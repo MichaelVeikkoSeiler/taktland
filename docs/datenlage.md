@@ -20,15 +20,17 @@ Alle Zahlen stammen aus `pipeline/explore.py` und `pipeline/coverage.py`.
 Die übrigen gehören BLS (113), RhB (102), MGB (39), ZB (36), SOB (33) und weiteren.
 Entscheidend ist die ISB im neuesten Jahr.
 
-Dazu kommen fünf Bahnhöfe der BLS auf ausdrücklichen Wunsch (`ZUSAETZLICH` in
-`pipeline/sources.py`): Köniz, Müntschemier, Ins, Spiez und Thun, zusammen **774**. Thun
-führt `passagierfrequenz` von 2018 bis 2024 mit ISB SBB, 2025 mit BLS; es ist der einzige
-Bahnhof mit einem solchen Wechsel. Den BLS-Bahnhöfen fehlen Perrons und Linien, die
-Datensätze dazu decken nur die SBB-Infrastruktur ab. Thun hat als einziger einen
-Bahnhofplan, Tagesrhythmus und Ausstattung (9 Kapitel), die übrigen haben 6. Weitere 73
-Bahnhöfe kämen ebenfalls auf 6 Kapitel: 70 der BLS, 2 der SOB und Interlaken Ost (BOB),
-geprüft 2026-09-22.
-Die Betreiberin in den Stammdaten ist bei ihnen «BLS AG (…)», nicht die SBB.
+Dazu kommen Bahnhöfe anderer Bahnen, wenn die Daten für mindestens sechs Kapitel
+reichen (`ANDERE_AB_KAPITEL` in `pipeline/sources.py`, angewandt in `build_facts.py
+--all`): Stand 2026-09-22 sind es 78, nämlich 75 der BLS, 2 der SOB (Schindellegi-
+Feusisberg, Hurden) und Interlaken Ost (BOB), zusammen **847**. Fünf davon (Köniz,
+Müntschemier, Ins, Spiez, Thun) kamen vorher auf ausdrücklichen Wunsch und stehen weiter
+unter `ZUSAETZLICH`. Thun führt `passagierfrequenz` von 2018 bis 2024 mit ISB SBB, 2025
+mit BLS; es ist der einzige Bahnhof mit einem solchen Wechsel. Den Bahnhöfen anderer
+Bahnen fehlen Perrons und Linien, die Datensätze dazu decken nur die SBB-Infrastruktur ab.
+Thun hat als einziger einen Bahnhofplan, Tagesrhythmus und Ausstattung (9 Kapitel), die
+übrigen haben 6. Die Betreiberin in den Stammdaten ist bei ihnen «BLS AG (…)»,
+«Schweizerische Südostbahn (sob)» und so weiter, nicht die SBB.
 
 ## Abdeckung, gemessen an den 769 SBB-Bahnhöfen
 

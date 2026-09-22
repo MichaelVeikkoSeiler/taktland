@@ -106,7 +106,10 @@ Lizenz die Quellenangabe verlangt. Beides prüft jetzt der Validator.
 **Auch die Pipeline tippt keine Zahlen ein.** In den Lücken-Texten stand «Pläne
 liegen für 60 der 769 SBB-Bahnhöfe vor», es waren längst 771, und «nur für 26
 grosse Bahnhöfe erhoben», wobei «grosse» eine Deutung war. Jetzt zählt
-`Data.zaehlung` in `build_facts.py` diese Zahlen aus den Quellen. Der
+`Data.zaehlung` in `build_facts.py` diese Zahlen aus den Quellen. Seit auch
+Bahnhöfe anderer Bahnen dazugehören, nennt der Satz zum Bahnhofplan nur noch, was
+der Datensatz enthält («Pläne für 62 Bahnhöfe»), nicht mehr einen Anteil an den
+«SBB-Bahnhöfen» von Taktland. Der
 `datenstand` einer Faktendatei ist das Abrufdatum der Daten
 (`data/raw/_abruf.json`, geschrieben von `fetch.py`), nicht das Baudatum: Ein
 Neubau ohne neue Daten ändert nichts. Der Validator vergleicht die Lücken eines

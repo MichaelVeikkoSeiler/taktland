@@ -601,6 +601,17 @@
    }
   },
   {
+   "uic": 8500159,
+   "name": "Grenchen Nord",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 1800,
+    "dnwv": 840,
+    "hoehe": 466.6,
+    "zuege": 75
+   }
+  },
+  {
    "uic": 8500200,
    "name": "Pieterlen",
    "kanton": "BE",
@@ -850,6 +861,39 @@
     "hoehe": 443,
     "zuege": 46,
     "perron": 122
+   }
+  },
+  {
+   "uic": 8500261,
+   "name": "Langendorf",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 260,
+    "dnwv": 210,
+    "hoehe": 470.4,
+    "zuege": 47
+   }
+  },
+  {
+   "uic": 8500262,
+   "name": "Lommiswil",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 100,
+    "hoehe": 555.35,
+    "zuege": 37
+   }
+  },
+  {
+   "uic": 8500264,
+   "name": "Oberdorf SO",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 200,
+    "dnwv": 360,
+    "hoehe": 655.3,
+    "zuege": 33
    }
   },
   {
@@ -4062,6 +4106,28 @@
    }
   },
   {
+   "uic": 8503285,
+   "name": "Schindellegi-Feusisberg",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 990,
+    "dnwv": 650,
+    "hoehe": 754.82,
+    "zuege": 186
+   }
+  },
+  {
+   "uic": 8503299,
+   "name": "Hurden",
+   "kanton": "SZ",
+   "werte": {
+    "dwv": 190,
+    "dnwv": 180,
+    "hoehe": 408,
+    "zuege": 185
+   }
+  },
+  {
    "uic": 8503300,
    "name": "Kempten",
    "kanton": "ZH",
@@ -6199,6 +6265,28 @@
    }
   },
   {
+   "uic": 8504480,
+   "name": "St-Blaise-Lac",
+   "kanton": "NE",
+   "werte": {
+    "dwv": 480,
+    "dnwv": 410,
+    "hoehe": 432.3,
+    "zuege": 154
+   }
+  },
+  {
+   "uic": 8504481,
+   "name": "Marin-Epagnier",
+   "kanton": "NE",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 650,
+    "hoehe": 449.8,
+    "zuege": 154
+   }
+  },
+  {
    "uic": 8504483,
    "name": "Ins",
    "kanton": "BE",
@@ -6218,6 +6306,50 @@
     "dnwv": 180,
     "hoehe": 435.6,
     "zuege": 94
+   }
+  },
+  {
+   "uic": 8504486,
+   "name": "Gümmenen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 920,
+    "dnwv": 530,
+    "hoehe": 494.2,
+    "zuege": 121
+   }
+  },
+  {
+   "uic": 8504487,
+   "name": "Rosshäusern",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 290,
+    "dnwv": 180,
+    "hoehe": 579.4,
+    "zuege": 121
+   }
+  },
+  {
+   "uic": 8504488,
+   "name": "Bern Riedbach",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 240,
+    "dnwv": 180,
+    "hoehe": 568.3,
+    "zuege": 121
+   }
+  },
+  {
+   "uic": 8504489,
+   "name": "Bern Bümpliz Nord",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 3000,
+    "dnwv": 1500,
+    "hoehe": 555.35,
+    "zuege": 139
    }
   },
   {
@@ -8297,6 +8429,61 @@
    }
   },
   {
+   "uic": 8507070,
+   "name": "Uetendorf",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1400,
+    "dnwv": 810,
+    "hoehe": 553.8,
+    "zuege": 82
+   }
+  },
+  {
+   "uic": 8507072,
+   "name": "Burgistein",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 530,
+    "dnwv": 360,
+    "hoehe": 566.7,
+    "zuege": 82
+   }
+  },
+  {
+   "uic": 8507074,
+   "name": "Kaufdorf",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 690,
+    "dnwv": 430,
+    "hoehe": 534.2,
+    "zuege": 80
+   }
+  },
+  {
+   "uic": 8507076,
+   "name": "Belp",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 5900,
+    "dnwv": 3700,
+    "hoehe": 522.6,
+    "zuege": 199
+   }
+  },
+  {
+   "uic": 8507079,
+   "name": "Bern Weissenbühl",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1600,
+    "dnwv": 680,
+    "hoehe": 550.1,
+    "zuege": 203
+   }
+  },
+  {
    "uic": 8507083,
    "name": "Köniz",
    "kanton": "BE",
@@ -8304,6 +8491,72 @@
     "dwv": 1900,
     "dnwv": 990,
     "hoehe": 571.786,
+    "zuege": 74
+   }
+  },
+  {
+   "uic": 8507085,
+   "name": "Gasel",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 450,
+    "dnwv": 260,
+    "hoehe": 649.507,
+    "zuege": 74
+   }
+  },
+  {
+   "uic": 8507086,
+   "name": "Niederscherli",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1200,
+    "dnwv": 610,
+    "hoehe": 655.664,
+    "zuege": 74
+   }
+  },
+  {
+   "uic": 8507087,
+   "name": "Mittelhäusern",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 570,
+    "dnwv": 350,
+    "hoehe": 668.645,
+    "zuege": 74
+   }
+  },
+  {
+   "uic": 8507089,
+   "name": "Schwarzenburg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 2000,
+    "dnwv": 1300,
+    "hoehe": 791.799,
+    "zuege": 74
+   }
+  },
+  {
+   "uic": 8507094,
+   "name": "Uetendorf Allmend",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 510,
+    "dnwv": 300,
+    "hoehe": 555.5,
+    "zuege": 82
+   }
+  },
+  {
+   "uic": 8507095,
+   "name": "Schwarzwasserbrücke",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 140,
+    "dnwv": 200,
+    "hoehe": 645.532,
     "zuege": 74
    }
   },
@@ -8319,6 +8572,189 @@
    }
   },
   {
+   "uic": 8507288,
+   "name": "Eifeld",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 70,
+    "hoehe": 624.5,
+    "zuege": 56
+   }
+  },
+  {
+   "uic": 8507290,
+   "name": "Zweisimmen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 4500,
+    "dnwv": 5300,
+    "hoehe": 941.6,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507291,
+   "name": "Weissenbach",
+   "kanton": "BE",
+   "werte": {
+    "hoehe": 842.8,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507292,
+   "name": "Boltigen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 270,
+    "dnwv": 240,
+    "hoehe": 814.3,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507293,
+   "name": "Oberwil im Simmental",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 170,
+    "dnwv": 140,
+    "hoehe": 781.8,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507295,
+   "name": "Därstetten",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 190,
+    "dnwv": 130,
+    "hoehe": 757.8,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507296,
+   "name": "Erlenbach im Simmental",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 440,
+    "dnwv": 410,
+    "hoehe": 681.4,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507297,
+   "name": "Oey-Diemtigen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 480,
+    "dnwv": 430,
+    "hoehe": 669.9,
+    "zuege": 55
+   }
+  },
+  {
+   "uic": 8507298,
+   "name": "Wimmis",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 620,
+    "dnwv": 420,
+    "hoehe": 627.7,
+    "zuege": 56
+   }
+  },
+  {
+   "uic": 8507299,
+   "name": "Lattigen bei Spiez",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 130,
+    "dnwv": 90,
+    "hoehe": 626.3,
+    "zuege": 56
+   }
+  },
+  {
+   "uic": 8507470,
+   "name": "Lalden",
+   "kanton": "VS",
+   "werte": {
+    "hoehe": 852.7,
+    "zuege": 39
+   }
+  },
+  {
+   "uic": 8507472,
+   "name": "Ausserberg",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 170,
+    "dnwv": 210,
+    "hoehe": 991.3,
+    "zuege": 39
+   }
+  },
+  {
+   "uic": 8507473,
+   "name": "Hohtenn",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 60,
+    "dnwv": 90,
+    "hoehe": 1078,
+    "zuege": 39
+   }
+  },
+  {
+   "uic": 8507474,
+   "name": "Goppenstein",
+   "kanton": "VS",
+   "werte": {
+    "dwv": 610,
+    "dnwv": 820,
+    "hoehe": 1216.95,
+    "zuege": 129
+   }
+  },
+  {
+   "uic": 8507475,
+   "name": "Kandersteg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1400,
+    "dnwv": 2000,
+    "hoehe": 1176,
+    "zuege": 122
+   }
+  },
+  {
+   "uic": 8507478,
+   "name": "Frutigen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 2600,
+    "dnwv": 2400,
+    "hoehe": 779.52,
+    "zuege": 70
+   }
+  },
+  {
+   "uic": 8507480,
+   "name": "Reichenbach im Kandertal",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 640,
+    "dnwv": 580,
+    "hoehe": 706.36,
+    "zuege": 107
+   }
+  },
+  {
    "uic": 8507483,
    "name": "Spiez",
    "kanton": "BE",
@@ -8327,6 +8763,39 @@
     "dnwv": 18600,
     "hoehe": 627.82,
     "zuege": 214
+   }
+  },
+  {
+   "uic": 8507492,
+   "name": "Interlaken Ost",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 17000,
+    "dnwv": 19300,
+    "hoehe": 567.3,
+    "zuege": 84
+   }
+  },
+  {
+   "uic": 8507493,
+   "name": "Interlaken West",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 6900,
+    "dnwv": 6400,
+    "hoehe": 563.35,
+    "zuege": 84
+   }
+  },
+  {
+   "uic": 8507495,
+   "name": "Leissigen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 360,
+    "dnwv": 260,
+    "hoehe": 569.37,
+    "zuege": 84
    }
   },
   {
@@ -8402,6 +8871,94 @@
    }
   },
   {
+   "uic": 8508080,
+   "name": "Oberburg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1400,
+    "dnwv": 710,
+    "hoehe": 546.85,
+    "zuege": 137
+   }
+  },
+  {
+   "uic": 8508083,
+   "name": "Burgdorf Buchmatt",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 280,
+    "dnwv": 80,
+    "hoehe": 525.05,
+    "zuege": 80
+   }
+  },
+  {
+   "uic": 8508084,
+   "name": "Kirchberg-Alchenflüh",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 880,
+    "dnwv": 700,
+    "hoehe": 509,
+    "zuege": 80
+   }
+  },
+  {
+   "uic": 8508085,
+   "name": "Aefligen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 490,
+    "dnwv": 270,
+    "hoehe": 496.9,
+    "zuege": 80
+   }
+  },
+  {
+   "uic": 8508086,
+   "name": "Utzenstorf",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1000,
+    "dnwv": 630,
+    "hoehe": 474.45,
+    "zuege": 80
+   }
+  },
+  {
+   "uic": 8508087,
+   "name": "Wiler",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 320,
+    "dnwv": 190,
+    "hoehe": 463.05,
+    "zuege": 79
+   }
+  },
+  {
+   "uic": 8508088,
+   "name": "Gerlafingen",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 590,
+    "dnwv": 420,
+    "hoehe": 451.85,
+    "zuege": 79
+   }
+  },
+  {
+   "uic": 8508089,
+   "name": "Biberist Ost",
+   "kanton": "SO",
+   "werte": {
+    "dwv": 370,
+    "dnwv": 280,
+    "hoehe": 446.55,
+    "zuege": 79
+   }
+  },
+  {
    "uic": 8508100,
    "name": "Langenthal",
    "kanton": "BE",
@@ -8447,6 +9004,50 @@
     "hoehe": 407,
     "zuege": 280,
     "perron": 222
+   }
+  },
+  {
+   "uic": 8508182,
+   "name": "Lotzwil",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 490,
+    "dnwv": 280,
+    "hoehe": 502.2,
+    "zuege": 64
+   }
+  },
+  {
+   "uic": 8508183,
+   "name": "Madiswil",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 580,
+    "dnwv": 320,
+    "hoehe": 533.96,
+    "zuege": 64
+   }
+  },
+  {
+   "uic": 8508186,
+   "name": "Rohrbach",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 490,
+    "dnwv": 280,
+    "hoehe": 583.46,
+    "zuege": 64
+   }
+  },
+  {
+   "uic": 8508187,
+   "name": "Huttwil",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1600,
+    "dnwv": 1000,
+    "hoehe": 637.75,
+    "zuege": 64
    }
   },
   {
@@ -8663,6 +9264,204 @@
     "hoehe": 456,
     "zuege": 86,
     "perron": 226
+   }
+  },
+  {
+   "uic": 8508251,
+   "name": "Steffisburg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 540,
+    "dnwv": 320,
+    "hoehe": 563.25,
+    "zuege": 102
+   }
+  },
+  {
+   "uic": 8508253,
+   "name": "Heimberg",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 620,
+    "dnwv": 430,
+    "hoehe": 552.1,
+    "zuege": 102
+   }
+  },
+  {
+   "uic": 8508254,
+   "name": "Brenzikofen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 180,
+    "dnwv": 140,
+    "hoehe": 577.25,
+    "zuege": 102
+   }
+  },
+  {
+   "uic": 8508255,
+   "name": "Oberdiessbach",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1200,
+    "dnwv": 720,
+    "hoehe": 604.65,
+    "zuege": 102
+   }
+  },
+  {
+   "uic": 8508260,
+   "name": "Grosshöchstetten",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 630,
+    "hoehe": 742.9,
+    "zuege": 75
+   }
+  },
+  {
+   "uic": 8508261,
+   "name": "Biglen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 600,
+    "dnwv": 380,
+    "hoehe": 739.05,
+    "zuege": 75
+   }
+  },
+  {
+   "uic": 8508262,
+   "name": "Walkringen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 370,
+    "dnwv": 230,
+    "hoehe": 690.8,
+    "zuege": 75
+   }
+  },
+  {
+   "uic": 8508264,
+   "name": "Schafhausen i.E.",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 150,
+    "dnwv": 100,
+    "hoehe": 605.95,
+    "zuege": 75
+   }
+  },
+  {
+   "uic": 8508265,
+   "name": "Hasle-Rüegsau",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 2900,
+    "dnwv": 1900,
+    "hoehe": 571.2,
+    "zuege": 132
+   }
+  },
+  {
+   "uic": 8508266,
+   "name": "Lützelflüh-Goldbach",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 670,
+    "hoehe": 582.45,
+    "zuege": 85
+   }
+  },
+  {
+   "uic": 8508267,
+   "name": "Ramsei",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1800,
+    "dnwv": 1200,
+    "hoehe": 600.1,
+    "zuege": 83
+   }
+  },
+  {
+   "uic": 8508271,
+   "name": "Grünenmatt",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 230,
+    "dnwv": 150,
+    "hoehe": 623.8,
+    "zuege": 73
+   }
+  },
+  {
+   "uic": 8508272,
+   "name": "Sumiswald-Grünen",
+   "kanton": "BE",
+   "werte": {
+    "dwv": 1100,
+    "dnwv": 720,
+    "hoehe": 662.4,
+    "zuege": 73
+   }
+  },
+  {
+   "uic": 8508292,
+   "name": "Hüswil",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 70,
+    "dnwv": 80,
+    "hoehe": 612.61,
+    "zuege": 59
+   }
+  },
+  {
+   "uic": 8508293,
+   "name": "Zell LU",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 800,
+    "dnwv": 360,
+    "hoehe": 588.3,
+    "zuege": 59
+   }
+  },
+  {
+   "uic": 8508294,
+   "name": "Gettnau",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 280,
+    "dnwv": 140,
+    "hoehe": 545.05,
+    "zuege": 59
+   }
+  },
+  {
+   "uic": 8508295,
+   "name": "Willisau",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 2500,
+    "dnwv": 1400,
+    "hoehe": 554.48,
+    "zuege": 81
+   }
+  },
+  {
+   "uic": 8508297,
+   "name": "Menznau",
+   "kanton": "LU",
+   "werte": {
+    "dwv": 720,
+    "dnwv": 520,
+    "hoehe": 596.06,
+    "zuege": 81
    }
   },
   {

@@ -17,7 +17,7 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sources import DATASETS, ZUSAETZLICH  # noqa: E402
+from sources import ANDERE_AB_KAPITEL, DATASETS, ZUSAETZLICH  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
@@ -133,11 +133,11 @@ class Data:
     @functools.cached_property
     def zaehlung(self):
         """Zahlen, die in den Lücken-Texten stehen. Gezählt statt eingetippt:
-        Dort stand «60 der 769 SBB-Bahnhöfe», es waren längst 771."""
-        alle = set(self.alle_sbb())
+        Dort stand «60 der 769 SBB-Bahnhöfe», es waren längst 771. Gezählt wird,
+        was der Datensatz enthält, nicht wie viele Bahnhöfe Taktland hat: Mit
+        den Bahnhöfen anderer Bahnen stimmte «SBB-Bahnhöfe» nicht mehr."""
         return {
-            "bahnhoefe": len(alle),
-            "bahnhofplan": len(alle & {int(u) for u in self.plan.uic.dropna()}),
+            "bahnhofplan": len({int(u) for u in self.plan.uic.dropna()}),
             "tagesverlauf": int(self.tagesverlauf.dropna(subset=["uhrzeit", "prozentsatz"]).uic.nunique()),
             "bahnhofbenutzer": int(self.benutzer.bahnhof_gare_stazione.nunique()),
             "wlan_standorte": len(self.wifi),
@@ -164,6 +164,14 @@ class Data:
         vorhanden = set(neu.uic.astype("int64"))
         uics += [u for u in ZUSAETZLICH if u in vorhanden and u not in uics]
         return uics
+
+    def andere(self):
+        """Bahnhoefe anderer Bahnen, die nicht schon in alle_sbb() stehen. Ob
+        einer aufgenommen wird, entscheidet main() nach ANDERE_AB_KAPITEL."""
+        neu = self.pf.sort_values("jahr").groupby("uic").tail(1)
+        schon = set(self.alle_sbb())
+        return [int(u) for u in neu[neu.isb_gi.astype(str).str.strip() != "SBB"].uic
+                if int(u) not in schon]
 
 
 #: Die Quelle schreibt 49 für «weniger als 50 Ein- und Aussteigende», so ihre
@@ -574,9 +582,8 @@ def luecken(d, uic, f):
                "perronoberflache")
     if not f.get("bahnhofplan"):
         lueckt("Bahnhofplan",
-               "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. "
-               f"Pläne liegen für {d.zaehlung['bahnhofplan']} der "
-               f"{d.zaehlung['bahnhoefe']} SBB-Bahnhöfe vor.",
+               "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz "
+               f"enthält Pläne für {d.zaehlung['bahnhofplan']} Bahnhöfe.",
                "haltestelle-karte-trafimage")
     tr = f.get("tagesrhythmus") or {}
     if tr and not tr.get("stunden"):
@@ -823,6 +830,15 @@ def main():
         print("Aufruf: build_facts.py <uic> [<uic> ...] | --all")
         return 1
     OUT.mkdir(parents=True, exist_ok=True)
+    if "--all" in args:
+        # Bahnhoefe anderer Bahnen, wenn die Daten fuer genug Kapitel reichen
+        dazu = 0
+        for uic in d.andere():
+            f = build(d, uic)
+            if f and len(f["verfuegbare_kapitel"]) >= ANDERE_AB_KAPITEL:
+                uics.append(uic)
+                dazu += 1
+        print(f"andere Bahnen: {dazu} Bahnhöfe mit mindestens {ANDERE_AB_KAPITEL} Kapiteln")
     for uic in uics:
         f = build(d, uic)
         if not f:

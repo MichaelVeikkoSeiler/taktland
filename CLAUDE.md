@@ -78,8 +78,9 @@ pipeline/    Rohdaten laden und zu facts/{uic}.json verdichten (Python, pandas)
 generator/   Profile schreiben und prüfen
 app/         PWA (React, Vite, Tailwind)
 data/raw/    heruntergeladene CSV, nicht in Git
-data/facts/  geprüfte Fakten je Bahnhof: 774, die 769 mit SBB-Infrastruktur und
-             fünf der BLS (ZUSAETZLICH in pipeline/sources.py)
+data/facts/  geprüfte Fakten je Bahnhof: 847, die 769 mit SBB-Infrastruktur und 78
+             anderer Bahnen mit Daten für mindestens sechs Kapitel
+             (ANDERE_AB_KAPITEL in pipeline/sources.py)
 data/bauplan.json  was pro Bahnhof von Hand entschieden ist
 data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand geändert
 data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_linien.py

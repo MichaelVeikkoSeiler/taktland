@@ -110,9 +110,15 @@ MVP_STATIONS = {
     "8508001": "Schönbühl SBB",
 }
 
-# Bahnhoefe ausserhalb der SBB-Infrastruktur, die trotzdem aufgenommen werden.
-# Die Frequenzdaten decken 1252 Bahnhoefe ab, die Infrastrukturdaten im Wesentlichen
-# nur die 769 der SBB. Fuer diese hier reicht die Datenlage dennoch fuer ein Profil.
+# Bahnhoefe ausserhalb der SBB-Infrastruktur. Die Frequenzdaten decken 1178
+# Bahnhoefe ab, die Infrastrukturdaten im Wesentlichen nur die der SBB.
+# Aufgenommen wird ein Bahnhof einer anderen Bahn, wenn die Daten fuer mindestens
+# so viele Kapitel reichen (build_facts.py); das sind Steckbrief, Stammdaten,
+# Gleise, Hindernisfreiheit, Zuege und Services, bei Thun mehr.
+ANDERE_AB_KAPITEL = 6
+
+# Diese fuenf kamen auf ausdruecklichen Wunsch, bevor es die Regel gab. Sie
+# erfuellen sie auch; die Liste bleibt, damit sie nicht an der Regel haengen.
 ZUSAETZLICH = {
     8507083: "Köniz",          # BLS
     8504484: "Müntschemier",   # BLS

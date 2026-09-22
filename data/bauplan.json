@@ -443,6 +443,16 @@
    ]
   }
  },
+ "8500159": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Wasseramt",
+    "Gäu"
+   ]
+  }
+ },
  "8500200": {
   "stammdaten": {
    "frage": "bezirk",
@@ -645,6 +655,36 @@
     "Biel/Bienne",
     "Jura bernois",
     "Bern-Mittelland"
+   ]
+  }
+ },
+ "8500261": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Wasseramt",
+    "Gäu"
+   ]
+  }
+ },
+ "8500262": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Wasseramt",
+    "Gäu"
+   ]
+  }
+ },
+ "8500264": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Wasseramt",
+    "Gäu"
    ]
   }
  },
@@ -3234,6 +3274,26 @@
    ]
   }
  },
+ "8503285": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "March",
+    "Schwyz",
+    "Küssnacht (SZ)"
+   ]
+  }
+ },
+ "8503299": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Rapperswil-Jona",
+    "Altendorf",
+    "Hombrechtikon"
+   ]
+  }
+ },
  "8503300": {
   "stammdaten": {
    "frage": "gemeinde",
@@ -4964,6 +5024,26 @@
    ]
   }
  },
+ "8504480": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Neuchâtel",
+    "Cornaux",
+    "Cressier (NE)"
+   ]
+  }
+ },
+ "8504481": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Cornaux",
+    "Cressier (NE)",
+    "Neuchâtel"
+   ]
+  }
+ },
  "8504483": {
   "stammdaten": {
    "frage": "bezirk",
@@ -4981,6 +5061,44 @@
     "Jura bernois",
     "Biel/Bienne",
     "Bern-Mittelland"
+   ]
+  }
+ },
+ "8504486": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Laupen",
+    "Mühleberg",
+    "Kerzers"
+   ]
+  }
+ },
+ "8504487": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Neuenegg",
+    "Ferenbalm"
+   ]
+  }
+ },
+ "8504488": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "ROSS",
+    "NWA"
+   ]
+  }
+ },
+ "8504489": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BNBS",
+    "BNAS"
    ]
   }
  },
@@ -6677,6 +6795,55 @@
    ]
   }
  },
+ "8507070": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Frutigen-Niedersimmental",
+    "Emmental"
+   ]
+  }
+ },
+ "8507072": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Frutigen-Niedersimmental",
+    "Obersimmental-Saanen"
+   ]
+  }
+ },
+ "8507074": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Emmental",
+    "Frutigen-Niedersimmental"
+   ]
+  }
+ },
+ "8507076": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Emmental",
+    "Seeland"
+   ]
+  }
+ },
+ "8507079": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "BN",
+    "KOE"
+   ]
+  }
+ },
  "8507083": {
   "stammdaten": {
    "frage": "bezirk",
@@ -6684,6 +6851,66 @@
     "Seeland",
     "Emmental",
     "Thun"
+   ]
+  }
+ },
+ "8507085": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Bern",
+    "Schwarzenburg",
+    "Wünnewil-Flamatt"
+   ]
+  }
+ },
+ "8507086": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schwarzenburg",
+    "Wünnewil-Flamatt",
+    "Bern"
+   ]
+  }
+ },
+ "8507087": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Schwarzenburg",
+    "Wünnewil-Flamatt",
+    "Neuenegg"
+   ]
+  }
+ },
+ "8507089": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Frutigen-Niedersimmental",
+    "Obersimmental-Saanen"
+   ]
+  }
+ },
+ "8507094": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Frutigen-Niedersimmental",
+    "Interlaken-Oberhasli"
+   ]
+  }
+ },
+ "8507095": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Köniz",
+    "Wünnewil-Flamatt",
+    "Neuenegg"
    ]
   }
  },
@@ -6696,6 +6923,173 @@
    ]
   }
  },
+ "8507288": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Spiez",
+    "Diemtigen",
+    "Erlenbach im Simmental"
+   ]
+  }
+ },
+ "8507290": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Thun",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8507291": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zweisimmen",
+    "Oberwil im Simmental",
+    "Därstetten"
+   ]
+  }
+ },
+ "8507292": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Thun",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8507293": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "DR",
+    "BOLT"
+   ]
+  }
+ },
+ "8507295": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Obersimmental-Saanen",
+    "Thun",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8507296": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "OE",
+    "DR"
+   ]
+  }
+ },
+ "8507297": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Obersimmental-Saanen",
+    "Interlaken-Oberhasli"
+   ]
+  }
+ },
+ "8507298": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Interlaken-Oberhasli",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8507299": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Interlaken-Oberhasli",
+    "Bern-Mittelland"
+   ]
+  }
+ },
+ "8507470": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Raron",
+    "Brig",
+    "Leuk"
+   ]
+  }
+ },
+ "8507472": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Visp",
+    "Brig",
+    "Leuk"
+   ]
+  }
+ },
+ "8507473": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Leuk",
+    "Visp",
+    "Brig"
+   ]
+  }
+ },
+ "8507474": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Steg-Hohtenn",
+    "Raron",
+    "Turtmann-Unterems"
+   ]
+  }
+ },
+ "8507475": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Interlaken-Oberhasli",
+    "Obersimmental-Saanen",
+    "Thun"
+   ]
+  }
+ },
+ "8507478": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "REIK",
+    "OE"
+   ]
+  }
+ },
+ "8507480": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Interlaken-Oberhasli",
+    "Thun",
+    "Bern-Mittelland"
+   ]
+  }
+ },
  "8507483": {
   "stammdaten": {
    "frage": "bezirk",
@@ -6703,6 +7097,34 @@
     "Thun",
     "Bern-Mittelland",
     "Emmental"
+   ]
+  }
+ },
+ "8507492": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "IW",
+    "LSS"
+   ]
+  }
+ },
+ "8507493": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "IO",
+    "LSS"
+   ]
+  }
+ },
+ "8507495": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Frutigen-Niedersimmental",
+    "Thun",
+    "Bern-Mittelland"
    ]
   }
  },
@@ -6765,6 +7187,86 @@
    ]
   }
  },
+ "8508080": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Hasle bei Burgdorf",
+    "Lyssach",
+    "Lützelflüh"
+   ]
+  }
+ },
+ "8508083": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Oberaargau",
+    "Seeland"
+   ]
+  }
+ },
+ "8508084": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Oberaargau",
+    "Seeland"
+   ]
+  }
+ },
+ "8508085": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Seeland",
+    "Oberaargau"
+   ]
+  }
+ },
+ "8508086": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Oberaargau",
+    "Bern-Mittelland",
+    "Seeland"
+   ]
+  }
+ },
+ "8508087": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Oberaargau",
+    "Seeland",
+    "Biel/Bienne"
+   ]
+  }
+ },
+ "8508088": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Lebern",
+    "Gäu"
+   ]
+  }
+ },
+ "8508089": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Solothurn",
+    "Lebern",
+    "Gäu"
+   ]
+  }
+ },
  "8508100": {
   "stammdaten": {
    "frage": "bezirk",
@@ -6802,6 +7304,46 @@
     "Aarau",
     "Lenzburg",
     "Kulm"
+   ]
+  }
+ },
+ "8508182": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Bern-Mittelland",
+    "Biel/Bienne"
+   ]
+  }
+ },
+ "8508183": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Bern-Mittelland",
+    "Seeland"
+   ]
+  }
+ },
+ "8508186": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Bern-Mittelland",
+    "Seeland"
+   ]
+  }
+ },
+ "8508187": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Bern-Mittelland",
+    "Seeland"
    ]
   }
  },
@@ -6978,6 +7520,185 @@
    "distraktoren": [
     "EBR",
     "GSAG"
+   ]
+  }
+ },
+ "8508251": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Frutigen-Niedersimmental",
+    "Interlaken-Oberhasli"
+   ]
+  }
+ },
+ "8508253": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Frutigen-Niedersimmental",
+    "Emmental"
+   ]
+  }
+ },
+ "8508254": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Emmental",
+    "Frutigen-Niedersimmental"
+   ]
+  }
+ },
+ "8508255": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Thun",
+    "Emmental",
+    "Frutigen-Niedersimmental"
+   ]
+  }
+ },
+ "8508260": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Thun",
+    "Frutigen-Niedersimmental"
+   ]
+  }
+ },
+ "8508261": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Thun",
+    "Seeland"
+   ]
+  }
+ },
+ "8508262": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Emmental",
+    "Thun",
+    "Seeland"
+   ]
+  }
+ },
+ "8508264": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Lützelflüh",
+    "Burgdorf",
+    "Walkringen"
+   ]
+  }
+ },
+ "8508265": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Oberaargau",
+    "Seeland"
+   ]
+  }
+ },
+ "8508266": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Oberaargau",
+    "Seeland"
+   ]
+  }
+ },
+ "8508267": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Sumiswald",
+    "Hasle bei Burgdorf",
+    "Lauperswil"
+   ]
+  }
+ },
+ "8508271": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Sumiswald",
+    "Hasle bei Burgdorf",
+    "Lauperswil"
+   ]
+  }
+ },
+ "8508272": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Bern-Mittelland",
+    "Oberaargau",
+    "Seeland"
+   ]
+  }
+ },
+ "8508292": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Willisau",
+    "Huttwil",
+    "Rohrbach"
+   ]
+  }
+ },
+ "8508293": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Sursee",
+    "Entlebuch",
+    "Luzern-Land"
+   ]
+  }
+ },
+ "8508294": {
+  "stammdaten": {
+   "frage": "gemeinde",
+   "distraktoren": [
+    "Zell (LU)",
+    "Nebikon",
+    "Wauwil"
+   ]
+  }
+ },
+ "8508295": {
+  "stammdaten": {
+   "frage": "abkuerzung",
+   "distraktoren": [
+    "GET",
+    "ZELL"
+   ]
+  }
+ },
+ "8508297": {
+  "stammdaten": {
+   "frage": "bezirk",
+   "distraktoren": [
+    "Entlebuch",
+    "Sursee",
+    "Luzern-Land"
    ]
   }
  },

@@ -1,0 +1,274 @@
+{
+  "uic": 8508267,
+  "name": "Ramsei",
+  "kanton": "BE",
+  "bps": "RAM",
+  "tier": "S",
+  "datenstand": "2026-09-20",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Ramsei",
+    "kanton": "BE",
+    "isb": "BLS",
+    "evu": "BLS",
+    "lon": 7.70993,
+    "lat": 46.996877,
+    "dwv": 1800,
+    "dtv": 1600,
+    "dnwv": 1200,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2022,
+        "dwv": 1600
+      },
+      {
+        "jahr": 2023,
+        "dwv": 1700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 1800
+      },
+      {
+        "jahr": 2025,
+        "dwv": 1800
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Ramsei",
+    "abkuerzung": "RAM",
+    "hoehe_m_ue_m": 600.1,
+    "gemeinde": "Lützelflüh",
+    "ortschaft": "Ramsei",
+    "bezirk": "Emmental",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "BLS AG (ebt)"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 2,
+    "nummern": [
+      "1",
+      "2"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 164,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 225,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "segmente": 5,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 5
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 2,
+    "gleise_mit_daten": 2
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Lützelflüh-Goldbach",
+      "bis": "Ramsei",
+      "strecke_nr": 403,
+      "strecke": "Burgdorf - Obermatt",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30218,
+      "zuege_pro_tag": 83
+    },
+    "staerkster_personenverkehr": {
+      "von": "Lützelflüh-Goldbach",
+      "bis": "Ramsei",
+      "strecke_nr": 403,
+      "strecke": "Burgdorf - Obermatt",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 30218,
+      "zuege_pro_tag": 83
+    },
+    "abschnitte": [
+      {
+        "von": "Lützelflüh-Goldbach",
+        "bis": "Ramsei",
+        "strecke_nr": 403,
+        "strecke": "Burgdorf - Obermatt",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 30218,
+        "zuege_pro_tag": 83
+      },
+      {
+        "von": "Grünenmatt",
+        "bis": "Ramsei",
+        "strecke_nr": 404,
+        "strecke": "Huttwil -  Ramsei / Burghof",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 26773,
+        "zuege_pro_tag": 73
+      },
+      {
+        "von": "Ramsei",
+        "bis": "Zollbrück",
+        "strecke_nr": 403,
+        "strecke": "Burgdorf - Obermatt",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 14429,
+        "zuege_pro_tag": 40
+      },
+      {
+        "von": "Lützelflüh-Goldbach",
+        "bis": "Ramsei",
+        "strecke_nr": 403,
+        "strecke": "Burgdorf - Obermatt",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 468,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Grünenmatt",
+        "bis": "Ramsei",
+        "strecke_nr": 404,
+        "strecke": "Huttwil -  Ramsei / Burghof",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 381,
+        "zuege_pro_tag": 1
+      },
+      {
+        "von": "Ramsei",
+        "bis": "Zollbrück",
+        "strecke_nr": 403,
+        "strecke": "Burgdorf - Obermatt",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 119,
+        "zuege_pro_tag": 0
+      }
+    ]
+  },
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": false,
+    "billettautomaten_erfasst": 1,
+    "automat_typen": [
+      "BLS IAT"
+    ],
+    "billettentwerter_erfasst": 0,
+    "wartehallen_erfasst": 0
+  },
+  "ausstattung": null,
+  "bahnhofplan": null,
+  "luecken": [
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
+      "quelle": "mobiliar-im-bahnhof, perronoberflache"
+    },
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 2 Gleise (1, 2). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "services"
+  ]
+}

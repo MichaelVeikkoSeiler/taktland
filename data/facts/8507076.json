@@ -1,0 +1,267 @@
+{
+  "uic": 8507076,
+  "name": "Belp",
+  "kanton": "BE",
+  "bps": "BP",
+  "tier": "M",
+  "datenstand": "2026-09-20",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Belp",
+    "kanton": "BE",
+    "isb": "BLS",
+    "evu": "BLS",
+    "lon": 7.498636,
+    "lat": 46.888883,
+    "dwv": 5900,
+    "dtv": 5200,
+    "dnwv": 3700,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": 6600
+      },
+      {
+        "jahr": 2022,
+        "dwv": 5300
+      },
+      {
+        "jahr": 2023,
+        "dwv": 5700
+      },
+      {
+        "jahr": 2024,
+        "dwv": 5900
+      },
+      {
+        "jahr": 2025,
+        "dwv": 5900
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Belp",
+    "abkuerzung": "BP",
+    "hoehe_m_ue_m": 522.6,
+    "gemeinde": "Belp",
+    "ortschaft": "Belp",
+    "bezirk": "Bern-Mittelland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "BLS AG (gbs)"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 3,
+    "nummern": [
+      "1",
+      "2",
+      "3"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 229,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      },
+      {
+        "nr": "2",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 255,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      },
+      {
+        "nr": "3",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Mittelperron",
+        "perronkante_m": 244,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "segmente": 16,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 16
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 3,
+    "gleise_mit_daten": 3
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Belp Steinbach",
+      "bis": "Belp",
+      "strecke_nr": 307,
+      "strecke": "Bern Fischermätteli - Belp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 72538,
+      "zuege_pro_tag": 199
+    },
+    "staerkster_personenverkehr": {
+      "von": "Belp Steinbach",
+      "bis": "Belp",
+      "strecke_nr": 307,
+      "strecke": "Bern Fischermätteli - Belp",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 72538,
+      "zuege_pro_tag": 199
+    },
+    "abschnitte": [
+      {
+        "von": "Belp Steinbach",
+        "bis": "Belp",
+        "strecke_nr": 307,
+        "strecke": "Bern Fischermätteli - Belp",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 72538,
+        "zuege_pro_tag": 199
+      },
+      {
+        "von": "Belp",
+        "bis": "Toffen",
+        "strecke_nr": 308,
+        "strecke": "Belp - Thun Abzweigung",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 29377,
+        "zuege_pro_tag": 80
+      },
+      {
+        "von": "Belp Steinbach",
+        "bis": "Belp",
+        "strecke_nr": 307,
+        "strecke": "Bern Fischermätteli - Belp",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 871,
+        "zuege_pro_tag": 2
+      },
+      {
+        "von": "Belp",
+        "bis": "Toffen",
+        "strecke_nr": 308,
+        "strecke": "Belp - Thun Abzweigung",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 871,
+        "zuege_pro_tag": 2
+      }
+    ]
+  },
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": false,
+    "billettautomaten_erfasst": 3,
+    "automat_typen": [
+      "AFA 460",
+      "AFA 470"
+    ],
+    "billettentwerter_erfasst": 0,
+    "wartehallen_erfasst": 0
+  },
+  "ausstattung": null,
+  "bahnhofplan": null,
+  "luecken": [
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
+      "quelle": "mobiliar-im-bahnhof, perronoberflache"
+    },
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 3 Gleise (1, 2, 3). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu den Gleisen 1, 2, 3 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "services"
+  ]
+}

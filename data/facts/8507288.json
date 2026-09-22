@@ -1,0 +1,240 @@
+{
+  "uic": 8507288,
+  "name": "Eifeld",
+  "kanton": "BE",
+  "bps": "EIF",
+  "tier": "S",
+  "datenstand": "2026-09-20",
+  "steckbrief": {
+    "source": "passagierfrequenz",
+    "jahr": 2025,
+    "name": "Eifeld",
+    "kanton": "BE",
+    "isb": "BLS",
+    "evu": "BLS",
+    "lon": 7.642273,
+    "lat": 46.683869,
+    "dwv": 130,
+    "dtv": 110,
+    "dnwv": 70,
+    "bemerkung": null,
+    "verlauf": [
+      {
+        "jahr": 2018,
+        "dwv": null,
+        "dwv_unter": 50
+      },
+      {
+        "jahr": 2022,
+        "dwv": 90
+      },
+      {
+        "jahr": 2023,
+        "dwv": 100
+      },
+      {
+        "jahr": 2024,
+        "dwv": 110
+      },
+      {
+        "jahr": 2025,
+        "dwv": 130
+      }
+    ]
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Eifeld",
+    "abkuerzung": "EIF",
+    "hoehe_m_ue_m": 624.5,
+    "gemeinde": "Wimmis",
+    "ortschaft": "Wimmis",
+    "bezirk": "Frutigen-Niedersimmental",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "BLS AG (sez)"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": {
+    "source": "21197_behig-haltekantesegment, sektortafel",
+    "hinweis": "Nur Gleise, zu denen offene Daten vorliegen. Unterirdische und fremdbetriebene Gleise fehlen teilweise. Nicht als Gesamtzahl der Gleise des Bahnhofs verwenden.",
+    "anzahl_mit_daten": 1,
+    "nummern": [
+      "1"
+    ],
+    "perronhoehen_cm": [
+      55
+    ],
+    "items": [
+      {
+        "nr": "1",
+        "perronhoehen_cm": [
+          55
+        ],
+        "hilfstritt": false,
+        "perrontyp": "Hausperron",
+        "perronkante_m": 150,
+        "sektoren": [],
+        "sektoren_anzahl": 0
+      }
+    ]
+  },
+  "hindernisfreiheit": {
+    "source": "21197_behig-haltekantesegment, haltestelle-visuell-taktile-sicherheitslinie, perron",
+    "segmente": 2,
+    "segmente_pro_perronhoehe_cm": {
+      "55": 2
+    },
+    "segmente_mit_hilfstritt": 0,
+    "datenstand_quelle": "2023",
+    "gleise_mit_55cm": 1,
+    "gleise_mit_daten": 1
+  },
+  "zuege": {
+    "source": "zugzahlen",
+    "jahr": 2025,
+    "hinweis": "Zuege pro Jahr auf einem Streckenabschnitt, beide Richtungen zusammen. Nicht die Zahl der Zuege, die am Bahnhof halten.",
+    "staerkster_abschnitt": {
+      "von": "Lattigen bei Spiez",
+      "bis": "Eifeld",
+      "strecke_nr": 312,
+      "strecke": "Spiez Abzweigung - Zweisimmen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 20288,
+      "zuege_pro_tag": 56
+    },
+    "staerkster_personenverkehr": {
+      "von": "Lattigen bei Spiez",
+      "bis": "Eifeld",
+      "strecke_nr": 312,
+      "strecke": "Spiez Abzweigung - Zweisimmen",
+      "art": "Personenverkehr",
+      "richtungen": 2,
+      "zuege_pro_jahr": 20288,
+      "zuege_pro_tag": 56
+    },
+    "abschnitte": [
+      {
+        "von": "Lattigen bei Spiez",
+        "bis": "Eifeld",
+        "strecke_nr": 312,
+        "strecke": "Spiez Abzweigung - Zweisimmen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20288,
+        "zuege_pro_tag": 56
+      },
+      {
+        "von": "Eifeld",
+        "bis": "Wimmis",
+        "strecke_nr": 312,
+        "strecke": "Spiez Abzweigung - Zweisimmen",
+        "art": "Personenverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 20287,
+        "zuege_pro_tag": 56
+      },
+      {
+        "von": "Lattigen bei Spiez",
+        "bis": "Eifeld",
+        "strecke_nr": 312,
+        "strecke": "Spiez Abzweigung - Zweisimmen",
+        "art": "Gueterverkehr",
+        "richtungen": 2,
+        "zuege_pro_jahr": 196,
+        "zuege_pro_tag": 1
+      }
+    ]
+  },
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": false,
+    "billettautomaten_erfasst": 0,
+    "billettentwerter_erfasst": 0,
+    "wartehallen_erfasst": 0
+  },
+  "ausstattung": null,
+  "bahnhofplan": null,
+  "luecken": [
+    {
+      "thema": "Genaue Fahrgastzahl",
+      "grund": "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, sondern nur als «weniger als 50».",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
+      "quelle": "mobiliar-im-bahnhof, perronoberflache"
+    },
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Vollständigkeit der Gleise",
+      "grund": "Erfasst sind 1 Gleise (1). Ob der Bahnhof weitere Gleise hat, etwa unterirdische oder solche anderer Bahnen, sagen die offenen Daten nicht.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Sektoren",
+      "grund": "Zu Gleis 1 sind keine Sektortafeln erfasst.",
+      "quelle": "sektortafel"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Billettautomaten",
+      "grund": "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, dass vor Ort einer steht.",
+      "quelle": "billetautomat"
+    },
+    {
+      "thema": "Stand der BehiG-Daten",
+      "grund": "Die Angaben zu Perronhöhen und Hindernisfreiheit haben den Stand 2023, die übrigen Daten sind neuer.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "verfuegbare_kapitel": [
+    "steckbrief",
+    "stammdaten",
+    "gleise",
+    "hindernisfreiheit",
+    "zuege",
+    "services"
+  ]
+}
