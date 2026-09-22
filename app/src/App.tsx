@@ -133,9 +133,7 @@ export default function App() {
         {!index && !fehler && <p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>}
 
         {seite.art === 'start' && index && <Start index={index} />}
-        {seite.art === 'anleitung' && (
-          <Anleitung index={index} zurueck={() => { window.location.hash = '#/' }} />
-        )}
+        {seite.art === 'anleitung' && <Anleitung index={index} />}
         {seite.art === 'duell' && <Duell />}
         {seite.art === 'standort' && <Standort index={index} />}
         {seite.art === 'linien' && <Linien index={index} />}

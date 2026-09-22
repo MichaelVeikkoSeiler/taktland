@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import { HERAUSGEBER, KONTAKT } from '../kontakt'
 import type { BahnhofIndex } from '../typen'
-import { Zurueck } from './Zurueck'
 
 /**
  * So funktioniert Taktland, und woher die Daten stammen.
@@ -10,12 +9,11 @@ import { Zurueck } from './Zurueck'
  * «Mittlerer Bahnhof» ist TIER_M_DWV in pipeline/build_facts.py; ein Test
  * prüft, dass hier dieselbe Zahl steht.
  */
-export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zurueck: () => void }) {
+/** Kein Weg zurück nötig: «Taktland» im Kopf führt zur Startseite */
+export function Anleitung({ index }: { index: BahnhofIndex | null }) {
   const stand = index ? datum(index.stand) : null
   return (
     <div className="px-4 pb-16">
-      <Zurueck onClick={zurueck} text="Startseite" />
-
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
         Hier steht, wie Taktland zu bedienen ist, woher die Daten stammen und was sie nicht
