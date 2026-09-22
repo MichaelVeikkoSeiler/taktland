@@ -18,17 +18,14 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
 
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
-        Taktland ist ein Lernspiel zu
-        {index ? ` ${index.bahnhoefe_gesamt} ` : ' '}
-        Bahnhöfen: allen, deren Infrastruktur die SBB betreibt, dazu Bahnhöfen anderer Bahnen
-        wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn, sofern die offenen Daten für mindestens
-        drei Kapitel reichen. Alles, was hier über einen Bahnhof steht, stammt aus den offenen
-        Daten der SBB; auf welchen Linien anderer Bahnen er liegt, aus dem Schienennetz des
-        Bundesamts für Verkehr.
+        Hier steht, wie Taktland zu bedienen ist, woher die Daten stammen und was sie nicht
+        hergeben. Was Taktland ist, steht auf der Startseite.
       </p>
       <p className="mt-2 leading-relaxed">
         Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnhöfe, Strecken, Brücken,
-        Tunnel, Duell und Standort.
+        Tunnel, Duell und Standort. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
+        betreibt, dazu Bahnhöfe anderer Bahnen wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn,
+        sofern die offenen Daten für mindestens drei Kapitel reichen.
       </p>
 
       <Abschnitt titel="Einen Bahnhof lernen">

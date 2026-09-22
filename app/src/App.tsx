@@ -170,8 +170,6 @@ export default function App() {
                                                   hover:text-sbb-black dark:hover:text-sbb-white">
               {KONTAKT}
             </a>. Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
-          </p>
-          <p className="mt-2 font-medium text-sbb-black dark:text-sbb-white">
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
             sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist ein Lernspiel
             und nicht für die Reiseplanung gedacht.
