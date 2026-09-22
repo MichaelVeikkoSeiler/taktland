@@ -228,3 +228,16 @@ export interface Vergleichsdaten {
   tunnel?: VergleichsTunnel[]
   tunnel_datenstand?: string | null
 }
+
+/** Die Übersichten «Tunnel» und «Brücken» (pipeline/export_app.py): jeder
+ *  Eintrag wie in den Fakten seiner Linie, dazu die Nummer der Linie. */
+export interface Uebersicht<T> {
+  stand: string
+  quelle: string
+  eintraege: Array<T & { linie: number }>
+  /** Nummer → Name der Linie (null, wenn die Quelle keinen führt) und ob sie
+   *  in Taktland eine eigene Seite hat */
+  linien: Record<string, { name: string | null; seite: boolean }>
+  /** nur bei den Brücken: so viele liegen auf Linien ohne eigene Seite */
+  ohne_seite?: number
+}

@@ -5,7 +5,6 @@ import {
 import { vergleichLaden } from '../daten'
 import type { Kategorie, Vergleichsdaten } from '../typen'
 import { kantonText } from '../kanton'
-import { Zurueck } from './Zurueck'
 
 /**
  * Bahnhöfe gegeneinander. Die Fragen entstehen hier aus den Werten in
@@ -154,7 +153,7 @@ function mitPunkt(text: string) {
   return text.endsWith('.') ? text : `${text}.`
 }
 
-export function Duell({ zurueck }: { zurueck: () => void }) {
+export function Duell() {
   const [daten, setDaten] = useState<Vergleichsdaten | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [auswahl, setAuswahl] = useState<string>(() => auswahlLesen())
@@ -249,9 +248,7 @@ export function Duell({ zurueck }: { zurueck: () => void }) {
 
   return (
     <div className="px-4 pb-16">
-      <Zurueck onClick={zurueck} text="Alle Bahnhöfe" />
-
-      <div className="mt-4 flex items-baseline justify-between border-b border-sbb-cloud
+      <div className="mt-6 flex items-baseline justify-between border-b border-sbb-cloud
                       pb-3 dark:border-sbb-iron">
         <h1 className="text-2xl font-bold tracking-tight">Duell</h1>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">

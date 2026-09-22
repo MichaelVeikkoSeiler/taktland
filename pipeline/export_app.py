@@ -5,6 +5,7 @@
 - profile/    : die fertigen Profile
 - linien.json : die Linien mit Seite, und welcher Bahnhof auf welcher liegt
 - linien/     : die fertigen Linienprofile
+- tunnel.json, bruecken.json : alle erfassten Tunnel und Brücken mit ihrer Linie
 
 Der Index fuehrt auch Bahnhoefe ohne Profil auf. Die App soll zeigen, was es
 noch nicht gibt, statt so zu tun, als gaebe es nur die vier fertigen.
@@ -67,6 +68,7 @@ def main():
           f"({groesse/1024:.0f} KB)")
     print(f"profile/: {len(list((ZIEL / 'profile').glob('*.json')))} Dateien")
     linien()
+    uebersichten()
 
 
 def linien():
@@ -103,6 +105,45 @@ def linien():
         }
     (ZIEL / "linien.json").write_text(json.dumps(verzeichnis, ensure_ascii=False), encoding="utf-8")
     print(f"linien.json: {len(eintraege)} Linien, {len(nach_bahnhof)} Bahnhöfe verknüpft")
+
+
+def uebersicht_daten():
+    """Die Übersichten «Tunnel» und «Brücken»: jeder Eintrag unverändert aus
+    den Fakten seiner Linie, dazu die Nummer der Linie. Die Brücken auf Linien
+    ohne eigene Seite kommen aus data/linien_uebersicht.json, damit sie nicht
+    verloren gehen. generator/tests/test_uebersichten.py prüft beides."""
+    linien, staende = {}, []
+    tunnel, bruecken = [], []
+    for p in sorted(LINIEN.glob("*.json"), key=lambda x: int(x.stem)):
+        f = json.loads(p.read_text(encoding="utf-8"))
+        nr = f["linie"]
+        staende.append(f["datenstand"])
+        linien[str(nr)] = {"name": f["name"], "seite": (LINIENPROFILE / f"{nr}.de.json").exists()}
+        tunnel += [{"linie": nr, **it} for it in (f.get("tunnel") or {}).get("items", [])]
+        bruecken += [{"linie": nr, **it} for it in (f.get("bruecken") or {}).get("items", [])]
+    u = json.loads((ROOT / "data" / "linien_uebersicht.json").read_text(encoding="utf-8"))
+    staende.append(u["datenstand"])
+    for x in u["bruecken_ohne_seite_liste"]:
+        linien[str(x["linie"])] = {"name": x["name"], "seite": False}
+        bruecken += [{"linie": x["linie"], **it} for it in x["items"]]
+    stand = max(staende)
+    mit_bruecken = {str(b["linie"]) for b in bruecken}
+    mit_tunnel = {str(t["linie"]) for t in tunnel}
+    return {
+        "tunnel": {"stand": stand, "quelle": "tunnel", "eintraege": tunnel,
+                   "linien": {k: v for k, v in linien.items() if k in mit_tunnel}},
+        "bruecken": {"stand": stand, "quelle": "brucken", "eintraege": bruecken,
+                     "ohne_seite": u["bruecken_ohne_seite"],
+                     "linien": {k: v for k, v in linien.items() if k in mit_bruecken}},
+    }
+
+
+def uebersichten():
+    for art, d in uebersicht_daten().items():
+        ziel = ZIEL / f"{art}.json"
+        ziel.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
+        print(f"{art}.json: {len(d['eintraege'])} Einträge auf {len(d['linien'])} Linien "
+              f"({ziel.stat().st_size/1024:.0f} KB)")
 
 
 if __name__ == "__main__":

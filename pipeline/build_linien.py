@@ -374,6 +374,14 @@ def main():
     # Was ohne eigene Seite bleibt, wird gezählt und in der App genannt
     ohne = bruecken[~bruecken.linie.isin(geschrieben)]
     ohne_ue = uebergaenge[~uebergaenge.linie.isin(geschrieben)]
+    # Die Brücken darauf stehen in der Übersicht aller Brücken, mit ihrer
+    # Linie. Den Namen der Linie gibt es nur, wenn linie.csv sie führt.
+    bruecken_ohne_seite = [
+        {"linie": int(nr),
+         "name": txt(linie.loc[nr].linienname) if nr in linie.index else None,
+         "items": bruecken_items(gruppe)}
+        for nr, gruppe in ohne.groupby("linie")
+    ]
     uebersicht = {
         "datenstand": stand,
         "hinweis": "Brücken und Bahnübergänge auf Linien ohne eigene Seite: weniger als zwei "
@@ -384,6 +392,7 @@ def main():
         "linien_ohne_seite_mit_bahnuebergaengen": int(ohne_ue.linie.nunique()),
         "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen":
             int(len(set(ohne.linie) | set(ohne_ue.linie))),
+        "bruecken_ohne_seite_liste": bruecken_ohne_seite,
     }
     UEBERSICHT.write_text(json.dumps(uebersicht, ensure_ascii=False, indent=1) + "\n",
                           encoding="utf-8")

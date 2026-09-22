@@ -1,6 +1,4 @@
 import { useEffect, useState, useSyncExternalStore } from 'react'
-import auftaktDunkel from '../assets/auftakt-dunkel.webp'
-import auftaktHell from '../assets/auftakt-hell.webp'
 
 /** So lange bleibt das andere Bild stehen, bevor es zurückblendet */
 const ANZEIGEDAUER_MS = 5000
@@ -20,14 +18,24 @@ function useDunkel() {
   )
 }
 
+/** Ein Auftaktbild, am Tag und wenn vorhanden in der Nacht */
+export interface AuftaktBild {
+  hell: string
+  dunkel?: string
+  breite: number
+  hoehe: number
+  alt: string
+}
+
 /**
- * Auftaktbild von Veikko, am Tag und in der Nacht. Welches erscheint, folgt
+ * Auftaktbild eines Bereichs, am Tag und in der Nacht. Welches erscheint, folgt
  * der Geräteeinstellung. Ein kleiner Knopf zeigt für fünf Sekunden das andere
  * Bild, dann blendet es zurück. Das andere Bild wird erst geladen, wenn jemand
- * den Knopf berührt: Wer ihn nie nutzt, lädt es nicht.
+ * den Knopf berührt: Wer ihn nie nutzt, lädt es nicht. Ohne Nachtbild gibt es
+ * nur das eine Bild und keinen Knopf.
  */
-export function Auftakt() {
-  const dunkel = useDunkel()
+export function Auftakt({ bild }: { bild: AuftaktBild }) {
+  const dunkel = useDunkel() && bild.dunkel !== undefined
   const [angefragt, setAngefragt] = useState(false)
   const [geladen, setGeladen] = useState(false)
   const [zeigen, setZeigen] = useState(false)
@@ -40,23 +48,22 @@ export function Auftakt() {
     return () => window.clearTimeout(uhr)
   }, [sichtbar])
 
-  const anderes = dunkel ? auftaktHell : auftaktDunkel
+  const anderes = dunkel ? bild.hell : bild.dunkel
   const beschriftung = dunkel ? 'Kurz das Tagbild zeigen' : 'Kurz das Nachtbild zeigen'
 
   return (
     <div className="relative -mx-4 -mt-8 mb-6">
       <picture>
-        <source srcSet={auftaktDunkel} media={DUNKEL} />
+        {bild.dunkel && <source srcSet={bild.dunkel} media={DUNKEL} />}
         <img
-          src={auftaktHell} width={1344} height={664}
-          alt="Illustration: Am Perron steigen Menschen aus einem Zug aus, andere warten aufs Einsteigen."
+          src={bild.hell} width={bild.breite} height={bild.hoehe} alt={bild.alt}
           className="block h-auto w-full"
         />
       </picture>
 
-      {angefragt && (
+      {anderes && angefragt && (
         <img
-          src={anderes} width={1344} height={664} alt="" aria-hidden="true"
+          src={anderes} width={bild.breite} height={bild.hoehe} alt="" aria-hidden="true"
           onLoad={() => setGeladen(true)}
           className={`pointer-events-none absolute inset-0 size-full transition-opacity
                       ease-in-out motion-reduce:transition-none ${
@@ -64,7 +71,7 @@ export function Auftakt() {
         />
       )}
 
-      <button
+      {anderes && <button
         type="button"
         onPointerEnter={() => setAngefragt(true)}
         onFocus={() => setAngefragt(true)}
@@ -75,7 +82,7 @@ export function Auftakt() {
                    focus-visible:opacity-100"
       >
         {dunkel ? <Sonne /> : <Mond />}
-      </button>
+      </button>}
     </div>
   )
 }

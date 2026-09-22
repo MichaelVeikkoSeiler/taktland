@@ -16,7 +16,7 @@ const TITEL: Record<ListenArt, { mehrzahl: string; einzahl: string; quelle: stri
 const FELDNAME: Record<string, string> = { kanton: 'Kanton', sicherungsart: 'Sicherungsart' }
 
 /** So, wie die Zahl in den Daten steht, ohne Rundung */
-function genau(n: number) {
+export function genau(n: number) {
   return n.toLocaleString('de-CH', { maximumFractionDigits: 20 })
 }
 

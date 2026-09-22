@@ -23,6 +23,10 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
         Bahnhöfen der SBB. Alles, was hier über einen Bahnhof steht, stammt aus den offenen
         Daten der SBB.
       </p>
+      <p className="mt-2 leading-relaxed">
+        Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnhöfe, Linien, Tunnel,
+        Brücken und Duell.
+      </p>
 
       <Abschnitt titel="Einen Bahnhof lernen">
         <Punkte>
@@ -130,6 +134,24 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Länge, Baujahr und
             Anzahl Gleise einer Linie stehen nicht in den offenen Daten, ebenso wenig Länge und
             Baujahr der Brücken.
+          </li>
+        </Punkte>
+      </Abschnitt>
+
+      <Abschnitt titel="Tunnel und Brücken">
+        <Punkte>
+          <li>
+            Unter «Tunnel» stehen alle erfassten Tunnel, unter «Brücken» alle erfassten
+            Brücken, jeweils mit der Linie, auf der sie erfasst sind. Suchen, sortieren und
+            blättern geht wie bei den Bahnhöfen.
+          </li>
+          <li>
+            Ein Tipp auf einen Eintrag führt zur Seite seiner Linie. Brücken auf Linien ohne
+            eigene Seite stehen trotzdem in der Liste, nur ohne Verweis.
+          </li>
+          <li>
+            Fragen dazu stehen auf den Linienseiten. Die Tunnel treten zudem im Duell
+            gegeneinander an.
           </li>
         </Punkte>
       </Abschnitt>

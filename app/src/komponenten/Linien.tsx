@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { linienLaden } from '../daten'
 import type { LinienEintrag, LinienVerzeichnis } from '../typen'
-import { Zurueck } from './Zurueck'
 
 /** Übersicht der Linien mit eigener Seite, nach Nummer geordnet. */
-export function Linien({ zurueck }: { zurueck: () => void }) {
+export function Linien() {
   const [daten, setDaten] = useState<LinienVerzeichnis | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [begriff, setBegriff] = useState('')
@@ -23,9 +22,7 @@ export function Linien({ zurueck }: { zurueck: () => void }) {
 
   return (
     <div className="px-4 pb-16">
-      <Zurueck onClick={zurueck} text="Alle Bahnhöfe" />
-
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">Linien</h1>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">Linien</h1>
       <p className="mt-2 leading-relaxed">
         Strecken der Infrastruktur mit ihrer Nummer, etwa Linie 600. Das sind keine Zuglinien
         wie eine S-Bahn: Der Fahrplan ist nicht Teil der Daten.
@@ -64,18 +61,23 @@ export function Linien({ zurueck }: { zurueck: () => void }) {
   )
 }
 
-/** Was ohne eigene Seite bleibt, gezählt in pipeline/build_linien.py */
+/** Was ohne eigene Seite bleibt, gezählt in pipeline/build_linien.py. Die
+ *  Brücken darauf stehen in der Übersicht aller Brücken. */
 function NichtAufgefuehrt({ n }: { n: NonNullable<LinienVerzeichnis['nicht_aufgefuehrt']> }) {
   const teile = [
     ...(n.bruecken > 0 ? [`${n.bruecken} ${n.bruecken === 1 ? 'Brücke' : 'Brücken'}`] : []),
     ...(n.bahnuebergaenge > 0
-      ? [`${n.bahnuebergaenge} ${n.bahnuebergaenge === 1 ? 'Bahnübergang' : 'Bahnübergänge'}`] : []),
+      ? [`${n.bahnuebergaenge} ${n.bahnuebergaenge === 1 ? 'Bahnübergang' : 'Bahnübergängen'}`] : []),
   ]
   if (!teile.length) return null
   return (
-    <> Nicht aufgeführt {teile.length > 1 || n.bruecken > 1 || n.bahnuebergaenge > 1 ? 'sind' : 'ist'}{' '}
-      {teile.join(' und ')} auf {n.linien} {n.linien === 1 ? 'weiteren Linie' : 'weiteren Linien'},
-      die weniger als zwei Bahnhöfe in Taktland und keinen Tunnel haben.</>
+    <> Ohne eigene Seite {n.linien === 1 ? 'bleibt 1 weitere Linie' : `bleiben ${n.linien} weitere Linien`}{' '}
+      mit {teile.join(' und ')}: {n.linien === 1 ? 'Sie hat' : 'Sie haben'} weniger als zwei
+      Bahnhöfe in Taktland und keinen Tunnel.
+      {n.bruecken > 0 && <> {n.bruecken === 1 ? 'Die Brücke steht' : 'Die Brücken stehen'} trotzdem
+        unter{' '}
+        <a href="#/bruecken" className="underline underline-offset-2 hover:text-sbb-black
+                                        dark:hover:text-sbb-white">Brücken</a>.</>}</>
   )
 }
 

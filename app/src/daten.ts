@@ -1,5 +1,5 @@
 import type {
-  BahnhofIndex, LinienProfil, LinienVerzeichnis, Profil, Vergleichsdaten,
+  BahnhofIndex, LinienProfil, LinienVerzeichnis, Profil, Uebersicht, Vergleichsdaten,
 } from './typen'
 
 const BASIS = import.meta.env.BASE_URL
@@ -52,4 +52,9 @@ export async function linienProfilLaden(nr: number, sprache = 'de'): Promise<Lin
 
 export async function vergleichLaden(): Promise<Vergleichsdaten> {
   return holen<Vergleichsdaten>('data/vergleich.json')
+}
+
+/** Alle erfassten Tunnel oder Brücken mit ihrer Linie */
+export async function uebersichtLaden<T>(art: 'tunnel' | 'bruecken'): Promise<Uebersicht<T>> {
+  return holen<Uebersicht<T>>(`data/${art}.json`)
 }

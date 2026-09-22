@@ -83,6 +83,7 @@ data/bauplan.json  was pro Bahnhof von Hand entschieden ist
 data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand geändert
 data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_linien.py
 data/linienprofile/ Linienseiten, gebaut mit generator/linien.py, nie von Hand geändert
+data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brücken darauf
 ```
 
 ## Befehle

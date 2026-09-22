@@ -7,7 +7,12 @@ import { KapitelBlock, Quellen, Rahmen } from './Bahnhof'
 import { Luecken } from './Luecken'
 
 /** Eine Linienseite. Aufbau wie beim Bahnhof: Kapitel, Fragen, Lücken, Quellen. */
-export function Linie({ nr, zurueck }: { nr: number; zurueck: () => void }) {
+export function Linie({ nr, zurueck, zurueckText }: {
+  nr: number
+  zurueck: () => void
+  /** «Alle Linien», oder «Alle Tunnel», wenn die Linie von dort geöffnet wurde */
+  zurueckText: string
+}) {
   const [profil, setProfil] = useState<LinienProfil | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [antworten, setAntworten] = useState<Record<string, { richtig: boolean }>>(
@@ -23,7 +28,7 @@ export function Linie({ nr, zurueck }: { nr: number; zurueck: () => void }) {
 
   if (fehler) {
     return (
-      <Rahmen zurueck={zurueck} zurueckText="Alle Linien">
+      <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
         <p className="px-4 text-sbb-black dark:text-sbb-white">
           Diese Linie konnte nicht geladen werden. {fehler}
         </p>
@@ -32,7 +37,7 @@ export function Linie({ nr, zurueck }: { nr: number; zurueck: () => void }) {
   }
   if (!profil || profil.linie !== nr) {
     return (
-      <Rahmen zurueck={zurueck} zurueckText="Alle Linien">
+      <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
         <p className="px-4 text-sbb-metal">Wird geladen …</p>
       </Rahmen>
     )
@@ -50,7 +55,7 @@ export function Linie({ nr, zurueck }: { nr: number; zurueck: () => void }) {
   }
 
   return (
-    <Rahmen zurueck={zurueck} zurueckText="Alle Linien">
+    <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
       <header className="px-4">
         <h1 className="text-2xl font-bold text-sbb-black dark:text-sbb-white">Linie {profil.linie}</h1>
         <p className="mt-1 text-sbb-black dark:text-sbb-white">{profil.name}</p>

@@ -5,5 +5,1303 @@
  "linien_ohne_seite_mit_bruecken": 57,
  "bahnuebergaenge_ohne_seite": 53,
  "linien_ohne_seite_mit_bahnuebergaengen": 29,
- "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen": 70
+ "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen": 70,
+ "bruecken_ohne_seite_liste": [
+  {
+   "linie": 140,
+   "name": "Brig - Visp - Zermatt",
+   "items": [
+    {
+     "name": "PU Lonza",
+     "km": 8.794,
+     "baueinheiten": 2,
+     "kanton": "Valais"
+    },
+    {
+     "name": "SU Lonzastrasse",
+     "km": 8.807,
+     "baueinheiten": 4,
+     "kanton": "Valais"
+    }
+   ]
+  },
+  {
+   "linie": 153,
+   "name": "St-Jean - Geneve-La-Praille",
+   "items": [
+    {
+     "name": "PI Piétons du Triage",
+     "km": 65.048,
+     "baueinheiten": 5,
+     "kanton": "Genève"
+    }
+   ]
+  },
+  {
+   "linie": 158,
+   "name": "Geneve Poste 1 - Geneve FB - Geneve",
+   "items": [
+    {
+     "name": "PI Route des Alpes",
+     "km": 60.119,
+     "baueinheiten": 9,
+     "kanton": "Genève"
+    },
+    {
+     "name": "Tunnel à Bagages I",
+     "km": 60.143,
+     "baueinheiten": 1,
+     "kanton": "Genève"
+    },
+    {
+     "name": "PI Quai IV - Magasin",
+     "km": 60.154,
+     "baueinheiten": 1,
+     "kanton": "Genève"
+    },
+    {
+     "name": "PI voy de Genève km-",
+     "km": 60.172,
+     "baueinheiten": 7,
+     "kanton": "Genève"
+    },
+    {
+     "name": "PI quai 4 - Douane",
+     "km": 60.224,
+     "baueinheiten": 1,
+     "kanton": "Genève"
+    },
+    {
+     "name": "Ge Quai 4+V8",
+     "km": 60.236,
+     "baueinheiten": 9,
+     "kanton": "Genève"
+    }
+   ]
+  },
+  {
+   "linie": 160,
+   "name": "Renens VD Ouest - Lausanne-Triage sect.",
+   "items": [
+    {
+     "name": "Viad d'accès I A",
+     "km": 6.573,
+     "baueinheiten": 3,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "PI du Record Buchet",
+     "km": 10.032,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 165,
+   "name": "Lausanne-Triage Est - Bussigny-Scheu.",
+   "items": [
+    {
+     "name": "Gal Larges Pièces 2",
+     "km": 14.032,
+     "baueinheiten": 4,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "PI Poimboeuf",
+     "km": 14.197,
+     "baueinheiten": 2,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 166,
+   "name": "Renens VD Ouest - Lausanne-Triage Est",
+   "items": [
+    {
+     "name": "SM d'Etrablon",
+     "km": 5.789,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "SM du Vertet",
+     "km": 6.653,
+     "baueinheiten": 2,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "Viad de la Poudrière II",
+     "km": 7.256,
+     "baueinheiten": 3,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 168,
+   "name": "Archy A - Lausanne-Triage Nord",
+   "items": [
+    {
+     "name": "SM Bois d'Ecublens",
+     "km": 5.909,
+     "baueinheiten": 2,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 169,
+   "name": "Lausanne-Triage sect. - Bussigny",
+   "items": [
+    {
+     "name": "Aq du Bief",
+     "km": 10.267,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "SM de la Bosse",
+     "km": 12.194,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "Viad de la Poudrière III",
+     "km": 13.319,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "PI pour service",
+     "km": 14.592,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 170,
+   "name": "Lausanne-Triage (Est - Sud)",
+   "items": [
+    {
+     "name": "PI Piét de la Bosse",
+     "km": 8.423,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "Tunnel à Câbles Est",
+     "km": 8.475,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "Tunnel à Câbles Ouest",
+     "km": 8.657,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 171,
+   "name": "Lausanne-Triage F - Lausanne-Triage Sud",
+   "items": [
+    {
+     "name": "AQ du Flon",
+     "km": 10.974,
+     "baueinheiten": 3,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 175,
+   "name": "Lausanne - (LSSB) - Renens VD Est",
+   "items": [
+    {
+     "name": "Pt sur le Flon",
+     "km": 1.29,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "PI du Martinet",
+     "km": 2.129,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "Viad du Galicien",
+     "km": 2.364,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "Viaduc de Malley",
+     "km": 2.535,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "PI du Closel",
+     "km": 3.385,
+     "baueinheiten": 1,
+     "kanton": "Vaud"
+    },
+    {
+     "name": "Ancien PI Piét du Léman",
+     "km": 3.551,
+     "baueinheiten": 3,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 206,
+   "name": "Renens VD Ouest - Bussigny Est",
+   "items": [
+    {
+     "name": "Pt sur la Sorge",
+     "km": 5.531,
+     "baueinheiten": 7,
+     "kanton": "Vaud"
+    }
+   ]
+  },
+  {
+   "linie": 232,
+   "name": "Moutier - Lengnau Ost",
+   "items": [
+    {
+     "name": "PI de Moutier",
+     "km": 0.323,
+     "baueinheiten": 1,
+     "kanton": "Bern"
+    }
+   ]
+  },
+  {
+   "linie": 265,
+   "name": "Biel Mett Abzweigung - Biel/Bienne Ost",
+   "items": [
+    {
+     "name": "SU Büttenbergstrasse",
+     "km": 95.961,
+     "baueinheiten": 1,
+     "kanton": "Bern"
+    },
+    {
+     "name": "PI Staatstrasse",
+     "km": 96.092,
+     "baueinheiten": 1,
+     "kanton": "Bern"
+    },
+    {
+     "name": "PI Muehlestrasse R",
+     "km": 96.314,
+     "baueinheiten": 2,
+     "kanton": "Bern"
+    },
+    {
+     "name": "SM s/voies du Triage",
+     "km": 97.212,
+     "baueinheiten": 1,
+     "kanton": "Bern"
+    },
+    {
+     "name": "PI Mettstrasse",
+     "km": 97.546,
+     "baueinheiten": 2,
+     "kanton": "Bern"
+    }
+   ]
+  },
+  {
+   "linie": 418,
+   "name": "Anschlussgleis Herzogenbuchsee Nord",
+   "items": [
+    {
+     "name": "U Bahnfeldstrasse",
+     "km": 66.186,
+     "baueinheiten": 1,
+     "kanton": "Bern"
+    }
+   ]
+  },
+  {
+   "linie": 452,
+   "name": "Rothrist - Zofingen (Kriegsschlaufe)",
+   "items": [
+    {
+     "name": "Tychbach-Brücke",
+     "km": 0.373,
+     "baueinheiten": 1,
+     "kanton": "Aargau"
+    }
+   ]
+  },
+  {
+   "linie": 457,
+   "name": "Hardfeld (Spw) - Mattstetten",
+   "items": [
+    {
+     "name": "Überwerfung Aespli",
+     "km": 92.782,
+     "baueinheiten": 1,
+     "kanton": "Bern"
+    }
+   ]
+  },
+  {
+   "linie": 511,
+   "name": "Basel SBB - Basel GB - Basel RB",
+   "items": [
+    {
+     "name": "LDu ZSW Basel Wolf",
+     "km": 0.895,
+     "baueinheiten": 2,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "U St. Jakobsstrasse",
+     "km": 2.206,
+     "baueinheiten": 2,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "U Gellertstrasse",
+     "km": 2.404,
+     "baueinheiten": 2,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "Birsbrücke 1",
+     "km": 2.73,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "Birsbrücke 2",
+     "km": 2.735,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "Überwerfung Schänzli",
+     "km": 3.032,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "Juraüberwerfung",
+     "km": 4.699,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "U Bremskanal",
+     "km": 5.76,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "U R/T Gruppe",
+     "km": 5.893,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "U Maschinenhaus",
+     "km": 6.299,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "PU Visiteur Pratteln",
+     "km": 6.941,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "Überwerfung 04",
+     "km": 7.211,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "U Hardstrasse",
+     "km": 7.252,
+     "baueinheiten": 3,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "U Hardstrasse RB",
+     "km": 7.265,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    }
+   ]
+  },
+  {
+   "linie": 520,
+   "name": "Gellert - Basel Bad DB",
+   "items": [
+    {
+     "name": "Überwerfung Gellert",
+     "km": 2.061,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "U St.Alban Teich",
+     "km": 2.513,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "U Zürcherstrasse Ost",
+     "km": 2.951,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "2. Rheinbrücke Basel",
+     "km": 3.258,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "Rheinbrücke Basel",
+     "km": 3.271,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "PU Solitude",
+     "km": 3.42,
+     "baueinheiten": 2,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "U Grenzacherstrasse",
+     "km": 3.526,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    }
+   ]
+  },
+  {
+   "linie": 521,
+   "name": "Umfahrung Sud: Basel SBB RB I - Muttenz",
+   "items": [
+    {
+     "name": "Donnerbaumbrücke",
+     "km": 2.95,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "PU Zollrampe",
+     "km": 4.786,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    }
+   ]
+  },
+  {
+   "linie": 522,
+   "name": "Umfahrung Nord: Gellert - Pratteln",
+   "items": [
+    {
+     "name": "U Zürcherstrasse West",
+     "km": 0.873,
+     "baueinheiten": 2,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "U Gellertstrasse Nord",
+     "km": 2.378,
+     "baueinheiten": 1,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "Birsbrücke 3",
+     "km": 2.671,
+     "baueinheiten": 2,
+     "kanton": "Basel-Stadt"
+    },
+    {
+     "name": "U Rothausstrasse",
+     "km": 6.109,
+     "baueinheiten": 2,
+     "kanton": "Basel-Landschaft"
+    },
+    {
+     "name": "Ueberwerfung O2",
+     "km": 7.415,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    }
+   ]
+  },
+  {
+   "linie": 529,
+   "name": "Basel SBB RB II - Birsfelden Ost (Abzw)",
+   "items": [
+    {
+     "name": "SU zur Linse",
+     "km": 8.122,
+     "baueinheiten": 1,
+     "kanton": "Basel-Landschaft"
+    }
+   ]
+  },
+  {
+   "linie": 531,
+   "name": "Olten Verbindungslinie",
+   "items": [
+    {
+     "name": "U Sunlightstrasse",
+     "km": 37.548,
+     "baueinheiten": 1,
+     "kanton": "Solothurn"
+    },
+    {
+     "name": "U Tannwaldstrasse VL",
+     "km": 37.914,
+     "baueinheiten": 1,
+     "kanton": "Solothurn"
+    }
+   ]
+  },
+  {
+   "linie": 591,
+   "name": "Verbindungslinie CBT Est Camorino Nord",
+   "items": [
+    {
+     "name": "Sot. Ciossa Bulzen",
+     "km": 226.602,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    }
+   ]
+  },
+  {
+   "linie": 592,
+   "name": "Verbindungslinie CBT Ovest Camorino Sud",
+   "items": [
+    {
+     "name": "Vi GbC Camorino Ovest",
+     "km": 227.002,
+     "baueinheiten": 10,
+     "kanton": "Ticino"
+    }
+   ]
+  },
+  {
+   "linie": 593,
+   "name": "Verbindungslinie CBT Est Camorino",
+   "items": [
+    {
+     "name": "Vi GbC Camorino Est",
+     "km": 227.022,
+     "baueinheiten": 5,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Canale alla Bolla",
+     "km": 227.211,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Cunicolo tecnico ETF",
+     "km": 227.297,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    }
+   ]
+  },
+  {
+   "linie": 601,
+   "name": "Rynacht - Erstfeld Nord Gleis links",
+   "items": [
+    {
+     "name": "U Rynächt",
+     "km": 39.336,
+     "baueinheiten": 1,
+     "kanton": "Uri"
+    },
+    {
+     "name": "U Werkstrasse Ost",
+     "km": 39.462,
+     "baueinheiten": 1,
+     "kanton": "Uri"
+    },
+    {
+     "name": "Cunicolo tecnico BTG Erstfeld",
+     "km": 39.632,
+     "baueinheiten": 1,
+     "kanton": "Uri"
+    },
+    {
+     "name": "Du Lehnacher 1",
+     "km": 40.375,
+     "baueinheiten": 1,
+     "kanton": "Uri"
+    },
+    {
+     "name": "Du Lehnacher 2",
+     "km": 40.444,
+     "baueinheiten": 1,
+     "kanton": "Uri"
+    }
+   ]
+  },
+  {
+   "linie": 629,
+   "name": "Chiasso SM - Gruppo S - Chiasso",
+   "items": [
+    {
+     "name": "Sot. str. RZS",
+     "km": 204.665,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    }
+   ]
+  },
+  {
+   "linie": 633,
+   "name": "Taverne-Torricella - Lugano Vedeggio",
+   "items": [
+    {
+     "name": "Str. N, rus. sot.A2+Vedeggio",
+     "km": 174.817,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. riale Bedano",
+     "km": 175.454,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. str. di Bedano",
+     "km": 175.564,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. rus. canale Coperto",
+     "km": 175.712,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Ponte riale Vallone",
+     "km": 176.448,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. Violino",
+     "km": 176.679,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    }
+   ]
+  },
+  {
+   "linie": 634,
+   "name": "Mendrisio Sud - Stabio",
+   "items": [
+    {
+     "name": "Ponte sull Laveggio",
+     "km": 1.699,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sottopasso Ligornetto",
+     "km": 2.055,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sottopasso Puntasei",
+     "km": 3.094,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sottopasso Prella",
+     "km": 3.398,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sottopassaggio stazione",
+     "km": 3.489,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sott. Santa Margherita",
+     "km": 4.918,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sottopasso Gerrette",
+     "km": 5.707,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Ponte sul gaggiolo",
+     "km": 6.486,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    }
+   ]
+  },
+  {
+   "linie": 637,
+   "name": "Chiasso Smistamento - Chiasso",
+   "items": [
+    {
+     "name": "Sot. str. via Alla Rampa",
+     "km": 206.123,
+     "baueinheiten": 4,
+     "kanton": "Ticino"
+    }
+   ]
+  },
+  {
+   "linie": 639,
+   "name": "Monte Olimpino II - Chiasso Smistamento",
+   "items": [
+    {
+     "name": "Sot. via Luigi Favre",
+     "km": 50.849,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. str. al Penz",
+     "km": 50.869,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. Casparina val Fre",
+     "km": 51.13,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. via al Crotti",
+     "km": 51.229,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. rus. Mara",
+     "km": 51.507,
+     "baueinheiten": 2,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. rus. + pers. Guasto",
+     "km": 51.681,
+     "baueinheiten": 3,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. str. Molino del Bosco",
+     "km": 51.834,
+     "baueinheiten": 2,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. rus. Ca del Buchett",
+     "km": 51.931,
+     "baueinheiten": 3,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. rus. Faloppia",
+     "km": 51.965,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. str. Servizio U-Gruppe",
+     "km": 52.084,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. rus. Raggio-U-gruppo",
+     "km": 52.377,
+     "baueinheiten": 3,
+     "kanton": "Ticino"
+    },
+    {
+     "name": "Sot. rus. Faloppia",
+     "km": 52.749,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    }
+   ]
+  },
+  {
+   "linie": 646,
+   "name": "Brunegg - Magenwil West (Abzw)",
+   "items": [
+    {
+     "name": "PU Büntli",
+     "km": 0.804,
+     "baueinheiten": 1,
+     "kanton": "Aargau"
+    },
+    {
+     "name": "PU Lindfeld II",
+     "km": 1.132,
+     "baueinheiten": 1,
+     "kanton": "Aargau"
+    }
+   ]
+  },
+  {
+   "linie": 648,
+   "name": "Brugg Sud - Brugg Nord (VL)",
+   "items": [
+    {
+     "name": "Vi Verbindungslinie",
+     "km": 31.85,
+     "baueinheiten": 5,
+     "kanton": "Aargau"
+    },
+    {
+     "name": "U Nigglistrasse",
+     "km": 32.157,
+     "baueinheiten": 2,
+     "kanton": "Aargau"
+    }
+   ]
+  },
+  {
+   "linie": 664,
+   "name": "Zug Nord - Zug Sud",
+   "items": [
+    {
+     "name": "PU Zug Nord",
+     "km": 29.151,
+     "baueinheiten": 3,
+     "kanton": "Zug"
+    }
+   ]
+  },
+  {
+   "linie": 666,
+   "name": "Goldau Nord - Goldau Ost",
+   "items": [
+    {
+     "name": "PU Arth-Goldau Nord",
+     "km": 8.911,
+     "baueinheiten": 5,
+     "kanton": "Schwyz"
+    },
+    {
+     "name": "LDu Arth-Goldau",
+     "km": 9.03,
+     "baueinheiten": 1,
+     "kanton": "Schwyz"
+    }
+   ]
+  },
+  {
+   "linie": 671,
+   "name": "Rapperswil - Pfaffikon Ost (SOB)",
+   "items": [
+    {
+     "name": "BDu Stadtbach",
+     "km": 0.021,
+     "baueinheiten": 1,
+     "kanton": "St. Gallen"
+    }
+   ]
+  },
+  {
+   "linie": 691,
+   "name": "RBL Kopf Zurich - Killwangen West",
+   "items": [
+    {
+     "name": "Reppischbrücke Süd",
+     "km": 11.888,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "U Kabelkanal",
+     "km": 12.7,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "Bremskanal Ost",
+     "km": 12.826,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "Bremskanal West",
+     "km": 13.659,
+     "baueinheiten": 1,
+     "kanton": "Aargau"
+    },
+    {
+     "name": "Überw. Killwangen",
+     "km": 15.541,
+     "baueinheiten": 1,
+     "kanton": "Aargau"
+    }
+   ]
+  },
+  {
+   "linie": 693,
+   "name": "RBL Mitte",
+   "items": [
+    {
+     "name": "Überw. RB Limmattal",
+     "km": 14.036,
+     "baueinheiten": 2,
+     "kanton": "Aargau"
+    }
+   ]
+  },
+  {
+   "linie": 698,
+   "name": "Killwangen West -411- Heitersbergl. Ost",
+   "items": [
+    {
+     "name": "Heitersberg-Viadukt",
+     "km": 16.876,
+     "baueinheiten": 1,
+     "kanton": "Aargau"
+    }
+   ]
+  },
+  {
+   "linie": 706,
+   "name": "Zurich Seebach - Glattbrugg Sud",
+   "items": [
+    {
+     "name": "Überw. Grubenacker 2",
+     "km": 5.852,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 709,
+   "name": "Zue Vorbahnhof Nord - Zurich Altstetten",
+   "items": [
+    {
+     "name": "U Langstrasse",
+     "km": 0.913,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "Überw. Mitte, Brücke",
+     "km": 2.377,
+     "baueinheiten": 2,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 715,
+   "name": "Zurich Altstetten Ost - Zurich Hard",
+   "items": [
+    {
+     "name": "Vi Hardturm Teil A - C",
+     "km": 0.849,
+     "baueinheiten": 3,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 718,
+   "name": "ZH Aussersihl - ZH Altstetten Sud",
+   "items": [
+    {
+     "name": "PDu Kohlendreieck",
+     "km": 1.442,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 727,
+   "name": "Zurich HB - Zurich Selnau",
+   "items": [
+    {
+     "name": "Sihlbrücke Gleis 7",
+     "km": 90.359,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "Sihlbrücke Gleis 6",
+     "km": 90.362,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "Sihlbrücke Gleis 5",
+     "km": 90.365,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "Sihlbrücke Gleis 4",
+     "km": 90.367,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "Sihlbrücke Gleis 3",
+     "km": 90.37,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 746,
+   "name": "Neugut Ost (Abzw) - Chriesbach (Abzw)",
+   "items": [
+    {
+     "name": "Vi Neugut, Rampe r.",
+     "km": 108.255,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 747,
+   "name": "Neugut West (Abzw) - Chriesbach (Abzw)",
+   "items": [
+    {
+     "name": "Vi Neugut, Rampe l.",
+     "km": 108.054,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 755,
+   "name": "ZH Langstrasse - ZH Viadukt",
+   "items": [
+    {
+     "name": "Vorbahnhof-Brücke",
+     "km": 0.926,
+     "baueinheiten": 2,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 756,
+   "name": "Ueberwerfung Hurlistein",
+   "items": [
+    {
+     "name": "Überwerfung Hürlistein",
+     "km": 14.564,
+     "baueinheiten": 2,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 757,
+   "name": "Kloten - Dorfnest (Uberwerfung)",
+   "items": [
+    {
+     "name": "Überwerfung Dorfnest",
+     "km": 12.689,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 764,
+   "name": "Schaffhausen - Singen - Konstanz",
+   "items": [
+    {
+     "name": "Du Krebsbach-Stollen",
+     "km": 365.003,
+     "baueinheiten": 1,
+     "kanton": "Schaffhausen"
+    }
+   ]
+  },
+  {
+   "linie": 768,
+   "name": "Niederglatt - Tanklager Oberhasli West",
+   "items": [
+    {
+     "name": "Bahn-U Li 307",
+     "km": 22.554,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "WU Höhrain",
+     "km": 22.766,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "U Birchstrasse",
+     "km": 23.599,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "U Rümlangerstrasse",
+     "km": 23.965,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "SU Feldmoos",
+     "km": 24.819,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "WU Gräfliholz",
+     "km": 26.714,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 842,
+   "name": "Oberwinterthur - SA Punten",
+   "items": [
+    {
+     "name": "WU Schooren",
+     "km": 31.063,
+     "baueinheiten": 2,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 848,
+   "name": "Romanshorn West - Romanshorn Sud (VL)",
+   "items": [
+    {
+     "name": "Salmsacher-Aachbrücke",
+     "km": 81.664,
+     "baueinheiten": 4,
+     "kanton": "Thurgau"
+    }
+   ]
+  },
+  {
+   "linie": 881,
+   "name": "Sargans Schl. West - Schleife - Trubbach",
+   "items": [
+    {
+     "name": "Du Saarkanal",
+     "km": 1.243,
+     "baueinheiten": 1,
+     "kanton": "St. Gallen"
+    },
+    {
+     "name": "Du Silbergiessen",
+     "km": 1.442,
+     "baueinheiten": 2,
+     "kanton": "St. Gallen"
+    },
+    {
+     "name": "Du Krummgiessen",
+     "km": 1.626,
+     "baueinheiten": 2,
+     "kanton": "St. Gallen"
+    },
+    {
+     "name": "SU Bannau",
+     "km": 2.757,
+     "baueinheiten": 2,
+     "kanton": "St. Gallen"
+    },
+    {
+     "name": "Br beim Kieswerk",
+     "km": 4.288,
+     "baueinheiten": 1,
+     "kanton": "St. Gallen"
+    },
+    {
+     "name": "Br über Saarkanal",
+     "km": 4.551,
+     "baueinheiten": 1,
+     "kanton": "St. Gallen"
+    },
+    {
+     "name": "Trübbach-Br.",
+     "km": 5.077,
+     "baueinheiten": 2,
+     "kanton": "St. Gallen"
+    }
+   ]
+  },
+  {
+   "linie": 7705,
+   "name": "Tanklager O'fingen - O'fingen(abgebr.)",
+   "items": [
+    {
+     "name": "SU beim Tanklager",
+     "km": 32.161,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    },
+    {
+     "name": "U Furttalstrasse",
+     "km": 32.797,
+     "baueinheiten": 1,
+     "kanton": "Zürich"
+    }
+   ]
+  },
+  {
+   "linie": 9599,
+   "name": null,
+   "items": [
+    {
+     "name": "Sot P Galletto",
+     "km": 146.992,
+     "baueinheiten": 1,
+     "kanton": "Ticino"
+    }
+   ]
+  }
+ ]
 }

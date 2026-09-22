@@ -84,7 +84,10 @@ Im Katalog von data.sbb.ch (60 Datensätze, geprüft 2026-09-21) steht zu Streck
   Kanton ist nicht verlässlich («St.AuslandGallen») und wird nicht verwendet.
 - `brucken` – 4057 Brücken mit Name, Linie, Kilometer, Kanton und Zahl der Baueinheiten,
   ohne Länge und Baujahr. 3898 davon liegen auf den 111 Linien mit Seite, 159 auf 57
-  kleinen Linien ohne Bahnhof und ohne Tunnel. Die Namen tragen unerklärte Abkürzungen
+  Linien ohne eigene Seite (weniger als zwei Bahnhöfe in Taktland, kein Tunnel). Diese
+  159 schreibt `pipeline/build_linien.py` nach `data/linien_uebersicht.json`; in der App
+  stehen sie in der Übersicht «Brücken», mit Linie, aber ohne Verweis. Linie 9599 fehlt
+  in `linie`, ihr Name ist darum nicht erfasst. Die Namen tragen unerklärte Abkürzungen
   (PI, PU, WU, Du, SU …). Die Beschreibung nennt als letzte Aktualisierung auf Deutsch
   «Januar 24», auf Englisch «Jan 2026».
 - `bahnubergang` – 1064 Bahnübergänge, 1011 davon auf Linien mit Seite. Verwendet sind
