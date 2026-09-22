@@ -296,7 +296,11 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
       <Abschnitt titel="Woher die Daten stammen">
         <Punkte>
           <li>
-            Die Angaben stammen aus offenen Daten der SBB auf{' '}
+            Alles, was du in Taktland liest, stammt aus offenen Daten. Taktland erfindet nichts
+            dazu, und wo etwas fehlt, steht es als Lücke da.
+          </li>
+          <li>
+            Die Angaben zu den Bahnhöfen stammen aus offenen Daten der SBB auf{' '}
             <Verweis href="https://data.sbb.ch">data.sbb.ch</Verweis>. Der Datensatz zu den
             Wartehallen steht unter den Nutzungsbedingungen von{' '}
             <Verweis href="https://opentransportdata.swiss">opentransportdata.swiss</Verweis>.
@@ -309,10 +313,9 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             Stand vom 6. Juli 2021.
           </li>
           <li>
-            Taktland gibt die Werte so weiter, wie sie in den Daten stehen, zum Teil gezählt
-            oder umgerechnet, etwa Züge pro Jahr in Züge pro Tag. Dazu schreibt es nichts:
-            keine Vermutungen, keine Vergleiche mit anderen Bahnhöfen. Was fehlt, steht als
-            Lücke da.
+            Die Werte stehen so da, wie sie in den Daten stehen, zum Teil gezählt oder
+            umgerechnet, etwa Züge pro Jahr in Züge pro Tag. Dazu schreibt Taktland nichts:
+            keine Vermutungen, keine Vergleiche mit anderen Bahnhöfen.
           </li>
           <li>
             Vor jeder Veröffentlichung gleicht ein Prüfprogramm Texte und Fragen mit den Daten
@@ -381,6 +384,11 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
             gleicht ein Prüfprogramm sie mit den Daten ab.
           </li>
           <li>Die Auftaktbilder sind mit ChatGPT entstanden.</li>
+          <li>
+            Taktland ist kostenlos und ohne Werbung. Wer mag, kann freiwillig an die Kosten für
+            die KI beitragen; schreib dafür kurz an{' '}
+            <Verweis href={`mailto:${KONTAKT}`}>{KONTAKT}</Verweis>.
+          </li>
         </Punkte>
       </Abschnitt>
     </div>

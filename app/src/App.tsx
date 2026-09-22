@@ -166,8 +166,8 @@ export default function App() {
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz.
             Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
             Hinweise und Fehler gern an{' '}
-            <a href={`mailto:${KONTAKT}`} className="underline underline-offset-2
-                                                  hover:text-sbb-black dark:hover:text-sbb-white">
+            <a href={`mailto:${KONTAKT}`}
+               className="hover:text-sbb-black dark:hover:text-sbb-white">
               {KONTAKT}
             </a>. Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet

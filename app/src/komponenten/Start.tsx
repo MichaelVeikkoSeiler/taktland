@@ -21,9 +21,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
         Taktland ist ein Lernspiel rund um die Schweizer Bahn. Es stellt{' '}
         {zahl(index.bahnhoefe_gesamt)} Bahnhöfe vor
         {z ? `, dazu ${zahl(z.linien)} Strecken mit ${zahl(z.tunnel)} Tunneln und `
-          + `${zahl(z.bruecken)} Brücken, und fragt dich dazu ab.` : ' und fragt dich dazu ab.'}{' '}
-        Alles, was du hier liest, stammt aus offenen Daten der SBB und des Bundesamts für
-        Verkehr. Taktland erfindet nichts dazu, und wo etwas fehlt, steht es als Lücke da.
+          + `${zahl(z.bruecken)} Brücken, und fragt dich dazu ab.` : ' und fragt dich dazu ab.'}
       </p>
       <p className={absatz}>
         Zu jedem Bahnhof gibt es Kapitel mit Fakten und Fragen, etwa zu den Perrons, den Zügen

@@ -121,21 +121,20 @@ export function Kopf({ aktiv, startseite, anleitung = false }: {
 
 /**
  * Der Weg zur Anleitung «So funktioniert’s»: ein «i» im Kreis statt eines
- * Textlinks (Michael, 2026-09-22). Auf der Anleitung selbst gefüllt.
+ * Textlinks (Michael, 2026-09-22). Geöffnet ist die Fläche SBB-Blau, sonst
+ * hellgrau; das «i» ist immer weiss.
  */
 function InfoKnopf({ hier, className, groesse }: { hier: boolean; className: string; groesse: string }) {
   return (
     <a href="#/anleitung" aria-label="So funktioniert’s" title="So funktioniert’s"
        aria-current={hier ? 'page' : undefined}
-       className={`${className} shrink-0 items-center justify-center transition-colors ${hier
-         ? 'text-sbb-black dark:text-sbb-white'
-         : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
+       className={`${className} group shrink-0 items-center justify-center`}>
       <svg viewBox="0 0 24 24" className={groesse} aria-hidden="true">
-        <circle cx="12" cy="12" r="10.4" stroke="currentColor" strokeWidth="1.8"
-                fill={hier ? 'currentColor' : 'none'} />
-        <g className={hier ? 'fill-white dark:fill-sbb-midnight' : 'fill-current'}>
-          <circle cx="12" cy="7.4" r="1.4" />
-          <rect x="10.9" y="10.2" width="2.2" height="7.6" rx="1.1" />
+        <circle cx="12" cy="12" r="11" className={`transition-colors ${hier
+          ? 'fill-sbb-blue' : 'fill-sbb-smoke group-hover:fill-sbb-metal'}`} />
+        <g className="fill-white">
+          <circle cx="12" cy="7.2" r="1.45" />
+          <rect x="10.85" y="10" width="2.3" height="7.8" rx="1.15" />
         </g>
       </svg>
     </a>
