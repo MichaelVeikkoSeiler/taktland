@@ -149,6 +149,25 @@ export function Anleitung({ index, zurueck }: { index: BahnhofIndex | null; zuru
         </Punkte>
       </Abschnitt>
 
+      <Abschnitt titel="Strecke">
+        <Punkte>
+          <li>
+            Unter «Strecke» (bei den Linien, Tunneln und Brücken) Start und Ziel wählen.
+            Taktland sucht einen Weg durch das Netz und zeigt die erfassten Tunnel und Brücken
+            entlang dieses Wegs, in Wegrichtung.
+          </li>
+          <li>
+            Das Netz sind die Abschnitte, auf denen laut den Zugzahlen der SBB Personenzüge
+            fahren. Einen Fahrplan enthalten die Daten nicht: Der Weg ist berechnet, und ob ein
+            Zug ihn fährt, sagen die Daten nicht. Mit «Über» lässt sich ein Bahnhof festlegen.
+          </li>
+          <li>
+            Tunnel und Brücken sind nur für die SBB erfasst. Führt der Weg über Strecken
+            anderer Bahnen, etwa den Lötschberg der BLS, fehlen sie dort. Die Seite sagt das.
+          </li>
+        </Punkte>
+      </Abschnitt>
+
       <Abschnitt titel="Tunnel und Brücken">
         <Punkte>
           <li>

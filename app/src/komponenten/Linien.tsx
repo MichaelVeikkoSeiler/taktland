@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { linienLaden } from '../daten'
 import type { LinienEintrag, LinienVerzeichnis } from '../typen'
+import { StreckeKarte } from './StreckeKarte'
 
 /** Übersicht der Linien mit eigener Seite, nach Nummer geordnet. */
 export function Linien() {
@@ -32,6 +33,7 @@ export function Linien() {
         erfassten Tunnel.
         {daten?.nicht_aufgefuehrt && <NichtAufgefuehrt n={daten.nicht_aufgefuehrt} />}
       </p>
+      <StreckeKarte />
 
       {fehler && <p className="mt-6">Die Linien konnten nicht geladen werden. {fehler}</p>}
       {!daten && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}

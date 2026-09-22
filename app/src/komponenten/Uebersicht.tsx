@@ -3,6 +3,7 @@ import { uebersichtLaden } from '../daten'
 import type { BrueckenEintrag, TunnelEintrag, Uebersicht as Daten } from '../typen'
 import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
 import { genau } from './Objekte'
+import { StreckeKarte } from './StreckeKarte'
 
 export type UebersichtArt = 'tunnel' | 'bruecken'
 
@@ -148,6 +149,7 @@ export function Uebersicht({ art, stand, aendern }: {
           Seite in Taktland: Sie haben weniger als zwei Bahnhöfe in Taktland und keinen
           Tunnel. Diese Brücken stehen trotzdem hier, nur ohne Verweis.</> : null}
       </p>
+      <StreckeKarte />
 
       {fehler && <p className="mt-6">Die Liste konnte nicht geladen werden. {fehler}</p>}
       {!daten && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}

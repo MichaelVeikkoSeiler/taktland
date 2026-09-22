@@ -85,6 +85,8 @@ data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand ge�
 data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_linien.py
 data/linienprofile/ Linienseiten, gebaut mit generator/linien.py, nie von Hand geändert
 data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brücken darauf
+data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzügen, je
+             Abschnitt die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py)
 ```
 
 ## Befehle
@@ -103,6 +105,9 @@ python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne 
 .venv/bin/python generator/linien.py 600 --zeigen    # Linienseite bauen und lesen
 .venv/bin/python generator/linien.py --alle          # alle Linienseiten bauen
 .venv/bin/python generator/linien.py --validieren    # Linienseiten prüfen
+.venv/bin/python pipeline/build_strecken.py      # Netz für die Seite «Strecke»
+python3 generator/strecken.py --validieren       # Tunnel und Brücken je Abschnitt prüfen
+python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

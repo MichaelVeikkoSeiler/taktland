@@ -121,3 +121,30 @@ Tunnel). Die Linienseiten führen das als Lücke.
 **Grauzone:** In `zugzahlen` ergibt Trassenkilometer geteilt durch Anzahl Züge bei 98 %
 der Abschnitte immer denselben Wert, sehr wahrscheinlich die Länge des Abschnitts. Die
 SBB beschreibt das nicht; verwendet wird es erst, wenn sie es bestätigt.
+
+## Strecke zwischen zwei Bahnhöfen
+
+Die Seite «Strecke» zählt Tunnel und Brücken entlang eines Wegs
+(`pipeline/build_strecken.py`, geprüft mit `generator/strecken.py --validieren`).
+
+- **Netz:** die Abschnitte der `zugzahlen` mit Personenzügen im neuesten Jahr (1558
+  Abschnitte, 1413 Betriebspunkte). `linie-mit-betriebspunkten` allein taugt nicht: Es
+  führt auch Projekte («Projekt Juradurchstich» 9501, Brüttenertunnel, Zimmerberg-
+  Basistunnel 2, Durchgangsbahnhof Luzern) und nur 1067 der Betriebspunkte des Netzes.
+- **Zuordnung:** Jeder Betriebspunkt wird auf `linienkilometrierung` projiziert (Punkte
+  meist alle 100 m). Nennt `linie-mit-betriebspunkten` den Kilometer des Punkts, gilt
+  dieser. Liegt auf einer Linie ein weiterer Betriebspunkt zwischen den Enden, führt der
+  Abschnitt nicht über sie (Aespli – Löchligut: Neubaustrecke 400 durch den Grauholz-
+  tunnel, nicht Linie 450 über Zollikofen). 11 Abschnitte liegen auf zwei Linien
+  nacheinander (Olten – Rothrist). 1296 von 1297 SBB-Abschnitten sind zugeordnet.
+- **Gegenprobe:** Lausanne – Brig, Luzern – Olten und Aarau – Lenzburg liegen ganz auf
+  einer Linie; der Weg ergibt dieselben Tunnel und Brücken wie die Linie zwischen den
+  beiden Bahnhöfen.
+- **Tunnel:** Der Kilometer liegt an einem Portal, welchem, sagt die Quelle nicht. Passt
+  die Länge nur in eine Richtung auf die Linie (Gotthard-Basistunnel), gilt der Bereich,
+  sonst der Punkt. Die zwei Röhren des Gotthard-Basistunnels sind zwei Linien (594, 595),
+  der Tunnel ist nur auf 594 erfasst.
+- **Grenzen:** kein Fahrplan, der Weg ist berechnet (kürzeste Luftlinie, Abschnitte mit
+  wenig Personenzügen teurer). 261 Abschnitte gehören anderen Bahnen (BLS, SOB, TPF …),
+  dort gibt es keine Tunnel- und Brückendaten (Lötschberg). Fünf Bahnhöfe liegen nicht im
+  Netz: Bure-Casernes, Grandgourt, Jestetten, Lottstetten, Mols.

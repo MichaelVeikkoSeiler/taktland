@@ -59,6 +59,12 @@ jobs:
       - name: Vergleichsdaten gegen die Fakten prüfen
         run: python3 generator/validate_vergleich.py
 
+      # Die Seite «Strecke» zählt in der App, was je Abschnitt vorbereitet ist:
+      # geprüft wird, dass jede Liste genau die Tunnel und Brücken der Linie
+      # zwischen den Kilometern des Abschnitts enthält
+      - name: Streckennetz gegen die Linienfakten prüfen
+        run: python3 generator/strecken.py --validieren
+
       # Stellt sicher, dass die App die aktuellen Profile ausliefert, auch wenn
       # jemand vergessen hat, export_app.py vor dem Einchecken laufen zu lassen
       - name: Daten für die App bereitstellen

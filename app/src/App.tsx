@@ -10,6 +10,7 @@ import { Linien } from './komponenten/Linien'
 import { Objekte } from './komponenten/Objekte'
 import { type Filter, filterAusAdresse } from './listen'
 import type { ListenArt } from './typen'
+import { Strecke, type StreckenWahl, wahlAusAdresse } from './komponenten/Strecke'
 import { Suche, type ListenStand } from './komponenten/Suche'
 import {
   ersteSortierung, Uebersicht, type UebersichtArt, type UebersichtStand,
@@ -23,6 +24,7 @@ import type { BahnhofIndex } from './typen'
 type Seite =
   | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'uebersicht'; liste: UebersichtArt }
+  | { art: 'strecke'; wahl: StreckenWahl }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
   | { art: 'objekte'; nr: number; liste: ListenArt; filter: Filter | null }
 
@@ -41,6 +43,8 @@ function seiteAusAdresse(): Seite {
   if (h === '#/duell') return { art: 'duell' }
   if (h === '#/anleitung') return { art: 'anleitung' }
   if (h === '#/linien') return { art: 'linien' }
+  const strecke = /^#\/strecke(?:\?(.*))?$/.exec(h)
+  if (strecke) return { art: 'strecke', wahl: wahlAusAdresse(strecke[1]) }
   if (h === '#/tunnel') return { art: 'uebersicht', liste: 'tunnel' }
   if (h === '#/bruecken') return { art: 'uebersicht', liste: 'bruecken' }
   return { art: 'liste' }
@@ -59,7 +63,7 @@ const ZURUECK_ZU: Record<Herkunft, { text: string; adresse: string }> = {
 function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
   switch (seite.art) {
     case 'liste': case 'bahnhof': return 'bahnhoefe'
-    case 'linien': return 'linien'
+    case 'linien': case 'strecke': return 'linien'
     case 'linie': case 'objekte': return herkunft
     case 'uebersicht': return seite.liste
     case 'duell': return 'duell'
@@ -127,6 +131,7 @@ export default function App() {
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}
                       aendern={(neu) => setUebersichten((u) => ({ ...u, [seite.liste]: neu }))} />
         )}
+        {seite.art === 'strecke' && <Strecke index={index} wahl={seite.wahl} />}
         {seite.art === 'linie' && (
           <Linie key={seite.nr} nr={seite.nr} zurueckText={zurueckZu.text}
                  zurueck={() => { window.location.hash = zurueckZu.adresse }} />

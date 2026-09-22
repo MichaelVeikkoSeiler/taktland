@@ -256,3 +256,37 @@ export interface Uebersicht<T> {
   /** nur bei den Brücken: so viele liegen auf Linien ohne eigene Seite */
   ohne_seite?: number
 }
+
+/** Ein Stück eines Abschnitts auf einer Linie der SBB, mit den Tunneln und
+ *  Brücken zwischen seinen Kilometern («Linie:Stelle» in den Linienfakten) */
+export interface StreckenTeil {
+  linie: number
+  km_von: number
+  km_bis: number
+  tunnel: string[]
+  bruecken: string[]
+}
+
+/** Ein Abschnitt mit Personenzügen laut zugzahlen. Ohne teile: keine
+ *  Tunnel- und Brückendaten (andere Bahn oder keine Linie zugeordnet). */
+export interface StreckenAbschnitt {
+  von: string
+  nach: string
+  /** nur für die Wegsuche, keine Angabe */
+  gewicht: number
+  isb: string
+  teile?: StreckenTeil[]
+}
+
+/** Das Netz für die Seite «Strecke» (pipeline/build_strecken.py) */
+export interface StreckenNetz {
+  datenstand: string
+  zugzahlen_jahr: number
+  quellen: string[]
+  /** Kürzel des Betriebspunkts → Name */
+  punkte: Record<string, string>
+  /** UIC des Bahnhofs → Kürzel des Betriebspunkts */
+  bahnhoefe: Record<string, string>
+  nicht_im_netz: number[]
+  abschnitte: StreckenAbschnitt[]
+}

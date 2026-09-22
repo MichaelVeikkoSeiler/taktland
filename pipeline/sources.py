@@ -78,6 +78,10 @@ DATASETS = {
         beschreibung="Betriebspunkte pro Linie; Bruecke Kuerzel <-> bpuic"),
     "linie": dict(
         join=None, tier="extra", beschreibung="Streckennetz mit Anfang und Ende"),
+    "linienkilometrierung": dict(
+        join=None, tier="linien",
+        beschreibung="Kilometerpunkte der Linien mit Koordinaten, meist alle 100 m. "
+                     "Legt jeden Abschnitt der Zugzahlen auf eine Linie (Strecke)"),
     "bilder-von-bahnhofen": dict(
         join="nummer", tier="extra", beschreibung="Bilder von 20 Bahnhoefen"),
     # --- nur fuer die Linienseiten (pipeline/build_linien.py) ---
