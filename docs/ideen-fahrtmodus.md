@@ -21,6 +21,34 @@ bei der Recherche gesperrt.
   Bahnhöfe).
 - **Kein SBB-Gong, fix ausgeschlossen.** Eigene Klänge ja, kein Nachbau des Gongs.
 
+- **Testfahrt 2:** 10 und 20 Sekunden haben sich bewährt.
+
+## Plan bis Samstag, 2026-09-26
+
+Entschieden am 2026-09-23, Schritt für Schritt. Was «später» heisst, bleibt auf
+der Merkliste unten.
+
+**Einbauen:**
+1. Spezialknopf «Fahrtmodus», direkt zur Auswahl der Fahrt
+2. Wahl «Nur Ziel»: Man kann wählen, ob man nur das Ziel eingibt (Start ist
+   dann der nächste Bahnhof per GPS) oder Start und Ziel wie bisher
+3. Favoriten und letzte Fahrten
+4. Streckenband
+5. Ring um die Anzeige, bei «Gleich» gross
+6. Im Tunnel «Ausfahrt in etwa …» mit Sekunden und einer Fläche, die sich füllt
+7. Kleine Karte mit Position
+8. Fahrtbilanz
+9. Abgehakte Objekte
+10. Sammelheft mit «Was fehlt noch?»: am Abend als Liste ansehen, und wieder
+    löschen können (es ist erst ein Test)
+11. Quiz zur Fahrt
+
+**Später:** Verknüpfung auf dem App-Symbol, eigener Klang je Art,
+Sprachansage, Vibration, Challenge, neues App-Symbol und Illustrationen
+(von Michael).
+
+**Nochmals fragen, wenn alles andere durch ist:** «Ohne Ziel».
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
