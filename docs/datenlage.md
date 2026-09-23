@@ -218,7 +218,8 @@ den GPS-Standort darauf. Tunnel werden an ihrem Kilometer gemeldet; die Ausfahrt
 nur, wo die Richtung der Länge eindeutig ist (`tunnel_bereiche`). Bahnhöfe liegen am Ende
 ihres Abschnitts auf dem Linienzug; gemeldet werden die Betriebspunkte des Wegs, die in
 Taktland eine Seite haben, ohne den Start. Ob der Zug dort hält, sagen die Daten nicht (kein
-Fahrplan). Die Meldung kommt etwa 20 Sekunden vorher. Die Zeit bis zum Objekt
+Fahrplan). Die Meldung kommt etwa 20 oder 10 Sekunden vorher, wählbar; Tunnel, Brücken und Bahnhöfe
+lassen sich einzeln abschalten. Die Zeit bis zum Objekt
 ist Weg durch Tempo, eine Schätzung. Getestet mit vorgespieltem Standort (Einfahrt
 Gotthard-Basistunnel, Standort 80 km neben der Strecke, Tunnel ohne GPS), nicht im Zug.
 

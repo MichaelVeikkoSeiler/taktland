@@ -194,8 +194,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Im Zug zeigt der «Fahrtmodus» den nächsten Tunnel, die nächste Brücke mit
-            mindestens 3 Baueinheiten und den nächsten Bahnhof und meldet sie etwa 20 Sekunden
-            vorher mit einem Ton. Bahnhöfe meldet er auch dort, wo der Zug nicht hält. Er
+            mindestens 3 Baueinheiten und den nächsten Bahnhof und meldet sie etwa 20 oder 10
+            Sekunden vorher mit einem Ton. Tunnel, Brücken und Bahnhöfe lassen sich einzeln
+            abschalten. Bahnhöfe meldet er auch dort, wo der Zug nicht hält. Er
             braucht den Standort und läuft nur, solange die Seite offen und der Bildschirm an ist.
             Die Zeiten sind Schätzungen aus Standort und Tempo. Im Tunnel gibt es kein GPS, dort
             rechnet er mit dem letzten Tempo weiter.

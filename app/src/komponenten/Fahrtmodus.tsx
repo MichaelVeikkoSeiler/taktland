@@ -2,8 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, projizieren, wegEnde } from '../fahrt'
 import { freigabeHilfe } from '../umgebung'
 
-/** So viele Sekunden vor einem Objekt kommt die Meldung */
-const VORLAUF_S = 20
+/** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
+const VORLAEUFE_S = [20, 10] as const
+type Vorlauf = typeof VORLAEUFE_S[number]
 /** Die Probefahrt läuft so viel schneller als die Wirklichkeit */
 const ZEITRAFFER = 20
 /** Tempo der Probefahrt, 100 km/h */
@@ -20,15 +21,16 @@ const OHNE_GPS_MAX_S = 20 * 60
 export type BrueckenWahl = 'groessere' | 'alle' | 'keine'
 const EINSTELLUNG = 'taktland.fahrt.v1'
 
-interface Einstellung { bruecken: BrueckenWahl; bahnhoefe: boolean; ton: boolean }
+interface Einstellung { tunnel: boolean; bruecken: BrueckenWahl; bahnhoefe: boolean; vorlauf: Vorlauf; ton: boolean }
 
 function einstellungLesen(): Einstellung {
   try {
     const x = JSON.parse(localStorage.getItem(EINSTELLUNG) ?? '{}')
     return { bruecken: ['groessere', 'alle', 'keine'].includes(x.bruecken) ? x.bruecken : 'groessere',
-             bahnhoefe: x.bahnhoefe !== false, ton: x.ton !== false }
+             tunnel: x.tunnel !== false, bahnhoefe: x.bahnhoefe !== false,
+             vorlauf: VORLAEUFE_S.includes(x.vorlauf) ? x.vorlauf : VORLAEUFE_S[0], ton: x.ton !== false }
   } catch {
-    return { bruecken: 'groessere', bahnhoefe: true, ton: true }
+    return { tunnel: true, bruecken: 'groessere', bahnhoefe: true, vorlauf: VORLAEUFE_S[0], ton: true }
   }
 }
 
@@ -61,7 +63,7 @@ type Meldung =
 
 /**
  * Der Fahrtmodus über der Seite «Strecke». Er zeigt das nächste Objekt und
- * meldet es mit einem Ton etwa 20 Sekunden vorher. Nur solange die Seite
+ * meldet es mit einem Ton etwa 20 oder 10 Sekunden vorher. Nur solange die Seite
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
 export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }: {
@@ -180,24 +182,25 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
   const faehrt = stand !== null && stand.v >= STEHT_UNTER
 
   const gewaehlt = useMemo(() => fahrweg.objekte.filter((o) => {
-    if (o.art === 'tunnel') return true
+    if (o.art === 'tunnel') return einstellung.tunnel
     if (o.art === 'bahnhof') return einstellung.bahnhoefe
     if (einstellung.bruecken === 'keine') return false
     if (einstellung.bruecken === 'alle') return true
     return (text(o)?.baueinheiten ?? 0) >= 3
-  }), [fahrweg, einstellung.bruecken, einstellung.bahnhoefe, text])
+  }), [fahrweg, einstellung.tunnel, einstellung.bruecken, einstellung.bahnhoefe, text])
 
+  // auch ohne Meldung der Tunnel: Im Tunnel fehlt das GPS, das sagt die Anzeige
   const imTunnel = sJetzt === null ? null
-    : gewaehlt.find((o) => o.sAus !== null && sJetzt >= o.s && sJetzt <= o.sAus) ?? null
+    : fahrweg.objekte.find((o) => o.sAus !== null && sJetzt >= o.s && sJetzt <= o.sAus) ?? null
   const kommend = sJetzt === null ? [] : gewaehlt.filter((o) => o.s > sJetzt)
   const eta = (o: FahrObjekt) => (sJetzt !== null && faehrt ? (o.s - sJetzt) / stand!.v : null)
 
-  // Die Meldung: etwa 20 Sekunden vorher, jedes Objekt einmal
+  // Die Meldung: etwa 20 oder 10 Sekunden vorher, wie gewählt, jedes Objekt einmal
   useEffect(() => {
     for (const o of kommend.slice(0, 5)) {
       const e = eta(o)
       const schluessel = `${o.art} ${o.kennung}`
-      if (e !== null && e <= VORLAUF_S && !gemeldet.current.has(schluessel)) {
+      if (e !== null && e <= einstellung.vorlauf && !gemeldet.current.has(schluessel)) {
         gemeldet.current.add(schluessel)
         if (einstellung.ton) piepen()
       }
@@ -205,7 +208,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
   })
 
   const naechstes = kommend[0]
-  const bald = naechstes && (eta(naechstes) ?? Infinity) <= VORLAUF_S
+  const bald = naechstes && (eta(naechstes) ?? Infinity) <= einstellung.vorlauf
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
@@ -238,7 +241,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
           </p>
         )}
 
-        {imTunnel && (
+        {imTunnel && einstellung.tunnel && (
           <div className="mt-5 bg-sbb-charcoal px-4 py-3 text-sbb-white">
             <p className="text-xs uppercase tracking-wide text-sbb-storm">Im Tunnel</p>
             <p className="text-lg font-bold">{text(imTunnel)?.name}</p>
@@ -288,8 +291,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
             </ol>
             <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
               Noch {aufzaehlen([
-                anzahl(kommend.filter((o) => o.art === 'tunnel').length, 'Tunnel', 'Tunnel'),
-                anzahl(kommend.filter((o) => o.art === 'bruecke').length, 'Brücke', 'Brücken'),
+                ...(einstellung.tunnel
+                  ? [anzahl(kommend.filter((o) => o.art === 'tunnel').length, 'Tunnel', 'Tunnel')] : []),
+                ...(einstellung.bruecken !== 'keine'
+                  ? [anzahl(kommend.filter((o) => o.art === 'bruecke').length, 'Brücke', 'Brücken')] : []),
                 ...(einstellung.bahnhoefe
                   ? [anzahl(kommend.filter((o) => o.art === 'bahnhof').length, 'Bahnhof', 'Bahnhöfe')] : []),
               ])} auf diesem Weg
@@ -298,6 +303,11 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
         )}
 
         <div className="mt-8 grid gap-3 border-t border-sbb-cloud pt-4 text-sm dark:border-sbb-iron">
+          <label className="flex items-center justify-between gap-3">
+            <span>Tunnel melden</span>
+            <input type="checkbox" checked={einstellung.tunnel} className="size-5 accent-sbb-red"
+                   onChange={(e) => aendern({ tunnel: e.target.checked })} />
+          </label>
           <label className="flex items-center justify-between gap-3">
             <span>Brücken melden</span>
             <select
@@ -317,7 +327,18 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
                    onChange={(e) => aendern({ bahnhoefe: e.target.checked })} />
           </label>
           <label className="flex items-center justify-between gap-3">
-            <span>Ton etwa {VORLAUF_S} Sekunden vorher</span>
+            <span>Melden etwa</span>
+            <select
+              value={einstellung.vorlauf}
+              onChange={(e) => aendern({ vorlauf: Number(e.target.value) as Vorlauf })}
+              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
+                         dark:bg-sbb-midnight dark:text-sbb-white"
+            >
+              {VORLAEUFE_S.map((x) => <option key={x} value={x}>{x} Sekunden vorher</option>)}
+            </select>
+          </label>
+          <label className="flex items-center justify-between gap-3">
+            <span>Ton bei der Meldung</span>
             <input type="checkbox" checked={einstellung.ton} className="size-5 accent-sbb-red"
                    onChange={(e) => aendern({ ton: e.target.checked })} />
           </label>

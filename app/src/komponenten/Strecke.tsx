@@ -477,7 +477,8 @@ function Ergebnis({
             </div>
             <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
               Im Zug zeigt der Fahrtmodus den nächsten Tunnel, die nächste grössere Brücke und den
-              nächsten Bahnhof und meldet sie etwa 20 Sekunden vorher mit einem Ton. Er braucht den Standort; dieser
+              nächsten Bahnhof und meldet sie etwa 20 oder 10 Sekunden vorher mit einem Ton. Was
+              er meldet, lässt sich wählen. Er braucht den Standort; dieser
               bleibt auf dem Gerät. Die Probefahrt spielt den Weg zum Ausprobieren ab.
             </p>
             {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}
