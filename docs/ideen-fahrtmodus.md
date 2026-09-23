@@ -7,6 +7,29 @@ meldet. Am nächsten kommt Soundscape für Android (Ansage beim Einfahren, ohne
 Vorwarnung, ohne Längen, ohne Brücken). Ohne Gewähr: App-Stores und sbb.ch waren
 bei der Recherche gesperrt.
 
+## Stand und Entscheide
+
+- **Einziger Nutzer ist Michael**, bis auf Weiteres. Ein Server für Nutzerdaten
+  und Datenschutzfragen stehen darum nicht an.
+- **Testfahrt 1 (2026-09-22), Bern – Zürich HB – Lugano:** hat gut geklappt.
+  **Testfahrt 2:** die Rückfahrt am 2026-09-25. Ergänzungen davor sind willkommen.
+- **Ton abschaltbar:** Das gibt es schon, als Häkchen «Ton bei der Meldung» in den
+  Einstellungen des Fahrtmodus. Es bleibt so.
+- **Bei Unsicherheit nachfragen:** Ist nicht klar, auf welcher Linie der Zug
+  fährt, fragt Taktland nach («Welche Linie fährst du?»), statt zu raten. Gilt
+  vor allem für «Ohne Ziel», wo Linien nebeneinander liegen (Limmattal, grosse
+  Bahnhöfe).
+- **Kein SBB-Gong, fix ausgeschlossen.** Eigene Klänge ja, kein Nachbau des Gongs.
+
+## Risiken, beim Bauen beachten
+
+- **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
+  Speicher des Browsers. Safari auf dem iPhone löscht ihn bei Websites, die sieben
+  Tage nicht besucht wurden, nicht aber bei Apps auf dem Home-Bildschirm. Darum
+  als App installieren und eine Sicherung zum Herunterladen anbieten.
+- **Challenge:** ohne Server, über einen geteilten Code oder Link.
+- **Grössere Funktionen** zuerst auf einem Branch, erst danach nach `main`.
+
 Alles unten folgt den Regeln in `CLAUDE.md`: nur Angaben aus den Daten, keine
 gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
 
