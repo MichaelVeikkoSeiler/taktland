@@ -215,7 +215,10 @@ Die Seite «Strecke» zählt Tunnel und Brücken entlang eines Wegs
 **Fahrtmodus:** Auf der Seite «Strecke» legt `app/src/fahrt.ts` den Weg als Linienzug an
 (Kilometrierung der Linien, auf Abschnitten anderer Bahnen gerade von Ende zu Ende) und
 den GPS-Standort darauf. Tunnel werden an ihrem Kilometer gemeldet; die Ausfahrt kennt er
-nur, wo die Richtung der Länge eindeutig ist (`tunnel_bereiche`). Die Zeit bis zum Objekt
+nur, wo die Richtung der Länge eindeutig ist (`tunnel_bereiche`). Bahnhöfe liegen am Ende
+ihres Abschnitts auf dem Linienzug; gemeldet werden die Betriebspunkte des Wegs, die in
+Taktland eine Seite haben, ohne den Start. Ob der Zug dort hält, sagen die Daten nicht (kein
+Fahrplan). Die Meldung kommt etwa 20 Sekunden vorher. Die Zeit bis zum Objekt
 ist Weg durch Tempo, eine Schätzung. Getestet mit vorgespieltem Standort (Einfahrt
 Gotthard-Basistunnel, Standort 80 km neben der Strecke, Tunnel ohne GPS), nicht im Zug.
 

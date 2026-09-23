@@ -329,18 +329,26 @@ function Ergebnis({
   const [laedt, setLaedt] = useState(false)
   const [fahrtFehler, setFahrtFehler] = useState<string | null>(null)
 
+  // Kürzel des Betriebspunkts → UIC des Bahnhofs
+  const uicVon = useMemo(() => new Map(Object.entries(netz.bahnhoefe).map(([u, abk]) => [abk, Number(u)])),
+                         [netz])
+
   const objektText = useCallback(({ kennung, art }: FahrObjekt): ObjektText | undefined => {
     const x = art === 'tunnel' ? tunnelNach.get(kennung) : undefined
     if (x) {
       return { name: x.name, baueinheiten: null,
                zeile: `${x.laenge_m === null ? 'Länge: keine Angabe' : `${genau(x.laenge_m)} m`} · Linie ${x.linie}` }
     }
+    if (art === 'bahnhof') {
+      const b = bahnhof.get(uicVon.get(kennung) ?? 0)
+      return b && { name: b.name, baueinheiten: null, zeile: b.kanton ? `Kanton ${b.kanton}` : 'Bahnhof' }
+    }
     const y = art === 'bruecke' ? brueckenNach.get(kennung) : undefined
     if (!y) return undefined
     return { name: y.name, baueinheiten: y.baueinheiten,
              zeile: `Linie ${y.linie}${y.baueinheiten === null ? ''
                : ` · ${y.baueinheiten} ${y.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}` }
-  }, [tunnelNach, brueckenNach])
+  }, [tunnelNach, brueckenNach, bahnhof, uicVon])
 
   async function fahrtStarten(probe: boolean) {
     // der Ton muss im Tipp selbst vorbereitet werden, sonst bleibt er stumm
@@ -351,7 +359,8 @@ function Ergebnis({
       const linien = geometrieLesen(await geometrieLaden())
       const fahrweg = fahrwegBauen(netz, linien, weg.punkte, weg.abschnitte,
                                    (id) => brueckenNach.get(id)?.km ?? undefined,
-                                   (id) => tunnelNach.get(id)?.laenge_m ?? null)
+                                   (id) => tunnelNach.get(id)?.laenge_m ?? null,
+                                   (abk) => bahnhof.has(uicVon.get(abk) ?? 0))
       setFahrt({ fahrweg, probe, piepen })
     } catch (e) {
       setFahrtFehler((e as Error).message)
@@ -364,8 +373,6 @@ function Ergebnis({
   const b = brueckenIds.flatMap((i) => { const x = brueckenNach.get(i); return x ? [{ ...x, id: i }] : [] })
 
   // Betriebspunkte des Wegs, die Bahnhöfe in Taktland sind
-  const uicVon = useMemo(() => new Map(Object.entries(netz.bahnhoefe).map(([u, abk]) => [abk, Number(u)])),
-                         [netz])
   const bahnhoefe = weg.punkte.map((p) => bahnhof.get(uicVon.get(p) ?? 0)).filter((x) => x !== undefined)
   const grosse = bahnhoefe.slice(1, -1).filter((x) => x.tier === 'L')
 
@@ -469,8 +476,8 @@ function Ergebnis({
               </button>
             </div>
             <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-              Im Zug zeigt der Fahrtmodus den nächsten Tunnel und die nächste grössere Brücke und
-              meldet sie etwa 30 Sekunden vorher mit einem Ton. Er braucht den Standort; dieser
+              Im Zug zeigt der Fahrtmodus den nächsten Tunnel, die nächste grössere Brücke und den
+              nächsten Bahnhof und meldet sie etwa 20 Sekunden vorher mit einem Ton. Er braucht den Standort; dieser
               bleibt auf dem Gerät. Die Probefahrt spielt den Weg zum Ausprobieren ab.
             </p>
             {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}

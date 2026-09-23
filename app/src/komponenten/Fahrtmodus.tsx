@@ -3,7 +3,7 @@ import { type FahrObjekt, type Fahrweg, lageBei, projizieren, wegEnde } from '..
 import { freigabeHilfe } from '../umgebung'
 
 /** So viele Sekunden vor einem Objekt kommt die Meldung */
-const VORLAUF_S = 30
+const VORLAUF_S = 20
 /** Die Probefahrt läuft so viel schneller als die Wirklichkeit */
 const ZEITRAFFER = 20
 /** Tempo der Probefahrt, 100 km/h */
@@ -20,15 +20,15 @@ const OHNE_GPS_MAX_S = 20 * 60
 export type BrueckenWahl = 'groessere' | 'alle' | 'keine'
 const EINSTELLUNG = 'taktland.fahrt.v1'
 
-interface Einstellung { bruecken: BrueckenWahl; ton: boolean }
+interface Einstellung { bruecken: BrueckenWahl; bahnhoefe: boolean; ton: boolean }
 
 function einstellungLesen(): Einstellung {
   try {
     const x = JSON.parse(localStorage.getItem(EINSTELLUNG) ?? '{}')
     return { bruecken: ['groessere', 'alle', 'keine'].includes(x.bruecken) ? x.bruecken : 'groessere',
-             ton: x.ton !== false }
+             bahnhoefe: x.bahnhoefe !== false, ton: x.ton !== false }
   } catch {
-    return { bruecken: 'groessere', ton: true }
+    return { bruecken: 'groessere', bahnhoefe: true, ton: true }
   }
 }
 
@@ -54,12 +54,14 @@ interface Stand {
   abseits: number | null
 }
 
+const ART: Record<FahrObjekt['art'], string> = { tunnel: 'Tunnel', bruecke: 'Brücke', bahnhof: 'Bahnhof' }
+
 type Meldung =
   | { art: 'sucht' } | { art: 'verweigert' } | { art: 'ohneGps' } | { art: 'fehler'; text: string }
 
 /**
  * Der Fahrtmodus über der Seite «Strecke». Er zeigt das nächste Objekt und
- * meldet es mit einem Ton etwa 30 Sekunden vorher. Nur solange die Seite
+ * meldet es mit einem Ton etwa 20 Sekunden vorher. Nur solange die Seite
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
 export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }: {
@@ -179,17 +181,18 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
 
   const gewaehlt = useMemo(() => fahrweg.objekte.filter((o) => {
     if (o.art === 'tunnel') return true
+    if (o.art === 'bahnhof') return einstellung.bahnhoefe
     if (einstellung.bruecken === 'keine') return false
     if (einstellung.bruecken === 'alle') return true
     return (text(o)?.baueinheiten ?? 0) >= 3
-  }), [fahrweg, einstellung.bruecken, text])
+  }), [fahrweg, einstellung.bruecken, einstellung.bahnhoefe, text])
 
   const imTunnel = sJetzt === null ? null
     : gewaehlt.find((o) => o.sAus !== null && sJetzt >= o.s && sJetzt <= o.sAus) ?? null
   const kommend = sJetzt === null ? [] : gewaehlt.filter((o) => o.s > sJetzt)
   const eta = (o: FahrObjekt) => (sJetzt !== null && faehrt ? (o.s - sJetzt) / stand!.v : null)
 
-  // Die Meldung: etwa 30 Sekunden vorher, jedes Objekt einmal
+  // Die Meldung: etwa 20 Sekunden vorher, jedes Objekt einmal
   useEffect(() => {
     for (const o of kommend.slice(0, 5)) {
       const e = eta(o)
@@ -252,7 +255,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
             ? 'border-l-8 border-sbb-red bg-white dark:bg-sbb-charcoal'
             : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
             <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
-              {bald ? 'Gleich' : 'Als Nächstes'} · {naechstes.art === 'tunnel' ? 'Tunnel' : 'Brücke'}
+              {bald ? 'Gleich' : 'Als Nächstes'} · {ART[naechstes.art]}
             </p>
             <p className="mt-1 text-2xl font-bold leading-tight">{text(naechstes)?.name}</p>
             <p className="mt-1 text-sbb-metal dark:text-sbb-storm">{text(naechstes)?.zeile}</p>
@@ -274,7 +277,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
                   <span className="min-w-0">
                     <span className="block truncate">{text(o)?.name}</span>
                     <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                      {o.art === 'tunnel' ? 'Tunnel' : 'Brücke'}
+                      {ART[o.art]}
                     </span>
                   </span>
                   <span className="shrink-0 text-sm tabular-nums text-sbb-metal dark:text-sbb-storm">
@@ -284,8 +287,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
               ))}
             </ol>
             <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-              Noch {anzahl(kommend.filter((o) => o.art === 'tunnel').length, 'Tunnel', 'Tunnel')} und{' '}
-              {anzahl(kommend.filter((o) => o.art === 'bruecke').length, 'Brücke', 'Brücken')} auf diesem Weg
+              Noch {aufzaehlen([
+                anzahl(kommend.filter((o) => o.art === 'tunnel').length, 'Tunnel', 'Tunnel'),
+                anzahl(kommend.filter((o) => o.art === 'bruecke').length, 'Brücke', 'Brücken'),
+                ...(einstellung.bahnhoefe
+                  ? [anzahl(kommend.filter((o) => o.art === 'bahnhof').length, 'Bahnhof', 'Bahnhöfe')] : []),
+              ])} auf diesem Weg
             </p>
           </>
         )}
@@ -305,6 +312,11 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
             </select>
           </label>
           <label className="flex items-center justify-between gap-3">
+            <span>Bahnhöfe melden</span>
+            <input type="checkbox" checked={einstellung.bahnhoefe} className="size-5 accent-sbb-red"
+                   onChange={(e) => aendern({ bahnhoefe: e.target.checked })} />
+          </label>
+          <label className="flex items-center justify-between gap-3">
             <span>Ton etwa {VORLAUF_S} Sekunden vorher</span>
             <input type="checkbox" checked={einstellung.ton} className="size-5 accent-sbb-red"
                    onChange={(e) => aendern({ ton: e.target.checked })} />
@@ -314,7 +326,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
         <p className="mt-6 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Standort bleibt auf diesem Gerät und wird weder gespeichert noch gesendet. Die Zeiten
           sind Schätzungen aus Standort und Tempo. Gemeldet wird nur, solange diese Seite offen und
-          der Bildschirm an ist. Auf Strecken anderer Bahnen fehlen Tunnel und Brücken.
+          der Bildschirm an ist. Auf Strecken anderer Bahnen fehlen Tunnel und Brücken. Als Bahnhof
+          gemeldet werden die Betriebspunkte des Wegs, die in Taktland eine Seite haben, auch wo
+          der Zug nicht hält: Einen Fahrplan enthalten die Daten nicht.
         </p>
       </div>
     </div>
@@ -343,4 +357,9 @@ function dauer(sekunden: number) {
 
 function anzahl(n: number, einzahl: string, mehrzahl: string) {
   return `${n} ${n === 1 ? einzahl : mehrzahl}`
+}
+
+/** «a und b», «a, b und c» */
+function aufzaehlen(teile: string[]) {
+  return teile.length > 1 ? `${teile.slice(0, -1).join(', ')} und ${teile[teile.length - 1]}` : teile.join('')
 }

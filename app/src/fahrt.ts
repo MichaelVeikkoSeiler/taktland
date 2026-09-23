@@ -25,8 +25,8 @@ interface Linienzug { km: number[]; lat: number[]; lon: number[] }
 
 export interface FahrObjekt {
   kennung: string
-  art: 'tunnel' | 'bruecke'
-  /** Einfahrt, in Metern entlang des Wegs */
+  art: 'tunnel' | 'bruecke' | 'bahnhof'
+  /** Einfahrt, beim Bahnhof der Betriebspunkt, in Metern entlang des Wegs */
   s: number
   /** Ausfahrt, nur bei Tunneln, deren Richtung die Daten hergeben */
   sAus: number | null
@@ -74,10 +74,13 @@ function aufLinie(z: Linienzug, km: number): Lage {
  * Baut den Linienzug des Wegs und legt jedes Objekt darauf. punkte sind die
  * Betriebspunkte des Wegs in Fahrtrichtung, abschnitte die Abschnitte
  * dazwischen. brueckeKm gibt den Kilometer einer Brücke auf ihrer Linie.
+ * istBahnhof sagt, welche Betriebspunkte als Bahnhof gemeldet werden; der
+ * Start zählt nicht, er liegt schon hinter dem Zug.
  */
 export function fahrwegBauen(netz: StreckenNetz, linien: Map<number, Linienzug>, punkteWeg: string[],
                              abschnitte: StreckenAbschnitt[], brueckeKm: (kennung: string) => number | undefined,
-                             tunnelLaenge: (kennung: string) => number | null): Fahrweg {
+                             tunnelLaenge: (kennung: string) => number | null,
+                             istBahnhof: (abk: string) => boolean): Fahrweg {
   const punkte: Punkt[] = []
   // nach Art getrennt: «660:0» ist der erste Tunnel und die erste Brücke der Linie 660
   const objekte = new Map<string, FahrObjekt>()
@@ -92,6 +95,13 @@ export function fahrwegBauen(netz: StreckenNetz, linien: Map<number, Linienzug>,
     punkte.push({ ...p, s })
   }
 
+  // am Ende eines Abschnitts steht der Zug an dessen Betriebspunkt
+  const bahnhofSetzen = (abk: string) => {
+    if (istBahnhof(abk) && !objekte.has(`bahnhof ${abk}`)) {
+      objekte.set(`bahnhof ${abk}`, { kennung: abk, art: 'bahnhof', s, sAus: null })
+    }
+  }
+
   abschnitte.forEach((e, i) => {
     const vorwaerts = e.von === punkteWeg[i]
     if (!e.teile?.length) {
@@ -99,6 +109,7 @@ export function fahrwegBauen(netz: StreckenNetz, linien: Map<number, Linienzug>,
         const [lat, lon] = netz.lagen[abk]
         hinzu({ lat, lon })
       }
+      bahnhofSetzen(punkteWeg[i + 1])
       return
     }
     for (const t of vorwaerts ? e.teile : [...e.teile].reverse()) {
@@ -152,6 +163,7 @@ export function fahrwegBauen(netz: StreckenNetz, linien: Map<number, Linienzug>,
         if (km !== undefined) objekte.set(`bruecke ${id}`, { kennung: id, art: 'bruecke', s: sBei(km), sAus: null })
       }
     }
+    bahnhofSetzen(punkteWeg[i + 1])
   })
   return { punkte, objekte: [...objekte.values()].sort((a, b) => a.s - b.s) }
 }
