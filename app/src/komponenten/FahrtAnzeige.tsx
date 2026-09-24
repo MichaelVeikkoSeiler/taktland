@@ -43,14 +43,12 @@ export function TunnelBalken({ anteil }: { anteil: number }) {
   )
 }
 
-/** Wie weit das Band nach vorne und nach hinten reicht, in Metern auf dem Weg */
-const VORNE_M = 6000
-const HINTEN_M = 600
-
 /**
- * Das Streckenband: oben der ganze Weg vom Start zum Ziel mit dem Zug darauf,
- * darunter das Stück direkt vor dem Zug. Die Objekte fahren von rechts auf
- * den Zug zu. Beides im Massstab des Wegs, ohne Zahlen.
+ * Das Streckenband: der ganze Weg vom Start zum Ziel als Linie, darauf alle
+ * Tunnel, Brücken und Bahnhöfe und der Zug an seiner Stelle. Was durchfahren
+ * ist, bleibt stehen, nur blasser (Michael, 2026-09-25: «Was vorbei ist, ist
+ * vorbei» war nach der Fahrt Lugano–Melide nicht erwünscht). Im Massstab des
+ * Wegs, ohne Zahlen.
  */
 export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
   fahrweg: Fahrweg
@@ -63,15 +61,16 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
   const ende = wegEnde(fahrweg) || 1
   const s = sJetzt ?? 0
   const B = 350
-  const zugX = 34
-  const xBei = (w: number) => zugX + ((w - s) / VORNE_M) * (B - zugX - 8)
-  const sichtbar = objekte.filter((o) => (o.sAus ?? o.s) >= s - HINTEN_M && o.s <= s + VORNE_M)
+  const RAND = 14
+  const xBei = (w: number) => RAND + (Math.max(0, Math.min(ende, w)) / ende) * (B - 2 * RAND)
+  const zugX = xBei(s)
+  const vorbei = (o: FahrObjekt) => (o.sAus ?? o.s) < s
   // Namen für die nächsten drei vor dem Zug, oben oder unten, ohne Überdeckung
   const beschriftet: Array<{ o: FahrObjekt; x: number; oben: boolean; kurz: string; rechts: boolean }> = []
   const frei = { oben: -Infinity, unten: -Infinity }
-  for (const o of sichtbar.filter((o) => o.s > s)) {
+  for (const o of objekte.filter((o) => o.s > s)) {
     if (beschriftet.length >= 3) break
-    const x = Math.max(zugX + 6, xBei(o.s))
+    const x = xBei(o.s)
     const text = name(o) ?? ''
     const kurz = text.length > 22 ? `${text.slice(0, 21)}…` : text
     const breite = kurz.length * 6.3
@@ -89,59 +88,51 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
         <span className="truncate">{start}</span>
         <span className="truncate text-right">{ziel}</span>
       </div>
-      <div className="relative mt-1 h-2 bg-sbb-cloud dark:bg-sbb-iron" aria-hidden="true">
-        <div className="h-2 bg-sbb-charcoal transition-[width] duration-500 ease-linear dark:bg-sbb-white"
-             style={{ width: `${Math.min(100, (s / ende) * 100)}%` }} />
-        <div className="absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 border-2 border-white
-                        bg-sbb-red transition-[left] duration-500 ease-linear dark:border-sbb-midnight"
-             style={{ left: `${Math.min(100, (s / ende) * 100)}%` }} />
-      </div>
-
-      <svg viewBox={`0 0 ${B} 92`} className="mt-4 w-full" role="img"
-           aria-label="Streckenband: die nächsten Objekte vor dem Zug">
-        <line x1="0" x2={B} y1="46" y2="46" strokeWidth="3"
+      <svg viewBox={`0 0 ${B} 92`} className="mt-1 w-full" role="img"
+           aria-label={`Streckenband: der ganze Weg von ${start} nach ${ziel} mit dem Zug`}>
+        <line x1={RAND} x2={B - RAND} y1="46" y2="46" strokeWidth="3"
               className="stroke-sbb-cloud dark:stroke-sbb-iron" />
-        <line x1="0" x2={zugX} y1="46" y2="46" strokeWidth="3"
-              className="stroke-sbb-charcoal dark:stroke-sbb-white" />
-        {sichtbar.map((o) => {
-          const x = Math.max(0, xBei(o.s))
+        <line x1={RAND} x2={zugX} y1="46" y2="46" strokeWidth="3"
+              className="stroke-sbb-charcoal transition-all duration-500 ease-linear dark:stroke-sbb-white" />
+        {/* Start und Ziel */}
+        {[RAND, B - RAND].map((x) => (
+          <line key={x} x1={x} x2={x} y1="38" y2="54" strokeWidth="3"
+                className="stroke-sbb-charcoal dark:stroke-sbb-white" />
+        ))}
+        {objekte.map((o) => {
+          const x = xBei(o.s)
+          const blass = vorbei(o) ? 'opacity-35' : ''
           if (o.art === 'tunnel') {
-            const x2 = o.sAus !== null ? Math.min(B, xBei(o.sAus)) : Math.min(B, x + 10)
+            const x2 = o.sAus !== null ? xBei(o.sAus) : x + 3
             return (
-              <g key={`t${o.kennung}`}>
-                <rect x={x} y="38" width={Math.max(4, x2 - x)} height="16" rx="2"
-                      className="fill-sbb-charcoal dark:fill-sbb-storm" />
-                {o.sAus === null && (
-                  <rect x={x} y="38" width="10" height="16" rx="2" className="fill-sbb-charcoal/40" />
-                )}
-              </g>
+              <rect key={`t${o.kennung}`} x={x} y="39" width={Math.max(3, x2 - x)} height="14" rx="1.5"
+                    className={`fill-sbb-charcoal dark:fill-sbb-storm ${blass}`} />
             )
           }
           if (o.art === 'bruecke') {
             return (
-              <path key={`b${o.kennung}`} d={`M${x - 7} 52 Q${x} 38 ${x + 7} 52`} fill="none" strokeWidth="3"
-                    strokeLinecap="round" className="stroke-sbb-blue" />
+              <path key={`b${o.kennung}`} d={`M${x - 4} 51 Q${x} 41 ${x + 4} 51`} fill="none" strokeWidth="2.5"
+                    strokeLinecap="round" className={`stroke-sbb-blue ${blass}`} />
             )
           }
           return (
-            <circle key={`h${o.kennung}`} cx={x} cy="46" r="6" strokeWidth="2.5"
-                    className="fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white" />
+            <circle key={`h${o.kennung}`} cx={x} cy="46" r="4.5" strokeWidth="2"
+                    className={`fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white ${blass}`} />
           )
         })}
-        {beschriftet.map(({ o, x, oben, kurz, rechts }) => {
-          return (
-            <g key={`n${o.art}${o.kennung}`}>
-              <line x1={x} x2={x} y1={oben ? 22 : 56} y2={oben ? 36 : 70} strokeWidth="1"
-                    className="stroke-sbb-metal dark:stroke-sbb-storm" />
-              <text x={x} y={oben ? 17 : 84} fontSize="11" textAnchor={rechts ? 'end' : 'start'}
-                    className="fill-sbb-black dark:fill-sbb-white">{kurz}</text>
-            </g>
-          )
-        })}
+        {beschriftet.map(({ o, x, oben, kurz, rechts }) => (
+          <g key={`n${o.art}${o.kennung}`}>
+            <line x1={x} x2={x} y1={oben ? 22 : 56} y2={oben ? 37 : 70} strokeWidth="1"
+                  className="stroke-sbb-metal dark:stroke-sbb-storm" />
+            <text x={x} y={oben ? 17 : 84} fontSize="11" textAnchor={rechts ? 'end' : 'start'}
+                  className="fill-sbb-black dark:fill-sbb-white">{kurz}</text>
+          </g>
+        ))}
         {/* der Zug */}
-        <g transform={`translate(${zugX - 13} 36)`}>
-          <rect width="26" height="20" rx="5" className="fill-sbb-red" />
-          <rect x="15" y="4" width="8" height="7" rx="1.5" className="fill-white" />
+        <g transform={`translate(${zugX - 11} 37)`} className="transition-transform duration-500 ease-linear">
+          <rect width="22" height="18" rx="4.5" strokeWidth="1.5"
+                className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
+          <rect x="12.5" y="3.5" width="6.5" height="6" rx="1.2" className="fill-white" />
         </g>
       </svg>
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-sbb-metal dark:text-sbb-storm" aria-hidden="true">
@@ -199,7 +190,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const hinter = weg.filter((p) => p.s <= s).map((p) => p.xy)
   const vor = weg.filter((p) => p.s >= s).map((p) => p.xy)
   if (hier && sJetzt !== null) { hinter.push([hx, hy]); vor.unshift([hx, hy]) }
-  const zeichen = objekte.filter((o) => o.s > s).slice(0, 12)
+  // alle Objekte des Wegs; durchfahrene bleiben stehen, nur blasser
+  const zeichen = objekte
 
   return (
     <figure className="mt-6">
@@ -233,6 +225,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           return (
             <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 3.5 : 3) * px}
                     strokeWidth={1.5} vectorEffect="non-scaling-stroke"
+                    opacity={(o.sAus ?? o.s) < s ? 0.35 : 1}
                     className={o.art === 'tunnel' ? 'fill-sbb-charcoal stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
                       : o.art === 'bruecke' ? 'fill-sbb-blue stroke-white dark:stroke-sbb-midnight'
                       : 'fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white'} />

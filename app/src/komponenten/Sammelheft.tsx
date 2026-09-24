@@ -81,7 +81,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Sammelheft</h1>
       <p className="mt-2 leading-relaxed">
-        Was du im Fahrtmodus durchfahren hast. Es bleibt auf diesem Gerät; die Probefahrt zählt
+        Was du im Fahrtmodus durchfahren hast, und unter «Protokoll» jede Fahrt mit Datum. Es bleibt auf diesem Gerät; die Probefahrt zählt
         nicht.
       </p>
 
@@ -101,7 +101,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
       </p>
 
       <div className="mt-6 grid grid-cols-3 border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ansicht">
-        {([['fahrten', 'Fahrten'], ['erlebt', 'Erlebt'], ['fehlt', 'Fehlt noch']] as const).map(([a, t]) => (
+        {([['fahrten', 'Protokoll'], ['erlebt', 'Erlebt'], ['fehlt', 'Fehlt noch']] as const).map(([a, t]) => (
           <button key={a} type="button" aria-pressed={ansicht === a} onClick={() => { setAnsicht(a); setMehr(false) }} className={knopf(ansicht === a)}>
             {t}
           </button>

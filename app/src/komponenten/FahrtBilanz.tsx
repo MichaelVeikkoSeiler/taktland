@@ -238,7 +238,7 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
                       border-l-sbb-red px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
                       dark:border-sbb-iron dark:border-l-sbb-red">
           <span>
-            <span className="block font-medium">Sammelheft</span>
+            <span className="block font-medium">Sammelheft und Protokoll deiner Fahrten</span>
             <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
               Alles, was du im Fahrtmodus durchfahren hast, und was noch fehlt
             </span>

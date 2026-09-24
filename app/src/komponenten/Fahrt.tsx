@@ -265,7 +265,7 @@ function SammelheftKarte() {
                   border-l-sbb-red bg-white px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
                   dark:border-sbb-iron dark:border-l-sbb-red dark:bg-sbb-midnight">
       <span className="min-w-0">
-        <span className="block font-medium">Sammelheft</span>
+        <span className="block font-medium">Sammelheft und Protokoll deiner Fahrten</span>
         <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
           {n('tunnel')} Tunnel, {n('bruecke')} {n('bruecke') === 1 ? 'Brücke' : 'Brücken'} und {n('bahnhof')}{' '}
           {n('bahnhof') === 1 ? 'Bahnhof' : 'Bahnhöfe'} erlebt
