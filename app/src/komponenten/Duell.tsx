@@ -376,17 +376,17 @@ export function Duell() {
             {runde.eintraege.map((b, i) => {
               const istRichtig = i === runde.richtig
               const rahmen = !aufgeloest
-                ? 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'
+                ? 'border-transparent bg-sbb-kachel dark:bg-sbb-charcoal hover:bg-sbb-silver dark:hover:bg-sbb-iron'
                 : istRichtig
                   ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15'
                   : i === gewaehlt
                     ? 'border-sbb-red bg-white dark:bg-sbb-midnight'
-                    : 'border-sbb-cloud bg-white opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight'
+                    : 'border-transparent bg-sbb-kachel dark:bg-sbb-charcoal opacity-60'
               return (
                 <li key={b.schluessel}>
                   <button
                     type="button" onClick={() => waehlen(i)} disabled={aufgeloest}
-                    className={`flex w-full items-center justify-between gap-3 border px-4 py-4
+                    className={`flex w-full items-center justify-between gap-3 rounded-lg border px-4 py-4
                                 text-left transition ${rahmen}`}
                   >
                     <span className="min-w-0">

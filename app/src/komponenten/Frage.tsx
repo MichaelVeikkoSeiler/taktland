@@ -284,9 +284,9 @@ function Sortieren({ items, gezeigt, abschliessen }: {
                 if (el) kaesten.current.set(it.label, el)
                 else kaesten.current.delete(it.label)
               }}
-              className={`flex items-center justify-between gap-2 border px-3 py-2.5 ${
+              className={`flex items-center justify-between gap-2 rounded-lg border px-3 py-2.5 ${
                 !gezeigt
-                  ? 'border-sbb-cloud bg-sbb-white dark:border-sbb-iron dark:bg-sbb-midnight'
+                  ? 'border-transparent bg-sbb-kachel dark:bg-sbb-charcoal'
                   : amRichtigenPlatz
                     ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15'
                     : 'border-sbb-red bg-sbb-white dark:bg-sbb-midnight'
@@ -378,14 +378,14 @@ function Zuordnen({ pairs, gezeigt, abschliessen }: {
                   type="button"
                   disabled={gezeigt}
                   onClick={() => setAktiv(aktiv === p.links ? null : p.links)}
-                  className={`w-full border px-3 py-2.5 text-left ${
+                  className={`w-full rounded-lg border px-3 py-2.5 text-left ${
                     gezeigt
                       ? stimmt
                         ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15'
                         : 'border-sbb-red bg-sbb-white dark:bg-sbb-midnight'
                       : aktiv === p.links
                         ? 'border-sbb-red bg-sbb-white dark:bg-sbb-midnight'
-                        : 'border-sbb-cloud bg-sbb-white dark:border-sbb-iron dark:bg-sbb-midnight'
+                        : 'border-transparent bg-sbb-kachel dark:bg-sbb-charcoal hover:bg-sbb-silver dark:hover:bg-sbb-iron'
                   } text-sbb-black dark:text-sbb-white`}
                 >
                   <span className="block hyphens-auto break-words">{p.links}</span>
@@ -406,11 +406,11 @@ function Zuordnen({ pairs, gezeigt, abschliessen }: {
                   type="button"
                   disabled={gezeigt || (vergeben && !aktiv)}
                   onClick={() => waehlen(r)}
-                  className={`w-full border px-3 py-2.5 text-left text-sbb-black
+                  className={`w-full rounded-lg border px-3 py-2.5 text-left text-sbb-black
                               dark:text-sbb-white ${
                     vergeben
-                      ? 'border-sbb-cloud bg-sbb-milk opacity-50 dark:border-sbb-iron dark:bg-sbb-charcoal'
-                      : 'border-sbb-cloud bg-sbb-white dark:border-sbb-iron dark:bg-sbb-midnight'
+                      ? 'border-transparent bg-sbb-kachel dark:bg-sbb-charcoal opacity-50'
+                      : 'border-transparent bg-sbb-kachel dark:bg-sbb-charcoal hover:bg-sbb-silver dark:hover:bg-sbb-iron'
                   }`}
                 >
                   <span className="block break-words tabular-nums">{r}</span>
@@ -462,15 +462,14 @@ function Hotspot({ frage, gleise, gezeigt, abschliessen }: {
 /* ---------- gemeinsame Stile ---------- */
 
 function knopf(gezeigt: boolean, istGewaehlt: boolean, istLoesung: boolean) {
-  const grund = 'w-full border px-3 py-2.5 text-left text-sbb-black dark:text-sbb-white'
+  const grund = 'w-full rounded-lg border px-3 py-2.5 text-left text-sbb-black dark:text-sbb-white'
   if (!gezeigt) {
-    return `${grund} border-sbb-cloud bg-sbb-white hover:border-sbb-black
-            dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white ${
-              istGewaehlt ? 'border-sbb-black dark:border-sbb-white' : ''}`
+    return `${grund} bg-sbb-kachel hover:bg-sbb-silver dark:hover:bg-sbb-iron dark:bg-sbb-charcoal ${
+              istGewaehlt ? 'border-sbb-black dark:border-sbb-white' : 'border-transparent'}`
   }
   if (istLoesung) return `${grund} border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15`
   if (istGewaehlt) return `${grund} border-sbb-red bg-sbb-white dark:bg-sbb-midnight`
-  return `${grund} border-sbb-cloud opacity-50 dark:border-sbb-iron`
+  return `${grund} border-transparent bg-sbb-kachel dark:bg-sbb-charcoal opacity-50`
 }
 
 function pruefKnopf(deaktiviert: boolean) {

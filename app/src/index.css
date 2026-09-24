@@ -25,6 +25,9 @@
   --color-sbb-anthracite: #5a5a5a;
   --color-sbb-iron: #444444;
   --color-sbb-charcoal: #212121;
+
+  /* Kacheln: Milk um 4,5 % dunkler (Michael, 2026-09-25) */
+  --color-sbb-kachel: #ebebeb;
   --color-sbb-midnight: #151515;
   --color-sbb-black: #000000;
 
@@ -122,7 +125,7 @@ body {
  * von den sonst kantigen Flächen.
  */
 @utility kachel {
-  background-color: #ebebeb;
+  background-color: var(--color-sbb-kachel);
   border-radius: 0.5rem;
   @media (prefers-color-scheme: dark) {
     background-color: var(--color-sbb-charcoal);
@@ -141,7 +144,7 @@ body {
 /* Eine Liste aus Kacheln: jeder Eintrag eine Kachel, dazwischen etwas Luft */
 @utility kachelliste {
   & > * {
-    background-color: #ebebeb;
+    background-color: var(--color-sbb-kachel);
     border-radius: 0.5rem;
     overflow: hidden;
   }
