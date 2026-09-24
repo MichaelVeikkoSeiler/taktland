@@ -1,9 +1,11 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   datum, type ErlebtArt, type ErlebteFahrt, fahrtEintragen, fahrtLoeschen, heftLesen, logbuchLoeschen,
   notizSetzen,
 } from '../erlebt'
-import type { BahnhofIndex } from '../typen'
+import { standortLaden } from '../daten'
+import type { BahnhofIndex, StandortDaten } from '../typen'
+import { type Box, KartenPlatz, lage, Netzkarte, useKarte } from './Netzkarte'
 import { BahnhofFeld } from './Strecke'
 
 const ART_TEXT: Record<ErlebtArt, [string, string]> = {
@@ -59,8 +61,8 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
           Noch keine Fahrt im Logbuch. Starte den Fahrtmodus mit dem roten Knopf oben.
         </p>
       ) : (
-        <ul className="mt-6 space-y-3">
-          {fahrten.map((f) => <Eintrag key={f.beginn} f={f} geaendert={neuLesen} />)}
+        <ul className="mt-6 divide-y divide-sbb-cloud border border-sbb-cloud dark:divide-sbb-iron dark:border-sbb-iron">
+          {fahrten.map((f) => <Eintrag key={f.beginn} f={f} index={index} geaendert={neuLesen} />)}
         </ul>
       )}
 
@@ -80,7 +82,20 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
   )
 }
 
-function Eintrag({ f, geaendert }: { f: ErlebteFahrt; geaendert: () => void }) {
+/** «2 Tunnel · 12 Brücken · 2 Bahnhöfe» */
+function zaehlung(f: ErlebteFahrt) {
+  return (['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => {
+    const n = f.objekte.filter((o) => o.art === a).length
+    return `${n} ${n === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}`
+  }).join(' · ')
+}
+
+/**
+ * Eine Fahrt als kompakte Zeile; ein Tipp klappt die Details auf: Notiz,
+ * Liste, Karte und Löschen (Michael, 2026-09-25: «Liste kompakter gestalten»).
+ */
+function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex | null; geaendert: () => void }) {
+  const [offen, setOffen] = useState(false)
   const [bearbeiten, setBearbeiten] = useState(false)
   const [text, setText] = useState(f.notiz ?? '')
 
@@ -96,75 +111,148 @@ function Eintrag({ f, geaendert }: { f: ErlebteFahrt; geaendert: () => void }) {
     geaendert()
   }
 
+  const knopf = 'text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm'
   return (
-    <li className="border border-sbb-cloud px-4 py-3 dark:border-sbb-iron">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="text-sm text-sbb-metal dark:text-sbb-storm">
-            {datum(f.beginn)}{f.manuell ? '' : `, ${uhrzeit(f.beginn)}`}
+    <li>
+      <button type="button" onClick={() => setOffen(!offen)} aria-expanded={offen}
+              className="flex w-full items-center justify-between gap-3 px-3 py-2.5 text-left
+                         hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
+        <span className="min-w-0">
+          <span className="block truncate font-bold">{f.von} → {f.nach}</span>
+          <span className="block truncate text-sm text-sbb-metal dark:text-sbb-storm">
+            {datum(f.beginn)}{f.manuell ? ' · von Hand eingetragen' : `, ${uhrzeit(f.beginn)}`}
+            {f.notiz ? ' · mit Notiz' : ''}
+          </span>
+        </span>
+        <svg viewBox="0 0 12 12" className={`size-3 shrink-0 transition-transform ${offen ? 'rotate-180' : ''}`}
+             aria-hidden="true">
+          <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" />
+        </svg>
+      </button>
+
+      {offen && (
+        <div className="border-t border-sbb-cloud px-3 pb-4 pt-3 dark:border-sbb-iron">
+          <p className="text-sm">
+            {f.manuell ? 'Von Hand eingetragen, ohne Fahrtmodus: keine Objekte erfasst' : zaehlung(f)}
           </p>
-          <p className="font-bold">{f.von} → {f.nach}</p>
-        </div>
-        <button type="button" onClick={loeschen} aria-label="Fahrt löschen" title="Fahrt löschen"
-                className="shrink-0 px-1 text-sbb-metal hover:text-sbb-red dark:text-sbb-storm">
-          ×
-        </button>
-      </div>
-      <p className="text-sm">
-        {f.manuell ? 'Von Hand eingetragen, ohne Fahrtmodus: keine Objekte erfasst'
-          : (['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => {
-            const n = f.objekte.filter((o) => o.art === a).length
-            return `${n} ${n === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}`
-          }).join(' · ')}
-      </p>
 
-      {bearbeiten ? (
-        <div className="mt-2">
-          <textarea value={text} onChange={(e) => setText(e.target.value)} rows={3} autoFocus
-                    placeholder="Deine Notiz zu dieser Fahrt"
-                    className="w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
-                               dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
-          <div className="mt-1 flex gap-3">
-            <button type="button" onClick={speichern}
-                    className="bg-sbb-charcoal px-3 py-1.5 text-sm font-medium text-white dark:bg-sbb-white dark:text-sbb-black">
-              Speichern
+          {bearbeiten ? (
+            <div className="mt-2">
+              <textarea value={text} onChange={(e) => setText(e.target.value)} rows={3} autoFocus
+                        placeholder="Deine Notiz zu dieser Fahrt"
+                        className="w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
+                                   dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
+              <div className="mt-1 flex gap-3">
+                <button type="button" onClick={speichern}
+                        className="bg-sbb-charcoal px-3 py-1.5 text-sm font-medium text-white dark:bg-sbb-white dark:text-sbb-black">
+                  Speichern
+                </button>
+                <button type="button" onClick={() => { setText(f.notiz ?? ''); setBearbeiten(false) }}
+                        className="text-sm underline underline-offset-2">
+                  Abbrechen
+                </button>
+              </div>
+            </div>
+          ) : f.notiz ? (
+            <p className="mt-2 whitespace-pre-line border-l-2 border-sbb-red pl-3">
+              {f.notiz}{' '}
+              <button type="button" onClick={() => setBearbeiten(true)} className={knopf}>ändern</button>
+            </p>
+          ) : (
+            <button type="button" onClick={() => setBearbeiten(true)} className={`mt-2 ${knopf}`}>
+              Notiz dazuschreiben
             </button>
-            <button type="button" onClick={() => { setText(f.notiz ?? ''); setBearbeiten(false) }}
-                    className="text-sm underline underline-offset-2">
-              Abbrechen
-            </button>
-          </div>
-        </div>
-      ) : f.notiz ? (
-        <p className="mt-2 whitespace-pre-line border-l-2 border-sbb-red pl-3">
-          {f.notiz}{' '}
-          <button type="button" onClick={() => setBearbeiten(true)}
-                  className="text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
-            ändern
+          )}
+
+          {f.objekte.length > 0 && (
+            <>
+              <FahrtKarte f={f} index={index} />
+              <details className="mt-3 text-sm">
+                <summary className={`cursor-pointer ${knopf}`}>Liste zeigen</summary>
+                <ol className="mt-2 space-y-0.5">
+                  {f.objekte.map((o) => (
+                    <li key={`${o.art}${o.kennung}`}>
+                      {o.name} <span className="text-sbb-metal dark:text-sbb-storm">· {ART_TEXT[o.art][0]}</span>
+                    </li>
+                  ))}
+                </ol>
+              </details>
+            </>
+          )}
+
+          <button type="button" onClick={loeschen}
+                  className="mt-4 border border-sbb-cloud px-3 py-1.5 text-sm font-medium hover:border-sbb-red
+                             hover:text-sbb-red dark:border-sbb-iron">
+            Fahrt löschen
           </button>
-        </p>
-      ) : (
-        <button type="button" onClick={() => setBearbeiten(true)}
-                className="mt-2 text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
-          Notiz dazuschreiben
-        </button>
-      )}
-
-      {f.objekte.length > 0 && (
-        <details className="mt-1 text-sm">
-          <summary className="cursor-pointer text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
-            Liste zeigen
-          </summary>
-          <ol className="mt-2 space-y-0.5">
-            {f.objekte.map((o) => (
-              <li key={`${o.art}${o.kennung}`}>
-                {o.name} <span className="text-sbb-metal dark:text-sbb-storm">· {ART_TEXT[o.art][0]}</span>
-              </li>
-            ))}
-          </ol>
-        </details>
+        </div>
       )}
     </li>
+  )
+}
+
+/**
+ * Karte einer Fahrt: dunkel die Linien der durchfahrenen Tunnel und Brücken,
+ * rot die Tunnel und Brücken, Ringe die Bahnhöfe, jeweils an der Lage aus
+ * ihrer Quelle. Den Weg selbst speichert das Logbuch nicht; die Karte zeigt,
+ * was durchfahren wurde.
+ */
+function FahrtKarte({ f, index }: { f: ErlebteFahrt; index: BahnhofIndex | null }) {
+  const { daten: karte, linien } = useKarte()
+  const [standort, setStandort] = useState<StandortDaten | null>(null)
+  useEffect(() => {
+    let ab = false
+    standortLaden().then((d) => { if (!ab) setStandort(d) }).catch(() => {})
+    return () => { ab = true }
+  }, [])
+
+  const inhalt = useMemo(() => {
+    if (!standort || !index) return null
+    const lagen = new Map<string, [number, number]>()
+    for (const [art, liste] of [['tunnel', standort.tunnel], ['bruecke', standort.bruecken]] as const) {
+      for (const [linie, stelle, , la, lo] of liste) {
+        if (la !== null && lo !== null) lagen.set(`${art} ${linie}:${stelle}`, lage(la, lo))
+      }
+    }
+    const bahnhof = new Map(index.bahnhoefe.map((b) => [String(b.uic), b]))
+    type Punkt = { o: ErlebteFahrt['objekte'][number]; x: number; y: number; uic: number | undefined }
+    const punkte = f.objekte.flatMap((o): Punkt[] => {
+      if (o.art === 'bahnhof') {
+        const b = bahnhof.get(o.kennung)
+        if (!b || b.lat === null || b.lon === null) return []
+        const [x, y] = lage(b.lat, b.lon)
+        return [{ o, x, y, uic: b.uic }]
+      }
+      const xy = lagen.get(`${o.art} ${o.kennung}`)
+      return xy ? [{ o, x: xy[0], y: xy[1], uic: undefined }] : []
+    })
+    if (!punkte.length) return null
+    const xs = punkte.map((p) => p.x), ys = punkte.map((p) => p.y)
+    const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]
+    const box: Box = { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2,
+                       w: Math.max((x1 - x0) * 1.3, (y1 - y0) * 1.3 * 1.6, 0.03) }
+    const hervor = new Set(f.objekte.filter((o) => o.art !== 'bahnhof').map((o) => Number(o.kennung.split(':')[0])))
+    return { punkte, box, hervor }
+  }, [standort, index, f])
+
+  if (!karte || !linien || !inhalt) return <KartenPlatz />
+  return (
+    <Netzkarte
+      daten={karte} linien={linien} start={inhalt.box} hervor={inhalt.hervor}
+      punkte={inhalt.punkte.filter((p) => p.o.art === 'bahnhof').map((p) => ({ name: p.o.name, x: p.x, y: p.y, uic: p.uic }))}
+      bahnhofOeffnen={(uic) => { window.location.hash = `#/bahnhof/${uic}` }}
+      zeichnen={(px) => inhalt.punkte.filter((p) => p.o.art !== 'bahnhof').map((p) => (
+        <circle key={`${p.o.art}${p.o.kennung}`} cx={p.x} cy={p.y}
+                r={(p.o.art === 'tunnel' ? 3.5 : 1.8) * px} className="fill-sbb-red" />
+      ))}
+      titel={`Karte der Fahrt ${f.von} nach ${f.nach}`}
+      beschriftung={(
+        <>
+          Rot: durchfahrene Tunnel (grosse Punkte) und Brücken (kleine), Ringe: Bahnhöfe, jeweils
+          dort, wo ihre Quelle die Lage angibt. Dunkel die Linien, auf denen sie liegen.
+        </>
+      )}
+    />
   )
 }
 
