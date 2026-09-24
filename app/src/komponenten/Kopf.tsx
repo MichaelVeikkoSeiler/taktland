@@ -8,6 +8,8 @@ import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
 import duellHell from '../assets/auftakt-duell-hell.webp'
 import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
 import logbuchHell from '../assets/auftakt-logbuch-hell.webp'
+import fahrtDunkel from '../assets/auftakt-fahrt-dunkel.webp'
+import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
 import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
@@ -50,7 +52,7 @@ let letzteObjekte = OBJEKTE[0]
 
 /** Auftaktbilder je Bereich, dazu eines für die Anleitung. Ein Bereich ohne
  *  Eintrag erscheint ohne Bild. */
-const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
+const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktBild>> = {
   start: {
     hell: startHell, dunkel: startDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Mann wartet am Perron, davor ein Bahnübergang und ein Tunnel, dahinter ein Zug auf einem Viadukt über einem See.',
@@ -80,6 +82,11 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
     hell: standortHell, dunkel: standortDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Mann schaut neben dem Gleis auf eine Karte in seinem Handy, vor ihm ein Tunnelportal mit einer roten Ortsmarke, links ein See.',
   },
+  // Michael, 2026-09-25: «Bilder für den Fahrtmodus», auch fürs Sammelheft
+  fahrt: {
+    hell: fahrtHell, dunkel: fahrtDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Blick aus dem Zugfenster auf ein Tunnelportal, einen See mit Dorf und Berge, auf dem Tisch ein Handy mit Taktland, das einen Tunnel meldet.',
+  },
   // Michael, 2026-09-25: «Bilder fürs Logbuch hell und dunkel»
   logbuch: {
     hell: logbuchHell, dunkel: logbuchDunkel, breite: 1344, hoehe: 664,
@@ -105,8 +112,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   fahrt?: boolean
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
-  // Fahrtmodus vorerst mit dem Bild der Strecken (Michael, 2026-09-24)
-  const bild = fahrt ? BILDER.linien : BILDER[schluessel]
+  const bild = fahrt ? BILDER.fahrt : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
