@@ -81,8 +81,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   fahrt?: boolean
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
-  // die Seite «Fahrtmodus» hat noch kein eigenes Bild
-  const bild = fahrt ? undefined : BILDER[schluessel]
+  // die Seite «Fahrtmodus» nimmt vorerst das Bild der Strecken (Michael, 2026-09-24)
+  const bild = fahrt ? BILDER.linien : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   return (
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
