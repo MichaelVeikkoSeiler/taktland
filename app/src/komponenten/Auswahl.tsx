@@ -80,7 +80,7 @@ export function Auswahl<T extends string | number>({
                   <button key={String(o.wert)} type="button" role="option" aria-selected={hier}
                           onClick={() => { waehlen(o.wert); schliessen() }}
                           className={`flex w-full items-center justify-between gap-3 border-b border-sbb-cloud
-                                      px-4 py-2.5 text-left text-sm last:border-b-0 hover:bg-sbb-milk
+                                      px-4 py-2.5 text-left text-base last:border-b-0 hover:bg-sbb-milk
                                       focus-visible:bg-sbb-milk dark:border-sbb-iron dark:hover:bg-sbb-charcoal
                                       dark:focus-visible:bg-sbb-charcoal ${hier ? 'font-bold' : ''}`}>
                     <span className="min-w-0">{o.text}</span>

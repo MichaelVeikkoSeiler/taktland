@@ -340,13 +340,13 @@ export function Duell() {
             titel="Bereich" wert={bereich}
             waehlen={(w) => auswahlWechseln(zusammensetzen(w, 'CH'))}
             optionen={[
-              { wert: 'bahnhoefe' as Bereich, text: `Bahnhöfe (${daten.bahnhoefe.length})` },
+              { wert: 'bahnhoefe' as Bereich, text: `Bahnhöfe (${daten.bahnhoefe.length})`, kurz: 'Bahnhöfe' },
               ...((daten.linien?.length ?? 0) > 0
-                ? [{ wert: 'linien' as Bereich, text: `Strecken (${daten.linien?.length})` }] : []),
+                ? [{ wert: 'linien' as Bereich, text: `Strecken (${daten.linien?.length})`, kurz: 'Strecken' }] : []),
               ...((daten.tunnel?.length ?? 0) > 0
-                ? [{ wert: 'tunnel' as Bereich, text: `Tunnel (${daten.tunnel?.length})` }] : []),
+                ? [{ wert: 'tunnel' as Bereich, text: `Tunnel (${daten.tunnel?.length})`, kurz: 'Tunnel' }] : []),
             ]}
-            className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sm text-sbb-black
+            className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sbb-black
                        disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
           />
         </div>
@@ -357,7 +357,7 @@ export function Duell() {
             waehlen={(w) => auswahlWechseln(zusammensetzen(bereich, w))}
             optionen={[{ wert: 'CH', text: 'Ganze Schweiz' },
                        ...kantone.map((kt) => ({ wert: kt.kuerzel, text: `${kt.name} (${kt.anzahl})`, kurz: kt.name }))]}
-            className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sm text-sbb-black
+            className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sbb-black
                        disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
           />
         </div>
