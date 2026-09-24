@@ -20,8 +20,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         hergeben. Was Taktland ist, steht auf der Startseite.
       </p>
       <p className="mt-2 leading-relaxed">
-        Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnhöfe, Strecken, Brücken,
-        Tunnel, Duell und Standort. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
+        Oben auf jeder Seite führen die Reiter zu den Bereichen: Objekte (darunter Bahnhöfe,
+        Strecken, Brücken und Tunnel), Duell, Standort und Logbuch. Der rote Knopf daneben
+        startet den Fahrtmodus. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
         betreibt, dazu Bahnhöfe anderer Bahnen wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn,
         sofern die offenen Daten für mindestens drei Kapitel reichen.
       </p>
