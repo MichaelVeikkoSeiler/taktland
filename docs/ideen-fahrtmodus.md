@@ -52,7 +52,8 @@ Zeichen und das Bild der Strecken.
 Sprachansage, Vibration, Challenge, neues App-Symbol und Illustrationen
 (von Michael).
 
-**Nochmals fragen, wenn alles andere durch ist:** «Ohne Ziel».
+**«Ohne Ziel»:** am 2026-09-24 nochmals gefragt; Michael will warten. Nach der
+Testfahrt am Samstag wieder ansprechen.
 
 **Vorgehen (Michael, 2026-09-24):** Alles geht direkt nach `main`. Sichtbare
 Änderungen zuerst als Screenshot an Michael; erst nach seinem OK pushen.
