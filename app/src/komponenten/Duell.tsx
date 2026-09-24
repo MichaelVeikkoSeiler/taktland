@@ -6,6 +6,7 @@ import { vergleichLaden } from '../daten'
 import type { Kategorie, Vergleichsdaten } from '../typen'
 import { kantonText } from '../kanton'
 import { Ladefehler } from './Ladefehler'
+import { Auswahl } from './Auswahl'
 
 /**
  * Bahnhöfe, Linien oder Tunnel gegeneinander. Die Fragen entstehen hier aus
@@ -333,41 +334,33 @@ export function Duell() {
           Runde kurz verworfen, und ein Feld, das dabei verschwindet, lässt
           sich nicht bedienen. */}
       <div className="mt-4 grid grid-cols-2 gap-2">
-        <label className="block">
+        <div>
           <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Bereich</span>
-          <select
-            value={bereich}
-            onChange={(e) => auswahlWechseln(zusammensetzen(e.target.value as Bereich, 'CH'))}
-            className="mt-1 w-full appearance-none border border-sbb-cloud bg-white px-3 py-2.5
-                       text-sbb-black disabled:opacity-60 dark:border-sbb-iron
-                       dark:bg-sbb-midnight dark:text-sbb-white"
-          >
-            <option value="bahnhoefe">Bahnhöfe ({daten.bahnhoefe.length})</option>
-            {(daten.linien?.length ?? 0) > 0 && (
-              <option value="linien">Strecken ({daten.linien?.length})</option>
-            )}
-            {(daten.tunnel?.length ?? 0) > 0 && (
-              <option value="tunnel">Tunnel ({daten.tunnel?.length})</option>
-            )}
-          </select>
-        </label>
-        <label className="block">
+          <Auswahl
+            titel="Bereich" wert={bereich}
+            waehlen={(w) => auswahlWechseln(zusammensetzen(w, 'CH'))}
+            optionen={[
+              { wert: 'bahnhoefe' as Bereich, text: `Bahnhöfe (${daten.bahnhoefe.length})` },
+              ...((daten.linien?.length ?? 0) > 0
+                ? [{ wert: 'linien' as Bereich, text: `Strecken (${daten.linien?.length})` }] : []),
+              ...((daten.tunnel?.length ?? 0) > 0
+                ? [{ wert: 'tunnel' as Bereich, text: `Tunnel (${daten.tunnel?.length})` }] : []),
+            ]}
+            className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sm text-sbb-black
+                       disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
+          />
+        </div>
+        <div>
           <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Gebiet</span>
-          <select
-            value={gebiet} disabled={bereich === 'linien'}
-            onChange={(e) => auswahlWechseln(zusammensetzen(bereich, e.target.value))}
-            className="mt-1 w-full appearance-none border border-sbb-cloud bg-white px-3 py-2.5
-                       text-sbb-black disabled:opacity-60 dark:border-sbb-iron
-                       dark:bg-sbb-midnight dark:text-sbb-white"
-          >
-            <option value="CH">Ganze Schweiz</option>
-            {kantone.map((kt) => (
-              <option key={kt.kuerzel} value={kt.kuerzel}>
-                {kt.name} ({kt.anzahl})
-              </option>
-            ))}
-          </select>
-        </label>
+          <Auswahl
+            titel="Gebiet" wert={gebiet} disabled={bereich === 'linien'}
+            waehlen={(w) => auswahlWechseln(zusammensetzen(bereich, w))}
+            optionen={[{ wert: 'CH', text: 'Ganze Schweiz' },
+                       ...kantone.map((kt) => ({ wert: kt.kuerzel, text: `${kt.name} (${kt.anzahl})`, kurz: kt.name }))]}
+            className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sm text-sbb-black
+                       disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
+          />
+        </div>
       </div>
 
       {runde && k ? (

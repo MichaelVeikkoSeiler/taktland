@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, projizieren, wegEnde } from '../fahrt'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
+import { Auswahl } from './Auswahl'
 
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
 const VORLAEUFE_S = [20, 10] as const
@@ -357,35 +358,33 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <input type="checkbox" checked={einstellung.tunnel} className="size-5 accent-sbb-red"
                    onChange={(e) => aendern({ tunnel: e.target.checked })} />
           </label>
-          <label className="flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between gap-3">
             <span>Brücken melden</span>
-            <select
-              value={einstellung.bruecken}
-              onChange={(e) => aendern({ bruecken: e.target.value as BrueckenWahl })}
+            <Auswahl
+              titel="Brücken melden" wert={einstellung.bruecken}
+              waehlen={(w) => aendern({ bruecken: w })}
+              optionen={[{ wert: 'groessere' as BrueckenWahl, text: 'ab 3 Baueinheiten' },
+                         { wert: 'alle' as BrueckenWahl, text: 'alle' },
+                         { wert: 'keine' as BrueckenWahl, text: 'keine' }]}
               className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
                          dark:bg-sbb-midnight dark:text-sbb-white"
-            >
-              <option value="groessere">ab 3 Baueinheiten</option>
-              <option value="alle">alle</option>
-              <option value="keine">keine</option>
-            </select>
-          </label>
+            />
+          </div>
           <label className="flex items-center justify-between gap-3">
             <span>Bahnhöfe melden</span>
             <input type="checkbox" checked={einstellung.bahnhoefe} className="size-5 accent-sbb-red"
                    onChange={(e) => aendern({ bahnhoefe: e.target.checked })} />
           </label>
-          <label className="flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between gap-3">
             <span>Melden etwa</span>
-            <select
-              value={einstellung.vorlauf}
-              onChange={(e) => aendern({ vorlauf: Number(e.target.value) as Vorlauf })}
+            <Auswahl
+              titel="Melden etwa" wert={einstellung.vorlauf}
+              waehlen={(w) => aendern({ vorlauf: w })}
+              optionen={VORLAEUFE_S.map((x) => ({ wert: x as Vorlauf, text: `${x} Sekunden vorher` }))}
               className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
                          dark:bg-sbb-midnight dark:text-sbb-white"
-            >
-              {VORLAEUFE_S.map((x) => <option key={x} value={x}>{x} Sekunden vorher</option>)}
-            </select>
-          </label>
+            />
+          </div>
           <label className="flex items-center justify-between gap-3">
             <span>Ton bei der Meldung</span>
             <input type="checkbox" checked={einstellung.ton} className="size-5 accent-sbb-red"

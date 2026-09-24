@@ -6,6 +6,7 @@ import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
 import { genau } from './Objekte'
 import { StreckeKarte } from './StreckeKarte'
 import { Ladefehler } from './Ladefehler'
+import { Auswahl } from './Auswahl'
 
 export type UebersichtArt = 'tunnel' | 'bruecken'
 
@@ -182,17 +183,16 @@ export function Uebersicht({ art, stand, aendern }: {
             />
           </label>
 
-          <label className="mt-3 flex items-center gap-2 text-sm text-sbb-metal dark:text-sbb-storm">
+          <div className="mt-3 flex items-center gap-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Sortierung
-            <select
-              value={sortierung.wert}
-              onChange={(e) => aendern({ ...stand, sortierung: e.target.value, seite: 0 })}
+            <Auswahl
+              titel="Sortierung" wert={sortierung.wert}
+              waehlen={(w) => aendern({ ...stand, sortierung: w, seite: 0 })}
+              optionen={t.sortierungen.map((s) => ({ wert: s.wert, text: s.text }))}
               className="min-w-0 border border-sbb-cloud bg-white px-2 py-1 text-sbb-black
                          dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
-            >
-              {t.sortierungen.map((s) => <option key={s.wert} value={s.wert}>{s.text}</option>)}
-            </select>
-          </label>
+            />
+          </div>
 
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             {stand.begriff.trim()

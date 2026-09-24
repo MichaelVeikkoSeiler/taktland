@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Auswahl } from './Auswahl'
 
 /** So viele Einträge stehen auf einer Seite (Michael, 2026-09-22: lieber 100).
  *  Ganz am Anfang wuchs die Bahnhofliste mit «Weitere anzeigen» um je 60
@@ -99,17 +100,14 @@ export function Blaettern({ seite, seiten, bereiche, blaettern, name }: {
         <span className="text-xs text-sbb-metal dark:text-sbb-storm">
           Seite {seite + 1} von {seiten}
         </span>
-        {/* unsichtbar über dem Feld: ein Tipp öffnet die Auswahl des Geräts */}
-        <select
-          aria-label="Seite wählen"
-          value={seite}
-          onChange={(e) => blaettern(Number(e.target.value))}
+        {/* unsichtbar über dem Feld: ein Tipp öffnet die Liste der Seiten */}
+        <Auswahl
+          titel="Seite wählen" wert={seite} waehlen={blaettern}
+          optionen={bereiche.map((b, i) => ({ wert: i, text: `Seite ${i + 1}: ${b}` }))}
           className="absolute inset-0 size-full cursor-pointer opacity-0"
         >
-          {bereiche.map((b, i) => (
-            <option key={i} value={i}>Seite {i + 1}: {b}</option>
-          ))}
-        </select>
+          <span className="sr-only">Seite wählen</span>
+        </Auswahl>
       </div>
       <button
         type="button" className={pfeil} disabled={seite === seiten - 1}

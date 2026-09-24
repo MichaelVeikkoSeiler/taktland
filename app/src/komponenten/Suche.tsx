@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { kantonText } from '../kanton'
 import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
+import { Auswahl } from './Auswahl'
 
 const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
@@ -57,18 +58,17 @@ export function Suche({ index, oeffnen, stand, aendern }: {
         />
       </label>
 
-      <label className="mt-3 flex items-center gap-2 text-sm text-sbb-metal dark:text-sbb-storm">
+      <div className="mt-3 flex items-center gap-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Sortierung
-        <select
-          value={sortierung}
-          onChange={(e) => aendern({ ...stand, sortierung: e.target.value as ListenStand['sortierung'], seite: 0 })}
+        <Auswahl
+          titel="Sortierung" wert={sortierung}
+          waehlen={(w) => aendern({ ...stand, sortierung: w, seite: 0 })}
+          optionen={[{ wert: 'alphabet' as ListenStand['sortierung'], text: 'Alphabetisch' },
+                     { wert: 'frequenz' as ListenStand['sortierung'], text: 'Meiste Ein- und Aussteigende zuerst' }]}
           className="min-w-0 border border-sbb-cloud bg-white px-2 py-1 text-sbb-black
                      dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
-        >
-          <option value="alphabet">Alphabetisch</option>
-          <option value="frequenz">Meiste Ein- und Aussteigende zuerst</option>
-        </select>
-      </label>
+        />
+      </div>
 
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         {begriff.trim()
