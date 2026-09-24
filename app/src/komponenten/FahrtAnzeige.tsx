@@ -106,18 +106,23 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
             const x2 = o.sAus !== null ? xBei(o.sAus) : x + 3
             return (
               <rect key={`t${o.kennung}`} x={x} y="39" width={Math.max(3, x2 - x)} height="14" rx="1.5"
-                    className={`fill-sbb-charcoal dark:fill-sbb-storm ${blass}`} />
+                    className={`fill-fahrt-tunnel dark:fill-sbb-storm ${blass}`} />
             )
           }
           if (o.art === 'bruecke') {
             return (
-              <path key={`b${o.kennung}`} d={`M${x - 4} 51 Q${x} 41 ${x + 4} 51`} fill="none" strokeWidth="2.5"
-                    strokeLinecap="round" className={`stroke-sbb-blue ${blass}`} />
+              <g key={`b${o.kennung}`} className={blass}>
+                {/* dunkle Kante unter dem Gelb */}
+                <path d={`M${x - 4} 51 Q${x} 41 ${x + 4} 51`} fill="none" strokeWidth="4.5"
+                      strokeLinecap="round" className="stroke-sbb-charcoal dark:stroke-transparent" />
+                <path d={`M${x - 4} 51 Q${x} 41 ${x + 4} 51`} fill="none" strokeWidth="2.5"
+                      strokeLinecap="round" className="stroke-fahrt-bruecke" />
+              </g>
             )
           }
           return (
             <circle key={`h${o.kennung}`} cx={x} cy="46" r="4.5" strokeWidth="2"
-                    className={`fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white ${blass}`} />
+                    className={`fill-white stroke-fahrt-bahnhof dark:fill-sbb-midnight dark:stroke-fahrt-bahnhof-hell ${blass}`} />
           )
         })}
         {beschriftet.map(({ o, x, oben, kurz, rechts }) => (
@@ -136,12 +141,15 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
         </g>
       </svg>
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-sbb-metal dark:text-sbb-storm" aria-hidden="true">
-        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-4 rounded-sm bg-sbb-charcoal dark:bg-sbb-storm" />Tunnel</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-4 rounded-sm bg-fahrt-tunnel dark:bg-sbb-storm" />Tunnel</span>
         <span className="flex items-center gap-1.5">
-          <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 9 Q8 0 15 9" fill="none" strokeWidth="2.5" className="stroke-sbb-blue" /></svg>
+          <svg viewBox="0 0 16 10" className="h-2.5 w-4">
+            <path d="M1 9 Q8 0 15 9" fill="none" strokeWidth="4" strokeLinecap="round" className="stroke-sbb-charcoal dark:stroke-transparent" />
+            <path d="M1 9 Q8 0 15 9" fill="none" strokeWidth="2.5" strokeLinecap="round" className="stroke-fahrt-bruecke" />
+          </svg>
           Brücke
         </span>
-        <span className="flex items-center gap-1.5"><span className="inline-block size-2.5 rounded-full border-2 border-sbb-charcoal dark:border-sbb-white" />Bahnhof</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block size-2.5 rounded-full border-2 border-fahrt-bahnhof dark:border-fahrt-bahnhof-hell" />Bahnhof</span>
       </div>
     </div>
   )
@@ -226,9 +234,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
             <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 3.5 : 3) * px}
                     strokeWidth={1.5} vectorEffect="non-scaling-stroke"
                     opacity={(o.sAus ?? o.s) < s ? 0.35 : 1}
-                    className={o.art === 'tunnel' ? 'fill-sbb-charcoal stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
-                      : o.art === 'bruecke' ? 'fill-sbb-blue stroke-white dark:stroke-sbb-midnight'
-                      : 'fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white'} />
+                    className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
+                      : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-sbb-charcoal dark:stroke-sbb-midnight'
+                      : 'fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight'} />
           )
         })}
         {hier && sJetzt !== null && (

@@ -26,6 +26,15 @@
   --color-sbb-iron: #444444;
   --color-sbb-charcoal: #212121;
 
+  /* Fahrtmodus: Tunnel schwarz, Brücken gelb, Bahnhöfe blau (Michael,
+     2026-09-25). Das Gelb ist ein kräftiger Ton; auf Weiss braucht es
+     eine dunkle Kante, sonst verschwindet es. Blau ist SBB Blue, im
+     Dunkeln heller, damit es auf Schwarz lesbar bleibt. */
+  --color-fahrt-tunnel: #000000;
+  --color-fahrt-bruecke: #ffde15;
+  --color-fahrt-bahnhof: #2d327d;
+  --color-fahrt-bahnhof-hell: #8d93e0;
+
   /* Kacheln: Milk um 4,5 % dunkler (Michael, 2026-09-25) */
   --color-sbb-kachel: #ebebeb;
   --color-sbb-midnight: #151515;
