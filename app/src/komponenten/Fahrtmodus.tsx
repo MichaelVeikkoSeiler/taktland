@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, projizieren, wegEnde } from '../fahrt'
 import { freigabeHilfe } from '../umgebung'
-import { FahrtKarte, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
+import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 import { Auswahl } from './Auswahl'
 
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
@@ -287,24 +287,24 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
         {naechstes ? (
           <div className={`mt-5 flex items-center gap-4 border px-4 transition-all ${bald
-            ? 'border-sbb-red bg-sbb-red py-7 text-white'
+            ? `${FARBE[naechstes.art].flaeche} ${FARBE[naechstes.art].schrift} py-7`
             : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
-            <Ring bald={!!bald}
+            <Ring bald={!!bald} art={naechstes.art}
                   anteil={eta(naechstes) === null ? null : 1 - eta(naechstes)! / RING_S}>
               <ZeitImRing sekunden={eta(naechstes)} steht={stand !== null} />
             </Ring>
             <div className="min-w-0">
-              <p className={`text-xs uppercase tracking-wide ${bald ? 'text-white' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+              <p className={`text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
                 {bald ? 'Gleich' : 'Als Nächstes'} · {ART[naechstes.art]}
               </p>
-              <p className={`mt-1 font-bold leading-tight ${bald ? 'text-3xl' : 'text-2xl'}`}>
+              <p lang="de" className={`mt-1 font-bold leading-tight break-words hyphens-auto ${bald ? 'text-3xl' : 'text-2xl'}`}>
                 {text(naechstes)?.name}
               </p>
-              <p className={`mt-1 ${bald ? 'text-white' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+              <p className={`mt-1 ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
                 {text(naechstes)?.zeile}
               </p>
               {naechstes.art === 'tunnel' && naechstes.sAus === null && (
-                <p className={`mt-1 text-sm ${bald ? 'text-white' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+                <p className={`mt-1 text-sm ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
                   Wo er endet, geben die Daten nicht her.
                 </p>
               )}

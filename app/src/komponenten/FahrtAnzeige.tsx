@@ -11,8 +11,34 @@ import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte } from './Netzkart
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
 
+/**
+ * Farben je Art im Fahrtmodus: Tunnel schwarz, Brücken gelb, Bahnhöfe blau
+ * (Michael, 2026-09-25), auch für den Ring und die grosse Fläche kurz vor dem
+ * Objekt. Auf Gelb steht die Schrift schwarz, sonst weiss. Im Dunkeln bekommt
+ * die schwarze Fläche einen hellen Rand, sonst verschwände sie.
+ */
+export const FARBE: Record<FahrObjekt['art'], { flaeche: string; ring: string; ringBald: string; grundBald: string; schrift: string }> = {
+  tunnel: {
+    flaeche: 'border-fahrt-tunnel bg-fahrt-tunnel dark:border-sbb-storm', schrift: 'text-white',
+    ring: 'stroke-fahrt-tunnel dark:stroke-sbb-storm', ringBald: 'stroke-white', grundBald: 'stroke-white/30',
+  },
+  bruecke: {
+    flaeche: 'border-fahrt-bruecke bg-fahrt-bruecke', schrift: 'text-sbb-black',
+    ring: 'stroke-fahrt-bruecke', ringBald: 'stroke-sbb-black', grundBald: 'stroke-black/15',
+  },
+  bahnhof: {
+    flaeche: 'border-fahrt-bahnhof bg-fahrt-bahnhof', schrift: 'text-white',
+    ring: 'stroke-fahrt-bahnhof dark:stroke-fahrt-bahnhof-hell', ringBald: 'stroke-white', grundBald: 'stroke-white/30',
+  },
+}
+
 /** Ring um die Zeit bis zum nächsten Objekt; voll beim Objekt */
-export function Ring({ anteil, bald, children }: { anteil: number | null; bald: boolean; children: React.ReactNode }) {
+export function Ring({ anteil, bald, art, children }: {
+  anteil: number | null
+  bald: boolean
+  art: FahrObjekt['art']
+  children: React.ReactNode
+}) {
   const r = 26
   const umfang = 2 * Math.PI * r
   const voll = Math.max(0, Math.min(1, anteil ?? 0))
@@ -20,11 +46,11 @@ export function Ring({ anteil, bald, children }: { anteil: number | null; bald: 
     <div className="relative size-20 shrink-0">
       <svg viewBox="0 0 64 64" className="size-20 -rotate-90" aria-hidden="true">
         <circle cx="32" cy="32" r={r} fill="none" strokeWidth="6"
-                className={bald ? 'stroke-white/30' : 'stroke-sbb-cloud dark:stroke-sbb-iron'} />
+                className={bald ? FARBE[art].grundBald : 'stroke-sbb-cloud dark:stroke-sbb-iron'} />
         <circle cx="32" cy="32" r={r} fill="none" strokeWidth="6" strokeDasharray={umfang}
                 strokeDashoffset={umfang * (1 - voll)}
                 className={`transition-[stroke-dashoffset] duration-500 ease-linear ${bald
-                  ? 'stroke-white' : 'stroke-sbb-red'}`} />
+                  ? FARBE[art].ringBald : FARBE[art].ring}`} />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
         {children}
