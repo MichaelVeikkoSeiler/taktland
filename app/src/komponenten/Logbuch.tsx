@@ -116,7 +116,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
     <li className="kachel overflow-hidden">
       <button type="button" onClick={() => setOffen(!offen)} aria-expanded={offen}
               className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left
-                         hover:bg-sbb-cloud/60 dark:hover:bg-sbb-iron/60">
+                         hover:bg-sbb-silver dark:hover:bg-sbb-iron/60">
         <span className="min-w-0">
           <span className="block truncate font-bold">{f.von} → {f.nach}</span>
           <span className="block truncate text-sm text-sbb-metal dark:text-sbb-storm">

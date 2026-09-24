@@ -115,12 +115,13 @@ body {
 }
 
 /*
- * Kachel für Listen: ganz helles Grau, leicht abgerundet (Michael,
- * 2026-09-25: «Kacheln ganz helles Grau (fast weiss) und leicht abgerundete
- * Ecken»). Eine bewusste Ausnahme von den sonst kantigen Flächen.
+ * Kachel für Listen: helles Grau, leicht abgerundet (Michael, 2026-09-25:
+ * «Kacheln ganz helles Grau (fast weiss) und leicht abgerundete Ecken», dann
+ * «+6 %»: Milk #f6f6f6 um 6 % dunkler ist #e7e7e7). Eine bewusste Ausnahme
+ * von den sonst kantigen Flächen.
  */
 @utility kachel {
-  background-color: var(--color-sbb-milk);
+  background-color: #e7e7e7;
   border-radius: 0.5rem;
   @media (prefers-color-scheme: dark) {
     background-color: var(--color-sbb-charcoal);
@@ -130,7 +131,7 @@ body {
 /* Eine Kachel, die zu etwas führt: beim Darüberfahren etwas dunkler */
 @utility kachel-link {
   transition: background-color 150ms;
-  &:hover { background-color: var(--color-sbb-cloud); }
+  &:hover { background-color: var(--color-sbb-silver); }
   @media (prefers-color-scheme: dark) {
     &:hover { background-color: var(--color-sbb-iron); }
   }
@@ -139,12 +140,12 @@ body {
 /* Eine Liste aus Kacheln: jeder Eintrag eine Kachel, dazwischen etwas Luft */
 @utility kachelliste {
   & > * {
-    background-color: var(--color-sbb-milk);
+    background-color: #e7e7e7;
     border-radius: 0.5rem;
     overflow: hidden;
   }
   & > * + * { margin-top: 0.5rem; }
-  & :is(a, button):hover { background-color: var(--color-sbb-cloud); }
+  & :is(a, button):hover { background-color: var(--color-sbb-silver); }
   @media (prefers-color-scheme: dark) {
     & > * { background-color: var(--color-sbb-charcoal); }
     & :is(a, button):hover { background-color: var(--color-sbb-iron); }
