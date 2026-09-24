@@ -168,20 +168,14 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
 /**
  * Der Spezialknopf zum Fahrtmodus, auf jeder Seite neben dem Namen (Michael,
  * 2026-09-24: «Eigener Spezial-Button Fahrtmodus»). Rot, weil er der
- * wichtigste Weg der App ist; offen ist er dunkler.
+ * wichtigste Weg der App ist; offen ist er dunkler. Schrift so gross wie die
+ * Reiter, ohne Zug-Zeichen (Michael, 2026-09-25).
  */
 function FahrtKnopf({ hier }: { hier: boolean }) {
   return (
     <a href="#/fahrt" aria-current={hier ? 'page' : undefined}
-       className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-bold text-white ${hier
+       className={`shrink-0 rounded-lg px-3 py-1.5 text-base font-bold text-white max-[359px]:text-[14px] ${hier
          ? 'bg-sbb-red125' : 'bg-sbb-red hover:bg-sbb-red125'}`}>
-      <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
-        <path d="M5 21l2-3M19 21l-2-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <rect x="5" y="3" width="14" height="15" rx="3" fill="currentColor" />
-        <rect x="7.5" y="6" width="9" height="5" rx="1" className="fill-sbb-red" />
-        <circle cx="9" cy="14.5" r="1.2" className="fill-sbb-red" />
-        <circle cx="15" cy="14.5" r="1.2" className="fill-sbb-red" />
-      </svg>
       Fahrtmodus
     </a>
   )
