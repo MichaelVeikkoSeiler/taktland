@@ -6,6 +6,8 @@ import brueckenDunkel from '../assets/auftakt-bruecken-dunkel.webp'
 import brueckenHell from '../assets/auftakt-bruecken-hell.webp'
 import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
 import duellHell from '../assets/auftakt-duell-hell.webp'
+import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
+import logbuchHell from '../assets/auftakt-logbuch-hell.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
 import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
@@ -77,6 +79,11 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
     hell: standortHell, dunkel: standortDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Mann schaut neben dem Gleis auf eine Karte in seinem Handy, vor ihm ein Tunnelportal mit einer roten Ortsmarke, links ein See.',
   },
+  // Michael, 2026-09-25: «Bilder fürs Logbuch hell und dunkel»
+  logbuch: {
+    hell: logbuchHell, dunkel: logbuchDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Blick aus dem Zugfenster auf einen See mit Uferort, Kirchturm und Viadukt, auf dem Tisch ein offenes rotes Notizbuch mit einer Strecke aus Punkten, ein Handy und ein Becher.',
+  },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration in zwei Hälften: links ein moderner Bahnhof mit Passerelle, Glaslift und Zug, rechts ein kleiner Bahnhof mit Holzdach vor einem Tunnel.',
@@ -97,8 +104,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   fahrt?: boolean
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
-  // Fahrtmodus und Logbuch vorerst mit dem Bild der Strecken (Michael, 2026-09-24)
-  const bild = fahrt || aktiv === 'logbuch' ? BILDER.linien : BILDER[schluessel]
+  // Fahrtmodus vorerst mit dem Bild der Strecken (Michael, 2026-09-24)
+  const bild = fahrt ? BILDER.linien : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
