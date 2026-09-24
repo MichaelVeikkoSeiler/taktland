@@ -147,8 +147,8 @@ Rot `#eb0000` nur für Wichtiges, sonst Weiss, Milk `#f6f6f6`, Cloud `#e5e5e5`,
 Metal `#767676`, Charcoal `#212121`. Keine Farbverläufe, kantige Flächen,
 Helvetica als Ersatz für die nicht frei lizenzierte Hausschrift SBB Web.
 
-Listen und Karten, die zu etwas führen, sind **Kacheln**: helles Grau `#e7e7e7`
-(Milk um 6 % dunkler), leicht abgerundet, ohne Rahmen (Michael, 2026-09-25). Dafür gibt es die Klassen
+Listen und Karten, die zu etwas führen, sind **Kacheln**: helles Grau `#ebebeb`
+(Milk um 4,5 % dunkler), leicht abgerundet, ohne Rahmen (Michael, 2026-09-25). Dafür gibt es die Klassen
 `kachel`, `kachel-link` und `kachelliste` in `app/src/index.css`; sie sind die
 einzige Ausnahme von den kantigen Flächen.
 

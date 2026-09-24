@@ -117,11 +117,12 @@ body {
 /*
  * Kachel für Listen: helles Grau, leicht abgerundet (Michael, 2026-09-25:
  * «Kacheln ganz helles Grau (fast weiss) und leicht abgerundete Ecken», dann
- * «+6 %»: Milk #f6f6f6 um 6 % dunkler ist #e7e7e7). Eine bewusste Ausnahme
+ * «+6 %», dann «nicht 6 sondern 4.5 %»: Milk #f6f6f6 um 4,5 % dunkler ist
+ * #ebebeb). Eine bewusste Ausnahme
  * von den sonst kantigen Flächen.
  */
 @utility kachel {
-  background-color: #e7e7e7;
+  background-color: #ebebeb;
   border-radius: 0.5rem;
   @media (prefers-color-scheme: dark) {
     background-color: var(--color-sbb-charcoal);
@@ -140,7 +141,7 @@ body {
 /* Eine Liste aus Kacheln: jeder Eintrag eine Kachel, dazwischen etwas Luft */
 @utility kachelliste {
   & > * {
-    background-color: #e7e7e7;
+    background-color: #ebebeb;
     border-radius: 0.5rem;
     overflow: hidden;
   }
