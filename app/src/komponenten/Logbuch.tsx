@@ -144,7 +144,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
                                    dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
               <div className="mt-1 flex gap-3">
                 <button type="button" onClick={speichern}
-                        className="bg-sbb-charcoal px-3 py-1.5 text-sm font-medium text-white dark:bg-sbb-white dark:text-sbb-black">
+                        className="rounded-lg bg-sbb-anthracite px-3 py-1.5 text-sm font-medium text-white dark:bg-sbb-white dark:text-sbb-black">
                   Speichern
                 </button>
                 <button type="button" onClick={() => { setText(f.notiz ?? ''); setBearbeiten(false) }}

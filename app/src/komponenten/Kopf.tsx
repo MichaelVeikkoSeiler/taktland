@@ -138,8 +138,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
             const hier = o.bereich === aktiv
             return (
               <a key={o.bereich} href={o.adresse} aria-current={hier ? 'page' : undefined}
-                 className={`px-1 py-1.5 text-center font-medium transition-colors sm:px-3 ${hier
-                   ? 'bg-sbb-charcoal text-white dark:bg-sbb-white dark:text-sbb-black'
+                 className={`rounded-lg px-1 py-1.5 text-center font-medium transition-colors sm:px-3 ${hier
+                   ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                    : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
                 {o.text}
               </a>

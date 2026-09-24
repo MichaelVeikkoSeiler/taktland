@@ -294,7 +294,7 @@ function Quiz({ fragen, nochmals }: { fragen: Frage[]; nochmals: () => void }) {
         <div className="mt-3 flex items-center justify-between gap-3">
           <p className="font-medium">{gewaehlt === f.richtig ? 'Richtig' : `Richtig wäre: ${f.antworten[f.richtig]}`}</p>
           <button type="button" onClick={() => { setNr(nr + 1); setGewaehlt(null) }}
-                  className="shrink-0 bg-sbb-charcoal px-4 py-2 font-medium text-white dark:bg-sbb-white dark:text-sbb-black">
+                  className="shrink-0 rounded-lg bg-sbb-anthracite px-4 py-2 font-medium text-white dark:bg-sbb-white dark:text-sbb-black">
             {nr + 1 < fragen.length ? 'Weiter' : 'Ergebnis'}
           </button>
         </div>
@@ -319,7 +319,7 @@ function BilanzNotiz({ beginn }: { beginn: number }) {
                            dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
       <div className="mt-1 flex items-center gap-3">
         <button type="button" disabled={!text.trim()} onClick={() => { notizSetzen(beginn, text); setGespeichert(true) }}
-                className="bg-sbb-charcoal px-3 py-1.5 text-sm font-medium text-white disabled:opacity-40
+                className="rounded-lg bg-sbb-anthracite px-3 py-1.5 text-sm font-medium text-white disabled:opacity-40
                            dark:bg-sbb-white dark:text-sbb-black">
           Notiz speichern
         </button>

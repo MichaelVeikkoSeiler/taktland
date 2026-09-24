@@ -120,12 +120,12 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
       <LogbuchKarte />
 
       <h2 className="mt-8 text-lg font-bold">Neue Fahrt</h2>
-      <div className="mt-3 grid grid-cols-2 border border-sbb-cloud dark:border-sbb-iron" role="group"
+      <div className="mt-3 grid grid-cols-2 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group"
            aria-label="Wie wählen">
         {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel']] as const).map(([a, t]) => (
           <button key={a} type="button" aria-pressed={art === a} onClick={() => artWaehlen(a)}
                   className={`px-3 py-2 font-medium ${art === a
-                    ? 'bg-sbb-charcoal text-white dark:bg-sbb-white dark:text-sbb-black'
+                    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                     : 'bg-white text-sbb-black hover:bg-sbb-milk dark:bg-sbb-midnight dark:text-sbb-white'}`}>
             {t}
           </button>

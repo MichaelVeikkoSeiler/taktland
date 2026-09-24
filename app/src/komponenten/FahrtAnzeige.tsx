@@ -197,11 +197,11 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
     <figure className="mt-6">
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-medium">Karte</p>
-        <div className="flex border border-sbb-cloud text-xs dark:border-sbb-iron" role="group" aria-label="Ausschnitt">
+        <div className="flex overflow-hidden rounded-lg border border-sbb-cloud text-xs dark:border-sbb-iron" role="group" aria-label="Ausschnitt">
           {([[true, 'Nah'], [false, 'Ganzer Weg']] as const).map(([n, t]) => (
             <button key={t} type="button" aria-pressed={nah === n} onClick={() => setNah(n)}
                     className={`px-3 py-1.5 font-medium ${nah === n
-                      ? 'bg-sbb-charcoal text-white dark:bg-sbb-white dark:text-sbb-black'
+                      ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                       : 'bg-white dark:bg-sbb-midnight'}`}>
               {t}
             </button>

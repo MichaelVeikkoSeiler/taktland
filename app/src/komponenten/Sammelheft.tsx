@@ -74,7 +74,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
   }
 
   const knopf = (aktiv: boolean) => `px-3 py-2 text-sm font-medium ${aktiv
-    ? 'bg-sbb-charcoal text-white dark:bg-sbb-white dark:text-sbb-black'
+    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
     : 'bg-white text-sbb-black hover:bg-sbb-milk dark:bg-sbb-midnight dark:text-sbb-white'}`
 
   return (
@@ -100,7 +100,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
         Gezählt von allen Tunneln und Brücken der SBB in Taktland und allen Bahnhöfen in Taktland.
       </p>
 
-      <div className="mt-6 grid grid-cols-2 border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ansicht">
+      <div className="mt-6 grid grid-cols-2 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ansicht">
         {([['erlebt', 'Erlebt'], ['fehlt', 'Fehlt noch']] as const).map(([a, t]) => (
           <button key={a} type="button" aria-pressed={ansicht === a} onClick={() => { setAnsicht(a); setMehr(false) }} className={knopf(ansicht === a)}>
             {t}
@@ -113,7 +113,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
           <div className="mt-4 flex gap-2">
             {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => (
               <button key={a} type="button" aria-pressed={art === a} onClick={() => { setArt(a); setMehr(false) }}
-                      className={`border border-sbb-cloud dark:border-sbb-iron ${knopf(art === a)}`}>
+                      className={`rounded-lg border border-sbb-cloud dark:border-sbb-iron ${knopf(art === a)}`}>
                 {ART_TEXT[a][1]}
               </button>
             ))}
