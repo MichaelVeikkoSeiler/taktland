@@ -230,3 +230,20 @@ export function tonVorbereiten(): () => void {
     }
   }
 }
+
+/**
+ * Den Ton im Tipp auf der Seite «Fahrtmodus» vorbereiten und bis zum Start
+ * auf der Seite «Strecke» liegen lassen: Dort startet der Fahrtmodus ohne
+ * eigenen Tipp, und ohne Tipp bliebe der Ton auf manchen Geräten stumm.
+ */
+let bereitgelegt: (() => void) | null = null
+
+export function tonBereitlegen() {
+  bereitgelegt = tonVorbereiten()
+}
+
+export function tonAbholen() {
+  const ton = bereitgelegt ?? tonVorbereiten()
+  bereitgelegt = null
+  return ton
+}

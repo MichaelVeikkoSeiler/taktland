@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { geometrieLaden, linienLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, tonVorbereiten } from '../fahrt'
+import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, tonAbholen } from '../fahrt'
+import { favoritUmschalten, istFavorit, letzteMerken } from '../fahrten'
 import { kantonText } from '../kanton'
 import type {
   BahnhofIndex, BrueckenEintrag, IndexEintrag, LinienVerzeichnis, Luecke, StreckenAbschnitt,
@@ -23,6 +24,17 @@ export interface StreckenWahl {
 export function streckenAdresse(w: StreckenWahl) {
   const teile = (['von', 'nach', 'ueber'] as const).filter((k) => w[k]).map((k) => `${k}=${w[k]}`)
   return teile.length ? `#/strecke?${teile.join('&')}` : '#/strecke'
+}
+
+/** Wie streckenAdresse, dazu startet die Seite den Fahrtmodus gleich selbst */
+export function fahrtAdresse(w: StreckenWahl, probe = false) {
+  return `${streckenAdresse(w)}&fahrt=${probe ? 'probe' : 'ja'}`
+}
+
+/** fahrt=ja oder fahrt=probe in der Adresse: mit dem Fahrtmodus öffnen */
+function fahrtAusAdresse(): 'ja' | 'probe' | null {
+  const f = new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('fahrt')
+  return f === 'ja' || f === 'probe' ? f : null
 }
 
 export function wahlAusAdresse(abfrage: string | undefined): StreckenWahl {
@@ -300,18 +312,19 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
       )}
 
       {netz && tunnel && bruecken && ergebnis?.art === 'weg' && (
-        <Ergebnis netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
+        <Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
                   brueckenIds={ergebnis.bruecken} tunnel={tunnel} bruecken={bruecken}
                   bahnhof={bahnhof} alleBruecken={alleBruecken} verzeichnis={verzeichnis}
-                  zeigeAlle={() => setAlleBruecken(true)} />
+                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} />
       )}
     </div>
   )
 }
 
 function Ergebnis({
-  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle,
+  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl,
 }: {
+  wahl: StreckenWahl
   netz: StreckenNetz
   weg: Weg
   tunnelIds: string[]
@@ -351,8 +364,10 @@ function Ergebnis({
   }, [tunnelNach, brueckenNach, bahnhof, uicVon])
 
   async function fahrtStarten(probe: boolean) {
-    // der Ton muss im Tipp selbst vorbereitet werden, sonst bleibt er stumm
-    const piepen = tonVorbereiten()
+    // der Ton muss im Tipp selbst vorbereitet werden, sonst bleibt er stumm;
+    // kommt der Start von der Seite «Fahrtmodus», liegt er dort schon bereit
+    const piepen = tonAbholen()
+    if (!probe && wahl.von && wahl.nach) letzteMerken({ von: wahl.von, nach: wahl.nach, ueber: wahl.ueber })
     setLaedt(true)
     setFahrtFehler(null)
     try {
@@ -368,6 +383,21 @@ function Ergebnis({
       setLaedt(false)
     }
   }
+  // Von der Seite «Fahrtmodus» her: gleich starten, einmal. Danach fällt
+  // fahrt= aus der Adresse, sonst startete ein Neuladen die Fahrt wieder.
+  const autostart = useRef(fahrtAusAdresse())
+  useEffect(() => {
+    const art = autostart.current
+    if (!art) return
+    autostart.current = null
+    window.history.replaceState(null, '', streckenAdresse(wahl))
+    void fahrtStarten(art === 'probe')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const gemerkt = wahl.von && wahl.nach ? { von: wahl.von, nach: wahl.nach, ueber: wahl.ueber } : null
+  const [favorit, setFavorit] = useState(() => (gemerkt ? istFavorit(gemerkt) : false))
+
   // mit Kennung, damit jede Zeile zu ihrem Eintrag in der Liste der Linie führt
   const t = tunnelIds.flatMap((i) => { const x = tunnelNach.get(i); return x ? [{ ...x, id: i }] : [] })
   const b = brueckenIds.flatMap((i) => { const x = brueckenNach.get(i); return x ? [{ ...x, id: i }] : [] })
@@ -481,6 +511,17 @@ function Ergebnis({
               er meldet, lässt sich wählen. Er braucht den Standort; dieser
               bleibt auf dem Gerät. Die Probefahrt spielt den Weg zum Ausprobieren ab.
             </p>
+            {gemerkt && (
+              <button
+                type="button" aria-pressed={favorit}
+                onClick={() => setFavorit(favoritUmschalten(gemerkt).favoriten.some(
+                  (x) => x.von === gemerkt.von && x.nach === gemerkt.nach && x.ueber === gemerkt.ueber))}
+                className="mt-3 flex items-center gap-2 text-sm font-medium"
+              >
+                <Stern voll={favorit} />
+                {favorit ? 'Favorit im Fahrtmodus' : 'Als Favorit im Fahrtmodus merken'}
+              </button>
+            )}
             {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}
             {fahrtFehler && <p className="mt-2 text-sm">Der Fahrtmodus konnte nicht starten. {fahrtFehler}</p>}
           </>
@@ -746,7 +787,18 @@ function Zeile({ name, linie, seite, teile, liste, stelle }: {
  * Ein Feld, in das man einen Bahnhof tippt. Darunter stehen passende Bahnhöfe
  * zur Wahl, die mit dem Namensanfang zuerst. Enter nimmt den ersten.
  */
-function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
+/** Stern für Favoriten: voll gesetzt, leer nicht */
+export function Stern({ voll }: { voll: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" className="size-5 shrink-0" aria-hidden="true">
+      <path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"
+            strokeWidth="1.6" strokeLinejoin="round"
+            className={voll ? 'fill-sbb-red stroke-sbb-red' : 'fill-none stroke-current'} />
+    </svg>
+  )
+}
+
+export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
   bezeichnung: string
   wert: number | null
   bahnhoefe: IndexEintrag[]

@@ -49,6 +49,9 @@ Sprachansage, Vibration, Challenge, neues App-Symbol und Illustrationen
 
 **Nochmals fragen, wenn alles andere durch ist:** «Ohne Ziel».
 
+**Vorgehen (Michael, 2026-09-24):** Alles geht direkt nach `main`. Sichtbare
+Änderungen zuerst als Screenshot an Michael; erst nach seinem OK pushen.
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im

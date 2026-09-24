@@ -74,13 +74,15 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
  * schöner, wenn die Auftaktbilder bleiben»). Die Anleitung gehört zu keinem
  * Bereich und hat ein eigenes Bild.
  */
-export function Kopf({ aktiv, startseite, anleitung = false }: {
+export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   aktiv: Bereich | null
   startseite: boolean
   anleitung?: boolean
+  fahrt?: boolean
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
-  const bild = BILDER[schluessel]
+  // die Seite «Fahrtmodus» hat noch kein eigenes Bild
+  const bild = fahrt ? undefined : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   return (
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
@@ -90,8 +92,11 @@ export function Kopf({ aktiv, startseite, anleitung = false }: {
         {startseite
           ? <h1 className={titel}>Taktland</h1>
           : <a href="#/" className={titel}>Taktland</a>}
-        {/* auf dem Handy neben dem Namen, ab 640 Pixeln am Ende der Reiter */}
-        <InfoKnopf hier={anleitung} className="flex sm:hidden" groesse="size-7" />
+        <div className="flex items-center gap-3">
+          <FahrtKnopf hier={fahrt} />
+          {/* auf dem Handy neben dem Namen, ab 640 Pixeln am Ende der Reiter */}
+          <InfoKnopf hier={anleitung} className="flex sm:hidden" groesse="size-7" />
+        </div>
       </div>
       {/* Sechs Reiter in einer Zeile: auf dem Handy über die ganze Breite verteilt
           und etwas kleiner geschrieben, je schmaler das Gerät, desto kleiner;
@@ -116,6 +121,28 @@ export function Kopf({ aktiv, startseite, anleitung = false }: {
                      ? 'border-sbb-black dark:border-sbb-white' : 'border-transparent'}`} />
       </nav>
     </header>
+  )
+}
+
+/**
+ * Der Spezialknopf zum Fahrtmodus, auf jeder Seite neben dem Namen (Michael,
+ * 2026-09-24: «Eigener Spezial-Button Fahrtmodus»). Rot, weil er der
+ * wichtigste Weg der App ist; offen ist er dunkler.
+ */
+function FahrtKnopf({ hier }: { hier: boolean }) {
+  return (
+    <a href="#/fahrt" aria-current={hier ? 'page' : undefined}
+       className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-bold text-white ${hier
+         ? 'bg-sbb-red125' : 'bg-sbb-red hover:bg-sbb-red125'}`}>
+      <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
+        <path d="M5 21l2-3M19 21l-2-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <rect x="5" y="3" width="14" height="15" rx="3" fill="currentColor" />
+        <rect x="7.5" y="6" width="9" height="5" rx="1" className="fill-sbb-red" />
+        <circle cx="9" cy="14.5" r="1.2" className="fill-sbb-red" />
+        <circle cx="15" cy="14.5" r="1.2" className="fill-sbb-red" />
+      </svg>
+      Fahrtmodus
+    </a>
   )
 }
 
