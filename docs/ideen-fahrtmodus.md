@@ -22,6 +22,10 @@ bei der Recherche gesperrt.
 - **Kein SBB-Gong, fix ausgeschlossen.** Eigene Klänge ja, kein Nachbau des Gongs.
 
 - **Testfahrt 2:** 10 und 20 Sekunden haben sich bewährt.
+- **Testfahrt 3 (2026-09-25), Lugano – Melide:** sehr gut, GPS auf etwa 10 m.
+  Rückmeldung: Durchfahrenes verschwand aus Band und Karte, das Protokoll war
+  schwer zu finden. Behoben: Band zeigt den ganzen Weg, Durchfahrenes bleibt
+  blass; «Sammelheft und Protokoll deiner Fahrten», Ansicht «Protokoll».
 
 ## Plan bis Samstag, 2026-09-26
 
