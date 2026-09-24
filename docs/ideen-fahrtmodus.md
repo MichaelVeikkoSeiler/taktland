@@ -43,6 +43,11 @@ der Merkliste unten.
     löschen können (es ist erst ein Test)
 11. Quiz zur Fahrt
 
+**Stand 2026-09-24:** alle 11 Punkte eingebaut und in `main` (Paket A: 1–3,
+Paket B: 4–7, Paket C: 8–11). Illustrationen und Piktos (Tunnel, Brücke, Bahnhof,
+Auftaktbild der Seite «Fahrtmodus») folgen von Michael; bis dahin einfache
+Zeichen und das Bild der Strecken.
+
 **Später:** Verknüpfung auf dem App-Symbol, eigener Klang je Art,
 Sprachansage, Vibration, Challenge, neues App-Symbol und Illustrationen
 (von Michael).
