@@ -4,6 +4,8 @@ import bahnhoefeDunkel from '../assets/auftakt-bahnhoefe-dunkel.webp'
 import bahnhoefeHell from '../assets/auftakt-bahnhoefe-hell.webp'
 import brueckenDunkel from '../assets/auftakt-bruecken-dunkel.webp'
 import brueckenHell from '../assets/auftakt-bruecken-hell.webp'
+import demoDunkel from '../assets/auftakt-demo-dunkel.webp'
+import demoHell from '../assets/auftakt-demo-hell.webp'
 import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
 import duellHell from '../assets/auftakt-duell-hell.webp'
 import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
@@ -89,6 +91,11 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: fahrtHell, dunkel: fahrtDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Blick aus dem Zugfenster auf ein Tunnelportal, einen See mit Dorf und Berge, auf dem Tisch ein Handy mit Taktland, das einen Tunnel meldet.',
   },
+  // Michael, 2026-09-25: «Hier das Bildpaar für Demo»
+  demo: {
+    hell: demoHell, dunkel: demoDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Eine Hand hält ein Handy mit Taktland vor einer Landschaft mit See, Viadukt und Tunnel, rundherum Kärtchen zu Karte, Fahrtmodus, Logbuch, Bahnhofseiten, Tunnel und Brücken, Duell und Standort.',
+  },
   // Michael, 2026-09-25: «Bilder fürs Logbuch hell und dunkel»
   logbuch: {
     hell: logbuchHell, dunkel: logbuchDunkel, breite: 1344, hoehe: 664,
@@ -114,8 +121,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   fahrt?: boolean
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
-  // Demo vorerst mit dem Bild der Startseite
-  const bild = fahrt ? BILDER.fahrt : aktiv === 'demo' ? BILDER.start : BILDER[schluessel]
+  const bild = fahrt ? BILDER.fahrt : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
