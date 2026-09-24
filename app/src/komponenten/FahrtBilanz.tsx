@@ -226,7 +226,7 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
                 Fragen nur zu dem, was oben in der Liste steht.
               </p>
               <button type="button" onClick={() => setFragen(fragenBauen(offen))}
-                      className="mt-3 bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125">
+                      className="mt-3 rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125">
                 Quiz starten
               </button>
             </>

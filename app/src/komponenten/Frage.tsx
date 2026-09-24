@@ -473,6 +473,6 @@ function knopf(gezeigt: boolean, istGewaehlt: boolean, istLoesung: boolean) {
 }
 
 function pruefKnopf(deaktiviert: boolean) {
-  return `mt-3 w-full bg-sbb-red px-4 py-2.5 font-bold text-sbb-white
+  return `mt-3 w-full rounded-lg bg-sbb-red px-4 py-2.5 font-bold text-sbb-white
           ${deaktiviert ? 'opacity-40' : 'hover:bg-sbb-red125'}`
 }

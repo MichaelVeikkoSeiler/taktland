@@ -452,7 +452,7 @@ export function Duell() {
 
               <button
                 type="button" onClick={() => naechste(serie)}
-                className="mt-4 w-full bg-sbb-red px-4 py-3 font-bold text-white
+                className="mt-4 w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white
                            hover:bg-sbb-red125"
               >
                 Nächste Frage
@@ -472,7 +472,7 @@ export function Duell() {
             type="button"
             onClick={() => (gebiet === 'CH'
               ? naechste(0) : auswahlWechseln(zusammensetzen(bereich, 'CH')))}
-            className="mt-4 bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125"
+            className="mt-4 rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125"
           >{gebiet === 'CH' ? 'Nochmals versuchen' : 'Ganze Schweiz spielen'}</button>
         </div>
       )}

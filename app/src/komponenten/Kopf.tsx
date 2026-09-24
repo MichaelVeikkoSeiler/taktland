@@ -159,7 +159,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
 function FahrtKnopf({ hier }: { hier: boolean }) {
   return (
     <a href="#/fahrt" aria-current={hier ? 'page' : undefined}
-       className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-bold text-white ${hier
+       className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-bold text-white ${hier
          ? 'bg-sbb-red125' : 'bg-sbb-red hover:bg-sbb-red125'}`}>
       <svg viewBox="0 0 24 24" className="size-4" aria-hidden="true">
         <path d="M5 21l2-3M19 21l-2-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />

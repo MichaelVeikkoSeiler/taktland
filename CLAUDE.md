@@ -149,8 +149,9 @@ Helvetica als Ersatz für die nicht frei lizenzierte Hausschrift SBB Web.
 
 Listen und Karten, die zu etwas führen, sind **Kacheln**: helles Grau `#ebebeb`
 (Milk um 4,5 % dunkler), leicht abgerundet, ohne Rahmen (Michael, 2026-09-25). Dafür gibt es die Klassen
-`kachel`, `kachel-link` und `kachelliste` in `app/src/index.css`; sie sind die
-einzige Ausnahme von den kantigen Flächen.
+`kachel`, `kachel-link` und `kachelliste` in `app/src/index.css`. Rote Knöpfe haben
+dieselben leicht abgerundeten Ecken (`rounded-lg`, Michael, 2026-09-25). Kacheln und
+rote Knöpfe sind die einzige Ausnahme von den kantigen Flächen.
 
 **Kein Logo, keine Bildmarke der SBB.** Die Farb- und Formensprache ist übernommen,
 die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot der SBB ist.

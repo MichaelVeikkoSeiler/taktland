@@ -248,7 +248,7 @@ function Zuruecksetzen() {
         <button
           type="button"
           onClick={() => { allesZuruecksetzen(); setFertig(true) }}
-          className="bg-sbb-red px-3 py-2 font-bold text-white hover:bg-sbb-red125"
+          className="rounded-lg bg-sbb-red px-3 py-2 font-bold text-white hover:bg-sbb-red125"
         >
           Ja, alles löschen
         </button>

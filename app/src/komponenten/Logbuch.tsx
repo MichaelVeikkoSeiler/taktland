@@ -292,7 +292,7 @@ function NeueFahrt({ index, fertig }: { index: BahnhofIndex | null; fertig: () =
       </label>
       <div className="flex gap-3">
         <button type="button" disabled={!bereit} onClick={speichern}
-                className="bg-sbb-red px-4 py-2 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40">
+                className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40">
           Eintragen
         </button>
         <button type="button" onClick={fertig} className="underline underline-offset-2">Abbrechen</button>

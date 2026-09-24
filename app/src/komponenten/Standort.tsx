@@ -129,7 +129,7 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
       <div className="mt-4 flex flex-wrap items-center gap-3">
         {!aktiv ? (
           <button type="button" onClick={() => starten(true)}
-                  className="bg-sbb-red px-4 py-2 font-bold text-white hover:bg-sbb-red125">
+                  className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white hover:bg-sbb-red125">
             {stand ? 'Standort weiter verfolgen' : 'Standort bestimmen'}
           </button>
         ) : (

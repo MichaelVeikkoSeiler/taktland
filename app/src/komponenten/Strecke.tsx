@@ -512,7 +512,7 @@ function Ergebnis({
             <div className="mt-5 grid grid-cols-2 gap-2">
               <button
                 type="button" disabled={laedt} onClick={() => void fahrtStarten(false)}
-                className="bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125
+                className="rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125
                            disabled:opacity-60"
               >
                 Fahrtmodus starten
