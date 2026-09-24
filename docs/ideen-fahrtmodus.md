@@ -96,6 +96,23 @@ Konto, keine Auswertung, der Standort bleibt auf dem Gerät. Darum in Stufen:
 Was sich so messen lässt: wie oft und wie lange der Fahrtmodus läuft. Ob
 Menschen deswegen mehr Bahn fahren, zeigt erst eine Befragung.
 
+## Sehenswürdigkeiten links und rechts der Strecke
+
+Idee von Michael, 2026-09-25. Nur aus amtlichen offenen Daten, Quellen geprüft
+am 2026-09-25 (über Suchresultate; opendata.swiss und swisstopo waren aus der
+Arbeitsumgebung gesperrt, die Bedingungen je Datensatz beim Laden nochmals prüfen):
+- **Sorglos-Paket**, alle «Freie Nutzung, Quellenangabe Pflicht», auch
+  kommerziell, ohne Bewilligung:
+  - swissNAMES3D (swisstopo): Gipfel mit Höhe, Seen; OGD seit 2021
+  - KGS-Inventar (BABS), nur A-Objekte (nationale Bedeutung, rund 3400)
+  - UNESCO-Welterbe Kultur- (BAK) und Naturstätten (BAFU)
+  - BLN (BAFU), Landschaften als Flächen, später
+- **Nicht nehmen:** OpenStreetMap (ODbL, Weitergabe unter gleichen Bedingungen),
+  Wikidata/Wikipedia (Qualität und Herkunft uneinheitlich, Texte CC BY-SA).
+- Gezeigt werden nur Name, Art, Höhe, Quelle; Seite (in Fahrtrichtung) und
+  Stelle rechnet die Pipeline, der Validator prüft. Hinweis in der App: ob es
+  zu sehen ist, sagen die Daten nicht.
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
