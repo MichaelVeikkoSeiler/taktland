@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, projizieren, wegEnde } from '../fahrt'
 import { freigabeHilfe } from '../umgebung'
+import { FahrtKarte, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
 const VORLAEUFE_S = [20, 10] as const
@@ -241,34 +242,49 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
           </p>
         )}
 
-        {imTunnel && einstellung.tunnel && (
-          <div className="mt-5 bg-sbb-charcoal px-4 py-3 text-sbb-white">
+        {imTunnel && einstellung.tunnel && sJetzt !== null && (
+          <div className="mt-5 bg-sbb-charcoal px-4 py-4 text-sbb-white">
             <p className="text-xs uppercase tracking-wide text-sbb-storm">Im Tunnel</p>
-            <p className="text-lg font-bold">{text(imTunnel)?.name}</p>
-            {faehrt && sJetzt !== null && (
-              <p className="text-sm text-sbb-storm">
-                Ausfahrt {dauer((imTunnel.sAus! - sJetzt) / stand!.v)}
-              </p>
-            )}
+            <p className="text-xl font-bold">{text(imTunnel)?.name}</p>
+            <p className="mt-2 text-2xl font-bold tabular-nums">
+              {faehrt ? `Ausfahrt ${dauer((imTunnel.sAus! - sJetzt) / stand!.v)}` : 'Zug steht'}
+            </p>
+            <TunnelBalken anteil={(sJetzt - imTunnel.s) / (imTunnel.sAus! - imTunnel.s || 1)} />
           </div>
         )}
 
         {naechstes ? (
-          <div className={`mt-5 border px-4 py-4 ${bald
-            ? 'border-l-8 border-sbb-red bg-white dark:bg-sbb-charcoal'
-            : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
-            <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
-              {bald ? 'Gleich' : 'Als Nächstes'} · {ART[naechstes.art]}
-            </p>
-            <p className="mt-1 text-2xl font-bold leading-tight">{text(naechstes)?.name}</p>
-            <p className="mt-1 text-sbb-metal dark:text-sbb-storm">{text(naechstes)?.zeile}</p>
-            <p className="mt-3 text-3xl font-bold tabular-nums">
-              {eta(naechstes) !== null ? dauer(eta(naechstes)!) : stand ? 'Zug steht' : '…'}
-            </p>
+          <div className={`mt-5 flex items-center gap-4 border px-4 transition-all ${bald
+            ? 'border-sbb-red bg-sbb-red py-7 text-white'
+            : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
+            <Ring bald={!!bald}
+                  anteil={eta(naechstes) === null ? null : 1 - eta(naechstes)! / RING_S}>
+              <ZeitImRing sekunden={eta(naechstes)} steht={stand !== null} />
+            </Ring>
+            <div className="min-w-0">
+              <p className={`text-xs uppercase tracking-wide ${bald ? 'text-white' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+                {bald ? 'Gleich' : 'Als Nächstes'} · {ART[naechstes.art]}
+              </p>
+              <p className={`mt-1 font-bold leading-tight ${bald ? 'text-3xl' : 'text-2xl'}`}>
+                {text(naechstes)?.name}
+              </p>
+              <p className={`mt-1 ${bald ? 'text-white' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+                {text(naechstes)?.zeile}
+              </p>
+              {naechstes.art === 'tunnel' && naechstes.sAus === null && (
+                <p className={`mt-1 text-sm ${bald ? 'text-white' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+                  Wo er endet, geben die Daten nicht her.
+                </p>
+              )}
+            </div>
           </div>
         ) : stand && sJetzt !== null ? (
           <p className="mt-5 text-lg">Auf dem Rest dieses Wegs ist nichts mehr zu melden.</p>
         ) : null}
+
+        <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
+                      start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
+                      name={(o) => text(o)?.name} />
 
         {kommend.length > 1 && (
           <>
@@ -301,6 +317,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
             </p>
           </>
         )}
+
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
 
         <div className="mt-8 grid gap-3 border-t border-sbb-cloud pt-4 text-sm dark:border-sbb-iron">
           <label className="flex items-center justify-between gap-3">
@@ -367,6 +385,20 @@ function zustand(meldung: Meldung | null, stand: Stand | null, ohneGps: boolean,
   }
   if (ohneGps) return imTunnel ? 'Im Tunnel ohne GPS, geschätzt mit dem letzten Tempo' : 'Kein GPS, geschätzt mit dem letzten Tempo'
   return probefahrt ? 'Gespielter Standort' : `GPS auf etwa ${Math.round(stand.genau ?? 0)} m genau`
+}
+
+/** Die Zeit im Ring: gross die Zahl, klein die Einheit */
+function ZeitImRing({ sekunden, steht }: { sekunden: number | null; steht: boolean }) {
+  if (sekunden === null) return <span className="text-sm font-bold">{steht ? 'steht' : '…'}</span>
+  const [zahl, einheit] = sekunden < 90 ? [Math.max(5, Math.round(sekunden / 5) * 5), 's']
+    : sekunden < 3600 ? [Math.round(sekunden / 60), 'min'] : [Math.floor(sekunden / 3600), 'h']
+  return (
+    <>
+      <span className="text-[10px]">etwa</span>
+      <span className="text-2xl font-bold tabular-nums">{zahl}</span>
+      <span className="text-xs">{einheit}</span>
+    </>
+  )
 }
 
 /** «in etwa 25 s», «in etwa 3 min» */
