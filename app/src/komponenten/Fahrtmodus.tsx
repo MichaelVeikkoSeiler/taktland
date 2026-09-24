@@ -67,13 +67,16 @@ type Meldung =
  * meldet es mit einem Ton etwa 20 oder 10 Sekunden vorher. Nur solange die Seite
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
-export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }: {
+export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren }: {
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
   piepen: () => void
   titel: string
-  beenden: () => void
+  /** mit allem, was seit dem ersten Standort durchfahren wurde, in Fahrtrichtung */
+  beenden: (durchfahren: FahrObjekt[]) => void
+  /** gleich beim Durchfahren, damit nichts verloren geht, wenn die Seite zugeht */
+  durchfahren: (o: FahrObjekt) => void
 }) {
   const [einstellung, setEinstellung] = useState(einstellungLesen)
   const [stand, setStand] = useState<Stand | null>(null)
@@ -82,6 +85,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
   const [gegenrichtung, setGegenrichtung] = useState(false)
   const standRef = useRef<Stand | null>(null)
   const gemeldet = useRef(new Set<string>())
+  // Stelle beim ersten Standort: was davor liegt, ist nicht durchfahren
+  const startS = useRef<number | null>(null)
+  const hinter = useRef<FahrObjekt[]>([])
   const uhrStart = useRef({ echt: Date.now(), spiel: 0 })
 
   /** In der Probefahrt läuft die Zeit schneller */
@@ -208,6 +214,19 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
     }
   })
 
+  // Durchfahren ist, was zwischen dem ersten Standort und jetzt liegt; alle
+  // Objekte, auch solche, die nicht gemeldet werden
+  useEffect(() => {
+    if (sJetzt === null) return
+    if (startS.current === null) startS.current = sJetzt
+    for (const o of fahrweg.objekte) {
+      if (o.s <= startS.current || o.s > sJetzt) continue
+      if (hinter.current.includes(o)) continue
+      hinter.current.push(o)
+      durchfahren(o)
+    }
+  })
+
   const naechstes = kommend[0]
   const bald = naechstes && (eta(naechstes) ?? Infinity) <= einstellung.vorlauf
 
@@ -223,7 +242,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden }
             </p>
           </div>
           <button
-            type="button" onClick={beenden}
+            type="button" onClick={() => beenden([...hinter.current].sort((a, b) => a.s - b.s))}
             className="shrink-0 border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
                        dark:border-sbb-iron dark:hover:border-sbb-white"
           >

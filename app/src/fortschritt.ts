@@ -1,3 +1,4 @@
+import { ERLEBT_SCHLUESSEL } from './erlebt'
 /** Fortschritt liegt nur auf dem Gerät. Kein Login, kein Server, kein Tracking. */
 
 // v2: Antworten unter der festen Kennung der Frage. v1 speicherte nach der
@@ -71,7 +72,8 @@ export const bearbeiteteLinien = () => Object.keys(lesen(LINIEN_SCHLUESSEL)).map
  * stillschweigend vom Zurücksetzen ausgenommen bleibt.
  */
 export function allesZuruecksetzen() {
-  for (const schluessel of [SCHLUESSEL, DUELL_SCHLUESSEL, LINIEN_SCHLUESSEL]) {
+  // das Sammelheft des Fahrtmodus gehört zum Fortschritt
+  for (const schluessel of [SCHLUESSEL, DUELL_SCHLUESSEL, LINIEN_SCHLUESSEL, ERLEBT_SCHLUESSEL]) {
     try {
       localStorage.removeItem(schluessel)
     } catch {

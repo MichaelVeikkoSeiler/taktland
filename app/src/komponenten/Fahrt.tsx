@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { heftLesen } from '../erlebt'
 import { tonBereitlegen } from '../fahrt'
 import {
   favoritUmschalten, gemerktLesen, type GemerkteFahrt, gleicheFahrt, letzteLoeschen,
@@ -114,6 +115,8 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
           )}
         </div>
       )}
+
+      <SammelheftKarte />
 
       <h2 className="mt-8 text-lg font-bold">Neue Fahrt</h2>
       <div className="mt-3 grid grid-cols-2 border border-sbb-cloud dark:border-sbb-iron" role="group"
@@ -249,5 +252,26 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten, loesch
         ))}
       </ul>
     </section>
+  )
+}
+
+/** Weg zum Sammelheft, mit dem Stand */
+function SammelheftKarte() {
+  const heft = useMemo(() => heftLesen(), [])
+  const n = (a: string) => Object.values(heft.objekte).filter((o) => o.art === a).length
+  return (
+    <a href="#/sammelheft"
+       className="mt-6 flex items-center justify-between gap-3 border border-l-4 border-sbb-cloud
+                  border-l-sbb-red bg-white px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
+                  dark:border-sbb-iron dark:border-l-sbb-red dark:bg-sbb-midnight">
+      <span className="min-w-0">
+        <span className="block font-medium">Sammelheft</span>
+        <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+          {n('tunnel')} Tunnel, {n('bruecke')} {n('bruecke') === 1 ? 'Brücke' : 'Brücken'} und {n('bahnhof')}{' '}
+          {n('bahnhof') === 1 ? 'Bahnhof' : 'Bahnhöfe'} erlebt
+        </span>
+      </span>
+      <span aria-hidden="true">→</span>
+    </a>
   )
 }

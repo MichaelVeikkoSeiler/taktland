@@ -5,6 +5,7 @@ import { Anleitung } from './komponenten/Anleitung'
 import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
 import { Fahrt } from './komponenten/Fahrt'
+import { Sammelheft } from './komponenten/Sammelheft'
 import { type Bereich, Kopf } from './komponenten/Kopf'
 import { Linie } from './komponenten/Linie'
 import { Linien } from './komponenten/Linien'
@@ -27,7 +28,7 @@ import { Ladefehler } from './komponenten/Ladefehler'
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
-  | { art: 'standort' } | { art: 'fahrt' }
+  | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
@@ -48,6 +49,7 @@ function seiteAusAdresse(): Seite {
   if (h === '#/duell') return { art: 'duell' }
   if (h === '#/standort') return { art: 'standort' }
   if (h === '#/fahrt') return { art: 'fahrt' }
+  if (h === '#/sammelheft') return { art: 'sammelheft' }
   if (h === '#/anleitung') return { art: 'anleitung' }
   // #/linien: die frühere Adresse, damit alte Lesezeichen weiter gehen
   if (h === '#/strecken' || h === '#/linien') return { art: 'linien' }
@@ -79,7 +81,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'uebersicht': return seite.liste
     case 'duell': return 'duell'
     case 'standort': return 'standort'
-    case 'anleitung': case 'fahrt': return null
+    case 'anleitung': case 'fahrt': case 'sammelheft': return null
   }
 }
 
@@ -128,7 +130,7 @@ export default function App() {
         {/* während der Entwicklung: Version und Knopf zum Aktualisieren */}
         <Aktualisieren />
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
-              fahrt={seite.art === 'fahrt'} />
+              fahrt={seite.art === 'fahrt' || seite.art === 'sammelheft'} />
 
         {fehler && (
           <Ladefehler className="px-4 py-8" was="Die Bahnhofsliste konnte nicht geladen werden." fehler={fehler} />
@@ -141,6 +143,7 @@ export default function App() {
         {seite.art === 'duell' && <Duell />}
         {seite.art === 'standort' && <Standort index={index} />}
         {seite.art === 'fahrt' && <Fahrt index={index} />}
+        {seite.art === 'sammelheft' && <Sammelheft index={index} />}
         {seite.art === 'linien' && <Linien index={index} />}
         {seite.art === 'uebersicht' && (
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}

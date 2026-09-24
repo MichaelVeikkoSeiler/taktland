@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { geometrieLaden, linienLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, tonAbholen } from '../fahrt'
 import { favoritUmschalten, istFavorit, letzteMerken } from '../fahrten'
+import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
+import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
 import { kantonText } from '../kanton'
 import type {
   BahnhofIndex, BrueckenEintrag, IndexEintrag, LinienVerzeichnis, Luecke, StreckenAbschnitt,
@@ -338,7 +340,9 @@ function Ergebnis({
 }) {
   const tunnelNach = useMemo(() => nachKennung(tunnel), [tunnel])
   const brueckenNach = useMemo(() => nachKennung(bruecken), [bruecken])
-  const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: () => void } | null>(null)
+  const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: () => void
+                                        beginn: number | null } | null>(null)
+  const [bilanz, setBilanz] = useState<{ objekte: BilanzObjekt[]; probe: boolean; beginn: number | null } | null>(null)
   const [laedt, setLaedt] = useState(false)
   const [fahrtFehler, setFahrtFehler] = useState<string | null>(null)
 
@@ -354,7 +358,7 @@ function Ergebnis({
     }
     if (art === 'bahnhof') {
       const b = bahnhof.get(uicVon.get(kennung) ?? 0)
-      return b && { name: b.name, baueinheiten: null, zeile: b.kanton ? `Kanton ${b.kanton}` : 'Bahnhof' }
+      return b && { name: b.name, baueinheiten: null, zeile: b.kanton ? kantonText(b.kanton) : 'Bahnhof' }
     }
     const y = art === 'bruecke' ? brueckenNach.get(kennung) : undefined
     if (!y) return undefined
@@ -376,13 +380,30 @@ function Ergebnis({
                                    (id) => brueckenNach.get(id)?.km ?? undefined,
                                    (id) => tunnelNach.get(id)?.laenge_m ?? null,
                                    (abk) => bahnhof.has(uicVon.get(abk) ?? 0))
-      setFahrt({ fahrweg, probe, piepen })
+      const titel = [bahnhoefe[0]?.name ?? '', bahnhoefe[bahnhoefe.length - 1]?.name ?? '']
+      // die Probefahrt kommt nicht ins Sammelheft
+      setFahrt({ fahrweg, probe, piepen, beginn: probe ? null : fahrtBeginnen(titel[0], titel[1]) })
     } catch (e) {
       setFahrtFehler((e as Error).message)
     } finally {
       setLaedt(false)
     }
   }
+  // Was die Bilanz, das Quiz und das Sammelheft zu einem Objekt wissen
+  function bilanzObjekt(o: FahrObjekt): BilanzObjekt {
+    const t = objektText(o)
+    const leer = { laenge_m: null, baueinheiten: null, linie: null, kanton: null }
+    if (o.art === 'bahnhof') {
+      const b = bahnhof.get(uicVon.get(o.kennung) ?? 0)
+      return { ...leer, art: 'bahnhof', kennung: String(b?.uic ?? o.kennung), name: t?.name ?? o.kennung,
+               zeile: t?.zeile ?? '', kanton: b?.kanton ?? null }
+    }
+    const x = o.art === 'tunnel' ? tunnelNach.get(o.kennung) : brueckenNach.get(o.kennung)
+    return { ...leer, art: o.art, kennung: o.kennung, name: t?.name ?? o.kennung, zeile: t?.zeile ?? '',
+             linie: x?.linie ?? null, baueinheiten: t?.baueinheiten ?? null,
+             laenge_m: o.art === 'tunnel' ? tunnelNach.get(o.kennung)?.laenge_m ?? null : null }
+  }
+
   // Von der Seite «Fahrtmodus» her: gleich starten, einmal. Danach fällt
   // fahrt= aus der Adresse, sonst startete ein Neuladen die Fahrt wieder.
   const autostart = useRef(fahrtAusAdresse())
@@ -530,8 +551,23 @@ function Ergebnis({
 
       {fahrt && (
         <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
-                    piepen={fahrt.piepen} beenden={() => setFahrt(null)}
+                    piepen={fahrt.piepen}
+                    durchfahren={(o) => {
+                      if (fahrt.beginn === null) return
+                      const b = bilanzObjekt(o)
+                      durchfahren(fahrt.beginn, { art: b.art, kennung: b.kennung, name: b.name })
+                    }}
+                    beenden={(liste) => {
+                      leereFahrtenWeg()
+                      setBilanz({ objekte: liste.map(bilanzObjekt), probe: fahrt.probe, beginn: fahrt.beginn })
+                      setFahrt(null)
+                    }}
                     titel={`${bahnhoefe[0]?.name} → ${bahnhoefe[bahnhoefe.length - 1]?.name}`} />
+      )}
+      {bilanz && (
+        <FahrtBilanz objekte={bilanz.objekte} probe={bilanz.probe} beginn={bilanz.beginn}
+                     titel={`${bahnhoefe[0]?.name} → ${bahnhoefe[bahnhoefe.length - 1]?.name}`}
+                     schliessen={() => setBilanz(null)} />
       )}
 
       <aside className="mt-6 border-l-4 border-sbb-red bg-sbb-milk px-4 py-3 dark:bg-sbb-charcoal">

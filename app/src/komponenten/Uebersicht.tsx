@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { uebersichtLaden } from '../daten'
+import { datum, erlebtAm } from '../erlebt'
 import type { BrueckenEintrag, TunnelEintrag, Uebersicht as Daten } from '../typen'
 import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
 import { genau } from './Objekte'
@@ -240,6 +241,7 @@ function Zeile({ e, linie, art, stelle }: {
 }) {
   const t = e as Tunnel
   const b = e as Bruecke
+  const erlebt = erlebtAm(art === 'tunnel' ? 'tunnel' : 'bruecke', `${e.linie}:${stelle}`)
   const teile = art === 'tunnel'
     ? [laenge(t.laenge_m),
        t.inbetriebnahme_jahr === null ? 'Jahr: keine Angabe' : `erstmals in Betrieb ${t.inbetriebnahme_jahr}`,
@@ -264,6 +266,9 @@ function Zeile({ e, linie, art, stelle }: {
       <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
         {wo}{linie?.seite ? '' : ' · ohne eigene Seite in Taktland'}
       </span>
+      {erlebt !== null && (
+        <span className="block text-sm font-medium text-sbb-green">✓ Im Fahrtmodus durchfahren am {datum(erlebt)}</span>
+      )}
     </span>
   )
 
