@@ -14,24 +14,35 @@ import startDunkel from '../assets/auftakt-start-dunkel.webp'
 import startHell from '../assets/auftakt-start-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
+import { useEffect } from 'react'
 import { Aktualisieren } from './Aktualisieren'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 
 export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch'
 
-/** Die Reiter oben auf jeder Seite, in dieser Reihenfolge */
-const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
+/** Die Unterreiter von «Objekte», in dieser Reihenfolge */
+const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   // die Startseite (#/) ist die Einleitung; die Bahnhöfe sind ein Bereich wie die anderen
   { bereich: 'bahnhoefe', text: 'Bahnhöfe', adresse: '#/bahnhoefe' },
   // Michael, 2026-09-22: «Bereich Linien soll neu Strecken heissen», Brücken vor Tunnel
   { bereich: 'linien', text: 'Strecken', adresse: '#/strecken' },
   { bereich: 'bruecken', text: 'Brücken', adresse: '#/bruecken' },
   { bereich: 'tunnel', text: 'Tunnel', adresse: '#/tunnel' },
-  { bereich: 'duell', text: 'Duell', adresse: '#/duell' },
-  { bereich: 'standort', text: 'Standort', adresse: '#/standort' },
-  // Michael, 2026-09-25: «Bitte ein neuer Reiter Logbuch»
-  { bereich: 'logbuch', text: 'Logbuch', adresse: '#/logbuch' },
 ]
+
+/** Die Hauptreiter. Bahnhöfe, Strecken, Brücken und Tunnel sind unter «Objekte»
+ *  zusammengefasst (Michael, 2026-09-25: «ziemlich eng, alle diese Reiter
+ *  nebeneinander»); ihre Unterreiter erscheinen, sobald man dort ist. */
+const HAUPT: Array<{ schluessel: string; text: string; bereiche: Bereich[]; adresse?: string }> = [
+  { schluessel: 'objekte', text: 'Objekte', bereiche: OBJEKTE.map((o) => o.bereich) },
+  { schluessel: 'duell', text: 'Duell', bereiche: ['duell'], adresse: '#/duell' },
+  { schluessel: 'standort', text: 'Standort', bereiche: ['standort'], adresse: '#/standort' },
+  // Michael, 2026-09-25: «Bitte ein neuer Reiter Logbuch»
+  { schluessel: 'logbuch', text: 'Logbuch', bereiche: ['logbuch'], adresse: '#/logbuch' },
+]
+
+/** «Objekte» führt dorthin zurück, wo man zuletzt war, am Anfang zu den Bahnhöfen */
+let letzteObjekte = OBJEKTE[0]
 
 /** Auftaktbilder je Bereich, dazu eines für die Anleitung. Ein Bereich ohne
  *  Eintrag erscheint ohne Bild. */
@@ -84,10 +95,11 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   fahrt?: boolean
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
-  // die Seite «Fahrtmodus» nimmt vorerst das Bild der Strecken (Michael, 2026-09-24)
   // Fahrtmodus und Logbuch vorerst mit dem Bild der Strecken (Michael, 2026-09-24)
   const bild = fahrt || aktiv === 'logbuch' ? BILDER.linien : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
+  const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
+  useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
   return (
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* Aktualisieren nur im Bild der Startseite (Michael, 2026-09-24) */}
@@ -103,21 +115,18 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
           <InfoKnopf hier={anleitung} className="flex sm:hidden" groesse="size-7" />
         </div>
       </div>
-      {/* Sieben Reiter in einer Zeile: auf dem Handy über die ganze Breite verteilt
-          und etwas kleiner geschrieben, je schmaler das Gerät, desto kleiner;
-          sonst fiel «Standort» und später «Logbuch» aus der Zeile */}
+      {/* Vier Hauptreiter; unter «Objekte» eine zweite Zeile mit den Unterreitern */}
       <nav aria-label="Bereiche"
-           className="-mb-px mt-4 flex justify-between gap-x-0.5 overflow-x-auto text-[13px]
-                      [scrollbar-width:none] max-[389px]:text-[12px] max-[339px]:text-[10px]
-                      min-[420px]:gap-x-1 min-[420px]:text-sm sm:justify-start sm:gap-x-6 sm:text-base">
-        {REITER.map((r) => {
-          const hier = r.bereich === aktiv
+           className="-mb-px mt-4 flex gap-x-6 overflow-x-auto text-base [scrollbar-width:none]
+                      max-[359px]:gap-x-4">
+        {HAUPT.map((h) => {
+          const hier = aktiv !== null && h.bereiche.includes(aktiv)
           return (
-            <a key={r.bereich} href={r.adresse} aria-current={hier ? 'page' : undefined}
+            <a key={h.schluessel} href={h.adresse ?? letzteObjekte.adresse} aria-current={hier ? 'page' : undefined}
                className={`shrink-0 border-b-2 pb-2 pt-1 font-medium transition-colors ${hier
                  ? 'border-sbb-black text-sbb-black dark:border-sbb-white dark:text-sbb-white'
                  : 'border-transparent text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
-              {r.text}
+              {h.text}
             </a>
           )
         })}
@@ -125,6 +134,23 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
                    className={`ml-auto hidden border-b-2 pb-2 pt-1 sm:flex ${anleitung
                      ? 'border-sbb-black dark:border-sbb-white' : 'border-transparent'}`} />
       </nav>
+      {objekteAktiv && (
+        <nav aria-label="Objekte"
+             className="-mx-4 grid grid-cols-4 gap-x-1 border-t border-sbb-cloud bg-sbb-milk px-4 py-2
+                        text-sm max-[359px]:text-[13px] sm:flex sm:gap-x-2 dark:border-sbb-iron dark:bg-sbb-charcoal">
+          {OBJEKTE.map((o) => {
+            const hier = o.bereich === aktiv
+            return (
+              <a key={o.bereich} href={o.adresse} aria-current={hier ? 'page' : undefined}
+                 className={`px-1 py-1.5 text-center font-medium transition-colors sm:px-3 ${hier
+                   ? 'bg-sbb-charcoal text-white dark:bg-sbb-white dark:text-sbb-black'
+                   : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
+                {o.text}
+              </a>
+            )
+          })}
+        </nav>
+      )}
     </header>
   )
 }
