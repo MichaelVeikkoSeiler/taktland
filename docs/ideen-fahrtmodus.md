@@ -135,6 +135,20 @@ Idee von Michael, 2026-09-25, beschlossen, wartet auf denselben Netzzugang:
 - Namen immer, wenn vertretbar: nur wenn der See auf dem Bildschirm gross genug
   ist und der Name nicht mit einem anderen Namen oder einem Bahnhof kollidiert.
 
+## Netzzugang freigeben (Michael, am Samstag auf dem Laptop)
+
+Sehenswürdigkeiten und Seen brauchen Daten, die aus der Arbeitsumgebung
+gesperrt sind. So freigeben:
+1. Im Browser claude.ai/code öffnen, die Sitzung «Taktland-Korrekturen».
+2. Oben die Umgebung **«Standard»** antippen, dann «Bearbeiten».
+3. Unter «Network access» «Custom» wählen und diese Adressen erlauben:
+   `data.geo.admin.ch`, `api3.geo.admin.ch`, `www.swisstopo.admin.ch`,
+   `opendata.swiss`, `ckan.opendata.swiss`.
+4. Speichern, dann Claude «frei» schreiben. Claude prüft, ob die Adressen
+   erreichbar sind; sonst in einer neuen Sitzung weiter.
+
+Anleitung: https://code.claude.com/docs/en/claude-code-on-the-web
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
