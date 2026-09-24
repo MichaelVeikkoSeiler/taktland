@@ -39,6 +39,8 @@ const HAUPT: Array<{ schluessel: string; text: string; bereiche: Bereich[]; adre
   { schluessel: 'standort', text: 'Standort', bereiche: ['standort'], adresse: '#/standort' },
   // Michael, 2026-09-25: «Bitte ein neuer Reiter Logbuch»
   { schluessel: 'logbuch', text: 'Logbuch', bereiche: ['logbuch'], adresse: '#/logbuch' },
+  // die Anleitung, bisher das «i» neben dem Namen (Michael, 2026-09-25)
+  { schluessel: 'info', text: 'Info', bereiche: [], adresse: '#/anleitung' },
 ]
 
 /** «Bahnland» führt dorthin zurück, wo man zuletzt war, am Anfang zu den Bahnhöfen */
@@ -109,18 +111,15 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
         {startseite
           ? <h1 className={titel}>Taktland</h1>
           : <a href="#/" className={titel}>Taktland</a>}
-        <div className="flex items-center gap-3">
-          <FahrtKnopf hier={fahrt} />
-          {/* auf dem Handy neben dem Namen, ab 640 Pixeln am Ende der Reiter */}
-          <InfoKnopf hier={anleitung} className="flex sm:hidden" groesse="size-7" />
-        </div>
+        {/* ganz rechts; das «i» ist zum Reiter «Info» geworden (Michael, 2026-09-25) */}
+        <FahrtKnopf hier={fahrt} />
       </div>
-      {/* Vier Hauptreiter; unter «Bahnland» eine zweite Zeile mit den Unterreitern */}
+      {/* Fünf Hauptreiter; unter «Bahnland» eine zweite Zeile mit den Unterreitern */}
       <nav aria-label="Bereiche"
-           className="-mb-px mt-4 flex gap-x-6 overflow-x-auto text-base [scrollbar-width:none]
-                      max-[359px]:gap-x-4">
+           className="-mb-px mt-4 flex justify-between gap-x-2 overflow-x-auto text-base
+                      [scrollbar-width:none] max-[359px]:text-[14px] sm:justify-start sm:gap-x-6">
         {HAUPT.map((h) => {
-          const hier = aktiv !== null && h.bereiche.includes(aktiv)
+          const hier = h.schluessel === 'info' ? anleitung : aktiv !== null && h.bereiche.includes(aktiv)
           return (
             <a key={h.schluessel} href={h.adresse ?? letzteObjekte.adresse} aria-current={hier ? 'page' : undefined}
                className={`shrink-0 border-b-2 pb-2 pt-1 font-medium transition-colors ${hier
@@ -130,9 +129,6 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
             </a>
           )
         })}
-        <InfoKnopf hier={anleitung} groesse="size-6"
-                   className={`ml-auto hidden border-b-2 pb-2 pt-1 sm:flex ${anleitung
-                     ? 'border-sbb-black dark:border-sbb-white' : 'border-transparent'}`} />
       </nav>
       {objekteAktiv && (
         <nav aria-label="Bahnland"
@@ -173,28 +169,6 @@ function FahrtKnopf({ hier }: { hier: boolean }) {
         <circle cx="15" cy="14.5" r="1.2" className="fill-sbb-red" />
       </svg>
       Fahrtmodus
-    </a>
-  )
-}
-
-/**
- * Der Weg zur Anleitung «So funktioniert’s»: ein «i» im Kreis statt eines
- * Textlinks (Michael, 2026-09-22). Geöffnet ist die Fläche SBB-Blau, sonst
- * hellgrau; das «i» ist immer weiss.
- */
-function InfoKnopf({ hier, className, groesse }: { hier: boolean; className: string; groesse: string }) {
-  return (
-    <a href="#/anleitung" aria-label="So funktioniert’s" title="So funktioniert’s"
-       aria-current={hier ? 'page' : undefined}
-       className={`${className} group shrink-0 items-center justify-center`}>
-      <svg viewBox="0 0 24 24" className={groesse} aria-hidden="true">
-        <circle cx="12" cy="12" r="11" className={`transition-colors ${hier
-          ? 'fill-sbb-blue' : 'fill-sbb-smoke group-hover:fill-sbb-metal'}`} />
-        <g className="fill-white">
-          <circle cx="12" cy="7.2" r="1.45" />
-          <rect x="10.85" y="10" width="2.3" height="7.8" rx="1.15" />
-        </g>
-      </svg>
     </a>
   )
 }

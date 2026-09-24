@@ -38,7 +38,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
         ein privates Lernprojekt und kein Angebot der SBB.
       </p>
       <p className={`${absatz} text-sbb-metal dark:text-sbb-storm`}>
-        Oben wählst du einen Bereich. Das «i» erklärt, wie Taktland funktioniert.
+        Oben wählst du einen Bereich. «Info» erklärt, wie Taktland funktioniert.
       </p>
     </main>
   )
