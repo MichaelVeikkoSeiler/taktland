@@ -162,6 +162,17 @@ Minuten (im Video rund 20 s) ohne Meldung bis zum Ceneri-Basistunnel.
 - Hell-Dunkel-Knopf liegt im Bild der Demo über der Karte «Standort»; allenfalls
   verschieben.
 
+## Probefahrt
+
+Michael, 2026-09-25: «Probefahrt extrem attraktiv!» Die Probefahrt spielt einen
+Weg 20-mal schneller ab und zeigt ohne Zugfahrt, was der Fahrtmodus kann. Ideen
+dazu, noch nicht beschlossen:
+- Probefahrt sichtbarer machen, etwa als eigene Kachel auf der Startseite oder
+  mit vorgeschlagenen Strecken (Walenstadt–Ziegelbrücke, Lugano–Mendrisio).
+- Wählbares Tempo (10-, 20-, 50-mal).
+- Probefahrt als Einstieg für Leute, die gerade nicht im Zug sitzen, auch für
+  Präsentationen.
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
