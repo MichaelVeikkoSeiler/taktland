@@ -58,6 +58,21 @@ Testfahrt am Samstag wieder ansprechen.
 **Vorgehen (Michael, 2026-09-24):** Alles geht direkt nach `main`. Sichtbare
 Änderungen zuerst als Screenshot an Michael; erst nach seinem OK pushen.
 
+## Barrierefreiheit: Fahrtmodus für blinde und sehbehinderte Menschen
+
+Idee von Michael, 2026-09-24. Das nächste Angebot dieser Art ist Soundscape für
+Android (siehe oben): Es sagt Tunnel erst beim Einfahren an, ohne Vorwarnung.
+Was es bräuchte:
+- **Sprachansage** («In 20 Sekunden: Zimmerbergtunnel, 9385 Meter»), nur mit
+  Angaben aus den Daten; steht schon unter «später»
+- **Bildschirmleser** (VoiceOver, TalkBack): Meldungen als Live-Region, alle
+  Knöpfe beschriftet, Ring und Streckenband mit Textalternative
+- **Vibration**, wo das Gerät sie kann (Android)
+- **Bedienung ohne Hinsehen:** grosse Flächen, wenige Schritte bis zum Start
+  (Favoriten, «Nur Ziel»)
+- **Testen mit Betroffenen**, etwa über einen Blinden- und Sehbehindertenverband,
+  bevor etwas als barrierefrei gilt
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
