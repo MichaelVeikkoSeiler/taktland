@@ -20,7 +20,7 @@ import { Auftakt, type AuftaktBild } from './Auftakt'
 
 export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch'
 
-/** Die Unterreiter von «Objekte», in dieser Reihenfolge */
+/** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   // die Startseite (#/) ist die Einleitung; die Bahnhöfe sind ein Bereich wie die anderen
   { bereich: 'bahnhoefe', text: 'Bahnhöfe', adresse: '#/bahnhoefe' },
@@ -30,18 +30,18 @@ const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   { bereich: 'tunnel', text: 'Tunnel', adresse: '#/tunnel' },
 ]
 
-/** Die Hauptreiter. Bahnhöfe, Strecken, Brücken und Tunnel sind unter «Objekte»
+/** Die Hauptreiter. Bahnhöfe, Strecken, Brücken und Tunnel sind unter «Bahnland»
  *  zusammengefasst (Michael, 2026-09-25: «ziemlich eng, alle diese Reiter
  *  nebeneinander»); ihre Unterreiter erscheinen, sobald man dort ist. */
 const HAUPT: Array<{ schluessel: string; text: string; bereiche: Bereich[]; adresse?: string }> = [
-  { schluessel: 'objekte', text: 'Objekte', bereiche: OBJEKTE.map((o) => o.bereich) },
+  { schluessel: 'objekte', text: 'Bahnland', bereiche: OBJEKTE.map((o) => o.bereich) },  // Name: Michael, 2026-09-25
   { schluessel: 'duell', text: 'Duell', bereiche: ['duell'], adresse: '#/duell' },
   { schluessel: 'standort', text: 'Standort', bereiche: ['standort'], adresse: '#/standort' },
   // Michael, 2026-09-25: «Bitte ein neuer Reiter Logbuch»
   { schluessel: 'logbuch', text: 'Logbuch', bereiche: ['logbuch'], adresse: '#/logbuch' },
 ]
 
-/** «Objekte» führt dorthin zurück, wo man zuletzt war, am Anfang zu den Bahnhöfen */
+/** «Bahnland» führt dorthin zurück, wo man zuletzt war, am Anfang zu den Bahnhöfen */
 let letzteObjekte = OBJEKTE[0]
 
 /** Auftaktbilder je Bereich, dazu eines für die Anleitung. Ein Bereich ohne
@@ -115,7 +115,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
           <InfoKnopf hier={anleitung} className="flex sm:hidden" groesse="size-7" />
         </div>
       </div>
-      {/* Vier Hauptreiter; unter «Objekte» eine zweite Zeile mit den Unterreitern */}
+      {/* Vier Hauptreiter; unter «Bahnland» eine zweite Zeile mit den Unterreitern */}
       <nav aria-label="Bereiche"
            className="-mb-px mt-4 flex gap-x-6 overflow-x-auto text-base [scrollbar-width:none]
                       max-[359px]:gap-x-4">
@@ -135,7 +135,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
                      ? 'border-sbb-black dark:border-sbb-white' : 'border-transparent'}`} />
       </nav>
       {objekteAktiv && (
-        <nav aria-label="Objekte"
+        <nav aria-label="Bahnland"
              className="-mx-4 grid grid-cols-4 gap-x-1 border-t border-sbb-cloud bg-sbb-milk px-4 py-2
                         text-sm max-[359px]:text-[13px] sm:flex sm:gap-x-2 dark:border-sbb-iron dark:bg-sbb-charcoal">
           {OBJEKTE.map((o) => {
