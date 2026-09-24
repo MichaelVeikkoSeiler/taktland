@@ -67,6 +67,9 @@ Was es bräuchte:
   Angaben aus den Daten; steht schon unter «später»
 - **Bildschirmleser** (VoiceOver, TalkBack): Meldungen als Live-Region, alle
   Knöpfe beschriftet, Ring und Streckenband mit Textalternative
+  - *Eingebaut 2026-09-24:* jede Meldung als Satz für Bildschirmleser
+    («In etwa 20 Sekunden: Tunnel Zimmerbergtunnel. 1’984 Meter, Linie 660»);
+    die Statuszeile (GPS, Tempo) liest er nicht mehr laufend vor
 - **Vibration**, wo das Gerät sie kann (Android)
 - **Bedienung ohne Hinsehen:** grosse Flächen, wenige Schritte bis zum Start
   (Favoriten, «Nur Ziel»)

@@ -85,6 +85,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const [gegenrichtung, setGegenrichtung] = useState(false)
   const standRef = useRef<Stand | null>(null)
   const gemeldet = useRef(new Set<string>())
+  const ansage = useRef<HTMLParagraphElement | null>(null)
   // Stelle beim ersten Standort: was davor liegt, ist nicht durchfahren
   const startS = useRef<number | null>(null)
   const hinter = useRef<FahrObjekt[]>([])
@@ -210,6 +211,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       if (e !== null && e <= einstellung.vorlauf && !gemeldet.current.has(schluessel)) {
         gemeldet.current.add(schluessel)
         if (einstellung.ton) piepen()
+        // für Bildschirmleser: dieselbe Meldung als Satz, einmal
+        const t = text(o)
+        if (ansage.current && t) {
+          ansage.current.textContent = `In etwa ${Math.max(5, Math.round(e / 5) * 5)} Sekunden: `
+            + `${ART[o.art]} ${t.name}. ${sprechbar(t.zeile)}`
+        }
       }
     }
   })
@@ -234,6 +241,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
                     dark:bg-sbb-midnight dark:text-sbb-white" role="dialog" aria-label="Fahrtmodus">
       <div className="mx-auto max-w-2xl px-4 pb-10 pt-4">
+        {/* Die Meldungen für Bildschirmleser (VoiceOver, TalkBack): nur hier
+            gesprochen, nicht bei jeder neuen Zeit */}
+        <p ref={ansage} className="sr-only" aria-live="assertive" aria-atomic="true" />
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="font-bold">{probefahrt ? 'Probefahrt' : 'Fahrtmodus'}</p>
@@ -250,7 +260,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           </button>
         </div>
 
-        <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm" role="status">
+        {/* ohne role="status": GPS-Genauigkeit und Tempo ändern sich laufend, ein
+            Bildschirmleser würde sonst ununterbrochen vorlesen */}
+        <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
           {zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
           {faehrt && !ohneGps && ` · etwa ${Math.round(stand!.v * 3.6)} km/h`}
         </p>
@@ -404,6 +416,11 @@ function zustand(meldung: Meldung | null, stand: Stand | null, ohneGps: boolean,
   }
   if (ohneGps) return imTunnel ? 'Im Tunnel ohne GPS, geschätzt mit dem letzten Tempo' : 'Kein GPS, geschätzt mit dem letzten Tempo'
   return probefahrt ? 'Gespielter Standort' : `GPS auf etwa ${Math.round(stand.genau ?? 0)} m genau`
+}
+
+/** Eine Zeile zum Vorlesen: «9385 m · Linie 711» wird «9385 Meter, Linie 711» */
+function sprechbar(zeile: string) {
+  return zeile.replace(/(\d) m\b/g, '$1 Meter').replace(/ · /g, ', ')
 }
 
 /** Die Zeit im Ring: gross die Zahl, klein die Einheit */
