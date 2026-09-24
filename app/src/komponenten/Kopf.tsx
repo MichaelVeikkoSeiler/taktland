@@ -17,7 +17,7 @@ import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { Aktualisieren } from './Aktualisieren'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch'
 
 /** Die Reiter oben auf jeder Seite, in dieser Reihenfolge */
 const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -29,6 +29,8 @@ const REITER: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   { bereich: 'tunnel', text: 'Tunnel', adresse: '#/tunnel' },
   { bereich: 'duell', text: 'Duell', adresse: '#/duell' },
   { bereich: 'standort', text: 'Standort', adresse: '#/standort' },
+  // Michael, 2026-09-25: «Bitte ein neuer Reiter Logbuch»
+  { bereich: 'logbuch', text: 'Logbuch', adresse: '#/logbuch' },
 ]
 
 /** Auftaktbilder je Bereich, dazu eines für die Anleitung. Ein Bereich ohne
@@ -83,7 +85,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
   // die Seite «Fahrtmodus» nimmt vorerst das Bild der Strecken (Michael, 2026-09-24)
-  const bild = fahrt ? BILDER.linien : BILDER[schluessel]
+  // Fahrtmodus und Logbuch vorerst mit dem Bild der Strecken (Michael, 2026-09-24)
+  const bild = fahrt || aktiv === 'logbuch' ? BILDER.linien : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   return (
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
@@ -100,13 +103,13 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
           <InfoKnopf hier={anleitung} className="flex sm:hidden" groesse="size-7" />
         </div>
       </div>
-      {/* Sechs Reiter in einer Zeile: auf dem Handy über die ganze Breite verteilt
+      {/* Sieben Reiter in einer Zeile: auf dem Handy über die ganze Breite verteilt
           und etwas kleiner geschrieben, je schmaler das Gerät, desto kleiner;
-          sonst fiel «Standort» aus der Zeile */}
+          sonst fiel «Standort» und später «Logbuch» aus der Zeile */}
       <nav aria-label="Bereiche"
-           className="-mb-px mt-4 flex justify-between gap-x-1.5 overflow-x-auto text-sm
-                      [scrollbar-width:none] max-[369px]:gap-x-1 max-[369px]:text-[13px]
-                      max-[339px]:text-xs sm:justify-start sm:gap-x-6 sm:text-base">
+           className="-mb-px mt-4 flex justify-between gap-x-0.5 overflow-x-auto text-[13px]
+                      [scrollbar-width:none] max-[389px]:text-[12px] max-[339px]:text-[10px]
+                      min-[420px]:gap-x-1 min-[420px]:text-sm sm:justify-start sm:gap-x-6 sm:text-base">
         {REITER.map((r) => {
           const hier = r.bereich === aktiv
           return (

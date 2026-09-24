@@ -1,0 +1,214 @@
+import { useCallback, useMemo, useState } from 'react'
+import {
+  datum, type ErlebtArt, type ErlebteFahrt, fahrtEintragen, fahrtLoeschen, heftLesen, logbuchLoeschen,
+  notizSetzen,
+} from '../erlebt'
+import type { BahnhofIndex } from '../typen'
+import { BahnhofFeld } from './Strecke'
+
+const ART_TEXT: Record<ErlebtArt, [string, string]> = {
+  tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
+}
+
+const uhrzeit = (ms: number) => new Date(ms).toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })
+
+/** Heute als «2026-09-25» für das Datumsfeld, in Ortszeit */
+function heute() {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+/**
+ * Das Logbuch: jede Fahrt im Fahrtmodus kommt beim Start automatisch hinein,
+ * mit Datum, Weg und den durchfahrenen Objekten. Dazu eigene Notizen und
+ * Fahrten ohne Fahrtmodus, von Hand eingetragen (Michael, 2026-09-25, nach der
+ * Fahrt Melide–Lugano). Alles bleibt auf diesem Gerät.
+ */
+export function Logbuch({ index }: { index: BahnhofIndex | null }) {
+  const [fahrten, setFahrten] = useState(() => heftLesen().fahrten)
+  const [neu, setNeu] = useState(false)
+  const neuLesen = () => setFahrten(heftLesen().fahrten)
+
+  function allesLoeschen() {
+    if (!window.confirm('Das ganze Logbuch auf diesem Gerät löschen? Das Sammelheft bleibt. Das lässt sich nicht rückgängig machen.')) return
+    logbuchLoeschen()
+    neuLesen()
+  }
+
+  return (
+    <div className="px-4 pb-16">
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">Logbuch</h1>
+      <p className="mt-2 leading-relaxed">
+        Jede Fahrt im Fahrtmodus steht automatisch hier, mit Datum, Weg und allem, was du
+        durchfahren hast. Du kannst eine Notiz dazuschreiben und Fahrten ohne Fahrtmodus von Hand
+        eintragen. Es bleibt auf diesem Gerät; die Probefahrt kommt nicht hinein.
+      </p>
+
+      {neu ? (
+        <NeueFahrt index={index} fertig={() => { setNeu(false); neuLesen() }} />
+      ) : (
+        <button type="button" onClick={() => setNeu(true)}
+                className="mt-5 border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
+                           dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white">
+          + Fahrt von Hand eintragen
+        </button>
+      )}
+
+      {fahrten.length === 0 ? (
+        <p className="mt-6 text-sbb-metal dark:text-sbb-storm">
+          Noch keine Fahrt im Logbuch. Starte den Fahrtmodus mit dem roten Knopf oben.
+        </p>
+      ) : (
+        <ul className="mt-6 space-y-3">
+          {fahrten.map((f) => <Eintrag key={f.beginn} f={f} geaendert={neuLesen} />)}
+        </ul>
+      )}
+
+      {fahrten.length > 0 && (
+        <div className="mt-10 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
+          <button type="button" onClick={allesLoeschen}
+                  className="border border-sbb-cloud px-4 py-2 text-sm font-medium hover:border-sbb-red
+                             hover:text-sbb-red dark:border-sbb-iron">
+            Logbuch löschen
+          </button>
+          <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+            Löscht alle Fahrten und Notizen auf diesem Gerät. Das Sammelheft bleibt.
+          </p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function Eintrag({ f, geaendert }: { f: ErlebteFahrt; geaendert: () => void }) {
+  const [bearbeiten, setBearbeiten] = useState(false)
+  const [text, setText] = useState(f.notiz ?? '')
+
+  function speichern() {
+    notizSetzen(f.beginn, text)
+    setBearbeiten(false)
+    geaendert()
+  }
+
+  function loeschen() {
+    if (!window.confirm(`Die Fahrt ${f.von} → ${f.nach} vom ${datum(f.beginn)} aus dem Logbuch löschen?`)) return
+    fahrtLoeschen(f.beginn)
+    geaendert()
+  }
+
+  return (
+    <li className="border border-sbb-cloud px-4 py-3 dark:border-sbb-iron">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-sm text-sbb-metal dark:text-sbb-storm">
+            {datum(f.beginn)}{f.manuell ? '' : `, ${uhrzeit(f.beginn)}`}
+          </p>
+          <p className="font-bold">{f.von} → {f.nach}</p>
+        </div>
+        <button type="button" onClick={loeschen} aria-label="Fahrt löschen" title="Fahrt löschen"
+                className="shrink-0 px-1 text-sbb-metal hover:text-sbb-red dark:text-sbb-storm">
+          ×
+        </button>
+      </div>
+      <p className="text-sm">
+        {f.manuell ? 'Von Hand eingetragen, ohne Fahrtmodus: keine Objekte erfasst'
+          : (['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => {
+            const n = f.objekte.filter((o) => o.art === a).length
+            return `${n} ${n === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}`
+          }).join(' · ')}
+      </p>
+
+      {bearbeiten ? (
+        <div className="mt-2">
+          <textarea value={text} onChange={(e) => setText(e.target.value)} rows={3} autoFocus
+                    placeholder="Deine Notiz zu dieser Fahrt"
+                    className="w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
+                               dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
+          <div className="mt-1 flex gap-3">
+            <button type="button" onClick={speichern}
+                    className="bg-sbb-charcoal px-3 py-1.5 text-sm font-medium text-white dark:bg-sbb-white dark:text-sbb-black">
+              Speichern
+            </button>
+            <button type="button" onClick={() => { setText(f.notiz ?? ''); setBearbeiten(false) }}
+                    className="text-sm underline underline-offset-2">
+              Abbrechen
+            </button>
+          </div>
+        </div>
+      ) : f.notiz ? (
+        <p className="mt-2 whitespace-pre-line border-l-2 border-sbb-red pl-3">
+          {f.notiz}{' '}
+          <button type="button" onClick={() => setBearbeiten(true)}
+                  className="text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
+            ändern
+          </button>
+        </p>
+      ) : (
+        <button type="button" onClick={() => setBearbeiten(true)}
+                className="mt-2 text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
+          Notiz dazuschreiben
+        </button>
+      )}
+
+      {f.objekte.length > 0 && (
+        <details className="mt-1 text-sm">
+          <summary className="cursor-pointer text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
+            Liste zeigen
+          </summary>
+          <ol className="mt-2 space-y-0.5">
+            {f.objekte.map((o) => (
+              <li key={`${o.art}${o.kennung}`}>
+                {o.name} <span className="text-sbb-metal dark:text-sbb-storm">· {ART_TEXT[o.art][0]}</span>
+              </li>
+            ))}
+          </ol>
+        </details>
+      )}
+    </li>
+  )
+}
+
+function NeueFahrt({ index, fertig }: { index: BahnhofIndex | null; fertig: () => void }) {
+  const [von, setVon] = useState<number | null>(null)
+  const [nach, setNach] = useState<number | null>(null)
+  const [tag, setTag] = useState(heute)
+  const [notiz, setNotiz] = useState('')
+  const bahnhof = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [b.uic, b])), [index])
+  const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? String(uic) : ''), [bahnhof])
+  const bereit = von !== null && nach !== null && von !== nach && tag !== ''
+
+  function speichern() {
+    if (!bereit) return
+    // Mittag des gewählten Tags: von Hand eingetragen gibt es keine Uhrzeit
+    const [j, m, t] = tag.split('-').map(Number)
+    fahrtEintragen(new Date(j, m - 1, t, 12).getTime(), name(von), name(nach), notiz)
+    fertig()
+  }
+
+  return (
+    <div className="mt-5 space-y-3 border border-sbb-cloud px-4 py-4 dark:border-sbb-iron">
+      <p className="font-bold">Fahrt von Hand eintragen</p>
+      <BahnhofFeld bezeichnung="Von" wert={von} bahnhoefe={index?.bahnhoefe ?? []} name={name} aendern={setVon} />
+      <BahnhofFeld bezeichnung="Nach" wert={nach} bahnhoefe={index?.bahnhoefe ?? []} name={name} aendern={setNach} />
+      <label className="block">
+        <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Datum</span>
+        <input type="date" value={tag} max={heute()} onChange={(e) => setTag(e.target.value)}
+               className="mt-1 w-full border border-sbb-cloud bg-white px-4 py-3 text-sbb-black
+                          dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
+      </label>
+      <label className="block">
+        <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Notiz (freiwillig)</span>
+        <textarea value={notiz} onChange={(e) => setNotiz(e.target.value)} rows={3}
+                  className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
+                             dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
+      </label>
+      <div className="flex gap-3">
+        <button type="button" disabled={!bereit} onClick={speichern}
+                className="bg-sbb-red px-4 py-2 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40">
+          Eintragen
+        </button>
+        <button type="button" onClick={fertig} className="underline underline-offset-2">Abbrechen</button>
+      </div>
+    </div>
+  )
+}

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { type ErlebtArt, heftLesen, schluesselVon } from '../erlebt'
+import { type ErlebtArt, heftLesen, notizSetzen, schluesselVon } from '../erlebt'
 import { kantonText } from '../kanton'
 
 /** Ein durchfahrenes Objekt mit allem, was die Bilanz und das Quiz zeigen */
@@ -233,18 +233,23 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
           )}
         </section>
 
-        <a href="#/sammelheft" onClick={schliessen}
-           className="mt-8 flex items-center justify-between gap-3 border border-l-4 border-sbb-cloud
-                      border-l-sbb-red px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
-                      dark:border-sbb-iron dark:border-l-sbb-red">
-          <span>
-            <span className="block font-medium">Sammelheft und Protokoll deiner Fahrten</span>
-            <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-              Alles, was du im Fahrtmodus durchfahren hast, und was noch fehlt
-            </span>
-          </span>
-          <span aria-hidden="true">→</span>
-        </a>
+        {beginn !== null && <BilanzNotiz beginn={beginn} />}
+
+        {([['#/logbuch', 'Logbuch', probe ? 'Die Probefahrt kommt nicht ins Logbuch'
+             : 'Diese Fahrt ist eingetragen, mit Datum und allem Durchfahrenen'],
+           ['#/sammelheft', 'Sammelheft', 'Alles, was du im Fahrtmodus durchfahren hast, und was noch fehlt']] as const)
+          .map(([adresse, titel, text]) => (
+            <a key={adresse} href={adresse} onClick={schliessen}
+               className="mt-3 flex items-center justify-between gap-3 border border-l-4 border-sbb-cloud
+                          border-l-sbb-red px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
+                          dark:border-sbb-iron dark:border-l-sbb-red">
+              <span>
+                <span className="block font-medium">{titel}</span>
+                <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{text}</span>
+              </span>
+              <span aria-hidden="true">→</span>
+            </a>
+          ))}
       </div>
     </div>
   )
@@ -297,5 +302,31 @@ function Quiz({ fragen, nochmals }: { fragen: Frage[]; nochmals: () => void }) {
         </div>
       )}
     </div>
+  )
+}
+
+/** Gleich nach der Fahrt eine Notiz ins Logbuch schreiben */
+function BilanzNotiz({ beginn }: { beginn: number }) {
+  const [text, setText] = useState('')
+  const [gespeichert, setGespeichert] = useState(false)
+  return (
+    <section className="mt-8">
+      <h2 className="text-lg font-bold">Ins Logbuch</h2>
+      <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
+        Die Fahrt ist schon eingetragen. Möchtest du etwas dazuschreiben?
+      </p>
+      <textarea value={text} rows={3} placeholder="Deine Notiz zu dieser Fahrt"
+                onChange={(e) => { setText(e.target.value); setGespeichert(false) }}
+                className="mt-2 w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
+                           dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
+      <div className="mt-1 flex items-center gap-3">
+        <button type="button" disabled={!text.trim()} onClick={() => { notizSetzen(beginn, text); setGespeichert(true) }}
+                className="bg-sbb-charcoal px-3 py-1.5 text-sm font-medium text-white disabled:opacity-40
+                           dark:bg-sbb-white dark:text-sbb-black">
+          Notiz speichern
+        </button>
+        {gespeichert && <span className="text-sm text-sbb-green">Gespeichert</span>}
+      </div>
+    </section>
   )
 }

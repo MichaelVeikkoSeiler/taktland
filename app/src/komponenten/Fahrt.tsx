@@ -117,6 +117,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
       )}
 
       <SammelheftKarte />
+      <LogbuchKarte />
 
       <h2 className="mt-8 text-lg font-bold">Neue Fahrt</h2>
       <div className="mt-3 grid grid-cols-2 border border-sbb-cloud dark:border-sbb-iron" role="group"
@@ -265,10 +266,29 @@ function SammelheftKarte() {
                   border-l-sbb-red bg-white px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
                   dark:border-sbb-iron dark:border-l-sbb-red dark:bg-sbb-midnight">
       <span className="min-w-0">
-        <span className="block font-medium">Sammelheft und Protokoll deiner Fahrten</span>
+        <span className="block font-medium">Sammelheft</span>
         <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
           {n('tunnel')} Tunnel, {n('bruecke')} {n('bruecke') === 1 ? 'Brücke' : 'Brücken'} und {n('bahnhof')}{' '}
           {n('bahnhof') === 1 ? 'Bahnhof' : 'Bahnhöfe'} erlebt
+        </span>
+      </span>
+      <span aria-hidden="true">→</span>
+    </a>
+  )
+}
+
+/** Weg zum Logbuch, mit der Zahl der Fahrten */
+function LogbuchKarte() {
+  const n = useMemo(() => heftLesen().fahrten.length, [])
+  return (
+    <a href="#/logbuch"
+       className="mt-2 flex items-center justify-between gap-3 border border-l-4 border-sbb-cloud
+                  border-l-sbb-red bg-white px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
+                  dark:border-sbb-iron dark:border-l-sbb-red dark:bg-sbb-midnight">
+      <span className="min-w-0">
+        <span className="block font-medium">Logbuch</span>
+        <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+          {n === 0 ? 'Noch keine Fahrt eingetragen' : `${n} ${n === 1 ? 'Fahrt' : 'Fahrten'} eingetragen`}
         </span>
       </span>
       <span aria-hidden="true">→</span>

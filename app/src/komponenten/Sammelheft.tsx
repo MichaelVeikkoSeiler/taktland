@@ -5,7 +5,7 @@ import { kantonText } from '../kanton'
 import type { BahnhofIndex, BrueckenEintrag, TunnelEintrag, Uebersicht } from '../typen'
 import { genau } from './Objekte'
 
-type Ansicht = 'fahrten' | 'erlebt' | 'fehlt'
+type Ansicht = 'erlebt' | 'fehlt'
 
 const ART_TEXT: Record<ErlebtArt, [string, string]> = {
   tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
@@ -31,7 +31,7 @@ function mitKennung<T>(u: Uebersicht<T>) {
  */
 export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
   const [heft, setHeft] = useState(heftLesen)
-  const [ansicht, setAnsicht] = useState<Ansicht>('fahrten')
+  const [ansicht, setAnsicht] = useState<Ansicht>('erlebt')
   const [art, setArt] = useState<ErlebtArt>('tunnel')
   const [mehr, setMehr] = useState(false)
   const [tunnel, setTunnel] = useState<Uebersicht<TunnelEintrag> | null>(null)
@@ -68,7 +68,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
   const fehlt = (alle[art] ?? []).filter((e) => !heft.objekte[schluesselVon(art, e.kennung)])
 
   function loeschen() {
-    if (!window.confirm('Das ganze Sammelheft auf diesem Gerät löschen? Das lässt sich nicht rückgängig machen.')) return
+    if (!window.confirm('Alle erlebten Objekte im Sammelheft löschen? Das Logbuch bleibt. Das lässt sich nicht rückgängig machen.')) return
     heftLoeschen()
     setHeft(heftLesen())
   }
@@ -81,8 +81,8 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Sammelheft</h1>
       <p className="mt-2 leading-relaxed">
-        Was du im Fahrtmodus durchfahren hast, und unter «Protokoll» jede Fahrt mit Datum. Es bleibt auf diesem Gerät; die Probefahrt zählt
-        nicht.
+        Was du im Fahrtmodus durchfahren hast, und was noch fehlt. Es bleibt auf diesem Gerät; die
+        Probefahrt zählt nicht. Jede Fahrt mit Datum steht im <a href="#/logbuch" className="underline underline-offset-2">Logbuch</a>.
       </p>
 
       <div className="mt-5 grid grid-cols-3 gap-2">
@@ -100,48 +100,15 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
         Gezählt von allen Tunneln und Brücken der SBB in Taktland und allen Bahnhöfen in Taktland.
       </p>
 
-      <div className="mt-6 grid grid-cols-3 border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ansicht">
-        {([['fahrten', 'Protokoll'], ['erlebt', 'Erlebt'], ['fehlt', 'Fehlt noch']] as const).map(([a, t]) => (
+      <div className="mt-6 grid grid-cols-2 border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ansicht">
+        {([['erlebt', 'Erlebt'], ['fehlt', 'Fehlt noch']] as const).map(([a, t]) => (
           <button key={a} type="button" aria-pressed={ansicht === a} onClick={() => { setAnsicht(a); setMehr(false) }} className={knopf(ansicht === a)}>
             {t}
           </button>
         ))}
       </div>
 
-      {ansicht === 'fahrten' && (
-        heft.fahrten.length === 0 ? (
-          <p className="mt-4 text-sbb-metal dark:text-sbb-storm">Noch keine Fahrt im Sammelheft.</p>
-        ) : (
-          <ul className="mt-4 space-y-3">
-            {heft.fahrten.map((f) => (
-              <li key={f.beginn} className="border border-sbb-cloud px-4 py-3 dark:border-sbb-iron">
-                <p className="text-sm text-sbb-metal dark:text-sbb-storm">
-                  {datum(f.beginn)}, {new Date(f.beginn).toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })}
-                </p>
-                <p className="font-bold">{f.von} → {f.nach}</p>
-                <p className="text-sm">
-                  {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => {
-                    const n = f.objekte.filter((o) => o.art === a).length
-                    return `${n} ${n === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}`
-                  }).join(' · ')}
-                </p>
-                <details className="mt-1 text-sm">
-                  <summary className="cursor-pointer text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
-                    Liste zeigen
-                  </summary>
-                  <ol className="mt-2 space-y-0.5">
-                    {f.objekte.map((o) => (
-                      <li key={`${o.art}${o.kennung}`}>{o.name} <span className="text-sbb-metal dark:text-sbb-storm">· {ART_TEXT[o.art][0]}</span></li>
-                    ))}
-                  </ol>
-                </details>
-              </li>
-            ))}
-          </ul>
-        )
-      )}
-
-      {ansicht !== 'fahrten' && (
+      {(
         <>
           <div className="mt-4 flex gap-2">
             {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => (
@@ -200,8 +167,8 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
           Sammelheft löschen
         </button>
         <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-          Löscht alle erlebten Objekte und Fahrten auf diesem Gerät. Favoriten und letzte Fahrten
-          bleiben.
+          Löscht alle erlebten Objekte auf diesem Gerät. Das Logbuch, die Favoriten und die letzten
+          Fahrten bleiben.
         </p>
       </div>
     </div>

@@ -21,6 +21,10 @@ export interface ErlebteFahrt {
   nach: string
   /** in der Reihenfolge der Fahrt, auch schon früher erlebte */
   objekte: Array<{ art: ErlebtArt; kennung: string; name: string }>
+  /** eigene Notiz im Logbuch */
+  notiz?: string
+  /** von Hand ins Logbuch eingetragen, ohne Fahrtmodus: keine Objekte erfasst */
+  manuell?: boolean
 }
 
 interface Heft {
@@ -71,12 +75,48 @@ export function durchfahren(beginn: number, o: { art: ErlebtArt; kennung: string
 export function leereFahrtenWeg() {
   const h = heftLesen()
   const vorher = h.fahrten.length
-  h.fahrten = h.fahrten.filter((f) => f.objekte.length > 0)
+  h.fahrten = h.fahrten.filter((f) => f.manuell || f.notiz || f.objekte.length > 0)
   if (h.fahrten.length !== vorher) schreiben(h)
 }
 
+/** Löscht die erlebten Objekte; das Logbuch mit den Fahrten bleibt */
 export function heftLoeschen() {
-  try { localStorage.removeItem(ERLEBT_SCHLUESSEL) } catch { /* nichts zu löschen */ }
+  const h = heftLesen()
+  h.objekte = {}
+  schreiben(h)
+}
+
+/* ---------- Logbuch ---------- */
+
+/** Eigene Notiz zu einer Fahrt; leer entfernt sie */
+export function notizSetzen(beginn: number, notiz: string) {
+  const h = heftLesen()
+  const f = h.fahrten.find((x) => x.beginn === beginn)
+  if (!f) return
+  if (notiz.trim()) f.notiz = notiz.trim()
+  else delete f.notiz
+  schreiben(h)
+}
+
+/** Eine Fahrt ohne Fahrtmodus von Hand eintragen */
+export function fahrtEintragen(beginn: number, von: string, nach: string, notiz: string) {
+  const h = heftLesen()
+  h.fahrten = [{ beginn, von, nach, objekte: [], manuell: true, ...(notiz.trim() ? { notiz: notiz.trim() } : {}) },
+               ...h.fahrten].sort((a, b) => b.beginn - a.beginn)
+  schreiben(h)
+}
+
+/** Eine Fahrt aus dem Logbuch; die erlebten Objekte im Sammelheft bleiben */
+export function fahrtLoeschen(beginn: number) {
+  const h = heftLesen()
+  h.fahrten = h.fahrten.filter((f) => f.beginn !== beginn)
+  schreiben(h)
+}
+
+export function logbuchLoeschen() {
+  const h = heftLesen()
+  h.fahrten = []
+  schreiben(h)
 }
 
 /** Wann ein Objekt zum ersten Mal durchfahren wurde, sonst null */
