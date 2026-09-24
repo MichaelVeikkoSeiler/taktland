@@ -55,9 +55,10 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start', AuftaktBild>> = {
     hell: startHell, dunkel: startDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Mann wartet am Perron, davor ein Bahnübergang und ein Tunnel, dahinter ein Zug auf einem Viadukt über einem See.',
   },
+  // Michael, 2026-09-25: «Bilder für den Reiter Info»
   anleitung: {
     hell: anleitungHell, dunkel: anleitungDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration: Ein Mann mit Rucksack schaut am Perron auf sein Handy, dahinter wartende und gehende Menschen.',
+    alt: 'Illustration: Ein Mann sitzt am Bahnhof an einem Tisch und liest auf dem Handy eine Seite mit einem Info-Zeichen, links ein Zug am Perron, rechts ein See mit Dorf und Bergen.',
   },
   bahnhoefe: {
     hell: bahnhoefeHell, dunkel: bahnhoefeDunkel, breite: 1344, hoehe: 664,
