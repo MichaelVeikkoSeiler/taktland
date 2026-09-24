@@ -3,12 +3,6 @@ import { useEffect, useState } from 'react'
 /** Merkt sich über das Neuladen hinweg, dass es der Knopf war */
 const MERKER = 'taktland.aktualisiert'
 
-/** Zeitpunkt des Baus (vite.config.ts), in Schweizer Zeit */
-const GEBAUT = new Date(import.meta.env.VITE_GEBAUT as string).toLocaleString('de-CH', {
-  timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', year: 'numeric',
-  hour: '2-digit', minute: '2-digit',
-})
-
 function ebenAktualisiert() {
   try {
     const ja = sessionStorage.getItem(MERKER) !== null
@@ -20,12 +14,11 @@ function ebenAktualisiert() {
 }
 
 /**
- * Während der Entwicklung ganz oben: von wann die geladene Version ist, und
- * ein Knopf, der den neuesten Stand holt. Auf dem Startbildschirm des iPhones
- * gibt es sonst keinen Weg, die App neu zu laden. Der Lernfortschritt bleibt,
- * er liegt im Browser und nicht in der geladenen Version.
- *
- * Später, wenn Taktland fertig ist, kann die Leiste wieder weg (App.tsx).
+ * Knopf oben rechts im Auftaktbild der Startseite (Michael, 2026-09-24: statt
+ * der Leiste mit Stand und Uhrzeit). Er holt den neuesten Stand; auf dem
+ * Startbildschirm des iPhones gibt es sonst keinen Weg, die App neu zu laden.
+ * Der Lernfortschritt bleibt, er liegt im Browser und nicht in der geladenen
+ * Version. Nach dem Neuladen steht kurz «Aktualisiert» daneben.
  */
 export function Aktualisieren() {
   const [laeuft, setLaeuft] = useState(false)
@@ -56,16 +49,23 @@ export function Aktualisieren() {
     window.location.reload()
   }
 
+  const text = laeuft ? 'Wird aktualisiert …' : 'Aktualisieren'
   return (
-    <div className="flex items-center justify-between gap-3 bg-sbb-milk px-4 py-1.5 text-xs
-                    text-sbb-metal dark:bg-sbb-charcoal dark:text-sbb-storm" role="status">
-      <span>{eben ? 'Aktualisiert. ' : ''}Version vom {GEBAUT}</span>
+    <div className="absolute right-2 top-[calc(env(safe-area-inset-top)+0.5rem)] flex items-center gap-2">
+      {eben && (
+        <span role="status" className="bg-black/40 px-2 py-1 text-xs text-white">Aktualisiert</span>
+      )}
       <button
-        type="button" onClick={holen} disabled={laeuft}
-        className="shrink-0 underline underline-offset-2 hover:text-sbb-black disabled:no-underline
-                   dark:hover:text-sbb-white"
+        type="button" onClick={holen} disabled={laeuft} aria-label={text} title={text}
+        className="flex size-7 items-center justify-center bg-black/30 text-white opacity-60
+                   transition-opacity hover:opacity-100 focus-visible:opacity-100 disabled:opacity-100"
       >
-        {laeuft ? 'Wird aktualisiert …' : 'Aktualisieren'}
+        <svg viewBox="0 0 24 24" className={`size-4 ${laeuft ? 'animate-spin motion-reduce:animate-none' : ''}`}
+             fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+             strokeLinejoin="round" aria-hidden="true">
+          <path d="M20 11a8 8 0 1 0-2.3 5.7" />
+          <path d="M20 4v7h-7" />
+        </svg>
       </button>
     </div>
   )

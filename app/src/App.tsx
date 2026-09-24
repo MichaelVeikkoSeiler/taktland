@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { allesZuruecksetzen, bearbeiteBahnhoefe, bearbeiteteLinien } from './fortschritt'
-import { Aktualisieren } from './komponenten/Aktualisieren'
 import { Anleitung } from './komponenten/Anleitung'
 import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
@@ -127,8 +126,6 @@ export default function App() {
     <div className="min-h-dvh bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       {/* auf dem Tablet breiter: 672 Pixel wirkten dort verloren (Michael, 2026-09-22) */}
       <div className="mx-auto max-w-2xl md:max-w-3xl">
-        {/* während der Entwicklung: Version und Knopf zum Aktualisieren */}
-        <Aktualisieren />
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
               fahrt={seite.art === 'fahrt' || seite.art === 'sammelheft'} />
 

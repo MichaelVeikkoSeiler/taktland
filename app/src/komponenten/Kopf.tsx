@@ -14,6 +14,7 @@ import startDunkel from '../assets/auftakt-start-dunkel.webp'
 import startHell from '../assets/auftakt-start-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
+import { Aktualisieren } from './Aktualisieren'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 
 export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort'
@@ -86,7 +87,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   const titel = 'text-3xl font-bold tracking-tight'
   return (
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
-      {bild && <Auftakt key={schluessel} bild={bild} />}
+      {/* Aktualisieren nur im Bild der Startseite (Michael, 2026-09-24) */}
+      {bild && <Auftakt key={schluessel} bild={bild} oben={startseite ? <Aktualisieren /> : undefined} />}
       <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />
       <div className="mt-3 flex items-center justify-between gap-4">
         {startseite

@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from 'react'
+import { type ReactNode, useEffect, useState, useSyncExternalStore } from 'react'
 
 /** So lange bleibt das andere Bild stehen, bevor es zurückblendet */
 const ANZEIGEDAUER_MS = 5000
@@ -66,7 +66,7 @@ export interface AuftaktBild {
 /** Die Vorschau überlebt den Wechsel des Bereichs, weil sie ausserhalb der
  *  Komponente steht; sie endet mit dem Zeitablauf oder mit dem Knopf. */
 let vorschau = false
-export function Auftakt({ bild }: { bild: AuftaktBild }) {
+export function Auftakt({ bild, oben }: { bild: AuftaktBild; oben?: ReactNode }) {
   // beide Hooks immer aufrufen, auch am Tag (Reihenfolge der Hooks)
   const tag = useTag()
   const geraetDunkel = useDunkel()
@@ -107,6 +107,8 @@ export function Auftakt({ bild }: { bild: AuftaktBild }) {
             sichtbar ? 'opacity-100 duration-700' : 'opacity-0 duration-1000'}`}
         />
       )}
+
+      {oben}
 
       {anderes && <button
         type="button"
