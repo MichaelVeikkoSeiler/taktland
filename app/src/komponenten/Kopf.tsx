@@ -24,7 +24,7 @@ import { useEffect } from 'react'
 import { Aktualisieren } from './Aktualisieren'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'demo'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'demo'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -36,6 +36,13 @@ const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   { bereich: 'tunnel', text: 'Tunnel', adresse: '#/tunnel' },
 ]
 
+/** Die Unterreiter von «Logbuch»: die Fahrten und das Sammelheft (Michael,
+ *  2026-09-25: beides hält fest, was man gefahren ist) */
+const LOGBUCH: Array<{ bereich: Bereich; text: string; adresse: string }> = [
+  { bereich: 'logbuch', text: 'Fahrten', adresse: '#/logbuch' },
+  { bereich: 'sammelheft', text: 'Sammelheft', adresse: '#/sammelheft' },
+]
+
 /** Die Hauptreiter. Bahnhöfe, Strecken, Brücken und Tunnel sind unter «Bahnland»
  *  zusammengefasst (Michael, 2026-09-25: «ziemlich eng, alle diese Reiter
  *  nebeneinander»); ihre Unterreiter erscheinen, sobald man dort ist. */
@@ -44,11 +51,10 @@ const HAUPT: Array<{ schluessel: string; text: string; bereiche: Bereich[]; adre
   { schluessel: 'duell', text: 'Duell', bereiche: ['duell'], adresse: '#/duell' },
   { schluessel: 'standort', text: 'Standort', bereiche: ['standort'], adresse: '#/standort' },
   // Michael, 2026-09-25: «Bitte ein neuer Reiter Logbuch»
-  { schluessel: 'logbuch', text: 'Logbuch', bereiche: ['logbuch'], adresse: '#/logbuch' },
-  // Michael, 2026-09-25: «neuer Reiter (Demo) zwischen Logbuch und Info»
-  { schluessel: 'demo', text: 'Demo', bereiche: ['demo'], adresse: '#/demo' },
+  { schluessel: 'logbuch', text: 'Logbuch', bereiche: ['logbuch', 'sammelheft'], adresse: '#/logbuch' },
+  // Die Demo ist vom eigenen Reiter unter «Info» gewandert (Michael, 2026-09-25)
   // die Anleitung, bisher das «i» neben dem Namen (Michael, 2026-09-25)
-  { schluessel: 'info', text: 'Info', bereiche: [], adresse: '#/anleitung' },
+  { schluessel: 'info', text: 'Info', bereiche: ['demo'], adresse: '#/anleitung' },
 ]
 
 /** «Bahnland» führt dorthin zurück, wo man zuletzt war, am Anfang zu den Bahnhöfen */
@@ -86,7 +92,7 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: standortHell, dunkel: standortDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Mann schaut neben dem Gleis auf eine Karte in seinem Handy, vor ihm ein Tunnelportal mit einer roten Ortsmarke, links ein See.',
   },
-  // Michael, 2026-09-25: «Bilder für den Fahrtmodus», auch fürs Sammelheft
+  // Michael, 2026-09-25: «Bilder für den Fahrtmodus»
   fahrt: {
     hell: fahrtHell, dunkel: fahrtDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Blick aus dem Zugfenster auf ein Tunnelportal, einen See mit Dorf und Berge, auf dem Tisch ein Handy mit Taktland, das einen Tunnel meldet.',
@@ -121,10 +127,13 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   fahrt?: boolean
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
-  const bild = fahrt ? BILDER.fahrt : BILDER[schluessel]
+  const bild = fahrt ? BILDER.fahrt : aktiv === 'sammelheft' ? BILDER.logbuch : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
+  // unter «Bahnland» und «Logbuch» eine zweite Zeile mit den Unterreitern
+  const unter = objekteAktiv ? { name: 'Bahnland', liste: OBJEKTE, raster: 'grid grid-cols-4 sm:flex' }
+    : LOGBUCH.some((l) => l.bereich === aktiv) ? { name: 'Logbuch', liste: LOGBUCH, raster: 'flex' } : null
   return (
     <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* Aktualisieren nur im Bild der Startseite (Michael, 2026-09-24) */}
@@ -139,10 +148,10 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
       </div>
       {/* Fünf Hauptreiter; unter «Bahnland» eine zweite Zeile mit den Unterreitern */}
       <nav aria-label="Bereiche"
-           className="-mb-px mt-4 flex justify-between gap-x-2 overflow-x-auto text-base max-[399px]:gap-x-1.5 max-[399px]:text-[15px]
-                      [scrollbar-width:none] max-[359px]:text-[13px] sm:justify-start sm:gap-x-6">
+           className="-mb-px mt-4 flex justify-between gap-x-2 overflow-x-auto text-base
+                      [scrollbar-width:none] max-[359px]:text-[14px] sm:justify-start sm:gap-x-6">
         {HAUPT.map((h) => {
-          const hier = h.schluessel === 'info' ? anleitung : aktiv !== null && h.bereiche.includes(aktiv)
+          const hier = (h.schluessel === 'info' && anleitung) || (aktiv !== null && h.bereiche.includes(aktiv))
           return (
             <a key={h.schluessel} href={h.adresse ?? letzteObjekte.adresse} aria-current={hier ? 'page' : undefined}
                className={`shrink-0 border-b-2 pb-2 pt-1 font-medium transition-colors ${hier
@@ -153,15 +162,15 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
           )
         })}
       </nav>
-      {objekteAktiv && (
-        <nav aria-label="Bahnland"
-             className="-mx-4 grid grid-cols-4 gap-x-1 border-t border-sbb-cloud bg-sbb-milk px-4 py-2
-                        text-sm max-[359px]:text-[13px] sm:flex sm:gap-x-2 dark:border-sbb-iron dark:bg-sbb-charcoal">
-          {OBJEKTE.map((o) => {
+      {unter && (
+        <nav aria-label={unter.name}
+             className={`-mx-4 ${unter.raster} gap-x-1 border-t border-sbb-cloud bg-sbb-milk px-4 py-2
+                        text-sm max-[359px]:text-[13px] sm:gap-x-2 dark:border-sbb-iron dark:bg-sbb-charcoal`}>
+          {unter.liste.map((o) => {
             const hier = o.bereich === aktiv
             return (
               <a key={o.bereich} href={o.adresse} aria-current={hier ? 'page' : undefined}
-                 className={`rounded-lg px-1 py-1.5 text-center font-medium transition-colors sm:px-3 ${hier
+                 className={`rounded-lg py-1.5 text-center font-medium ${unter.raster === 'flex' ? 'px-3' : 'px-1'} transition-colors sm:px-3 ${hier
                    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                    : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
                 {o.text}
@@ -183,7 +192,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
 function FahrtKnopf({ hier }: { hier: boolean }) {
   return (
     <a href="#/fahrt" aria-current={hier ? 'page' : undefined}
-       className={`shrink-0 rounded-lg px-3 py-1.5 text-base font-bold text-white max-[399px]:text-[15px] max-[359px]:text-[13px] ${hier
+       className={`shrink-0 rounded-lg px-3 py-1.5 text-base font-bold text-white max-[359px]:text-[14px] ${hier
          ? 'bg-sbb-red125' : 'bg-sbb-red hover:bg-sbb-red125'}`}>
       Fahrtmodus
     </a>

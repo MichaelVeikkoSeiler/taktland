@@ -86,7 +86,8 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
     case 'demo': return 'demo'
-    case 'anleitung': case 'fahrt': case 'sammelheft': return null
+    case 'sammelheft': return 'sammelheft'
+    case 'anleitung': case 'fahrt': return null
   }
 }
 
@@ -133,7 +134,7 @@ export default function App() {
       {/* auf dem Tablet breiter: 672 Pixel wirkten dort verloren (Michael, 2026-09-22) */}
       <div className="mx-auto max-w-2xl md:max-w-3xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
-              fahrt={seite.art === 'fahrt' || seite.art === 'sammelheft'} />
+              fahrt={seite.art === 'fahrt'} />
 
         {fehler && (
           <Ladefehler className="px-4 py-8" was="Die Bahnhofsliste konnte nicht geladen werden." fehler={fehler} />

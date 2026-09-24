@@ -74,11 +74,9 @@ export function Blaettern({ seite, seiten, bereiche, blaettern, name }: {
   name: string
 }) {
   if (seiten <= 1) return null
-  const pfeil = `flex w-14 shrink-0 items-center justify-center border border-sbb-cloud
-                 bg-white text-2xl text-sbb-black transition hover:border-sbb-black
-                 disabled:cursor-default disabled:opacity-30 disabled:hover:border-sbb-cloud
-                 dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white
-                 dark:hover:border-sbb-white dark:disabled:hover:border-sbb-iron`
+  // als Kacheln wie die Listen (Michael, 2026-09-25)
+  const pfeil = `kachel kachel-link flex w-14 shrink-0 items-center justify-center text-2xl
+                 text-sbb-black disabled:cursor-default disabled:opacity-30 dark:text-sbb-white`
   return (
     <nav aria-label={name} className="mt-4 flex min-h-14 items-stretch gap-2">
       <button
@@ -89,10 +87,8 @@ export function Blaettern({ seite, seiten, bereiche, blaettern, name }: {
         <span className={seite === 0 ? undefined : 'pfeil pfeil-gleich pfeil-links'}
               aria-hidden="true">←</span>
       </button>
-      <div className="relative flex min-w-0 flex-1 flex-col items-center justify-center border
-                      border-sbb-cloud bg-white px-2 py-1 focus-within:border-sbb-black
-                      hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
-                      dark:focus-within:border-sbb-white dark:hover:border-sbb-white">
+      <div className="kachel kachel-link relative flex min-w-0 flex-1 flex-col items-center justify-center
+                      px-2 py-1">
         <span className="block w-full text-center leading-tight font-medium text-balance
                          break-words text-sbb-black dark:text-sbb-white">
           {bereiche[seite]}

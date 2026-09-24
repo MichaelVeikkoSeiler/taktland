@@ -2,7 +2,7 @@ const BASIS = import.meta.env.BASE_URL
 
 /**
  * Ein Video der App zum Zeigen (Michael, 2026-09-25: «Demoversion als Video»,
- * «unter einem neuen Reiter Demo zwischen Logbuch und Info»). Aufgenommen im
+ * erst als eigener Reiter, dann unter «Info»). Aufgenommen im
  * Browser in Handygrösse; der Fahrtmodus läuft darin als Probefahrt.
  */
 export function Demo() {
