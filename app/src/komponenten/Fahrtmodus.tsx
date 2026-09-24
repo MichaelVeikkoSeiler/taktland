@@ -321,8 +321,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         {kommend.length > 1 && (
           <>
             <p className="mt-6 text-sm font-medium">Danach</p>
-            <ol className="mt-2 divide-y divide-sbb-cloud border border-sbb-cloud dark:divide-sbb-iron
-                           dark:border-sbb-iron">
+            <ol className="mt-2 kachelliste">
               {kommend.slice(1, 4).map((o) => (
                 <li key={`${o.art} ${o.kennung}`} className="flex justify-between gap-3 px-3 py-2">
                   <span className="min-w-0">

@@ -3,10 +3,7 @@ export function StreckeKarte() {
   return (
     <a
       href="#/strecke"
-      className="mt-4 flex items-center justify-between gap-3 border border-l-4 border-sbb-cloud
-                 border-l-sbb-red bg-white px-4 py-3 transition hover:border-sbb-black
-                 hover:border-l-sbb-red dark:border-sbb-iron dark:border-l-sbb-red
-                 dark:bg-sbb-midnight dark:hover:border-sbb-white dark:hover:border-l-sbb-red"
+      className="mt-4 flex items-center justify-between gap-3 kachel kachel-link px-4 py-3"
     >
       <span className="min-w-0">
         <span className="block font-medium text-sbb-black dark:text-sbb-white">Strecke</span>

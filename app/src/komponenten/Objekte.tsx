@@ -145,8 +145,7 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
             </p>
           )}
 
-          <ol className="mt-4 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
-                         dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
+          <ol className="mt-4 kachelliste">
             {eintraege.map(({ e, stelle }) => (
               <li key={stelle} id={filter ? undefined : `eintrag-${stelle}`}
                   aria-current={!filter && stelle === markiert ? 'true' : undefined}>

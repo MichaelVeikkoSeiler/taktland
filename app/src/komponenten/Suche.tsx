@@ -109,8 +109,8 @@ function Eintrag({ e, oeffnen }: { e: IndexEintrag; oeffnen: (uic: number) => vo
         className={`flex w-full items-center justify-between gap-3 border px-4 py-3
                     text-left transition ${
           hatProfil
-            ? 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'
-            : 'cursor-default border-dashed border-sbb-cloud bg-transparent opacity-70 dark:border-sbb-iron'
+            ? 'kachel kachel-link border-transparent'
+            : 'cursor-default rounded-lg border-dashed border-sbb-cloud bg-transparent opacity-70 dark:border-sbb-iron'
         }`}
       >
         <span className="min-w-0">

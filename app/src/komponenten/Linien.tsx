@@ -117,9 +117,7 @@ function Eintrag({ l, durch }: { l: LinienEintrag; durch: string[] }) {
   return (
     <li>
       <a href={`#/linie/${l.linie}`}
-         className="flex items-center justify-between gap-3 border border-sbb-cloud bg-white
-                    px-4 py-3 hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
-                    dark:hover:border-sbb-white">
+         className="flex items-center justify-between gap-3 kachel kachel-link px-4 py-3">
         <span className="min-w-0">
           <span className="flex items-center gap-2 font-medium text-sbb-black dark:text-sbb-white">
             Linie {l.linie}

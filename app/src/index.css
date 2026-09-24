@@ -126,3 +126,27 @@ body {
     background-color: var(--color-sbb-charcoal);
   }
 }
+
+/* Eine Kachel, die zu etwas führt: beim Darüberfahren etwas dunkler */
+@utility kachel-link {
+  transition: background-color 150ms;
+  &:hover { background-color: var(--color-sbb-cloud); }
+  @media (prefers-color-scheme: dark) {
+    &:hover { background-color: var(--color-sbb-iron); }
+  }
+}
+
+/* Eine Liste aus Kacheln: jeder Eintrag eine Kachel, dazwischen etwas Luft */
+@utility kachelliste {
+  & > * {
+    background-color: var(--color-sbb-milk);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  & > * + * { margin-top: 0.5rem; }
+  & :is(a, button):hover { background-color: var(--color-sbb-cloud); }
+  @media (prefers-color-scheme: dark) {
+    & > * { background-color: var(--color-sbb-charcoal); }
+    & :is(a, button):hover { background-color: var(--color-sbb-iron); }
+  }
+}

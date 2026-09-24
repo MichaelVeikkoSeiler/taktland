@@ -154,9 +154,7 @@ function LinienLinks({ linien }: { linien: LinienEintrag[] }) {
       {linien.map((l) => (
         <li key={l.linie}>
           <a href={`#/linie/${l.linie}`}
-             className="flex items-center justify-between gap-3 border border-sbb-cloud bg-white
-                        px-3 py-2 hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
-                        dark:hover:border-sbb-white">
+             className="flex items-center justify-between gap-3 kachel kachel-link px-3 py-2">
             <span className="min-w-0">
               <span className="font-medium text-sbb-black dark:text-sbb-white">Linie {l.linie}</span>
               {l.bahn && <span className="ml-2"><BahnKuerzel isb={l.bahn} titel={`Datenherr laut BAV: ${l.bahn}`} /></span>}
@@ -239,8 +237,7 @@ export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang, verwe
 function BahnhofListe({ fakten }: { fakten: Fakt[] }) {
   return (
     <div className="mt-4">
-      <ol className="divide-y divide-sbb-cloud border border-sbb-cloud bg-white
-                     dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
+      <ol className="kachelliste">
         {fakten.map((f) => (
           <li key={f.factRef}>
             <a href={`#/bahnhof/${f.uic}`}
@@ -289,9 +286,7 @@ function FaktZeile({ fakt, href, zielText = 'Alle anzeigen' }: {
   // Mit Verweis wird die ganze Kachel zum Link: ein Link über der Fläche, damit
   // dt und dd direkt im dl bleiben
   return (
-    <div className={`relative border border-sbb-cloud bg-white px-3 py-2
-                     dark:border-sbb-iron dark:bg-sbb-midnight ${
-      ziel ? 'hover:border-sbb-black dark:hover:border-sbb-white' : ''}`}>
+    <div className={`kachel relative px-3 py-2 ${ziel ? 'kachel-link' : ''}`}>
       {ziel && (
         <>
           <a href={ziel} className="absolute inset-0"

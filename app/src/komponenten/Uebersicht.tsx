@@ -272,13 +272,12 @@ function Zeile({ e, linie, art, stelle }: {
     </span>
   )
 
-  const rahmen = `flex items-center justify-between gap-3 border border-sbb-cloud bg-white px-4
-                  py-3 dark:border-sbb-iron dark:bg-sbb-midnight`
+  const rahmen = 'kachel flex items-center justify-between gap-3 px-4 py-3'
   return (
     <li>
       {linie?.seite ? (
         <a href={`#/linie/${e.linie}/${art}?eintrag=${stelle}`}
-           className={`${rahmen} hover:border-sbb-black dark:hover:border-sbb-white`}>
+           className={`${rahmen} kachel-link`}>
           {inhalt}
           <span className="pfeil shrink-0" aria-hidden="true">→</span>
         </a>

@@ -171,7 +171,7 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
 
         <div className="mt-5 grid grid-cols-3 gap-2">
           {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => (
-            <div key={a} className="border border-sbb-cloud px-3 py-3 dark:border-sbb-iron">
+            <div key={a} className="kachel px-3 py-3">
               <p className="text-3xl font-bold tabular-nums">{anzahl(a)}</p>
               <p className="text-sm text-sbb-metal dark:text-sbb-storm">
                 {anzahl(a) === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}
@@ -186,7 +186,7 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
         </p>
 
         {offen.length > 0 && (
-          <ol className="mt-5 divide-y divide-sbb-cloud border border-sbb-cloud dark:divide-sbb-iron dark:border-sbb-iron">
+          <ol className="mt-5 kachelliste">
             {offen.map((o) => (
               <li key={`${o.art}${o.kennung}`} className="flex items-start justify-between gap-3 px-3 py-2">
                 <span className="min-w-0">
@@ -240,14 +240,12 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
            ['#/sammelheft', 'Sammelheft', 'Alles, was du im Fahrtmodus durchfahren hast, und was noch fehlt']] as const)
           .map(([adresse, titel, text]) => (
             <a key={adresse} href={adresse} onClick={schliessen}
-               className="mt-3 flex items-center justify-between gap-3 border border-l-4 border-sbb-cloud
-                          border-l-sbb-red px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
-                          dark:border-sbb-iron dark:border-l-sbb-red">
+               className="kachel kachel-link mt-3 flex items-center justify-between gap-3 px-4 py-3">
               <span>
                 <span className="block font-medium">{titel}</span>
                 <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{text}</span>
               </span>
-              <span aria-hidden="true">→</span>
+              <span className="pfeil shrink-0" aria-hidden="true">→</span>
             </a>
           ))}
       </div>
@@ -262,7 +260,7 @@ function Quiz({ fragen, nochmals }: { fragen: Frage[]; nochmals: () => void }) {
 
   if (nr >= fragen.length) {
     return (
-      <div className="mt-3 border border-sbb-cloud px-4 py-4 dark:border-sbb-iron">
+      <div className="mt-3 kachel px-4 py-4">
         <p className="text-2xl font-bold">{richtig} von {fragen.length} richtig</p>
         <button type="button" onClick={nochmals}
                 className="mt-3 border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
@@ -274,7 +272,7 @@ function Quiz({ fragen, nochmals }: { fragen: Frage[]; nochmals: () => void }) {
   }
   const f = fragen[nr]
   return (
-    <div className="mt-3 border border-sbb-cloud px-4 py-4 dark:border-sbb-iron">
+    <div className="mt-3 kachel px-4 py-4">
       <p className="text-xs text-sbb-metal dark:text-sbb-storm">Frage {nr + 1} von {fragen.length}</p>
       <p className="mt-1 text-lg font-bold">{f.text}</p>
       <div className="mt-3 grid gap-2">

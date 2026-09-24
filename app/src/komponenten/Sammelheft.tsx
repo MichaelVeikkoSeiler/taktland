@@ -87,7 +87,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
 
       <div className="mt-5 grid grid-cols-3 gap-2">
         {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => (
-          <div key={a} className="border border-sbb-cloud px-3 py-3 dark:border-sbb-iron">
+          <div key={a} className="kachel px-3 py-3">
             <p className="text-3xl font-bold tabular-nums">{erlebt(a).length}</p>
             <p className="text-sm text-sbb-metal dark:text-sbb-storm">
               {erlebt(a).length === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}
@@ -122,7 +122,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
             erlebt(art).length === 0 ? (
               <p className="mt-4 text-sbb-metal dark:text-sbb-storm">Noch keine {ART_TEXT[art][1]} erlebt.</p>
             ) : (
-              <ul className="mt-4 divide-y divide-sbb-cloud border border-sbb-cloud dark:divide-sbb-iron dark:border-sbb-iron">
+              <ul className="mt-4 kachelliste">
                 {erlebt(art).map((o) => (
                   <li key={o.kennung} className="flex items-center justify-between gap-3 px-3 py-2">
                     <span className="min-w-0 truncate font-medium">
@@ -141,7 +141,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
                 {art === 'tunnel' ? 'Die längsten zuerst.' : art === 'bruecke'
                   ? 'Die mit den meisten Baueinheiten zuerst.' : 'Die mit den meisten Ein- und Aussteigenden zuerst.'}
               </p>
-              <ul className="mt-2 divide-y divide-sbb-cloud border border-sbb-cloud dark:divide-sbb-iron dark:border-sbb-iron">
+              <ul className="mt-2 kachelliste">
                 {fehlt.slice(0, mehr ? fehlt.length : ZUERST).map((e) => (
                   <li key={e.kennung} className="px-3 py-2">
                     <span className="block font-medium">{e.name}</span>

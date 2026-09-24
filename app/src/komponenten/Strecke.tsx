@@ -590,8 +590,7 @@ function Ergebnis({
       {t.length > 0 && (
         <section id="weg-tunnel" className="mt-8 scroll-mt-4">
           <h2 className="text-lg font-bold">Tunnel in Wegrichtung</h2>
-          <ol className="mt-3 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
-                         dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
+          <ol className="mt-3 kachelliste">
             {t.map((x) => (
               <Zeile key={x.id} name={x.name} linie={x.linie} liste="tunnel" stelle={x.id}
                      seite={tunnel.linien[String(x.linie)]?.seite ?? false} teile={[
@@ -607,8 +606,7 @@ function Ergebnis({
       {b.length > 0 && (
         <section id="weg-bruecken" className="mt-8 scroll-mt-4">
           <h2 className="text-lg font-bold">Brücken in Wegrichtung</h2>
-          <ol className="mt-3 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
-                         dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
+          <ol className="mt-3 kachelliste">
             {(alleBruecken ? b : b.slice(0, BRUECKEN_ZUERST)).map((x) => (
               <Zeile key={x.id} name={x.name} linie={x.linie} liste="bruecken" stelle={x.id}
                      seite={bruecken.linien[String(x.linie)]?.seite ?? false} teile={[
@@ -654,8 +652,7 @@ function WegLinien({ laeufe, netz, verzeichnis }: {
   return (
     <section className="mt-8">
       <h2 className="text-lg font-bold">Linien in Wegrichtung</h2>
-      <ol className="mt-3 divide-y divide-sbb-cloud border border-sbb-cloud bg-white
-                     dark:divide-sbb-iron dark:border-sbb-iron dark:bg-sbb-midnight">
+      <ol className="mt-3 kachelliste">
         {laeufe.map((l, i) => {
           const strecke = `${ort(l.von)} → ${ort(l.bis)}`
           if (l.linie === null) {
@@ -778,13 +775,13 @@ function Kachel({ zahl, text, ziel }: { zahl: number; text: string; ziel?: strin
       </p>
     </>
   )
-  const stil = 'border border-sbb-cloud bg-white px-4 py-3 dark:border-sbb-iron dark:bg-sbb-midnight'
+  const stil = 'kachel px-4 py-3'
   if (!ziel || zahl === 0) return <div className={stil}>{inhalt}</div>
   return (
     <button
       type="button" aria-label={`${zahl} ${text}: zur Liste`}
       onClick={() => document.getElementById(ziel)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-      className={`${stil} text-left transition hover:border-sbb-black dark:hover:border-sbb-white`}
+      className={`${stil} kachel-link text-left`}
     >
       {inhalt}
     </button>

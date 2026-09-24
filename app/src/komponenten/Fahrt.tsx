@@ -184,7 +184,7 @@ function StartPerGps({ suche, name, neu, selbst }: {
   return (
     <div>
       <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Von (nächster Bahnhof per GPS)</span>
-      <div className="mt-1 border border-sbb-cloud bg-sbb-milk px-4 py-3 dark:border-sbb-iron dark:bg-sbb-charcoal">
+      <div className="mt-1 kachel px-4 py-3">
         {suche.art === 'gefunden' ? (
           <>
             <p className="text-lg">{name(suche.uic)}</p>
@@ -234,7 +234,7 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten, loesch
           </button>
         )}
       </div>
-      <ul className="mt-2 divide-y divide-sbb-cloud border border-sbb-cloud dark:divide-sbb-iron dark:border-sbb-iron">
+      <ul className="mt-2 kachelliste">
         {fahrten.map((f) => (
           <li key={`${f.von}-${f.nach}-${f.ueber}`} className="flex items-stretch">
             <button type="button" onClick={() => starten(f)}
@@ -262,9 +262,7 @@ function SammelheftKarte() {
   const n = (a: string) => Object.values(heft.objekte).filter((o) => o.art === a).length
   return (
     <a href="#/sammelheft"
-       className="mt-6 flex items-center justify-between gap-3 border border-l-4 border-sbb-cloud
-                  border-l-sbb-red bg-white px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
-                  dark:border-sbb-iron dark:border-l-sbb-red dark:bg-sbb-midnight">
+       className="kachel kachel-link mt-6 flex items-center justify-between gap-3 px-4 py-3">
       <span className="min-w-0">
         <span className="block font-medium">Sammelheft</span>
         <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
@@ -272,7 +270,7 @@ function SammelheftKarte() {
           {n('bahnhof') === 1 ? 'Bahnhof' : 'Bahnhöfe'} erlebt
         </span>
       </span>
-      <span aria-hidden="true">→</span>
+      <span className="pfeil shrink-0" aria-hidden="true">→</span>
     </a>
   )
 }
@@ -282,16 +280,14 @@ function LogbuchKarte() {
   const n = useMemo(() => heftLesen().fahrten.length, [])
   return (
     <a href="#/logbuch"
-       className="mt-2 flex items-center justify-between gap-3 border border-l-4 border-sbb-cloud
-                  border-l-sbb-red bg-white px-4 py-3 hover:border-sbb-black hover:border-l-sbb-red
-                  dark:border-sbb-iron dark:border-l-sbb-red dark:bg-sbb-midnight">
+       className="kachel kachel-link mt-2 flex items-center justify-between gap-3 px-4 py-3">
       <span className="min-w-0">
         <span className="block font-medium">Logbuch</span>
         <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
           {n === 0 ? 'Noch keine Fahrt eingetragen' : `${n} ${n === 1 ? 'Fahrt' : 'Fahrten'} eingetragen`}
         </span>
       </span>
-      <span aria-hidden="true">→</span>
+      <span className="pfeil shrink-0" aria-hidden="true">→</span>
     </a>
   )
 }
