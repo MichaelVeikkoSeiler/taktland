@@ -22,13 +22,14 @@ import {
 import { indexLaden } from './daten'
 import { HERAUSGEBER, KONTAKT } from './kontakt'
 import type { BahnhofIndex } from './typen'
+import { Demo } from './komponenten/Demo'
 import { Ladefehler } from './komponenten/Ladefehler'
 
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
-  | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' } | { art: 'logbuch' }
+  | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'demo' }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
@@ -51,6 +52,7 @@ function seiteAusAdresse(): Seite {
   if (h === '#/fahrt') return { art: 'fahrt' }
   if (h === '#/sammelheft') return { art: 'sammelheft' }
   if (h === '#/logbuch') return { art: 'logbuch' }
+  if (h === '#/demo') return { art: 'demo' }
   if (h === '#/anleitung') return { art: 'anleitung' }
   // #/linien: die frühere Adresse, damit alte Lesezeichen weiter gehen
   if (h === '#/strecken' || h === '#/linien') return { art: 'linien' }
@@ -83,6 +85,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'duell': return 'duell'
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
+    case 'demo': return 'demo'
     case 'anleitung': case 'fahrt': case 'sammelheft': return null
   }
 }
@@ -145,6 +148,7 @@ export default function App() {
         {seite.art === 'fahrt' && <Fahrt index={index} />}
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}
         {seite.art === 'logbuch' && <Logbuch index={index} />}
+        {seite.art === 'demo' && <Demo />}
         {seite.art === 'linien' && <Linien index={index} />}
         {seite.art === 'uebersicht' && (
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}

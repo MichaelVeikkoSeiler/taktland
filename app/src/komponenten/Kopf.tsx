@@ -22,7 +22,7 @@ import { useEffect } from 'react'
 import { Aktualisieren } from './Aktualisieren'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'demo'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -43,6 +43,8 @@ const HAUPT: Array<{ schluessel: string; text: string; bereiche: Bereich[]; adre
   { schluessel: 'standort', text: 'Standort', bereiche: ['standort'], adresse: '#/standort' },
   // Michael, 2026-09-25: «Bitte ein neuer Reiter Logbuch»
   { schluessel: 'logbuch', text: 'Logbuch', bereiche: ['logbuch'], adresse: '#/logbuch' },
+  // Michael, 2026-09-25: «neuer Reiter (Demo) zwischen Logbuch und Info»
+  { schluessel: 'demo', text: 'Demo', bereiche: ['demo'], adresse: '#/demo' },
   // die Anleitung, bisher das «i» neben dem Namen (Michael, 2026-09-25)
   { schluessel: 'info', text: 'Info', bereiche: [], adresse: '#/anleitung' },
 ]
@@ -112,7 +114,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   fahrt?: boolean
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
-  const bild = fahrt ? BILDER.fahrt : BILDER[schluessel]
+  // Demo vorerst mit dem Bild der Startseite
+  const bild = fahrt ? BILDER.fahrt : aktiv === 'demo' ? BILDER.start : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
@@ -130,8 +133,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
       </div>
       {/* Fünf Hauptreiter; unter «Bahnland» eine zweite Zeile mit den Unterreitern */}
       <nav aria-label="Bereiche"
-           className="-mb-px mt-4 flex justify-between gap-x-2 overflow-x-auto text-base
-                      [scrollbar-width:none] max-[359px]:text-[14px] sm:justify-start sm:gap-x-6">
+           className="-mb-px mt-4 flex justify-between gap-x-2 overflow-x-auto text-base max-[399px]:gap-x-1.5 max-[399px]:text-[15px]
+                      [scrollbar-width:none] max-[359px]:text-[13px] sm:justify-start sm:gap-x-6">
         {HAUPT.map((h) => {
           const hier = h.schluessel === 'info' ? anleitung : aktiv !== null && h.bereiche.includes(aktiv)
           return (
@@ -174,7 +177,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
 function FahrtKnopf({ hier }: { hier: boolean }) {
   return (
     <a href="#/fahrt" aria-current={hier ? 'page' : undefined}
-       className={`shrink-0 rounded-lg px-3 py-1.5 text-base font-bold text-white max-[359px]:text-[14px] ${hier
+       className={`shrink-0 rounded-lg px-3 py-1.5 text-base font-bold text-white max-[399px]:text-[15px] max-[359px]:text-[13px] ${hier
          ? 'bg-sbb-red125' : 'bg-sbb-red hover:bg-sbb-red125'}`}>
       Fahrtmodus
     </a>

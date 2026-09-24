@@ -60,6 +60,10 @@ self.addEventListener('fetch', (e) => {
   const anfrage = e.request
   if (anfrage.method !== 'GET' || new URL(anfrage.url).origin !== self.location.origin) return
 
+  // Das Demo-Video nicht über den Cache: Browser holen es stückweise (Range),
+  // das braucht die Antwort des Servers
+  if (anfrage.headers.has('range') || new URL(anfrage.url).pathname.endsWith('.mp4')) return
+
   // Seitenaufruf: erst das Netz, damit Aktualisierungen ankommen; sonst der Cache.
   // «no-cache» fragt beim Server nach, ob es eine neuere Fassung gibt. Ohne
   // das hielt der Browser die Seite bis zu 10 Minuten fest (GitHub Pages
