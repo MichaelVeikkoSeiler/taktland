@@ -76,6 +76,22 @@ Was es bräuchte:
 - **Testen mit Betroffenen**, etwa über einen Blinden- und Sehbehindertenverband,
   bevor etwas als barrierefrei gilt
 
+## Messbarkeit: Wie wird Taktland genutzt?
+
+Idee von Michael, 2026-09-24: Die Wirkung sollte bis zu einem gewissen Grad
+messbar sein. Heute misst Taktland nichts, und das Versprechen lautet: kein
+Konto, keine Auswertung, der Standort bleibt auf dem Gerät. Darum in Stufen:
+1. **Eigenes Protokoll auf dem Gerät:** Das Sammelheft ist es schon (Fahrten,
+   Datum, Objekte). Dazu ein Export als Datei, den man freiwillig weitergeben kann.
+2. **Pilot mit Freiwilligen:** Testpersonen schicken ihren Export, etwa nach
+   einem Monat. Keine Technik nötig, volle Kontrolle bei den Nutzern.
+3. **Zählung ohne Personenbezug, nur mit Einwilligung:** etwa «Fahrtmodus
+   gestartet», «Fahrt beendet», ohne Standort, ohne Kennung. Braucht einen
+   Server, eine Datenschutzerklärung und eine Änderung des Versprechens in der
+   App. Erst nach Klärung mit der SBB.
+Was sich so messen lässt: wie oft und wie lange der Fahrtmodus läuft. Ob
+Menschen deswegen mehr Bahn fahren, zeigt erst eine Befragung.
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
