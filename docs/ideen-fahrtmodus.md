@@ -149,6 +149,19 @@ gesperrt sind. So freigeben:
 
 Anleitung: https://code.claude.com/docs/en/claude-code-on-the-web
 
+## Demo-Video
+
+Reiter «Demo» mit einer Aufnahme der App (Michael, 2026-09-25); Aufnahme mit
+`docs/demo-aufnahme.mjs`. Heute Probefahrt Lugano–Bellinzona, davor gut sieben
+Minuten (im Video rund 20 s) ohne Meldung bis zum Ceneri-Basistunnel.
+- **Vorschlag für eine neue Aufnahme:** Walenstadt–Ziegelbrücke (Linie 890,
+  5 Tunnel, darunter der Kerenzerbergtunnel mit 3955 m, 45 Brücken), kurz und
+  laufend etwas zu melden. Alternative: Lugano–Mendrisio (3 Tunnel, 41 Brücken).
+- **Prüfen:** Brunnen–Flüelen führt über die Linien 600 und 604; es sieht so aus,
+  als meldete Taktland Tunnel beider Gleise (etwa Morschach- und Stutzecktunnel).
+- Hell-Dunkel-Knopf liegt im Bild der Demo über der Karte «Standort»; allenfalls
+  verschieben.
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
