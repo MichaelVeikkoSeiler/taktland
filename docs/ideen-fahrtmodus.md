@@ -112,6 +112,28 @@ Arbeitsumgebung gesperrt, die Bedingungen je Datensatz beim Laden nochmals prüf
 - Gezeigt werden nur Name, Art, Höhe, Quelle; Seite (in Fahrtrichtung) und
   Stelle rechnet die Pipeline, der Validator prüft. Hinweis in der App: ob es
   zu sehen ist, sagen die Daten nicht.
+- **Schritt 1 beschlossen** (Michael, 2026-09-25): KGS-A-Objekte und
+  UNESCO-Welterbe, zuerst im Umkreis von 15 km um Lugano und entlang
+  Lugano–Zürich–Bern–Müntschemier. Wartet auf Netzzugang zu `opendata.swiss`,
+  `ckan.opendata.swiss`, `data.geo.admin.ch`, `api3.geo.admin.ch`. Vorschlag
+  Abstand zur Strecke: 2 km, nach der Testfahrt anpassen.
+
+## Seen auf den Karten
+
+Idee von Michael, 2026-09-25, beschlossen, wartet auf denselben Netzzugang:
+- **Alle Seen** der Quelle, nicht nur die grössten. Damit braucht es keine
+  Flächenangabe und keine Rangliste.
+- Quelle: vereinfachte Landeskarte 1:1 Mio. von swisstopo als Vektordaten
+  (Seen als Flächen), passend zur kleinen, selbst gezeichneten Karte. «Alle»
+  heisst: alle Seen, die diese Quelle führt; kleine Seen fehlen dort, das steht
+  als Hinweis bei der Karte.
+- Überall, wo die Netzkarte gezeichnet wird: Fahrtmodus, Linienseiten, Tunnel,
+  Brücken, Logbuch. Unter dem Streckennetz.
+- Farbe von Claude festgelegt (Michael: «helles Blau selber durch dich
+  definiert»): Fläche `#d6e7f5`, Name `#4a7196`; dunkel Fläche `#1d2c3a`,
+  Name `#8fb3d4`.
+- Namen immer, wenn vertretbar: nur wenn der See auf dem Bildschirm gross genug
+  ist und der Name nicht mit einem anderen Namen oder einem Bahnhof kollidiert.
 
 ## Risiken, beim Bauen beachten
 
