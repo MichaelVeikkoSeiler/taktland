@@ -61,7 +61,7 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
           Noch keine Fahrt im Logbuch. Starte den Fahrtmodus mit dem roten Knopf oben.
         </p>
       ) : (
-        <ul className="mt-6 divide-y divide-sbb-cloud border border-sbb-cloud dark:divide-sbb-iron dark:border-sbb-iron">
+        <ul className="mt-6 space-y-2">
           {fahrten.map((f) => <Eintrag key={f.beginn} f={f} index={index} geaendert={neuLesen} />)}
         </ul>
       )}
@@ -113,10 +113,10 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
 
   const knopf = 'text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm'
   return (
-    <li>
+    <li className="kachel overflow-hidden">
       <button type="button" onClick={() => setOffen(!offen)} aria-expanded={offen}
-              className="flex w-full items-center justify-between gap-3 px-3 py-2.5 text-left
-                         hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
+              className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left
+                         hover:bg-sbb-cloud/60 dark:hover:bg-sbb-iron/60">
         <span className="min-w-0">
           <span className="block truncate font-bold">{f.von} → {f.nach}</span>
           <span className="block truncate text-sm text-sbb-metal dark:text-sbb-storm">
@@ -131,7 +131,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
       </button>
 
       {offen && (
-        <div className="border-t border-sbb-cloud px-3 pb-4 pt-3 dark:border-sbb-iron">
+        <div className="border-t border-sbb-cloud px-4 pb-4 pt-3 dark:border-sbb-iron">
           <p className="text-sm">
             {f.manuell ? 'Von Hand eingetragen, ohne Fahrtmodus: keine Objekte erfasst' : zaehlung(f)}
           </p>
