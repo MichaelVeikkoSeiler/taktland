@@ -14,6 +14,7 @@ import { vereinfachen } from './Blaettern'
 import { Fahrtmodus, type ObjektText } from './Fahrtmodus'
 import { Luecken } from './Luecken'
 import { FavoritKnopf, Stern } from './Stern'
+import { STUFE_TEXT } from './Suche'
 import { genau } from './Objekte'
 import { Ladefehler } from './Ladefehler'
 
@@ -395,15 +396,39 @@ function Ergebnis({
   function bilanzObjekt(o: FahrObjekt): BilanzObjekt {
     const t = objektText(o)
     const leer = { laenge_m: null, baueinheiten: null, linie: null, kanton: null }
+    // Angaben zum Aufklappen in der Bilanz (Michael, 2026-09-25); fehlt ein
+    // Wert, steht er nicht da, statt geschätzt
+    const angaben: Array<[string, string]> = []
+    const dazu = (k: string, v: string | number | null | undefined) => {
+      if (v !== null && v !== undefined && v !== '') angaben.push([k, String(v)])
+    }
     if (o.art === 'bahnhof') {
       const b = bahnhof.get(uicVon.get(o.kennung) ?? 0)
+      dazu('Kanton', b?.kanton)
+      dazu('Grösse', b ? STUFE_TEXT[b.tier] : null)
+      dazu('Ein- und Aussteigende pro Werktag', b?.dwv != null ? b.dwv.toLocaleString('de-CH') : null)
+      dazu('Infrastruktur', b?.isb)
       return { ...leer, art: 'bahnhof', kennung: String(b?.uic ?? o.kennung), name: t?.name ?? o.kennung,
-               zeile: t?.zeile ?? '', kanton: b?.kanton ?? null }
+               zeile: t?.zeile ?? '', kanton: b?.kanton ?? null, angaben }
+    }
+    if (o.art === 'tunnel') {
+      const x = tunnelNach.get(o.kennung)
+      dazu('Länge', x ? (x.laenge_m === null ? 'keine Angabe' : `${genau(x.laenge_m)} m`) : null)
+      dazu('In Betrieb seit', x?.inbetriebnahme_jahr)
+      dazu('Röhren und Spuren', x?.tunnelsystem)
+      dazu('Linie', x?.linie)
+      dazu('Kanton laut Quelle', x?.kanton)
+      dazu('Bemerkung der Quelle', x?.bemerkung)
+    } else {
+      const y = brueckenNach.get(o.kennung)
+      dazu('Baueinheiten', y ? (y.baueinheiten === null ? 'keine Angabe' : y.baueinheiten) : null)
+      dazu('Linie', y?.linie)
+      dazu('Kanton laut Quelle', y?.kanton)
     }
     const x = o.art === 'tunnel' ? tunnelNach.get(o.kennung) : brueckenNach.get(o.kennung)
     return { ...leer, art: o.art, kennung: o.kennung, name: t?.name ?? o.kennung, zeile: t?.zeile ?? '',
              linie: x?.linie ?? null, baueinheiten: t?.baueinheiten ?? null,
-             laenge_m: o.art === 'tunnel' ? tunnelNach.get(o.kennung)?.laenge_m ?? null : null }
+             laenge_m: o.art === 'tunnel' ? tunnelNach.get(o.kennung)?.laenge_m ?? null : null, angaben }
   }
 
   // Von der Seite «Fahrtmodus» her: gleich starten, einmal. Danach fällt

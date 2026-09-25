@@ -6,7 +6,7 @@ import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
 import { Auswahl } from './Auswahl'
 import { FavoritKnopf } from './Stern'
 
-const STUFE_TEXT: Record<string, string> = {
+export const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
 }
 

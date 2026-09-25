@@ -13,6 +13,8 @@ export interface BilanzObjekt {
   baueinheiten: number | null
   linie: number | null
   kanton: string | null
+  /** zum Aufklappen: Bezeichnung und Wert, nur was in den Daten steht */
+  angaben: Array<[string, string]>
 }
 
 /** Brücken ab so vielen Baueinheiten stehen offen in der Liste, die übrigen eingeklappt */
@@ -141,6 +143,12 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
   const neu = (o: BilanzObjekt) => beginn !== null
     && (heft.objekte[schluesselVon(o.art, o.kennung)]?.zeit ?? 0) >= beginn
   const offen = objekte.filter((o) => o.art !== 'bruecke' || (o.baueinheiten ?? 0) >= GROSSE_BRUECKE)
+  const [aufgeklappt, setAufgeklappt] = useState<Set<string>>(() => new Set())
+  const umklappen = (id: string) => setAufgeklappt((alt) => {
+    const neu = new Set(alt)
+    if (!neu.delete(id)) neu.add(id)
+    return neu
+  })
   const kleine = objekte.filter((o) => o.art === 'bruecke' && (o.baueinheiten ?? 0) < GROSSE_BRUECKE)
   const [fragen, setFragen] = useState<Frage[] | null>(null)
   const moeglich = useMemo(() => fragenBauen(offen).length >= 2, [objekte]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -170,7 +178,7 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
         )}
 
         <div className="mt-5 grid grid-cols-3 gap-2">
-          {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => (
+          {(['bahnhof', 'bruecke', 'tunnel'] as const).map((a) => (
             <div key={a} className="kachel px-3 py-3">
               <p className="text-3xl font-bold tabular-nums">{anzahl(a)}</p>
               <p className="text-sm text-sbb-metal dark:text-sbb-storm">
@@ -185,21 +193,52 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
             : 'Durchfahren ab dem ersten Standort, gezählt, nicht gemessen.'}
         </p>
 
+        {/* jede Zeile klappt auf und zeigt die Angaben aus den Daten (Michael,
+            2026-09-25: «mit rotem nickenden Pfeil nach unten, aufklappen») */}
         {offen.length > 0 && (
           <ol className="mt-5 kachelliste">
-            {offen.map((o) => (
-              <li key={`${o.art}${o.kennung}`} className="flex items-start justify-between gap-3 px-3 py-2">
-                <span className="min-w-0">
-                  <span className="block font-medium">{o.name}</span>
-                  <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                    {ART_TEXT[o.art][0]} · {o.zeile}
-                  </span>
-                </span>
-                {neu(o) && (
-                  <span className="shrink-0 bg-sbb-red px-2 py-0.5 text-xs font-bold text-white">neu</span>
-                )}
-              </li>
-            ))}
+            {offen.map((o) => {
+              const id = `${o.art}${o.kennung}`
+              const auf = aufgeklappt.has(id)
+              return (
+                <li key={id}>
+                  <button type="button" aria-expanded={auf} onClick={() => umklappen(id)}
+                          className="flex w-full items-center justify-between gap-3 px-3 py-2 text-left">
+                    <span className="min-w-0">
+                      <span className="block font-medium">{o.name}</span>
+                      <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+                        {ART_TEXT[o.art][0]} · {o.zeile}
+                      </span>
+                    </span>
+                    <span className="flex shrink-0 items-center gap-2">
+                      {neu(o) && (
+                        <span className="rounded bg-sbb-red px-2 py-0.5 text-xs font-bold text-white">neu</span>
+                      )}
+                      <span className={`pfeil ${auf ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
+                        {auf ? '↑' : '↓'}
+                      </span>
+                    </span>
+                  </button>
+                  {auf && (
+                    <div className="px-3 pb-3">
+                      {o.angaben.length === 0 ? (
+                        <p className="text-sm text-sbb-metal dark:text-sbb-storm">Keine weiteren Angaben in den Daten.</p>
+                      ) : (
+                        <dl className="grid grid-cols-2 gap-x-4 gap-y-1 border-t border-sbb-silver pt-2 text-sm
+                                       dark:border-sbb-iron">
+                          {o.angaben.map(([k, v]) => (
+                            <div key={k} className="contents">
+                              <dt className="text-sbb-metal dark:text-sbb-storm">{k}</dt>
+                              <dd className="min-w-0 break-words">{v}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
+                    </div>
+                  )}
+                </li>
+              )
+            })}
           </ol>
         )}
         {kleine.length > 0 && (
