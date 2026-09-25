@@ -105,7 +105,12 @@ export function Suche({ index, oeffnen, stand, aendern }: {
 }
 
 /** Das Suchfeld der Bahnhöfe; auch bei den Favoriten */
-export function Suchfeld({ begriff, aendern }: { begriff: string; aendern: (b: string) => void }) {
+export function Suchfeld({ begriff, aendern, fokus = false }: {
+  begriff: string
+  aendern: (b: string) => void
+  /** gleich zum Tippen bereit, etwa nach «+ Bahnhof hinzufügen» */
+  fokus?: boolean
+}) {
   return (
     <label className="block">
       <span className="sr-only">Bahnhof suchen</span>
@@ -113,6 +118,7 @@ export function Suchfeld({ begriff, aendern }: { begriff: string; aendern: (b: s
         type="search"
         value={begriff}
         onChange={(e) => aendern(e.target.value)}
+        autoFocus={fokus}
         placeholder="Bahnhof suchen"
         autoComplete="off"
         className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg
