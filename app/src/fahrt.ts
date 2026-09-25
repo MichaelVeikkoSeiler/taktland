@@ -206,9 +206,10 @@ export function wegEnde(fw: Fahrweg) {
 }
 
 /**
- * Ein weicher Zweiklang wie ein kleines Glockenspiel, aufsteigend C6–G6 mit
+ * Ein weicher Zweiklang wie ein kleines Glockenspiel, aufsteigend G4–D5 mit
  * leisem Oberton und langem Ausklang (Michael, 2026-09-25: «einen anderen
- * Audioton»; vorher zwei kurze Pieptöne). Bewusst nicht der Gong der SBB.
+ * Audioton», dann «wesentlich tiefer»; vorher zwei kurze Pieptöne). Bewusst
+ * nicht der Gong der SBB. Der Oberton hilft kleinen Handylautsprechern.
  * Der Browser erlaubt Töne erst nach einer Berührung, darum wird er beim Start
  * des Fahrtmodus vorbereitet.
  */
@@ -221,8 +222,8 @@ export function tonVorbereiten(): () => void {
   return () => {
     const jetzt = ctx.currentTime
     // [Beginn in s, Grundton in Hz]; dazu die Oktave darüber, leiser
-    for (const [beginn, hoehe] of [[0, 1047], [0.16, 1568]] as const) {
-      for (const [faktor, staerke] of [[1, 0.32], [2, 0.08]] as const) {
+    for (const [beginn, hoehe] of [[0, 392], [0.16, 587]] as const) {
+      for (const [faktor, staerke] of [[1, 0.34], [2, 0.12]] as const) {
         const osc = ctx.createOscillator()
         const laut = ctx.createGain()
         osc.type = 'sine'
