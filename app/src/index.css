@@ -28,12 +28,13 @@
 
   /* Fahrtmodus: Tunnel schwarz, Brücken orange (erst gelb, Michael,
      2026-09-25: «Gelb soll neu überall Orange sein»), Bahnhöfe blau. Auf
-     Orange steht die Schrift schwarz. Blau ist SBB Blue, im Dunkeln heller,
-     damit es auf Schwarz lesbar bleibt. */
+     Orange steht die Schrift schwarz. Das Blau hat weniger Rot als SBB Blue
+     (Michael: «etwas zu fest violett»), im Dunkeln heller, damit es auf
+     Schwarz lesbar bleibt. */
   --color-fahrt-tunnel: #000000;
   --color-fahrt-bruecke: #f27e00;
-  --color-fahrt-bahnhof: #2d327d;
-  --color-fahrt-bahnhof-hell: #8d93e0;
+  --color-fahrt-bahnhof: #1d3f8a;
+  --color-fahrt-bahnhof-hell: #7fa3e6;
 
   /* Kacheln: Milk um 4,5 % dunkler (Michael, 2026-09-25) */
   --color-sbb-kachel: #ebebeb;
