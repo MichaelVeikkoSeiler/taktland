@@ -12,9 +12,9 @@ import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte } from './Netzkart
 export const RING_S = 60
 
 /**
- * Farben je Art im Fahrtmodus: Tunnel schwarz, Brücken gelb, Bahnhöfe blau
+ * Farben je Art im Fahrtmodus: Tunnel schwarz, Brücken orange, Bahnhöfe blau
  * (Michael, 2026-09-25), auch für den Ring und die grosse Fläche kurz vor dem
- * Objekt. Auf Gelb steht die Schrift schwarz, sonst weiss. Im Dunkeln bekommt
+ * Objekt. Auf Orange steht die Schrift schwarz, sonst weiss. Im Dunkeln bekommt
  * die schwarze Fläche einen hellen Rand, sonst verschwände sie.
  */
 export const FARBE: Record<FahrObjekt['art'], { flaeche: string; ring: string; ringBald: string; grundBald: string; schrift: string }> = {
@@ -137,13 +137,8 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
           }
           if (o.art === 'bruecke') {
             return (
-              <g key={`b${o.kennung}`} className={blass}>
-                {/* dunkle Kante unter dem Gelb */}
-                <path d={`M${x - 4} 51 Q${x} 41 ${x + 4} 51`} fill="none" strokeWidth="4.5"
-                      strokeLinecap="round" className="stroke-sbb-charcoal dark:stroke-transparent" />
-                <path d={`M${x - 4} 51 Q${x} 41 ${x + 4} 51`} fill="none" strokeWidth="2.5"
-                      strokeLinecap="round" className="stroke-fahrt-bruecke" />
-              </g>
+              <path key={`b${o.kennung}`} d={`M${x - 4} 51 Q${x} 41 ${x + 4} 51`} fill="none" strokeWidth="2.5"
+                    strokeLinecap="round" className={`stroke-fahrt-bruecke ${blass}`} />
             )
           }
           return (
@@ -170,7 +165,6 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
         <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-4 rounded-sm bg-fahrt-tunnel dark:bg-sbb-storm" />Tunnel</span>
         <span className="flex items-center gap-1.5">
           <svg viewBox="0 0 16 10" className="h-2.5 w-4">
-            <path d="M1 9 Q8 0 15 9" fill="none" strokeWidth="4" strokeLinecap="round" className="stroke-sbb-charcoal dark:stroke-transparent" />
             <path d="M1 9 Q8 0 15 9" fill="none" strokeWidth="2.5" strokeLinecap="round" className="stroke-fahrt-bruecke" />
           </svg>
           Brücke
@@ -261,7 +255,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
                     strokeWidth={1.5} vectorEffect="non-scaling-stroke"
                     opacity={(o.sAus ?? o.s) < s ? 0.35 : 1}
                     className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
-                      : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-sbb-charcoal dark:stroke-sbb-midnight'
+                      : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-white dark:stroke-sbb-midnight'
                       : 'fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight'} />
           )
         })}

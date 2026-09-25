@@ -275,7 +275,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         )}
 
         {imTunnel && einstellung.tunnel && sJetzt !== null && (
-          <div className="mt-5 bg-sbb-charcoal px-4 py-4 text-sbb-white">
+          <div className="mt-5 rounded-lg bg-sbb-charcoal px-4 py-4 text-sbb-white">
             <p className="text-xs uppercase tracking-wide text-sbb-storm">Im Tunnel</p>
             <p className="text-xl font-bold">{text(imTunnel)?.name}</p>
             <p className="mt-2 text-2xl font-bold tabular-nums">
@@ -286,7 +286,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         )}
 
         {naechstes ? (
-          <div className={`mt-5 flex items-center gap-4 border px-4 transition-all ${bald
+          <div className={`mt-5 flex items-center gap-4 rounded-lg border px-4 transition-all ${bald
             ? `${FARBE[naechstes.art].flaeche} ${FARBE[naechstes.art].schrift} py-7`
             : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
             <Ring bald={!!bald} art={naechstes.art}
