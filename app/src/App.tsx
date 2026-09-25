@@ -5,6 +5,7 @@ import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
 import { Fahrt } from './komponenten/Fahrt'
 import { Sammelheft } from './komponenten/Sammelheft'
+import { Favoriten } from './komponenten/Favoriten'
 import { Logbuch } from './komponenten/Logbuch'
 import { type Bereich, Kopf } from './komponenten/Kopf'
 import { Linie } from './komponenten/Linie'
@@ -29,7 +30,7 @@ import { Ladefehler } from './komponenten/Ladefehler'
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
-  | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'demo' }
+  | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'demo' }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
@@ -52,6 +53,7 @@ function seiteAusAdresse(): Seite {
   if (h === '#/fahrt') return { art: 'fahrt' }
   if (h === '#/sammelheft') return { art: 'sammelheft' }
   if (h === '#/logbuch') return { art: 'logbuch' }
+  if (h === '#/favoriten') return { art: 'favoriten' }
   if (h === '#/demo') return { art: 'demo' }
   if (h === '#/anleitung') return { art: 'anleitung' }
   // #/linien: die frühere Adresse, damit alte Lesezeichen weiter gehen
@@ -85,6 +87,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'duell': return 'duell'
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
+    case 'favoriten': return 'favoriten'
     case 'demo': return 'demo'
     case 'sammelheft': return 'sammelheft'
     case 'anleitung': case 'fahrt': return null
@@ -149,6 +152,7 @@ export default function App() {
         {seite.art === 'fahrt' && <Fahrt index={index} />}
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}
         {seite.art === 'logbuch' && <Logbuch index={index} />}
+        {seite.art === 'favoriten' && <Favoriten index={index} oeffnen={oeffnen} />}
         {seite.art === 'demo' && <Demo />}
         {seite.art === 'linien' && <Linien index={index} />}
         {seite.art === 'uebersicht' && (

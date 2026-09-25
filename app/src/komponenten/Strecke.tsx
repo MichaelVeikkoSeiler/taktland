@@ -3,6 +3,7 @@ import { geometrieLaden, linienLaden, streckenLaden, uebersichtLaden } from '../
 import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, tonAbholen } from '../fahrt'
 import { favoritUmschalten, istFavorit, letzteMerken } from '../fahrten'
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
+import { useFavoriten } from '../favoriten'
 import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
 import { kantonText } from '../kanton'
 import type {
@@ -12,6 +13,7 @@ import type {
 import { vereinfachen } from './Blaettern'
 import { Fahrtmodus, type ObjektText } from './Fahrtmodus'
 import { Luecken } from './Luecken'
+import { FavoritKnopf, Stern } from './Stern'
 import { genau } from './Objekte'
 import { Ladefehler } from './Ladefehler'
 
@@ -820,17 +822,6 @@ function Zeile({ name, linie, seite, teile, liste, stelle }: {
  * Ein Feld, in das man einen Bahnhof tippt. Darunter stehen passende Bahnhöfe
  * zur Wahl, die mit dem Namensanfang zuerst. Enter nimmt den ersten.
  */
-/** Stern für Favoriten: voll gesetzt, leer nicht */
-export function Stern({ voll }: { voll: boolean }) {
-  return (
-    <svg viewBox="0 0 24 24" className="size-5 shrink-0" aria-hidden="true">
-      <path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z"
-            strokeWidth="1.6" strokeLinejoin="round"
-            className={voll ? 'fill-sbb-red stroke-sbb-red' : 'fill-none stroke-current'} />
-    </svg>
-  )
-}
-
 export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
   bezeichnung: string
   wert: number | null
@@ -841,6 +832,13 @@ export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
   const [text, setText] = useState(name(wert))
   const [offen, setOffen] = useState(false)
   useEffect(() => { setText(name(wert)) }, [wert, name])
+  const favoriten = useFavoriten()
+  // bei leerem Feld stehen die Favoriten zur Wahl (Michael, 2026-09-25)
+  const favoritenZurWahl = useMemo(() => {
+    if (text.trim()) return []
+    const hier = new Map(bahnhoefe.map((e) => [e.uic, e]))
+    return favoriten.map((u) => hier.get(u)).filter((e): e is IndexEintrag => !!e)
+  }, [text, favoriten, bahnhoefe])
 
   const vorschlaege = useMemo(() => {
     const b = vereinfachen(text.trim())
@@ -883,24 +881,35 @@ export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
           )}
         </span>
       </label>
-      {offen && vorschlaege.length > 0 && (
-        <ul className="absolute z-10 mt-px w-full border border-sbb-cloud bg-white shadow-sm
-                       dark:border-sbb-iron dark:bg-sbb-midnight">
-          {vorschlaege.map((e) => (
-            <li key={e.uic}>
-              <button
-                type="button" onMouseDown={(ev) => ev.preventDefault()} onClick={() => nehmen(e)}
-                className="flex w-full justify-between gap-3 px-4 py-2 text-left hover:bg-sbb-milk
-                           dark:hover:bg-sbb-charcoal"
-              >
-                <span className="text-sbb-black dark:text-sbb-white">{e.name}</span>
-                <span className="text-sm text-sbb-metal dark:text-sbb-storm">
-                  {e.kanton ? kantonText(e.kanton) : ''}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
+      {offen && (vorschlaege.length > 0 || favoritenZurWahl.length > 0) && (
+        <div className="absolute z-10 mt-px w-full border border-sbb-cloud bg-white shadow-sm
+                        dark:border-sbb-iron dark:bg-sbb-midnight"
+             // der Fokus bleibt im Feld, auch beim Tipp auf einen Stern
+             onMouseDown={(ev) => ev.preventDefault()}>
+          {favoritenZurWahl.length > 0 && (
+            <p className="px-4 pt-2 text-xs font-medium uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
+              Favoriten
+            </p>
+          )}
+          <ul>
+            {(vorschlaege.length > 0 ? vorschlaege : favoritenZurWahl).map((e) => (
+              <li key={e.uic} className="flex items-stretch">
+                <button
+                  type="button" onClick={() => nehmen(e)}
+                  className="flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3 py-2 pl-4 pr-1
+                             text-left hover:bg-sbb-milk dark:hover:bg-sbb-charcoal"
+                >
+                  <span className="text-sbb-black dark:text-sbb-white">{e.name}</span>
+                  <span className="text-sm text-sbb-metal dark:text-sbb-storm">
+                    {e.kanton ? kantonText(e.kanton) : ''}
+                  </span>
+                </button>
+                <FavoritKnopf uic={e.uic} name={e.name} favorit={favoriten.includes(e.uic)}
+                              className="w-12 hover:bg-sbb-milk dark:hover:bg-sbb-charcoal" />
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   )

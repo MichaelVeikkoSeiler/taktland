@@ -31,8 +31,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       </a>
       <p className="mt-2 leading-relaxed">
         Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnland (darunter Bahnhöfe,
-        Strecken, Brücken und Tunnel), Duell, Standort, Logbuch (darunter
-        Fahrten und Sammelheft) und Info, diese Seite. Der rote
+        Strecken, Brücken und Tunnel), Duell, Standort, Reisetasche (darunter
+        Logbuch, Sammelheft und Favoriten) und Info, diese Seite. Der rote
         Knopf beim Namen startet den Fahrtmodus. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
         betreibt, dazu Bahnhöfe anderer Bahnen wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn,
         sofern die offenen Daten für mindestens drei Kapitel reichen.

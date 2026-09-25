@@ -6,7 +6,8 @@ import {
 } from '../fahrten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
-import { BahnhofFeld, fahrtAdresse, Stern, type StreckenWahl } from './Strecke'
+import { BahnhofFeld, fahrtAdresse, type StreckenWahl } from './Strecke'
+import { Stern } from './Stern'
 
 type Art = 'ziel' | 'beide'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'

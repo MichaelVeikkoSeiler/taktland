@@ -39,7 +39,7 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
 
   return (
     <div className="px-4 pb-16">
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahrten</h1>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">Logbuch</h1>
       <p className="mt-2 leading-relaxed">
         Jede Fahrt im Fahrtmodus steht automatisch hier, mit Datum, Weg und allem, was du
         durchfahren hast. Du kannst eine Notiz dazuschreiben und Fahrten ohne Fahrtmodus von Hand
