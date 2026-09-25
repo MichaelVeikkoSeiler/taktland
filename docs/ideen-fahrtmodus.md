@@ -173,6 +173,20 @@ dazu, noch nicht beschlossen:
 - Probefahrt als Einstieg für Leute, die gerade nicht im Zug sitzen, auch für
   Präsentationen.
 
+## Test mit anderen
+
+Idee, 2026-09-25: Bisher nutzt nur Michael Taktland. Nächster Schritt: 10–20
+Leute aus dem Umfeld eine Woche lang pendeln lassen, zuerst Bahnbegeisterte
+und Pendelnde.
+- Vorher: Demo und Probefahrt als Einstieg, kurze Anleitung zum Installieren
+  auf dem Home-Bildschirm.
+- Danach fragen: Was hast du behalten? Was hat gestört? Hast du den Fahrtmodus
+  im Zug wirklich geöffnet? Würdest du Taktland weiterempfehlen?
+- Beobachten ohne Messung auf dem Gerät: Taktland sendet nichts; was zählt,
+  sagen die Leute selbst.
+- Offene Punkte, die der Test zeigt: Verständlichkeit ohne Erklärung, GPS und
+  Akku, offene Seite im Zug.
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
