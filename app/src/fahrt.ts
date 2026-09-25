@@ -206,8 +206,11 @@ export function wegEnde(fw: Fahrweg) {
 }
 
 /**
- * Ein kurzer Doppelton. Der Browser erlaubt Töne erst nach einer Berührung,
- * darum wird er beim Start des Fahrtmodus vorbereitet.
+ * Ein weicher Zweiklang wie ein kleines Glockenspiel, aufsteigend C6–G6 mit
+ * leisem Oberton und langem Ausklang (Michael, 2026-09-25: «einen anderen
+ * Audioton»; vorher zwei kurze Pieptöne). Bewusst nicht der Gong der SBB.
+ * Der Browser erlaubt Töne erst nach einer Berührung, darum wird er beim Start
+ * des Fahrtmodus vorbereitet.
  */
 export function tonVorbereiten(): () => void {
   const Kontext = window.AudioContext
@@ -217,16 +220,20 @@ export function tonVorbereiten(): () => void {
   void ctx.resume()
   return () => {
     const jetzt = ctx.currentTime
-    for (const [beginn, hoehe] of [[0, 880], [0.22, 1175]] as const) {
-      const osc = ctx.createOscillator()
-      const laut = ctx.createGain()
-      osc.frequency.value = hoehe
-      laut.gain.setValueAtTime(0.0001, jetzt + beginn)
-      laut.gain.exponentialRampToValueAtTime(0.4, jetzt + beginn + 0.02)
-      laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + beginn + 0.18)
-      osc.connect(laut).connect(ctx.destination)
-      osc.start(jetzt + beginn)
-      osc.stop(jetzt + beginn + 0.2)
+    // [Beginn in s, Grundton in Hz]; dazu die Oktave darüber, leiser
+    for (const [beginn, hoehe] of [[0, 1047], [0.16, 1568]] as const) {
+      for (const [faktor, staerke] of [[1, 0.32], [2, 0.08]] as const) {
+        const osc = ctx.createOscillator()
+        const laut = ctx.createGain()
+        osc.type = 'sine'
+        osc.frequency.value = hoehe * faktor
+        laut.gain.setValueAtTime(0.0001, jetzt + beginn)
+        laut.gain.exponentialRampToValueAtTime(staerke, jetzt + beginn + 0.008)
+        laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + beginn + 0.9)
+        osc.connect(laut).connect(ctx.destination)
+        osc.start(jetzt + beginn)
+        osc.stop(jetzt + beginn + 0.95)
+      }
     }
   }
 }

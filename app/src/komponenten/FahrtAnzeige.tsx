@@ -72,9 +72,9 @@ export function TunnelBalken({ anteil }: { anteil: number }) {
 /**
  * Das Streckenband: der ganze Weg vom Start zum Ziel als Linie, darauf alle
  * Tunnel, Brücken und Bahnhöfe und der Zug an seiner Stelle. Was durchfahren
- * ist, bleibt stehen, nur blasser (Michael, 2026-09-25: «Was vorbei ist, ist
- * vorbei» war nach der Fahrt Lugano–Melide nicht erwünscht). Im Massstab des
- * Wegs, ohne Zahlen.
+ * ist, bleibt stehen, in voller Farbe (Michael, 2026-09-25: erst «Was vorbei
+ * ist, ist vorbei» nicht erwünscht, dann «soll nicht heller werden»). Im
+ * Massstab des Wegs, ohne Zahlen.
  */
 export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
   fahrweg: Fahrweg
@@ -90,7 +90,6 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
   const RAND = 14
   const xBei = (w: number) => RAND + (Math.max(0, Math.min(ende, w)) / ende) * (B - 2 * RAND)
   const zugX = xBei(s)
-  const vorbei = (o: FahrObjekt) => (o.sAus ?? o.s) < s
   // Namen für die nächsten drei vor dem Zug, oben oder unten, ohne Überdeckung
   const beschriftet: Array<{ o: FahrObjekt; x: number; oben: boolean; kurz: string; rechts: boolean }> = []
   const frei = { oben: -Infinity, unten: -Infinity }
@@ -127,24 +126,23 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
         ))}
         {objekte.map((o) => {
           const x = xBei(o.s)
-          const blass = vorbei(o) ? 'opacity-35' : ''
           if (o.art === 'tunnel') {
             const x2 = o.sAus !== null ? xBei(o.sAus) : x + 3
             return (
               <rect key={`t${o.kennung}`} x={x} y="41" width={Math.max(2.5, x2 - x)} height="10" rx="1.5"
-                    className={`fill-fahrt-tunnel dark:fill-sbb-storm ${blass}`} />
+                    className="fill-fahrt-tunnel dark:fill-sbb-storm" />
             )
           }
           if (o.art === 'bruecke') {
             return (
               <path key={`b${o.kennung}`} d={`M${x - 3} 49 Q${x} 41.5 ${x + 3} 49`} fill="none" strokeWidth="2"
-                    strokeLinecap="round" className={`stroke-fahrt-bruecke ${blass}`} />
+                    strokeLinecap="round" className="stroke-fahrt-bruecke" />
             )
           }
           // Bahnhöfe als Punkte statt Kreise (Michael, 2026-09-25: «übersichtlicher»)
           return (
             <circle key={`h${o.kennung}`} cx={x} cy="46" r="3" strokeWidth="1"
-                    className={`fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight ${blass}`} />
+                    className="fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight" />
           )
         })}
         {beschriftet.map(({ o, x, oben, kurz, rechts }) => (
@@ -219,7 +217,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const hinter = weg.filter((p) => p.s <= s).map((p) => p.xy)
   const vor = weg.filter((p) => p.s >= s).map((p) => p.xy)
   if (hier && sJetzt !== null) { hinter.push([hx, hy]); vor.unshift([hx, hy]) }
-  // alle Objekte des Wegs; durchfahrene bleiben stehen, nur blasser
+  // alle Objekte des Wegs; durchfahrene bleiben stehen, in voller Farbe
   const zeichen = objekte
 
   return (
@@ -254,7 +252,6 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           return (
             <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 3 : 2.5) * px}
                     strokeWidth={1.5} vectorEffect="non-scaling-stroke"
-                    opacity={(o.sAus ?? o.s) < s ? 0.35 : 1}
                     className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
                       : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-white dark:stroke-sbb-midnight'
                       : 'fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight'} />
