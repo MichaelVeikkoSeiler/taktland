@@ -1,4 +1,7 @@
-# Fahrtmodus: vorgemerkte Ideen
+# Merkliste Taktland
+
+Aufgeräumt am 2026-09-25. Offen für Samstag, 2026-09-26: Netzzugang freigeben,
+dann Seen, Sehenswürdigkeiten (Schritt 1) und BTI.
 
 Vorgemerkt von Michael am 2026-09-23, noch nicht begonnen. Hintergrund: Eine
 Recherche (rund 25 Suchen) fand kein Angebot, das für eine frei gewählte Strecke
@@ -25,7 +28,7 @@ bei der Recherche gesperrt.
 - **Testfahrt 3 (2026-09-25), Lugano – Melide:** sehr gut, GPS auf etwa 10 m.
   Rückmeldung: Durchfahrenes verschwand aus Band und Karte, das Protokoll war
   schwer zu finden. Behoben: Band zeigt den ganzen Weg, Durchfahrenes bleibt
-  blass; «Sammelheft und Protokoll deiner Fahrten», Ansicht «Protokoll».
+  stehen, seit 2026-09-25 in voller Farbe; die Fahrten stehen im Logbuch.
 
 ## Plan bis Samstag, 2026-09-26
 
@@ -53,8 +56,22 @@ Auftaktbild der Seite «Fahrtmodus») folgen von Michael; bis dahin einfache
 Zeichen und das Bild der Strecken.
 
 **Später:** Verknüpfung auf dem App-Symbol, eigener Klang je Art,
-Sprachansage, Vibration, Challenge, neues App-Symbol und Illustrationen
-(von Michael).
+Sprachansage, Vibration, Challenge, neues App-Symbol und Piktos (von Michael).
+
+**Erledigt seit 2026-09-24** (alles in `main`):
+- Reiter: Bahnland, Duell, Standort, Reisetasche (Logbuch, Sammelheft,
+  Favoriten), Info mit der Demo; roter Knopf «Fahrtmodus» ohne Zug-Zeichen.
+- Auftaktbilder von Michael für Fahrtmodus, Logbuch/Reisetasche, Info, Demo.
+- Kacheln `#ebebeb`, abgerundete rote und gewählte Knöpfe (Anthracite).
+- Favoritenbahnhöfe mit Stern in jeder Bahnhofsuche, alphabetisch, «+ Bahnhof
+  hinzufügen»; im Fahrtmodus «Gemerkte Fahrten» statt Favoriten; letzte
+  Fahrten, Sammelheft und Logbuch nur noch in der Reisetasche.
+- Fahrtmodus: Tunnel schwarz, Brücken orange, Bahnhöfe blau (`#1d3f8a`), auch
+  Ring und Fläche; Bahnhöfe als Punkte, Band kleiner, Durchfahrenes in voller
+  Farbe; Meldungen innerhalb 40 s als Karten übereinander; abgerundet.
+- Ton: weicher Zweiklang G4–D5 statt Piepen.
+- Fahrtbilanz: Objekte zum Aufklappen mit den Angaben aus den Daten.
+- Demo-Video (Probefahrt Lugano–Bellinzona) unter Info.
 
 **«Ohne Ziel»:** am 2026-09-24 nochmals gefragt; Michael will warten. Nach der
 Testfahrt am Samstag wieder ansprechen.
@@ -231,7 +248,7 @@ Aare Seeland mobil, beim Laden prüfen).
 
 ## Risiken, beim Bauen beachten
 
-- **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
+- **Speicher auf dem Gerät:** Logbuch, Sammelheft und Favoriten liegen im
   Speicher des Browsers. Safari auf dem iPhone löscht ihn bei Websites, die sieben
   Tage nicht besucht wurden, nicht aber bei Apps auf dem Home-Bildschirm. Darum
   als App installieren und eine Sicherung zum Herunterladen anbieten.
@@ -243,36 +260,31 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
 
 ## Einstieg
 
-- **Eigener Knopf «Fahrtmodus»**, als eigener Reiter oder Spezial-Knopf in der
-  Navigation, direkt zur Auswahl der Fahrt.
-- **Nur Ziel eingeben:** Start ist der nächste Bahnhof per GPS.
+- ~~**Eigener Knopf «Fahrtmodus»**~~ erledigt: roter Knopf neben dem Namen.
+- ~~**Nur Ziel eingeben**~~ erledigt: Start ist der nächste Bahnhof per GPS.
 - **Ohne Ziel:** Aus einigen GPS-Punkten Linie und Richtung erkennen
   (`strecken_geometrie.json`) und melden, was auf der Linie vorne liegt; bei
   einem Linienwechsel neu suchen.
-- **Pendelfunktion und Favoriten:** feste Fahrten und letzte Fahrten, ein Tipp
-  bis zum Start (auf dem Gerät gespeichert).
+- ~~**Pendelfunktion**~~ erledigt als «Gemerkte Fahrten» (ein Tipp bis zum
+  Start); letzte Fahrten zeigt das Logbuch.
 - **Verknüpfung auf dem App-Symbol:** `shortcuts` im Manifest der PWA
   («Fahrtmodus», «Letzte Fahrt»), vor allem Android.
 - **Neues App-Symbol** (gestaltet von Michael).
 
 ## Anzeige
 
-- **Streckenband:** Zug-Symbol fährt auf die kommenden Objekte zu, im Massstab
-  des Wegs.
-- **Ring um die Anzeige:** füllt sich bis zur Meldung, bei «Gleich» gross.
-- **Kleine Karte mit eigener Position:** aus `karte.json`, ohne Kartendienst.
-- **Im Tunnel:** «Ausfahrt in etwa …» mit Sekunden und einer Fläche, die sich
-  füllt (nur wo die Ausfahrt bekannt ist, sonst Hinweis).
-- **Objektillustrationen:** Tunnel, Brücke, Bahnhof; zeichnet Michael selbst.
+- ~~**Streckenband**~~ erledigt.
+- ~~**Ring um die Anzeige**~~ erledigt, in der Farbe des Objekts.
+- ~~**Kleine Karte mit eigener Position**~~ erledigt; Seen kommen dazu (oben).
+- ~~**Im Tunnel**~~ erledigt: «Ausfahrt in etwa …» mit Balken.
+- **Objektillustrationen (Piktos):** Tunnel, Brücke, Bahnhof; zeichnet Michael selbst. Offen.
 
 ## Nach der Fahrt
 
-- **Fahrtbilanz:** Zählung der durchfahrenen Tunnel, Brücken, Bahnhöfe und die
-  Liste dazu.
-- **Abgehakte Objekte:** auf dem Gerät gemerkt, was schon durchfahren ist.
-- **Sammelheft mit «Was fehlt noch?»**, als Challenge: «Wer hat mehr Tunnel
+- ~~**Fahrtbilanz**~~ erledigt, mit aufklappbaren Angaben.
+- ~~**Abgehakte Objekte**~~ erledigt (Sammelheft).
+- ~~**Sammelheft mit «Was fehlt noch?»**~~ erledigt. Offen bleibt die Challenge: «Wer hat mehr Tunnel
   durchfahren?» Offene Frage: Ein Vergleich mit anderen braucht einen Weg,
   Stände zu teilen (etwa einen Code oder Link zum Vergleichen), denn heute
   bleibt alles auf dem Gerät und Taktland hat keinen Server für Nutzerdaten.
-- **Quiz zur Fahrt:** Fragen nur zu den Objekten dieser Fahrt, nach den Regeln
-  für Fragen (keine Glücksfragen).
+- ~~**Quiz zur Fahrt**~~ erledigt.
