@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { favoritEinsetzen, favoritEntfernen, useFavoriten } from '../favoriten'
+import { alphabetisch, favoritEinsetzen, favoritEntfernen, useFavoriten } from '../favoriten'
 import { kantonText } from '../kanton'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { vereinfachen } from './Blaettern'
@@ -21,7 +21,7 @@ export function Favoriten({ index, oeffnen }: { index: BahnhofIndex | null; oeff
   const [entfernt, setEntfernt] = useState<{ uic: number; name: string; stelle: number } | null>(null)
 
   const nachUic = useMemo(() => new Map((index?.bahnhoefe ?? []).map((e) => [e.uic, e])), [index])
-  const liste = favoriten.map((u) => nachUic.get(u)).filter((e): e is IndexEintrag => !!e)
+  const liste = alphabetisch(favoriten.map((u) => nachUic.get(u)).filter((e): e is IndexEintrag => !!e))
 
   const treffer = useMemo(() => {
     const b = vereinfachen(begriff.trim())

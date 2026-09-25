@@ -3,7 +3,7 @@ import { geometrieLaden, linienLaden, streckenLaden, uebersichtLaden } from '../
 import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, tonAbholen } from '../fahrt'
 import { favoritUmschalten, istFavorit, letzteMerken } from '../fahrten'
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
-import { useFavoriten } from '../favoriten'
+import { alphabetisch, useFavoriten } from '../favoriten'
 import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
 import { kantonText } from '../kanton'
 import type {
@@ -837,7 +837,7 @@ export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
   const favoritenZurWahl = useMemo(() => {
     if (text.trim()) return []
     const hier = new Map(bahnhoefe.map((e) => [e.uic, e]))
-    return favoriten.map((u) => hier.get(u)).filter((e): e is IndexEintrag => !!e)
+    return alphabetisch(favoriten.map((u) => hier.get(u)).filter((e): e is IndexEintrag => !!e))
   }, [text, favoriten, bahnhoefe])
 
   const vorschlaege = useMemo(() => {

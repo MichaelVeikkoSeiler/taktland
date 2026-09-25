@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useFavoriten } from '../favoriten'
+import { alphabetisch, useFavoriten } from '../favoriten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { kantonText } from '../kanton'
 import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
@@ -43,7 +43,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
   const nachUic = useMemo(() => new Map(index.bahnhoefe.map((e) => [e.uic, e])), [index.bahnhoefe])
   // bei leerem Suchfeld stehen die Favoriten oben (Michael, 2026-09-25)
   const favoritenOben = begriff.trim() ? []
-    : favoriten.map((u) => nachUic.get(u)).filter((e): e is IndexEintrag => !!e)
+    : alphabetisch(favoriten.map((u) => nachUic.get(u)).filter((e): e is IndexEintrag => !!e))
 
   const { listeOben, sichtbar, leiste, blaettern } = useSeiten(
     treffer, stand.seite, (seite) => aendern({ ...stand, seite }), (e) => e.name)

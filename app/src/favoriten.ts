@@ -69,6 +69,11 @@ export function favoritUmschalten(uic: number) {
   else favoritHinzufuegen(uic)
 }
 
+/** Favoriten zum Anzeigen: alphabetisch (Michael, 2026-09-25) */
+export function alphabetisch<T extends { name: string }>(liste: T[]): T[] {
+  return [...liste].sort((a, b) => a.name.localeCompare(b.name, 'de-CH', { sensitivity: 'base' }))
+}
+
 /** Die Favoriten, immer aktuell */
 export function useFavoriten(): number[] {
   return useSyncExternalStore(abonnieren, lesen, () => [])
