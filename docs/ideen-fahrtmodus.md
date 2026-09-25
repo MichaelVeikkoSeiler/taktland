@@ -143,7 +143,9 @@ gesperrt sind. So freigeben:
 2. Oben die Umgebung **«Standard»** antippen, dann «Bearbeiten».
 3. Unter «Network access» «Custom» wählen und diese Adressen erlauben:
    `data.geo.admin.ch`, `api3.geo.admin.ch`, `www.swisstopo.admin.ch`,
-   `opendata.swiss`, `ckan.opendata.swiss`.
+   `opendata.swiss`, `ckan.opendata.swiss`; für neue Bahnhöfe (BTI) auch
+   `data.sbb.ch`, für den Fahrplan später `opentransportdata.swiss` und
+   `data.opentransportdata.swiss`.
 4. Speichern, dann Claude «frei» schreiben. Claude prüft, ob die Adressen
    erreichbar sind; sonst in einer neuen Sitzung weiter.
 
@@ -211,6 +213,21 @@ nur Standort und Weg, keinen Fahrplan. Stufe 1, ohne Server und ohne Schlüssel:
   SBB-App; beim Gespräch mit dem Vorgesetzten erwähnen.
 - Später (Stufe 2) Echtzeit und Verspätung: bräuchte einen Schlüssel und damit
   einen Server; widerspricht «kein Server», darum offen.
+
+## BTI Biel–Täuffelen–Ins
+
+Wunsch von Michael, 2026-09-25: «das BTI Bähnli Biel Ins aufnehmen». Heute
+fehlen die Bahnhöfe dazwischen (Nidau, Ipsach, Täuffelen, Siselen …); Biel/Bienne
+und Ins sind drin. Die Infrastruktur betreibt nicht die SBB (nach meinem Wissen
+Aare Seeland mobil, beim Laden prüfen).
+- Braucht die Rohdaten von `data.sbb.ch` (hier gesperrt, `data/raw` fehlt in
+  der Arbeitsumgebung) und das Schienennetz des BAV.
+- Vorgehen: prüfen, welche BTI-Bahnhöfe in den Quellen stehen und für wie viele
+  Kapitel die Daten reichen; die Bahn in `ALLE_BAHNHOEFE_VON` oder die
+  Bahnhöfe einzeln in `ZUSAETZLICH` (pipeline/sources.py); Fakten bauen,
+  Bauplan, Profile in Gruppen von fünf lesen; Linie aus dem Schienennetz.
+- Im Fahrtmodus wie bei anderen Bahnen: Bahnhöfe ja, Tunnel und Brücken fehlen
+  in den Daten, der Weg ist gerade von Bahnhof zu Bahnhof gezogen.
 
 ## Risiken, beim Bauen beachten
 
