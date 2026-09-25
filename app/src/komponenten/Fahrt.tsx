@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { heftLesen } from '../erlebt'
 import { tonBereitlegen } from '../fahrt'
 import {
-  favoritUmschalten, gemerktLesen, type GemerkteFahrt, gleicheFahrt, letzteLoeschen,
+  favoritUmschalten, gemerktLesen, type GemerkteFahrt,
 } from '../fahrten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
@@ -26,7 +25,7 @@ type Suche =
 /**
  * Der Weg in den Fahrtmodus über den Spezialknopf: nur das Ziel eingeben
  * (Start ist der nächste Bahnhof im Netz, per GPS) oder Start und Ziel wie auf
- * der Seite «Strecke», dazu Favoriten und die letzten Fahrten. Gestartet wird
+ * der Seite «Strecke», dazu die gemerkten Fahrten. Gestartet wird
  * auf der Seite «Strecke», die den Weg sucht.
  */
 export function Fahrt({ index }: { index: BahnhofIndex | null }) {
@@ -100,25 +99,15 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         Sekunden vorher. Er braucht den Standort; dieser bleibt auf dem Gerät.
       </p>
 
-      {(gemerkt.favoriten.length > 0 || gemerkt.letzte.length > 0) && index && (
-        <div className="mt-6 space-y-6">
-          {gemerkt.favoriten.length > 0 && (
-            <FahrtListe titel="Gemerkte Fahrten" fahrten={gemerkt.favoriten} text={fahrtText}
-                        favorit={() => true} starten={(f) => starten(f)}
-                        umschalten={(f) => setGemerkt(favoritUmschalten(f))} />
-          )}
-          {gemerkt.letzte.length > 0 && (
-            <FahrtListe titel="Letzte Fahrten" fahrten={gemerkt.letzte} text={fahrtText}
-                        favorit={(f) => gemerkt.favoriten.some((x) => gleicheFahrt(x, f))}
-                        starten={(f) => starten(f)}
-                        umschalten={(f) => setGemerkt(favoritUmschalten(f))}
-                        loeschen={() => setGemerkt(letzteLoeschen())} />
-          )}
+      {/* Letzte Fahrten, Sammelheft und Logbuch stehen in der Reisetasche
+          (Michael, 2026-09-25: «Es ist ja bereits alles in der Reisetasche») */}
+      {gemerkt.favoriten.length > 0 && index && (
+        <div className="mt-6">
+          <FahrtListe titel="Gemerkte Fahrten" fahrten={gemerkt.favoriten} text={fahrtText}
+                      favorit={() => true} starten={(f) => starten(f)}
+                      umschalten={(f) => setGemerkt(favoritUmschalten(f))} />
         </div>
       )}
-
-      <SammelheftKarte />
-      <LogbuchKarte />
 
       <h2 className="mt-8 text-lg font-bold">Neue Fahrt</h2>
       <div className="mt-3 grid grid-cols-2 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group"
@@ -168,7 +157,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         <p className="mt-2 text-sm">Start und Ziel sind derselbe Bahnhof.</p>
       )}
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-        Zur Auswahl stehen die Bahnhöfe, zu denen Taktland Wege kennt. Gemerkte und letzte
+        Zur Auswahl stehen die Bahnhöfe, zu denen Taktland Wege kennt. Gemerkte
         Fahrten bleiben auf diesem Gerät.
       </p>
     </div>
@@ -214,27 +203,17 @@ function StartPerGps({ suche, name, neu, selbst }: {
   )
 }
 
-function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten, loeschen }: {
+function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten }: {
   titel: string
   fahrten: GemerkteFahrt[]
   text: (f: GemerkteFahrt) => string
   favorit: (f: GemerkteFahrt) => boolean
   starten: (f: GemerkteFahrt) => void
   umschalten: (f: GemerkteFahrt) => void
-  loeschen?: () => void
 }) {
   return (
     <section>
-      <div className="flex items-baseline justify-between gap-3">
-        <h2 className="text-lg font-bold">{titel}</h2>
-        {loeschen && (
-          <button type="button" onClick={loeschen}
-                  className="text-sm text-sbb-metal underline underline-offset-2 hover:text-sbb-black
-                             dark:text-sbb-storm dark:hover:text-sbb-white">
-            Liste leeren
-          </button>
-        )}
-      </div>
+      <h2 className="text-lg font-bold">{titel}</h2>
       <ul className="mt-2 kachelliste">
         {fahrten.map((f) => (
           <li key={`${f.von}-${f.nach}-${f.ueber}`} className="flex items-stretch">
@@ -257,38 +236,4 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten, loesch
   )
 }
 
-/** Weg zum Sammelheft, mit dem Stand */
-function SammelheftKarte() {
-  const heft = useMemo(() => heftLesen(), [])
-  const n = (a: string) => Object.values(heft.objekte).filter((o) => o.art === a).length
-  return (
-    <a href="#/sammelheft"
-       className="kachel kachel-link mt-6 flex items-center justify-between gap-3 px-4 py-3">
-      <span className="min-w-0">
-        <span className="block font-medium">Sammelheft</span>
-        <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-          {n('bahnhof')} {n('bahnhof') === 1 ? 'Bahnhof' : 'Bahnhöfe'}, {n('bruecke')}{' '}
-          {n('bruecke') === 1 ? 'Brücke' : 'Brücken'} und {n('tunnel')} Tunnel erlebt
-        </span>
-      </span>
-      <span className="pfeil shrink-0" aria-hidden="true">→</span>
-    </a>
-  )
-}
 
-/** Weg zum Logbuch, mit der Zahl der Fahrten */
-function LogbuchKarte() {
-  const n = useMemo(() => heftLesen().fahrten.length, [])
-  return (
-    <a href="#/logbuch"
-       className="kachel kachel-link mt-2 flex items-center justify-between gap-3 px-4 py-3">
-      <span className="min-w-0">
-        <span className="block font-medium">Logbuch</span>
-        <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-          {n === 0 ? 'Noch keine Fahrt eingetragen' : `${n} ${n === 1 ? 'Fahrt' : 'Fahrten'} eingetragen`}
-        </span>
-      </span>
-      <span className="pfeil shrink-0" aria-hidden="true">→</span>
-    </a>
-  )
-}
