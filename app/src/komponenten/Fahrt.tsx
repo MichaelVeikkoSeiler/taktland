@@ -103,7 +103,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
       {(gemerkt.favoriten.length > 0 || gemerkt.letzte.length > 0) && index && (
         <div className="mt-6 space-y-6">
           {gemerkt.favoriten.length > 0 && (
-            <FahrtListe titel="Favoriten" fahrten={gemerkt.favoriten} text={fahrtText}
+            <FahrtListe titel="Gemerkte Fahrten" fahrten={gemerkt.favoriten} text={fahrtText}
                         favorit={() => true} starten={(f) => starten(f)}
                         umschalten={(f) => setGemerkt(favoritUmschalten(f))} />
           )}
@@ -168,7 +168,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         <p className="mt-2 text-sm">Start und Ziel sind derselbe Bahnhof.</p>
       )}
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-        Zur Auswahl stehen die Bahnhöfe, zu denen Taktland Wege kennt. Favoriten und letzte
+        Zur Auswahl stehen die Bahnhöfe, zu denen Taktland Wege kennt. Gemerkte und letzte
         Fahrten bleiben auf diesem Gerät.
       </p>
     </div>
@@ -245,7 +245,7 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten, loesch
               <span className="shrink-0 text-sm font-bold text-sbb-red">Starten</span>
             </button>
             <button type="button" onClick={() => umschalten(f)} aria-pressed={favorit(f)}
-                    aria-label={favorit(f) ? 'Aus den Favoriten nehmen' : 'Als Favorit merken'}
+                    aria-label={favorit(f) ? 'Nicht mehr merken' : 'Fahrt merken'}
                     className="flex shrink-0 items-center border-l border-sbb-cloud px-3 hover:bg-sbb-milk
                                dark:border-sbb-iron dark:hover:bg-sbb-charcoal">
               <Stern voll={favorit(f)} />

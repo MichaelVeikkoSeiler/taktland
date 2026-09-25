@@ -167,8 +167,8 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
           Sammelheft löschen
         </button>
         <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-          Löscht alle erlebten Objekte auf diesem Gerät. Das Logbuch, die Favoriten und die letzten
-          Fahrten bleiben.
+          Löscht alle erlebten Objekte auf diesem Gerät. Das Logbuch, die Favoriten, die gemerkten und die
+          letzten Fahrten bleiben.
         </p>
       </div>
     </div>

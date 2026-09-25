@@ -542,7 +542,7 @@ function Ergebnis({
                 className="mt-3 flex items-center gap-2 text-sm font-medium"
               >
                 <Stern voll={favorit} />
-                {favorit ? 'Favorit im Fahrtmodus' : 'Als Favorit im Fahrtmodus merken'}
+                {favorit ? 'Im Fahrtmodus gemerkt' : 'Fahrt im Fahrtmodus merken'}
               </button>
             )}
             {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}
