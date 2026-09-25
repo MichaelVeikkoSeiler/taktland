@@ -187,6 +187,31 @@ und Pendelnde.
 - Offene Punkte, die der Test zeigt: Verständlichkeit ohne Erklärung, GPS und
   Akku, offene Seite im Zug.
 
+## Welcher Zug? (Zug erkennen, Stufe 1)
+
+Idee, 2026-09-25, noch nicht beschlossen («warte noch»). Heute kennt Taktland
+nur Standort und Weg, keinen Fahrplan. Stufe 1, ohne Server und ohne Schlüssel:
+- **0. Quelle:** Fahrplan als GTFS von opentransportdata.swiss; Bedingungen
+  beim Laden prüfen. Braucht Netzzugang zu `opentransportdata.swiss` und
+  `data.opentransportdata.swiss` (zusätzlich zu den Adressen oben).
+- **1. Pipeline:** nur Züge und nur Bahnhöfe in Taktland; je Zug Nummer, Ziel,
+  Halte mit Fahrplanzeiten, Verkehrstage; nach Abschnitten aufgeteilt, die App
+  lädt nur den eigenen Weg. Stand und Gültigkeit sichtbar.
+- **2. «In welchem Zug sitzt du?»** beim Start: die Züge, die laut Fahrplan
+  bald ab dem Start Richtung Ziel fahren, dazu «Keiner davon». Die App nimmt nie
+  selbst einen Zug an; ohne Wahl läuft alles wie heute.
+- **3. Dann:** Zug oben («IC 2 nach Lugano»), «Nächster Halt laut Fahrplan»
+  mit Fahrplanzeit, Zugnummer im Logbuch.
+- **4. Lücken benennen:** keine Verspätungen, Extrazüge, Ersatzbusse,
+  Baustellen.
+- **5. Zuerst Teststrecken** (Michaels häufigste Strecken), dann alle.
+- Philosophie bleibt: der Zug kommt von der Nutzerin oder vom Nutzer, Zeiten
+  heissen «laut Fahrplan», Quelle in der Fusszeile.
+- Aufwand einige Tage (Pipeline). Vorsicht: Fahrplan ist Kerngeschäft der
+  SBB-App; beim Gespräch mit dem Vorgesetzten erwähnen.
+- Später (Stufe 2) Echtzeit und Verspätung: bräuchte einen Schlüssel und damit
+  einen Server; widerspricht «kein Server», darum offen.
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Sammelheft, abgehakte Objekte und Favoriten liegen im
