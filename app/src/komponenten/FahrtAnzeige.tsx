@@ -122,7 +122,7 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
               className="stroke-sbb-charcoal transition-all duration-500 ease-linear dark:stroke-sbb-white" />
         {/* Start und Ziel */}
         {[RAND, B - RAND].map((x) => (
-          <line key={x} x1={x} x2={x} y1="38" y2="54" strokeWidth="3"
+          <line key={x} x1={x} x2={x} y1="40" y2="52" strokeWidth="2.5"
                 className="stroke-sbb-charcoal dark:stroke-sbb-white" />
         ))}
         {objekte.map((o) => {
@@ -131,19 +131,20 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
           if (o.art === 'tunnel') {
             const x2 = o.sAus !== null ? xBei(o.sAus) : x + 3
             return (
-              <rect key={`t${o.kennung}`} x={x} y="39" width={Math.max(3, x2 - x)} height="14" rx="1.5"
+              <rect key={`t${o.kennung}`} x={x} y="41" width={Math.max(2.5, x2 - x)} height="10" rx="1.5"
                     className={`fill-fahrt-tunnel dark:fill-sbb-storm ${blass}`} />
             )
           }
           if (o.art === 'bruecke') {
             return (
-              <path key={`b${o.kennung}`} d={`M${x - 4} 51 Q${x} 41 ${x + 4} 51`} fill="none" strokeWidth="2.5"
+              <path key={`b${o.kennung}`} d={`M${x - 3} 49 Q${x} 41.5 ${x + 3} 49`} fill="none" strokeWidth="2"
                     strokeLinecap="round" className={`stroke-fahrt-bruecke ${blass}`} />
             )
           }
+          // Bahnhöfe als Punkte statt Kreise (Michael, 2026-09-25: «übersichtlicher»)
           return (
-            <circle key={`h${o.kennung}`} cx={x} cy="46" r="4.5" strokeWidth="2"
-                    className={`fill-white stroke-fahrt-bahnhof dark:fill-sbb-midnight dark:stroke-fahrt-bahnhof-hell ${blass}`} />
+            <circle key={`h${o.kennung}`} cx={x} cy="46" r="3" strokeWidth="1"
+                    className={`fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight ${blass}`} />
           )
         })}
         {beschriftet.map(({ o, x, oben, kurz, rechts }) => (
@@ -155,21 +156,21 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
           </g>
         ))}
         {/* der Zug */}
-        <g transform={`translate(${zugX - 11} 37)`} className="transition-transform duration-500 ease-linear">
-          <rect width="22" height="18" rx="4.5" strokeWidth="1.5"
+        <g transform={`translate(${zugX - 9} 39)`} className="transition-transform duration-500 ease-linear">
+          <rect width="18" height="14" rx="3.5" strokeWidth="1.5"
                 className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
-          <rect x="12.5" y="3.5" width="6.5" height="6" rx="1.2" className="fill-white" />
+          <rect x="10" y="3" width="5" height="4.5" rx="1" className="fill-white" />
         </g>
       </svg>
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-sbb-metal dark:text-sbb-storm" aria-hidden="true">
-        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-4 rounded-sm bg-fahrt-tunnel dark:bg-sbb-storm" />Tunnel</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-2 w-4 rounded-sm bg-fahrt-tunnel dark:bg-sbb-storm" />Tunnel</span>
         <span className="flex items-center gap-1.5">
           <svg viewBox="0 0 16 10" className="h-2.5 w-4">
-            <path d="M1 9 Q8 0 15 9" fill="none" strokeWidth="2.5" strokeLinecap="round" className="stroke-fahrt-bruecke" />
+            <path d="M3 9 Q8 1 13 9" fill="none" strokeWidth="2" strokeLinecap="round" className="stroke-fahrt-bruecke" />
           </svg>
           Brücke
         </span>
-        <span className="flex items-center gap-1.5"><span className="inline-block size-2.5 rounded-full border-2 border-fahrt-bahnhof dark:border-fahrt-bahnhof-hell" />Bahnhof</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block size-2 rounded-full bg-fahrt-bahnhof dark:bg-fahrt-bahnhof-hell" />Bahnhof</span>
       </div>
     </div>
   )
@@ -251,7 +252,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           const l = lageBei(fahrweg, o.s)
           const [x, y] = lage(l.lat, l.lon)
           return (
-            <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 3.5 : 3) * px}
+            <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 3 : 2.5) * px}
                     strokeWidth={1.5} vectorEffect="non-scaling-stroke"
                     opacity={(o.sAus ?? o.s) < s ? 0.35 : 1}
                     className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'

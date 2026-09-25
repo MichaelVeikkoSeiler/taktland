@@ -9,6 +9,8 @@ const VORLAEUFE_S = [20, 10] as const
 type Vorlauf = typeof VORLAEUFE_S[number]
 /** Die Probefahrt läuft so viel schneller als die Wirklichkeit */
 const ZEITRAFFER = 20
+/** Was so viele Sekunden vor dem Zug liegt, steht als eigene Karte oben */
+const ZUGLEICH_S = 40
 /** Tempo der Probefahrt, 100 km/h */
 const PROBE_TEMPO = 100 / 3.6
 /** Langsamer gilt als Stillstand: keine Zeitangabe */
@@ -236,7 +238,41 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   })
 
   const naechstes = kommend[0]
-  const bald = naechstes && (eta(naechstes) ?? Infinity) <= einstellung.vorlauf
+  // Was in den nächsten 40 Sekunden kommt, läuft gleichzeitig, als Karten
+  // übereinander (Michael, 2026-09-25); das erste immer, höchstens drei
+  const zugleich = kommend.filter((o, i) => i === 0 || (eta(o) ?? Infinity) <= ZUGLEICH_S).slice(0, 3)
+  const danach = kommend.slice(Math.max(1, zugleich.length))
+
+  // als Funktion, nicht als Komponente: sonst entstünde die Karte bei jeder
+  // neuen Zeit neu, und Ring und Farbe liefen nicht mehr weich
+  function karte(o: FahrObjekt) {
+    const bald = (eta(o) ?? Infinity) <= einstellung.vorlauf
+    return (
+      <div key={`${o.art} ${o.kennung}`} className={`flex items-center gap-4 rounded-lg border px-4 transition-all ${bald
+        ? `${FARBE[o.art].flaeche} ${FARBE[o.art].schrift} py-7`
+        : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
+        <Ring bald={bald} art={o.art} anteil={eta(o) === null ? null : 1 - eta(o)! / RING_S}>
+          <ZeitImRing sekunden={eta(o)} steht={stand !== null} />
+        </Ring>
+        <div className="min-w-0">
+          <p className={`text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+            {bald ? 'Gleich' : o === naechstes ? 'Als Nächstes' : 'Kurz danach'} · {ART[o.art]}
+          </p>
+          <p lang="de" className={`mt-1 font-bold leading-tight break-words hyphens-auto ${bald ? 'text-3xl' : 'text-2xl'}`}>
+            {text(o)?.name}
+          </p>
+          <p className={`mt-1 ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+            {text(o)?.zeile}
+          </p>
+          {o.art === 'tunnel' && o.sAus === null && (
+            <p className={`mt-1 text-sm ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+              Wo er endet, geben die Daten nicht her.
+            </p>
+          )}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
@@ -286,29 +322,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         )}
 
         {naechstes ? (
-          <div className={`mt-5 flex items-center gap-4 rounded-lg border px-4 transition-all ${bald
-            ? `${FARBE[naechstes.art].flaeche} ${FARBE[naechstes.art].schrift} py-7`
-            : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
-            <Ring bald={!!bald} art={naechstes.art}
-                  anteil={eta(naechstes) === null ? null : 1 - eta(naechstes)! / RING_S}>
-              <ZeitImRing sekunden={eta(naechstes)} steht={stand !== null} />
-            </Ring>
-            <div className="min-w-0">
-              <p className={`text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
-                {bald ? 'Gleich' : 'Als Nächstes'} · {ART[naechstes.art]}
-              </p>
-              <p lang="de" className={`mt-1 font-bold leading-tight break-words hyphens-auto ${bald ? 'text-3xl' : 'text-2xl'}`}>
-                {text(naechstes)?.name}
-              </p>
-              <p className={`mt-1 ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
-                {text(naechstes)?.zeile}
-              </p>
-              {naechstes.art === 'tunnel' && naechstes.sAus === null && (
-                <p className={`mt-1 text-sm ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
-                  Wo er endet, geben die Daten nicht her.
-                </p>
-              )}
-            </div>
+          <div className="mt-5 space-y-2">
+            {zugleich.map(karte)}
           </div>
         ) : stand && sJetzt !== null ? (
           <p className="mt-5 text-lg">Auf dem Rest dieses Wegs ist nichts mehr zu melden.</p>
@@ -318,11 +333,11 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
                       name={(o) => text(o)?.name} />
 
-        {kommend.length > 1 && (
+        {danach.length > 0 && (
           <>
             <p className="mt-6 text-sm font-medium">Danach</p>
             <ol className="mt-2 kachelliste">
-              {kommend.slice(1, 4).map((o) => (
+              {danach.slice(0, 3).map((o) => (
                 <li key={`${o.art} ${o.kennung}`} className="flex justify-between gap-3 px-3 py-2">
                   <span className="min-w-0">
                     <span className="block truncate">{text(o)?.name}</span>
