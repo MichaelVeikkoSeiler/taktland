@@ -267,8 +267,8 @@ function SammelheftKarte() {
       <span className="min-w-0">
         <span className="block font-medium">Sammelheft</span>
         <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-          {n('tunnel')} Tunnel, {n('bruecke')} {n('bruecke') === 1 ? 'Brücke' : 'Brücken'} und {n('bahnhof')}{' '}
-          {n('bahnhof') === 1 ? 'Bahnhof' : 'Bahnhöfe'} erlebt
+          {n('bahnhof')} {n('bahnhof') === 1 ? 'Bahnhof' : 'Bahnhöfe'}, {n('bruecke')}{' '}
+          {n('bruecke') === 1 ? 'Brücke' : 'Brücken'} und {n('tunnel')} Tunnel erlebt
         </span>
       </span>
       <span className="pfeil shrink-0" aria-hidden="true">→</span>

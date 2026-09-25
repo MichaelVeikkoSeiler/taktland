@@ -10,6 +10,8 @@ type Ansicht = 'erlebt' | 'fehlt'
 const ART_TEXT: Record<ErlebtArt, [string, string]> = {
   tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
 }
+/** Wie die Unterreiter von Bahnland: Bahnhöfe, Brücken, Tunnel (Michael, 2026-09-25) */
+const REIHENFOLGE: ErlebtArt[] = ['bahnhof', 'bruecke', 'tunnel']
 /** So viele Einträge stehen bei «Fehlt noch» zuerst da */
 const ZUERST = 30
 
@@ -32,7 +34,7 @@ function mitKennung<T>(u: Uebersicht<T>) {
 export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
   const [heft, setHeft] = useState(heftLesen)
   const [ansicht, setAnsicht] = useState<Ansicht>('erlebt')
-  const [art, setArt] = useState<ErlebtArt>('tunnel')
+  const [art, setArt] = useState<ErlebtArt>('bahnhof')
   const [mehr, setMehr] = useState(false)
   const [tunnel, setTunnel] = useState<Uebersicht<TunnelEintrag> | null>(null)
   const [bruecken, setBruecken] = useState<Uebersicht<BrueckenEintrag> | null>(null)
@@ -86,7 +88,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
       </p>
 
       <div className="mt-5 grid grid-cols-3 gap-2">
-        {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => (
+        {REIHENFOLGE.map((a) => (
           <div key={a} className="kachel px-3 py-3">
             <p className="text-3xl font-bold tabular-nums">{erlebt(a).length}</p>
             <p className="text-sm text-sbb-metal dark:text-sbb-storm">
@@ -97,7 +99,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
         ))}
       </div>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        Gezählt von allen Tunneln und Brücken der SBB in Taktland und allen Bahnhöfen in Taktland.
+        Gezählt von allen Bahnhöfen in Taktland und allen Brücken und Tunneln der SBB in Taktland.
       </p>
 
       <div className="mt-6 grid grid-cols-2 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ansicht">
@@ -111,7 +113,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
       {(
         <>
           <div className="mt-4 flex gap-2">
-            {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => (
+            {REIHENFOLGE.map((a) => (
               <button key={a} type="button" aria-pressed={art === a} onClick={() => { setArt(a); setMehr(false) }}
                       className={`rounded-lg border border-sbb-cloud dark:border-sbb-iron ${knopf(art === a)}`}>
                 {ART_TEXT[a][1]}
