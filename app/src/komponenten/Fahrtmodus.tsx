@@ -368,11 +368,6 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
                       name={(o) => textVon(o)?.name} springen={probefahrt ? springen : undefined} />
-        {probefahrt && (
-          <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-            Zug im Band ziehen oder antippen, um an eine Stelle zu springen.
-          </p>
-        )}
 
         {probefahrt && (
           <div className="mt-4 flex items-center gap-3 text-sm">

@@ -224,25 +224,26 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
           <rect x="10" y="3" width="5" height="4.5" rx="1" className="fill-white" />
         </g>
       </svg>
-      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-sbb-metal dark:text-sbb-storm" aria-hidden="true">
-        <span className="flex items-center gap-1.5"><span className="inline-block h-2 w-4 rounded-sm bg-fahrt-tunnel dark:bg-sbb-storm" />Tunnel</span>
-        <span className="flex items-center gap-1.5">
+      <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-sbb-metal dark:text-sbb-storm" aria-hidden="true">
+        <span className="flex items-center gap-1"><span className="inline-block h-2 w-4 rounded-sm bg-fahrt-tunnel dark:bg-sbb-storm" />Tunnel</span>
+        <span className="flex items-center gap-1">
           <svg viewBox="0 0 16 10" className="h-2.5 w-4">
             <path d="M3 9 Q8 1 13 9" fill="none" strokeWidth="2" strokeLinecap="round" className="stroke-fahrt-bruecke" />
           </svg>
           Brücke
         </span>
-        <span className="flex items-center gap-1.5"><span className="inline-block size-2 rounded-full bg-fahrt-bahnhof dark:bg-fahrt-bahnhof-hell" />Bahnhof</span>
-        {(fahrweg.seeUfer?.length ?? 0) > 0 && (
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-1 w-4 rounded-full bg-see-band" />
-            See links (oben) oder rechts (unten)
+        <span className="flex items-center gap-1"><span className="inline-block size-2 rounded-full bg-fahrt-bahnhof dark:bg-fahrt-bahnhof-hell" />Bahnhof</span>
+        {/* Sehenswertes vor den Seen: Tunnel bis Sehenswertes passen auf eine Zeile (Michael, 2026-09-26) */}
+        {objekte.some((o) => o.art === 'sehenswert') && (
+          <span className="flex items-center gap-1">
+            <span className="inline-block size-2 rotate-45 bg-fahrt-sehenswert dark:bg-fahrt-sehenswert-hell" />
+            Sehenswertes
           </span>
         )}
-        {objekte.some((o) => o.art === 'sehenswert') && (
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block size-2 rotate-45 bg-fahrt-sehenswert dark:bg-fahrt-sehenswert-hell" />
-            Sehenswertes, Flächen als Band
+        {(fahrweg.seeUfer?.length ?? 0) > 0 && (
+          <span className="flex items-center gap-1">
+            <span className="inline-block h-1 w-4 rounded-full bg-see-band" />
+            See links (oben) oder rechts (unten)
           </span>
         )}
       </div>
