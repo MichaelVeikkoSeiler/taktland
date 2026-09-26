@@ -194,7 +194,7 @@ export default function App() {
             Bundesamt für Landestopografie swisstopo. Kulturgüter: Bundesamt für
             Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
             Moorlandschaften: Bundesamt für Umwelt BAFU.
-            Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
+            Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot einer Bundes- oder Privatbahn.
             Hinweise und Fehler gern an{' '}
             <a href={`mailto:${KONTAKT}`}
                className="hover:text-sbb-black dark:hover:text-sbb-white">

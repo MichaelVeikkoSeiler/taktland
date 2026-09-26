@@ -410,7 +410,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Taktland ist ein Lernspiel und nicht für die Reiseplanung gedacht. Es ist ein
-            privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
+            privates Lernprojekt von {HERAUSGEBER} und kein Angebot einer Bundes- oder Privatbahn.
           </li>
           <li>
             Hinweise auf Fehler gern an{' '}

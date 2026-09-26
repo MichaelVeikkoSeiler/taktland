@@ -289,7 +289,7 @@ function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
           sieht, sagen die Daten nicht.
           {daten.ohneLaenge > 0 && ' Tunnel anderer Bahnen haben in den Daten keine Länge und stehen nicht auf dem Blatt.'}
           {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo, BABS. Taktland ist ein
-          privates Lernprojekt und kein Angebot der SBB.
+          privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
         </p>
       </div>
     </div>
