@@ -9,6 +9,7 @@ import type {
 } from '../typen'
 import { nachKennung, type Nachbarn, type StreckenWahl, wegSuchen } from './Strecke'
 import { Ladefehler } from './Ladefehler'
+import { Pikto } from './Pikto'
 
 /** So viele Einträge je Art passen auf ein Blatt A4 */
 const TUNNEL_MAX = 5
@@ -272,6 +273,7 @@ function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
                   <li key={e.nr} className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
                     <Kaestchen />
                     <Nummer e={e} />
+                    <Pikto art="tunnel" className="size-5" />
                     <span className="min-w-0 flex-1 truncate">{e.name} · {e.zeile}</span>
                     <span className="shrink-0 text-[12px]">geschätzt ____ s</span>
                     <span className="shrink-0 text-[12px]">gezählt ____ s</span>
@@ -342,6 +344,7 @@ function Zeile({ e }: { e: Eintrag }) {
     <li className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
       <Kaestchen />
       <Nummer e={e} />
+      {(e.art === 'bahnhof' || e.art === 'bruecke') && <Pikto art={e.art} className="size-5" />}
       {/* ist der Name lang, wird er gekürzt; Art und Seite bleiben sichtbar */}
       <span className="min-w-0 truncate">{e.name}</span>
       <span className="shrink-0">

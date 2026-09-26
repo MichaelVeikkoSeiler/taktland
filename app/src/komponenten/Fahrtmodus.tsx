@@ -5,6 +5,7 @@ import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 import { Auswahl } from './Auswahl'
 import { KurzLang, LANGFORM } from './Sehenswert'
+import { Pikto } from './Pikto'
 
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
 const VORLAEUFE_S = [20, 10] as const
@@ -384,9 +385,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             : <DistanzImRing meter={bis(o)} />}
         </Ring>
         <div className="min-w-0">
-          <p className={`text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
-            {bald ? 'Gleich' : o === naechstes ? 'Als Nächstes' : 'Kurz danach'} · <ArtText o={o} />
-            {angabe === 'beides' && eta(o) !== null && bis(o) !== null && ` · etwa ${strecke(bis(o)!)}`}
+          <p className={`flex items-center gap-2 text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+            {/* Pikto der Art (Michael, 2026-09-26); auf der farbigen Fläche nur das Zeichen */}
+            {o.art !== 'sehenswert' && <Pikto art={o.art} className={bald ? 'size-8' : 'size-7'} nurZeichen={bald} />}
+            <span>
+              {bald ? 'Gleich' : o === naechstes ? 'Als Nächstes' : 'Kurz danach'} · <ArtText o={o} />
+              {angabe === 'beides' && eta(o) !== null && bis(o) !== null && ` · etwa ${strecke(bis(o)!)}`}
+            </span>
           </p>
           {o.sehenswert?.sorte === 'flaeche' && (
             <p className={`mt-1 ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>Du fährst durch</p>
