@@ -546,6 +546,9 @@ data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-1
              Sternen»): solange echtes Wetter gilt, der Stand der Sonne über der Mitte des Modells jetzt oder zur gewählten Stunde der Prognose
              (nachtRechnen in Relief.tsx), nachts ein gemalter Nachthimmel, weniger Licht, Licht in den Fenstern zur Stunde, Tasten am Pult
              leuchtend, in der Dämmerung der Abendhimmel, Sterne hinter Wolken schwächer; bei Schönwetter und in «Wo bin ich?» immer Tag
+data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
+             ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
+             nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -576,6 +579,8 @@ python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
 .venv/bin/python pipeline/build_bodenbedeckung.py  # Wald und Siedlung (swissTLMRegio)
 .venv/bin/python pipeline/build_kartengrund.py   # Grenzen, Flüsse, Höhenstufen für die Karten
+python3 pipeline/fetch_fahrplan.py              # Fahrplan (GTFS) laden, 290 MB, entpackt 4,5 GB
+.venv/bin/python pipeline/build_fahrplan.py      # Züge und Halte für «Welcher Zug?», vor export_app
 python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D

@@ -24,7 +24,7 @@ export function Fortsetzen() {
       <p className="font-bold">Fahrt {laufend.ohne ? `ohne Ziel ab ${laufend.titel.split(' → ')[0]}` : laufend.titel} fortsetzen?</p>
       <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
         Begonnen um {uhrzeit(laufend.beginn)}, zuletzt gemerkt um {uhrzeit(laufend.zeit)}
-        {laufend.zug ? `, im Zug ${laufend.zug}` : ''}. Was seither am Weg lag, zählt als durchfahren.
+        {laufend.zug ? `, im ${laufend.zug.text}` : ''}. Was seither am Weg lag, zählt als durchfahren.
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button

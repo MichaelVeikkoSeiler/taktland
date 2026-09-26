@@ -304,6 +304,12 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             nächsten liegt, sie steht aber nicht an der Station. Die Zahl über dem Mast ist die Stärke in km/h, die Stationen nennt die Tafel. Die Windhosen sind gezeichnet und nicht massstäblich.
           </li>
           <li>
+            Züge und Halte bei «In welchem Zug sitzt du?»: Fahrplan (GTFS) auf{' '}
+            <Verweis href="https://opentransportdata.swiss">opentransportdata.swiss</Verweis>,
+            zweimal pro Woche neu geladen. Es sind Zeiten laut Fahrplan, ohne Verspätungen,
+            Ausfälle, Extrazüge und Ersatzbusse.
+          </li>
+          <li>
             Linien anderer Bahnen und das Kapitel «Netz»: Schienennetz des Bundesamts für
             Verkehr BAV auf{' '}
             <Verweis href="https://data.geo.admin.ch/browser/#/collections/ch.bav.schienennetz">

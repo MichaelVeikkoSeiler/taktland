@@ -330,6 +330,12 @@ und Pendelnde.
 Gespräch mit dem Vorgesetzten nach `main`. Der Fahrplan käme beim Veröffentlichen aus dem
 GTFS, zweimal pro Woche neu.
 
+Was gebaut ist: Fahrplan als GTFS von
+opentransportdata.swiss, `pipeline/fetch_fahrplan.py` und `pipeline/build_fahrplan.py`,
+beim Veröffentlichen gebaut (nicht in Git), montags und donnerstags neu, weil die
+Bedingungen regelmässiges Nachführen verlangen. Frage «In welchem Zug sitzt du?» beim
+Start, Zug oben, «Nächster Halt laut Fahrplan», Zug im Logbuch. Stufe 2 (Echtzeit) bleibt offen.
+
 Idee, 2026-09-25, damals noch nicht beschlossen («warte noch»). Heute kennt Taktland
 nur Standort und Weg, keinen Fahrplan. Stufe 1, ohne Server und ohne Schlüssel:
 - **0. Quelle:** Fahrplan als GTFS von opentransportdata.swiss; Bedingungen
