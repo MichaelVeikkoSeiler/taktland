@@ -86,7 +86,7 @@ type Meldung =
  * meldet es mit einem Ton etwa 20 oder 10 Sekunden vorher. Nur solange die Seite
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
-export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren }: {
+export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren, wiederholen }: {
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
@@ -96,6 +96,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   beenden: (durchfahren: FahrObjekt[]) => void
   /** gleich beim Durchfahren, damit nichts verloren geht, wenn die Seite zugeht */
   durchfahren: (o: FahrObjekt) => void
+  /** Probefahrt von vorn (Michael, 2026-09-26: «am Schluss wiederholt werden») */
+  wiederholen?: () => void
 }) {
   const [einstellung, setEinstellung] = useState(einstellungLesen)
   // Sehenswertes bringt seinen Text selbst mit
@@ -114,11 +116,20 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const uhrStart = useRef({ echt: Date.now(), spiel: 0 })
   const [raffer, setRaffer] = useState<Zeitraffer>(20)
   const rafferRef = useRef<Zeitraffer>(20)
+  // Probefahrt anhalten (Michael, 2026-09-26: «mit einem Pauseknopf pausiert werden»)
+  const [pause, setPause] = useState(false)
+  const pauseRef = useRef(false)
 
-  /** In der Probefahrt läuft die Zeit schneller */
+  /** In der Probefahrt läuft die Zeit schneller, in der Pause steht sie */
   const uhr = () => probefahrt
-    ? uhrStart.current.spiel + (Date.now() - uhrStart.current.echt) * rafferRef.current
+    ? uhrStart.current.spiel + (pauseRef.current ? 0 : (Date.now() - uhrStart.current.echt) * rafferRef.current)
     : Date.now()
+
+  function pauseUmschalten() {
+    uhrStart.current = { echt: Date.now(), spiel: uhr() }
+    pauseRef.current = !pauseRef.current
+    setPause(pauseRef.current)
+  }
 
   /** Tempo der Probefahrt wechseln, ohne dass der Zug springt */
   function rafferWaehlen(f: Zeitraffer) {
@@ -351,6 +362,15 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
         {probefahrt && (
           <div className="mt-4 flex items-center gap-3 text-sm">
+            <button type="button" onClick={pauseUmschalten} aria-pressed={pause}
+                    aria-label={pause ? 'Probefahrt fortsetzen' : 'Probefahrt anhalten'}
+                    className={`flex size-9 shrink-0 items-center justify-center rounded-lg border ${pause
+                      ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
+                      : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
+              <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true" fill="currentColor">
+                {pause ? <path d="M4 2.5v11l9-5.5z" /> : <path d="M3.5 2.5h3v11h-3zM9.5 2.5h3v11h-3z" />}
+              </svg>
+            </button>
             <span className="text-sbb-metal dark:text-sbb-storm">Zeitraffer</span>
             <div className="flex flex-1 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron"
                  role="group" aria-label="Tempo der Probefahrt">
@@ -370,8 +390,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         {/* ohne role="status": GPS-Genauigkeit und Tempo ändern sich laufend, ein
             Bildschirmleser würde sonst ununterbrochen vorlesen */}
         <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-          {zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
-          {faehrt && !ohneGps && ` · etwa ${Math.round(stand!.v * 3.6)} km/h`}
+          {pause ? 'Probefahrt angehalten' : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
+          {!pause && faehrt && !ohneGps && ` · etwa ${Math.round(stand!.v * 3.6)} km/h`}
         </p>
         {gegenrichtung && (
           <p className="mt-2 border-l-2 border-sbb-red pl-3 text-sm">
@@ -403,6 +423,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             ))}
             <p className="mt-1 text-xs text-white/80">Grenze laut BAFU, für die Karte vereinfacht</p>
           </div>
+        )}
+
+        {probefahrt && wiederholen && sJetzt !== null && sJetzt >= wegEnde(fahrweg) - 1 && (
+          <button type="button" onClick={wiederholen}
+                  className="mt-5 w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125">
+            Probefahrt nochmals abspielen
+          </button>
         )}
 
         {naechstes ? (

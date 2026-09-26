@@ -14,7 +14,19 @@ export interface GemerkteFahrt {
 interface Gemerkt {
   favoriten: GemerkteFahrt[]
   letzte: GemerkteFahrt[]
+  /** Probefahrten zum Anwählen, Starten und Löschen (Michael, 2026-09-26) */
+  probefahrten: GemerkteFahrt[]
 }
+
+/** Die ersten Probefahrten, von Michael gewünscht (2026-09-26): Biel/Bienne –
+ *  Yverdon-les-Bains, Thun – Brig, Zürich HB – Bern, dazu Walenstadt –
+ *  Ziegelbrücke (5 Tunnel, 45 Brücken). Sie stehen da, bis sie gelöscht werden. */
+const ERSTE_PROBEFAHRTEN: GemerkteFahrt[] = [
+  { von: 8504300, nach: 8504200, ueber: null },
+  { von: 8507100, nach: 8501609, ueber: null },
+  { von: 8503000, nach: 8507000, ueber: null },
+  { von: 8509414, nach: 8503225, ueber: null },
+]
 
 const SCHLUESSEL = 'taktland.fahrten.v1'
 /** So viele letzte Fahrten bleiben stehen */
@@ -32,9 +44,11 @@ export function gemerktLesen(): Gemerkt {
     return {
       favoriten: Array.isArray(x.favoriten) ? x.favoriten.filter(gueltig) : [],
       letzte: Array.isArray(x.letzte) ? x.letzte.filter(gueltig) : [],
+      // noch nie gespeichert: die ersten Probefahrten; eine geleerte Liste bleibt leer
+      probefahrten: Array.isArray(x.probefahrten) ? x.probefahrten.filter(gueltig) : ERSTE_PROBEFAHRTEN,
     }
   } catch {
-    return { favoriten: [], letzte: [] }
+    return { favoriten: [], letzte: [], probefahrten: ERSTE_PROBEFAHRTEN }
   }
 }
 
@@ -70,6 +84,28 @@ export function favoritUmschalten(f: GemerkteFahrt): Gemerkt {
 export function letzteLoeschen(): Gemerkt {
   const g = gemerktLesen()
   g.letzte = []
+  schreiben(g)
+  return g
+}
+
+export function istProbefahrt(f: GemerkteFahrt) {
+  return gemerktLesen().probefahrten.some((x) => gleicheFahrt(x, f))
+}
+
+/** Als Probefahrt merken oder wieder entfernen; gibt den neuen Stand zurück */
+export function probefahrtUmschalten(f: GemerkteFahrt): Gemerkt {
+  const g = gemerktLesen()
+  g.probefahrten = g.probefahrten.some((x) => gleicheFahrt(x, f))
+    ? g.probefahrten.filter((x) => !gleicheFahrt(x, f))
+    : [...g.probefahrten, f]
+  schreiben(g)
+  return g
+}
+
+/** Eine entfernte Probefahrt an ihrer alten Stelle wieder einsetzen («Rückgängig») */
+export function probefahrtEinsetzen(f: GemerkteFahrt, stelle: number): Gemerkt {
+  const g = gemerktLesen()
+  if (!g.probefahrten.some((x) => gleicheFahrt(x, f))) g.probefahrten.splice(stelle, 0, f)
   schreiben(g)
   return g
 }

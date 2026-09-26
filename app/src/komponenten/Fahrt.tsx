@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { tonBereitlegen } from '../fahrt'
 import {
-  favoritUmschalten, gemerktLesen, type GemerkteFahrt,
+  favoritUmschalten, gemerktLesen, type GemerkteFahrt, probefahrtEinsetzen, probefahrtUmschalten,
 } from '../fahrten'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
@@ -34,6 +34,12 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
   const [wahl, setWahl] = useState<StreckenWahl>({ von: null, nach: null, ueber: null })
   const [suche, setSuche] = useState<Suche>({ art: 'aus' })
   const [gemerkt, setGemerkt] = useState(gemerktLesen)
+  const [entfernt, setEntfernt] = useState<{ f: GemerkteFahrt; stelle: number } | null>(null)
+  useEffect(() => {
+    if (!entfernt) return
+    const uhr = setTimeout(() => setEntfernt(null), 8000)
+    return () => clearTimeout(uhr)
+  }, [entfernt])
 
   const bahnhof = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [b.uic, b])), [index])
   const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? String(uic) : ''),
@@ -112,6 +118,49 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
                       favorit={() => true} starten={(f) => starten(f)}
                       umschalten={(f) => setGemerkt(favoritUmschalten(f))} />
         </div>
+      )}
+
+      {/* Probefahrten zum Anwählen, Starten und Löschen (Michael, 2026-09-26) */}
+      {index && (gemerkt.probefahrten.length > 0 || entfernt) && (
+        <section className="mt-6">
+          <h2 className="text-lg font-bold">Probefahrten</h2>
+          {entfernt && (
+            <div role="status" className="kachel mt-2 flex items-center justify-between gap-3 py-1 pl-4 pr-1">
+              <span className="min-w-0">{fahrtText(entfernt.f)} entfernt.</span>
+              <button type="button"
+                      onClick={() => { setGemerkt(probefahrtEinsetzen(entfernt.f, entfernt.stelle)); setEntfernt(null) }}
+                      className="min-h-11 shrink-0 rounded-lg px-3 font-bold text-sbb-red hover:bg-sbb-silver
+                                 dark:hover:bg-sbb-iron">
+                Rückgängig
+              </button>
+            </div>
+          )}
+          <ul className="mt-2 kachelliste">
+            {gemerkt.probefahrten.map((f, i) => (
+              <li key={`${f.von}-${f.nach}-${f.ueber}`} className="flex items-stretch">
+                <button type="button" onClick={() => starten(f, true)}
+                        className="flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3 px-3 py-3
+                                   text-left hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
+                  <span className="min-w-0 font-medium">{fahrtText(f)}</span>
+                  <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
+                </button>
+                <button type="button" aria-label={`${fahrtText(f)} aus den Probefahrten entfernen`}
+                        title="Aus den Probefahrten entfernen"
+                        onClick={() => { setEntfernt({ f, stelle: i }); setGemerkt(probefahrtUmschalten(f)) }}
+                        className="flex min-h-11 w-12 shrink-0 items-center justify-center border-l border-sbb-cloud
+                                   text-xl text-sbb-metal hover:bg-sbb-milk hover:text-sbb-black
+                                   dark:border-sbb-iron dark:text-sbb-storm dark:hover:bg-sbb-charcoal
+                                   dark:hover:text-sbb-white">
+                  ×
+                </button>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+            Spielt den Weg im Zeitraffer ab, ohne Standort. Neue Probefahrten kommen auf der Seite
+            «Strecke» mit «Als Probefahrt merken» dazu.
+          </p>
+        </section>
       )}
 
       <h2 className="mt-8 text-lg font-bold">Neue Fahrt</h2>

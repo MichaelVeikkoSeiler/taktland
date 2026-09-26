@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { flaechenLaden, geometrieLaden, linienLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, tonAbholen } from '../fahrt'
-import { favoritUmschalten, istFavorit, letzteMerken } from '../fahrten'
+import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
@@ -347,6 +347,8 @@ function Ergebnis({
                                         beginn: number | null } | null>(null)
   const [bilanz, setBilanz] = useState<{ objekte: BilanzObjekt[]; probe: boolean; beginn: number | null } | null>(null)
   const [laedt, setLaedt] = useState(false)
+  // jede Wiederholung der Probefahrt beginnt mit einem neuen Fahrtmodus
+  const [lauf, setLauf] = useState(0)
   const [fahrtFehler, setFahrtFehler] = useState<string | null>(null)
 
   // Kürzel des Betriebspunkts → UIC des Bahnhofs
@@ -458,6 +460,7 @@ function Ergebnis({
 
   const gemerkt = wahl.von && wahl.nach ? { von: wahl.von, nach: wahl.nach, ueber: wahl.ueber } : null
   const [favorit, setFavorit] = useState(() => (gemerkt ? istFavorit(gemerkt) : false))
+  const [probe, setProbe] = useState(() => (gemerkt ? istProbefahrt(gemerkt) : false))
 
   // mit Kennung, damit jede Zeile zu ihrem Eintrag in der Liste der Linie führt
   const t = tunnelIds.flatMap((i) => { const x = tunnelNach.get(i); return x ? [{ ...x, id: i }] : [] })
@@ -610,6 +613,16 @@ function Ergebnis({
                 {favorit ? 'Im Fahrtmodus gemerkt' : 'Fahrt im Fahrtmodus merken'}
               </button>
             )}
+            {gemerkt && (
+              <button
+                type="button" aria-pressed={probe}
+                onClick={() => { probefahrtUmschalten(gemerkt); setProbe(istProbefahrt(gemerkt)) }}
+                className="mt-2 flex items-center gap-2 text-sm font-medium"
+              >
+                <Stern voll={probe} />
+                {probe ? 'Unter den Probefahrten' : 'Als Probefahrt merken'}
+              </button>
+            )}
             {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}
             {fahrtFehler && <p className="mt-2 text-sm">Der Fahrtmodus konnte nicht starten. {fahrtFehler}</p>}
           </>
@@ -617,7 +630,8 @@ function Ergebnis({
       </section>
 
       {fahrt && (
-        <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
+        <Fahrtmodus key={lauf} fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
+                    wiederholen={fahrt.probe ? () => setLauf((l) => l + 1) : undefined}
                     piepen={fahrt.piepen}
                     durchfahren={(o) => {
                       if (fahrt.beginn === null || o.tlm) return
