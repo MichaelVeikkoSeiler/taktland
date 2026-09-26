@@ -6,6 +6,7 @@ import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
 import { kantonText } from '../kanton'
+import { ohneKuerzel } from '../kuerzel'
 import type {
   BahnhofIndex, BrueckenEintrag, IndexEintrag, LinienVerzeichnis, Luecke, StreckenAbschnitt,
   StreckenNetz, TunnelEintrag, Uebersicht,
@@ -361,10 +362,13 @@ function Ergebnis({
                gross: tlm.gezeichnet_ab_100m ?? false,
                zeile: `${tlm.name ? `${wort} · ` : ''}swissTLM3D (swisstopo), ohne Länge` }
     }
+    // Name ohne das unerklärte Kürzel der Quelle, der volle Name klein dazu
+    const quelle = (n: string) => (ohneKuerzel(n) !== n ? ` · Name laut Quelle: ${n}` : '')
     const x = art === 'tunnel' ? tunnelNach.get(kennung) : undefined
     if (x) {
-      return { name: x.name, baueinheiten: null,
-               zeile: `${x.laenge_m === null ? 'Länge: keine Angabe' : `${genau(x.laenge_m)} m`} · Linie ${x.linie}` }
+      return { name: ohneKuerzel(x.name), baueinheiten: null,
+               zeile: `${x.laenge_m === null ? 'Länge: keine Angabe' : `${genau(x.laenge_m)} m`} · Linie ${x.linie}`
+                 + quelle(x.name) }
     }
     if (art === 'bahnhof') {
       const b = bahnhof.get(uicVon.get(kennung) ?? 0)
@@ -372,9 +376,9 @@ function Ergebnis({
     }
     const y = art === 'bruecke' ? brueckenNach.get(kennung) : undefined
     if (!y) return undefined
-    return { name: y.name, baueinheiten: y.baueinheiten,
+    return { name: ohneKuerzel(y.name), baueinheiten: y.baueinheiten,
              zeile: `Linie ${y.linie}${y.baueinheiten === null ? ''
-               : ` · ${y.baueinheiten} ${y.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}` }
+               : ` · ${y.baueinheiten} ${y.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}${quelle(y.name)}` }
   }, [tunnelNach, brueckenNach, bahnhof, uicVon])
 
   async function fahrtStarten(probe: boolean) {
@@ -438,7 +442,9 @@ function Ergebnis({
       dazu('Kanton laut Quelle', y?.kanton)
     }
     const x = o.art === 'tunnel' ? tunnelNach.get(o.kennung) : brueckenNach.get(o.kennung)
-    return { ...leer, art: o.art === 'tunnel' ? 'tunnel' : 'bruecke', kennung: o.kennung, name: t?.name ?? o.kennung, zeile: t?.zeile ?? '',
+    // Sammelheft und Bilanz behalten den Namen laut Quelle, mit Kürzel
+    return { ...leer, art: o.art === 'tunnel' ? 'tunnel' : 'bruecke', kennung: o.kennung,
+             name: x?.name ?? t?.name ?? o.kennung, zeile: (t?.zeile ?? '').replace(/ · Name laut Quelle: .*$/, ''),
              linie: x?.linie ?? null, baueinheiten: t?.baueinheiten ?? null,
              laenge_m: o.art === 'tunnel' ? tunnelNach.get(o.kennung)?.laenge_m ?? null : null, angaben }
   }
