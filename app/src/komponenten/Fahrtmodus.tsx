@@ -27,7 +27,7 @@ export type BrueckenWahl = 'groessere' | 'alle' | 'keine'
 /** Sehenswertes: jede Kategorie für sich ein- und ausschaltbar (Michael, 2026-09-26) */
 type SehenswertWahl = Record<SehenswertSorte, boolean>
 const SORTEN: Array<[SehenswertSorte, string]> = [
-  ['gipfel', 'Gipfel melden'], ['kgs', 'Kulturgüter melden'], ['seilbahn', 'Seilbahnen melden'],
+  ['gipfel', 'Gipfel melden'], ['kgs', 'Kultur melden'], ['seilbahn', 'Seilbahnen melden'],
   ['flaeche', 'Gebiete melden (BLN, Pärke, Moorlandschaften)'],
 ]
 const EINSTELLUNG = 'taktland.fahrt.v1'

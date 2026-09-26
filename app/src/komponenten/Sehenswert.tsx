@@ -257,7 +257,7 @@ export function AuswahlZeile({ auswahl, schliessen }: { auswahl: Auswahl | null;
 const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   ['orte', 'Orte', <span className="inline-block size-1.5 rounded-full bg-sbb-metal dark:bg-sbb-storm" />],
   ['gipfel', 'Gipfel', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M5 1L9 9H1Z" className="fill-gipfel" /></svg>],
-  ['kgs', 'Kulturgut', <svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>],
+  ['kgs', 'Kultur', <svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>],
   ['seilbahn', 'Seilbahn', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="1.5" strokeDasharray="3 2" className="stroke-seilbahn" /></svg>],
   ['gebiete', 'Gebiete', <span className="inline-block size-2.5 rounded-sm border border-flaeche-park-rand bg-flaeche-park" />],
 ]

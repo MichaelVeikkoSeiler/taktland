@@ -394,7 +394,7 @@ export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: 
   }
   for (const k of daten.kgs) {
     dazu(`kgs ${k.nr}`, { lat: k.lage[0], lon: k.lage[1] }, KGS_M, {
-      sorte: 'kgs', art: 'Kulturgut', name: k.name,
+      sorte: 'kgs', art: 'Kultur', name: k.name,
       zeile: [k.art ?? k.gruppe, `${k.gemeinde}${k.kanton ? ` ${k.kanton}` : ''}`].join(' · ') })
   }
   daten.gipfel.forEach((g, i) => {
