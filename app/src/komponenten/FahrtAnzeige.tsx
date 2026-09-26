@@ -343,6 +343,17 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
               strokeLinejoin="round" className="stroke-sbb-storm dark:stroke-sbb-metal" />
         <path d={pfad(vor)} fill="none" strokeWidth={3.5} vectorEffect="non-scaling-stroke"
               strokeLinejoin="round" className="stroke-sbb-charcoal dark:stroke-sbb-white" />
+        {/* Tunnel, deren Ende die Daten hergeben, als dicker Strich (Michael, 2026-09-26) */}
+        {zeichen.filter((o) => o.art === 'tunnel' && o.sAus !== null).map((o) => {
+          const stueck = weg.filter((p) => p.s > o.s && p.s < o.sAus!).map((p) => p.xy)
+          const [a, b] = [lageBei(fahrweg, o.s), lageBei(fahrweg, o.sAus!)]
+          const d = pfad([lage(a.lat, a.lon), ...stueck, lage(b.lat, b.lon)])
+          return (
+            <path key={`tz${o.kennung}`} d={d} fill="none" strokeWidth={8} strokeLinecap="round"
+                  strokeLinejoin="round" vectorEffect="non-scaling-stroke"
+                  className="stroke-fahrt-tunnel dark:stroke-sbb-storm" />
+          )
+        })}
         {zeichen.map((o) => {
           const l = lageBei(fahrweg, o.s)
           const [x, y] = lage(l.lat, l.lon)
