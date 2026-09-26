@@ -150,8 +150,8 @@ export function OhneZiel({ index }: { index: BahnhofIndex | null }) {
         </a>
       </div>
       <p className="mt-4 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
-        Der Standort bleibt auf diesem Gerät. Als Strecke gilt jeder Abschnitt mit Personenzügen im
-        Netz der Seite «Strecke»; der Weg folgt derselben Linie der Infrastruktur, bis diese sich
+        Der Standort bleibt auf diesem Gerät. Als Strecke gilt jeder Abschnitt im Netz der Seite
+        «Strecke»; der Weg folgt derselben Linie der Infrastruktur, bis diese sich
         verzweigt. Eine Linie ist eine Strecke, keine Zuglinie: Wohin der Zug fährt, sagen die
         Daten nicht.
       </p>

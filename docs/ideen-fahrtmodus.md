@@ -363,6 +363,24 @@ zählt die BTI wie eine selten befahrene Strecke: Biel → Ins bleibt auf der SB
 mit «Über Täuffelen» fährt der Weg über die BTI. Endpunkte im Schienennetz sind
 «Biel/Bienne [Gleis 11]» und «Ins [Gleis 11]», sie gelten als die Bahnhöfe.
 
+## Andere Bahnen im Netz
+
+Erledigt am 2026-09-26 in der Nacht (Michael: «Warum ist Meiringen nicht erfasst?»,
+«Los»). Stücke von 29 Linien aus dem Schienennetz des BAV (RhB, MGB, MOB, MVR, zb,
+KWO, OeBB, dazu einzelne Stücke von SBB und BLS), 1186 von 1189 Bahnhöfen im Netz.
+Auswahl «Bahnen» auf «Strecke», bei «Neue Fahrt» und im Fahrtblatt (Michael: «filtern
+können, ob man alle Bahnen oder nur einzelne berücksichtigt haben möchte»).
+Offen, für Michael:
+- Museumsbahnen Blonay-Chamby und Furka-Bergstrecke aufnehmen, dann in der Auswahl
+  «Bahnen» zu Beginn aus?
+- Luzern – Interlaken Ost führt über Bern; «Über Meiringen» legt den Brünig fest.
+- Karte beim Fahren: Das graue Netz zeigt nur SBB-Linien, andere Bahnen nur als Weg.
+
+## Einträge über Geräte hinweg
+
+Vorgemerkt 2026-09-26 (Michael: «dass meine Eintragungen in Taktland von Gerät zu Gerät
+bleiben … Was heisst es, wenn wir dies ändern?»). Zu besprechen, nicht gebaut.
+
 ## Fahrt fortsetzen
 
 **Eingebaut 2026-09-26:** Die Stelle auf dem Weg (nicht der Standort) wird alle fünf

@@ -91,8 +91,9 @@ data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_
 data/linienprofile/ Linienseiten, gebaut mit generator/linien.py, nie von Hand geändert
 data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brücken darauf,
              und der Tag, an dem jede Quelle der Linien geladen wurde
-data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzügen, je
-             Abschnitt die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py)
+data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzügen, dazu Stücke
+             anderer Bahnen aus dem Schienennetz (RhB, MGB, MOB, zb …), je Abschnitt die
+             Bahn und die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py)
 data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierung,
              platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte

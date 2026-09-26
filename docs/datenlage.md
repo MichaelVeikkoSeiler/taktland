@@ -208,9 +208,25 @@ Die Seite «Strecke» zählt Tunnel und Brücken entlang eines Wegs
   bevorzugen. Geprüft an 27 Strecken mit bekanntem Weg der Fernzüge: 26 stimmen (vorher
   20), etwa Basel – Zürich über Brugg und Zürich – Thalwil durch den Zimmerberg-
   Basistunnel. Winterthur – Chur führt weiter über Rapperswil; «Über» legt den Weg fest.
-- **Grenzen:** kein Fahrplan, der Weg ist berechnet. 261 Abschnitte gehören anderen Bahnen (BLS, SOB, TPF …),
-  dort gibt es keine Tunnel- und Brückendaten (Lötschberg). Fünf Bahnhöfe liegen nicht im
-  Netz: Bure-Casernes, Grandgourt, Jestetten, Lottstetten, Mols.
+- **Andere Bahnen (2026-09-26):** Die `zugzahlen` führen die Schmalspurbahnen nicht
+  (RhB, MGB, MOB, MVR, zb, KWO) und einzelne Stücke anderer (Oberdorf SO – Moutier,
+  Oensingen – Balsthal, Lottstetten und Jestetten, Mols, Grandgourt, Ferenbalm-Gurbrü).
+  Aus dem `schienennetz` des BAV kommen darum Stücke von 29 Linien dazu: Jede Linie wird
+  an den Punkten geteilt, die schon im Netz liegen, ein Stück kommt dazu, wenn an ihm ein
+  Bahnhof mit Faktendatei liegt, der sonst fehlte. Ohne die Museumsbahnen Blonay-Chamby und
+  Furka-Bergstrecke. Im Netz sind 1186 von 1189 Bahnhöfen; es fehlen Bure-Casernes,
+  Vevey Vignerons und Schmitten (Albula) Landwasserviadukt, die das Schienennetz nicht führt.
+  Für die Wegsuche zählt ein solches Stück wie ein Abschnitt mit 5 Zügen pro Tag (keine
+  Angabe, nur Suchhilfe): Von 600 zufälligen alten Wegen bleiben 599 gleich; Zürich HB –
+  Meiringen führt über den Brünig, Luzern – Interlaken Ost aber über Bern («Über Meiringen»).
+  Je Abschnitt steht die Bahn (`bahn`); in der App lässt sich wählen, welche der Weg nehmen darf.
+- **Verlauf ohne Punkt im Schienennetz:** Spurweichen und Abzweigungen der `zugzahlen`
+  («Wiler Nord», «Spiez Ost») fehlen im Schienennetz. Führt eine Linie ihre Zeichnung an
+  beiden Enden höchstens 150 m vorbei, gilt das Stück dazwischen als Verlauf (42
+  Abschnitte). 11 kurze Abschnitte an Bahnhöfen bleiben ohne Verlauf (Burgdorf – Burgdorf
+  Buchmatt, Hondrich Süd – Spiez …), dort fehlen Tunnel und Brücken beim Fahren.
+- **Grenzen:** kein Fahrplan, der Weg ist berechnet. Auf Strecken anderer Bahnen gibt es
+  Tunnel und Brücken nur aus swissTLM3D, ohne Länge und meist ohne Namen.
 
 **Fahrtmodus:** Auf der Seite «Strecke» legt `app/src/fahrt.ts` den Weg als Linienzug an
 (Kilometrierung der Linien, auf Abschnitten anderer Bahnen gerade von Ende zu Ende) und
