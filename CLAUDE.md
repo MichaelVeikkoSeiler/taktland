@@ -168,8 +168,8 @@ Helvetica als Ersatz für die nicht frei lizenzierte Hausschrift SBB Web.
 
 Listen und Karten, die zu etwas führen, sind **Kacheln**: helles Grau `#ebebeb`
 (Milk um 4,5 % dunkler), leicht abgerundet, ohne Rahmen (Michael, 2026-09-25). Dafür gibt es die Klassen
-`kachel`, `kachel-link` und `kachelliste` in `app/src/index.css`. Rote Knöpfe und gewählte
-Knöpfe haben dieselben leicht abgerundeten Ecken (`rounded-lg`); gewählte Knöpfe sind
+`kachel`, `kachel-link` und `kachelliste` in `app/src/index.css`. Alle Knöpfe, rote, gewählte
+und weisse mit Rand, haben dieselben leicht abgerundeten Ecken (`rounded-lg`, Michael, 2026-09-26); gewählte Knöpfe sind
 Anthracite `#5a5a5a` statt Schwarz (Michael, 2026-09-25). Kacheln und Knöpfe sind die
 einzige Ausnahme von den kantigen Flächen.
 

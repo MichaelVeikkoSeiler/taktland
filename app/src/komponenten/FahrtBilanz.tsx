@@ -302,7 +302,7 @@ function Quiz({ fragen, nochmals }: { fragen: Frage[]; nochmals: () => void }) {
       <div className="mt-3 kachel px-4 py-4">
         <p className="text-2xl font-bold">{richtig} von {fragen.length} richtig</p>
         <button type="button" onClick={nochmals}
-                className="mt-3 border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
+                className="rounded-lg mt-3 border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
                            dark:border-sbb-iron dark:hover:border-sbb-white">
           Neue Fragen
         </button>

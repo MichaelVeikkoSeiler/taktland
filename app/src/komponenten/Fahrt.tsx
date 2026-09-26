@@ -371,7 +371,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
           Losfahren
         </button>
         <button type="button" disabled={!bereit} onClick={() => starten(fahrt, true)}
-                className="border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
+                className="rounded-lg border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
                            disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight
                            dark:hover:border-sbb-white">
           Probefahrt

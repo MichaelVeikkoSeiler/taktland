@@ -51,7 +51,7 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
         <NeueFahrt index={index} fertig={() => { setNeu(false); neuLesen() }} />
       ) : (
         <button type="button" onClick={() => setNeu(true)}
-                className="mt-5 border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
+                className="rounded-lg mt-5 border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
                            dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white">
           + Fahrt von Hand eintragen
         </button>
@@ -72,7 +72,7 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
       {fahrten.length > 0 && (
         <div className="mt-10 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
           <button type="button" onClick={allesLoeschen}
-                  className="border border-sbb-cloud px-4 py-2 text-sm font-medium hover:border-sbb-red
+                  className="rounded-lg border border-sbb-cloud px-4 py-2 text-sm font-medium hover:border-sbb-red
                              hover:text-sbb-red dark:border-sbb-iron">
             Logbuch löschen
           </button>
@@ -184,7 +184,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
           )}
 
           <button type="button" onClick={loeschen}
-                  className="mt-4 border border-sbb-cloud px-3 py-1.5 text-sm font-medium hover:border-sbb-red
+                  className="rounded-lg mt-4 border border-sbb-cloud px-3 py-1.5 text-sm font-medium hover:border-sbb-red
                              hover:text-sbb-red dark:border-sbb-iron">
             Fahrt löschen
           </button>
@@ -311,7 +311,7 @@ function NeueFahrt({ index, fertig }: { index: BahnhofIndex | null; fertig: () =
 function Sicherung() {
   const [meldung, setMeldung] = useState<string | null>(null)
   const [fund, setFund] = useState<{ erstellt: string; daten: Record<string, string> } | null>(null)
-  const knopf = `border border-sbb-cloud bg-white px-4 py-2 text-sm font-medium hover:border-sbb-black
+  const knopf = `rounded-lg border border-sbb-cloud bg-white px-4 py-2 text-sm font-medium hover:border-sbb-black
                  dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white`
 
   async function gewaehlt(f: File | undefined) {

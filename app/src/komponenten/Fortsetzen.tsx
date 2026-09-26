@@ -41,7 +41,7 @@ export function Fortsetzen() {
         </button>
         <button
           type="button" onClick={() => { laufendEnde(); leereFahrtenWeg() }}
-          className="border border-sbb-cloud bg-white px-4 py-2 font-medium hover:border-sbb-black
+          className="rounded-lg border border-sbb-cloud bg-white px-4 py-2 font-medium hover:border-sbb-black
                      dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white"
         >
           Fahrt beenden

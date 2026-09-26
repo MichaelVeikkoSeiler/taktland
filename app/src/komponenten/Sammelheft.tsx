@@ -164,7 +164,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
 
       <div className="mt-10 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
         <button type="button" onClick={loeschen}
-                className="border border-sbb-cloud px-4 py-2 text-sm font-medium hover:border-sbb-red
+                className="rounded-lg border border-sbb-cloud px-4 py-2 text-sm font-medium hover:border-sbb-red
                            hover:text-sbb-red dark:border-sbb-iron">
           Sammelheft löschen
         </button>

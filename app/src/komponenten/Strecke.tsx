@@ -633,7 +633,7 @@ function Ergebnis({
               </button>
               <button
                 type="button" disabled={laedt} onClick={() => void fahrtStarten(true)}
-                className="border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
+                className="rounded-lg border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
                            disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight
                            dark:hover:border-sbb-white"
               >
@@ -756,7 +756,7 @@ function Ergebnis({
           {!alleBruecken && b.length > BRUECKEN_ZUERST && (
             <button
               type="button" onClick={zeigeAlle}
-              className="mt-3 w-full border border-sbb-cloud bg-white px-4 py-3 font-medium
+              className="rounded-lg mt-3 w-full border border-sbb-cloud bg-white px-4 py-3 font-medium
                          hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
                          dark:hover:border-sbb-white"
             >
@@ -869,7 +869,7 @@ function BahnhofLinien({ b, verzeichnis }: {
             <li key={nr}>
               {seiten.has(nr) ? (
                 <a href={`#/linie/${nr}`} title={name}
-                   className="block border border-sbb-cloud bg-white px-2 py-0.5 text-sm font-medium
+                   className="block rounded-lg border border-sbb-cloud bg-white px-2 py-0.5 text-sm font-medium
                               text-sbb-black hover:border-sbb-black dark:border-sbb-iron
                               dark:bg-sbb-midnight dark:text-sbb-white dark:hover:border-sbb-white">
                   Linie {nr} <span className="pfeil" aria-hidden="true">→</span>

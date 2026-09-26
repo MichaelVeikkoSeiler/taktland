@@ -144,7 +144,7 @@ export function OhneZiel({ index }: { index: BahnhofIndex | null }) {
       <div className="mt-5 flex flex-wrap gap-2">
         <a href="#/fahrt"
            onClick={() => { if (weiter) { laufendEnde(); leereFahrtenWeg() } }}
-           className="border border-sbb-cloud bg-white px-4 py-2 font-medium hover:border-sbb-black
+           className="rounded-lg border border-sbb-cloud bg-white px-4 py-2 font-medium hover:border-sbb-black
                       dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white">
           {weiter ? 'Fahrt beenden' : 'Abbrechen'}
         </a>

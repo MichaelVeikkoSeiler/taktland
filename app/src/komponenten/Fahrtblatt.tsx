@@ -132,7 +132,7 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
             Drucken oder als PDF sichern
           </button>
           <button type="button" onClick={() => window.history.back()}
-                  className="border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
+                  className="rounded-lg border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black
                              dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white">
             Zurück
           </button>
