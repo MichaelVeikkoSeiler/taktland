@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { type FahrObjekt, type Fahrweg, lageBei, projizieren, wegEnde } from '../fahrt'
+import { type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEILBAHN_M, type SehenswertSorte, wegEnde } from '../fahrt'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 import { Auswahl } from './Auswahl'
@@ -24,18 +24,26 @@ const OHNE_GPS_NACH_S = 8
 const OHNE_GPS_MAX_S = 20 * 60
 
 export type BrueckenWahl = 'groessere' | 'alle' | 'keine'
+/** Sehenswertes: jede Kategorie für sich ein- und ausschaltbar (Michael, 2026-09-26) */
+type SehenswertWahl = Record<SehenswertSorte, boolean>
+const SORTEN: Array<[SehenswertSorte, string]> = [
+  ['gipfel', 'Gipfel melden'], ['kgs', 'Kulturgüter melden'], ['seilbahn', 'Seilbahnen melden'],
+  ['flaeche', 'Flächen melden (BLN, Pärke, Moore)'],
+]
 const EINSTELLUNG = 'taktland.fahrt.v1'
 
-interface Einstellung { tunnel: boolean; bruecken: BrueckenWahl; bahnhoefe: boolean; vorlauf: Vorlauf; ton: boolean }
+interface Einstellung { tunnel: boolean; bruecken: BrueckenWahl; bahnhoefe: boolean; sehenswert: SehenswertWahl
+                        vorlauf: Vorlauf; ton: boolean }
 
 function einstellungLesen(): Einstellung {
   try {
     const x = JSON.parse(localStorage.getItem(EINSTELLUNG) ?? '{}')
     return { bruecken: ['groessere', 'alle', 'keine'].includes(x.bruecken) ? x.bruecken : 'groessere',
              tunnel: x.tunnel !== false, bahnhoefe: x.bahnhoefe !== false,
+             sehenswert: Object.fromEntries(SORTEN.map(([k]) => [k, x.sehenswert?.[k] !== false])) as SehenswertWahl,
              vorlauf: VORLAEUFE_S.includes(x.vorlauf) ? x.vorlauf : VORLAEUFE_S[0], ton: x.ton !== false }
   } catch {
-    return { tunnel: true, bruecken: 'groessere', bahnhoefe: true, vorlauf: VORLAEUFE_S[0], ton: true }
+    return { tunnel: true, bruecken: 'groessere', bahnhoefe: true, sehenswert: { gipfel: true, kgs: true, seilbahn: true, flaeche: true }, vorlauf: VORLAEUFE_S[0], ton: true }
   }
 }
 
@@ -61,7 +69,11 @@ interface Stand {
   abseits: number | null
 }
 
-const ART: Record<FahrObjekt['art'], string> = { tunnel: 'Tunnel', bruecke: 'Brücke', bahnhof: 'Bahnhof' }
+const ART: Record<FahrObjekt['art'], string> = { tunnel: 'Tunnel', bruecke: 'Brücke', bahnhof: 'Bahnhof',
+                                                  sehenswert: 'Sehenswert' }
+/** «Kulturgut · links», «BLN-Gebiet», «Tunnel» */
+const artText = (o: FahrObjekt) => o.sehenswert
+  ? `${o.sehenswert.art}${o.sehenswert.seite ? ` · ${o.sehenswert.seite}` : ''}` : ART[o.art]
 
 type Meldung =
   | { art: 'sucht' } | { art: 'verweigert' } | { art: 'ohneGps' } | { art: 'fehler'; text: string }
@@ -83,6 +95,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   durchfahren: (o: FahrObjekt) => void
 }) {
   const [einstellung, setEinstellung] = useState(einstellungLesen)
+  // Sehenswertes bringt seinen Text selbst mit
+  const textVon = (o: FahrObjekt): ObjektText | undefined => o.sehenswert
+    ? { name: o.sehenswert.name, zeile: o.sehenswert.zeile, baueinheiten: null } : text(o)
   const [stand, setStand] = useState<Stand | null>(null)
   const [meldung, setMeldung] = useState<Meldung | null>({ art: 'sucht' })
   const [jetzt, setJetzt] = useState(0)
@@ -161,7 +176,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     const id = window.setInterval(() => {
       const t = uhr()
       const s = Math.min(wegEnde(fahrweg), PROBE_TEMPO * t / 1000)
-      const imTunnel = fahrweg.objekte.some((o) => o.sAus !== null && s > o.s + 50 && s < o.sAus - 50)
+      const imTunnel = fahrweg.objekte.some((o) => o.art === 'tunnel' && o.sAus !== null && s > o.s + 50 && s < o.sAus - 50)
       if (imTunnel) return
       const l = lageBei(fahrweg, s)
       standort(t, l.lat, l.lon, 10, PROBE_TEMPO)
@@ -205,14 +220,18 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const gewaehlt = useMemo(() => fahrweg.objekte.filter((o) => {
     if (o.art === 'tunnel') return einstellung.tunnel
     if (o.art === 'bahnhof') return einstellung.bahnhoefe
+    if (o.art === 'sehenswert') return o.sehenswert ? einstellung.sehenswert[o.sehenswert.sorte] : false
     if (einstellung.bruecken === 'keine') return false
     if (einstellung.bruecken === 'alle') return true
     return (text(o)?.baueinheiten ?? 0) >= 3
-  }), [fahrweg, einstellung.tunnel, einstellung.bruecken, einstellung.bahnhoefe, text])
+  }), [fahrweg, einstellung.tunnel, einstellung.bruecken, einstellung.bahnhoefe, einstellung.sehenswert, text])
 
   // auch ohne Meldung der Tunnel: Im Tunnel fehlt das GPS, das sagt die Anzeige
   const imTunnel = sJetzt === null ? null
-    : fahrweg.objekte.find((o) => o.sAus !== null && sJetzt >= o.s && sJetzt <= o.sAus) ?? null
+    : fahrweg.objekte.find((o) => o.art === 'tunnel' && o.sAus !== null && sJetzt >= o.s && sJetzt <= o.sAus) ?? null
+  // Flächen, durch die der Weg gerade führt (Michael, 2026-09-26: «du fährst durch …»)
+  const inFlaechen = sJetzt === null ? []
+    : gewaehlt.filter((o) => o.sehenswert?.sorte === 'flaeche' && sJetzt >= o.s && sJetzt <= o.sAus!)
   const kommend = sJetzt === null ? [] : gewaehlt.filter((o) => o.s > sJetzt)
   const eta = (o: FahrObjekt) => (sJetzt !== null && faehrt ? (o.s - sJetzt) / stand!.v : null)
 
@@ -225,10 +244,11 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         gemeldet.current.add(schluessel)
         if (einstellung.ton) piepen()
         // für Bildschirmleser: dieselbe Meldung als Satz, einmal
-        const t = text(o)
+        const t = textVon(o)
         if (ansage.current && t) {
           ansage.current.textContent = `In etwa ${Math.max(5, Math.round(e / 5) * 5)} Sekunden: `
-            + `${ART[o.art]} ${t.name}. ${sprechbar(t.zeile)}`
+            + (o.sehenswert?.sorte === 'flaeche' ? `Du fährst durch ${t.name}, ${o.sehenswert.art}.`
+              : `${artText(o).replace(' · ', ', ')}: ${t.name}. ${sprechbar(t.zeile)}`)
         }
       }
     }
@@ -240,6 +260,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     if (sJetzt === null) return
     if (startS.current === null) startS.current = sJetzt
     for (const o of fahrweg.objekte) {
+      // Sehenswertes kommt nicht ins Sammelheft: gesehen hat man es damit nicht
+      if (o.art === 'sehenswert') continue
       if (o.s <= startS.current || o.s > sJetzt) continue
       if (hinter.current.includes(o)) continue
       hinter.current.push(o)
@@ -266,14 +288,23 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         </Ring>
         <div className="min-w-0">
           <p className={`text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
-            {bald ? 'Gleich' : o === naechstes ? 'Als Nächstes' : 'Kurz danach'} · {ART[o.art]}
+            {bald ? 'Gleich' : o === naechstes ? 'Als Nächstes' : 'Kurz danach'} · {artText(o)}
           </p>
+          {o.sehenswert?.sorte === 'flaeche' && (
+            <p className={`mt-1 ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>Du fährst durch</p>
+          )}
           <p lang="de" className={`mt-1 font-bold leading-tight break-words hyphens-auto ${bald ? 'text-3xl' : 'text-2xl'}`}>
-            {text(o)?.name}
+            {textVon(o)?.name}
           </p>
           <p className={`mt-1 ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
-            {text(o)?.zeile}
+            {textVon(o)?.zeile}
           </p>
+          {o.sehenswert && o.sehenswert.sorte !== 'flaeche' && (
+            <p className={`mt-1 text-sm ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+              {o.sehenswert.seite === 'links' ? 'Links' : 'Rechts'} der Strecke laut Lage in der Quelle. Ob
+              es zu sehen ist, sagen die Daten nicht.
+            </p>
+          )}
           {o.art === 'tunnel' && o.sAus === null && (
             <p className={`mt-1 text-sm ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
               Wo er endet, geben die Daten nicht her.
@@ -313,7 +344,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
-                      name={(o) => text(o)?.name} />
+                      name={(o) => textVon(o)?.name} />
 
         {probefahrt && (
           <div className="mt-4 flex items-center gap-3 text-sm">
@@ -350,11 +381,24 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         {imTunnel && einstellung.tunnel && sJetzt !== null && (
           <div className="mt-5 rounded-lg bg-sbb-charcoal px-4 py-4 text-sbb-white">
             <p className="text-xs uppercase tracking-wide text-sbb-storm">Im Tunnel</p>
-            <p className="text-xl font-bold">{text(imTunnel)?.name}</p>
+            <p className="text-xl font-bold">{textVon(imTunnel)?.name}</p>
             <p className="mt-2 text-2xl font-bold tabular-nums">
               {faehrt ? `Ausfahrt ${dauer((imTunnel.sAus! - sJetzt) / stand!.v)}` : 'Zug steht'}
             </p>
             <TunnelBalken anteil={(sJetzt - imTunnel.s) / (imTunnel.sAus! - imTunnel.s || 1)} />
+          </div>
+        )}
+
+        {inFlaechen.length > 0 && (
+          <div className="mt-5 rounded-lg bg-fahrt-sehenswert px-4 py-3 text-white">
+            <p className="text-xs uppercase tracking-wide text-white/80">Du fährst durch</p>
+            {inFlaechen.map((o) => (
+              <p key={o.kennung} className="mt-1">
+                <span className="text-lg font-bold">{o.sehenswert!.name}</span>
+                <span className="text-sm text-white/80"> · {o.sehenswert!.art}</span>
+              </p>
+            ))}
+            <p className="mt-1 text-xs text-white/80">Grenze laut BAFU, für die Karte vereinfacht</p>
           </div>
         )}
 
@@ -373,9 +417,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
               {danach.slice(0, 3).map((o) => (
                 <li key={`${o.art} ${o.kennung}`} className="flex justify-between gap-3 px-3 py-2">
                   <span className="min-w-0">
-                    <span className="block truncate">{text(o)?.name}</span>
+                    <span className="block truncate">{textVon(o)?.name}</span>
                     <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                      {ART[o.art]}
+                      {artText(o)}
                     </span>
                   </span>
                   <span className="shrink-0 text-sm tabular-nums text-sbb-metal dark:text-sbb-storm">
@@ -392,6 +436,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                   ? [anzahl(kommend.filter((o) => o.art === 'bruecke').length, 'Brücke', 'Brücken')] : []),
                 ...(einstellung.bahnhoefe
                   ? [anzahl(kommend.filter((o) => o.art === 'bahnhof').length, 'Bahnhof', 'Bahnhöfe')] : []),
+                ...(Object.values(einstellung.sehenswert).some(Boolean)
+                  ? [`${kommend.filter((o) => o.art === 'sehenswert').length} Sehenswertes`] : []),
               ])} auf diesem Weg
             </p>
           </>
@@ -420,6 +466,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <input type="checkbox" checked={einstellung.bahnhoefe} className="size-5 accent-sbb-red"
                    onChange={(e) => aendern({ bahnhoefe: e.target.checked })} />
           </label>
+          {SORTEN.map(([k, t]) => (
+            <label key={k} className="flex items-center justify-between gap-3">
+              <span>{t}</span>
+              <input type="checkbox" checked={einstellung.sehenswert[k]} className="size-5 accent-sbb-red"
+                     onChange={(e) => aendern({ sehenswert: { ...einstellung.sehenswert, [k]: e.target.checked } })} />
+            </label>
+          ))}
           <div className="flex items-center justify-between gap-3">
             <span>Melden etwa</span>
             <Auswahl
@@ -442,7 +495,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           sind Schätzungen aus Standort und Tempo. Gemeldet wird nur, solange diese Seite offen und
           der Bildschirm an ist. Auf Strecken anderer Bahnen fehlen Tunnel und Brücken. Als Bahnhof
           gemeldet werden die Betriebspunkte des Wegs, die in Taktland eine Seite haben, auch wo
-          der Zug nicht hält: Einen Fahrplan enthalten die Daten nicht.
+          der Zug nicht hält: Einen Fahrplan enthalten die Daten nicht. Sehenswertes: Kulturgüter
+          bis {KGS_M} m, Seilbahnen mit einem Ende bis {SEILBAHN_M} m und Gipfel bis {GIPFEL_M / 1000} km
+          neben der gezeichneten Strecke, dazu BLN-Gebiete, Pärke und Moorlandschaften, durch die sie
+          führt. Links und rechts ergeben sich aus der Lage in den Quellen (swisstopo, BABS, BAV, BAFU);
+          ob etwas vom Zug aus zu sehen ist, sagen die Daten nicht. Sehenswertes kommt nicht ins
+          Sammelheft.
         </p>
       </div>
     </div>

@@ -8,7 +8,7 @@ import { useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
-import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, useSehenswert } from './Sehenswert'
+import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
@@ -31,6 +31,10 @@ export const FARBE: Record<FahrObjekt['art'], { flaeche: string; ring: string; r
   bahnhof: {
     flaeche: 'border-fahrt-bahnhof bg-fahrt-bahnhof', schrift: 'text-white',
     ring: 'stroke-fahrt-bahnhof dark:stroke-fahrt-bahnhof-hell', ringBald: 'stroke-white', grundBald: 'stroke-white/30',
+  },
+  sehenswert: {
+    flaeche: 'border-fahrt-sehenswert bg-fahrt-sehenswert', schrift: 'text-white',
+    ring: 'stroke-fahrt-sehenswert dark:stroke-fahrt-sehenswert-hell', ringBald: 'stroke-white', grundBald: 'stroke-white/30',
   },
 }
 
@@ -135,6 +139,19 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
                     className="fill-fahrt-tunnel dark:fill-sbb-storm" />
             )
           }
+          if (o.art === 'sehenswert') {
+            // Flächen als Band unter der Strecke, der Rest als kleine Raute
+            if (o.sAus !== null) {
+              return (
+                <rect key={`s${o.kennung}`} x={x} y="53" width={Math.max(2, xBei(o.sAus) - x)} height="3"
+                      className="fill-fahrt-sehenswert/60 dark:fill-fahrt-sehenswert-hell/60" />
+              )
+            }
+            return (
+              <rect key={`s${o.kennung}`} x={x - 2} y="44" width="4" height="4" transform={`rotate(45 ${x} 46)`}
+                    className="fill-fahrt-sehenswert dark:fill-fahrt-sehenswert-hell" />
+            )
+          }
           if (o.art === 'bruecke') {
             return (
               <path key={`b${o.kennung}`} d={`M${x - 3} 49 Q${x} 41.5 ${x + 3} 49`} fill="none" strokeWidth="2"
@@ -171,6 +188,12 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
           Brücke
         </span>
         <span className="flex items-center gap-1.5"><span className="inline-block size-2 rounded-full bg-fahrt-bahnhof dark:bg-fahrt-bahnhof-hell" />Bahnhof</span>
+        {objekte.some((o) => o.art === 'sehenswert') && (
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block size-2 rotate-45 bg-fahrt-sehenswert dark:bg-fahrt-sehenswert-hell" />
+            Sehenswertes, Flächen als Band
+          </span>
+        )}
       </div>
     </div>
   )
@@ -328,6 +351,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
                     strokeWidth={1.5} vectorEffect="non-scaling-stroke"
                     className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
                       : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-white dark:stroke-sbb-midnight'
+                      : o.art === 'sehenswert' ? 'fill-fahrt-sehenswert stroke-white dark:fill-fahrt-sehenswert-hell dark:stroke-sbb-midnight'
                       : 'fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight'} />
           )
         })}
@@ -340,6 +364,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
         )}
       </svg>
       {!voll && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
+      {!voll && sehenswert.s && <SehenswertLegende />}
       <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>
         {!linien && 'Das Netz wird geladen … '}
         <details>
@@ -349,7 +374,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
         dem Schienennetz des BAV. Auf Strecken anderer Bahnen ist der Weg gerade von Bahnhof zu
         Bahnhof gezogen. Rot der geschätzte Standort.
         {seen && ' Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab.'}
-        {sehenswert.s && ' Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; BLN, Pärke, Moorlandschaften: BAFU. Kulturgüter erscheinen erst näher; ein Tipp auf ein Zeichen zeigt, was es ist.'}
+        {sehenswert.s && ' Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; BLN, Pärke, Moorlandschaften: BAFU. Kulturgüter erscheinen erst näher; ein Tipp auf ein Zeichen zeigt, was es ist, ein Tipp in der Legende blendet eine Kategorie aus oder ein.'}
         {' Zoomen mit zwei Fingern oder mit «+» und «−»; näher gezoomt lässt sich die Karte verschieben.'}
           </p>
         </details>

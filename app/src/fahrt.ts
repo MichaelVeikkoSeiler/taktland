@@ -9,7 +9,7 @@
  * nur der Rechnung; eine Länge des Wegs zeigt die App nicht an, weil die
  * Kilometrierung ein Standort ist und keine Länge.
  */
-import type { StreckenAbschnitt, StreckenGeometrie, StreckenNetz } from './typen'
+import type { FlaechenDaten, KodierterZug, SehenswertDaten, StreckenAbschnitt, StreckenGeometrie, StreckenNetz } from './typen'
 
 /** Meter je Grad in der Schweiz: für kurze Abstände genau genug */
 const M_BREITE = 111_200
@@ -23,13 +23,25 @@ export interface Punkt extends Lage { s: number }
 
 interface Linienzug { km: number[]; lat: number[]; lon: number[] }
 
+export type SehenswertSorte = 'gipfel' | 'kgs' | 'seilbahn' | 'flaeche'
+
 export interface FahrObjekt {
   kennung: string
-  art: 'tunnel' | 'bruecke' | 'bahnhof'
+  art: 'tunnel' | 'bruecke' | 'bahnhof' | 'sehenswert'
   /** Einfahrt, beim Bahnhof der Betriebspunkt, in Metern entlang des Wegs */
   s: number
-  /** Ausfahrt, nur bei Tunneln, deren Richtung die Daten hergeben */
+  /** Ausfahrt: bei Tunneln, deren Richtung die Daten hergeben, und bei Flächen */
   sAus: number | null
+  /** nur bei Sehenswertem: was die Quelle dazu sagt und auf welcher Seite es liegt */
+  sehenswert?: {
+    sorte: SehenswertSorte
+    /** Gipfel, Kulturgut, Seilbahn oder die Art der Fläche */
+    art: string
+    name: string
+    zeile: string
+    /** in Fahrtrichtung; null bei Flächen, durch die der Weg führt */
+    seite: 'links' | 'rechts' | null
+  }
 }
 
 export interface Fahrweg {
@@ -254,4 +266,154 @@ export function tonAbholen() {
   const ton = bereitgelegt ?? tonVorbereiten()
   bereitgelegt = null
   return ton
+}
+
+
+/**
+ * Sehenswertes am Weg für den Fahrtmodus (Michael, 2026-09-26: «links» oder
+ * «rechts» und «du fährst durch …»). Gemeldet wird, was nahe an der
+ * gezeichneten Strecke liegt: Kulturgüter bis KGS_M, Seilbahnen mit einem Ende
+ * bis SEILBAHN_M, Gipfel bis GIPFEL_M. Die Seite ergibt sich aus der Lage in der
+ * Quelle gegenüber der Strecke in Fahrtrichtung; ob man es vom Zug aus sieht,
+ * sagen die Daten nicht. Flächen (BLN, Pärke, Moorlandschaften) werden
+ * gemeldet, wo der Weg in sie hineinführt, mit der Stelle, wo er sie verlässt.
+ */
+export const KGS_M = 200
+export const SEILBAHN_M = 300
+export const GIPFEL_M = 8000
+/** Abstand der Stichproben, mit denen der Weg auf Flächen geprüft wird */
+const FLAECHE_SCHRITT_M = 100
+/** Kürzere Lücken zwischen zwei Stücken in derselben Fläche gelten als drin */
+const FLAECHE_LUECKE_M = 500
+/** Kürzer als das zählt nicht als Durchfahrt (Rand der vereinfachten Fläche) */
+const FLAECHE_MIN_M = 300
+
+const xy = (p: Lage) => [p.lon * M_LAENGE, p.lat * M_BREITE] as const
+
+/** Nächste Stelle auf dem Weg samt Seite in Fahrtrichtung. Liegt sie an
+ *  Anfang oder Ende des Wegs, gibt es keine Seite: Das Objekt liegt davor oder dahinter. */
+export function seitlich(fw: Fahrweg, p: Lage) {
+  const pts = fw.punkte
+  const [px, py] = xy(p)
+  let best = { s: 0, abstand: Infinity, kreuz: 0, t: 0, i: 0 }
+  for (let i = 1; i < pts.length; i++) {
+    const [ax, ay] = xy(pts[i - 1])
+    const [bx, by] = xy(pts[i])
+    const dx = bx - ax, dy = by - ay
+    const l2 = dx * dx + dy * dy
+    const t = l2 ? Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / l2)) : 0
+    const d = Math.hypot(px - ax - t * dx, py - ay - t * dy)
+    if (d < best.abstand) {
+      best = { s: pts[i - 1].s + t * (pts[i].s - pts[i - 1].s), abstand: d,
+               kreuz: dx * (py - ay) - dy * (px - ax), t, i }
+    }
+  }
+  const amEnde = (best.i === 1 && best.t === 0) || (best.i === pts.length - 1 && best.t === 1)
+  // Osten ist x, Norden ist y: positives Kreuzprodukt heisst links der Fahrtrichtung
+  const seite: 'links' | 'rechts' | null = amEnde || best.kreuz === 0 ? null
+    : best.kreuz > 0 ? 'links' : 'rechts'
+  return { s: best.s, abstand: best.abstand, seite }
+}
+
+function entpacken(z: KodierterZug): Lage[] {
+  let [la, lo] = z.start
+  const raus = [{ lat: la / 1e5, lon: lo / 1e5 }]
+  for (let i = 0; i < z.d.length; i += 2) {
+    la += z.d[i]; lo += z.d[i + 1]
+    raus.push({ lat: la / 1e5, lon: lo / 1e5 })
+  }
+  return raus
+}
+
+function innen(p: Lage, ring: Lage[]) {
+  let drin = false
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const a = ring[i], b = ring[j]
+    if ((a.lat > p.lat) !== (b.lat > p.lat)
+        && p.lon < (b.lon - a.lon) * (p.lat - a.lat) / (b.lat - a.lat) + a.lon) drin = !drin
+  }
+  return drin
+}
+
+const zahl = (n: number) => n.toLocaleString('de-CH')
+
+export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: FlaechenDaten): FahrObjekt[] {
+  if (fw.punkte.length < 2) return []
+  const ende = wegEnde(fw)
+  // Rahmen des Wegs, damit nicht jedes Objekt der Schweiz gerechnet wird
+  const rand = GIPFEL_M / M_LAENGE
+  const la = fw.punkte.map((p) => p.lat), lo = fw.punkte.map((p) => p.lon)
+  const [la0, la1, lo0, lo1] = [Math.min(...la) - rand, Math.max(...la) + rand, Math.min(...lo) - rand, Math.max(...lo) + rand]
+  const imRahmen = (p: Lage) => p.lat > la0 && p.lat < la1 && p.lon > lo0 && p.lon < lo1
+  const raus: FahrObjekt[] = []
+  // Im Tunnel sieht man nichts: dort wird nichts Sehenswertes gemeldet
+  const tunnel = fw.objekte.filter((o) => o.art === 'tunnel' && o.sAus !== null).map((o) => [o.s, o.sAus!] as const)
+  const tunnelBei = (s: number) => tunnel.find(([a, b]) => s >= a && s <= b)
+  const dazu = (kennung: string, p: Lage, grenze: number, x: Omit<NonNullable<FahrObjekt['sehenswert']>, 'seite'>) => {
+    if (!imRahmen(p)) return
+    const n = seitlich(fw, p)
+    if (n.abstand > grenze || n.seite === null || n.s <= 0 || n.s >= ende || tunnelBei(n.s)) return
+    raus.push({ kennung, art: 'sehenswert', s: n.s, sAus: null, sehenswert: { ...x, seite: n.seite } })
+  }
+  for (const k of daten.kgs) {
+    dazu(`kgs ${k.nr}`, { lat: k.lage[0], lon: k.lage[1] }, KGS_M, {
+      sorte: 'kgs', art: 'Kulturgut', name: k.name,
+      zeile: [k.art ?? k.gruppe, `${k.gemeinde}${k.kanton ? ` ${k.kanton}` : ''}`].join(' · ') })
+  }
+  daten.gipfel.forEach((g, i) => {
+    dazu(`gipfel ${i}`, { lat: g.lage[0], lon: g.lage[1] }, GIPFEL_M, {
+      sorte: 'gipfel', art: 'Gipfel', name: g.name,
+      zeile: g.hoehe_m != null ? `${zahl(g.hoehe_m)} m ü. M.` : 'Höhe: keine Angabe' })
+  })
+  for (const b of daten.seilbahnen) {
+    // das Ende näher an der Strecke, meist die Talstation
+    const enden = b.verlauf.flatMap((z) => { const l = entpacken(z); return [l[0], l[l.length - 1]] })
+    const nah = enden.filter(imRahmen).map((p) => ({ p, n: seitlich(fw, p) }))
+      .sort((a, c) => a.n.abstand - c.n.abstand)[0]
+    if (!nah) continue
+    dazu(`seilbahn ${b.nr}`, nah.p, SEILBAHN_M, {
+      sorte: 'seilbahn', art: 'Seilbahn', name: b.name,
+      zeile: [b.bahntyp, b.laenge_schief_m != null ? `Länge schief ${zahl(b.laenge_schief_m)} m` : null,
+              b.hoehendifferenz_m != null ? `Höhendifferenz ${zahl(b.hoehendifferenz_m)} m` : null]
+        .filter(Boolean).join(' · ') || 'Seilbahn' })
+  }
+
+  // Flächen: der Weg in Schritten, je Schritt drin oder nicht
+  const proben: Array<Lage & { s: number }> = []
+  for (let i = 1; i < fw.punkte.length; i++) {
+    const a = fw.punkte[i - 1], b = fw.punkte[i]
+    const n = Math.max(1, Math.ceil((b.s - a.s) / FLAECHE_SCHRITT_M))
+    for (let k = 0; k < n; k++) {
+      const t = k / n
+      proben.push({ lat: a.lat + t * (b.lat - a.lat), lon: a.lon + t * (b.lon - a.lon), s: a.s + t * (b.s - a.s) })
+    }
+  }
+  proben.push(fw.punkte[fw.punkte.length - 1])
+  flaechen.flaechen.forEach((f, nr) => {
+    const ringe = f.ringe.map(entpacken)
+    const alle = ringe.flat()
+    const [fla0, fla1] = [Math.min(...alle.map((p) => p.lat)), Math.max(...alle.map((p) => p.lat))]
+    const [flo0, flo1] = [Math.min(...alle.map((p) => p.lon)), Math.max(...alle.map((p) => p.lon))]
+    const stuecke: Array<[number, number]> = []
+    for (const p of proben) {
+      if (p.lat < fla0 || p.lat > fla1 || p.lon < flo0 || p.lon > flo1) continue
+      // gerade-ungerade über alle Ringe: Inseln und Löcher zählen nicht als drin
+      if (ringe.filter((r) => innen(p, r)).length % 2 === 0) continue
+      const letztes = stuecke[stuecke.length - 1]
+      if (letztes && p.s - letztes[1] <= FLAECHE_LUECKE_M) letztes[1] = p.s
+      else stuecke.push([p.s, p.s])
+    }
+    // beginnt die Durchfahrt im Tunnel, gilt sie ab dessen Ausfahrt
+    for (const st of stuecke) {
+      let t = tunnelBei(st[0])
+      while (t && st[0] < st[1]) { st[0] = t[1]; t = tunnelBei(st[0] + 1) }
+    }
+    stuecke.filter(([a, b]) => b - a >= FLAECHE_MIN_M).forEach(([a, b], k) => {
+      const art = f.art === 'BLN' ? 'BLN-Gebiet' : f.art
+      raus.push({ kennung: `flaeche ${nr}:${k}`, art: 'sehenswert', s: a, sAus: b,
+                  sehenswert: { sorte: 'flaeche', art, name: f.name, seite: null,
+                                zeile: f.art === 'BLN' ? 'Landschaft oder Naturdenkmal von nationaler Bedeutung' : f.art } })
+    })
+  })
+  return raus
 }

@@ -35,6 +35,9 @@
   --color-fahrt-bruecke: #f27e00;
   --color-fahrt-bahnhof: #1d3f8a;
   --color-fahrt-bahnhof-hell: #7fa3e6;
+  /* Sehenswertes im Fahrtmodus, von Claude festgelegt (2026-09-26) */
+  --color-fahrt-sehenswert: #2f7d4f;
+  --color-fahrt-sehenswert-hell: #6cc28f;
 
   /* Seen auf den Karten, von Claude festgelegt (Michael, 2026-09-25: «helles
      Blau selber durch dich definiert»); dunkel eigene Töne, unten */

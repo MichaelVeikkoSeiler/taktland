@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { geometrieLaden, linienLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, tonAbholen } from '../fahrt'
+import { flaechenLaden, geometrieLaden, linienLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
+import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, sehenswertAufWeg, tonAbholen } from '../fahrt'
 import { favoritUmschalten, istFavorit, letzteMerken } from '../fahrten'
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
 import { alphabetisch, useFavoriten } from '../favoriten'
@@ -383,6 +383,11 @@ function Ergebnis({
                                    (id) => brueckenNach.get(id)?.km ?? undefined,
                                    (id) => tunnelNach.get(id)?.laenge_m ?? null,
                                    (abk) => bahnhof.has(uicVon.get(abk) ?? 0))
+      // Sehenswertes am Weg; fehlen die Daten, fährt der Fahrtmodus ohne
+      try {
+        const [s, f] = await Promise.all([sehenswertLaden(), flaechenLaden()])
+        fahrweg.objekte = [...fahrweg.objekte, ...sehenswertAufWeg(fahrweg, s, f)].sort((a, b) => a.s - b.s)
+      } catch { /* ohne Sehenswertes */ }
       const titel = [bahnhoefe[0]?.name ?? '', bahnhoefe[bahnhoefe.length - 1]?.name ?? '']
       // die Probefahrt kommt nicht ins Sammelheft
       setFahrt({ fahrweg, probe, piepen, beginn: probe ? null : fahrtBeginnen(titel[0], titel[1]) })
@@ -426,7 +431,7 @@ function Ergebnis({
       dazu('Kanton laut Quelle', y?.kanton)
     }
     const x = o.art === 'tunnel' ? tunnelNach.get(o.kennung) : brueckenNach.get(o.kennung)
-    return { ...leer, art: o.art, kennung: o.kennung, name: t?.name ?? o.kennung, zeile: t?.zeile ?? '',
+    return { ...leer, art: o.art === 'tunnel' ? 'tunnel' : 'bruecke', kennung: o.kennung, name: t?.name ?? o.kennung, zeile: t?.zeile ?? '',
              linie: x?.linie ?? null, baueinheiten: t?.baueinheiten ?? null,
              laenge_m: o.art === 'tunnel' ? tunnelNach.get(o.kennung)?.laenge_m ?? null : null, angaben }
   }

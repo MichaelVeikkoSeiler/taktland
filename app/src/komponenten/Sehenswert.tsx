@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
 import { flaechenLaden, sehenswertLaden } from '../daten'
 import type { FlaechenDaten, KodierterZug, SehenswertDaten } from '../typen'
 import { LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
@@ -107,6 +107,29 @@ export function useSehenswert() {
 const imBild = (z: { x0: number; x1: number; y0: number; y1: number }, box: Box, h: number) =>
   z.x1 > box.cx - box.w && z.x0 < box.cx + box.w && z.y1 > box.cy - h && z.y0 < box.cy + h
 
+/**
+ * Welche Kategorien die Karten zeigen: jede lässt sich in der Legende aus- und
+ * einblenden (Michael, 2026-09-26), gemerkt auf diesem Gerät, für alle Karten.
+ */
+export type Kategorie = 'gipfel' | 'kgs' | 'seilbahn' | 'bln' | 'park' | 'moor'
+const KATEGORIEN_SPEICHER = 'taktland.karte.v1'
+let versteckt: Set<Kategorie> = (() => {
+  try { return new Set(JSON.parse(localStorage.getItem(KATEGORIEN_SPEICHER) ?? '{}').versteckt ?? []) } catch { return new Set() }
+})()
+const hoerer = new Set<() => void>()
+
+export function kategorieUmschalten(k: Kategorie) {
+  versteckt = new Set(versteckt)
+  if (versteckt.has(k)) versteckt.delete(k)
+  else versteckt.add(k)
+  try { localStorage.setItem(KATEGORIEN_SPEICHER, JSON.stringify({ versteckt: [...versteckt] })) } catch { /* nur für jetzt */ }
+  hoerer.forEach((h) => h())
+}
+
+export function useVersteckt() {
+  return useSyncExternalStore((h) => { hoerer.add(h); return () => { hoerer.delete(h) } }, () => versteckt)
+}
+
 /** Flächen, ganz unten, noch unter den Seen */
 export function FlaechenEbene({ flaechen, box, verh = 1.6, waehlen }: {
   flaechen: Flaeche[] | null
@@ -114,11 +137,12 @@ export function FlaechenEbene({ flaechen, box, verh = 1.6, waehlen }: {
   verh?: number
   waehlen?: (a: Auswahl) => void
 }) {
+  const aus = useVersteckt()
   if (!flaechen) return null
   const h = box.w / verh
   return (
     <g>
-      {flaechen.filter((f) => imBild(f, box, h)).map((f, i) => (
+      {flaechen.filter((f) => !aus.has(f.art) && imBild(f, box, h)).map((f, i) => (
         <path key={i} d={f.d} fillRule="evenodd" strokeWidth={1} vectorEffect="non-scaling-stroke"
               className={`${f.art === 'bln' ? 'fill-flaeche-bln stroke-flaeche-bln-rand'
                 : f.art === 'moor' ? 'fill-flaeche-moor stroke-flaeche-moor-rand'
@@ -145,6 +169,7 @@ export function SehenswertEbene({ daten, box, px, verh = 1.6, belegt = [], waehl
   belegt?: Feld[]
   waehlen?: (a: Auswahl) => void
 }) {
+  const aus = useVersteckt()
   if (!daten) return null
   const h = box.w / verh
   const drin = (x: number, y: number) => Math.abs(x - box.cx) < box.w * 0.52 && Math.abs(y - box.cy) < h * 0.52
@@ -161,9 +186,9 @@ export function SehenswertEbene({ daten, box, px, verh = 1.6, belegt = [], waehl
     felder.push(f)
     namen.push({ x: p.x, y: p.y, name: text, art, rechts })
   }
-  const seilbahnen = box.w < 1.5 ? daten.seilbahnen.filter((z) => imBild(z, box, h)) : []
-  const kgs = box.w < 0.35 ? daten.kgs.filter((p) => drin(p.x, p.y)) : []
-  const gipfel = daten.gipfel.filter((p) => drin(p.x, p.y))
+  const seilbahnen = box.w < 1.5 && !aus.has('seilbahn') ? daten.seilbahnen.filter((z) => imBild(z, box, h)) : []
+  const kgs = box.w < 0.35 && !aus.has('kgs') ? daten.kgs.filter((p) => drin(p.x, p.y)) : []
+  const gipfel = aus.has('gipfel') ? [] : daten.gipfel.filter((p) => drin(p.x, p.y))
   // Namen: Gipfel zuerst, Kulturgüter erst nah
   for (const p of gipfel) if (box.w < 1.5) beschriften(p, 'gipfel', 9)
   if (box.w < 0.08) for (const p of kgs) beschriften(p, 'kgs', 8.5)
@@ -222,16 +247,28 @@ export function AuswahlZeile({ auswahl, schliessen }: { auswahl: Auswahl | null;
   )
 }
 
-/** Kleine Legende der Zeichen */
+const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
+  ['gipfel', 'Gipfel', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M5 1L9 9H1Z" className="fill-gipfel" /></svg>],
+  ['kgs', 'Kulturgut', <svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>],
+  ['seilbahn', 'Seilbahn', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="1.5" strokeDasharray="3 2" className="stroke-seilbahn" /></svg>],
+  ['bln', 'BLN', <span className="inline-block size-2.5 rounded-sm border border-flaeche-bln-rand bg-flaeche-bln" />],
+  ['park', 'Park', <span className="inline-block size-2.5 rounded-sm border border-flaeche-park-rand bg-flaeche-park" />],
+  ['moor', 'Moorlandschaft', <span className="inline-block size-2.5 rounded-sm border border-flaeche-moor-rand bg-flaeche-moor" />],
+]
+
+/** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein */
 export function SehenswertLegende() {
+  const aus = useVersteckt()
   return (
-    <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs text-sbb-metal dark:text-sbb-storm" aria-hidden="true">
-      <span className="flex items-center gap-1"><svg viewBox="0 0 10 10" className="size-2.5"><path d="M5 1L9 9H1Z" className="fill-gipfel" /></svg>Gipfel</span>
-      <span className="flex items-center gap-1"><svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>Kulturgut</span>
-      <span className="flex items-center gap-1"><svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="1.5" strokeDasharray="3 2" className="stroke-seilbahn" /></svg>Seilbahn</span>
-      <span className="flex items-center gap-1"><span className="inline-block size-2.5 rounded-sm bg-flaeche-bln" />BLN</span>
-      <span className="flex items-center gap-1"><span className="inline-block size-2.5 rounded-sm bg-flaeche-park" />Park</span>
-      <span className="flex items-center gap-1"><span className="inline-block size-2.5 rounded-sm bg-flaeche-moor" />Moorlandschaft</span>
+    <div className="mt-1 flex flex-wrap gap-1.5 text-xs" role="group" aria-label="Auf der Karte zeigen">
+      {LEGENDE.map(([k, text, zeichen]) => (
+        <button key={k} type="button" aria-pressed={!aus.has(k)} onClick={() => kategorieUmschalten(k)}
+                className={`flex min-h-8 items-center gap-1.5 rounded-lg px-2 ${aus.has(k)
+                  ? 'text-sbb-metal line-through opacity-60 dark:text-sbb-storm'
+                  : 'bg-sbb-kachel dark:bg-sbb-charcoal'}`}>
+          <span aria-hidden="true" className="flex">{zeichen}</span>{text}
+        </button>
+      ))}
     </div>
   )
 }
