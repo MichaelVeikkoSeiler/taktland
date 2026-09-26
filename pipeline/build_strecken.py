@@ -37,6 +37,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import schienennetz  # noqa: E402
+from build_seen import vereinfachen  # noqa: E402
 from sources import DATASETS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -51,6 +52,8 @@ QUELLEN = ["zugzahlen", "linienkilometrierung", "linie-mit-betriebspunkten", "li
            "brucken"]
 #: vom BAV: die Linie auf Abschnitten anderer Bahnen (pipeline/schienennetz.py)
 QUELLEN_BAV = ["schienennetz"]
+#: von swisstopo: Tunnel und Brücken auf Abschnitten anderer Bahnen
+QUELLEN_SWISSTOPO = ["swisstlm3d"]
 
 #: So weit darf ein Betriebspunkt von einer Linie entfernt liegen, um auf ihr
 #: zu gelten. 150 m genügen fast überall; an Übergängen zwischen zwei Linien
@@ -124,6 +127,8 @@ BAV_OHNE_ZUGZAHLEN = {"261"}
 #: («Biel/Bienne [Gleis 11/voie 11]»): Sie gelten als dieser Bahnhof, damit die
 #: BTI an Biel/Bienne und Ins anschliesst.
 BAV_GLEIS_IM_BAHNHOF = {8530750: 8504300, 8516177: 8504483}
+#: umgekehrt, je Linie: welcher Punkt des Schienennetzes für den Bahnhof steht
+BAV_GLEIS_IM_BAHNHOF_ZURUECK = {261: {8504300: 8530750, 8504483: 8516177}}
 
 
 def bav_abschnitte(kanten, punkte):
@@ -151,6 +156,74 @@ def bav_abschnitte(kanten, punkte):
                                              "linie_bav": int(nummer)}
 
 
+#: So nah muss jeder Punkt eines Bauwerks aus swissTLM3D an der Linie des
+#: Schienennetzes liegen, damit es zum Abschnitt gehört (beide sind Karten mit
+#: eigener Genauigkeit; parallele Strecken liegen meist weiter auseinander)
+TLM_NAH_M = 30
+M_LAT, M_LON = 111_200, 73_000
+
+
+def bav_verlauf(bav, nummer, von_nr, bis_nr):
+    """Die Linie des Schienennetzes zwischen zwei Betriebspunkten, als Liste
+    (Breite, Länge) von von_nr nach bis_nr, oder None"""
+    l = bav.get(str(nummer))
+    if not l:
+        return None
+    km = {p["nummer"]: p["km"] for p in l["punkte"]}
+    von_nr = BAV_GLEIS_IM_BAHNHOF_ZURUECK.get(nummer, {}).get(von_nr, von_nr)
+    bis_nr = BAV_GLEIS_IM_BAHNHOF_ZURUECK.get(nummer, {}).get(bis_nr, bis_nr)
+    if von_nr not in km or bis_nr not in km:
+        return None
+    lo, hi = sorted((km[von_nr], km[bis_nr]))
+    pts = []
+    for g in sorted(l["segmente"], key=lambda g: min(g["km_anfang"], g["km_ende"])):
+        a, b = sorted((g["km_anfang"], g["km_ende"]))
+        if a < lo - 1e-6 or b > hi + 1e-6:
+            continue
+        zug = g["zug"] if g["km_anfang"] <= g["km_ende"] else g["zug"][::-1]
+        pts += zug if not pts else zug[1:]
+    if len(pts) < 2:
+        return None
+    return pts if km[von_nr] <= km[bis_nr] else pts[::-1]
+
+
+def tlm_laden():
+    """Bauwerke aus swissTLM3D (pipeline/build_tlm_bauwerke.py), mit Punkten in Metern"""
+    pfad = ROOT / "data" / "tlm_bauwerke.json"
+    if not pfad.exists():
+        return {}, None
+    d = json.loads(pfad.read_text(encoding="utf-8"))
+    raus = {}
+    for k, b in d["bauwerke"].items():
+        la, lo = b["start"]
+        pts = [(la / 1e5, lo / 1e5)]
+        for i in range(0, len(b["d"]), 2):
+            la += b["d"][i]; lo += b["d"][i + 1]
+            pts.append((la / 1e5, lo / 1e5))
+        raus[k] = {**b, "pts": pts}
+    return raus, d
+
+
+def nah_an(pts_bauwerk, verlauf):
+    """Liegt jeder Punkt des Bauwerks höchstens TLM_NAH_M neben dem Verlauf?"""
+    v = np.array([(lo * M_LON, la * M_LAT) for la, lo in verlauf])
+    ax, ay, bx, by = v[:-1, 0], v[:-1, 1], v[1:, 0], v[1:, 1]
+    dx, dy = bx - ax, by - ay
+    l2 = np.where(dx * dx + dy * dy == 0, 1, dx * dx + dy * dy)
+    for la, lo in pts_bauwerk:
+        x, y = lo * M_LON, la * M_LAT
+        t = np.clip(((x - ax) * dx + (y - ay) * dy) / l2, 0, 1)
+        if np.min(np.hypot(ax + t * dx - x, ay + t * dy - y)) > TLM_NAH_M:
+            return False
+    return True
+
+
+def kodieren(pts):
+    ganz = [(round(la * 1e5), round(lo * 1e5)) for la, lo in pts]
+    return {"start": list(ganz[0]),
+            "d": [v for (a0, o0), (a1, o1) in zip(ganz, ganz[1:]) for v in (a1 - a0, o1 - o0)]}
+
+
 def linienzuege():
     """Je Linie die Kilometerpunkte als Linienzug, nach km geordnet, dazu
     Breite und Länge für die Geometrie des Fahrtmodus."""
@@ -166,7 +239,7 @@ def linienzuege():
     return zuege, wgs
 
 
-def geometrie_schreiben(wgs, linien, stand):
+def geometrie_schreiben(wgs, linien, stand, abschnitte=None, bauwerke=None):
     """Je Linie die Punkte als Differenzen in ganzen Zahlen: Meter der
     Kilometrierung, Breite und Länge in Hunderttausendstel Grad (etwa 1 m).
     So wird die Datei ein Drittel so gross wie mit ausgeschriebenen Zahlen."""
@@ -182,7 +255,13 @@ def geometrie_schreiben(wgs, linien, stand):
                                      "hinweis": "Je Linie start = [Meter, Breite, Länge] als ganze "
                                                 "Zahlen (Breite und Länge mal 100000), d = Differenzen "
                                                 "zum Vorgänger in derselben Reihenfolge.",
-                                     "linien": raus}, separators=(",", ":")) + "\n", encoding="utf-8")
+                                     "linien": raus,
+                                     # Abschnitte anderer Bahnen: Verlauf laut Schienennetz des BAV,
+                                     # «von|nach» wie in strecken.json, [Breite, Länge] mal 100000
+                                     "abschnitte": abschnitte or {},
+                                     # Tunnel und Brücken aus swissTLM3D auf diesen Abschnitten
+                                     "bauwerke": bauwerke or {}}, separators=(",", ":")) + "\n",
+                          encoding="utf-8")
 
 
 def projektion(p, zug):
@@ -348,6 +427,10 @@ def main():
             for x in l["punkte"]:
                 bav_je_punkt[x["nummer"]].add(int(nummer))
 
+    tlm, tlm_datei = tlm_laden()
+    tlm_rahmen = {k: (min(p[0] for p in b["pts"]), max(p[0] for p in b["pts"]),
+                      min(p[1] for p in b["pts"]), max(p[1] for p in b["pts"])) for k, b in tlm.items()}
+    verlaeufe, bauwerke_genutzt = {}, {}
     liste, ohne_zuordnung, bereiche = [], [], {}
     for (a, b), k in sorted(kanten.items()):
         # ohne Zugzahlen (BAV_OHNE_ZUGZAHLEN) wie ein selten befahrener Abschnitt:
@@ -393,6 +476,22 @@ def main():
                 eintrag["linie_bav"] = k["linie_bav"]
             elif len(gemeinsam) == 1:
                 eintrag["linie_bav"] = gemeinsam.pop()
+            # der Verlauf laut Schienennetz und die Bauwerke darauf aus swissTLM3D
+            verlauf = (bav_verlauf(bav_linien, eintrag["linie_bav"], punkte[a]["uic"], punkte[b]["uic"])
+                       if "linie_bav" in eintrag else None)
+            if verlauf:
+                # vereinfacht auf 5 m, in Metern gerechnet; die Datei lädt der Fahrtmodus beim Start
+                meter = vereinfachen([(lo * M_LON, la * M_LAT) for la, lo in verlauf], 5)
+                verlaeufe[f"{a}|{b}"] = kodieren([(y / M_LAT, x / M_LON) for x, y in meter])
+                las, los = [p[0] for p in verlauf], [p[1] for p in verlauf]
+                rand = 0.001
+                auf = [kb for kb, (a0, a1, o0, o1) in tlm_rahmen.items()
+                       if a0 > min(las) - rand and a1 < max(las) + rand and o0 > min(los) - rand
+                       and o1 < max(los) + rand and nah_an(tlm[kb]["pts"], verlauf)]
+                if auf:
+                    eintrag["tlm"] = sorted(auf, key=lambda x: int(x[1:]))
+                    for kb in auf:
+                        bauwerke_genutzt[kb] = {x: v for x, v in tlm[kb].items() if x != "pts"}
         liste.append(eintrag)
 
     namen = {json.loads(p.read_text(encoding="utf-8"))["uic"]: json.loads(p.read_text(encoding="utf-8"))["name"]
@@ -401,9 +500,10 @@ def main():
     raus = {
         "datenstand": stand,
         "zugzahlen_jahr": jahr,
-        "quellen": QUELLEN + QUELLEN_BAV,
+        "quellen": QUELLEN + QUELLEN_BAV + QUELLEN_SWISSTOPO,
         "hinweis": "Abschnitte mit Personenzügen laut zugzahlen, dazu die Linie 261 (BTI) aus dem "
-                   "Schienennetz des BAV, die die Zugzahlen nicht führen. teile: die Linie der SBB, "
+                   "Schienennetz des BAV, die die Zugzahlen nicht führen. tlm: Tunnel und Brücken aus swissTLM3D "
+                   "auf Abschnitten anderer Bahnen (strecken_geometrie.json, bauwerke). teile: die Linie der SBB, "
                    "auf der der Abschnitt liegt (selten zwei nacheinander), mit Kilometrierung "
                    "(ein Standort, keine Länge). tunnel und bruecken: Kennungen «Linie:Stelle» "
                    "in den Listen der Linienfakten. Ohne teile: keine Tunnel- und Brückendaten; "
@@ -422,7 +522,7 @@ def main():
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     genutzt = {t["linie"] for e in liste for t in e.get("teile", [])}
-    geometrie_schreiben(wgs, genutzt, stand)
+    geometrie_schreiben(wgs, genutzt, stand, verlaeufe, bauwerke_genutzt)
 
     sbb = [e for e in liste if e["isb"] == "SBB"]
     zugeordnet = [e for e in sbb if "teile" in e]
@@ -435,6 +535,8 @@ def main():
           f"davon {geteilt} auf zwei Linien, ohne Zuordnung ~{km_ohne:.0f} von ~{km_sbb:.0f} km Luftlinie")
     print(f"  andere Bahnen (keine Tunnel- und Brückendaten): {len(liste) - len(sbb)} Abschnitte, "
           f"davon {sum(1 for e in liste if e['isb'] != 'SBB' and 'linie_bav' in e)} mit Linie laut BAV")
+    print(f"  andere Bahnen: {len(verlaeufe)} Abschnitte mit Verlauf laut BAV, {len(bauwerke_genutzt)} "
+          f"Bauwerke aus swissTLM3D darauf")
     print(f"strecken_geometrie.json: {len(genutzt)} Linien ({GEOMETRIE.stat().st_size/1024:.0f} KB)")
     for a, b, km in sorted(ohne_zuordnung, key=lambda x: -x[2])[:12]:
         print(f"    ohne Zuordnung: {punkte[a]['name']} – {punkte[b]['name']} ({km:.1f} km)")

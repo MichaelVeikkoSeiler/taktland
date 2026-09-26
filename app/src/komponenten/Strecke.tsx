@@ -353,7 +353,14 @@ function Ergebnis({
   const uicVon = useMemo(() => new Map(Object.entries(netz.bahnhoefe).map(([u, abk]) => [abk, Number(u)])),
                          [netz])
 
-  const objektText = useCallback(({ kennung, art }: FahrObjekt): ObjektText | undefined => {
+  const objektText = useCallback(({ kennung, art, tlm }: FahrObjekt): ObjektText | undefined => {
+    // Strecken anderer Bahnen: Tunnel und Brücken aus swissTLM3D, ohne Länge
+    if (tlm) {
+      const wort = { tunnel: 'Tunnel', galerie: 'Galerie', bruecke: 'Brücke', gedeckte_bruecke: 'Gedeckte Brücke' }[tlm.art]
+      return { name: tlm.name ?? `${wort} ohne Namen`, baueinheiten: null,
+               gross: tlm.gezeichnet_ab_100m ?? false,
+               zeile: `${tlm.name ? `${wort} · ` : ''}swissTLM3D (swisstopo), ohne Länge` }
+    }
     const x = art === 'tunnel' ? tunnelNach.get(kennung) : undefined
     if (x) {
       return { name: x.name, baueinheiten: null,
@@ -586,13 +593,14 @@ function Ergebnis({
         <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
                     piepen={fahrt.piepen}
                     durchfahren={(o) => {
-                      if (fahrt.beginn === null) return
+                      if (fahrt.beginn === null || o.tlm) return
                       const b = bilanzObjekt(o)
                       durchfahren(fahrt.beginn, { art: b.art, kennung: b.kennung, name: b.name })
                     }}
                     beenden={(liste) => {
                       leereFahrtenWeg()
-                      setBilanz({ objekte: liste.map(bilanzObjekt), probe: fahrt.probe, beginn: fahrt.beginn })
+                      setBilanz({ objekte: liste.filter((o) => !o.tlm).map(bilanzObjekt), probe: fahrt.probe,
+                                  beginn: fahrt.beginn })
                       setFahrt(null)
                     }}
                     titel={`${bahnhoefe[0]?.name} → ${bahnhoefe[bahnhoefe.length - 1]?.name}`} />

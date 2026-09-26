@@ -314,6 +314,8 @@ export interface StreckenAbschnitt {
   teile?: StreckenTeil[]
   /** ohne teile: die Linie laut Schienennetz des BAV, wenn genau eine beide Enden führt */
   linie_bav?: number
+  /** ohne teile: Tunnel und Brücken aus swissTLM3D, Schlüssel in StreckenGeometrie.bauwerke */
+  tlm?: string[]
 }
 
 /** Das Netz für die Seite «Strecke» (pipeline/build_strecken.py) */
@@ -340,6 +342,18 @@ export interface StreckenGeometrie {
   datenstand: string
   quelle: string
   linien: Record<string, { start: [number, number, number]; d: number[] }>
+  /** Abschnitte anderer Bahnen «von|nach»: Verlauf laut Schienennetz des BAV */
+  abschnitte?: Record<string, KodierterZug>
+  /** Tunnel, Galerien und Brücken aus swissTLM3D auf diesen Abschnitten */
+  bauwerke?: Record<string, TlmBauwerk>
+}
+
+/** Ein Bauwerk aus swissTLM3D: Art, Name wenn erfasst, Linie; keine Länge */
+export interface TlmBauwerk extends KodierterZug {
+  art: 'tunnel' | 'galerie' | 'bruecke' | 'gedeckte_bruecke'
+  name?: string
+  /** nur bei Brücken: Ist die Linie auf der Karte mindestens 100 m lang? */
+  gezeichnet_ab_100m?: boolean
 }
 
 /** Die kleine Karte zu den Tunneln (pipeline/build_karte.py): das Streckennetz,

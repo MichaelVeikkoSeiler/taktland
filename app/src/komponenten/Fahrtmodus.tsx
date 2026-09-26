@@ -56,6 +56,8 @@ export interface ObjektText {
   name: string
   zeile: string
   baueinheiten: number | null
+  /** Brücken aus swissTLM3D: auf der Karte mindestens 100 m lang gezeichnet */
+  gross?: boolean
 }
 
 interface Stand {
@@ -73,7 +75,8 @@ const ART: Record<FahrObjekt['art'], string> = { tunnel: 'Tunnel', bruecke: 'Br�
                                                   sehenswert: 'Sehenswert' }
 /** «Kulturgut · links», «BLN-Gebiet», «Tunnel» */
 const artText = (o: FahrObjekt) => o.sehenswert
-  ? `${o.sehenswert.art}${o.sehenswert.seite ? ` · ${o.sehenswert.seite}` : ''}` : ART[o.art]
+  ? `${o.sehenswert.art}${o.sehenswert.seite ? ` · ${o.sehenswert.seite}` : ''}`
+  : o.tlm?.art === 'galerie' ? 'Galerie' : ART[o.art]
 
 type Meldung =
   | { art: 'sucht' } | { art: 'verweigert' } | { art: 'ohneGps' } | { art: 'fehler'; text: string }
@@ -223,7 +226,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     if (o.art === 'sehenswert') return o.sehenswert ? einstellung.sehenswert[o.sehenswert.sorte] : false
     if (einstellung.bruecken === 'keine') return false
     if (einstellung.bruecken === 'alle') return true
-    return (text(o)?.baueinheiten ?? 0) >= 3
+    return (text(o)?.baueinheiten ?? 0) >= 3 || text(o)?.gross === true
   }), [fahrweg, einstellung.tunnel, einstellung.bruecken, einstellung.bahnhoefe, einstellung.sehenswert, text])
 
   // auch ohne Meldung der Tunnel: Im Tunnel fehlt das GPS, das sagt die Anzeige
@@ -493,7 +496,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <p className="mt-6 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Standort bleibt auf diesem Gerät und wird weder gespeichert noch gesendet. Die Zeiten
           sind Schätzungen aus Standort und Tempo. Gemeldet wird nur, solange diese Seite offen und
-          der Bildschirm an ist. Auf Strecken anderer Bahnen fehlen Tunnel und Brücken. Als Bahnhof
+          der Bildschirm an ist. Auf Strecken anderer Bahnen folgt der Weg dem Schienennetz des BAV,
+          und Tunnel, Galerien und Brücken stammen aus swissTLM3D von swisstopo: ohne Länge, oft ohne
+          Namen; als grössere Brücke gilt dort, was auf der Karte mindestens 100 m lang ist. Sie
+          kommen nicht ins Sammelheft. Als Bahnhof
           gemeldet werden die Betriebspunkte des Wegs, die in Taktland eine Seite haben, auch wo
           der Zug nicht hält: Einen Fahrplan enthalten die Daten nicht. Sehenswertes: Kulturgüter
           bis {KGS_M} m, Seilbahnen mit einem Ende bis {SEILBAHN_M} m und Gipfel bis {GIPFEL_M / 1000} km

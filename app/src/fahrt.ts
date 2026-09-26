@@ -9,7 +9,8 @@
  * nur der Rechnung; eine Länge des Wegs zeigt die App nicht an, weil die
  * Kilometrierung ein Standort ist und keine Länge.
  */
-import type { FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten, StreckenAbschnitt, StreckenGeometrie, StreckenNetz } from './typen'
+import type { FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten, StreckenAbschnitt, StreckenGeometrie, StreckenNetz,
+  TlmBauwerk } from './typen'
 
 /** Meter je Grad in der Schweiz: für kurze Abstände genau genug */
 const M_BREITE = 111_200
@@ -32,6 +33,8 @@ export interface FahrObjekt {
   s: number
   /** Ausfahrt: bei Tunneln, deren Richtung die Daten hergeben, und bei Flächen */
   sAus: number | null
+  /** nur bei Tunneln und Brücken aus swissTLM3D (Strecken anderer Bahnen) */
+  tlm?: TlmBauwerk
   /** nur bei Sehenswertem: was die Quelle dazu sagt und auf welcher Seite es liegt */
   sehenswert?: {
     sorte: SehenswertSorte
@@ -58,7 +61,10 @@ export function abstand(a: Lage, b: Lage) {
 }
 
 export function geometrieLesen(g: StreckenGeometrie) {
-  const raus = new Map<number, Linienzug>()
+  const raus: Map<number, Linienzug> & { abschnitte?: StreckenGeometrie['abschnitte']
+                                         bauwerke?: StreckenGeometrie['bauwerke'] } = new Map<number, Linienzug>()
+  raus.abschnitte = g.abschnitte
+  raus.bauwerke = g.bauwerke
   for (const [nr, x] of Object.entries(g.linien)) {
     let [m, la, lo] = x.start
     const z: Linienzug = { km: [m / 1000], lat: [la / 1e5], lon: [lo / 1e5] }
@@ -93,7 +99,10 @@ function aufLinie(z: Linienzug, km: number): Lage {
  * istBahnhof sagt, welche Betriebspunkte als Bahnhof gemeldet werden; der
  * Start zählt nicht, er liegt schon hinter dem Zug.
  */
-export function fahrwegBauen(netz: StreckenNetz, linien: Map<number, Linienzug>, punkteWeg: string[],
+export function fahrwegBauen(netz: StreckenNetz,
+                             linien: Map<number, Linienzug> & { abschnitte?: StreckenGeometrie['abschnitte']
+                                                                bauwerke?: StreckenGeometrie['bauwerke'] },
+                             punkteWeg: string[],
                              abschnitte: StreckenAbschnitt[], brueckeKm: (kennung: string) => number | undefined,
                              tunnelLaenge: (kennung: string) => number | null,
                              istBahnhof: (abk: string) => boolean): Fahrweg {
@@ -121,9 +130,29 @@ export function fahrwegBauen(netz: StreckenNetz, linien: Map<number, Linienzug>,
   abschnitte.forEach((e, i) => {
     const vorwaerts = e.von === punkteWeg[i]
     if (!e.teile?.length) {
-      for (const abk of [punkteWeg[i], punkteWeg[i + 1]]) {
-        const [lat, lon] = netz.lagen[abk]
-        hinzu({ lat, lon })
+      // Strecken anderer Bahnen: dem Verlauf laut Schienennetz des BAV entlang,
+      // sonst gerade von Ende zu Ende
+      const verlauf = linien.abschnitte?.[`${e.von}|${e.nach}`]
+      const ab = Math.max(0, punkte.length - 1)
+      if (verlauf) {
+        const pts = entpacken(verlauf)
+        for (const p of vorwaerts ? pts : pts.reverse()) hinzu(p)
+      } else {
+        for (const abk of [punkteWeg[i], punkteWeg[i + 1]]) {
+          const [lat, lon] = netz.lagen[abk]
+          hinzu({ lat, lon })
+        }
+      }
+      // Tunnel und Brücken aus swissTLM3D: Anfang und Ende auf den eben gelegten Weg
+      for (const id of verlauf ? e.tlm ?? [] : []) {
+        const b = linien.bauwerke?.[id]
+        if (!b || objekte.has(`tlm ${id}`)) continue
+        const l = entpacken(b)
+        const stueck = { punkte: punkte.slice(ab), objekte: [] }
+        const [s1, s2] = [l[0], l[l.length - 1]].map((q) => projizieren(stueck, q).s).sort((x, y) => x - y)
+        const tunnelartig = b.art === 'tunnel' || b.art === 'galerie'
+        objekte.set(`tlm ${id}`, { kennung: `tlm:${id}`, art: tunnelartig ? 'tunnel' : 'bruecke', s: s1,
+                                   sAus: tunnelartig && s2 > s1 ? s2 : null, tlm: b })
       }
       bahnhofSetzen(punkteWeg[i + 1])
       return

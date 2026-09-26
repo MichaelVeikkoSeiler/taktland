@@ -104,6 +104,9 @@ data/sehenswert.json  Gipfel mit Höhe (swisstopo), Kulturgüter von nationaler 
              (BABS) und Seilbahnen mit Bundeskonzession (BAV) für die Karten
              (pipeline/build_sehenswert.py)
 data/flaechen.json  BLN, Pärke und Moorlandschaften (BAFU), vereinfachte Umrisse
+data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3D
+             (pipeline/fetch_tlm3d.py, pipeline/build_tlm_bauwerke.py), ohne Länge; im
+             Fahrtmodus auf Strecken anderer Bahnen, deren Verlauf aus dem Schienennetz kommt
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -131,6 +134,8 @@ python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 .venv/bin/python pipeline/build_karte.py         # Netz für die kleine Tunnelkarte
 python3 pipeline/build_seen.py                   # Seen für die Karten (swisstopo)
 python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
+python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
+.venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

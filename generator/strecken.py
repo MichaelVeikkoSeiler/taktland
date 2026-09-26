@@ -112,6 +112,45 @@ def validieren():
             if t["bruecken"] != soll_b:
                 fehler.append(f"{wo}, Linie {nr}: Brücken weichen von den Fakten ab "
                               f"({len(t['bruecken'])} statt {len(soll_b)})")
+    # Bauwerke aus swissTLM3D: nur auf Abschnitten anderer Bahnen mit Verlauf,
+    # jeder Punkt höchstens 30 m daneben (wie in pipeline/build_strecken.py)
+    g_datei = json.loads((ROOT / "data" / "strecken_geometrie.json").read_text(encoding="utf-8"))
+    verlaeufe, bauwerke = g_datei.get("abschnitte", {}), g_datei.get("bauwerke", {})
+
+    def punkte_von(z):
+        la, lo = z["start"]
+        raus = [(la, lo)]
+        for i in range(0, len(z["d"]), 2):
+            la += z["d"][i]; lo += z["d"][i + 1]
+            raus.append((la, lo))
+        return [(a / 1e5 * 111_200, b / 1e5 * 73_000) for a, b in raus]
+
+    def abstand(p, linie):
+        best = float("inf")
+        for (ax, ay), (bx, by) in zip(linie, linie[1:]):
+            dx, dy = bx - ax, by - ay
+            l2 = dx * dx + dy * dy or 1
+            t = max(0, min(1, ((p[0] - ax) * dx + (p[1] - ay) * dy) / l2))
+            best = min(best, ((ax + t * dx - p[0]) ** 2 + (ay + t * dy - p[1]) ** 2) ** 0.5)
+        return best
+
+    for e in n["abschnitte"]:
+        if not e.get("tlm"):
+            continue
+        wo = f"{punkte.get(e['von'])} – {punkte.get(e['nach'])}"
+        v = verlaeufe.get(f"{e['von']}|{e['nach']}")
+        if e.get("teile") or not v:
+            fehler.append(f"{wo}: Bauwerke aus swissTLM3D ohne eigenen Verlauf")
+            continue
+        linie = punkte_von(v)
+        for kb in e["tlm"]:
+            b = bauwerke.get(kb)
+            geprueft += 1
+            if not b:
+                fehler.append(f"{wo}: Bauwerk {kb} fehlt in strecken_geometrie.json")
+            elif max(abstand(p, linie) for p in punkte_von(b)) > 31:
+                fehler.append(f"{wo}: Bauwerk {kb} liegt mehr als 30 m neben dem Verlauf")
+
     # jeder Bahnhof ist im Netz oder ausdrücklich nicht
     uics = {int(p.stem) for p in FACTS.glob("*.json")}
     im = {int(u) for u in n["bahnhoefe"]}
