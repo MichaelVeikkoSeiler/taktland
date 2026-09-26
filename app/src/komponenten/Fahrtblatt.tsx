@@ -15,7 +15,6 @@ const TUNNEL_MAX = 5
 const BRUECKEN_MAX = 3
 const BAHNHOEFE_MAX = 5
 const GIPFEL_MAX = 3
-const KULTUR_MAX = 2
 const SEILBAHN_MAX = 1
 const SEEN_MAX = 3
 /** Brücken ab so vielen Baueinheiten, wie in «Fahren» als grössere Brücke */
@@ -23,7 +22,7 @@ const BRUECKE_AB_BE = 3
 /** Farben wie im Streckenband von «Fahren» (Michael, 2026-09-26: «gleiche Farben wie
  *  in der App»), fest und hell, damit der Druck im Dunkelmodus gleich aussieht */
 const FARBE: Record<Eintrag['art'], string> = {
-  tunnel: '#000000', bruecke: '#f27e00', bahnhof: '#1d3f8a', gipfel: '#2f7d4f', kgs: '#2f7d4f', seilbahn: '#2f7d4f',
+  tunnel: '#000000', bruecke: '#f27e00', bahnhof: '#1d3f8a', gipfel: '#2f7d4f', seilbahn: '#2f7d4f',
 }
 const SEE = '#c9def1'
 const WEG = '#767676'
@@ -43,7 +42,7 @@ const AUSSCHNITT_MAX_ZOOM = 12
 interface Eintrag {
   nr: number
   o: FahrObjekt
-  art: 'tunnel' | 'bruecke' | 'bahnhof' | 'gipfel' | 'kgs' | 'seilbahn'
+  art: 'tunnel' | 'bruecke' | 'bahnhof' | 'gipfel' | 'seilbahn'
   name: string
   zeile: string
   seite?: 'links' | 'rechts'
@@ -176,16 +175,16 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
   const gewaehlt = bhf.length <= BAHNHOEFE_MAX ? bhf
     : [...bhf].sort((x, y) => (stufe[x.b!.tier] ?? 3) - (stufe[y.b!.tier] ?? 3)).slice(0, BAHNHOEFE_MAX)
   for (const { o, b } of gewaehlt) roh.push({ o, art: 'bahnhof', name: b!.name, zeile: '' })
-  // Sehenswertes: die höchsten Gipfel, dazu Kultur und Seilbahnen in Fahrtrichtung
+  // Sehenswertes: die höchsten Gipfel, dazu Seilbahnen in Fahrtrichtung; keine
+  // Kulturgüter, das sind meist Gebäude (Michael, 2026-09-26)
   const sw = ob.filter((o) => o.sehenswert && o.sehenswert.seite)
   const hoehe = (o: FahrObjekt) => Number((o.sehenswert!.zeile.match(/^([\d'’]+) m/)?.[1] ?? '0').replace(/['’]/g, ''))
   const gipfel = sw.filter((o) => o.sehenswert!.sorte === 'gipfel').sort((a, b) => hoehe(b) - hoehe(a)).slice(0, GIPFEL_MAX)
-  const kultur = sw.filter((o) => o.sehenswert!.sorte === 'kgs').slice(0, KULTUR_MAX)
   const seilbahn = sw.filter((o) => o.sehenswert!.sorte === 'seilbahn').slice(0, SEILBAHN_MAX)
-  for (const o of [...gipfel, ...kultur, ...seilbahn]) {
+  for (const o of [...gipfel, ...seilbahn]) {
     const s = o.sehenswert!
     roh.push({ o, art: s.sorte as Eintrag['art'], name: s.name, seite: s.seite!,
-               zeile: s.sorte === 'gipfel' ? s.zeile : s.sorte === 'kgs' ? 'Kulturgut' : 'Seilbahn' })
+               zeile: s.sorte === 'gipfel' ? s.zeile : 'Seilbahn' })
   }
   return roh.sort((a, b) => a.o.s - b.o.s).map((e, i) => ({ ...e, nr: i + 1 }))
 }
@@ -236,7 +235,7 @@ function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
   const gruppe = (arten: Eintrag['art'][]) => eintraege.filter((e) => arten.includes(e.art))
   const tunnel = gruppe(['tunnel'])
   const bahnhoefe = gruppe(['bahnhof', 'bruecke'])
-  const sehen = gruppe(['gipfel', 'kgs', 'seilbahn'])
+  const sehen = gruppe(['gipfel', 'seilbahn'])
 
   return (
     <div ref={rahmen} className="fahrtblatt-rahmen mt-6 print:mt-0" style={{ height: hoehe * massstab || undefined }}>
@@ -315,7 +314,7 @@ function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
               der Strecke, die {SEEN_MAX} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
               laut Daten; ob man es vom Zug aus sieht, sagen sie nicht.
               {daten.ohneLaenge > 0 && ' Tunnel anderer Bahnen haben in den Daten keine Länge und stehen nicht auf dem Blatt.'}
-              {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo, BABS. Taktland ist ein
+              {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo. Taktland ist ein
               privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
             </p>
           </div>
@@ -367,7 +366,7 @@ function Nummer({ e }: { e: Eintrag }) {
 /** Was die Farben auf der Karte bedeuten, nur was auf diesem Blatt vorkommt */
 function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
   const hat = (a: Eintrag['art']) => eintraege.some((e) => e.art === a)
-  const sehen = [hat('gipfel') && 'Gipfel', hat('kgs') && 'Kulturgut', hat('seilbahn') && 'Seilbahn'].filter(Boolean)
+  const sehen = [hat('gipfel') && 'Gipfel', hat('seilbahn') && 'Seilbahn'].filter(Boolean)
   const punkt = (farbe: string) => (
     <span className="inline-block size-3 shrink-0 rounded-full" style={{ backgroundColor: farbe, printColorAdjust: 'exact' }} />
   )
