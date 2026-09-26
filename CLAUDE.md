@@ -461,6 +461,9 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              (FUEHRERSTAND_NAHE_KM; «Schienen hören zu früh vor dem Fahrzeug auf»), in der Brille Regen und Schnee auf dem Tisch in einem Würfel von 1,6 m über dem Modell, im Führerstand um den Kopf
              (NIEDER_TISCH_M; Michael, 2026-10-24; mit dem Emulator nicht geprüft, IWER startete hier keine Sitzung); neben dem Schalter die Zeile
              «Wetter Station Uhrzeit: …, Temperatur (MeteoSchweiz)»; Quelle in der Fusszeile, Annahmen und Datenschutz unter Info
+data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
+             ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
+             nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -491,6 +494,8 @@ python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
 .venv/bin/python pipeline/build_bodenbedeckung.py  # Wald und Siedlung (swissTLMRegio)
 .venv/bin/python pipeline/build_kartengrund.py   # Grenzen, Flüsse, Höhenstufen für die Karten
+python3 pipeline/fetch_fahrplan.py              # Fahrplan (GTFS) laden, 290 MB, entpackt 4,5 GB
+.venv/bin/python pipeline/build_fahrplan.py      # Züge und Halte für «Welcher Zug?», vor export_app
 python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D
