@@ -283,6 +283,69 @@ def bav_verlauf(bav, nummer, von_nr, bis_nr):
     return pts if km[von_nr] <= km[bis_nr] else pts[::-1]
 
 
+#: Fehlt ein Ende im Schienennetz (Spurweichen und Abzweigungen wie «Wiler Nord»,
+#: auch «Sattel») oder liegen die Enden auf verschiedenen Linien, sucht
+#: verlauf_nach_lage() eine Linie, deren Zeichnung an beiden Enden höchstens so nah
+#: vorbeiführt, und nimmt das Stück dazwischen (Michael, 2026-09-26: 52 Abschnitte
+#: ohne Verlauf und darum ohne Tunnel und Brücken beim Fahren)
+LAGE_NAH_M = 150
+
+
+def linien_zuege(bav):
+    """Je Linie die Zeichnung aller Segmente hintereinander, nach Kilometer, in Metern"""
+    raus = {}
+    for nummer, l in bav.items():
+        if not nummer.isdigit():
+            continue
+        pts = []
+        for g in sorted(l["segmente"], key=lambda g: min(g["km_anfang"], g["km_ende"])):
+            zug = g["zug"] if g["km_anfang"] <= g["km_ende"] else g["zug"][::-1]
+            pts += zug if not pts else zug[1:]
+        if len(pts) >= 2:
+            m = np.array([(lo * M_LON, la * M_LAT) for la, lo in pts])
+            raus[nummer] = (pts, m, np.concatenate([[0], np.cumsum(np.hypot(*np.diff(m, axis=0).T))]))
+    return raus
+
+
+def _projizieren(m, s, x, y):
+    """Abstand und Stelle (Meter entlang) des nächsten Punkts der Zeichnung"""
+    a, b = m[:-1], m[1:]
+    d = b - a
+    l2 = np.where((d ** 2).sum(1) == 0, 1, (d ** 2).sum(1))
+    t = np.clip(((x - a[:, 0]) * d[:, 0] + (y - a[:, 1]) * d[:, 1]) / l2, 0, 1)
+    px, py = a[:, 0] + t * d[:, 0], a[:, 1] + t * d[:, 1]
+    ab = np.hypot(px - x, py - y)
+    i = int(np.argmin(ab))
+    return float(ab[i]), float(s[i] + t[i] * math.sqrt(l2[i])), i, float(t[i])
+
+
+def verlauf_nach_lage(zuege_bav, wgs_a, wgs_b, km_luft):
+    """Das Stück einer Linie des Schienennetzes zwischen zwei Lagen, oder None"""
+    xa, ya = wgs_a[1] * M_LON, wgs_a[0] * M_LAT
+    xb, yb = wgs_b[1] * M_LON, wgs_b[0] * M_LAT
+    best = None
+    for nummer, (pts, m, s) in zuege_bav.items():
+        if not (m[:, 0].min() - LAGE_NAH_M <= min(xa, xb) and max(xa, xb) <= m[:, 0].max() + LAGE_NAH_M
+                and m[:, 1].min() - LAGE_NAH_M <= min(ya, yb) and max(ya, yb) <= m[:, 1].max() + LAGE_NAH_M):
+            continue
+        da, sa, ia, ta = _projizieren(m, s, xa, ya)
+        db, sb, ib, tb = _projizieren(m, s, xb, yb)
+        if max(da, db) > LAGE_NAH_M or abs(sb - sa) > km_luft * 3000 + 500 or abs(sb - sa) < 1:
+            continue
+        if best is None or max(da, db) < best[0]:
+            best = (max(da, db), nummer, (ia, ta), (ib, tb))
+    if not best:
+        return None
+    pts = zuege_bav[best[1]][0]
+    def punkt(i, t):
+        (la0, lo0), (la1, lo1) = pts[i], pts[i + 1]
+        return (la0 + (la1 - la0) * t, lo0 + (lo1 - lo0) * t)
+    (ia, ta), (ib, tb) = best[2], best[3]
+    if (ia, ta) <= (ib, tb):
+        return [punkt(ia, ta)] + pts[ia + 1:ib + 1] + [punkt(ib, tb)]
+    return ([punkt(ib, tb)] + pts[ib + 1:ia + 1] + [punkt(ia, ta)])[::-1]
+
+
 def tlm_laden():
     """Bauwerke aus swissTLM3D (pipeline/build_tlm_bauwerke.py), mit Punkten in Metern"""
     pfad = ROOT / "data" / "tlm_bauwerke.json"
@@ -609,6 +672,7 @@ def main():
     print(f"Punkte des Schienennetzes im Bahnhof: {sum(len(v) for v in IM_BAHNHOF.values())} "
           f"bei {len(IM_BAHNHOF)} Bahnhöfen")
 
+    zuege_bav, nach_lage = linien_zuege(bav_linien), 0
     tlm, tlm_datei = tlm_laden()
     tlm_rahmen = {k: (min(p[0] for p in b["pts"]), max(p[0] for p in b["pts"]),
                       min(p[1] for p in b["pts"]), max(p[1] for p in b["pts"])) for k, b in tlm.items()}
@@ -676,6 +740,10 @@ def main():
                             kandidaten.append((lang, nr, v))
                 if kandidaten:
                     verlauf = min(kandidaten)[2]
+            if not verlauf:
+                verlauf = verlauf_nach_lage(zuege_bav, punkte[a]["wgs"], punkte[b]["wgs"], k["km"])
+                if verlauf:
+                    nach_lage += 1
             if verlauf:
                 eintrag["verlauf_bav"] = True
                 # vereinfacht auf 5 m, in Metern gerechnet; die Datei lädt der Fahrtmodus beim Start
@@ -740,6 +808,7 @@ def main():
           f"davon {geteilt} auf zwei Linien, ohne Zuordnung ~{km_ohne:.0f} von ~{km_sbb:.0f} km Luftlinie")
     print(f"  andere Bahnen (keine Tunnel- und Brückendaten): {len(liste) - len(sbb)} Abschnitte, "
           f"davon {sum(1 for e in liste if e['isb'] != 'SBB' and 'linie_bav' in e)} mit Linie laut BAV")
+    print(f"  davon {nach_lage} mit Verlauf nach der Lage der Enden (verlauf_nach_lage)")
     print(f"  andere Bahnen: {len(verlaeufe)} Abschnitte mit Verlauf laut BAV, {len(bauwerke_genutzt)} "
           f"Bauwerke aus swissTLM3D darauf")
     print(f"  Linien anderer Bahnen aus dem Schienennetz: {len(bav_gewaehlt)}: "
