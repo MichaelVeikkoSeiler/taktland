@@ -347,8 +347,6 @@ function Ergebnis({
                                         beginn: number | null } | null>(null)
   const [bilanz, setBilanz] = useState<{ objekte: BilanzObjekt[]; probe: boolean; beginn: number | null } | null>(null)
   const [laedt, setLaedt] = useState(false)
-  // jede Wiederholung der Probefahrt beginnt mit einem neuen Fahrtmodus
-  const [lauf, setLauf] = useState(0)
   const [fahrtFehler, setFahrtFehler] = useState<string | null>(null)
 
   // Kürzel des Betriebspunkts → UIC des Bahnhofs
@@ -629,8 +627,7 @@ function Ergebnis({
       </section>
 
       {fahrt && (
-        <Fahrtmodus key={lauf} fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
-                    wiederholen={fahrt.probe ? () => setLauf((l) => l + 1) : undefined}
+        <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
                     piepen={fahrt.piepen}
                     durchfahren={(o) => {
                       if (fahrt.beginn === null || o.tlm) return
