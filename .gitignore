@@ -5,6 +5,9 @@ data/scharf_pakete/
 data/gebaeude_extern/
 data/baeume_extern/
 data/umgebung_pakete/
+# Fahrplan: entsteht beim Veröffentlichen aus dem GTFS (pipeline/build_fahrplan.py)
+data/fahrplan/
+app/public/data/fahrplan/
 *.csv
 *.parquet
 

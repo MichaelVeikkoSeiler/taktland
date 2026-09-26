@@ -5,6 +5,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Der Fahrplan (GTFS) erscheint zweimal pro Woche neu, und die Bedingungen von
+  # opentransportdata.swiss verlangen, ihn regelmässig nachzuführen: montags und
+  # donnerstags früh neu veröffentlichen (Zeit in UTC)
+  schedule:
+    - cron: '17 3 * * 1,4'
 
 permissions:
   contents: read
@@ -64,6 +69,15 @@ jobs:
       # zwischen den Kilometern des Abschnitts enthält
       - name: Streckennetz gegen die Linienfakten prüfen
         run: python3 generator/strecken.py --validieren
+
+      # Fahrplan für «Welcher Zug?»: neueste Datei laden (290 MB) und auf Züge und
+      # Bahnhöfe im Netz verdichten. Klappt es nicht, erscheint die App ohne
+      # Fahrplan; der Fahrtmodus sagt dann, dass er fehlt.
+      - name: Fahrplan laden und verdichten
+        run: |
+          python3 pipeline/fetch_fahrplan.py && python3 pipeline/build_fahrplan.py \
+            || echo "::warning::Fahrplan nicht gebaut, die App erscheint ohne"
+          rm -rf data/raw/gtfs
 
       # Stellt sicher, dass die App die aktuellen Profile ausliefert, auch wenn
       # jemand vergessen hat, export_app.py vor dem Einchecken laufen zu lassen
