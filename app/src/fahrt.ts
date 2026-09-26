@@ -146,13 +146,18 @@ export function fahrwegBauen(netz: StreckenNetz,
       // Tunnel und Brücken aus swissTLM3D: Anfang und Ende auf den eben gelegten Weg
       for (const id of verlauf ? e.tlm ?? [] : []) {
         const b = linien.bauwerke?.[id]
-        if (!b || objekte.has(`tlm ${id}`)) continue
+        if (!b) continue
         const l = entpacken(b)
+        // Anfang und Ende auf dieses Stück gelegt; ausserhalb gilt sein Ende
         const stueck = { punkte: punkte.slice(ab), objekte: [] }
         const [s1, s2] = [l[0], l[l.length - 1]].map((q) => projizieren(stueck, q).s).sort((x, y) => x - y)
         const tunnelartig = b.art === 'tunnel' || b.art === 'galerie'
-        objekte.set(`tlm ${id}`, { kennung: `tlm:${id}`, art: tunnelartig ? 'tunnel' : 'bruecke', s: s1,
-                                   sAus: tunnelartig && s2 > s1 ? s2 : null, tlm: b })
+        // ein langer Tunnel reicht über mehrere Abschnitte (Lötschberg): die Stücke zusammen
+        const alt = objekte.get(`tlm ${id}`)
+        const von = Math.min(s1, alt?.s ?? s1)
+        const bis = Math.max(s2, alt?.sAus ?? s2)
+        objekte.set(`tlm ${id}`, { kennung: `tlm:${id}`, art: tunnelartig ? 'tunnel' : 'bruecke', s: von,
+                                   sAus: tunnelartig && bis > von ? bis : null, tlm: b })
       }
       bahnhofSetzen(punkteWeg[i + 1])
       return

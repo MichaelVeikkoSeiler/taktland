@@ -148,8 +148,19 @@ def validieren():
             geprueft += 1
             if not b:
                 fehler.append(f"{wo}: Bauwerk {kb} fehlt in strecken_geometrie.json")
-            elif max(abstand(p, linie) for p in punkte_von(b)) > 31:
-                fehler.append(f"{wo}: Bauwerk {kb} liegt mehr als 30 m neben dem Verlauf")
+            else:
+                # wie pipeline/build_strecken.py: ganz, oder mindestens 100 m und 30 % des
+                # Kürzeren von Bauwerk und Abschnitt höchstens 30 m neben dem Verlauf
+                p = punkte_von(b)
+                proben = [p[0]]
+                for (ax, ay), (bx, by) in zip(p, p[1:]):
+                    k = max(1, int(((bx - ax) ** 2 + (by - ay) ** 2) ** 0.5 // 25))
+                    proben += [(ax + (bx - ax) * j / k, ay + (by - ay) * j / k) for j in range(1, k + 1)]
+                nah = sum(1 for q in proben if abstand(q, linie) <= 31)
+                lang = lambda z: sum(((b2[0] - a2[0]) ** 2 + (b2[1] - a2[1]) ** 2) ** 0.5 for a2, b2 in zip(z, z[1:]))
+                if nah < len(proben) and not ((nah - 1) * 25 >= 100
+                                              and (nah - 1) * 25 >= 0.3 * min(lang(proben), lang(linie)) - 30):
+                    fehler.append(f"{wo}: Bauwerk {kb} liegt zu wenig nahe am Verlauf")
 
     # jeder Bahnhof ist im Netz oder ausdrücklich nicht
     uics = {int(p.stem) for p in FACTS.glob("*.json")}

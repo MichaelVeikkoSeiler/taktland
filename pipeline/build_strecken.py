@@ -204,18 +204,48 @@ def tlm_laden():
     return raus, d
 
 
+#: So viel eines Bauwerks muss neben dem Verlauf liegen, damit es zum Abschnitt
+#: gehört. Ein langer Tunnel reicht über mehrere Abschnitte (Lötschbergtunnel:
+#: Eggenschwand – Tunnelstation – Goppenstein); er gehört zu jedem, an dem
+#: mindestens so viel von ihm liegt. Vorher musste er ganz in einem liegen und
+#: fehlte darum (Michael, 2026-09-26: «Ist der Lötschbergtunnel erfasst?»).
+TLM_MIN_M = 100
+TLM_SCHRITT_M = 25
+#: und mindestens dieser Anteil des Kürzeren von Bauwerk und Abschnitt: Der
+#: Lötschbergtunnel liegt im Grundriss über dem Basistunnel und kreuzt ihn auf
+#: 150 m (1 %); echte Zuordnungen decken mindestens 35 % ab
+TLM_MIN_ANTEIL = 0.3
+
+
+def proben(pts):
+    """Punkte des Bauwerks alle TLM_SCHRITT_M, in Metern"""
+    m = [(lo * M_LON, la * M_LAT) for la, lo in pts]
+    raus = [m[0]]
+    for (ax, ay), (bx, by) in zip(m, m[1:]):
+        n = max(1, int(math.hypot(bx - ax, by - ay) // TLM_SCHRITT_M))
+        raus += [(ax + (bx - ax) * k / n, ay + (by - ay) * k / n) for k in range(1, n + 1)]
+    return raus
+
+
 def nah_an(pts_bauwerk, verlauf):
-    """Liegt jeder Punkt des Bauwerks höchstens TLM_NAH_M neben dem Verlauf?"""
+    """Liegen mindestens TLM_MIN_M des Bauwerks höchstens TLM_NAH_M neben dem Verlauf?"""
     v = np.array([(lo * M_LON, la * M_LAT) for la, lo in verlauf])
     ax, ay, bx, by = v[:-1, 0], v[:-1, 1], v[1:, 0], v[1:, 1]
     dx, dy = bx - ax, by - ay
     l2 = np.where(dx * dx + dy * dy == 0, 1, dx * dx + dy * dy)
-    for la, lo in pts_bauwerk:
-        x, y = lo * M_LON, la * M_LAT
+    p = proben(pts_bauwerk)
+    lang_v = float(np.sum(np.hypot(dx, dy)))
+    lang_b = sum(math.dist(a, b) for a, b in zip(p, p[1:]))
+    nah = 0
+    for x, y in p:
         t = np.clip(((x - ax) * dx + (y - ay) * dy) / l2, 0, 1)
-        if np.min(np.hypot(ax + t * dx - x, ay + t * dy - y)) > TLM_NAH_M:
-            return False
-    return True
+        if np.min(np.hypot(ax + t * dx - x, ay + t * dy - y)) <= TLM_NAH_M:
+            nah += 1
+    # ein kurzes Bauwerk ganz, ein langes mit mindestens TLM_MIN_M, beides mit TLM_MIN_ANTEIL
+    if nah == len(p):
+        return True
+    nah_m = (nah - 1) * TLM_SCHRITT_M
+    return nah_m >= TLM_MIN_M and nah_m >= TLM_MIN_ANTEIL * min(lang_b, lang_v)
 
 
 def stelle(pts_bauwerk, verlauf):
@@ -497,6 +527,18 @@ def main():
             # der Verlauf laut Schienennetz und die Bauwerke darauf aus swissTLM3D
             verlauf = (bav_verlauf(bav_linien, eintrag["linie_bav"], punkte[a]["uic"], punkte[b]["uic"])
                        if "linie_bav" in eintrag else None)
+            # führen mehrere Linien beide Enden (Mitholz – Ferden: 330 und 331), der
+            # kürzeste Verlauf, der zur Luftlinie passt; linie_bav bleibt dann leer
+            if not verlauf and len(gemeinsam) > 1:
+                kandidaten = []
+                for nr in sorted(gemeinsam):
+                    v = bav_verlauf(bav_linien, nr, punkte[a]["uic"], punkte[b]["uic"])
+                    if v:
+                        lang = sum(math.dist(ebene(p[1], p[0]), ebene(q[1], q[0])) for p, q in zip(v, v[1:]))
+                        if lang <= k["km"] * 3 + 0.5:
+                            kandidaten.append((lang, nr, v))
+                if kandidaten:
+                    verlauf = min(kandidaten)[2]
             if verlauf:
                 eintrag["verlauf_bav"] = True
                 # vereinfacht auf 5 m, in Metern gerechnet; die Datei lädt der Fahrtmodus beim Start
@@ -504,9 +546,10 @@ def main():
                 verlaeufe[f"{a}|{b}"] = kodieren([(y / M_LAT, x / M_LON) for x, y in meter])
                 las, los = [p[0] for p in verlauf], [p[1] for p in verlauf]
                 rand = 0.001
+                # Rahmen überlappen (nicht: enthalten), sonst fielen lange Tunnel wieder weg
                 auf = [kb for kb, (a0, a1, o0, o1) in tlm_rahmen.items()
-                       if a0 > min(las) - rand and a1 < max(las) + rand and o0 > min(los) - rand
-                       and o1 < max(los) + rand and nah_an(tlm[kb]["pts"], verlauf)]
+                       if a1 > min(las) - rand and a0 < max(las) + rand and o1 > min(los) - rand
+                       and o0 < max(los) + rand and nah_an(tlm[kb]["pts"], verlauf)]
                 if auf:
                     # in Richtung von → nach geordnet; die App dreht um, wenn der Weg andersherum führt
                     eintrag["tlm"] = sorted(auf, key=lambda x: stelle(tlm[x]["pts"], verlauf))
