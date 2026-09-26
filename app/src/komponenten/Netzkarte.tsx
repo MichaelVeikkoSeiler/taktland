@@ -326,8 +326,8 @@ export function Netzkarte({
     if (beschriftet.length >= hoechstens) break
     if (!drin(p.x, p.y)) continue
     const breite = p.name.length * 6.2 * px
-    const rechts = p.x + 6 * px + breite < box.cx + box.w / 2 - 3 * px
-    const x0 = rechts ? p.x + 6 * px : p.x - 6 * px - breite
+    const rechts = p.x + 8 * px + breite < box.cx + box.w / 2 - 3 * px
+    const x0 = rechts ? p.x + 8 * px : p.x - 8 * px - breite
     if (x0 < box.cx - box.w / 2 + 3 * px) continue
     const feld: [number, number, number, number] = [x0, p.y - 6 * px, x0 + breite, p.y + 6 * px]
     if (belegt.some((f) => f[0] < feld[2] && feld[0] < f[2] && f[1] < feld[3] && feld[1] < f[3])) continue
@@ -404,8 +404,9 @@ export function Netzkarte({
         <SeenNamen seen={seen} box={box} px={px} belegt={belegt} verh={verh} />
         <SehenswertEbene daten={sehenswert.s} box={box} px={px} verh={verh} belegt={belegt} waehlen={setAuswahl} />
         {zeichnen?.(px, box)}
+        {/* Bahnhöfe so gross wie der rote Standortpunkt (Michael, 2026-09-26) */}
         {punkte.filter((p) => drin(p.x, p.y)).map((p) => (
-          <circle key={`b${p.name}${p.x}`} cx={p.x} cy={p.y} r={2.8 * px} strokeWidth={1.2}
+          <circle key={`b${p.name}${p.x}`} cx={p.x} cy={p.y} r={5 * px} strokeWidth={1.5}
                   vectorEffect="non-scaling-stroke"
                   className="fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white" />
         ))}
@@ -416,7 +417,7 @@ export function Netzkarte({
           </circle>
         ))}
         {beschriftet.map((p) => (
-          <text key={`t${p.name}`} x={p.x + (p.anker === 'start' ? 6 : -6) * px} y={p.y + 3.5 * px}
+          <text key={`t${p.name}`} x={p.x + (p.anker === 'start' ? 8 : -8) * px} y={p.y + 3.5 * px}
                 fontSize={10.5 * px} fontWeight="bold" textAnchor={p.anker}
                 className="fill-sbb-black stroke-white dark:fill-sbb-white dark:stroke-sbb-midnight"
                 strokeWidth={3} paintOrder="stroke" vectorEffect="non-scaling-stroke">{p.name}</text>

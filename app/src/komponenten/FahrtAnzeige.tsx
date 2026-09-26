@@ -369,7 +369,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           const l = lageBei(fahrweg, o.s)
           const [x, y] = lage(l.lat, l.lon)
           return (
-            <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 3 : 2.5) * px}
+            <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 5 : 2.5) * px}
                     strokeWidth={1.5} vectorEffect="non-scaling-stroke"
                     className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
                       : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-white dark:stroke-sbb-midnight'
