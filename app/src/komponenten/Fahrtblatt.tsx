@@ -190,14 +190,23 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
   return roh.sort((a, b) => a.o.s - b.o.s).map((e, i) => ({ ...e, nr: i + 1 }))
 }
 
-/** Seen entlang des Wegs, zusammengefasst nach Name und Seite */
+/**
+ * Seen entlang des Wegs, jeder See einmal (Michael, 2026-09-26: der Schiffenensee
+ * stand links und rechts doppelt da). Sind es zu viele, die, an denen der Weg am
+ * längsten entlangführt, laut den Uferstücken; gezeigt in Fahrtrichtung.
+ */
 function seenAmWeg(fw: Fahrweg) {
-  const raus: Array<{ name: string; seite: 'links' | 'rechts' }> = []
+  const je = new Map<string, { name: string; seiten: Set<'links' | 'rechts'>; s: number; meter: number }>()
   for (const u of fw.seeUfer ?? []) {
     if (!u.name) continue
-    if (!raus.some((x) => x.name === u.name && x.seite === u.seite)) raus.push({ name: u.name, seite: u.seite })
+    const x = je.get(u.name) ?? { name: u.name, seiten: new Set(), s: u.s0, meter: 0 }
+    x.seiten.add(u.seite)
+    x.s = Math.min(x.s, u.s0)
+    x.meter += u.s1 - u.s0
+    je.set(u.name, x)
   }
-  return raus
+  return [...je.values()].sort((a, b) => b.meter - a.meter).slice(0, SEEN_MAX).sort((a, b) => a.s - b.s)
+    .map((x) => ({ name: x.name, seite: x.seiten.size > 1 ? 'links und rechts' : [...x.seiten][0] }))
 }
 
 function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
@@ -223,7 +232,7 @@ function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
     if (flaeche.current) ro.observe(flaeche.current)
     return () => ro.disconnect()
   }, [])
-  const seen = seenAmWeg(daten.fahrweg).slice(0, SEEN_MAX)
+  const seen = seenAmWeg(daten.fahrweg)
   const gruppe = (arten: Eintrag['art'][]) => eintraege.filter((e) => arten.includes(e.art))
   const tunnel = gruppe(['tunnel'])
   const bahnhoefe = gruppe(['bahnhof', 'bruecke'])
@@ -297,14 +306,14 @@ function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
                 )}
               </div>
             </div>
-            <div className="mt-3 min-h-12 flex-1 border-2 border-black p-2 text-[13px]">
+            <div className="mt-3 min-h-10 flex-1 border-2 border-black p-2 text-[13px]">
               Das habe ich aus dem Fenster gesehen:
             </div>
             <p className="mt-2 text-[9.5px] leading-snug">
               Auswahl nach Zahlen aus den Daten: die {TUNNEL_MAX} längsten Tunnel mit bekannter Länge, Brücken ab
-              {' '}{BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen zuerst die grossen, die {GIPFEL_MAX} höchsten Gipfel bis 8 km
-              neben der Strecke. Links und rechts in Fahrtrichtung laut Lage in den Daten; ob man es vom Zug aus
-              sieht, sagen die Daten nicht.
+              {' '}{BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen die grossen, die {GIPFEL_MAX} höchsten Gipfel bis 8 km neben
+              der Strecke, die {SEEN_MAX} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
+              laut Daten; ob man es vom Zug aus sieht, sagen sie nicht.
               {daten.ohneLaenge > 0 && ' Tunnel anderer Bahnen haben in den Daten keine Länge und stehen nicht auf dem Blatt.'}
               {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo, BABS. Taktland ist ein
               privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
