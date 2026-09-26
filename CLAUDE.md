@@ -96,6 +96,8 @@ data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierun
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte
              bei Tunneln, Brücken und auf den Linienseiten (pipeline/build_karte.py),
              selbst gezeichnet, ohne Kartendienst
+data/seen.json  Seen für alle Karten aus Swiss Map Vector 1000 von swisstopo
+             (pipeline/build_seen.py), nur Umriss und Name, kleine Seen fehlen
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -121,6 +123,7 @@ python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne 
 python3 generator/strecken.py --validieren       # Tunnel und Brücken je Abschnitt prüfen
 python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 .venv/bin/python pipeline/build_karte.py         # Netz für die kleine Tunnelkarte
+python3 pipeline/build_seen.py                   # Seen für die Karten (swisstopo)
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

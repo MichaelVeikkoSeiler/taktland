@@ -7,6 +7,7 @@
 import { useMemo, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte } from './Netzkarte'
+import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
@@ -187,6 +188,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   sJetzt: number | null
 }) {
   const { linien } = useKarte()
+  const seen = useSeen()
   const [nah, setNah] = useState(true)
 
   const weg = useMemo(() => fahrweg.punkte.map((p) => ({ xy: lage(p.lat, p.lon), s: p.s })), [fahrweg])
@@ -238,6 +240,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
       <svg viewBox={[box.cx - box.w / 2, box.cy - h / 2, box.w, h].join(' ')} role="img"
            aria-label="Karte mit dem Weg und dem Standort" preserveAspectRatio="xMidYMid meet"
            className="mt-2 aspect-[1.6] w-full border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight">
+        <SeenFlaechen seen={seen} box={box} />
+        <SeenNamen seen={seen} box={box} px={px} />
         {netz.map((st, i) => (
           <path key={i} d={pfad(st.x.map((x, j) => [x, st.y[j]]))} fill="none" strokeWidth={1}
                 vectorEffect="non-scaling-stroke" className="stroke-sbb-cloud dark:stroke-sbb-iron" />
@@ -269,6 +273,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
         Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), Linien anderer Bahnen aus
         dem Schienennetz des BAV. Auf Strecken anderer Bahnen ist der Weg gerade von Bahnhof zu
         Bahnhof gezogen. Rot der geschätzte Standort.
+        {seen && ' Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab.'}
         {!linien && ' Das Netz wird geladen …'}
       </figcaption>
     </figure>

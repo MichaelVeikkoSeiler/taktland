@@ -1,6 +1,7 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { karteLaden } from '../daten'
 import type { KartenDaten } from '../typen'
+import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 
 /** Verhältnis Meter je Grad Länge zu Breite in der Schweiz: x = Länge mal das */
 export const LAENGE_ZU_BREITE = 73_000 / 111_200
@@ -133,6 +134,7 @@ export function Netzkarte({
   titel: string
 }) {
   const [box, setBox] = useState<Box>(start)
+  const seen = useSeen()
   const svg = useRef<SVGSVGElement | null>(null)
   const zeiger = useRef(new Map<number, { x: number; y: number }>())
   const zieht = useRef<{ art: 'nichts' | 'karte'; x: number; y: number; d: number } | null>(null)
@@ -292,6 +294,7 @@ export function Netzkarte({
            }}
            className="mt-1 aspect-[1.6] w-full touch-none border border-sbb-cloud bg-white
                       dark:border-sbb-iron dark:bg-sbb-midnight">
+        <SeenFlaechen seen={seen} box={box} />
         {sichtbar.map(({ nr, s, i }) => (
           <path key={`${nr}-${i}`} d={pfad(s.x.map((x, j) => [x, s.y[j]]))} fill="none"
                 className={hervor?.has(nr)
@@ -313,6 +316,7 @@ export function Netzkarte({
                   textAnchor={o.x > box.cx ? 'end' : 'start'}>{o.name}</text>
           </g>
         ))}
+        <SeenNamen seen={seen} box={box} px={px} belegt={belegt} />
         {zeichnen?.(px, box)}
         {punkte.filter((p) => drin(p.x, p.y)).map((p) => (
           <circle key={`b${p.name}${p.x}`} cx={p.x} cy={p.y} r={2.8 * px} strokeWidth={1.2}
@@ -334,6 +338,7 @@ export function Netzkarte({
       </svg>
       <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         {beschriftung}{' '}
+        {seen && 'Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. '}
         Zoomen mit zwei Fingern, mit «+» und «−» oder mit Strg und dem Mausrad; Ziehen verschiebt
         die Karte, sobald sie näher steht.
       </figcaption>

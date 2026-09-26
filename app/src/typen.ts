@@ -341,6 +341,21 @@ export interface StreckenGeometrie {
 
 /** Die kleine Karte zu den Tunneln (pipeline/build_karte.py): das Streckennetz,
  *  je Linie in Stücken, kodiert wie StreckenGeometrie */
+/** Die Seen für die Karten (data/seen.json), aus Swiss Map Vector 1000 von
+ *  swisstopo. Ringe als [Breite, Länge] mal 100000 mit Differenzen; der erste
+ *  Ring ist das Ufer, weitere sind Inseln. */
+export interface SeenDaten {
+  quelle: string
+  lizenz: string
+  geladen: string
+  hinweis: string
+  seen: Array<{
+    ringe: Array<{ start: [number, number]; d: number[] }>
+    name?: string
+    namenspunkt?: [number, number]
+  }>
+}
+
 export interface KartenDaten {
   datenstand: string
   quellen: string[]

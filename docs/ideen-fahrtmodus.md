@@ -137,7 +137,10 @@ Arbeitsumgebung gesperrt, die Bedingungen je Datensatz beim Laden nochmals prüf
 
 ## Seen auf den Karten
 
-Idee von Michael, 2026-09-25, beschlossen, wartet auf denselben Netzzugang:
+**Eingebaut 2026-09-26** (206 Seen, 188 mit Namen, aus Swiss Map Vector 1000;
+Fläche `#c9def1`, Name `#3f6a93`). Test auf der Fahrt Lugano–Bern.
+
+Idee von Michael, 2026-09-25:
 - **Alle Seen** der Quelle, nicht nur die grössten. Damit braucht es keine
   Flächenangabe und keine Rangliste.
 - Quelle: vereinfachte Landeskarte 1:1 Mio. von swisstopo als Vektordaten

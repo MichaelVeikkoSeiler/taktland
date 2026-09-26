@@ -179,7 +179,8 @@ export default function App() {
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
-            Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz.
+            Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
+            Seen: Bundesamt für Landestopografie swisstopo.
             Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
             Hinweise und Fehler gern an{' '}
             <a href={`mailto:${KONTAKT}`}
