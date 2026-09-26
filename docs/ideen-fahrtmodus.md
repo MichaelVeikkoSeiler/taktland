@@ -174,6 +174,9 @@ Tunnel-Schätzen, «Wie lange noch?».
   Sehenswertes links und rechts zum Ankreuzen, Platz für eine Zeichnung. Alles aus den
   Daten des Wegs, auf dem Gerät erzeugt, ohne Server. Passt zu Reise-Bingo und
   Tunnel-Schätzen; auch ohne Handy im Zug nutzbar.
+  *Umgesetzt:* eigener Abschnitt «Fahrtblatt» unter «Fahren», nur dort. Obere Hälfte
+  des Blatts die Karte mit Nordpfeil und Legende, bei dicht liegenden Nummern bis zwei
+  vergrösserte Ausschnitte (A, B); untere Hälfte zum Ausfüllen.
 
 **Erinnerungen**
 - **Reisetagebuch zum Ausdrucken:** eine Seite pro Fahrt, Datum, Weg, Durchfahrenes,

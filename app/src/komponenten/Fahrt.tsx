@@ -46,6 +46,16 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
     setProbenOffen(offen)
     try { localStorage.setItem('taktland.probefahrten.offen', offen ? 'ja' : 'nein') } catch { /* nur jetzt */ }
   }
+  // Fahrtblatt: eigener Abschnitt, zu Beginn zugeklappt (Michael, 2026-09-26)
+  const [blattOffen, setBlattOffen] = useState(() => {
+    try { return localStorage.getItem('taktland.fahrtblatt.offen') === 'ja' } catch { return false }
+  })
+  function blattOffenSetzen(offen: boolean) {
+    setBlattOffen(offen)
+    try { localStorage.setItem('taktland.fahrtblatt.offen', offen ? 'ja' : 'nein') } catch { /* nur jetzt */ }
+  }
+  const [blatt, setBlatt] = useState<StreckenWahl>({ von: null, nach: null, ueber: null })
+  const blattBereit = blatt.von !== null && blatt.nach !== null && blatt.von !== blatt.nach
   // welche Probefahrt gerade ihre beiden Richtungen zeigt
   const [richtungWahl, setRichtungWahl] = useState<string | null>(null)
   const [neueProbe, setNeueProbe] = useState<{ von: number | null; nach: number | null } | null>(null)
@@ -252,6 +262,45 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         </section>
       )}
 
+      {/* Das Fahrtblatt zum Ausdrucken, nur hier (Michael, 2026-09-26) */}
+      {index && (
+        <section className="mt-2">
+          <button type="button" onClick={() => blattOffenSetzen(!blattOffen)} aria-expanded={blattOffen}
+                  className="kachel kachel-link flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3
+                             text-left">
+            <span className="text-lg font-bold">Fahrtblatt</span>
+            <span className={`pfeil ${blattOffen ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
+              {blattOffen ? '↑' : '↓'}
+            </span>
+          </button>
+          {blattOffen && (
+            <div className="mt-3 space-y-3">
+              <p className="leading-relaxed">
+                Ein Blatt A4 zum Ausdrucken für die Fahrt mit Kindern: oben die Karte des Wegs, unten die
+                wichtigsten Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken.
+              </p>
+              <BahnhofFeld bezeichnung="Von" wert={blatt.von} bahnhoefe={imNetz} name={name}
+                           aendern={(u) => setBlatt((w) => ({ ...w, von: u }))} />
+              <BahnhofFeld bezeichnung="Nach" wert={blatt.nach} bahnhoefe={imNetz} name={name}
+                           aendern={(u) => setBlatt((w) => ({ ...w, nach: u }))} />
+              <BahnhofFeld bezeichnung="Über (freiwillig)" wert={blatt.ueber} bahnhoefe={imNetz} name={name}
+                           aendern={(u) => setBlatt((w) => ({ ...w, ueber: u }))} />
+              <button type="button" disabled={!blattBereit}
+                      onClick={() => {
+                        window.location.hash = `#/fahrtblatt?von=${blatt.von}&nach=${blatt.nach}${blatt.ueber ? `&ueber=${blatt.ueber}` : ''}`
+                      }}
+                      className="w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125
+                                 disabled:opacity-40">
+                Fahrtblatt erstellen
+              </button>
+              {blatt.von !== null && blatt.von === blatt.nach && (
+                <p className="text-sm">Start und Ziel sind derselbe Bahnhof.</p>
+              )}
+            </div>
+          )}
+        </section>
+      )}
+
       <h2 className="mt-8 text-lg font-bold">Neue Fahrt</h2>
       <div className="mt-3 grid grid-cols-3 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group"
            aria-label="Wie wählen">
@@ -328,12 +377,6 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
           Probefahrt
         </button>
       </div>
-      {bereit && (
-        <a href={`#/fahrtblatt?von=${fahrt.von}&nach=${fahrt.nach}${fahrt.ueber ? `&ueber=${fahrt.ueber}` : ''}`}
-           className="mt-3 inline-flex items-center gap-2 text-sm font-medium underline-offset-2 hover:underline">
-          Fahrtblatt für Kinder drucken
-        </a>
-      )}
       {fahrt.von !== null && fahrt.von === fahrt.nach && (
         <p className="mt-2 text-sm">Start und Ziel sind derselbe Bahnhof.</p>
       )}

@@ -667,12 +667,6 @@ function Ergebnis({
                 {probe ? 'Unter den Probefahrten' : 'Als Probefahrt merken'}
               </button>
             )}
-            {gemerkt && !wahl.weg && (
-              <a href={`#/fahrtblatt?${streckenAdresse(wahl).split('?')[1]}`}
-                 className="mt-2 flex items-center gap-2 text-sm font-medium">
-                Fahrtblatt für Kinder drucken
-              </a>
-            )}
             {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}
             {fahrtFehler && <p className="mt-2 text-sm">«Fahren» konnte nicht starten. {fahrtFehler}</p>}
           </>
