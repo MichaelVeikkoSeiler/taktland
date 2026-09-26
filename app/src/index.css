@@ -43,6 +43,8 @@
      Blau selber durch dich definiert»); dunkel eigene Töne, unten */
   --color-see: #c9def1;
   --color-see-name: #3f6a93;
+  /* Seen neben der Strecke im Streckenband, kräftiger als die Seefläche */
+  --color-see-band: #7fb2e0;
   --color-see-halo: #ffffff;
 
   /* Sehenswertes auf den Karten, von Claude festgelegt: zurückhaltend, damit

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEILBAHN_M, type SehenswertSorte, wegEnde } from '../fahrt'
+import { type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEILBAHN_M, type SehenswertSorte, wegEnde } from '../fahrt'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 import { Auswahl } from './Auswahl'
@@ -500,7 +500,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           neben der gezeichneten Strecke, dazu BLN-Gebiete, Pärke und Moorlandschaften, durch die sie
           führt. Links und rechts ergeben sich aus der Lage in den Quellen (swisstopo, BABS, BAV, BAFU);
           ob etwas vom Zug aus zu sehen ist, sagen die Daten nicht. Sehenswertes kommt nicht ins
-          Sammelheft.
+          Sammelheft. Hellblau im Streckenband: ein See der Landeskarte 1:1 Million liegt
+          etwa {SEE_M} m links (oben) oder rechts (unten) der gezeichneten Strecke; kleine Seen
+          fehlen in diesem Massstab.
         </p>
       </div>
     </div>

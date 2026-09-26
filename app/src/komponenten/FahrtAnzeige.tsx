@@ -130,6 +130,11 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
           <line key={x} x1={x} x2={x} y1="40" y2="52" strokeWidth="2.5"
                 className="stroke-sbb-charcoal dark:stroke-sbb-white" />
         ))}
+        {/* Seen neben der Strecke: links der Fahrtrichtung über dem Band, rechts darunter */}
+        {(fahrweg.seeUfer ?? []).map((u) => (
+          <rect key={`see${u.seite}${u.s0}`} x={xBei(u.s0)} y={u.seite === 'links' ? 37 : 52}
+                width={Math.max(2, xBei(u.s1) - xBei(u.s0))} height="3" rx="1.5" className="fill-see-band" />
+        ))}
         {objekte.map((o) => {
           const x = xBei(o.s)
           if (o.art === 'tunnel') {
@@ -143,7 +148,7 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
             // Flächen als Band unter der Strecke, der Rest als kleine Raute
             if (o.sAus !== null) {
               return (
-                <rect key={`s${o.kennung}`} x={x} y="53" width={Math.max(2, xBei(o.sAus) - x)} height="3"
+                <rect key={`s${o.kennung}`} x={x} y="58" width={Math.max(2, xBei(o.sAus) - x)} height="3"
                       className="fill-fahrt-sehenswert/60 dark:fill-fahrt-sehenswert-hell/60" />
               )
             }
@@ -188,6 +193,12 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
           Brücke
         </span>
         <span className="flex items-center gap-1.5"><span className="inline-block size-2 rounded-full bg-fahrt-bahnhof dark:bg-fahrt-bahnhof-hell" />Bahnhof</span>
+        {(fahrweg.seeUfer?.length ?? 0) > 0 && (
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block h-1 w-4 rounded-full bg-see-band" />
+            See links (oben) oder rechts (unten)
+          </span>
+        )}
         {objekte.some((o) => o.art === 'sehenswert') && (
           <span className="flex items-center gap-1.5">
             <span className="inline-block size-2 rotate-45 bg-fahrt-sehenswert dark:bg-fahrt-sehenswert-hell" />

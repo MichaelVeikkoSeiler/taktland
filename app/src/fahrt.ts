@@ -9,7 +9,7 @@
  * nur der Rechnung; eine Länge des Wegs zeigt die App nicht an, weil die
  * Kilometrierung ein Standort ist und keine Länge.
  */
-import type { FlaechenDaten, KodierterZug, SehenswertDaten, StreckenAbschnitt, StreckenGeometrie, StreckenNetz } from './typen'
+import type { FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten, StreckenAbschnitt, StreckenGeometrie, StreckenNetz } from './typen'
 
 /** Meter je Grad in der Schweiz: für kurze Abstände genau genug */
 const M_BREITE = 111_200
@@ -47,7 +47,11 @@ export interface FahrObjekt {
 export interface Fahrweg {
   punkte: Punkt[]
   objekte: FahrObjekt[]
+  /** Stücke, auf denen ein See neben der Strecke liegt, mit der Seite */
+  seeUfer?: SeeUfer[]
 }
+
+export interface SeeUfer { s0: number; s1: number; seite: 'links' | 'rechts'; name: string | null }
 
 export function abstand(a: Lage, b: Lage) {
   return Math.hypot((b.lat - a.lat) * M_BREITE, (b.lon - a.lon) * M_LAENGE)
@@ -416,4 +420,61 @@ export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: 
     })
   })
   return raus
+}
+
+
+/**
+ * Wo ein See neben der Strecke liegt (Michael, 2026-09-26: «Seetangierungen als
+ * hellblaue Linie … an der richtigen Seite»). Alle SEE_SCHRITT_M wird ein Punkt
+ * SEE_M links und rechts der Strecke geprüft: Liegt er in einem See der
+ * Landeskarte 1:1 Million, liegt der See auf dieser Seite. Kleine Seen fehlen in
+ * diesem Massstab; in Tunneln zählt nichts.
+ */
+export const SEE_M = 250
+const SEE_SCHRITT_M = 100
+const SEE_LUECKE_M = 1000
+const SEE_MIN_M = 300
+
+export function seeUferAufWeg(fw: Fahrweg, daten: SeenDaten): SeeUfer[] {
+  const seen = daten.seen.map((x) => {
+    const ringe = x.ringe.map(entpacken)
+    const alle = ringe[0] ?? []
+    return { ringe, name: x.name ?? null,
+             la0: Math.min(...alle.map((p) => p.lat)), la1: Math.max(...alle.map((p) => p.lat)),
+             lo0: Math.min(...alle.map((p) => p.lon)), lo1: Math.max(...alle.map((p) => p.lon)) }
+  })
+  const imSee = (p: Lage) => seen.find((x) => p.lat >= x.la0 && p.lat <= x.la1 && p.lon >= x.lo0 && p.lon <= x.lo1
+    && x.ringe.filter((r) => innen(p, r)).length % 2 === 1)
+  const tunnel = fw.objekte.filter((o) => o.art === 'tunnel' && o.sAus !== null).map((o) => [o.s, o.sAus!] as const)
+  const offen: Partial<Record<'links' | 'rechts', SeeUfer>> = {}
+  const raus: SeeUfer[] = []
+  const schliessen = (seite: 'links' | 'rechts') => {
+    const u = offen[seite]
+    if (u && u.s1 - u.s0 >= SEE_MIN_M) raus.push(u)
+    delete offen[seite]
+  }
+  for (let i = 1; i < fw.punkte.length; i++) {
+    const a = fw.punkte[i - 1], b = fw.punkte[i]
+    const [ax, ay] = xy(a), [bx, by] = xy(b)
+    const l = Math.hypot(bx - ax, by - ay)
+    if (!l) continue
+    // senkrecht nach links, in Grad
+    const nLat = ((bx - ax) / l) * SEE_M / M_BREITE, nLon = (-(by - ay) / l) * SEE_M / M_LAENGE
+    const n = Math.max(1, Math.ceil((b.s - a.s) / SEE_SCHRITT_M))
+    for (let k = 0; k < n; k++) {
+      const t = k / n
+      const p = { lat: a.lat + t * (b.lat - a.lat), lon: a.lon + t * (b.lon - a.lon) }
+      const s = a.s + t * (b.s - a.s)
+      const drinnen = tunnel.some(([v, w]) => s >= v && s <= w)
+      for (const [seite, f] of [['links', 1], ['rechts', -1]] as const) {
+        const see = drinnen ? undefined : imSee({ lat: p.lat + f * nLat, lon: p.lon + f * nLon })
+        const u = offen[seite]
+        if (see && u && s - u.s1 <= SEE_LUECKE_M) { u.s1 = s; u.name ??= see.name }
+        else if (see) { schliessen(seite); offen[seite] = { s0: s, s1: s, seite, name: see.name } }
+        else if (u && s - u.s1 > SEE_LUECKE_M) schliessen(seite)
+      }
+    }
+  }
+  schliessen('links'); schliessen('rechts')
+  return raus.sort((x, y) => x.s0 - y.s0)
 }

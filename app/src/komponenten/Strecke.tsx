@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { flaechenLaden, geometrieLaden, linienLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, sehenswertAufWeg, tonAbholen } from '../fahrt'
+import { flaechenLaden, geometrieLaden, linienLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
+import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, tonAbholen } from '../fahrt'
 import { favoritUmschalten, istFavorit, letzteMerken } from '../fahrten'
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
 import { alphabetisch, useFavoriten } from '../favoriten'
@@ -388,6 +388,7 @@ function Ergebnis({
         const [s, f] = await Promise.all([sehenswertLaden(), flaechenLaden()])
         fahrweg.objekte = [...fahrweg.objekte, ...sehenswertAufWeg(fahrweg, s, f)].sort((a, b) => a.s - b.s)
       } catch { /* ohne Sehenswertes */ }
+      try { fahrweg.seeUfer = seeUferAufWeg(fahrweg, await seenLaden()) } catch { /* ohne Seen */ }
       const titel = [bahnhoefe[0]?.name ?? '', bahnhoefe[bahnhoefe.length - 1]?.name ?? '']
       // die Probefahrt kommt nicht ins Sammelheft
       setFahrt({ fahrweg, probe, piepen, beginn: probe ? null : fahrtBeginnen(titel[0], titel[1]) })
