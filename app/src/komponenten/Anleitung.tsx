@@ -33,7 +33,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnland (darunter Bahnhöfe,
         Strecken, Brücken und Tunnel), Duell, Standort, Reisetasche (darunter
         Logbuch, Sammelheft und Favoriten) und Info, diese Seite. Der rote
-        Knopf «Fahren» beim Namen führt zum Fahren im Zug. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
+        Knopf «Fahren» ist für unterwegs im Zug. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
         betreibt, dazu Bahnhöfe anderer Bahnen wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn,
         sofern die offenen Daten für mindestens drei Kapitel reichen.
       </p>
@@ -131,6 +131,10 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Kanton, darum gibt es sie nur für die ganze Schweiz.
           </li>
           <li>
+            Mit «Zwei Bahnhöfe selbst wählen» lassen sich zwei bestimmte Bahnhöfe vergleichen.
+            Serie und Bestwert zählen dabei nicht.
+          </li>
+          <li>
             Brücken treten nicht gegeneinander an: Von ihnen ist nur die Zahl der Baueinheiten
             erfasst, und die meisten haben genau eine.
           </li>
@@ -148,25 +152,18 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             «Olten» eintippt, sieht alle Linien, auf denen Olten liegt.
           </li>
           <li>
-            Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach ihrem Kilometer geordnet,
-            die erfassten Tunnel mit Länge, Jahr der ersten Inbetriebnahme und Tunnelsystem,
-            die erfassten Brücken mit Kanton und Zahl der Baueinheiten und die erfassten
-            Bahnübergänge mit Sicherungsart und Zahl der gekreuzten Gleise. Jeder Bahnhof in
-            der Liste führt zu seiner Seite, und die Bahnhofsseite führt zu seinen Linien.
+            Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach Kilometer und die
+            erfassten Tunnel, Brücken und Bahnübergänge. Bahnhof- und Linienseiten verweisen
+            aufeinander.
           </li>
           <li>
-            Kacheln mit Pfeil führen zur ganzen Liste: «Erfasste Tunnel», «Erfasste Brücken»
-            und «Erfasste Bahnübergänge» zu allen Einträgen der Linie, eine Kachel wie
-            «Ticino, 325 Brücken» zu genau diesen 325. Eine Kachel zu einem einzelnen Tunnel,
-            einer Brücke oder einem Bahnübergang zeigt diesen Eintrag oben in einem eigenen
-            Kasten und rot markiert in der Liste.
+            Kacheln mit Pfeil führen zur Liste dahinter, etwa «Ticino, 325 Brücken» zu genau
+            diesen 325. Ein einzelner Eintrag steht dann oben und ist in der Liste rot markiert.
           </li>
           <li>
-            Das Kapitel «Netz» nennt je Abschnitt zwischen zwei Betriebspunkten die Zahl der
-            Streckengleise, die Spurweite, den Strom und die Infrastrukturbetreiberin, aus dem
-            Schienennetz des BAV (Stand 2021). Ein Tipp auf eine Kachel zeigt genau diese
-            Abschnitte, etwa alle mit einem Streckengleis, und die kleine Karte hebt sie rot
-            hervor.
+            Das Kapitel «Netz» nennt je Abschnitt Streckengleise, Spurweite, Strom und
+            Betreiberin, aus dem Schienennetz des BAV (Stand 2021). Ein Tipp auf eine Kachel hebt
+            die Abschnitte auf der Karte rot hervor.
           </li>
           <li>
             Linien anderer Bahnen, etwa der BLS, der SOB oder der RhB, tragen das Kürzel ihrer
@@ -201,20 +198,65 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Abschnitte anderer Bahnen, etwa Ins oder Spiez der BLS, liegen dort auf keiner Linie.
           </li>
           <li>
-            Tunnel und Brücken sind nur für die SBB erfasst. Führt der Weg über Strecken
-            anderer Bahnen, etwa den Lötschberg der BLS, fehlen sie dort. Die Seite sagt das.
+            Die Daten der SBB führen Tunnel und Brücken nur auf ihren eigenen Strecken. Auf
+            Strecken anderer Bahnen, etwa dem Lötschberg der BLS, stammen sie aus swissTLM3D
+            von swisstopo: ohne Länge, oft ohne Namen, und getrennt gezählt.
           </li>
           <li>
-            Im Zug zeigt «Fahren» den nächsten Tunnel, die nächste Brücke mit
-            mindestens 3 Baueinheiten und den nächsten Bahnhof und meldet sie etwa 20 oder 10
-            Sekunden vorher mit einem Ton. Tunnel, Brücken und Bahnhöfe lassen sich einzeln
-            abschalten. Bahnhöfe meldet Taktland auch dort, wo der Zug nicht hält. «Fahren»
-            braucht den Standort und läuft nur, solange die Seite offen und der Bildschirm an ist.
-            Die Zeiten sind Schätzungen aus Standort und Tempo. Im Tunnel gibt es kein GPS, dort
-            rechnet Taktland mit dem letzten Tempo weiter.
+            «Losfahren» startet «Fahren» auf diesem Weg, «Probefahrt» spielt ihn ab.
+          </li>
+        </Punkte>
+      </Abschnitt>
+
+      <Abschnitt titel="Fahren">
+        <Punkte>
+          <li>
+            Der rote Knopf «Fahren» öffnet die Wahl der Fahrt: «Nur Ziel» (Start ist der nächste
+            Bahnhof per GPS), «Start und Ziel» oder «Ohne Ziel». Gemerkte Fahrten starten mit
+            einem Tipp.
           </li>
           <li>
-            Die «Probefahrt» spielt den Weg zwanzigmal schneller ab, zum Ausprobieren zu Hause.
+            Im Zug meldet Taktland den nächsten Tunnel, die nächste Brücke und den nächsten
+            Bahnhof etwa 20 oder 10 Sekunden vorher mit einem Ton, auch Bahnhöfe, an denen der
+            Zug nicht hält. Dazu kommt Sehenswertes links oder rechts: Gipfel, Kultur,
+            Seilbahnen und Gebiete, durch die der Weg führt. Ob es vom Zug aus zu sehen ist,
+            sagen die Daten nicht. Was gemeldet wird, lässt sich unten auf der Seite wählen.
+          </li>
+          <li>
+            Das Band zeigt den ganzen Weg. Hellblau darüber oder darunter: Links oder rechts
+            liegt ein See nahe der Strecke.
+          </li>
+          <li>
+            «Ohne Ziel» erkennt nach einigen hundert Metern Strecke und Richtung und folgt der
+            Linie bis zur nächsten Verzweigung, dann sucht es neu. Liegen Strecken
+            nebeneinander, fragt Taktland, welche du fährst.
+          </li>
+          <li>
+            Die Zeiten sind Schätzungen aus Standort und Tempo; im Tunnel ohne GPS rechnet
+            Taktland mit dem letzten Tempo weiter. Gemeldet wird nur, solange die Seite offen und
+            der Bildschirm an ist. Schliesst das Handy die Seite, fragt Taktland beim nächsten
+            Öffnen, ob die Fahrt weitergehen soll.
+          </li>
+          <li>
+            Probefahrten spielen einen Weg 5- bis 100-mal schneller ab, zum Ausprobieren ohne
+            Zug. Den Zug im Band kann man an jede Stelle ziehen.
+          </li>
+        </Punkte>
+      </Abschnitt>
+
+      <Abschnitt titel="Reisetasche">
+        <Punkte>
+          <li>
+            Im Logbuch steht jede Fahrt mit «Fahren», mit allem, was du durchfahren hast. Du
+            kannst Notizen dazuschreiben und Fahrten ohne «Fahren» von Hand eintragen.
+          </li>
+          <li>
+            Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren hast
+            und was noch fehlt. Die Favoriten sind deine Bahnhöfe mit Stern.
+          </li>
+          <li>
+            Unten im Logbuch lässt sich alles als Datei sichern und wieder einlesen, etwa auf
+            einem neuen Gerät.
           </li>
         </Punkte>
       </Abschnitt>
@@ -233,10 +275,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             auf Linien ohne eigene Seite stehen trotzdem in der Liste, nur ohne Verweis.
           </li>
           <li>
-            In der Liste einer Linie lässt sich jeder Tunnel und jede Brücke antippen, ebenso
-            jeder rote Punkt auf der Karte: Der Eintrag steht dann oben im Kasten «Ausgewählt»
-            und ist auf der Karte markiert. Auf der Karte einer Linienseite führt ein Tipp auf
-            einen Bahnhof zu seiner Seite.
+            Ein Tipp auf einen Eintrag oder einen roten Punkt der Karte zeigt ihn oben unter
+            «Ausgewählt». Ein Tipp auf einen Bahnhof der Karte öffnet seine Seite.
           </li>
           <li>
             Fragen dazu stehen auf den Linienseiten. Die Tunnel treten zudem im Duell
@@ -245,6 +285,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Auch jede Linienseite zeigt die kleine Karte: die Linie, ihre Tunnel und als Ringe
             ihre Bahnhöfe in Taktland, beschriftet der erste und der letzte.
+          </li>
+          <li>
+            Die Karten zeigen auch Seen, Gipfel, Kultur (Kulturgüter von nationaler Bedeutung),
+            Seilbahnen und Gebiete (BLN, Pärke, Moorlandschaften). Die Knöpfe unter der Karte
+            blenden sie ein und aus; ein Tipp auf ein Zeichen zeigt Name und Quelle.
           </li>
         </Punkte>
       </Abschnitt>
@@ -302,7 +347,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Taktland lässt sich auf den Startbildschirm legen: auf dem iPhone in Safari über
-            «Teilen» und «Zum Home-Bildschirm», auf Android über das Menü von Chrome.
+            «Teilen» und «Zum Home-Bildschirm», auf Android über das Menü von Chrome. Das lohnt
+            sich: Safari löscht den Speicher von Websites, die sieben Tage nicht geöffnet wurden,
+            nicht aber den von Apps auf dem Home-Bildschirm. Sicher ist eine Sicherung im Logbuch.
           </li>
         </Punkte>
       </Abschnitt>
@@ -325,6 +372,12 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             <Verweis href="https://data.geo.admin.ch/browser/#/collections/ch.bav.schienennetz">
               data.geo.admin.ch</Verweis>, freie Nutzung mit Quellenangabe. Die Datei trägt den
             Stand vom 6. Juli 2021.
+          </li>
+          <li>
+            Seen, Gipfel und die Tunnel und Brücken anderer Bahnen stammen von swisstopo,
+            Kulturgüter vom Bundesamt für Bevölkerungsschutz BABS, Seilbahnen vom BAV, BLN,
+            Pärke und Moorlandschaften vom Bundesamt für Umwelt BAFU, alle frei nutzbar mit
+            Quellenangabe.
           </li>
           <li>
             Die Werte stehen so da, wie sie in den Daten stehen, zum Teil gezählt oder
@@ -379,7 +432,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Den Standort fragt Taktland nur beim Fahren und auf der Seite «Standort» ab, und
             nur nach deiner Freigabe. Er wird auf dem Gerät verrechnet, weder gespeichert noch
-            gesendet, und nach «Beenden» oder «Anhalten» nicht mehr abgefragt.
+            gesendet, und nach «Beenden» oder «Anhalten» nicht mehr abgefragt. Damit eine
+            Fahrt weitergehen kann, merkt sich Taktland auf dem Gerät die Stelle auf dem Weg,
+            nicht den Standort.
           </li>
           <li>
             Ausgeliefert wird die Seite von GitHub Pages. GitHub speichert dabei laut eigenen
