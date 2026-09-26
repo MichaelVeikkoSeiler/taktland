@@ -166,6 +166,15 @@ Tunnel-Schätzen, «Wie lange noch?».
 - **Abzeichen** aus Zählungen und Schwellen der Daten («erster Tunnel über 5 km»,
   «10 Brücken»); keine Summen wie «insgesamt 23 km Tunnel» (CLAUDE.md, Regel 8).
 
+**Vor der Fahrt**
+- **Fahrtblatt als PDF zum Ausdrucken** (Michael, 2026-09-26): vor der Fahrt eine Karte
+  des Wegs (selbst gezeichnet wie die Karten in der App, mit Seen und Bahnhöfen) und
+  Sachen zum Ausfüllen während der Fahrt, etwa die Tunnel, Brücken und Bahnhöfe des
+  Wegs in Fahrtrichtung zum Abhaken, Felder «Wie lange hat der Tunnel gedauert?»,
+  Sehenswertes links und rechts zum Ankreuzen, Platz für eine Zeichnung. Alles aus den
+  Daten des Wegs, auf dem Gerät erzeugt, ohne Server. Passt zu Reise-Bingo und
+  Tunnel-Schätzen; auch ohne Handy im Zug nutzbar.
+
 **Erinnerungen**
 - **Reisetagebuch zum Ausdrucken:** eine Seite pro Fahrt, Datum, Weg, Durchfahrenes,
   Platz für eine Zeichnung, auf dem Gerät erzeugt.
