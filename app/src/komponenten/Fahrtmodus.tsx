@@ -8,7 +8,7 @@ import { Auswahl } from './Auswahl'
 const VORLAEUFE_S = [20, 10] as const
 type Vorlauf = typeof VORLAEUFE_S[number]
 /** Wie viel schneller die Probefahrt läuft; wählbar (Michael, 2026-09-26) */
-const ZEITRAFFER = [10, 20, 50] as const
+const ZEITRAFFER = [5, 10, 20, 50, 100] as const
 type Zeitraffer = typeof ZEITRAFFER[number]
 /** Was so viele Sekunden vor dem Zug liegt, steht als eigene Karte oben */
 const ZUGLEICH_S = 40
@@ -307,15 +307,23 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           </button>
         </div>
 
+        {/* Karte und Band ganz oben, über Zeitraffer, Tempo und Meldungen: Diese
+            wechseln ihre Höhe, Karte und Band sollen nicht springen (Michael,
+            2026-09-26: «Karte noch weiter oben. Oberhalb der Geschwindigkeit») */}
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
+        <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
+                      start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
+                      name={(o) => text(o)?.name} />
+
         {probefahrt && (
-          <div className="mt-3 flex items-center gap-3 text-sm">
+          <div className="mt-4 flex items-center gap-3 text-sm">
             <span className="text-sbb-metal dark:text-sbb-storm">Zeitraffer</span>
-            <div className="flex overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron"
+            <div className="flex flex-1 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron"
                  role="group" aria-label="Tempo der Probefahrt">
               {ZEITRAFFER.map((f) => (
                 <button key={f} type="button" aria-pressed={raffer === f} onClick={() => rafferWaehlen(f)}
                         aria-label={`${f}-mal schneller`}
-                        className={`min-h-9 whitespace-nowrap px-4 font-medium tabular-nums ${raffer === f
+                        className={`min-h-9 flex-1 whitespace-nowrap px-1 font-medium tabular-nums ${raffer === f
                           ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                           : 'bg-white dark:bg-sbb-midnight'}`}>
                   {f}×
@@ -338,12 +346,6 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           </p>
         )}
 
-        {/* Band und Karte oben, über den Meldungen: Diese wechseln ihre Höhe,
-            Band und Karte sollen dabei nicht springen (Michael, 2026-09-26) */}
-        <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
-                      start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
-                      name={(o) => text(o)?.name} />
-        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
 
         {imTunnel && einstellung.tunnel && sJetzt !== null && (
           <div className="mt-5 rounded-lg bg-sbb-charcoal px-4 py-4 text-sbb-white">

@@ -265,7 +265,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const zeichen = objekte
 
   return (
-    <figure className="mt-5">
+    <figure className="mt-3">
       {/* eine Zeile für alle Knöpfe, damit die Karte kompakt oben bleibt */}
       <div className="flex items-center justify-between gap-2 text-xs">
         <div className="flex overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ausschnitt">
