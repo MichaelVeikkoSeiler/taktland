@@ -485,3 +485,32 @@ export interface KartengrundDaten {
    *  1 Million, lage = Mitte der Beschriftung [Breite, Länge] */
   orte?: Array<{ name: string; klasse: number; lage: [number, number] }>
 }
+
+/** Fahrplan (pipeline/build_fahrplan.py): nur Züge, nur Bahnhöfe im Netz */
+export interface FahrplanInfo {
+  quelle: string
+  stand: string
+  /** erster und letzter Verkehrstag darin, «2026-09-26» */
+  von: string
+  bis: string
+  je_datei: number
+  /** je Muster eine Bitfolge als Hex, Bit 0 = von */
+  tage: string[]
+}
+
+/** [Fahrt, Ankunft, Abfahrt, Verkehrstage] in Minuten ab Mitternacht des Verkehrstags */
+export type FahrplanHalt = [number, number | null, number | null, number]
+
+export interface FahrplanFahrt {
+  /** Zugnummer */
+  n: string
+  /** Gattung laut Fahrplan (IC, IR, RE, S …) */
+  g: string
+  /** Linie laut Fahrplan (IC2, S10 …) */
+  l: string
+  /** Ziel laut Fahrplan */
+  z: string
+  t: number
+  /** [UIC, Ankunft, Abfahrt] */
+  h: Array<[number, number | null, number | null]>
+}

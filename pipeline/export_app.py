@@ -9,6 +9,7 @@
   und Bahnübergänge mit ihrer Linie
 - strecken.json : das Netz für die Seite «Strecke»
 - standort.json : die Lage der Tunnel, Brücken und Bahnübergänge für die Seite «Standort»
+- fahrplan/   : der Fahrplan für «Welcher Zug?», wenn er gebaut ist (nicht im Repository)
 
 Der Index fuehrt auch Bahnhoefe ohne Profil auf. Die App soll zeigen, was es
 noch nicht gibt, statt so zu tun, als gaebe es nur die vier fertigen.
@@ -153,6 +154,16 @@ def main():
             shutil.rmtree(ZIEL / "gelaende")
         shutil.copytree(gelaende, ZIEL / "gelaende")
         print(f"gelaende/: {sum(p.stat().st_size for p in (ZIEL / 'gelaende').iterdir())/1e6:.1f} MB")
+    # der Fahrplan (pipeline/build_fahrplan.py) entsteht erst beim Veröffentlichen
+    # und ist nicht im Repository; fehlt er, fragt der Fahrtmodus nicht nach dem Zug
+    fahrplan = ROOT / "data" / "fahrplan"
+    if (ZIEL / "fahrplan").exists():
+        shutil.rmtree(ZIEL / "fahrplan")
+    if (fahrplan / "info.json").exists():
+        shutil.copytree(fahrplan, ZIEL / "fahrplan")
+        print(f"fahrplan/: {sum(1 for _ in (ZIEL / 'fahrplan').rglob('*.json'))} Dateien")
+    else:
+        print("fahrplan/: fehlt (pipeline/fetch_fahrplan.py, pipeline/build_fahrplan.py)")
 
 
 def linien():

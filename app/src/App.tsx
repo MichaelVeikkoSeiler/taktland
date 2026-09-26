@@ -278,7 +278,7 @@ export default function App() {
               Alle Datenquellen und Lizenzen
             </summary>
             <p className="mt-1">
-              Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
+              Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen und Fahrplan: opentransportdata.swiss;
               Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
               Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Luftbild in 3D (SWISSIMAGE), Höhenstufen und das Gelände in 3D (swissALTIRegio, im Führerstand swissALTI3D, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
               Gipfel und Ortsnamen (Swiss Map Vector 1000), Brückenlängen und beim Fahren Tunnel und Brücken

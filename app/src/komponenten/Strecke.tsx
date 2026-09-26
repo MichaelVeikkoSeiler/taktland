@@ -2,8 +2,11 @@ import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, ladenVerfolgen, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { bahnhoefeVorziehen, gerundetM, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
-import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegLinieSetzen, wegSetzen } from '../erlebt'
-import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
+import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegLinieSetzen, wegSetzen, zugEintragen } from '../erlebt'
+import {
+  type GemerkterZug, laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle, laufendZug,
+} from '../laufend'
+import { zugText } from './Zug'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import { nachbarnBauen, useBahnenAus } from '../bahnen'
 import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
@@ -427,6 +430,7 @@ function Ergebnis({
   const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: Ton
                                         beginn: number | null
                                         fortsetzen: { startS: number; s: number } | null
+                                        zug: GemerkterZug | null
                                         /** «Ohne Ziel»: Meter der früheren Linien derselben Fahrt */
                                         wegVorher: number
                                         /** «Ohne Ziel»: das wievielte Wegstück dieser Fahrt im Logbuch */
@@ -538,7 +542,7 @@ function Ergebnis({
         ? heftLesen().fahrten.find((f) => f.beginn === beginn)?.weg_m ?? 0 : 0
       const wegTeil = beginn !== null && wahl.ohne && gleich
         ? heftLesen().fahrten.find((f) => f.beginn === beginn)?.wege?.length ?? 0 : 0
-      setFahrt({ fahrweg, probe, piepen, beginn, fortsetzen, wegVorher, wegTeil })
+      setFahrt({ fahrweg, probe, piepen, beginn, fortsetzen, zug: fortsetzen && alt?.zug ? alt.zug : null, wegVorher, wegTeil })
     } catch (e) {
       setFahrtFehler((e as Error).message)
     } finally {
@@ -818,6 +822,18 @@ function Ergebnis({
                       tonWeitergeben(fahrt.piepen)
                       setFahrt(null)
                       window.location.hash = fahrtAdresse({ von: wahl.nach, nach: wahl.von, ueber: wahl.ueber }, true)
+                    }}
+                    zugStrecke={!fahrt.probe && !wahl.ohne && wahl.von && wahl.nach
+                      ? { von: wahl.von, nach: wahl.nach } : null}
+                    zugAnfang={fahrt.zug}
+                    zugGewaehlt={(z) => {
+                      if (fahrt.beginn === null) return
+                      laufendZug(fahrt.beginn, z ? { id: z.id, tag: z.tag, n: z.fahrt.n, text: zugText(z) } : undefined)
+                      zugEintragen(fahrt.beginn, z ? zugText(z) : null)
+                    }}
+                    halt={(uic) => {
+                      const abk = netz.bahnhoefe[String(uic)]
+                      return { abk, name: bahnhof.get(uic)?.name ?? (abk ? netz.punkte[abk] : String(uic)) }
                     }}
                     ohneZiel={wahl.ohne && !fahrt.probe ? () => {
                       // der Ton bleibt freigegeben, auch ohne neuen Tipp

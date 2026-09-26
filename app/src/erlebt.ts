@@ -30,6 +30,8 @@ export interface ErlebteFahrt {
   notiz?: string
   /** von Hand ins Logbuch eingetragen, ohne Fahrtmodus: keine Objekte erfasst */
   manuell?: boolean
+  /** der gewählte Zug laut Fahrplan, «IC 2 · Zug 875 nach Lugano» */
+  zug?: string
   /** gefahrene Meter auf der gezeichneten Strecke, vom ersten Standort bis zum
    *  letzten; erst seit 2026-09-28 erfasst (Michael), ältere Fahrten ohne */
   weg_m?: number
@@ -112,6 +114,16 @@ export function wegPunkte(w: { start: [number, number]; d: number[] }) {
   const raus = [{ lat: la / 1e4, lon: lo / 1e4 }]
   for (let i = 0; i + 1 < w.d.length; i += 2) { la += w.d[i]; lo += w.d[i + 1]; raus.push({ lat: la / 1e4, lon: lo / 1e4 }) }
   return raus
+}
+
+/** Der gewählte Zug zur Fahrt; ohne Wahl weg */
+export function zugEintragen(beginn: number, zug: string | null) {
+  const h = heftLesen()
+  const f = h.fahrten.find((x) => x.beginn === beginn)
+  if (!f) return
+  if (zug) f.zug = zug
+  else delete f.zug
+  schreiben(h)
 }
 
 /** Fahrten ohne ein einziges durchfahrenes Objekt fallen weg */
