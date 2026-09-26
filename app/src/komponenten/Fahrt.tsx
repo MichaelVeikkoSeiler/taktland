@@ -9,11 +9,14 @@ import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
 import { BahnhofFeld, fahrtAdresse, type StreckenWahl } from './Strecke'
 import { Stern } from './Stern'
 
-type Art = 'ziel' | 'beide'
+type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
 
 function artLesen(): Art {
-  try { return localStorage.getItem(ART_MERKEN) === 'beide' ? 'beide' : 'ziel' } catch { return 'ziel' }
+  try {
+    const x = localStorage.getItem(ART_MERKEN)
+    return x === 'beide' || x === 'ohne' ? x : 'ziel'
+  } catch { return 'ziel' }
 }
 
 /** Ab so vielen Metern bis zum nächsten Bahnhof fragt die Seite nach */
@@ -250,11 +253,11 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
       )}
 
       <h2 className="mt-8 text-lg font-bold">Neue Fahrt</h2>
-      <div className="mt-3 grid grid-cols-2 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group"
+      <div className="mt-3 grid grid-cols-3 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group"
            aria-label="Wie wählen">
-        {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel']] as const).map(([a, t]) => (
+        {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel'], ['ohne', 'Ohne Ziel']] as const).map(([a, t]) => (
           <button key={a} type="button" aria-pressed={art === a} onClick={() => artWaehlen(a)}
-                  className={`px-3 py-2 font-medium ${art === a
+                  className={`px-2 py-2 font-medium leading-tight ${art === a
                     ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                     : 'bg-white text-sbb-black hover:bg-sbb-milk dark:bg-sbb-midnight dark:text-sbb-white'}`}>
             {t}
@@ -262,6 +265,19 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         ))}
       </div>
 
+      {art === 'ohne' ? (
+        <div className="mt-4">
+          <p className="leading-relaxed">
+            Taktland erkennt aus einigen Standorten Strecke und Richtung und meldet, was auf derselben
+            Linie vorne liegt. Verzweigt sich die Linie, sucht Taktland neu; liegen Strecken
+            nebeneinander, fragt es nach.
+          </p>
+          <button type="button" onClick={() => { tonBereitlegen(); window.location.hash = '#/ohneziel' }}
+                  className="mt-4 w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125">
+            Ohne Ziel starten
+          </button>
+        </div>
+      ) : (<>
       <div className="mt-4 space-y-3">
         {art === 'ziel' ? (
           <StartPerGps suche={suche} name={name} neu={standortSuchen}
@@ -315,6 +331,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
       {fahrt.von !== null && fahrt.von === fahrt.nach && (
         <p className="mt-2 text-sm">Start und Ziel sind derselbe Bahnhof.</p>
       )}
+      </>)}
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
         Zur Auswahl stehen die Bahnhöfe, zu denen Taktland Wege kennt. Gemerkte
         Fahrten bleiben auf diesem Gerät.

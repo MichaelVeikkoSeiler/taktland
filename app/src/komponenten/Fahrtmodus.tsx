@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEILBAHN_M, type SehenswertSorte, wegEnde } from '../fahrt'
+import { spurMerken } from '../ohneziel'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 import { Auswahl } from './Auswahl'
@@ -22,6 +23,9 @@ const ABSEITS_M = 300
 const OHNE_GPS_NACH_S = 8
 /** So lange rechnet die Anzeige ohne GPS mit dem letzten Tempo weiter (Tunnel) */
 const OHNE_GPS_MAX_S = 20 * 60
+/** «Ohne Ziel»: so nah am Ende des Wegs oder so lange daneben wird neu gesucht */
+const AM_ENDE_M = 150
+const NEU_SUCHEN_S = 20
 
 export type BrueckenWahl = 'groessere' | 'alle' | 'keine'
 /** Sehenswertes: jede Kategorie für sich ein- und ausschaltbar (Michael, 2026-09-26) */
@@ -86,7 +90,7 @@ type Meldung =
  * meldet es mit einem Ton etwa 20 oder 10 Sekunden vorher. Nur solange die Seite
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
-export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren }: {
+export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren, fortsetzen, stelle, ohneZiel }: {
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
@@ -96,6 +100,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   beenden: (durchfahren: FahrObjekt[]) => void
   /** gleich beim Durchfahren, damit nichts verloren geht, wenn die Seite zugeht */
   durchfahren: (o: FahrObjekt) => void
+  /** Fortgesetzte Fahrt: Stelle beim ersten und beim letzten Standort vor dem Schliessen */
+  fortsetzen?: { startS: number; s: number } | null
+  /** die Stelle, damit die Fahrt nach dem Schliessen weitergehen kann */
+  stelle?: (startS: number, s: number) => void
+  /** «Ohne Ziel»: am Ende des Wegs oder lange daneben neu suchen */
+  ohneZiel?: () => void
 }) {
   const [einstellung, setEinstellung] = useState(einstellungLesen)
   // Sehenswertes bringt seinen Text selbst mit
@@ -109,8 +119,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const gemeldet = useRef(new Set<string>())
   const ansage = useRef<HTMLParagraphElement | null>(null)
   // Stelle beim ersten Standort: was davor liegt, ist nicht durchfahren
-  const startS = useRef<number | null>(null)
-  const hinter = useRef<FahrObjekt[]>([])
+  const startS = useRef<number | null>(fortsetzen?.startS ?? null)
+  // fortgesetzt: was vor dem Schliessen durchfahren war, steht schon im Sammelheft
+  const hinter = useRef<FahrObjekt[]>(fortsetzen
+    ? fahrweg.objekte.filter((o) => o.art !== 'sehenswert' && o.s > fortsetzen.startS && o.s <= fortsetzen.s)
+    : [])
+  const gemerktUm = useRef(0)
   const uhrStart = useRef({ echt: Date.now(), spiel: 0 })
   const [raffer, setRaffer] = useState<Zeitraffer>(20)
   const rafferRef = useRef<Zeitraffer>(20)
@@ -182,8 +196,11 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       return
     }
     const id = navigator.geolocation.watchPosition(
-      (pos) => standort(Date.now(), pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy,
-                        pos.coords.speed),
+      (pos) => {
+        standort(Date.now(), pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy, pos.coords.speed)
+        if (ohneZiel) spurMerken({ lat: pos.coords.latitude, lon: pos.coords.longitude, genau: pos.coords.accuracy,
+                                   t: Date.now() })
+      },
       (err) => setMeldung(err.code === err.PERMISSION_DENIED ? { art: 'verweigert' }
         : { art: 'fehler', text: 'Der Standort ist gerade nicht zu bekommen.' }),
       { enableHighAccuracy: true, maximumAge: 1000, timeout: 30_000 },
@@ -290,6 +307,27 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       hinter.current.push(o)
       durchfahren(o)
     }
+    // höchstens alle 5 Sekunden, und nur vorwärts
+    if (stelle && Date.now() - gemerktUm.current > 5000) {
+      gemerktUm.current = Date.now()
+      stelle(startS.current, Math.max(sJetzt, fortsetzen?.s ?? 0))
+    }
+  })
+
+  // «Ohne Ziel»: am Ende der erkannten Linie oder nach NEU_SUCHEN_S daneben
+  // (anderer Zweig an einer Verzweigung) die Linie neu suchen
+  const abseitsSeit = useRef<number | null>(null)
+  const neuGesucht = useRef(false)
+  useEffect(() => {
+    if (!ohneZiel || neuGesucht.current || !stand) return
+    if (stand.abseits === null) abseitsSeit.current = null
+    else abseitsSeit.current ??= Date.now()
+    const amEnde = sJetzt !== null && sJetzt >= wegEnde(fahrweg) - AM_ENDE_M
+    const daneben = abseitsSeit.current !== null && Date.now() - abseitsSeit.current > NEU_SUCHEN_S * 1000
+    if (amEnde || daneben) {
+      neuGesucht.current = true
+      ohneZiel()
+    }
   })
 
   const naechstes = kommend[0]
@@ -393,6 +431,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           {zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
           {faehrt && !ohneGps && ` · etwa ${Math.round(stand!.v * 3.6)} km/h`}
         </p>
+        {ohneZiel && (
+          <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
+            Ohne Ziel: Taktland folgt der Linie bis {titel.split(' → ')[1]} und sucht dann neu, ebenso,
+            wenn der Zug die Strecke verlässt.
+          </p>
+        )}
         {gegenrichtung && (
           <p className="mt-2 border-l-2 border-sbb-red pl-3 text-sm">
             Der Standort bewegt sich gegen die Richtung dieses Wegs. Vielleicht sind Start und

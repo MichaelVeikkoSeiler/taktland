@@ -4,6 +4,7 @@ import {
   notizSetzen,
 } from '../erlebt'
 import { standortLaden } from '../daten'
+import { sicherungEinlesen, sicherungHerunterladen, sicherungPruefen } from '../sicherung'
 import type { BahnhofIndex, StandortDaten } from '../typen'
 import { type Box, KartenPlatz, lage, Netzkarte, useKarte } from './Netzkarte'
 import { BahnhofFeld } from './Strecke'
@@ -65,6 +66,8 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
           {fahrten.map((f) => <Eintrag key={f.beginn} f={f} index={index} geaendert={neuLesen} />)}
         </ul>
       )}
+
+      <Sicherung />
 
       {fahrten.length > 0 && (
         <div className="mt-10 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
@@ -298,5 +301,70 @@ function NeueFahrt({ index, fertig }: { index: BahnhofIndex | null; fertig: () =
         <button type="button" onClick={fertig} className="underline underline-offset-2">Abbrechen</button>
       </div>
     </div>
+  )
+}
+
+/**
+ * Sicherung als Datei: alles, was Taktland auf diesem Gerät weiss (Michael,
+ * 2026-09-26). Einlesen ersetzt den Stand auf dem Gerät, darum mit Rückfrage.
+ */
+function Sicherung() {
+  const [meldung, setMeldung] = useState<string | null>(null)
+  const [fund, setFund] = useState<{ erstellt: string; daten: Record<string, string> } | null>(null)
+  const knopf = `border border-sbb-cloud bg-white px-4 py-2 text-sm font-medium hover:border-sbb-black
+                 dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white`
+
+  async function gewaehlt(f: File | undefined) {
+    setMeldung(null)
+    setFund(null)
+    if (!f) return
+    try { setFund(await sicherungPruefen(f)) } catch (e) { setMeldung((e as Error).message) }
+  }
+
+  return (
+    <section className="mt-10 border-t border-sbb-cloud pt-4 dark:border-sbb-iron" aria-labelledby="sicherung">
+      <h2 id="sicherung" className="text-lg font-bold">Sicherung</h2>
+      <p className="mt-1 text-sm leading-relaxed">
+        Logbuch, Sammelheft, Favoriten, Probefahrten, Lernfortschritt und Einstellungen liegen nur im
+        Speicher dieses Browsers. Safari löscht ihn bei Websites, die sieben Tage nicht geöffnet
+        wurden; als App auf dem Home-Bildschirm nicht. Mit einer Sicherung als Datei geht nichts
+        verloren, und du kannst alles auf ein anderes Gerät bringen. Die Datei bleibt bei dir.
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button type="button" className={knopf}
+                onClick={() => {
+                  const n = sicherungHerunterladen()
+                  setFund(null)
+                  setMeldung(`Sicherung mit ${n} ${n === 1 ? 'Eintrag' : 'Einträgen'} heruntergeladen.`)
+                }}>
+          Sicherung herunterladen
+        </button>
+        <label className={`${knopf} cursor-pointer`}>
+          Sicherung einlesen …
+          <input type="file" accept="application/json,.json" className="sr-only"
+                 onChange={(e) => { void gewaehlt(e.target.files?.[0]); e.target.value = '' }} />
+        </label>
+      </div>
+      {meldung && <p className="mt-2 text-sm" role="status">{meldung}</p>}
+      {fund && (
+        <div className="mt-3 border-l-2 border-sbb-red pl-3 text-sm">
+          <p>
+            Sicherung vom {datum(Date.parse(fund.erstellt))}, {uhrzeit(Date.parse(fund.erstellt))} Uhr. Sie ersetzt
+            alles, was Taktland jetzt auf diesem Gerät weiss. Das lässt sich nicht rückgängig machen.
+          </p>
+          <div className="mt-2 flex gap-2">
+            <button type="button"
+                    onClick={() => { sicherungEinlesen(fund.daten); window.location.reload() }}
+                    className="rounded-lg bg-sbb-red px-3 py-2 font-bold text-white hover:bg-sbb-red125">
+              Ja, einlesen
+            </button>
+            <button type="button" onClick={() => setFund(null)}
+                    className="border border-sbb-cloud px-3 py-2 dark:border-sbb-iron">
+              Abbrechen
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
   )
 }

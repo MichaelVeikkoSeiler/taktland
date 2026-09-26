@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { flaechenLaden, geometrieLaden, linienLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, tonAbholen } from '../fahrt'
+import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
+import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
 import { kantonText } from '../kanton'
@@ -24,23 +25,29 @@ export interface StreckenWahl {
   von: number | null
   nach: number | null
   ueber: number | null
+  /** «Ohne Ziel»: der Weg als Betriebspunkte, statt gesucht (Michael, 2026-09-26) */
+  weg?: string[] | null
+  ohne?: boolean
 }
 
 /** #/strecke?von=8503000&nach=8505300&ueber=8505000: teilbar und mit «Zurück» erreichbar */
 export function streckenAdresse(w: StreckenWahl) {
   const teile = (['von', 'nach', 'ueber'] as const).filter((k) => w[k]).map((k) => `${k}=${w[k]}`)
+  if (w.weg?.length) teile.push(`weg=${w.weg.join('.')}`)
+  if (w.ohne) teile.push('ohne=1')
   return teile.length ? `#/strecke?${teile.join('&')}` : '#/strecke'
 }
 
-/** Wie streckenAdresse, dazu startet die Seite den Fahrtmodus gleich selbst */
-export function fahrtAdresse(w: StreckenWahl, probe = false) {
-  return `${streckenAdresse(w)}&fahrt=${probe ? 'probe' : 'ja'}`
+/** Wie streckenAdresse, dazu startet die Seite den Fahrtmodus gleich selbst;
+ *  «weiter» setzt die laufende Fahrt fort */
+export function fahrtAdresse(w: StreckenWahl, art: boolean | 'weiter' = false) {
+  return `${streckenAdresse(w)}&fahrt=${art === 'weiter' ? 'weiter' : art ? 'probe' : 'ja'}`
 }
 
-/** fahrt=ja oder fahrt=probe in der Adresse: mit dem Fahrtmodus öffnen */
-function fahrtAusAdresse(): 'ja' | 'probe' | null {
+/** fahrt=ja, fahrt=probe oder fahrt=weiter in der Adresse: mit dem Fahrtmodus öffnen */
+function fahrtAusAdresse(): 'ja' | 'probe' | 'weiter' | null {
   const f = new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('fahrt')
-  return f === 'ja' || f === 'probe' ? f : null
+  return f === 'ja' || f === 'probe' || f === 'weiter' ? f : null
 }
 
 export function wahlAusAdresse(abfrage: string | undefined): StreckenWahl {
@@ -49,7 +56,9 @@ export function wahlAusAdresse(abfrage: string | undefined): StreckenWahl {
     const v = Number(p.get(k))
     return Number.isInteger(v) && v > 0 ? v : null
   }
-  return { von: zahl('von'), nach: zahl('nach'), ueber: zahl('ueber') }
+  const weg = (p.get('weg') ?? '').split('.').filter((x) => /^[A-Z]+$/.test(x))
+  return { von: zahl('von'), nach: zahl('nach'), ueber: zahl('ueber'), weg: weg.length >= 2 ? weg : null,
+           ohne: p.get('ohne') === '1' }
 }
 
 interface Weg {
@@ -226,7 +235,16 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
   }, [netz])
 
   const ergebnis = useMemo(() => {
-    if (!netz || !wahl.von || !wahl.nach) return null
+    if (!netz) return null
+    if (wahl.weg) {
+      // der Weg ist gegeben («Ohne Ziel»): je zwei Betriebspunkte ihr Abschnitt
+      const abschnitte = wahl.weg.slice(1).map((b, i) =>
+        nachbarn.get(wahl.weg![i])?.find(([x]) => x === b)?.[1])
+      if (!abschnitte.every((e) => e)) return { art: 'keinWeg' as const }
+      const weg = { punkte: wahl.weg, abschnitte: abschnitte as StreckenAbschnitt[] }
+      return { art: 'weg' as const, weg, ...entlang(weg) }
+    }
+    if (!wahl.von || !wahl.nach) return null
     const nichtImNetz = [wahl.von, wahl.nach, wahl.ueber].filter(
       (u): u is number => u !== null && !netz.bahnhoefe[String(u)])
     if (nichtImNetz.length) return { art: 'fehlt' as const, bahnhoefe: nichtImNetz }
@@ -244,7 +262,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
     }
     if (!weg) return { art: 'keinWeg' as const }
     return { art: 'weg' as const, weg, ...entlang(weg) }
-  }, [netz, nachbarn, wahl])
+  }, [netz, nachbarn, wahl.von, wahl.nach, wahl.ueber, wahl.weg?.join('.')])
 
   function waehlen(neu: Partial<StreckenWahl>) {
     window.location.hash = streckenAdresse({ ...wahl, ...neu })
@@ -318,7 +336,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
       )}
 
       {netz && tunnel && bruecken && ergebnis?.art === 'weg' && (
-        <Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
+        <Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}-${wahl.weg?.join('.')}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
                   brueckenIds={ergebnis.bruecken} tunnel={tunnel} bruecken={bruecken}
                   bahnhof={bahnhof} alleBruecken={alleBruecken} verzeichnis={verzeichnis}
                   zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} />
@@ -345,9 +363,16 @@ function Ergebnis({
   const tunnelNach = useMemo(() => nachKennung(tunnel), [tunnel])
   const brueckenNach = useMemo(() => nachKennung(bruecken), [bruecken])
   const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: () => void
-                                        beginn: number | null } | null>(null)
+                                        beginn: number | null
+                                        fortsetzen: { startS: number; s: number } | null } | null>(null)
   const [bilanz, setBilanz] = useState<{ objekte: BilanzObjekt[]; probe: boolean; beginn: number | null } | null>(null)
   const [laedt, setLaedt] = useState(false)
+  // während der Fahrtmodus hier läuft, fragt oben niemand «fortsetzen?»
+  useEffect(() => {
+    if (!fahrt || fahrt.beginn === null) return
+    laufendHierSetzen(true)
+    return () => laufendHierSetzen(false)
+  }, [fahrt])
   const [fahrtFehler, setFahrtFehler] = useState<string | null>(null)
 
   // Kürzel des Betriebspunkts → UIC des Bahnhofs
@@ -381,11 +406,11 @@ function Ergebnis({
                : ` · ${y.baueinheiten} ${y.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}${quelle(y.name)}` }
   }, [tunnelNach, brueckenNach, bahnhof, uicVon])
 
-  async function fahrtStarten(probe: boolean) {
+  async function fahrtStarten(probe: boolean, weiter = false) {
     // der Ton muss im Tipp selbst vorbereitet werden, sonst bleibt er stumm;
     // kommt der Start von der Seite «Fahrtmodus», liegt er dort schon bereit
     const piepen = tonAbholen()
-    if (!probe && wahl.von && wahl.nach) letzteMerken({ von: wahl.von, nach: wahl.nach, ueber: wahl.ueber })
+    if (!probe && !weiter && !wahl.ohne && wahl.von && wahl.nach) letzteMerken({ von: wahl.von, nach: wahl.nach, ueber: wahl.ueber })
     setLaedt(true)
     setFahrtFehler(null)
     try {
@@ -399,9 +424,21 @@ function Ergebnis({
         fahrweg.objekte = [...fahrweg.objekte, ...sehenswertAufWeg(fahrweg, s, f)].sort((a, b) => a.s - b.s)
       } catch { /* ohne Sehenswertes */ }
       try { fahrweg.seeUfer = seeUferAufWeg(fahrweg, await seenLaden()) } catch { /* ohne Seen */ }
-      const titel = [bahnhoefe[0]?.name ?? '', bahnhoefe[bahnhoefe.length - 1]?.name ?? '']
+      const titel = titelText.split(' → ')
+      // fortsetzen, wenn es dieselbe Fahrt ist und der Weg gleich herauskommt
+      // «Ohne Ziel»: jede neu erkannte Linie gehört zur selben Fahrt im Logbuch
+      const alt = weiter || wahl.ohne ? laufendLesen() : null
+      const gleich = alt !== null && (wahl.ohne ? alt.ohne === true
+        : alt.von === wahl.von && alt.nach === wahl.nach && alt.ueber === wahl.ueber)
+      const fortsetzen = !wahl.ohne && gleich && alt.startS !== null && alt.s !== null
+        && Math.abs(alt.laenge - wegEnde(fahrweg)) < 1 ? { startS: alt.startS, s: alt.s } : null
       // die Probefahrt kommt nicht ins Sammelheft
-      setFahrt({ fahrweg, probe, piepen, beginn: probe ? null : fahrtBeginnen(titel[0], titel[1]) })
+      const beginn = probe ? null : gleich ? alt.beginn : fahrtBeginnen(titel[0], wahl.ohne ? 'ohne Ziel' : titel[1])
+      if (beginn !== null && (!gleich || wahl.ohne) && ((wahl.von && wahl.nach) || wahl.ohne)) {
+        laufendBeginnen({ von: wahl.von ?? 0, nach: wahl.nach ?? 0, ueber: wahl.ueber, titel: titel.join(' → '), beginn,
+                          laenge: wegEnde(fahrweg), ...(wahl.ohne ? { ohne: true } : {}) })
+      }
+      setFahrt({ fahrweg, probe, piepen, beginn, fortsetzen })
     } catch (e) {
       setFahrtFehler((e as Error).message)
     } finally {
@@ -457,7 +494,7 @@ function Ergebnis({
     if (!art) return
     autostart.current = null
     window.history.replaceState(null, '', streckenAdresse(wahl))
-    void fahrtStarten(art === 'probe')
+    void fahrtStarten(art === 'probe', art === 'weiter')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -471,6 +508,9 @@ function Ergebnis({
 
   // Betriebspunkte des Wegs, die Bahnhöfe in Taktland sind
   const bahnhoefe = weg.punkte.map((p) => bahnhof.get(uicVon.get(p) ?? 0)).filter((x) => x !== undefined)
+  // Anfang und Ende des Wegs; ohne Bahnhof dort («Ohne Ziel») der Name des Betriebspunkts
+  const endName = (abk: string) => bahnhof.get(uicVon.get(abk) ?? 0)?.name ?? netz.punkte[abk] ?? abk
+  const titelText = `${endName(weg.punkte[0])} → ${endName(weg.punkte[weg.punkte.length - 1])}`
   const grosse = bahnhoefe.slice(1, -1).filter((x) => x.tier === 'L')
 
   // Strecken anderer Bahnen: Tunnel und Brücken aus swissTLM3D (Michael, 2026-09-26:
@@ -538,7 +578,8 @@ function Ergebnis({
     <>
       <section className="mt-8">
         <h2 className="text-xl font-bold tracking-tight">
-          <BahnhofLink b={bahnhoefe[0]} /> → <BahnhofLink b={bahnhoefe[bahnhoefe.length - 1]} />
+          {wahl.weg ? titelText
+            : <><BahnhofLink b={bahnhoefe[0]} /> → <BahnhofLink b={bahnhoefe[bahnhoefe.length - 1]} /></>}
         </h2>
         {grosse.length > 0 && (
           <p className="mt-1 leading-relaxed">
@@ -634,23 +675,31 @@ function Ergebnis({
 
       {fahrt && (
         <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
-                    piepen={fahrt.piepen}
+                    piepen={fahrt.piepen} fortsetzen={fahrt.fortsetzen}
+                    ohneZiel={wahl.ohne && !fahrt.probe ? () => {
+                      // der Ton bleibt freigegeben, auch ohne neuen Tipp
+                      tonWeitergeben(fahrt.piepen)
+                      window.location.hash = '#/ohneziel'
+                    } : undefined}
+                    stelle={fahrt.beginn === null ? undefined
+                      : (startS, s) => laufendStelle(fahrt.beginn!, startS, s)}
                     durchfahren={(o) => {
                       if (fahrt.beginn === null || o.tlm) return
                       const b = bilanzObjekt(o)
                       durchfahren(fahrt.beginn, { art: b.art, kennung: b.kennung, name: b.name })
                     }}
                     beenden={(liste) => {
+                      if (fahrt.beginn !== null) laufendEnde()
                       leereFahrtenWeg()
                       setBilanz({ objekte: liste.filter((o) => !o.tlm).map(bilanzObjekt), probe: fahrt.probe,
                                   beginn: fahrt.beginn })
                       setFahrt(null)
                     }}
-                    titel={`${bahnhoefe[0]?.name} → ${bahnhoefe[bahnhoefe.length - 1]?.name}`} />
+                    titel={titelText} />
       )}
       {bilanz && (
         <FahrtBilanz objekte={bilanz.objekte} probe={bilanz.probe} beginn={bilanz.beginn}
-                     titel={`${bahnhoefe[0]?.name} → ${bahnhoefe[bahnhoefe.length - 1]?.name}`}
+                     titel={titelText}
                      schliessen={() => setBilanz(null)} />
       )}
 

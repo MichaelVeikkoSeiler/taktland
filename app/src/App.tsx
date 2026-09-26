@@ -4,6 +4,8 @@ import { Anleitung } from './komponenten/Anleitung'
 import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
 import { Fahrt } from './komponenten/Fahrt'
+import { Fortsetzen } from './komponenten/Fortsetzen'
+import { OhneZiel } from './komponenten/OhneZiel'
 import { Sammelheft } from './komponenten/Sammelheft'
 import { Favoriten } from './komponenten/Favoriten'
 import { Logbuch } from './komponenten/Logbuch'
@@ -30,7 +32,7 @@ import { Ladefehler } from './komponenten/Ladefehler'
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
-  | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'demo' }
+  | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'demo' } | { art: 'ohneziel' }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
@@ -51,6 +53,7 @@ function seiteAusAdresse(): Seite {
   if (h === '#/duell') return { art: 'duell' }
   if (h === '#/standort') return { art: 'standort' }
   if (h === '#/fahrt') return { art: 'fahrt' }
+  if (h === '#/ohneziel') return { art: 'ohneziel' }
   if (h === '#/sammelheft') return { art: 'sammelheft' }
   if (h === '#/logbuch') return { art: 'logbuch' }
   if (h === '#/favoriten') return { art: 'favoriten' }
@@ -90,7 +93,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'favoriten': return 'favoriten'
     case 'demo': return 'demo'
     case 'sammelheft': return 'sammelheft'
-    case 'anleitung': case 'fahrt': return null
+    case 'anleitung': case 'fahrt': case 'ohneziel': return null
   }
 }
 
@@ -137,7 +140,8 @@ export default function App() {
       {/* auf dem Tablet breiter: 672 Pixel wirkten dort verloren (Michael, 2026-09-22) */}
       <div className="mx-auto max-w-2xl md:max-w-3xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
-              fahrt={seite.art === 'fahrt'} />
+              fahrt={seite.art === 'fahrt' || seite.art === 'ohneziel'} />
+        <Fortsetzen />
 
         {fehler && (
           <Ladefehler className="px-4 py-8" was="Die Bahnhofsliste konnte nicht geladen werden." fehler={fehler} />
@@ -150,6 +154,7 @@ export default function App() {
         {seite.art === 'duell' && <Duell index={index} />}
         {seite.art === 'standort' && <Standort index={index} />}
         {seite.art === 'fahrt' && <Fahrt index={index} />}
+        {seite.art === 'ohneziel' && <OhneZiel index={index} />}
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}
         {seite.art === 'logbuch' && <Logbuch index={index} />}
         {seite.art === 'favoriten' && <Favoriten index={index} oeffnen={oeffnen} />}

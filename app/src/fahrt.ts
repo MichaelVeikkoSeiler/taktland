@@ -299,6 +299,11 @@ export function tonBereitlegen() {
   bereitgelegt = tonVorbereiten()
 }
 
+/** Einen schon freigegebenen Ton für die nächste Seite bereitlegen */
+export function tonWeitergeben(ton: () => void) {
+  bereitgelegt = ton
+}
+
 export function tonAbholen() {
   const ton = bereitgelegt ?? tonVorbereiten()
   bereitgelegt = null
