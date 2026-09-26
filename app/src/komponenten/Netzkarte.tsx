@@ -430,7 +430,7 @@ export function Netzkarte({
         <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           {beschriftung}{' '}
           {seen && 'Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. '}
-          {sehenswert.s && 'Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; BLN, Pärke, Moorlandschaften: BAFU. Kulturgüter erscheinen erst näher. Ein Tipp auf ein Zeichen zeigt, was es ist; ein Tipp in der Legende blendet eine Kategorie aus oder ein. '}
+          {sehenswert.s && 'Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften): BAFU. Kulturgüter erscheinen erst näher. Ein Tipp auf ein Zeichen zeigt, was es ist; ein Tipp in der Legende blendet eine Kategorie aus oder ein. '}
           Zoomen mit zwei Fingern, mit «+» und «−» oder mit Strg und dem Mausrad; Ziehen verschiebt
           die Karte, sobald sie näher steht.
         </figcaption>

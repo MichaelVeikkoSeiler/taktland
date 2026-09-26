@@ -446,10 +446,11 @@ export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: 
       while (t && st[0] < st[1]) { st[0] = t[1]; t = tunnelBei(st[0] + 1) }
     }
     stuecke.filter(([a, b]) => b - a >= FLAECHE_MIN_M).forEach(([a, b], k) => {
-      const art = f.art === 'BLN' ? 'BLN-Gebiet' : f.art
+      // «Gebiete» von nationaler Bedeutung (Michael, 2026-09-26: BLN, Pärke und Moorlandschaften zusammen)
+      const art = f.art === 'BLN' ? 'Landschaft (BLN)' : f.art
       raus.push({ kennung: `flaeche ${nr}:${k}`, art: 'sehenswert', s: a, sAus: b,
                   sehenswert: { sorte: 'flaeche', art, name: f.name, seite: null,
-                                zeile: f.art === 'BLN' ? 'Landschaft oder Naturdenkmal von nationaler Bedeutung' : f.art } })
+                                zeile: 'Gebiet von nationaler Bedeutung' } })
     })
   })
   return raus

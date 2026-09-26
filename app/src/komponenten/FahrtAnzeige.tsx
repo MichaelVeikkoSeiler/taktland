@@ -437,7 +437,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
         dem Schienennetz des BAV. Auf Strecken anderer Bahnen ist der Weg gerade von Bahnhof zu
         Bahnhof gezogen. Rot der geschätzte Standort.
         {seen && ' Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab.'}
-        {sehenswert.s && ' Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; BLN, Pärke, Moorlandschaften: BAFU. Kulturgüter erscheinen erst näher; ein Tipp auf ein Zeichen zeigt, was es ist, ein Tipp in der Legende blendet eine Kategorie aus oder ein.'}
+        {sehenswert.s && ' Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften): BAFU. Kulturgüter erscheinen erst näher; ein Tipp auf ein Zeichen zeigt, was es ist, ein Tipp in der Legende blendet eine Kategorie aus oder ein.'}
         {' Zoomen mit zwei Fingern oder mit «+» und «−»; näher gezoomt lässt sich die Karte verschieben.'}
           </p>
         </details>

@@ -28,7 +28,7 @@ export type BrueckenWahl = 'groessere' | 'alle' | 'keine'
 type SehenswertWahl = Record<SehenswertSorte, boolean>
 const SORTEN: Array<[SehenswertSorte, string]> = [
   ['gipfel', 'Gipfel melden'], ['kgs', 'Kulturgüter melden'], ['seilbahn', 'Seilbahnen melden'],
-  ['flaeche', 'Flächen melden (BLN, Pärke, Moore)'],
+  ['flaeche', 'Gebiete melden (BLN, Pärke, Moorlandschaften)'],
 ]
 const EINSTELLUNG = 'taktland.fahrt.v1'
 
@@ -73,7 +73,7 @@ interface Stand {
 
 const ART: Record<FahrObjekt['art'], string> = { tunnel: 'Tunnel', bruecke: 'Brücke', bahnhof: 'Bahnhof',
                                                   sehenswert: 'Sehenswert' }
-/** «Kulturgut · links», «BLN-Gebiet», «Tunnel» */
+/** «Kulturgut · links», «Landschaft (BLN)», «Tunnel» */
 const artText = (o: FahrObjekt) => o.sehenswert
   ? `${o.sehenswert.art}${o.sehenswert.seite ? ` · ${o.sehenswert.seite}` : ''}`
   : o.tlm?.art === 'galerie' ? 'Galerie' : ART[o.art]
@@ -523,7 +523,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           gemeldet werden die Betriebspunkte des Wegs, die in Taktland eine Seite haben, auch wo
           der Zug nicht hält: Einen Fahrplan enthalten die Daten nicht. Sehenswertes: Kulturgüter
           bis {KGS_M} m, Seilbahnen mit einem Ende bis {SEILBAHN_M} m und Gipfel bis {GIPFEL_M / 1000} km
-          neben der gezeichneten Strecke, dazu BLN-Gebiete, Pärke und Moorlandschaften, durch die sie
+          neben der gezeichneten Strecke, dazu Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften), durch die sie
           führt. Links und rechts ergeben sich aus der Lage in den Quellen (swisstopo, BABS, BAV, BAFU);
           ob etwas vom Zug aus zu sehen ist, sagen die Daten nicht. Sehenswertes kommt nicht ins
           Sammelheft. Hellblau im Streckenband: ein See der Landeskarte 1:1 Million liegt

@@ -79,9 +79,13 @@ function flaechenLesen(f: FlaechenDaten): Flaeche[] {
   return f.flaechen.map((a) => ({
     ...zug(a.ringe, true),
     art: a.art === 'BLN' ? 'bln' : a.art === 'Moorlandschaft' ? 'moor' : 'park',
-    info: { titel: a.name, zeilen: [a.art === 'BLN' ? 'Landschaft oder Naturdenkmal von nationaler Bedeutung (BLN)'
-      : a.art === 'Moorlandschaft' ? 'Moorlandschaft von nationaler Bedeutung' : a.art], quelle: f.quelle },
+    info: { titel: a.name, zeilen: ['Gebiet von nationaler Bedeutung', gebietArt(a.art)], quelle: f.quelle },
   }))
+}
+
+/** Die Art eines Gebiets, wie sie der Name des Inventars des BAFU nennt */
+export function gebietArt(art: string) {
+  return art === 'BLN' ? 'Landschaft oder Naturdenkmal (BLN)' : art
 }
 
 let vorrat: Sehenswert | null = null
@@ -111,10 +115,14 @@ const imBild = (z: { x0: number; x1: number; y0: number; y1: number }, box: Box,
  * Welche Kategorien die Karten zeigen: jede lässt sich in der Legende aus- und
  * einblenden (Michael, 2026-09-26), gemerkt auf diesem Gerät, für alle Karten.
  */
-export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'bln' | 'park' | 'moor'
+export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete'
 const KATEGORIEN_SPEICHER = 'taktland.karte.v1'
 let versteckt: Set<Kategorie> = (() => {
-  try { return new Set(JSON.parse(localStorage.getItem(KATEGORIEN_SPEICHER) ?? '{}').versteckt ?? []) } catch { return new Set() }
+  try {
+    // BLN, Park und Moorlandschaft waren bis 2026-09-26 drei Knöpfe; ist einer aus, sind es die Gebiete
+    const alt: string[] = JSON.parse(localStorage.getItem(KATEGORIEN_SPEICHER) ?? '{}').versteckt ?? []
+    return new Set(alt.map((k) => (['bln', 'park', 'moor'].includes(k) ? 'gebiete' : k)) as Kategorie[])
+  } catch { return new Set() }
 })()
 const hoerer = new Set<() => void>()
 
@@ -142,11 +150,10 @@ export function FlaechenEbene({ flaechen, box, verh = 1.6, waehlen }: {
   const h = box.w / verh
   return (
     <g>
-      {flaechen.filter((f) => !aus.has(f.art) && imBild(f, box, h)).map((f, i) => (
+      {/* BLN, Pärke und Moorlandschaften als «Gebiete» in einer Farbe (Michael, 2026-09-26) */}
+      {!aus.has('gebiete') && flaechen.filter((f) => imBild(f, box, h)).map((f, i) => (
         <path key={i} d={f.d} fillRule="evenodd" strokeWidth={1} vectorEffect="non-scaling-stroke"
-              className={`${f.art === 'bln' ? 'fill-flaeche-bln stroke-flaeche-bln-rand'
-                : f.art === 'moor' ? 'fill-flaeche-moor stroke-flaeche-moor-rand'
-                  : 'fill-flaeche-park stroke-flaeche-park-rand'} ${waehlen ? 'cursor-pointer' : ''}`}
+              className={`fill-flaeche-park stroke-flaeche-park-rand ${waehlen ? 'cursor-pointer' : ''}`}
               onClick={waehlen ? () => waehlen(f.info) : undefined} />
       ))}
     </g>
@@ -252,9 +259,7 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   ['gipfel', 'Gipfel', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M5 1L9 9H1Z" className="fill-gipfel" /></svg>],
   ['kgs', 'Kulturgut', <svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>],
   ['seilbahn', 'Seilbahn', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="1.5" strokeDasharray="3 2" className="stroke-seilbahn" /></svg>],
-  ['bln', 'BLN', <span className="inline-block size-2.5 rounded-sm border border-flaeche-bln-rand bg-flaeche-bln" />],
-  ['park', 'Park', <span className="inline-block size-2.5 rounded-sm border border-flaeche-park-rand bg-flaeche-park" />],
-  ['moor', 'Moorlandschaft', <span className="inline-block size-2.5 rounded-sm border border-flaeche-moor-rand bg-flaeche-moor" />],
+  ['gebiete', 'Gebiete', <span className="inline-block size-2.5 rounded-sm border border-flaeche-park-rand bg-flaeche-park" />],
 ]
 
 /** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein */
