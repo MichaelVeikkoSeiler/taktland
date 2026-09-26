@@ -916,15 +916,15 @@ function Zeile({ name, linie, seite, teile, liste, stelle }: {
       <p className="font-medium text-sbb-black dark:text-sbb-white">
         {seite
           ? <a href={`#/linie/${linie}/${liste}?eintrag=${stelle.split(':')[1]}`}
-               className="underline-offset-2 hover:underline">{name}</a>
-          : name}
+               className="underline-offset-2 hover:underline">{ohneKuerzel(name)}</a>
+          : ohneKuerzel(name)}
       </p>
       <p className="text-sm text-sbb-metal dark:text-sbb-storm">
         {seite
           ? <a href={`#/linie/${linie}`} className="underline underline-offset-2 hover:text-sbb-black
                                                    dark:hover:text-sbb-white">Linie {linie}</a>
           : `Linie ${linie}`}
-        {' · '}{teile.join(' · ')}
+        {' · '}{teile.join(' · ')}{ohneKuerzel(name) !== name && ` · Name laut Quelle: ${name}`}
       </p>
     </li>
   )

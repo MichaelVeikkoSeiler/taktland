@@ -7,6 +7,7 @@ import { genau } from './Objekte'
 import { StreckeKarte } from './StreckeKarte'
 import { Ladefehler } from './Ladefehler'
 import { Auswahl } from './Auswahl'
+import { ohneKuerzel } from '../kuerzel'
 
 export type UebersichtArt = 'tunnel' | 'bruecken'
 
@@ -32,7 +33,7 @@ interface Sortierung {
 }
 
 const nachName = (a: Eintrag, b: Eintrag) =>
-  a.name.localeCompare(b.name, 'de-CH', { sensitivity: 'base' })
+  ohneKuerzel(a.name).localeCompare(ohneKuerzel(b.name), 'de-CH', { sensitivity: 'base' })
 
 /** Einträge ohne Angabe stehen am Schluss, nicht als 0 */
 function nachZahl(wert: (e: Eintrag) => number | null, absteigend: boolean) {
@@ -50,7 +51,7 @@ const nachLinie: Sortierung = {
   marke: (e) => `Linie ${e.linie}`,
 }
 const alphabetisch: Sortierung = {
-  wert: 'alphabet', text: 'Alphabetisch', vergleich: nachName, marke: (e) => e.name,
+  wert: 'alphabet', text: 'Alphabetisch', vergleich: nachName, marke: (e) => ohneKuerzel(e.name),
 }
 
 const TEXTE = {
@@ -256,8 +257,10 @@ function Zeile({ e, linie, art, stelle }: {
 
   const inhalt = (
     <span className="min-w-0">
-      <span className="block font-medium text-sbb-black dark:text-sbb-white">{e.name}</span>
-      <span className="block text-sm text-sbb-black dark:text-sbb-white">{teile.join(' · ')}</span>
+      <span className="block font-medium text-sbb-black dark:text-sbb-white">{ohneKuerzel(e.name)}</span>
+      <span className="block text-sm text-sbb-black dark:text-sbb-white">
+        {teile.join(' · ')}{ohneKuerzel(e.name) !== e.name && ` · Name laut Quelle: ${e.name}`}
+      </span>
       {art === 'tunnel' && t.bemerkung && (
         <span className="block text-sm text-sbb-black dark:text-sbb-white">
           Bemerkung der Quelle: «{t.bemerkung}»

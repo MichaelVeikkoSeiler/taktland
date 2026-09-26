@@ -7,6 +7,7 @@ import { type Filter, listenAdresse } from '../listen'
 import { ObjektKarte } from './Karte'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
+import { ohneKuerzel } from '../kuerzel'
 
 /** einzahl mit Adjektiv: «1 erfasster Tunnel», «1 erfasste Brücke» */
 const TITEL: Record<ListenArt, { mehrzahl: string; einzahl: string; quelle: string }> = {
@@ -171,16 +172,21 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
   )
 }
 
-function Zeile({ name, teile, bemerkung }: {
+function Zeile({ name, teile, bemerkung, kuerzel = false }: {
   name: string | null
   teile: string[]
   bemerkung?: string | null
+  /** Brücken und Tunnel: das unerklärte Kürzel der Quelle weglassen (app/src/kuerzel.ts) */
+  kuerzel?: boolean
 }) {
+  const kurz = name && kuerzel ? ohneKuerzel(name) : name
   return (
     <>
       {/* span statt p: die Zeile steht auch in einer Schaltfläche */}
-      <span className="block font-medium text-sbb-black dark:text-sbb-white">{name ?? 'ohne Namen'}</span>
-      <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{teile.join(' · ')}</span>
+      <span className="block font-medium text-sbb-black dark:text-sbb-white">{kurz ?? 'ohne Namen'}</span>
+      <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+        {teile.join(' · ')}{kurz !== name && ` · Name laut Quelle: ${name}`}
+      </span>
       {bemerkung && (
         <span className="mt-0.5 block text-sm text-sbb-black dark:text-sbb-white">
           Bemerkung der Quelle: «{bemerkung}»
@@ -196,7 +202,7 @@ function km(n: number | null) {
 
 function Tunnel({ t }: { t: TunnelEintrag }) {
   return (
-    <Zeile name={t.name} bemerkung={t.bemerkung} teile={[
+    <Zeile name={t.name} bemerkung={t.bemerkung} kuerzel teile={[
       km(t.km),
       t.laenge_m === null ? 'Länge: keine Angabe' : `${genau(t.laenge_m)} m`,
       t.inbetriebnahme_jahr === null
@@ -209,7 +215,7 @@ function Tunnel({ t }: { t: TunnelEintrag }) {
 
 function Bruecke({ b }: { b: BrueckenEintrag }) {
   return (
-    <Zeile name={b.name} teile={[
+    <Zeile name={b.name} kuerzel teile={[
       km(b.km),
       b.kanton ? `Kanton «${b.kanton}»` : 'Kanton: keine Angabe',
       b.baueinheiten === null ? 'Baueinheiten: keine Angabe'
