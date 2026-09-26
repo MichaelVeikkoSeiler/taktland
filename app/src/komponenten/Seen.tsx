@@ -62,9 +62,9 @@ export function useSeen(): See[] | null {
 type Feld = [number, number, number, number]
 
 /** Die Flächen im Bild; unter dem Streckennetz zeichnen */
-export function SeenFlaechen({ seen, box }: { seen: See[] | null; box: Box }) {
+export function SeenFlaechen({ seen, box, verh = 1.6 }: { seen: See[] | null; box: Box; verh?: number }) {
   if (!seen) return null
-  const h = box.w / 1.6
+  const h = box.w / verh
   const im = seen.filter((s) => s.x1 > box.cx - box.w && s.x0 < box.cx + box.w
     && s.y1 > box.cy - h && s.y0 < box.cy + h)
   return (
@@ -78,14 +78,15 @@ export function SeenFlaechen({ seen, box }: { seen: See[] | null; box: Box }) {
  * Die Namen der Seen im Bild, die Platz haben. «belegt» sind Felder, die
  * schon beschriftet sind (etwa Bahnhöfe); sie gehen vor.
  */
-export function SeenNamen({ seen, box, px, belegt = [] }: {
+export function SeenNamen({ seen, box, px, belegt = [], verh = 1.6 }: {
   seen: See[] | null
   box: Box
   px: number
   belegt?: Feld[]
+  verh?: number
 }) {
   if (!seen) return null
-  const h = box.w / 1.6
+  const h = box.w / verh
   const schrift = 9.5
   const felder = [...belegt]
   const namen: Array<{ s: See; feld: Feld }> = []

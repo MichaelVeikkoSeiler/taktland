@@ -86,6 +86,61 @@ export function boxUm(stuecke: Stueck[], mindestens: number): Box {
   return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w }
 }
 
+/**
+ * Karte als Vollbild (Michael, 2026-09-26: «Karte als Vollbild anzeigen lassen
+ * können wäre cool»). Kein Vollbild des Browsers, das auf dem iPhone fehlt,
+ * sondern eine Fläche über der ganzen Seite. Das Seitenverhältnis folgt dann
+ * dem Bildschirm; Escape schliesst.
+ */
+export function useVollbild(svg: React.RefObject<SVGSVGElement | null>) {
+  const [voll, setVoll] = useState(false)
+  const [verh, setVerh] = useState(SEITENVERHAELTNIS)
+  useEffect(() => {
+    if (!voll) { setVerh(SEITENVERHAELTNIS); return }
+    const el = svg.current
+    const messen = () => {
+      const r = el?.getBoundingClientRect()
+      if (r && r.width && r.height) setVerh(r.width / r.height)
+    }
+    messen()
+    const beobachter = new ResizeObserver(messen)
+    if (el) beobachter.observe(el)
+    const taste = (e: KeyboardEvent) => { if (e.key === 'Escape') setVoll(false) }
+    document.addEventListener('keydown', taste)
+    const vorher = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      beobachter.disconnect()
+      document.removeEventListener('keydown', taste)
+      document.body.style.overflow = vorher
+    }
+  }, [voll, svg])
+  return { voll, setVoll, verh }
+}
+
+/** Klassen für die Figur und die Zeichnung, normal oder als Vollbild */
+export const vollbildKlassen = (voll: boolean, normal: string) => voll
+  ? { figur: 'fixed inset-0 z-[80] m-0 flex flex-col bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] dark:bg-sbb-midnight',
+      svg: 'mt-2 min-h-0 w-full flex-1' }
+  : { figur: normal, svg: 'mt-1 aspect-[1.6] w-full' }
+
+export function VollbildKnopf({ voll, umschalten }: { voll: boolean; umschalten: () => void }) {
+  return (
+    <button type="button" onClick={umschalten} aria-label={voll ? 'Vollbild schliessen' : 'Karte als Vollbild'}
+            title={voll ? 'Vollbild schliessen' : 'Vollbild'}
+            className="flex size-8 items-center justify-center rounded-lg border border-sbb-cloud bg-white
+                       text-sbb-black hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
+                       dark:text-sbb-white dark:hover:border-sbb-white">
+      <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true" fill="none" stroke="currentColor"
+           strokeWidth="1.6" strokeLinecap="round">
+        {voll
+          ? <path d="M6 2v4H2M10 2v4h4M6 14v-4H2M10 14v-4h4" />
+          : <path d="M2 6V2h4M14 6V2h-4M2 10v4h4M14 10v4h-4" />}
+      </svg>
+    </button>
+  )
+}
+
 /** Lädt das Streckennetz einmal und hält es im Speicher */
 export function useKarte() {
   const [daten, setDaten] = useState<KartenDaten | null>(null)
@@ -138,11 +193,25 @@ export function Netzkarte({
   const svg = useRef<SVGSVGElement | null>(null)
   const zeiger = useRef(new Map<number, { x: number; y: number }>())
   const zieht = useRef<{ art: 'nichts' | 'karte'; x: number; y: number; d: number } | null>(null)
-
-  // Wechselt die Seite den Ausschnitt (andere Linie, anderer Bahnhof), gilt er neu
-  useEffect(() => { setBox(start) }, [start.cx, start.cy, start.w])
+  const { voll, setVoll, verh } = useVollbild(svg)
+  // Hat man selbst gezoomt oder verschoben, bleibt der Ausschnitt, auch wenn
+  // der Standort sich ein wenig ändert (Michael, 2026-09-26: «springt dauernd
+  // auf Default-Ausschnitt zurück»). Ein neuer Ort (andere Linie, anderer
+  // Bahnhof, ein grosser Sprung) setzt ihn neu.
+  const [eigen, setEigen] = useState(false)
+  const letzterStart = useRef(start)
+  useEffect(() => {
+    const alt = letzterStart.current
+    letzterStart.current = start
+    const weit = Math.hypot(start.cx - alt.cx, start.cy - alt.cy) > start.w * 0.5 || start.w !== alt.w
+    if (eigen && !weit) return
+    setBox(start)
+    setEigen(false)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [start.cx, start.cy, start.w])
 
   const zoomen = useCallback((faktor: number, mitteX?: number, mitteY?: number) => {
+    setEigen(true)
     setBox((alt) => {
       const w = Math.min(WEIT, Math.max(ENG, alt.w / faktor))
       if (mitteX === undefined || mitteY === undefined) return { ...alt, w }
@@ -218,6 +287,7 @@ export function Netzkarte({
       e.currentTarget.setPointerCapture(e.pointerId)
     }
     const einheit = proPixel()
+    setEigen(true)
     setBox((alt) => ({ ...alt, cx: alt.cx - dx * einheit, cy: alt.cy - dy * einheit }))
   }
 
@@ -226,7 +296,8 @@ export function Netzkarte({
     if (zeiger.current.size === 0) zieht.current = null
   }
 
-  const h = box.w / SEITENVERHAELTNIS
+  const h = box.w / verh
+  const klassen = vollbildKlassen(voll, 'mt-4')
   const ansicht = [box.cx - box.w / 2, box.cy - h / 2, box.w, h]
   const px = box.w / 350
   const drin = (x: number, y: number) =>
@@ -264,10 +335,17 @@ export function Netzkarte({
     .filter((o) => !punkte.some((p) => p.name === o.name && drin(p.x, p.y)))
 
   return (
-    <figure className="mt-4">
+    <figure className={klassen.figur}>
       <div className="flex flex-wrap items-center justify-end gap-3 text-xs">
+        {eigen && (
+          <button type="button" onClick={() => { setBox(start); setEigen(false) }}
+                  className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
+                             dark:text-sbb-storm dark:hover:text-sbb-white">
+            Zurück
+          </button>
+        )}
         {presets.map((p) => (
-          <button key={p.text} type="button" onClick={() => setBox(p.box)}
+          <button key={p.text} type="button" onClick={() => { setBox(p.box); setEigen(true) }}
                   className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
                              dark:text-sbb-storm dark:hover:text-sbb-white">
             {p.text}
@@ -277,13 +355,14 @@ export function Netzkarte({
           {([['−', 1 / 1.6], ['+', 1.6]] as const).map(([zeichen, f]) => (
             <button key={zeichen} type="button" onClick={() => zoomen(f)}
                     aria-label={zeichen === '+' ? 'Näher heran' : 'Weiter weg'}
-                    className="flex size-7 items-center justify-center border border-sbb-cloud
+                    className="flex size-8 items-center justify-center rounded-lg border border-sbb-cloud
                                bg-white text-base leading-none text-sbb-black hover:border-sbb-black
                                dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white
                                dark:hover:border-sbb-white">
               {zeichen}
             </button>
           ))}
+          <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </span>
       </div>
       <svg ref={svg} viewBox={ansicht.join(' ')} role="img" preserveAspectRatio="xMidYMid meet"
@@ -292,9 +371,9 @@ export function Netzkarte({
              const p = zuKarte(e.clientX, e.clientY)
              zoomen(1.8, p?.x, p?.y)
            }}
-           className="mt-1 aspect-[1.6] w-full touch-none border border-sbb-cloud bg-white
-                      dark:border-sbb-iron dark:bg-sbb-midnight">
-        <SeenFlaechen seen={seen} box={box} />
+           className={`${klassen.svg} touch-none border border-sbb-cloud bg-white
+                      dark:border-sbb-iron dark:bg-sbb-midnight`}>
+        <SeenFlaechen seen={seen} box={box} verh={verh} />
         {sichtbar.map(({ nr, s, i }) => (
           <path key={`${nr}-${i}`} d={pfad(s.x.map((x, j) => [x, s.y[j]]))} fill="none"
                 className={hervor?.has(nr)
@@ -316,7 +395,7 @@ export function Netzkarte({
                   textAnchor={o.x > box.cx ? 'end' : 'start'}>{o.name}</text>
           </g>
         ))}
-        <SeenNamen seen={seen} box={box} px={px} belegt={belegt} />
+        <SeenNamen seen={seen} box={box} px={px} belegt={belegt} verh={verh} />
         {zeichnen?.(px, box)}
         {punkte.filter((p) => drin(p.x, p.y)).map((p) => (
           <circle key={`b${p.name}${p.x}`} cx={p.x} cy={p.y} r={2.8 * px} strokeWidth={1.2}
@@ -336,12 +415,15 @@ export function Netzkarte({
                 strokeWidth={3} paintOrder="stroke" vectorEffect="non-scaling-stroke">{p.name}</text>
         ))}
       </svg>
-      <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-        {beschriftung}{' '}
-        {seen && 'Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. '}
-        Zoomen mit zwei Fingern, mit «+» und «−» oder mit Strg und dem Mausrad; Ziehen verschiebt
-        die Karte, sobald sie näher steht.
-      </figcaption>
+      {/* im Vollbild nur die Karte; die Hinweise bleiben auf der Seite */}
+      {!voll && (
+        <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
+          {beschriftung}{' '}
+          {seen && 'Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. '}
+          Zoomen mit zwei Fingern, mit «+» und «−» oder mit Strg und dem Mausrad; Ziehen verschiebt
+          die Karte, sobald sie näher steht.
+        </figcaption>
+      )}
     </figure>
   )
 }

@@ -6,7 +6,7 @@
  */
 import { useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
-import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte } from './Netzkarte'
+import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
@@ -198,6 +198,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const zeiger = useRef(new Map<number, { x: number; y: number }>())
   const abstand = useRef(0)
   const flaeche = useRef<SVGSVGElement | null>(null)
+  const { voll, setVoll, verh } = useVollbild(flaeche)
   const setNah = (n: boolean) => { setNahRoh(n); setZoom(1); setVersatz([0, 0]) }
   const zoomen = (f: number) => setZoom((z) => Math.min(40, Math.max(0.25, z * f)))
 
@@ -246,8 +247,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
     zeiger.current.delete(e.pointerId)
     if (zeiger.current.size < 2) abstand.current = 0
   }
-  const h = box.w / SEITENVERHAELTNIS
+  const h = box.w / verh
   const px = box.w / 350
+  const klassen = vollbildKlassen(voll, 'mt-3')
   const s = sJetzt ?? 0
 
   const netz: Stueck[] = []
@@ -265,7 +267,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const zeichen = objekte
 
   return (
-    <figure className="mt-3">
+    <figure className={klassen.figur}>
       {/* eine Zeile für alle Knöpfe, damit die Karte kompakt oben bleibt */}
       <div className="flex items-center justify-between gap-2 text-xs">
         <div className="flex overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ausschnitt">
@@ -295,15 +297,16 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
               {zeichen}
             </button>
           ))}
+          <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </div>
       </div>
       <svg ref={flaeche} viewBox={[box.cx - box.w / 2, box.cy - h / 2, box.w, h].join(' ')} role="img"
            aria-label="Karte mit dem Weg und dem Standort" preserveAspectRatio="xMidYMid meet"
            onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
-           className="mt-1 aspect-[1.6] w-full border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight">
-        <SeenFlaechen seen={seen} box={box} />
-        <SeenNamen seen={seen} box={box} px={px} />
+           className={`${klassen.svg} border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight`}>
+        <SeenFlaechen seen={seen} box={box} verh={verh} />
+        <SeenNamen seen={seen} box={box} px={px} verh={verh} />
         {netz.map((st, i) => (
           <path key={i} d={pfad(st.x.map((x, j) => [x, st.y[j]]))} fill="none" strokeWidth={1}
                 vectorEffect="non-scaling-stroke" className="stroke-sbb-cloud dark:stroke-sbb-iron" />
@@ -331,7 +334,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           </>
         )}
       </svg>
-      <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
+      <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>
         {!linien && 'Das Netz wird geladen … '}
         <details>
           <summary className="cursor-pointer underline underline-offset-2">Zur Karte</summary>
