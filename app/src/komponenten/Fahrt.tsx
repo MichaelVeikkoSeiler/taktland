@@ -3,6 +3,7 @@ import { tonBereitlegen } from '../fahrt'
 import {
   favoritUmschalten, gemerktLesen, type GemerkteFahrt,
 } from '../fahrten'
+import { alphabetisch, useFavoriten } from '../favoriten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
 import { BahnhofFeld, fahrtAdresse, type StreckenWahl } from './Strecke'
@@ -39,6 +40,10 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
                            [bahnhof])
   // nur Bahnhöfe, zu denen die Seite «Strecke» Wege kennt
   const imNetz = useMemo(() => (index?.bahnhoefe ?? []).filter((b) => b.im_netz), [index])
+  // Favoritenbahnhöfe als Ziel mit einem Tipp (Michael, 2026-09-26)
+  const favoritenUic = useFavoriten()
+  const favoriten = useMemo(() => alphabetisch(favoritenUic.map((u) => bahnhof.get(u))
+    .filter((b): b is IndexEintrag => !!b && b.im_netz)), [favoritenUic, bahnhof])
 
   function artWaehlen(a: Art) {
     setArt(a)
@@ -135,6 +140,25 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         )}
         <BahnhofFeld bezeichnung="Nach" wert={wahl.nach} bahnhoefe={imNetz} name={name}
                      aendern={(u) => setWahl((w) => ({ ...w, nach: u }))} />
+        {favoriten.length > 0 && (
+          <div>
+            <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Ziel aus den Favoriten</span>
+            <div className="mt-1 flex flex-wrap gap-2">
+              {favoriten.map((b) => {
+                const hier = wahl.nach === b.uic
+                return (
+                  <button key={b.uic} type="button" aria-pressed={hier}
+                          onClick={() => setWahl((w) => ({ ...w, nach: b.uic }))}
+                          className={`min-h-11 rounded-lg px-3 py-2 text-sm font-medium ${hier
+                            ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
+                            : 'kachel kachel-link'}`}>
+                    {b.name}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
         {art === 'beide' && (
           <BahnhofFeld bezeichnung="Über (freiwillig)" wert={wahl.ueber} bahnhoefe={imNetz} name={name}
                        aendern={(u) => setWahl((w) => ({ ...w, ueber: u }))} />
