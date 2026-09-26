@@ -218,6 +218,24 @@ def nah_an(pts_bauwerk, verlauf):
     return True
 
 
+def stelle(pts_bauwerk, verlauf):
+    """Wie weit entlang des Verlaufs das Bauwerk beginnt, für die Reihenfolge in
+    Wegrichtung (Meter der gezeichneten Linie, nur zum Ordnen)"""
+    v = [(lo * M_LON, la * M_LAT) for la, lo in verlauf]
+    la, lo = pts_bauwerk[0]
+    p = (lo * M_LON, la * M_LAT)
+    best, weit, s = float("inf"), 0.0, 0.0
+    for (ax, ay), (bx, by) in zip(v, v[1:]):
+        dx, dy = bx - ax, by - ay
+        l = math.hypot(dx, dy)
+        t = max(0.0, min(1.0, ((p[0] - ax) * dx + (p[1] - ay) * dy) / (l * l or 1)))
+        d = math.hypot(ax + t * dx - p[0], ay + t * dy - p[1])
+        if d < best:
+            best, weit = d, s + t * l
+        s += l
+    return weit
+
+
 def kodieren(pts):
     ganz = [(round(la * 1e5), round(lo * 1e5)) for la, lo in pts]
     return {"start": list(ganz[0]),
@@ -480,6 +498,7 @@ def main():
             verlauf = (bav_verlauf(bav_linien, eintrag["linie_bav"], punkte[a]["uic"], punkte[b]["uic"])
                        if "linie_bav" in eintrag else None)
             if verlauf:
+                eintrag["verlauf_bav"] = True
                 # vereinfacht auf 5 m, in Metern gerechnet; die Datei lädt der Fahrtmodus beim Start
                 meter = vereinfachen([(lo * M_LON, la * M_LAT) for la, lo in verlauf], 5)
                 verlaeufe[f"{a}|{b}"] = kodieren([(y / M_LAT, x / M_LON) for x, y in meter])
@@ -489,7 +508,8 @@ def main():
                        if a0 > min(las) - rand and a1 < max(las) + rand and o0 > min(los) - rand
                        and o1 < max(los) + rand and nah_an(tlm[kb]["pts"], verlauf)]
                 if auf:
-                    eintrag["tlm"] = sorted(auf, key=lambda x: int(x[1:]))
+                    # in Richtung von → nach geordnet; die App dreht um, wenn der Weg andersherum führt
+                    eintrag["tlm"] = sorted(auf, key=lambda x: stelle(tlm[x]["pts"], verlauf))
                     for kb in auf:
                         bauwerke_genutzt[kb] = {x: v for x, v in tlm[kb].items() if x != "pts"}
         liste.append(eintrag)
@@ -518,6 +538,9 @@ def main():
         "tunnel_bereiche": dict(sorted(bereiche.items())),
         "bahnhoefe": {str(u): abk for u, abk in sorted(im_netz.items())},
         "nicht_im_netz": sorted(u for u in namen if u not in im_netz),
+        # Art und Name der Bauwerke aus swissTLM3D, für die Zählung auf der Seite «Strecke»
+        "tlm_bauwerke": {k: {"art": b["art"], **({"name": b["name"]} if b.get("name") else {})}
+                         for k, b in sorted(bauwerke_genutzt.items(), key=lambda x: int(x[0][1:]))},
         "abschnitte": liste,
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")

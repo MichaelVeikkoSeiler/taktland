@@ -314,8 +314,11 @@ export interface StreckenAbschnitt {
   teile?: StreckenTeil[]
   /** ohne teile: die Linie laut Schienennetz des BAV, wenn genau eine beide Enden führt */
   linie_bav?: number
-  /** ohne teile: Tunnel und Brücken aus swissTLM3D, Schlüssel in StreckenGeometrie.bauwerke */
+  /** ohne teile: Tunnel und Brücken aus swissTLM3D, in Richtung von → nach; Schlüssel in
+   *  StreckenGeometrie.bauwerke und StreckenNetz.tlm_bauwerke */
   tlm?: string[]
+  /** ohne teile: Der Verlauf stammt aus dem Schienennetz des BAV, und swissTLM3D wurde geprüft */
+  verlauf_bav?: true
 }
 
 /** Das Netz für die Seite «Strecke» (pipeline/build_strecken.py) */
@@ -329,6 +332,8 @@ export interface StreckenNetz {
   bahnhoefe: Record<string, string>
   nicht_im_netz: number[]
   abschnitte: StreckenAbschnitt[]
+  /** Art und Name der Tunnel und Brücken aus swissTLM3D auf Strecken anderer Bahnen */
+  tlm_bauwerke?: Record<string, { art: TlmBauwerk['art']; name?: string }>
   /** Kürzel → [Breite, Länge] */
   lagen: Record<string, [number, number]>
   /** Tunnel «Linie:Stelle» → [km von, km bis]; gleich, wenn die Richtung

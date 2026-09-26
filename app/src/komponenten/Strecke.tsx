@@ -467,6 +467,21 @@ function Ergebnis({
   const bahnhoefe = weg.punkte.map((p) => bahnhof.get(uicVon.get(p) ?? 0)).filter((x) => x !== undefined)
   const grosse = bahnhoefe.slice(1, -1).filter((x) => x.tier === 'L')
 
+  // Strecken anderer Bahnen: Tunnel und Brücken aus swissTLM3D (Michael, 2026-09-26:
+  // «mitzählen», getrennt ausgewiesen), in Wegrichtung, jedes einmal
+  const tlmListe: Array<{ id: string; art: string; name?: string; wo: string }> = []
+  weg.abschnitte.forEach((e, i) => {
+    const ids = e.von === weg.punkte[i] ? e.tlm ?? [] : [...(e.tlm ?? [])].reverse()
+    for (const id of ids) {
+      const x = netz.tlm_bauwerke?.[id]
+      if (x && !tlmListe.some((y) => y.id === id)) {
+        tlmListe.push({ id, ...x, wo: `${netz.punkte[weg.punkte[i]]} – ${netz.punkte[weg.punkte[i + 1]]}` })
+      }
+    }
+  })
+  const tlmT = tlmListe.filter((x) => x.art === 'tunnel' || x.art === 'galerie')
+  const tlmB = tlmListe.filter((x) => x.art === 'bruecke' || x.art === 'gedeckte_bruecke')
+
   const ohneDaten = weg.abschnitte.filter((e) => !e.teile?.length)
   const andere = ohneDaten.filter((e) => e.isb !== 'SBB')
   const ohneLinie = ohneDaten.filter((e) => e.isb === 'SBB')
@@ -481,9 +496,16 @@ function Ergebnis({
     ...(andere.length ? [{
       thema: 'Strecken anderer Bahnen',
       grund: `${andere.length} von ${weg.abschnitte.length} Abschnitten dieses Wegs gehören zur `
-        + `Infrastruktur der ${bahnen.join(' und ')}, etwa ${beispiele(andere)}. Tunnel und Brücken `
-        + 'sind nur für die SBB erfasst, dort fehlen sie in der Zählung.',
-      quelle: 'zugzahlen',
+        + `Infrastruktur der ${bahnen.join(' und ')}, etwa ${beispiele(andere)}. Die Daten der SBB `
+        + 'erfassen Tunnel und Brücken nur auf ihrer Infrastruktur. '
+        + (andere.every((e) => e.verlauf_bav)
+          ? 'Auf diesen Abschnitten stammen sie aus swissTLM3D von swisstopo, ohne Länge und oft ohne Namen.'
+          : andere.some((e) => e.verlauf_bav)
+            ? `Auf ${andere.filter((e) => e.verlauf_bav).length} davon stammen sie aus swissTLM3D von `
+              + 'swisstopo, ohne Länge und oft ohne Namen; auf den übrigen fehlen sie in der Zählung, '
+              + 'weil ihr Verlauf nicht im Schienennetz des BAV steht.'
+            : 'Dort fehlen sie in der Zählung, weil ihr Verlauf nicht im Schienennetz des BAV steht.'),
+      quelle: 'zugzahlen, schienennetz, swissTLM3D',
     }] : []),
     ...(ohneLinie.length ? [{
       thema: 'Abschnitte ohne Linie',
@@ -539,12 +561,17 @@ function Ergebnis({
         </details>
 
         <div className="mt-4 grid grid-cols-2 gap-2">
-          <Kachel zahl={t.length} text="Tunnel" ziel="weg-tunnel" />
-          <Kachel zahl={b.length} text={b.length === 1 ? 'Brücke' : 'Brücken'} ziel="weg-bruecken" />
+          <Kachel zahl={t.length + tlmT.length} text="Tunnel" ziel="weg-tunnel"
+                  zusatz={tlmT.length ? `davon ${tlmT.length} aus swissTLM3D` : undefined} />
+          <Kachel zahl={b.length + tlmB.length} text={b.length + tlmB.length === 1 ? 'Brücke' : 'Brücken'}
+                  ziel="weg-bruecken"
+                  zusatz={tlmB.length ? `davon ${tlmB.length} aus swissTLM3D` : undefined} />
         </div>
         <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
           Erfasst entlang dieses Wegs, jede nur einmal gezählt.
-          {andere.length > 0 && ' Auf Strecken anderer Bahnen fehlen sie, siehe unten.'}
+          {andere.length > 0 && (andere.some((e) => e.verlauf_bav)
+            ? ' Auf Strecken anderer Bahnen aus swissTLM3D von swisstopo, siehe unten.'
+            : ' Auf Strecken anderer Bahnen fehlen sie, siehe unten.')}
         </p>
 
         {weg.abschnitte.length > 0 && (
@@ -631,7 +658,7 @@ function Ergebnis({
 
       <WegLinien laeufe={laeufe(weg)} netz={netz} verzeichnis={verzeichnis} />
 
-      {t.length > 0 && (
+      {t.length + tlmT.length > 0 && (
         <section id="weg-tunnel" className="mt-8 scroll-mt-4">
           <h2 className="text-lg font-bold">Tunnel in Wegrichtung</h2>
           <ol className="mt-3 kachelliste">
@@ -644,10 +671,11 @@ function Ergebnis({
                      ]} />
             ))}
           </ol>
+          <TlmListe liste={tlmT} />
         </section>
       )}
 
-      {b.length > 0 && (
+      {b.length + tlmB.length > 0 && (
         <section id="weg-bruecken" className="mt-8 scroll-mt-4">
           <h2 className="text-lg font-bold">Brücken in Wegrichtung</h2>
           <ol className="mt-3 kachelliste">
@@ -670,6 +698,7 @@ function Ergebnis({
               Alle {b.length.toLocaleString('de-CH')} Brücken anzeigen
             </button>
           )}
+          <TlmListe liste={tlmB} />
         </section>
       )}
 
@@ -808,7 +837,31 @@ function BahnhofLink({ b }: { b: IndexEintrag | undefined }) {
   )
 }
 
-function Kachel({ zahl, text, ziel }: { zahl: number; text: string; ziel?: string }) {
+/** Tunnel und Brücken aus swissTLM3D auf Strecken anderer Bahnen, unter der Liste der SBB */
+function TlmListe({ liste }: { liste: Array<{ id: string; art: string; name?: string; wo: string }> }) {
+  if (!liste.length) return null
+  const wort: Record<string, string> = { tunnel: 'Tunnel', galerie: 'Galerie', bruecke: 'Brücke',
+                                         gedeckte_bruecke: 'Gedeckte Brücke' }
+  return (
+    <>
+      <p className="mt-4 text-sm font-medium">Auf Strecken anderer Bahnen, aus swissTLM3D (swisstopo)</p>
+      <ol className="mt-2 kachelliste">
+        {liste.map((x) => (
+          <li key={x.id} className="px-3 py-2">
+            <p className="font-medium text-sbb-black dark:text-sbb-white">
+              {x.name ?? `${wort[x.art]} ohne Namen`}
+            </p>
+            <p className="text-sm text-sbb-metal dark:text-sbb-storm">
+              {x.name ? `${wort[x.art]} · ` : ''}{x.wo} · Länge: keine Angabe
+            </p>
+          </li>
+        ))}
+      </ol>
+    </>
+  )
+}
+
+function Kachel({ zahl, text, ziel, zusatz }: { zahl: number; text: string; ziel?: string; zusatz?: string }) {
   const inhalt = (
     <>
       <p className="text-3xl font-bold tabular-nums text-sbb-black dark:text-sbb-white">
@@ -817,6 +870,7 @@ function Kachel({ zahl, text, ziel }: { zahl: number; text: string; ziel?: strin
       <p className="text-sm text-sbb-metal dark:text-sbb-storm">
         {text}{ziel && zahl > 0 && <span className="pfeil pfeil-unten" aria-hidden="true"> ↓</span>}
       </p>
+      {zusatz && <p className="text-xs text-sbb-metal dark:text-sbb-storm">{zusatz}</p>}
     </>
   )
   const stil = 'kachel px-4 py-3'
