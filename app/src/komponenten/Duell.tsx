@@ -3,10 +3,11 @@ import {
   auswahlLesen, auswahlMerken, duellstandLesen, duellstandMerken, type Duellstand,
 } from '../fortschritt'
 import { vergleichLaden } from '../daten'
-import type { Kategorie, Vergleichsdaten } from '../typen'
+import type { BahnhofIndex, IndexEintrag, Kategorie, Vergleichsdaten } from '../typen'
 import { kantonText } from '../kanton'
 import { Ladefehler } from './Ladefehler'
 import { Auswahl } from './Auswahl'
+import { BahnhofFeld } from './Strecke'
 
 /**
  * Bahnhöfe, Linien oder Tunnel gegeneinander. Die Fragen entstehen hier aus
@@ -87,6 +88,16 @@ interface Runde {
  *  eine Bahnhofsseite geht und zurückkommt, soll die Serie nicht verlieren. */
 let zwischenstand: { auswahl: string; serie: number; runde: Runde | null;
                      gewaehlt: number | null } | null = null
+
+/**
+ * Zwei Bahnhöfe selbst gewählt (Michael, 2026-09-26: «optional 2 Bahnhöfe
+ * wählen»). Gefragt wird jede Kategorie, in der beide einen Wert haben und die
+ * Werte weit genug auseinanderliegen, jede einmal, in zufälliger Reihenfolge.
+ * Serie und Bestwert zählen dabei nicht: Das Paar ist ja nicht zufällig.
+ */
+interface Paar { a: number | null; b: number | null; reihe: Kategorie[]; nr: number; richtig: number
+                 gewaehlt: number | null; eintraege: Gegenstand[] }
+let paarGemerkt: Paar | null = null
 
 function zufall<T>(liste: T[]): T {
   return liste[Math.floor(Math.random() * liste.length)]
@@ -198,7 +209,7 @@ function mitPunkt(text: string) {
   return text.endsWith('.') ? text : `${text}.`
 }
 
-export function Duell() {
+export function Duell({ index }: { index: BahnhofIndex | null }) {
   const [daten, setDaten] = useState<Vergleichsdaten | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [auswahl, setAuswahl] = useState<string>(() => auswahlLesen())
@@ -207,6 +218,8 @@ export function Duell() {
   const [gewaehlt, setGewaehlt] = useState<number | null>(gemerkt?.gewaehlt ?? null)
   const [serie, setSerie] = useState(gemerkt?.serie ?? 0)
   const [stand, setStand] = useState<Duellstand>(() => duellstandLesen())
+  const [paar, setPaar] = useState<Paar | null>(paarGemerkt)
+  useEffect(() => { paarGemerkt = paar }, [paar])
 
   useEffect(() => { zwischenstand = { auswahl, serie, runde, gewaehlt } },
             [auswahl, serie, runde, gewaehlt])
@@ -306,6 +319,24 @@ export function Duell() {
 
   const rekord = stand.rekorde[auswahl] ?? 0
 
+  // Für das selbst gewählte Paar: nur Bahnhöfe mit Werten im Vergleich
+  const imVergleich = useMemo(() => new Set(daten?.bahnhoefe.map((b) => b.uic) ?? []), [daten])
+  const waehlbar = useMemo(() => (index?.bahnhoefe ?? []).filter((e) => imVergleich.has(e.uic)),
+                           [index, imVergleich])
+  const nameVon = useCallback((uic: number | null) => (uic === null ? ''
+    : daten?.bahnhoefe.find((b) => b.uic === uic)?.name ?? ''), [daten])
+
+  function paarSetzen(a: number | null, b: number | null) {
+    const ga = alle.find((g) => g.schluessel === String(a))
+    const gb = alle.find((g) => g.schluessel === String(b))
+    const reihe = ga && gb && a !== b
+      ? kategorien.filter((k) => wertVon(ga, k) != null && wertVon(gb, k) != null
+          && weitGenug(wertVon(ga, k), wertVon(gb, k), k)).sort(() => Math.random() - 0.5)
+      : []
+    setPaar({ a, b, reihe, nr: 0, richtig: 0, gewaehlt: null,
+              eintraege: ga && gb ? [ga, gb].sort(() => Math.random() - 0.5) : [] })
+  }
+
   const quote = useMemo(
     () => (stand.gespielt ? Math.round((stand.richtig / stand.gespielt) * 100) : null),
     [stand],
@@ -363,7 +394,20 @@ export function Duell() {
         </div>
       </div>
 
-      {runde && k ? (
+      {bereich === 'bahnhoefe' && (paar ? (
+        <PaarDuell paar={paar} setPaar={setPaar} waehlbar={waehlbar} nameVon={nameVon}
+                   setzen={paarSetzen} beenden={() => setPaar(null)} />
+      ) : (
+        <button type="button" onClick={() => setPaar({ a: null, b: null, reihe: [], nr: 0, richtig: 0,
+                                                        gewaehlt: null, eintraege: [] })}
+                className="kachel kachel-link mt-3 flex min-h-11 w-full items-center justify-between gap-3
+                           px-4 py-3 text-left font-medium">
+          Zwei Bahnhöfe selbst wählen
+          <span className="pfeil" aria-hidden="true">→</span>
+        </button>
+      ))}
+
+      {paar && bereich === 'bahnhoefe' ? null : runde && k ? (
         <>
           <p className="mt-5 text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
             {k.titel}
@@ -504,4 +548,121 @@ function fussnote(bereich: Bereich, gebiet: string, anzahl: number) {
     : (gebiet === 'CH' ? `Alle ${anzahl} Bahnhöfe sind dabei.`
       : `${anzahl} Bahnhöfe im Kanton ${kanton}.`)
   return `${wer} Jeder Wert stammt unverändert aus den offenen Daten.`
+}
+
+/** Das Duell mit zwei selbst gewählten Bahnhöfen */
+function PaarDuell({ paar, setPaar, waehlbar, nameVon, setzen, beenden }: {
+  paar: Paar
+  setPaar: (p: Paar) => void
+  waehlbar: IndexEintrag[]
+  nameVon: (uic: number | null) => string
+  setzen: (a: number | null, b: number | null) => void
+  beenden: () => void
+}) {
+  const k = paar.reihe[paar.nr]
+  const fertig = paar.eintraege.length === 2 && paar.reihe.length > 0 && paar.nr >= paar.reihe.length
+  const werte = k ? paar.eintraege.map((g) => wertVon(g, k)) : []
+  const vorn = k ? werte.indexOf(k.richtung === 'tiefster' ? Math.min(...werte) : Math.max(...werte)) : -1
+  const aufgeloest = paar.gewaehlt !== null
+
+  return (
+    <div className="kachel mt-3 p-3">
+      <div className="flex items-center justify-between gap-3">
+        <p className="font-medium">Zwei Bahnhöfe selbst wählen</p>
+        <button type="button" onClick={beenden}
+                className="min-h-11 rounded-lg px-3 text-sm font-medium hover:bg-sbb-silver dark:hover:bg-sbb-iron">
+          Zufällig spielen
+        </button>
+      </div>
+      <div className="mt-2 grid gap-2">
+        <BahnhofFeld bezeichnung="Erster Bahnhof" wert={paar.a} bahnhoefe={waehlbar} name={nameVon}
+                     aendern={(u) => setzen(u, paar.b)} />
+        <BahnhofFeld bezeichnung="Zweiter Bahnhof" wert={paar.b} bahnhoefe={waehlbar} name={nameVon}
+                     aendern={(u) => setzen(paar.a, u)} />
+      </div>
+
+      {paar.a !== null && paar.b !== null && paar.a === paar.b && (
+        <p className="mt-3">Wähl zwei verschiedene Bahnhöfe.</p>
+      )}
+      {paar.eintraege.length === 2 && paar.reihe.length === 0 && (
+        <p className="mt-3">
+          In keiner Kategorie liegen diese beiden weit genug auseinander, dass man es wissen kann.
+          Wähl ein anderes Paar.
+        </p>
+      )}
+
+      {k && !fertig && (
+        <>
+          <p className="mt-4 text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
+            Frage {paar.nr + 1} von {paar.reihe.length} · {k.titel}
+          </p>
+          <p className="mt-1 text-lg font-medium">{k.frage}</p>
+          <ul className="mt-3 space-y-2">
+            {paar.eintraege.map((g, i) => {
+              const rahmen = !aufgeloest
+                ? 'border-transparent bg-white dark:bg-sbb-midnight hover:bg-sbb-silver dark:hover:bg-sbb-iron'
+                : i === vorn ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15'
+                  : i === paar.gewaehlt ? 'border-sbb-red bg-white dark:bg-sbb-midnight'
+                    : 'border-transparent bg-white opacity-60 dark:bg-sbb-midnight'
+              return (
+                <li key={g.schluessel}>
+                  <button type="button" disabled={aufgeloest}
+                          onClick={() => setPaar({ ...paar, gewaehlt: i, richtig: paar.richtig + (i === vorn ? 1 : 0) })}
+                          className={`flex w-full items-center justify-between gap-3 rounded-lg border px-4 py-4
+                                      text-left transition ${rahmen}`}>
+                    <span className="min-w-0">
+                      <span className="block truncate font-medium">{g.name}</span>
+                      {g.unterzeile && <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{g.unterzeile}</span>}
+                    </span>
+                    {aufgeloest && <span className="shrink-0 font-bold tabular-nums">{zahl(wertVon(g, k), k)}</span>}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+          {aufgeloest && (
+            <>
+              <div className={`mt-3 border-l-2 px-3 py-2 text-sm ${paar.gewaehlt === vorn
+                ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15' : 'border-sbb-red bg-white dark:bg-sbb-midnight'}`}>
+                <p className="font-bold">{paar.gewaehlt === vorn ? 'Richtig' : 'Nicht ganz'}</p>
+                <p className="mt-0.5">{paar.eintraege[vorn].name} liegt vorn: {mitPunkt(zahl(werte[vorn], k))}</p>
+                {k.hinweis && <p className="mt-1">{k.hinweis}</p>}
+                <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">Quelle: {k.quelle}</p>
+              </div>
+              <button type="button" onClick={() => setPaar({ ...paar, nr: paar.nr + 1, gewaehlt: null })}
+                      className="mt-3 w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125">
+                {paar.nr + 1 < paar.reihe.length ? 'Nächste Frage' : 'Auswertung'}
+              </button>
+            </>
+          )}
+        </>
+      )}
+
+      {fertig && (
+        <>
+          <p className="mt-4 text-lg font-medium">
+            {paar.richtig} von {paar.reihe.length} richtig.
+          </p>
+          <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
+            Mehr dazu:{' '}
+            {paar.eintraege.map((g, i) => (
+              <span key={g.schluessel}>
+                {i > 0 && ' · '}
+                <a href={g.link} className="underline underline-offset-2 hover:text-sbb-red">{g.linkText}</a>
+              </span>
+            ))}
+          </p>
+          <button type="button" onClick={() => setzen(paar.a, paar.b)}
+                  className="mt-3 w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125">
+            Nochmals, neu gemischt
+          </button>
+        </>
+      )}
+
+      <p className="mt-3 text-xs text-sbb-metal dark:text-sbb-storm">
+        Gefragt wird nur, wo beide Bahnhöfe einen Wert haben und die Werte weit genug auseinanderliegen.
+        Serie und Bestwert zählen hier nicht.
+      </p>
+    </div>
+  )
 }

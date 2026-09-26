@@ -147,7 +147,7 @@ export default function App() {
 
         {seite.art === 'start' && index && <Start index={index} />}
         {seite.art === 'anleitung' && <Anleitung index={index} />}
-        {seite.art === 'duell' && <Duell />}
+        {seite.art === 'duell' && <Duell index={index} />}
         {seite.art === 'standort' && <Standort index={index} />}
         {seite.art === 'fahrt' && <Fahrt index={index} />}
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}
