@@ -123,6 +123,38 @@ def abschnitte():
 #: Abschnitt des Netzes. Ohne Zugzahlen zählt er für die Wegsuche wie ein
 #: Abschnitt mit einem Zug pro Tag (siehe main).
 BAV_OHNE_ZUGZAHLEN = {"261"}
+#: Dazu kommen Stücke weiterer Linien (Michael, 2026-09-26: «Meiringen ist nicht
+#: erfasst»; RhB, MGB, MOB, MVR, zb …), ausgewählt nach den Daten in
+#: bav_stuecke_waehlen(): Jede Linie wird an den Punkten geteilt, die schon im
+#: Netz liegen; ein Stück kommt dazu, wenn an ihm ein Bahnhof mit Faktendatei liegt,
+#: der sonst nicht im Netz läge (Oberdorf SO – Moutier, Rafz – Neuhausen mit
+#: Lottstetten und Jestetten). Stücke ohne solchen Bahnhof bleiben weg, so kommt
+#: nichts doppelt, was die Zugzahlen schon führen.
+#: Ohne: die Museumsbahnen Blonay-Chamby und Furka-Bergstrecke. Ihre Bahnhöfe
+#: liegen an anderen Linien, und ein Weg Brig – Andermatt soll nicht über den Pass.
+BAV_OHNE_DATENHERR = {"cmBC", "DFB"}
+#: Für die Wegsuche zählt ein solches Stück wie ein Abschnitt mit so vielen
+#: Zügen pro Tag (die BTI wie einer mit einem Zug, siehe main). Keine Angabe über
+#: die Züge, nur eine Suchhilfe. Gewählt an 600 zufälligen Wegen zwischen
+#: Bahnhöfen, die schon vorher im Netz lagen, und an Wegen auf den neuen Bahnen:
+#: Mit 5 bleiben 599 gleich, und Zürich HB – Meiringen läuft über den Brünig,
+#: Montreux – Zweisimmen über die MOB, Brig – Andermatt über die MGB. Mit 1 liefen
+#: diese über Bern und Thun, mit 15 änderten sich 12 der alten Wege. Luzern –
+#: Interlaken Ost bleibt über Bern; «Über Meiringen» legt den Brünig fest.
+ZUEGE_OHNE_ZAEHLUNG = 5
+#: Abkürzungen des Schienennetzes, wie die Zugzahlen sie schreiben, und bei
+#: mehrsprachigen nur die erste. So bekommen SBB-Stücke ihre Linie und damit
+#: Tunnel und Brücken der SBB (Mols, Grandgourt).
+ISB_WIE_ZUGZAHLEN = {"SBB CFF FFS": "SBB", "BLSN": "BLS", "TPFH": "TPF", "RhB FR VR": "RhB"}
+#: Die Bahn eines Abschnitts in der Auswahl «Bahnen» der App: die Infrastruktur,
+#: bei der MGB die Linie der MGB auf der Infrastruktur der MGI
+BAHN = {"MGI": "MGB"}
+
+
+def bahn(isb):
+    return BAHN.get(isb, isb)
+
+
 #: Endpunkte, die das Schienennetz als eigenen Betriebspunkt im Bahnhof führt
 #: («Biel/Bienne [Gleis 11/voie 11]»): Sie gelten als dieser Bahnhof, damit die
 #: BTI an Biel/Bienne und Ins anschliesst.
@@ -140,12 +172,49 @@ IM_BAHNHOF_M = 150
 IM_BAHNHOF: dict = {}
 
 
-def bav_abschnitte(kanten, punkte):
-    """Die Abschnitte der Linien in BAV_OHNE_ZUGZAHLEN, in kanten und punkte
-    eingefügt wie die aus den Zugzahlen, mit zuege None."""
+def bav_stuecke_waehlen(bav, punkte, facts):
+    """Je Linie die Segmente, die ins Netz kommen (siehe BAV_OHNE_DATENHERR)"""
+    im_netz = {p["uic"] for p in punkte.values() if p.get("uic")}
+    raus = {}
+    for nummer, l in bav.items():
+        if not nummer.isdigit() or l["datenherr"] in BAV_OHNE_DATENHERR or nummer in BAV_OHNE_ZUGZAHLEN:
+            continue
+        # Stücke zwischen Punkten im Netz, in der Reihenfolge der Kilometer
+        segmente = sorted(l["segmente"], key=lambda g: (min(g["km_anfang"], g["km_ende"]), max(g["km_anfang"], g["km_ende"])))
+        stueck, neu = [], False
+        def abschliessen():
+            if stueck and neu:
+                raus.setdefault(nummer, []).extend(stueck)
+        for g in segmente:
+            vorn, hinten = (g["von_nummer"], g["bis_nummer"]) if g["km_anfang"] <= g["km_ende"] \
+                else (g["bis_nummer"], g["von_nummer"])
+            if not stueck or vorn in im_netz:
+                abschliessen()
+                stueck, neu = [], False
+            stueck.append(g)
+            neu = neu or any(n in facts and n not in im_netz for n in (vorn, hinten))
+        abschliessen()
+    return raus
+
+
+def bav_abschnitte(kanten, punkte, facts):
+    """Die Abschnitte der Linien in BAV_OHNE_ZUGZAHLEN und aus bav_linien_waehlen(),
+    in kanten und punkte eingefügt wie die aus den Zugzahlen, mit zuege None.
+    Abschnitte, die die Zugzahlen schon führen, bleiben, wie sie sind."""
     bav, _ = schienennetz.je_linie()
     abk_von = {p["uic"]: abk for abk, p in punkte.items() if p["uic"]}
-    for nummer in sorted(BAV_OHNE_ZUGZAHLEN):
+    # Punkte des Schienennetzes im Bahnhof («Interlaken Ost Brünig», «Landquart RhB»):
+    # Name beginnt mit dem des Bahnhofs, höchstens IM_BAHNHOF_M entfernt (wie in main)
+    bahnhoefe = [(p["uic"], p["name"], p["wgs"]) for p in punkte.values() if p.get("uic") in facts]
+    def im_bahnhof(p):
+        for uic, name, (la, lo) in bahnhoefe:
+            if p["name"].startswith(name + " ") and \
+                    math.hypot((p["lat"] - la) * 111_200, (p["lon"] - lo) * 73_000) <= IM_BAHNHOF_M:
+                return uic
+        return None
+    stuecke = bav_stuecke_waehlen(bav, punkte, facts)
+    stuecke.update({n: bav[n]["segmente"] for n in BAV_OHNE_ZUGZAHLEN})
+    for nummer in sorted(stuecke, key=int):
         l = bav[nummer]
         lage = {p["nummer"]: p for p in l["punkte"]}
         def abk(nr):
@@ -153,16 +222,30 @@ def bav_abschnitte(kanten, punkte):
             if bahnhof in abk_von:
                 return abk_von[bahnhof]
             p = lage[nr]
-            punkte.setdefault(p["abkuerzung"], {"name": p["name"], "uic": nr,
-                                                "lage": ebene(p["lon"], p["lat"]),
-                                                "wgs": (round(p["lat"], 5), round(p["lon"], 5))})
-            abk_von[nr] = p["abkuerzung"]
-            return p["abkuerzung"]
-        for g in l["segmente"]:
+            dort = im_bahnhof(p)
+            if dort in abk_von:
+                abk_von[nr] = abk_von[dort]
+                BAV_GLEIS_IM_BAHNHOF_ZURUECK.setdefault(int(nummer), {})[dort] = nr
+                return abk_von[dort]
+            # dieselbe Abkürzung für einen anderen Punkt: die Nummer anhängen
+            # ohne Abkürzung in der Quelle die Nummer
+            a = p["abkuerzung"] or str(nr)
+            a = a if a not in punkte else f"{a}~{nr}"
+            punkte.setdefault(a, {"name": p["name"], "uic": nr,
+                                  "lage": ebene(p["lon"], p["lat"]),
+                                  "wgs": (round(p["lat"], 5), round(p["lon"], 5))})
+            abk_von[nr] = a
+            return a
+        for g in stuecke[nummer]:
             a, b = abk(g["von_nummer"]), abk(g["bis_nummer"])
+            if a == b or tuple(sorted((a, b))) in kanten:
+                continue
             km = math.dist(punkte[a]["lage"], punkte[b]["lage"])
-            kanten[tuple(sorted((a, b)))] = {"km": km, "isb": g["isb"], "zuege": None,
-                                             "linie_bav": int(nummer)}
+            kanten[tuple(sorted((a, b)))] = {"km": km, "isb": ISB_WIE_ZUGZAHLEN.get(g["isb"], g["isb"]),
+                                             "zuege": None,
+                                             "linie_bav": int(nummer),
+                                             "stueck": nummer not in BAV_OHNE_ZUGZAHLEN}
+    return set(stuecke)
 
 
 #: So nah muss jeder Punkt eines Bauwerks aus swissTLM3D an der Linie des
@@ -492,7 +575,9 @@ def main():
     abruf = json.loads((RAW / "_abruf.json").read_text(encoding="utf-8"))
     stand = max(abruf[q] for q in QUELLEN + QUELLEN_BAV)
     jahr, kanten, punkte = abschnitte()
-    bav_abschnitte(kanten, punkte)
+    namen = {json.loads(p.read_text(encoding="utf-8"))["uic"]: json.loads(p.read_text(encoding="utf-8"))["name"]
+             for p in FACTS.glob("*.json")}
+    bav_gewaehlt = bav_abschnitte(kanten, punkte, namen)
     zuege, wgs = linienzuege()
     lage = lagen(punkte, zuege)
     auf_linie = punkte_je_linie(lage)
@@ -533,10 +618,13 @@ def main():
         # ohne Zugzahlen (BAV_OHNE_ZUGZAHLEN) wie ein selten befahrener Abschnitt:
         # So nimmt der Weg die BTI nur, wenn Start, Ziel oder «Über» an ihr
         # liegen. Ohne Strafe lief Dornach – Marin-Epagnier über Täuffelen.
-        strafe = STRAFE / max(k["zuege"] or 1, 1)
+        # Stücke anderer Bahnen (bav_stuecke_waehlen) wie ein Abschnitt mit
+        # ZUEGE_OHNE_ZAEHLUNG Zügen pro Tag, siehe dort
+        pro_tag = k["zuege"] or (ZUEGE_OHNE_ZAEHLUNG if k.get("stueck") else 1)
+        strafe = STRAFE / max(pro_tag, 1)
         eintrag = {"von": a, "nach": b,
                    "gewicht": round(k["km"] * (1 + strafe) + ZUSCHLAG_KM, 3),
-                   "isb": k["isb"]}
+                   "isb": k["isb"], "bahn": bahn(k["isb"])}
         teile = None
         if k["isb"] == "SBB":
             eine = zuordnen(a, b, k["km"], lage, sbb_linien, auf_linie)
@@ -606,15 +694,14 @@ def main():
                         bauwerke_genutzt[kb] = {x: v for x, v in tlm[kb].items() if x != "pts"}
         liste.append(eintrag)
 
-    namen = {json.loads(p.read_text(encoding="utf-8"))["uic"]: json.loads(p.read_text(encoding="utf-8"))["name"]
-             for p in FACTS.glob("*.json")}
     im_netz = {p["uic"]: abk for abk, p in punkte.items() if p["uic"] in namen}
     raus = {
         "datenstand": stand,
         "zugzahlen_jahr": jahr,
         "quellen": QUELLEN + QUELLEN_BAV + QUELLEN_SWISSTOPO,
-        "hinweis": "Abschnitte mit Personenzügen laut zugzahlen, dazu die Linie 261 (BTI) aus dem "
-                   "Schienennetz des BAV, die die Zugzahlen nicht führen. tlm: Tunnel und Brücken aus swissTLM3D "
+        "hinweis": "Abschnitte mit Personenzügen laut zugzahlen, dazu die Linie 261 (BTI) und die Linien "
+                   "anderer Bahnen (bav_linien) aus dem Schienennetz des BAV, die die Zugzahlen nicht führen. "
+                   "bahn: die Bahn laut Quelle, für die Auswahl «Bahnen» in der App. tlm: Tunnel und Brücken aus swissTLM3D "
                    "auf Abschnitten anderer Bahnen (strecken_geometrie.json, bauwerke). teile: die Linie der SBB, "
                    "auf der der Abschnitt liegt (selten zwei nacheinander), mit Kilometrierung "
                    "(ein Standort, keine Länge). tunnel und bruecken: Kennungen «Linie:Stelle» "
@@ -633,6 +720,9 @@ def main():
         # Art und Name der Bauwerke aus swissTLM3D, für die Zählung auf der Seite «Strecke»
         "tlm_bauwerke": {k: {"art": b["art"], **({"name": b["name"]} if b.get("name") else {})}
                          for k, b in sorted(bauwerke_genutzt.items(), key=lambda x: int(x[0][1:]))},
+        # Linien anderer Bahnen aus dem Schienennetz (bav_linien_waehlen), mit Name und Bahn
+        "bav_linien": {n: {"name": bav_linien[n]["name"], "bahn": bahn(bav_linien[n]["datenherr"])}
+                       for n in sorted(bav_gewaehlt | BAV_OHNE_ZUGZAHLEN, key=int)},
         "abschnitte": liste,
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
@@ -652,6 +742,10 @@ def main():
           f"davon {sum(1 for e in liste if e['isb'] != 'SBB' and 'linie_bav' in e)} mit Linie laut BAV")
     print(f"  andere Bahnen: {len(verlaeufe)} Abschnitte mit Verlauf laut BAV, {len(bauwerke_genutzt)} "
           f"Bauwerke aus swissTLM3D darauf")
+    print(f"  Linien anderer Bahnen aus dem Schienennetz: {len(bav_gewaehlt)}: "
+          + ", ".join(f"{n} {bav_linien[n]['name']}" for n in sorted(bav_gewaehlt, key=int)))
+    from collections import Counter
+    print("  Abschnitte je Bahn: " + ", ".join(f"{b} {z}" for b, z in Counter(e["bahn"] for e in liste).most_common()))
     print(f"strecken_geometrie.json: {len(genutzt)} Linien ({GEOMETRIE.stat().st_size/1024:.0f} KB)")
     for a, b, km in sorted(ohne_zuordnung, key=lambda x: -x[2])[:12]:
         print(f"    ohne Zuordnung: {punkte[a]['name']} – {punkte[b]['name']} ({km:.1f} km)")
