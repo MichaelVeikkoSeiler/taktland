@@ -374,7 +374,7 @@ Offen, für Michael:
 - Museumsbahnen Blonay-Chamby und Furka-Bergstrecke aufnehmen, dann in der Auswahl
   «Bahnen» zu Beginn aus?
 - Luzern – Interlaken Ost führt über Bern; «Über Meiringen» legt den Brünig fest.
-- Karte beim Fahren: Das graue Netz zeigt nur SBB-Linien, andere Bahnen nur als Weg.
+- Karte: Linie 118 (Châtel-St-Denis – Montbovon) hat keine Linienseite und fehlt im grauen Netz.
 
 ## Einträge über Geräte hinweg
 
