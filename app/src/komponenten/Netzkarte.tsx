@@ -2,7 +2,7 @@ import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { karteLaden } from '../daten'
 import type { KartenDaten } from '../typen'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
-import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
+import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert, useVersteckt } from './Sehenswert'
 
 /** Verhältnis Meter je Grad Länge zu Breite in der Schweiz: x = Länge mal das */
 export const LAENGE_ZU_BREITE = 73_000 / 111_200
@@ -192,6 +192,7 @@ export function Netzkarte({
   const [box, setBox] = useState<Box>(start)
   const seen = useSeen()
   const sehenswert = useSehenswert()
+  const versteckt = useVersteckt()
   const [auswahl, setAuswahl] = useState<Auswahl | null>(null)
   const svg = useRef<SVGSVGElement | null>(null)
   const zeiger = useRef(new Map<number, { x: number; y: number }>())
@@ -320,7 +321,8 @@ export function Netzkarte({
   const hoechstens = box.w > 1 ? 4 : box.w > 0.3 ? 8 : 16
   const beschriftet: Array<Beschriftung & { anker: 'start' | 'end' }> = []
   const belegt: Array<[number, number, number, number]> = []
-  for (const p of punkte) {
+  // «Orte» aus der Legende blendet auch die Namen der Bahnhöfe aus (Michael, 2026-09-26)
+  for (const p of versteckt.has('orte') ? [] : punkte) {
     if (beschriftet.length >= hoechstens) break
     if (!drin(p.x, p.y)) continue
     const breite = p.name.length * 6.2 * px
@@ -333,7 +335,7 @@ export function Netzkarte({
     beschriftet.push({ ...p, anker: rechts ? 'start' : 'end' })
   }
 
-  const orte = daten.orte.map((o) => ({ ...o, x: o.lage[1] * LAENGE_ZU_BREITE, y: -o.lage[0] }))
+  const orte = versteckt.has('orte') ? [] : daten.orte.map((o) => ({ ...o, x: o.lage[1] * LAENGE_ZU_BREITE, y: -o.lage[0] }))
     .filter((o) => drin(o.x, o.y))
     .filter((o) => !punkte.some((p) => p.name === o.name && drin(p.x, p.y)))
 
@@ -421,7 +423,7 @@ export function Netzkarte({
         ))}
       </svg>
       <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />
-      {sehenswert.s && <SehenswertLegende />}
+      <SehenswertLegende orte />
       {/* im Vollbild nur die Karte; die Hinweise bleiben auf der Seite */}
       {!voll && (
         <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">

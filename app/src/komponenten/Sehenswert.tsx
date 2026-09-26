@@ -111,7 +111,7 @@ const imBild = (z: { x0: number; x1: number; y0: number; y1: number }, box: Box,
  * Welche Kategorien die Karten zeigen: jede lässt sich in der Legende aus- und
  * einblenden (Michael, 2026-09-26), gemerkt auf diesem Gerät, für alle Karten.
  */
-export type Kategorie = 'gipfel' | 'kgs' | 'seilbahn' | 'bln' | 'park' | 'moor'
+export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'bln' | 'park' | 'moor'
 const KATEGORIEN_SPEICHER = 'taktland.karte.v1'
 let versteckt: Set<Kategorie> = (() => {
   try { return new Set(JSON.parse(localStorage.getItem(KATEGORIEN_SPEICHER) ?? '{}').versteckt ?? []) } catch { return new Set() }
@@ -248,6 +248,7 @@ export function AuswahlZeile({ auswahl, schliessen }: { auswahl: Auswahl | null;
 }
 
 const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
+  ['orte', 'Orte', <span className="inline-block size-1.5 rounded-full bg-sbb-metal dark:bg-sbb-storm" />],
   ['gipfel', 'Gipfel', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M5 1L9 9H1Z" className="fill-gipfel" /></svg>],
   ['kgs', 'Kulturgut', <svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>],
   ['seilbahn', 'Seilbahn', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="1.5" strokeDasharray="3 2" className="stroke-seilbahn" /></svg>],
@@ -257,11 +258,11 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
 ]
 
 /** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein */
-export function SehenswertLegende() {
+export function SehenswertLegende({ orte = false }: { orte?: boolean }) {
   const aus = useVersteckt()
   return (
     <div className="mt-1 flex flex-wrap gap-1.5 text-xs" role="group" aria-label="Auf der Karte zeigen">
-      {LEGENDE.map(([k, text, zeichen]) => (
+      {LEGENDE.filter(([k]) => orte || k !== 'orte').map(([k, text, zeichen]) => (
         <button key={k} type="button" aria-pressed={!aus.has(k)} onClick={() => kategorieUmschalten(k)}
                 className={`flex min-h-8 items-center gap-1.5 rounded-lg px-2 ${aus.has(k)
                   ? 'text-sbb-metal line-through opacity-60 dark:text-sbb-storm'
