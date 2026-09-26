@@ -1,5 +1,7 @@
 # Merkliste Taktland
 
+Seit 2026-09-26 heisst der Fahrtmodus in der App «Fahren» (Michael).
+
 Aufgeräumt am 2026-09-25. Offen für Samstag, 2026-09-26: Netzzugang freigeben,
 dann Seen, Sehenswürdigkeiten (Schritt 1) und BTI.
 
@@ -232,7 +234,12 @@ und Pendelnde.
 
 ## Welcher Zug? (Zug erkennen, Stufe 1)
 
-Idee, 2026-09-25, noch nicht beschlossen («warte noch»). Heute kennt Taktland
+**Gebaut 2026-09-26, bleibt auf dem Branch** `claude/taktland-korrektionen-ka4jp8`
+(Michael: «Punkt 4 bleibt»): Fahrplan ist Kerngeschäft der SBB-App, erst nach dem
+Gespräch mit dem Vorgesetzten nach `main`. Der Fahrplan käme beim Veröffentlichen aus dem
+GTFS, zweimal pro Woche neu.
+
+Idee, 2026-09-25, damals noch nicht beschlossen («warte noch»). Heute kennt Taktland
 nur Standort und Weg, keinen Fahrplan. Stufe 1, ohne Server und ohne Schlüssel:
 - **0. Quelle:** Fahrplan als GTFS von opentransportdata.swiss; Bedingungen
   beim Laden prüfen. Braucht Netzzugang zu `opentransportdata.swiss` und
@@ -267,6 +274,9 @@ mit «Über Täuffelen» fährt der Weg über die BTI. Endpunkte im Schienennetz
 
 ## Fahrt fortsetzen
 
+**Eingebaut 2026-09-26:** Die Stelle auf dem Weg (nicht der Standort) wird alle fünf
+Sekunden gemerkt; beim Öffnen fragt Taktland bis zwölf Stunden danach.
+
 Idee, 2026-09-26 (Michael: «Ja»): Schliesst das Handy die Seite ganz (wenig
 Speicher, lange im Hintergrund), endet heute der Fahrtmodus; beim Neustart
 zählt das Sammelheft erst ab dem neuen Standort, das Stück dazwischen fehlt.
@@ -280,7 +290,8 @@ neuen als durchfahren, wie heute nach einer Pause im Hintergrund.
 - **Speicher auf dem Gerät:** Logbuch, Sammelheft und Favoriten liegen im
   Speicher des Browsers. Safari auf dem iPhone löscht ihn bei Websites, die sieben
   Tage nicht besucht wurden, nicht aber bei Apps auf dem Home-Bildschirm. Darum
-  als App installieren und eine Sicherung zum Herunterladen anbieten.
+  als App installieren und eine Sicherung zum Herunterladen anbieten. *Sicherung
+  eingebaut 2026-09-26* (Logbuch: «Sicherung herunterladen» und «einlesen»).
 - **Challenge:** ohne Server, über einen geteilten Code oder Link.
 - **Grössere Funktionen** zuerst auf einem Branch, erst danach nach `main`.
 
@@ -291,7 +302,9 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
 
 - ~~**Eigener Knopf «Fahrtmodus»**~~ erledigt: roter Knopf neben dem Namen.
 - ~~**Nur Ziel eingeben**~~ erledigt: Start ist der nächste Bahnhof per GPS.
-- **Ohne Ziel:** Aus einigen GPS-Punkten Linie und Richtung erkennen
+- ~~**Ohne Ziel**~~ eingebaut 2026-09-26: Abschnitt und Richtung aus den Standorten, der
+  Weg folgt derselben Linie bis zur Verzweigung, dann neu gesucht; liegen Strecken
+  nebeneinander, fragt Taktland «Welche Linie fährst du?». Ursprüngliche Idee: Aus einigen GPS-Punkten Linie und Richtung erkennen
   (`strecken_geometrie.json`) und melden, was auf der Linie vorne liegt; bei
   einem Linienwechsel neu suchen.
 - ~~**Pendelfunktion**~~ erledigt als «Gemerkte Fahrten» (ein Tipp bis zum
