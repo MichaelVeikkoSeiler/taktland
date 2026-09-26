@@ -333,6 +333,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
                       name={(o) => text(o)?.name} />
 
+        {/* die Karte gleich unter dem Band, damit beide zusammen im Bild sind
+            (Michael, 2026-09-26) */}
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
+
         {danach.length > 0 && (
           <>
             <p className="mt-6 text-sm font-medium">Danach</p>
@@ -363,8 +367,6 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             </p>
           </>
         )}
-
-        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
 
         <div className="mt-8 grid gap-3 border-t border-sbb-cloud pt-4 text-sm dark:border-sbb-iron">
           <label className="flex items-center justify-between gap-3">
