@@ -98,6 +98,10 @@ data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine K
              selbst gezeichnet, ohne Kartendienst
 data/seen.json  Seen für alle Karten aus Swiss Map Vector 1000 von swisstopo
              (pipeline/build_seen.py), nur Umriss und Name, kleine Seen fehlen
+data/sehenswert.json  Gipfel mit Höhe (swisstopo), Kulturgüter von nationaler Bedeutung
+             (BABS) und Seilbahnen mit Bundeskonzession (BAV) für die Karten
+             (pipeline/build_sehenswert.py)
+data/flaechen.json  BLN, Pärke und Moorlandschaften (BAFU), vereinfachte Umrisse
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -124,6 +128,7 @@ python3 generator/strecken.py --validieren       # Tunnel und Brücken je Abschn
 python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 .venv/bin/python pipeline/build_karte.py         # Netz für die kleine Tunnelkarte
 python3 pipeline/build_seen.py                   # Seen für die Karten (swisstopo)
+python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

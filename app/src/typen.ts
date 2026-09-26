@@ -356,6 +356,30 @@ export interface SeenDaten {
   }>
 }
 
+/** Kodierte Linie oder Fläche: [Breite, Länge] mal 100000 mit Differenzen */
+export interface KodierterZug { start: [number, number]; d: number[] }
+
+/** Sehenswertes für die Karten (data/sehenswert.json) */
+export interface SehenswertDaten {
+  geladen: string
+  quellen: { gipfel: string; kgs: string; seilbahnen: string; flaechen: string }
+  hinweis: string
+  gipfel: Array<{ name: string; hoehe_m: number | null; lage: [number, number] }>
+  kgs: Array<{ nr: number; name: string; gruppe: string; art?: string; gemeinde: string; kanton: string | null;
+               lage: [number, number] }>
+  seilbahnen: Array<{ nr: string; name: string; bahntyp: string | null; fahrzeugtyp: string | null;
+                      betreiber: string | null; laenge_schief_m: number | null; hoehendifferenz_m: number | null;
+                      verlauf: KodierterZug[] }>
+}
+
+/** Flächen für die Karten (data/flaechen.json) */
+export interface FlaechenDaten {
+  geladen: string
+  quelle: string
+  hinweis: string
+  flaechen: Array<{ art: string; name: string; nr?: number; ringe: KodierterZug[] }>
+}
+
 export interface KartenDaten {
   datenstand: string
   quellen: string[]

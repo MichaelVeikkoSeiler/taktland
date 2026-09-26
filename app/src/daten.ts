@@ -1,6 +1,6 @@
 import type {
   BahnhofIndex, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StandortDaten, StreckenGeometrie,
-  SeenDaten, StreckenNetz,
+  FlaechenDaten, SeenDaten, SehenswertDaten, StreckenNetz,
   Uebersicht, Vergleichsdaten,
 } from './typen'
 
@@ -89,6 +89,16 @@ export async function geometrieLaden(): Promise<StreckenGeometrie> {
 /** Das Streckennetz für die kleine Karte zu den Tunneln */
 export async function karteLaden(): Promise<KartenDaten> {
   return holen<KartenDaten>('data/karte.json')
+}
+
+/** Gipfel, KGS-Objekte und Seilbahnen für die Karten */
+export async function sehenswertLaden(): Promise<SehenswertDaten> {
+  return holen<SehenswertDaten>('data/sehenswert.json')
+}
+
+/** BLN, Pärke und Moorlandschaften für die Karten */
+export async function flaechenLaden(): Promise<FlaechenDaten> {
+  return holen<FlaechenDaten>('data/flaechen.json')
 }
 
 /** Die Seen für die Karten */

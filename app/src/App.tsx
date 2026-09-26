@@ -180,7 +180,9 @@ export default function App() {
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
-            Seen: Bundesamt für Landestopografie swisstopo.
+            Seen und Gipfel: Bundesamt für Landestopografie swisstopo. Kulturgüter: Bundesamt für
+            Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
+            Moorlandschaften: Bundesamt für Umwelt BAFU.
             Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot der SBB.
             Hinweise und Fehler gern an{' '}
             <a href={`mailto:${KONTAKT}`}

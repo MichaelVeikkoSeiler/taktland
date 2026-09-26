@@ -8,6 +8,7 @@ import { useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
+import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, useSehenswert } from './Sehenswert'
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
@@ -189,6 +190,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
 }) {
   const { linien } = useKarte()
   const seen = useSeen()
+  const sehenswert = useSehenswert()
+  const [auswahl, setAuswahl] = useState<Auswahl | null>(null)
   const [nah, setNahRoh] = useState(true)
   // eigener Zoom und Verschiebung, die das Nachführen alle halbe Sekunde
   // nicht zurücksetzt (Michael, 2026-09-26: «springt immer wieder auf den
@@ -305,8 +308,10 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
            onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
            className={`${klassen.svg} border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight`}>
+        <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />
         <SeenFlaechen seen={seen} box={box} verh={verh} />
         <SeenNamen seen={seen} box={box} px={px} verh={verh} />
+        <SehenswertEbene daten={sehenswert.s} box={box} px={px} verh={verh} waehlen={setAuswahl} />
         {netz.map((st, i) => (
           <path key={i} d={pfad(st.x.map((x, j) => [x, st.y[j]]))} fill="none" strokeWidth={1}
                 vectorEffect="non-scaling-stroke" className="stroke-sbb-cloud dark:stroke-sbb-iron" />
@@ -334,6 +339,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           </>
         )}
       </svg>
+      {!voll && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
       <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>
         {!linien && 'Das Netz wird geladen … '}
         <details>
@@ -343,6 +349,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
         dem Schienennetz des BAV. Auf Strecken anderer Bahnen ist der Weg gerade von Bahnhof zu
         Bahnhof gezogen. Rot der geschätzte Standort.
         {seen && ' Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab.'}
+        {sehenswert.s && ' Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; BLN, Pärke, Moorlandschaften: BAFU. Kulturgüter erscheinen erst näher; ein Tipp auf ein Zeichen zeigt, was es ist.'}
         {' Zoomen mit zwei Fingern oder mit «+» und «−»; näher gezoomt lässt sich die Karte verschieben.'}
           </p>
         </details>

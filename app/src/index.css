@@ -42,6 +42,18 @@
   --color-see-name: #3f6a93;
   --color-see-halo: #ffffff;
 
+  /* Sehenswertes auf den Karten, von Claude festgelegt: zurückhaltend, damit
+     Strecke und Fahrtmodus-Farben vorne bleiben */
+  --color-gipfel: #6b4a2e;
+  --color-kgs: #7a3e9d;
+  --color-seilbahn: #444444;
+  --color-flaeche-bln: #e3eed8;
+  --color-flaeche-bln-rand: #b9d3a3;
+  --color-flaeche-park: #d3e8c7;
+  --color-flaeche-park-rand: #7fae66;
+  --color-flaeche-moor: #ece9d2;
+  --color-flaeche-moor-rand: #c9c29a;
+
   /* Kacheln: Milk um 4,5 % dunkler (Michael, 2026-09-25) */
   --color-sbb-kachel: #ebebeb;
   --color-sbb-midnight: #151515;
@@ -135,7 +147,11 @@ body {
 
 /* Seen im Dunkeln */
 @media (prefers-color-scheme: dark) {
-  :root { --color-see: #1d2c3a; --color-see-name: #8fb3d4; --color-see-halo: #151515; }
+  :root { --color-see: #1d2c3a; --color-see-name: #8fb3d4; --color-see-halo: #151515;
+          --color-gipfel: #c9a27e; --color-kgs: #c39be0; --color-seilbahn: #bdbdbd;
+          --color-flaeche-bln: #1f2a1b; --color-flaeche-bln-rand: #3a5230;
+          --color-flaeche-park: #1c2d18; --color-flaeche-park-rand: #4f7a3d;
+          --color-flaeche-moor: #29271c; --color-flaeche-moor-rand: #5a5437; }
 }
 
 /*

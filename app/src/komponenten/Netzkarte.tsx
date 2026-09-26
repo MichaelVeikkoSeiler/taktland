@@ -2,6 +2,7 @@ import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { karteLaden } from '../daten'
 import type { KartenDaten } from '../typen'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
+import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 
 /** Verhältnis Meter je Grad Länge zu Breite in der Schweiz: x = Länge mal das */
 export const LAENGE_ZU_BREITE = 73_000 / 111_200
@@ -190,6 +191,8 @@ export function Netzkarte({
 }) {
   const [box, setBox] = useState<Box>(start)
   const seen = useSeen()
+  const sehenswert = useSehenswert()
+  const [auswahl, setAuswahl] = useState<Auswahl | null>(null)
   const svg = useRef<SVGSVGElement | null>(null)
   const zeiger = useRef(new Map<number, { x: number; y: number }>())
   const zieht = useRef<{ art: 'nichts' | 'karte'; x: number; y: number; d: number } | null>(null)
@@ -373,6 +376,7 @@ export function Netzkarte({
            }}
            className={`${klassen.svg} touch-none border border-sbb-cloud bg-white
                       dark:border-sbb-iron dark:bg-sbb-midnight`}>
+        <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />
         <SeenFlaechen seen={seen} box={box} verh={verh} />
         {sichtbar.map(({ nr, s, i }) => (
           <path key={`${nr}-${i}`} d={pfad(s.x.map((x, j) => [x, s.y[j]]))} fill="none"
@@ -396,6 +400,7 @@ export function Netzkarte({
           </g>
         ))}
         <SeenNamen seen={seen} box={box} px={px} belegt={belegt} verh={verh} />
+        <SehenswertEbene daten={sehenswert.s} box={box} px={px} verh={verh} belegt={belegt} waehlen={setAuswahl} />
         {zeichnen?.(px, box)}
         {punkte.filter((p) => drin(p.x, p.y)).map((p) => (
           <circle key={`b${p.name}${p.x}`} cx={p.x} cy={p.y} r={2.8 * px} strokeWidth={1.2}
@@ -415,11 +420,14 @@ export function Netzkarte({
                 strokeWidth={3} paintOrder="stroke" vectorEffect="non-scaling-stroke">{p.name}</text>
         ))}
       </svg>
+      <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />
+      {sehenswert.s && <SehenswertLegende />}
       {/* im Vollbild nur die Karte; die Hinweise bleiben auf der Seite */}
       {!voll && (
         <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           {beschriftung}{' '}
           {seen && 'Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. '}
+          {sehenswert.s && 'Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; BLN, Pärke, Moorlandschaften: BAFU. Kulturgüter erscheinen erst näher. Ein Tipp auf ein Zeichen zeigt, was es ist. '}
           Zoomen mit zwei Fingern, mit «+» und «−» oder mit Strg und dem Mausrad; Ziehen verschiebt
           die Karte, sobald sie näher steht.
         </figcaption>
