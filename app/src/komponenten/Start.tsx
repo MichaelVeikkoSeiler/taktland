@@ -42,7 +42,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
       <p className={absatz}>
         Entstanden ist Taktland mit einer Rundum-KI-Lösung und eigener Entwicklungsarbeit. Es ist
         kostenlos, braucht kein Konto, und dein Fortschritt bleibt auf deinem Gerät; Taktland ist
-        ein privates Lernprojekt und kein Angebot der SBB.
+        ein privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
       </p>
       <p className={`${absatz} text-sbb-metal dark:text-sbb-storm`}>
         Oben wählst du einen Bereich. «Info» erklärt, wie Taktland funktioniert.
