@@ -104,7 +104,6 @@ export function fahrwegBauen(netz: StreckenNetz,
                                                                 bauwerke?: StreckenGeometrie['bauwerke'] },
                              punkteWeg: string[],
                              abschnitte: StreckenAbschnitt[], brueckeKm: (kennung: string) => number | undefined,
-                             tunnelLaenge: (kennung: string) => number | null,
                              istBahnhof: (abk: string) => boolean): Fahrweg {
   const punkte: Punkt[] = []
   // nach Art getrennt: «660:0» ist der erste Tunnel und die erste Brücke der Linie 660
@@ -202,10 +201,10 @@ export function fahrwegBauen(netz: StreckenNetz,
         const [v, w] = netz.tunnel_bereiche[id] ?? [NaN, NaN]
         if (Number.isNaN(v)) continue
         const ein = sBei(steigend ? v : w)
-        const laenge = tunnelLaenge(id)
-        // Die Ausfahrt nur, wenn die Daten die Richtung hergeben (v ≠ w)
+        // Die Ausfahrt nur, wenn Anfang und Ende bekannt sind (v ≠ w): aus der
+        // Länge laut SBB oder laut swissTLM3D (pipeline/build_tunnel_richtung.py)
         objekte.set(`tunnel ${id}`, { kennung: id, art: 'tunnel', s: ein,
-                          sAus: v !== w && laenge ? ein + laenge : null })
+                          sAus: v !== w ? sBei(steigend ? w : v) : null })
       }
       for (const id of t.bruecken) {
         if (objekte.has(`bruecke ${id}`)) continue

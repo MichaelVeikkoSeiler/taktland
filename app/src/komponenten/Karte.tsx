@@ -135,8 +135,9 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], wae
           dem Schienennetz des BAV, ohne Strassen, Orte und Grenzen.{' '}
           {stationen.length > 0 && 'Ringe: die Bahnhöfe dieser Linie in Taktland an ihrem Kilometer. '}
           {art === 'tunnel' && objekte.length > 0
-            && 'Rot die Tunnel dieser Linie: als Strecke, wo die Daten die Richtung der Länge '
-              + 'hergeben, sonst als Punkt beim erfassten Kilometer, dem Portal. '}
+            && 'Rot die Tunnel dieser Linie: als Strecke, wo die Länge nur in eine Richtung passt '
+              + 'oder swissTLM3D (swisstopo) Anfang und Ende zeigt, sonst als Punkt beim erfassten '
+              + 'Kilometer. Ob dieser am Portal liegt, sagt die Quelle nicht; oft liegt er im Tunnel. '}
           {art === 'bruecken'
             && 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge ist '
               + 'nicht erfasst. '}

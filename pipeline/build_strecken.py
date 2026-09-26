@@ -439,6 +439,25 @@ def objekte():
     return tunnel, bruecken
 
 
+def tunnel_aus_tlm():
+    """Anfang und Ende laut swissTLM3D für Tunnel ohne Richtung
+    (pipeline/build_tunnel_richtung.py), «Linie:Stelle» → (von, bis)"""
+    pfad = ROOT / "data" / "tunnel_richtung.json"
+    if not pfad.exists():
+        return {}
+    return {k: (v["von"], v["bis"])
+            for k, v in json.loads(pfad.read_text(encoding="utf-8"))["tunnel"].items()}
+
+
+def tunnel_bereich_mit_tlm(kennung, km, laenge_m, lo, hi, aus_tlm):
+    """Wie tunnel_bereich; gibt die Länge keine Richtung her, gelten Anfang und
+    Ende laut swissTLM3D, wenn es sie gibt"""
+    v, w = tunnel_bereich(km, laenge_m, lo, hi)
+    if v == w and kennung in aus_tlm:
+        return aus_tlm[kennung]
+    return v, w
+
+
 def tunnel_bereich(km, laenge_m, lo, hi):
     """Der Kilometer eines Tunnels liegt an einem Portal, welchem, sagt die
     Quelle nicht. Passt die Länge nur in eine Richtung auf die Linie
@@ -466,6 +485,7 @@ def main():
     auf_linie = punkte_je_linie(lage)
     sbb_linien = set(load("linie").linie.astype(int))
     tunnel, bruecken = objekte()
+    aus_tlm = tunnel_aus_tlm()
     bereich = {nr: (float(z[2].min()), float(z[2].max())) for nr, z in zuege.items()}
     # Linien des Schienennetzes je Betriebspunkt, ohne Tramlinien (Buchstaben)
     bav_linien, _ = schienennetz.je_linie()
@@ -502,7 +522,7 @@ def main():
                 ll, lh = bereich[nr]
                 auf_teil = []
                 for i, km, lm in tunnel.get(nr, []):
-                    v, w = tunnel_bereich(km, lm, ll, lh)
+                    v, w = tunnel_bereich_mit_tlm(i, km, lm, ll, lh, aus_tlm)
                     if w >= lo and v <= hi:
                         auf_teil.append(i)
                         # Anfang und Ende, damit der Fahrtmodus die Einfahrt kennt

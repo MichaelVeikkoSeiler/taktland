@@ -390,7 +390,6 @@ function Ergebnis({
       const linien = geometrieLesen(await geometrieLaden())
       const fahrweg = fahrwegBauen(netz, linien, weg.punkte, weg.abschnitte,
                                    (id) => brueckenNach.get(id)?.km ?? undefined,
-                                   (id) => tunnelNach.get(id)?.laenge_m ?? null,
                                    (abk) => bahnhof.has(uicVon.get(abk) ?? 0))
       // Sehenswertes am Weg; fehlen die Daten, fährt der Fahrtmodus ohne
       try {

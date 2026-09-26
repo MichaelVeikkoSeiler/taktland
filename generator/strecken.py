@@ -41,9 +41,31 @@ def fakten_objekte():
     return raus
 
 
-def tunnel_bereich(km, laenge_m, lo, hi):
+def tunnel_aus_tlm():
+    pfad = ROOT / "data" / "tunnel_richtung.json"
+    return json.loads(pfad.read_text(encoding="utf-8"))["tunnel"] if pfad.exists() else {}
+
+
+TLM_TUNNEL = None
+
+
+def tunnel_bereich(km, laenge_m, lo, hi, kennung=None):
     """Zweite Meinung zu pipeline/build_strecken.py: Der Tunnel gilt als
-    Bereich, wenn seine Länge nur in eine Richtung auf die Linie passt."""
+    Bereich, wenn seine Länge nur in eine Richtung auf die Linie passt; sonst
+    Anfang und Ende laut swissTLM3D, wenn data/tunnel_richtung.json sie führt
+    und ihr Abstand höchstens 10 % von der Länge laut SBB abweicht."""
+    global TLM_TUNNEL
+    if TLM_TUNNEL is None:
+        TLM_TUNNEL = tunnel_aus_tlm()
+    v, w = _bereich(km, laenge_m, lo, hi)
+    x = TLM_TUNNEL.get(kennung) if kennung else None
+    if v == w and x and laenge_m and abs((x["bis"] - x["von"]) - laenge_m / 1000) <= max(0.1 * laenge_m / 1000, 0.05) \
+            and x["von"] - 0.3 <= km <= x["bis"] + 0.3:
+        return x["von"], x["bis"]
+    return v, w
+
+
+def _bereich(km, laenge_m, lo, hi):
     if not laenge_m:
         return km, km
     lang = laenge_m / 1000
@@ -94,7 +116,8 @@ def validieren():
                 fehler.append(f"{wo}: Linie {nr} ohne Bereich")
                 continue
             soll_t = [f"{nr}:{i}" for i, x in enumerate(obj.get(("tunnel", nr), []))
-                      if (lambda v, w: w >= lo and v <= hi)(*tunnel_bereich(x["km"], x["laenge_m"], *bereich))]
+                      if (lambda v, w: w >= lo and v <= hi)(*tunnel_bereich(x["km"], x["laenge_m"], *bereich,
+                                                                              kennung=f"{nr}:{i}"))]
             soll_b = [f"{nr}:{i}" for i, x in enumerate(obj.get(("bruecken", nr), []))
                       if lo <= x["km"] <= hi]
             geprueft += len(soll_t) + len(soll_b)
@@ -102,7 +125,7 @@ def validieren():
                 fehler.append(f"{wo}, Linie {nr}: Tunnel {t['tunnel']} statt {soll_t}")
             for i in t["tunnel"]:
                 x = obj[("tunnel", nr)][int(i.split(":")[1])]
-                soll = [round(v, 3) for v in tunnel_bereich(x["km"], x["laenge_m"], *bereich)]
+                soll = [round(v, 3) for v in tunnel_bereich(x["km"], x["laenge_m"], *bereich, kennung=i)]
                 if n["tunnel_bereiche"].get(i) != soll:
                     fehler.append(f"{wo}: Bereich von Tunnel {i} {n['tunnel_bereiche'].get(i)} statt {soll}")
             # der Fahrtmodus braucht die Lage der Linie über das ganze Stück

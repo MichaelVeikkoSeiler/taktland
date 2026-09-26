@@ -107,6 +107,9 @@ data/flaechen.json  BLN, Pärke und Moorlandschaften (BAFU), vereinfachte Umriss
 data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3D
              (pipeline/fetch_tlm3d.py, pipeline/build_tlm_bauwerke.py), ohne Länge; im
              Fahrtmodus auf Strecken anderer Bahnen, deren Verlauf aus dem Schienennetz kommt
+data/tunnel_richtung.json  Anfang und Ende von SBB-Tunneln, deren Länge in beide Richtungen
+             passt, laut swissTLM3D (pipeline/build_tunnel_richtung.py); der Kilometer der
+             SBB liegt oft im Tunnel, nicht am Portal
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -136,6 +139,7 @@ python3 pipeline/build_seen.py                   # Seen für die Karten (swissto
 python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
 python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
+.venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

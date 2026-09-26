@@ -327,8 +327,8 @@ function UmgebungsKarte({ stand, linien, karte, daten, bahnhoefe, naechsteLinie,
         <>
           Gezeichnet aus den Daten der SBB und des BAV, ohne Strassen und ohne Kartenbilder eines
           fremden Dienstes. Der grosse gefüllte Punkt ist dein Standort, der Kreis darum seine
-          Genauigkeit laut Gerät. Ringe: Bahnhöfe. Rot: Tunnel (als Strecke, wo die Daten die
-          Richtung der Länge hergeben, sonst als Punkt) und Brücken (kleine Punkte). Quadrate:
+          Genauigkeit laut Gerät. Ringe: Bahnhöfe. Rot: Tunnel (als Strecke, wo die Länge nur in
+          eine Richtung passt oder swissTLM3D Anfang und Ende zeigt, sonst als Punkt) und Brücken (kleine Punkte). Quadrate:
           Bahnübergänge. Punkte stehen dort, wo ihre Quelle die Lage angibt, nicht immer genau
           auf der gezeichneten Linie. Ein Tipp auf einen Bahnhof oder eine Linie führt dorthin.
         </>

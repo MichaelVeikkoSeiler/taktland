@@ -23,7 +23,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import schienennetz  # noqa: E402
-from build_strecken import tunnel_bereich  # noqa: E402
+from build_strecken import tunnel_aus_tlm, tunnel_bereich_mit_tlm  # noqa: E402
 from sources import DATASETS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -129,11 +129,12 @@ def main():
 
     # Tunnel: Bereich wie auf der Seite Strecke, für alle Tunnel der Linienfakten
     tunnel = {}
+    aus_tlm = tunnel_aus_tlm()
     for p in LINIEN.glob("*.json"):
         f = json.loads(p.read_text(encoding="utf-8"))
         for i, t in enumerate((f.get("tunnel") or {}).get("items", [])):
             lo_, hi_ = bereich[f["linie"]]
-            v, w = tunnel_bereich(t["km"], t["laenge_m"], lo_, hi_)
+            v, w = tunnel_bereich_mit_tlm(f"{f['linie']}:{i}", t["km"], t["laenge_m"], lo_, hi_, aus_tlm)
             tunnel[f"{f['linie']}:{i}"] = [round(v, 3), round(w, 3)]
 
     namen = {}
@@ -149,7 +150,8 @@ def main():
         "quellen": QUELLEN + QUELLEN_BAV,
         "hinweis": "Linien: je Stück start = [Meter, Breite, Länge] als ganze Zahlen (Grad mal "
                    "100000), d = Differenzen; vereinfacht auf {} m. tunnel: km von, km bis auf "
-                   "der Linie, gleich, wenn die Richtung der Länge nicht erfasst ist. orte: Lage "
+                   "der Linie, gleich, wenn die Richtung der Länge nicht erfasst ist; ohne Richtung aus "
+                   "der Länge Anfang und Ende laut swissTLM3D (data/tunnel_richtung.json), wo es sie gibt. orte: Lage "
                    "aus den Fakten, nur zur Orientierung. Stücke aus dem Schienennetz des BAV: "
                    "Kilometer nur an den Enden erfasst, dazwischen nach dem Weg verteilt."
                    .format(TOLERANZ_M),

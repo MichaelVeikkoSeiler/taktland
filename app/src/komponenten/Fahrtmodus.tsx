@@ -151,7 +151,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     let p = projizieren(fahrweg, { lat, lon }, fenster[0], fenster[1])
     if (p.abstand > Math.max(ABSEITS_M, 2 * (genau ?? 0)) && alt) p = projizieren(fahrweg, { lat, lon })
     const abseits = p.abstand > Math.max(ABSEITS_M, 2 * (genau ?? 0)) ? p.abstand : null
-    let v = alt?.v ?? 0
+    // schon beim ersten Standort das Tempo des Geräts, sonst «steht» bis zum nächsten
+    // (Göschenen – Airolo: gleich nach dem Start im Tunnel, dort kommt keiner mehr)
+    let v = alt?.v ?? (tempo !== null && tempo >= 0 ? tempo : 0)
     if (alt && abseits === null && t > alt.t) {
       const gemessen = (p.s - alt.s) / ((t - alt.t) / 1000)
       const neu = tempo !== null && tempo >= 0 ? tempo : Math.max(0, gemessen)
