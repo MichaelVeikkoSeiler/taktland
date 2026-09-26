@@ -249,6 +249,16 @@ Aare Seeland mobil, beim Laden prüfen).
 - Im Fahrtmodus wie bei anderen Bahnen: Bahnhöfe ja, Tunnel und Brücken fehlen
   in den Daten, der Weg ist gerade von Bahnhof zu Bahnhof gezogen.
 
+## Fahrt fortsetzen
+
+Idee, 2026-09-26 (Michael: «Ja»): Schliesst das Handy die Seite ganz (wenig
+Speicher, lange im Hintergrund), endet heute der Fahrtmodus; beim Neustart
+zählt das Sammelheft erst ab dem neuen Standort, das Stück dazwischen fehlt.
+Vorschlag: die laufende Fahrt (Weg, Start, bisher Durchfahrenes, Einstellungen)
+auf dem Gerät merken und beim Öffnen fragen «Fahrt Lugano → Bern fortsetzen?».
+Beim Fortsetzen zählt alles zwischen dem letzten gespeicherten Standort und dem
+neuen als durchfahren, wie heute nach einer Pause im Hintergrund.
+
 ## Risiken, beim Bauen beachten
 
 - **Speicher auf dem Gerät:** Logbuch, Sammelheft und Favoriten liegen im
