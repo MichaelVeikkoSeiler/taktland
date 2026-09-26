@@ -140,6 +140,44 @@ ohne Server.
   Menschen hilft, denen Tunnel unangenehm sind, müssten Betroffene sagen.
 - **Ruhemodus:** nur Bahnhöfe oder nur das Ziel; geht heute schon über die Einstellungen.
 
+## Für Familien
+
+Ideen vom 2026-09-26 (Michael: «in die Merkliste»), noch nicht beschlossen. Heute
+schon nützlich: Tunnel mit «Gleich» und «Ausfahrt in etwa …», Sehenswertes links und
+rechts, Probefahrt zur Vorfreude, kein Konto, keine Werbung.
+
+**Vorschlag zuerst** (wenig Aufwand, nur Daten, die Taktland schon hat): Reise-Bingo,
+Tunnel-Schätzen, «Wie lange noch?».
+
+**Spiele während der Fahrt**
+- **Tunnel-Schätzen:** vor dem Tunnel schätzt jede Person die Sekunden, Taktland misst
+  Einfahrt bis Ausfahrt auf dem Gerät. Nur bei Tunneln mit bekanntem Anfang und Ende.
+- **Reise-Bingo:** vor der Fahrt eine Karte aus dem Weg (ein Tunnel, eine Brücke, ein
+  See rechts, ein Gipfel links, ein Bahnhof), die Kinder haken ab. Alles aus den Daten.
+- **Familienduell:** zwei bis vier Personen abwechselnd auf einem Handy, jede mit
+  eigenem Punktestand.
+- **Quiz zur Fahrt, leichtere Stufe:** weniger Zahlen, mehr «Welcher Tunnel kam zuerst?».
+
+**Für Kinder gemacht**
+- **Kinderansicht:** grosse Piktos (von Michael), kurze Sätze, ohne Karte, der Zug im Band.
+- **«Wie lange noch?»** als grosse Anzeige; mit «Welcher Zug?» auch «noch 3 Halte laut
+  Fahrplan».
+- **Ein Sammelheft pro Kind** auf einem Familienhandy, Namen nur auf dem Gerät.
+- **Abzeichen** aus Zählungen und Schwellen der Daten («erster Tunnel über 5 km»,
+  «10 Brücken»); keine Summen wie «insgesamt 23 km Tunnel» (CLAUDE.md, Regel 8).
+
+**Erinnerungen**
+- **Reisetagebuch zum Ausdrucken:** eine Seite pro Fahrt, Datum, Weg, Durchfahrenes,
+  Platz für eine Zeichnung, auf dem Gerät erzeugt.
+
+**Worauf achten**
+- Auch für Kinder nichts erfinden: kein Maskottchen mit ausgedachten «Wusstest du …?».
+  Kindgerecht heisst einfacher sagen, nicht mehr behaupten.
+- Keine Daten über Kinder, kein Konto.
+- Ton: für Familien lauter, für Mitreisende leise; Hinweis auf Kopfhörer.
+- Französisch und Italienisch wären für Familien in der Romandie und im Tessin
+  Voraussetzung; «Fahren» gibt es heute nur auf Deutsch.
+
 ## Messbarkeit: Wie wird Taktland genutzt?
 
 Idee von Michael, 2026-09-24: Die Wirkung sollte bis zu einem gewissen Grad
