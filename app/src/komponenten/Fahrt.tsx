@@ -43,6 +43,8 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
     setProbenOffen(offen)
     try { localStorage.setItem('taktland.probefahrten.offen', offen ? 'ja' : 'nein') } catch { /* nur jetzt */ }
   }
+  // welche Probefahrt gerade ihre beiden Richtungen zeigt
+  const [richtungWahl, setRichtungWahl] = useState<string | null>(null)
   const [neueProbe, setNeueProbe] = useState<{ von: number | null; nach: number | null } | null>(null)
   useEffect(() => {
     if (!entfernt) return
@@ -158,13 +160,21 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
               )}
               {gemerkt.probefahrten.length > 0 && (
                 <ul className="mt-2 kachelliste">
-                  {gemerkt.probefahrten.map((f, i) => (
-                    <li key={`${f.von}-${f.nach}-${f.ueber}`} className="flex items-stretch">
-                      <button type="button" onClick={() => starten(f, true)}
+                  {gemerkt.probefahrten.map((f, i) => {
+                    const k = `${f.von}-${f.nach}-${f.ueber}`
+                    const offen = richtungWahl === k
+                    return (
+                    <li key={k}>
+                    <div className="flex items-stretch">
+                      {/* erst die Probefahrt wählen, dann die Richtung (Michael, 2026-09-26) */}
+                      <button type="button" onClick={() => setRichtungWahl(offen ? null : k)} aria-expanded={offen}
                               className="flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3 px-3 py-3
                                          text-left hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
-                        <span className="min-w-0 font-medium">{fahrtText(f)}</span>
-                        <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
+                        <span className="min-w-0 font-medium">{name(f.von)} – {name(f.nach)}
+                          {f.ueber ? ` (über ${name(f.ueber)})` : ''}</span>
+                        <span className={`pfeil shrink-0 ${offen ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
+                          {offen ? '↑' : '↓'}
+                        </span>
                       </button>
                       <button type="button" aria-label={`${fahrtText(f)} aus den Probefahrten entfernen`}
                               title="Aus den Probefahrten entfernen"
@@ -175,8 +185,22 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
                                          dark:hover:bg-sbb-charcoal dark:hover:text-sbb-white">
                         ×
                       </button>
+                    </div>
+                    {offen && (
+                      <div className="grid gap-2 px-3 pb-3">
+                        {[f, { von: f.nach, nach: f.von, ueber: f.ueber }].map((r) => (
+                          <button key={`${r.von}-${r.nach}`} type="button" onClick={() => starten(r, true)}
+                                  className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
+                                             text-left hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
+                            <span className="min-w-0 font-medium">{fahrtText(r)}</span>
+                            <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
                     </li>
-                  ))}
+                    )
+                  })}
                 </ul>
               )}
               {neueProbe ? (
