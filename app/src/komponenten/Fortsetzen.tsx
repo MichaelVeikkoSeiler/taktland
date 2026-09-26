@@ -19,7 +19,7 @@ export function Fortsetzen() {
   if (!laufend) return null
 
   return (
-    <div className="mx-4 mt-4 rounded-lg bg-sbb-milk px-4 py-3 dark:bg-sbb-charcoal" role="region"
+    <div className="print:hidden mx-4 mt-4 rounded-lg bg-sbb-milk px-4 py-3 dark:bg-sbb-charcoal" role="region"
          aria-label="Laufende Fahrt">
       <p className="font-bold">Fahrt {laufend.ohne ? `ohne Ziel ab ${laufend.titel.split(' → ')[0]}` : laufend.titel} fortsetzen?</p>
       <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">

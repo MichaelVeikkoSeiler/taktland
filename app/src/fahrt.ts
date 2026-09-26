@@ -197,14 +197,18 @@ export function fahrwegBauen(netz: StreckenNetz,
       }
 
       for (const id of t.tunnel) {
-        if (objekte.has(`tunnel ${id}`)) continue
         const [v, w] = netz.tunnel_bereiche[id] ?? [NaN, NaN]
         if (Number.isNaN(v)) continue
         const ein = sBei(steigend ? v : w)
         // Die Ausfahrt nur, wenn Anfang und Ende bekannt sind (v ≠ w): aus der
         // Länge laut SBB oder laut swissTLM3D (pipeline/build_tunnel_richtung.py)
-        objekte.set(`tunnel ${id}`, { kennung: id, art: 'tunnel', s: ein,
-                          sAus: v !== w ? sBei(steigend ? w : v) : null })
+        const aus = v !== w ? sBei(steigend ? w : v) : null
+        // Ein langer Tunnel reicht über mehrere Abschnitte (Gotthard-Basistunnel mit
+        // den Betriebspunkten darin): sBei endet am Rand dieses Teils, die Stücke zusammen
+        const alt = objekte.get(`tunnel ${id}`)
+        objekte.set(`tunnel ${id}`, alt
+          ? { ...alt, s: Math.min(alt.s, ein), sAus: alt.sAus !== null && aus !== null ? Math.max(alt.sAus, aus) : alt.sAus }
+          : { kennung: id, art: 'tunnel', s: ein, sAus: aus })
       }
       for (const id of t.bruecken) {
         if (objekte.has(`bruecke ${id}`)) continue

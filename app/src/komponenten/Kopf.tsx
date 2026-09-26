@@ -138,7 +138,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   const unter = objekteAktiv ? { name: 'Bahnland', liste: OBJEKTE, raster: 'grid grid-cols-4 sm:flex' }
     : REISETASCHE.some((l) => l.bereich === aktiv) ? { name: 'Reisetasche', liste: REISETASCHE, raster: 'flex' } : null
   return (
-    <header className="border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
+    <header className="print:hidden border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* Aktualisieren nur im Bild der Startseite (Michael, 2026-09-24) */}
       {bild && <Auftakt key={schluessel} bild={bild} oben={startseite ? <Aktualisieren /> : undefined} />}
       <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />

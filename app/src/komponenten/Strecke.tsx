@@ -61,19 +61,19 @@ export function wahlAusAdresse(abfrage: string | undefined): StreckenWahl {
            ohne: p.get('ohne') === '1' }
 }
 
-interface Weg {
+export interface Weg {
   punkte: string[]
   abschnitte: StreckenAbschnitt[]
 }
 
-type Nachbarn = Map<string, Array<[string, StreckenAbschnitt]>>
+export type Nachbarn = Map<string, Array<[string, StreckenAbschnitt]>>
 
 /**
  * Kürzester Weg nach dem Gewicht der Abschnitte (Dijkstra). Das Gewicht ist
  * die Luftlinie, bei wenig befahrenen Abschnitten erhöht; es dient nur der
  * Suche und wird nirgends angezeigt. generator/strecken.py sucht gleich.
  */
-function wegSuchen(nachbarn: Nachbarn, start: string, ziel: string): Weg | null {
+export function wegSuchen(nachbarn: Nachbarn, start: string, ziel: string): Weg | null {
   if (start === ziel) return { punkte: [start], abschnitte: [] }
   const dist = new Map<string, number>([[start, 0]])
   const vor = new Map<string, [string, StreckenAbschnitt]>()
@@ -176,7 +176,7 @@ function laeufe(weg: Weg): Lauf[] {
 
 /** «Linie:Stelle» → Eintrag. Die Übersicht führt die Einträge je Linie in der
  *  Reihenfolge der Linienfakten, also zählt die Stelle innerhalb der Linie. */
-function nachKennung<T>(u: Uebersicht<T>) {
+export function nachKennung<T>(u: Uebersicht<T>) {
   const raus = new Map<string, T & { linie: number }>()
   const zaehler = new Map<number, number>()
   for (const e of u.eintraege) {
@@ -666,6 +666,12 @@ function Ergebnis({
                 <Stern voll={probe} />
                 {probe ? 'Unter den Probefahrten' : 'Als Probefahrt merken'}
               </button>
+            )}
+            {gemerkt && !wahl.weg && (
+              <a href={`#/fahrtblatt?${streckenAdresse(wahl).split('?')[1]}`}
+                 className="mt-2 flex items-center gap-2 text-sm font-medium">
+                Fahrtblatt für Kinder drucken
+              </a>
             )}
             {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}
             {fahrtFehler && <p className="mt-2 text-sm">«Fahren» konnte nicht starten. {fahrtFehler}</p>}

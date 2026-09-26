@@ -328,6 +328,12 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
           Probefahrt
         </button>
       </div>
+      {bereit && (
+        <a href={`#/fahrtblatt?von=${fahrt.von}&nach=${fahrt.nach}${fahrt.ueber ? `&ueber=${fahrt.ueber}` : ''}`}
+           className="mt-3 inline-flex items-center gap-2 text-sm font-medium underline-offset-2 hover:underline">
+          Fahrtblatt für Kinder drucken
+        </a>
+      )}
       {fahrt.von !== null && fahrt.von === fahrt.nach && (
         <p className="mt-2 text-sm">Start und Ziel sind derselbe Bahnhof.</p>
       )}

@@ -6,6 +6,7 @@ import { Duell } from './komponenten/Duell'
 import { Fahrt } from './komponenten/Fahrt'
 import { Fortsetzen } from './komponenten/Fortsetzen'
 import { OhneZiel } from './komponenten/OhneZiel'
+import { Fahrtblatt } from './komponenten/Fahrtblatt'
 import { Sammelheft } from './komponenten/Sammelheft'
 import { Favoriten } from './komponenten/Favoriten'
 import { Logbuch } from './komponenten/Logbuch'
@@ -33,6 +34,7 @@ import { Ladefehler } from './komponenten/Ladefehler'
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'demo' } | { art: 'ohneziel' }
+  | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
@@ -61,6 +63,8 @@ function seiteAusAdresse(): Seite {
   if (h === '#/anleitung') return { art: 'anleitung' }
   // #/linien: die frühere Adresse, damit alte Lesezeichen weiter gehen
   if (h === '#/strecken' || h === '#/linien') return { art: 'linien' }
+  const blatt = /^#\/fahrtblatt(?:\?(.*))?$/.exec(h)
+  if (blatt) return { art: 'fahrtblatt', wahl: wahlAusAdresse(blatt[1]) }
   const strecke = /^#\/strecke(?:\?(.*))?$/.exec(h)
   if (strecke) return { art: 'strecke', wahl: wahlAusAdresse(strecke[1]) }
   if (h === '#/tunnel') return { art: 'uebersicht', liste: 'tunnel' }
@@ -93,7 +97,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'favoriten': return 'favoriten'
     case 'demo': return 'demo'
     case 'sammelheft': return 'sammelheft'
-    case 'anleitung': case 'fahrt': case 'ohneziel': return null
+    case 'anleitung': case 'fahrt': case 'ohneziel': case 'fahrtblatt': return null
   }
 }
 
@@ -127,7 +131,7 @@ export default function App() {
   // jedem Neuzeichnen nach oben
   const adresse = seite.art === 'bahnhof' ? `b${seite.uic}` : seite.art === 'linie' ? `l${seite.nr}`
     : seite.art === 'objekte' ? window.location.hash
-    : seite.art === 'uebersicht' ? seite.liste : seite.art
+    : seite.art === 'uebersicht' ? seite.liste : seite.art === 'fahrtblatt' ? window.location.hash : seite.art
   useEffect(() => { window.scrollTo(0, 0) }, [adresse])
 
   function oeffnen(neu: number) { window.location.hash = `#/bahnhof/${neu}` }
@@ -155,6 +159,7 @@ export default function App() {
         {seite.art === 'standort' && <Standort index={index} />}
         {seite.art === 'fahrt' && <Fahrt index={index} />}
         {seite.art === 'ohneziel' && <OhneZiel index={index} />}
+        {seite.art === 'fahrtblatt' && <Fahrtblatt index={index} wahl={seite.wahl} />}
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}
         {seite.art === 'logbuch' && <Logbuch index={index} />}
         {seite.art === 'favoriten' && <Favoriten index={index} oeffnen={oeffnen} />}
@@ -180,7 +185,7 @@ export default function App() {
                    eintrag={index.bahnhoefe.find((b) => b.uic === seite.uic)} />
         )}
 
-        <footer className="mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
+        <footer className="print:hidden mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
