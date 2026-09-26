@@ -14,6 +14,8 @@ import { Pikto } from './Pikto'
 
 /** So viele Einträge je Art passen auf ein Blatt A4 */
 const TUNNEL_MAX = 5
+/** so viele Tunnel anderer Bahnen mit Namen (swissTLM3D, ohne Länge) vor denen mit Länge */
+const TLM_TUNNEL_ZUERST = 2
 const BRUECKEN_MAX = 3
 const BAHNHOEFE_MAX = 5
 const GIPFEL_MAX = 3
@@ -114,7 +116,10 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
     return () => { ab = true }
   }, [index, wahl.von, wahl.nach, wahl.ueber, bahnhof])
 
-  const eintraege = useMemo(() => (daten ? auswaehlen(daten, bahnhof) : []), [daten, bahnhof])
+  // passt das Blatt nicht auf eine Seite, fallen von unten Einträge weg (siehe auswaehlen)
+  const [weniger, setWeniger] = useState(0)
+  useEffect(() => setWeniger(0), [daten])
+  const eintraege = useMemo(() => (daten ? auswaehlen(daten, bahnhof, weniger) : []), [daten, bahnhof, weniger])
 
   return (
     <div className="px-4 pb-16 print:p-0">
@@ -139,25 +144,48 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
       </div>
       {fehler && <Ladefehler className="mt-6" was="Das Fahrtblatt konnte nicht erstellt werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-6 text-sbb-metal print:hidden">Das Fahrtblatt wird erstellt …</p>}
-      {daten && <Blatt daten={daten} eintraege={eintraege} />}
+      {daten && <Blatt daten={daten} eintraege={eintraege} zuViel={() => setWeniger((w) => Math.min(w + 1, 40))} />}
     </div>
   )
 }
 
 /** Was aufs Blatt kommt, in Fahrtrichtung nummeriert */
-function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string }>): Eintrag[] {
+function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string }>, weniger = 0): Eintrag[] {
   const tunnelNach = nachKennung(d.tunnel)
   const brueckenNach = nachKennung(d.bruecken)
   const uicVon = new Map(Object.entries(d.netz.bahnhoefe).map(([k, v]) => [v, Number(k)]))
   const roh: Array<Omit<Eintrag, 'nr'>> = []
   const ob = d.fahrweg.objekte
 
-  // die längsten Tunnel mit bekannter Länge
+  // Tunnel anderer Bahnen aus swissTLM3D haben keine Länge und selten einen Namen
+  // (Michael, 2026-09-26: RhB, MGB, MOB auf dem Blatt). Gleichnamige Teile
+  // (Lötschberg-Basistunnel in vier Stücken) gelten als ein Tunnel.
+  const tlmJe = new Map<string, FahrObjekt>()
+  for (const o of ob.filter((x) => x.art === 'tunnel' && x.tlm && x.sAus !== null)) {
+    const k = o.tlm!.name ?? o.kennung
+    const alt = tlmJe.get(k)
+    tlmJe.set(k, alt ? { ...alt, s: Math.min(alt.s, o.s), sAus: Math.max(alt.sAus!, o.sAus!) } : o)
+  }
+  // nach der Länge ihrer Zeichnung auf dem Weg: nur für die Auswahl, sie steht nirgends
+  const gezeichnet = (x: FahrObjekt) => x.sAus! - x.s
+  const tlmMitNamen = [...tlmJe.values()].filter((o) => o.tlm!.name).sort((a, b) => gezeichnet(b) - gezeichnet(a))
+  const tlmOhneNamen = [...tlmJe.values()].filter((o) => !o.tlm!.name).sort((a, b) => gezeichnet(b) - gezeichnet(a))
+  // zuerst bis zwei mit Namen (Lötschberg-Basistunnel), dann die längsten mit bekannter
+  // Länge, dann weitere mit Namen, zuletzt die ohne
+  const erste = tlmMitNamen.slice(0, TLM_TUNNEL_ZUERST)
   const tunnel = ob.filter((o) => o.art === 'tunnel' && !o.tlm && tunnelNach.get(o.kennung)?.laenge_m != null)
-    .sort((a, b) => tunnelNach.get(b.kennung)!.laenge_m! - tunnelNach.get(a.kennung)!.laenge_m!).slice(0, TUNNEL_MAX)
+    .sort((a, b) => tunnelNach.get(b.kennung)!.laenge_m! - tunnelNach.get(a.kennung)!.laenge_m!)
+    .slice(0, TUNNEL_MAX - erste.length)
+  const tlmTunnel = [...erste, ...tlmMitNamen.slice(TLM_TUNNEL_ZUERST), ...tlmOhneNamen]
+    .slice(0, TUNNEL_MAX - tunnel.length)
   for (const o of tunnel) {
     const t = tunnelNach.get(o.kennung)!
     roh.push({ o, art: 'tunnel', name: ohneKuerzel(t.name), zeile: `${zahl(t.laenge_m!)} m` })
+  }
+  for (const o of tlmTunnel) {
+    const galerie = o.tlm!.art === 'galerie'
+    roh.push({ o, art: 'tunnel', name: o.tlm!.name ?? (galerie ? 'Galerie' : 'Tunnel'),
+               zeile: o.tlm!.name ? 'Länge nicht erfasst' : 'Name und Länge nicht erfasst' })
   }
   // Brücken mit den meisten Baueinheiten, ab 3
   const bruecken = ob.filter((o) => o.art === 'bruecke' && !o.tlm && (brueckenNach.get(o.kennung)?.baueinheiten ?? 0) >= BRUECKE_AB_BE)
@@ -167,6 +195,9 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
     const b = brueckenNach.get(o.kennung)!
     roh.push({ o, art: 'bruecke', name: ohneKuerzel(b.name), zeile: `${b.baueinheiten} Baueinheiten` })
   }
+  // dazu Brücken anderer Bahnen aus swissTLM3D, nur die mit Namen (Landwasserviadukt)
+  const tlmBruecken = ob.filter((o) => o.art === 'bruecke' && o.tlm?.name).slice(0, BRUECKEN_MAX - bruecken.length)
+  for (const o of tlmBruecken) roh.push({ o, art: 'bruecke', name: o.tlm!.name!, zeile: '' })
   // Bahnhöfe: alle, und sind es zu viele, zuerst die grossen, dann die mittleren
   const stufe = { L: 0, M: 1, S: 2 } as Record<string, number>
   const bhf = ob.filter((o) => o.art === 'bahnhof').map((o) => ({ o, b: bahnhof.get(uicVon.get(o.kennung) ?? 0) }))
@@ -185,7 +216,15 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
     roh.push({ o, art: s.sorte as Eintrag['art'], name: s.name, seite: s.seite!,
                zeile: s.sorte === 'gipfel' ? s.zeile : 'Seilbahn' })
   }
-  return roh.sort((a, b) => a.o.s - b.o.s).map((e, i) => ({ ...e, nr: i + 1 }))
+  // zu viel für eine Seite: zuerst die kleinen Bahnhöfe weg, dann Seilbahnen, Gipfel,
+  // Brücken und Tunnel, je die zuletzt gewählten
+  const stufeVon = (e: Omit<Eintrag, 'nr'>) => stufe[bahnhof.get(uicVon.get(e.o.kennung) ?? 0)?.tier ?? ''] ?? 3
+  const reihe = [
+    ...roh.filter((e) => e.art === 'bahnhof').sort((a, b) => stufeVon(b) - stufeVon(a)),
+    ...(['seilbahn', 'gipfel', 'bruecke', 'tunnel'] as const).flatMap((a) => roh.filter((e) => e.art === a).reverse()),
+  ]
+  const weg = new Set(reihe.slice(0, weniger))
+  return roh.filter((e) => !weg.has(e)).sort((a, b) => a.o.s - b.o.s).map((e, i) => ({ ...e, nr: i + 1 }))
 }
 
 /**
@@ -207,7 +246,12 @@ function seenAmWeg(fw: Fahrweg) {
     .map((x) => ({ name: x.name, seite: x.seiten.size > 1 ? 'links und rechts' : [...x.seiten][0] }))
 }
 
-function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
+function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[]; zuViel: () => void }) {
+  const unten = useRef<HTMLDivElement | null>(null)
+  useLayoutEffect(() => {
+    const el = unten.current
+    if (el && el.scrollHeight > el.clientHeight + 1) zuViel()
+  })
   // auf dem Handy verkleinert zeigen, gedruckt in voller Grösse
   const rahmen = useRef<HTMLDivElement | null>(null)
   const blatt = useRef<HTMLDivElement | null>(null)
@@ -260,7 +304,7 @@ function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
           </div>
 
           {/* untere Hälfte: zum Ausfüllen */}
-          <div className="flex min-h-0 flex-1 flex-col pt-3">
+          <div ref={unten} className="flex min-h-0 flex-1 flex-col pt-3">
             <p className="text-[12px] leading-snug">
               Hake ab, was du unterwegs entdeckst. Bei jedem Tunnel: Schätze vorher, wie viele Sekunden es
               dunkel bleibt, und zähle dann mit. Die Zahlen in den Listen gehören zu den Zahlen auf der Karte.
@@ -313,7 +357,9 @@ function Blatt({ daten, eintraege }: { daten: Daten; eintraege: Eintrag[] }) {
               {' '}{BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen die grossen, die {GIPFEL_MAX} höchsten Gipfel bis 8 km neben
               der Strecke, die {SEEN_MAX} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
               laut Daten; ob man es vom Zug aus sieht, sagen sie nicht.
-              {daten.ohneLaenge > 0 && ' Tunnel anderer Bahnen haben in den Daten keine Länge und stehen nicht auf dem Blatt.'}
+              {daten.ohneLaenge > 0 && ` Tunnel anderer Bahnen (swissTLM3D) haben in den Daten keine Länge und meist keinen`
+                + ` Namen: Zuerst stehen bis ${TLM_TUNNEL_ZUERST} mit Namen, fehlen Tunnel mit Länge, die längsten laut`
+                + ' Zeichnung; Brücken anderer Bahnen nur mit Namen.'}
               {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo. Taktland ist ein
               privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
             </p>
