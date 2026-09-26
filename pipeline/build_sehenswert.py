@@ -52,7 +52,7 @@ QUELLEN = {
     "moor": f"{BASIS}/ch.bafu.bundesinventare-moorlandschaften/bundesinventare-moorlandschaften/"
             "bundesinventare-moorlandschaften_2056.shp.zip",
 }
-TOLERANZ_FLAECHE_M = 150
+TOLERANZ_FLAECHE_M = 30
 TOLERANZ_SEILBAHN_M = 20
 
 

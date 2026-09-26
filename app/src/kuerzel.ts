@@ -15,8 +15,24 @@ const KUERZEL = new Set([
   'Überw.', 'Gal', 'TC',
 ])
 
-/** Der Name ohne führendes Kürzel; bleibt nichts übrig, der ganze Name */
+/** Zusätze, die in der Quelle nach dem Kürzel stehen («PI voy Lausanne est», «Sot. str.
+ *  Via Iragna», «Sent. Pers. Scaretta»): ebenfalls unerklärt, darum ebenfalls weg
+ *  (Michael, 2026-09-26: «Das Voy verstehe ich auch nicht») */
+const ZUSATZ = new Set([
+  'voy', 'voy.', 'voyag', 'voyag.', 'voyageurs', 'piet', 'piét', 'piet.', 'piét.', 'piétons', 'pietons',
+  'pers', 'pers.', 'sot', 'sot.', 'str', 'str.', 'rus', 'rus.', 'rusc', 'rusc.', 'attr', 'attr.', 'sent',
+  'sent.', 'po', 'po.', 'p', 'ped', 'ped.', '.', 'sent.sot.', 'sent.attr.',
+])
+/** Verhältniswörter am Anfang, die nach dem Weglassen übrig bleiben («PI de Clarens») */
+const VORNE = new Set(['de', 'du', 'des', 'sur', 'sous', 'di', 'del', 'della', 'sul', 'sulla'])
+
+/** Der Name ohne führendes Kürzel und seine Zusätze; bleibt nichts übrig, der ganze Name.
+ *  Der Name laut Quelle geht nicht verloren: Wo gekürzt wird, steht er klein dabei. */
 export function ohneKuerzel(name: string): string {
-  const [erstes, ...rest] = name.trim().split(/\s+/)
-  return KUERZEL.has(erstes) && rest.length ? rest.join(' ') : name
+  const w = name.trim().split(/\s+/)
+  if (!KUERZEL.has(w[0]) && !['Sent.sot.', 'Sent.attr.'].includes(w[0])) return name
+  let i = 1
+  while (i < w.length - 1 && ZUSATZ.has(w[i].toLowerCase())) i++
+  while (i < w.length - 1 && VORNE.has(w[i].toLowerCase())) i++
+  return i < w.length ? w.slice(i).join(' ') : name
 }

@@ -6,7 +6,7 @@
  */
 import { useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
-import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
+import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useBreite, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 
@@ -277,7 +277,11 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const abstand = useRef(0)
   const flaeche = useRef<SVGSVGElement | null>(null)
   const { voll, setVoll, verh } = useVollbild(flaeche)
-  const setNah = (n: boolean) => { setNahRoh(n); setZoom(1); setVersatz([0, 0]) }
+  const breite = useBreite(flaeche)
+  // «Nah»: die Karte folgt dem Zug in Sprüngen, nicht jede halbe Sekunde. So
+  // bleibt das Bild ruhig, und die Ebenen müssen nicht ständig neu gezeichnet werden.
+  const mitte = useRef<[number, number] | null>(null)
+  const setNah = (n: boolean) => { setNahRoh(n); setZoom(1); setVersatz([0, 0]); mitte.current = null }
   const zoomen = (f: number) => setZoom((z) => Math.min(40, Math.max(0.25, z * f)))
 
   const weg = useMemo(() => fahrweg.punkte.map((p) => ({ xy: lage(p.lat, p.lon), s: p.s })), [fahrweg])
@@ -292,8 +296,18 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
 
   const hier = sJetzt !== null ? lageBei(fahrweg, sJetzt) : fahrweg.punkte[0]
   const [hx, hy] = hier ? lage(hier.lat, hier.lon) : [ganz.cx, ganz.cy]
-  const grund = nah ? { cx: hx, cy: hy, w: NAH } : ganz
-  const box = { cx: grund.cx + versatz[0], cy: grund.cy + versatz[1], w: grund.w / zoom }
+  if (nah) {
+    const m = mitte.current
+    const w = NAH / zoom
+    // neu ausrichten, sobald der Zug das innere Viertel verlässt; so bleibt der
+    // rote Punkt immer ganz im Bild
+    if (!m || Math.abs(hx - m[0]) > w * 0.2 || Math.abs(hy - m[1]) > (w / verh) * 0.2) mitte.current = [hx, hy]
+  }
+  const [mx, my] = nah && mitte.current ? mitte.current : [ganz.cx, ganz.cy]
+  const grund = nah ? { cx: mx, cy: my, w: NAH } : ganz
+  const bx = grund.cx + versatz[0], by = grund.cy + versatz[1], bw = grund.w / zoom
+  // gleich bleibend, solange sich der Ausschnitt nicht ändert: die Ebenen zeichnen dann nicht neu
+  const box = useMemo(() => ({ cx: bx, cy: by, w: bw }), [bx, by, bw])
   const veraendert = zoom !== 1 || versatz[0] !== 0 || versatz[1] !== 0
 
   function runter(e: React.PointerEvent<SVGSVGElement>) {
@@ -326,18 +340,32 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
     if (zeiger.current.size < 2) abstand.current = 0
   }
   const h = box.w / verh
-  const px = box.w / 350
+  const px = box.w / breite
   const klassen = vollbildKlassen(voll, 'mt-3')
   const s = sJetzt ?? 0
 
-  const netz: Stueck[] = []
-  if (linien) {
-    for (const stuecke of linien.values()) {
+  const netz = useMemo(() => {
+    const raus: Stueck[] = []
+    for (const stuecke of linien?.values() ?? []) {
       for (const st of stuecke) {
-        if (st.x.some((x, j) => Math.abs(x - box.cx) < box.w && Math.abs(st.y[j] - box.cy) < h)) netz.push(st)
+        if (st.x.some((x, j) => Math.abs(x - box.cx) < box.w && Math.abs(st.y[j] - box.cy) < h)) raus.push(st)
       }
     }
-  }
+    return raus
+  }, [linien, box, h])
+  // was sich nur mit dem Ausschnitt ändert, nicht mit jedem Standort
+  const ebenen = useMemo(() => (
+    <>
+      <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />
+      <SeenFlaechen seen={seen} box={box} verh={verh} />
+      <SeenNamen seen={seen} box={box} px={px} verh={verh} />
+      <SehenswertEbene daten={sehenswert.s} box={box} px={px} verh={verh} waehlen={setAuswahl} />
+      {netz.map((st, i) => (
+        <path key={i} d={pfad(st.x.map((x, j) => [x, st.y[j]]))} fill="none" strokeWidth={1}
+              vectorEffect="non-scaling-stroke" className="stroke-sbb-cloud dark:stroke-sbb-iron" />
+      ))}
+    </>
+  ), [sehenswert.f, sehenswert.s, seen, box, px, verh, netz])
   const hinter = weg.filter((p) => p.s <= s).map((p) => p.xy)
   const vor = weg.filter((p) => p.s >= s).map((p) => p.xy)
   if (hier && sJetzt !== null) { hinter.push([hx, hy]); vor.unshift([hx, hy]) }
@@ -360,7 +388,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
         </div>
         <div className="flex items-center gap-2">
           {veraendert && (
-            <button type="button" onClick={() => { setZoom(1); setVersatz([0, 0]) }}
+            <button type="button" onClick={() => { setZoom(1); setVersatz([0, 0]); mitte.current = null }}
                     className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
                                dark:text-sbb-storm dark:hover:text-sbb-white">
               {nah ? 'Zum Zug' : 'Alles'}
@@ -383,14 +411,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
            onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
            className={`${klassen.svg} border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight`}>
-        <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />
-        <SeenFlaechen seen={seen} box={box} verh={verh} />
-        <SeenNamen seen={seen} box={box} px={px} verh={verh} />
-        <SehenswertEbene daten={sehenswert.s} box={box} px={px} verh={verh} waehlen={setAuswahl} />
-        {netz.map((st, i) => (
-          <path key={i} d={pfad(st.x.map((x, j) => [x, st.y[j]]))} fill="none" strokeWidth={1}
-                vectorEffect="non-scaling-stroke" className="stroke-sbb-cloud dark:stroke-sbb-iron" />
-        ))}
+        {ebenen}
         <path d={pfad(hinter)} fill="none" strokeWidth={3} vectorEffect="non-scaling-stroke"
               strokeLinejoin="round" className="stroke-sbb-storm dark:stroke-sbb-metal" />
         <path d={pfad(vor)} fill="none" strokeWidth={3.5} vectorEffect="non-scaling-stroke"

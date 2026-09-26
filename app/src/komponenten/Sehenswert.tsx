@@ -254,6 +254,22 @@ export function AuswahlZeile({ auswahl, schliessen }: { auswahl: Auswahl | null;
   )
 }
 
+/** Kurz auf dem Handy, ausgeschrieben ab Tablet-Breite (Michael, 2026-09-26: «auf dem
+ *  Desktop und dem Tablet … wieder als Originalbezeichnung, da wir hier mehr Platz haben») */
+export function KurzLang({ kurz, lang }: { kurz: string; lang: string }) {
+  if (kurz === lang) return <>{kurz}</>
+  return <><span className="md:hidden">{kurz}</span><span className="hidden md:inline">{lang}</span></>
+}
+
+/** Die ausgeschriebene Bezeichnung zu einer Kurzform im Fahrtmodus */
+export const LANGFORM: Record<string, string> = { Kultur: 'Kulturgut' }
+
+const LANG: Partial<Record<Kategorie, string>> = {
+  kgs: 'Kulturgüter von nationaler Bedeutung',
+  seilbahn: 'Seilbahnen mit Bundeskonzession',
+  gebiete: 'Gebiete (BLN, Pärke, Moorlandschaften)',
+}
+
 const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   ['orte', 'Orte', <span className="inline-block size-1.5 rounded-full bg-sbb-metal dark:bg-sbb-storm" />],
   ['gipfel', 'Gipfel', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M5 1L9 9H1Z" className="fill-gipfel" /></svg>],
@@ -272,7 +288,7 @@ export function SehenswertLegende({ orte = false }: { orte?: boolean }) {
                 className={`flex min-h-8 items-center gap-1.5 rounded-lg px-2 ${aus.has(k)
                   ? 'text-sbb-metal line-through opacity-60 dark:text-sbb-storm'
                   : 'bg-sbb-kachel dark:bg-sbb-charcoal'}`}>
-          <span aria-hidden="true" className="flex">{zeichen}</span>{text}
+          <span aria-hidden="true" className="flex">{zeichen}</span><KurzLang kurz={text} lang={LANG[k] ?? text} />
         </button>
       ))}
     </div>

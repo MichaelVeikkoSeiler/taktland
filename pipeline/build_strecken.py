@@ -129,6 +129,15 @@ BAV_OHNE_ZUGZAHLEN = {"261"}
 BAV_GLEIS_IM_BAHNHOF = {8530750: 8504300, 8516177: 8504483}
 #: umgekehrt, je Linie: welcher Punkt des Schienennetzes für den Bahnhof steht
 BAV_GLEIS_IM_BAHNHOF_ZURUECK = {261: {8504300: 8530750, 8504483: 8516177}}
+#: Punkte des Schienennetzes im Bahnhof, die eine Linie statt des Bahnhofs führt
+#: («Kerzers BLS» 104 m neben «Kerzers», Linie 220): Sie gelten für den Verlauf als
+#: dieser Bahnhof, wenn ihr Name mit dem Namen des Bahnhofs beginnt und sie höchstens
+#: IM_BAHNHOF_M entfernt liegen. Weiter weg liegen Abzweigungen («Kerzers Süd
+#: (Abzw)»), die bleiben eigene Punkte. Vorher fehlte darum zwischen Gümmenen und
+#: Kerzers der Verlauf und mit ihm der Tunnel aus swissTLM3D (Michael, 2026-09-26).
+IM_BAHNHOF_M = 150
+#: Bahnhof (UIC) → Punkte des Schienennetzes, die für ihn stehen; gefüllt in main()
+IM_BAHNHOF: dict = {}
 
 
 def bav_abschnitte(kanten, punkte):
@@ -172,6 +181,10 @@ def bav_verlauf(bav, nummer, von_nr, bis_nr):
     km = {p["nummer"]: p["km"] for p in l["punkte"]}
     von_nr = BAV_GLEIS_IM_BAHNHOF_ZURUECK.get(nummer, {}).get(von_nr, von_nr)
     bis_nr = BAV_GLEIS_IM_BAHNHOF_ZURUECK.get(nummer, {}).get(bis_nr, bis_nr)
+
+    def auf_linie(nr):
+        return nr if nr in km else next((x for x in IM_BAHNHOF.get(nr, []) if x in km), nr)
+    von_nr, bis_nr = auf_linie(von_nr), auf_linie(bis_nr)
     if von_nr not in km or bis_nr not in km:
         return None
     lo, hi = sorted((km[von_nr], km[bis_nr]))
@@ -494,6 +507,22 @@ def main():
         if nummer.isdigit():
             for x in l["punkte"]:
                 bav_je_punkt[x["nummer"]].add(int(nummer))
+    # Punkte im Bahnhof, die für ihn stehen (IM_BAHNHOF_M); ihre Linien zählen für den Bahnhof
+    bahnhof_lage = {p["uic"]: (p["name"], p["wgs"]) for p in punkte.values() if p.get("uic") and p.get("wgs")}
+    IM_BAHNHOF.clear()
+    for nummer, l in bav_linien.items():
+        if not nummer.isdigit():
+            continue
+        for x in l["punkte"]:
+            for uic, (name, (la, lo)) in bahnhof_lage.items():
+                if x["nummer"] == uic or not x["name"].startswith(name + " "):
+                    continue
+                if math.hypot((x["lat"] - la) * 111_200, (x["lon"] - lo) * 73_000) <= IM_BAHNHOF_M:
+                    if x["nummer"] not in IM_BAHNHOF.setdefault(uic, []):
+                        IM_BAHNHOF[uic].append(x["nummer"])
+                    bav_je_punkt[uic].add(int(nummer))
+    print(f"Punkte des Schienennetzes im Bahnhof: {sum(len(v) for v in IM_BAHNHOF.values())} "
+          f"bei {len(IM_BAHNHOF)} Bahnhöfen")
 
     tlm, tlm_datei = tlm_laden()
     tlm_rahmen = {k: (min(p[0] for p in b["pts"]), max(p[0] for p in b["pts"]),

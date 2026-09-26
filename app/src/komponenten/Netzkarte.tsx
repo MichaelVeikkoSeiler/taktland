@@ -119,6 +119,24 @@ export function useVollbild(svg: React.RefObject<SVGSVGElement | null>) {
   return { voll, setVoll, verh }
 }
 
+/** Breite der Zeichnung in Bildpunkten. Zeichen und Schrift richten sich danach,
+ *  damit sie im Vollbild auf Tablet und Desktop nicht mitwachsen (Michael,
+ *  2026-09-26: «Wenn der Ausschnitt grösser wird, sollen die Punkte nicht auch
+ *  grösser werden»); vorher galt fest die Breite eines Handys, 350 Bildpunkte. */
+export function useBreite(svg: React.RefObject<SVGSVGElement | null>) {
+  const [breite, setBreite] = useState(350)
+  useEffect(() => {
+    const el = svg.current
+    if (!el) return
+    const messen = () => { const w = el.getBoundingClientRect().width; if (w) setBreite(w) }
+    messen()
+    const beobachter = new ResizeObserver(messen)
+    beobachter.observe(el)
+    return () => beobachter.disconnect()
+  }, [svg])
+  return breite
+}
+
 /** Klassen für die Figur und die Zeichnung, normal oder als Vollbild */
 export const vollbildKlassen = (voll: boolean, normal: string) => voll
   ? { figur: 'fixed inset-0 z-[80] m-0 flex flex-col bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] dark:bg-sbb-midnight',
@@ -198,6 +216,7 @@ export function Netzkarte({
   const zeiger = useRef(new Map<number, { x: number; y: number }>())
   const zieht = useRef<{ art: 'nichts' | 'karte'; x: number; y: number; d: number } | null>(null)
   const { voll, setVoll, verh } = useVollbild(svg)
+  const breite = useBreite(svg)
   // Hat man selbst gezoomt oder verschoben, bleibt der Ausschnitt, auch wenn
   // der Standort sich ein wenig ändert (Michael, 2026-09-26: «springt dauernd
   // auf Default-Ausschnitt zurück»). Ein neuer Ort (andere Linie, anderer
@@ -303,7 +322,7 @@ export function Netzkarte({
   const h = box.w / verh
   const klassen = vollbildKlassen(voll, 'mt-4')
   const ansicht = [box.cx - box.w / 2, box.cy - h / 2, box.w, h]
-  const px = box.w / 350
+  const px = box.w / breite
   const drin = (x: number, y: number) =>
     Math.abs(x - box.cx) < box.w * 0.55 && Math.abs(y - box.cy) < h * 0.55
 

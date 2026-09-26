@@ -202,6 +202,7 @@ body {
 @media print {
   @page { size: A4; margin: 10mm; }
   html, body { background: #fff !important; }
-  .fahrtblatt { transform: none !important; width: 190mm !important; }
+  .fahrtblatt { transform: none !important; width: 190mm !important;
+                print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .fahrtblatt-rahmen { height: auto !important; }
 }

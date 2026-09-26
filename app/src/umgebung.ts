@@ -4,6 +4,7 @@
  * ist Luftlinie vom Standort zum Punkt in den Daten, kein Weg und keine
  * Angabe der Quelle.
  */
+import { ohneKuerzel } from './kuerzel'
 import type { Stueck } from './komponenten/Karte'
 import { LAENGE_ZU_BREITE } from './komponenten/Karte'
 import { listenAdresse } from './listen'
@@ -61,8 +62,9 @@ export function objekteBei(von: Lage, daten: StandortDaten,
     .filter(([, , , la, lo]) => la !== null && lo !== null)
     .map(([linie, stelle, name, la, lo]) => ({
       schluessel: `${art}${linie}:${stelle}`,
-      name: name ?? 'Ohne Namen in den Daten',
-      zusatz: `Linie ${linie}`,
+      // ohne das unerklärte Kürzel der Quelle; der Name laut Quelle steht darunter
+      name: name ? ohneKuerzel(name) : 'Ohne Namen in den Daten',
+      zusatz: `Linie ${linie}${name && ohneKuerzel(name) !== name ? ` · laut Quelle: ${name}` : ''}`,
       m: abstandM(von, la as number, lo as number),
       adresse: daten.linien[String(linie)]?.[1] ? listenAdresse(linie, art, null, stelle) : null,
     }))

@@ -4,6 +4,7 @@ import { spurMerken } from '../ohneziel'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 import { Auswahl } from './Auswahl'
+import { KurzLang, LANGFORM } from './Sehenswert'
 
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
 const VORLAEUFE_S = [20, 10] as const
@@ -34,9 +35,10 @@ export type BrueckenWahl = 'groessere' | 'alle' | 'keine'
 export type Angabe = 'zeit' | 'distanz' | 'beides'
 /** Sehenswertes: jede Kategorie für sich ein- und ausschaltbar (Michael, 2026-09-26) */
 type SehenswertWahl = Record<SehenswertSorte, boolean>
-const SORTEN: Array<[SehenswertSorte, string]> = [
-  ['gipfel', 'Gipfel melden'], ['kgs', 'Kultur melden'], ['seilbahn', 'Seilbahnen melden'],
-  ['flaeche', 'Gebiete melden (BLN, Pärke, Moorlandschaften)'],
+const SORTEN: Array<[SehenswertSorte, string, string]> = [
+  ['gipfel', 'Gipfel melden', 'Gipfel melden'], ['kgs', 'Kultur melden', 'Kulturgüter melden'],
+  ['seilbahn', 'Seilbahnen melden', 'Seilbahnen melden'],
+  ['flaeche', 'Gebiete melden (BLN, Pärke, Moorlandschaften)', 'Gebiete melden (BLN, Pärke, Moorlandschaften)'],
 ]
 const EINSTELLUNG = 'taktland.fahrt.v1'
 
@@ -83,6 +85,12 @@ interface Stand {
 const ART: Record<FahrObjekt['art'], string> = { tunnel: 'Tunnel', bruecke: 'Brücke', bahnhof: 'Bahnhof',
                                                   sehenswert: 'Sehenswert' }
 /** «Kulturgut · links», «Landschaft (BLN)», «Tunnel» */
+/** In der Anzeige: auf dem Handy kurz, ab Tablet ausgeschrieben */
+function ArtText({ o }: { o: FahrObjekt }) {
+  if (!o.sehenswert) return <>{artText(o)}</>
+  const a = o.sehenswert.art
+  return <><KurzLang kurz={a} lang={LANGFORM[a] ?? a} />{o.sehenswert.seite ? ` · ${o.sehenswert.seite}` : ''}</>
+}
 const artText = (o: FahrObjekt) => o.sehenswert
   ? `${o.sehenswert.art}${o.sehenswert.seite ? ` · ${o.sehenswert.seite}` : ''}`
   : o.tlm?.art === 'galerie' ? 'Galerie' : ART[o.art]
@@ -133,10 +141,18 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const uhrStart = useRef({ echt: Date.now(), spiel: 0 })
   const [raffer, setRaffer] = useState<Zeitraffer>(20)
   const rafferRef = useRef<Zeitraffer>(20)
-  /** In der Probefahrt läuft die Zeit schneller */
+  // Probefahrt anhalten und weiterfahren (Michael, 2026-09-26: «unterbrechen und wieder starten»)
+  const [angehalten, setAngehalten] = useState(false)
+  const angehaltenRef = useRef(false)
+  /** In der Probefahrt läuft die Zeit schneller; angehalten steht sie */
   const uhr = () => probefahrt
-    ? uhrStart.current.spiel + (Date.now() - uhrStart.current.echt) * rafferRef.current
+    ? uhrStart.current.spiel + (angehaltenRef.current ? 0 : (Date.now() - uhrStart.current.echt) * rafferRef.current)
     : Date.now()
+  function anhaltenUmschalten() {
+    uhrStart.current = { echt: Date.now(), spiel: uhr() }
+    angehaltenRef.current = !angehaltenRef.current
+    setAngehalten(angehaltenRef.current)
+  }
 
   /** Probefahrt: an eine Stelle springen, vorwärts oder zurück (Michael,
    *  2026-09-26: «den Zug als Regler verschieben»). Was hinter der neuen Stelle
@@ -219,6 +235,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     if (!probefahrt) return
     uhrStart.current = { echt: Date.now(), spiel: 0 }
     const id = window.setInterval(() => {
+      if (angehaltenRef.current) return
       const t = uhr()
       const s = Math.min(wegEnde(fahrweg), PROBE_TEMPO * t / 1000)
       const imTunnel = fahrweg.objekte.some((o) => o.art === 'tunnel' && o.sAus !== null && s > o.s + 50 && s < o.sAus - 50)
@@ -305,7 +322,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           ansage.current.textContent = (angabe === 'zeit' || m === null ? sek
             : angabe === 'distanz' ? `In etwa ${streckeGesprochen(m)}` : `${sek}, etwa ${streckeGesprochen(m, false)}`) + ': '
             + (o.sehenswert?.sorte === 'flaeche' ? `Du fährst durch ${t.name}, ${o.sehenswert.art}.`
-              : `${artText(o).replace(' · ', ', ')}: ${t.name}. ${sprechbar(t.zeile)}`)
+              : `${artText(o).replace(/^Kultur\b/, 'Kulturgut').replace(' · ', ', ')}: ${t.name}. ${sprechbar(t.zeile)}`)
         }
       }
     }
@@ -368,7 +385,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         </Ring>
         <div className="min-w-0">
           <p className={`text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
-            {bald ? 'Gleich' : o === naechstes ? 'Als Nächstes' : 'Kurz danach'} · {artText(o)}
+            {bald ? 'Gleich' : o === naechstes ? 'Als Nächstes' : 'Kurz danach'} · <ArtText o={o} />
             {angabe === 'beides' && eta(o) !== null && bis(o) !== null && ` · etwa ${strecke(bis(o)!)}`}
           </p>
           {o.sehenswert?.sorte === 'flaeche' && (
@@ -429,7 +446,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
         {probefahrt && (
           <div className="mt-4 flex items-center gap-3 text-sm">
-            <span className="text-sbb-metal dark:text-sbb-storm">Zeitraffer</span>
+            <button type="button" onClick={anhaltenUmschalten} aria-pressed={angehalten}
+                    className={`min-h-9 shrink-0 rounded-lg px-3 font-bold ${angehalten
+                      ? 'bg-sbb-red text-white hover:bg-sbb-red125'
+                      : 'border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
+              {angehalten ? 'Weiter' : 'Anhalten'}
+            </button>
+            <span className="hidden text-sbb-metal sm:inline dark:text-sbb-storm">Zeitraffer</span>
             <div className="flex flex-1 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron"
                  role="group" aria-label="Tempo der Probefahrt">
               {ZEITRAFFER.map((f) => (
@@ -448,8 +471,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         {/* ohne role="status": GPS-Genauigkeit und Tempo ändern sich laufend, ein
             Bildschirmleser würde sonst ununterbrochen vorlesen */}
         <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-          {zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
-          {faehrt && !ohneGps && ` · etwa ${Math.round(stand!.v * 3.6)} km/h`}
+          {probefahrt && angehalten ? 'Probefahrt angehalten' : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
+          {faehrt && !ohneGps && !angehalten && ` · etwa ${Math.round(stand!.v * 3.6)} km/h`}
         </p>
         {ohneZiel && (
           <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -508,7 +531,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                   <span className="min-w-0">
                     <span className="block truncate">{textVon(o)?.name}</span>
                     <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                      {artText(o)}
+                      <ArtText o={o} />
                     </span>
                   </span>
                   <span className="shrink-0 text-sm tabular-nums text-sbb-metal dark:text-sbb-storm">
@@ -555,9 +578,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <input type="checkbox" checked={einstellung.bahnhoefe} className="size-5 accent-sbb-red"
                    onChange={(e) => aendern({ bahnhoefe: e.target.checked })} />
           </label>
-          {SORTEN.map(([k, t]) => (
+          {SORTEN.map(([k, t, lang]) => (
             <label key={k} className="flex items-center justify-between gap-3">
-              <span>{t}</span>
+              <span><KurzLang kurz={t} lang={lang} /></span>
               <input type="checkbox" checked={einstellung.sehenswert[k]} className="size-5 accent-sbb-red"
                      onChange={(e) => aendern({ sehenswert: { ...einstellung.sehenswert, [k]: e.target.checked } })} />
             </label>

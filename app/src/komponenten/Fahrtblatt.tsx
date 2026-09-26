@@ -20,6 +20,14 @@ const SEILBAHN_MAX = 2
 const SEEN_MAX = 4
 /** Brücken ab so vielen Baueinheiten, wie in «Fahren» als grössere Brücke */
 const BRUECKE_AB_BE = 3
+/** Farben wie im Streckenband von «Fahren» (Michael, 2026-09-26: «gleiche Farben wie
+ *  in der App»), fest und hell, damit der Druck im Dunkelmodus gleich aussieht */
+const FARBE: Record<Eintrag['art'], string> = {
+  tunnel: '#000000', bruecke: '#f27e00', bahnhof: '#1d3f8a', gipfel: '#2f7d4f', kgs: '#2f7d4f', seilbahn: '#2f7d4f',
+}
+const SEE = '#c9def1'
+const WEG = '#767676'
+
 /** Breite des Blatts auf dem Bildschirm, entspricht 190 mm Druckbreite bei 96 dpi */
 const BLATT_PX = 718
 
@@ -317,11 +325,11 @@ function Zeile({ e }: { e: Eintrag }) {
   )
 }
 
-/** wie auf der Karte: Bahnhöfe weiss, alles andere schwarz */
+/** in der Farbe der Art, wie auf der Karte */
 function Nummer({ e }: { e: Eintrag }) {
   return (
-    <span className={`inline-flex size-5 shrink-0 items-center justify-center rounded-full border-[1.5px] border-black
-                      text-[11px] font-bold ${e.art === 'bahnhof' ? 'bg-white text-black' : 'bg-black text-white'}`}>
+    <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
+          style={{ backgroundColor: FARBE[e.art], printColorAdjust: 'exact', WebkitPrintColorAdjust: 'exact' }}>
       {e.nr}
     </span>
   )
@@ -373,11 +381,11 @@ function Karte({ daten, eintraege, hoch }: { daten: Daten; eintraege: Eintrag[];
     <svg viewBox={`0 0 ${B} ${H}`} className="mt-3 block w-full border-2 border-black" role="img"
          aria-label={`Karte des Wegs ${daten.titel[0]} bis ${daten.titel[1]}`}>
       {seen.map((p, i) => (
-        <polygon key={i} points={p.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')} fill="#d6e7f5" />
+        <polygon key={i} points={p.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')} fill={SEE} />
       ))}
-      <polyline points={linie(0, ende)} fill="none" stroke="#000" strokeWidth={2.5} strokeLinejoin="round" />
+      <polyline points={linie(0, ende)} fill="none" stroke={WEG} strokeWidth={3} strokeLinejoin="round" />
       {eintraege.filter((e) => e.art === 'tunnel' && e.o.sAus !== null).map((e) => (
-        <polyline key={`t${e.nr}`} points={linie(e.o.s, e.o.sAus!)} fill="none" stroke="#000" strokeWidth={7}
+        <polyline key={`t${e.nr}`} points={linie(e.o.s, e.o.sAus!)} fill="none" stroke={FARBE.tunnel} strokeWidth={7}
                   strokeLinecap="butt" />
       ))}
       {[[ax, ay, daten.titel[0]], [zx, zy, daten.titel[1]]].map(([x, y, n], i) => (
@@ -392,9 +400,8 @@ function Karte({ daten, eintraege, hoch }: { daten: Daten; eintraege: Eintrag[];
         const [x, y] = marke(e)
         return (
           <g key={e.nr}>
-            <circle cx={x} cy={y} r={8} fill={e.art === 'bahnhof' ? '#fff' : '#000'} stroke="#000" strokeWidth={1.5} />
-            <text x={x} y={y + 4} textAnchor="middle" fontSize={11} fontWeight={700}
-                  fill={e.art === 'bahnhof' ? '#000' : '#fff'}>{e.nr}</text>
+            <circle cx={x} cy={y} r={8} fill={FARBE[e.art]} stroke="#fff" strokeWidth={1.5} />
+            <text x={x} y={y + 4} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff">{e.nr}</text>
           </g>
         )
       })}

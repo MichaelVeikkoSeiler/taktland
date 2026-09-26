@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { karteLaden, linienLaden, standortLaden } from '../daten'
+import { ohneKuerzel } from '../kuerzel'
 import type { BahnhofIndex, KartenDaten, StandortDaten } from '../typen'
 import {
   abstandText, bahnhoefeBei, freigabeHilfe, type Lage, linienBei, objekteBei, type Treffer,
@@ -279,7 +280,7 @@ function UmgebungsKarte({ stand, linien, karte, daten, bahnhoefe, naechsteLinie,
     return daten[art].flatMap(([linie, stelle, name, la, lo]) => {
       if (la === null || lo === null) return []
       const [x, y] = lage(la, lo)
-      return [{ kennung: `${linie}:${stelle}`, linie, name, x, y }]
+      return [{ kennung: `${linie}:${stelle}`, linie, name: name ? ohneKuerzel(name) : name, x, y }]
     })
   }
 
