@@ -338,6 +338,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           </p>
         )}
 
+        {/* Band und Karte oben, über den Meldungen: Diese wechseln ihre Höhe,
+            Band und Karte sollen dabei nicht springen (Michael, 2026-09-26) */}
+        <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
+                      start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
+                      name={(o) => text(o)?.name} />
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
+
         {imTunnel && einstellung.tunnel && sJetzt !== null && (
           <div className="mt-5 rounded-lg bg-sbb-charcoal px-4 py-4 text-sbb-white">
             <p className="text-xs uppercase tracking-wide text-sbb-storm">Im Tunnel</p>
@@ -356,14 +363,6 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         ) : stand && sJetzt !== null ? (
           <p className="mt-5 text-lg">Auf dem Rest dieses Wegs ist nichts mehr zu melden.</p>
         ) : null}
-
-        <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
-                      start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
-                      name={(o) => text(o)?.name} />
-
-        {/* die Karte gleich unter dem Band, damit beide zusammen im Bild sind
-            (Michael, 2026-09-26) */}
-        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
 
         {danach.length > 0 && (
           <>

@@ -265,10 +265,10 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const zeichen = objekte
 
   return (
-    <figure className="mt-6">
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-sm font-medium">Karte</p>
-        <div className="flex overflow-hidden rounded-lg border border-sbb-cloud text-xs dark:border-sbb-iron" role="group" aria-label="Ausschnitt">
+    <figure className="mt-5">
+      {/* eine Zeile für alle Knöpfe, damit die Karte kompakt oben bleibt */}
+      <div className="flex items-center justify-between gap-2 text-xs">
+        <div className="flex overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ausschnitt">
           {([[true, 'Nah'], [false, 'Ganzer Weg']] as const).map(([n, t]) => (
             <button key={t} type="button" aria-pressed={nah === n} onClick={() => setNah(n)}
                     className={`px-3 py-1.5 font-medium ${nah === n
@@ -278,16 +278,14 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
             </button>
           ))}
         </div>
-      </div>
-      <div className="mt-2 flex items-center justify-end gap-3 text-xs">
-        {veraendert && (
-          <button type="button" onClick={() => { setZoom(1); setVersatz([0, 0]) }}
-                  className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
-                             dark:text-sbb-storm dark:hover:text-sbb-white">
-            {nah ? 'Zurück zum Zug' : 'Ganzer Weg'}
-          </button>
-        )}
-        <span className="flex gap-1">
+        <div className="flex items-center gap-2">
+          {veraendert && (
+            <button type="button" onClick={() => { setZoom(1); setVersatz([0, 0]) }}
+                    className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
+                               dark:text-sbb-storm dark:hover:text-sbb-white">
+              {nah ? 'Zum Zug' : 'Alles'}
+            </button>
+          )}
           {([['−', 1 / 1.6], ['+', 1.6]] as const).map(([zeichen, f]) => (
             <button key={zeichen} type="button" onClick={() => zoomen(f)}
                     aria-label={zeichen === '+' ? 'Näher heran' : 'Weiter weg'}
@@ -297,7 +295,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
               {zeichen}
             </button>
           ))}
-        </span>
+        </div>
       </div>
       <svg ref={flaeche} viewBox={[box.cx - box.w / 2, box.cy - h / 2, box.w, h].join(' ')} role="img"
            aria-label="Karte mit dem Weg und dem Standort" preserveAspectRatio="xMidYMid meet"
@@ -334,12 +332,17 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
         )}
       </svg>
       <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
+        {!linien && 'Das Netz wird geladen … '}
+        <details>
+          <summary className="cursor-pointer underline underline-offset-2">Zur Karte</summary>
+          <p className="mt-1">
         Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), Linien anderer Bahnen aus
         dem Schienennetz des BAV. Auf Strecken anderer Bahnen ist der Weg gerade von Bahnhof zu
         Bahnhof gezogen. Rot der geschätzte Standort.
         {seen && ' Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab.'}
         {' Zoomen mit zwei Fingern oder mit «+» und «−»; näher gezoomt lässt sich die Karte verschieben.'}
-        {!linien && ' Das Netz wird geladen …'}
+          </p>
+        </details>
       </figcaption>
     </figure>
   )
