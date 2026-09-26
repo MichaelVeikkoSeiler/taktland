@@ -135,6 +135,27 @@ Arbeitsumgebung gesperrt, die Bedingungen je Datensatz beim Laden nochmals prüf
   `ckan.opendata.swiss`, `data.geo.admin.ch`, `api3.geo.admin.ch`. Vorschlag
   Abstand zur Strecke: 2 km, nach der Testfahrt anpassen.
 
+### Auswahl vom 2026-09-26 (Michael: «übernehmen», Bau wartet noch)
+
+Quellen im Katalog von geo.admin.ch (STAC) gefunden; Bedingungen je Datensatz
+beim Laden prüfen und in der Pipeline festhalten.
+1. **Gipfel mit Höhe:** Swiss Map Vector 1000 (swisstopo), Ebene
+   `T15_DKM1M_HOEHENKOTE` (96 Höhenkoten) und Namen; schon geladen für die
+   Seen (`data/raw/swiss-map-vector1000`), gleiche Lizenz. Erster Schritt.
+2. **KGS-Objekte von nationaler Bedeutung:** `ch.babs.kulturgueter` (BABS).
+3. **Seilbahnen mit Bundeskonzession:** `ch.bav.seilbahnen-bundeskonzession`
+   (BAV); passt zum Bahnthema.
+4. **Flächen:** BLN `ch.bafu.bundesinventare-bln`, Pärke
+   `ch.bafu.schutzgebiete-paerke_nationaler_bedeutung`, Nationalpark
+   `ch.bafu.schutzgebiete-schweizerischer_nationalpark`, Moorlandschaften
+   `ch.bafu.bundesinventare-moorlandschaften`. Meldung «du fährst durch …»
+   statt links/rechts.
+- Nicht gewählt, bleiben als Möglichkeit: UNESCO-Welterbe (BAK, BAFU), ISOS
+  (BAK), IVS (ASTRA), Auen.
+- In der App: nur Name, Art, Höhe, Quelle; Seite und Stelle aus der Pipeline,
+  vom Validator geprüft; eigene Art im Fahrtmodus, abschaltbar, eigene Farbe;
+  Hinweis «Ob es zu sehen ist, sagen die Daten nicht».
+
 ## Seen auf den Karten
 
 **Eingebaut 2026-09-26** (206 Seen, 188 mit Namen, aus Swiss Map Vector 1000;
