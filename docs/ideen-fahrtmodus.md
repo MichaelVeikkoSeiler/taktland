@@ -257,18 +257,13 @@ nur Standort und Weg, keinen Fahrplan. Stufe 1, ohne Server und ohne Schlüssel:
 
 ## BTI Biel–Täuffelen–Ins
 
-Wunsch von Michael, 2026-09-25: «das BTI Bähnli Biel Ins aufnehmen». Heute
-fehlen die Bahnhöfe dazwischen (Nidau, Ipsach, Täuffelen, Siselen …); Biel/Bienne
-und Ins sind drin. Die Infrastruktur betreibt nicht die SBB (nach meinem Wissen
-Aare Seeland mobil, beim Laden prüfen).
-- Braucht die Rohdaten von `data.sbb.ch` (hier gesperrt, `data/raw` fehlt in
-  der Arbeitsumgebung) und das Schienennetz des BAV.
-- Vorgehen: prüfen, welche BTI-Bahnhöfe in den Quellen stehen und für wie viele
-  Kapitel die Daten reichen; die Bahn in `ALLE_BAHNHOEFE_VON` oder die
-  Bahnhöfe einzeln in `ZUSAETZLICH` (pipeline/sources.py); Fakten bauen,
-  Bauplan, Profile in Gruppen von fünf lesen; Linie aus dem Schienennetz.
-- Im Fahrtmodus wie bei anderen Bahnen: Bahnhöfe ja, Tunnel und Brücken fehlen
-  in den Daten, der Weg ist gerade von Bahnhof zu Bahnhof gezogen.
+Erledigt am 2026-09-26 (Michael: «Strecke + schlanke Seiten»). Die 14
+Haltestellen stehen nicht in der Passagierfrequenz; sie haben nur Stammdaten und
+eine Frage zur Höhe, die Fahrgastzahl steht als Lücke da, im Duell spielen sie
+nicht mit. Linie 261 hat eine Linienseite aus dem Schienennetz des BAV. Im Netz
+zählt die BTI wie eine selten befahrene Strecke: Biel → Ins bleibt auf der SBB,
+mit «Über Täuffelen» fährt der Weg über die BTI. Endpunkte im Schienennetz sind
+«Biel/Bienne [Gleis 11]» und «Ins [Gleis 11]», sie gelten als die Bahnhöfe.
 
 ## Fahrt fortsetzen
 

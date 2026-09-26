@@ -1,7 +1,7 @@
 {
  "linie": 100,
  "name": "Lausanne - Simplon Tunnel I - Iselle",
- "datenstand": "2026-09-22",
+ "datenstand": "2026-09-26",
  "strecke": {
   "source": "linie",
   "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
@@ -2118,27 +2118,19 @@
  "bahnuebergaenge": {
   "source": "bahnubergang",
   "hinweis": "Name und Sicherungsart wie in der Quelle. gleise ist die Zahl der gekreuzten Gleise; 0 und leere Felder stehen als null.",
-  "anzahl_erfasst": 6,
+  "anzahl_erfasst": 2,
   "nach_sicherungsart": [
-   {
-    "wert": "unbewacht",
-    "anzahl": 3
-   },
    {
     "wert": "Bedarfsschrankenanl",
     "anzahl": 2
-   },
-   {
-    "wert": "Schrankenanlage",
-    "anzahl": 1
    }
   ],
   "ohne_sicherungsart": 0,
   "ohne_gleiszahl": 0,
-  "meiste_gleise": 5,
+  "meiste_gleise": 2,
   "mit_meisten_gleisen": [
-   3,
-   4
+   0,
+   1
   ],
   "anzahl_mit_meisten_gleisen": 2,
   "items": [
@@ -2153,30 +2145,6 @@
     "km": 11.016,
     "sicherungsart": "Bedarfsschrankenanl",
     "gleise": 2
-   },
-   {
-    "name": "PN du Duzillet",
-    "km": 41.073,
-    "sicherungsart": "unbewacht",
-    "gleise": 2
-   },
-   {
-    "name": "PN du Grand Canal",
-    "km": 41.21,
-    "sicherungsart": "unbewacht",
-    "gleise": 5
-   },
-   {
-    "name": "PN route de l'industrie",
-    "km": 41.216,
-    "sicherungsart": "Schrankenanlage",
-    "gleise": 5
-   },
-   {
-    "name": "PN de la raffinerie",
-    "km": 41.376,
-    "sicherungsart": "unbewacht",
-    "gleise": 1
    }
   ]
  },
@@ -2223,7 +2191,7 @@
   },
   {
    "thema": "Stand der Bahnübergänge",
-   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-26.",
    "quelle": "bahnubergang"
   },
   {

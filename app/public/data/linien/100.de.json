@@ -2,7 +2,7 @@
   "linie": 100,
   "name": "Lausanne - Simplon Tunnel I - Iselle",
   "lang": "de",
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -838,68 +838,26 @@
     {
       "id": "bahnuebergaenge",
       "title": "Bahnübergänge",
-      "body": "Für die Linie 100 sind 6 Bahnübergänge erfasst. Als Sicherungsart eingetragen ist «unbewacht» bei 3 Bahnübergängen, «Bedarfsschrankenanl» bei 2 und «Schrankenanlage» bei 1. Die grösste eingetragene Zahl gekreuzter Gleise ist 5, bei PN du Grand Canal und PN route de l'industrie.",
+      "body": "Für die Linie 100 sind 2 Bahnübergänge erfasst. Als Sicherungsart ist bei jedem erfassten Bahnübergang «Bedarfsschrankenanl» eingetragen. Die grösste eingetragene Zahl gekreuzter Gleise ist 2, bei PN Butticaz und PN Grand.",
       "facts": [
         {
           "label": "Erfasste Bahnübergänge",
-          "value": 6,
+          "value": 2,
           "source": "bahnubergang",
           "factRef": "bahnuebergaenge.anzahl_erfasst",
           "liste": "bahnuebergaenge"
-        },
-        {
-          "label": "«unbewacht»",
-          "value": 3,
-          "unit": "Bahnübergänge",
-          "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
-          "liste": "bahnuebergaenge",
-          "filter": {
-            "feld": "sicherungsart",
-            "wert": "unbewacht"
-          }
         },
         {
           "label": "«Bedarfsschrankenanl»",
           "value": 2,
           "unit": "Bahnübergänge",
           "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[1].anzahl",
+          "factRef": "bahnuebergaenge.nach_sicherungsart[0].anzahl",
           "liste": "bahnuebergaenge",
           "filter": {
             "feld": "sicherungsart",
             "wert": "Bedarfsschrankenanl"
           }
-        },
-        {
-          "label": "«Schrankenanlage»",
-          "value": 1,
-          "unit": "Bahnübergang",
-          "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.nach_sicherungsart[2].anzahl",
-          "liste": "bahnuebergaenge",
-          "filter": {
-            "feld": "sicherungsart",
-            "wert": "Schrankenanlage"
-          }
-        },
-        {
-          "label": "PN du Grand Canal",
-          "value": 5,
-          "unit": "Gleise",
-          "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[3].gleise",
-          "liste": "bahnuebergaenge",
-          "eintrag": 3
-        },
-        {
-          "label": "PN route de l'industrie",
-          "value": 5,
-          "unit": "Gleise",
-          "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[4].gleise",
-          "liste": "bahnuebergaenge",
-          "eintrag": 4
         },
         {
           "label": "PN Butticaz",
@@ -918,24 +876,6 @@
           "factRef": "bahnuebergaenge.items[1].gleise",
           "liste": "bahnuebergaenge",
           "eintrag": 1
-        },
-        {
-          "label": "PN du Duzillet",
-          "value": 2,
-          "unit": "Gleise",
-          "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[2].gleise",
-          "liste": "bahnuebergaenge",
-          "eintrag": 2
-        },
-        {
-          "label": "PN de la raffinerie",
-          "value": 1,
-          "unit": "Gleise",
-          "source": "bahnubergang",
-          "factRef": "bahnuebergaenge.items[5].gleise",
-          "liste": "bahnuebergaenge",
-          "eintrag": 5
         }
       ],
       "erlaeuterung": "Bahnübergänge sind niveaugleiche Gleisquerungen. Sie sind signaltechnisch gesichert, mit Blinklicht oder Schranken oder mit einer Verkehrsregelungsanlage, oder ungesichert.",
@@ -945,28 +885,29 @@
           "type": "single_choice",
           "prompt": "Wie viele Bahnübergänge sind für die Linie 100 erfasst?",
           "options": [
-            "6",
-            "10",
-            "13",
-            "18"
+            "1",
+            "2",
+            "3",
+            "4"
           ],
-          "correct": 0,
-          "explanation": "Erfasst sind 6 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
+          "correct": 1,
+          "explanation": "Erfasst sind 2 Bahnübergänge. Die Zahl gibt wieder, was in den offenen Daten steht.",
           "factRef": "bahnuebergaenge.anzahl_erfasst",
-          "difficulty": 1
+          "difficulty": 1,
+          "optionen_aus_fakten": true
         },
         {
-          "id": "bahnuebergaenge:4833027c",
+          "id": "bahnuebergaenge:71e770c7",
           "type": "single_choice",
-          "prompt": "Welche Sicherungsart ist bei den meisten Bahnübergängen der Linie 100 eingetragen?",
+          "prompt": "Welche Sicherungsart ist bei den Bahnübergängen der Linie 100 eingetragen?",
           "options": [
             "Bedarfsschrankenanl",
+            "Blinklichtanlage",
             "Halbschrankeanlage",
-            "Schrankenanlage",
-            "unbewacht"
+            "VRA"
           ],
-          "correct": 3,
-          "explanation": "Eingetragen ist «unbewacht», bei 3 der erfassten Bahnübergänge.",
+          "correct": 0,
+          "explanation": "Eingetragen ist «Bedarfsschrankenanl», bei 2 der erfassten Bahnübergänge.",
           "factRef": "bahnuebergaenge.nach_sicherungsart[0].wert",
           "difficulty": 2
         }
@@ -1016,7 +957,7 @@
     },
     {
       "thema": "Stand der Bahnübergänge",
-      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-26.",
       "quelle": "bahnubergang"
     },
     {
@@ -2329,30 +2270,6 @@
         "km": 11.016,
         "sicherungsart": "Bedarfsschrankenanl",
         "gleise": 2
-      },
-      {
-        "name": "PN du Duzillet",
-        "km": 41.073,
-        "sicherungsart": "unbewacht",
-        "gleise": 2
-      },
-      {
-        "name": "PN du Grand Canal",
-        "km": 41.21,
-        "sicherungsart": "unbewacht",
-        "gleise": 5
-      },
-      {
-        "name": "PN route de l'industrie",
-        "km": 41.216,
-        "sicherungsart": "Schrankenanlage",
-        "gleise": 5
-      },
-      {
-        "name": "PN de la raffinerie",
-        "km": 41.376,
-        "sicherungsart": "unbewacht",
-        "gleise": 1
       }
     ],
     "netz": [

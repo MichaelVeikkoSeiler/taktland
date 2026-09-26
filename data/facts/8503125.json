@@ -4,7 +4,7 @@
   "kanton": "ZH",
   "bps": "UST",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -111,35 +111,35 @@
       },
       {
         "jahr": 2019,
-        "anzahl": 28000
-      },
-      {
-        "jahr": 2019,
         "anzahl": 26000
       },
       {
-        "jahr": 2020,
-        "anzahl": 20600
+        "jahr": 2019,
+        "anzahl": 28000
       },
       {
         "jahr": 2020,
         "anzahl": 22300
       },
       {
-        "jahr": 2021,
-        "anzahl": 22500
+        "jahr": 2020,
+        "anzahl": 20600
       },
       {
         "jahr": 2021,
         "anzahl": 20900
       },
       {
-        "jahr": 2022,
-        "anzahl": 24000
+        "jahr": 2021,
+        "anzahl": 22500
       },
       {
         "jahr": 2022,
         "anzahl": 25500
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 24000
       },
       {
         "jahr": 2023,
@@ -151,11 +151,11 @@
       },
       {
         "jahr": 2024,
-        "anzahl": 26200
+        "anzahl": 27900
       },
       {
         "jahr": 2024,
-        "anzahl": 27900
+        "anzahl": 26200
       },
       {
         "jahr": 2025,

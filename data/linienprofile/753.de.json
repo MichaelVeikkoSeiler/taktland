@@ -2,7 +2,7 @@
   "linie": 753,
   "name": "Effretikon - Wetzikon - Hinwil",
   "lang": "de",
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -458,7 +458,7 @@
     },
     {
       "thema": "Stand der Bahnübergänge",
-      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-26.",
       "quelle": "bahnubergang"
     },
     {
@@ -586,13 +586,13 @@
       },
       {
         "name": "BUe Wiesentalweg",
-        "km": 3.575,
+        "km": 3.578,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
       },
       {
         "name": "BUe Oeliweg",
-        "km": 4.023,
+        "km": 4.026,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
       },

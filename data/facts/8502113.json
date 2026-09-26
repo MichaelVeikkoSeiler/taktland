@@ -4,7 +4,7 @@
   "kanton": "AG",
   "bps": "AA",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -58,8 +58,8 @@
   "bahnhofbenutzer": {
     "source": "anzahl-sbb-bahnhofbenutzer",
     "jahr": 2025,
-    "anzahl_pro_tag": 69300,
-    "einheit": "DP/jour",
+    "anzahl_pro_tag": 78500,
+    "einheit": "DP/jour ouvré",
     "verlauf": [
       {
         "jahr": 2013,
@@ -79,19 +79,19 @@
       },
       {
         "jahr": 2015,
-        "anzahl": 63100
-      },
-      {
-        "jahr": 2015,
         "anzahl": 70700
       },
       {
-        "jahr": 2016,
-        "anzahl": 64200
+        "jahr": 2015,
+        "anzahl": 63100
       },
       {
         "jahr": 2016,
         "anzahl": 72400
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 64200
       },
       {
         "jahr": 2017,
@@ -103,11 +103,11 @@
       },
       {
         "jahr": 2018,
-        "anzahl": 63900
+        "anzahl": 72100
       },
       {
         "jahr": 2018,
-        "anzahl": 72100
+        "anzahl": 63900
       },
       {
         "jahr": 2019,
@@ -119,11 +119,11 @@
       },
       {
         "jahr": 2020,
-        "anzahl": 50200
+        "anzahl": 56600
       },
       {
         "jahr": 2020,
-        "anzahl": 56600
+        "anzahl": 50200
       },
       {
         "jahr": 2021,
@@ -135,11 +135,11 @@
       },
       {
         "jahr": 2022,
-        "anzahl": 68700
+        "anzahl": 61700
       },
       {
         "jahr": 2022,
-        "anzahl": 61700
+        "anzahl": 68700
       },
       {
         "jahr": 2023,
@@ -159,11 +159,11 @@
       },
       {
         "jahr": 2025,
-        "anzahl": 78500
+        "anzahl": 69300
       },
       {
         "jahr": 2025,
-        "anzahl": 69300
+        "anzahl": 78500
       }
     ]
   },
@@ -322,7 +322,7 @@
         "nr": "1/10",
         "typ": "Hausperron",
         "laenge_m": 486,
-        "flaeche_netto_m2": 2539.35,
+        "flaeche_netto_m2": 2540.05,
         "niveaufreier_zugang": "ja",
         "linie": 649
       },
@@ -330,7 +330,7 @@
         "nr": "6",
         "typ": "Aussenperron",
         "laenge_m": 480,
-        "flaeche_netto_m2": 1807.05,
+        "flaeche_netto_m2": 1807.81,
         "niveaufreier_zugang": "ja",
         "linie": 650
       },
@@ -338,7 +338,7 @@
         "nr": "4/5",
         "typ": "Mittelperron",
         "laenge_m": 428,
-        "flaeche_netto_m2": 2140.17,
+        "flaeche_netto_m2": 2142.35,
         "niveaufreier_zugang": "ja",
         "linie": 650
       },
@@ -346,7 +346,7 @@
         "nr": "2/3",
         "typ": "Mittelperron",
         "laenge_m": 428,
-        "flaeche_netto_m2": 2290.47,
+        "flaeche_netto_m2": 2293.29,
         "niveaufreier_zugang": "ja",
         "linie": 649
       },
@@ -481,12 +481,11 @@
         "perrontyp": "Aussenperron",
         "perronkante_m": 481,
         "sektoren": [
-          "A",
           "B",
           "C",
           "D"
         ],
-        "sektoren_anzahl": 4
+        "sektoren_anzahl": 3
       }
     ]
   },
@@ -641,10 +640,10 @@
           "belaege": [
             {
               "belag": "Bituminöses Mischgut",
-              "flaeche_m2": 3329
+              "flaeche_m2": 3332
             }
           ],
-          "flaeche_m2": 3329
+          "flaeche_m2": 3332
         },
         {
           "nr": "4/5",
@@ -652,10 +651,10 @@
           "belaege": [
             {
               "belag": "Bituminöses Mischgut",
-              "flaeche_m2": 3224
+              "flaeche_m2": 3226
             }
           ],
-          "flaeche_m2": 3224
+          "flaeche_m2": 3226
         },
         {
           "nr": "6",
@@ -663,10 +662,10 @@
           "belaege": [
             {
               "belag": "Bituminöses Mischgut",
-              "flaeche_m2": 2259
+              "flaeche_m2": 2174
             }
           ],
-          "flaeche_m2": 2259
+          "flaeche_m2": 2174
         }
       ]
     }

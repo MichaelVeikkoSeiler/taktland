@@ -4,7 +4,7 @@
   "kanton": "VD",
   "bps": "GM",
   "tier": "S",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -219,10 +219,10 @@
           "belaege": [
             {
               "belag": "Bituminöses Mischgut",
-              "flaeche_m2": 633
+              "flaeche_m2": 634
             }
           ],
-          "flaeche_m2": 633
+          "flaeche_m2": 634
         }
       ]
     }

@@ -78,9 +78,11 @@ pipeline/    Rohdaten laden und zu facts/{uic}.json verdichten (Python, pandas)
 generator/   Profile schreiben und prüfen
 app/         PWA (React, Vite, Tailwind)
 data/raw/    heruntergeladene CSV, nicht in Git
-data/facts/  geprüfte Fakten je Bahnhof: 1175, die 769 mit SBB-Infrastruktur und 406
-             anderer Bahnen (BLS, RhB, MGB, MOB, ZB, SOB, MVR …) mit Daten für mindestens
-             drei Kapitel (ALLE_BAHNHOEFE_VON, ANDERE_AB_KAPITEL in pipeline/sources.py)
+data/facts/  geprüfte Fakten je Bahnhof: 1189, die mit SBB-Infrastruktur, die anderer
+             Bahnen (BLS, RhB, MGB, MOB, ZB, SOB, MVR …) mit Daten für mindestens drei
+             Kapitel (ALLE_BAHNHOEFE_VON, ANDERE_AB_KAPITEL in pipeline/sources.py) und die
+             14 Haltestellen der BTI ohne Frequenzdaten (HALTESTELLEN_OHNE_FREQUENZ): nur
+             Stammdaten, «Fahrgastzahl nicht erfasst», nicht im Duell
 data/bauplan.json  was pro Bahnhof von Hand entschieden ist
 data/profiles/ lernbare Profile je Bahnhof und Sprache, gebaut, nie von Hand geändert
 data/linien/   Fakten je Linie (Strecke, Bahnhöfe, Tunnel), aus pipeline/build_linien.py;

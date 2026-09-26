@@ -4,7 +4,7 @@
   "kanton": "BE",
   "bps": "BI",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -79,19 +79,19 @@
       },
       {
         "jahr": 2015,
-        "anzahl": 67900
-      },
-      {
-        "jahr": 2015,
         "anzahl": 63400
       },
       {
-        "jahr": 2016,
-        "anzahl": 67300
+        "jahr": 2015,
+        "anzahl": 67900
       },
       {
         "jahr": 2016,
         "anzahl": 62700
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 67300
       },
       {
         "jahr": 2017,
@@ -103,19 +103,19 @@
       },
       {
         "jahr": 2018,
-        "anzahl": 68600
-      },
-      {
-        "jahr": 2018,
         "anzahl": 64100
       },
       {
-        "jahr": 2019,
-        "anzahl": 64800
+        "jahr": 2018,
+        "anzahl": 68600
       },
       {
         "jahr": 2019,
         "anzahl": 69400
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 64800
       },
       {
         "jahr": 2020,
@@ -143,19 +143,19 @@
       },
       {
         "jahr": 2023,
-        "anzahl": 60300
-      },
-      {
-        "jahr": 2023,
         "anzahl": 63600
       },
       {
-        "jahr": 2024,
-        "anzahl": 65200
+        "jahr": 2023,
+        "anzahl": 60300
       },
       {
         "jahr": 2024,
         "anzahl": 61600
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 65200
       },
       {
         "jahr": 2025,

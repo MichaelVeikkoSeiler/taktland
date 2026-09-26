@@ -10,6 +10,13 @@ export const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
 }
 
+/** Die Grösse folgt aus der Fahrgastzahl. Fehlt diese (BTI), ist auch die
+ *  Grösse unbekannt: «Kleiner Bahnhof» läse eine fehlende Zahl als Tatsache. */
+export function stufeText(e: { tier: string; frequenz_erfasst?: false } | undefined) {
+  if (!e) return ''
+  return e.frequenz_erfasst === false ? 'Haltestelle, Fahrgastzahl nicht erfasst' : STUFE_TEXT[e.tier]
+}
+
 /** Was die Liste sich merkt, solange die App offen ist. Sie verschwindet,
  *  wenn ein Bahnhof offen ist: Wer zurückkommt, landet auf derselben Seite. */
 export interface ListenStand {
@@ -154,7 +161,7 @@ export function Eintrag({ e, oeffnen, favorit }: {
             {e.isb && <BahnKuerzel isb={e.isb} />}
           </span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-            {e.kanton ? `${kantonText(e.kanton)} · ` : ''}{STUFE_TEXT[e.tier]}
+            {e.kanton ? `${kantonText(e.kanton)} · ` : ''}{stufeText(e)}
             {e.dwv != null && ` · ${e.dwv.toLocaleString('de-CH')} pro Werktag`}
           </span>
         </span>

@@ -1,0 +1,125 @@
+{
+  "uic": 8504468,
+  "name": "Ins Dorf",
+  "kanton": "BE",
+  "bps": null,
+  "tier": "S",
+  "datenstand": "2026-09-26",
+  "steckbrief": {
+    "source": "haltestelle-haltekante",
+    "frequenz_erfasst": false,
+    "jahr": null,
+    "name": "Ins Dorf",
+    "kanton": "BE",
+    "isb": "asm",
+    "isb_source": "schienennetz",
+    "evu": null,
+    "lon": 7.10681,
+    "lat": 47.00558,
+    "dwv": null,
+    "dtv": null,
+    "dnwv": null,
+    "bemerkung": null,
+    "verlauf": []
+  },
+  "stammdaten": {
+    "source": "haltestelle-haltekante",
+    "bezeichnung_offiziell": "Ins Dorf",
+    "abkuerzung": "INSD",
+    "hoehe_m_ue_m": 476.1,
+    "gemeinde": "Ins",
+    "ortschaft": "Ins",
+    "bezirk": "Seeland",
+    "kanton": "Bern",
+    "verkehrsmittel": [
+      "TRAIN"
+    ],
+    "betreiber": "Aare Seeland mobil (bti)"
+  },
+  "bahnhofbenutzer": null,
+  "tagesrhythmus": null,
+  "perrons": null,
+  "gleise": null,
+  "hindernisfreiheit": null,
+  "zuege": null,
+  "linien": null,
+  "services": {
+    "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
+    "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
+    "wlan_erfasst": false,
+    "wartehallen_erfasst": 0
+  },
+  "ausstattung": null,
+  "bahnhofplan": null,
+  "luecken": [
+    {
+      "thema": "Ein- und Aussteigende",
+      "grund": "Die Passagierfrequenz der SBB führt diese Haltestelle nicht. Wie viele Personen hier ein- und aussteigen, steht darum nicht in den Daten.",
+      "quelle": "passagierfrequenz"
+    },
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Mobiliar und Perronbelag liegen für diesen Bahnhof keine offenen Daten vor.",
+      "quelle": "mobiliar-im-bahnhof, perronoberflache"
+    },
+    {
+      "thema": "Bahnhofplan",
+      "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",
+      "quelle": "haltestelle-karte-trafimage"
+    },
+    {
+      "thema": "Tagesrhythmus",
+      "grund": "Wie sich die Besucherzahl über den Tag verteilt, ist nur für 26 Bahnhöfe erhoben.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer-tagesverlauf"
+    },
+    {
+      "thema": "Bahnhofbenutzer",
+      "grund": "Die Zahl aller Bahnhofbenutzer, auch ohne Zugfahrt, ist nur für 28 Bahnhöfe erhoben. Erfasst sind hier nur Ein- und Aussteigende.",
+      "quelle": "anzahl-sbb-bahnhofbenutzer"
+    },
+    {
+      "thema": "Gleise",
+      "grund": "Zu den Gleisen dieses Bahnhofs liegen keine offenen Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "WLAN",
+      "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
+      "quelle": "wifistation"
+    },
+    {
+      "thema": "Ausstattung",
+      "grund": "Zu Billettautomaten und Entwertern liegen für diesen Bahnhof keine Daten vor. Die Quelle ordnet diese Geräte über ein Betriebspunkt-Kürzel zu, das hier fehlt.",
+      "quelle": "billetautomat, billetentwerter"
+    },
+    {
+      "thema": "Hindernisfreiheit",
+      "grund": "Zur Hindernisfreiheit liegen für diesen Bahnhof keine Daten vor.",
+      "quelle": "21197_behig-haltekantesegment"
+    },
+    {
+      "thema": "Wartehallen",
+      "grund": "Es ist keine Wartehalle erfasst. Das schliesst nicht aus, dass es vor Ort einen Warteraum gibt.",
+      "quelle": "haltestelle-wartehallen"
+    },
+    {
+      "thema": "Zugzahlen",
+      "grund": "In den Zugzahlen 2025 ist für diesen Bahnhof kein Streckenabschnitt mit Fahrten erfasst.",
+      "quelle": "zugzahlen"
+    },
+    {
+      "thema": "Linien",
+      "grund": "Dieser Bahnhof fehlt in der Liste der Linien mit Betriebspunkten, aus der die Angaben zu Linie und Kilometer stammen.",
+      "quelle": "linie-mit-betriebspunkten"
+    },
+    {
+      "thema": "Fahrplan",
+      "grund": "Welche Züge hier halten und wohin sie fahren, ist nicht Teil dieser Daten. Die Zugzahlen zählen Fahrten auf den Streckenabschnitten.",
+      "quelle": "zugzahlen"
+    }
+  ],
+  "verfuegbare_kapitel": [
+    "stammdaten",
+    "services"
+  ]
+}

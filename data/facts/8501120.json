@@ -4,7 +4,7 @@
   "kanton": "VD",
   "bps": "LS",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -63,11 +63,11 @@
     "verlauf": [
       {
         "jahr": 2013,
-        "anzahl": 139000
+        "anzahl": null
       },
       {
         "jahr": 2013,
-        "anzahl": null
+        "anzahl": 139000
       },
       {
         "jahr": 2014,
@@ -79,11 +79,11 @@
       },
       {
         "jahr": 2015,
-        "anzahl": 130800
+        "anzahl": 142600
       },
       {
         "jahr": 2015,
-        "anzahl": 142600
+        "anzahl": 130800
       },
       {
         "jahr": 2016,
@@ -95,19 +95,19 @@
       },
       {
         "jahr": 2017,
-        "anzahl": 148500
-      },
-      {
-        "jahr": 2017,
         "anzahl": 135600
       },
       {
-        "jahr": 2018,
-        "anzahl": 132500
+        "jahr": 2017,
+        "anzahl": 148500
       },
       {
         "jahr": 2018,
         "anzahl": 144700
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 132500
       },
       {
         "jahr": 2019,
@@ -127,27 +127,27 @@
       },
       {
         "jahr": 2021,
-        "anzahl": 94700
-      },
-      {
-        "jahr": 2021,
         "anzahl": 102700
       },
       {
-        "jahr": 2022,
-        "anzahl": 108300
+        "jahr": 2021,
+        "anzahl": 94700
       },
       {
         "jahr": 2022,
         "anzahl": 117300
       },
       {
-        "jahr": 2023,
-        "anzahl": 115800
+        "jahr": 2022,
+        "anzahl": 108300
       },
       {
         "jahr": 2023,
         "anzahl": 125600
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 115800
       },
       {
         "jahr": 2024,

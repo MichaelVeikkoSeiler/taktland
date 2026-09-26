@@ -4,7 +4,7 @@
   "kanton": "GE",
   "bps": "GEAP",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -79,43 +79,43 @@
       },
       {
         "jahr": 2015,
-        "anzahl": 40600
-      },
-      {
-        "jahr": 2015,
         "anzahl": 42200
       },
       {
-        "jahr": 2016,
-        "anzahl": 41800
+        "jahr": 2015,
+        "anzahl": 40600
       },
       {
         "jahr": 2016,
         "anzahl": 43200
       },
       {
-        "jahr": 2017,
-        "anzahl": 43800
+        "jahr": 2016,
+        "anzahl": 41800
       },
       {
         "jahr": 2017,
         "anzahl": 45200
       },
       {
-        "jahr": 2018,
-        "anzahl": 44400
+        "jahr": 2017,
+        "anzahl": 43800
       },
       {
         "jahr": 2018,
         "anzahl": 45300
       },
       {
-        "jahr": 2019,
-        "anzahl": 46700
+        "jahr": 2018,
+        "anzahl": 44400
       },
       {
         "jahr": 2019,
         "anzahl": 45900
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 46700
       },
       {
         "jahr": 2020,
@@ -143,19 +143,19 @@
       },
       {
         "jahr": 2023,
-        "anzahl": 42400
-      },
-      {
-        "jahr": 2023,
         "anzahl": 41100
       },
       {
-        "jahr": 2024,
-        "anzahl": 44100
+        "jahr": 2023,
+        "anzahl": 42400
       },
       {
         "jahr": 2024,
         "anzahl": 43000
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 44100
       },
       {
         "jahr": 2025,

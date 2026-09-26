@@ -114,6 +114,43 @@ def abschnitte():
     return jahr, kanten, punkte
 
 
+#: Linien ohne Zugzahlen, die trotzdem ins Netz kommen, aus dem Schienennetz des
+#: BAV (Michael, 2026-09-26: «BTI Bahn Biel bis Ins aufnehmen»). Die Zugzahlen
+#: der SBB führen die BTI nicht; jeder Abschnitt des Schienennetzes wird ein
+#: Abschnitt des Netzes. Ohne Zugzahlen zählt er für die Wegsuche wie ein
+#: Abschnitt mit einem Zug pro Tag (siehe main).
+BAV_OHNE_ZUGZAHLEN = {"261"}
+#: Endpunkte, die das Schienennetz als eigenen Betriebspunkt im Bahnhof führt
+#: («Biel/Bienne [Gleis 11/voie 11]»): Sie gelten als dieser Bahnhof, damit die
+#: BTI an Biel/Bienne und Ins anschliesst.
+BAV_GLEIS_IM_BAHNHOF = {8530750: 8504300, 8516177: 8504483}
+
+
+def bav_abschnitte(kanten, punkte):
+    """Die Abschnitte der Linien in BAV_OHNE_ZUGZAHLEN, in kanten und punkte
+    eingefügt wie die aus den Zugzahlen, mit zuege None."""
+    bav, _ = schienennetz.je_linie()
+    abk_von = {p["uic"]: abk for abk, p in punkte.items() if p["uic"]}
+    for nummer in sorted(BAV_OHNE_ZUGZAHLEN):
+        l = bav[nummer]
+        lage = {p["nummer"]: p for p in l["punkte"]}
+        def abk(nr):
+            bahnhof = BAV_GLEIS_IM_BAHNHOF.get(nr, nr)
+            if bahnhof in abk_von:
+                return abk_von[bahnhof]
+            p = lage[nr]
+            punkte.setdefault(p["abkuerzung"], {"name": p["name"], "uic": nr,
+                                                "lage": ebene(p["lon"], p["lat"]),
+                                                "wgs": (round(p["lat"], 5), round(p["lon"], 5))})
+            abk_von[nr] = p["abkuerzung"]
+            return p["abkuerzung"]
+        for g in l["segmente"]:
+            a, b = abk(g["von_nummer"]), abk(g["bis_nummer"])
+            km = math.dist(punkte[a]["lage"], punkte[b]["lage"])
+            kanten[tuple(sorted((a, b)))] = {"km": km, "isb": g["isb"], "zuege": None,
+                                             "linie_bav": int(nummer)}
+
+
 def linienzuege():
     """Je Linie die Kilometerpunkte als Linienzug, nach km geordnet, dazu
     Breite und Länge für die Geometrie des Fahrtmodus."""
@@ -296,6 +333,7 @@ def main():
     abruf = json.loads((RAW / "_abruf.json").read_text(encoding="utf-8"))
     stand = max(abruf[q] for q in QUELLEN + QUELLEN_BAV)
     jahr, kanten, punkte = abschnitte()
+    bav_abschnitte(kanten, punkte)
     zuege, wgs = linienzuege()
     lage = lagen(punkte, zuege)
     auf_linie = punkte_je_linie(lage)
@@ -312,8 +350,12 @@ def main():
 
     liste, ohne_zuordnung, bereiche = [], [], {}
     for (a, b), k in sorted(kanten.items()):
+        # ohne Zugzahlen (BAV_OHNE_ZUGZAHLEN) wie ein selten befahrener Abschnitt:
+        # So nimmt der Weg die BTI nur, wenn Start, Ziel oder «Über» an ihr
+        # liegen. Ohne Strafe lief Dornach – Marin-Epagnier über Täuffelen.
+        strafe = STRAFE / max(k["zuege"] or 1, 1)
         eintrag = {"von": a, "nach": b,
-                   "gewicht": round(k["km"] * (1 + STRAFE / max(k["zuege"], 1)) + ZUSCHLAG_KM, 3),
+                   "gewicht": round(k["km"] * (1 + strafe) + ZUSCHLAG_KM, 3),
                    "isb": k["isb"]}
         teile = None
         if k["isb"] == "SBB":
@@ -347,7 +389,9 @@ def main():
             # Tunnel und Brücken gibt es dafür nicht.
             gemeinsam = (bav_je_punkt.get(punkte[a]["uic"], set())
                          & bav_je_punkt.get(punkte[b]["uic"], set()))
-            if len(gemeinsam) == 1:
+            if "linie_bav" in k:
+                eintrag["linie_bav"] = k["linie_bav"]
+            elif len(gemeinsam) == 1:
                 eintrag["linie_bav"] = gemeinsam.pop()
         liste.append(eintrag)
 
@@ -358,7 +402,8 @@ def main():
         "datenstand": stand,
         "zugzahlen_jahr": jahr,
         "quellen": QUELLEN + QUELLEN_BAV,
-        "hinweis": "Abschnitte mit Personenzügen laut zugzahlen. teile: die Linie der SBB, "
+        "hinweis": "Abschnitte mit Personenzügen laut zugzahlen, dazu die Linie 261 (BTI) aus dem "
+                   "Schienennetz des BAV, die die Zugzahlen nicht führen. teile: die Linie der SBB, "
                    "auf der der Abschnitt liegt (selten zwei nacheinander), mit Kilometrierung "
                    "(ein Standort, keine Länge). tunnel und bruecken: Kennungen «Linie:Stelle» "
                    "in den Listen der Linienfakten. Ohne teile: keine Tunnel- und Brückendaten; "

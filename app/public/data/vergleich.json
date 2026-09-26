@@ -1,5 +1,5 @@
 {
- "datenstand": "2026-09-20",
+ "datenstand": "2026-09-26",
  "hinweis": "Jeder Wert stammt unveraendert aus data/facts/{uic}.json. Die Fragen entstehen in der App aus diesen Werten, es wird nichts geschrieben und nichts geschaetzt.",
  "kategorien": [
   {
@@ -17124,8 +17124,8 @@
    }
   }
  ],
- "tunnel_datenstand": "2026-09-21",
- "linien_datenstand": "2026-09-22",
+ "tunnel_datenstand": "2026-09-26",
+ "linien_datenstand": "2026-09-26",
  "linien_kategorien": [
   {
    "id": "linie_bahnhoefe",
@@ -17202,7 +17202,7 @@
     "linie_betriebspunkte": 59,
     "linie_tunnel": 9,
     "linie_bruecken": 201,
-    "linie_bahnuebergaenge": 6
+    "linie_bahnuebergaenge": 2
    }
   },
   {

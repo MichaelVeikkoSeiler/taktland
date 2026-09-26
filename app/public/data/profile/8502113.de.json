@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
@@ -310,21 +310,21 @@
         },
         {
           "label": "Nettofläche Perron 1/10",
-          "value": 2539.35,
+          "value": 2540.05,
           "unit": "m²",
           "source": "perron",
           "factRef": "perrons.items[0].flaeche_netto_m2"
         },
         {
           "label": "Nettofläche Perron 4/5",
-          "value": 2140.17,
+          "value": 2142.35,
           "unit": "m²",
           "source": "perron",
           "factRef": "perrons.items[2].flaeche_netto_m2"
         },
         {
           "label": "Nettofläche Perron 6",
-          "value": 1807.05,
+          "value": 1807.81,
           "unit": "m²",
           "source": "perron",
           "factRef": "perrons.items[1].flaeche_netto_m2"
@@ -353,22 +353,22 @@
           "pairs": [
             {
               "links": "Perron 1/10",
-              "rechts": "2539.35 m²",
+              "rechts": "2540.05 m²",
               "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
               "links": "Perron 6",
-              "rechts": "1807.05 m²",
+              "rechts": "1807.81 m²",
               "factRef": "perrons.items[1].flaeche_netto_m2"
             },
             {
               "links": "Perron 4/5",
-              "rechts": "2140.17 m²",
+              "rechts": "2142.35 m²",
               "factRef": "perrons.items[2].flaeche_netto_m2"
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1/10 hat 2539.35 Quadratmeter, Perron 6 hat 1807.05 Quadratmeter, Perron 4/5 hat 2140.17 Quadratmeter.",
+          "explanation": "Perron 1/10 hat 2540.05 Quadratmeter, Perron 6 hat 1807.81 Quadratmeter, Perron 4/5 hat 2142.35 Quadratmeter.",
           "difficulty": 3
         },
         {
@@ -758,14 +758,14 @@
         },
         {
           "label": "Belagsfläche Perron 2/3",
-          "value": 3329,
+          "value": 3332,
           "unit": "m²",
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
         },
         {
           "label": "Belagsfläche Perron 6",
-          "value": 2259,
+          "value": 2174,
           "unit": "m²",
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
@@ -839,7 +839,7 @@
           "items": [
             {
               "label": "Perron 2/3",
-              "value": 3329,
+              "value": 3332,
               "factRef": "ausstattung.perronbelag.items[2].flaeche_m2"
             },
             {
@@ -849,7 +849,7 @@
             },
             {
               "label": "Perron 6",
-              "value": 2259,
+              "value": 2174,
               "factRef": "ausstattung.perronbelag.items[4].flaeche_m2"
             },
             {
@@ -859,7 +859,7 @@
             }
           ],
           "factRef": "ausstattung.perronbelag.items",
-          "explanation": "Perron 2/3 hat mit 3'329 Quadratmetern die grösste erfasste Belagsfläche, Perron 0 mit 202 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
+          "explanation": "Perron 2/3 hat mit 3'332 Quadratmetern die grösste erfasste Belagsfläche, Perron 0 mit 202 die kleinste der gezeigten. Perrons mit fast gleicher Belagsfläche bleiben weg.",
           "difficulty": 2
         }
       ]

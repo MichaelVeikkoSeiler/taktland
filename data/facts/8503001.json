@@ -4,7 +4,7 @@
   "kanton": "ZH",
   "bps": "ZAS",
   "tier": "M",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -95,21 +95,21 @@
       },
       {
         "jahr": 2017,
-        "anzahl": 64100
-      },
-      {
-        "jahr": 2017,
         "anzahl": 52800
       },
       {
-        "jahr": 2018,
-        "anzahl": 61600
+        "jahr": 2017,
+        "anzahl": 64100
       },
       {
         "jahr": 2018,
         "anzahl": 50700
       },
       {
+        "jahr": 2018,
+        "anzahl": 61600
+      },
+      {
         "jahr": 2019,
         "anzahl": 0
       },
@@ -124,38 +124,38 @@
       {
         "jahr": 2020,
         "anzahl": 0
-      },
-      {
-        "jahr": 2021,
-        "anzahl": 36900
       },
       {
         "jahr": 2021,
         "anzahl": 42700
       },
       {
-        "jahr": 2022,
-        "anzahl": 57400
+        "jahr": 2021,
+        "anzahl": 36900
       },
       {
         "jahr": 2022,
         "anzahl": 49300
       },
       {
-        "jahr": 2023,
-        "anzahl": 67100
+        "jahr": 2022,
+        "anzahl": 57400
       },
       {
         "jahr": 2023,
         "anzahl": 57600
       },
       {
-        "jahr": 2024,
-        "anzahl": 69700
+        "jahr": 2023,
+        "anzahl": 67100
       },
       {
         "jahr": 2024,
         "anzahl": 59500
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 69700
       },
       {
         "jahr": 2025,

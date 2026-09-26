@@ -1,19 +1,19 @@
 {
- "datenstand": "2026-09-22",
+ "datenstand": "2026-09-26",
  "abgerufen": {
-  "linie": "2026-09-22",
-  "linie-mit-betriebspunkten": "2026-09-19",
-  "tunnel": "2026-09-21",
-  "brucken": "2026-09-21",
-  "bahnubergang": "2026-09-21",
-  "schienennetz": "2026-09-22"
+  "linie": "2026-09-26",
+  "linie-mit-betriebspunkten": "2026-09-26",
+  "tunnel": "2026-09-26",
+  "brucken": "2026-09-26",
+  "bahnubergang": "2026-09-26",
+  "schienennetz": "2026-09-26"
  },
  "hinweis": "Brücken und Bahnübergänge auf Linien ohne eigene Seite: weniger als zwei Bahnhöfe in Taktland und kein Tunnel.",
  "bruecken_ohne_seite": 155,
  "linien_ohne_seite_mit_bruecken": 54,
- "bahnuebergaenge_ohne_seite": 53,
- "linien_ohne_seite_mit_bahnuebergaengen": 29,
- "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen": 67,
+ "bahnuebergaenge_ohne_seite": 57,
+ "linien_ohne_seite_mit_bahnuebergaengen": 30,
+ "linien_ohne_seite_mit_bruecken_oder_bahnuebergaengen": 68,
  "bruecken_ohne_seite_liste": [
   {
    "linie": 153,
@@ -1296,6 +1296,36 @@
    ]
   },
   {
+   "linie": 135,
+   "name": "St-Triphon Raffinerie",
+   "items": [
+    {
+     "name": "PN de la raffinerie",
+     "km": 0.198,
+     "sicherungsart": "unbewacht",
+     "gleise": 1
+    },
+    {
+     "name": "PN du Duzillet",
+     "km": 0.631,
+     "sicherungsart": "unbewacht",
+     "gleise": 2
+    },
+    {
+     "name": "PN du Grand Canal",
+     "km": 1.227,
+     "sicherungsart": "unbewacht",
+     "gleise": 5
+    },
+    {
+     "name": "PN route de l'industrie",
+     "km": 1.25,
+     "sicherungsart": "Schrankenanlage",
+     "gleise": 5
+    }
+   ]
+  },
+  {
    "linie": 149,
    "name": "Gland Ballastiere",
    "items": [
@@ -1868,7 +1898,7 @@
   "258": "Kerzers West - Kerzers BLS",
   "259": "Kerzers Sud - Kerzers SBB",
   "260": "Zollikofen Nord - Biel/Bienne Aebistr.",
-  "261": "Biel - Tauffelen - Ins",
+  "261": "Biel - Täuffelen - Ins",
   "263": "Studen Auto - Studen",
   "264": "Lyss West - Lyss Fulenmatt (Agl)",
   "265": "Biel Mett Abzweigung - Biel/Bienne Ost",

@@ -4,7 +4,7 @@
   "kanton": "VD",
   "bps": "MD",
   "tier": "S",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -69,7 +69,7 @@
         "nr": "1",
         "typ": "Hausperron",
         "laenge_m": 174,
-        "flaeche_netto_m2": 531.96,
+        "flaeche_netto_m2": 598.7,
         "niveaufreier_zugang": "ja",
         "linie": 251
       }

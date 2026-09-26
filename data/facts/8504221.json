@@ -4,7 +4,7 @@
   "kanton": "NE",
   "bps": "NE",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -58,8 +58,8 @@
   "bahnhofbenutzer": {
     "source": "anzahl-sbb-bahnhofbenutzer",
     "jahr": 2025,
-    "anzahl_pro_tag": 27900,
-    "einheit": "DP/jour",
+    "anzahl_pro_tag": 30600,
+    "einheit": "DP/jour ouvré",
     "verlauf": [
       {
         "jahr": 2013,
@@ -79,35 +79,35 @@
       },
       {
         "jahr": 2015,
-        "anzahl": 30600
-      },
-      {
-        "jahr": 2015,
         "anzahl": 33400
       },
       {
-        "jahr": 2016,
-        "anzahl": 30400
+        "jahr": 2015,
+        "anzahl": 30600
       },
       {
         "jahr": 2016,
         "anzahl": 33200
       },
       {
-        "jahr": 2017,
-        "anzahl": 30200
+        "jahr": 2016,
+        "anzahl": 30400
       },
       {
         "jahr": 2017,
         "anzahl": 33000
       },
       {
-        "jahr": 2018,
-        "anzahl": 32600
+        "jahr": 2017,
+        "anzahl": 30200
       },
       {
         "jahr": 2018,
         "anzahl": 30000
+      },
+      {
+        "jahr": 2018,
+        "anzahl": 32600
       },
       {
         "jahr": 2019,
@@ -119,11 +119,11 @@
       },
       {
         "jahr": 2020,
-        "anzahl": 21900
+        "anzahl": 23600
       },
       {
         "jahr": 2020,
-        "anzahl": 23600
+        "anzahl": 21900
       },
       {
         "jahr": 2021,
@@ -135,11 +135,11 @@
       },
       {
         "jahr": 2022,
-        "anzahl": 28600
+        "anzahl": 26700
       },
       {
         "jahr": 2022,
-        "anzahl": 26700
+        "anzahl": 28600
       },
       {
         "jahr": 2023,
@@ -159,11 +159,11 @@
       },
       {
         "jahr": 2025,
-        "anzahl": 30600
+        "anzahl": 27900
       },
       {
         "jahr": 2025,
-        "anzahl": 27900
+        "anzahl": 30600
       }
     ]
   },

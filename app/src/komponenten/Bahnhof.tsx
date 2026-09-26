@@ -80,8 +80,11 @@ export function Bahnhof({ uic, zurueck, eintrag }: {
       <header className="px-4">
         <h1 className="text-2xl font-bold text-sbb-black dark:text-sbb-white">{profil.name}</h1>
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
-          {kanton ? `${kantonText(kanton)} · ` : ''}{STUFE_TEXT[profil.tier]} · Fahrgastzahlen{' '}
-          {profil.dataYear} · {fragenGesamt} Fragen
+          {kanton ? `${kantonText(kanton)} · ` : ''}
+          {eintrag?.frequenz_erfasst === false
+            ? 'Haltestelle, Fahrgastzahl nicht erfasst'
+            : <>{STUFE_TEXT[profil.tier]} · Fahrgastzahlen {profil.dataYear}</>}
+          {' · '}{fragenGesamt} {fragenGesamt === 1 ? 'Frage' : 'Fragen'}
         </p>
         {eintrag?.isb && (
           <p className="mt-2 flex items-start gap-2 text-sm text-sbb-black dark:text-sbb-white">
@@ -90,6 +93,9 @@ export function Bahnhof({ uic, zurueck, eintrag }: {
               Die Infrastruktur dieses Bahnhofs betreibt die {eintrag.isb}, nicht die SBB. Die
               offenen Daten der SBB enthalten dazu weniger, etwa keine Perrons; darum hat diese
               Seite weniger Kapitel.
+              {eintrag.frequenz_erfasst === false && ' Die Passagierfrequenz der SBB führt diese '
+                + 'Haltestelle nicht: Fahrgastzahlen fehlen, und im Duell spielt sie nicht mit. Die '
+                + 'Betreiberin stammt aus dem Schienennetz des BAV.'}
             </span>
           </p>
         )}

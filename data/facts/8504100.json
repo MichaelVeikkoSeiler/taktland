@@ -4,7 +4,7 @@
   "kanton": "FR",
   "bps": "FRI",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -103,43 +103,43 @@
       },
       {
         "jahr": 2018,
-        "anzahl": 27900
-      },
-      {
-        "jahr": 2018,
         "anzahl": 30600
       },
       {
-        "jahr": 2019,
-        "anzahl": 32200
+        "jahr": 2018,
+        "anzahl": 27900
       },
       {
         "jahr": 2019,
         "anzahl": 29500
       },
       {
-        "jahr": 2020,
-        "anzahl": 23300
+        "jahr": 2019,
+        "anzahl": 32200
       },
       {
         "jahr": 2020,
         "anzahl": 21300
       },
       {
-        "jahr": 2021,
-        "anzahl": 25100
+        "jahr": 2020,
+        "anzahl": 23300
       },
       {
         "jahr": 2021,
         "anzahl": 23100
       },
       {
-        "jahr": 2022,
-        "anzahl": 27700
+        "jahr": 2021,
+        "anzahl": 25100
       },
       {
         "jahr": 2022,
         "anzahl": 29900
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 27700
       },
       {
         "jahr": 2023,

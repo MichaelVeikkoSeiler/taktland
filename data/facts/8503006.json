@@ -4,7 +4,7 @@
   "kanton": "ZH",
   "bps": "ZOER",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -58,8 +58,8 @@
   "bahnhofbenutzer": {
     "source": "anzahl-sbb-bahnhofbenutzer",
     "jahr": 2025,
-    "anzahl_pro_tag": 118300,
-    "einheit": "DP/jour ouvré",
+    "anzahl_pro_tag": 106000,
+    "einheit": "DP/jour",
     "verlauf": [
       {
         "jahr": 2013,
@@ -95,27 +95,27 @@
       },
       {
         "jahr": 2017,
-        "anzahl": 106000
-      },
-      {
-        "jahr": 2017,
         "anzahl": 94200
       },
       {
-        "jahr": 2018,
-        "anzahl": 99800
+        "jahr": 2017,
+        "anzahl": 106000
       },
       {
         "jahr": 2018,
         "anzahl": 111700
       },
       {
-        "jahr": 2019,
-        "anzahl": 105400
+        "jahr": 2018,
+        "anzahl": 99800
       },
       {
         "jahr": 2019,
         "anzahl": 117400
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 105400
       },
       {
         "jahr": 2020,
@@ -135,11 +135,11 @@
       },
       {
         "jahr": 2022,
-        "anzahl": 104300
+        "anzahl": 95200
       },
       {
         "jahr": 2022,
-        "anzahl": 95200
+        "anzahl": 104300
       },
       {
         "jahr": 2023,
@@ -151,19 +151,19 @@
       },
       {
         "jahr": 2024,
-        "anzahl": 113800
-      },
-      {
-        "jahr": 2024,
         "anzahl": 103300
       },
       {
-        "jahr": 2025,
-        "anzahl": 106000
+        "jahr": 2024,
+        "anzahl": 113800
       },
       {
         "jahr": 2025,
         "anzahl": 118300
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 106000
       }
     ]
   },

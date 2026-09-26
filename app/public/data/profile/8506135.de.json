@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -539,7 +539,7 @@
         55
       ],
       "hilfstritt": false,
-      "perrontyp": "Hausperron",
+      "perrontyp": "Aussenperron",
       "perronkante_m": 132,
       "sektoren": [],
       "sektoren_anzahl": 0

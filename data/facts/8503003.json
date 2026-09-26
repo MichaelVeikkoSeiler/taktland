@@ -4,7 +4,7 @@
   "kanton": "ZH",
   "bps": "ZSTH",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -58,8 +58,8 @@
   "bahnhofbenutzer": {
     "source": "anzahl-sbb-bahnhofbenutzer",
     "jahr": 2025,
-    "anzahl_pro_tag": 82700,
-    "einheit": "DP/jour",
+    "anzahl_pro_tag": 93000,
+    "einheit": "DP/jour ouvré",
     "verlauf": [
       {
         "jahr": 2013,
@@ -127,43 +127,43 @@
       },
       {
         "jahr": 2021,
-        "anzahl": 68100
-      },
-      {
-        "jahr": 2021,
         "anzahl": 61000
       },
       {
-        "jahr": 2022,
-        "anzahl": 81100
+        "jahr": 2021,
+        "anzahl": 68100
       },
       {
         "jahr": 2022,
         "anzahl": 73300
       },
       {
-        "jahr": 2023,
-        "anzahl": 78900
+        "jahr": 2022,
+        "anzahl": 81100
       },
       {
         "jahr": 2023,
         "anzahl": 86800
       },
       {
-        "jahr": 2024,
-        "anzahl": 75500
+        "jahr": 2023,
+        "anzahl": 78900
       },
       {
         "jahr": 2024,
         "anzahl": 84500
       },
       {
-        "jahr": 2025,
-        "anzahl": 93000
+        "jahr": 2024,
+        "anzahl": 75500
       },
       {
         "jahr": 2025,
         "anzahl": 82700
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 93000
       }
     ]
   },

@@ -138,4 +138,29 @@ ZUSAETZLICH = {
     8507100: "Thun",           # in passagierfrequenz bis 2024 SBB, ab 2025 BLS
 }
 
+# Haltestellen ohne Frequenzdaten: Die Passagierfrequenz der SBB führt sie nicht
+# (bei Biel/Bienne und Ins steht «Ohne ASM»). Aufgenommen auf Wunsch (Michael,
+# 2026-09-26: «BTI Bahn Biel bis Ins aufnehmen») mit dem, was es gibt: Stammdaten
+# aus dem Haltestellenverzeichnis (haltestelle-haltekante) und die Infrastruktur-
+# betreiberin laut Schienennetz des BAV. Die Seite hat keine Lernfragen, und
+# die Fahrgastzahl steht als Lücke da. Die Liste: alle Betriebspunkte der Linie
+# 261 «Biel - Täuffelen - Ins» im Schienennetz, die das Haltestellenverzeichnis
+# als Zughalt (TRAIN) führt; Finsterhennen ist dort kein Halt.
+HALTESTELLEN_OHNE_FREQUENZ = {
+    8504461: "Nidau",
+    8504469: "Nidau Beunden",
+    8504471: "Ipsach",
+    8504470: "Ipsach Herdi",
+    8504472: "Sutz",
+    8504462: "Lattrigen",
+    8504474: "Mörigen",
+    8504475: "Gerolfingen",
+    8504463: "Täuffelen",
+    8504464: "Hagneck",
+    8504465: "Lüscherz",
+    8504466: "Siselen-Finsterhennen",
+    8504467: "Brüttelen",
+    8504468: "Ins Dorf",
+}
+
 ATTRIBUTION = "Daten: SBB Open Data (data.sbb.ch), Lizenz mit Quellenangabe"

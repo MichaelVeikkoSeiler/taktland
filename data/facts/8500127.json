@@ -4,7 +4,7 @@
   "kanton": "JU",
   "bps": "CTM",
   "tier": "S",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -63,7 +63,7 @@
     "anzahl_mit_daten": 2,
     "niveaufrei_erreichbar": 1,
     "laengste_m": 163,
-    "kuerzeste_m": 150,
+    "kuerzeste_m": 83,
     "items": [
       {
         "nr": "2",
@@ -76,7 +76,7 @@
       {
         "nr": "1",
         "typ": "Hausperron",
-        "laenge_m": 150,
+        "laenge_m": 83,
         "flaeche_netto_m2": 344.73,
         "niveaufreier_zugang": "ja",
         "linie": 240
@@ -251,10 +251,10 @@
           "belaege": [
             {
               "belag": "Bituminöses Mischgut",
-              "flaeche_m2": 437
+              "flaeche_m2": 209
             }
           ],
-          "flaeche_m2": 437
+          "flaeche_m2": 209
         },
         {
           "nr": "2",

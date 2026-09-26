@@ -4,7 +4,7 @@
   "kanton": "ZG",
   "bps": "ZG",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -58,8 +58,8 @@
   "bahnhofbenutzer": {
     "source": "anzahl-sbb-bahnhofbenutzer",
     "jahr": 2025,
-    "anzahl_pro_tag": 64400,
-    "einheit": "DP/jour ouvré",
+    "anzahl_pro_tag": 59300,
+    "einheit": "DP/jour",
     "verlauf": [
       {
         "jahr": 2013,
@@ -71,11 +71,11 @@
       },
       {
         "jahr": 2014,
-        "anzahl": 62000
+        "anzahl": null
       },
       {
         "jahr": 2014,
-        "anzahl": null
+        "anzahl": 62000
       },
       {
         "jahr": 2015,
@@ -87,22 +87,18 @@
       },
       {
         "jahr": 2016,
-        "anzahl": 60500
-      },
-      {
-        "jahr": 2016,
         "anzahl": 66100
       },
       {
-        "jahr": 2017,
-        "anzahl": 66400
+        "jahr": 2016,
+        "anzahl": 60500
       },
       {
         "jahr": 2017,
         "anzahl": 61000
       },
       {
-        "jahr": 2018,
+        "jahr": 2017,
         "anzahl": 66400
       },
       {
@@ -110,12 +106,16 @@
         "anzahl": 61300
       },
       {
-        "jahr": 2019,
-        "anzahl": 67700
+        "jahr": 2018,
+        "anzahl": 66400
       },
       {
         "jahr": 2019,
         "anzahl": 63300
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 67700
       },
       {
         "jahr": 2020,
@@ -127,11 +127,11 @@
       },
       {
         "jahr": 2021,
-        "anzahl": 43400
+        "anzahl": 46100
       },
       {
         "jahr": 2021,
-        "anzahl": 46100
+        "anzahl": 43400
       },
       {
         "jahr": 2022,
@@ -143,27 +143,27 @@
       },
       {
         "jahr": 2023,
-        "anzahl": 56300
-      },
-      {
-        "jahr": 2023,
         "anzahl": 59800
       },
       {
-        "jahr": 2024,
-        "anzahl": 54900
+        "jahr": 2023,
+        "anzahl": 56300
       },
       {
         "jahr": 2024,
         "anzahl": 58900
       },
       {
-        "jahr": 2025,
-        "anzahl": 59300
+        "jahr": 2024,
+        "anzahl": 54900
       },
       {
         "jahr": 2025,
         "anzahl": 64400
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 59300
       }
     ]
   },

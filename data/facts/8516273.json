@@ -4,7 +4,7 @@
   "kanton": "GE",
   "bps": "GEV",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -123,19 +123,19 @@
       },
       {
         "jahr": 2021,
-        "anzahl": 7600
-      },
-      {
-        "jahr": 2021,
         "anzahl": 6800
       },
       {
-        "jahr": 2022,
-        "anzahl": 11200
+        "jahr": 2021,
+        "anzahl": 7600
       },
       {
         "jahr": 2022,
         "anzahl": 10100
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 11200
       },
       {
         "jahr": 2023,

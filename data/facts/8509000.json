@@ -4,7 +4,7 @@
   "kanton": "GR",
   "bps": "CH",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -103,11 +103,11 @@
       },
       {
         "jahr": 2018,
-        "anzahl": 35900
+        "anzahl": 37600
       },
       {
         "jahr": 2018,
-        "anzahl": 37600
+        "anzahl": 35900
       },
       {
         "jahr": 2019,
@@ -119,43 +119,43 @@
       },
       {
         "jahr": 2020,
-        "anzahl": 28000
-      },
-      {
-        "jahr": 2020,
         "anzahl": 29700
       },
       {
-        "jahr": 2021,
-        "anzahl": 31400
+        "jahr": 2020,
+        "anzahl": 28000
       },
       {
         "jahr": 2021,
         "anzahl": 29500
       },
       {
-        "jahr": 2022,
-        "anzahl": 34600
+        "jahr": 2021,
+        "anzahl": 31400
       },
       {
         "jahr": 2022,
         "anzahl": 36300
       },
       {
-        "jahr": 2023,
-        "anzahl": 39500
+        "jahr": 2022,
+        "anzahl": 34600
       },
       {
         "jahr": 2023,
         "anzahl": 37600
       },
       {
-        "jahr": 2024,
-        "anzahl": 38400
+        "jahr": 2023,
+        "anzahl": 39500
       },
       {
         "jahr": 2024,
         "anzahl": 40300
+      },
+      {
+        "jahr": 2024,
+        "anzahl": 38400
       },
       {
         "jahr": 2025,

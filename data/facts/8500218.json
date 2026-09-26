@@ -4,7 +4,7 @@
   "kanton": "SO",
   "bps": "OL",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -87,11 +87,11 @@
       },
       {
         "jahr": 2016,
-        "anzahl": 73600
+        "anzahl": 65100
       },
       {
         "jahr": 2016,
-        "anzahl": 65100
+        "anzahl": 73600
       },
       {
         "jahr": 2017,
@@ -135,11 +135,11 @@
       },
       {
         "jahr": 2022,
-        "anzahl": 62900
+        "anzahl": 57200
       },
       {
         "jahr": 2022,
-        "anzahl": 57200
+        "anzahl": 62900
       },
       {
         "jahr": 2023,
@@ -151,11 +151,11 @@
       },
       {
         "jahr": 2024,
-        "anzahl": 69600
+        "anzahl": 62900
       },
       {
         "jahr": 2024,
-        "anzahl": 62900
+        "anzahl": 69600
       },
       {
         "jahr": 2025,

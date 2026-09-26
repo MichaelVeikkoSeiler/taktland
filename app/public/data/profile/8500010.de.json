@@ -4,7 +4,7 @@
   "tier": "L",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "21197_behig-haltekantesegment",
     "anzahl-sbb-bahnhofbenutzer-tagesverlauf",
@@ -733,7 +733,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Basel SBB steht in der Liste der WLAN-Standorte. Erfasst sind 19 Billettautomaten, 37 Billettentwerter und 14 Wartehallen.",
+      "body": "Basel SBB steht in der Liste der WLAN-Standorte. Erfasst sind 19 Billettautomaten, 35 Billettentwerter und 14 Wartehallen.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -750,7 +750,7 @@
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 37,
+          "value": 35,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
@@ -770,13 +770,13 @@
           "type": "cloze",
           "prompt": "In Basel SBB sind ___ Billettentwerter erfasst.",
           "options": [
-            "26",
-            "37",
-            "44"
+            "24",
+            "35",
+            "42"
           ],
           "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 37 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 35 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -828,7 +828,7 @@
         },
         {
           "label": "Belagsfläche Perron 19/20",
-          "value": 4653,
+          "value": 4633,
           "unit": "m²",
           "source": "perronoberflache",
           "factRef": "ausstattung.perronbelag.items[6].flaeche_m2"
@@ -878,7 +878,7 @@
             },
             {
               "label": "Perron 19/20",
-              "value": 4653,
+              "value": 4633,
               "factRef": "ausstattung.perronbelag.items[6].flaeche_m2"
             },
             {

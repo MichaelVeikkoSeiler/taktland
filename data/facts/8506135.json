@@ -4,7 +4,7 @@
   "kanton": "TG",
   "bps": "BER",
   "tier": "S",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -101,7 +101,7 @@
           55
         ],
         "hilfstritt": false,
-        "perrontyp": "Hausperron",
+        "perrontyp": "Aussenperron",
         "perronkante_m": 132,
         "sektoren": [],
         "sektoren_anzahl": 0

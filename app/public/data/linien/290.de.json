@@ -2,7 +2,7 @@
   "linie": 290,
   "name": "Bern Wylerfeld - Thun",
   "lang": "de",
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "brucken",
     "linie",
@@ -217,9 +217,9 @@
           "type": "single_choice",
           "prompt": "Welcher dieser Bahnhöfe liegt laut Schienennetz des BAV auf der Linie 290?",
           "options": [
-            "Preda",
-            "Ramsei",
-            "Reichenbach im Kandertal",
+            "Küblis",
+            "La Neuveville",
+            "Lancy-Bachet",
             "Thun"
           ],
           "correct": 3,

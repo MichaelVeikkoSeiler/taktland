@@ -1,0 +1,329 @@
+{
+ "linie": 261,
+ "name": "Biel - Täuffelen - Ins",
+ "datenstand": "2026-09-26",
+ "quelle": "schienennetz",
+ "strecke": {
+  "source": "schienennetz",
+  "hinweis": "Kilometer: Standorte entlang der Linie laut Schienennetz des BAV. Anfang und Ende nennt die Quelle nicht; aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+  "kleinster_km_bei": "Biel/Bienne [Gleis 11/voie 11]",
+  "kleinster_km": 0,
+  "kleinster_km_bei_uic": null,
+  "groesster_km_bei": "Ins [Gleis 11]",
+  "groesster_km": 21.19,
+  "groesster_km_bei_uic": null
+ },
+ "bahnhoefe": {
+  "source": "schienennetz",
+  "hinweis": "Nur Bahnhöfe aus Taktland, nach ihrem Kilometer auf der Linie laut Schienennetz des BAV geordnet.",
+  "betriebspunkte_erfasst": 17,
+  "anzahl_in_taktland": 14,
+  "items": [
+   {
+    "uic": 8504461,
+    "name": "Nidau",
+    "km": 1.17
+   },
+   {
+    "uic": 8504469,
+    "name": "Nidau Beunden",
+    "km": 1.66
+   },
+   {
+    "uic": 8504471,
+    "name": "Ipsach",
+    "km": 2.14
+   },
+   {
+    "uic": 8504470,
+    "name": "Ipsach Herdi",
+    "km": 2.91
+   },
+   {
+    "uic": 8504472,
+    "name": "Sutz",
+    "km": 4.24
+   },
+   {
+    "uic": 8504462,
+    "name": "Lattrigen",
+    "km": 4.95
+   },
+   {
+    "uic": 8504474,
+    "name": "Mörigen",
+    "km": 6.31
+   },
+   {
+    "uic": 8504475,
+    "name": "Gerolfingen",
+    "km": 7.74
+   },
+   {
+    "uic": 8504463,
+    "name": "Täuffelen",
+    "km": 8.81
+   },
+   {
+    "uic": 8504464,
+    "name": "Hagneck",
+    "km": 10.18
+   },
+   {
+    "uic": 8504465,
+    "name": "Lüscherz",
+    "km": 11.61
+   },
+   {
+    "uic": 8504466,
+    "name": "Siselen-Finsterhennen",
+    "km": 13.53
+   },
+   {
+    "uic": 8504467,
+    "name": "Brüttelen",
+    "km": 16.51
+   },
+   {
+    "uic": 8504468,
+    "name": "Ins Dorf",
+    "km": 20.21
+   }
+  ]
+ },
+ "netz": {
+  "source": "schienennetz",
+  "hinweis": "Je Abschnitt zwischen zwei Betriebspunkten, wie im Schienennetz des BAV. gleise ist die Zahl der Streckengleise, isb die Infrastrukturbetreiberin, bahn der Datenherr der Linie, je als Abkürzung der Quelle.",
+  "stand": "2021-07-06",
+  "bahn": "asm",
+  "abschnitte_erfasst": 16,
+  "nach_isb": [
+   {
+    "wert": "asm",
+    "abschnitte": 16
+   }
+  ],
+  "nach_gleisen": [
+   {
+    "wert": 1,
+    "abschnitte": 16
+   }
+  ],
+  "nach_spurweite": [
+   {
+    "wert": "1000 mm",
+    "abschnitte": 16
+   }
+  ],
+  "nach_strom": [
+   {
+    "wert": "Gleichstrom",
+    "abschnitte": 16
+   }
+  ],
+  "items": [
+   {
+    "von": "Biel/Bienne [Gleis 11/voie 11]",
+    "bis": "Nidau",
+    "km_von": 0,
+    "km_bis": 1.17,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Nidau",
+    "bis": "Nidau Beunden",
+    "km_von": 1.17,
+    "km_bis": 1.66,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Nidau Beunden",
+    "bis": "Ipsach",
+    "km_von": 1.66,
+    "km_bis": 2.14,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Ipsach",
+    "bis": "Ipsach Herdi",
+    "km_von": 2.14,
+    "km_bis": 2.91,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Ipsach Herdi",
+    "bis": "Sutz",
+    "km_von": 2.91,
+    "km_bis": 4.24,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Sutz",
+    "bis": "Lattrigen",
+    "km_von": 4.24,
+    "km_bis": 4.95,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Lattrigen",
+    "bis": "Mörigen",
+    "km_von": 4.95,
+    "km_bis": 6.31,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Mörigen",
+    "bis": "Gerolfingen",
+    "km_von": 6.31,
+    "km_bis": 7.74,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Gerolfingen",
+    "bis": "Täuffelen",
+    "km_von": 7.74,
+    "km_bis": 8.81,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Täuffelen",
+    "bis": "Hagneck",
+    "km_von": 8.81,
+    "km_bis": 10.18,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Hagneck",
+    "bis": "Lüscherz",
+    "km_von": 10.18,
+    "km_bis": 11.61,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Lüscherz",
+    "bis": "Siselen-Finsterhennen",
+    "km_von": 11.61,
+    "km_bis": 13.53,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Siselen-Finsterhennen",
+    "bis": "Finsterhennen",
+    "km_von": 13.53,
+    "km_bis": 13.94,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Finsterhennen",
+    "bis": "Brüttelen",
+    "km_von": 13.94,
+    "km_bis": 16.51,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Brüttelen",
+    "bis": "Ins Dorf",
+    "km_von": 16.51,
+    "km_bis": 20.21,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   },
+   {
+    "von": "Ins Dorf",
+    "bis": "Ins [Gleis 11]",
+    "km_von": 20.21,
+    "km_bis": 21.19,
+    "isb": "asm",
+    "gleise": 1,
+    "spurweite": "1000 mm",
+    "strom": "Gleichstrom"
+   }
+  ]
+ },
+ "luecken": [
+  {
+   "thema": "Linie einer anderen Bahn",
+   "grund": "Diese Linie fehlt in den Daten der SBB. Sie stammt aus dem Schienennetz des Bundesamts für Verkehr (BAV). Tunnel, Brücken und Bahnübergänge sind nur in den Daten der SBB erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Länge der Linie",
+   "grund": "Die Länge der Linie steht nicht in den offenen Daten. Erfasst ist der Kilometer jedes Betriebspunkts, ein Standort auf der Linie.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Anfang und Ende",
+   "grund": "Welcher Betriebspunkt Anfang und welcher Ende der Linie ist, nennt das Schienennetz nicht. Aufgeführt sind die Betriebspunkte mit dem kleinsten und dem grössten Kilometer.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Baujahr der Linie",
+   "grund": "Wann die Linie gebaut oder eröffnet wurde, steht nicht in den offenen Daten. Ein Jahr ist nur für Tunnel erfasst: das Jahr der ersten Inbetriebnahme.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Stand des Schienennetzes",
+   "grund": "Das Schienennetz des BAV trägt den Stand vom 2021-07-06. Was sich seither geändert hat, ist darin nicht erfasst.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Weitere Betriebspunkte",
+   "grund": "Aufgeführt sind die 14 Bahnhöfe, die Taktland kennt. Das Schienennetz führt für diese Linie 17 Betriebspunkte. Die übrigen sind in Taktland nicht als Bahnhof geführt.",
+   "quelle": "schienennetz"
+  },
+  {
+   "thema": "Züge auf der Linie",
+   "grund": "Welche Züge auf dieser Linie fahren, ist nicht Teil dieser Daten. Eine Linie ist hier eine Strecke der Infrastruktur, keine Zuglinie wie eine S-Bahn.",
+   "quelle": "schienennetz"
+  }
+ ],
+ "verfuegbare_kapitel": [
+  "strecke",
+  "bahnhoefe",
+  "netz"
+ ]
+}

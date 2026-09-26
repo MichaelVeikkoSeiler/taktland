@@ -60,6 +60,8 @@ def main():
             # die App kennzeichnet diese Bahnhöfe
             **({"isb": sb["isb"]} if sb.get("isb") and sb["isb"] != "SBB" else {}),
             "im_netz": str(d["uic"]) in im_netz,
+            # Haltestellen ohne Frequenzdaten (BTI): keine Grösse, keine Fahrgastzahl
+            **({"frequenz_erfasst": False} if sb.get("frequenz_erfasst") is False else {}),
             # alle Linien, auf denen der Bahnhof erfasst ist, mit oder ohne eigene
             # Seite; fehlt das Feld, führen die Daten zu den Linien ihn nicht
             **({"linien": [it["nummer"] for it in d["linien"]["items"]]}

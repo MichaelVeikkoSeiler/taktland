@@ -199,6 +199,9 @@ export interface IndexEintrag {
   isb?: string
   /** Die Seite «Strecke» kennt Wege ab diesem Bahnhof */
   im_netz: boolean
+  /** false: Die Passagierfrequenz führt diese Haltestelle nicht (BTI); dann
+   *  gibt es keine Grösse und keine Fahrgastzahl */
+  frequenz_erfasst?: false
   /** Alle Linien, auf denen der Bahnhof erfasst ist; fehlt, wenn die Daten zu
    *  den Linien ihn nicht führen */
   linien?: number[]

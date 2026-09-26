@@ -2,7 +2,7 @@
   "linie": 219,
   "name": "Auvernier - Les Verrieres frontiere",
   "lang": "de",
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -635,7 +635,7 @@
     },
     {
       "thema": "Stand der Bahnübergänge",
-      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-26.",
       "quelle": "bahnubergang"
     },
     {

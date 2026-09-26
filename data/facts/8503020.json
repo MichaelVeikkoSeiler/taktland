@@ -4,7 +4,7 @@
   "kanton": "ZH",
   "bps": "ZHDB",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -79,11 +79,11 @@
       },
       {
         "jahr": 2015,
-        "anzahl": 39000
+        "anzahl": 37000
       },
       {
         "jahr": 2015,
-        "anzahl": 37000
+        "anzahl": 39000
       },
       {
         "jahr": 2016,
@@ -111,11 +111,11 @@
       },
       {
         "jahr": 2019,
-        "anzahl": 47100
+        "anzahl": 55100
       },
       {
         "jahr": 2019,
-        "anzahl": 55100
+        "anzahl": 47100
       },
       {
         "jahr": 2020,
@@ -127,27 +127,27 @@
       },
       {
         "jahr": 2021,
-        "anzahl": 28700
-      },
-      {
-        "jahr": 2021,
         "anzahl": 32900
       },
       {
-        "jahr": 2022,
-        "anzahl": 44100
+        "jahr": 2021,
+        "anzahl": 28700
       },
       {
         "jahr": 2022,
         "anzahl": 38700
       },
       {
-        "jahr": 2023,
-        "anzahl": 43700
+        "jahr": 2022,
+        "anzahl": 44100
       },
       {
         "jahr": 2023,
         "anzahl": 50000
+      },
+      {
+        "jahr": 2023,
+        "anzahl": 43700
       },
       {
         "jahr": 2024,

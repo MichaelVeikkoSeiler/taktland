@@ -17,7 +17,8 @@ from pathlib import Path
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from sources import ALLE_BAHNHOEFE_VON, ANDERE_AB_KAPITEL, DATASETS, ZUSAETZLICH  # noqa: E402
+from sources import (ALLE_BAHNHOEFE_VON, ANDERE_AB_KAPITEL, DATASETS,  # noqa: E402
+                     HALTESTELLEN_OHNE_FREQUENZ, ZUSAETZLICH)
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW = ROOT / "data" / "raw"
@@ -157,6 +158,21 @@ class Data:
         return max(v for k, v in abruf.items()
                    if DATASETS.get(k, {}).get("tier") != "linien")
 
+    @functools.cached_property
+    def isb_laut_bav(self):
+        """Infrastrukturbetreiberin je Betriebspunkt laut Schienennetz des BAV,
+        nur für die Haltestellen ohne Frequenzdaten: Die Passagierfrequenz, aus
+        der sonst isb stammt, führt sie nicht."""
+        import schienennetz
+        _, knoten, segmente, _ = schienennetz.lesen()
+        raus = {}
+        for g in segmente:
+            for ende in (g["anfang"], g["ende"]):
+                nr = knoten.get(ende, {}).get("nummer")
+                if nr in HALTESTELLEN_OHNE_FREQUENZ and g.get("isb"):
+                    raus.setdefault(nr, set()).add(g["isb"])
+        return {nr: ", ".join(sorted(v)) for nr, v in raus.items()}
+
     def alle_sbb(self):
         neu = self.pf.sort_values("jahr").groupby("uic").tail(1)
         uics = [int(u) for u in neu[neu.isb_gi.astype(str).str.strip() == "SBB"].uic]
@@ -191,10 +207,37 @@ def frequenz(ziel, feld, wert):
     return ziel
 
 
+def steckbrief_ohne_frequenz(d, uic):
+    """Steckbrief einer Haltestelle, die die Passagierfrequenz nicht führt:
+    Name, Kanton und Lage aus dem Haltestellenverzeichnis, die Betreiberin der
+    Infrastruktur aus dem Schienennetz des BAV. Keine Fahrgastzahlen:
+    frequenz_erfasst ist false, die Felder bleiben leer."""
+    df = d.dienststelle[(d.dienststelle.uic == uic)
+                        & d.dienststelle.meansoftransport.astype(str).str.contains("TRAIN")]
+    if df.empty:
+        return None
+    r = df.iloc[0]
+    lat, lon = (round(float(x), 6) for x in str(r.geopos_haltestelle).split(",", 1))
+    return {
+        "source": "haltestelle-haltekante",
+        "frequenz_erfasst": False,
+        "jahr": None,
+        "name": txt(r.designationofficial),
+        "kanton": txt(r.cantonabbreviation),
+        "isb": d.isb_laut_bav.get(uic),
+        "isb_source": "schienennetz",
+        "evu": None,
+        "lon": lon, "lat": lat,
+        "dwv": None, "dtv": None, "dnwv": None,
+        "bemerkung": None,
+        "verlauf": [],
+    }
+
+
 def steckbrief(d, uic):
     zeilen = d.pf[d.pf.uic == uic].sort_values("jahr")
     if zeilen.empty:
-        return None
+        return steckbrief_ohne_frequenz(d, uic) if uic in HALTESTELLEN_OHNE_FREQUENZ else None
     r = zeilen.iloc[-1]
     lon = lat = None
     if isinstance(r.geopos, str) and "," in r.geopos:
@@ -565,6 +608,11 @@ def luecken(d, uic, f):
                "erfasst. Er fehlt im Haltestellenverzeichnis, aus dem diese Angaben stammen.",
                "haltestelle-haltekante")
     sb = f.get("steckbrief") or {}
+    if sb.get("frequenz_erfasst") is False:
+        lueckt("Ein- und Aussteigende",
+               "Die Passagierfrequenz der SBB führt diese Haltestelle nicht. Wie viele "
+               "Personen hier ein- und aussteigen, steht darum nicht in den Daten.",
+               "passagierfrequenz")
     if any(k.endswith("_unter") for x in [sb, *(sb.get("verlauf") or [])] for k in x):
         lueckt("Genaue Fahrgastzahl",
                "Werte unter 50 Ein- und Aussteigenden nennt die Quelle nicht genau, "
@@ -818,7 +866,8 @@ def build(d, uic):
                                 ["steckbrief", "stammdaten", "tagesrhythmus", "perrons", "gleise",
                                  "hindernisfreiheit", "zuege", "linien", "services",
                                  "ausstattung", "bahnhofplan"]
-                                if f.get(k)]
+                                # ohne Frequenzdaten kein Kapitel Steckbrief: es erzählt die Fahrgastzahlen
+                                if f.get(k) and not (k == "steckbrief" and sb.get("frequenz_erfasst") is False)]
     return f
 
 
@@ -840,6 +889,7 @@ def main():
                       or len(f["verfuegbare_kapitel"]) >= ANDERE_AB_KAPITEL):
                 uics.append(uic)
                 dazu += 1
+        uics += [u for u in HALTESTELLEN_OHNE_FREQUENZ if u not in uics]
         print(f"andere Bahnen: {dazu} Bahnhöfe (alle der {', '.join(sorted(ALLE_BAHNHOEFE_VON))}, "
               f"sonst ab {ANDERE_AB_KAPITEL} Kapiteln)")
     for uic in uics:

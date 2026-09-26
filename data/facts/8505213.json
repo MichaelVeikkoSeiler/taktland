@@ -4,7 +4,7 @@
   "kanton": "TI",
   "bps": "BEL",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -103,11 +103,11 @@
       },
       {
         "jahr": 2018,
-        "anzahl": 14600
+        "anzahl": 13700
       },
       {
         "jahr": 2018,
-        "anzahl": 13700
+        "anzahl": 14600
       },
       {
         "jahr": 2019,
@@ -127,19 +127,19 @@
       },
       {
         "jahr": 2021,
-        "anzahl": 12600
-      },
-      {
-        "jahr": 2021,
         "anzahl": 11700
       },
       {
-        "jahr": 2022,
-        "anzahl": 13600
+        "jahr": 2021,
+        "anzahl": 12600
       },
       {
         "jahr": 2022,
         "anzahl": 14400
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 13600
       },
       {
         "jahr": 2023,
@@ -151,11 +151,11 @@
       },
       {
         "jahr": 2024,
-        "anzahl": 16100
+        "anzahl": 15200
       },
       {
         "jahr": 2024,
-        "anzahl": 15200
+        "anzahl": 16100
       },
       {
         "jahr": 2025,

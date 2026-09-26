@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -210,7 +210,7 @@
     {
       "id": "perrons",
       "title": "Perrons",
-      "body": "Zu 2 Perrons in Courtemaîche liegen offene Daten vor. Perron 2 misst 163 Meter, Perron 1 misst 150 Meter. 1 ist als niveaufrei vermerkt, 1 ausdrücklich als nicht niveaufrei.",
+      "body": "Zu 2 Perrons in Courtemaîche liegen offene Daten vor. Perron 2 misst 163 Meter, Perron 1 misst 83 Meter. 1 ist als niveaufrei vermerkt, 1 ausdrücklich als nicht niveaufrei.",
       "facts": [
         {
           "label": "Perrons mit offenen Daten",

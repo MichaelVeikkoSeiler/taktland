@@ -1,7 +1,7 @@
 {
  "linie": 225,
  "name": "Biel/Bienne West - La Chaux-de-Fonds",
- "datenstand": "2026-09-22",
+ "datenstand": "2026-09-26",
  "strecke": {
   "source": "linie",
   "hinweis": "Kilometrierung: Standortangaben entlang der Linie. Die Differenz ist nicht als Länge der Linie belegt.",
@@ -814,7 +814,7 @@
   },
   {
    "thema": "Stand der Bahnübergänge",
-   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+   "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-26.",
    "quelle": "bahnubergang"
   },
   {

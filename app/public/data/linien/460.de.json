@@ -2,7 +2,7 @@
   "linie": 460,
   "name": "Gumligen Sud - Fluhmuhle",
   "lang": "de",
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -836,7 +836,7 @@
     },
     {
       "thema": "Stand der Bahnübergänge",
-      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-26.",
       "quelle": "bahnubergang"
     },
     {
@@ -1885,19 +1885,19 @@
       },
       {
         "name": "BUe Riedgass",
-        "km": 51.365,
+        "km": 51.36,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
       },
       {
         "name": "BUe Gigenstrasse",
-        "km": 51.582,
+        "km": 51.581,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
       },
       {
         "name": "BUe Schulhausstr.",
-        "km": 51.871,
+        "km": 51.87,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
       },
@@ -1909,19 +1909,19 @@
       },
       {
         "name": "BUe Inner Guntere",
-        "km": 52.59,
+        "km": 52.591,
         "sicherungsart": "Blinklichtanlage",
         "gleise": 1
       },
       {
         "name": "BUe Undergass",
-        "km": 52.882,
+        "km": 52.883,
         "sicherungsart": "Schrankenanlage",
         "gleise": 1
       },
       {
         "name": "BUe Waerterhaus",
-        "km": 53.85,
+        "km": 53.851,
         "sicherungsart": "Blinklichtanlage",
         "gleise": 1
       },

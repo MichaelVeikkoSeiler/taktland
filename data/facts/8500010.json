@@ -4,7 +4,7 @@
   "kanton": "BS",
   "bps": "BS",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -79,19 +79,19 @@
       },
       {
         "jahr": 2015,
-        "anzahl": 126400
+        "anzahl": 134500
       },
       {
         "jahr": 2015,
-        "anzahl": 134500
+        "anzahl": 126400
+      },
+      {
+        "jahr": 2016,
+        "anzahl": 126400
       },
       {
         "jahr": 2016,
         "anzahl": 135400
-      },
-      {
-        "jahr": 2016,
-        "anzahl": 126400
       },
       {
         "jahr": 2017,
@@ -111,11 +111,11 @@
       },
       {
         "jahr": 2019,
-        "anzahl": 136200
+        "anzahl": 128400
       },
       {
         "jahr": 2019,
-        "anzahl": 128400
+        "anzahl": 136200
       },
       {
         "jahr": 2020,
@@ -127,19 +127,19 @@
       },
       {
         "jahr": 2021,
-        "anzahl": 91700
-      },
-      {
-        "jahr": 2021,
         "anzahl": 95700
       },
       {
-        "jahr": 2022,
-        "anzahl": 119800
+        "jahr": 2021,
+        "anzahl": 91700
       },
       {
         "jahr": 2022,
         "anzahl": 124000
+      },
+      {
+        "jahr": 2022,
+        "anzahl": 119800
       },
       {
         "jahr": 2023,
@@ -354,7 +354,7 @@
         "nr": "19/20",
         "typ": "Mittelperron",
         "laenge_m": 460,
-        "flaeche_netto_m2": 4198.73,
+        "flaeche_netto_m2": 4178.61,
         "niveaufreier_zugang": "ja",
         "linie": 514
       },
@@ -716,9 +716,14 @@
         "perrontyp": null,
         "perronkante_m": null,
         "sektoren": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "F",
           "H"
         ],
-        "sektoren_anzahl": 1
+        "sektoren_anzahl": 6
       },
       {
         "nr": "20",
@@ -727,9 +732,14 @@
         "perrontyp": null,
         "perronkante_m": null,
         "sektoren": [
+          "A",
+          "B",
+          "C",
+          "E",
+          "F",
           "H"
         ],
-        "sektoren_anzahl": 1
+        "sektoren_anzahl": 6
       },
       {
         "nr": "30",
@@ -965,7 +975,7 @@
       "andere",
       "ePOS"
     ],
-    "billettentwerter_erfasst": 37,
+    "billettentwerter_erfasst": 35,
     "wartehallen_erfasst": 14,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/883cc827c7533ba48309a642481097ee"
   },
@@ -1055,10 +1065,10 @@
           "belaege": [
             {
               "belag": "Verbundstein-Pflästerung",
-              "flaeche_m2": 4653
+              "flaeche_m2": 4633
             }
           ],
-          "flaeche_m2": 4653
+          "flaeche_m2": 4633
         },
         {
           "nr": "3/4",

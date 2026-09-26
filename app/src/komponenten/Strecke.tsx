@@ -411,7 +411,7 @@ function Ergebnis({
     if (o.art === 'bahnhof') {
       const b = bahnhof.get(uicVon.get(o.kennung) ?? 0)
       dazu('Kanton', b?.kanton)
-      dazu('Grösse', b ? STUFE_TEXT[b.tier] : null)
+      dazu('Grösse', b && b.frequenz_erfasst !== false ? STUFE_TEXT[b.tier] : null)
       dazu('Ein- und Aussteigende pro Werktag', b?.dwv != null ? b.dwv.toLocaleString('de-CH') : null)
       dazu('Infrastruktur', b?.isb)
       return { ...leer, art: 'bahnhof', kennung: String(b?.uic ?? o.kennung), name: t?.name ?? o.kennung,
@@ -611,7 +611,10 @@ function Ergebnis({
           Taktland sucht den kürzesten Weg über die Abschnitte, auf denen laut den Zugzahlen
           {' '}{netz.zugzahlen_jahr} Personenzüge fahren. Abschnitte mit wenigen Zügen zählen dabei
           als länger, und jeder Betriebspunkt unterwegs kostet etwas, damit der Weg den stark
-          befahrenen, durchgehenden Strecken folgt. Als Brücke gilt jedes
+          befahrenen, durchgehenden Strecken folgt. Dazu kommt die BTI (Linie 261, Biel – Täuffelen
+          – Ins) aus dem Schienennetz des BAV: Die Zugzahlen führen sie nicht, darum zählt sie wie
+          eine selten befahrene Strecke, und der Weg nimmt sie, wenn Start, Ziel oder «Über» an ihr
+          liegen. Als Brücke gilt jedes
           Bauwerk im Brückenverzeichnis, auch ein kleines: Eine Brücke bis zwei Meter heisst
           Durchlass. Ein Tunnel zählt, sobald der Weg ihn berührt, auch einer, in dem der
           Start- oder Zielbahnhof liegt (in Zürich HB etwa der Tunnel Bahnhof Museumstrasse).

@@ -2,7 +2,7 @@
   "linie": 770,
   "name": "Bulach - Eglisau - Neuhausen",
   "lang": "de",
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -235,9 +235,9 @@
           "type": "single_choice",
           "prompt": "Welcher dieser Bahnhöfe liegt laut Schienennetz des BAV auf der Linie 770?",
           "options": [
-            "Eschenz",
-            "Faoug",
-            "Filisur",
+            "La Chaudanne-Les Moulins",
+            "La Tine",
+            "Langendorf",
             "Lottstetten"
           ],
           "correct": 3,
@@ -662,7 +662,7 @@
     },
     {
       "thema": "Stand der Bahnübergänge",
-      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-21.",
+      "grund": "Die Quelle wird laut ihrer Beschreibung wöchentlich aktualisiert und vervollständigt. Taktland zeigt den Stand vom 2026-09-26.",
       "quelle": "bahnubergang"
     },
     {

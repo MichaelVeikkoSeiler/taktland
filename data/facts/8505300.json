@@ -4,7 +4,7 @@
   "kanton": "TI",
   "bps": "LG",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -58,8 +58,8 @@
   "bahnhofbenutzer": {
     "source": "anzahl-sbb-bahnhofbenutzer",
     "jahr": 2025,
-    "anzahl_pro_tag": 36200,
-    "einheit": "DP/jour",
+    "anzahl_pro_tag": 39000,
+    "einheit": "DP/jour ouvré",
     "verlauf": [
       {
         "jahr": 2013,
@@ -111,27 +111,27 @@
       },
       {
         "jahr": 2019,
-        "anzahl": 24100
-      },
-      {
-        "jahr": 2019,
         "anzahl": 26300
       },
       {
-        "jahr": 2020,
-        "anzahl": 17000
+        "jahr": 2019,
+        "anzahl": 24100
       },
       {
         "jahr": 2020,
         "anzahl": 15500
       },
       {
-        "jahr": 2021,
-        "anzahl": 20100
+        "jahr": 2020,
+        "anzahl": 17000
       },
       {
         "jahr": 2021,
         "anzahl": 21700
+      },
+      {
+        "jahr": 2021,
+        "anzahl": 20100
       },
       {
         "jahr": 2022,
@@ -143,27 +143,27 @@
       },
       {
         "jahr": 2023,
-        "anzahl": 30000
-      },
-      {
-        "jahr": 2023,
         "anzahl": 28100
       },
       {
-        "jahr": 2024,
-        "anzahl": 34100
+        "jahr": 2023,
+        "anzahl": 30000
       },
       {
         "jahr": 2024,
         "anzahl": 31700
       },
       {
-        "jahr": 2025,
-        "anzahl": 39000
+        "jahr": 2024,
+        "anzahl": 34100
       },
       {
         "jahr": 2025,
         "anzahl": 36200
+      },
+      {
+        "jahr": 2025,
+        "anzahl": 39000
       }
     ]
   },

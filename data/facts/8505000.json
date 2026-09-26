@@ -4,7 +4,7 @@
   "kanton": "LU",
   "bps": "LZ",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -71,19 +71,19 @@
       },
       {
         "jahr": 2014,
-        "anzahl": 157000
-      },
-      {
-        "jahr": 2014,
         "anzahl": null
       },
       {
-        "jahr": 2015,
-        "anzahl": 159400
+        "jahr": 2014,
+        "anzahl": 157000
       },
       {
         "jahr": 2015,
         "anzahl": 158700
+      },
+      {
+        "jahr": 2015,
+        "anzahl": 159400
       },
       {
         "jahr": 2016,
@@ -95,11 +95,11 @@
       },
       {
         "jahr": 2017,
-        "anzahl": 163600
+        "anzahl": 161900
       },
       {
         "jahr": 2017,
-        "anzahl": 161900
+        "anzahl": 163600
       },
       {
         "jahr": 2018,
@@ -111,19 +111,19 @@
       },
       {
         "jahr": 2019,
-        "anzahl": 166900
-      },
-      {
-        "jahr": 2019,
         "anzahl": 166300
       },
       {
-        "jahr": 2020,
-        "anzahl": 102700
+        "jahr": 2019,
+        "anzahl": 166900
       },
       {
         "jahr": 2020,
         "anzahl": 104700
+      },
+      {
+        "jahr": 2020,
+        "anzahl": 102700
       },
       {
         "jahr": 2021,
@@ -135,11 +135,11 @@
       },
       {
         "jahr": 2022,
-        "anzahl": 133600
+        "anzahl": 131700
       },
       {
         "jahr": 2022,
-        "anzahl": 131700
+        "anzahl": 133600
       },
       {
         "jahr": 2023,
@@ -151,11 +151,11 @@
       },
       {
         "jahr": 2024,
-        "anzahl": 145400
+        "anzahl": 146600
       },
       {
         "jahr": 2024,
-        "anzahl": 146600
+        "anzahl": 145400
       },
       {
         "jahr": 2025,

@@ -4,7 +4,7 @@
   "kanton": "SG",
   "bps": "SG",
   "tier": "L",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -63,19 +63,19 @@
     "verlauf": [
       {
         "jahr": 2013,
-        "anzahl": null
-      },
-      {
-        "jahr": 2013,
         "anzahl": 79000
       },
       {
-        "jahr": 2014,
+        "jahr": 2013,
         "anzahl": null
       },
       {
         "jahr": 2014,
         "anzahl": 77000
+      },
+      {
+        "jahr": 2014,
+        "anzahl": null
       },
       {
         "jahr": 2015,
@@ -87,13 +87,13 @@
       },
       {
         "jahr": 2016,
-        "anzahl": 71800
-      },
-      {
-        "jahr": 2016,
         "anzahl": 77300
       },
       {
+        "jahr": 2016,
+        "anzahl": 71800
+      },
+      {
         "jahr": 2017,
         "anzahl": 0
       },
@@ -108,14 +108,14 @@
       {
         "jahr": 2018,
         "anzahl": 0
-      },
-      {
-        "jahr": 2019,
-        "anzahl": 76300
       },
       {
         "jahr": 2019,
         "anzahl": 81800
+      },
+      {
+        "jahr": 2019,
+        "anzahl": 76300
       },
       {
         "jahr": 2020,
@@ -135,11 +135,11 @@
       },
       {
         "jahr": 2022,
-        "anzahl": 69100
+        "anzahl": 65100
       },
       {
         "jahr": 2022,
-        "anzahl": 65100
+        "anzahl": 69100
       },
       {
         "jahr": 2023,
@@ -151,11 +151,11 @@
       },
       {
         "jahr": 2024,
-        "anzahl": 72300
+        "anzahl": 77400
       },
       {
         "jahr": 2024,
-        "anzahl": 77400
+        "anzahl": 72300
       },
       {
         "jahr": 2025,

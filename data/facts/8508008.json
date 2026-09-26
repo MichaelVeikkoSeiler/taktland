@@ -4,7 +4,7 @@
   "kanton": "BE",
   "bps": "HB",
   "tier": "S",
-  "datenstand": "2026-09-20",
+  "datenstand": "2026-09-26",
   "steckbrief": {
     "source": "passagierfrequenz",
     "jahr": 2025,
@@ -69,7 +69,7 @@
         "nr": "1",
         "typ": "Hausperron",
         "laenge_m": 322,
-        "flaeche_netto_m2": 1305.17,
+        "flaeche_netto_m2": 1304.2,
         "niveaufreier_zugang": "ja",
         "linie": 450
       },
@@ -234,8 +234,11 @@
     "source": "wifistation, billetautomat, billetentwerter, haltestelle-uhr, haltestelle-wartehallen, abfahrtsplakate0",
     "hinweis": "Zahlen geben an, was in den offenen Daten erfasst ist. Eine 0 bedeutet nicht, dass es das vor Ort nicht gibt.",
     "wlan_erfasst": false,
-    "billettautomaten_erfasst": 0,
-    "billettentwerter_erfasst": 4,
+    "billettautomaten_erfasst": 2,
+    "automat_typen": [
+      "ePOS"
+    ],
+    "billettentwerter_erfasst": 5,
     "wartehallen_erfasst": 1,
     "abfahrtsplakat_pdf": "https://data.sbb.ch/api/explore/v2.1/catalog/datasets/abfahrtsplakate0/files/b5a9f6cae6e3eb35873f14d2dc3dd85f"
   },
@@ -257,10 +260,10 @@
           "belaege": [
             {
               "belag": "Bituminöses Mischgut",
-              "flaeche_m2": 1640
+              "flaeche_m2": 1639
             }
           ],
-          "flaeche_m2": 1640
+          "flaeche_m2": 1639
         },
         {
           "nr": "2",
@@ -302,11 +305,6 @@
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
-    },
-    {
-      "thema": "Billettautomaten",
-      "grund": "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, dass vor Ort einer steht.",
-      "quelle": "billetautomat"
     },
     {
       "thema": "Stand der BehiG-Daten",

@@ -292,6 +292,10 @@ def main():
     bahnhoefe = []
     for p in sorted(FACTS.glob("*.json")):
         d = json.loads(p.read_text(encoding="utf-8"))
+        # Haltestellen ohne Frequenzdaten (BTI) spielen im Duell nicht mit
+        # (Michael, 2026-09-26: schlanke Seite «ohne Duell»)
+        if d["steckbrief"].get("frequenz_erfasst") is False:
+            continue
         werte = {}
         for k in KATEGORIEN:
             v = holen(d, k["pfad"])

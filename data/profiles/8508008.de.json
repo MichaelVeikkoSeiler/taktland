@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-22",
+  "generated": "2026-09-26",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -196,7 +196,7 @@
         },
         {
           "label": "Nettofläche Perron 1",
-          "value": 1305.17,
+          "value": 1304.2,
           "unit": "m²",
           "source": "perron",
           "factRef": "perrons.items[0].flaeche_netto_m2"
@@ -232,7 +232,7 @@
           "pairs": [
             {
               "links": "Perron 1",
-              "rechts": "1305.17 m²",
+              "rechts": "1304.2 m²",
               "factRef": "perrons.items[0].flaeche_netto_m2"
             },
             {
@@ -242,7 +242,7 @@
             }
           ],
           "factRef": "perrons.items",
-          "explanation": "Perron 1 hat 1305.17 Quadratmeter, Perron 2 hat 1142.27 Quadratmeter.",
+          "explanation": "Perron 1 hat 1304.2 Quadratmeter, Perron 2 hat 1142.27 Quadratmeter.",
           "difficulty": 3
         },
         {
@@ -281,7 +281,7 @@
           "type": "cloze",
           "prompt": "An Gleis 1 in Herzogenbuchsee sind ___ Sektoren erfasst.",
           "options": [
-            "5",
+            "3",
             "6",
             "7"
           ],
@@ -328,8 +328,8 @@
           "prompt": "In Herzogenbuchsee sind ___ Perronsegmente erfasst.",
           "options": [
             "4",
-            "5",
-            "7"
+            "7",
+            "12"
           ],
           "correct": 0,
           "optionen_aus_fakten": true,
@@ -485,7 +485,7 @@
     {
       "id": "services",
       "title": "Services",
-      "body": "Erfasst sind 4 Billettentwerter und 1 Wartehalle. Billettautomaten sind keine verzeichnet. Herzogenbuchsee steht nicht in der Liste der WLAN-Standorte.",
+      "body": "Erfasst sind 2 Billettautomaten vom Typ ePOS, 5 Billettentwerter und 1 Wartehalle. Herzogenbuchsee steht nicht in der Liste der WLAN-Standorte.",
       "facts": [
         {
           "label": "WLAN erfasst",
@@ -496,13 +496,13 @@
         },
         {
           "label": "Billettautomaten erfasst",
-          "value": 0,
+          "value": 2,
           "source": "billetautomat",
           "factRef": "services.billettautomaten_erfasst"
         },
         {
           "label": "Billettentwerter erfasst",
-          "value": 4,
+          "value": 5,
           "source": "billetentwerter",
           "factRef": "services.billettentwerter_erfasst"
         }
@@ -522,13 +522,13 @@
           "type": "cloze",
           "prompt": "In Herzogenbuchsee sind ___ Billettentwerter erfasst.",
           "options": [
-            "4",
+            "3",
             "5",
             "7"
           ],
-          "correct": 0,
+          "correct": 1,
           "optionen_aus_fakten": true,
-          "explanation": "Erfasst sind 4 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
+          "explanation": "Erfasst sind 5 Billettentwerter. Die Zahl gibt wieder, was in den offenen Daten steht, nicht zwingend, was vor Ort hängt.",
           "factRef": "services.billettentwerter_erfasst",
           "difficulty": 2
         }
@@ -564,7 +564,7 @@
           "type": "single_choice",
           "prompt": "Wie viele Sitzbänke sind in den offenen Daten erfasst?",
           "options": [
-            "5",
+            "3",
             "8",
             "9",
             "11"
@@ -633,11 +633,6 @@
       "thema": "WLAN",
       "grund": "Dieser Bahnhof steht nicht in der Liste der WLAN-Standorte. Die Liste umfasst 79 Standorte und ist keine vollständige Auskunft.",
       "quelle": "wifistation"
-    },
-    {
-      "thema": "Billettautomaten",
-      "grund": "Es ist kein Billettautomat erfasst. Das schliesst nicht aus, dass vor Ort einer steht.",
-      "quelle": "billetautomat"
     },
     {
       "thema": "Stand der BehiG-Daten",
