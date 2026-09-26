@@ -99,6 +99,47 @@ Was es bräuchte:
 - **Testen mit Betroffenen**, etwa über einen Blinden- und Sehbehindertenverband,
   bevor etwas als barrierefrei gilt
 
+### Ideen vom 2026-09-26 (Michael: «in die Merkliste aufnehmen»)
+
+Noch nicht beschlossen. Vorgehen: zuerst mit Betroffenen reden (etwa über einen
+Blinden- und Sehbehindertenverband), dann bauen. Am wenigsten Aufwand bei vermutlich
+viel Nutzen: Sprachansage, «Wo bin ich?» und Aussteige-Erinnerung, alle auf dem Gerät,
+ohne Server.
+
+**Blinde und sehbehinderte Menschen**
+- **Sprachansage ohne Bildschirmleser:** das Handy spricht selbst («In 20 Sekunden:
+  Bahnhof Olten»), mit der Sprachausgabe des Browsers, auf dem Gerät.
+- **Nächster Halt laut Fahrplan** ansagen, mit «Welcher Zug?» (Punkt 4, auf dem
+  Branch): vermutlich der grösste Nutzen, weil Durchsagen im Zug ausfallen oder schwer
+  verständlich sein können. Immer «laut Fahrplan», ohne Verspätungen. Auch ein Argument
+  fürs Gespräch mit dem Vorgesetzten: Hilfe für Reisende, keine Konkurrenz zur SBB-App.
+- **«Wo bin ich?»:** ein grosser Knopf, der auf Tipp sagt, zwischen welchen Bahnhöfen
+  der Zug ist, was als Nächstes kommt und wie lange noch.
+- **Aussteige-Erinnerung** vor dem Ziel, etwa zwei Minuten vorher, deutlicher als die
+  übrigen Meldungen.
+- **Eigener Klang je Art** (Tunnel, Brücke, Bahnhof), steht schon unter «später».
+- **Vibrationsmuster je Art** auf Android; auf dem iPhone lässt der Browser keine
+  Vibration zu.
+- **Grosse Schrift und hoher Kontrast** als eigene Einstellung.
+
+**Hörbehinderte Menschen**
+- Ring, Farbe und «Gleich» wirken schon ohne Ton; dazu Vibration statt Ton.
+- Nächster Halt als Text (mit Punkt 4), für alle, die Durchsagen nicht hören.
+
+**Menschen mit eingeschränkter Mobilität**
+- **Vorlauf vor dem Ziel wählbar** (etwa 2 oder 5 Minuten), um rechtzeitig aufzustehen.
+- **Perronhöhen des Zielbahnhofs** aus den Fakten zeigen, wo erfasst. Streng nach der
+  Regel: fehlt eine Angabe, heisst das nicht «nicht vorhanden».
+- Nicht in den Daten und darum nur als Lücke zu nennen: stufenfreier Einstieg,
+  Ausstiegsseite, ob Lifte gehen.
+
+**Menschen, die Orientierung oder Ruhe brauchen**
+- **Einfache Ansicht:** nur das Wichtigste, gross («Noch 12 Minuten bis Bern»,
+  mit Punkt 4 «Noch 3 Halte»), ohne Karte und Band.
+- **Tunnel mit Ende ankündigen** («Ausfahrt in etwa 2 min») gibt es schon; ob das
+  Menschen hilft, denen Tunnel unangenehm sind, müssten Betroffene sagen.
+- **Ruhemodus:** nur Bahnhöfe oder nur das Ziel; geht heute schon über die Einstellungen.
+
 ## Messbarkeit: Wie wird Taktland genutzt?
 
 Idee von Michael, 2026-09-24: Die Wirkung sollte bis zu einem gewissen Grad
