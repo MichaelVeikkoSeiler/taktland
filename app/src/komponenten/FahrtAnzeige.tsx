@@ -4,7 +4,7 @@
  * Sie zeigen Lagen auf dem Weg, aber keine Längen: Die Kilometrierung ist ein
  * Standort und keine Länge, darum stehen hier keine Kilometer.
  */
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useKarte } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
@@ -189,7 +189,17 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
 }) {
   const { linien } = useKarte()
   const seen = useSeen()
-  const [nah, setNah] = useState(true)
+  const [nah, setNahRoh] = useState(true)
+  // eigener Zoom und Verschiebung, die das Nachführen alle halbe Sekunde
+  // nicht zurücksetzt (Michael, 2026-09-26: «springt immer wieder auf den
+  // Default-Ausschnitt»); «Nah» folgt dem Zug trotzdem
+  const [zoom, setZoom] = useState(1)
+  const [versatz, setVersatz] = useState<[number, number]>([0, 0])
+  const zeiger = useRef(new Map<number, { x: number; y: number }>())
+  const abstand = useRef(0)
+  const flaeche = useRef<SVGSVGElement | null>(null)
+  const setNah = (n: boolean) => { setNahRoh(n); setZoom(1); setVersatz([0, 0]) }
+  const zoomen = (f: number) => setZoom((z) => Math.min(40, Math.max(0.25, z * f)))
 
   const weg = useMemo(() => fahrweg.punkte.map((p) => ({ xy: lage(p.lat, p.lon), s: p.s })), [fahrweg])
   const ganz = useMemo(() => {
@@ -203,7 +213,39 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
 
   const hier = sJetzt !== null ? lageBei(fahrweg, sJetzt) : fahrweg.punkte[0]
   const [hx, hy] = hier ? lage(hier.lat, hier.lon) : [ganz.cx, ganz.cy]
-  const box = nah ? { cx: hx, cy: hy, w: NAH } : ganz
+  const grund = nah ? { cx: hx, cy: hy, w: NAH } : ganz
+  const box = { cx: grund.cx + versatz[0], cy: grund.cy + versatz[1], w: grund.w / zoom }
+  const veraendert = zoom !== 1 || versatz[0] !== 0 || versatz[1] !== 0
+
+  function runter(e: React.PointerEvent<SVGSVGElement>) {
+    zeiger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    if (zeiger.current.size === 2) {
+      const [a, b] = [...zeiger.current.values()]
+      abstand.current = Math.hypot(a.x - b.x, a.y - b.y)
+      e.currentTarget.setPointerCapture(e.pointerId)
+    }
+  }
+  function bewegt(e: React.PointerEvent<SVGSVGElement>) {
+    const vorher = zeiger.current.get(e.pointerId)
+    if (!vorher) return
+    zeiger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    if (zeiger.current.size === 2) {
+      const [a, b] = [...zeiger.current.values()]
+      const d = Math.hypot(a.x - b.x, a.y - b.y)
+      if (abstand.current) zoomen(d / abstand.current)
+      abstand.current = d
+      return
+    }
+    // mit einem Finger verschieben, sobald die Karte näher steht
+    if (zoom <= 1) return
+    const breite = flaeche.current?.getBoundingClientRect().width || 350
+    const e2 = box.w / breite
+    setVersatz(([vx, vy]) => [vx - (e.clientX - vorher.x) * e2, vy - (e.clientY - vorher.y) * e2])
+  }
+  function hoch(e: React.PointerEvent<SVGSVGElement>) {
+    zeiger.current.delete(e.pointerId)
+    if (zeiger.current.size < 2) abstand.current = 0
+  }
   const h = box.w / SEITENVERHAELTNIS
   const px = box.w / 350
   const s = sJetzt ?? 0
@@ -237,9 +279,31 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           ))}
         </div>
       </div>
-      <svg viewBox={[box.cx - box.w / 2, box.cy - h / 2, box.w, h].join(' ')} role="img"
+      <div className="mt-2 flex items-center justify-end gap-3 text-xs">
+        {veraendert && (
+          <button type="button" onClick={() => { setZoom(1); setVersatz([0, 0]) }}
+                  className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
+                             dark:text-sbb-storm dark:hover:text-sbb-white">
+            {nah ? 'Zurück zum Zug' : 'Ganzer Weg'}
+          </button>
+        )}
+        <span className="flex gap-1">
+          {([['−', 1 / 1.6], ['+', 1.6]] as const).map(([zeichen, f]) => (
+            <button key={zeichen} type="button" onClick={() => zoomen(f)}
+                    aria-label={zeichen === '+' ? 'Näher heran' : 'Weiter weg'}
+                    className="flex size-8 items-center justify-center rounded-lg border border-sbb-cloud
+                               bg-white text-base leading-none hover:border-sbb-black
+                               dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white">
+              {zeichen}
+            </button>
+          ))}
+        </span>
+      </div>
+      <svg ref={flaeche} viewBox={[box.cx - box.w / 2, box.cy - h / 2, box.w, h].join(' ')} role="img"
            aria-label="Karte mit dem Weg und dem Standort" preserveAspectRatio="xMidYMid meet"
-           className="mt-2 aspect-[1.6] w-full border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight">
+           onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
+           style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
+           className="mt-1 aspect-[1.6] w-full border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight">
         <SeenFlaechen seen={seen} box={box} />
         <SeenNamen seen={seen} box={box} px={px} />
         {netz.map((st, i) => (
@@ -274,6 +338,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
         dem Schienennetz des BAV. Auf Strecken anderer Bahnen ist der Weg gerade von Bahnhof zu
         Bahnhof gezogen. Rot der geschätzte Standort.
         {seen && ' Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab.'}
+        {' Zoomen mit zwei Fingern oder mit «+» und «−»; näher gezoomt lässt sich die Karte verschieben.'}
         {!linien && ' Das Netz wird geladen …'}
       </figcaption>
     </figure>

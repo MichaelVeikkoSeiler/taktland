@@ -7,8 +7,9 @@ import { Auswahl } from './Auswahl'
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
 const VORLAEUFE_S = [20, 10] as const
 type Vorlauf = typeof VORLAEUFE_S[number]
-/** Die Probefahrt läuft so viel schneller als die Wirklichkeit */
-const ZEITRAFFER = 20
+/** Wie viel schneller die Probefahrt läuft; wählbar (Michael, 2026-09-26) */
+const ZEITRAFFER = [10, 20, 50] as const
+type Zeitraffer = typeof ZEITRAFFER[number]
 /** Was so viele Sekunden vor dem Zug liegt, steht als eigene Karte oben */
 const ZUGLEICH_S = 40
 /** Tempo der Probefahrt, 100 km/h */
@@ -93,11 +94,20 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const startS = useRef<number | null>(null)
   const hinter = useRef<FahrObjekt[]>([])
   const uhrStart = useRef({ echt: Date.now(), spiel: 0 })
+  const [raffer, setRaffer] = useState<Zeitraffer>(20)
+  const rafferRef = useRef<Zeitraffer>(20)
 
   /** In der Probefahrt läuft die Zeit schneller */
   const uhr = () => probefahrt
-    ? uhrStart.current.spiel + (Date.now() - uhrStart.current.echt) * ZEITRAFFER
+    ? uhrStart.current.spiel + (Date.now() - uhrStart.current.echt) * rafferRef.current
     : Date.now()
+
+  /** Tempo der Probefahrt wechseln, ohne dass der Zug springt */
+  function rafferWaehlen(f: Zeitraffer) {
+    uhrStart.current = { echt: Date.now(), spiel: uhr() }
+    rafferRef.current = f
+    setRaffer(f)
+  }
 
   function aendern(neu: Partial<Einstellung>) {
     const e = { ...einstellung, ...neu }
@@ -186,7 +196,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   // Geschätzte Stelle jetzt: seit dem letzten Standort mit dem letzten Tempo weiter
   const seit = stand ? Math.max(0, (jetzt - stand.t) / 1000) : 0
   // in der Probefahrt vergehen zwischen zwei Standorten 10 Sekunden Spielzeit
-  const ohneGps = stand !== null && seit > OHNE_GPS_NACH_S * (probefahrt ? ZEITRAFFER : 1)
+  const ohneGps = stand !== null && seit > OHNE_GPS_NACH_S * (probefahrt ? raffer : 1)
   const sJetzt = stand && stand.abseits === null
     ? Math.min(wegEnde(fahrweg), stand.s + (seit < OHNE_GPS_MAX_S ? stand.v * seit : 0))
     : null
@@ -285,7 +295,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           <div className="min-w-0">
             <p className="font-bold">{probefahrt ? 'Probefahrt' : 'Fahrtmodus'}</p>
             <p className="truncate text-sm text-sbb-metal dark:text-sbb-storm">
-              {titel}{probefahrt ? ` · ${ZEITRAFFER}-mal schneller` : ''}
+              {titel}
             </p>
           </div>
           <button
@@ -296,6 +306,24 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             Beenden
           </button>
         </div>
+
+        {probefahrt && (
+          <div className="mt-3 flex items-center gap-3 text-sm">
+            <span className="text-sbb-metal dark:text-sbb-storm">Zeitraffer</span>
+            <div className="flex overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron"
+                 role="group" aria-label="Tempo der Probefahrt">
+              {ZEITRAFFER.map((f) => (
+                <button key={f} type="button" aria-pressed={raffer === f} onClick={() => rafferWaehlen(f)}
+                        aria-label={`${f}-mal schneller`}
+                        className={`min-h-9 whitespace-nowrap px-4 font-medium tabular-nums ${raffer === f
+                          ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
+                          : 'bg-white dark:bg-sbb-midnight'}`}>
+                  {f}×
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* ohne role="status": GPS-Genauigkeit und Tempo ändern sich laufend, ein
             Bildschirmleser würde sonst ununterbrochen vorlesen */}
