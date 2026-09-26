@@ -5,6 +5,7 @@ import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtU
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
 import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
 import { alphabetisch, useFavoriten } from '../favoriten'
+import { nachbarnBauen, useBahnenAus } from '../bahnen'
 import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
 import { kantonText } from '../kanton'
 import { ohneKuerzel } from '../kuerzel'
@@ -19,6 +20,7 @@ import { FavoritKnopf, Stern } from './Stern'
 import { STUFE_TEXT } from './Suche'
 import { genau } from './Objekte'
 import { Ladefehler } from './Ladefehler'
+import { BahnenWahl } from './BahnenWahl'
 
 /** Start, Ziel und wahlweise ein Bahnhof dazwischen, als UIC */
 export interface StreckenWahl {
@@ -225,21 +227,17 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
   const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? String(uic) : ''),
                            [bahnhof])
 
-  const nachbarn = useMemo(() => {
-    const n: Nachbarn = new Map()
-    for (const e of netz?.abschnitte ?? []) {
-      n.set(e.von, [...(n.get(e.von) ?? []), [e.nach, e]])
-      n.set(e.nach, [...(n.get(e.nach) ?? []), [e.von, e]])
-    }
-    return n
-  }, [netz])
+  // ein gegebener Weg («Ohne Ziel») gilt, wie er ist; gesucht wird nur auf den gewählten Bahnen
+  const bahnenAus = useBahnenAus()
+  const alleNachbarn = useMemo(() => nachbarnBauen(netz, new Set()), [netz])
+  const nachbarn = useMemo(() => nachbarnBauen(netz, bahnenAus), [netz, bahnenAus])
 
   const ergebnis = useMemo(() => {
     if (!netz) return null
     if (wahl.weg) {
       // der Weg ist gegeben («Ohne Ziel»): je zwei Betriebspunkte ihr Abschnitt
       const abschnitte = wahl.weg.slice(1).map((b, i) =>
-        nachbarn.get(wahl.weg![i])?.find(([x]) => x === b)?.[1])
+        alleNachbarn.get(wahl.weg![i])?.find(([x]) => x === b)?.[1])
       if (!abschnitte.every((e) => e)) return { art: 'keinWeg' as const }
       const weg = { punkte: wahl.weg, abschnitte: abschnitte as StreckenAbschnitt[] }
       return { art: 'weg' as const, weg, ...entlang(weg) }
@@ -262,7 +260,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
     }
     if (!weg) return { art: 'keinWeg' as const }
     return { art: 'weg' as const, weg, ...entlang(weg) }
-  }, [netz, nachbarn, wahl.von, wahl.nach, wahl.ueber, wahl.weg?.join('.')])
+  }, [netz, nachbarn, alleNachbarn, wahl.von, wahl.nach, wahl.ueber, wahl.weg?.join('.')])
 
   function waehlen(neu: Partial<StreckenWahl>) {
     window.location.hash = streckenAdresse({ ...wahl, ...neu })
@@ -297,6 +295,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
             Start und Ziel tauschen
           </button>
         )}
+        {netz && <BahnenWahl netz={netz} />}
       </div>
 
       {fehler && <Ladefehler className="mt-6" was="Das Netz konnte nicht geladen werden." fehler={fehler} />}
@@ -326,13 +325,16 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
       {netz && ergebnis?.art === 'fehlt' && (
         <p className="mt-6 leading-relaxed">
           {ergebnis.bahnhoefe.map(name).join(' und ')}{' '}
-          {ergebnis.bahnhoefe.length > 1 ? 'liegen' : 'liegt'} nicht im Netz: Die Zugzahlen
-          führen dort keinen Abschnitt mit Personenzügen.
+          {ergebnis.bahnhoefe.length > 1 ? 'liegen' : 'liegt'} nicht im Netz: Weder die Zugzahlen
+          noch die aufgenommenen Strecken aus dem Schienennetz des BAV führen dort einen Abschnitt.
         </p>
       )}
 
       {netz && ergebnis?.art === 'keinWeg' && (
-        <p className="mt-6">Zwischen diesen Bahnhöfen findet sich im Netz kein Weg.</p>
+        <p className="mt-6">
+          Zwischen diesen Bahnhöfen findet sich im Netz kein Weg
+          {bahnenAus.size > 0 ? ' auf den gewählten Bahnen. Unter «Bahnen» lassen sich weitere zulassen.' : '.'}
+        </p>
       )}
 
       {netz && tunnel && bruecken && ergebnis?.art === 'weg' && (
@@ -711,10 +713,12 @@ function Ergebnis({
           Taktland sucht den kürzesten Weg über die Abschnitte, auf denen laut den Zugzahlen
           {' '}{netz.zugzahlen_jahr} Personenzüge fahren. Abschnitte mit wenigen Zügen zählen dabei
           als länger, und jeder Betriebspunkt unterwegs kostet etwas, damit der Weg den stark
-          befahrenen, durchgehenden Strecken folgt. Dazu kommt die BTI (Linie 261, Biel – Täuffelen
-          – Ins) aus dem Schienennetz des BAV: Die Zugzahlen führen sie nicht, darum zählt sie wie
-          eine selten befahrene Strecke, und der Weg nimmt sie, wenn Start, Ziel oder «Über» an ihr
-          liegen. Als Brücke gilt jedes
+          befahrenen, durchgehenden Strecken folgt. Dazu kommen Strecken aus dem Schienennetz des
+          BAV, die die Zugzahlen nicht führen: die BTI (Linie 261, Biel – Täuffelen – Ins), die zählt
+          wie eine selten befahrene Strecke, und die Strecken weiterer Bahnen wie RhB, MGB, MOB und
+          Zentralbahn, wo Bahnhöfe sonst fehlten. Für sie gibt es keine Zugzahlen; sie zählen darum
+          wie mässig befahrene Strecken. Welche Bahnen der Weg nehmen darf, lässt sich unter
+          «Bahnen» wählen. Als Brücke gilt jedes
           Bauwerk im Brückenverzeichnis, auch ein kleines: Eine Brücke bis zwei Meter heisst
           Durchlass. Ein Tunnel zählt, sobald der Weg ihn berührt, auch einer, in dem der
           Start- oder Zielbahnhof liegt (in Zürich HB etwa der Tunnel Bahnhof Museumstrasse).

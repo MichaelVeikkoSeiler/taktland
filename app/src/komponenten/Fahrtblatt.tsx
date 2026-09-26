@@ -4,6 +4,7 @@ import {
   type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, wegEnde,
 } from '../fahrt'
 import { ohneKuerzel } from '../kuerzel'
+import { bahnenAusLesen, nachbarnBauen } from '../bahnen'
 import type {
   BahnhofIndex, BrueckenEintrag, SeenDaten, StreckenAbschnitt, StreckenNetz, TunnelEintrag, Uebersicht,
 } from '../typen'
@@ -82,11 +83,8 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
       const [netz, tunnel, bruecken, g] = await Promise.all([
         streckenLaden(), uebersichtLaden<TunnelEintrag>('tunnel'), uebersichtLaden<BrueckenEintrag>('bruecken'),
         geometrieLaden()])
-      const nachbarn: Nachbarn = new Map()
-      for (const e of netz.abschnitte) {
-        nachbarn.set(e.von, [...(nachbarn.get(e.von) ?? []), [e.nach, e]])
-        nachbarn.set(e.nach, [...(nachbarn.get(e.nach) ?? []), [e.von, e]])
-      }
+      // nur auf den gewählten Bahnen, wie auf der Seite «Strecke»
+      const nachbarn: Nachbarn = nachbarnBauen(netz, bahnenAusLesen())
       const abk = (u: number | null) => (u ? netz.bahnhoefe[String(u)] : undefined)
       const [a, z, u] = [abk(wahl.von), abk(wahl.nach), abk(wahl.ueber)]
       if (!a || !z) throw new Error('Start oder Ziel liegt nicht im Netz.')

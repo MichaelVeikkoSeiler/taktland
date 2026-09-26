@@ -8,6 +8,7 @@ import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
 import { BahnhofFeld, fahrtAdresse, type StreckenWahl } from './Strecke'
 import { Stern } from './Stern'
+import { BahnenWahl } from './BahnenWahl'
 
 type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
@@ -285,6 +286,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
                            aendern={(u) => setBlatt((w) => ({ ...w, nach: u }))} />
               <BahnhofFeld bezeichnung="Über (freiwillig)" wert={blatt.ueber} bahnhoefe={imNetz} name={name}
                            aendern={(u) => setBlatt((w) => ({ ...w, ueber: u }))} />
+              <BahnenWahl />
               <button type="button" disabled={!blattBereit}
                       onClick={() => {
                         window.location.hash = `#/fahrtblatt?von=${blatt.von}&nach=${blatt.nach}${blatt.ueber ? `&ueber=${blatt.ueber}` : ''}`
@@ -363,6 +365,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
           <BahnhofFeld bezeichnung="Über (freiwillig)" wert={wahl.ueber} bahnhoefe={imNetz} name={name}
                        aendern={(u) => setWahl((w) => ({ ...w, ueber: u }))} />
         )}
+        <BahnenWahl />
       </div>
 
       <div className="mt-5 grid grid-cols-2 gap-2">

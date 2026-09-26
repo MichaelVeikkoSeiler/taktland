@@ -311,6 +311,8 @@ export interface StreckenAbschnitt {
   /** nur für die Wegsuche, keine Angabe */
   gewicht: number
   isb: string
+  /** die Bahn für die Auswahl «Bahnen»: die Infrastruktur, bei der MGB die Linie */
+  bahn?: string
   teile?: StreckenTeil[]
   /** ohne teile: die Linie laut Schienennetz des BAV, wenn genau eine beide Enden führt */
   linie_bav?: number
