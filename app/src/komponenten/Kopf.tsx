@@ -101,7 +101,7 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
   // Michael, 2026-09-25: «Hier das Bildpaar für Demo»
   demo: {
     hell: demoHell, dunkel: demoDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration: Eine Hand hält ein Handy mit Taktland vor einer Landschaft mit See, Viadukt und Tunnel, rundherum Kärtchen zu Karte, Fahrtmodus, Logbuch, Bahnhofseiten, Tunnel und Brücken, Duell und Standort.',
+    alt: 'Illustration: Eine Hand hält ein Handy mit Taktland vor einer Landschaft mit See, Viadukt und Tunnel, rundherum Kärtchen zu Karte, Fahren, Logbuch, Bahnhofseiten, Tunnel und Brücken, Duell und Standort.',
   },
   // Michael, 2026-09-25: «Bilder fürs Logbuch hell und dunkel»
   logbuch: {
@@ -197,7 +197,7 @@ function FahrtKnopf({ hier }: { hier: boolean }) {
     <a href="#/fahrt" aria-current={hier ? 'page' : undefined}
        className={`shrink-0 rounded-lg px-3 py-1.5 text-base font-bold text-white max-[359px]:text-[14px] ${hier
          ? 'bg-sbb-red125' : 'bg-sbb-red hover:bg-sbb-red125'}`}>
-      Fahrtmodus
+      Fahren
     </a>
   )
 }

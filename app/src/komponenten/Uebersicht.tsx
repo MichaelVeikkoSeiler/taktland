@@ -270,7 +270,7 @@ function Zeile({ e, linie, art, stelle }: {
         {wo}{linie?.seite ? '' : ' · ohne eigene Seite in Taktland'}
       </span>
       {erlebt !== null && (
-        <span className="block text-sm font-medium text-sbb-green">✓ Im Fahrtmodus durchfahren am {datum(erlebt)}</span>
+        <span className="block text-sm font-medium text-sbb-green">✓ Beim Fahren durchfahren am {datum(erlebt)}</span>
       )}
     </span>
   )

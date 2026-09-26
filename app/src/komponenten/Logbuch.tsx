@@ -42,8 +42,8 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Logbuch</h1>
       <p className="mt-2 leading-relaxed">
-        Jede Fahrt im Fahrtmodus steht automatisch hier, mit Datum, Weg und allem, was du
-        durchfahren hast. Du kannst eine Notiz dazuschreiben und Fahrten ohne Fahrtmodus von Hand
+        Jede Fahrt mit «Fahren» steht automatisch hier, mit Datum, Weg und allem, was du
+        durchfahren hast. Du kannst eine Notiz dazuschreiben und Fahrten ohne «Fahren» von Hand
         eintragen. Es bleibt auf diesem Gerät; die Probefahrt kommt nicht hinein.
       </p>
 
@@ -59,7 +59,7 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
 
       {fahrten.length === 0 ? (
         <p className="mt-6 text-sbb-metal dark:text-sbb-storm">
-          Noch keine Fahrt im Logbuch. Starte den Fahrtmodus mit dem roten Knopf oben.
+          Noch keine Fahrt im Logbuch. Starte «Fahren» mit dem roten Knopf oben.
         </p>
       ) : (
         <ul className="mt-6 space-y-2">
@@ -136,7 +136,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
       {offen && (
         <div className="border-t border-sbb-cloud px-4 pb-4 pt-3 dark:border-sbb-iron">
           <p className="text-sm">
-            {f.manuell ? 'Von Hand eingetragen, ohne Fahrtmodus: keine Objekte erfasst' : zaehlung(f)}
+            {f.manuell ? 'Von Hand eingetragen, ohne «Fahren»: keine Objekte erfasst' : zaehlung(f)}
           </p>
 
           {bearbeiten ? (

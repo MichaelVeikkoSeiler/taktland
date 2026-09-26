@@ -83,7 +83,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Sammelheft</h1>
       <p className="mt-2 leading-relaxed">
-        Was du im Fahrtmodus durchfahren hast, und was noch fehlt. Es bleibt auf diesem Gerät; die
+        Was du beim Fahren durchfahren hast, und was noch fehlt. Es bleibt auf diesem Gerät; die
         Probefahrt zählt nicht. Jede Fahrt mit Datum steht im <a href="#/logbuch" className="underline underline-offset-2">Logbuch</a>.
       </p>
 

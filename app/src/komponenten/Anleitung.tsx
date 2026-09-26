@@ -33,7 +33,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnland (darunter Bahnhöfe,
         Strecken, Brücken und Tunnel), Duell, Standort, Reisetasche (darunter
         Logbuch, Sammelheft und Favoriten) und Info, diese Seite. Der rote
-        Knopf beim Namen startet den Fahrtmodus. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
+        Knopf «Fahren» beim Namen führt zum Fahren im Zug. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
         betreibt, dazu Bahnhöfe anderer Bahnen wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn,
         sofern die offenen Daten für mindestens drei Kapitel reichen.
       </p>
@@ -205,13 +205,13 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             anderer Bahnen, etwa den Lötschberg der BLS, fehlen sie dort. Die Seite sagt das.
           </li>
           <li>
-            Im Zug zeigt der «Fahrtmodus» den nächsten Tunnel, die nächste Brücke mit
+            Im Zug zeigt «Fahren» den nächsten Tunnel, die nächste Brücke mit
             mindestens 3 Baueinheiten und den nächsten Bahnhof und meldet sie etwa 20 oder 10
             Sekunden vorher mit einem Ton. Tunnel, Brücken und Bahnhöfe lassen sich einzeln
-            abschalten. Bahnhöfe meldet er auch dort, wo der Zug nicht hält. Er
+            abschalten. Bahnhöfe meldet Taktland auch dort, wo der Zug nicht hält. «Fahren»
             braucht den Standort und läuft nur, solange die Seite offen und der Bildschirm an ist.
             Die Zeiten sind Schätzungen aus Standort und Tempo. Im Tunnel gibt es kein GPS, dort
-            rechnet er mit dem letzten Tempo weiter.
+            rechnet Taktland mit dem letzten Tempo weiter.
           </li>
           <li>
             Die «Probefahrt» spielt den Weg zwanzigmal schneller ab, zum Ausprobieren zu Hause.
@@ -377,7 +377,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             oder Programme von fremden Diensten.
           </li>
           <li>
-            Den Standort fragt Taktland nur im Fahrtmodus und auf der Seite «Standort» ab, und
+            Den Standort fragt Taktland nur beim Fahren und auf der Seite «Standort» ab, und
             nur nach deiner Freigabe. Er wird auf dem Gerät verrechnet, weder gespeichert noch
             gesendet, und nach «Beenden» oder «Anhalten» nicht mehr abgefragt.
           </li>

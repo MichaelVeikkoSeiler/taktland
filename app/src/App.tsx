@@ -185,7 +185,7 @@ export default function App() {
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
-            Seen, Gipfel und im Fahrtmodus Tunnel und Brücken anderer Bahnen (swissTLM3D):
+            Seen, Gipfel und beim Fahren Tunnel und Brücken anderer Bahnen (swissTLM3D):
             Bundesamt für Landestopografie swisstopo. Kulturgüter: Bundesamt für
             Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
             Moorlandschaften: Bundesamt für Umwelt BAFU.

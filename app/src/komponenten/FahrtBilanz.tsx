@@ -276,7 +276,7 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
 
         {([['#/logbuch', 'Logbuch', probe ? 'Die Probefahrt kommt nicht ins Logbuch'
              : 'Diese Fahrt ist eingetragen, mit Datum und allem Durchfahrenen'],
-           ['#/sammelheft', 'Sammelheft', 'Alles, was du im Fahrtmodus durchfahren hast, und was noch fehlt']] as const)
+           ['#/sammelheft', 'Sammelheft', 'Alles, was du beim Fahren durchfahren hast, und was noch fehlt']] as const)
           .map(([adresse, titel, text]) => (
             <a key={adresse} href={adresse} onClick={schliessen}
                className="kachel kachel-link mt-3 flex items-center justify-between gap-3 px-4 py-3">

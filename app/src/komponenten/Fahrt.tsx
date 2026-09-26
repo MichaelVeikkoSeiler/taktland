@@ -118,10 +118,10 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
 
   return (
     <div className="px-4 pb-16">
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahrtmodus</h1>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahren</h1>
       <p className="mt-2 leading-relaxed">
         Im Zug meldet Taktland Tunnel, Brücken und Bahnhöfe auf deinem Weg, etwa 20 oder 10
-        Sekunden vorher. Er braucht den Standort; dieser bleibt auf dem Gerät.
+        Sekunden vorher. Dafür braucht Taktland den Standort; dieser bleibt auf dem Gerät.
       </p>
 
       {/* Letzte Fahrten, Sammelheft und Logbuch stehen in der Reisetasche
@@ -319,7 +319,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
       <div className="mt-5 grid grid-cols-2 gap-2">
         <button type="button" disabled={!bereit} onClick={() => starten(fahrt)}
                 className="rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40">
-          Fahrtmodus starten
+          Losfahren
         </button>
         <button type="button" disabled={!bereit} onClick={() => starten(fahrt, true)}
                 className="border border-sbb-cloud bg-white px-4 py-3 font-medium hover:border-sbb-black

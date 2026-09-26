@@ -10,8 +10,8 @@ export function Demo() {
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Demo</h1>
       <p className="mt-2 leading-relaxed">
-        Taktland in gut anderthalb Minuten: ein Bahnhof mit Fragen, ein Duell und der
-        Fahrtmodus. Der Fahrtmodus läuft im Video als Probefahrt von Lugano nach Bellinzona,
+        Taktland in gut anderthalb Minuten: ein Bahnhof mit Fragen, ein Duell und
+        «Fahren». Es läuft im Video als Probefahrt von Lugano nach Bellinzona,
         20-mal schneller als im Zug. Das Video hat keinen Ton.
       </p>
       <video controls playsInline preload="metadata" poster={`${BASIS}demo/taktland-demo.webp`}

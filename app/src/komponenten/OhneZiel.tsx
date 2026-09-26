@@ -109,7 +109,7 @@ export function OhneZiel({ index }: { index: BahnhofIndex | null }) {
           <p>Auf einer Strecke. Die Richtung ist noch nicht klar; das braucht etwas Fahrt.</p>
         )}
         {zustand.art === 'erkennung' && zustand.e.art === 'eindeutig' && (
-          <p>Erkannt: Richtung {name(zustand.e.kandidat.ende)}. Der Fahrtmodus startet …</p>
+          <p>Erkannt: Richtung {name(zustand.e.kandidat.ende)}. «Fahren» startet …</p>
         )}
         {zustand.art === 'erkennung' && zustand.e.art === 'mehrere' && (
           <>

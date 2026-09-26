@@ -29,7 +29,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
         Zu jedem Bahnhof gibt es Kapitel mit Fakten und Fragen, etwa zu den Perrons, den Zügen
         oder wie viele Menschen dort ein- und aussteigen. Im Duell treten zwei Bahnhöfe, Strecken
         oder Tunnel gegeneinander an. Unter «Strecke» siehst du, welche Tunnel und Brücken
-        zwischen zwei Bahnhöfen liegen, und im Zug meldet dir der Fahrtmodus den nächsten.
+        zwischen zwei Bahnhöfen liegen, und im Zug meldet dir «Fahren» den nächsten.
         «Standort» zeigt dir, was in deiner Nähe liegt.
       </p>
       <p className={absatz}>

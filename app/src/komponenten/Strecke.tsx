@@ -629,7 +629,7 @@ function Ergebnis({
                 className="rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125
                            disabled:opacity-60"
               >
-                Fahrtmodus starten
+                Losfahren
               </button>
               <button
                 type="button" disabled={laedt} onClick={() => void fahrtStarten(true)}
@@ -641,9 +641,9 @@ function Ergebnis({
               </button>
             </div>
             <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-              Im Zug zeigt der Fahrtmodus den nächsten Tunnel, die nächste grössere Brücke und den
+              Im Zug zeigt «Fahren» den nächsten Tunnel, die nächste grössere Brücke und den
               nächsten Bahnhof und meldet sie etwa 20 oder 10 Sekunden vorher mit einem Ton. Was
-              er meldet, lässt sich wählen. Er braucht den Standort; dieser
+              gemeldet wird, lässt sich wählen. Dafür braucht Taktland den Standort; dieser
               bleibt auf dem Gerät. Die Probefahrt spielt den Weg zum Ausprobieren ab.
             </p>
             {gemerkt && (
@@ -654,7 +654,7 @@ function Ergebnis({
                 className="mt-3 flex items-center gap-2 text-sm font-medium"
               >
                 <Stern voll={favorit} />
-                {favorit ? 'Im Fahrtmodus gemerkt' : 'Fahrt im Fahrtmodus merken'}
+                {favorit ? 'Bei «Fahren» gemerkt' : 'Fahrt bei «Fahren» merken'}
               </button>
             )}
             {gemerkt && (
@@ -668,7 +668,7 @@ function Ergebnis({
               </button>
             )}
             {laedt && <p className="mt-2 text-sm">Die Lage der Linien wird geladen …</p>}
-            {fahrtFehler && <p className="mt-2 text-sm">Der Fahrtmodus konnte nicht starten. {fahrtFehler}</p>}
+            {fahrtFehler && <p className="mt-2 text-sm">«Fahren» konnte nicht starten. {fahrtFehler}</p>}
           </>
         )}
       </section>

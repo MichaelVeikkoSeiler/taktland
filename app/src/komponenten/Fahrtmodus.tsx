@@ -378,14 +378,14 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
-                    dark:bg-sbb-midnight dark:text-sbb-white" role="dialog" aria-label="Fahrtmodus">
+                    dark:bg-sbb-midnight dark:text-sbb-white" role="dialog" aria-label="Fahren">
       <div className="mx-auto max-w-2xl px-4 pb-10 pt-4">
         {/* Die Meldungen für Bildschirmleser (VoiceOver, TalkBack): nur hier
             gesprochen, nicht bei jeder neuen Zeit */}
         <p ref={ansage} className="sr-only" aria-live="assertive" aria-atomic="true" />
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="font-bold">{probefahrt ? 'Probefahrt' : 'Fahrtmodus'}</p>
+            <p className="font-bold">{probefahrt ? 'Probefahrt' : 'Fahren'}</p>
             <p className="truncate text-sm text-sbb-metal dark:text-sbb-storm">
               {titel}
             </p>
@@ -581,7 +581,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
 function zustand(meldung: Meldung | null, stand: Stand | null, ohneGps: boolean, imTunnel: boolean,
                  probefahrt: boolean) {
-  if (meldung?.art === 'verweigert') return freigabeHilfe('ohne ihn geht der Fahrtmodus nicht')
+  if (meldung?.art === 'verweigert') return freigabeHilfe('ohne ihn geht «Fahren» nicht')
   if (meldung?.art === 'fehler') return meldung.text
   if (!stand) return probefahrt ? 'Probefahrt beginnt …' : 'Standort wird gesucht …'
   if (stand.abseits !== null) {

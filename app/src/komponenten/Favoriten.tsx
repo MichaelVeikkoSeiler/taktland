@@ -58,7 +58,7 @@ export function Favoriten({ index, oeffnen }: { index: BahnhofIndex | null; oeff
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Favoriten</h1>
       <p className="mt-2 leading-relaxed">
         Bahnhöfe, die du oft brauchst. Sie stehen in jeder Bahnhofsuche oben, sobald das Feld
-        leer ist: unter Bahnhöfe, bei der Strecke, im Fahrtmodus und im Logbuch. Neue kommen
+        leer ist: unter Bahnhöfe, bei der Strecke, bei «Fahren» und im Logbuch. Neue kommen
         unten mit «+» dazu, in jeder Bahnhofsuche auch mit dem Stern. Die Favoriten bleiben auf
         diesem Gerät.
       </p>
