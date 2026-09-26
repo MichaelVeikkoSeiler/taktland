@@ -459,7 +459,7 @@ export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: 
  * Landeskarte 1:1 Million, liegt der See auf dieser Seite. Kleine Seen fehlen in
  * diesem Massstab; in Tunneln zählt nichts.
  */
-export const SEE_M = 250
+export const SEE_M = 350  // Michael, 2026-09-26: 350 statt 250 m
 const SEE_SCHRITT_M = 100
 const SEE_LUECKE_M = 1000
 const SEE_MIN_M = 300
