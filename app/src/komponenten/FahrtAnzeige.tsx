@@ -82,20 +82,55 @@ export function TunnelBalken({ anteil }: { anteil: number }) {
  * ist, ist vorbei» nicht erwünscht, dann «soll nicht heller werden»). Im
  * Massstab des Wegs, ohne Zahlen.
  */
-export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
+export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, springen }: {
   fahrweg: Fahrweg
   objekte: FahrObjekt[]
   sJetzt: number | null
   start: string
   ziel: string
   name: (o: FahrObjekt) => string | undefined
+  /** nur in der Probefahrt: den Zug an eine Stelle ziehen (Michael, 2026-09-26:
+   *  «den Zug als Regler verschieben») */
+  springen?: (s: number) => void
 }) {
   const ende = wegEnde(fahrweg) || 1
-  const s = sJetzt ?? 0
   const B = 350
   const RAND = 14
+  const band = useRef<SVGSVGElement | null>(null)
+  // während des Ziehens folgt der Zug dem Finger, ohne Übergang
+  const [gezogen, setGezogen] = useState<number | null>(null)
+  const s = gezogen ?? sJetzt ?? 0
   const xBei = (w: number) => RAND + (Math.max(0, Math.min(ende, w)) / ende) * (B - 2 * RAND)
   const zugX = xBei(s)
+  const weich = gezogen === null ? 'transition-all duration-500 ease-linear' : ''
+
+  function sBei(clientX: number) {
+    const r = band.current?.getBoundingClientRect()
+    if (!r || !r.width) return 0
+    const x = ((clientX - r.left) / r.width) * B
+    return Math.max(0, Math.min(ende, ((x - RAND) / (B - 2 * RAND)) * ende))
+  }
+  const ziehen = springen ? {
+    onPointerDown: (e: React.PointerEvent<SVGSVGElement>) => {
+      e.currentTarget.setPointerCapture(e.pointerId)
+      setGezogen(sBei(e.clientX))
+    },
+    onPointerMove: (e: React.PointerEvent<SVGSVGElement>) => {
+      if (gezogen !== null) setGezogen(sBei(e.clientX))
+    },
+    onPointerUp: (e: React.PointerEvent<SVGSVGElement>) => {
+      if (gezogen === null) return
+      springen(sBei(e.clientX))
+      setGezogen(null)
+    },
+    onPointerCancel: () => setGezogen(null),
+    onKeyDown: (e: React.KeyboardEvent<SVGSVGElement>) => {
+      const schritt = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+      if (!schritt) return
+      e.preventDefault()
+      springen(Math.max(0, Math.min(ende, (sJetzt ?? 0) + schritt * ende / 50)))
+    },
+  } : {}
   // Namen für die nächsten drei vor dem Zug, oben oder unten, ohne Überdeckung
   const beschriftet: Array<{ o: FahrObjekt; x: number; oben: boolean; kurz: string; rechts: boolean }> = []
   const frei = { oben: -Infinity, unten: -Infinity }
@@ -119,12 +154,17 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
         <span className="truncate">{start}</span>
         <span className="truncate text-right">{ziel}</span>
       </div>
-      <svg viewBox={`0 0 ${B} 92`} className="mt-1 w-full" role="img"
-           aria-label={`Streckenband: der ganze Weg von ${start} nach ${ziel} mit dem Zug`}>
+      <svg ref={band} viewBox={`0 0 ${B} 92`} {...ziehen}
+           className={`mt-1 w-full ${springen ? 'cursor-grab touch-none active:cursor-grabbing' : ''}`}
+           {...(springen
+             ? { role: 'slider', tabIndex: 0, 'aria-valuemin': 0, 'aria-valuemax': 100,
+                 'aria-valuenow': Math.round((s / ende) * 100),
+                 'aria-label': `Probefahrt: Zug auf dem Weg von ${start} nach ${ziel} verschieben` }
+             : { role: 'img', 'aria-label': `Streckenband: der ganze Weg von ${start} nach ${ziel} mit dem Zug` })}>
         <line x1={RAND} x2={B - RAND} y1="46" y2="46" strokeWidth="3"
               className="stroke-sbb-cloud dark:stroke-sbb-iron" />
         <line x1={RAND} x2={zugX} y1="46" y2="46" strokeWidth="3"
-              className="stroke-sbb-charcoal transition-all duration-500 ease-linear dark:stroke-sbb-white" />
+              className={`stroke-sbb-charcoal dark:stroke-sbb-white ${weich}`} />
         {/* Start und Ziel */}
         {[RAND, B - RAND].map((x) => (
           <line key={x} x1={x} x2={x} y1="40" y2="52" strokeWidth="2.5"
@@ -178,7 +218,7 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name }: {
           </g>
         ))}
         {/* der Zug */}
-        <g transform={`translate(${zugX - 9} 39)`} className="transition-transform duration-500 ease-linear">
+        <g transform={`translate(${zugX - 9} 39)`} className={weich}>
           <rect width="18" height="14" rx="3.5" strokeWidth="1.5"
                 className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
           <rect x="10" y="3" width="5" height="4.5" rx="1" className="fill-white" />

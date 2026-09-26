@@ -125,6 +125,25 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     ? uhrStart.current.spiel + (pauseRef.current ? 0 : (Date.now() - uhrStart.current.echt) * rafferRef.current)
     : Date.now()
 
+  /** Probefahrt: an eine Stelle springen, vorwärts oder zurück (Michael,
+   *  2026-09-26: «den Zug als Regler verschieben»). Was hinter der neuen Stelle
+   *  liegt, gilt als nicht gemeldet und wird wieder gemeldet. */
+  function springen(s: number) {
+    const t = (s / PROBE_TEMPO) * 1000
+    uhrStart.current = { echt: Date.now(), spiel: t }
+    for (const o of fahrweg.objekte) {
+      if (o.s > s) gemeldet.current.delete(`${o.art} ${o.kennung}`)
+    }
+    hinter.current = hinter.current.filter((o) => o.s <= s)
+    if (startS.current !== null && s < startS.current) startS.current = s
+    // wie ein erster Standort: keine Gegenrichtung, Tempo der Probefahrt
+    standRef.current = null
+    setGegenrichtung(false)
+    const l = lageBei(fahrweg, s)
+    standort(t, l.lat, l.lon, 10, PROBE_TEMPO)
+    setJetzt(t)
+  }
+
   function pauseUmschalten() {
     uhrStart.current = { echt: Date.now(), spiel: uhr() }
     pauseRef.current = !pauseRef.current
@@ -360,7 +379,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
-                      name={(o) => textVon(o)?.name} />
+                      name={(o) => textVon(o)?.name} springen={probefahrt ? springen : undefined} />
+        {probefahrt && (
+          <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
+            Zug im Band ziehen oder antippen, um an eine Stelle zu springen.
+          </p>
+        )}
 
         {probefahrt && (
           <div className="mt-4 flex items-center gap-3 text-sm">
