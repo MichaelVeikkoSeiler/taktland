@@ -4,6 +4,9 @@ import { useAudio } from '../audio'
 import { useEinstellungen } from '../einstellungen'
 import { abstand, type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEE_QUER_M, SEILBAHN_M, type SehenswertSorte, type Ton, wegEnde } from '../fahrt'
 import { spurMerken } from '../ohneziel'
+import { type Zug, zuegeSuchen, zugLaden, zugName, type Zugsuche, zeitVon } from '../fahrplan'
+import type { GemerkterZug } from '../laufend'
+import { ZugAnzeige, ZugFrage } from './Zug'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 import { Auswahl } from './Auswahl'
@@ -139,7 +142,7 @@ type Meldung =
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
 export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren, fortsetzen, stelle, ohneZiel,
-                            bahnhofSeite, startKennung, retour }: {
+                            zugStrecke, zugAnfang, zugGewaehlt, halt, bahnhofSeite, startKennung, retour }: {
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
@@ -155,6 +158,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   stelle?: (startS: number, s: number) => void
   /** «Ohne Ziel»: am Ende des Wegs oder lange daneben neu suchen */
   ohneZiel?: () => void
+  /** Start und Ziel als UIC: Dann fragt der Fahrtmodus «In welchem Zug sitzt du?» */
+  zugStrecke?: { von: number; nach: number } | null
+  /** beim Fortsetzen: der vorher gewählte Zug */
+  zugAnfang?: GemerkterZug | null
+  zugGewaehlt?: (z: Zug | null) => void
+  /** Bahnhof im Fahrplan (UIC) → Kürzel auf dem Weg und Name */
+  halt?: (uic: number) => { abk: string | undefined; name: string }
   /** Bahnhof auf dem Weg → seine Seite in Taktland, falls es eine gibt */
   bahnhofSeite?: (o: FahrObjekt) => { uic: number; eintrag: IndexEintrag | undefined } | null
   /** Kürzel des Startbahnhofs: Er steht nicht unter den Objekten, der Zug steht aber oft dort */
@@ -167,6 +177,23 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const stummSetzen = (neu: Record<string, string>) => {
     setStumm(neu)
     try { localStorage.setItem(STUMM, JSON.stringify(neu)) } catch { /* ohne Speicher gilt es bis zum Schluss */ }
+  }
+  // «Welcher Zug?»: nur im Zug, nie in der Probefahrt; Taktland nimmt nie selbst einen Zug an
+  const [zugsuche, setZugsuche] = useState<Zugsuche | null>(null)
+  const [zug, setZug] = useState<Zug | null>(null)
+  const [frageOffen, setFrageOffen] = useState(!zugAnfang)
+  useEffect(() => {
+    if (probefahrt || !zugStrecke) return
+    let ab = false
+    if (zugAnfang) void zugLaden(zugAnfang).then((z) => { if (!ab) setZug(z) })
+    void zuegeSuchen(zugStrecke.von, zugStrecke.nach).then((s) => { if (!ab) setZugsuche(s) })
+    return () => { ab = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  function zugWaehlen(z: Zug | null) {
+    setZug(z)
+    setFrageOffen(false)
+    zugGewaehlt?.(z)
   }
   // Sehenswertes bringt seinen Text selbst mit
   const textVon = (o: FahrObjekt): ObjektText | undefined => o.sehenswert
@@ -566,6 +593,23 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     }
   })
 
+  // der nächste Halt des gewählten Zugs: der erste Halt nach dem Start, der
+  // als Bahnhof vor dem Zug auf dem Weg liegt
+  const naechsterHalt = (() => {
+    if (!zug || !halt || !zugStrecke) return null
+    const h = zug.fahrt.h
+    const start = Math.max(0, h.findIndex((x) => x[0] === zugStrecke.von))
+    for (let i = start + 1; i < h.length; i++) {
+      const { abk, name } = halt(h[i][0])
+      const o = fahrweg.objekte.find((x) => x.art === 'bahnhof' && x.kennung === abk)
+      if (!o) continue
+      if (sJetzt !== null && o.s <= sJetzt + 50) continue
+      const min = h[i][1] ?? h[i][2]
+      return { name, zeit: min === null ? null : zeitVon(zug, min) }
+    }
+    return null
+  })()
+
   const naechstes = kommend[0]
   // Was in den nächsten 40 Sekunden kommt, läuft gleichzeitig, als Karten
   // übereinander (Michael, 2026-09-25); das erste immer, höchstens drei
@@ -752,6 +796,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <p className="truncate text-sm text-sbb-metal dark:text-sbb-storm">
               {titel}
             </p>
+            {zug && <p className="truncate text-sm font-medium">{zugName(zug.fahrt)} nach {zug.fahrt.z}</p>}
             {/* wie weit noch bis zum Ziel, entlang des gesuchten Wegs (Michael, 2026-09-27:
                 «Kilometerangaben bis zum Zielort»); ohne Ziel keine */}
             {!ohneZiel && sJetzt !== null && (
@@ -819,6 +864,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             </button>
           )}
         </div>
+        {zug && !frageOffen && (
+          <ZugAnzeige zug={zug} halt={naechsterHalt} aendern={() => setFrageOffen(true)} />
+        )}
+        {frageOffen && zugsuche && (
+          <ZugFrage suche={zugsuche} waehlen={zugWaehlen}
+                    schliessen={() => { setFrageOffen(false); if (!zug) zugWaehlen(null) }} />
+        )}
         {ohneZiel && (
           <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
             Ohne Ziel: Taktland folgt der Linie bis {titel.split(' → ')[1]} und sucht dann neu, ebenso,
@@ -956,7 +1008,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           Der Standort bleibt auf diesem Gerät und wird weder gespeichert noch gesendet. Die Zeiten
           sind Schätzungen aus Standort und Tempo, die Distanzen gerundet und entlang der gezeichneten
           Strecke gemessen. Gemeldet wird nur, solange diese Seite offen und
-          der Bildschirm an ist. Auf Strecken anderer Bahnen folgt der Weg dem Schienennetz des BAV,
+          der Bildschirm an ist. Züge und Halte laut Fahrplan: opentransportdata.swiss, ohne Verspätungen,
+          Ausfälle, Extrazüge und Ersatzbusse. Auf Strecken anderer Bahnen folgt der Weg dem Schienennetz des BAV,
           und Tunnel, Galerien und Brücken stammen aus swissTLM3D von swisstopo, oft ohne Namen,
           mit der Länge ihrer Zeichnung, gerundet; als grössere Brücke gilt, was auf der Karte
           mindestens 100 m lang ist. Im

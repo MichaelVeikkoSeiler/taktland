@@ -212,6 +212,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
             {f.weg_m !== undefined ? ` · ${km(f.weg_m)}` : ''}
             {f.notiz ? ' · mit Notiz' : ''}
           </span>
+          {f.zug && <span className="block truncate text-sm text-sbb-metal dark:text-sbb-storm">{f.zug}</span>}
         </span>
         <svg viewBox="0 0 12 12" className={`size-3 shrink-0 transition-transform ${offen ? 'rotate-180' : ''}`}
              aria-hidden="true">

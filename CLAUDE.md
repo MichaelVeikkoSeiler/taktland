@@ -134,6 +134,9 @@ data/bruecken_bereich.json  Anfang, Ende und Länge von SBB-Brücken laut Zeichn
 data/schweiz11.json  Pool für das Spiel «Geo»: Bahnhöfe, Tunnel und Brücken mit Ziel (Mitte des
              Bauwerks), Kanton laut Kantonsfläche (BFS) und Stufe nach Rang (pipeline/build_schweiz11.py, nach
              export_app.py); dazu die Kantonsflächen für das Spielgebiet
+data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
+             ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
+             nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -163,6 +166,8 @@ python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
 .venv/bin/python pipeline/build_bodenbedeckung.py  # Wald und Siedlung (swissTLMRegio)
 .venv/bin/python pipeline/build_kartengrund.py   # Grenzen, Flüsse, Höhenstufen für die Karten
+python3 pipeline/fetch_fahrplan.py              # Fahrplan (GTFS) laden, 290 MB, entpackt 4,5 GB
+.venv/bin/python pipeline/build_fahrplan.py      # Züge und Halte für «Welcher Zug?», vor export_app
 python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D

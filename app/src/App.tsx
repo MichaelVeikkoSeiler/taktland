@@ -219,7 +219,7 @@ export default function App() {
             <img src="./logo.svg" alt="" className="size-6" />Taktland
           </p>
           <p>
-            Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
+            Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen und Fahrplan: opentransportdata.swiss;
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
             Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Höhenstufen (swissALTIRegio),
             Gipfel und Ortsnamen (Swiss Map Vector 1000), Brückenlängen und beim Fahren Tunnel und Brücken

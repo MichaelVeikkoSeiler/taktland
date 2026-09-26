@@ -1,5 +1,6 @@
 import type {
-  BahnhofIndex, BodenbedeckungDaten, IndexEintrag, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StandortDaten, StreckenGeometrie,
+  BahnhofIndex, BodenbedeckungDaten, FahrplanFahrt, FahrplanHalt, FahrplanInfo, IndexEintrag, KartenDaten, LinienProfil, LinienVerzeichnis, Profil,
+  StandortDaten, StreckenGeometrie,
   FlaechenDaten, KartengrundDaten, KartenlinienDaten, SeenDaten, SehenswertDaten, StreckenNetz,
   Uebersicht, Vergleichsdaten,
 } from './typen'
@@ -142,4 +143,22 @@ export function fahrtZiele(index: BahnhofIndex | null): IndexEintrag[] {
 /** Name zu einer Nummer, auch für die Ziele ohne Bahnhofsnummer */
 export function namenFuerFahrt(index: BahnhofIndex | null): Map<number, string> {
   return new Map(fahrtZiele(index).map((b) => [b.uic, b.name]))
+}
+
+/** Fahrplan (pipeline/build_fahrplan.py): Stand, Gültigkeit, Verkehrstage */
+export async function fahrplanInfoLaden(): Promise<FahrplanInfo> {
+  return holen<FahrplanInfo>('data/fahrplan/info.json')
+}
+
+/** Alle Fahrten mit Halt an diesem Bahnhof; ohne Fahrplan dort eine leere Liste */
+export async function fahrplanHaltLaden(uic: number): Promise<FahrplanHalt[]> {
+  try {
+    return await holen<FahrplanHalt[]>(`data/fahrplan/halt/${uic}.json`)
+  } catch {
+    return []
+  }
+}
+
+export async function fahrplanFahrtenLaden(datei: number): Promise<FahrplanFahrt[]> {
+  return holen<FahrplanFahrt[]>(`data/fahrplan/fahrt/${datei}.json`)
 }

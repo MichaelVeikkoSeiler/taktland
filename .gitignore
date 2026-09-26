@@ -1,5 +1,8 @@
 # Daten
 data/raw/
+# Fahrplan: entsteht beim Veröffentlichen aus dem GTFS (pipeline/build_fahrplan.py)
+data/fahrplan/
+app/public/data/fahrplan/
 *.csv
 *.parquet
 
