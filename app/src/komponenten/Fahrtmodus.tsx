@@ -28,6 +28,10 @@ const AM_ENDE_M = 150
 const NEU_SUCHEN_S = 20
 
 export type BrueckenWahl = 'groessere' | 'alle' | 'keine'
+/** Was die Meldung nennt: Zeit, Distanz oder beides (Michael, 2026-09-26: für
+ *  sehbehinderte Menschen vielleicht besser Distanzen). Wann gemeldet wird, bleibt
+ *  nach Zeit, damit in jedem Tempo gleich viel Zeit zum Reagieren bleibt. */
+export type Angabe = 'zeit' | 'distanz' | 'beides'
 /** Sehenswertes: jede Kategorie für sich ein- und ausschaltbar (Michael, 2026-09-26) */
 type SehenswertWahl = Record<SehenswertSorte, boolean>
 const SORTEN: Array<[SehenswertSorte, string]> = [
@@ -37,7 +41,7 @@ const SORTEN: Array<[SehenswertSorte, string]> = [
 const EINSTELLUNG = 'taktland.fahrt.v1'
 
 interface Einstellung { tunnel: boolean; bruecken: BrueckenWahl; bahnhoefe: boolean; sehenswert: SehenswertWahl
-                        vorlauf: Vorlauf; ton: boolean }
+                        vorlauf: Vorlauf; ton: boolean; angabe: Angabe }
 
 function einstellungLesen(): Einstellung {
   try {
@@ -45,9 +49,10 @@ function einstellungLesen(): Einstellung {
     return { bruecken: ['groessere', 'alle', 'keine'].includes(x.bruecken) ? x.bruecken : 'groessere',
              tunnel: x.tunnel !== false, bahnhoefe: x.bahnhoefe !== false,
              sehenswert: Object.fromEntries(SORTEN.map(([k]) => [k, x.sehenswert?.[k] !== false])) as SehenswertWahl,
-             vorlauf: VORLAEUFE_S.includes(x.vorlauf) ? x.vorlauf : VORLAEUFE_S[0], ton: x.ton !== false }
+             vorlauf: VORLAEUFE_S.includes(x.vorlauf) ? x.vorlauf : VORLAEUFE_S[0], ton: x.ton !== false,
+             angabe: ['zeit', 'distanz', 'beides'].includes(x.angabe) ? x.angabe : 'zeit' }
   } catch {
-    return { tunnel: true, bruecken: 'groessere', bahnhoefe: true, sehenswert: { gipfel: true, kgs: true, seilbahn: true, flaeche: true }, vorlauf: VORLAEUFE_S[0], ton: true }
+    return { tunnel: true, bruecken: 'groessere', bahnhoefe: true, sehenswert: { gipfel: true, kgs: true, seilbahn: true, flaeche: true }, vorlauf: VORLAEUFE_S[0], ton: true, angabe: 'zeit' }
   }
 }
 
@@ -274,6 +279,15 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     : gewaehlt.filter((o) => o.sehenswert?.sorte === 'flaeche' && sJetzt >= o.s && sJetzt <= o.sAus!)
   const kommend = sJetzt === null ? [] : gewaehlt.filter((o) => o.s > sJetzt)
   const eta = (o: FahrObjekt) => (sJetzt !== null && faehrt ? (o.s - sJetzt) / stand!.v : null)
+  /** Meter bis zum Objekt entlang des gezeichneten Wegs; gilt auch, wenn der Zug steht */
+  const bis = (o: FahrObjekt) => (sJetzt !== null ? Math.max(0, o.s - sJetzt) : null)
+  const { angabe } = einstellung
+  /** «in etwa 25 s», «in etwa 500 m» oder beides, wie gewählt; ohne Tempo nur die Distanz */
+  const abstandText = (sekunden: number | null, meter: number | null) => {
+    const z = sekunden !== null && angabe !== 'distanz' ? dauer(sekunden) : null
+    const d = meter !== null && (angabe !== 'zeit' || sekunden === null) ? `in etwa ${strecke(meter)}` : null
+    return z && d ? `${z} · ${strecke(meter!)}` : z ?? d
+  }
 
   // Die Meldung: etwa 20 oder 10 Sekunden vorher, wie gewählt, jedes Objekt einmal
   useEffect(() => {
@@ -286,7 +300,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         // für Bildschirmleser: dieselbe Meldung als Satz, einmal
         const t = textVon(o)
         if (ansage.current && t) {
-          ansage.current.textContent = `In etwa ${Math.max(5, Math.round(e / 5) * 5)} Sekunden: `
+          const m = bis(o)
+          const sek = `In etwa ${Math.max(5, Math.round(e / 5) * 5)} Sekunden`
+          ansage.current.textContent = (angabe === 'zeit' || m === null ? sek
+            : angabe === 'distanz' ? `In etwa ${streckeGesprochen(m)}` : `${sek}, etwa ${streckeGesprochen(m, false)}`) + ': '
             + (o.sehenswert?.sorte === 'flaeche' ? `Du fährst durch ${t.name}, ${o.sehenswert.art}.`
               : `${artText(o).replace(' · ', ', ')}: ${t.name}. ${sprechbar(t.zeile)}`)
         }
@@ -345,11 +362,14 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         ? `${FARBE[o.art].flaeche} ${FARBE[o.art].schrift} py-7`
         : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
         <Ring bald={bald} art={o.art} anteil={eta(o) === null ? null : 1 - eta(o)! / RING_S}>
-          <ZeitImRing sekunden={eta(o)} steht={stand !== null} />
+          {angabe === 'zeit' || (angabe === 'beides' && eta(o) !== null)
+            ? <ZeitImRing sekunden={eta(o)} steht={stand !== null} />
+            : <DistanzImRing meter={bis(o)} />}
         </Ring>
         <div className="min-w-0">
           <p className={`text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
             {bald ? 'Gleich' : o === naechstes ? 'Als Nächstes' : 'Kurz danach'} · {artText(o)}
+            {angabe === 'beides' && eta(o) !== null && bis(o) !== null && ` · etwa ${strecke(bis(o)!)}`}
           </p>
           {o.sehenswert?.sorte === 'flaeche' && (
             <p className={`mt-1 ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>Du fährst durch</p>
@@ -450,7 +470,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <p className="text-xs uppercase tracking-wide text-sbb-storm">Im Tunnel</p>
             <p className="text-xl font-bold">{textVon(imTunnel)?.name}</p>
             <p className="mt-2 text-2xl font-bold tabular-nums">
-              {faehrt ? `Ausfahrt ${dauer((imTunnel.sAus! - sJetzt) / stand!.v)}` : 'Zug steht'}
+              {faehrt || angabe !== 'zeit'
+                ? `Ausfahrt ${abstandText(faehrt ? (imTunnel.sAus! - sJetzt) / stand!.v : null, imTunnel.sAus! - sJetzt)}`
+                : 'Zug steht'}
             </p>
             <TunnelBalken anteil={(sJetzt - imTunnel.s) / (imTunnel.sAus! - imTunnel.s || 1)} />
           </div>
@@ -490,7 +512,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                     </span>
                   </span>
                   <span className="shrink-0 text-sm tabular-nums text-sbb-metal dark:text-sbb-storm">
-                    {eta(o) !== null ? dauer(eta(o)!) : ''}
+                    {abstandText(eta(o), angabe === 'zeit' ? null : bis(o)) ?? ''}
                   </span>
                 </li>
               ))}
@@ -550,6 +572,17 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                          dark:bg-sbb-midnight dark:text-sbb-white"
             />
           </div>
+          <div className="flex items-center justify-between gap-3">
+            <span>Angabe</span>
+            <Auswahl
+              titel="Angabe" wert={angabe}
+              waehlen={(w) => aendern({ angabe: w })}
+              optionen={[{ wert: 'zeit' as Angabe, text: 'Zeit' }, { wert: 'distanz' as Angabe, text: 'Distanz' },
+                         { wert: 'beides' as Angabe, text: 'Zeit und Distanz' }]}
+              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
+                         dark:bg-sbb-midnight dark:text-sbb-white"
+            />
+          </div>
           <label className="flex items-center justify-between gap-3">
             <span>Ton bei der Meldung</span>
             <input type="checkbox" checked={einstellung.ton} className="size-5 accent-sbb-red"
@@ -559,7 +592,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
         <p className="mt-6 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Standort bleibt auf diesem Gerät und wird weder gespeichert noch gesendet. Die Zeiten
-          sind Schätzungen aus Standort und Tempo. Gemeldet wird nur, solange diese Seite offen und
+          sind Schätzungen aus Standort und Tempo, die Distanzen gerundet und entlang der gezeichneten
+          Strecke gemessen. Gemeldet wird nur, solange diese Seite offen und
           der Bildschirm an ist. Auf Strecken anderer Bahnen folgt der Weg dem Schienennetz des BAV,
           und Tunnel, Galerien und Brücken stammen aus swissTLM3D von swisstopo: ohne Länge, oft ohne
           Namen; als grössere Brücke gilt dort, was auf der Karte mindestens 100 m lang ist. Sie
@@ -602,6 +636,31 @@ function ZeitImRing({ sekunden, steht }: { sekunden: number | null; steht: boole
   if (sekunden === null) return <span className="text-sm font-bold">{steht ? 'steht' : '…'}</span>
   const [zahl, einheit] = sekunden < 90 ? [Math.max(5, Math.round(sekunden / 5) * 5), 's']
     : sekunden < 3600 ? [Math.round(sekunden / 60), 'min'] : [Math.floor(sekunden / 3600), 'h']
+  return (
+    <>
+      <span className="text-[10px]">etwa</span>
+      <span className="text-2xl font-bold tabular-nums">{zahl}</span>
+      <span className="text-xs">{einheit}</span>
+    </>
+  )
+}
+
+/** «500 m», «1,2 km», «15 km»: entlang der gezeichneten Strecke, darum gerundet */
+function strecke(meter: number) {
+  if (meter < 1000) return `${Math.max(50, Math.round(meter / 50) * 50)} m`
+  if (meter < 10_000) return `${(Math.round(meter / 100) / 10).toLocaleString('de-CH')} km`
+  return `${Math.round(meter / 1000)} km`
+}
+
+/** zum Vorlesen: «in etwa 500 Metern» (Dativ) oder «etwa 500 Meter» */
+function streckeGesprochen(meter: number, dativ = true) {
+  return strecke(meter).replace(/ m$/, dativ ? ' Metern' : ' Meter').replace(/ km$/, dativ ? ' Kilometern' : ' Kilometer')
+}
+
+/** Die Distanz im Ring: gross die Zahl, klein die Einheit */
+function DistanzImRing({ meter }: { meter: number | null }) {
+  if (meter === null) return <span className="text-sm font-bold">…</span>
+  const [zahl, einheit] = strecke(meter).split(' ')
   return (
     <>
       <span className="text-[10px]">etwa</span>
