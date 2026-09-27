@@ -30,7 +30,7 @@ const BRUECKE_AB_BE = 3
 /** Farben wie im Streckenband von «Fahren» (Michael, 2026-09-26: «gleiche Farben wie
  *  in der App»), fest und hell, damit der Druck im Dunkelmodus gleich aussieht */
 const FARBE: Record<Eintrag['art'], string> = {
-  tunnel: '#000000', bruecke: '#f27e00', bahnhof: '#1d3f8a', gipfel: '#2f7d4f', seilbahn: '#2f7d4f',
+  tunnel: '#2b2b2b', bruecke: '#b35900', bahnhof: '#1d3f8a', gipfel: '#2f7d4f', seilbahn: '#0d5c6e',
 }
 const SEE = '#c9def1'
 /** Grund der Karte, heller als in der App, damit der Druck wenig Tinte braucht */
@@ -540,7 +540,6 @@ function Nummer({ e }: { e: Eintrag }) {
 /** Was die Farben auf der Karte bedeuten, nur was auf diesem Blatt vorkommt */
 function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
   const hat = (a: Eintrag['art']) => eintraege.some((e) => e.art === a)
-  const sehen = [hat('gipfel') && 'Gipfel', hat('seilbahn') && 'Seilbahn'].filter(Boolean)
   const punkt = (farbe: string) => (
     <span className="inline-block size-3 shrink-0 rounded-full" style={{ backgroundColor: farbe, printColorAdjust: 'exact' }} />
   )
@@ -559,7 +558,8 @@ function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
       )}
       {hat('bruecke') && <li className="flex items-center gap-1.5">{punkt(FARBE.bruecke)}Brücke</li>}
       {hat('bahnhof') && <li className="flex items-center gap-1.5">{punkt(FARBE.bahnhof)}Bahnhof</li>}
-      {sehen.length > 0 && <li className="flex items-center gap-1.5">{punkt(FARBE.gipfel)}{sehen.join(', ')}</li>}
+      {hat('gipfel') && <li className="flex items-center gap-1.5">{punkt(FARBE.gipfel)}Gipfel</li>}
+      {hat('seilbahn') && <li className="flex items-center gap-1.5">{punkt(FARBE.seilbahn)}Seilbahn</li>}
       {seen && (
         <li className="flex items-center gap-1.5">
           <span className="inline-block h-3 w-5" style={{ backgroundColor: SEE, printColorAdjust: 'exact' }} />See

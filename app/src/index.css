@@ -8,9 +8,10 @@
  * Kein Logo, keine Bildmarke: Taktland ist kein Angebot der SBB.
  */
 @theme {
-  --color-sbb-red: #eb0000;
-  --color-sbb-red125: #c60018;
-  --color-sbb-red150: #a20013;
+  /* Akzent: Karmin wie die Bildmarke, statt SBB-Rot (Michael, 2026-09-27); die Namen bleiben */
+  --color-sbb-red: #a8102e;
+  --color-sbb-red125: #860c24;
+  --color-sbb-red150: #6e0a1e;
 
   --color-sbb-white: #ffffff;
   --color-sbb-milk: #f6f6f6;
@@ -31,8 +32,8 @@
      Orange steht die Schrift schwarz. Das Blau hat weniger Rot als SBB Blue
      (Michael: «etwas zu fest violett»), im Dunkeln heller, damit es auf
      Schwarz lesbar bleibt. */
-  --color-fahrt-tunnel: #000000;
-  --color-fahrt-bruecke: #f27e00;
+  --color-fahrt-tunnel: #2b2b2b;
+  --color-fahrt-bruecke: #b35900;
   --color-fahrt-bahnhof: #1d3f8a;
   --color-fahrt-bahnhof-hell: #7fa3e6;
   /* Sehenswertes im Fahrtmodus, von Claude festgelegt (2026-09-26) */
@@ -58,8 +59,8 @@
   /* Sehenswertes auf den Karten, von Claude festgelegt: zurückhaltend, damit
      Strecke und Fahrtmodus-Farben vorne bleiben */
   --color-gipfel: #6b4a2e;
-  --color-kgs: #7a3e9d;
-  --color-seilbahn: #444444;
+  --color-kgs: #6b3fa0;
+  --color-seilbahn: #0d5c6e;
   --color-flaeche-bln: #e3eed8;
   --color-flaeche-bln-rand: #b9d3a3;
   --color-flaeche-park: #d3e8c7;
@@ -156,6 +157,8 @@ body {
 
 @media (prefers-color-scheme: dark) {
   :focus-visible { outline-color: var(--color-sbb-white); }
+  /* im Dunkeln ein helleres Karmin: gut sichtbar auf Schwarz, weisse Schrift darauf bleibt lesbar */
+  :root { --color-sbb-red: #d63a55; --color-sbb-red125: #c42446; --color-sbb-red150: #a8102e; }
 }
 
 /* Seen im Dunkeln */
@@ -163,7 +166,7 @@ body {
   :root { --color-ausland: #1b1b1b; --color-kantonsgrenze: #2e2e2e; --color-landesgrenze: #4a4a4a;
           --color-fluss: #2f4a63; --color-hoehe-1: #1a1a1a; --color-hoehe-2: #202020; --color-hoehe-3: #272727;
           --color-see: #1d2c3a; --color-see-name: #8fb3d4; --color-see-halo: #151515;
-          --color-gipfel: #c9a27e; --color-kgs: #c39be0; --color-seilbahn: #bdbdbd;
+          --color-gipfel: #c9a27e; --color-kgs: #c39be0; --color-seilbahn: #7cc0cf;
           --color-flaeche-bln: #1f2a1b; --color-flaeche-bln-rand: #3a5230;
           --color-flaeche-park: #1c2d18; --color-flaeche-park-rand: #4f7a3d;
           --color-flaeche-moor: #29271c; --color-flaeche-moor-rand: #5a5437; }

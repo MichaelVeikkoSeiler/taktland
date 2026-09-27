@@ -166,8 +166,9 @@ auffällt, wird zur Regel im Baukasten, zur Prüfregel oder zum Abschnitt in
 
 ## Gestaltung
 
-Die App folgt der öffentlichen Designdokumentation der SBB (digital.sbb.ch):
-Rot `#eb0000` nur für Wichtiges, sonst Weiss, Milk `#f6f6f6`, Cloud `#e5e5e5`,
+Die App folgt der öffentlichen Designdokumentation der SBB (digital.sbb.ch), mit eigener
+Akzentfarbe: Karmin `#a8102e` wie die Bildmarke (im Dunkelmodus `#d63a55`) nur für Wichtiges,
+statt des SBB-Rots (Michael, 2026-09-27; in Tailwind weiter `sbb-red`), sonst Weiss, Milk `#f6f6f6`, Cloud `#e5e5e5`,
 Metal `#767676`, Charcoal `#212121`. Keine Farbverläufe, kantige Flächen,
 Helvetica als Ersatz für die nicht frei lizenzierte Hausschrift SBB Web.
 
@@ -180,8 +181,8 @@ einzige Ausnahme von den kantigen Flächen.
 
 **Die Bildmarke von Taktland** ist ein weisses «T» aus einer Linie mit fünf Haltepunkten auf
 karminrotem (`#a8102e`), abgerundetem Quadrat; die obere Abzweigung ist ausgefüllt
-(`app/public/logo.svg`, Entwürfe in `entwuerfe/logo/`, Michael, 2026-09-27). Das
-Karminrot gilt nur für die Bildmarke, als Abstand zum Rot der SBB. Sie steht vor dem Namen im Kopf und ist das App-Symbol.
+(`app/public/logo.svg`, Entwürfe in `entwuerfe/logo/`, Michael, 2026-09-27). Sie steht vor dem
+Namen im Kopf und ist das App-Symbol; ihr Karminrot ist auch die Akzentfarbe der App.
 
 **Kein Logo, keine Bildmarke der SBB.** Die Farb- und Formensprache ist übernommen,
 die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot der SBB ist.

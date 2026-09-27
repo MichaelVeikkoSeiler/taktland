@@ -37,8 +37,8 @@ export function Gleisschema({ gleise, auswaehlbar, gewaehlt, loesung, onWahl }: 
           const istLoesung = loesung != null && g.nr === loesung
           const istGewaehlt = gewaehlt === g.nr
           const farbe = loesung != null
-            ? (istLoesung ? '#00873d' : istGewaehlt ? '#eb0000' : '#bdbdbd')
-            : (istGewaehlt ? '#eb0000' : '#767676')
+            ? (istLoesung ? '#00873d' : istGewaehlt ? '#a8102e' : '#bdbdbd')
+            : (istGewaehlt ? '#a8102e' : '#767676')
           return (
             <g
               key={g.nr}
