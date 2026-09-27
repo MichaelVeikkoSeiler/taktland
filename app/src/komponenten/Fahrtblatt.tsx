@@ -39,6 +39,8 @@ const GRUND = { hoehen: ['#f7f6f2', '#efece6', '#e6e2da'], ausland: '#f2f2f2', k
 /** Grenzen deutlich (Michael, 2026-09-27: Landesgrenze «dick, dunkelgrau», Kantonsgrenzen
  *  «durchgezogen» und «etwas markanter») */
 const GRENZE_BREITE = { land: 2.4, kanton: 1 }
+/** Die Strecke kräftiger als die Landesgrenze, damit man sie nicht verwechselt */
+const STRECKE_BREITE = 5
 const WEG = '#767676'
 
 /** Breite des Blatts auf dem Bildschirm, entspricht 190 mm Druckbreite bei 96 dpi */
@@ -540,14 +542,14 @@ function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
   return (
     <ul className="mt-1.5 flex flex-wrap gap-x-4 gap-y-0.5 text-[11px]" aria-label="Legende">
       <li className="flex items-center gap-1.5">
-        <span className="inline-block h-[3px] w-5" style={{ backgroundColor: WEG, printColorAdjust: 'exact' }} />Strecke
+        <span className="inline-block h-[5px] w-5" style={{ backgroundColor: WEG, printColorAdjust: 'exact' }} />Strecke
       </li>
       <li className="flex items-center gap-1.5">
         <span className="inline-block size-3 border-2 border-black bg-white" />Start und Ziel
       </li>
       {hat('tunnel') && (
         <li className="flex items-center gap-1.5">
-          <span className="inline-block h-[7px] w-5" style={{ backgroundColor: FARBE.tunnel, printColorAdjust: 'exact' }} />Tunnel
+          <span className="inline-block h-[9px] w-5" style={{ backgroundColor: FARBE.tunnel, printColorAdjust: 'exact' }} />Tunnel
         </li>
       )}
       {hat('bruecke') && <li className="flex items-center gap-1.5">{punkt(FARBE.bruecke)}Brücke</li>}
@@ -813,9 +815,9 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
       {seen.map((q, i) => (
         <polygon key={i} points={q.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')} fill={SEE} />
       ))}
-      <polyline points={linie(0, ende)} fill="none" stroke={WEG} strokeWidth={3} strokeLinejoin="round" />
+      <polyline points={linie(0, ende)} fill="none" stroke={WEG} strokeWidth={STRECKE_BREITE} strokeLinejoin="round" />
       {eintraege.filter((e) => e.art === 'tunnel' && e.o.sAus !== null).map((e) => (
-        <polyline key={`t${e.nr}`} points={linie(e.o.s, e.o.sAus!)} fill="none" stroke={FARBE.tunnel} strokeWidth={7}
+        <polyline key={`t${e.nr}`} points={linie(e.o.s, e.o.sAus!)} fill="none" stroke={FARBE.tunnel} strokeWidth={STRECKE_BREITE + 4}
                   strokeLinecap="butt" />
       ))}
       {rahmen.map((r) => (
