@@ -115,7 +115,7 @@ const imBild = (z: { x0: number; x1: number; y0: number; y1: number }, box: Box,
  * Welche Kategorien die Karten zeigen: jede lässt sich in der Legende aus- und
  * einblenden (Michael, 2026-09-26), gemerkt auf diesem Gerät, für alle Karten.
  */
-export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete'
+export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden'
 const KATEGORIEN_SPEICHER = 'taktland.karte.v1'
 let versteckt: Set<Kategorie> = (() => {
   try {
@@ -269,6 +269,7 @@ const LANG: Partial<Record<Kategorie, string>> = {
   kgs: 'Kulturgüter von nationaler Bedeutung',
   seilbahn: 'Seilbahnen mit Bundeskonzession',
   gebiete: 'Gebiete (BLN, Pärke, Moorlandschaften)',
+  boden: 'Wald und Siedlung',
 }
 
 const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
@@ -277,6 +278,7 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   ['kgs', 'Kultur', <svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>],
   ['seilbahn', 'Seilbahn', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="1.5" strokeDasharray="3 2" className="stroke-seilbahn" /></svg>],
   ['gebiete', 'Gebiete', <span className="inline-block size-2.5 rounded-sm border border-flaeche-park-rand bg-flaeche-park" />],
+  ['boden', 'Wald, Siedlung', <span className="inline-flex gap-0.5"><span className="inline-block size-2.5 rounded-sm bg-wald" /><span className="inline-block size-2.5 rounded-sm bg-siedlung" /></span>],
 ]
 
 /** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein */

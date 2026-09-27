@@ -384,7 +384,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Seen, Flüsse, Gipfel und die Tunnel und Brücken anderer Bahnen stammen von swisstopo
             (Swiss Map Vector 1000, swissTLM3D), die Höhenstufen der Karten aus swissALTIRegio von
-            swisstopo, die Landes- und Kantonsgrenzen vom Bundesamt für Statistik BFS,
+            swisstopo, Wald, Siedlung und Stadtzentren aus swissTLMRegio von swisstopo, die Landes- und Kantonsgrenzen vom Bundesamt für Statistik BFS,
             Kulturgüter vom Bundesamt für Bevölkerungsschutz BABS, Seilbahnen vom BAV, BLN,
             Pärke und Moorlandschaften vom Bundesamt für Umwelt BAFU, alle frei nutzbar mit
             Quellenangabe.

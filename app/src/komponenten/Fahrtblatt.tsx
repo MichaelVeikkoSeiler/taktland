@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { flaechenLaden, geometrieLaden, kartengrundLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
+import { bodenbedeckungLaden, flaechenLaden, geometrieLaden, kartengrundLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import {
   type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, wegEnde,
 } from '../fahrt'
 import { ohneKuerzel } from '../kuerzel'
 import { bahnenAusLesen, nachbarnBauen } from '../bahnen'
 import type {
-  BahnhofIndex, BrueckenEintrag, KartengrundDaten, SeenDaten, StreckenAbschnitt, StreckenNetz, TunnelEintrag, Uebersicht,
+  BahnhofIndex, BodenbedeckungDaten, BrueckenEintrag, KartengrundDaten, SeenDaten, StreckenAbschnitt, StreckenNetz, TunnelEintrag, Uebersicht,
 } from '../typen'
 import { nachKennung, type Nachbarn, type StreckenWahl, wegSuchen } from './Strecke'
 import { Ladefehler } from './Ladefehler'
@@ -44,6 +44,8 @@ const GRENZE_BREITE = { land: 2.4, kanton: 1 }
 /** Die Strecke kräftiger als die Landesgrenze, damit man sie nicht verwechselt */
 const STRECKE_BREITE = 5
 const WEG = '#767676'
+/** Wald, Siedlung, Stadtzentrum: durchscheinend über den Höhenstufen, hell für den Druck */
+const BODEN = { wald: 'rgb(118 168 92 / 0.26)', siedlung: 'rgb(140 128 118 / 0.2)', stadtzentrum: 'rgb(120 106 96 / 0.38)' }
 
 /** Breite des Blatts auf dem Bildschirm, entspricht 190 mm Druckbreite bei 96 dpi */
 const BLATT_PX = 718
@@ -76,6 +78,8 @@ interface Daten {
   seen: SeenDaten | null
   /** Grund der Karte: Ausland, Kantone, Flüsse, Höhenstufen (Michael, 2026-09-27) */
   grund: KartengrundDaten | null
+  /** Wald, Siedlung, Stadtzentrum (swissTLMRegio), Michael, 2026-09-27 */
+  boden: BodenbedeckungDaten | null
   titel: [string, string]
   /** Tunnel anderer Bahnen aus swissTLM3D: ohne Länge, darum nicht auf dem Blatt */
   ohneLaenge: number
@@ -127,9 +131,11 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
       try { seen = await seenLaden(); fahrweg.seeUfer = seeUferAufWeg(fahrweg, seen) } catch { /* ohne Seen */ }
       let grund: KartengrundDaten | null = null
       try { grund = await kartengrundLaden() } catch { /* ohne Grund, weiss */ }
+      let boden: BodenbedeckungDaten | null = null
+      try { boden = await bodenbedeckungLaden() } catch { /* ohne Wald und Siedlung */ }
       const name = (x: string) => bahnhof.get(uicVon.get(x) ?? 0)?.name ?? netz.punkte[x] ?? x
       if (!ab) {
-        setDaten({ netz, tunnel, bruecken, fahrweg, seen, grund, titel: [name(weg.punkte[0]), name(weg.punkte[weg.punkte.length - 1])],
+        setDaten({ netz, tunnel, bruecken, fahrweg, seen, grund, boden, titel: [name(weg.punkte[0]), name(weg.punkte[weg.punkte.length - 1])],
                    ohneLaenge: fahrweg.objekte.filter((o) => o.tlm && o.art === 'tunnel').length })
       }
     })().catch((e: Error) => { if (!ab) setFehler(e.message) })
@@ -579,6 +585,10 @@ function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
         ))}
         Höhe ab 1000, 2000, 3000 m
       </li>
+      <li className="flex items-center gap-1.5">
+        <span className="inline-block h-3 w-3" style={{ backgroundColor: BODEN.wald, printColorAdjust: 'exact' }} />Wald
+        <span className="ml-1 inline-block h-3 w-3" style={{ backgroundColor: BODEN.siedlung, printColorAdjust: 'exact' }} />Siedlung
+      </li>
     </ul>
   )
 }
@@ -779,10 +789,10 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
     const l = lageBei(fw, bis); const [x, y] = pt(l.lat, l.lon); raus.push(`${x.toFixed(1)},${y.toFixed(1)}`)
     return raus.join(' ')
   }
-  const punkte = (r: { start: [number, number]; d: number[] }) => {
+  const punkte = (r: { start: [number, number]; d: number[] }, f = 1e5) => {
     let [la, lo] = r.start
-    const q = [pt(la / 1e5, lo / 1e5)]
-    for (let i = 0; i < r.d.length; i += 2) { la += r.d[i]; lo += r.d[i + 1]; q.push(pt(la / 1e5, lo / 1e5)) }
+    const q = [pt(la / f, lo / f)]
+    for (let i = 0; i < r.d.length; i += 2) { la += r.d[i]; lo += r.d[i + 1]; q.push(pt(la / f, lo / f)) }
     return q
   }
   const sichtbar = (q: ReadonlyArray<readonly [number, number]>) => q.some(([x, y]) => drin(x, y, 50))
@@ -794,6 +804,10 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
   const g = daten.grund
   const hoehen = (g?.hoehen ?? []).map((st) => st.ringe.map(punkte).filter(sichtbar).map((q) => d(q)).join(''))
   const land = (g?.land ?? []).map((r) => d(punkte(r))).join('')
+  const bb = daten.boden
+  const boden = bb ? (['siedlung', 'stadtzentrum', 'wald'] as const).map((k) => ({
+    k, d: bb[k].map((r) => punkte(r, bb.faktor)).filter(sichtbar).map((q) => d(q)).join(''),
+  })) : []
   const kantone = (g?.kanton ?? []).map(punkte).filter(sichtbar)
   const fluesse = (g?.fluesse ?? []).map((f) => ({ q: punkte(f), b: f.b })).filter((f) => sichtbar(f.q))
   const gesetzt = platzieren(fw, p, eintraege, B, H)
@@ -829,6 +843,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
     <>
       <rect x={0} y={0} width={B} height={H} fill="#fff" />
       {hoehen.map((x, i) => x && <path key={`h${i}`} d={x} fillRule="evenodd" fill={GRUND.hoehen[i]} />)}
+      {boden.map((b) => b.d && <path key={b.k} d={b.d} fillRule="evenodd" fill={BODEN[b.k]} />)}
       {land && <path d={`M-10 -10H${B + 10}V${H + 10}H-10Z${land}`} fillRule="evenodd" fill={GRUND.ausland} />}
       {kantone.map((q, i) => <path key={`k${i}`} d={d(q)} fill="none" stroke={GRUND.kanton} strokeWidth={GRENZE_BREITE.kanton}
                                                strokeLinejoin="round" />)}

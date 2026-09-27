@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { kartengrundLaden } from '../daten'
-import type { KartengrundDaten, KodierterZug } from '../typen'
+import { bodenbedeckungLaden, kartengrundLaden } from '../daten'
+import { useVersteckt } from './Sehenswert'
+import type { BodenbedeckungDaten, KartengrundDaten, KodierterZug } from '../typen'
 import { LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
 
 /**
@@ -21,12 +22,12 @@ interface Grund {
 let vorrat: Grund | null = null
 let laden: Promise<Grund> | null = null
 
-function zug(z: KodierterZug, zu: boolean): Zug {
+function zug(z: KodierterZug, zu: boolean, faktor = 1e5): Zug {
   let [la, lo] = z.start
-  const pts: Array<[number, number]> = [[lo / 1e5 * LAENGE_ZU_BREITE, -la / 1e5]]
+  const pts: Array<[number, number]> = [[lo / faktor * LAENGE_ZU_BREITE, -la / faktor]]
   for (let i = 0; i < z.d.length; i += 2) {
     la += z.d[i]; lo += z.d[i + 1]
-    pts.push([lo / 1e5 * LAENGE_ZU_BREITE, -la / 1e5])
+    pts.push([lo / faktor * LAENGE_ZU_BREITE, -la / faktor])
   }
   let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity]
   for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y) }
@@ -54,11 +55,36 @@ export function useKartengrund(): Grund | null {
   return g
 }
 
+/** Wald, Siedlung und Stadtzentrum (Michael, 2026-09-27), einmal geladen für alle Karten */
+interface Boden { wald: Zug[]; siedlung: Zug[]; stadtzentrum: Zug[] }
+let bodenVorrat: Boden | null = null
+let bodenLaden: Promise<Boden> | null = null
+
+function bodenLesen(d: BodenbedeckungDaten): Boden {
+  const f = d.faktor
+  return { wald: d.wald.map((r) => zug(r, true, f)), siedlung: d.siedlung.map((r) => zug(r, true, f)),
+           stadtzentrum: d.stadtzentrum.map((r) => zug(r, true, f)) }
+}
+
+function useBoden(): Boden | null {
+  const [b, setB] = useState<Boden | null>(bodenVorrat)
+  useEffect(() => {
+    if (bodenVorrat) return
+    let ab = false
+    bodenLaden ??= bodenbedeckungLaden().then((d) => (bodenVorrat = bodenLesen(d)))
+    bodenLaden.then((x) => { if (!ab) setB(x) }).catch(() => { bodenLaden = null })
+    return () => { ab = true }
+  }, [])
+  return b
+}
+
 const im = (z: Zug, box: Box, h: number) =>
   z.x1 > box.cx - box.w && z.x0 < box.cx + box.w && z.y1 > box.cy - h && z.y0 < box.cy + h
 
 /** Unter allen anderen Ebenen zeichnen */
 export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | null; box: Box; verh?: number }) {
+  const boden = useBoden()
+  const aus = useVersteckt()
   if (!grund) return null
   const h = box.w / verh
   // ein Rahmen weit um den Ausschnitt; mit der Schweiz als Loch wird er zum Ausland
@@ -69,6 +95,12 @@ export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | nu
       {grund.hoehen.map((s, i) => (
         <path key={`h${s.ab}`} d={s.flaechen.filter((z) => im(z, box, h)).map((z) => z.d).join('')}
               fillRule="evenodd" className={['fill-hoehe-1', 'fill-hoehe-2', 'fill-hoehe-3'][i]} />
+      ))}
+      {/* Siedlung, Stadtzentrum und Wald über den Höhenstufen, leicht durchscheinend */}
+      {boden && !aus.has('boden') && ([['siedlung', 'fill-siedlung'], ['stadtzentrum', 'fill-stadtzentrum'],
+        ['wald', 'fill-wald']] as const).map(([k, klasse]) => (
+        <path key={k} d={boden[k].filter((z) => im(z, box, h)).map((z) => z.d).join('')}
+              fillRule="evenodd" className={klasse} />
       ))}
       {(
         <>

@@ -53,6 +53,10 @@
   --color-hoehe-1: #f5f3ee;
   --color-hoehe-2: #ebe8e1;
   --color-hoehe-3: #dedad2;
+  /* Wald, Siedlung, Stadtzentrum (swissTLMRegio), durchscheinend über den Höhenstufen */
+  --color-wald: rgb(118 168 92 / 0.28);
+  --color-siedlung: rgb(140 128 118 / 0.22);
+  --color-stadtzentrum: rgb(120 106 96 / 0.4);
   --color-see-name: #3f6a93;
   /* Seen neben der Strecke im Streckenband, kräftiger als die Seefläche */
   --color-see-band: #7fb2e0;
@@ -166,7 +170,8 @@ body {
 /* Seen im Dunkeln */
 @media (prefers-color-scheme: dark) {
   :root { --color-ausland: #1b1b1b; --color-kantonsgrenze: #2e2e2e; --color-landesgrenze: #4a4a4a;
-          --color-fluss: #2f4a63; --color-hoehe-1: #1a1a1a; --color-hoehe-2: #202020; --color-hoehe-3: #272727;
+          --color-fluss: #2f4a63; --color-wald: rgb(96 150 80 / 0.22); --color-siedlung: rgb(200 200 200 / 0.1);
+          --color-stadtzentrum: rgb(200 200 200 / 0.2); --color-hoehe-1: #1a1a1a; --color-hoehe-2: #202020; --color-hoehe-3: #272727;
           --color-see: #1d2c3a; --color-see-rand: #34506b; --color-see-name: #8fb3d4; --color-see-halo: #151515;
           --color-gipfel: #c9a27e; --color-kgs: #c39be0; --color-seilbahn: #7cc0cf;
           --color-flaeche-bln: #1f2a1b; --color-flaeche-bln-rand: #3a5230;

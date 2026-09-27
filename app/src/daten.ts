@@ -1,5 +1,5 @@
 import type {
-  BahnhofIndex, IndexEintrag, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StandortDaten, StreckenGeometrie,
+  BahnhofIndex, BodenbedeckungDaten, IndexEintrag, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StandortDaten, StreckenGeometrie,
   FlaechenDaten, KartengrundDaten, SeenDaten, SehenswertDaten, StreckenNetz,
   Uebersicht, Vergleichsdaten,
 } from './typen'
@@ -104,6 +104,11 @@ export async function flaechenLaden(): Promise<FlaechenDaten> {
 /** Grund der Karten: Schweiz, Kantone, Flüsse, Höhenstufen */
 export async function kartengrundLaden(): Promise<KartengrundDaten> {
   return holen<KartengrundDaten>('data/kartengrund.json')
+}
+
+/** Wald, Siedlung, Stadtzentrum (swissTLMRegio), gut 1,8 MB: erst laden, wenn eine Karte sie zeigt */
+export async function bodenbedeckungLaden(): Promise<BodenbedeckungDaten> {
+  return holen<BodenbedeckungDaten>('data/bodenbedeckung.json')
 }
 
 /** Die Seen für die Karten */
