@@ -10,7 +10,8 @@
  *
  * Es wird nichts an einen Server gemeldet. Der Cache liegt auf dem Gerät.
  */
-const VERSION = 'taktland-v5'
+// v6: neue Bildmarke (2026-09-27); ein neuer Name leert den alten Vorrat samt alten Symbolen
+const VERSION = 'taktland-v6'
 const SHELL = './'
 
 /** So viele Profile werden im Voraus gespeichert. Bei vielen Bahnhöfen ist

@@ -45,7 +45,10 @@ def main():
     # Symbole als Data-URI, das Manifest entfällt in der Einzeldatei
     for name in ("icon-192.png", "apple-touch-icon.png"):
         roh = base64.b64encode((DIST / name).read_bytes()).decode()
-        html = html.replace(f'href="./{name}"', f'href="data:image/png;base64,{roh}"')
+        html = re.sub(r'href="\./' + re.escape(name) + r'(\?v=\d+)?"', f'href="data:image/png;base64,{roh}"', html)
+    # die Bildmarke als SVG ebenso
+    svg = base64.b64encode((DIST / "logo.svg").read_bytes()).decode()
+    html = re.sub(r'href="\./logo\.svg(\?v=\d+)?"', f'href="data:image/svg+xml;base64,{svg}"', html)
     html = re.sub(r'\s*<link rel="manifest"[^>]*>', "", html)
 
     html = html.replace("</head>", einbau + "\n  </head>")
