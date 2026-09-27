@@ -142,6 +142,13 @@ BAV_OHNE_DATENHERR = {"cmBC", "DFB"}
 #: diese über Bern und Thun, mit 15 änderten sich 12 der alten Wege. Luzern –
 #: Interlaken Ost bleibt über Bern; «Über Meiringen» legt den Brünig fest.
 ZUEGE_OHNE_ZAEHLUNG = 5
+#: Die BTI zählt wie ein Abschnitt mit so vielen Zügen pro Tag (Michael,
+#: 2026-09-27: «diese Linie bevorzugen, wenn man Ins oder Ins Dorf bis Biel
+#: eingibt»). Mit 20 laufen Ins – Biel und Ins Dorf – Biel über Täuffelen,
+#: Dornach – Marin-Epagnier bleibt auf SBB und BLS, von 600 zufälligen Wegen
+#: ändern sich 4 (Wege nach Brüttelen über Biel statt über Ins). Mit 1 lief
+#: sogar Ins Dorf – Biel über Kerzers und Lyss.
+ZUEGE_BTI = 20
 #: Abkürzungen des Schienennetzes, wie die Zugzahlen sie schreiben, und bei
 #: mehrsprachigen nur die erste. So bekommen SBB-Stücke ihre Linie und damit
 #: Tunnel und Brücken der SBB (Mols, Grandgourt).
@@ -679,12 +686,11 @@ def main():
     verlaeufe, bauwerke_genutzt = {}, {}
     liste, ohne_zuordnung, bereiche = [], [], {}
     for (a, b), k in sorted(kanten.items()):
-        # ohne Zugzahlen (BAV_OHNE_ZUGZAHLEN) wie ein selten befahrener Abschnitt:
-        # So nimmt der Weg die BTI nur, wenn Start, Ziel oder «Über» an ihr
-        # liegen. Ohne Strafe lief Dornach – Marin-Epagnier über Täuffelen.
+        # ohne Zugzahlen (BAV_OHNE_ZUGZAHLEN) wie ein Abschnitt mit ZUEGE_BTI
+        # Zügen: Ohne Strafe lief Dornach – Marin-Epagnier über Täuffelen.
         # Stücke anderer Bahnen (bav_stuecke_waehlen) wie ein Abschnitt mit
         # ZUEGE_OHNE_ZAEHLUNG Zügen pro Tag, siehe dort
-        pro_tag = k["zuege"] or (ZUEGE_OHNE_ZAEHLUNG if k.get("stueck") else 1)
+        pro_tag = k["zuege"] or (ZUEGE_OHNE_ZAEHLUNG if k.get("stueck") else ZUEGE_BTI)
         strafe = STRAFE / max(pro_tag, 1)
         eintrag = {"von": a, "nach": b,
                    "gewicht": round(k["km"] * (1 + strafe) + ZUSCHLAG_KM, 3),

@@ -359,8 +359,10 @@ Erledigt am 2026-09-26 (Michael: «Strecke + schlanke Seiten»). Die 14
 Haltestellen stehen nicht in der Passagierfrequenz; sie haben nur Stammdaten und
 eine Frage zur Höhe, die Fahrgastzahl steht als Lücke da, im Duell spielen sie
 nicht mit. Linie 261 hat eine Linienseite aus dem Schienennetz des BAV. Im Netz
-zählt die BTI wie eine selten befahrene Strecke: Biel → Ins bleibt auf der SBB,
-mit «Über Täuffelen» fährt der Weg über die BTI. Endpunkte im Schienennetz sind
+zählt die BTI wie ein Abschnitt mit 20 Zügen pro Tag (2026-09-27, Michael: «diese
+Linie bevorzugen, wenn man Ins oder Ins Dorf bis Biel eingibt»): Ins – Biel und Ins
+Dorf – Biel führen über Täuffelen, Dornach – Marin-Epagnier bleibt auf SBB und BLS.
+Vorher (wie ein Zug pro Tag) lief sogar Ins Dorf – Biel über Kerzers und Lyss. Endpunkte im Schienennetz sind
 «Biel/Bienne [Gleis 11]» und «Ins [Gleis 11]», sie gelten als die Bahnhöfe.
 
 ## Andere Bahnen im Netz

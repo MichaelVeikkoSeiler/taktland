@@ -714,10 +714,10 @@ function Ergebnis({
           {' '}{netz.zugzahlen_jahr} Personenzüge fahren. Abschnitte mit wenigen Zügen zählen dabei
           als länger, und jeder Betriebspunkt unterwegs kostet etwas, damit der Weg den stark
           befahrenen, durchgehenden Strecken folgt. Dazu kommen Strecken aus dem Schienennetz des
-          BAV, die die Zugzahlen nicht führen: die BTI (Linie 261, Biel – Täuffelen – Ins), die zählt
-          wie eine selten befahrene Strecke, und die Strecken weiterer Bahnen wie RhB, MGB, MOB und
-          Zentralbahn, wo Bahnhöfe sonst fehlten. Für sie gibt es keine Zugzahlen; sie zählen darum
-          wie mässig befahrene Strecken. Welche Bahnen der Weg nehmen darf, lässt sich unter
+          BAV, die die Zugzahlen nicht führen: die BTI (Linie 261, Biel – Täuffelen – Ins) und die
+          Strecken weiterer Bahnen wie RhB, MGB, MOB und Zentralbahn, wo Bahnhöfe sonst fehlten. Für
+          sie gibt es keine Zugzahlen; sie zählen darum wie mässig befahrene Strecken, die BTI so,
+          dass Ins – Biel über Täuffelen führt. Welche Bahnen der Weg nehmen darf, lässt sich unter
           «Bahnen» wählen. Als Brücke gilt jedes
           Bauwerk im Brückenverzeichnis, auch ein kleines: Eine Brücke bis zwei Meter heisst
           Durchlass. Ein Tunnel zählt, sobald der Weg ihn berührt, auch einer, in dem der
