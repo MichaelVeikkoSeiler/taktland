@@ -11,7 +11,8 @@ import { Pikto } from './Pikto'
 const VORLAEUFE_S = [20, 10] as const
 type Vorlauf = typeof VORLAEUFE_S[number]
 /** Wie viel schneller die Probefahrt läuft; wählbar (Michael, 2026-09-26) */
-const ZEITRAFFER = [5, 10, 20, 50, 100] as const
+/** 1 = Echtzeit bei PROBE_TEMPO; 1 und 200 dazu (Michael, 2026-09-27) */
+const ZEITRAFFER = [1, 5, 10, 20, 50, 100, 200] as const
 type Zeitraffer = typeof ZEITRAFFER[number]
 /** Was so viele Sekunden vor dem Zug liegt, steht als eigene Karte oben */
 const ZUGLEICH_S = 40
@@ -462,8 +463,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                  role="group" aria-label="Tempo der Probefahrt">
               {ZEITRAFFER.map((f) => (
                 <button key={f} type="button" aria-pressed={raffer === f} onClick={() => rafferWaehlen(f)}
-                        aria-label={`${f}-mal schneller`}
-                        className={`min-h-9 flex-1 whitespace-nowrap px-1 font-medium tabular-nums ${raffer === f
+                        aria-label={f === 1 ? 'In Echtzeit, etwa 100 km/h' : `${f}-mal schneller`}
+                        className={`min-h-9 flex-1 whitespace-nowrap px-0.5 text-[13px] font-medium tabular-nums sm:px-1 sm:text-sm ${raffer === f
                           ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                           : 'bg-white dark:bg-sbb-midnight'}`}>
                   {f}×

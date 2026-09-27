@@ -238,8 +238,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Öffnen, ob die Fahrt weitergehen soll.
           </li>
           <li>
-            Probefahrten spielen einen Weg 5- bis 100-mal schneller ab, zum Ausprobieren ohne
-            Zug. Den Zug im Band kann man an jede Stelle ziehen.
+            Probefahrten spielen einen Weg in Echtzeit mit etwa 100 km/h oder 5- bis 200-mal
+            schneller ab, zum Ausprobieren ohne Zug. «Anhalten» unterbricht sie, «Weiter» fährt
+            weiter. Den Zug im Band kann man an jede Stelle ziehen.
           </li>
         </Punkte>
       </Abschnitt>
