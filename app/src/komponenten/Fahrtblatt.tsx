@@ -34,8 +34,11 @@ const FARBE: Record<Eintrag['art'], string> = {
 }
 const SEE = '#c9def1'
 /** Grund der Karte, heller als in der App, damit der Druck wenig Tinte braucht */
-const GRUND = { hoehen: ['#f7f6f2', '#efece6', '#e6e2da'], ausland: '#f2f2f2', kanton: '#dcdcdc',
-                grenze: '#bdbdbd', fluss: '#9cc3e6' }
+const GRUND = { hoehen: ['#f7f6f2', '#efece6', '#e6e2da'], ausland: '#f2f2f2', kanton: '#a3a3a3',
+                grenze: '#5a5a5a', fluss: '#9cc3e6' }
+/** Grenzen deutlich (Michael, 2026-09-27: Landesgrenze «dick, dunkelgrau», Kantonsgrenzen
+ *  «durchgezogen» und «etwas markanter») */
+const GRENZE_BREITE = { land: 2.4, kanton: 1 }
 const WEG = '#767676'
 
 /** Breite des Blatts auf dem Bildschirm, entspricht 190 mm Druckbreite bei 96 dpi */
@@ -556,6 +559,12 @@ function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
         </li>
       )}
       <li className="flex items-center gap-1.5">
+        <span className="inline-block w-5" style={{ height: GRENZE_BREITE.land, backgroundColor: GRUND.grenze, printColorAdjust: 'exact' }} />Landesgrenze
+      </li>
+      <li className="flex items-center gap-1.5">
+        <span className="inline-block h-px w-5" style={{ backgroundColor: GRUND.kanton, printColorAdjust: 'exact' }} />Kantonsgrenze
+      </li>
+      <li className="flex items-center gap-1.5">
         {GRUND.hoehen.map((f) => (
           <span key={f} className="inline-block h-3 w-3" style={{ backgroundColor: f, printColorAdjust: 'exact' }} />
         ))}
@@ -794,8 +803,9 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
       <rect x={0} y={0} width={B} height={H} fill="#fff" />
       {hoehen.map((x, i) => x && <path key={`h${i}`} d={x} fillRule="evenodd" fill={GRUND.hoehen[i]} />)}
       {land && <path d={`M-10 -10H${B + 10}V${H + 10}H-10Z${land}`} fillRule="evenodd" fill={GRUND.ausland} />}
-      {kantone.map((q, i) => <path key={`k${i}`} d={d(q)} fill="none" stroke={GRUND.kanton} strokeWidth={0.6} />)}
-      {land && <path d={land} fill="none" stroke={GRUND.grenze} strokeWidth={1} />}
+      {kantone.map((q, i) => <path key={`k${i}`} d={d(q)} fill="none" stroke={GRUND.kanton} strokeWidth={GRENZE_BREITE.kanton}
+                                               strokeLinejoin="round" />)}
+      {land && <path d={land} fill="none" stroke={GRUND.grenze} strokeWidth={GRENZE_BREITE.land} strokeLinejoin="round" />}
       {fluesse.map((f, i) => (
         <path key={`f${i}`} d={d(f.q, false)} fill="none" stroke={GRUND.fluss} strokeWidth={f.b >= 0.3 ? 1.6 : 1}
               strokeLinejoin="round" strokeLinecap="round" />
