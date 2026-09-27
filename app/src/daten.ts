@@ -106,7 +106,7 @@ export async function kartengrundLaden(): Promise<KartengrundDaten> {
   return holen<KartengrundDaten>('data/kartengrund.json')
 }
 
-/** Wald, Siedlung, Stadtzentrum (swissTLMRegio), gut 1,8 MB: erst laden, wenn eine Karte sie zeigt */
+/** Wald und Siedlung (swissTLMRegio), gut 4 MB: erst laden, wenn eine Karte sie zeigt */
 export async function bodenbedeckungLaden(): Promise<BodenbedeckungDaten> {
   return holen<BodenbedeckungDaten>('data/bodenbedeckung.json')
 }

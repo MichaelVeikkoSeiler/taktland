@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Wald, Siedlung und Stadtzentrum für die Karten: data/bodenbedeckung.json
-(Michael, 2026-09-27: «Wald, Siedlung und ggf. noch Stadtzentrum»).
+"""Wald und Siedlung für die Karten: data/bodenbedeckung.json
+(Michael, 2026-09-27: «Wald, Siedlung und ggf. noch Stadtzentrum»;
+Stadtzentrum wieder entfernt, Michael, 2026-09-28).
 
 Quelle: swissTLMRegio von swisstopo (Landschaftsmodell 1:200'000), Ebene
-tlmregio_landcover_landcover, objval «Wald», «Siedl» und «Stadtzentr». Die
+tlmregio_landcover_landcover, objval «Wald» und «Siedl». Die
 Flächen werden vereinfacht und sehr kleine weggelassen, damit die Karten schnell
 bleiben. Nur zum Zeichnen: keine Zahl aus dieser Datei steht als Angabe in der App.
 
@@ -35,7 +36,6 @@ GPKG = RAW / "swissTLMRegio_Product_LV95.gpkg"
 ARTEN = {
     "Wald": ("wald", 30, 2_000_000),
     "Siedl": ("siedlung", 30, 1_000_000),
-    "Stadtzentr": ("stadtzentrum", 25, 0),
 }
 
 

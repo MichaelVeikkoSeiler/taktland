@@ -435,7 +435,7 @@ export interface StandortDaten {
 }
 
 /** Grund der Karten (data/kartengrund.json): nur zum Zeichnen, keine Angaben */
-/** Wald, Siedlung, Stadtzentrum aus swissTLMRegio (pipeline/build_bodenbedeckung.py):
+/** Wald und Siedlung aus swissTLMRegio (pipeline/build_bodenbedeckung.py):
  *  Ringe in Grad mal faktor, nur zum Zeichnen */
 export interface BodenbedeckungDaten {
   quelle: string
@@ -444,7 +444,6 @@ export interface BodenbedeckungDaten {
   hinweis: string
   wald: KodierterZug[]
   siedlung: KodierterZug[]
-  stadtzentrum: KodierterZug[]
 }
 
 export interface KartengrundDaten {

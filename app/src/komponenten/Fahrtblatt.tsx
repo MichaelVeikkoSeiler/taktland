@@ -44,8 +44,8 @@ const GRENZE_BREITE = { land: 2.4, kanton: 1 }
 /** Die Strecke kräftiger als die Landesgrenze, damit man sie nicht verwechselt */
 const STRECKE_BREITE = 5
 const WEG = '#767676'
-/** Wald, Siedlung, Stadtzentrum: durchscheinend über den Höhenstufen, hell für den Druck */
-const BODEN = { wald: 'rgb(118 168 92 / 0.26)', siedlung: 'rgb(140 128 118 / 0.34)', stadtzentrum: 'rgb(120 106 96 / 0.5)' }
+/** Wald und Siedlung: durchscheinend über den Höhenstufen, hell für den Druck */
+const BODEN = { wald: 'rgb(118 168 92 / 0.26)', siedlung: 'rgb(140 128 118 / 0.34)' }
 
 /** Breite des Blatts auf dem Bildschirm, entspricht 190 mm Druckbreite bei 96 dpi */
 const BLATT_PX = 718
@@ -78,7 +78,7 @@ interface Daten {
   seen: SeenDaten | null
   /** Grund der Karte: Ausland, Kantone, Flüsse, Höhenstufen (Michael, 2026-09-27) */
   grund: KartengrundDaten | null
-  /** Wald, Siedlung, Stadtzentrum (swissTLMRegio), Michael, 2026-09-27 */
+  /** Wald und Siedlung (swissTLMRegio), Michael, 2026-09-27 */
   boden: BodenbedeckungDaten | null
   titel: [string, string]
   /** Tunnel anderer Bahnen aus swissTLM3D: ohne Länge, darum nicht auf dem Blatt */
@@ -805,7 +805,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
   const hoehen = (g?.hoehen ?? []).map((st) => st.ringe.map(punkte).filter(sichtbar).map((q) => d(q)).join(''))
   const land = (g?.land ?? []).map((r) => d(punkte(r))).join('')
   const bb = daten.boden
-  const boden = bb ? (['siedlung', 'stadtzentrum', 'wald'] as const).map((k) => ({
+  const boden = bb ? (['siedlung', 'wald'] as const).map((k) => ({
     k, d: bb[k].map((r) => punkte(r, bb.faktor)).filter(sichtbar).map((q) => d(q)).join(''),
   })) : []
   const kantone = (g?.kanton ?? []).map(punkte).filter(sichtbar)

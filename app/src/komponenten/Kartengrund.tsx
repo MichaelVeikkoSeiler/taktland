@@ -55,15 +55,14 @@ export function useKartengrund(): Grund | null {
   return g
 }
 
-/** Wald, Siedlung und Stadtzentrum (Michael, 2026-09-27), einmal geladen für alle Karten */
-interface Boden { wald: Zug[]; siedlung: Zug[]; stadtzentrum: Zug[] }
+/** Wald und Siedlung (Michael, 2026-09-27), einmal geladen für alle Karten */
+interface Boden { wald: Zug[]; siedlung: Zug[] }
 let bodenVorrat: Boden | null = null
 let bodenLaden: Promise<Boden> | null = null
 
 function bodenLesen(d: BodenbedeckungDaten): Boden {
   const f = d.faktor
-  return { wald: d.wald.map((r) => zug(r, true, f)), siedlung: d.siedlung.map((r) => zug(r, true, f)),
-           stadtzentrum: d.stadtzentrum.map((r) => zug(r, true, f)) }
+  return { wald: d.wald.map((r) => zug(r, true, f)), siedlung: d.siedlung.map((r) => zug(r, true, f)) }
 }
 
 function useBoden(): Boden | null {
@@ -96,9 +95,8 @@ export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | nu
         <path key={`h${s.ab}`} d={s.flaechen.filter((z) => im(z, box, h)).map((z) => z.d).join('')}
               fillRule="evenodd" className={['fill-hoehe-1', 'fill-hoehe-2', 'fill-hoehe-3'][i]} />
       ))}
-      {/* Siedlung, Stadtzentrum und Wald über den Höhenstufen, leicht durchscheinend */}
-      {boden && !aus.has('boden') && ([['siedlung', 'fill-siedlung'], ['stadtzentrum', 'fill-stadtzentrum'],
-        ['wald', 'fill-wald']] as const).map(([k, klasse]) => (
+      {/* Siedlung und Wald über den Höhenstufen, leicht durchscheinend */}
+      {boden && !aus.has('boden') && ([['siedlung', 'fill-siedlung'], ['wald', 'fill-wald']] as const).map(([k, klasse]) => (
         <path key={k} d={boden[k].filter((z) => im(z, box, h)).map((z) => z.d).join('')}
               fillRule="evenodd" className={klasse} />
       ))}
