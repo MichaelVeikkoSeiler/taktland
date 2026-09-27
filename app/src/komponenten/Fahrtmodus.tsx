@@ -314,9 +314,17 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   /** Meter bis zum Objekt entlang des gezeichneten Wegs; gilt auch, wenn der Zug steht */
   const bis = (o: FahrObjekt) => (sJetzt !== null ? Math.max(0, o.s - sJetzt) : null)
   const { angabe } = einstellung
+  /** Probefahrt: die Uhr läuft im Zeitraffer; angezeigt wird die Zeit, die wirklich vergeht,
+   *  passend zum Tempo in km/h (Michael, 2026-09-27). Wann gemeldet wird, bleibt gleich. */
+  const echt = (sekunden: number) => (probefahrt ? sekunden / raffer : sekunden)
+  /** Tempo, wie es sich anfühlt: in der Probefahrt mal Zeitraffer */
+  const kmhJetzt = () => {
+    const k = Math.round(stand!.v * 3.6 * (probefahrt ? raffer : 1))
+    return k > 9999 ? k.toLocaleString('de-CH') : String(k)
+  }
   /** «in etwa 25 s», «in etwa 500 m» oder beides, wie gewählt; ohne Tempo nur die Distanz */
   const abstandText = (sekunden: number | null, meter: number | null) => {
-    const z = sekunden !== null && angabe !== 'distanz' ? dauer(sekunden) : null
+    const z = sekunden !== null && angabe !== 'distanz' ? dauer(echt(sekunden)) : null
     const d = meter !== null && (angabe !== 'zeit' || sekunden === null) ? `in etwa ${strecke(meter)}` : null
     return z && d ? `${z} · ${strecke(meter!)}` : z ?? d
   }
@@ -333,7 +341,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         const t = textVon(o)
         if (ansage.current && t) {
           const m = bis(o)
-          const sek = `In etwa ${Math.max(5, Math.round(e / 5) * 5)} Sekunden`
+          const sek = `In etwa ${sekundenGerundet(echt(e))} Sekunden`
           ansage.current.textContent = (angabe === 'zeit' || m === null ? sek
             : angabe === 'distanz' ? `In etwa ${streckeGesprochen(m)}` : `${sek}, etwa ${streckeGesprochen(m, false)}`) + ': '
             + (o.sehenswert?.sorte === 'flaeche' ? `Du fährst durch ${t.name}, ${o.sehenswert.art}.`
@@ -395,7 +403,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
         <Ring bald={bald} art={o.art} anteil={eta(o) === null ? null : 1 - eta(o)! / RING_S}>
           {angabe === 'zeit' || (angabe === 'beides' && eta(o) !== null)
-            ? <ZeitImRing sekunden={eta(o)} steht={stand !== null} />
+            ? <ZeitImRing sekunden={eta(o) === null ? null : echt(eta(o)!)} steht={stand !== null} />
             : <DistanzImRing meter={bis(o)} />}
         </Ring>
         <div className="min-w-0">
@@ -507,7 +515,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           </>
         ) : (
           <p className="text-sbb-metal dark:text-sbb-storm">
-            {faehrt && !ohneGps ? `Etwa ${Math.round(stand!.v * 3.6)} km/h` : zustand(meldung, stand, ohneGps, imTunnel !== null, false)}
+            {faehrt && !ohneGps ? `Etwa ${kmhJetzt()} km/h` : zustand(meldung, stand, ohneGps, imTunnel !== null, false)}
           </p>
         )}
       </div>
@@ -593,7 +601,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             Bildschirmleser würde sonst ununterbrochen vorlesen */}
         <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
           {probefahrt && angehalten ? 'Probefahrt angehalten' : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
-          {faehrt && !ohneGps && !angehalten && ` · etwa ${Math.round(stand!.v * 3.6)} km/h`}
+          {faehrt && !ohneGps && !angehalten && ` · etwa ${kmhJetzt()} km/h`}
         </p>
         {ohneZiel && (
           <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -780,7 +788,7 @@ function sprechbar(zeile: string) {
 /** Die Zeit im Ring: gross die Zahl, klein die Einheit */
 function ZeitImRing({ sekunden, steht }: { sekunden: number | null; steht: boolean }) {
   if (sekunden === null) return <span className="text-sm font-bold">{steht ? 'steht' : '…'}</span>
-  const [zahl, einheit] = sekunden < 90 ? [Math.max(5, Math.round(sekunden / 5) * 5), 's']
+  const [zahl, einheit] = sekunden < 90 ? [sekundenGerundet(sekunden), 's']
     : sekunden < 3600 ? [Math.round(sekunden / 60), 'min'] : [Math.floor(sekunden / 3600), 'h']
   return (
     <>
@@ -829,8 +837,13 @@ function DistanzImRing({ meter }: { meter: number | null }) {
 }
 
 /** «in etwa 25 s», «in etwa 3 min» */
+/** auf 5 s gerundet; darunter ganze Sekunden, im Zeitraffer der Probefahrt kommt das vor */
+function sekundenGerundet(sekunden: number) {
+  return sekunden < 5 ? Math.max(1, Math.round(sekunden)) : Math.round(sekunden / 5) * 5
+}
+
 function dauer(sekunden: number) {
-  if (sekunden < 90) return `in etwa ${Math.max(5, Math.round(sekunden / 5) * 5)} s`
+  if (sekunden < 90) return `in etwa ${sekundenGerundet(sekunden)} s`
   if (sekunden < 3600) return `in etwa ${Math.round(sekunden / 60)} min`
   return `in etwa ${Math.floor(sekunden / 3600)} h ${Math.round((sekunden % 3600) / 60)} min`
 }
