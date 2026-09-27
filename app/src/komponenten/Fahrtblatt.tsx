@@ -12,7 +12,8 @@ import { nachKennung, type Nachbarn, type StreckenWahl, wegSuchen } from './Stre
 import { Ladefehler } from './Ladefehler'
 import { Pikto } from './Pikto'
 
-/** So viele Einträge je Art passen auf ein Blatt A4 */
+/** So viele Einträge je Art passen auf ein Blatt A4; zweiseitig doppelt so viele
+ *  (Michael, 2026-09-27: «eine einfache Variante und eine schwierigere Variante») */
 const TUNNEL_MAX = 5
 /** so viele Tunnel anderer Bahnen mit Namen (swissTLM3D, ohne Länge) vor denen mit Länge */
 const TLM_TUNNEL_ZUERST = 2
@@ -135,7 +136,8 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
     try { localStorage.setItem('taktland.fahrtblatt.seiten', zweiseitig ? '2' : '1') } catch { /* nur jetzt */ }
   }, [zweiseitig])
   useEffect(() => setWeniger(0), [daten, zweiseitig])
-  const eintraege = useMemo(() => (daten ? auswaehlen(daten, bahnhof, weniger) : []), [daten, bahnhof, weniger])
+  const eintraege = useMemo(() => (daten ? auswaehlen(daten, bahnhof, weniger, zweiseitig ? 2 : 1) : []),
+    [daten, bahnhof, weniger, zweiseitig])
 
   return (
     <div className="px-4 pb-16 print:p-0">
@@ -158,8 +160,8 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
         </div>
         <p className="mt-2 text-sm text-sbb-metal">
           {zweiseitig
-            ? 'Vorne die Karte über die ganze Seite, hinten die Listen zum Ausfüllen. Beidseitig drucken, über die lange Kante.'
-            : 'Oben die Karte, unten die Listen zum Ausfüllen.'}
+            ? 'Die schwierigere Variante: vorne die Karte über die ganze Seite, hinten etwa doppelt so viel zum Ausfüllen. Beidseitig drucken, über die lange Kante.'
+            : 'Die einfache Variante: oben die Karte, unten die Listen zum Ausfüllen.'}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           <button type="button" disabled={!daten} onClick={() => window.print()}
@@ -181,7 +183,7 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
 }
 
 /** Was aufs Blatt kommt, in Fahrtrichtung nummeriert */
-function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string }>, weniger = 0): Eintrag[] {
+function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string }>, weniger = 0, mal = 1): Eintrag[] {
   const tunnelNach = nachKennung(d.tunnel)
   const brueckenNach = nachKennung(d.bruecken)
   const uicVon = new Map(Object.entries(d.netz.bahnhoefe).map(([k, v]) => [v, Number(k)]))
@@ -205,7 +207,7 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
   // Verteilung auf die Strecke haben»): Jede Art wählt nach ihrer Rangliste, zuerst
   // nur, was mindestens VERTEILT_ANTEIL des Wegs von allem schon Gewählten entfernt
   // liegt, dann mit halbem Abstand, dann ohne. So bleibt die Zahl je Art gleich.
-  const abstand = wegEnde(d.fahrweg) * VERTEILT_ANTEIL
+  const abstand = wegEnde(d.fahrweg) * VERTEILT_ANTEIL / mal
   const belegt: number[] = []
   const verteilen = <T extends FahrObjekt>(liste: T[], n: number): T[] => {
     const raus: T[] = []
@@ -221,8 +223,8 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
   // längsten mit bekannter Länge, dann weitere mit Namen, zuletzt die ohne
   const tunnelMitLaenge = ob.filter((o) => o.art === 'tunnel' && !o.tlm && tunnelNach.get(o.kennung)?.laenge_m != null)
     .sort((a, b) => tunnelNach.get(b.kennung)!.laenge_m! - tunnelNach.get(a.kennung)!.laenge_m!)
-  const tunnel = verteilen([...tlmMitNamen.slice(0, TLM_TUNNEL_ZUERST), ...tunnelMitLaenge,
-                            ...tlmMitNamen.slice(TLM_TUNNEL_ZUERST), ...tlmOhneNamen], TUNNEL_MAX)
+  const tunnel = verteilen([...tlmMitNamen.slice(0, TLM_TUNNEL_ZUERST * mal), ...tunnelMitLaenge,
+                            ...tlmMitNamen.slice(TLM_TUNNEL_ZUERST * mal), ...tlmOhneNamen], TUNNEL_MAX * mal)
   for (const o of tunnel) {
     if (o.tlm) {
       const galerie = o.tlm.art === 'galerie'
@@ -238,7 +240,7 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
     ...ob.filter((o) => o.art === 'bruecke' && !o.tlm && (brueckenNach.get(o.kennung)?.baueinheiten ?? 0) >= BRUECKE_AB_BE)
       .sort((a, b) => brueckenNach.get(b.kennung)!.baueinheiten! - brueckenNach.get(a.kennung)!.baueinheiten!),
     ...ob.filter((o) => o.art === 'bruecke' && o.tlm?.name),
-  ], BRUECKEN_MAX)
+  ], BRUECKEN_MAX * mal)
   for (const o of bruecken) {
     if (o.tlm) roh.push({ o, art: 'bruecke', name: o.tlm.name!, zeile: '' })
     else {
@@ -250,8 +252,8 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
   // Kulturgüter, das sind meist Gebäude (Michael, 2026-09-26)
   const sw = ob.filter((o) => o.sehenswert && o.sehenswert.seite)
   const hoehe = (o: FahrObjekt) => Number((o.sehenswert!.zeile.match(/^([\d'’]+) m/)?.[1] ?? '0').replace(/['’]/g, ''))
-  const gipfel = verteilen(sw.filter((o) => o.sehenswert!.sorte === 'gipfel').sort((a, b) => hoehe(b) - hoehe(a)), GIPFEL_MAX)
-  const seilbahn = verteilen(sw.filter((o) => o.sehenswert!.sorte === 'seilbahn'), SEILBAHN_MAX)
+  const gipfel = verteilen(sw.filter((o) => o.sehenswert!.sorte === 'gipfel').sort((a, b) => hoehe(b) - hoehe(a)), GIPFEL_MAX * mal)
+  const seilbahn = verteilen(sw.filter((o) => o.sehenswert!.sorte === 'seilbahn'), SEILBAHN_MAX * mal)
   for (const o of [...gipfel, ...seilbahn]) {
     const x = o.sehenswert!
     roh.push({ o, art: x.sorte as Eintrag['art'], name: x.name, seite: x.seite!,
@@ -261,7 +263,7 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
   const stufe = { L: 0, M: 1, S: 2 } as Record<string, number>
   const bhf = ob.filter((o) => o.art === 'bahnhof' && bahnhof.has(uicVon.get(o.kennung) ?? 0))
   const tier = (o: FahrObjekt) => stufe[bahnhof.get(uicVon.get(o.kennung) ?? 0)!.tier] ?? 3
-  for (const o of verteilen([...bhf].sort((x, y) => tier(x) - tier(y)), BAHNHOEFE_MAX)) {
+  for (const o of verteilen([...bhf].sort((x, y) => tier(x) - tier(y)), BAHNHOEFE_MAX * mal)) {
     roh.push({ o, art: 'bahnhof', name: bahnhof.get(uicVon.get(o.kennung) ?? 0)!.name, zeile: '' })
   }
   // zu viel für eine Seite: zuerst die kleinen Bahnhöfe weg, dann Seilbahnen, Gipfel,
@@ -280,7 +282,7 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
  * stand links und rechts doppelt da). Sind es zu viele, die, an denen der Weg am
  * längsten entlangführt, laut den Uferstücken; gezeigt in Fahrtrichtung.
  */
-function seenAmWeg(fw: Fahrweg) {
+function seenAmWeg(fw: Fahrweg, mal = 1) {
   const je = new Map<string, { name: string; seiten: Set<'links' | 'rechts'>; s: number; meter: number }>()
   for (const u of fw.seeUfer ?? []) {
     if (!u.name) continue
@@ -290,7 +292,8 @@ function seenAmWeg(fw: Fahrweg) {
     x.meter += u.s1 - u.s0
     je.set(u.name, x)
   }
-  return [...je.values()].sort((a, b) => b.meter - a.meter).slice(0, SEEN_MAX).sort((a, b) => a.s - b.s)
+  return [...je.values()].sort((a, b) => b.meter - a.meter)
+    .slice(0, SEEN_MAX * mal).sort((a, b) => a.s - b.s)
     .map((x) => ({ name: x.name, seite: x.seiten.size > 1 ? 'links und rechts' : [...x.seiten][0] }))
 }
 
@@ -324,11 +327,40 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
     if (flaeche.current) ro.observe(flaeche.current)
     return () => ro.disconnect()
   }, [])
-  const seen = seenAmWeg(daten.fahrweg)
+  const mal = zweiseitig ? 2 : 1
+  const seen = seenAmWeg(daten.fahrweg, mal)
   const gruppe = (arten: Eintrag['art'][]) => eintraege.filter((e) => arten.includes(e.art))
   const tunnel = gruppe(['tunnel'])
-  const bahnhoefe = gruppe(['bahnhof', 'bruecke'])
+  // zweiseitig mit doppelt so vielen Einträgen: Brücken in die rechte Spalte, die hat Platz
+  const bahnhoefe = gruppe(zweiseitig ? ['bahnhof'] : ['bahnhof', 'bruecke'])
+  const bruecken = zweiseitig ? gruppe(['bruecke']) : []
   const sehen = gruppe(['gipfel', 'seilbahn'])
+
+  const listeBahnhoefe = bahnhoefe.length > 0 && (
+    <Liste titel={zweiseitig ? 'Bahnhöfe' : 'Bahnhöfe und Brücken'} gross={zweiseitig}>
+      {bahnhoefe.map((e) => <Zeile key={e.nr} e={e} gross={zweiseitig} />)}
+    </Liste>
+  )
+  const listeBruecken = bruecken.length > 0 && (
+    <Liste titel="Brücken" gross>
+      {bruecken.map((e) => <Zeile key={e.nr} e={e} gross />)}
+    </Liste>
+  )
+  const listeSehen = sehen.length > 0 && (
+    <Liste titel="Aus dem Fenster" gross={zweiseitig}>
+      {sehen.map((e) => <Zeile key={e.nr} e={e} gross={zweiseitig} />)}
+    </Liste>
+  )
+  const listeSeen = seen.length > 0 && (
+    <Liste titel="Seen" gross={zweiseitig}>
+      {seen.map((s) => (
+        <li key={s.name + s.seite} className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${zweiseitig ? 'py-0.5' : 'py-px'}`}>
+          <Kaestchen />
+          <span className="min-w-0 truncate">{s.name} · {s.seite}</span>
+        </li>
+      ))}
+    </Liste>
+  )
 
   return (
     <div ref={rahmen} className="fahrtblatt-rahmen mt-6 print:mt-0" style={{ height: hoehe * massstab || undefined }}>
@@ -373,7 +405,7 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
             {tunnel.length > 0 && (
               <Liste titel="Tunnel" gross={zweiseitig}>
                 {tunnel.map((e) => (
-                  <li key={e.nr} className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${zweiseitig ? 'py-2' : 'py-px'}`}>
+                  <li key={e.nr} className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${zweiseitig ? 'py-0.5' : 'py-px'}`}>
                     <Kaestchen />
                     <Nummer e={e} />
                     <Pikto art="tunnel" className="size-5" />
@@ -384,43 +416,28 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
                 ))}
               </Liste>
             )}
-            <div className="grid grid-cols-2 gap-x-6">
-              <div>
-                {bahnhoefe.length > 0 && (
-                  <Liste titel="Bahnhöfe und Brücken" gross={zweiseitig}>
-                    {bahnhoefe.map((e) => <Zeile key={e.nr} e={e} gross={zweiseitig} />)}
-                  </Liste>
-                )}
+            {zweiseitig ? (
+              // doppelt so viele Einträge: die Spalten gleichen sich selbst aus
+              <div className="columns-2 gap-x-6">
+                {listeBahnhoefe}{listeBruecken}{listeSehen}{listeSeen}
               </div>
-              <div>
-                {sehen.length > 0 && (
-                  <Liste titel="Aus dem Fenster" gross={zweiseitig}>
-                    {sehen.map((e) => <Zeile key={e.nr} e={e} gross={zweiseitig} />)}
-                  </Liste>
-                )}
-                {seen.length > 0 && (
-                  <Liste titel="Seen" gross={zweiseitig}>
-                    {seen.map((s) => (
-                      <li key={s.name + s.seite} className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${zweiseitig ? 'py-2' : 'py-px'}`}>
-                        <Kaestchen />
-                        <span className="min-w-0 truncate">{s.name} · {s.seite}</span>
-                      </li>
-                    ))}
-                  </Liste>
-                )}
+            ) : (
+              <div className="grid grid-cols-2 gap-x-6">
+                <div>{listeBahnhoefe}</div>
+                <div>{listeSehen}{listeSeen}</div>
               </div>
-            </div>
+            )}
             <div className={`mt-3 min-h-10 flex-1 border-2 border-black p-2 ${zweiseitig ? 'text-[15px]' : 'text-[13px]'}`}>
               Das habe ich aus dem Fenster gesehen:
             </div>
             <p className="mt-2 text-[9.5px] leading-snug">
-              Auswahl nach Zahlen aus den Daten und über den Weg verteilt: {TUNNEL_MAX} Tunnel, zuerst die längsten mit
-              bekannter Länge, Brücken ab {BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen zuerst die grossen, {GIPFEL_MAX} Gipfel
+              Auswahl nach Zahlen aus den Daten und über den Weg verteilt: {TUNNEL_MAX * mal} Tunnel, zuerst die längsten mit
+              bekannter Länge, Brücken ab {BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen zuerst die grossen, {GIPFEL_MAX * mal} Gipfel
               bis 8 km neben der Strecke, zuerst die höchsten; liegen zwei zu nah beieinander, kommt der nächste der Liste.
-              Die {SEEN_MAX} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
+              Die {SEEN_MAX * mal} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
               laut Daten; ob man es vom Zug aus sieht, sagen sie nicht.
               {daten.ohneLaenge > 0 && ` Tunnel anderer Bahnen (swissTLM3D) haben in den Daten keine Länge und meist keinen`
-                + ` Namen: Zuerst stehen bis ${TLM_TUNNEL_ZUERST} mit Namen, fehlen Tunnel mit Länge, die längsten laut`
+                + ` Namen: Zuerst stehen bis ${TLM_TUNNEL_ZUERST * mal} mit Namen, fehlen Tunnel mit Länge, die längsten laut`
                 + ' Zeichnung; Brücken anderer Bahnen nur mit Namen.'}
               {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo, BFS. Taktland ist ein
               privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
@@ -435,7 +452,7 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
 /** gross: auf der Rückseite, mit mehr Platz zum Schreiben */
 function Liste({ titel, children, gross = false }: { titel: string; children: React.ReactNode; gross?: boolean }) {
   return (
-    <section className={`break-inside-avoid ${gross ? 'mt-4 text-[15px]' : 'mt-2 text-[13px]'}`}>
+    <section className={`break-inside-avoid ${gross ? 'pt-3 text-[14px]' : 'mt-2 text-[13px]'}`}>
       <h2 className={`border-b border-black font-bold ${gross ? 'text-[16px]' : 'text-[14px]'}`}>{titel}</h2>
       <ul>{children}</ul>
     </section>
@@ -448,7 +465,7 @@ function Kaestchen() {
 
 function Zeile({ e, gross = false }: { e: Eintrag; gross?: boolean }) {
   return (
-    <li className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${gross ? 'py-2' : 'py-px'}`}>
+    <li className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${gross ? 'py-0.5' : 'py-px'}`}>
       <Kaestchen />
       <Nummer e={e} />
       {(e.art === 'bahnhof' || e.art === 'bruecke') && <Pikto art={e.art} className="size-5" />}
