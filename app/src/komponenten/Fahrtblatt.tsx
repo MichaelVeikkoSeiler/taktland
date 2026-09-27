@@ -13,7 +13,8 @@ import { Ladefehler } from './Ladefehler'
 import { Pikto } from './Pikto'
 
 /** So viele Einträge je Art passen auf ein Blatt A4; zweiseitig doppelt so viele
- *  (Michael, 2026-09-27: «eine einfache Variante und eine schwierigere Variante») */
+ *  (Michael, 2026-09-27: «eine einfache Variante und eine schwierigere Variante»;
+ *  in der App «Einfach» und «Ausführlich») */
 const TUNNEL_MAX = 5
 /** so viele Tunnel anderer Bahnen mit Namen (swissTLM3D, ohne Länge) vor denen mit Länge */
 const TLM_TUNNEL_ZUERST = 2
@@ -149,7 +150,7 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
           die Druckfunktion deines Geräts.
         </p>
         <div className="mt-4 flex gap-2" role="group" aria-label="Umfang">
-          {([[false, '1 Seite'], [true, '2 Seiten']] as const).map(([z, t]) => (
+          {([[false, 'Einfach'], [true, 'Ausführlich']] as const).map(([z, t]) => (
             <button key={t} type="button" aria-pressed={zweiseitig === z} onClick={() => setZweiseitig(z)}
                     className={`rounded-lg border px-4 py-2 font-medium ${zweiseitig === z
                       ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
@@ -160,8 +161,8 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
         </div>
         <p className="mt-2 text-sm text-sbb-metal">
           {zweiseitig
-            ? 'Die schwierigere Variante: vorne die Karte über die ganze Seite, hinten etwa doppelt so viel zum Ausfüllen. Beidseitig drucken, über die lange Kante.'
-            : 'Die einfache Variante: oben die Karte, unten die Listen zum Ausfüllen.'}
+            ? 'Zwei Seiten: vorne die Karte über die ganze Seite, hinten etwa doppelt so viel zum Ausfüllen, der Reihe nach. Beidseitig drucken, über die lange Kante.'
+            : 'Eine Seite: oben die Karte, unten die Listen zum Ausfüllen.'}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           <button type="button" disabled={!daten} onClick={() => window.print()}
