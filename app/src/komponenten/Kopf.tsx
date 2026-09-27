@@ -141,11 +141,11 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
     <header className="print:hidden border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* Aktualisieren nur im Bild der Startseite (Michael, 2026-09-24) */}
       {bild && <Auftakt key={schluessel} bild={bild} oben={startseite ? <Aktualisieren /> : undefined} />}
-      <div className="h-1 w-10 bg-sbb-red" aria-hidden="true" />
-      <div className="mt-3 flex items-center justify-between gap-4">
+      <div className="flex items-center justify-between gap-4">
+        {/* die Bildmarke vor dem Namen, statt des roten Strichs (Michael, 2026-09-27) */}
         {startseite
-          ? <h1 className={titel}>Taktland</h1>
-          : <a href="#/" className={titel}>Taktland</a>}
+          ? <h1 className={`${titel} flex items-center gap-3`}><Bildmarke />Taktland</h1>
+          : <a href="#/" className={`${titel} flex items-center gap-3`}><Bildmarke />Taktland</a>}
         {/* ganz rechts; das «i» ist zum Reiter «Info» geworden (Michael, 2026-09-25) */}
         <FahrtKnopf hier={fahrt} />
       </div>
@@ -200,4 +200,9 @@ function FahrtKnopf({ hier }: { hier: boolean }) {
       Fahren
     </a>
   )
+}
+
+/** Die Bildmarke von Taktland (app/public/logo.svg); der Name steht daneben als Text */
+function Bildmarke() {
+  return <img src="./logo.svg" alt="" className="size-9 shrink-0" />
 }

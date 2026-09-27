@@ -178,6 +178,10 @@ und weisse mit Rand, haben dieselben leicht abgerundeten Ecken (`rounded-lg`, Mi
 Anthracite `#5a5a5a` statt Schwarz (Michael, 2026-09-25). Kacheln und Knöpfe sind die
 einzige Ausnahme von den kantigen Flächen.
 
+**Die Bildmarke von Taktland** ist ein weisses «T» aus einer Linie mit fünf Haltepunkten auf
+rotem, abgerundetem Quadrat (`app/public/logo.svg`, Entwurf in `entwuerfe/logo/`, Michael,
+2026-09-27). Sie steht vor dem Namen im Kopf und ist das App-Symbol.
+
 **Kein Logo, keine Bildmarke der SBB.** Die Farb- und Formensprache ist übernommen,
 die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot der SBB ist.
 
