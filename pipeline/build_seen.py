@@ -35,7 +35,7 @@ ZIEL = ROOT / "data" / "seen.json"
 URL = ("https://data.geo.admin.ch/ch.swisstopo.swiss-map-vector1000/"
        "swiss-map-vector1000/swiss-map-vector1000_2056.gpkg.zip")
 EBENE = "T22_DKM1M_GEWAESSER_PLY"
-TOLERANZ_M = 60
+TOLERANZ_M = 30
 #: Rahmen der Karte in LV95 (Ost, Nord): die Schweiz mit etwas Rand
 RAHMEN = (2_470_000, 1_060_000, 2_850_000, 1_310_000)
 

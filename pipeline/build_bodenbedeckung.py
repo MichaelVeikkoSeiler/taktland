@@ -33,8 +33,8 @@ GPKG = RAW / "swissTLMRegio_Product_LV95.gpkg"
 #: objval der Quelle → Schlüssel in der Datei, Toleranz der Vereinfachung und
 #: kleinste Fläche in m², die noch kommt
 ARTEN = {
-    "Wald": ("wald", 150, 2_000_000),
-    "Siedl": ("siedlung", 100, 1_000_000),
+    "Wald": ("wald", 30, 2_000_000),
+    "Siedl": ("siedlung", 30, 1_000_000),
     "Stadtzentr": ("stadtzentrum", 25, 0),
 }
 
