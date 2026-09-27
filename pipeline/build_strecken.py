@@ -117,6 +117,44 @@ def abschnitte():
     return jahr, kanten, punkte
 
 
+#: Endpunkte ohne Bahnhofsnummer und ohne Linienzug in den Zugzahlen (Michael,
+#: 2026-09-27: «Brig nach Iselle», die Durchfahrt durch den Simplon). Die Zugzahlen
+#: führen den Abschnitt Staz. della Galleria Sempione – Iselle di Trasquera mit
+#: Personenzügen, aber ohne Verlauf und ohne UIC für Iselle. Die Lage ist das Ende
+#: der Linienkilometrierung der Linie; die App wählt den Punkt mit der Nummer «ziel»
+#: (kein UIC, nur für die App), zeigt ihn ohne Bahnhofseite.
+GRENZPUNKTE = {"IS": {"linie": 100, "ziel": -1}}
+
+
+def grenzpunkte_ergaenzen(jahr, kanten, punkte):
+    """Abschnitte zu GRENZPUNKTE aus den Zugzahlen, die abschnitte() mangels
+    Verlauf überspringt; Länge für die Wegsuche aus der Kilometrierung."""
+    zz = load("zugzahlen")
+    pv = zz[(zz.geschaeftscode == "Personenverkehr") & (zz.anzahl_zuege > 0) & (zz.jahr == jahr)]
+    km_linie = load("linienkilometrierung")
+    amtlich = load("linie-mit-betriebspunkten")
+    for abk, g in GRENZPUNKTE.items():
+        zeilen = pv[(pv.bp_von_abschnitt == abk) | (pv.bp_bis_abschnitt == abk)]
+        if zeilen.empty:
+            continue
+        linie = km_linie[km_linie.linienr == g["linie"]]
+        ende = linie.loc[linie.km.idxmax()]
+        la, lo = (float(x) for x in ende.geo_point_2d.split(","))
+        name = (zeilen.bp_bis_abschnitt_bezeichnung if (zeilen.bp_bis_abschnitt == abk).any()
+                else zeilen.bp_von_abschnitt_bezeichnung).iloc[0]
+        punkte[abk] = {"name": name, "uic": None, "ziel": g["ziel"], "lage": ebene(lo, la),
+                       "wgs": (round(la, 5), round(lo, 5))}
+        for r in zeilen.itertuples():
+            andere = r.bp_von_abschnitt if r.bp_bis_abschnitt == abk else r.bp_bis_abschnitt
+            km_andere = amtlich[(amtlich.abkurzung_bpk == andere) & (amtlich.linie == g["linie"])].km
+            if andere not in punkte or km_andere.empty:
+                continue
+            schluessel = tuple(sorted((abk, andere)))
+            alt = kanten.get(schluessel)
+            kanten[schluessel] = {"km": abs(float(ende.km) - float(km_andere.iloc[0])), "isb": r.isb,
+                                  "zuege": (alt["zuege"] if alt else 0) + r.anzahl_zuege / 365}
+
+
 #: Linien ohne Zugzahlen, die trotzdem ins Netz kommen, aus dem Schienennetz des
 #: BAV (Michael, 2026-09-26: «BTI Bahn Biel bis Ins aufnehmen»). Die Zugzahlen
 #: der SBB führen die BTI nicht; jeder Abschnitt des Schienennetzes wird ein
@@ -645,6 +683,7 @@ def main():
     abruf = json.loads((RAW / "_abruf.json").read_text(encoding="utf-8"))
     stand = max(abruf[q] for q in QUELLEN + QUELLEN_BAV)
     jahr, kanten, punkte = abschnitte()
+    grenzpunkte_ergaenzen(jahr, kanten, punkte)
     namen = {json.loads(p.read_text(encoding="utf-8"))["uic"]: json.loads(p.read_text(encoding="utf-8"))["name"]
              for p in FACTS.glob("*.json")}
     bav_gewaehlt = bav_abschnitte(kanten, punkte, namen)
@@ -769,6 +808,9 @@ def main():
         liste.append(eintrag)
 
     im_netz = {p["uic"]: abk for abk, p in punkte.items() if p["uic"] in namen}
+    # Endpunkte ohne Bahnhofsnummer (GRENZPUNKTE), nur für die Auswahl in der App
+    im_netz.update({p["ziel"]: abk for abk, p in punkte.items() if p.get("ziel") and abk in
+                    {x for e in liste for x in (e["von"], e["nach"])}})
     raus = {
         "datenstand": stand,
         "zugzahlen_jahr": jahr,

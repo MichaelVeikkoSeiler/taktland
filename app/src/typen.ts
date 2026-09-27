@@ -205,6 +205,9 @@ export interface IndexEintrag {
   /** Alle Linien, auf denen der Bahnhof erfasst ist; fehlt, wenn die Daten zu
    *  den Linien ihn nicht führen */
   linien?: number[]
+  /** ein Ziel im Netz ohne Bahnhofsnummer und ohne Faktendatei (Iselle): nur zur
+   *  Wahl beim Fahren, ohne Bahnhofseite, nicht im Sammelheft */
+  ohne_bahnhofseite?: true
 }
 
 export interface BahnhofIndex {
@@ -215,6 +218,9 @@ export interface BahnhofIndex {
   mit_profil: number
   quelle: string
   bahnhoefe: IndexEintrag[]
+  /** Ziele im Netz ohne Bahnhofsnummer (pipeline/build_strecken.py, GRENZPUNKTE);
+   *  die Nummer ist negativ, kein UIC */
+  ziele_ohne_bahnhof?: Array<{ uic: number; name: string; lat: number; lon: number }>
 }
 
 /* ---------- Vergleich zweier Bahnhöfe ---------- */

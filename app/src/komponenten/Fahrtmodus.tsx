@@ -349,7 +349,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         const t = textVon(o)
         if (ansage.current && t) {
           const m = bis(o)
-          const sek = `In etwa ${sekundenGerundet(echt(e))} Sekunden`
+          const sek = `In etwa ${sekundenGerundet(echt(e))} ${sekundenGerundet(echt(e)) === 1 ? 'Sekunde' : 'Sekunden'}`
           ansage.current.textContent = (angabe === 'zeit' || m === null ? sek
             : angabe === 'distanz' ? `In etwa ${streckeGesprochen(m)}` : `${sek}, etwa ${streckeGesprochen(m, false)}`) + ': '
             + (o.sehenswert?.sorte === 'flaeche' ? `Du fährst durch ${t.name}, ${o.sehenswert.art}.`

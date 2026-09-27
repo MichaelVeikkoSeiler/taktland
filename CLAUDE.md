@@ -93,7 +93,9 @@ data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brück
              und der Tag, an dem jede Quelle der Linien geladen wurde
 data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzügen, dazu Stücke
              anderer Bahnen aus dem Schienennetz (RhB, MGB, MOB, zb …), je Abschnitt die
-             Bahn und die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py)
+             Bahn und die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py); dazu
+             Iselle di Trasquera als Ziel ohne Bahnhofsnummer (GRENZPUNKTE, Nummer -1): Lage am
+             Ende der Kilometrierung der Linie 100, in der App ohne Bahnhofseite
 data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierung,
              platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte

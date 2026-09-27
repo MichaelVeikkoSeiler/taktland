@@ -24,6 +24,14 @@ LINIENPROFILE = ROOT / "data" / "linienprofile"
 ZIEL = ROOT / "app" / "public" / "data"
 
 
+def ziele_ohne_bahnhof(netz):
+    if not netz.exists():
+        return []
+    n = json.loads(netz.read_text(encoding="utf-8"))
+    return [{"uic": int(u), "name": n["punkte"][abk], "lat": n["lagen"][abk][0], "lon": n["lagen"][abk][1]}
+            for u, abk in n["bahnhoefe"].items() if int(u) < 0]
+
+
 def main():
     (ZIEL / "profile").mkdir(parents=True, exist_ok=True)
     for alt in (ZIEL / "profile").glob("*.json"):
@@ -81,6 +89,9 @@ def main():
         "mit_profil": sum(1 for e in eintraege if e["sprachen"]),
         "quelle": "data.sbb.ch",
         "bahnhoefe": eintraege,
+        # Ziele im Netz ohne Bahnhofsnummer und ohne Faktendatei (build_strecken.GRENZPUNKTE):
+        # nur für die Wahl von Start und Ziel beim Fahren, keine Bahnhofseite
+        "ziele_ohne_bahnhof": ziele_ohne_bahnhof(netz),
     }
     (ZIEL / "index.json").write_text(json.dumps(index, ensure_ascii=False), encoding="utf-8")
     groesse = (ZIEL / "index.json").stat().st_size

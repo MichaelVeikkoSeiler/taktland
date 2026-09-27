@@ -9,6 +9,7 @@ import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
 import { BahnhofFeld, fahrtAdresse, type StreckenWahl } from './Strecke'
 import { Stern } from './Stern'
 import { BahnenWahl } from './BahnenWahl'
+import { fahrtZiele, namenFuerFahrt } from '../daten'
 
 type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
@@ -75,10 +76,11 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
   }, [entfernt])
 
   const bahnhof = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [b.uic, b])), [index])
-  const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? String(uic) : ''),
-                           [bahnhof])
+  const zielNamen = useMemo(() => namenFuerFahrt(index), [index])
+  const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? zielNamen.get(uic) ?? String(uic) : ''),
+                           [bahnhof, zielNamen])
   // nur Bahnhöfe, zu denen die Seite «Strecke» Wege kennt
-  const imNetz = useMemo(() => (index?.bahnhoefe ?? []).filter((b) => b.im_netz), [index])
+  const imNetz = useMemo(() => fahrtZiele(index), [index])
   // Favoritenbahnhöfe als Ziel mit einem Tipp (Michael, 2026-09-26)
   const favoritenUic = useFavoriten()
   const favoriten = useMemo(() => alphabetisch(favoritenUic.map((u) => bahnhof.get(u))

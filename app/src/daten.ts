@@ -1,5 +1,5 @@
 import type {
-  BahnhofIndex, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StandortDaten, StreckenGeometrie,
+  BahnhofIndex, IndexEintrag, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StandortDaten, StreckenGeometrie,
   FlaechenDaten, KartengrundDaten, SeenDaten, SehenswertDaten, StreckenNetz,
   Uebersicht, Vergleichsdaten,
 } from './typen'
@@ -114,4 +114,22 @@ export async function seenLaden(): Promise<SeenDaten> {
 /** Lage der Tunnel, Brücken und Bahnübergänge für die Seite «Standort» */
 export async function standortLaden(): Promise<StandortDaten> {
   return holen<StandortDaten>('data/standort.json')
+}
+
+/**
+ * Bahnhöfe zur Wahl beim Fahren: die im Netz und die Ziele ohne Bahnhofsnummer
+ * (Michael, 2026-09-27: «Brig nach Iselle»), diese ohne Bahnhofseite.
+ */
+export function fahrtZiele(index: BahnhofIndex | null): IndexEintrag[] {
+  return [
+    ...(index?.bahnhoefe ?? []).filter((b) => b.im_netz),
+    ...(index?.ziele_ohne_bahnhof ?? []).map((z): IndexEintrag => ({
+      uic: z.uic, name: z.name, kanton: null, tier: 'S', dwv: null, lat: z.lat, lon: z.lon,
+      sprachen: [], im_netz: true, ohne_bahnhofseite: true })),
+  ]
+}
+
+/** Name zu einer Nummer, auch für die Ziele ohne Bahnhofsnummer */
+export function namenFuerFahrt(index: BahnhofIndex | null): Map<number, string> {
+  return new Map(fahrtZiele(index).map((b) => [b.uic, b.name]))
 }

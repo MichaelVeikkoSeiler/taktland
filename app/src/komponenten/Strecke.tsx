@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { flaechenLaden, geometrieLaden, linienLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
+import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
@@ -56,7 +56,8 @@ export function wahlAusAdresse(abfrage: string | undefined): StreckenWahl {
   const p = new URLSearchParams(abfrage ?? '')
   const zahl = (k: string) => {
     const v = Number(p.get(k))
-    return Number.isInteger(v) && v > 0 ? v : null
+    // negativ: ein Ziel ohne Bahnhofsnummer (Iselle, siehe fahrtZiele)
+    return Number.isInteger(v) && v !== 0 ? v : null
   }
   const weg = (p.get('weg') ?? '').split('.').filter((x) => /^[A-Z]+$/.test(x))
   return { von: zahl('von'), nach: zahl('nach'), ueber: zahl('ueber'), weg: weg.length >= 2 ? weg : null,
@@ -224,8 +225,9 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
 
   const bahnhof = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [b.uic, b])), [index])
   // stabil, sonst setzte das Eingabefeld bei jedem Tastendruck den Text zurück
-  const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? String(uic) : ''),
-                           [bahnhof])
+  const zielNamen = useMemo(() => namenFuerFahrt(index), [index])
+  const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? zielNamen.get(uic) ?? String(uic) : ''),
+                           [bahnhof, zielNamen])
 
   // ein gegebener Weg («Ohne Ziel») gilt, wie er ist; gesucht wird nur auf den gewählten Bahnen
   const bahnenAus = useBahnenAus()
@@ -266,7 +268,8 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
     window.location.hash = streckenAdresse({ ...wahl, ...neu })
   }
 
-  const alle = index?.bahnhoefe ?? []
+  // dazu die Ziele ohne Bahnhofsnummer (Iselle)
+  const alle = useMemo(() => [...(index?.bahnhoefe ?? []), ...fahrtZiele(index).filter((b) => b.ohne_bahnhofseite)], [index])
 
   return (
     <div className="px-4 pb-16">
@@ -513,6 +516,11 @@ function Ergebnis({
   // Anfang und Ende des Wegs; ohne Bahnhof dort («Ohne Ziel») der Name des Betriebspunkts
   const endName = (abk: string) => bahnhof.get(uicVon.get(abk) ?? 0)?.name ?? netz.punkte[abk] ?? abk
   const titelText = `${endName(weg.punkte[0])} → ${endName(weg.punkte[weg.punkte.length - 1])}`
+  // ein Ende ohne Bahnhof in Taktland (Iselle) steht als Name, ohne Verweis
+  const endeLink = (abk: string) => {
+    const x = bahnhof.get(uicVon.get(abk) ?? 0)
+    return x ? <BahnhofLink b={x} /> : endName(abk)
+  }
   const grosse = bahnhoefe.slice(1, -1).filter((x) => x.tier === 'L')
 
   // Strecken anderer Bahnen: Tunnel und Brücken aus swissTLM3D (Michael, 2026-09-26:
@@ -581,7 +589,7 @@ function Ergebnis({
       <section className="mt-8">
         <h2 className="text-xl font-bold tracking-tight">
           {wahl.weg ? titelText
-            : <><BahnhofLink b={bahnhoefe[0]} /> → <BahnhofLink b={bahnhoefe[bahnhoefe.length - 1]} /></>}
+            : <>{endeLink(weg.punkte[0])} → {endeLink(weg.punkte[weg.punkte.length - 1])}</>}
         </h2>
         {grosse.length > 0 && (
           <p className="mt-1 leading-relaxed">
@@ -1066,11 +1074,13 @@ export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
                 >
                   <span className="text-sbb-black dark:text-sbb-white">{e.name}</span>
                   <span className="text-sm text-sbb-metal dark:text-sbb-storm">
-                    {e.kanton ? kantonText(e.kanton) : ''}
+                    {e.ohne_bahnhofseite ? 'ohne Bahnhofseite' : e.kanton ? kantonText(e.kanton) : ''}
                   </span>
                 </button>
-                <FavoritKnopf uic={e.uic} name={e.name} favorit={favoriten.includes(e.uic)}
-                              className="w-12 hover:bg-sbb-milk dark:hover:bg-sbb-charcoal" />
+                {/* ohne Bahnhofseite auch kein Favorit: die Favoriten führen zu Bahnhofseiten */}
+                {e.ohne_bahnhofseite ? <span className="w-12 shrink-0" aria-hidden="true" />
+                  : <FavoritKnopf uic={e.uic} name={e.name} favorit={favoriten.includes(e.uic)}
+                                  className="w-12 hover:bg-sbb-milk dark:hover:bg-sbb-charcoal" />}
               </li>
             ))}
           </ul>
