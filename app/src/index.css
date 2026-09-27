@@ -215,4 +215,6 @@ body {
   .fahrtblatt { transform: none !important; width: 190mm !important;
                 print-color-adjust: exact; -webkit-print-color-adjust: exact; }
   .fahrtblatt-rahmen { height: auto !important; }
+  /* zweiseitig: die Listen auf die Rückseite */
+  .fahrtblatt-rueckseite { break-before: page; }
 }

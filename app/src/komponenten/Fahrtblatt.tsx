@@ -127,7 +127,14 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
 
   // passt das Blatt nicht auf eine Seite, fallen von unten Einträge weg (siehe auswaehlen)
   const [weniger, setWeniger] = useState(0)
-  useEffect(() => setWeniger(0), [daten])
+  // eine Seite oder Vorder- und Rückseite (Michael, 2026-09-27), auf dem Gerät gemerkt
+  const [zweiseitig, setZweiseitig] = useState(() => {
+    try { return localStorage.getItem('taktland.fahrtblatt.seiten') === '2' } catch { return false }
+  })
+  useEffect(() => {
+    try { localStorage.setItem('taktland.fahrtblatt.seiten', zweiseitig ? '2' : '1') } catch { /* nur jetzt */ }
+  }, [zweiseitig])
+  useEffect(() => setWeniger(0), [daten, zweiseitig])
   const eintraege = useMemo(() => (daten ? auswaehlen(daten, bahnhof, weniger) : []), [daten, bahnhof, weniger])
 
   return (
@@ -138,6 +145,21 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
           Ein Blatt zum Ausdrucken für die Fahrt mit Kindern: die Karte des Wegs und die wichtigsten
           Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken. Drucken oder als PDF sichern geht über
           die Druckfunktion deines Geräts.
+        </p>
+        <div className="mt-4 flex gap-2" role="group" aria-label="Umfang">
+          {([[false, '1 Seite'], [true, '2 Seiten']] as const).map(([z, t]) => (
+            <button key={t} type="button" aria-pressed={zweiseitig === z} onClick={() => setZweiseitig(z)}
+                    className={`rounded-lg border px-4 py-2 font-medium ${zweiseitig === z
+                      ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
+                      : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`}>
+              {t}
+            </button>
+          ))}
+        </div>
+        <p className="mt-2 text-sm text-sbb-metal">
+          {zweiseitig
+            ? 'Vorne die Karte über die ganze Seite, hinten die Listen zum Ausfüllen. Beidseitig drucken, über die lange Kante.'
+            : 'Oben die Karte, unten die Listen zum Ausfüllen.'}
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
           <button type="button" disabled={!daten} onClick={() => window.print()}
@@ -153,7 +175,7 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
       </div>
       {fehler && <Ladefehler className="mt-6" was="Das Fahrtblatt konnte nicht erstellt werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-6 text-sbb-metal print:hidden">Das Fahrtblatt wird erstellt …</p>}
-      {daten && <Blatt daten={daten} eintraege={eintraege} zuViel={() => setWeniger((w) => Math.min(w + 1, 40))} />}
+      {daten && <Blatt daten={daten} eintraege={eintraege} zweiseitig={zweiseitig} zuViel={() => setWeniger((w) => Math.min(w + 1, 40))} />}
     </div>
   )
 }
@@ -272,7 +294,9 @@ function seenAmWeg(fw: Fahrweg) {
     .map((x) => ({ name: x.name, seite: x.seiten.size > 1 ? 'links und rechts' : [...x.seiten][0] }))
 }
 
-function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[]; zuViel: () => void }) {
+function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
+  daten: Daten; eintraege: Eintrag[]; zweiseitig: boolean; zuViel: () => void
+}) {
   const unten = useRef<HTMLDivElement | null>(null)
   useLayoutEffect(() => {
     const el = unten.current
@@ -310,9 +334,9 @@ function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[
     <div ref={rahmen} className="fahrtblatt-rahmen mt-6 print:mt-0" style={{ height: hoehe * massstab || undefined }}>
       <div ref={blatt} id="fahrtblatt" className="fahrtblatt origin-top-left bg-white p-4 text-black shadow print:p-0 print:shadow-none"
            style={{ width: BLATT_PX, transform: `scale(${massstab})` }}>
-        <div className="flex flex-col" style={{ height: BLATT_HOCH_PX }}>
-          {/* obere Hälfte: die Karte */}
-          <div className="flex flex-col" style={{ height: BLATT_HOCH_PX / 2 }}>
+        <div className="flex flex-col" style={{ height: zweiseitig ? undefined : BLATT_HOCH_PX }}>
+          {/* obere Hälfte oder ganze Vorderseite: die Karte */}
+          <div className="flex flex-col" style={{ height: zweiseitig ? BLATT_HOCH_PX : BLATT_HOCH_PX / 2 }}>
             <div className="flex items-end justify-between gap-4 border-b-2 border-black pb-2">
               <div className="min-w-0">
                 <p className="text-[11px] uppercase tracking-wide">Taktland · Fahrtblatt</p>
@@ -329,22 +353,33 @@ function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[
             <Legende eintraege={eintraege} seen={seen.length > 0} />
           </div>
 
-          {/* untere Hälfte: zum Ausfüllen */}
-          <div ref={unten} className="flex min-h-0 flex-1 flex-col pt-3">
-            <p className="text-[12px] leading-snug">
+          {zweiseitig && (
+            <div className="-mx-4 my-4 h-4 bg-sbb-milk print:hidden dark:bg-sbb-charcoal" aria-hidden="true" />
+          )}
+
+          {/* untere Hälfte oder Rückseite: zum Ausfüllen */}
+          <div ref={unten} className={`flex min-h-0 flex-col ${zweiseitig ? 'fahrtblatt-rueckseite' : 'flex-1 pt-3'}`}
+               style={{ height: zweiseitig ? BLATT_HOCH_PX : undefined }}>
+            {zweiseitig && (
+              <div className="mb-3 border-b-2 border-black pb-2">
+                <p className="text-[11px] uppercase tracking-wide">Taktland · Fahrtblatt · Rückseite</p>
+                <p className="truncate text-2xl font-bold leading-tight">{daten.titel[0]} → {daten.titel[1]}</p>
+              </div>
+            )}
+            <p className={zweiseitig ? 'text-[14px] leading-snug' : 'text-[12px] leading-snug'}>
               Hake ab, was du unterwegs entdeckst. Bei jedem Tunnel: Schätze vorher, wie viele Sekunden es
               dunkel bleibt, und zähle dann mit. Die Zahlen in den Listen gehören zu den Zahlen auf der Karte.
             </p>
             {tunnel.length > 0 && (
-              <Liste titel="Tunnel">
+              <Liste titel="Tunnel" gross={zweiseitig}>
                 {tunnel.map((e) => (
-                  <li key={e.nr} className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
+                  <li key={e.nr} className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${zweiseitig ? 'py-2' : 'py-px'}`}>
                     <Kaestchen />
                     <Nummer e={e} />
                     <Pikto art="tunnel" className="size-5" />
                     <span className="min-w-0 flex-1 truncate">{e.name} · {e.zeile}</span>
-                    <span className="shrink-0 text-[12px]">geschätzt ____ s</span>
-                    <span className="shrink-0 text-[12px]">gezählt ____ s</span>
+                    <span className={`shrink-0 ${zweiseitig ? 'text-[14px]' : 'text-[12px]'}`}>geschätzt ____ s</span>
+                    <span className={`shrink-0 ${zweiseitig ? 'text-[14px]' : 'text-[12px]'}`}>gezählt ____ s</span>
                   </li>
                 ))}
               </Liste>
@@ -352,21 +387,21 @@ function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[
             <div className="grid grid-cols-2 gap-x-6">
               <div>
                 {bahnhoefe.length > 0 && (
-                  <Liste titel="Bahnhöfe und Brücken">
-                    {bahnhoefe.map((e) => <Zeile key={e.nr} e={e} />)}
+                  <Liste titel="Bahnhöfe und Brücken" gross={zweiseitig}>
+                    {bahnhoefe.map((e) => <Zeile key={e.nr} e={e} gross={zweiseitig} />)}
                   </Liste>
                 )}
               </div>
               <div>
                 {sehen.length > 0 && (
-                  <Liste titel="Aus dem Fenster">
-                    {sehen.map((e) => <Zeile key={e.nr} e={e} />)}
+                  <Liste titel="Aus dem Fenster" gross={zweiseitig}>
+                    {sehen.map((e) => <Zeile key={e.nr} e={e} gross={zweiseitig} />)}
                   </Liste>
                 )}
                 {seen.length > 0 && (
-                  <Liste titel="Seen">
+                  <Liste titel="Seen" gross={zweiseitig}>
                     {seen.map((s) => (
-                      <li key={s.name + s.seite} className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
+                      <li key={s.name + s.seite} className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${zweiseitig ? 'py-2' : 'py-px'}`}>
                         <Kaestchen />
                         <span className="min-w-0 truncate">{s.name} · {s.seite}</span>
                       </li>
@@ -375,7 +410,7 @@ function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[
                 )}
               </div>
             </div>
-            <div className="mt-3 min-h-10 flex-1 border-2 border-black p-2 text-[13px]">
+            <div className={`mt-3 min-h-10 flex-1 border-2 border-black p-2 ${zweiseitig ? 'text-[15px]' : 'text-[13px]'}`}>
               Das habe ich aus dem Fenster gesehen:
             </div>
             <p className="mt-2 text-[9.5px] leading-snug">
@@ -397,10 +432,11 @@ function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[
   )
 }
 
-function Liste({ titel, children }: { titel: string; children: React.ReactNode }) {
+/** gross: auf der Rückseite, mit mehr Platz zum Schreiben */
+function Liste({ titel, children, gross = false }: { titel: string; children: React.ReactNode; gross?: boolean }) {
   return (
-    <section className="mt-2 break-inside-avoid text-[13px]">
-      <h2 className="border-b border-black text-[14px] font-bold">{titel}</h2>
+    <section className={`break-inside-avoid ${gross ? 'mt-4 text-[15px]' : 'mt-2 text-[13px]'}`}>
+      <h2 className={`border-b border-black font-bold ${gross ? 'text-[16px]' : 'text-[14px]'}`}>{titel}</h2>
       <ul>{children}</ul>
     </section>
   )
@@ -410,9 +446,9 @@ function Kaestchen() {
   return <span className="mt-0.5 inline-block size-4 shrink-0 border-[1.5px] border-black" aria-hidden="true" />
 }
 
-function Zeile({ e }: { e: Eintrag }) {
+function Zeile({ e, gross = false }: { e: Eintrag; gross?: boolean }) {
   return (
-    <li className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
+    <li className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${gross ? 'py-2' : 'py-px'}`}>
       <Kaestchen />
       <Nummer e={e} />
       {(e.art === 'bahnhof' || e.art === 'bruecke') && <Pikto art={e.art} className="size-5" />}
