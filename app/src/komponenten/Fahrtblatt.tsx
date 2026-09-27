@@ -294,7 +294,7 @@ function seenAmWeg(fw: Fahrweg, mal = 1) {
   }
   return [...je.values()].sort((a, b) => b.meter - a.meter)
     .slice(0, SEEN_MAX * mal).sort((a, b) => a.s - b.s)
-    .map((x) => ({ name: x.name, seite: x.seiten.size > 1 ? 'links und rechts' : [...x.seiten][0] }))
+    .map((x) => ({ name: x.name, s: x.s, seite: x.seiten.size > 1 ? 'links und rechts' : [...x.seiten][0] }))
 }
 
 function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
@@ -331,30 +331,23 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
   const seen = seenAmWeg(daten.fahrweg, mal)
   const gruppe = (arten: Eintrag['art'][]) => eintraege.filter((e) => arten.includes(e.art))
   const tunnel = gruppe(['tunnel'])
-  // zweiseitig mit doppelt so vielen Einträgen: Brücken in die rechte Spalte, die hat Platz
-  const bahnhoefe = gruppe(zweiseitig ? ['bahnhof'] : ['bahnhof', 'bruecke'])
-  const bruecken = zweiseitig ? gruppe(['bruecke']) : []
+  const bahnhoefe = gruppe(['bahnhof', 'bruecke'])
   const sehen = gruppe(['gipfel', 'seilbahn'])
 
   const listeBahnhoefe = bahnhoefe.length > 0 && (
-    <Liste titel={zweiseitig ? 'Bahnhöfe' : 'Bahnhöfe und Brücken'} gross={zweiseitig}>
-      {bahnhoefe.map((e) => <Zeile key={e.nr} e={e} gross={zweiseitig} />)}
-    </Liste>
-  )
-  const listeBruecken = bruecken.length > 0 && (
-    <Liste titel="Brücken" gross>
-      {bruecken.map((e) => <Zeile key={e.nr} e={e} gross />)}
+    <Liste titel="Bahnhöfe und Brücken">
+      {bahnhoefe.map((e) => <Zeile key={e.nr} e={e} />)}
     </Liste>
   )
   const listeSehen = sehen.length > 0 && (
-    <Liste titel="Aus dem Fenster" gross={zweiseitig}>
-      {sehen.map((e) => <Zeile key={e.nr} e={e} gross={zweiseitig} />)}
+    <Liste titel="Aus dem Fenster">
+      {sehen.map((e) => <Zeile key={e.nr} e={e} />)}
     </Liste>
   )
   const listeSeen = seen.length > 0 && (
-    <Liste titel="Seen" gross={zweiseitig}>
+    <Liste titel="Seen">
       {seen.map((s) => (
-        <li key={s.name + s.seite} className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${zweiseitig ? 'py-0.5' : 'py-px'}`}>
+        <li key={s.name + s.seite} className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
           <Kaestchen />
           <span className="min-w-0 truncate">{s.name} · {s.seite}</span>
         </li>
@@ -380,7 +373,7 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
               </div>
             </div>
             <div ref={flaeche} className="mt-2 min-h-0 flex-1">
-              {karte[1] > 0 && <Karten daten={daten} eintraege={eintraege} B={karte[0]} H={karte[1]} />}
+              {karte[1] > 0 && <Karten daten={daten} eintraege={eintraege} B={karte[0]} H={karte[1]} drehen={zweiseitig} />}
             </div>
             <Legende eintraege={eintraege} seen={seen.length > 0} />
           </div>
@@ -402,30 +395,27 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
               Hake ab, was du unterwegs entdeckst. Bei jedem Tunnel: Schätze vorher, wie viele Sekunden es
               dunkel bleibt, und zähle dann mit. Die Zahlen in den Listen gehören zu den Zahlen auf der Karte.
             </p>
-            {tunnel.length > 0 && (
-              <Liste titel="Tunnel" gross={zweiseitig}>
-                {tunnel.map((e) => (
-                  <li key={e.nr} className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${zweiseitig ? 'py-0.5' : 'py-px'}`}>
-                    <Kaestchen />
-                    <Nummer e={e} />
-                    <Pikto art="tunnel" className="size-5" />
-                    <span className="min-w-0 flex-1 truncate">{e.name} · {e.zeile}</span>
-                    <span className={`shrink-0 ${zweiseitig ? 'text-[14px]' : 'text-[12px]'}`}>geschätzt ____ s</span>
-                    <span className={`shrink-0 ${zweiseitig ? 'text-[14px]' : 'text-[12px]'}`}>gezählt ____ s</span>
-                  </li>
-                ))}
-              </Liste>
-            )}
-            {zweiseitig ? (
-              // doppelt so viele Einträge: die Spalten gleichen sich selbst aus
-              <div className="columns-2 gap-x-6">
-                {listeBahnhoefe}{listeBruecken}{listeSehen}{listeSeen}
-              </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-x-6">
-                <div>{listeBahnhoefe}</div>
-                <div>{listeSehen}{listeSeen}</div>
-              </div>
+            {zweiseitig ? <Reihenfolge eintraege={eintraege} seen={seen} /> : (
+              <>
+                {tunnel.length > 0 && (
+                  <Liste titel="Tunnel">
+                    {tunnel.map((e) => (
+                      <li key={e.nr} className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
+                        <Kaestchen />
+                        <Nummer e={e} />
+                        <Pikto art="tunnel" className="size-5" />
+                        <span className="min-w-0 flex-1 truncate">{e.name} · {e.zeile}</span>
+                        <span className="shrink-0 text-[12px]">geschätzt ____ s</span>
+                        <span className="shrink-0 text-[12px]">gezählt ____ s</span>
+                      </li>
+                    ))}
+                  </Liste>
+                )}
+                <div className="grid grid-cols-2 gap-x-6">
+                  <div>{listeBahnhoefe}</div>
+                  <div>{listeSehen}{listeSeen}</div>
+                </div>
+              </>
             )}
             <div className={`mt-3 min-h-10 flex-1 border-2 border-black p-2 ${zweiseitig ? 'text-[15px]' : 'text-[13px]'}`}>
               Das habe ich aus dem Fenster gesehen:
@@ -449,12 +439,56 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
   )
 }
 
-/** gross: auf der Rückseite, mit mehr Platz zum Schreiben */
-function Liste({ titel, children, gross = false }: { titel: string; children: React.ReactNode; gross?: boolean }) {
+function Liste({ titel, children }: { titel: string; children: React.ReactNode }) {
   return (
-    <section className={`break-inside-avoid ${gross ? 'pt-3 text-[14px]' : 'mt-2 text-[13px]'}`}>
-      <h2 className={`border-b border-black font-bold ${gross ? 'text-[16px]' : 'text-[14px]'}`}>{titel}</h2>
+    <section className="mt-2 break-inside-avoid text-[13px]">
+      <h2 className="border-b border-black text-[14px] font-bold">{titel}</h2>
       <ul>{children}</ul>
+    </section>
+  )
+}
+
+/**
+ * Die Rückseite des zweiseitigen Blatts: alles der Reihe nach, wie es unterwegs
+ * kommt, in zwei Spalten (Michael, 2026-09-27). Seen stehen dort, wo der Weg sie
+ * zum ersten Mal berührt.
+ */
+function Reihenfolge({ eintraege, seen }: {
+  eintraege: Eintrag[]; seen: Array<{ name: string; s: number; seite: string }>
+}) {
+  const reihe = [
+    ...eintraege.map((e) => ({ s: e.o.s, e, see: null })),
+    ...seen.map((x) => ({ s: x.s, e: null, see: x })),
+  ].sort((a, b) => a.s - b.s)
+  const zusatz = (e: Eintrag) => [
+    e.art === 'bruecke' ? 'Brücke' : e.art === 'bahnhof' ? 'Bahnhof' : null,
+    e.art === 'seilbahn' ? null : e.zeile || null,
+    e.art === 'seilbahn' ? 'Seilbahn' : null,
+    e.seite ?? null,
+  ].filter(Boolean).join(' · ')
+  return (
+    <section className="pt-3 text-[14px]">
+      <h2 className="border-b border-black text-[16px] font-bold">Der Reihe nach</h2>
+      <ol className="columns-2 gap-x-6">
+        {reihe.map(({ e, see }) => (
+          <li key={e ? e.nr : `see ${see!.name}`}
+              className="flex break-inside-avoid items-start gap-2 border-b border-dotted border-neutral-400 py-1">
+            <Kaestchen />
+            {e ? <Nummer e={e} /> : <span className="inline-block size-5 shrink-0" />}
+            {e && (e.art === 'tunnel' || e.art === 'bruecke' || e.art === 'bahnhof')
+              ? <Pikto art={e.art} className="size-5 shrink-0" />
+              : <span className="mt-1 inline-block size-3.5 shrink-0 mx-[3px]"
+                      style={{ backgroundColor: e ? FARBE[e.art] : SEE, printColorAdjust: 'exact', WebkitPrintColorAdjust: 'exact' }} />}
+            <span className="min-w-0 flex-1 leading-tight">
+              <span className="block truncate">{e ? e.name : see!.name}</span>
+              <span className="block text-[12px]">
+                {e ? zusatz(e) : `See · ${see!.seite}`}
+                {e?.art === 'tunnel' && <> · <span className="whitespace-nowrap">geschätzt ___ s · gezählt ___ s</span></>}
+              </span>
+            </span>
+          </li>
+        ))}
+      </ol>
     </section>
   )
 }
@@ -463,9 +497,9 @@ function Kaestchen() {
   return <span className="mt-0.5 inline-block size-4 shrink-0 border-[1.5px] border-black" aria-hidden="true" />
 }
 
-function Zeile({ e, gross = false }: { e: Eintrag; gross?: boolean }) {
+function Zeile({ e }: { e: Eintrag }) {
   return (
-    <li className={`flex items-center gap-2 border-b border-dotted border-neutral-400 ${gross ? 'py-0.5' : 'py-px'}`}>
+    <li className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
       <Kaestchen />
       <Nummer e={e} />
       {(e.art === 'bahnhof' || e.art === 'bruecke') && <Pikto art={e.art} className="size-5" />}
@@ -531,18 +565,48 @@ function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
 /** Ausschnitt der Karte in projizierten Grad (Länge × cos φ, −Breite) */
 interface Box { x0: number; x1: number; y0: number; y1: number }
 
-function projektion(kx: number, box: Box, B: number, H: number, rand: number) {
+/** dreh: um so viel (Bogenmass, im Uhrzeigersinn) ist die Karte gedreht; box,
+ *  zurueck und hin rechnen in den gedrehten Grad */
+function projektion(kx: number, box: Box, B: number, H: number, rand: number, dreh = 0) {
   const m = Math.min((B - 2 * rand) / (box.x1 - box.x0 || 1e-6), (H - 2 * rand) / (box.y1 - box.y0 || 1e-6))
   const ox = (B - (box.x1 - box.x0) * m) / 2, oy = (H - (box.y1 - box.y0) * m) / 2
+  const [c, sn] = [Math.cos(dreh), Math.sin(dreh)]
   return {
     m,
-    pt: (lat: number, lon: number) => [ox + (lon * kx - box.x0) * m, oy + (-lat - box.y0) * m] as const,
+    pt: (lat: number, lon: number) => {
+      const [x, y] = gedreht(lon * kx, -lat, c, sn)
+      return [ox + (x - box.x0) * m, oy + (y - box.y0) * m] as const
+    },
     zurueck: (x: number, y: number) => [box.x0 + (x - ox) / m, box.y0 + (y - oy) / m] as const,
     /** projizierte Grad auf das Blatt */
     hin: (x: number, y: number) => [ox + (x - box.x0) * m, oy + (y - box.y0) * m] as const,
   }
 }
 type Projektion = ReturnType<typeof projektion>
+
+const gedreht = (x: number, y: number, c: number, sn: number) => [x * c - y * sn, x * sn + y * c] as const
+
+/**
+ * Der Winkel, bei dem der Weg auf B × H am grössten erscheint (Michael, 2026-09-27:
+ * «so gedreht, damit sie möglichst gross dargestellt werden kann»), in ganzen Grad
+ * zwischen -90 und 90, damit Norden eher oben bleibt; bei Gleichstand der kleinere.
+ */
+function besteDrehung(xs: number[], ys: number[], B: number, H: number, rand: number) {
+  let best = 0, bestM = 0
+  for (let g = 0; g <= 90; g++) {
+    for (const w of g ? [g, -g] : [0]) {
+      const r = (w * Math.PI) / 180, [c, sn] = [Math.cos(r), Math.sin(r)]
+      let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity]
+      for (let i = 0; i < xs.length; i++) {
+        const [x, y] = gedreht(xs[i], ys[i], c, sn)
+        if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y
+      }
+      const m = Math.min((B - 2 * rand) / (x1 - x0 || 1e-9), (H - 2 * rand) / (y1 - y0 || 1e-9))
+      if (m > bestM * 1.0001) { best = r; bestM = m }
+    }
+  }
+  return best
+}
 
 /** Wo die Nummer steht: auf der Strecke, Sehenswertes etwas zur Seite in Fahrtrichtung */
 function marke(fw: Fahrweg, p: Projektion, e: Eintrag) {
@@ -613,17 +677,24 @@ function dichteStellen(fw: Fahrweg, p: Projektion, eintraege: Eintrag[]): Box[] 
 }
 
 /** Eine Karte des ganzen Wegs und, wo sich Nummern drängen, ein vergrösserter Ausschnitt */
-function Karten({ daten, eintraege, B, H }: { daten: Daten; eintraege: Eintrag[]; B: number; H: number }) {
+function Karten({ daten, eintraege, B, H, drehen }: {
+  daten: Daten; eintraege: Eintrag[]; B: number; H: number; drehen: boolean
+}) {
   const fw = daten.fahrweg
   const RAND = 30, LUECKE = 8
   const lat0 = fw.punkte.reduce((s, q) => s + q.lat, 0) / fw.punkte.length
   const kx = Math.cos((lat0 * Math.PI) / 180)
-  const xs = fw.punkte.map((q) => q.lon * kx), ys = fw.punkte.map((q) => -q.lat)
+  const roh = [fw.punkte.map((q) => q.lon * kx), fw.punkte.map((q) => -q.lat)]
+  // zweiseitig: gedreht, so gross wie möglich und ohne Ausschnitte (Michael, 2026-09-27)
+  const dreh = drehen ? besteDrehung(roh[0], roh[1], B, H, RAND) : 0
+  const [c, sn] = [Math.cos(dreh), Math.sin(dreh)]
+  const xs = roh[0].map((x, i) => gedreht(x, roh[1][i], c, sn)[0])
+  const ys = roh[0].map((x, i) => gedreht(x, roh[1][i], c, sn)[1])
   const ganz: Box = { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) }
 
   type Teil = { x: number; y: number; w: number; h: number; box: Box; ausschnitte?: Box[]; istAusschnitt?: boolean }
   let teile: Teil[] = [{ x: 0, y: 0, w: B, h: H, box: ganz }]
-  if (dichteStellen(fw, projektion(kx, ganz, B, H, RAND), eintraege).length) {
+  if (!drehen && dichteStellen(fw, projektion(kx, ganz, B, H, RAND), eintraege).length) {
     // breiter Weg: Ausschnitte darunter, hoher Weg: daneben
     const breit = (ganz.x1 - ganz.x0) / (ganz.y1 - ganz.y0 || 1e-6) > B / H
     const haupt = breit ? { x: 0, y: 0, w: B, h: Math.round(H * 0.6) } : { x: 0, y: 0, w: Math.round(B * 0.6), h: H }
@@ -660,7 +731,7 @@ function Karten({ daten, eintraege, B, H }: { daten: Daten; eintraege: Eintrag[]
          aria-label={`Karte des Wegs ${daten.titel[0]} bis ${daten.titel[1]}`}>
       {teile.map((t, i) => (
         <svg key={i} x={t.x} y={t.y} width={t.w} height={t.h} viewBox={`0 0 ${t.w} ${t.h}`} overflow="hidden">
-          <Karte daten={daten} eintraege={eintraege} B={t.w} H={t.h} p={projektion(kx, t.box, t.w, t.h, RAND)}
+          <Karte daten={daten} eintraege={eintraege} B={t.w} H={t.h} p={projektion(kx, t.box, t.w, t.h, RAND, dreh)} dreh={dreh}
                  ausschnitte={t.ausschnitte?.map((a, j) => [a, 'AB'[j]] as const)}
                  ausschnittName={t.istAusschnitt ? `${'AB'[i - 1]} · Ausschnitt vergrössert` : undefined} />
         </svg>
@@ -670,8 +741,8 @@ function Karten({ daten, eintraege, B, H }: { daten: Daten; eintraege: Eintrag[]
 }
 
 /** Eine Karte, schwarz-weiss druckbar, mit Seen und nummerierten Punkten */
-function Karte({ daten, eintraege, B, H, p, ausschnitte, ausschnittName }: {
-  daten: Daten; eintraege: Eintrag[]; B: number; H: number; p: Projektion
+function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }: {
+  daten: Daten; eintraege: Eintrag[]; B: number; H: number; p: Projektion; dreh: number
   ausschnitte?: ReadonlyArray<readonly [Box, string]>; ausschnittName?: string
 }) {
   const fw = daten.fahrweg
@@ -766,7 +837,7 @@ function Karte({ daten, eintraege, B, H, p, ausschnitte, ausschnittName }: {
       {ausschnittName && (
         <text x={8} y={17} fontSize={12} stroke="#fff" strokeWidth={4} paintOrder="stroke">{ausschnittName}</text>
       )}
-      <Nordpfeil x={B - 20} y={8} />
+      <Nordpfeil x={B - 26} y={8} dreh={dreh} />
       <rect x={1} y={1} width={B - 2} height={H - 2} fill="none" stroke="#000" strokeWidth={2} />
     </>
   )
@@ -798,13 +869,26 @@ function namensLage(x: number, y: number, n: string, B: number, nummern: Array<{
   return moeglich.reduce((best, l) => (verdeckt(l) < verdeckt(best) ? l : best), oben)
 }
 
-/** Die Karten sind genordet: oben ist Norden */
-function Nordpfeil({ x, y }: { x: number; y: number }) {
+/** Wo Norden ist: genordet oben, auf der gedrehten Karte mitgedreht; das N bleibt aufrecht */
+function Nordpfeil({ x, y, dreh }: { x: number; y: number; dreh: number }) {
+  if (!dreh) {
+    return (
+      <g transform={`translate(${x} ${y})`} aria-label="Norden">
+        <rect x={-12} y={-2} width={24} height={40} fill="#fff" opacity={0.85} />
+        <text x={0} y={11} textAnchor="middle" fontSize={12} fontWeight={700}>N</text>
+        <polygon points="0,14 7,34 0,29 -7,34" fill="#000" />
+      </g>
+    )
+  }
+  const grad = (dreh * 180) / Math.PI
+  // Mitte des Pfeils; das N steht vor seiner Spitze
+  const [mx, my] = [x, y + 22]
+  const [nx, ny] = [mx + Math.sin(dreh) * 22, my - Math.cos(dreh) * 22]
   return (
-    <g transform={`translate(${x} ${y})`} aria-label="Norden">
-      <rect x={-12} y={-2} width={24} height={40} fill="#fff" opacity={0.85} />
-      <text x={0} y={11} textAnchor="middle" fontSize={12} fontWeight={700}>N</text>
-      <polygon points="0,14 7,34 0,29 -7,34" fill="#000" />
+    <g aria-label="Norden">
+      <circle cx={mx} cy={my} r={24} fill="#fff" opacity={0.85} />
+      <polygon points="0,-12 7,8 0,3 -7,8" fill="#000" transform={`translate(${mx} ${my}) rotate(${grad})`} />
+      <text x={nx} y={ny + 4} textAnchor="middle" fontSize={12} fontWeight={700}>N</text>
     </g>
   )
 }
