@@ -264,10 +264,12 @@ const NAH = 0.08
  * Die kleine Karte zur Fahrt: grau das Streckennetz, dunkel der Weg vor dem
  * Zug, rot der Standort. «Nah» folgt dem Zug, «Ganzer Weg» zeigt alles.
  */
-export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
+export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild }: {
   fahrweg: Fahrweg
   objekte: FahrObjekt[]
   sJetzt: number | null
+  /** was im Vollbild unter der Karte steht: das Nötigste zum Fahren (Michael, 2026-09-27) */
+  vollbild?: React.ReactNode
 }) {
   const { linien } = useKarte()
   const seen = useSeen()
@@ -486,6 +488,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           )}
         </svg>
       </div>
+      {voll && vollbild && <div className="shrink-0">{vollbild}</div>}
       {!voll && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
       {!voll && sehenswert.s && <SehenswertLegende />}
       <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>

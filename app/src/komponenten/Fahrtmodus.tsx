@@ -4,7 +4,7 @@ import { spurMerken } from '../ohneziel'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
 import { Auswahl } from './Auswahl'
-import { KurzLang, LANGFORM } from './Sehenswert'
+import { kategorieUmschalten, KurzLang, LANGFORM, useVersteckt } from './Sehenswert'
 import { Pikto } from './Pikto'
 
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
@@ -432,6 +432,100 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     )
   }
 
+  // Im Vollbild der Karte das Nötigste (Michael, 2026-09-27: «die Grundfunktionen
+  // anwählen», Tempo in km/h, Ein- und Ausblenden, «eine einfache Vorankündigung»)
+  const kmh = (f: number) => (100 * f > 9999 ? (100 * f).toLocaleString('de-CH') : String(100 * f))
+  const chip = (an: boolean) => `min-h-9 rounded-lg px-2.5 text-xs font-medium ${an
+    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
+    : 'text-sbb-metal line-through bg-sbb-kachel dark:bg-sbb-charcoal dark:text-sbb-storm'}`
+  const naechsteZeile = naechstes && (() => {
+    const o = naechstes
+    const bald = (eta(o) ?? Infinity) <= einstellung.vorlauf
+    return (
+      <div className={`flex items-center gap-3 rounded-lg px-3 py-2 ${bald
+        ? `${FARBE[o.art].flaeche} ${FARBE[o.art].schrift}` : 'kachel'}`}>
+        {o.art !== 'sehenswert' ? <Pikto art={o.art} className="size-8" nurZeichen={bald} />
+          : <span className="size-8 shrink-0" aria-hidden="true" />}
+        <div className="min-w-0 flex-1">
+          <p className={`truncate text-xs uppercase tracking-wide ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
+            {bald ? 'Gleich' : 'Als Nächstes'} · <ArtText o={o} />
+          </p>
+          <p className="truncate text-lg font-bold leading-tight">{textVon(o)?.name}</p>
+        </div>
+        <span className="shrink-0 text-lg font-bold tabular-nums">
+          {abstandText(eta(o), angabe === 'zeit' ? null : bis(o)) ?? ''}
+        </span>
+      </div>
+    )
+  })()
+  const versteckt = useVersteckt()
+  const sorteZeigen = (k: SehenswertSorte, an: boolean) => {
+    aendern({ sehenswert: { ...einstellung.sehenswert, [k]: an } })
+    // auch auf der Karte, dort heissen die Gebiete «gebiete»
+    const kat = k === 'flaeche' ? 'gebiete' : k
+    if (versteckt.has(kat) === an) kategorieUmschalten(kat)
+  }
+  const vollbildLeiste = (
+    <div className="mt-2 space-y-2">
+      {imTunnel && einstellung.tunnel && sJetzt !== null ? (
+        <div className="flex items-center gap-3 rounded-lg bg-sbb-charcoal px-3 py-2 text-sbb-white">
+          <div className="min-w-0 flex-1">
+            <p className="text-xs uppercase tracking-wide text-sbb-storm">Im Tunnel</p>
+            <p className="truncate text-lg font-bold leading-tight">{textVon(imTunnel)?.name}</p>
+          </div>
+          <span className="shrink-0 font-bold tabular-nums">
+            {faehrt || angabe !== 'zeit'
+              ? `Ausfahrt ${abstandText(faehrt ? (imTunnel.sAus! - sJetzt) / stand!.v : null, imTunnel.sAus! - sJetzt)}`
+              : 'Zug steht'}
+          </span>
+        </div>
+      ) : naechsteZeile ?? (
+        <p className="kachel px-3 py-2 text-sm">Auf dem Rest dieses Wegs ist nichts mehr zu melden.</p>
+      )}
+      <div className="flex items-center gap-2 text-sm">
+        {probefahrt ? (
+          <>
+            <button type="button" onClick={anhaltenUmschalten} aria-pressed={angehalten}
+                    className={`min-h-9 shrink-0 rounded-lg px-3 font-bold ${angehalten
+                      ? 'bg-sbb-red text-white hover:bg-sbb-red125'
+                      : 'border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
+              {angehalten ? 'Weiter' : 'Anhalten'}
+            </button>
+            <div className="flex flex-1 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron"
+                 role="group" aria-label="Tempo der Probefahrt in km/h">
+              {ZEITRAFFER.map((f) => (
+                <button key={f} type="button" aria-pressed={raffer === f} onClick={() => rafferWaehlen(f)}
+                        aria-label={`etwa ${kmh(f)} km/h`}
+                        className={`min-h-9 flex-1 whitespace-nowrap px-0.5 text-xs font-medium tabular-nums ${raffer === f
+                          ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
+                          : 'bg-white dark:bg-sbb-midnight'}`}>
+                  {kmh(f)}
+                </button>
+              ))}
+            </div>
+            <span className="shrink-0 text-xs text-sbb-metal dark:text-sbb-storm">km/h</span>
+          </>
+        ) : (
+          <p className="text-sbb-metal dark:text-sbb-storm">
+            {faehrt && !ohneGps ? `Etwa ${Math.round(stand!.v * 3.6)} km/h` : zustand(meldung, stand, ohneGps, imTunnel !== null, false)}
+          </p>
+        )}
+      </div>
+      <div className="flex flex-wrap gap-1.5" role="group" aria-label="Zeigen und melden">
+        <button type="button" aria-pressed={einstellung.tunnel} className={chip(einstellung.tunnel)}
+                onClick={() => aendern({ tunnel: !einstellung.tunnel })}>Tunnel</button>
+        <button type="button" aria-pressed={einstellung.bruecken !== 'keine'} className={chip(einstellung.bruecken !== 'keine')}
+                onClick={() => aendern({ bruecken: einstellung.bruecken === 'keine' ? 'groessere' : 'keine' })}>Brücken</button>
+        <button type="button" aria-pressed={einstellung.bahnhoefe} className={chip(einstellung.bahnhoefe)}
+                onClick={() => aendern({ bahnhoefe: !einstellung.bahnhoefe })}>Bahnhöfe</button>
+        {([['gipfel', 'Gipfel'], ['kgs', 'Kultur'], ['seilbahn', 'Seilbahnen'], ['flaeche', 'Gebiete']] as const).map(([k, t]) => (
+          <button key={k} type="button" aria-pressed={einstellung.sehenswert[k]} className={chip(einstellung.sehenswert[k])}
+                  onClick={() => sorteZeigen(k, !einstellung.sehenswert[k])}>{t}</button>
+        ))}
+      </div>
+    </div>
+  )
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
                     dark:bg-sbb-midnight dark:text-sbb-white" role="dialog" aria-label="Fahren">
@@ -466,7 +560,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         {/* Karte und Band ganz oben, über Zeitraffer, Tempo und Meldungen: Diese
             wechseln ihre Höhe, Karte und Band sollen nicht springen (Michael,
             2026-09-26: «Karte noch weiter oben. Oberhalb der Geschwindigkeit») */}
-        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} />
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
                       name={(o) => textVon(o)?.name} springen={probefahrt ? springen : undefined} />
