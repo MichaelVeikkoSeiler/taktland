@@ -445,6 +445,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <p className="truncate text-sm text-sbb-metal dark:text-sbb-storm">
               {titel}
             </p>
+            {/* wie weit noch bis zum Ziel, entlang des gesuchten Wegs (Michael, 2026-09-27:
+                «Kilometerangaben bis zum Zielort»); ohne Ziel keine */}
+            {!ohneZiel && sJetzt !== null && (
+              <p className="text-sm font-medium tabular-nums">
+                {wegEnde(fahrweg) - sJetzt < AM_ENDE_M ? 'Am Ziel' : `Noch etwa ${strecke(wegEnde(fahrweg) - sJetzt)} auf diesem Weg`}
+              </p>
+            )}
           </div>
           <button
             type="button" onClick={() => beenden([...hinter.current].sort((a, b) => a.s - b.s))}
