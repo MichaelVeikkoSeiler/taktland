@@ -800,6 +800,24 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
   const grad = (dreh * 180) / Math.PI
   const ende = wegEnde(fw)
   const enden = [[lageBei(fw, 0), daten.titel[0]], [lageBei(fw, ende), daten.titel[1]]] as const
+  // Start und Ziel: fett, der Name ganz auf der Karte (Michael, 2026-09-27)
+  const belegt: Kasten[] = [{ x0: B - 52, x1: B, y0: 0, y1: 56 }]   // der Nordpfeil
+  if (ausschnittName) belegt.push({ x0: 0, x1: ausschnittName.length * 6.6 + 16, y0: 0, y1: 24 })
+  const [c, sn] = [Math.cos(-dreh), Math.sin(-dreh)]
+  const endNamen = enden.map(([l, n]) => {
+    const [x, y] = pt(l.lat, l.lon)
+    if (!drin(x, y, 6)) return null
+    // gedreht wie der Nordpfeil: die Nummern in dieselbe Lage zurückdrehen, dann wählen
+    const lokal = gesetzt.map((g) => {
+      const [dx, dy] = gedreht(g.x - x, g.y - y, c, sn)
+      return { x: x + dx, y: y + dy }
+    })
+    const lage = namensLage(x, y, n, B, H, lokal, dreh)
+    belegt.push(lage.kasten, { x0: x - 8, x1: x + 8, y0: y - 8, y1: y + 8 })
+    return { x, y, n, lage }
+  })
+  for (const g of gesetzt) belegt.push({ x0: g.x - 10, x1: g.x + 10, y0: g.y - 10, y1: g.y + 10 })
+  const orte = ortsnamen(daten, fw, p, B, H, belegt, dreh)
   const rahmen = (ausschnitte ?? []).map(([a, name]) => {
     const [ax, ay] = p.hin(a.x0, a.y0), [bx, by] = p.hin(a.x1, a.y1)
     return { x: ax, y: ay, w: bx - ax, h: by - ay, name }
@@ -833,24 +851,25 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
                 stroke="#fff" strokeWidth={3} paintOrder="stroke">{r.name}</text>
         </g>
       ))}
-      {enden.map(([l, n], i) => {
-        const [x, y] = pt(l.lat, l.lon)
-        if (!drin(x, y, 6)) return null
-        // gedreht wie der Nordpfeil: die Nummern in dieselbe Lage zurückdrehen, dann wählen
-        const [c, sn] = [Math.cos(-dreh), Math.sin(-dreh)]
-        const lokal = gesetzt.map((g) => {
-          const [dx, dy] = gedreht(g.x - x, g.y - y, c, sn)
-          return { x: x + dx, y: y + dy }
-        })
-        const lage = namensLage(x, y, n, B, lokal)
+      {/* grössere Orte am Weg, nicht fett, ohne Punkt: so steht der Name auf der Landeskarte */}
+      {orte.map((o) => {
+        // zwei Zeilen, wo die Landeskarte den Namen umbricht («Oster-» / «mundigen»)
+        const zeilen = o.name.split('\n')
         return (
-          <g key={i} transform={dreh ? `rotate(${grad} ${x} ${y})` : undefined}>
-            <rect x={x - 6} y={y - 6} width={12} height={12} fill="#fff" stroke="#000" strokeWidth={2.5} />
-            <text x={lage.x} y={lage.y} fontSize={15} textAnchor={lage.anker}
-                  stroke="#fff" strokeWidth={4} paintOrder="stroke">{n}</text>
-          </g>
+          <text key={o.name} x={o.x} y={o.y + 4 - (zeilen.length - 1) * 6.5} textAnchor="middle" fontSize={12}
+                fill="#3a3a3a" stroke="#fff" strokeWidth={3} paintOrder="stroke"
+                transform={dreh ? `rotate(${grad} ${o.x} ${o.y})` : undefined}>
+            {zeilen.map((z, i) => <tspan key={i} x={o.x} dy={i ? 13 : 0}>{z}</tspan>)}
+          </text>
         )
       })}
+      {endNamen.map((e, i) => e && (
+        <g key={i} transform={dreh ? `rotate(${grad} ${e.x} ${e.y})` : undefined}>
+          <rect x={e.x - 6} y={e.y - 6} width={12} height={12} fill="#fff" stroke="#000" strokeWidth={2.5} />
+          <text x={e.lage.x} y={e.lage.y} fontSize={15} fontWeight={700} textAnchor={e.lage.anker}
+                stroke="#fff" strokeWidth={4} paintOrder="stroke">{e.n}</text>
+        </g>
+      ))}
       {gesetzt.map(({ e, x, y, ox, oy }) => {
         if (!drin(x, y, 10)) return null
         // weggeschoben: ein Strich zum Ort, Sehenswertes erst ab seinem gewohnten Abstand
@@ -873,30 +892,98 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
   )
 }
 
+interface Kasten { x0: number; x1: number; y0: number; y1: number }
+const ueberlappt = (a: Kasten, b: Kasten) => !(a.x1 < b.x0 || a.x0 > b.x1 || a.y1 < b.y0 || a.y0 > b.y1)
+/** Wie weit ein Kasten, um (cx, cy) gedreht wie die Schrift, über den Rand der Karte ragt; 0: ganz drauf */
+function ueberRand(k: Kasten, cx: number, cy: number, dreh: number, B: number, H: number, rand = 4) {
+  const [c, sn] = [Math.cos(dreh), Math.sin(dreh)]
+  let raus = 0
+  for (const [x, y] of [[k.x0, k.y0], [k.x1, k.y0], [k.x0, k.y1], [k.x1, k.y1]]) {
+    const [dx, dy] = gedreht(x - cx, y - cy, c, sn)
+    const [px, py] = [cx + dx, cy + dy]
+    raus += Math.max(0, rand - px) + Math.max(0, px - (B - rand)) + Math.max(0, rand - py) + Math.max(0, py - (H - rand))
+  }
+  return raus
+}
+
 /**
  * Wohin der Name von Start oder Ziel kommt: oben, unten, rechts oder links vom
- * Viereck, dorthin, wo keine Nummer steht. Die Breite ist geschätzt (15 px Schrift).
+ * Viereck, dorthin, wo keine Nummer steht, und immer ganz auf der Karte (Michael,
+ * 2026-09-27: «Iselle di Trasquera» war abgeschnitten). Die Breite ist geschätzt
+ * (15 px, fett).
  */
-function namensLage(x: number, y: number, n: string, B: number, nummern: Array<{ x: number; y: number }>) {
-  const w = n.length * 8.2, h = 15
-  const oben = { x, y: y - 12, anker: x < B * 0.2 ? 'start' : x > B * 0.8 ? 'end' : 'middle' } as const
-  const moeglich = [
-    oben,
-    { ...oben, y: y + 23 },
-    { x: x + 11, y: y + 5, anker: 'start' },
-    { x: x - 11, y: y + 5, anker: 'end' },
-  ] as const
-  const kasten = (l: (typeof moeglich)[number]) => {
+function namensLage(x: number, y: number, n: string, B: number, H: number, nummern: Array<{ x: number; y: number }>,
+                    dreh = 0) {
+  const w = n.length * 8.8, h = 15
+  type Lage = { x: number; y: number; anker: 'start' | 'middle' | 'end' }
+  const moeglich: Lage[] = [
+    { x, y: y - 12, anker: 'middle' }, { x, y: y + 23, anker: 'middle' },
+    { x: x + 11, y: y + 5, anker: 'start' }, { x: x - 11, y: y + 5, anker: 'end' },
+    { x: x - 6, y: y - 12, anker: 'start' }, { x: x + 6, y: y - 12, anker: 'end' },
+    { x: x - 6, y: y + 23, anker: 'start' }, { x: x + 6, y: y + 23, anker: 'end' },
+  ]
+  const kasten = (l: Lage): Kasten => {
     const x0 = l.anker === 'start' ? l.x : l.anker === 'end' ? l.x - w : l.x - w / 2
     return { x0, x1: x0 + w, y0: l.y - h + 3, y1: l.y + 3 }
   }
-  // wie viele Nummern der Name verdecken würde; ausserhalb der Karte zählt wie viele
-  const verdeckt = (l: (typeof moeglich)[number]) => {
+  // was nicht ganz auf der Karte steht, kommt zuletzt (gemessen mit der Drehung der
+  // Schrift um das Viereck); sonst zählt, wie viele Nummern der Name verdecken würde
+  const wert = (l: Lage) => {
     const k = kasten(l)
-    if (k.x0 < 0 || k.x1 > B || k.y0 < 0) return 99
+    const raus = ueberRand(k, x, y, dreh, B, H)
+    if (raus > 0) return 1000 + raus
     return nummern.filter((m) => !(m.x < k.x0 - 6 || m.x > k.x1 + 6 || m.y < k.y0 - 6 || m.y > k.y1 + 6)).length
   }
-  return moeglich.reduce((best, l) => (verdeckt(l) < verdeckt(best) ? l : best), oben)
+  const best = moeglich.reduce((b, l) => (wert(l) < wert(b) ? l : b), moeglich[0])
+  return { ...best, kasten: kasten(best) }
+}
+
+/**
+ * Grössere Orte am Weg (Michael, 2026-09-27: «Thun, Interlaken, Brig, Visp»): aus den
+ * Ortsnamen der Landeskarte 1:1 Million, je grösser, desto weiter vom Weg entfernt;
+ * nur, was ganz auf die Karte passt und nichts verdeckt, höchstens ORTE_MAX.
+ * Start und Ziel stehen schon fett da.
+ */
+const ORTE_MAX = 14
+/** so weit vom Weg, in Metern, je Einwohnerklasse der Quelle (1 = 2000-9999 … 5 = über 1 Million) */
+const ORTE_BIS_M: Record<number, number> = { 1: 11_000, 2: 15_000, 3: 20_000, 4: 30_000, 5: 30_000 }
+
+function ortsnamen(daten: Daten, fw: Fahrweg, p: Projektion, B: number, H: number, belegt: Kasten[], dreh = 0) {
+  const orte = daten.grund?.orte ?? []
+  if (!orte.length) return []
+  const weg = fw.punkte.filter((_, i) => i % 3 === 0 || i === fw.punkte.length - 1).map((q) => p.pt(q.lat, q.lon))
+  const meterJePx = 111_000 / p.m
+  const kandidaten = orte.flatMap((o) => {
+    if (daten.titel.some((t) => t.startsWith(o.name.split('\n')[0]))) return []
+    const [x, y] = p.pt(o.lage[0], o.lage[1])
+    if (x < 0 || x > B || y < 0 || y > H) return []
+    let d = Infinity
+    for (let i = 1; i < weg.length; i++) {
+      const [ax, ay] = weg[i - 1], [bx, by] = weg[i]
+      const l2 = (bx - ax) ** 2 + (by - ay) ** 2 || 1
+      const t = Math.max(0, Math.min(1, ((x - ax) * (bx - ax) + (y - ay) * (by - ay)) / l2))
+      d = Math.min(d, Math.hypot(x - ax - t * (bx - ax), y - ay - t * (by - ay)))
+    }
+    const meter = d * meterJePx
+    return meter <= (ORTE_BIS_M[o.klasse] ?? 0) ? [{ ...o, x, y, meter }] : []
+  }).sort((a, b) => b.klasse - a.klasse || a.meter - b.meter)
+  const raus: Array<{ name: string; x: number; y: number }> = []
+  for (const o of kandidaten) {
+    if (raus.length >= ORTE_MAX) break
+    const zeilen = o.name.split('\n')
+    const w = Math.max(...zeilen.map((z) => z.length)) * 6.6
+    const h2 = zeilen.length * 6.5
+    // wo die Landeskarte den Namen hat, sonst knapp darüber, darunter oder daneben
+    for (const [dx, dy] of [[0, 0], [0, -14], [0, 14], [w / 2 + 8, 0], [-w / 2 - 8, 0]]) {
+      const [x, y] = [o.x + dx, o.y + dy]
+      const k = { x0: x - w / 2, x1: x + w / 2, y0: y - h2 - 2, y1: y + h2 }
+      if (ueberRand(k, x, y, dreh, B, H) > 0 || belegt.some((b) => ueberlappt(b, k))) continue
+      belegt.push(k)
+      raus.push({ name: o.name, x, y })
+      break
+    }
+  }
+  return raus
 }
 
 /** Wo Norden ist: genordet oben, auf der gedrehten Karte mitgedreht */

@@ -447,4 +447,7 @@ export interface KartengrundDaten {
   fluesse: Array<KodierterZug & { b: number; name?: string }>
   /** je Stufe die Flächen darüber */
   hoehen: Array<{ ab_m: number; ringe: KodierterZug[] }>
+  /** Ortsnamen der Landeskarte 1:1 Million: klasse 1 = 2000-9999 Einwohner … 5 = über
+   *  1 Million, lage = Mitte der Beschriftung [Breite, Länge] */
+  orte?: Array<{ name: string; klasse: number; lage: [number, number] }>
 }

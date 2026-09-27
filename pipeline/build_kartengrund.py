@@ -8,6 +8,10 @@ Hintergrund langweilig»; Muster 1, 2 und 3).
 - fluesse: die breiteren Fliessgewässer aus Swiss Map Vector 1000 von swisstopo
   (Ebene T26_DKM1M_GEWAESSER_LIN, Strichbreite der Landeskarte LB1000 ab
   FLUSS_AB_MM), mit Namen, wie die Quelle sie führt.
+- orte: Ortsnamen der Landeskarte 1:1 Million (Swiss Map Vector 1000, Ebene
+  T03_DKM1M_ORTSCHAFT_PKT_ANNO) ab ORTE_AB_KLASSE, mit der Einwohnerklasse der
+  Quelle und der Mitte der Beschriftung, wie sie auf der Landeskarte steht; für
+  die Namen auf dem Fahrtblatt (Michael, 2026-09-27: «Thun, Interlaken, Brig, Visp»)
 - hoehen: Flächen über HOEHEN_STUFEN Metern aus swissALTIRegio von swisstopo,
   gemittelt auf RASTER_M, geglättet, als Höhenlinien; flache Töne, keine Schattierung.
 
@@ -19,6 +23,7 @@ keine Zahl aus dieser Datei steht als Angabe in der App.
 import json
 import sqlite3
 import sys
+from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
@@ -45,6 +50,10 @@ RASTER_M = 200
 #: Glättung des Rasters in Zellen (Gauss), gegen Treppen und Zacken
 GLAETTEN = 1.2
 FLUSS_AB_MM = 0.24
+#: Einwohnerklassen der Quelle, klein nach gross; ab «2000-9999» kommen sie mit
+ORTE_KLASSEN = ["Ort_2000-9999", "Ort_10000-49999", "Ort_50000-99999", "Ort_100000-1000000",
+                "Ort_Groesser_1000000"]
+ORTE_AB_KLASSE = 0
 TOLERANZ_GRENZE_M = 100
 TOLERANZ_FLUSS_M = 80
 TOLERANZ_HOEHE_M = 60
@@ -138,6 +147,35 @@ def fluesse():
     return raus
 
 
+def orte():
+    """Ortsnamen mit Einwohnerklasse (1 = 2000-9999 … 5 = über 1 Million) und der
+    Mitte ihrer Beschriftung auf der Landeskarte 1:1 Million"""
+    c = sqlite3.connect(smv_laden())
+    x0, y0, x1, y1 = RAHMEN
+    # ein Name über zwei Zeilen («Oster-» / «mundigen») steht in zwei Zeilen der Quelle mit
+    # derselben ORIG_FID; ANNOTEXT hat den ganzen Namen mit Zeilenumbruch. Die Zeilen
+    # bleiben, wie die Landeskarte sie setzt: ob ein Bindestrich zum Namen gehört
+    # (La Chaux-de-Fonds) oder nur trennt (Ostermundigen), sagt die Quelle nicht.
+    teile = defaultdict(list)
+    for shape, text, symbol, fid in c.execute(
+            "select SHAPE, ANNOTEXT, Symbol, ORIG_FID from T03_DKM1M_ORTSCHAFT_PKT_ANNO"):
+        if symbol in ORTE_KLASSEN[ORTE_AB_KLASSE:] and text:
+            teile[fid].append((text, symbol, [p for z in wkb_linien(shape) for p in z]))
+    raus = []
+    for liste in teile.values():
+        text, symbol, _ = liste[0]
+        pts = [p for _, _, ps in liste for p in ps]
+        e = sum(p[0] for p in pts) / len(pts)
+        n = sum(p[1] for p in pts) / len(pts)
+        if not (x0 <= e <= x1 and y0 <= n <= y1):
+            continue
+        la, lo = lv95_zu_wgs84(e, n)
+        zeilen = [z.strip() for z in text.replace("\r\n", "\n").split("\n") if z.strip()]
+        raus.append({"name": "\n".join(zeilen), "klasse": ORTE_KLASSEN.index(symbol) + 1,
+                     "lage": [round(la, 5), round(lo, 5)]})
+    return sorted(raus, key=lambda o: (-o["klasse"], o["name"]))
+
+
 def hoehen_raster():
     """Mittlere Höhe je RASTER_M-Feld aus swissALTIRegio (Übersicht des COG, nur
     der Rahmen), einmal geladen und in data/raw gespeichert"""
@@ -185,9 +223,12 @@ def main():
                     "swisstopo, Swiss Map Vector 1000", "swisstopo, swissALTIRegio"],
         "geladen": date.today().isoformat(),
         "hinweis": "Nur zum Zeichnen: Ringe und Linien als [Breite, Länge] mal 100000, start und "
-                   f"Differenzen d. Höhen gemittelt auf {RASTER_M} m und geglättet; keine Angaben.",
+                   f"Differenzen d. Höhen gemittelt auf {RASTER_M} m und geglättet; keine Angaben. "
+                   "orte: klasse 1 = 2000-9999 Einwohner, 2 = 10000-49999, 3 = 50000-99999, "
+                   "4 = 100000-1000000, 5 = über 1 Million laut Quelle; lage = Mitte der Beschriftung; name mit \\n, wo die Landeskarte ihn auf zwei Zeilen setzt.",
         **grenzen(),
         "fluesse": fluesse(),
+        "orte": orte(),
         "hoehen": hoehen(),
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
