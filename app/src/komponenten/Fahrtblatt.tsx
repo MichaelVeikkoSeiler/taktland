@@ -777,6 +777,9 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
   const kantone = (g?.kanton ?? []).map(punkte).filter(sichtbar)
   const fluesse = (g?.fluesse ?? []).map((f) => ({ q: punkte(f), b: f.b })).filter((f) => sichtbar(f.q))
   const gesetzt = platzieren(fw, p, eintraege, B, H)
+  // Schrift auf der gedrehten Karte gedreht wie der Nordpfeil (Michael, 2026-09-27:
+  // «das vereinfacht das Drehen des Blattes»)
+  const grad = (dreh * 180) / Math.PI
   const ende = wegEnde(fw)
   const enden = [[lageBei(fw, 0), daten.titel[0]], [lageBei(fw, ende), daten.titel[1]]] as const
   const rahmen = (ausschnitte ?? []).map(([a, name]) => {
@@ -814,9 +817,15 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
       {enden.map(([l, n], i) => {
         const [x, y] = pt(l.lat, l.lon)
         if (!drin(x, y, 6)) return null
-        const lage = namensLage(x, y, n, B, gesetzt)
+        // gedreht wie der Nordpfeil: die Nummern in dieselbe Lage zurückdrehen, dann wählen
+        const [c, sn] = [Math.cos(-dreh), Math.sin(-dreh)]
+        const lokal = gesetzt.map((g) => {
+          const [dx, dy] = gedreht(g.x - x, g.y - y, c, sn)
+          return { x: x + dx, y: y + dy }
+        })
+        const lage = namensLage(x, y, n, B, lokal)
         return (
-          <g key={i}>
+          <g key={i} transform={dreh ? `rotate(${grad} ${x} ${y})` : undefined}>
             <rect x={x - 6} y={y - 6} width={12} height={12} fill="#fff" stroke="#000" strokeWidth={2.5} />
             <text x={lage.x} y={lage.y} fontSize={15} textAnchor={lage.anker}
                   stroke="#fff" strokeWidth={4} paintOrder="stroke">{n}</text>
@@ -831,7 +840,8 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
           <g key={e.nr}>
             {weg && <line x1={ox} y1={oy} x2={x} y2={y} stroke="#000" strokeWidth={0.8} />}
             <circle cx={x} cy={y} r={8} fill={FARBE[e.art]} stroke="#fff" strokeWidth={1.5} />
-            <text x={x} y={y + 4} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff">{e.nr}</text>
+            <text x={x} y={y + 4} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff"
+                  transform={dreh ? `rotate(${grad} ${x} ${y})` : undefined}>{e.nr}</text>
           </g>
         )
       })}
@@ -870,7 +880,7 @@ function namensLage(x: number, y: number, n: string, B: number, nummern: Array<{
   return moeglich.reduce((best, l) => (verdeckt(l) < verdeckt(best) ? l : best), oben)
 }
 
-/** Wo Norden ist: genordet oben, auf der gedrehten Karte mitgedreht; das N bleibt aufrecht */
+/** Wo Norden ist: genordet oben, auf der gedrehten Karte mitgedreht */
 function Nordpfeil({ x, y, dreh }: { x: number; y: number; dreh: number }) {
   if (!dreh) {
     return (
@@ -881,15 +891,12 @@ function Nordpfeil({ x, y, dreh }: { x: number; y: number; dreh: number }) {
       </g>
     )
   }
-  const grad = (dreh * 180) / Math.PI
-  // Mitte des Pfeils; das N steht vor seiner Spitze
-  const [mx, my] = [x, y + 22]
-  const [nx, ny] = [mx + Math.sin(dreh) * 22, my - Math.cos(dreh) * 22]
+  // Pfeil und N gedreht, wie die Schrift auf der Karte
   return (
-    <g aria-label="Norden">
-      <circle cx={mx} cy={my} r={24} fill="#fff" opacity={0.85} />
-      <polygon points="0,-12 7,8 0,3 -7,8" fill="#000" transform={`translate(${mx} ${my}) rotate(${grad})`} />
-      <text x={nx} y={ny + 4} textAnchor="middle" fontSize={12} fontWeight={700}>N</text>
+    <g aria-label="Norden" transform={`translate(${x} ${y + 22}) rotate(${(dreh * 180) / Math.PI})`}>
+      <circle r={24} fill="#fff" opacity={0.85} />
+      <text y={-9} textAnchor="middle" fontSize={12} fontWeight={700}>N</text>
+      <polygon points="0,-6 7,14 0,9 -7,14" fill="#000" />
     </g>
   )
 }
