@@ -44,6 +44,9 @@ export interface FahrObjekt {
     zeile: string
     /** in Fahrtrichtung; null bei Flächen, durch die der Weg führt */
     seite: 'links' | 'rechts' | null
+    /** Lage laut Quelle, für die Luftlinie vom Standort (Michael, 2026-09-27); bei
+     *  Seilbahnen das Ende näher an der Strecke; bei Flächen keine */
+    lage?: Lage
   }
 }
 
@@ -414,11 +417,11 @@ export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: 
   // Im Tunnel sieht man nichts: dort wird nichts Sehenswertes gemeldet
   const tunnel = fw.objekte.filter((o) => o.art === 'tunnel' && o.sAus !== null).map((o) => [o.s, o.sAus!] as const)
   const tunnelBei = (s: number) => tunnel.find(([a, b]) => s >= a && s <= b)
-  const dazu = (kennung: string, p: Lage, grenze: number, x: Omit<NonNullable<FahrObjekt['sehenswert']>, 'seite'>) => {
+  const dazu = (kennung: string, p: Lage, grenze: number, x: Omit<NonNullable<FahrObjekt['sehenswert']>, 'seite' | 'lage'>) => {
     if (!imRahmen(p)) return
     const n = seitlich(fw, p)
     if (n.abstand > grenze || n.seite === null || n.s <= 0 || n.s >= ende || tunnelBei(n.s)) return
-    raus.push({ kennung, art: 'sehenswert', s: n.s, sAus: null, sehenswert: { ...x, seite: n.seite } })
+    raus.push({ kennung, art: 'sehenswert', s: n.s, sAus: null, sehenswert: { ...x, seite: n.seite, lage: p } })
   }
   for (const k of daten.kgs) {
     dazu(`kgs ${k.nr}`, { lat: k.lage[0], lon: k.lage[1] }, KGS_M, {

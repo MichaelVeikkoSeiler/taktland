@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEILBAHN_M, type SehenswertSorte, type Ton, wegEnde } from '../fahrt'
+import { abstand, type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEILBAHN_M, type SehenswertSorte, type Ton, wegEnde } from '../fahrt'
 import { spurMerken } from '../ohneziel'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
@@ -314,6 +314,14 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   /** Meter bis zum Objekt entlang des gezeichneten Wegs; gilt auch, wenn der Zug steht */
   const bis = (o: FahrObjekt) => (sJetzt !== null ? Math.max(0, o.s - sJetzt) : null)
   const { angabe } = einstellung
+  /** Sehenswertes: Luftlinie vom geschätzten Standort zum Objekt laut Quelle (Michael,
+   *  2026-09-27), bei Seilbahnen zum Ende näher an der Strecke */
+  const hierLage = sJetzt !== null ? lageBei(fahrweg, sJetzt) : null
+  const luftlinie = (o: FahrObjekt) => {
+    const l = o.sehenswert?.lage
+    if (!l || !hierLage) return null
+    return `Luftlinie ${o.sehenswert!.sorte === 'seilbahn' ? 'zum näheren Ende ' : ''}etwa ${strecke(abstand(hierLage, l))}`
+  }
   /** Probefahrt: die Uhr läuft im Zeitraffer; angezeigt wird die Zeit, die wirklich vergeht,
    *  passend zum Tempo in km/h (Michael, 2026-09-27). Wann gemeldet wird, bleibt gleich. */
   const echt = (sekunden: number) => (probefahrt ? sekunden / raffer : sekunden)
@@ -345,7 +353,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           ansage.current.textContent = (angabe === 'zeit' || m === null ? sek
             : angabe === 'distanz' ? `In etwa ${streckeGesprochen(m)}` : `${sek}, etwa ${streckeGesprochen(m, false)}`) + ': '
             + (o.sehenswert?.sorte === 'flaeche' ? `Du fährst durch ${t.name}, ${o.sehenswert.art}.`
-              : `${artText(o).replace(/^Kultur\b/, 'Kulturgut').replace(' · ', ', ')}: ${t.name}. ${sprechbar(t.zeile)}`)
+              : `${artText(o).replace(/^Kultur\b/, 'Kulturgut').replace(' · ', ', ')}: ${t.name}. ${sprechbar(t.zeile)}`
+                + (luftlinie(o) ? `. ${luftlinie(o)!.replace(/ km$/, ' Kilometer').replace(/ m$/, ' Meter')}.` : ''))
         }
       }
     }
@@ -424,6 +433,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           <p className={`mt-1 ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
             {textVon(o)?.zeile}
           </p>
+          {luftlinie(o) && <p className="mt-1 font-medium tabular-nums">{luftlinie(o)}</p>}
           {o.sehenswert && o.sehenswert.sorte !== 'flaeche' && (
             <p className={`mt-1 text-sm ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
               {o.sehenswert.seite === 'links' ? 'Links' : 'Rechts'} der Strecke laut Lage in der Quelle. Ob
@@ -459,6 +469,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             {bald ? 'Gleich' : 'Als Nächstes'} · <ArtText o={o} />
           </p>
           <p className="truncate text-lg font-bold leading-tight">{textVon(o)?.name}</p>
+          {luftlinie(o) && <p className="truncate text-xs tabular-nums">{luftlinie(o)}</p>}
         </div>
         <span className="shrink-0 text-lg font-bold tabular-nums">
           {abstandText(eta(o), angabe === 'zeit' ? null : bis(o)) ?? ''}
@@ -662,7 +673,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                   <span className="min-w-0 flex-1">
                     <span className="block truncate">{textVon(o)?.name}</span>
                     <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                      <ArtText o={o} />
+                      <ArtText o={o} />{luftlinie(o) && ` · ${luftlinie(o)}`}
                     </span>
                   </span>
                   <span className="shrink-0 text-sm tabular-nums text-sbb-metal dark:text-sbb-storm">
