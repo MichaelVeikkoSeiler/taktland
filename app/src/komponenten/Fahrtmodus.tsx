@@ -546,8 +546,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <p className="mt-6 text-sm font-medium">Danach</p>
             <ol className="mt-2 kachelliste">
               {danach.slice(0, 3).map((o) => (
-                <li key={`${o.art} ${o.kennung}`} className="flex justify-between gap-3 px-3 py-2">
-                  <span className="min-w-0">
+                <li key={`${o.art} ${o.kennung}`} className="flex items-center gap-3 px-3 py-2">
+                  {/* Pikto der Art; Sehenswertes hat keins, der Platz bleibt, damit die Namen fluchten */}
+                  {o.art !== 'sehenswert' ? <Pikto art={o.art} className="size-6" /> : <span className="size-6 shrink-0" aria-hidden="true" />}
+                  <span className="min-w-0 flex-1">
                     <span className="block truncate">{textVon(o)?.name}</span>
                     <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
                       <ArtText o={o} />
