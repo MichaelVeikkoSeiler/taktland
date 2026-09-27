@@ -254,6 +254,9 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
   )
 }
 
+/** Der Grund reicht so weit (in Breiten des Ausschnitts, von der Mitte aus) über das Bild
+ *  hinaus; der Zug springt neu, bevor er ein Fünftel aus der Mitte ist */
+const GRUND_RAND = 0.75
 /** Breite des nahen Ausschnitts, in Grad Breite (etwa 9 km) */
 const NAH = 0.08
 
@@ -318,7 +321,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const blick = nah && hier ? { cx: hx + versatz[0], cy: hy + versatz[1], w: bw } : box
   const veraendert = zoom !== 1 || versatz[0] !== 0 || versatz[1] !== 0
 
-  function runter(e: React.PointerEvent<SVGSVGElement>) {
+  function runter(e: React.PointerEvent<HTMLDivElement>) {
     zeiger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     if (zeiger.current.size === 2) {
       const [a, b] = [...zeiger.current.values()]
@@ -326,7 +329,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
       e.currentTarget.setPointerCapture(e.pointerId)
     }
   }
-  function bewegt(e: React.PointerEvent<SVGSVGElement>) {
+  function bewegt(e: React.PointerEvent<HTMLDivElement>) {
     const vorher = zeiger.current.get(e.pointerId)
     if (!vorher) return
     zeiger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
@@ -343,7 +346,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
     const e2 = box.w / breite
     setVersatz(([vx, vy]) => [vx - (e.clientX - vorher.x) * e2, vy - (e.clientY - vorher.y) * e2])
   }
-  function hoch(e: React.PointerEvent<SVGSVGElement>) {
+  function hoch(e: React.PointerEvent<HTMLDivElement>) {
     zeiger.current.delete(e.pointerId)
     if (zeiger.current.size < 2) abstand.current = 0
   }
@@ -446,25 +449,43 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </div>
       </div>
-      <svg ref={flaeche} viewBox={[blick.cx - blick.w / 2, blick.cy - h / 2, blick.w, h].join(' ')} role="img"
-           aria-label="Karte mit dem Weg und dem Standort" preserveAspectRatio="xMidYMid meet"
-           onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
+      {/* Zwei Ebenen (Michael, 2026-09-27: auf dem Tablet «ruckelt es», Teile des Bildes
+          verschoben, der rote Punkt halb, Flächen und Kultur blinken): Der Grund mit Höhen,
+          Seen, Flächen und Netz wird nur neu gezeichnet, wenn der Ausschnitt springt, und
+          dazwischen als Ganzes verschoben, was die Grafik des Geräts ohne neues Zeichnen
+          kann. Darüber, durchsichtig und leicht, der Weg, die Zeichen und der Zug. */}
+      <div onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
-           className={`${klassen.svg} border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight`}>
-        {ebenen}
-        <path d={pfad(hinter)} fill="none" strokeWidth={3} vectorEffect="non-scaling-stroke"
-              strokeLinejoin="round" className="stroke-sbb-storm dark:stroke-sbb-metal" />
-        <path d={pfad(vor)} fill="none" strokeWidth={3.5} vectorEffect="non-scaling-stroke"
-              strokeLinejoin="round" className="stroke-sbb-charcoal dark:stroke-sbb-white" />
-        {zeichenEbene}
-        {hier && sJetzt !== null && (
-          <>
-            <circle cx={hx} cy={hy} r={9 * px} className="fill-sbb-red/20" />
-            <circle cx={hx} cy={hy} r={5 * px} strokeWidth={2} vectorEffect="non-scaling-stroke"
-                    className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
-          </>
-        )}
-      </svg>
+           className={`${klassen.svg} relative overflow-hidden border border-sbb-cloud bg-white
+                       dark:border-sbb-iron dark:bg-sbb-midnight`}>
+        <svg viewBox={[box.cx - box.w * GRUND_RAND, box.cy - h * GRUND_RAND, box.w * 2 * GRUND_RAND, h * 2 * GRUND_RAND].join(' ')}
+             preserveAspectRatio="xMidYMid meet" aria-hidden="true"
+             className="absolute max-w-none"
+             style={{
+               left: `${(0.5 - GRUND_RAND) * 100}%`, top: `${(0.5 - GRUND_RAND) * 100}%`,
+               width: `${GRUND_RAND * 200}%`, height: `${GRUND_RAND * 200}%`,
+               transform: `translate3d(${((box.cx - blick.cx) / px).toFixed(2)}px, ${((box.cy - blick.cy) / px).toFixed(2)}px, 0)`,
+               willChange: 'transform',
+             }}>
+          {ebenen}
+        </svg>
+        <svg ref={flaeche} viewBox={[blick.cx - blick.w / 2, blick.cy - h / 2, blick.w, h].join(' ')} role="img"
+             aria-label="Karte mit dem Weg und dem Standort" preserveAspectRatio="xMidYMid meet"
+             className="pointer-events-none absolute inset-0 size-full">
+          <path d={pfad(hinter)} fill="none" strokeWidth={3} vectorEffect="non-scaling-stroke"
+                strokeLinejoin="round" className="stroke-sbb-storm dark:stroke-sbb-metal" />
+          <path d={pfad(vor)} fill="none" strokeWidth={3.5} vectorEffect="non-scaling-stroke"
+                strokeLinejoin="round" className="stroke-sbb-charcoal dark:stroke-sbb-white" />
+          {zeichenEbene}
+          {hier && sJetzt !== null && (
+            <>
+              <circle cx={hx} cy={hy} r={9 * px} className="fill-sbb-red/20" />
+              <circle cx={hx} cy={hy} r={5 * px} strokeWidth={2} vectorEffect="non-scaling-stroke"
+                      className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
+            </>
+          )}
+        </svg>
+      </div>
       {!voll && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
       {!voll && sehenswert.s && <SehenswertLegende />}
       <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>
