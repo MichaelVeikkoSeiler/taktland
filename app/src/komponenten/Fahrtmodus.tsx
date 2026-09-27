@@ -449,7 +449,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                 «Kilometerangaben bis zum Zielort»); ohne Ziel keine */}
             {!ohneZiel && sJetzt !== null && (
               <p className="text-sm font-medium tabular-nums">
-                {wegEnde(fahrweg) - sJetzt < AM_ENDE_M ? 'Am Ziel' : `Noch etwa ${strecke(wegEnde(fahrweg) - sJetzt)} auf diesem Weg`}
+                {wegEnde(fahrweg) - sJetzt < AM_ENDE_M ? 'Am Ziel' : `Noch etwa ${bisZiel(wegEnde(fahrweg) - sJetzt)} auf diesem Weg`}
               </p>
             )}
           </div>
@@ -701,6 +701,13 @@ function strecke(meter: number) {
   if (meter < 1000) return `${Math.max(50, Math.round(meter / 50) * 50)} m`
   if (meter < 10_000) return `${(Math.round(meter / 100) / 10).toLocaleString('de-CH')} km`
   return `${Math.round(meter / 1000)} km`
+}
+
+/** bis zum Ziel: ab 5 km ganze Kilometer, darunter mit einer Kommastelle, auch unter
+ *  1 km (Michael, 2026-09-27) */
+function bisZiel(meter: number) {
+  if (meter >= 5000) return `${Math.round(meter / 1000)} km`
+  return `${(Math.round(meter / 100) / 10).toLocaleString('de-CH', { minimumFractionDigits: 1 })} km`
 }
 
 /** zum Vorlesen: «in etwa 500 Metern» (Dativ) oder «etwa 500 Meter» */
