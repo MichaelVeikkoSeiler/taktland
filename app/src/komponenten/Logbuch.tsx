@@ -8,6 +8,7 @@ import { sicherungEinlesen, sicherungHerunterladen, sicherungPruefen } from '../
 import type { BahnhofIndex, StandortDaten } from '../typen'
 import { type Box, KartenPlatz, lage, Netzkarte, useKarte } from './Netzkarte'
 import { BahnhofFeld } from './Strecke'
+import { Pikto } from './Pikto'
 
 const ART_TEXT: Record<ErlebtArt, [string, string]> = {
   tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
@@ -85,12 +86,21 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
   )
 }
 
-/** «2 Tunnel · 12 Brücken · 2 Bahnhöfe» */
-function zaehlung(f: ErlebteFahrt) {
-  return (['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => {
-    const n = f.objekte.filter((o) => o.art === a).length
-    return `${n} ${n === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}`
-  }).join(' · ')
+/** «2 Tunnel · 12 Brücken · 2 Bahnhöfe», je mit Pikto (Michael, 2026-09-27) */
+function Zaehlung({ f }: { f: ErlebteFahrt }) {
+  return (
+    <span className="flex flex-wrap items-center gap-x-4 gap-y-1">
+      {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => {
+        const n = f.objekte.filter((o) => o.art === a).length
+        return (
+          <span key={a} className="flex items-center gap-1.5">
+            <Pikto art={a} className="size-5" />
+            {n} {n === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}
+          </span>
+        )
+      })}
+    </span>
+  )
 }
 
 /**
@@ -135,9 +145,9 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
 
       {offen && (
         <div className="border-t border-sbb-cloud px-4 pb-4 pt-3 dark:border-sbb-iron">
-          <p className="text-sm">
-            {f.manuell ? 'Von Hand eingetragen, ohne «Fahren»: keine Objekte erfasst' : zaehlung(f)}
-          </p>
+          <div className="text-sm">
+            {f.manuell ? 'Von Hand eingetragen, ohne «Fahren»: keine Objekte erfasst' : <Zaehlung f={f} />}
+          </div>
 
           {bearbeiten ? (
             <div className="mt-2">
@@ -172,10 +182,11 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
               <FahrtKarte f={f} index={index} />
               <details className="mt-3 text-sm">
                 <summary className={`cursor-pointer ${knopf}`}>Liste zeigen</summary>
-                <ol className="mt-2 space-y-0.5">
+                <ol className="mt-2 space-y-1">
                   {f.objekte.map((o) => (
-                    <li key={`${o.art}${o.kennung}`}>
-                      {o.name} <span className="text-sbb-metal dark:text-sbb-storm">· {ART_TEXT[o.art][0]}</span>
+                    <li key={`${o.art}${o.kennung}`} className="flex items-center gap-2">
+                      <Pikto art={o.art} className="size-4" />
+                      <span>{o.name} <span className="text-sbb-metal dark:text-sbb-storm">· {ART_TEXT[o.art][0]}</span></span>
                     </li>
                   ))}
                 </ol>

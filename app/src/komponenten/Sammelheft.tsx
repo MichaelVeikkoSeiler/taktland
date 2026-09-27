@@ -4,6 +4,7 @@ import { datum, type ErlebtArt, heftLesen, heftLoeschen, schluesselVon } from '.
 import { kantonText } from '../kanton'
 import type { BahnhofIndex, BrueckenEintrag, TunnelEintrag, Uebersicht } from '../typen'
 import { genau } from './Objekte'
+import { Pikto } from './Pikto'
 
 type Ansicht = 'erlebt' | 'fehlt'
 
@@ -90,7 +91,8 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
       <div className="mt-5 grid grid-cols-3 gap-2">
         {REIHENFOLGE.map((a) => (
           <div key={a} className="kachel px-3 py-3">
-            <p className="text-3xl font-bold tabular-nums">{erlebt(a).length}</p>
+            <Pikto art={a} className="size-7" />
+            <p className="mt-2 text-3xl font-bold tabular-nums">{erlebt(a).length}</p>
             <p className="text-sm text-sbb-metal dark:text-sbb-storm">
               {erlebt(a).length === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}
               {alle[a] && <> von {alle[a]!.length}</>}
@@ -115,7 +117,8 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
           <div className="mt-4 flex gap-2">
             {REIHENFOLGE.map((a) => (
               <button key={a} type="button" aria-pressed={art === a} onClick={() => { setArt(a); setMehr(false) }}
-                      className={`rounded-lg border border-sbb-cloud dark:border-sbb-iron ${knopf(art === a)}`}>
+                      className={`flex items-center gap-2 rounded-lg border border-sbb-cloud dark:border-sbb-iron ${knopf(art === a)}`}>
+                <Pikto art={a} className="size-5" />
                 {ART_TEXT[a][1]}
               </button>
             ))}
@@ -127,8 +130,10 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
               <ul className="mt-4 kachelliste">
                 {erlebt(art).map((o) => (
                   <li key={o.kennung} className="flex items-center justify-between gap-3 px-3 py-2">
-                    <span className="min-w-0 truncate font-medium">
-                      <span className="mr-2 text-sbb-green" aria-hidden="true">✓</span>{o.name}
+                    <span className="flex min-w-0 items-center gap-2 font-medium">
+                      {/* das Pikto als Sticker: erlebt in Farbe (Michael, 2026-09-27) */}
+                      <Pikto art={o.art} className="size-6" />
+                      <span className="truncate">{o.name}</span>
                     </span>
                     <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">{datum(o.zeit)}</span>
                   </li>
@@ -145,9 +150,13 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
               </p>
               <ul className="mt-2 kachelliste">
                 {fehlt.slice(0, mehr ? fehlt.length : ZUERST).map((e) => (
-                  <li key={e.kennung} className="px-3 py-2">
-                    <span className="block font-medium">{e.name}</span>
-                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{e.zeile}</span>
+                  <li key={e.kennung} className="flex items-center gap-2 px-3 py-2">
+                    {/* noch nicht erlebt: das Pikto blass */}
+                    <Pikto art={art} className="size-6 opacity-25" />
+                    <span className="min-w-0">
+                      <span className="block font-medium">{e.name}</span>
+                      <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{e.zeile}</span>
+                    </span>
                   </li>
                 ))}
               </ul>
