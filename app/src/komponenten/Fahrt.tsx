@@ -47,6 +47,14 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
     setProbenOffen(offen)
     try { localStorage.setItem('taktland.probefahrten.offen', offen ? 'ja' : 'nein') } catch { /* nur jetzt */ }
   }
+  // Neue Fahrt: eine Kachel wie die beiden anderen (Michael, 2026-09-27), zu Beginn offen
+  const [neuOffen, setNeuOffen] = useState(() => {
+    try { return localStorage.getItem('taktland.neuefahrt.offen') !== 'nein' } catch { return true }
+  })
+  function neuOffenSetzen(offen: boolean) {
+    setNeuOffen(offen)
+    try { localStorage.setItem('taktland.neuefahrt.offen', offen ? 'ja' : 'nein') } catch { /* nur jetzt */ }
+  }
   // Fahrtblatt: eigener Abschnitt, zu Beginn zugeklappt (Michael, 2026-09-26)
   const [blattOffen, setBlattOffen] = useState(() => {
     try { return localStorage.getItem('taktland.fahrtblatt.offen') === 'ja' } catch { return false }
@@ -303,7 +311,16 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         </section>
       )}
 
-      <h2 className="mt-8 text-lg font-bold">Neue Fahrt</h2>
+      <section className="mt-2">
+      <button type="button" onClick={() => neuOffenSetzen(!neuOffen)} aria-expanded={neuOffen}
+              className="kachel kachel-link flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3
+                         text-left">
+        <span className="text-lg font-bold">Neue Fahrt</span>
+        <span className={`pfeil ${neuOffen ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
+          {neuOffen ? '↑' : '↓'}
+        </span>
+      </button>
+      {neuOffen && (<>
       <div className="mt-3 grid grid-cols-3 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group"
            aria-label="Wie wählen">
         {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel'], ['ohne', 'Ohne Ziel']] as const).map(([a, t]) => (
@@ -388,6 +405,8 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         Zur Auswahl stehen die Bahnhöfe, zu denen Taktland Wege kennt. Gemerkte
         Fahrten bleiben auf diesem Gerät.
       </p>
+      </>)}
+      </section>
     </div>
   )
 }
