@@ -55,7 +55,7 @@
   --color-hoehe-3: #dedad2;
   /* Wald, Siedlung, Stadtzentrum (swissTLMRegio), durchscheinend über den Höhenstufen */
   --color-wald: rgb(118 168 92 / 0.28);
-  --color-siedlung: rgb(140 128 118 / 0.22);
+  --color-siedlung: rgb(140 128 118 / 0.3);
   --color-stadtzentrum: rgb(120 106 96 / 0.4);
   --color-see-name: #3f6a93;
   /* Seen neben der Strecke im Streckenband, kräftiger als die Seefläche */

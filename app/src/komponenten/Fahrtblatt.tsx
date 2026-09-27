@@ -45,7 +45,7 @@ const GRENZE_BREITE = { land: 2.4, kanton: 1 }
 const STRECKE_BREITE = 5
 const WEG = '#767676'
 /** Wald, Siedlung, Stadtzentrum: durchscheinend über den Höhenstufen, hell für den Druck */
-const BODEN = { wald: 'rgb(118 168 92 / 0.26)', siedlung: 'rgb(140 128 118 / 0.2)', stadtzentrum: 'rgb(120 106 96 / 0.38)' }
+const BODEN = { wald: 'rgb(118 168 92 / 0.26)', siedlung: 'rgb(140 128 118 / 0.34)', stadtzentrum: 'rgb(120 106 96 / 0.5)' }
 
 /** Breite des Blatts auf dem Bildschirm, entspricht 190 mm Druckbreite bei 96 dpi */
 const BLATT_PX = 718
