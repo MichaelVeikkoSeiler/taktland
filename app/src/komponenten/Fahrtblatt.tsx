@@ -21,6 +21,8 @@ const BAHNHOEFE_MAX = 5
 const GIPFEL_MAX = 3
 const SEILBAHN_MAX = 1
 const SEEN_MAX = 3
+/** Mindestabstand zwischen Einträgen, als Anteil des Wegs (siehe auswaehlen) */
+const VERTEILT_ANTEIL = 1 / 20
 /** Brücken ab so vielen Baueinheiten, wie in «Fahren» als grössere Brücke */
 const BRUECKE_AB_BE = 3
 /** Farben wie im Streckenband von «Fahren» (Michael, 2026-09-26: «gleiche Farben wie
@@ -177,51 +179,68 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
   const gezeichnet = (x: FahrObjekt) => x.sAus! - x.s
   const tlmMitNamen = [...tlmJe.values()].filter((o) => o.tlm!.name).sort((a, b) => gezeichnet(b) - gezeichnet(a))
   const tlmOhneNamen = [...tlmJe.values()].filter((o) => !o.tlm!.name).sort((a, b) => gezeichnet(b) - gezeichnet(a))
-  // zuerst bis zwei mit Namen (Lötschberg-Basistunnel), dann die längsten mit bekannter
-  // Länge, dann weitere mit Namen, zuletzt die ohne
-  const erste = tlmMitNamen.slice(0, TLM_TUNNEL_ZUERST)
-  const tunnel = ob.filter((o) => o.art === 'tunnel' && !o.tlm && tunnelNach.get(o.kennung)?.laenge_m != null)
+  // Über den Weg verteilt (Michael, 2026-09-27: «dass die Punkte eine gewisse
+  // Verteilung auf die Strecke haben»): Jede Art wählt nach ihrer Rangliste, zuerst
+  // nur, was mindestens VERTEILT_ANTEIL des Wegs von allem schon Gewählten entfernt
+  // liegt, dann mit halbem Abstand, dann ohne. So bleibt die Zahl je Art gleich.
+  const abstand = wegEnde(d.fahrweg) * VERTEILT_ANTEIL
+  const belegt: number[] = []
+  const verteilen = <T extends FahrObjekt>(liste: T[], n: number): T[] => {
+    const raus: T[] = []
+    for (const grenze of [abstand, abstand / 2, 0]) {
+      for (const o of liste) {
+        if (raus.length >= n || raus.includes(o)) continue
+        if (belegt.every((x) => Math.abs(x - o.s) >= grenze)) { raus.push(o); belegt.push(o.s) }
+      }
+    }
+    return raus
+  }
+  // Tunnel: zuerst bis zwei mit Namen aus swissTLM3D (Lötschberg-Basistunnel), dann die
+  // längsten mit bekannter Länge, dann weitere mit Namen, zuletzt die ohne
+  const tunnelMitLaenge = ob.filter((o) => o.art === 'tunnel' && !o.tlm && tunnelNach.get(o.kennung)?.laenge_m != null)
     .sort((a, b) => tunnelNach.get(b.kennung)!.laenge_m! - tunnelNach.get(a.kennung)!.laenge_m!)
-    .slice(0, TUNNEL_MAX - erste.length)
-  const tlmTunnel = [...erste, ...tlmMitNamen.slice(TLM_TUNNEL_ZUERST), ...tlmOhneNamen]
-    .slice(0, TUNNEL_MAX - tunnel.length)
+  const tunnel = verteilen([...tlmMitNamen.slice(0, TLM_TUNNEL_ZUERST), ...tunnelMitLaenge,
+                            ...tlmMitNamen.slice(TLM_TUNNEL_ZUERST), ...tlmOhneNamen], TUNNEL_MAX)
   for (const o of tunnel) {
-    const t = tunnelNach.get(o.kennung)!
-    roh.push({ o, art: 'tunnel', name: ohneKuerzel(t.name), zeile: `${zahl(t.laenge_m!)} m` })
+    if (o.tlm) {
+      const galerie = o.tlm.art === 'galerie'
+      roh.push({ o, art: 'tunnel', name: o.tlm.name ?? (galerie ? 'Galerie' : 'Tunnel'),
+                 zeile: o.tlm.name ? 'Länge nicht erfasst' : 'Name und Länge nicht erfasst' })
+    } else {
+      const t = tunnelNach.get(o.kennung)!
+      roh.push({ o, art: 'tunnel', name: ohneKuerzel(t.name), zeile: `${zahl(t.laenge_m!)} m` })
+    }
   }
-  for (const o of tlmTunnel) {
-    const galerie = o.tlm!.art === 'galerie'
-    roh.push({ o, art: 'tunnel', name: o.tlm!.name ?? (galerie ? 'Galerie' : 'Tunnel'),
-               zeile: o.tlm!.name ? 'Länge nicht erfasst' : 'Name und Länge nicht erfasst' })
-  }
-  // Brücken mit den meisten Baueinheiten, ab 3
-  const bruecken = ob.filter((o) => o.art === 'bruecke' && !o.tlm && (brueckenNach.get(o.kennung)?.baueinheiten ?? 0) >= BRUECKE_AB_BE)
-    .sort((a, b) => brueckenNach.get(b.kennung)!.baueinheiten! - brueckenNach.get(a.kennung)!.baueinheiten!)
-    .slice(0, BRUECKEN_MAX)
+  // Brücken mit den meisten Baueinheiten, ab 3, dazu die anderer Bahnen mit Namen (Landwasserviadukt)
+  const bruecken = verteilen([
+    ...ob.filter((o) => o.art === 'bruecke' && !o.tlm && (brueckenNach.get(o.kennung)?.baueinheiten ?? 0) >= BRUECKE_AB_BE)
+      .sort((a, b) => brueckenNach.get(b.kennung)!.baueinheiten! - brueckenNach.get(a.kennung)!.baueinheiten!),
+    ...ob.filter((o) => o.art === 'bruecke' && o.tlm?.name),
+  ], BRUECKEN_MAX)
   for (const o of bruecken) {
-    const b = brueckenNach.get(o.kennung)!
-    roh.push({ o, art: 'bruecke', name: ohneKuerzel(b.name), zeile: `${b.baueinheiten} Baueinheiten` })
+    if (o.tlm) roh.push({ o, art: 'bruecke', name: o.tlm.name!, zeile: '' })
+    else {
+      const b = brueckenNach.get(o.kennung)!
+      roh.push({ o, art: 'bruecke', name: ohneKuerzel(b.name), zeile: `${b.baueinheiten} Baueinheiten` })
+    }
   }
-  // dazu Brücken anderer Bahnen aus swissTLM3D, nur die mit Namen (Landwasserviadukt)
-  const tlmBruecken = ob.filter((o) => o.art === 'bruecke' && o.tlm?.name).slice(0, BRUECKEN_MAX - bruecken.length)
-  for (const o of tlmBruecken) roh.push({ o, art: 'bruecke', name: o.tlm!.name!, zeile: '' })
-  // Bahnhöfe: alle, und sind es zu viele, zuerst die grossen, dann die mittleren
-  const stufe = { L: 0, M: 1, S: 2 } as Record<string, number>
-  const bhf = ob.filter((o) => o.art === 'bahnhof').map((o) => ({ o, b: bahnhof.get(uicVon.get(o.kennung) ?? 0) }))
-    .filter((x) => x.b)
-  const gewaehlt = bhf.length <= BAHNHOEFE_MAX ? bhf
-    : [...bhf].sort((x, y) => (stufe[x.b!.tier] ?? 3) - (stufe[y.b!.tier] ?? 3)).slice(0, BAHNHOEFE_MAX)
-  for (const { o, b } of gewaehlt) roh.push({ o, art: 'bahnhof', name: b!.name, zeile: '' })
   // Sehenswertes: die höchsten Gipfel, dazu Seilbahnen in Fahrtrichtung; keine
   // Kulturgüter, das sind meist Gebäude (Michael, 2026-09-26)
   const sw = ob.filter((o) => o.sehenswert && o.sehenswert.seite)
   const hoehe = (o: FahrObjekt) => Number((o.sehenswert!.zeile.match(/^([\d'’]+) m/)?.[1] ?? '0').replace(/['’]/g, ''))
-  const gipfel = sw.filter((o) => o.sehenswert!.sorte === 'gipfel').sort((a, b) => hoehe(b) - hoehe(a)).slice(0, GIPFEL_MAX)
-  const seilbahn = sw.filter((o) => o.sehenswert!.sorte === 'seilbahn').slice(0, SEILBAHN_MAX)
+  const gipfel = verteilen(sw.filter((o) => o.sehenswert!.sorte === 'gipfel').sort((a, b) => hoehe(b) - hoehe(a)), GIPFEL_MAX)
+  const seilbahn = verteilen(sw.filter((o) => o.sehenswert!.sorte === 'seilbahn'), SEILBAHN_MAX)
   for (const o of [...gipfel, ...seilbahn]) {
-    const s = o.sehenswert!
-    roh.push({ o, art: s.sorte as Eintrag['art'], name: s.name, seite: s.seite!,
-               zeile: s.sorte === 'gipfel' ? s.zeile : 'Seilbahn' })
+    const x = o.sehenswert!
+    roh.push({ o, art: x.sorte as Eintrag['art'], name: x.name, seite: x.seite!,
+               zeile: x.sorte === 'gipfel' ? x.zeile : 'Seilbahn' })
+  }
+  // Bahnhöfe zuletzt, sie füllen die Lücken: zuerst die grossen, dann die mittleren
+  const stufe = { L: 0, M: 1, S: 2 } as Record<string, number>
+  const bhf = ob.filter((o) => o.art === 'bahnhof' && bahnhof.has(uicVon.get(o.kennung) ?? 0))
+  const tier = (o: FahrObjekt) => stufe[bahnhof.get(uicVon.get(o.kennung) ?? 0)!.tier] ?? 3
+  for (const o of verteilen([...bhf].sort((x, y) => tier(x) - tier(y)), BAHNHOEFE_MAX)) {
+    roh.push({ o, art: 'bahnhof', name: bahnhof.get(uicVon.get(o.kennung) ?? 0)!.name, zeile: '' })
   }
   // zu viel für eine Seite: zuerst die kleinen Bahnhöfe weg, dann Seilbahnen, Gipfel,
   // Brücken und Tunnel, je die zuletzt gewählten
@@ -360,9 +379,10 @@ function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[
               Das habe ich aus dem Fenster gesehen:
             </div>
             <p className="mt-2 text-[9.5px] leading-snug">
-              Auswahl nach Zahlen aus den Daten: die {TUNNEL_MAX} längsten Tunnel mit bekannter Länge, Brücken ab
-              {' '}{BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen die grossen, die {GIPFEL_MAX} höchsten Gipfel bis 8 km neben
-              der Strecke, die {SEEN_MAX} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
+              Auswahl nach Zahlen aus den Daten und über den Weg verteilt: {TUNNEL_MAX} Tunnel, zuerst die längsten mit
+              bekannter Länge, Brücken ab {BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen zuerst die grossen, {GIPFEL_MAX} Gipfel
+              bis 8 km neben der Strecke, zuerst die höchsten; liegen zwei zu nah beieinander, kommt der nächste der Liste.
+              Die {SEEN_MAX} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
               laut Daten; ob man es vom Zug aus sieht, sagen sie nicht.
               {daten.ohneLaenge > 0 && ` Tunnel anderer Bahnen (swissTLM3D) haben in den Daten keine Länge und meist keinen`
                 + ` Namen: Zuerst stehen bis ${TLM_TUNNEL_ZUERST} mit Namen, fehlen Tunnel mit Länge, die längsten laut`
