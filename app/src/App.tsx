@@ -190,8 +190,9 @@ export default function App() {
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
-            Seen, Gipfel und beim Fahren Tunnel und Brücken anderer Bahnen (swissTLM3D):
-            Bundesamt für Landestopografie swisstopo. Kulturgüter: Bundesamt für
+            Seen, Flüsse, Höhenstufen, Gipfel und beim Fahren Tunnel und Brücken anderer Bahnen
+            (swissTLM3D): Bundesamt für Landestopografie swisstopo. Landes- und Kantonsgrenzen:
+            Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für
             Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
             Moorlandschaften: Bundesamt für Umwelt BAFU.
             Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot einer Bundes- oder Privatbahn.

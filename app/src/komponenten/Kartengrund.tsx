@@ -7,8 +7,7 @@ import { LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
  * Der Grund der Karten (Michael, 2026-09-27: «den weissen Hintergrund
  * langweilig»): (1) das Ausland leicht grau, die Kantone fein umrandet,
  * (2) die breiteren Flüsse, (3) Höhenstufen ab 1000, 2000 und 3000 m als flache
- * Töne. Welche Ebenen gezeichnet werden, steht für die Muster in
- * localStorage «taktland.kartengrund» («123» = alle, leer = keine).
+ * Töne. Michael, 2026-09-27: «alle drei, Gebiete heller».
  */
 
 interface Zug { d: string; x0: number; x1: number; y0: number; y1: number }
@@ -55,29 +54,23 @@ export function useKartengrund(): Grund | null {
   return g
 }
 
-function ebenenWahl(): string {
-  try { return localStorage.getItem('taktland.kartengrund') ?? '' } catch { return '' }
-}
-
 const im = (z: Zug, box: Box, h: number) =>
   z.x1 > box.cx - box.w && z.x0 < box.cx + box.w && z.y1 > box.cy - h && z.y0 < box.cy + h
 
 /** Unter allen anderen Ebenen zeichnen */
 export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | null; box: Box; verh?: number }) {
   if (!grund) return null
-  const wahl = ebenenWahl()
-  if (!wahl) return null
   const h = box.w / verh
   // ein Rahmen weit um den Ausschnitt; mit der Schweiz als Loch wird er zum Ausland
   const r = [box.cx - box.w * 2, box.cy - h * 2, box.cx + box.w * 2, box.cy + h * 2]
   const rahmen = `M${r[0]} ${r[1]}H${r[2]}V${r[3]}H${r[0]}Z`
   return (
     <g aria-hidden="true">
-      {wahl.includes('3') && grund.hoehen.map((s, i) => (
+      {grund.hoehen.map((s, i) => (
         <path key={`h${s.ab}`} d={s.flaechen.filter((z) => im(z, box, h)).map((z) => z.d).join('')}
               fillRule="evenodd" className={['fill-hoehe-1', 'fill-hoehe-2', 'fill-hoehe-3'][i]} />
       ))}
-      {wahl.includes('1') && (
+      {(
         <>
           <path d={rahmen + grund.land} fillRule="evenodd" className="fill-ausland" />
           {grund.kantone.filter((z) => im(z, box, h)).map((z, i) => (
@@ -88,7 +81,7 @@ export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | nu
                 className="stroke-landesgrenze" />
         </>
       )}
-      {wahl.includes('2') && grund.fluesse.filter((z) => im(z, box, h)).map((z, i) => (
+      {grund.fluesse.filter((z) => im(z, box, h)).map((z, i) => (
         <path key={`f${i}`} d={z.d} fill="none" strokeWidth={z.b >= 0.3 ? 2 : 1.3}
               strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke"
               className="stroke-fluss" />

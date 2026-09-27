@@ -152,7 +152,8 @@ export function FlaechenEbene({ flaechen, box, verh = 1.6, waehlen }: {
     <g>
       {/* BLN, Pärke und Moorlandschaften als «Gebiete» in einer Farbe (Michael, 2026-09-26) */}
       {!aus.has('gebiete') && flaechen.filter((f) => imBild(f, box, h)).map((f, i) => (
-        <path key={i} d={f.d} fillRule="evenodd" strokeWidth={1} vectorEffect="non-scaling-stroke"
+        // halb durchsichtig, damit die Höhenstufen darunter sichtbar bleiben (Michael, 2026-09-27)
+        <path key={i} d={f.d} fillRule="evenodd" strokeWidth={1} vectorEffect="non-scaling-stroke" fillOpacity={0.45}
               className={`fill-flaeche-park stroke-flaeche-park-rand ${waehlen ? 'cursor-pointer' : ''}`}
               onClick={waehlen ? () => waehlen(f.info) : undefined} />
       ))}

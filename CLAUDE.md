@@ -105,6 +105,9 @@ data/sehenswert.json  Gipfel mit Höhe (swisstopo), Kulturgüter von nationaler 
              (BABS) und Seilbahnen mit Bundeskonzession (BAV) für die Karten
              (pipeline/build_sehenswert.py)
 data/flaechen.json  BLN, Pärke und Moorlandschaften (BAFU), vereinfachte Umrisse
+data/kartengrund.json  Grund aller Karten: Schweiz und Kantone (BFS g1), Flüsse (Swiss Map
+             Vector 1000), Höhenstufen ab 1000, 2000 und 3000 m (swissALTIRegio), nur zum
+             Zeichnen (pipeline/build_kartengrund.py, braucht rasterio, scipy, scikit-image)
 data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3D
              (pipeline/fetch_tlm3d.py, pipeline/build_tlm_bauwerke.py), ohne Länge; im
              Fahrtmodus auf Strecken anderer Bahnen, deren Verlauf aus dem Schienennetz kommt
@@ -138,6 +141,7 @@ python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 .venv/bin/python pipeline/build_karte.py         # Netz für die kleine Tunnelkarte
 python3 pipeline/build_seen.py                   # Seen für die Karten (swisstopo)
 python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
+.venv/bin/python pipeline/build_kartengrund.py   # Grenzen, Flüsse, Höhenstufen für die Karten
 python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D

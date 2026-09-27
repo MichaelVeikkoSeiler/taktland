@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import { flaechenLaden, geometrieLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
+import { flaechenLaden, geometrieLaden, kartengrundLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import {
   type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, wegEnde,
 } from '../fahrt'
 import { ohneKuerzel } from '../kuerzel'
 import { bahnenAusLesen, nachbarnBauen } from '../bahnen'
 import type {
-  BahnhofIndex, BrueckenEintrag, SeenDaten, StreckenAbschnitt, StreckenNetz, TunnelEintrag, Uebersicht,
+  BahnhofIndex, BrueckenEintrag, KartengrundDaten, SeenDaten, StreckenAbschnitt, StreckenNetz, TunnelEintrag, Uebersicht,
 } from '../typen'
 import { nachKennung, type Nachbarn, type StreckenWahl, wegSuchen } from './Strecke'
 import { Ladefehler } from './Ladefehler'
@@ -29,6 +29,9 @@ const FARBE: Record<Eintrag['art'], string> = {
   tunnel: '#000000', bruecke: '#f27e00', bahnhof: '#1d3f8a', gipfel: '#2f7d4f', seilbahn: '#2f7d4f',
 }
 const SEE = '#c9def1'
+/** Grund der Karte, heller als in der App, damit der Druck wenig Tinte braucht */
+const GRUND = { hoehen: ['#f7f6f2', '#efece6', '#e6e2da'], ausland: '#f2f2f2', kanton: '#dcdcdc',
+                grenze: '#bdbdbd', fluss: '#9cc3e6' }
 const WEG = '#767676'
 
 /** Breite des Blatts auf dem Bildschirm, entspricht 190 mm Druckbreite bei 96 dpi */
@@ -58,6 +61,8 @@ interface Daten {
   bruecken: Uebersicht<BrueckenEintrag>
   fahrweg: Fahrweg
   seen: SeenDaten | null
+  /** Grund der Karte: Ausland, Kantone, Flüsse, Höhenstufen (Michael, 2026-09-27) */
+  grund: KartengrundDaten | null
   titel: [string, string]
   /** Tunnel anderer Bahnen aus swissTLM3D: ohne Länge, darum nicht auf dem Blatt */
   ohneLaenge: number
@@ -107,9 +112,11 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
         fahrweg.objekte = [...fahrweg.objekte, ...sehenswertAufWeg(fahrweg, s, f)].sort((p, q) => p.s - q.s)
       } catch { /* ohne Sehenswertes */ }
       try { seen = await seenLaden(); fahrweg.seeUfer = seeUferAufWeg(fahrweg, seen) } catch { /* ohne Seen */ }
+      let grund: KartengrundDaten | null = null
+      try { grund = await kartengrundLaden() } catch { /* ohne Grund, weiss */ }
       const name = (x: string) => bahnhof.get(uicVon.get(x) ?? 0)?.name ?? netz.punkte[x] ?? x
       if (!ab) {
-        setDaten({ netz, tunnel, bruecken, fahrweg, seen, titel: [name(weg.punkte[0]), name(weg.punkte[weg.punkte.length - 1])],
+        setDaten({ netz, tunnel, bruecken, fahrweg, seen, grund, titel: [name(weg.punkte[0]), name(weg.punkte[weg.punkte.length - 1])],
                    ohneLaenge: fahrweg.objekte.filter((o) => o.tlm && o.art === 'tunnel').length })
       }
     })().catch((e: Error) => { if (!ab) setFehler(e.message) })
@@ -360,7 +367,7 @@ function Blatt({ daten, eintraege, zuViel }: { daten: Daten; eintraege: Eintrag[
               {daten.ohneLaenge > 0 && ` Tunnel anderer Bahnen (swissTLM3D) haben in den Daten keine Länge und meist keinen`
                 + ` Namen: Zuerst stehen bis ${TLM_TUNNEL_ZUERST} mit Namen, fehlen Tunnel mit Länge, die längsten laut`
                 + ' Zeichnung; Brücken anderer Bahnen nur mit Namen.'}
-              {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo. Taktland ist ein
+              {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo, BFS. Taktland ist ein
               privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
             </p>
           </div>
@@ -438,6 +445,12 @@ function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
           <span className="inline-block h-3 w-5" style={{ backgroundColor: SEE, printColorAdjust: 'exact' }} />See
         </li>
       )}
+      <li className="flex items-center gap-1.5">
+        {GRUND.hoehen.map((f) => (
+          <span key={f} className="inline-block h-3 w-3" style={{ backgroundColor: f, printColorAdjust: 'exact' }} />
+        ))}
+        Höhe ab 1000, 2000, 3000 m
+      </li>
     </ul>
   )
 }
@@ -601,13 +614,23 @@ function Karte({ daten, eintraege, B, H, p, ausschnitte, ausschnittName }: {
     const l = lageBei(fw, bis); const [x, y] = pt(l.lat, l.lon); raus.push(`${x.toFixed(1)},${y.toFixed(1)}`)
     return raus.join(' ')
   }
-  // Seen im Ausschnitt
-  const seen = (daten.seen?.seen ?? []).flatMap((s) => s.ringe.map((r) => {
+  const punkte = (r: { start: [number, number]; d: number[] }) => {
     let [la, lo] = r.start
     const q = [pt(la / 1e5, lo / 1e5)]
     for (let i = 0; i < r.d.length; i += 2) { la += r.d[i]; lo += r.d[i + 1]; q.push(pt(la / 1e5, lo / 1e5)) }
     return q
-  })).filter((q) => q.some(([x, y]) => drin(x, y, 50)))
+  }
+  const sichtbar = (q: ReadonlyArray<readonly [number, number]>) => q.some(([x, y]) => drin(x, y, 50))
+  const d = (q: ReadonlyArray<readonly [number, number]>, zu = true) =>
+    q.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join('') + (zu ? 'Z' : '')
+  // Seen im Ausschnitt
+  const seen = (daten.seen?.seen ?? []).flatMap((s) => s.ringe.map(punkte)).filter(sichtbar)
+  // Grund wie in der App, heller für den Druck; Ringe ganz draussen fallen weg
+  const g = daten.grund
+  const hoehen = (g?.hoehen ?? []).map((st) => st.ringe.map(punkte).filter(sichtbar).map((q) => d(q)).join(''))
+  const land = (g?.land ?? []).map((r) => d(punkte(r))).join('')
+  const kantone = (g?.kanton ?? []).map(punkte).filter(sichtbar)
+  const fluesse = (g?.fluesse ?? []).map((f) => ({ q: punkte(f), b: f.b })).filter((f) => sichtbar(f.q))
   const gesetzt = platzieren(fw, p, eintraege, B, H)
   const ende = wegEnde(fw)
   const enden = [[lageBei(fw, 0), daten.titel[0]], [lageBei(fw, ende), daten.titel[1]]] as const
@@ -619,6 +642,14 @@ function Karte({ daten, eintraege, B, H, p, ausschnitte, ausschnittName }: {
   return (
     <>
       <rect x={0} y={0} width={B} height={H} fill="#fff" />
+      {hoehen.map((x, i) => x && <path key={`h${i}`} d={x} fillRule="evenodd" fill={GRUND.hoehen[i]} />)}
+      {land && <path d={`M-10 -10H${B + 10}V${H + 10}H-10Z${land}`} fillRule="evenodd" fill={GRUND.ausland} />}
+      {kantone.map((q, i) => <path key={`k${i}`} d={d(q)} fill="none" stroke={GRUND.kanton} strokeWidth={0.6} />)}
+      {land && <path d={land} fill="none" stroke={GRUND.grenze} strokeWidth={1} />}
+      {fluesse.map((f, i) => (
+        <path key={`f${i}`} d={d(f.q, false)} fill="none" stroke={GRUND.fluss} strokeWidth={f.b >= 0.3 ? 1.6 : 1}
+              strokeLinejoin="round" strokeLinecap="round" />
+      ))}
       {seen.map((q, i) => (
         <polygon key={i} points={q.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')} fill={SEE} />
       ))}

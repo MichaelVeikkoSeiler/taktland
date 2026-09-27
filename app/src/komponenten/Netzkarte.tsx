@@ -2,6 +2,7 @@ import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { karteLaden } from '../daten'
 import type { KartenDaten } from '../typen'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
+import { KartengrundEbene, useKartengrund } from './Kartengrund'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert, useVersteckt } from './Sehenswert'
 
 /** Verhältnis Meter je Grad Länge zu Breite in der Schweiz: x = Länge mal das */
@@ -209,6 +210,7 @@ export function Netzkarte({
 }) {
   const [box, setBox] = useState<Box>(start)
   const seen = useSeen()
+  const kartengrund = useKartengrund()
   const sehenswert = useSehenswert()
   const versteckt = useVersteckt()
   const [auswahl, setAuswahl] = useState<Auswahl | null>(null)
@@ -397,6 +399,7 @@ export function Netzkarte({
            }}
            className={`${klassen.svg} touch-none border border-sbb-cloud bg-white
                       dark:border-sbb-iron dark:bg-sbb-midnight`}>
+        <KartengrundEbene grund={kartengrund} box={box} verh={verh} />
         <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />
         <SeenFlaechen seen={seen} box={box} verh={verh} />
         {sichtbar.map(({ nr, s, i }) => (
@@ -448,7 +451,8 @@ export function Netzkarte({
       {!voll && (
         <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           {beschriftung}{' '}
-          {seen && 'Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. '}
+          {seen && 'Seen und Flüsse: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. '}
+          {kartengrund && 'Höhenstufen ab 1000, 2000 und 3000 m: swissALTIRegio, swisstopo, vereinfacht; Landes- und Kantonsgrenzen: BFS. '}
           {sehenswert.s && 'Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften): BAFU. Kulturgüter erscheinen erst näher. Ein Tipp auf ein Zeichen zeigt, was es ist; ein Tipp in der Legende blendet eine Kategorie aus oder ein. '}
           Zoomen mit zwei Fingern, mit «+» und «−» oder mit Strg und dem Mausrad; Ziehen verschiebt
           die Karte, sobald sie näher steht.
