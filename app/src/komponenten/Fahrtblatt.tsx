@@ -43,6 +43,8 @@ const BLATT_PX = 718
 /** Höhe des Blatts: A4 ohne Rand (277 mm) bei 96 dpi, etwas Luft fürs Runden.
  *  Die obere Hälfte gehört der Karte, die untere dem Ausfüllen (Michael, 2026-09-26) */
 const BLATT_HOCH_PX = 1036
+/** Die gedrehte Karte füllt die Fläche nicht ganz, sonst wirkt sie eng (Michael, 2026-09-27: «um ca. 5 %» kleiner) */
+const GEDREHT_ANTEIL = 0.95
 /** Näher als so viele Pixel überdecken sich zwei Nummern auf der Karte */
 const ENG_PX = 18
 /** So weit um die dichteste Stelle herum zeigt der Ausschnitt alles */
@@ -568,8 +570,8 @@ interface Box { x0: number; x1: number; y0: number; y1: number }
 
 /** dreh: um so viel (Bogenmass, im Uhrzeigersinn) ist die Karte gedreht; box,
  *  zurueck und hin rechnen in den gedrehten Grad */
-function projektion(kx: number, box: Box, B: number, H: number, rand: number, dreh = 0) {
-  const m = Math.min((B - 2 * rand) / (box.x1 - box.x0 || 1e-6), (H - 2 * rand) / (box.y1 - box.y0 || 1e-6))
+function projektion(kx: number, box: Box, B: number, H: number, rand: number, dreh = 0, anteil = 1) {
+  const m = anteil * Math.min((B - 2 * rand) / (box.x1 - box.x0 || 1e-6), (H - 2 * rand) / (box.y1 - box.y0 || 1e-6))
   const ox = (B - (box.x1 - box.x0) * m) / 2, oy = (H - (box.y1 - box.y0) * m) / 2
   const [c, sn] = [Math.cos(dreh), Math.sin(dreh)]
   return {
@@ -732,7 +734,7 @@ function Karten({ daten, eintraege, B, H, drehen }: {
          aria-label={`Karte des Wegs ${daten.titel[0]} bis ${daten.titel[1]}`}>
       {teile.map((t, i) => (
         <svg key={i} x={t.x} y={t.y} width={t.w} height={t.h} viewBox={`0 0 ${t.w} ${t.h}`} overflow="hidden">
-          <Karte daten={daten} eintraege={eintraege} B={t.w} H={t.h} p={projektion(kx, t.box, t.w, t.h, RAND, dreh)} dreh={dreh}
+          <Karte daten={daten} eintraege={eintraege} B={t.w} H={t.h} p={projektion(kx, t.box, t.w, t.h, RAND, dreh, drehen ? GEDREHT_ANTEIL : 1)} dreh={dreh}
                  ausschnitte={t.ausschnitte?.map((a, j) => [a, 'AB'[j]] as const)}
                  ausschnittName={t.istAusschnitt ? `${'AB'[i - 1]} · Ausschnitt vergrössert` : undefined} />
         </svg>
