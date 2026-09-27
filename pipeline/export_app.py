@@ -91,7 +91,7 @@ def main():
     uebersichten()
     # das Streckennetz unverändert, geprüft mit generator/strecken.py
     for name in ("strecken.json", "strecken_geometrie.json", "karte.json", "standort.json", "seen.json",
-                 "sehenswert.json", "flaechen.json"):
+                 "sehenswert.json", "flaechen.json", "kartengrund.json"):
         quelle = ROOT / "data" / name
         if quelle.exists():
             shutil.copy(quelle, ZIEL / name)

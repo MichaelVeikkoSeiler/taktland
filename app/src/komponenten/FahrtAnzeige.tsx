@@ -9,6 +9,7 @@ import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useBreite, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
+import { KartengrundEbene, useKartengrund } from './Kartengrund'
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
@@ -265,6 +266,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
 }) {
   const { linien } = useKarte()
   const seen = useSeen()
+  const kartengrund = useKartengrund()
   const sehenswert = useSehenswert()
   const [auswahl, setAuswahl] = useState<Auswahl | null>(null)
   const [nah, setNahRoh] = useState(true)
@@ -356,6 +358,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   // was sich nur mit dem Ausschnitt ändert, nicht mit jedem Standort
   const ebenen = useMemo(() => (
     <>
+      <KartengrundEbene grund={kartengrund} box={box} verh={verh} />
       <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />
       <SeenFlaechen seen={seen} box={box} verh={verh} />
       <SeenNamen seen={seen} box={box} px={px} verh={verh} />
@@ -365,7 +368,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
               vectorEffect="non-scaling-stroke" className="stroke-sbb-cloud dark:stroke-sbb-iron" />
       ))}
     </>
-  ), [sehenswert.f, sehenswert.s, seen, box, px, verh, netz])
+  ), [kartengrund, sehenswert.f, sehenswert.s, seen, box, px, verh, netz])
   const hinter = weg.filter((p) => p.s <= s).map((p) => p.xy)
   const vor = weg.filter((p) => p.s >= s).map((p) => p.xy)
   if (hier && sJetzt !== null) { hinter.push([hx, hy]); vor.unshift([hx, hy]) }

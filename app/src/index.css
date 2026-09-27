@@ -42,6 +42,14 @@
   /* Seen auf den Karten, von Claude festgelegt (Michael, 2026-09-25: «helles
      Blau selber durch dich definiert»); dunkel eigene Töne, unten */
   --color-see: #c9def1;
+  /* Grund der Karten (Muster, Michael, 2026-09-27) */
+  --color-ausland: #f0f0f0;
+  --color-kantonsgrenze: #d8d8d8;
+  --color-landesgrenze: #b4b4b4;
+  --color-fluss: #7fb2e0;
+  --color-hoehe-1: #f5f3ee;
+  --color-hoehe-2: #ebe8e1;
+  --color-hoehe-3: #dedad2;
   --color-see-name: #3f6a93;
   /* Seen neben der Strecke im Streckenband, kräftiger als die Seefläche */
   --color-see-band: #7fb2e0;
@@ -152,7 +160,9 @@ body {
 
 /* Seen im Dunkeln */
 @media (prefers-color-scheme: dark) {
-  :root { --color-see: #1d2c3a; --color-see-name: #8fb3d4; --color-see-halo: #151515;
+  :root { --color-ausland: #1b1b1b; --color-kantonsgrenze: #2e2e2e; --color-landesgrenze: #4a4a4a;
+          --color-fluss: #2f4a63; --color-hoehe-1: #1a1a1a; --color-hoehe-2: #202020; --color-hoehe-3: #272727;
+          --color-see: #1d2c3a; --color-see-name: #8fb3d4; --color-see-halo: #151515;
           --color-gipfel: #c9a27e; --color-kgs: #c39be0; --color-seilbahn: #bdbdbd;
           --color-flaeche-bln: #1f2a1b; --color-flaeche-bln-rand: #3a5230;
           --color-flaeche-park: #1c2d18; --color-flaeche-park-rand: #4f7a3d;

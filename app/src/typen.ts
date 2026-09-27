@@ -427,3 +427,18 @@ export interface StandortDaten {
   bruecken: StandortZeile[]
   bahnuebergaenge: StandortZeile[]
 }
+
+/** Grund der Karten (data/kartengrund.json): nur zum Zeichnen, keine Angaben */
+export interface KartengrundDaten {
+  quellen: string[]
+  geladen: string
+  hinweis: string
+  /** die Schweiz als Fläche, Ringe */
+  land: KodierterZug[]
+  /** die Kantone, Ringe */
+  kanton: KodierterZug[]
+  /** Fliessgewässer; b: Strichbreite der Landeskarte in mm */
+  fluesse: Array<KodierterZug & { b: number; name?: string }>
+  /** je Stufe die Flächen darüber */
+  hoehen: Array<{ ab_m: number; ringe: KodierterZug[] }>
+}

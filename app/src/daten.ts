@@ -1,6 +1,6 @@
 import type {
   BahnhofIndex, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StandortDaten, StreckenGeometrie,
-  FlaechenDaten, SeenDaten, SehenswertDaten, StreckenNetz,
+  FlaechenDaten, KartengrundDaten, SeenDaten, SehenswertDaten, StreckenNetz,
   Uebersicht, Vergleichsdaten,
 } from './typen'
 
@@ -99,6 +99,11 @@ export async function sehenswertLaden(): Promise<SehenswertDaten> {
 /** BLN, Pärke und Moorlandschaften für die Karten */
 export async function flaechenLaden(): Promise<FlaechenDaten> {
   return holen<FlaechenDaten>('data/flaechen.json')
+}
+
+/** Grund der Karten: Schweiz, Kantone, Flüsse, Höhenstufen */
+export async function kartengrundLaden(): Promise<KartengrundDaten> {
+  return holen<KartengrundDaten>('data/kartengrund.json')
 }
 
 /** Die Seen für die Karten */
