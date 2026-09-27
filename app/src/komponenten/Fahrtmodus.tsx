@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEILBAHN_M, type SehenswertSorte, wegEnde } from '../fahrt'
+import { type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEILBAHN_M, type SehenswertSorte, type Ton, wegEnde } from '../fahrt'
 import { spurMerken } from '../ohneziel'
 import { freigabeHilfe } from '../umgebung'
 import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './FahrtAnzeige'
@@ -111,7 +111,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
-  piepen: () => void
+  piepen: Ton
   titel: string
   /** mit allem, was seit dem ersten Standort durchfahren wurde, in Fahrtrichtung */
   beenden: (durchfahren: FahrObjekt[]) => void
@@ -328,7 +328,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       const schluessel = `${o.art} ${o.kennung}`
       if (e !== null && e <= einstellung.vorlauf && !gemeldet.current.has(schluessel)) {
         gemeldet.current.add(schluessel)
-        if (einstellung.ton) piepen()
+        if (einstellung.ton) piepen(o.art)
         // für Bildschirmleser: dieselbe Meldung als Satz, einmal
         const t = textVon(o)
         if (ansage.current && t) {

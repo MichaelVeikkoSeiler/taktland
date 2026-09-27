@@ -218,7 +218,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Im Zug meldet Taktland den nächsten Tunnel, die nächste Brücke und den nächsten
             Bahnhof etwa 20 oder 10 Sekunden vorher mit einem Ton, auch Bahnhöfe, an denen der
-            Zug nicht hält. Dazu kommt Sehenswertes links oder rechts: Gipfel, Kultur,
+            Zug nicht hält. Jede Art hat ihren eigenen Ton: zwei tiefe Töne abwärts für einen
+            Tunnel, zweimal ein heller, kurzer für eine Brücke, zwei Töne aufwärts für einen
+            Bahnhof und ein einzelner für Sehenswertes. Dazu kommt Sehenswertes links oder rechts: Gipfel, Kultur,
             Seilbahnen und Gebiete, durch die der Weg führt. Ob es vom Zug aus zu sehen ist,
             sagen die Daten nicht. Was gemeldet wird, lässt sich unten auf der Seite wählen.
           </li>

@@ -258,24 +258,43 @@ export function wegEnde(fw: Fahrweg) {
   return fw.punkte[fw.punkte.length - 1]?.s ?? 0
 }
 
+/** Welcher Ton zu welchem Objekt gehört */
+export type TonArt = FahrObjekt['art']
+export type Ton = (art: TonArt) => void
+
 /**
- * Ein weicher Zweiklang wie ein kleines Glockenspiel, aufsteigend G4–D5 mit
- * leisem Oberton und langem Ausklang (Michael, 2026-09-25: «einen anderen
- * Audioton», dann «wesentlich tiefer»; vorher zwei kurze Pieptöne). Bewusst
- * nicht der Gong der SBB. Der Oberton hilft kleinen Handylautsprechern.
- * Der Browser erlaubt Töne erst nach einer Berührung, darum wird er beim Start
- * des Fahrtmodus vorbereitet.
+ * Je Art ein eigenes Muster, erkennbar auch ohne Blick aufs Handy (Michael,
+ * 2026-09-27: «Brücken anders als Tunnel, Tunnel anders als Bahnhöfe»):
+ * [Beginn in s, Grundton in Hz, Ausklang in s]
+ * - Tunnel: zwei Töne abwärts, tief, lang, D4–G3
+ * - Brücke: zweimal derselbe helle, kurze Ton, A5
+ * - Bahnhof: der weiche Zweiklang aufwärts, G4–D5, wie bisher (2026-09-25:
+ *   «einen anderen Audioton», dann «wesentlich tiefer»)
+ * - Sehenswertes: ein einzelner Ton, E5
+ * Weiche Sinustöne mit leisem Oberton, der kleinen Handylautsprechern hilft;
+ * bewusst nicht der Gong der SBB.
  */
-export function tonVorbereiten(): () => void {
+const TOENE: Record<TonArt, readonly (readonly [number, number, number])[]> = {
+  tunnel: [[0, 293.66, 1.1], [0.18, 196, 1.3]],
+  bruecke: [[0, 880, 0.35], [0.14, 880, 0.45]],
+  bahnhof: [[0, 392, 0.9], [0.16, 587.33, 0.9]],
+  sehenswert: [[0, 659.26, 1.2]],
+}
+
+/**
+ * Der Browser erlaubt Töne erst nach einer Berührung, darum wird der Ton beim
+ * Start des Fahrtmodus vorbereitet.
+ */
+export function tonVorbereiten(): Ton {
   const Kontext = window.AudioContext
     ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
   if (!Kontext) return () => undefined
   const ctx = new Kontext()
   void ctx.resume()
-  return () => {
+  return (art) => {
     const jetzt = ctx.currentTime
-    // [Beginn in s, Grundton in Hz]; dazu die Oktave darüber, leiser
-    for (const [beginn, hoehe] of [[0, 392], [0.16, 587]] as const) {
+    for (const [beginn, hoehe, ausklang] of TOENE[art]) {
+      // Grundton und die Oktave darüber, leiser
       for (const [faktor, staerke] of [[1, 0.34], [2, 0.12]] as const) {
         const osc = ctx.createOscillator()
         const laut = ctx.createGain()
@@ -283,10 +302,10 @@ export function tonVorbereiten(): () => void {
         osc.frequency.value = hoehe * faktor
         laut.gain.setValueAtTime(0.0001, jetzt + beginn)
         laut.gain.exponentialRampToValueAtTime(staerke, jetzt + beginn + 0.008)
-        laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + beginn + 0.9)
+        laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + beginn + ausklang)
         osc.connect(laut).connect(ctx.destination)
         osc.start(jetzt + beginn)
-        osc.stop(jetzt + beginn + 0.95)
+        osc.stop(jetzt + beginn + ausklang + 0.05)
       }
     }
   }
@@ -297,14 +316,14 @@ export function tonVorbereiten(): () => void {
  * auf der Seite «Strecke» liegen lassen: Dort startet der Fahrtmodus ohne
  * eigenen Tipp, und ohne Tipp bliebe der Ton auf manchen Geräten stumm.
  */
-let bereitgelegt: (() => void) | null = null
+let bereitgelegt: Ton | null = null
 
 export function tonBereitlegen() {
   bereitgelegt = tonVorbereiten()
 }
 
 /** Einen schon freigegebenen Ton für die nächste Seite bereitlegen */
-export function tonWeitergeben(ton: () => void) {
+export function tonWeitergeben(ton: Ton) {
   bereitgelegt = ton
 }
 

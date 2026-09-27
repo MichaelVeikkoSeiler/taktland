@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { flaechenLaden, geometrieLaden, linienLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
+import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
 import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
@@ -364,7 +364,7 @@ function Ergebnis({
 }) {
   const tunnelNach = useMemo(() => nachKennung(tunnel), [tunnel])
   const brueckenNach = useMemo(() => nachKennung(bruecken), [bruecken])
-  const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: () => void
+  const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: Ton
                                         beginn: number | null
                                         fortsetzen: { startS: number; s: number } | null } | null>(null)
   const [bilanz, setBilanz] = useState<{ objekte: BilanzObjekt[]; probe: boolean; beginn: number | null } | null>(null)
