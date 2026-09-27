@@ -449,7 +449,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                 «Kilometerangaben bis zum Zielort»); ohne Ziel keine */}
             {!ohneZiel && sJetzt !== null && (
               <p className="text-sm font-medium tabular-nums">
-                {wegEnde(fahrweg) - sJetzt < AM_ENDE_M ? 'Am Ziel' : `Noch etwa ${bisZiel(wegEnde(fahrweg) - sJetzt)} auf diesem Weg`}
+                {bisZiel(wegEnde(fahrweg) - sJetzt) === null ? 'Am Ziel'
+                  : `Noch etwa ${bisZiel(wegEnde(fahrweg) - sJetzt)} auf diesem Weg`}
               </p>
             )}
           </div>
@@ -703,11 +704,16 @@ function strecke(meter: number) {
   return `${Math.round(meter / 1000)} km`
 }
 
-/** bis zum Ziel: ab 5 km ganze Kilometer, darunter mit einer Kommastelle, auch unter
- *  1 km (Michael, 2026-09-27) */
-function bisZiel(meter: number) {
+/** bis zum Ziel (Michael, 2026-09-27): ab 5 km ganze Kilometer, ab 1 km mit einer
+ *  Kommastelle, darunter in 50-m-Schritten bis 50 m, dann in 10-m-Schritten bis 0;
+ *  null heisst am Ziel */
+function bisZiel(meter: number): string | null {
   if (meter >= 5000) return `${Math.round(meter / 1000)} km`
-  return `${(Math.round(meter / 100) / 10).toLocaleString('de-CH', { minimumFractionDigits: 1 })} km`
+  const km = (x: number) => `${(Math.round(x / 100) / 10).toLocaleString('de-CH', { minimumFractionDigits: 1 })} km`
+  if (meter >= 1000) return km(meter)
+  const m = meter >= 50 ? Math.round(meter / 50) * 50 : Math.round(meter / 10) * 10
+  if (m >= 1000) return km(1000)
+  return m > 0 ? `${m} m` : null
 }
 
 /** zum Vorlesen: «in etwa 500 Metern» (Dativ) oder «etwa 500 Meter» */
