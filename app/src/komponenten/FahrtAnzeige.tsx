@@ -83,7 +83,7 @@ export function TunnelBalken({ anteil }: { anteil: number }) {
  * ist, ist vorbei» nicht erwünscht, dann «soll nicht heller werden»). Im
  * Massstab des Wegs, ohne Zahlen.
  */
-export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, springen }: {
+export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, springen, fliessend = false }: {
   fahrweg: Fahrweg
   objekte: FahrObjekt[]
   sJetzt: number | null
@@ -93,6 +93,8 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
   /** nur in der Probefahrt: den Zug an eine Stelle ziehen (Michael, 2026-09-26:
    *  «den Zug als Regler verschieben») */
   springen?: (s: number) => void
+  /** die Anzeige wird oft nachgeführt (Probefahrt): ohne Überblendung, sonst hinkt der Zug nach */
+  fliessend?: boolean
 }) {
   const ende = wegEnde(fahrweg) || 1
   const B = 350
@@ -103,7 +105,7 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
   const s = gezogen ?? sJetzt ?? 0
   const xBei = (w: number) => RAND + (Math.max(0, Math.min(ende, w)) / ende) * (B - 2 * RAND)
   const zugX = xBei(s)
-  const weich = gezogen === null ? 'transition-all duration-500 ease-linear' : ''
+  const weich = gezogen === null && !fliessend ? 'transition-all duration-500 ease-linear' : ''
 
   function sBei(clientX: number) {
     const r = band.current?.getBoundingClientRect()
@@ -310,6 +312,10 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
   const bx = grund.cx + versatz[0], by = grund.cy + versatz[1], bw = grund.w / zoom
   // gleich bleibend, solange sich der Ausschnitt nicht ändert: die Ebenen zeichnen dann nicht neu
   const box = useMemo(() => ({ cx: bx, cy: by, w: bw }), [bx, by, bw])
+  // «Nah»: Das Bild folgt dem Zug stufenlos, nur das Blickfenster verschiebt sich; die
+  // Ebenen reichen um box eine ganze Breite weiter und bleiben, bis der Zug das innere
+  // Fünftel verlässt (Michael, 2026-09-27: «ruckelt das ganze Kartenbild»)
+  const blick = nah && hier ? { cx: hx + versatz[0], cy: hy + versatz[1], w: bw } : box
   const veraendert = zoom !== 1 || versatz[0] !== 0 || versatz[1] !== 0
 
   function runter(e: React.PointerEvent<SVGSVGElement>) {
@@ -369,11 +375,42 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
       ))}
     </>
   ), [kartengrund, sehenswert.f, sehenswert.s, seen, box, px, verh, netz])
-  const hinter = weg.filter((p) => p.s <= s).map((p) => p.xy)
-  const vor = weg.filter((p) => p.s >= s).map((p) => p.xy)
+  // der Weg geteilt beim Zug; weg ist nach s geordnet, darum binäre Suche statt Filter
+  let lo = 0, hi = weg.length
+  while (lo < hi) { const m = (lo + hi) >> 1; if (weg[m].s <= s) lo = m + 1; else hi = m }
+  const hinter = weg.slice(0, lo).map((p) => p.xy)
+  const vor = weg.slice(lo).map((p) => p.xy)
   if (hier && sJetzt !== null) { hinter.push([hx, hy]); vor.unshift([hx, hy]) }
   // alle Objekte des Wegs; durchfahrene bleiben stehen, in voller Farbe
   const zeichen = objekte
+  // hängt nicht vom Standort ab: einmal rechnen, nicht bei jedem Bild
+  const zeichenEbene = useMemo(() => (
+    <>
+      {/* Tunnel, deren Ende die Daten hergeben, als dicker Strich (Michael, 2026-09-26) */}
+      {zeichen.filter((o) => o.art === 'tunnel' && o.sAus !== null).map((o) => {
+        const stueck = weg.filter((p) => p.s > o.s && p.s < o.sAus!).map((p) => p.xy)
+        const [a, b] = [lageBei(fahrweg, o.s), lageBei(fahrweg, o.sAus!)]
+        const d = pfad([lage(a.lat, a.lon), ...stueck, lage(b.lat, b.lon)])
+        return (
+          <path key={`tz${o.kennung}`} d={d} fill="none" strokeWidth={8} strokeLinecap="round"
+                strokeLinejoin="round" vectorEffect="non-scaling-stroke"
+                className="stroke-fahrt-tunnel dark:stroke-sbb-storm" />
+        )
+      })}
+      {zeichen.map((o) => {
+        const l = lageBei(fahrweg, o.s)
+        const [x, y] = lage(l.lat, l.lon)
+        return (
+          <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 5 : 2.5) * px}
+                  strokeWidth={1.5} vectorEffect="non-scaling-stroke"
+                  className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
+                    : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-white dark:stroke-sbb-midnight'
+                    : o.art === 'sehenswert' ? 'fill-fahrt-sehenswert stroke-white dark:fill-fahrt-sehenswert-hell dark:stroke-sbb-midnight'
+                    : 'fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight'} />
+        )
+      })}
+    </>
+  ), [zeichen, weg, fahrweg, px])
 
   return (
     <figure className={klassen.figur}>
@@ -409,7 +446,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
           <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </div>
       </div>
-      <svg ref={flaeche} viewBox={[box.cx - box.w / 2, box.cy - h / 2, box.w, h].join(' ')} role="img"
+      <svg ref={flaeche} viewBox={[blick.cx - blick.w / 2, blick.cy - h / 2, blick.w, h].join(' ')} role="img"
            aria-label="Karte mit dem Weg und dem Standort" preserveAspectRatio="xMidYMid meet"
            onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
@@ -419,29 +456,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt }: {
               strokeLinejoin="round" className="stroke-sbb-storm dark:stroke-sbb-metal" />
         <path d={pfad(vor)} fill="none" strokeWidth={3.5} vectorEffect="non-scaling-stroke"
               strokeLinejoin="round" className="stroke-sbb-charcoal dark:stroke-sbb-white" />
-        {/* Tunnel, deren Ende die Daten hergeben, als dicker Strich (Michael, 2026-09-26) */}
-        {zeichen.filter((o) => o.art === 'tunnel' && o.sAus !== null).map((o) => {
-          const stueck = weg.filter((p) => p.s > o.s && p.s < o.sAus!).map((p) => p.xy)
-          const [a, b] = [lageBei(fahrweg, o.s), lageBei(fahrweg, o.sAus!)]
-          const d = pfad([lage(a.lat, a.lon), ...stueck, lage(b.lat, b.lon)])
-          return (
-            <path key={`tz${o.kennung}`} d={d} fill="none" strokeWidth={8} strokeLinecap="round"
-                  strokeLinejoin="round" vectorEffect="non-scaling-stroke"
-                  className="stroke-fahrt-tunnel dark:stroke-sbb-storm" />
-          )
-        })}
-        {zeichen.map((o) => {
-          const l = lageBei(fahrweg, o.s)
-          const [x, y] = lage(l.lat, l.lon)
-          return (
-            <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 5 : 2.5) * px}
-                    strokeWidth={1.5} vectorEffect="non-scaling-stroke"
-                    className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
-                      : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-white dark:stroke-sbb-midnight'
-                      : o.art === 'sehenswert' ? 'fill-fahrt-sehenswert stroke-white dark:fill-fahrt-sehenswert-hell dark:stroke-sbb-midnight'
-                      : 'fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight'} />
-          )
-        })}
+        {zeichenEbene}
         {hier && sJetzt !== null && (
           <>
             <circle cx={hx} cy={hy} r={9 * px} className="fill-sbb-red/20" />

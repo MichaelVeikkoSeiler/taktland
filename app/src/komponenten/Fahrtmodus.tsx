@@ -18,6 +18,8 @@ type Zeitraffer = typeof ZEITRAFFER[number]
 const ZUGLEICH_S = 40
 /** Tempo der Probefahrt, 100 km/h */
 const PROBE_TEMPO = 100 / 3.6
+/** so oft zeichnet die Probefahrt die Anzeige neu, Millisekunden */
+const ANZEIGE_PROBE_MS = 33
 /** Langsamer gilt als Stillstand: keine Zeitangabe */
 const STEHT_UNTER = 3
 /** Weiter weg vom Weg gilt als «nicht auf dieser Strecke», mindestens */
@@ -249,10 +251,21 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [probefahrt, fahrweg])
 
-  // Die Anzeige läuft jede halbe Sekunde weiter, auch ohne neuen Standort
+  // Die Anzeige läuft weiter, auch ohne neuen Standort: im Zug jede halbe Sekunde,
+  // in der Probefahrt etwa 30-mal pro Sekunde, damit der Punkt bei hohem Tempo
+  // gleitet statt springt (Michael, 2026-09-27: «springt immer von Stelle zu Stelle»)
   useEffect(() => {
-    const id = window.setInterval(() => setJetzt(uhr()), 500)
-    return () => window.clearInterval(id)
+    if (!probefahrt) {
+      const id = window.setInterval(() => setJetzt(uhr()), 500)
+      return () => window.clearInterval(id)
+    }
+    let bild = 0, zuletzt = 0
+    const weiter = (zeit: number) => {
+      if (zeit - zuletzt >= ANZEIGE_PROBE_MS) { zuletzt = zeit; setJetzt(uhr()) }
+      bild = requestAnimationFrame(weiter)
+    }
+    bild = requestAnimationFrame(weiter)
+    return () => cancelAnimationFrame(bild)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [probefahrt])
 
@@ -446,7 +459,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             wechseln ihre Höhe, Karte und Band sollen nicht springen (Michael,
             2026-09-26: «Karte noch weiter oben. Oberhalb der Geschwindigkeit») */}
         <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} />
-        <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt}
+        <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
                       name={(o) => textVon(o)?.name} springen={probefahrt ? springen : undefined} />
 
