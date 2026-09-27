@@ -69,7 +69,8 @@ export function SeenFlaechen({ seen, box, verh = 1.6 }: { seen: See[] | null; bo
     && s.y1 > box.cy - h && s.y0 < box.cy + h)
   return (
     <g aria-hidden="true">
-      {im.map((s, i) => <path key={i} d={s.d} fillRule="evenodd" className="fill-see" />)}
+      {im.map((s, i) => <path key={i} d={s.d} fillRule="evenodd" strokeWidth={0.8} vectorEffect="non-scaling-stroke"
+                                   strokeLinejoin="round" className="fill-see stroke-see-rand" />)}
     </g>
   )
 }
