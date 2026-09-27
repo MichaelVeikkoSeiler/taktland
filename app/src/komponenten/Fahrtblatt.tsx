@@ -371,7 +371,9 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
           {/* obere Hälfte oder ganze Vorderseite: die Karte */}
           <div className="flex flex-col" style={{ height: zweiseitig ? BLATT_HOCH_PX : BLATT_HOCH_PX / 2 }}>
             <div className="flex items-end justify-between gap-4 border-b-2 border-black pb-2">
-              <div className="min-w-0">
+              {/* die Bildmarke vor dem Titel (Michael, 2026-09-27) */}
+              <img src="./logo.svg" alt="" className="size-11 shrink-0 self-center" />
+              <div className="min-w-0 flex-1">
                 <p className="text-[11px] uppercase tracking-wide">Taktland · Fahrtblatt</p>
                 <p className="truncate text-2xl font-bold leading-tight">{daten.titel[0]} → {daten.titel[1]}</p>
               </div>
@@ -394,9 +396,12 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
           <div ref={unten} className={`flex min-h-0 flex-col ${zweiseitig ? 'fahrtblatt-rueckseite' : 'flex-1 pt-3'}`}
                style={{ height: zweiseitig ? BLATT_HOCH_PX : undefined }}>
             {zweiseitig && (
-              <div className="mb-3 border-b-2 border-black pb-2">
-                <p className="text-[11px] uppercase tracking-wide">Taktland · Fahrtblatt · Rückseite</p>
-                <p className="truncate text-2xl font-bold leading-tight">{daten.titel[0]} → {daten.titel[1]}</p>
+              <div className="mb-3 flex items-center gap-4 border-b-2 border-black pb-2">
+                <img src="./logo.svg" alt="" className="size-11 shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-[11px] uppercase tracking-wide">Taktland · Fahrtblatt · Rückseite</p>
+                  <p className="truncate text-2xl font-bold leading-tight">{daten.titel[0]} → {daten.titel[1]}</p>
+                </div>
               </div>
             )}
             <p className={zweiseitig ? 'text-[14px] leading-snug' : 'text-[12px] leading-snug'}>
