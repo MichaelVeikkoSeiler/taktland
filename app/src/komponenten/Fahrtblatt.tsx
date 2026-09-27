@@ -33,6 +33,8 @@ const FARBE: Record<Eintrag['art'], string> = {
   tunnel: '#2b2b2b', bruecke: '#b35900', bahnhof: '#1d3f8a', gipfel: '#2f7d4f', seilbahn: '#0d5c6e',
 }
 const SEE = '#c9def1'
+/** Kontur der Seen, etwas dunkler (Michael, 2026-09-27) */
+const SEE_RAND = '#7fa8cf'
 /** Grund der Karte, heller als in der App, damit der Druck wenig Tinte braucht */
 const GRUND = { hoehen: ['#f7f6f2', '#efece6', '#e6e2da'], ausland: '#f2f2f2', kanton: '#a3a3a3',
                 grenze: '#5a5a5a', fluss: '#9cc3e6' }
@@ -562,7 +564,7 @@ function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
       {hat('seilbahn') && <li className="flex items-center gap-1.5">{punkt(FARBE.seilbahn)}Seilbahn</li>}
       {seen && (
         <li className="flex items-center gap-1.5">
-          <span className="inline-block h-3 w-5" style={{ backgroundColor: SEE, printColorAdjust: 'exact' }} />See
+          <span className="inline-block h-3 w-5" style={{ backgroundColor: SEE, border: `0.8px solid ${SEE_RAND}`, printColorAdjust: 'exact' }} />See
         </li>
       )}
       <li className="flex items-center gap-1.5">
@@ -836,7 +838,8 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
               strokeLinejoin="round" strokeLinecap="round" />
       ))}
       {seen.map((q, i) => (
-        <polygon key={i} points={q.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')} fill={SEE} />
+        <polygon key={i} points={q.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')} fill={SEE}
+                 stroke={SEE_RAND} strokeWidth={0.8} strokeLinejoin="round" />
       ))}
       <polyline points={linie(0, ende)} fill="none" stroke={WEG} strokeWidth={STRECKE_BREITE} strokeLinejoin="round" />
       {eintraege.filter((e) => e.art === 'tunnel' && e.o.sAus !== null).map((e) => (
