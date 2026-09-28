@@ -490,12 +490,17 @@ export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: 
 
 /**
  * Wo ein See neben der Strecke liegt (Michael, 2026-09-26: «Seetangierungen als
- * hellblaue Linie … an der richtigen Seite»). Alle SEE_SCHRITT_M wird ein Punkt
- * SEE_M links und rechts der Strecke geprüft: Liegt er in einem See der
- * Landeskarte 1:1 Million, liegt der See auf dieser Seite. Kleine Seen fehlen in
+ * hellblaue Linie … an der richtigen Seite»). Alle SEE_SCHRITT_M werden links und
+ * rechts der Strecke Punkte bis SEE_M quer dazu geprüft, im Abstand von SEE_QUER_M
+ * (700, 400 und 100 m): Liegt einer in einem See der Landeskarte 1:1 Million,
+ * liegt der See auf dieser Seite. Kleine Seen fehlen in
  * diesem Massstab; in Tunneln zählt nichts.
  */
-export const SEE_M = 500  // Michael, 2026-09-26: erst 250, dann 350, dann 500 m
+export const SEE_M = 700  // Michael, 2026-09-26: erst 250, dann 350, dann 500 m; 2026-09-28: 700 m
+/** quer zur Strecke alle 300 m bis SEE_M (Michael, 2026-09-28) */
+export const SEE_QUER_M = 300
+const SEE_QUER: number[] = []
+for (let q = SEE_M; q > 0; q -= SEE_QUER_M) SEE_QUER.push(q)
 const SEE_SCHRITT_M = 100
 const SEE_LUECKE_M = 1000
 const SEE_MIN_M = 300
@@ -524,7 +529,7 @@ export function seeUferAufWeg(fw: Fahrweg, daten: SeenDaten): SeeUfer[] {
     const l = Math.hypot(bx - ax, by - ay)
     if (!l) continue
     // senkrecht nach links, in Grad
-    const nLat = ((bx - ax) / l) * SEE_M / M_BREITE, nLon = (-(by - ay) / l) * SEE_M / M_LAENGE
+    const nLat = ((bx - ax) / l) / M_BREITE, nLon = (-(by - ay) / l) / M_LAENGE
     const n = Math.max(1, Math.ceil((b.s - a.s) / SEE_SCHRITT_M))
     for (let k = 0; k < n; k++) {
       const t = k / n
@@ -532,7 +537,11 @@ export function seeUferAufWeg(fw: Fahrweg, daten: SeenDaten): SeeUfer[] {
       const s = a.s + t * (b.s - a.s)
       const drinnen = tunnel.some(([v, w]) => s >= v && s <= w)
       for (const [seite, f] of [['links', 1], ['rechts', -1]] as const) {
-        const see = drinnen ? undefined : imSee({ lat: p.lat + f * nLat, lon: p.lon + f * nLon })
+        let see: ReturnType<typeof imSee>
+        if (!drinnen) for (const q of SEE_QUER) {
+          see = imSee({ lat: p.lat + f * nLat * q, lon: p.lon + f * nLon * q })
+          if (see) break
+        }
         const u = offen[seite]
         if (see && u && s - u.s1 <= SEE_LUECKE_M) { u.s1 = s; u.name ??= see.name }
         else if (see) { schliessen(seite); offen[seite] = { s0: s, s1: s, seite, name: see.name } }
