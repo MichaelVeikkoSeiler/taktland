@@ -58,6 +58,8 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
         </button>
       )}
 
+      {fahrten.length > 0 && <Uebersicht fahrten={fahrten} index={index} />}
+
       {fahrten.length === 0 ? (
         <p className="mt-6 text-sbb-metal dark:text-sbb-storm">
           Noch keine Fahrt im Logbuch. Starte «Fahren» mit dem roten Knopf oben.
@@ -86,12 +88,69 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
   )
 }
 
+/**
+ * Gesamtübersicht über alle Fahrten im Logbuch (Michael, 2026-09-28): wie viele
+ * Fahrten seit wann, was dabei durchfahren wurde, jedes Objekt nur einmal, die
+ * Strecken, die mehrmals vorkommen, und eine Karte aller Fahrten zusammen.
+ * Gezählt wird nur, was im Logbuch steht; Distanzen speichert es nicht.
+ */
+function Uebersicht({ fahrten, index }: { fahrten: ErlebteFahrt[]; index: BahnhofIndex | null }) {
+  const [karte, setKarte] = useState(false)
+  const { alle, strecken, erste, letzte, vonHand } = useMemo(() => {
+    const gesehen = new Set<string>()
+    const alle: ErlebteFahrt['objekte'] = []
+    // älteste Fahrt zuerst, damit die Reihenfolge der Fahrten erhalten bleibt
+    const zeitlich = [...fahrten].sort((a, b) => a.beginn - b.beginn)
+    for (const f of zeitlich) {
+      for (const o of f.objekte) {
+        const k = `${o.art} ${o.kennung}`
+        if (!gesehen.has(k)) { gesehen.add(k); alle.push(o) }
+      }
+    }
+    const zaehler = new Map<string, number>()
+    for (const f of fahrten) zaehler.set(`${f.von} → ${f.nach}`, (zaehler.get(`${f.von} → ${f.nach}`) ?? 0) + 1)
+    const strecken = [...zaehler].filter(([, n]) => n > 1).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de'))
+    return { alle, strecken, erste: zeitlich[0].beginn, letzte: zeitlich[zeitlich.length - 1].beginn,
+             vonHand: fahrten.filter((f) => f.manuell).length }
+  }, [fahrten])
+  const n = fahrten.length
+  const knopf = 'text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm'
+
+  return (
+    <section className="kachel mt-6 px-4 py-4" aria-labelledby="uebersicht">
+      <h2 id="uebersicht" className="text-lg font-bold">Übersicht</h2>
+      <p className="mt-1">
+        {n} {n === 1 ? 'Fahrt' : 'Fahrten'}
+        {n === 1 ? ` am ${datum(erste)}` : `, die erste am ${datum(erste)}, die letzte am ${datum(letzte)}`}
+        {vonHand > 0 && `; ${vonHand} davon von Hand eingetragen, ohne erfasste Objekte`}
+      </p>
+      <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">Durchfahren, jedes nur einmal gezählt</p>
+      <div className="mt-1 text-sm"><Zaehlung objekte={alle} /></div>
+      {strecken.length > 0 && (
+        <>
+          <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">Mehrmals gefahren</p>
+          <ul className="mt-1 space-y-0.5 text-sm">
+            {strecken.map(([s, k]) => <li key={s}>{s} <span className="text-sbb-metal dark:text-sbb-storm">· {k}×</span></li>)}
+          </ul>
+        </>
+      )}
+      {alle.length > 0 && (karte
+        ? <FahrtKarte objekte={alle} index={index} titel="Karte aller Fahrten im Logbuch" />
+        : (
+          <button type="button" onClick={() => setKarte(true)} className={`mt-3 ${knopf}`}>
+            Karte aller Fahrten zeigen
+          </button>
+        ))}
+    </section>
+  )
+}
+
 /** «2 Tunnel · 12 Brücken · 2 Bahnhöfe», je mit Pikto (Michael, 2026-09-27) */
-function Zaehlung({ f }: { f: ErlebteFahrt }) {
+function Zaehlung({ objekte }: { objekte: ErlebteFahrt['objekte'] }) {
   return (
     <span className="flex flex-wrap items-center gap-x-4 gap-y-1">
       {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => {
-        const n = f.objekte.filter((o) => o.art === a).length
+        const n = objekte.filter((o) => o.art === a).length
         return (
           <span key={a} className="flex items-center gap-1.5">
             <Pikto art={a} className="size-5" />
@@ -146,7 +205,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
       {offen && (
         <div className="border-t border-sbb-cloud px-4 pb-4 pt-3 dark:border-sbb-iron">
           <div className="text-sm">
-            {f.manuell ? 'Von Hand eingetragen, ohne «Fahren»: keine Objekte erfasst' : <Zaehlung f={f} />}
+            {f.manuell ? 'Von Hand eingetragen, ohne «Fahren»: keine Objekte erfasst' : <Zaehlung objekte={f.objekte} />}
           </div>
 
           {bearbeiten ? (
@@ -179,7 +238,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
 
           {f.objekte.length > 0 && (
             <>
-              <FahrtKarte f={f} index={index} />
+              <FahrtKarte objekte={f.objekte} index={index} titel={`Karte der Fahrt ${f.von} nach ${f.nach}`} />
               <details className="mt-3 text-sm">
                 <summary className={`cursor-pointer ${knopf}`}>Liste zeigen</summary>
                 <ol className="mt-2 space-y-1">
@@ -211,7 +270,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
  * ihrer Quelle. Den Weg selbst speichert das Logbuch nicht; die Karte zeigt,
  * was durchfahren wurde.
  */
-function FahrtKarte({ f, index }: { f: ErlebteFahrt; index: BahnhofIndex | null }) {
+function FahrtKarte({ objekte, index, titel }: { objekte: ErlebteFahrt['objekte']; index: BahnhofIndex | null; titel: string }) {
   const { daten: karte, linien } = useKarte()
   const [standort, setStandort] = useState<StandortDaten | null>(null)
   useEffect(() => {
@@ -230,7 +289,7 @@ function FahrtKarte({ f, index }: { f: ErlebteFahrt; index: BahnhofIndex | null 
     }
     const bahnhof = new Map(index.bahnhoefe.map((b) => [String(b.uic), b]))
     type Punkt = { o: ErlebteFahrt['objekte'][number]; x: number; y: number; uic: number | undefined }
-    const punkte = f.objekte.flatMap((o): Punkt[] => {
+    const punkte = objekte.flatMap((o): Punkt[] => {
       if (o.art === 'bahnhof') {
         const b = bahnhof.get(o.kennung)
         if (!b || b.lat === null || b.lon === null) return []
@@ -245,9 +304,9 @@ function FahrtKarte({ f, index }: { f: ErlebteFahrt; index: BahnhofIndex | null 
     const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]
     const box: Box = { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2,
                        w: Math.max((x1 - x0) * 1.3, (y1 - y0) * 1.3 * 1.6, 0.03) }
-    const hervor = new Set(f.objekte.filter((o) => o.art !== 'bahnhof').map((o) => Number(o.kennung.split(':')[0])))
+    const hervor = new Set(objekte.filter((o) => o.art !== 'bahnhof').map((o) => Number(o.kennung.split(':')[0])))
     return { punkte, box, hervor }
-  }, [standort, index, f])
+  }, [standort, index, objekte])
 
   if (!karte || !linien || !inhalt) return <KartenPlatz />
   return (
@@ -259,7 +318,7 @@ function FahrtKarte({ f, index }: { f: ErlebteFahrt; index: BahnhofIndex | null 
         <circle key={`${p.o.art}${p.o.kennung}`} cx={p.x} cy={p.y}
                 r={(p.o.art === 'tunnel' ? 3.5 : 1.8) * px} className="fill-sbb-red" />
       ))}
-      titel={`Karte der Fahrt ${f.von} nach ${f.nach}`}
+      titel={titel}
       beschriftung={(
         <>
           Rot: durchfahrene Tunnel (grosse Punkte) und Brücken (kleine), Ringe: Bahnhöfe, jeweils
