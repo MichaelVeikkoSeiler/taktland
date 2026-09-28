@@ -25,6 +25,9 @@ export interface ErlebteFahrt {
   notiz?: string
   /** von Hand ins Logbuch eingetragen, ohne Fahrtmodus: keine Objekte erfasst */
   manuell?: boolean
+  /** gefahrene Meter auf der gezeichneten Strecke, vom ersten Standort bis zum
+   *  letzten; erst seit 2026-09-28 erfasst (Michael), ältere Fahrten ohne */
+  weg_m?: number
 }
 
 interface Heft {
@@ -68,6 +71,15 @@ export function durchfahren(beginn: number, o: { art: ErlebtArt; kennung: string
   if (!h.objekte[k]) h.objekte[k] = { ...o, zeit: Date.now() }
   const fahrt = h.fahrten.find((f) => f.beginn === beginn)
   if (fahrt && !fahrt.objekte.some((x) => x.art === o.art && x.kennung === o.kennung)) fahrt.objekte.push(o)
+  schreiben(h)
+}
+
+/** Die gefahrenen Meter der Fahrt nachführen */
+export function wegSetzen(beginn: number, m: number) {
+  const h = heftLesen()
+  const f = h.fahrten.find((x) => x.beginn === beginn)
+  if (!f || !(m >= 0)) return
+  f.weg_m = Math.round(m)
   schreiben(h)
 }
 

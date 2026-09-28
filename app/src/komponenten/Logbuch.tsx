@@ -14,6 +14,9 @@ const ART_TEXT: Record<ErlebtArt, [string, string]> = {
   tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
 }
 
+/** «etwa 42 km», unter 10 km mit einer Stelle; gemessen auf der gezeichneten Strecke, darum «etwa» */
+const km = (m: number) => `etwa ${(m / 1000).toLocaleString('de-CH', { maximumFractionDigits: m < 10_000 ? 1 : 0 })} km`
+
 const uhrzeit = (ms: number) => new Date(ms).toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })
 
 /** Heute als «2026-09-25» für das Datumsfeld, in Ortszeit */
@@ -43,8 +46,8 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Logbuch</h1>
       <p className="mt-2 leading-relaxed">
-        Jede Fahrt mit «Fahren» steht automatisch hier, mit Datum, Weg und allem, was du
-        durchfahren hast. Du kannst eine Notiz dazuschreiben und Fahrten ohne «Fahren» von Hand
+        Jede Fahrt mit «Fahren» steht automatisch hier, mit Datum, Weg, Kilometern und allem,
+        was du durchfahren hast. Du kannst eine Notiz dazuschreiben und Fahrten ohne «Fahren» von Hand
         eintragen. Es bleibt auf diesem Gerät; die Probefahrt kommt nicht hinein.
       </p>
 
@@ -92,11 +95,11 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
  * Gesamtübersicht über alle Fahrten im Logbuch (Michael, 2026-09-28): wie viele
  * Fahrten seit wann, was dabei durchfahren wurde, jedes Objekt nur einmal, die
  * Strecken, die mehrmals vorkommen, und eine Karte aller Fahrten zusammen.
- * Gezählt wird nur, was im Logbuch steht; Distanzen speichert es nicht.
+ * Gezählt wird nur, was im Logbuch steht; Kilometer erst seit 2026-09-28.
  */
 function Uebersicht({ fahrten, index }: { fahrten: ErlebteFahrt[]; index: BahnhofIndex | null }) {
   const [karte, setKarte] = useState(false)
-  const { alle, strecken, erste, letzte, vonHand } = useMemo(() => {
+  const { alle, strecken, erste, letzte, vonHand, weg, ohneWeg } = useMemo(() => {
     const gesehen = new Set<string>()
     const alle: ErlebteFahrt['objekte'] = []
     // älteste Fahrt zuerst, damit die Reihenfolge der Fahrten erhalten bleibt
@@ -111,7 +114,9 @@ function Uebersicht({ fahrten, index }: { fahrten: ErlebteFahrt[]; index: Bahnho
     for (const f of fahrten) zaehler.set(`${f.von} → ${f.nach}`, (zaehler.get(`${f.von} → ${f.nach}`) ?? 0) + 1)
     const strecken = [...zaehler].filter(([, n]) => n > 1).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de'))
     return { alle, strecken, erste: zeitlich[0].beginn, letzte: zeitlich[zeitlich.length - 1].beginn,
-             vonHand: fahrten.filter((f) => f.manuell).length }
+             vonHand: fahrten.filter((f) => f.manuell).length,
+             weg: fahrten.reduce((a, f) => a + (f.weg_m ?? 0), 0),
+             ohneWeg: fahrten.filter((f) => f.weg_m === undefined).length }
   }, [fahrten])
   const n = fahrten.length
   const knopf = 'text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm'
@@ -124,6 +129,12 @@ function Uebersicht({ fahrten, index }: { fahrten: ErlebteFahrt[]; index: Bahnho
         {n === 1 ? ` am ${datum(erste)}` : `, die erste am ${datum(erste)}, die letzte am ${datum(letzte)}`}
         {vonHand > 0 && `; ${vonHand} davon von Hand eingetragen, ohne erfasste Objekte`}
       </p>
+      {ohneWeg < n && (
+        <p className="mt-1">
+          Mit «Fahren» zusammen {km(weg)}, gemessen auf der gezeichneten Strecke
+          {ohneWeg > 0 && `; ${ohneWeg} ${ohneWeg === 1 ? 'Fahrt' : 'Fahrten'} ohne Kilometer (von Hand eingetragen oder vor dem 28.9.2026)`}
+        </p>
+      )}
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">Durchfahren, jedes nur einmal gezählt</p>
       <div className="mt-1 text-sm"><Zaehlung objekte={alle} /></div>
       {strecken.length > 0 && (
@@ -193,6 +204,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
           <span className="block truncate font-bold">{f.von} → {f.nach}</span>
           <span className="block truncate text-sm text-sbb-metal dark:text-sbb-storm">
             {datum(f.beginn)}{f.manuell ? ' · von Hand eingetragen' : `, ${uhrzeit(f.beginn)}`}
+            {f.weg_m !== undefined ? ` · ${km(f.weg_m)}` : ''}
             {f.notiz ? ' · mit Notiz' : ''}
           </span>
         </span>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
-import { durchfahren, fahrtBeginnen, leereFahrtenWeg } from '../erlebt'
+import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegSetzen } from '../erlebt'
 import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import { nachbarnBauen, useBahnenAus } from '../bahnen'
@@ -369,7 +369,9 @@ function Ergebnis({
   const brueckenNach = useMemo(() => nachKennung(bruecken), [bruecken])
   const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: Ton
                                         beginn: number | null
-                                        fortsetzen: { startS: number; s: number } | null } | null>(null)
+                                        fortsetzen: { startS: number; s: number } | null
+                                        /** «Ohne Ziel»: Meter der früheren Linien derselben Fahrt */
+                                        wegVorher: number } | null>(null)
   const [bilanz, setBilanz] = useState<{ objekte: BilanzObjekt[]; probe: boolean; beginn: number | null } | null>(null)
   const [laedt, setLaedt] = useState(false)
   // während der Fahrtmodus hier läuft, fragt oben niemand «fortsetzen?»
@@ -443,7 +445,10 @@ function Ergebnis({
         laufendBeginnen({ von: wahl.von ?? 0, nach: wahl.nach ?? 0, ueber: wahl.ueber, titel: titel.join(' → '), beginn,
                           laenge: wegEnde(fahrweg), ...(wahl.ohne ? { ohne: true } : {}) })
       }
-      setFahrt({ fahrweg, probe, piepen, beginn, fortsetzen })
+      // «Ohne Ziel» mit neu erkannter Linie: die Meter der bisherigen Linien bleiben
+      const wegVorher = beginn !== null && wahl.ohne && gleich
+        ? heftLesen().fahrten.find((f) => f.beginn === beginn)?.weg_m ?? 0 : 0
+      setFahrt({ fahrweg, probe, piepen, beginn, fortsetzen, wegVorher })
     } catch (e) {
       setFahrtFehler((e as Error).message)
     } finally {
@@ -692,7 +697,10 @@ function Ergebnis({
                       window.location.hash = '#/ohneziel'
                     } : undefined}
                     stelle={fahrt.beginn === null ? undefined
-                      : (startS, s) => laufendStelle(fahrt.beginn!, startS, s)}
+                      : (startS, s) => {
+                        laufendStelle(fahrt.beginn!, startS, s)
+                        wegSetzen(fahrt.beginn!, fahrt.wegVorher + Math.max(0, s - startS))
+                      }}
                     durchfahren={(o) => {
                       if (fahrt.beginn === null || o.tlm) return
                       const b = bilanzObjekt(o)
