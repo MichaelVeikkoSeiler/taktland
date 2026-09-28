@@ -61,6 +61,9 @@ self.addEventListener('fetch', (e) => {
   const anfrage = e.request
   if (anfrage.method !== 'GET' || new URL(anfrage.url).origin !== self.location.origin) return
 
+  // Die Frage nach einer neuen Version (serviceWorker.ts) geht immer ans Netz
+  if (anfrage.cache === 'no-store') return
+
   // Das Demo-Video nicht über den Cache: Browser holen es stückweise (Range),
   // das braucht die Antwort des Servers
   if (anfrage.headers.has('range') || new URL(anfrage.url).pathname.endsWith('.mp4')) return

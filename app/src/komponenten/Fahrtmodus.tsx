@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { neuLadenSperren } from '../serviceWorker'
 import { abstand, type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEE_QUER_M, SEILBAHN_M, type SehenswertSorte, type Ton, wegEnde } from '../fahrt'
 import { spurMerken } from '../ohneziel'
 import { freigabeHilfe } from '../umgebung'
@@ -214,6 +215,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   }
 
   // Echter Standort
+  // während der Fahrt lädt die App nicht von selbst neu, auch bei einer neuen Version
+  useEffect(() => neuLadenSperren(), [])
+
   useEffect(() => {
     if (probefahrt) return
     if (!('geolocation' in navigator)) {
