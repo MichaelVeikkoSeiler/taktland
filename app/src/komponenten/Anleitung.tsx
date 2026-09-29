@@ -226,6 +226,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             «Angekommen in …» erscheint, mit «Fahrt beenden» und «Weiterfahren». Dazu kommt Sehenswertes links oder rechts: Gipfel, Kultur,
             Seilbahnen und Gebiete, durch die der Weg führt. Ob es vom Zug aus zu sehen ist,
             sagen die Daten nicht. Was gemeldet wird, lässt sich unten auf der Seite wählen.
+            Mit «Nicht mehr melden» auf der Meldung schweigt ein einzelnes Objekt künftig, etwa auf
+            dem täglichen Weg; unten unter «Nicht mehr gemeldet» lässt es sich wieder einschalten.
           </li>
           <li>
             Das Band zeigt den ganzen Weg. Hellblau darüber oder darunter: Links oder rechts

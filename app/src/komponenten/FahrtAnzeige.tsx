@@ -443,21 +443,22 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
         <div className="flex overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ausschnitt">
           {([[true, 'Nah'], [false, 'Ganzer Weg']] as const).map(([n, t]) => (
             <button key={t} type="button" aria-pressed={nah === n} onClick={() => setNah(n)}
-                    className={`px-3 py-1.5 font-medium ${nah === n
+                    className={`whitespace-nowrap px-2.5 py-1.5 font-medium ${nah === n
                       ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                       : 'bg-white dark:bg-sbb-midnight'}`}>
               {t}
             </button>
           ))}
-        </div>
-        <div className="flex items-center gap-2">
+          {/* im selben Stil daneben (Michael, 2026-09-29) */}
           {veraendert && (
             <button type="button" onClick={() => { setZoom(1); setVersatz([0, 0]); mitte.current = null }}
-                    className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
-                               dark:text-sbb-storm dark:hover:text-sbb-white">
+                    className="whitespace-nowrap border-l border-sbb-cloud bg-white px-2.5 py-1.5 font-medium
+                               dark:border-sbb-iron dark:bg-sbb-midnight">
               {nah ? 'Zum Zug' : 'Alles'}
             </button>
           )}
+        </div>
+        <div className="flex items-center gap-2">
           {([['−', 1 / 1.6], ['+', 1.6]] as const).map(([zeichen, f]) => (
             <button key={zeichen} type="button" onClick={() => zoomen(f)}
                     aria-label={zeichen === '+' ? 'Näher heran' : 'Weiter weg'}

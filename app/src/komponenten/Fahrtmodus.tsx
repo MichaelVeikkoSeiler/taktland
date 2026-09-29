@@ -68,6 +68,22 @@ function einstellungLesen(): Einstellung {
   }
 }
 
+/** Sehenswertes, das nicht mehr gemeldet wird (Michael, 2026-09-29: in Bern als Pendler
+ *  «immer die gleichen kulturellen und sehenswerten Sachen»): Schlüssel → Name */
+const STUMM = 'taktland.fahrt.stumm.v1'
+function stummLesen(): Record<string, string> {
+  try {
+    const x = JSON.parse(localStorage.getItem(STUMM) ?? '{}')
+    return x && typeof x === 'object' && !Array.isArray(x) ? x : {}
+  } catch { return {} }
+}
+/** Nach Sorte, Name und Lage, nicht nach der Kennung: die zählt bei Gipfeln nur durch */
+function stummSchluessel(o: FahrObjekt): string | null {
+  const x = o.sehenswert
+  if (!x) return null
+  return [x.sorte, x.name, x.lage ? `${x.lage.lat.toFixed(4)},${x.lage.lon.toFixed(4)}` : ''].join('|')
+}
+
 function einstellungMerken(e: Einstellung) {
   try { localStorage.setItem(EINSTELLUNG, JSON.stringify(e)) } catch { /* ohne Speicher gilt es bis zum Schluss */ }
 }
@@ -138,6 +154,11 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   startKennung?: string
 }) {
   const [einstellung, setEinstellung] = useState(einstellungLesen)
+  const [stumm, setStumm] = useState(stummLesen)
+  const stummSetzen = (neu: Record<string, string>) => {
+    setStumm(neu)
+    try { localStorage.setItem(STUMM, JSON.stringify(neu)) } catch { /* ohne Speicher gilt es bis zum Schluss */ }
+  }
   // Sehenswertes bringt seinen Text selbst mit
   const textVon = (o: FahrObjekt): ObjektText | undefined => o.sehenswert
     ? { name: o.sehenswert.name, zeile: o.sehenswert.zeile, baueinheiten: null } : text(o)
@@ -313,11 +334,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const gewaehlt = useMemo(() => fahrweg.objekte.filter((o) => {
     if (o.art === 'tunnel') return einstellung.tunnel
     if (o.art === 'bahnhof') return einstellung.bahnhoefe
-    if (o.art === 'sehenswert') return o.sehenswert ? einstellung.sehenswert[o.sehenswert.sorte] : false
+    if (o.art === 'sehenswert') {
+      return o.sehenswert ? einstellung.sehenswert[o.sehenswert.sorte] && !(stummSchluessel(o)! in stumm) : false
+    }
     if (einstellung.bruecken === 'keine') return false
     if (einstellung.bruecken === 'alle') return true
     return (text(o)?.baueinheiten ?? 0) >= 3 || text(o)?.gross === true
-  }), [fahrweg, einstellung.tunnel, einstellung.bruecken, einstellung.bahnhoefe, einstellung.sehenswert, text])
+  }), [fahrweg, einstellung.tunnel, einstellung.bruecken, einstellung.bahnhoefe, einstellung.sehenswert, stumm, text])
 
   // auch ohne Meldung der Tunnel: Im Tunnel fehlt das GPS, das sagt die Anzeige
   const imTunnel = sJetzt === null ? null
@@ -515,6 +538,14 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
               {o.sehenswert.seite === 'links' ? 'Links' : 'Rechts'} der Strecke laut Lage in der Quelle. Ob
               es zu sehen ist, sagen die Daten nicht.
             </p>
+          )}
+          {o.art === 'sehenswert' && (
+            <button type="button"
+                    onClick={() => stummSetzen({ ...stumm, [stummSchluessel(o)!]: textVon(o)?.name ?? '' })}
+                    className={`mt-3 min-h-9 rounded-lg border px-3 text-sm font-medium ${bald
+                      ? 'border-current' : 'border-sbb-cloud text-sbb-black dark:border-sbb-iron dark:text-sbb-white'}`}>
+              Nicht mehr melden
+            </button>
           )}
           {o.art === 'tunnel' && o.sAus === null && (
             <p className={`mt-1 text-sm ${bald ? '' : 'text-sbb-metal dark:text-sbb-storm'}`}>
@@ -829,6 +860,28 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                          dark:bg-sbb-midnight dark:text-sbb-white"
             />
           </div>
+          {Object.keys(stumm).length > 0 && (
+            <details>
+              <summary className="cursor-pointer">
+                Nicht mehr gemeldet: {anzahl(Object.keys(stumm).length, 'Sehenswertes', 'Sehenswertes')}
+              </summary>
+              <ul className="mt-2 kachelliste">
+                {Object.entries(stumm).sort((a, b) => a[1].localeCompare(b[1], 'de')).map(([k, name]) => (
+                  <li key={k} className="flex items-center justify-between gap-3 px-3 py-2">
+                    <span className="min-w-0 break-words">{name || 'ohne Namen'}</span>
+                    <button type="button" className="shrink-0 min-h-9 rounded-lg px-2 font-medium underline"
+                            onClick={() => { const { [k]: _, ...rest } = stumm; stummSetzen(rest) }}>
+                      Wieder melden
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <button type="button" onClick={() => stummSetzen({})}
+                      className="mt-2 min-h-9 rounded-lg border border-sbb-cloud px-3 font-medium dark:border-sbb-iron">
+                Alle wieder melden
+              </button>
+            </details>
+          )}
           <label className="flex items-center justify-between gap-3">
             <span>Ton bei der Meldung</span>
             <input type="checkbox" checked={einstellung.ton} className="size-5 accent-sbb-red"

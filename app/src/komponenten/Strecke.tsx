@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { bahnhoefeVorziehen, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
@@ -511,15 +511,22 @@ function Ergebnis({
 
   // Von der Seite «Fahrtmodus» her: gleich starten, einmal. Danach fällt
   // fahrt= aus der Adresse, sonst startete ein Neuladen die Fahrt wieder.
-  const autostart = useRef(fahrtAusAdresse())
+  // Auch wenn die Seite schon offen ist: «Fortsetzen» nach dem Neuladen
+  // ändert nur die Adresse, die Seite bleibt dieselbe.
+  const [startWunsch, setStartWunsch] = useState(fahrtAusAdresse)
   useEffect(() => {
-    const art = autostart.current
+    const beiWechsel = () => { const art = fahrtAusAdresse(); if (art) setStartWunsch(art) }
+    window.addEventListener('hashchange', beiWechsel)
+    return () => window.removeEventListener('hashchange', beiWechsel)
+  }, [])
+  useEffect(() => {
+    const art = startWunsch
     if (!art) return
-    autostart.current = null
+    setStartWunsch(null)
     window.history.replaceState(null, '', streckenAdresse(wahl))
     void fahrtStarten(art === 'probe', art === 'weiter')
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [startWunsch])
 
   const gemerkt = wahl.von && wahl.nach ? { von: wahl.von, nach: wahl.nach, ueber: wahl.ueber } : null
   const [favorit, setFavorit] = useState(() => (gemerkt ? istFavorit(gemerkt) : false))
