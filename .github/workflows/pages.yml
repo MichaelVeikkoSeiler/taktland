@@ -74,9 +74,17 @@ jobs:
         working-directory: app
         run: npm run build
 
+      # taktland.ch: an der Wurzel die Seite aus web/, die App unter /app/
+      # (Michael, 2026-09-30)
+      - name: Seite zusammenstellen
+        run: |
+          mkdir -p _site
+          cp -r web/. _site/
+          cp -r app/dist _site/app
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: app/dist
+          path: _site
 
   veroeffentlichen:
     needs: bauen

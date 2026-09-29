@@ -77,6 +77,7 @@ Die Regeln im Detail: `generator/SCHEMA.md`. Die Datenlage: `docs/datenlage.md`.
 pipeline/    Rohdaten laden und zu facts/{uic}.json verdichten (Python, pandas)
 generator/   Profile schreiben und prüfen
 app/         PWA (React, Vite, Tailwind)
+web/         Seite für taktland.ch (reines HTML); veröffentlicht an der Wurzel, die App unter /app/
 data/raw/    heruntergeladene CSV, nicht in Git
 data/facts/  geprüfte Fakten je Bahnhof: 1189, die mit SBB-Infrastruktur, die anderer
              Bahnen (BLS, RhB, MGB, MOB, ZB, SOB, MVR …) mit Daten für mindestens drei
