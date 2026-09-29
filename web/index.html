@@ -86,9 +86,15 @@
 
     .schritte { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 12px; margin-top: 24px; }
     @media (min-width: 820px) { .schritte { grid-template-columns: repeat(3, 1fr); } }
-    .schritte li { counter-increment: s; background: var(--kachel); border-radius: 8px; padding: 20px; }
-    .schritte li::before { content: counter(s); display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
-                           background: var(--karmin); color: #fff; font-weight: 700; margin-bottom: 10px; }
+    /* Nummer links, Titel daneben, der Text darunter eingerückt (Michael, 2026-09-29) */
+    .schritte li { counter-increment: s; background: var(--kachel); border-radius: 8px; padding: 20px;
+                   display: grid; grid-template-columns: 32px 1fr; column-gap: 14px; row-gap: 6px; align-items: center; }
+    .schritte li::before { content: counter(s); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+                           background: var(--karmin); color: #fff; font-weight: 700; }
+    .schritte li b { font-size: 18px; }
+    .schritte li span { grid-column: 2; }
+    /* Sprungziele nicht unter dem festen Kopf */
+    [id] { scroll-margin-top: 76px; }
 
     .schluss { text-align: center; margin-top: 96px; }
     .schluss img { width: 72px; height: 72px; margin: 0 auto; }
@@ -245,11 +251,11 @@
       <p class="dach">Loslegen</p>
       <h2 id="start">In drei Schritten im Zug.</h2>
       <ol class="schritte">
-        <li><b>Taktland öffnen</b><br />auf dem Handy, im Browser. Keine Installation nötig.</li>
-        <li><b>Zum Home-Bildschirm hinzufügen</b><br />iPhone: Safari → Teilen → «Zum Home-Bildschirm».
-            Android: Chrome → Menü → «Zum Startbildschirm hinzufügen».</li>
-        <li><b>Fahren</b><br />Im Zug den roten Knopf tippen, Ziel wählen, Bildschirm anlassen.
-            Unterwegs geht es auch ohne Empfang, wenn Taktland einmal geladen ist.</li>
+        <li><b>Taktland öffnen</b><span>auf dem Handy, im Browser. Keine Installation nötig.</span></li>
+        <li><b>Zum Home-Bildschirm hinzufügen</b><span>iPhone: Safari → Teilen → «Zum Home-Bildschirm».
+            Android: Chrome → Menü → «Zum Startbildschirm hinzufügen».</span></li>
+        <li><b>Fahren</b><span>Im Zug den roten Knopf tippen, Ziel wählen, Bildschirm anlassen.
+            Unterwegs geht es auch ohne Empfang, wenn Taktland einmal geladen ist.</span></li>
       </ol>
     </section>
 
