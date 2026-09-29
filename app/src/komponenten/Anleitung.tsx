@@ -359,14 +359,22 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Ganz unten auf jeder Seite lässt sich der ganze Fortschritt löschen.
           </li>
           <li>
-            Ganz oben steht, von wann die geladene Version ist. «Aktualisieren» holt den
-            neuesten Stand, etwa nach einer Korrektur. Der Fortschritt bleibt dabei erhalten.
+            Ganz oben steht, von wann die geladene Version ist. Gibt es eine neuere, lädt
+            Taktland sie beim Öffnen oder wenn du es aus dem Hintergrund zurückholst, nicht
+            aber während einer Fahrt. «Aktualisieren» holt den neuesten Stand sofort. Der
+            Fortschritt bleibt dabei erhalten.
           </li>
           <li>
-            Taktland lässt sich auf den Startbildschirm legen: auf dem iPhone in Safari über
-            «Teilen» und «Zum Home-Bildschirm», auf Android über das Menü von Chrome. Das lohnt
-            sich: Safari löscht den Speicher von Websites, die sieben Tage nicht geöffnet wurden,
-            nicht aber den von Apps auf dem Home-Bildschirm. Sicher ist eine Sicherung im Logbuch.
+            Taktland liegt unter taktland.ch/app/ und lässt sich auf den Startbildschirm legen:
+            auf dem iPhone in Safari über «Teilen» und «Zum Home-Bildschirm», auf Android über
+            das Menü von Chrome. Das lohnt sich: Safari löscht den Speicher von Websites, die
+            sieben Tage nicht geöffnet wurden, nicht aber den von Apps auf dem Home-Bildschirm.
+            Sicher ist eine Sicherung im Logbuch.
+          </li>
+          <li>
+            Bis zum 29. September 2026 lag Taktland unter einer Adresse von GitHub. Der
+            Fortschritt von dort zieht nicht von selbst um: in der alten App die Sicherung
+            herunterladen und hier im Logbuch einlesen.
           </li>
         </Punkte>
       </Abschnitt>
@@ -391,8 +399,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Stand vom 6. Juli 2021.
           </li>
           <li>
-            Seen, Flüsse, Gipfel und die Tunnel und Brücken anderer Bahnen stammen von swisstopo
-            (Swiss Map Vector 1000, swissTLM3D), die Höhenstufen der Karten aus swissALTIRegio von
+            Seen, Flüsse, Gipfel, die Tunnel und Brücken anderer Bahnen und die Länge vieler
+            SBB-Brücken stammen von swisstopo (Swiss Map Vector 1000, swissTLM3D), die Höhenstufen der Karten aus swissALTIRegio von
             swisstopo, Wald und Siedlung aus swissTLMRegio von swisstopo, die Landes- und Kantonsgrenzen vom Bundesamt für Statistik BFS,
             Kulturgüter vom Bundesamt für Bevölkerungsschutz BABS, Seilbahnen vom BAV, BLN,
             Pärke und Moorlandschaften vom Bundesamt für Umwelt BAFU, alle frei nutzbar mit
@@ -457,7 +465,13 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Ausgeliefert wird die Seite von GitHub Pages. GitHub speichert dabei laut eigenen
-            Angaben die IP-Adressen der Besucher aus Sicherheitsgründen.
+            Angaben die IP-Adressen der Besucher aus Sicherheitsgründen. Die Adresse
+            taktland.ch ist bei cyon registriert, deren Namensserver sie auflösen.
+          </li>
+          <li>
+            Beim Öffnen und Zurückholen fragt Taktland eine kleine Datei auf taktland.ch ab, ob
+            es verfügbar ist, und ob es eine neue Version gibt. Dabei wird nichts über dich
+            mitgeschickt.
           </li>
         </Punkte>
       </Abschnitt>
