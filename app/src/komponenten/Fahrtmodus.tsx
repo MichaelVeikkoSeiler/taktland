@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { neuLadenSperren } from '../serviceWorker'
 import { abstand, type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEE_QUER_M, SEILBAHN_M, type SehenswertSorte, type Ton, wegEnde } from '../fahrt'
 import { spurMerken } from '../ohneziel'
@@ -7,6 +7,8 @@ import { FahrtKarte, FARBE, Ring, RING_S, Streckenband, TunnelBalken } from './F
 import { Auswahl } from './Auswahl'
 import { kategorieUmschalten, KurzLang, LANGFORM, useVersteckt } from './Sehenswert'
 import { Pikto } from './Pikto'
+import { Bahnhof } from './Bahnhof'
+import type { IndexEintrag } from '../typen'
 
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
 const VORLAEUFE_S = [20, 10] as const
@@ -23,6 +25,8 @@ const PROBE_TEMPO = 100 / 3.6
 const ANZEIGE_PROBE_MS = 33
 /** Langsamer gilt als Stillstand: keine Zeitangabe */
 const STEHT_UNTER = 3
+/** So nah am Punkt eines Bahnhofs gilt ein stehender Zug als «am Bahnhof», Meter */
+const AM_BAHNHOF_M = 400
 /** Weiter weg vom Weg gilt als «nicht auf dieser Strecke», mindestens */
 const ABSEITS_M = 300
 /** Ohne neuen Standort seit so vielen Sekunden gilt: kein GPS */
@@ -108,7 +112,8 @@ type Meldung =
  * meldet es mit einem Ton etwa 20 oder 10 Sekunden vorher. Nur solange die Seite
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
-export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren, fortsetzen, stelle, ohneZiel }: {
+export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren, fortsetzen, stelle, ohneZiel,
+                            bahnhofSeite }: {
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
@@ -124,6 +129,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   stelle?: (startS: number, s: number) => void
   /** «Ohne Ziel»: am Ende des Wegs oder lange daneben neu suchen */
   ohneZiel?: () => void
+  /** Bahnhof auf dem Weg → seine Seite in Taktland, falls es eine gibt */
+  bahnhofSeite?: (o: FahrObjekt) => { uic: number; eintrag: IndexEintrag | undefined } | null
 }) {
   const [einstellung, setEinstellung] = useState(einstellungLesen)
   // Sehenswertes bringt seinen Text selbst mit
@@ -314,6 +321,33 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const inFlaechen = sJetzt === null ? []
     : gewaehlt.filter((o) => o.sehenswert?.sorte === 'flaeche' && sJetzt >= o.s && sJetzt <= o.sAus!)
   const kommend = sJetzt === null ? [] : gewaehlt.filter((o) => o.s > sJetzt)
+  // Steht der Zug an einem Bahnhof, lässt sich dessen Seite öffnen (Michael,
+  // 2026-09-29: «während dem Stillstand … die hinterlegten Infos nachschauen»)
+  const [offenerBahnhof, setOffenerBahnhof] = useState<{ uic: number; eintrag: IndexEintrag | undefined } | null>(null)
+  const bahnhofSchliessen = useCallback(() => setOffenerBahnhof(null), [])
+  const amBahnhof = (() => {
+    if (sJetzt === null || !bahnhofSeite || (probefahrt ? !angehalten : faehrt)) return null
+    let best: FahrObjekt | null = null
+    for (const o of fahrweg.objekte) {
+      if (o.art !== 'bahnhof' || Math.abs(o.s - sJetzt) > AM_BAHNHOF_M) continue
+      if (!best || Math.abs(o.s - sJetzt) < Math.abs(best.s - sJetzt)) best = o
+    }
+    const seite = best ? bahnhofSeite(best) : null
+    return best && seite ? { o: best, seite } : null
+  })()
+  const bahnhofKnopf = amBahnhof && (
+    <button type="button" onClick={() => setOffenerBahnhof(amBahnhof.seite)}
+            className="kachel kachel-link mt-3 flex w-full items-center justify-between gap-3 px-4 py-3 text-left">
+      <span className="flex min-w-0 items-center gap-3">
+        <Pikto art="bahnhof" className="size-8 shrink-0" />
+        <span className="min-w-0">
+          <span className="block text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">Zug steht bei</span>
+          <span className="block truncate text-lg font-bold leading-tight">{textVon(amBahnhof.o)?.name}</span>
+        </span>
+      </span>
+      <span className="shrink-0 font-medium">Infos <span aria-hidden="true">→</span></span>
+    </button>
+  )
   const eta = (o: FahrObjekt) => (sJetzt !== null && faehrt ? (o.s - sJetzt) / stand!.v : null)
   /** Meter bis zum Objekt entlang des gezeichneten Wegs; gilt auch, wenn der Zug steht */
   const bis = (o: FahrObjekt) => (sJetzt !== null ? Math.max(0, o.s - sJetzt) : null)
@@ -490,6 +524,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   }
   const vollbildLeiste = (
     <div className="mt-2 space-y-2">
+      {bahnhofKnopf}
       {imTunnel && einstellung.tunnel && sJetzt !== null ? (
         <div className="flex items-center gap-3 rounded-lg bg-sbb-charcoal px-3 py-2 text-sbb-white">
           <div className="min-w-0 flex-1">
@@ -587,6 +622,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
                       name={(o) => textVon(o)?.name} springen={probefahrt ? springen : undefined} />
+        {bahnhofKnopf}
 
         {probefahrt && (
           <div className="mt-4 flex items-center gap-3 text-sm">
@@ -778,9 +814,49 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           fehlen in diesem Massstab.
         </p>
       </div>
+      {offenerBahnhof && (
+        <BahnhofFenster uic={offenerBahnhof.uic} eintrag={offenerBahnhof.eintrag}
+                        schliessen={bahnhofSchliessen} />
+      )}
     </div>
   )
 }
+
+/**
+ * Die Seite eines Bahnhofs über der Fahrt; die Fahrt läuft darunter weiter,
+ * mit Tönen. Verweise auf andere Seiten gehen hier nicht: Sie würden die Fahrt
+ * verlassen.
+ */
+// memo: Die Fahrt zeichnet sich oft neu, die Bahnhofseite soll das nicht mitmachen
+const BahnhofFenster = memo(function BahnhofFenster({ uic, eintrag, schliessen }: {
+  uic: number; eintrag: IndexEintrag | undefined; schliessen: () => void
+}) {
+  useEffect(() => {
+    const taste = (e: KeyboardEvent) => { if (e.key === 'Escape') schliessen() }
+    document.addEventListener('keydown', taste)
+    return () => document.removeEventListener('keydown', taste)
+  }, [schliessen])
+  return (
+    <div className="fixed inset-0 z-[90] overflow-y-auto bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white"
+         role="dialog" aria-modal="true" aria-label="Bahnhof"
+         onClickCapture={(e) => {
+           const a = (e.target as HTMLElement).closest('a')
+           if (a && a.getAttribute('href')?.startsWith('#')) e.preventDefault()
+         }}>
+      <div className="sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-sbb-cloud bg-sbb-white
+                      px-4 py-2 pt-[max(0.5rem,env(safe-area-inset-top))] dark:border-sbb-iron dark:bg-sbb-midnight">
+        <span className="text-sm text-sbb-metal dark:text-sbb-storm">Die Fahrt läuft weiter</span>
+        <button type="button" onClick={schliessen}
+                className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white hover:bg-sbb-red125">
+          Zurück zur Fahrt
+        </button>
+      </div>
+      <div className="mx-auto max-w-2xl pt-4">
+        <Bahnhof uic={uic} eintrag={eintrag} zurueck={schliessen} zurueckText="Zurück zur Fahrt" />
+      </div>
+    </div>
+  )
+})
 
 function zustand(meldung: Meldung | null, stand: Stand | null, ohneGps: boolean, imTunnel: boolean,
                  probefahrt: boolean) {

@@ -691,6 +691,11 @@ function Ergebnis({
       {fahrt && (
         <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
                     piepen={fahrt.piepen} fortsetzen={fahrt.fortsetzen}
+                    bahnhofSeite={(o) => {
+                      const uic = uicVon.get(o.kennung)
+                      const b = uic === undefined ? undefined : bahnhof.get(uic)
+                      return b ? { uic: b.uic, eintrag: b } : null
+                    }}
                     ohneZiel={wahl.ohne && !fahrt.probe ? () => {
                       // der Ton bleibt freigegeben, auch ohne neuen Tipp
                       tonWeitergeben(fahrt.piepen)

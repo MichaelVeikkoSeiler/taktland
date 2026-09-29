@@ -16,9 +16,11 @@ const STUFE_TEXT: Record<string, string> = {
 }
 
 /** kanton aus dem Index, wie in der Liste: «Kanton TG», bei Jestetten «Ausland» */
-export function Bahnhof({ uic, zurueck, eintrag }: {
+export function Bahnhof({ uic, zurueck, eintrag, zurueckText }: {
   uic: number
   zurueck: () => void
+  /** Text des Verweises zurück, sonst «Alle Bahnhöfe» */
+  zurueckText?: string
   /** der Eintrag im Index: Kanton, Bahn der Infrastruktur, im Streckennetz */
   eintrag: IndexEintrag | undefined
 }) {
@@ -53,14 +55,14 @@ export function Bahnhof({ uic, zurueck, eintrag }: {
 
   if (fehler) {
     return (
-      <Rahmen zurueck={zurueck}>
+      <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
         <Ladefehler className="px-4 text-sbb-black dark:text-sbb-white"
                     was="Dieses Profil konnte nicht geladen werden." fehler={fehler} />
       </Rahmen>
     )
   }
   if (!profil) {
-    return <Rahmen zurueck={zurueck}><p className="px-4 text-sbb-metal">Wird geladen …</p></Rahmen>
+    return <Rahmen zurueck={zurueck} zurueckText={zurueckText}><p className="px-4 text-sbb-metal">Wird geladen …</p></Rahmen>
   }
 
   const fragenGesamt = profil.chapters.reduce((n, k) => n + k.questions.length, 0)
@@ -76,7 +78,7 @@ export function Bahnhof({ uic, zurueck, eintrag }: {
   }
 
   return (
-    <Rahmen zurueck={zurueck}>
+    <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
       <header className="px-4">
         <h1 className="text-2xl font-bold text-sbb-black dark:text-sbb-white">{profil.name}</h1>
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
