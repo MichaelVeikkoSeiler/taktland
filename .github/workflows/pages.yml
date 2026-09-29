@@ -77,10 +77,7 @@ jobs:
       # taktland.ch: an der Wurzel die Seite aus web/, die App unter /app/
       # (Michael, 2026-09-30)
       - name: Seite zusammenstellen
-        run: |
-          mkdir -p _site
-          cp -r web/. _site/
-          cp -r app/dist _site/app
+        run: python3 pipeline/export_web.py
 
       - uses: actions/upload-pages-artifact@v3
         with:

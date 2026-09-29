@@ -79,7 +79,8 @@ generator/   Profile schreiben und prüfen
 app/         PWA (React, Vite, Tailwind)
 app/public/status.json  Schalter: "verfuegbar": false macht Taktland auf allen Geräten unbenutzbar
              (src/verfuegbar.ts), fehlt die Datei ebenso; ohne Empfang höchstens 30 Tage weiter
-web/         Seite für taktland.ch (reines HTML); veröffentlicht an der Wurzel, die App unter /app/
+web/         Seite für taktland.ch (reines HTML); pipeline/export_web.py stellt sie mit der App unter
+             /app/ zusammen und setzt die Zahlen (data-zahl) aus dem Index der App ein
 data/raw/    heruntergeladene CSV, nicht in Git
 data/facts/  geprüfte Fakten je Bahnhof: 1189, die mit SBB-Infrastruktur, die anderer
              Bahnen (BLS, RhB, MGB, MOB, ZB, SOB, MVR …) mit Daten für mindestens drei

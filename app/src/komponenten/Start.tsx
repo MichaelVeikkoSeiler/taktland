@@ -35,9 +35,6 @@ export function Start({ index }: { index: BahnhofIndex }) {
         Im Zug meldet dir «Fahren» per GPS den nächsten Tunnel, die nächste Brücke und den
         nächsten Bahnhof einige Sekunden im Voraus mit einem Ton, dazu Sehenswertes links und
         rechts der Strecke. Was du durchfährst, sammelt Taktland im Logbuch und im Sammelheft.
-        Ein anderes Angebot, das dies für eine frei gewählte Strecke im ganzen Schweizer Netz
-        kann, hat eine Recherche im September 2026 nicht gefunden. Damit ist «Fahren»
-        wahrscheinlich einzigartig.
       </p>
       <p className={absatz}>
         Entstanden ist Taktland mit einer Rundum-KI-Lösung und eigener Entwicklungsarbeit. Es ist
