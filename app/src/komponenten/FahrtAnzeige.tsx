@@ -200,6 +200,13 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
                     className="fill-fahrt-sehenswert dark:fill-fahrt-sehenswert-hell" />
             )
           }
+          if (o.art === 'bruecke' && o.sAus !== null) {
+            // Brücken mit Anfang und Ende laut swisstopo als Balken wie Tunnel, in ihrer Farbe
+            return (
+              <rect key={`b${o.kennung}`} x={x} y="41" width={Math.max(2.5, xBei(o.sAus) - x)} height="10" rx="1.5"
+                    className="fill-fahrt-bruecke" />
+            )
+          }
           if (o.art === 'bruecke') {
             return (
               <path key={`b${o.kennung}`} d={`M${x - 3} 49 Q${x} 41.5 ${x + 3} 49`} fill="none" strokeWidth="2"
@@ -391,15 +398,16 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild }: {
   // hängt nicht vom Standort ab: einmal rechnen, nicht bei jedem Bild
   const zeichenEbene = useMemo(() => (
     <>
-      {/* Tunnel, deren Ende die Daten hergeben, als dicker Strich (Michael, 2026-09-26) */}
-      {zeichen.filter((o) => o.art === 'tunnel' && o.sAus !== null).map((o) => {
+      {/* Tunnel und Brücken, deren Ende die Daten hergeben, als dicker Strich (Michael,
+          2026-09-26; Brücken 2026-09-29, in ihrer Farbe) */}
+      {zeichen.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null).map((o) => {
         const stueck = weg.filter((p) => p.s > o.s && p.s < o.sAus!).map((p) => p.xy)
         const [a, b] = [lageBei(fahrweg, o.s), lageBei(fahrweg, o.sAus!)]
         const d = pfad([lage(a.lat, a.lon), ...stueck, lage(b.lat, b.lon)])
         return (
           <path key={`tz${o.kennung}`} d={d} fill="none" strokeWidth={8} strokeLinecap="round"
                 strokeLinejoin="round" vectorEffect="non-scaling-stroke"
-                className="stroke-fahrt-tunnel dark:stroke-sbb-storm" />
+                className={o.art === 'bruecke' ? 'stroke-fahrt-bruecke' : 'stroke-fahrt-tunnel dark:stroke-sbb-storm'} />
         )
       })}
       {zeichen.map((o) => {

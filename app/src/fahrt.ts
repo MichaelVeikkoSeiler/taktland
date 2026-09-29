@@ -238,6 +238,13 @@ export function fahrwegBauen(netz: StreckenNetz,
       }
       for (const id of t.bruecken) {
         if (objekte.has(`bruecke ${id}`)) continue
+        // Anfang und Ende laut swissTLM3D, wo es sie gibt (pipeline/build_bruecken_bereich.py)
+        const bb = netz.bruecken_bereiche?.[id]
+        if (bb) {
+          const [ein, aus] = [sBei(bb[0]), sBei(bb[1])]
+          objekte.set(`bruecke ${id}`, { kennung: id, art: 'bruecke', s: Math.min(ein, aus), sAus: Math.max(ein, aus) })
+          continue
+        }
         const km = brueckeKm(id)
         if (km !== undefined) objekte.set(`bruecke ${id}`, { kennung: id, art: 'bruecke', s: sBei(km), sAus: null })
       }

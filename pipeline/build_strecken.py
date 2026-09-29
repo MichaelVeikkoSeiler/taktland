@@ -653,6 +653,16 @@ def tunnel_aus_tlm():
             for k, v in json.loads(pfad.read_text(encoding="utf-8"))["tunnel"].items()}
 
 
+def bruecken_aus_tlm():
+    """Anfang, Ende und Länge laut swissTLM3D für SBB-Brücken
+    (pipeline/build_bruecken_bereich.py), «Linie:Stelle» → [von, bis, Meter]"""
+    pfad = ROOT / "data" / "bruecken_bereich.json"
+    if not pfad.exists():
+        return {}
+    return {k: [v["von"], v["bis"], v["laenge_m"]]
+            for k, v in json.loads(pfad.read_text(encoding="utf-8"))["bruecken"].items()}
+
+
 def tunnel_bereich_mit_tlm(kennung, km, laenge_m, lo, hi, aus_tlm):
     """Wie tunnel_bereich; gibt die Länge keine Richtung her, gelten Anfang und
     Ende laut swissTLM3D, wenn es sie gibt"""
@@ -693,6 +703,8 @@ def main():
     sbb_linien = set(load("linie").linie.astype(int))
     tunnel, bruecken = objekte()
     aus_tlm = tunnel_aus_tlm()
+    bruecken_tlm = bruecken_aus_tlm()
+    bruecken_bereiche = {}
     bereich = {nr: (float(z[2].min()), float(z[2].max())) for nr, z in zuege.items()}
     # Linien des Schienennetzes je Betriebspunkt, ohne Tramlinien (Buchstaben)
     bav_linien, _ = schienennetz.je_linie()
@@ -758,6 +770,9 @@ def main():
                     "tunnel": auf_teil,
                     "bruecken": [i for i, km in bruecken.get(nr, []) if lo <= km <= hi],
                 })
+                for i in eintrag["teile"][-1]["bruecken"]:
+                    if i in bruecken_tlm:
+                        bruecken_bereiche[i] = bruecken_tlm[i]
         else:
             if k["isb"] == "SBB":
                 ohne_zuordnung.append((a, b, k["km"]))
@@ -831,6 +846,9 @@ def main():
         "lagen": {abk: list(p["wgs"]) for abk, p in sorted(punkte.items())},
         # Tunnel: km von, km bis (bei unbekannter Richtung beide gleich, siehe tunnel_bereich)
         "tunnel_bereiche": dict(sorted(bereiche.items())),
+        # Brücken: km von, km bis und Länge in Metern laut Zeichnung von swissTLM3D
+        # (pipeline/build_bruecken_bereich.py), nur wo eindeutig
+        "bruecken_bereiche": dict(sorted(bruecken_bereiche.items())),
         "bahnhoefe": {str(u): abk for u, abk in sorted(im_netz.items())},
         "nicht_im_netz": sorted(u for u in namen if u not in im_netz),
         # Art und Name der Bauwerke aus swissTLM3D, für die Zählung auf der Seite «Strecke»

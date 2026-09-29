@@ -386,6 +386,13 @@ function Ergebnis({
   const uicVon = useMemo(() => new Map(Object.entries(netz.bahnhoefe).map(([u, abk]) => [abk, Number(u)])),
                          [netz])
 
+  /** «etwa 120 m laut swisstopo»: Die SBB nennt keine Länge, swissTLM3D zeichnet die
+   *  Brücke (Michael, 2026-09-29); gerundet, weil aus der Zeichnung gemessen */
+  const brueckeLaenge = useCallback((kennung: string) => {
+    const m = netz.bruecken_bereiche?.[kennung]?.[2]
+    if (m === undefined) return null
+    return `etwa ${m < 100 ? Math.max(5, Math.round(m / 5) * 5) : Math.round(m / 10) * 10} m laut swisstopo`
+  }, [netz])
   const objektText = useCallback(({ kennung, art, tlm }: FahrObjekt): ObjektText | undefined => {
     // Strecken anderer Bahnen: Tunnel und Brücken aus swissTLM3D, ohne Länge
     if (tlm) {
@@ -408,10 +415,10 @@ function Ergebnis({
     }
     const y = art === 'bruecke' ? brueckenNach.get(kennung) : undefined
     if (!y) return undefined
-    return { name: ohneKuerzel(y.name), baueinheiten: y.baueinheiten,
-             zeile: `Linie ${y.linie}${y.baueinheiten === null ? ''
+    return { name: ohneKuerzel(y.name), baueinheiten: y.baueinheiten, laenge: brueckeLaenge(kennung),
+             zeile: `${brueckeLaenge(kennung) ? `${brueckeLaenge(kennung)} · ` : ''}Linie ${y.linie}${y.baueinheiten === null ? ''
                : ` · ${y.baueinheiten} ${y.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}${quelle(y.name)}` }
-  }, [tunnelNach, brueckenNach, bahnhof, uicVon])
+  }, [tunnelNach, brueckenNach, bahnhof, uicVon, brueckeLaenge])
 
   async function fahrtStarten(probe: boolean, weiter = false) {
     // der Ton muss im Tipp selbst vorbereitet werden, sonst bleibt er stumm;
@@ -486,6 +493,7 @@ function Ergebnis({
     } else {
       const y = brueckenNach.get(o.kennung)
       dazu('Baueinheiten', y ? (y.baueinheiten === null ? 'keine Angabe' : y.baueinheiten) : null)
+      dazu('Länge laut Zeichnung von swisstopo', brueckeLaenge(o.kennung)?.replace(' laut swisstopo', ''))
       dazu('Linie', y?.linie)
       dazu('Kanton laut Quelle', y?.kanton)
     }

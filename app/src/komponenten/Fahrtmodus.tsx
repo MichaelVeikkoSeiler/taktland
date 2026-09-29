@@ -79,6 +79,8 @@ export interface ObjektText {
   baueinheiten: number | null
   /** Brücken aus swissTLM3D: auf der Karte mindestens 100 m lang gezeichnet */
   gross?: boolean
+  /** Brücken: «etwa 380 m laut swisstopo», wo swissTLM3D Anfang und Ende hergibt */
+  laenge?: string | null
 }
 
 interface Stand {
@@ -718,7 +720,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                   <span className="min-w-0 flex-1">
                     <span className="block truncate">{textVon(o)?.name}</span>
                     <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                      <ArtText o={o} />{luftlinie(o) && ` · ${luftlinie(o)}`}
+                      <ArtText o={o} />{luftlinie(o) && ` · ${luftlinie(o)}`}{textVon(o)?.laenge && ` · ${textVon(o)!.laenge}`}
                     </span>
                   </span>
                   <span className="shrink-0 text-sm tabular-nums text-sbb-metal dark:text-sbb-storm">

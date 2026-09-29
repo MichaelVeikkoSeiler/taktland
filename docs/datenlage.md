@@ -119,6 +119,9 @@ Im Katalog von data.sbb.ch (60 Datensätze, geprüft 2026-09-21) steht zu Streck
   in `linie`, ihr Name ist darum nicht erfasst. Die Namen tragen unerklärte Abkürzungen
   (PI, PU, WU, Du, SU …). Die Beschreibung nennt als letzte Aktualisierung auf Deutsch
   «Januar 24», auf Englisch «Jan 2026».
+  Länge beim Fahren: Für 1553 Brücken nennt `data/bruecken_bereich.json` Anfang und Ende
+  laut swissTLM3D (nur wo der Kilometer laut SBB in genau einer gezeichneten Brücke liegt
+  und keine andere SBB-Brücke darin); die App zeigt «etwa … m laut swisstopo».
 - `bahnubergang` – 1064 Bahnübergänge, 1011 davon auf Linien mit Seite. Verwendet sind
   Name, Kilometer, Sicherungsart (das deutsche Feld `sicherungsart`, nicht das
   mehrsprachige `sicherungsart_text`) und die Zahl der gekreuzten Gleise. Nicht verwendet:

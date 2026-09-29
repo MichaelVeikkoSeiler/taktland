@@ -349,6 +349,9 @@ export interface StreckenNetz {
   /** Tunnel «Linie:Stelle» → [km von, km bis]; gleich, wenn die Richtung
    *  der Länge unbekannt ist */
   tunnel_bereiche: Record<string, [number, number]>
+  /** Brücke «Linie:Stelle» → [km von, km bis, Meter] laut Zeichnung von swissTLM3D;
+   *  fehlt, wo swisstopo keine eindeutige Brücke zeichnet */
+  bruecken_bereiche?: Record<string, [number, number, number]>
 }
 
 /** Lage der Linien für den Fahrtmodus: je Linie der erste Punkt [Meter,
