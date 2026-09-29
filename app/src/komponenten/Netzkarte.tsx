@@ -397,7 +397,7 @@ export function Netzkarte({
              const p = zuKarte(e.clientX, e.clientY)
              zoomen(1.8, p?.x, p?.y)
            }}
-           className={`${klassen.svg} touch-none border border-sbb-cloud bg-white
+           className={`${klassen.svg} touch-none border border-sbb-cloud bg-karte
                       dark:border-sbb-iron dark:bg-sbb-midnight`}>
         <KartengrundEbene grund={kartengrund} box={box} verh={verh} />
         <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />

@@ -50,6 +50,8 @@
   --color-kantonsgrenze: #d8d8d8;
   --color-landesgrenze: #b4b4b4;
   --color-fluss: #7fb2e0;
+  /* Grund der Karten in der App: ganz helles Grün statt Weiss (Michael, 2026-09-30) */
+  --color-karte: #f1f6ea;
   --color-hoehe-1: #f5f3ee;
   --color-hoehe-2: #ebe8e1;
   --color-hoehe-3: #dedad2;

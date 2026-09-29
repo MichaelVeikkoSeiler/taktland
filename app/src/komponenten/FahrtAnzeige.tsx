@@ -471,7 +471,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
           kann. Darüber, durchsichtig und leicht, der Weg, die Zeichen und der Zug. */}
       <div onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
-           className={`${klassen.svg} relative overflow-hidden border border-sbb-cloud bg-white
+           className={`${klassen.svg} relative overflow-hidden border border-sbb-cloud bg-karte
                        dark:border-sbb-iron dark:bg-sbb-midnight`}>
         <svg viewBox={[box.cx - box.w * GRUND_RAND, box.cy - h * GRUND_RAND, box.w * 2 * GRUND_RAND, h * 2 * GRUND_RAND].join(' ')}
              preserveAspectRatio="xMidYMid meet" aria-hidden="true"
