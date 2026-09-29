@@ -6,7 +6,7 @@
  */
 import { useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
-import { lage, pfad, SEITENVERHAELTNIS, type Stueck, useBreite, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
+import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 import { KartengrundEbene, useKartengrund } from './Kartengrund'
@@ -271,8 +271,11 @@ const NAH = 0.08
  * Die kleine Karte zur Fahrt: grau das Streckennetz, dunkel der Weg vor dem
  * Zug, rot der Standort. «Nah» folgt dem Zug, «Ganzer Weg» zeigt alles.
  */
-export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild }: {
+export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: {
   fahrweg: Fahrweg
+  /** Namen von Start und Ziel, beschriftet wie auf dem Fahrtblatt (Michael, 2026-09-29) */
+  start?: string
+  ziel?: string
   objekte: FahrObjekt[]
   sJetzt: number | null
   /** was im Vollbild unter der Karte steht: das Nötigste zum Fahren (Michael, 2026-09-27) */
@@ -306,9 +309,11 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild }: {
     for (const { xy: [x, y] } of weg) {
       x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y)
     }
-    const w = Math.max((x1 - x0) * 1.15, (y1 - y0) * 1.15 * SEITENVERHAELTNIS, NAH)
+    // so gross wie möglich (Michael, 2026-09-29: «möglichst gross»): wenig Rand für die
+    // Beschriftung von Start und Ziel, auch bei kurzen Wegen nur ein kleines Mindestmass
+    const w = Math.max((x1 - x0) * 1.2, (y1 - y0) * 1.3 * verh, NAH / 8)
     return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w }
-  }, [weg])
+  }, [weg, verh])
 
   const hier = sJetzt !== null ? lageBei(fahrweg, sJetzt) : fahrweg.punkte[0]
   const [hx, hy] = hier ? lage(hier.lat, hier.lon) : [ganz.cx, ganz.cy]
@@ -487,6 +492,21 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild }: {
           <path d={pfad(vor)} fill="none" strokeWidth={3.5} vectorEffect="non-scaling-stroke"
                 strokeLinejoin="round" className="stroke-sbb-charcoal dark:stroke-sbb-white" />
           {zeichenEbene}
+          {/* Start und Ziel: Quadrat und Name, fett, wie auf dem Fahrtblatt */}
+          {([[weg[0], start], [weg[weg.length - 1], ziel]] as const).map(([p, name], i) => p && name && (
+            <g key={i}>
+              <rect x={p.xy[0] - 4.5 * px} y={p.xy[1] - 4.5 * px} width={9 * px} height={9 * px} strokeWidth={2}
+                    vectorEffect="non-scaling-stroke" className="fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white" />
+              {/* in der oberen Hälfte unter den Punkt, sonst darüber: nie über den Rand */}
+              <text x={p.xy[0] + (p.xy[0] > blick.cx + blick.w / 6 ? -9 : 9) * px}
+                    y={p.xy[1] + (p.xy[1] < blick.cy ? 19 : -8) * px}
+                    textAnchor={p.xy[0] > blick.cx + blick.w / 6 ? 'end' : 'start'} fontSize={14 * px} fontWeight={700}
+                    strokeWidth={3.5 * px} paintOrder="stroke" strokeLinejoin="round"
+                    className="fill-sbb-black stroke-white dark:fill-sbb-white dark:stroke-sbb-midnight">
+                {name}
+              </text>
+            </g>
+          ))}
           {hier && sJetzt !== null && (
             <>
               <circle cx={hx} cy={hy} r={9 * px} className="fill-sbb-red/20" />
