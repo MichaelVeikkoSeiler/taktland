@@ -7,6 +7,7 @@ import { alphabetisch, useFavoriten } from '../favoriten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
 import { BahnhofFeld, fahrtAdresse, type StreckenWahl } from './Strecke'
+import type { FahrtTeil } from './Kopf'
 import { Stern } from './Stern'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
@@ -34,36 +35,12 @@ type Suche =
  * der Seite «Strecke», dazu die gemerkten Fahrten. Gestartet wird
  * auf der Seite «Strecke», die den Weg sucht.
  */
-export function Fahrt({ index }: { index: BahnhofIndex | null }) {
+export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: FahrtTeil }) {
   const [art, setArt] = useState<Art>(artLesen)
   const [wahl, setWahl] = useState<StreckenWahl>({ von: null, nach: null, ueber: null })
   const [suche, setSuche] = useState<Suche>({ art: 'aus' })
   const [gemerkt, setGemerkt] = useState(gemerktLesen)
   const [entfernt, setEntfernt] = useState<{ f: GemerkteFahrt; stelle: number } | null>(null)
-  // Probefahrten zu Beginn zugeklappt; die Wahl bleibt auf dem Gerät
-  const [probenOffen, setProbenOffen] = useState(() => {
-    try { return localStorage.getItem('taktland.probefahrten.offen') === 'ja' } catch { return false }
-  })
-  function probenOffenSetzen(offen: boolean) {
-    setProbenOffen(offen)
-    try { localStorage.setItem('taktland.probefahrten.offen', offen ? 'ja' : 'nein') } catch { /* nur jetzt */ }
-  }
-  // Neue Fahrt: eine Kachel wie die beiden anderen (Michael, 2026-09-27), zu Beginn offen
-  const [neuOffen, setNeuOffen] = useState(() => {
-    try { return localStorage.getItem('taktland.neuefahrt.offen') !== 'nein' } catch { return true }
-  })
-  function neuOffenSetzen(offen: boolean) {
-    setNeuOffen(offen)
-    try { localStorage.setItem('taktland.neuefahrt.offen', offen ? 'ja' : 'nein') } catch { /* nur jetzt */ }
-  }
-  // Fahrtblatt: eigener Abschnitt, zu Beginn zugeklappt (Michael, 2026-09-26)
-  const [blattOffen, setBlattOffen] = useState(() => {
-    try { return localStorage.getItem('taktland.fahrtblatt.offen') === 'ja' } catch { return false }
-  })
-  function blattOffenSetzen(offen: boolean) {
-    setBlattOffen(offen)
-    try { localStorage.setItem('taktland.fahrtblatt.offen', offen ? 'ja' : 'nein') } catch { /* nur jetzt */ }
-  }
   const [blatt, setBlatt] = useState<StreckenWahl>({ von: null, nach: null, ueber: null })
   const blattBereit = blatt.von !== null && blatt.nach !== null && blatt.von !== blatt.nach
   // welche Probefahrt gerade ihre beiden Richtungen zeigt
@@ -120,7 +97,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
 
   // «Nur Ziel»: den Start gleich suchen, sobald die Bahnhöfe da sind
   useEffect(() => {
-    if (art === 'ziel' && index && suche.art === 'aus') standortSuchen()
+    if (teil === 'neu' && art === 'ziel' && index && suche.art === 'aus') standortSuchen()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [art, index])
 
@@ -139,7 +116,8 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
 
   return (
     <div className="px-4 pb-16">
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahren</h1>
+      {teil === 'neu' && (<>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">Neue Fahrt</h1>
       <p className="mt-2 leading-relaxed">
         Im Zug meldet Taktland Tunnel, Brücken und Bahnhöfe auf deinem Weg, etwa 20 oder 10
         Sekunden vorher. Dafür braucht Taktland den Standort; dieser bleibt auf dem Gerät.
@@ -154,23 +132,19 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
                       umschalten={(f) => setGemerkt(favoritUmschalten(f))} />
         </div>
       )}
+      </>)}
 
       {/* Probefahrten zum Anwählen, Starten, Hinzufügen und Löschen, auf- und
           zuklappbar (Michael, 2026-09-26) */}
-      {index && (
-        <section className="mt-6">
-          <button type="button" onClick={() => probenOffenSetzen(!probenOffen)} aria-expanded={probenOffen}
-                  className="kachel kachel-link flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3
-                             text-left">
-            <span className="text-lg font-bold">
-              Probefahrten{gemerkt.probefahrten.length > 0 && ` (${gemerkt.probefahrten.length})`}
-            </span>
-            <span className={`pfeil ${probenOffen ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
-              {probenOffen ? '↑' : '↓'}
-            </span>
-          </button>
-          {probenOffen && (
-            <>
+      {teil === 'probe' && (
+        <section>
+          <h1 className="mt-6 text-2xl font-bold tracking-tight">Probefahren</h1>
+          <p className="mt-2 leading-relaxed">
+            Eine Probefahrt spielt den Weg im Zeitraffer ab, ohne Zug und ohne Standort. Erst die
+            Fahrt wählen, dann die Richtung.
+          </p>
+          {index && (
+            <div className="mt-4">
               {entfernt && (
                 <div role="status" className="kachel mt-2 flex items-center justify-between gap-3 py-1 pl-4 pr-1">
                   <span className="min-w-0">{fahrtText(entfernt.f)} entfernt.</span>
@@ -265,31 +239,24 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
                 </button>
               )}
               <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-                Spielt den Weg im Zeitraffer ab, ohne Standort. Neue Probefahrten kommen auch auf der
-                Seite «Strecke» mit «Als Probefahrt merken» dazu.
+                Neue Probefahrten kommen auch auf der Seite «Strecke» mit «Als Probefahrt merken»
+                dazu. Sie bleiben auf diesem Gerät.
               </p>
-            </>
+            </div>
           )}
         </section>
       )}
 
       {/* Das Fahrtblatt zum Ausdrucken, nur hier (Michael, 2026-09-26) */}
-      {index && (
-        <section className="mt-2">
-          <button type="button" onClick={() => blattOffenSetzen(!blattOffen)} aria-expanded={blattOffen}
-                  className="kachel kachel-link flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3
-                             text-left">
-            <span className="text-lg font-bold">Fahrtblatt</span>
-            <span className={`pfeil ${blattOffen ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
-              {blattOffen ? '↑' : '↓'}
-            </span>
-          </button>
-          {blattOffen && (
-            <div className="mt-3 space-y-3">
-              <p className="leading-relaxed">
-                Ein Blatt A4 zum Ausdrucken für die Fahrt mit Kindern: oben die Karte des Wegs, unten die
-                wichtigsten Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken.
-              </p>
+      {teil === 'blatt' && (
+        <section>
+          <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahrtblatt</h1>
+          <p className="mt-2 leading-relaxed">
+            Ein Blatt A4 zum Ausdrucken für die Fahrt mit Kindern: oben die Karte des Wegs, unten die
+            wichtigsten Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken.
+          </p>
+          {index && (
+            <div className="mt-4 space-y-3">
               <BahnhofFeld bezeichnung="Von" wert={blatt.von} bahnhoefe={imNetz} name={name}
                            aendern={(u) => setBlatt((w) => ({ ...w, von: u }))} />
               <BahnhofFeld bezeichnung="Nach" wert={blatt.nach} bahnhoefe={imNetz} name={name}
@@ -313,17 +280,9 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         </section>
       )}
 
-      <section className="mt-2">
-      <button type="button" onClick={() => neuOffenSetzen(!neuOffen)} aria-expanded={neuOffen}
-              className="kachel kachel-link flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3
-                         text-left">
-        <span className="text-lg font-bold">Neue Fahrt</span>
-        <span className={`pfeil ${neuOffen ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
-          {neuOffen ? '↑' : '↓'}
-        </span>
-      </button>
-      {neuOffen && (<>
-      <div className="mt-3 grid grid-cols-3 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group"
+      {teil === 'neu' && (
+      <section className="mt-6">
+      <div className="grid grid-cols-3 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group"
            aria-label="Wie wählen">
         {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel'], ['ohne', 'Ohne Ziel']] as const).map(([a, t]) => (
           <button key={a} type="button" aria-pressed={art === a} onClick={() => artWaehlen(a)}
@@ -407,8 +366,8 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
         Zur Auswahl stehen die Bahnhöfe, zu denen Taktland Wege kennt. Gemerkte
         Fahrten bleiben auf diesem Gerät.
       </p>
-      </>)}
       </section>
+      )}
     </div>
   )
 }

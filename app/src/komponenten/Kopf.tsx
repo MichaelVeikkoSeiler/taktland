@@ -44,6 +44,15 @@ const REISETASCHE: Array<{ bereich: Bereich; text: string; adresse: string }> = 
   { bereich: 'favoriten', text: 'Favoriten', adresse: '#/favoriten' },
 ]
 
+/** Die Unterreiter von «Fahren» (Michael, 2026-09-29: «Fahren muss auch drei
+ *  Unterseiten haben mit Neue Fahrt, Probefahren, Fahrtblatt») */
+export type FahrtTeil = 'neu' | 'probe' | 'blatt'
+const FAHREN: Array<{ bereich: FahrtTeil; text: string; adresse: string }> = [
+  { bereich: 'neu', text: 'Neue Fahrt', adresse: '#/fahrt' },
+  { bereich: 'probe', text: 'Probefahren', adresse: '#/fahrt/probe' },
+  { bereich: 'blatt', text: 'Fahrtblatt', adresse: '#/fahrt/blatt' },
+]
+
 /** Die Hauptreiter. Bahnhöfe, Strecken, Brücken und Tunnel sind unter «Bahnland»
  *  zusammengefasst (Michael, 2026-09-25: «ziemlich eng, alle diese Reiter
  *  nebeneinander»); ihre Unterreiter erscheinen, sobald man dort ist. */
@@ -121,11 +130,12 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
  * schöner, wenn die Auftaktbilder bleiben»). Die Anleitung gehört zu keinem
  * Bereich und hat ein eigenes Bild.
  */
-export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
+export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   aktiv: Bereich | null
   startseite: boolean
   anleitung?: boolean
-  fahrt?: boolean
+  /** unter «Fahren»: welche Unterseite */
+  fahrt?: FahrtTeil | null
 }) {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
   // die ganze Reisetasche mit dem Bild des Logbuchs
@@ -134,9 +144,12 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
-  // unter «Bahnland» und «Reisetasche» eine zweite Zeile mit den Unterreitern
-  const unter = objekteAktiv ? { name: 'Bahnland', liste: OBJEKTE, raster: 'grid grid-cols-4 sm:flex' }
+  // unter «Bahnland», «Reisetasche» und «Fahren» eine zweite Zeile mit den Unterreitern
+  const unter: { name: string; liste: Array<{ bereich: string; text: string; adresse: string }>; raster: string } | null =
+    fahrt ? { name: 'Fahren', liste: FAHREN, raster: 'flex' }
+    : objekteAktiv ? { name: 'Bahnland', liste: OBJEKTE, raster: 'grid grid-cols-4 sm:flex' }
     : REISETASCHE.some((l) => l.bereich === aktiv) ? { name: 'Reisetasche', liste: REISETASCHE, raster: 'flex' } : null
+  const unterAktiv: string | null = fahrt ?? aktiv
   return (
     <header className="print:hidden border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* Aktualisieren nur im Bild der Startseite (Michael, 2026-09-24) */}
@@ -147,7 +160,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
           ? <h1 className={`${titel} flex items-center gap-3`}><Bildmarke />Taktland</h1>
           : <a href="#/" className={`${titel} flex items-center gap-3`}><Bildmarke />Taktland</a>}
         {/* ganz rechts; das «i» ist zum Reiter «Info» geworden (Michael, 2026-09-25) */}
-        <FahrtKnopf hier={fahrt} />
+        <FahrtKnopf hier={fahrt !== null} />
       </div>
       {/* Fünf Hauptreiter; unter «Bahnland» eine zweite Zeile mit den Unterreitern */}
       <nav aria-label="Bereiche"
@@ -170,7 +183,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = false }: {
              className={`-mx-4 ${unter.raster} gap-x-1 border-t border-sbb-cloud bg-sbb-milk px-4 py-2
                         text-sm max-[359px]:text-[13px] sm:gap-x-2 dark:border-sbb-iron dark:bg-sbb-charcoal`}>
           {unter.liste.map((o) => {
-            const hier = o.bereich === aktiv
+            const hier = o.bereich === unterAktiv
             return (
               <a key={o.bereich} href={o.adresse} aria-current={hier ? 'page' : undefined}
                  className={`rounded-lg py-1.5 text-center font-medium ${unter.raster === 'flex' ? 'px-3' : 'px-1'} transition-colors sm:px-3 ${hier

@@ -213,7 +213,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Fahren">
         <Punkte>
           <li>
-            Der rote Knopf «Fahren» öffnet die Wahl der Fahrt: «Nur Ziel» (Start ist der nächste
+            Der rote Knopf «Fahren» hat drei Unterseiten: «Neue Fahrt», «Probefahren» und
+            «Fahrtblatt». Unter «Neue Fahrt» wählst du «Nur Ziel» (Start ist der nächste
             Bahnhof per GPS), «Start und Ziel» oder «Ohne Ziel». Gemerkte Fahrten starten mit
             einem Tipp.
           </li>

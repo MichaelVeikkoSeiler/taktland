@@ -10,7 +10,7 @@ import { Fahrtblatt } from './komponenten/Fahrtblatt'
 import { Sammelheft } from './komponenten/Sammelheft'
 import { Favoriten } from './komponenten/Favoriten'
 import { Logbuch } from './komponenten/Logbuch'
-import { type Bereich, Kopf } from './komponenten/Kopf'
+import { type Bereich, type FahrtTeil, Kopf } from './komponenten/Kopf'
 import { Linie } from './komponenten/Linie'
 import { Linien } from './komponenten/Linien'
 import { Objekte } from './komponenten/Objekte'
@@ -33,7 +33,7 @@ import { Ladefehler } from './komponenten/Ladefehler'
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
-  | { art: 'standort' } | { art: 'fahrt' } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'demo' } | { art: 'ohneziel' }
+  | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'demo' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
@@ -54,7 +54,10 @@ function seiteAusAdresse(): Seite {
   if (linie) return { art: 'linie', nr: Number(linie[1]) }
   if (h === '#/duell') return { art: 'duell' }
   if (h === '#/standort') return { art: 'standort' }
-  if (h === '#/fahrt') return { art: 'fahrt' }
+  // Fahren mit drei Unterseiten (Michael, 2026-09-29)
+  if (h === '#/fahrt') return { art: 'fahrt', teil: 'neu' }
+  if (h === '#/fahrt/probe') return { art: 'fahrt', teil: 'probe' }
+  if (h === '#/fahrt/blatt') return { art: 'fahrt', teil: 'blatt' }
   if (h === '#/ohneziel') return { art: 'ohneziel' }
   if (h === '#/sammelheft') return { art: 'sammelheft' }
   if (h === '#/logbuch') return { art: 'logbuch' }
@@ -131,7 +134,8 @@ export default function App() {
   // jedem Neuzeichnen nach oben
   const adresse = seite.art === 'bahnhof' ? `b${seite.uic}` : seite.art === 'linie' ? `l${seite.nr}`
     : seite.art === 'objekte' ? window.location.hash
-    : seite.art === 'uebersicht' ? seite.liste : seite.art === 'fahrtblatt' ? window.location.hash : seite.art
+    : seite.art === 'uebersicht' ? seite.liste : seite.art === 'fahrtblatt' ? window.location.hash
+    : seite.art === 'fahrt' ? `fahrt ${seite.teil}` : seite.art
   useEffect(() => { window.scrollTo(0, 0) }, [adresse])
 
   function oeffnen(neu: number) { window.location.hash = `#/bahnhof/${neu}` }
@@ -144,7 +148,8 @@ export default function App() {
       {/* auf dem Tablet breiter: 672 Pixel wirkten dort verloren (Michael, 2026-09-22) */}
       <div className="mx-auto max-w-2xl md:max-w-3xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
-              fahrt={seite.art === 'fahrt' || seite.art === 'ohneziel'} />
+              fahrt={seite.art === 'fahrt' ? seite.teil : seite.art === 'ohneziel' ? 'neu'
+                : seite.art === 'fahrtblatt' ? 'blatt' : null} />
         <Fortsetzen />
 
         {fehler && (
@@ -157,7 +162,7 @@ export default function App() {
         {seite.art === 'anleitung' && <Anleitung index={index} />}
         {seite.art === 'duell' && <Duell index={index} />}
         {seite.art === 'standort' && <Standort index={index} />}
-        {seite.art === 'fahrt' && <Fahrt index={index} />}
+        {seite.art === 'fahrt' && <Fahrt key={seite.teil} index={index} teil={seite.teil} />}
         {seite.art === 'ohneziel' && <OhneZiel index={index} />}
         {seite.art === 'fahrtblatt' && <Fahrtblatt index={index} wahl={seite.wahl} />}
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}
