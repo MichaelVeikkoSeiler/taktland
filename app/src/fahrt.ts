@@ -33,6 +33,10 @@ export interface FahrObjekt {
   s: number
   /** Ausfahrt: bei Tunneln, deren Richtung die Daten hergeben, und bei Flächen */
   sAus: number | null
+  /** nur bei Bahnhöfen: der Betriebspunkt, bevor bahnhoefeVorziehen s verschob; für die Karte */
+  sOrt?: number
+  /** nur bei Tunneln und Brücken aus swissTLM3D: die Bahn des Abschnitts */
+  bahn?: string
   /** nur bei Tunneln und Brücken aus swissTLM3D (Strecken anderer Bahnen) */
   tlm?: TlmBauwerk
   /** nur bei Sehenswertem: was die Quelle dazu sagt und auf welcher Seite es liegt */
@@ -75,6 +79,7 @@ export function bahnhoefeVorziehen(fw: Fahrweg, perron: (kennung: string) => num
     if (o.art !== 'bahnhof') continue
     const vor = perron(o.kennung) ?? BAHNHOF_VOR_M
     if (o.s >= ende - 1) fw.ziel_m = vor
+    o.sOrt = o.s
     o.s = Math.max(0, o.s - vor)
   }
   fw.objekte.sort((a, b) => a.s - b.s)
@@ -182,7 +187,7 @@ export function fahrwegBauen(netz: StreckenNetz,
         const von = Math.min(s1, alt?.s ?? s1)
         const bis = Math.max(s2, alt?.sAus ?? s2)
         objekte.set(`tlm ${id}`, { kennung: `tlm:${id}`, art: tunnelartig ? 'tunnel' : 'bruecke', s: von,
-                                   sAus: tunnelartig && bis > von ? bis : null, tlm: b })
+                                   sAus: tunnelartig && bis > von ? bis : null, tlm: b, bahn: e.bahn ?? e.isb })
       }
       bahnhofSetzen(punkteWeg[i + 1])
       return

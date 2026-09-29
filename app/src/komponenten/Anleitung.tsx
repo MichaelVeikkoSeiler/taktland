@@ -267,7 +267,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren hast
-            und was noch fehlt. Die Favoriten sind deine Bahnhöfe mit Stern.
+            und was noch fehlt, von allen Bahnen; einzelne Bahnen lassen sich ausblenden. Tunnel
+            und Brücken anderer Bahnen stammen aus swissTLM3D, meist ohne Namen und ohne Länge;
+            «Fehlt noch» kennt nur die der SBB. Die Favoriten sind deine Bahnhöfe mit Stern.
           </li>
           <li>
             Unten im Logbuch lässt sich alles als Datei sichern und wieder einlesen, etwa auf

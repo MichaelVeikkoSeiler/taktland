@@ -18,6 +18,12 @@ const ZUERST = 30
 
 interface Eintrag { kennung: string; name: string; zeile: string }
 
+/** Ausgeblendete Bahnen im Sammelheft, nur auf diesem Gerät */
+const AUS_SCHLUESSEL = 'taktland.sammelheft.bahnen-aus.v1'
+function ausLesen(): Set<string> {
+  try { return new Set(JSON.parse(localStorage.getItem(AUS_SCHLUESSEL) ?? '[]')) } catch { return new Set() }
+}
+
 /** Die Einträge einer Übersicht mit ihrer Kennung «Linie:Stelle», wie im Fahrtmodus */
 function mitKennung<T>(u: Uebersicht<T>) {
   const zaehler = new Map<number, number>()
@@ -37,6 +43,15 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
   const [ansicht, setAnsicht] = useState<Ansicht>('erlebt')
   const [art, setArt] = useState<ErlebtArt>('bahnhof')
   const [mehr, setMehr] = useState(false)
+  // alle Bahnen eingeblendet, einzelne lassen sich ausblenden (Michael, 2026-09-30)
+  const [aus, setAus] = useState(ausLesen)
+  function bahnUmschalten(b: string) {
+    const neu = new Set(aus)
+    if (neu.has(b)) neu.delete(b)
+    else neu.add(b)
+    setAus(neu)
+    try { localStorage.setItem(AUS_SCHLUESSEL, JSON.stringify([...neu])) } catch { /* ohne Speicher nur jetzt */ }
+  }
   const [tunnel, setTunnel] = useState<Uebersicht<TunnelEintrag> | null>(null)
   const [bruecken, setBruecken] = useState<Uebersicht<BrueckenEintrag> | null>(null)
 
@@ -66,9 +81,17 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
       .map((b) => ({ kennung: String(b.uic), name: b.name, zeile: b.kanton ? kantonText(b.kanton) : '' })),
   }), [tunnel, bruecken, index])
 
-  const erlebt = (a: ErlebtArt) => Object.values(heft.objekte).filter((o) => o.art === a)
+  // die Bahn eines Eintrags; ältere Einträge ohne Bahn: Bahnhöfe laut Index, sonst SBB
+  const isb = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [String(b.uic), b.isb ?? 'SBB'])), [index])
+  const bahnVon = (o: { art: ErlebtArt; kennung: string; bahn?: string }) =>
+    o.bahn ?? (o.art === 'bahnhof' ? isb.get(o.kennung) ?? 'SBB' : 'SBB')
+  const bahnen = [...new Set(['SBB', ...Object.values(heft.objekte).map(bahnVon)])]
+    .sort((a, b) => (a === 'SBB' ? -1 : b === 'SBB' ? 1 : a.localeCompare(b, 'de')))
+  const erlebt = (a: ErlebtArt) => Object.values(heft.objekte).filter((o) => o.art === a && !aus.has(bahnVon(o)))
     .sort((x, y) => y.zeit - x.zeit)
-  const fehlt = (alle[art] ?? []).filter((e) => !heft.objekte[schluesselVon(art, e.kennung)])
+  // «Fehlt noch»: Bahnhöfe aller Bahnen, Tunnel und Brücken nur die der SBB
+  const fehlt = (alle[art] ?? []).filter((e) => !heft.objekte[schluesselVon(art, e.kennung)]
+    && !aus.has(art === 'bahnhof' ? isb.get(e.kennung) ?? 'SBB' : 'SBB'))
 
   function loeschen() {
     if (!window.confirm('Alle erlebten Objekte im Sammelheft löschen? Das Logbuch bleibt. Das lässt sich nicht rückgängig machen.')) return
@@ -101,8 +124,21 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
         ))}
       </div>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        Gezählt von allen Bahnhöfen in Taktland und allen Brücken und Tunneln der SBB in Taktland.
+        «von»: alle Bahnhöfe in Taktland und alle Brücken und Tunnel der SBB in Taktland. Tunnel und
+        Brücken anderer Bahnen stammen aus swissTLM3D von swisstopo, meist ohne Namen und ohne Länge.
       </p>
+      {bahnen.length > 1 && (
+        <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Bahnen">
+          {bahnen.map((b) => (
+            <button key={b} type="button" aria-pressed={!aus.has(b)} onClick={() => bahnUmschalten(b)}
+                    className={`rounded-lg border px-3 py-1.5 text-sm font-medium ${aus.has(b)
+                      ? 'border-sbb-cloud bg-white text-sbb-metal line-through dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-storm'
+                      : 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'}`}>
+              {b}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="mt-6 grid grid-cols-2 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ansicht">
         {([['erlebt', 'Erlebt'], ['fehlt', 'Fehlt noch']] as const).map(([a, t]) => (
@@ -134,6 +170,9 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
                       {/* das Pikto als Sticker: erlebt in Farbe (Michael, 2026-09-27) */}
                       <Pikto art={o.art} className="size-6" />
                       <span className="truncate">{o.name}</span>
+                      {bahnVon(o) !== 'SBB' && (
+                        <span className="shrink-0 text-sm font-normal text-sbb-metal dark:text-sbb-storm">{bahnVon(o)}</span>
+                      )}
                     </span>
                     <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">{datum(o.zeit)}</span>
                   </li>

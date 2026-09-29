@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   datum, type ErlebtArt, type ErlebteFahrt, fahrtEintragen, fahrtLoeschen, heftLesen, logbuchLoeschen,
-  notizSetzen,
+  notizSetzen, wegPunkte,
 } from '../erlebt'
 import { standortLaden } from '../daten'
 import { sicherungEinlesen, sicherungHerunterladen, sicherungPruefen } from '../sicherung'
 import type { BahnhofIndex, StandortDaten } from '../typen'
-import { type Box, KartenPlatz, lage, Netzkarte, useKarte } from './Netzkarte'
+import { type Box, KartenPlatz, lage, Netzkarte, pfad, useKarte } from './Netzkarte'
 import { BahnhofFeld } from './Strecke'
 import { Pikto } from './Pikto'
 
@@ -146,7 +146,7 @@ function Uebersicht({ fahrten, index }: { fahrten: ErlebteFahrt[]; index: Bahnho
         </>
       )}
       {alle.length > 0 && (karte
-        ? <FahrtKarte objekte={alle} index={index} titel="Karte aller Fahrten im Logbuch" />
+        ? <FahrtKarte objekte={alle} wege={fahrten.flatMap((f) => f.wege ?? [])} index={index} titel="Karte aller Fahrten im Logbuch" />
         : (
           <button type="button" onClick={() => setKarte(true)} className={`mt-3 ${knopf}`}>
             Karte aller Fahrten zeigen
@@ -250,7 +250,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
 
           {f.objekte.length > 0 && (
             <>
-              <FahrtKarte objekte={f.objekte} index={index} titel={`Karte der Fahrt ${f.von} nach ${f.nach}`} />
+              <FahrtKarte objekte={f.objekte} wege={f.wege ?? []} index={index} titel={`Karte der Fahrt ${f.von} nach ${f.nach}`} />
               <details className="mt-3 text-sm">
                 <summary className={`cursor-pointer ${knopf}`}>Liste zeigen</summary>
                 <ol className="mt-2 space-y-1">
@@ -279,10 +279,12 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
 /**
  * Karte einer Fahrt: dunkel die Linien der durchfahrenen Tunnel und Brücken,
  * rot die Tunnel und Brücken, Ringe die Bahnhöfe, jeweils an der Lage aus
- * ihrer Quelle. Den Weg selbst speichert das Logbuch nicht; die Karte zeigt,
- * was durchfahren wurde.
+ * ihrer Quelle. Schwarz der gefahrene Weg, seit 2026-09-30 gespeichert; ältere
+ * Fahrten zeigen nur, was durchfahren wurde.
  */
-function FahrtKarte({ objekte, index, titel }: { objekte: ErlebteFahrt['objekte']; index: BahnhofIndex | null; titel: string }) {
+function FahrtKarte({ objekte, wege, index, titel }: {
+  objekte: ErlebteFahrt['objekte']; wege: NonNullable<ErlebteFahrt['wege']>; index: BahnhofIndex | null; titel: string
+}) {
   const { daten: karte, linien } = useKarte()
   const [standort, setStandort] = useState<StandortDaten | null>(null)
   useEffect(() => {
@@ -311,14 +313,16 @@ function FahrtKarte({ objekte, index, titel }: { objekte: ErlebteFahrt['objekte'
       const xy = lagen.get(`${o.art} ${o.kennung}`)
       return xy ? [{ o, x: xy[0], y: xy[1], uic: undefined }] : []
     })
-    if (!punkte.length) return null
-    const xs = punkte.map((p) => p.x), ys = punkte.map((p) => p.y)
+    const linienzuege = wege.map((w) => wegPunkte(w).map((p) => lage(p.lat, p.lon)))
+    const alleXy = [...punkte.map((p) => [p.x, p.y] as [number, number]), ...linienzuege.flat()]
+    if (!alleXy.length) return null
+    const xs = alleXy.map((p) => p[0]), ys = alleXy.map((p) => p[1])
     const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]
     const box: Box = { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2,
                        w: Math.max((x1 - x0) * 1.3, (y1 - y0) * 1.3 * 1.6, 0.03) }
     const hervor = new Set(objekte.filter((o) => o.art !== 'bahnhof').map((o) => Number(o.kennung.split(':')[0])))
-    return { punkte, box, hervor }
-  }, [standort, index, objekte])
+    return { punkte, box, hervor, linienzuege }
+  }, [standort, index, objekte, wege])
 
   if (!karte || !linien || !inhalt) return <KartenPlatz />
   return (
@@ -326,15 +330,24 @@ function FahrtKarte({ objekte, index, titel }: { objekte: ErlebteFahrt['objekte'
       daten={karte} linien={linien} start={inhalt.box} hervor={inhalt.hervor}
       punkte={inhalt.punkte.filter((p) => p.o.art === 'bahnhof').map((p) => ({ name: p.o.name, x: p.x, y: p.y, uic: p.uic }))}
       bahnhofOeffnen={(uic) => { window.location.hash = `#/bahnhof/${uic}` }}
-      zeichnen={(px) => inhalt.punkte.filter((p) => p.o.art !== 'bahnhof').map((p) => (
-        <circle key={`${p.o.art}${p.o.kennung}`} cx={p.x} cy={p.y}
-                r={(p.o.art === 'tunnel' ? 3.5 : 1.8) * px} className="fill-sbb-red" />
-      ))}
+      zeichnen={(px) => (
+        <>
+          {inhalt.linienzuege.map((z, i) => (
+            <path key={`w${i}`} d={pfad(z)} fill="none" strokeWidth={3.5} vectorEffect="non-scaling-stroke"
+                  strokeLinejoin="round" strokeLinecap="round" className="stroke-sbb-charcoal dark:stroke-sbb-white" />
+          ))}
+          {inhalt.punkte.filter((p) => p.o.art !== 'bahnhof').map((p) => (
+            <circle key={`${p.o.art}${p.o.kennung}`} cx={p.x} cy={p.y}
+                    r={(p.o.art === 'tunnel' ? 3.5 : 1.8) * px} className="fill-sbb-red" />
+          ))}
+        </>
+      )}
       titel={titel}
       beschriftung={(
         <>
           Rot: durchfahrene Tunnel (grosse Punkte) und Brücken (kleine), Ringe: Bahnhöfe, jeweils
-          dort, wo ihre Quelle die Lage angibt. Dunkel die Linien, auf denen sie liegen.
+          dort, wo ihre Quelle die Lage angibt. Dunkel die Linien, auf denen sie liegen; schwarz der
+          gefahrene Weg, gespeichert seit dem 30.9.2026.
         </>
       )}
     />

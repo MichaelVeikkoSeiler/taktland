@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { bahnhoefeVorziehen, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
+import { bahnhoefeVorziehen, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
-import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegSetzen } from '../erlebt'
+import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegLinieSetzen, wegSetzen } from '../erlebt'
 import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import { nachbarnBauen, useBahnenAus } from '../bahnen'
@@ -371,7 +371,9 @@ function Ergebnis({
                                         beginn: number | null
                                         fortsetzen: { startS: number; s: number } | null
                                         /** «Ohne Ziel»: Meter der früheren Linien derselben Fahrt */
-                                        wegVorher: number } | null>(null)
+                                        wegVorher: number
+                                        /** «Ohne Ziel»: das wievielte Wegstück dieser Fahrt im Logbuch */
+                                        wegTeil: number } | null>(null)
   const [bilanz, setBilanz] = useState<{ objekte: BilanzObjekt[]; probe: boolean; beginn: number | null } | null>(null)
   const [laedt, setLaedt] = useState(false)
   // während der Fahrtmodus hier läuft, fragt oben niemand «fortsetzen?»
@@ -456,7 +458,9 @@ function Ergebnis({
       // «Ohne Ziel» mit neu erkannter Linie: die Meter der bisherigen Linien bleiben
       const wegVorher = beginn !== null && wahl.ohne && gleich
         ? heftLesen().fahrten.find((f) => f.beginn === beginn)?.weg_m ?? 0 : 0
-      setFahrt({ fahrweg, probe, piepen, beginn, fortsetzen, wegVorher })
+      const wegTeil = beginn !== null && wahl.ohne && gleich
+        ? heftLesen().fahrten.find((f) => f.beginn === beginn)?.wege?.length ?? 0 : 0
+      setFahrt({ fahrweg, probe, piepen, beginn, fortsetzen, wegVorher, wegTeil })
     } catch (e) {
       setFahrtFehler((e as Error).message)
     } finally {
@@ -715,11 +719,30 @@ function Ergebnis({
                       : (startS, s) => {
                         laufendStelle(fahrt.beginn!, startS, s)
                         wegSetzen(fahrt.beginn!, fahrt.wegVorher + Math.max(0, s - startS))
+                        // der gefahrene Weg für die Karte im Logbuch, etwa alle 150 m ein Punkt
+                        const fw = fahrt.fahrweg
+                        const pts = [lageBei(fw, startS)]
+                        let letzte = startS
+                        for (const p of fw.punkte) {
+                          if (p.s <= startS || p.s >= s) continue
+                          if (p.s - letzte >= 150) { pts.push(p); letzte = p.s }
+                        }
+                        pts.push(lageBei(fw, s))
+                        wegLinieSetzen(fahrt.beginn!, fahrt.wegTeil, pts)
                       }}
                     durchfahren={(o) => {
-                      if (fahrt.beginn === null || o.tlm) return
+                      if (fahrt.beginn === null) return
+                      // Tunnel und Brücken anderer Bahnen aus swissTLM3D kommen mit ihrer Bahn
+                      // ins Sammelheft (Michael, 2026-09-30: «alle Bahnen defaultmässig»)
+                      if (o.tlm) {
+                        if (o.art !== 'tunnel' && o.art !== 'bruecke') return
+                        durchfahren(fahrt.beginn, { art: o.art, kennung: o.kennung, name: objektText(o)?.name ?? o.kennung,
+                                                    ...(o.bahn ? { bahn: o.bahn } : {}) })
+                        return
+                      }
                       const b = bilanzObjekt(o)
-                      durchfahren(fahrt.beginn, { art: b.art, kennung: b.kennung, name: b.name })
+                      const bahn = b.art === 'bahnhof' ? bahnhof.get(Number(b.kennung))?.isb ?? 'SBB' : 'SBB'
+                      durchfahren(fahrt.beginn, { art: b.art, kennung: b.kennung, name: b.name, bahn })
                     }}
                     beenden={(liste) => {
                       if (fahrt.beginn !== null) laufendEnde()

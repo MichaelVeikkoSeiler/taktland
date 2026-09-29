@@ -366,6 +366,10 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
   }
   const h = box.w / verh
   const px = box.w / breite
+  // Lage der Namen von Start und Ziel: nur neu, wenn sich der Ausschnitt ändert
+  const endNamen = useMemo(() => ([[weg[0], start], [weg[weg.length - 1], ziel]] as const)
+    .filter((x): x is [typeof weg[number], string] => Boolean(x[0] && x[1]))
+    .map(([p, name]) => ({ p, name, l: namensLage(p.xy, name, px, weg, box, h) })), [weg, start, ziel, px, box, h])
   const klassen = vollbildKlassen(voll, 'mt-3')
   const s = sJetzt ?? 0
 
@@ -416,7 +420,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
         )
       })}
       {zeichen.map((o) => {
-        const l = lageBei(fahrweg, o.s)
+        // Bahnhöfe am Betriebspunkt, nicht am Anfang ihrer Perrons; Start und Ziel zeichnet die Karte grösser
+        if (o.art === 'bahnhof' && ((o.sOrt ?? o.s) < 1 || (o.sOrt ?? o.s) > wegEnde(fahrweg) - 1)) return null
+        const l = lageBei(fahrweg, o.art === 'bahnhof' ? o.sOrt ?? o.s : o.s)
         const [x, y] = lage(l.lat, l.lon)
         return (
           <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 5 : 2.5) * px}
@@ -492,21 +498,21 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
           <path d={pfad(vor)} fill="none" strokeWidth={3.5} vectorEffect="non-scaling-stroke"
                 strokeLinejoin="round" className="stroke-sbb-charcoal dark:stroke-sbb-white" />
           {zeichenEbene}
-          {/* Start und Ziel: Quadrat und Name, fett, wie auf dem Fahrtblatt */}
-          {([[weg[0], start], [weg[weg.length - 1], ziel]] as const).map(([p, name], i) => p && name && (
-            <g key={i}>
-              <rect x={p.xy[0] - 4.5 * px} y={p.xy[1] - 4.5 * px} width={9 * px} height={9 * px} strokeWidth={2}
-                    vectorEffect="non-scaling-stroke" className="fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white" />
-              {/* in der oberen Hälfte unter den Punkt, sonst darüber: nie über den Rand */}
-              <text x={p.xy[0] + (p.xy[0] > blick.cx + blick.w / 6 ? -9 : 9) * px}
-                    y={p.xy[1] + (p.xy[1] < blick.cy ? 19 : -8) * px}
-                    textAnchor={p.xy[0] > blick.cx + blick.w / 6 ? 'end' : 'start'} fontSize={14 * px} fontWeight={700}
-                    strokeWidth={3.5 * px} paintOrder="stroke" strokeLinejoin="round"
-                    className="fill-sbb-black stroke-white dark:fill-sbb-white dark:stroke-sbb-midnight">
-                {name}
-              </text>
-            </g>
-          ))}
+          {/* Start und Ziel: grössere Bahnhofspunkte, der Name fett daneben, darüber oder
+              darunter, wo er die Strecke nicht verdeckt und im Bild bleibt (Michael, 2026-09-30) */}
+          {endNamen.map(({ p, name, l }, i) => {
+            return (
+              <g key={i}>
+                <circle cx={p.xy[0]} cy={p.xy[1]} r={7 * px} strokeWidth={2} vectorEffect="non-scaling-stroke"
+                        className="fill-fahrt-bahnhof stroke-white dark:fill-fahrt-bahnhof-hell dark:stroke-sbb-midnight" />
+                <text x={l.x} y={l.y} textAnchor={l.anker} fontSize={14 * px} fontWeight={700}
+                      strokeWidth={3.5 * px} paintOrder="stroke" strokeLinejoin="round"
+                      className="fill-sbb-black stroke-white dark:fill-sbb-white dark:stroke-sbb-midnight">
+                  {name}
+                </text>
+              </g>
+            )
+          })}
           {hier && sJetzt !== null && (
             <>
               <circle cx={hx} cy={hy} r={9 * px} className="fill-sbb-red/20" />
@@ -536,4 +542,53 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
       </figcaption>
     </figure>
   )
+}
+
+/** Schneidet die Strecke von a nach b das Rechteck? (Liang-Barsky) */
+function schneidet(a: [number, number], b: [number, number], r: { x0: number; y0: number; x1: number; y1: number }) {
+  let t0 = 0, t1 = 1
+  const dx = b[0] - a[0], dy = b[1] - a[1]
+  for (const [p, q] of [[-dx, a[0] - r.x0], [dx, r.x1 - a[0]], [-dy, a[1] - r.y0], [dy, r.y1 - a[1]]]) {
+    if (p === 0) { if (q < 0) return false; continue }
+    const t = q / p
+    if (p < 0) { if (t > t1) return false; if (t > t0) t0 = t }
+    else { if (t < t0) return false; if (t < t1) t1 = t }
+  }
+  return true
+}
+
+/**
+ * Wo der Name von Start oder Ziel steht: rechts, links, darüber, darunter oder
+ * schräg daneben, als Erstes, wo er die Strecke nicht schneidet und ganz im
+ * Bild bleibt; sonst dort, wo er am wenigsten von ihr verdeckt.
+ */
+function namensLage([x, y]: [number, number], name: string, px: number,
+                    weg: Array<{ xy: [number, number] }>, blick: { cx: number; cy: number; w: number }, h: number) {
+  const fs = 14 * px, b = name.length * fs * 0.6, abst = 11 * px
+  const kandidaten: Array<{ x: number; y: number; anker: 'start' | 'end' | 'middle'; box: { x0: number; y0: number; x1: number; y1: number } }> = []
+  const setzen = (dx: -1 | 0 | 1, dy: -1 | 0 | 1) => {
+    const ax = x + dx * abst, ay = y + dy * abst
+    const anker = dx > 0 ? 'start' : dx < 0 ? 'end' : 'middle'
+    const x0 = anker === 'start' ? ax : anker === 'end' ? ax - b : ax - b / 2
+    // Grundlinie: darunter eine Zeile tiefer, daneben mittig
+    const yb = dy > 0 ? ay + fs * 0.8 : dy < 0 ? ay : ay + fs * 0.35
+    kandidaten.push({ x: ax, y: yb, anker, box: { x0, x1: x0 + b, y0: yb - fs * 0.8, y1: yb + fs * 0.2 } })
+  }
+  for (const [dx, dy] of [[1, 0], [-1, 0], [0, -1], [0, 1], [1, -1], [-1, -1], [1, 1], [-1, 1]] as const) setzen(dx, dy)
+  const [vx0, vx1, vy0, vy1] = [blick.cx - blick.w / 2, blick.cx + blick.w / 2, blick.cy - h / 2, blick.cy + h / 2]
+  const weit = b * 2 + abst
+  const fern = (q: [number, number]) => Math.abs(q[0] - x) > weit || Math.abs(q[1] - y) > weit
+  let beste = kandidaten[0], wenigste = Infinity
+  for (const k of kandidaten) {
+    const drin = k.box.x0 >= vx0 && k.box.x1 <= vx1 && k.box.y0 >= vy0 && k.box.y1 <= vy1
+    let treffer = 0
+    for (let i = 1; i < weg.length; i++) {
+      if (fern(weg[i - 1].xy) && fern(weg[i].xy)) continue
+      if (schneidet(weg[i - 1].xy, weg[i].xy, k.box)) treffer++
+    }
+    const kosten = treffer + (drin ? 0 : 1000)
+    if (kosten === 0) return k
+    if (kosten < wenigste) { wenigste = kosten; beste = k }
+  }
+  return beste
 }

@@ -13,6 +13,8 @@ export interface ErlebtesObjekt {
   name: string
   /** erstes Mal durchfahren, Millisekunden */
   zeit: number
+  /** die Bahn (SBB, BLS, RhB …) für die Auswahl im Sammelheft; fehlt bei älteren Einträgen */
+  bahn?: string
 }
 
 export interface ErlebteFahrt {
@@ -20,7 +22,7 @@ export interface ErlebteFahrt {
   von: string
   nach: string
   /** in der Reihenfolge der Fahrt, auch schon früher erlebte */
-  objekte: Array<{ art: ErlebtArt; kennung: string; name: string }>
+  objekte: Array<{ art: ErlebtArt; kennung: string; name: string; bahn?: string }>
   /** eigene Notiz im Logbuch */
   notiz?: string
   /** von Hand ins Logbuch eingetragen, ohne Fahrtmodus: keine Objekte erfasst */
@@ -28,6 +30,10 @@ export interface ErlebteFahrt {
   /** gefahrene Meter auf der gezeichneten Strecke, vom ersten Standort bis zum
    *  letzten; erst seit 2026-09-28 erfasst (Michael), ältere Fahrten ohne */
   weg_m?: number
+  /** der gefahrene Weg für die Karte im Logbuch, je erkannte Linie ein Stück: erster
+   *  Punkt [Breite, Länge] mal 10000 und Differenzen; seit 2026-09-30 (Michael: «die
+   *  Strecke … nicht schwarz»), ältere Fahrten ohne */
+  wege?: Array<{ start: [number, number]; d: number[] }>
 }
 
 interface Heft {
@@ -65,7 +71,7 @@ export function fahrtBeginnen(von: string, nach: string): number {
 }
 
 /** Ein Objekt ist durchfahren: ins Heft und zur Fahrt */
-export function durchfahren(beginn: number, o: { art: ErlebtArt; kennung: string; name: string }) {
+export function durchfahren(beginn: number, o: { art: ErlebtArt; kennung: string; name: string; bahn?: string }) {
   const h = heftLesen()
   const k = schluesselVon(o.art, o.kennung)
   if (!h.objekte[k]) h.objekte[k] = { ...o, zeit: Date.now() }
@@ -81,6 +87,28 @@ export function wegSetzen(beginn: number, m: number) {
   if (!f || !(m >= 0)) return
   f.weg_m = Math.round(m)
   schreiben(h)
+}
+
+/** Den gefahrenen Weg nachführen: Stück «teil» (bei «Ohne Ziel» eines je Linie) */
+export function wegLinieSetzen(beginn: number, teil: number, punkte: Array<{ lat: number; lon: number }>) {
+  const h = heftLesen()
+  const f = h.fahrten.find((x) => x.beginn === beginn)
+  if (!f || punkte.length < 2) return
+  const ganz = punkte.map((p) => [Math.round(p.lat * 1e4), Math.round(p.lon * 1e4)] as [number, number])
+  const d: number[] = []
+  for (let i = 1; i < ganz.length; i++) d.push(ganz[i][0] - ganz[i - 1][0], ganz[i][1] - ganz[i - 1][1])
+  const wege = f.wege ?? []
+  wege[teil] = { start: ganz[0], d }
+  f.wege = wege.filter(Boolean)
+  schreiben(h)
+}
+
+/** Die Punkte eines gespeicherten Wegstücks, in Grad */
+export function wegPunkte(w: { start: [number, number]; d: number[] }) {
+  let [la, lo] = w.start
+  const raus = [{ lat: la / 1e4, lon: lo / 1e4 }]
+  for (let i = 0; i + 1 < w.d.length; i += 2) { la += w.d[i]; lo += w.d[i + 1]; raus.push({ lat: la / 1e4, lon: lo / 1e4 }) }
+  return raus
 }
 
 /** Fahrten ohne ein einziges durchfahrenes Objekt fallen weg */
