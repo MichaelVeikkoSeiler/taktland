@@ -81,6 +81,9 @@ app/public/status.json  Schalter: "verfuegbar": false macht Taktland auf allen G
              (src/verfuegbar.ts), fehlt die Datei ebenso; ohne Empfang höchstens 30 Tage weiter
 web/         Seite für taktland.ch (reines HTML); pipeline/export_web.py stellt sie mit der App unter
              /app/ zusammen und setzt die Zahlen (data-zahl) aus dem Index der App ein
+server/zaehler/  Zähler auf zaehler.taktland.ch (Webhosting bei cyon, von Hand hochladen): je Tag nur
+             die Zahl der Aufrufe (web), der Geräte (app) und der neuen Geräte (neu), ohne IP und Kennung;
+             die App meldet höchstens einmal am Tag (src/zaehlen.ts), liste/ ist mit Passwort geschützt
 data/raw/    heruntergeladene CSV, nicht in Git
 data/facts/  geprüfte Fakten je Bahnhof: 1189, die mit SBB-Infrastruktur, die anderer
              Bahnen (BLS, RhB, MGB, MOB, ZB, SOB, MVR …) mit Daten für mindestens drei

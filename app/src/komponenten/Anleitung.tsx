@@ -473,6 +473,13 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             es verfügbar ist, und ob es eine neue Version gibt. Dabei wird nichts über dich
             mitgeschickt.
           </li>
+          <li>
+            Gezählt wird nur, wie oft Taktland geöffnet wird: Höchstens einmal am Tag meldet die
+            App «geöffnet» an zaehler.taktland.ch, beim ersten Mal auf einem Gerät «neu».
+            Gespeichert wird dort je Tag nur die Zahl, ohne IP-Adresse, ohne Kennung und ohne
+            Uhrzeit. Der Zähler liegt bei cyon in der Schweiz; wie jeder Webserver führt er ein
+            Zugriffsprotokoll, das cyon verwaltet. Ohne Netz zählt nichts.
+          </li>
         </Punkte>
       </Abschnitt>
 

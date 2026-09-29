@@ -217,7 +217,8 @@ export default function App() {
             </a>
           </p>
           <p className="mt-1">
-            Der Lernfortschritt bleibt auf diesem Gerät. Es gibt kein Konto und keine Auswertung.
+            Der Lernfortschritt bleibt auf diesem Gerät. Es gibt kein Konto; gezählt wird nur, wie oft
+            Taktland geöffnet wird, eine Zahl pro Tag.
           </p>
           <Zuruecksetzen />
           {index && <p className="mt-1">Datenstand: {index.stand}</p>}

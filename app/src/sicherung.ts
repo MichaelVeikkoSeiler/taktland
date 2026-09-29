@@ -7,8 +7,9 @@
  */
 
 const PRAEFIX = 'taktland.'
-/** Nicht in die Sicherung: der Merker für Updates und die gerade laufende Fahrt */
-const OHNE = new Set(['taktland.aktualisiert', 'taktland.laufend.v1'])
+/** Nicht in die Sicherung: der Merker für Updates, die gerade laufende Fahrt und der Tag der
+ *  letzten Zählung (ein anderes Gerät ist ein neues Gerät) */
+const OHNE = new Set(['taktland.aktualisiert', 'taktland.laufend.v1', 'taktland.gezaehlt.v1'])
 
 interface Datei {
   app: 'taktland'

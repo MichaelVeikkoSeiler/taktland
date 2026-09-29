@@ -243,8 +243,8 @@
         </div>
         <div class="kachel">
           <h3>Deine Daten bleiben bei dir</h3>
-          <p>Kein Konto, keine Werbung, keine Auswertung, wer Taktland nutzt. Logbuch und
-             Fortschritt liegen nur auf deinem Gerät.</p>
+          <p>Kein Konto, keine Werbung, keine Profile. Gezählt wird nur, wie oft Taktland geöffnet
+             wird. Logbuch und Fortschritt liegen nur auf deinem Gerät.</p>
         </div>
       </div>
     </div>
@@ -279,9 +279,17 @@
          BAFU, Bundesamt für Bevölkerungsschutz BABS.</p>
       <p>Datenschutz: Diese Seite und die App liefert GitHub Pages aus; GitHub speichert laut eigenen
          Angaben die IP-Adressen der Besucher aus Sicherheitsgründen. Die Adresse taktland.ch ist bei
-         cyon registriert. Taktland selbst speichert nichts über dich auf einem Server. Mehr dazu in
-         der App unter <a href="./app/#/anleitung">Info</a>.</p>
+         cyon registriert. Gezählt wird nur, wie oft Webseite und App geöffnet werden: Ein Zähler bei
+         cyon in der Schweiz (zaehler.taktland.ch) speichert je Tag nur die Zahl, ohne IP-Adresse und
+         ohne Kennung; wie jeder Webserver führt er ein Zugriffsprotokoll, das cyon verwaltet. Mehr
+         dazu in der App unter <a href="./app/#/anleitung">Info</a>.</p>
     </div>
   </footer>
+  <script>
+    // zählt den Aufruf, nur ein Wort, ohne Kennung (server/zaehler, wie app/src/zaehlen.ts)
+    if (location.hostname === 'taktland.ch') {
+      try { navigator.sendBeacon('https://zaehler.taktland.ch/zaehlen.php?w=web') } catch (e) { /* nie stören */ }
+    }
+  </script>
 </body>
 </html>
