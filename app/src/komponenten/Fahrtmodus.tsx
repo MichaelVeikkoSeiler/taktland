@@ -453,7 +453,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         ? `${FARBE[o.art].flaeche} ${FARBE[o.art].schrift} py-7`
         : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
         <Ring bald={bald} art={o.art} anteil={eta(o) === null ? null : 1 - eta(o)! / RING_S}>
-          {angabe === 'zeit' || (angabe === 'beides' && eta(o) !== null)
+          {/* Sehenswertes: nie «steht», dann die Distanz (Michael, 2026-09-29) */}
+          {(angabe === 'zeit' || (angabe === 'beides' && eta(o) !== null)) && !(o.art === 'sehenswert' && eta(o) === null)
             ? <ZeitImRing sekunden={eta(o) === null ? null : echt(eta(o)!)} steht={stand !== null} />
             : <DistanzImRing meter={bis(o)} />}
         </Ring>
