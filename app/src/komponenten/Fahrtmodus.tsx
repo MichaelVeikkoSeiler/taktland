@@ -606,8 +606,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                 «Kilometerangaben bis zum Zielort»); ohne Ziel keine */}
             {!ohneZiel && sJetzt !== null && (
               <p className="text-sm font-medium tabular-nums">
-                {bisZiel(wegEnde(fahrweg) - sJetzt) === null ? 'Am Ziel'
-                  : `Noch etwa ${bisZiel(wegEnde(fahrweg) - sJetzt)} auf diesem Weg`}
+                {bisZiel(wegEnde(fahrweg) - (fahrweg.ziel_m ?? 0) - sJetzt) === null ? 'Am Ziel'
+                  : `Noch etwa ${bisZiel(wegEnde(fahrweg) - (fahrweg.ziel_m ?? 0) - sJetzt)} auf diesem Weg`}
               </p>
             )}
           </div>

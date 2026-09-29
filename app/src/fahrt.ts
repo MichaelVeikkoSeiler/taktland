@@ -55,6 +55,29 @@ export interface Fahrweg {
   objekte: FahrObjekt[]
   /** Stücke, auf denen ein See neben der Strecke liegt, mit der Seite */
   seeUfer?: SeeUfer[]
+  /** So viele Meter vor dem Ende gilt das Ziel als erreicht: sein längster Perron */
+  ziel_m?: number
+}
+
+/** Ohne Perrondaten gilt ein Bahnhof so weit vor seinem Betriebspunkt als erreicht */
+export const BAHNHOF_VOR_M = 150
+
+/**
+ * Bahnhöfe gelten schon ab dem Anfang ihrer Perrons als erreicht, nicht erst am
+ * Betriebspunkt (Michael, 2026-09-29: «beim hintersten Bahnsteig … erkennen, dass
+ * man in Bern angekommen ist»). Wo die Perrons liegen, sagen die Daten nicht, darum
+ * die ganze Länge des längsten Perrons vor dem Punkt. Verschiebt die Bahnhöfe auf
+ * dem Weg und hält fest, wie weit vor dem Ende das Ziel erreicht ist.
+ */
+export function bahnhoefeVorziehen(fw: Fahrweg, perron: (kennung: string) => number | undefined) {
+  const ende = wegEnde(fw)
+  for (const o of fw.objekte) {
+    if (o.art !== 'bahnhof') continue
+    const vor = perron(o.kennung) ?? BAHNHOF_VOR_M
+    if (o.s >= ende - 1) fw.ziel_m = vor
+    o.s = Math.max(0, o.s - vor)
+  }
+  fw.objekte.sort((a, b) => a.s - b.s)
 }
 
 export interface SeeUfer { s0: number; s1: number; seite: 'links' | 'rechts'; name: string | null }

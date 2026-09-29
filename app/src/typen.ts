@@ -199,6 +199,8 @@ export interface IndexEintrag {
   isb?: string
   /** Die Seite «Strecke» kennt Wege ab diesem Bahnhof */
   im_netz: boolean
+  /** der längste Perron mit Daten, Meter; fehlt ohne Perrondaten */
+  perron_laengste_m?: number
   /** false: Die Passagierfrequenz führt diese Haltestelle nicht (BTI); dann
    *  gibt es keine Grösse und keine Fahrgastzahl */
   frequenz_erfasst?: false

@@ -68,6 +68,10 @@ def main():
             # die App kennzeichnet diese Bahnhöfe
             **({"isb": sb["isb"]} if sb.get("isb") and sb["isb"] != "SBB" else {}),
             "im_netz": str(d["uic"]) in im_netz,
+            # der längste Perron mit Daten: So weit vor dem Betriebspunkt gilt ein
+            # Bahnhof beim Fahren als erreicht (Michael, 2026-09-29: Bern)
+            **({"perron_laengste_m": d["perrons"]["laengste_m"]}
+               if (d.get("perrons") or {}).get("laengste_m") else {}),
             # Haltestellen ohne Frequenzdaten (BTI): keine Grösse, keine Fahrgastzahl
             **({"frequenz_erfasst": False} if sb.get("frequenz_erfasst") is False else {}),
             # alle Linien, auf denen der Bahnhof erfasst ist, mit oder ohne eigene

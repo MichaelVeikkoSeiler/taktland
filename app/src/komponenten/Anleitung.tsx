@@ -242,7 +242,14 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Öffnen, ob die Fahrt weitergehen soll.
           </li>
           <li>
-            Oben steht, wie weit es auf dem gesuchten Weg noch bis zum Ziel ist.
+            Oben steht, wie weit es auf dem gesuchten Weg noch bis zum Ziel ist. Ein Bahnhof gilt
+            schon als erreicht, wenn der Zug so weit vor ihm ist, wie sein längster Perron lang
+            ist; wo die Perrons genau liegen, sagen die Daten nicht. Ohne Perrondaten sind es
+            150 m.
+          </li>
+          <li>
+            Steht der Zug bis etwa 1 km bei einem Bahnhof, öffnet «Infos» dessen Seite über der
+            Fahrt. «Zurück zur Fahrt» schliesst sie; die Fahrt läuft darunter weiter.
           </li>
           <li>
             Probefahrten spielen einen Weg in Echtzeit mit etwa 100 km/h oder 5- bis 200-mal

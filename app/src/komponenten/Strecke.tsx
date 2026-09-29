@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
+import { bahnhoefeVorziehen, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegSetzen } from '../erlebt'
 import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
@@ -425,6 +425,7 @@ function Ergebnis({
       const fahrweg = fahrwegBauen(netz, linien, weg.punkte, weg.abschnitte,
                                    (id) => brueckenNach.get(id)?.km ?? undefined,
                                    (abk) => bahnhof.has(uicVon.get(abk) ?? 0))
+      bahnhoefeVorziehen(fahrweg, (abk) => bahnhof.get(uicVon.get(abk) ?? 0)?.perron_laengste_m)
       // Sehenswertes am Weg; fehlen die Daten, fährt der Fahrtmodus ohne
       try {
         const [s, f] = await Promise.all([sehenswertLaden(), flaechenLaden()])
