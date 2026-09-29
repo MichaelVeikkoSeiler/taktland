@@ -341,6 +341,37 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     const seite = best ? bahnhofSeite(best) : null
     return best && seite ? { o: best, seite } : null
   })()
+  // Ankunft am Ziel (Michael, 2026-09-29): in der Perronzone des Ziels, und der Zug
+  // steht; einmal, mit eigenem Ton und grosser Karte
+  const zielName = titel.split(' → ')[1] ?? ''
+  const amZiel = !ohneZiel && sJetzt !== null && sJetzt >= wegEnde(fahrweg) - (fahrweg.ziel_m ?? AM_ENDE_M)
+  const angekommen = amZiel && (probefahrt ? angehalten || sJetzt! >= wegEnde(fahrweg) - 1 : !faehrt)
+  const [ankunft, setAnkunft] = useState<'offen' | 'weg' | null>(null)
+  useEffect(() => {
+    if (!angekommen || ankunft !== null) return
+    setAnkunft('offen')
+    if (einstellung.ton) piepen('ankunft')
+    if (ansage.current) ansage.current.textContent = `Angekommen in ${zielName}.`
+  })
+  const fahrtBeenden = () => beenden([...hinter.current].sort((a, b) => a.s - b.s))
+  const ankunftKarte = ankunft === 'offen' && (
+    <div className="mt-3 rounded-lg bg-fahrt-bahnhof px-4 py-5 text-white" role="status">
+      <p className="flex items-center gap-2 text-xs uppercase tracking-wide">
+        <Pikto art="bahnhof" className="size-7" nurZeichen /> Am Ziel
+      </p>
+      <p className="mt-1 text-3xl font-bold leading-tight">Angekommen in {zielName}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <button type="button" onClick={fahrtBeenden}
+                className="rounded-lg bg-white px-4 py-2 font-bold text-sbb-black">
+          Fahrt beenden
+        </button>
+        <button type="button" onClick={() => setAnkunft('weg')}
+                className="rounded-lg border border-white/70 px-4 py-2 font-medium">
+          Weiterfahren
+        </button>
+      </div>
+    </div>
+  )
   const bahnhofKnopf = amBahnhof && (
     <button type="button" onClick={() => setOffenerBahnhof(amBahnhof.seite)}
             className="kachel kachel-link mt-3 flex w-full items-center justify-between gap-3 px-4 py-3 text-left">
@@ -531,6 +562,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   }
   const vollbildLeiste = (
     <div className="mt-2 space-y-2">
+      {ankunftKarte}
       {bahnhofKnopf}
       {imTunnel && einstellung.tunnel && sJetzt !== null ? (
         <div className="flex items-center gap-3 rounded-lg bg-sbb-charcoal px-3 py-2 text-sbb-white">
@@ -614,7 +646,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             )}
           </div>
           <button
-            type="button" onClick={() => beenden([...hinter.current].sort((a, b) => a.s - b.s))}
+            type="button" onClick={fahrtBeenden}
             className="shrink-0 rounded-lg border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
                        dark:border-sbb-iron dark:hover:border-sbb-white"
           >
@@ -630,6 +662,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
                       name={(o) => textVon(o)?.name} springen={probefahrt ? springen : undefined} />
+        {ankunftKarte}
         {bahnhofKnopf}
 
         {probefahrt && (

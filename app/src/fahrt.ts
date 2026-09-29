@@ -297,7 +297,7 @@ export function wegEnde(fw: Fahrweg) {
 }
 
 /** Welcher Ton zu welchem Objekt gehört */
-export type TonArt = FahrObjekt['art']
+export type TonArt = FahrObjekt['art'] | 'ankunft'
 export type Ton = (art: TonArt) => void
 
 /**
@@ -309,6 +309,7 @@ export type Ton = (art: TonArt) => void
  * - Bahnhof: der weiche Zweiklang aufwärts, G4–D5, wie bisher (2026-09-25:
  *   «einen anderen Audioton», dann «wesentlich tiefer»)
  * - Sehenswertes: ein einzelner Ton, E5
+ * - Ankunft am Ziel: drei Töne aufwärts, G4–H4–D5, der letzte lang (2026-09-29)
  * Weiche Sinustöne mit leisem Oberton, der kleinen Handylautsprechern hilft;
  * bewusst nicht der Gong der SBB.
  */
@@ -317,6 +318,7 @@ const TOENE: Record<TonArt, readonly (readonly [number, number, number])[]> = {
   bruecke: [[0, 880, 0.35], [0.14, 880, 0.45]],
   bahnhof: [[0, 392, 0.9], [0.16, 587.33, 0.9]],
   sehenswert: [[0, 659.26, 1.2]],
+  ankunft: [[0, 392, 0.7], [0.2, 493.88, 0.7], [0.4, 587.33, 1.6]],
 }
 
 /**
