@@ -7,39 +7,59 @@ function zahl(n: number) {
 
 /**
  * Die Startseite: ein Tipp auf «Taktland» führt hierher (Michael, 2026-09-22).
- * Ein Text in einer Schriftgrösse, ohne Verweise; die Bereiche stehen oben in
- * den Reitern. Die Zahlen stammen aus dem Index, gezählt in
+ * Ein Text in einer Schriftgrösse, ohne Verweise, jeder Absatz mit einem fetten
+ * Stichwort; die Bereiche stehen oben in den Reitern. Die Zahlen stammen aus dem Index, gezählt in
  * pipeline/export_app.py; so stimmen sie auch, wenn Bahnhöfe oder Strecken
  * dazukommen.
  */
 export function Start({ index }: { index: BahnhofIndex }) {
   const z = index.zahlen
   const absatz = 'mt-4 text-[15px] leading-relaxed'
+  const fett = 'font-bold'
   return (
     <main className="px-4 py-6">
-      {/* h2, nicht h1: «Taktland» im Kopf ist die erste Überschrift der Seite */}
-      <h2 className="text-2xl font-bold tracking-tight">Lerne das Bahnland Schweiz kennen</h2>
+      {/* h2, nicht h1: «Taktland» im Kopf ist die erste Überschrift der Seite.
+          Text: Michael, 2026-09-30 («Lernspiel», «Nachschlagewerk», Namensherkunft) */}
+      <h2 className="text-2xl font-bold tracking-tight">Willkommen im Taktland</h2>
       <p className="mt-3 text-[15px] leading-relaxed">
-        Taktland ist ein Lernspiel rund um die Schweizer Bahn. Es stellt{' '}
+        In der Schweiz fahren die Züge nach dem Taktfahrplan: zur gleichen Minute, Stunde für
+        Stunde. Davon hat Taktland seinen Namen. Es ist das Land, das im Takt fährt.
+      </p>
+      <p className={absatz}>
+        Taktland ist Lernspiel und Nachschlagewerk zugleich. Zusammengetragen aus öffentlichen
+        Datenbanken der Bahn, des Bundes und von swisstopo, stellt es{' '}
         {zahl(index.bahnhoefe_gesamt)} Bahnhöfe vor
-        {z ? `, dazu ${zahl(z.linien)} Strecken mit ${zahl(z.tunnel)} Tunneln und `
-          + `${zahl(z.bruecken)} Brücken, und fragt dich dazu ab.` : ' und fragt dich dazu ab.'}
+        {z ? `, dazu ${zahl(z.linien)} Strecken mit ${zahl(z.tunnel)} Tunneln und ${zahl(z.bruecken)} Brücken.` : '.'}
       </p>
       <p className={absatz}>
-        Zu jedem Bahnhof gibt es Kapitel mit Fakten und Fragen, etwa zu den Perrons, den Zügen
-        oder wie viele Menschen dort ein- und aussteigen. Im Duell treten zwei Bahnhöfe, Strecken
-        oder Tunnel gegeneinander an. Unter «Strecke» siehst du, welche Tunnel und Brücken
-        zwischen zwei Bahnhöfen liegen, und «Standort» zeigt dir, was in deiner Nähe liegt.
+        <span className={fett}>Nachschlagen.</span> Jeder Bahnhof hat einen Steckbrief, etwa zu den
+        Perrons und dazu, wie viele Menschen dort ein- und aussteigen. Zu jeder Strecke gibt es ihre
+        Tunnel, Brücken und Bahnübergänge. Die Quelle steht jeweils dabei.
       </p>
       <p className={absatz}>
-        Im Zug meldet dir «Fahren» per GPS den nächsten Tunnel, die nächste Brücke und den
-        nächsten Bahnhof einige Sekunden im Voraus mit einem Ton, dazu Sehenswertes links und
-        rechts der Strecke. Was du durchfährst, sammelt Taktland im Logbuch und im Sammelheft.
+        <span className={fett}>Lernen.</span> Zu jedem Bahnhof gibt es Fragen, mit denen du prüfst,
+        was hängen geblieben ist. Im «Duell» treten zwei Bahnhöfe, Strecken oder Tunnel
+        gegeneinander an. «Standort» zeigt dir, was in deiner Nähe liegt.
       </p>
       <p className={absatz}>
-        Entstanden ist Taktland mit einer Rundum-KI-Lösung und eigener Entwicklungsarbeit. Es ist
-        kostenlos, braucht kein Konto, und dein Fortschritt bleibt auf deinem Gerät; Taktland ist
-        ein privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
+        <span className={fett}>Mitfahren.</span> Im Zug verfolgt «Fahren» per GPS, wo du bist, und
+        meldet einige Sekunden im Voraus, was als Nächstes kommt. Jede Art hat ihren eigenen Ton:
+        tief für einen Tunnel, hell für eine Brücke, zwei Töne aufwärts für einen Bahnhof. Dazu
+        kommt Sehenswertes links und rechts der Strecke, etwa Gipfel, Kulturgüter und Seilbahnen.
+        Ohne Zug spielst du jede Strecke als Probefahrt ab.
+      </p>
+      <p className={absatz}>
+        <span className={fett}>Ausdrucken.</span> Das Fahrtblatt ist ein Druckbogen für unterwegs:
+        oben die Karte des Wegs, unten die Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken.
+      </p>
+      <p className={absatz}>
+        <span className={fett}>Festhalten.</span> Was du durchfährst, sammelt Taktland in der
+        Reisetasche: im Logbuch jede Fahrt, im Sammelheft jeden Tunnel und jede Brücke.
+      </p>
+      <p className={absatz}>
+        <span className={fett}>Ehrlich.</span> Wo die Daten schweigen, sagt Taktland das, statt zu
+        raten. Taktland ist kostenlos, braucht kein Konto, und dein Fortschritt bleibt auf deinem
+        Gerät.
       </p>
       <p className={`${absatz} text-sbb-metal dark:text-sbb-storm`}>
         Oben wählst du einen Bereich. «Info» erklärt, wie Taktland funktioniert.
