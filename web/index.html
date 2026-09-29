@@ -52,6 +52,8 @@
     .auftakt h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.08; letter-spacing: -0.03em; margin: 28px 0 0; max-width: 16ch; }
     .auftakt p.lead { font-size: clamp(18px, 2.2vw, 22px); margin: 16px 0 0; max-width: 40em; }
     .knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    /* auf dem Handy führt erst das Ende der Seite zur App (Michael, 2026-09-30) */
+    @media (max-width: 719px) { .nur-gross { display: none; } }
     .klein-leise { color: var(--leise); font-size: 14px; margin-top: 12px; }
 
     .zahlen { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 48px; }
@@ -101,7 +103,7 @@
   <header class="kopf">
     <div class="breite">
       <a class="marke" href="./"><img src="./logo.svg" alt="" />Taktland</a>
-      <a class="knopf rot klein" href="./app/">App öffnen</a>
+      <a class="knopf rot klein nur-gross" href="./app/">App öffnen</a>
     </div>
   </header>
 
@@ -118,7 +120,7 @@
         durchfahren hast. Jede Angabe stammt aus offenen Daten, mit Quelle.
       </p>
       <div class="knoepfe">
-        <a class="knopf rot" href="./app/">Taktland öffnen →</a>
+        <a class="knopf rot nur-gross" href="./app/">Taktland öffnen →</a>
         <a class="knopf hell" href="#so">So geht’s</a>
       </div>
       <p class="klein-leise">Kostenlos, ohne Konto, ohne Werbung. Läuft im Browser auf Handy, Tablet und Computer.</p>
