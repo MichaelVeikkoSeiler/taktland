@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { HERAUSGEBER, KONTAKT } from '../kontakt'
+import { HERAUSGEBER } from '../kontakt'
 import type { BahnhofIndex } from '../typen'
 
 /**
@@ -443,10 +443,6 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Taktland ist ein Lernspiel und nicht für die Reiseplanung gedacht. Es ist ein
             privates Lernprojekt von {HERAUSGEBER} und kein Angebot einer Bundes- oder Privatbahn.
           </li>
-          <li>
-            Hinweise auf Fehler gern an{' '}
-            <Verweis href={`mailto:${KONTAKT}`}>{KONTAKT}</Verweis>.
-          </li>
         </Punkte>
       </Abschnitt>
 
@@ -490,11 +486,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             gleicht ein Prüfprogramm sie mit den Daten ab.
           </li>
           <li>Die Auftaktbilder sind mit ChatGPT entstanden.</li>
-          <li>
-            Taktland ist kostenlos und ohne Werbung. Wer mag, kann freiwillig an die Kosten für
-            die KI beitragen; schreib dafür kurz an{' '}
-            <Verweis href={`mailto:${KONTAKT}`}>{KONTAKT}</Verweis>.
-          </li>
+          <li>Taktland ist kostenlos und ohne Werbung.</li>
         </Punkte>
       </Abschnitt>
     </div>

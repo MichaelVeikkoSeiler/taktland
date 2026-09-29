@@ -24,7 +24,7 @@ import {
   ersteSortierung, Uebersicht, type UebersichtArt, type UebersichtStand,
 } from './komponenten/Uebersicht'
 import { indexLaden } from './daten'
-import { HERAUSGEBER, KONTAKT } from './kontakt'
+import { HERAUSGEBER } from './kontakt'
 import type { BahnhofIndex } from './typen'
 import { Demo } from './komponenten/Demo'
 import { Ladefehler } from './komponenten/Ladefehler'
@@ -205,11 +205,7 @@ export default function App() {
             Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
             Moorlandschaften: Bundesamt für Umwelt BAFU.
             Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot einer Bundes- oder Privatbahn.
-            Hinweise und Fehler gern an{' '}
-            <a href={`mailto:${KONTAKT}`}
-               className="hover:text-sbb-black dark:hover:text-sbb-white">
-              {KONTAKT}
-            </a>. Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
+            Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
             sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist ein Lernspiel
             und nicht für die Reiseplanung gedacht.
