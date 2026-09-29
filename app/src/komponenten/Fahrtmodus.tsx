@@ -25,8 +25,9 @@ const PROBE_TEMPO = 100 / 3.6
 const ANZEIGE_PROBE_MS = 33
 /** Langsamer gilt als Stillstand: keine Zeitangabe */
 const STEHT_UNTER = 3
-/** So nah am Punkt eines Bahnhofs gilt ein stehender Zug als «am Bahnhof», Meter */
-const AM_BAHNHOF_M = 400
+/** So nah am Punkt eines Bahnhofs gilt ein stehender Zug als «am Bahnhof», Meter; grosse
+ *  Bahnhöfe sind lang, der Punkt liegt nicht, wo der Zug hält (Michael, 2026-09-29: Bern) */
+const AM_BAHNHOF_M = 1000
 /** Weiter weg vom Weg gilt als «nicht auf dieser Strecke», mindestens */
 const ABSEITS_M = 300
 /** Ohne neuen Standort seit so vielen Sekunden gilt: kein GPS */
@@ -113,7 +114,7 @@ type Meldung =
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
 export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren, fortsetzen, stelle, ohneZiel,
-                            bahnhofSeite }: {
+                            bahnhofSeite, startKennung }: {
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
@@ -131,6 +132,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   ohneZiel?: () => void
   /** Bahnhof auf dem Weg → seine Seite in Taktland, falls es eine gibt */
   bahnhofSeite?: (o: FahrObjekt) => { uic: number; eintrag: IndexEintrag | undefined } | null
+  /** Kürzel des Startbahnhofs: Er steht nicht unter den Objekten, der Zug steht aber oft dort */
+  startKennung?: string
 }) {
   const [einstellung, setEinstellung] = useState(einstellungLesen)
   // Sehenswertes bringt seinen Text selbst mit
@@ -328,7 +331,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const amBahnhof = (() => {
     if (sJetzt === null || !bahnhofSeite || (probefahrt ? !angehalten : faehrt)) return null
     let best: FahrObjekt | null = null
-    for (const o of fahrweg.objekte) {
+    const start: FahrObjekt[] = startKennung ? [{ art: 'bahnhof', kennung: startKennung, s: 0, sAus: null }] : []
+    for (const o of [...start, ...fahrweg.objekte]) {
       if (o.art !== 'bahnhof' || Math.abs(o.s - sJetzt) > AM_BAHNHOF_M) continue
       if (!best || Math.abs(o.s - sJetzt) < Math.abs(best.s - sJetzt)) best = o
     }

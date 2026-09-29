@@ -696,6 +696,7 @@ function Ergebnis({
                       const b = uic === undefined ? undefined : bahnhof.get(uic)
                       return b ? { uic: b.uic, eintrag: b } : null
                     }}
+                    startKennung={weg.punkte[0]}
                     ohneZiel={wahl.ohne && !fahrt.probe ? () => {
                       // der Ton bleibt freigegeben, auch ohne neuen Tipp
                       tonWeitergeben(fahrt.piepen)
