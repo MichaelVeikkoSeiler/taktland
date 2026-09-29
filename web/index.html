@@ -30,6 +30,10 @@
     body { margin: 0; background: var(--grund); color: var(--text);
            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 1.55; }
     img { max-width: 100%; height: auto; display: block; }
+    /* Umbruch (Michael, 2026-09-29: «auf dem Tablet schöner umbrechen»): Titel in
+       gleich langen Zeilen, Absätze ohne einzelnes Wort auf der letzten Zeile */
+    h1, h2, h3 { text-wrap: balance; }
+    p, li { text-wrap: pretty; }
     a { color: inherit; }
     .breite { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
 
@@ -49,7 +53,7 @@
 
     .auftakt { margin-top: 24px; }
     .auftakt picture img { width: 100%; aspect-ratio: 1344 / 664; max-height: 440px; object-fit: cover; }
-    .auftakt h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.08; letter-spacing: -0.03em; margin: 28px 0 0; max-width: 16ch; }
+    .auftakt h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.08; letter-spacing: -0.03em; margin: 28px 0 0; max-width: 20ch; }
     .auftakt p.lead { font-size: clamp(18px, 2.2vw, 22px); margin: 16px 0 0; max-width: 40em; }
     .knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
     /* auf dem Handy führt erst das Ende der Seite zur App (Michael, 2026-09-30) */
