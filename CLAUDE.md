@@ -198,7 +198,8 @@ karminrotem (`#a8102e`), abgerundetem Quadrat; die obere Abzweigung ist ausgefü
 Namen im Kopf und ist das App-Symbol; ihr Karminrot ist auch die Akzentfarbe der App.
 
 **Kein Logo, keine Bildmarke der SBB.** Die Farb- und Formensprache ist übernommen,
-die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot der SBB ist.
+die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot einer Bahn ist, ohne Namen
+(Michael, 2026-09-29: «einer Bahnunternehmung»).
 
 ## Sprache
 
