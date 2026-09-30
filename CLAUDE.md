@@ -197,8 +197,8 @@ Anthracite `#5a5a5a` statt Schwarz (Michael, 2026-09-25). Kacheln und Knöpfe si
 einzige Ausnahme von den kantigen Flächen.
 
 **Die Bildmarke von Taktland** ist ein weisses «T» aus einer Linie mit fünf Haltepunkten auf
-karminrotem (`#a8102e`), abgerundetem Quadrat; die obere Abzweigung ist ausgefüllt
-(`app/public/logo.svg`, Entwürfe in `entwuerfe/logo/`, Michael, 2026-09-27). Sie steht vor dem
+karminrotem (`#a8102e`), abgerundetem Quadrat; alle Haltepunkte sind Ringe, der Stamm biegt
+unten nach rechts ab (`app/public/logo.svg`, Entwürfe in `entwuerfe/logo/`, Michael, 2026-09-30). Sie steht vor dem
 Namen im Kopf und ist das App-Symbol; ihr Karminrot ist auch die Akzentfarbe der App.
 
 **Kein Logo, keine Bildmarke der SBB.** Die Farb- und Formensprache ist übernommen,
