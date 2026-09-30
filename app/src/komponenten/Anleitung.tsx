@@ -273,7 +273,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren hast
             und was noch fehlt, von allen Bahnen; einzelne Bahnen lassen sich ausblenden. Tunnel
-            und Brücken anderer Bahnen stammen aus swissTLM3D, meist ohne Namen und ohne Länge;
+            und Brücken anderer Bahnen stammen aus swissTLM3D, meist ohne Namen, mit der Länge ihrer
+            Zeichnung;
             «Fehlt noch» kennt nur die der SBB. Die Favoriten sind deine Bahnhöfe mit Stern.
           </li>
           <li>

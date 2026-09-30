@@ -87,6 +87,13 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
     o.bahn ?? (o.art === 'bahnhof' ? isb.get(o.kennung) ?? 'SBB' : 'SBB')
   const bahnen = [...new Set(['SBB', ...Object.values(heft.objekte).map(bahnVon)])]
     .sort((a, b) => (a === 'SBB' ? -1 : b === 'SBB' ? 1 : a.localeCompare(b, 'de')))
+  // die Länge eines erlebten Objekts; ältere Einträge ohne: SBB-Tunnel laut Übersicht
+  const tunnelLaenge = useMemo(() => new Map((tunnel ? mitKennung(tunnel) : []).map((e) => [e.kennung, e.laenge_m])), [tunnel])
+  const laengeVon = (o: { art: ErlebtArt; kennung: string; laenge?: string; bahn?: string }) => {
+    if (o.laenge) return o.laenge
+    const m = o.art === 'tunnel' && !o.kennung.startsWith('tlm:') ? tunnelLaenge.get(o.kennung) : null
+    return m != null ? `${genau(m)} m` : null
+  }
   const erlebt = (a: ErlebtArt) => Object.values(heft.objekte).filter((o) => o.art === a && !aus.has(bahnVon(o)))
     .sort((x, y) => y.zeit - x.zeit)
   // «Fehlt noch»: Bahnhöfe aller Bahnen, Tunnel und Brücken nur die der SBB
@@ -125,7 +132,8 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
       </div>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         «von»: alle Bahnhöfe in Taktland und alle Brücken und Tunnel der SBB in Taktland. Tunnel und
-        Brücken anderer Bahnen stammen aus swissTLM3D von swisstopo, meist ohne Namen und ohne Länge.
+        Brücken anderer Bahnen stammen aus swissTLM3D von swisstopo, meist ohne Namen. Ihre Länge ist
+        die ihrer Zeichnung, gerundet, ebenso bei vielen SBB-Brücken; SBB-Tunnel mit der Länge laut SBB.
       </p>
       {bahnen.length > 1 && (
         <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Bahnen">
@@ -166,13 +174,18 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
               <ul className="mt-4 kachelliste">
                 {erlebt(art).map((o) => (
                   <li key={o.kennung} className="flex items-center justify-between gap-3 px-3 py-2">
-                    <span className="flex min-w-0 items-center gap-2 font-medium">
+                    <span className="flex min-w-0 items-center gap-2">
                       {/* das Pikto als Sticker: erlebt in Farbe (Michael, 2026-09-27) */}
-                      <Pikto art={o.art} className="size-6" />
-                      <span className="truncate">{o.name}</span>
-                      {bahnVon(o) !== 'SBB' && (
-                        <span className="shrink-0 text-sm font-normal text-sbb-metal dark:text-sbb-storm">{bahnVon(o)}</span>
-                      )}
+                      <Pikto art={o.art} className="size-6 shrink-0" />
+                      <span className="min-w-0">
+                        <span className="block truncate font-medium">{o.name}</span>
+                        {/* Bahn und Länge darunter, sonst verdrängen sie auf dem Handy den Namen */}
+                        {(bahnVon(o) !== 'SBB' || laengeVon(o)) && (
+                          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+                            {[bahnVon(o) !== 'SBB' ? bahnVon(o) : null, laengeVon(o)].filter(Boolean).join(' · ')}
+                          </span>
+                        )}
+                      </span>
                     </span>
                     <span className="shrink-0 text-sm text-sbb-metal dark:text-sbb-storm">{datum(o.zeit)}</span>
                   </li>

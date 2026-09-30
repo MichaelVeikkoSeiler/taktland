@@ -422,6 +422,11 @@ export function seitlich(fw: Fahrweg, p: Lage) {
   return { s: best.s, abstand: best.abstand, seite }
 }
 
+/** Eine Länge laut Zeichnung, gerundet: unter 100 m auf 5 m, sonst auf 10 m */
+export function gerundetM(m: number): number {
+  return m < 100 ? Math.max(5, Math.round(m / 5) * 5) : Math.round(m / 10) * 10
+}
+
 /** Länge einer Linie in Metern, etwa eines Bauwerks laut Zeichnung von swissTLM3D */
 export function zugLaengeM(z: KodierterZug): number {
   const l = entpacken(z)

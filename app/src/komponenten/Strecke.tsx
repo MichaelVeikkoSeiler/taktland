@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { bahnhoefeVorziehen, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
+import { bahnhoefeVorziehen, gerundetM, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegLinieSetzen, wegSetzen } from '../erlebt'
 import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
@@ -199,7 +199,7 @@ const BRUECKEN_ZUERST = 100
 
 /** «etwa 120 m laut swisstopo»: gemessen an der Zeichnung von swissTLM3D, darum gerundet */
 function laengeText(m: number) {
-  return `etwa ${genau(m < 100 ? Math.max(5, Math.round(m / 5) * 5) : Math.round(m / 10) * 10)} m laut swisstopo`
+  return `etwa ${genau(gerundetM(m))} m laut swisstopo`
 }
 
 export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: StreckenWahl }) {
@@ -751,13 +751,18 @@ function Ergebnis({
                       // ins Sammelheft (Michael, 2026-09-30: «alle Bahnen defaultmässig»)
                       if (o.tlm) {
                         if (o.art !== 'tunnel' && o.art !== 'bruecke') return
+                        const laenge = objektText(o)?.laenge
                         durchfahren(fahrt.beginn, { art: o.art, kennung: o.kennung, name: objektText(o)?.name ?? o.kennung,
-                                                    ...(o.bahn ? { bahn: o.bahn } : {}) })
+                                                    ...(o.bahn ? { bahn: o.bahn } : {}), ...(laenge ? { laenge } : {}) })
                         return
                       }
                       const b = bilanzObjekt(o)
                       const bahn = b.art === 'bahnhof' ? bahnhof.get(Number(b.kennung))?.isb ?? 'SBB' : 'SBB'
-                      durchfahren(fahrt.beginn, { art: b.art, kennung: b.kennung, name: b.name, bahn })
+                      // die Länge mit ins Sammelheft und Logbuch: Tunnel laut SBB, Brücken laut Zeichnung
+                      const laenge = b.art === 'tunnel' && b.laenge_m !== null ? `${genau(b.laenge_m)} m`
+                        : b.art === 'bruecke' ? brueckeLaenge(b.kennung) : null
+                      durchfahren(fahrt.beginn, { art: b.art, kennung: b.kennung, name: b.name, bahn,
+                                                  ...(laenge ? { laenge } : {}) })
                     }}
                     beenden={(liste) => {
                       if (fahrt.beginn !== null) laufendEnde()

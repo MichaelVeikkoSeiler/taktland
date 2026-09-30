@@ -257,7 +257,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
                   {f.objekte.map((o) => (
                     <li key={`${o.art}${o.kennung}`} className="flex items-center gap-2">
                       <Pikto art={o.art} className="size-4" />
-                      <span>{o.name} <span className="text-sbb-metal dark:text-sbb-storm">· {ART_TEXT[o.art][0]}</span></span>
+                      <span>{o.name} <span className="text-sbb-metal dark:text-sbb-storm">· {ART_TEXT[o.art][0]}{o.laenge && ` · ${o.laenge}`}</span></span>
                     </li>
                   ))}
                 </ol>

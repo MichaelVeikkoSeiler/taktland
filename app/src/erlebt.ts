@@ -15,6 +15,9 @@ export interface ErlebtesObjekt {
   zeit: number
   /** die Bahn (SBB, BLS, RhB …) für die Auswahl im Sammelheft; fehlt bei älteren Einträgen */
   bahn?: string
+  /** Länge, wie «Fahren» sie zeigt: «2’580 m» laut SBB oder «etwa 390 m laut swisstopo»
+   *  laut Zeichnung (Michael, 2026-09-30); fehlt bei älteren Einträgen und ohne Angabe */
+  laenge?: string
 }
 
 export interface ErlebteFahrt {
@@ -22,7 +25,7 @@ export interface ErlebteFahrt {
   von: string
   nach: string
   /** in der Reihenfolge der Fahrt, auch schon früher erlebte */
-  objekte: Array<{ art: ErlebtArt; kennung: string; name: string; bahn?: string }>
+  objekte: Array<{ art: ErlebtArt; kennung: string; name: string; bahn?: string; laenge?: string }>
   /** eigene Notiz im Logbuch */
   notiz?: string
   /** von Hand ins Logbuch eingetragen, ohne Fahrtmodus: keine Objekte erfasst */
@@ -71,7 +74,7 @@ export function fahrtBeginnen(von: string, nach: string): number {
 }
 
 /** Ein Objekt ist durchfahren: ins Heft und zur Fahrt */
-export function durchfahren(beginn: number, o: { art: ErlebtArt; kennung: string; name: string; bahn?: string }) {
+export function durchfahren(beginn: number, o: { art: ErlebtArt; kennung: string; name: string; bahn?: string; laenge?: string }) {
   const h = heftLesen()
   const k = schluesselVon(o.art, o.kennung)
   if (!h.objekte[k]) h.objekte[k] = { ...o, zeit: Date.now() }
