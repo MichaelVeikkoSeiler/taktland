@@ -385,7 +385,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const amZiel = !ohneZiel && sJetzt !== null && sJetzt >= wegEnde(fahrweg) - (fahrweg.ziel_m ?? AM_ENDE_M)
   // etwa 2 s vor dem Anhalten (Michael, 2026-09-30); das GPS meldet den Stillstand erst
   // hinterher. Im Zug aus Tempo und Bremsung der letzten Standorte, sonst der Stillstand;
-  // in der Probefahrt 2 s echter Zeit vor dem Ende, bei Zeitraffer entsprechend früher
+  // in der Probefahrt an derselben Stelle wie im Zug, 2 s gespielter Zeit vor dem Ende; im
+  // Zeitraffer entsprechend kürzer auf dem Bildschirm (Michael, 2026-09-30: «ca 0.3 Sek»)
   const bremsung = (() => {
     const l = letzteStaende.current
     if (l.length < 2) return null
@@ -396,7 +397,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const haeltGleich = stand !== null && bremsung !== null && stand.v / bremsung <= ANKUNFT_VOR_S
   const angekommen = amZiel && (probefahrt
     ? angehalten || (stand !== null && stand.v > 0
-        ? (wegEnde(fahrweg) - sJetzt!) / (stand.v * raffer) <= ANKUNFT_VOR_S : sJetzt! >= wegEnde(fahrweg) - 1)
+        ? (wegEnde(fahrweg) - sJetzt!) / stand.v <= ANKUNFT_VOR_S : sJetzt! >= wegEnde(fahrweg) - 1)
     : !faehrt || haeltGleich)
   const [ankunft, setAnkunft] = useState<'offen' | 'weg' | null>(null)
   useEffect(() => {
