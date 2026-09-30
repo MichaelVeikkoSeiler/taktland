@@ -134,6 +134,14 @@ export function kategorieUmschalten(k: Kategorie) {
   hoerer.forEach((h) => h())
 }
 
+/** Mehrere Kategorien auf einmal ein- oder ausblenden */
+function kategorienSetzen(ks: Kategorie[], zeigen: boolean) {
+  versteckt = new Set(versteckt)
+  for (const k of ks) { if (zeigen) versteckt.delete(k); else versteckt.add(k) }
+  try { localStorage.setItem(KATEGORIEN_SPEICHER, JSON.stringify({ versteckt: [...versteckt] })) } catch { /* nur für jetzt */ }
+  hoerer.forEach((h) => h())
+}
+
 export function useVersteckt() {
   return useSyncExternalStore((h) => { hoerer.add(h); return () => { hoerer.delete(h) } }, () => versteckt)
 }
@@ -281,19 +289,28 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   ['boden', 'Wald, Siedlung', <span className="inline-flex gap-0.5"><span className="inline-block size-2.5 rounded-sm bg-wald" /><span className="inline-block size-2.5 rounded-sm bg-siedlung" /></span>],
 ]
 
-/** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein */
-export function SehenswertLegende({ orte = false }: { orte?: boolean }) {
+/** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein.
+ *  «gebieteMitBoden»: Gebiete, Wald und Siedlung als ein Knopf «Gebiete», damit die
+ *  Legende in «Fahren» eine Zeile weniger braucht (Michael, 2026-09-30) */
+export function SehenswertLegende({ orte = false, gebieteMitBoden = false }: { orte?: boolean; gebieteMitBoden?: boolean }) {
   const aus = useVersteckt()
+  const eintraege = LEGENDE.filter(([k]) => (orte || k !== 'orte') && !(gebieteMitBoden && k === 'boden'))
   return (
     <div className="mt-1 flex flex-wrap gap-1.5 text-xs" role="group" aria-label="Auf der Karte zeigen">
-      {LEGENDE.filter(([k]) => orte || k !== 'orte').map(([k, text, zeichen]) => (
-        <button key={k} type="button" aria-pressed={!aus.has(k)} onClick={() => kategorieUmschalten(k)}
-                className={`flex min-h-8 items-center gap-1.5 rounded-lg px-2 ${aus.has(k)
-                  ? 'text-sbb-metal line-through opacity-60 dark:text-sbb-storm'
-                  : 'bg-sbb-kachel dark:bg-sbb-charcoal'}`}>
-          <span aria-hidden="true" className="flex">{zeichen}</span><KurzLang kurz={text} lang={LANG[k] ?? text} />
-        </button>
-      ))}
+      {eintraege.map(([k, text, zeichen]) => {
+        const zusammen = gebieteMitBoden && k === 'gebiete'
+        const an = !aus.has(k)
+        return (
+          <button key={k} type="button" aria-pressed={an}
+                  onClick={() => (zusammen ? kategorienSetzen(['gebiete', 'boden'], !an) : kategorieUmschalten(k))}
+                  className={`flex min-h-8 items-center gap-1.5 rounded-lg px-2 ${!an
+                    ? 'text-sbb-metal line-through opacity-60 dark:text-sbb-storm'
+                    : 'bg-sbb-kachel dark:bg-sbb-charcoal'}`}>
+            <span aria-hidden="true" className="flex gap-0.5">{zeichen}{zusammen && LEGENDE.find(([x]) => x === 'boden')![2]}</span>
+            <KurzLang kurz={text} lang={zusammen ? 'Gebiete, Wald und Siedlung' : LANG[k] ?? text} />
+          </button>
+        )
+      })}
     </div>
   )
 }

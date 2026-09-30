@@ -153,9 +153,16 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
 
   return (
     <div className="mt-5">
-      <div className="flex justify-between gap-3 text-xs text-sbb-metal dark:text-sbb-storm">
-        <span className="truncate">{start}</span>
-        <span className="truncate text-right">{ziel}</span>
+      <div className="flex items-center gap-2 text-xs text-sbb-metal dark:text-sbb-storm">
+        <span className="min-w-0 shrink truncate">{start}</span>
+        {/* ein dünner Pfeil in Fahrtrichtung (Michael, 2026-09-30) */}
+        <svg viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true" className="h-2 min-w-6 flex-1">
+          <path d="M0 4H99" strokeWidth="1" vectorEffect="non-scaling-stroke" className="stroke-current" />
+        </svg>
+        <svg viewBox="0 0 6 8" aria-hidden="true" className="-ml-2 h-2 w-1.5 shrink-0">
+          <path d="M0 0L6 4L0 8" fill="none" strokeWidth="1" vectorEffect="non-scaling-stroke" className="stroke-current" />
+        </svg>
+        <span className="min-w-0 shrink truncate text-right">{ziel}</span>
       </div>
       <svg ref={band} viewBox={`0 0 ${B} 92`} {...ziehen}
            className={`mt-1 w-full ${springen ? 'cursor-grab touch-none active:cursor-grabbing' : ''}`}
@@ -296,6 +303,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
   const abstand = useRef(0)
   const flaeche = useRef<SVGSVGElement | null>(null)
   const { voll, setVoll, verh } = useVollbild(flaeche)
+  // «Zur Karte» unten links in der Karte (Michael, 2026-09-30: «spart vertikalen Platz»)
+  const [zurKarte, setZurKarte] = useState(false)
   const breite = useBreite(flaeche)
   // «Nah»: die Karte folgt dem Zug in Sprüngen, nicht jede halbe Sekunde. So
   // bleibt das Bild ruhig, und die Ebenen müssen nicht ständig neu gezeichnet werden.
@@ -522,14 +531,21 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
             </>
           )}
         </svg>
+        {!voll && (
+          <button type="button" aria-expanded={zurKarte} onClick={() => setZurKarte(!zurKarte)}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  className="absolute bottom-1 left-1 rounded-md bg-white/85 px-1.5 py-0.5 text-[11px] text-sbb-metal
+                             underline underline-offset-2 dark:bg-sbb-midnight/85 dark:text-sbb-storm">
+            Zur Karte
+          </button>
+        )}
       </div>
       {voll && vollbild && <div className="shrink-0">{vollbild}</div>}
       {!voll && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
-      {!voll && sehenswert.s && <SehenswertLegende />}
+      {!voll && sehenswert.s && <SehenswertLegende gebieteMitBoden />}
       <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>
         {!linien && 'Das Netz wird geladen … '}
-        <details>
-          <summary className="cursor-pointer underline underline-offset-2">Zur Karte</summary>
+        {zurKarte && (
           <p className="mt-1">
         Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), Linien anderer Bahnen aus
         dem Schienennetz des BAV. Auf Strecken anderer Bahnen ist der Weg gerade von Bahnhof zu
@@ -539,7 +555,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
         {sehenswert.s && ' Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften): BAFU. Kulturgüter erscheinen erst näher; ein Tipp auf ein Zeichen zeigt, was es ist, ein Tipp in der Legende blendet eine Kategorie aus oder ein.'}
         {' Zoomen mit zwei Fingern oder mit «+» und «−»; näher gezoomt lässt sich die Karte verschieben.'}
           </p>
-        </details>
+        )}
       </figcaption>
     </figure>
   )
