@@ -725,6 +725,15 @@ function Ergebnis({
                       return b ? { uic: b.uic, eintrag: b } : null
                     }}
                     startKennung={weg.punkte[0]}
+                    retour={wahl.ohne || !wahl.von || !wahl.nach ? undefined : () => {
+                      // dieselbe Fahrt in Gegenrichtung (Michael, 2026-09-30: «Beenden, Nochmals und Retour»);
+                      // Logbuch und Sammelheft sind schon beim Durchfahren geschrieben
+                      if (fahrt.beginn !== null) laufendEnde()
+                      leereFahrtenWeg()
+                      tonWeitergeben(fahrt.piepen)
+                      setFahrt(null)
+                      window.location.hash = fahrtAdresse({ von: wahl.nach, nach: wahl.von, ueber: wahl.ueber }, fahrt.probe)
+                    }}
                     ohneZiel={wahl.ohne && !fahrt.probe ? () => {
                       // der Ton bleibt freigegeben, auch ohne neuen Tipp
                       tonWeitergeben(fahrt.piepen)
