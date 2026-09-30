@@ -271,15 +271,29 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
 /** Der Grund reicht so weit (in Breiten des Ausschnitts, von der Mitte aus) über das Bild
  *  hinaus; der Zug springt neu, bevor er ein Fünftel aus der Mitte ist */
 const GRUND_RAND = 0.75
-/** Breite des nahen Ausschnitts, in Grad Breite (etwa 9 km) */
+/** Breite des nahen Ausschnitts ohne Tempo, in Grad Breite (etwa 9 km) */
 const NAH = 0.08
+/** Meter in Grad Breite */
+const M_GRAD = 1 / 111_195
+/** «Nah» nach Tempo (Michael, 2026-09-30): etwa die Strecke der nächsten Minute, in
+ *  Stufen, damit das Bild nicht bei jedem Tempowechsel springt; stehend 250 m */
+const NAH_STUFEN_M = [250, 500, 1000, 2000, 4000, 8000]
+const NAH_SEKUNDEN = 72
+function nahStufe(tempo: number, alt: number | null): number {
+  const ziel = tempo * NAH_SEKUNDEN
+  // erst wechseln, wenn das Tempo deutlich neben der jetzigen Stufe liegt
+  if (alt !== null && ziel < alt * 1.6 && ziel > alt / 1.6) return alt
+  return NAH_STUFEN_M.reduce((a, b) => (Math.abs(Math.log(b / ziel)) < Math.abs(Math.log(a / ziel)) ? b : a))
+}
 
 /**
  * Die kleine Karte zur Fahrt: grau das Streckennetz, dunkel der Weg vor dem
  * Zug, rot der Standort. «Nah» folgt dem Zug, «Ganzer Weg» zeigt alles.
  */
-export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: {
+export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null }: {
   fahrweg: Fahrweg
+  /** Tempo in Metern pro Sekunde, wie es sich anfühlt (Probefahrt mal Zeitraffer); null ohne Standort */
+  tempo?: number | null
   /** Namen von Start und Ziel, beschriftet wie auf dem Fahrtblatt (Michael, 2026-09-29) */
   start?: string
   ziel?: string
@@ -324,17 +338,23 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel }: 
     return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w }
   }, [weg, verh])
 
+  // «Nah» nach Tempo, nie weiter als «Ganzer Weg» (Michael, 2026-09-30: auf dem kurzen Weg
+  // Bern Wankdorf – Bern war «Nah» weiter weg als der ganze Weg)
+  const stufe = useRef<number | null>(null)
+  if (tempo !== null) stufe.current = nahStufe(tempo, stufe.current)
+  const nahW = Math.min(stufe.current !== null ? stufe.current * M_GRAD : NAH, ganz.w)
+
   const hier = sJetzt !== null ? lageBei(fahrweg, sJetzt) : fahrweg.punkte[0]
   const [hx, hy] = hier ? lage(hier.lat, hier.lon) : [ganz.cx, ganz.cy]
   if (nah) {
     const m = mitte.current
-    const w = NAH / zoom
+    const w = nahW / zoom
     // neu ausrichten, sobald der Zug das innere Viertel verlässt; so bleibt der
     // rote Punkt immer ganz im Bild
     if (!m || Math.abs(hx - m[0]) > w * 0.2 || Math.abs(hy - m[1]) > (w / verh) * 0.2) mitte.current = [hx, hy]
   }
   const [mx, my] = nah && mitte.current ? mitte.current : [ganz.cx, ganz.cy]
-  const grund = nah ? { cx: mx, cy: my, w: NAH } : ganz
+  const grund = nah ? { cx: mx, cy: my, w: nahW } : ganz
   const bx = grund.cx + versatz[0], by = grund.cy + versatz[1], bw = grund.w / zoom
   // gleich bleibend, solange sich der Ausschnitt nicht ändert: die Ebenen zeichnen dann nicht neu
   const box = useMemo(() => ({ cx: bx, cy: by, w: bw }), [bx, by, bw])

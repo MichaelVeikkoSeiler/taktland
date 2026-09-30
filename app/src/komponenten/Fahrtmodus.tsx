@@ -690,6 +690,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             wechseln ihre Höhe, Karte und Band sollen nicht springen (Michael,
             2026-09-26: «Karte noch weiter oben. Oberhalb der Geschwindigkeit») */}
         <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste}
+                    tempo={stand ? stand.v * (probefahrt ? raffer : 1) : null}
                     start={titel.split(' → ')[0]} ziel={ohneZiel ? undefined : titel.split(' → ')[1]} />
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
