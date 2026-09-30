@@ -25,6 +25,8 @@ const PROBE_TEMPO = 100 / 3.6
 const ANZEIGE_PROBE_MS = 33
 /** Brücken ab dieser Länge zeigen beim Überfahren «Überfahrt» mit Balken */
 const UEBERFAHRT_AB_M = 50
+/** «Angekommen in …» so viele Sekunden vor dem Anhalten */
+const ANKUNFT_VOR_S = 2
 /** Langsamer gilt als Stillstand: keine Zeitangabe */
 const STEHT_UNTER = 3
 /** So nah am Punkt eines Bahnhofs gilt ein stehender Zug als «am Bahnhof», Meter; grosse
@@ -332,6 +334,11 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     ? Math.min(wegEnde(fahrweg), stand.s + (seit < OHNE_GPS_MAX_S ? stand.v * seit : 0))
     : null
   const faehrt = stand !== null && stand.v >= STEHT_UNTER
+  // die letzten Standorte, um die Bremsung vor dem Ziel zu schätzen
+  const letzteStaende = useRef<Array<{ v: number; t: number }>>([])
+  useEffect(() => {
+    if (stand) letzteStaende.current = [...letzteStaende.current.slice(-3), { v: stand.v, t: stand.t }]
+  }, [stand])
 
   const gewaehlt = useMemo(() => fahrweg.objekte.filter((o) => {
     if (o.art === 'tunnel') return einstellung.tunnel
@@ -376,7 +383,21 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   // steht; einmal, mit eigenem Ton und grosser Karte
   const zielName = titel.split(' → ')[1] ?? ''
   const amZiel = !ohneZiel && sJetzt !== null && sJetzt >= wegEnde(fahrweg) - (fahrweg.ziel_m ?? AM_ENDE_M)
-  const angekommen = amZiel && (probefahrt ? angehalten || sJetzt! >= wegEnde(fahrweg) - 1 : !faehrt)
+  // etwa 2 s vor dem Anhalten (Michael, 2026-09-30); das GPS meldet den Stillstand erst
+  // hinterher. Im Zug aus Tempo und Bremsung der letzten Standorte, sonst der Stillstand;
+  // in der Probefahrt 2 s echter Zeit vor dem Ende, bei Zeitraffer entsprechend früher
+  const bremsung = (() => {
+    const l = letzteStaende.current
+    if (l.length < 2) return null
+    const dt = (l[l.length - 1].t - l[0].t) / 1000
+    const a = dt > 0 ? (l[0].v - l[l.length - 1].v) / dt : 0
+    return a > 0.05 ? a : null
+  })()
+  const haeltGleich = stand !== null && bremsung !== null && stand.v / bremsung <= ANKUNFT_VOR_S
+  const angekommen = amZiel && (probefahrt
+    ? angehalten || (stand !== null && stand.v > 0
+        ? (wegEnde(fahrweg) - sJetzt!) / (stand.v * raffer) <= ANKUNFT_VOR_S : sJetzt! >= wegEnde(fahrweg) - 1)
+    : !faehrt || haeltGleich)
   const [ankunft, setAnkunft] = useState<'offen' | 'weg' | null>(null)
   useEffect(() => {
     if (!angekommen || ankunft !== null) return
