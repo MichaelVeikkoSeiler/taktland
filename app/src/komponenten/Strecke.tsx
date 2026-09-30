@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { bahnhoefeVorziehen, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
+import { bahnhoefeVorziehen, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegLinieSetzen, wegSetzen } from '../erlebt'
 import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendStelle } from '../laufend'
@@ -197,6 +197,11 @@ const BEISPIELE: Array<[string, string]> = [
 /** So viele Brücken stehen zuerst da, der Rest auf Knopfdruck */
 const BRUECKEN_ZUERST = 100
 
+/** «etwa 120 m laut swisstopo»: gemessen an der Zeichnung von swissTLM3D, darum gerundet */
+function laengeText(m: number) {
+  return `etwa ${m < 100 ? Math.max(5, Math.round(m / 5) * 5) : Math.round(m / 10) * 10} m laut swisstopo`
+}
+
 export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: StreckenWahl }) {
   const [netz, setNetz] = useState<StreckenNetz | null>(null)
   const [tunnel, setTunnel] = useState<Uebersicht<TunnelEintrag> | null>(null)
@@ -392,16 +397,18 @@ function Ergebnis({
    *  Brücke (Michael, 2026-09-29); gerundet, weil aus der Zeichnung gemessen */
   const brueckeLaenge = useCallback((kennung: string) => {
     const m = netz.bruecken_bereiche?.[kennung]?.[2]
-    if (m === undefined) return null
-    return `etwa ${m < 100 ? Math.max(5, Math.round(m / 5) * 5) : Math.round(m / 10) * 10} m laut swisstopo`
+    return m === undefined ? null : laengeText(m)
   }, [netz])
   const objektText = useCallback(({ kennung, art, tlm }: FahrObjekt): ObjektText | undefined => {
-    // Strecken anderer Bahnen: Tunnel und Brücken aus swissTLM3D, ohne Länge
+    // Strecken anderer Bahnen: Tunnel und Brücken aus swissTLM3D. Eine Länge nennt die
+    // Quelle nicht; bei Brücken gilt die Länge der Zeichnung, wie bei den SBB-Brücken
     if (tlm) {
       const wort = { tunnel: 'Tunnel', galerie: 'Galerie', bruecke: 'Brücke', gedeckte_bruecke: 'Gedeckte Brücke' }[tlm.art]
-      return { name: tlm.name ?? `${wort} ohne Namen`, baueinheiten: null,
+      const bruecke = tlm.art === 'bruecke' || tlm.art === 'gedeckte_bruecke'
+      const laenge = bruecke && zugLaengeM(tlm) >= 5 ? laengeText(zugLaengeM(tlm)) : null
+      return { name: tlm.name ?? `${wort} ohne Namen`, baueinheiten: null, laenge,
                gross: tlm.gezeichnet_ab_100m ?? false,
-               zeile: `${tlm.name ? `${wort} · ` : ''}swissTLM3D (swisstopo), ohne Länge` }
+               zeile: `${tlm.name ? `${wort} · ` : ''}${laenge ? `${laenge} · ` : ''}swissTLM3D (swisstopo)${laenge ? '' : ', ohne Länge'}` }
     }
     // Name ohne das unerklärte Kürzel der Quelle, der volle Name klein dazu
     const quelle = (n: string) => (ohneKuerzel(n) !== n ? ` · Name laut Quelle: ${n}` : '')

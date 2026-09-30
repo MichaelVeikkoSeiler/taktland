@@ -186,8 +186,10 @@ export function fahrwegBauen(netz: StreckenNetz,
         const alt = objekte.get(`tlm ${id}`)
         const von = Math.min(s1, alt?.s ?? s1)
         const bis = Math.max(s2, alt?.sAus ?? s2)
+        // auch Brücken von Anfang bis Ende, wie die SBB-Brücken mit Bereich (Michael,
+        // 2026-09-30: Saaneviadukt bei Gümmenen «als dickere orange Linie»)
         objekte.set(`tlm ${id}`, { kennung: `tlm:${id}`, art: tunnelartig ? 'tunnel' : 'bruecke', s: von,
-                                   sAus: tunnelartig && bis > von ? bis : null, tlm: b, bahn: e.bahn ?? e.isb })
+                                   sAus: bis > von ? bis : null, tlm: b, bahn: e.bahn ?? e.isb })
       }
       bahnhofSetzen(punkteWeg[i + 1])
       return
@@ -418,6 +420,14 @@ export function seitlich(fw: Fahrweg, p: Lage) {
   const seite: 'links' | 'rechts' | null = amEnde || best.kreuz === 0 ? null
     : best.kreuz > 0 ? 'links' : 'rechts'
   return { s: best.s, abstand: best.abstand, seite }
+}
+
+/** Länge einer Linie in Metern, etwa eines Bauwerks laut Zeichnung von swissTLM3D */
+export function zugLaengeM(z: KodierterZug): number {
+  const l = entpacken(z)
+  let m = 0
+  for (let i = 1; i < l.length; i++) m += abstand(l[i - 1], l[i])
+  return m
 }
 
 function entpacken(z: KodierterZug): Lage[] {

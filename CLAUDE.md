@@ -121,7 +121,8 @@ data/kartengrund.json  Grund aller Karten: Schweiz und Kantone (BFS g1), Flüsse
              Landeskarte 1:1 Million ab 2000 Einwohnern für das Fahrtblatt, nur zum
              Zeichnen (pipeline/build_kartengrund.py, braucht rasterio, scipy, scikit-image)
 data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3D
-             (pipeline/fetch_tlm3d.py, pipeline/build_tlm_bauwerke.py), ohne Länge; im
+             (pipeline/fetch_tlm3d.py, pipeline/build_tlm_bauwerke.py), ohne Länge (Brücken beim Fahren mit der
+             Länge ihrer Zeichnung, zugLaengeM in src/fahrt.ts); im
              Fahrtmodus auf Strecken anderer Bahnen, deren Verlauf aus dem Schienennetz kommt
 data/tunnel_richtung.json  Anfang und Ende von SBB-Tunneln, deren Länge in beide Richtungen
              passt, laut swissTLM3D (pipeline/build_tunnel_richtung.py); der Kilometer der
