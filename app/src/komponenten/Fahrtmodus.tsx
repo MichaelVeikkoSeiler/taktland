@@ -509,9 +509,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         ? `${FARBE[o.art].flaeche} ${FARBE[o.art].schrift} py-7`
         : 'border-sbb-cloud bg-white py-4 dark:border-sbb-iron dark:bg-sbb-charcoal'}`}>
         <Ring bald={bald} art={o.art} anteil={eta(o) === null ? null : 1 - eta(o)! / RING_S}>
-          {/* Sehenswertes: nie «steht», dann die Distanz (Michael, 2026-09-29) */}
-          {(angabe === 'zeit' || (angabe === 'beides' && eta(o) !== null)) && !(o.art === 'sehenswert' && eta(o) === null)
-            ? <ZeitImRing sekunden={eta(o) === null ? null : echt(eta(o)!)} steht={stand !== null} />
+          {/* Steht der Zug, gibt es keine Zeit: dann die Distanz statt «steht», das neben
+              einem Tunnel wie «der Tunnel steht» klang (Michael, 2026-09-30) */}
+          {angabe !== 'distanz' && (eta(o) !== null || stand === null)
+            ? <ZeitImRing sekunden={eta(o) === null ? null : echt(eta(o)!)} steht={false} />
             : <DistanzImRing meter={bis(o)} />}
         </Ring>
         <div className="min-w-0">
