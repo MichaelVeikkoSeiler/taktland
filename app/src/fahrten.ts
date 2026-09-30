@@ -109,3 +109,14 @@ export function probefahrtEinsetzen(f: GemerkteFahrt, stelle: number): Gemerkt {
   schreiben(g)
   return g
 }
+
+/** Eine Probefahrt um eine Stelle nach oben (-1) oder unten (1) schieben (Michael, 2026-09-30) */
+export function probefahrtVerschieben(stelle: number, richtung: -1 | 1): Gemerkt {
+  const g = gemerktLesen()
+  const ziel = stelle + richtung
+  if (ziel >= 0 && ziel < g.probefahrten.length) {
+    [g.probefahrten[stelle], g.probefahrten[ziel]] = [g.probefahrten[ziel], g.probefahrten[stelle]]
+    schreiben(g)
+  }
+  return g
+}

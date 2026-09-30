@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { tonBereitlegen } from '../fahrt'
 import {
-  favoritUmschalten, gemerktLesen, type GemerkteFahrt, probefahrtEinsetzen, probefahrtUmschalten,
+  favoritUmschalten, gemerktLesen, type GemerkteFahrt, probefahrtEinsetzen, probefahrtUmschalten, probefahrtVerschieben,
 } from '../fahrten'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
@@ -45,6 +45,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
   const blattBereit = blatt.von !== null && blatt.nach !== null && blatt.von !== blatt.nach
   // welche Probefahrt gerade ihre beiden Richtungen zeigt
   const [richtungWahl, setRichtungWahl] = useState<string | null>(null)
+  const [ordnen, setOrdnen] = useState(false)
   const [neueProbe, setNeueProbe] = useState<{ von: number | null; nach: number | null } | null>(null)
   useEffect(() => {
     if (!entfernt) return
@@ -156,7 +157,37 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                   </button>
                 </div>
               )}
-              {gemerkt.probefahrten.length > 0 && (
+              {gemerkt.probefahrten.length > 1 && (
+                <div className="flex justify-end">
+                  <button type="button" onClick={() => { setOrdnen((o) => !o); setRichtungWahl(null) }}
+                          className="min-h-11 rounded-lg px-3 text-sm font-medium hover:bg-sbb-silver
+                                     dark:hover:bg-sbb-iron">
+                    {ordnen ? 'Fertig' : 'Reihenfolge ändern'}
+                  </button>
+                </div>
+              )}
+              {gemerkt.probefahrten.length > 0 && ordnen && (
+                /* Reihenfolge mit Pfeilen ändern (Michael, 2026-09-30) */
+                <ul className="mt-2 kachelliste">
+                  {gemerkt.probefahrten.map((f, i) => (
+                    <li key={`${f.von}-${f.nach}-${f.ueber}`} className="flex items-center">
+                      <span className="min-w-0 flex-1 px-3 py-3 font-medium">{name(f.von)} – {name(f.nach)}
+                        {f.ueber ? ` (über ${name(f.ueber)})` : ''}</span>
+                      {([[-1, '↑', 'nach oben'], [1, '↓', 'nach unten']] as const).map(([r, z, w]) => (
+                        <button key={r} type="button" aria-label={`${fahrtText(f)} ${w}`} title={`Nach ${r < 0 ? 'oben' : 'unten'}`}
+                                disabled={i + r < 0 || i + r >= gemerkt.probefahrten.length}
+                                onClick={() => setGemerkt(probefahrtVerschieben(i, r))}
+                                className="flex min-h-11 w-12 shrink-0 items-center justify-center self-stretch border-l
+                                           border-sbb-cloud text-xl hover:bg-sbb-milk disabled:opacity-30
+                                           dark:border-sbb-iron dark:hover:bg-sbb-charcoal">
+                          {z}
+                        </button>
+                      ))}
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {gemerkt.probefahrten.length > 0 && !ordnen && (
                 <ul className="mt-2 kachelliste">
                   {gemerkt.probefahrten.map((f, i) => {
                     const k = `${f.von}-${f.nach}-${f.ueber}`
