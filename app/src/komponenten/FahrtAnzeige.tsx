@@ -135,20 +135,26 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
       springen(Math.max(0, Math.min(ende, (sJetzt ?? 0) + schritt * ende / 50)))
     },
   } : {}
-  // Namen für die nächsten drei vor dem Zug, oben oder unten, ohne Überdeckung
+  // Höchstens vier Namen vor dem Zug, oben oder unten, ohne Überdeckung. Zuerst die
+  // Bahnhöfe, dann Tunnel und Brücken, wo Platz bleibt, zuletzt Sehenswertes, je das
+  // Nächste zuerst (Michael, 2026-09-30: «nur Bahnhöfe beschriften … ausser es hat Platz»)
   const beschriftet: Array<{ o: FahrObjekt; x: number; oben: boolean; kurz: string; rechts: boolean }> = []
-  const frei = { oben: -Infinity, unten: -Infinity }
-  for (const o of objekte.filter((o) => o.s > s)) {
-    if (beschriftet.length >= 3) break
+  const belegt: Record<'oben' | 'unten', Array<[number, number]>> = { oben: [], unten: [] }
+  const frei = (z: 'oben' | 'unten', von: number, bis: number) =>
+    belegt[z].every(([a, b]) => bis + 6 < a || von > b + 6)
+  const rang = (o: FahrObjekt) => (o.art === 'bahnhof' ? 0 : o.art === 'sehenswert' ? 2 : 1)
+  const vorne = objekte.filter((o) => o.s > s).sort((a, b) => rang(a) - rang(b) || a.s - b.s)
+  for (const o of vorne) {
+    if (beschriftet.length >= 4) break
     const x = xBei(o.s)
     const text = name(o) ?? ''
     const kurz = text.length > 22 ? `${text.slice(0, 21)}…` : text
     const breite = kurz.length * 6.3
     const rechts = x + breite > B
     const [von, bis] = rechts ? [x - breite, x] : [x, x + breite]
-    const zeile = von > frei.oben + 6 ? 'oben' : von > frei.unten + 6 ? 'unten' : null
+    const zeile = frei('oben', von, bis) ? 'oben' : frei('unten', von, bis) ? 'unten' : null
     if (!zeile) continue
-    frei[zeile] = bis
+    belegt[zeile].push([von, bis])
     beschriftet.push({ o, x, oben: zeile === 'oben', kurz, rechts })
   }
 
