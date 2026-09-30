@@ -549,7 +549,8 @@ export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: 
  * rechts der Strecke Punkte bis SEE_M quer dazu geprüft, im Abstand von SEE_QUER_M
  * (700, 400 und 100 m): Liegt einer in einem See der Landeskarte 1:1 Million,
  * liegt der See auf dieser Seite. Kleine Seen fehlen in
- * diesem Massstab; in Tunneln zählt nichts.
+ * diesem Massstab. Auch in Tunneln, die am See entlangführen (Michael, 2026-09-30:
+ * beim Kerenzerbergtunnel fehlte der Walensee).
  */
 export const SEE_M = 700  // Michael, 2026-09-26: erst 250, dann 350, dann 500 m; 2026-09-28: 700 m
 /** quer zur Strecke alle 300 m bis SEE_M (Michael, 2026-09-28) */
@@ -570,7 +571,6 @@ export function seeUferAufWeg(fw: Fahrweg, daten: SeenDaten): SeeUfer[] {
   })
   const imSee = (p: Lage) => seen.find((x) => p.lat >= x.la0 && p.lat <= x.la1 && p.lon >= x.lo0 && p.lon <= x.lo1
     && x.ringe.filter((r) => innen(p, r)).length % 2 === 1)
-  const tunnel = fw.objekte.filter((o) => o.art === 'tunnel' && o.sAus !== null).map((o) => [o.s, o.sAus!] as const)
   const offen: Partial<Record<'links' | 'rechts', SeeUfer>> = {}
   const raus: SeeUfer[] = []
   const schliessen = (seite: 'links' | 'rechts') => {
@@ -590,10 +590,9 @@ export function seeUferAufWeg(fw: Fahrweg, daten: SeenDaten): SeeUfer[] {
       const t = k / n
       const p = { lat: a.lat + t * (b.lat - a.lat), lon: a.lon + t * (b.lon - a.lon) }
       const s = a.s + t * (b.s - a.s)
-      const drinnen = tunnel.some(([v, w]) => s >= v && s <= w)
       for (const [seite, f] of [['links', 1], ['rechts', -1]] as const) {
         let see: ReturnType<typeof imSee>
-        if (!drinnen) for (const q of SEE_QUER) {
+        for (const q of SEE_QUER) {
           see = imSee({ lat: p.lat + f * nLat * q, lon: p.lon + f * nLon * q })
           if (see) break
         }
