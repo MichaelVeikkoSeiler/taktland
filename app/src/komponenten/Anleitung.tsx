@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { HERAUSGEBER } from '../kontakt'
 import type { BahnhofIndex } from '../typen'
 
 /**
@@ -449,7 +448,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Taktland ist ein Lernspiel und nicht für die Reiseplanung gedacht. Es ist ein
-            privates Lernprojekt von {HERAUSGEBER} und kein Angebot einer Bundes- oder Privatbahn.
+            privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
           </li>
         </Punkte>
       </Abschnitt>
@@ -458,7 +457,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         <Punkte>
           <li>
             Taktland speichert nichts über dich auf einem Server. Es gibt kein Konto, keine
-            Werbung und keine Auswertung, wer die Seite nutzt.
+            Werbung und keine Profile. Gezählt wird nur, wie oft Taktland geöffnet wird (siehe unten).
           </li>
           <li>
             Der Lernfortschritt bleibt im Browser dieses Geräts. Die App lädt keine Schriften
