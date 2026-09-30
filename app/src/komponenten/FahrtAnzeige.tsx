@@ -67,10 +67,11 @@ export function Ring({ anteil, bald, art, children }: {
 }
 
 /** Balken im Tunnel: wie weit bis zur Ausfahrt, dazu die Sekunden */
-export function TunnelBalken({ anteil }: { anteil: number }) {
+export function TunnelBalken({ anteil, hell = false }: { anteil: number; hell?: boolean }) {
+  // hell: auf der Fläche der Brücke dunkel statt weiss
   return (
-    <div className="mt-2 h-3 w-full bg-white/15" aria-hidden="true">
-      <div className="h-3 bg-white transition-[width] duration-500 ease-linear"
+    <div className={`mt-2 h-3 w-full ${hell ? 'bg-black/15' : 'bg-white/15'}`} aria-hidden="true">
+      <div className={`h-3 ${hell ? 'bg-sbb-black' : 'bg-white'} transition-[width] duration-500 ease-linear`}
            style={{ width: `${Math.max(0, Math.min(1, anteil)) * 100}%` }} />
     </div>
   )

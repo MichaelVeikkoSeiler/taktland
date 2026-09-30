@@ -23,6 +23,8 @@ const ZUGLEICH_S = 40
 const PROBE_TEMPO = 100 / 3.6
 /** so oft zeichnet die Probefahrt die Anzeige neu, Millisekunden */
 const ANZEIGE_PROBE_MS = 33
+/** Brücken ab dieser Länge zeigen beim Überfahren «Überfahrt» mit Balken */
+const UEBERFAHRT_AB_M = 50
 /** Langsamer gilt als Stillstand: keine Zeitangabe */
 const STEHT_UNTER = 3
 /** So nah am Punkt eines Bahnhofs gilt ein stehender Zug als «am Bahnhof», Meter; grosse
@@ -345,6 +347,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   // auch ohne Meldung der Tunnel: Im Tunnel fehlt das GPS, das sagt die Anzeige
   const imTunnel = sJetzt === null ? null
     : fahrweg.objekte.find((o) => o.art === 'tunnel' && o.sAus !== null && sJetzt >= o.s && sJetzt <= o.sAus) ?? null
+  // Überfahrt einer Brücke mit bekannter Länge, wie «Im Tunnel» (Michael, 2026-09-30:
+  // «analog bei einer Durchfahrt eines Tunnels … Also Überfahrt»); kurze Brücken nicht,
+  // die wären nach einer Sekunde vorbei
+  const aufBruecke = sJetzt === null || imTunnel ? null
+    : gewaehlt.find((o) => o.art === 'bruecke' && o.sAus !== null && o.sAus - o.s >= UEBERFAHRT_AB_M
+                           && sJetzt >= o.s && sJetzt <= o.sAus) ?? null
   // Flächen, durch die der Weg gerade führt (Michael, 2026-09-26: «du fährst durch …»)
   const inFlaechen = sJetzt === null ? []
     : gewaehlt.filter((o) => o.sehenswert?.sorte === 'flaeche' && sJetzt >= o.s && sJetzt <= o.sAus!)
@@ -608,6 +616,18 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
               : 'Zug steht'}
           </span>
         </div>
+      ) : aufBruecke && sJetzt !== null ? (
+        <div className="flex items-center gap-3 rounded-lg bg-fahrt-bruecke px-3 py-2 text-sbb-black">
+          <div className="min-w-0 flex-1">
+            <p className="text-xs uppercase tracking-wide">Überfahrt</p>
+            <p className="truncate text-lg font-bold leading-tight">{textVon(aufBruecke)?.name}</p>
+          </div>
+          <span className="shrink-0 font-bold tabular-nums">
+            {faehrt || angabe !== 'zeit'
+              ? `Ende ${abstandText(faehrt ? (aufBruecke.sAus! - sJetzt) / stand!.v : null, aufBruecke.sAus! - sJetzt)}`
+              : 'Zug steht'}
+          </span>
+        </div>
       ) : naechsteZeile ?? (
         <p className="kachel px-3 py-2 text-sm">Auf dem Rest dieses Wegs ist nichts mehr zu melden.</p>
       )}
@@ -752,6 +772,20 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                 : 'Zug steht'}
             </p>
             <TunnelBalken anteil={(sJetzt - imTunnel.s) / (imTunnel.sAus! - imTunnel.s || 1)} />
+          </div>
+        )}
+
+        {aufBruecke && sJetzt !== null && (
+          <div className="mt-5 rounded-lg bg-fahrt-bruecke px-4 py-4 text-sbb-black">
+            <p className="text-xs uppercase tracking-wide">Überfahrt</p>
+            <p className="text-xl font-bold">{textVon(aufBruecke)?.name}</p>
+            {textVon(aufBruecke)?.laenge && <p className="text-sm">{textVon(aufBruecke)!.laenge}</p>}
+            <p className="mt-2 text-2xl font-bold tabular-nums">
+              {faehrt || angabe !== 'zeit'
+                ? `Ende ${abstandText(faehrt ? (aufBruecke.sAus! - sJetzt) / stand!.v : null, aufBruecke.sAus! - sJetzt)}`
+                : 'Zug steht'}
+            </p>
+            <TunnelBalken hell anteil={(sJetzt - aufBruecke.s) / (aufBruecke.sAus! - aufBruecke.s || 1)} />
           </div>
         )}
 
