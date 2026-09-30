@@ -215,6 +215,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     setJetzt(t)
   }
 
+  /** Probefahrt von vorn (Michael, 2026-09-30: «Eine Probefahrt soll man wiederholen können») */
+  function vonVorn() {
+    springen(0)
+    setAnkunft(null)
+    if (angehaltenRef.current) anhaltenUmschalten()
+  }
+
   /** Tempo der Probefahrt wechseln, ohne dass der Zug springt */
   function rafferWaehlen(f: Zeitraffer) {
     uhrStart.current = { echt: Date.now(), spiel: uhr() }
@@ -418,10 +425,17 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                 className="rounded-lg bg-white px-4 py-2 font-bold text-sbb-black">
           Fahrt beenden
         </button>
-        <button type="button" onClick={() => setAnkunft('weg')}
-                className="rounded-lg border border-white/70 px-4 py-2 font-medium">
-          Weiterfahren
-        </button>
+        {probefahrt ? (
+          <button type="button" onClick={vonVorn}
+                  className="rounded-lg border border-white/70 px-4 py-2 font-medium">
+            Nochmals fahren
+          </button>
+        ) : (
+          <button type="button" onClick={() => setAnkunft('weg')}
+                  className="rounded-lg border border-white/70 px-4 py-2 font-medium">
+            Weiterfahren
+          </button>
+        )}
       </div>
     </div>
   )
@@ -766,10 +780,19 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
         {/* ohne role="status": GPS-Genauigkeit und Tempo ändern sich laufend, ein
             Bildschirmleser würde sonst ununterbrochen vorlesen */}
-        <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-          {probefahrt && angehalten ? 'Probefahrt angehalten' : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
-          {faehrt && !ohneGps && !angehalten && ` · etwa ${kmhJetzt()} km/h`}
-        </p>
+        <div className="mt-3 flex items-baseline justify-between gap-3 text-sm text-sbb-metal dark:text-sbb-storm">
+          <p>
+            {probefahrt && angehalten ? 'Probefahrt angehalten' : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
+            {faehrt && !ohneGps && !angehalten && ` · etwa ${kmhJetzt()} km/h`}
+          </p>
+          {/* die Probefahrt wiederholen (Michael, 2026-09-30) */}
+          {probefahrt && (
+            <button type="button" onClick={vonVorn}
+                    className="shrink-0 underline underline-offset-2 hover:text-sbb-black dark:hover:text-sbb-white">
+              Von vorn
+            </button>
+          )}
+        </div>
         {ohneZiel && (
           <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
             Ohne Ziel: Taktland folgt der Linie bis {titel.split(' → ')[1]} und sucht dann neu, ebenso,
