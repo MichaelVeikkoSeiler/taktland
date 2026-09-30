@@ -259,7 +259,13 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Probefahrten spielen einen Weg in Echtzeit mit etwa 100 km/h oder 5- bis 200-mal
             schneller ab, zum Ausprobieren ohne Zug. «Anhalten» unterbricht sie, «Weiter» fährt
-            weiter. Den Zug im Band kann man an jede Stelle ziehen.
+            weiter. Den Zug im Band kann man an jede Stelle ziehen. Deine Probefahrten stehen
+            unter «Probefahren»; dort kommen neue dazu.
+          </li>
+          <li>
+            Das Fahrtblatt unter «Fahrtblatt» ist ein Druckbogen für eine Strecke: oben die Karte,
+            unten Tunnel, Brücken, Bahnhöfe und Gipfel zum Abhaken, die Tunnel mit Länge zum
+            Schätzen und Mitzählen. «Einfach» passt auf eine Seite, «Ausführlich» auf zwei.
           </li>
         </Punkte>
       </Abschnitt>

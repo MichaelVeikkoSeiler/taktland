@@ -441,3 +441,15 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
   Stände zu teilen (etwa einen Code oder Link zum Vergleichen), denn heute
   bleibt alles auf dem Gerät und Taktland hat keinen Server für Nutzerdaten.
 - ~~**Quiz zur Fahrt**~~ erledigt.
+
+## Eigene Einträge (Michael, 2026-09-30: «auf die Merkliste nehmen»)
+
+- **Persönliche Orte erfassen:** eigene Orte am Weg festhalten, etwa das Haus der
+  Grosseltern oder eine Stelle mit schöner Aussicht, und sie beim Fahren gemeldet
+  bekommen wie Sehenswertes. Bleibt auf dem Gerät und kommt in die Sicherung.
+- **Objekten ohne Namen einen Namen geben:** Tunnel und Brücken anderer Bahnen
+  (swissTLM3D) heissen oft nur «Brücke ohne Namen». Die Nutzerin oder der Nutzer kann
+  selbst einen Namen geben, etwa «Saaneviadukt». Der Name muss sichtbar als eigener
+  gekennzeichnet sein (etwa «selbst benannt»), damit er nie wie eine Angabe aus den
+  Daten wirkt; der Name laut Quelle bleibt daneben erkennbar («ohne Namen laut
+  swisstopo»). Nur auf dem Gerät, nie in Fragen oder Vergleichen.
