@@ -894,9 +894,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           sind Schätzungen aus Standort und Tempo, die Distanzen gerundet und entlang der gezeichneten
           Strecke gemessen. Gemeldet wird nur, solange diese Seite offen und
           der Bildschirm an ist. Auf Strecken anderer Bahnen folgt der Weg dem Schienennetz des BAV,
-          und Tunnel, Galerien und Brücken stammen aus swissTLM3D von swisstopo, oft ohne Namen.
-          Tunnel stehen dort ohne Länge, Brücken mit der Länge ihrer Zeichnung, gerundet; als
-          grössere Brücke gilt, was auf der Karte mindestens 100 m lang ist. Im
+          und Tunnel, Galerien und Brücken stammen aus swissTLM3D von swisstopo, oft ohne Namen,
+          mit der Länge ihrer Zeichnung, gerundet; als grössere Brücke gilt, was auf der Karte
+          mindestens 100 m lang ist. Im
           Sammelheft stehen sie mit ihrer Bahn. Als Bahnhof
           gemeldet werden die Betriebspunkte des Wegs, die in Taktland eine Seite haben, auch wo
           der Zug nicht hält: Einen Fahrplan enthalten die Daten nicht. Sehenswertes: Kulturgüter

@@ -202,8 +202,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Die Daten der SBB führen Tunnel und Brücken nur auf ihren eigenen Strecken. Auf
             Strecken anderer Bahnen, etwa dem Lötschberg der BLS, stammen sie aus swissTLM3D
-            von swisstopo: oft ohne Namen, Tunnel ohne Länge, und getrennt gezählt. Beim Fahren
-            zeigt Taktland Brücken anderer Bahnen mit der Länge ihrer Zeichnung.
+            von swisstopo: oft ohne Namen und getrennt gezählt. Beim Fahren zeigt Taktland sie
+            mit der Länge ihrer Zeichnung, gerundet.
           </li>
           <li>
             «Losfahren» startet «Fahren» auf diesem Weg, «Probefahrt» spielt ihn ab.

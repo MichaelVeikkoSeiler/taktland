@@ -199,7 +199,7 @@ const BRUECKEN_ZUERST = 100
 
 /** «etwa 120 m laut swisstopo»: gemessen an der Zeichnung von swissTLM3D, darum gerundet */
 function laengeText(m: number) {
-  return `etwa ${m < 100 ? Math.max(5, Math.round(m / 5) * 5) : Math.round(m / 10) * 10} m laut swisstopo`
+  return `etwa ${genau(m < 100 ? Math.max(5, Math.round(m / 5) * 5) : Math.round(m / 10) * 10)} m laut swisstopo`
 }
 
 export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: StreckenWahl }) {
@@ -401,11 +401,12 @@ function Ergebnis({
   }, [netz])
   const objektText = useCallback(({ kennung, art, tlm }: FahrObjekt): ObjektText | undefined => {
     // Strecken anderer Bahnen: Tunnel und Brücken aus swissTLM3D. Eine Länge nennt die
-    // Quelle nicht; bei Brücken gilt die Länge der Zeichnung, wie bei den SBB-Brücken
+    // Quelle nicht; es gilt die Länge der Zeichnung, wie bei den SBB-Brücken (Michael,
+    // 2026-09-30: Brücken, dann «Ich will» auch für Tunnel)
     if (tlm) {
       const wort = { tunnel: 'Tunnel', galerie: 'Galerie', bruecke: 'Brücke', gedeckte_bruecke: 'Gedeckte Brücke' }[tlm.art]
-      const bruecke = tlm.art === 'bruecke' || tlm.art === 'gedeckte_bruecke'
-      const laenge = bruecke && zugLaengeM(tlm) >= 5 ? laengeText(zugLaengeM(tlm)) : null
+      const m = zugLaengeM(tlm)
+      const laenge = m >= 5 ? laengeText(m) : null
       return { name: tlm.name ?? `${wort} ohne Namen`, baueinheiten: null, laenge,
                gross: tlm.gezeichnet_ab_100m ?? false,
                zeile: `${tlm.name ? `${wort} · ` : ''}${laenge ? `${laenge} · ` : ''}swissTLM3D (swisstopo)${laenge ? '' : ', ohne Länge'}` }
