@@ -315,13 +315,10 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
       <section className="mt-6">
       {/* im Stil der Unterreiter «Neue Fahrt», «Probefahren», «Fahrtblatt» (Michael, 2026-10-01:
           «Schaltflächen sind nicht einheitlich») */}
-      <div className="grid grid-cols-3 gap-1 rounded-lg bg-sbb-milk p-1 dark:bg-sbb-charcoal" role="group"
-           aria-label="Wie wählen">
+      <div className="segmente grid grid-cols-3" role="group" aria-label="Wie wählen">
         {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel'], ['ohne', 'Ohne Ziel']] as const).map(([a, t]) => (
           <button key={a} type="button" aria-pressed={art === a} onClick={() => artWaehlen(a)}
-                  className={`whitespace-nowrap rounded-lg px-2 py-1.5 text-center text-sm font-medium leading-tight transition-colors ${art === a
-                    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
-                    : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
+                  className="segment px-2 py-1.5 text-sm leading-tight">
             {t}
           </button>
         ))}

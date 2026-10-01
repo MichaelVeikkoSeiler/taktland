@@ -167,12 +167,10 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
           Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken. Drucken oder als PDF sichern geht über
           die Druckfunktion deines Geräts.
         </p>
-        <div className="mt-4 flex gap-2" role="group" aria-label="Umfang">
+        <div className="segmente mt-4 inline-flex" role="group" aria-label="Umfang">
           {([[false, 'Einfach'], [true, 'Ausführlich']] as const).map(([z, t]) => (
             <button key={t} type="button" aria-pressed={zweiseitig === z} onClick={() => setZweiseitig(z)}
-                    className={`rounded-lg border px-4 py-2 font-medium ${zweiseitig === z
-                      ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
-                      : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`}>
+                    className="segment px-4 py-1.5 text-sm">
               {t}
             </button>
           ))}

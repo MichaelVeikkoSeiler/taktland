@@ -479,20 +479,17 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
     <figure className={klassen.figur}>
       {/* eine Zeile für alle Knöpfe, damit die Karte kompakt oben bleibt */}
       <div className="flex items-center justify-between gap-2 text-xs">
-        <div className="flex overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ausschnitt">
+        <div className="segmente" role="group" aria-label="Ausschnitt">
           {([[true, 'Nah'], [false, 'Ganzer Weg']] as const).map(([n, t]) => (
             <button key={t} type="button" aria-pressed={nah === n} onClick={() => setNah(n)}
-                    className={`whitespace-nowrap px-2.5 py-1.5 font-medium ${nah === n
-                      ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
-                      : 'bg-white dark:bg-sbb-midnight'}`}>
+                    className="segment px-2.5 py-1">
               {t}
             </button>
           ))}
           {/* im selben Stil daneben (Michael, 2026-09-29) */}
           {veraendert && (
             <button type="button" onClick={() => { setZoom(1); setVersatz([0, 0]); mitte.current = null }}
-                    className="whitespace-nowrap border-l border-sbb-cloud bg-white px-2.5 py-1.5 font-medium
-                               dark:border-sbb-iron dark:bg-sbb-midnight">
+                    className="segment px-2.5 py-1 text-sbb-black underline underline-offset-2 dark:text-sbb-white">
               {nah ? 'Zum Zug' : 'Alles'}
             </button>
           )}

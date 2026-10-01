@@ -187,6 +187,36 @@ body {
  * #ebebeb). Eine bewusste Ausnahme
  * von den sonst kantigen Flächen.
  */
+/* Knopfgruppen, aus denen man eines wählt (Nah / Ganzer Weg, Nur Ziel / Start und Ziel …):
+   im Stil der Unterreiter, hellgrauer Grund, das Gewählte Anthracite (Michael, 2026-10-01:
+   «Schaltflächen sind nicht einheitlich», «gilt generell») */
+@utility segmente {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-sbb-milk);
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--color-sbb-charcoal);
+  }
+}
+
+@utility segment {
+  border-radius: 0.5rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: center;
+  color: var(--color-sbb-metal);
+  transition: color 150ms, background-color 150ms;
+  &:hover { color: var(--color-sbb-black); }
+  &[aria-pressed="true"] { background-color: var(--color-sbb-anthracite); color: #fff; }
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-sbb-storm);
+    &:hover { color: var(--color-sbb-white); }
+    &[aria-pressed="true"] { background-color: var(--color-sbb-white); color: var(--color-sbb-black); }
+  }
+}
+
 @utility kachel {
   background-color: var(--color-sbb-kachel);
   border-radius: 0.5rem;

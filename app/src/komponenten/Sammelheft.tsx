@@ -106,10 +106,6 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
     setHeft(heftLesen())
   }
 
-  const knopf = (aktiv: boolean) => `px-3 py-2 text-sm font-medium ${aktiv
-    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
-    : 'bg-white text-sbb-black hover:bg-sbb-milk dark:bg-sbb-midnight dark:text-sbb-white'}`
-
   return (
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Sammelheft</h1>
@@ -148,9 +144,9 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
         </div>
       )}
 
-      <div className="mt-6 grid grid-cols-2 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron" role="group" aria-label="Ansicht">
+      <div className="segmente mt-6 grid grid-cols-2" role="group" aria-label="Ansicht">
         {([['erlebt', 'Erlebt'], ['fehlt', 'Fehlt noch']] as const).map(([a, t]) => (
-          <button key={a} type="button" aria-pressed={ansicht === a} onClick={() => { setAnsicht(a); setMehr(false) }} className={knopf(ansicht === a)}>
+          <button key={a} type="button" aria-pressed={ansicht === a} onClick={() => { setAnsicht(a); setMehr(false) }} className="segment px-3 py-1.5 text-sm">
             {t}
           </button>
         ))}
@@ -158,10 +154,10 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
 
       {(
         <>
-          <div className="mt-4 flex gap-2">
+          <div className="segmente mt-4 grid grid-cols-3" role="group" aria-label="Art">
             {REIHENFOLGE.map((a) => (
               <button key={a} type="button" aria-pressed={art === a} onClick={() => { setArt(a); setMehr(false) }}
-                      className={`flex items-center gap-2 rounded-lg border border-sbb-cloud dark:border-sbb-iron ${knopf(art === a)}`}>
+                      className="segment flex items-center justify-center gap-2 px-2 py-1.5 text-sm">
                 <Pikto art={a} className="size-5" />
                 {ART_TEXT[a][1]}
               </button>

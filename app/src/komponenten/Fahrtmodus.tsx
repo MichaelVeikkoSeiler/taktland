@@ -703,14 +703,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                       : 'border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
               {angehalten ? 'Weiter' : 'Anhalten'}
             </button>
-            <div className="flex flex-1 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron"
+            <div className="segmente flex-1 gap-0.5"
                  role="group" aria-label="Tempo der Probefahrt in km/h">
               {ZEITRAFFER.map((f) => (
                 <button key={f} type="button" aria-pressed={raffer === f} onClick={() => rafferWaehlen(f)}
                         aria-label={`etwa ${kmh(f)} km/h`}
-                        className={`min-h-9 flex-1 whitespace-nowrap px-0.5 text-xs font-medium tabular-nums ${raffer === f
-                          ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
-                          : 'bg-white dark:bg-sbb-midnight'}`}>
+                        className="segment min-h-8 flex-1 px-0.5 text-xs tabular-nums">
                   {kmh(f)}
                 </button>
               ))}
@@ -790,14 +788,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
               {angehalten ? 'Weiter' : 'Anhalten'}
             </button>
             <span className="hidden text-sbb-metal sm:inline dark:text-sbb-storm">Zeitraffer</span>
-            <div className="flex flex-1 overflow-hidden rounded-lg border border-sbb-cloud dark:border-sbb-iron"
+            <div className="segmente flex-1 gap-0.5"
                  role="group" aria-label="Tempo der Probefahrt">
               {ZEITRAFFER.map((f) => (
                 <button key={f} type="button" aria-pressed={raffer === f} onClick={() => rafferWaehlen(f)}
                         aria-label={f === 1 ? 'In Echtzeit, etwa 100 km/h' : `${f}-mal schneller`}
-                        className={`min-h-9 flex-1 whitespace-nowrap px-0.5 text-[13px] font-medium tabular-nums sm:px-1 sm:text-sm ${raffer === f
-                          ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
-                          : 'bg-white dark:bg-sbb-midnight'}`}>
+                        className="segment min-h-8 flex-1 px-0.5 text-[13px] tabular-nums sm:px-1 sm:text-sm">
                   {f}×
                 </button>
               ))}
