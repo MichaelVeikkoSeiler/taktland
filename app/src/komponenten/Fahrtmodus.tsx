@@ -1132,7 +1132,7 @@ export function MeldeEinstellungen({ einstellung, aendern }: {
               optionen={[{ wert: 'groessere' as BrueckenWahl, text: 'ab 3 Baueinheiten' },
                          { wert: 'alle' as BrueckenWahl, text: 'alle' },
                          { wert: 'keine' as BrueckenWahl, text: 'keine' }]}
-              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
+              className="rounded-lg border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
                          dark:bg-sbb-midnight dark:text-sbb-white"
             />
           </div>
@@ -1159,7 +1159,7 @@ export function MeldeEinstellungen({ einstellung, aendern }: {
               titel="Melden etwa" wert={einstellung.vorlauf}
               waehlen={(w) => aendern({ vorlauf: w })}
               optionen={VORLAEUFE_S.map((x) => ({ wert: x as Vorlauf, text: `${x} Sekunden vorher` }))}
-              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
+              className="rounded-lg border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
                          dark:bg-sbb-midnight dark:text-sbb-white"
             />
           </div>
@@ -1170,7 +1170,7 @@ export function MeldeEinstellungen({ einstellung, aendern }: {
               waehlen={(w) => aendern({ angabe: w })}
               optionen={[{ wert: 'zeit' as Angabe, text: 'Zeit' }, { wert: 'distanz' as Angabe, text: 'Distanz' },
                          { wert: 'beides' as Angabe, text: 'Zeit und Distanz' }]}
-              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
+              className="rounded-lg border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
                          dark:bg-sbb-midnight dark:text-sbb-white"
             />
           </div>

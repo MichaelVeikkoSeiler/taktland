@@ -227,7 +227,7 @@ function Eintrag({ t }: { t: Treffer }) {
       </span>
     </>
   )
-  const stil = 'flex w-full items-center justify-between gap-3 border px-4 py-3 text-left'
+  const stil = 'flex w-full items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left'
   return (
     <li>
       {t.adresse ? (

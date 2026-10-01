@@ -380,7 +380,7 @@ export function Duell({ index }: { index: BahnhofIndex | null }) {
               ...((daten.tunnel?.length ?? 0) > 0
                 ? [{ wert: 'tunnel' as Bereich, text: `Tunnel (${daten.tunnel?.length})`, kurz: 'Tunnel' }] : []),
             ]}
-            className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sbb-black
+            className="rounded-lg mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sbb-black
                        disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
           />
         </div>
@@ -391,7 +391,7 @@ export function Duell({ index }: { index: BahnhofIndex | null }) {
             waehlen={(w) => auswahlWechseln(zusammensetzen(bereich, w))}
             optionen={[{ wert: 'CH', text: 'Ganze Schweiz' },
                        ...kantone.map((kt) => ({ wert: kt.kuerzel, text: `${kt.name} (${kt.anzahl})`, kurz: kt.name }))]}
-            className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sbb-black
+            className="rounded-lg mt-1 w-full border border-sbb-cloud bg-white px-3 py-2.5 text-sbb-black
                        disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
           />
         </div>

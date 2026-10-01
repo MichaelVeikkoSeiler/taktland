@@ -13,7 +13,8 @@ export interface Option<T> {
  * gestalten (Michael, 2026-09-25: «Schrift etwas kleiner, damit man mehr
  * sieht»). Hier öffnet ein Tipp eine kompakte Liste unten am Bildschirm; die
  * gewählte Zeile ist markiert, Escape oder ein Tipp daneben schliesst sie.
- * Ohne children zeigt der Knopf den gewählten Text mit einem Pfeil.
+ * Ohne children zeigt der Knopf den gewählten Text mit einem Pfeil. Feld und
+ * Liste haben die leicht abgerundeten Ecken der Knöpfe (Michael, 2026-10-02).
  */
 export function Auswahl<T extends string | number>({
   wert, optionen, waehlen, titel, className = '', disabled = false, children,
@@ -67,7 +68,8 @@ export function Auswahl<T extends string | number>({
         <div className="fixed inset-0 z-[70] flex items-end justify-center bg-black/40 sm:items-center"
              onClick={schliessen}>
           <div role="dialog" aria-label={titel} onClick={(e) => e.stopPropagation()}
-               className="w-full max-w-md bg-white text-sbb-black shadow-lg dark:bg-sbb-midnight dark:text-sbb-white">
+               className="w-full max-w-md overflow-hidden rounded-t-lg bg-white text-sbb-black shadow-lg sm:rounded-lg
+                          dark:bg-sbb-midnight dark:text-sbb-white">
             <p className="border-b border-sbb-cloud px-4 py-2.5 text-xs font-medium uppercase tracking-wide
                           text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
               {titel}

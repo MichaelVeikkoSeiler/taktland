@@ -291,7 +291,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         {/* persönlich statt Aufzählung (Michael, 2026-10-01: «etwas auflockern», Variante B) */}
         <blockquote className="mt-2 border-l-2 border-sbb-red pl-4 text-lg leading-relaxed">
           «Ich fahre gern Zug und wollte mehr wissen über das, woran ich vorbeifahre: Welcher
-          Tunnel ist das, wie lang ist er, wie heisst der Bahnhof, an dem wir nicht halten?
+          Tunnel ist das, wie lang ist er, wie heisst der Bahnhof, an dem wir gerade durchfahren?
           Daraus ist Taktland entstanden, aus offenen Daten und mit Hilfe von KI. Es soll Lust
           aufs Bahnfahren machen und vielleicht auch andere in den Zug locken.»
         </blockquote>

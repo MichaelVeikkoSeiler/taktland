@@ -66,7 +66,7 @@ export function Linien({ index }: { index: BahnhofIndex | null }) {
             <input
               type="search" value={begriff} onChange={(e) => setBegriff(e.target.value)}
               placeholder="Nummer, Name oder Bahnhof"
-              className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg text-sbb-black
+              className="rounded-lg w-full border border-sbb-cloud bg-white px-4 py-3 text-lg text-sbb-black
                          placeholder:text-sbb-metal focus:border-sbb-black focus:outline-none
                          dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white
                          dark:focus:border-sbb-white"

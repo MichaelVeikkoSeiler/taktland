@@ -231,7 +231,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
             <div className="mt-2">
               <textarea value={text} onChange={(e) => setText(e.target.value)} rows={3} autoFocus
                         placeholder="Deine Notiz zu dieser Fahrt"
-                        className="w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
+                        className="rounded-lg w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
                                    dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
               <div className="mt-1 flex gap-3">
                 <button type="button" onClick={speichern}
@@ -386,13 +386,13 @@ function NeueFahrt({ index, fertig }: { index: BahnhofIndex | null; fertig: () =
       <label className="block">
         <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Datum</span>
         <input type="date" value={tag} max={heute()} onChange={(e) => setTag(e.target.value)}
-               className="mt-1 w-full border border-sbb-cloud bg-white px-4 py-3 text-sbb-black
+               className="rounded-lg mt-1 w-full border border-sbb-cloud bg-white px-4 py-3 text-sbb-black
                           dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
       </label>
       <label className="block">
         <span className="block text-xs text-sbb-metal dark:text-sbb-storm">Notiz (optional)</span>
         <textarea value={notiz} onChange={(e) => setNotiz(e.target.value)} rows={3}
-                  className="mt-1 w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
+                  className="rounded-lg mt-1 w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
                              dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
       </label>
       <div className="flex gap-3">

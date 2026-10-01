@@ -208,7 +208,7 @@ export function Uebersicht({ art, stand, aendern }: {
               type="search" value={stand.begriff} autoComplete="off"
               onChange={(e) => aendern({ ...stand, begriff: e.target.value, seite: 0 })}
               placeholder={t.suche}
-              className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg text-sbb-black
+              className="rounded-lg w-full border border-sbb-cloud bg-white px-4 py-3 text-lg text-sbb-black
                          placeholder:text-sbb-metal dark:border-sbb-iron dark:bg-sbb-midnight
                          dark:text-sbb-white"
             />
@@ -220,7 +220,7 @@ export function Uebersicht({ art, stand, aendern }: {
               titel="Sortierung" wert={sortierung.wert}
               waehlen={(w) => aendern({ ...stand, sortierung: w, seite: 0 })}
               optionen={t.sortierungen.map((s) => ({ wert: s.wert, text: s.text }))}
-              className="min-w-0 border border-sbb-cloud bg-white px-2 py-1 text-sbb-black
+              className="rounded-lg min-w-0 border border-sbb-cloud bg-white px-2 py-1 text-sbb-black
                          dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
             />
           </div>

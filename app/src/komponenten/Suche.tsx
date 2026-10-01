@@ -68,7 +68,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
           waehlen={(w) => aendern({ ...stand, sortierung: w, seite: 0 })}
           optionen={[{ wert: 'alphabet' as ListenStand['sortierung'], text: 'Alphabetisch' },
                      { wert: 'frequenz' as ListenStand['sortierung'], text: 'Meiste Ein- und Aussteigende zuerst' }]}
-          className="min-w-0 border border-sbb-cloud bg-white px-2 py-1 text-sbb-black
+          className="rounded-lg min-w-0 border border-sbb-cloud bg-white px-2 py-1 text-sbb-black
                      dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white"
         />
       </div>
@@ -128,7 +128,7 @@ export function Suchfeld({ begriff, aendern, fokus = false }: {
         autoFocus={fokus}
         placeholder="Bahnhof suchen"
         autoComplete="off"
-        className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg
+        className="rounded-lg w-full border border-sbb-cloud bg-white px-4 py-3 text-lg
                    text-sbb-black placeholder:text-sbb-metal dark:border-sbb-iron
                    dark:bg-sbb-midnight dark:text-sbb-white"
       />

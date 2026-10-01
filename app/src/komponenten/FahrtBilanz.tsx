@@ -355,7 +355,7 @@ function BilanzNotiz({ beginn }: { beginn: number }) {
       </p>
       <textarea value={text} rows={3} placeholder="Deine Notiz zu dieser Fahrt"
                 onChange={(e) => { setText(e.target.value); setGespeichert(false) }}
-                className="mt-2 w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
+                className="rounded-lg mt-2 w-full border border-sbb-cloud bg-white px-3 py-2 text-sbb-black
                            dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
       <div className="mt-1 flex items-center gap-3">
         <button type="button" disabled={!text.trim()} onClick={() => { notizSetzen(beginn, text); setGespeichert(true) }}

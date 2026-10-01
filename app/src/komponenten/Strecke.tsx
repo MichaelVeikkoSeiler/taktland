@@ -1144,14 +1144,14 @@ export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
             onFocus={() => setOffen(true)}
             onBlur={() => window.setTimeout(() => setOffen(false), 150)}
             onKeyDown={(e) => { if (e.key === 'Enter' && vorschlaege[0]) nehmen(vorschlaege[0]) }}
-            className="w-full border border-sbb-cloud bg-white px-4 py-3 text-lg text-sbb-black
+            className={`w-full border border-sbb-cloud bg-white px-4 py-3 text-lg text-sbb-black
                        placeholder:text-sbb-metal dark:border-sbb-iron dark:bg-sbb-midnight
-                       dark:text-sbb-white"
+                       dark:text-sbb-white ${wert ? 'rounded-l-lg' : 'rounded-lg'}`}
           />
           {wert && (
             <button type="button" onClick={() => { setText(''); aendern(null) }}
                     aria-label={`${bezeichnung} leeren`}
-                    className="shrink-0 border border-l-0 border-sbb-cloud px-3 text-sbb-metal
+                    className="shrink-0 rounded-r-lg border border-l-0 border-sbb-cloud px-3 text-sbb-metal
                                hover:text-sbb-black dark:border-sbb-iron dark:hover:text-sbb-white">
               ×
             </button>
@@ -1159,7 +1159,7 @@ export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
         </span>
       </label>
       {offen && (vorschlaege.length > 0 || favoritenZurWahl.length > 0) && (
-        <div className="absolute z-10 mt-px w-full border border-sbb-cloud bg-white shadow-sm
+        <div className="absolute z-10 mt-1 w-full overflow-hidden rounded-lg border border-sbb-cloud bg-white shadow-md
                         dark:border-sbb-iron dark:bg-sbb-midnight"
              // der Fokus bleibt im Feld, auch beim Tipp auf einen Stern
              onMouseDown={(ev) => ev.preventDefault()}>
