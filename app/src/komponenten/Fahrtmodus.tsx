@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { neuLadenSperren } from '../serviceWorker'
+import { useAudio } from '../audio'
 import { abstand, type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEE_QUER_M, SEILBAHN_M, type SehenswertSorte, type Ton, wegEnde } from '../fahrt'
 import { spurMerken } from '../ohneziel'
 import { freigabeHilfe } from '../umgebung'
@@ -174,6 +175,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const [gegenrichtung, setGegenrichtung] = useState(false)
   const standRef = useRef<Stand | null>(null)
   const gemeldet = useRef(new Set<string>())
+  // welche Töne schon klangen: «art kennung@20» (Reisetasche → Audio, zweimal 20 und 10 s)
+  const getoent = useRef(new Set<string>())
+  const audio = useAudio()
   const ansage = useRef<HTMLParagraphElement | null>(null)
   // Stelle beim ersten Standort: was davor liegt, ist nicht durchfahren
   const startS = useRef<number | null>(fortsetzen?.startS ?? null)
@@ -205,7 +209,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     const t = (s / PROBE_TEMPO) * 1000
     uhrStart.current = { echt: Date.now(), spiel: t }
     for (const o of fahrweg.objekte) {
-      if (o.s > s) gemeldet.current.delete(`${o.art} ${o.kennung}`)
+      if (o.s > s) {
+        gemeldet.current.delete(`${o.art} ${o.kennung}`)
+        for (const m of [20, 10, ...VORLAEUFE_S]) getoent.current.delete(`${o.art} ${o.kennung}@${m}`)
+      }
     }
     hinter.current = hinter.current.filter((o) => o.s <= s)
     if (startS.current !== null && s < startS.current) startS.current = s
@@ -493,9 +500,16 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     for (const o of kommend.slice(0, 5)) {
       const e = eta(o)
       const schluessel = `${o.art} ${o.kennung}`
+      // der Ton: mit der Meldung oder, unter Audio gewählt, etwa 20 und 10 s vorher
+      // (Michael, 2026-10-01); springt die Zeit über beide, klingt er nur einmal
+      if (e !== null) {
+        const faellig = (audio.zweimal ? [20, 10] : [einstellung.vorlauf])
+          .filter((m) => e <= m && !getoent.current.has(`${schluessel}@${m}`))
+        faellig.forEach((m) => getoent.current.add(`${schluessel}@${m}`))
+        if (faellig.length && einstellung.ton) piepen(o.art)
+      }
       if (e !== null && e <= einstellung.vorlauf && !gemeldet.current.has(schluessel)) {
         gemeldet.current.add(schluessel)
-        if (einstellung.ton) piepen(o.art)
         // für Bildschirmleser: dieselbe Meldung als Satz, einmal
         const t = textVon(o)
         if (ansage.current && t) {
@@ -977,6 +991,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <input type="checkbox" checked={einstellung.ton} className="size-5 accent-sbb-red"
                    onChange={(e) => aendern({ ton: e.target.checked })} />
           </label>
+          <p className="text-sm text-sbb-metal dark:text-sbb-storm">
+            Töne je Art, zweimal statt einmal und zum Anhören: unter Reisetasche → Audio.
+          </p>
         </div>
 
         <p className="mt-6 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">

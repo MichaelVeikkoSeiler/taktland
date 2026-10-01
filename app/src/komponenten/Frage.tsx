@@ -1,6 +1,7 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { Frage as FrageTyp, Gleis, MatchPaar, SortItem } from '../typen'
 import { Gleisschema } from './Gleisschema'
+import { antwortTon } from '../audio'
 
 interface Props {
   frage: FrageTyp
@@ -27,6 +28,7 @@ export function Frage({ frage, beantwortet, gleise, onAntwort }: Props) {
   function abschliessen(war: boolean) {
     setRichtig(war)
     setGezeigt(true)
+    antwortTon(war ? 'richtig' : 'falsch')
     onAntwort(war)
   }
 

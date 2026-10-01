@@ -180,7 +180,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Das Logbuch hält jede Fahrt fest, mit Notizen und von Hand eingetragenen Fahrten.
             Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren
             hast; «Fehlt noch» kennt nur die der SBB. Favoriten sind Bahnhöfe mit Stern.
-            Unter «Audio» lassen sich alle Töne und der Ton beim Wechsel der Reiter ausschalten.
+            Unter «Audio» lassen sich die Töne einzeln ein- und ausschalten und anhören: beim Fahren
+            je Art, einmal oder zweimal (etwa 20 und 10 Sekunden vorher), bei den Reitern und nach
+            jeder Antwort.
           </li>
           <li>
             Alles bleibt im Browser dieses Geräts, ohne Konto. Handy und Computer zählen
@@ -284,6 +286,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Claude Code, die Auftaktbilder mit ChatGPT. Die Texte zu Bahnhöfen und Linien
             setzt ein Programm aus den offenen Daten zusammen.
           </li>
+          <li>Idee, Konzept und Gestaltung: Michael Veikko Seiler.</li>
         </Punkte>
       </Abschnitt>
       </div>

@@ -3,22 +3,36 @@ import { useSyncExternalStore } from 'react'
 /**
  * Audio-Einstellungen (Michael, 2026-10-01: Reiter «Audio» in der Reisetasche).
  * an: alle Töne von Taktland, auch die Meldungen beim Fahren. reiter: ein kurzer
- * Ton beim Wechsel der Reiter. Beides ist am Anfang an und bleibt auf diesem Gerät.
+ * Ton beim Wechsel der Reiter. arten: der Ton beim Fahren je Art. zweimal: der Ton
+ * etwa 20 und 10 Sekunden vor dem Objekt statt einmal mit der Meldung. antworten:
+ * ein Ton nach jeder Antwort bei den Fragen und im Duell. Am Anfang ist alles an,
+ * ausser «zweimal»; alles bleibt auf diesem Gerät.
  */
-export interface Audio { an: boolean; reiter: boolean }
+export type TonArt = 'tunnel' | 'bruecke' | 'bahnhof' | 'sehenswert' | 'ankunft'
+export interface Audio {
+  an: boolean
+  reiter: boolean
+  arten: Record<TonArt, boolean>
+  zweimal: boolean
+  antworten: boolean
+}
 
 const SCHLUESSEL = 'taktland.audio.v1'
-const GRUND: Audio = { an: true, reiter: true }
+const ARTEN: TonArt[] = ['tunnel', 'bruecke', 'bahnhof', 'sehenswert', 'ankunft']
 
 let stand: Audio = lesen()
 const hoerer = new Set<() => void>()
 
 function lesen(): Audio {
-  try {
-    const x = JSON.parse(localStorage.getItem(SCHLUESSEL) ?? '{}')
-    return { an: x.an !== false, reiter: x.reiter !== false }
-  } catch {
-    return GRUND
+  let x: Record<string, unknown> = {}
+  try { x = JSON.parse(localStorage.getItem(SCHLUESSEL) ?? '{}') } catch { /* Standard */ }
+  const a = (x.arten ?? {}) as Partial<Record<TonArt, boolean>>
+  return {
+    an: x.an !== false,
+    reiter: x.reiter !== false,
+    arten: Object.fromEntries(ARTEN.map((k) => [k, a[k] !== false])) as Record<TonArt, boolean>,
+    zweimal: x.zweimal === true,
+    antworten: x.antworten !== false,
   }
 }
 
@@ -38,31 +52,87 @@ export function useAudio(): Audio {
 
 let ctx: AudioContext | null = null
 
-/**
- * Der Ton der Reiter: ein kurzes, weiches «Tock», zwei Sinustöne im Abstand einer
- * Quinte (E5 und H5), nach 0,12 s verklungen; leise, damit er beim Blättern nicht
- * stört, und deutlich anders als die Meldungen beim Fahren.
- */
-export function reiterTon() {
-  if (!stand.an || !stand.reiter) return
+/** Ein gemeinsamer Audio-Kontext für alle Töne; erst nach einer Berührung hörbar */
+export function audioKontext(): AudioContext | null {
+  if (ctx) return ctx
   try {
     const Kontext = window.AudioContext
       ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
-    if (!Kontext) return
-    ctx ??= new Kontext()
-    void ctx.resume()
-    const jetzt = ctx.currentTime
-    for (const [hoehe, staerke, beginn] of [[659.26, 0.16, 0], [987.77, 0.07, 0.012]] as const) {
-      const osc = ctx.createOscillator()
-      const laut = ctx.createGain()
-      osc.type = 'sine'
-      osc.frequency.value = hoehe
-      laut.gain.setValueAtTime(0.0001, jetzt + beginn)
-      laut.gain.exponentialRampToValueAtTime(staerke, jetzt + beginn + 0.004)
-      laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + beginn + 0.12)
-      osc.connect(laut).connect(ctx.destination)
-      osc.start(jetzt + beginn)
-      osc.stop(jetzt + beginn + 0.15)
+    ctx = Kontext ? new Kontext() : null
+  } catch { ctx = null }
+  return ctx
+}
+
+/** [Beginn in s, Tonhöhe in Hz, Ausklang in s, Stärke] */
+type Muster = ReadonlyArray<readonly [number, number, number, number?]>
+
+/**
+ * Die Töne beim Fahren, je Art ein eigenes Muster, erkennbar auch ohne Blick aufs
+ * Handy (Michael, 2026-09-27: «Brücken anders als Tunnel, Tunnel anders als Bahnhöfe»):
+ * - Tunnel: zwei Töne abwärts, tief, lang, D4–G3
+ * - Brücke: zweimal derselbe helle, kurze Ton, A5
+ * - Bahnhof: der weiche Zweiklang aufwärts, G4–D5
+ * - Sehenswertes: ein einzelner Ton, E5
+ * - Ankunft am Ziel: drei Töne aufwärts, G4–H4–D5, der letzte lang (2026-09-29)
+ * Weiche Sinustöne mit leisem Oberton, der kleinen Handylautsprechern hilft;
+ * bewusst nicht der Gong der SBB.
+ */
+export const TOENE: Record<TonArt, Muster> = {
+  tunnel: [[0, 293.66, 1.1], [0.18, 196, 1.3]],
+  bruecke: [[0, 880, 0.35], [0.14, 880, 0.45]],
+  bahnhof: [[0, 392, 0.9], [0.16, 587.33, 0.9]],
+  sehenswert: [[0, 659.26, 1.2]],
+  ankunft: [[0, 392, 0.7], [0.2, 493.88, 0.7], [0.4, 587.33, 1.6]],
+}
+
+/**
+ * Kurze Töne ausserhalb der Fahrt, leiser als die Meldungen (Michael, 2026-10-01):
+ * - reiter: ein «Tock», E5 und H5, nach 0,12 s verklungen
+ * - richtig: zwei helle Töne aufwärts, C5–G5, kurz
+ * - falsch: ein weicher, tiefer Ton abwärts, E4–C4, ohne Schärfe
+ * - bestwert: drei schnelle Töne aufwärts, C5–E5–G5
+ */
+const KURZ: Record<'reiter' | 'richtig' | 'falsch' | 'bestwert', Muster> = {
+  reiter: [[0, 659.26, 0.12, 0.16], [0.012, 987.77, 0.12, 0.07]],
+  richtig: [[0, 523.25, 0.22, 0.2], [0.09, 783.99, 0.35, 0.2]],
+  falsch: [[0, 329.63, 0.25, 0.18], [0.12, 261.63, 0.4, 0.16]],
+  bestwert: [[0, 523.25, 0.2, 0.2], [0.08, 659.26, 0.2, 0.2], [0.16, 783.99, 0.55, 0.22]],
+}
+
+function spielen(muster: Muster, oberton = true) {
+  const c = audioKontext()
+  if (!c) return
+  try {
+    void c.resume()
+    const jetzt = c.currentTime
+    for (const [beginn, hoehe, ausklang, staerke = 0.34] of muster) {
+      // Grundton und, für die Fahrtöne, die Oktave darüber, leiser
+      for (const [faktor, anteil] of (oberton ? [[1, 1], [2, 0.35]] : [[1, 1]]) as Array<[number, number]>) {
+        const osc = c.createOscillator()
+        const laut = c.createGain()
+        osc.type = 'sine'
+        osc.frequency.value = hoehe * faktor
+        laut.gain.setValueAtTime(0.0001, jetzt + beginn)
+        laut.gain.exponentialRampToValueAtTime(staerke * anteil, jetzt + beginn + 0.006)
+        laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + beginn + ausklang)
+        osc.connect(laut).connect(c.destination)
+        osc.start(jetzt + beginn)
+        osc.stop(jetzt + beginn + ausklang + 0.05)
+      }
     }
   } catch { /* ohne Ton geht alles weiter */ }
+}
+
+/** Ein Fahrton, ohne die Schalter zu prüfen (das tun Fahrtmodus und Probehören) */
+export function tonSpielen(art: TonArt) {
+  spielen(TOENE[art])
+}
+
+export function reiterTon() {
+  if (stand.an && stand.reiter) spielen(KURZ.reiter, false)
+}
+
+/** Nach einer Antwort; ein neuer Bestwert im Duell klingt anders als ein einfaches «Richtig» */
+export function antwortTon(art: 'richtig' | 'falsch' | 'bestwert') {
+  if (stand.an && stand.antworten) spielen(KURZ[art], false)
 }

@@ -11,7 +11,7 @@
  */
 import type { FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten, StreckenAbschnitt, StreckenGeometrie, StreckenNetz,
   TlmBauwerk } from './typen'
-import { audioLesen } from './audio'
+import { audioKontext, audioLesen, tonSpielen, type TonArt } from './audio'
 
 /** Meter je Grad in der Schweiz: für kurze Abstände genau genug */
 const M_BREITE = 111_200
@@ -302,60 +302,23 @@ export function wegEnde(fw: Fahrweg) {
   return fw.punkte[fw.punkte.length - 1]?.s ?? 0
 }
 
-/** Welcher Ton zu welchem Objekt gehört */
-export type TonArt = FahrObjekt['art'] | 'ankunft'
+/** Welcher Ton zu welchem Objekt gehört; die Töne selbst stehen in audio.ts */
+export type { TonArt } from './audio'
 export type Ton = (art: TonArt) => void
 
 /**
- * Je Art ein eigenes Muster, erkennbar auch ohne Blick aufs Handy (Michael,
- * 2026-09-27: «Brücken anders als Tunnel, Tunnel anders als Bahnhöfe»):
- * [Beginn in s, Grundton in Hz, Ausklang in s]
- * - Tunnel: zwei Töne abwärts, tief, lang, D4–G3
- * - Brücke: zweimal derselbe helle, kurze Ton, A5
- * - Bahnhof: der weiche Zweiklang aufwärts, G4–D5, wie bisher (2026-09-25:
- *   «einen anderen Audioton», dann «wesentlich tiefer»)
- * - Sehenswertes: ein einzelner Ton, E5
- * - Ankunft am Ziel: drei Töne aufwärts, G4–H4–D5, der letzte lang (2026-09-29)
- * Weiche Sinustöne mit leisem Oberton, der kleinen Handylautsprechern hilft;
- * bewusst nicht der Gong der SBB.
- */
-const TOENE: Record<TonArt, readonly (readonly [number, number, number])[]> = {
-  tunnel: [[0, 293.66, 1.1], [0.18, 196, 1.3]],
-  bruecke: [[0, 880, 0.35], [0.14, 880, 0.45]],
-  bahnhof: [[0, 392, 0.9], [0.16, 587.33, 0.9]],
-  sehenswert: [[0, 659.26, 1.2]],
-  ankunft: [[0, 392, 0.7], [0.2, 493.88, 0.7], [0.4, 587.33, 1.6]],
-}
-
-/**
  * Der Browser erlaubt Töne erst nach einer Berührung, darum wird der Ton beim
- * Start des Fahrtmodus vorbereitet.
+ * Start des Fahrtmodus vorbereitet. Hauptschalter und Ton je Art stellt man unter
+ * Reisetasche → Audio ein (Michael, 2026-10-01).
  */
 export function tonVorbereiten(): Ton {
-  const Kontext = window.AudioContext
-    ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext
-  if (!Kontext) return () => undefined
-  const ctx = new Kontext()
+  const ctx = audioKontext()
+  if (!ctx) return () => undefined
   void ctx.resume()
   return (art) => {
-    // der Hauptschalter unter Reisetasche → Audio schaltet auch die Meldungen stumm
-    if (!audioLesen().an) return
-    const jetzt = ctx.currentTime
-    for (const [beginn, hoehe, ausklang] of TOENE[art]) {
-      // Grundton und die Oktave darüber, leiser
-      for (const [faktor, staerke] of [[1, 0.34], [2, 0.12]] as const) {
-        const osc = ctx.createOscillator()
-        const laut = ctx.createGain()
-        osc.type = 'sine'
-        osc.frequency.value = hoehe * faktor
-        laut.gain.setValueAtTime(0.0001, jetzt + beginn)
-        laut.gain.exponentialRampToValueAtTime(staerke, jetzt + beginn + 0.008)
-        laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + beginn + ausklang)
-        osc.connect(laut).connect(ctx.destination)
-        osc.start(jetzt + beginn)
-        osc.stop(jetzt + beginn + ausklang + 0.05)
-      }
-    }
+    const a = audioLesen()
+    if (!a.an || !a.arten[art]) return
+    tonSpielen(art)
   }
 }
 

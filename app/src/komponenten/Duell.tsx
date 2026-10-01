@@ -8,6 +8,7 @@ import { kantonText } from '../kanton'
 import { Ladefehler } from './Ladefehler'
 import { Auswahl } from './Auswahl'
 import { BahnhofFeld } from './Strecke'
+import { antwortTon } from '../audio'
 
 /**
  * Bahnhöfe, Linien oder Tunnel gegeneinander. Die Fragen entstehen hier aus
@@ -313,6 +314,8 @@ export function Duell({ index }: { index: BahnhofIndex | null }) {
     setGewaehlt(i)
     const richtig = i === runde.richtig
     const neueSerie = richtig ? serie + 1 : 0
+    // ein neuer Bestwert klingt anders als ein einfaches «Richtig» (Michael, 2026-10-01)
+    antwortTon(!richtig ? 'falsch' : neueSerie > (stand.rekorde[auswahl] ?? 0) ? 'bestwert' : 'richtig')
     setSerie(neueSerie)
     setStand(duellstandMerken(auswahl, richtig, richtig ? neueSerie : serie))
   }
@@ -607,7 +610,10 @@ function PaarDuell({ paar, setPaar, waehlbar, nameVon, setzen, beenden }: {
               return (
                 <li key={g.schluessel}>
                   <button type="button" disabled={aufgeloest}
-                          onClick={() => setPaar({ ...paar, gewaehlt: i, richtig: paar.richtig + (i === vorn ? 1 : 0) })}
+                          onClick={() => {
+                            antwortTon(i === vorn ? 'richtig' : 'falsch')
+                            setPaar({ ...paar, gewaehlt: i, richtig: paar.richtig + (i === vorn ? 1 : 0) })
+                          }}
                           className={`flex w-full items-center justify-between gap-3 rounded-lg border px-4 py-4
                                       text-left transition ${rahmen}`}>
                     <span className="min-w-0">
