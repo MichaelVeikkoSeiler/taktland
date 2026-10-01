@@ -38,7 +38,7 @@ export function AudioSeite() {
                     audioSetzen({ antworten: !audio.antworten })
                     if (!audio.antworten) antwortTon('richtig')
                   }} />
-        <Schalter titel="Töne beim Aufklappen" text="Ein gläsernes Klicken, wenn sich etwas aufklappt"
+        <Schalter titel="Töne beim Auf- und Zuklappen" text="Ein gläsernes Klicken beim Aufklappen, etwas tiefer beim Zuklappen"
                   an={audio.aufklappen} gesperrt={aus}
                   umschalten={() => {
                     audioSetzen({ aufklappen: !audio.aufklappen })

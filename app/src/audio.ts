@@ -15,7 +15,7 @@ export interface Audio {
   arten: Record<TonArt, boolean>
   zweimal: boolean
   antworten: boolean
-  /** ein gläsernes Klicken beim Aufklappen (Michael, 2026-10-01) */
+  /** ein gläsernes Klicken beim Auf- und Zuklappen (Michael, 2026-10-01) */
   aufklappen: boolean
 }
 
@@ -96,13 +96,15 @@ export const TOENE: Record<TonArt, Muster> = {
  * - bestwert: drei schnelle Töne aufwärts, C5–E5–G5
  * - aufklappen: ein gläsernes Klicken, C7 mit einem unharmonischen Teilton darüber
  *   (wie bei angeschlagenem Glas), nach 0,09 s verklungen
+ * - zuklappen: dasselbe Glas eine Quarte tiefer (G6) und leiser, als Gegenstück
  */
-const KURZ: Record<'reiter' | 'richtig' | 'falsch' | 'bestwert' | 'aufklappen', Muster> = {
+const KURZ: Record<'reiter' | 'richtig' | 'falsch' | 'bestwert' | 'aufklappen' | 'zuklappen', Muster> = {
   reiter: [[0, 659.26, 0.12, 0.16], [0.012, 987.77, 0.12, 0.07]],
   richtig: [[0, 523.25, 0.22, 0.2], [0.09, 783.99, 0.35, 0.2]],
   falsch: [[0, 329.63, 0.25, 0.18], [0.12, 261.63, 0.4, 0.16]],
   bestwert: [[0, 523.25, 0.2, 0.2], [0.08, 659.26, 0.2, 0.2], [0.16, 783.99, 0.55, 0.22]],
   aufklappen: [[0, 2093, 0.09, 0.07], [0, 5651, 0.05, 0.025]],
+  zuklappen: [[0, 1567.98, 0.08, 0.05], [0, 4234, 0.04, 0.018]],
 }
 
 function spielen(muster: Muster, oberton = true) {
@@ -147,17 +149,22 @@ export function aufklappTon() {
   if (stand.an && stand.aufklappen) spielen(KURZ.aufklappen, false)
 }
 
+export function zuklappTon() {
+  if (stand.an && stand.aufklappen) spielen(KURZ.zuklappen, false)
+}
+
 /**
  * Für die ganze App, einmal angemeldet: Klappt etwas auf, eine Kachel mit Pfeil
- * (details) oder ein Knopf, der etwas öffnet (aria-expanded), klickt es gläsern.
- * Beim Zuklappen bleibt es still.
+ * (details) oder ein Knopf, der etwas öffnet (aria-expanded), klickt es gläsern,
+ * beim Zuklappen etwas tiefer und leiser.
  */
 export function aufklappenHoeren() {
   document.addEventListener('click', (e) => {
     const ziel = e.target instanceof Element ? e.target : null
     if (!ziel) return
-    if (ziel.closest('[aria-expanded="false"]')) { aufklappTon(); return }
+    const knopf = ziel.closest('[aria-expanded]')
+    if (knopf) { (knopf.getAttribute('aria-expanded') === 'true' ? zuklappTon : aufklappTon)(); return }
     const summary = ziel.closest('summary')
-    if (summary && !summary.parentElement?.hasAttribute('open')) aufklappTon()
+    if (summary) (summary.parentElement?.hasAttribute('open') ? zuklappTon : aufklappTon)()
   }, true)
 }

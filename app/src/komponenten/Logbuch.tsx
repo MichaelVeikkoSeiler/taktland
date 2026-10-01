@@ -9,6 +9,8 @@ import type { BahnhofIndex, StandortDaten } from '../typen'
 import { type Box, KartenPlatz, lage, Netzkarte, pfad, useKarte } from './Netzkarte'
 import { BahnhofFeld } from './Strecke'
 import { Pikto } from './Pikto'
+import { zuklappTon } from '../audio'
+import { tippSchliesst } from '../zuklappen'
 
 const ART_TEXT: Record<ErlebtArt, [string, string]> = {
   tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
@@ -215,7 +217,9 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
       </button>
 
       {offen && (
-        <div className="border-t border-sbb-cloud px-4 pb-4 pt-3 dark:border-sbb-iron">
+        // ein Tipp auf den offenen Inhalt klappt den Eintrag zu (Michael, 2026-10-01)
+        <div className="border-t border-sbb-cloud px-4 pb-4 pt-3 dark:border-sbb-iron"
+             onClick={(e) => { if (!bearbeiten && tippSchliesst(e)) { zuklappTon(); setOffen(false) } }}>
           <div className="text-sm">
             {f.manuell ? 'Von Hand eingetragen, ohne «Fahren»: keine Objekte erfasst' : <Zaehlung objekte={f.objekte} />}
           </div>

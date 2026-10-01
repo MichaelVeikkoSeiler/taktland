@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 import type { BahnhofIndex } from '../typen'
+import { zuklappTon } from '../audio'
+import { tippSchliesst } from '../zuklappen'
 
 /**
  * So funktioniert Taktland, und woher die Daten stammen.
@@ -312,7 +314,8 @@ function Abschnitt({ titel, children, offen = false }: { titel: string; children
       {/* ein Tipp auf den offenen Text schliesst das Thema wieder, ausser auf einen Verweis
           oder beim Markieren von Text (Michael, 2026-10-01) */}
       <div className="cursor-pointer px-4 pb-4" onClick={(e) => {
-        if ((e.target as HTMLElement).closest('a') || window.getSelection()?.toString()) return
+        if (!tippSchliesst(e)) return
+        zuklappTon()
         e.currentTarget.closest('details')?.removeAttribute('open')
       }}>{children}</div>
     </details>
