@@ -856,7 +856,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
                                                strokeLinejoin="round" />)}
       {land && <path d={land} fill="none" stroke={GRUND.grenze} strokeWidth={GRENZE_BREITE.land} strokeLinejoin="round" />}
       {fluesse.map((f, i) => (
-        <path key={`f${i}`} d={kurve(f.q, 1)} fill="none" stroke={GRUND.fluss} strokeWidth={f.k <= 4 ? 1.6 : 1}
+        <path key={`f${i}`} d={kurve(f.q, 1)} fill="none" stroke={GRUND.fluss} strokeWidth={f.k <= 4 ? 1.6 : f.k === 5 ? 1 : 0.8}
               strokeLinejoin="round" strokeLinecap="round" />
       ))}
       {seen.map((q, i) => (

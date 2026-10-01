@@ -124,7 +124,7 @@ export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | nu
         </>
       )}
       {grund.fluesse.filter((z) => im(z, box, h)).map((z, i) => (
-        <path key={`f${i}`} d={z.d} fill="none" strokeWidth={z.k <= 4 ? 2 : 1.3}
+        <path key={`f${i}`} d={z.d} fill="none" strokeWidth={z.k <= 4 ? 2 : z.k === 5 ? 1.3 : 1}
               strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke"
               className="stroke-fluss" />
       ))}

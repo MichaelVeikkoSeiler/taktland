@@ -51,8 +51,9 @@ HOEHEN_STUFEN = [1000, 2000, 3000]
 RASTER_M = 200
 #: Glättung des Rasters in Zellen (Gauss), gegen Treppen und Zacken
 GLAETTEN = 1.2
-#: klasse der Quelle: 4 die grössten (Aare, Rhein, Reuss …), 5 etwa Emme, Linth, Kander
-FLUSS_BIS_KLASSE = 5
+#: klasse der Quelle: 4 die grössten (Aare, Rhein, Reuss …), 5 etwa Emme, Linth, Kander,
+#: 6 etwa Sihl, Simme, Glatt, Seez (Michael, 2026-10-01: «Mehr Flüsse»)
+FLUSS_BIS_KLASSE = 6
 #: Einwohnerklassen der Quelle, klein nach gross; ab «2000-9999» kommen sie mit
 ORTE_KLASSEN = ["Ort_2000-9999", "Ort_10000-49999", "Ort_50000-99999", "Ort_100000-1000000",
                 "Ort_Groesser_1000000"]
