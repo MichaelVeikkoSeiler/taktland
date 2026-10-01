@@ -292,8 +292,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         <blockquote className="mt-2 border-l-2 border-sbb-red pl-4 text-lg leading-relaxed">
           «Ich fahre gern Zug und wollte mehr wissen über das, woran ich vorbeifahre: Welcher
           Tunnel ist das, wie lang ist er, wie heisst der Bahnhof, an dem wir nicht halten?
-          Daraus ist Taktland entstanden. Es soll Lust aufs Bahnfahren machen, damit mehr
-          Menschen den Zug nehmen, kostenlos und ohne Werbung.»
+          Daraus ist Taktland entstanden, mit Hilfe von offenen Datenquellen und KI-Tools. Es
+          soll Lust aufs Bahnfahren machen, damit mehr Menschen den Zug nehmen.»
         </blockquote>
         <p className="mt-3 font-medium">Michael Veikko Seiler</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
