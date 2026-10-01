@@ -15,6 +15,8 @@ export interface Audio {
   arten: Record<TonArt, boolean>
   zweimal: boolean
   antworten: boolean
+  /** ein gläsernes Klicken beim Aufklappen (Michael, 2026-10-01) */
+  aufklappen: boolean
 }
 
 const SCHLUESSEL = 'taktland.audio.v1'
@@ -33,6 +35,7 @@ function lesen(): Audio {
     arten: Object.fromEntries(ARTEN.map((k) => [k, a[k] !== false])) as Record<TonArt, boolean>,
     zweimal: x.zweimal === true,
     antworten: x.antworten !== false,
+    aufklappen: x.aufklappen !== false,
   }
 }
 
@@ -91,12 +94,15 @@ export const TOENE: Record<TonArt, Muster> = {
  * - richtig: zwei helle Töne aufwärts, C5–G5, kurz
  * - falsch: ein weicher, tiefer Ton abwärts, E4–C4, ohne Schärfe
  * - bestwert: drei schnelle Töne aufwärts, C5–E5–G5
+ * - aufklappen: ein gläsernes Klicken, C7 mit einem unharmonischen Teilton darüber
+ *   (wie bei angeschlagenem Glas), nach 0,09 s verklungen
  */
-const KURZ: Record<'reiter' | 'richtig' | 'falsch' | 'bestwert', Muster> = {
+const KURZ: Record<'reiter' | 'richtig' | 'falsch' | 'bestwert' | 'aufklappen', Muster> = {
   reiter: [[0, 659.26, 0.12, 0.16], [0.012, 987.77, 0.12, 0.07]],
   richtig: [[0, 523.25, 0.22, 0.2], [0.09, 783.99, 0.35, 0.2]],
   falsch: [[0, 329.63, 0.25, 0.18], [0.12, 261.63, 0.4, 0.16]],
   bestwert: [[0, 523.25, 0.2, 0.2], [0.08, 659.26, 0.2, 0.2], [0.16, 783.99, 0.55, 0.22]],
+  aufklappen: [[0, 2093, 0.09, 0.07], [0, 5651, 0.05, 0.025]],
 }
 
 function spielen(muster: Muster, oberton = true) {
@@ -135,4 +141,23 @@ export function reiterTon() {
 /** Nach einer Antwort; ein neuer Bestwert im Duell klingt anders als ein einfaches «Richtig» */
 export function antwortTon(art: 'richtig' | 'falsch' | 'bestwert') {
   if (stand.an && stand.antworten) spielen(KURZ[art], false)
+}
+
+export function aufklappTon() {
+  if (stand.an && stand.aufklappen) spielen(KURZ.aufklappen, false)
+}
+
+/**
+ * Für die ganze App, einmal angemeldet: Klappt etwas auf, eine Kachel mit Pfeil
+ * (details) oder ein Knopf, der etwas öffnet (aria-expanded), klickt es gläsern.
+ * Beim Zuklappen bleibt es still.
+ */
+export function aufklappenHoeren() {
+  document.addEventListener('click', (e) => {
+    const ziel = e.target instanceof Element ? e.target : null
+    if (!ziel) return
+    if (ziel.closest('[aria-expanded="false"]')) { aufklappTon(); return }
+    const summary = ziel.closest('summary')
+    if (summary && !summary.parentElement?.hasAttribute('open')) aufklappTon()
+  }, true)
 }

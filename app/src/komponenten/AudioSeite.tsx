@@ -1,4 +1,4 @@
-import { antwortTon, audioKontext, audioSetzen, reiterTon, type TonArt, tonSpielen, useAudio } from '../audio'
+import { antwortTon, audioKontext, aufklappTon, audioSetzen, reiterTon, type TonArt, tonSpielen, useAudio } from '../audio'
 
 /**
  * Reiter «Audio» in der Reisetasche (Michael, 2026-10-01): die Töne von Taktland
@@ -37,6 +37,12 @@ export function AudioSeite() {
                   umschalten={() => {
                     audioSetzen({ antworten: !audio.antworten })
                     if (!audio.antworten) antwortTon('richtig')
+                  }} />
+        <Schalter titel="Töne beim Aufklappen" text="Ein gläsernes Klicken, wenn sich etwas aufklappt"
+                  an={audio.aufklappen} gesperrt={aus}
+                  umschalten={() => {
+                    audioSetzen({ aufklappen: !audio.aufklappen })
+                    if (!audio.aufklappen) aufklappTon()
                   }} />
       </div>
       {aus && (

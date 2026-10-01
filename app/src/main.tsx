@@ -6,6 +6,7 @@ import { serviceWorkerAnmelden } from './serviceWorker'
 import { Gesperrt } from './komponenten/Gesperrt'
 import { useSperre } from './verfuegbar'
 import { oeffnenZaehlen } from './zaehlen'
+import { aufklappenHoeren } from './audio'
 
 /** Taktland, solange es verfügbar ist (src/verfuegbar.ts) */
 function Taktland() {
@@ -29,3 +30,4 @@ createRoot(document.getElementById('root')!).render(
 )
 
 serviceWorkerAnmelden()
+aufklappenHoeren()
