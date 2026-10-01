@@ -295,7 +295,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           Daraus ist Taktland entstanden, aus offenen Daten und mit Hilfe von KI. Es soll Lust
           aufs Bahnfahren machen und vielleicht auch andere in den Zug locken.»
         </blockquote>
-        <p className="mt-3 font-medium">Michael Veikko Seiler</p>
+        <p className="mt-3 font-medium">Michael Seiler</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
         <p className="mt-4 text-sm leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Name spielt auf den Taktfahrplan der Schweiz an. Umgesetzt mit Claude Code, die
