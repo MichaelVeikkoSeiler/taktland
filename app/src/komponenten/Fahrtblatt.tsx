@@ -11,6 +11,7 @@ import type {
 import { nachKennung, type Nachbarn, type StreckenWahl, wegSuchen } from './Strecke'
 import { Ladefehler } from './Ladefehler'
 import { Pikto } from './Pikto'
+import { kurve } from './Netzkarte'
 
 /** So viele Einträge je Art passen auf ein Blatt A4; zweiseitig doppelt so viele
  *  (Michael, 2026-09-27: «eine einfache Variante und eine schwierigere Variante»;
@@ -855,7 +856,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
                                                strokeLinejoin="round" />)}
       {land && <path d={land} fill="none" stroke={GRUND.grenze} strokeWidth={GRENZE_BREITE.land} strokeLinejoin="round" />}
       {fluesse.map((f, i) => (
-        <path key={`f${i}`} d={d(f.q, false)} fill="none" stroke={GRUND.fluss} strokeWidth={f.b >= 0.3 ? 1.6 : 1}
+        <path key={`f${i}`} d={kurve(f.q, 1)} fill="none" stroke={GRUND.fluss} strokeWidth={f.b >= 0.3 ? 1.6 : 1}
               strokeLinejoin="round" strokeLinecap="round" />
       ))}
       {seen.map((q, i) => (

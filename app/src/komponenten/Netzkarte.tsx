@@ -69,6 +69,23 @@ export function zwischen(stuecke: Stueck[], von: number, bis: number) {
 export const pfad = (pts: Array<[number, number]>) =>
   pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(5)} ${y.toFixed(5)}`).join('')
 
+/**
+ * Eine offene Linie als Kurve: durch die Mitten der Stücke, die Punkte der Quelle
+ * als Stützpunkte (Michael, 2026-10-01: Flüsse «extrem eckig»). Nur zum Zeichnen;
+ * die Kurve weicht an Ecken höchstens um die halbe Stücklänge ab.
+ */
+export function kurve(pts: ReadonlyArray<readonly [number, number]>, stellen = 5) {
+  const f = (v: number) => v.toFixed(stellen)
+  if (pts.length < 3) return pts.map(([x, y], i) => `${i ? 'L' : 'M'}${f(x)} ${f(y)}`).join('')
+  let d = `M${f(pts[0][0])} ${f(pts[0][1])}`
+  for (let i = 1; i < pts.length - 1; i++) {
+    const [x, y] = pts[i], [nx, ny] = pts[i + 1]
+    d += `Q${f(x)} ${f(y)} ${f((x + nx) / 2)} ${f((y + ny) / 2)}`
+  }
+  const [lx, ly] = pts[pts.length - 1]
+  return d + `L${f(lx)} ${f(ly)}`
+}
+
 /** Lage in der Zeichnung: x aus der Länge, y aus der Breite (nach Norden negativ) */
 export function lage(lat: number, lon: number): [number, number] {
   return [lon * LAENGE_ZU_BREITE, -lat]

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { bodenbedeckungLaden, kartengrundLaden } from '../daten'
 import { useVersteckt } from './Sehenswert'
 import type { BodenbedeckungDaten, KartengrundDaten, KodierterZug } from '../typen'
-import { LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
+import { kurve, LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
 
 /**
  * Der Grund der Karten (Michael, 2026-09-27: «den weissen Hintergrund
@@ -22,7 +22,7 @@ interface Grund {
 let vorrat: Grund | null = null
 let laden: Promise<Grund> | null = null
 
-function zug(z: KodierterZug, zu: boolean, faktor = 1e5): Zug {
+function zug(z: KodierterZug, zu: boolean, faktor = 1e5, rund = false): Zug {
   let [la, lo] = z.start
   const pts: Array<[number, number]> = [[lo / faktor * LAENGE_ZU_BREITE, -la / faktor]]
   for (let i = 0; i < z.d.length; i += 2) {
@@ -31,14 +31,14 @@ function zug(z: KodierterZug, zu: boolean, faktor = 1e5): Zug {
   }
   let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity]
   for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y) }
-  return { d: pfad(pts) + (zu ? 'Z' : ''), x0, x1, y0, y1 }
+  return { d: rund ? kurve(pts) : pfad(pts) + (zu ? 'Z' : ''), x0, x1, y0, y1 }
 }
 
 function lesen(d: KartengrundDaten): Grund {
   return {
     land: d.land.map((r) => zug(r, true).d).join(''),
     kantone: d.kanton.map((r) => zug(r, true)),
-    fluesse: d.fluesse.map((f) => ({ ...zug(f, false), b: f.b })),
+    fluesse: d.fluesse.map((f) => ({ ...zug(f, false, 1e5, true), b: f.b })),
     hoehen: d.hoehen.map((s) => ({ ab: s.ab_m, flaechen: s.ringe.map((r) => zug(r, true)) })),
   }
 }

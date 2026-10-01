@@ -55,7 +55,8 @@ ORTE_KLASSEN = ["Ort_2000-9999", "Ort_10000-49999", "Ort_50000-99999", "Ort_1000
                 "Ort_Groesser_1000000"]
 ORTE_AB_KLASSE = 0
 TOLERANZ_GRENZE_M = 100
-TOLERANZ_FLUSS_M = 80
+#: Flüsse mit allen Punkten der Quelle, gezeichnet als Kurve (Michael, 2026-10-01: «extrem eckig»)
+TOLERANZ_FLUSS_M = 0
 TOLERANZ_HOEHE_M = 60
 #: kleinere Flächen und Löcher fallen weg
 MIN_FLAECHE_M2 = 8 * RASTER_M * RASTER_M
