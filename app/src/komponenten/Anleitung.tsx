@@ -370,9 +370,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Ganz unten auf jeder Seite lässt sich der ganze Fortschritt löschen.
           </li>
           <li>
-            Ganz oben steht, von wann die geladene Version ist. Gibt es eine neuere, lädt
-            Taktland sie beim Öffnen oder wenn du es aus dem Hintergrund zurückholst, nicht
-            aber während einer Fahrt. «Aktualisieren» holt den neuesten Stand sofort. Der
+            Gibt es eine neuere Version, lädt Taktland sie von selbst beim Öffnen oder wenn
+            du es aus dem Hintergrund zurückholst, nicht aber während einer Fahrt. Der
             Fortschritt bleibt dabei erhalten.
           </li>
           <li>

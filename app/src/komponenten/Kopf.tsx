@@ -21,7 +21,6 @@ import startHell from '../assets/auftakt-start-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { useEffect } from 'react'
-import { Aktualisieren } from './Aktualisieren'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 
 export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'demo'
@@ -152,8 +151,9 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   const unterAktiv: string | null = fahrt ?? aktiv
   return (
     <header className="print:hidden border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
-      {/* Aktualisieren nur im Bild der Startseite (Michael, 2026-09-24) */}
-      {bild && <Auftakt key={schluessel} bild={bild} oben={startseite ? <Aktualisieren /> : undefined} />}
+      {/* ohne Knopf «Aktualisieren»: neue Versionen lädt die App von selbst (serviceWorker.ts;
+          Michael, 2026-10-01: «benötigen wir nicht mehr») */}
+      {bild && <Auftakt key={schluessel} bild={bild} />}
       <div className="flex items-center justify-between gap-4">
         {/* die Bildmarke vor dem Namen, statt des roten Strichs (Michael, 2026-09-27) */}
         {startseite
