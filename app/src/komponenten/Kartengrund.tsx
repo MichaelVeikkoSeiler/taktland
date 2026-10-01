@@ -156,11 +156,16 @@ export function FlussNamen({ grund, box, px, belegt = [], verh = 1.6 }: {
       {namen.map((n, i) => (
         <g key={n.name}>
           <path id={`${id}f${i}`} d={kurve(n.pts)} fill="none" />
-          <text fontSize={FLUSS_SCHRIFT * px} fontStyle="italic" dy={-0.35 * FLUSS_SCHRIFT * px}
-                className="fill-see-name stroke-see-halo" strokeWidth={2.5} paintOrder="stroke"
-                vectorEffect="non-scaling-stroke">
-            <textPath href={`#${id}f${i}`} startOffset="50%" textAnchor="middle">{n.name}</textPath>
-          </text>
+          {/* erst die Kontur aller Buchstaben, dann die Schrift: auf einer Kurve malt der
+              Browser sonst Buchstabe für Buchstabe, und die Kontur deckt den vorigen an
+              (Michael, 2026-10-01) */}
+          {[true, false].map((kontur) => (
+            <text key={String(kontur)} fontSize={FLUSS_SCHRIFT * px} fontStyle="italic" dy={-0.35 * FLUSS_SCHRIFT * px}
+                  className={kontur ? 'fill-see-halo stroke-see-halo' : 'fill-see-name'}
+                  strokeWidth={kontur ? 2 : undefined} strokeLinejoin="round" vectorEffect="non-scaling-stroke">
+              <textPath href={`#${id}f${i}`} startOffset="50%" textAnchor="middle">{n.name}</textPath>
+            </text>
+          ))}
         </g>
       ))}
     </g>

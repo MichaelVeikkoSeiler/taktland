@@ -876,10 +876,14 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
       {flussNamen.map((n, i) => (
         <g key={n.name}>
           <path id={`${kennung}f${i}`} d={kurve(n.pts, 1)} fill="none" />
-          <text fontSize={FLUSS_SCHRIFT} fontStyle="italic" dy={-0.35 * FLUSS_SCHRIFT} fill={FLUSS_NAME}
-                stroke="#fff" strokeWidth={3} paintOrder="stroke">
-            <textPath href={`#${kennung}f${i}`} startOffset="50%" textAnchor="middle">{n.name}</textPath>
-          </text>
+          {/* erst die Kontur aller Buchstaben, dann die Schrift (wie in der App) */}
+          {[true, false].map((kontur) => (
+            <text key={String(kontur)} fontSize={FLUSS_SCHRIFT} fontStyle="italic" dy={-0.35 * FLUSS_SCHRIFT}
+                  fill={kontur ? '#fff' : FLUSS_NAME} stroke={kontur ? '#fff' : undefined}
+                  strokeWidth={kontur ? 2.4 : undefined} strokeLinejoin="round">
+              <textPath href={`#${kennung}f${i}`} startOffset="50%" textAnchor="middle">{n.name}</textPath>
+            </text>
+          ))}
         </g>
       ))}
       <polyline points={linie(0, ende)} fill="none" stroke={WEG} strokeWidth={STRECKE_BREITE} strokeLinejoin="round" />
