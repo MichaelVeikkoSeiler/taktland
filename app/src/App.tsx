@@ -211,8 +211,8 @@ export default function App() {
             Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot einer Bundes- oder Privatbahn.
             Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
-            sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist ein Lernspiel
-            und nicht für die Reiseplanung gedacht.
+            sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist zum Lernen,
+            Nachschlagen und Mitfahren gedacht, nicht für die Reiseplanung.
           </p>
           <p className="mt-2">
             <a href="#/anleitung" className="underline underline-offset-2 hover:text-sbb-black
