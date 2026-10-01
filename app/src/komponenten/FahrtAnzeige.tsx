@@ -9,7 +9,7 @@ import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
-import { KartengrundEbene, useKartengrund } from './Kartengrund'
+import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
@@ -425,6 +425,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
       <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />
       <SeenFlaechen seen={seen} box={box} verh={verh} />
       <SeenNamen seen={seen} box={box} px={px} verh={verh} />
+      <FlussNamen grund={kartengrund} box={box} px={px} verh={verh} />
       <SehenswertEbene daten={sehenswert.s} box={box} px={px} verh={verh} waehlen={setAuswahl} />
       {netz.map((st, i) => (
         <path key={i} d={pfad(st.x.map((x, j) => [x, st.y[j]]))} fill="none" strokeWidth={1}
@@ -577,7 +578,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
         Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), Linien anderer Bahnen aus
         dem Schienennetz des BAV. Auf Strecken anderer Bahnen ist der Weg gerade von Bahnhof zu
         Bahnhof gezogen. Rot der geschätzte Standort.
-        {seen && ' Seen und Flüsse: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab.'}
+        {seen && ' Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. Flüsse: swissTLMRegio, swisstopo.'}
         {kartengrund && ' Höhenstufen ab 1000, 2000 und 3000 m: swissALTIRegio, swisstopo, vereinfacht; Wald und Siedlung: swissTLMRegio, swisstopo, vereinfacht, kleine Flächen fehlen; Landes- und Kantonsgrenzen: BFS.'}
         {sehenswert.s && ' Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften): BAFU. Kulturgüter erscheinen erst näher; ein Tipp auf ein Zeichen zeigt, was es ist, ein Tipp in der Legende blendet eine Kategorie aus oder ein.'}
         {' Zoomen mit zwei Fingern oder mit «+» und «−»; näher gezoomt lässt sich die Karte verschieben.'}

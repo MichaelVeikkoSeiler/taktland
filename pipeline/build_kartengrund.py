@@ -5,9 +5,11 @@ Hintergrund langweilig»; Muster 1, 2 und 3).
 - land: die Schweiz als Fläche und die Kantone, aus den generalisierten Grenzen
   des BFS (g1, Stand 2026-01-01, data.geo.admin.ch). Die Karte zeichnet das
   Ausland leicht grau und die Kantonsgrenzen fein.
-- fluesse: die breiteren Fliessgewässer aus Swiss Map Vector 1000 von swisstopo
-  (Ebene T26_DKM1M_GEWAESSER_LIN, Strichbreite der Landeskarte LB1000 ab
-  FLUSS_AB_MM), mit Namen, wie die Quelle sie führt.
+- fluesse: die grösseren Fliessgewässer aus swissTLMRegio von swisstopo (Ebene
+  tlmregio_hydrography_flowingwater, objval «Fluss», klasse bis FLUSS_BIS_KLASSE;
+  ohne Seeachsen und eingedolte Stücke), Stücke gleichen Namens zu Linien
+  verbunden, mit dem Namen, wie die Quelle ihn führt (Michael, 2026-10-01:
+  «Flüsse beschriften»; vorher Swiss Map Vector 1000, dort ohne die meisten Namen).
 - orte: Ortsnamen der Landeskarte 1:1 Million (Swiss Map Vector 1000, Ebene
   T03_DKM1M_ORTSCHAFT_PKT_ANNO) ab ORTE_AB_KLASSE, mit der Einwohnerklasse der
   Quelle und der Mitte der Beschriftung, wie sie auf der Landeskarte steht; für
@@ -49,14 +51,14 @@ HOEHEN_STUFEN = [1000, 2000, 3000]
 RASTER_M = 200
 #: Glättung des Rasters in Zellen (Gauss), gegen Treppen und Zacken
 GLAETTEN = 1.2
-FLUSS_AB_MM = 0.24
+#: klasse der Quelle: 4 die grössten (Aare, Rhein, Reuss …), 5 etwa Emme, Linth, Kander
+FLUSS_BIS_KLASSE = 5
 #: Einwohnerklassen der Quelle, klein nach gross; ab «2000-9999» kommen sie mit
 ORTE_KLASSEN = ["Ort_2000-9999", "Ort_10000-49999", "Ort_50000-99999", "Ort_100000-1000000",
                 "Ort_Groesser_1000000"]
 ORTE_AB_KLASSE = 0
 TOLERANZ_GRENZE_M = 100
-#: Flüsse mit allen Punkten der Quelle, gezeichnet als Kurve (Michael, 2026-10-01: «extrem eckig»)
-TOLERANZ_FLUSS_M = 0
+TOLERANZ_FLUSS_M = 25
 TOLERANZ_HOEHE_M = 60
 #: kleinere Flächen und Löcher fallen weg
 MIN_FLAECHE_M2 = 8 * RASTER_M * RASTER_M
@@ -129,19 +131,54 @@ def wkb_linien(b):
     return raus
 
 
-def fluesse():
-    gpkg = smv_laden()
-    c = sqlite3.connect(gpkg)
-    x0, y0, x1, y1 = RAHMEN
+def zusammenfuegen(stuecke):
+    """Stücke, die an einem Ende zusammenstossen, zu längeren Linien verbinden;
+    an Verzweigungen (mehr als zwei Enden an einem Punkt) bleibt die Linie getrennt"""
+    stuecke = [list(z) for z in stuecke if len(z) >= 2]
+    enden = defaultdict(list)
+    for i, z in enumerate(stuecke):
+        enden[tuple(z[0])].append(i)
+        enden[tuple(z[-1])].append(i)
+    frei = set(range(len(stuecke)))
     raus = []
-    for shape, name, lb in c.execute(
-            "select SHAPE, NAME, LB1000 from T26_DKM1M_GEWAESSER_LIN where LB1000 >= ?", (FLUSS_AB_MM,)):
-        for z in wkb_linien(shape):
-            if not any(x0 <= e <= x1 and y0 <= n <= y1 for e, n in z):
-                continue
+    while frei:
+        i = min(frei)
+        frei.discard(i)
+        linie = stuecke[i][:]
+        for vorn in (False, True):
+            while True:
+                p = tuple(linie[0] if vorn else linie[-1])
+                weiter = [j for j in enden[p] if j in frei]
+                if len(enden[p]) != 2 or len(weiter) != 1:
+                    break
+                j = weiter[0]
+                frei.discard(j)
+                z = stuecke[j]
+                if vorn:
+                    z = z if tuple(z[-1]) == p else z[::-1]
+                    linie = z[:-1] + linie
+                else:
+                    z = z if tuple(z[0]) == p else z[::-1]
+                    linie = linie + z[1:]
+        raus.append(linie)
+    return raus
+
+
+def fluesse():
+    from build_bodenbedeckung import laden
+    c = sqlite3.connect(laden())
+    je = defaultdict(list)
+    for geom, name, klasse in c.execute(
+            "select geom, namn, klasse from tlmregio_hydrography_flowingwater "
+            "where objval = 'Fluss' and klasse <= ? order by id", (FLUSS_BIS_KLASSE,)):
+        for z in wkb_linien(geom):
+            je[(name or "", klasse)].append([tuple(p[:2]) for p in z])
+    raus = []
+    for (name, klasse), stuecke in sorted(je.items()):
+        for z in zusammenfuegen(stuecke):
             z = vereinfachen(z, TOLERANZ_FLUSS_M)
             if len(z) >= 2:
-                eintrag = {"b": round(float(lb), 2), **kodieren(z)}
+                eintrag = {"k": klasse, **kodieren(z)}
                 if name:
                     eintrag["name"] = name
                 raus.append(eintrag)
@@ -221,11 +258,12 @@ def hoehen():
 def main():
     raus = {
         "quellen": ["BFS, generalisierte Gemeindegrenzen g1 (Stand 2026-01-01)",
-                    "swisstopo, Swiss Map Vector 1000", "swisstopo, swissALTIRegio"],
+                    "swisstopo, Swiss Map Vector 1000", "swisstopo, swissTLMRegio (Flüsse)",
+                    "swisstopo, swissALTIRegio"],
         "geladen": date.today().isoformat(),
         "hinweis": "Nur zum Zeichnen: Ringe und Linien als [Breite, Länge] mal 100000, start und "
                    f"Differenzen d. Höhen gemittelt auf {RASTER_M} m und geglättet; keine Angaben. "
-                   "orte: klasse 1 = 2000-9999 Einwohner, 2 = 10000-49999, 3 = 50000-99999, "
+                   "fluesse: k = klasse der Quelle (4 die grössten). orte: klasse 1 = 2000-9999 Einwohner, 2 = 10000-49999, 3 = 50000-99999, "
                    "4 = 100000-1000000, 5 = über 1 Million laut Quelle; lage = Mitte der Beschriftung; name mit \\n, wo die Landeskarte ihn auf zwei Zeilen setzt.",
         **grenzen(),
         "fluesse": fluesse(),

@@ -116,8 +116,8 @@ data/sehenswert.json  Gipfel mit Höhe (swisstopo), Kulturgüter von nationaler 
 data/bodenbedeckung.json  Wald und Siedlung aus swissTLMRegio (swisstopo), vereinfacht,
              kleine Flächen fehlen, nur zum Zeichnen (pipeline/build_bodenbedeckung.py)
 data/flaechen.json  BLN, Pärke und Moorlandschaften (BAFU), vereinfachte Umrisse
-data/kartengrund.json  Grund aller Karten: Schweiz und Kantone (BFS g1), Flüsse (Swiss Map
-             Vector 1000), Höhenstufen ab 1000, 2000 und 3000 m (swissALTIRegio), Ortsnamen der
+data/kartengrund.json  Grund aller Karten: Schweiz und Kantone (BFS g1), Flüsse mit Namen
+             (swissTLMRegio, beschriftet in der App), Höhenstufen ab 1000, 2000 und 3000 m (swissALTIRegio), Ortsnamen der
              Landeskarte 1:1 Million ab 2000 Einwohnern für das Fahrtblatt, nur zum
              Zeichnen (pipeline/build_kartengrund.py, braucht rasterio, scipy, scikit-image)
 data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3D

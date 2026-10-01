@@ -460,7 +460,8 @@ export interface KartengrundDaten {
   /** die Kantone, Ringe */
   kanton: KodierterZug[]
   /** Fliessgewässer; b: Strichbreite der Landeskarte in mm */
-  fluesse: Array<KodierterZug & { b: number; name?: string }>
+  /** k: Klasse der Quelle (swissTLMRegio), 4 die grössten */
+  fluesse: Array<KodierterZug & { k: number; name?: string }>
   /** je Stufe die Flächen darüber */
   hoehen: Array<{ ab_m: number; ringe: KodierterZug[] }>
   /** Ortsnamen der Landeskarte 1:1 Million: klasse 1 = 2000-9999 Einwohner … 5 = über

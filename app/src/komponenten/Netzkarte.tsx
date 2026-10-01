@@ -2,7 +2,7 @@ import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { karteLaden } from '../daten'
 import type { KartenDaten } from '../typen'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
-import { KartengrundEbene, useKartengrund } from './Kartengrund'
+import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert, useVersteckt } from './Sehenswert'
 
 /** Verhältnis Meter je Grad Länge zu Breite in der Schweiz: x = Länge mal das */
@@ -441,6 +441,7 @@ export function Netzkarte({
           </g>
         ))}
         <SeenNamen seen={seen} box={box} px={px} belegt={belegt} verh={verh} />
+        <FlussNamen grund={kartengrund} box={box} px={px} belegt={belegt} verh={verh} />
         <SehenswertEbene daten={sehenswert.s} box={box} px={px} verh={verh} belegt={belegt} waehlen={setAuswahl} />
         {zeichnen?.(px, box)}
         {/* Bahnhöfe so gross wie der rote Standortpunkt (Michael, 2026-09-26) */}
@@ -468,7 +469,7 @@ export function Netzkarte({
       {!voll && (
         <figcaption className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           {beschriftung}{' '}
-          {seen && 'Seen und Flüsse: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. '}
+          {seen && 'Seen: Swiss Map Vector 1000, swisstopo; kleine Seen fehlen in diesem Massstab. Flüsse: swissTLMRegio, swisstopo. '}
           {kartengrund && 'Höhenstufen ab 1000, 2000 und 3000 m: swissALTIRegio, swisstopo, vereinfacht; Wald und Siedlung: swissTLMRegio, swisstopo, vereinfacht, kleine Flächen fehlen; Landes- und Kantonsgrenzen: BFS. '}
           {sehenswert.s && 'Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften): BAFU. Kulturgüter erscheinen erst näher. Ein Tipp auf ein Zeichen zeigt, was es ist; ein Tipp in der Legende blendet eine Kategorie aus oder ein. '}
           Zoomen mit zwei Fingern, mit «+» und «−» oder mit Strg und dem Mausrad; Ziehen verschiebt

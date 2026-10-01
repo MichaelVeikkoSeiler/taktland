@@ -816,7 +816,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
     k, d: bb[k].map((r) => punkte(r, bb.faktor)).filter(sichtbar).map((q) => d(q)).join(''),
   })) : []
   const kantone = (g?.kanton ?? []).map(punkte).filter(sichtbar)
-  const fluesse = (g?.fluesse ?? []).map((f) => ({ q: punkte(f), b: f.b })).filter((f) => sichtbar(f.q))
+  const fluesse = (g?.fluesse ?? []).map((f) => ({ q: punkte(f), k: f.k })).filter((f) => sichtbar(f.q))
   const gesetzt = platzieren(fw, p, eintraege, B, H)
   // Schrift auf der gedrehten Karte gedreht wie der Nordpfeil (Michael, 2026-09-27:
   // «das vereinfacht das Drehen des Blattes»)
@@ -856,7 +856,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
                                                strokeLinejoin="round" />)}
       {land && <path d={land} fill="none" stroke={GRUND.grenze} strokeWidth={GRENZE_BREITE.land} strokeLinejoin="round" />}
       {fluesse.map((f, i) => (
-        <path key={`f${i}`} d={kurve(f.q, 1)} fill="none" stroke={GRUND.fluss} strokeWidth={f.b >= 0.3 ? 1.6 : 1}
+        <path key={`f${i}`} d={kurve(f.q, 1)} fill="none" stroke={GRUND.fluss} strokeWidth={f.k <= 4 ? 1.6 : 1}
               strokeLinejoin="round" strokeLinecap="round" />
       ))}
       {seen.map((q, i) => (
