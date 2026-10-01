@@ -20,8 +20,9 @@ import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { useEffect } from 'react'
 import { Auftakt, type AuftaktBild } from './Auftakt'
+import { reiterTon } from '../audio'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -39,6 +40,8 @@ const REISETASCHE: Array<{ bereich: Bereich; text: string; adresse: string }> = 
   { bereich: 'logbuch', text: 'Logbuch', adresse: '#/logbuch' },
   { bereich: 'sammelheft', text: 'Sammelheft', adresse: '#/sammelheft' },
   { bereich: 'favoriten', text: 'Favoriten', adresse: '#/favoriten' },
+  // Michael, 2026-10-01: «neuen Reiter Audio»
+  { bereich: 'audio', text: 'Audio', adresse: '#/audio' },
 ]
 
 /** Die Unterreiter von «Fahren» (Michael, 2026-09-29: «Fahren muss auch drei
@@ -131,7 +134,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
   // die ganze Reisetasche mit dem Bild des Logbuchs
   const bild = fahrt ? BILDER.fahrt
-    : aktiv === 'sammelheft' || aktiv === 'favoriten' ? BILDER.logbuch : BILDER[schluessel]
+    : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' ? BILDER.logbuch : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
@@ -162,6 +165,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
           const hier = (h.schluessel === 'info' && anleitung) || (aktiv !== null && h.bereiche.includes(aktiv))
           return (
             <a key={h.schluessel} href={h.adresse ?? letzteObjekte.adresse} aria-current={hier ? 'page' : undefined}
+               onClick={reiterTon}
                className={`shrink-0 border-b-2 pb-2 pt-1 font-medium transition-colors ${hier
                  ? 'border-sbb-black text-sbb-black dark:border-sbb-white dark:text-sbb-white'
                  : 'border-transparent text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
@@ -177,7 +181,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
           {unter.liste.map((o) => {
             const hier = o.bereich === unterAktiv
             return (
-              <a key={o.bereich} href={o.adresse} aria-current={hier ? 'page' : undefined}
+              <a key={o.bereich} href={o.adresse} aria-current={hier ? 'page' : undefined} onClick={reiterTon}
                  className={`rounded-lg py-1.5 text-center font-medium ${unter.raster === 'flex' ? 'px-3' : 'px-1'} transition-colors sm:px-3 ${hier
                    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                    : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>

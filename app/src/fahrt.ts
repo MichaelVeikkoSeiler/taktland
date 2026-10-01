@@ -11,6 +11,7 @@
  */
 import type { FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten, StreckenAbschnitt, StreckenGeometrie, StreckenNetz,
   TlmBauwerk } from './typen'
+import { audioLesen } from './audio'
 
 /** Meter je Grad in der Schweiz: für kurze Abstände genau genug */
 const M_BREITE = 111_200
@@ -337,6 +338,8 @@ export function tonVorbereiten(): Ton {
   const ctx = new Kontext()
   void ctx.resume()
   return (art) => {
+    // der Hauptschalter unter Reisetasche → Audio schaltet auch die Meldungen stumm
+    if (!audioLesen().an) return
     const jetzt = ctx.currentTime
     for (const [beginn, hoehe, ausklang] of TOENE[art]) {
       // Grundton und die Oktave darüber, leiser

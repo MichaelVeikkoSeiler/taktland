@@ -180,6 +180,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Das Logbuch hält jede Fahrt fest, mit Notizen und von Hand eingetragenen Fahrten.
             Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren
             hast; «Fehlt noch» kennt nur die der SBB. Favoriten sind Bahnhöfe mit Stern.
+            Unter «Audio» lassen sich alle Töne und der Ton beim Wechsel der Reiter ausschalten.
           </li>
           <li>
             Alles bleibt im Browser dieses Geräts, ohne Konto. Handy und Computer zählen
