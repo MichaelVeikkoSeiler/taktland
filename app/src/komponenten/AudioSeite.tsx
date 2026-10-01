@@ -9,6 +9,7 @@ const ARTEN: Array<{ art: TonArt; name: string; klang: string }> = [
   { art: 'bruecke', name: 'Brücke', klang: 'zweimal ein heller, kurzer Ton' },
   { art: 'bahnhof', name: 'Bahnhof', klang: 'zwei Töne aufwärts' },
   { art: 'sehenswert', name: 'Sehenswertes', klang: 'ein einzelner Ton' },
+  { art: 'bahnuebergang', name: 'Bahnübergang', klang: 'drei kurze Töne im Wechsel' },
   { art: 'ankunft', name: 'Ankunft am Ziel', klang: 'drei Töne aufwärts' },
 ]
 

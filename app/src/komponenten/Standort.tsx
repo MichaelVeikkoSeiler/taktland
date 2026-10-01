@@ -251,7 +251,7 @@ const M_JE_EINHEIT = 111_200
 /**
  * Kleine Karte rund um den Standort, gezeichnet aus den Daten wie die Karten
  * bei Tunneln und Brücken: grau die Linien, Ringe die Bahnhöfe, rot Tunnel
- * und Brücken, Quadrate die Bahnübergänge, ein gefüllter Punkt der Standort.
+ * und Brücken, Kreuze die Bahnübergänge, ein gefüllter Punkt der Standort.
  * Zoomen und Verschieben kann man wie auf jeder Karte.
  */
 function UmgebungsKarte({ stand, linien, karte, daten, bahnhoefe, naechsteLinie, seiten }: {
@@ -305,8 +305,9 @@ function UmgebungsKarte({ stand, linien, karte, daten, bahnhoefe, naechsteLinie,
           <circle key={`b${b.kennung}`} cx={b.x} cy={b.y} r={1.8 * px} className="fill-sbb-red" />
         ))}
         {objekte('bahnuebergaenge').filter((u) => drin(u.x, u.y)).map((u) => (
-          <rect key={`u${u.kennung}`} x={u.x - 2.2 * px} y={u.y - 2.2 * px} width={4.4 * px}
-                height={4.4 * px} className="fill-sbb-charcoal dark:fill-sbb-white" />
+          <path key={`u${u.kennung}`} strokeWidth={2} strokeLinecap="round" vectorEffect="non-scaling-stroke"
+                d={`M${u.x - 3 * px} ${u.y - 3 * px}L${u.x + 3 * px} ${u.y + 3 * px}M${u.x + 3 * px} ${u.y - 3 * px}L${u.x - 3 * px} ${u.y + 3 * px}`}
+                className="stroke-fahrt-uebergang dark:stroke-fahrt-uebergang-hell" />
         ))}
         {genauR > 0 && (
           <circle cx={cx} cy={cy} r={genauR} className="fill-sbb-charcoal/10 dark:fill-sbb-white/15" />
@@ -329,7 +330,7 @@ function UmgebungsKarte({ stand, linien, karte, daten, bahnhoefe, naechsteLinie,
           Gezeichnet aus den Daten der SBB und des BAV, ohne Strassen und ohne Kartenbilder eines
           fremden Dienstes. Der grosse gefüllte Punkt ist dein Standort, der Kreis darum seine
           Genauigkeit laut Gerät. Ringe: Bahnhöfe. Rot: Tunnel (als Strecke, wo die Länge nur in
-          eine Richtung passt oder swissTLM3D Anfang und Ende zeigt, sonst als Punkt) und Brücken (kleine Punkte). Quadrate:
+          eine Richtung passt oder swissTLM3D Anfang und Ende zeigt, sonst als Punkt) und Brücken (kleine Punkte). Kreuze:
           Bahnübergänge. Punkte stehen dort, wo ihre Quelle die Lage angibt, nicht immer genau
           auf der gezeichneten Linie. Ein Tipp auf einen Bahnhof oder eine Linie führt dorthin.
         </>

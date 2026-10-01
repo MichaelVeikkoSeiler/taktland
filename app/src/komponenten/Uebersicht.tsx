@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { uebersichtLaden } from '../daten'
 import { datum, erlebtAm } from '../erlebt'
-import type { BrueckenEintrag, TunnelEintrag, Uebersicht as Daten } from '../typen'
+import type { BrueckenEintrag, TunnelEintrag, UebergangEintrag, Uebersicht as Daten } from '../typen'
 import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
 import { genau } from './Objekte'
 import { StreckeKarte } from './StreckeKarte'
@@ -9,7 +9,7 @@ import { Ladefehler } from './Ladefehler'
 import { Auswahl } from './Auswahl'
 import { ohneKuerzel } from '../kuerzel'
 
-export type UebersichtArt = 'tunnel' | 'bruecken'
+export type UebersichtArt = 'tunnel' | 'bruecken' | 'bahnuebergaenge'
 
 /** Was die Übersicht sich merkt, solange die App offen ist: Wer von einer
  *  Linie zurückkommt, landet auf derselben Seite. */
@@ -21,7 +21,13 @@ export interface UebersichtStand {
 
 type Tunnel = TunnelEintrag & { linie: number }
 type Bruecke = BrueckenEintrag & { linie: number }
-type Eintrag = Tunnel | Bruecke
+type Uebergang = UebergangEintrag & { linie: number }
+type Eintrag = Tunnel | Bruecke | Uebergang
+
+/** Bahnübergänge ohne Namen in der Quelle */
+const OHNE_NAMEN = 'ohne Namen'
+const nameVon = (e: Eintrag) => (e.name === null ? OHNE_NAMEN : ohneKuerzel(e.name))
+const kantonVon = (e: Eintrag) => ('kanton' in e ? e.kanton : null)
 
 interface Sortierung {
   wert: string
@@ -33,7 +39,8 @@ interface Sortierung {
 }
 
 const nachName = (a: Eintrag, b: Eintrag) =>
-  ohneKuerzel(a.name).localeCompare(ohneKuerzel(b.name), 'de-CH', { sensitivity: 'base' })
+  (a.name === null ? 1 : 0) - (b.name === null ? 1 : 0)
+  || nameVon(a).localeCompare(nameVon(b), 'de-CH', { sensitivity: 'base' })
 
 /** Einträge ohne Angabe stehen am Schluss, nicht als 0 */
 function nachZahl(wert: (e: Eintrag) => number | null, absteigend: boolean) {
@@ -51,7 +58,7 @@ const nachLinie: Sortierung = {
   marke: (e) => `Linie ${e.linie}`,
 }
 const alphabetisch: Sortierung = {
-  wert: 'alphabet', text: 'Alphabetisch', vergleich: nachName, marke: (e) => ohneKuerzel(e.name),
+  wert: 'alphabet', text: 'Alphabetisch', vergleich: nachName, marke: nameVon,
 }
 
 const TEXTE = {
@@ -82,6 +89,22 @@ const TEXTE = {
       nachLinie,
     ] as Sortierung[],
   },
+  bahnuebergaenge: {
+    titel: 'Bahnübergänge',
+    mehrzahl: 'Bahnübergänge',
+    suche: 'Bahnübergang, Sicherungsart oder Liniennummer',
+    sortierungen: [
+      nachLinie,
+      alphabetisch,
+      { wert: 'sicherung', text: 'Nach Sicherungsart',
+        vergleich: (a, b) => {
+          const [x, y] = [(a as Uebergang).sicherungsart, (b as Uebergang).sicherungsart]
+          if (x === null || y === null) return x === y ? nachLinie.vergleich(a, b) : x === null ? 1 : -1
+          return x.localeCompare(y, 'de-CH') || nachLinie.vergleich(a, b)
+        },
+        marke: (e) => (e as Uebergang).sicherungsart ?? 'Sicherungsart: keine Angabe' },
+    ] as Sortierung[],
+  },
 }
 
 /** Die erste Sortierung ist die, mit der die Übersicht öffnet */
@@ -107,14 +130,14 @@ export function Uebersicht({ art, stand, aendern }: {
   stand: UebersichtStand
   aendern: (neu: UebersichtStand) => void
 }) {
-  const [daten, setDaten] = useState<Daten<TunnelEintrag | BrueckenEintrag> | null>(null)
+  const [daten, setDaten] = useState<Daten<TunnelEintrag | BrueckenEintrag | UebergangEintrag> | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const t = TEXTE[art]
   const sortierung = t.sortierungen.find((s) => s.wert === stand.sortierung) ?? t.sortierungen[0]
 
   useEffect(() => {
     let abgebrochen = false
-    uebersichtLaden<TunnelEintrag | BrueckenEintrag>(art)
+    uebersichtLaden<TunnelEintrag | BrueckenEintrag | UebergangEintrag>(art)
       .then((d) => { if (!abgebrochen) { setDaten(d); setFehler(null) } })
       .catch((e: Error) => { if (!abgebrochen) setFehler(e.message) })
     return () => { abgebrochen = true }
@@ -136,8 +159,9 @@ export function Uebersicht({ art, stand, aendern }: {
   const treffer = useMemo(() => {
     const b = vereinfachen(stand.begriff.trim())
     const liste = b
-      ? alle.filter((e) => vereinfachen(e.name).includes(b) || String(e.linie).startsWith(b)
-                          || vereinfachen(e.kanton ?? '').includes(b))
+      ? alle.filter((e) => vereinfachen(nameVon(e)).includes(b) || String(e.linie).startsWith(b)
+                          || vereinfachen(kantonVon(e) ?? '').includes(b)
+                          || vereinfachen((e as Uebergang).sicherungsart ?? '').includes(b))
       : alle
     return [...liste].sort(sortierung.vergleich)
   }, [alle, stand.begriff, sortierung])
@@ -153,17 +177,23 @@ export function Uebersicht({ art, stand, aendern }: {
           Die erfassten Tunnel aus den offenen Daten der SBB, jeder mit der Linie, auf der er
           erfasst ist. Länge und Jahr der ersten Inbetriebnahme stehen wie in der Quelle.
         </p>
-      ) : (
+      ) : art === 'bruecken' ? (
         <p className="mt-2 leading-relaxed">
           Die erfassten Brücken aus den offenen Daten der SBB, jede mit der Linie, auf der sie
           erfasst ist. Länge und Baujahr einer Brücke stehen nicht in den Daten.
         </p>
+      ) : (
+        <p className="mt-2 leading-relaxed">
+          Die erfassten Bahnübergänge aus den offenen Daten der SBB, jeder mit der Linie, auf der er
+          erfasst ist. Sicherungsart und gekreuzte Gleise stehen wie in der Quelle, auch die Kürzel.
+          Bahnübergänge anderer Bahnen stehen nicht in diesen Daten.
+        </p>
       )}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Ein Tipp auf einen Eintrag öffnet die Liste seiner Linie und zeigt ihn oben.
-        {daten?.ohne_seite ? <> {daten.ohne_seite} Brücken liegen auf Linien ohne eigene
+        {daten?.ohne_seite ? <> {daten.ohne_seite} {t.mehrzahl} liegen auf Linien ohne eigene
           Seite in Taktland: Sie haben weniger als zwei Bahnhöfe in Taktland und keinen
-          Tunnel. Diese Brücken stehen trotzdem hier, nur ohne Verweis.</> : null}
+          Tunnel. Diese {t.mehrzahl} stehen trotzdem hier, nur ohne Verweis.</> : null}
       </p>
       <StreckeKarte />
 
@@ -242,13 +272,17 @@ function Zeile({ e, linie, art, stelle }: {
 }) {
   const t = e as Tunnel
   const b = e as Bruecke
-  const erlebt = erlebtAm(art === 'tunnel' ? 'tunnel' : 'bruecke', `${e.linie}:${stelle}`)
+  const u = e as Uebergang
+  const erlebt = erlebtAm(art === 'tunnel' ? 'tunnel' : art === 'bruecken' ? 'bruecke' : 'bahnuebergang', `${e.linie}:${stelle}`)
   const teile = art === 'tunnel'
     ? [laenge(t.laenge_m),
        t.inbetriebnahme_jahr === null ? 'Jahr: keine Angabe' : `erstmals in Betrieb ${t.inbetriebnahme_jahr}`,
        t.tunnelsystem ? `Tunnelsystem «${t.tunnelsystem}»` : 'Tunnelsystem: keine Angabe',
        t.kanton ? `Kanton «${t.kanton}»` : 'Kanton: keine Angabe']
-    : [b.kanton ? `Kanton «${b.kanton}»` : 'Kanton: keine Angabe', baueinheiten(b.baueinheiten)]
+    : art === 'bruecken' ? [b.kanton ? `Kanton «${b.kanton}»` : 'Kanton: keine Angabe', baueinheiten(b.baueinheiten)]
+    : [u.sicherungsart ? `Sicherungsart «${u.sicherungsart}»` : 'Sicherungsart: keine Angabe',
+       u.gleise === null ? 'gekreuzte Gleise: keine Angabe'
+         : `${u.gleise} ${u.gleise === 1 ? 'gekreuztes Gleis' : 'gekreuzte Gleise'}`]
   const wo = [
     `Linie ${e.linie}`,
     linie?.name ?? 'Name der Linie: keine Angabe',
@@ -257,9 +291,9 @@ function Zeile({ e, linie, art, stelle }: {
 
   const inhalt = (
     <span className="min-w-0">
-      <span className="block font-medium text-sbb-black dark:text-sbb-white">{ohneKuerzel(e.name)}</span>
+      <span className="block font-medium text-sbb-black dark:text-sbb-white">{nameVon(e)}</span>
       <span className="block text-sm text-sbb-black dark:text-sbb-white">
-        {teile.join(' · ')}{ohneKuerzel(e.name) !== e.name && ` · Name laut Quelle: ${e.name}`}
+        {teile.join(' · ')}{e.name !== null && ohneKuerzel(e.name) !== e.name && ` · Name laut Quelle: ${e.name}`}
       </span>
       {art === 'tunnel' && t.bemerkung && (
         <span className="block text-sm text-sbb-black dark:text-sbb-white">
@@ -270,7 +304,7 @@ function Zeile({ e, linie, art, stelle }: {
         {wo}{linie?.seite ? '' : ' · ohne eigene Seite in Taktland'}
       </span>
       {erlebt !== null && (
-        <span className="block text-sm font-medium text-sbb-green">✓ Beim Fahren durchfahren am {datum(erlebt)}</span>
+        <span className="block text-sm font-medium text-sbb-green">✓ Beim Fahren {art === 'bahnuebergaenge' ? 'überquert' : 'durchfahren'} am {datum(erlebt)}</span>
       )}
     </span>
   )

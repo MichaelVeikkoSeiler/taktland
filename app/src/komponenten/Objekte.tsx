@@ -78,7 +78,8 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
     : alle.map((e, stelle) => ({ e, stelle })))
     .map(({ e, stelle }) => ({
       kennung: `${nr}:${stelle}`,
-      name: art === 'netz' ? `${e.von as string} – ${e.bis as string}` : String(e.name),
+      name: art === 'netz' ? `${e.von as string} – ${e.bis as string}`
+        : e.name == null ? 'ohne Namen' : ohneKuerzel(String(e.name)),
       km: typeof e.km === 'number' ? e.km : typeof e.km_von === 'number' ? e.km_von : null,
       bis: typeof e.km_bis === 'number' ? e.km_bis : null,
     }))
@@ -119,7 +120,7 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
         </div>
       )}
 
-      {profil && art !== 'bahnuebergaenge' && (
+      {profil && (
         <ObjektKarte art={art} linie={nr} markiert={gewaehlt ? `${nr}:${markiert}` : null}
                      objekte={karteObjekte}
                      waehlen={(kennung) => waehlen(Number(kennung.split(':')[1]))} />

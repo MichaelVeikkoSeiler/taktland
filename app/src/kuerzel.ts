@@ -1,5 +1,5 @@
 /**
- * Kürzel vor den Namen von Brücken und Tunneln in den Quellen der SBB
+ * Kürzel vor den Namen von Brücken, Tunneln und Bahnübergängen in den Quellen der SBB
  * («PDu Bahndamm», «U Kantonsstrasse», «PI de Clarens», «Sot. …»). Was sie
  * bedeuten, erklärt die Quelle nicht (docs/datenlage.md); Taktland löst sie
  * darum nicht auf. Im Fahrtmodus stören sie (Michael, 2026-09-26: «eher
@@ -13,6 +13,8 @@ const KUERZEL = new Set([
   'BDu', 'PDu', 'WDu', 'KDu', 'LDu', 'DU', 'BU', 'Vi', 'Viad', 'Via', 'Via.', 'Br', 'Br.', 'Aq', 'AQ',
   'Attr.', 'Attr', 'Sent.', 'Rus.', 'Rusc.', 'Rus.sot.', 'Sot.Str.', 'Str.sot.', 'Sot.rus.', 'SM',
   'Überw.', 'Gal', 'TC',
+  // vor den Namen der Bahnübergänge, gezählt in data/raw/bahnubergang.csv (2026-10-01)
+  'BUe', 'PN', 'PL',
 ])
 
 /** Zusätze, die in der Quelle nach dem Kürzel stehen («PI voy Lausanne est», «Sot. str.

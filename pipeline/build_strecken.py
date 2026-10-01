@@ -627,20 +627,26 @@ def zweigeteilt(a, b, geo, lage, zuege, sbb_linien, auf_linie):
 
 
 def objekte():
-    """Tunnel und Brücken je Linie aus den Fakten, mit ihrer Kennung
-    «Linie:Stelle» in der Liste der Linie."""
-    tunnel, bruecken = defaultdict(list), defaultdict(list)
+    """Tunnel, Brücken und Bahnübergänge je Linie aus den Fakten, mit ihrer
+    Kennung «Linie:Stelle» in der Liste der Linie (Bahnübergänge: Michael,
+    2026-10-01, «alle bauen»)."""
+    tunnel, bruecken, uebergaenge = defaultdict(list), defaultdict(list), defaultdict(list)
     for p in LINIEN.glob("*.json"):
         f = json.loads(p.read_text(encoding="utf-8"))
         for i, t in enumerate((f.get("tunnel") or {}).get("items", [])):
             tunnel[f["linie"]].append((f"{f['linie']}:{i}", t["km"], t["laenge_m"]))
         for i, b in enumerate((f.get("bruecken") or {}).get("items", [])):
             bruecken[f["linie"]].append((f"{f['linie']}:{i}", b["km"]))
+        for i, b in enumerate((f.get("bahnuebergaenge") or {}).get("items", [])):
+            uebergaenge[f["linie"]].append((f"{f['linie']}:{i}", b["km"]))
     u = json.loads((ROOT / "data" / "linien_uebersicht.json").read_text(encoding="utf-8"))
     for x in u["bruecken_ohne_seite_liste"]:
         for i, b in enumerate(x["items"]):
             bruecken[x["linie"]].append((f"{x['linie']}:{i}", b["km"]))
-    return tunnel, bruecken
+    for x in u["bahnuebergaenge_ohne_seite_liste"]:
+        for i, b in enumerate(x["items"]):
+            uebergaenge[x["linie"]].append((f"{x['linie']}:{i}", b["km"]))
+    return tunnel, bruecken, uebergaenge
 
 
 def tunnel_aus_tlm():
@@ -701,7 +707,7 @@ def main():
     lage = lagen(punkte, zuege)
     auf_linie = punkte_je_linie(lage)
     sbb_linien = set(load("linie").linie.astype(int))
-    tunnel, bruecken = objekte()
+    tunnel, bruecken, uebergaenge = objekte()
     aus_tlm = tunnel_aus_tlm()
     bruecken_tlm = bruecken_aus_tlm()
     bruecken_bereiche = {}
@@ -769,6 +775,7 @@ def main():
                     "linie": nr, "km_von": ka, "km_bis": kb,
                     "tunnel": auf_teil,
                     "bruecken": [i for i, km in bruecken.get(nr, []) if lo <= km <= hi],
+                    "bahnuebergaenge": [i for i, km in uebergaenge.get(nr, []) if lo <= km <= hi],
                 })
                 for i in eintrag["teile"][-1]["bruecken"]:
                     if i in bruecken_tlm:
@@ -835,7 +842,7 @@ def main():
                    "bahn: die Bahn laut Quelle, für die Auswahl «Bahnen» in der App. tlm: Tunnel und Brücken aus swissTLM3D "
                    "auf Abschnitten anderer Bahnen (strecken_geometrie.json, bauwerke). teile: die Linie der SBB, "
                    "auf der der Abschnitt liegt (selten zwei nacheinander), mit Kilometrierung "
-                   "(ein Standort, keine Länge). tunnel und bruecken: Kennungen «Linie:Stelle» "
+                   "(ein Standort, keine Länge). tunnel, bruecken und bahnuebergaenge: Kennungen «Linie:Stelle» "
                    "in den Listen der Linienfakten. Ohne teile: keine Tunnel- und Brückendaten; "
                    "linie_bav: die Linie laut Schienennetz des BAV, wenn genau eine beide Enden führt. "
                    "gewicht dient nur der Wegsuche.",

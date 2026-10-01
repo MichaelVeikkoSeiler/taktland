@@ -8,7 +8,7 @@ import { useSyncExternalStore } from 'react'
  * ein Ton nach jeder Antwort bei den Fragen und im Duell. Am Anfang ist alles an,
  * ausser «zweimal»; alles bleibt auf diesem Gerät.
  */
-export type TonArt = 'tunnel' | 'bruecke' | 'bahnhof' | 'sehenswert' | 'ankunft'
+export type TonArt = 'tunnel' | 'bruecke' | 'bahnhof' | 'sehenswert' | 'bahnuebergang' | 'ankunft'
 export interface Audio {
   an: boolean
   reiter: boolean
@@ -20,7 +20,7 @@ export interface Audio {
 }
 
 const SCHLUESSEL = 'taktland.audio.v1'
-const ARTEN: TonArt[] = ['tunnel', 'bruecke', 'bahnhof', 'sehenswert', 'ankunft']
+const ARTEN: TonArt[] = ['tunnel', 'bruecke', 'bahnhof', 'sehenswert', 'bahnuebergang', 'ankunft']
 
 let stand: Audio = lesen()
 const hoerer = new Set<() => void>()
@@ -76,6 +76,7 @@ type Muster = ReadonlyArray<readonly [number, number, number, number?]>
  * - Brücke: zweimal derselbe helle, kurze Ton, A5
  * - Bahnhof: der weiche Zweiklang aufwärts, G4–D5
  * - Sehenswertes: ein einzelner Ton, E5
+ * - Bahnübergang: drei kurze Töne im Wechsel, E5–C5–E5 (2026-10-01)
  * - Ankunft am Ziel: drei Töne aufwärts, G4–H4–D5, der letzte lang (2026-09-29)
  * Weiche Sinustöne mit leisem Oberton, der kleinen Handylautsprechern hilft;
  * bewusst nicht der Gong der SBB.
@@ -85,6 +86,7 @@ export const TOENE: Record<TonArt, Muster> = {
   bruecke: [[0, 880, 0.35], [0.14, 880, 0.45]],
   bahnhof: [[0, 392, 0.9], [0.16, 587.33, 0.9]],
   sehenswert: [[0, 659.26, 1.2]],
+  bahnuebergang: [[0, 659.26, 0.3], [0.13, 523.25, 0.3], [0.26, 659.26, 0.4]],
   ankunft: [[0, 392, 0.7], [0.2, 493.88, 0.7], [0.4, 587.33, 1.6]],
 }
 

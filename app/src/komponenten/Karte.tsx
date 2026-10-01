@@ -46,7 +46,7 @@ function useSeiten() {
  * Richtung der Länge erfasst ist; eine Brücke hat keine Länge und ist ein Punkt.
  */
 export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], waehlen, bahnhofOeffnen }: {
-  art: 'tunnel' | 'bruecken' | 'netz'
+  art: 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'netz'
   linie: number
   objekte: KartenObjekt[]
   markiert: string | null
@@ -91,6 +91,13 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], wae
                          strokeLinecap="round" onClick={waehlen ? () => waehlen(t.kennung) : undefined} />
           }
           const p = punktBei(eigene, v)
+          // Bahnübergänge als kleines Kreuz in ihrer Farbe, wie beim Fahren (2026-10-01)
+          if (art === 'bahnuebergaenge') {
+            const r = (t.kennung === markiert ? 4.5 : 3) * px
+            return p && <path key={t.kennung} d={`M${p[0] - r} ${p[1] - r}L${p[0] + r} ${p[1] + r}M${p[0] + r} ${p[1] - r}L${p[0] - r} ${p[1] + r}`}
+                              strokeWidth={t.kennung === markiert ? 3 : 2} strokeLinecap="round" vectorEffect="non-scaling-stroke"
+                              className="stroke-fahrt-uebergang dark:stroke-fahrt-uebergang-hell" />
+          }
           // viele Brücken: kleinere Punkte, damit die Linie noch zu sehen ist
           const r = t.kennung === markiert ? 4 : art === 'bruecken' ? 1.8 : 2.5
           return p && <circle key={t.kennung} cx={p[0]} cy={p[1]} r={r * px} className="fill-sbb-red" />
@@ -141,6 +148,8 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], wae
           {art === 'bruecken'
             && 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge ist '
               + 'nicht erfasst. '}
+          {art === 'bahnuebergaenge'
+            && 'Die Kreuze sind die Bahnübergänge dieser Linie, je bei ihrem Kilometer laut Quelle. '}
           {art === 'netz'
             && 'Rot die Abschnitte dieser Liste, je von ihrem ersten bis zu ihrem letzten '
               + 'Kilometer laut Schienennetz des BAV. '}

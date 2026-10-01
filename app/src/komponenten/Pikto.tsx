@@ -4,8 +4,10 @@
  * Zeichen; auf einer Fläche in derselben Farbe nur das Zeichen, sonst
  * verschwände das Quadrat. Alle drei liegen in der Vorlage auf derselben
  * Zeichenfläche an verschiedenen Stellen: x ist die linke Kante des Quadrats.
+ * Der Bahnübergang (Andreaskreuz am Pfosten) ist von Claude gezeichnet
+ * (2026-10-01), im selben Mass rechts daneben.
  */
-export type PiktoArt = 'tunnel' | 'bruecke' | 'bahnhof'
+export type PiktoArt = 'tunnel' | 'bruecke' | 'bahnhof' | 'bahnuebergang'
 
 const SEITE = 140.33
 const OBEN = 26.55
@@ -21,6 +23,10 @@ const PIKTO: Record<PiktoArt, { x: number; farbe: string; zeichen: string }> = {
   bahnhof: {
     x: 181.64, farbe: '#1d3f8a',
     zeichen: 'M289.94,121.1v-38.36c0-1-.51-1.93-1.35-2.46l-35.21-22.41c-.96-.61-2.18-.61-3.13,0l-35.21,22.41c-.84.54-1.35,1.46-1.35,2.46v38.36c0,1.61-1.31,2.92-2.92,2.92h-9.46c-1.61,0-2.92,1.31-2.92,2.92v6.71c0,1.61,1.31,2.92,2.92,2.92h101.02c1.61,0,2.92-1.31,2.92-2.92v-6.71c0-1.61-1.31-2.92-2.92-2.92h-9.46c-1.61,0-2.92-1.31-2.92-2.92Z',
+  },
+  bahnuebergang: {
+    x: 500, farbe: '#7b2d5f',
+    zeichen: 'M528.8,51.16L540.82,39.13L611.53,109.84L599.51,121.87ZM540.82,121.87L528.8,109.84L599.51,39.13L611.53,51.16ZM564.66,80.5L575.66,80.5L575.66,150.5L564.66,150.5Z',
   },
 }
 

@@ -14,6 +14,7 @@ import { tippSchliesst } from '../zuklappen'
 
 const ART_TEXT: Record<ErlebtArt, [string, string]> = {
   tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
+  bahnuebergang: ['Bahnübergang', 'Bahnübergänge'],
 }
 
 /** «etwa 42 km», unter 10 km mit einer Stelle; gemessen auf der gezeichneten Strecke, darum «etwa» */
@@ -162,8 +163,10 @@ function Uebersicht({ fahrten, index }: { fahrten: ErlebteFahrt[]; index: Bahnho
 function Zaehlung({ objekte }: { objekte: ErlebteFahrt['objekte'] }) {
   return (
     <span className="flex flex-wrap items-center gap-x-4 gap-y-1">
-      {(['tunnel', 'bruecke', 'bahnhof'] as const).map((a) => {
+      {(['tunnel', 'bruecke', 'bahnhof', 'bahnuebergang'] as const).map((a) => {
         const n = objekte.filter((o) => o.art === a).length
+        // Bahnübergänge erst seit 2026-10-01 und nur, wenn gemeldet: keine «0» bei älteren Fahrten
+        if (a === 'bahnuebergang' && n === 0) return null
         return (
           <span key={a} className="flex items-center gap-1.5">
             <Pikto art={a} className="size-5" />

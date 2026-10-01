@@ -37,6 +37,10 @@ export const FARBE: Record<FahrObjekt['art'], { flaeche: string; ring: string; r
     flaeche: 'border-fahrt-sehenswert bg-fahrt-sehenswert', schrift: 'text-white',
     ring: 'stroke-fahrt-sehenswert dark:stroke-fahrt-sehenswert-hell', ringBald: 'stroke-white', grundBald: 'stroke-white/30',
   },
+  bahnuebergang: {
+    flaeche: 'border-fahrt-uebergang bg-fahrt-uebergang', schrift: 'text-white',
+    ring: 'stroke-fahrt-uebergang dark:stroke-fahrt-uebergang-hell', ringBald: 'stroke-white', grundBald: 'stroke-white/30',
+  },
 }
 
 /** Ring um die Zeit bis zum nächsten Objekt; voll beim Objekt */
@@ -227,6 +231,13 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
                     strokeLinecap="round" className="stroke-fahrt-bruecke" />
             )
           }
+          if (o.art === 'bahnuebergang') {
+            // ein kleines Kreuz über der Strecke, wie das Andreaskreuz (2026-10-01)
+            return (
+              <path key={`u${o.kennung}`} d={`M${x - 3} 42.5 L${x + 3} 49.5 M${x + 3} 42.5 L${x - 3} 49.5`} strokeWidth="2"
+                    strokeLinecap="round" className="stroke-fahrt-uebergang dark:stroke-fahrt-uebergang-hell" />
+            )
+          }
           // Bahnhöfe als Punkte statt Kreise (Michael, 2026-09-25: «übersichtlicher»)
           return (
             <circle key={`h${o.kennung}`} cx={x} cy="46" r="3" strokeWidth="1"
@@ -262,6 +273,15 @@ export function Streckenband({ fahrweg, objekte, sJetzt, start, ziel, name, spri
           <span className="flex items-center gap-1">
             <span className="inline-block size-2 rotate-45 bg-fahrt-sehenswert dark:bg-fahrt-sehenswert-hell" />
             Sehenswertes
+          </span>
+        )}
+        {objekte.some((o) => o.art === 'bahnuebergang') && (
+          <span className="flex items-center gap-1">
+            <svg viewBox="0 0 10 10" className="size-2.5">
+              <path d="M2 2 L8 8 M8 2 L2 8" strokeWidth="2" strokeLinecap="round"
+                    className="stroke-fahrt-uebergang dark:stroke-fahrt-uebergang-hell" />
+            </svg>
+            Bahnübergang
           </span>
         )}
         {(fahrweg.seeUfer?.length ?? 0) > 0 && (
@@ -463,6 +483,14 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
         const [x, y] = lage(l.lat, l.lon)
         return [{ o, x, y }]
       }), px).map(({ o, x, y }) => {
+        if (o.art === 'bahnuebergang') {
+          const r = 2.5 * px
+          return (
+            <path key={`${o.art}${o.kennung}`} d={`M${x - r} ${y - r}L${x + r} ${y + r}M${x + r} ${y - r}L${x - r} ${y + r}`}
+                  strokeWidth={2.5} strokeLinecap="round" vectorEffect="non-scaling-stroke"
+                  className="stroke-fahrt-uebergang dark:stroke-fahrt-uebergang-hell" />
+          )
+        }
         return (
           <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 4 : 2) * px}
                   strokeWidth={1.5} vectorEffect="non-scaling-stroke"
@@ -643,8 +671,8 @@ function namensLage([x, y]: [number, number], name: string, px: number,
  * Vorrang haben Bahnhöfe, dann Tunnel und Brücken, dann Sehenswertes. Je näher die Karte,
  * desto mehr bleiben; weggelassen wird nur auf der Karte, gemeldet wird alles.
  */
-const PUNKT_ABSTAND_PX: Record<string, number> = { bahnhof: 11, tunnel: 9, bruecke: 9, sehenswert: 9 }
-const PUNKT_RANG: Record<string, number> = { bahnhof: 0, tunnel: 1, bruecke: 1, sehenswert: 2 }
+const PUNKT_ABSTAND_PX: Record<string, number> = { bahnhof: 11, tunnel: 9, bruecke: 9, sehenswert: 9, bahnuebergang: 8 }
+const PUNKT_RANG: Record<string, number> = { bahnhof: 0, tunnel: 1, bruecke: 1, sehenswert: 2, bahnuebergang: 2 }
 
 function punkteAusduennen<T extends { o: { art: string; s: number }; x: number; y: number }>(punkte: T[], px: number): T[] {
   const zelle = 12 * px

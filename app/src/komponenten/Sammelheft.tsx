@@ -2,17 +2,23 @@ import { useEffect, useMemo, useState } from 'react'
 import { uebersichtLaden } from '../daten'
 import { datum, type ErlebtArt, heftLesen, heftLoeschen, schluesselVon } from '../erlebt'
 import { kantonText } from '../kanton'
-import type { BahnhofIndex, BrueckenEintrag, TunnelEintrag, Uebersicht } from '../typen'
+import type { BahnhofIndex, BrueckenEintrag, TunnelEintrag, Uebersicht, UebergangEintrag } from '../typen'
 import { genau } from './Objekte'
 import { Pikto } from './Pikto'
+import { KurzLang } from './Sehenswert'
+import { ohneKuerzel } from '../kuerzel'
 
 type Ansicht = 'erlebt' | 'fehlt'
 
 const ART_TEXT: Record<ErlebtArt, [string, string]> = {
   tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
+  bahnuebergang: ['Bahnübergang', 'Bahnübergänge'],
 }
-/** Wie die Unterreiter von Bahnland: Bahnhöfe, Brücken, Tunnel (Michael, 2026-09-25) */
-const REIHENFOLGE: ErlebtArt[] = ['bahnhof', 'bruecke', 'tunnel']
+/** Wie die Unterreiter von Bahnland: Bahnhöfe, Brücken, Tunnel (Michael, 2026-09-25),
+ *  dahinter die Bahnübergänge (2026-10-01) */
+const REIHENFOLGE: ErlebtArt[] = ['bahnhof', 'bruecke', 'tunnel', 'bahnuebergang']
+/** auf dem Handy kürzer, sonst passen vier Knöpfe nicht nebeneinander */
+const KURZ: Partial<Record<ErlebtArt, string>> = { bahnuebergang: 'Übergänge' }
 /** So viele Einträge stehen bei «Fehlt noch» zuerst da */
 const ZUERST = 30
 
@@ -54,11 +60,15 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
   }
   const [tunnel, setTunnel] = useState<Uebersicht<TunnelEintrag> | null>(null)
   const [bruecken, setBruecken] = useState<Uebersicht<BrueckenEintrag> | null>(null)
+  const [uebergaenge, setUebergaenge] = useState<Uebersicht<UebergangEintrag> | null>(null)
 
   useEffect(() => {
     let abgebrochen = false
     Promise.all([uebersichtLaden<TunnelEintrag>('tunnel'), uebersichtLaden<BrueckenEintrag>('bruecken')])
       .then(([t, b]) => { if (!abgebrochen) { setTunnel(t); setBruecken(b) } })
+      .catch(() => {})
+    uebersichtLaden<UebergangEintrag>('bahnuebergaenge')
+      .then((u) => { if (!abgebrochen) setUebergaenge(u) })
       .catch(() => {})
     return () => { abgebrochen = true }
   }, [])
@@ -79,7 +89,11 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
     bahnhof: index && [...index.bahnhoefe]
       .sort((a, b) => (b.dwv ?? -1) - (a.dwv ?? -1))
       .map((b) => ({ kennung: String(b.uic), name: b.name, zeile: b.kanton ? kantonText(b.kanton) : '' })),
-  }), [tunnel, bruecken, index])
+    // nach Linie und Kilometer, wie in den Daten
+    bahnuebergang: uebergaenge && mitKennung(uebergaenge)
+      .map((e) => ({ kennung: e.kennung, name: e.name ? ohneKuerzel(e.name) : 'Bahnübergang ohne Namen',
+                     zeile: `Linie ${e.linie}${e.sicherungsart ? ` · Sicherungsart «${e.sicherungsart}»` : ''}` })),
+  }), [tunnel, bruecken, uebergaenge, index])
 
   // die Bahn eines Eintrags; ältere Einträge ohne Bahn: Bahnhöfe laut Index, sonst SBB
   const isb = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [String(b.uic), b.isb ?? 'SBB'])), [index])
@@ -114,7 +128,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
         Probefahrt zählt nicht. Jede Fahrt mit Datum steht im <a href="#/logbuch" className="underline underline-offset-2">Logbuch</a>.
       </p>
 
-      <div className="mt-5 grid grid-cols-3 gap-2">
+      <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
         {REIHENFOLGE.map((a) => (
           <div key={a} className="kachel px-3 py-3">
             <Pikto art={a} className="size-7" />
@@ -127,7 +141,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
         ))}
       </div>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        «von»: alle Bahnhöfe in Taktland und alle Brücken und Tunnel der SBB in Taktland. Tunnel und
+        «von»: alle Bahnhöfe in Taktland und alle Brücken, Tunnel und Bahnübergänge der SBB in Taktland. Tunnel und
         Brücken anderer Bahnen stammen aus swissTLM3D von swisstopo, meist ohne Namen. Ihre Länge ist
         die ihrer Zeichnung, gerundet, ebenso bei vielen SBB-Brücken; SBB-Tunnel mit der Länge laut SBB.
       </p>
@@ -154,12 +168,12 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
 
       {(
         <>
-          <div className="segmente mt-4 grid grid-cols-3" role="group" aria-label="Art">
+          <div className="segmente mt-4 grid grid-cols-4" role="group" aria-label="Art">
             {REIHENFOLGE.map((a) => (
               <button key={a} type="button" aria-pressed={art === a} onClick={() => { setArt(a); setMehr(false) }}
-                      className="segment flex items-center justify-center gap-2 px-2 py-1.5 text-sm">
+                      className="segment flex min-w-0 flex-col items-center justify-center gap-1 px-1 py-1.5 text-xs sm:flex-row sm:gap-2 sm:px-2 sm:text-sm">
                 <Pikto art={a} className="size-5" />
-                {ART_TEXT[a][1]}
+                <span className="max-w-full truncate"><KurzLang kurz={KURZ[a] ?? ART_TEXT[a][1]} lang={ART_TEXT[a][1]} /></span>
               </button>
             ))}
           </div>
@@ -194,7 +208,8 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
             <>
               <p className="mt-4 text-sm text-sbb-metal dark:text-sbb-storm">
                 {art === 'tunnel' ? 'Die längsten zuerst.' : art === 'bruecke'
-                  ? 'Die mit den meisten Baueinheiten zuerst.' : 'Die mit den meisten Ein- und Aussteigenden zuerst.'}
+                  ? 'Die mit den meisten Baueinheiten zuerst.' : art === 'bahnuebergang'
+                    ? 'Nach Linie und Kilometer, wie in den Daten.' : 'Die mit den meisten Ein- und Aussteigenden zuerst.'}
               </p>
               <ul className="mt-2 kachelliste">
                 {fehlt.slice(0, mehr ? fehlt.length : ZUERST).map((e) => (

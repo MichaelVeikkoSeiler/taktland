@@ -11,7 +11,7 @@ import { kantonText } from '../kanton'
 import { ohneKuerzel } from '../kuerzel'
 import type {
   BahnhofIndex, BrueckenEintrag, IndexEintrag, LinienVerzeichnis, Luecke, StreckenAbschnitt,
-  StreckenNetz, TunnelEintrag, Uebersicht,
+  StreckenNetz, TunnelEintrag, Uebersicht, UebergangEintrag,
 } from '../typen'
 import { vereinfachen } from './Blaettern'
 import { Fahrtmodus, type ObjektText } from './Fahrtmodus'
@@ -372,6 +372,15 @@ function Ergebnis({
 }) {
   const tunnelNach = useMemo(() => nachKennung(tunnel), [tunnel])
   const brueckenNach = useMemo(() => nachKennung(bruecken), [bruecken])
+  // Bahnübergänge (Michael, 2026-10-01): erst für den Fahrtmodus gebraucht; fehlen sie, fährt er ohne
+  const [uebergaenge, setUebergaenge] = useState<Uebersicht<UebergangEintrag> | null>(null)
+  useEffect(() => {
+    let abgebrochen = false
+    uebersichtLaden<UebergangEintrag>('bahnuebergaenge').then((u) => { if (!abgebrochen) setUebergaenge(u) }).catch(() => {})
+    return () => { abgebrochen = true }
+  }, [])
+  const uebergaengeNach = useMemo(() => (uebergaenge ? nachKennung(uebergaenge) : new Map<string, UebergangEintrag & { linie: number }>()),
+                                  [uebergaenge])
   const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: Ton
                                         beginn: number | null
                                         fortsetzen: { startS: number; s: number } | null
@@ -423,12 +432,19 @@ function Ergebnis({
       const b = bahnhof.get(uicVon.get(kennung) ?? 0)
       return b && { name: b.name, baueinheiten: null, zeile: b.kanton ? kantonText(b.kanton) : 'Bahnhof' }
     }
+    if (art === 'bahnuebergang') {
+      const u = uebergaengeNach.get(kennung)
+      if (!u) return undefined
+      return { name: u.name ? ohneKuerzel(u.name) : 'Bahnübergang ohne Namen', baueinheiten: null,
+               zeile: [u.sicherungsart ? `Sicherungsart «${u.sicherungsart}»` : 'Sicherungsart: keine Angabe',
+                       `Linie ${u.linie}`].join(' · ') + (u.name ? quelle(u.name) : '') }
+    }
     const y = art === 'bruecke' ? brueckenNach.get(kennung) : undefined
     if (!y) return undefined
     return { name: ohneKuerzel(y.name), baueinheiten: y.baueinheiten, laenge: brueckeLaenge(kennung),
              zeile: `${brueckeLaenge(kennung) ? `${brueckeLaenge(kennung)} · ` : ''}Linie ${y.linie}${y.baueinheiten === null ? ''
                : ` · ${y.baueinheiten} ${y.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}${quelle(y.name)}` }
-  }, [tunnelNach, brueckenNach, bahnhof, uicVon, brueckeLaenge])
+  }, [tunnelNach, brueckenNach, uebergaengeNach, bahnhof, uicVon, brueckeLaenge])
 
   async function fahrtStarten(probe: boolean, weiter = false) {
     // der Ton muss im Tipp selbst vorbereitet werden, sonst bleibt er stumm;
@@ -439,9 +455,16 @@ function Ergebnis({
     setFahrtFehler(null)
     try {
       const linien = geometrieLesen(await geometrieLaden())
+      // kommt die Fahrt gleich mit der Seite, sind die Bahnübergänge vielleicht noch nicht geladen
+      let ue = uebergaengeNach
+      if (!uebergaenge) {
+        const u = await uebersichtLaden<UebergangEintrag>('bahnuebergaenge').catch(() => null)
+        if (u) { setUebergaenge(u); ue = nachKennung(u) }
+      }
       const fahrweg = fahrwegBauen(netz, linien, weg.punkte, weg.abschnitte,
                                    (id) => brueckenNach.get(id)?.km ?? undefined,
-                                   (abk) => bahnhof.has(uicVon.get(abk) ?? 0))
+                                   (abk) => bahnhof.has(uicVon.get(abk) ?? 0),
+                                   (id) => ue.get(id)?.km ?? undefined)
       bahnhoefeVorziehen(fahrweg, (abk) => bahnhof.get(uicVon.get(abk) ?? 0)?.perron_laengste_m)
       // Sehenswertes am Weg; fehlen die Daten, fährt der Fahrtmodus ohne
       try {
@@ -765,6 +788,12 @@ function Ergebnis({
                                                     ...(o.bahn ? { bahn: o.bahn } : {}), ...(laenge ? { laenge } : {}) })
                         return
                       }
+                      if (o.art === 'bahnuebergang') {
+                        const u = uebergaengeNach.get(o.kennung)
+                        durchfahren(fahrt.beginn, { art: 'bahnuebergang', kennung: o.kennung, bahn: 'SBB',
+                                                    name: u?.name ?? objektText(o)?.name ?? o.kennung })
+                        return
+                      }
                       const b = bilanzObjekt(o)
                       const bahn = b.art === 'bahnhof' ? bahnhof.get(Number(b.kennung))?.isb ?? 'SBB' : 'SBB'
                       // die Länge mit ins Sammelheft und Logbuch: Tunnel laut SBB, Brücken laut Zeichnung
@@ -776,7 +805,7 @@ function Ergebnis({
                     beenden={(liste) => {
                       if (fahrt.beginn !== null) laufendEnde()
                       leereFahrtenWeg()
-                      setBilanz({ objekte: liste.filter((o) => !o.tlm).map(bilanzObjekt), probe: fahrt.probe,
+                      setBilanz({ objekte: liste.filter((o) => !o.tlm && o.art !== 'bahnuebergang').map(bilanzObjekt), probe: fahrt.probe,
                                   beginn: fahrt.beginn })
                       setFahrt(null)
                     }}

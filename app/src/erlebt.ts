@@ -1,14 +1,14 @@
 /**
- * Das Sammelheft: welche Tunnel, Brücken und Bahnhöfe im Fahrtmodus
+ * Das Sammelheft: welche Tunnel, Brücken, Bahnhöfe und Bahnübergänge im Fahrtmodus
  * durchfahren wurden, und die Fahrten dazu. Nur auf diesem Gerät
  * (localStorage), nie gesendet. Die Probefahrt schreibt nichts hinein.
  */
 
-export type ErlebtArt = 'tunnel' | 'bruecke' | 'bahnhof'
+export type ErlebtArt = 'tunnel' | 'bruecke' | 'bahnhof' | 'bahnuebergang'
 
 export interface ErlebtesObjekt {
   art: ErlebtArt
-  /** Tunnel und Brücken: «Linie:Stelle»; Bahnhöfe: die UIC */
+  /** Tunnel, Brücken und Bahnübergänge: «Linie:Stelle»; Bahnhöfe: die UIC */
   kennung: string
   name: string
   /** erstes Mal durchfahren, Millisekunden */

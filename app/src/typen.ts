@@ -309,6 +309,8 @@ export interface StreckenTeil {
   km_bis: number
   tunnel: string[]
   bruecken: string[]
+  /** Bahnübergänge, ebenso «Linie:Stelle» (fehlt in älteren Daten) */
+  bahnuebergaenge?: string[]
 }
 
 /** Ein Abschnitt mit Personenzügen laut zugzahlen. Ohne teile: keine

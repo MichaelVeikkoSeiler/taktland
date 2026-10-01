@@ -58,19 +58,20 @@ const SORTEN: Array<[SehenswertSorte, string, string]> = [
 ]
 const EINSTELLUNG = 'taktland.fahrt.v1'
 
+/** bahnuebergaenge: am Anfang aus, es sind viele (Michael, 2026-10-01) */
 interface Einstellung { tunnel: boolean; bruecken: BrueckenWahl; bahnhoefe: boolean; sehenswert: SehenswertWahl
-                        vorlauf: Vorlauf; ton: boolean; angabe: Angabe }
+                        bahnuebergaenge: boolean; vorlauf: Vorlauf; ton: boolean; angabe: Angabe }
 
 function einstellungLesen(): Einstellung {
   try {
     const x = JSON.parse(localStorage.getItem(EINSTELLUNG) ?? '{}')
     return { bruecken: ['groessere', 'alle', 'keine'].includes(x.bruecken) ? x.bruecken : 'groessere',
-             tunnel: x.tunnel !== false, bahnhoefe: x.bahnhoefe !== false,
+             tunnel: x.tunnel !== false, bahnhoefe: x.bahnhoefe !== false, bahnuebergaenge: x.bahnuebergaenge === true,
              sehenswert: Object.fromEntries(SORTEN.map(([k]) => [k, x.sehenswert?.[k] !== false])) as SehenswertWahl,
              vorlauf: VORLAEUFE_S.includes(x.vorlauf) ? x.vorlauf : VORLAEUFE_S[0], ton: x.ton !== false,
              angabe: ['zeit', 'distanz', 'beides'].includes(x.angabe) ? x.angabe : 'zeit' }
   } catch {
-    return { tunnel: true, bruecken: 'groessere', bahnhoefe: true, sehenswert: { gipfel: true, kgs: true, seilbahn: true, flaeche: true }, vorlauf: VORLAEUFE_S[0], ton: true, angabe: 'zeit' }
+    return { tunnel: true, bruecken: 'groessere', bahnhoefe: true, bahnuebergaenge: false, sehenswert: { gipfel: true, kgs: true, seilbahn: true, flaeche: true }, vorlauf: VORLAEUFE_S[0], ton: true, angabe: 'zeit' }
   }
 }
 
@@ -117,7 +118,7 @@ interface Stand {
 }
 
 const ART: Record<FahrObjekt['art'], string> = { tunnel: 'Tunnel', bruecke: 'Brücke', bahnhof: 'Bahnhof',
-                                                  sehenswert: 'Sehenswert' }
+                                                  sehenswert: 'Sehenswert', bahnuebergang: 'Bahnübergang' }
 /** «Kulturgut · links», «Landschaft (BLN)», «Tunnel» */
 /** In der Anzeige: auf dem Handy kurz, ab Tablet ausgeschrieben */
 function ArtText({ o }: { o: FahrObjekt }) {
@@ -363,13 +364,15 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const gewaehlt = useMemo(() => fahrweg.objekte.filter((o) => {
     if (o.art === 'tunnel') return einstellung.tunnel
     if (o.art === 'bahnhof') return einstellung.bahnhoefe
+    if (o.art === 'bahnuebergang') return einstellung.bahnuebergaenge
     if (o.art === 'sehenswert') {
       return o.sehenswert ? einstellung.sehenswert[o.sehenswert.sorte] && !(stummSchluessel(o)! in stumm) : false
     }
     if (einstellung.bruecken === 'keine') return false
     if (einstellung.bruecken === 'alle') return true
     return (text(o)?.baueinheiten ?? 0) >= 3 || text(o)?.gross === true
-  }), [fahrweg, einstellung.tunnel, einstellung.bruecken, einstellung.bahnhoefe, einstellung.sehenswert, stumm, text])
+  }), [fahrweg, einstellung.tunnel, einstellung.bruecken, einstellung.bahnhoefe, einstellung.bahnuebergaenge,
+        einstellung.sehenswert, stumm, text])
 
   // auch ohne Meldung der Tunnel: Im Tunnel fehlt das GPS, das sagt die Anzeige
   const imTunnel = sJetzt === null ? null
@@ -728,6 +731,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                 onClick={() => aendern({ bruecken: einstellung.bruecken === 'keine' ? 'groessere' : 'keine' })}>Brücken</button>
         <button type="button" aria-pressed={einstellung.bahnhoefe} className={chip(einstellung.bahnhoefe)}
                 onClick={() => aendern({ bahnhoefe: !einstellung.bahnhoefe })}>Bahnhöfe</button>
+        <button type="button" aria-pressed={einstellung.bahnuebergaenge} className={chip(einstellung.bahnuebergaenge)}
+                onClick={() => aendern({ bahnuebergaenge: !einstellung.bahnuebergaenge })}>Bahnübergänge</button>
         {([['gipfel', 'Gipfel'], ['kgs', 'Kultur'], ['seilbahn', 'Seilbahnen'], ['flaeche', 'Gebiete']] as const).map(([k, t]) => (
           <button key={k} type="button" aria-pressed={einstellung.sehenswert[k]} className={chip(einstellung.sehenswert[k])}
                   onClick={() => sorteZeigen(k, !einstellung.sehenswert[k])}>{t}</button>
@@ -906,6 +911,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                   ? [anzahl(kommend.filter((o) => o.art === 'bruecke').length, 'Brücke', 'Brücken')] : []),
                 ...(einstellung.bahnhoefe
                   ? [anzahl(kommend.filter((o) => o.art === 'bahnhof').length, 'Bahnhof', 'Bahnhöfe')] : []),
+                ...(einstellung.bahnuebergaenge
+                  ? [anzahl(kommend.filter((o) => o.art === 'bahnuebergang').length, 'Bahnübergang', 'Bahnübergänge')] : []),
                 ...(Object.values(einstellung.sehenswert).some(Boolean)
                   ? [`${kommend.filter((o) => o.art === 'sehenswert').length} Sehenswertes`] : []),
               ])} auf diesem Weg
@@ -964,7 +971,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           ob etwas vom Zug aus zu sehen ist, sagen die Daten nicht. Sehenswertes kommt nicht ins
           Sammelheft. Hellblau im Streckenband: ein See der Landeskarte 1:1 Million liegt
           bis etwa {SEE_M} m (geprüft alle {SEE_QUER_M} m quer zur Strecke) links (oben) oder rechts (unten) der gezeichneten Strecke; kleine Seen
-          fehlen in diesem Massstab.
+          fehlen in diesem Massstab. Bahnübergänge stammen aus den offenen Daten der SBB, gemeldet am
+          Kilometer der Quelle; auf Strecken anderer Bahnen fehlen sie.
         </p>
       </div>
       {offenerBahnhof && (
@@ -1132,6 +1140,11 @@ export function MeldeEinstellungen({ einstellung, aendern }: {
             <span>Bahnhöfe melden</span>
             <input type="checkbox" checked={einstellung.bahnhoefe} className="size-5 accent-sbb-red"
                    onChange={(e) => aendern({ bahnhoefe: e.target.checked })} />
+          </label>
+          <label className="flex items-center justify-between gap-3">
+            <span>Bahnübergänge melden</span>
+            <input type="checkbox" checked={einstellung.bahnuebergaenge} className="size-5 accent-sbb-red"
+                   onChange={(e) => aendern({ bahnuebergaenge: e.target.checked })} />
           </label>
           {SORTEN.map(([k, t, lang]) => (
             <label key={k} className="flex items-center justify-between gap-3">

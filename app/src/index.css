@@ -39,6 +39,10 @@
   /* Sehenswertes im Fahrtmodus, von Claude festgelegt (2026-09-26) */
   --color-fahrt-sehenswert: #2f7d4f;
   --color-fahrt-sehenswert-hell: #6cc28f;
+  /* Bahnübergänge, von Claude festgelegt (2026-10-01): Pflaume, klar getrennt vom
+     Karmin der Marke und vom Violett der Kulturgüter */
+  --color-fahrt-uebergang: #7b2d5f;
+  --color-fahrt-uebergang-hell: #d68ac0;
 
   /* Seen auf den Karten, von Claude festgelegt (Michael, 2026-09-25: «helles
      Blau selber durch dich definiert»); dunkel eigene Töne, unten */

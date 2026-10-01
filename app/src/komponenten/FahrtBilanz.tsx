@@ -26,6 +26,7 @@ const MINDESTABSTAND = 0.05
 
 const ART_TEXT: Record<ErlebtArt, [string, string]> = {
   tunnel: ['Tunnel', 'Tunnel'], bruecke: ['Brücke', 'Brücken'], bahnhof: ['Bahnhof', 'Bahnhöfe'],
+  bahnuebergang: ['Bahnübergang', 'Bahnübergänge'],
 }
 
 /** Namen, die im Namen eines Bahnhofs seinen Kanton verraten */

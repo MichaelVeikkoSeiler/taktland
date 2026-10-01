@@ -1,4 +1,4 @@
-"""Die Übersichten «Tunnel» und «Brücken» der App: genau die Einträge aus
+"""Die Übersichten «Tunnel», «Brücken» und «Bahnübergänge» der App: genau die Einträge aus
 den Fakten, jeder mit der Linie, auf der er erfasst ist."""
 import json
 import sys
@@ -46,6 +46,21 @@ def test_bruecken_wie_in_den_fakten_samt_linien_ohne_seite():
         assert d["linien"][str(x["linie"])] == {"name": x["name"], "seite": False}
     mit_seite = sum((f.get("bruecken") or {}).get("anzahl_erfasst", 0) for f in alle)
     assert len(d["eintraege"]) == mit_seite + u["bruecken_ohne_seite"]
+
+
+def test_bahnuebergaenge_wie_in_den_fakten_samt_linien_ohne_seite():
+    d = export_app.uebersicht_daten()["bahnuebergaenge"]
+    u = json.loads((ROOT / "data" / "linien_uebersicht.json").read_text(encoding="utf-8"))
+    alle = fakten()
+    for f in alle:
+        assert ohne_linie(d["eintraege"], f["linie"]) == (f.get("bahnuebergaenge") or {}).get("items", [])
+    ohne = u["bahnuebergaenge_ohne_seite_liste"]
+    assert sum(len(x["items"]) for x in ohne) == u["bahnuebergaenge_ohne_seite"] == d["ohne_seite"]
+    for x in ohne:
+        assert ohne_linie(d["eintraege"], x["linie"]) == x["items"]
+        assert d["linien"][str(x["linie"])] == {"name": x["name"], "seite": False}
+    mit_seite = sum((f.get("bahnuebergaenge") or {}).get("anzahl_erfasst", 0) for f in alle)
+    assert len(d["eintraege"]) == mit_seite + u["bahnuebergaenge_ohne_seite"]
 
 
 def test_linien_je_bahnhof_wie_in_den_fakten():

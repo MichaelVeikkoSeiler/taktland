@@ -73,6 +73,7 @@ function seiteAusAdresse(): Seite {
   if (strecke) return { art: 'strecke', wahl: wahlAusAdresse(strecke[1]) }
   if (h === '#/tunnel') return { art: 'uebersicht', liste: 'tunnel' }
   if (h === '#/bruecken') return { art: 'uebersicht', liste: 'bruecken' }
+  if (h === '#/bahnuebergaenge') return { art: 'uebersicht', liste: 'bahnuebergaenge' }
   if (h === '#/bahnhoefe') return { art: 'liste' }
   // #/ und alles Unbekannte: die Startseite mit der Einleitung
   return { art: 'start' }
@@ -86,6 +87,7 @@ const ZURUECK_ZU: Record<Herkunft, { text: string; adresse: string }> = {
   linien: { text: 'Alle Strecken', adresse: '#/strecken' },
   tunnel: { text: 'Alle Tunnel', adresse: '#/tunnel' },
   bruecken: { text: 'Alle Brücken', adresse: '#/bruecken' },
+  bahnuebergaenge: { text: 'Alle Bahnübergänge', adresse: '#/bahnuebergaenge' },
 }
 
 function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
@@ -119,7 +121,7 @@ export default function App() {
     begriff: '', seite: 0, sortierung: 'alphabet',
   })
   const [uebersichten, setUebersichten] = useState<Record<UebersichtArt, UebersichtStand>>({
-    tunnel: neuerStand('tunnel'), bruecken: neuerStand('bruecken'),
+    tunnel: neuerStand('tunnel'), bruecken: neuerStand('bruecken'), bahnuebergaenge: neuerStand('bahnuebergaenge'),
   })
   const [herkunft, setHerkunft] = useState<Herkunft>('linien')
   if (seite.art === 'linien' && herkunft !== 'linien') setHerkunft('linien')

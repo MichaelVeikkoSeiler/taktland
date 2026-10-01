@@ -23,7 +23,7 @@ import { Auftakt, type AuftaktBild } from './Auftakt'
 import { reiterTon } from '../audio'
 import { useEinstellungen } from '../einstellungen'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio' | 'einstellungen'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio' | 'einstellungen'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -33,6 +33,8 @@ const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
   { bereich: 'linien', text: 'Strecken', adresse: '#/strecken' },
   { bereich: 'bruecken', text: 'Brücken', adresse: '#/bruecken' },
   { bereich: 'tunnel', text: 'Tunnel', adresse: '#/tunnel' },
+  // Michael, 2026-10-01: «Eigener Reiter Bahnübergänge unter Bahnland»
+  { bereich: 'bahnuebergaenge', text: 'Bahnübergänge', adresse: '#/bahnuebergaenge' },
 ]
 
 /** Die Unterreiter der «Reisetasche»: Logbuch, Sammelheft und Favoriten
@@ -136,14 +138,16 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
   // die ganze Reisetasche mit dem Bild des Logbuchs
   const bild = fahrt ? BILDER.fahrt
-    : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' || aktiv === 'einstellungen' ? BILDER.logbuch : BILDER[schluessel]
+    : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' || aktiv === 'einstellungen' ? BILDER.logbuch
+    // die Bahnübergänge mit dem Bild der Startseite, darauf ist einer zu sehen
+    : aktiv === 'bahnuebergaenge' ? BILDER.start : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
   // unter «Bahnland», «Reisetasche» und «Fahren» eine zweite Zeile mit den Unterreitern
   const unter: { name: string; liste: Array<{ bereich: string; text: string; adresse: string }>; raster: string } | null =
     fahrt ? { name: 'Fahren', liste: FAHREN, raster: 'flex' }
-    : objekteAktiv ? { name: 'Bahnland', liste: OBJEKTE, raster: 'grid grid-cols-4 sm:flex' }
+    : objekteAktiv ? { name: 'Bahnland', liste: OBJEKTE, raster: 'flex' }
     : REISETASCHE.some((l) => l.bereich === aktiv) ? { name: 'Reisetasche', liste: REISETASCHE, raster: 'flex' } : null
   const unterAktiv: string | null = fahrt ?? aktiv
   const unterLeiste = useRef<HTMLElement>(null)

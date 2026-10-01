@@ -5,7 +5,8 @@
 - profile/    : die fertigen Profile
 - linien.json : die Linien mit Seite, und welcher Bahnhof auf welcher liegt
 - linien/     : die fertigen Linienprofile
-- tunnel.json, bruecken.json : alle erfassten Tunnel und Brücken mit ihrer Linie
+- tunnel.json, bruecken.json, bahnuebergaenge.json : alle erfassten Tunnel, Brücken
+  und Bahnübergänge mit ihrer Linie
 - strecken.json : das Netz für die Seite «Strecke»
 - standort.json : die Lage der Tunnel, Brücken und Bahnübergänge für die Seite «Standort»
 
@@ -162,33 +163,41 @@ def linien():
 
 
 def uebersicht_daten():
-    """Die Übersichten «Tunnel» und «Brücken»: jeder Eintrag unverändert aus
-    den Fakten seiner Linie, dazu die Nummer der Linie. Die Brücken auf Linien
-    ohne eigene Seite kommen aus data/linien_uebersicht.json, damit sie nicht
-    verloren gehen. generator/tests/test_uebersichten.py prüft beides."""
+    """Die Übersichten «Tunnel», «Brücken» und «Bahnübergänge»: jeder Eintrag
+    unverändert aus den Fakten seiner Linie, dazu die Nummer der Linie. Die
+    Brücken und Bahnübergänge auf Linien ohne eigene Seite kommen aus
+    data/linien_uebersicht.json, damit sie nicht verloren gehen. generator/tests/test_uebersichten.py prüft beides."""
     linien = {}
-    tunnel, bruecken = [], []
+    tunnel, bruecken, uebergaenge = [], [], []
     for p in sorted(LINIEN.glob("*.json"), key=lambda x: int(x.stem)):
         f = json.loads(p.read_text(encoding="utf-8"))
         nr = f["linie"]
         linien[str(nr)] = {"name": f["name"], "seite": (LINIENPROFILE / f"{nr}.de.json").exists()}
         tunnel += [{"linie": nr, **it} for it in (f.get("tunnel") or {}).get("items", [])]
         bruecken += [{"linie": nr, **it} for it in (f.get("bruecken") or {}).get("items", [])]
+        uebergaenge += [{"linie": nr, **it} for it in (f.get("bahnuebergaenge") or {}).get("items", [])]
     u = json.loads((ROOT / "data" / "linien_uebersicht.json").read_text(encoding="utf-8"))
     for x in u["bruecken_ohne_seite_liste"]:
         linien[str(x["linie"])] = {"name": x["name"], "seite": False}
         bruecken += [{"linie": x["linie"], **it} for it in x["items"]]
+    for x in u["bahnuebergaenge_ohne_seite_liste"]:
+        linien[str(x["linie"])] = {"name": x["name"], "seite": False}
+        uebergaenge += [{"linie": x["linie"], **it} for it in x["items"]]
     # der Tag, an dem die eigene Quelle geladen wurde, nicht der neueste aller
     # Quellen der Linien (sonst rückte ein Neuladen von «linie» den Stand vor)
     stand = u["abgerufen"]
     mit_bruecken = {str(b["linie"]) for b in bruecken}
     mit_tunnel = {str(t["linie"]) for t in tunnel}
+    mit_uebergaengen = {str(b["linie"]) for b in uebergaenge}
     return {
         "tunnel": {"stand": stand["tunnel"], "quelle": "tunnel", "eintraege": tunnel,
                    "linien": {k: v for k, v in linien.items() if k in mit_tunnel}},
         "bruecken": {"stand": stand["brucken"], "quelle": "brucken", "eintraege": bruecken,
                      "ohne_seite": u["bruecken_ohne_seite"],
                      "linien": {k: v for k, v in linien.items() if k in mit_bruecken}},
+        "bahnuebergaenge": {"stand": stand["bahnubergang"], "quelle": "bahnubergang", "eintraege": uebergaenge,
+                            "ohne_seite": u["bahnuebergaenge_ohne_seite"],
+                            "linien": {k: v for k, v in linien.items() if k in mit_uebergaengen}},
     }
 
 

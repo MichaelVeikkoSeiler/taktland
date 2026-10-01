@@ -72,7 +72,7 @@ export async function vergleichLaden(): Promise<Vergleichsdaten> {
 }
 
 /** Alle erfassten Tunnel oder Brücken mit ihrer Linie */
-export async function uebersichtLaden<T>(art: 'tunnel' | 'bruecken'): Promise<Uebersicht<T>> {
+export async function uebersichtLaden<T>(art: 'tunnel' | 'bruecken' | 'bahnuebergaenge'): Promise<Uebersicht<T>> {
   return holen<Uebersicht<T>>(`data/${art}.json`)
 }
 

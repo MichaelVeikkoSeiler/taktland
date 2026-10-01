@@ -29,7 +29,7 @@ export type SehenswertSorte = 'gipfel' | 'kgs' | 'seilbahn' | 'flaeche'
 
 export interface FahrObjekt {
   kennung: string
-  art: 'tunnel' | 'bruecke' | 'bahnhof' | 'sehenswert'
+  art: 'tunnel' | 'bruecke' | 'bahnhof' | 'sehenswert' | 'bahnuebergang'
   /** Einfahrt, beim Bahnhof der Betriebspunkt, in Metern entlang des Wegs */
   s: number
   /** Ausfahrt: bei Tunneln, deren Richtung die Daten hergeben, und bei Flächen */
@@ -132,14 +132,16 @@ function aufLinie(z: Linienzug, km: number): Lage {
  * Betriebspunkte des Wegs in Fahrtrichtung, abschnitte die Abschnitte
  * dazwischen. brueckeKm gibt den Kilometer einer Brücke auf ihrer Linie.
  * istBahnhof sagt, welche Betriebspunkte als Bahnhof gemeldet werden; der
- * Start zählt nicht, er liegt schon hinter dem Zug.
+ * Start zählt nicht, er liegt schon hinter dem Zug. uebergangKm gibt den Kilometer
+ * eines Bahnübergangs auf seiner Linie (Michael, 2026-10-01).
  */
 export function fahrwegBauen(netz: StreckenNetz,
                              linien: Map<number, Linienzug> & { abschnitte?: StreckenGeometrie['abschnitte']
                                                                 bauwerke?: StreckenGeometrie['bauwerke'] },
                              punkteWeg: string[],
                              abschnitte: StreckenAbschnitt[], brueckeKm: (kennung: string) => number | undefined,
-                             istBahnhof: (abk: string) => boolean): Fahrweg {
+                             istBahnhof: (abk: string) => boolean,
+                             uebergangKm: (kennung: string) => number | undefined = () => undefined): Fahrweg {
   const punkte: Punkt[] = []
   // nach Art getrennt: «660:0» ist der erste Tunnel und die erste Brücke der Linie 660
   const objekte = new Map<string, FahrObjekt>()
@@ -258,6 +260,11 @@ export function fahrwegBauen(netz: StreckenNetz,
         }
         const km = brueckeKm(id)
         if (km !== undefined) objekte.set(`bruecke ${id}`, { kennung: id, art: 'bruecke', s: sBei(km), sAus: null })
+      }
+      for (const id of t.bahnuebergaenge ?? []) {
+        if (objekte.has(`bahnuebergang ${id}`)) continue
+        const km = uebergangKm(id)
+        if (km !== undefined) objekte.set(`bahnuebergang ${id}`, { kennung: id, art: 'bahnuebergang', s: sBei(km), sAus: null })
       }
     }
     bahnhofSetzen(punkteWeg[i + 1])
