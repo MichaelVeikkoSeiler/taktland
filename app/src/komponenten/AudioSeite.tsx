@@ -97,7 +97,7 @@ export function AudioSeite() {
   )
 }
 
-function Schalter({ titel, text, an, umschalten, gesperrt = false, ohneKachel = false }: {
+export function Schalter({ titel, text, an, umschalten, gesperrt = false, ohneKachel = false }: {
   titel: string; text: string; an: boolean; umschalten: () => void; gesperrt?: boolean; ohneKachel?: boolean
 }) {
   const ein = an && !gesperrt

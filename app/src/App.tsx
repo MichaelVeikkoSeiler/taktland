@@ -28,12 +28,13 @@ import { HERAUSGEBER } from './kontakt'
 import type { BahnhofIndex } from './typen'
 import { Ladefehler } from './komponenten/Ladefehler'
 import { AudioSeite } from './komponenten/AudioSeite'
+import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
-  | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'audio' } | { art: 'ohneziel' }
+  | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'audio' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
@@ -63,6 +64,7 @@ function seiteAusAdresse(): Seite {
   if (h === '#/logbuch') return { art: 'logbuch' }
   if (h === '#/favoriten') return { art: 'favoriten' }
   if (h === '#/audio') return { art: 'audio' }
+  if (h === '#/einstellungen') return { art: 'einstellungen' }
   if (h === '#/anleitung') return { art: 'anleitung' }
   // #/linien: die frühere Adresse, damit alte Lesezeichen weiter gehen
   if (h === '#/strecken' || h === '#/linien') return { art: 'linien' }
@@ -99,6 +101,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'logbuch': return 'logbuch'
     case 'favoriten': return 'favoriten'
     case 'audio': return 'audio'
+    case 'einstellungen': return 'einstellungen'
     case 'sammelheft': return 'sammelheft'
     case 'anleitung': case 'fahrt': case 'ohneziel': case 'fahrtblatt': return null
   }
@@ -169,6 +172,7 @@ export default function App() {
         {seite.art === 'logbuch' && <Logbuch index={index} />}
         {seite.art === 'favoriten' && <Favoriten index={index} oeffnen={oeffnen} />}
         {seite.art === 'audio' && <AudioSeite />}
+        {seite.art === 'einstellungen' && <EinstellungenSeite />}
         {seite.art === 'linien' && <Linien index={index} />}
         {seite.art === 'uebersicht' && (
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}

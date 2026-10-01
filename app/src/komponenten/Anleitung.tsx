@@ -185,6 +185,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Unter «Audio» lassen sich die Töne einzeln ein- und ausschalten und anhören: beim Fahren
             je Art, einmal oder zweimal (etwa 20 und 10 Sekunden vorher), bei den Reitern und nach
             jeder Antwort.
+            Unter «Einstellungen» stehen Schriftgrösse und Schriftart, ob der Bildschirm beim Fahren
+            wach bleibt, und die Standardwerte dafür, was beim Fahren gemeldet wird.
           </li>
           <li>
             Alles bleibt im Browser dieses Geräts, ohne Konto. Handy und Computer zählen

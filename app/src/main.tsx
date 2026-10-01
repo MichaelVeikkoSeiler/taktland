@@ -7,6 +7,7 @@ import { Gesperrt } from './komponenten/Gesperrt'
 import { useSperre } from './verfuegbar'
 import { oeffnenZaehlen } from './zaehlen'
 import { aufklappenHoeren } from './audio'
+import { anwenden as einstellungenAnwenden } from './einstellungen'
 
 /** Taktland, solange es verfügbar ist (src/verfuegbar.ts) */
 function Taktland() {
@@ -22,6 +23,9 @@ function Taktland() {
   }, [sperre])
   return sperre ? <Gesperrt sperre={sperre} /> : <App />
 }
+
+// Schriftgrösse und Schriftart vor dem ersten Bild, damit nichts springt
+einstellungenAnwenden()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

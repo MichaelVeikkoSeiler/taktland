@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { neuLadenSperren } from '../serviceWorker'
 import { useAudio } from '../audio'
+import { useEinstellungen } from '../einstellungen'
 import { abstand, type FahrObjekt, type Fahrweg, GIPFEL_M, KGS_M, lageBei, projizieren, SEE_M, SEE_QUER_M, SEILBAHN_M, type SehenswertSorte, type Ton, wegEnde } from '../fahrt'
 import { spurMerken } from '../ohneziel'
 import { freigabeHilfe } from '../umgebung'
@@ -326,8 +327,11 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [probefahrt])
 
-  // Bildschirm anlassen, solange der Fahrtmodus läuft
+  // Bildschirm anlassen, solange der Fahrtmodus läuft, ausser unter Einstellungen
+  // abgeschaltet (Michael, 2026-10-01)
+  const { wach } = useEinstellungen()
   useEffect(() => {
+    if (!wach) return
     let sperre: WakeLockSentinel | null = null
     const holen = () => {
       if (document.visibilityState === 'visible' && 'wakeLock' in navigator) {
@@ -340,7 +344,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       document.removeEventListener('visibilitychange', holen)
       void sperre?.release()
     }
-  }, [])
+  }, [wach])
 
   // Geschätzte Stelle jetzt: seit dem letzten Standort mit dem letzten Tempo weiter
   const seit = stand ? Math.max(0, (jetzt - stand.t) / 1000) : 0
@@ -914,56 +918,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         )}
 
         <div className="mt-8 grid gap-3 border-t border-sbb-cloud pt-4 text-sm dark:border-sbb-iron">
-          <label className="flex items-center justify-between gap-3">
-            <span>Tunnel melden</span>
-            <input type="checkbox" checked={einstellung.tunnel} className="size-5 accent-sbb-red"
-                   onChange={(e) => aendern({ tunnel: e.target.checked })} />
-          </label>
-          <div className="flex items-center justify-between gap-3">
-            <span>Brücken melden</span>
-            <Auswahl
-              titel="Brücken melden" wert={einstellung.bruecken}
-              waehlen={(w) => aendern({ bruecken: w })}
-              optionen={[{ wert: 'groessere' as BrueckenWahl, text: 'ab 3 Baueinheiten' },
-                         { wert: 'alle' as BrueckenWahl, text: 'alle' },
-                         { wert: 'keine' as BrueckenWahl, text: 'keine' }]}
-              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
-                         dark:bg-sbb-midnight dark:text-sbb-white"
-            />
-          </div>
-          <label className="flex items-center justify-between gap-3">
-            <span>Bahnhöfe melden</span>
-            <input type="checkbox" checked={einstellung.bahnhoefe} className="size-5 accent-sbb-red"
-                   onChange={(e) => aendern({ bahnhoefe: e.target.checked })} />
-          </label>
-          {SORTEN.map(([k, t, lang]) => (
-            <label key={k} className="flex items-center justify-between gap-3">
-              <span><KurzLang kurz={t} lang={lang} /></span>
-              <input type="checkbox" checked={einstellung.sehenswert[k]} className="size-5 accent-sbb-red"
-                     onChange={(e) => aendern({ sehenswert: { ...einstellung.sehenswert, [k]: e.target.checked } })} />
-            </label>
-          ))}
-          <div className="flex items-center justify-between gap-3">
-            <span>Melden etwa</span>
-            <Auswahl
-              titel="Melden etwa" wert={einstellung.vorlauf}
-              waehlen={(w) => aendern({ vorlauf: w })}
-              optionen={VORLAEUFE_S.map((x) => ({ wert: x as Vorlauf, text: `${x} Sekunden vorher` }))}
-              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
-                         dark:bg-sbb-midnight dark:text-sbb-white"
-            />
-          </div>
-          <div className="flex items-center justify-between gap-3">
-            <span>Angabe</span>
-            <Auswahl
-              titel="Angabe" wert={angabe}
-              waehlen={(w) => aendern({ angabe: w })}
-              optionen={[{ wert: 'zeit' as Angabe, text: 'Zeit' }, { wert: 'distanz' as Angabe, text: 'Distanz' },
-                         { wert: 'beides' as Angabe, text: 'Zeit und Distanz' }]}
-              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
-                         dark:bg-sbb-midnight dark:text-sbb-white"
-            />
-          </div>
+          <MeldeEinstellungen einstellung={einstellung} aendern={aendern} />
           {Object.keys(stumm).length > 0 && (
             <details>
               <summary className="cursor-pointer">
@@ -1148,4 +1103,79 @@ function anzahl(n: number, einzahl: string, mehrzahl: string) {
 /** «a und b», «a, b und c» */
 function aufzaehlen(teile: string[]) {
   return teile.length > 1 ? `${teile.slice(0, -1).join(', ')} und ${teile[teile.length - 1]}` : teile.join('')
+}
+
+/**
+ * Was beim Fahren gemeldet wird und wie: im Fahrtmodus unten und als Standardwerte
+ * unter Reisetasche → Einstellungen (Michael, 2026-10-01). Beides ist dieselbe
+ * Einstellung: Was man hier ändert, gilt für diese und jede neue Fahrt.
+ */
+export function MeldeEinstellungen({ einstellung, aendern }: {
+  einstellung: Einstellung; aendern: (neu: Partial<Einstellung>) => void
+}) {
+  return (
+    <>
+          <label className="flex items-center justify-between gap-3">
+            <span>Tunnel melden</span>
+            <input type="checkbox" checked={einstellung.tunnel} className="size-5 accent-sbb-red"
+                   onChange={(e) => aendern({ tunnel: e.target.checked })} />
+          </label>
+          <div className="flex items-center justify-between gap-3">
+            <span>Brücken melden</span>
+            <Auswahl
+              titel="Brücken melden" wert={einstellung.bruecken}
+              waehlen={(w) => aendern({ bruecken: w })}
+              optionen={[{ wert: 'groessere' as BrueckenWahl, text: 'ab 3 Baueinheiten' },
+                         { wert: 'alle' as BrueckenWahl, text: 'alle' },
+                         { wert: 'keine' as BrueckenWahl, text: 'keine' }]}
+              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
+                         dark:bg-sbb-midnight dark:text-sbb-white"
+            />
+          </div>
+          <label className="flex items-center justify-between gap-3">
+            <span>Bahnhöfe melden</span>
+            <input type="checkbox" checked={einstellung.bahnhoefe} className="size-5 accent-sbb-red"
+                   onChange={(e) => aendern({ bahnhoefe: e.target.checked })} />
+          </label>
+          {SORTEN.map(([k, t, lang]) => (
+            <label key={k} className="flex items-center justify-between gap-3">
+              <span><KurzLang kurz={t} lang={lang} /></span>
+              <input type="checkbox" checked={einstellung.sehenswert[k]} className="size-5 accent-sbb-red"
+                     onChange={(e) => aendern({ sehenswert: { ...einstellung.sehenswert, [k]: e.target.checked } })} />
+            </label>
+          ))}
+          <div className="flex items-center justify-between gap-3">
+            <span>Melden etwa</span>
+            <Auswahl
+              titel="Melden etwa" wert={einstellung.vorlauf}
+              waehlen={(w) => aendern({ vorlauf: w })}
+              optionen={VORLAEUFE_S.map((x) => ({ wert: x as Vorlauf, text: `${x} Sekunden vorher` }))}
+              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
+                         dark:bg-sbb-midnight dark:text-sbb-white"
+            />
+          </div>
+          <div className="flex items-center justify-between gap-3">
+            <span>Angabe</span>
+            <Auswahl
+              titel="Angabe" wert={einstellung.angabe}
+              waehlen={(w) => aendern({ angabe: w })}
+              optionen={[{ wert: 'zeit' as Angabe, text: 'Zeit' }, { wert: 'distanz' as Angabe, text: 'Distanz' },
+                         { wert: 'beides' as Angabe, text: 'Zeit und Distanz' }]}
+              className="border border-sbb-cloud bg-white px-2 py-1 text-sbb-black dark:border-sbb-iron
+                         dark:bg-sbb-midnight dark:text-sbb-white"
+            />
+          </div>
+    </>
+  )
+}
+
+/** Die gemerkten Melde-Einstellungen, auch ausserhalb einer Fahrt */
+export function useMeldeEinstellung() {
+  const [einstellung, setEinstellung] = useState(einstellungLesen)
+  const aendern = (neu: Partial<Einstellung>) => {
+    const e = { ...einstellung, ...neu }
+    setEinstellung(e)
+    einstellungMerken(e)
+  }
+  return [einstellung, aendern] as const
 }

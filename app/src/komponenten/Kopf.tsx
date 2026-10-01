@@ -18,11 +18,11 @@ import startDunkel from '../assets/auftakt-start-dunkel.webp'
 import startHell from '../assets/auftakt-start-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 import { reiterTon } from '../audio'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio' | 'einstellungen'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -42,6 +42,7 @@ const REISETASCHE: Array<{ bereich: Bereich; text: string; adresse: string }> = 
   { bereich: 'favoriten', text: 'Favoriten', adresse: '#/favoriten' },
   // Michael, 2026-10-01: «neuen Reiter Audio»
   { bereich: 'audio', text: 'Audio', adresse: '#/audio' },
+  { bereich: 'einstellungen', text: 'Einstellungen', adresse: '#/einstellungen' },
 ]
 
 /** Die Unterreiter von «Fahren» (Michael, 2026-09-29: «Fahren muss auch drei
@@ -134,7 +135,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
   // die ganze Reisetasche mit dem Bild des Logbuchs
   const bild = fahrt ? BILDER.fahrt
-    : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' ? BILDER.logbuch : BILDER[schluessel]
+    : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' || aktiv === 'einstellungen' ? BILDER.logbuch : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
@@ -144,6 +145,15 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : objekteAktiv ? { name: 'Bahnland', liste: OBJEKTE, raster: 'grid grid-cols-4 sm:flex' }
     : REISETASCHE.some((l) => l.bereich === aktiv) ? { name: 'Reisetasche', liste: REISETASCHE, raster: 'flex' } : null
   const unterAktiv: string | null = fahrt ?? aktiv
+  const unterLeiste = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const leiste = unterLeiste.current
+    const hier = leiste?.querySelector<HTMLElement>('[aria-current="page"]')
+    if (!leiste || !hier) return
+    if (hier.offsetLeft + hier.offsetWidth > leiste.scrollLeft + leiste.clientWidth || hier.offsetLeft < leiste.scrollLeft) {
+      leiste.scrollLeft = hier.offsetLeft - 16
+    }
+  }, [unterAktiv])
   return (
     <header className="print:hidden border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* ohne Knopf «Aktualisieren»: neue Versionen lädt die App von selbst (serviceWorker.ts;
@@ -175,14 +185,16 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
         })}
       </nav>
       {unter && (
-        <nav aria-label={unter.name}
-             className={`-mx-4 ${unter.raster} gap-x-1 border-t border-sbb-cloud bg-sbb-milk px-4 py-2
-                        text-sm max-[359px]:text-[13px] sm:gap-x-2 dark:border-sbb-iron dark:bg-sbb-charcoal`}>
+        // passt die Zeile nicht (fünf Reiter, grosse Schrift), lässt sie sich seitlich schieben;
+        // der gewählte Reiter rückt ins Bild, ohne die Seite zu bewegen
+        <nav aria-label={unter.name} ref={unterLeiste}
+             className={`relative -mx-4 ${unter.raster} gap-x-1 overflow-x-auto border-t border-sbb-cloud bg-sbb-milk px-4 py-2
+                        text-sm [scrollbar-width:none] max-[359px]:text-[13px] sm:gap-x-2 dark:border-sbb-iron dark:bg-sbb-charcoal`}>
           {unter.liste.map((o) => {
             const hier = o.bereich === unterAktiv
             return (
               <a key={o.bereich} href={o.adresse} aria-current={hier ? 'page' : undefined} onClick={reiterTon}
-                 className={`rounded-lg py-1.5 text-center font-medium ${unter.raster === 'flex' ? 'px-3' : 'px-1'} transition-colors sm:px-3 ${hier
+                 className={`shrink-0 whitespace-nowrap rounded-lg py-1.5 text-center font-medium ${unter.raster === 'flex' ? 'px-3' : 'px-1'} transition-colors sm:px-3 ${hier
                    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                    : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
                 {o.text}
