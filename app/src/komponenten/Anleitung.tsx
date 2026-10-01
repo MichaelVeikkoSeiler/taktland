@@ -17,77 +17,43 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <img src="./logo.svg" alt="" className="mt-6 size-16" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
-        Hier steht, wie Taktland zu bedienen ist, woher die Daten stammen und was sie nicht
-        hergeben. Was Taktland ist, steht auf der Startseite.
-      </p>
-      <p className="mt-2 leading-relaxed">
-        Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnland (darunter Bahnhöfe,
-        Strecken, Brücken und Tunnel), Duell, Standort, Reisetasche (darunter
-        Logbuch, Sammelheft und Favoriten) und Info, diese Seite. Der rote
-        Knopf «Fahren» ist für unterwegs im Zug. Aufgenommen sind alle Bahnhöfe, deren Infrastruktur die SBB
-        betreibt, dazu Bahnhöfe anderer Bahnen wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn,
-        sofern die offenen Daten für mindestens drei Kapitel reichen.
+        Die Reiter oben führen zu Bahnland (Bahnhöfe, Strecken, Brücken, Tunnel), Duell,
+        Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
+        Ein Tipp auf ein Thema klappt es auf.
       </p>
 
-      <Abschnitt titel="Einen Bahnhof lernen">
+      {/* aufklappbar und gestrafft (Michael, 2026-10-01: «sehr, sehr viel Text») */}
+      <div className="mt-6 grid gap-2">
+      <Abschnitt titel="Bahnhöfe lernen">
         <Punkte>
           <li>
-            Einen Bahnhof in der Liste suchen oder durchblättern. Zwischen den Pfeilen stehen
-            der erste und der letzte Bahnhof der Seite. Ein Tipp darauf zeigt alle Seiten.
+            Aufgenommen sind alle Bahnhöfe mit Infrastruktur der SBB, dazu Bahnhöfe anderer
+            Bahnen wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn, sofern die offenen Daten
+            für mindestens drei Kapitel reichen. Sie tragen das Kürzel ihrer Bahn und haben
+            weniger Kapitel.
           </li>
           <li>
-            Bahnhöfe, deren Infrastruktur nicht die SBB betreibt, tragen in der Liste und auf
-            ihrer Seite das Kürzel der Bahn, etwa BLS. Zu ihnen enthalten die offenen Daten der
-            SBB weniger, darum haben ihre Seiten weniger Kapitel.
+            Jede Bahnhofsseite hat Kapitel, etwa Steckbrief, Perrons oder Züge: zuerst ein
+            kurzer Text, dann die Zahlen mit ihrem Datensatz, dann die Fragen.
           </li>
           <li>
-            Jede Bahnhofsseite hat Kapitel, etwa Steckbrief, Perrons oder Züge. Zuerst kommt
-            ein kurzer Text, darunter die Zahlen mit ihrem Datensatz, dann die Fragen.
+            Nach jeder Antwort stehen «Richtig» oder «Nicht ganz», eine Erklärung und der
+            Beleg aus den Daten. Jede Frage lässt sich nochmals beantworten, es zählt die
+            letzte Antwort. «zurücksetzen» löscht den Stand des Bahnhofs.
           </li>
           <li>
-            Nach jeder Antwort steht «Richtig» oder «Nicht ganz», dazu eine Erklärung und der
-            Beleg: die Stelle in den Daten, aus der die Antwort stammt.
+            Fragearten: Auswahl, Lückentext, Richtig oder falsch, Mehrfachauswahl,
+            Schieberegler (knapp daneben zählt auch), Sortieren, Zuordnen und Gleis antippen.
           </li>
           <li>
-            Jede Frage lässt sich nochmals beantworten, es zählt die letzte Antwort. Oben auf
-            der Bahnhofsseite steht, wie viele richtig sind. «zurücksetzen» löscht den Stand
-            dieses Bahnhofs.
-          </li>
-        </Punkte>
-      </Abschnitt>
-
-      <Abschnitt titel="Die Fragen">
-        <dl className="mt-3 grid gap-2">
-          <Art name="Auswahl">Eine Antwort antippen.</Art>
-          <Art name="Lückentext">Das fehlende Wort oder die fehlende Zahl wählen.</Art>
-          <Art name="Richtig oder falsch">Entscheiden, ob die Aussage stimmt.</Art>
-          <Art name="Mehrfachauswahl">
-            Alle passenden Antworten wählen, dann «Antwort prüfen».
-          </Art>
-          <Art name="Schieberegler">
-            Den Wert einstellen, dann «Antwort prüfen». Knapp daneben zählt auch, danach steht
-            der genaue Wert da.
-          </Art>
-          <Art name="Sortieren">
-            Mit den Pfeilen in die richtige Reihenfolge bringen, dann «Reihenfolge prüfen».
-          </Art>
-          <Art name="Zuordnen">Links antippen, dann den passenden Wert rechts wählen.</Art>
-          <Art name="Gleis antippen">Im Gleisschema das gesuchte Gleis antippen.</Art>
-        </dl>
-      </Abschnitt>
-
-      <Abschnitt titel="Was die Daten nicht sagen">
-        <Punkte>
-          <li>
-            Kästen «Zum Verständnis» erklären Fachbegriffe allgemein. Sie sind keine Angabe
-            zum Bahnhof.
+            Gross heisst: Für den Bahnhof ist ein Bahnhofplan veröffentlicht. Mittel: kein
+            Plan, aber mindestens 5'000 Ein- und Aussteigende an einem Werktag. Klein: alle
+            übrigen. Das ist eine Sortierhilfe von Taktland, keine Einstufung der SBB.
           </li>
           <li>
-            Am Ende jeder Bahnhofsseite steht unter «Was diese Daten nicht sagen», was fehlt
-            oder nur eingeschränkt erfasst ist.
-          </li>
-          <li>
-            Eine 0 heisst: nichts erfasst. Das bedeutet nicht, dass es vor Ort nichts gibt.
+            Kästen «Zum Verständnis» erklären Fachbegriffe allgemein, ohne Bezug auf den
+            Bahnhof. Unter «Was diese Daten nicht sagen» steht, was fehlt. Eine 0 heisst
+            «nichts erfasst», nicht «nichts vorhanden».
           </li>
         </Punkte>
       </Abschnitt>
@@ -95,219 +61,101 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Duell">
         <Punkte>
           <li>
-            Zwei Bahnhöfe, eine Frage, zum Beispiel: Wo steigen mehr Personen ein und aus,
-            welcher liegt höher? Nach der Antwort stehen die Werte da.
+            Zwei Bahnhöfe, Linien oder Tunnel, eine Frage, etwa: Wo steigen mehr Personen ein
+            und aus? Welcher Tunnel ist länger? Danach stehen die Werte da, bei Tunneln auch
+            die Bemerkung der Quelle.
           </li>
           <li>
-            Jede richtige Antwort verlängert die Serie, eine falsche setzt sie auf 0. Der
-            Bestwert bleibt gespeichert.
+            Jede richtige Antwort verlängert die Serie, eine falsche setzt sie auf 0. Je
+            länger die Serie, desto knapper die Werte; ab 4 stehen manchmal vier zur Wahl.
           </li>
           <li>
-            Je länger die Serie, desto näher liegen die Werte beieinander. Ab einer Serie von
-            4 stehen manchmal vier Bahnhöfe zur Wahl.
+            Gespielt wird in der ganzen Schweiz oder in einem Kanton mit genug Einträgen.
+            Linien und Tunnel ohne Kanton in den Daten spielen nur schweizweit mit. Brücken
+            fehlen: Erfasst ist nur die Zahl ihrer Baueinheiten, meist genau eine.
           </li>
           <li>
-            Zuerst den Bereich wählen: Bahnhöfe, Linien oder Tunnel. Dann das Gebiet: die
-            ganze Schweiz oder einen Kanton, sofern er genug Einträge für faire Paare hat.
-          </li>
-          <li>
-            Bei den Tunneln lautet die Frage etwa: Welcher ist länger, welcher ging früher
-            erstmals in Betrieb? Nach der Antwort steht, falls vorhanden, die Bemerkung der
-            Quelle, etwa was eine Länge umfasst. Den Kanton eines Tunnels nennt die Quelle;
-            wo sie keinen Kanton angibt, spielt der Tunnel nur in der ganzen Schweiz mit.
-          </li>
-          <li>
-            Bei den Linien geht es darum, auf welcher Linie mehr Bahnhöfe, Betriebspunkte,
-            Tunnel, Brücken oder Bahnübergänge erfasst sind. Eine Linie hat in den Daten keinen
-            Kanton, darum gibt es sie nur für die ganze Schweiz.
-          </li>
-          <li>
-            Mit «Zwei Bahnhöfe selbst wählen» lassen sich zwei bestimmte Bahnhöfe vergleichen.
-            Serie und Bestwert zählen dabei nicht.
-          </li>
-          <li>
-            Brücken treten nicht gegeneinander an: Von ihnen ist nur die Zahl der Baueinheiten
-            erfasst, und die meisten haben genau eine.
+            «Zwei Bahnhöfe selbst wählen» vergleicht zwei bestimmte Bahnhöfe, ohne Serie.
           </li>
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Strecken">
+      <Abschnitt titel="Strecken, Brücken und Tunnel">
         <Punkte>
           <li>
-            Unter «Strecken» stehen die Strecken der Infrastruktur, jede unter ihrer
-            Liniennummer, etwa Linie 600. Das sind keine Zuglinien wie eine S-Bahn.
+            «Strecken» sind die Linien der Infrastruktur, etwa Linie 600, keine Zuglinien.
+            Die Suche findet sie über Nummer, Namen oder einen Bahnhof. Eine Linienseite zeigt
+            die Bahnhöfe nach Kilometer, die erfassten Tunnel, Brücken und Bahnübergänge und
+            eine kleine Karte.
           </li>
           <li>
-            Die Suche findet eine Linie über ihre Nummer, ihren Namen oder einen Bahnhof: Wer
-            «Olten» eintippt, sieht alle Linien, auf denen Olten liegt.
+            Das Kapitel «Netz» nennt je Abschnitt Gleise, Spurweite, Strom und Betreiberin,
+            aus dem Schienennetz des BAV (Stand 2021). Linien anderer Bahnen tragen das
+            Kürzel aus dem Schienennetz und haben keine Tunnel, Brücken und Bahnübergänge:
+            Diese führt nur die SBB. Tramlinien fehlen.
           </li>
           <li>
-            Eine Linienseite zeigt Anfang und Ende, die Bahnhöfe nach Kilometer und die
-            erfassten Tunnel, Brücken und Bahnübergänge. Bahnhof- und Linienseiten verweisen
-            aufeinander.
+            Die Kilometrierung ist ein Standort, keine Länge. Länge und Baujahr einer Linie
+            und einer Brücke stehen nicht in den offenen Daten.
           </li>
           <li>
-            Kacheln mit Pfeil führen zur Liste dahinter, etwa «Ticino, 325 Brücken» zu genau
-            diesen 325. Ein einzelner Eintrag steht dann oben und ist in der Liste rot markiert.
+            «Tunnel» und «Brücken» listen alle erfassten Einträge mit ihrer Linie. Ein Tipp
+            öffnet die Liste der Linie mit dem Eintrag oben. Kacheln mit Pfeil führen zur
+            Liste dahinter.
           </li>
           <li>
-            Das Kapitel «Netz» nennt je Abschnitt Streckengleise, Spurweite, Strom und
-            Betreiberin, aus dem Schienennetz des BAV (Stand 2021). Ein Tipp auf eine Kachel hebt
-            die Abschnitte auf der Karte rot hervor.
-          </li>
-          <li>
-            Linien anderer Bahnen, etwa der BLS, der SOB oder der RhB, tragen das Kürzel ihrer
-            Bahn, wie es im Schienennetz steht («BLSN», «RhB FR VR», «zb»). Für sie gibt es
-            Bahnhöfe und Netz, aber keine Tunnel, Brücken und Bahnübergänge: Diese Daten führt
-            nur die SBB. Tramlinien sind nicht aufgenommen.
-          </li>
-          <li>
-            Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Länge und Baujahr
-            einer Linie stehen nicht in den offenen Daten, ebenso wenig Länge und Baujahr der
-            Brücken.
+            Die Karten sind selbst gezeichnet, ohne Kartendienst. Sie zeigen auch Seen,
+            Flüsse, Gipfel, Kultur, Seilbahnen und Gebiete; die Knöpfe darunter blenden sie
+            ein und aus, ein Tipp auf ein Zeichen zeigt Name und Quelle.
           </li>
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Strecke">
+      <Abschnitt titel="Strecke: ein Weg durchs Netz">
         <Punkte>
           <li>
-            Unter «Strecke» (bei den Strecken, Brücken und Tunneln) Start und Ziel wählen.
-            Taktland sucht einen Weg durch das Netz und zeigt die erfassten Tunnel und Brücken
-            entlang dieses Wegs, in Wegrichtung.
+            Start und Ziel wählen, wahlweise einen Bahnhof «Über». Taktland sucht einen Weg
+            über Abschnitte, auf denen laut den Zugzahlen der SBB Personenzüge fahren, und
+            zeigt Tunnel und Brücken in Wegrichtung. Der Weg ist berechnet; ob ein Zug ihn
+            fährt, sagen die Daten nicht.
           </li>
           <li>
-            Das Netz sind die Abschnitte, auf denen laut den Zugzahlen der SBB Personenzüge
-            fahren. Einen Fahrplan enthalten die Daten nicht: Der Weg ist berechnet, und ob ein
-            Zug ihn fährt, sagen die Daten nicht. Mit «Über» lässt sich ein Bahnhof festlegen.
+            Auf Strecken anderer Bahnen, etwa dem Lötschberg der BLS, stammen Tunnel und
+            Brücken aus swissTLM3D von swisstopo: oft ohne Namen, mit der gerundeten Länge
+            ihrer Zeichnung.
           </li>
-          <li>
-            Unter jedem gewählten Bahnhof stehen die Linien, auf denen er erfasst ist; ein Tipp
-            öffnet die Linie, gestrichelte haben keine eigene Seite. Das Ergebnis nennt die
-            Linien in Wegrichtung. Die Linien stammen aus den Daten der SBB: Bahnhöfe und
-            Abschnitte anderer Bahnen, etwa Ins oder Spiez der BLS, liegen dort auf keiner Linie.
-          </li>
-          <li>
-            Die Daten der SBB führen Tunnel und Brücken nur auf ihren eigenen Strecken. Auf
-            Strecken anderer Bahnen, etwa dem Lötschberg der BLS, stammen sie aus swissTLM3D
-            von swisstopo: oft ohne Namen und getrennt gezählt. Beim Fahren zeigt Taktland sie
-            mit der Länge ihrer Zeichnung, gerundet.
-          </li>
-          <li>
-            «Losfahren» startet «Fahren» auf diesem Weg, «Probefahrt» spielt ihn ab.
-          </li>
+          <li>«Losfahren» startet die Fahrt auf diesem Weg, «Probefahrt» spielt ihn ab.</li>
         </Punkte>
       </Abschnitt>
 
       <Abschnitt titel="Fahren">
         <Punkte>
           <li>
-            Der rote Knopf «Fahren» hat drei Unterseiten: «Neue Fahrt», «Probefahren» und
-            «Fahrtblatt». Unter «Neue Fahrt» wählst du «Nur Ziel» (Start ist der nächste
-            Bahnhof per GPS), «Start und Ziel» oder «Ohne Ziel». Gemerkte Fahrten starten mit
-            einem Tipp.
+            «Neue Fahrt»: «Nur Ziel» (Start ist der nächste Bahnhof per GPS), «Start und
+            Ziel» oder «Ohne Ziel». «Ohne Ziel» erkennt nach einigen hundert Metern Strecke
+            und Richtung und fragt, wenn Strecken nebeneinander liegen.
           </li>
           <li>
-            Im Zug meldet Taktland den nächsten Tunnel, die nächste Brücke und den nächsten
-            Bahnhof etwa 20 oder 10 Sekunden vorher mit einem Ton, auch Bahnhöfe, an denen der
-            Zug nicht hält. Jede Art hat ihren eigenen Ton: zwei tiefe Töne abwärts für einen
-            Tunnel, zweimal ein heller, kurzer für eine Brücke, zwei Töne aufwärts für einen
-            Bahnhof und ein einzelner für Sehenswertes. Steht der Zug am Ziel, erklingen drei Töne aufwärts und
-            «Angekommen in …» erscheint, mit «Fahrt beenden» und «Weiterfahren». Dazu kommt Sehenswertes links oder rechts: Gipfel, Kultur,
-            Seilbahnen und Gebiete, durch die der Weg führt. Ob es vom Zug aus zu sehen ist,
-            sagen die Daten nicht. Was gemeldet wird, lässt sich unten auf der Seite wählen.
-            Mit «Nicht mehr melden» auf der Meldung schweigt ein einzelnes Objekt künftig, etwa auf
-            dem täglichen Weg; unten unter «Nicht mehr gemeldet» lässt es sich wieder einschalten.
+            Etwa 20 oder 10 Sekunden vorher meldet Taktland Tunnel, Brücken, Bahnhöfe (auch
+            ohne Halt) und Sehenswertes links oder rechts, jede Art mit eigenem Ton. Ob
+            Sehenswertes vom Zug aus zu sehen ist, sagen die Daten nicht. Was gemeldet wird,
+            lässt sich unten wählen; «Nicht mehr melden» schweigt ein einzelnes Objekt.
           </li>
           <li>
-            Das Band zeigt den ganzen Weg. Hellblau darüber oder darunter: Links oder rechts
-            liegt ein See nahe der Strecke.
+            Am Ziel erklingen drei Töne aufwärts und «Angekommen in …» erscheint. Ein Bahnhof
+            gilt als erreicht, wenn der Zug die halbe Länge seines längsten Perrons vor
+            seinem Punkt ist (ohne Perrondaten 150 m): Taktland nimmt an, dass der Punkt etwa
+            in der Mitte liegt.
           </li>
           <li>
-            «Ohne Ziel» erkennt nach einigen hundert Metern Strecke und Richtung und folgt der
-            Linie bis zur nächsten Verzweigung, dann sucht es neu. Liegen Strecken
-            nebeneinander, fragt Taktland, welche du fährst.
+            Die Zeiten sind Schätzungen aus Standort und Tempo, im Tunnel mit dem letzten
+            Tempo. Gemeldet wird nur bei offener Seite und eingeschaltetem Bildschirm.
+            Hellblau neben dem Band: Links oder rechts liegt ein See.
           </li>
           <li>
-            Die Zeiten sind Schätzungen aus Standort und Tempo; im Tunnel ohne GPS rechnet
-            Taktland mit dem letzten Tempo weiter. Gemeldet wird nur, solange die Seite offen und
-            der Bildschirm an ist. Schliesst das Handy die Seite, fragt Taktland beim nächsten
-            Öffnen, ob die Fahrt weitergehen soll.
-          </li>
-          <li>
-            Oben steht, wie weit es auf dem gesuchten Weg noch bis zum Ziel ist. Ein Bahnhof gilt
-            schon als erreicht, wenn der Zug die halbe Länge seines längsten Perrons vor seinem
-            Punkt in den Daten ist. Wo die Perrons liegen, sagen die Daten nicht; Taktland nimmt
-            an, dass der Punkt etwa in der Mitte des Bahnhofs liegt. Ohne Perrondaten sind es 150 m.
-          </li>
-          <li>
-            Steht der Zug bis etwa 1 km bei einem Bahnhof, öffnet «Infos» dessen Seite über der
-            Fahrt. «Zurück zur Fahrt» schliesst sie; die Fahrt läuft darunter weiter.
-          </li>
-          <li>
-            Probefahrten spielen einen Weg in Echtzeit mit etwa 100 km/h oder 5- bis 200-mal
-            schneller ab, zum Ausprobieren ohne Zug. «Anhalten» unterbricht sie, «Weiter» fährt
-            weiter. Den Zug im Band kann man an jede Stelle ziehen. Deine Probefahrten stehen
-            unter «Probefahren»; dort kommen neue dazu.
-          </li>
-          <li>
-            Das Fahrtblatt unter «Fahrtblatt» ist ein Druckbogen für eine Strecke: oben die Karte,
-            unten Tunnel, Brücken, Bahnhöfe und Gipfel zum Abhaken, die Tunnel mit Länge zum
-            Schätzen und Mitzählen. «Einfach» passt auf eine Seite, «Ausführlich» auf zwei.
-          </li>
-        </Punkte>
-      </Abschnitt>
-
-      <Abschnitt titel="Reisetasche">
-        <Punkte>
-          <li>
-            Im Logbuch steht jede Fahrt mit «Fahren», mit allem, was du durchfahren hast. Du
-            kannst Notizen dazuschreiben und Fahrten ohne «Fahren» von Hand eintragen.
-          </li>
-          <li>
-            Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren hast
-            und was noch fehlt, von allen Bahnen; einzelne Bahnen lassen sich ausblenden. Tunnel
-            und Brücken anderer Bahnen stammen aus swissTLM3D, meist ohne Namen, mit der Länge ihrer
-            Zeichnung;
-            «Fehlt noch» kennt nur die der SBB. Die Favoriten sind deine Bahnhöfe mit Stern.
-          </li>
-          <li>
-            Unten im Logbuch lässt sich alles als Datei sichern und wieder einlesen, etwa auf
-            einem neuen Gerät.
-          </li>
-        </Punkte>
-      </Abschnitt>
-
-      <Abschnitt titel="Brücken und Tunnel">
-        <Punkte>
-          <li>
-            Unter «Tunnel» stehen alle erfassten Tunnel, unter «Brücken» alle erfassten
-            Brücken, jeweils mit der Linie, auf der sie erfasst sind. Suchen, sortieren und
-            blättern geht wie bei den Bahnhöfen.
-          </li>
-          <li>
-            Ein Tipp auf einen Eintrag öffnet die Liste seiner Linie und zeigt ihn oben. Eine
-            kleine Karte zeigt, wo die Linie und ihre Tunnel oder Brücken liegen; sie ist aus dem
-            Streckennetz der SBB gezeichnet, ohne Kartenbilder eines fremden Dienstes. Brücken
-            auf Linien ohne eigene Seite stehen trotzdem in der Liste, nur ohne Verweis.
-          </li>
-          <li>
-            Ein Tipp auf einen Eintrag oder einen roten Punkt der Karte zeigt ihn oben unter
-            «Ausgewählt». Ein Tipp auf einen Bahnhof der Karte öffnet seine Seite.
-          </li>
-          <li>
-            Fragen dazu stehen auf den Linienseiten. Die Tunnel treten zudem im Duell
-            gegeneinander an.
-          </li>
-          <li>
-            Auch jede Linienseite zeigt die kleine Karte: die Linie, ihre Tunnel und als Ringe
-            ihre Bahnhöfe in Taktland, beschriftet der erste und der letzte.
-          </li>
-          <li>
-            Die Karten zeigen auch Seen, Gipfel, Kultur (Kulturgüter von nationaler Bedeutung),
-            Seilbahnen und Gebiete (BLN, Pärke, Moorlandschaften). Die Knöpfe unter der Karte
-            blenden sie ein und aus; ein Tipp auf ein Zeichen zeigt Name und Quelle.
+            «Probefahren» spielt einen Weg ohne Zug ab, in Echtzeit oder 5- bis 200-mal
+            schneller. Das «Fahrtblatt» ist ein Druckbogen mit Karte und Liste zum Abhaken,
+            auf einer oder zwei Seiten.
           </li>
         </Punkte>
       </Abschnitt>
@@ -315,129 +163,87 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Standort">
         <Punkte>
           <li>
-            Unter «Standort» auf «Standort bestimmen» tippen. Taktland zeigt die nächsten
-            Bahnhöfe, Strecken, Brücken, Tunnel und Bahnübergänge, jeweils mit der Luftlinie
-            dorthin, dazu eine kleine Karte der Umgebung. Die Liste folgt dir, bis du «Anhalten»
-            tippst oder die Seite verlässt.
+            «Standort bestimmen» zeigt die nächsten Bahnhöfe, Strecken, Brücken, Tunnel und
+            Bahnübergänge mit der Luftlinie dorthin und eine Karte. Die Liste folgt dir bis
+            «Anhalten».
           </li>
           <li>
-            Die Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs ist der Punkt, den die
-            SBB in ihren Daten nennt. Ein Tunnel ist dabei ein einzelner Punkt, nicht die ganze
-            Röhre. Der Abstand ist auf dem Gerät gerechnet, eine Luftlinie und kein Weg.
-          </li>
-          <li>
-            Ein Tipp auf einen Eintrag öffnet den Bahnhof, die Linie oder die Liste der Linie mit
-            dem Eintrag oben. Einträge ohne Pfeil haben in Taktland keine eigene Seite.
+            Die Lage ist der Punkt, den die SBB nennt; ein Tunnel ist ein einzelner Punkt,
+            nicht die ganze Röhre.
           </li>
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Grosser, mittlerer, kleiner Bahnhof">
-        <Punkte>
-          <li>Grosser Bahnhof: Für ihn ist ein Bahnhofplan veröffentlicht.</li>
-          <li>
-            Mittlerer Bahnhof: kein Bahnhofplan, aber mindestens 5'000 Ein- und Aussteigende
-            an einem Werktag.
-          </li>
-          <li>Kleiner Bahnhof: alle übrigen.</li>
-        </Punkte>
-        <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-          Die Einteilung ist eine Sortierhilfe von Taktland, keine Einstufung der SBB.
-        </p>
-      </Abschnitt>
-
-      <Abschnitt titel="Fortschritt">
+      <Abschnitt titel="Reisetasche und Fortschritt">
         <Punkte>
           <li>
-            Der Fortschritt bleibt auf diesem Gerät, im Browser. Es gibt kein Konto, und der
-            Fortschritt wird nirgendwohin geschickt.
+            Das Logbuch hält jede Fahrt fest, mit Notizen und von Hand eingetragenen Fahrten.
+            Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren
+            hast; «Fehlt noch» kennt nur die der SBB. Favoriten sind Bahnhöfe mit Stern.
           </li>
           <li>
-            Handy und Computer zählen getrennt, ebenso zwei Browser auf demselben Gerät. Wer
-            die Browserdaten löscht, löscht auch den Fortschritt.
+            Alles bleibt im Browser dieses Geräts, ohne Konto. Handy und Computer zählen
+            getrennt; wer die Browserdaten löscht, löscht auch den Fortschritt. Unten im
+            Logbuch lässt sich alles als Datei sichern und wieder einlesen.
           </li>
           <li>
-            Ganz unten auf jeder Seite lässt sich der ganze Fortschritt löschen.
+            Auf den Startbildschirm legen lohnt sich: auf dem iPhone in Safari über «Teilen»
+            und «Zum Home-Bildschirm», auf Android über das Menü von Chrome. Safari löscht
+            sonst den Speicher von Websites, die sieben Tage nicht geöffnet wurden.
           </li>
           <li>
-            Gibt es eine neuere Version, lädt Taktland sie von selbst beim Öffnen oder wenn
-            du es aus dem Hintergrund zurückholst, nicht aber während einer Fahrt. Der
-            Fortschritt bleibt dabei erhalten.
-          </li>
-          <li>
-            Taktland liegt unter taktland.ch/app/ und lässt sich auf den Startbildschirm legen:
-            auf dem iPhone in Safari über «Teilen» und «Zum Home-Bildschirm», auf Android über
-            das Menü von Chrome. Das lohnt sich: Safari löscht den Speicher von Websites, die
-            sieben Tage nicht geöffnet wurden, nicht aber den von Apps auf dem Home-Bildschirm.
-            Sicher ist eine Sicherung im Logbuch.
-          </li>
-          <li>
-            Bis zum 29. September 2026 lag Taktland unter einer Adresse von GitHub. Der
-            Fortschritt von dort zieht nicht von selbst um: in der alten App die Sicherung
-            herunterladen und hier im Logbuch einlesen.
+            Neue Versionen lädt Taktland von selbst beim Öffnen, nicht während einer Fahrt.
+            Wer Taktland vor dem 29. September 2026 unter der alten Adresse bei GitHub
+            nutzte: dort die Sicherung herunterladen und hier im Logbuch einlesen.
           </li>
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Woher die Daten stammen">
+      <Abschnitt titel="Woher die Daten stammen" offen>
         <Punkte>
           <li>
-            Alles, was du in Taktland liest, stammt aus offenen Daten. Taktland erfindet nichts
-            dazu, und wo etwas fehlt, steht es als Lücke da.
+            Alles stammt aus offenen Daten. Taktland erfindet nichts dazu; wo etwas fehlt,
+            steht es als Lücke da. Werte stehen so da, wie sie in den Daten stehen, zum Teil
+            gezählt oder umgerechnet, ohne Vermutungen und ohne Vergleiche.
           </li>
           <li>
-            Die Angaben zu den Bahnhöfen stammen aus offenen Daten der SBB auf{' '}
-            <Verweis href="https://data.sbb.ch">data.sbb.ch</Verweis>. Der Datensatz zu den
-            Wartehallen steht unter den Nutzungsbedingungen von{' '}
+            Bahnhöfe, Linien, Tunnel und Brücken: offene Daten der SBB auf{' '}
+            <Verweis href="https://data.sbb.ch">data.sbb.ch</Verweis>; die Wartehallen unter
+            den Nutzungsbedingungen von{' '}
             <Verweis href="https://opentransportdata.swiss">opentransportdata.swiss</Verweis>.
           </li>
           <li>
-            Die Linien anderer Bahnen (BLS, SOB, RhB …) und das Kapitel «Netz» auf den
-            Linienseiten stammen aus dem Schienennetz des Bundesamts für Verkehr BAV auf{' '}
+            Linien anderer Bahnen und das Kapitel «Netz»: Schienennetz des Bundesamts für
+            Verkehr BAV auf{' '}
             <Verweis href="https://data.geo.admin.ch/browser/#/collections/ch.bav.schienennetz">
-              data.geo.admin.ch</Verweis>, freie Nutzung mit Quellenangabe. Die Datei trägt den
-            Stand vom 6. Juli 2021.
+              data.geo.admin.ch</Verweis>, Stand 6. Juli 2021.
           </li>
           <li>
-            Seen, Gipfel, die Tunnel und Brücken anderer Bahnen und die Länge vieler
-            SBB-Brücken stammen von swisstopo (Swiss Map Vector 1000, swissTLM3D), die Höhenstufen der Karten aus swissALTIRegio von
-            swisstopo, Flüsse, Wald und Siedlung aus swissTLMRegio von swisstopo, die Landes- und Kantonsgrenzen vom Bundesamt für Statistik BFS,
-            Kulturgüter vom Bundesamt für Bevölkerungsschutz BABS, Seilbahnen vom BAV, BLN,
-            Pärke und Moorlandschaften vom Bundesamt für Umwelt BAFU, alle frei nutzbar mit
-            Quellenangabe.
+            Karten: Seen, Gipfel, Tunnel und Brücken anderer Bahnen und viele Brückenlängen
+            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen aus swissALTIRegio,
+            Flüsse, Wald und Siedlung aus swissTLMRegio; Grenzen vom BFS, Kulturgüter vom
+            BABS, Seilbahnen vom BAV, BLN, Pärke und Moorlandschaften vom BAFU. Alle frei
+            nutzbar mit Quellenangabe.
           </li>
           <li>
-            Die Werte stehen so da, wie sie in den Daten stehen, zum Teil gezählt oder
-            umgerechnet, etwa Züge pro Jahr in Züge pro Tag. Dazu schreibt Taktland nichts:
-            keine Vermutungen, keine Vergleiche mit anderen Bahnhöfen.
+            Unter jeder Zahl steht ihr Datensatz. Vor jeder Veröffentlichung gleicht ein
+            Prüfprogramm Texte und Fragen mit den Daten ab; es findet viele Fehler, aber nicht
+            jeden.{stand && ` Die Daten wurden am ${stand} geladen.`}
           </li>
-          <li>
-            Vor jeder Veröffentlichung gleicht ein Prüfprogramm Texte und Fragen mit den Daten
-            ab. Es findet viele Fehler, aber nicht jeden.
-          </li>
-          <li>
-            Unter jeder Zahl in den Kästchen steht ihr Datensatz. Die Liste aller Datensätze
-            eines Bahnhofs steht unten auf seiner Seite.
-          </li>
-          {stand && <li>Die Daten wurden am {stand} geladen.</li>}
         </Punkte>
       </Abschnitt>
 
       <Abschnitt titel="Fehler sind möglich">
         <Punkte>
           <li>
-            Die Rohdaten können Fehler enthalten, unvollständig oder veraltet sein. Laut ihren{' '}
+            Die Rohdaten können Fehler enthalten, unvollständig oder veraltet sein; laut ihren{' '}
             <Verweis href="https://data.sbb.ch/page/licence/">Nutzungsbedingungen</Verweis>{' '}
-            übernimmt die SBB keine Gewähr für Aktualität, Richtigkeit und Vollständigkeit der
-            Rohdaten.
+            übernimmt die SBB keine Gewähr dafür. Auch beim Zählen, Umrechnen und Formulieren
+            können Fehler passieren.
           </li>
           <li>
-            Auch beim Aufbereiten, also beim Zählen, Umrechnen und Formulieren, können Fehler
-            passieren.
-          </li>
-          <li>
-            Taktland ist ein Lernspiel und nicht für die Reiseplanung gedacht. Es ist ein
-            privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
+            Taktland ist ein Lernspiel, nicht für die Reiseplanung gedacht, ein privates
+            Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
           </li>
         </Punkte>
       </Abschnitt>
@@ -445,53 +251,41 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Datenschutz">
         <Punkte>
           <li>
-            Taktland speichert nichts über dich auf einem Server. Es gibt kein Konto, keine
-            Werbung und keine Profile. Gezählt wird nur, wie oft Taktland geöffnet wird (siehe unten).
+            Kein Konto, keine Werbung, keine Profile. Der Fortschritt bleibt im Browser; die
+            App lädt keine Schriften oder Programme von fremden Diensten.
           </li>
           <li>
-            Der Lernfortschritt bleibt im Browser dieses Geräts. Die App lädt keine Schriften
-            oder Programme von fremden Diensten.
+            Den Standort fragt Taktland nur beim Fahren und unter «Standort» ab, nach deiner
+            Freigabe. Er wird auf dem Gerät verrechnet, weder gespeichert noch gesendet;
+            gemerkt wird nur die Stelle auf dem Weg, damit eine Fahrt weitergehen kann.
           </li>
           <li>
-            Den Standort fragt Taktland nur beim Fahren und auf der Seite «Standort» ab, und
-            nur nach deiner Freigabe. Er wird auf dem Gerät verrechnet, weder gespeichert noch
-            gesendet, und nach «Beenden» oder «Anhalten» nicht mehr abgefragt. Damit eine
-            Fahrt weitergehen kann, merkt sich Taktland auf dem Gerät die Stelle auf dem Weg,
-            nicht den Standort.
+            Ausgeliefert wird die Seite von GitHub Pages; GitHub speichert laut eigenen
+            Angaben die IP-Adressen aus Sicherheitsgründen. Die Adresse taktland.ch ist bei
+            cyon registriert. Beim Öffnen fragt Taktland dort ab, ob es verfügbar ist und ob
+            es eine neue Version gibt, ohne etwas über dich mitzuschicken.
           </li>
           <li>
-            Ausgeliefert wird die Seite von GitHub Pages. GitHub speichert dabei laut eigenen
-            Angaben die IP-Adressen der Besucher aus Sicherheitsgründen. Die Adresse
-            taktland.ch ist bei cyon registriert, deren Namensserver sie auflösen.
-          </li>
-          <li>
-            Beim Öffnen und Zurückholen fragt Taktland eine kleine Datei auf taktland.ch ab, ob
-            es verfügbar ist, und ob es eine neue Version gibt. Dabei wird nichts über dich
-            mitgeschickt.
-          </li>
-          <li>
-            Gezählt wird nur, wie oft Taktland geöffnet wird: Höchstens einmal am Tag meldet die
-            App «geöffnet» an zaehler.taktland.ch, beim ersten Mal auf einem Gerät «neu».
-            Gespeichert wird dort je Tag nur die Zahl, ohne IP-Adresse, ohne Kennung und ohne
-            Uhrzeit. Der Zähler liegt bei cyon in der Schweiz; wie jeder Webserver führt er ein
-            Zugriffsprotokoll, das cyon verwaltet. Ohne Netz zählt nichts.
+            Gezählt wird nur, wie oft Taktland geöffnet wird: höchstens einmal am Tag
+            «geöffnet» an zaehler.taktland.ch, beim ersten Mal auf einem Gerät «neu». Dort
+            steht je Tag nur die Zahl, ohne IP-Adresse, Kennung und Uhrzeit. Der Zähler liegt
+            bei cyon in der Schweiz; wie jeder Webserver führt er ein Zugriffsprotokoll, das
+            cyon verwaltet.
           </li>
         </Punkte>
       </Abschnitt>
 
       <Abschnitt titel="Über Taktland">
         <Punkte>
-          <li>Der Name spielt auf den Taktfahrplan der Schweiz an.</li>
+          <li>Der Name spielt auf den Taktfahrplan der Schweiz an. Taktland ist kostenlos und ohne Werbung.</li>
           <li>
-            Taktland ist mit Unterstützung von KI entstanden: Programm, Textbausteine und
-            Prüfregeln wurden mit Claude Code geschrieben. Die Texte zu Bahnhöfen und Linien
-            setzt ein Programm aus den offenen Daten zusammen, und vor jeder Veröffentlichung
-            gleicht ein Prüfprogramm sie mit den Daten ab.
+            Entstanden mit Unterstützung von KI: Programm, Textbausteine und Prüfregeln mit
+            Claude Code, die Auftaktbilder mit ChatGPT. Die Texte zu Bahnhöfen und Linien
+            setzt ein Programm aus den offenen Daten zusammen.
           </li>
-          <li>Die Auftaktbilder sind mit ChatGPT entstanden.</li>
-          <li>Taktland ist kostenlos und ohne Werbung.</li>
         </Punkte>
       </Abschnitt>
+      </div>
     </div>
   )
 }
@@ -502,12 +296,17 @@ function datum(iso: string) {
   return j && m && t ? `${t}.${m}.${j}` : iso
 }
 
-function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) {
+/** ein Thema als aufklappbare Kachel; der Titel bleibt eine Überschrift */
+function Abschnitt({ titel, children, offen = false }: { titel: string; children: ReactNode; offen?: boolean }) {
   return (
-    <section className="mt-8">
-      <h2 className="text-xl font-semibold text-sbb-black dark:text-sbb-white">{titel}</h2>
-      {children}
-    </section>
+    <details className="kachel group" open={offen}>
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3
+                          [&::-webkit-details-marker]:hidden">
+        <h2 className="text-lg font-semibold text-sbb-black dark:text-sbb-white">{titel}</h2>
+        <span className="pfeil shrink-0 transition-transform group-open:rotate-180" aria-hidden="true">↓</span>
+      </summary>
+      <div className="px-4 pb-4">{children}</div>
+    </details>
   )
 }
 
@@ -516,15 +315,6 @@ function Punkte({ children }: { children: ReactNode }) {
     <ul className="mt-2 list-disc space-y-2 pl-5 leading-relaxed marker:text-sbb-red">
       {children}
     </ul>
-  )
-}
-
-function Art({ name, children }: { name: string; children: ReactNode }) {
-  return (
-    <div className="border-l-2 border-sbb-red bg-sbb-milk px-3 py-2 dark:bg-sbb-charcoal">
-      <dt className="font-semibold text-sbb-black dark:text-sbb-white">{name}</dt>
-      <dd className="text-sm text-sbb-black dark:text-sbb-white">{children}</dd>
-    </div>
   )
 }
 
