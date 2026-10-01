@@ -26,7 +26,8 @@ export function EinstellungenSeite() {
               wert: s, titel: SCHRIFTEN[s].text, text: 'Taktland: Bahnhöfe, Tunnel und Brücken',
               stil: { fontFamily: SCHRIFTEN[s].familie } }))} />
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        Alle drei Schriften sind schon auf dem Gerät; wie sie genau aussehen, hängt vom Handy ab.
+        Space Grotesk ist in Taktland mitgeliefert (SIL Open Font License) und lädt erst, wenn du sie
+        wählst. Die anderen sind schon auf dem Gerät; wie sie genau aussehen, hängt vom Handy ab.
       </p>
 
       <h2 className="mt-8 text-lg font-semibold">Beim Fahren</h2>

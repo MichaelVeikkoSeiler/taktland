@@ -2,6 +2,8 @@ import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+// Space Grotesk, mitgeliefert; geladen wird sie erst, wenn man sie unter Einstellungen wählt
+import '@fontsource-variable/space-grotesk/index.css'
 import { serviceWorkerAnmelden } from './serviceWorker'
 import { Gesperrt } from './komponenten/Gesperrt'
 import { useSperre } from './verfuegbar'

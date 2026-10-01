@@ -21,6 +21,7 @@ import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { useEffect, useRef } from 'react'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 import { reiterTon } from '../audio'
+import { useEinstellungen } from '../einstellungen'
 
 export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio' | 'einstellungen'
 
@@ -146,14 +147,16 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : REISETASCHE.some((l) => l.bereich === aktiv) ? { name: 'Reisetasche', liste: REISETASCHE, raster: 'flex' } : null
   const unterAktiv: string | null = fahrt ?? aktiv
   const unterLeiste = useRef<HTMLElement>(null)
+  const schrift = useEinstellungen()
   useEffect(() => {
     const leiste = unterLeiste.current
     const hier = leiste?.querySelector<HTMLElement>('[aria-current="page"]')
     if (!leiste || !hier) return
-    if (hier.offsetLeft + hier.offsetWidth > leiste.scrollLeft + leiste.clientWidth || hier.offsetLeft < leiste.scrollLeft) {
-      leiste.scrollLeft = hier.offsetLeft - 16
-    }
-  }, [unterAktiv])
+    // ganz ins Bild, mit dem Rand von 16 px; auch wenn eine andere Schrift die Zeile verbreitert
+    const rechts = hier.offsetLeft + hier.offsetWidth + 16 - leiste.clientWidth
+    if (rechts > leiste.scrollLeft) leiste.scrollLeft = rechts
+    else if (hier.offsetLeft - 16 < leiste.scrollLeft) leiste.scrollLeft = hier.offsetLeft - 16
+  }, [unterAktiv, schrift.groesse, schrift.schrift])
   return (
     <header className="print:hidden border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* ohne Knopf «Aktualisieren»: neue Versionen lädt die App von selbst (serviceWorker.ts;

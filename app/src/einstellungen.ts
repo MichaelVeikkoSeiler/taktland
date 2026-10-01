@@ -5,26 +5,28 @@ import { useSyncExternalStore } from 'react'
  * Fahren, Schriftgrösse und Schriftart. Sie bleiben auf diesem Gerät.
  */
 export type Groesse = 'normal' | 'gross' | 'sehrgross'
-export type Schrift = 'helvetica' | 'system' | 'serif'
+export type Schrift = 'helvetica' | 'grotesk' | 'system' | 'serif'
 export interface Einstellungen { wach: boolean; groesse: Groesse; schrift: Schrift }
 
 const SCHLUESSEL = 'taktland.einstellungen.v1'
 
 /** Schriftgrösse als Anteil der Grundgrösse; alle Masse der App hängen daran (rem) */
 export const GROESSEN: Record<Groesse, { text: string; prozent: number }> = {
-  normal: { text: 'Normal', prozent: 100 },
+  // «Basic» statt «Normal» (Michael, 2026-10-01: wer gross wählt, ist nicht «nicht normal»)
+  normal: { text: 'Basic', prozent: 100 },
   gross: { text: 'Gross', prozent: 112.5 },
   sehrgross: { text: 'Sehr gross', prozent: 125 },
 }
 
 /**
- * Drei Schriften, alle schon auf dem Gerät, keine von einem fremden Dienst geladen:
- * Helvetica wie bisher, die Schrift des Handys (auf Android meist Roboto, auf dem
- * iPhone San Francisco) und eine Serifenschrift. Wie sie genau aussehen, hängt vom
- * Gerät ab.
+ * Vier Schriften, keine von einem fremden Dienst geladen: Helvetica wie bisher, Space
+ * Grotesk (Florian Karsten, SIL Open Font License, in der App mitgeliefert; Michael,
+ * 2026-10-01), die Schrift des Handys (auf Android meist Roboto, auf dem iPhone San
+ * Francisco) und eine Serifenschrift. Space Grotesk lädt erst, wenn man sie wählt.
  */
 export const SCHRIFTEN: Record<Schrift, { text: string; familie: string }> = {
   helvetica: { text: 'Helvetica', familie: '"Helvetica Neue", Helvetica, Arial, system-ui, sans-serif' },
+  grotesk: { text: 'Space Grotesk', familie: '"Space Grotesk Variable", "Helvetica Neue", Helvetica, Arial, sans-serif' },
   system: { text: 'Schrift des Handys', familie: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' },
   serif: { text: 'Serifenschrift', familie: 'Georgia, Charter, "Noto Serif", "Times New Roman", serif' },
 }
