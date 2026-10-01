@@ -451,18 +451,20 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
         const [a, b] = [lageBei(fahrweg, o.s), lageBei(fahrweg, o.sAus!)]
         const d = pfad([lage(a.lat, a.lon), ...stueck, lage(b.lat, b.lon)])
         return (
-          <path key={`tz${o.kennung}`} d={d} fill="none" strokeWidth={8} strokeLinecap="round"
+          <path key={`tz${o.kennung}`} d={d} fill="none" strokeWidth={nah ? 8 : 5} strokeLinecap="round"
                 strokeLinejoin="round" vectorEffect="non-scaling-stroke"
                 className={o.art === 'bruecke' ? 'stroke-fahrt-bruecke' : 'stroke-fahrt-tunnel dark:stroke-sbb-storm'} />
         )
       })}
-      {zeichen.map((o) => {
+      {punkteAusduennen(zeichen.flatMap((o) => {
         // Bahnhöfe am Betriebspunkt, nicht am Anfang ihrer Perrons; Start und Ziel zeichnet die Karte grösser
-        if (o.art === 'bahnhof' && ((o.sOrt ?? o.s) < 1 || (o.sOrt ?? o.s) > wegEnde(fahrweg) - 1)) return null
+        if (o.art === 'bahnhof' && ((o.sOrt ?? o.s) < 1 || (o.sOrt ?? o.s) > wegEnde(fahrweg) - 1)) return []
         const l = lageBei(fahrweg, o.art === 'bahnhof' ? o.sOrt ?? o.s : o.s)
         const [x, y] = lage(l.lat, l.lon)
+        return [{ o, x, y }]
+      }), px).map(({ o, x, y }) => {
         return (
-          <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 5 : 2.5) * px}
+          <circle key={`${o.art}${o.kennung}`} cx={x} cy={y} r={(o.art === 'bahnhof' ? 4 : 2) * px}
                   strokeWidth={1.5} vectorEffect="non-scaling-stroke"
                   className={o.art === 'tunnel' ? 'fill-fahrt-tunnel stroke-white dark:fill-sbb-storm dark:stroke-sbb-midnight'
                     : o.art === 'bruecke' ? 'fill-fahrt-bruecke stroke-white dark:stroke-sbb-midnight'
@@ -471,7 +473,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
         )
       })}
     </>
-  ), [zeichen, weg, fahrweg, px])
+  ), [zeichen, weg, fahrweg, px, nah])
 
   return (
     <figure className={klassen.figur}>
@@ -636,4 +638,37 @@ function namensLage([x, y]: [number, number], name: string, px: number,
     if (kosten < wenigste) { wenigste = kosten; beste = k }
   }
   return beste
+}
+
+/**
+ * Punkte auf der Karte ausdünnen (Michael, 2026-10-01: «die vielen, vielen Punkte»): ein Punkt
+ * bleibt nur, wenn auf dem Bildschirm keiner mit Vorrang näher als sein Abstand steht.
+ * Vorrang haben Bahnhöfe, dann Tunnel und Brücken, dann Sehenswertes. Je näher die Karte,
+ * desto mehr bleiben; weggelassen wird nur auf der Karte, gemeldet wird alles.
+ */
+const PUNKT_ABSTAND_PX: Record<string, number> = { bahnhof: 11, tunnel: 9, bruecke: 9, sehenswert: 9 }
+const PUNKT_RANG: Record<string, number> = { bahnhof: 0, tunnel: 1, bruecke: 1, sehenswert: 2 }
+
+function punkteAusduennen<T extends { o: { art: string; s: number }; x: number; y: number }>(punkte: T[], px: number): T[] {
+  const zelle = 12 * px
+  const raster = new Map<string, T[]>()
+  const raus: T[] = []
+  for (const p of [...punkte].sort((a, b) => (PUNKT_RANG[a.o.art] ?? 3) - (PUNKT_RANG[b.o.art] ?? 3) || a.o.s - b.o.s)) {
+    const r = (PUNKT_ABSTAND_PX[p.o.art] ?? 9) * px
+    const [ix, iy] = [Math.floor(p.x / zelle), Math.floor(p.y / zelle)]
+    let frei = true
+    for (let dx = -1; dx <= 1 && frei; dx++) {
+      for (let dy = -1; dy <= 1 && frei; dy++) {
+        for (const q of raster.get(`${ix + dx}:${iy + dy}`) ?? []) {
+          if (Math.hypot(q.x - p.x, q.y - p.y) < r) { frei = false; break }
+        }
+      }
+    }
+    if (!frei) continue
+    raus.push(p)
+    const k = `${ix}:${iy}`
+    raster.set(k, [...(raster.get(k) ?? []), p])
+  }
+  // in der Reihenfolge des Wegs zeichnen, wie bisher
+  return raus.sort((a, b) => a.o.s - b.o.s)
 }
