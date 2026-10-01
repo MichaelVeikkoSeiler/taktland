@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { bodenbedeckungLaden, flaechenLaden, geometrieLaden, kartengrundLaden, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import {
   type FahrObjekt, type Fahrweg, fahrwegBauen, gerundetM, zugLaengeM, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, wegEnde,
@@ -12,6 +12,7 @@ import { nachKennung, type Nachbarn, type StreckenWahl, wegSuchen } from './Stre
 import { Ladefehler } from './Ladefehler'
 import { Pikto } from './Pikto'
 import { kurve } from './Netzkarte'
+import { flussNamenSetzen } from './Kartengrund'
 
 /** So viele Einträge je Art passen auf ein Blatt A4; zweiseitig doppelt so viele
  *  (Michael, 2026-09-27: «eine einfache Variante und eine schwierigere Variante»;
@@ -34,6 +35,9 @@ const FARBE: Record<Eintrag['art'], string> = {
 const SEE = '#c9def1'
 /** Kontur der Seen, etwas dunkler (Michael, 2026-09-27) */
 const SEE_RAND = '#7fa8cf'
+/** Flussnamen: Schriftgrösse und Farbe wie die Seenamen der App */
+const FLUSS_SCHRIFT = 11
+const FLUSS_NAME = '#3f6a93'
 /** Grund der Karte, heller als in der App, damit der Druck wenig Tinte braucht */
 const GRUND = { hoehen: ['#f7f6f2', '#efece6', '#e6e2da'], ausland: '#f2f2f2', kanton: '#a3a3a3',
                 grenze: '#5a5a5a', fluss: '#9cc3e6' }
@@ -785,6 +789,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
 }) {
   const fw = daten.fahrweg
   const { pt } = p
+  const kennung = useId()
   const drin = (x: number, y: number, r = 0) => x > -r && x < B + r && y > -r && y < H + r
   // etwa alle 3 Pixel ein Punkt, auch im vergrösserten Ausschnitt fein
   const schritt = Math.max(20, (3 * 111_000) / p.m)
@@ -816,7 +821,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
     k, d: bb[k].map((r) => punkte(r, bb.faktor)).filter(sichtbar).map((q) => d(q)).join(''),
   })) : []
   const kantone = (g?.kanton ?? []).map(punkte).filter(sichtbar)
-  const fluesse = (g?.fluesse ?? []).map((f) => ({ q: punkte(f), k: f.k })).filter((f) => sichtbar(f.q))
+  const fluesse = (g?.fluesse ?? []).map((f) => ({ q: punkte(f), k: f.k, name: f.name })).filter((f) => sichtbar(f.q))
   const gesetzt = platzieren(fw, p, eintraege, B, H)
   // Schrift auf der gedrehten Karte gedreht wie der Nordpfeil (Michael, 2026-09-27:
   // «das vereinfacht das Drehen des Blattes»)
@@ -841,6 +846,11 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
   })
   for (const g of gesetzt) belegt.push({ x0: g.x - 10, x1: g.x + 10, y0: g.y - 10, y1: g.y + 10 })
   const orte = ortsnamen(daten, fw, p, B, H, belegt, dreh)
+  // Flussnamen entlang des Flusses, wie in der App (Michael, 2026-10-01); lesbar, wenn das
+  // Blatt so gedreht ist, dass Norden oben steht
+  const flussNamen = flussNamenSetzen(fluesse.map((f) => ({ name: f.name, k: f.k, pts: f.q })),
+    ([x, y]) => drin(x, y, -12), FLUSS_SCHRIFT, belegt.map((b) => [b.x0, b.y0, b.x1, b.y1]),
+    [Math.cos(dreh), Math.sin(dreh)])
   const rahmen = (ausschnitte ?? []).map(([a, name]) => {
     const [ax, ay] = p.hin(a.x0, a.y0), [bx, by] = p.hin(a.x1, a.y1)
     return { x: ax, y: ay, w: bx - ax, h: by - ay, name }
@@ -862,6 +872,15 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
       {seen.map((q, i) => (
         <polygon key={i} points={q.map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')} fill={SEE}
                  stroke={SEE_RAND} strokeWidth={0.8} strokeLinejoin="round" />
+      ))}
+      {flussNamen.map((n, i) => (
+        <g key={n.name}>
+          <path id={`${kennung}f${i}`} d={kurve(n.pts, 1)} fill="none" />
+          <text fontSize={FLUSS_SCHRIFT} fontStyle="italic" dy={-0.35 * FLUSS_SCHRIFT} fill={FLUSS_NAME}
+                stroke="#fff" strokeWidth={3} paintOrder="stroke">
+            <textPath href={`#${kennung}f${i}`} startOffset="50%" textAnchor="middle">{n.name}</textPath>
+          </text>
+        </g>
       ))}
       <polyline points={linie(0, ende)} fill="none" stroke={WEG} strokeWidth={STRECKE_BREITE} strokeLinejoin="round" />
       {eintraege.filter((e) => e.art === 'tunnel' && e.o.sAus !== null).map((e) => (

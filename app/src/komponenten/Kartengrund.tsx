@@ -132,7 +132,7 @@ export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | nu
   )
 }
 
-type Feld = [number, number, number, number]
+export type Feld = [number, number, number, number]
 const FLUSS_SCHRIFT = 10
 
 /**
@@ -148,18 +148,45 @@ export function FlussNamen({ grund, box, px, belegt = [], verh = 1.6 }: {
   const h = box.w / verh
   const [vx0, vx1] = [box.cx - box.w * 0.46, box.cx + box.w * 0.46]
   const [vy0, vy1] = [box.cy - h * 0.44, box.cy + h * 0.44]
-  const drin = ([x, y]: [number, number]) => x > vx0 && x < vx1 && y > vy0 && y < vy1
-  const felder = [...belegt]
+  const namen = flussNamenSetzen(
+    grund.fluesse.filter((f) => f.x1 > vx0 && f.x0 < vx1 && f.y1 > vy0 && f.y0 < vy1),
+    ([x, y]) => x > vx0 && x < vx1 && y > vy0 && y < vy1, FLUSS_SCHRIFT * px, [...belegt])
+  return (
+    <g aria-hidden="true">
+      {namen.map((n, i) => (
+        <g key={n.name}>
+          <path id={`${id}f${i}`} d={kurve(n.pts)} fill="none" />
+          <text fontSize={FLUSS_SCHRIFT * px} fontStyle="italic" dy={-0.35 * FLUSS_SCHRIFT * px}
+                className="fill-see-name stroke-see-halo" strokeWidth={2.5} paintOrder="stroke"
+                vectorEffect="non-scaling-stroke">
+            <textPath href={`#${id}f${i}`} startOffset="50%" textAnchor="middle">{n.name}</textPath>
+          </text>
+        </g>
+      ))}
+    </g>
+  )
+}
+
+/**
+ * Wo die Flussnamen stehen: je Name höchstens einmal, die grossen Flüsse zuerst, an
+ * der längsten sichtbaren Strecke, nur wo der Fluss dort etwa so gerade ist wie der
+ * Name lang und nichts in felder verdeckt. lesen: die Richtung, in der die Schrift
+ * von links nach rechts läuft (auf dem gedrehten Fahrtblatt mitgedreht).
+ */
+export function flussNamenSetzen(
+  fluesse: ReadonlyArray<{ name?: string; k: number; pts: ReadonlyArray<readonly [number, number]> }>,
+  drin: (p: readonly [number, number]) => boolean, schrift: number, felder: Feld[],
+  lesen: readonly [number, number] = [1, 0],
+) {
+  type P = readonly [number, number]
   const gesetzt = new Set<string>()
-  const namen: Array<{ name: string; d: string }> = []
-  const reihe = grund.fluesse.filter((f) => f.name && f.x1 > vx0 && f.x0 < vx1 && f.y1 > vy0 && f.y0 < vy1)
-    .sort((a, b) => a.k - b.k)
-  for (const f of reihe) {
+  const raus: Array<{ name: string; pts: P[] }> = []
+  const zaehle = (q: P[]) => q.slice(1).reduce((s, p, i) => s + Math.hypot(p[0] - q[i][0], p[1] - q[i][1]), 0)
+  for (const f of [...fluesse].filter((f) => f.name).sort((a, b) => a.k - b.k)) {
     if (gesetzt.has(f.name!)) continue
-    const laenge = f.name!.length * FLUSS_SCHRIFT * 0.5 * px
+    const laenge = f.name!.length * schrift * 0.56
     // die längste sichtbare Strecke
-    let best: Array<[number, number]> = [], lauf: Array<[number, number]> = []
-    const zaehle = (q: Array<[number, number]>) => q.slice(1).reduce((s, p, i) => s + Math.hypot(p[0] - q[i][0], p[1] - q[i][1]), 0)
+    let best: P[] = [], lauf: P[] = []
     for (const p of [...f.pts, null]) {
       if (p && drin(p)) { lauf.push(p); continue }
       if (zaehle(lauf) > zaehle(best)) best = lauf
@@ -172,33 +199,24 @@ export function FlussNamen({ grund, box, px, belegt = [], verh = 1.6 }: {
     const [a, b] = [stueck[0], stueck[stueck.length - 1]]
     if (Math.hypot(b[0] - a[0], b[1] - a[1]) < laenge * 0.9) continue
     const xs = stueck.map((p) => p[0]), ys = stueck.map((p) => p[1])
-    const r = FLUSS_SCHRIFT * 0.7 * px
+    const r = schrift * 0.7
     const feld: Feld = [Math.min(...xs) - r, Math.min(...ys) - r, Math.max(...xs) + r, Math.max(...ys) + r]
     if (felder.some((g) => g[0] < feld[2] && feld[0] < g[2] && g[1] < feld[3] && feld[1] < g[3])) continue
     felder.push(feld)
     gesetzt.add(f.name!)
-    // von links nach rechts lesbar
-    namen.push({ name: f.name!, d: kurve(a[0] <= b[0] ? stueck : [...stueck].reverse()) })
+    // die Schrift auf einem sanften Bogen durch Anfang, Mitte und Ende: folgt sie jeder
+    // Windung, drängen sich die Buchstaben und verdecken einander
+    const mitte = teilstueck(stueck, laenge * 0.6, laenge * 0.6)[0] ?? a
+    const bogen = [a, mitte, b]
+    const vorwaerts = (b[0] - a[0]) * lesen[0] + (b[1] - a[1]) * lesen[1] >= 0
+    raus.push({ name: f.name!, pts: vorwaerts ? bogen : [...bogen].reverse() })
   }
-  return (
-    <g aria-hidden="true">
-      {namen.map((n, i) => (
-        <g key={n.name}>
-          <path id={`${id}f${i}`} d={n.d} fill="none" />
-          <text fontSize={FLUSS_SCHRIFT * px} fontStyle="italic" dy={-0.35 * FLUSS_SCHRIFT * px}
-                className="fill-see-name stroke-see-halo" strokeWidth={2.5} paintOrder="stroke"
-                vectorEffect="non-scaling-stroke">
-            <textPath href={`#${id}f${i}`} startOffset="50%" textAnchor="middle">{n.name}</textPath>
-          </text>
-        </g>
-      ))}
-    </g>
-  )
+  return raus
 }
 
 /** Der Teil einer Linie zwischen zwei Abständen vom Anfang */
-function teilstueck(q: Array<[number, number]>, von: number, bis: number): Array<[number, number]> {
-  const raus: Array<[number, number]> = []
+function teilstueck(q: ReadonlyArray<readonly [number, number]>, von: number, bis: number) {
+  const raus: Array<readonly [number, number]> = []
   let s = 0
   for (let i = 1; i < q.length; i++) {
     const [a, b] = [q[i - 1], q[i]]
