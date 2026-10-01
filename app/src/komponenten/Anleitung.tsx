@@ -289,6 +289,12 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
 
       <Abschnitt titel="Über Taktland">
         <Punkte>
+          {/* Ziel von Taktland (Michael, 2026-10-01: «mehr Leute zu Bahnfahrten bewegen») */}
+          <li>
+            Wozu Taktland: Taktland will Lust aufs Bahnfahren machen. Wer die Bahnhöfe, Strecken,
+            Tunnel und Brücken kennt, erlebt eine Fahrt bewusster und steigt lieber ein. So sollen
+            mehr Menschen den Zug nehmen.
+          </li>
           <li>Der Name spielt auf den Taktfahrplan der Schweiz an. Taktland ist kostenlos und ohne Werbung.</li>
           <li>
             Entstanden mit Unterstützung von KI: Programm, Textbausteine und Prüfregeln mit
