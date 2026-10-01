@@ -305,7 +305,12 @@ function Abschnitt({ titel, children, offen = false }: { titel: string; children
         <h2 className="text-lg font-semibold text-sbb-black dark:text-sbb-white">{titel}</h2>
         <span className="pfeil shrink-0 transition-transform group-open:rotate-180" aria-hidden="true">↓</span>
       </summary>
-      <div className="px-4 pb-4">{children}</div>
+      {/* ein Tipp auf den offenen Text schliesst das Thema wieder, ausser auf einen Verweis
+          oder beim Markieren von Text (Michael, 2026-10-01) */}
+      <div className="cursor-pointer px-4 pb-4" onClick={(e) => {
+        if ((e.target as HTMLElement).closest('a') || window.getSelection()?.toString()) return
+        e.currentTarget.closest('details')?.removeAttribute('open')
+      }}>{children}</div>
     </details>
   )
 }
