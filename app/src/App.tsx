@@ -207,7 +207,7 @@ export default function App() {
             Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für
             Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
             Moorlandschaften: Bundesamt für Umwelt BAFU.
-            Taktland ist ein privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
+            Taktland ist ein privates Lernprojekt und kein Angebot einer Bahnunternehmung.
             Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
             sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist zum Lernen,
