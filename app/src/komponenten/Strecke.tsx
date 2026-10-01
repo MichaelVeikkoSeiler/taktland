@@ -291,7 +291,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
         <BahnhofFeld bezeichnung="Nach" wert={wahl.nach} bahnhoefe={alle} name={name}
                      aendern={(u) => waehlen({ nach: u })} />
         <BahnhofLinien b={wahl.nach ? bahnhof.get(wahl.nach) : undefined} verzeichnis={verzeichnis} />
-        <BahnhofFeld bezeichnung="Über (freiwillig)" wert={wahl.ueber} bahnhoefe={alle} name={name}
+        <BahnhofFeld bezeichnung="Über (optional)" wert={wahl.ueber} bahnhoefe={alle} name={name}
                      aendern={(u) => waehlen({ ueber: u })} />
         <BahnhofLinien b={wahl.ueber ? bahnhof.get(wahl.ueber) : undefined} verzeichnis={verzeichnis} />
         {(wahl.von || wahl.nach) && (

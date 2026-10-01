@@ -292,7 +292,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                            aendern={(u) => setBlatt((w) => ({ ...w, von: u }))} />
               <BahnhofFeld bezeichnung="Nach" wert={blatt.nach} bahnhoefe={imNetz} name={name}
                            aendern={(u) => setBlatt((w) => ({ ...w, nach: u }))} />
-              <BahnhofFeld bezeichnung="Über (freiwillig)" wert={blatt.ueber} bahnhoefe={imNetz} name={name}
+              <BahnhofFeld bezeichnung="Über (optional)" wert={blatt.ueber} bahnhoefe={imNetz} name={name}
                            aendern={(u) => setBlatt((w) => ({ ...w, ueber: u }))} />
               <BahnenWahl />
               <button type="button" disabled={!blattBereit}
@@ -371,7 +371,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
           </div>
         )}
         {art === 'beide' && (
-          <BahnhofFeld bezeichnung="Über (freiwillig)" wert={wahl.ueber} bahnhoefe={imNetz} name={name}
+          <BahnhofFeld bezeichnung="Über (optional)" wert={wahl.ueber} bahnhoefe={imNetz} name={name}
                        aendern={(u) => setWahl((w) => ({ ...w, ueber: u }))} />
         )}
         <BahnenWahl />
