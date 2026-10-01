@@ -3,6 +3,7 @@ import { bodenbedeckungLaden, kartengrundLaden } from '../daten'
 import { useVersteckt } from './Sehenswert'
 import type { BodenbedeckungDaten, KartengrundDaten, KodierterZug } from '../typen'
 import { kurve, LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
+import { imBild, type Kachel, kachelnImBild, kachelPfad, type Schicht, schichtBauen, type Stueck, stueckeln } from '../kacheln'
 
 /**
  * Der Grund der Karten (Michael, 2026-09-27: «den weissen Hintergrund
@@ -12,12 +13,15 @@ import { kurve, LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
  */
 
 interface Zug { d: string; x0: number; x1: number; y0: number; y1: number }
-interface Fluss extends Zug { k: number; name?: string; pts: Array<[number, number]> }
+interface Fluss extends Zug { k: number; name?: string; pts: Array<[number, number]>; stuecke: Stueck[] }
 interface Grund {
-  land: string
-  kantone: Zug[]
+  /** die Schweiz als Fläche, für das Ausland je Kachel */
+  land: Schicht
+  /** Landes- und Kantonsgrenzen in kurzen Stücken */
+  grenze: Stueck[]
+  kantone: Stueck[]
   fluesse: Fluss[]
-  hoehen: Array<{ ab: number; flaechen: Zug[] }>
+  hoehen: Array<{ ab: number; schicht: Schicht }>
 }
 
 let vorrat: Grund | null = null
@@ -33,25 +37,26 @@ function punkteLesen(z: KodierterZug, faktor = 1e5) {
   return pts
 }
 
-function zug(z: KodierterZug, zu: boolean, faktor = 1e5, rund = false): Zug {
-  return zugAus(punkteLesen(z, faktor), zu, rund)
-}
-
 function zugAus(pts: Array<[number, number]>, zu: boolean, rund = false): Zug {
   let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity]
   for (const [x, y] of pts) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y) }
   return { d: rund ? kurve(pts) : pfad(pts) + (zu ? 'Z' : ''), x0, x1, y0, y1 }
 }
 
+/** ein Ring als offene Linie, die zum Anfang zurückführt, in Stücken */
+const ringStuecke = (pts: Array<[number, number]>) => stueckeln([...pts, pts[0]], (q) => pfad(q as Array<[number, number]>))
+
 function lesen(d: KartengrundDaten): Grund {
+  const land = d.land.map((r) => punkteLesen(r))
   return {
-    land: d.land.map((r) => zug(r, true).d).join(''),
-    kantone: d.kanton.map((r) => zug(r, true)),
+    land: schichtBauen(land),
+    grenze: land.flatMap(ringStuecke),
+    kantone: d.kanton.flatMap((r) => ringStuecke(punkteLesen(r))),
     fluesse: d.fluesse.map((f) => {
       const pts = punkteLesen(f)
-      return { ...zugAus(pts, false, true), k: f.k, name: f.name, pts }
+      return { ...zugAus(pts, false, true), k: f.k, name: f.name, pts, stuecke: stueckeln(pts, (q) => kurve(q)) }
     }),
-    hoehen: d.hoehen.map((s) => ({ ab: s.ab_m, flaechen: s.ringe.map((r) => zug(r, true)) })),
+    hoehen: d.hoehen.map((s) => ({ ab: s.ab_m, schicht: schichtBauen(s.ringe.map((r) => punkteLesen(r))) })),
   }
 }
 
@@ -68,13 +73,14 @@ export function useKartengrund(): Grund | null {
 }
 
 /** Wald und Siedlung (Michael, 2026-09-27), einmal geladen für alle Karten */
-interface Boden { wald: Zug[]; siedlung: Zug[] }
+interface Boden { wald: Schicht; siedlung: Schicht }
 let bodenVorrat: Boden | null = null
 let bodenLaden: Promise<Boden> | null = null
 
 function bodenLesen(d: BodenbedeckungDaten): Boden {
   const f = d.faktor
-  return { wald: d.wald.map((r) => zug(r, true, f)), siedlung: d.siedlung.map((r) => zug(r, true, f)) }
+  return { wald: schichtBauen(d.wald.map((r) => punkteLesen(r, f))),
+           siedlung: schichtBauen(d.siedlung.map((r) => punkteLesen(r, f))) }
 }
 
 function useBoden(): Boden | null {
@@ -89,8 +95,8 @@ function useBoden(): Boden | null {
   return b
 }
 
-const im = (z: Zug, box: Box, h: number) =>
-  z.x1 > box.cx - box.w && z.x0 < box.cx + box.w && z.y1 > box.cy - h && z.y0 < box.cy + h
+/** alle Kacheln einer Schicht als ein Pfad: so gibt es an den Kachelrändern keine feinen Fugen */
+const kachelnPfad = (s: Schicht, kacheln: Kachel[]) => kacheln.map((k) => kachelPfad(s, k)).join('')
 
 /** Unter allen anderen Ebenen zeichnen */
 export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | null; box: Box; verh?: number }) {
@@ -98,35 +104,29 @@ export function KartengrundEbene({ grund, box, verh = 1.6 }: { grund: Grund | nu
   const aus = useVersteckt()
   if (!grund) return null
   const h = box.w / verh
-  // ein Rahmen weit um den Ausschnitt; mit der Schweiz als Loch wird er zum Ausland
-  const r = [box.cx - box.w * 2, box.cy - h * 2, box.cx + box.w * 2, box.cy + h * 2]
-  const rahmen = `M${r[0]} ${r[1]}H${r[2]}V${r[3]}H${r[0]}Z`
+  const kacheln = kachelnImBild(box, h)
+  // je Kachel ihr Rechteck mit der Schweiz als Loch: das Ausland
+  const ausland = kacheln.map((k) => `M${k.x0} ${k.y0}h${k.g}v${k.g}h${-k.g}Z${kachelPfad(grund.land, k)}`).join('')
   return (
     <g aria-hidden="true">
       {grund.hoehen.map((s, i) => (
-        <path key={`h${s.ab}`} d={s.flaechen.filter((z) => im(z, box, h)).map((z) => z.d).join('')}
+        <path key={`h${s.ab}`} d={kachelnPfad(s.schicht, kacheln)}
               fillRule="evenodd" className={['fill-hoehe-1', 'fill-hoehe-2', 'fill-hoehe-3'][i]} />
       ))}
       {/* Siedlung und Wald über den Höhenstufen, leicht durchscheinend */}
       {boden && !aus.has('boden') && ([['siedlung', 'fill-siedlung'], ['wald', 'fill-wald']] as const).map(([k, klasse]) => (
-        <path key={k} d={boden[k].filter((z) => im(z, box, h)).map((z) => z.d).join('')}
-              fillRule="evenodd" className={klasse} />
+        <path key={k} d={kachelnPfad(boden[k], kacheln)} fillRule="evenodd" className={klasse} />
       ))}
-      {(
-        <>
-          <path d={rahmen + grund.land} fillRule="evenodd" className="fill-ausland" />
-          {grund.kantone.filter((z) => im(z, box, h)).map((z, i) => (
-            <path key={`k${i}`} d={z.d} fill="none" strokeWidth={0.75} vectorEffect="non-scaling-stroke"
-                  className="stroke-kantonsgrenze" />
-          ))}
-          <path d={grund.land} fill="none" strokeWidth={1.2} vectorEffect="non-scaling-stroke"
-                className="stroke-landesgrenze" />
-        </>
-      )}
-      {grund.fluesse.filter((z) => im(z, box, h)).map((z, i) => (
-        <path key={`f${i}`} d={z.d} fill="none" strokeWidth={z.k <= 4 ? 2 : z.k === 5 ? 1.3 : 1}
-              strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke"
-              className="stroke-fluss" />
+      <path d={ausland} fillRule="evenodd" className="fill-ausland" />
+      <path d={grund.kantone.filter((z) => imBild(z, box, h)).map((z) => z.d).join('')} fill="none" strokeWidth={0.75}
+            vectorEffect="non-scaling-stroke" strokeLinejoin="round" className="stroke-kantonsgrenze" />
+      <path d={grund.grenze.filter((z) => imBild(z, box, h)).map((z) => z.d).join('')} fill="none" strokeWidth={1.2}
+            vectorEffect="non-scaling-stroke" strokeLinejoin="round" className="stroke-landesgrenze" />
+      {([[4, 2], [5, 1.3], [6, 1]] as const).map(([k, breite]) => (
+        <path key={`f${k}`} d={grund.fluesse.filter((f) => (k === 4 ? f.k <= 4 : f.k === k) && imBild(f, box, h))
+                                 .flatMap((f) => f.stuecke.filter((z) => imBild(z, box, h)).map((z) => z.d)).join('')}
+              fill="none" strokeWidth={breite} strokeLinejoin="round" strokeLinecap="round"
+              vectorEffect="non-scaling-stroke" className="stroke-fluss" />
       ))}
     </g>
   )
@@ -162,7 +162,9 @@ export function FlussNamen({ grund, box, px, belegt = [], verh = 1.6 }: {
           {[true, false].map((kontur) => (
             <text key={String(kontur)} fontSize={FLUSS_SCHRIFT * px} fontStyle="italic" dy={-0.35 * FLUSS_SCHRIFT * px}
                   className={kontur ? 'fill-see-halo stroke-see-halo' : 'fill-see-name'}
-                  strokeWidth={kontur ? 2 : undefined} strokeLinejoin="round" vectorEffect="non-scaling-stroke">
+                  // in Kartenmass: auf einem Schriftbogen gilt non-scaling-stroke nicht, 2 hiess
+                  // dort 2 Grad, ein weisser Fleck über der halben Karte (Michael, 2026-10-01)
+                  strokeWidth={kontur ? 2 * px : undefined} strokeLinejoin="round">
               <textPath href={`#${id}f${i}`} startOffset="50%" textAnchor="middle">{n.name}</textPath>
             </text>
           ))}

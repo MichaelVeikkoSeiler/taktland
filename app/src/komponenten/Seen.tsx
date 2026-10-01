@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { seenLaden } from '../daten'
 import type { SeenDaten } from '../typen'
 import { LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
+import { imBild, kachelnImBild, kachelPfad, type Schicht, schichtBauen, type Stueck, stueckeln } from '../kacheln'
 
 /**
  * Seen auf den Karten (Michael, 2026-09-25: «Alle Seen», «helles Blau selber
@@ -21,8 +22,13 @@ export interface See {
 let vorrat: See[] | null = null
 let laden: Promise<See[]> | null = null
 
+/** Wasser je Kachel und die Ufer in Stücken (Michael, 2026-10-01: die Seen sofort zeigen) */
+let wasser: Schicht | null = null
+let ufer: Stueck[] = []
+
 function lesen(daten: SeenDaten): See[] {
-  return daten.seen.map((s) => {
+  const ringe: Array<Array<[number, number]>> = []
+  const seen = daten.seen.map((s) => {
     let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity]
     const d = s.ringe.map(({ start, d }) => {
       let [la, lo] = start
@@ -34,6 +40,7 @@ function lesen(daten: SeenDaten): See[] {
       for (const [x, y] of pts) {
         x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y)
       }
+      ringe.push(pts)
       return `${pfad(pts)}Z`
     }).join('')
     const see: See = { d, x0, x1, y0, y1 }
@@ -44,6 +51,9 @@ function lesen(daten: SeenDaten): See[] {
     }
     return see
   })
+  wasser = schichtBauen(ringe)
+  ufer = ringe.flatMap((r) => stueckeln([...r, r[0]], (q) => pfad(q as Array<[number, number]>)))
+  return seen
 }
 
 /** Lädt die Seen einmal für alle Karten; ohne Seen bleibt die Karte, wie sie war */
@@ -63,14 +73,15 @@ type Feld = [number, number, number, number]
 
 /** Die Flächen im Bild; unter dem Streckennetz zeichnen */
 export function SeenFlaechen({ seen, box, verh = 1.6 }: { seen: See[] | null; box: Box; verh?: number }) {
-  if (!seen) return null
+  if (!seen || !wasser) return null
   const h = box.w / verh
-  const im = seen.filter((s) => s.x1 > box.cx - box.w && s.x0 < box.cx + box.w
-    && s.y1 > box.cy - h && s.y0 < box.cy + h)
+  const w = wasser
+  // das Wasser je Kachel, das Ufer nur, wo es im Bild liegt: nicht mehr ganze Seen bei jedem Bild
   return (
     <g aria-hidden="true">
-      {im.map((s, i) => <path key={i} d={s.d} fillRule="evenodd" strokeWidth={0.8} vectorEffect="non-scaling-stroke"
-                                   strokeLinejoin="round" className="fill-see stroke-see-rand" />)}
+      <path d={kachelnImBild(box, h).map((k) => kachelPfad(w, k)).join('')} fillRule="evenodd" className="fill-see" />
+      <path d={ufer.filter((u) => imBild(u, box, h)).map((u) => u.d).join('')} fill="none" strokeWidth={0.8}
+            vectorEffect="non-scaling-stroke" strokeLinejoin="round" className="stroke-see-rand" />
     </g>
   )
 }

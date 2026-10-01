@@ -2,6 +2,7 @@ import { useEffect, useState, useSyncExternalStore } from 'react'
 import { flaechenLaden, sehenswertLaden } from '../daten'
 import type { FlaechenDaten, KodierterZug, SehenswertDaten } from '../typen'
 import { LAENGE_ZU_BREITE, pfad, type Box } from './Netzkarte'
+import { kachelnImBild, kachelPfad, type Schicht, schichtBauen, type Stueck, stueckeln } from '../kacheln'
 
 /**
  * Sehenswertes auf den Karten (Michael, 2026-09-26: «Gipfel mit Höhe, KGS
@@ -16,7 +17,8 @@ export interface Auswahl { titel: string; zeilen: string[]; quelle: string }
 
 interface Punkt { x: number; y: number; name: string; info: Auswahl }
 interface Zug { d: string; x0: number; x1: number; y0: number; y1: number; info: Auswahl }
-interface Flaeche extends Zug { art: 'bln' | 'park' | 'moor' }
+/** ein Gebiet: die Fläche je Kachel, der Rand in Stücken (Michael, 2026-10-01: Karte flüssig) */
+interface Flaeche extends Zug { art: 'bln' | 'park' | 'moor'; schicht: Schicht; rand: Stueck[] }
 
 interface Sehenswert { gipfel: Punkt[]; kgs: Punkt[]; seilbahnen: Zug[] }
 
@@ -78,6 +80,8 @@ function lesen(s: SehenswertDaten): Sehenswert {
 function flaechenLesen(f: FlaechenDaten): Flaeche[] {
   return f.flaechen.map((a) => ({
     ...zug(a.ringe, true),
+    schicht: schichtBauen(a.ringe.map(entpacken)),
+    rand: a.ringe.flatMap((r) => { const q = entpacken(r); return stueckeln([...q, q[0]], (s) => pfad(s as Array<[number, number]>)) }),
     art: a.art === 'BLN' ? 'bln' : a.art === 'Moorlandschaft' ? 'moor' : 'park',
     info: { titel: a.name, zeilen: ['Gebiet von nationaler Bedeutung', gebietArt(a.art)], quelle: f.quelle },
   }))
@@ -156,14 +160,19 @@ export function FlaechenEbene({ flaechen, box, verh = 1.6, waehlen }: {
   const aus = useVersteckt()
   if (!flaechen) return null
   const h = box.w / verh
+  const kacheln = kachelnImBild(box, h)
   return (
     <g>
       {/* BLN, Pärke und Moorlandschaften als «Gebiete» in einer Farbe (Michael, 2026-09-26) */}
       {!aus.has('gebiete') && flaechen.filter((f) => imBild(f, box, h)).map((f, i) => (
-        // halb durchsichtig, damit die Höhenstufen darunter sichtbar bleiben (Michael, 2026-09-27)
-        <path key={i} d={f.d} fillRule="evenodd" strokeWidth={1} vectorEffect="non-scaling-stroke" fillOpacity={0.45}
-              className={`fill-flaeche-park stroke-flaeche-park-rand ${waehlen ? 'cursor-pointer' : ''}`}
-              onClick={waehlen ? () => waehlen(f.info) : undefined} />
+        // halb durchsichtig, damit die Höhenstufen darunter sichtbar bleiben (Michael, 2026-09-27);
+        // nur die Kacheln im Bild, der Rand für sich
+        <g key={i} className={waehlen ? 'cursor-pointer' : ''} onClick={waehlen ? () => waehlen(f.info) : undefined}>
+          <path d={kacheln.map((k) => kachelPfad(f.schicht, k)).join('')} fillRule="evenodd" fillOpacity={0.45}
+                className="fill-flaeche-park" />
+          <path d={f.rand.filter((r) => imBild(r, box, h)).map((r) => r.d).join('')} fill="none" strokeWidth={1}
+                vectorEffect="non-scaling-stroke" className="stroke-flaeche-park-rand" />
+        </g>
       ))}
     </g>
   )
