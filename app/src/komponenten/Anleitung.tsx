@@ -233,6 +233,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             nutzbar mit Quellenangabe.
           </li>
           <li>
+            Schrift Space Grotesk: Florian Karsten und The Space Grotesk Project Authors, unter der{' '}
+            <Verweis href="./lizenzen/space-grotesk-OFL.txt">SIL Open Font License</Verweis>, in
+            Taktland mitgeliefert.
+          </li>
+          <li>
             Unter jeder Zahl steht ihr Datensatz. Vor jeder Veröffentlichung gleicht ein
             Prüfprogramm Texte und Fragen mit den Daten ab; es findet viele Fehler, aber nicht
             jeden.{stand && ` Die Daten wurden am ${stand} geladen.`}
