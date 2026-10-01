@@ -24,7 +24,6 @@ import {
   ersteSortierung, Uebersicht, type UebersichtArt, type UebersichtStand,
 } from './komponenten/Uebersicht'
 import { indexLaden } from './daten'
-import { HERAUSGEBER } from './kontakt'
 import type { BahnhofIndex } from './typen'
 import { Ladefehler } from './komponenten/Ladefehler'
 import { AudioSeite } from './komponenten/AudioSeite'
@@ -208,7 +207,7 @@ export default function App() {
             Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für
             Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
             Moorlandschaften: Bundesamt für Umwelt BAFU.
-            Taktland ist ein privates Lernprojekt von {HERAUSGEBER} und kein Angebot einer Bundes- oder Privatbahn.
+            Taktland ist ein privates Lernprojekt und kein Angebot einer Bundes- oder Privatbahn.
             Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
             Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
             sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist zum Lernen,
