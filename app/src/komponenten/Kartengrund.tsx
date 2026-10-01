@@ -189,7 +189,7 @@ export function flussNamenSetzen(
   const zaehle = (q: P[]) => q.slice(1).reduce((s, p, i) => s + Math.hypot(p[0] - q[i][0], p[1] - q[i][1]), 0)
   for (const f of [...fluesse].filter((f) => f.name).sort((a, b) => a.k - b.k)) {
     if (gesetzt.has(f.name!)) continue
-    const laenge = f.name!.length * schrift * 0.56
+    const laenge = schriftBreite(f.name!) * schrift * 1.1
     // die längste sichtbare Strecke
     let best: P[] = [], lauf: P[] = []
     for (const p of [...f.pts, null]) {
@@ -202,7 +202,8 @@ export function flussNamenSetzen(
     // das Stück um die Mitte, so lang wie der Name und etwas mehr
     const stueck = teilstueck(best, ganz / 2 - laenge * 0.6, ganz / 2 + laenge * 0.6)
     const [a, b] = [stueck[0], stueck[stueck.length - 1]]
-    if (Math.hypot(b[0] - a[0], b[1] - a[1]) < laenge * 0.9) continue
+    // ist der Bogen kürzer als der Name, fallen am Ende Buchstaben weg
+    if (Math.hypot(b[0] - a[0], b[1] - a[1]) < laenge * 0.95) continue
     const xs = stueck.map((p) => p[0]), ys = stueck.map((p) => p[1])
     const r = schrift * 0.7
     const feld: Feld = [Math.min(...xs) - r, Math.min(...ys) - r, Math.max(...xs) + r, Math.max(...ys) + r]
@@ -217,6 +218,15 @@ export function flussNamenSetzen(
     raus.push({ name: f.name!, pts: vorwaerts ? bogen : [...bogen].reverse() })
   }
   return raus
+}
+
+/** Breite eines Namens in Schriftgrössen, je Buchstabe geschätzt (kursive Helvetica) */
+function schriftBreite(name: string) {
+  let b = 0
+  for (const z of name) {
+    b += /[mwMW]/.test(z) ? 0.85 : /[iljftrI.' ]/.test(z) ? 0.3 : /[A-ZÄÖÜ]/.test(z) ? 0.68 : 0.55
+  }
+  return b
 }
 
 /** Der Teil einer Linie zwischen zwei Abständen vom Anfang */

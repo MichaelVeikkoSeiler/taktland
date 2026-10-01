@@ -811,16 +811,16 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
   const d = (q: ReadonlyArray<readonly [number, number]>, zu = true) =>
     q.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join('') + (zu ? 'Z' : '')
   // Seen im Ausschnitt
-  const seen = (daten.seen?.seen ?? []).flatMap((s) => s.ringe.map(punkte)).filter(sichtbar)
+  const seen = (daten.seen?.seen ?? []).flatMap((s) => s.ringe.map((r) => punkte(r))).filter(sichtbar)
   // Grund wie in der App, heller für den Druck; Ringe ganz draussen fallen weg
   const g = daten.grund
-  const hoehen = (g?.hoehen ?? []).map((st) => st.ringe.map(punkte).filter(sichtbar).map((q) => d(q)).join(''))
+  const hoehen = (g?.hoehen ?? []).map((st) => st.ringe.map((r) => punkte(r)).filter(sichtbar).map((q) => d(q)).join(''))
   const land = (g?.land ?? []).map((r) => d(punkte(r))).join('')
   const bb = daten.boden
   const boden = bb ? (['siedlung', 'wald'] as const).map((k) => ({
     k, d: bb[k].map((r) => punkte(r, bb.faktor)).filter(sichtbar).map((q) => d(q)).join(''),
   })) : []
-  const kantone = (g?.kanton ?? []).map(punkte).filter(sichtbar)
+  const kantone = (g?.kanton ?? []).map((r) => punkte(r)).filter(sichtbar)
   const fluesse = (g?.fluesse ?? []).map((f) => ({ q: punkte(f), k: f.k, name: f.name })).filter((f) => sichtbar(f.q))
   const gesetzt = platzieren(fw, p, eintraege, B, H)
   // Schrift auf der gedrehten Karte gedreht wie der Nordpfeil (Michael, 2026-09-27:
@@ -849,7 +849,7 @@ function Karte({ daten, eintraege, B, H, p, dreh, ausschnitte, ausschnittName }:
   // Flussnamen entlang des Flusses, wie in der App (Michael, 2026-10-01); lesbar, wenn das
   // Blatt so gedreht ist, dass Norden oben steht
   const flussNamen = flussNamenSetzen(fluesse.map((f) => ({ name: f.name, k: f.k, pts: f.q })),
-    ([x, y]) => drin(x, y, -12), FLUSS_SCHRIFT, belegt.map((b) => [b.x0, b.y0, b.x1, b.y1]),
+    ([x, y]) => drin(x, y, -20), FLUSS_SCHRIFT, belegt.map((b) => [b.x0, b.y0, b.x1, b.y1]),
     [Math.cos(dreh), Math.sin(dreh)])
   const rahmen = (ausschnitte ?? []).map(([a, name]) => {
     const [ax, ay] = p.hin(a.x0, a.y0), [bx, by] = p.hin(a.x1, a.y1)
