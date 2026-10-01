@@ -20,16 +20,6 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         Hier steht, wie Taktland zu bedienen ist, woher die Daten stammen und was sie nicht
         hergeben. Was Taktland ist, steht auf der Startseite.
       </p>
-      {/* die Demo, bis 2026-09-25 ein eigener Reiter (Michael: «unter Info») */}
-      <a href="#/demo" className="kachel kachel-link mt-4 flex items-center justify-between gap-3 px-4 py-3">
-        <span className="min-w-0">
-          <span className="block font-medium">Demo ansehen</span>
-          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-            Ein Video der App, gut anderthalb Minuten, ohne Ton
-          </span>
-        </span>
-        <span className="pfeil shrink-0" aria-hidden="true">→</span>
-      </a>
       <p className="mt-2 leading-relaxed">
         Oben auf jeder Seite führen die Reiter zu den Bereichen: Bahnland (darunter Bahnhöfe,
         Strecken, Brücken und Tunnel), Duell, Standort, Reisetasche (darunter

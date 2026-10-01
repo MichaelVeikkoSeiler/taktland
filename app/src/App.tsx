@@ -26,14 +26,13 @@ import {
 import { indexLaden } from './daten'
 import { HERAUSGEBER } from './kontakt'
 import type { BahnhofIndex } from './typen'
-import { Demo } from './komponenten/Demo'
 import { Ladefehler } from './komponenten/Ladefehler'
 
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
-  | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'demo' } | { art: 'ohneziel' }
+  | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
@@ -62,7 +61,6 @@ function seiteAusAdresse(): Seite {
   if (h === '#/sammelheft') return { art: 'sammelheft' }
   if (h === '#/logbuch') return { art: 'logbuch' }
   if (h === '#/favoriten') return { art: 'favoriten' }
-  if (h === '#/demo') return { art: 'demo' }
   if (h === '#/anleitung') return { art: 'anleitung' }
   // #/linien: die frühere Adresse, damit alte Lesezeichen weiter gehen
   if (h === '#/strecken' || h === '#/linien') return { art: 'linien' }
@@ -98,7 +96,6 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
     case 'favoriten': return 'favoriten'
-    case 'demo': return 'demo'
     case 'sammelheft': return 'sammelheft'
     case 'anleitung': case 'fahrt': case 'ohneziel': case 'fahrtblatt': return null
   }
@@ -168,7 +165,6 @@ export default function App() {
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}
         {seite.art === 'logbuch' && <Logbuch index={index} />}
         {seite.art === 'favoriten' && <Favoriten index={index} oeffnen={oeffnen} />}
-        {seite.art === 'demo' && <Demo />}
         {seite.art === 'linien' && <Linien index={index} />}
         {seite.art === 'uebersicht' && (
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}
