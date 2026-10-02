@@ -18,7 +18,7 @@ import startDunkel from '../assets/auftakt-start-dunkel.webp'
 import startHell from '../assets/auftakt-start-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 import { reiterTon } from '../audio'
 import { useEinstellungen } from '../einstellungen'
@@ -175,9 +175,9 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
         <FahrtKnopf hier={fahrt !== null} />
       </div>
       {/* Fünf Hauptreiter; unter «Bahnland» eine zweite Zeile mit den Unterreitern */}
-      <nav aria-label="Bereiche"
-           className="-mb-px mt-4 flex justify-between gap-x-2 overflow-x-auto text-base
-                      [scrollbar-width:none] max-[359px]:gap-x-1.5 max-[359px]:text-[14px] sm:justify-start sm:gap-x-6">
+      <Schiebeleiste name="Bereiche" aussen="-mb-px mt-4" grund="bg-white dark:bg-sbb-midnight"
+           className="flex justify-between gap-x-2 text-base
+                      max-[359px]:gap-x-1.5 max-[359px]:text-[14px] sm:justify-start sm:gap-x-6">
         {HAUPT.map((h) => {
           const hier = (h.schluessel === 'info' && anleitung) || (aktiv !== null && h.bereiche.includes(aktiv))
           return (
@@ -190,13 +190,14 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
             </a>
           )
         })}
-      </nav>
+      </Schiebeleiste>
       {unter && (
         // passt die Zeile nicht (fünf Reiter, grosse Schrift), lässt sie sich seitlich schieben;
         // der gewählte Reiter rückt ins Bild, ohne die Seite zu bewegen
-        <nav aria-label={unter.name} ref={unterLeiste}
-             className={`relative -mx-4 ${unter.raster} gap-x-1 overflow-x-auto border-t border-sbb-cloud bg-sbb-milk px-4 py-2
-                        text-sm [scrollbar-width:none] max-[359px]:text-[13px] sm:gap-x-2 dark:border-sbb-iron dark:bg-sbb-charcoal`}>
+        <Schiebeleiste name={unter.name} leiste={unterLeiste}
+             aussen="-mx-4 border-t border-sbb-cloud bg-sbb-milk dark:border-sbb-iron dark:bg-sbb-charcoal"
+             grund="bg-sbb-milk dark:bg-sbb-charcoal"
+             className={`${unter.raster} gap-x-1 px-4 py-2 text-sm max-[359px]:text-[13px] sm:gap-x-2`}>
           {unter.liste.map((o) => {
             const hier = o.bereich === unterAktiv
             return (
@@ -208,9 +209,69 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
               </a>
             )
           })}
-        </nav>
+        </Schiebeleiste>
       )}
     </header>
+  )
+}
+
+/**
+ * Eine Reiterzeile, die sich seitlich schieben lässt, wenn sie nicht ins Bild passt.
+ * Liegt links oder rechts noch etwas verborgen, steht dort ein einfacher Pfeil ohne
+ * Stamm; ein Tipp darauf schiebt die Zeile weiter (Michael, 2026-10-02).
+ */
+function Schiebeleiste({ name, aussen, grund, className, leiste, children }: {
+  name: string
+  /** Rand und Hintergrund um die Zeile */
+  aussen: string
+  /** Hintergrund unter den Pfeilen, wie die Zeile */
+  grund: string
+  className: string
+  leiste?: React.RefObject<HTMLElement | null>
+  children: React.ReactNode
+}) {
+  const eigene = useRef<HTMLElement | null>(null)
+  const nav = leiste ?? eigene
+  const [mehr, setMehr] = useState({ links: false, rechts: false })
+  useEffect(() => {
+    const el = nav.current
+    if (!el) return
+    const pruefen = () => {
+      const links = el.scrollLeft > 2
+      const rechts = el.scrollLeft + el.clientWidth < el.scrollWidth - 2
+      setMehr((alt) => (alt.links === links && alt.rechts === rechts ? alt : { links, rechts }))
+    }
+    pruefen()
+    el.addEventListener('scroll', pruefen, { passive: true })
+    const ro = new ResizeObserver(pruefen)
+    ro.observe(el)
+    for (const k of el.children) ro.observe(k)
+    return () => { el.removeEventListener('scroll', pruefen); ro.disconnect() }
+  })
+  const schieben = (richtung: 1 | -1) => {
+    const el = nav.current
+    if (el) el.scrollBy({ left: richtung * el.clientWidth * 0.6, behavior: 'smooth' })
+  }
+  const pfeil = (seite: 'links' | 'rechts') => mehr[seite] && (
+    <button type="button" tabIndex={-1} onClick={() => schieben(seite === 'links' ? -1 : 1)}
+            aria-label={`${name}: weitere Reiter ${seite}`}
+            className={`absolute inset-y-0 ${seite === 'links' ? 'left-0' : 'right-0'} z-10 flex w-7 items-center
+                        justify-center text-sbb-black dark:text-sbb-white ${grund}`}>
+      <svg viewBox="0 0 12 12" className="size-3" aria-hidden="true">
+        <path d={seite === 'links' ? 'M7.5 2 3.5 6l4 4' : 'M4.5 2l4 4-4 4'} fill="none" stroke="currentColor"
+              strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </button>
+  )
+  return (
+    <div className={`relative ${aussen}`}>
+      <nav aria-label={name} ref={(el) => { nav.current = el }}
+           className={`overflow-x-auto [scrollbar-width:none] ${className}`}>
+        {children}
+      </nav>
+      {pfeil('links')}
+      {pfeil('rechts')}
+    </div>
   )
 }
 
