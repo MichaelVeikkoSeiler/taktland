@@ -6,7 +6,7 @@ import { antwortTon, audioKontext, aufklappTon, audioSetzen, reiterTon, type Ton
  */
 const ARTEN: Array<{ art: TonArt; name: string; klang: string }> = [
   { art: 'tunnel', name: 'Tunnel', klang: 'zwei tiefe Töne abwärts' },
-  { art: 'bruecke', name: 'Brücke', klang: 'zweimal ein heller, kurzer Ton' },
+  { art: 'bruecke', name: 'Brücke', klang: 'drei helle Töne im Bogen: hoch, höher, hoch' },
   { art: 'bahnhof', name: 'Bahnhof', klang: 'zwei Töne aufwärts' },
   { art: 'sehenswert', name: 'Sehenswertes', klang: 'ein einzelner Ton' },
   { art: 'bahnuebergang', name: 'Bahnübergang', klang: 'drei kurze Töne im Wechsel' },

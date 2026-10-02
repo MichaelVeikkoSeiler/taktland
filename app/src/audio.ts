@@ -73,7 +73,8 @@ type Muster = ReadonlyArray<readonly [number, number, number, number?]>
  * Die Töne beim Fahren, je Art ein eigenes Muster, erkennbar auch ohne Blick aufs
  * Handy (Michael, 2026-09-27: «Brücken anders als Tunnel, Tunnel anders als Bahnhöfe»):
  * - Tunnel: zwei Töne abwärts, tief, lang, D4–G3
- * - Brücke: zweimal derselbe helle, kurze Ton, A5
+ * - Brücke: ein Bogen hoch, höher, hoch, A5–Cis6–A5, wie über etwas hinüber
+ *   (Michael, 2026-10-02; vorher zweimal A5)
  * - Bahnhof: der weiche Zweiklang aufwärts, G4–D5
  * - Sehenswertes: ein einzelner Ton, E5
  * - Bahnübergang: drei kurze Töne im Wechsel, E5–C5–E5 (2026-10-01)
@@ -83,7 +84,7 @@ type Muster = ReadonlyArray<readonly [number, number, number, number?]>
  */
 export const TOENE: Record<TonArt, Muster> = {
   tunnel: [[0, 293.66, 1.1], [0.18, 196, 1.3]],
-  bruecke: [[0, 880, 0.35], [0.14, 880, 0.45]],
+  bruecke: [[0, 880, 0.3], [0.13, 1108.73, 0.3], [0.26, 880, 0.45]],
   bahnhof: [[0, 392, 0.9], [0.16, 587.33, 0.9]],
   sehenswert: [[0, 659.26, 1.2]],
   bahnuebergang: [[0, 659.26, 0.3], [0.13, 523.25, 0.3], [0.26, 659.26, 0.4]],
