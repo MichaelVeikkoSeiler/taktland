@@ -168,7 +168,7 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
           <button type="button" onClick={schliessen}
                   className="shrink-0 rounded-lg border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
                              dark:border-sbb-iron dark:hover:border-sbb-white">
-            Schliessen
+            Fahrt beenden
           </button>
         </div>
 

@@ -139,7 +139,7 @@ type Meldung =
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
 export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren, fortsetzen, stelle, ohneZiel,
-                            bahnhofSeite, startKennung, retour }: {
+                            bahnhofSeite, startKennung }: {
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
@@ -159,8 +159,6 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   bahnhofSeite?: (o: FahrObjekt) => { uic: number; eintrag: IndexEintrag | undefined } | null
   /** Kürzel des Startbahnhofs: Er steht nicht unter den Objekten, der Zug steht aber oft dort */
   startKennung?: string
-  /** dieselbe Fahrt in Gegenrichtung starten */
-  retour?: () => void
 }) {
   const [einstellung, setEinstellung] = useState(einstellungLesen)
   const [stumm, setStumm] = useState(stummLesen)
@@ -436,30 +434,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <Pikto art="bahnhof" className="size-7" nurZeichen /> Am Ziel
       </p>
       <p className="mt-1 text-3xl font-bold leading-tight">Angekommen in {zielName}</p>
-      {/* immer drei Knöpfe (Michael, 2026-09-30: «Beenden, Nochmals und Retour») */}
-      <div className="mt-4 grid grid-cols-3 gap-2">
-        <button type="button" onClick={fahrtBeenden}
-                className="rounded-lg bg-white px-2 py-2 font-bold text-sbb-black">
-          Beenden
-        </button>
-        {probefahrt ? (
-          <button type="button" onClick={vonVorn}
-                  className="rounded-lg border border-white/70 px-2 py-2 font-medium">
-            Nochmals
-          </button>
-        ) : (
-          <button type="button" onClick={() => setAnkunft('weg')}
-                  className="rounded-lg border border-white/70 px-2 py-2 font-medium">
-            Weiterfahren
-          </button>
-        )}
-        {retour && (
-          <button type="button" onClick={retour}
-                  className="rounded-lg border border-white/70 px-2 py-2 font-medium">
-            Retour
-          </button>
-        )}
-      </div>
+      {/* ein Knopf (Michael, 2026-10-02: «reicht es, wenn steht "Zur Bilanz"»);
+          vorher Beenden, Weiterfahren oder Nochmals und Retour */}
+      <button type="button" onClick={fahrtBeenden}
+              className="mt-4 w-full rounded-lg bg-white px-4 py-2.5 font-bold text-sbb-black">
+        Zur Bilanz
+      </button>
     </div>
   )
   const bahnhofKnopf = amBahnhof && (
