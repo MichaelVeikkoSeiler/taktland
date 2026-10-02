@@ -245,7 +245,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Fehler sind möglich">
+      <Abschnitt titel="Fehler und Verfügbarkeit">
         <Punkte>
           <li>
             Die Rohdaten können Fehler enthalten, unvollständig oder veraltet sein; laut ihren{' '}
@@ -256,6 +256,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Taktland ist zum Lernen, Nachschlagen und Mitfahren gedacht, nicht für die
             Reiseplanung. Es ist ein privates Lernprojekt und kein Angebot einer Bahnunternehmung.
+          </li>
+          <li>
+            Taktland ist ein freiwilliges, kostenloses Angebot. Es besteht kein Anspruch darauf, dass
+            es jederzeit verfügbar ist, fehlerfrei läuft oder weiter betrieben wird; es kann ohne
+            Ankündigung geändert, eingeschränkt oder eingestellt werden.
           </li>
         </Punkte>
       </Abschnitt>
