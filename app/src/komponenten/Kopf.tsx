@@ -250,8 +250,26 @@ function Schiebeleiste({ name, aussen, grund, className, leiste, children }: {
   })
   const schieben = (richtung: 1 | -1) => {
     const el = nav.current
-    if (el) el.scrollBy({ left: richtung * el.clientWidth * 0.6, behavior: 'smooth' })
+    if (!el) return
+    perPfeil.current = true
+    el.scrollBy({ left: richtung * el.clientWidth * 0.6, behavior: 'smooth' })
   }
+  // auch beim Wischen mit dem Finger ein Wischton, einmal je Bewegung (Michael, 2026-10-02);
+  // nach einem Tipp auf den Pfeil hat dieser schon geklungen
+  const perPfeil = useRef(false)
+  useEffect(() => {
+    const el = nav.current
+    if (!el) return
+    let vorher = el.scrollLeft
+    const ende = () => {
+      const d = el.scrollLeft - vorher
+      vorher = el.scrollLeft
+      if (perPfeil.current) { perPfeil.current = false; return }
+      if (Math.abs(d) > 8) wischTon(d > 0 ? 'rechts' : 'links')
+    }
+    el.addEventListener('scrollend', ende)
+    return () => el.removeEventListener('scrollend', ende)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
   const pfeil = (seite: 'links' | 'rechts') => mehr[seite] && (
     <button type="button" tabIndex={-1} onClick={() => { wischTon(seite); schieben(seite === 'links' ? -1 : 1) }}
             aria-label={`${name}: weitere Reiter ${seite}`}
@@ -265,7 +283,7 @@ function Schiebeleiste({ name, aussen, grund, className, leiste, children }: {
   )
   return (
     <div className={`relative ${aussen}`}>
-      <nav aria-label={name} ref={(el) => { nav.current = el }}
+      <nav aria-label={name} ref={nav}
            className={`overflow-x-auto [scrollbar-width:none] ${className}`}>
         {children}
       </nav>

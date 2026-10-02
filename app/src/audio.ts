@@ -152,8 +152,12 @@ export function antwortTon(art: 'richtig' | 'falsch' | 'bestwert') {
 /**
  * Ein kurzes Wischen beim Tipp auf einen Pfeil der Reiterzeile (Michael, 2026-10-02):
  * Rauschen durch einen Filter, der in Pfeilrichtung gleitet, nach rechts aufwärts,
- * nach links abwärts; rund 0,16 s, leise wie der Reiterton. Gilt mit den Reitertönen.
+ * nach links abwärts; rund 0,16 s. Gilt mit den Reitertönen. Der Filter lässt nur
+ * etwa ein Fünftel des Rauschens durch, darum ist es stärker angesetzt; so klingt es
+ * etwa so laut wie der Reiterton (erst 0,14, nicht zu hören, Michael, 2026-10-02).
  */
+const WISCH_STAERKE = 0.75
+
 export function wischTon(richtung: 'links' | 'rechts') {
   if (!stand.an || !stand.reiter) return
   const c = audioKontext()
@@ -175,7 +179,7 @@ export function wischTon(richtung: 'links' | 'rechts') {
     filter.frequency.exponentialRampToValueAtTime(bis, jetzt + dauer)
     const laut = c.createGain()
     laut.gain.setValueAtTime(0.0001, jetzt)
-    laut.gain.exponentialRampToValueAtTime(0.14, jetzt + 0.04)
+    laut.gain.exponentialRampToValueAtTime(WISCH_STAERKE, jetzt + 0.04)
     laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + dauer)
     quelle.connect(filter).connect(laut).connect(c.destination)
     quelle.start(jetzt)
