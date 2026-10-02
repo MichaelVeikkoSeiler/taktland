@@ -127,6 +127,83 @@ function aufLinie(z: Linienzug, km: number): Lage {
   return { lat: z.lat[lo] + t * (z.lat[hi] - z.lat[lo]), lon: z.lon[lo] + t * (z.lon[hi] - z.lon[lo]) }
 }
 
+/** Weiter auseinander liegen Ende und Anfang zweier Linien, gilt der Übergang als Sprung */
+const UEBERGANG_SPRUNG_M = 60
+/** So weit sucht die Glättung auf beiden Linien nach der Stelle, an der sie zusammenkommen */
+const UEBERGANG_SUCHE_KM = 2.5
+const UEBERGANG_SCHRITT_KM = 0.01
+/** So nah müssen sich die beiden Linien dort kommen */
+const UEBERGANG_NAH_M = 40
+/** um die erste nahe Stelle herum die engste suchen */
+const UEBERGANG_ENG_KM = 0.3
+
+/**
+ * Wechselt der Weg von einer Linie auf eine andere, liegt der gemeinsame
+ * Betriebspunkt auf beiden Linien nicht immer an derselben Stelle: in Madretsch
+ * rund 500 m auseinander, der Weg sprang hinauf und wieder zurück (Michael,
+ * 2026-10-02: «unrealistischer Haken» vor Biel). Hier rückt der Wechsel an die
+ * nächste Stelle, an der die beiden Linien laut ihrer Zeichnung höchstens
+ * UEBERGANG_NAH_M auseinander liegen, sofern keine Linie dafür umkehren muss. Nur zum Zeichnen; die Kilometer der Objekte bleiben.
+ * Schlüssel «Abschnitt:Teil» in Fahrtrichtung → [km am Anfang, km am Ende].
+ */
+function uebergaengeGlaetten(linien: Map<number, Linienzug>, punkteWeg: string[],
+                             abschnitte: StreckenAbschnitt[]) {
+  const folge: Array<{ schluessel: string; z: Linienzug; linie: number; ka: number; kb: number } | null> = []
+  abschnitte.forEach((e, i) => {
+    if (!e.teile?.length) { folge.push(null); return }
+    const vorwaerts = e.von === punkteWeg[i]
+    ;(vorwaerts ? e.teile : [...e.teile].reverse()).forEach((t, j) => {
+      const z = linien.get(t.linie)
+      if (!z) { folge.push(null); return }
+      const [ka, kb] = vorwaerts ? [t.km_von, t.km_bis] : [t.km_bis, t.km_von]
+      folge.push({ schluessel: `${i}:${j}`, z, linie: t.linie, ka, kb })
+    })
+  })
+  const raus = new Map<string, [number, number]>()
+  // Kilometer auf einer Linie in der Nähe von km, ohne über den Anfang des Teils hinaus
+  const kandidaten = (z: Linienzug, km: number, gegen: number) => {
+    const liste: Array<{ km: number; lage: Lage }> = []
+    const [min, max] = [z.km[0], z.km[z.km.length - 1]]
+    for (let k = km - UEBERGANG_SUCHE_KM; k <= km + UEBERGANG_SUCHE_KM; k += UEBERGANG_SCHRITT_KM) {
+      if (k < min || k > max) continue
+      // die Richtung des Teils bleibt: das verschobene Ende liegt auf derselben Seite
+      if (Math.sign(k - gegen) !== Math.sign(km - gegen) || Math.abs(k - gegen) < UEBERGANG_SCHRITT_KM) continue
+      liste.push({ km: k, lage: aufLinie(z, k) })
+    }
+    return liste
+  }
+  for (let n = 0; n + 1 < folge.length; n++) {
+    const a = folge[n], b = folge[n + 1]
+    if (!a || !b || a.linie === b.linie) continue
+    const [akb, bka] = [raus.get(a.schluessel)?.[1] ?? a.kb, b.ka]
+    if (abstand(aufLinie(a.z, akb), aufLinie(b.z, bka)) <= UEBERGANG_SPRUNG_M) continue
+    let best: [number, number, number] | null = null
+    const vonB = kandidaten(b.z, bka, b.kb)
+    for (const x of kandidaten(a.z, akb, raus.get(a.schluessel)?.[0] ?? a.ka)) {
+      for (const y of vonB) {
+        // die nächste Stelle, an der sie zusammenkommen: so wenig verschoben wie möglich
+        const d = abstand(x.lage, y.lage)
+        const weg = Math.abs(x.km - akb) + Math.abs(y.km - bka)
+        if (d <= UEBERGANG_NAH_M && (!best || weg < best[0])) best = [weg, x.km, y.km]
+      }
+    }
+    if (!best) continue
+    // dort, wo sie zusammenkommen, die engste Stelle in der Nähe, sonst bleibt eine Stufe
+    let eng: [number, number, number] = [Infinity, best[1], best[2]]
+    for (const x of kandidaten(a.z, akb, raus.get(a.schluessel)?.[0] ?? a.ka)) {
+      if (Math.abs(x.km - best[1]) > UEBERGANG_ENG_KM) continue
+      for (const y of vonB) {
+        if (Math.abs(y.km - best[2]) > UEBERGANG_ENG_KM) continue
+        const d = abstand(x.lage, y.lage)
+        if (d < eng[0]) eng = [d, x.km, y.km]
+      }
+    }
+    raus.set(a.schluessel, [raus.get(a.schluessel)?.[0] ?? a.ka, eng[1]])
+    raus.set(b.schluessel, [eng[2], b.kb])
+  }
+  return raus
+}
+
 /**
  * Baut den Linienzug des Wegs und legt jedes Objekt darauf. punkte sind die
  * Betriebspunkte des Wegs in Fahrtrichtung, abschnitte die Abschnitte
@@ -157,11 +234,14 @@ export function fahrwegBauen(netz: StreckenNetz,
   }
 
   // am Ende eines Abschnitts steht der Zug an dessen Betriebspunkt
-  const bahnhofSetzen = (abk: string) => {
+  // sOrt: die Stelle seines Kilometers, wenn der Übergang zur nächsten Linie verschoben ist
+  const bahnhofSetzen = (abk: string, sOrt = s) => {
     if (istBahnhof(abk) && !objekte.has(`bahnhof ${abk}`)) {
-      objekte.set(`bahnhof ${abk}`, { kennung: abk, art: 'bahnhof', s, sAus: null })
+      objekte.set(`bahnhof ${abk}`, { kennung: abk, art: 'bahnhof', s: sOrt, sAus: null })
     }
   }
+
+  const uebergang = uebergaengeGlaetten(linien, punkteWeg, abschnitte)
 
   abschnitte.forEach((e, i) => {
     const vorwaerts = e.von === punkteWeg[i]
@@ -200,10 +280,12 @@ export function fahrwegBauen(netz: StreckenNetz,
       bahnhofSetzen(punkteWeg[i + 1])
       return
     }
-    for (const t of vorwaerts ? e.teile : [...e.teile].reverse()) {
+    let sEnde: number | undefined
+    const teile = vorwaerts ? e.teile : [...e.teile].reverse()
+    teile.forEach((t, j) => {
       const z = linien.get(t.linie)
-      if (!z) continue
-      const [ka, kb] = vorwaerts ? [t.km_von, t.km_bis] : [t.km_bis, t.km_von]
+      if (!z) return
+      const [ka, kb] = uebergang.get(`${i}:${j}`) ?? (vorwaerts ? [t.km_von, t.km_bis] : [t.km_bis, t.km_von])
       const steigend = ka <= kb
       const stuetzen: Array<[number, number]> = []
       const setzen = (km: number) => { hinzu(aufLinie(z, km)); stuetzen.push([km, s]) }
@@ -234,6 +316,9 @@ export function fahrwegBauen(netz: StreckenNetz,
         }
         return st[st.length - 1][1]
       }
+      // der Betriebspunkt am Ende des Abschnitts liegt bei seinem Kilometer, nicht am
+      // verschobenen Übergang (uebergaengeGlaetten)
+      if (j === teile.length - 1) sEnde = sBei(vorwaerts ? t.km_bis : t.km_von)
 
       for (const id of t.tunnel) {
         const [v, w] = netz.tunnel_bereiche[id] ?? [NaN, NaN]
@@ -266,8 +351,8 @@ export function fahrwegBauen(netz: StreckenNetz,
         const km = uebergangKm(id)
         if (km !== undefined) objekte.set(`bahnuebergang ${id}`, { kennung: id, art: 'bahnuebergang', s: sBei(km), sAus: null })
       }
-    }
-    bahnhofSetzen(punkteWeg[i + 1])
+    })
+    bahnhofSetzen(punkteWeg[i + 1], sEnde)
   })
   return { punkte, objekte: [...objekte.values()].sort((a, b) => a.s - b.s) }
 }
