@@ -254,21 +254,35 @@ function Schiebeleiste({ name, aussen, grund, className, leiste, children }: {
     perPfeil.current = true
     el.scrollBy({ left: richtung * el.clientWidth * 0.6, behavior: 'smooth' })
   }
-  // auch beim Wischen mit dem Finger ein Wischton, einmal je Bewegung (Michael, 2026-10-02);
+  // auch beim Wischen mit dem Finger ein Wischton, einmal je Bewegung (Michael, 2026-10-02):
+  // gleich bei der ersten Bewegung, nicht erst am Ende (kam etwa 0,5 s zu spät);
   // nach einem Tipp auf den Pfeil hat dieser schon geklungen
   const perPfeil = useRef(false)
   useEffect(() => {
     const el = nav.current
     if (!el) return
     let vorher = el.scrollLeft
-    const ende = () => {
+    let gespielt = false
+    // nur wenn jemand die Zeile berührt; rückt die App den gewählten Reiter ins Bild, nicht
+    let beruehrt = false
+    const an = () => { beruehrt = true; vorher = el.scrollLeft }
+    const bewegt = () => {
+      if (!beruehrt || gespielt || perPfeil.current) return
       const d = el.scrollLeft - vorher
-      vorher = el.scrollLeft
-      if (perPfeil.current) { perPfeil.current = false; return }
-      if (Math.abs(d) > 8) wischTon(d > 0 ? 'rechts' : 'links')
+      if (Math.abs(d) < 3) return
+      gespielt = true
+      wischTon(d > 0 ? 'rechts' : 'links')
     }
+    const ende = () => { vorher = el.scrollLeft; gespielt = false; beruehrt = false; perPfeil.current = false }
+    const arten = ['touchstart', 'pointerdown', 'wheel'] as const
+    for (const a of arten) el.addEventListener(a, an, { passive: true })
+    el.addEventListener('scroll', bewegt, { passive: true })
     el.addEventListener('scrollend', ende)
-    return () => el.removeEventListener('scrollend', ende)
+    return () => {
+      for (const a of arten) el.removeEventListener(a, an)
+      el.removeEventListener('scroll', bewegt)
+      el.removeEventListener('scrollend', ende)
+    }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
   const pfeil = (seite: 'links' | 'rechts') => mehr[seite] && (
     <button type="button" tabIndex={-1} onClick={() => { wischTon(seite); schieben(seite === 'links' ? -1 : 1) }}
