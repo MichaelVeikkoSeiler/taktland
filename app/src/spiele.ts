@@ -18,13 +18,13 @@ export interface Spiel {
 export const SPIELE: Spiel[] = [
   {
     id: 'duell', titel: 'Duell', status: 'spielbereit', adresse: '#/duell',
-    beschreibung: 'Zwei Bahnhöfe, Linien oder Tunnel treten gegeneinander an. Du wählst, wer bei '
+    beschreibung: 'Zwei Bahnhöfe, Strecken oder Tunnel treten gegeneinander an. Du wählst, wer bei '
       + 'einer Zahl aus den Daten vorne liegt, und baust Runde um Runde deine Serie auf.',
   },
-  // Platzhalter, noch ohne Namen und Inhalt
-  { id: 'neu-1', titel: 'Neues Spiel', status: 'im-bau', beschreibung: 'Weitere Spiele für Taktland sind in Vorbereitung.' },
-  { id: 'neu-2', titel: 'Neues Spiel', status: 'im-bau', beschreibung: 'Weitere Spiele für Taktland sind in Vorbereitung.' },
-  { id: 'neu-3', titel: 'Neues Spiel', status: 'im-bau', beschreibung: 'Weitere Spiele für Taktland sind in Vorbereitung.' },
+  // Platzhalter, noch ohne Namen und Inhalt; schmal gezeigt, ohne eigene Beschreibung
+  { id: 'neu-1', titel: 'Neues Spiel', status: 'im-bau', beschreibung: '' },
+  { id: 'neu-2', titel: 'Neues Spiel', status: 'im-bau', beschreibung: '' },
+  { id: 'neu-3', titel: 'Neues Spiel', status: 'im-bau', beschreibung: '' },
 ]
 
 /** Alle Bereiche, die zum Hauptreiter «Spiele» gehören: die Übersicht und jedes spielbereite

@@ -14,8 +14,19 @@ export function Spiele() {
         die Bahn in der Schweiz.
       </p>
       <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-        {SPIELE.map((s) => <Karte key={s.id} spiel={s} />)}
+        {SPIELE.filter((s) => s.status === 'spielbereit').map((s) => <Karte key={s.id} spiel={s} />)}
       </ul>
+      {/* Platzhalter schmal, damit das Spielbare die Hauptsache bleibt (Michael, 2026-10-03) */}
+      {SPIELE.some((s) => s.status === 'im-bau') && (
+        <>
+          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+            {SPIELE.filter((s) => s.status === 'im-bau').map((s) => <Karte key={s.id} spiel={s} />)}
+          </ul>
+          <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+            Weitere Spiele für Taktland sind in Vorbereitung.
+          </p>
+        </>
+      )}
     </div>
   )
 }
@@ -40,15 +51,13 @@ function Karte({ spiel }: { spiel: Spiel }) {
       </li>
     )
   }
-  // im Bau: nicht anklickbar, gedämpft, mit einem Gleis, das am Prellbock endet
+  // im Bau: nicht anklickbar, gedämpft, eine schmale Zeile mit einem Gleis, das am Prellbock endet
   return (
-    <li className="kachel flex flex-col p-4 text-sbb-metal dark:text-sbb-storm" aria-label={`${spiel.titel}, im Bau`}>
-      <div className="flex items-start justify-between gap-3">
-        <h2 className="text-xl font-bold tracking-tight">{spiel.titel}</h2>
-        <span className="shrink-0 rounded-lg border border-current px-2 py-0.5 text-xs font-medium">Im Bau</span>
-      </div>
+    <li className="kachel flex items-center gap-3 px-4 py-3 text-sbb-metal dark:text-sbb-storm"
+        aria-label={`${spiel.titel}, im Bau`}>
       <Prellbock />
-      <p className="mt-2 leading-relaxed">{spiel.beschreibung}</p>
+      <span className="min-w-0 flex-1 truncate font-medium">{spiel.titel}</span>
+      <span className="shrink-0 rounded-lg border border-current px-2 py-0.5 text-xs font-medium">Im Bau</span>
     </li>
   )
 }
@@ -56,7 +65,7 @@ function Karte({ spiel }: { spiel: Spiel }) {
 /** Ein Gleisstück, das an einem Prellbock endet: hier geht es noch nicht weiter */
 function Prellbock() {
   return (
-    <svg viewBox="0 0 120 24" className="mt-3 h-6 w-28" aria-hidden="true" fill="none" stroke="currentColor"
+    <svg viewBox="0 0 120 24" className="h-5 w-16 shrink-0" aria-hidden="true" fill="none" stroke="currentColor"
          strokeWidth="1.6" strokeLinecap="round">
       <path d="M2 9h92M2 17h92" />
       {[8, 22, 36, 50, 64, 78].map((x) => <path key={x} d={`M${x} 5v16`} strokeWidth="2.4" />)}
