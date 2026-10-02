@@ -166,8 +166,8 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
             <p className="truncate text-sm text-sbb-metal dark:text-sbb-storm">{titel}</p>
           </div>
           <button type="button" onClick={schliessen}
-                  className="shrink-0 rounded-lg border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
-                             dark:border-sbb-iron dark:hover:border-sbb-white">
+                  className="shrink-0 rounded-lg bg-fahrt-bahnhof px-4 py-2 font-medium text-white hover:opacity-90">
+            {/* weiss auf Blau, wie die Karte «Am Ziel» (Michael, 2026-10-02) */}
             Fahrt beenden
           </button>
         </div>
