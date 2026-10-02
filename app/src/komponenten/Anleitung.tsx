@@ -206,7 +206,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Woher die Daten stammen" offen>
+      <Abschnitt titel="Woher die Daten stammen">
         <Punkte>
           <li>
             Alles stammt aus offenen Daten. Taktland erfindet nichts dazu; wo etwas fehlt,
@@ -315,9 +315,11 @@ function datum(iso: string) {
 }
 
 /** ein Thema als aufklappbare Kachel; der Titel bleibt eine Überschrift */
-function Abschnitt({ titel, children, offen = false }: { titel: string; children: ReactNode; offen?: boolean }) {
+/** Alle Themen zu, auch beim Zurückkommen auf Info (Michael, 2026-10-02: «alle schliessen,
+ *  wenn man Info verlässt»); die Quellen stehen ohnehin in der Fusszeile */
+function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) {
   return (
-    <details className="kachel group" open={offen}>
+    <details className="kachel group">
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3
                           [&::-webkit-details-marker]:hidden">
         <h2 className="text-lg font-semibold text-sbb-black dark:text-sbb-white">{titel}</h2>
