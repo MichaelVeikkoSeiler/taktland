@@ -19,11 +19,12 @@ export function Start({ index }: { index: BahnhofIndex }) {
   return (
     <main className="px-4 py-6">
       {/* h2, nicht h1: «Taktland» im Kopf ist die erste Überschrift der Seite.
-          Text: Michael, 2026-09-30 («Lernspiel», «Nachschlagewerk», Namensherkunft); 2026-10-01 «Reisebegleiter» */}
+          Text: Michael, 2026-09-30 («Lernspiel», «Nachschlagewerk», Namensherkunft); 2026-10-01 «Reisebegleiter»;
+          2026-10-02 «fahren Züge im Taktfahrplan», nicht «die Züge»: ob alle so fahren, ist nicht belegt */}
       <h2 className="text-2xl font-bold tracking-tight">Willkommen im Taktland</h2>
       <p className="mt-3 text-[15px] leading-relaxed">
-        In der Schweiz fahren die Züge nach dem Taktfahrplan: zur gleichen Minute, Stunde für
-        Stunde. Davon hat Taktland seinen Namen. Es ist das Land, das im Takt fährt.
+        In der Schweiz fahren Züge im Taktfahrplan. Davon hat Taktland seinen Namen. Es ist das
+        Land, das im Takt fährt.
       </p>
       <p className={absatz}>
         Taktland ist Lernspiel, Nachschlagewerk und Reisebegleiter zugleich. Zusammengetragen aus öffentlichen
