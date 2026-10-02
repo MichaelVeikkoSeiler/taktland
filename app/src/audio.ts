@@ -77,7 +77,8 @@ type Muster = ReadonlyArray<readonly [number, number, number, number?]>
  *   (Michael, 2026-10-02; vorher zweimal A5)
  * - Bahnhof: der weiche Zweiklang aufwärts, G4–D5
  * - Sehenswertes: ein einzelner Ton, E5
- * - Bahnübergang: drei kurze Töne im Wechsel, E5–C5–E5 (2026-10-01)
+ * - Bahnübergang: viermal schnell derselbe Ton, G5, wie das Läuten an der Schranke
+ *   (2026-10-02; vorher E5–C5–E5, zu nah am Bogen der Brücke)
  * - Ankunft am Ziel: drei Töne aufwärts, G4–H4–D5, der letzte lang (2026-09-29)
  * Weiche Sinustöne mit leisem Oberton, der kleinen Handylautsprechern hilft;
  * bewusst nicht der Gong der SBB.
@@ -87,7 +88,7 @@ export const TOENE: Record<TonArt, Muster> = {
   bruecke: [[0, 880, 0.3], [0.13, 1108.73, 0.3], [0.26, 880, 0.45]],
   bahnhof: [[0, 392, 0.9], [0.16, 587.33, 0.9]],
   sehenswert: [[0, 659.26, 1.2]],
-  bahnuebergang: [[0, 659.26, 0.3], [0.13, 523.25, 0.3], [0.26, 659.26, 0.4]],
+  bahnuebergang: [[0, 783.99, 0.16], [0.15, 783.99, 0.16], [0.3, 783.99, 0.16], [0.45, 783.99, 0.22]],
   ankunft: [[0, 392, 0.7], [0.2, 493.88, 0.7], [0.4, 587.33, 1.6]],
 }
 
