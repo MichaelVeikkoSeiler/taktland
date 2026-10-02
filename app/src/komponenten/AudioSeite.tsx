@@ -25,7 +25,7 @@ export function AudioSeite() {
       <div className="kachelliste mt-4">
         <Schalter titel="Töne" text="Alle Töne von Taktland, auch die Meldungen beim Fahren"
                   an={audio.an} umschalten={() => audioSetzen({ an: !audio.an })} />
-        <Schalter titel="Töne bei den Reitern" text="Ein kurzer, leiser Ton beim Wechsel der Reiter"
+        <Schalter titel="Töne bei den Reitern" text="Ein kurzer, leiser Ton beim Wechsel der Reiter, ein Wischen bei den Pfeilen der Reiterzeile"
                   an={audio.reiter} gesperrt={aus}
                   umschalten={() => {
                     audioSetzen({ reiter: !audio.reiter })

@@ -20,7 +20,7 @@ import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
 import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { useEffect, useRef, useState } from 'react'
 import { Auftakt, type AuftaktBild } from './Auftakt'
-import { reiterTon } from '../audio'
+import { reiterTon, wischTon } from '../audio'
 import { useEinstellungen } from '../einstellungen'
 
 export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio' | 'einstellungen'
@@ -253,7 +253,7 @@ function Schiebeleiste({ name, aussen, grund, className, leiste, children }: {
     if (el) el.scrollBy({ left: richtung * el.clientWidth * 0.6, behavior: 'smooth' })
   }
   const pfeil = (seite: 'links' | 'rechts') => mehr[seite] && (
-    <button type="button" tabIndex={-1} onClick={() => schieben(seite === 'links' ? -1 : 1)}
+    <button type="button" tabIndex={-1} onClick={() => { wischTon(seite); schieben(seite === 'links' ? -1 : 1) }}
             aria-label={`${name}: weitere Reiter ${seite}`}
             className={`absolute inset-y-0 ${seite === 'links' ? 'left-0' : 'right-0'} z-10 flex w-7 items-center
                         justify-center text-sbb-black dark:text-sbb-white ${grund}`}>

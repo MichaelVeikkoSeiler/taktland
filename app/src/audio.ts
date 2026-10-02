@@ -149,6 +149,40 @@ export function antwortTon(art: 'richtig' | 'falsch' | 'bestwert') {
   if (stand.an && stand.antworten) spielen(KURZ[art], false)
 }
 
+/**
+ * Ein kurzes Wischen beim Tipp auf einen Pfeil der Reiterzeile (Michael, 2026-10-02):
+ * Rauschen durch einen Filter, der in Pfeilrichtung gleitet, nach rechts aufwärts,
+ * nach links abwärts; rund 0,16 s, leise wie der Reiterton. Gilt mit den Reitertönen.
+ */
+export function wischTon(richtung: 'links' | 'rechts') {
+  if (!stand.an || !stand.reiter) return
+  const c = audioKontext()
+  if (!c) return
+  try {
+    void c.resume()
+    const jetzt = c.currentTime
+    const dauer = 0.16
+    const puffer = c.createBuffer(1, Math.ceil(c.sampleRate * dauer), c.sampleRate)
+    const daten = puffer.getChannelData(0)
+    for (let i = 0; i < daten.length; i++) daten[i] = Math.random() * 2 - 1
+    const quelle = c.createBufferSource()
+    quelle.buffer = puffer
+    const filter = c.createBiquadFilter()
+    filter.type = 'bandpass'
+    filter.Q.value = 1.4
+    const [von, bis] = richtung === 'rechts' ? [900, 3200] : [3200, 900]
+    filter.frequency.setValueAtTime(von, jetzt)
+    filter.frequency.exponentialRampToValueAtTime(bis, jetzt + dauer)
+    const laut = c.createGain()
+    laut.gain.setValueAtTime(0.0001, jetzt)
+    laut.gain.exponentialRampToValueAtTime(0.14, jetzt + 0.04)
+    laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + dauer)
+    quelle.connect(filter).connect(laut).connect(c.destination)
+    quelle.start(jetzt)
+    quelle.stop(jetzt + dauer + 0.02)
+  } catch { /* ohne Ton geht alles weiter */ }
+}
+
 export function aufklappTon() {
   if (stand.an && stand.aufklappen) spielen(KURZ.aufklappen, false)
 }
