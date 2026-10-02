@@ -748,6 +748,13 @@ function Ergebnis({
                       return b ? { uic: b.uic, eintrag: b } : null
                     }}
                     startKennung={weg.punkte[0]}
+                    retour={!fahrt.probe || wahl.ohne || !wahl.von || !wahl.nach ? undefined : () => {
+                      // die Probefahrt in Gegenrichtung (Michael, 2026-10-02: «nur bei der Probefahrt»)
+                      leereFahrtenWeg()
+                      tonWeitergeben(fahrt.piepen)
+                      setFahrt(null)
+                      window.location.hash = fahrtAdresse({ von: wahl.nach, nach: wahl.von, ueber: wahl.ueber }, true)
+                    }}
                     ohneZiel={wahl.ohne && !fahrt.probe ? () => {
                       // der Ton bleibt freigegeben, auch ohne neuen Tipp
                       tonWeitergeben(fahrt.piepen)
