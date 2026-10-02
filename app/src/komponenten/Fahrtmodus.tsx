@@ -438,15 +438,22 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       <p className="mt-1 text-3xl font-bold leading-tight">Angekommen in {zielName}</p>
       {/* ein Knopf (Michael, 2026-10-02: «reicht es, wenn steht "Zur Bilanz"»);
           vorher Beenden, Weiterfahren oder Nochmals und Retour */}
-      <div className={`mt-4 grid gap-2 ${retour ? 'grid-cols-2' : ''}`}>
+      {/* in der Probefahrt «Zur Bilanz» über die ganze Breite, darunter Wiederholen und Retour */}
+      <div className={`mt-4 grid gap-2 ${probefahrt && retour ? 'grid-cols-2' : ''}`}>
         <button type="button" onClick={fahrtBeenden}
-                className="rounded-lg bg-white px-4 py-2.5 font-bold text-sbb-black">
+                className={`rounded-lg bg-white px-2 py-2.5 font-bold text-sbb-black ${probefahrt && retour ? 'col-span-2' : ''}`}>
           Zur Bilanz
         </button>
-        {/* Retour nur in der Probefahrt (Michael, 2026-10-02) */}
+        {/* Wiederholen und Retour nur in der Probefahrt (Michael, 2026-10-02) */}
+        {probefahrt && (
+          <button type="button" onClick={vonVorn}
+                  className="rounded-lg border border-white/70 px-2 py-2.5 font-medium">
+            Wiederholen
+          </button>
+        )}
         {retour && (
           <button type="button" onClick={retour}
-                  className="rounded-lg border border-white/70 px-4 py-2.5 font-medium">
+                  className="rounded-lg border border-white/70 px-2 py-2.5 font-medium">
             Retour
           </button>
         )}
