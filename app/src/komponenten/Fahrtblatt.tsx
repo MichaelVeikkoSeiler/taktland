@@ -6,7 +6,7 @@ import {
 import { ohneKuerzel } from '../kuerzel'
 import { bahnenAusLesen, nachbarnBauen } from '../bahnen'
 import type {
-  BahnhofIndex, BodenbedeckungDaten, BrueckenEintrag, KartengrundDaten, SeenDaten, StreckenAbschnitt, StreckenNetz, TunnelEintrag, Uebersicht,
+  BahnhofIndex, BodenbedeckungDaten, BrueckenEintrag, KartengrundDaten, SeenDaten, StreckenAbschnitt, StreckenNetz, TunnelEintrag, UebergangEintrag, Uebersicht,
 } from '../typen'
 import { nachKennung, type Nachbarn, type StreckenWahl, wegSuchen } from './Strecke'
 import { Ladefehler } from './Ladefehler'
@@ -22,6 +22,8 @@ const BRUECKEN_MAX = 3
 const BAHNHOEFE_MAX = 5
 const GIPFEL_MAX = 3
 const SEILBAHN_MAX = 1
+/** Bahnübergänge, über den Weg verteilt, solche mit Namen zuerst (Michael, 2026-10-02) */
+const BAHNUEBERGAENGE_MAX = 2
 const SEEN_MAX = 3
 /** Mindestabstand zwischen Einträgen, als Anteil des Wegs (siehe auswaehlen) */
 const VERTEILT_ANTEIL = 1 / 20
@@ -31,6 +33,7 @@ const BRUECKE_AB_BE = 3
  *  in der App»), fest und hell, damit der Druck im Dunkelmodus gleich aussieht */
 const FARBE: Record<Eintrag['art'], string> = {
   tunnel: '#2b2b2b', bruecke: '#b35900', bahnhof: '#1d3f8a', gipfel: '#2f7d4f', seilbahn: '#0d5c6e',
+  bahnuebergang: '#7b2d5f',
 }
 const SEE = '#c9def1'
 /** Kontur der Seen, etwas dunkler (Michael, 2026-09-27) */
@@ -67,7 +70,7 @@ const AUSSCHNITT_MAX_ZOOM = 12
 interface Eintrag {
   nr: number
   o: FahrObjekt
-  art: 'tunnel' | 'bruecke' | 'bahnhof' | 'gipfel' | 'seilbahn'
+  art: 'tunnel' | 'bruecke' | 'bahnhof' | 'gipfel' | 'seilbahn' | 'bahnuebergang'
   name: string
   zeile: string
   seite?: 'links' | 'rechts'
@@ -77,6 +80,8 @@ interface Daten {
   netz: StreckenNetz
   tunnel: Uebersicht<TunnelEintrag>
   bruecken: Uebersicht<BrueckenEintrag>
+  /** fehlen sie, kommt das Blatt ohne Bahnübergänge */
+  uebergaenge: Uebersicht<UebergangEintrag> | null
   fahrweg: Fahrweg
   seen: SeenDaten | null
   /** Grund der Karte: Ausland, Kantone, Flüsse, Höhenstufen (Michael, 2026-09-27) */
@@ -110,6 +115,8 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
       const [netz, tunnel, bruecken, g] = await Promise.all([
         streckenLaden(), uebersichtLaden<TunnelEintrag>('tunnel'), uebersichtLaden<BrueckenEintrag>('bruecken'),
         geometrieLaden()])
+      const uebergaenge = await uebersichtLaden<UebergangEintrag>('bahnuebergaenge').catch(() => null)
+      const uebergaengeNach = uebergaenge ? nachKennung(uebergaenge) : null
       // nur auf den gewählten Bahnen, wie auf der Seite «Strecke»
       const nachbarn: Nachbarn = nachbarnBauen(netz, bahnenAusLesen())
       const abk = (u: number | null) => (u ? netz.bahnhoefe[String(u)] : undefined)
@@ -125,7 +132,8 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
       const brueckenNach = nachKennung(bruecken)
       const fahrweg = fahrwegBauen(netz, geometrieLesen(g), weg.punkte, weg.abschnitte,
                                    (id) => brueckenNach.get(id)?.km ?? undefined,
-                                   (x) => bahnhof.has(uicVon.get(x) ?? 0))
+                                   (x) => bahnhof.has(uicVon.get(x) ?? 0),
+                                   (id) => uebergaengeNach?.get(id)?.km ?? undefined)
       let seen: SeenDaten | null = null
       try {
         const [s, f] = await Promise.all([sehenswertLaden(), flaechenLaden()])
@@ -138,7 +146,7 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
       try { boden = await bodenbedeckungLaden() } catch { /* ohne Wald und Siedlung */ }
       const name = (x: string) => bahnhof.get(uicVon.get(x) ?? 0)?.name ?? netz.punkte[x] ?? x
       if (!ab) {
-        setDaten({ netz, tunnel, bruecken, fahrweg, seen, grund, boden, titel: [name(weg.punkte[0]), name(weg.punkte[weg.punkte.length - 1])],
+        setDaten({ netz, tunnel, bruecken, uebergaenge, fahrweg, seen, grund, boden, titel: [name(weg.punkte[0]), name(weg.punkte[weg.punkte.length - 1])],
                    mitTlm: fahrweg.objekte.some((o) => !!o.tlm) })
       }
     })().catch((e: Error) => { if (!ab) setFehler(e.message) })
@@ -285,6 +293,14 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
     roh.push({ o, art: x.sorte as Eintrag['art'], name: x.name, seite: x.seite!,
                zeile: x.sorte === 'gipfel' ? x.zeile : 'Seilbahn' })
   }
+  // Bahnübergänge: die mit Namen zuerst, über den Weg verteilt
+  const uebergaengeNach = d.uebergaenge ? nachKennung(d.uebergaenge) : new Map<string, UebergangEintrag & { linie: number }>()
+  const ue = ob.filter((o) => o.art === 'bahnuebergang' && uebergaengeNach.has(o.kennung))
+  for (const o of verteilen([...ue].sort((a, b) => Number(!uebergaengeNach.get(a.kennung)!.name)
+                                                 - Number(!uebergaengeNach.get(b.kennung)!.name)), BAHNUEBERGAENGE_MAX * mal)) {
+    const u = uebergaengeNach.get(o.kennung)!
+    roh.push({ o, art: 'bahnuebergang', name: u.name ? ohneKuerzel(u.name) : 'ohne Namen', zeile: u.sicherungsart ?? '' })
+  }
   // Bahnhöfe zuletzt, sie füllen die Lücken: zuerst die grossen, dann die mittleren
   const stufe = { L: 0, M: 1, S: 2 } as Record<string, number>
   const bhf = ob.filter((o) => o.art === 'bahnhof' && bahnhof.has(uicVon.get(o.kennung) ?? 0))
@@ -292,12 +308,12 @@ function auswaehlen(d: Daten, bahnhof: Map<number, { name: string; tier: string 
   for (const o of verteilen([...bhf].sort((x, y) => tier(x) - tier(y)), BAHNHOEFE_MAX * mal)) {
     roh.push({ o, art: 'bahnhof', name: bahnhof.get(uicVon.get(o.kennung) ?? 0)!.name, zeile: '' })
   }
-  // zu viel für eine Seite: zuerst die kleinen Bahnhöfe weg, dann Seilbahnen, Gipfel,
+  // zu viel für eine Seite: zuerst die kleinen Bahnhöfe weg, dann Bahnübergänge, Seilbahnen, Gipfel,
   // Brücken und Tunnel, je die zuletzt gewählten
   const stufeVon = (e: Omit<Eintrag, 'nr'>) => stufe[bahnhof.get(uicVon.get(e.o.kennung) ?? 0)?.tier ?? ''] ?? 3
   const reihe = [
     ...roh.filter((e) => e.art === 'bahnhof').sort((a, b) => stufeVon(b) - stufeVon(a)),
-    ...(['seilbahn', 'gipfel', 'bruecke', 'tunnel'] as const).flatMap((a) => roh.filter((e) => e.art === a).reverse()),
+    ...(['bahnuebergang', 'seilbahn', 'gipfel', 'bruecke', 'tunnel'] as const).flatMap((a) => roh.filter((e) => e.art === a).reverse()),
   ]
   const weg = new Set(reihe.slice(0, weniger))
   return roh.filter((e) => !weg.has(e)).sort((a, b) => a.o.s - b.o.s).map((e, i) => ({ ...e, nr: i + 1 }))
@@ -357,11 +373,11 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
   const seen = seenAmWeg(daten.fahrweg, mal)
   const gruppe = (arten: Eintrag['art'][]) => eintraege.filter((e) => arten.includes(e.art))
   const tunnel = gruppe(['tunnel'])
-  const bahnhoefe = gruppe(['bahnhof', 'bruecke'])
+  const bahnhoefe = gruppe(['bahnhof', 'bruecke', 'bahnuebergang'])
   const sehen = gruppe(['gipfel', 'seilbahn'])
 
   const listeBahnhoefe = bahnhoefe.length > 0 && (
-    <Liste titel="Bahnhöfe und Brücken">
+    <Liste titel={bahnhoefe.some((e) => e.art === 'bahnuebergang') ? 'Bahnhöfe, Brücken, Bahnübergänge' : 'Bahnhöfe und Brücken'}>
       {bahnhoefe.map((e) => <Zeile key={e.nr} e={e} />)}
     </Liste>
   )
@@ -452,7 +468,7 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
               Das habe ich aus dem Fenster gesehen:
             </div>
             <p className="mt-2 text-[9.5px] leading-snug">
-              Auswahl nach Zahlen aus den Daten und über den Weg verteilt: {TUNNEL_MAX * mal} Tunnel, zuerst die längsten, Brücken ab {BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen zuerst die grossen, {GIPFEL_MAX * mal} Gipfel
+              Auswahl nach Zahlen aus den Daten und über den Weg verteilt: {TUNNEL_MAX * mal} Tunnel, zuerst die längsten, Brücken ab {BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen zuerst die grossen, {BAHNUEBERGAENGE_MAX * mal} Bahnübergänge der SBB, die mit Namen zuerst, {GIPFEL_MAX * mal} Gipfel
               bis 8 km neben der Strecke, zuerst die höchsten; liegen zwei zu nah beieinander, kommt der nächste der Liste.
               Die {SEEN_MAX * mal} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
               laut Daten; ob man es vom Zug aus sieht, sagen sie nicht.
@@ -491,7 +507,7 @@ function Reihenfolge({ eintraege, seen }: {
     ...seen.map((x) => ({ s: x.s, e: null, see: x })),
   ].sort((a, b) => a.s - b.s)
   const zusatz = (e: Eintrag) => [
-    e.art === 'bruecke' ? 'Brücke' : e.art === 'bahnhof' ? 'Bahnhof' : null,
+    e.art === 'bruecke' ? 'Brücke' : e.art === 'bahnhof' ? 'Bahnhof' : e.art === 'bahnuebergang' ? 'Bahnübergang' : null,
     e.art === 'seilbahn' ? null : e.zeile || null,
     e.art === 'seilbahn' ? 'Seilbahn' : null,
     e.seite ?? null,
@@ -505,7 +521,7 @@ function Reihenfolge({ eintraege, seen }: {
               className="flex break-inside-avoid items-start gap-2 border-b border-dotted border-neutral-400 py-1">
             <Kaestchen />
             {e ? <Nummer e={e} /> : <span className="inline-block size-5 shrink-0" />}
-            {e && (e.art === 'tunnel' || e.art === 'bruecke' || e.art === 'bahnhof')
+            {e && (e.art === 'tunnel' || e.art === 'bruecke' || e.art === 'bahnhof' || e.art === 'bahnuebergang')
               ? <Pikto art={e.art} className="size-5 shrink-0" />
               : <span className="mt-1 inline-block size-3.5 shrink-0 mx-[3px]"
                       style={{ backgroundColor: e ? FARBE[e.art] : SEE, printColorAdjust: 'exact', WebkitPrintColorAdjust: 'exact' }} />}
@@ -532,13 +548,14 @@ function Zeile({ e }: { e: Eintrag }) {
     <li className="flex items-center gap-2 border-b border-dotted border-neutral-400 py-px">
       <Kaestchen />
       <Nummer e={e} />
-      {(e.art === 'bahnhof' || e.art === 'bruecke') && <Pikto art={e.art} className="size-5" />}
+      {(e.art === 'bahnhof' || e.art === 'bruecke' || e.art === 'bahnuebergang') && <Pikto art={e.art} className="size-5" />}
       {/* ist der Name lang, wird er gekürzt; Art und Seite bleiben sichtbar */}
       <span className="min-w-0 truncate">{e.name}</span>
       <span className="shrink-0">
         {e.zeile && <> · {e.zeile}</>}
         {e.seite && <> · {e.seite}</>}
         {e.art === 'bruecke' && e.name !== 'Brücke' && ' · Brücke'}
+        {e.art === 'bahnuebergang' && ' · Bahnübergang'}
       </span>
     </li>
   )
@@ -575,6 +592,7 @@ function Legende({ eintraege, seen }: { eintraege: Eintrag[]; seen: boolean }) {
       )}
       {hat('bruecke') && <li className="flex items-center gap-1.5">{punkt(FARBE.bruecke)}Brücke</li>}
       {hat('bahnhof') && <li className="flex items-center gap-1.5">{punkt(FARBE.bahnhof)}Bahnhof</li>}
+      {hat('bahnuebergang') && <li className="flex items-center gap-1.5">{punkt(FARBE.bahnuebergang)}Bahnübergang</li>}
       {hat('gipfel') && <li className="flex items-center gap-1.5">{punkt(FARBE.gipfel)}Gipfel</li>}
       {hat('seilbahn') && <li className="flex items-center gap-1.5">{punkt(FARBE.seilbahn)}Seilbahn</li>}
       {seen && (
