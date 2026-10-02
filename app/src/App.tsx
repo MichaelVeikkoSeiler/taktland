@@ -3,6 +3,8 @@ import { allesZuruecksetzen, bearbeiteBahnhoefe, bearbeiteteLinien } from './for
 import { Anleitung } from './komponenten/Anleitung'
 import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
+import { Spiele } from './komponenten/Spiele'
+import { Zurueck } from './komponenten/Zurueck'
 import { Fahrt } from './komponenten/Fahrt'
 import { Fortsetzen } from './komponenten/Fortsetzen'
 import { OhneZiel } from './komponenten/OhneZiel'
@@ -32,7 +34,7 @@ import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'audio' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
@@ -53,6 +55,7 @@ function seiteAusAdresse(): Seite {
   const linie = /^#\/linie\/(\d+)$/.exec(h)
   if (linie) return { art: 'linie', nr: Number(linie[1]) }
   if (h === '#/duell') return { art: 'duell' }
+  if (h === '#/spiele') return { art: 'spiele' }
   if (h === '#/standort') return { art: 'standort' }
   // Fahren mit drei Unterseiten (Michael, 2026-09-29)
   if (h === '#/fahrt') return { art: 'fahrt', teil: 'neu' }
@@ -98,6 +101,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'linie': case 'objekte': return herkunft
     case 'uebersicht': return seite.liste
     case 'duell': return 'duell'
+    case 'spiele': return 'spiele'
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
     case 'favoriten': return 'favoriten'
@@ -164,7 +168,16 @@ export default function App() {
 
         {seite.art === 'start' && index && <Start index={index} />}
         {seite.art === 'anleitung' && <Anleitung index={index} />}
-        {seite.art === 'duell' && <Duell index={index} />}
+        {seite.art === 'spiele' && <Spiele />}
+        {/* das Duell gehört zu «Spiele» (Michael, 2026-10-02); seine Adresse #/duell bleibt */}
+        {seite.art === 'duell' && (
+          <>
+            <div className="px-4">
+              <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
+            </div>
+            <Duell index={index} />
+          </>
+        )}
         {seite.art === 'standort' && <Standort index={index} />}
         {seite.art === 'fahrt' && <Fahrt key={seite.teil} index={index} teil={seite.teil} />}
         {seite.art === 'ohneziel' && <OhneZiel index={index} />}

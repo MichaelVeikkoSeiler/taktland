@@ -21,9 +21,10 @@ import tunnelHell from '../assets/auftakt-tunnel-hell.webp'
 import { useEffect, useRef, useState } from 'react'
 import { Auftakt, type AuftaktBild } from './Auftakt'
 import { reiterTon, wischTon } from '../audio'
+import { SPIEL_BEREICHE } from '../spiele'
 import { useEinstellungen } from '../einstellungen'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio' | 'einstellungen'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio' | 'einstellungen'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -62,7 +63,8 @@ const FAHREN: Array<{ bereich: FahrtTeil; text: string; adresse: string }> = [
  *  nebeneinander»); ihre Unterreiter erscheinen, sobald man dort ist. */
 const HAUPT: Array<{ schluessel: string; text: string; bereiche: Bereich[]; adresse?: string }> = [
   { schluessel: 'objekte', text: 'Bahnland', bereiche: OBJEKTE.map((o) => o.bereich) },  // Name: Michael, 2026-09-25
-  { schluessel: 'duell', text: 'Duell', bereiche: ['duell'], adresse: '#/duell' },
+  // «Spiele» statt «Duell» (Michael, 2026-10-02): die Übersicht und jedes Spiel darin (src/spiele.ts)
+  { schluessel: 'spiele', text: 'Spiele', bereiche: SPIEL_BEREICHE as Bereich[], adresse: '#/spiele' },
   { schluessel: 'standort', text: 'Standort', bereiche: ['standort'], adresse: '#/standort' },
   // erst «Logbuch», seit 2026-09-25 «Reisetasche» (Michael)
   { schluessel: 'reisetasche', text: 'Reisetasche', bereiche: REISETASCHE.map((r) => r.bereich), adresse: '#/logbuch' },
@@ -140,7 +142,9 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   const bild = fahrt ? BILDER.fahrt
     : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' || aktiv === 'einstellungen' ? BILDER.logbuch
     // die Bahnübergänge mit dem Bild der Startseite, darauf ist einer zu sehen
-    : aktiv === 'bahnuebergaenge' ? BILDER.start : BILDER[schluessel]
+    : aktiv === 'bahnuebergaenge' ? BILDER.start
+    // die Spiele mit dem Bild des Duells
+    : aktiv === 'spiele' ? BILDER.duell : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
