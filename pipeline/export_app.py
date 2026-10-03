@@ -108,7 +108,7 @@ def main():
     # das Streckennetz unverändert, geprüft mit generator/strecken.py
     for name in ("strecken.json", "strecken_geometrie.json", "karte.json", "standort.json", "seen.json",
                  "sehenswert.json", "flaechen.json", "kartengrund.json", "bodenbedeckung.json",
-                 # der Pool für das Spiel «Schweiz 1:1» (pipeline/build_schweiz11.py)
+                 # der Pool für das Spiel «Geo» (pipeline/build_schweiz11.py)
                  "schweiz11.json"):
         quelle = ROOT / "data" / name
         if quelle.exists():

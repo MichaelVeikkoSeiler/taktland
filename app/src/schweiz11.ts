@@ -1,5 +1,5 @@
 /**
- * «Schweiz 1:1» (Michael, 2026-10-03): ein Objekt wird genannt, man setzt einen Pin
+ * «Geo» (Michael, 2026-10-03, zuerst «Schweiz 1:1»): ein Objekt wird genannt, man setzt einen Pin
  * dorthin, wo es liegt. Hier stehen Daten, Auswahl und Wertung, ohne Oberfläche,
  * damit dieselbe Logik später auch ein Spiel auf mehreren Geräten tragen kann.
  * Der Pool entsteht in pipeline/build_schweiz11.py (data/schweiz11.json).

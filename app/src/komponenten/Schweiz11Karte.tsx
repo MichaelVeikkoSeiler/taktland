@@ -16,7 +16,7 @@ const TIPP_PX = 8
 export interface KartenPin { la: number; lo: number; name?: string; eigen?: boolean }
 
 /**
- * Die Karte für «Schweiz 1:1»: frei zoombar und verschiebbar, ein Tipp setzt den Pin,
+ * Die Karte für «Geo»: frei zoombar und verschiebbar, ein Tipp setzt den Pin,
  * Ziehen am Pin verschiebt ihn. Im Grund nur das Spielgebiet hell und alles andere
  * grau; die Hilfen kommen dazu, wenn sie eingeschaltet sind. Beschriftungen, die das
  * Ziel verraten, fehlen (verraet in schweiz11.ts). In der Auflösung (aufloesung) sind

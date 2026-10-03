@@ -1,4 +1,4 @@
-"""Der Pool für das Spiel «Schweiz 1:1» (Michael, 2026-10-03): jedes Objekt, das
+"""Der Pool für das Spiel «Geo» (Michael, 2026-10-03): jedes Objekt, das
 man auf der Karte suchen kann, mit Ziel, Kanton und Schwierigkeit.
 
 Liest nur, was Taktland schon hat:
@@ -250,7 +250,7 @@ def main():
     objekte = [{k: v for k, v in o.items() if not k.startswith("_")} for o in bahnhoefe + tunnel + bruecken]
 
     raus = {
-        "hinweis": "Pool für «Schweiz 1:1», gebaut mit pipeline/build_schweiz11.py. Ziel la/lo: Bahnhof laut "
+        "hinweis": "Pool für «Geo», gebaut mit pipeline/build_schweiz11.py. Ziel la/lo: Bahnhof laut "
                    "Fakten, Tunnel und Brücken in der Mitte zwischen Anfang und Ende entlang der Linie (g: "
                    "Linie, km von, km bis in karte.json; z: Zeichnung aus swissTLM3D), sonst Lage laut Quelle. "
                    "kt: Kanton, in dessen Fläche das Ziel liegt (BFS g1). s: 1 leicht, 2 mittel, 3 schwer, nach "

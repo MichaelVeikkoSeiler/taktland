@@ -34,7 +34,7 @@ export const SPIELE: Spiel[] = [
       + 'einer Zahl aus den Daten vorne liegt, und baust Runde um Runde deine Serie auf.',
   },
   {
-    id: 'schweiz11', titel: 'Schweiz 1:1', status: 'spielbereit', adresse: '#/schweiz11',
+    id: 'schweiz11', titel: 'Geo', status: 'spielbereit', adresse: '#/schweiz11',
     kurz: 'Wo liegt dieser Bahnhof, Tunnel oder diese Brücke? Setze deinen Pin.',
     bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: Jemand setzt eine Ortsmarke auf eine Karte im Handy.' },
     beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '

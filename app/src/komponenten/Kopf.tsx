@@ -150,7 +150,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' || aktiv === 'einstellungen' ? BILDER.logbuch
     // die Bahnübergänge mit dem Bild der Startseite, darauf ist einer zu sehen
     : aktiv === 'bahnuebergaenge' ? BILDER.start
-    // die Spiele und Schweiz 1:1 mit dem Bild der Spiele, das Duell mit seinem
+    // die Spiele und Geo mit dem Bild der Spiele, das Duell mit seinem
     : aktiv === 'spiele' || aktiv === 'schweiz11' ? BILDER.spiele : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)

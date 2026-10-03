@@ -46,7 +46,7 @@ interface Antwort { pin: KartenPin | null; dM: number | null; punkte: number; ze
 interface Partie { e: Einstellungen; aufgaben: SpielObjekt[]; spieler: string[]; d0: number }
 
 /**
- * «Schweiz 1:1» (Michael, 2026-10-03): Einstellungen, dann die Partie als ganze
+ * «Geo» (Michael, 2026-10-03): Einstellungen, dann die Partie als ganze
  * Fläche über der Seite, damit die Karte möglichst viel Platz hat. Allein oder zu
  * mehreren auf einem Gerät; alle bekommen dieselben Aufgaben.
  */
@@ -89,7 +89,7 @@ export function Schweiz11({ index }: { index: BahnhofIndex | null }) {
   return (
     <div className="px-4 pb-16">
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">Schweiz 1:1</h1>
+      <h1 className="mt-4 text-2xl font-bold tracking-tight">Geo</h1>
       <p className="mt-2 leading-relaxed">
         Ein Bahnhof, ein Tunnel oder eine Brücke wird genannt. Setze den Pin dorthin, wo er liegt: Je näher,
         desto mehr Punkte. Hilfen auf der Karte zeigen mehr, kosten aber Punkte.
@@ -253,7 +253,7 @@ function Spiel({ pool, partie, index, nochmals, schliessen }: {
   const kopf = (
     <div className="flex items-center justify-between gap-3 border-b border-sbb-cloud px-4 py-2 dark:border-sbb-iron">
       <p className="min-w-0 truncate text-sm text-sbb-metal dark:text-sbb-storm">
-        <span className="font-bold text-sbb-black dark:text-sbb-white">Schweiz 1:1</span>
+        <span className="font-bold text-sbb-black dark:text-sbb-white">Geo</span>
         {phase !== 'ende' && <> · Frage {frage + 1} von {aufgaben.length}{gruppe && phase === 'frage' ? ` · ${spieler[wer]}` : ''}</>}
       </p>
       <div className="flex shrink-0 items-center gap-2">
@@ -311,7 +311,7 @@ function Spiel({ pool, partie, index, nochmals, schliessen }: {
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white"
-         role="dialog" aria-label="Schweiz 1:1">
+         role="dialog" aria-label="Geo">
       {kopf}
       {phase === 'uebergabe' && (
         <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
