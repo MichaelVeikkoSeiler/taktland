@@ -39,20 +39,24 @@ function useKartenlinien() {
  * Körnung über der ganzen Karte (Michael, 2026-10-03: «eine grundsätzliche Körnung», dann «noch stärker»):
  * ein kleines Rauschen, einmal gerechnet und gekachelt, fest im Bild, nicht auf der Karte
  */
+const KORN_PX = 160
 let koernungUrl: string | null = null
 function koernung(): string | null {
   if (koernungUrl !== null) return koernungUrl
   try {
-    const n = 160, c = document.createElement('canvas')
+    // ein Korn je Bildpunkt des Geräts, sonst wird es auf scharfen Bildschirmen hochgezogen und
+    // unscharf (Michael, 2026-10-03: «noch etwas zu unscharf»)
+    const n = Math.round(KORN_PX * Math.min(3, Math.max(1, window.devicePixelRatio || 1)))
+    const c = document.createElement('canvas')
     c.width = c.height = n
     const ctx = c.getContext('2d')
     if (!ctx) return (koernungUrl = '')
     const bild = ctx.createImageData(n, n)
     let z = 20261003
     for (let i = 0; i < n * n; i++) {
-      z = (z * 1103515245 + 12345) & 0x7fffffff
+      z = (Math.imul(z, 1103515245) + 12345) & 0x7fffffff
       const v = 70 + (z >> 16) % 150
-      bild.data.set([v, v, v, 64], i * 4)
+      bild.data.set([v, v, v, 80], i * 4)
     }
     ctx.putImageData(bild, 0, 0)
     koernungUrl = c.toDataURL('image/png')
@@ -411,7 +415,7 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
         {!aufloesung && oben}
       </svg>
       {korn && <div aria-hidden="true" className="pointer-events-none absolute inset-0 mix-blend-multiply"
-                    style={{ backgroundImage: `url(${korn})`, backgroundSize: '160px 160px' }} />}
+                    style={{ backgroundImage: `url(${korn})`, backgroundSize: `${KORN_PX}px ${KORN_PX}px`, imageRendering: 'pixelated' }} />}
       {/* die Lösung über Körnung und Aufhellung, damit sie klar bleibt */}
       {aufloesung && (
         <svg viewBox={ansicht.join(' ')} className="pointer-events-none absolute inset-0 size-full" aria-hidden="true">
