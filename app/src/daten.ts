@@ -1,6 +1,6 @@
 import type {
   BahnhofIndex, BodenbedeckungDaten, IndexEintrag, KartenDaten, LinienProfil, LinienVerzeichnis, Profil, StandortDaten, StreckenGeometrie,
-  FlaechenDaten, KartengrundDaten, SeenDaten, SehenswertDaten, StreckenNetz,
+  FlaechenDaten, KartengrundDaten, KartenlinienDaten, SeenDaten, SehenswertDaten, StreckenNetz,
   Uebersicht, Vergleichsdaten,
 } from './typen'
 
@@ -114,6 +114,11 @@ export async function bodenbedeckungLaden(): Promise<BodenbedeckungDaten> {
 /** Die Seen für die Karten */
 export async function seenLaden(): Promise<SeenDaten> {
   return holen<SeenDaten>('data/seen.json')
+}
+
+/** Kantonsgrenzen und Bahnlinien für die Karte von «Geo», erst dort geladen */
+export async function kartenlinienLaden(): Promise<KartenlinienDaten> {
+  return holen<KartenlinienDaten>('data/kartenlinien.json')
 }
 
 /** Lage der Tunnel, Brücken und Bahnübergänge für die Seite «Standort» */

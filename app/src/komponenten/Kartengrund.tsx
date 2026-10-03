@@ -27,7 +27,7 @@ interface Grund {
 let vorrat: Grund | null = null
 let laden: Promise<Grund> | null = null
 
-function punkteLesen(z: KodierterZug, faktor = 1e5) {
+export function punkteLesen(z: KodierterZug, faktor = 1e5) {
   let [la, lo] = z.start
   const pts: Array<[number, number]> = [[lo / faktor * LAENGE_ZU_BREITE, -la / faktor]]
   for (let i = 0; i < z.d.length; i += 2) {
@@ -83,7 +83,7 @@ function bodenLesen(d: BodenbedeckungDaten): Boden {
            siedlung: schichtBauen(d.siedlung.map((r) => punkteLesen(r, f))) }
 }
 
-function useBoden(): Boden | null {
+export function useBoden(): Boden | null {
   const [b, setB] = useState<Boden | null>(bodenVorrat)
   useEffect(() => {
     if (bodenVorrat) return

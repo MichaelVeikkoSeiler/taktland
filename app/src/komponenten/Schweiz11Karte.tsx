@@ -1,10 +1,11 @@
-import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
+import { type ReactNode, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { kartenlinienLaden } from '../daten'
 import type { IndexEintrag } from '../typen'
 import { abstandM, distanzText, gebietRinge, type Hilfe, imGebiet, orteLaden, type Pool, type SpielObjekt, verraet } from '../schweiz11'
 import { type Box, LAENGE_ZU_BREITE, lage, pfad, useKarte, zwischen } from './Netzkarte'
-import { useKartengrund } from './Kartengrund'
+import { punkteLesen, useBoden, useKartengrund } from './Kartengrund'
 import { SeenFlaechen, useSeen } from './Seen'
-import { imBild } from '../kacheln'
+import { imBild, kachelnImBild, kachelPfad, type Stueck, stueckeln } from '../kacheln'
 
 /** Schmaler darf der Ausschnitt nicht werden: etwa 200 m */
 const ENGSTE = 0.003
@@ -12,6 +13,52 @@ const ENGSTE = 0.003
 const AUFLOESUNG_MIN_BREITE = 0.4
 /** Mehr bewegt gilt als Verschieben, nicht als Tipp */
 const TIPP_PX = 8
+
+/** Grund der Geo-Karte, immer hell wie die Karte selbst: Höhenstufen, Siedlung, Wald */
+const GRUND = { hoehen: ['#ecebe0', '#e2e0d3', '#d6d3c5'], siedlung: 'rgb(140 128 118 / 0.3)', wald: 'rgb(110 160 85 / 0.24)' }
+
+/** feinere Kantonsgrenzen und Bahnlinien (data/kartenlinien.json), einmal geladen */
+let linienVorrat: { kantone: Stueck[]; bahn: Stueck[] } | null = null
+let linienLaden: Promise<void> | null = null
+function useKartenlinien() {
+  const [l, setL] = useState(linienVorrat)
+  useEffect(() => {
+    if (linienVorrat) return
+    let ab = false
+    linienLaden ??= kartenlinienLaden().then((d) => {
+      const stuecke = (z: typeof d.bahnlinien) => z.flatMap((r) => stueckeln(punkteLesen(r), (q) => pfad(q as Array<[number, number]>)))
+      linienVorrat = { kantone: stuecke(d.kantonsgrenzen), bahn: stuecke(d.bahnlinien) }
+    })
+    linienLaden.then(() => { if (!ab) setL(linienVorrat) }).catch(() => { linienLaden = null })
+    return () => { ab = true }
+  }, [])
+  return l
+}
+
+/**
+ * Körnung über der ganzen Karte (Michael, 2026-10-03: «eine grundsätzliche Körnung»):
+ * ein kleines Rauschen, einmal gerechnet und gekachelt, fest im Bild, nicht auf der Karte
+ */
+let koernungUrl: string | null = null
+function koernung(): string | null {
+  if (koernungUrl !== null) return koernungUrl
+  try {
+    const n = 160, c = document.createElement('canvas')
+    c.width = c.height = n
+    const ctx = c.getContext('2d')
+    if (!ctx) return (koernungUrl = '')
+    const bild = ctx.createImageData(n, n)
+    let z = 20261003
+    for (let i = 0; i < n * n; i++) {
+      z = (z * 1103515245 + 12345) & 0x7fffffff
+      const v = 110 + (z >> 16) % 110
+      bild.data.set([v, v, v, 34], i * 4)
+    }
+    ctx.putImageData(bild, 0, 0)
+    koernungUrl = c.toDataURL('image/png')
+  } catch { koernungUrl = '' }
+  return koernungUrl
+}
 
 export interface KartenPin { la: number; lo: number; name?: string; eigen?: boolean }
 
@@ -85,6 +132,9 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
   const ansicht = [box.cx - box.w / 2, box.cy - h / 2, box.w, h]
 
   const grund = useKartengrund()
+  const boden = useBoden()
+  const linien = useKartenlinien()
+  const clipId = useId()
   const seen = useSeen()
   const { linien: netz } = useKarte()
   const [orte, setOrte] = useState<Array<{ name: string; klasse?: number; lage: [number, number] }> | null>(null)
@@ -217,6 +267,9 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
     return null
   }, [ziel, netz])
 
+  const kacheln = kachelnImBild(box, h)
+  const korn = koernung()
+
   // in der Auflösung klar beschriftet: das Ziel «Richtig» in Grün, der eigene Pin «Dein Tipp», die Pins der
   // anderen mit Namen, auf jeder Linie die Entfernung (Michael, 2026-10-03). Zuerst in «belegt»,
   // damit Bahnhöfe und Orte ausweichen.
@@ -258,17 +311,27 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
            onDoubleClick={(e) => zoomen(2, zuKarte(e.clientX, e.clientY))}>
         {/* Grund: das Spielgebiet hell, alles andere grau */}
         <path d={gebietPfad} fillRule="evenodd" className="fill-karte" />
+        {/* Höhenstufen, Siedlung und Wald nur im Spielgebiet; sie zeigen nichts, was gefragt ist */}
+        <clipPath id={clipId}><path d={gebietPfad} fillRule="evenodd" /></clipPath>
+        <g clipPath={`url(#${clipId})`}>
+          {grund?.hoehen.map((st, i) => (
+            <path key={`h${st.ab}`} d={kacheln.map((k) => kachelPfad(st.schicht, k)).join('')} fillRule="evenodd" fill={GRUND.hoehen[i]} />
+          ))}
+          {boden && (['siedlung', 'wald'] as const).map((k) => (
+            <path key={k} d={kacheln.map((kk) => kachelPfad(boden[k], kk)).join('')} fillRule="evenodd" fill={GRUND[k]} />
+          ))}
+        </g>
         {gebiet !== 'CH' && (
           <path d={gebietPfad} fill="none" strokeWidth={1.5 * pg}
                 className="stroke-sbb-metal dark:stroke-sbb-storm" />
         )}
         {hilfen.has('seen') && <SeenFlaechen seen={seen} box={box} verh={verh} px={px} />}
         {hilfen.has('fluesse') && grund && (
-          <path d={grund.fluesse.filter((f) => f.k <= 5 && imBild(f, box, h)).flatMap((f) => f.stuecke.filter((z) => imBild(z, box, h)).map((z) => z.d)).join('')}
+          <path d={grund.fluesse.filter((f) => f.k <= (box.w < 0.6 ? 6 : 5) && imBild(f, box, h)).flatMap((f) => f.stuecke.filter((z) => imBild(z, box, h)).map((z) => z.d)).join('')}
                 fill="none" strokeWidth={1.6 * pg} strokeLinecap="round" className="stroke-fluss" />
         )}
         {hilfen.has('kantone') && (
-          <path d={kantonPfad} fill="none" strokeWidth={1 * pg} strokeDasharray={`${5 * pg} ${3 * pg}`} strokeLinejoin="round"
+          <path d={linien ? linien.kantone.filter((z) => imBild(z, box, h)).map((z) => z.d).join('') : kantonPfad} fill="none" strokeWidth={1 * pg} strokeDasharray={`${5 * pg} ${3 * pg}`} strokeLinejoin="round"
                 className="stroke-sbb-metal/60 dark:stroke-sbb-storm/60" />
         )}
         {/* die Landesgrenze gehört zum Grund */}
@@ -277,7 +340,8 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
         )}
         {hilfen.has('bahnnetz') && netz && (
           <>
-            <path d={[...netz.values()].flat().filter((s) => s.x.some((x, i) => drin(x, s.y[i], box.w * 0.1)))
+            <path d={linien ? linien.bahn.filter((z) => imBild(z, box, h)).map((z) => z.d).join('')
+                       : [...netz.values()].flat().filter((s) => s.x.some((x, i) => drin(x, s.y[i], box.w * 0.1)))
                        .map((s) => pfad(s.x.map((x, i) => [x, s.y[i]]))).join('')}
                   fill="none" strokeWidth={1.6 * pg} strokeLinejoin="round"
                   className="stroke-sbb-charcoal/75" />
@@ -336,6 +400,8 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
         })()}
         {marken}
       </svg>
+      {korn && <div aria-hidden="true" className="pointer-events-none absolute inset-0 mix-blend-multiply"
+                    style={{ backgroundImage: `url(${korn})`, backgroundSize: '160px 160px' }} />}
       <div className="absolute bottom-2 right-2 flex flex-col gap-1.5">
         {([['+', 2], ['−', 0.5]] as const).map(([t, f]) => (
           <button key={t} type="button" onClick={() => zoomen(f)} aria-label={f > 1 ? 'Näher' : 'Weiter weg'}

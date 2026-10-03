@@ -396,6 +396,16 @@ export interface SeenDaten {
 /** Kodierte Linie oder Fläche: [Breite, Länge] mal 100000 mit Differenzen */
 export interface KodierterZug { start: [number, number]; d: number[] }
 
+/** Feinere Kantonsgrenzen und Bahnlinien aus swissTLMRegio für die Karte von «Geo»
+ *  (data/kartenlinien.json), nur zum Zeichnen */
+export interface KartenlinienDaten {
+  quelle: string
+  geladen: string
+  hinweis: string
+  kantonsgrenzen: KodierterZug[]
+  bahnlinien: KodierterZug[]
+}
+
 /** Sehenswertes für die Karten (data/sehenswert.json) */
 export interface SehenswertDaten {
   geladen: string

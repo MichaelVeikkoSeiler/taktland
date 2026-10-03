@@ -110,6 +110,8 @@ data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine K
              selbst gezeichnet, ohne Kartendienst
 data/seen.json  Seen für alle Karten aus swissTLMRegio von swisstopo wie die Flüsse
              (pipeline/build_seen.py), nur Umriss und Name, Seen unter 0,1 km² fehlen
+data/kartenlinien.json  feinere Kantonsgrenzen und Bahnlinien aus swissTLMRegio für die Karte von «Geo»,
+             nur zum Zeichnen (pipeline/build_kartenlinien.py), erst dort geladen
 data/sehenswert.json  Gipfel mit Höhe (swisstopo), Kulturgüter von nationaler Bedeutung
              (BABS) und Seilbahnen mit Bundeskonzession (BAV) für die Karten
              (pipeline/build_sehenswert.py)
@@ -166,6 +168,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D
 .venv/bin/python pipeline/build_bruecken_bereich.py  # Brückenlängen laut swissTLM3D, vor build_strecken
 .venv/bin/python pipeline/build_schweiz11.py   # Pool für «Geo», nach export_app
+.venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

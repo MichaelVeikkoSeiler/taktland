@@ -21,7 +21,7 @@ const STUFEN = [0.05, 0.2, 0.8]
  * Überblick war der Wald sonst ein einziger Pfad von fast 9 Millionen Zeichen, und
  * der Browser zeichnete statt der Karte eine leere Fläche.
  */
-const TOLERANZ_TEIL = 100
+const TOLERANZ_TEIL = 250
 const KLEIN_TEIL = 25
 /** so viele Kacheln höchstens über die Breite des Ausschnitts */
 const JE_BREITE = 6
