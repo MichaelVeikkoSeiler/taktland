@@ -73,10 +73,11 @@ export function Schweiz11({ index }: { index: BahnhofIndex | null }) {
     setPartie({ e, aufgaben: aufgabenZiehen(pool, e), spieler: gruppe ? namen.map((n) => n.trim()) : ['Du'], d0: nullGrenzeM(pool, e.gebiet) })
   }
 
-  const wahl = <T extends string | number>(titel: string, wert: T, optionen: Array<[T, string]>, setzen: (w: T) => void) => (
+  const wahl = <T extends string | number>(titel: string, wert: T, optionen: Array<[T, string]>, setzen: (w: T) => void,
+    spalten = `repeat(${optionen.length}, minmax(0, 1fr))`) => (
     <fieldset className="mt-5">
       <legend className="text-sm text-sbb-metal dark:text-sbb-storm">{titel}</legend>
-      <div className="segmente mt-1.5 grid" style={{ gridTemplateColumns: `repeat(${optionen.length}, minmax(0, 1fr))` }}>
+      <div className="segmente mt-1.5 grid" style={{ gridTemplateColumns: spalten }}>
         {optionen.map(([w, t]) => (
           <button key={String(w)} type="button" aria-pressed={wert === w} onClick={() => setzen(w)}
                   className="segment px-1 py-2 text-sm">{t}</button>
@@ -98,7 +99,9 @@ export function Schweiz11({ index }: { index: BahnhofIndex | null }) {
       {pool && (
         <div className="md:grid md:grid-cols-2 md:gap-x-8">
           <div>
-            {wahl('Wer spielt', gruppe ? 'g' : 'a', [['a', 'Allein'], ['g', 'Zu mehreren, ein Gerät']], (w) => setGruppe(w === 'g'))}
+            {wahl('Wer spielt', gruppe ? 'g' : 'a', [['a', 'Allein'], ['g', 'Mehrere auf diesem Gerät']], (w) => setGruppe(w === 'g'),
+                  // der längere Name braucht mehr Platz, sonst bricht er auf schmalen Geräten um
+                  'minmax(0, 2fr) minmax(0, 3fr)')}
             {gruppe && (
               <div className="mt-3 space-y-2">
                 {namen.map((n, i) => (
