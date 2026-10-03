@@ -1,8 +1,8 @@
 import { SPIELE, type Spiel } from '../spiele'
 
 /**
- * Übersicht unter «Spiele» (Michael, 2026-10-02): jedes Spiel als Kachel, spielbereite
- * mit «Spielen», die übrigen als stille Platzhalter ohne Knopf. Die Liste steht in
+ * Übersicht unter «Spiele» (Michael, 2026-10-02): jedes Spiel als Kachel mit kleinem Bild,
+ * zwei je Zeile (Michael, 2026-10-03), die übrigen als stille Platzhalter ohne Knopf. Die Liste steht in
  * src/spiele.ts.
  */
 export function Spiele() {
@@ -13,7 +13,8 @@ export function Spiele() {
         Entdecke Taktland spielerisch. Hier findest du das Duell und Schweiz 1:1; weitere Spiele
         rund um die Bahn in der Schweiz folgen.
       </p>
-      <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+      {/* zwei Kacheln je Zeile, auch auf dem Handy; weitere Spiele folgen (Michael, 2026-10-03) */}
+      <ul className="mt-5 grid grid-cols-2 gap-3 md:grid-cols-3">
         {SPIELE.filter((s) => s.status === 'spielbereit').map((s) => <Karte key={s.id} spiel={s} />)}
       </ul>
       {/* Platzhalter schmal, damit das Spielbare die Hauptsache bleibt (Michael, 2026-10-03) */}
@@ -33,20 +34,22 @@ export function Spiele() {
 
 function Karte({ spiel }: { spiel: Spiel }) {
   if (spiel.status === 'spielbereit' && spiel.adresse) {
+    // die ganze Kachel führt zum Spiel; oben ein kleines Bild, darunter Titel und ein Satz
     return (
-      <li className="kachel flex flex-col p-4">
-        <div className="flex items-start justify-between gap-3">
-          <h2 className="text-xl font-bold tracking-tight">{spiel.titel}</h2>
-          <span className="shrink-0 rounded-lg bg-white px-2 py-0.5 text-xs font-medium text-sbb-black
-                           dark:bg-sbb-midnight dark:text-sbb-white">
-            Spielbereit
-          </span>
-        </div>
-        <p className="mt-2 flex-1 leading-relaxed">{spiel.beschreibung}</p>
-        <a href={spiel.adresse}
-           className="mt-4 inline-flex min-h-11 items-center justify-center self-start rounded-lg bg-sbb-red px-6
-                      font-bold text-white hover:bg-sbb-red125">
-          Spielen
+      <li className="flex">
+        <a href={spiel.adresse} className="kachel kachel-link flex w-full flex-col overflow-hidden">
+          {spiel.bild && (
+            <picture>
+              <source srcSet={spiel.bild.dunkel} media="(prefers-color-scheme: dark)" />
+              <img src={spiel.bild.hell} alt={spiel.bild.alt} loading="lazy"
+                   className="aspect-[4/3] w-full object-cover" />
+            </picture>
+          )}
+          <div className="flex flex-1 flex-col p-3">
+            <h2 className="text-lg font-bold leading-tight tracking-tight">{spiel.titel}</h2>
+            <p className="mt-1 flex-1 text-sm leading-snug">{spiel.kurz ?? spiel.beschreibung}</p>
+            <span className="mt-3 font-bold text-sbb-red">Spielen →</span>
+          </div>
         </a>
       </li>
     )

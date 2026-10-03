@@ -5,6 +5,11 @@
  * Beschreibung, Adresse und status 'spielbereit'. Platzhalter sind entfernt (Michael,
  * 2026-10-03: weitere Spiele folgen sporadisch); ein neues kann trotzdem mit «im-bau» erscheinen.
  */
+import duellDunkel from './assets/auftakt-duell-dunkel.webp'
+import duellHell from './assets/auftakt-duell-hell.webp'
+import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
+import spieleHell from './assets/auftakt-spiele-hell.webp'
+
 export type SpielStatus = 'spielbereit' | 'im-bau'
 
 export interface Spiel {
@@ -14,18 +19,26 @@ export interface Spiel {
   status: SpielStatus
   /** nur bei spielbereiten Spielen: wohin «Spielen» führt */
   adresse?: string
+  /** kurz für die Kachel in der Übersicht, die Beschreibung steht beim Spiel */
+  kurz?: string
+  /** kleines Bild auf der Kachel, hell und dunkel */
+  bild?: { hell: string; dunkel: string; alt: string }
 }
 
 export const SPIELE: Spiel[] = [
   {
     id: 'duell', titel: 'Duell', status: 'spielbereit', adresse: '#/duell',
+    kurz: 'Zwei Bahnhöfe, Strecken oder Tunnel: Wer liegt bei einer Zahl vorne?',
+    bild: { hell: duellHell, dunkel: duellDunkel, alt: 'Illustration: ein grosser und ein kleiner Bahnhof nebeneinander.' },
     beschreibung: 'Zwei Bahnhöfe, Strecken oder Tunnel treten gegeneinander an. Du wählst, wer bei '
       + 'einer Zahl aus den Daten vorne liegt, und baust Runde um Runde deine Serie auf.',
   },
   {
     id: 'schweiz11', titel: 'Schweiz 1:1', status: 'spielbereit', adresse: '#/schweiz11',
+    kurz: 'Wo liegt dieser Bahnhof, Tunnel oder diese Brücke? Setze deinen Pin.',
+    bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: Jemand setzt eine Ortsmarke auf eine Karte im Handy.' },
     beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
-      + 'je näher, desto mehr Punkte. Allein oder zu mehreren auf einem Gerät.',
+      + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
   },
 ]
 
