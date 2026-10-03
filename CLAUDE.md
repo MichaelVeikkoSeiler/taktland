@@ -129,6 +129,9 @@ data/tunnel_richtung.json  Anfang und Ende von SBB-Tunneln, deren Länge in beid
              SBB liegt oft im Tunnel, nicht am Portal
 data/bruecken_bereich.json  Anfang, Ende und Länge von SBB-Brücken laut Zeichnung von swissTLM3D,
              nur wo eindeutig (pipeline/build_bruecken_bereich.py); die SBB nennt keine Länge
+data/schweiz11.json  Pool für das Spiel «Schweiz 1:1»: Bahnhöfe, Tunnel und Brücken mit Ziel (Mitte des
+             Bauwerks), Kanton laut Kantonsfläche (BFS) und Stufe nach Rang (pipeline/build_schweiz11.py, nach
+             export_app.py); dazu die Kantonsflächen für das Spielgebiet
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -162,6 +165,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D
 .venv/bin/python pipeline/build_bruecken_bereich.py  # Brückenlängen laut swissTLM3D, vor build_strecken
+.venv/bin/python pipeline/build_schweiz11.py   # Pool für «Schweiz 1:1», nach export_app
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

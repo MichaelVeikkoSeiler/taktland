@@ -21,8 +21,12 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Zwei Bahnhöfe, Strecken oder Tunnel treten gegeneinander an. Du wählst, wer bei '
       + 'einer Zahl aus den Daten vorne liegt, und baust Runde um Runde deine Serie auf.',
   },
+  {
+    id: 'schweiz11', titel: 'Schweiz 1:1', status: 'spielbereit', adresse: '#/schweiz11',
+    beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
+      + 'je näher, desto mehr Punkte. Allein oder zu mehreren auf einem Gerät.',
+  },
   // Platzhalter, noch ohne Namen und Inhalt; schmal gezeigt, ohne eigene Beschreibung
-  { id: 'neu-1', titel: 'Neues Spiel', status: 'im-bau', beschreibung: '' },
   { id: 'neu-2', titel: 'Neues Spiel', status: 'im-bau', beschreibung: '' },
   { id: 'neu-3', titel: 'Neues Spiel', status: 'im-bau', beschreibung: '' },
 ]
