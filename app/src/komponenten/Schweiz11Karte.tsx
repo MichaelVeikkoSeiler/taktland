@@ -36,7 +36,7 @@ function useKartenlinien() {
 }
 
 /**
- * Körnung über der ganzen Karte (Michael, 2026-10-03: «eine grundsätzliche Körnung»):
+ * Körnung über der ganzen Karte (Michael, 2026-10-03: «eine grundsätzliche Körnung», dann «noch stärker»):
  * ein kleines Rauschen, einmal gerechnet und gekachelt, fest im Bild, nicht auf der Karte
  */
 let koernungUrl: string | null = null
@@ -51,8 +51,8 @@ function koernung(): string | null {
     let z = 20261003
     for (let i = 0; i < n * n; i++) {
       z = (z * 1103515245 + 12345) & 0x7fffffff
-      const v = 110 + (z >> 16) % 110
-      bild.data.set([v, v, v, 34], i * 4)
+      const v = 70 + (z >> 16) % 150
+      bild.data.set([v, v, v, 64], i * 4)
     }
     ctx.putImageData(bild, 0, 0)
     koernungUrl = c.toDataURL('image/png')
@@ -303,6 +303,54 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
                       'fill-sbb-green dark:fill-fahrt-sehenswert-hell', rechtsFrei(zx)))
   }
 
+  // oben: Aufhellung, Bauwerk, Linien, Ziel und Pins; im Spiel nur der eigene Pin
+  const oben = (
+    <>
+      {/* in der Auflösung die ganze Karte samt Beschriftungen 30 % heller, damit Bauwerk, Linien,
+          Ziel und Pins hervorstechen (Michael, 2026-10-03) */}
+      {aufloesung && <rect x={ansicht[0] - box.w} y={ansicht[1] - h} width={box.w * 3} height={h * 3} className="fill-white" opacity={0.3} />}
+      {/* Ziel und Bauwerk erst in der Auflösung */}
+      {aufloesung && bauwerk && bauwerk.length > 1 && (
+        <path d={pfad(bauwerk)} fill="none" strokeWidth={6 * pg} strokeLinecap="round"
+              className={ziel.t === 't' ? 'stroke-fahrt-tunnel dark:stroke-sbb-storm' : 'stroke-fahrt-bruecke'} />
+      )}
+      {aufloesung && pins.map((p, i) => {
+        const [x, y] = lage(p.la, p.lo)
+        return <line key={`v${i}`} x1={x} y1={y} x2={zx} y2={zy} strokeWidth={(p.eigen ? 2 : 1.4) * pg} strokeDasharray={`${5 * pg} ${4 * pg}`} className="stroke-sbb-red" />
+      })}
+      {aufloesung && (
+        <g>
+          <circle cx={zx} cy={zy} r={7 * pg} strokeWidth={2.5 * pg}
+                  className="fill-white stroke-sbb-green dark:fill-sbb-midnight dark:stroke-fahrt-sehenswert-hell" />
+          <circle cx={zx} cy={zy} r={2.5 * pg} className="fill-sbb-green dark:fill-fahrt-sehenswert-hell" />
+        </g>
+      )}
+      {aufloesung && pins.filter((p) => !p.eigen && p.name).map((p, i) => {
+        const [x, y] = lage(p.la, p.lo)
+        return (
+          <g key={`n${i}`}>
+            <circle cx={x} cy={y} r={4.5 * pg} strokeWidth={1.5 * pg}
+                    className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
+          </g>
+        )
+      })}
+      {(aufloesung ? pins.find((p) => p.eigen) ?? null : pin) && (() => {
+        const p = aufloesung ? pins.find((q) => q.eigen)! : pin!
+        const [x, y] = lage(p.la, p.lo)
+        // Nadel: Spitze am Punkt, Kopf darüber; ein grösserer, unsichtbarer Griff zum Ziehen
+        return (
+          <g data-pin className={setzen ? 'cursor-grab' : ''}>
+            <path d={`M${x} ${y}L${x - 7 * pg} ${y - 15 * pg}A${9 * pg} ${9 * pg} 0 1 1 ${x + 7 * pg} ${y - 15 * pg}Z`}
+                  strokeWidth={1.5 * pg} className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
+            <circle cx={x} cy={y - 21 * pg} r={3.2 * pg} className="fill-white" />
+            {setzen && <circle cx={x} cy={y - 14 * pg} r={22 * pg} fill="transparent" />}
+          </g>
+        )
+      })()}
+      {marken}
+    </>
+  )
+
   return (
     <div ref={huelle} className={`${klasse || 'relative'} overflow-hidden bg-ausland`}>
       <svg ref={svg} viewBox={ansicht.join(' ')} className="absolute inset-0 size-full touch-none select-none"
@@ -352,15 +400,6 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
             })}
           </>
         )}
-        {/* Ziel und Bauwerk erst in der Auflösung */}
-        {aufloesung && bauwerk && bauwerk.length > 1 && (
-          <path d={pfad(bauwerk)} fill="none" strokeWidth={6 * pg} strokeLinecap="round"
-                className={ziel.t === 't' ? 'stroke-fahrt-tunnel dark:stroke-sbb-storm' : 'stroke-fahrt-bruecke'} />
-        )}
-        {aufloesung && pins.map((p, i) => {
-          const [x, y] = lage(p.la, p.lo)
-          return <line key={`v${i}`} x1={x} y1={y} x2={zx} y2={zy} strokeWidth={(p.eigen ? 2 : 1.4) * pg} strokeDasharray={`${5 * pg} ${4 * pg}`} className="stroke-sbb-red" />
-        })}
         {/* Beschriftungen: Bahnhöfe vor Orten */}
         {hilfen.has('bahnnetz') && bahnhoefe.filter((b) => stufeSichtbar(b.tier)).sort((a, b) => a.tier.localeCompare(b.tier))
           .map((b) => { const [x, y] = lage(b.lat!, b.lon!); return beschriftung(`bn${b.uic}`, x, y, b.name, b.tier === 'L') })}
@@ -369,39 +408,16 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
             && ((o.klasse ?? 1) >= 3 || box.w < (o.klasse === 2 ? 1.6 : 0.6)))
           .sort((a, b) => (b.klasse ?? 0) - (a.klasse ?? 0))
           .map((o) => { const [x, y] = lage(o.lage[0], o.lage[1]); return beschriftung(`o${o.name}`, x, y, o.name.replace('\n', ' ')) })}
-        {aufloesung && (
-          <g>
-            <circle cx={zx} cy={zy} r={7 * pg} strokeWidth={2.5 * pg}
-                    className="fill-white stroke-sbb-green dark:fill-sbb-midnight dark:stroke-fahrt-sehenswert-hell" />
-            <circle cx={zx} cy={zy} r={2.5 * pg} className="fill-sbb-green dark:fill-fahrt-sehenswert-hell" />
-          </g>
-        )}
-        {aufloesung && pins.filter((p) => !p.eigen && p.name).map((p, i) => {
-          const [x, y] = lage(p.la, p.lo)
-          return (
-            <g key={`n${i}`}>
-              <circle cx={x} cy={y} r={4.5 * pg} strokeWidth={1.5 * pg}
-                      className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
-            </g>
-          )
-        })}
-        {(aufloesung ? pins.find((p) => p.eigen) ?? null : pin) && (() => {
-          const p = aufloesung ? pins.find((q) => q.eigen)! : pin!
-          const [x, y] = lage(p.la, p.lo)
-          // Nadel: Spitze am Punkt, Kopf darüber; ein grösserer, unsichtbarer Griff zum Ziehen
-          return (
-            <g data-pin className={setzen ? 'cursor-grab' : ''}>
-              <path d={`M${x} ${y}L${x - 7 * pg} ${y - 15 * pg}A${9 * pg} ${9 * pg} 0 1 1 ${x + 7 * pg} ${y - 15 * pg}Z`}
-                    strokeWidth={1.5 * pg} className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
-              <circle cx={x} cy={y - 21 * pg} r={3.2 * pg} className="fill-white" />
-              {setzen && <circle cx={x} cy={y - 14 * pg} r={22 * pg} fill="transparent" />}
-            </g>
-          )
-        })()}
-        {marken}
+        {!aufloesung && oben}
       </svg>
       {korn && <div aria-hidden="true" className="pointer-events-none absolute inset-0 mix-blend-multiply"
                     style={{ backgroundImage: `url(${korn})`, backgroundSize: '160px 160px' }} />}
+      {/* die Lösung über Körnung und Aufhellung, damit sie klar bleibt */}
+      {aufloesung && (
+        <svg viewBox={ansicht.join(' ')} className="pointer-events-none absolute inset-0 size-full" aria-hidden="true">
+          {oben}
+        </svg>
+      )}
       <div className="absolute bottom-2 right-2 flex flex-col gap-1.5">
         {([['+', 2], ['−', 0.5]] as const).map(([t, f]) => (
           <button key={t} type="button" onClick={() => zoomen(f)} aria-label={f > 1 ? 'Näher' : 'Weiter weg'}
