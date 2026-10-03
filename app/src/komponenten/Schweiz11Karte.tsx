@@ -8,6 +8,8 @@ import { imBild } from '../kacheln'
 
 /** Schmaler darf der Ausschnitt nicht werden: etwa 200 m */
 const ENGSTE = 0.003
+/** Breite der Auflösung mindestens, in Kartenmass: etwa 30 km */
+const AUFLOESUNG_MIN_BREITE = 0.4
 /** Mehr bewegt gilt als Verschieben, nicht als Tipp */
 const TIPP_PX = 8
 
@@ -60,13 +62,14 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
     return Math.max(start.w, (y1 - y0) * 1.08 * verh)
   }, [ringe, start.w, verh])
   // neues Gebiet oder neue Grösse der Karte: wieder das ganze Spielgebiet
-  // in der Auflösung: Ziel und alle Pins im Bild, mit Rand; mindestens etwa 3 km breit
+  // in der Auflösung: Ziel und alle Pins im Bild, mit Rand; mindestens etwa 30 km breit (im Kanton
+  // höchstens das ganze Gebiet), sonst sieht man nur eine Fläche (Michael, 2026-10-03)
   const fokus = useMemo<Box | null>(() => {
     if (!aufloesung) return null
     const pts = [lage(ziel.la, ziel.lo), ...pins.map((q) => lage(q.la, q.lo))]
     const xs = pts.map((q) => q[0]), ys = pts.map((q) => q[1])
     const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]
-    const w = Math.min(breiteStart, Math.max(0.04, (x1 - x0) * 1.5, (y1 - y0) * 1.5 * verh))
+    const w = Math.min(breiteStart, Math.max(AUFLOESUNG_MIN_BREITE, (x1 - x0) * 1.5, (y1 - y0) * 1.5 * verh))
     return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w }
   }, [aufloesung, ziel, pins, breiteStart, verh])
   useEffect(() => setBox(fokus ?? { ...start, w: breiteStart }), [start, breiteStart, fokus])

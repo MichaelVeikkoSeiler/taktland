@@ -397,7 +397,8 @@ function Aufloesung({ pool, e, ziel, index, spieler, antworten, frage, d0, letzt
   const eigene = runde[0]
   const name = anzeigeName(ziel)
   const stand = spieler.map((s, i) => ({ name: s, punkte: antworten.reduce((a, r) => a + (r[i]?.punkte ?? 0), 0) }))
-  const alleHilfen = useMemo(() => new Set<Hilfe>(['kantone', 'seen']), [])
+  // in der Auflösung alle Hilfen, damit man sich orientieren kann (Michael, 2026-10-03)
+  const alleHilfen = useMemo(() => new Set<Hilfe>(['kantone', 'seen', 'fluesse', 'orte', 'bahnnetz']), [])
 
   return (
     <div className="flex min-h-0 flex-1 flex-col md:flex-row">
