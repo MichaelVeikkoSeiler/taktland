@@ -73,7 +73,8 @@ export function useSeen(): See[] | null {
 type Feld = [number, number, number, number]
 
 /** Die Flächen im Bild; unter dem Streckennetz zeichnen */
-export function SeenFlaechen({ seen, box, verh = 1.6 }: { seen: See[] | null; box: Box; verh?: number }) {
+/** px: Kartenmass je Bildpunkt; damit wird das Ufer ohne vector-effect gezeichnet (siehe Schweiz11Karte) */
+export function SeenFlaechen({ seen, box, verh = 1.6, px }: { seen: See[] | null; box: Box; verh?: number; px?: number }) {
   if (!seen || !wasser) return null
   const h = box.w / verh
   const w = wasser
@@ -81,8 +82,8 @@ export function SeenFlaechen({ seen, box, verh = 1.6 }: { seen: See[] | null; bo
   return (
     <g aria-hidden="true">
       <path d={kachelnImBild(box, h).map((k) => kachelPfad(w, k)).join('')} fillRule="evenodd" className="fill-see" />
-      <path d={ufer.filter((u) => imBild(u, box, h)).map((u) => u.d).join('')} fill="none" strokeWidth={0.8}
-            vectorEffect="non-scaling-stroke" strokeLinejoin="round" className="stroke-see-rand" />
+      <path d={ufer.filter((u) => imBild(u, box, h)).map((u) => u.d).join('')} fill="none" strokeWidth={px ? 0.8 * px : 0.8}
+            vectorEffect={px ? undefined : 'non-scaling-stroke'} strokeLinejoin="round" className="stroke-see-rand" />
     </g>
   )
 }
