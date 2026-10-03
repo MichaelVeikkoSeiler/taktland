@@ -10,8 +10,8 @@ export function Spiele() {
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Spiele</h1>
       <p className="mt-2 leading-relaxed">
-        Entdecke Taktland spielerisch. Hier findest du das Duell und bald weitere Spiele rund um
-        die Bahn in der Schweiz.
+        Entdecke Taktland spielerisch. Hier findest du das Duell und Schweiz 1:1; weitere Spiele
+        rund um die Bahn in der Schweiz folgen.
       </p>
       <ul className="mt-5 grid gap-3 sm:grid-cols-2">
         {SPIELE.filter((s) => s.status === 'spielbereit').map((s) => <Karte key={s.id} spiel={s} />)}

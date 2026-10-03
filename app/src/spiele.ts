@@ -2,7 +2,8 @@
  * Die Spiele von Taktland (Michael, 2026-10-02: Hauptreiter «Spiele» statt «Duell»).
  * Eine Liste für die Übersicht unter #/spiele. Ein neues Spiel kommt hierher: erst mit
  * status 'im-bau' ohne Adresse, als Platzhalter; ist es fertig, bekommt es Titel,
- * Beschreibung, Adresse und status 'spielbereit'. Welche Spiele dazukommen, ist offen.
+ * Beschreibung, Adresse und status 'spielbereit'. Platzhalter sind entfernt (Michael,
+ * 2026-10-03: weitere Spiele folgen sporadisch); ein neues kann trotzdem mit «im-bau» erscheinen.
  */
 export type SpielStatus = 'spielbereit' | 'im-bau'
 
@@ -26,9 +27,6 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
       + 'je näher, desto mehr Punkte. Allein oder zu mehreren auf einem Gerät.',
   },
-  // Platzhalter, noch ohne Namen und Inhalt; schmal gezeigt, ohne eigene Beschreibung
-  { id: 'neu-2', titel: 'Neues Spiel', status: 'im-bau', beschreibung: '' },
-  { id: 'neu-3', titel: 'Neues Spiel', status: 'im-bau', beschreibung: '' },
 ]
 
 /** Alle Bereiche, die zum Hauptreiter «Spiele» gehören: die Übersicht und jedes spielbereite
