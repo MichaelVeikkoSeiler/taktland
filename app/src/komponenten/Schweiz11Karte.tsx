@@ -1,6 +1,6 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import type { IndexEintrag } from '../typen'
-import { gebietRinge, type Hilfe, imGebiet, orteLaden, type Pool, type SpielObjekt, verraet } from '../schweiz11'
+import { abstandM, distanzText, gebietRinge, type Hilfe, imGebiet, orteLaden, type Pool, type SpielObjekt, verraet } from '../schweiz11'
 import { type Box, LAENGE_ZU_BREITE, lage, pfad, useKarte, zwischen } from './Netzkarte'
 import { useKartengrund } from './Kartengrund'
 import { SeenFlaechen, useSeen } from './Seen'
@@ -215,6 +215,39 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
     return null
   }, [ziel, netz])
 
+  // in der Auflösung klar beschriftet: das Ziel «Richtig», der eigene Pin «Dein Tipp», die Pins der
+  // anderen mit Namen, auf jeder Linie die Entfernung (Michael, 2026-10-03). Zuerst in «belegt»,
+  // damit Bahnhöfe und Orte ausweichen.
+  const marke = (key: string, x: number, y: number, text: string, farbe: string, rechts: boolean, gross = 12.5) => {
+    const b = text.length * gross * 0.6 * pg
+    const x0 = rechts ? x : x - b
+    belegt.push([x0 - 3 * pg, y - gross * pg, x0 + b + 3 * pg, y + 4 * pg])
+    return (
+      <text key={key} x={x} y={y} fontSize={gross * pg} fontWeight="bold" textAnchor={rechts ? 'start' : 'end'}
+            className={`${farbe} stroke-white dark:stroke-sbb-midnight`}
+            strokeWidth={4 * g} paintOrder="stroke" strokeLinejoin="round" vectorEffect="non-scaling-stroke">{text}</text>
+    )
+  }
+  const rechtsFrei = (x: number) => x < box.cx + box.w / 2 - 90 * pg
+  const marken: ReactNode[] = []
+  if (aufloesung) {
+    for (const [i, p] of pins.entries()) {
+      const [x, y] = lage(p.la, p.lo)
+      const l = Math.hypot(x - zx, y - zy)
+      // die Entfernung in der Mitte der Linie, wenn sie lang genug ist
+      if (l > 80 * pg) {
+        marken.push(marke(`km${i}`, (x + zx) / 2 + 6 * pg, (y + zy) / 2 + 4 * pg, distanzText(abstandM(p, ziel)),
+                          'fill-sbb-red', true, 11.5))
+      }
+      const text = p.eigen ? 'Dein Tipp' : p.name
+      // der eigene Pin hat die Nadel, sein Name steht neben dem Kopf
+      if (text) marken.push(marke(`pn${i}`, x + (rechtsFrei(x) ? 1 : -1) * (p.eigen ? 11 : 7) * pg,
+                                  y + (p.eigen ? -17 : 4) * pg, text, 'fill-sbb-red', rechtsFrei(x)))
+    }
+    marken.push(marke('ziel', zx + (rechtsFrei(zx) ? 1 : -1) * 11 * pg, zy + 4.5 * pg, 'Richtig',
+                      'fill-fahrt-bahnhof dark:fill-fahrt-bahnhof-hell', rechtsFrei(zx)))
+  }
+
   return (
     <div ref={huelle} className={`${klasse || 'relative'} overflow-hidden bg-ausland`}>
       <svg ref={svg} viewBox={ansicht.join(' ')} className="absolute inset-0 size-full touch-none select-none"
@@ -283,8 +316,8 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
           const [x, y] = lage(p.la, p.lo)
           return (
             <g key={`n${i}`}>
-              <circle cx={x} cy={y} r={4 * pg} className="fill-sbb-red" />
-              {beschriftung(`pn${i}`, x, y, p.name!)}
+              <circle cx={x} cy={y} r={4.5 * pg} strokeWidth={1.5 * g} vectorEffect="non-scaling-stroke"
+                      className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
             </g>
           )
         })}
@@ -301,6 +334,7 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
             </g>
           )
         })()}
+        {marken}
       </svg>
       <div className="absolute bottom-2 right-2 flex flex-col gap-1.5">
         {([['+', 2], ['−', 0.5]] as const).map(([t, f]) => (
