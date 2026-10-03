@@ -108,8 +108,8 @@ data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierun
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte
              bei Tunneln, Brücken und auf den Linienseiten (pipeline/build_karte.py),
              selbst gezeichnet, ohne Kartendienst
-data/seen.json  Seen für alle Karten aus Swiss Map Vector 1000 von swisstopo
-             (pipeline/build_seen.py), nur Umriss und Name, kleine Seen fehlen
+data/seen.json  Seen für alle Karten aus swissTLMRegio von swisstopo wie die Flüsse
+             (pipeline/build_seen.py), nur Umriss und Name, Seen unter 0,1 km² fehlen
 data/sehenswert.json  Gipfel mit Höhe (swisstopo), Kulturgüter von nationaler Bedeutung
              (BABS) und Seilbahnen mit Bundeskonzession (BAV) für die Karten
              (pipeline/build_sehenswert.py)
@@ -118,7 +118,7 @@ data/bodenbedeckung.json  Wald und Siedlung aus swissTLMRegio (swisstopo), verei
 data/flaechen.json  BLN, Pärke und Moorlandschaften (BAFU), vereinfachte Umrisse
 data/kartengrund.json  Grund aller Karten: Schweiz und Kantone (BFS g1), Flüsse mit Namen
              (swissTLMRegio, beschriftet in der App), Höhenstufen ab 1000, 2000 und 3000 m (swissALTIRegio), Ortsnamen der
-             Landeskarte 1:1 Million ab 2000 Einwohnern für das Fahrtblatt, nur zum
+             Landeskarte 1:1 Million ab 2000 Einwohnern, gesetzt auf den Ortspunkt aus swissTLMRegio, nur zum
              Zeichnen (pipeline/build_kartengrund.py, braucht rasterio, scipy, scikit-image)
 data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3D
              (pipeline/fetch_tlm3d.py, pipeline/build_tlm_bauwerke.py), ohne Länge (beim Fahren mit der Länge
@@ -157,7 +157,7 @@ python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne 
 python3 generator/strecken.py --validieren       # Tunnel und Brücken je Abschnitt prüfen
 python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 .venv/bin/python pipeline/build_karte.py         # Netz für die kleine Tunnelkarte
-python3 pipeline/build_seen.py                   # Seen für die Karten (swisstopo)
+.venv/bin/python pipeline/build_seen.py         # Seen für die Karten (swissTLMRegio)
 python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
 .venv/bin/python pipeline/build_bodenbedeckung.py  # Wald und Siedlung (swissTLMRegio)
 .venv/bin/python pipeline/build_kartengrund.py   # Grenzen, Flüsse, Höhenstufen für die Karten

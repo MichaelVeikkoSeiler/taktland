@@ -967,9 +967,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           neben der gezeichneten Strecke, dazu Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften), durch die sie
           führt. Links und rechts ergeben sich aus der Lage in den Quellen (swisstopo, BABS, BAV, BAFU);
           ob etwas vom Zug aus zu sehen ist, sagen die Daten nicht. Sehenswertes kommt nicht ins
-          Sammelheft. Hellblau im Streckenband: ein See der Landeskarte 1:1 Million liegt
-          bis etwa {SEE_M} m (geprüft alle {SEE_QUER_M} m quer zur Strecke) links (oben) oder rechts (unten) der gezeichneten Strecke; kleine Seen
-          fehlen in diesem Massstab. Bahnübergänge stammen aus den offenen Daten der SBB, gemeldet am
+          Sammelheft. Hellblau im Streckenband: ein See aus swissTLMRegio liegt
+          bis etwa {SEE_M} m (geprüft alle {SEE_QUER_M} m quer zur Strecke) links (oben) oder rechts (unten) der gezeichneten Strecke; Seen unter 0,1 km²
+          fehlen. Bahnübergänge stammen aus den offenen Daten der SBB, gemeldet am
           Kilometer der Quelle; auf Strecken anderer Bahnen fehlen sie.
         </p>
       </div>

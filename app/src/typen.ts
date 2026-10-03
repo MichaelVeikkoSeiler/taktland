@@ -378,8 +378,8 @@ export interface TlmBauwerk extends KodierterZug {
 
 /** Die kleine Karte zu den Tunneln (pipeline/build_karte.py): das Streckennetz,
  *  je Linie in Stücken, kodiert wie StreckenGeometrie */
-/** Die Seen für die Karten (data/seen.json), aus Swiss Map Vector 1000 von
- *  swisstopo. Ringe als [Breite, Länge] mal 100000 mit Differenzen; der erste
+/** Die Seen für die Karten (data/seen.json), aus swissTLMRegio von
+ *  swisstopo, ab 0,1 km². Ringe als [Breite, Länge] mal 100000 mit Differenzen; der erste
  *  Ring ist das Ufer, weitere sind Inseln. */
 export interface SeenDaten {
   quelle: string

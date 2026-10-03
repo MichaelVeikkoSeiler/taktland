@@ -1,23 +1,25 @@
 #!/usr/bin/env python3
 """Die Seen für die Karten: data/seen.json.
 
-Quelle: Swiss Map Vector 1000 von swisstopo, die Landeskarte 1:1 Million als
-Vektordaten (Ebene T22_DKM1M_GEWAESSER_PLY, Objektart «See»). Kostenlose
+Quelle: swissTLMRegio von swisstopo (Ebene tlmregio_hydrography_lake, Seen und
+Stauseen), dieselbe Quelle wie die Flüsse in data/kartengrund.json, damit die
+Flüsse am Ufer enden (Michael, 2026-10-03: «Flüsse ragen gar nicht bis zu den
+Seen»; vorher Swiss Map Vector 1000, dort gröber gezeichnet). Kostenlose
 Geodaten (OGD): nutzen, bearbeiten und weitergeben erlaubt, auch kommerziell;
-Quellenangabe Pflicht («Bundesamt für Landestopografie swisstopo»), geprüft am
-2026-09-26 auf swisstopo.admin.ch (Nutzungsbedingungen OGD).
+Quellenangabe Pflicht («Bundesamt für Landestopografie swisstopo»).
 
-Aufgenommen sind alle Seen der Quelle, die im Rahmen der Karte liegen (Michael,
-2026-09-25: «Alle Seen, nicht nur die 50 grössten»). In diesem Massstab fehlen
-kleine Seen; das steht als Hinweis in der App. Namen stehen, wie die Quelle sie
-führt, ohne Sprachkürzel («Zürichsee [GER]» wird «Zürichsee»); Seen ohne Namen
-bleiben ohne Namen. Keine Flächen, keine Ränge: Die App zeichnet nur.
+Aufgenommen sind alle Seen ab MIN_FLAECHE_M2, die im Rahmen der Karte liegen
+(Michael, 2026-09-25: «Alle Seen, nicht nur die 50 grössten»); kleinere fehlen,
+das steht als Hinweis in der App. Die Flächen haben keinen Namen; er steht an
+den Ufern (Ebene tlmregio_hydrography_stagnantwater, «Seeufer»), wie die Quelle
+ihn führt. Keine Flächen, keine Ränge: Die App zeichnet nur. Die Landeskarte
+1:1 Million (laden, wkb_polygone) brauchen weiter die Gipfel und Ortsnamen.
 
 Umrechnung LV95 → WGS84 nach den Näherungsformeln von swisstopo (etwa 1 m
 genau), Vereinfachung nach Douglas-Peucker um TOLERANZ_M. Ohne zusätzliche
 Bibliotheken.
 
-    python3 pipeline/build_seen.py            # lädt die Quelle, falls sie fehlt
+    .venv/bin/python pipeline/build_seen.py   # lädt swissTLMRegio, falls es fehlt
 """
 import json
 import re
@@ -25,6 +27,7 @@ import sqlite3
 import struct
 import urllib.request
 import zipfile
+from collections import defaultdict
 from datetime import date
 from pathlib import Path
 
@@ -35,7 +38,9 @@ ZIEL = ROOT / "data" / "seen.json"
 URL = ("https://data.geo.admin.ch/ch.swisstopo.swiss-map-vector1000/"
        "swiss-map-vector1000/swiss-map-vector1000_2056.gpkg.zip")
 EBENE = "T22_DKM1M_GEWAESSER_PLY"
-TOLERANZ_M = 30
+TOLERANZ_M = 25
+#: kleinere Seen fehlen, sonst wird die Datei zu gross
+MIN_FLAECHE_M2 = 100_000
 #: Rahmen der Karte in LV95 (Ost, Nord): die Schweiz mit etwas Rand
 RAHMEN = (2_470_000, 1_060_000, 2_850_000, 1_310_000)
 
@@ -162,51 +167,100 @@ def namenspunkt(ringe):
     return aussen[0]
 
 
+def flaeche(ring) -> float:
+    return abs(sum(x1 * y2 - x2 * y1 for (x1, y1), (x2, y2) in zip(ring, ring[1:] + ring[:1]))) / 2
+
+
+def wkb_linien(b: bytes):
+    """Linien aus einer GeoPackage-Geometrie (LineString oder MultiLineString)"""
+    flags = b[3]
+    pos = 8 + {0: 0, 1: 32, 2: 48, 3: 48, 4: 64}[(flags >> 1) & 7]
+
+    def lies(pos):
+        ordnung = "<" if b[pos] == 1 else ">"
+        typ = struct.unpack_from(ordnung + "I", b, pos + 1)[0] % 1000
+        dim = 3 if struct.unpack_from(ordnung + "I", b, pos + 1)[0] >= 1000 else 2
+        pos += 5
+        n = struct.unpack_from(ordnung + "I", b, pos)[0]
+        pos += 4
+        if typ == 2:
+            werte = struct.unpack_from(ordnung + "d" * (dim * n), b, pos)
+            return [list(zip(werte[0::dim], werte[1::dim]))], pos + 8 * dim * n
+        alle = []
+        for _ in range(n):
+            teil, pos = lies(pos)
+            alle += teil
+        return alle, pos
+
+    return lies(pos)[0]
+
+
+def namen_tlmregio(db, polygone) -> dict[int, str]:
+    """Name je See: die Ufer (stagnantwater, «Seeufer») tragen den Namen, die
+    Flächen nicht. Ein Ufer gehört zu dem See, dessen Rand seine Punkte berühren."""
+    ecke = {}
+    for i, polygon in enumerate(polygone):
+        for e, n in polygon[0]:
+            ecke[(round(e), round(n))] = i
+    stimmen = defaultdict(lambda: defaultdict(int))
+    for geom, namn in db.execute(
+            "select geom, namn from tlmregio_hydrography_stagnantwater "
+            "where objval = 'Seeufer' and namn is not null"):
+        for linie in wkb_linien(geom):
+            for e, n in linie:
+                i = ecke.get((round(e), round(n)))
+                if i is not None:
+                    stimmen[i][namn] += 1
+    return {i: max(je.items(), key=lambda kv: kv[1])[0] for i, je in stimmen.items()}
+
+
 def main():
-    gpkg = laden()
-    db = sqlite3.connect(gpkg)
-    seen = []
-    punkte = 0
-    for shape, name_lang in db.execute(
-            f'select SHAPE, NAME_LANG from "{EBENE}" where OBJEKTART = ?', ("See",)):
-        teile = wkb_polygone(shape)
-        # der Name nur einmal, beim ausgedehntesten Teil (Rahmen des Ufers)
-        def ausdehnung(pg):
-            es, ns = [p[0] for p in pg[0]], [p[1] for p in pg[0]]
-            return (max(es) - min(es)) * (max(ns) - min(ns))
-        haupt = max(range(len(teile)), key=lambda i: ausdehnung(teile[i])) if teile else -1
-        for nr, polygon in enumerate(teile):
+    from build_bodenbedeckung import laden as tlmregio_laden
+    db = sqlite3.connect(tlmregio_laden())
+    polygone = []
+    for (geom,) in db.execute("select geom from tlmregio_hydrography_lake order by id"):
+        for polygon in wkb_polygone(geom):
+            polygon = [[p[:2] for p in r] for r in polygon]
+            if flaeche(polygon[0]) < MIN_FLAECHE_M2:
+                continue
             es = [p[0] for p in polygon[0]]
             ns = [p[1] for p in polygon[0]]
             if max(es) < RAHMEN[0] or min(es) > RAHMEN[2] or max(ns) < RAHMEN[1] or min(ns) > RAHMEN[3]:
                 continue
-            ringe = [vereinfachen(r, TOLERANZ_M) for r in polygon]
-            ringe = [r for r in ringe if len(r) >= 4]
-            if not ringe:
-                continue
-            eintrag = {"ringe": []}
-            for r in ringe:
-                werte = [nach_wgs84(e, n) for e, n in r[:-1]]  # ohne den wiederholten Schlusspunkt
-                ganz = [(round(la * 1e5), round(lo * 1e5)) for la, lo in werte]
-                d = []
-                for (la0, lo0), (la1, lo1) in zip(ganz, ganz[1:]):
-                    d += [la1 - la0, lo1 - lo0]
-                eintrag["ringe"].append({"start": list(ganz[0]), "d": d})
-                punkte += len(ganz)
-            name = name_von(name_lang) if nr == haupt else None
-            if name:
-                eintrag["name"] = name
-                la, lo = nach_wgs84(*namenspunkt(ringe))
-                eintrag["namenspunkt"] = [round(la, 5), round(lo, 5)]
-            seen.append(eintrag)
+            polygone.append(polygon)
+    namen = namen_tlmregio(db, polygone)
+    seen = []
+    punkte = 0
+    for nr, polygon in enumerate(polygone):
+        # Inseln unter der Mindestfläche fallen weg wie kleine Seen
+        ringe = [polygon[0]] + [r for r in polygon[1:] if flaeche(r) >= MIN_FLAECHE_M2]
+        ringe = [vereinfachen(r, TOLERANZ_M) for r in ringe]
+        ringe = [r for r in ringe if len(r) >= 4]
+        if not ringe:
+            continue
+        eintrag = {"ringe": []}
+        for r in ringe:
+            werte = [nach_wgs84(e, n) for e, n in r[:-1]]  # ohne den wiederholten Schlusspunkt
+            ganz = [(round(la * 1e5), round(lo * 1e5)) for la, lo in werte]
+            d = []
+            for (la0, lo0), (la1, lo1) in zip(ganz, ganz[1:]):
+                d += [la1 - la0, lo1 - lo0]
+            eintrag["ringe"].append({"start": list(ganz[0]), "d": d})
+            punkte += len(ganz)
+        name = name_von(namen.get(nr))
+        if name:
+            eintrag["name"] = name
+            la, lo = nach_wgs84(*namenspunkt(ringe))
+            eintrag["namenspunkt"] = [round(la, 5), round(lo, 5)]
+        seen.append(eintrag)
     daten = {
-        "quelle": "Swiss Map Vector 1000, Bundesamt für Landestopografie swisstopo",
+        "quelle": "swissTLMRegio, Bundesamt für Landestopografie swisstopo",
         "lizenz": "Kostenlose Geodaten (OGD) von swisstopo, Quellenangabe Pflicht",
         "geladen": date.today().isoformat(),
-        "hinweis": ("Seen der Landeskarte 1:1 Million, vereinfacht auf "
-                    f"{TOLERANZ_M} m; kleine Seen fehlen in diesem Massstab. Ringe: start = "
-                    "[Breite, Länge] mal 100000, d = Differenzen; der erste Ring ist das Ufer, "
-                    "weitere sind Inseln. Namen wie in der Quelle, ohne Sprachkürzel."),
+        "hinweis": ("Seen und Stauseen aus swissTLMRegio, derselben Quelle wie die Flüsse, ab "
+                    f"{MIN_FLAECHE_M2 / 1e6:g} km², vereinfacht auf {TOLERANZ_M} m; kleinere Seen fehlen. "
+                    "Ringe: start = [Breite, Länge] mal 100000, d = Differenzen; der erste Ring ist "
+                    "das Ufer, weitere sind Inseln. Namen wie die Ufer in der Quelle sie führen."),
         "seen": seen,
     }
     ZIEL.write_text(json.dumps(daten, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

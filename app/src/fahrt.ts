@@ -605,9 +605,8 @@ export function sehenswertAufWeg(fw: Fahrweg, daten: SehenswertDaten, flaechen: 
  * Wo ein See neben der Strecke liegt (Michael, 2026-09-26: «Seetangierungen als
  * hellblaue Linie … an der richtigen Seite»). Alle SEE_SCHRITT_M werden links und
  * rechts der Strecke Punkte bis SEE_M quer dazu geprüft, im Abstand von SEE_QUER_M
- * (700, 400 und 100 m): Liegt einer in einem See der Landeskarte 1:1 Million,
- * liegt der See auf dieser Seite. Kleine Seen fehlen in
- * diesem Massstab. Auch in Tunneln, die am See entlangführen (Michael, 2026-09-30:
+ * (700, 400 und 100 m): Liegt einer in einem See aus swissTLMRegio,
+ * liegt der See auf dieser Seite. Seen unter 0,1 km² fehlen. Auch in Tunneln, die am See entlangführen (Michael, 2026-09-30:
  * beim Kerenzerbergtunnel fehlte der Walensee).
  */
 export const SEE_M = 700  // Michael, 2026-09-26: erst 250, dann 350, dann 500 m; 2026-09-28: 700 m

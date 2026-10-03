@@ -7,7 +7,8 @@ import { imBild, kachelnImBild, kachelPfad, type Schicht, schichtBauen, type Stu
 /**
  * Seen auf den Karten (Michael, 2026-09-25: «Alle Seen», «helles Blau selber
  * durch dich definiert», «Seenamen immer einblenden wenn vertretbar»). Aus
- * Swiss Map Vector 1000 von swisstopo; in diesem Massstab fehlen kleine Seen.
+ * swissTLMRegio von swisstopo wie die Flüsse, damit beide zusammenpassen (Michael,
+ * 2026-10-03: «Flüsse ragen gar nicht bis zu den Seen»); Seen unter 0,1 km² fehlen.
  * Gezeichnet unter dem Streckennetz. Ein Name steht nur, wenn der See im Bild
  * breit genug dafür ist und er keinen anderen Namen überdeckt.
  */

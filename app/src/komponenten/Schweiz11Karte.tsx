@@ -8,7 +8,7 @@ import { imBild } from '../kacheln'
 
 /** Schmaler darf der Ausschnitt nicht werden: etwa 200 m */
 const ENGSTE = 0.003
-/** Breite der Auflösung mindestens, in Kartenmass: etwa 30 km */
+/** Breite der Auflösung mindestens, in Kartenmass: etwa 45 km (1 = 1 Breitengrad, 111 km) */
 const AUFLOESUNG_MIN_BREITE = 0.4
 /** Mehr bewegt gilt als Verschieben, nicht als Tipp */
 const TIPP_PX = 8
@@ -62,7 +62,7 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
     return Math.max(start.w, (y1 - y0) * 1.08 * verh)
   }, [ringe, start.w, verh])
   // neues Gebiet oder neue Grösse der Karte: wieder das ganze Spielgebiet
-  // in der Auflösung: Ziel und alle Pins im Bild, mit Rand; mindestens etwa 30 km breit (im Kanton
+  // in der Auflösung: Ziel und alle Pins im Bild, mit Rand; mindestens etwa 45 km breit (im Kanton
   // höchstens das ganze Gebiet), sonst sieht man nur eine Fläche (Michael, 2026-10-03)
   const fokus = useMemo<Box | null>(() => {
     if (!aufloesung) return null
