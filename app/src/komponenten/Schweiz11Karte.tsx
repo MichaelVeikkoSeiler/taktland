@@ -215,7 +215,7 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
     return null
   }, [ziel, netz])
 
-  // in der Auflösung klar beschriftet: das Ziel «Richtig», der eigene Pin «Dein Tipp», die Pins der
+  // in der Auflösung klar beschriftet: das Ziel «Richtig» in Grün, der eigene Pin «Dein Tipp», die Pins der
   // anderen mit Namen, auf jeder Linie die Entfernung (Michael, 2026-10-03). Zuerst in «belegt»,
   // damit Bahnhöfe und Orte ausweichen.
   const marke = (key: string, x: number, y: number, text: string, farbe: string, rechts: boolean, gross = 12.5) => {
@@ -245,7 +245,7 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
                                   y + (p.eigen ? -17 : 4) * pg, text, 'fill-sbb-red', rechtsFrei(x)))
     }
     marken.push(marke('ziel', zx + (rechtsFrei(zx) ? 1 : -1) * 11 * pg, zy + 4.5 * pg, 'Richtig',
-                      'fill-fahrt-bahnhof dark:fill-fahrt-bahnhof-hell', rechtsFrei(zx)))
+                      'fill-sbb-green dark:fill-fahrt-sehenswert-hell', rechtsFrei(zx)))
   }
 
   return (
@@ -279,7 +279,7 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
             <path d={[...netz.values()].flat().filter((s) => s.x.some((x, i) => drin(x, s.y[i], box.w * 0.1)))
                        .map((s) => pfad(s.x.map((x, i) => [x, s.y[i]]))).join('')}
                   fill="none" strokeWidth={1.6 * g} vectorEffect="non-scaling-stroke" strokeLinejoin="round"
-                  className="stroke-sbb-charcoal/75 dark:stroke-sbb-silver/80" />
+                  className="stroke-sbb-charcoal/75" />
             {bahnhoefe.filter((b) => drin(...lage(b.lat!, b.lon!)) && stufeSichtbar(b.tier)).map((b) => {
               const [x, y] = lage(b.lat!, b.lon!)
               return <circle key={`b${b.uic}`} cx={x} cy={y} r={2.6 * pg} strokeWidth={1.2 * g} vectorEffect="non-scaling-stroke"
@@ -308,8 +308,8 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
         {aufloesung && (
           <g>
             <circle cx={zx} cy={zy} r={7 * pg} strokeWidth={2.5 * g} vectorEffect="non-scaling-stroke"
-                    className="fill-white stroke-fahrt-bahnhof dark:fill-sbb-midnight dark:stroke-fahrt-bahnhof-hell" />
-            <circle cx={zx} cy={zy} r={2.5 * pg} className="fill-fahrt-bahnhof dark:fill-fahrt-bahnhof-hell" />
+                    className="fill-white stroke-sbb-green dark:fill-sbb-midnight dark:stroke-fahrt-sehenswert-hell" />
+            <circle cx={zx} cy={zy} r={2.5 * pg} className="fill-sbb-green dark:fill-fahrt-sehenswert-hell" />
           </g>
         )}
         {aufloesung && pins.filter((p) => !p.eigen && p.name).map((p, i) => {
