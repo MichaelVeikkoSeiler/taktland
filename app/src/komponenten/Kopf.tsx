@@ -12,6 +12,8 @@ import fahrtDunkel from '../assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
+import spieleDunkel from '../assets/auftakt-spiele-dunkel.webp'
+import spieleHell from '../assets/auftakt-spiele-hell.webp'
 import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
 import standortHell from '../assets/auftakt-standort-hell.webp'
 import startDunkel from '../assets/auftakt-start-dunkel.webp'
@@ -117,6 +119,11 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: logbuchHell, dunkel: logbuchDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Blick aus dem Zugfenster auf einen See mit Uferort, Kirchturm und Viadukt, auf dem Tisch ein offenes rotes Notizbuch mit einer Strecke aus Punkten, ein Handy und ein Becher.',
   },
+  // Michael, 2026-10-03: eigenes Bildpaar für die Spiele, das Duell behält seines
+  spiele: {
+    hell: spieleHell, dunkel: spieleDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Jemand setzt auf einer Brücke eine rote Ortsmarke auf eine Karte im Handy, dahinter ein See mit Dorf, Berge und ein Zug auf einem Viadukt vor einem Tunnel.',
+  },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration in zwei Hälften: links ein moderner Bahnhof mit Passerelle, Glaslift und Zug, rechts ein kleiner Bahnhof mit Holzdach vor einem Tunnel.',
@@ -143,8 +150,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' || aktiv === 'einstellungen' ? BILDER.logbuch
     // die Bahnübergänge mit dem Bild der Startseite, darauf ist einer zu sehen
     : aktiv === 'bahnuebergaenge' ? BILDER.start
-    // die Spiele mit dem Bild des Duells
-    : aktiv === 'spiele' || aktiv === 'schweiz11' ? BILDER.duell : BILDER[schluessel]
+    // die Spiele und Schweiz 1:1 mit dem Bild der Spiele, das Duell mit seinem
+    : aktiv === 'spiele' || aktiv === 'schweiz11' ? BILDER.spiele : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
