@@ -52,7 +52,7 @@ function lesen(daten: SeenDaten): See[] {
     }
     return see
   })
-  wasser = schichtBauen(ringe)
+  wasser = schichtBauen(ringe, true)
   ufer = ringe.flatMap((r) => stueckeln([...r, r[0]], (q) => pfad(q as Array<[number, number]>)))
   return seen
 }

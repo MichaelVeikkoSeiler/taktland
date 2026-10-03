@@ -76,6 +76,10 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
 
   const h = box.w / verh
   const px = box.w / mass.b
+  // auf Tablet und Computer Schrift, Linien und Marken grösser: sonst wirkt die breite Karte
+  // leer und fein (Michael, 2026-10-03: «eher schlechte Kartenqualität auf dem Tablet»)
+  const g = Math.min(mass.b, mass.h * 1.6) >= 640 ? 1.4 : 1
+  const pg = px * g
   const ansicht = [box.cx - box.w / 2, box.cy - h / 2, box.w, h]
 
   const grund = useKartengrund()
@@ -169,24 +173,30 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
   // Beschriftungen ohne Überdeckung: ein grobes Raster je Bild
   const belegt: Array<[number, number, number, number]> = []
   const frei = (x: number, y: number, b: number) => {
-    const f: [number, number, number, number] = [x - 2 * px, y - 8 * px, x + b, y + 3 * px]
+    const f: [number, number, number, number] = [x - 2 * pg, y - 8 * pg, x + b, y + 3 * pg]
     if (belegt.some((g) => f[0] < g[2] && f[2] > g[0] && f[1] < g[3] && f[3] > g[1])) return false
     belegt.push(f)
     return true
   }
   const beschriftung = (key: string, x: number, y: number, text: string, fett = false): ReactNode => {
-    const b = text.length * 6.2 * px
-    if (!drin(x, y) || !frei(x + 5 * px, y, b)) return null
+    const b = text.length * 6.2 * pg
+    if (!drin(x, y) || !frei(x + 5 * pg, y, b)) return null
     return (
-      <text key={key} x={x + 5 * px} y={y + 3.5 * px} fontSize={10.5 * px} fontWeight={fett ? 'bold' : undefined}
+      <text key={key} x={x + 5 * pg} y={y + 3.5 * pg} fontSize={10.5 * pg} fontWeight={fett ? 'bold' : undefined}
             className="fill-sbb-black stroke-white dark:fill-sbb-white dark:stroke-sbb-midnight"
-            strokeWidth={3} paintOrder="stroke" vectorEffect="non-scaling-stroke">{text}</text>
+            strokeWidth={3 * g} paintOrder="stroke" vectorEffect="non-scaling-stroke">{text}</text>
     )
   }
 
   // im Spiel: Bahnhöfe, deren Name nichts verrät; das Ziel selbst nie
   const bahnhoefe = useMemo(() => index.filter((b) => b.lat !== null && b.lon !== null
     && !(ziel.t === 'b' && String(b.uic) === ziel.id) && (aufloesung || !verraet(b.name, ziel.name))), [index, ziel, aufloesung])
+  // ein Ort, dessen Bahnhof gleich heisst und nah liegt, steht schon als Bahnhof da («Ins», «Belp»)
+  const ortAmBahnhof = (o: { name: string; lage: [number, number] }) => {
+    const n = o.name.replace('\n', ' ')
+    return bahnhoefe.some((b) => (b.name === n || b.name.startsWith(n + ' ')) && stufeSichtbar(b.tier)
+      && Math.abs(b.lat! - o.lage[0]) < 0.02 && Math.abs(b.lon! - o.lage[1]) < 0.03)
+  }
   const stufeSichtbar = (tier: string) => tier === 'L' || (tier === 'M' && box.w < 1.2) || box.w < 0.35
   const [zx, zy] = lage(ziel.la, ziel.lo)
 
@@ -214,65 +224,66 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
         {/* Grund: das Spielgebiet hell, alles andere grau */}
         <path d={gebietPfad} fillRule="evenodd" className="fill-karte" />
         {gebiet !== 'CH' && (
-          <path d={gebietPfad} fill="none" strokeWidth={1.5} vectorEffect="non-scaling-stroke"
+          <path d={gebietPfad} fill="none" strokeWidth={1.5 * g} vectorEffect="non-scaling-stroke"
                 className="stroke-sbb-metal dark:stroke-sbb-storm" />
         )}
         {hilfen.has('seen') && <SeenFlaechen seen={seen} box={box} verh={verh} />}
         {hilfen.has('fluesse') && grund && (
           <path d={grund.fluesse.filter((f) => f.k <= 5 && imBild(f, box, h)).flatMap((f) => f.stuecke.filter((z) => imBild(z, box, h)).map((z) => z.d)).join('')}
-                fill="none" strokeWidth={1.4} strokeLinecap="round" vectorEffect="non-scaling-stroke" className="stroke-fluss" />
+                fill="none" strokeWidth={1.6 * g} strokeLinecap="round" vectorEffect="non-scaling-stroke" className="stroke-fluss" />
         )}
         {hilfen.has('kantone') && (
-          <path d={kantonPfad} fill="none" strokeWidth={0.9} vectorEffect="non-scaling-stroke" strokeLinejoin="round"
+          <path d={kantonPfad} fill="none" strokeWidth={1 * g} strokeDasharray={`${5 * g} ${3 * g}`} vectorEffect="non-scaling-stroke" strokeLinejoin="round"
                 className="stroke-sbb-metal/60 dark:stroke-sbb-storm/60" />
         )}
         {/* die Landesgrenze gehört zum Grund */}
         {grund && (
-          <path d={grund.grenze.filter((z) => imBild(z, box, h)).map((z) => z.d).join('')} fill="none" strokeWidth={1.2}
+          <path d={grund.grenze.filter((z) => imBild(z, box, h)).map((z) => z.d).join('')} fill="none" strokeWidth={1.4 * g}
                 vectorEffect="non-scaling-stroke" className="stroke-landesgrenze" />
         )}
         {hilfen.has('bahnnetz') && netz && (
           <>
             <path d={[...netz.values()].flat().filter((s) => s.x.some((x, i) => drin(x, s.y[i], box.w * 0.1)))
                        .map((s) => pfad(s.x.map((x, i) => [x, s.y[i]]))).join('')}
-                  fill="none" strokeWidth={1.2} vectorEffect="non-scaling-stroke" strokeLinejoin="round"
-                  className="stroke-sbb-metal dark:stroke-sbb-storm" />
+                  fill="none" strokeWidth={1.6 * g} vectorEffect="non-scaling-stroke" strokeLinejoin="round"
+                  className="stroke-sbb-charcoal/75 dark:stroke-sbb-silver/80" />
             {bahnhoefe.filter((b) => drin(...lage(b.lat!, b.lon!)) && stufeSichtbar(b.tier)).map((b) => {
               const [x, y] = lage(b.lat!, b.lon!)
-              return <circle key={`b${b.uic}`} cx={x} cy={y} r={2.6 * px} strokeWidth={1} vectorEffect="non-scaling-stroke"
+              return <circle key={`b${b.uic}`} cx={x} cy={y} r={2.6 * pg} strokeWidth={1.2 * g} vectorEffect="non-scaling-stroke"
                              className="fill-white stroke-sbb-charcoal dark:fill-sbb-midnight dark:stroke-sbb-white" />
             })}
           </>
         )}
         {/* Ziel und Bauwerk erst in der Auflösung */}
         {aufloesung && bauwerk && bauwerk.length > 1 && (
-          <path d={pfad(bauwerk)} fill="none" strokeWidth={6} strokeLinecap="round" vectorEffect="non-scaling-stroke"
+          <path d={pfad(bauwerk)} fill="none" strokeWidth={6 * g} strokeLinecap="round" vectorEffect="non-scaling-stroke"
                 className={ziel.t === 't' ? 'stroke-fahrt-tunnel dark:stroke-sbb-storm' : 'stroke-fahrt-bruecke'} />
         )}
         {aufloesung && pins.map((p, i) => {
           const [x, y] = lage(p.la, p.lo)
-          return <line key={`v${i}`} x1={x} y1={y} x2={zx} y2={zy} strokeWidth={p.eigen ? 2 : 1.4} strokeDasharray="5 4"
+          return <line key={`v${i}`} x1={x} y1={y} x2={zx} y2={zy} strokeWidth={(p.eigen ? 2 : 1.4) * g} strokeDasharray={`${5 * g} ${4 * g}`}
                        vectorEffect="non-scaling-stroke" className="stroke-sbb-red" />
         })}
         {/* Beschriftungen: Bahnhöfe vor Orten */}
         {hilfen.has('bahnnetz') && bahnhoefe.filter((b) => stufeSichtbar(b.tier)).sort((a, b) => a.tier.localeCompare(b.tier))
           .map((b) => { const [x, y] = lage(b.lat!, b.lon!); return beschriftung(`bn${b.uic}`, x, y, b.name, b.tier === 'L') })}
         {hilfen.has('orte') && orte?.filter((o) => (aufloesung || !verraet(o.name, ziel.name))
+            && !(hilfen.has('bahnnetz') && ortAmBahnhof(o))
             && ((o.klasse ?? 1) >= 3 || box.w < (o.klasse === 2 ? 1.6 : 0.6)))
           .sort((a, b) => (b.klasse ?? 0) - (a.klasse ?? 0))
           .map((o) => { const [x, y] = lage(o.lage[0], o.lage[1]); return beschriftung(`o${o.name}`, x, y, o.name.replace('\n', ' ')) })}
         {aufloesung && (
           <g>
-            <circle cx={zx} cy={zy} r={7 * px} strokeWidth={2.5} vectorEffect="non-scaling-stroke"
+            <circle cx={zx} cy={zy} r={7 * pg} strokeWidth={2.5 * g} vectorEffect="non-scaling-stroke"
                     className="fill-white stroke-fahrt-bahnhof dark:fill-sbb-midnight dark:stroke-fahrt-bahnhof-hell" />
-            <circle cx={zx} cy={zy} r={2.5 * px} className="fill-fahrt-bahnhof dark:fill-fahrt-bahnhof-hell" />
+            <circle cx={zx} cy={zy} r={2.5 * pg} className="fill-fahrt-bahnhof dark:fill-fahrt-bahnhof-hell" />
           </g>
         )}
         {aufloesung && pins.filter((p) => !p.eigen && p.name).map((p, i) => {
           const [x, y] = lage(p.la, p.lo)
           return (
             <g key={`n${i}`}>
-              <circle cx={x} cy={y} r={4 * px} className="fill-sbb-red" />
+              <circle cx={x} cy={y} r={4 * pg} className="fill-sbb-red" />
               {beschriftung(`pn${i}`, x, y, p.name!)}
             </g>
           )
@@ -283,10 +294,10 @@ export function Schweiz11Karte({ pool, gebiet, hilfen, ziel, index, pin, setzen,
           // Nadel: Spitze am Punkt, Kopf darüber; ein grösserer, unsichtbarer Griff zum Ziehen
           return (
             <g data-pin className={setzen ? 'cursor-grab' : ''}>
-              <path d={`M${x} ${y}L${x - 7 * px} ${y - 15 * px}A${9 * px} ${9 * px} 0 1 1 ${x + 7 * px} ${y - 15 * px}Z`}
-                    strokeWidth={1.5} vectorEffect="non-scaling-stroke" className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
-              <circle cx={x} cy={y - 21 * px} r={3.2 * px} className="fill-white" />
-              {setzen && <circle cx={x} cy={y - 14 * px} r={22 * px} fill="transparent" />}
+              <path d={`M${x} ${y}L${x - 7 * pg} ${y - 15 * pg}A${9 * pg} ${9 * pg} 0 1 1 ${x + 7 * pg} ${y - 15 * pg}Z`}
+                    strokeWidth={1.5 * g} vectorEffect="non-scaling-stroke" className="fill-sbb-red stroke-white dark:stroke-sbb-midnight" />
+              <circle cx={x} cy={y - 21 * pg} r={3.2 * pg} className="fill-white" />
+              {setzen && <circle cx={x} cy={y - 14 * pg} r={22 * pg} fill="transparent" />}
             </g>
           )
         })()}

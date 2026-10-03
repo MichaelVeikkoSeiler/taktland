@@ -35,10 +35,15 @@ function ringAus(pts: P[]): Ring {
 }
 
 /** Eine Flächenebene: alle Ringe und die schon zugeschnittenen Kacheln */
-export interface Schicht { ringe: Ring[]; vorrat: Map<string, string> }
+export interface Schicht { ringe: Ring[]; vorrat: Map<string, string>; fein?: boolean }
 
-export function schichtBauen(ringe: P[][]): Schicht {
-  return { ringe: ringe.filter((r) => r.length >= 3).map(ringAus), vorrat: new Map() }
+/**
+ * fein: ohne Vereinfachung und ohne Weglassen kleiner Flächen, für Ebenen mit wenigen
+ * Punkten und eigenem Rand (Seen): sonst passt die Fläche nicht mehr zum Ufer, und ein
+ * schmaler See wie der Wohlensee verdreht sich (Michael, 2026-10-03)
+ */
+export function schichtBauen(ringe: P[][], fein = false): Schicht {
+  return { ringe: ringe.filter((r) => r.length >= 3).map(ringAus), vorrat: new Map(), fein }
 }
 
 /** Sutherland-Hodgman an einer Kante; innen(p) und schnitt(a, b) für diese Kante */
@@ -100,11 +105,11 @@ export function kachelPfad(s: Schicht, k: Kachel): string {
   if (da !== undefined) return da
   const [x0, y0, x1, y1] = [k.ix * k.g, k.iy * k.g, (k.ix + 1) * k.g, (k.iy + 1) * k.g]
   let d = ''
-  const klein = k.g > STUFEN[0] ? k.g / KLEIN_TEIL : 0
+  const klein = k.g > STUFEN[0] && !s.fein ? k.g / KLEIN_TEIL : 0
   for (const r of s.ringe) {
     if (r.x1 < x0 || r.x0 > x1 || r.y1 < y0 || r.y0 > y1) continue
     if (r.x1 - r.x0 < klein && r.y1 - r.y0 < klein) continue
-    const pts = ringBei(r, k.g)
+    const pts = s.fein ? r.pts : ringBei(r, k.g)
     const q = r.x0 >= x0 && r.x1 <= x1 && r.y0 >= y0 && r.y1 <= y1 ? pts : zuschneiden(pts, x0, y0, x1, y1)
     if (q.length < 3) continue
     d += q.map(([x, y], i) => `${i ? 'L' : 'M'}${z(x)} ${z(y)}`).join('') + 'Z'
