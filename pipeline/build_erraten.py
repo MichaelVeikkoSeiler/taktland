@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Der Pool für das Spiel «Bahnhof erraten» (Michael, 2026-10-04): data/erraten.json.
+"""Der Pool für das Spiel «Bahnhofsuche» (Michael, 2026-10-04): data/erraten.json.
 
 Taktland wählt einen Bahnhof, der Spieler deckt Hinweiskarten auf und rät. Jede Karte
 ist ein Feld aus data/facts/{uic}.json, nichts wird gerechnet oder ergänzt:
@@ -75,7 +75,7 @@ def main():
     pool.sort(key=lambda o: o["name"])
     doppelt = [k for k, v in Counter(o["name"] for o in pool).items() if v > 1]
     daten = {
-        "hinweis": ("Pool für «Bahnhof erraten», gebaut mit pipeline/build_erraten.py aus data/facts. Felder wie in "
+        "hinweis": ("Pool für «Bahnhofsuche», gebaut mit pipeline/build_erraten.py aus data/facts. Felder wie in "
                     "den Fakten: kanton und bezirk aus den Stammdaten, dwv (oder dwv_unter: weniger als dieser Wert) "
                     "Ein- und Aussteigende pro Werktag laut SBB, hoehe in m ü. M., bahn die Infrastruktur (isb), "
                     "zuege_von die Unternehmen (evu). s: Stufe nach Rang bei dwv, 1 leicht (oberste 20 %), "

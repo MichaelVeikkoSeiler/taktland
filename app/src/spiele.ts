@@ -43,9 +43,9 @@ export const SPIELE: Spiel[] = [
       + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
   },
   {
-    id: 'erraten', titel: 'Bahnhof erraten', status: 'spielbereit', adresse: '#/erraten',
+    id: 'erraten', titel: 'Bahnhofsuche', status: 'spielbereit', adresse: '#/erraten',
     kurz: 'Sechs verdeckte Hinweise, ein Bahnhof: Wie wenige brauchst du?',
-    bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhof erraten» auf dem Tablet.' },
+    bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhofsuche» auf dem Tablet.' },
     beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
   },

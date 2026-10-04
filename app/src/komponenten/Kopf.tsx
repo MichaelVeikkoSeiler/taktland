@@ -121,10 +121,10 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: logbuchHell, dunkel: logbuchDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Blick aus dem Zugfenster auf einen See mit Uferort, Kirchturm und Viadukt, auf dem Tisch ein offenes rotes Notizbuch mit einer Strecke aus Punkten, ein Handy und ein Becher.',
   },
-  // Michael, 2026-10-04: eigenes Bildpaar für «Bahnhof erraten»
+  // Michael, 2026-10-04: eigenes Bildpaar für «Bahnhofsuche»
   erraten: {
     hell: erratenHell, dunkel: erratenDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration: Jemand sitzt auf dem Sofa und spielt auf dem Tablet «Bahnhof erraten» mit sechs verdeckten Hinweiskarten.',
+    alt: 'Illustration: Jemand sitzt auf dem Sofa und spielt auf dem Tablet «Bahnhofsuche» mit sechs verdeckten Hinweiskarten.',
   },
   // Michael, 2026-10-03: eigenes Bildpaar für die Spiele, das Duell behält seines
   spiele: {

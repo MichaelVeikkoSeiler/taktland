@@ -1,5 +1,5 @@
 /**
- * «Bahnhof erraten» (Michael, 2026-10-04): Spiellogik ohne Darstellung.
+ * «Bahnhofsuche» (Michael, 2026-10-04, zuerst «Bahnhof erraten»): Spiellogik ohne Darstellung.
  *
  * Taktland wählt einen Bahnhof, sechs Hinweiskarten liegen verdeckt, die Kategorie
  * ist sichtbar. Wer am Zug ist, deckt eine Karte auf oder rät. Ein falscher Tipp

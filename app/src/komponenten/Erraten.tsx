@@ -35,7 +35,7 @@ function einstellungLesen(): { e: Einstellungen; namen: string[] } {
 }
 
 /**
- * «Bahnhof erraten» (Michael, 2026-10-04): Einstellungen, dann die Partie als ganze
+ * «Bahnhofsuche» (Michael, 2026-10-04): Einstellungen, dann die Partie als ganze
  * Fläche über der Seite. Die Regeln stehen in src/erraten.ts; hier wird nur gezeigt und
  * jede Eingabe als Aktion an schritt() gegeben. Die laufende Partie bleibt in dieser
  * Sitzung erhalten, auch nach «Bahnhof ansehen» und nach einem Neuladen.
@@ -92,7 +92,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
   return (
     <div className="px-4 pb-16">
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">Bahnhof erraten</h1>
+      <h1 className="mt-4 text-2xl font-bold tracking-tight">Bahnhofsuche</h1>
       <p className="mt-2 leading-relaxed">
         Taktland denkt an einen Bahnhof. Sechs Hinweiskarten liegen verdeckt; du siehst nur, worum es geht. Decke auf, was
         dir am meisten hilft, und rate: Je weniger Karten offen sind, desto mehr Punkte.
@@ -223,7 +223,7 @@ function Spiel({ pool, partie, setPartie, index, nochmals, schliessen }: {
   const kopf = (
     <div className="flex items-center justify-between gap-3 border-b border-sbb-cloud px-4 py-2 dark:border-sbb-iron">
       <p className="min-w-0 truncate text-sm text-sbb-metal dark:text-sbb-storm">
-        <span className="font-bold text-sbb-black dark:text-sbb-white">Bahnhof erraten</span>
+        <span className="font-bold text-sbb-black dark:text-sbb-white">Bahnhofsuche</span>
         {x.phase !== 'ende' && <> · Bahnhof {x.frage + 1} von {x.runden.length}</>}
       </p>
       <div className="flex shrink-0 items-center gap-2">
@@ -243,7 +243,7 @@ function Spiel({ pool, partie, setPartie, index, nochmals, schliessen }: {
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white"
-         role="dialog" aria-label="Bahnhof erraten">
+         role="dialog" aria-label="Bahnhofsuche">
       {kopf}
       {x.phase === 'uebergabe' && (
         <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">

@@ -20,7 +20,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
         Die Reiter oben führen zu Bahnland (Bahnhöfe, Strecken, Brücken, Tunnel,
-        Bahnübergänge), Spiele (Duell, Geo, Bahnhof erraten), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
+        Bahnübergänge), Spiele (Duell, Geo, Bahnhofsuche), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
 

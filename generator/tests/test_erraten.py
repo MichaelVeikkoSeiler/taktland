@@ -1,4 +1,4 @@
-"""Der Pool für «Bahnhof erraten» (data/erraten.json): jeder Hinweis steht so in den
+"""Der Pool für «Bahnhofsuche» (data/erraten.json): jeder Hinweis steht so in den
 Fakten, der Bezirk verrät den Namen nicht, und kein Name kommt zweimal vor."""
 import json
 import re

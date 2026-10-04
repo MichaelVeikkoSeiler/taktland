@@ -110,7 +110,7 @@ def main():
                  "sehenswert.json", "flaechen.json", "kartengrund.json", "bodenbedeckung.json", "kartenlinien.json",
                  # der Pool für das Spiel «Geo» (pipeline/build_schweiz11.py)
                  "schweiz11.json",
-                 # der Pool für «Bahnhof erraten» (pipeline/build_erraten.py)
+                 # der Pool für «Bahnhofsuche» (pipeline/build_erraten.py)
                  "erraten.json"):
         quelle = ROOT / "data" / name
         if quelle.exists():
