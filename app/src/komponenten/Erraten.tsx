@@ -11,7 +11,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { genau } from './Objekte'
 import { raenge } from '../schweiz11'
-import { antwortTon } from '../audio'
+import { antwortTon, reiterTon } from '../audio'
 
 const KANTONSNAME: Record<string, string> = {
   AG: 'Aargau', AI: 'Appenzell Innerrhoden', AR: 'Appenzell Ausserrhoden',
@@ -82,7 +82,8 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
       <legend className="text-sm text-sbb-metal dark:text-sbb-storm">{titel}</legend>
       <div className="segmente mt-1.5 grid" style={{ gridTemplateColumns: spalten }}>
         {optionen.map(([w, t]) => (
-          <button key={String(w)} type="button" aria-pressed={wert === w} onClick={() => setzen(w)}
+          <button key={String(w)} type="button" aria-pressed={wert === w}
+                  onClick={() => { if (wert !== w) reiterTon(); setzen(w) }}
                   className="segment px-1 py-2 text-sm">{t}</button>
         ))}
       </div>
@@ -141,7 +142,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
                   (w) => setE({ ...e, schwierigkeit: w }))}
             <div className="mt-5">
               <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Region</span>
-              <Auswahl titel="Region" wert={kantone.includes(e.gebiet) ? e.gebiet : 'CH'} waehlen={(w) => setE({ ...e, gebiet: w })}
+              <Auswahl titel="Region" wert={kantone.includes(e.gebiet) ? e.gebiet : 'CH'} waehlen={(w) => { if (w !== e.gebiet) reiterTon(); setE({ ...e, gebiet: w }) }}
                        optionen={[{ wert: 'CH', text: 'Ganze Schweiz' }, ...kantone.map((k) => ({ wert: k, text: KANTONSNAME[k] ?? k }))]}
                        className="mt-1.5 w-full rounded-lg border border-sbb-cloud bg-white px-3 py-2.5 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
             </div>

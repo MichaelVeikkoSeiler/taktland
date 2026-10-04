@@ -239,7 +239,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
  * Liegt links oder rechts noch etwas verborgen, steht dort ein einfacher Pfeil ohne
  * Stamm; ein Tipp darauf schiebt die Zeile weiter (Michael, 2026-10-02).
  */
-function Schiebeleiste({ name, aussen, grund, className, leiste, children }: {
+export function Schiebeleiste({ name, aussen, grund, className, leiste, was = 'Reiter', children }: {
   name: string
   /** Rand und Hintergrund um die Zeile */
   aussen: string
@@ -247,6 +247,8 @@ function Schiebeleiste({ name, aussen, grund, className, leiste, children }: {
   grund: string
   className: string
   leiste?: React.RefObject<HTMLElement | null>
+  /** was links und rechts verborgen liegt, für Bildschirmleser */
+  was?: string
   children: React.ReactNode
 }) {
   const eigene = useRef<HTMLElement | null>(null)
@@ -305,7 +307,7 @@ function Schiebeleiste({ name, aussen, grund, className, leiste, children }: {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
   const pfeil = (seite: 'links' | 'rechts') => mehr[seite] && (
     <button type="button" tabIndex={-1} onClick={() => { wischTon(seite); schieben(seite === 'links' ? -1 : 1) }}
-            aria-label={`${name}: weitere Reiter ${seite}`}
+            aria-label={`${name}: weitere ${was} ${seite}`}
             className={`absolute inset-y-0 ${seite === 'links' ? 'left-0' : 'right-0'} z-10 flex w-7 items-center
                         justify-center text-sbb-black dark:text-sbb-white ${grund}`}>
       <svg viewBox="0 0 12 12" className="size-3" aria-hidden="true">
