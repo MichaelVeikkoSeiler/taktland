@@ -48,7 +48,8 @@ export function bahnhoefeBei(von: Lage, index: BahnhofIndex): Treffer[] {
       schluessel: `b${b.uic}`, name: b.name, zusatz: null,
       m: abstandM(von, b.lat as number, b.lon as number),
       adresse: b.sprachen.length ? `#/bahnhof/${b.uic}` : null,
-      isb: b.isb,
+      // im Index steht die Bahn nur, wenn es nicht die SBB ist (Michael, 2026-10-04: auch ein SBB-Kästchen)
+      isb: b.isb ?? 'SBB',
       lage: [b.lat as number, b.lon as number] as [number, number],
     }))
     .sort(nachAbstand)

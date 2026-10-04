@@ -88,6 +88,12 @@ export function Bahnhof({ uic, zurueck, eintrag, zurueckText }: {
             : <>{STUFE_TEXT[profil.tier]} · Fahrgastzahlen {profil.dataYear}</>}
           {' · '}{fragenGesamt} {fragenGesamt === 1 ? 'Frage' : 'Fragen'}
         </p>
+        {eintrag && !eintrag.isb && (
+          <p className="mt-2 flex items-start gap-2 text-sm text-sbb-black dark:text-sbb-white">
+            <BahnKuerzel isb="SBB" />
+            <span>Die Infrastruktur dieses Bahnhofs betreibt die SBB.</span>
+          </p>
+        )}
         {eintrag?.isb && (
           <p className="mt-2 flex items-start gap-2 text-sm text-sbb-black dark:text-sbb-white">
             <BahnKuerzel isb={eintrag.isb} />

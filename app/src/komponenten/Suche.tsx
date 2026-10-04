@@ -158,7 +158,8 @@ export function Eintrag({ e, oeffnen, favorit }: {
         <span className="min-w-0">
           <span className="flex min-w-0 items-center gap-2">
             <span className="truncate font-medium text-sbb-black dark:text-sbb-white">{e.name}</span>
-            {e.isb && <BahnKuerzel isb={e.isb} />}
+            {/* auch die SBB als Kästchen (Michael, 2026-10-04); im Index fehlt isb nur bei ihr */}
+            <BahnKuerzel isb={e.isb ?? 'SBB'} />
           </span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
             {e.kanton ? `${kantoneText(e)} · ` : ''}{stufeText(e)}
