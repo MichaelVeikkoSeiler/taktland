@@ -10,7 +10,7 @@ export function Spiele() {
     <div className="px-4 pb-16">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Spiele</h1>
       <p className="mt-2 leading-relaxed">
-        Entdecke Taktland spielerisch. Hier findest du das Duell und Geo; weitere Spiele
+        Entdecke Taktland spielerisch. Hier findest du das Duell, Geo und Bahnhof erraten; weitere Spiele
         rund um die Bahn in der Schweiz folgen.
       </p>
       {/* zwei Kacheln je Zeile, auch auf dem Handy; weitere Spiele folgen (Michael, 2026-10-03) */}

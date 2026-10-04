@@ -34,7 +34,7 @@ async function abrufen(url: string) {
   }
 }
 
-async function holen<T>(pfad: string): Promise<T> {
+export async function holen<T>(pfad: string): Promise<T> {
   const treffer = zwischenspeicher.get(pfad)
   if (treffer) return treffer as T
   const antwort = await abrufen(`${BASIS}${pfad}`)

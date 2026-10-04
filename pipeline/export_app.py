@@ -109,7 +109,9 @@ def main():
     for name in ("strecken.json", "strecken_geometrie.json", "karte.json", "standort.json", "seen.json",
                  "sehenswert.json", "flaechen.json", "kartengrund.json", "bodenbedeckung.json", "kartenlinien.json",
                  # der Pool für das Spiel «Geo» (pipeline/build_schweiz11.py)
-                 "schweiz11.json"):
+                 "schweiz11.json",
+                 # der Pool für «Bahnhof erraten» (pipeline/build_erraten.py)
+                 "erraten.json"):
         quelle = ROOT / "data" / name
         if quelle.exists():
             shutil.copy(quelle, ZIEL / name)

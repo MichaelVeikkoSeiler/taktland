@@ -7,6 +7,8 @@
  */
 import duellDunkel from './assets/auftakt-duell-dunkel.webp'
 import duellHell from './assets/auftakt-duell-hell.webp'
+import bahnhoefeDunkel from './assets/auftakt-bahnhoefe-dunkel.webp'
+import bahnhoefeHell from './assets/auftakt-bahnhoefe-hell.webp'
 import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
 
@@ -39,6 +41,13 @@ export const SPIELE: Spiel[] = [
     bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: Jemand setzt eine Ortsmarke auf eine Karte im Handy.' },
     beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
       + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
+  },
+  {
+    id: 'erraten', titel: 'Bahnhof erraten', status: 'spielbereit', adresse: '#/erraten',
+    kurz: 'Sechs verdeckte Hinweise, ein Bahnhof: Wie wenige brauchst du?',
+    bild: { hell: bahnhoefeHell, dunkel: bahnhoefeDunkel, alt: 'Illustration: Ein Bahnhof mit Perron und Zug.' },
+    beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
+      + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
   },
 ]
 

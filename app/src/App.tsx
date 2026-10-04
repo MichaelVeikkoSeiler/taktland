@@ -5,6 +5,7 @@ import { Bahnhof } from './komponenten/Bahnhof'
 import { Duell } from './komponenten/Duell'
 import { Spiele } from './komponenten/Spiele'
 import { Schweiz11 } from './komponenten/Schweiz11'
+import { Erraten } from './komponenten/Erraten'
 import { Zurueck } from './komponenten/Zurueck'
 import { Fahrt } from './komponenten/Fahrt'
 import { Fortsetzen } from './komponenten/Fortsetzen'
@@ -35,7 +36,7 @@ import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'erraten' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'audio' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
@@ -58,6 +59,7 @@ function seiteAusAdresse(): Seite {
   if (h === '#/duell') return { art: 'duell' }
   if (h === '#/spiele') return { art: 'spiele' }
   if (h === '#/schweiz11') return { art: 'schweiz11' }
+  if (h === '#/erraten') return { art: 'erraten' }
   if (h === '#/standort') return { art: 'standort' }
   // Fahren mit drei Unterseiten (Michael, 2026-09-29)
   if (h === '#/fahrt') return { art: 'fahrt', teil: 'neu' }
@@ -105,6 +107,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'duell': return 'duell'
     case 'spiele': return 'spiele'
     case 'schweiz11': return 'schweiz11'
+    case 'erraten': return 'erraten'
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
     case 'favoriten': return 'favoriten'
@@ -173,6 +176,7 @@ export default function App() {
         {seite.art === 'anleitung' && <Anleitung index={index} />}
         {seite.art === 'spiele' && <Spiele />}
         {seite.art === 'schweiz11' && <Schweiz11 index={index} />}
+        {seite.art === 'erraten' && <Erraten index={index} />}
         {/* das Duell gehört zu «Spiele» (Michael, 2026-10-02); seine Adresse #/duell bleibt */}
         {seite.art === 'duell' && (
           <>

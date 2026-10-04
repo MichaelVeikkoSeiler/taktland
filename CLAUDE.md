@@ -134,6 +134,9 @@ data/bruecken_bereich.json  Anfang, Ende und Länge von SBB-Brücken laut Zeichn
 data/schweiz11.json  Pool für das Spiel «Geo»: Bahnhöfe, Tunnel und Brücken mit Ziel (Mitte des
              Bauwerks), Kanton laut Kantonsfläche (BFS) und Stufe nach Rang (pipeline/build_schweiz11.py, nach
              export_app.py); dazu die Kantonsflächen für das Spielgebiet
+data/erraten.json  Pool für das Spiel «Bahnhof erraten»: je Bahnhof die sechs Hinweise aus data/facts (Kanton,
+             Bezirk, Ein- und Aussteigende, Höhe, Bahn, Züge von) und die Stufe nach Rang
+             (pipeline/build_erraten.py); Spiellogik in app/src/erraten.ts, getrennt von der Darstellung
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -168,6 +171,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D
 .venv/bin/python pipeline/build_bruecken_bereich.py  # Brückenlängen laut swissTLM3D, vor build_strecken
 .venv/bin/python pipeline/build_schweiz11.py   # Pool für «Geo», nach export_app
+.venv/bin/python pipeline/build_erraten.py      # Pool für «Bahnhof erraten» aus data/facts
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 ```
 
