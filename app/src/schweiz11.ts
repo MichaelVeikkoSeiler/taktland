@@ -5,6 +5,7 @@
  * Der Pool entsteht in pipeline/build_schweiz11.py (data/schweiz11.json).
  */
 import { kartengrundLaden } from './daten'
+import { ohneKuerzel } from './kuerzel'
 import { LAENGE_ZU_BREITE } from './komponenten/Netzkarte'
 import type { KodierterZug } from './typen'
 
@@ -76,12 +77,34 @@ export function schweiz11Laden(): Promise<Pool> {
     .then((d) => {
       const kantone = new Map(d.kantone.map((k) => [k.kt, { flaeche_km2: k.flaeche_km2, ringe: k.ringe.map(ringLesen) }]))
       // Datenprüfung: nur Objekte mit Name, Typ, gültiger Lage, Kanton und Stufe
-      const objekte = d.objekte.filter((o) => o.name?.trim() && ['b', 't', 'r'].includes(o.t)
+      const gueltig = d.objekte.filter((o) => o.name?.trim() && ['b', 't', 'r'].includes(o.t)
         && Number.isFinite(o.la) && Number.isFinite(o.lo) && kantone.has(o.kt) && [1, 2, 3].includes(o.s))
-      return { objekte, kantone, flaecheCH: [...kantone.values()].reduce((a, k) => a + k.flaeche_km2, 0) }
+      return { objekte: fragbar(gueltig), kantone, flaecheCH: [...kantone.values()].reduce((a, k) => a + k.flaeche_km2, 0) }
     })
     .catch((e) => { poolLaden = null; throw e })
   return poolLaden
+}
+
+/** Name zum Anzeigen: ohne Kürzel der Quelle und ohne Nummer in Klammern («( 042 )»);
+ *  der Name laut Quelle steht in der Auflösung dabei */
+export const anzeigeName = (o: SpielObjekt) =>
+  (o.t === 'b' ? o.name : ohneKuerzel(o.name)).replace(/\s*\(\s*\d+\s*\)\s*$/, '')
+
+/**
+ * Nur Objekte, nach denen sich fragen lässt (CLAUDE.md Regel 9): Ein Name, der nach dem
+ * Kürzen nur noch «km 116.824» ist, sagt nichts; ein Name, den mehrere Objekte derselben
+ * Art tragen («Kantonsstrasse»), lässt offen, welches gemeint ist. Ein Bauwerk aus
+ * swissTLM3D mit demselben Namen wie ein Tunnel oder eine Brücke der SBB in weniger als
+ * 3 km ist dasselbe Bauwerk ein zweites Mal und fällt weg.
+ */
+function fragbar(objekte: SpielObjekt[]) {
+  const sbb = objekte.filter((o) => o.t !== 'b' && !o.id.startsWith('tlm:'))
+  const doppelt = (o: SpielObjekt) => o.id.startsWith('tlm:')
+    && sbb.some((s) => s.t === o.t && anzeigeName(s) === anzeigeName(o) && abstandM(s, o) < 3000)
+  const rest = objekte.filter((o) => (o.t === 'b' || /\p{L}{3,}/u.test(anzeigeName(o).replace(/\bkm\b/gi, ''))) && !doppelt(o))
+  const zahl = new Map<string, number>()
+  for (const o of rest) zahl.set(`${o.t} ${anzeigeName(o)}`, (zahl.get(`${o.t} ${anzeigeName(o)}`) ?? 0) + 1)
+  return rest.filter((o) => zahl.get(`${o.t} ${anzeigeName(o)}`) === 1)
 }
 
 /** Ortsnamen der Landeskarte (kartengrund.json) für die Hilfe «Ortsnamen» */
@@ -239,16 +262,19 @@ export function typText(o: SpielObjekt) {
 /** Wörter, die keinen Ort verraten */
 const LEER = new Set(['bahnhof', 'tunnel', 'brucke', 'brucken', 'viadukt', 'galerie', 'pont', 'ponte', 'galleria',
   'nord', 'sud', 'ost', 'west', 'est', 'ouest', 'dessus', 'dessous', 'ober', 'unter', 'gare', 'stazione', 'dorf',
-  'stadt', 'bruecke', 'strasse', 'route', 'chemin', 'tunnels', 'kehrtunnel', 'basistunnel', 'scheiteltunnel'])
+  'stadt', 'bruecke', 'strasse', 'route', 'chemin', 'tunnels', 'kehrtunnel', 'basistunnel', 'scheiteltunnel',
+  // kurze Füllwörter; Ortsnamen wie Zug, Ins, Wil oder Bex zählen dagegen
+  'des', 'les', 'sur', 'der', 'die', 'das', 'den', 'dem', 'von', 'bei', 'und', 'zum', 'zur', 'del', 'dei', 'della',
+  'aux', 'sous', 'san', 'via', 'alt', 'neu'])
 
 function woerter(name: string) {
   return name.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
-    .split(/[^a-z0-9]+/).filter((w) => w.length >= 4 && !LEER.has(w))
+    .split(/[^a-z0-9]+/).filter((w) => w.length >= 3 && !LEER.has(w))
 }
 
 /**
  * Verrät eine Beschriftung die Lösung? Ja, wenn sie ein Wort des gesuchten Namens
- * enthält (ab 4 Buchstaben, ohne Wörter wie «Tunnel» oder «Nord»), auch in einer
+ * enthält (ab 3 Buchstaben, ohne Wörter wie «Tunnel» oder «Nord»), auch in einer
  * Zusammensetzung: «Zürich» bei «Zürich HB», «Göschenen» bei «Göschenen», «Paudex»
  * bei «Tunnel de Paudex». So bleiben auch Nachbarn wie «Zürich Oerlikon» verborgen.
  */

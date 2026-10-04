@@ -284,7 +284,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
           <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahrtblatt</h1>
           <p className="mt-2 leading-relaxed">
             Ein Blatt A4 zum Ausdrucken für die Fahrt mit Kindern: oben die Karte des Wegs, unten die
-            wichtigsten Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken.
+            ausgewählte Tunnel, Brücken, Bahnhöfe, Gipfel und Seen zum Abhaken.
           </p>
           {index && (
             <div className="mt-4 space-y-3">

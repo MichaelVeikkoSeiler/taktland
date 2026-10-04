@@ -98,7 +98,7 @@ const zahl = (n: number) => (n > 9999 ? n.toLocaleString('de-CH') : String(n))
 /**
  * Das Fahrtblatt für Familien (Michael, 2026-09-26): vor der Fahrt ausdrucken,
  * im Zug mit den Kindern ausfüllen. Eine Karte des Wegs und die wichtigsten
- * Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken. Ausgewählt wird nur nach
+ * Tunnel, Brücken, Bahnhöfe, Gipfel und Seen zum Abhaken. Ausgewählt wird nur nach
  * Zahlen aus den Daten (Länge, Baueinheiten, Höhe, Grösse des Bahnhofs), nicht
  * nach «schön» oder «berühmt». Gedruckt oder als PDF gesichert wird mit der
  * Druckfunktion des Browsers; Taktland sendet dafür nichts.
@@ -171,8 +171,8 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
       <div className="print:hidden">
         <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahrtblatt</h1>
         <p className="mt-2 leading-relaxed">
-          Ein Blatt zum Ausdrucken für die Fahrt mit Kindern: die Karte des Wegs und die wichtigsten
-          Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken. Drucken oder als PDF sichern geht über
+          Ein Blatt zum Ausdrucken für die Fahrt mit Kindern: die Karte des Wegs und ausgewählte
+          Tunnel, Brücken, Bahnhöfe, Gipfel und Seen zum Abhaken. Drucken oder als PDF sichern geht über
           die Druckfunktion deines Geräts.
         </p>
         <div className="segmente mt-4 inline-flex" role="group" aria-label="Umfang">
@@ -468,9 +468,9 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
               Das habe ich aus dem Fenster gesehen:
             </div>
             <p className="mt-2 text-[9.5px] leading-snug">
-              Auswahl nach Zahlen aus den Daten und über den Weg verteilt: {TUNNEL_MAX * mal} Tunnel, zuerst die längsten, Brücken ab {BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen zuerst die grossen, {BAHNUEBERGAENGE_MAX * mal} Bahnübergänge der SBB, die mit Namen zuerst, {GIPFEL_MAX * mal} Gipfel
+              Auswahl nach Zahlen aus den Daten und über den Weg verteilt: höchstens {TUNNEL_MAX * mal} Tunnel, zuerst die längsten, Brücken ab {BRUECKE_AB_BE} Baueinheiten, bei vielen Bahnhöfen zuerst die grossen, höchstens {BAHNUEBERGAENGE_MAX * mal} Bahnübergänge der SBB, die mit Namen zuerst, höchstens {GIPFEL_MAX * mal} Gipfel
               bis 8 km neben der Strecke, zuerst die höchsten; liegen zwei zu nah beieinander, kommt der nächste der Liste.
-              Die {SEEN_MAX * mal} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
+              Höchstens {SEEN_MAX * mal} Seen, an denen der Weg am längsten entlangführt. Links und rechts in Fahrtrichtung
               laut Daten; ob man es vom Zug aus sieht, sagen sie nicht.
               {daten.mitTlm && ' Tunnel und Brücken anderer Bahnen (swissTLM3D) haben in den Daten keine Länge und meist'
                 + ' keinen Namen: Es gilt die Länge ihrer Zeichnung; Brücken anderer Bahnen mit Namen oder auf der Karte ab 100 m.'}

@@ -77,7 +77,7 @@ export function AudioSeite() {
       <h2 className="mt-8 text-lg font-semibold">Wann der Ton kommt</h2>
       <div className="mt-3 grid gap-2" role="radiogroup" aria-label="Wann der Ton kommt">
         {([[false, 'Einmal, mit der Meldung', 'Wie unter «Melden etwa» beim Fahren gewählt: etwa 20 oder 10 Sekunden vorher'],
-           [true, 'Zweimal', 'Etwa 20 und nochmals etwa 10 Sekunden vor dem Tunnel, der Brücke oder dem Bahnhof']] as const)
+           [true, 'Zweimal', 'Etwa 20 und nochmals etwa 10 Sekunden vor jedem gemeldeten Objekt']] as const)
           .map(([wert, titel, text]) => (
             <button key={titel} type="button" role="radio" aria-checked={audio.zweimal === wert} disabled={aus}
                     onClick={() => audioSetzen({ zweimal: wert })}

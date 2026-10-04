@@ -29,10 +29,12 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Bahnhöfe lernen">
         <Punkte>
           <li>
-            Aufgenommen sind alle Bahnhöfe mit Infrastruktur der SBB, dazu Bahnhöfe anderer
-            Bahnen wie BLS, RhB, SOB oder Matterhorn Gotthard Bahn, sofern die offenen Daten
-            für mindestens drei Kapitel reichen. Sie tragen das Kürzel ihrer Bahn und haben
-            weniger Kapitel.
+            Aufgenommen sind alle Bahnhöfe mit Infrastruktur der SBB oder der BLS, dazu
+            Bahnhöfe anderer Bahnen wie RhB, SOB oder Matterhorn Gotthard Bahn, sofern die
+            offenen Daten für mindestens drei Kapitel reichen. Bahnhöfe anderer Bahnen tragen
+            das Kürzel ihrer Bahn und haben weniger Kapitel. Dazu kommen Haltestellen der BTI,
+            für die keine Fahrgastzahlen erfasst sind: Von ihnen zeigt Taktland nur die
+            Stammdaten.
           </li>
           <li>
             Jede Bahnhofsseite hat Kapitel, etwa Steckbrief, Perrons oder Züge: zuerst ein
@@ -98,7 +100,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Die Kilometrierung ist ein Standort, keine Länge. Länge und Baujahr einer Linie
-            und einer Brücke stehen nicht in den offenen Daten.
+            stehen nicht in den offenen Daten, die Länge einer Brücke nennt die SBB nicht.
+            Wo eine Brücke mit «etwa … m» steht, ist das die Länge ihrer Zeichnung in
+            swissTLM3D von swisstopo, von Taktland daraus gerechnet.
           </li>
           <li>
             «Tunnel» und «Brücken» listen alle erfassten Einträge mit ihrer Linie. Ein Tipp
@@ -117,14 +121,14 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         <Punkte>
           <li>
             Start und Ziel wählen, wahlweise einen Bahnhof «Über». Taktland sucht einen Weg
-            über Abschnitte, auf denen laut den Zugzahlen der SBB Personenzüge fahren, und
-            zeigt Tunnel und Brücken in Wegrichtung. Der Weg ist berechnet; ob ein Zug ihn
+            über Abschnitte, auf denen laut den Zugzahlen der SBB Personenzüge fahren, und über
+            Strecken anderer Bahnen aus dem Schienennetz des BAV. Er zeigt Tunnel und Brücken in Wegrichtung. Der Weg ist berechnet; ob ein Zug ihn
             fährt, sagen die Daten nicht.
           </li>
           <li>
             Auf Strecken anderer Bahnen, etwa dem Lötschberg der BLS, stammen Tunnel und
             Brücken aus swissTLM3D von swisstopo: oft ohne Namen, mit der gerundeten Länge
-            ihrer Zeichnung.
+            ihrer Zeichnung, von Taktland gerechnet.
           </li>
           <li>«Losfahren» startet die Fahrt auf diesem Weg, «Probefahrt» spielt ihn ab.</li>
         </Punkte>
@@ -138,10 +142,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             und Richtung und fragt, wenn Strecken nebeneinander liegen.
           </li>
           <li>
-            Etwa 20 oder 10 Sekunden vorher meldet Taktland Tunnel, Brücken, Bahnhöfe (auch
-            ohne Halt) und Sehenswertes links oder rechts, jede Art mit eigenem Ton. Ob
+            Etwa 20 oder 10 Sekunden vorher meldet Taktland Tunnel, Brücken, Bahnübergänge,
+            Bahnhöfe (auch ohne Halt) und Sehenswertes links oder rechts, jede Art mit eigenem Ton. Ob
             Sehenswertes vom Zug aus zu sehen ist, sagen die Daten nicht. Was gemeldet wird,
-            lässt sich unten wählen; «Nicht mehr melden» schweigt ein einzelnes Objekt.
+            lässt sich unten wählen; bei Sehenswertem schweigt «Nicht mehr melden» ein
+            einzelnes Objekt.
           </li>
           <li>
             Am Ziel erklingen drei Töne aufwärts und «Angekommen in …» erscheint. Ein Bahnhof
@@ -153,6 +158,10 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Die Zeiten sind Schätzungen aus Standort und Tempo, im Tunnel mit dem letzten
             Tempo. Gemeldet wird nur bei offener Seite und eingeschaltetem Bildschirm.
             Hellblau neben dem Band: Links oder rechts liegt ein See.
+          </li>
+          <li>
+            Die Meldungen zu Bahnübergängen sind keine Sicherheitsinformation. Die Daten
+            können unvollständig oder veraltet sein; es gelten allein die Signale vor Ort.
           </li>
           <li>
             «Probefahren» spielt einen Weg ohne Zug ab, in Echtzeit oder 5- bis 200-mal
@@ -233,6 +242,18 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             nutzbar mit Quellenangabe.
           </li>
           <li>
+            Höhenstufen aus swissALTIRegio, mit der von swisstopo verlangten Quellenangabe:
+            Bundesamt für Landestopografie swisstopo; Tarquini S., I. Isola, M. Favalli,
+            A. Battistini, G. Dotta (2023). TINITALY, a digital elevation model of Italy with a
+            10 meters cell size (Version 1.1). Istituto Nazionale di Geofisica e Vulcanologia
+            (INGV). <Verweis href="https://doi.org/10.13127/tinitaly/1.1">https://doi.org/10.13127/tinitaly/1.1</Verweis>;
+            DGM Österreich, geoland.at; DGM1, Bayerische Vermessungsverwaltung –
+            www.geodaten.bayern.de; DGM 1 Baden-Württemberg: LGL, www.lgl-bw.de, dl-de/by-2-0;
+            RGEAlti, Institut National de l'information géographique et forestière, données
+            originales téléchargées sur https://geoservices.ign.fr/rgealti#telechargement5m,
+            mise à jour du juillet 2023.
+          </li>
+          <li>
             Schrift Space Grotesk: Florian Karsten und The Space Grotesk Project Authors, unter der{' '}
             <Verweis href="./lizenzen/space-grotesk-OFL.txt">SIL Open Font License</Verweis>, in
             Taktland mitgeliefert.
@@ -273,19 +294,25 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Den Standort fragt Taktland nur beim Fahren und unter «Standort» ab, nach deiner
-            Freigabe. Er wird auf dem Gerät verrechnet, weder gespeichert noch gesendet;
-            gemerkt wird nur die Stelle auf dem Weg, damit eine Fahrt weitergehen kann.
+            Freigabe. Er wird nie gesendet. Unter «Standort» wird er nur auf dem Gerät
+            verrechnet und nicht gespeichert. Beim Fahren merkt sich Taktland die Stelle auf dem
+            Weg, damit eine Fahrt weitergehen kann, und hält für das Logbuch den gefahrenen Weg
+            mit Datum fest, als Punkte auf der Strecke. Beides bleibt im Browser dieses Geräts
+            und kommt nur in die Sicherungsdatei, wenn du sie herunterlädst; löschen lässt es
+            sich mit der Fahrt im Logbuch.
           </li>
           <li>
-            Ausgeliefert wird die Seite von GitHub Pages; GitHub speichert laut eigenen
-            Angaben die IP-Adressen aus Sicherheitsgründen. Die Adresse taktland.ch ist bei
-            cyon registriert. Beim Öffnen fragt Taktland dort ab, ob es verfügbar ist und ob
-            es eine neue Version gibt, ohne etwas über dich mitzuschicken.
+            Ausgeliefert wird die Seite von GitHub Pages, einem Dienst von GitHub (USA); die
+            Daten können dabei in die USA gelangen. GitHub speichert laut eigenen Angaben die
+            IP-Adressen aus Sicherheitsgründen. Die Adresse taktland.ch ist bei cyon
+            registriert. Beim Öffnen und beim Zurückholen fragt Taktland bei GitHub Pages ab,
+            ob es verfügbar ist und ob es eine neue Version gibt, ohne etwas über dich
+            mitzuschicken.
           </li>
           <li>
             Gezählt wird nur, wie oft Taktland geöffnet wird: höchstens einmal am Tag
             «geöffnet» an zaehler.taktland.ch, beim ersten Mal auf einem Gerät «neu». Dort
-            steht je Tag nur die Zahl, ohne IP-Adresse, Kennung und Uhrzeit. Der Zähler liegt
+            stehen je Tag nur Zahlen, ohne IP-Adresse, Kennung und Uhrzeit. Der Zähler liegt
             bei cyon in der Schweiz; wie jeder Webserver führt er ein Zugriffsprotokoll, das
             cyon verwaltet.
           </li>

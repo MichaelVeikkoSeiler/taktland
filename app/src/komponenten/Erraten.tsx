@@ -155,7 +155,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
         <div className="mt-6">
           {anzahl < e.fragen ? (
             <p className="mb-3 border-l-2 border-sbb-red pl-3 text-sm">
-              {anzahl === 0 ? 'Dazu gibt es keine passenden Bahnhöfe.' : `Dazu gibt es nur ${anzahl} passende Bahnhöfe.`} Wähle
+              {anzahl === 0 ? 'Dazu gibt es keine passenden Bahnhöfe.' : `Dazu gibt es nur ${anzahl} ${anzahl === 1 ? 'passenden Bahnhof' : 'passende Bahnhöfe'}.`} Wähle
               eine andere Region, eine andere Schwierigkeit oder 5 Bahnhöfe.
             </p>
           ) : (

@@ -102,7 +102,7 @@ export interface ObjektText {
   baueinheiten: number | null
   /** Brücken aus swissTLM3D: auf der Karte mindestens 100 m lang gezeichnet */
   gross?: boolean
-  /** Brücken: «etwa 380 m laut swisstopo», wo swissTLM3D Anfang und Ende hergibt */
+  /** Brücken: «etwa 380 m laut Zeichnung von swisstopo», wo swissTLM3D Anfang und Ende hergibt */
   laenge?: string | null
 }
 
@@ -953,7 +953,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         </div>
 
         <p className="mt-6 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
-          Der Standort bleibt auf diesem Gerät und wird weder gespeichert noch gesendet. Die Zeiten
+          Der Standort bleibt auf diesem Gerät und wird nie gesendet; für das Logbuch hält Taktland
+          den gefahrenen Weg als Punkte auf der Strecke fest, nur in diesem Browser. Die Zeiten
           sind Schätzungen aus Standort und Tempo, die Distanzen gerundet und entlang der gezeichneten
           Strecke gemessen. Gemeldet wird nur, solange diese Seite offen und
           der Bildschirm an ist. Auf Strecken anderer Bahnen folgt der Weg dem Schienennetz des BAV,
@@ -970,7 +971,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           Sammelheft. Hellblau im Streckenband: ein See aus swissTLMRegio liegt
           bis etwa {SEE_M} m (geprüft alle {SEE_QUER_M} m quer zur Strecke) links (oben) oder rechts (unten) der gezeichneten Strecke; Seen unter 0,1 km²
           fehlen. Bahnübergänge stammen aus den offenen Daten der SBB, gemeldet am
-          Kilometer der Quelle; auf Strecken anderer Bahnen fehlen sie.
+          Kilometer der Quelle; auf Strecken anderer Bahnen fehlen sie. Die Meldungen zu
+          Bahnübergängen sind keine Sicherheitsinformation: Die Daten können unvollständig oder
+          veraltet sein, es gelten allein die Signale vor Ort.
         </p>
       </div>
       {offenerBahnhof && (

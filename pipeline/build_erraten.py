@@ -16,8 +16,8 @@ Diese sechs gibt es bei fast allen Bahnhöfen. Gemeinde, Perronlänge, Linie und
 Zugzahlen nicht: die Gemeinde verrät bei 813 von 1187 Bahnhöfen den Namen, die
 übrigen fehlen bei einem Viertel bis zur Hälfte (vor allem bei RhB, MGB, zb).
 
-Aufgenommen wird ein Bahnhof nur, wenn die Felder vorhanden sind und der Bezirk den
-Namen nicht verrät (Bezirk Meilen bei Meilen prüft nichts, CLAUDE.md Regel 9). Ohne
+Aufgenommen wird ein Bahnhof nur, wenn die Felder vorhanden sind und weder Bezirk noch
+Kanton den Namen verraten (Bezirk Meilen bei Meilen prüft nichts, CLAUDE.md Regel 9). Ohne
 Bezirk (etwa in Genf, Neuenburg, Zug, Basel-Stadt) bleibt er im Pool; die Karte liegt
 dann offen mit «In den Daten nicht angegeben» und kostet nichts.
 
@@ -65,6 +65,10 @@ def main():
             continue
         if e["bezirk"] and woerter(e["bezirk"]) & woerter(name):
             weg["Bezirk verrät den Namen"] += 1
+            continue
+        # ebenso der Kanton: Kanton Zug bei Zug Casino, Genève bei Genève-Eaux-Vives
+        if woerter(e["kanton"]) & woerter(name):
+            weg["Kanton verrät den Namen"] += 1
             continue
         pool.append({k: v for k, v in e.items() if v is not None})
     # Stufe nach Rang; gleicher Wert, gleiche Reihenfolge nach Name, damit der Bau gleich bleibt

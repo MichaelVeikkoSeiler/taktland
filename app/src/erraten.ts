@@ -123,16 +123,28 @@ function mischen<T>(liste: T[], zufall: () => number): T[] {
   return a
 }
 
+/** Lässt sich b mit allen sechs Karten von ziel unterscheiden? Zahlen gelten erst ab 5 %
+ *  Unterschied als verschieden (CLAUDE.md Regel 9), sonst wäre die Auswahl Raten. */
+export function unterscheidbar(ziel: ErratenBahnhof, b: ErratenBahnhof) {
+  const weit = (x: number, y: number) => Math.abs(x - y) >= 0.05 * Math.max(Math.abs(x), Math.abs(y), 1)
+  const dwvAnders = ziel.dwv !== undefined && b.dwv !== undefined ? weit(ziel.dwv, b.dwv)
+    : ziel.dwv_unter !== undefined && b.dwv_unter !== undefined ? false
+      : (ziel.dwv ?? 0) >= 1.05 * (b.dwv_unter ?? 0) || (b.dwv ?? 0) >= 1.05 * (ziel.dwv_unter ?? 0)
+  return ziel.kanton !== b.kanton || (ziel.bezirk ?? '') !== (b.bezirk ?? '') || ziel.bahn !== b.bahn
+    || ziel.zuege_von !== b.zuege_von || weit(ziel.hoehe, b.hoehe) || dwvAnders
+}
+
 /**
  * Drei falsche Antworten, die glaubwürdig sind: aus demselben Kanton und mit ähnlich
  * vielen Ein- und Aussteigenden (nahe im Rang), sonst aus der ganzen Schweiz nahe im
  * Rang. Aus den acht nächsten werden drei zufällig gezogen, damit es nicht immer
- * dieselben sind. Keine zwei mit gleichem Namen.
+ * dieselben sind. Keine zwei mit gleichem Namen, keiner, der in allen
+ * sechs Karten der Lösung gleicht.
  */
 export function ablenker(p: Pool, ziel: ErratenBahnhof, zufall: () => number = Math.random): number[] {
   const r = p.rang.get(ziel.id) ?? 0
   const nah = (b: ErratenBahnhof) => Math.abs((p.rang.get(b.id) ?? 0) - r)
-  const andere = p.bahnhoefe.filter((b) => b.id !== ziel.id && b.name !== ziel.name)
+  const andere = p.bahnhoefe.filter((b) => b.id !== ziel.id && b.name !== ziel.name && unterscheidbar(ziel, b))
   const gleicherKanton = andere.filter((b) => b.kt === ziel.kt).sort((a, b) => nah(a) - nah(b))
   const reihe = gleicherKanton.length >= 3 ? gleicherKanton : [...gleicherKanton, ...andere.filter((b) => b.kt !== ziel.kt).sort((a, b) => nah(a) - nah(b))]
   const auswahl: ErratenBahnhof[] = []

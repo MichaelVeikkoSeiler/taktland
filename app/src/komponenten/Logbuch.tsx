@@ -353,8 +353,8 @@ function FahrtKarte({ objekte, wege, index, titel }: {
       beschriftung={(
         <>
           Rot: durchfahrene Tunnel (grosse Punkte) und Brücken (kleine), Ringe: Bahnhöfe, jeweils
-          dort, wo ihre Quelle die Lage angibt. Dunkel die Linien, auf denen sie liegen; schwarz der
-          gefahrene Weg, gespeichert seit dem 30.9.2026.
+          dort, wo ihre Quelle die Lage angibt. Dunkel die Linien, auf denen sie liegen; schwarz (im Dunkelmodus
+          weiss) der gefahrene Weg, gespeichert seit dem 30.9.2026.
         </>
       )}
     />

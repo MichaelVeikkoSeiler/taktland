@@ -36,7 +36,7 @@
     {
       "name": "Duell",
       "short_name": "Duell",
-      "description": "Zwei Bahnhöfe gegeneinander, über alle 771",
+      "description": "Zwei Bahnhöfe, Strecken oder Tunnel gegeneinander",
       "url": "./#/duell",
       "icons": [
         {

@@ -1,5 +1,5 @@
 """Der Pool für «Bahnhofsuche» (data/erraten.json): jeder Hinweis steht so in den
-Fakten, der Bezirk verrät den Namen nicht, und kein Name kommt zweimal vor."""
+Fakten, weder Bezirk noch Kanton verraten den Namen, und kein Name kommt zweimal vor."""
 import json
 import re
 from pathlib import Path
@@ -25,6 +25,10 @@ def test_jeder_hinweis_steht_in_den_fakten():
 
 def test_bezirk_verraet_den_namen_nicht():
     assert not [b["name"] for b in POOL if woerter(b.get("bezirk")) & woerter(b["name"])]
+
+
+def test_kanton_verraet_den_namen_nicht():
+    assert not [b["name"] for b in POOL if woerter(b["kanton"]) & woerter(b["name"])]
 
 
 def test_namen_eindeutig_und_stufen_gesetzt():

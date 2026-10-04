@@ -139,15 +139,15 @@ export function ObjektKarte({ art, linie, objekte, markiert, bahnhoefe = [], wae
       beschriftung={(
         <>
           Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), Linien anderer Bahnen aus
-          dem Schienennetz des BAV, ohne Strassen, Orte und Grenzen.{' '}
+          dem Schienennetz des BAV, ohne Strassen; Ortsnamen sind Bahnhöfe aus den Fakten, zur Orientierung.{' '}
           {stationen.length > 0 && 'Ringe: die Bahnhöfe dieser Linie in Taktland an ihrem Kilometer. '}
           {art === 'tunnel' && objekte.length > 0
             && 'Rot die Tunnel dieser Linie: als Strecke, wo die Länge nur in eine Richtung passt '
               + 'oder swissTLM3D (swisstopo) Anfang und Ende zeigt, sonst als Punkt beim erfassten '
               + 'Kilometer. Ob dieser am Portal liegt, sagt die Quelle nicht; oft liegt er im Tunnel. '}
           {art === 'bruecken'
-            && 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge ist '
-              + 'nicht erfasst. '}
+            && 'Rot die Brücken dieser Linie, je als Punkt bei ihrem Kilometer; eine Länge nennt '
+              + 'die SBB nicht. '}
           {art === 'bahnuebergaenge'
             && 'Die Kreuze sind die Bahnübergänge dieser Linie, je bei ihrem Kilometer laut Quelle. '}
           {art === 'netz'
@@ -200,7 +200,7 @@ export function BahnhofKarte({ eintrag, nachbarn = [] }: {
       beschriftung={(
         <>
           Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), Linien anderer Bahnen aus
-          dem Schienennetz des BAV, ohne Strassen, Orte und Grenzen. Der rote Punkt ist{' '}
+          dem Schienennetz des BAV, ohne Strassen; Ortsnamen sind Bahnhöfe aus den Fakten, zur Orientierung. Der rote Punkt ist{' '}
           {eintrag.name}, seine Lage stammt aus den Fakten
           {(eintrag.linien?.length ?? 0) > 0 && '; dunkel die Linien, auf denen er erfasst ist'}.
           Ein Tipp auf eine Linie öffnet ihre Seite.

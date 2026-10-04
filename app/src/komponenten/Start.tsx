@@ -33,8 +33,9 @@ export function Start({ index }: { index: BahnhofIndex }) {
         {z ? `, dazu ${zahl(z.linien)} Strecken mit ${zahl(z.tunnel)} Tunneln und ${zahl(z.bruecken)} Brücken.` : '.'}
       </p>
       <p className={absatz}>
-        <span className={fett}>Nachschlagen.</span> Jeder Bahnhof hat einen Steckbrief, etwa zu den
-        Perrons und dazu, wie viele Menschen dort ein- und aussteigen. Zu jeder Strecke gibt es ihre
+        <span className={fett}>Nachschlagen.</span> Jeder Bahnhof hat eine eigene Seite, mit
+        Kapiteln etwa zu den Perrons und dazu, wie viele Menschen dort ein- und aussteigen, soweit
+        die Daten das hergeben. Zu jeder Strecke gibt es ihre
         Tunnel, Brücken und Bahnübergänge zu erkunden.
       </p>
       <p className={absatz}>
@@ -57,7 +58,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
       </p>
       <p className={absatz}>
         <span className={fett}>Ausdrucken.</span> Das Fahrtblatt ist ein Druckbogen für unterwegs:
-        oben die Karte des Wegs, unten die Tunnel, Bahnhöfe und Sehenswürdigkeiten zum Abhaken. Zum
+        oben die Karte des Wegs, unten Tunnel, Brücken, Bahnhöfe, Gipfel und Seen zum Abhaken. Zum
         Beispiel zur Unterhaltung mit Kindern.
       </p>
       <p className={absatz}>

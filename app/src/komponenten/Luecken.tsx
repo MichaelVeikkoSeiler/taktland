@@ -21,7 +21,7 @@ export function Luecken({ luecken }: { luecken: Luecke[] }) {
           <li key={`${i}-${l.thema}`}>
             <p className="font-bold text-sbb-black dark:text-sbb-white">{l.thema}</p>
             <p className="text-sm text-sbb-iron dark:text-sbb-storm">{l.grund}</p>
-            <p className="mt-0.5 text-xs text-sbb-metal">Quelle: {l.quelle}</p>
+            <p className="mt-0.5 text-xs text-sbb-metal">Datensatz: {l.quelle}</p>
           </li>
         ))}
       </ul>

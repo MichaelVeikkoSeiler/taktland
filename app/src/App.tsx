@@ -225,7 +225,7 @@ export default function App() {
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
-            Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Höhenstufen (swissALTIRegio),
+            Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Höhenstufen (swissALTIRegio, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
             Gipfel und Ortsnamen (Swiss Map Vector 1000), Brückenlängen und beim Fahren Tunnel und Brücken
             anderer Bahnen (swissTLM3D): Bundesamt für Landestopografie swisstopo. Landes- und Kantonsgrenzen:
             Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für
@@ -245,10 +245,10 @@ export default function App() {
           </p>
           <p className="mt-1">
             Der Lernfortschritt bleibt auf diesem Gerät. Es gibt kein Konto; gezählt wird nur, wie oft
-            Taktland geöffnet wird, eine Zahl pro Tag.
+            Taktland geöffnet wird, nur als Zahlen je Tag.
           </p>
           <Zuruecksetzen />
-          {index && <p className="mt-1">Datenstand: {index.stand}</p>}
+          {index && <p className="mt-1">Daten geladen am {index.stand.split('-').map(Number).reverse().join('.')}</p>}
         </footer>
       </div>
     </div>

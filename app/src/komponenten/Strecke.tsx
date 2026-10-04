@@ -197,9 +197,9 @@ const BEISPIELE: Array<[string, string]> = [
 /** So viele Brücken stehen zuerst da, der Rest auf Knopfdruck */
 const BRUECKEN_ZUERST = 100
 
-/** «etwa 120 m laut swisstopo»: gemessen an der Zeichnung von swissTLM3D, darum gerundet */
+/** «etwa 120 m laut Zeichnung von swisstopo»: gemessen an der Zeichnung von swissTLM3D, darum gerundet */
 function laengeText(m: number) {
-  return `etwa ${genau(gerundetM(m))} m laut swisstopo`
+  return `etwa ${genau(gerundetM(m))} m laut Zeichnung von swisstopo`
 }
 
 export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: StreckenWahl }) {
@@ -528,7 +528,7 @@ function Ergebnis({
     } else {
       const y = brueckenNach.get(o.kennung)
       dazu('Baueinheiten', y ? (y.baueinheiten === null ? 'keine Angabe' : y.baueinheiten) : null)
-      dazu('Länge laut Zeichnung von swisstopo', brueckeLaenge(o.kennung)?.replace(' laut swisstopo', ''))
+      dazu('Länge laut Zeichnung von swisstopo', brueckeLaenge(o.kennung)?.replace(' laut Zeichnung von swisstopo', ''))
       dazu('Linie', y?.linie)
       dazu('Kanton laut Quelle', y?.kanton)
     }
@@ -611,10 +611,10 @@ function Ergebnis({
         + `Infrastruktur der ${bahnen.join(' und ')}, etwa ${beispiele(andere)}. Die Daten der SBB `
         + 'erfassen Tunnel und Brücken nur auf ihrer Infrastruktur. '
         + (andere.every((e) => e.verlauf_bav)
-          ? 'Auf diesen Abschnitten stammen sie aus swissTLM3D von swisstopo, ohne Länge und oft ohne Namen.'
+          ? 'Auf diesen Abschnitten stammen sie aus swissTLM3D von swisstopo; eine Länge nennt die Quelle nicht, oft auch keinen Namen.'
           : andere.some((e) => e.verlauf_bav)
             ? `Auf ${andere.filter((e) => e.verlauf_bav).length} davon stammen sie aus swissTLM3D von `
-              + 'swisstopo, ohne Länge und oft ohne Namen; auf den übrigen fehlen sie in der Zählung, '
+              + 'swisstopo, ohne Länge in der Quelle und oft ohne Namen; auf den übrigen fehlen sie in der Zählung, '
               + 'weil ihr Verlauf nicht im Schienennetz des BAV steht.'
             : 'Dort fehlen sie in der Zählung, weil ihr Verlauf nicht im Schienennetz des BAV steht.'),
       quelle: 'zugzahlen, schienennetz, swissTLM3D',
@@ -635,7 +635,7 @@ function Ergebnis({
     {
       thema: 'Länge des Wegs',
       grund: 'Die Kilometrierung ist ein Standort auf der Linie, keine Länge. Wie lang der Weg ist, '
-        + 'nennt Taktland darum nicht.',
+        + 'nennen die Daten nicht. Beim Fahren misst Taktland die gezeichnete Strecke, gerundet.',
       quelle: 'linienkilometrierung',
     },
   ]
@@ -1031,7 +1031,7 @@ function TlmListe({ liste }: { liste: Array<{ id: string; art: string; name?: st
               {x.name ?? `${wort[x.art]} ohne Namen`}
             </p>
             <p className="text-sm text-sbb-metal dark:text-sbb-storm">
-              {x.name ? `${wort[x.art]} · ` : ''}{x.wo} · Länge: keine Angabe
+              {x.name ? `${wort[x.art]} · ` : ''}{x.wo} · Länge: nicht in der Quelle
             </p>
           </li>
         ))}

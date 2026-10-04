@@ -186,8 +186,9 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
             Tunnel ist dabei ein einzelner Punkt, nicht die ganze Röhre. Bei den Linien zählt der
             nächste Punkt der vereinfachten Linienführung, auf etwa 30 m genau. Bahnhöfe: ihre
             Lage aus den Fakten{ohneLage > 0 && `; ${ohneLage} ohne Lage in den Daten fehlen`}.
-            Tunnel, Brücken, Bahnübergänge und Linien stammen aus Datensätzen der SBB; was dort
-            nicht erfasst ist, fehlt auch hier. Datenstand: tunnel {daten.datenstand.tunnel},
+            Tunnel, Brücken und Bahnübergänge stammen aus Datensätzen der SBB, die Linien aus der
+            Linienkilometrierung der SBB und dem Schienennetz des BAV; was dort nicht erfasst ist,
+            fehlt auch hier. Datenstand: tunnel {daten.datenstand.tunnel},
             brucken {daten.datenstand.brucken}, bahnubergang {daten.datenstand.bahnubergang},
             linie {daten.datenstand.linie}.
           </p>

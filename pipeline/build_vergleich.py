@@ -65,7 +65,7 @@ KATEGORIEN = [
         "art": "messwert",
         "quelle": "haltestelle-haltekante",
         "min_abstand": 60,
-        "min_anteil": 0.0,
+        "min_anteil": 0.05,
     },
     {
         "id": "zuege",

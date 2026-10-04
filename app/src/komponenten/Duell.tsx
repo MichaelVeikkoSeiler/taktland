@@ -541,14 +541,14 @@ export function Duell({ index }: { index: BahnhofIndex | null }) {
 function fussnote(bereich: Bereich, gebiet: string, anzahl: number) {
   const kanton = KANTONSNAME[gebiet] ?? gebiet
   if (bereich === 'linien') {
-    return `Alle ${anzahl} Linien mit eigener Seite in Taktland sind dabei. Die Werte sind in `
+    return `${anzahl} Linien der SBB mit eigener Seite in Taktland sind dabei; Linien anderer Bahnen fehlen. Die Werte sind in `
       + 'den offenen Daten gezählt. Eine Linie hat in den Daten keinen Kanton, darum gibt es '
       + 'sie nur für die ganze Schweiz.'
   }
   const wer = bereich === 'tunnel'
     ? (gebiet === 'CH' ? `Alle ${anzahl} Tunnel aus den offenen Daten sind dabei.`
       : `${anzahl} Tunnel im Kanton ${kanton}, nach der Kantonsangabe der Quelle.`)
-    : (gebiet === 'CH' ? `Alle ${anzahl} Bahnhöfe sind dabei.`
+    : (gebiet === 'CH' ? `${anzahl} Bahnhöfe sind dabei; Haltestellen ohne Fahrgastzahlen in den Daten fehlen.`
       : `${anzahl} Bahnhöfe im Kanton ${kanton}.`)
   return `${wer} Jeder Wert stammt unverändert aus den offenen Daten.`
 }

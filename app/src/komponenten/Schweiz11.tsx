@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import {
-  abstandM, aufgabenZiehen, distanzText, einstellungSchluessel, type Einstellungen, GRUNDWERT, type Hilfe, HILFE_ABZUG,
+  abstandM, anzeigeName, aufgabenZiehen, distanzText, einstellungSchluessel, type Einstellungen, GRUNDWERT, type Hilfe, HILFE_ABZUG,
   HILFEN, hinweisGesehen, KATEGORIE_NAME, type Kategorie, nullGrenzeM, partieFesthalten, passende, type Pool, punkte, raenge,
   schweiz11Laden, type Schwierigkeit, speicherLesen, type SpielObjekt, STANDARD, STUFE_FAKTOR, STUFE_NAME, typText, urteil,
 } from '../schweiz11'
@@ -9,7 +9,6 @@ import { type KartenPin, Schweiz11Karte } from './Schweiz11Karte'
 import { Auswahl } from './Auswahl'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
-import { ohneKuerzel } from '../kuerzel'
 import { kantonText } from '../kanton'
 import { genau } from './Objekte'
 import { gerundetM } from '../fahrt'
@@ -25,10 +24,6 @@ const KANTONSNAME: Record<string, string> = {
 }
 const EINSTELLUNG = 'taktland.schweiz11.einstellungen.v1'
 
-/** Name zum Anzeigen: ohne Kürzel der Quelle und ohne Nummer in Klammern («( 042 )»);
- *  der Name laut Quelle steht in der Auflösung dabei */
-const anzeigeName = (o: SpielObjekt) =>
-  (o.t === 'b' ? o.name : ohneKuerzel(o.name)).replace(/\s*\(\s*\d+\s*\)\s*$/, '')
 const MAX_SPIELER = 8
 
 function einstellungLesen(): { e: Einstellungen; namen: string[]; gruppe: boolean } {
@@ -146,7 +141,7 @@ export function Schweiz11({ index }: { index: BahnhofIndex | null }) {
         <div className="mt-6">
           {anzahl < e.fragen ? (
             <p className="mb-3 border-l-2 border-sbb-red pl-3 text-sm">
-              {anzahl === 0 ? 'Dazu gibt es keine passenden Objekte.' : `Dazu gibt es nur ${anzahl} passende Objekte.`} Wähle ein
+              {anzahl === 0 ? 'Dazu gibt es keine passenden Objekte.' : `Dazu gibt es nur ${anzahl} ${anzahl === 1 ? 'passendes Objekt' : 'passende Objekte'}.`} Wähle ein
               grösseres Gebiet, eine andere Art oder eine andere Schwierigkeit.
             </p>
           ) : (

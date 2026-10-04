@@ -261,7 +261,7 @@ function BahnhofListe({ fakten }: { fakten: Fakt[] }) {
           </li>
         ))}
       </ol>
-      <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">Quelle: {fakten[0].source}</p>
+      <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">Datensatz: {fakten[0].source}</p>
     </div>
   )
 }
@@ -313,7 +313,7 @@ function FaktZeile({ fakt, href, zielText = 'Alle anzeigen' }: {
         lang ? 'truncate text-sm font-normal' : 'text-lg tabular-nums'}`}>
         {anzeige}{fakt.unit ? ` ${fakt.unit}` : ''}
       </dd>
-      <dd className="mt-0.5 text-xs text-sbb-metal dark:text-sbb-storm">Quelle: {fakt.source}</dd>
+      <dd className="mt-0.5 text-xs text-sbb-metal dark:text-sbb-storm">Datensatz: {fakt.source}</dd>
     </div>
   )
 }

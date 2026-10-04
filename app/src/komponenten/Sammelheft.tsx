@@ -110,6 +110,9 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
   }
   const erlebt = (a: ErlebtArt) => Object.values(heft.objekte).filter((o) => o.art === a && !aus.has(bahnVon(o)))
     .sort((x, y) => y.zeit - x.zeit)
+  // «von …» zählt nur, was in der Liste dahinter steht: Tunnel und Brücken anderer Bahnen
+  // (swissTLM3D, Kennung «tlm:») gehören nicht dazu
+  const imSatz = (a: ErlebtArt) => erlebt(a).filter((o) => a === 'bahnhof' || !o.kennung.startsWith('tlm:')).length
   // «Fehlt noch»: Bahnhöfe aller Bahnen, Tunnel und Brücken nur die der SBB
   const fehlt = (alle[art] ?? []).filter((e) => !heft.objekte[schluesselVon(art, e.kennung)]
     && !aus.has(art === 'bahnhof' ? isb.get(e.kennung) ?? 'SBB' : 'SBB'))
@@ -135,7 +138,9 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
             <p className="mt-2 text-3xl font-bold tabular-nums">{erlebt(a).length}</p>
             <p className="text-sm text-sbb-metal dark:text-sbb-storm">
               {erlebt(a).length === 1 ? ART_TEXT[a][0] : ART_TEXT[a][1]}
-              {alle[a] && <> von {alle[a]!.length}</>}
+              {alle[a] && (imSatz(a) === erlebt(a).length
+                ? <> von {alle[a]!.length}</>
+                : <>; {imSatz(a)} von {alle[a]!.length} der SBB</>)}
             </p>
           </div>
         ))}

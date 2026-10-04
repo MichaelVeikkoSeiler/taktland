@@ -8,14 +8,13 @@
   <meta name="theme-color" content="#a8102e" />
   <link rel="icon" type="image/svg+xml" href="./logo.svg" />
   <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
-  <!-- Installiert man von hier aus, heisst die App nur «Taktland» und startet unter /app/
-       (Michael, 2026-10-01); sonst nahm Chrome den Titel der Seite als Namen -->
+  <!-- Installiert man von hier aus, heisst die App nur «Taktland» und startet unter /app/ (2026-10-01); sonst nahm Chrome den Titel der Seite als Namen -->
   <link rel="manifest" href="./manifest.webmanifest" />
   <meta name="apple-mobile-web-app-title" content="Taktland" />
   <meta name="application-name" content="Taktland" />
   <meta property="og:title" content="Taktland – die Schweizer Bahn kennenlernen" />
   <meta property="og:description" content="Bahnhöfe, Tunnel und Brücken kennenlernen, im Zug mitfahren und alles festhalten. Kostenlos, ohne Konto." />
-  <meta property="og:image" content="./bilder/auftakt-start-hell.webp" />
+  <meta property="og:image" content="https://taktland.ch/bilder/auftakt-start-hell.webp" />
   <script>
     // Wer Taktland als App installiert hat und hier landet (alte Adresse), gehört in die App
     if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) location.replace('./app/')
@@ -35,7 +34,7 @@
     body { margin: 0; background: var(--grund); color: var(--text);
            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; line-height: 1.55; }
     img { max-width: 100%; height: auto; display: block; }
-    /* Umbruch (Michael, 2026-09-29: «auf dem Tablet schöner umbrechen»): Titel in
+    /* Umbruch (2026-09-29): Titel in
        gleich langen Zeilen, Absätze ohne einzelnes Wort auf der letzten Zeile */
     h1, h2, h3 { text-wrap: balance; }
     p, li { text-wrap: pretty; }
@@ -61,7 +60,7 @@
     .auftakt h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.08; letter-spacing: -0.03em; margin: 28px 0 0; max-width: 20ch; }
     .auftakt p.lead { font-size: clamp(18px, 2.2vw, 22px); margin: 16px 0 0; max-width: 40em; }
     .knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
-    /* auf dem Handy führt erst das Ende der Seite zur App (Michael, 2026-09-30) */
+    /* auf dem Handy führt erst das Ende der Seite zur App (2026-09-30) */
     @media (max-width: 719px) { .nur-gross { display: none; } }
     .klein-leise { color: var(--leise); font-size: 14px; margin-top: 12px; }
 
@@ -95,7 +94,7 @@
 
     .schritte { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 12px; margin-top: 24px; }
     @media (min-width: 820px) { .schritte { grid-template-columns: repeat(3, 1fr); } }
-    /* Nummer links, Titel daneben, der Text darunter eingerückt (Michael, 2026-09-29) */
+    /* Nummer links, Titel daneben, der Text darunter eingerückt (2026-09-29) */
     .schritte li { counter-increment: s; background: var(--kachel); border-radius: 8px; padding: 20px;
                    display: grid; grid-template-columns: 32px 1fr; column-gap: 14px; row-gap: 6px; align-items: center; }
     .schritte li::before { content: counter(s); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
@@ -173,10 +172,11 @@
     <section class="teil zeile umgekehrt" aria-labelledby="bahnhoefe">
       <div>
         <p class="dach">Bahnland</p>
-        <h2 id="bahnhoefe">Jeder Bahnhof mit Steckbrief und Fragen.</h2>
+        <h2 id="bahnhoefe">Jeder Bahnhof mit eigener Seite und Fragen.</h2>
         <p>
           Wie viele Menschen steigen in Luzern ein und aus? Wie lang ist der längste Perron?
-          Zu jedem Bahnhof gibt es kurze Kapitel mit den Zahlen aus den Daten und Fragen dazu.
+          Zu jedem Bahnhof gibt es kurze Kapitel mit den Zahlen aus den Daten, soweit es sie gibt,
+          und Fragen dazu.
           Nach jeder Antwort steht der Beleg.
         </p>
         <ul class="punkte">
@@ -191,7 +191,7 @@
     <section class="teil zeile" aria-labelledby="duell">
       <div>
         <p class="dach">Duell</p>
-        <h2 id="duell">Welcher Bahnhof ist grösser?</h2>
+        <h2 id="duell">Wo steigen mehr Menschen ein und aus?</h2>
         <p>
           Zwei Bahnhöfe, eine Frage. Jede richtige Antwort verlängert die Serie, und je länger
           sie wird, desto knapper liegen die Werte beieinander.
@@ -268,7 +268,8 @@
         <li><b>Zum Home-Bildschirm hinzufügen</b><span>iPhone: Safari → Teilen → «Zum Home-Bildschirm».
             Android: Chrome → Menü → «Zum Startbildschirm hinzufügen».</span></li>
         <li><b>Fahren</b><span>Im Zug den roten Knopf tippen, Ziel wählen, Bildschirm anlassen.
-            Unterwegs geht es auch ohne Empfang, wenn Taktland einmal geladen ist.</span></li>
+            Unterwegs geht es auch ohne Empfang, wenn Taktland und die Strecke einmal mit Empfang
+            geladen sind.</span></li>
       </ol>
     </section>
 
@@ -282,14 +283,17 @@
   <footer>
     <div class="breite">
       <p><b style="color: var(--text)">Taktland</b> ist ein privates Lernprojekt und kein Angebot einer
-         Bahnunternehmung.</p>
+         Bahnunternehmung. Von Veikko Seiler, entstanden mit Unterstützung von KI (Claude Code;
+         Auftaktbilder: ChatGPT).</p>
       <p>Daten: SBB Open Data (data.sbb.ch), opentransportdata.swiss, Bundesamt für Verkehr BAV,
          Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, Bundesamt für Umwelt
-         BAFU, Bundesamt für Bevölkerungsschutz BABS.</p>
-      <p>Datenschutz: Diese Seite und die App liefert GitHub Pages aus; GitHub speichert laut eigenen
+         BAFU, Bundesamt für Bevölkerungsschutz BABS. Höhenstufen: swissALTIRegio mit Höhenmodellen
+         aus Italien, Österreich, Deutschland und Frankreich, die volle Quellenangabe steht in der App
+         unter <a href="./app/#/anleitung">Info</a>.</p>
+      <p>Datenschutz: Diese Seite und die App liefert GitHub Pages aus, ein Dienst von GitHub (USA); GitHub speichert laut eigenen
          Angaben die IP-Adressen der Besucher aus Sicherheitsgründen. Die Adresse taktland.ch ist bei
          cyon registriert. Gezählt wird nur, wie oft Webseite und App geöffnet werden: Ein Zähler bei
-         cyon in der Schweiz (zaehler.taktland.ch) speichert je Tag nur die Zahl, ohne IP-Adresse und
+         cyon in der Schweiz (zaehler.taktland.ch) speichert je Tag nur Zahlen, ohne IP-Adresse und
          ohne Kennung; wie jeder Webserver führt er ein Zugriffsprotokoll, das cyon verwaltet. Mehr
          dazu in der App unter <a href="./app/#/anleitung">Info</a>.</p>
     </div>
