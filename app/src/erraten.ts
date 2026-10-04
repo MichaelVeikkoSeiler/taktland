@@ -87,7 +87,8 @@ export interface Einstellungen {
   /** Sekunden je Bahnhof (beim Gegeneinander je Zug), 0 = ohne */
   zeit: 0 | 30 | 60 | 90
 }
-export const STANDARD: Einstellungen = { modus: 'allein', antwort: 'frei', fragen: 5, schwierigkeit: 'gemischt', gebiet: 'CH', zeit: 0 }
+/** Auswahl aus vier zuerst und als Standard (Michael, 2026-10-04) */
+export const STANDARD: Einstellungen = { modus: 'allein', antwort: 'auswahl', fragen: 5, schwierigkeit: 'gemischt', gebiet: 'CH', zeit: 0 }
 
 export interface Pool { bahnhoefe: ErratenBahnhof[]; nach: Map<number, ErratenBahnhof>; rang: Map<number, number> }
 

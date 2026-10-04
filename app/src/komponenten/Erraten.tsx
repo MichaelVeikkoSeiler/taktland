@@ -134,7 +134,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
                 </div>
               </>
             )}
-            {wahl('Antwort', e.antwort, [['frei', 'Freie Eingabe'], ['auswahl', 'Auswahl aus vier']], (w) => setE({ ...e, antwort: w }))}
+            {wahl('Antwort', e.antwort, [['auswahl', 'Auswahl aus vier'], ['frei', 'Freie Eingabe']], (w) => setE({ ...e, antwort: w }))}
             {wahl('Bahnhöfe', e.fragen, [[5, '5'], [10, '10']], (w) => setE({ ...e, fragen: w }))}
           </div>
           <div>
