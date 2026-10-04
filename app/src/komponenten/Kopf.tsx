@@ -8,6 +8,8 @@ import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
 import duellHell from '../assets/auftakt-duell-hell.webp'
 import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
 import logbuchHell from '../assets/auftakt-logbuch-hell.webp'
+import erratenDunkel from '../assets/auftakt-erraten-dunkel.webp'
+import erratenHell from '../assets/auftakt-erraten-hell.webp'
 import fahrtDunkel from '../assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
@@ -119,6 +121,11 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: logbuchHell, dunkel: logbuchDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Blick aus dem Zugfenster auf einen See mit Uferort, Kirchturm und Viadukt, auf dem Tisch ein offenes rotes Notizbuch mit einer Strecke aus Punkten, ein Handy und ein Becher.',
   },
+  // Michael, 2026-10-04: eigenes Bildpaar für «Bahnhof erraten»
+  erraten: {
+    hell: erratenHell, dunkel: erratenDunkel, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Jemand sitzt auf dem Sofa und spielt auf dem Tablet «Bahnhof erraten» mit sechs verdeckten Hinweiskarten.',
+  },
   // Michael, 2026-10-03: eigenes Bildpaar für die Spiele, das Duell behält seines
   spiele: {
     hell: spieleHell, dunkel: spieleDunkel, breite: 1344, hoehe: 664,
@@ -152,8 +159,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : aktiv === 'bahnuebergaenge' ? BILDER.start
     // die Spiele und Geo mit dem Bild der Spiele, das Duell mit seinem
     : aktiv === 'spiele' || aktiv === 'schweiz11' ? BILDER.spiele
-    // Bahnhof erraten mit dem Bild der Bahnhöfe
-    : aktiv === 'erraten' ? BILDER.bahnhoefe : BILDER[schluessel]
+    : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])

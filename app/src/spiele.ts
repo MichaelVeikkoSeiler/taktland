@@ -7,8 +7,8 @@
  */
 import duellDunkel from './assets/auftakt-duell-dunkel.webp'
 import duellHell from './assets/auftakt-duell-hell.webp'
-import bahnhoefeDunkel from './assets/auftakt-bahnhoefe-dunkel.webp'
-import bahnhoefeHell from './assets/auftakt-bahnhoefe-hell.webp'
+import erratenDunkel from './assets/auftakt-erraten-dunkel.webp'
+import erratenHell from './assets/auftakt-erraten-hell.webp'
 import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
 
@@ -45,7 +45,7 @@ export const SPIELE: Spiel[] = [
   {
     id: 'erraten', titel: 'Bahnhof erraten', status: 'spielbereit', adresse: '#/erraten',
     kurz: 'Sechs verdeckte Hinweise, ein Bahnhof: Wie wenige brauchst du?',
-    bild: { hell: bahnhoefeHell, dunkel: bahnhoefeDunkel, alt: 'Illustration: Ein Bahnhof mit Perron und Zug.' },
+    bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhof erraten» auf dem Tablet.' },
     beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
   },
