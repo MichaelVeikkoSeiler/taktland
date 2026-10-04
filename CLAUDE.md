@@ -218,7 +218,7 @@ die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot einer Bahn i
 
 ## Sprache
 
-Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen über 9999 mit Apostroph.
+Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen ab 1000 mit Apostroph (5'000; Michael, 2026-10-04).
 «Perron» statt Bahnsteig, «Billett» statt Fahrkarte.
 
 ## Quellenangabe
