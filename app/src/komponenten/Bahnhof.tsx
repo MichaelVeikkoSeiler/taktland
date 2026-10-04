@@ -89,23 +89,19 @@ export function Bahnhof({ uic, zurueck, eintrag, zurueckText }: {
           {' · '}{fragenGesamt} {fragenGesamt === 1 ? 'Frage' : 'Fragen'}
         </p>
         {eintrag && !eintrag.isb && (
-          <p className="mt-2 flex items-start gap-2 text-sm text-sbb-black dark:text-sbb-white">
-            <BahnKuerzel isb="SBB" />
-            <span>Die Infrastruktur dieses Bahnhofs betreibt die SBB.</span>
-          </p>
+          <p className="mt-2 flex text-sm"><BahnKuerzel isb="SBB" /></p>
         )}
         {eintrag?.isb && (
-          <p className="mt-2 flex items-start gap-2 text-sm text-sbb-black dark:text-sbb-white">
-            <BahnKuerzel isb={eintrag.isb} />
-            <span>
-              Die Infrastruktur dieses Bahnhofs betreibt die {eintrag.isb}, nicht die SBB. Die
-              offenen Daten der SBB enthalten dazu weniger, etwa keine Perrons; darum hat diese
-              Seite weniger Kapitel.
+          <div className="mt-2 text-sm text-sbb-black dark:text-sbb-white">
+            <p className="flex"><BahnKuerzel isb={eintrag.isb} /></p>
+            <p className="mt-1">
+              Die offenen Daten der SBB enthalten zu Bahnhöfen anderer Bahnen weniger, etwa keine
+              Perrons; darum hat diese Seite weniger Kapitel.
               {eintrag.frequenz_erfasst === false && ' Die Passagierfrequenz der SBB führt diese '
                 + 'Haltestelle nicht: Fahrgastzahlen fehlen, und im Duell spielt sie nicht mit. Die '
                 + 'Betreiberin stammt aus dem Schienennetz des BAV.'}
-            </span>
-          </p>
+            </p>
+          </div>
         )}
         {eintrag?.im_netz && (
           <p className="mt-2 text-sm">
@@ -171,7 +167,7 @@ function LinienLinks({ linien }: { linien: LinienEintrag[] }) {
              className="flex items-center justify-between gap-3 kachel kachel-link px-3 py-2">
             <span className="min-w-0">
               <span className="font-medium text-sbb-black dark:text-sbb-white">Linie {l.linie}</span>
-              {l.bahn && <span className="ml-2"><BahnKuerzel isb={l.bahn} titel={`Datenherr laut BAV: ${l.bahn}`} /></span>}
+              {l.bahn && <span className="ml-2"><BahnKuerzel isb={l.bahn} titel={`Datenherr laut BAV: ${l.bahn}`} kurz /></span>}
               <span className="ml-2 text-sm text-sbb-metal dark:text-sbb-storm">{l.name}</span>
             </span>
             <span className="pfeil shrink-0" aria-hidden="true">→</span>

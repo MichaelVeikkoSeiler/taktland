@@ -121,7 +121,7 @@ function Eintrag({ l, durch }: { l: LinienEintrag; durch: string[] }) {
         <span className="min-w-0">
           <span className="flex items-center gap-2 font-medium text-sbb-black dark:text-sbb-white">
             Linie {l.linie}
-            {l.bahn && <BahnKuerzel isb={l.bahn} />}
+            {l.bahn && <BahnKuerzel isb={l.bahn} kurz />}
           </span>
           <span className="block truncate text-sm text-sbb-black dark:text-sbb-white">{l.name}</span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{teile.join(' · ')}</span>

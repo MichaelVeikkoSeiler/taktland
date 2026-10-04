@@ -158,9 +158,10 @@ export function Eintrag({ e, oeffnen, favorit }: {
         <span className="min-w-0">
           <span className="flex min-w-0 items-center gap-2">
             <span className="truncate font-medium text-sbb-black dark:text-sbb-white">{e.name}</span>
-            {/* auch die SBB als Kästchen (Michael, 2026-10-04); im Index fehlt isb nur bei ihr */}
-            <BahnKuerzel isb={e.isb ?? 'SBB'} />
           </span>
+          {/* auch die SBB als Kästchen (Michael, 2026-10-04); im Index fehlt isb nur bei ihr. Auf
+              eigener Zeile, damit «Infrastruktur: …» lange Namen nicht abschneidet */}
+          <span className="mt-0.5 flex"><BahnKuerzel isb={e.isb ?? 'SBB'} /></span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
             {e.kanton ? `${kantoneText(e)} · ` : ''}{stufeText(e)}
             {e.dwv != null && ` · ${e.dwv.toLocaleString('de-CH')} pro Werktag`}
@@ -176,13 +177,14 @@ export function Eintrag({ e, oeffnen, favorit }: {
   )
 }
 
-/** Kennzeichen für Bahnhöfe, deren Infrastruktur nicht die SBB betreibt */
-export function BahnKuerzel({ isb, titel = `Infrastruktur: ${isb}` }: { isb: string; titel?: string }) {
+/** Bei Bahnhöfen steht «Infrastruktur: BLS» im Kästchen, damit klar ist, was die Bahn dort ist
+ *  (Michael, 2026-10-04); bei Linien (kurz) nur das Kürzel, dort heisst es «Datenherr laut BAV» */
+export function BahnKuerzel({ isb, titel = `Infrastruktur: ${isb}`, kurz = false }: { isb: string; titel?: string; kurz?: boolean }) {
   return (
     <span title={titel} aria-label={titel}
           className="shrink-0 border border-sbb-metal px-1 text-xs font-medium leading-4
                      text-sbb-metal dark:border-sbb-storm dark:text-sbb-storm">
-      {isb}
+      {kurz ? isb : `Infrastruktur: ${isb}`}
     </span>
   )
 }
