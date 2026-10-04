@@ -41,7 +41,7 @@ export function Linien({ index }: { index: BahnhofIndex | null }) {
   }, [daten, begriff, index])
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Strecken</h1>
       <p className="mt-2 leading-relaxed">
         Die Strecken der Infrastruktur, jede unter ihrer Liniennummer, etwa Linie 600. Das sind

@@ -11,7 +11,7 @@ export function EinstellungenSeite() {
   const [melde, meldeAendern] = useMeldeEinstellung()
   const wachMoeglich = typeof navigator !== 'undefined' && 'wakeLock' in navigator
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Einstellungen</h1>
       <p className="mt-2 leading-relaxed">Die Einstellungen gelten für dieses Gerät.</p>
 

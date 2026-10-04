@@ -8,7 +8,7 @@ import { Schiebeleiste } from './Kopf'
  */
 export function Spiele() {
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Spiele</h1>
       <p className="mt-2 leading-relaxed">
         Entdecke Taktland spielerisch. Hier findest du das Duell, Geo und die Bahnhofsuche; weitere Spiele

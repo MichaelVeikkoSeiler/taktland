@@ -116,7 +116,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
     `${name(f.von)} → ${name(f.nach)}${f.ueber ? ` (über ${name(f.ueber)})` : ''}`
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       {teil === 'neu' && (<>
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Neue Fahrt</h1>
       <p className="mt-2 leading-relaxed">

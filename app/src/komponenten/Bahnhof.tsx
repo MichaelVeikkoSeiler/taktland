@@ -361,7 +361,7 @@ export function Rahmen({ children, zurueck, zurueckText = 'Alle Bahnhöfe' }: {
   zurueckText?: string
 }) {
   return (
-    <div className="pb-16">
+    <div className="pb-4">
       <div className="px-4">
         <Zurueck onClick={zurueck} text={zurueckText} />
       </div>

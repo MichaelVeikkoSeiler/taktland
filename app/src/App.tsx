@@ -216,7 +216,7 @@ export default function App() {
                    eintrag={index.bahnhoefe.find((b) => b.uic === seite.uic)} />
         )}
 
-        <footer className="print:hidden mt-12 border-t border-sbb-cloud px-4 py-6 text-xs
+        <footer className="print:hidden mt-6 border-t border-sbb-cloud px-4 pt-4 pb-6 text-xs
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
           {/* die Bildmarke klein über den Angaben (Michael, 2026-09-27) */}
           <p className="mb-3 flex items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">

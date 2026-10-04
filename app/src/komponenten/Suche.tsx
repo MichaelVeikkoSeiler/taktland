@@ -56,7 +56,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
     treffer, stand.seite, (seite) => aendern({ ...stand, seite }), (e) => e.name)
 
   return (
-    <div className="px-4 pb-16 pt-6">
+    <div className="px-4 pb-4 pt-6">
       {/* Titel wie in jedem Bereich (Michael, 2026-09-22) */}
       <h1 className="mb-4 text-2xl font-bold tracking-tight">Bahnhöfe</h1>
       <Suchfeld begriff={begriff} aendern={(b) => aendern({ ...stand, begriff: b, seite: 0 })} />

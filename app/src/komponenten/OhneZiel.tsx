@@ -89,7 +89,7 @@ export function OhneZiel({ index }: { index: BahnhofIndex | null }) {
   const name = (abk: string) => bahnhof.get(uicVon.get(abk) ?? 0)?.name ?? daten?.netz.punkte[abk] ?? abk
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Ohne Ziel</h1>
       <p className="mt-2 leading-relaxed">
         Taktland erkennt aus einigen Standorten, auf welcher Strecke und in welche Richtung der Zug

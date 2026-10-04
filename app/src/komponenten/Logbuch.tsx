@@ -46,7 +46,7 @@ export function Logbuch({ index }: { index: BahnhofIndex | null }) {
   }
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Logbuch</h1>
       <p className="mt-2 leading-relaxed">
         Jede Fahrt mit «Fahren» steht automatisch hier, mit Datum, Weg, Kilometern und allem,

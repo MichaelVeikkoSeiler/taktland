@@ -94,7 +94,7 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
   )
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <Zurueck onClick={zurueck} text={`Linie ${nr}`} />
 
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{t.mehrzahl} der Linie {nr}</h1>

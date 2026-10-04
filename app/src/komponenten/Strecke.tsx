@@ -277,7 +277,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
   const alle = useMemo(() => [...(index?.bahnhoefe ?? []), ...fahrtZiele(index).filter((b) => b.ohne_bahnhofseite)], [index])
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Strecke</h1>
       <p className="mt-2 leading-relaxed">
         Start und Ziel wählen: Taktland sucht einen Weg durch das Netz und zeigt die erfassten

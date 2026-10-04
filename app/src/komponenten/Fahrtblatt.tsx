@@ -167,7 +167,7 @@ export function Fahrtblatt({ index, wahl }: { index: BahnhofIndex | null; wahl: 
     [daten, bahnhof, weniger, zweiseitig])
 
   return (
-    <div className="px-4 pb-16 print:p-0">
+    <div className="px-4 pb-4 print:p-0">
       <div className="print:hidden">
         <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahrtblatt</h1>
         <p className="mt-2 leading-relaxed">

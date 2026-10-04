@@ -353,7 +353,7 @@ export function Duell({ index }: { index: BahnhofIndex | null }) {
   const getroffen = runde !== null && gewaehlt === runde.richtig
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <div className="mt-6 flex items-baseline justify-between border-b border-sbb-cloud
                       pb-3 dark:border-sbb-iron">
         <h1 className="text-2xl font-bold tracking-tight">Duell</h1>

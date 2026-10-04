@@ -170,7 +170,7 @@ export function Uebersicht({ art, stand, aendern }: {
     treffer, stand.seite, (seite) => aendern({ ...stand, seite }), sortierung.marke)
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">{t.titel}</h1>
       {art === 'tunnel' ? (
         <p className="mt-2 leading-relaxed">

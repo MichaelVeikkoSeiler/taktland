@@ -14,7 +14,7 @@ import { tippSchliesst } from '../zuklappen'
 export function Anleitung({ index }: { index: BahnhofIndex | null }) {
   const stand = index ? datum(index.stand) : null
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       {/* die Bildmarke gross als Einstieg (Michael, 2026-09-27) */}
       <img src="./logo.svg" alt="" className="mt-6 size-16" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>

@@ -121,7 +121,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
   }
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Sammelheft</h1>
       <p className="mt-2 leading-relaxed">
         Was du beim Fahren durchfahren hast, und was noch fehlt. Es bleibt auf diesem Gerät; die

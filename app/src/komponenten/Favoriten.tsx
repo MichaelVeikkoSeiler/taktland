@@ -54,7 +54,7 @@ export function Favoriten({ index, oeffnen }: { index: BahnhofIndex | null; oeff
   }
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Favoriten</h1>
       <p className="mt-2 leading-relaxed">
         Bahnhöfe, die du oft brauchst. Sie stehen in jeder Bahnhofsuche oben, sobald das Feld

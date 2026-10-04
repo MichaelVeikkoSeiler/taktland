@@ -17,7 +17,7 @@ export function AudioSeite() {
   const audio = useAudio()
   const aus = !audio.an
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Audio</h1>
       <p className="mt-2 leading-relaxed">
         Hier stellst du ein, welche Töne Taktland spielt. Die Einstellung gilt für dieses Gerät.

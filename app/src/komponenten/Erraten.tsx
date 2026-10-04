@@ -91,7 +91,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
   )
 
   return (
-    <div className="px-4 pb-16">
+    <div className="px-4 pb-4">
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">Bahnhofsuche</h1>
       <p className="mt-2 leading-relaxed">
