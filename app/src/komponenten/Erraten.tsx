@@ -3,7 +3,7 @@ import type { BahnhofIndex, IndexEintrag } from '../typen'
 import {
   type Aktion, bestwert, bestwertFesthalten, type Einstellungen, erratenLaden, type ErratenBahnhof, HINWEISE, type HinweisId,
   hinweisText, moeglich, type Modus, type Partie, partieAnlegen, partieLesen, partieMerken, passende, type Pool,
-  PUNKTE_HOECHST, PUNKTE_JE_HINWEIS, type Runde, schritt, type Schwierigkeit, type Spur, stand, STANDARD, STUFE_NAME,
+  KOSTEN, PUNKTE_HOECHST, PUNKTE_JE_HINWEIS, type Runde, schritt, type Schwierigkeit, type Spur, stand, STANDARD, STUFE_NAME,
   suchen, verdeckt, vorgegeben,
 } from '../erraten'
 import { Auswahl } from './Auswahl'
@@ -175,7 +175,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
             Die Karten zeigen Kanton und Bezirk, Ein- und Aussteigende pro Werktag (SBB), Höhe, die Bahn der Infrastruktur und
             die Unternehmen, deren Züge dort halten, alles aus den Daten der Bahnhofseiten. Leicht, mittel und schwer ergeben
             sich aus dem Rang bei den Ein- und Aussteigenden: die obersten 20 % leicht, bis 50 % mittel, der Rest schwer.
-            Jede aufgedeckte Karte kostet {PUNKTE_JE_HINWEIS} Punkte, ohne Karte gibt es {PUNKTE_HOECHST}. Ergebnisse bleiben
+            Jede aufgedeckte Karte kostet {PUNKTE_JE_HINWEIS} Punkte, der Bezirk {KOSTEN.bezirk}; ohne Karte gibt es {PUNKTE_HOECHST}. Ergebnisse bleiben
             auf diesem Gerät.
           </p>
         </div>
@@ -311,7 +311,7 @@ function Karten({ pool, x, r, spur, ziel, aufdecken }: {
       {HINWEISE.map((h) => (
         <Karte key={h.id} titel={h.titel} wert={hinweisText(ziel, h.id)}
                zustand={vor.includes(h.id) ? 'vorgegeben' : zu.includes(h.id) ? 'verdeckt' : 'offen'}
-               neu={h.id === neu && x.phase !== 'aufloesung'} kosten={PUNKTE_JE_HINWEIS}
+               neu={h.id === neu && x.phase !== 'aufloesung'} kosten={KOSTEN[h.id]}
                onClick={aufdecken ? () => aufdecken(h.id) : undefined} />
       ))}
     </div>
@@ -321,7 +321,7 @@ function Karten({ pool, x, r, spur, ziel, aufdecken }: {
 function Frage({ pool, x, r, spur, ziel, amZug, tun }: {
   pool: Pool; x: Partie; r: Runde; spur: Spur; ziel: ErratenBahnhof; amZug: string; tun: (a: Aktion) => void
 }) {
-  const noch = moeglich(spur.offen.length)
+  const noch = moeglich(spur.offen)
   const [text, setText] = useState('')
   const [gewaehlt, setGewaehlt] = useState<ErratenBahnhof | null>(null)
   const vorschlaege = useMemo(() => (gewaehlt ? [] : suchen(pool, text, spur.falsch)), [pool, text, spur.falsch, gewaehlt])
@@ -343,7 +343,7 @@ function Frage({ pool, x, r, spur, ziel, amZug, tun }: {
         Noch erreichbar: <span className="text-2xl font-bold tabular-nums">{noch}</span> Punkte
       </p>
       <p className="text-xs text-sbb-metal dark:text-sbb-storm">
-        {STUFE_NAME[ziel.s]} · jede aufgedeckte Karte −{PUNKTE_JE_HINWEIS} · ein falscher Tipp deckt die nächste auf
+        {STUFE_NAME[ziel.s]} · jede Karte −{PUNKTE_JE_HINWEIS}, der Bezirk −{KOSTEN.bezirk} · ein falscher Tipp deckt die nächste auf
       </p>
       {meldung && <p className="mt-2 border-l-2 border-sbb-red pl-3 text-sm" role="status">{meldung}</p>}
     </div>
@@ -434,7 +434,7 @@ function ZugEnde({ pool, x, r, spur, ziel, amZug, weiter }: {
           <Karten pool={pool} x={x} r={r} spur={spur} ziel={ziel} />
         </div>
         <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-          Merk dir deine Karten; die anderen sehen sie nicht. Noch erreichbar: {moeglich(spur.offen.length)} Punkte.
+          Merk dir deine Karten; die anderen sehen sie nicht. Noch erreichbar: {moeglich(spur.offen)} Punkte.
         </p>
         <button type="button" onClick={weiter}
                 className="mt-4 min-h-12 w-full rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 md:w-auto md:px-10">

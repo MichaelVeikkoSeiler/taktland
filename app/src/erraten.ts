@@ -46,10 +46,13 @@ export const HINWEISE: Array<{ id: HinweisId; titel: string }> = [
   { id: 'zuege_von', titel: 'Züge von' },
 ]
 
-/** Punkte: ohne aufgedeckte Karte 70, jede kostet 10, bei sechs bleiben 10 */
+/** Punkte: ohne aufgedeckte Karte 80, jede kostet 10, der Bezirk 20, bei allen sechs bleiben 10 */
 export const PUNKTE_JE_HINWEIS = 10
-export const PUNKTE_HOECHST = PUNKTE_JE_HINWEIS * (HINWEISE.length + 1)
-export const moeglich = (kosten: number) => PUNKTE_HOECHST - PUNKTE_JE_HINWEIS * kosten
+/** was eine Karte kostet: der Bezirk 20, weil er viel verrät (Michael, 2026-10-04), die übrigen 10 */
+export const KOSTEN: Record<HinweisId, number> = { kanton: 10, bezirk: 20, dwv: 10, hoehe: 10, bahn: 10, zuege_von: 10 }
+/** ohne aufgedeckte Karte 80, mit allen sechs bleiben 10 */
+export const PUNKTE_HOECHST = PUNKTE_JE_HINWEIS + Object.values(KOSTEN).reduce((a, b) => a + b, 0)
+export const moeglich = (offen: HinweisId[]) => PUNKTE_HOECHST - offen.reduce((a, h) => a + KOSTEN[h], 0)
 
 export const STUFE_NAME: Record<Stufe, string> = { 1: 'Leicht', 2: 'Mittel', 3: 'Schwer' }
 
@@ -236,7 +239,7 @@ function rundeBeenden(x: Partie, r: Runde, sieger: number | null, zeitAus = fals
   r.fertig = true
   r.sieger = sieger
   r.zeitAus = zeitAus
-  r.punkte = sieger === null ? 0 : moeglich(r.spuren[gegeneinander(x) ? sieger : 0].offen.length)
+  r.punkte = sieger === null ? 0 : moeglich(r.spuren[gegeneinander(x) ? sieger : 0].offen)
   return { ...x, phase: 'aufloesung', frist: null }
 }
 
@@ -276,7 +279,8 @@ export function schritt(alt: Partie, a: Aktion, p: Pool, jetzt = Date.now()): Pa
       s.falsch.push(a.bahnhof)
       // ein falscher Tipp deckt die nächste verdeckte Karte auf; ist keine mehr verdeckt, ist die Runde
       // für diese Spur vorbei
-      const naechsteKarte = verdeckt(x, r, s, p)[0] ?? null
+      // die günstigste zuerst, in der Reihenfolge der Anzeige; der teure Bezirk erst zuletzt
+      const naechsteKarte = [...verdeckt(x, r, s, p)].sort((a1, b1) => KOSTEN[a1] - KOSTEN[b1])[0] ?? null
       if (naechsteKarte) {
         s.offen.push(naechsteKarte)
       } else if (gegeneinander(x)) {
