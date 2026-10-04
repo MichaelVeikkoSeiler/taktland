@@ -459,18 +459,20 @@ function Aufloesung({ x, r, ziel, index, weiter }: {
         <div>
           <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">Gesucht war · {STUFE_NAME[ziel.s]}</p>
           <p className="text-3xl font-bold leading-tight">{ziel.name}</p>
-          <div className="kachel mt-3 p-3">
+          {/* richtig grün, nicht erkannt rot, in den Farben des Duells (Michael, 2026-10-04) */}
+          <div className={`mt-3 rounded-lg border-2 p-3 ${r.sieger !== null
+            ? 'border-sbb-green bg-sbb-green-bg dark:bg-sbb-green/15' : 'border-sbb-red bg-sbb-red/5 dark:bg-sbb-red/15'}`}>
             {!gegen ? (
               r.sieger !== null ? (
                 <>
-                  <p className="text-lg font-bold">{x.e.modus === 'miteinander' ? 'Gemeinsam erkannt!' : 'Richtig!'}</p>
+                  <p className="text-lg font-bold text-sbb-green dark:text-fahrt-sehenswert-hell">{x.e.modus === 'miteinander' ? 'Gemeinsam erkannt!' : 'Richtig!'}</p>
                   <p className="mt-1 tabular-nums">
                     Mit {hinweise(spur0)} {hinweise(spur0) === 1 ? 'Hinweis' : 'Hinweisen'}
                     {spur0.falsch.length ? ` und ${spur0.falsch.length} falschen ${spur0.falsch.length === 1 ? 'Tipp' : 'Tipps'}` : ''} · <span className="font-bold">{r.punkte} Punkte</span>
                   </p>
                 </>
               ) : (
-                <p className="text-lg font-bold">{r.zeitAus ? 'Zeit abgelaufen' : 'Nicht erkannt'} · 0 Punkte</p>
+                <p className="text-lg font-bold"><span className="text-sbb-red">{r.zeitAus ? 'Zeit abgelaufen' : 'Nicht erkannt'}</span> · 0 Punkte</p>
               )
             ) : (
               <p className="text-lg font-bold">
