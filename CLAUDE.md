@@ -50,7 +50,8 @@ wenn eine Aussage allgemein bekannt oder offensichtlich richtig ist.
 
 9. **Keine Glücksfragen.** Was gefragt wird, muss man wissen können. Werte, die
    weniger als 5 % auseinanderliegen, werden nicht gegeneinander gefragt,
-   weder beim Sortieren noch beim Zuordnen oder beim Hotspot. Ein Schieberegler
+   weder beim Sortieren noch beim Zuordnen oder beim Hotspot. Bei Jahreszahlen
+   gilt statt 5 % ein Abstand von mindestens 10 Jahren (Michael, 2026-10-04). Ein Schieberegler
    darf höchstens ein Viertel seiner Spanne als richtig werten. Gleichstand ist
    kein Vorsprung: Bei gleich vielen Zügen pro Tag ist kein Abschnitt «am
    stärksten befahren». Genauso wenig darf eine Frage ihre Antwort verraten:
