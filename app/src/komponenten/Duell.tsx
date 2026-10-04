@@ -4,7 +4,7 @@ import {
 } from '../fortschritt'
 import { vergleichLaden } from '../daten'
 import type { BahnhofIndex, IndexEintrag, Kategorie, Vergleichsdaten } from '../typen'
-import { kantonText } from '../kanton'
+import { kantoneText } from '../kanton'
 import { Ladefehler } from './Ladefehler'
 import { Auswahl } from './Auswahl'
 import { BahnhofFeld } from './Strecke'
@@ -253,8 +253,8 @@ export function Duell({ index }: { index: BahnhofIndex | null }) {
     }
     return daten.bahnhoefe.map((b) => ({
       schluessel: String(b.uic), name: b.name,
-      unterzeile: b.kanton ? kantonText(b.kanton) : null,
-      kantone: b.kanton ? [b.kanton] : [], werte: b.werte,
+      unterzeile: kantoneText(b),
+      kantone: b.kanton ? [b.kanton, ...(b.kanton_auch ?? [])] : [], werte: b.werte,
       link: `#/bahnhof/${b.uic}`, linkText: b.name,
     }))
   }, [daten, bereich])

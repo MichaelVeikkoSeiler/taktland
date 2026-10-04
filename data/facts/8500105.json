@@ -2,6 +2,9 @@
   "uic": 8500105,
   "name": "Moutier",
   "kanton": "BE",
+  "kanton_auch": [
+    "JU"
+  ],
   "bps": "MOU",
   "tier": "S",
   "datenstand": "2026-09-26",
@@ -322,6 +325,11 @@
   },
   "bahnhofplan": null,
   "luecken": [
+    {
+      "thema": "Kanton",
+      "grund": "Die Quellen nennen verschiedene Kantone: Jura laut Haltestellendaten, BE laut Passagierfrequenz 2025. Welche Angabe gilt, sagen die Daten nicht; Taktland führt den Bahnhof bei beiden.",
+      "quelle": "haltestelle-haltekante, passagierfrequenz"
+    },
     {
       "thema": "Bahnhofplan",
       "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",

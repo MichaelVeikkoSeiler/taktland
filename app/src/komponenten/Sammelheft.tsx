@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { uebersichtLaden } from '../daten'
 import { datum, type ErlebtArt, heftLesen, heftLoeschen, schluesselVon } from '../erlebt'
-import { kantonText } from '../kanton'
+import { kantoneText } from '../kanton'
 import type { BahnhofIndex, BrueckenEintrag, TunnelEintrag, Uebersicht, UebergangEintrag } from '../typen'
 import { genau } from './Objekte'
 import { Pikto } from './Pikto'
@@ -88,7 +88,7 @@ export function Sammelheft({ index }: { index: BahnhofIndex | null }) {
                        : ` · ${e.baueinheiten} ${e.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}` })),
     bahnhof: index && [...index.bahnhoefe]
       .sort((a, b) => (b.dwv ?? -1) - (a.dwv ?? -1))
-      .map((b) => ({ kennung: String(b.uic), name: b.name, zeile: b.kanton ? kantonText(b.kanton) : '' })),
+      .map((b) => ({ kennung: String(b.uic), name: b.name, zeile: kantoneText(b) ?? '' })),
     // nach Linie und Kilometer, wie in den Daten
     bahnuebergang: uebergaenge && mitKennung(uebergaenge)
       .map((e) => ({ kennung: e.kennung, name: e.name ? ohneKuerzel(e.name) : 'Bahnübergang ohne Namen',

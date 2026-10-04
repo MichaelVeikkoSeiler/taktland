@@ -60,6 +60,8 @@ def main():
             "uic": d["uic"],
             "name": d["name"],
             "kanton": d["kanton"],
+            # zweiter Kanton, wo die Quellen sich widersprechen (Moutier)
+            **({"kanton_auch": d["kanton_auch"]} if d.get("kanton_auch") else {}),
             "tier": d["tier"],
             "dwv": sb.get("dwv"),
             "lat": sb.get("lat"),

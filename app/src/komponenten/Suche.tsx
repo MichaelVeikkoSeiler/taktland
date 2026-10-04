@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
-import { kantonText } from '../kanton'
+import { kantoneText } from '../kanton'
 import { Blaettern, useSeiten, vereinfachen } from './Blaettern'
 import { Auswahl } from './Auswahl'
 import { FavoritKnopf } from './Stern'
@@ -38,7 +38,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
     let liste = index.bahnhoefe
     if (b) liste = liste.filter((e) => vereinfachen(e.name).includes(b) ||
                                        String(e.uic).startsWith(b) ||
-                                       vereinfachen(e.kanton ?? '').includes(b))
+                                       [e.kanton, ...(e.kanton_auch ?? [])].some((k) => vereinfachen(k ?? '').includes(b)))
     // Der Index kommt nach Ein- und Aussteigenden geordnet, grösste zuerst
     if (sortierung === 'alphabet') {
       liste = [...liste].sort((a, b) => a.name.localeCompare(b.name, 'de-CH', { sensitivity: 'base' }))
@@ -161,7 +161,7 @@ export function Eintrag({ e, oeffnen, favorit }: {
             {e.isb && <BahnKuerzel isb={e.isb} />}
           </span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-            {e.kanton ? `${kantonText(e.kanton)} · ` : ''}{stufeText(e)}
+            {e.kanton ? `${kantoneText(e)} · ` : ''}{stufeText(e)}
             {e.dwv != null && ` · ${e.dwv.toLocaleString('de-CH')} pro Werktag`}
           </span>
         </span>

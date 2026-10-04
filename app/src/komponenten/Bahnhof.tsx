@@ -8,7 +8,7 @@ import { Luecken } from './Luecken'
 import { streckenAdresse } from './Strecke'
 import { BahnKuerzel } from './Suche'
 import { Zurueck } from './Zurueck'
-import { kantonText } from '../kanton'
+import { kantoneText } from '../kanton'
 import { Ladefehler } from './Ladefehler'
 
 const STUFE_TEXT: Record<string, string> = {
@@ -82,7 +82,7 @@ export function Bahnhof({ uic, zurueck, eintrag, zurueckText }: {
       <header className="px-4">
         <h1 className="text-2xl font-bold text-sbb-black dark:text-sbb-white">{profil.name}</h1>
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
-          {kanton ? `${kantonText(kanton)} · ` : ''}
+          {kanton ? `${kantoneText({ kanton, kanton_auch: eintrag?.kanton_auch })} · ` : ''}
           {eintrag?.frequenz_erfasst === false
             ? 'Haltestelle, Fahrgastzahl nicht erfasst'
             : <>{STUFE_TEXT[profil.tier]} · Fahrgastzahlen {profil.dataYear}</>}

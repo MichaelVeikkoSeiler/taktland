@@ -588,6 +588,26 @@ def services(d, uic):
     return out
 
 
+#: Kantonsname der Haltestellendaten zum Kürzel der Passagierfrequenz
+KANTON_KUERZEL = {
+    "Aargau": "AG", "Appenzell Ausserrhoden": "AR", "Appenzell Innerrhoden": "AI",
+    "Basel-Landschaft": "BL", "Basel-Stadt": "BS", "Bern": "BE", "Fribourg": "FR",
+    "Genève": "GE", "Glarus": "GL", "Graubünden": "GR", "Jura": "JU", "Luzern": "LU",
+    "Neuchâtel": "NE", "Nidwalden": "NW", "Obwalden": "OW", "St. Gallen": "SG",
+    "Schaffhausen": "SH", "Schwyz": "SZ", "Solothurn": "SO", "Thurgau": "TG",
+    "Ticino": "TI", "Uri": "UR", "Valais": "VS", "Vaud": "VD", "Zug": "ZG", "Zürich": "ZH",
+}
+
+
+def kanton_laut_stammdaten(uic, sb, sd):
+    """Das Kürzel des Kantons laut Haltestellendaten, wenn es von dem der Passagier-
+    frequenz abweicht (Moutier: BE in der Zählung 2024, Jura in den Haltestellendaten).
+    Taktland entscheidet nicht, welche Quelle recht hat: Beide stehen in den Fakten,
+    die Lücke «Kanton» nennt den Widerspruch (Michael, 2026-10-04)."""
+    k = KANTON_KUERZEL.get((sd or {}).get("kanton") or "")
+    return k if k and sb.get("kanton") and k != sb["kanton"] else None
+
+
 def luecken(d, uic, f):
     """Was zu diesem Bahnhof fehlt - ausdruecklich benannt statt weggelassen.
 
@@ -608,6 +628,12 @@ def luecken(d, uic, f):
                "erfasst. Er fehlt im Haltestellenverzeichnis, aus dem diese Angaben stammen.",
                "haltestelle-haltekante")
     sb = f.get("steckbrief") or {}
+    if f.get("kanton_auch"):
+        lueckt("Kanton",
+               f"Die Quellen nennen verschiedene Kantone: {f['stammdaten']['kanton']} laut "
+               f"Haltestellendaten, {f['kanton']} laut Passagierfrequenz {sb.get('jahr')}. "
+               "Welche Angabe gilt, sagen die Daten nicht; Taktland führt den Bahnhof bei beiden.",
+               "haltestelle-haltekante, passagierfrequenz")
     if sb.get("frequenz_erfasst") is False:
         lueckt("Ein- und Aussteigende",
                "Die Passagierfrequenz der SBB führt diese Haltestelle nicht. Wie viele "
@@ -845,6 +871,7 @@ def build(d, uic):
         "uic": uic,
         "name": name,
         "kanton": sb["kanton"],
+        **({"kanton_auch": [k]} if (k := kanton_laut_stammdaten(uic, sb, stammdaten(d, uic))) else {}),
         "bps": d.uic2bps.get(uic),
         "tier": bestimme_tier(sb, plan),
         "datenstand": d.datenstand,

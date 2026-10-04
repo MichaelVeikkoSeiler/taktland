@@ -190,6 +190,8 @@ export interface IndexEintrag {
   uic: number
   name: string
   kanton: string | null
+  /** weitere Kantone, wo die Quellen verschiedene nennen (Moutier: BE und JU) */
+  kanton_auch?: string[]
   tier: Stufe
   dwv: number | null
   lat: number | null
@@ -254,6 +256,7 @@ export interface VergleichsBahnhof {
   uic: number
   name: string
   kanton: string | null
+  kanton_auch?: string[]
   werte: Record<string, number>
 }
 

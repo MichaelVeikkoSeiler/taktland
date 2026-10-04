@@ -9,7 +9,7 @@ import { type KartenPin, Schweiz11Karte } from './Schweiz11Karte'
 import { Auswahl } from './Auswahl'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
-import { kantonText } from '../kanton'
+import { kantoneText } from '../kanton'
 import { genau } from './Objekte'
 import { gerundetM } from '../fahrt'
 import { antwortTon, reiterTon } from '../audio'
@@ -368,7 +368,7 @@ function fakten(o: SpielObjekt, index: IndexEintrag[]): string[] {
     return [
       b?.dwv ? `${genau(b.dwv)} Ein- und Aussteigende pro Werktag (SBB)` : null,
       b?.perron_laengste_m ? `Längstes erfasstes Perron: ${genau(b.perron_laengste_m)} m` : null,
-      b?.kanton ? kantonText(b.kanton) : null,
+      b ? kantoneText(b) : null,
     ].filter((x): x is string => !!x).slice(0, 2)
   }
   if (o.id.startsWith('tlm:')) {

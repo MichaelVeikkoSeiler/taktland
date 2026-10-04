@@ -327,6 +327,9 @@
    "uic": 8500105,
    "name": "Moutier",
    "kanton": "BE",
+   "kanton_auch": [
+    "JU"
+   ],
    "werte": {
     "dwv": 3700,
     "dnwv": 2100,

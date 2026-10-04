@@ -7,7 +7,7 @@ import { laufendBeginnen, laufendEnde, laufendHierSetzen, laufendLesen, laufendS
 import { alphabetisch, useFavoriten } from '../favoriten'
 import { nachbarnBauen, useBahnenAus } from '../bahnen'
 import { type BilanzObjekt, FahrtBilanz } from './FahrtBilanz'
-import { kantonText } from '../kanton'
+import { kantoneText } from '../kanton'
 import { ohneKuerzel } from '../kuerzel'
 import type {
   BahnhofIndex, BrueckenEintrag, IndexEintrag, LinienVerzeichnis, Luecke, StreckenAbschnitt,
@@ -430,7 +430,7 @@ function Ergebnis({
     }
     if (art === 'bahnhof') {
       const b = bahnhof.get(uicVon.get(kennung) ?? 0)
-      return b && { name: b.name, baueinheiten: null, zeile: b.kanton ? kantonText(b.kanton) : 'Bahnhof' }
+      return b && { name: b.name, baueinheiten: null, zeile: kantoneText(b) ?? 'Bahnhof' }
     }
     if (art === 'bahnuebergang') {
       const u = uebergaengeNach.get(kennung)
@@ -510,12 +510,14 @@ function Ergebnis({
     }
     if (o.art === 'bahnhof') {
       const b = bahnhof.get(uicVon.get(o.kennung) ?? 0)
-      dazu('Kanton', b?.kanton)
+      dazu('Kanton', b && (b.kanton_auch?.length ? [b.kanton, ...b.kanton_auch].join(' / ') : b.kanton))
       dazu('Grösse', b && b.frequenz_erfasst !== false ? STUFE_TEXT[b.tier] : null)
       dazu('Ein- und Aussteigende pro Werktag', b?.dwv != null ? b.dwv.toLocaleString('de-CH') : null)
       dazu('Infrastruktur', b?.isb)
       return { ...leer, art: 'bahnhof', kennung: String(b?.uic ?? o.kennung), name: t?.name ?? o.kennung,
-               zeile: t?.zeile ?? '', kanton: b?.kanton ?? null, angaben }
+               zeile: t?.zeile ?? '', angaben,
+               // ohne Kanton, wo die Quellen verschiedene nennen (Moutier): sonst fragte die Bilanz danach
+               kanton: b?.kanton_auch?.length ? null : b?.kanton ?? null }
     }
     if (o.art === 'tunnel') {
       const x = tunnelNach.get(o.kennung)
@@ -1176,7 +1178,7 @@ export function BahnhofFeld({ bezeichnung, wert, bahnhoefe, name, aendern }: {
                 >
                   <span className="text-sbb-black dark:text-sbb-white">{e.name}</span>
                   <span className="text-sm text-sbb-metal dark:text-sbb-storm">
-                    {e.ohne_bahnhofseite ? 'ohne Bahnhofseite' : e.kanton ? kantonText(e.kanton) : ''}
+                    {e.ohne_bahnhofseite ? 'ohne Bahnhofseite' : kantoneText(e) ?? ''}
                   </span>
                 </button>
                 {/* ohne Bahnhofseite auch kein Favorit: die Favoriten führen zu Bahnhofseiten */}

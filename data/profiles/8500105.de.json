@@ -4,7 +4,7 @@
   "tier": "S",
   "lang": "de",
   "dataYear": 2025,
-  "generated": "2026-09-22",
+  "generated": "2026-10-04",
   "sources": [
     "21197_behig-haltekantesegment",
     "billetautomat",
@@ -660,6 +660,11 @@
     }
   ],
   "luecken": [
+    {
+      "thema": "Kanton",
+      "grund": "Die Quellen nennen verschiedene Kantone: Jura laut Haltestellendaten, BE laut Passagierfrequenz 2025. Welche Angabe gilt, sagen die Daten nicht; Taktland führt den Bahnhof bei beiden.",
+      "quelle": "haltestelle-haltekante, passagierfrequenz"
+    },
     {
       "thema": "Bahnhofplan",
       "grund": "Für diesen Bahnhof ist kein Bahnhofplan veröffentlicht. Der Datensatz enthält Pläne für 62 Bahnhöfe.",

@@ -304,7 +304,8 @@ def main():
         if not werte:
             continue
         bahnhoefe.append({"uic": d["uic"], "name": d["name"],
-                          "kanton": d.get("kanton"), "werte": werte})
+                          "kanton": d.get("kanton"),
+                          **({"kanton_auch": d["kanton_auch"]} if d.get("kanton_auch") else {}), "werte": werte})
 
     # der Datenstand der Fakten, nicht der Tag, an dem diese Datei gebaut wurde
     staende = sorted({json.loads((FACTS / f"{b['uic']}.json").read_text(encoding="utf-8"))

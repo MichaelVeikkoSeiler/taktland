@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { alphabetisch, favoritEinsetzen, favoritEntfernen, favoritHinzufuegen, useFavoriten } from '../favoriten'
-import { kantonText } from '../kanton'
+import { kantoneText } from '../kanton'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { vereinfachen } from './Blaettern'
 import { Stern } from './Stern'
@@ -95,7 +95,7 @@ export function Favoriten({ index, oeffnen }: { index: BahnhofIndex | null; oeff
                 <span className="min-w-0">
                   <span className="block truncate font-medium">{e.name}</span>
                   {e.kanton && (
-                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{kantonText(e.kanton)}</span>
+                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{kantoneText(e)}</span>
                   )}
                 </span>
                 {e.sprachen.length > 0 && <span className="pfeil shrink-0" aria-hidden="true">→</span>}
@@ -141,7 +141,7 @@ export function Favoriten({ index, oeffnen }: { index: BahnhofIndex | null; oeff
                         <span className="min-w-0">
                           <span className="block truncate font-medium">{e.name}</span>
                           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                            {schon ? 'schon ein Favorit' : e.kanton ? kantonText(e.kanton) : ''}
+                            {schon ? 'schon ein Favorit' : e.kanton ? kantoneText(e) : ''}
                           </span>
                         </span>
                         <Stern voll={schon} />
