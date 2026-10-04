@@ -143,6 +143,10 @@ def linien():
             # die Linie fehlt in den Daten der SBB
             **({"bahn": f["netz"]["bahn"]}
                if f.get("netz") and f["netz"]["bahn"] != "SBB CFF FFS" else {}),
+            # die Infrastrukturbetreiberinnen der Abschnitte laut Schienennetz des BAV, wie die
+            # Quelle sie abkürzt; ohne Netzdaten keine Angabe (Michael, 2026-10-04)
+            **({"isb": [x["wert"] for x in f["netz"]["nach_isb"] if x.get("wert")]}
+               if f.get("netz") and f["netz"].get("nach_isb") else {}),
             **({"quelle": "schienennetz"} if f.get("quelle") == "schienennetz" else {}),
             # Bahnhöfe, die nur das Schienennetz des BAV auf dieser Linie führt
             **({"weitere_bahnhoefe": f["weitere_bahnhoefe"]["anzahl"]}

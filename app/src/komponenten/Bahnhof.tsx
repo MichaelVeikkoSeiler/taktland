@@ -167,7 +167,7 @@ function LinienLinks({ linien }: { linien: LinienEintrag[] }) {
              className="flex items-center justify-between gap-3 kachel kachel-link px-3 py-2">
             <span className="min-w-0">
               <span className="font-medium text-sbb-black dark:text-sbb-white">Linie {l.linie}</span>
-              {l.bahn && <span className="ml-2"><BahnKuerzel isb={l.bahn} titel={`Datenherr laut BAV: ${l.bahn}`} kurz /></span>}
+              {l.isb?.length ? <span className="ml-2"><BahnKuerzel isb={l.isb.join(' / ')} titel={`Infrastruktur laut Schienennetz des BAV: ${l.isb.join(' / ')}`} /></span> : null}
               <span className="ml-2 text-sm text-sbb-metal dark:text-sbb-storm">{l.name}</span>
             </span>
             <span className="pfeil shrink-0" aria-hidden="true">→</span>

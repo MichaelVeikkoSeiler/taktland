@@ -50,8 +50,9 @@ export function Linien({ index }: { index: BahnhofIndex | null }) {
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Aufgenommen sind Linien mit mindestens zwei Bahnhöfen in Taktland oder mit einem
         erfassten Tunnel. Linien anderer Bahnen stammen aus dem Schienennetz des Bundesamts für
-        Verkehr (BAV, Stand 2021) und tragen das Kürzel ihrer Bahn, wie es dort steht; Tramlinien
-        sind nicht dabei.
+        Verkehr (BAV, Stand 2021); Tramlinien sind nicht dabei. Das Kästchen nennt die
+        Infrastrukturbetreiberinnen jeder Linie laut diesem Schienennetz, mit den Kürzeln, wie sie
+        dort stehen.
         {daten?.nicht_aufgefuehrt && <NichtAufgefuehrt n={daten.nicht_aufgefuehrt} />}
       </p>
       <StreckeKarte />
@@ -121,7 +122,7 @@ function Eintrag({ l, durch }: { l: LinienEintrag; durch: string[] }) {
         <span className="min-w-0">
           <span className="flex items-center gap-2 font-medium text-sbb-black dark:text-sbb-white">
             Linie {l.linie}
-            {l.bahn && <BahnKuerzel isb={l.bahn} kurz />}
+            {l.isb?.length ? <BahnKuerzel isb={l.isb.join(' / ')} titel={`Infrastruktur laut Schienennetz des BAV: ${l.isb.join(' / ')}`} /> : null}
           </span>
           <span className="block truncate text-sm text-sbb-black dark:text-sbb-white">{l.name}</span>
           <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{teile.join(' · ')}</span>

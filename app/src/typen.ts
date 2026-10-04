@@ -169,6 +169,8 @@ export interface LinienEintrag {
   bahnuebergaenge: number
   /** Datenherr laut Schienennetz des BAV, wenn nicht die SBB («BLSN», «RhB FR VR») */
   bahn?: string
+  /** Infrastrukturbetreiberinnen der Abschnitte laut Schienennetz des BAV, Abkürzung der Quelle */
+  isb?: string[]
   /** «schienennetz»: die Linie fehlt in den Daten der SBB */
   quelle?: 'schienennetz'
   /** Bahnhöfe, die nur das Schienennetz auf dieser Linie führt */

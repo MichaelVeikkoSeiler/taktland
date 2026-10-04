@@ -71,7 +71,7 @@ export function Linie({ nr, zurueck, zurueckText }: {
       <header className="px-4">
         <h1 className="flex items-center gap-2 text-2xl font-bold text-sbb-black dark:text-sbb-white">
           Linie {profil.linie}
-          {eintrag?.bahn && <BahnKuerzel isb={eintrag.bahn} titel={`Datenherr laut BAV: ${eintrag.bahn}`} kurz />}
+          {eintrag?.isb?.length ? <BahnKuerzel isb={eintrag.isb.join(' / ')} titel={`Infrastruktur laut Schienennetz des BAV: ${eintrag.isb.join(' / ')}`} /> : null}
         </h1>
         <p className="mt-1 text-sbb-black dark:text-sbb-white">{profil.name}</p>
         {eintrag?.quelle === 'schienennetz' && (

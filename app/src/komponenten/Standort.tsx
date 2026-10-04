@@ -217,8 +217,8 @@ function Eintrag({ t }: { t: Treffer }) {
       <span className="min-w-0">
         <span className="flex min-w-0 items-center gap-2">
           <span className="truncate font-medium text-sbb-black dark:text-sbb-white">{t.name}</span>
+          {t.isb && <BahnKuerzel isb={t.isb} />}
         </span>
-        {t.isb && <span className="mt-0.5 flex"><BahnKuerzel isb={t.isb} /></span>}
         {t.zusatz && (
           <span className="block truncate text-sm text-sbb-metal dark:text-sbb-storm">{t.zusatz}</span>
         )}
