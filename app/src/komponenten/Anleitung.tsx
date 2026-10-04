@@ -289,6 +289,10 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Datenschutz">
         <Punkte>
           <li>
+            Verantwortlich ist Veikko Seiler, erreichbar unter{' '}
+            <Verweis href="mailto:veikko@gmx.ch">veikko@gmx.ch</Verweis>, auch für Fragen zu deinen Daten.
+          </li>
+          <li>
             Taktland ist kostenlos. Kein Konto, keine Werbung, keine Profile. Der Fortschritt bleibt im Browser; die
             App lädt keine Schriften oder Programme von fremden Diensten.
           </li>
