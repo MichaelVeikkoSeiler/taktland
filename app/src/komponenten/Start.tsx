@@ -1,6 +1,7 @@
 import type { BahnhofIndex } from '../typen'
 
-/** Zahlen über 9999 mit Apostroph, darunter ohne (CLAUDE.md) */
+/** Zahlen über 9999 mit Apostroph, darunter ohne: auf der Startseite bewusst ohne Apostroph ab 1000
+ *  (Michael, 2026-10-05: «bei den Zahlen kein Apostroph») */
 function zahl(n: number) {
   return n > 9999 ? n.toLocaleString('de-CH') : String(n)
 }
@@ -21,13 +22,14 @@ export function Start({ index }: { index: BahnhofIndex }) {
       {/* h2, nicht h1: «Taktland» im Kopf ist die erste Überschrift der Seite.
           Text: Michael, 2026-09-30 («Lernspiel», «Nachschlagewerk», Namensherkunft); 2026-10-01 «Reisebegleiter»;
           2026-10-02 «fahren Züge im Taktfahrplan», nicht «die Züge»: ob alle so fahren, ist nicht belegt;
-          2026-10-02 ganzer Text neu von Michael, mit «Kein Fahrplan» */}
+          2026-10-02 ganzer Text neu von Michael, mit «Kein Fahrplan»;
+          2026-10-05 «Reisebegleiter», die Spiele unter «Lernen», Bahnübergänge im Sammelheft */}
       <h2 className="text-2xl font-bold tracking-tight">Willkommen im Taktland</h2>
       <p className="mt-3 text-[15px] leading-relaxed">
         In der Schweiz fahren Züge im Taktfahrplan. Davon hat Taktland seinen Namen.
       </p>
       <p className={absatz}>
-        Taktland ist Lernspiel, Nachschlagewerk und Reiseunterhalter zugleich. Zusammengetragen aus öffentlichen
+        Taktland ist Lernspiel, Nachschlagewerk und Reisebegleiter zugleich. Zusammengetragen aus öffentlichen
         Datenbanken der Bahn, des Bundes und von swisstopo, stellt es{' '}
         {zahl(index.bahnhoefe_gesamt)} Bahnhöfe vor
         {z ? `, dazu ${zahl(z.linien)} Strecken mit ${zahl(z.tunnel)} Tunneln und ${zahl(z.bruecken)} Brücken.` : '.'}
@@ -40,8 +42,10 @@ export function Start({ index }: { index: BahnhofIndex }) {
       </p>
       <p className={absatz}>
         <span className={fett}>Lernen.</span> Zu jedem Bahnhof gibt es Fragen, mit denen du prüfen
-        kannst, was hängen geblieben ist. Im «Duell» treten zwei Bahnhöfe, Strecken oder Tunnel
-        gegeneinander an. Und unter Standort siehst du, was in deiner Nähe liegt.
+        kannst, was hängen geblieben ist. Dazu kommen drei Spiele: Im «Duell» treten zwei Bahnhöfe,
+        Strecken oder Tunnel gegeneinander an, bei «Geo» setzt du den Pin auf die Karte, und bei der
+        «Bahnhofsuche» errätst du einen Bahnhof aus Hinweiskarten. Allein, zu mehreren auf einem Gerät
+        oder auf mehreren Geräten. Und unter Standort siehst du, was in deiner Nähe liegt.
       </p>
       <p className={absatz}>
         <span className={fett}>Mitfahren.</span> Im Zug verfolgt «Fahren» per GPS, wo du bist, und
@@ -63,7 +67,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
       </p>
       <p className={absatz}>
         <span className={fett}>Festhalten.</span> Was du durchfährst, sammelt Taktland in der
-        Reisetasche: im Logbuch jede Fahrt, im Sammelheft jeden Tunnel und jede Brücke.
+        Reisetasche: im Logbuch jede Fahrt, im Sammelheft jeden Bahnhof, Tunnel, jede Brücke und jeden Bahnübergang.
       </p>
       <p className={absatz}>
         <span className={fett}>Ehrlich.</span> Wo die Daten schweigen, sagt Taktland das, statt zu
