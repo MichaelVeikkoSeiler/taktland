@@ -290,7 +290,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         <Punkte>
           <li>
             Verantwortlich ist Veikko Seiler, erreichbar unter{' '}
-            <Verweis href="mailto:veikko@gmx.ch">veikko@gmx.ch</Verweis>, auch für Fragen zu deinen Daten.
+            <Verweis href="mailto:hallo@taktland.ch">hallo@taktland.ch</Verweis>, auch für Fragen zu deinen Daten.
           </li>
           <li>
             Taktland ist kostenlos. Kein Konto, keine Werbung, keine Profile. Der Fortschritt bleibt im Browser; die
@@ -309,7 +309,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Ausgeliefert wird die Seite von GitHub Pages, einem Dienst von GitHub (USA); die
             Daten können dabei in die USA gelangen. GitHub speichert laut eigenen Angaben die
             IP-Adressen aus Sicherheitsgründen. Die Adresse taktland.ch ist bei cyon
-            registriert. Beim Öffnen und beim Zurückholen fragt Taktland bei GitHub Pages ab,
+            registriert. Mails an hallo@taktland.ch nimmt cyon an und leitet sie an ein Postfach
+            bei GMX weiter. Beim Öffnen und beim Zurückholen fragt Taktland bei GitHub Pages ab,
             ob es verfügbar ist und ob es eine neue Version gibt, ohne etwas über dich
             mitzuschicken.
           </li>

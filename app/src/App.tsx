@@ -248,6 +248,13 @@ export default function App() {
             </a>
           </p>
           <p className="mt-1">
+            Kontakt:{' '}
+            <a href="mailto:hallo@taktland.ch" className="underline underline-offset-2 hover:text-sbb-black
+                                                       dark:hover:text-sbb-white">
+              hallo@taktland.ch
+            </a>
+          </p>
+          <p className="mt-1">
             Der Lernfortschritt bleibt auf diesem Gerät. Es gibt kein Konto; gezählt wird nur, wie oft
             Taktland geöffnet wird, nur als Zahlen je Tag.
           </p>
