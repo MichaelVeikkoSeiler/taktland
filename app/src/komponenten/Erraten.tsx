@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { raumEroeffnen, teilnahmeMerken } from '../spielraum'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import {
   type Aktion, bestwert, bestwertFesthalten, type Einstellungen, erratenLaden, type ErratenBahnhof, HINWEISE, type HinweisId,
@@ -24,13 +25,13 @@ const KANTONSNAME: Record<string, string> = {
 const EINSTELLUNG = 'taktland.erraten.einstellungen.v1'
 const MAX_SPIELER = 8
 
-function einstellungLesen(): { e: Einstellungen; namen: string[] } {
+export function einstellungLesen(): { e: Einstellungen; namen: string[]; online: boolean; meinName: string } {
   try {
     const x = JSON.parse(localStorage.getItem(EINSTELLUNG) ?? '{}')
     const namen = Array.isArray(x.namen) && x.namen.length >= 2 ? x.namen.slice(0, MAX_SPIELER).map(String) : ['Spieler 1', 'Spieler 2']
-    return { e: { ...STANDARD, ...(x.e ?? {}) }, namen }
+    return { e: { ...STANDARD, ...(x.e ?? {}) }, namen, online: x.online === true, meinName: typeof x.meinName === 'string' ? x.meinName : '' }
   } catch {
-    return { e: STANDARD, namen: ['Spieler 1', 'Spieler 2'] }
+    return { e: STANDARD, namen: ['Spieler 1', 'Spieler 2'], online: false, meinName: '' }
   }
 }
 
@@ -52,11 +53,27 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
   const [e, setE] = useState<Einstellungen>(gemerkt.e)
   const [namen, setNamen] = useState<string[]>(gemerkt.namen)
   const [zuWenig, setZuWenig] = useState(false)
+  // auf mehreren Geräten (Michael, 2026-10-05, nach dem Muster von Geo): eigener Name, Raum eröffnen oder mit Code beitreten
+  const [online, setOnline] = useState(gemerkt.online)
+  const [meinName, setMeinName] = useState(gemerkt.meinName)
+  const [code, setCode] = useState('')
+  const [eroeffnet, setEroeffnet] = useState<'nein' | 'laeuft' | string>('nein')
   useEffect(() => {
-    try { localStorage.setItem(EINSTELLUNG, JSON.stringify({ e, namen })) } catch { /* nur jetzt */ }
-  }, [e, namen])
+    try { localStorage.setItem(EINSTELLUNG, JSON.stringify({ e, namen, online, meinName })) } catch { /* nur jetzt */ }
+  }, [e, namen, online, meinName])
 
-  const mehrere = e.modus !== 'allein'
+  async function eroeffnen() {
+    setEroeffnet('laeuft')
+    try {
+      const raum = await raumEroeffnen()
+      teilnahmeMerken({ raum, name: meinName.trim(), gastgeber: true })
+      window.location.hash = `#/erraten/mit/${raum}`
+    } catch (x) {
+      setEroeffnet(x instanceof Error ? x.message : 'Der Raum konnte nicht eröffnet werden.')
+    }
+  }
+
+  const mehrere = !online && e.modus !== 'allein'
   const anzahl = pool ? passende(pool, e).length : 0
   const kantone = useMemo(() => {
     if (!pool) return []
@@ -67,7 +84,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
       .sort((a, b) => (KANTONSNAME[a] ?? a).localeCompare(KANTONSNAME[b] ?? b, 'de-CH'))
   }, [pool])
   const namenOk = !mehrere || namen.every((n) => n.trim())
-  const best = !mehrere ? bestwert(e) : null
+  const best = !mehrere && !online ? bestwert(e) : null
 
   function starten() {
     if (!pool) return
@@ -84,7 +101,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
         {optionen.map(([w, t]) => (
           <button key={String(w)} type="button" aria-pressed={wert === w}
                   onClick={() => { if (wert !== w) reiterTon(); setzen(w) }}
-                  className="segment px-1 py-2 text-sm">{t}</button>
+                  className="segment whitespace-normal px-1 py-2 text-sm leading-tight">{t}</button>
         ))}
       </div>
     </fieldset>
@@ -103,9 +120,36 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
       {pool && (
         <div className="md:grid md:grid-cols-2 md:gap-x-8">
           <div>
-            {wahl('Wer spielt', mehrere ? 'm' : 'a', [['a', 'Allein'], ['m', 'Mehrere auf diesem Gerät']],
-                  (w) => setE({ ...e, modus: w === 'a' ? 'allein' : e.modus === 'allein' ? 'miteinander' : e.modus }),
-                  'minmax(0, 2fr) minmax(0, 3fr)')}
+            {wahl('Wer spielt', online ? 'o' : mehrere ? 'm' : 'a', [['a', 'Allein'], ['m', 'Mehrere auf diesem Gerät'], ['o', 'Auf mehreren Geräten']],
+                  (w) => {
+                    setOnline(w === 'o')
+                    if (w !== 'o') setE({ ...e, modus: w === 'a' ? 'allein' : e.modus === 'allein' ? 'miteinander' : e.modus })
+                  },
+                  // die längeren Namen brauchen mehr Platz, sonst brechen sie auf schmalen Geräten um
+                  'minmax(0, 2fr) minmax(0, 3fr) minmax(0, 3fr)')}
+            {online && (
+              <div className="mt-3">
+                <label className="block text-sm text-sbb-metal dark:text-sbb-storm" htmlFor="erraten-mein-name">Dein Name</label>
+                <input id="erraten-mein-name" value={meinName} maxLength={20} onChange={(ev) => setMeinName(ev.target.value)}
+                       className="mt-1.5 w-full rounded-lg border border-sbb-cloud bg-white px-3 py-2 dark:border-sbb-iron dark:bg-sbb-midnight" />
+                <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+                  Du eröffnest einen Raum und zeigst den QR-Code; die anderen scannen ihn mit ihrem Gerät. Alle suchen
+                  gleichzeitig dieselben Bahnhöfe, jeder mit eigenen Karten. Die Einstellungen hier gelten für alle. Braucht Empfang.
+                </p>
+                <form className="mt-3 flex gap-2" onSubmit={(ev) => {
+                  ev.preventDefault()
+                  if (/^[A-Za-z]{4}$/.test(code.trim())) window.location.hash = `#/erraten/mit/${code.trim().toUpperCase()}`
+                }}>
+                  <input value={code} maxLength={4} aria-label="Code eines Raums" placeholder="Code"
+                         onChange={(ev) => setCode(ev.target.value)} autoCapitalize="characters"
+                         className="w-28 rounded-lg border border-sbb-cloud bg-white px-3 py-2 uppercase tracking-widest dark:border-sbb-iron dark:bg-sbb-midnight" />
+                  <button type="submit" disabled={!/^[A-Za-z]{4}$/.test(code.trim())}
+                          className="rounded-lg border border-sbb-cloud px-4 font-medium disabled:opacity-40 dark:border-sbb-iron">
+                    Mit Code beitreten
+                  </button>
+                </form>
+              </div>
+            )}
             {mehrere && (
               <>
                 {wahl('Wie', e.modus, [['miteinander', 'Miteinander'], ['gegeneinander', 'Gegeneinander']] as Array<[Modus, string]>,
@@ -146,7 +190,7 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
                        optionen={[{ wert: 'CH', text: 'Ganze Schweiz' }, ...kantone.map((k) => ({ wert: k, text: KANTONSNAME[k] ?? k }))]}
                        className="mt-1.5 w-full rounded-lg border border-sbb-cloud bg-white px-3 py-2.5 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white" />
             </div>
-            {wahl(e.modus === 'gegeneinander' ? 'Zeit je Zug' : 'Zeit je Bahnhof', e.zeit,
+            {wahl(mehrere && e.modus === 'gegeneinander' ? 'Zeit je Zug' : 'Zeit je Bahnhof', e.zeit,
                   [[0, 'Ohne'], [30, '30 s'], [60, '60 s'], [90, '90 s']], (w) => setE({ ...e, zeit: w }))}
           </div>
         </div>
@@ -164,13 +208,22 @@ export function Erraten({ index }: { index: BahnhofIndex | null }) {
             </p>
           )}
           {zuWenig && <p className="mb-3 text-sm">Die Partie konnte nicht angelegt werden. Bitte andere Einstellungen wählen.</p>}
-          <button type="button" disabled={anzahl < e.fragen || !namenOk} onClick={starten}
-                  className="min-h-12 w-full rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40 md:w-auto">
-            Spiel starten
-          </button>
-          <p className="mt-6 text-sm text-sbb-metal dark:text-sbb-storm">
-            Spielen auf mehreren Geräten gleichzeitig ist in Vorbereitung.
-          </p>
+          {online ? (
+            <>
+              <button type="button" disabled={anzahl < e.fragen || !meinName.trim() || eroeffnet === 'laeuft'} onClick={() => void eroeffnen()}
+                      className="min-h-12 w-full rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40 md:w-auto">
+                {eroeffnet === 'laeuft' ? 'Raum wird eröffnet …' : 'Raum eröffnen'}
+              </button>
+              {eroeffnet !== 'nein' && eroeffnet !== 'laeuft' && (
+                <p className="mt-2 border-l-2 border-sbb-red pl-3 text-sm">{eroeffnet}</p>
+              )}
+            </>
+          ) : (
+            <button type="button" disabled={anzahl < e.fragen || !namenOk} onClick={starten}
+                    className="min-h-12 w-full rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40 md:w-auto">
+              Spiel starten
+            </button>
+          )}
           <p className="mt-4 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
             Die Karten zeigen Kanton und Bezirk, Ein- und Aussteigende pro Werktag (SBB), Höhe, die Bahn der Infrastruktur und
             die Unternehmen, deren Züge dort halten, alles aus den Daten der Bahnhofseiten. Leicht, mittel und schwer ergeben
@@ -300,7 +353,7 @@ function Karte({ titel, wert, zustand, neu, kosten, onClick }: {
   )
 }
 
-function Karten({ pool, x, r, spur, ziel, aufdecken }: {
+export function Karten({ pool, x, r, spur, ziel, aufdecken }: {
   pool: Pool; x: Partie; r: Runde; spur: Spur; ziel: ErratenBahnhof; aufdecken?: (h: HinweisId) => void
 }) {
   const vor = vorgegeben(ziel, x.e.gebiet)
@@ -318,7 +371,7 @@ function Karten({ pool, x, r, spur, ziel, aufdecken }: {
   )
 }
 
-function Frage({ pool, x, r, spur, ziel, amZug, tun }: {
+export function Frage({ pool, x, r, spur, ziel, amZug, tun }: {
   pool: Pool; x: Partie; r: Runde; spur: Spur; ziel: ErratenBahnhof; amZug: string; tun: (a: Aktion) => void
 }) {
   const noch = moeglich(spur.offen)
@@ -451,7 +504,6 @@ function Aufloesung({ x, r, ziel, index, weiter }: {
   const gegen = x.e.modus === 'gegeneinander'
   const letzte = x.frage + 1 === x.runden.length
   const spur0 = r.spuren[0]
-  const ix = index.find((b) => b.uic === ziel.id)
   const hinweise = (s: Spur) => s.offen.length
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
@@ -512,22 +564,7 @@ function Aufloesung({ x, r, ziel, index, weiter }: {
           )}
         </div>
         <div>
-          <p className="text-sm font-bold">Steckbrief</p>
-          <dl className="mt-2 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1.5 text-sm">
-            {HINWEISE.map((h) => (
-              <div key={h.id} className="contents">
-                <dt className="text-sbb-metal dark:text-sbb-storm">{h.titel}</dt>
-                <dd>{hinweisText(ziel, h.id)}</dd>
-              </div>
-            ))}
-            {ix?.perron_laengste_m ? (
-              <div className="contents">
-                <dt className="text-sbb-metal dark:text-sbb-storm">Längstes Perron</dt>
-                <dd>{genau(ix.perron_laengste_m)} m (erfasst)</dd>
-              </div>
-            ) : null}
-          </dl>
-          <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">Ein- und Aussteigende laut SBB; alles aus den Daten der Bahnhofseite.</p>
+          <Steckbrief ziel={ziel} index={index} />
           <div className="mt-4 grid gap-2 sm:grid-cols-2">
             <a href={`#/bahnhof/${ziel.id}`}
                className="flex min-h-12 items-center justify-center rounded-lg border border-sbb-cloud px-4 font-medium dark:border-sbb-iron">
@@ -542,6 +579,31 @@ function Aufloesung({ x, r, ziel, index, weiter }: {
         </div>
       </div>
     </div>
+  )
+}
+
+/** Was über den gesuchten Bahnhof in den Daten steht */
+export function Steckbrief({ ziel, index }: { ziel: ErratenBahnhof; index: IndexEintrag[] }) {
+  const ix = index.find((b) => b.uic === ziel.id)
+  return (
+    <>
+      <p className="text-sm font-bold">Steckbrief</p>
+      <dl className="mt-2 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1.5 text-sm">
+        {HINWEISE.map((h) => (
+          <div key={h.id} className="contents">
+            <dt className="text-sbb-metal dark:text-sbb-storm">{h.titel}</dt>
+            <dd>{hinweisText(ziel, h.id)}</dd>
+          </div>
+        ))}
+        {ix?.perron_laengste_m ? (
+          <div className="contents">
+            <dt className="text-sbb-metal dark:text-sbb-storm">Längstes Perron</dt>
+            <dd>{genau(ix.perron_laengste_m)} m (erfasst)</dd>
+          </div>
+        ) : null}
+      </dl>
+      <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">Ein- und Aussteigende laut SBB; alles aus den Daten der Bahnhofseite.</p>
+    </>
   )
 }
 

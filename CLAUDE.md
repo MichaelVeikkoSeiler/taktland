@@ -85,10 +85,11 @@ web/         Seite für taktland.ch (reines HTML); pipeline/export_web.py stellt
 server/zaehler/  Zähler auf zaehler.taktland.ch (Webhosting bei cyon, von Hand hochladen): je Tag nur
              die Zahl der Aufrufe (web), der Geräte (app) und der neuen Geräte (neu), ohne IP und Kennung;
              die App meldet höchstens einmal am Tag (src/zaehlen.ts), liste/ ist mit Passwort geschützt
-server/spiel/  Vermittlung für «Geo» auf mehreren Geräten auf spiel.taktland.ch (cyon, von Hand hochladen):
-             raum.php reicht je Raum nur Ereignisse weiter (Beitritt, Start, Tipp, Weiter), ohne IP;
-             Räume verfallen nach sechs Stunden. Gerechnet wird auf den Geräten (src/spielraum.ts,
-             komponenten/Schweiz11Online.tsx), zum Ausprobieren mit VITE_SPIEL_URL gegen php -S
+server/spiel/  Vermittlung für «Geo» und «Bahnhofsuche» auf mehreren Geräten auf spiel.taktland.ch (cyon,
+             von Hand hochladen): raum.php reicht je Raum nur Ereignisse weiter (Beitritt, Start, Tipp,
+             Weiter), ohne IP; Räume verfallen nach sechs Stunden. Gerechnet wird auf den Geräten
+             (src/spielraum.ts, komponenten/Raum.tsx, Schweiz11Online.tsx, ErratenOnline.tsx), zum
+             Ausprobieren mit VITE_SPIEL_URL gegen php -S
 data/raw/    heruntergeladene CSV, nicht in Git
 data/facts/  geprüfte Fakten je Bahnhof: 1189, die mit SBB-Infrastruktur, die anderer
              Bahnen (BLS, RhB, MGB, MOB, ZB, SOB, MVR …) mit Daten für mindestens drei

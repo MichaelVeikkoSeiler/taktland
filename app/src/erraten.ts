@@ -5,12 +5,12 @@
  * ist sichtbar. Wer am Zug ist, deckt eine Karte auf oder rät. Ein falscher Tipp
  * deckt die nächste verdeckte Karte auf. Jede aufgedeckte Karte kostet gleich viel.
  *
- * Aufbau für später (Online auf mehreren Geräten): Der ganze Spielstand ist ein
- * schlichtes, serialisierbares Objekt (Partie). Er ändert sich nur über schritt()
- * mit einer Aktion; der Zufall (Bahnhöfe, Auswahlantworten) ist beim Anlegen der
- * Partie schon gezogen. Ein Transport muss also nur die Partie einmal und danach die
- * Aktionen verteilen; jedes Gerät rechnet mit derselben Funktion denselben Stand.
- * Die Darstellung (komponenten/Erraten.tsx) liest nur und schickt Aktionen.
+ * Der ganze Spielstand ist ein schlichtes, serialisierbares Objekt (Partie). Er ändert
+ * sich nur über schritt() mit einer Aktion; der Zufall (Bahnhöfe, Auswahlantworten)
+ * steckt in rundenZiehen(). Die Darstellung (komponenten/Erraten.tsx) liest nur und
+ * schickt Aktionen. Auf mehreren Geräten (komponenten/ErratenOnline.tsx) zieht der
+ * Gastgeber die Runden und schickt sie allen; jedes Gerät spielt sie für sich allein
+ * und meldet nur sein Ergebnis je Bahnhof.
  *
  * Daten: data/erraten.json, gebaut mit pipeline/build_erraten.py aus data/facts;
  * die Felder und die Stufe sind dort beschrieben.
@@ -199,15 +199,26 @@ const neueSpur = (): Spur => ({ offen: [], falsch: [], geloest: false, raus: fal
 
 /** Legt eine Partie an; der ganze Zufall steckt hier. Null, wenn es zu wenige Bahnhöfe gibt. */
 export function partieAnlegen(p: Pool, e: Einstellungen, spieler: string[], zufall: () => number = Math.random, jetzt = Date.now()): Partie | null {
+  const gezogen = rundenZiehen(p, e, zufall)
+  return gezogen ? partieAusRunden(e, spieler, gezogen, 0, jetzt) : null
+}
+
+/** Der Zufall einer Partie: welche Bahnhöfe und bei Auswahl welche vier Antworten. Auf mehreren
+ *  Geräten zieht ihn der Gastgeber und schickt ihn allen. */
+export function rundenZiehen(p: Pool, e: Einstellungen, zufall: () => number = Math.random): Array<{ ziel: number; optionen: number[] | null }> | null {
   const ziele = mischen(passende(p, e), zufall).slice(0, e.fragen)
   if (ziele.length < e.fragen) return null
+  return ziele.map((z) => ({ ziel: z.id, optionen: e.antwort === 'auswahl' ? mischen([z.id, ...ablenker(p, z, zufall)], zufall) : null }))
+}
+
+/** Eine Partie aus gezogenen Runden, beginnend bei Frage `ab` */
+export function partieAusRunden(e: Einstellungen, spieler: string[], gezogen: Array<{ ziel: number; optionen: number[] | null }>, ab = 0, jetzt = Date.now()): Partie {
   const n = e.modus === 'gegeneinander' ? spieler.length : 1
-  const runden: Runde[] = ziele.map((z) => ({
-    ziel: z.id,
-    optionen: e.antwort === 'auswahl' ? mischen([z.id, ...ablenker(p, z, zufall)], zufall) : null,
+  const runden: Runde[] = gezogen.map((g) => ({
+    ziel: g.ziel, optionen: g.optionen,
     spuren: Array.from({ length: n }, neueSpur), sieger: null, zeitAus: false, fertig: false, punkte: 0,
   }))
-  const partie: Partie = { version: 1, e, spieler, runden, frage: 0, amZug: 0, phase: 'frage', frist: null, letzter: null }
+  const partie: Partie = { version: 1, e, spieler, runden, frage: ab, amZug: 0, phase: 'frage', frist: null, letzter: null }
   return frageBeginnen(partie, jetzt)
 }
 

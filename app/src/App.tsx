@@ -7,6 +7,7 @@ import { Spiele } from './komponenten/Spiele'
 import { Schweiz11 } from './komponenten/Schweiz11'
 import { Schweiz11Online } from './komponenten/Schweiz11Online'
 import { Erraten } from './komponenten/Erraten'
+import { ErratenOnline } from './komponenten/ErratenOnline'
 import { Zurueck } from './komponenten/Zurueck'
 import { Fahrt } from './komponenten/Fahrt'
 import { Fortsetzen } from './komponenten/Fortsetzen'
@@ -37,7 +38,7 @@ import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'audio' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
@@ -63,6 +64,8 @@ function seiteAusAdresse(): Seite {
   const geoRaum = /^#\/schweiz11\/mit\/([A-Za-z]{4})$/.exec(h)
   if (geoRaum) return { art: 'schweiz11mit', raum: geoRaum[1].toUpperCase() }
   if (h === '#/erraten') return { art: 'erraten' }
+  const suchRaum = /^#\/erraten\/mit\/([A-Za-z]{4})$/.exec(h)
+  if (suchRaum) return { art: 'erratenmit', raum: suchRaum[1].toUpperCase() }
   if (h === '#/standort') return { art: 'standort' }
   // Fahren mit drei Unterseiten (Michael, 2026-09-29)
   if (h === '#/fahrt') return { art: 'fahrt', teil: 'neu' }
@@ -110,7 +113,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'duell': return 'duell'
     case 'spiele': return 'spiele'
     case 'schweiz11': case 'schweiz11mit': return 'schweiz11'
-    case 'erraten': return 'erraten'
+    case 'erraten': case 'erratenmit': return 'erraten'
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
     case 'favoriten': return 'favoriten'
@@ -181,6 +184,7 @@ export default function App() {
         {seite.art === 'schweiz11' && <Schweiz11 index={index} />}
         {seite.art === 'schweiz11mit' && <Schweiz11Online key={seite.raum} raum={seite.raum} index={index} />}
         {seite.art === 'erraten' && <Erraten index={index} />}
+        {seite.art === 'erratenmit' && <ErratenOnline key={seite.raum} raum={seite.raum} index={index} />}
         {/* das Duell gehört zu «Spiele» (Michael, 2026-10-02); seine Adresse #/duell bleibt */}
         {seite.art === 'duell' && (
           <>

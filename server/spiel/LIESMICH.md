@@ -1,4 +1,4 @@
-# Vermittlung für «Geo» auf mehreren Geräten
+# Vermittlung für Spiele auf mehreren Geräten («Geo», «Bahnhofsuche»)
 
 Läuft auf `spiel.taktland.ch` (Webhosting bei cyon, Ordner `public_html/spiel.taktland.ch`),
 nicht bei GitHub. Von Hand hochladen, wenn sich hier etwas ändert.

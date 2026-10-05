@@ -62,26 +62,37 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         </Punkte>
       </Abschnitt>
 
-      <Abschnitt titel="Duell">
-        <Punkte>
+      <Abschnitt titel="Spiele">
+        <Spiel titel="Duell">
           <li>
-            Zwei Bahnhöfe, Linien oder Tunnel, eine Frage, etwa: Wo steigen mehr Personen ein
-            und aus? Welcher Tunnel ist länger? Danach stehen die Werte da, bei Tunneln auch
-            die Bemerkung der Quelle.
+            Zwei Bahnhöfe, Linien oder Tunnel, eine Frage, etwa: Welcher Tunnel ist länger? Danach
+            stehen die Werte da.
           </li>
           <li>
-            Jede richtige Antwort verlängert die Serie, eine falsche setzt sie auf 0. Je
-            länger die Serie, desto knapper die Werte; ab 4 stehen manchmal vier zur Wahl.
+            Jede richtige Antwort verlängert die Serie, eine falsche setzt sie auf 0. Je länger die
+            Serie, desto knapper die Werte. Brücken fehlen, weil ihre Länge nicht in den Daten der SBB steht.
           </li>
+          <li>«Zwei Bahnhöfe selbst wählen» vergleicht zwei bestimmte Bahnhöfe, ohne Serie.</li>
+        </Spiel>
+        <Spiel titel="Geo">
           <li>
-            Gespielt wird in der ganzen Schweiz oder in einem Kanton mit genug Einträgen.
-            Linien und Tunnel ohne Kanton in den Daten spielen nur schweizweit mit. Brücken
-            fehlen: Erfasst ist nur die Zahl ihrer Baueinheiten, meist genau eine.
+            Ein Bahnhof, Tunnel oder eine Brücke wird genannt. Setze den Pin auf der Karte: Je näher,
+            desto mehr Punkte. Jede Hilfe auf der Karte kostet 15 % der möglichen Punkte.
           </li>
+        </Spiel>
+        <Spiel titel="Bahnhofsuche">
           <li>
-            «Zwei Bahnhöfe selbst wählen» vergleicht zwei bestimmte Bahnhöfe, ohne Serie.
+            Gesucht ist ein Bahnhof, sechs Hinweiskarten liegen verdeckt. Ohne Karte gibt es 80 Punkte,
+            jede aufgedeckte kostet 10, der Bezirk 20. Ein falscher Tipp deckt die nächste Karte auf.
           </li>
-        </Punkte>
+        </Spiel>
+        <Spiel titel="Zu mehreren">
+          <li>Auf einem Gerät: Ihr spielt reihum und gebt das Gerät weiter.</li>
+          <li>
+            Auf mehreren Geräten (Geo, Bahnhofsuche): Wer eröffnet, zeigt einen QR-Code, die anderen
+            scannen ihn. Alle spielen dieselben Aufgaben gleichzeitig. Braucht Empfang.
+          </li>
+        </Spiel>
       </Abschnitt>
 
       <Abschnitt titel="Strecken, Brücken und Tunnel">
@@ -315,8 +326,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             mitzuschicken.
           </li>
           <li>
-            Wer Geo auf mehreren Geräten spielt, schickt über spiel.taktland.ch (cyon, Schweiz) den
-            Namen, der im Raum erscheint, und die Tipps an die anderen im selben Raum. Dort liegen nur
+            Wer Geo oder die Bahnhofsuche auf mehreren Geräten spielt, schickt über spiel.taktland.ch
+            (cyon, Schweiz) den Namen, der im Raum erscheint, und die Tipps oder Ergebnisse an die
+            anderen im selben Raum. Dort liegen nur
             diese Angaben, ohne IP-Adresse und ohne Konto; nach sechs Stunden wird der Raum gelöscht.
             Wie jeder Webserver führt auch dieser ein Zugriffsprotokoll, das cyon verwaltet.
           </li>
@@ -376,6 +388,16 @@ function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) 
         e.currentTarget.closest('details')?.removeAttribute('open')
       }}>{children}</div>
     </details>
+  )
+}
+
+/** ein Spiel als Unterbereich von «Spiele» */
+function Spiel({ titel, children }: { titel: string; children: ReactNode }) {
+  return (
+    <>
+      <h3 className="mt-4 font-semibold text-sbb-black first:mt-2 dark:text-sbb-white">{titel}</h3>
+      <Punkte>{children}</Punkte>
+    </>
   )
 }
 

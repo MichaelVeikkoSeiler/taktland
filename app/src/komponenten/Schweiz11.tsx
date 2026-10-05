@@ -277,13 +277,13 @@ export function useFrage({ e, ziel, d0, aktiv, schluessel, beiAbgabe }: {
 export type Frage = ReturnType<typeof useFrage>
 
 /** Die Leiste oben: Spiel, Frage, Zeit und Beenden */
-export function Kopf({ text, rest, beenden, beendenText = 'Beenden' }: {
-  text: React.ReactNode; rest: number | null; beenden: () => void; beendenText?: string
+export function Kopf({ text, rest, beenden, beendenText = 'Beenden', titel = 'Geo' }: {
+  text: React.ReactNode; rest: number | null; beenden: () => void; beendenText?: string; titel?: string
 }) {
   return (
     <div className="flex items-center justify-between gap-3 border-b border-sbb-cloud px-4 py-2 dark:border-sbb-iron">
       <p className="min-w-0 truncate text-sm text-sbb-metal dark:text-sbb-storm">
-        <span className="font-bold text-sbb-black dark:text-sbb-white">Geo</span>{text}
+        <span className="font-bold text-sbb-black dark:text-sbb-white">{titel}</span>{text}
       </p>
       <div className="flex shrink-0 items-center gap-2">
         {rest !== null && (
