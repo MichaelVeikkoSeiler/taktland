@@ -314,6 +314,12 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             mitzuschicken.
           </li>
           <li>
+            Wer Geo auf mehreren Geräten spielt, schickt über spiel.taktland.ch (cyon, Schweiz) den
+            Namen, der im Raum erscheint, und die Tipps an die anderen im selben Raum. Dort liegen nur
+            diese Angaben, ohne IP-Adresse und ohne Konto; nach sechs Stunden wird der Raum gelöscht.
+            Wie jeder Webserver führt auch dieser ein Zugriffsprotokoll, das cyon verwaltet.
+          </li>
+          <li>
             Gezählt wird nur, wie oft Taktland geöffnet wird: höchstens einmal am Tag
             «geöffnet» an zaehler.taktland.ch, beim ersten Mal auf einem Gerät «neu». Dort
             stehen je Tag nur Zahlen, ohne IP-Adresse, Kennung und Uhrzeit. Der Zähler liegt
