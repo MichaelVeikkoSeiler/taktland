@@ -40,6 +40,8 @@ function useKartenlinien() {
  * ein kleines Rauschen, einmal gerechnet und gekachelt, fest im Bild, nicht auf der Karte
  */
 const KORN_PX = 160
+/** so dunkel wird das dunkelste Korn, 0 bis 255 */
+const KORN_TIEFE = 45
 let koernungUrl: string | null = null
 function koernung(): string | null {
   if (koernungUrl !== null) return koernungUrl
@@ -55,8 +57,11 @@ function koernung(): string | null {
     let z = 20261003
     for (let i = 0; i < n * n; i++) {
       z = (Math.imul(z, 1103515245) + 12345) & 0x7fffffff
-      const v = 70 + (z >> 16) % 150
-      bild.data.set([v, v, v, 80], i * 4)
+      // die meisten Körner fast weiss, wenige dunkel (Zufall hoch vier): gleich fein und gut zu sehen,
+      // aber das Bild wird im Mittel kaum dunkler (Michael, 2026-10-05: «zu dunkel»)
+      const u = ((z >> 16) % 1000) / 1000
+      const v = Math.round(255 - KORN_TIEFE * u ** 4)
+      bild.data.set([v, v, v, 255], i * 4)
     }
     ctx.putImageData(bild, 0, 0)
     koernungUrl = c.toDataURL('image/png')
