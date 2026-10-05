@@ -282,6 +282,7 @@ export function Netzkarte({
     const breitePx = masse.current?.width
     if (!el || !breitePx) return
     const s = f.w / b.w, e = f.w / breitePx
+    el.style.willChange = 'transform'
     el.style.transform = `translate3d(${(-s * (b.cx - f.cx)) / e}px, ${(-s * (b.cy - f.cy)) / e}px, 0) scale(${s})`
   }, [])
   const festhalten = useCallback(() => {
@@ -309,7 +310,7 @@ export function Netzkarte({
   useLayoutEffect(() => {
     fest.current = box
     if (!geste.current) live.current = box
-    if (huelle.current) huelle.current.style.transform = ''
+    if (huelle.current) { huelle.current.style.transform = ''; huelle.current.style.willChange = '' }
   }, [box])
   useEffect(() => () => { if (ruhe.current) clearTimeout(ruhe.current) }, [])
 
@@ -484,9 +485,9 @@ export function Netzkarte({
            }}
            className={`${klassen.svg} relative touch-none overflow-hidden border border-sbb-cloud bg-karte
                       dark:border-sbb-iron dark:bg-sbb-midnight`}>
-      {/* die Hülle trägt die eigene Grafikebene; auf dem svg selbst rastert Chrome den Inhalt
-          über den Rand hinaus falsch */}
-      <div ref={huelle} className="absolute inset-0" style={{ transformOrigin: '50% 50%', willChange: 'transform' }}>
+      {/* die Hülle trägt während einer Geste die eigene Grafikebene (will-change nur dann, dauerhaft
+          malte Safari geänderte Teile nicht nach); auf dem svg selbst rastert Chrome falsch */}
+      <div ref={huelle} className="absolute inset-0" style={{ transformOrigin: '50% 50%' }}>
       <svg ref={svg} viewBox={ansicht.join(' ')} role="img" preserveAspectRatio="xMidYMid meet"
            aria-label={titel} className="absolute max-w-none"
            style={{ left: `${-RAND_BILD * 100}%`, top: `${-RAND_BILD * 100}%`,

@@ -404,14 +404,18 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   stand.current = { zoom, bw: box.w, breite }
   function zeigen() {
     const g = geste.current
-    if (buehne.current) buehne.current.style.transform = `translate3d(${g.tx}px, ${g.ty}px, 0) scale(${g.s})`
+    if (!buehne.current) return
+    // eigene Grafikebene nur während der Geste: dauerhaft malte Safari darauf Weg und Zug nicht
+    // mehr vollständig nach, bei Tempo 100 blieb die Karte leer (Michael, 2026-10-05)
+    buehne.current.style.willChange = 'transform'
+    buehne.current.style.transform = `translate3d(${g.tx}px, ${g.ty}px, 0) scale(${g.s})`
   }
   function festhalten() {
     if (ruhe.current) clearTimeout(ruhe.current)
     ruhe.current = null
     const g = geste.current
     geste.current = { s: 1, tx: 0, ty: 0 }
-    if (g.s === 1 && g.tx === 0 && g.ty === 0) return
+    if (g.s === 1 && g.tx === 0 && g.ty === 0) { zuruecksetzen(); return }
     const { zoom: z, bw, breite: b } = stand.current
     const e2 = bw / (b || 350)
     zurueck.current = true
@@ -429,11 +433,16 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
     if (ruhe.current) clearTimeout(ruhe.current)
     ruhe.current = setTimeout(festhalten, 180)
   }
+  function zuruecksetzen() {
+    if (!buehne.current) return
+    buehne.current.style.transform = ''
+    buehne.current.style.willChange = ''
+  }
   // die neue Zeichnung ist da: die Vorschau zurücksetzen, im selben Bild
   useLayoutEffect(() => {
     if (!zurueck.current) return
     zurueck.current = false
-    if (buehne.current) buehne.current.style.transform = ''
+    zuruecksetzen()
   }, [zoom, versatz])
 
   function runter(e: React.PointerEvent<HTMLDivElement>) {
@@ -588,7 +597,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
            className={`${klassen.svg} relative overflow-hidden border border-sbb-cloud bg-karte
                        dark:border-sbb-iron dark:bg-sbb-midnight`}>
-        <div ref={buehne} className="absolute inset-0" style={{ transformOrigin: '50% 50%', willChange: 'transform' }}>
+        <div ref={buehne} className="absolute inset-0" style={{ transformOrigin: '50% 50%' }}>
         <svg viewBox={[box.cx - box.w * GRUND_RAND, box.cy - h * GRUND_RAND, box.w * 2 * GRUND_RAND, h * 2 * GRUND_RAND].join(' ')}
              preserveAspectRatio="xMidYMid meet" aria-hidden="true"
              className="absolute max-w-none"
