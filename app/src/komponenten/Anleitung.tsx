@@ -300,7 +300,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Datenschutz">
         <Punkte>
           <li>
-            Verantwortlich ist Veikko Seiler, erreichbar unter{' '}
+            Verantwortlich ist Michael Veikko Seiler, erreichbar unter{' '}
             <Verweis href="mailto:hallo@taktland.ch">hallo@taktland.ch</Verweis>, auch für Fragen zu deinen Daten.
           </li>
           <li>
@@ -343,14 +343,16 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       </Abschnitt>
 
       <Abschnitt titel="Über Taktland">
-        {/* persönlich statt Aufzählung (Michael, 2026-10-01: «etwas auflockern», Variante B) */}
+        {/* persönlich statt Aufzählung (Michael, 2026-10-01: «etwas auflockern», Variante B); Text von Michael, 2026-10-05 */}
         <blockquote className="mt-2 border-l-2 border-sbb-red pl-4 text-lg leading-relaxed">
-          «Ich fahre gern Zug und wollte mehr wissen über das, woran ich vorbeifahre: Welcher
-          Tunnel ist das, wie lang ist er, wie heisst der Bahnhof, an dem wir gerade durchfahren?
-          Daraus ist Taktland entstanden, aus offenen Daten und mit Hilfe von KI. Es soll Lust
-          aufs Bahnfahren machen und vielleicht auch andere in den Zug locken.»
+          «Ich bin gerne mit dem Zug unterwegs und wollte mehr über das wissen, woran ich
+          vorbeifahre. Wie heisst der Bahnhof, an dem ich gerade vorbeifahre? Wie heisst die Brücke
+          oder der Tunnel, den wir soeben passieren? Wann folgt der nächste Tunnel? Aus solchen
+          Fragen ist Taktland entstanden: aus offenen Daten, die mit Hilfe von KI miteinander
+          verknüpft sind. Taktland soll ein Reisebegleiter sein und auch ausserhalb des Zuges
+          unterhalten. Eines der Ziele: weg vom Auto und rein in den Zug.»
         </blockquote>
-        <p className="mt-3 font-medium">Veikko Seiler</p>
+        <p className="mt-3 font-medium">Michael Veikko Seiler</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
         <p className="mt-4 text-sm leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Name spielt auf den Taktfahrplan der Schweiz an. Umgesetzt mit Claude Code, die
