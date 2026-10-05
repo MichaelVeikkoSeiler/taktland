@@ -4,7 +4,7 @@
  * Sie zeigen Lagen auf dem Weg, aber keine Längen: Die Kilometrierung ist ein
  * Standort und keine Länge, darum stehen hier keine Kilometer.
  */
-import { useMemo, useRef, useState } from 'react'
+import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
@@ -391,6 +391,51 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const blick = nah && hier ? { cx: hx + versatz[0], cy: hy + versatz[1], w: bw } : box
   const veraendert = zoom !== 1 || versatz[0] !== 0 || versatz[1] !== 0
 
+  /**
+   * Während der Geste wird die schon gezeichnete Karte nur skaliert und verschoben (CSS, ohne neues
+   * Zeichnen); Zoom und Versatz übernimmt sie, wenn die Finger ruhen oder loslassen (Michael,
+   * 2026-10-05: auf dem Tablet ruckelte das Zoomen, und die Ebenen sprangen)
+   */
+  const buehne = useRef<HTMLDivElement | null>(null)
+  const geste = useRef({ s: 1, tx: 0, ty: 0 })
+  const ruhe = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const zurueck = useRef(false)
+  const stand = useRef({ zoom, bw: box.w, breite })
+  stand.current = { zoom, bw: box.w, breite }
+  function zeigen() {
+    const g = geste.current
+    if (buehne.current) buehne.current.style.transform = `translate3d(${g.tx}px, ${g.ty}px, 0) scale(${g.s})`
+  }
+  function festhalten() {
+    if (ruhe.current) clearTimeout(ruhe.current)
+    ruhe.current = null
+    const g = geste.current
+    geste.current = { s: 1, tx: 0, ty: 0 }
+    if (g.s === 1 && g.tx === 0 && g.ty === 0) return
+    const { zoom: z, bw, breite: b } = stand.current
+    const e2 = bw / (b || 350)
+    zurueck.current = true
+    setZoom(Math.min(40, Math.max(0.25, z * g.s)))
+    setVersatz(([vx, vy]) => [vx - (g.tx / g.s) * e2, vy - (g.ty / g.s) * e2])
+  }
+  function vorschau(s: number, dx: number, dy: number) {
+    const g = geste.current
+    const z = stand.current.zoom
+    // nicht über die Grenzen des Zooms hinaus
+    const neuS = Math.min(40 / z, Math.max(0.25 / z, g.s * s))
+    geste.current = { s: neuS, tx: g.tx + dx, ty: g.ty + dy }
+    zeigen()
+    if (neuS > 2.5 || neuS < 0.6) { festhalten(); return }
+    if (ruhe.current) clearTimeout(ruhe.current)
+    ruhe.current = setTimeout(festhalten, 180)
+  }
+  // die neue Zeichnung ist da: die Vorschau zurücksetzen, im selben Bild
+  useLayoutEffect(() => {
+    if (!zurueck.current) return
+    zurueck.current = false
+    if (buehne.current) buehne.current.style.transform = ''
+  }, [zoom, versatz])
+
   function runter(e: React.PointerEvent<HTMLDivElement>) {
     zeiger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     if (zeiger.current.size === 2) {
@@ -406,19 +451,18 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
     if (zeiger.current.size === 2) {
       const [a, b] = [...zeiger.current.values()]
       const d = Math.hypot(a.x - b.x, a.y - b.y)
-      if (abstand.current) zoomen(d / abstand.current)
+      if (abstand.current) vorschau(d / abstand.current, 0, 0)
       abstand.current = d
       return
     }
     // mit einem Finger verschieben, sobald die Karte näher steht
-    if (zoom <= 1) return
-    const breite = flaeche.current?.getBoundingClientRect().width || 350
-    const e2 = box.w / breite
-    setVersatz(([vx, vy]) => [vx - (e.clientX - vorher.x) * e2, vy - (e.clientY - vorher.y) * e2])
+    if (zoom * geste.current.s <= 1) return
+    vorschau(1, e.clientX - vorher.x, e.clientY - vorher.y)
   }
   function hoch(e: React.PointerEvent<HTMLDivElement>) {
     zeiger.current.delete(e.pointerId)
     if (zeiger.current.size < 2) abstand.current = 0
+    if (zeiger.current.size === 0) festhalten()
   }
   const h = box.w / verh
   const px = box.w / breite
@@ -544,6 +588,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
            className={`${klassen.svg} relative overflow-hidden border border-sbb-cloud bg-karte
                        dark:border-sbb-iron dark:bg-sbb-midnight`}>
+        <div ref={buehne} className="absolute inset-0" style={{ transformOrigin: '50% 50%', willChange: 'transform' }}>
         <svg viewBox={[box.cx - box.w * GRUND_RAND, box.cy - h * GRUND_RAND, box.w * 2 * GRUND_RAND, h * 2 * GRUND_RAND].join(' ')}
              preserveAspectRatio="xMidYMid meet" aria-hidden="true"
              className="absolute max-w-none"
@@ -586,6 +631,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
             </>
           )}
         </svg>
+        </div>
         {!voll && (
           <button type="button" aria-expanded={zurKarte} onClick={() => setZurKarte(!zurKarte)}
                   onPointerDown={(e) => e.stopPropagation()}

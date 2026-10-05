@@ -1,10 +1,12 @@
-import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { type ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { karteLaden } from '../daten'
 import type { KartenDaten } from '../typen'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert, useVersteckt } from './Sehenswert'
 
+/** So viel der Breite reicht die Zeichnung der Netzkarte auf jeder Seite über den Rahmen hinaus */
+const RAND_BILD = 0.25
 /** Verhältnis Meter je Grad Länge zu Breite in der Schweiz: x = Länge mal das */
 export const LAENGE_ZU_BREITE = 73_000 / 111_200
 /** Die Karte ist so viel breiter als hoch */
@@ -111,7 +113,7 @@ export function boxUm(stuecke: Stueck[], mindestens: number): Box {
  * sondern eine Fläche über der ganzen Seite. Das Seitenverhältnis folgt dann
  * dem Bildschirm; Escape schliesst.
  */
-export function useVollbild(svg: React.RefObject<SVGSVGElement | null>) {
+export function useVollbild(svg: React.RefObject<Element | null>) {
   const [voll, setVoll] = useState(false)
   const [verh, setVerh] = useState(SEITENVERHAELTNIS)
   useEffect(() => {
@@ -141,7 +143,7 @@ export function useVollbild(svg: React.RefObject<SVGSVGElement | null>) {
  *  damit sie im Vollbild auf Tablet und Desktop nicht mitwachsen (Michael,
  *  2026-09-26: «Wenn der Ausschnitt grösser wird, sollen die Punkte nicht auch
  *  grösser werden»); vorher galt fest die Breite eines Handys, 350 Bildpunkte. */
-export function useBreite(svg: React.RefObject<SVGSVGElement | null>) {
+export function useBreite(svg: React.RefObject<Element | null>) {
   const [breite, setBreite] = useState(350)
   useEffect(() => {
     const el = svg.current
@@ -234,8 +236,10 @@ export function Netzkarte({
   const svg = useRef<SVGSVGElement | null>(null)
   const zeiger = useRef(new Map<number, { x: number; y: number }>())
   const zieht = useRef<{ art: 'nichts' | 'karte'; x: number; y: number; d: number } | null>(null)
-  const { voll, setVoll, verh } = useVollbild(svg)
-  const breite = useBreite(svg)
+  // gemessen am Rahmen: die Zeichnung selbst ist grösser, sie reicht über den Rand hinaus
+  const rahmen = useRef<HTMLDivElement | null>(null)
+  const { voll, setVoll, verh } = useVollbild(rahmen)
+  const breite = useBreite(rahmen)
   // Hat man selbst gezoomt oder verschoben, bleibt der Ausschnitt, auch wenn
   // der Standort sich ein wenig ändert (Michael, 2026-09-26: «springt dauernd
   // auf Default-Ausschnitt zurück»). Ein neuer Ort (andere Linie, anderer
@@ -252,33 +256,90 @@ export function Netzkarte({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [start.cx, start.cy, start.w])
 
-  const zoomen = useCallback((faktor: number, mitteX?: number, mitteY?: number) => {
+  /**
+   * Während zwei Finger zoomen oder einer schiebt, wird die schon gezeichnete Karte nur als Bild
+   * skaliert und verschoben (CSS, das die Grafik des Geräts ohne neues Zeichnen kann); neu
+   * gezeichnet wird erst, wenn die Geste kurz ruht oder der Ausschnitt den gezeichneten Bereich
+   * verlässt (Michael, 2026-10-05: auf dem Tablet ruckelte es beim Zoomen, und Seen, Wald und
+   * Höhenstufen sprangen, weil jede Bewegung alle Ebenen neu zuschnitt)
+   */
+  const huelle = useRef<HTMLDivElement | null>(null)
+  const live = useRef<Box>(box)
+  const fest = useRef<Box>(box)
+  const geste = useRef(false)
+  const ruhe = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const verhRef = useRef(verh)
+  verhRef.current = verh
+  // Lage des Rahmens, einmal zu Beginn einer Geste gemessen: nach jedem Verschieben neu messen
+  // hiesse jedes Mal das Layout neu rechnen
+  const masse = useRef<DOMRect | null>(null)
+  const messen = useCallback(() => {
+    if (!geste.current || !masse.current) masse.current = rahmen.current?.getBoundingClientRect() ?? null
+    return masse.current
+  }, [])
+  const anwenden = useCallback(() => {
+    const el = huelle.current, b = live.current, f = fest.current
+    const breitePx = masse.current?.width
+    if (!el || !breitePx) return
+    const s = f.w / b.w, e = f.w / breitePx
+    el.style.transform = `translate3d(${(-s * (b.cx - f.cx)) / e}px, ${(-s * (b.cy - f.cy)) / e}px, 0) scale(${s})`
+  }, [])
+  const festhalten = useCallback(() => {
+    if (ruhe.current) clearTimeout(ruhe.current)
+    ruhe.current = null
+    geste.current = false
+    masse.current = null
+    setBox(live.current)
+  }, [])
+  const vorschau = useCallback((neu: Box) => {
+    live.current = neu
+    geste.current = true
     setEigen(true)
-    setBox((alt) => {
-      const w = Math.min(WEIT, Math.max(ENG, alt.w / faktor))
-      if (mitteX === undefined || mitteY === undefined) return { ...alt, w }
-      // der Punkt unter dem Finger bleibt stehen
-      const anteil = w / alt.w
-      return { cx: mitteX + (alt.cx - mitteX) * anteil, cy: mitteY + (alt.cy - mitteY) * anteil, w }
-    })
+    anwenden()
+    // gezeichnet ist der feste Ausschnitt mit etwas Rand: weit hinaus, viel näher oder weiter
+    // weg, dann jetzt neu zeichnen, sonst kurz nach der letzten Bewegung
+    const f = fest.current
+    const weit = neu.w > f.w * 1.4 || neu.w < f.w / 2.5
+      || Math.abs(neu.cx - f.cx) > f.w * 0.45 || Math.abs(neu.cy - f.cy) > (f.w / verhRef.current) * 0.45
+    if (weit) { festhalten(); return }
+    if (ruhe.current) clearTimeout(ruhe.current)
+    ruhe.current = setTimeout(festhalten, 180)
+  }, [anwenden, festhalten])
+  // die neue Zeichnung ist da: das Bild zurücksetzen, im selben Bild
+  useLayoutEffect(() => {
+    fest.current = box
+    if (!geste.current) live.current = box
+    if (huelle.current) huelle.current.style.transform = ''
+  }, [box])
+  useEffect(() => () => { if (ruhe.current) clearTimeout(ruhe.current) }, [])
+
+  const zoomen = useCallback((faktor: number, mitteX?: number, mitteY?: number, sofort = false) => {
+    const alt = live.current
+    const w = Math.min(WEIT, Math.max(ENG, alt.w / faktor))
+    // der Punkt unter dem Finger bleibt stehen
+    const anteil = w / alt.w
+    const neu = mitteX === undefined || mitteY === undefined ? { ...alt, w }
+      : { cx: mitteX + (alt.cx - mitteX) * anteil, cy: mitteY + (alt.cy - mitteY) * anteil, w }
+    vorschau(neu)
+    if (sofort) festhalten()
+  }, [vorschau, festhalten])
+
+  /** Bildpunkte der Karte in Einheiten der Zeichnung, im Ausschnitt, der gerade zu sehen ist */
+  const proPixel = useCallback(() => {
+    const r = messen()
+    return r && r.width ? live.current.w / r.width : live.current.w / 350
   }, [])
 
-  /** Bildpunkte der Karte in Einheiten der Zeichnung */
-  const proPixel = useCallback(() => {
-    const r = svg.current?.getBoundingClientRect()
-    return r && r.width ? box.w / r.width : box.w / 350
-  }, [box.w])
-
   const zuKarte = useCallback((klientX: number, klientY: number) => {
-    const r = svg.current?.getBoundingClientRect()
+    const r = messen()
     if (!r) return null
-    const e = proPixel()
-    return { x: box.cx + (klientX - r.left - r.width / 2) * e, y: box.cy + (klientY - r.top - r.height / 2) * e }
-  }, [box.cx, box.cy, proPixel])
+    const e = proPixel(), b = live.current
+    return { x: b.cx + (klientX - r.left - r.width / 2) * e, y: b.cy + (klientY - r.top - r.height / 2) * e }
+  }, [proPixel])
 
   // Mausrad nur mit Strg oder Befehlstaste: sonst soll die Seite rollen
   useEffect(() => {
-    const el = svg.current
+    const el = rahmen.current
     if (!el) return
     const rad = (e: WheelEvent) => {
       if (!e.ctrlKey && !e.metaKey) return
@@ -290,7 +351,7 @@ export function Netzkarte({
     return () => el.removeEventListener('wheel', rad)
   }, [zoomen, zuKarte])
 
-  function runter(e: React.PointerEvent<SVGSVGElement>) {
+  function runter(e: React.PointerEvent<HTMLDivElement>) {
     zeiger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     if (zeiger.current.size === 1) zieht.current = { art: 'nichts', x: e.clientX, y: e.clientY, d: 0 }
     if (zeiger.current.size === 2) {
@@ -300,7 +361,7 @@ export function Netzkarte({
     }
   }
 
-  function bewegt(e: React.PointerEvent<SVGSVGElement>) {
+  function bewegt(e: React.PointerEvent<HTMLDivElement>) {
     if (!zeiger.current.has(e.pointerId)) return
     const vorher = zeiger.current.get(e.pointerId)!
     zeiger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
@@ -329,18 +390,24 @@ export function Netzkarte({
       e.currentTarget.setPointerCapture(e.pointerId)
     }
     const einheit = proPixel()
-    setEigen(true)
-    setBox((alt) => ({ ...alt, cx: alt.cx - dx * einheit, cy: alt.cy - dy * einheit }))
+    const alt = live.current
+    vorschau({ ...alt, cx: alt.cx - dx * einheit, cy: alt.cy - dy * einheit })
   }
 
-  function hoch(e: React.PointerEvent<SVGSVGElement>) {
+  function hoch(e: React.PointerEvent<HTMLDivElement>) {
     zeiger.current.delete(e.pointerId)
-    if (zeiger.current.size === 0) zieht.current = null
+    if (zeiger.current.size === 0) {
+      zieht.current = null
+      if (geste.current) festhalten()
+    }
   }
 
   const h = box.w / verh
   const klassen = vollbildKlassen(voll, 'mt-4')
-  const ansicht = [box.cx - box.w / 2, box.cy - h / 2, box.w, h]
+  // die Zeichnung reicht je RAND_BILD über den Rahmen hinaus, damit beim Verschieben und
+  // Herauszoomen während einer Geste kein leerer Rand zu sehen ist
+  const ansicht = [box.cx - box.w * (0.5 + RAND_BILD), box.cy - h * (0.5 + RAND_BILD),
+                   box.w * (1 + 2 * RAND_BILD), h * (1 + 2 * RAND_BILD)]
   const px = box.w / breite
   const drin = (x: number, y: number) =>
     Math.abs(x - box.cx) < box.w * 0.55 && Math.abs(y - box.cy) < h * 0.55
@@ -396,7 +463,7 @@ export function Netzkarte({
         ))}
         <span className="flex gap-1">
           {([['−', 1 / 1.6], ['+', 1.6]] as const).map(([zeichen, f]) => (
-            <button key={zeichen} type="button" onClick={() => zoomen(f)}
+            <button key={zeichen} type="button" onClick={() => zoomen(f, undefined, undefined, true)}
                     aria-label={zeichen === '+' ? 'Näher heran' : 'Weiter weg'}
                     className="flex size-8 items-center justify-center rounded-lg border border-sbb-cloud
                                bg-white text-base leading-none text-sbb-black hover:border-sbb-black
@@ -408,14 +475,22 @@ export function Netzkarte({
           <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </span>
       </div>
-      <svg ref={svg} viewBox={ansicht.join(' ')} role="img" preserveAspectRatio="xMidYMid meet"
-           aria-label={titel} onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch}
+      {/* der Rahmen nimmt die Finger und schneidet ab; darin wird die Karte während einer
+          Geste nur als Bild verschoben und skaliert, über den Rand hinaus gezeichnet */}
+      <div ref={rahmen} onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch}
            onPointerCancel={hoch} onDoubleClick={(e) => {
              const p = zuKarte(e.clientX, e.clientY)
-             zoomen(1.8, p?.x, p?.y)
+             zoomen(1.8, p?.x, p?.y, true)
            }}
-           className={`${klassen.svg} touch-none border border-sbb-cloud bg-karte
+           className={`${klassen.svg} relative touch-none overflow-hidden border border-sbb-cloud bg-karte
                       dark:border-sbb-iron dark:bg-sbb-midnight`}>
+      {/* die Hülle trägt die eigene Grafikebene; auf dem svg selbst rastert Chrome den Inhalt
+          über den Rand hinaus falsch */}
+      <div ref={huelle} className="absolute inset-0" style={{ transformOrigin: '50% 50%', willChange: 'transform' }}>
+      <svg ref={svg} viewBox={ansicht.join(' ')} role="img" preserveAspectRatio="xMidYMid meet"
+           aria-label={titel} className="absolute max-w-none"
+           style={{ left: `${-RAND_BILD * 100}%`, top: `${-RAND_BILD * 100}%`,
+                    width: `${(1 + 2 * RAND_BILD) * 100}%`, height: `${(1 + 2 * RAND_BILD) * 100}%` }}>
         <KartengrundEbene grund={kartengrund} box={box} verh={verh} />
         <FlaechenEbene flaechen={sehenswert.f} box={box} verh={verh} waehlen={setAuswahl} />
         <SeenFlaechen seen={seen} box={box} verh={verh} />
@@ -463,6 +538,8 @@ export function Netzkarte({
                 strokeWidth={3} paintOrder="stroke" vectorEffect="non-scaling-stroke">{p.name}</text>
         ))}
       </svg>
+      </div>
+      </div>
       <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />
       <SehenswertLegende orte />
       {/* im Vollbild nur die Karte; die Hinweise bleiben auf der Seite */}
