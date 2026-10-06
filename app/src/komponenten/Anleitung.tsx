@@ -397,13 +397,14 @@ function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) 
  *  ein Tipp auf den offenen Text schliesst nur dieses Spiel, nicht den ganzen Bereich */
 function Spiel({ titel, children }: { titel: string; children: ReactNode }) {
   return (
-    <details className="group/spiel mt-2 border-t border-sbb-cloud first:border-t-0 dark:border-sbb-iron">
+    // ein eigener, heller Kasten mit Einzug, weil die Spiele «Spiele» untergeordnet sind (Michael, 2026-10-06)
+    <details className="group/spiel mt-2 ml-4 rounded-lg bg-white px-4 first:mt-1 dark:bg-sbb-midnight">
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 py-2
                           [&::-webkit-details-marker]:hidden">
         <h3 className="font-semibold text-sbb-black dark:text-sbb-white">{titel}</h3>
         <span className="pfeil shrink-0 text-sm transition-transform group-open/spiel:rotate-180" aria-hidden="true">↓</span>
       </summary>
-      <div className="cursor-pointer pb-2" onClick={(e) => {
+      <div className="cursor-pointer pb-3" onClick={(e) => {
         if (!tippSchliesst(e)) return
         e.stopPropagation()
         zuklappTon()
