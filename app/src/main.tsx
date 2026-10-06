@@ -8,7 +8,7 @@ import { serviceWorkerAnmelden } from './serviceWorker'
 import { Gesperrt } from './komponenten/Gesperrt'
 import { useSperre } from './verfuegbar'
 import { oeffnenZaehlen } from './zaehlen'
-import { aufklappenHoeren } from './audio'
+import { aufklappenHoeren, schreibmaschineHoeren } from './audio'
 import { anwenden as einstellungenAnwenden } from './einstellungen'
 
 /** Taktland, solange es verfügbar ist (src/verfuegbar.ts) */
@@ -37,3 +37,4 @@ createRoot(document.getElementById('root')!).render(
 
 serviceWorkerAnmelden()
 aufklappenHoeren()
+schreibmaschineHoeren()

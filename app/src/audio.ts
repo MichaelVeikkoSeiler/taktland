@@ -20,6 +20,8 @@ export interface Audio {
   aufklappen: boolean
   /** Lautstärke aller Töne in Prozent; 100 ist 20 % lauter als vor dem Regler (Michael, 2026-10-06) */
   lautstaerke: number
+  /** Schreibmaschine beim Tippen in Textfeldern (Michael, 2026-10-06); am Anfang aus */
+  schreibmaschine: boolean
 }
 
 const SCHLUESSEL = 'taktland.audio.v1'
@@ -39,6 +41,7 @@ function lesen(): Audio {
     zweimal: x.zweimal === true,
     antworten: x.antworten !== false,
     aufklappen: x.aufklappen !== false,
+    schreibmaschine: x.schreibmaschine === true,
     lautstaerke: typeof x.lautstaerke === 'number' && x.lautstaerke >= 0 && x.lautstaerke <= 100 ? Math.round(x.lautstaerke) : 100,
   }
 }
@@ -242,5 +245,95 @@ export function aufklappenHoeren() {
     if (knopf) { (knopf.getAttribute('aria-expanded') === 'true' ? zuklappTon : aufklappTon)(); return }
     const summary = ziel.closest('summary')
     if (summary) (summary.parentElement?.hasAttribute('open') ? zuklappTon : aufklappTon)()
+  }, true)
+}
+
+/**
+ * Schreibmaschine (Michael, 2026-10-06: «beim Eintragen von Texten»): ein trockener Anschlag je Zeichen,
+ * etwas tiefer und dumpfer bei der Leertaste, leiser beim Löschen, die Glocke bei der Eingabetaste.
+ * Alles aus Rauschen und Sinustönen gerechnet, ohne Aufnahme; jeder Anschlag klingt leicht anders.
+ */
+export type Anschlag = 'taste' | 'leer' | 'loeschen' | 'glocke'
+
+export function schreibmaschinenTon(art: Anschlag) {
+  if (!stand.an || !stand.schreibmaschine) return
+  const c = audioKontext()
+  if (!c) return
+  try {
+    void c.resume()
+    const jetzt = c.currentTime
+    const ziel = ausgang(c)
+    const rauschen = (dauer: number, frequenz: number, q: number, staerke: number, ab = 0) => {
+      const puffer = c.createBuffer(1, Math.ceil(c.sampleRate * dauer), c.sampleRate)
+      const d = puffer.getChannelData(0)
+      // schnell abklingendes Rauschen: der Hammer auf dem Papier
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (d.length * 0.18))
+      const quelle = c.createBufferSource()
+      quelle.buffer = puffer
+      const filter = c.createBiquadFilter()
+      filter.type = 'bandpass'
+      filter.frequency.value = frequenz * (0.9 + Math.random() * 0.2)
+      filter.Q.value = q
+      const laut = c.createGain()
+      laut.gain.value = staerke
+      quelle.connect(filter).connect(laut).connect(ziel)
+      quelle.start(jetzt + ab)
+    }
+    const dumpf = (frequenz: number, dauer: number, staerke: number) => {
+      const osc = c.createOscillator()
+      osc.frequency.setValueAtTime(frequenz, jetzt)
+      osc.frequency.exponentialRampToValueAtTime(frequenz * 0.6, jetzt + dauer)
+      const laut = c.createGain()
+      laut.gain.setValueAtTime(staerke, jetzt)
+      laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + dauer)
+      osc.connect(laut).connect(ziel)
+      osc.start(jetzt)
+      osc.stop(jetzt + dauer + 0.01)
+    }
+    if (art === 'taste') {
+      rauschen(0.035, 3200, 0.9, 0.9)
+      dumpf(170, 0.045, 0.25)
+    } else if (art === 'leer') {
+      rauschen(0.05, 1300, 0.8, 0.8)
+      dumpf(110, 0.07, 0.35)
+    } else if (art === 'loeschen') {
+      rauschen(0.03, 2400, 1.2, 0.45)
+    } else {
+      // die Glocke am Zeilenende, dazu der Wagenrücklauf als kurzes Rauschen
+      rauschen(0.12, 900, 0.6, 0.35)
+      for (const [f, s] of [[2093, 0.22], [4186, 0.06], [6280, 0.03]] as const) {
+        const osc = c.createOscillator()
+        osc.frequency.value = f
+        const laut = c.createGain()
+        laut.gain.setValueAtTime(0.0001, jetzt + 0.02)
+        laut.gain.exponentialRampToValueAtTime(s, jetzt + 0.03)
+        laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + 1.2)
+        osc.connect(laut).connect(ziel)
+        osc.start(jetzt + 0.02)
+        osc.stop(jetzt + 1.25)
+      }
+    }
+  } catch { /* ohne Ton geht alles weiter */ }
+}
+
+/** Textfelder, in denen getippt wird; Regler, Kästchen und Auswahlfelder nicht */
+function istTextfeld(z: EventTarget | null) {
+  if (z instanceof HTMLTextAreaElement) return true
+  return z instanceof HTMLInputElement && ['text', 'search', 'email', 'url', 'tel', 'number', 'password', ''].includes(z.type)
+}
+
+/** Für die ganze App, einmal angemeldet: jede Eingabe in einem Textfeld klingt wie eine Schreibmaschine */
+export function schreibmaschineHoeren() {
+  document.addEventListener('input', (e) => {
+    if (!istTextfeld(e.target)) return
+    const ie = e as InputEvent
+    if (ie.inputType?.startsWith('delete')) schreibmaschinenTon('loeschen')
+    else if (ie.inputType === 'insertLineBreak' || ie.inputType === 'insertParagraph') schreibmaschinenTon('glocke')
+    else if (ie.data === ' ') schreibmaschinenTon('leer')
+    else schreibmaschinenTon('taste')
+  }, true)
+  // die Eingabetaste in einzeiligen Feldern löst kein «input» aus
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target instanceof HTMLInputElement && istTextfeld(e.target)) schreibmaschinenTon('glocke')
   }, true)
 }

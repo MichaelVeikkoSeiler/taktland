@@ -1,4 +1,4 @@
-import { antwortTon, audioKontext, aufklappTon, audioSetzen, reiterTon, type TonArt, tonSpielen, useAudio } from '../audio'
+import { antwortTon, audioKontext, aufklappTon, audioSetzen, reiterTon, schreibmaschinenTon, type TonArt, tonSpielen, useAudio } from '../audio'
 
 /**
  * «Audio» in den Einstellungen (Michael, 2026-10-01 als Reiter der Reisetasche, seit 2026-10-06
@@ -57,6 +57,15 @@ export function AudioEinstellungen() {
                   umschalten={() => {
                     audioSetzen({ aufklappen: !audio.aufklappen })
                     if (!audio.aufklappen) aufklappTon()
+                  }} />
+        <Schalter titel="Schreibmaschine beim Tippen"
+                  text="Ein Anschlag je Zeichen, dumpfer bei der Leertaste, die Glocke bei der Eingabetaste"
+                  an={audio.schreibmaschine} gesperrt={aus}
+                  umschalten={() => {
+                    audioSetzen({ schreibmaschine: !audio.schreibmaschine })
+                    // wer sie einschaltet, hört gleich drei Anschläge und die Glocke
+                    if (!audio.schreibmaschine) [0, 110, 230].forEach((t, i) => setTimeout(() => schreibmaschinenTon(i === 2 ? 'leer' : 'taste'), t))
+                    if (!audio.schreibmaschine) setTimeout(() => schreibmaschinenTon('glocke'), 420)
                   }} />
       </div>
       {aus && (
