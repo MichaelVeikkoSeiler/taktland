@@ -118,6 +118,13 @@ def main():
         if quelle.exists():
             shutil.copy(quelle, ZIEL / name)
             print(f"{name}: {(ZIEL / name).stat().st_size/1024:.0f} KB")
+    # die 3D-Reliefs (pipeline/build_relief.py), erst auf ihrer Seite geladen
+    relief = ROOT / "data" / "relief"
+    if relief.exists():
+        if (ZIEL / "relief").exists():
+            shutil.rmtree(ZIEL / "relief")
+        shutil.copytree(relief, ZIEL / "relief")
+        print(f"relief/: {sum(p.stat().st_size for p in (ZIEL / 'relief').iterdir())/1024:.0f} KB")
 
 
 def linien():

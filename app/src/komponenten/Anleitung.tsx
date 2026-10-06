@@ -247,13 +247,13 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Karten: Ortsnamen, Gipfel, Tunnel und Brücken anderer Bahnen und viele Brückenlängen
-            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen aus swissALTIRegio,
+            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen und das 3D-Relief der Gotthard-Bergstrecke aus swissALTIRegio,
             Seen, Flüsse, Lage der Orte, Wald und Siedlung, in Geo auch Bahnlinien und Kantonsgrenzen aus swissTLMRegio; Grenzen vom BFS, Kulturgüter vom
             BABS, Seilbahnen vom BAV, BLN, Pärke und Moorlandschaften vom BAFU. Alle frei
             nutzbar mit Quellenangabe.
           </li>
           <li>
-            Höhenstufen aus swissALTIRegio, mit der von swisstopo verlangten Quellenangabe:
+            Höhenstufen und 3D-Relief aus swissALTIRegio, mit der von swisstopo verlangten Quellenangabe:
             Bundesamt für Landestopografie swisstopo; Tarquini S., I. Isola, M. Favalli,
             A. Battistini, G. Dotta (2023). TINITALY, a digital elevation model of Italy with a
             10 meters cell size (Version 1.1). Istituto Nazionale di Geofisica e Vulcanologia

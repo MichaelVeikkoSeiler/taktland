@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { allesZuruecksetzen, bearbeiteBahnhoefe, bearbeiteteLinien } from './fortschritt'
 import { Anleitung } from './komponenten/Anleitung'
 import { Bahnhof } from './komponenten/Bahnhof'
@@ -8,6 +8,8 @@ import { Schweiz11 } from './komponenten/Schweiz11'
 import { Schweiz11Online } from './komponenten/Schweiz11Online'
 import { Erraten } from './komponenten/Erraten'
 import { ErratenOnline } from './komponenten/ErratenOnline'
+// three.js nur für das 3D-Relief, erst dort geladen
+const ReliefSeite = lazy(() => import('./komponenten/Relief'))
 import { Zurueck } from './komponenten/Zurueck'
 import { Fahrt } from './komponenten/Fahrt'
 import { Fortsetzen } from './komponenten/Fortsetzen'
@@ -37,7 +39,7 @@ import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
@@ -63,6 +65,8 @@ function seiteAusAdresse(): Seite {
   const geoRaum = /^#\/schweiz11\/mit\/([A-Za-z]{4})$/.exec(h)
   if (geoRaum) return { art: 'schweiz11mit', raum: geoRaum[1].toUpperCase() }
   if (h === '#/erraten') return { art: 'erraten' }
+  const relief = /^#\/relief\/([a-z]+)$/.exec(h)
+  if (relief) return { art: 'relief', name: relief[1] }
   const suchRaum = /^#\/erraten\/mit\/([A-Za-z]{4})$/.exec(h)
   if (suchRaum) return { art: 'erratenmit', raum: suchRaum[1].toUpperCase() }
   if (h === '#/standort') return { art: 'standort' }
@@ -108,6 +112,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'start': return null
     case 'linien': case 'strecke': return 'linien'
     case 'linie': case 'objekte': return herkunft
+    case 'relief': return 'linien'
     case 'uebersicht': return seite.liste
     case 'duell': return 'duell'
     case 'spiele': return 'spiele'
@@ -206,6 +211,11 @@ export default function App() {
                       aendern={(neu) => setUebersichten((u) => ({ ...u, [seite.liste]: neu }))} />
         )}
         {seite.art === 'strecke' && <Strecke index={index} wahl={seite.wahl} />}
+        {seite.art === 'relief' && (
+          <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Das Relief wird geladen …</p>}>
+            <ReliefSeite name={seite.name} />
+          </Suspense>
+        )}
         {seite.art === 'linie' && (
           <Linie key={seite.nr} nr={seite.nr} zurueckText={zurueckZu.text}
                  zurueck={() => { window.location.hash = zurueckZu.adresse }} />
@@ -237,7 +247,7 @@ export default function App() {
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
-            Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Höhenstufen (swissALTIRegio, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
+            Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Höhenstufen und das 3D-Relief (swissALTIRegio, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
             Gipfel und Ortsnamen (Swiss Map Vector 1000), Brückenlängen und beim Fahren Tunnel und Brücken
             anderer Bahnen (swissTLM3D): Bundesamt für Landestopografie swisstopo. Landes- und Kantonsgrenzen:
             Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für

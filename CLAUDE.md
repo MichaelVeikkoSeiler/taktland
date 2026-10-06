@@ -143,6 +143,10 @@ data/schweiz11.json  Pool für das Spiel «Geo»: Bahnhöfe, Tunnel und Brücken
 data/erraten.json  Pool für das Spiel «Bahnhofsuche»: je Bahnhof die sechs Hinweise aus data/facts (Kanton,
              Bezirk, Ein- und Aussteigende, Höhe, Bahn, Züge von) und die Stufe nach Rang
              (pipeline/build_erraten.py); Spiellogik in app/src/erraten.ts, getrennt von der Darstellung
+data/relief/   3D-Relief einer Strecke, zuerst die Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca):
+             Gelände aus swissALTIRegio auf 50 m gemittelt (.bin, Uint16), Linie, Tunnel und Brücken mit
+             Anfang und Ende, Bahnhöfe, Gipfel (pipeline/build_relief.py); in der App komponenten/Relief.tsx
+             mit three.js, erst dort geladen; die Höhe der Gleise steht in keiner Quelle
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -179,6 +183,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_schweiz11.py   # Pool für «Geo», nach export_app
 .venv/bin/python pipeline/build_erraten.py      # Pool für «Bahnhofsuche» aus data/facts
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
+.venv/bin/python pipeline/build_relief.py       # 3D-Relief der Gotthard-Bergstrecke (lädt swissALTIRegio)
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

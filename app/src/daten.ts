@@ -44,6 +44,13 @@ export async function holen<T>(pfad: string): Promise<T> {
   return daten
 }
 
+/** Binärdaten wie die Höhen eines Reliefs (pipeline/build_relief.py) */
+export async function holenBinaer(pfad: string): Promise<ArrayBuffer> {
+  const antwort = await abrufen(`${BASIS}${pfad}`)
+  if (!antwort.ok) throw new Error(`${pfad} nicht gefunden (${antwort.status})`)
+  return antwort.arrayBuffer()
+}
+
 export async function indexLaden(): Promise<BahnhofIndex> {
   if (eingebettet) return eingebettet.index
   return holen<BahnhofIndex>('data/index.json')

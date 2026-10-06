@@ -10,6 +10,11 @@ import { Ladefehler } from './Ladefehler'
 import { BahnKuerzel } from './Suche'
 
 /** Eine Linienseite. Aufbau wie beim Bahnhof: Kapitel, Fragen, Lücken, Quellen. */
+/** Linien mit 3D-Relief (pipeline/build_relief.py, Michael, 2026-10-06) */
+const RELIEF: Record<number, { name: string; titel: string }> = {
+  600: { name: 'gotthard', titel: 'Gotthard-Bergstrecke' },
+}
+
 export function Linie({ nr, zurueck, zurueckText }: {
   nr: number
   zurueck: () => void
@@ -81,6 +86,12 @@ export function Linie({ nr, zurueck, zurueckText }: {
           </p>
         )}
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">{fragenGesamt} Fragen</p>
+        {RELIEF[nr] && (
+          <a href={`#/relief/${RELIEF[nr].name}`} className="kachel kachel-link mt-3 flex items-center justify-between gap-3 px-4 py-3">
+            <span className="font-medium">{RELIEF[nr].titel} in 3D</span>
+            <span className="pfeil shrink-0" aria-hidden="true">→</span>
+          </a>
+        )}
         {beantwortet > 0 && (
           <p className="mt-2 flex items-center gap-3 text-sm text-sbb-metal dark:text-sbb-storm">
             <span>{richtig} von {beantwortet} richtig</span>
