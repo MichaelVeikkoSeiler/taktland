@@ -473,7 +473,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       <span className="shrink-0 font-medium">Infos <span aria-hidden="true">→</span></span>
     </button>
   )
-  const eta = (o: FahrObjekt) => (sJetzt !== null && faehrt ? (o.s - sJetzt) / stand!.v : null)
+  const eta = (o: FahrObjekt) => (sJetzt !== null && faehrt ? Math.max(0, o.s - sJetzt) / stand!.v : null)
   /** Meter bis zum Objekt entlang des gezeichneten Wegs; gilt auch, wenn der Zug steht */
   const bis = (o: FahrObjekt) => (sJetzt !== null ? Math.max(0, o.s - sJetzt) : null)
   const { angabe } = einstellung
@@ -566,11 +566,18 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     }
   })
 
-  const naechstes = kommend[0]
+  // Der Zielbahnhof bleibt als «Gleich» stehen, bis «Am Ziel» erscheint, statt dazwischen
+  // «nichts mehr zu melden» (Michael, 2026-10-06): Gemeldet wird er vor dem Perron, angekommen
+  // ist man erst, wenn der Zug dort hält
+  const zielObjekt = ohneZiel ? null
+    : gewaehlt.find((o) => o.art === 'bahnhof' && (o.sOrt ?? o.s) >= wegEnde(fahrweg) - 1) ?? null
+  const anzeige = kommend.length || !zielObjekt || ankunft !== null || sJetzt === null || sJetzt < zielObjekt.s
+    ? kommend : [zielObjekt]
+  const naechstes = anzeige[0]
   // Was in den nächsten 40 Sekunden kommt, läuft gleichzeitig, als Karten
   // übereinander (Michael, 2026-09-25); das erste immer, höchstens drei
-  const zugleich = kommend.filter((o, i) => i === 0 || (eta(o) ?? Infinity) <= ZUGLEICH_S).slice(0, 3)
-  const danach = kommend.slice(Math.max(1, zugleich.length))
+  const zugleich = anzeige.filter((o, i) => i === 0 || (eta(o) ?? Infinity) <= ZUGLEICH_S).slice(0, 3)
+  const danach = anzeige.slice(Math.max(1, zugleich.length))
 
   // als Funktion, nicht als Komponente: sonst entstünde die Karte bei jeder
   // neuen Zeit neu, und Ring und Farbe liefen nicht mehr weich
