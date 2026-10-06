@@ -53,6 +53,16 @@ RELIEFS = {
     # St. Moritz (km 0) bis Campocologno (km 57.65); Tirano liegt in Italien, ausserhalb von swissALTIRegio
     "bernina": {"titel": "Berninalinie", "linie": "950", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 57.7,
                 "rand_m": 2500, "raster_m": 50},
+    # Michael, 2026-10-06: «Chur–Arosa, Montreux–Zweisimmen und Engelberg»; Kilometer laut Schienennetz
+    # Chur Arosabahn (km 0) bis Arosa (km 25.68)
+    "arosa": {"titel": "Chur–Arosa", "linie": "930", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 25.7,
+              "rand_m": 2500, "raster_m": 50},
+    # Montreux MOB (km 0.07) bis Zweisimmen (km 62.43)
+    "goldenpass": {"titel": "Montreux–Zweisimmen", "linie": "120", "quelle": "schienennetz", "von_km": 0.0,
+                   "bis_km": 62.5, "rand_m": 2500, "raster_m": 50},
+    # Hergiswil NW (km 0) bis Engelberg (km 24.74)
+    "engelberg": {"titel": "Hergiswil–Engelberg", "linie": "480", "quelle": "schienennetz", "von_km": 0.0,
+                  "bis_km": 24.8, "rand_m": 2500, "raster_m": 50},
 }
 
 #: so weit dürfen beide Enden eines Bauwerks aus swissTLM3D neben der Linie liegen

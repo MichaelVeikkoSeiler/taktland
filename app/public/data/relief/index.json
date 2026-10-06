@@ -76,6 +76,39 @@
     2811000,
     1156600
    ]
+  },
+  {
+   "name": "arosa",
+   "titel": "Chur–Arosa",
+   "linie": "930",
+   "rahmen": [
+    2756850,
+    1180600,
+    2775650,
+    1193800
+   ]
+  },
+  {
+   "name": "goldenpass",
+   "titel": "Montreux–Zweisimmen",
+   "linie": "120",
+   "rahmen": [
+    2556100,
+    1140150,
+    2598050,
+    1158300
+   ]
+  },
+  {
+   "name": "engelberg",
+   "titel": "Hergiswil–Engelberg",
+   "linie": "480",
+   "rahmen": [
+    2663750,
+    1183300,
+    2676100,
+    1206400
+   ]
   }
  ]
 }

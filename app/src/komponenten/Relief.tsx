@@ -433,7 +433,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     const cz = zs.length ? (Math.min(...zs) + Math.max(...zs)) / 2 : 0
     // die Breite zählt im Hochformat mehr: sonst ragt eine Strecke von Westen nach Osten links und rechts hinaus
     const seitenverhaeltnis = Math.max(0.5, el.clientWidth / Math.max(1, zug ? el.clientHeight : Math.min(window.innerHeight * 0.7, el.clientWidth * 1.1)))
-    const spanne = xs.length ? Math.max((Math.max(...xs) - Math.min(...xs)) * 1.5 / seitenverhaeltnis, Math.max(...zs) - Math.min(...zs), 5) : 40
+    const spanne = xs.length ? Math.max((Math.max(...xs) - Math.min(...xs)) * 1.3 / seitenverhaeltnis, Math.max(...zs) - Math.min(...zs), 5) : 40
     steuerung.target.set(cx, Y(1500), cz)
     kamera.position.set(cx - spanne * 0.3, spanne * 0.85, cz - spanne * 1.0)
     steuerung.update()

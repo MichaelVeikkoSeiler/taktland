@@ -19,6 +19,9 @@ const RELIEF: Record<number, { name: string; titel: string }> = {
   470: { name: 'bruenig', titel: 'Brüniglinie' },
   610: { name: 'furka', titel: 'Furka-Oberalp' },
   950: { name: 'bernina', titel: 'Berninalinie' },
+  930: { name: 'arosa', titel: 'Chur–Arosa' },
+  120: { name: 'goldenpass', titel: 'Montreux–Zweisimmen' },
+  480: { name: 'engelberg', titel: 'Hergiswil–Engelberg' },
 }
 
 export function Linie({ nr, zurueck, zurueckText }: {
