@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { holen, holenBinaer } from '../daten'
+import { bodenbedeckungLaden, flaechenLaden, holen, holenBinaer, sehenswertLaden } from '../daten'
+import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SehenswertDaten } from '../typen'
 import type { FahrObjekt, Fahrweg } from '../fahrt'
 import { lv95 } from '../relief'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
+import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
 
 /**
  * 3D-Relief einer Strecke (Michael, 2026-10-06: zuerst die Gotthard-Bergstrecke, im Browser,
@@ -66,6 +68,55 @@ function useRelief(name: string | null) {
   return { daten, fehler }
 }
 
+/** Was die Karten sonst zeigen, auch im Relief (Michael, 2026-10-06: «die Elemente wie bei anderen
+ *  Probefahrten ein- und ausblenden»): Kulturgüter, Seilbahnen, Gebiete, Wald und Siedlung. Fehlt
+ *  eine Datei, bleibt das Relief ohne sie. */
+interface Zusatz { s: SehenswertDaten | null; f: FlaechenDaten | null; b: BodenbedeckungDaten | null }
+
+function useZusatz() {
+  const [z, setZ] = useState<Zusatz | null>(null)
+  useEffect(() => {
+    let ab = false
+    void Promise.all([sehenswertLaden().catch(() => null), flaechenLaden().catch(() => null), bodenbedeckungLaden().catch(() => null)])
+      .then(([s, f, b]) => { if (!ab) setZ({ s, f, b }) })
+    return () => { ab = true }
+  }, [])
+  return z
+}
+
+/** Breite und Länge eines kodierten Zugs (Hunderttausendstel, als Differenzen) */
+function zugLesen(z: KodierterZug, faktor = 1e5): Array<[number, number]> {
+  let [la, lo] = z.start
+  const raus: Array<[number, number]> = [lv95(la / faktor, lo / faktor)]
+  for (let i = 0; i < z.d.length; i += 2) {
+    la += z.d[i]; lo += z.d[i + 1]
+    raus.push(lv95(la / faktor, lo / faktor))
+  }
+  return raus
+}
+
+/** Flächen im Ausschnitt eines Reliefs in Landeskoordinaten, je Relief einmal gerechnet */
+interface Auflage { wald: Array<Array<[number, number]>>; siedlung: Array<Array<[number, number]>>; gebiete: Array<{ art: string; ringe: Array<Array<[number, number]>> }> }
+const auflagen = new WeakMap<Relief, Auflage>()
+function auflageFuer(r: Relief, z: Zusatz): Auflage {
+  const fertig = auflagen.get(r)
+  if (fertig) return fertig
+  const { ost, nord, m, breite, hoehe } = r.raster
+  const ueberlappt = (pts: Array<[number, number]>) => {
+    let e0 = Infinity, e1 = -Infinity, n0 = Infinity, n1 = -Infinity
+    for (const [e, n] of pts) { e0 = Math.min(e0, e); e1 = Math.max(e1, e); n0 = Math.min(n0, n); n1 = Math.max(n1, n) }
+    return e1 >= ost && e0 <= ost + breite * m && n1 >= nord - hoehe * m && n0 <= nord
+  }
+  const ringe = (zuege: KodierterZug[], faktor?: number) => zuege.map((x) => zugLesen(x, faktor)).filter(ueberlappt)
+  const a: Auflage = {
+    wald: z.b ? ringe(z.b.wald, z.b.faktor) : [],
+    siedlung: z.b ? ringe(z.b.siedlung, z.b.faktor) : [],
+    gebiete: (z.f?.flaechen ?? []).map((g) => ({ art: g.art, ringe: ringe(g.ringe) })).filter((g) => g.ringe.length),
+  }
+  auflagen.set(r, a)
+  return a
+}
+
 /* ---------- die eigene Seite ---------- */
 
 export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?: { text: string; adresse: string } }) {
@@ -97,6 +148,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
             {faktor === 2 && <span className="font-medium text-sbb-black dark:text-sbb-white"> Die Höhe ist 2-fach überhöht.</span>}
           </p>
           <Legende wegText="Linie" wegFarbe={FARBEN.linie} />
+          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz /></div>
           <Hinweise r={daten.r} />
         </>
       )}
@@ -153,6 +205,10 @@ function Hinweise({ r }: { r: Relief }) {
       )}
       {r.hinweis && <p>{r.hinweis} Galerien sind wie Tunnel gezeichnet.</p>}
       <p>Brücken nur, wo Anfang und Ende bekannt sind. Gipfel nur aus Swiss Map Vector 1000.</p>
+      <p>Kulturgüter von nationaler Bedeutung (BABS), Seilbahnen mit Bundeskonzession (BAV), Gebiete (BAFU), Wald und
+        Siedlung (swissTLMRegio) wie auf den Karten. Seilbahnen sind gerade von Station zu Station gezogen; wie hoch
+        das Seil hängt, steht in keiner Quelle. Das Kilometernetz folgt den Landeskoordinaten (LV95), eine Linie je
+        Kilometer, kräftiger alle 10 km.</p>
       <p>Quellen: {r.quellen.join('; ')}. Datenstand der Linie {r.datenstand.split('-').map(Number).reverse().join('.')}.</p>
     </div>
   )
@@ -254,6 +310,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
   className: string
 }) {
   const rahmen = useRef<HTMLDivElement>(null)
+  const zusatz = useZusatz()
+  const aus = useVersteckt()
+  const ausJetzt = useRef(aus)
+  const anwenden = useRef<((a: Set<Kategorie>) => void) | null>(null)
+  // ein- und ausblenden, ohne das Relief neu zu bauen
+  useEffect(() => { ausJetzt.current = aus; anwenden.current?.(aus) }, [aus])
   useEffect(() => {
     const el = rahmen.current
     if (!el) return
@@ -275,7 +337,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
 
     // Gelände als Netz, jedes SCHRITT-te Feld
     const nx = Math.floor((breite - 1) / SCHRITT) + 1, ny = Math.floor((hoehe - 1) / SCHRITT) + 1
-    const pos = new Float32Array(nx * ny * 3), farben = new Float32Array(nx * ny * 3)
+    const pos = new Float32Array(nx * ny * 3), farben = new Float32Array(nx * ny * 3), uv = new Float32Array(nx * ny * 2)
     const c = new THREE.Color()
     for (let j = 0; j < ny; j++) {
       for (let i = 0; i < nx; i++) {
@@ -285,6 +347,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
         pos[k] = X(ost + (gi + 0.5) * m); pos[k + 1] = Y(z); pos[k + 2] = Z(nord - (gj + 0.5) * m)
         hoehenFarbe(z, c)
         farben[k] = c.r; farben[k + 1] = c.g; farben[k + 2] = c.b
+        uv[(j * nx + i) * 2] = (gi + 0.5) / breite; uv[(j * nx + i) * 2 + 1] = 1 - (gj + 0.5) / hoehe
       }
     }
     const index = new Uint32Array((nx - 1) * (ny - 1) * 6)
@@ -299,9 +362,58 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     const geo = new THREE.BufferGeometry()
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
     geo.setAttribute('color', new THREE.BufferAttribute(farben, 3))
+    geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
     geo.setIndex(new THREE.BufferAttribute(index, 1))
     geo.computeVertexNormals()
-    szene.add(new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ vertexColors: true })))
+    // Auflage auf dem Gelände: Wald, Siedlung, Gebiete und das Kilometernetz, auf eine Leinwand gemalt,
+    // die über das Gelände gespannt ist (weiss lässt die Farbe des Geländes, wie sie ist)
+    const PX = 2048 / Math.max(breite, hoehe)
+    const leinwand = document.createElement('canvas')
+    leinwand.width = Math.round(breite * PX); leinwand.height = Math.round(hoehe * PX)
+    const lctx = leinwand.getContext('2d')!
+    const lx = (e: number) => ((e - ost) / m) * PX, ly = (n: number) => ((nord - n) / m) * PX
+    const auflageTextur = new THREE.CanvasTexture(leinwand)
+    auflageTextur.colorSpace = THREE.SRGBColorSpace
+    auflageTextur.anisotropy = renderer.capabilities.getMaxAnisotropy()
+    const auflage = zusatz ? auflageFuer(r, zusatz) : null
+    const flaecheMalen = (ringe: Array<Array<[number, number]>>, fuellung: string, rand?: string) => {
+      lctx.beginPath()
+      for (const ring of ringe) {
+        ring.forEach(([e, n], i) => (i ? lctx.lineTo(lx(e), ly(n)) : lctx.moveTo(lx(e), ly(n))))
+        lctx.closePath()
+      }
+      lctx.fillStyle = fuellung; lctx.fill('evenodd')
+      if (rand) { lctx.strokeStyle = rand; lctx.lineWidth = 1.5; lctx.stroke() }
+    }
+    const GEBIET: Record<string, [string, string]> = {
+      bln: ['rgba(185, 211, 163, 0.35)', '#9dbf84'], park: ['rgba(127, 174, 102, 0.3)', '#6f9e57'], moor: ['rgba(201, 194, 154, 0.4)', '#b0a77a'],
+    }
+    const auflageMalen = (a: Set<Kategorie>) => {
+      lctx.fillStyle = '#ffffff'
+      lctx.fillRect(0, 0, leinwand.width, leinwand.height)
+      if (auflage && !a.has('boden')) {
+        flaecheMalen(auflage.wald, 'rgba(118, 168, 92, 0.4)')
+        flaecheMalen(auflage.siedlung, 'rgba(140, 128, 118, 0.4)')
+      }
+      if (auflage && !a.has('gebiete')) {
+        for (const g of auflage.gebiete) flaecheMalen(g.ringe, ...(GEBIET[g.art] ?? GEBIET.bln))
+      }
+      if (!a.has('kmnetz')) {
+        // Landeskoordinaten: eine Linie je Kilometer, alle 10 km kräftiger
+        for (let e = Math.ceil(ost / 1000) * 1000; e <= ost + breite * m; e += 1000) {
+          lctx.strokeStyle = e % 10000 === 0 ? 'rgba(60, 60, 60, 0.55)' : 'rgba(60, 60, 60, 0.28)'
+          lctx.lineWidth = e % 10000 === 0 ? 2 : 1
+          lctx.beginPath(); lctx.moveTo(lx(e), 0); lctx.lineTo(lx(e), leinwand.height); lctx.stroke()
+        }
+        for (let n = Math.ceil((nord - hoehe * m) / 1000) * 1000; n <= nord; n += 1000) {
+          lctx.strokeStyle = n % 10000 === 0 ? 'rgba(60, 60, 60, 0.55)' : 'rgba(60, 60, 60, 0.28)'
+          lctx.lineWidth = n % 10000 === 0 ? 2 : 1
+          lctx.beginPath(); lctx.moveTo(0, ly(n)); lctx.lineTo(leinwand.width, ly(n)); lctx.stroke()
+        }
+      }
+      auflageTextur.needsUpdate = true
+    }
+    szene.add(new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ vertexColors: true, map: auflageTextur })))
     szene.add(new THREE.HemisphereLight('#ffffff', '#8a8a7a', 1.6))
     const sonne = new THREE.DirectionalLight('#ffffff', 2.2)
     // Licht von Nordwesten wie auf der Landeskarte
@@ -368,7 +480,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     // Beschriftungen in fester Bildschirmgrösse, auf einem hellen Schild; wo sich zwei
     // überdecken, bleibt die mit dem kleineren Rang stehen (zeichnen() blendet die andere aus)
     const schilder: Array<{ sp: THREE.Sprite; rang: number; folge: number }> = []
-    const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number, folge = 0) => {
+    const gruppen = { gipfel: new THREE.Group(), kgs: new THREE.Group(), seilbahn: new THREE.Group() }
+    Object.values(gruppen).forEach((g) => szene.add(g))
+    const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number, folge = 0, ort: THREE.Object3D = szene) => {
       const lw = document.createElement('canvas')
       const ctx = lw.getContext('2d')!
       const px = 28, rand = 10
@@ -387,7 +501,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       sp.center.set(0, 0)
       sp.position.set(x, y, z)
       sp.renderOrder = 3
-      szene.add(sp)
+      ort.add(sp)
       schilder.push({ sp, rang, folge })
     }
     const kugel = (farbe: string, x: number, y: number, z: number, groesse = 0.12, durch = false) => {
@@ -423,9 +537,43 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       const y = Y(Math.max(g.hoehe_m, hoeheBei(r, h, g.lage[0], g.lage[1])))
       const kegel = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.25, 4), new THREE.MeshBasicMaterial({ color: FARBEN.gipfel }))
       kegel.position.set(X(g.lage[0]), y + 0.12, Z(g.lage[1]))
-      szene.add(kegel)
-      schild(`${g.name} ${g.hoehe_m.toLocaleString('de-CH')} m`, dunkel ? '#e2c9a8' : FARBEN.gipfel, X(g.lage[0]), y + 0.3, Z(g.lage[1]), 2)
+      gruppen.gipfel.add(kegel)
+      schild(`${g.name} ${g.hoehe_m.toLocaleString('de-CH')} m`, dunkel ? '#e2c9a8' : FARBEN.gipfel, X(g.lage[0]), y + 0.3, Z(g.lage[1]), 2, 0, gruppen.gipfel)
     }
+
+    const imAusschnitt = (e: number, n: number) => e >= ost && e <= ost + breite * m && n <= nord && n >= nord - hoehe * m
+    for (const k of zusatz?.s?.kgs ?? []) {
+      const [e, n] = lv95(k.lage[0], k.lage[1])
+      if (!imAusschnitt(e, n)) continue
+      const y = Y(hoeheBei(r, h, e, n))
+      const raute = new THREE.Mesh(new THREE.OctahedronGeometry(0.08), new THREE.MeshBasicMaterial({ color: dunkel ? '#c39be0' : '#6b3fa0' }))
+      raute.position.set(X(e), y + 0.08, Z(n))
+      gruppen.kgs.add(raute)
+      schild(k.name, dunkel ? '#c39be0' : '#6b3fa0', X(e), y + 0.18, Z(n), 3, 0, gruppen.kgs)
+    }
+    for (const b of zusatz?.s?.seilbahnen ?? []) {
+      const pts = b.verlauf.flatMap((v) => zugLesen(v))
+      if (pts.length < 2 || !pts.some(([e, n]) => imAusschnitt(e, n))) continue
+      // gerade von Station zu Station: wie hoch das Seil hängt, steht in keiner Quelle
+      const [ea, na] = pts[0], [eb, nb] = pts[pts.length - 1]
+      const a = new THREE.Vector3(X(ea), Y(hoeheBei(r, h, ea, na)) + 0.03, Z(na))
+      const z2 = new THREE.Vector3(X(eb), Y(hoeheBei(r, h, eb, nb)) + 0.03, Z(nb))
+      const seil = new THREE.Mesh(new THREE.TubeGeometry(new THREE.LineCurve3(a, z2), 8, 0.025, 5, false),
+        new THREE.MeshBasicMaterial({ color: dunkel ? '#7cc0cf' : '#0d5c6e' }))
+      gruppen.seilbahn.add(seil)
+      for (const p of [a, z2]) {
+        const st = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.07, 0.07), new THREE.MeshBasicMaterial({ color: dunkel ? '#7cc0cf' : '#0d5c6e' }))
+        st.position.copy(p)
+        gruppen.seilbahn.add(st)
+      }
+    }
+    anwenden.current = (a: Set<Kategorie>) => {
+      gruppen.gipfel.visible = !a.has('gipfel')
+      gruppen.kgs.visible = !a.has('kgs')
+      gruppen.seilbahn.visible = !a.has('seilbahn')
+      auflageMalen(a)
+    }
+    anwenden.current(ausJetzt.current)
 
     // der Zug: ein roter Punkt mit weissem Rand, auch im Tunnel sichtbar
     const zugRand = zug ? kugel('#ffffff', 0, 0, 0, 0.2, true) : null
@@ -477,6 +625,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       const liste = schilder.map((x) => ({ ...x, abstand: x.sp.position.distanceToSquared(kamera.position) }))
         .sort((a, c) => a.rang - c.rang || a.folge - c.folge || a.abstand - c.abstand)
       for (const { sp } of liste) {
+        if (sp.parent && !sp.parent.visible) continue
         projiziert.copy(sp.position).project(kamera)
         if (projiziert.z > 1 || projiziert.z < -1) { sp.visible = false; continue }
         const breite = sp.scale.x * pm[0] * b / 2, hoehe = sp.scale.y * pm[5] * hh / 2
@@ -537,9 +686,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
         const mat = x.material as THREE.Material & { map?: THREE.Texture }
         mat?.map?.dispose(); mat?.dispose?.()
       })
+      anwenden.current = null
       renderer.dispose()
       renderer.domElement.remove()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug])
+  }, [r, h, faktor, weg, wegFarbe, zug, zusatz])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }

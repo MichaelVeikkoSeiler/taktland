@@ -680,6 +680,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
       {voll && vollbild && <div className="shrink-0">{vollbild}</div>}
       {!voll && !dreiD && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
       {!voll && !dreiD && sehenswert.s && <SehenswertLegende gebieteMitBoden />}
+      {!voll && dreiD && relief && <SehenswertLegende gebieteMitBoden kmNetz />}
       <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>
         {!linien && 'Das Netz wird geladen … '}
         {zurKarte && (

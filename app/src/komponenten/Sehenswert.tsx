@@ -119,7 +119,7 @@ const imBild = (z: { x0: number; x1: number; y0: number; y1: number }, box: Box,
  * Welche Kategorien die Karten zeigen: jede lässt sich in der Legende aus- und
  * einblenden (Michael, 2026-09-26), gemerkt auf diesem Gerät, für alle Karten.
  */
-export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden'
+export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden' | 'kmnetz'
 const KATEGORIEN_SPEICHER = 'taktland.karte.v1'
 let versteckt: Set<Kategorie> = (() => {
   try {
@@ -287,6 +287,7 @@ const LANG: Partial<Record<Kategorie, string>> = {
   seilbahn: 'Seilbahnen mit Bundeskonzession',
   gebiete: 'Gebiete (BLN, Pärke, Moorlandschaften)',
   boden: 'Wald und Siedlung',
+  kmnetz: 'Kilometernetz (Landeskoordinaten)',
 }
 
 const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
@@ -296,14 +297,18 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   ['seilbahn', 'Seilbahn', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="1.5" strokeDasharray="3 2" className="stroke-seilbahn" /></svg>],
   ['gebiete', 'Gebiete', <span className="inline-block size-2.5 rounded-sm border border-flaeche-park-rand bg-flaeche-park" />],
   ['boden', 'Wald, Siedlung', <span className="inline-flex gap-0.5"><span className="inline-block size-2.5 rounded-sm bg-wald" /><span className="inline-block size-2.5 rounded-sm bg-siedlung" /></span>],
+  // nur im 3D-Relief (Michael, 2026-10-06: «ein Kilometernetz über die Reliefs spannen»)
+  ['kmnetz', 'Km-Netz', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M3.5 0V10M6.5 0V10M0 3.5H10M0 6.5H10" strokeWidth="1" className="stroke-sbb-metal" /></svg>],
 ]
 
 /** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein.
  *  «gebieteMitBoden»: Gebiete, Wald und Siedlung als ein Knopf «Gebiete», damit die
  *  Legende in «Fahren» eine Zeile weniger braucht (Michael, 2026-09-30) */
-export function SehenswertLegende({ orte = false, gebieteMitBoden = false }: { orte?: boolean; gebieteMitBoden?: boolean }) {
+export function SehenswertLegende({ orte = false, gebieteMitBoden = false, kmNetz = false }: {
+  orte?: boolean; gebieteMitBoden?: boolean; kmNetz?: boolean
+}) {
   const aus = useVersteckt()
-  const eintraege = LEGENDE.filter(([k]) => (orte || k !== 'orte') && !(gebieteMitBoden && k === 'boden'))
+  const eintraege = LEGENDE.filter(([k]) => (orte || k !== 'orte') && (kmNetz || k !== 'kmnetz') && !(gebieteMitBoden && k === 'boden'))
   return (
     <div className="mt-1 flex flex-wrap gap-1.5 text-xs" role="group" aria-label="Auf der Karte zeigen">
       {eintraege.map(([k, text, zeichen]) => {
