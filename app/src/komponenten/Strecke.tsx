@@ -656,7 +656,7 @@ function Ergebnis({
             ))}
           </p>
         )}
-        <details className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+        <details className="klapp mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
           <summary className="cursor-pointer underline underline-offset-2">
             Alle {weg.punkte.length} Betriebspunkte des Wegs
           </summary>

@@ -921,7 +921,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <div className="mt-8 grid gap-3 border-t border-sbb-cloud pt-4 text-sm dark:border-sbb-iron">
           <MeldeEinstellungen einstellung={einstellung} aendern={aendern} />
           {Object.keys(stumm).length > 0 && (
-            <details>
+            <details className="klapp">
               <summary className="cursor-pointer">
                 Nicht mehr gemeldet: {anzahl(Object.keys(stumm).length, 'Sehenswertes', 'Sehenswertes')}
               </summary>

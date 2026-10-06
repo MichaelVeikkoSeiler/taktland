@@ -30,7 +30,7 @@ export function BahnenWahl({ netz: gegeben = null }: { netz?: StreckenNetz | nul
   }
 
   return (
-    <details className="group">
+    <details className="klapp group">
       <summary className="cursor-pointer text-sm text-sbb-metal underline underline-offset-2 hover:text-sbb-black
                           dark:text-sbb-storm dark:hover:text-sbb-white">
         Bahnen: {text}

@@ -156,8 +156,24 @@ body {
   25% { transform: translate(2px, -2px); }
 }
 
+/* aufklappbare Textzeilen (details.klapp): statt des Dreiecks des Browsers derselbe rote
+   Pfeil wie bei den Kacheln, wippt senkrecht, aufgeklappt gedreht (Michael, 2026-10-06) */
+details.klapp > summary { list-style: none; }
+details.klapp > summary::-webkit-details-marker { display: none; }
+details.klapp > summary::after {
+  content: "↓";
+  display: inline-block;
+  margin-left: 0.35em;
+  color: var(--color-sbb-red);
+  font-size: 1.15em;
+  line-height: 1;
+  transition: rotate 150ms;
+  animation: pfeil-unten 1.5s ease-in-out infinite;
+}
+details.klapp[open] > summary::after { rotate: 180deg; }
+
 @media (prefers-reduced-motion: reduce) {
-  .pfeil { animation: none; }
+  .pfeil, details.klapp > summary::after { animation: none; }
 }
 
 /* Fokus nur bei Tastaturbedienung, dann aber deutlich */

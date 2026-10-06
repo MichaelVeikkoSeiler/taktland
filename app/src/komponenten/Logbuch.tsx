@@ -258,7 +258,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
           {f.objekte.length > 0 && (
             <>
               <FahrtKarte objekte={f.objekte} wege={f.wege ?? []} index={index} titel={`Karte der Fahrt ${f.von} nach ${f.nach}`} />
-              <details className="mt-3 text-sm">
+              <details className="klapp mt-3 text-sm">
                 <summary className={`cursor-pointer ${knopf}`}>Liste zeigen</summary>
                 <ol className="mt-2 space-y-1">
                   {f.objekte.map((o) => (

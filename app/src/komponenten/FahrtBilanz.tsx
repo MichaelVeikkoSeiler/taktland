@@ -243,7 +243,7 @@ export function FahrtBilanz({ titel, objekte, beginn, probe, schliessen }: {
           </ol>
         )}
         {kleine.length > 0 && (
-          <details className="mt-2 text-sm">
+          <details className="klapp mt-2 text-sm">
             <summary className="cursor-pointer text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
               {kleine.length} {kleine.length === 1 ? 'kleinere Brücke' : 'kleinere Brücken'} (unter{' '}
               {GROSSE_BRUECKE} Baueinheiten oder ohne Angabe)
