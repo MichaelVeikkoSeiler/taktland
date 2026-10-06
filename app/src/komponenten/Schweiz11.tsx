@@ -38,7 +38,9 @@ function einstellungLesen(): { e: Einstellungen; namen: string[]; gruppe: boolea
   }
 }
 
-export interface Antwort { pin: KartenPin | null; dM: number | null; punkte: number; zeitAus: boolean }
+/** hilfen: wie viele Hilfen eingeschaltet waren; fehlt bei Geräten mit älterer Version und bei
+ *  Spielern, die nicht getippt haben (Michael, 2026-10-06: «Anzahl Hilfen anzeigen») */
+export interface Antwort { pin: KartenPin | null; dM: number | null; punkte: number; zeitAus: boolean; hilfen?: number }
 interface Partie { e: Einstellungen; aufgaben: SpielObjekt[]; spieler: string[]; d0: number }
 
 /**
@@ -259,7 +261,7 @@ export function useFrage({ e, ziel, d0, aktiv, schluessel, beiAbgabe }: {
     // ein gesetzter, aber nicht bestätigter Pin zählt nicht
     const p = zeitAus ? null : pin
     const dM = p ? abstandM(p, ziel) : null
-    const a: Antwort = { pin: p, dM, zeitAus, punkte: dM === null ? 0 : punkte(dM, d0, ziel.s, hilfen.size) }
+    const a: Antwort = { pin: p, dM, zeitAus, punkte: dM === null ? 0 : punkte(dM, d0, ziel.s, hilfen.size), hilfen: hilfen.size }
     setPin(null)
     setHilfen(new Set())
     beiAbgabe(a)
@@ -549,14 +551,23 @@ export function Aufloesung({ pool, e, ziel, index, spieler, antworten, frage, d0
   )
 }
 
+/** «keine Hilfe», «1 Hilfe», «3 Hilfen»; «mindestens», wenn sie nicht bei jeder Frage bekannt ist */
+function hilfenText(n: number, unvollstaendig: boolean) {
+  const t = n === 0 ? 'keine Hilfe' : n === 1 ? '1 Hilfe' : `${n} Hilfen`
+  return unvollstaendig ? (n === 0 ? 'Hilfen nicht bei jeder Frage bekannt' : `mindestens ${t}`) : t
+}
+
 export function Ende({ spieler, antworten, bisher, nochmals, schliessen, schliessenText = 'Einstellungen', warten }: {
   spieler: string[]; antworten: Antwort[][]; bisher: number | null | undefined; nochmals?: () => void; schliessen: () => void
   schliessenText?: string; warten?: string
 }) {
   const zeilen = spieler.map((name, i) => {
     const d = antworten.map((r) => r[i]?.dM).filter((x): x is number => x !== null && x !== undefined)
+    const h = antworten.map((r) => r[i]?.hilfen)
+    const bekannt = h.filter((x): x is number => typeof x === 'number')
     return { name, punkte: antworten.reduce((a, r) => a + (r[i]?.punkte ?? 0), 0),
-             schnitt: d.length ? d.reduce((a, b) => a + b, 0) / d.length : null, ohne: antworten.length - d.length }
+             schnitt: d.length ? d.reduce((a, b) => a + b, 0) / d.length : null, ohne: antworten.length - d.length,
+             hilfen: bekannt.length ? hilfenText(bekannt.reduce((a, b) => a + b, 0), bekannt.length < h.length) : null }
   })
   const allein = spieler.length === 1
   const z = zeilen[0]
@@ -570,6 +581,7 @@ export function Ende({ spieler, antworten, bisher, nochmals, schliessen, schlies
             <p className="mt-1 text-sbb-metal dark:text-sbb-storm">
               {z.schnitt === null ? 'Kein Tipp bestätigt' : `Durchschnittlich ${distanzText(z.schnitt)} daneben`}
               {z.ohne > 0 && z.schnitt !== null ? ` · ${z.ohne} ohne bestätigten Tipp` : ''}
+              {z.hilfen ? ` · ${z.hilfen}` : ''}
             </p>
             {bisher !== undefined && (
               <p className="mt-2 font-medium">
@@ -585,6 +597,7 @@ export function Ende({ spieler, antworten, bisher, nochmals, schliessen, schlies
                   <span className="block font-bold">{x.rang}. {x.name}</span>
                   <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
                     {x.schnitt === null ? 'Kein Tipp bestätigt' : `Durchschnittlich ${distanzText(x.schnitt)} daneben`}
+                    {x.hilfen ? ` · ${x.hilfen}` : ''}
                   </span>
                 </span>
                 <span className="shrink-0 text-xl font-bold tabular-nums">{x.punkte}</span>
