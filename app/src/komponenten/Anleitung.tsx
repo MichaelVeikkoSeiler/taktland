@@ -397,8 +397,8 @@ function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) 
  *  ein Tipp auf den offenen Text schliesst nur dieses Spiel, nicht den ganzen Bereich */
 function Spiel({ titel, children }: { titel: string; children: ReactNode }) {
   return (
-    // ein eigener, heller Kasten mit Einzug, weil die Spiele «Spiele» untergeordnet sind (Michael, 2026-10-06)
-    <details className="group/spiel mt-2 ml-4 rounded-lg bg-white px-4 first:mt-1 dark:bg-sbb-midnight">
+    // ein eigener, heller Kasten, links bündig mit dem Titel «Spiele», dem die Spiele untergeordnet sind (Michael, 2026-10-06)
+    <details className="group/spiel mt-2 rounded-lg bg-white px-4 first:mt-1 dark:bg-sbb-midnight">
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 py-2
                           [&::-webkit-details-marker]:hidden">
         <h3 className="font-semibold text-sbb-black dark:text-sbb-white">{titel}</h3>
