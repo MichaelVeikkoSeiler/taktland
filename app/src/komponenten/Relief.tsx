@@ -228,8 +228,9 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
               </div>
               <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
                 Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
-                auf Tischhöhe. Trigger oder Fingertippen dreht es, Greifen macht es doppelt so gross. Die Höhe stellst du vorher
-                oben ein. Bei der Probefahrt fährt der Zug als roter Punkt in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
+                auf Tischhöhe. Einen Abzug halten trägt es mit der Hand, beide Abzüge ziehen es grösser oder kleiner und drehen es;
+                der Thumbstick dreht und hebt es, die Greiftaste stellt es zurück. Mit den Händen gilt Daumen an Zeigefinger als
+                Abzug. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt der Zug als roter Punkt in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
                 Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan.
               </p>
               {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
@@ -854,30 +855,86 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     modell.add(...szene.children)
     szene.add(modell)
     const hintergrund = szene.background
+    /** in der Brille: je Bild die Tasten auswerten (Sekunden seit dem letzten Bild) */
+    let brilleSchritt: ((dt: number) => void) | null = null
     if (brille) {
       let tiefst = Infinity
       for (let i = 1; i < pos.length; i += 3) if (pos[i] !== Y(KEINE_HOEHE)) tiefst = Math.min(tiefst, pos[i])
-      let gross = false
-      const setzen = () => {
-        const s = brilleMass * (gross ? 2 : 1)
-        modell.scale.setScalar(s)
-        modell.position.set(0, BRILLE_TISCH_M - tiefst * s, -BRILLE_ABSTAND_M - (gross ? BRILLE_BREITE_M / 2 : 0))
-        // Schilder behalten ihre Grösse, die Gruppe darüber schrumpft sie sonst mit
+      // Schilder und Zug behalten ihre Grösse, die Gruppe darüber schrumpft sie sonst mit
+      const massAnpassen = (s: number) => {
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] / s, grundMass[1] / s, 1)
         const zs = Math.max(1, BRILLE_ZUG_M / (0.15 * s))
         zugKern?.scale.setScalar(zs); zugRand?.scale.setScalar(zs)
       }
-      // Trigger oder Fingertippen dreht das Modell, Greifen macht es doppelt so gross
-      for (const i of [0, 1]) {
-        const steuer = renderer.xr.getController(i)
-        steuer.addEventListener('select', () => { modell.rotation.y += Math.PI / 6 })
-        steuer.addEventListener('squeeze', () => { gross = !gross; setzen() })
-        szene.add(steuer)
+      const setzen = () => {
+        modell.scale.setScalar(brilleMass)
+        modell.position.set(0, BRILLE_TISCH_M - tiefst * brilleMass, -BRILLE_ABSTAND_M)
+        modell.rotation.set(0, 0, 0)
+        massAnpassen(brilleMass)
+      }
+
+      // Tasten (Michael, 2026-10-06: «die Landschaft mit den beiden Abzügen aufheben und anders hinstellen»):
+      // ein Abzug gehalten trägt das Modell mit der Hand, waagrecht; beide Abzüge ziehen es grösser oder
+      // kleiner und drehen es; der Thumbstick dreht und hebt; die Greiftaste stellt es zurück an den Anfang.
+      // Mit Handtracking gilt das Zusammenführen von Daumen und Zeigefinger als Abzug.
+      const steuer = [0, 1].map((i) => renderer.xr.getController(i))
+      const haelt = new Set<THREE.Object3D>()
+      const lage = (o: THREE.Object3D) => o.getWorldPosition(new THREE.Vector3())
+      const gieren = (o: THREE.Object3D) => {
+        const v = new THREE.Vector3(0, 0, -1).applyQuaternion(o.getWorldQuaternion(new THREE.Quaternion()))
+        return Math.atan2(-v.x, -v.z)
+      }
+      // was beim Anfassen galt: Lage der Hand(e) und des Modells
+      let griff: { p: THREE.Vector3; gier: number; abstand: number; m: THREE.Vector3; r: number; s: number } | null = null
+      const anfassen = () => {
+        const h = [...haelt]
+        if (!h.length) { griff = null; return }
+        const [a, b] = h.map(lage)
+        griff = h.length === 1
+          ? { p: a, gier: gieren(h[0]), abstand: 0, m: modell.position.clone(), r: modell.rotation.y, s: modell.scale.x }
+          : { p: a.clone().add(b).multiplyScalar(0.5), gier: Math.atan2(b.x - a.x, b.z - a.z), abstand: Math.max(0.02, a.distanceTo(b)),
+              m: modell.position.clone(), r: modell.rotation.y, s: modell.scale.x }
+      }
+      for (const c of steuer) {
+        c.addEventListener('selectstart', () => { haelt.add(c); anfassen() })
+        c.addEventListener('selectend', () => { haelt.delete(c); anfassen() })
+        c.addEventListener('squeeze', () => { haelt.clear(); griff = null; setzen() })
+        szene.add(c)
+      }
+      const um = new THREE.Vector3()
+      brilleSchritt = (dt) => {
+        const h = [...haelt]
+        if (griff && h.length === 1) {
+          const p = lage(h[0]), d = gieren(h[0]) - griff.gier
+          um.copy(griff.m).sub(griff.p).applyAxisAngle(new THREE.Vector3(0, 1, 0), d)
+          modell.position.copy(p).add(um)
+          modell.rotation.y = griff.r + d
+        } else if (griff && h.length === 2) {
+          const [a, b] = h.map(lage)
+          const mitte = a.clone().add(b).multiplyScalar(0.5)
+          const f = Math.min(8, Math.max(0.125, a.distanceTo(b) / griff.abstand))
+          const s = Math.min(brilleMass * 8, Math.max(brilleMass / 4, griff.s * f))
+          const d = Math.atan2(b.x - a.x, b.z - a.z) - griff.gier
+          um.copy(griff.m).sub(griff.p).multiplyScalar(s / griff.s).applyAxisAngle(new THREE.Vector3(0, 1, 0), d)
+          modell.position.copy(mitte).add(um)
+          modell.rotation.y = griff.r + d
+          modell.scale.setScalar(s)
+          massAnpassen(s)
+        }
+        // Thumbstick: links und rechts dreht, vor und zurück hebt und senkt
+        for (const quelle of renderer.xr.getSession()?.inputSources ?? []) {
+          const ax = quelle.gamepad?.axes
+          if (!ax || ax.length < 4) continue
+          const [x, y] = [ax[2], ax[3]].map((v) => (Math.abs(v) < 0.2 ? 0 : v))
+          modell.rotation.y -= x * 1.2 * dt
+          modell.position.y -= y * 0.4 * dt
+        }
       }
       renderer.xr.addEventListener('sessionend', () => {
         modell.scale.setScalar(1); modell.position.set(0, 0, 0); modell.rotation.set(0, 0, 0)
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
         zugKern?.scale.setScalar(1); zugRand?.scale.setScalar(1)
+        haelt.clear(); griff = null
         nurBild.visible = true; nurBrille.visible = false
         szene.background = hintergrund
         groesseSetzen()
@@ -890,7 +947,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const sitzung = await xr.requestSession(ar ? 'immersive-ar' : 'immersive-vr', { optionalFeatures: ['local-floor', 'hand-tracking'] })
         renderer.xr.setReferenceSpaceType('local-floor')
         await renderer.xr.setSession(sitzung)
-        gross = false
         setzen()
         nurBild.visible = false; nurBrille.visible = true
         szene.background = ar ? null : hintergrund
@@ -900,8 +956,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // beim Fahren: die Kamera folgt dem Zug mit demselben Blickwinkel; am Anfang von schräg hinten
     let letzte: THREE.Vector3 | null = null
     let laeuft = true
+    const uhr = new THREE.Clock()
     const zeichnen = () => {
       if (!laeuft) return
+      const dt = Math.min(0.1, uhr.getDelta())
+      if (renderer.xr.isPresenting) brilleSchritt?.(dt)
       if (probe && zug === eigenerZug) {
         const start = probe.current
         const anfang = pk[0].m, ende = pk[pk.length - 1].m
