@@ -57,7 +57,9 @@ const SCHRITT = 2
 const UEBER_M = 25
 /** in der Brille (Michael, 2026-10-06: «Quest 3»): das Relief als Modell so breit, der tiefste Punkt auf
  *  Tischhöhe, so weit vor dir; Linien so dick, dass sie auf diese Grösse noch zu sehen sind */
-const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILLE_LINIE_M = 0.0025
+const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILLE_LINIE_M = 0.0012
+/** Radius der Linie und der Bahnhöfe auf dem Bildschirm in km (Michael, 2026-10-06: «ziemlich fett», vorher 60 und 120 m) */
+const STRICH_KM = 0.032, BAHNHOF_KM = 0.075
 /** der Zug in der Brille so gross (Radius), damit man ihn auf dem Modell findet */
 const BRILLE_ZUG_M = 0.008
 /** so lange dauert die Probefahrt in der Brille über die ganze Bergstrecke, dann beginnt sie von vorn */
@@ -618,7 +620,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       // Röhre statt Linie: Linien sind in WebGL nur 1 Pixel breit
       const kurve = new THREE.CatmullRomCurve3(punkte)
       const material = new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch, transparent: durch, opacity: durch ? 0.75 : 1 })
-      const radien: Array<[number, THREE.Group]> = [[0.06, nurBild], ...(brille ? [[BRILLE_LINIE_M / brilleMass, nurBrille] as [number, THREE.Group]] : [])]
+      const radien: Array<[number, THREE.Group]> = [[STRICH_KM, nurBild], ...(brille ? [[BRILLE_LINIE_M / brilleMass, nurBrille] as [number, THREE.Group]] : [])]
       for (const [radius, ort] of radien) {
         const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, Math.max(4, punkte.length * 2), radius, 6, false), material)
         if (durch) netz.renderOrder = 2
@@ -693,14 +695,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     r.bahnhoefe.forEach((b, i) => {
       const y = Y(hoeheBei(r, h, b.lage[0], b.lage[1]) + UEBER_M)
-      kugel(FARBEN.bahnhof, X(b.lage[0]), y, Z(b.lage[1]))
+      kugel(FARBEN.bahnhof, X(b.lage[0]), y, Z(b.lage[1]), BAHNHOF_KM)
       // Anfang und Ende der Strecke zuerst, dann die übrigen Bahnhöfe, dann die Gipfel
       const ende = i === 0 || i === r.bahnhoefe.length - 1
       schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + 0.15, Z(b.lage[1]), ende ? 0 : 1, folge.get(i) ?? 0)
     })
     for (const t of weg.tunnelPunkte.filter(imStueck)) {
       const p = punkt3d(t)
-      kugel(tunnelFarbe, p.x, p.y, p.z, 0.09)
+      kugel(tunnelFarbe, p.x, p.y, p.z, BAHNHOF_KM * 0.7)
     }
     for (const g of r.gipfel) {
       const y = Y(Math.max(g.hoehe_m ?? 0, hoeheBei(r, h, g.lage[0], g.lage[1])))
