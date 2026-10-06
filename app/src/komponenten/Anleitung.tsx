@@ -393,13 +393,25 @@ function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) 
   )
 }
 
-/** ein Spiel als Unterbereich von «Spiele» */
+/** ein Spiel als Unterbereich von «Spiele», auf- und zuklappbar, am Anfang zu (Michael, 2026-10-06);
+ *  ein Tipp auf den offenen Text schliesst nur dieses Spiel, nicht den ganzen Bereich */
 function Spiel({ titel, children }: { titel: string; children: ReactNode }) {
   return (
-    <>
-      <h3 className="mt-4 font-semibold text-sbb-black first:mt-2 dark:text-sbb-white">{titel}</h3>
-      <Punkte>{children}</Punkte>
-    </>
+    <details className="group/spiel mt-2 border-t border-sbb-cloud first:border-t-0 dark:border-sbb-iron">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 py-2
+                          [&::-webkit-details-marker]:hidden">
+        <h3 className="font-semibold text-sbb-black dark:text-sbb-white">{titel}</h3>
+        <span className="pfeil shrink-0 text-sm transition-transform group-open/spiel:rotate-180" aria-hidden="true">↓</span>
+      </summary>
+      <div className="cursor-pointer pb-2" onClick={(e) => {
+        if (!tippSchliesst(e)) return
+        e.stopPropagation()
+        zuklappTon()
+        e.currentTarget.closest('details')?.removeAttribute('open')
+      }}>
+        <Punkte>{children}</Punkte>
+      </div>
+    </details>
   )
 }
 
