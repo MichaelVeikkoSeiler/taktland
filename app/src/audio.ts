@@ -18,7 +18,7 @@ export interface Audio {
   antworten: boolean
   /** ein gläsernes Klicken beim Auf- und Zuklappen (Michael, 2026-10-01) */
   aufklappen: boolean
-  /** Lautstärke aller Töne in Prozent, 100 ist die bisherige Stärke (Michael, 2026-10-06) */
+  /** Lautstärke aller Töne in Prozent; 100 ist 20 % lauter als vor dem Regler (Michael, 2026-10-06) */
   lautstaerke: number
 }
 
@@ -61,15 +61,30 @@ export function useAudio(): Audio {
 let ctx: AudioContext | null = null
 let ausgangKnoten: GainNode | null = null
 
-/** Das Ohr hört Lautstärke nicht linear; im Quadrat wirkt der Regler gleichmässiger */
-const verstaerkung = () => (stand.lautstaerke / 100) ** 2
+/** 100 % am Regler ist 20 % lauter als die Töne vor dem Regler (Michael, 2026-10-06: «muss lauter sein») */
+const HOECHST = 1.2
 
-/** Alle Töne laufen über einen gemeinsamen Regler zum Lautsprecher */
+/** Das Ohr hört Lautstärke nicht linear; im Quadrat wirkt der Regler gleichmässiger */
+const verstaerkung = () => HOECHST * (stand.lautstaerke / 100) ** 2
+
+/** Alle Töne laufen über einen gemeinsamen Regler zum Lautsprecher; ein Begrenzer dahinter
+ *  verhindert ein Kratzen, wenn sich laute Töne überlagern */
 function ausgang(c: AudioContext): AudioNode {
   if (!ausgangKnoten) {
     ausgangKnoten = c.createGain()
     ausgangKnoten.gain.value = verstaerkung()
-    ausgangKnoten.connect(c.destination)
+    let ziel: AudioNode = c.destination
+    try {
+      const begrenzer = c.createDynamicsCompressor()
+      begrenzer.threshold.value = -3
+      begrenzer.knee.value = 0
+      begrenzer.ratio.value = 20
+      begrenzer.attack.value = 0.002
+      begrenzer.release.value = 0.1
+      begrenzer.connect(c.destination)
+      ziel = begrenzer
+    } catch { /* ohne Begrenzer */ }
+    ausgangKnoten.connect(ziel)
   }
   return ausgangKnoten
 }

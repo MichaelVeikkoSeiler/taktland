@@ -16,6 +16,9 @@ export function EinstellungenSeite() {
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Einstellungen</h1>
       <p className="mt-2 leading-relaxed">Die Einstellungen gelten für dieses Gerät.</p>
 
+      {/* Audio ganz oben (Michael, 2026-10-06) */}
+      <AudioEinstellungen />
+
       <h2 className="mt-8 text-lg font-semibold">Schriftgrösse</h2>
       <Wahl name="Schriftgrösse" wert={e.groesse} waehlen={(g: Groesse) => einstellungenSetzen({ groesse: g })}
             optionen={(Object.keys(GROESSEN) as Groesse[]).map((g) => ({
@@ -46,8 +49,6 @@ export function EinstellungenSeite() {
       <div className="kachel mt-3 grid gap-3 p-4 text-sm">
         <MeldeEinstellungen einstellung={melde} aendern={meldeAendern} />
       </div>
-
-      <AudioEinstellungen />
     </div>
   )
 }
