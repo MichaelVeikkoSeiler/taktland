@@ -465,3 +465,8 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
     Quelle, die Linie liegt aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den
     Enden. Das Gelände hat 50 m Raster, ohne Häuser und Bäume. Das muss sichtbar dabeistehen.
   - Im Tunnel zeigt die Sicht aus dem Zug nichts; dort eher kurz aussen bleiben oder abblenden.
+- **Eigenes Zugmodell:** Michael modelliert selbst einen Zug und schickt ihn als GLB (unter etwa 2 MB, ohne
+  Logo und ohne Lackierung einer bestimmten Bahn). Er ersetzt dann die Kästen aus three.js (ZUG_* in
+  komponenten/Relief.tsx); Lizenz und Urheber kommen in Info. «Nicht massstäblich» bleibt stehen.
+- **Ansichten als Fahrgast oder Lokführer:** zum Hinweis «in den Zug wechseln» oben; Lokführer mit Blick
+  nach vorn, Fahrgast seitlich aus dem Fenster. Dieselben offenen Fragen (Übelkeit, Gleishöhe, Tunnel).

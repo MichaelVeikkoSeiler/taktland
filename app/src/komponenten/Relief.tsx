@@ -60,8 +60,14 @@ const UEBER_M = 25
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILLE_LINIE_M = 0.0012
 /** Radius der Linie und der Bahnhöfe auf dem Bildschirm in km (Michael, 2026-10-06: «ziemlich fett», vorher 60 und 120 m) */
 const STRICH_KM = 0.032, BAHNHOF_KM = 0.075
-/** der Zug in der Brille so gross (Radius), damit man ihn auf dem Modell findet */
-const BRILLE_ZUG_M = 0.008
+/** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
+const BRILLE_ZUG_M = 0.005
+/** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
+ *  entlang der Linie, Breite und Höhe in km; etwa elfmal grösser als ein echter Zug, sonst wäre er
+ *  auf dem Gelände kaum zu sehen. Darum steht «Zug nicht massstäblich» dabei. Kein bestimmter Zugtyp. */
+const ZUG_LOK_M = 220, ZUG_WAGEN_M = 280, ZUG_WAGEN = 6, ZUG_LUECKE_M = 15
+const ZUG_BREITE = 0.09, ZUG_HOEHE = 0.1
+const ZUG_GRAU = '#8c8c8c'
 /** so lange dauert die Probefahrt in der Brille über die ganze Bergstrecke, dann beginnt sie von vorn */
 const PROBE_DAUER_S = 150
 /** so nah (km) an der Kamera erscheinen die Namen der Kulturgüter */
@@ -232,7 +238,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                 Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
                 auf Tischhöhe. Einen Abzug halten trägt es mit der Hand, beide Abzüge ziehen es grösser oder kleiner und drehen es;
                 der Thumbstick dreht und hebt es, die Greiftaste stellt es zurück. Mit den Händen gilt Daumen an Zeigefinger als
-                Abzug. Probefahrt: A startet, B hält an, X schneller, Y langsamer. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt der Zug als roter Punkt in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
+                Abzug. Probefahrt: A startet, B hält an, X schneller, Y langsamer. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt ein Zug, nicht massstäblich und kein bestimmter Typ, in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
                 Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan.
               </p>
               {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
@@ -424,7 +430,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
       </div>
       <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug. Die Höhe der Gleise steht in
-        keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden.
+        keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Zug nicht
+        massstäblich und kein bestimmter Zugtyp.
         {faktor === 2 && ' Höhe 2-fach überhöht.'}
       </p>
     </>
@@ -769,10 +776,52 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     anwenden.current(ausJetzt.current)
 
-    // der Zug: ein roter Punkt mit weissem Rand, auch im Tunnel sichtbar
-    const zugRand = zug ? kugel('#ffffff', 0, 0, 0, 0.2, true) : null
-    const zugKern = zug ? kugel(FARBEN.zug, 0, 0, 0, 0.15, true) : null
-    if (zugKern) zugKern.renderOrder = 5
+    // der Zug: Lok und Wagen, jeder folgt der Linie; im Tunnel halb durchsichtig über dem Berg
+    const zugTeile: Array<{ netz: THREE.Group; ab: number; laenge: number; materialien: THREE.MeshLambertMaterial[]; drin: boolean }> = []
+    let zugMass = 1
+    if (zug) {
+      let ab = 0
+      for (let i = 0; i <= ZUG_WAGEN; i++) {
+        const laenge = i === 0 ? ZUG_LOK_M : ZUG_WAGEN_M
+        const g = new THREE.Group()
+        const grau = new THREE.MeshLambertMaterial({ color: ZUG_GRAU })
+        const materialien = [grau]
+        g.add(new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE, ZUG_HOEHE, laenge / 1000), grau))
+        if (i === 0) {
+          // die karminrote Front der Lok, vorne in Fahrtrichtung
+          const rot = new THREE.MeshLambertMaterial({ color: FARBEN.zug })
+          materialien.push(rot)
+          const front = new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE * 1.04, ZUG_HOEHE * 1.04, laenge * 0.2 / 1000), rot)
+          front.position.z = laenge * 0.4 / 1000
+          g.add(front)
+        }
+        szene.add(g)
+        zugTeile.push({ netz: g, ab, laenge, materialien, drin: false })
+        ab += laenge + ZUG_LUECKE_M
+      }
+    }
+    const vorwaerts = new THREE.Vector3(0, 0, 1), richtungZug = new THREE.Vector3()
+    /** die Lok vorne bei s, die Wagen dahinter, je mit seiner Mitte auf der Linie */
+    const zugSetzen = (s: number | null) => {
+      for (const t of zugTeile) {
+        const halb = (t.laenge * zugMass) / 2
+        const mitte = s === null ? 0 : s - t.ab * zugMass - halb
+        const sichtbar = s !== null && imStueck(mitte)
+        t.netz.visible = sichtbar
+        if (!sichtbar) continue
+        const a = punkt3d(Math.max(pk[0].m, mitte - halb)), b = punkt3d(Math.min(pk[pk.length - 1].m, mitte + halb))
+        t.netz.position.copy(a).add(b).multiplyScalar(0.5)
+        t.netz.position.y += (ZUG_HOEHE * zugMass) / 2
+        if (b.distanceToSquared(a) > 0) t.netz.quaternion.setFromUnitVectors(vorwaerts, richtungZug.copy(b).sub(a).normalize())
+        t.netz.scale.setScalar(zugMass)
+        const drin = weg.bauwerke.some((x) => x.art === 'tunnel' && mitte >= x.von && mitte <= x.bis)
+        if (drin !== t.drin) {
+          t.drin = drin
+          for (const m of t.materialien) { m.transparent = drin; m.opacity = drin ? 0.55 : 1; m.depthTest = !drin; m.needsUpdate = true }
+          t.netz.traverse((o) => { o.renderOrder = drin ? 5 : 0 })
+        }
+      }
+    }
 
     const steuerung = new OrbitControls(kamera, renderer.domElement)
     steuerung.enableDamping = true
@@ -868,8 +917,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       // Schilder und Zug behalten ihre Grösse, die Gruppe darüber schrumpft sie sonst mit
       const massAnpassen = (s: number) => {
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] / s, grundMass[1] / s, 1)
-        const zs = Math.max(1, BRILLE_ZUG_M / (0.15 * s))
-        zugKern?.scale.setScalar(zs); zugRand?.scale.setScalar(zs)
+        zugMass = Math.max(1, BRILLE_ZUG_M / (ZUG_BREITE * s))
       }
       const setzen = () => {
         modell.scale.setScalar(brilleMass)
@@ -985,7 +1033,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       renderer.xr.addEventListener('sessionend', () => {
         modell.scale.setScalar(1); modell.position.set(0, 0, 0); modell.rotation.set(0, 0, 0)
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
-        zugKern?.scale.setScalar(1); zugRand?.scale.setScalar(1)
+        zugMass = 1
         haelt.clear(); griff = null
         nurBild.visible = true; nurBrille.visible = false
         szene.background = hintergrund
@@ -1028,13 +1076,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         eigenerZug.current = fahrt.s
         if (fahrt.s === null) letzte = null
       }
-      if (zug && zugRand && zugKern) {
+      if (zug) {
         const s = zug.current
         const sichtbar = s !== null && imStueck(s)
-        zugRand.visible = zugKern.visible = sichtbar
+        zugSetzen(s)
         if (sichtbar) {
           const p = punkt3d(s)
-          zugRand.position.copy(p); zugKern.position.copy(p)
           // in der Brille steht das Modell still, du schaust dem Zug von aussen zu
           if (renderer.xr.isPresenting) letzte = null
           else if (!letzte && blick?.current) {
@@ -1044,7 +1091,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             const hinten = punkt3d(Math.max(pk[0].m, s - 3000))
             const richtung = p.clone().sub(hinten).setY(0).normalize()
             steuerung.target.copy(p)
-            kamera.position.copy(p).addScaledVector(richtung, -7).add(new THREE.Vector3(0, 4.5, 0))
+            kamera.position.copy(p).addScaledVector(richtung, -5).add(new THREE.Vector3(0, 3.2, 0))
           } else {
             const d = p.clone().sub(letzte)
             steuerung.target.add(d); kamera.position.add(d)
