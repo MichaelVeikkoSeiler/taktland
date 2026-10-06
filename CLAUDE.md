@@ -156,7 +156,8 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              auf der Bergstrecke)
              (pipeline/build_relief.py); in der App komponenten/Relief.tsx mit three.js, erst dort geladen;
              auf der eigenen Seite «In der Brille ansehen» (WebXR, Quest 3): Modell 1,2 m breit auf Tischhöhe; ein Abzug trägt es, beide
-             skalieren und drehen, Thumbstick dreht und hebt, Greiftaste setzt zurück;
+             skalieren und drehen, Thumbstick dreht und hebt, Greiftaste setzt zurück; Probefahrt: A startet, B hält
+             an, X verdoppelt das Tempo (bis 16-fach), Y halbiert es (bis ¼);
              mit Passthrough, wo die Brille es kann; erscheint nur, wo der Browser WebXR meldet;
              «Probefahrt in der Brille»: der Zug fährt in 2,5 Minuten über das Modell (Zeitraffer, kein Fahrplan);
              die Höhe der Gleise steht in keiner Quelle

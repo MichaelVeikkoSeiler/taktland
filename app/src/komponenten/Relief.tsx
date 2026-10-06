@@ -232,7 +232,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                 Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
                 auf Tischhöhe. Einen Abzug halten trägt es mit der Hand, beide Abzüge ziehen es grösser oder kleiner und drehen es;
                 der Thumbstick dreht und hebt es, die Greiftaste stellt es zurück. Mit den Händen gilt Daumen an Zeigefinger als
-                Abzug. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt der Zug als roter Punkt in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
+                Abzug. Probefahrt: A startet, B hält an, X schneller, Y langsamer. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt der Zug als roter Punkt in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
                 Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan.
               </p>
               {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
@@ -859,6 +859,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const hintergrund = szene.background
     /** in der Brille: je Bild die Tasten auswerten (Sekunden seit dem letzten Bild) */
     let brilleSchritt: ((dt: number) => void) | null = null
+    /** die Probefahrt auf der eigenen Seite: Stelle in Metern, ob sie läuft, Tempo als Vielfaches;
+     *  «signal» ist der letzte Start von der Seite (probe), ein neuer beginnt von vorn */
+    const fahrt = { s: null as number | null, laeuft: false, tempo: 1, signal: null as number | null }
     if (brille) {
       let tiefst = Infinity
       for (let i = 1; i < pos.length; i += 3) if (pos[i] !== Y(KEINE_HOEHE)) tiefst = Math.min(tiefst, pos[i])
@@ -904,6 +907,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         szene.add(c)
       }
       const um = new THREE.Vector3()
+      const gedrueckt = new Set<string>()
+      // ein kurzer Hinweis über dem Modell, wenn sich die Probefahrt ändert
+      const hinweisLeinwand = document.createElement('canvas')
+      hinweisLeinwand.width = 512; hinweisLeinwand.height = 96
+      const hinweisTextur = new THREE.CanvasTexture(hinweisLeinwand)
+      hinweisTextur.colorSpace = THREE.SRGBColorSpace
+      const hinweis = new THREE.Sprite(new THREE.SpriteMaterial({ map: hinweisTextur, depthTest: false }))
+      hinweis.scale.set(0.32, 0.06, 1)
+      hinweis.renderOrder = 6
+      hinweis.visible = false
+      szene.add(hinweis)
+      let hinweisBis = 0
+      const tempoText = (t: number) => (t === 1 ? 'im Grundtempo' : `${t.toLocaleString('de-CH')}-fach`)
+      const hinweisZeigen = (text: string) => {
+        const g = hinweisLeinwand.getContext('2d')!
+        g.clearRect(0, 0, 512, 96)
+        g.fillStyle = 'rgba(255,255,255,0.9)'; g.beginPath(); g.roundRect(0, 0, 512, 96, 16); g.fill()
+        g.fillStyle = '#212121'; g.font = 'bold 44px Helvetica, Arial, sans-serif'; g.textAlign = 'center'
+        g.fillText(text, 256, 63)
+        hinweisTextur.needsUpdate = true
+        hinweis.visible = true
+        hinweisBis = performance.now() + 2000
+      }
       brilleSchritt = (dt) => {
         const h = [...haelt]
         if (griff && h.length === 1) {
@@ -922,6 +948,30 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           modell.rotation.y = griff.r + d
           modell.scale.setScalar(s)
           massAnpassen(s)
+        }
+        // A startet die Probefahrt oder setzt sie fort, B hält sie an, X schneller, Y langsamer
+        // (Michael, 2026-10-06); A und B rechts, X und Y links, je Knopf 4 und 5 der Quest
+        if (probe && zug === eigenerZug) {
+          for (const quelle of renderer.xr.getSession()?.inputSources ?? []) {
+            const knoepfe = quelle.gamepad?.buttons
+            if (!knoepfe) continue
+            for (const nr of [4, 5]) {
+              const schluessel = `${quelle.handedness}${nr}`, an = !!knoepfe[nr]?.pressed
+              if (an && !gedrueckt.has(schluessel)) {
+                const rechts = quelle.handedness === 'right'
+                if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true }
+                else if (rechts) fahrt.laeuft = false
+                else if (nr === 4) fahrt.tempo = Math.min(16, fahrt.tempo * 2)
+                else fahrt.tempo = Math.max(0.25, fahrt.tempo / 2)
+                hinweisZeigen(fahrt.laeuft ? `Probefahrt ${tempoText(fahrt.tempo)}` : 'Probefahrt angehalten')
+              }
+              if (an) gedrueckt.add(schluessel); else gedrueckt.delete(schluessel)
+            }
+          }
+        }
+        if (hinweis.visible) {
+          hinweis.position.copy(modell.position).add(new THREE.Vector3(0, 0.35, 0))
+          if (performance.now() > hinweisBis) hinweis.visible = false
         }
         // Thumbstick: links und rechts dreht, vor und zurück hebt und senkt
         for (const quelle of renderer.xr.getSession()?.inputSources ?? []) {
@@ -964,11 +1014,19 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const dt = Math.min(0.1, uhr.getDelta())
       if (renderer.xr.isPresenting) brilleSchritt?.(dt)
       if (probe && zug === eigenerZug) {
-        const start = probe.current
         const anfang = pk[0].m, ende = pk[pk.length - 1].m
-        eigenerZug.current = start === null ? null
-          : anfang + ((((performance.now() - start) / 1000) / PROBE_DAUER_S) % 1) * (ende - anfang)
-        if (start === null) letzte = null
+        if (probe.current !== fahrt.signal) {
+          fahrt.signal = probe.current
+          fahrt.s = probe.current === null ? null : anfang
+          fahrt.laeuft = probe.current !== null
+          fahrt.tempo = 1
+        }
+        if (fahrt.laeuft && fahrt.s !== null) {
+          fahrt.s += ((ende - anfang) / PROBE_DAUER_S) * fahrt.tempo * dt
+          if (fahrt.s > ende) fahrt.s = anfang + (fahrt.s - ende)
+        }
+        eigenerZug.current = fahrt.s
+        if (fahrt.s === null) letzte = null
       }
       if (zug && zugRand && zugKern) {
         const s = zug.current
