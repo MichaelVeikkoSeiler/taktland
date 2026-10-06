@@ -192,21 +192,23 @@
   },
   {
    "name": "jurafuss",
-   "titel": "Solothurn–Yverdon",
-   "linie": "410",
+   "titel": "Lausanne–Solothurn",
+   "linie": "150",
    "linien": [
-    "410",
-    "210"
+    "150",
+    "200",
+    "210",
+    "410"
    ],
    "rahmen": [
-    2535650,
-    1178850,
+    2526850,
+    1149550,
     2610700,
     1231200
    ],
    "probefahrt": {
-    "von": 8500207,
-    "nach": 8504200,
+    "von": 8501120,
+    "nach": 8500207,
     "ueber": null
    }
   }

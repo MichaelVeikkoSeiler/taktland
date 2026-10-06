@@ -63,11 +63,16 @@ RELIEFS = {
     # Hergiswil NW (km 0) bis Engelberg (km 24.74)
     "engelberg": {"titel": "Hergiswil–Engelberg", "linie": "480", "quelle": "schienennetz", "von_km": 0.0,
                   "bis_km": 24.8, "rand_m": 2500, "raster_m": 50, "probefahrt": ("Hergiswil NW", "Engelberg")},
-    # Michael, 2026-10-06: «Solothurn bis Yverdon»; zwei Linien der SBB: 410 von Solothurn (km 73.82) bis
-    # Biel/Bienne (Geometrie bis km 99.3, der Bahnhof bei 99.37 kommt aus 210), dann 210 von Biel/Bienne (km 104.5) zurück bis Yverdon-les-Bains (km 39.13)
-    "jurafuss": {"titel": "Solothurn–Yverdon", "teile": [{"linie": "410", "von_km": 73.5, "bis_km": 99.3},
-                                                         {"linie": "210", "von_km": 104.5, "bis_km": 38.9}],
-                 "rand_m": 2500, "raster_m": 50, "probefahrt": ("Solothurn", "Yverdon-les-Bains")},
+    # Michael, 2026-10-06: «Solothurn bis Yverdon», dann «Lausanne bis Solothurn» (ersetzt die kürzere):
+    # vier Linien der SBB hintereinander, Kilometer laut strecken_geometrie.json: 150 von Lausanne (km 0) bis
+    # Renens VD Ouest (km 5.2), 200 bis Daillens (km 19.2), 210 bis Biel/Bienne (km 104.5), 410 zurück bis
+    # Solothurn (km 73.82; ihre Geometrie endet bei km 99.3, der Bahnhof Biel kommt aus 210).
+    # Der Name «jurafuss» bleibt, damit die Adresse #/fahrt/3d/jurafuss weiter gilt
+    "jurafuss": {"titel": "Lausanne–Solothurn", "teile": [{"linie": "150", "von_km": 0.0, "bis_km": 5.2},
+                                                          {"linie": "200", "von_km": 5.2, "bis_km": 19.2},
+                                                          {"linie": "210", "von_km": 19.2, "bis_km": 104.5},
+                                                          {"linie": "410", "von_km": 99.3, "bis_km": 73.5}],
+                 "rand_m": 2500, "raster_m": 50, "probefahrt": ("Lausanne", "Solothurn")},
 }
 
 # «probefahrt»: Von, Nach und wenn nötig Über für die Probefahrt im Reiter «3D» (Michael, 2026-10-06:
@@ -227,8 +232,18 @@ def stueck(nr, bav, von_km, bis_km):
             bruecken.append({"name": b["name"], "von_km": bb["von"], "bis_km": bb["bis"], "laenge_m": bb["laenge_m"]})
     bahnhoefe = [{"uic": b["uic"], "name": b["name"], "km": b["km"]}
                  for b in linie["bahnhoefe"]["items"] if drin(b.get("km"))]
-    for b in bahnhoefe:
-        b["lage"] = [round(x) for x in bei(punkte, b["km"])]
+    for b in list(bahnhoefe):
+        lage = bei(punkte, b["km"])
+        # liegt ein Bahnhof knapp vor dem Ende der Geometrie (Lausanne bei km 0, die Linie 150 beginnt bei
+        # km 0.1), steht er am Ende; weiter weg bleibt er weg, statt geraten zu werden
+        if lage is None:
+            ende = min((punkte[0], punkte[-1]), key=lambda p: abs(p[0] - b["km"] * 1000))
+            if abs(ende[0] - b["km"] * 1000) <= 200:
+                lage = (ende[1], ende[2])
+        if lage is None:
+            bahnhoefe.remove(b)
+            continue
+        b["lage"] = [round(x) for x in lage]
     return weg, tunnel, bruecken, bahnhoefe, linie
 
 

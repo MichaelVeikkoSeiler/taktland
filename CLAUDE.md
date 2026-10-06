@@ -148,8 +148,8 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              Thusis bis St. Moritz), Lötschberg-Bergstrecke (BLS 300, Frutigen bis Brig), Brig–Zermatt
              (MGB 140), Brüniglinie (zb 470, Luzern bis Meiringen), Furka-Oberalp (MGB 610, Brig bis Disentis),
              Berninalinie (RhB 950, St. Moritz bis Campocologno; Tirano liegt in Italien), Chur–Arosa (RhB 930),
-             Montreux–Zweisimmen (MOB 120), Hergiswil–Engelberg (zb 480), Solothurn–Yverdon (SBB 410 und 210
-             hintereinander, «teile»: der Weg zählt dann Meter ab Solothurn, nicht die Kilometrierung): der
+             Montreux–Zweisimmen (MOB 120), Hergiswil–Engelberg (zb 480), Lausanne–Solothurn (SBB 150, 200, 210 und
+             410 hintereinander, «teile»: der Weg zählt dann Meter ab Lausanne, nicht die Kilometrierung): der
              Ausschnitt in den Geländekacheln (data/gelaende, keine eigenen Höhen mehr), Linie, Tunnel und Brücken mit Anfang und Ende
              (bei anderen Bahnen Linie aus dem Schienennetz des BAV, Bauwerke aus swissTLM3D ohne Namen),
              Bahnhöfe, Gipfel; index.json nennt die Bergstrecken für den Reiter «3D» unter Fahren samt Probefahrt (Über hält sie
