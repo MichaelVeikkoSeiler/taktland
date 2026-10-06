@@ -63,6 +63,11 @@ RELIEFS = {
     # Hergiswil NW (km 0) bis Engelberg (km 24.74)
     "engelberg": {"titel": "Hergiswil–Engelberg", "linie": "480", "quelle": "schienennetz", "von_km": 0.0,
                   "bis_km": 24.8, "rand_m": 2500, "raster_m": 50, "probefahrt": ("Hergiswil NW", "Engelberg")},
+    # Michael, 2026-10-06: «Solothurn bis Yverdon»; zwei Linien der SBB: 410 von Solothurn (km 73.82) bis
+    # Biel/Bienne (Geometrie bis km 99.3, der Bahnhof bei 99.37 kommt aus 210), dann 210 von Biel/Bienne (km 104.5) zurück bis Yverdon-les-Bains (km 39.13)
+    "jurafuss": {"titel": "Solothurn–Yverdon", "teile": [{"linie": "410", "von_km": 73.5, "bis_km": 99.3},
+                                                         {"linie": "210", "von_km": 104.5, "bis_km": 38.9}],
+                 "rand_m": 2500, "raster_m": 50, "probefahrt": ("Solothurn", "Yverdon-les-Bains")},
 }
 
 # «probefahrt»: Von, Nach und wenn nötig Über für die Probefahrt im Reiter «3D» (Michael, 2026-10-06:
@@ -190,25 +195,15 @@ def gelaende(rahmen, raster_m):
     return h
 
 
-def bauen(name, r):
-    nr = r["linie"]
-    bav = r.get("quelle") == "schienennetz"
+def stueck(nr, bav, von_km, bis_km):
+    """Linie, Tunnel, Brücken und Bahnhöfe einer Linie zwischen zwei Kilometern, in deren Kilometrierung"""
     punkte = linie_punkte_bav(nr) if bav else linie_punkte(nr)
-    von, bis = r["von_km"] * 1000, r["bis_km"] * 1000
-    weg = [p for p in punkte if von <= p[0] <= bis]
-    e = [p[1] for p in weg]
-    n = [p[2] for p in weg]
-    rm = r["raster_m"]
-    rahmen = (int((min(e) - r["rand_m"]) // rm * rm), int((min(n) - r["rand_m"]) // rm * rm),
-              int(-(-(max(e) + r["rand_m"]) // rm) * rm), int(-(-(max(n) + r["rand_m"]) // rm) * rm))
-    h = gelaende(rahmen, rm)
-    print(f"{name}: Gelände {h.shape[1]} × {h.shape[0]} Felder zu {rm} m, "
-          f"{np.nanmin(h):.0f} bis {np.nanmax(h):.0f} m ü. M.")
-
+    lo, hi = min(von_km, bis_km), max(von_km, bis_km)
+    weg = [p for p in punkte if lo * 1000 <= p[0] <= hi * 1000]
     linie = json.loads((ROOT / "data" / "linien" / f"{nr}.json").read_text(encoding="utf-8"))
     richtung = json.loads((ROOT / "data" / "tunnel_richtung.json").read_text(encoding="utf-8"))["tunnel"]
     bereich = json.loads((ROOT / "data" / "bruecken_bereich.json").read_text(encoding="utf-8"))["bruecken"]
-    drin = lambda km: km is not None and r["von_km"] <= km <= r["bis_km"]
+    drin = lambda km: km is not None and lo <= km <= hi
 
     tunnel, bruecken = [], []
     if bav:
@@ -234,6 +229,58 @@ def bauen(name, r):
                  for b in linie["bahnhoefe"]["items"] if drin(b.get("km"))]
     for b in bahnhoefe:
         b["lage"] = [round(x) for x in bei(punkte, b["km"])]
+    return weg, tunnel, bruecken, bahnhoefe, linie
+
+
+def zusammensetzen(teile):
+    """Mehrere Linienstücke hintereinander (Michael, 2026-10-06: «Solothurn bis Yverdon» über die
+    Linien 410 und 210). Der Weg zählt dann Meter ab dem Anfang des ersten Stücks, nicht mehr die
+    Kilometrierung einer Linie; Tunnel, Brücken und Bahnhöfe werden darauf umgerechnet."""
+    weg, tunnel, bruecken, bahnhoefe, linien = [], [], [], [], []
+    versatz = 0.0
+    for t in teile:
+        w, tu, br, bh, linie = stueck(t["linie"], t.get("quelle") == "schienennetz", t["von_km"], t["bis_km"])
+        a, z = t["von_km"], t["bis_km"]
+        auf = lambda km, a=a, v=versatz: v / 1000 + abs(km - a)
+        for m, x, y in sorted(w, key=lambda p: p[0], reverse=z < a):
+            mm = versatz + abs(m - a * 1000)
+            if not weg or mm > weg[-1][0]:
+                weg.append((mm, x, y))
+        for x in tu + br:
+            x["km"] = round(auf(x["km"]), 3) if "km" in x else None
+            if "von_km" in x:
+                x["von_km"], x["bis_km"] = sorted((round(auf(x["von_km"]), 3), round(auf(x["bis_km"]), 3)))
+        tunnel += tu
+        bruecken += br
+        for b in sorted(bh, key=lambda b: b["km"], reverse=z < a):
+            if all(b["uic"] != c["uic"] for c in bahnhoefe):
+                bahnhoefe.append({**b, "km": round(auf(b["km"]), 3)})
+        linien.append({"linie": t["linie"], "linie_name": linie["name"], "von_km": a, "bis_km": z,
+                       "datenstand": linie["datenstand"]})
+        versatz += abs(z - a) * 1000
+    return weg, tunnel, bruecken, bahnhoefe, linien
+
+
+def bauen(name, r):
+    teile = r.get("teile")
+    if teile:
+        weg, tunnel, bruecken, bahnhoefe, linien = zusammensetzen(teile)
+        nr, bav = teile[0]["linie"], all(t.get("quelle") == "schienennetz" for t in teile)
+        linie = {"name": " / ".join(x["linie_name"] for x in linien), "datenstand": min(x["datenstand"] for x in linien)}
+        von_km, bis_km = 0.0, round(weg[-1][0] / 1000, 3)
+    else:
+        nr = r["linie"]
+        bav = r.get("quelle") == "schienennetz"
+        weg, tunnel, bruecken, bahnhoefe, linie = stueck(nr, bav, r["von_km"], r["bis_km"])
+        von_km, bis_km = r["von_km"], r["bis_km"]
+    e = [p[1] for p in weg]
+    n = [p[2] for p in weg]
+    rm = r["raster_m"]
+    rahmen = (int((min(e) - r["rand_m"]) // rm * rm), int((min(n) - r["rand_m"]) // rm * rm),
+              int(-(-(max(e) + r["rand_m"]) // rm) * rm), int(-(-(max(n) + r["rand_m"]) // rm) * rm))
+    h = gelaende(rahmen, rm)
+    print(f"{name}: Gelände {h.shape[1]} × {h.shape[0]} Felder zu {rm} m, "
+          f"{np.nanmin(h):.0f} bis {np.nanmax(h):.0f} m ü. M.")
 
     sehenswert = json.loads((ROOT / "data" / "sehenswert.json").read_text(encoding="utf-8"))
     gipfel = []
@@ -245,7 +292,8 @@ def bauen(name, r):
     ZIEL.mkdir(parents=True, exist_ok=True)
     np.clip(np.round(h), 0, 65535).astype("<u2").tofile(ZIEL / f"{name}.bin")
     daten = {
-        "titel": r["titel"], "linie": nr, "linie_name": linie["name"], "von_km": r["von_km"], "bis_km": r["bis_km"],
+        "titel": r["titel"], "linie": nr, "linie_name": linie["name"], "von_km": von_km, "bis_km": bis_km,
+        **({"teile": [{k: x[k] for k in ("linie", "linie_name", "von_km", "bis_km")} for x in linien]} if teile else {}),
         "datenstand": linie["datenstand"],
         "quellen": ["Gelände: swissALTIRegio, Bundesamt für Landestopografie swisstopo, 10 m, gemittelt auf "
                     f"{rm} m"] + (["Linie und Bahnhöfe: Schienennetz, Bundesamt für Verkehr BAV (Stand 2021)",
@@ -268,7 +316,9 @@ def bauen(name, r):
     von, nach, *ueber = r["probefahrt"]
     probefahrt = {"von": bahnhof_im_netz(von), "nach": bahnhof_im_netz(nach),
                   "ueber": bahnhof_im_netz(ueber[0]) if ueber else None}
-    return {"name": name, "titel": r["titel"], "linie": nr, "rahmen": list(rahmen), "probefahrt": probefahrt}
+    return {"name": name, "titel": r["titel"], "linie": nr,
+            "linien": [t["linie"] for t in teile] if teile else [nr],
+            "rahmen": list(rahmen), "probefahrt": probefahrt}
 
 
 if __name__ == "__main__":

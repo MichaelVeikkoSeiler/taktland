@@ -512,7 +512,9 @@ function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string
                                    hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
                   <span className="min-w-0">
                     <span className="block font-medium">{r.titel}</span>
-                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Linie {r.linie}</span>
+                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
+                      {(r.linien ?? [r.linie]).length > 1 ? 'Linien' : 'Linie'} {(r.linien ?? [r.linie]).join(' und ')}
+                    </span>
                   </span>
                   <span className={`pfeil shrink-0 ${auf ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
                     {auf ? '↑' : '↓'}

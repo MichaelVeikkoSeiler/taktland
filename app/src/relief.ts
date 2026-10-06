@@ -19,6 +19,8 @@ export function lv95(lat: number, lon: number): [number, number] {
 interface ReliefUebersicht {
   reliefs: Array<{
     name: string; titel: string; linie: string; rahmen: [number, number, number, number]
+    /** alle Linien, wenn ein Relief mehrere hintereinander zeigt (Solothurn–Yverdon: 410 und 210) */
+    linien?: string[]
     /** die Probefahrt im Reiter «3D», Über hält sie auf der Bergstrecke */
     probefahrt: { von: number; nach: number; ueber: number | null }
   }>

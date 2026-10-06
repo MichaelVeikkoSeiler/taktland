@@ -22,6 +22,8 @@ const RELIEF: Record<number, { name: string; titel: string }> = {
   930: { name: 'arosa', titel: 'Chur–Arosa' },
   120: { name: 'goldenpass', titel: 'Montreux–Zweisimmen' },
   480: { name: 'engelberg', titel: 'Hergiswil–Engelberg' },
+  410: { name: 'jurafuss', titel: 'Solothurn–Yverdon' },
+  210: { name: 'jurafuss', titel: 'Solothurn–Yverdon' },
 }
 
 export function Linie({ nr, zurueck, zurueckText }: {

@@ -25,6 +25,8 @@ import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
 
 interface Relief {
   titel: string; linie: string; linie_name: string; von_km: number; bis_km: number; datenstand: string
+  /** mehrere Linien hintereinander; der Weg zählt dann Meter ab dem Anfang, nicht die Kilometrierung */
+  teile?: Array<{ linie: string; linie_name: string; von_km: number; bis_km: number }>
   quellen: string[]
   /** bei Linien anderer Bahnen: woher Tunnel und Brücken kommen */
   hinweis?: string
@@ -132,7 +134,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{daten?.r.titel ?? '3D-Relief'} in 3D</h1>
       {daten && (
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
-          Linie {daten.r.linie} {daten.r.linie_name}, Kilometer {daten.r.von_km.toLocaleString('de-CH')} bis {daten.r.bis_km.toLocaleString('de-CH')}
+          {(daten.r.teile ?? [daten.r]).map((t) => `Linie ${t.linie} ${t.linie_name}, Kilometer ${t.von_km.toLocaleString('de-CH')} bis ${t.bis_km.toLocaleString('de-CH')}`).join('; dann ')}
         </p>
       )}
       {fehler && <Ladefehler className="mt-6" was="Das Relief konnte nicht geladen werden." fehler={fehler} />}

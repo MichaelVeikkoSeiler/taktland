@@ -4,6 +4,9 @@
    "name": "gotthard",
    "titel": "Gotthard-Bergstrecke",
    "linie": "600",
+   "linien": [
+    "600"
+   ],
    "rahmen": [
     2685500,
     1131450,
@@ -20,6 +23,9 @@
    "name": "albula",
    "titel": "Albulalinie",
    "linie": "940",
+   "linien": [
+    "940"
+   ],
    "rahmen": [
     2750500,
     1149900,
@@ -36,6 +42,9 @@
    "name": "loetschberg",
    "titel": "Lötschberg-Bergstrecke",
    "linie": "300",
+   "linien": [
+    "300"
+   ],
    "rahmen": [
     2613550,
     1125350,
@@ -52,6 +61,9 @@
    "name": "zermatt",
    "titel": "Brig–Zermatt",
    "linie": "140",
+   "linien": [
+    "140"
+   ],
    "rahmen": [
     2621400,
     1094450,
@@ -68,6 +80,9 @@
    "name": "bruenig",
    "titel": "Brüniglinie",
    "linie": "470",
+   "linien": [
+    "470"
+   ],
    "rahmen": [
     2650800,
     1172850,
@@ -84,6 +99,9 @@
    "name": "furka",
    "titel": "Furka-Oberalp",
    "linie": "610",
+   "linien": [
+    "610"
+   ],
    "rahmen": [
     2639650,
     1127350,
@@ -100,6 +118,9 @@
    "name": "bernina",
    "titel": "Berninalinie",
    "linie": "950",
+   "linien": [
+    "950"
+   ],
    "rahmen": [
     2782300,
     1121300,
@@ -116,6 +137,9 @@
    "name": "arosa",
    "titel": "Chur–Arosa",
    "linie": "930",
+   "linien": [
+    "930"
+   ],
    "rahmen": [
     2756850,
     1180600,
@@ -132,6 +156,9 @@
    "name": "goldenpass",
    "titel": "Montreux–Zweisimmen",
    "linie": "120",
+   "linien": [
+    "120"
+   ],
    "rahmen": [
     2556100,
     1140150,
@@ -148,6 +175,9 @@
    "name": "engelberg",
    "titel": "Hergiswil–Engelberg",
    "linie": "480",
+   "linien": [
+    "480"
+   ],
    "rahmen": [
     2663750,
     1183300,
@@ -157,6 +187,26 @@
    "probefahrt": {
     "von": 8508318,
     "nach": 8508399,
+    "ueber": null
+   }
+  },
+  {
+   "name": "jurafuss",
+   "titel": "Solothurn–Yverdon",
+   "linie": "410",
+   "linien": [
+    "410",
+    "210"
+   ],
+   "rahmen": [
+    2535650,
+    1178850,
+    2610700,
+    1231200
+   ],
+   "probefahrt": {
+    "von": 8500207,
+    "nach": 8504200,
     "ueber": null
    }
   }
