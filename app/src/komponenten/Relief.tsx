@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { bodenbedeckungLaden, flaechenLaden, holen, holenBinaer, sehenswertLaden } from '../daten'
-import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SehenswertDaten } from '../typen'
+import { bodenbedeckungLaden, flaechenLaden, holen, holenBinaer, seenLaden, sehenswertLaden } from '../daten'
+import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import type { FahrObjekt, Fahrweg } from '../fahrt'
 import { lv95 } from '../relief'
 import { Zurueck } from './Zurueck'
@@ -73,14 +73,15 @@ function useRelief(name: string | null) {
 /** Was die Karten sonst zeigen, auch im Relief (Michael, 2026-10-06: «die Elemente wie bei anderen
  *  Probefahrten ein- und ausblenden»): Kulturgüter, Seilbahnen, Gebiete, Wald und Siedlung. Fehlt
  *  eine Datei, bleibt das Relief ohne sie. */
-interface Zusatz { s: SehenswertDaten | null; f: FlaechenDaten | null; b: BodenbedeckungDaten | null }
+interface Zusatz { s: SehenswertDaten | null; f: FlaechenDaten | null; b: BodenbedeckungDaten | null; seen: SeenDaten | null }
 
 function useZusatz() {
   const [z, setZ] = useState<Zusatz | null>(null)
   useEffect(() => {
     let ab = false
-    void Promise.all([sehenswertLaden().catch(() => null), flaechenLaden().catch(() => null), bodenbedeckungLaden().catch(() => null)])
-      .then(([s, f, b]) => { if (!ab) setZ({ s, f, b }) })
+    void Promise.all([sehenswertLaden().catch(() => null), flaechenLaden().catch(() => null), bodenbedeckungLaden().catch(() => null),
+      seenLaden().catch(() => null)])
+      .then(([s, f, b, seen]) => { if (!ab) setZ({ s, f, b, seen }) })
     return () => { ab = true }
   }, [])
   return z
@@ -95,6 +96,28 @@ function zugLesen(z: KodierterZug, faktor = 1e5): Array<[number, number]> {
     raus.push(lv95(la / faktor, lo / faktor))
   }
   return raus
+}
+
+/** Ein Ring, abgeschnitten am Rechteck (Sutherland-Hodgman); eck im Uhrzeigersinn in Ost, Nord */
+function zugInRahmen(ring: Array<[number, number]>, eck: Array<[number, number]>) {
+  let aus = ring
+  for (let k = 0; k < 4 && aus.length; k++) {
+    const [ax, ay] = eck[k], [bx, by] = eck[(k + 1) % 4]
+    const innen = ([x, y]: [number, number]) => (bx - ax) * (y - ay) - (by - ay) * (x - ax) <= 0
+    const schnitt = (p: [number, number], q: [number, number]): [number, number] => {
+      const d1 = (bx - ax) * (p[1] - ay) - (by - ay) * (p[0] - ax), d2 = (bx - ax) * (q[1] - ay) - (by - ay) * (q[0] - ax)
+      const t = d1 / ((d1 - d2) || 1)
+      return [p[0] + t * (q[0] - p[0]), p[1] + t * (q[1] - p[1])]
+    }
+    const ein = aus
+    aus = []
+    ein.forEach((p, i) => {
+      const q = ein[(i + 1) % ein.length]
+      if (innen(p)) { aus.push(p); if (!innen(q)) aus.push(schnitt(p, q)) }
+      else if (innen(q)) aus.push(schnitt(p, q))
+    })
+  }
+  return aus
 }
 
 /** Flächen im Ausschnitt eines Reliefs in Landeskoordinaten, je Relief einmal gerechnet */
@@ -207,6 +230,8 @@ function Hinweise({ r }: { r: Relief }) {
       )}
       {r.hinweis && <p>{r.hinweis} Galerien sind wie Tunnel gezeichnet.</p>}
       <p>Brücken nur, wo Anfang und Ende bekannt sind. Gipfel nur aus Swiss Map Vector 1000.</p>
+      <p>Seen aus swissTLMRegio (swisstopo) wie auf den Karten, Seen unter 0,1 km² fehlen; flach gezeichnet auf der
+        mittleren Höhe ihres Ufers im Gelände, nicht auf einem gemessenen Seespiegel.</p>
       <p>Kulturgüter von nationaler Bedeutung (BABS), Seilbahnen mit Bundeskonzession (BAV), Gebiete (BAFU), Wald und
         Siedlung (swissTLMRegio) wie auf den Karten. Seilbahnen sind gerade von Station zu Station gezogen; wie hoch
         das Seil hängt, steht in keiner Quelle. Das Kilometernetz folgt den Landeskoordinaten (LV95), eine Linie je
@@ -544,6 +569,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     }
 
     const imAusschnitt = (e: number, n: number) => e >= ost && e <= ost + breite * m && n <= nord && n >= nord - hoehe * m
+    // Seen (Michael, 2026-10-06: «Erst Seen dazu»): flach auf Seehöhe, die Höhe ist die mittlere des Ufers im
+    // Gelände; was über den Ausschnitt hinausragt, ist abgeschnitten
+    const eck: Array<[number, number]> = [[ost, nord], [ost + breite * m, nord], [ost + breite * m, nord - hoehe * m], [ost, nord - hoehe * m]]
+    for (const see of zusatz?.seen?.seen ?? []) {
+      const ringe = see.ringe.map((x) => zugInRahmen(zugLesen(x), eck)).filter((q) => q.length >= 3)
+      if (!ringe.length) continue
+      const flaeche = (q: Array<[number, number]>) => Math.abs(q.reduce((a, [e, n], i) => { const [e2, n2] = q[(i + 1) % q.length]; return a + e * n2 - e2 * n }, 0))
+      ringe.sort((a, b) => flaeche(b) - flaeche(a))
+      const ufer = ringe[0].map(([e, n]) => hoeheBei(r, h, e, n)).sort((a, b) => a - b)
+      const pegel = ufer[Math.floor(ufer.length / 2)]
+      const form = new THREE.Shape(ringe[0].map(([e, n]) => new THREE.Vector2(X(e), -Z(n))))
+      form.holes = ringe.slice(1).map((q) => new THREE.Path(q.map(([e, n]) => new THREE.Vector2(X(e), -Z(n)))))
+      const wasser = new THREE.Mesh(new THREE.ShapeGeometry(form), new THREE.MeshLambertMaterial({ color: '#9cc3e6' }))
+      wasser.rotation.x = -Math.PI / 2
+      wasser.position.y = Y(pegel + 3)
+      szene.add(wasser)
+      // «N_P» setzt swissTLMRegio, wo kein Name steht: ein Platzhalter, kein Name
+      if (see.name && see.name !== 'N_P') {
+        const [ne, nn] = see.namenspunkt ? lv95(see.namenspunkt[0], see.namenspunkt[1]) : ringe[0][0]
+        // grössere Seen zuerst, vor den Gipfeln gleichen Rangs
+        if (imAusschnitt(ne, nn)) schild(see.name, dunkel ? '#8fb3d4' : '#3f6a93', X(ne), Y(pegel + 3) + 0.1, Z(nn), 2, -flaeche(ringe[0]))
+      }
+    }
     for (const k of zusatz?.s?.kgs ?? []) {
       const [e, n] = lv95(k.lage[0], k.lage[1])
       if (!imAusschnitt(e, n)) continue
