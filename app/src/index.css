@@ -129,6 +129,7 @@ body {
 }
 .pfeil-links { animation-name: pfeil-links; }
 .pfeil-unten { animation-name: pfeil-unten; }
+/* klappbare Kacheln: ↓ wippt senkrecht; aufgeklappt ist er gedreht und wippt dann nach oben (Michael, 2026-10-06) */
 .pfeil-oben { animation-name: pfeil-oben; }
 .pfeil-schraeg { animation-name: pfeil-schraeg; }
 /* die Blätterpfeile sind schon gross genug */

@@ -380,7 +380,7 @@ function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) 
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3
                           [&::-webkit-details-marker]:hidden">
         <h2 className="text-lg font-semibold text-sbb-black dark:text-sbb-white">{titel}</h2>
-        <span className="pfeil shrink-0 transition-transform group-open:rotate-180" aria-hidden="true">↓</span>
+        <span className="pfeil pfeil-unten shrink-0 transition-transform group-open:rotate-180" aria-hidden="true">↓</span>
       </summary>
       {/* ein Tipp auf den offenen Text schliesst das Thema wieder, ausser auf einen Verweis
           oder beim Markieren von Text (Michael, 2026-10-01) */}
@@ -402,7 +402,7 @@ function Spiel({ titel, children }: { titel: string; children: ReactNode }) {
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 py-2
                           [&::-webkit-details-marker]:hidden">
         <h3 className="font-semibold text-sbb-black dark:text-sbb-white">{titel}</h3>
-        <span className="pfeil shrink-0 text-sm transition-transform group-open/spiel:rotate-180" aria-hidden="true">↓</span>
+        <span className="pfeil pfeil-unten shrink-0 text-sm transition-transform group-open/spiel:rotate-180" aria-hidden="true">↓</span>
       </summary>
       <div className="cursor-pointer pb-3" onClick={(e) => {
         if (!tippSchliesst(e)) return
