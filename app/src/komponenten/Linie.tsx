@@ -15,6 +15,10 @@ const RELIEF: Record<number, { name: string; titel: string }> = {
   600: { name: 'gotthard', titel: 'Gotthard-Bergstrecke' },
   940: { name: 'albula', titel: 'Albulalinie' },
   300: { name: 'loetschberg', titel: 'Lötschberg-Bergstrecke' },
+  140: { name: 'zermatt', titel: 'Brig–Zermatt' },
+  470: { name: 'bruenig', titel: 'Brüniglinie' },
+  610: { name: 'furka', titel: 'Furka-Oberalp' },
+  950: { name: 'bernina', titel: 'Berninalinie' },
 }
 
 export function Linie({ nr, zurueck, zurueckText }: {

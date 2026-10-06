@@ -32,6 +32,50 @@
     2644550,
     1162800
    ]
+  },
+  {
+   "name": "zermatt",
+   "titel": "Brig–Zermatt",
+   "linie": "140",
+   "rahmen": [
+    2621400,
+    1094450,
+    2644700,
+    1132400
+   ]
+  },
+  {
+   "name": "bruenig",
+   "titel": "Brüniglinie",
+   "linie": "470",
+   "rahmen": [
+    2650800,
+    1172850,
+    2669100,
+    1213900
+   ]
+  },
+  {
+   "name": "furka",
+   "titel": "Furka-Oberalp",
+   "linie": "610",
+   "rahmen": [
+    2639650,
+    1127350,
+    2710850,
+    1176150
+   ]
+  },
+  {
+   "name": "bernina",
+   "titel": "Berninalinie",
+   "linie": "950",
+   "rahmen": [
+    2782300,
+    1121300,
+    2811000,
+    1156600
+   ]
   }
  ]
 }

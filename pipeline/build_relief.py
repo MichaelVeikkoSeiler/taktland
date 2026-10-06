@@ -40,6 +40,19 @@ RELIEFS = {
     # Frutigen (km 13.54) bis Brig-Lötschberg (km 73.52) laut data/linien/300.json
     "loetschberg": {"titel": "Lötschberg-Bergstrecke", "linie": "300", "quelle": "schienennetz", "von_km": 13.0,
                     "bis_km": 73.6, "rand_m": 2500, "raster_m": 50},
+    # Michael, 2026-10-06: «Brig–Zermatt, Brünig, Furka-Oberalp, Berninalinie»; Kilometer laut Schienennetz
+    # Brig Bahnhofplatz (km 0) bis Zermatt (km 43.98)
+    "zermatt": {"titel": "Brig–Zermatt", "linie": "140", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 44.0,
+                "rand_m": 2500, "raster_m": 50},
+    # Luzern Brünig (km 0.13) bis Meiringen (km 45.47)
+    "bruenig": {"titel": "Brüniglinie", "linie": "470", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 45.5,
+                "rand_m": 2500, "raster_m": 50},
+    # Brig Bahnhofplatz (km 0) bis Disentis/Mustér (km 96.94)
+    "furka": {"titel": "Furka-Oberalp", "linie": "610", "quelle": "schienennetz", "von_km": 0.0,
+                      "bis_km": 97.0, "rand_m": 2500, "raster_m": 50},
+    # St. Moritz (km 0) bis Campocologno (km 57.65); Tirano liegt in Italien, ausserhalb von swissALTIRegio
+    "bernina": {"titel": "Berninalinie", "linie": "950", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 57.7,
+                "rand_m": 2500, "raster_m": 50},
 }
 
 #: so weit dürfen beide Enden eines Bauwerks aus swissTLM3D neben der Linie liegen

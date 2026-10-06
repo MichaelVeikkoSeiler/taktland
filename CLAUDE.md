@@ -144,7 +144,9 @@ data/erraten.json  Pool für das Spiel «Bahnhofsuche»: je Bahnhof die sechs Hi
              Bezirk, Ein- und Aussteigende, Höhe, Bahn, Züge von) und die Stufe nach Rang
              (pipeline/build_erraten.py); Spiellogik in app/src/erraten.ts, getrennt von der Darstellung
 data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca), Albulalinie (RhB 940,
-             Thusis bis St. Moritz), Lötschberg-Bergstrecke (BLS 300, Frutigen bis Brig): Gelände aus
+             Thusis bis St. Moritz), Lötschberg-Bergstrecke (BLS 300, Frutigen bis Brig), Brig–Zermatt
+             (MGB 140), Brüniglinie (zb 470, Luzern bis Meiringen), Furka-Oberalp (MGB 610, Brig bis Disentis),
+             Berninalinie (RhB 950, St. Moritz bis Campocologno; Tirano liegt in Italien): Gelände aus
              swissALTIRegio auf 50 m gemittelt (.bin, Uint16), Linie, Tunnel und Brücken mit Anfang und Ende
              (bei anderen Bahnen Linie aus dem Schienennetz des BAV, Bauwerke aus swissTLM3D ohne Namen),
              Bahnhöfe, Gipfel; index.json sagt, welches Relief welchen Ausschnitt deckt («3D» beim Fahren)
@@ -186,7 +188,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_schweiz11.py   # Pool für «Geo», nach export_app
 .venv/bin/python pipeline/build_erraten.py      # Pool für «Bahnhofsuche» aus data/facts
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
-.venv/bin/python pipeline/build_relief.py       # 3D-Reliefs Gotthard, Albula, Lötschberg (lädt swissALTIRegio)
+.venv/bin/python pipeline/build_relief.py       # 3D-Reliefs der Bergstrecken (lädt swissALTIRegio)
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine
