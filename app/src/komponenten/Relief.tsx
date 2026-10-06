@@ -5,7 +5,7 @@ import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, 
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import type { FahrObjekt, Fahrweg } from '../fahrt'
 import { lv95 } from '../relief'
-import { ausschnittLaden, fensterLaden, KEINE_HOEHE } from '../gelaende'
+import { ausschnittLaden, fensterLaden, KEINE_HOEHE, type Luftbild, luftbildLaden } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -296,8 +296,16 @@ function Legende({ wegText, wegFarbe, zug = false }: { wegText: string; wegFarbe
 
 function Hinweise({ r }: { r: Relief }) {
   const ohneEnde = r.tunnel.filter((t) => t.von_km === undefined)
+  const [jahre, setJahre] = useState<number[] | null>(null)
+  useEffect(() => { void luftbildLaden(r.raster).then((l) => setJahre(l?.jahre ?? null)) }, [r])
   return (
     <div className="mt-4 space-y-2 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
+      {jahre && (
+        <p>
+          Luftbild: SWISSIMAGE (swisstopo), auf 10 m gemittelt, aufgenommen {jahre.length > 1 ? `${jahre[0]} bis ${jahre[jahre.length - 1]}` : jahre[0]};
+          je Kilometer die neueste Aufnahme. Was darauf zu sehen ist, zeigt den Stand der Aufnahme, nicht heute.
+        </p>
+      )}
       <p>
         Die Höhe der Gleise steht in keiner Quelle. Die Linie ist darum auf das Gelände gelegt, etwas darüber;
         in Tunneln und auf Brücken gerade zwischen ihren beiden Enden. Das zeigt den Verlauf, nicht die
@@ -478,6 +486,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   const eigenerZug = useRef<number | null>(null)
   const zug = zugVonAussen ?? (probe ? eigenerZug : undefined)
   const zusatz = useZusatz()
+  const [luftbild, setLuftbild] = useState<Luftbild | null>(null)
+  useEffect(() => {
+    let ab = false
+    void luftbildLaden(r.raster).then((l) => { if (!ab) setLuftbild(l) })
+    return () => { ab = true }
+  }, [r])
   const aus = useVersteckt()
   const ausJetzt = useRef(aus)
   const anwenden = useRef<((a: Set<Kategorie>) => void) | null>(null)
@@ -538,12 +552,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     geo.computeVertexNormals()
     // Auflage auf dem Gelände: Wald, Siedlung, Gebiete und das Kilometernetz, auf eine Leinwand gemalt,
     // die über das Gelände gespannt ist (weiss lässt die Farbe des Geländes, wie sie ist)
-    const PX = 2048 / Math.max(breite, hoehe)
+    // mit Luftbild feiner, etwa 10 m je Bildpunkt wie das Luftbild selbst
+    const PX = (luftbild ? 4096 : 2048) / Math.max(breite, hoehe)
     const leinwand = document.createElement('canvas')
     leinwand.width = Math.round(breite * PX); leinwand.height = Math.round(hoehe * PX)
     const lctx = leinwand.getContext('2d')!
     const lx = (e: number) => ((e - ost) / m) * PX, ly = (n: number) => ((nord - n) / m) * PX
     const auflageTextur = new THREE.CanvasTexture(leinwand)
+    const gelaendeMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, map: auflageTextur })
     auflageTextur.colorSpace = THREE.SRGBColorSpace
     auflageTextur.anisotropy = renderer.capabilities.getMaxAnisotropy()
     const auflage = zusatz ? auflageFuer(r, zusatz) : null
@@ -562,12 +578,22 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const auflageMalen = (a: Set<Kategorie>) => {
       lctx.fillStyle = '#ffffff'
       lctx.fillRect(0, 0, leinwand.width, leinwand.height)
-      if (auflage && !a.has('boden')) {
+      // das Luftbild ersetzt die Farben des Geländes und zeigt Wald und Siedlung selbst
+      const mitBild = !!luftbild && !a.has('luftbild')
+      if (mitBild) {
+        const seite = (luftbild.kachel_m / m) * PX
+        for (const { ex, ny, bild } of luftbild.kacheln) lctx.drawImage(bild, lx(ex * luftbild.kachel_m), ly((ny + 1) * luftbild.kachel_m), seite, seite)
+      }
+      if (gelaendeMaterial.vertexColors === mitBild) { gelaendeMaterial.vertexColors = !mitBild; gelaendeMaterial.needsUpdate = true }
+      // das Luftbild hat seine Schatten schon, mit der Beleuchtung darüber wirkt es sonst zu dunkel
+      gelaendeMaterial.color.setScalar(mitBild ? 1.3 : 1)
+      if (auflage && !a.has('boden') && !mitBild) {
         flaecheMalen(auflage.wald, 'rgba(118, 168, 92, 0.4)')
         flaecheMalen(auflage.siedlung, 'rgba(140, 128, 118, 0.4)')
       }
       if (auflage && !a.has('gebiete')) {
-        for (const g of auflage.gebiete) flaecheMalen(g.ringe, ...(GEBIET[g.art] ?? GEBIET.bln))
+        // auf dem Luftbild nur der Umriss, eine Fläche würde das Bild verdecken
+        for (const g of auflage.gebiete) flaecheMalen(g.ringe, mitBild ? 'rgba(0,0,0,0)' : (GEBIET[g.art] ?? GEBIET.bln)[0], (GEBIET[g.art] ?? GEBIET.bln)[1])
       }
       if (!a.has('kmnetz')) {
         // Landeskoordinaten: eine Linie je Kilometer, alle 10 km kräftiger
@@ -584,7 +610,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       }
       auflageTextur.needsUpdate = true
     }
-    szene.add(new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ vertexColors: true, map: auflageTextur })))
+    szene.add(new THREE.Mesh(geo, gelaendeMaterial))
     szene.add(new THREE.HemisphereLight('#ffffff', '#8a8a7a', 1.6))
     const sonne = new THREE.DirectionalLight('#ffffff', 2.2)
     // Licht von Nordwesten wie auf der Landeskarte
@@ -1124,6 +1150,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       renderer.dispose()
       renderer.domElement.remove()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }

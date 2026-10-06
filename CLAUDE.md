@@ -168,6 +168,10 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); die Reliefs in
              data/relief bleiben für die Bergstrecken als Ganzes und
              holen ihr Gelände ebenfalls aus den Kacheln
+data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),
+             auf 10 m gemittelt, JPEG im 10-km-Raster der Geländekacheln, je km der neueste Jahrgang, die Jahre
+             je Kachel in index.json (pipeline/build_luftbild.py; vorerst nur die Albula, 4,6 MB; die 2-m-Kacheln in
+             data/raw/swissimage, nicht in Git); in der App ein Knopf «Luftbild», Gebiete darauf nur als Umriss
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -206,6 +210,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 .venv/bin/python pipeline/build_relief.py       # Bergstrecken in 3D (Ausschnitt, Linie, Bauwerke; Gelände aus den Kacheln)
 .venv/bin/python pipeline/build_gelaende.py     # Geländekacheln der ganzen Schweiz für «3D» auf jeder Fahrt
+.venv/bin/python pipeline/build_luftbild.py albula   # Luftbild (SWISSIMAGE) für eine Bergstrecke, vor export_app
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

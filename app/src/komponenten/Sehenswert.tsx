@@ -119,7 +119,7 @@ const imBild = (z: { x0: number; x1: number; y0: number; y1: number }, box: Box,
  * Welche Kategorien die Karten zeigen: jede lässt sich in der Legende aus- und
  * einblenden (Michael, 2026-09-26), gemerkt auf diesem Gerät, für alle Karten.
  */
-export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden' | 'kmnetz'
+export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden' | 'kmnetz' | 'luftbild'
 const KATEGORIEN_SPEICHER = 'taktland.karte.v1'
 let versteckt: Set<Kategorie> = (() => {
   try {
@@ -288,6 +288,7 @@ const LANG: Partial<Record<Kategorie, string>> = {
   gebiete: 'Gebiete (BLN, Pärke, Moorlandschaften)',
   boden: 'Wald und Siedlung',
   kmnetz: 'Kilometernetz (Landeskoordinaten)',
+  luftbild: 'Luftbild (SWISSIMAGE)',
 }
 
 const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
@@ -298,6 +299,8 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   ['gebiete', 'Gebiete', <span className="inline-block size-2.5 rounded-sm border border-flaeche-park-rand bg-flaeche-park" />],
   ['boden', 'Wald, Siedlung', <span className="inline-flex gap-0.5"><span className="inline-block size-2.5 rounded-sm bg-wald" /><span className="inline-block size-2.5 rounded-sm bg-siedlung" /></span>],
   // nur im 3D-Relief (Michael, 2026-10-06: «ein Kilometernetz über die Reliefs spannen»)
+  // nur im 3D-Relief (Michael, 2026-10-06: «die Landschaft ist leer»)
+  ['luftbild', 'Luftbild', <span className="inline-block size-2.5 rounded-sm bg-[#7d8f6a]" />],
   ['kmnetz', 'Km-Netz', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M3.5 0V10M6.5 0V10M0 3.5H10M0 6.5H10" strokeWidth="1" className="stroke-sbb-metal" /></svg>],
 ]
 
@@ -308,7 +311,7 @@ export function SehenswertLegende({ orte = false, gebieteMitBoden = false, kmNet
   orte?: boolean; gebieteMitBoden?: boolean; kmNetz?: boolean
 }) {
   const aus = useVersteckt()
-  const eintraege = LEGENDE.filter(([k]) => (orte || k !== 'orte') && (kmNetz || k !== 'kmnetz') && !(gebieteMitBoden && k === 'boden'))
+  const eintraege = LEGENDE.filter(([k]) => (orte || k !== 'orte') && (kmNetz || (k !== 'kmnetz' && k !== 'luftbild')) && !(gebieteMitBoden && k === 'boden'))
   return (
     <div className="mt-1 flex flex-wrap gap-1.5 text-xs" role="group" aria-label="Auf der Karte zeigen">
       {eintraege.map(([k, text, zeichen]) => {

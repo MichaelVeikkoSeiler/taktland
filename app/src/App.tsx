@@ -252,7 +252,7 @@ export default function App() {
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
-            Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Höhenstufen und das Gelände in 3D (swissALTIRegio, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
+            Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Luftbild in 3D (SWISSIMAGE), Höhenstufen und das Gelände in 3D (swissALTIRegio, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
             Gipfel und Ortsnamen (Swiss Map Vector 1000), Brückenlängen und beim Fahren Tunnel und Brücken
             anderer Bahnen, auch in 3D (swissTLM3D): Bundesamt für Landestopografie swisstopo. Landes- und Kantonsgrenzen:
             Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für

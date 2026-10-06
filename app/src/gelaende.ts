@@ -83,3 +83,51 @@ export async function ausschnittLaden(raster: Raster) {
   })
   return { raster: { ost, nord, m, breite, hoehe }, h, quelle: ix.quelle }
 }
+
+/**
+ * Luftbild auf dem Gelände (Michael, 2026-10-06: «die Landschaft ist leer»): SWISSIMAGE von swisstopo,
+ * auf 10 m gemittelt, in denselben 10-km-Kacheln (pipeline/build_luftbild.py). Fehlt eine Kachel,
+ * bleibt das Gelände dort in seinen Farben.
+ */
+interface LuftbildIndex {
+  quelle: string; kachel_m: number; pixel: number; kacheln: Record<string, { jahre: number[] }>
+}
+export const luftbildIndex = () => holen<LuftbildIndex>('data/luftbild/index.json')
+
+const bildVorrat = new Map<string, Promise<ImageBitmap | null>>()
+function luftbildKachel(name: string) {
+  let p = bildVorrat.get(name)
+  if (!p) {
+    p = holenBinaer(`data/luftbild/${name}.jpg`)
+      .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' })))
+      .catch(() => { bildVorrat.delete(name); return null })
+    bildVorrat.set(name, p)
+  }
+  return p
+}
+
+export interface Luftbild {
+  kacheln: Array<{ ex: number; ny: number; bild: ImageBitmap }>
+  kachel_m: number
+  /** die Aufnahmejahre in diesem Ausschnitt */
+  jahre: number[]
+}
+
+/** Die Luftbilder, die einen Ausschnitt berühren, oder null, wenn es dort keine gibt */
+export async function luftbildLaden(raster: Raster): Promise<Luftbild | null> {
+  const ix = await luftbildIndex().catch(() => null)
+  if (!ix) return null
+  const k = ix.kachel_m
+  const namen: Array<[number, number]> = []
+  for (let ex = Math.floor(raster.ost / k); ex <= Math.floor((raster.ost + raster.breite * raster.m - 1) / k); ex++) {
+    for (let ny = Math.floor((raster.nord - raster.hoehe * raster.m) / k); ny <= Math.floor((raster.nord - 1) / k); ny++) {
+      if (ix.kacheln[`${ex}_${ny}`]) namen.push([ex, ny])
+    }
+  }
+  if (!namen.length) return null
+  const bilder = await Promise.all(namen.map(([ex, ny]) => luftbildKachel(`${ex}_${ny}`)))
+  const kacheln = namen.flatMap(([ex, ny], i) => (bilder[i] ? [{ ex, ny, bild: bilder[i]! }] : []))
+  if (!kacheln.length) return null
+  const jahre = [...new Set(kacheln.flatMap(({ ex, ny }) => ix.kacheln[`${ex}_${ny}`].jahre))].sort()
+  return { kacheln, kachel_m: k, jahre }
+}
