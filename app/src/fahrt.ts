@@ -401,7 +401,7 @@ export type Ton = (art: TonArt) => void
 /**
  * Der Browser erlaubt Töne erst nach einer Berührung, darum wird der Ton beim
  * Start des Fahrtmodus vorbereitet. Hauptschalter und Ton je Art stellt man unter
- * Reisetasche → Audio ein (Michael, 2026-10-01).
+ * Einstellungen → Audio ein (Michael, 2026-10-01).
  */
 export function tonVorbereiten(): Ton {
   const ctx = audioKontext()

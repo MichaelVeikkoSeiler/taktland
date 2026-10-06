@@ -202,11 +202,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Das Logbuch hält jede Fahrt fest, mit Notizen und von Hand eingetragenen Fahrten.
             Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren
             hast; «Fehlt noch» kennt nur die der SBB. Favoriten sind Bahnhöfe mit Stern.
-            Unter «Audio» lassen sich die Töne einzeln ein- und ausschalten und anhören: beim Fahren
-            je Art, einmal oder zweimal (etwa 20 und 10 Sekunden vorher), bei den Reitern und nach
-            jeder Antwort.
-            Unter «Einstellungen» stehen Schriftgrösse und Schriftart, ob der Bildschirm beim Fahren
-            wach bleibt, und die Standardwerte dafür, was beim Fahren gemeldet wird.
+            Die «Einstellungen» öffnest du unten auf jeder Seite, über den Quellenangaben. Dort
+            stehen Schriftgrösse und Schriftart, ob der Bildschirm beim Fahren wach bleibt, die
+            Standardwerte dafür, was beim Fahren gemeldet wird, und unter «Audio» die Lautstärke und
+            die Töne einzeln zum Ein- und Ausschalten und Anhören: beim Fahren je Art, einmal oder
+            zweimal (etwa 20 und 10 Sekunden vorher), bei den Reitern und nach jeder Antwort.
           </li>
           <li>
             Alles bleibt im Browser dieses Geräts, ohne Konto. Handy und Computer zählen

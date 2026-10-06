@@ -32,14 +32,13 @@ import {
 import { indexLaden } from './daten'
 import type { BahnhofIndex } from './typen'
 import { Ladefehler } from './komponenten/Ladefehler'
-import { AudioSeite } from './komponenten/AudioSeite'
 import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'anleitung' } | { art: 'linien' }
-  | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'audio' } | { art: 'einstellungen' } | { art: 'ohneziel' }
+  | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl }
@@ -75,8 +74,8 @@ function seiteAusAdresse(): Seite {
   if (h === '#/sammelheft') return { art: 'sammelheft' }
   if (h === '#/logbuch') return { art: 'logbuch' }
   if (h === '#/favoriten') return { art: 'favoriten' }
-  if (h === '#/audio') return { art: 'audio' }
-  if (h === '#/einstellungen') return { art: 'einstellungen' }
+  // #/audio: früher ein eigener Reiter, heute ein Teil der Einstellungen
+  if (h === '#/einstellungen' || h === '#/audio') return { art: 'einstellungen' }
   if (h === '#/anleitung') return { art: 'anleitung' }
   // #/linien: die frühere Adresse, damit alte Lesezeichen weiter gehen
   if (h === '#/strecken' || h === '#/linien') return { art: 'linien' }
@@ -117,7 +116,6 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
     case 'favoriten': return 'favoriten'
-    case 'audio': return 'audio'
     case 'einstellungen': return 'einstellungen'
     case 'sammelheft': return 'sammelheft'
     case 'anleitung': case 'fahrt': case 'ohneziel': case 'fahrtblatt': return null
@@ -201,7 +199,6 @@ export default function App() {
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}
         {seite.art === 'logbuch' && <Logbuch index={index} />}
         {seite.art === 'favoriten' && <Favoriten index={index} oeffnen={oeffnen} />}
-        {seite.art === 'audio' && <AudioSeite />}
         {seite.art === 'einstellungen' && <EinstellungenSeite />}
         {seite.art === 'linien' && <Linien index={index} />}
         {seite.art === 'uebersicht' && (
@@ -230,6 +227,13 @@ export default function App() {
           <p className="mb-3 flex items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
             <img src="./logo.svg" alt="" className="size-6" />Taktland
           </p>
+          {/* die Einstellungen links über den Quellenangaben, statt als Reiter der Reisetasche (Michael, 2026-10-06) */}
+          <a href="#/einstellungen"
+             className="mb-3 inline-flex min-h-10 items-center rounded-lg border border-sbb-cloud bg-white px-4 text-sm
+                        font-medium text-sbb-black hover:bg-sbb-milk dark:border-sbb-iron dark:bg-sbb-midnight
+                        dark:text-sbb-white dark:hover:bg-sbb-charcoal">
+            Einstellungen
+          </a>
           <p>
             Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
             Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;

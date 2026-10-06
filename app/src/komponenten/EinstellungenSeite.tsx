@@ -1,10 +1,11 @@
 import { einstellungenSetzen, GROESSEN, type Groesse, type Schrift, SCHRIFTEN, useEinstellungen } from '../einstellungen'
-import { Schalter } from './AudioSeite'
+import { AudioEinstellungen, Schalter } from './AudioSeite'
 import { MeldeEinstellungen, useMeldeEinstellung } from './Fahrtmodus'
 
 /**
- * Reiter «Einstellungen» in der Reisetasche (Michael, 2026-10-01: «Bildschirm wach
- * halten, Standardwerte und Schriftgrösse bauen. Zudem 3 verschiedene Schriftarten»).
+ * «Einstellungen» (Michael, 2026-10-01: «Bildschirm wach halten, Standardwerte und Schriftgrösse
+ * bauen. Zudem 3 verschiedene Schriftarten»). Seit 2026-10-06 kein Reiter der Reisetasche mehr,
+ * sondern über die Fusszeile erreichbar, mit «Audio» als eigenem Teil.
  */
 export function EinstellungenSeite() {
   const e = useEinstellungen()
@@ -45,6 +46,8 @@ export function EinstellungenSeite() {
       <div className="kachel mt-3 grid gap-3 p-4 text-sm">
         <MeldeEinstellungen einstellung={melde} aendern={meldeAendern} />
       </div>
+
+      <AudioEinstellungen />
     </div>
   )
 }

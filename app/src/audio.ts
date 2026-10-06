@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from 'react'
 
 /**
- * Audio-Einstellungen (Michael, 2026-10-01: Reiter «Audio» in der Reisetasche).
+ * Audio-Einstellungen (Michael, 2026-10-01: Reiter «Audio» in der Reisetasche, seit 2026-10-06
+ * ein Teil der Einstellungen).
  * an: alle Töne von Taktland, auch die Meldungen beim Fahren. reiter: ein kurzer
  * Ton beim Wechsel der Reiter. arten: der Ton beim Fahren je Art. zweimal: der Ton
  * etwa 20 und 10 Sekunden vor dem Objekt statt einmal mit der Meldung. antworten:
@@ -17,6 +18,8 @@ export interface Audio {
   antworten: boolean
   /** ein gläsernes Klicken beim Auf- und Zuklappen (Michael, 2026-10-01) */
   aufklappen: boolean
+  /** Lautstärke aller Töne in Prozent, 100 ist die bisherige Stärke (Michael, 2026-10-06) */
+  lautstaerke: number
 }
 
 const SCHLUESSEL = 'taktland.audio.v1'
@@ -36,6 +39,7 @@ function lesen(): Audio {
     zweimal: x.zweimal === true,
     antworten: x.antworten !== false,
     aufklappen: x.aufklappen !== false,
+    lautstaerke: typeof x.lautstaerke === 'number' && x.lautstaerke >= 0 && x.lautstaerke <= 100 ? Math.round(x.lautstaerke) : 100,
   }
 }
 
@@ -46,6 +50,7 @@ export function audioLesen(): Audio {
 export function audioSetzen(neu: Partial<Audio>) {
   stand = { ...stand, ...neu }
   try { localStorage.setItem(SCHLUESSEL, JSON.stringify(stand)) } catch { /* ohne Speicher nur für jetzt */ }
+  if (ausgangKnoten) ausgangKnoten.gain.value = verstaerkung()
   hoerer.forEach((h) => h())
 }
 
@@ -54,6 +59,20 @@ export function useAudio(): Audio {
 }
 
 let ctx: AudioContext | null = null
+let ausgangKnoten: GainNode | null = null
+
+/** Das Ohr hört Lautstärke nicht linear; im Quadrat wirkt der Regler gleichmässiger */
+const verstaerkung = () => (stand.lautstaerke / 100) ** 2
+
+/** Alle Töne laufen über einen gemeinsamen Regler zum Lautsprecher */
+function ausgang(c: AudioContext): AudioNode {
+  if (!ausgangKnoten) {
+    ausgangKnoten = c.createGain()
+    ausgangKnoten.gain.value = verstaerkung()
+    ausgangKnoten.connect(c.destination)
+  }
+  return ausgangKnoten
+}
 
 /** Ein gemeinsamer Audio-Kontext für alle Töne; erst nach einer Berührung hörbar */
 export function audioKontext(): AudioContext | null {
@@ -127,7 +146,7 @@ function spielen(muster: Muster, oberton = true) {
         laut.gain.setValueAtTime(0.0001, jetzt + beginn)
         laut.gain.exponentialRampToValueAtTime(staerke * anteil, jetzt + beginn + 0.006)
         laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + beginn + ausklang)
-        osc.connect(laut).connect(c.destination)
+        osc.connect(laut).connect(ausgang(c))
         osc.start(jetzt + beginn)
         osc.stop(jetzt + beginn + ausklang + 0.05)
       }
@@ -181,7 +200,7 @@ export function wischTon(richtung: 'links' | 'rechts') {
     laut.gain.setValueAtTime(0.0001, jetzt)
     laut.gain.exponentialRampToValueAtTime(WISCH_STAERKE, jetzt + 0.04)
     laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + dauer)
-    quelle.connect(filter).connect(laut).connect(c.destination)
+    quelle.connect(filter).connect(laut).connect(ausgang(c))
     quelle.start(jetzt)
     quelle.stop(jetzt + dauer + 0.02)
   } catch { /* ohne Ton geht alles weiter */ }

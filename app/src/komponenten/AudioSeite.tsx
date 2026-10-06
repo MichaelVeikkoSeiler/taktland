@@ -1,8 +1,8 @@
 import { antwortTon, audioKontext, aufklappTon, audioSetzen, reiterTon, type TonArt, tonSpielen, useAudio } from '../audio'
 
 /**
- * Reiter «Audio» in der Reisetasche (Michael, 2026-10-01): die Töne von Taktland
- * einzeln steuern und probehören.
+ * «Audio» in den Einstellungen (Michael, 2026-10-01 als Reiter der Reisetasche, seit 2026-10-06
+ * ein Teil der Einstellungen, mit Lautstärkeregler): die Töne von Taktland einzeln steuern und probehören.
  */
 const ARTEN: Array<{ art: TonArt; name: string; klang: string }> = [
   { art: 'tunnel', name: 'Tunnel', klang: 'zwei tiefe Töne abwärts' },
@@ -13,16 +13,29 @@ const ARTEN: Array<{ art: TonArt; name: string; klang: string }> = [
   { art: 'ankunft', name: 'Ankunft am Ziel', klang: 'drei Töne aufwärts' },
 ]
 
-export function AudioSeite() {
+export function AudioEinstellungen() {
   const audio = useAudio()
   const aus = !audio.an
   return (
-    <div className="px-4 pb-4">
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Audio</h1>
-      <p className="mt-2 leading-relaxed">
-        Hier stellst du ein, welche Töne Taktland spielt. Die Einstellung gilt für dieses Gerät.
-      </p>
-      <div className="kachelliste mt-4">
+    <>
+      <h2 className="mt-8 text-lg font-semibold">Audio</h2>
+      <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">Welche Töne Taktland spielt und wie laut.</p>
+      <div className={`kachel mt-3 px-4 py-3 ${aus ? 'opacity-50' : ''}`}>
+        <label htmlFor="lautstaerke" className="flex items-baseline justify-between gap-3">
+          <span className="font-medium">Lautstärke</span>
+          <span className="text-sm tabular-nums text-sbb-metal dark:text-sbb-storm">{audio.lautstaerke} %</span>
+        </label>
+        <input id="lautstaerke" type="range" min={0} max={100} step={5} value={audio.lautstaerke} disabled={aus}
+               onChange={(e) => audioSetzen({ lautstaerke: Number(e.target.value) })}
+               // beim Loslassen einmal der Ton eines Bahnhofs, damit man hört, wie laut es ist
+               onPointerUp={() => { void audioKontext()?.resume(); tonSpielen('bahnhof') }}
+               onKeyUp={() => { void audioKontext()?.resume(); tonSpielen('bahnhof') }}
+               className="mt-2 w-full accent-sbb-red" />
+        <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
+          Für alle Töne von Taktland. Wie laut es am Ende klingt, bestimmt auch die Lautstärke des Geräts.
+        </p>
+      </div>
+      <div className="kachelliste mt-3">
         <Schalter titel="Töne" text="Alle Töne von Taktland, auch die Meldungen beim Fahren"
                   an={audio.an} umschalten={() => audioSetzen({ an: !audio.an })} />
         <Schalter titel="Töne bei den Reitern" text="Ein kurzer, leiser Ton beim Wechsel der Reiter, ein Wischen bei den Pfeilen der Reiterzeile"
@@ -52,7 +65,7 @@ export function AudioSeite() {
         </p>
       )}
 
-      <h2 className="mt-8 text-lg font-semibold">Beim Fahren</h2>
+      <h3 className="mt-6 font-semibold">Töne beim Fahren</h3>
       <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
         Jede Art hat ihren eigenen Ton. Ausgeschaltet erscheint die Meldung weiter, nur ohne Ton.
         «▶» spielt ihn einmal ab.
@@ -74,7 +87,7 @@ export function AudioSeite() {
         ))}
       </div>
 
-      <h2 className="mt-8 text-lg font-semibold">Wann der Ton kommt</h2>
+      <h3 className="mt-6 font-semibold">Wann der Ton kommt</h3>
       <div className="mt-3 grid gap-2" role="radiogroup" aria-label="Wann der Ton kommt">
         {([[false, 'Einmal, mit der Meldung', 'Wie unter «Melden etwa» beim Fahren gewählt: etwa 20 oder 10 Sekunden vorher'],
            [true, 'Zweimal', 'Etwa 20 und nochmals etwa 10 Sekunden vor jedem gemeldeten Objekt']] as const)
@@ -94,7 +107,7 @@ export function AudioSeite() {
             </button>
           ))}
       </div>
-    </div>
+    </>
   )
 }
 

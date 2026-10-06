@@ -28,7 +28,7 @@ import { reiterTon, wischTon } from '../audio'
 import { SPIEL_BEREICHE } from '../spiele'
 import { useEinstellungen } from '../einstellungen'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'audio' | 'einstellungen'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'einstellungen'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -48,9 +48,8 @@ const REISETASCHE: Array<{ bereich: Bereich; text: string; adresse: string }> = 
   { bereich: 'logbuch', text: 'Logbuch', adresse: '#/logbuch' },
   { bereich: 'sammelheft', text: 'Sammelheft', adresse: '#/sammelheft' },
   { bereich: 'favoriten', text: 'Favoriten', adresse: '#/favoriten' },
-  // Michael, 2026-10-01: «neuen Reiter Audio»
-  { bereich: 'audio', text: 'Audio', adresse: '#/audio' },
-  { bereich: 'einstellungen', text: 'Einstellungen', adresse: '#/einstellungen' },
+  // Audio und Einstellungen waren Reiter hier; seit 2026-10-06 ist Audio ein Teil der Einstellungen,
+  // die über die Fusszeile erreichbar sind (Michael)
 ]
 
 /** Die Unterreiter von «Fahren» (Michael, 2026-09-29: «Fahren muss auch drei
@@ -154,7 +153,9 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
   // die ganze Reisetasche mit dem Bild des Logbuchs
   const bild = fahrt ? BILDER.fahrt
-    : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'audio' || aktiv === 'einstellungen' ? BILDER.logbuch
+    : aktiv === 'sammelheft' || aktiv === 'favoriten' ? BILDER.logbuch
+    // die Einstellungen mit dem Bild von Info
+    : aktiv === 'einstellungen' ? BILDER.anleitung
     // die Bahnübergänge mit dem Bild der Startseite, darauf ist einer zu sehen
     : aktiv === 'bahnuebergaenge' ? BILDER.start
     // die Spiele und Geo mit dem Bild der Spiele, das Duell mit seinem

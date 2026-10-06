@@ -177,7 +177,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const [gegenrichtung, setGegenrichtung] = useState(false)
   const standRef = useRef<Stand | null>(null)
   const gemeldet = useRef(new Set<string>())
-  // welche Töne schon klangen: «art kennung@20» (Reisetasche → Audio, zweimal 20 und 10 s)
+  // welche Töne schon klangen: «art kennung@20» (Einstellungen → Audio, zweimal 20 und 10 s)
   const getoent = useRef(new Set<string>())
   const audio = useAudio()
   const ansage = useRef<HTMLParagraphElement | null>(null)
@@ -948,7 +948,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                    onChange={(e) => aendern({ ton: e.target.checked })} />
           </label>
           <p className="text-sm text-sbb-metal dark:text-sbb-storm">
-            Töne je Art, zweimal statt einmal und zum Anhören: unter Reisetasche → Audio.
+            Lautstärke, Töne je Art, zweimal statt einmal und zum Anhören: unter Einstellungen → Audio, unten auf jeder Seite.
           </p>
         </div>
 
@@ -1112,7 +1112,7 @@ function aufzaehlen(teile: string[]) {
 
 /**
  * Was beim Fahren gemeldet wird und wie: im Fahrtmodus unten und als Standardwerte
- * unter Reisetasche → Einstellungen (Michael, 2026-10-01). Beides ist dieselbe
+ * unter Einstellungen (Michael, 2026-10-01). Beides ist dieselbe
  * Einstellung: Was man hier ändert, gilt für diese und jede neue Fahrt.
  */
 export function MeldeEinstellungen({ einstellung, aendern }: {
