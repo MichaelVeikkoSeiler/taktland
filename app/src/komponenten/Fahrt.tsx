@@ -11,6 +11,7 @@ import type { FahrtTeil } from './Kopf'
 import { Stern } from './Stern'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
+import { reliefListe } from '../relief'
 
 type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
@@ -137,6 +138,8 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
 
       {/* Probefahrten zum Anwählen, Starten, Hinzufügen und Löschen, auf- und
           zuklappbar (Michael, 2026-09-26) */}
+      {teil === '3d' && <DreiDStrecken />}
+
       {teil === 'probe' && (
         <section>
           <h1 className="mt-6 text-2xl font-bold tracking-tight">Probefahren</h1>
@@ -479,3 +482,40 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten }: {
 }
 
 
+
+/** Reiter «3D-Strecken» (Michael, 2026-10-06): alle Strecken mit 3D-Relief zum Anschauen */
+function DreiDStrecken() {
+  const [liste, setListe] = useState<Awaited<ReturnType<typeof reliefListe>> | null>(null)
+  const [fehler, setFehler] = useState<string | null>(null)
+  useEffect(() => { reliefListe().then(setListe).catch((e: Error) => setFehler(e.message)) }, [])
+  return (
+    <section>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">3D-Strecken</h1>
+      <p className="mt-2 leading-relaxed">
+        Strecken mit Gelände in 3D zum Drehen und Zoomen. Führt eine Fahrt oder Probefahrt hindurch,
+        lässt sich die Karte dort auch auf «3D» stellen.
+      </p>
+      {fehler && <p className="mt-4 text-sm">Die Liste konnte nicht geladen werden. {fehler}</p>}
+      {!liste && !fehler && <p className="mt-4 text-sbb-metal">Wird geladen …</p>}
+      {liste && (
+        <ul className="kachelliste mt-4">
+          {liste.map((r) => (
+            <li key={r.name}>
+              <a href={`#/fahrt/3d/${r.name}`} className="kachel-link flex items-center justify-between gap-3 px-4 py-3">
+                <span className="min-w-0">
+                  <span className="block font-medium">{r.titel}</span>
+                  <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Linie {r.linie}</span>
+                </span>
+                <span className="pfeil shrink-0" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+      <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
+        Gelände aus swissALTIRegio (swisstopo). Die Höhe der Gleise steht in keiner Quelle; die Linie ist aufs
+        Gelände gelegt.
+      </p>
+    </section>
+  )
+}

@@ -18,6 +18,12 @@ export function lv95(lat: number, lon: number): [number, number] {
 
 interface ReliefUebersicht { reliefs: Array<{ name: string; titel: string; linie: string; rahmen: [number, number, number, number] }> }
 
+/** Alle Reliefs, in der Reihenfolge der Pipeline */
+export async function reliefListe() {
+  const u = await holen<ReliefUebersicht>('data/relief/index.json')
+  return u.reliefs
+}
+
 /** So viel des Wegs muss im Ausschnitt liegen, damit «3D» erscheint */
 const MIN_IM_RELIEF_M = 5000
 

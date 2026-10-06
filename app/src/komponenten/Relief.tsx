@@ -68,7 +68,7 @@ function useRelief(name: string | null) {
 
 /* ---------- die eigene Seite ---------- */
 
-export default function ReliefSeite({ name }: { name: string }) {
+export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?: { text: string; adresse: string } }) {
   const { daten, fehler } = useRelief(name)
   const [faktor, setFaktor] = useState<1 | 2>(1)
   const weg = useMemo(() => (daten ? wegDerLinie(daten.r) : null), [daten])
@@ -76,8 +76,8 @@ export default function ReliefSeite({ name }: { name: string }) {
   return (
     <div className="px-4 pb-4">
       {/* zurück zur Linie des Reliefs, sonst zu allen Strecken */}
-      <Zurueck onClick={() => { window.location.hash = daten ? `#/linie/${daten.r.linie}` : '#/strecken' }}
-               text={daten ? `Linie ${daten.r.linie}` : 'Alle Strecken'} />
+      <Zurueck onClick={() => { window.location.hash = zurueck?.adresse ?? (daten ? `#/linie/${daten.r.linie}` : '#/strecken') }}
+               text={zurueck?.text ?? (daten ? `Linie ${daten.r.linie}` : 'Alle Strecken')} />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{daten?.r.titel ?? '3D-Relief'} in 3D</h1>
       {daten && (
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">

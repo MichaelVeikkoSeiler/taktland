@@ -39,7 +39,7 @@ import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string; ausFahren: boolean } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
@@ -66,13 +66,17 @@ function seiteAusAdresse(): Seite {
   if (geoRaum) return { art: 'schweiz11mit', raum: geoRaum[1].toUpperCase() }
   if (h === '#/erraten') return { art: 'erraten' }
   const relief = /^#\/relief\/([a-z]+)$/.exec(h)
-  if (relief) return { art: 'relief', name: relief[1] }
+  if (relief) return { art: 'relief', name: relief[1], ausFahren: false }
+  // dasselbe Relief aus dem Reiter «3D-Strecken» unter Fahren
+  const relief3d = /^#\/fahrt\/3d\/([a-z]+)$/.exec(h)
+  if (relief3d) return { art: 'relief', name: relief3d[1], ausFahren: true }
   const suchRaum = /^#\/erraten\/mit\/([A-Za-z]{4})$/.exec(h)
   if (suchRaum) return { art: 'erratenmit', raum: suchRaum[1].toUpperCase() }
   if (h === '#/standort') return { art: 'standort' }
   // Fahren mit drei Unterseiten (Michael, 2026-09-29)
   if (h === '#/fahrt') return { art: 'fahrt', teil: 'neu' }
   if (h === '#/fahrt/probe') return { art: 'fahrt', teil: 'probe' }
+  if (h === '#/fahrt/3d') return { art: 'fahrt', teil: '3d' }
   if (h === '#/fahrt/blatt') return { art: 'fahrt', teil: 'blatt' }
   if (h === '#/ohneziel') return { art: 'ohneziel' }
   if (h === '#/sammelheft') return { art: 'sammelheft' }
@@ -112,7 +116,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'start': return null
     case 'linien': case 'strecke': return 'linien'
     case 'linie': case 'objekte': return herkunft
-    case 'relief': return 'linien'
+    case 'relief': return seite.ausFahren ? null : 'linien'
     case 'uebersicht': return seite.liste
     case 'duell': return 'duell'
     case 'spiele': return 'spiele'
@@ -172,7 +176,7 @@ export default function App() {
       <div className="mx-auto max-w-2xl md:max-w-3xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
               fahrt={seite.art === 'fahrt' ? seite.teil : seite.art === 'ohneziel' ? 'neu'
-                : seite.art === 'fahrtblatt' ? 'blatt' : null} />
+                : seite.art === 'fahrtblatt' ? 'blatt' : seite.art === 'relief' && seite.ausFahren ? '3d' : null} />
         <Fortsetzen />
 
         {fehler && (
@@ -213,7 +217,8 @@ export default function App() {
         {seite.art === 'strecke' && <Strecke index={index} wahl={seite.wahl} />}
         {seite.art === 'relief' && (
           <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Das Relief wird geladen …</p>}>
-            <ReliefSeite name={seite.name} />
+            <ReliefSeite key={seite.name} name={seite.name}
+                         zurueck={seite.ausFahren ? { text: 'Alle 3D-Strecken', adresse: '#/fahrt/3d' } : undefined} />
           </Suspense>
         )}
         {seite.art === 'linie' && (

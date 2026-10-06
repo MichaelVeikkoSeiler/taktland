@@ -54,10 +54,12 @@ const REISETASCHE: Array<{ bereich: Bereich; text: string; adresse: string }> = 
 
 /** Die Unterreiter von «Fahren» (Michael, 2026-09-29: «Fahren muss auch drei
  *  Unterseiten haben mit Neue Fahrt, Probefahren, Fahrtblatt») */
-export type FahrtTeil = 'neu' | 'probe' | 'blatt'
+export type FahrtTeil = 'neu' | 'probe' | '3d' | 'blatt'
 const FAHREN: Array<{ bereich: FahrtTeil; text: string; adresse: string }> = [
   { bereich: 'neu', text: 'Neue Fahrt', adresse: '#/fahrt' },
   { bereich: 'probe', text: 'Probefahren', adresse: '#/fahrt/probe' },
+  // alle Strecken mit 3D-Relief (Michael, 2026-10-06: «neuer Reiter rechts neben Probefahren»)
+  { bereich: '3d', text: '3D-Strecken', adresse: '#/fahrt/3d' },
   { bereich: 'blatt', text: 'Fahrtblatt', adresse: '#/fahrt/blatt' },
 ]
 
