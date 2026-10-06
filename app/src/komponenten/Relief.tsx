@@ -55,6 +55,9 @@ interface Weg {
 const SCHRITT = 2
 /** die Linie liegt so viel über dem Gelände, damit sie nicht darin verschwindet */
 const UEBER_M = 25
+/** in der Brille (Michael, 2026-10-06: «Quest 3»): das Relief als Modell so breit, der tiefste Punkt auf
+ *  Tischhöhe, so weit vor dir; Linien so dick, dass sie auf diese Grösse noch zu sehen sind */
+const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILLE_LINIE_M = 0.0025
 /** so nah (km) an der Kamera erscheinen die Namen der Kulturgüter */
 const NAH_KULTUR = 9
 
@@ -164,6 +167,16 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   const { daten, fehler } = useRelief(name)
   const [faktor, setFaktor] = useState<1 | 2>(1)
   const weg = useMemo(() => (daten ? wegDerLinie(daten.r) : null), [daten])
+  // in der Brille (Michael, 2026-10-06: «Quest 3»): nur, wo der Browser WebXR kann
+  const brille = useRef<(() => Promise<void>) | null>(null)
+  const [brilleMoeglich, setBrilleMoeglich] = useState(false)
+  const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
+  useEffect(() => {
+    const xr = navigator.xr
+    if (!xr) return
+    void Promise.all([xr.isSessionSupported('immersive-ar').catch(() => false), xr.isSessionSupported('immersive-vr').catch(() => false)])
+      .then(([ar, vr]) => setBrilleMoeglich(ar || vr))
+  }, [])
 
   return (
     <div className="px-4 pb-4">
@@ -181,8 +194,26 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
       {daten && weg && (
         <>
           <div className="mt-4"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
-          <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.linie}
+          <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
                  className="mt-3 w-full overflow-hidden rounded-lg" />
+          {brilleMoeglich ? (
+            <div className="mt-3">
+              <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white"
+                      onClick={() => { setBrilleFehler(null); brille.current?.().catch((e: Error) => setBrilleFehler(e.message)) }}>
+                In der Brille ansehen
+              </button>
+              <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+                Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
+                auf Tischhöhe. Trigger oder Fingertippen dreht es, Greifen macht es doppelt so gross. Die Höhe stellst du vorher
+                oben ein.
+              </p>
+              {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
+            </div>
+          ) : (
+            <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+              In einer Brille mit WebXR, etwa der Meta Quest 3, steht hier «In der Brille ansehen».
+            </p>
+          )}
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der rechten Maustaste.
             Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
@@ -393,12 +424,14 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, brille, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
   /** beim Fahren: wo die Kamera vom Zug aus steht; bleibt, wenn der Ausschnitt weiterwandert */
   blick?: React.MutableRefObject<THREE.Vector3 | null>
+  /** auf der eigenen Seite: hier legt die Szene ab, wie sie in der Brille startet (WebXR) */
+  brille?: React.MutableRefObject<(() => Promise<void>) | null>
   className: string
 }) {
   const rahmen = useRef<HTMLDivElement>(null)
@@ -422,7 +455,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
     const szene = new THREE.Scene()
     szene.background = new THREE.Color(dunkel ? '#141414' : '#f6f6f6')
     const kamera = new THREE.PerspectiveCamera(40, 1, 0.1, 500)
-    const renderer = new THREE.WebGLRenderer({ antialias: true })
+    // durchsichtig, damit die Brille im Passthrough die Umgebung zeigt
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    renderer.xr.enabled = !!brille
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.domElement.style.touchAction = 'none'
     el.appendChild(renderer.domElement)
@@ -541,14 +576,22 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
       punkte.push(punkt3d(bis))
       return punkte
     }
+    // in der Brille ist das Relief etwa einen Meter breit: dort eigene, dickere Linien
+    const brilleMass = BRILLE_BREITE_M / (Math.max(breite, hoehe) * m / 1000)
+    const nurBild = new THREE.Group(), nurBrille = new THREE.Group()
+    nurBrille.visible = false
+    szene.add(nurBild, nurBrille)
     const roehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean) => {
       if (punkte.length < 2) return
       // Röhre statt Linie: Linien sind in WebGL nur 1 Pixel breit
       const kurve = new THREE.CatmullRomCurve3(punkte)
-      const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, Math.max(4, punkte.length * 2), 0.06, 6, false),
-        new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch, transparent: durch, opacity: durch ? 0.75 : 1 }))
-      if (durch) netz.renderOrder = 2
-      szene.add(netz)
+      const material = new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch, transparent: durch, opacity: durch ? 0.75 : 1 })
+      const radien: Array<[number, THREE.Group]> = [[0.06, nurBild], ...(brille ? [[BRILLE_LINIE_M / brilleMass, nurBrille] as [number, THREE.Group]] : [])]
+      for (const [radius, ort] of radien) {
+        const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, Math.max(4, punkte.length * 2), radius, 6, false), material)
+        if (durch) netz.renderOrder = 2
+        ort.add(netz)
+      }
     }
     /** gestrichelt (Tunnel): 400 m sichtbar, 250 m nicht (Punkte alle 50 m) */
     const STRICH = 8, LUECKE = 5
@@ -573,7 +616,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
 
     // Beschriftungen in fester Bildschirmgrösse, auf einem hellen Schild; wo sich zwei
     // überdecken, bleibt die mit dem kleineren Rang stehen (zeichnen() blendet die andere aus)
-    const schilder: Array<{ sp: THREE.Sprite; rang: number; folge: number }> = []
+    const schilder: Array<{ sp: THREE.Sprite; rang: number; folge: number; grundMass: [number, number] }> = []
     const gruppen = { gipfel: new THREE.Group(), kgs: new THREE.Group(), seilbahn: new THREE.Group() }
     Object.values(gruppen).forEach((g) => szene.add(g))
     const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number, folge = 0, ort: THREE.Object3D = szene) => {
@@ -596,7 +639,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
       sp.position.set(x, y, z)
       sp.renderOrder = 3
       ort.add(sp)
-      schilder.push({ sp, rang, folge })
+      schilder.push({ sp, rang, folge, grundMass: [sp.scale.x, sp.scale.y] })
     }
     const kugel = (farbe: string, x: number, y: number, z: number, groesse = 0.12, durch = false) => {
       const k = new THREE.Mesh(new THREE.SphereGeometry(groesse, 16, 10), new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch }))
@@ -735,19 +778,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
 
     // Schilder, die ein wichtigeres verdecken würden, ausblenden; bei gleichem Rang gewinnt das nähere
     const projiziert = new THREE.Vector3()
+    const kameraLokal = new THREE.Vector3()
     const schilderOrdnen = () => {
-      const b = renderer.domElement.clientWidth, hh = renderer.domElement.clientHeight
-      const pm = kamera.projectionMatrix.elements
+      // in der Brille zählt das linke Auge, mit seinem Ausschnitt
+      let kam: THREE.PerspectiveCamera = kamera
+      let b = renderer.domElement.clientWidth, hh = renderer.domElement.clientHeight
+      if (renderer.xr.isPresenting) {
+        const auge = renderer.xr.getCamera().cameras[0] as (THREE.PerspectiveCamera & { viewport?: THREE.Vector4 }) | undefined
+        if (!auge?.viewport) return
+        kam = auge; b = auge.viewport.z; hh = auge.viewport.w
+      }
+      const pm = kam.projectionMatrix.elements
+      const mass = modell.scale.x
+      modell.worldToLocal(kam.getWorldPosition(kameraLokal))
       const belegt: Array<[number, number, number, number]> = []
-      const liste = schilder.map((x) => ({ ...x, abstand: x.sp.position.distanceToSquared(kamera.position) }))
+      const liste = schilder.map((x) => ({ ...x, abstand: x.sp.position.distanceToSquared(kameraLokal) }))
         .sort((a, c) => a.rang - c.rang || a.folge - c.folge || a.abstand - c.abstand)
       for (const { sp, rang, abstand } of liste) {
         if (sp.parent && !sp.parent.visible) continue
         // Kulturgüter nur nah an der Kamera, sonst überdecken ihre Namen im Mittelland alles
         if (rang >= 3 && abstand > NAH_KULTUR ** 2) { sp.visible = false; continue }
-        projiziert.copy(sp.position).project(kamera)
+        sp.getWorldPosition(projiziert).project(kam)
         if (projiziert.z > 1 || projiziert.z < -1) { sp.visible = false; continue }
-        const breite = sp.scale.x * pm[0] * b / 2, hoehe = sp.scale.y * pm[5] * hh / 2
+        const breite = sp.scale.x * mass * pm[0] * b / 2, hoehe = sp.scale.y * mass * pm[5] * hh / 2
         const px = (projiziert.x + 1) / 2 * b, py = (1 - projiziert.y) / 2 * hh
         // vier Lagen um den Punkt: rechts oben, links oben, rechts unten, links unten;
         // die erste, die frei ist und ganz im Bild liegt, gilt
@@ -762,6 +815,51 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
           belegt.push([x0, y0, x1, y1])
           break
         }
+      }
+    }
+
+    // alles Gezeichnete in eine Gruppe, die in der Brille als Modell auf dem Tisch steht
+    const modell = new THREE.Group()
+    modell.add(...szene.children)
+    szene.add(modell)
+    const hintergrund = szene.background
+    if (brille) {
+      let tiefst = Infinity
+      for (let i = 1; i < pos.length; i += 3) if (pos[i] !== Y(KEINE_HOEHE)) tiefst = Math.min(tiefst, pos[i])
+      let gross = false
+      const setzen = () => {
+        const s = brilleMass * (gross ? 2 : 1)
+        modell.scale.setScalar(s)
+        modell.position.set(0, BRILLE_TISCH_M - tiefst * s, -BRILLE_ABSTAND_M - (gross ? BRILLE_BREITE_M / 2 : 0))
+        // Schilder behalten ihre Grösse, die Gruppe darüber schrumpft sie sonst mit
+        for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] / s, grundMass[1] / s, 1)
+      }
+      // Trigger oder Fingertippen dreht das Modell, Greifen macht es doppelt so gross
+      for (const i of [0, 1]) {
+        const steuer = renderer.xr.getController(i)
+        steuer.addEventListener('select', () => { modell.rotation.y += Math.PI / 6 })
+        steuer.addEventListener('squeeze', () => { gross = !gross; setzen() })
+        szene.add(steuer)
+      }
+      renderer.xr.addEventListener('sessionend', () => {
+        modell.scale.setScalar(1); modell.position.set(0, 0, 0); modell.rotation.set(0, 0, 0)
+        for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
+        nurBild.visible = true; nurBrille.visible = false
+        szene.background = hintergrund
+        groesseSetzen()
+      })
+      brille.current = async () => {
+        const xr = navigator.xr
+        if (!xr) return
+        // mit Passthrough, wo die Brille es kann, sonst in einem leeren Raum
+        const ar = await xr.isSessionSupported('immersive-ar').catch(() => false)
+        const sitzung = await xr.requestSession(ar ? 'immersive-ar' : 'immersive-vr', { optionalFeatures: ['local-floor', 'hand-tracking'] })
+        renderer.xr.setReferenceSpaceType('local-floor')
+        await renderer.xr.setSession(sitzung)
+        gross = false
+        setzen()
+        nurBild.visible = false; nurBrille.visible = true
+        szene.background = ar ? null : hintergrund
       }
     }
 
@@ -796,11 +894,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
       if (blick && letzte) blick.current = kamera.position.clone().sub(steuerung.target)
       schilderOrdnen()
       renderer.render(szene, kamera)
-      requestAnimationFrame(zeichnen)
     }
-    zeichnen()
+    // über die Schleife des Renderers, damit dieselbe Zeichnung auch in der Brille läuft
+    renderer.setAnimationLoop(zeichnen)
     return () => {
       laeuft = false
+      renderer.setAnimationLoop(null)
+      void renderer.xr.getSession()?.end()
+      if (brille) brille.current = null
       beobachter.disconnect()
       steuerung.dispose()
       szene.traverse((o) => {
@@ -813,6 +914,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
       renderer.dispose()
       renderer.domElement.remove()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, blick, zusatz])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, zusatz])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }
