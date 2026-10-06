@@ -1,0 +1,15 @@
+{
+ "reliefs": [
+  {
+   "name": "gotthard",
+   "titel": "Gotthard-Bergstrecke",
+   "linie": "600",
+   "rahmen": [
+    2685500,
+    1131450,
+    2720850,
+    1189250
+   ]
+  }
+ ]
+}

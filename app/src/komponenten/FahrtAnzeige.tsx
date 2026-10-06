@@ -4,12 +4,16 @@
  * Sie zeigen Lagen auf dem Weg, aber keine Längen: Die Kilometrierung ist ein
  * Standort und keine Länge, darum stehen hier keine Kilometer.
  */
-import { useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { type FahrObjekt, type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlassen, VollbildKnopf } from './Netzkarte'
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
+import { reliefFuer } from '../relief'
+
+// three.js nur für die Ansicht «3D», erst dort geladen
+const ReliefFahrt = lazy(() => import('./Relief').then((m) => ({ default: m.ReliefFahrt })))
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
@@ -335,6 +339,14 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const sehenswert = useSehenswert()
   const [auswahl, setAuswahl] = useState<Auswahl | null>(null)
   const [nah, setNahRoh] = useState(true)
+  // «3D», wo der Weg durch ein Relief führt (Michael, 2026-10-06: zuerst die Gotthard-Bergstrecke)
+  const [relief, setRelief] = useState<{ name: string; titel: string } | null>(null)
+  const [dreiD, setDreiD] = useState(false)
+  useEffect(() => {
+    let ab = false
+    void reliefFuer(fahrweg).then((r) => { if (!ab) setRelief(r) })
+    return () => { ab = true }
+  }, [fahrweg])
   // eigener Zoom und Verschiebung, die das Nachführen alle halbe Sekunde
   // nicht zurücksetzt (Michael, 2026-09-26: «springt immer wieder auf den
   // Default-Ausschnitt»); «Nah» folgt dem Zug trotzdem
@@ -562,13 +574,19 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
       <div className="flex items-center justify-between gap-2 text-xs">
         <div className="segmente" role="group" aria-label="Ausschnitt">
           {([[true, 'Nah'], [false, 'Ganzer Weg']] as const).map(([n, t]) => (
-            <button key={t} type="button" aria-pressed={nah === n} onClick={() => setNah(n)}
+            <button key={t} type="button" aria-pressed={!dreiD && nah === n} onClick={() => { setDreiD(false); setNah(n) }}
                     className="segment px-2.5 py-1">
               {t}
             </button>
           ))}
+          {relief && (
+            <button type="button" aria-pressed={dreiD} onClick={() => setDreiD(true)} title={`${relief.titel} in 3D`}
+                    className="segment px-2.5 py-1">
+              3D
+            </button>
+          )}
           {/* im selben Stil daneben (Michael, 2026-09-29) */}
-          {veraendert && (
+          {!dreiD && veraendert && (
             <button type="button" onClick={() => { setZoom(1); setVersatz([0, 0]); mitte.current = null }}
                     className="segment px-2.5 py-1 text-sbb-black underline underline-offset-2 dark:text-sbb-white">
               {nah ? 'Zum Zug' : 'Alles'}
@@ -576,7 +594,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           )}
         </div>
         <div className="flex items-center gap-2">
-          {([['−', 1 / 1.6], ['+', 1.6]] as const).map(([zeichen, f]) => (
+          {/* in 3D zoomt man mit zwei Fingern */}
+          {!dreiD && ([['−', 1 / 1.6], ['+', 1.6]] as const).map(([zeichen, f]) => (
             <button key={zeichen} type="button" onClick={() => zoomen(f)}
                     aria-label={zeichen === '+' ? 'Näher heran' : 'Weiter weg'}
                     className="flex size-8 items-center justify-center rounded-lg border border-sbb-cloud
@@ -593,6 +612,11 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           Seen, Flächen und Netz wird nur neu gezeichnet, wenn der Ausschnitt springt, und
           dazwischen als Ganzes verschoben, was die Grafik des Geräts ohne neues Zeichnen
           kann. Darüber, durchsichtig und leicht, der Weg, die Zeichen und der Zug. */}
+      {dreiD && relief ? (
+        <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Relief wird geladen …</div>}>
+          <ReliefFahrt name={relief.name} fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} />
+        </Suspense>
+      ) : (
       <div onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
            style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }}
            className={`${klassen.svg} relative overflow-hidden border border-sbb-cloud bg-karte
@@ -650,9 +674,10 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           </button>
         )}
       </div>
+      )}
       {voll && vollbild && <div className="shrink-0">{vollbild}</div>}
-      {!voll && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
-      {!voll && sehenswert.s && <SehenswertLegende gebieteMitBoden />}
+      {!voll && !dreiD && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
+      {!voll && !dreiD && sehenswert.s && <SehenswertLegende gebieteMitBoden />}
       <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>
         {!linien && 'Das Netz wird geladen … '}
         {zurKarte && (

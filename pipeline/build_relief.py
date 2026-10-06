@@ -10,7 +10,8 @@ Nichts wird dazu erfunden: Wo die Daten Anfang und Ende eines Tunnels nicht herg
 steht er als Punkt mit «Ende unbekannt». Die Höhe der Gleise steht in keiner Quelle; die
 App legt die Linie aufs Gelände und schreibt das dazu.
 
-Ergebnis: data/relief/{name}.json (alles ausser den Höhen) und data/relief/{name}.bin
+Ergebnis: data/relief/index.json (welches Relief welchen Ausschnitt in LV95 deckt),
+data/relief/{name}.json (alles ausser den Höhen) und data/relief/{name}.bin
 (Höhen in Metern als Uint16, Zeile für Zeile von Norden nach Süden, je Zeile von Westen
 nach Osten). Lage in LV95 (Ost, Nord) in Metern.
 
@@ -145,8 +146,10 @@ def bauen(name, r):
     ohne = sum(1 for t in tunnel if "von_km" not in t)
     print(f"{name}: {len(weg)} Wegpunkte, {len(bahnhoefe)} Bahnhöfe, {len(tunnel)} Tunnel ({ohne} ohne bekanntes Ende), "
           f"{len(bruecken)} Brücken mit Anfang und Ende, {len(gipfel)} Gipfel")
+    return {"name": name, "titel": r["titel"], "linie": nr, "rahmen": list(rahmen)}
 
 
 if __name__ == "__main__":
-    for name, r in RELIEFS.items():
-        bauen(name, r)
+    # die Übersicht: welches Relief welchen Ausschnitt deckt, für «3D» beim Fahren
+    uebersicht = [bauen(name, r) for name, r in RELIEFS.items()]
+    (ZIEL / "index.json").write_text(json.dumps({"reliefs": uebersicht}, ensure_ascii=False, indent=1), encoding="utf-8")
