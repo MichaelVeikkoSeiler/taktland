@@ -367,8 +367,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
 
     // Beschriftungen in fester Bildschirmgrösse, auf einem hellen Schild; wo sich zwei
     // überdecken, bleibt die mit dem kleineren Rang stehen (zeichnen() blendet die andere aus)
-    const schilder: Array<{ sp: THREE.Sprite; rang: number }> = []
-    const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number) => {
+    const schilder: Array<{ sp: THREE.Sprite; rang: number; folge: number }> = []
+    const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number, folge = 0) => {
       const lw = document.createElement('canvas')
       const ctx = lw.getContext('2d')!
       const px = 28, rand = 10
@@ -388,7 +388,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       sp.position.set(x, y, z)
       sp.renderOrder = 3
       szene.add(sp)
-      schilder.push({ sp, rang })
+      schilder.push({ sp, rang, folge })
     }
     const kugel = (farbe: string, x: number, y: number, z: number, groesse = 0.12, durch = false) => {
       const k = new THREE.Mesh(new THREE.SphereGeometry(groesse, 16, 10), new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch }))
@@ -397,12 +397,23 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       szene.add(k)
       return k
     }
+    // Reihenfolge der Bahnhöfe zwischen den Enden durch Halbieren: zuerst der mittlere, dann die
+    // in der Mitte jeder Hälfte usw., damit die Namen in der Übersicht über die Strecke verteilt sind
+    const folge = new Map<number, number>()
+    const haelften: Array<[number, number]> = [[0, r.bahnhoefe.length - 1]]
+    while (haelften.length) {
+      const [a, z] = haelften.shift()!
+      if (z - a < 2) continue
+      const m = Math.floor((a + z) / 2)
+      folge.set(m, folge.size)
+      haelften.push([a, m], [m, z])
+    }
     r.bahnhoefe.forEach((b, i) => {
       const y = Y(hoeheBei(r, h, b.lage[0], b.lage[1]) + UEBER_M)
       kugel(FARBEN.bahnhof, X(b.lage[0]), y, Z(b.lage[1]))
       // Anfang und Ende der Strecke zuerst, dann die übrigen Bahnhöfe, dann die Gipfel
       const ende = i === 0 || i === r.bahnhoefe.length - 1
-      schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + 0.15, Z(b.lage[1]), ende ? 0 : 1)
+      schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + 0.15, Z(b.lage[1]), ende ? 0 : 1, folge.get(i) ?? 0)
     })
     for (const t of weg.tunnelPunkte.filter(imStueck)) {
       const p = punkt3d(t)
@@ -426,16 +437,22 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     steuerung.maxPolarAngle = Math.PI * 0.49
     steuerung.minDistance = 1
     steuerung.maxDistance = 120
-    // ausgerichtet auf das Gezeichnete, Blick von Norden
+    // ausgerichtet auf das Gezeichnete, Blick von Norden oder bei breiten Strecken von Westen
     const gezeichnet = pk.filter((p) => imStueck(p.m))
     const xs = gezeichnet.map((p) => X(p.e)), zs = gezeichnet.map((p) => Z(p.n))
     const cx = xs.length ? (Math.min(...xs) + Math.max(...xs)) / 2 : 0
     const cz = zs.length ? (Math.min(...zs) + Math.max(...zs)) / 2 : 0
     // die Breite zählt im Hochformat mehr: sonst ragt eine Strecke von Westen nach Osten links und rechts hinaus
     const seitenverhaeltnis = Math.max(0.5, el.clientWidth / Math.max(1, zug ? el.clientHeight : Math.min(window.innerHeight * 0.7, el.clientWidth * 1.1)))
-    const spanne = xs.length ? Math.max((Math.max(...xs) - Math.min(...xs)) * 1.3 / seitenverhaeltnis, Math.max(...zs) - Math.min(...zs), 5) : 40
+    const breitX = xs.length ? Math.max(...xs) - Math.min(...xs) : 0, tiefZ = zs.length ? Math.max(...zs) - Math.min(...zs) : 0
+    // Strecken von West nach Osten von Westen her ansehen: so läuft die Linie im Bild nach oben,
+    // die Namen stehen untereinander statt sich nebeneinander zu drängen
+    const vonWesten = breitX > tiefZ * 1.3
+    const spanne = !xs.length ? 40 : vonWesten ? Math.max(tiefZ * 1.3 / seitenverhaeltnis, breitX * 1.35, 5)
+      : Math.max(breitX * 1.3 / seitenverhaeltnis, tiefZ, 5)
     steuerung.target.set(cx, Y(1500), cz)
-    kamera.position.set(cx - spanne * 0.3, spanne * 0.85, cz - spanne * 1.0)
+    if (vonWesten) kamera.position.set(cx - spanne * 1.0, spanne * 0.85, cz + spanne * 0.15)
+    else kamera.position.set(cx - spanne * 0.3, spanne * 0.85, cz - spanne * 1.0)
     steuerung.update()
 
     const groesseSetzen = () => {
@@ -458,19 +475,25 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       const pm = kamera.projectionMatrix.elements
       const belegt: Array<[number, number, number, number]> = []
       const liste = schilder.map((x) => ({ ...x, abstand: x.sp.position.distanceToSquared(kamera.position) }))
-        .sort((a, c) => a.rang - c.rang || a.abstand - c.abstand)
+        .sort((a, c) => a.rang - c.rang || a.folge - c.folge || a.abstand - c.abstand)
       for (const { sp } of liste) {
         projiziert.copy(sp.position).project(kamera)
         if (projiziert.z > 1 || projiziert.z < -1) { sp.visible = false; continue }
-        const breite = sp.scale.x * pm[0] * b / 2, punkt = (projiziert.x + 1) / 2 * b
-        // am rechten Rand links vom Punkt, damit der Name nicht abgeschnitten wird
-        const links = punkt + breite > b - 4
-        sp.center.set(links ? 1 : 0, 0)
-        const x0 = links ? punkt - breite : punkt, x1 = x0 + breite
-        const y1 = (1 - projiziert.y) / 2 * hh, y0 = y1 - sp.scale.y * pm[5] * hh / 2
-        const frei = !belegt.some(([a0, c0, a1, c1]) => x0 < a1 + 4 && x1 > a0 - 4 && y0 < c1 + 2 && y1 > c0 - 2)
-        sp.visible = frei
-        if (frei) belegt.push([x0, y0, x1, y1])
+        const breite = sp.scale.x * pm[0] * b / 2, hoehe = sp.scale.y * pm[5] * hh / 2
+        const px = (projiziert.x + 1) / 2 * b, py = (1 - projiziert.y) / 2 * hh
+        // vier Lagen um den Punkt: rechts oben, links oben, rechts unten, links unten;
+        // die erste, die frei ist und ganz im Bild liegt, gilt
+        sp.visible = false
+        for (const [cx, cy] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
+          const x0 = cx ? px - breite : px, x1 = x0 + breite
+          const y0 = cy ? py : py - hoehe, y1 = y0 + hoehe
+          if (x0 < 2 || x1 > b - 2 || y0 < 2 || y1 > hh - 2) continue
+          if (belegt.some(([a0, c0, a1, c1]) => x0 < a1 + 4 && x1 > a0 - 4 && y0 < c1 + 2 && y1 > c0 - 2)) continue
+          sp.center.set(cx, cy)
+          sp.visible = true
+          belegt.push([x0, y0, x1, y1])
+          break
+        }
       }
     }
 
