@@ -218,7 +218,7 @@ export default function App() {
         {seite.art === 'relief' && (
           <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Das Relief wird geladen …</p>}>
             <ReliefSeite key={seite.name} name={seite.name}
-                         zurueck={seite.ausFahren ? { text: 'Alle 3D-Strecken', adresse: '#/fahrt/3d' } : undefined} />
+                         zurueck={seite.ausFahren ? { text: 'Alle Bergstrecken', adresse: '#/fahrt/3d' } : undefined} />
           </Suspense>
         )}
         {seite.art === 'linie' && (

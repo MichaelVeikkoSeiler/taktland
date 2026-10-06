@@ -10,10 +10,11 @@ import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlas
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
-import { dreiDGemerkt, dreiDVerbrauchen, reliefFuer } from '../relief'
+import { dreiDGemerkt, dreiDVerbrauchen } from '../relief'
+import { gelaendeMoeglich } from '../gelaende'
 
 // three.js nur für die Ansicht «3D», erst dort geladen
-const ReliefFahrt = lazy(() => import('./Relief').then((m) => ({ default: m.ReliefFahrt })))
+const GelaendeFahrt = lazy(() => import('./Relief').then((m) => ({ default: m.GelaendeFahrt })))
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
@@ -339,16 +340,11 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const sehenswert = useSehenswert()
   const [auswahl, setAuswahl] = useState<Auswahl | null>(null)
   const [nah, setNahRoh] = useState(true)
-  // «3D», wo der Weg durch ein Relief führt (Michael, 2026-10-06: zuerst die Gotthard-Bergstrecke)
-  const [relief, setRelief] = useState<{ name: string; titel: string } | null>(null)
-  // aus dem Reiter «3D» gleich in 3D, sobald das Relief bekannt ist
+  // «3D» auf jeder Fahrt aus den Geländekacheln (Michael, 2026-10-06: «alle Strecken optional 3D»);
+  // aus dem Reiter «3D» gleich in 3D
+  const relief = gelaendeMoeglich()
   const [dreiD, setDreiD] = useState(dreiDGemerkt)
   useEffect(() => dreiDVerbrauchen(), [])
-  useEffect(() => {
-    let ab = false
-    void reliefFuer(fahrweg).then((r) => { if (!ab) setRelief(r) })
-    return () => { ab = true }
-  }, [fahrweg])
   // eigener Zoom und Verschiebung, die das Nachführen alle halbe Sekunde
   // nicht zurücksetzt (Michael, 2026-09-26: «springt immer wieder auf den
   // Default-Ausschnitt»); «Nah» folgt dem Zug trotzdem
@@ -582,7 +578,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
             </button>
           ))}
           {relief && (
-            <button type="button" aria-pressed={dreiD} onClick={() => setDreiD(true)} title={`${relief.titel} in 3D`}
+            <button type="button" aria-pressed={dreiD} onClick={() => setDreiD(true)} title="Gelände in 3D"
                     className="segment px-2.5 py-1">
               3D
             </button>
@@ -615,8 +611,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           dazwischen als Ganzes verschoben, was die Grafik des Geräts ohne neues Zeichnen
           kann. Darüber, durchsichtig und leicht, der Weg, die Zeichen und der Zug. */}
       {dreiD && relief ? (
-        <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Relief wird geladen …</div>}>
-          <ReliefFahrt name={relief.name} fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} />
+        <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>}>
+          <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} />
         </Suspense>
       ) : (
       <div onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}

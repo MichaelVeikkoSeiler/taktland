@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { bodenbedeckungLaden, flaechenLaden, holen, holenBinaer, seenLaden, sehenswertLaden } from '../daten'
+import { bodenbedeckungLaden, flaechenLaden, holen, holenBinaer, seenLaden, sehenswertLaden, streckenLaden } from '../daten'
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import type { FahrObjekt, Fahrweg } from '../fahrt'
 import { lv95 } from '../relief'
+import { fensterLaden, KEINE_HOEHE } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -36,7 +37,7 @@ interface Relief {
   bahnhoefe: Array<{ uic: number; name: string; km: number; lage: [number, number] }>
   tunnel: Array<{ name: string | null; laenge_m: number | null; km: number; von_km?: number; bis_km?: number; galerie?: boolean }>
   bruecken: Array<{ name: string | null; von_km: number; bis_km: number; laenge_m: number | null }>
-  gipfel: Array<{ name: string; hoehe_m: number; lage: [number, number] }>
+  gipfel: Array<{ name: string; hoehe_m: number | null; lage: [number, number] }>
 }
 
 /** Ein Weg im Relief: Punkte mit ihrer Stelle in Metern, dazu Tunnel und Brücken als Bereiche */
@@ -53,6 +54,8 @@ interface Weg {
 const SCHRITT = 2
 /** die Linie liegt so viel über dem Gelände, damit sie nicht darin verschwindet */
 const UEBER_M = 25
+/** so nah (km) an der Kamera erscheinen die Namen der Kulturgüter */
+const NAH_KULTUR = 9
 
 const FARBEN = {
   linie: '#a8102e', weg: '#212121', tunnel: '#212121', bruecke: '#b45309', bahnhof: '#1e3a8a', gipfel: '#5b3a1e', zug: '#a8102e',
@@ -75,13 +78,17 @@ function useRelief(name: string | null) {
  *  eine Datei, bleibt das Relief ohne sie. */
 interface Zusatz { s: SehenswertDaten | null; f: FlaechenDaten | null; b: BodenbedeckungDaten | null; seen: SeenDaten | null }
 
+let zusatzLaeuft: Promise<Zusatz> | null = null
+let zusatzFertig: Zusatz | null = null
 function useZusatz() {
-  const [z, setZ] = useState<Zusatz | null>(null)
+  const [z, setZ] = useState<Zusatz | null>(zusatzFertig)
   useEffect(() => {
+    if (zusatzFertig) return
     let ab = false
-    void Promise.all([sehenswertLaden().catch(() => null), flaechenLaden().catch(() => null), bodenbedeckungLaden().catch(() => null),
-      seenLaden().catch(() => null)])
-      .then(([s, f, b, seen]) => { if (!ab) setZ({ s, f, b, seen }) })
+    zusatzLaeuft ??= Promise.all([sehenswertLaden().catch(() => null), flaechenLaden().catch(() => null),
+      bodenbedeckungLaden().catch(() => null), seenLaden().catch(() => null)])
+      .then(([s, f, b, seen]) => (zusatzFertig = { s, f, b, seen }))
+    void zusatzLaeuft.then((x) => { if (!ab) setZ(x) })
     return () => { ab = true }
   }, [])
   return z
@@ -120,26 +127,34 @@ function zugInRahmen(ring: Array<[number, number]>, eck: Array<[number, number]>
   return aus
 }
 
-/** Flächen im Ausschnitt eines Reliefs in Landeskoordinaten, je Relief einmal gerechnet */
+/** Flächen in Landeskoordinaten mit ihrem Rahmen, einmal entpackt für alle Ausschnitte
+ *  (beim Fahren wandert der Ausschnitt mit, Wald und Siedlung sind 4 MB) */
+interface Ring { pts: Array<[number, number]>; e0: number; e1: number; n0: number; n1: number }
 interface Auflage { wald: Array<Array<[number, number]>>; siedlung: Array<Array<[number, number]>>; gebiete: Array<{ art: string; ringe: Array<Array<[number, number]>> }> }
-const auflagen = new WeakMap<Relief, Auflage>()
+let entpackt: { z: Zusatz; wald: Ring[]; siedlung: Ring[]; gebiete: Array<{ art: string; ringe: Ring[] }> } | null = null
+function ringLesen(x: KodierterZug, faktor?: number): Ring {
+  const pts = zugLesen(x, faktor)
+  let e0 = Infinity, e1 = -Infinity, n0 = Infinity, n1 = -Infinity
+  for (const [e, n] of pts) { e0 = Math.min(e0, e); e1 = Math.max(e1, e); n0 = Math.min(n0, n); n1 = Math.max(n1, n) }
+  return { pts, e0, e1, n0, n1 }
+}
 function auflageFuer(r: Relief, z: Zusatz): Auflage {
-  const fertig = auflagen.get(r)
-  if (fertig) return fertig
+  if (entpackt?.z !== z) {
+    entpackt = {
+      z,
+      wald: z.b ? z.b.wald.map((x) => ringLesen(x, z.b!.faktor)) : [],
+      siedlung: z.b ? z.b.siedlung.map((x) => ringLesen(x, z.b!.faktor)) : [],
+      gebiete: (z.f?.flaechen ?? []).map((g) => ({ art: g.art, ringe: g.ringe.map((x) => ringLesen(x)) })),
+    }
+  }
   const { ost, nord, m, breite, hoehe } = r.raster
-  const ueberlappt = (pts: Array<[number, number]>) => {
-    let e0 = Infinity, e1 = -Infinity, n0 = Infinity, n1 = -Infinity
-    for (const [e, n] of pts) { e0 = Math.min(e0, e); e1 = Math.max(e1, e); n0 = Math.min(n0, n); n1 = Math.max(n1, n) }
-    return e1 >= ost && e0 <= ost + breite * m && n1 >= nord - hoehe * m && n0 <= nord
+  const drin = (q: Ring) => q.e1 >= ost && q.e0 <= ost + breite * m && q.n1 >= nord - hoehe * m && q.n0 <= nord
+  const ringe = (qs: Ring[]) => qs.filter(drin).map((q) => q.pts)
+  return {
+    wald: ringe(entpackt.wald),
+    siedlung: ringe(entpackt.siedlung),
+    gebiete: entpackt.gebiete.map((g) => ({ art: g.art, ringe: ringe(g.ringe) })).filter((g) => g.ringe.length),
   }
-  const ringe = (zuege: KodierterZug[], faktor?: number) => zuege.map((x) => zugLesen(x, faktor)).filter(ueberlappt)
-  const a: Auflage = {
-    wald: z.b ? ringe(z.b.wald, z.b.faktor) : [],
-    siedlung: z.b ? ringe(z.b.siedlung, z.b.faktor) : [],
-    gebiete: (z.f?.flaechen ?? []).map((g) => ({ art: g.art, ringe: ringe(g.ringe) })).filter((g) => g.ringe.length),
-  }
-  auflagen.set(r, a)
-  return a
 }
 
 /* ---------- die eigene Seite ---------- */
@@ -278,31 +293,78 @@ function wegDerFahrt(r: Relief, fahrweg: Fahrweg, objekte: FahrObjekt[]): Weg {
   }
 }
 
+/** Seite des Ausschnitts beim Fahren, und wie weit der Zug von seiner Mitte weg sein darf */
+const FENSTER_M = 30_000
+const WANDERN_M = 8_000
+
+/** Stelle auf dem Weg in Landeskoordinaten */
+function lageAufWeg(fahrweg: Fahrweg, s: number): [number, number] {
+  const pk = fahrweg.punkte
+  let lo = 0, hi = pk.length - 1
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (pk[mid].s < s) lo = mid + 1; else hi = mid }
+  const b = pk[lo], a = pk[Math.max(0, lo - 1)]
+  const t = Math.max(0, Math.min(1, (s - a.s) / ((b.s - a.s) || 1)))
+  return lv95(a.lat + t * (b.lat - a.lat), a.lon + t * (b.lon - a.lon))
+}
+
 /**
- * «3D» beim Fahren und in der Probefahrt (Michael, 2026-10-06: «auf eine Probefahrt oder echte
- * Fahrt projizieren»): der Weg der Fahrt im Relief, der Zug als roter Punkt, die Kamera folgt
- * ihm; drehen und zoomen bleibt möglich.
+ * «3D» auf jeder Fahrt und Probefahrt (Michael, 2026-10-06: «dass man alle Strecken optional 3D
+ * darstellen könnte»): ein Ausschnitt von 30 km aus den Geländekacheln um den Zug, der mitwandert,
+ * sobald der Zug 8 km von seiner Mitte weg ist. Der Blick der Kamera bleibt dabei, wie er war.
  */
-export function ReliefFahrt({ name, fahrweg, objekte, sJetzt, className }: {
-  name: string; fahrweg: Fahrweg; objekte: FahrObjekt[]; sJetzt: number | null; className: string
+export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
+  fahrweg: Fahrweg; objekte: FahrObjekt[]; sJetzt: number | null; className: string
 }) {
-  const { daten, fehler } = useRelief(name)
   const [faktor, setFaktor] = useState<1 | 2>(1)
+  const [mitte, setMitte] = useState<[number, number] | null>(null)
+  const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
+  const [fehler, setFehler] = useState<string | null>(null)
   const zug = useRef<number | null>(sJetzt)
+  const blick = useRef<THREE.Vector3 | null>(null)
   useEffect(() => { zug.current = sJetzt }, [sJetzt])
+  // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
+  useEffect(() => {
+    const [e, n] = lageAufWeg(fahrweg, sJetzt ?? 0)
+    if (!mitte || Math.hypot(e - mitte[0], n - mitte[1]) > WANDERN_M) setMitte([Math.round(e / 1000) * 1000, Math.round(n / 1000) * 1000])
+  }, [fahrweg, sJetzt, mitte])
+  useEffect(() => {
+    if (!mitte) return
+    let ab = false
+    void Promise.all([fensterLaden(mitte[0], mitte[1], FENSTER_M), streckenLaden(), sehenswertLaden().catch(() => null)])
+      .then(([f, netz, sw]) => {
+        if (ab) return
+        const { ost, nord, m, breite, hoehe } = f.raster
+        const drin = ([e, n]: [number, number]) => e >= ost && e <= ost + breite * m && n <= nord && n >= nord - hoehe * m
+        const bahnhoefe = objekte.filter((o) => o.art === 'bahnhof').flatMap((o, i) => {
+          const lage = lageAufWeg(fahrweg, o.sOrt ?? o.s)
+          return drin(lage) ? [{ uic: i, name: netz.punkte[o.kennung] ?? o.kennung, km: (o.sOrt ?? o.s) / 1000, lage }] : []
+        })
+        const gipfel = (sw?.gipfel ?? []).flatMap((g) => {
+          const lage = lv95(g.lage[0], g.lage[1])
+          return drin(lage) ? [{ name: g.name, hoehe_m: g.hoehe_m, lage }] : []
+        })
+        setDaten({
+          r: { titel: 'Gelände', linie: '', linie_name: '', von_km: 0, bis_km: 0, datenstand: '', quellen: [f.quelle],
+               raster: f.raster, weg: [], bahnhoefe, tunnel: [], bruecken: [], gipfel },
+          h: f.h,
+        })
+      })
+      .catch((e: Error) => { if (!ab) setFehler(e.message) })
+    return () => { ab = true }
+  }, [mitte, fahrweg, objekte])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
-  if (fehler) return <div className={className}><Ladefehler was="Das Relief konnte nicht geladen werden." fehler={fehler} /></div>
-  if (!daten || !weg) return <div className={`${className} flex items-center justify-center text-sm text-sbb-metal`}>Das Relief wird geladen …</div>
+  if (fehler) return <div className={className}><Ladefehler was="Das Gelände konnte nicht geladen werden." fehler={fehler} /></div>
+  if (!daten || !weg) return <div className={`${className} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>
   return (
     <>
       <div className={`${className} relative`}>
-        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug}
+        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick}
                className="absolute inset-0 overflow-hidden" />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
       </div>
       <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-        {daten.r.titel}: Gelände aus swissALTIRegio (swisstopo). Die Höhe der Gleise steht in keiner Quelle; der Weg ist
-        aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden.
+        Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug. Die Höhe der Gleise steht in
+        keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden.
         {faktor === 2 && ' Höhe 2-fach überhöht.'}
       </p>
     </>
@@ -330,10 +392,12 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
+  /** beim Fahren: wo die Kamera vom Zug aus steht; bleibt, wenn der Ausschnitt weiterwandert */
+  blick?: React.MutableRefObject<THREE.Vector3 | null>
   className: string
 }) {
   const rahmen = useRef<HTMLDivElement>(null)
@@ -382,6 +446,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     for (let j = 0; j < ny - 1; j++) {
       for (let i = 0; i < nx - 1; i++) {
         const a = j * nx + i, b = a + 1, d = a + nx, e2 = d + 1
+        // wo keine Kachel liegt, bleibt das Gelände offen
+        if ([a, b, d, e2].some((v) => pos[v * 3 + 1] === Y(KEINE_HOEHE))) continue
         index[q++] = a; index[q++] = d; index[q++] = b
         index[q++] = b; index[q++] = d; index[q++] = e2
       }
@@ -390,7 +456,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
     geo.setAttribute('color', new THREE.BufferAttribute(farben, 3))
     geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
-    geo.setIndex(new THREE.BufferAttribute(index, 1))
+    geo.setIndex(new THREE.BufferAttribute(index.subarray(0, q), 1))
     geo.computeVertexNormals()
     // Auflage auf dem Gelände: Wald, Siedlung, Gebiete und das Kilometernetz, auf eine Leinwand gemalt,
     // die über das Gelände gespannt ist (weiss lässt die Farbe des Geländes, wie sie ist)
@@ -561,11 +627,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       kugel(tunnelFarbe, p.x, p.y, p.z, 0.09)
     }
     for (const g of r.gipfel) {
-      const y = Y(Math.max(g.hoehe_m, hoeheBei(r, h, g.lage[0], g.lage[1])))
+      const y = Y(Math.max(g.hoehe_m ?? 0, hoeheBei(r, h, g.lage[0], g.lage[1])))
       const kegel = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.25, 4), new THREE.MeshBasicMaterial({ color: FARBEN.gipfel }))
       kegel.position.set(X(g.lage[0]), y + 0.12, Z(g.lage[1]))
       gruppen.gipfel.add(kegel)
-      schild(`${g.name} ${g.hoehe_m.toLocaleString('de-CH')} m`, dunkel ? '#e2c9a8' : FARBEN.gipfel, X(g.lage[0]), y + 0.3, Z(g.lage[1]), 2, 0, gruppen.gipfel)
+      schild(g.hoehe_m != null ? `${g.name} ${g.hoehe_m.toLocaleString('de-CH')} m` : g.name, dunkel ? '#e2c9a8' : FARBEN.gipfel, X(g.lage[0]), y + 0.3, Z(g.lage[1]), 2, 0, gruppen.gipfel)
     }
 
     const imAusschnitt = (e: number, n: number) => e >= ost && e <= ost + breite * m && n <= nord && n >= nord - hoehe * m
@@ -674,8 +740,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       const belegt: Array<[number, number, number, number]> = []
       const liste = schilder.map((x) => ({ ...x, abstand: x.sp.position.distanceToSquared(kamera.position) }))
         .sort((a, c) => a.rang - c.rang || a.folge - c.folge || a.abstand - c.abstand)
-      for (const { sp } of liste) {
+      for (const { sp, rang, abstand } of liste) {
         if (sp.parent && !sp.parent.visible) continue
+        // Kulturgüter nur nah an der Kamera, sonst überdecken ihre Namen im Mittelland alles
+        if (rang >= 3 && abstand > NAH_KULTUR ** 2) { sp.visible = false; continue }
         projiziert.copy(sp.position).project(kamera)
         if (projiziert.z > 1 || projiziert.z < -1) { sp.visible = false; continue }
         const breite = sp.scale.x * pm[0] * b / 2, hoehe = sp.scale.y * pm[5] * hh / 2
@@ -708,7 +776,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
         if (sichtbar) {
           const p = punkt3d(s)
           zugRand.position.copy(p); zugKern.position.copy(p)
-          if (!letzte) {
+          if (!letzte && blick?.current) {
+            steuerung.target.copy(p)
+            kamera.position.copy(p).add(blick.current)
+          } else if (!letzte) {
             const hinten = punkt3d(Math.max(pk[0].m, s - 3000))
             const richtung = p.clone().sub(hinten).setY(0).normalize()
             steuerung.target.copy(p)
@@ -721,6 +792,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
         }
       }
       steuerung.update()
+      if (blick && letzte) blick.current = kamera.position.clone().sub(steuerung.target)
       schilderOrdnen()
       renderer.render(szene, kamera)
       requestAnimationFrame(zeichnen)
@@ -740,6 +812,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       renderer.dispose()
       renderer.domElement.remove()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, zusatz])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, zusatz])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }

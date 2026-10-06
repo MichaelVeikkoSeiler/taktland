@@ -151,10 +151,15 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              hintereinander, «teile»: der Weg zählt dann Meter ab Solothurn, nicht die Kilometrierung): Gelände aus
              swissALTIRegio auf 50 m gemittelt (.bin, Uint16), Linie, Tunnel und Brücken mit Anfang und Ende
              (bei anderen Bahnen Linie aus dem Schienennetz des BAV, Bauwerke aus swissTLM3D ohne Namen),
-             Bahnhöfe, Gipfel; index.json sagt, welches Relief welchen Ausschnitt deckt («3D» beim Fahren)
-             und welche Probefahrt der Reiter «3D» unter Fahren anbietet (Über hält sie auf der Bergstrecke)
+             Bahnhöfe, Gipfel; index.json nennt die Bergstrecken für den Reiter «3D» unter Fahren samt Probefahrt (Über hält sie
+             auf der Bergstrecke)
              (pipeline/build_relief.py); in der App komponenten/Relief.tsx mit three.js, erst dort geladen;
              die Höhe der Gleise steht in keiner Quelle
+data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Bahnlinie) in Kacheln von 10 km
+             zu 50 m aus swissALTIRegio, je Zeile Differenzen und gzip (.hgz, 550 Kacheln, 18 MB;
+             pipeline/build_gelaende.py): «3D» auf jeder Fahrt und Probefahrt, 30 km um den Zug, der Ausschnitt
+             wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); die Reliefs in
+             data/relief bleiben für die Bergstrecken als Ganzes
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -192,6 +197,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_erraten.py      # Pool für «Bahnhofsuche» aus data/facts
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 .venv/bin/python pipeline/build_relief.py       # 3D-Reliefs der Bergstrecken (lädt swissALTIRegio)
+.venv/bin/python pipeline/build_gelaende.py     # Geländekacheln der ganzen Schweiz für «3D» auf jeder Fahrt
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

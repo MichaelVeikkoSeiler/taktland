@@ -125,6 +125,13 @@ def main():
             shutil.rmtree(ZIEL / "relief")
         shutil.copytree(relief, ZIEL / "relief")
         print(f"relief/: {sum(p.stat().st_size for p in (ZIEL / 'relief').iterdir())/1024:.0f} KB")
+    # Gelände der ganzen Schweiz in Kacheln (pipeline/build_gelaende.py), für «3D» auf jeder Fahrt
+    gelaende = ROOT / "data" / "gelaende"
+    if gelaende.exists():
+        if (ZIEL / "gelaende").exists():
+            shutil.rmtree(ZIEL / "gelaende")
+        shutil.copytree(gelaende, ZIEL / "gelaende")
+        print(f"gelaende/: {sum(p.stat().st_size for p in (ZIEL / 'gelaende').iterdir())/1e6:.1f} MB")
 
 
 def linien():

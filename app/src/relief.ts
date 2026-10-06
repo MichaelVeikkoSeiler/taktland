@@ -1,5 +1,4 @@
 import { holen } from './daten'
-import type { Fahrweg } from './fahrt'
 
 /**
  * Was die App über die 3D-Reliefs wissen muss, ohne three.js zu laden (das steckt in
@@ -37,26 +36,5 @@ export function dreiDVerbrauchen() { dreiDVorgemerkt = false }
 export async function reliefListe() {
   const u = await holen<ReliefUebersicht>('data/relief/index.json')
   return u.reliefs
-}
-
-/** So viel des Wegs muss im Ausschnitt liegen, damit «3D» erscheint */
-const MIN_IM_RELIEF_M = 5000
-
-/** Das Relief, durch das der Weg am längsten führt, oder null */
-export async function reliefFuer(fahrweg: Fahrweg): Promise<{ name: string; titel: string } | null> {
-  const u = await holen<ReliefUebersicht>('data/relief/index.json').catch(() => null)
-  if (!u) return null
-  let best: { name: string; titel: string; m: number } | null = null
-  for (const r of u.reliefs) {
-    const [e0, n0, e1, n1] = r.rahmen
-    let m = 0
-    for (let i = 1; i < fahrweg.punkte.length; i++) {
-      const a = fahrweg.punkte[i]
-      const [e, n] = lv95(a.lat, a.lon)
-      if (e >= e0 && e <= e1 && n >= n0 && n <= n1) m += a.s - fahrweg.punkte[i - 1].s
-    }
-    if (m >= MIN_IM_RELIEF_M && (!best || m > best.m)) best = { name: r.name, titel: r.titel, m }
-  }
-  return best && { name: best.name, titel: best.titel }
 }
 

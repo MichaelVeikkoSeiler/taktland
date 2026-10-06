@@ -483,7 +483,7 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten }: {
 
 
 
-/** Reiter «3D» (Michael, 2026-10-06): alle Strecken mit 3D-Relief, zum Anschauen und als Probefahrt
+/** Reiter «3D» (Michael, 2026-10-06): die Bergstrecken mit eigenem Relief, zum Anschauen und als Probefahrt
  *  in beide Richtungen, wie die gemerkten Probefahrten: erst die Strecke wählen, dann die Richtung */
 function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string; starten: (w: StreckenWahl) => void }) {
   const [liste, setListe] = useState<Awaited<ReturnType<typeof reliefListe>> | null>(null)
@@ -493,10 +493,10 @@ function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string
   const text = (w: StreckenWahl) => `${name(w.von)} → ${name(w.nach)}${w.ueber ? ` (über ${name(w.ueber)})` : ''}`
   return (
     <section>
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">3D-Strecken</h1>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">Bergstrecken in 3D</h1>
       <p className="mt-2 leading-relaxed">
-        Strecken mit Gelände in 3D zum Drehen und Zoomen, auch als Probefahrt im Zeitraffer. Führt eine Fahrt
-        oder Probefahrt hindurch, lässt sich die Karte dort auch auf «3D» stellen.
+        Jede Fahrt und Probefahrt lässt sich auf «3D» stellen. Hier stehen bekannte Bergstrecken als Ganzes zum
+        Drehen und Zoomen und als Probefahrt im Zeitraffer, die gleich in 3D beginnt.
       </p>
       {fehler && <p className="mt-4 text-sm">Die Liste konnte nicht geladen werden. {fehler}</p>}
       {!liste && !fehler && <p className="mt-4 text-sbb-metal">Wird geladen …</p>}
