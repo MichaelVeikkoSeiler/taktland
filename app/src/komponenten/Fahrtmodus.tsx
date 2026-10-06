@@ -34,6 +34,8 @@ const STEHT_UNTER = 3
 /** So nah am Punkt eines Bahnhofs gilt ein stehender Zug als «am Bahnhof», Meter; grosse
  *  Bahnhöfe sind lang, der Punkt liegt nicht, wo der Zug hält (Michael, 2026-09-29: Bern) */
 const AM_BAHNHOF_M = 1000
+/** so weit hinter dem Ende des Perrons gilt ein Bahnhof noch als gehalten, für GPS-Ungenauigkeit */
+const HALT_NACH_M = 50
 /** Weiter weg vom Weg gilt als «nicht auf dieser Strecke», mindestens */
 const ABSEITS_M = 300
 /** Ohne neuen Standort seit so vielen Sekunden gilt: kein GPS */
@@ -500,9 +502,30 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     return z && d ? `${z} · ${strecke(meter!)}` : z ?? d
   }
 
+  // Ein gemeldeter Bahnhof bleibt stehen, bis der Zug dort hält («Zug steht bei») oder das Ende
+  // des Perrons hinter sich hat; solange wird nichts gemeldet, was danach kommt (Michael,
+  // 2026-10-06). Der Zielbahnhof bleibt, bis «Am Ziel» erscheint. Gemeldet wird ein Bahnhof vor
+  // der Mitte des Perrons (bahnhoefeVorziehen), das Ende liegt gleich weit dahinter.
+  const rollt = probefahrt ? !angehalten : faehrt
+  // wo der Zug schon gehalten hat: beim Weiterfahren aus dem Perron nicht nochmals «Gleich»
+  const gehaltenBei = useRef(new Set<string>())
+  const haltBahnhof = (() => {
+    if (sJetzt === null) return null
+    for (const o of gewaehlt) {
+      if (o.art !== 'bahnhof' || sJetzt < o.s) continue
+      const ort = o.sOrt ?? o.s
+      const istZiel = !ohneZiel && ort >= wegEnde(fahrweg) - 1
+      if (istZiel) { if (ankunft === null) return o; continue }
+      if (sJetzt > ort + (ort - o.s) + HALT_NACH_M || gehaltenBei.current.has(o.kennung)) continue
+      if (!rollt) { gehaltenBei.current.add(o.kennung); continue }
+      return o
+    }
+    return null
+  })()
+
   // Die Meldung: etwa 20 oder 10 Sekunden vorher, wie gewählt, jedes Objekt einmal
   useEffect(() => {
-    for (const o of kommend.slice(0, 5)) {
+    for (const o of (haltBahnhof ? [] : kommend).slice(0, 5)) {
       const e = eta(o)
       const schluessel = `${o.art} ${o.kennung}`
       // der Ton: mit der Meldung oder, unter Audio gewählt, etwa 20 und 10 s vorher
@@ -566,13 +589,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     }
   })
 
-  // Der Zielbahnhof bleibt als «Gleich» stehen, bis «Am Ziel» erscheint, statt dazwischen
-  // «nichts mehr zu melden» (Michael, 2026-10-06): Gemeldet wird er vor dem Perron, angekommen
-  // ist man erst, wenn der Zug dort hält
-  const zielObjekt = ohneZiel ? null
-    : gewaehlt.find((o) => o.art === 'bahnhof' && (o.sOrt ?? o.s) >= wegEnde(fahrweg) - 1) ?? null
-  const anzeige = kommend.length || !zielObjekt || ankunft !== null || sJetzt === null || sJetzt < zielObjekt.s
-    ? kommend : [zielObjekt]
+  // während ein Bahnhof gehalten wird (oben), nur er: weder «nichts mehr zu melden» noch, was danach kommt
+  const anzeige = haltBahnhof ? [haltBahnhof] : kommend
   const naechstes = anzeige[0]
   // Was in den nächsten 40 Sekunden kommt, läuft gleichzeitig, als Karten
   // übereinander (Michael, 2026-09-25); das erste immer, höchstens drei
