@@ -230,14 +230,24 @@ function Szene({ r, h, faktor }: { r: Relief; h: Uint16Array; faktor: 1 | 2 }) {
       punkte.push(new THREE.Vector3(X(e), Y(hoeheAmWeg(bis)), Z(n)))
       return new THREE.BufferGeometry().setFromPoints(punkte)
     }
-    const breitLinie = (g: THREE.BufferGeometry, farbe: string, durch = false) => {
+    const roehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean) => {
       // Röhre statt Linie: Linien sind in WebGL nur 1 Pixel breit
-      const p = g.getAttribute('position')
-      const kurve = new THREE.CatmullRomCurve3(Array.from({ length: p.count }, (_, i) => new THREE.Vector3().fromBufferAttribute(p, i)))
-      const roehre = new THREE.Mesh(new THREE.TubeGeometry(kurve, Math.max(8, p.count * 2), 0.06, 6, false),
+      const kurve = new THREE.CatmullRomCurve3(punkte)
+      const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, Math.max(4, punkte.length * 2), 0.06, 6, false),
         new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch, transparent: durch, opacity: durch ? 0.75 : 1 }))
-      if (durch) roehre.renderOrder = 2
-      szene.add(roehre)
+      if (durch) netz.renderOrder = 2
+      szene.add(netz)
+    }
+    /** gestrichelt (Tunnel): 400 m sichtbar, 250 m nicht (Punkte alle 50 m) */
+    const STRICH = 8, LUECKE = 5
+    const breitLinie = (g: THREE.BufferGeometry, farbe: string, durch = false) => {
+      const p = g.getAttribute('position')
+      const punkte = Array.from({ length: p.count }, (_, i) => new THREE.Vector3().fromBufferAttribute(p, i))
+      if (!durch || punkte.length <= STRICH) { roehre(punkte, farbe, durch); return }
+      for (let i = 0; i < punkte.length - 1; i += STRICH + LUECKE) {
+        const stueck = punkte.slice(i, Math.min(punkte.length, i + STRICH + 1))
+        if (stueck.length >= 2) roehre(stueck, farbe, durch)
+      }
     }
     const anfang = r.weg[0][0], ende = r.weg[r.weg.length - 1][0]
     // die Linie in Stücken: offen, im Tunnel (durch den Berg sichtbar), auf der Brücke
