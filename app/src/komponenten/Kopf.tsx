@@ -59,7 +59,7 @@ const FAHREN: Array<{ bereich: FahrtTeil; text: string; adresse: string }> = [
   { bereich: 'neu', text: 'Neue Fahrt', adresse: '#/fahrt' },
   { bereich: 'probe', text: 'Probefahren', adresse: '#/fahrt/probe' },
   // alle Strecken mit 3D-Relief (Michael, 2026-10-06: «neuer Reiter rechts neben Probefahren»)
-  { bereich: '3d', text: '3D-Strecken', adresse: '#/fahrt/3d' },
+  { bereich: '3d', text: '3D', adresse: '#/fahrt/3d' },
   { bereich: 'blatt', text: 'Fahrtblatt', adresse: '#/fahrt/blatt' },
 ]
 

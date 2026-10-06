@@ -31,39 +31,52 @@ ALTI_URL = ("/vsicurl/https://data.geo.admin.ch/ch.swisstopo.swissaltiregio/swis
 RELIEFS = {
     # Erstfeld (km 41.58) bis Biasca (km 131.80) laut data/linien/600.json
     "gotthard": {"titel": "Gotthard-Bergstrecke", "linie": "600", "von_km": 41.0, "bis_km": 132.4,
-                 "rand_m": 2500, "raster_m": 50},
+                 "rand_m": 2500, "raster_m": 50, "probefahrt": ("Erstfeld", "Biasca", "Airolo")},
     # Linien anderer Bahnen aus dem Schienennetz des BAV (Michael, 2026-10-06: «Albula und Lötschberg»);
     # Tunnel und Brücken dort aus swissTLM3D, ohne Namen
     # Thusis (km 41.26) bis St. Moritz (km 102.94) laut data/linien/940.json
     "albula": {"titel": "Albulalinie", "linie": "940", "quelle": "schienennetz", "von_km": 40.8, "bis_km": 103.0,
-               "rand_m": 2500, "raster_m": 50},
+               "rand_m": 2500, "raster_m": 50, "probefahrt": ("Thusis", "St. Moritz")},
     # Frutigen (km 13.54) bis Brig-Lötschberg (km 73.52) laut data/linien/300.json
     "loetschberg": {"titel": "Lötschberg-Bergstrecke", "linie": "300", "quelle": "schienennetz", "von_km": 13.0,
-                    "bis_km": 73.6, "rand_m": 2500, "raster_m": 50},
+                    "bis_km": 73.6, "rand_m": 2500, "raster_m": 50, "probefahrt": ("Frutigen", "Brig", "Kandersteg")},
     # Michael, 2026-10-06: «Brig–Zermatt, Brünig, Furka-Oberalp, Berninalinie»; Kilometer laut Schienennetz
     # Brig Bahnhofplatz (km 0) bis Zermatt (km 43.98)
     "zermatt": {"titel": "Brig–Zermatt", "linie": "140", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 44.0,
-                "rand_m": 2500, "raster_m": 50},
+                "rand_m": 2500, "raster_m": 50, "probefahrt": ("Brig", "Zermatt")},
     # Luzern Brünig (km 0.13) bis Meiringen (km 45.47)
     "bruenig": {"titel": "Brüniglinie", "linie": "470", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 45.5,
-                "rand_m": 2500, "raster_m": 50},
+                "rand_m": 2500, "raster_m": 50, "probefahrt": ("Luzern", "Meiringen")},
     # Brig Bahnhofplatz (km 0) bis Disentis/Mustér (km 96.94)
     "furka": {"titel": "Furka-Oberalp", "linie": "610", "quelle": "schienennetz", "von_km": 0.0,
-                      "bis_km": 97.0, "rand_m": 2500, "raster_m": 50},
+                      "bis_km": 97.0, "rand_m": 2500, "raster_m": 50, "probefahrt": ("Brig", "Disentis/Mustér")},
     # St. Moritz (km 0) bis Campocologno (km 57.65); Tirano liegt in Italien, ausserhalb von swissALTIRegio
     "bernina": {"titel": "Berninalinie", "linie": "950", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 57.7,
-                "rand_m": 2500, "raster_m": 50},
+                "rand_m": 2500, "raster_m": 50, "probefahrt": ("St. Moritz", "Campocologno")},
     # Michael, 2026-10-06: «Chur–Arosa, Montreux–Zweisimmen und Engelberg»; Kilometer laut Schienennetz
     # Chur Arosabahn (km 0) bis Arosa (km 25.68)
     "arosa": {"titel": "Chur–Arosa", "linie": "930", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 25.7,
-              "rand_m": 2500, "raster_m": 50},
+              "rand_m": 2500, "raster_m": 50, "probefahrt": ("Chur", "Arosa")},
     # Montreux MOB (km 0.07) bis Zweisimmen (km 62.43)
     "goldenpass": {"titel": "Montreux–Zweisimmen", "linie": "120", "quelle": "schienennetz", "von_km": 0.0,
-                   "bis_km": 62.5, "rand_m": 2500, "raster_m": 50},
+                   "bis_km": 62.5, "rand_m": 2500, "raster_m": 50, "probefahrt": ("Montreux", "Zweisimmen")},
     # Hergiswil NW (km 0) bis Engelberg (km 24.74)
     "engelberg": {"titel": "Hergiswil–Engelberg", "linie": "480", "quelle": "schienennetz", "von_km": 0.0,
-                  "bis_km": 24.8, "rand_m": 2500, "raster_m": 50},
+                  "bis_km": 24.8, "rand_m": 2500, "raster_m": 50, "probefahrt": ("Hergiswil NW", "Engelberg")},
 }
+
+# «probefahrt»: Von, Nach und wenn nötig Über für die Probefahrt im Reiter «3D» (Michael, 2026-10-06:
+# «diese Strecken wären doch attraktiv, um sie Probe zu fahren»); Über hält die Fahrt auf der Bergstrecke
+# statt im Basistunnel. Die Namen müssen im Netz der Seite «Strecke» stehen (data/strecken.json).
+
+
+def bahnhof_im_netz(name):
+    n = json.loads((ROOT / "data" / "strecken.json").read_text(encoding="utf-8"))
+    for uic, abk in n["bahnhoefe"].items():
+        if n["punkte"].get(abk) == name:
+            return int(uic)
+    raise SystemExit(f"{name} steht nicht im Netz (data/strecken.json)")
+
 
 #: so weit dürfen beide Enden eines Bauwerks aus swissTLM3D neben der Linie liegen
 TLM_ABSTAND_M = 40
@@ -252,7 +265,10 @@ def bauen(name, r):
     ohne = sum(1 for t in tunnel if "von_km" not in t)
     print(f"{name}: {len(weg)} Wegpunkte, {len(bahnhoefe)} Bahnhöfe, {len(tunnel)} Tunnel ({ohne} ohne bekanntes Ende), "
           f"{len(bruecken)} Brücken mit Anfang und Ende, {len(gipfel)} Gipfel")
-    return {"name": name, "titel": r["titel"], "linie": nr, "rahmen": list(rahmen)}
+    von, nach, *ueber = r["probefahrt"]
+    probefahrt = {"von": bahnhof_im_netz(von), "nach": bahnhof_im_netz(nach),
+                  "ueber": bahnhof_im_netz(ueber[0]) if ueber else None}
+    return {"name": name, "titel": r["titel"], "linie": nr, "rahmen": list(rahmen), "probefahrt": probefahrt}
 
 
 if __name__ == "__main__":

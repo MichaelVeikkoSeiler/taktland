@@ -11,7 +11,7 @@ import type { FahrtTeil } from './Kopf'
 import { Stern } from './Stern'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
-import { reliefListe } from '../relief'
+import { dreiDVormerken, reliefListe } from '../relief'
 
 type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
@@ -138,7 +138,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
 
       {/* Probefahrten zum Anwählen, Starten, Hinzufügen und Löschen, auf- und
           zuklappbar (Michael, 2026-09-26) */}
-      {teil === '3d' && <DreiDStrecken />}
+      {teil === '3d' && <DreiDStrecken name={name} starten={(w) => { dreiDVormerken(); starten(w, true) }} />}
 
       {teil === 'probe' && (
         <section>
@@ -483,33 +483,62 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten }: {
 
 
 
-/** Reiter «3D-Strecken» (Michael, 2026-10-06): alle Strecken mit 3D-Relief zum Anschauen */
-function DreiDStrecken() {
+/** Reiter «3D» (Michael, 2026-10-06): alle Strecken mit 3D-Relief, zum Anschauen und als Probefahrt
+ *  in beide Richtungen, wie die gemerkten Probefahrten: erst die Strecke wählen, dann die Richtung */
+function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string; starten: (w: StreckenWahl) => void }) {
   const [liste, setListe] = useState<Awaited<ReturnType<typeof reliefListe>> | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
+  const [offen, setOffen] = useState<string | null>(null)
   useEffect(() => { reliefListe().then(setListe).catch((e: Error) => setFehler(e.message)) }, [])
+  const text = (w: StreckenWahl) => `${name(w.von)} → ${name(w.nach)}${w.ueber ? ` (über ${name(w.ueber)})` : ''}`
   return (
     <section>
       <h1 className="mt-6 text-2xl font-bold tracking-tight">3D-Strecken</h1>
       <p className="mt-2 leading-relaxed">
-        Strecken mit Gelände in 3D zum Drehen und Zoomen. Führt eine Fahrt oder Probefahrt hindurch,
-        lässt sich die Karte dort auch auf «3D» stellen.
+        Strecken mit Gelände in 3D zum Drehen und Zoomen, auch als Probefahrt im Zeitraffer. Führt eine Fahrt
+        oder Probefahrt hindurch, lässt sich die Karte dort auch auf «3D» stellen.
       </p>
       {fehler && <p className="mt-4 text-sm">Die Liste konnte nicht geladen werden. {fehler}</p>}
       {!liste && !fehler && <p className="mt-4 text-sbb-metal">Wird geladen …</p>}
       {liste && (
         <ul className="kachelliste mt-4">
-          {liste.map((r) => (
-            <li key={r.name}>
-              <a href={`#/fahrt/3d/${r.name}`} className="kachel-link flex items-center justify-between gap-3 px-4 py-3">
-                <span className="min-w-0">
-                  <span className="block font-medium">{r.titel}</span>
-                  <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Linie {r.linie}</span>
-                </span>
-                <span className="pfeil shrink-0" aria-hidden="true">→</span>
-              </a>
-            </li>
-          ))}
+          {liste.map((r) => {
+            const auf = offen === r.name
+            const p = r.probefahrt
+            return (
+              <li key={r.name}>
+                <button type="button" onClick={() => setOffen(auf ? null : r.name)} aria-expanded={auf}
+                        className="flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3 text-left
+                                   hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
+                  <span className="min-w-0">
+                    <span className="block font-medium">{r.titel}</span>
+                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Linie {r.linie}</span>
+                  </span>
+                  <span className={`pfeil shrink-0 ${auf ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
+                    {auf ? '↑' : '↓'}
+                  </span>
+                </button>
+                {auf && (
+                  <div className="grid gap-2 px-3 pb-3">
+                    {[p, { von: p.nach, nach: p.von, ueber: p.ueber }].map((w) => (
+                      <button key={`${w.von}-${w.nach}`} type="button" onClick={() => starten(w)}
+                              className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
+                                         text-left hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
+                        <span className="min-w-0 font-medium">{text(w)}</span>
+                        <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
+                      </button>
+                    ))}
+                    <a href={`#/fahrt/3d/${r.name}`}
+                       className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
+                                  hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
+                      <span className="min-w-0 font-medium">Relief ansehen</span>
+                      <span className="pfeil shrink-0" aria-hidden="true">→</span>
+                    </a>
+                  </div>
+                )}
+              </li>
+            )
+          })}
         </ul>
       )}
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">

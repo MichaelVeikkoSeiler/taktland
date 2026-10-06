@@ -16,7 +16,20 @@ export function lv95(lat: number, lon: number): [number, number] {
   ]
 }
 
-interface ReliefUebersicht { reliefs: Array<{ name: string; titel: string; linie: string; rahmen: [number, number, number, number] }> }
+interface ReliefUebersicht {
+  reliefs: Array<{
+    name: string; titel: string; linie: string; rahmen: [number, number, number, number]
+    /** die Probefahrt im Reiter «3D», Über hält sie auf der Bergstrecke */
+    probefahrt: { von: number; nach: number; ueber: number | null }
+  }>
+}
+
+/** aus dem Reiter «3D» gestartet: die Karte im Fahrtmodus gleich in 3D zeigen (die Seite «Strecke»
+ *  schreibt die Adresse beim Start um, darum hier vorgemerkt und von der ersten Karte verbraucht) */
+let dreiDVorgemerkt = false
+export function dreiDVormerken() { dreiDVorgemerkt = true }
+export const dreiDGemerkt = () => dreiDVorgemerkt
+export function dreiDVerbrauchen() { dreiDVorgemerkt = false }
 
 /** Alle Reliefs, in der Reihenfolge der Pipeline */
 export async function reliefListe() {

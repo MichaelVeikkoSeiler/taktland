@@ -151,6 +151,7 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              swissALTIRegio auf 50 m gemittelt (.bin, Uint16), Linie, Tunnel und Brücken mit Anfang und Ende
              (bei anderen Bahnen Linie aus dem Schienennetz des BAV, Bauwerke aus swissTLM3D ohne Namen),
              Bahnhöfe, Gipfel; index.json sagt, welches Relief welchen Ausschnitt deckt («3D» beim Fahren)
+             und welche Probefahrt der Reiter «3D» unter Fahren anbietet (Über hält sie auf der Bergstrecke)
              (pipeline/build_relief.py); in der App komponenten/Relief.tsx mit three.js, erst dort geladen;
              die Höhe der Gleise steht in keiner Quelle
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der

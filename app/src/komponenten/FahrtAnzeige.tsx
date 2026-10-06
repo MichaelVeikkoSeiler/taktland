@@ -10,7 +10,7 @@ import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlas
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
-import { reliefFuer } from '../relief'
+import { dreiDGemerkt, dreiDVerbrauchen, reliefFuer } from '../relief'
 
 // three.js nur für die Ansicht «3D», erst dort geladen
 const ReliefFahrt = lazy(() => import('./Relief').then((m) => ({ default: m.ReliefFahrt })))
@@ -341,7 +341,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const [nah, setNahRoh] = useState(true)
   // «3D», wo der Weg durch ein Relief führt (Michael, 2026-10-06: zuerst die Gotthard-Bergstrecke)
   const [relief, setRelief] = useState<{ name: string; titel: string } | null>(null)
-  const [dreiD, setDreiD] = useState(false)
+  // aus dem Reiter «3D» gleich in 3D, sobald das Relief bekannt ist
+  const [dreiD, setDreiD] = useState(dreiDGemerkt)
+  useEffect(() => dreiDVerbrauchen(), [])
   useEffect(() => {
     let ab = false
     void reliefFuer(fahrweg).then((r) => { if (!ab) setRelief(r) })
