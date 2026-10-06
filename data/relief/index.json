@@ -10,6 +10,28 @@
     2720850,
     1189250
    ]
+  },
+  {
+   "name": "albula",
+   "titel": "Albulalinie",
+   "linie": "940",
+   "rahmen": [
+    2750500,
+    1149900,
+    2790400,
+    1176900
+   ]
+  },
+  {
+   "name": "loetschberg",
+   "titel": "Lötschberg-Bergstrecke",
+   "linie": "300",
+   "rahmen": [
+    2613550,
+    1125350,
+    2644550,
+    1162800
+   ]
   }
  ]
 }

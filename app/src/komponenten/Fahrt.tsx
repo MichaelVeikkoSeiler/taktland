@@ -46,7 +46,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
   // welche Probefahrt gerade ihre beiden Richtungen zeigt
   const [richtungWahl, setRichtungWahl] = useState<string | null>(null)
   const [ordnen, setOrdnen] = useState(false)
-  const [neueProbe, setNeueProbe] = useState<{ von: number | null; nach: number | null } | null>(null)
+  const [neueProbe, setNeueProbe] = useState<{ von: number | null; nach: number | null; ueber: number | null } | null>(null)
   useEffect(() => {
     if (!entfernt) return
     const uhr = setTimeout(() => setEntfernt(null), 8000)
@@ -246,12 +246,16 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                                aendern={(u) => setNeueProbe((w) => w && { ...w, von: u })} />
                   <BahnhofFeld bezeichnung="Nach" wert={neueProbe.nach} bahnhoefe={imNetz} name={name}
                                aendern={(u) => setNeueProbe((w) => w && { ...w, nach: u })} />
+                  {/* «Über» wie beim Fahrtblatt (Michael, 2026-10-06: Erstfeld – Biasca über Göschenen) */}
+                  <BahnhofFeld bezeichnung="Über (optional)" wert={neueProbe.ueber ?? null} bahnhoefe={imNetz} name={name}
+                               aendern={(u) => setNeueProbe((w) => w && { ...w, ueber: u })} />
                   <button type="button"
                           disabled={neueProbe.von === null || neueProbe.nach === null
-                                    || neueProbe.von === neueProbe.nach}
+                                    || neueProbe.von === neueProbe.nach
+                                    || neueProbe.ueber === neueProbe.von || neueProbe.ueber === neueProbe.nach}
                           onClick={() => {
-                            const f = { von: neueProbe.von!, nach: neueProbe.nach!, ueber: null }
-                            if (!gemerkt.probefahrten.some((x) => x.von === f.von && x.nach === f.nach && !x.ueber)) {
+                            const f = { von: neueProbe.von!, nach: neueProbe.nach!, ueber: neueProbe.ueber ?? null }
+                            if (!gemerkt.probefahrten.some((x) => x.von === f.von && x.nach === f.nach && (x.ueber ?? null) === f.ueber)) {
                               setGemerkt(probefahrtUmschalten(f))
                             }
                             setNeueProbe(null)
@@ -262,7 +266,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                   </button>
                 </div>
               ) : (
-                <button type="button" onClick={() => setNeueProbe({ von: null, nach: null })}
+                <button type="button" onClick={() => setNeueProbe({ von: null, nach: null, ueber: null })}
                         className="kachel kachel-link mt-2 flex min-h-11 w-full items-center gap-3 px-4 py-3
                                    text-left font-medium">
                   <span className="text-2xl leading-none text-sbb-red" aria-hidden="true">+</span>

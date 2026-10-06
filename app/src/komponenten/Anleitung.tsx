@@ -247,7 +247,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Karten: Ortsnamen, Gipfel, Tunnel und Brücken anderer Bahnen und viele Brückenlängen
-            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen und das 3D-Relief der Gotthard-Bergstrecke aus swissALTIRegio,
+            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen und die 3D-Reliefs aus swissALTIRegio,
             Seen, Flüsse, Lage der Orte, Wald und Siedlung, in Geo auch Bahnlinien und Kantonsgrenzen aus swissTLMRegio; Grenzen vom BFS, Kulturgüter vom
             BABS, Seilbahnen vom BAV, BLN, Pärke und Moorlandschaften vom BAFU. Alle frei
             nutzbar mit Quellenangabe.

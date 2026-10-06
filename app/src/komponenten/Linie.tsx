@@ -13,6 +13,8 @@ import { BahnKuerzel } from './Suche'
 /** Linien mit 3D-Relief (pipeline/build_relief.py, Michael, 2026-10-06) */
 const RELIEF: Record<number, { name: string; titel: string }> = {
   600: { name: 'gotthard', titel: 'Gotthard-Bergstrecke' },
+  940: { name: 'albula', titel: 'Albulalinie' },
+  300: { name: 'loetschberg', titel: 'Lötschberg-Bergstrecke' },
 }
 
 export function Linie({ nr, zurueck, zurueckText }: {

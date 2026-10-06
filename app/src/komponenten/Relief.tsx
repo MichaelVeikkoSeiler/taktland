@@ -24,12 +24,14 @@ import { Ladefehler } from './Ladefehler'
 interface Relief {
   titel: string; linie: string; linie_name: string; von_km: number; bis_km: number; datenstand: string
   quellen: string[]
+  /** bei Linien anderer Bahnen: woher Tunnel und Brücken kommen */
+  hinweis?: string
   raster: { ost: number; nord: number; m: number; breite: number; hoehe: number; datei: string }
   /** [Meter der Kilometrierung, Ost, Nord] */
   weg: Array<[number, number, number]>
   bahnhoefe: Array<{ uic: number; name: string; km: number; lage: [number, number] }>
-  tunnel: Array<{ name: string; laenge_m: number | null; km: number; von_km?: number; bis_km?: number }>
-  bruecken: Array<{ name: string; von_km: number; bis_km: number; laenge_m: number }>
+  tunnel: Array<{ name: string | null; laenge_m: number | null; km: number; von_km?: number; bis_km?: number; galerie?: boolean }>
+  bruecken: Array<{ name: string | null; von_km: number; bis_km: number; laenge_m: number | null }>
   gipfel: Array<{ name: string; hoehe_m: number; lage: [number, number] }>
 }
 
@@ -145,9 +147,10 @@ function Hinweise({ r }: { r: Relief }) {
       {ohneEnde.length > 0 && (
         <p>
           Wo ein Tunnel anfängt und endet, geben die Daten nicht bei allen her. Diese stehen als Punkt beim
-          Kilometer der SBB: {ohneEnde.map((t) => t.name).join(', ')}.
+          Kilometer der SBB: {ohneEnde.map((t) => t.name ?? 'ohne Namen').join(', ')}.
         </p>
       )}
+      {r.hinweis && <p>{r.hinweis} Galerien sind wie Tunnel gezeichnet.</p>}
       <p>Brücken nur, wo Anfang und Ende bekannt sind. Gipfel nur aus Swiss Map Vector 1000.</p>
       <p>Quellen: {r.quellen.join('; ')}. Datenstand der Linie {r.datenstand.split('-').map(Number).reverse().join('.')}.</p>
     </div>

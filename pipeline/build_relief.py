@@ -32,7 +32,18 @@ RELIEFS = {
     # Erstfeld (km 41.58) bis Biasca (km 131.80) laut data/linien/600.json
     "gotthard": {"titel": "Gotthard-Bergstrecke", "linie": "600", "von_km": 41.0, "bis_km": 132.4,
                  "rand_m": 2500, "raster_m": 50},
+    # Linien anderer Bahnen aus dem Schienennetz des BAV (Michael, 2026-10-06: «Albula und Lötschberg»);
+    # Tunnel und Brücken dort aus swissTLM3D, ohne Namen
+    # Thusis (km 41.26) bis St. Moritz (km 102.94) laut data/linien/940.json
+    "albula": {"titel": "Albulalinie", "linie": "940", "quelle": "schienennetz", "von_km": 40.8, "bis_km": 103.0,
+               "rand_m": 2500, "raster_m": 50},
+    # Frutigen (km 13.54) bis Brig-Lötschberg (km 73.52) laut data/linien/300.json
+    "loetschberg": {"titel": "Lötschberg-Bergstrecke", "linie": "300", "quelle": "schienennetz", "von_km": 13.0,
+                    "bis_km": 73.6, "rand_m": 2500, "raster_m": 50},
 }
+
+#: so weit dürfen beide Enden eines Bauwerks aus swissTLM3D neben der Linie liegen
+TLM_ABSTAND_M = 40
 
 
 def wgs84_zu_lv95(lat, lon):
@@ -54,6 +65,65 @@ def linie_punkte(nr):
     for i in range(0, len(d), 3):
         m, la, lo = m + d[i], la + d[i + 1], lo + d[i + 2]
         raus.append((m, *wgs84_zu_lv95(la / 1e5, lo / 1e5)))
+    return raus
+
+
+def linie_punkte_bav(nr):
+    """[(Meter der Kilometrierung, Ost, Nord)] aus den Segmenten des Schienennetzes, jedes
+    Segment von seinem Anfangs- zum End-Kilometer, die Punkte dazwischen nach ihrem Abstand"""
+    import schienennetz
+    linien, _ = schienennetz.je_linie()
+    l = linien[nr]
+    lage = {p["nummer"]: (p["lat"], p["lon"]) for p in l["punkte"]}
+    raus = []
+    for seg in sorted(l["segmente"], key=lambda x: x["km_anfang"]):
+        zug = [wgs84_zu_lv95(la, lo) for la, lo in seg["zug"]]
+        anfang = lage.get(seg["von_nummer"])
+        if anfang:
+            a = wgs84_zu_lv95(*anfang)
+            if np.hypot(zug[-1][0] - a[0], zug[-1][1] - a[1]) < np.hypot(zug[0][0] - a[0], zug[0][1] - a[1]):
+                zug.reverse()
+        laengen = np.concatenate([[0], np.cumsum(np.hypot(np.diff([z[0] for z in zug]), np.diff([z[1] for z in zug])))])
+        gesamt = laengen[-1] or 1
+        m0, m1 = seg["km_anfang"] * 1000, seg["km_ende"] * 1000
+        for (x, y), d in zip(zug, laengen):
+            m = m0 + (m1 - m0) * d / gesamt
+            if not raus or m > raus[-1][0]:
+                raus.append((m, x, y))
+    return raus
+
+
+def tlm_auf_linie(weg):
+    """Tunnel, Galerien und Brücken aus swissTLM3D, deren beide Enden höchstens TLM_ABSTAND_M
+    neben dem Weg liegen, als Bereich auf dem Weg (Meter)"""
+    d = json.loads((ROOT / "data" / "tlm_bauwerke.json").read_text(encoding="utf-8"))["bauwerke"]
+    w = np.array([[p[1], p[2]] for p in weg]); mm = np.array([p[0] for p in weg])
+
+    def projektion(x, y):
+        a, b = w[:-1], w[1:]
+        ab = b - a
+        t = np.clip(((x - a[:, 0]) * ab[:, 0] + (y - a[:, 1]) * ab[:, 1]) / np.maximum((ab ** 2).sum(1), 1e-9), 0, 1)
+        px, py = a[:, 0] + t * ab[:, 0], a[:, 1] + t * ab[:, 1]
+        dist = np.hypot(px - x, py - y)
+        i = int(np.argmin(dist))
+        return dist[i], mm[i] + t[i] * (mm[i + 1] - mm[i])
+
+    e0, n0, e1, n1 = w[:, 0].min() - 500, w[:, 1].min() - 500, w[:, 0].max() + 500, w[:, 1].max() + 500
+    raus = []
+    for b in d.values():
+        if b["art"] not in ("tunnel", "galerie", "bruecke"):
+            continue
+        la, lo = b["start"]
+        pts = [(la, lo)]
+        for i in range(0, len(b["d"]), 2):
+            la, lo = la + b["d"][i], lo + b["d"][i + 1]
+            pts.append((la, lo))
+        (xa, ya), (xb, yb) = wgs84_zu_lv95(pts[0][0] / 1e5, pts[0][1] / 1e5), wgs84_zu_lv95(pts[-1][0] / 1e5, pts[-1][1] / 1e5)
+        if not (e0 <= xa <= e1 and n0 <= ya <= n1):
+            continue
+        (da, ma), (db, mb) = projektion(xa, ya), projektion(xb, yb)
+        if da <= TLM_ABSTAND_M and db <= TLM_ABSTAND_M and abs(mb - ma) >= 1:
+            raus.append({"art": b["art"], "von": min(ma, mb), "bis": max(ma, mb)})
     return raus
 
 
@@ -86,7 +156,8 @@ def gelaende(rahmen, raster_m):
 
 def bauen(name, r):
     nr = r["linie"]
-    punkte = linie_punkte(nr)
+    bav = r.get("quelle") == "schienennetz"
+    punkte = linie_punkte_bav(nr) if bav else linie_punkte(nr)
     von, bis = r["von_km"] * 1000, r["bis_km"] * 1000
     weg = [p for p in punkte if von <= p[0] <= bis]
     e = [p[1] for p in weg]
@@ -103,15 +174,22 @@ def bauen(name, r):
     bereich = json.loads((ROOT / "data" / "bruecken_bereich.json").read_text(encoding="utf-8"))["bruecken"]
     drin = lambda km: km is not None and r["von_km"] <= km <= r["bis_km"]
 
-    tunnel = []
-    for i, t in enumerate(linie["tunnel"]["items"]):
+    tunnel, bruecken = [], []
+    if bav:
+        for b in tlm_auf_linie(weg):
+            eintrag = {"name": None, "laenge_m": None, "km": round((b["von"] + b["bis"]) / 2000, 3),
+                       "von_km": round(b["von"] / 1000, 3), "bis_km": round(b["bis"] / 1000, 3)}
+            if b["art"] == "bruecke":
+                bruecken.append({**eintrag, "laenge_m": None})
+            else:
+                tunnel.append({**eintrag, "galerie": b["art"] == "galerie"})
+    for i, t in enumerate(linie.get("tunnel", {}).get("items", [])):
         if not drin(t.get("km")):
             continue
         rt = richtung.get(f"{nr}:{i}")
         tunnel.append({"name": t["name"], "laenge_m": t.get("laenge_m"), "km": t["km"],
                        **({"von_km": rt["von"], "bis_km": rt["bis"]} if rt else {})})
-    bruecken = []
-    for i, b in enumerate(linie["bruecken"]["items"]):
+    for i, b in enumerate(linie.get("bruecken", {}).get("items", [])):
         bb = bereich.get(f"{nr}:{i}")
         # nur Brücken mit Anfang und Ende: ein Punkt allein sagt im Relief nichts
         if bb and drin(b.get("km")):
@@ -134,9 +212,14 @@ def bauen(name, r):
         "titel": r["titel"], "linie": nr, "linie_name": linie["name"], "von_km": r["von_km"], "bis_km": r["bis_km"],
         "datenstand": linie["datenstand"],
         "quellen": ["Gelände: swissALTIRegio, Bundesamt für Landestopografie swisstopo, 10 m, gemittelt auf "
-                    f"{rm} m", "Linie, Bahnhöfe, Tunnel und Brücken: SBB Open Data (linienkilometrierung, "
-                    "linie-mit-betriebspunkten, tunnel, brucken)", "Anfang und Ende von Tunneln und Brücken: "
-                    "swissTLM3D, swisstopo", "Gipfel: Swiss Map Vector 1000, swisstopo"],
+                    f"{rm} m"] + (["Linie und Bahnhöfe: Schienennetz, Bundesamt für Verkehr BAV (Stand 2021)",
+                                   "Tunnel, Galerien und Brücken: swissTLM3D, swisstopo"] if bav else
+                                  ["Linie, Bahnhöfe, Tunnel und Brücken: SBB Open Data (linienkilometrierung, "
+                                   "linie-mit-betriebspunkten, tunnel, brucken)", "Anfang und Ende von Tunneln und "
+                                   "Brücken: swissTLM3D, swisstopo"]) + ["Gipfel: Swiss Map Vector 1000, swisstopo"],
+        **({"hinweis": "Tunnel, Galerien und Brücken stammen aus swissTLM3D und haben dort keinen Namen. "
+                       f"Gezeichnet sind die, deren beide Enden höchstens {TLM_ABSTAND_M} m neben der Linie liegen."}
+           if bav else {}),
         "raster": {"ost": rahmen[0], "nord": rahmen[3], "m": rm, "breite": int(h.shape[1]), "hoehe": int(h.shape[0]),
                    "datei": f"{name}.bin"},
         "weg": [[round(m), round(x), round(y)] for m, x, y in weg],
