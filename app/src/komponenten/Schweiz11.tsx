@@ -551,10 +551,11 @@ export function Aufloesung({ pool, e, ziel, index, spieler, antworten, frage, d0
   )
 }
 
-/** «keine Hilfe», «1 Hilfe», «3 Hilfen»; «mindestens», wenn sie nicht bei jeder Frage bekannt ist */
-function hilfenText(n: number, unvollstaendig: boolean) {
+/** «keine Hilfe», «1 Hilfe», «3 Hilfen»; wo sie nicht bei jeder Frage bekannt ist (kein Tipp, ältere
+ *  Version), mit «bei 4 von 5 Fragen» */
+function hilfenText(n: number, bekannt: number, fragen: number) {
   const t = n === 0 ? 'keine Hilfe' : n === 1 ? '1 Hilfe' : `${n} Hilfen`
-  return unvollstaendig ? (n === 0 ? 'Hilfen nicht bei jeder Frage bekannt' : `mindestens ${t}`) : t
+  return bekannt < fragen ? `${t} bei ${bekannt} von ${fragen} Fragen` : t
 }
 
 export function Ende({ spieler, antworten, bisher, nochmals, schliessen, schliessenText = 'Einstellungen', warten }: {
@@ -567,7 +568,7 @@ export function Ende({ spieler, antworten, bisher, nochmals, schliessen, schlies
     const bekannt = h.filter((x): x is number => typeof x === 'number')
     return { name, punkte: antworten.reduce((a, r) => a + (r[i]?.punkte ?? 0), 0),
              schnitt: d.length ? d.reduce((a, b) => a + b, 0) / d.length : null, ohne: antworten.length - d.length,
-             hilfen: bekannt.length ? hilfenText(bekannt.reduce((a, b) => a + b, 0), bekannt.length < h.length) : null }
+             hilfen: bekannt.length ? hilfenText(bekannt.reduce((a, b) => a + b, 0), bekannt.length, h.length) : null }
   })
   const allein = spieler.length === 1
   const z = zeilen[0]
