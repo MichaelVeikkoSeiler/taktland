@@ -453,3 +453,15 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
   gekennzeichnet sein (etwa «selbst benannt»), damit er nie wie eine Angabe aus den
   Daten wirkt; der Name laut Quelle bleibt daneben erkennbar («ohne Namen laut
   swisstopo»). Nur auf dem Gerät, nie in Fragen oder Vergleichen.
+
+## Brille (Michael, 2026-10-06: «für die Merkliste»)
+
+- **In den Zug wechseln:** Bei der Probefahrt in der Brille die Sicht eines Fahrgasts einnehmen,
+  also vom Modell auf dem Tisch in den Zug wechseln und die Strecke von dort aus sehen. Zu klären:
+  - In der Brille wird es leicht übel, wenn sich die Sicht bewegt, ohne dass man sich selbst bewegt.
+    Ein sanfter Anfang wäre, über dem Zug zu schweben und ihm von hinten nachzuschauen, statt im
+    Wagen zu sitzen; dazu eine Taste zum Hin- und Herwechseln.
+  - Aus der Nähe fällt auf, was nicht in den Daten steht: Die Höhe der Gleise steht in keiner
+    Quelle, die Linie liegt aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den
+    Enden. Das Gelände hat 50 m Raster, ohne Häuser und Bäume. Das muss sichtbar dabeistehen.
+  - Im Tunnel zeigt die Sicht aus dem Zug nichts; dort eher kurz aussen bleiben oder abblenden.
