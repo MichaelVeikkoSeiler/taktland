@@ -42,15 +42,25 @@ function kachelLaden(name: string, zellen: number) {
   return p
 }
 
-/** Ein Ausschnitt von seite_m auf seite_m um eine Mitte (Landeskoordinaten), aus den Kacheln
- *  zusammengesetzt; wo keine Kachel liegt, steht KEINE_HOEHE */
+export interface Raster { ost: number; nord: number; m: number; breite: number; hoehe: number }
+
+/** Ein Ausschnitt von seite_m auf seite_m um eine Mitte (Landeskoordinaten), beim Fahren */
 export async function fensterLaden(mitteE: number, mitteN: number, seite_m: number) {
+  const { raster_m: m } = await gelaendeIndex()
+  const breite = Math.round(seite_m / m)
+  return ausschnittLaden({
+    ost: Math.floor((mitteE - seite_m / 2) / m) * m, nord: Math.ceil((mitteN + seite_m / 2) / m) * m, m, breite, hoehe: breite,
+  })
+}
+
+/** Ein Ausschnitt im 50-m-Raster der Kacheln, aus ihnen zusammengesetzt (auch die Bergstrecken,
+ *  Michael, 2026-10-06: «auf die Kacheln umstellen»); wo keine Kachel liegt, steht KEINE_HOEHE */
+export async function ausschnittLaden(raster: Raster) {
   const ix = await gelaendeIndex()
   const { kachel_m: k, raster_m: m, zellen } = ix
+  if (raster.m !== m) throw new Error(`Der Ausschnitt hat ${raster.m} m, die Kacheln ${m} m`)
   const vorhanden = new Set(ix.kacheln)
-  const ost = Math.floor((mitteE - seite_m / 2) / m) * m
-  const nord = Math.ceil((mitteN + seite_m / 2) / m) * m
-  const breite = Math.round(seite_m / m), hoehe = breite
+  const { ost, nord, breite, hoehe } = raster
   const h = new Uint16Array(breite * hoehe).fill(KEINE_HOEHE)
   const kacheln: string[] = []
   for (let ex = Math.floor(ost / k); ex <= Math.floor((ost + breite * m - 1) / k); ex++) {
@@ -71,5 +81,5 @@ export async function fensterLaden(mitteE: number, mitteN: number, seite_m: numb
       }
     }
   })
-  return { raster: { ost, nord, m, breite, hoehe, datei: '' }, h, quelle: ix.quelle }
+  return { raster: { ost, nord, m, breite, hoehe }, h, quelle: ix.quelle }
 }

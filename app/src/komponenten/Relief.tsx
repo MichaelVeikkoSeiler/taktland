@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { bodenbedeckungLaden, flaechenLaden, holen, holenBinaer, seenLaden, sehenswertLaden, streckenLaden } from '../daten'
+import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, streckenLaden } from '../daten'
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import type { FahrObjekt, Fahrweg } from '../fahrt'
 import { lv95 } from '../relief'
-import { fensterLaden, KEINE_HOEHE } from '../gelaende'
+import { ausschnittLaden, fensterLaden, KEINE_HOEHE } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -31,7 +31,8 @@ interface Relief {
   quellen: string[]
   /** bei Linien anderer Bahnen: woher Tunnel und Brücken kommen */
   hinweis?: string
-  raster: { ost: number; nord: number; m: number; breite: number; hoehe: number; datei: string }
+  /** der Ausschnitt im Raster der Geländekacheln; die Höhen kommen aus ihnen (gelaende.ts) */
+  raster: { ost: number; nord: number; m: number; breite: number; hoehe: number }
   /** [Meter der Kilometrierung, Ost, Nord] */
   weg: Array<[number, number, number]>
   bahnhoefe: Array<{ uic: number; name: string; km: number; lage: [number, number] }>
@@ -67,7 +68,7 @@ function useRelief(name: string | null) {
   useEffect(() => {
     if (!name) return
     holen<Relief>(`data/relief/${name}.json`)
-      .then(async (r) => setDaten({ r, h: new Uint16Array(await holenBinaer(`data/relief/${r.raster.datei}`)) }))
+      .then(async (r) => setDaten({ r, h: (await ausschnittLaden(r.raster)).h }))
       .catch((e: Error) => setFehler(e.message))
   }, [name])
   return { daten, fehler }

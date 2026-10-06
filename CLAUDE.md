@@ -149,7 +149,7 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              Berninalinie (RhB 950, St. Moritz bis Campocologno; Tirano liegt in Italien), Chur–Arosa (RhB 930),
              Montreux–Zweisimmen (MOB 120), Hergiswil–Engelberg (zb 480), Solothurn–Yverdon (SBB 410 und 210
              hintereinander, «teile»: der Weg zählt dann Meter ab Solothurn, nicht die Kilometrierung): Gelände aus
-             swissALTIRegio auf 50 m gemittelt (.bin, Uint16), Linie, Tunnel und Brücken mit Anfang und Ende
+             der Ausschnitt in den Geländekacheln (data/gelaende, keine eigenen Höhen mehr), Linie, Tunnel und Brücken mit Anfang und Ende
              (bei anderen Bahnen Linie aus dem Schienennetz des BAV, Bauwerke aus swissTLM3D ohne Namen),
              Bahnhöfe, Gipfel; index.json nennt die Bergstrecken für den Reiter «3D» unter Fahren samt Probefahrt (Über hält sie
              auf der Bergstrecke)
@@ -159,7 +159,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              zu 50 m aus swissALTIRegio, je Zeile Differenzen und gzip (.hgz, 550 Kacheln, 18 MB;
              pipeline/build_gelaende.py): «3D» auf jeder Fahrt und Probefahrt, 30 km um den Zug, der Ausschnitt
              wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); die Reliefs in
-             data/relief bleiben für die Bergstrecken als Ganzes
+             data/relief bleiben für die Bergstrecken als Ganzes und
+             holen ihr Gelände ebenfalls aus den Kacheln
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```

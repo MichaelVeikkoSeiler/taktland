@@ -1,7 +1,7 @@
 """3D-Relief einer Strecke (Michael, 2026-10-06: «Gotthard Bergstrecke»).
 
-Für einen Ausschnitt einer Linie: das Gelände aus swissALTIRegio (swisstopo, 10 m),
-gemittelt auf RASTER_M, dazu der Verlauf der Linie aus der Kilometrierung der SBB
+Für einen Ausschnitt einer Linie: der Ausschnitt im Raster der Geländekacheln
+(build_gelaende.py, swissALTIRegio auf 50 m; die App setzt das Gelände daraus zusammen), dazu der Verlauf der Linie aus der Kilometrierung der SBB
 (data/strecken_geometrie.json), Tunnel und Brücken mit Anfang und Ende, wo bekannt
 (data/tunnel_richtung.json, data/bruecken_bereich.json), die Bahnhöfe der Linie
 (data/linien/{nr}.json) und die Gipfel im Ausschnitt (data/sehenswert.json).
@@ -10,10 +10,10 @@ Nichts wird dazu erfunden: Wo die Daten Anfang und Ende eines Tunnels nicht herg
 steht er als Punkt mit «Ende unbekannt». Die Höhe der Gleise steht in keiner Quelle; die
 App legt die Linie aufs Gelände und schreibt das dazu.
 
-Ergebnis: data/relief/index.json (welches Relief welchen Ausschnitt in LV95 deckt),
-data/relief/{name}.json (alles ausser den Höhen) und data/relief/{name}.bin
-(Höhen in Metern als Uint16, Zeile für Zeile von Norden nach Süden, je Zeile von Westen
-nach Osten). Lage in LV95 (Ost, Nord) in Metern.
+Ergebnis: data/relief/index.json (die Bergstrecken mit Ausschnitt in LV95 und Probefahrt) und
+data/relief/{name}.json (Ausschnitt, Linie, Bauwerke, Bahnhöfe, Gipfel; keine Höhen). Bis
+2026-10-06 stand das Gelände je Relief in {name}.bin, jetzt kommt es aus den Kacheln. Lage in
+LV95 (Ost, Nord) in Metern.
 
     .venv/bin/python pipeline/build_relief.py
 """
@@ -50,7 +50,7 @@ RELIEFS = {
     # Brig Bahnhofplatz (km 0) bis Disentis/Mustér (km 96.94)
     "furka": {"titel": "Furka-Oberalp", "linie": "610", "quelle": "schienennetz", "von_km": 0.0,
                       "bis_km": 97.0, "rand_m": 2500, "raster_m": 50, "probefahrt": ("Brig", "Disentis/Mustér")},
-    # St. Moritz (km 0) bis Campocologno (km 57.65); Tirano liegt in Italien, ausserhalb von swissALTIRegio
+    # St. Moritz (km 0) bis Campocologno (km 57.65); Tirano liegt in Italien und nicht im Netz der Seite «Strecke»
     "bernina": {"titel": "Berninalinie", "linie": "950", "quelle": "schienennetz", "von_km": 0.0, "bis_km": 57.7,
                 "rand_m": 2500, "raster_m": 50, "probefahrt": ("St. Moritz", "Campocologno")},
     # Michael, 2026-10-06: «Chur–Arosa, Montreux–Zweisimmen und Engelberg»; Kilometer laut Schienennetz
@@ -278,9 +278,11 @@ def bauen(name, r):
     rm = r["raster_m"]
     rahmen = (int((min(e) - r["rand_m"]) // rm * rm), int((min(n) - r["rand_m"]) // rm * rm),
               int(-(-(max(e) + r["rand_m"]) // rm) * rm), int(-(-(max(n) + r["rand_m"]) // rm) * rm))
-    h = gelaende(rahmen, rm)
-    print(f"{name}: Gelände {h.shape[1]} × {h.shape[0]} Felder zu {rm} m, "
-          f"{np.nanmin(h):.0f} bis {np.nanmax(h):.0f} m ü. M.")
+    # das Gelände kommt aus den Kacheln (build_gelaende.py, Michael, 2026-10-06: «Bergstrecken auch auf
+    # die Kacheln umstellen»); hier steht nur der Ausschnitt, auf deren 50-m-Raster ausgerichtet
+    assert rm == 50, "die Geländekacheln haben 50 m"
+    breite, hoehe = (rahmen[2] - rahmen[0]) // rm, (rahmen[3] - rahmen[1]) // rm
+    print(f"{name}: Ausschnitt {breite} × {hoehe} Felder zu {rm} m")
 
     sehenswert = json.loads((ROOT / "data" / "sehenswert.json").read_text(encoding="utf-8"))
     gipfel = []
@@ -290,13 +292,12 @@ def bauen(name, r):
             gipfel.append({"name": g["name"], "hoehe_m": g["hoehe_m"], "lage": [round(ge), round(gn)]})
 
     ZIEL.mkdir(parents=True, exist_ok=True)
-    np.clip(np.round(h), 0, 65535).astype("<u2").tofile(ZIEL / f"{name}.bin")
     daten = {
         "titel": r["titel"], "linie": nr, "linie_name": linie["name"], "von_km": von_km, "bis_km": bis_km,
         **({"teile": [{k: x[k] for k in ("linie", "linie_name", "von_km", "bis_km")} for x in linien]} if teile else {}),
         "datenstand": linie["datenstand"],
-        "quellen": ["Gelände: swissALTIRegio, Bundesamt für Landestopografie swisstopo, 10 m, gemittelt auf "
-                    f"{rm} m"] + (["Linie und Bahnhöfe: Schienennetz, Bundesamt für Verkehr BAV (Stand 2021)",
+        "quellen": ["Gelände: swissALTIRegio, Bundesamt für Landestopografie swisstopo, gemittelt auf "
+                    f"{rm} m (Geländekacheln)"] + (["Linie und Bahnhöfe: Schienennetz, Bundesamt für Verkehr BAV (Stand 2021)",
                                    "Tunnel, Galerien und Brücken: swissTLM3D, swisstopo"] if bav else
                                   ["Linie, Bahnhöfe, Tunnel und Brücken: SBB Open Data (linienkilometrierung, "
                                    "linie-mit-betriebspunkten, tunnel, brucken)", "Anfang und Ende von Tunneln und "
@@ -304,8 +305,7 @@ def bauen(name, r):
         **({"hinweis": "Tunnel, Galerien und Brücken stammen aus swissTLM3D und haben dort keinen Namen. "
                        f"Gezeichnet sind die, deren beide Enden höchstens {TLM_ABSTAND_M} m neben der Linie liegen."}
            if bav else {}),
-        "raster": {"ost": rahmen[0], "nord": rahmen[3], "m": rm, "breite": int(h.shape[1]), "hoehe": int(h.shape[0]),
-                   "datei": f"{name}.bin"},
+        "raster": {"ost": rahmen[0], "nord": rahmen[3], "m": rm, "breite": int(breite), "hoehe": int(hoehe)},
         "weg": [[round(m), round(x), round(y)] for m, x, y in weg],
         "bahnhoefe": bahnhoefe, "tunnel": tunnel, "bruecken": bruecken, "gipfel": gipfel,
     }
