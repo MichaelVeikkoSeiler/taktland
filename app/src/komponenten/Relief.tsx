@@ -58,6 +58,10 @@ const UEBER_M = 25
 /** in der Brille (Michael, 2026-10-06: «Quest 3»): das Relief als Modell so breit, der tiefste Punkt auf
  *  Tischhöhe, so weit vor dir; Linien so dick, dass sie auf diese Grösse noch zu sehen sind */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILLE_LINIE_M = 0.0025
+/** der Zug in der Brille so gross (Radius), damit man ihn auf dem Modell findet */
+const BRILLE_ZUG_M = 0.008
+/** so lange dauert die Probefahrt in der Brille über die ganze Bergstrecke, dann beginnt sie von vorn */
+const PROBE_DAUER_S = 150
 /** so nah (km) an der Kamera erscheinen die Namen der Kulturgüter */
 const NAH_KULTUR = 9
 
@@ -171,6 +175,15 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   const brille = useRef<(() => Promise<void>) | null>(null)
   const [brilleMoeglich, setBrilleMoeglich] = useState(false)
   const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
+  // Probefahrt in der Brille (Michael, 2026-10-06: «Fährt der Zug auf der Brille?»): Startzeit oder null
+  const probe = useRef<number | null>(null)
+  const [probeLaeuft, setProbeLaeuft] = useState(false)
+  const inBrille = (mitZug: boolean) => {
+    setBrilleFehler(null)
+    probe.current = mitZug ? performance.now() : null
+    setProbeLaeuft(mitZug)
+    brille.current?.().catch((e: Error) => setBrilleFehler(e.message))
+  }
   useEffect(() => {
     const xr = navigator.xr
     if (!xr) return
@@ -195,17 +208,29 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
         <>
           <div className="mt-4"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
           <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
-                 className="mt-3 w-full overflow-hidden rounded-lg" />
+                 probe={probe} className="mt-3 w-full overflow-hidden rounded-lg" />
           {brilleMoeglich ? (
             <div className="mt-3">
-              <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white"
-                      onClick={() => { setBrilleFehler(null); brille.current?.().catch((e: Error) => setBrilleFehler(e.message)) }}>
-                In der Brille ansehen
-              </button>
+              <div className="flex flex-wrap gap-2">
+                <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={() => inBrille(false)}>
+                  In der Brille ansehen
+                </button>
+                <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 font-bold dark:border-sbb-iron"
+                        onClick={() => inBrille(true)}>
+                  Probefahrt in der Brille
+                </button>
+                {probeLaeuft && (
+                  <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 dark:border-sbb-iron"
+                          onClick={() => { probe.current = null; setProbeLaeuft(false) }}>
+                    Probefahrt anhalten
+                  </button>
+                )}
+              </div>
               <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
                 Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
                 auf Tischhöhe. Trigger oder Fingertippen dreht es, Greifen macht es doppelt so gross. Die Höhe stellst du vorher
-                oben ein.
+                oben ein. Bei der Probefahrt fährt der Zug als roter Punkt in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
+                Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan.
               </p>
               {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
             </div>
@@ -424,7 +449,7 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, brille, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
@@ -432,9 +457,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, brille, className }: {
   blick?: React.MutableRefObject<THREE.Vector3 | null>
   /** auf der eigenen Seite: hier legt die Szene ab, wie sie in der Brille startet (WebXR) */
   brille?: React.MutableRefObject<(() => Promise<void>) | null>
+  /** auf der eigenen Seite: Probefahrt über die ganze Strecke; Startzeit (performance.now) oder null */
+  probe?: React.RefObject<number | null>
   className: string
 }) {
   const rahmen = useRef<HTMLDivElement>(null)
+  // bei der Probefahrt auf der eigenen Seite rechnet die Szene die Stelle des Zugs selbst,
+  // in ihrer Schleife: in der Brille läuft keine andere
+  const eigenerZug = useRef<number | null>(null)
+  const zug = zugVonAussen ?? (probe ? eigenerZug : undefined)
   const zusatz = useZusatz()
   const aus = useVersteckt()
   const ausJetzt = useRef(aus)
@@ -833,6 +864,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, brille, className }: {
         modell.position.set(0, BRILLE_TISCH_M - tiefst * s, -BRILLE_ABSTAND_M - (gross ? BRILLE_BREITE_M / 2 : 0))
         // Schilder behalten ihre Grösse, die Gruppe darüber schrumpft sie sonst mit
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] / s, grundMass[1] / s, 1)
+        const zs = Math.max(1, BRILLE_ZUG_M / (0.15 * s))
+        zugKern?.scale.setScalar(zs); zugRand?.scale.setScalar(zs)
       }
       // Trigger oder Fingertippen dreht das Modell, Greifen macht es doppelt so gross
       for (const i of [0, 1]) {
@@ -844,6 +877,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, brille, className }: {
       renderer.xr.addEventListener('sessionend', () => {
         modell.scale.setScalar(1); modell.position.set(0, 0, 0); modell.rotation.set(0, 0, 0)
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
+        zugKern?.scale.setScalar(1); zugRand?.scale.setScalar(1)
         nurBild.visible = true; nurBrille.visible = false
         szene.background = hintergrund
         groesseSetzen()
@@ -868,6 +902,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, brille, className }: {
     let laeuft = true
     const zeichnen = () => {
       if (!laeuft) return
+      if (probe && zug === eigenerZug) {
+        const start = probe.current
+        const anfang = pk[0].m, ende = pk[pk.length - 1].m
+        eigenerZug.current = start === null ? null
+          : anfang + ((((performance.now() - start) / 1000) / PROBE_DAUER_S) % 1) * (ende - anfang)
+        if (start === null) letzte = null
+      }
       if (zug && zugRand && zugKern) {
         const s = zug.current
         const sichtbar = s !== null && imStueck(s)
@@ -875,7 +916,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, brille, className }: {
         if (sichtbar) {
           const p = punkt3d(s)
           zugRand.position.copy(p); zugKern.position.copy(p)
-          if (!letzte && blick?.current) {
+          // in der Brille steht das Modell still, du schaust dem Zug von aussen zu
+          if (renderer.xr.isPresenting) letzte = null
+          else if (!letzte && blick?.current) {
             steuerung.target.copy(p)
             kamera.position.copy(p).add(blick.current)
           } else if (!letzte) {
@@ -914,6 +957,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, blick, brille, className }: {
       renderer.dispose()
       renderer.domElement.remove()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, zusatz])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }
