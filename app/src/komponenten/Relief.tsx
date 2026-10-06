@@ -93,6 +93,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                  className="mt-3 w-full overflow-hidden rounded-lg" />
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der rechten Maustaste.
+            Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
             {faktor === 2 && <span className="font-medium text-sbb-black dark:text-sbb-white"> Die Höhe ist 2-fach überhöht.</span>}
           </p>
           <Legende wegText="Linie" wegFarbe={FARBEN.linie} />
@@ -364,23 +365,30 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     }
     const imStueck = (meter: number) => weg.stuecke.some(([a, b]) => meter >= a && meter <= b)
 
-    // Beschriftungen in fester Bildschirmgrösse
-    const schild = (text: string, farbe: string, x: number, y: number, z: number) => {
+    // Beschriftungen in fester Bildschirmgrösse, auf einem hellen Schild; wo sich zwei
+    // überdecken, bleibt die mit dem kleineren Rang stehen (zeichnen() blendet die andere aus)
+    const schilder: Array<{ sp: THREE.Sprite; rang: number }> = []
+    const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number) => {
       const lw = document.createElement('canvas')
       const ctx = lw.getContext('2d')!
-      const px = 28
+      const px = 28, rand = 10
       ctx.font = `bold ${px}px Helvetica, Arial, sans-serif`
-      lw.width = Math.ceil(ctx.measureText(text).width) + 16; lw.height = px + 14
+      lw.width = Math.ceil(ctx.measureText(text).width) + 2 * rand; lw.height = px + 16
       ctx.font = `bold ${px}px Helvetica, Arial, sans-serif`
-      ctx.lineWidth = 6; ctx.strokeStyle = dunkel ? '#141414' : '#ffffff'; ctx.fillStyle = farbe
-      ctx.strokeText(text, 8, px); ctx.fillText(text, 8, px)
-      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(lw), depthTest: false, sizeAttenuation: false }))
+      ctx.fillStyle = dunkel ? 'rgba(20,20,20,0.82)' : 'rgba(255,255,255,0.85)'
+      ctx.beginPath(); ctx.roundRect(0, 0, lw.width, lw.height, 8); ctx.fill()
+      ctx.fillStyle = farbe
+      ctx.fillText(text, rand, px + 2)
+      const textur = new THREE.CanvasTexture(lw)
+      textur.colorSpace = THREE.SRGBColorSpace // sonst wirken die Farben blasser
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: textur, depthTest: false, sizeAttenuation: false }))
       const s = 0.00085
       sp.scale.set(lw.width * s, lw.height * s, 1)
       sp.center.set(0, 0)
       sp.position.set(x, y, z)
       sp.renderOrder = 3
       szene.add(sp)
+      schilder.push({ sp, rang })
     }
     const kugel = (farbe: string, x: number, y: number, z: number, groesse = 0.12, durch = false) => {
       const k = new THREE.Mesh(new THREE.SphereGeometry(groesse, 16, 10), new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch }))
@@ -389,11 +397,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       szene.add(k)
       return k
     }
-    for (const b of r.bahnhoefe) {
+    r.bahnhoefe.forEach((b, i) => {
       const y = Y(hoeheBei(r, h, b.lage[0], b.lage[1]) + UEBER_M)
       kugel(FARBEN.bahnhof, X(b.lage[0]), y, Z(b.lage[1]))
-      schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + 0.15, Z(b.lage[1]))
-    }
+      // Anfang und Ende der Strecke zuerst, dann die übrigen Bahnhöfe, dann die Gipfel
+      const ende = i === 0 || i === r.bahnhoefe.length - 1
+      schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + 0.15, Z(b.lage[1]), ende ? 0 : 1)
+    })
     for (const t of weg.tunnelPunkte.filter(imStueck)) {
       const p = punkt3d(t)
       kugel(tunnelFarbe, p.x, p.y, p.z, 0.09)
@@ -403,7 +413,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
       const kegel = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.25, 4), new THREE.MeshBasicMaterial({ color: FARBEN.gipfel }))
       kegel.position.set(X(g.lage[0]), y + 0.12, Z(g.lage[1]))
       szene.add(kegel)
-      schild(`${g.name} ${g.hoehe_m.toLocaleString('de-CH')} m`, dunkel ? '#e2c9a8' : FARBEN.gipfel, X(g.lage[0]), y + 0.3, Z(g.lage[1]))
+      schild(`${g.name} ${g.hoehe_m.toLocaleString('de-CH')} m`, dunkel ? '#e2c9a8' : FARBEN.gipfel, X(g.lage[0]), y + 0.3, Z(g.lage[1]), 2)
     }
 
     // der Zug: ein roter Punkt mit weissem Rand, auch im Tunnel sichtbar
@@ -439,6 +449,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
     const beobachter = new ResizeObserver(groesseSetzen)
     beobachter.observe(el)
 
+    // Schilder, die ein wichtigeres verdecken würden, ausblenden; bei gleichem Rang gewinnt das nähere
+    const projiziert = new THREE.Vector3()
+    const schilderOrdnen = () => {
+      const b = renderer.domElement.clientWidth, hh = renderer.domElement.clientHeight
+      const pm = kamera.projectionMatrix.elements
+      const belegt: Array<[number, number, number, number]> = []
+      const liste = schilder.map((x) => ({ ...x, abstand: x.sp.position.distanceToSquared(kamera.position) }))
+        .sort((a, c) => a.rang - c.rang || a.abstand - c.abstand)
+      for (const { sp } of liste) {
+        projiziert.copy(sp.position).project(kamera)
+        if (projiziert.z > 1 || projiziert.z < -1) { sp.visible = false; continue }
+        const breite = sp.scale.x * pm[0] * b / 2, punkt = (projiziert.x + 1) / 2 * b
+        // am rechten Rand links vom Punkt, damit der Name nicht abgeschnitten wird
+        const links = punkt + breite > b - 4
+        sp.center.set(links ? 1 : 0, 0)
+        const x0 = links ? punkt - breite : punkt, x1 = x0 + breite
+        const y1 = (1 - projiziert.y) / 2 * hh, y0 = y1 - sp.scale.y * pm[5] * hh / 2
+        const frei = !belegt.some(([a0, c0, a1, c1]) => x0 < a1 + 4 && x1 > a0 - 4 && y0 < c1 + 2 && y1 > c0 - 2)
+        sp.visible = frei
+        if (frei) belegt.push([x0, y0, x1, y1])
+      }
+    }
+
     // beim Fahren: die Kamera folgt dem Zug mit demselben Blickwinkel; am Anfang von schräg hinten
     let letzte: THREE.Vector3 | null = null
     let laeuft = true
@@ -464,6 +497,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug, className }: {
         }
       }
       steuerung.update()
+      schilderOrdnen()
       renderer.render(szene, kamera)
       requestAnimationFrame(zeichnen)
     }
