@@ -63,10 +63,11 @@ const STRICH_KM = 0.032, BAHNHOF_KM = 0.075
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
 const BRILLE_ZUG_M = 0.005
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
- *  entlang der Linie, Breite und Höhe in km; etwa elfmal grösser als ein echter Zug, sonst wäre er
+ *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
+ *  2026-10-06, Michael: «halb so gross»), sonst wäre er
  *  auf dem Gelände kaum zu sehen. Darum steht «Zug nicht massstäblich» dabei. Kein bestimmter Zugtyp. */
-const ZUG_LOK_M = 220, ZUG_WAGEN_M = 280, ZUG_WAGEN = 6, ZUG_LUECKE_M = 15
-const ZUG_BREITE = 0.09, ZUG_HOEHE = 0.1
+const ZUG_LOK_M = 110, ZUG_WAGEN_M = 140, ZUG_WAGEN = 6, ZUG_LUECKE_M = 8
+const ZUG_BREITE = 0.045, ZUG_HOEHE = 0.05
 const ZUG_GRAU = '#8c8c8c'
 /** so lange dauert die Probefahrt in der Brille über die ganze Bergstrecke, dann beginnt sie von vorn */
 const PROBE_DAUER_S = 150
