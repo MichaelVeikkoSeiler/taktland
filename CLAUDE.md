@@ -77,7 +77,8 @@ Die Regeln im Detail: `generator/SCHEMA.md`. Die Datenlage: `docs/datenlage.md`.
 ```
 pipeline/    Rohdaten laden und zu facts/{uic}.json verdichten (Python, pandas)
 generator/   Profile schreiben und prüfen
-app/         PWA (React, Vite, Tailwind)
+app/         PWA (React, Vite, Tailwind); Lizenztexte mitgelieferter Bibliotheken in app/public/lizenzen/
+             drittsoftware.txt, bei einer neuen Bibliothek dort ergänzen
 app/public/status.json  Schalter: "verfuegbar": false macht Taktland auf allen Geräten unbenutzbar
              (src/verfuegbar.ts), fehlt die Datei ebenso; ohne Empfang höchstens 30 Tage weiter
 web/         Seite für taktland.ch (reines HTML); pipeline/export_web.py stellt sie mit der App unter
@@ -197,7 +198,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_schweiz11.py   # Pool für «Geo», nach export_app
 .venv/bin/python pipeline/build_erraten.py      # Pool für «Bahnhofsuche» aus data/facts
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
-.venv/bin/python pipeline/build_relief.py       # 3D-Reliefs der Bergstrecken (lädt swissALTIRegio)
+.venv/bin/python pipeline/build_relief.py       # Bergstrecken in 3D (Ausschnitt, Linie, Bauwerke; Gelände aus den Kacheln)
 .venv/bin/python pipeline/build_gelaende.py     # Geländekacheln der ganzen Schweiz für «3D» auf jeder Fahrt
 ```
 

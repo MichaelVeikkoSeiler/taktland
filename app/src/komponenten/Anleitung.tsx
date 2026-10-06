@@ -176,7 +176,15 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             «Probefahren» spielt einen Weg ohne Zug ab, in Echtzeit oder 5- bis 200-mal
-            schneller. Das «Fahrtblatt» ist ein Druckbogen mit Karte und Liste zum Abhaken,
+            schneller.
+          </li>
+          <li>
+            «3D» auf der Karte zeigt auf jeder Fahrt und Probefahrt das Gelände rund um den Zug, zum
+            Drehen und Zoomen. Unter «3D» stehen bekannte Bergstrecken als Ganzes, mit Probefahrt. Die
+            Höhe der Gleise steht in keiner Quelle: Der Weg liegt auf dem Gelände, in Tunneln und auf
+            Brücken gerade zwischen den Enden.
+          </li>
+          <li> Das «Fahrtblatt» ist ein Druckbogen mit Karte und Liste zum Abhaken,
             auf einer oder zwei Seiten.
           </li>
         </Punkte>
@@ -247,13 +255,13 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Karten: Ortsnamen, Gipfel, Tunnel und Brücken anderer Bahnen und viele Brückenlängen
-            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen und die 3D-Reliefs aus swissALTIRegio,
+            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen und das Gelände in 3D aus swissALTIRegio,
             Seen, Flüsse, Lage der Orte, Wald und Siedlung, in Geo auch Bahnlinien und Kantonsgrenzen aus swissTLMRegio; Grenzen vom BFS, Kulturgüter vom
             BABS, Seilbahnen vom BAV, BLN, Pärke und Moorlandschaften vom BAFU. Alle frei
             nutzbar mit Quellenangabe.
           </li>
           <li>
-            Höhenstufen und 3D-Relief aus swissALTIRegio, mit der von swisstopo verlangten Quellenangabe:
+            Höhenstufen und Gelände in 3D aus swissALTIRegio, mit der von swisstopo verlangten Quellenangabe:
             Bundesamt für Landestopografie swisstopo; Tarquini S., I. Isola, M. Favalli,
             A. Battistini, G. Dotta (2023). TINITALY, a digital elevation model of Italy with a
             10 meters cell size (Version 1.1). Istituto Nazionale di Geofisica e Vulcanologia
@@ -268,6 +276,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Schrift Space Grotesk: Florian Karsten und The Space Grotesk Project Authors, unter der{' '}
             <Verweis href="./lizenzen/space-grotesk-OFL.txt">SIL Open Font License</Verweis>, in
             Taktland mitgeliefert.
+          </li>
+          <li>
+            Programmteile anderer: three.js für die 3D-Ansicht, React und qrcode-generator, alle unter
+            der MIT-Lizenz; die Lizenztexte stehen in{' '}
+            <Verweis href="./lizenzen/drittsoftware.txt">drittsoftware.txt</Verweis>.
           </li>
           <li>
             Unter jeder Zahl steht ihr Datensatz. Vor jeder Veröffentlichung gleicht ein
