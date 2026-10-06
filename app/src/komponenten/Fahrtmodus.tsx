@@ -42,6 +42,12 @@ const ABSEITS_M = 300
 const OHNE_GPS_NACH_S = 8
 /** So lange rechnet die Anzeige ohne GPS mit dem letzten Tempo weiter (Tunnel) */
 const OHNE_GPS_MAX_S = 20 * 60
+/** Im Tunnel und so weit vor dem Portal gelten nur genaue Standorte; ungenaue (Mobilfunk, WLAN)
+ *  übergeht Taktland und zieht das Tempo von vor der Einfahrt weiter (Michael, 2026-10-06: «die vor
+ *  der Tunneleinfahrt gemessene Geschwindigkeit … bei Empfangsverlust weiterziehen») */
+const TUNNEL_VOR_M = 150, TUNNEL_NACH_M = 100, GENAU_IM_TUNNEL_M = 50
+/** Tunnel ohne bekanntes Ende: so weit nach seinem Punkt gilt er als «drin» */
+const TUNNEL_OHNE_ENDE_M = 500
 /** «Ohne Ziel»: so nah am Ende des Wegs oder so lange daneben wird neu gesucht */
 const AM_ENDE_M = 150
 const NEU_SUCHEN_S = 20
@@ -251,6 +257,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   // Ein Standort kommt an: auf den Weg legen, Tempo nachführen
   function standort(t: number, lat: number, lon: number, genau: number | null, tempo: number | null) {
     const alt = standRef.current
+    // im Tunnel: einen ungenauen Standort übergehen, die Schätzung mit dem Tempo von vorher läuft weiter
+    if (alt && alt.abseits === null && (genau === null || genau > GENAU_IM_TUNNEL_M)) {
+      const geschaetzt = alt.s + alt.v * Math.max(0, (t - alt.t) / 1000)
+      const imTunnel = fahrweg.objekte.some((o) => o.art === 'tunnel'
+        && geschaetzt >= o.s - TUNNEL_VOR_M && geschaetzt <= (o.sAus ?? o.s + TUNNEL_OHNE_ENDE_M) + TUNNEL_NACH_M)
+      if (imTunnel) return
+    }
     const fenster = alt && alt.abseits === null ? [alt.s - 3000, alt.s + 30_000] : [-Infinity, Infinity]
     let p = projizieren(fahrweg, { lat, lon }, fenster[0], fenster[1])
     if (p.abstand > Math.max(ABSEITS_M, 2 * (genau ?? 0)) && alt) p = projizieren(fahrweg, { lat, lon })

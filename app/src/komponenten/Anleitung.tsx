@@ -166,8 +166,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             in der Mitte liegt.
           </li>
           <li>
-            Die Zeiten sind Schätzungen aus Standort und Tempo, im Tunnel mit dem letzten
-            Tempo. Gemeldet wird nur bei offener Seite und eingeschaltetem Bildschirm.
+            Die Zeiten sind Schätzungen aus Standort und Tempo. Im Tunnel rechnet Taktland mit dem
+            Tempo von vor der Einfahrt weiter und übergeht ungenaue Standorte, bis wieder ein genauer
+            kommt. Gemeldet wird nur bei offener Seite und eingeschaltetem Bildschirm.
             Hellblau neben dem Band: Links oder rechts liegt ein See.
           </li>
           <li>
