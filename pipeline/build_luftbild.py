@@ -21,6 +21,7 @@ liegen (Namen wie in data/strecken.json): so viel zeigt «3D» beim Fahren um de
 import json
 import subprocess
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
@@ -79,7 +80,17 @@ def laden(href):
     datei = ROH / href.rsplit("/", 1)[1]
     if not datei.exists():
         ROH.mkdir(parents=True, exist_ok=True)
-        subprocess.run(["curl", "-sf", "--retry", "3", "-o", str(datei), href], check=True)
+        # abgebrochene Verbindungen kommen vor (2026-10-07): mehrmals versuchen, halbe Dateien wegwerfen
+        teil = datei.with_suffix(".teil")
+        for versuch in range(6):
+            r = subprocess.run(["curl", "-sf", "--retry", "5", "--retry-all-errors", "-o", str(teil), href])
+            if r.returncode == 0:
+                teil.rename(datei)
+                break
+            teil.unlink(missing_ok=True)
+            time.sleep(5 * (versuch + 1))
+        else:
+            raise SystemExit(f"{href} liess sich nicht laden")
     return datei
 
 
