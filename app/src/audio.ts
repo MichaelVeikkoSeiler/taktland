@@ -352,7 +352,13 @@ const GERAEUSCH_HOECHST_MS = 44
 const STOSS_M = 25
 const ACHSEN_M = [0, 2.5, 17.5, 20]
 
-let geraeusch: { rollen: GainNode; zischen: GainNode; quellen: AudioBufferSourceNode[]; naechster: number; uhr: number; tempo: number } | null = null
+/** so lange steigt das Geräusch beim Anfahren an und klingt vor dem Ziel aus (Michael, 2026-10-07) */
+const AN_AB_S = 2.5
+
+let geraeusch: {
+  rollen: GainNode; zischen: GainNode; huelle: GainNode; quellen: AudioBufferSourceNode[]
+  naechster: number; uhr: number; tempo: number; faehrtSeit: number | null
+} | null = null
 
 function rauschenSchleife(c: AudioContext, braun: boolean) {
   const puffer = c.createBuffer(1, c.sampleRate * 2, c.sampleRate)
@@ -369,7 +375,7 @@ function rauschenSchleife(c: AudioContext, braun: boolean) {
   return q
 }
 
-function schlag(c: AudioContext, wann: number, staerke: number) {
+function schlag(c: AudioContext, ziel: AudioNode, wann: number, staerke: number) {
   const dauer = 0.07
   const puffer = c.createBuffer(1, Math.ceil(c.sampleRate * dauer), c.sampleRate)
   const d = puffer.getChannelData(0)
@@ -382,7 +388,7 @@ function schlag(c: AudioContext, wann: number, staerke: number) {
   filter.Q.value = 1.1
   const laut = c.createGain()
   laut.gain.value = staerke
-  q.connect(filter).connect(laut).connect(ausgang(c))
+  q.connect(filter).connect(laut).connect(ziel)
   q.start(wann)
   // dazu ein dumpfer Schlag
   const osc = c.createOscillator()
@@ -391,13 +397,15 @@ function schlag(c: AudioContext, wann: number, staerke: number) {
   const tief = c.createGain()
   tief.gain.setValueAtTime(staerke * 0.6, wann)
   tief.gain.exponentialRampToValueAtTime(0.0001, wann + 0.09)
-  osc.connect(tief).connect(ausgang(c))
+  osc.connect(tief).connect(ziel)
   osc.start(wann)
   osc.stop(wann + 0.1)
 }
 
-/** Das Tempo des Zugs in m/s, laufend; null oder 0 lässt das Geräusch ausklingen. Nur mit «an» und «zuggeraeusch». */
-export function zuggeraeuschTempo(ms: number | null) {
+/** Das Tempo des Zugs in m/s, laufend, und wie viele Sekunden es noch bis zum Ziel sind; null oder 0 lässt das
+ *  Geräusch ausklingen. Nur mit «an» und «zuggeraeusch». Beim Anfahren steigt es in AN_AB_S an, so lange vor dem
+ *  Ziel klingt es aus. */
+export function zuggeraeuschTempo(ms: number | null, bisZielS = Infinity) {
   const v = stand.an && stand.zuggeraeusch && ms ? Math.min(GERAEUSCH_HOECHST_MS, Math.max(0, ms)) : 0
   const c = audioKontext()
   if (!c) return
@@ -405,23 +413,33 @@ export function zuggeraeuschTempo(ms: number | null) {
     if (!geraeusch) {
       if (v < 0.5) return
       void c.resume()
-      const rollen = c.createGain(), zischen = c.createGain()
-      rollen.gain.value = 0; zischen.gain.value = 0
+      const rollen = c.createGain(), zischen = c.createGain(), huelle = c.createGain()
+      rollen.gain.value = 0; zischen.gain.value = 0; huelle.gain.value = 0
+      huelle.connect(ausgang(c))
       const tief = c.createBiquadFilter()
       tief.type = 'lowpass'; tief.frequency.value = 220
       const braun = rauschenSchleife(c, true), weiss = rauschenSchleife(c, false)
-      braun.connect(tief).connect(rollen).connect(ausgang(c))
+      braun.connect(tief).connect(rollen).connect(huelle)
       const hoch = c.createBiquadFilter()
       hoch.type = 'bandpass'; hoch.frequency.value = 2600; hoch.Q.value = 0.6
-      weiss.connect(hoch).connect(zischen).connect(ausgang(c))
+      weiss.connect(hoch).connect(zischen).connect(huelle)
       braun.start(); weiss.start()
-      geraeusch = { rollen, zischen, quellen: [braun, weiss], naechster: c.currentTime + 0.1, uhr: 0, tempo: 0 }
+      geraeusch = { rollen, zischen, huelle, quellen: [braun, weiss], naechster: c.currentTime + 0.1, uhr: 0, tempo: 0, faehrtSeit: null }
     }
     const g = geraeusch
     g.tempo = v
     const anteil = v / GERAEUSCH_HOECHST_MS
     g.rollen.gain.setTargetAtTime(0.55 * Math.sqrt(anteil), c.currentTime, 0.4)
     g.zischen.gain.setTargetAtTime(0.035 * anteil, c.currentTime, 0.4)
+    // Hülle: ab dem Anfahren in AN_AB_S auf voll, vor dem Ziel wieder hinunter; steht der Zug, beginnt es neu
+    const jetzt = c.currentTime
+    if (v < 0.5) g.faehrtSeit = null
+    else g.faehrtSeit ??= jetzt
+    const an = g.faehrtSeit === null ? 0 : Math.min(1, (jetzt - g.faehrtSeit) / AN_AB_S)
+    const ab = Math.max(0, Math.min(1, bisZielS / AN_AB_S))
+    g.huelle.gain.cancelScheduledValues(jetzt)
+    g.huelle.gain.setValueAtTime(g.huelle.gain.value, jetzt)
+    g.huelle.gain.linearRampToValueAtTime(Math.min(an, ab), jetzt + 0.25)
     if (!g.uhr) {
       // Schläge etwas im Voraus planen
       g.uhr = window.setInterval(() => {
@@ -430,7 +448,7 @@ export function zuggeraeuschTempo(ms: number | null) {
         if (g.naechster < t) g.naechster = t + 0.05
         while (g.naechster < t + 0.25) {
           const staerke = 0.25 + 0.35 * (g.tempo / GERAEUSCH_HOECHST_MS)
-          for (const a of ACHSEN_M) schlag(c, g.naechster + a / g.tempo, staerke)
+          for (const a of ACHSEN_M) schlag(c, g.huelle, g.naechster + a / g.tempo, staerke)
           g.naechster += STOSS_M / g.tempo
         }
       }, 80)
@@ -446,7 +464,7 @@ export function zuggeraeuschAus() {
   geraeusch = null
   window.clearInterval(g.uhr)
   try {
-    if (c) { g.rollen.gain.setTargetAtTime(0, c.currentTime, 0.15); g.zischen.gain.setTargetAtTime(0, c.currentTime, 0.15) }
-    window.setTimeout(() => { for (const q of g.quellen) q.stop(); g.rollen.disconnect(); g.zischen.disconnect() }, 1000)
+    if (c) g.huelle.gain.setTargetAtTime(0, c.currentTime, 0.15)
+    window.setTimeout(() => { for (const q of g.quellen) q.stop(); g.huelle.disconnect() }, 1000)
   } catch { /* nichts */ }
 }

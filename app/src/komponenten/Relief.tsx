@@ -6,7 +6,7 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, streckenLaden } from '../daten'
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
-import type { FahrObjekt, Fahrweg } from '../fahrt'
+import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
 import { lv95 } from '../relief'
 import { audioKontext, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { ausschnittLaden, fensterLaden, KEINE_HOEHE, type Luftbild, luftbildLaden } from '../gelaende'
@@ -430,10 +430,13 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   useEffect(() => {
     const uhr = window.setInterval(() => {
       const x = tempo.current
-      zuggeraeuschTempo(performance.now() - x.t > 1500 ? 0 : x.v)
+      const v = performance.now() - x.t > 1500 ? 0 : x.v
+      // bis zum Ziel am Ende des Wegs, beim Tempo jetzt (mit Zeitraffer)
+      const ende = wegEnde(fahrweg)
+      zuggeraeuschTempo(v, x.s !== null && v > 0 ? Math.max(0, ende - x.s) / v : Infinity)
     }, 250)
     return () => { window.clearInterval(uhr); zuggeraeuschAus() }
-  }, [])
+  }, [fahrweg])
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
   useEffect(() => {
     const [e, n] = lageAufWeg(fahrweg, sJetzt ?? 0)
@@ -996,32 +999,56 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           mesh(new THREE.BoxGeometry(W * 0.8, H * 0.78, luecke + 0.002), schwarz).position.set(0, unten / 2 + h / 2 - H * 0.02, -L / 2 - luecke / 2)
         }
         if (i === 0) {
-          // Kopf: von der Seite unten senkrecht, oben in einer Rundung zurück zum Dach; rot nur die Spitze
-          // (Michael, 2026-10-07: «nur bei der Spitze rot»), dahinter hell wie der Kasten
+          // Kopf: derselbe Querschnitt wie der Kasten, der nach vorne in einer Rundung niedriger wird, so geht er
+          // ohne Stufe aus dem Kasten hervor (Michael, 2026-10-07: «Siehst du die Stufe?»); rot nur die Spitze
           const z0 = L / 2 - kopf, z1 = L / 2, c = kopf * 0.75, p0y = unten + H * 0.25
-          // die Rundung: z = z1 - c·t², y von p0y bis zum Dach
-          const bei = (t: number) => new THREE.Vector2(z1 - c * t * t, (1 - t) * (1 - t) * p0y + (1 - (1 - t) * (1 - t)) * h)
-          const T = 0.62, stufen = 10
-          const vorn = [new THREE.Vector2(z1 - c * T * T, unten), new THREE.Vector2(z1, unten)]
-          for (let k = 0; k <= stufen; k++) vorn.push(bei((k / stufen) * T))
-          const hinten = [new THREE.Vector2(z0, unten), new THREE.Vector2(z1 - c * T * T, unten)]
-          for (let k = 0; k <= stufen; k++) hinten.push(bei(T + (k / stufen) * (1 - T)))
-          hinten.push(new THREE.Vector2(z0, h))
-          const rot = new THREE.MeshLambertMaterial({ color: FARBEN.zug })
-          materialien.push(rot)
-          for (const [umriss, mat] of [[hinten, hell], [vorn, rot]] as const) {
-            const fg = new THREE.ExtrudeGeometry(new THREE.Shape(umriss), { depth: W * 0.96, bevelEnabled: true, bevelThickness: W * 0.02,
-                                                                          bevelSize: W * 0.02, bevelSegments: 2 })
-            fg.translate(0, 0, -W * 0.48)
-            fg.rotateY(-Math.PI / 2)
-            mesh(fg, mat)
+          // die Rundung von der Seite: z = z1 - c·t², oben von p0y (t = 0, vorne) bis zum Dach (t = 1)
+          const zBei = (t: number) => z1 - c * t * t
+          const obenBei = (z: number) => {
+            if (z <= z1 - c) return h
+            const t = Math.sqrt((z1 - z) / c)
+            return (1 - t) * (1 - t) * p0y + (1 - (1 - t) * (1 - t)) * h
           }
-          // Frontscheibe auf der Rundung, wo sie etwa unter 33° steigt
-          const mz = 0.25 * z1 + 0.5 * z1 + 0.25 * (z1 - c), my = 0.25 * p0y + 0.75 * h
-          const tz = -c, ty = h - p0y, n = Math.hypot(tz, ty)
-          const scheibe = mesh(new THREE.BoxGeometry(W * 0.8, H * 0.03, n * 0.55), schwarz)
-          scheibe.position.set(0, my + (-tz / n) * H * 0.03, mz + (ty / n) * H * 0.03)
-          scheibe.rotation.x = Math.atan2(ty, -tz)
+          let schnitt = quer.getPoints(6)
+          if (schnitt[0].equals(schnitt[schnitt.length - 1])) schnitt = schnitt.slice(0, -1)
+          /** Ringe des Querschnitts an den Stellen zs, je nach oben gestaucht; offen = nur ein Stück des Rings */
+          const loft = (zs: number[], punkte: THREE.Vector2[], geschlossen: boolean, weiter = 1, deckel = false) => {
+            const pos: number[] = [], idx: number[] = []
+            const n = punkte.length
+            for (const z of zs) {
+              const f = (obenBei(z) - unten) / (h - unten)
+              for (const q of punkte) pos.push(q.x * weiter, unten + (q.y - unten) * f * weiter, z)
+            }
+            for (let j = 0; j < zs.length - 1; j++) {
+              for (let k = 0; k < (geschlossen ? n : n - 1); k++) {
+                const a0 = j * n + k, a1 = j * n + ((k + 1) % n), b0 = a0 + n, b1 = a1 + n
+                idx.push(a0, a1, b1, a0, b1, b0)
+              }
+            }
+            if (deckel) {
+              // vorne zu: ein Fächer um die Mitte des letzten Rings
+              const m = pos.length / 3, j = zs.length - 1
+              pos.push(0, unten + (obenBei(zs[j]) - unten) / 2, zs[j])
+              for (let k = 0; k < n; k++) idx.push(j * n + k, j * n + ((k + 1) % n), m)
+            }
+            const geo = new THREE.BufferGeometry()
+            geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+            geo.setIndex(idx)
+            geo.computeVertexNormals()
+            return geo
+          }
+          const T = 0.62, stufen = 14
+          const tReihe = (von: number, bis: number, k: number) => Array.from({ length: k + 1 }, (_, i) => von + (bis - von) * (i / k))
+          const rot = new THREE.MeshLambertMaterial({ color: FARBEN.zug, side: THREE.DoubleSide })
+          hell.side = THREE.DoubleSide
+          materialien.push(rot)
+          mesh(loft([z0, ...tReihe(1, T, 6).map(zBei)], schnitt, true), hell)
+          mesh(loft(tReihe(T, 0, stufen).map(zBei), schnitt, true, 1, true), rot)
+          // Frontscheibe: der obere Teil des Querschnitts, eng auf der Rundung
+          const scheibeSchnitt = schnitt.filter((q) => q.y >= unten + 0.55 * (h - unten))
+          const scheibe = new THREE.MeshLambertMaterial({ color: ZUG_DUNKEL, side: THREE.DoubleSide })
+          materialien.push(scheibe)
+          mesh(loft(tReihe(0.55, 0.12, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
         }
         szene.add(g)
         zugTeile.push({ netz: g, ab, laenge, materialien, drin: false })
