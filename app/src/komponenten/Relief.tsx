@@ -68,6 +68,8 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILL
 const STRICH_PX = 3.5, STRICH_INNEN = 0.5, BAHNHOF_KM = 0.075
 /** so hoch steht der Mast eines Bahnhofs, bevor er mit dem Zoom kürzer wird */
 const MAST_KM = 0.5
+/** Tunnel auf dem Bildschirm: Strich und Lücke je Kilometer Abstand der Kamera (aus 20 km 150 und 100 m) */
+const STRICH_JE_KM = 0.0075, LUECKE_JE_KM = 0.005
 /** Mast und Schild der Bahnhöfe, dunkelgrau (Michael, 2026-10-07: «wesentlich dunkler») */
 const BAHNHOF_GRAU = '#2a2a2a'
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
@@ -206,6 +208,9 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   // Probefahrt in der Brille (Michael, 2026-10-06: «Fährt der Zug auf der Brille?»): Startzeit oder null
   const probe = useRef<number | null>(null)
   const [probeLaeuft, setProbeLaeuft] = useState(false)
+  // die Stelle des Zugs bei der Probefahrt, von der Szene nachgeführt, für das Zuggeräusch
+  const probeStelle = useRef<number | null>(null)
+  const audio = useZuggeraeusch(probeStelle, weg ? weg.punkte[weg.punkte.length - 1].m : Infinity)
   const inBrille = (mitZug: boolean) => {
     setBrilleFehler(null)
     probe.current = mitZug ? performance.now() : null
@@ -236,7 +241,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
         <>
           <div className="mt-4"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
           <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
-                 probe={probe} className="mt-3 w-full overflow-hidden rounded-lg" />
+                 probe={probe} probeStelle={probeStelle} className="mt-3 w-full overflow-hidden rounded-lg" />
           {brilleMoeglich ? (
             <div className="mt-3">
               <div className="flex flex-wrap gap-2">
@@ -253,13 +258,15 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                     Probefahrt anhalten
                   </button>
                 )}
+                <GeraeuschKnopf audio={audio} className="px-4 py-2" />
               </div>
               <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
                 Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
                 auf Tischhöhe. Einen Abzug halten trägt es mit der Hand, beide Abzüge ziehen es grösser oder kleiner und drehen es;
                 der Thumbstick dreht und hebt es, die Greiftaste stellt es zurück. Mit den Händen gilt Daumen an Zeigefinger als
                 Abzug. Probefahrt: A startet, B hält an, X schneller, Y langsamer. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt ein Zug, nicht massstäblich und kein bestimmter Typ, in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
-                Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan.
+                Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan. Das Zuggeräusch ist gerechnet,
+                keine Aufnahme, und klingt höchstens wie bei etwa 160 km/h.
               </p>
               {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
             </div>
@@ -279,6 +286,42 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
         </>
       )}
     </div>
+  )
+}
+
+/**
+ * Zuggeräusch (src/audio.ts): das Tempo aus der Stelle des Zugs über die Zeit, geglättet. Kommt 1,5 s nichts
+ * Neues, steht der Zug; springt die Stelle zurück (die Probefahrt beginnt von vorn), fährt er neu an.
+ */
+function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number) {
+  const audio = useAudio()
+  useEffect(() => {
+    let alt = { s: stelle.current, t: performance.now() }, v = 0
+    const uhr = window.setInterval(() => {
+      const s = stelle.current, t = performance.now()
+      let neu = false
+      if (s !== alt.s) {
+        if (s !== null && alt.s !== null && s > alt.s) v = v ? v * 0.6 + 0.4 * ((s - alt.s) / ((t - alt.t) / 1000)) : (s - alt.s) / ((t - alt.t) / 1000)
+        else { v = 0; neu = true }
+        alt = { s, t }
+      } else if (t - alt.t > 1500) v = 0
+      zuggeraeuschTempo(neu ? 0 : v, s !== null && v > 0 ? Math.max(0, ende - s) / v : Infinity)
+    }, 250)
+    return () => { window.clearInterval(uhr); zuggeraeuschAus() }
+  }, [stelle, ende])
+  return audio
+}
+
+function GeraeuschKnopf({ audio, className }: { audio: ReturnType<typeof useAudio>; className: string }) {
+  const an = audio.zuggeraeusch && audio.an
+  return (
+    <button type="button" aria-pressed={an} disabled={!audio.an}
+            title={audio.an ? undefined : 'Die Töne sind in den Einstellungen unter Audio aus'}
+            onClick={() => { void audioKontext()?.resume(); audioSetzen({ zuggeraeusch: !audio.zuggeraeusch }) }}
+            className={`rounded-lg font-bold disabled:opacity-50 ${an
+              ? 'bg-sbb-anthracite text-white' : 'border border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'} ${className}`}>
+      Zuggeräusch {an ? 'an' : 'aus'}
+    </button>
   )
 }
 
@@ -416,27 +459,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   const zug = useRef<number | null>(sJetzt)
   const blick = useRef<THREE.Vector3 | null>(null)
   useEffect(() => { zug.current = sJetzt }, [sJetzt])
-  // Zuggeräusch: das Tempo aus der Stelle des Zugs über die Zeit, geglättet; kommt nichts Neues, steht er
-  const audio = useAudio()
-  const tempo = useRef({ s: sJetzt, t: performance.now(), v: 0 })
-  useEffect(() => {
-    const x = tempo.current, t = performance.now()
-    if (sJetzt !== null && x.s !== null && t > x.t) {
-      const v = Math.abs(sJetzt - x.s) / ((t - x.t) / 1000)
-      if (v < 2000) x.v = x.v * 0.6 + v * 0.4
-    }
-    tempo.current = { s: sJetzt, t, v: x.v }
-  }, [sJetzt])
-  useEffect(() => {
-    const uhr = window.setInterval(() => {
-      const x = tempo.current
-      const v = performance.now() - x.t > 1500 ? 0 : x.v
-      // bis zum Ziel am Ende des Wegs, beim Tempo jetzt (mit Zeitraffer)
-      const ende = wegEnde(fahrweg)
-      zuggeraeuschTempo(v, x.s !== null && v > 0 ? Math.max(0, ende - x.s) / v : Infinity)
-    }, 250)
-    return () => { window.clearInterval(uhr); zuggeraeuschAus() }
-  }, [fahrweg])
+  const ende = useMemo(() => wegEnde(fahrweg), [fahrweg])
+  const audio = useZuggeraeusch(zug, ende)
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
   useEffect(() => {
     const [e, n] = lageAufWeg(fahrweg, sJetzt ?? 0)
@@ -476,13 +500,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick}
                className="absolute inset-0 overflow-hidden" />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
-        <button type="button" aria-pressed={audio.zuggeraeusch && audio.an} disabled={!audio.an}
-                title={audio.an ? undefined : 'Die Töne sind in den Einstellungen unter Audio aus'}
-                onClick={() => { audioKontext()?.resume(); audioSetzen({ zuggeraeusch: !audio.zuggeraeusch }) }}
-                className={`absolute right-2 top-2 rounded-lg px-2.5 py-1 text-xs font-bold disabled:opacity-50 ${audio.zuggeraeusch && audio.an
-                  ? 'bg-sbb-anthracite text-white' : 'border border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
-          Zuggeräusch {audio.zuggeraeusch && audio.an ? 'an' : 'aus'}
-        </button>
+        <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 px-2.5 py-1 text-xs" />
       </div>
       <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
@@ -516,7 +534,7 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
@@ -526,12 +544,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   brille?: React.MutableRefObject<(() => Promise<void>) | null>
   /** auf der eigenen Seite: Probefahrt über die ganze Strecke; Startzeit (performance.now) oder null */
   probe?: React.RefObject<number | null>
+  /** auf der eigenen Seite: hier führt die Szene die Stelle des Zugs bei der Probefahrt nach (Zuggeräusch) */
+  probeStelle?: React.MutableRefObject<number | null>
   className: string
 }) {
   const rahmen = useRef<HTMLDivElement>(null)
   // bei der Probefahrt auf der eigenen Seite rechnet die Szene die Stelle des Zugs selbst,
   // in ihrer Schleife: in der Brille läuft keine andere
-  const eigenerZug = useRef<number | null>(null)
+  const eigenerZugHier = useRef<number | null>(null)
+  const eigenerZug = probeStelle ?? eigenerZugHier
   const zug = zugVonAussen ?? (probe ? eigenerZug : undefined)
   const zusatz = useZusatz()
   const [luftbild, setLuftbild] = useState<Luftbild | null>(null)
@@ -743,21 +764,33 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // auf dem Bildschirm eine Linie mit fester Breite in Bildpunkten, die beim Hineinzoomen nicht dicker
     // wird (Michael, 2026-10-07: «die Strecke beim Einzoomen kleiner»); in der Brille eine Röhre in Metern
     const linienMaterialien: LineMaterial[] = []
-    const roehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean) => {
+    /** gestrichelte Linien auf dem Bildschirm: Strich und Lücke wachsen mit dem Abstand der Kamera, so bleiben
+     *  sie auf dem Bildschirm gleich lang (Michael, 2026-10-07: «Wenn man näher geht … viel zu gross») */
+    const strichMaterialien: LineMaterial[] = []
+    const roehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean, wo: 'beide' | 'bild' | 'brille' = 'beide') => {
       if (punkte.length < 2) return
+      if (wo !== 'brille') bildLinie(punkte, farbe, durch)
+      if (wo !== 'bild') brillenRoehre(punkte, farbe, durch)
+    }
+    const randVon = (farbe: string) => '#' + new THREE.Color(farbe).multiplyScalar(0.4).getHexString()
+    const bildLinie = (punkte: THREE.Vector3[], farbe: string, durch: boolean) => {
       const lg = new LineGeometry()
       lg.setPositions(punkte.flatMap((p) => [p.x, p.y, p.z]))
       // aussen dunkler Rand, innen heller (Michael, 2026-10-07: «Innen heller aussen dunkler»); der innere
       // Strich kommt danach; der Rand schreibt keine Tiefe, sonst verdeckt er den inneren stellenweise
-      const rand = '#' + new THREE.Color(farbe).multiplyScalar(0.4).getHexString()
-      ;[[rand, STRICH_PX], [farbe, STRICH_PX * STRICH_INNEN]].forEach(([f, breit], k) => {
+      ;[[randVon(farbe), STRICH_PX], [farbe, STRICH_PX * STRICH_INNEN]].forEach(([f, breit], k) => {
         const lm = new LineMaterial({ color: f as string, linewidth: (breit as number) * (durch ? 0.85 : 1), depthTest: !durch,
-                                      transparent: durch, opacity: durch ? 0.9 : 1, depthWrite: k === 1 })
+                                      transparent: durch, opacity: durch ? 0.9 : 1, depthWrite: k === 1, dashed: durch })
         linienMaterialien.push(lm)
+        if (durch) strichMaterialien.push(lm)
         const strich = new Line2(lg, lm)
+        if (durch) strich.computeLineDistances()
         strich.renderOrder = (durch ? 2 : 0) + k
         nurBild.add(strich)
       })
+    }
+    const brillenRoehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean) => {
+      const rand = randVon(farbe)
       if (brille) {
         // wie auf dem Bildschirm aussen dunkel, innen heller: eine dickere Röhre von innen gesehen als Rand,
         // darin die hellere (Michael, 2026-10-07: «Die Linie in der Brille auch so machen»)
@@ -771,11 +804,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         })
       }
     }
-    /** gestrichelt (Tunnel): 150 m sichtbar, 100 m nicht (Punkte alle 50 m; Michael, 2026-10-07: «feiner») */
+    /** gestrichelt (Tunnel): auf dem Bildschirm mit dem Zoom (strichMaterialien), in der Brille 150 m sichtbar,
+     *  100 m nicht (Punkte alle 50 m; Michael, 2026-10-07: «feiner») */
     const STRICH = 3, LUECKE = 2
     const linie = (punkte: THREE.Vector3[], farbe: string, tunnel: boolean) => {
       if (!tunnel || punkte.length <= STRICH) { roehre(punkte, farbe, tunnel); return }
-      for (let i = 0; i < punkte.length - 1; i += STRICH + LUECKE) roehre(punkte.slice(i, Math.min(punkte.length, i + STRICH + 1)), farbe, true)
+      roehre(punkte, farbe, true, 'bild')
+      for (let i = 0; i < punkte.length - 1; i += STRICH + LUECKE) roehre(punkte.slice(i, Math.min(punkte.length, i + STRICH + 1)), farbe, true, 'brille')
     }
     // grau, wo der Weg selbst dunkel ist (beim Fahren), sonst wären Tunnel kaum zu unterscheiden
     const tunnelFarbe = dunkel || wegFarbe === FARBEN.weg ? '#b4b4b4' : FARBEN.tunnel
@@ -1339,6 +1374,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (!renderer.xr.isPresenting) {
         const f = zeichenMass()
         for (const z of zeichen) z.scale.setScalar(f)
+        const abstand = kamera.position.distanceTo(steuerung.target)
+        for (const lm of strichMaterialien) { lm.dashSize = abstand * STRICH_JE_KM; lm.gapSize = abstand * LUECKE_JE_KM }
         for (const { sp, y } of masten) sp.position.y = y + MAST_KM * f
       }
       if (zug) {
