@@ -73,6 +73,8 @@ const ZUG_LOK_M = 110, ZUG_WAGEN_M = 140, ZUG_WAGEN = 3, ZUG_LUECKE_M = 8
 const ZUG_BREITE = 0.045, ZUG_HOEHE = 0.05
 /** in diesem Abstand der Kamera (km) hat der Zug seine Grundgrösse; näher kleiner, weiter weg grösser */
 const ZUG_NORMAL_KM = 6
+/** beim Fahren (Fahrt und Probefahrt) ist der Zug grösser (Michael, 2026-10-07: «bei der Fahrt Live … 150 %») */
+const ZUG_FAHRT_FAKTOR = 1.5
 const ZUG_GRAU = '#8c8c8c'
 /** so lange dauert die Probefahrt in der Brille über die ganze Bergstrecke, dann beginnt sie von vorn */
 const PROBE_DAUER_S = 150
@@ -1132,7 +1134,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const sichtbar = s !== null && imStueck(s)
         // auf dem Bildschirm wächst der Zug mit dem Abstand der Kamera: beim Hineinzoomen kleiner,
         // aus der Ferne noch zu finden (Michael, 2026-10-07)
-        if (!renderer.xr.isPresenting) zugMass = zeichenMass()
+        if (!renderer.xr.isPresenting) zugMass = zeichenMass() * (zugVonAussen ? ZUG_FAHRT_FAKTOR : 1)
         zugSetzen(s)
         if (sichtbar) {
           const p = punkt3d(s)
