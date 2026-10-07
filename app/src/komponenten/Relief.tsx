@@ -582,6 +582,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const kamera = new THREE.PerspectiveCamera(40, 1, 0.1, 500)
     // durchsichtig, damit die Brille im Passthrough die Umgebung zeigt
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    // für den Zug am Tunnelportal (zugSetzen)
+    renderer.localClippingEnabled = true
     renderer.xr.enabled = !!brille
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.domElement.style.touchAction = 'none'
@@ -998,7 +1000,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     anwenden.current(ausJetzt.current)
 
     // der Zug: Lok und Wagen, jeder folgt der Linie; im Tunnel halb durchsichtig über dem Berg
-    const zugTeile: Array<{ netz: THREE.Group; ab: number; laenge: number; materialien: THREE.MeshLambertMaterial[]; drin: boolean }> = []
+    const zugTeile: Array<{ netz: THREE.Group; durch: THREE.Group; ebeneAussen: THREE.Plane; ebeneDrin: THREE.Plane; ab: number; laenge: number }> = []
     let zugMass = 1
     if (zug) {
       let ab = 0
@@ -1085,11 +1087,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           materialien.push(scheibe)
           mesh(loft(tReihe(0.55, 0.12, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
         }
-        szene.add(g)
-        zugTeile.push({ netz: g, ab, laenge, materialien, drin: false })
+        // im Tunnel derselbe Wagen halb durchsichtig über dem Berg; beide werden am Portal geschnitten, so
+        // wechselt der Wagen nicht auf einmal, sondern fliessend (Michael, 2026-10-07: «wagen für wagen … verfeinern»)
+        const ebeneAussen = new THREE.Plane(), ebeneDrin = new THREE.Plane()
+        const durch = g.clone()
+        const ersatz = new Map<THREE.Material, THREE.Material>()
+        durch.traverse((o) => {
+          if (!(o instanceof THREE.Mesh)) return
+          const alt = o.material as THREE.Material
+          if (!ersatz.has(alt)) {
+            const m = alt.clone()
+            m.transparent = true; m.opacity = 0.55; m.depthTest = false; m.clippingPlanes = [ebeneDrin]
+            ersatz.set(alt, m)
+          }
+          o.material = ersatz.get(alt)!
+          o.renderOrder = 5
+        })
+        for (const m of materialien) m.clippingPlanes = [ebeneAussen]
+        szene.add(g, durch)
+        zugTeile.push({ netz: g, durch, ebeneAussen, ebeneDrin, ab, laenge })
         ab += laenge + ZUG_LUECKE_M
       }
     }
+    const oben = new THREE.Vector3(0, 1, 0), richtungZug = new THREE.Vector3()
     /** die Lok vorne bei s, die Wagen dahinter, je mit seiner Mitte auf der Linie */
     const zugSetzen = (s: number | null) => {
       for (const t of zugTeile) {
@@ -1097,6 +1117,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const mitte = s === null ? 0 : s - t.ab * zugMass - halb
         const sichtbar = s !== null && imStueck(mitte)
         t.netz.visible = sichtbar
+        t.durch.visible = false
         if (!sichtbar) continue
         const a = punkt3d(Math.max(pk[0].m, mitte - halb)), b = punkt3d(Math.min(pk[pk.length - 1].m, mitte + halb))
         t.netz.position.copy(a).add(b).multiplyScalar(0.5)
@@ -1105,11 +1126,28 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const dx = b.x - a.x, dy = b.y - a.y, dz = b.z - a.z, flach = Math.hypot(dx, dz)
         if (flach > 0) t.netz.rotation.set(-Math.max(-ZUG_NEIGUNG_MAX, Math.min(ZUG_NEIGUNG_MAX, Math.atan2(dy, flach))), Math.atan2(dx, dz), 0, 'YXZ')
         t.netz.scale.setScalar(zugMass)
-        const drin = weg.bauwerke.some((x) => x.art === 'tunnel' && mitte >= x.von && mitte <= x.bis)
-        if (drin !== t.drin) {
-          t.drin = drin
-          for (const m of t.materialien) { m.transparent = drin; m.opacity = drin ? 0.55 : 1; m.depthTest = !drin; m.needsUpdate = true }
-          t.netz.traverse((o) => { o.renderOrder = drin ? 5 : 0 })
+        t.durch.position.copy(t.netz.position); t.durch.rotation.copy(t.netz.rotation); t.durch.scale.copy(t.netz.scale)
+        // ein Wagen ganz draussen, ganz drin oder über einem Portal; dort schneidet eine Ebene quer zur Linie
+        const von = mitte - halb, bis = mitte + halb
+        const tunnel = weg.bauwerke.filter((x) => x.art === 'tunnel' && x.bis > von && x.von < bis)
+        const ganzDrin = tunnel.some((x) => x.von <= von && x.bis >= bis)
+        // ohne Schnitt: Ebenen weit weg, die nichts abschneiden bzw. alles
+        t.ebeneAussen.set(oben, 1e6); t.ebeneDrin.set(oben, 1e6)
+        if (ganzDrin) { t.netz.visible = false; t.durch.visible = true }
+        else if (tunnel.length) {
+          // das nächste Portal im Wagen: Einfahrt (der Tunnel liegt vorn) oder Ausfahrt (er liegt hinten)
+          const x = tunnel[0]
+          const einfahrt = x.von > von
+          const sp = einfahrt ? x.von : x.bis
+          const p = punkt3d(sp), q = punkt3d(Math.min(pk[pk.length - 1].m, sp + 5))
+          const vorn = richtungZug.copy(q).sub(p).normalize()
+          // three.js schneidet weg, was auf der negativen Seite liegt
+          t.ebeneAussen.setFromNormalAndCoplanarPoint(einfahrt ? vorn.clone().negate() : vorn, p)
+          t.ebeneDrin.setFromNormalAndCoplanarPoint(einfahrt ? vorn : vorn.clone().negate(), p)
+          // in der Brille steht alles in einem verschobenen Modell: die Ebenen in Weltkoordinaten
+          const welt = t.netz.parent?.matrixWorld
+          if (welt) { t.ebeneAussen.applyMatrix4(welt); t.ebeneDrin.applyMatrix4(welt) }
+          t.durch.visible = true
         }
       }
     }
