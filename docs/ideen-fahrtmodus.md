@@ -456,6 +456,10 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
 
 ## Brille (Michael, 2026-10-06: «für die Merkliste»)
 
+- **Brille beim Fahren in der ganzen Schweiz** (Michael, 2026-10-07: «Funktioniert die Brille überall?»,
+  dann «Auf die Merkliste»): heute gibt es «In der Brille ansehen» nur auf den Seiten der Bergstrecken.
+  Die 3D-Ansicht beim Fahren und bei Probefahrten (30 km um den Zug, wandert mit) hätte dieselbe Szene;
+  zu klären ist, wie das Modell auf dem Tisch mitwandert, ohne dass es in der Brille springt.
 - **In den Zug wechseln:** Bei der Probefahrt in der Brille die Sicht eines Fahrgasts einnehmen,
   also vom Modell auf dem Tisch in den Zug wechseln und die Strecke von dort aus sehen. Zu klären:
   - In der Brille wird es leicht übel, wenn sich die Sicht bewegt, ohne dass man sich selbst bewegt.
