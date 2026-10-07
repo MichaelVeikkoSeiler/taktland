@@ -267,7 +267,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                 der Thumbstick dreht und hebt es, die Greiftaste stellt es zurück. Mit den Händen gilt Daumen an Zeigefinger als
                 Abzug. Probefahrt: A startet, B hält an, X schneller, Y langsamer. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt ein Zug, nicht massstäblich und kein bestimmter Typ, in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
                 Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan. Das Zuggeräusch ist gerechnet,
-                keine Aufnahme, und klingt höchstens wie bei etwa 160 km/h.
+                keine Aufnahme; im Zeitraffer klingt es langsamer, als der Zug fährt.
               </p>
               {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
             </div>

@@ -345,9 +345,27 @@ export function schreibmaschineHoeren() {
  * Zuggeräusch in der 3D-Ansicht (Michael, 2026-10-07: «ein typisches Zuggeräusch optional»): ein tiefes Rollen
  * aus gefiltertem Rauschen, darüber ein leises Zischen, und an jedem Schienenstoss das Schlagen der Räder,
  * zwei Drehgestelle mit je zwei Achsen: «ta-dam … ta-dam». Kein aufgenommener Zug, alles gerechnet; es
- * folgt dem Tempo, im Zeitraffer höchstens wie bei GERAEUSCH_HOECHST_MS, und schweigt, wenn der Zug steht.
+ * folgt dem Tempo (KLANG_TEMPO), im Zeitraffer gestaucht, und schweigt, wenn der Zug steht.
  */
-const GERAEUSCH_HOECHST_MS = 44
+/**
+ * Wie schnell das Geräusch klingt, je nach Tempo in km/h: im Zeitraffer gestaucht, sonst rattert es nur noch.
+ * 2000 klang richtig (Michael, 2026-10-07), langsamer soll es langsamer klingen, 5000 noch etwas schneller,
+ * darüber bleibt es dabei. Zwischen den Punkten im Logarithmus des Tempos.
+ */
+const KLANG_TEMPO: Array<[number, number]> = [[100, 80], [500, 115], [1000, 140], [2000, 160], [5000, 200]]
+const GERAEUSCH_HOECHST_MS = 200 / 3.6
+/** ab diesem Klangtempo (wie bei 2000 km/h) volle Lautstärke, wie bisher */
+const VOLL_MS = 160 / 3.6
+
+function klangTempo(ms: number) {
+  const kmh = ms * 3.6
+  if (kmh <= KLANG_TEMPO[0][0]) return (kmh * KLANG_TEMPO[0][1]) / KLANG_TEMPO[0][0] / 3.6
+  for (let i = 1; i < KLANG_TEMPO.length; i++) {
+    const [a, ka] = KLANG_TEMPO[i - 1], [b, kb] = KLANG_TEMPO[i]
+    if (kmh <= b) return (ka + ((kb - ka) * Math.log(kmh / a)) / Math.log(b / a)) / 3.6
+  }
+  return GERAEUSCH_HOECHST_MS
+}
 /** Abstand der Schienenstösse und wo die Achsen eines Wagens sie treffen, in Metern */
 const STOSS_M = 25
 const ACHSEN_M = [0, 2.5, 17.5, 20]
@@ -410,7 +428,7 @@ export type GeraeuschOrt = 'tunnel' | 'bruecke' | null
  *  Geräusch ausklingen. Nur mit «an» und «zuggeraeusch». Beim Anfahren steigt es in AN_AB_S an, so lange vor dem
  *  Ziel klingt es aus. */
 export function zuggeraeuschTempo(ms: number | null, bisZielS = Infinity, ort: GeraeuschOrt = null) {
-  const v = stand.an && stand.zuggeraeusch && ms ? Math.min(GERAEUSCH_HOECHST_MS, Math.max(0, ms)) : 0
+  const v = stand.an && stand.zuggeraeusch && ms ? klangTempo(Math.max(0, ms)) : 0
   const c = audioKontext()
   if (!c) return
   try {
@@ -441,7 +459,7 @@ export function zuggeraeuschTempo(ms: number | null, bisZielS = Infinity, ort: G
     }
     const g = geraeusch
     g.tempo = v
-    const anteil = v / GERAEUSCH_HOECHST_MS
+    const anteil = Math.min(1, v / VOLL_MS)
     g.rollen.gain.setTargetAtTime(0.55 * Math.sqrt(anteil), c.currentTime, 0.4)
     g.zischen.gain.setTargetAtTime(0.035 * anteil * (ort === 'tunnel' ? 0.5 : 1), c.currentTime, 0.4)
     // im Tunnel dumpfer, lauter und mit Widerhall; auf der Brücke hohl, mit mehr Bauch
@@ -465,8 +483,9 @@ export function zuggeraeuschTempo(ms: number | null, bisZielS = Infinity, ort: G
         const t = c.currentTime
         if (g.tempo < 0.5) { g.naechster = t + 0.1; return }
         if (g.naechster < t) g.naechster = t + 0.05
-        while (g.naechster < t + 0.25) {
-          const staerke = 0.25 + 0.35 * (g.tempo / GERAEUSCH_HOECHST_MS)
+        // eine halbe Sekunde im Voraus: stockt die Seite kurz (die Szene baut das Gelände neu), fehlen keine Schläge
+        while (g.naechster < t + 0.5) {
+          const staerke = 0.25 + 0.35 * Math.min(1, g.tempo / VOLL_MS)
           for (const a of ACHSEN_M) schlag(c, g.huelle, g.naechster + a / g.tempo, staerke)
           g.naechster += STOSS_M / g.tempo
         }
