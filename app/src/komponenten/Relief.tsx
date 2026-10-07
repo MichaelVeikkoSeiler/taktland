@@ -80,7 +80,8 @@ const ZUG_FAHRT_FAKTOR = 1.5
 const ZUG_NEIGUNG_MAX = 0.12
 /** Höhe der Linie: alle HOEHE_SCHRITT_M aus dem Gelände, gemittelt über GLAETTEN_M davor und danach */
 const HOEHE_SCHRITT_M = 50, GLAETTEN_M = 400
-const ZUG_GRAU = '#8c8c8c'
+/** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
+const ZUG_HELL = '#dcdcdc', ZUG_DUNKEL = '#2e2e2e'
 /** so lange dauert die Probefahrt in der Brille über die ganze Bergstrecke, dann beginnt sie von vorn */
 const PROBE_DAUER_S = 150
 /** so nah (km) an der Kamera erscheinen die Namen der Kulturgüter */
@@ -881,28 +882,53 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       for (let i = 0; i <= ZUG_WAGEN; i++) {
         const laenge = i === 0 ? ZUG_LOK_M : ZUG_WAGEN_M
         const g = new THREE.Group()
-        const grau = new THREE.MeshLambertMaterial({ color: ZUG_GRAU })
-        const materialien = [grau]
-        const L = laenge / 1000
+        // hell mit dunklem Fensterband, dunklen Übergängen und karminrotem, gerundetem Kopf
+        // (Michael, 2026-10-07: «den Zug in diesem Design»); kein bestimmter Zugtyp
+        const W = ZUG_BREITE, H = ZUG_HOEHE, L = laenge / 1000, h = H / 2
+        const hell = new THREE.MeshLambertMaterial({ color: ZUG_HELL })
+        const schwarz = new THREE.MeshLambertMaterial({ color: ZUG_DUNKEL })
+        const materialien = [hell, schwarz]
+        const mesh = (geo: THREE.BufferGeometry, mat: THREE.Material) => { const n = new THREE.Mesh(geo, mat); g.add(n); return n }
+        // Kasten: Querschnitt mit gerundetem Dach, über dem Fahrwerk
+        const unten = -h + H * 0.14, r = W * 0.32
+        const quer = new THREE.Shape()
+        quer.moveTo(-W / 2, unten); quer.lineTo(W / 2, unten); quer.lineTo(W / 2, h - r)
+        quer.quadraticCurveTo(W / 2, h, W / 2 - r, h); quer.lineTo(-W / 2 + r, h)
+        quer.quadraticCurveTo(-W / 2, h, -W / 2, h - r); quer.closePath()
+        // vorne bei der Lok ein Stück frei für den Kopf
+        const kopf = i === 0 ? H * 1.6 : 0
+        const kasten = new THREE.ExtrudeGeometry(quer, { depth: L - kopf, bevelEnabled: false, curveSegments: 4 })
+        kasten.translate(0, 0, -L / 2)
+        mesh(kasten, hell)
+        // Fahrwerk dunkel und etwas schmaler
+        mesh(new THREE.BoxGeometry(W * 0.86, unten + h, L * 0.96), schwarz).position.y = (-h + unten) / 2
+        // Fensterband auf beiden Seiten, knapp vor der Wand
+        const band = new THREE.BoxGeometry(W * 1.03, H * 0.22, (L - kopf) * 0.92)
+        mesh(band, schwarz).position.set(0, h - r - H * 0.08, -kopf / 2)
+        // Übergang zum nächsten Wagen
+        if (i < ZUG_WAGEN) {
+          const luecke = ZUG_LUECKE_M / 1000
+          mesh(new THREE.BoxGeometry(W * 0.8, H * 0.78, luecke + 0.002), schwarz).position.set(0, unten / 2 + h / 2 - H * 0.02, -L / 2 - luecke / 2)
+        }
         if (i === 0) {
-          // die Lok: grauer Kasten und davor die karminrote Front, die sich nicht überlappen (sonst flackert es,
-          // Michael, 2026-10-07); die ganze Stirn unter 45° schräg wie bei einem Schnellzug: unten vorn,
-          // oben um die Höhe des Zugs zurückgesetzt
-          const c = ZUG_HOEHE, f = c * 1.2
-          const kasten = new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE, ZUG_HOEHE, L - f), grau)
-          kasten.position.z = -f / 2
-          g.add(kasten)
-          const z0 = L / 2 - f, z1 = L / 2, h = ZUG_HOEHE / 2
-          const profil = new THREE.Shape([new THREE.Vector2(z0, -h), new THREE.Vector2(z1, -h), new THREE.Vector2(z1 - c, h),
-                                          new THREE.Vector2(z0, h)])
-          const fg = new THREE.ExtrudeGeometry(profil, { depth: ZUG_BREITE, bevelEnabled: false })
-          fg.translate(0, 0, -ZUG_BREITE / 2)
+          // Kopf: von der Seite unten senkrecht, oben in einer Rundung zurück zum Dach
+          const z0 = L / 2 - kopf, z1 = L / 2, c = kopf * 0.75
+          const seite = new THREE.Shape()
+          seite.moveTo(z0, unten); seite.lineTo(z1, unten); seite.lineTo(z1, unten + H * 0.25)
+          seite.quadraticCurveTo(z1, h, z1 - c, h); seite.lineTo(z0, h); seite.closePath()
+          const fg = new THREE.ExtrudeGeometry(seite, { depth: W * 0.96, bevelEnabled: true, bevelThickness: W * 0.02,
+                                                      bevelSize: W * 0.02, bevelSegments: 2, curveSegments: 8 })
+          fg.translate(0, 0, -W * 0.48)
           fg.rotateY(-Math.PI / 2)
           const rot = new THREE.MeshLambertMaterial({ color: FARBEN.zug })
           materialien.push(rot)
-          g.add(new THREE.Mesh(fg, rot))
-        } else {
-          g.add(new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE, ZUG_HOEHE, L), grau))
+          mesh(fg, rot)
+          // Frontscheibe auf der Rundung, wo sie etwa unter 33° steigt
+          const p0y = unten + H * 0.25, mz = 0.25 * z1 + 0.5 * z1 + 0.25 * (z1 - c), my = 0.25 * p0y + 0.75 * h
+          const tz = -c, ty = h - p0y, n = Math.hypot(tz, ty)
+          const scheibe = mesh(new THREE.BoxGeometry(W * 0.8, H * 0.03, n * 0.55), schwarz)
+          scheibe.position.set(0, my + (-tz / n) * H * 0.03, mz + (ty / n) * H * 0.03)
+          scheibe.rotation.x = Math.atan2(ty, -tz)
         }
         szene.add(g)
         zugTeile.push({ netz: g, ab, laenge, materialien, drin: false })
