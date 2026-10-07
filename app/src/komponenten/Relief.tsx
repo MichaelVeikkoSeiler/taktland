@@ -834,14 +834,25 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const g = new THREE.Group()
         const grau = new THREE.MeshLambertMaterial({ color: ZUG_GRAU })
         const materialien = [grau]
-        g.add(new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE, ZUG_HOEHE, laenge / 1000), grau))
+        const L = laenge / 1000
         if (i === 0) {
-          // die karminrote Front der Lok, vorne in Fahrtrichtung
+          // die Lok: grauer Kasten und davor die karminrote Front, die sich nicht überlappen (sonst flackert es,
+          // Michael, 2026-10-07); die Spitze unten unter 45° abgeschrägt
+          const f = L * 0.2, c = Math.min(f, ZUG_HOEHE * 0.6)
+          const kasten = new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE, ZUG_HOEHE, L - f), grau)
+          kasten.position.z = -f / 2
+          g.add(kasten)
+          const z0 = L / 2 - f, z1 = L / 2, h = ZUG_HOEHE / 2
+          const profil = new THREE.Shape([new THREE.Vector2(z0, -h), new THREE.Vector2(z1 - c, -h), new THREE.Vector2(z1, -h + c),
+                                          new THREE.Vector2(z1, h), new THREE.Vector2(z0, h)])
+          const fg = new THREE.ExtrudeGeometry(profil, { depth: ZUG_BREITE, bevelEnabled: false })
+          fg.translate(0, 0, -ZUG_BREITE / 2)
+          fg.rotateY(-Math.PI / 2)
           const rot = new THREE.MeshLambertMaterial({ color: FARBEN.zug })
           materialien.push(rot)
-          const front = new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE * 1.04, ZUG_HOEHE * 1.04, laenge * 0.2 / 1000), rot)
-          front.position.z = laenge * 0.4 / 1000
-          g.add(front)
+          g.add(new THREE.Mesh(fg, rot))
+        } else {
+          g.add(new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE, ZUG_HOEHE, L), grau))
         }
         szene.add(g)
         zugTeile.push({ netz: g, ab, laenge, materialien, drin: false })
