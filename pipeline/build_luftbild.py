@@ -12,6 +12,8 @@ Die 2-m-Kacheln landen in data/raw/swissimage/ (nicht in Git) und werden nur ein
 
     .venv/bin/python pipeline/build_luftbild.py albula        # die Kacheln einer Bergstrecke
     .venv/bin/python pipeline/build_luftbild.py --orte Gümmenen Müntschemier   # rund um Bahnhöfe
+    .venv/bin/python pipeline/build_luftbild.py --alle        # alle Geländekacheln (Michael, 2026-10-07:
+                                                              # «ganze Schweiz»), Rohbilder je Kachel gelöscht
 
 Mit --orte alle Kacheln, die höchstens FAHRT_RAND_M neben dem Rechteck um die genannten Bahnhöfe
 liegen (Namen wie in data/strecken.json): so viel zeigt «3D» beim Fahren um den Zug.
@@ -81,7 +83,7 @@ def laden(href):
     return datei
 
 
-def kachel_bauen(ex, ny):
+def kachel_bauen(ex, ny, roh_loeschen=False):
     km = km_kacheln(ex, ny)
     bild = np.full((PIXEL, PIXEL, 3), 255, np.uint8)
     with ThreadPoolExecutor(16) as pool:
@@ -92,6 +94,8 @@ def kachel_bauen(ex, ny):
         i0 = (ke - ex * KACHEL_M // 1000) * JE_KM
         j0 = ((ny + 1) * KACHEL_M // 1000 - kn - 1) * JE_KM
         bild[j0:j0 + JE_KM, i0:i0 + JE_KM] = np.transpose(a, (1, 2, 0))
+        if roh_loeschen:
+            datei.unlink()
     ZIEL.mkdir(parents=True, exist_ok=True)
     Image.fromarray(bild).save(ZIEL / f"{ex}_{ny}.jpg", quality=78, optimize=True, progressive=True)
     jahre = sorted({j for j, _ in km.values()})
@@ -126,7 +130,11 @@ def kacheln_um_orte(orte):
 
 def main():
     args = sys.argv[1:] or ["albula"]
-    if args[0] == "--orte":
+    roh_loeschen = args[0] == "--alle"
+    if args[0] == "--alle":
+        ix_g = json.loads((ROOT / "data" / "gelaende" / "index.json").read_text(encoding="utf-8"))
+        gruppen = [[tuple(int(x) for x in k.split("_")) for k in ix_g["kacheln"]]]
+    elif args[0] == "--orte":
         gruppen = [kacheln_um_orte(args[1:])]
     else:
         gruppen = [kacheln_fuer(name) for name in args]
@@ -137,8 +145,13 @@ def main():
             k = f"{ex}_{ny}"
             if k in ix["kacheln"] and (ZIEL / f"{k}.jpg").exists():
                 continue
-            info = kachel_bauen(ex, ny)
+            info = kachel_bauen(ex, ny, roh_loeschen)
+            if not info["km"]:
+                (ZIEL / f"{k}.jpg").unlink()
+                continue
             ix["kacheln"][k] = info
+            # nach jeder Kachel festhalten, damit ein abgebrochener Lauf dort weitermacht
+            ix_datei.write_text(json.dumps(ix, ensure_ascii=False, indent=0), encoding="utf-8")
             print(f"{k}: {info['km']} km², Jahre {info['jahre']}, {(ZIEL / f'{k}.jpg').stat().st_size / 1024:.0f} KB")
     ix.update({
         "quelle": "SWISSIMAGE 10 cm, Bundesamt für Landestopografie swisstopo, gemittelt auf 10 m",
