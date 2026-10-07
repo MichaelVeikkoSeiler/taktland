@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { Line2 } from 'three/examples/jsm/lines/Line2.js'
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, streckenLaden } from '../daten'
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import type { FahrObjekt, Fahrweg } from '../fahrt'
@@ -59,15 +62,17 @@ const UEBER_M = 25
  *  Tischhöhe, so weit vor dir; Linien so dick, dass sie auf diese Grösse noch zu sehen sind */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILLE_LINIE_M = 0.0012
 /** Radius der Linie und der Bahnhöfe auf dem Bildschirm in km (Michael, 2026-10-06: «ziemlich fett», vorher 60 und 120 m) */
-const STRICH_KM = 0.032, BAHNHOF_KM = 0.075
+const STRICH_PX = 4, BAHNHOF_KM = 0.075
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
 const BRILLE_ZUG_M = 0.005
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
  *  2026-10-06, Michael: «halb so gross»), sonst wäre er
  *  auf dem Gelände kaum zu sehen. Darum steht «Zug nicht massstäblich» dabei. Kein bestimmter Zugtyp. */
-const ZUG_LOK_M = 110, ZUG_WAGEN_M = 140, ZUG_WAGEN = 6, ZUG_LUECKE_M = 8
+const ZUG_LOK_M = 110, ZUG_WAGEN_M = 140, ZUG_WAGEN = 3, ZUG_LUECKE_M = 8
 const ZUG_BREITE = 0.045, ZUG_HOEHE = 0.05
+/** in diesem Abstand der Kamera (km) hat der Zug seine Grundgrösse; näher kleiner, weiter weg grösser */
+const ZUG_NORMAL_KM = 6
 const ZUG_GRAU = '#8c8c8c'
 /** so lange dauert die Probefahrt in der Brille über die ganze Bergstrecke, dann beginnt sie von vorn */
 const PROBE_DAUER_S = 150
@@ -649,16 +654,25 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const nurBild = new THREE.Group(), nurBrille = new THREE.Group()
     nurBrille.visible = false
     szene.add(nurBild, nurBrille)
+    // auf dem Bildschirm eine Linie mit fester Breite in Bildpunkten, die beim Hineinzoomen nicht dicker
+    // wird (Michael, 2026-10-07: «die Strecke beim Einzoomen kleiner»); in der Brille eine Röhre in Metern
+    const linienMaterialien: LineMaterial[] = []
     const roehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean) => {
       if (punkte.length < 2) return
-      // Röhre statt Linie: Linien sind in WebGL nur 1 Pixel breit
-      const kurve = new THREE.CatmullRomCurve3(punkte)
-      const material = new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch, transparent: durch, opacity: durch ? 0.75 : 1 })
-      const radien: Array<[number, THREE.Group]> = [[STRICH_KM, nurBild], ...(brille ? [[BRILLE_LINIE_M / brilleMass, nurBrille] as [number, THREE.Group]] : [])]
-      for (const [radius, ort] of radien) {
-        const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, Math.max(4, punkte.length * 2), radius, 6, false), material)
+      const lg = new LineGeometry()
+      lg.setPositions(punkte.flatMap((p) => [p.x, p.y, p.z]))
+      const lm = new LineMaterial({ color: farbe, linewidth: durch ? STRICH_PX - 1 : STRICH_PX, depthTest: !durch,
+                                    transparent: durch, opacity: durch ? 0.75 : 1 })
+      linienMaterialien.push(lm)
+      const strich = new Line2(lg, lm)
+      if (durch) strich.renderOrder = 2
+      nurBild.add(strich)
+      if (brille) {
+        const kurve = new THREE.CatmullRomCurve3(punkte)
+        const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, Math.max(4, punkte.length * 2), BRILLE_LINIE_M / brilleMass, 6, false),
+          new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch, transparent: durch, opacity: durch ? 0.75 : 1 }))
         if (durch) netz.renderOrder = 2
-        ort.add(netz)
+        nurBrille.add(netz)
       }
     }
     /** gestrichelt (Tunnel): 400 m sichtbar, 250 m nicht (Punkte alle 50 m) */
@@ -709,11 +723,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       ort.add(sp)
       schilder.push({ sp, rang, folge, grundMass: [sp.scale.x, sp.scale.y] })
     }
+    /** Zeichen, die auf dem Bildschirm mit dem Zug beim Hineinzoomen kleiner werden */
+    const zeichen: THREE.Object3D[] = []
     const kugel = (farbe: string, x: number, y: number, z: number, groesse = 0.12, durch = false) => {
       const k = new THREE.Mesh(new THREE.SphereGeometry(groesse, 16, 10), new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch }))
       k.position.set(x, y, z)
       if (durch) k.renderOrder = 4
       szene.add(k)
+      zeichen.push(k)
       return k
     }
     // Reihenfolge der Bahnhöfe zwischen den Enden durch Halbieren: zuerst der mittlere, dann die
@@ -743,6 +760,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const kegel = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.25, 4), new THREE.MeshBasicMaterial({ color: FARBEN.gipfel }))
       kegel.position.set(X(g.lage[0]), y + 0.12, Z(g.lage[1]))
       gruppen.gipfel.add(kegel)
+      zeichen.push(kegel)
       schild(g.hoehe_m != null ? `${g.name} ${g.hoehe_m.toLocaleString('de-CH')} m` : g.name, dunkel ? '#e2c9a8' : FARBEN.gipfel, X(g.lage[0]), y + 0.3, Z(g.lage[1]), 2, 0, gruppen.gipfel)
     }
 
@@ -777,6 +795,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const raute = new THREE.Mesh(new THREE.OctahedronGeometry(0.08), new THREE.MeshBasicMaterial({ color: dunkel ? '#c39be0' : '#6b3fa0' }))
       raute.position.set(X(e), y + 0.08, Z(n))
       gruppen.kgs.add(raute)
+      zeichen.push(raute)
       schild(k.name, dunkel ? '#c39be0' : '#6b3fa0', X(e), y + 0.18, Z(n), 3, 0, gruppen.kgs)
     }
     for (const b of zusatz?.s?.seilbahnen ?? []) {
@@ -879,6 +898,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const hh = zug ? el.clientHeight : Math.round(Math.min(window.innerHeight * 0.7, b * 1.1))
       if (!b || !hh) return
       renderer.setSize(b, hh)
+      for (const lm of linienMaterialien) lm.resolution.set(b, hh)
       kamera.aspect = b / hh
       kamera.updateProjectionMatrix()
     }
@@ -1075,6 +1095,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         renderer.xr.setReferenceSpaceType('local-floor')
         await renderer.xr.setSession(sitzung)
         setzen()
+        for (const z of zeichen) z.scale.setScalar(1)
         nurBild.visible = false; nurBrille.visible = true
         szene.background = ar ? null : hintergrund
       }
@@ -1084,6 +1105,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     let letzte: THREE.Vector3 | null = null
     let laeuft = true
     const uhr = new THREE.Clock()
+    const zeichenMass = () => Math.min(2, Math.max(0.15, kamera.position.distanceTo(steuerung.target) / ZUG_NORMAL_KM))
     const zeichnen = () => {
       if (!laeuft) return
       const dt = Math.min(0.1, uhr.getDelta())
@@ -1103,9 +1125,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         eigenerZug.current = fahrt.s
         if (fahrt.s === null) letzte = null
       }
+      // Bahnhöfe, Gipfel und Kulturgüter gleich: aus der Nähe kleiner, aus der Ferne grösser
+      if (!renderer.xr.isPresenting) { const f = zeichenMass(); for (const z of zeichen) z.scale.setScalar(f) }
       if (zug) {
         const s = zug.current
         const sichtbar = s !== null && imStueck(s)
+        // auf dem Bildschirm wächst der Zug mit dem Abstand der Kamera: beim Hineinzoomen kleiner,
+        // aus der Ferne noch zu finden (Michael, 2026-10-07)
+        if (!renderer.xr.isPresenting) zugMass = zeichenMass()
         zugSetzen(s)
         if (sichtbar) {
           const p = punkt3d(s)
