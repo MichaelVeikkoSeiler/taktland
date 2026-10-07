@@ -171,7 +171,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),
              auf 10 m gemittelt, JPEG im 10-km-Raster der Geländekacheln, je km der neueste Jahrgang, die Jahre
              je Kachel in index.json (pipeline/build_luftbild.py; vorerst die Albula und mit --orte 15 km rund um
-             Gümmenen–Müntschemier für «3D» beim Fahren, zusammen 8,4 MB; die 2-m-Kacheln in
+             Neuchâtel–Bern für «3D» beim Fahren, zusammen 13,7 MB; die 2-m-Kacheln in
              data/raw/swissimage, nicht in Git); in der App ein Knopf «Luftbild», Gebiete darauf nur als Umriss
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
