@@ -67,8 +67,8 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILL
 const STRICH_PX = 3.5, STRICH_INNEN = 0.5, BAHNHOF_KM = 0.075
 /** so hoch steht der Mast eines Bahnhofs, bevor er mit dem Zoom kürzer wird */
 const MAST_KM = 0.5
-/** Mast und Schild der Bahnhöfe */
-const ANTHRAZIT = '#5a5a5a'
+/** Mast und Schild der Bahnhöfe, dunkelgrau (Michael, 2026-10-07: «wesentlich dunkler») */
+const BAHNHOF_GRAU = '#2a2a2a'
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
 const BRILLE_ZUG_M = 0.005
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
@@ -773,13 +773,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const lw = document.createElement('canvas')
       const ctx = lw.getContext('2d')!
       const px = 28, rand = 10
-      // Bahnhöfe: eckiges Schild in Anthrazit, weisse, dünnere Schrift (Michael, 2026-10-07)
+      // Bahnhöfe: eckiges Schild in Dunkelgrau, weisse, dünnere Schrift (Michael, 2026-10-07)
       const schrift = `${ortsschild ? 'normal' : 'bold'} ${px}px Helvetica, Arial, sans-serif`
       ctx.font = schrift
       lw.width = Math.ceil(ctx.measureText(text).width) + 2 * rand; lw.height = px + 16
       ctx.font = schrift
       if (ortsschild) {
-        ctx.fillStyle = ANTHRAZIT
+        ctx.fillStyle = BAHNHOF_GRAU
         ctx.fillRect(0, 0, lw.width, lw.height)
       } else {
         ctx.fillStyle = dunkel ? 'rgba(20,20,20,0.82)' : 'rgba(255,255,255,0.85)'
@@ -823,7 +823,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // Bahnhöfe als dünner Mast senkrecht in den Himmel, oben das Schild mit dem Namen (Michael, 2026-10-07:
     // «Der blaue Punkt wirkte für mich zu grob»); der Mast wird beim Hineinzoomen kürzer wie der Zug
     const masten: Array<{ sp: THREE.Sprite; y: number }> = []
-    const mastFarbe = ANTHRAZIT
+    const mastFarbe = BAHNHOF_GRAU
     r.bahnhoefe.forEach((b, i) => {
       const y = Y(hoeheBei(r, h, b.lage[0], b.lage[1]) + UEBER_M)
       const lg = new LineGeometry()
