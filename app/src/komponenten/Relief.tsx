@@ -837,14 +837,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const L = laenge / 1000
         if (i === 0) {
           // die Lok: grauer Kasten und davor die karminrote Front, die sich nicht überlappen (sonst flackert es,
-          // Michael, 2026-10-07); die Spitze unten unter 45° abgeschrägt
-          const f = L * 0.2, c = Math.min(f, ZUG_HOEHE * 0.6)
+          // Michael, 2026-10-07); die ganze Stirn unter 45° schräg wie bei einem Schnellzug: unten vorn,
+          // oben um die Höhe des Zugs zurückgesetzt
+          const c = ZUG_HOEHE, f = c * 1.2
           const kasten = new THREE.Mesh(new THREE.BoxGeometry(ZUG_BREITE, ZUG_HOEHE, L - f), grau)
           kasten.position.z = -f / 2
           g.add(kasten)
           const z0 = L / 2 - f, z1 = L / 2, h = ZUG_HOEHE / 2
-          const profil = new THREE.Shape([new THREE.Vector2(z0, -h), new THREE.Vector2(z1 - c, -h), new THREE.Vector2(z1, -h + c),
-                                          new THREE.Vector2(z1, h), new THREE.Vector2(z0, h)])
+          const profil = new THREE.Shape([new THREE.Vector2(z0, -h), new THREE.Vector2(z1, -h), new THREE.Vector2(z1 - c, h),
+                                          new THREE.Vector2(z0, h)])
           const fg = new THREE.ExtrudeGeometry(profil, { depth: ZUG_BREITE, bevelEnabled: false })
           fg.translate(0, 0, -ZUG_BREITE / 2)
           fg.rotateY(-Math.PI / 2)
