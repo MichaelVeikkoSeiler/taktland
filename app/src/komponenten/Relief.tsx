@@ -67,6 +67,8 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILL
 const STRICH_PX = 3.5, STRICH_INNEN = 0.5, BAHNHOF_KM = 0.075
 /** so hoch steht der Mast eines Bahnhofs, bevor er mit dem Zoom kürzer wird */
 const MAST_KM = 0.5
+/** Mast und Schild der Bahnhöfe */
+const ANTHRAZIT = '#5a5a5a'
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
 const BRILLE_ZUG_M = 0.005
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
@@ -767,16 +769,23 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const gruppen = { gipfel: new THREE.Group(), kgs: new THREE.Group(), seilbahn: new THREE.Group() }
     Object.values(gruppen).forEach((g) => szene.add(g))
     const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number, folge = 0, ort: THREE.Object3D = szene,
-                    lagen: Array<[number, number]> = [[0, 0], [1, 0], [0, 1], [1, 1]]) => {
+                    lagen: Array<[number, number]> = [[0, 0], [1, 0], [0, 1], [1, 1]], ortsschild = false) => {
       const lw = document.createElement('canvas')
       const ctx = lw.getContext('2d')!
       const px = 28, rand = 10
-      ctx.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      // Bahnhöfe: eckiges Schild in Anthrazit, weisse, dünnere Schrift (Michael, 2026-10-07)
+      const schrift = `${ortsschild ? 'normal' : 'bold'} ${px}px Helvetica, Arial, sans-serif`
+      ctx.font = schrift
       lw.width = Math.ceil(ctx.measureText(text).width) + 2 * rand; lw.height = px + 16
-      ctx.font = `bold ${px}px Helvetica, Arial, sans-serif`
-      ctx.fillStyle = dunkel ? 'rgba(20,20,20,0.82)' : 'rgba(255,255,255,0.85)'
-      ctx.beginPath(); ctx.roundRect(0, 0, lw.width, lw.height, 8); ctx.fill()
-      ctx.fillStyle = farbe
+      ctx.font = schrift
+      if (ortsschild) {
+        ctx.fillStyle = ANTHRAZIT
+        ctx.fillRect(0, 0, lw.width, lw.height)
+      } else {
+        ctx.fillStyle = dunkel ? 'rgba(20,20,20,0.82)' : 'rgba(255,255,255,0.85)'
+        ctx.beginPath(); ctx.roundRect(0, 0, lw.width, lw.height, 8); ctx.fill()
+      }
+      ctx.fillStyle = ortsschild ? '#ffffff' : farbe
       ctx.fillText(text, rand, px + 2)
       const textur = new THREE.CanvasTexture(lw)
       textur.colorSpace = THREE.SRGBColorSpace // sonst wirken die Farben blasser
@@ -814,19 +823,19 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // Bahnhöfe als dünner Mast senkrecht in den Himmel, oben das Schild mit dem Namen (Michael, 2026-10-07:
     // «Der blaue Punkt wirkte für mich zu grob»); der Mast wird beim Hineinzoomen kürzer wie der Zug
     const masten: Array<{ sp: THREE.Sprite; y: number }> = []
-    const mastFarbe = dunkel ? '#c8c8c8' : '#2e2e2e'
+    const mastFarbe = ANTHRAZIT
     r.bahnhoefe.forEach((b, i) => {
       const y = Y(hoeheBei(r, h, b.lage[0], b.lage[1]) + UEBER_M)
       const lg = new LineGeometry()
       lg.setPositions([0, 0, 0, 0, MAST_KM, 0])
-      const lm = new LineMaterial({ color: mastFarbe, linewidth: 1.5 })
+      const lm = new LineMaterial({ color: mastFarbe, linewidth: 1 })
       linienMaterialien.push(lm)
       const mast = new Line2(lg, lm)
       mast.position.set(X(b.lage[0]), y, Z(b.lage[1]))
       nurBild.add(mast)
       zeichen.push(mast)
       if (brille) {
-        const stab = new THREE.Mesh(new THREE.CylinderGeometry(BRILLE_LINIE_M * 0.4 / brilleMass, BRILLE_LINIE_M * 0.4 / brilleMass, MAST_KM, 6),
+        const stab = new THREE.Mesh(new THREE.CylinderGeometry(BRILLE_LINIE_M * 0.25 / brilleMass, BRILLE_LINIE_M * 0.25 / brilleMass, MAST_KM, 6),
           new THREE.MeshBasicMaterial({ color: mastFarbe }))
         stab.position.set(X(b.lage[0]), y + MAST_KM / 2, Z(b.lage[1]))
         nurBrille.add(stab)
@@ -834,7 +843,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       // Anfang und Ende der Strecke zuerst, dann die übrigen Bahnhöfe, dann die Gipfel
       const ende = i === 0 || i === r.bahnhoefe.length - 1
       const sp = schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + MAST_KM, Z(b.lage[1]), ende ? 0 : 1, folge.get(i) ?? 0,
-                        szene, [[0.5, 0], [0, 0], [1, 0]])
+                        szene, [[0.5, 0], [0, 0], [1, 0]], true)
       masten.push({ sp, y })
     })
     for (const t of weg.tunnelPunkte.filter(imStueck)) {
