@@ -68,8 +68,9 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILL
 const STRICH_PX = 3.5, STRICH_INNEN = 0.5, BAHNHOF_KM = 0.075
 /** so hoch steht der Mast eines Bahnhofs, bevor er mit dem Zoom kürzer wird */
 const MAST_KM = 0.5
-/** Tunnel auf dem Bildschirm: Strich und Lücke je Kilometer Abstand der Kamera (aus 20 km 150 und 100 m) */
-const STRICH_JE_KM = 0.0075, LUECKE_JE_KM = 0.005
+/** Tunnel auf dem Bildschirm: Strich und Lücke je Kilometer Abstand der Kamera (aus 20 km 300 und 200 m;
+ *  Michael, 2026-10-07: «Die Längen verdoppeln») */
+const STRICH_JE_KM = 0.015, LUECKE_JE_KM = 0.01
 /** Mast und Schild der Bahnhöfe, dunkelgrau (Michael, 2026-10-07: «wesentlich dunkler») */
 const BAHNHOF_GRAU = '#2a2a2a'
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
@@ -1097,7 +1098,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const alt = o.material as THREE.Material
           if (!ersatz.has(alt)) {
             const m = alt.clone()
-            m.transparent = true; m.opacity = 0.55; m.depthTest = false; m.clippingPlanes = [ebeneDrin]
+            m.transparent = true; m.opacity = 0.35; m.depthTest = false; m.clippingPlanes = [ebeneDrin]
             ersatz.set(alt, m)
           }
           o.material = ersatz.get(alt)!
