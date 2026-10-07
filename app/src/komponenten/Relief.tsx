@@ -726,11 +726,16 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         nurBild.add(strich)
       })
       if (brille) {
-        const kurve = new THREE.CatmullRomCurve3(punkte)
-        const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, Math.max(4, punkte.length * 2), BRILLE_LINIE_M / brilleMass, 6, false),
-          new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch, transparent: durch, opacity: durch ? 0.75 : 1 }))
-        if (durch) netz.renderOrder = 2
-        nurBrille.add(netz)
+        // wie auf dem Bildschirm aussen dunkel, innen heller: eine dickere Röhre von innen gesehen als Rand,
+        // darin die hellere (Michael, 2026-10-07: «Die Linie in der Brille auch so machen»)
+        const kurve = new THREE.CatmullRomCurve3(punkte), teile = Math.max(4, punkte.length * 2), dick = BRILLE_LINIE_M / brilleMass
+        ;[[rand, dick, THREE.BackSide], [farbe, dick * STRICH_INNEN * 1.2, THREE.FrontSide]].forEach(([f, r, seite], k) => {
+          const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, teile, r as number, 8, false),
+            new THREE.MeshBasicMaterial({ color: f as string, side: seite as THREE.Side, depthTest: !durch,
+                                          transparent: durch, opacity: durch ? 0.9 : 1 }))
+          netz.renderOrder = (durch ? 2 : 0) + k
+          nurBrille.add(netz)
+        })
       }
     }
     /** gestrichelt (Tunnel): 150 m sichtbar, 100 m nicht (Punkte alle 50 m; Michael, 2026-10-07: «feiner») */
