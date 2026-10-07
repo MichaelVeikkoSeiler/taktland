@@ -69,12 +69,16 @@ const BRILLE_ZUG_M = 0.005
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
  *  2026-10-06, Michael: «halb so gross»), sonst wäre er
  *  auf dem Gelände kaum zu sehen. Darum steht «Zug nicht massstäblich» dabei. Kein bestimmter Zugtyp. */
-const ZUG_LOK_M = 110, ZUG_WAGEN_M = 140, ZUG_WAGEN = 3, ZUG_LUECKE_M = 8
+const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 3, ZUG_LUECKE_M = 8
 const ZUG_BREITE = 0.045, ZUG_HOEHE = 0.05
 /** in diesem Abstand der Kamera (km) hat der Zug seine Grundgrösse; näher kleiner, weiter weg grösser */
 const ZUG_NORMAL_KM = 6
 /** beim Fahren (Fahrt und Probefahrt) ist der Zug grösser (Michael, 2026-10-07: «bei der Fahrt Live … 150 %») */
 const ZUG_FAHRT_FAKTOR = 1.5
+/** so stark neigt sich ein Wagen höchstens (im überhöhten Gelände wären es sonst Rampen) */
+const ZUG_NEIGUNG_MAX = 0.12
+/** Höhe der Linie: alle HOEHE_SCHRITT_M aus dem Gelände, gemittelt über GLAETTEN_M davor und danach */
+const HOEHE_SCHRITT_M = 50, GLAETTEN_M = 400
 const ZUG_GRAU = '#8c8c8c'
 /** so lange dauert die Probefahrt in der Brille über die ganze Bergstrecke, dann beginnt sie von vorn */
 const PROBE_DAUER_S = 150
@@ -634,12 +638,34 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const t = Math.max(0, Math.min(1, (meter - a.m) / ((b.m - a.m) || 1)))
       return [a.e + t * (b.e - a.e), a.n + t * (b.n - a.n)] as const
     }
+    // Die Höhe der Gleise steht in keiner Quelle. Das Gelände unter der Linie, Feld für Feld genommen,
+    // liess den Zug an jedem Hang auf und ab fahren (Michael, 2026-10-07: «gradliniger»): darum
+    // gemittelt über GLAETTEN_M vor und hinter jedem Punkt, für Linie und Zug gleich
+    const m0 = pk[0].m, schritte = Math.max(1, Math.ceil((pk[pk.length - 1].m - m0) / HOEHE_SCHRITT_M))
+    const summe = new Float64Array(schritte + 2), anzahl = new Uint32Array(schritte + 2)
+    for (let i = 0; i <= schritte; i++) {
+      const [e, n] = punktBei(m0 + i * HOEHE_SCHRITT_M)
+      const z = hoeheBei(r, h, e, n)
+      // ohne Kachel steht 0: nicht mitzählen
+      summe[i + 1] = summe[i] + (z > KEINE_HOEHE ? z : 0)
+      anzahl[i + 1] = anzahl[i] + (z > KEINE_HOEHE ? 1 : 0)
+    }
+    const breitSchritte = Math.round(GLAETTEN_M / HOEHE_SCHRITT_M)
+    const geglaettet = new Float32Array(schritte + 1)
+    for (let i = 0; i <= schritte; i++) {
+      const a = Math.max(0, i - breitSchritte), b = Math.min(schritte, i + breitSchritte) + 1
+      const k = anzahl[b] - anzahl[a]
+      geglaettet[i] = k ? (summe[b] - summe[a]) / k : 0
+    }
+    const gelaendeAmWeg = (meter: number) => {
+      const x = Math.max(0, Math.min(schritte, (meter - m0) / HOEHE_SCHRITT_M))
+      const i = Math.min(schritte - 1, Math.floor(x)), t = x - i
+      return geglaettet[i] * (1 - t) + geglaettet[i + 1] * t + UEBER_M
+    }
     const hoeheAmWeg = (meter: number) => {
-      const [e, n] = punktBei(meter)
       const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
-      if (!bau) return hoeheBei(r, h, e, n) + UEBER_M
-      const [ea, na] = punktBei(bau.von), [eb, nb] = punktBei(bau.bis)
-      const ha = hoeheBei(r, h, ea, na) + UEBER_M, hb = hoeheBei(r, h, eb, nb) + UEBER_M
+      if (!bau) return gelaendeAmWeg(meter)
+      const ha = gelaendeAmWeg(bau.von), hb = gelaendeAmWeg(bau.bis)
       return ha + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (hb - ha)
     }
     const punkt3d = (meter: number) => {
@@ -861,7 +887,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         ab += laenge + ZUG_LUECKE_M
       }
     }
-    const vorwaerts = new THREE.Vector3(0, 0, 1), richtungZug = new THREE.Vector3()
     /** die Lok vorne bei s, die Wagen dahinter, je mit seiner Mitte auf der Linie */
     const zugSetzen = (s: number | null) => {
       for (const t of zugTeile) {
@@ -873,7 +898,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const a = punkt3d(Math.max(pk[0].m, mitte - halb)), b = punkt3d(Math.min(pk[pk.length - 1].m, mitte + halb))
         t.netz.position.copy(a).add(b).multiplyScalar(0.5)
         t.netz.position.y += (ZUG_HOEHE * zugMass) / 2
-        if (b.distanceToSquared(a) > 0) t.netz.quaternion.setFromUnitVectors(vorwaerts, richtungZug.copy(b).sub(a).normalize())
+        // nur um die Senkrechte drehen und vorn und hinten neigen, nie zur Seite kippen (Michael, 2026-10-07)
+        const dx = b.x - a.x, dy = b.y - a.y, dz = b.z - a.z, flach = Math.hypot(dx, dz)
+        if (flach > 0) t.netz.rotation.set(-Math.max(-ZUG_NEIGUNG_MAX, Math.min(ZUG_NEIGUNG_MAX, Math.atan2(dy, flach))), Math.atan2(dx, dz), 0, 'YXZ')
         t.netz.scale.setScalar(zugMass)
         const drin = weg.bauwerke.some((x) => x.art === 'tunnel' && mitte >= x.von && mitte <= x.bis)
         if (drin !== t.drin) {
