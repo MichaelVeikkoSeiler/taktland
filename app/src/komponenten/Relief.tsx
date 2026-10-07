@@ -211,7 +211,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   const [probeLaeuft, setProbeLaeuft] = useState(false)
   // die Stelle des Zugs bei der Probefahrt, von der Szene nachgeführt, für das Zuggeräusch
   const probeStelle = useRef<number | null>(null)
-  const audio = useZuggeraeusch(probeStelle, weg ? weg.punkte[weg.punkte.length - 1].m : Infinity)
+  const audio = useZuggeraeusch(probeStelle, weg ? weg.punkte[weg.punkte.length - 1].m : Infinity, useMemo(() => weg?.bauwerke ?? [], [weg]))
   const inBrille = (mitZug: boolean) => {
     setBrilleFehler(null)
     probe.current = mitZug ? performance.now() : null
@@ -294,7 +294,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
  * Zuggeräusch (src/audio.ts): das Tempo aus der Stelle des Zugs über die Zeit, geglättet. Kommt 1,5 s nichts
  * Neues, steht der Zug; springt die Stelle zurück (die Probefahrt beginnt von vorn), fährt er neu an.
  */
-function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number) {
+function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number, bauwerke: Weg['bauwerke']) {
   const audio = useAudio()
   useEffect(() => {
     let alt = { s: stelle.current, t: performance.now() }, v = 0
@@ -306,10 +306,11 @@ function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number) {
         else { v = 0; neu = true }
         alt = { s, t }
       } else if (t - alt.t > 1500) v = 0
-      zuggeraeuschTempo(neu ? 0 : v, s !== null && v > 0 ? Math.max(0, ende - s) / v : Infinity)
+      const ort = s === null ? null : bauwerke.find((b) => s >= b.von && s <= b.bis)?.art ?? null
+      zuggeraeuschTempo(neu ? 0 : v, s !== null && v > 0 ? Math.max(0, ende - s) / v : Infinity, ort)
     }, 250)
     return () => { window.clearInterval(uhr); zuggeraeuschAus() }
-  }, [stelle, ende])
+  }, [stelle, ende, bauwerke])
   return audio
 }
 
@@ -461,7 +462,11 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   const blick = useRef<THREE.Vector3 | null>(null)
   useEffect(() => { zug.current = sJetzt }, [sJetzt])
   const ende = useMemo(() => wegEnde(fahrweg), [fahrweg])
-  const audio = useZuggeraeusch(zug, ende)
+  const bauwerke = useMemo(() => objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
+    .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })), [objekte])
+  const audio = useZuggeraeusch(zug, ende, bauwerke)
+  // «Hinter den Zug»: die Kamera wieder schräg hinter den Zug wie am Anfang
+  const hinterZug = useRef(false)
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
   useEffect(() => {
     const [e, n] = lageAufWeg(fahrweg, sJetzt ?? 0)
@@ -498,16 +503,20 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   return (
     <>
       <div className={`${className} relative`}>
-        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick}
+        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
                className="absolute inset-0 overflow-hidden" />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
         <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 px-2.5 py-1 text-xs" />
+        <button type="button" onClick={() => { hinterZug.current = true }}
+                className="absolute bottom-2 left-2 rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
+          Hinter den Zug
+        </button>
       </div>
       <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
         SWISSIMAGE (swisstopo), auf 10 m gemittelt, Stand der Aufnahme. Die Höhe der Gleise steht in
         keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Zug nicht
-        massstäblich und kein bestimmter Zugtyp.
+        massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
         {faktor === 2 && ' Höhe 2-fach überhöht.'}
       </p>
     </>
@@ -535,7 +544,7 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
@@ -545,6 +554,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   brille?: React.MutableRefObject<(() => Promise<void>) | null>
   /** auf der eigenen Seite: Probefahrt über die ganze Strecke; Startzeit (performance.now) oder null */
   probe?: React.RefObject<number | null>
+  /** beim Fahren: true setzt die Kamera wieder schräg hinter den Zug wie am Anfang */
+  hinterZug?: React.MutableRefObject<boolean>
   /** auf der eigenen Seite: hier führt die Szene die Stelle des Zugs bei der Probefahrt nach (Zuggeräusch) */
   probeStelle?: React.MutableRefObject<number | null>
   className: string
@@ -1417,6 +1428,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         for (const lm of strichMaterialien) { lm.dashSize = abstand * STRICH_JE_KM; lm.gapSize = abstand * LUECKE_JE_KM }
         for (const { sp, y } of masten) sp.position.y = y + MAST_KM * f
       }
+      if (hinterZug?.current) { hinterZug.current = false; letzte = null; if (blick) blick.current = null }
       if (zug) {
         const s = zug.current
         const sichtbar = s !== null && imStueck(s)

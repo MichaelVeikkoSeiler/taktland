@@ -357,6 +357,7 @@ const AN_AB_S = 2.5
 
 let geraeusch: {
   rollen: GainNode; zischen: GainNode; huelle: GainNode; quellen: AudioBufferSourceNode[]
+  tief: BiquadFilterNode; bauch: BiquadFilterNode; laut: GainNode; hall: GainNode
   naechster: number; uhr: number; tempo: number; faehrtSeit: number | null
 } | null = null
 
@@ -402,10 +403,13 @@ function schlag(c: AudioContext, ziel: AudioNode, wann: number, staerke: number)
   osc.stop(wann + 0.1)
 }
 
+/** Wo der Zug fährt: im Tunnel dumpfer und lauter mit Widerhall, auf einer Brücke hohler (Michael, 2026-10-07) */
+export type GeraeuschOrt = 'tunnel' | 'bruecke' | null
+
 /** Das Tempo des Zugs in m/s, laufend, und wie viele Sekunden es noch bis zum Ziel sind; null oder 0 lässt das
  *  Geräusch ausklingen. Nur mit «an» und «zuggeraeusch». Beim Anfahren steigt es in AN_AB_S an, so lange vor dem
  *  Ziel klingt es aus. */
-export function zuggeraeuschTempo(ms: number | null, bisZielS = Infinity) {
+export function zuggeraeuschTempo(ms: number | null, bisZielS = Infinity, ort: GeraeuschOrt = null) {
   const v = stand.an && stand.zuggeraeusch && ms ? Math.min(GERAEUSCH_HOECHST_MS, Math.max(0, ms)) : 0
   const c = audioKontext()
   if (!c) return
@@ -415,7 +419,15 @@ export function zuggeraeuschTempo(ms: number | null, bisZielS = Infinity) {
       void c.resume()
       const rollen = c.createGain(), zischen = c.createGain(), huelle = c.createGain()
       rollen.gain.value = 0; zischen.gain.value = 0; huelle.gain.value = 0
-      huelle.connect(ausgang(c))
+      // dahinter: ein Bauch um 200 Hz für Brücken, die Lautstärke je Ort und ein kurzer Widerhall für Tunnel
+      const bauch = c.createBiquadFilter()
+      bauch.type = 'peaking'; bauch.frequency.value = 200; bauch.Q.value = 1.8; bauch.gain.value = 0
+      const laut = c.createGain()
+      const hall = c.createGain(), echo = c.createDelay(0.5), rueck = c.createGain()
+      hall.gain.value = 0; echo.delayTime.value = 0.07; rueck.gain.value = 0.45
+      huelle.connect(bauch).connect(laut).connect(ausgang(c))
+      laut.connect(hall).connect(echo).connect(ausgang(c))
+      echo.connect(rueck).connect(echo)
       const tief = c.createBiquadFilter()
       tief.type = 'lowpass'; tief.frequency.value = 220
       const braun = rauschenSchleife(c, true), weiss = rauschenSchleife(c, false)
@@ -424,13 +436,20 @@ export function zuggeraeuschTempo(ms: number | null, bisZielS = Infinity) {
       hoch.type = 'bandpass'; hoch.frequency.value = 2600; hoch.Q.value = 0.6
       weiss.connect(hoch).connect(zischen).connect(huelle)
       braun.start(); weiss.start()
-      geraeusch = { rollen, zischen, huelle, quellen: [braun, weiss], naechster: c.currentTime + 0.1, uhr: 0, tempo: 0, faehrtSeit: null }
+      geraeusch = { rollen, zischen, huelle, quellen: [braun, weiss], tief, bauch, laut, hall,
+                    naechster: c.currentTime + 0.1, uhr: 0, tempo: 0, faehrtSeit: null }
     }
     const g = geraeusch
     g.tempo = v
     const anteil = v / GERAEUSCH_HOECHST_MS
     g.rollen.gain.setTargetAtTime(0.55 * Math.sqrt(anteil), c.currentTime, 0.4)
-    g.zischen.gain.setTargetAtTime(0.035 * anteil, c.currentTime, 0.4)
+    g.zischen.gain.setTargetAtTime(0.035 * anteil * (ort === 'tunnel' ? 0.5 : 1), c.currentTime, 0.4)
+    // im Tunnel dumpfer, lauter und mit Widerhall; auf der Brücke hohl, mit mehr Bauch
+    const t0 = c.currentTime
+    g.tief.frequency.setTargetAtTime(ort === 'tunnel' ? 140 : 220, t0, 0.3)
+    g.bauch.gain.setTargetAtTime(ort === 'bruecke' ? 10 : 0, t0, 0.3)
+    g.laut.gain.setTargetAtTime(ort === 'tunnel' ? 1.7 : ort === 'bruecke' ? 1.2 : 1, t0, 0.3)
+    g.hall.gain.setTargetAtTime(ort === 'tunnel' ? 0.5 : 0, t0, 0.3)
     // Hülle: ab dem Anfahren in AN_AB_S auf voll, vor dem Ziel wieder hinunter; steht der Zug, beginnt es neu
     const jetzt = c.currentTime
     if (v < 0.5) g.faehrtSeit = null
@@ -465,6 +484,6 @@ export function zuggeraeuschAus() {
   window.clearInterval(g.uhr)
   try {
     if (c) g.huelle.gain.setTargetAtTime(0, c.currentTime, 0.15)
-    window.setTimeout(() => { for (const q of g.quellen) q.stop(); g.huelle.disconnect() }, 1000)
+    window.setTimeout(() => { for (const q of g.quellen) q.stop(); g.huelle.disconnect(); g.laut.disconnect(); g.hall.disconnect() }, 1000)
   } catch { /* nichts */ }
 }

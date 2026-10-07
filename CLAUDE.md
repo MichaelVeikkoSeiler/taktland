@@ -171,7 +171,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              pipeline/build_gelaende.py): «3D» auf jeder Fahrt und Probefahrt, 30 km um den Zug, der Ausschnitt
              wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); Knopf «Zuggeräusch»: Rollen und
              Radschläge, gerechnet in src/audio.ts, folgen dem Tempo (höchstens etwa 160 km/h), steigen beim Anfahren in
-             2,5 s an und klingen 2,5 s vor dem Ziel aus, am Anfang aus; die Reliefs in
+             2,5 s an und klingen 2,5 s vor dem Ziel aus, im Tunnel dumpfer und lauter mit Widerhall, auf Brücken
+             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; die Reliefs in
              data/relief bleiben für die Bergstrecken als Ganzes und
              holen ihr Gelände ebenfalls aus den Kacheln
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),
