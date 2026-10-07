@@ -1,7 +1,7 @@
 {
  "quelle": "swissTLM3D (swisstopo), Tunnel aus pipeline/build_tlm_bauwerke.py",
  "stand": "2026-02",
- "hinweis": "Anfang und Ende auf der Linie (Kilometer der Linie, auf die Enden des Tunnels in swissTLM3D gelegt) für SBB-Tunnel, bei denen die Länge laut SBB in beide Richtungen passt. Nur wenn genau ein Tunnel in swissTLM3D auf der Linie liegt, dessen Länge höchstens 10 % von der Länge laut SBB abweicht und in dem oder neben dem der Kilometer laut SBB liegt. tlm: die Stücke in swissTLM3D.",
+ "hinweis": "Anfang und Ende auf der Linie (Kilometer der Linie, auf die Enden des Tunnels in swissTLM3D gelegt) für SBB-Tunnel, bei denen die Länge laut SBB in beide Richtungen passt. Nur wenn genau ein Tunnel in swissTLM3D auf der Linie liegt, dessen Länge höchstens 10 % von der Länge laut SBB abweicht und in dem oder neben dem der Kilometer laut SBB liegt (höchstens 300 m daneben, bei gleichem Namen 1 km). tlm: die Stücke in swissTLM3D, name: ihr Name dort.",
  "tunnel": {
   "100:0": {
    "von": 3.651,
@@ -50,14 +50,16 @@
    "bis": 115.81,
    "tlm": [
     "t528"
-   ]
+   ],
+   "name": "Varen-Tunnel"
   },
   "100:7": {
    "von": 115.897,
    "bis": 117.284,
    "tlm": [
     "t546"
-   ]
+   ],
+   "name": "Leuk-Tunnel"
   },
   "111:0": {
    "von": 3.793,
@@ -85,7 +87,8 @@
    "bis": 63.688,
    "tlm": [
     "t400"
-   ]
+   ],
+   "name": "Tunnel de la Bâtie"
   },
   "200:0": {
    "von": 22.899,
@@ -169,14 +172,16 @@
    "bis": 53.719,
    "tlm": [
     "t2051"
-   ]
+   ],
+   "name": "Tunnel de la Raisse"
   },
   "210:7": {
    "von": 55.126,
    "bis": 57.409,
    "tlm": [
     "t2083"
-   ]
+   ],
+   "name": "Tunnel de St-Aubin-Sauges"
   },
   "210:8": {
    "von": 73.506,
@@ -281,7 +286,8 @@
    "bis": 25.77,
    "tlm": [
     "t2608"
-   ]
+   ],
+   "name": "Tunnel des Loges"
   },
   "225:0": {
    "von": 34.681,
@@ -337,14 +343,16 @@
    "bis": 75.889,
    "tlm": [
     "t2759"
-   ]
+   ],
+   "name": "Tunnel des Crosettes"
   },
   "226:0": {
    "von": 53.01,
    "bis": 54.308,
    "tlm": [
     "t3037"
-   ]
+   ],
+   "name": "Tunnel ferroviaire de Pierre Pertuis"
   },
   "226:1": {
    "von": 67.822,
@@ -428,7 +436,8 @@
    "bis": 99.413,
    "tlm": [
     "t3475"
-   ]
+   ],
+   "name": "Tunnel du Mont Russelin"
   },
   "240:3": {
    "von": 102.185,
@@ -442,7 +451,8 @@
    "bis": 105.841,
    "tlm": [
     "t3577"
-   ]
+   ],
+   "name": "Tunnel de la Croix"
   },
   "240:5": {
    "von": 115.303,
@@ -470,7 +480,8 @@
    "bis": 32.889,
    "tlm": [
     "t1198"
-   ]
+   ],
+   "name": "Tunnel de Vauderens"
   },
   "250:3": {
    "von": 78.627,
@@ -498,7 +509,8 @@
    "bis": 11.811,
    "tlm": [
     "t2491"
-   ]
+   ],
+   "name": "Grauholztunnel"
   },
   "400:1": {
    "von": 17.118,
@@ -512,21 +524,24 @@
    "bis": 20.925,
    "tlm": [
     "t2732"
-   ]
+   ],
+   "name": "Emmequerungstunnel"
   },
   "400:4": {
    "von": 30.108,
    "bis": 31.121,
    "tlm": [
     "t2915"
-   ]
+   ],
+   "name": "Hersiwiltunnel"
   },
   "400:5": {
    "von": 33.098,
    "bis": 36.272,
    "tlm": [
     "t3008"
-   ]
+   ],
+   "name": "Önzbergtunnel"
   },
   "400:6": {
    "von": 36.583,
@@ -540,7 +555,8 @@
    "bis": 43.991,
    "tlm": [
     "t3118"
-   ]
+   ],
+   "name": "Langenthaltunnel"
   },
   "400:9": {
    "von": 48.168,
@@ -617,7 +633,8 @@
    "bis": 36.81,
    "tlm": [
     "t3844"
-   ]
+   ],
+   "name": "Hauenstein-Basistunnel"
   },
   "500:1": {
    "von": 42.515,
@@ -646,7 +663,8 @@
    "tlm": [
     "t4086",
     "t4096"
-   ]
+   ],
+   "name": "Adlertunnel"
   },
   "503:0": {
    "von": 29.011,
@@ -667,7 +685,8 @@
    "bis": 33.496,
    "tlm": [
     "t3654"
-   ]
+   ],
+   "name": "Hauenstein-Scheiteltunnel"
   },
   "510:1": {
    "von": 140.159,
@@ -688,7 +707,8 @@
    "bis": 4.977,
    "tlm": [
     "t2602"
-   ]
+   ],
+   "name": "Luzerner Stadttunnel"
   },
   "570:1": {
    "von": 6.455,
@@ -724,7 +744,8 @@
    "tlm": [
     "t257",
     "t276"
-   ]
+   ],
+   "name": "Galleria di Base del Ceneri"
   },
   "595:0": {
    "von": 159.797,
@@ -759,7 +780,8 @@
    "bis": 25.721,
    "tlm": [
     "t2359"
-   ]
+   ],
+   "name": "Ölbergtunnel"
   },
   "600:5": {
    "von": 26.611,
@@ -780,7 +802,8 @@
    "bis": 29.896,
    "tlm": [
     "t2216"
-   ]
+   ],
+   "name": "Axenbergtunnel"
   },
   "600:8": {
    "von": 30.211,
@@ -845,6 +868,14 @@
     "t1626"
    ]
   },
+  "600:19": {
+   "von": 55.831,
+   "bis": 57.315,
+   "tlm": [
+    "t1607"
+   ],
+   "name": "Pfaffensprungtunnel"
+  },
   "600:20": {
    "von": 59.179,
    "bis": 59.27,
@@ -857,7 +888,8 @@
    "bis": 61.797,
    "tlm": [
     "t1490"
-   ]
+   ],
+   "name": "Wattingertunnel"
   },
   "600:23": {
    "von": 61.976,
@@ -885,7 +917,8 @@
    "bis": 65.348,
    "tlm": [
     "t1576"
-   ]
+   ],
+   "name": "Leggisteintunnel"
   },
   "600:27": {
    "von": 65.456,
@@ -906,14 +939,16 @@
    "bis": 68.612,
    "tlm": [
     "t1475"
-   ]
+   ],
+   "name": "Naxbergtunnel"
   },
   "600:30": {
    "von": 70.78,
    "bis": 85.793,
    "tlm": [
     "t1354"
-   ]
+   ],
+   "name": "Galleria ferroviaria del San Gottardo / Gotthard-Bahntunnel"
   },
   "600:31": {
    "von": 87.581,
@@ -941,7 +976,8 @@
    "bis": 101.027,
    "tlm": [
     "t913"
-   ]
+   ],
+   "name": "Galleria di Freggio"
   },
   "600:35": {
    "von": 101.327,
@@ -976,7 +1012,8 @@
    "bis": 116.783,
    "tlm": [
     "t725"
-   ]
+   ],
+   "name": "Galleria di Pianotondo"
   },
   "600:42": {
    "von": 116.95,
@@ -990,7 +1027,8 @@
    "bis": 119.325,
    "tlm": [
     "t714"
-   ]
+   ],
+   "name": "Galleria di Travi"
   },
   "600:44": {
    "von": 133.954,
@@ -1026,56 +1064,64 @@
    "tlm": [
     "t208",
     "t210"
-   ]
+   ],
+   "name": "Galleria ferroviaria del Monte Ceneri"
   },
   "600:52": {
    "von": 170.75,
    "bis": 170.827,
    "tlm": [
     "t121"
-   ]
+   ],
+   "name": "Galleria di Molinero"
   },
   "600:53": {
    "von": 178.786,
    "bis": 179.719,
    "tlm": [
     "t57"
-   ]
+   ],
+   "name": "Galleria di Massagno"
   },
   "600:54": {
    "von": 183.382,
    "bis": 184.144,
    "tlm": [
     "t34"
-   ]
+   ],
+   "name": "Galleria di Paradiso"
   },
   "600:55": {
    "von": 184.308,
    "bis": 184.362,
    "tlm": [
     "t31"
-   ]
+   ],
+   "name": "Galleria di San Martino"
   },
   "600:56": {
    "von": 189.54,
    "bis": 190.115,
    "tlm": [
     "t23"
-   ]
+   ],
+   "name": "Galleria di Maroggia"
   },
   "600:57": {
    "von": 200.242,
    "bis": 200.341,
    "tlm": [
     "t9"
-   ]
+   ],
+   "name": "Galleria di Coldrerio"
   },
   "605:0": {
    "von": 26.602,
    "bis": 29.978,
    "tlm": [
     "t2276"
-   ]
+   ],
+   "name": "Stutzegg-Axenbergtunnel"
   },
   "605:1": {
    "von": 30.153,
@@ -1097,14 +1143,16 @@
    "tlm": [
     "t208",
     "t210"
-   ]
+   ],
+   "name": "Galleria ferroviaria del Monte Ceneri"
   },
   "608:0": {
    "von": 178.789,
    "bis": 179.733,
    "tlm": [
     "t57"
-   ]
+   ],
+   "name": "Galleria di Massagno"
   },
   "630:0": {
    "von": 168.486,
@@ -1125,14 +1173,16 @@
    "bis": 19.163,
    "tlm": [
     "t3235"
-   ]
+   ],
+   "name": "Zimmerbergtunnel"
   },
   "660:1": {
    "von": 20.322,
    "bis": 23.682,
    "tlm": [
     "t3172"
-   ]
+   ],
+   "name": "Albistunnel"
   },
   "660:2": {
    "von": 63.392,
@@ -1195,7 +1245,8 @@
    "bis": 42.085,
    "tlm": [
     "t3897"
-   ]
+   ],
+   "name": "Bözbergtunnel"
   },
   "702:0": {
    "von": 42.089,
@@ -1279,7 +1330,8 @@
    "bis": 101.475,
    "tlm": [
     "t3628"
-   ]
+   ],
+   "name": "Hirschengrabentunnel"
   },
   "745:3": {
    "von": 108.511,
@@ -1293,7 +1345,8 @@
    "bis": 205.749,
    "tlm": [
     "t3623"
-   ]
+   ],
+   "name": "Weinbergtunnel"
   },
   "748:2": {
    "von": 206.214,
@@ -1307,7 +1360,8 @@
    "bis": 3.588,
    "tlm": [
     "t3681"
-   ]
+   ],
+   "name": "Wipkingertunnel"
   },
   "754:0": {
    "von": 28.4,
@@ -1335,7 +1389,8 @@
    "bis": 3.753,
    "tlm": [
     "t3686"
-   ]
+   ],
+   "name": "Käferbergtunnel"
   },
   "762:0": {
    "von": 52.514,
@@ -1356,7 +1411,8 @@
    "bis": 14.713,
    "tlm": [
     "t4099"
-   ]
+   ],
+   "name": "Dättenbergtunnel"
   },
   "770:0": {
    "von": 38.105,
@@ -1377,35 +1433,40 @@
    "bis": 48.226,
    "tlm": [
     "t4399"
-   ]
+   ],
+   "name": "Emmersbergtunnel"
   },
   "890:0": {
    "von": 14.984,
    "bis": 15.442,
    "tlm": [
     "t2820"
-   ]
+   ],
+   "name": "Bommersteintunnel"
   },
   "890:1": {
    "von": 20.791,
    "bis": 20.908,
    "tlm": [
     "t2806"
-   ]
+   ],
+   "name": "Bühltunnel"
   },
   "890:2": {
    "von": 23.676,
    "bis": 23.81,
    "tlm": [
     "t2818"
-   ]
+   ],
+   "name": "Stutztunnel"
   },
   "890:3": {
    "von": 24.945,
    "bis": 28.867,
    "tlm": [
     "t2826"
-   ]
+   ],
+   "name": "Kerenzerbergtunnel"
   },
   "890:4": {
    "von": 32.68,

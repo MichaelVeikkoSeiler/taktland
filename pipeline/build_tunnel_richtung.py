@@ -32,6 +32,10 @@ LINIEN = ROOT / "data" / "linien"
 ZIEL = ROOT / "data" / "tunnel_richtung.json"
 
 PORTAL_KM = 0.3
+#: so weit, wenn der Tunnel in swissTLM3D gleich heisst wie bei der SBB: der Pfaffensprungtunnel
+#: (Kehrtunnel, km 57.665 laut SBB) liegt in swissTLM3D auf km 55.831 bis 57.315, gleich lang
+#: (Michael, 2026-10-07: «verläuft die Strecke hier wirklich so?»)
+PORTAL_NAME_KM = 1.0
 AUF_LINIE_KM = 0.15
 #: so weit darf die Länge in swissTLM3D von der Länge laut SBB abweichen
 TOLERANZ = 0.1
@@ -107,11 +111,14 @@ def main():
                     continue
                 a, b = min(k for _, k in pr), max(k for _, k in pr)
                 # Länge wie laut SBB, und der Kilometer der SBB im Tunnel oder direkt daneben
-                if abs((b - a) - lang) <= max(TOLERANZ * lang, 0.05) and a - PORTAL_KM <= km <= b + PORTAL_KM:
-                    passend.append((round(a, 3), round(b, 3), g["ids"]))
-            if len({(a, b) for a, b, _ in passend}) == 1:
-                a, b, ids = passend[0]
+                rand = PORTAL_NAME_KM if g["name"] and g["name"] == t["name"] else PORTAL_KM
+                if abs((b - a) - lang) <= max(TOLERANZ * lang, 0.05) and a - rand <= km <= b + rand:
+                    passend.append((round(a, 3), round(b, 3), g["ids"], g["name"]))
+            if len({(a, b) for a, b, _, _ in passend}) == 1:
+                a, b, ids, name = passend[0]
                 raus[f"{nr}:{i}"] = {"von": a, "bis": b, "tlm": sorted(ids, key=lambda k: int(k[1:]))}
+                if name:
+                    raus[f"{nr}:{i}"]["name"] = name
             else:
                 ohne += 1
     ZIEL.write_text(json.dumps({
@@ -121,7 +128,8 @@ def main():
                    "swissTLM3D gelegt) für SBB-Tunnel, bei denen die Länge laut SBB in beide Richtungen "
                    "passt. Nur wenn genau ein Tunnel in swissTLM3D auf der Linie liegt, dessen Länge "
                    "höchstens 10 % von der Länge laut SBB abweicht und in dem oder neben dem der "
-                   "Kilometer laut SBB liegt. tlm: die Stücke in swissTLM3D.",
+                   "Kilometer laut SBB liegt (höchstens 300 m daneben, bei gleichem Namen 1 km). "
+                   "tlm: die Stücke in swissTLM3D, name: ihr Name dort.",
         "tunnel": raus,
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(f"tunnel_richtung.json: {len(raus)} Tunnel mit Anfang und Ende aus swissTLM3D, {ohne} ohne "

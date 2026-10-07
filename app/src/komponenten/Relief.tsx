@@ -587,12 +587,33 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const GEBIET: Record<string, [string, string]> = {
       bln: ['rgba(185, 211, 163, 0.35)', '#9dbf84'], park: ['rgba(127, 174, 102, 0.3)', '#6f9e57'], moor: ['rgba(201, 194, 154, 0.4)', '#b0a77a'],
     }
+    let grund: HTMLCanvasElement | null = null
+    /** die Farben des Geländes, ein Bildpunkt je Feld, abgedunkelt wie das Luftbild aufgehellt wird */
+    const grundBild = () => {
+      if (grund) return grund
+      grund = document.createElement('canvas')
+      grund.width = breite; grund.height = hoehe
+      const g = grund.getContext('2d')!, bild = g.createImageData(breite, hoehe), rgb = { r: 0, g: 0, b: 0 }
+      for (let j = 0; j < hoehe; j++) {
+        for (let i = 0; i < breite; i++) {
+          hoehenFarbe(h[j * breite + i], c).getRGB(rgb, THREE.SRGBColorSpace)
+          const k = (j * breite + i) * 4
+          bild.data[k] = (rgb.r * 255) / 1.3; bild.data[k + 1] = (rgb.g * 255) / 1.3; bild.data[k + 2] = (rgb.b * 255) / 1.3; bild.data[k + 3] = 255
+        }
+      }
+      g.putImageData(bild, 0, 0)
+      return grund
+    }
     const auflageMalen = (a: Set<Kategorie>) => {
       lctx.fillStyle = '#ffffff'
       lctx.fillRect(0, 0, leinwand.width, leinwand.height)
       // das Luftbild ersetzt die Farben des Geländes und zeigt Wald und Siedlung selbst
       const mitBild = !!luftbild && !a.has('luftbild')
       if (mitBild) {
+        // darunter die Farben des Geländes: wo ein Bild fehlt oder nicht geladen ist, bleibt es
+        // nicht weiss (Michael, 2026-10-07: «Fehlt hier eine Kachel?»)
+        lctx.imageSmoothingEnabled = true
+        lctx.drawImage(grundBild(), 0, 0, leinwand.width, leinwand.height)
         const seite = (luftbild.kachel_m / m) * PX
         for (const { ex, ny, bild } of luftbild.kacheln) lctx.drawImage(bild, lx(ex * luftbild.kachel_m), ly((ny + 1) * luftbild.kachel_m), seite, seite)
       }

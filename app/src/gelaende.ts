@@ -94,10 +94,17 @@ interface LuftbildIndex {
 }
 export const luftbildIndex = () => holen<LuftbildIndex>('data/luftbild/index.json')
 
+/** so viele Bilder bleiben geladen (je etwa 4 MB): auf einer langen Fahrt füllten sie sonst den
+ *  Speicher des Telefons, und neue Bilder liessen sich nicht mehr entpacken */
+const BILDER_HOECHSTENS = 25
 const bildVorrat = new Map<string, Promise<ImageBitmap | null>>()
 function luftbildKachel(name: string) {
   let p = bildVorrat.get(name)
-  if (!p) {
+  if (p) {
+    // zuletzt gebraucht ans Ende
+    bildVorrat.delete(name); bildVorrat.set(name, p)
+  } else {
+    while (bildVorrat.size >= BILDER_HOECHSTENS) bildVorrat.delete(bildVorrat.keys().next().value!)
     p = holenBinaer(`data/luftbild/${name}.jpg`)
       .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' })))
       .catch(() => { bildVorrat.delete(name); return null })

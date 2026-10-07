@@ -135,7 +135,8 @@ data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3
              Fahrtmodus auf Strecken anderer Bahnen, deren Verlauf aus dem Schienennetz kommt
 data/tunnel_richtung.json  Anfang und Ende von SBB-Tunneln, deren Länge in beide Richtungen
              passt, laut swissTLM3D (pipeline/build_tunnel_richtung.py); der Kilometer der
-             SBB liegt oft im Tunnel, nicht am Portal
+             SBB liegt oft im Tunnel, nicht am Portal; bei gleichem Namen in swissTLM3D darf er bis 1 km
+             daneben liegen (Pfaffensprungtunnel)
 data/bruecken_bereich.json  Anfang, Ende und Länge von SBB-Brücken laut Zeichnung von swissTLM3D,
              nur wo eindeutig (pipeline/build_bruecken_bereich.py); die SBB nennt keine Länge
 data/schweiz11.json  Pool für das Spiel «Geo»: Bahnhöfe, Tunnel und Brücken mit Ziel (Mitte des
@@ -173,7 +174,8 @@ data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fas
              auf 10 m gemittelt, JPEG im 10-km-Raster der Geländekacheln, je km der neueste Jahrgang (2017 bis 2025),
              die Jahre je Kachel in index.json (pipeline/build_luftbild.py --alle: 508 Kacheln der ganzen Schweiz,
              105 MB; Kacheln ohne Bild von swisstopo, im Ausland, fehlen; die 2-m-Rohbilder werden je Kachel
-             gelöscht); in der App ein Knopf «Luftbild», Gebiete darauf nur als Umriss
+             gelöscht); in der App ein Knopf «Luftbild», Gebiete darauf nur als Umriss; fehlt ein Bild oder lädt es nicht,
+             zeigt das Gelände dort seine Farben; höchstens 25 Bilder bleiben geladen (src/gelaende.ts)
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
