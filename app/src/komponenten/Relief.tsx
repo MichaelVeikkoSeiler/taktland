@@ -65,13 +65,15 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILL
 /** Breite der Linie in Bildpunkten, bei jedem Zoom gleich: aussen der dunkle Rand, innen STRICH_INNEN davon heller
  *  (Michael, 2026-10-07: «halb so dick», dann «Innen heller aussen dunkler») */
 const STRICH_PX = 3.5, STRICH_INNEN = 0.5, BAHNHOF_KM = 0.075
+/** so hoch steht der Mast eines Bahnhofs, bevor er mit dem Zoom kürzer wird */
+const MAST_KM = 0.5
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
 const BRILLE_ZUG_M = 0.005
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
  *  2026-10-06, Michael: «halb so gross»), sonst wäre er
  *  auf dem Gelände kaum zu sehen. Darum steht «Zug nicht massstäblich» dabei. Kein bestimmter Zugtyp. */
-const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 3, ZUG_LUECKE_M = 8
+const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 4, ZUG_LUECKE_M = 8
 const ZUG_BREITE = 0.045, ZUG_HOEHE = 0.05
 /** in diesem Abstand der Kamera (km) hat der Zug seine Grundgrösse; näher kleiner, weiter weg grösser */
 const ZUG_NORMAL_KM = 6
@@ -761,10 +763,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
 
     // Beschriftungen in fester Bildschirmgrösse, auf einem hellen Schild; wo sich zwei
     // überdecken, bleibt die mit dem kleineren Rang stehen (zeichnen() blendet die andere aus)
-    const schilder: Array<{ sp: THREE.Sprite; rang: number; folge: number; grundMass: [number, number] }> = []
+    const schilder: Array<{ sp: THREE.Sprite; rang: number; folge: number; grundMass: [number, number]; lagen: Array<[number, number]> }> = []
     const gruppen = { gipfel: new THREE.Group(), kgs: new THREE.Group(), seilbahn: new THREE.Group() }
     Object.values(gruppen).forEach((g) => szene.add(g))
-    const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number, folge = 0, ort: THREE.Object3D = szene) => {
+    const schild = (text: string, farbe: string, x: number, y: number, z: number, rang: number, folge = 0, ort: THREE.Object3D = szene,
+                    lagen: Array<[number, number]> = [[0, 0], [1, 0], [0, 1], [1, 1]]) => {
       const lw = document.createElement('canvas')
       const ctx = lw.getContext('2d')!
       const px = 28, rand = 10
@@ -784,7 +787,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       sp.position.set(x, y, z)
       sp.renderOrder = 3
       ort.add(sp)
-      schilder.push({ sp, rang, folge, grundMass: [sp.scale.x, sp.scale.y] })
+      schilder.push({ sp, rang, folge, grundMass: [sp.scale.x, sp.scale.y], lagen })
+      return sp
     }
     /** Zeichen, die auf dem Bildschirm mit dem Zug beim Hineinzoomen kleiner werden */
     const zeichen: THREE.Object3D[] = []
@@ -807,12 +811,31 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       folge.set(m, folge.size)
       haelften.push([a, m], [m, z])
     }
+    // Bahnhöfe als dünner Mast senkrecht in den Himmel, oben das Schild mit dem Namen (Michael, 2026-10-07:
+    // «Der blaue Punkt wirkte für mich zu grob»); der Mast wird beim Hineinzoomen kürzer wie der Zug
+    const masten: Array<{ sp: THREE.Sprite; y: number }> = []
+    const mastFarbe = dunkel ? '#c8c8c8' : '#2e2e2e'
     r.bahnhoefe.forEach((b, i) => {
       const y = Y(hoeheBei(r, h, b.lage[0], b.lage[1]) + UEBER_M)
-      kugel(FARBEN.bahnhof, X(b.lage[0]), y, Z(b.lage[1]), BAHNHOF_KM)
+      const lg = new LineGeometry()
+      lg.setPositions([0, 0, 0, 0, MAST_KM, 0])
+      const lm = new LineMaterial({ color: mastFarbe, linewidth: 1.5 })
+      linienMaterialien.push(lm)
+      const mast = new Line2(lg, lm)
+      mast.position.set(X(b.lage[0]), y, Z(b.lage[1]))
+      nurBild.add(mast)
+      zeichen.push(mast)
+      if (brille) {
+        const stab = new THREE.Mesh(new THREE.CylinderGeometry(BRILLE_LINIE_M * 0.4 / brilleMass, BRILLE_LINIE_M * 0.4 / brilleMass, MAST_KM, 6),
+          new THREE.MeshBasicMaterial({ color: mastFarbe }))
+        stab.position.set(X(b.lage[0]), y + MAST_KM / 2, Z(b.lage[1]))
+        nurBrille.add(stab)
+      }
       // Anfang und Ende der Strecke zuerst, dann die übrigen Bahnhöfe, dann die Gipfel
       const ende = i === 0 || i === r.bahnhoefe.length - 1
-      schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + 0.15, Z(b.lage[1]), ende ? 0 : 1, folge.get(i) ?? 0)
+      const sp = schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + MAST_KM, Z(b.lage[1]), ende ? 0 : 1, folge.get(i) ?? 0,
+                        szene, [[0.5, 0], [0, 0], [1, 0]])
+      masten.push({ sp, y })
     })
     for (const t of weg.tunnelPunkte.filter(imStueck)) {
       const p = punkt3d(t)
@@ -831,6 +854,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // Seen (Michael, 2026-10-06: «Erst Seen dazu»): flach auf Seehöhe, die Höhe ist die mittlere des Ufers im
     // Gelände; was über den Ausschnitt hinausragt, ist abgeschnitten
     const eck: Array<[number, number]> = [[ost, nord], [ost + breite * m, nord], [ost + breite * m, nord - hoehe * m], [ost, nord - hoehe * m]]
+    // auf dem Luftbild sind die Seen selbst zu sehen, dort ohne blaue Fläche (Michael, 2026-10-07)
+    const seeFlaechen = new THREE.Group()
+    szene.add(seeFlaechen)
     for (const see of zusatz?.seen?.seen ?? []) {
       const ringe = see.ringe.map((x) => zugInRahmen(zugLesen(x), eck)).filter((q) => q.length >= 3)
       if (!ringe.length) continue
@@ -843,7 +869,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const wasser = new THREE.Mesh(new THREE.ShapeGeometry(form), new THREE.MeshLambertMaterial({ color: '#9cc3e6' }))
       wasser.rotation.x = -Math.PI / 2
       wasser.position.y = Y(pegel + 3)
-      szene.add(wasser)
+      seeFlaechen.add(wasser)
       // «N_P» setzt swissTLMRegio, wo kein Name steht: ein Platzhalter, kein Name
       if (see.name && see.name !== 'N_P') {
         const [ne, nn] = see.namenspunkt ? lv95(see.namenspunkt[0], see.namenspunkt[1]) : ringe[0][0]
@@ -861,6 +887,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       zeichen.push(raute)
       schild(k.name, dunkel ? '#c39be0' : '#6b3fa0', X(e), y + 0.18, Z(n), 3, 0, gruppen.kgs)
     }
+    const seilBild = new THREE.Group(), seilBrille = new THREE.Group()
+    seilBrille.visible = false
+    gruppen.seilbahn.add(seilBild, seilBrille)
     for (const b of zusatz?.s?.seilbahnen ?? []) {
       const pts = b.verlauf.flatMap((v) => zugLesen(v))
       if (pts.length < 2 || !pts.some(([e, n]) => imAusschnitt(e, n))) continue
@@ -868,19 +897,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const [ea, na] = pts[0], [eb, nb] = pts[pts.length - 1]
       const a = new THREE.Vector3(X(ea), Y(hoeheBei(r, h, ea, na)) + 0.03, Z(na))
       const z2 = new THREE.Vector3(X(eb), Y(hoeheBei(r, h, eb, nb)) + 0.03, Z(nb))
-      const seil = new THREE.Mesh(new THREE.TubeGeometry(new THREE.LineCurve3(a, z2), 8, 0.025, 5, false),
-        new THREE.MeshBasicMaterial({ color: dunkel ? '#7cc0cf' : '#0d5c6e' }))
-      gruppen.seilbahn.add(seil)
+      // auf dem Bildschirm mit fester Breite, die Röhre wurde beim Hineinzoomen viel zu dick (Michael, 2026-10-07)
+      const seilFarbe = dunkel ? '#7cc0cf' : '#0d5c6e'
+      const lg = new LineGeometry()
+      lg.setPositions([a.x, a.y, a.z, z2.x, z2.y, z2.z])
+      const lm = new LineMaterial({ color: seilFarbe, linewidth: 1.5 })
+      linienMaterialien.push(lm)
+      seilBild.add(new Line2(lg, lm))
+      if (brille) {
+        seilBrille.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.LineCurve3(a, z2), 8, BRILLE_LINIE_M * 0.5 / brilleMass, 5, false),
+          new THREE.MeshBasicMaterial({ color: seilFarbe })))
+      }
       for (const p of [a, z2]) {
-        const st = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.07, 0.07), new THREE.MeshBasicMaterial({ color: dunkel ? '#7cc0cf' : '#0d5c6e' }))
+        const st = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.04), new THREE.MeshBasicMaterial({ color: seilFarbe }))
         st.position.copy(p)
         gruppen.seilbahn.add(st)
+        zeichen.push(st)
       }
     }
     anwenden.current = (a: Set<Kategorie>) => {
       gruppen.gipfel.visible = !a.has('gipfel')
       gruppen.kgs.visible = !a.has('kgs')
       gruppen.seilbahn.visible = !a.has('seilbahn')
+      seeFlaechen.visible = !luftbild || a.has('luftbild')
       auflageMalen(a)
     }
     anwenden.current(ausJetzt.current)
@@ -922,20 +961,28 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           mesh(new THREE.BoxGeometry(W * 0.8, H * 0.78, luecke + 0.002), schwarz).position.set(0, unten / 2 + h / 2 - H * 0.02, -L / 2 - luecke / 2)
         }
         if (i === 0) {
-          // Kopf: von der Seite unten senkrecht, oben in einer Rundung zurück zum Dach
-          const z0 = L / 2 - kopf, z1 = L / 2, c = kopf * 0.75
-          const seite = new THREE.Shape()
-          seite.moveTo(z0, unten); seite.lineTo(z1, unten); seite.lineTo(z1, unten + H * 0.25)
-          seite.quadraticCurveTo(z1, h, z1 - c, h); seite.lineTo(z0, h); seite.closePath()
-          const fg = new THREE.ExtrudeGeometry(seite, { depth: W * 0.96, bevelEnabled: true, bevelThickness: W * 0.02,
-                                                      bevelSize: W * 0.02, bevelSegments: 2, curveSegments: 8 })
-          fg.translate(0, 0, -W * 0.48)
-          fg.rotateY(-Math.PI / 2)
+          // Kopf: von der Seite unten senkrecht, oben in einer Rundung zurück zum Dach; rot nur die Spitze
+          // (Michael, 2026-10-07: «nur bei der Spitze rot»), dahinter hell wie der Kasten
+          const z0 = L / 2 - kopf, z1 = L / 2, c = kopf * 0.75, p0y = unten + H * 0.25
+          // die Rundung: z = z1 - c·t², y von p0y bis zum Dach
+          const bei = (t: number) => new THREE.Vector2(z1 - c * t * t, (1 - t) * (1 - t) * p0y + (1 - (1 - t) * (1 - t)) * h)
+          const T = 0.62, stufen = 10
+          const vorn = [new THREE.Vector2(z1 - c * T * T, unten), new THREE.Vector2(z1, unten)]
+          for (let k = 0; k <= stufen; k++) vorn.push(bei((k / stufen) * T))
+          const hinten = [new THREE.Vector2(z0, unten), new THREE.Vector2(z1 - c * T * T, unten)]
+          for (let k = 0; k <= stufen; k++) hinten.push(bei(T + (k / stufen) * (1 - T)))
+          hinten.push(new THREE.Vector2(z0, h))
           const rot = new THREE.MeshLambertMaterial({ color: FARBEN.zug })
           materialien.push(rot)
-          mesh(fg, rot)
+          for (const [umriss, mat] of [[hinten, hell], [vorn, rot]] as const) {
+            const fg = new THREE.ExtrudeGeometry(new THREE.Shape(umriss), { depth: W * 0.96, bevelEnabled: true, bevelThickness: W * 0.02,
+                                                                          bevelSize: W * 0.02, bevelSegments: 2 })
+            fg.translate(0, 0, -W * 0.48)
+            fg.rotateY(-Math.PI / 2)
+            mesh(fg, mat)
+          }
           // Frontscheibe auf der Rundung, wo sie etwa unter 33° steigt
-          const p0y = unten + H * 0.25, mz = 0.25 * z1 + 0.5 * z1 + 0.25 * (z1 - c), my = 0.25 * p0y + 0.75 * h
+          const mz = 0.25 * z1 + 0.5 * z1 + 0.25 * (z1 - c), my = 0.25 * p0y + 0.75 * h
           const tz = -c, ty = h - p0y, n = Math.hypot(tz, ty)
           const scheibe = mesh(new THREE.BoxGeometry(W * 0.8, H * 0.03, n * 0.55), schwarz)
           scheibe.position.set(0, my + (-tz / n) * H * 0.03, mz + (ty / n) * H * 0.03)
@@ -1025,7 +1072,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const belegt: Array<[number, number, number, number]> = []
       const liste = schilder.map((x) => ({ ...x, abstand: x.sp.position.distanceToSquared(kameraLokal) }))
         .sort((a, c) => a.rang - c.rang || a.folge - c.folge || a.abstand - c.abstand)
-      for (const { sp, rang, abstand } of liste) {
+      for (const { sp, rang, abstand, lagen } of liste) {
         if (sp.parent && !sp.parent.visible) continue
         // Kulturgüter nur nah an der Kamera, sonst überdecken ihre Namen im Mittelland alles
         if (rang >= 3 && abstand > NAH_KULTUR ** 2) { sp.visible = false; continue }
@@ -1033,12 +1080,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (projiziert.z > 1 || projiziert.z < -1) { sp.visible = false; continue }
         const breite = sp.scale.x * mass * pm[0] * b / 2, hoehe = sp.scale.y * mass * pm[5] * hh / 2
         const px = (projiziert.x + 1) / 2 * b, py = (1 - projiziert.y) / 2 * hh
-        // vier Lagen um den Punkt: rechts oben, links oben, rechts unten, links unten;
-        // die erste, die frei ist und ganz im Bild liegt, gilt
+        // Lagen um den Punkt, meist rechts oben, links oben, rechts unten, links unten, bei Bahnhöfen
+        // über dem Mast; die erste, die frei ist und ganz im Bild liegt, gilt
         sp.visible = false
-        for (const [cx, cy] of [[0, 0], [1, 0], [0, 1], [1, 1]]) {
-          const x0 = cx ? px - breite : px, x1 = x0 + breite
-          const y0 = cy ? py : py - hoehe, y1 = y0 + hoehe
+        for (const [cx, cy] of lagen) {
+          const x0 = px - cx * breite, x1 = x0 + breite
+          const y0 = py - (1 - cy) * hoehe, y1 = y0 + hoehe
           if (x0 < 2 || x1 > b - 2 || y0 < 2 || y1 > hh - 2) continue
           if (belegt.some(([a0, c0, a1, c1]) => x0 < a1 + 4 && x1 > a0 - 4 && y0 < c1 + 2 && y1 > c0 - 2)) continue
           sp.center.set(cx, cy)
@@ -1183,7 +1230,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
         zugMass = 1
         haelt.clear(); griff = null
-        nurBild.visible = true; nurBrille.visible = false
+        nurBild.visible = true; nurBrille.visible = false; seilBild.visible = true; seilBrille.visible = false
         szene.background = hintergrund
         groesseSetzen()
       })
@@ -1197,7 +1244,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         await renderer.xr.setSession(sitzung)
         setzen()
         for (const z of zeichen) z.scale.setScalar(1)
-        nurBild.visible = false; nurBrille.visible = true
+        nurBild.visible = false; nurBrille.visible = true; seilBild.visible = false; seilBrille.visible = true
         szene.background = ar ? null : hintergrund
       }
     }
@@ -1227,7 +1274,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (fahrt.s === null) letzte = null
       }
       // Bahnhöfe, Gipfel und Kulturgüter gleich: aus der Nähe kleiner, aus der Ferne grösser
-      if (!renderer.xr.isPresenting) { const f = zeichenMass(); for (const z of zeichen) z.scale.setScalar(f) }
+      if (!renderer.xr.isPresenting) {
+        const f = zeichenMass()
+        for (const z of zeichen) z.scale.setScalar(f)
+        for (const { sp, y } of masten) sp.position.y = y + MAST_KM * f
+      }
       if (zug) {
         const s = zug.current
         const sichtbar = s !== null && imStueck(s)

@@ -161,8 +161,9 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              an, X verdoppelt das Tempo (bis 16-fach), Y halbiert es (bis ¼);
              mit Passthrough, wo die Brille es kann; erscheint nur, wo der Browser WebXR meldet;
              «Probefahrt in der Brille»: der Zug fährt in 2,5 Minuten über das Modell (Zeitraffer, kein Fahrplan);
-             der Zug ist Lok und 3 Wagen gleicher Länge, hell mit dunklem Fensterband und dunklen
-             Übergängen, der Kopf karminrot und gerundet mit Frontscheibe, aus der Nähe kleiner, «nicht massstäblich»;
+             der Zug ist Lok und 4 Wagen gleicher Länge, hell mit dunklem Fensterband und dunklen
+             Übergängen, der Kopf gerundet mit Frontscheibe, nur die Spitze karminrot; Bahnhöfe als dünner Mast mit
+             dem Namen oben, Seilbahnen als feine Linie, Seen auf dem Luftbild ohne Fläche, aus der Nähe kleiner, «nicht massstäblich»;
              die Höhe der Gleise steht in keiner Quelle: die Linie folgt dem Gelände, gemittelt über 400 m davor und danach;
              die Wagen drehen nur um die Senkrechte und neigen sich höchstens 7°, kippen nie zur Seite
 data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Bahnlinie) in Kacheln von 10 km
