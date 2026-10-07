@@ -11,6 +11,10 @@ die Farben des Geländes.
 Die 2-m-Kacheln landen in data/raw/swissimage/ (nicht in Git) und werden nur einmal geladen.
 
     .venv/bin/python pipeline/build_luftbild.py albula        # die Kacheln einer Bergstrecke
+    .venv/bin/python pipeline/build_luftbild.py --orte Gümmenen Müntschemier   # rund um Bahnhöfe
+
+Mit --orte alle Kacheln, die höchstens FAHRT_RAND_M neben dem Rechteck um die genannten Bahnhöfe
+liegen (Namen wie in data/strecken.json): so viel zeigt «3D» beim Fahren um den Zug.
 """
 import json
 import subprocess
@@ -102,12 +106,34 @@ def kacheln_fuer(name):
             for ny in range(n0 // KACHEL_M, (n1 - 1) // KACHEL_M + 1)]
 
 
+#: halbe Seite des Ausschnitts beim Fahren (FENSTER_M in komponenten/Relief.tsx)
+FAHRT_RAND_M = 15_000
+
+
+def kacheln_um_orte(orte):
+    import build_relief
+    d = json.loads((ROOT / "data" / "strecken.json").read_text(encoding="utf-8"))
+    lage = {name: d["lagen"][abk] for abk, name in d["punkte"].items() if abk in d["lagen"]}
+    fehlt = [o for o in orte if o not in lage]
+    if fehlt:
+        raise SystemExit(f"nicht im Netz: {', '.join(fehlt)}")
+    pts = [build_relief.wgs84_zu_lv95(*lage[o]) for o in orte]
+    e0, e1 = min(e for e, _ in pts) - FAHRT_RAND_M, max(e for e, _ in pts) + FAHRT_RAND_M
+    n0, n1 = min(n for _, n in pts) - FAHRT_RAND_M, max(n for _, n in pts) + FAHRT_RAND_M
+    return [(ex, ny) for ex in range(int(e0) // KACHEL_M, int(e1) // KACHEL_M + 1)
+            for ny in range(int(n0) // KACHEL_M, int(n1) // KACHEL_M + 1)]
+
+
 def main():
-    namen = sys.argv[1:] or ["albula"]
+    args = sys.argv[1:] or ["albula"]
+    if args[0] == "--orte":
+        gruppen = [kacheln_um_orte(args[1:])]
+    else:
+        gruppen = [kacheln_fuer(name) for name in args]
     ix_datei = ZIEL / "index.json"
     ix = json.loads(ix_datei.read_text(encoding="utf-8")) if ix_datei.exists() else {"kacheln": {}}
-    for name in namen:
-        for ex, ny in kacheln_fuer(name):
+    for kacheln in gruppen:
+        for ex, ny in kacheln:
             k = f"{ex}_{ny}"
             if k in ix["kacheln"] and (ZIEL / f"{k}.jpg").exists():
                 continue

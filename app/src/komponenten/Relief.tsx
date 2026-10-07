@@ -445,7 +445,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
       </div>
       <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-        Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug. Die Höhe der Gleise steht in
+        Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
+        SWISSIMAGE (swisstopo), auf 10 m gemittelt, Stand der Aufnahme. Die Höhe der Gleise steht in
         keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Zug nicht
         massstäblich und kein bestimmter Zugtyp.
         {faktor === 2 && ' Höhe 2-fach überhöht.'}
