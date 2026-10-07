@@ -22,6 +22,8 @@ export interface Audio {
   lautstaerke: number
   /** Schreibmaschine beim Tippen in Textfeldern (Michael, 2026-10-06); am Anfang aus */
   schreibmaschine: boolean
+  /** Rollen und Schlagen der Räder in der 3D-Ansicht beim Fahren (Michael, 2026-10-07); am Anfang aus */
+  zuggeraeusch: boolean
 }
 
 const SCHLUESSEL = 'taktland.audio.v1'
@@ -42,6 +44,7 @@ function lesen(): Audio {
     antworten: x.antworten !== false,
     aufklappen: x.aufklappen !== false,
     schreibmaschine: x.schreibmaschine === true,
+    zuggeraeusch: x.zuggeraeusch === true,
     lautstaerke: typeof x.lautstaerke === 'number' && x.lautstaerke >= 0 && x.lautstaerke <= 100 ? Math.round(x.lautstaerke) : 100,
   }
 }
@@ -336,4 +339,114 @@ export function schreibmaschineHoeren() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && e.target instanceof HTMLInputElement && istTextfeld(e.target)) schreibmaschinenTon('glocke')
   }, true)
+}
+
+/**
+ * Zuggeräusch in der 3D-Ansicht (Michael, 2026-10-07: «ein typisches Zuggeräusch optional»): ein tiefes Rollen
+ * aus gefiltertem Rauschen, darüber ein leises Zischen, und an jedem Schienenstoss das Schlagen der Räder,
+ * zwei Drehgestelle mit je zwei Achsen: «ta-dam … ta-dam». Kein aufgenommener Zug, alles gerechnet; es
+ * folgt dem Tempo, im Zeitraffer höchstens wie bei GERAEUSCH_HOECHST_MS, und schweigt, wenn der Zug steht.
+ */
+const GERAEUSCH_HOECHST_MS = 44
+/** Abstand der Schienenstösse und wo die Achsen eines Wagens sie treffen, in Metern */
+const STOSS_M = 25
+const ACHSEN_M = [0, 2.5, 17.5, 20]
+
+let geraeusch: { rollen: GainNode; zischen: GainNode; quellen: AudioBufferSourceNode[]; naechster: number; uhr: number; tempo: number } | null = null
+
+function rauschenSchleife(c: AudioContext, braun: boolean) {
+  const puffer = c.createBuffer(1, c.sampleRate * 2, c.sampleRate)
+  const d = puffer.getChannelData(0)
+  let letzter = 0
+  for (let i = 0; i < d.length; i++) {
+    const w = Math.random() * 2 - 1
+    // braunes Rauschen: aufsummiert, tief und dumpf
+    d[i] = braun ? (letzter = (letzter + 0.02 * w) / 1.02) * 3.5 : w
+  }
+  const q = c.createBufferSource()
+  q.buffer = puffer
+  q.loop = true
+  return q
+}
+
+function schlag(c: AudioContext, wann: number, staerke: number) {
+  const dauer = 0.07
+  const puffer = c.createBuffer(1, Math.ceil(c.sampleRate * dauer), c.sampleRate)
+  const d = puffer.getChannelData(0)
+  for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (d.length * 0.15))
+  const q = c.createBufferSource()
+  q.buffer = puffer
+  const filter = c.createBiquadFilter()
+  filter.type = 'bandpass'
+  filter.frequency.value = 700 + Math.random() * 200
+  filter.Q.value = 1.1
+  const laut = c.createGain()
+  laut.gain.value = staerke
+  q.connect(filter).connect(laut).connect(ausgang(c))
+  q.start(wann)
+  // dazu ein dumpfer Schlag
+  const osc = c.createOscillator()
+  osc.frequency.setValueAtTime(95, wann)
+  osc.frequency.exponentialRampToValueAtTime(55, wann + 0.08)
+  const tief = c.createGain()
+  tief.gain.setValueAtTime(staerke * 0.6, wann)
+  tief.gain.exponentialRampToValueAtTime(0.0001, wann + 0.09)
+  osc.connect(tief).connect(ausgang(c))
+  osc.start(wann)
+  osc.stop(wann + 0.1)
+}
+
+/** Das Tempo des Zugs in m/s, laufend; null oder 0 lässt das Geräusch ausklingen. Nur mit «an» und «zuggeraeusch». */
+export function zuggeraeuschTempo(ms: number | null) {
+  const v = stand.an && stand.zuggeraeusch && ms ? Math.min(GERAEUSCH_HOECHST_MS, Math.max(0, ms)) : 0
+  const c = audioKontext()
+  if (!c) return
+  try {
+    if (!geraeusch) {
+      if (v < 0.5) return
+      void c.resume()
+      const rollen = c.createGain(), zischen = c.createGain()
+      rollen.gain.value = 0; zischen.gain.value = 0
+      const tief = c.createBiquadFilter()
+      tief.type = 'lowpass'; tief.frequency.value = 220
+      const braun = rauschenSchleife(c, true), weiss = rauschenSchleife(c, false)
+      braun.connect(tief).connect(rollen).connect(ausgang(c))
+      const hoch = c.createBiquadFilter()
+      hoch.type = 'bandpass'; hoch.frequency.value = 2600; hoch.Q.value = 0.6
+      weiss.connect(hoch).connect(zischen).connect(ausgang(c))
+      braun.start(); weiss.start()
+      geraeusch = { rollen, zischen, quellen: [braun, weiss], naechster: c.currentTime + 0.1, uhr: 0, tempo: 0 }
+    }
+    const g = geraeusch
+    g.tempo = v
+    const anteil = v / GERAEUSCH_HOECHST_MS
+    g.rollen.gain.setTargetAtTime(0.55 * Math.sqrt(anteil), c.currentTime, 0.4)
+    g.zischen.gain.setTargetAtTime(0.035 * anteil, c.currentTime, 0.4)
+    if (!g.uhr) {
+      // Schläge etwas im Voraus planen
+      g.uhr = window.setInterval(() => {
+        const t = c.currentTime
+        if (g.tempo < 0.5) { g.naechster = t + 0.1; return }
+        if (g.naechster < t) g.naechster = t + 0.05
+        while (g.naechster < t + 0.25) {
+          const staerke = 0.25 + 0.35 * (g.tempo / GERAEUSCH_HOECHST_MS)
+          for (const a of ACHSEN_M) schlag(c, g.naechster + a / g.tempo, staerke)
+          g.naechster += STOSS_M / g.tempo
+        }
+      }, 80)
+    }
+  } catch { /* ohne Ton geht alles weiter */ }
+}
+
+/** Beim Verlassen der 3D-Ansicht */
+export function zuggeraeuschAus() {
+  if (!geraeusch) return
+  const c = audioKontext()
+  const g = geraeusch
+  geraeusch = null
+  window.clearInterval(g.uhr)
+  try {
+    if (c) { g.rollen.gain.setTargetAtTime(0, c.currentTime, 0.15); g.zischen.gain.setTargetAtTime(0, c.currentTime, 0.15) }
+    window.setTimeout(() => { for (const q of g.quellen) q.stop(); g.rollen.disconnect(); g.zischen.disconnect() }, 1000)
+  } catch { /* nichts */ }
 }

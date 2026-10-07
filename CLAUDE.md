@@ -169,7 +169,8 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
 data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Bahnlinie) in Kacheln von 10 km
              zu 50 m aus swissALTIRegio, je Zeile Differenzen und gzip (.hgz, 550 Kacheln, 18 MB;
              pipeline/build_gelaende.py): «3D» auf jeder Fahrt und Probefahrt, 30 km um den Zug, der Ausschnitt
-             wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); die Reliefs in
+             wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); Knopf «Zuggeräusch»: Rollen und
+             Radschläge, gerechnet in src/audio.ts, folgen dem Tempo (höchstens etwa 160 km/h), am Anfang aus; die Reliefs in
              data/relief bleiben für die Bergstrecken als Ganzes und
              holen ihr Gelände ebenfalls aus den Kacheln
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),

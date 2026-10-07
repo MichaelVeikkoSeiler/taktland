@@ -8,6 +8,7 @@ import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, 
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import type { FahrObjekt, Fahrweg } from '../fahrt'
 import { lv95 } from '../relief'
+import { audioKontext, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { ausschnittLaden, fensterLaden, KEINE_HOEHE, type Luftbild, luftbildLaden } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
@@ -415,6 +416,24 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   const zug = useRef<number | null>(sJetzt)
   const blick = useRef<THREE.Vector3 | null>(null)
   useEffect(() => { zug.current = sJetzt }, [sJetzt])
+  // Zuggeräusch: das Tempo aus der Stelle des Zugs über die Zeit, geglättet; kommt nichts Neues, steht er
+  const audio = useAudio()
+  const tempo = useRef({ s: sJetzt, t: performance.now(), v: 0 })
+  useEffect(() => {
+    const x = tempo.current, t = performance.now()
+    if (sJetzt !== null && x.s !== null && t > x.t) {
+      const v = Math.abs(sJetzt - x.s) / ((t - x.t) / 1000)
+      if (v < 2000) x.v = x.v * 0.6 + v * 0.4
+    }
+    tempo.current = { s: sJetzt, t, v: x.v }
+  }, [sJetzt])
+  useEffect(() => {
+    const uhr = window.setInterval(() => {
+      const x = tempo.current
+      zuggeraeuschTempo(performance.now() - x.t > 1500 ? 0 : x.v)
+    }, 250)
+    return () => { window.clearInterval(uhr); zuggeraeuschAus() }
+  }, [])
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
   useEffect(() => {
     const [e, n] = lageAufWeg(fahrweg, sJetzt ?? 0)
@@ -454,6 +473,13 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick}
                className="absolute inset-0 overflow-hidden" />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
+        <button type="button" aria-pressed={audio.zuggeraeusch && audio.an} disabled={!audio.an}
+                title={audio.an ? undefined : 'Die Töne sind in den Einstellungen unter Audio aus'}
+                onClick={() => { audioKontext()?.resume(); audioSetzen({ zuggeraeusch: !audio.zuggeraeusch }) }}
+                className={`absolute right-2 top-2 rounded-lg px-2.5 py-1 text-xs font-bold disabled:opacity-50 ${audio.zuggeraeusch && audio.an
+                  ? 'bg-sbb-anthracite text-white' : 'border border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
+          Zuggeräusch {audio.zuggeraeusch && audio.an ? 'an' : 'aus'}
+        </button>
       </div>
       <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
