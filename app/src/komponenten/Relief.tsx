@@ -62,7 +62,8 @@ const UEBER_M = 25
  *  Tischhöhe, so weit vor dir; Linien so dick, dass sie auf diese Grösse noch zu sehen sind */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILLE_LINIE_M = 0.0012
 /** Radius der Linie und der Bahnhöfe auf dem Bildschirm in km (Michael, 2026-10-06: «ziemlich fett», vorher 60 und 120 m) */
-const STRICH_PX = 4, BAHNHOF_KM = 0.075
+/** Breite der Linie in Bildpunkten, bei jedem Zoom gleich (Michael, 2026-10-07: «halb so dick») */
+const STRICH_PX = 2, BAHNHOF_KM = 0.075
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
 const BRILLE_ZUG_M = 0.005
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
@@ -86,7 +87,7 @@ const PROBE_DAUER_S = 150
 const NAH_KULTUR = 9
 
 const FARBEN = {
-  linie: '#a8102e', weg: '#212121', tunnel: '#212121', bruecke: '#b45309', bahnhof: '#1e3a8a', gipfel: '#5b3a1e', zug: '#a8102e',
+  linie: '#a8102e', weg: '#5a5a5a', tunnel: '#212121', bruecke: '#b45309', bahnhof: '#1e3a8a', gipfel: '#5b3a1e', zug: '#a8102e',
 }
 
 function useRelief(name: string | null) {
@@ -711,7 +712,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (punkte.length < 2) return
       const lg = new LineGeometry()
       lg.setPositions(punkte.flatMap((p) => [p.x, p.y, p.z]))
-      const lm = new LineMaterial({ color: farbe, linewidth: durch ? STRICH_PX - 1 : STRICH_PX, depthTest: !durch,
+      const lm = new LineMaterial({ color: farbe, linewidth: durch ? STRICH_PX * 0.75 : STRICH_PX, depthTest: !durch,
                                     transparent: durch, opacity: durch ? 0.75 : 1 })
       linienMaterialien.push(lm)
       const strich = new Line2(lg, lm)
@@ -725,14 +726,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         nurBrille.add(netz)
       }
     }
-    /** gestrichelt (Tunnel): 400 m sichtbar, 250 m nicht (Punkte alle 50 m) */
-    const STRICH = 8, LUECKE = 5
+    /** gestrichelt (Tunnel): 150 m sichtbar, 100 m nicht (Punkte alle 50 m; Michael, 2026-10-07: «feiner») */
+    const STRICH = 3, LUECKE = 2
     const linie = (punkte: THREE.Vector3[], farbe: string, tunnel: boolean) => {
       if (!tunnel || punkte.length <= STRICH) { roehre(punkte, farbe, tunnel); return }
       for (let i = 0; i < punkte.length - 1; i += STRICH + LUECKE) roehre(punkte.slice(i, Math.min(punkte.length, i + STRICH + 1)), farbe, true)
     }
     // grau, wo der Weg selbst dunkel ist (beim Fahren), sonst wären Tunnel kaum zu unterscheiden
-    const tunnelFarbe = dunkel || wegFarbe === FARBEN.tunnel ? '#8a8a8a' : FARBEN.tunnel
+    const tunnelFarbe = dunkel || wegFarbe === FARBEN.weg ? '#8a8a8a' : FARBEN.tunnel
     for (const [anfang, ende] of weg.stuecke) {
       const grenzen = weg.bauwerke.filter((g) => g.bis > anfang && g.von < ende).sort((a, b) => a.von - b.von)
       let bei = anfang

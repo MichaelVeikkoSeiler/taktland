@@ -111,9 +111,11 @@ def test_karte_kennt_jeden_tunnel_wie_die_strecke():
         assert karte["tunnel"][i] == bereich
     assert {i.split(":")[0] for i in alle} <= set(karte["linien"])
     # Anfang und Ende laut swissTLM3D dürfen den Kilometer laut SBB um bis zu
-    # 300 m verfehlen (pipeline/build_tunnel_richtung.py, PORTAL_KM)
+    # 300 m verfehlen, bei gleichem Namen um 1 km (pipeline/build_tunnel_richtung.py,
+    # PORTAL_KM und PORTAL_NAME_KM)
     aus_tlm = json.loads((S.ROOT / "data" / "tunnel_richtung.json").read_text(encoding="utf-8"))["tunnel"]
     for i, (von, bis) in karte["tunnel"].items():
         km = obj[("tunnel", int(i.split(":")[0]))][int(i.split(":")[1])]["km"]
-        rand = 0.3 if i in aus_tlm else 0
+        sbb = obj[("tunnel", int(i.split(":")[0]))][int(i.split(":")[1])]
+        rand = (1.0 if aus_tlm[i].get("name") == sbb["name"] else 0.3) if i in aus_tlm else 0
         assert von - rand <= km <= bis + rand
