@@ -213,14 +213,13 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
   // Probefahrt in der Brille (Michael, 2026-10-06: «Fährt der Zug auf der Brille?»): Startzeit oder null
   const probe = useRef<number | null>(null)
-  const [probeLaeuft, setProbeLaeuft] = useState(false)
   // die Stelle des Zugs bei der Probefahrt, von der Szene nachgeführt, für das Zuggeräusch
   const probeStelle = useRef<number | null>(null)
   const audio = useZuggeraeusch(probeStelle, weg ? weg.punkte[weg.punkte.length - 1].m : Infinity, useMemo(() => weg?.bauwerke ?? [], [weg]))
-  const inBrille = (mitZug: boolean) => {
+  // in der Brille steht der Zug am Anfang bereit, A startet ihn (Michael, 2026-10-08: ein Knopf statt zwei)
+  const inBrille = () => {
     setBrilleFehler(null)
-    probe.current = mitZug ? performance.now() : null
-    setProbeLaeuft(mitZug)
+    probe.current = performance.now()
     brille.current?.().catch((e: Error) => setBrilleFehler(e.message))
   }
   useEffect(() => {
@@ -251,19 +250,9 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
           {brilleMoeglich ? (
             <div className="mt-3">
               <div className="flex flex-wrap gap-2">
-                <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={() => inBrille(false)}>
+                <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
                   In der Brille ansehen
                 </button>
-                <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 font-bold dark:border-sbb-iron"
-                        onClick={() => inBrille(true)}>
-                  Probefahrt in der Brille
-                </button>
-                {probeLaeuft && (
-                  <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 dark:border-sbb-iron"
-                          onClick={() => { probe.current = null; setProbeLaeuft(false) }}>
-                    Probefahrt anhalten
-                  </button>
-                )}
                 <GeraeuschKnopf audio={audio} className="h-10 w-12" />
               </div>
               <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -375,7 +364,6 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
   const brille = useRef<(() => Promise<void>) | null>(null)
   const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
   const probe = useRef<number | null>(null)
-  const [probeLaeuft, setProbeLaeuft] = useState(false)
   const probeStelle = useRef<number | null>(null)
   useEffect(() => {
     let ab = false
@@ -448,10 +436,10 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
   }, [fahrweg, objekte])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
   const audio = useZuggeraeusch(probeStelle, useMemo(() => wegEnde(fahrweg), [fahrweg]), useMemo(() => weg?.bauwerke ?? [], [weg]))
-  const inBrille = (mitZug: boolean) => {
+  // in der Brille steht der Zug am Anfang bereit, A startet ihn (Michael, 2026-10-08: ein Knopf statt zwei)
+  const inBrille = () => {
     setBrilleFehler(null)
-    probe.current = mitZug ? performance.now() : null
-    setProbeLaeuft(mitZug)
+    probe.current = performance.now()
     brille.current?.().catch((e: Error) => setBrilleFehler(e.message))
   }
   const feldM = daten?.r.raster.m
@@ -467,18 +455,9 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
           <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
                  probe={probe} probeStelle={probeStelle} className="mt-3 w-full overflow-hidden rounded-lg" />
           <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={() => inBrille(false)}>
+            <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
               In der Brille ansehen
             </button>
-            <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 font-bold dark:border-sbb-iron" onClick={() => inBrille(true)}>
-              Probefahrt in der Brille
-            </button>
-            {probeLaeuft && (
-              <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 dark:border-sbb-iron"
-                      onClick={() => { probe.current = null; setProbeLaeuft(false) }}>
-                Probefahrt anhalten
-              </button>
-            )}
             <GeraeuschKnopf audio={audio} className="h-10 w-12" />
           </div>
           {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
@@ -1501,7 +1480,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const hinweisTextur = new THREE.CanvasTexture(hinweisLeinwand)
       hinweisTextur.colorSpace = THREE.SRGBColorSpace
       const hinweis = new THREE.Sprite(new THREE.SpriteMaterial({ map: hinweisTextur, depthTest: false }))
-      hinweis.scale.set(0.32, 0.06, 1)
+      hinweis.scale.set(0.24, 0.045, 1)
       hinweis.renderOrder = 6
       hinweis.visible = false
       szene.add(hinweis)
@@ -1557,7 +1536,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           }
         }
         if (hinweis.visible) {
-          hinweis.position.copy(modell.position).add(new THREE.Vector3(0, 0.35, 0))
+          // am Blick, nicht am Modell: etwas unter der Mitte der Sicht, 0,9 m vor den Augen, so bleibt er im
+          // Ausschnitt, wo immer das Modell steht (Michael, 2026-10-08)
+          const auge = renderer.xr.getCamera()
+          const vorn = new THREE.Vector3(0, -0.18, -1).normalize().applyQuaternion(auge.getWorldQuaternion(new THREE.Quaternion()))
+          hinweis.position.copy(auge.getWorldPosition(new THREE.Vector3())).addScaledVector(vorn, 0.9)
           if (performance.now() > hinweisBis) hinweis.visible = false
         }
         // Thumbstick: links und rechts dreht, vor und zurück hebt und senkt
