@@ -297,6 +297,13 @@ def bav_abschnitte(kanten, punkte, facts):
 #: Schienennetzes liegen, damit es zum Abschnitt gehört (beide sind Karten mit
 #: eigener Genauigkeit; parallele Strecken liegen meist weiter auseinander)
 TLM_NAH_M = 30
+#: bei Tunneln weiter: Im Lötschberg-Basistunnel liegt der Verlauf laut Schienennetz 34 bis 100 m neben der
+#: Zeichnung in swissTLM3D (zwei Röhren); mit 30 m fehlte er zwischen Lötschen und St. German, und die Strecke
+#: lief dort über den Berg (Michael, 2026-10-08: «tritt irgendwo weit oben … aus dem Berg heraus»)
+TLM_NAH_TUNNEL_M = 120
+#: mit der weiteren Toleranz muss der Tunnel den grössten Teil des Abschnitts begleiten, sonst fängt sie Tunnel
+#: anderer Linien darunter oder daneben ein (Gotthard-Bahntunnel unter Andermatt – Göschenen)
+TLM_TUNNEL_ANTEIL = 0.6
 M_LAT, M_LON = 111_200, 73_000
 
 
@@ -431,8 +438,9 @@ def proben(pts):
     return raus
 
 
-def nah_an(pts_bauwerk, verlauf):
-    """Liegen mindestens TLM_MIN_M des Bauwerks höchstens TLM_NAH_M neben dem Verlauf?"""
+def nah_an(pts_bauwerk, verlauf, nah_m_grenze=TLM_NAH_M):
+    """Liegen mindestens TLM_MIN_M des Bauwerks höchstens nah_m_grenze neben dem Verlauf? Mit der weiteren
+    Grenze für Tunnel muss er stattdessen TLM_TUNNEL_ANTEIL des Abschnitts begleiten"""
     v = np.array([(lo * M_LON, la * M_LAT) for la, lo in verlauf])
     ax, ay, bx, by = v[:-1, 0], v[:-1, 1], v[1:, 0], v[1:, 1]
     dx, dy = bx - ax, by - ay
@@ -443,12 +451,15 @@ def nah_an(pts_bauwerk, verlauf):
     nah = 0
     for x, y in p:
         t = np.clip(((x - ax) * dx + (y - ay) * dy) / l2, 0, 1)
-        if np.min(np.hypot(ax + t * dx - x, ay + t * dy - y)) <= TLM_NAH_M:
+        if np.min(np.hypot(ax + t * dx - x, ay + t * dy - y)) <= nah_m_grenze:
             nah += 1
+    nah_m = (nah - 1) * TLM_SCHRITT_M
+    if nah_m_weit := nah_m if nah_m_grenze != TLM_NAH_M else None:
+        # weite Toleranz (Tunnel): nur, wenn er den grössten Teil des Abschnitts begleitet
+        return nah_m_weit >= TLM_TUNNEL_ANTEIL * lang_v
     # ein kurzes Bauwerk ganz, ein langes mit mindestens TLM_MIN_M, beides mit TLM_MIN_ANTEIL
     if nah == len(p):
         return True
-    nah_m = (nah - 1) * TLM_SCHRITT_M
     return nah_m >= TLM_MIN_M and nah_m >= TLM_MIN_ANTEIL * min(lang_b, lang_v)
 
 
@@ -821,7 +832,8 @@ def main():
                 # Rahmen überlappen (nicht: enthalten), sonst fielen lange Tunnel wieder weg
                 auf = [kb for kb, (a0, a1, o0, o1) in tlm_rahmen.items()
                        if a1 > min(las) - rand and a0 < max(las) + rand and o1 > min(los) - rand
-                       and o0 < max(los) + rand and nah_an(tlm[kb]["pts"], verlauf)]
+                       and o0 < max(los) + rand and (nah_an(tlm[kb]["pts"], verlauf) or tlm[kb]["art"] in ("tunnel", "galerie")
+                            and nah_an(tlm[kb]["pts"], verlauf, TLM_NAH_TUNNEL_M))]
                 if auf:
                     # in Richtung von → nach geordnet; die App dreht um, wenn der Weg andersherum führt
                     eintrag["tlm"] = sorted(auf, key=lambda x: stelle(tlm[x]["pts"], verlauf))

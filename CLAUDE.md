@@ -132,7 +132,9 @@ data/kartengrund.json  Grund aller Karten: Schweiz und Kantone (BFS g1), Flüsse
 data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3D
              (pipeline/fetch_tlm3d.py, pipeline/build_tlm_bauwerke.py), ohne Länge (beim Fahren mit der Länge
              ihrer Zeichnung, zugLaengeM in src/fahrt.ts); im
-             Fahrtmodus auf Strecken anderer Bahnen, deren Verlauf aus dem Schienennetz kommt
+             Fahrtmodus auf Strecken anderer Bahnen, deren Verlauf aus dem Schienennetz kommt; zum Abschnitt gehört ein
+             Bauwerk bis 30 m neben dem Verlauf, ein Tunnel auch bis 120 m, wenn er dann 60 % des Abschnitts begleitet
+             (Lötschberg-Basistunnel, Albulatunnel: zwei Röhren, Verlauf und Zeichnung liegen auseinander)
 data/tunnel_richtung.json  Anfang und Ende von SBB-Tunneln, deren Länge in beide Richtungen
              passt, laut swissTLM3D (pipeline/build_tunnel_richtung.py); der Kilometer der
              SBB liegt oft im Tunnel, nicht am Portal; bei gleichem Namen in swissTLM3D darf er bis 1 km

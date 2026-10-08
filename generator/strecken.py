@@ -183,8 +183,13 @@ def validieren():
                     proben += [(ax + (bx - ax) * j / k, ay + (by - ay) * j / k) for j in range(1, k + 1)]
                 nah = sum(1 for q in proben if abstand(q, linie) <= 31)
                 lang = lambda z: sum(((b2[0] - a2[0]) ** 2 + (b2[1] - a2[1]) ** 2) ** 0.5 for a2, b2 in zip(z, z[1:]))
-                if nah < len(proben) and not ((nah - 1) * 25 >= 100
-                                              and (nah - 1) * 25 >= 0.3 * min(lang(proben), lang(linie)) - 30):
+                eng = nah == len(proben) or ((nah - 1) * 25 >= 100
+                                             and (nah - 1) * 25 >= 0.3 * min(lang(proben), lang(linie)) - 30)
+                # Tunnel auch bis 120 m daneben, wenn er dann mindestens 60 % des Abschnitts begleitet
+                # (Lötschberg-Basistunnel zwischen Lötschen und St. German, zwei Röhren)
+                weit = sum(1 for q in proben if abstand(q, linie) <= 121)
+                tunnel_weit = b.get("art") in ("tunnel", "galerie") and (weit - 1) * 25 >= 0.6 * lang(linie) - 30
+                if not eng and not tunnel_weit:
                     fehler.append(f"{wo}: Bauwerk {kb} liegt zu wenig nahe am Verlauf")
 
     # jeder Bahnhof ist im Netz oder ausdrücklich nicht
