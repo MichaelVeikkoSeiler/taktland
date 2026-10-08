@@ -263,7 +263,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                 Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
                 auf Tischhöhe. Einen Abzug halten trägt es mit der Hand, beide Abzüge ziehen es grösser oder kleiner und drehen es;
                 der Thumbstick dreht und hebt es, die Greiftaste stellt es zurück. Mit den Händen gilt Daumen an Zeigefinger als
-                Abzug. Probefahrt: der Zug wartet am Anfang, A startet, B hält an, X schneller, Y langsamer. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt ein Zug, nicht massstäblich und kein bestimmter Typ, in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
+                Abzug. Probefahrt: der Zug wartet am Anfang, A startet, B hält an, X langsamer, Y schneller. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt ein Zug, nicht massstäblich und kein bestimmter Typ, in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
                 Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan. Das Zuggeräusch ist gerechnet,
                 keine Aufnahme; im Zeitraffer klingt es langsamer, als der Zug fährt.
               </p>
@@ -479,7 +479,7 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
             swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
             wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert. Bedienung wie bei den Bergstrecken: ein Abzug
             trägt das Modell, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt, die
-            Greiftaste stellt es zurück. Probefahrt: der Zug wartet am Anfang, A startet, B hält an, X schneller, Y langsamer; der Zug fährt in
+            Greiftaste stellt es zurück. Probefahrt: der Zug wartet am Anfang, A startet, B hält an, X langsamer, Y schneller; der Zug fährt in
             {' '}{(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke, ein Zeitraffer, kein Fahrplan.
             Die Höhe der Gleise steht in keiner Quelle. Zug nicht massstäblich und kein bestimmter Zugtyp.
           </p>
@@ -1282,11 +1282,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const tReihe = (von: number, bis: number, k: number) => Array.from({ length: k + 1 }, (_, i) => von + (bis - von) * (i / k))
           hell.side = THREE.DoubleSide
           // beim Steuerwagen ist die Spitze hell, und alles ist um die Senkrechte gedreht, nach hinten gerichtet
-          const spitze = hinten ? hell : new THREE.MeshLambertMaterial({ color: FARBEN.zug, side: THREE.DoubleSide })
-          if (!hinten) materialien.push(spitze as THREE.MeshLambertMaterial)
+          // jede Spitze mit eigener Farbe: rot ist immer die in Fahrtrichtung (Michael, 2026-10-08: «Rot muss immer
+          // vorne … sein»), siehe spitzenFaerben
+          const spitze = new THREE.MeshLambertMaterial({ color: hinten ? ZUG_HELL : FARBEN.zug, side: THREE.DoubleSide })
+          materialien.push(spitze)
           const kopfteil = (geo: THREE.BufferGeometry, mat: THREE.Material) => { if (hinten) geo.rotateY(Math.PI); return mesh(geo, mat) }
           kopfteil(loft([z0, ...tReihe(1, T, 6).map(zBei)], schnitt, true), hell)
-          kopfteil(loft(tReihe(T, 0, stufen).map(zBei), schnitt, true, 1, true), spitze)
+          kopfteil(loft(tReihe(T, 0, stufen).map(zBei), schnitt, true, 1, true), spitze).userData.spitze = hinten ? 'hinten' : 'vorn'
           // Frontscheibe: der obere Teil des Querschnitts, eng auf der Rundung
           const scheibeSchnitt = schnitt.filter((q) => q.y >= unten + 0.55 * (h - unten))
           const scheibe = new THREE.MeshLambertMaterial({ color: ZUG_DUNKEL, side: THREE.DoubleSide })
@@ -1313,6 +1315,20 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         szene.add(g, durch)
         zugTeile.push({ netz: g, durch, ebeneAussen, ebeneDrin, ab, laenge })
         ab += laenge + ZUG_LUECKE_M
+      }
+    }
+    /** rot die Spitze in Fahrtrichtung: vorwärts die Lok, zurück der Steuerwagen, die andere hell */
+    let gefaerbt = 1
+    const spitzenFaerben = (richtung: number) => {
+      gefaerbt = richtung
+      for (const t of zugTeile) {
+        for (const teil of [t.netz, t.durch]) {
+          teil.traverse((o) => {
+            const wo = o.userData.spitze
+            if (!wo || !(o instanceof THREE.Mesh)) return
+            ;(o.material as THREE.MeshLambertMaterial).color.set((wo === 'vorn') === (richtung > 0) ? FARBEN.zug : ZUG_HELL)
+          })
+        }
       }
     }
     const oben = new THREE.Vector3(0, 1, 0), richtungZug = new THREE.Vector3()
@@ -1544,7 +1560,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         g.fillStyle = '#212121'; g.font = 'bold 48px Helvetica, Arial, sans-serif'
         g.fillText('Tasten', 48, 84)
         const zeilen: Array<[string, string]> = [
-          ['A', 'Probefahrt starten'], ['B', 'anhalten'], ['X / Y', 'schneller / langsamer'],
+          ['A', 'Probefahrt starten'], ['B', 'anhalten'], ['X / Y', 'langsamer / schneller'],
           ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],
           ['Thumbstick', 'drehen, heben, senken'], ['Greiftaste', 'Modell zurück an den Anfang'],
         ]
@@ -1674,7 +1690,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           modell.scale.setScalar(s)
           massAnpassen(s)
         }
-        // A startet die Probefahrt oder setzt sie fort, B hält sie an, X schneller, Y langsamer
+        // A startet die Probefahrt oder setzt sie fort, B hält sie an, X langsamer, Y schneller
         // (Michael, 2026-10-06); A und B rechts, X und Y links, je Knopf 4 und 5 der Quest
         if (probe && zug === eigenerZug) {
           for (const quelle of renderer.xr.getSession()?.inputSources ?? []) {
@@ -1692,8 +1708,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
                 const rechts = quelle.handedness === 'right'
                 if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true; fahrt.gestartet = true; tafel.visible = false }
                 else if (rechts) fahrt.laeuft = false
-                else if (nr === 4) fahrt.tempo = Math.min(16, fahrt.tempo * 2)
-                else fahrt.tempo = Math.max(0.25, fahrt.tempo / 2)
+                // X langsamer, Y schneller (Michael, 2026-10-08: «kehre sie um»)
+                else if (nr === 4) fahrt.tempo = Math.max(0.25, fahrt.tempo / 2)
+                else fahrt.tempo = Math.min(16, fahrt.tempo * 2)
                 hinweisZeigen(fahrt.laeuft ? `Probefahrt ${tempoText(fahrt.tempo)}` : 'Probefahrt angehalten')
               }
               if (an) gedrueckt.add(schluessel); else gedrueckt.delete(schluessel)
@@ -1797,6 +1814,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           }
         }
         eigenerZug.current = fahrt.s
+        if (fahrt.richtung !== gefaerbt) spitzenFaerben(fahrt.richtung)
         if (fahrt.s === null) letzte = null
       }
       // Bahnhöfe, Gipfel und Kulturgüter gleich: aus der Nähe kleiner, aus der Ferne grösser
