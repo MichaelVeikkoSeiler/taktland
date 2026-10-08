@@ -12,7 +12,7 @@ import { Stern } from './Stern'
 import Wischen from './Wischen'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
-import { BRILLE_LUFTLINIE_HOECHSTENS_M, brilleVormerken, dreiDVormerken, reliefListe, useBrilleMoeglich } from '../relief'
+import { dreiDVormerken, reliefListe } from '../relief'
 
 type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
@@ -47,7 +47,6 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
   const blattBereit = blatt.von !== null && blatt.nach !== null && blatt.von !== blatt.nach
   // welche Probefahrt gerade ihre beiden Richtungen zeigt
   const [richtungWahl, setRichtungWahl] = useState<string | null>(null)
-  const xr = useBrilleMoeglich()
   const [ordnen, setOrdnen] = useState(false)
   const [neueProbe, setNeueProbe] = useState<{ von: number | null; nach: number | null; ueber: number | null } | null>(null)
   useEffect(() => {
@@ -58,14 +57,6 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
 
   const bahnhof = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [b.uic, b])), [index])
   const zielNamen = useMemo(() => namenFuerFahrt(index), [index])
-  // «In der Brille» nur für kurze eigene Probefahrten (Luftlinie über alle Halte), lange laden zu langsam
-  const kurzFuerBrille = useCallback((r: StreckenWahl) => {
-    const halte = [r.von, r.ueber, r.nach].filter((u): u is number => u !== null).map((u) => bahnhof.get(u))
-    if (halte.some((b) => b?.lat == null || b?.lon == null)) return false
-    let m = 0
-    for (let i = 1; i < halte.length; i++) m += abstandM({ lat: halte[i - 1]!.lat!, lon: halte[i - 1]!.lon! }, halte[i]!.lat!, halte[i]!.lon!)
-    return m <= BRILLE_LUFTLINIE_HOECHSTENS_M
-  }, [bahnhof])
   const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? zielNamen.get(uic) ?? String(uic) : ''),
                            [bahnhof, zielNamen])
   // nur Bahnhöfe, zu denen die Seite «Strecke» Wege kennt
@@ -241,13 +232,6 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                             <span className="min-w-0 font-medium">{fahrtText(r)}</span>
                             <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
                           </button>
-                          {xr && kurzFuerBrille(r) && (
-                            <button type="button" onClick={() => { brilleVormerken(); starten(r, true) }}
-                                    aria-label={`${fahrtText(r)} in der Brille`}
-                                    className="flex min-h-11 shrink-0 items-center rounded-lg bg-sbb-red px-3 py-2 text-sm font-bold text-white">
-                              In der Brille
-                            </button>
-                          )}
                           </div>
                         ))}
                       </div>
@@ -518,14 +502,14 @@ function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string
   const [liste, setListe] = useState<Awaited<ReturnType<typeof reliefListe>> | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [offen, setOffen] = useState<string | null>(null)
-  const xr = useBrilleMoeglich()
   useEffect(() => { reliefListe().then(setListe).catch((e: Error) => setFehler(e.message)) }, [])
   const text = (w: StreckenWahl) => `${name(w.von)} → ${name(w.nach)}${w.ueber ? ` (über ${name(w.ueber)})` : ''}`
   return (
     <section>
       <h2 className="mt-8 text-xl font-bold tracking-tight">Bergstrecken</h2>
       <p className="mt-2 leading-relaxed">
-        Bekannte Bergstrecken als Probefahrt, die gleich in 3D beginnt, und als Ganzes zum Drehen und Zoomen.
+        Bekannte Bergstrecken als Probefahrt, die gleich in 3D beginnt. Als Modell zum Drehen, auch in der Brille, stehen
+        sie unter <a href="#/modellbahn" className="underline underline-offset-2">Spiele, Modellbahn</a>.
       </p>
       {fehler && <p className="mt-4 text-sm">Die Liste konnte nicht geladen werden. {fehler}</p>}
       {!liste && !fehler && <p className="mt-4 text-sbb-metal">Wird geladen …</p>}
@@ -559,21 +543,8 @@ function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string
                         <span className="min-w-0 font-medium">{text(w)}</span>
                         <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
                       </button>
-                      {xr && (
-                        <button type="button" onClick={() => { brilleVormerken(); starten(w) }}
-                                aria-label={`${text(w)} in der Brille`}
-                                className="flex min-h-11 shrink-0 items-center rounded-lg bg-sbb-red px-3 py-2 text-sm font-bold text-white">
-                          In der Brille
-                        </button>
-                      )}
                       </div>
                     ))}
-                    <a href={`#/fahrt/3d/${r.name}`}
-                       className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
-                                  hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
-                      <span className="min-w-0 font-medium">Relief ansehen</span>
-                      <span className="pfeil shrink-0" aria-hidden="true">→</span>
-                    </a>
                   </div>
                 )}
               </li>

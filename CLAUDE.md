@@ -156,15 +156,14 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              410 hintereinander, «teile»: der Weg zählt dann Meter ab Lausanne, nicht die Kilometrierung): der
              Ausschnitt in den Geländekacheln (data/gelaende, keine eigenen Höhen mehr), Linie, Tunnel und Brücken mit Anfang und Ende
              (bei anderen Bahnen Linie aus dem Schienennetz des BAV, Bauwerke aus swissTLM3D ohne Namen),
-             Bahnhöfe, Gipfel; index.json nennt die Bergstrecken für «Probefahren» (Abschnitt Bergstrecken, kein eigener Reiter mehr) samt Probefahrt (Über hält sie
+             Bahnhöfe, Gipfel; index.json nennt die Bergstrecken für «Probefahren» (Abschnitt Bergstrecken, als Probefahrt ohne Brille) und die Modellbahn samt Probefahrt (Über hält sie
              auf der Bergstrecke)
              (pipeline/build_relief.py); in der App komponenten/Relief.tsx mit three.js, erst dort geladen;
              auf der eigenen Seite «In der Brille ansehen» (WebXR, Quest 3): Modell 1,2 m breit auf Tischhöhe; ein Abzug trägt es, beide
              skalieren und drehen, Thumbstick dreht und hebt, Greiftaste setzt zurück; Probefahrt: der Zug wartet am Anfang, A startet, B hält
              an, X halbiert das Tempo (bis ¼), Y verdoppelt es (bis 16-fach); Knopf «Zuggeräusch» wie beim Fahren;
              mit Passthrough, wo die Brille es kann; erscheint nur, wo der Browser WebXR meldet;
-             ein Knopf «In der Brille ansehen», davor ein Kasten «In der Brille: ein Modell zum Anschauen, kein Abbild der
-             Wirklichkeit» (BrilleHinweis), der ganze Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das
+             ein Knopf «In der Brille ansehen» (Modellbahn), der ganze Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das
              Modell (Zeitraffer, kein Fahrplan); Hinweise in der Brille hängen am Blick, nicht am Modell; beim Betreten eine
              Tafel mit den Tasten und rotem Knopf «Schliessen» (Strahl und Abzug oder A), sie bleibt bis dahin; erst das nächste A startet; am Ziel hält er und zeigt die Knöpfe «Fahrt wiederholen»,
              «Zurückfahren» (Steuerwagen voraus) und «Fahrt beenden», mit dem Strahl oder A, X, B; bis zum ersten A zeigt ein wippender roter Pfeil von oben auf die Lok;
@@ -181,12 +180,15 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              Anthrazit, aus: Kreuz auf Weiss) fürs Zuggeräusch: Rollen und
              Radschläge, gerechnet in src/audio.ts, folgen dem Tempo (im Zeitraffer gestaucht, ab 5000 km/h gleich), steigen beim Anfahren in
              2,5 s an und klingen 2,5 s vor dem Ziel aus, im Tunnel dumpfer und lauter mit Widerhall, auf Brücken
-             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; Reiter «Brille» rechts von «3D»
-             (nur mit WebXR, rot mit weisser Schrift wie jeder Knopf zur Brille, gewählt mit Rand; bei den Probefahrten und
-             Bergstrecken führt «In der Brille» neben «Abspielen» gleich dorthin, ohne WebXR fehlt jeder Hinweis auf die Brille; nur bis 170 km Weg,
-             bei eigenen Probefahrten bis 120 km Luftlinie, BRILLE_HOECHSTENS_M in src/relief.ts: länger lädt das Gelände zu langsam): die ganze Strecke als Modell wie die Bergstrecken, Gelände nur in einem Band von 5 km
+             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; unter Fahren keine Brille (Michael, 2026-10-08).
+             Spiel «Modellbahn» unter Spiele (komponenten/Modellbahn.tsx, #/modellbahn, für alle, die Brille nur mit WebXR):
+             über jedem Modell der Kasten «Modellbahn: ein Modell zum Anschauen, kein Abbild der Wirklichkeit» (ModellHinweis),
+             darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Zuggeräusch und «In der Brille ansehen»; die
+             Bergstrecken und Lausanne–Solothurn als Modell (#/modellbahn/gotthard, alte Adressen #/relief/…, #/fahrt/3d/…
+             führen dorthin) und «Eigene Strecke» (#/modellbahn/strecke, die Seite Strecke mit modell, bis 170 km Weg,
+             MODELL_HOECHSTENS_M in src/relief.ts: länger lädt das Gelände zu langsam; ModellStrecke): die ganze Strecke als Modell wie die Bergstrecken, Gelände nur in einem Band von 5 km
              links und rechts (nur diese Kacheln, das Netz ohne leere Punkte), ab 3 Millionen Feldern im Band gröber,
-             Luftbilder verkleinert (BrilleFahrt); Seen, Gipfel und Kulturgüter nur im Band; in Modellen über 100 km nur Seen ab
+             Luftbilder verkleinert; Seen, Gipfel und Kulturgüter nur im Band; in Modellen über 100 km nur Seen ab
              8 km² beschriftet, Masten mit der Grösse des Modells höher; die Reliefs in
              data/relief bleiben für die Bergstrecken als Ganzes und
              holen ihr Gelände ebenfalls aus den Kacheln

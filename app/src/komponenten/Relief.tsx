@@ -212,7 +212,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   const weg = useMemo(() => (daten ? wegDerLinie(daten.r) : null), [daten])
   // in der Brille (Michael, 2026-10-06: «Quest 3»): nur, wo der Browser WebXR kann
   const brille = useRef<(() => Promise<void>) | null>(null)
-  const brilleMoeglich = useBrilleMoeglich()
+  const fahrknopf = useRef<Fahrknopf | null>(null)
   const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
   // Probefahrt in der Brille (Michael, 2026-10-06: «Fährt der Zug auf der Brille?»): Startzeit oder null
   const probe = useRef<number | null>(null)
@@ -229,44 +229,24 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
 
   return (
     <div className="px-4 pb-4">
-      {/* zurück zur Linie des Reliefs, sonst zu allen Strecken */}
-      <Zurueck onClick={() => { window.location.hash = zurueck?.adresse ?? (daten ? `#/linie/${daten.r.linie}` : '#/strecken') }}
-               text={zurueck?.text ?? (daten ? `Linie ${daten.r.linie}` : 'Alle Strecken')} />
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">{daten?.r.titel ?? '3D-Relief'} in 3D</h1>
+      {/* die Bergstrecken als Modell gehören zur Modellbahn (Michael, 2026-10-08) */}
+      <Zurueck onClick={() => { window.location.hash = zurueck?.adresse ?? '#/modellbahn' }} text={zurueck?.text ?? 'Modellbahn'} />
+      <h1 className="mt-4 text-2xl font-bold tracking-tight">{daten?.r.titel ?? 'Bergstrecke'} als Modell</h1>
       {daten && (
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
           {(daten.r.teile ?? [daten.r]).map((t) => `Linie ${t.linie} ${t.linie_name}, Kilometer ${t.von_km.toLocaleString('de-CH')} bis ${t.bis_km.toLocaleString('de-CH')}`).join('; dann ')}
         </p>
       )}
+      <ModellHinweis />
       {fehler && <Ladefehler className="mt-6" was="Das Relief konnte nicht geladen werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-6 text-sbb-metal">Das Relief wird geladen …</p>}
       {daten && weg && (
         <>
           <div className="mt-4"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
           <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
-                 probe={probe} probeStelle={probeStelle} className="mt-3 w-full overflow-hidden rounded-lg" />
-          {brilleMoeglich ? (
-            <div className="mt-3">
-              <BrilleHinweis />
-              <div className="mt-3 flex flex-wrap gap-2">
-                <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
-                  In der Brille ansehen
-                </button>
-                <GeraeuschKnopf audio={audio} className="h-10 w-12" />
-              </div>
-              <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-                Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
-                auf Tischhöhe. Einen Abzug halten trägt es mit der Hand, beide Abzüge ziehen es grösser oder kleiner und drehen es;
-                der Thumbstick dreht und hebt es, die Greiftaste stellt es zurück. Mit den Händen gilt Daumen an Zeigefinger als
-                Abzug. Probefahrt: der Zug wartet am Anfang, A startet, B hält an, X langsamer, Y schneller. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt ein Zug, nicht massstäblich und kein bestimmter Typ, in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
-                Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan. Das Zuggeräusch ist gerechnet,
-                keine Aufnahme; im Zeitraffer klingt es langsamer, als der Zug fährt.
-              </p>
-              {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
-            </div>
-          ) : null}
+                 probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} className="mt-3 w-full overflow-hidden rounded-lg" />
+          <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-            Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der rechten Maustaste.
             Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
             {faktor === 2 && <span className="font-medium text-sbb-black dark:text-sbb-white"> Die Höhe ist 2-fach überhöht.</span>}
           </p>
@@ -349,13 +329,14 @@ const BAND_FELDER = 3_000_000
  * projizieren»): das Gelände aus den Kacheln im Rechteck um den Weg, bei langen Strecken gröber gemittelt, sonst wie
  * die Bergstrecken: «In der Brille ansehen» und die Probefahrt mit A, B, X und Y.
  */
-export function BrilleFahrt({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: FahrObjekt[] }) {
+export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: FahrObjekt[] }) {
   const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const brille = useRef<(() => Promise<void>) | null>(null)
   const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
   const probe = useRef<number | null>(null)
   const probeStelle = useRef<number | null>(null)
+  const fahrknopf = useRef<Fahrknopf | null>(null)
   useEffect(() => {
     let ab = false
     // Punkte auf dem Weg etwa alle 500 m; um jeden ein Kreis von BAND_M ergibt das Band
@@ -437,29 +418,18 @@ export function BrilleFahrt({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: F
   const feldM = daten?.r.raster.m
   return (
     <div>
+      <ModellHinweis />
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-3 text-sm text-sbb-metal">Das Gelände entlang der ganzen Strecke wird geladen …</p>}
       {daten && weg && (
         <>
           <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
-                 probe={probe} probeStelle={probeStelle} className="mt-3 w-full overflow-hidden rounded-lg" />
-          <BrilleHinweis />
-          <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
-              In der Brille ansehen
-            </button>
-            <GeraeuschKnopf audio={audio} className="h-10 w-12" />
-          </div>
-          {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
+                 probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} className="mt-3 w-full overflow-hidden rounded-lg" />
+          <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
-            Die ganze Strecke als Modell, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit auf Tischhöhe, mit einem Band
-            von {BAND_M / 1000} km links und rechts der Strecke; was weiter weg liegt, fehlt. Gelände aus
-            swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
-            wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert. Bedienung wie bei den Bergstrecken: ein Abzug
-            trägt das Modell, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt, die
-            Greiftaste stellt es zurück. Probefahrt: der Zug wartet am Anfang, A startet, B hält an, X langsamer, Y schneller; der Zug fährt in
-            {' '}{(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke, ein Zeitraffer, kein Fahrplan.
-            Die Höhe der Gleise steht in keiner Quelle. Zug nicht massstäblich und kein bestimmter Zugtyp.
+            Die ganze Strecke als Modell, mit einem Band von {BAND_M / 1000} km links und rechts der Strecke; was weiter weg
+            liegt, fehlt. Gelände aus swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
+            wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert.
           </p>
         </>
       )}
@@ -467,12 +437,14 @@ export function BrilleFahrt({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: F
   )
 }
 
-/** Vor jedem Knopf zur Brille, gut sichtbar (Michael, 2026-10-08: «Proportionen, Gleisdesign … grenzt diesen Teil mit
- *  der VR-Brille vom Rest von Taktland ab, wo sonst alles realitätsgetreu ist») */
-function BrilleHinweis() {
+interface Fahrknopf { los: () => void; halt: () => void }
+
+/** Über jedem Modell der Modellbahn, gut sichtbar (Michael, 2026-10-08: «Proportionen, Gleisdesign … grenzt diesen Teil
+ *  mit der VR-Brille vom Rest von Taktland ab, wo sonst alles realitätsgetreu ist») */
+function ModellHinweis() {
   return (
     <div className="mt-3 border-l-4 border-sbb-red bg-sbb-milk p-3 text-sm dark:bg-sbb-charcoal">
-      <p className="font-bold">In der Brille: ein Modell zum Anschauen, kein Abbild der Wirklichkeit</p>
+      <p className="font-bold">Modellbahn: ein Modell zum Anschauen, kein Abbild der Wirklichkeit</p>
       <p className="mt-1">Anders als im übrigen Taktland stimmt hier nicht alles mit der Wirklichkeit überein:</p>
       <ul className="mt-1 list-disc space-y-0.5 pl-5">
         <li>Der Zug ist nicht massstäblich und kein bestimmter Zugtyp.</li>
@@ -482,6 +454,44 @@ function BrilleHinweis() {
         <li>Die Fahrt ist ein Zeitraffer, kein Fahrplan; das Zuggeräusch ist gerechnet.</li>
       </ul>
     </div>
+  )
+}
+
+/** Unter dem Modell: der Zug fährt auf dem Bildschirm, dazu das Zuggeräusch und, nur wo der Browser eine Brille meldet,
+ *  «In der Brille ansehen» (Michael, 2026-10-08: Modellbahn für alle, die Brille nur, wo vorhanden) */
+function ModellKnoepfe({ fahrknopf, audio, inBrille, brilleFehler }: {
+  fahrknopf: React.RefObject<Fahrknopf | null>
+  audio: ReturnType<typeof useZuggeraeusch>
+  inBrille: () => void
+  brilleFehler: string | null
+}) {
+  const xr = useBrilleMoeglich()
+  const weiss = 'rounded-lg border border-sbb-cloud bg-white px-4 py-2 font-bold dark:border-sbb-iron dark:bg-sbb-midnight'
+  return (
+    <>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {xr && (
+          <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
+            In der Brille ansehen
+          </button>
+        )}
+        <button type="button" className={xr ? weiss : 'rounded-lg bg-sbb-red px-4 py-2 font-bold text-white'}
+                onClick={() => fahrknopf.current?.los()}>
+          Zug fahren
+        </button>
+        <button type="button" className={weiss} onClick={() => fahrknopf.current?.halt()}>Anhalten</button>
+        <GeraeuschKnopf audio={audio} className="h-10 w-12" />
+      </div>
+      {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
+      <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+        «Zug fahren» schickt einen Zug in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke,
+        ein Zeitraffer, kein Fahrplan. Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der
+        rechten Maustaste.
+        {xr && <> In der Brille steht das Modell etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit auf Tischhöhe: ein
+          Abzug trägt es, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt es, die Greiftaste
+          stellt es zurück. Der Zug wartet am Anfang, A startet, B hält an, X langsamer, Y schneller.</>}
+      </p>
+    </>
   )
 }
 
@@ -715,7 +725,7 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fahrknopf, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
@@ -729,6 +739,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   hinterZug?: React.MutableRefObject<boolean>
   /** auf der eigenen Seite: hier führt die Szene die Stelle des Zugs bei der Probefahrt nach (Zuggeräusch) */
   probeStelle?: React.MutableRefObject<number | null>
+  /** Modellbahn auf dem Bildschirm: hier legt die Szene ab, wie der Zug losfährt und anhält */
+  fahrknopf?: React.MutableRefObject<Fahrknopf | null>
   className: string
 }) {
   const rahmen = useRef<HTMLDivElement>(null)
@@ -1466,7 +1478,18 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
      *  «signal» ist der letzte Start von der Seite (probe), ein neuer beginnt von vorn */
     const fahrt = { s: null as number | null, laeuft: false, tempo: 1, signal: null as number | null, gestartet: false,
                     /** 1 vorwärts, -1 zurück: dann fährt der Steuerwagen voraus wie bei einem Pendelzug */
-                    richtung: 1 }
+                    richtung: 1,
+                    /** «Zug fahren» auf dem Bildschirm, im nächsten Bild ausgeführt */
+                    losWunsch: false }
+    if (fahrknopf) {
+      fahrknopf.current = {
+        los: () => {
+          if (probe && probe.current === null) (probe as React.MutableRefObject<number | null>).current = performance.now()
+          fahrt.losWunsch = true
+        },
+        halt: () => { fahrt.laeuft = false },
+      }
+    }
     /** in der Brille: am Ziel die Knöpfe «Fahrt wiederholen», «Zurückfahren», «Fahrt beenden» zeigen */
     let menueZeigen: (() => void) | null = null
     /** so lang ist der Zug jetzt auf dem Weg, in dessen Metern */
@@ -1823,6 +1846,16 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           fahrt.gestartet = false
           fahrt.tempo = 1
           fahrt.richtung = 1
+        }
+        if (fahrt.losWunsch && fahrt.s !== null) {
+          fahrt.losWunsch = false
+          // am Ziel beginnt «Zug fahren» wieder am Anfang
+          if (fahrt.richtung > 0 ? fahrt.s >= ende : fahrt.s - zugLaengeS() <= anfang) {
+            fahrt.richtung = 1
+            fahrt.s = Math.min(ende, anfang + zugLaengeS())
+          }
+          fahrt.laeuft = true
+          fahrt.gestartet = true
         }
         if (fahrt.laeuft && fahrt.s !== null) {
           fahrt.s += fahrt.richtung * ((ende - anfang) / PROBE_DAUER_S) * fahrt.tempo * dt

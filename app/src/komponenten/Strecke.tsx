@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { bahnhoefeVorziehen, gerundetM, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
@@ -21,6 +21,11 @@ import { STUFE_TEXT } from './Suche'
 import { genau } from './Objekte'
 import { Ladefehler } from './Ladefehler'
 import { BahnenWahl } from './BahnenWahl'
+import { Zurueck } from './Zurueck'
+import { MODELL_HOECHSTENS_M } from '../relief'
+
+// das Modell der Strecke für die Modellbahn, mit three.js, erst dort geladen
+const ModellStrecke = lazy(() => import('./Relief').then((m) => ({ default: m.ModellStrecke })))
 
 /** Start, Ziel und wahlweise ein Bahnhof dazwischen, als UIC */
 export interface StreckenWahl {
@@ -202,7 +207,9 @@ function laengeText(m: number) {
   return `etwa ${genau(gerundetM(m))} m laut Zeichnung von swisstopo`
 }
 
-export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: StreckenWahl }) {
+/** modell: die Seite «Eigene Strecke» der Modellbahn (Michael, 2026-10-08): dieselbe Wahl, dann das Modell statt der Fahrt */
+export function Strecke({ index, wahl, modell = false }: { index: BahnhofIndex | null; wahl: StreckenWahl; modell?: boolean }) {
+  const adresse = (w: StreckenWahl) => (modell ? streckenAdresse(w).replace('#/strecke', '#/modellbahn/strecke') : streckenAdresse(w))
   const [netz, setNetz] = useState<StreckenNetz | null>(null)
   const [tunnel, setTunnel] = useState<Uebersicht<TunnelEintrag> | null>(null)
   const [bruecken, setBruecken] = useState<Uebersicht<BrueckenEintrag> | null>(null)
@@ -270,7 +277,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
   }, [netz, nachbarn, alleNachbarn, wahl.von, wahl.nach, wahl.ueber, wahl.weg?.join('.')])
 
   function waehlen(neu: Partial<StreckenWahl>) {
-    window.location.hash = streckenAdresse({ ...wahl, ...neu })
+    window.location.hash = adresse({ ...wahl, ...neu })
   }
 
   // dazu die Ziele ohne Bahnhofsnummer (Iselle)
@@ -278,11 +285,24 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
 
   return (
     <div className="px-4 pb-4">
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Strecke</h1>
-      <p className="mt-2 leading-relaxed">
-        Start und Ziel wählen: Taktland sucht einen Weg durch das Netz und zeigt die erfassten
-        Tunnel und Brücken entlang dieses Wegs.
-      </p>
+      {modell ? (
+        <>
+          <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">Eigene Strecke als Modell</h1>
+          <p className="mt-2 leading-relaxed">
+            Start und Ziel wählen: Taktland sucht einen Weg durch das Netz und baut ihn als Modell im Gelände, bis
+            etwa {MODELL_HOECHSTENS_M / 1000} km.
+          </p>
+        </>
+      ) : (
+        <>
+          <h1 className="mt-6 text-2xl font-bold tracking-tight">Strecke</h1>
+          <p className="mt-2 leading-relaxed">
+            Start und Ziel wählen: Taktland sucht einen Weg durch das Netz und zeigt die erfassten
+            Tunnel und Brücken entlang dieses Wegs.
+          </p>
+        </>
+      )}
 
       <div className="mt-6 space-y-3">
         <BahnhofFeld bezeichnung="Von" wert={wahl.von} bahnhoefe={alle} name={name}
@@ -319,7 +339,7 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
               if (!va || !vb) return null
               return (
                 <li key={a + b}>
-                  <a href={streckenAdresse({ von: va.uic, nach: vb.uic, ueber: null })}
+                  <a href={adresse({ von: va.uic, nach: vb.uic, ueber: null })}
                      className="underline underline-offset-2 hover:text-sbb-black dark:hover:text-sbb-white">
                     {a} → {b}
                   </a>
@@ -349,16 +369,17 @@ export function Strecke({ index, wahl }: { index: BahnhofIndex | null; wahl: Str
         <Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}-${wahl.weg?.join('.')}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
                   brueckenIds={ergebnis.bruecken} tunnel={tunnel} bruecken={bruecken}
                   bahnhof={bahnhof} alleBruecken={alleBruecken} verzeichnis={verzeichnis}
-                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} />
+                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} />
       )}
     </div>
   )
 }
 
 function Ergebnis({
-  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl,
+  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl, modell,
 }: {
   wahl: StreckenWahl
+  modell: boolean
   netz: StreckenNetz
   weg: Weg
   tunnelIds: string[]
@@ -390,6 +411,8 @@ function Ergebnis({
                                         wegTeil: number } | null>(null)
   const [bilanz, setBilanz] = useState<{ objekte: BilanzObjekt[]; probe: boolean; beginn: number | null } | null>(null)
   const [laedt, setLaedt] = useState(false)
+  // Modellbahn: der fertige Weg fürs Modell
+  const [modellWeg, setModellWeg] = useState<Fahrweg | null>(null)
   // während der Fahrtmodus hier läuft, fragt oben niemand «fortsetzen?»
   useEffect(() => {
     if (!fahrt || fahrt.beginn === null) return
@@ -446,7 +469,7 @@ function Ergebnis({
                : ` · ${y.baueinheiten} ${y.baueinheiten === 1 ? 'Baueinheit' : 'Baueinheiten'}`}${quelle(y.name)}` }
   }, [tunnelNach, brueckenNach, uebergaengeNach, bahnhof, uicVon, brueckeLaenge])
 
-  async function fahrtStarten(probe: boolean, weiter = false) {
+  async function fahrtStarten(probe: boolean, weiter = false, alsModell = false) {
     // der Ton muss im Tipp selbst vorbereitet werden, sonst bleibt er stumm;
     // kommt der Start von der Seite «Fahrtmodus», liegt er dort schon bereit
     const piepen = tonAbholen()
@@ -472,6 +495,8 @@ function Ergebnis({
         fahrweg.objekte = [...fahrweg.objekte, ...sehenswertAufWeg(fahrweg, s, f)].sort((a, b) => a.s - b.s)
       } catch { /* ohne Sehenswertes */ }
       try { fahrweg.seeUfer = seeUferAufWeg(fahrweg, await seenLaden()) } catch { /* ohne Seen */ }
+      // Modellbahn: nur der Weg fürs Modell, keine Fahrt, nichts ins Logbuch
+      if (alsModell) { setModellWeg(fahrweg); return }
       const titel = titelText.split(' → ')
       // fortsetzen, wenn es dieselbe Fahrt ist und der Weg gleich herauskommt
       // «Ohne Ziel»: jede neu erkannte Linie gehört zur selben Fahrt im Logbuch
@@ -641,6 +666,13 @@ function Ergebnis({
       quelle: 'linienkilometrierung',
     },
   ]
+
+  if (modell) {
+    return (
+      <ModellAusWeg titel={titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
+                    bauen={() => void fahrtStarten(true, false, true)} />
+    )
+  }
 
   return (
     <>
@@ -894,6 +926,35 @@ function Ergebnis({
 }
 
 /** Die Linien des Wegs, verlinkt, wo die Linie in Taktland eine Seite hat */
+/** Die eigene Strecke der Modellbahn: gleich nach der Wahl bauen; bis etwa 170 km, länger lädt das Gelände zu langsam */
+function ModellAusWeg({ titel, laedt, fehler, fahrweg, bauen }: {
+  titel: string; laedt: boolean; fehler: string | null; fahrweg: Fahrweg | null; bauen: () => void
+}) {
+  // einmal je Weg (die Seite gibt Ergebnis je Wahl einen eigenen Schlüssel)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { bauen() }, [])
+  const laenge = fahrweg ? wegEnde(fahrweg) : null
+  return (
+    <section className="mt-8">
+      <h2 className="text-xl font-bold tracking-tight">{titel}</h2>
+      {(laedt || (!fahrweg && !fehler)) && <p className="mt-2 text-sm text-sbb-metal">Der Weg wird gebaut …</p>}
+      {fehler && <p className="mt-2 text-sm">Das Modell konnte nicht gebaut werden. {fehler}</p>}
+      {fahrweg && laenge !== null && laenge > MODELL_HOECHSTENS_M && (
+        <p className="mt-2 leading-relaxed">
+          Dieser Weg ist gezeichnet etwa {Math.round(laenge / 1000).toLocaleString('de-CH')} km lang. Das Modell
+          reicht bis {MODELL_HOECHSTENS_M / 1000} km, sonst lädt das Gelände zu langsam. Ein näheres Ziel oder «Über» ergibt
+          einen kürzeren Abschnitt.
+        </p>
+      )}
+      {fahrweg && laenge !== null && laenge <= MODELL_HOECHSTENS_M && (
+        <Suspense fallback={<p className="mt-2 text-sm text-sbb-metal">Das Modell wird geladen …</p>}>
+          <ModellStrecke fahrweg={fahrweg} objekte={fahrweg.objekte} />
+        </Suspense>
+      )}
+    </section>
+  )
+}
+
 function WegLinien({ laeufe, netz, verzeichnis }: {
   laeufe: Lauf[]
   netz: StreckenNetz

@@ -464,6 +464,9 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
   Dazu in der Fahrtanzeige ein roter Reiter «Brille» rechts von «3D» statt des Knopfs «Strecke in der Brille».
 - **Brille nur auf kurzen Strecken** (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: Kacheln zu langsam): bis
   170 km Weg, bei eigenen Probefahrten bis 120 km Luftlinie; sonst fehlt der Knopf ganz.
+- **Spiel «Modellbahn»** erledigt 2026-10-08 (Michael: «neues Spiel 3D/VR … unter Live-Fahrten und Probefahrten
+  … kein VR mit Brille»): Bergstrecken und eigene Strecken bis 170 km als Modell, für alle auf dem Bildschirm mit
+  «Zug fahren», die Brille nur dort und nur wo vorhanden. Zugmodelle kommen hierher.
 - **Zugmodelle zur Wahl** (Michael, 2026-10-08: «verschiedene Zugmodelle … wie zum Beispiel ein Feuerwehrzug»):
   bei der Probefahrt in der Brille Pendelzug (heute), kurzer Regionalzug, langer Güterzug, Feuerwehrzug (Lösch- und
   Rettungszug), später Bergbahn. Wahl auf der Seite neben «In der Brille ansehen», Pendelzug vorgewählt, letzte Wahl

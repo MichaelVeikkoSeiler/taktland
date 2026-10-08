@@ -28,7 +28,7 @@ import { reiterTon, wischTon } from '../audio'
 import { SPIEL_BEREICHE } from '../spiele'
 import { useEinstellungen } from '../einstellungen'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'einstellungen'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'modellbahn' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'einstellungen'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -159,7 +159,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     // die Bahnübergänge mit dem Bild der Startseite, darauf ist einer zu sehen
     : aktiv === 'bahnuebergaenge' ? BILDER.start
     // die Spiele und Geo mit dem Bild der Spiele, das Duell mit seinem
-    : aktiv === 'spiele' || aktiv === 'schweiz11' ? BILDER.spiele
+    : aktiv === 'spiele' || aktiv === 'schweiz11' || aktiv === 'modellbahn' ? BILDER.spiele
     : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)

@@ -26,6 +26,7 @@ import { eintragAusAdresse, type Filter, filterAusAdresse } from './listen'
 import type { ListenArt } from './typen'
 import { Standort } from './komponenten/Standort'
 import { Start } from './komponenten/Start'
+import { Modellbahn } from './komponenten/Modellbahn'
 import { Strecke, type StreckenWahl, wahlAusAdresse } from './komponenten/Strecke'
 import { Suche, type ListenStand } from './komponenten/Suche'
 import {
@@ -39,11 +40,11 @@ import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string; ausFahren: boolean } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string } | { art: 'modellbahn' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
-  | { art: 'strecke'; wahl: StreckenWahl }
+  | { art: 'strecke'; wahl: StreckenWahl; modell?: boolean }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
   | { art: 'objekte'; nr: number; liste: ListenArt; filter: Filter | null; eintrag: number | null }
 
@@ -65,11 +66,12 @@ function seiteAusAdresse(): Seite {
   const geoRaum = /^#\/schweiz11\/mit\/([A-Za-z]{4})$/.exec(h)
   if (geoRaum) return { art: 'schweiz11mit', raum: geoRaum[1].toUpperCase() }
   if (h === '#/erraten') return { art: 'erraten' }
-  const relief = /^#\/relief\/([a-z]+)$/.exec(h)
-  if (relief) return { art: 'relief', name: relief[1], ausFahren: false }
-  // dasselbe Relief aus dem Reiter «3D-Strecken» unter Fahren
-  const relief3d = /^#\/fahrt\/3d\/([a-z]+)$/.exec(h)
-  if (relief3d) return { art: 'relief', name: relief3d[1], ausFahren: true }
+  // die Modellbahn (Michael, 2026-10-08): eigene Strecke, Bergstrecken; die alten Adressen der Reliefs führen dorthin
+  if (h === '#/modellbahn') return { art: 'modellbahn' }
+  const modellStrecke = /^#\/modellbahn\/strecke(?:\?(.*))?$/.exec(h)
+  if (modellStrecke) return { art: 'strecke', wahl: wahlAusAdresse(modellStrecke[1]), modell: true }
+  const relief = /^#\/(?:modellbahn|relief|fahrt\/3d)\/([a-z]+)$/.exec(h)
+  if (relief) return { art: 'relief', name: relief[1] }
   const suchRaum = /^#\/erraten\/mit\/([A-Za-z]{4})$/.exec(h)
   if (suchRaum) return { art: 'erratenmit', raum: suchRaum[1].toUpperCase() }
   if (h === '#/standort') return { art: 'standort' }
@@ -115,9 +117,10 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
   switch (seite.art) {
     case 'liste': case 'bahnhof': return 'bahnhoefe'
     case 'start': return null
-    case 'linien': case 'strecke': return 'linien'
+    case 'linien': return 'linien'
+    case 'strecke': return seite.modell ? 'modellbahn' : 'linien'
     case 'linie': case 'objekte': return herkunft
-    case 'relief': return seite.ausFahren ? null : 'linien'
+    case 'relief': case 'modellbahn': return 'modellbahn'
     case 'uebersicht': return seite.liste
     case 'duell': return 'duell'
     case 'spiele': return 'spiele'
@@ -177,7 +180,7 @@ export default function App() {
       <div className="mx-auto max-w-2xl md:max-w-3xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
               fahrt={seite.art === 'fahrt' ? seite.teil : seite.art === 'ohneziel' ? 'neu'
-                : seite.art === 'fahrtblatt' ? 'blatt' : seite.art === 'relief' && seite.ausFahren ? 'probe' : null} />
+                : seite.art === 'fahrtblatt' ? 'blatt' : null} />
         <Fortsetzen />
 
         {fehler && (
@@ -215,11 +218,11 @@ export default function App() {
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}
                       aendern={(neu) => setUebersichten((u) => ({ ...u, [seite.liste]: neu }))} />
         )}
-        {seite.art === 'strecke' && <Strecke index={index} wahl={seite.wahl} />}
+        {seite.art === 'strecke' && <Strecke key={seite.modell ? 'modell' : 'strecke'} index={index} wahl={seite.wahl} modell={seite.modell} />}
+        {seite.art === 'modellbahn' && <Modellbahn />}
         {seite.art === 'relief' && (
           <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Das Relief wird geladen …</p>}>
-            <ReliefSeite key={seite.name} name={seite.name}
-                         zurueck={seite.ausFahren ? { text: 'Alle Bergstrecken', adresse: '#/fahrt/probe' } : undefined} />
+            <ReliefSeite key={seite.name} name={seite.name} />
           </Suspense>
         )}
         {seite.art === 'linie' && (

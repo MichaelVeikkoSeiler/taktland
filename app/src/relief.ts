@@ -35,20 +35,11 @@ export function dreiDVormerken() { dreiDVorgemerkt = true }
 export const dreiDGemerkt = () => dreiDVorgemerkt
 export function dreiDVerbrauchen() { dreiDVorgemerkt = false }
 
-/** «In der Brille» bei einer Probefahrt (Michael, 2026-10-08: «direkter … intuitiver»): gleich in 3D und dort gleich
- *  das Modell der ganzen Strecke für die Brille, ohne Umweg über «3D» und «Strecke in der Brille» */
-let brilleVorgemerkt = false
-export function brilleVormerken() { brilleVorgemerkt = true; dreiDVorgemerkt = true }
-export const brilleGemerkt = () => brilleVorgemerkt
-export function brilleVerbrauchen() { brilleVorgemerkt = false }
+/** Die Modellbahn baut eigene Strecken nur bis so lang (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: «Die
+ *  Kacheln wurden nicht schnell genug nachgebaut»); die längste Bergstrecke, Lausanne – Solothurn, hat gut 160 km */
+export const MODELL_HOECHSTENS_M = 170_000
 
-/** Die Brille nur für Strecken bis so lang (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: «Die Kacheln
- *  wurden nicht schnell genug nachgebaut»); die längste Bergstrecke, Lausanne – Solothurn, hat gut 160 km */
-export const BRILLE_HOECHSTENS_M = 170_000
-/** bei den eigenen Probefahrten ist der Weg noch nicht gerechnet: dort zählt die Luftlinie über alle Halte */
-export const BRILLE_LUFTLINIE_HOECHSTENS_M = 120_000
-
-/** ob der Browser eine Brille (WebXR) meldet; nur dann gibt es Knöpfe für die Brille (Michael, 2026-10-08) */
+/** ob der Browser eine Brille (WebXR) meldet; nur dann gibt es in der Modellbahn Knöpfe für die Brille (Michael, 2026-10-08) */
 export function useBrilleMoeglich() {
   const [ja, setJa] = useState(false)
   useEffect(() => {
@@ -60,9 +51,9 @@ export function useBrilleMoeglich() {
   return ja
 }
 
-/** Alle Reliefs, in der Reihenfolge der Pipeline */
-export async function reliefListe() {
+/** Die Reliefs, in der Reihenfolge der Pipeline; ohne «alle» nur die Bergstrecken */
+export async function reliefListe(alle = false) {
   const u = await holen<ReliefUebersicht>('data/relief/index.json')
-  return u.reliefs.filter((r) => r.bergstrecke !== false)
+  return u.reliefs.filter((r) => alle || r.bergstrecke !== false)
 }
 

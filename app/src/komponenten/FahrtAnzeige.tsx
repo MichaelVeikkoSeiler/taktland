@@ -10,12 +10,11 @@ import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlas
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
-import { BRILLE_HOECHSTENS_M, brilleGemerkt, brilleVerbrauchen, dreiDGemerkt, dreiDVerbrauchen, useBrilleMoeglich } from '../relief'
+import { dreiDGemerkt, dreiDVerbrauchen } from '../relief'
 import { gelaendeMoeglich } from '../gelaende'
 
 // three.js nur für die Ansicht «3D», erst dort geladen
 const GelaendeFahrt = lazy(() => import('./Relief').then((m) => ({ default: m.GelaendeFahrt })))
-const BrilleFahrt = lazy(() => import('./Relief').then((m) => ({ default: m.BrilleFahrt })))
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60
@@ -346,12 +345,6 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const relief = gelaendeMoeglich()
   const [dreiD, setDreiD] = useState(dreiDGemerkt)
   useEffect(() => dreiDVerbrauchen(), [])
-  // Reiter «Brille» rechts von «3D», nur wo der Browser WebXR meldet (Michael, 2026-10-08): die ganze Strecke als
-  // Modell für die Brille; «In der Brille» bei den Probefahrten öffnet ihn gleich
-  // auf langen Strecken lädt das Gelände zu langsam: dort gar kein Reiter «Brille»
-  const xr = useBrilleMoeglich() && wegEnde(fahrweg) <= BRILLE_HOECHSTENS_M
-  const [brille, setBrille] = useState(brilleGemerkt)
-  useEffect(() => brilleVerbrauchen(), [])
   // eigener Zoom und Verschiebung, die das Nachführen alle halbe Sekunde
   // nicht zurücksetzt (Michael, 2026-09-26: «springt immer wieder auf den
   // Default-Ausschnitt»); «Nah» folgt dem Zug trotzdem
@@ -579,24 +572,15 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
       <div className="flex items-center justify-between gap-2 text-xs">
         <div className="segmente" role="group" aria-label="Ausschnitt">
           {([[true, 'Nah'], [false, 'Ganzer Weg']] as const).map(([n, t]) => (
-            <button key={t} type="button" aria-pressed={!dreiD && nah === n} onClick={() => { setDreiD(false); setBrille(false); setNah(n) }}
+            <button key={t} type="button" aria-pressed={!dreiD && nah === n} onClick={() => { setDreiD(false); setNah(n) }}
                     className="segment px-2.5 py-1">
               {t}
             </button>
           ))}
           {relief && (
-            <button type="button" aria-pressed={dreiD && !brille} onClick={() => { setDreiD(true); setBrille(false) }} title="Gelände in 3D"
+            <button type="button" aria-pressed={dreiD} onClick={() => setDreiD(true)} title="Gelände in 3D"
                     className="segment px-2.5 py-1">
               3D
-            </button>
-          )}
-          {/* rot mit weisser Schrift wie jeder Knopf zur Brille, gewählt mit Rand (Michael, 2026-10-08) */}
-          {relief && xr && (
-            <button type="button" aria-pressed={brille} onClick={() => { setDreiD(true); setBrille(true) }}
-                    title="Die ganze Strecke als Modell für die Brille"
-                    className="segment !bg-sbb-red px-2.5 py-1 font-bold !text-white aria-pressed:ring-2
-                               aria-pressed:ring-sbb-anthracite aria-pressed:ring-offset-1 dark:aria-pressed:ring-white">
-              Brille
             </button>
           )}
           {/* im selben Stil daneben (Michael, 2026-09-29) */}
@@ -628,9 +612,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           kann. Darüber, durchsichtig und leicht, der Weg, die Zeichen und der Zug. */}
       {dreiD && relief ? (
         <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>}>
-          {brille && xr
-            ? <BrilleFahrt fahrweg={fahrweg} objekte={objekte} />
-            : <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} />}
+          <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} />
         </Suspense>
       ) : (
       <div onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}

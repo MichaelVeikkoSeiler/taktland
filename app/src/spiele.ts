@@ -49,6 +49,14 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
   },
+  // Michael, 2026-10-08: «neues Spiel 3D/VR», Name «Modellbahn»; die Brille gibt es nur hier, nicht unter Fahren
+  {
+    id: 'modellbahn', titel: 'Modellbahn', status: 'spielbereit', adresse: '#/modellbahn',
+    kurz: 'Eine Strecke als Modell im Gelände, auch in der VR-Brille.',
+    bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: eine Bahnlandschaft mit Viadukt und Tunnel.' },
+    beschreibung: 'Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen, mit einer '
+      + 'Brille auch auf dem Tisch vor dir. Ein Modell, kein Abbild der Wirklichkeit.',
+  },
 ]
 
 /** Alle Bereiche, die zum Hauptreiter «Spiele» gehören: die Übersicht und jedes spielbereite

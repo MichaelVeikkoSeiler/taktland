@@ -11,7 +11,7 @@ export function Spiele() {
     <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Spiele</h1>
       <p className="mt-2 leading-relaxed">
-        Entdecke Taktland spielerisch. Hier findest du das Duell, Geo und die Bahnhofsuche; weitere Spiele
+        Entdecke Taktland spielerisch. Hier findest du das Duell, Geo, die Bahnhofsuche und die Modellbahn; weitere Spiele
         rund um die Bahn in der Schweiz folgen.
       </p>
       {/* auf dem Handy nebeneinander zum Wischen, wie die Reiter mit Pfeilen und Wischton; die nächste

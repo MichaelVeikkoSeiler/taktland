@@ -23,7 +23,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
         Die Reiter oben führen zu Bahnland (Bahnhöfe, Strecken, Brücken, Tunnel,
-        Bahnübergänge), Spiele (Duell, Geo, Bahnhofsuche), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
+        Bahnübergänge), Spiele (Duell, Geo, Bahnhofsuche, Modellbahn), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
 
@@ -88,6 +88,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Gesucht ist ein Bahnhof, sechs Hinweiskarten liegen verdeckt. Ohne Karte gibt es 80 Punkte,
             jede aufgedeckte kostet 10, der Bezirk 20. Ein falscher Tipp deckt die nächste Karte auf.
           </li>
+        </Spiel>
+        <Spiel titel="Modellbahn">
+          Eine Strecke als Modell im Gelände: eine Bergstrecke oder eine eigene bis etwa 170 km. Drehen, zoomen und einen
+          Zug darüber fahren lassen{xr ? '; mit der Brille steht das Modell vor dir auf dem Tisch' : ''}. Ein Modell, kein Abbild:
+          Zug, Gleise und Masten sind nicht massstäblich, die Fahrt ist ein Zeitraffer.
         </Spiel>
         <Spiel titel="Zu mehreren">
           <li>Auf einem Gerät: Ihr spielt reihum und gebt das Gerät weiter.</li>
@@ -184,8 +189,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             «3D» auf der Karte zeigt auf jeder Fahrt und Probefahrt das Gelände rund um den Zug, zum
-            Drehen und Zoomen{xr ? '; in der Brille auch die ganze Strecke als Modell auf dem Tisch' : ''}.
-            Unter «Probefahren» stehen dazu bekannte Bergstrecken, als Probefahrt und als Ganzes. Die
+            Drehen und Zoomen. Unter «Probefahren» stehen dazu bekannte Bergstrecken als Probefahrt. Als Modell, auch in
+            einer VR-Brille, gibt es sie unter Spiele, «Modellbahn». Die
             Höhe der Gleise steht in keiner Quelle: Der Weg liegt auf dem Gelände, in Tunneln und auf
             Brücken gerade zwischen den Enden.
           </li>
