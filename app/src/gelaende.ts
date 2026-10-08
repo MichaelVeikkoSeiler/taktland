@@ -98,17 +98,19 @@ export const luftbildIndex = () => holen<LuftbildIndex>('data/luftbild/index.jso
  *  Speicher des Telefons, und neue Bilder liessen sich nicht mehr entpacken */
 const BILDER_HOECHSTENS = 25
 const bildVorrat = new Map<string, Promise<ImageBitmap | null>>()
-function luftbildKachel(name: string) {
-  let p = bildVorrat.get(name)
+function luftbildKachel(name: string, px: number, voll: number) {
+  const schluessel = `${name}@${px}`
+  let p = bildVorrat.get(schluessel)
   if (p) {
     // zuletzt gebraucht ans Ende
-    bildVorrat.delete(name); bildVorrat.set(name, p)
+    bildVorrat.delete(schluessel); bildVorrat.set(schluessel, p)
   } else {
     while (bildVorrat.size >= BILDER_HOECHSTENS) bildVorrat.delete(bildVorrat.keys().next().value!)
     p = holenBinaer(`data/luftbild/${name}.jpg`)
-      .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' })))
-      .catch(() => { bildVorrat.delete(name); return null })
-    bildVorrat.set(name, p)
+      .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' }),
+        px < voll ? { resizeWidth: px, resizeHeight: px, resizeQuality: 'medium' } : undefined))
+      .catch(() => { bildVorrat.delete(schluessel); return null })
+    bildVorrat.set(schluessel, p)
   }
   return p
 }
@@ -120,11 +122,14 @@ export interface Luftbild {
   jahre: number[]
 }
 
-/** Die Luftbilder, die einen Ausschnitt berühren, oder null, wenn es dort keine gibt */
+/** Die Luftbilder, die einen Ausschnitt berühren, oder null, wenn es dort keine gibt. So fein, wie die Leinwand
+ *  der Szene sie zeigt (4096 Bildpunkte über die längere Seite): für eine ganze Strecke in der Brille kleiner, sonst
+ *  füllen Hunderte Bilder den Speicher */
 export async function luftbildLaden(raster: Raster): Promise<Luftbild | null> {
   const ix = await luftbildIndex().catch(() => null)
   if (!ix) return null
   const k = ix.kachel_m
+  const px = Math.max(64, Math.min(ix.pixel, Math.round((4096 * k) / (Math.max(raster.breite, raster.hoehe) * raster.m))))
   const namen: Array<[number, number]> = []
   for (let ex = Math.floor(raster.ost / k); ex <= Math.floor((raster.ost + raster.breite * raster.m - 1) / k); ex++) {
     for (let ny = Math.floor((raster.nord - raster.hoehe * raster.m) / k); ny <= Math.floor((raster.nord - 1) / k); ny++) {
@@ -132,7 +137,7 @@ export async function luftbildLaden(raster: Raster): Promise<Luftbild | null> {
     }
   }
   if (!namen.length) return null
-  const bilder = await Promise.all(namen.map(([ex, ny]) => luftbildKachel(`${ex}_${ny}`)))
+  const bilder = await Promise.all(namen.map(([ex, ny]) => luftbildKachel(`${ex}_${ny}`, px, ix.pixel)))
   const kacheln = namen.flatMap(([ex, ny], i) => (bilder[i] ? [{ ex, ny, bild: bilder[i]! }] : []))
   if (!kacheln.length) return null
   const jahre = [...new Set(kacheln.flatMap(({ ex, ny }) => ix.kacheln[`${ex}_${ny}`].jahre))].sort()

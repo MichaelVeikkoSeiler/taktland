@@ -172,7 +172,9 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); Knopf «Zuggeräusch»: Rollen und
              Radschläge, gerechnet in src/audio.ts, folgen dem Tempo (im Zeitraffer gestaucht, ab 5000 km/h gleich), steigen beim Anfahren in
              2,5 s an und klingen 2,5 s vor dem Ziel aus, im Tunnel dumpfer und lauter mit Widerhall, auf Brücken
-             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; die Reliefs in
+             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; Knopf «Strecke in der Brille»
+             (nur mit WebXR): die ganze Strecke als Modell wie die Bergstrecken, Gelände im Rechteck um den Weg, ab
+             1'700 Feldern je Seite gröber, Luftbilder verkleinert (BrilleFahrt); die Reliefs in
              data/relief bleiben für die Bergstrecken als Ganzes und
              holen ihr Gelände ebenfalls aus den Kacheln
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),

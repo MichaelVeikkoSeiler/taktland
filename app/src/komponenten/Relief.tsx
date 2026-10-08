@@ -294,9 +294,10 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
  * Zuggeräusch (src/audio.ts): das Tempo aus der Stelle des Zugs über die Zeit, geglättet. Kommt 1,5 s nichts
  * Neues, steht der Zug; springt die Stelle zurück (die Probefahrt beginnt von vorn), fährt er neu an.
  */
-function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number, bauwerke: Weg['bauwerke']) {
+function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number, bauwerke: Weg['bauwerke'], aktiv = true) {
   const audio = useAudio()
   useEffect(() => {
+    if (!aktiv) return
     let alt = { s: stelle.current, t: performance.now() }, v = 0
     const uhr = window.setInterval(() => {
       const s = stelle.current, t = performance.now()
@@ -310,7 +311,7 @@ function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number, b
       zuggeraeuschTempo(neu ? 0 : v, s !== null && v > 0 ? Math.max(0, ende - s) / v : Infinity, ort)
     }, 250)
     return () => { window.clearInterval(uhr); zuggeraeuschAus() }
-  }, [stelle, ende, bauwerke])
+  }, [stelle, ende, bauwerke, aktiv])
   return audio
 }
 
@@ -324,6 +325,124 @@ function GeraeuschKnopf({ audio, className }: { audio: ReturnType<typeof useAudi
               ? 'bg-sbb-anthracite text-white' : 'border border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'} ${className}`}>
       Zuggeräusch {an ? 'an' : 'aus'}
     </button>
+  )
+}
+
+/** ob der Browser eine Brille (WebXR) meldet */
+function useBrilleMoeglich() {
+  const [ja, setJa] = useState(false)
+  useEffect(() => {
+    const xr = navigator.xr
+    if (!xr) return
+    void Promise.all([xr.isSessionSupported('immersive-ar').catch(() => false), xr.isSessionSupported('immersive-vr').catch(() => false)])
+      .then(([ar, vr]) => setJa(ar || vr))
+  }, [])
+  return ja
+}
+
+/** so viele Felder höchstens je Seite im Modell der ganzen Strecke; längere Strecken werden gröber */
+const STRECKE_FELDER = 1700
+const STRECKE_RAND_M = 3000
+
+/**
+ * Die ganze Strecke einer Fahrt als Modell für die Brille (Michael, 2026-10-08: «diese Probefahrt auf die Brille
+ * projizieren»): das Gelände aus den Kacheln im Rechteck um den Weg, bei langen Strecken gröber gemittelt, sonst wie
+ * die Bergstrecken: «In der Brille ansehen» und die Probefahrt mit A, B, X und Y.
+ */
+function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte: FahrObjekt[]; zurueck: () => void }) {
+  const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
+  const [fehler, setFehler] = useState<string | null>(null)
+  const brille = useRef<(() => Promise<void>) | null>(null)
+  const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
+  const probe = useRef<number | null>(null)
+  const [probeLaeuft, setProbeLaeuft] = useState(false)
+  const probeStelle = useRef<number | null>(null)
+  useEffect(() => {
+    let ab = false
+    const lagen = fahrweg.punkte.map((p) => lv95(p.lat, p.lon))
+    let e0 = Infinity, e1 = -Infinity, n0 = Infinity, n1 = -Infinity
+    for (const [e, n] of lagen) { e0 = Math.min(e0, e); e1 = Math.max(e1, e); n0 = Math.min(n0, n); n1 = Math.max(n1, n) }
+    const m = 50
+    const ost = Math.floor((e0 - STRECKE_RAND_M) / m) * m, nord = Math.ceil((n1 + STRECKE_RAND_M) / m) * m
+    const breite = Math.ceil((e1 + STRECKE_RAND_M - ost) / m), hoehe = Math.ceil((nord - n0 + STRECKE_RAND_M) / m)
+    void Promise.all([ausschnittLaden({ ost, nord, m, breite, hoehe }), streckenLaden(), sehenswertLaden().catch(() => null)])
+      .then(([f, netz, sw]) => {
+        if (ab) return
+        // gröber, wo die Strecke lang ist: je k mal k Felder die Höhe in ihrer Mitte
+        const k = Math.max(1, Math.ceil(Math.max(breite, hoehe) / STRECKE_FELDER))
+        const b2 = Math.floor(breite / k), h2 = Math.floor(hoehe / k), mitte = Math.floor(k / 2)
+        let h = f.h
+        if (k > 1) {
+          h = new Uint16Array(b2 * h2)
+          for (let j = 0; j < h2; j++) for (let i = 0; i < b2; i++) h[j * b2 + i] = f.h[(j * k + mitte) * breite + i * k + mitte]
+        }
+        const raster = { ost, nord, m: m * k, breite: b2, hoehe: h2 }
+        const drin = ([e, n]: [number, number]) => e >= ost && e <= ost + b2 * m * k && n <= nord && n >= nord - h2 * m * k
+        const bahnhoefe = objekte.filter((o) => o.art === 'bahnhof').flatMap((o, i) => {
+          const lage = lageAufWeg(fahrweg, o.sOrt ?? o.s)
+          return drin(lage) ? [{ uic: i, name: netz.punkte[o.kennung] ?? o.kennung, km: (o.sOrt ?? o.s) / 1000, lage }] : []
+        })
+        const gipfel = (sw?.gipfel ?? []).flatMap((g) => {
+          const lage = lv95(g.lage[0], g.lage[1])
+          return drin(lage) ? [{ name: g.name, hoehe_m: g.hoehe_m, lage }] : []
+        })
+        setDaten({
+          r: { titel: 'Strecke', linie: '', linie_name: '', von_km: 0, bis_km: 0, datenstand: '', quellen: [f.quelle],
+               raster, weg: [], bahnhoefe, tunnel: [], bruecken: [], gipfel },
+          h,
+        })
+      })
+      .catch((e: Error) => { if (!ab) setFehler(e.message) })
+    return () => { ab = true }
+  }, [fahrweg, objekte])
+  const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
+  const audio = useZuggeraeusch(probeStelle, useMemo(() => wegEnde(fahrweg), [fahrweg]), useMemo(() => weg?.bauwerke ?? [], [weg]))
+  const inBrille = (mitZug: boolean) => {
+    setBrilleFehler(null)
+    probe.current = mitZug ? performance.now() : null
+    setProbeLaeuft(mitZug)
+    brille.current?.().catch((e: Error) => setBrilleFehler(e.message))
+  }
+  const feldM = daten?.r.raster.m
+  return (
+    <div>
+      <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 text-sm font-bold dark:border-sbb-iron" onClick={zurueck}>
+        Zurück zur Fahrt in 3D
+      </button>
+      {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
+      {!daten && !fehler && <p className="mt-3 text-sm text-sbb-metal">Das Gelände der ganzen Strecke wird geladen …</p>}
+      {daten && weg && (
+        <>
+          <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
+                 probe={probe} probeStelle={probeStelle} className="mt-3 w-full overflow-hidden rounded-lg" />
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={() => inBrille(false)}>
+              In der Brille ansehen
+            </button>
+            <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 font-bold dark:border-sbb-iron" onClick={() => inBrille(true)}>
+              Probefahrt in der Brille
+            </button>
+            {probeLaeuft && (
+              <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 dark:border-sbb-iron"
+                      onClick={() => { probe.current = null; setProbeLaeuft(false) }}>
+                Probefahrt anhalten
+              </button>
+            )}
+            <GeraeuschKnopf audio={audio} className="px-4 py-2" />
+          </div>
+          {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
+          <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
+            Die ganze Strecke als Modell, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit auf Tischhöhe. Gelände aus
+            swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
+            wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert. Bedienung wie bei den Bergstrecken: ein Abzug
+            trägt das Modell, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt, die
+            Greiftaste stellt es zurück. Probefahrt: A startet, B hält an, X schneller, Y langsamer; der Zug fährt in
+            {' '}{(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke, ein Zeitraffer, kein Fahrplan.
+            Die Höhe der Gleise steht in keiner Quelle. Zug nicht massstäblich und kein bestimmter Zugtyp.
+          </p>
+        </>
+      )}
+    </div>
   )
 }
 
@@ -464,7 +583,10 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   const ende = useMemo(() => wegEnde(fahrweg), [fahrweg])
   const bauwerke = useMemo(() => objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
     .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })), [objekte])
-  const audio = useZuggeraeusch(zug, ende, bauwerke)
+  // die ganze Strecke als Modell für die Brille (Michael, 2026-10-08), nur wo der Browser WebXR kann
+  const [ganze, setGanze] = useState(false)
+  const xr = useBrilleMoeglich()
+  const audio = useZuggeraeusch(zug, ende, bauwerke, !ganze)
   // «Hinter den Zug»: die Kamera wieder schräg hinter den Zug wie am Anfang
   const hinterZug = useRef(false)
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
@@ -498,6 +620,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
     return () => { ab = true }
   }, [mitte, fahrweg, objekte])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
+  if (ganze) return <BrilleFahrt fahrweg={fahrweg} objekte={objekte} zurueck={() => setGanze(false)} />
   if (fehler) return <div className={className}><Ladefehler was="Das Gelände konnte nicht geladen werden." fehler={fehler} /></div>
   if (!daten || !weg) return <div className={`${className} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>
   return (
@@ -519,6 +642,12 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
         {faktor === 2 && ' Höhe 2-fach überhöht.'}
       </p>
+      {xr && (
+        <button type="button" className="mt-2 rounded-lg border border-sbb-cloud px-4 py-2 text-sm font-bold dark:border-sbb-iron"
+                onClick={() => setGanze(true)}>
+          Strecke in der Brille
+        </button>
+      )}
     </>
   )
 }
