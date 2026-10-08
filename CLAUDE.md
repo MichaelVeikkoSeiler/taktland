@@ -169,7 +169,8 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
 data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Bahnlinie) in Kacheln von 10 km
              zu 50 m aus swissALTIRegio, je Zeile Differenzen und gzip (.hgz, 550 Kacheln, 18 MB;
              pipeline/build_gelaende.py): «3D» auf jeder Fahrt und Probefahrt, 30 km um den Zug, der Ausschnitt
-             wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); Knopf «Zuggeräusch»: Rollen und
+             wandert mit (app/src/gelaende.ts, GelaendeFahrt in komponenten/Relief.tsx); Lautsprecher-Knopf (an: Wellen auf
+             Anthrazit, aus: Kreuz auf Weiss) fürs Zuggeräusch: Rollen und
              Radschläge, gerechnet in src/audio.ts, folgen dem Tempo (im Zeitraffer gestaucht, ab 5000 km/h gleich), steigen beim Anfahren in
              2,5 s an und klingen 2,5 s vor dem Ziel aus, im Tunnel dumpfer und lauter mit Widerhall, auf Brücken
              hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; Knopf «Strecke in der Brille»

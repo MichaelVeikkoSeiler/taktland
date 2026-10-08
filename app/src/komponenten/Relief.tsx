@@ -264,7 +264,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                     Probefahrt anhalten
                   </button>
                 )}
-                <GeraeuschKnopf audio={audio} className="px-4 py-2" />
+                <GeraeuschKnopf audio={audio} className="h-10 w-12" />
               </div>
               <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
                 Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
@@ -320,15 +320,29 @@ function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number, b
   return audio
 }
 
+/** Zuggeräusch ein und aus als Lautsprecher (Michael, 2026-10-08: «ein Icon … eindeutig, ob ein- oder ausgeschaltet»):
+ *  an mit Schallwellen, weiss auf Anthrazit wie ein gewählter Knopf; aus mit Kreuz, dunkel auf Weiss */
 function GeraeuschKnopf({ audio, className }: { audio: ReturnType<typeof useAudio>; className: string }) {
   const an = audio.zuggeraeusch && audio.an
+  const text = !audio.an ? 'Zuggeräusch: die Töne sind in den Einstellungen unter Audio aus'
+    : an ? 'Zuggeräusch ist an, ausschalten' : 'Zuggeräusch ist aus, einschalten'
   return (
-    <button type="button" aria-pressed={an} disabled={!audio.an}
-            title={audio.an ? undefined : 'Die Töne sind in den Einstellungen unter Audio aus'}
+    <button type="button" aria-pressed={an} disabled={!audio.an} aria-label={text} title={text}
             onClick={() => { void audioKontext()?.resume(); audioSetzen({ zuggeraeusch: !audio.zuggeraeusch }) }}
-            className={`rounded-lg font-bold disabled:opacity-50 ${an
-              ? 'bg-sbb-anthracite text-white' : 'border border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'} ${className}`}>
-      Zuggeräusch {an ? 'an' : 'aus'}
+            className={`inline-flex items-center justify-center rounded-lg disabled:opacity-50 ${an
+              ? 'bg-sbb-anthracite text-white' : 'border border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${className}`}>
+      <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round"
+           strokeLinejoin="round" aria-hidden="true">
+        <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" />
+        {an ? (
+          <>
+            <path d="M15.5 9a4 4 0 0 1 0 6" />
+            <path d="M18 6.5a7.5 7.5 0 0 1 0 11" />
+          </>
+        ) : (
+          <path d="M15.5 9.5l5 5m0-5l-5 5" />
+        )}
+      </svg>
     </button>
   )
 }
@@ -465,7 +479,7 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
                 Probefahrt anhalten
               </button>
             )}
-            <GeraeuschKnopf audio={audio} className="px-4 py-2" />
+            <GeraeuschKnopf audio={audio} className="h-10 w-12" />
           </div>
           {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
@@ -667,7 +681,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
                className="absolute inset-0 overflow-hidden" />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
-        <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 px-2.5 py-1 text-xs" />
+        <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 h-9 w-10" />
         <button type="button" onClick={() => { hinterZug.current = true }}
                 className="absolute bottom-2 left-2 rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
           Hinter den Zug
