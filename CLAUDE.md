@@ -183,7 +183,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; unter Fahren keine Brille (Michael, 2026-10-08).
              Spiel «Modellbahn VR» unter Spiele (bis 2026-10-08 «Modellbahn») (komponenten/Modellbahn.tsx, #/modellbahn, für alle, die Brille nur mit WebXR):
              unter jedem Modell, vor den Knöpfen, der Kasten «Modellbahn VR: ein Modell zum Anschauen, kein Abbild der Wirklichkeit»
-             (ModellHinweis); eine gemerkte Probefahrt (&fest=1) zeigt Start, Ziel und Über nur als Titel, ohne Felder, das Modell gleich darunter;
+             (ModellHinweis); eine gemerkte Probefahrt (&fest=1) zeigt Start, Ziel, Über und ihre Linien nur zum Lesen, ohne Felder zum Ändern;
              die Linie dunkelgrau mit Rand wie in 3D beim Fahren (FARBEN.weg), in der Brille ein flaches Band statt einer Röhre,
              auf dem der Zug fährt (eine Röhre schluckte ihn aus der Nähe), Tunnel darin gestrichelt mit 12 mm Strich und 8 mm Lücke auf
              dem Tisch wie die Striche auf dem Bildschirm aus der Nähe (BRILLE_STRICH_M),

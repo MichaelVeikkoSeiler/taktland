@@ -290,8 +290,7 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
       {modell && fest ? (
         <>
           <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn VR" />
-          <h1 className="mt-4 text-2xl font-bold tracking-tight">{name(wahl.von)} → {name(wahl.nach)}</h1>
-          {wahl.ueber && <p className="mt-1 text-sbb-metal dark:text-sbb-storm">über {name(wahl.ueber)}</p>}
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">Probefahrt als Modell</h1>
         </>
       ) : modell ? (
         <>
@@ -312,6 +311,18 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
         </>
       )}
 
+      {fest && (
+        // nur zum Lesen: dieselben Angaben, aber keine Felder zum Ändern (Michael, 2026-10-08)
+        <div className="mt-4 space-y-3">
+          {([['Von', wahl.von], ['Nach', wahl.nach], ['Über', wahl.ueber]] as const).filter(([, u]) => u).map(([t, u]) => (
+            <div key={t}>
+              <span className="block text-xs text-sbb-metal dark:text-sbb-storm">{t}</span>
+              <p className="mt-1 rounded-lg bg-sbb-milk px-4 py-3 text-lg dark:bg-sbb-charcoal">{name(u)}</p>
+              <div className="mt-2"><BahnhofLinien b={u ? bahnhof.get(u) : undefined} verzeichnis={verzeichnis} /></div>
+            </div>
+          ))}
+        </div>
+      )}
       {!fest && <div className="mt-6 space-y-3">
         <BahnhofFeld bezeichnung="Von" wert={wahl.von} bahnhoefe={alle} name={name}
                      aendern={(u) => waehlen({ von: u })} />
@@ -377,18 +388,17 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
         <Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}-${wahl.weg?.join('.')}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
                   brueckenIds={ergebnis.bruecken} tunnel={tunnel} bruecken={bruecken}
                   bahnhof={bahnhof} alleBruecken={alleBruecken} verzeichnis={verzeichnis}
-                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} fest={fest} />
+                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} />
       )}
     </div>
   )
 }
 
 function Ergebnis({
-  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl, modell, fest,
+  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl, modell,
 }: {
   wahl: StreckenWahl
   modell: boolean
-  fest: boolean
   netz: StreckenNetz
   weg: Weg
   tunnelIds: string[]
@@ -678,7 +688,7 @@ function Ergebnis({
 
   if (modell) {
     return (
-      <ModellAusWeg titel={fest ? null : titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
+      <ModellAusWeg titel={titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
                     bauen={() => void fahrtStarten(true, false, true)} />
     )
   }
