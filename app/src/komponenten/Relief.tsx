@@ -243,14 +243,14 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
       {daten && weg && (
         <>
           <div className="mt-4"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
-          <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
+          <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                  probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} className="mt-3 w-full overflow-hidden rounded-lg" />
           <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
             {faktor === 2 && <span className="font-medium text-sbb-black dark:text-sbb-white"> Die Höhe ist 2-fach überhöht.</span>}
           </p>
-          <Legende wegText="Linie" wegFarbe={FARBEN.linie} />
+          <Legende wegText="Linie" wegFarbe={FARBEN.weg} />
           <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz /></div>
           <Hinweise r={daten.r} />
         </>
@@ -423,7 +423,7 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
       {!daten && !fehler && <p className="mt-3 text-sm text-sbb-metal">Das Gelände entlang der ganzen Strecke wird geladen …</p>}
       {daten && weg && (
         <>
-          <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
+          <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                  probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} className="mt-3 w-full overflow-hidden rounded-lg" />
           <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
@@ -1000,16 +1000,31 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         nurBild.add(strich)
       })
     }
+    /** ein flaches Band auf der Linie, waagrecht quer zur Fahrt; breit: halbe Breite */
+    const band = (punkte: THREE.Vector3[], breit: number, hoeher: number) => {
+      const pos: number[] = [], index: number[] = []
+      punkte.forEach((p, i) => {
+        const a = punkte[Math.max(0, i - 1)], z = punkte[Math.min(punkte.length - 1, i + 1)]
+        const nx = -(z.z - a.z), nz = z.x - a.x, l = Math.hypot(nx, nz) || 1
+        pos.push(p.x + (nx / l) * breit, p.y + hoeher, p.z + (nz / l) * breit, p.x - (nx / l) * breit, p.y + hoeher, p.z - (nz / l) * breit)
+        if (i) index.push(2 * i - 2, 2 * i - 1, 2 * i, 2 * i - 1, 2 * i + 1, 2 * i)
+      })
+      const g = new THREE.BufferGeometry()
+      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+      g.setIndex(index)
+      return g
+    }
     const brillenRoehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean) => {
       const rand = randVon(farbe)
       if (brille) {
-        // wie auf dem Bildschirm aussen dunkel, innen heller: eine dickere Röhre von innen gesehen als Rand,
-        // darin die hellere (Michael, 2026-10-07: «Die Linie in der Brille auch so machen»)
-        const kurve = new THREE.CatmullRomCurve3(punkte), teile = Math.max(4, punkte.length * 2), dick = BRILLE_LINIE_M / brilleMass
-        ;[[rand, dick, THREE.BackSide], [farbe, dick * STRICH_INNEN * 1.2, THREE.FrontSide]].forEach(([f, r, seite], k) => {
-          const netz = new THREE.Mesh(new THREE.TubeGeometry(kurve, teile, r as number, 8, false),
-            new THREE.MeshBasicMaterial({ color: f as string, side: seite as THREE.Side, depthTest: !durch,
-                                          transparent: durch, opacity: durch ? 0.9 : 1 }))
+        // wie auf dem Bildschirm aussen dunkel, innen heller, aber als flaches Band, auf dem der Zug fährt; eine Röhre
+        // schluckte den Zug, sobald man nahe heranging (Michael, 2026-10-08: «keine rote Röhre … dunkelgrau mit Rändern»)
+        const dick = BRILLE_LINIE_M / brilleMass
+        ;[[rand, dick, 0], [farbe, dick * STRICH_INNEN, dick * 0.05]].forEach(([f, breit, hoeher], k) => {
+          const netz = new THREE.Mesh(band(punkte, breit as number, hoeher as number),
+            new THREE.MeshBasicMaterial({ color: f as string, side: THREE.DoubleSide, depthTest: !durch,
+                                          transparent: durch, opacity: durch ? 0.9 : 1,
+                                          polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
           netz.renderOrder = (durch ? 2 : 0) + k
           nurBrille.add(netz)
         })

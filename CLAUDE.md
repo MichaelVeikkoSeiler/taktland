@@ -183,6 +183,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; unter Fahren keine Brille (Michael, 2026-10-08).
              Spiel «Modellbahn» unter Spiele (komponenten/Modellbahn.tsx, #/modellbahn, für alle, die Brille nur mit WebXR):
              über jedem Modell der Kasten «Modellbahn: ein Modell zum Anschauen, kein Abbild der Wirklichkeit» (ModellHinweis),
+             die Linie dunkelgrau mit Rand wie in 3D beim Fahren (FARBEN.weg), in der Brille ein flaches Band statt einer Röhre,
+             auf dem der Zug fährt (eine Röhre schluckte ihn aus der Nähe),
              darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Zuggeräusch und «Mit VR-Brille» (immer rot; ohne WebXR
              geht er nicht und sagt beim Tippen, was es dafür braucht); die
              Bergstrecken und Lausanne–Solothurn als Modell (#/modellbahn/gotthard, alte Adressen #/relief/…, #/fahrt/3d/…
