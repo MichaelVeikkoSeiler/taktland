@@ -7,7 +7,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, streckenLaden } from '../daten'
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
-import { brilleGemerkt, brilleVerbrauchen, lv95, useBrilleMoeglich } from '../relief'
+import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { ausschnittLaden, fensterLaden, KEINE_HOEHE, type Luftbild, luftbildLaden } from '../gelaende'
 import { Zurueck } from './Zurueck'
@@ -348,7 +348,7 @@ const BAND_FELDER = 3_000_000
  * projizieren»): das Gelände aus den Kacheln im Rechteck um den Weg, bei langen Strecken gröber gemittelt, sonst wie
  * die Bergstrecken: «In der Brille ansehen» und die Probefahrt mit A, B, X und Y.
  */
-function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte: FahrObjekt[]; zurueck: () => void }) {
+export function BrilleFahrt({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: FahrObjekt[] }) {
   const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const brille = useRef<(() => Promise<void>) | null>(null)
@@ -436,9 +436,6 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
   const feldM = daten?.r.raster.m
   return (
     <div>
-      <button type="button" className="rounded-lg border border-sbb-cloud px-4 py-2 text-sm font-bold dark:border-sbb-iron" onClick={zurueck}>
-        Zurück zur Fahrt in 3D
-      </button>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-3 text-sm text-sbb-metal">Das Gelände entlang der ganzen Strecke wird geladen …</p>}
       {daten && weg && (
@@ -605,11 +602,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   const ende = useMemo(() => wegEnde(fahrweg), [fahrweg])
   const bauwerke = useMemo(() => objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
     .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })), [objekte])
-  // die ganze Strecke als Modell für die Brille (Michael, 2026-10-08), nur wo der Browser WebXR kann
-  const [ganze, setGanze] = useState(brilleGemerkt)
-  useEffect(() => brilleVerbrauchen(), [])
-  const xr = useBrilleMoeglich()
-  const audio = useZuggeraeusch(zug, ende, bauwerke, !ganze)
+  const audio = useZuggeraeusch(zug, ende, bauwerke)
   // «Hinter den Zug»: die Kamera wieder schräg hinter den Zug wie am Anfang
   const hinterZug = useRef(false)
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
@@ -643,7 +636,6 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
     return () => { ab = true }
   }, [mitte, fahrweg, objekte])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
-  if (ganze) return <BrilleFahrt fahrweg={fahrweg} objekte={objekte} zurueck={() => setGanze(false)} />
   if (fehler) return <div className={className}><Ladefehler was="Das Gelände konnte nicht geladen werden." fehler={fehler} /></div>
   if (!daten || !weg) return <div className={`${className} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>
   return (
@@ -665,12 +657,6 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
         {faktor === 2 && ' Höhe 2-fach überhöht.'}
       </p>
-      {xr && (
-        <button type="button" className="mt-2 rounded-lg bg-sbb-red px-4 py-2 text-sm font-bold text-white"
-                onClick={() => setGanze(true)}>
-          Strecke in der Brille
-        </button>
-      )}
     </>
   )
 }

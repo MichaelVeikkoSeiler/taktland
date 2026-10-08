@@ -461,6 +461,7 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
 - **Kürzerer Weg in die Brille** erledigt 2026-10-08: mit Brille steht bei jeder Richtung einer Probefahrt und
   einer Bergstrecke neben «Abspielen» ein roter Knopf «In der Brille»; er öffnet gleich das Modell der Strecke,
   es bleibt der Tipp auf «In der Brille ansehen» (den verlangt der Browser). Ohne Brille kein Hinweis darauf.
+  Dazu in der Fahrtanzeige ein roter Reiter «Brille» rechts von «3D» statt des Knopfs «Strecke in der Brille».
 
 - **Brille beim Fahren in der ganzen Schweiz** (Michael, 2026-10-07: «Funktioniert die Brille überall?»,
   dann «Auf die Merkliste»): heute gibt es «In der Brille ansehen» nur auf den Seiten der Bergstrecken. Erledigt 2026-10-08 als

@@ -180,9 +180,9 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              Anthrazit, aus: Kreuz auf Weiss) fürs Zuggeräusch: Rollen und
              Radschläge, gerechnet in src/audio.ts, folgen dem Tempo (im Zeitraffer gestaucht, ab 5000 km/h gleich), steigen beim Anfahren in
              2,5 s an und klingen 2,5 s vor dem Ziel aus, im Tunnel dumpfer und lauter mit Widerhall, auf Brücken
-             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; Knopf «Strecke in der Brille»
-             (nur mit WebXR, rot wie jeder Knopf zur Brille; bei den Probefahrten und Bergstrecken führt «In der Brille» neben
-             «Abspielen» gleich dorthin, ohne WebXR fehlt jeder Hinweis auf die Brille): die ganze Strecke als Modell wie die Bergstrecken, Gelände nur in einem Band von 5 km
+             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; Reiter «Brille» rechts von «3D»
+             (nur mit WebXR, rot mit weisser Schrift wie jeder Knopf zur Brille, gewählt mit Rand; bei den Probefahrten und
+             Bergstrecken führt «In der Brille» neben «Abspielen» gleich dorthin, ohne WebXR fehlt jeder Hinweis auf die Brille): die ganze Strecke als Modell wie die Bergstrecken, Gelände nur in einem Band von 5 km
              links und rechts (nur diese Kacheln, das Netz ohne leere Punkte), ab 3 Millionen Feldern im Band gröber,
              Luftbilder verkleinert (BrilleFahrt); Seen, Gipfel und Kulturgüter nur im Band; in Modellen über 100 km nur Seen ab
              8 km² beschriftet, Masten mit der Grösse des Modells höher; die Reliefs in
