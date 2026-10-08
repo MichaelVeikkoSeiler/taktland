@@ -129,10 +129,32 @@ function luftbildKachel(name: string, px: number, voll: number) {
     p = holenBinaer(`data/luftbild/${name}.jpg`)
       .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' }),
         px < voll ? { resizeWidth: px, resizeHeight: px, resizeQuality: 'medium' } : undefined))
+      .then(ohneLeeres)
       .catch(() => { bildVorrat.delete(schluessel); return null })
     bildVorrat.set(schluessel, p)
   }
   return p
+}
+
+/** Wo swisstopo keine Aufnahme hat (jenseits der Grenze), ist die Kachel reinweiss (Michael, 2026-10-08: «bei der
+ *  Furkastrecke nicht alle Kacheln dargestellt»; bei Binn fast die Hälfte). Dort durchsichtig, damit das Gelände in
+ *  seinen Farben erscheint wie bei einer fehlenden Kachel; Schnee und Gletscher erreichen nicht in allen drei Farben 250. */
+async function ohneLeeres(bild: ImageBitmap): Promise<ImageBitmap> {
+  if (typeof OffscreenCanvas === 'undefined') return bild
+  const c = new OffscreenCanvas(bild.width, bild.height)
+  // im Speicher statt auf der Grafikkarte, sonst ist das Auslesen sehr langsam
+  const g = c.getContext('2d', { willReadFrequently: true })
+  if (!g) return bild
+  g.drawImage(bild, 0, 0)
+  const daten = g.getImageData(0, 0, c.width, c.height), d = daten.data
+  let leer = false
+  for (let i = 0; i < d.length; i += 4) {
+    if (d[i] >= 250 && d[i + 1] >= 250 && d[i + 2] >= 250) { d[i + 3] = 0; leer = true }
+  }
+  if (!leer) return bild
+  g.putImageData(daten, 0, 0)
+  bild.close()
+  return createImageBitmap(c)
 }
 
 export interface Luftbild {
