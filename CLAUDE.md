@@ -164,7 +164,8 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              Modell (Zeitraffer, kein Fahrplan); Hinweise in der Brille hängen am Blick, nicht am Modell; beim Betreten eine
              Tafel mit den Tasten, bis A oder 15 s; bis zum ersten A zeigt ein wippender roter Pfeil von oben auf die Lok;
              der Zug ist Lok und 4 Wagen gleicher Länge, hell mit dunklem Fensterband und dunklen
-             Übergängen, der Kopf gerundet mit Frontscheibe, nur die Spitze karminrot; Bahnhöfe als dünner Mast in Dunkelgrau mit
+             Übergängen, der Kopf gerundet mit Frontscheibe, nur die Spitze karminrot; in der Brille näher als 0,8 m
+             kleiner (mit der Wurzel des Abstands, höchstens bis 40 %); Bahnhöfe als dünner Mast in Dunkelgrau mit
              dem Namen oben auf eckigem dunkelgrauem Schild, Seilbahnen als feine Linie, Seen auf dem Luftbild ohne Fläche, aus der Nähe kleiner, «nicht massstäblich»;
              die Höhe der Gleise steht in keiner Quelle: die Linie folgt dem Gelände, gemittelt über 400 m davor und danach;
              die Wagen drehen nur um die Senkrechte und neigen sich höchstens 7°, kippen nie zur Seite

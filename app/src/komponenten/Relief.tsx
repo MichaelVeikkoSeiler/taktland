@@ -80,6 +80,8 @@ const STRICH_JE_KM = 0.015, LUECKE_JE_KM = 0.01
 const BAHNHOF_GRAU = '#2a2a2a'
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
 const BRILLE_ZUG_M = 0.005
+/** näher als so viele Meter wird der Zug in der Brille kleiner */
+const BRILLE_NAH_M = 0.8
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
  *  2026-10-06, Michael: «halb so gross»), sonst wäre er
@@ -1190,6 +1192,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // der Zug: Lok und Wagen, jeder folgt der Linie; im Tunnel halb durchsichtig über dem Berg
     const zugTeile: Array<{ netz: THREE.Group; durch: THREE.Group; ebeneAussen: THREE.Plane; ebeneDrin: THREE.Plane; ab: number; laenge: number }> = []
     let zugMass = 1
+    /** in der Brille: die Grösse des Zugs aus der Ferne, je nach Grösse des Modells */
+    let zugMassBrille = 1
     if (zug) {
       let ab = 0
       for (let i = 0; i <= ZUG_WAGEN; i++) {
@@ -1298,6 +1302,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       }
     }
     const oben = new THREE.Vector3(0, 1, 0), richtungZug = new THREE.Vector3()
+    const augeLage = new THREE.Vector3(), lokWelt = new THREE.Vector3()
     /** die Lok vorne bei s, die Wagen dahinter, je mit seiner Mitte auf der Linie */
     const zugSetzen = (s: number | null) => {
       for (const t of zugTeile) {
@@ -1437,7 +1442,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       // Schilder und Zug behalten ihre Grösse, die Gruppe darüber schrumpft sie sonst mit
       const massAnpassen = (s: number) => {
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] / s, grundMass[1] / s, 1)
-        zugMass = Math.max(1, BRILLE_ZUG_M / (ZUG_BREITE * s))
+        zugMassBrille = Math.max(1, BRILLE_ZUG_M / (ZUG_BREITE * s))
+        zugMass = zugMassBrille
       }
       const setzen = () => {
         modell.scale.setScalar(brilleMass)
@@ -1683,6 +1689,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         // auf dem Bildschirm wächst der Zug mit dem Abstand der Kamera: beim Hineinzoomen kleiner,
         // aus der Ferne noch zu finden (Michael, 2026-10-07)
         if (!renderer.xr.isPresenting) zugMass = zeichenMass() * (zugVonAussen ? ZUG_FAHRT_FAKTOR : 1)
+        else if (zugTeile.length) {
+          // in der Brille aus der Nähe kleiner, aber nicht im gleichen Mass wie der Abstand (Michael, 2026-10-08:
+          // «nicht gerade proportional, aber doch etwas verkleinert»): ab BRILLE_NAH_M voll, darunter mit der
+          // Wurzel des Abstands, höchstens bis auf 40 %
+          const abstand = renderer.xr.getCamera().getWorldPosition(augeLage).distanceTo(zugTeile[0].netz.getWorldPosition(lokWelt))
+          zugMass = zugMassBrille * Math.max(0.4, Math.min(1, Math.sqrt(abstand / BRILLE_NAH_M)))
+        }
         zugSetzen(s)
         if (sichtbar) {
           const p = punkt3d(s)
