@@ -135,9 +135,10 @@ data/tlm_bauwerke.json  Tunnel, Galerien und Brücken aller Bahnen aus swissTLM3
              Fahrtmodus auf Strecken anderer Bahnen, deren Verlauf aus dem Schienennetz kommt; zum Abschnitt gehört ein
              Bauwerk bis 30 m neben dem Verlauf, ein Tunnel auch bis 120 m, wenn er dann 60 % des Abschnitts begleitet
              (Lötschberg-Basistunnel, Albulatunnel: zwei Röhren, Verlauf und Zeichnung liegen auseinander)
-data/tunnel_richtung.json  Anfang und Ende von SBB-Tunneln, deren Länge in beide Richtungen
-             passt, laut swissTLM3D (pipeline/build_tunnel_richtung.py); der Kilometer der
-             SBB liegt oft im Tunnel, nicht am Portal; bei gleichem Namen in swissTLM3D darf er bis 1 km
+data/tunnel_richtung.json  Anfang und Ende von SBB-Tunneln laut swissTLM3D (pipeline/build_tunnel_richtung.py),
+             auch wo die Länge nur in eine Richtung passt (Vingelz, Simplon, Heitersberg: dort lag der Bereich bis
+             2,7 km verschoben), sobald es genau einen Treffer gibt; der Kilometer der SBB liegt oft im Tunnel,
+             nicht am Portal; bei gleichem Namen in swissTLM3D darf er bis 1 km
              daneben liegen (Pfaffensprungtunnel)
 data/bruecken_bereich.json  Anfang, Ende und Länge von SBB-Brücken laut Zeichnung von swissTLM3D,
              nur wo eindeutig (pipeline/build_bruecken_bereich.py); die SBB nennt keine Länge

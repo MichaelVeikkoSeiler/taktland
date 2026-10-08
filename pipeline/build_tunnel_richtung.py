@@ -96,9 +96,11 @@ def main():
             if not lm:
                 continue
             v, w = tunnel_bereich(km, lm, lo, hi)
+            # auch wenn die Länge nur in eine Richtung passt: Der Kilometer der SBB liegt oft im Tunnel, nicht
+            # am Portal (Vingelztunnel km 103.11, laut swissTLM3D 101.087 bis 103.52; Murgenthaltunnel 2,7 km
+            # verschoben). Gibt es dort einen eindeutigen Treffer in swissTLM3D, gilt er (Michael, 2026-10-08)
             if v != w:
                 schon += 1
-                continue
             lang = lm / 1000
             portal_bei = punkt_bei(zug, km)
             passend = []

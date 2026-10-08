@@ -681,12 +681,11 @@ def bruecken_aus_tlm():
 
 
 def tunnel_bereich_mit_tlm(kennung, km, laenge_m, lo, hi, aus_tlm):
-    """Wie tunnel_bereich; gibt die Länge keine Richtung her, gelten Anfang und
-    Ende laut swissTLM3D, wenn es sie gibt"""
-    v, w = tunnel_bereich(km, laenge_m, lo, hi)
-    if v == w and kennung in aus_tlm:
+    """Anfang und Ende laut swissTLM3D, wenn es sie gibt (data/tunnel_richtung.json), auch wo die Länge eine
+    Richtung hergäbe: der Kilometer der SBB liegt oft im Tunnel, nicht am Portal; sonst wie tunnel_bereich"""
+    if kennung in aus_tlm:
         return aus_tlm[kennung]
-    return v, w
+    return tunnel_bereich(km, laenge_m, lo, hi)
 
 
 def tunnel_bereich(km, laenge_m, lo, hi):

@@ -73,12 +73,13 @@ def test_pruefer_findet_eine_falsche_zuordnung(tmp_path):
 
 
 def test_gotthard_basistunnel_mit_bekannter_ausfahrt():
-    # Der Fahrtmodus kennt die Ausfahrt nur, wo die Länge in eine Richtung auf
-    # die Linie passt: beim Gotthard-Basistunnel 57.104 km nach Norden
+    # Anfang und Ende laut swissTLM3D (data/tunnel_richtung.json): Der Kilometer der SBB
+    # (256.455) liegt im Tunnel, nicht am Portal; die Länge stimmt auf 10 % mit 57.104 km
     obj = S.fakten_objekte()
     i = next(i for i, x in enumerate(obj[("tunnel", 594)]) if x["name"] == "Gotthard-Basistunnel")
     von, bis = NETZ["tunnel_bereiche"][f"594:{i}"]
-    assert round(bis - von, 3) == 57.104 and bis == obj[("tunnel", 594)][i]["km"]
+    km = obj[("tunnel", 594)][i]["km"]
+    assert abs((bis - von) - 57.104) <= 5.71 and von <= km <= bis
 
 
 def test_geometrie_deckt_jede_linie_des_netzes():

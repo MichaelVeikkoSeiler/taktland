@@ -50,17 +50,16 @@ TLM_TUNNEL = None
 
 
 def tunnel_bereich(km, laenge_m, lo, hi, kennung=None, name=None):
-    """Zweite Meinung zu pipeline/build_strecken.py: Der Tunnel gilt als
-    Bereich, wenn seine Länge nur in eine Richtung auf die Linie passt; sonst
-    Anfang und Ende laut swissTLM3D, wenn data/tunnel_richtung.json sie führt
-    und ihr Abstand höchstens 10 % von der Länge laut SBB abweicht; der Kilometer
-    laut SBB höchstens 300 m daneben, bei gleichem Namen in swissTLM3D 1 km."""
+    """Zweite Meinung zu pipeline/build_strecken.py: Anfang und Ende laut swissTLM3D, wenn
+    data/tunnel_richtung.json sie führt und ihr Abstand höchstens 10 % von der Länge laut SBB abweicht;
+    der Kilometer laut SBB höchstens 300 m daneben, bei gleichem Namen in swissTLM3D 1 km. Sonst gilt
+    der Tunnel als Bereich, wenn seine Länge nur in eine Richtung auf die Linie passt."""
     global TLM_TUNNEL
     if TLM_TUNNEL is None:
         TLM_TUNNEL = tunnel_aus_tlm()
     v, w = _bereich(km, laenge_m, lo, hi)
     x = TLM_TUNNEL.get(kennung) if kennung else None
-    if v == w and x and laenge_m and abs((x["bis"] - x["von"]) - laenge_m / 1000) <= max(0.1 * laenge_m / 1000, 0.05) \
+    if x and laenge_m and abs((x["bis"] - x["von"]) - laenge_m / 1000) <= max(0.1 * laenge_m / 1000, 0.05) \
             and x["von"] - (1.0 if name and x.get("name") == name else 0.3) <= km \
             <= x["bis"] + (1.0 if name and x.get("name") == name else 0.3):
         return x["von"], x["bis"]

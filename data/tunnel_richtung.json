@@ -61,6 +61,14 @@
    ],
    "name": "Leuk-Tunnel"
   },
+  "100:8": {
+   "von": 147.172,
+   "bis": 166.973,
+   "tlm": [
+    "t579"
+   ],
+   "name": "Simplontunnel"
+  },
   "111:0": {
    "von": 3.793,
    "bis": 3.814,
@@ -196,6 +204,14 @@
    "tlm": [
     "t2479"
    ]
+  },
+  "210:10": {
+   "von": 101.087,
+   "bis": 103.52,
+   "tlm": [
+    "t2838"
+   ],
+   "name": "Vingelztunnel"
   },
   "219:2": {
    "von": 12.909,
@@ -565,6 +581,14 @@
     "t3219"
    ]
   },
+  "400:10": {
+   "von": 49.219,
+   "bis": 53.972,
+   "tlm": [
+    "t3357"
+   ],
+   "name": "Murgenthaltunnel"
+  },
   "415:1": {
    "von": 68.832,
    "bis": 69.266,
@@ -627,6 +651,14 @@
    "tlm": [
     "t2598"
    ]
+  },
+  "460:7": {
+   "von": 90.405,
+   "bis": 91.539,
+   "tlm": [
+    "t2623"
+   ],
+   "name": "Zimmereggtunnel"
   },
   "500:0": {
    "von": 28.662,
@@ -746,6 +778,14 @@
     "t276"
    ],
    "name": "Galleria di Base del Ceneri"
+  },
+  "594:0": {
+   "von": 199.798,
+   "bis": 256.8,
+   "tlm": [
+    "t1976"
+   ],
+   "name": "Galleria di base del San Gottardo / Gotthard-Basistunnel / Tunnel da basa dal Son Gottard"
   },
   "595:0": {
    "von": 159.797,
@@ -1115,6 +1155,14 @@
    ],
    "name": "Galleria di Coldrerio"
   },
+  "604:1": {
+   "von": 22.868,
+   "bis": 25.681,
+   "tlm": [
+    "t2388"
+   ],
+   "name": "Fronalptunnel"
+  },
   "605:0": {
    "von": 26.602,
    "bis": 29.978,
@@ -1160,6 +1208,22 @@
    "tlm": [
     "t364"
    ]
+  },
+  "650:0": {
+   "von": 17.062,
+   "bis": 22.005,
+   "tlm": [
+    "t3841"
+   ],
+   "name": "Heitersbergtunnel"
+  },
+  "650:2": {
+   "von": 44.127,
+   "bis": 47.24,
+   "tlm": [
+    "t3553"
+   ],
+   "name": "Eppenbergtunnel"
   },
   "651:0": {
    "von": 3.628,
@@ -1283,6 +1347,14 @@
     "t3567"
    ]
   },
+  "730:0": {
+   "von": 5.867,
+   "bis": 7.354,
+   "tlm": [
+    "t3587"
+   ],
+   "name": "Riesbachtunnel"
+  },
   "730:1": {
    "von": 13.889,
    "bis": 13.965,
@@ -1332,6 +1404,14 @@
     "t3628"
    ],
    "name": "Hirschengrabentunnel"
+  },
+  "745:2": {
+   "von": 101.726,
+   "bis": 107.048,
+   "tlm": [
+    "t3588"
+   ],
+   "name": "Zürichbergtunnel"
   },
   "745:3": {
    "von": 108.511,
@@ -1435,6 +1515,22 @@
     "t4399"
    ],
    "name": "Emmersbergtunnel"
+  },
+  "853:0": {
+   "von": 21.482,
+   "bis": 30.09,
+   "tlm": [
+    "t3367"
+   ],
+   "name": "Rickentunnel"
+  },
+  "880:0": {
+   "von": 78.606,
+   "bis": 80.073,
+   "tlm": [
+    "t3865"
+   ],
+   "name": "Rosenbergtunnel"
   },
   "890:0": {
    "von": 14.984,
