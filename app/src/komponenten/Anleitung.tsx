@@ -156,7 +156,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Fahren">
         <Punkte>
           <li>
-            «Neue Fahrt»: «Nur Ziel» (Start ist der nächste Bahnhof per GPS), «Start und
+            «Mitfahren»: «Nur Ziel» (Start ist der nächste Bahnhof per GPS), «Start und
             Ziel» oder «Ohne Ziel». «Ohne Ziel» erkennt nach einigen hundert Metern Strecke
             und Richtung und fragt, wenn Strecken nebeneinander liegen.
           </li>

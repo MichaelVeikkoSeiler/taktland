@@ -84,6 +84,11 @@ const BAHNHOF_GRAU = '#2a2a2a'
 const BRILLE_ZUG_M = 0.005
 /** näher als so viele Meter wird der Zug in der Brille kleiner */
 const BRILLE_NAH_M = 0.8
+/** so gross lässt sich jedes Modell in der Brille höchstens ziehen: Meter auf dem Tisch je Kilometer */
+const BRILLE_GROESST_M_JE_KM = 0.3
+/** in der Brille wird bis so nahe vor den Augen gezeichnet; mit 10 cm verschwand das Gelände um den Kopf (Michael,
+ *  2026-10-08: «Die Landschaft verschwindet dann um einem») */
+const BRILLE_NAHE_M = 0.01
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
  *  2026-10-06, Michael: «halb so gross»), sonst wäre er
@@ -1759,7 +1764,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const [a, b] = h.map(lage)
           const mitte = a.clone().add(b).multiplyScalar(0.5)
           const f = Math.min(8, Math.max(0.125, a.distanceTo(b) / griff.abstand))
-          const s = Math.min(brilleMass * 8, Math.max(brilleMass / 4, griff.s * f))
+          // grösser bis 8-fach, lange Strecken bis 0,3 m je km wie eine Bergstrecke (Michael, 2026-10-08: «nur begrenzt
+          // zum Zug herangehen»)
+          const s = Math.min(Math.max(brilleMass * 8, BRILLE_GROESST_M_JE_KM), Math.max(brilleMass / 4, griff.s * f))
           const d = Math.atan2(b.x - a.x, b.z - a.z) - griff.gier
           um.copy(griff.m).sub(griff.p).multiplyScalar(s / griff.s).applyAxisAngle(new THREE.Vector3(0, 1, 0), d)
           modell.position.copy(mitte).add(um)
@@ -1846,6 +1853,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         zugMass = 1
         menue.visible = false
         haelt.clear(); griff = null
+        kamera.near = 0.1; kamera.updateProjectionMatrix()
         nurBild.visible = true; nurBrille.visible = false; seilBild.visible = true; seilBrille.visible = false
         szene.background = hintergrund
         groesseSetzen()
@@ -1857,6 +1865,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const ar = await xr.isSessionSupported('immersive-ar').catch(() => false)
         const sitzung = await xr.requestSession(ar ? 'immersive-ar' : 'immersive-vr', { optionalFeatures: ['local-floor', 'hand-tracking'] })
         renderer.xr.setReferenceSpaceType('local-floor')
+        // three gibt camera.near als depthNear an die Brille weiter
+        kamera.near = BRILLE_NAHE_M; kamera.updateProjectionMatrix()
         await renderer.xr.setSession(sitzung)
         setzen()
         if (probe?.current != null) tafelZeigen?.()

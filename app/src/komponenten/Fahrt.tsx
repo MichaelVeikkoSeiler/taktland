@@ -120,7 +120,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
   return (
     <div className="px-4 pb-4">
       {teil === 'neu' && (<>
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Neue Fahrt</h1>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight">Mitfahren</h1>
       <p className="mt-2 leading-relaxed">
         Im Zug meldet Taktland Tunnel, Brücken und Bahnhöfe auf deinem Weg, etwa 20 oder 10
         Sekunden vorher. Dafür braucht Taktland den Standort; dieser bleibt auf dem Gerät.
@@ -333,7 +333,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
 
       {teil === 'neu' && (
       <section className="mt-6">
-      {/* im Stil der Unterreiter «Neue Fahrt», «Probefahren», «Fahrtblatt» (Michael, 2026-10-01:
+      {/* im Stil der Unterreiter «Mitfahren», «Probefahren», «Fahrtblatt» (Michael, 2026-10-01:
           «Schaltflächen sind nicht einheitlich») */}
       <div className="segmente grid grid-cols-3" role="group" aria-label="Wie wählen">
         {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel'], ['ohne', 'Ohne Ziel']] as const).map(([a, t]) => (

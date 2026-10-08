@@ -160,7 +160,7 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              auf der Bergstrecke)
              (pipeline/build_relief.py); in der App komponenten/Relief.tsx mit three.js, erst dort geladen;
              auf der eigenen Seite «Mit VR-Brille» (WebXR, Quest 3): Modell 1,2 m breit auf Tischhöhe; ein Abzug trägt es, beide
-             skalieren und drehen, Thumbstick dreht und hebt, rechte Greiftaste setzt zurück, linke schaltet das Zuggeräusch; Probefahrt: der Zug wartet am Anfang, A startet, B hält
+             skalieren und drehen (bis 8-fach, lange Strecken bis 0,3 m je km, BRILLE_GROESST_M_JE_KM; gezeichnet ab 1 cm vor den Augen), Thumbstick dreht und hebt, rechte Greiftaste setzt zurück, linke schaltet das Zuggeräusch; Probefahrt: der Zug wartet am Anfang, A startet, B hält
              an, X halbiert das Tempo (bis ¼), Y verdoppelt es (bis 16-fach); Knopf «Zuggeräusch» wie beim Fahren;
              mit Passthrough, wo die Brille es kann; erscheint nur, wo der Browser WebXR meldet;
              ein Knopf «Mit VR-Brille» (Modellbahn), der ganze Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das

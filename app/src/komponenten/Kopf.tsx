@@ -56,7 +56,8 @@ const REISETASCHE: Array<{ bereich: Bereich; text: string; adresse: string }> = 
  *  Unterseiten haben mit Neue Fahrt, Probefahren, Fahrtblatt») */
 export type FahrtTeil = 'neu' | 'probe' | 'blatt'
 const FAHREN: Array<{ bereich: FahrtTeil; text: string; adresse: string }> = [
-  { bereich: 'neu', text: 'Neue Fahrt', adresse: '#/fahrt' },
+  // bis 2026-10-08 «Neue Fahrt» (Michael: «Mitfahren»)
+  { bereich: 'neu', text: 'Mitfahren', adresse: '#/fahrt' },
   { bereich: 'probe', text: 'Probefahren', adresse: '#/fahrt/probe' },
   { bereich: 'blatt', text: 'Fahrtblatt', adresse: '#/fahrt/blatt' },
 ]
