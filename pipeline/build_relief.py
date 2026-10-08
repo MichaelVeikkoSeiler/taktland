@@ -72,7 +72,10 @@ RELIEFS = {
                                                           {"linie": "200", "von_km": 5.2, "bis_km": 19.2},
                                                           {"linie": "210", "von_km": 19.2, "bis_km": 104.5},
                                                           {"linie": "410", "von_km": 99.3, "bis_km": 73.5}],
-                 "rand_m": 2500, "raster_m": 50, "probefahrt": ("Lausanne", "Solothurn")},
+                 "rand_m": 2500, "raster_m": 50, "probefahrt": ("Lausanne", "Solothurn"),
+                 # keine Bergstrecke (Michael, 2026-10-08): nicht in der Liste «Bergstrecken», die Seite bleibt über
+                 # die Linien 200, 210 und 410 erreichbar
+                 "bergstrecke": False},
 }
 
 # «probefahrt»: Von, Nach und wenn nötig Über für die Probefahrt im Reiter «3D» (Michael, 2026-10-06:
@@ -333,7 +336,7 @@ def bauen(name, r):
                   "ueber": bahnhof_im_netz(ueber[0]) if ueber else None}
     return {"name": name, "titel": r["titel"], "linie": nr,
             "linien": [t["linie"] for t in teile] if teile else [nr],
-            "rahmen": list(rahmen), "probefahrt": probefahrt}
+            "rahmen": list(rahmen), "probefahrt": probefahrt, "bergstrecke": r.get("bergstrecke", True)}
 
 
 if __name__ == "__main__":

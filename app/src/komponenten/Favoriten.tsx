@@ -4,6 +4,7 @@ import { kantoneText } from '../kanton'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { vereinfachen } from './Blaettern'
 import { Stern } from './Stern'
+import Wischen from './Wischen'
 import { Suchfeld } from './Suche'
 
 /** So viele Treffer zeigt die Suche hier */
@@ -88,7 +89,10 @@ export function Favoriten({ index, oeffnen }: { index: BahnhofIndex | null; oeff
       ) : (
         <ul className="mt-3 space-y-2">
           {liste.map((e) => (
-            <li key={e.uic} className="kachel flex items-stretch overflow-hidden">
+            <li key={e.uic} className="kachel overflow-hidden">
+              {/* nach links wischen und bestätigen nimmt den Bahnhof aus den Favoriten (Michael, 2026-10-08) */}
+              <Wischen frage={`${e.name} aus den Favoriten löschen?`} loeschen={() => entfernen(e)}>
+              <div className="flex items-stretch">
               <button type="button" disabled={e.sprachen.length === 0} onClick={() => oeffnen(e.uic)}
                       className="kachel-link flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3
                                  py-3 pl-4 pr-1 text-left disabled:cursor-default">
@@ -107,6 +111,8 @@ export function Favoriten({ index, oeffnen }: { index: BahnhofIndex | null; oeff
                                  dark:hover:bg-sbb-iron dark:hover:text-sbb-white">
                 ×
               </button>
+              </div>
+              </Wischen>
             </li>
           ))}
         </ul>

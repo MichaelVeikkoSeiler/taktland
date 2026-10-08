@@ -9,6 +9,7 @@ import type { BahnhofIndex, StandortDaten } from '../typen'
 import { type Box, KartenPlatz, lage, Netzkarte, pfad, useKarte } from './Netzkarte'
 import { BahnhofFeld } from './Strecke'
 import { Pikto } from './Pikto'
+import Wischen from './Wischen'
 import { zuklappTon } from '../audio'
 import { tippSchliesst } from '../zuklappen'
 
@@ -202,6 +203,9 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
   const knopf = 'text-sm text-sbb-metal underline underline-offset-2 dark:text-sbb-storm'
   return (
     <li className="kachel overflow-hidden">
+      {/* nach links wischen und bestätigen löscht die Fahrt (Michael, 2026-10-08) */}
+      <Wischen frage={`Die Fahrt ${f.von} → ${f.nach} vom ${datum(f.beginn)} aus dem Logbuch löschen?`}
+               loeschen={() => { fahrtLoeschen(f.beginn); geaendert() }}>
       <button type="button" onClick={() => setOffen(!offen)} aria-expanded={offen}
               className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left
                          hover:bg-sbb-silver dark:hover:bg-sbb-iron/60">
@@ -218,6 +222,7 @@ function Eintrag({ f, index, geaendert }: { f: ErlebteFahrt; index: BahnhofIndex
           <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" />
         </svg>
       </button>
+      </Wischen>
 
       {offen && (
         // ein Tipp auf den offenen Inhalt klappt den Eintrag zu (Michael, 2026-10-01)

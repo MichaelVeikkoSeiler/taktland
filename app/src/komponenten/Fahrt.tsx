@@ -9,6 +9,7 @@ import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
 import { BahnhofFeld, fahrtAdresse, type StreckenWahl } from './Strecke'
 import type { FahrtTeil } from './Kopf'
 import { Stern } from './Stern'
+import Wischen from './Wischen'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
 import { dreiDVormerken, reliefListe } from '../relief'
@@ -196,6 +197,9 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                     const offen = richtungWahl === k
                     return (
                     <li key={k}>
+                    {/* nach links wischen und bestätigen löscht die Probefahrt (Michael, 2026-10-08) */}
+                    <Wischen frage={`Probefahrt ${name(f.von)} – ${name(f.nach)}${f.ueber ? ` (über ${name(f.ueber)})` : ''} löschen?`}
+                             loeschen={() => { setEntfernt({ f, stelle: i }); setGemerkt(probefahrtUmschalten(f)) }}>
                     <div className="flex items-stretch">
                       {/* erst die Probefahrt wählen, dann die Richtung (Michael, 2026-09-26) */}
                       <button type="button" onClick={() => setRichtungWahl(offen ? null : k)} aria-expanded={offen}
@@ -217,6 +221,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                         ×
                       </button>
                     </div>
+                    </Wischen>
                     {offen && (
                       <div className="grid gap-2 px-3 pb-3">
                         {[f, { von: f.nach, nach: f.von, ueber: f.ueber }].map((r) => (
@@ -462,7 +467,10 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten }: {
       <h2 className="text-lg font-bold">{titel}</h2>
       <ul className="mt-2 kachelliste">
         {fahrten.map((f) => (
-          <li key={`${f.von}-${f.nach}-${f.ueber}`} className="flex items-stretch">
+          <li key={`${f.von}-${f.nach}-${f.ueber}`}>
+            {/* gemerkte Fahrten: nach links wischen und bestätigen nimmt sie aus der Liste (Michael, 2026-10-08) */}
+            <Wischen frage={`Gemerkte Fahrt ${text(f)} löschen?`} loeschen={() => { if (favorit(f)) umschalten(f) }}>
+            <div className="flex items-stretch">
             <button type="button" onClick={() => starten(f)}
                     className="flex min-w-0 flex-1 items-center justify-between gap-3 px-3 py-3 text-left
                                hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
@@ -475,6 +483,8 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten }: {
                                dark:border-sbb-iron dark:hover:bg-sbb-charcoal">
               <Stern voll={favorit(f)} />
             </button>
+            </div>
+            </Wischen>
           </li>
         ))}
       </ul>

@@ -22,6 +22,8 @@ interface ReliefUebersicht {
     linien?: string[]
     /** die Probefahrt unter «Probefahren», Bergstrecken; Über hält sie auf der Bergstrecke */
     probefahrt: { von: number; nach: number; ueber: number | null }
+    /** false: keine Bergstrecke (Lausanne–Solothurn), nicht in der Liste, die Seite bleibt über die Linien */
+    bergstrecke?: boolean
   }>
 }
 
@@ -35,6 +37,6 @@ export function dreiDVerbrauchen() { dreiDVorgemerkt = false }
 /** Alle Reliefs, in der Reihenfolge der Pipeline */
 export async function reliefListe() {
   const u = await holen<ReliefUebersicht>('data/relief/index.json')
-  return u.reliefs
+  return u.reliefs.filter((r) => r.bergstrecke !== false)
 }
 

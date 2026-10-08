@@ -17,7 +17,8 @@
     "von": 8505114,
     "nach": 8505209,
     "ueber": 8505201
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "albula",
@@ -36,7 +37,8 @@
     "von": 8509189,
     "nach": 8509253,
     "ueber": null
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "loetschberg",
@@ -55,7 +57,8 @@
     "von": 8507478,
     "nach": 8501609,
     "ueber": 8507475
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "zermatt",
@@ -74,7 +77,8 @@
     "von": 8501609,
     "nach": 8501689,
     "ueber": null
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "bruenig",
@@ -93,7 +97,8 @@
     "von": 8505000,
     "nach": 8508308,
     "ueber": null
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "furka",
@@ -112,7 +117,8 @@
     "von": 8501609,
     "nach": 8509179,
     "ueber": null
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "bernina",
@@ -131,7 +137,8 @@
     "von": 8509253,
     "nach": 8509368,
     "ueber": null
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "arosa",
@@ -150,7 +157,8 @@
     "von": 8509000,
     "nach": 8509157,
     "ueber": null
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "goldenpass",
@@ -169,7 +177,8 @@
     "von": 8501300,
     "nach": 8507290,
     "ueber": null
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "engelberg",
@@ -188,7 +197,8 @@
     "von": 8508318,
     "nach": 8508399,
     "ueber": null
-   }
+   },
+   "bergstrecke": true
   },
   {
    "name": "jurafuss",
@@ -210,7 +220,8 @@
     "von": 8501120,
     "nach": 8500207,
     "ueber": null
-   }
+   },
+   "bergstrecke": false
   }
  ]
 }
