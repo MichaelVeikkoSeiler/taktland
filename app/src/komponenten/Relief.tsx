@@ -1529,6 +1529,22 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       tafel.visible = false
       szene.add(tafel)
       let tafelBis = 0
+      // ein roter Pfeil zeigt von oben auf die Lok, solange der Zug noch nicht fährt, und wippt dabei
+      // (Michael, 2026-10-08: «damit man gleich sieht, wo der Zug jetzt steht»); durch Berge hindurch sichtbar
+      const pfeil = new THREE.Group()
+      {
+        const rot = new THREE.MeshBasicMaterial({ color: FARBEN.zug, depthTest: false })
+        const spitze = new THREE.Mesh(new THREE.ConeGeometry(0.012, 0.03, 16), rot)
+        spitze.rotation.x = Math.PI
+        spitze.position.y = 0.015
+        const schaft = new THREE.Mesh(new THREE.CylinderGeometry(0.004, 0.004, 0.05, 8), rot)
+        schaft.position.y = 0.055
+        pfeil.add(spitze, schaft)
+        pfeil.traverse((o) => { o.renderOrder = 8 })
+      }
+      pfeil.visible = false
+      szene.add(pfeil)
+      const lokLage = new THREE.Vector3()
       tafelZeigen = () => { tafel.visible = true; tafelBis = performance.now() + TAFEL_MS }
       brilleSchritt = (dt) => {
         const h = [...haelt]
@@ -1568,6 +1584,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               if (an) gedrueckt.add(schluessel); else gedrueckt.delete(schluessel)
             }
           }
+        }
+        const lok = zugTeile[0]
+        pfeil.visible = !!probe && zug === eigenerZug && fahrt.s !== null && !fahrt.laeuft && !!lok?.netz.visible
+        if (pfeil.visible) {
+          lok.netz.getWorldPosition(lokLage)
+          // knapp über dem Zug, wippt 1,5 cm auf und ab, etwa einmal pro Sekunde
+          pfeil.position.copy(lokLage).add(new THREE.Vector3(0, 0.02 + 0.015 * (1 + Math.sin(performance.now() / 160)), 0))
         }
         if (tafel.visible) {
           // mitten im Blick, 1 m vor den Augen
