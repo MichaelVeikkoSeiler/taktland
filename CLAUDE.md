@@ -189,7 +189,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Zuggeräusch und «Mit VR-Brille» (immer rot; ohne WebXR
              geht er nicht und sagt beim Tippen, was es dafür braucht); die
              Bergstrecken und Lausanne–Solothurn als Modell (#/modellbahn/gotthard, alte Adressen #/relief/…, #/fahrt/3d/…
-             führen dorthin) und «Eigene Strecke» (#/modellbahn/strecke, die Seite Strecke mit modell, bis 170 km Weg,
+             führen dorthin; #/relief/… kommt von der Linienseite, «Zurück» führt zur Linie), die eigenen Probefahrten aus «Fahren»
+             als Kacheln, «Als Modell ansehen» auf der Seite Strecke, und «Eigene Strecke» (#/modellbahn/strecke, die Seite Strecke mit modell, bis 170 km Weg,
              MODELL_HOECHSTENS_M in src/relief.ts: länger lädt das Gelände zu langsam; ModellStrecke): die ganze Strecke als Modell wie die Bergstrecken, Gelände nur in einem Band von 5 km
              links und rechts (nur diese Kacheln, das Netz ohne leere Punkte), ab 3 Millionen Feldern im Band gröber,
              Luftbilder verkleinert; Seen, Gipfel und Kulturgüter nur im Band; in Modellen über 100 km nur Seen ab

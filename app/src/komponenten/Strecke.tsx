@@ -746,6 +746,14 @@ function Ergebnis({
               gemeldet wird, lässt sich wählen. Dafür braucht Taktland den Standort; dieser
               bleibt auf dem Gerät. Die Probefahrt spielt den Weg zum Ausprobieren ab.
             </p>
+            {/* derselbe Weg als Modell in der Modellbahn (Michael, 2026-10-08) */}
+            {!wahl.weg && wahl.von && wahl.nach && (
+              <a href={streckenAdresse(wahl).replace('#/strecke', '#/modellbahn/strecke')}
+                 className="mt-3 flex items-center gap-2 text-sm font-medium underline underline-offset-2">
+                Als Modell ansehen (Spiele, Modellbahn, bis {MODELL_HOECHSTENS_M / 1000} km)
+                <span className="pfeil" aria-hidden="true">→</span>
+              </a>
+            )}
             {gemerkt && (
               <button
                 type="button" aria-pressed={favorit}

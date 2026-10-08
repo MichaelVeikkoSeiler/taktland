@@ -147,6 +147,11 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
             Eine Probefahrt spielt den Weg im Zeitraffer ab, ohne Zug und ohne Standort. Erst die
             Fahrt wählen, dann die Richtung.
           </p>
+          <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+            Probefahren zeigt eine Fahrt wie unterwegs, mit Karte, Meldungen und wählbarem Tempo. Die{' '}
+            <a href="#/modellbahn" className="underline underline-offset-2">Modellbahn</a> unter Spiele zeigt eine Strecke als
+            Modell zum Drehen, auch mit VR-Brille.
+          </p>
           {index && (
             <div className="mt-4">
               {entfernt && (

@@ -40,7 +40,7 @@ import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string } | { art: 'modellbahn' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string; vonLinie: boolean } | { art: 'modellbahn' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
@@ -70,8 +70,9 @@ function seiteAusAdresse(): Seite {
   if (h === '#/modellbahn') return { art: 'modellbahn' }
   const modellStrecke = /^#\/modellbahn\/strecke(?:\?(.*))?$/.exec(h)
   if (modellStrecke) return { art: 'strecke', wahl: wahlAusAdresse(modellStrecke[1]), modell: true }
-  const relief = /^#\/(?:modellbahn|relief|fahrt\/3d)\/([a-z]+)$/.exec(h)
-  if (relief) return { art: 'relief', name: relief[1] }
+  // #/relief/…: von einer Linienseite her, «Zurück» führt dorthin (Michael, 2026-10-08)
+  const relief = /^#\/(modellbahn|relief|fahrt\/3d)\/([a-z]+)$/.exec(h)
+  if (relief) return { art: 'relief', name: relief[2], vonLinie: relief[1] === 'relief' }
   const suchRaum = /^#\/erraten\/mit\/([A-Za-z]{4})$/.exec(h)
   if (suchRaum) return { art: 'erratenmit', raum: suchRaum[1].toUpperCase() }
   if (h === '#/standort') return { art: 'standort' }
@@ -120,7 +121,8 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'linien': return 'linien'
     case 'strecke': return seite.modell ? 'modellbahn' : 'linien'
     case 'linie': case 'objekte': return herkunft
-    case 'relief': case 'modellbahn': return 'modellbahn'
+    case 'relief': return seite.vonLinie ? 'linien' : 'modellbahn'
+    case 'modellbahn': return 'modellbahn'
     case 'uebersicht': return seite.liste
     case 'duell': return 'duell'
     case 'spiele': return 'spiele'
@@ -219,10 +221,10 @@ export default function App() {
                       aendern={(neu) => setUebersichten((u) => ({ ...u, [seite.liste]: neu }))} />
         )}
         {seite.art === 'strecke' && <Strecke key={seite.modell ? 'modell' : 'strecke'} index={index} wahl={seite.wahl} modell={seite.modell} />}
-        {seite.art === 'modellbahn' && <Modellbahn />}
+        {seite.art === 'modellbahn' && <Modellbahn index={index} />}
         {seite.art === 'relief' && (
           <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Das Relief wird geladen …</p>}>
-            <ReliefSeite key={seite.name} name={seite.name} />
+            <ReliefSeite key={seite.name} name={seite.name} vonLinie={seite.vonLinie} />
           </Suspense>
         )}
         {seite.art === 'linie' && (

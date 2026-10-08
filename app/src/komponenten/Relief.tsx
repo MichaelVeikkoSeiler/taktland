@@ -208,7 +208,7 @@ function auflageFuer(r: Relief, z: Zusatz): Auflage {
 
 /* ---------- die eigene Seite ---------- */
 
-export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?: { text: string; adresse: string } }) {
+export default function ReliefSeite({ name, vonLinie = false }: { name: string; vonLinie?: boolean }) {
   const { daten, fehler } = useRelief(name)
   const [faktor, setFaktor] = useState<1 | 2>(1)
   const weg = useMemo(() => (daten ? wegDerLinie(daten.r) : null), [daten])
@@ -232,7 +232,10 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   return (
     <div className="px-4 pb-4">
       {/* die Bergstrecken als Modell gehören zur Modellbahn (Michael, 2026-10-08) */}
-      <Zurueck onClick={() => { window.location.hash = zurueck?.adresse ?? '#/modellbahn' }} text={zurueck?.text ?? 'Modellbahn'} />
+      {/* zurück dorthin, woher man kam: zur Linie oder zur Modellbahn (Michael, 2026-10-08) */}
+      {vonLinie && daten
+        ? <Zurueck onClick={() => { window.location.hash = `#/linie/${daten.r.linie}` }} text={`Linie ${daten.r.linie}`} />
+        : <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />}
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{daten?.r.titel ?? 'Bergstrecke'} als Modell</h1>
       {daten && (
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
