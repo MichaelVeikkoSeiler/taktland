@@ -76,6 +76,8 @@ const SEE_NAME_AB_M2 = 8e6
 /** Tunnel auf dem Bildschirm: Strich und Lücke je Kilometer Abstand der Kamera (aus 20 km 300 und 200 m;
  *  Michael, 2026-10-07: «Die Längen verdoppeln») */
 const STRICH_JE_KM = 0.015, LUECKE_JE_KM = 0.01
+/** in der Brille: Strich und Lücke der Tunnel auf dem Tisch, so wie die Striche auf dem Bildschirm aus 0,8 m aussehen */
+const BRILLE_STRICH_M = 0.012, BRILLE_LUECKE_M = 0.008
 /** Mast und Schild der Bahnhöfe, dunkelgrau (Michael, 2026-10-07: «wesentlich dunkler») */
 const BAHNHOF_GRAU = '#2a2a2a'
 /** der Zug in der Brille mindestens so breit, damit man ihn auf dem Modell findet */
@@ -1030,9 +1032,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         })
       }
     }
-    /** gestrichelt (Tunnel): auf dem Bildschirm mit dem Zoom (strichMaterialien), in der Brille 150 m sichtbar,
-     *  100 m nicht (Punkte alle 50 m; Michael, 2026-10-07: «feiner») */
-    const STRICH = 3, LUECKE = 2
+    /** gestrichelt (Tunnel): auf dem Bildschirm mit dem Zoom (strichMaterialien); in der Brille wie auf dem Bildschirm
+     *  aus der Nähe gesehen, Strich und Lücke auf dem Tisch gleich lang, ob das Modell kurz oder lang ist (Michael,
+     *  2026-10-08: «die gestrichelten Tunnellinien … übernehmen»); Punkte alle 50 m */
+    const STRICH = Math.max(1, Math.round(BRILLE_STRICH_M / brilleMass / 0.05))
+    const LUECKE = Math.max(1, Math.round(BRILLE_LUECKE_M / brilleMass / 0.05))
     const linie = (punkte: THREE.Vector3[], farbe: string, tunnel: boolean) => {
       if (!tunnel || punkte.length <= STRICH) { roehre(punkte, farbe, tunnel); return }
       roehre(punkte, farbe, true, 'bild')
