@@ -470,8 +470,14 @@ function ModellKnoepfe({ fahrknopf, audio, inBrille, brilleFehler }: {
   return (
     <>
       <div className="mt-3 flex flex-wrap gap-2">
-        {xr && (
+        {xr ? (
           <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
+            In der Brille ansehen
+          </button>
+        ) : (
+          // ohne Brille durchgestrichen, als Hinweis, dass es mit einer Brille mehr zu sehen gibt (Michael, 2026-10-08)
+          <button type="button" disabled aria-describedby="ohne-brille"
+                  className="cursor-not-allowed rounded-lg bg-sbb-red/45 px-4 py-2 font-bold text-white line-through decoration-2">
             In der Brille ansehen
           </button>
         )}
@@ -483,6 +489,12 @@ function ModellKnoepfe({ fahrknopf, audio, inBrille, brilleFehler }: {
         <GeraeuschKnopf audio={audio} className="h-10 w-12" />
       </div>
       {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
+      {!xr && (
+        <p id="ohne-brille" className="mt-2 text-sm font-medium">
+          Mit einer VR-Brille wie der Meta Quest 3 steht das Modell vor dir auf dem Tisch, und du lässt den Zug mit den
+          Controllern fahren. Öffne dafür Taktland im Browser der Brille.
+        </p>
+      )}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         «Zug fahren» schickt einen Zug in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke,
         ein Zeitraffer, kein Fahrplan. Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der

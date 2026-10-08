@@ -183,7 +183,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; unter Fahren keine Brille (Michael, 2026-10-08).
              Spiel «Modellbahn» unter Spiele (komponenten/Modellbahn.tsx, #/modellbahn, für alle, die Brille nur mit WebXR):
              über jedem Modell der Kasten «Modellbahn: ein Modell zum Anschauen, kein Abbild der Wirklichkeit» (ModellHinweis),
-             darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Zuggeräusch und «In der Brille ansehen»; die
+             darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Zuggeräusch und «In der Brille ansehen» (ohne WebXR
+             durchgestrichen und blass, mit dem Satz, was die Brille zeigt); die
              Bergstrecken und Lausanne–Solothurn als Modell (#/modellbahn/gotthard, alte Adressen #/relief/…, #/fahrt/3d/…
              führen dorthin) und «Eigene Strecke» (#/modellbahn/strecke, die Seite Strecke mit modell, bis 170 km Weg,
              MODELL_HOECHSTENS_M in src/relief.ts: länger lädt das Gelände zu langsam; ModellStrecke): die ganze Strecke als Modell wie die Bergstrecken, Gelände nur in einem Band von 5 km
