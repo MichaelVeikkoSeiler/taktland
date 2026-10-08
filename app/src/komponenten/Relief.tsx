@@ -327,7 +327,7 @@ const BAND_FELDER = 3_000_000
 /**
  * Die ganze Strecke einer Fahrt als Modell für die Brille (Michael, 2026-10-08: «diese Probefahrt auf die Brille
  * projizieren»): das Gelände aus den Kacheln im Rechteck um den Weg, bei langen Strecken gröber gemittelt, sonst wie
- * die Bergstrecken: «In der Brille ansehen» und die Probefahrt mit A, B, X und Y.
+ * die Bergstrecken: «Mit VR-Brille» und die Probefahrt mit A, B, X und Y.
  */
 export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: FahrObjekt[] }) {
   const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
@@ -457,8 +457,8 @@ function ModellHinweis() {
   )
 }
 
-/** Unter dem Modell: der Zug fährt auf dem Bildschirm, dazu das Zuggeräusch und, nur wo der Browser eine Brille meldet,
- *  «In der Brille ansehen» (Michael, 2026-10-08: Modellbahn für alle, die Brille nur, wo vorhanden) */
+/** Unter dem Modell: «Mit VR-Brille», der Zug auf dem Bildschirm und das Zuggeräusch (Michael, 2026-10-08: Modellbahn
+ *  für alle; der Knopf zur Brille steht immer da, ohne Brille geht er einfach nicht und sagt, was es dafür braucht) */
 function ModellKnoepfe({ fahrknopf, audio, inBrille, brilleFehler }: {
   fahrknopf: React.RefObject<Fahrknopf | null>
   audio: ReturnType<typeof useZuggeraeusch>
@@ -466,32 +466,25 @@ function ModellKnoepfe({ fahrknopf, audio, inBrille, brilleFehler }: {
   brilleFehler: string | null
 }) {
   const xr = useBrilleMoeglich()
+  const [ohne, setOhne] = useState(false)
   const weiss = 'rounded-lg border border-sbb-cloud bg-white px-4 py-2 font-bold dark:border-sbb-iron dark:bg-sbb-midnight'
   return (
     <>
       <div className="mt-3 flex flex-wrap gap-2">
-        {xr ? (
-          <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
-            In der Brille ansehen
-          </button>
-        ) : (
-          // ohne Brille durchgestrichen, als Hinweis, dass es mit einer Brille mehr zu sehen gibt (Michael, 2026-10-08)
-          <button type="button" disabled aria-describedby="ohne-brille"
-                  className="cursor-not-allowed rounded-lg bg-sbb-red/45 px-4 py-2 font-bold text-white line-through decoration-2">
-            In der Brille ansehen
-          </button>
-        )}
-        <button type="button" className={xr ? weiss : 'rounded-lg bg-sbb-red px-4 py-2 font-bold text-white'}
-                onClick={() => fahrknopf.current?.los()}>
+        <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white"
+                onClick={() => (xr ? inBrille() : setOhne(true))}>
+          Mit VR-Brille
+        </button>
+        <button type="button" className={weiss} onClick={() => fahrknopf.current?.los()}>
           Zug fahren
         </button>
         <button type="button" className={weiss} onClick={() => fahrknopf.current?.halt()}>Anhalten</button>
         <GeraeuschKnopf audio={audio} className="h-10 w-12" />
       </div>
       {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
-      {!xr && (
-        <p id="ohne-brille" className="mt-2 text-sm font-medium">
-          Mit einer VR-Brille wie der Meta Quest 3 steht das Modell vor dir auf dem Tisch, und du lässt den Zug mit den
+      {!xr && ohne && (
+        <p className="mt-2 text-sm font-medium" role="status">
+          Auf diesem Gerät ist keine VR-Brille zu finden. Mit einer VR-Brille wie der Meta Quest 3 steht das Modell vor dir auf dem Tisch, und du lässt den Zug mit den
           Controllern fahren. Öffne dafür Taktland im Browser der Brille.
         </p>
       )}

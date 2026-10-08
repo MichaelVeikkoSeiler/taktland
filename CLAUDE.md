@@ -159,11 +159,11 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              Bahnhöfe, Gipfel; index.json nennt die Bergstrecken für «Probefahren» (Abschnitt Bergstrecken, als Probefahrt ohne Brille) und die Modellbahn samt Probefahrt (Über hält sie
              auf der Bergstrecke)
              (pipeline/build_relief.py); in der App komponenten/Relief.tsx mit three.js, erst dort geladen;
-             auf der eigenen Seite «In der Brille ansehen» (WebXR, Quest 3): Modell 1,2 m breit auf Tischhöhe; ein Abzug trägt es, beide
+             auf der eigenen Seite «Mit VR-Brille» (WebXR, Quest 3): Modell 1,2 m breit auf Tischhöhe; ein Abzug trägt es, beide
              skalieren und drehen, Thumbstick dreht und hebt, Greiftaste setzt zurück; Probefahrt: der Zug wartet am Anfang, A startet, B hält
              an, X halbiert das Tempo (bis ¼), Y verdoppelt es (bis 16-fach); Knopf «Zuggeräusch» wie beim Fahren;
              mit Passthrough, wo die Brille es kann; erscheint nur, wo der Browser WebXR meldet;
-             ein Knopf «In der Brille ansehen» (Modellbahn), der ganze Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das
+             ein Knopf «Mit VR-Brille» (Modellbahn), der ganze Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das
              Modell (Zeitraffer, kein Fahrplan); Hinweise in der Brille hängen am Blick, nicht am Modell; beim Betreten eine
              Tafel mit den Tasten und rotem Knopf «Schliessen» (Strahl und Abzug oder A), sie bleibt bis dahin; erst das nächste A startet; am Ziel hält er und zeigt die Knöpfe «Fahrt wiederholen»,
              «Zurückfahren» (Steuerwagen voraus) und «Fahrt beenden», mit dem Strahl oder A, X, B; bis zum ersten A zeigt ein wippender roter Pfeil von oben auf die Lok;
@@ -183,8 +183,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; unter Fahren keine Brille (Michael, 2026-10-08).
              Spiel «Modellbahn» unter Spiele (komponenten/Modellbahn.tsx, #/modellbahn, für alle, die Brille nur mit WebXR):
              über jedem Modell der Kasten «Modellbahn: ein Modell zum Anschauen, kein Abbild der Wirklichkeit» (ModellHinweis),
-             darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Zuggeräusch und «In der Brille ansehen» (ohne WebXR
-             durchgestrichen und blass, mit dem Satz, was die Brille zeigt); die
+             darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Zuggeräusch und «Mit VR-Brille» (immer rot; ohne WebXR
+             geht er nicht und sagt beim Tippen, was es dafür braucht); die
              Bergstrecken und Lausanne–Solothurn als Modell (#/modellbahn/gotthard, alte Adressen #/relief/…, #/fahrt/3d/…
              führen dorthin) und «Eigene Strecke» (#/modellbahn/strecke, die Seite Strecke mit modell, bis 170 km Weg,
              MODELL_HOECHSTENS_M in src/relief.ts: länger lädt das Gelände zu langsam; ModellStrecke): die ganze Strecke als Modell wie die Bergstrecken, Gelände nur in einem Band von 5 km
