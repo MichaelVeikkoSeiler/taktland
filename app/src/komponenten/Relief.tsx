@@ -43,6 +43,9 @@ interface Relief {
   tunnel: Array<{ name: string | null; laenge_m: number | null; km: number; von_km?: number; bis_km?: number; galerie?: boolean }>
   bruecken: Array<{ name: string | null; von_km: number; bis_km: number; laenge_m: number | null }>
   gipfel: Array<{ name: string; hoehe_m: number | null; lage: [number, number] }>
+  /** ganze Strecke in der Brille: nur diese Kacheln und nur, was im Band um die Strecke liegt */
+  kacheln?: Set<string>
+  innen?: (e: number, n: number) => boolean
 }
 
 /** Ein Weg im Relief: Punkte mit ihrer Stelle in Metern, dazu Tunnel und Brücken als Bereiche */
@@ -342,9 +345,10 @@ function useBrilleMoeglich() {
   return ja
 }
 
-/** so viele Felder höchstens je Seite im Modell der ganzen Strecke; längere Strecken werden gröber */
-const STRECKE_FELDER = 1700
-const STRECKE_RAND_M = 3000
+/** im Modell der ganzen Strecke nur ein Band von so vielen Metern links und rechts (Michael, 2026-10-08: «5 km
+ *  je Seite»); höchstens so viele Felder darin, sonst wird es gröber */
+const BAND_M = 5000
+const BAND_FELDER = 3_000_000
 
 /**
  * Die ganze Strecke einer Fahrt als Modell für die Brille (Michael, 2026-10-08: «diese Probefahrt auf die Brille
@@ -361,36 +365,67 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
   const probeStelle = useRef<number | null>(null)
   useEffect(() => {
     let ab = false
-    const lagen = fahrweg.punkte.map((p) => lv95(p.lat, p.lon))
+    // Punkte auf dem Weg etwa alle 500 m; um jeden ein Kreis von BAND_M ergibt das Band
+    const lagen: Array<[number, number]> = []
+    let laenge = 0
+    const pk = fahrweg.punkte
+    for (let i = 0; i < pk.length; i++) {
+      const [e, n] = lv95(pk[i].lat, pk[i].lon)
+      if (i) {
+        const [ea, na] = lagen[lagen.length - 1], d = Math.hypot(e - ea, n - na)
+        laenge += d
+        for (let t = 500; t < d; t += 500) lagen.push([ea + ((e - ea) * t) / d, na + ((n - na) * t) / d])
+      }
+      lagen.push([e, n])
+    }
     let e0 = Infinity, e1 = -Infinity, n0 = Infinity, n1 = -Infinity
     for (const [e, n] of lagen) { e0 = Math.min(e0, e); e1 = Math.max(e1, e); n0 = Math.min(n0, n); n1 = Math.max(n1, n) }
     const m = 50
-    const ost = Math.floor((e0 - STRECKE_RAND_M) / m) * m, nord = Math.ceil((n1 + STRECKE_RAND_M) / m) * m
-    const breite = Math.ceil((e1 + STRECKE_RAND_M - ost) / m), hoehe = Math.ceil((nord - n0 + STRECKE_RAND_M) / m)
-    void Promise.all([ausschnittLaden({ ost, nord, m, breite, hoehe }), streckenLaden(), sehenswertLaden().catch(() => null)])
+    const ost = Math.floor((e0 - BAND_M) / m) * m, nord = Math.ceil((n1 + BAND_M) / m) * m
+    const breite = Math.ceil((e1 + BAND_M - ost) / m), hoehe = Math.ceil((nord - n0 + BAND_M) / m)
+    // nur die Kacheln, die das Band berühren
+    const kacheln = new Set<string>()
+    for (const [e, n] of lagen) {
+      for (const de of [-BAND_M, 0, BAND_M]) for (const dn of [-BAND_M, 0, BAND_M]) kacheln.add(`${Math.floor((e + de) / 10_000)}_${Math.floor((n + dn) / 10_000)}`)
+    }
+    // so fein, wie das Band es zulässt: seine Fläche etwa Länge mal Breite
+    const flaecheM2 = Math.min(breite * hoehe * m * m, laenge * 2 * BAND_M + Math.PI * BAND_M * BAND_M)
+    const k = Math.max(1, Math.ceil(Math.sqrt(flaecheM2 / (m * m) / BAND_FELDER)))
+    void Promise.all([ausschnittLaden({ ost, nord, m, breite, hoehe }, kacheln), streckenLaden(), sehenswertLaden().catch(() => null)])
       .then(([f, netz, sw]) => {
         if (ab) return
-        // gröber, wo die Strecke lang ist: je k mal k Felder die Höhe in ihrer Mitte
-        const k = Math.max(1, Math.ceil(Math.max(breite, hoehe) / STRECKE_FELDER))
-        const b2 = Math.floor(breite / k), h2 = Math.floor(hoehe / k), mitte = Math.floor(k / 2)
-        let h = f.h
-        if (k > 1) {
-          h = new Uint16Array(b2 * h2)
-          for (let j = 0; j < h2; j++) for (let i = 0; i < b2; i++) h[j * b2 + i] = f.h[(j * k + mitte) * breite + i * k + mitte]
+        const b2 = Math.floor(breite / k), h2 = Math.floor(hoehe / k), mitte = Math.floor(k / 2), m2 = m * k
+        const h = new Uint16Array(b2 * h2)
+        // das Band: um jeden Punkt des Wegs ein Kreis, Feld für Feld
+        const im = new Uint8Array(b2 * h2), rz = Math.ceil(BAND_M / m2)
+        for (const [e, n] of lagen) {
+          const ci = Math.floor((e - ost) / m2), cj = Math.floor((nord - n) / m2)
+          for (let dj = -rz; dj <= rz; dj++) {
+            const j = cj + dj
+            if (j < 0 || j >= h2) continue
+            const w = Math.floor(Math.sqrt(rz * rz - dj * dj))
+            for (let i = Math.max(0, ci - w); i <= Math.min(b2 - 1, ci + w); i++) im[j * b2 + i] = 1
+          }
         }
-        const raster = { ost, nord, m: m * k, breite: b2, hoehe: h2 }
-        const drin = ([e, n]: [number, number]) => e >= ost && e <= ost + b2 * m * k && n <= nord && n >= nord - h2 * m * k
+        for (let j = 0; j < h2; j++) {
+          for (let i = 0; i < b2; i++) if (im[j * b2 + i]) h[j * b2 + i] = f.h[(j * k + mitte) * breite + i * k + mitte]
+        }
+        const raster = { ost, nord, m: m2, breite: b2, hoehe: h2 }
+        const innen = (e: number, n: number) => {
+          const i = Math.floor((e - ost) / m2), j = Math.floor((nord - n) / m2)
+          return i >= 0 && j >= 0 && i < b2 && j < h2 && im[j * b2 + i] === 1
+        }
         const bahnhoefe = objekte.filter((o) => o.art === 'bahnhof').flatMap((o, i) => {
           const lage = lageAufWeg(fahrweg, o.sOrt ?? o.s)
-          return drin(lage) ? [{ uic: i, name: netz.punkte[o.kennung] ?? o.kennung, km: (o.sOrt ?? o.s) / 1000, lage }] : []
+          return innen(...lage) ? [{ uic: i, name: netz.punkte[o.kennung] ?? o.kennung, km: (o.sOrt ?? o.s) / 1000, lage }] : []
         })
         const gipfel = (sw?.gipfel ?? []).flatMap((g) => {
           const lage = lv95(g.lage[0], g.lage[1])
-          return drin(lage) ? [{ name: g.name, hoehe_m: g.hoehe_m, lage }] : []
+          return innen(...lage) ? [{ name: g.name, hoehe_m: g.hoehe_m, lage }] : []
         })
         setDaten({
           r: { titel: 'Strecke', linie: '', linie_name: '', von_km: 0, bis_km: 0, datenstand: '', quellen: [f.quelle],
-               raster, weg: [], bahnhoefe, tunnel: [], bruecken: [], gipfel },
+               raster, weg: [], bahnhoefe, tunnel: [], bruecken: [], gipfel, kacheln, innen },
           h,
         })
       })
@@ -412,7 +447,7 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
         Zurück zur Fahrt in 3D
       </button>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
-      {!daten && !fehler && <p className="mt-3 text-sm text-sbb-metal">Das Gelände der ganzen Strecke wird geladen …</p>}
+      {!daten && !fehler && <p className="mt-3 text-sm text-sbb-metal">Das Gelände entlang der ganzen Strecke wird geladen …</p>}
       {daten && weg && (
         <>
           <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
@@ -434,7 +469,8 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
           </div>
           {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
-            Die ganze Strecke als Modell, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit auf Tischhöhe. Gelände aus
+            Die ganze Strecke als Modell, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit auf Tischhöhe, mit einem Band
+            von {BAND_M / 1000} km links und rechts der Strecke; was weiter weg liegt, fehlt. Gelände aus
             swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
             wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert. Bedienung wie bei den Bergstrecken: ein Abzug
             trägt das Modell, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt, die
@@ -701,7 +737,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   const [luftbild, setLuftbild] = useState<Luftbild | null>(null)
   useEffect(() => {
     let ab = false
-    void luftbildLaden(r.raster).then((l) => { if (!ab) setLuftbild(l) })
+    void luftbildLaden(r.raster, r.kacheln).then((l) => { if (!ab) setLuftbild(l) })
     return () => { ab = true }
   }, [r])
   const aus = useVersteckt()
@@ -734,26 +770,34 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
 
     // Gelände als Netz, jedes SCHRITT-te Feld
     const nx = Math.floor((breite - 1) / SCHRITT) + 1, ny = Math.floor((hoehe - 1) / SCHRITT) + 1
-    const pos = new Float32Array(nx * ny * 3), farben = new Float32Array(nx * ny * 3), uv = new Float32Array(nx * ny * 2)
+    // nur Punkte mit Höhe kommen ins Netz: wo keine Kachel liegt (oder ausserhalb des Bandes um eine ganze
+    // Strecke), bleibt das Gelände offen und belegt keinen Speicher
+    const nummer = new Int32Array(nx * ny).fill(-1)
+    let netzPunkte = 0
+    for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) if (h[j * SCHRITT * breite + i * SCHRITT] !== KEINE_HOEHE) nummer[j * nx + i] = netzPunkte++
+    const pos = new Float32Array(netzPunkte * 3), farben = new Float32Array(netzPunkte * 3), uv = new Float32Array(netzPunkte * 2)
     const c = new THREE.Color()
     for (let j = 0; j < ny; j++) {
       for (let i = 0; i < nx; i++) {
+        const v = nummer[j * nx + i]
+        if (v < 0) continue
         const gi = i * SCHRITT, gj = j * SCHRITT
         const z = h[gj * breite + gi]
-        const k = (j * nx + i) * 3
+        const k = v * 3
         pos[k] = X(ost + (gi + 0.5) * m); pos[k + 1] = Y(z); pos[k + 2] = Z(nord - (gj + 0.5) * m)
         hoehenFarbe(z, c)
         farben[k] = c.r; farben[k + 1] = c.g; farben[k + 2] = c.b
-        uv[(j * nx + i) * 2] = (gi + 0.5) / breite; uv[(j * nx + i) * 2 + 1] = 1 - (gj + 0.5) / hoehe
+        uv[v * 2] = (gi + 0.5) / breite; uv[v * 2 + 1] = 1 - (gj + 0.5) / hoehe
       }
     }
-    const index = new Uint32Array((nx - 1) * (ny - 1) * 6)
     let q = 0
+    for (let j = 0; j < ny - 1; j++) for (let i = 0; i < nx - 1; i++) if (Math.min(nummer[j * nx + i], nummer[j * nx + i + 1], nummer[(j + 1) * nx + i], nummer[(j + 1) * nx + i + 1]) >= 0) q += 6
+    const index = new Uint32Array(q)
+    q = 0
     for (let j = 0; j < ny - 1; j++) {
       for (let i = 0; i < nx - 1; i++) {
-        const a = j * nx + i, b = a + 1, d = a + nx, e2 = d + 1
-        // wo keine Kachel liegt, bleibt das Gelände offen
-        if ([a, b, d, e2].some((v) => pos[v * 3 + 1] === Y(KEINE_HOEHE))) continue
+        const a = nummer[j * nx + i], b = nummer[j * nx + i + 1], d = nummer[(j + 1) * nx + i], e2 = nummer[(j + 1) * nx + i + 1]
+        if (Math.min(a, b, d, e2) < 0) continue
         index[q++] = a; index[q++] = d; index[q++] = b
         index[q++] = b; index[q++] = d; index[q++] = e2
       }
@@ -762,7 +806,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
     geo.setAttribute('color', new THREE.BufferAttribute(farben, 3))
     geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
-    geo.setIndex(new THREE.BufferAttribute(index.subarray(0, q), 1))
+    geo.setIndex(new THREE.BufferAttribute(index, 1))
     geo.computeVertexNormals()
     // Auflage auf dem Gelände: Wald, Siedlung, Gebiete und das Kilometernetz, auf eine Leinwand gemalt,
     // die über das Gelände gespannt ist (weiss lässt die Farbe des Geländes, wie sie ist)
@@ -1072,6 +1116,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
 
     const imAusschnitt = (e: number, n: number) => e >= ost && e <= ost + breite * m && n <= nord && n >= nord - hoehe * m
+      && (!r.innen || r.innen(e, n))
     // Seen (Michael, 2026-10-06: «Erst Seen dazu»): flach auf Seehöhe, die Höhe ist die mittlere des Ufers im
     // Gelände; was über den Ausschnitt hinausragt, ist abgeschnitten
     const eck: Array<[number, number]> = [[ost, nord], [ost + breite * m, nord], [ost + breite * m, nord - hoehe * m], [ost, nord - hoehe * m]]
@@ -1082,6 +1127,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     for (const see of zusatz?.seen?.seen ?? []) {
       const ringe = see.ringe.map((x) => zugInRahmen(zugLesen(x), eck)).filter((q) => q.length >= 3)
       if (!ringe.length) continue
+      // ganze Strecke in der Brille: nur Seen, die ins Band um die Strecke reichen
+      if (r.innen && !ringe.some((q) => q.some(([e, n]) => r.innen!(e, n)))) continue
       const flaeche = (q: Array<[number, number]>) => Math.abs(q.reduce((a, [e, n], i) => { const [e2, n2] = q[(i + 1) % q.length]; return a + e * n2 - e2 * n }, 0))
       ringe.sort((a, b) => flaeche(b) - flaeche(a))
       const ufer = ringe[0].map(([e, n]) => hoeheBei(r, h, e, n)).sort((a, b) => a - b)

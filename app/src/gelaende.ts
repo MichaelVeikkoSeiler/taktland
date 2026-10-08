@@ -55,7 +55,7 @@ export async function fensterLaden(mitteE: number, mitteN: number, seite_m: numb
 
 /** Ein Ausschnitt im 50-m-Raster der Kacheln, aus ihnen zusammengesetzt (auch die Bergstrecken,
  *  Michael, 2026-10-06: «auf die Kacheln umstellen»); wo keine Kachel liegt, steht KEINE_HOEHE */
-export async function ausschnittLaden(raster: Raster) {
+export async function ausschnittLaden(raster: Raster, nurKacheln?: Set<string>) {
   const ix = await gelaendeIndex()
   const { kachel_m: k, raster_m: m, zellen } = ix
   if (raster.m !== m) throw new Error(`Der Ausschnitt hat ${raster.m} m, die Kacheln ${m} m`)
@@ -65,7 +65,8 @@ export async function ausschnittLaden(raster: Raster) {
   const kacheln: string[] = []
   for (let ex = Math.floor(ost / k); ex <= Math.floor((ost + breite * m - 1) / k); ex++) {
     for (let ny = Math.floor((nord - hoehe * m) / k); ny <= Math.floor((nord - 1) / k); ny++) {
-      if (vorhanden.has(`${ex}_${ny}`)) kacheln.push(`${ex}_${ny}`)
+      // nurKacheln: nur die entlang einer Strecke (ganze Strecke in der Brille)
+      if (vorhanden.has(`${ex}_${ny}`) && (!nurKacheln || nurKacheln.has(`${ex}_${ny}`))) kacheln.push(`${ex}_${ny}`)
     }
   }
   const geladen = await Promise.all(kacheln.map((n) => kachelLaden(n, zellen)))
@@ -125,7 +126,7 @@ export interface Luftbild {
 /** Die Luftbilder, die einen Ausschnitt berühren, oder null, wenn es dort keine gibt. So fein, wie die Leinwand
  *  der Szene sie zeigt (4096 Bildpunkte über die längere Seite): für eine ganze Strecke in der Brille kleiner, sonst
  *  füllen Hunderte Bilder den Speicher */
-export async function luftbildLaden(raster: Raster): Promise<Luftbild | null> {
+export async function luftbildLaden(raster: Raster, nurKacheln?: Set<string>): Promise<Luftbild | null> {
   const ix = await luftbildIndex().catch(() => null)
   if (!ix) return null
   const k = ix.kachel_m
@@ -133,7 +134,7 @@ export async function luftbildLaden(raster: Raster): Promise<Luftbild | null> {
   const namen: Array<[number, number]> = []
   for (let ex = Math.floor(raster.ost / k); ex <= Math.floor((raster.ost + raster.breite * raster.m - 1) / k); ex++) {
     for (let ny = Math.floor((raster.nord - raster.hoehe * raster.m) / k); ny <= Math.floor((raster.nord - 1) / k); ny++) {
-      if (ix.kacheln[`${ex}_${ny}`]) namen.push([ex, ny])
+      if (ix.kacheln[`${ex}_${ny}`] && (!nurKacheln || nurKacheln.has(`${ex}_${ny}`))) namen.push([ex, ny])
     }
   }
   if (!namen.length) return null
