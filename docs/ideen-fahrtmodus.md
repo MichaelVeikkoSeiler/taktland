@@ -467,6 +467,8 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
 - **Spiel «Modellbahn»** erledigt 2026-10-08 (Michael: «neues Spiel 3D/VR … unter Live-Fahrten und Probefahrten
   … kein VR mit Brille»): Bergstrecken und eigene Strecken bis 170 km als Modell, für alle auf dem Bildschirm mit
   «Zug fahren», die Brille nur dort und nur wo vorhanden. Zugmodelle kommen hierher.
+- **Breiteres Band** erledigt 2026-10-08: 15 km je Seite bis 60 km Strecke, dann schmaler bis 5 km, so dass jedes
+  Modell etwa 2'000 km² deckt wie das Gotthard-Modell.
 - **Zugmodelle zur Wahl** (Michael, 2026-10-08: «verschiedene Zugmodelle … wie zum Beispiel ein Feuerwehrzug»):
   bei der Probefahrt in der Brille Pendelzug (heute), kurzer Regionalzug, langer Güterzug, Feuerwehrzug (Lösch- und
   Rettungszug), später Bergbahn. Wahl auf der Seite neben «In der Brille ansehen», Pendelzug vorgewählt, letzte Wahl

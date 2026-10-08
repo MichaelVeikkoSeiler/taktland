@@ -330,9 +330,12 @@ function GeraeuschKnopf({ audio, className }: { audio: ReturnType<typeof useAudi
 }
 
 
-/** im Modell der ganzen Strecke nur ein Band von so vielen Metern links und rechts (Michael, 2026-10-08: «5 km
- *  je Seite»); höchstens so viele Felder darin, sonst wird es gröber */
-const BAND_M = 5000
+/** im Modell der ganzen Strecke nur ein Band links und rechts (Michael, 2026-10-08: erst «5 km je Seite», dann «noch
+ *  vertretbar erweitern»): so breit, dass das Band etwa BAND_FLAECHE_M2 deckt wie das Modell der Gotthard-Bergstrecke,
+ *  das auf der Quest flüssig läuft, aber mindestens 5 und höchstens 15 km; höchstens so viele Felder, sonst gröber */
+const BAND_MIN_M = 5000, BAND_MAX_M = 15_000, BAND_FLAECHE_M2 = 2e9
+const bandBreite = (laengeM: number) =>
+  Math.round(Math.min(BAND_MAX_M, Math.max(BAND_MIN_M, BAND_FLAECHE_M2 / (2 * Math.max(1, laengeM)))) / 500) * 500
 const BAND_FELDER = 3_000_000
 
 /**
@@ -348,6 +351,7 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
   const probe = useRef<number | null>(null)
   const probeStelle = useRef<number | null>(null)
   const fahrknopf = useRef<Fahrknopf | null>(null)
+  const BAND_M = useMemo(() => bandBreite(wegEnde(fahrweg)), [fahrweg])
   useEffect(() => {
     let ab = false
     // Punkte auf dem Weg etwa alle 500 m; um jeden ein Kreis von BAND_M ergibt das Band
@@ -369,9 +373,13 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
     const ost = Math.floor((e0 - BAND_M) / m) * m, nord = Math.ceil((n1 + BAND_M) / m) * m
     const breite = Math.ceil((e1 + BAND_M - ost) / m), hoehe = Math.ceil((nord - n0 + BAND_M) / m)
     // nur die Kacheln, die das Band berühren
+    const schritte: number[] = []
+    for (let d = -BAND_M; d < BAND_M; d += 5000) schritte.push(d)
+    schritte.push(BAND_M)
     const kacheln = new Set<string>()
     for (const [e, n] of lagen) {
-      for (const de of [-BAND_M, 0, BAND_M]) for (const dn of [-BAND_M, 0, BAND_M]) kacheln.add(`${Math.floor((e + de) / 10_000)}_${Math.floor((n + dn) / 10_000)}`)
+      // in Schritten von 5 km bis zum Rand, damit bei breitem Band keine Kachel dazwischen fehlt
+      for (const de of schritte) for (const dn of schritte) kacheln.add(`${Math.floor((e + de) / 10_000)}_${Math.floor((n + dn) / 10_000)}`)
     }
     // so fein, wie das Band es zulässt: seine Fläche etwa Länge mal Breite
     const flaecheM2 = Math.min(breite * hoehe * m * m, laenge * 2 * BAND_M + Math.PI * BAND_M * BAND_M)
@@ -416,7 +424,7 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
       })
       .catch((e: Error) => { if (!ab) setFehler(e.message) })
     return () => { ab = true }
-  }, [fahrweg, objekte])
+  }, [fahrweg, objekte, BAND_M])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
   const audio = useZuggeraeusch(probeStelle, useMemo(() => wegEnde(fahrweg), [fahrweg]), useMemo(() => weg?.bauwerke ?? [], [weg]),
                                 true, fahrweg.punkte[0]?.s ?? 0)
@@ -439,7 +447,7 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
           <ModellHinweis />
           <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
-            Die ganze Strecke als Modell, mit einem Band von {BAND_M / 1000} km links und rechts der Strecke; was weiter weg
+            Die ganze Strecke als Modell, mit einem Band von {(BAND_M / 1000).toLocaleString('de-CH').replace('.', ',')} km links und rechts der Strecke; was weiter weg
             liegt, fehlt. Gelände aus swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
             wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert.
           </p>
