@@ -464,6 +464,14 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
   Dazu in der Fahrtanzeige ein roter Reiter «Brille» rechts von «3D» statt des Knopfs «Strecke in der Brille».
 - **Brille nur auf kurzen Strecken** (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: Kacheln zu langsam): bis
   170 km Weg, bei eigenen Probefahrten bis 120 km Luftlinie; sonst fehlt der Knopf ganz.
+- **Zugmodelle zur Wahl** (Michael, 2026-10-08: «verschiedene Zugmodelle … wie zum Beispiel ein Feuerwehrzug»):
+  bei der Probefahrt in der Brille Pendelzug (heute), kurzer Regionalzug, langer Güterzug, Feuerwehrzug (Lösch- und
+  Rettungszug), später Bergbahn. Wahl auf der Seite neben «In der Brille ansehen», Pendelzug vorgewählt, letzte Wahl
+  gemerkt. Nach Bahn eingegrenzt (kein langer Güterzug bei RhB, MGB, MOB, zb), Länge auf kurzen Strecken begrenzt.
+  Kein echtes Vorbild, keine Marken, «kein bestimmter Zugtyp» bleibt; keine erfundene Geschwindigkeit je Modell,
+  höchstens ein eigenes gerechnetes Geräusch.
+- **Hinweis «Modell, kein Abbild»** erledigt 2026-10-08: vor jedem «In der Brille ansehen» ein Kasten mit rotem Rand,
+  was in der Brille nicht der Wirklichkeit entspricht; dazu eine rote Zeile auf der Tafel in der Brille.
 - **3D bei hohem Tempo** erledigt 2026-10-08: Fenster 7 km vor dem Zug, neu erst nach 12 km, das nächste wird
   vorausgeladen.
 

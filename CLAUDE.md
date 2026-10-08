@@ -163,7 +163,8 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              skalieren und drehen, Thumbstick dreht und hebt, Greiftaste setzt zurück; Probefahrt: der Zug wartet am Anfang, A startet, B hält
              an, X halbiert das Tempo (bis ¼), Y verdoppelt es (bis 16-fach); Knopf «Zuggeräusch» wie beim Fahren;
              mit Passthrough, wo die Brille es kann; erscheint nur, wo der Browser WebXR meldet;
-             ein Knopf «In der Brille ansehen», der ganze Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das
+             ein Knopf «In der Brille ansehen», davor ein Kasten «In der Brille: ein Modell zum Anschauen, kein Abbild der
+             Wirklichkeit» (BrilleHinweis), der ganze Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das
              Modell (Zeitraffer, kein Fahrplan); Hinweise in der Brille hängen am Blick, nicht am Modell; beim Betreten eine
              Tafel mit den Tasten und rotem Knopf «Schliessen» (Strahl und Abzug oder A), sie bleibt bis dahin; erst das nächste A startet; am Ziel hält er und zeigt die Knöpfe «Fahrt wiederholen»,
              «Zurückfahren» (Steuerwagen voraus) und «Fahrt beenden», mit dem Strahl oder A, X, B; bis zum ersten A zeigt ein wippender roter Pfeil von oben auf die Lok;

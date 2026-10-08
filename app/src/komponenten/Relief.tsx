@@ -247,7 +247,8 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                  probe={probe} probeStelle={probeStelle} className="mt-3 w-full overflow-hidden rounded-lg" />
           {brilleMoeglich ? (
             <div className="mt-3">
-              <div className="flex flex-wrap gap-2">
+              <BrilleHinweis />
+              <div className="mt-3 flex flex-wrap gap-2">
                 <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
                   In der Brille ansehen
                 </button>
@@ -442,6 +443,7 @@ export function BrilleFahrt({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: F
         <>
           <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.linie} brille={brille}
                  probe={probe} probeStelle={probeStelle} className="mt-3 w-full overflow-hidden rounded-lg" />
+          <BrilleHinweis />
           <div className="mt-3 flex flex-wrap gap-2">
             <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white" onClick={inBrille}>
               In der Brille ansehen
@@ -461,6 +463,24 @@ export function BrilleFahrt({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: F
           </p>
         </>
       )}
+    </div>
+  )
+}
+
+/** Vor jedem Knopf zur Brille, gut sichtbar (Michael, 2026-10-08: «Proportionen, Gleisdesign … grenzt diesen Teil mit
+ *  der VR-Brille vom Rest von Taktland ab, wo sonst alles realitätsgetreu ist») */
+function BrilleHinweis() {
+  return (
+    <div className="mt-3 border-l-4 border-sbb-red bg-sbb-milk p-3 text-sm dark:bg-sbb-charcoal">
+      <p className="font-bold">In der Brille: ein Modell zum Anschauen, kein Abbild der Wirklichkeit</p>
+      <p className="mt-1">Anders als im übrigen Taktland stimmt hier nicht alles mit der Wirklichkeit überein:</p>
+      <ul className="mt-1 list-disc space-y-0.5 pl-5">
+        <li>Der Zug ist nicht massstäblich und kein bestimmter Zugtyp.</li>
+        <li>Die Strecke ist eine gezeichnete Linie, keine Gleise; Bahnhofsmasten und Schilder sind nicht massstäblich.</li>
+        <li>Die Höhe der Gleise steht in keiner Quelle: Die Linie folgt dem Gelände, Tunnel und Brücken gerade zwischen ihren Enden.</li>
+        <li>Gelände und Luftbild sind vereinfacht und gemittelt.</li>
+        <li>Die Fahrt ist ein Zeitraffer, kein Fahrplan; das Zuggeräusch ist gerechnet.</li>
+      </ul>
     </div>
   )
 }
@@ -1532,10 +1552,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       // mitten im Blick; sie bleibt, bis man sie mit «Schliessen» (Strahl und Abzug) oder A schliesst (Michael, 2026-10-08:
       // «manuell schliessen … per Schliessen-Button»); erst das nächste A startet die Probefahrt
       const tafelLeinwand = document.createElement('canvas')
-      tafelLeinwand.width = 1024; tafelLeinwand.height = 640
+      tafelLeinwand.width = 1024; tafelLeinwand.height = 720
       {
         const g = tafelLeinwand.getContext('2d')!
-        g.fillStyle = 'rgba(255,255,255,0.94)'; g.beginPath(); g.roundRect(0, 0, 1024, 640, 24); g.fill()
+        g.fillStyle = 'rgba(255,255,255,0.94)'; g.beginPath(); g.roundRect(0, 0, 1024, 720, 24); g.fill()
         g.fillStyle = '#212121'; g.font = 'bold 48px Helvetica, Arial, sans-serif'
         g.fillText('Tasten', 48, 84)
         const zeilen: Array<[string, string]> = [
@@ -1549,12 +1569,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           g.font = '38px Helvetica, Arial, sans-serif'; g.fillStyle = '#212121'; g.fillText(was, 340, y)
         })
         g.font = '32px Helvetica, Arial, sans-serif'; g.fillStyle = '#767676'
-        g.fillText('A und B rechts, X und Y links.', 48, 610)
+        g.fillText('A und B rechts, X und Y links.', 48, 606)
+        // wie auf der Seite davor: hier ist ein Modell, kein Abbild (Michael, 2026-10-08)
+        g.fillStyle = '#a8102e'; g.font = 'bold 32px Helvetica, Arial, sans-serif'
+        g.fillText('Ein Modell, kein Abbild: vieles ist nicht massstäblich.', 48, 672)
       }
       const tafelTextur = new THREE.CanvasTexture(tafelLeinwand)
       tafelTextur.colorSpace = THREE.SRGBColorSpace
       const tafel = new THREE.Group()
-      const tafelFlaeche = new THREE.Mesh(new THREE.PlaneGeometry(0.44, 0.275),
+      const tafelFlaeche = new THREE.Mesh(new THREE.PlaneGeometry(0.44, 0.3094),
         new THREE.MeshBasicMaterial({ map: tafelTextur, transparent: true, depthTest: false }))
       tafelFlaeche.renderOrder = 7
       tafel.add(tafelFlaeche)
@@ -1617,7 +1640,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       ]
       // «Schliessen» unter der Tafel mit den Tasten
       const schliessen = knopfFlaeche('Schliessen', 'A', true)
-      schliessen.position.y = -0.175
+      schliessen.position.y = -0.192
       schliessen.renderOrder = 8
       tafel.add(schliessen)
       titel.position.y = 0.075
