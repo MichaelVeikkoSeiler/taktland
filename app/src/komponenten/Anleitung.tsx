@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import type { BahnhofIndex } from '../typen'
 import { zuklappTon } from '../audio'
 import { tippSchliesst } from '../zuklappen'
+import { useBrilleMoeglich } from '../relief'
 
 /**
  * So funktioniert Taktland, und woher die Daten stammen.
@@ -12,6 +13,8 @@ import { tippSchliesst } from '../zuklappen'
  */
 /** Kein Weg zurück nötig: «Taktland» im Kopf führt zur Startseite */
 export function Anleitung({ index }: { index: BahnhofIndex | null }) {
+  // die Brille nur erwähnen, wo der Browser eine meldet (Michael, 2026-10-08)
+  const xr = useBrilleMoeglich()
   const stand = index ? datum(index.stand) : null
   return (
     <div className="px-4 pb-4">
@@ -181,7 +184,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             «3D» auf der Karte zeigt auf jeder Fahrt und Probefahrt das Gelände rund um den Zug, zum
-            Drehen und Zoomen; mit einer Brille wie der Meta Quest 3 auch die ganze Strecke als Modell auf dem Tisch.
+            Drehen und Zoomen{xr ? '; in der Brille auch die ganze Strecke als Modell auf dem Tisch' : ''}.
             Unter «Probefahren» stehen dazu bekannte Bergstrecken, als Probefahrt und als Ganzes. Die
             Höhe der Gleise steht in keiner Quelle: Der Weg liegt auf dem Gelände, in Tunneln und auf
             Brücken gerade zwischen den Enden.

@@ -456,6 +456,12 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
 
 ## Brille (Michael, 2026-10-06: «für die Merkliste»)
 
+- **Neue Auftaktbilder generieren** (Michael, 2026-10-08: «bitte nimm das in die Merkliste»): die Bilder zum
+  Auftakt der Seiten neu machen, passend zum heutigen Stand (3D, Brille, Bergstrecken unter Probefahrten).
+- **Kürzerer Weg in die Brille** erledigt 2026-10-08: mit Brille steht bei jeder Richtung einer Probefahrt und
+  einer Bergstrecke neben «Abspielen» ein roter Knopf «In der Brille»; er öffnet gleich das Modell der Strecke,
+  es bleibt der Tipp auf «In der Brille ansehen» (den verlangt der Browser). Ohne Brille kein Hinweis darauf.
+
 - **Brille beim Fahren in der ganzen Schweiz** (Michael, 2026-10-07: «Funktioniert die Brille überall?»,
   dann «Auf die Merkliste»): heute gibt es «In der Brille ansehen» nur auf den Seiten der Bergstrecken. Erledigt 2026-10-08 als
   «Strecke in der Brille» (ganze Strecke als Modell, Band von 5 km).

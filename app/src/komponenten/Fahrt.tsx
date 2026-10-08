@@ -12,7 +12,7 @@ import { Stern } from './Stern'
 import Wischen from './Wischen'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
-import { dreiDVormerken, reliefListe } from '../relief'
+import { brilleVormerken, dreiDVormerken, reliefListe, useBrilleMoeglich } from '../relief'
 
 type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
@@ -47,6 +47,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
   const blattBereit = blatt.von !== null && blatt.nach !== null && blatt.von !== blatt.nach
   // welche Probefahrt gerade ihre beiden Richtungen zeigt
   const [richtungWahl, setRichtungWahl] = useState<string | null>(null)
+  const xr = useBrilleMoeglich()
   const [ordnen, setOrdnen] = useState(false)
   const [neueProbe, setNeueProbe] = useState<{ von: number | null; nach: number | null; ueber: number | null } | null>(null)
   useEffect(() => {
@@ -225,12 +226,21 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                     {offen && (
                       <div className="grid gap-2 px-3 pb-3">
                         {[f, { von: f.nach, nach: f.von, ueber: f.ueber }].map((r) => (
-                          <button key={`${r.von}-${r.nach}`} type="button" onClick={() => starten(r, true)}
-                                  className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
+                          <div key={`${r.von}-${r.nach}`} className="flex gap-2">
+                          <button type="button" onClick={() => starten(r, true)}
+                                  className="flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
                                              text-left hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
                             <span className="min-w-0 font-medium">{fahrtText(r)}</span>
                             <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
                           </button>
+                          {xr && (
+                            <button type="button" onClick={() => { brilleVormerken(); starten(r, true) }}
+                                    aria-label={`${fahrtText(r)} in der Brille`}
+                                    className="flex min-h-11 shrink-0 items-center rounded-lg bg-sbb-red px-3 py-2 text-sm font-bold text-white">
+                              In der Brille
+                            </button>
+                          )}
+                          </div>
                         ))}
                       </div>
                     )}
@@ -500,6 +510,7 @@ function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string
   const [liste, setListe] = useState<Awaited<ReturnType<typeof reliefListe>> | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const [offen, setOffen] = useState<string | null>(null)
+  const xr = useBrilleMoeglich()
   useEffect(() => { reliefListe().then(setListe).catch((e: Error) => setFehler(e.message)) }, [])
   const text = (w: StreckenWahl) => `${name(w.von)} → ${name(w.nach)}${w.ueber ? ` (über ${name(w.ueber)})` : ''}`
   return (
@@ -533,12 +544,21 @@ function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string
                 {auf && (
                   <div className="grid gap-2 px-3 pb-3">
                     {[p, { von: p.nach, nach: p.von, ueber: p.ueber }].map((w) => (
-                      <button key={`${w.von}-${w.nach}`} type="button" onClick={() => starten(w)}
-                              className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
+                      <div key={`${w.von}-${w.nach}`} className="flex gap-2">
+                      <button type="button" onClick={() => starten(w)}
+                              className="flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
                                          text-left hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
                         <span className="min-w-0 font-medium">{text(w)}</span>
                         <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
                       </button>
+                      {xr && (
+                        <button type="button" onClick={() => { brilleVormerken(); starten(w) }}
+                                aria-label={`${text(w)} in der Brille`}
+                                className="flex min-h-11 shrink-0 items-center rounded-lg bg-sbb-red px-3 py-2 text-sm font-bold text-white">
+                          In der Brille
+                        </button>
+                      )}
+                      </div>
                     ))}
                     <a href={`#/fahrt/3d/${r.name}`}
                        className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2

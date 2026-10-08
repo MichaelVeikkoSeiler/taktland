@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { holen } from './daten'
 
 /**
@@ -33,6 +34,25 @@ let dreiDVorgemerkt = false
 export function dreiDVormerken() { dreiDVorgemerkt = true }
 export const dreiDGemerkt = () => dreiDVorgemerkt
 export function dreiDVerbrauchen() { dreiDVorgemerkt = false }
+
+/** «In der Brille» bei einer Probefahrt (Michael, 2026-10-08: «direkter … intuitiver»): gleich in 3D und dort gleich
+ *  das Modell der ganzen Strecke für die Brille, ohne Umweg über «3D» und «Strecke in der Brille» */
+let brilleVorgemerkt = false
+export function brilleVormerken() { brilleVorgemerkt = true; dreiDVorgemerkt = true }
+export const brilleGemerkt = () => brilleVorgemerkt
+export function brilleVerbrauchen() { brilleVorgemerkt = false }
+
+/** ob der Browser eine Brille (WebXR) meldet; nur dann gibt es Knöpfe für die Brille (Michael, 2026-10-08) */
+export function useBrilleMoeglich() {
+  const [ja, setJa] = useState(false)
+  useEffect(() => {
+    const xr = navigator.xr
+    if (!xr) return
+    void Promise.all([xr.isSessionSupported('immersive-ar').catch(() => false), xr.isSessionSupported('immersive-vr').catch(() => false)])
+      .then(([ar, vr]) => setJa(ar || vr))
+  }, [])
+  return ja
+}
 
 /** Alle Reliefs, in der Reihenfolge der Pipeline */
 export async function reliefListe() {

@@ -7,7 +7,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, streckenLaden } from '../daten'
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
-import { lv95 } from '../relief'
+import { brilleGemerkt, brilleVerbrauchen, lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { ausschnittLaden, fensterLaden, KEINE_HOEHE, type Luftbild, luftbildLaden } from '../gelaende'
 import { Zurueck } from './Zurueck'
@@ -212,7 +212,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   const weg = useMemo(() => (daten ? wegDerLinie(daten.r) : null), [daten])
   // in der Brille (Michael, 2026-10-06: «Quest 3»): nur, wo der Browser WebXR kann
   const brille = useRef<(() => Promise<void>) | null>(null)
-  const [brilleMoeglich, setBrilleMoeglich] = useState(false)
+  const brilleMoeglich = useBrilleMoeglich()
   const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
   // Probefahrt in der Brille (Michael, 2026-10-06: «Fährt der Zug auf der Brille?»): Startzeit oder null
   const probe = useRef<number | null>(null)
@@ -226,12 +226,6 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
     probe.current = performance.now()
     brille.current?.().catch((e: Error) => setBrilleFehler(e.message))
   }
-  useEffect(() => {
-    const xr = navigator.xr
-    if (!xr) return
-    void Promise.all([xr.isSessionSupported('immersive-ar').catch(() => false), xr.isSessionSupported('immersive-vr').catch(() => false)])
-      .then(([ar, vr]) => setBrilleMoeglich(ar || vr))
-  }, [])
 
   return (
     <div className="px-4 pb-4">
@@ -269,11 +263,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
               </p>
               {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
             </div>
-          ) : (
-            <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-              In einer Brille mit WebXR, etwa der Meta Quest 3, steht hier «In der Brille ansehen».
-            </p>
-          )}
+          ) : null}
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der rechten Maustaste.
             Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
@@ -347,17 +337,6 @@ function GeraeuschKnopf({ audio, className }: { audio: ReturnType<typeof useAudi
   )
 }
 
-/** ob der Browser eine Brille (WebXR) meldet */
-function useBrilleMoeglich() {
-  const [ja, setJa] = useState(false)
-  useEffect(() => {
-    const xr = navigator.xr
-    if (!xr) return
-    void Promise.all([xr.isSessionSupported('immersive-ar').catch(() => false), xr.isSessionSupported('immersive-vr').catch(() => false)])
-      .then(([ar, vr]) => setJa(ar || vr))
-  }, [])
-  return ja
-}
 
 /** im Modell der ganzen Strecke nur ein Band von so vielen Metern links und rechts (Michael, 2026-10-08: «5 km
  *  je Seite»); höchstens so viele Felder darin, sonst wird es gröber */
@@ -627,7 +606,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   const bauwerke = useMemo(() => objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
     .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })), [objekte])
   // die ganze Strecke als Modell für die Brille (Michael, 2026-10-08), nur wo der Browser WebXR kann
-  const [ganze, setGanze] = useState(false)
+  const [ganze, setGanze] = useState(brilleGemerkt)
+  useEffect(() => brilleVerbrauchen(), [])
   const xr = useBrilleMoeglich()
   const audio = useZuggeraeusch(zug, ende, bauwerke, !ganze)
   // «Hinter den Zug»: die Kamera wieder schräg hinter den Zug wie am Anfang
@@ -686,7 +666,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         {faktor === 2 && ' Höhe 2-fach überhöht.'}
       </p>
       {xr && (
-        <button type="button" className="mt-2 rounded-lg border border-sbb-cloud px-4 py-2 text-sm font-bold dark:border-sbb-iron"
+        <button type="button" className="mt-2 rounded-lg bg-sbb-red px-4 py-2 text-sm font-bold text-white"
                 onClick={() => setGanze(true)}>
           Strecke in der Brille
         </button>
