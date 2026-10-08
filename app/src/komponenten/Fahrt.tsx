@@ -12,7 +12,7 @@ import { Stern } from './Stern'
 import Wischen from './Wischen'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
-import { brilleVormerken, dreiDVormerken, reliefListe, useBrilleMoeglich } from '../relief'
+import { BRILLE_LUFTLINIE_HOECHSTENS_M, brilleVormerken, dreiDVormerken, reliefListe, useBrilleMoeglich } from '../relief'
 
 type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
@@ -58,6 +58,14 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
 
   const bahnhof = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [b.uic, b])), [index])
   const zielNamen = useMemo(() => namenFuerFahrt(index), [index])
+  // «In der Brille» nur für kurze eigene Probefahrten (Luftlinie über alle Halte), lange laden zu langsam
+  const kurzFuerBrille = useCallback((r: StreckenWahl) => {
+    const halte = [r.von, r.ueber, r.nach].filter((u): u is number => u !== null).map((u) => bahnhof.get(u))
+    if (halte.some((b) => b?.lat == null || b?.lon == null)) return false
+    let m = 0
+    for (let i = 1; i < halte.length; i++) m += abstandM({ lat: halte[i - 1]!.lat!, lon: halte[i - 1]!.lon! }, halte[i]!.lat!, halte[i]!.lon!)
+    return m <= BRILLE_LUFTLINIE_HOECHSTENS_M
+  }, [bahnhof])
   const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? zielNamen.get(uic) ?? String(uic) : ''),
                            [bahnhof, zielNamen])
   // nur Bahnhöfe, zu denen die Seite «Strecke» Wege kennt
@@ -233,7 +241,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                             <span className="min-w-0 font-medium">{fahrtText(r)}</span>
                             <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
                           </button>
-                          {xr && (
+                          {xr && kurzFuerBrille(r) && (
                             <button type="button" onClick={() => { brilleVormerken(); starten(r, true) }}
                                     aria-label={`${fahrtText(r)} in der Brille`}
                                     className="flex min-h-11 shrink-0 items-center rounded-lg bg-sbb-red px-3 py-2 text-sm font-bold text-white">

@@ -462,6 +462,8 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
   einer Bergstrecke neben «Abspielen» ein roter Knopf «In der Brille»; er öffnet gleich das Modell der Strecke,
   es bleibt der Tipp auf «In der Brille ansehen» (den verlangt der Browser). Ohne Brille kein Hinweis darauf.
   Dazu in der Fahrtanzeige ein roter Reiter «Brille» rechts von «3D» statt des Knopfs «Strecke in der Brille».
+- **Brille nur auf kurzen Strecken** (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: Kacheln zu langsam): bis
+  170 km Weg, bei eigenen Probefahrten bis 120 km Luftlinie; sonst fehlt der Knopf ganz.
 
 - **Brille beim Fahren in der ganzen Schweiz** (Michael, 2026-10-07: «Funktioniert die Brille überall?»,
   dann «Auf die Merkliste»): heute gibt es «In der Brille ansehen» nur auf den Seiten der Bergstrecken. Erledigt 2026-10-08 als

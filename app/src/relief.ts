@@ -42,6 +42,12 @@ export function brilleVormerken() { brilleVorgemerkt = true; dreiDVorgemerkt = t
 export const brilleGemerkt = () => brilleVorgemerkt
 export function brilleVerbrauchen() { brilleVorgemerkt = false }
 
+/** Die Brille nur für Strecken bis so lang (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: «Die Kacheln
+ *  wurden nicht schnell genug nachgebaut»); die längste Bergstrecke, Lausanne – Solothurn, hat gut 160 km */
+export const BRILLE_HOECHSTENS_M = 170_000
+/** bei den eigenen Probefahrten ist der Weg noch nicht gerechnet: dort zählt die Luftlinie über alle Halte */
+export const BRILLE_LUFTLINIE_HOECHSTENS_M = 120_000
+
 /** ob der Browser eine Brille (WebXR) meldet; nur dann gibt es Knöpfe für die Brille (Michael, 2026-10-08) */
 export function useBrilleMoeglich() {
   const [ja, setJa] = useState(false)

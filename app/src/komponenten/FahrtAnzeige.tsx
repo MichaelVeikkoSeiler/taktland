@@ -10,7 +10,7 @@ import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlas
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
-import { brilleGemerkt, brilleVerbrauchen, dreiDGemerkt, dreiDVerbrauchen, useBrilleMoeglich } from '../relief'
+import { BRILLE_HOECHSTENS_M, brilleGemerkt, brilleVerbrauchen, dreiDGemerkt, dreiDVerbrauchen, useBrilleMoeglich } from '../relief'
 import { gelaendeMoeglich } from '../gelaende'
 
 // three.js nur für die Ansicht «3D», erst dort geladen
@@ -348,7 +348,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   useEffect(() => dreiDVerbrauchen(), [])
   // Reiter «Brille» rechts von «3D», nur wo der Browser WebXR meldet (Michael, 2026-10-08): die ganze Strecke als
   // Modell für die Brille; «In der Brille» bei den Probefahrten öffnet ihn gleich
-  const xr = useBrilleMoeglich()
+  // auf langen Strecken lädt das Gelände zu langsam: dort gar kein Reiter «Brille»
+  const xr = useBrilleMoeglich() && wegEnde(fahrweg) <= BRILLE_HOECHSTENS_M
   const [brille, setBrille] = useState(brilleGemerkt)
   useEffect(() => brilleVerbrauchen(), [])
   // eigener Zoom und Verschiebung, die das Nachführen alle halbe Sekunde
