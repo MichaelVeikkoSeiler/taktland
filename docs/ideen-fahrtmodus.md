@@ -464,6 +464,8 @@ gerechneten Grössen (keine Summe der Tunnellängen), Lücken benennen.
   Dazu in der Fahrtanzeige ein roter Reiter «Brille» rechts von «3D» statt des Knopfs «Strecke in der Brille».
 - **Brille nur auf kurzen Strecken** (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: Kacheln zu langsam): bis
   170 km Weg, bei eigenen Probefahrten bis 120 km Luftlinie; sonst fehlt der Knopf ganz.
+- **3D bei hohem Tempo** erledigt 2026-10-08: Fenster 7 km vor dem Zug, neu erst nach 12 km, das nächste wird
+  vorausgeladen.
 
 - **Brille beim Fahren in der ganzen Schweiz** (Michael, 2026-10-07: «Funktioniert die Brille überall?»,
   dann «Auf die Merkliste»): heute gibt es «In der Brille ansehen» nur auf den Seiten der Bergstrecken. Erledigt 2026-10-08 als

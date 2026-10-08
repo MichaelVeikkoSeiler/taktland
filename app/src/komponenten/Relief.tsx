@@ -9,7 +9,7 @@ import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, Sehen
 import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
-import { ausschnittLaden, fensterLaden, KEINE_HOEHE, type Luftbild, luftbildLaden } from '../gelaende'
+import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -572,7 +572,10 @@ function wegDerFahrt(r: Relief, fahrweg: Fahrweg, objekte: FahrObjekt[]): Weg {
 
 /** Seite des Ausschnitts beim Fahren, und wie weit der Zug von seiner Mitte weg sein darf */
 const FENSTER_M = 30_000
-const WANDERN_M = 8_000
+const WANDERN_M = 12_000
+/** die Mitte des Fensters liegt so weit vor dem Zug: hinter ihm sieht man ohnehin wenig, und er bleibt länger im
+ *  selben Fenster, bevor es neu gebaut wird (Michael, 2026-10-08: bei hohem Tempo «nicht schnell genug nachgebaut») */
+const VORLAUF_M = 7_000
 
 /** Stelle auf dem Weg in Landeskoordinaten */
 function lageAufWeg(fahrweg: Fahrweg, s: number): [number, number] {
@@ -606,10 +609,15 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   // «Hinter den Zug»: die Kamera wieder schräg hinter den Zug wie am Anfang
   const hinterZug = useRef(false)
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
+  const mitteS = useRef(0)
   useEffect(() => {
-    const [e, n] = lageAufWeg(fahrweg, sJetzt ?? 0)
-    if (!mitte || Math.hypot(e - mitte[0], n - mitte[1]) > WANDERN_M) setMitte([Math.round(e / 1000) * 1000, Math.round(n / 1000) * 1000])
-  }, [fahrweg, sJetzt, mitte])
+    const s = Math.min(ende, (sJetzt ?? 0) + VORLAUF_M)
+    const [e, n] = lageAufWeg(fahrweg, s)
+    if (!mitte || Math.hypot(e - mitte[0], n - mitte[1]) > WANDERN_M) {
+      mitteS.current = s
+      setMitte([Math.round(e / 1000) * 1000, Math.round(n / 1000) * 1000])
+    }
+  }, [fahrweg, sJetzt, mitte, ende])
   useEffect(() => {
     if (!mitte) return
     let ab = false
@@ -626,6 +634,11 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
           const lage = lv95(g.lage[0], g.lage[1])
           return drin(lage) ? [{ name: g.name, hoehe_m: g.hoehe_m, lage }] : []
         })
+        // das nächste Fenster schon laden, solange der Zug in diesem fährt
+        if (mitteS.current < ende) {
+          const [e, n] = lageAufWeg(fahrweg, Math.min(ende, mitteS.current + WANDERN_M))
+          void fensterVorladen(e, n, FENSTER_M).catch(() => {})
+        }
         setDaten({
           r: { titel: 'Gelände', linie: '', linie_name: '', von_km: 0, bis_km: 0, datenstand: '', quellen: [f.quelle],
                raster: f.raster, weg: [], bahnhoefe, tunnel: [], bruecken: [], gipfel },
@@ -634,7 +647,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
       })
       .catch((e: Error) => { if (!ab) setFehler(e.message) })
     return () => { ab = true }
-  }, [mitte, fahrweg, objekte])
+  }, [mitte, fahrweg, objekte, ende])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
   if (fehler) return <div className={className}><Ladefehler was="Das Gelände konnte nicht geladen werden." fehler={fehler} /></div>
   if (!daten || !weg) return <div className={`${className} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>

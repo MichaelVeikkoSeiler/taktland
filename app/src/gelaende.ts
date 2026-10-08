@@ -44,13 +44,32 @@ function kachelLaden(name: string, zellen: number) {
 
 export interface Raster { ost: number; nord: number; m: number; breite: number; hoehe: number }
 
-/** Ein Ausschnitt von seite_m auf seite_m um eine Mitte (Landeskoordinaten), beim Fahren */
-export async function fensterLaden(mitteE: number, mitteN: number, seite_m: number) {
+async function fensterRaster(mitteE: number, mitteN: number, seite_m: number): Promise<Raster> {
   const { raster_m: m } = await gelaendeIndex()
   const breite = Math.round(seite_m / m)
-  return ausschnittLaden({
-    ost: Math.floor((mitteE - seite_m / 2) / m) * m, nord: Math.ceil((mitteN + seite_m / 2) / m) * m, m, breite, hoehe: breite,
-  })
+  return { ost: Math.floor((mitteE - seite_m / 2) / m) * m, nord: Math.ceil((mitteN + seite_m / 2) / m) * m, m, breite, hoehe: breite }
+}
+
+/** Ein Ausschnitt von seite_m auf seite_m um eine Mitte (Landeskoordinaten), beim Fahren */
+export async function fensterLaden(mitteE: number, mitteN: number, seite_m: number) {
+  return ausschnittLaden(await fensterRaster(mitteE, mitteN, seite_m))
+}
+
+/** Die Kacheln und Luftbilder des nächsten Fensters schon laden, solange der Zug noch im jetzigen fährt (Michael,
+ *  2026-10-08: bei hohem Tempo «nicht schnell genug nachgebaut»); sie bleiben im Vorrat, das Fenster selbst ist
+ *  dann gleich da */
+export async function fensterVorladen(mitteE: number, mitteN: number, seite_m: number) {
+  const raster = await fensterRaster(mitteE, mitteN, seite_m)
+  const ix = await gelaendeIndex()
+  const { kachel_m: k, zellen } = ix
+  const vorhanden = new Set(ix.kacheln)
+  const laden: Array<Promise<unknown>> = [luftbildLaden(raster)]
+  for (let ex = Math.floor(raster.ost / k); ex <= Math.floor((raster.ost + raster.breite * raster.m - 1) / k); ex++) {
+    for (let ny = Math.floor((raster.nord - raster.hoehe * raster.m) / k); ny <= Math.floor((raster.nord - 1) / k); ny++) {
+      if (vorhanden.has(`${ex}_${ny}`)) laden.push(kachelLaden(`${ex}_${ny}`, zellen))
+    }
+  }
+  await Promise.all(laden)
 }
 
 /** Ein Ausschnitt im 50-m-Raster der Kacheln, aus ihnen zusammengesetzt (auch die Bergstrecken,
