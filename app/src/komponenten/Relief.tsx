@@ -484,8 +484,9 @@ function ModellKnoepfe({ fahrknopf, audio, inBrille, brilleFehler }: {
       {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
       {!xr && ohne && (
         <p className="mt-2 text-sm font-medium" role="status">
-          Auf diesem Gerät ist keine VR-Brille zu finden. Mit einer VR-Brille wie der Meta Quest 3 steht das Modell vor dir auf dem Tisch, und du lässt den Zug mit den
-          Controllern fahren. Öffne dafür Taktland im Browser der Brille.
+          Auf diesem Gerät ist keine VR-Brille zu finden. Mit einer VR-Brille wie der Meta Quest 3 steht das Modell in
+          deinem Raum auf dem Tisch; du siehst deine Umgebung, wo die Brille es kann, und lässt den Zug mit den Controllern
+          fahren. Öffne dafür Taktland im Browser der Brille.
         </p>
       )}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
