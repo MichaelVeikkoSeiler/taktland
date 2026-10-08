@@ -153,7 +153,7 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              410 hintereinander, «teile»: der Weg zählt dann Meter ab Lausanne, nicht die Kilometrierung): der
              Ausschnitt in den Geländekacheln (data/gelaende, keine eigenen Höhen mehr), Linie, Tunnel und Brücken mit Anfang und Ende
              (bei anderen Bahnen Linie aus dem Schienennetz des BAV, Bauwerke aus swissTLM3D ohne Namen),
-             Bahnhöfe, Gipfel; index.json nennt die Bergstrecken für den Reiter «3D» unter Fahren samt Probefahrt (Über hält sie
+             Bahnhöfe, Gipfel; index.json nennt die Bergstrecken für «Probefahren» (Abschnitt Bergstrecken, kein eigener Reiter mehr) samt Probefahrt (Über hält sie
              auf der Bergstrecke)
              (pipeline/build_relief.py); in der App komponenten/Relief.tsx mit three.js, erst dort geladen;
              auf der eigenen Seite «In der Brille ansehen» (WebXR, Quest 3): Modell 1,2 m breit auf Tischhöhe; ein Abzug trägt es, beide

@@ -138,7 +138,6 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
 
       {/* Probefahrten zum Anwählen, Starten, Hinzufügen und Löschen, auf- und
           zuklappbar (Michael, 2026-09-26) */}
-      {teil === '3d' && <DreiDStrecken name={name} starten={(w) => { dreiDVormerken(); starten(w, true) }} />}
 
       {teil === 'probe' && (
         <section>
@@ -284,6 +283,8 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
           )}
         </section>
       )}
+      {/* die Bergstrecken, früher ein eigener Reiter «3D» (Michael, 2026-10-08: jede Probefahrt hat 3D) */}
+      {teil === 'probe' && <DreiDStrecken name={name} starten={(w) => { dreiDVormerken(); starten(w, true) }} />}
 
       {/* Das Fahrtblatt zum Ausdrucken, nur hier (Michael, 2026-09-26) */}
       {teil === 'blatt' && (
@@ -483,8 +484,8 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten }: {
 
 
 
-/** Reiter «3D» (Michael, 2026-10-06): die Bergstrecken mit eigenem Relief, zum Anschauen und als Probefahrt
- *  in beide Richtungen, wie die gemerkten Probefahrten: erst die Strecke wählen, dann die Richtung */
+/** Die Bergstrecken mit eigenem Relief (Michael, 2026-10-06; seit 2026-10-08 unter «Probefahren» statt eines eigenen
+ *  Reiters), zum Anschauen und als Probefahrt in beide Richtungen: erst die Strecke wählen, dann die Richtung */
 function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string; starten: (w: StreckenWahl) => void }) {
   const [liste, setListe] = useState<Awaited<ReturnType<typeof reliefListe>> | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
@@ -493,10 +494,9 @@ function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string
   const text = (w: StreckenWahl) => `${name(w.von)} → ${name(w.nach)}${w.ueber ? ` (über ${name(w.ueber)})` : ''}`
   return (
     <section>
-      <h1 className="mt-6 text-2xl font-bold tracking-tight">Bergstrecken in 3D</h1>
+      <h2 className="mt-8 text-xl font-bold tracking-tight">Bergstrecken</h2>
       <p className="mt-2 leading-relaxed">
-        Jede Fahrt und Probefahrt lässt sich auf «3D» stellen. Hier stehen bekannte Bergstrecken als Ganzes zum
-        Drehen und Zoomen und als Probefahrt im Zeitraffer, die gleich in 3D beginnt.
+        Bekannte Bergstrecken als Probefahrt, die gleich in 3D beginnt, und als Ganzes zum Drehen und Zoomen.
       </p>
       {fehler && <p className="mt-4 text-sm">Die Liste konnte nicht geladen werden. {fehler}</p>}
       {!liste && !fehler && <p className="mt-4 text-sbb-metal">Wird geladen …</p>}

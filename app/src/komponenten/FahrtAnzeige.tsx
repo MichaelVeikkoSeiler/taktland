@@ -341,7 +341,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const [auswahl, setAuswahl] = useState<Auswahl | null>(null)
   const [nah, setNahRoh] = useState(true)
   // «3D» auf jeder Fahrt aus den Geländekacheln (Michael, 2026-10-06: «alle Strecken optional 3D»);
-  // aus dem Reiter «3D» gleich in 3D
+  // aus den Bergstrecken unter «Probefahren» gleich in 3D
   const relief = gelaendeMoeglich()
   const [dreiD, setDreiD] = useState(dreiDGemerkt)
   useEffect(() => dreiDVerbrauchen(), [])

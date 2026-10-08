@@ -20,12 +20,12 @@ interface ReliefUebersicht {
     name: string; titel: string; linie: string; rahmen: [number, number, number, number]
     /** alle Linien, wenn ein Relief mehrere hintereinander zeigt (Solothurn–Yverdon: 410 und 210) */
     linien?: string[]
-    /** die Probefahrt im Reiter «3D», Über hält sie auf der Bergstrecke */
+    /** die Probefahrt unter «Probefahren», Bergstrecken; Über hält sie auf der Bergstrecke */
     probefahrt: { von: number; nach: number; ueber: number | null }
   }>
 }
 
-/** aus dem Reiter «3D» gestartet: die Karte im Fahrtmodus gleich in 3D zeigen (die Seite «Strecke»
+/** aus den Bergstrecken gestartet: die Karte im Fahrtmodus gleich in 3D zeigen (die Seite «Strecke»
  *  schreibt die Adresse beim Start um, darum hier vorgemerkt und von der ersten Karte verbraucht) */
 let dreiDVorgemerkt = false
 export function dreiDVormerken() { dreiDVorgemerkt = true }

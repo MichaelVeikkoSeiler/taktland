@@ -181,7 +181,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             «3D» auf der Karte zeigt auf jeder Fahrt und Probefahrt das Gelände rund um den Zug, zum
-            Drehen und Zoomen. Unter «3D» stehen bekannte Bergstrecken als Ganzes, mit Probefahrt. Die
+            Drehen und Zoomen; mit einer Brille wie der Meta Quest 3 auch die ganze Strecke als Modell auf dem Tisch.
+            Unter «Probefahren» stehen dazu bekannte Bergstrecken, als Probefahrt und als Ganzes. Die
             Höhe der Gleise steht in keiner Quelle: Der Weg liegt auf dem Gelände, in Tunneln und auf
             Brücken gerade zwischen den Enden.
           </li>

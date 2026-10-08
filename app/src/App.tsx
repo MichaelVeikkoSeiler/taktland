@@ -76,7 +76,8 @@ function seiteAusAdresse(): Seite {
   // Fahren mit drei Unterseiten (Michael, 2026-09-29)
   if (h === '#/fahrt') return { art: 'fahrt', teil: 'neu' }
   if (h === '#/fahrt/probe') return { art: 'fahrt', teil: 'probe' }
-  if (h === '#/fahrt/3d') return { art: 'fahrt', teil: '3d' }
+  // der Reiter «3D» ist seit 2026-10-08 ein Teil von «Probefahren»; alte Links führen dorthin
+  if (h === '#/fahrt/3d') return { art: 'fahrt', teil: 'probe' }
   if (h === '#/fahrt/blatt') return { art: 'fahrt', teil: 'blatt' }
   if (h === '#/ohneziel') return { art: 'ohneziel' }
   if (h === '#/sammelheft') return { art: 'sammelheft' }
@@ -176,7 +177,7 @@ export default function App() {
       <div className="mx-auto max-w-2xl md:max-w-3xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
               fahrt={seite.art === 'fahrt' ? seite.teil : seite.art === 'ohneziel' ? 'neu'
-                : seite.art === 'fahrtblatt' ? 'blatt' : seite.art === 'relief' && seite.ausFahren ? '3d' : null} />
+                : seite.art === 'fahrtblatt' ? 'blatt' : seite.art === 'relief' && seite.ausFahren ? 'probe' : null} />
         <Fortsetzen />
 
         {fehler && (
@@ -218,7 +219,7 @@ export default function App() {
         {seite.art === 'relief' && (
           <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Das Relief wird geladen …</p>}>
             <ReliefSeite key={seite.name} name={seite.name}
-                         zurueck={seite.ausFahren ? { text: 'Alle Bergstrecken', adresse: '#/fahrt/3d' } : undefined} />
+                         zurueck={seite.ausFahren ? { text: 'Alle Bergstrecken', adresse: '#/fahrt/probe' } : undefined} />
           </Suspense>
         )}
         {seite.art === 'linie' && (
