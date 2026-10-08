@@ -44,7 +44,7 @@ type Seite =
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl }
   | { art: 'uebersicht'; liste: UebersichtArt }
-  | { art: 'strecke'; wahl: StreckenWahl; modell?: boolean }
+  | { art: 'strecke'; wahl: StreckenWahl; modell?: boolean; fest?: boolean }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
   | { art: 'objekte'; nr: number; liste: ListenArt; filter: Filter | null; eintrag: number | null }
 
@@ -69,7 +69,8 @@ function seiteAusAdresse(): Seite {
   // die Modellbahn (Michael, 2026-10-08): eigene Strecke, Bergstrecken; die alten Adressen der Reliefs führen dorthin
   if (h === '#/modellbahn') return { art: 'modellbahn' }
   const modellStrecke = /^#\/modellbahn\/strecke(?:\?(.*))?$/.exec(h)
-  if (modellStrecke) return { art: 'strecke', wahl: wahlAusAdresse(modellStrecke[1]), modell: true }
+  // fest=1: eine gemerkte Probefahrt, nur ansehen, nicht ändern (Michael, 2026-10-08)
+  if (modellStrecke) return { art: 'strecke', wahl: wahlAusAdresse(modellStrecke[1]), modell: true, fest: /(^|&)fest=1/.test(modellStrecke[1] ?? '') }
   // #/relief/…: von einer Linienseite her, «Zurück» führt dorthin (Michael, 2026-10-08)
   const relief = /^#\/(modellbahn|relief|fahrt\/3d)\/([a-z]+)$/.exec(h)
   if (relief) return { art: 'relief', name: relief[2], vonLinie: relief[1] === 'relief' }
@@ -220,7 +221,7 @@ export default function App() {
           <Uebersicht key={seite.liste} art={seite.liste} stand={uebersichten[seite.liste]}
                       aendern={(neu) => setUebersichten((u) => ({ ...u, [seite.liste]: neu }))} />
         )}
-        {seite.art === 'strecke' && <Strecke key={seite.modell ? 'modell' : 'strecke'} index={index} wahl={seite.wahl} modell={seite.modell} />}
+        {seite.art === 'strecke' && <Strecke key={seite.modell ? 'modell' : 'strecke'} index={index} wahl={seite.wahl} modell={seite.modell} fest={seite.fest} />}
         {seite.art === 'modellbahn' && <Modellbahn index={index} />}
         {seite.art === 'relief' && (
           <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Das Relief wird geladen …</p>}>

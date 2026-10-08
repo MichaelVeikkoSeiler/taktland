@@ -247,7 +247,6 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
           {(daten.r.teile ?? [daten.r]).map((t) => `Linie ${t.linie} ${t.linie_name}, Kilometer ${t.von_km.toLocaleString('de-CH')} bis ${t.bis_km.toLocaleString('de-CH')}`).join('; dann ')}
         </p>
       )}
-      <ModellHinweis />
       {fehler && <Ladefehler className="mt-6" was="Das Relief konnte nicht geladen werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-6 text-sbb-metal">Das Relief wird geladen …</p>}
       {daten && weg && (
@@ -255,6 +254,8 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
           <div className="mt-4"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
           <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                  probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} className="mt-3 w-full overflow-hidden rounded-lg" />
+          {/* erst das Modell, dann der Hinweis, dann die Knöpfe (Michael, 2026-10-08: «Karte soll weiter oben sein») */}
+          <ModellHinweis />
           <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
@@ -428,13 +429,14 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
   const feldM = daten?.r.raster.m
   return (
     <div>
-      <ModellHinweis />
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       {!daten && !fehler && <p className="mt-3 text-sm text-sbb-metal">Das Gelände entlang der ganzen Strecke wird geladen …</p>}
       {daten && weg && (
         <>
           <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                  probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} className="mt-3 w-full overflow-hidden rounded-lg" />
+          {/* erst das Modell, dann der Hinweis, dann die Knöpfe (Michael, 2026-10-08: «Karte soll weiter oben sein») */}
+          <ModellHinweis />
           <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
             Die ganze Strecke als Modell, mit einem Band von {BAND_M / 1000} km links und rechts der Strecke; was weiter weg

@@ -208,7 +208,9 @@ function laengeText(m: number) {
 }
 
 /** modell: die Seite «Eigene Strecke» der Modellbahn (Michael, 2026-10-08): dieselbe Wahl, dann das Modell statt der Fahrt */
-export function Strecke({ index, wahl, modell = false }: { index: BahnhofIndex | null; wahl: StreckenWahl; modell?: boolean }) {
+/** fest: eine gemerkte Probefahrt in der Modellbahn VR; Start, Ziel und Über stehen da, lassen sich aber nicht ändern,
+ *  und das Modell steht gleich oben (Michael, 2026-10-08: «ohne Editierbarkeit … Karte weiter oben») */
+export function Strecke({ index, wahl, modell = false, fest = false }: { index: BahnhofIndex | null; wahl: StreckenWahl; modell?: boolean; fest?: boolean }) {
   const adresse = (w: StreckenWahl) => (modell ? streckenAdresse(w).replace('#/strecke', '#/modellbahn/strecke') : streckenAdresse(w))
   const [netz, setNetz] = useState<StreckenNetz | null>(null)
   const [tunnel, setTunnel] = useState<Uebersicht<TunnelEintrag> | null>(null)
@@ -285,7 +287,13 @@ export function Strecke({ index, wahl, modell = false }: { index: BahnhofIndex |
 
   return (
     <div className="px-4 pb-4">
-      {modell ? (
+      {modell && fest ? (
+        <>
+          <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn VR" />
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">{name(wahl.von)} → {name(wahl.nach)}</h1>
+          {wahl.ueber && <p className="mt-1 text-sbb-metal dark:text-sbb-storm">über {name(wahl.ueber)}</p>}
+        </>
+      ) : modell ? (
         <>
           <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn VR" />
           <h1 className="mt-4 text-2xl font-bold tracking-tight">Eigene Strecke als Modell</h1>
@@ -304,7 +312,7 @@ export function Strecke({ index, wahl, modell = false }: { index: BahnhofIndex |
         </>
       )}
 
-      <div className="mt-6 space-y-3">
+      {!fest && <div className="mt-6 space-y-3">
         <BahnhofFeld bezeichnung="Von" wert={wahl.von} bahnhoefe={alle} name={name}
                      aendern={(u) => waehlen({ von: u })} />
         <BahnhofLinien b={wahl.von ? bahnhof.get(wahl.von) : undefined} verzeichnis={verzeichnis} />
@@ -324,7 +332,7 @@ export function Strecke({ index, wahl, modell = false }: { index: BahnhofIndex |
           </button>
         )}
         {netz && <BahnenWahl netz={netz} />}
-      </div>
+      </div>}
 
       {fehler && <Ladefehler className="mt-6" was="Das Netz konnte nicht geladen werden." fehler={fehler} />}
       {!netz && !fehler && <p className="mt-6 text-sbb-metal">Wird geladen …</p>}
@@ -369,17 +377,18 @@ export function Strecke({ index, wahl, modell = false }: { index: BahnhofIndex |
         <Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}-${wahl.weg?.join('.')}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
                   brueckenIds={ergebnis.bruecken} tunnel={tunnel} bruecken={bruecken}
                   bahnhof={bahnhof} alleBruecken={alleBruecken} verzeichnis={verzeichnis}
-                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} />
+                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} fest={fest} />
       )}
     </div>
   )
 }
 
 function Ergebnis({
-  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl, modell,
+  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl, modell, fest,
 }: {
   wahl: StreckenWahl
   modell: boolean
+  fest: boolean
   netz: StreckenNetz
   weg: Weg
   tunnelIds: string[]
@@ -669,7 +678,7 @@ function Ergebnis({
 
   if (modell) {
     return (
-      <ModellAusWeg titel={titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
+      <ModellAusWeg titel={fest ? null : titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
                     bauen={() => void fahrtStarten(true, false, true)} />
     )
   }
@@ -748,7 +757,7 @@ function Ergebnis({
             </p>
             {/* derselbe Weg als Modell in der Modellbahn (Michael, 2026-10-08) */}
             {!wahl.weg && wahl.von && wahl.nach && (
-              <a href={streckenAdresse(wahl).replace('#/strecke', '#/modellbahn/strecke')}
+              <a href={`${streckenAdresse(wahl).replace('#/strecke', '#/modellbahn/strecke')}&fest=1`}
                  className="mt-3 flex items-center gap-2 text-sm font-medium underline underline-offset-2">
                 Als Modell ansehen (Spiele, Modellbahn VR, bis {MODELL_HOECHSTENS_M / 1000} km)
                 <span className="pfeil" aria-hidden="true">→</span>
@@ -936,15 +945,16 @@ function Ergebnis({
 /** Die Linien des Wegs, verlinkt, wo die Linie in Taktland eine Seite hat */
 /** Die eigene Strecke der Modellbahn: gleich nach der Wahl bauen; bis etwa 170 km, länger lädt das Gelände zu langsam */
 function ModellAusWeg({ titel, laedt, fehler, fahrweg, bauen }: {
-  titel: string; laedt: boolean; fehler: string | null; fahrweg: Fahrweg | null; bauen: () => void
+  /** null: der Titel steht schon oben (gemerkte Probefahrt) */
+  titel: string | null; laedt: boolean; fehler: string | null; fahrweg: Fahrweg | null; bauen: () => void
 }) {
   // einmal je Weg (die Seite gibt Ergebnis je Wahl einen eigenen Schlüssel)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { bauen() }, [])
   const laenge = fahrweg ? wegEnde(fahrweg) : null
   return (
-    <section className="mt-8">
-      <h2 className="text-xl font-bold tracking-tight">{titel}</h2>
+    <section className={titel ? 'mt-8' : 'mt-2'}>
+      {titel && <h2 className="text-xl font-bold tracking-tight">{titel}</h2>}
       {(laedt || (!fahrweg && !fehler)) && <p className="mt-2 text-sm text-sbb-metal">Der Weg wird gebaut …</p>}
       {fehler && <p className="mt-2 text-sm">Das Modell konnte nicht gebaut werden. {fehler}</p>}
       {fahrweg && laenge !== null && laenge > MODELL_HOECHSTENS_M && (
