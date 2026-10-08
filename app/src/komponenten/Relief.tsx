@@ -1426,6 +1426,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const hintergrund = szene.background
     /** in der Brille: je Bild die Tasten auswerten (Sekunden seit dem letzten Bild) */
     let brilleSchritt: ((dt: number) => void) | null = null
+    /** in der Brille: die Tafel mit den Tasten zeigen */
+    let tafelZeigen: (() => void) | null = null
     /** die Probefahrt auf der eigenen Seite: Stelle in Metern, ob sie läuft, Tempo als Vielfaches;
      *  «signal» ist der letzte Start von der Seite (probe), ein neuer beginnt von vorn */
     const fahrt = { s: null as number | null, laeuft: false, tempo: 1, signal: null as number | null }
@@ -1496,6 +1498,38 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         hinweis.visible = true
         hinweisBis = performance.now() + dauer
       }
+      // Tafel mit den Tasten beim Betreten der Brille (Michael, 2026-10-08: «kurze Instruktion … Tastenbelegung»),
+      // mitten im Blick; sie verschwindet mit A oder nach TAFEL_MS
+      const TAFEL_MS = 15000
+      const tafelLeinwand = document.createElement('canvas')
+      tafelLeinwand.width = 1024; tafelLeinwand.height = 640
+      {
+        const g = tafelLeinwand.getContext('2d')!
+        g.fillStyle = 'rgba(255,255,255,0.94)'; g.beginPath(); g.roundRect(0, 0, 1024, 640, 24); g.fill()
+        g.fillStyle = '#212121'; g.font = 'bold 48px Helvetica, Arial, sans-serif'
+        g.fillText('Tasten', 48, 84)
+        const zeilen: Array<[string, string]> = [
+          ['A', 'Probefahrt starten'], ['B', 'anhalten'], ['X / Y', 'schneller / langsamer'],
+          ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],
+          ['Thumbstick', 'drehen, heben, senken'], ['Greiftaste', 'Modell zurück an den Anfang'],
+        ]
+        zeilen.forEach(([taste, was], i) => {
+          const y = 160 + i * 62
+          g.font = 'bold 38px Helvetica, Arial, sans-serif'; g.fillStyle = '#a8102e'; g.fillText(taste, 48, y)
+          g.font = '38px Helvetica, Arial, sans-serif'; g.fillStyle = '#212121'; g.fillText(was, 340, y)
+        })
+        g.font = '32px Helvetica, Arial, sans-serif'; g.fillStyle = '#767676'
+        g.fillText('A und B rechts, X und Y links. Mit A geht es los.', 48, 610)
+      }
+      const tafelTextur = new THREE.CanvasTexture(tafelLeinwand)
+      tafelTextur.colorSpace = THREE.SRGBColorSpace
+      const tafel = new THREE.Sprite(new THREE.SpriteMaterial({ map: tafelTextur, depthTest: false }))
+      tafel.scale.set(0.44, 0.275, 1)
+      tafel.renderOrder = 7
+      tafel.visible = false
+      szene.add(tafel)
+      let tafelBis = 0
+      tafelZeigen = () => { tafel.visible = true; tafelBis = performance.now() + TAFEL_MS }
       brilleSchritt = (dt) => {
         const h = [...haelt]
         if (griff && h.length === 1) {
@@ -1525,7 +1559,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               const schluessel = `${quelle.handedness}${nr}`, an = !!knoepfe[nr]?.pressed
               if (an && !gedrueckt.has(schluessel)) {
                 const rechts = quelle.handedness === 'right'
-                if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true }
+                if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true; tafel.visible = false }
                 else if (rechts) fahrt.laeuft = false
                 else if (nr === 4) fahrt.tempo = Math.min(16, fahrt.tempo * 2)
                 else fahrt.tempo = Math.max(0.25, fahrt.tempo / 2)
@@ -1534,6 +1568,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               if (an) gedrueckt.add(schluessel); else gedrueckt.delete(schluessel)
             }
           }
+        }
+        if (tafel.visible) {
+          // mitten im Blick, 1 m vor den Augen
+          const auge = renderer.xr.getCamera()
+          const vorn = new THREE.Vector3(0, 0.05, -1).normalize().applyQuaternion(auge.getWorldQuaternion(new THREE.Quaternion()))
+          tafel.position.copy(auge.getWorldPosition(new THREE.Vector3())).addScaledVector(vorn, 1)
+          if (performance.now() > tafelBis) tafel.visible = false
         }
         if (hinweis.visible) {
           // am Blick, nicht am Modell: etwas unter der Mitte der Sicht, 0,9 m vor den Augen, so bleibt er im
@@ -1570,7 +1611,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         renderer.xr.setReferenceSpaceType('local-floor')
         await renderer.xr.setSession(sitzung)
         setzen()
-        if (probe?.current != null) hinweisZeigen('A startet die Probefahrt', 5000)
+        if (probe?.current != null) tafelZeigen?.()
         for (const z of zeichen) z.scale.setScalar(1)
         nurBild.visible = false; nurBrille.visible = true; seilBild.visible = false; seilBrille.visible = true
         szene.background = ar ? null : hintergrund

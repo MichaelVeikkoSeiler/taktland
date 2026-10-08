@@ -161,7 +161,8 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              an, X verdoppelt das Tempo (bis 16-fach), Y halbiert es (bis ¼); Knopf «Zuggeräusch» wie beim Fahren;
              mit Passthrough, wo die Brille es kann; erscheint nur, wo der Browser WebXR meldet;
              ein Knopf «In der Brille ansehen», der Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das
-             Modell (Zeitraffer, kein Fahrplan); Hinweise in der Brille hängen am Blick, nicht am Modell;
+             Modell (Zeitraffer, kein Fahrplan); Hinweise in der Brille hängen am Blick, nicht am Modell; beim Betreten eine
+             Tafel mit den Tasten, bis A oder 15 s;
              der Zug ist Lok und 4 Wagen gleicher Länge, hell mit dunklem Fensterband und dunklen
              Übergängen, der Kopf gerundet mit Frontscheibe, nur die Spitze karminrot; Bahnhöfe als dünner Mast in Dunkelgrau mit
              dem Namen oben auf eckigem dunkelgrauem Schild, Seilbahnen als feine Linie, Seen auf dem Luftbild ohne Fläche, aus der Nähe kleiner, «nicht massstäblich»;
