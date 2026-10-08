@@ -86,7 +86,8 @@ const BRILLE_NAH_M = 0.8
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
  *  2026-10-06, Michael: «halb so gross»), sonst wäre er
  *  auf dem Gelände kaum zu sehen. Darum steht «Zug nicht massstäblich» dabei. Kein bestimmter Zugtyp. */
-const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 4, ZUG_LUECKE_M = 8
+/** Lok, vier Wagen und am Schluss ein Steuerwagen mit derselben schrägen Form, ohne Rot (Michael, 2026-10-08) */
+const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 5, ZUG_LUECKE_M = 8
 const ZUG_BREITE = 0.045, ZUG_HOEHE = 0.05
 /** in diesem Abstand der Kamera (km) hat der Zug seine Grundgrösse; näher kleiner, weiter weg grösser */
 const ZUG_NORMAL_KM = 6
@@ -217,7 +218,8 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
   const probe = useRef<number | null>(null)
   // die Stelle des Zugs bei der Probefahrt, von der Szene nachgeführt, für das Zuggeräusch
   const probeStelle = useRef<number | null>(null)
-  const audio = useZuggeraeusch(probeStelle, weg ? weg.punkte[weg.punkte.length - 1].m : Infinity, useMemo(() => weg?.bauwerke ?? [], [weg]))
+  const audio = useZuggeraeusch(probeStelle, weg ? weg.punkte[weg.punkte.length - 1].m : Infinity, useMemo(() => weg?.bauwerke ?? [], [weg]),
+                                true, weg ? weg.punkte[0].m : 0)
   // in der Brille steht der Zug am Anfang bereit, A startet ihn (Michael, 2026-10-08: ein Knopf statt zwei)
   const inBrille = () => {
     setBrilleFehler(null)
@@ -287,27 +289,34 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
 }
 
 /**
- * Zuggeräusch (src/audio.ts): das Tempo aus der Stelle des Zugs über die Zeit, geglättet. Kommt 1,5 s nichts
- * Neues, steht der Zug; springt die Stelle zurück (die Probefahrt beginnt von vorn), fährt er neu an.
+ * Zuggeräusch (src/audio.ts): das Tempo aus der Stelle des Zugs über die Zeit, geglättet, vorwärts wie rückwärts
+ * (in der Brille fährt der Zug auch zurück). Kommt 1,5 s nichts Neues, steht der Zug; springt die Stelle gegen die
+ * Fahrtrichtung weit (die Fahrt beginnt von vorn), fährt er neu an. Vor dem Ziel (ende, rückwärts anfang) klingt es aus.
  */
-function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number, bauwerke: Weg['bauwerke'], aktiv = true) {
+function useZuggeraeusch(stelle: React.RefObject<number | null>, ende: number, bauwerke: Weg['bauwerke'], aktiv = true,
+                         anfang = 0) {
   const audio = useAudio()
   useEffect(() => {
     if (!aktiv) return
-    let alt = { s: stelle.current, t: performance.now() }, v = 0
+    let alt = { s: stelle.current, t: performance.now() }, v = 0, richtung = 1
     const uhr = window.setInterval(() => {
       const s = stelle.current, t = performance.now()
       let neu = false
       if (s !== alt.s) {
-        if (s !== null && alt.s !== null && s > alt.s) v = v ? v * 0.6 + 0.4 * ((s - alt.s) / ((t - alt.t) / 1000)) : (s - alt.s) / ((t - alt.t) / 1000)
-        else { v = 0; neu = true }
+        if (s !== null && alt.s !== null) {
+          const ds = s - alt.s, dt = (t - alt.t) / 1000, jetzt = Math.abs(ds) / dt
+          // ein weiter Sprung gegen die bisherige Richtung: die Fahrt beginnt von vorn
+          if (v > 0 && Math.sign(ds) !== richtung && jetzt > 5 * v + 2000) { v = 0; neu = true }
+          else { v = v ? v * 0.6 + 0.4 * jetzt : jetzt; richtung = ds >= 0 ? 1 : -1 }
+        } else { v = 0; neu = true }
         alt = { s, t }
       } else if (t - alt.t > 1500) v = 0
       const ort = s === null ? null : bauwerke.find((b) => s >= b.von && s <= b.bis)?.art ?? null
-      zuggeraeuschTempo(neu ? 0 : v, s !== null && v > 0 ? Math.max(0, ende - s) / v : Infinity, ort)
+      const rest = s === null ? Infinity : richtung > 0 ? ende - s : s - anfang
+      zuggeraeuschTempo(neu ? 0 : v, v > 0 ? Math.max(0, rest) / v : Infinity, ort)
     }, 250)
     return () => { window.clearInterval(uhr); zuggeraeuschAus() }
-  }, [stelle, ende, bauwerke, aktiv])
+  }, [stelle, ende, bauwerke, aktiv, anfang])
   return audio
 }
 
@@ -437,7 +446,8 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
     return () => { ab = true }
   }, [fahrweg, objekte])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
-  const audio = useZuggeraeusch(probeStelle, useMemo(() => wegEnde(fahrweg), [fahrweg]), useMemo(() => weg?.bauwerke ?? [], [weg]))
+  const audio = useZuggeraeusch(probeStelle, useMemo(() => wegEnde(fahrweg), [fahrweg]), useMemo(() => weg?.bauwerke ?? [], [weg]),
+                                true, fahrweg.punkte[0]?.s ?? 0)
   // in der Brille steht der Zug am Anfang bereit, A startet ihn (Michael, 2026-10-08: ein Knopf statt zwei)
   const inBrille = () => {
     setBrilleFehler(null)
@@ -1213,21 +1223,23 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         quer.quadraticCurveTo(W / 2, h, W / 2 - r, h); quer.lineTo(-W / 2 + r, h)
         quer.quadraticCurveTo(-W / 2, h, -W / 2, h - r); quer.closePath()
         // vorne bei der Lok ein Stück frei für den Kopf
-        const kopf = i === 0 ? H * 1.6 : 0
+        // der Steuerwagen am Schluss hat den Kopf hinten
+        const hinten = i === ZUG_WAGEN
+        const kopf = i === 0 || hinten ? H * 1.6 : 0
         const kasten = new THREE.ExtrudeGeometry(quer, { depth: L - kopf, bevelEnabled: false, curveSegments: 4 })
-        kasten.translate(0, 0, -L / 2)
+        kasten.translate(0, 0, hinten ? -L / 2 + kopf : -L / 2)
         mesh(kasten, hell)
         // Fahrwerk dunkel und etwas schmaler
         mesh(new THREE.BoxGeometry(W * 0.86, unten + h, L * 0.96), schwarz).position.y = (-h + unten) / 2
         // Fensterband auf beiden Seiten, knapp vor der Wand
         const band = new THREE.BoxGeometry(W * 1.03, H * 0.22, (L - kopf) * 0.92)
-        mesh(band, schwarz).position.set(0, h - r - H * 0.08, -kopf / 2)
+        mesh(band, schwarz).position.set(0, h - r - H * 0.08, hinten ? kopf / 2 : -kopf / 2)
         // Übergang zum nächsten Wagen
         if (i < ZUG_WAGEN) {
           const luecke = ZUG_LUECKE_M / 1000
           mesh(new THREE.BoxGeometry(W * 0.8, H * 0.78, luecke + 0.002), schwarz).position.set(0, unten / 2 + h / 2 - H * 0.02, -L / 2 - luecke / 2)
         }
-        if (i === 0) {
+        if (i === 0 || hinten) {
           // Kopf: derselbe Querschnitt wie der Kasten, der nach vorne in einer Rundung niedriger wird, so geht er
           // ohne Stufe aus dem Kasten hervor (Michael, 2026-10-07: «Siehst du die Stufe?»); rot nur die Spitze
           const z0 = L / 2 - kopf, z1 = L / 2, c = kopf * 0.75, p0y = unten + H * 0.25
@@ -1268,16 +1280,18 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           }
           const T = 0.62, stufen = 14
           const tReihe = (von: number, bis: number, k: number) => Array.from({ length: k + 1 }, (_, i) => von + (bis - von) * (i / k))
-          const rot = new THREE.MeshLambertMaterial({ color: FARBEN.zug, side: THREE.DoubleSide })
           hell.side = THREE.DoubleSide
-          materialien.push(rot)
-          mesh(loft([z0, ...tReihe(1, T, 6).map(zBei)], schnitt, true), hell)
-          mesh(loft(tReihe(T, 0, stufen).map(zBei), schnitt, true, 1, true), rot)
+          // beim Steuerwagen ist die Spitze hell, und alles ist um die Senkrechte gedreht, nach hinten gerichtet
+          const spitze = hinten ? hell : new THREE.MeshLambertMaterial({ color: FARBEN.zug, side: THREE.DoubleSide })
+          if (!hinten) materialien.push(spitze as THREE.MeshLambertMaterial)
+          const kopfteil = (geo: THREE.BufferGeometry, mat: THREE.Material) => { if (hinten) geo.rotateY(Math.PI); return mesh(geo, mat) }
+          kopfteil(loft([z0, ...tReihe(1, T, 6).map(zBei)], schnitt, true), hell)
+          kopfteil(loft(tReihe(T, 0, stufen).map(zBei), schnitt, true, 1, true), spitze)
           // Frontscheibe: der obere Teil des Querschnitts, eng auf der Rundung
           const scheibeSchnitt = schnitt.filter((q) => q.y >= unten + 0.55 * (h - unten))
           const scheibe = new THREE.MeshLambertMaterial({ color: ZUG_DUNKEL, side: THREE.DoubleSide })
           materialien.push(scheibe)
-          mesh(loft(tReihe(0.55, 0.12, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
+          kopfteil(loft(tReihe(0.55, 0.12, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
         }
         // im Tunnel derselbe Wagen halb durchsichtig über dem Berg; beide werden am Portal geschnitten, so
         // wechselt der Wagen nicht auf einmal, sondern fliessend (Michael, 2026-10-07: «wagen für wagen … verfeinern»)
@@ -1435,7 +1449,16 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     let tafelZeigen: (() => void) | null = null
     /** die Probefahrt auf der eigenen Seite: Stelle in Metern, ob sie läuft, Tempo als Vielfaches;
      *  «signal» ist der letzte Start von der Seite (probe), ein neuer beginnt von vorn */
-    const fahrt = { s: null as number | null, laeuft: false, tempo: 1, signal: null as number | null, gestartet: false }
+    const fahrt = { s: null as number | null, laeuft: false, tempo: 1, signal: null as number | null, gestartet: false,
+                    /** 1 vorwärts, -1 zurück: dann fährt der Steuerwagen voraus wie bei einem Pendelzug */
+                    richtung: 1 }
+    /** in der Brille: am Ziel die Knöpfe «Fahrt wiederholen», «Zurückfahren», «Fahrt beenden» zeigen */
+    let menueZeigen: (() => void) | null = null
+    /** so lang ist der Zug jetzt auf dem Weg, in dessen Metern */
+    const zugLaengeS = () => {
+      const t = zugTeile[zugTeile.length - 1]
+      return t ? (t.ab + t.laenge) * zugMass : 0
+    }
     if (brille) {
       let tiefst = Infinity
       for (let i = 1; i < pos.length; i += 3) if (pos[i] !== Y(KEINE_HOEHE)) tiefst = Math.min(tiefst, pos[i])
@@ -1475,13 +1498,19 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               m: modell.position.clone(), r: modell.rotation.y, s: modell.scale.x }
       }
       for (const c of steuer) {
-        c.addEventListener('selectstart', () => { haelt.add(c); anfassen() })
+        c.addEventListener('selectstart', () => {
+          // zeigt der Strahl auf einen Knopf am Ziel, gilt der Knopf, nicht das Tragen
+          if (knopfUnter?.(c)) return
+          haelt.add(c); anfassen()
+        })
         c.addEventListener('selectend', () => { haelt.delete(c); anfassen() })
         c.addEventListener('squeeze', () => { haelt.clear(); griff = null; setzen() })
         szene.add(c)
       }
       const um = new THREE.Vector3()
       const gedrueckt = new Set<string>()
+      /** trifft der Strahl dieses Controllers einen Knopf am Ziel? Dann ist er schon ausgelöst */
+      let knopfUnter: ((c: THREE.Object3D) => boolean) | null = null
       // ein kurzer Hinweis über dem Modell, wenn sich die Probefahrt ändert
       const hinweisLeinwand = document.createElement('canvas')
       hinweisLeinwand.width = 512; hinweisLeinwand.height = 96
@@ -1552,6 +1581,80 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       szene.add(pfeil)
       const lokLage = new THREE.Vector3()
       tafelZeigen = () => { tafel.visible = true; tafelBis = performance.now() + TAFEL_MS }
+
+      // am Ziel drei Knöpfe vor den Augen (Michael, 2026-10-08: «Fahrt wiederholen oder zurückfahren oder Fahrt
+      // beenden»): mit dem Strahl zielen und mit dem Abzug drücken, oder A, X und B
+      const menue = new THREE.Group()
+      menue.visible = false
+      szene.add(menue)
+      const knopfFlaeche = (text: string, taste: string, haupt: boolean) => {
+        const lw = document.createElement('canvas')
+        lw.width = 768; lw.height = 160
+        const g = lw.getContext('2d')!
+        g.fillStyle = haupt ? '#a8102e' : '#ffffff'; g.beginPath(); g.roundRect(4, 4, 760, 152, 24); g.fill()
+        if (!haupt) { g.strokeStyle = '#e5e5e5'; g.lineWidth = 4; g.stroke() }
+        g.fillStyle = haupt ? '#ffffff' : '#212121'; g.font = 'bold 60px Helvetica, Arial, sans-serif'; g.fillText(text, 44, 100)
+        g.font = '48px Helvetica, Arial, sans-serif'; g.fillStyle = haupt ? '#ffffff' : '#767676'; g.textAlign = 'right'; g.fillText(taste, 724, 98)
+        const tex = new THREE.CanvasTexture(lw)
+        tex.colorSpace = THREE.SRGBColorSpace
+        return new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.0625),
+          new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false }))
+      }
+      const titel = (() => {
+        const lw = document.createElement('canvas')
+        lw.width = 768; lw.height = 110
+        const g = lw.getContext('2d')!
+        g.fillStyle = 'rgba(255,255,255,0.94)'; g.beginPath(); g.roundRect(4, 4, 760, 102, 24); g.fill()
+        g.fillStyle = '#212121'; g.font = 'bold 56px Helvetica, Arial, sans-serif'; g.fillText('Am Ziel', 44, 74)
+        const tex = new THREE.CanvasTexture(lw)
+        tex.colorSpace = THREE.SRGBColorSpace
+        return new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.043), new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false }))
+      })()
+      const anfangS = pk[0].m, endeS = pk[pk.length - 1].m
+      const aktionen: Array<{ netz: THREE.Mesh; tun: () => void }> = [
+        { netz: knopfFlaeche('Fahrt wiederholen', 'A', true), tun: () => {
+          fahrt.s = fahrt.richtung > 0 ? Math.min(endeS, anfangS + zugLaengeS()) : endeS
+          fahrt.laeuft = true
+        } },
+        { netz: knopfFlaeche('Zurückfahren', 'X', false), tun: () => { fahrt.richtung = -fahrt.richtung; fahrt.laeuft = true } },
+        { netz: knopfFlaeche('Fahrt beenden', 'B', false), tun: () => { void renderer.xr.getSession()?.end() } },
+      ]
+      titel.position.y = 0.075
+      aktionen.forEach(({ netz }, k) => { netz.position.y = -k * 0.075; netz.renderOrder = 9; menue.add(netz) })
+      titel.renderOrder = 9
+      menue.add(titel)
+      const waehlen = (k: number) => { menue.visible = false; aktionen[k].tun() }
+      menueZeigen = () => {
+        // 0,8 m vor den Augen, waagrecht in Blickrichtung, der Person zugewandt
+        const auge = renderer.xr.getCamera()
+        const kopf = auge.getWorldPosition(new THREE.Vector3())
+        const vorn = new THREE.Vector3(0, 0, -1).applyQuaternion(auge.getWorldQuaternion(new THREE.Quaternion())).setY(0).normalize()
+        menue.position.copy(kopf).addScaledVector(vorn, 0.8).add(new THREE.Vector3(0, -0.05, 0))
+        menue.lookAt(kopf.x, menue.position.y, kopf.z)
+        menue.visible = true
+      }
+      // Strahlen aus den Controllern, nur solange die Knöpfe zu sehen sind
+      const strahlen = steuer.map((c) => {
+        const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3(0, 0, -1.5)]),
+          new THREE.LineBasicMaterial({ color: '#ffffff', transparent: true, opacity: 0.7, depthTest: false }))
+        l.visible = false
+        l.renderOrder = 9
+        c.add(l)
+        return l
+      })
+      const strahl = new THREE.Raycaster()
+      const getroffen = (c: THREE.Object3D) => {
+        strahl.setFromXRController(c as THREE.XRTargetRaySpace)
+        const t = strahl.intersectObjects(aktionen.map((x) => x.netz), false)[0]
+        return t ? aktionen.findIndex((x) => x.netz === t.object) : -1
+      }
+      knopfUnter = (c) => {
+        if (!menue.visible) return false
+        const k = getroffen(c)
+        if (k < 0) return false
+        waehlen(k)
+        return true
+      }
       brilleSchritt = (dt) => {
         const h = [...haelt]
         if (griff && h.length === 1) {
@@ -1579,7 +1682,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             if (!knoepfe) continue
             for (const nr of [4, 5]) {
               const schluessel = `${quelle.handedness}${nr}`, an = !!knoepfe[nr]?.pressed
-              if (an && !gedrueckt.has(schluessel)) {
+              if (an && !gedrueckt.has(schluessel) && menue.visible) {
+                // am Ziel: A wiederholt, X fährt zurück, B beendet
+                const rechts = quelle.handedness === 'right'
+                if (rechts && nr === 4) waehlen(0)
+                else if (!rechts && nr === 4) waehlen(1)
+                else if (rechts && nr === 5) waehlen(2)
+              } else if (an && !gedrueckt.has(schluessel)) {
                 const rechts = quelle.handedness === 'right'
                 if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true; fahrt.gestartet = true; tafel.visible = false }
                 else if (rechts) fahrt.laeuft = false
@@ -1590,6 +1699,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               if (an) gedrueckt.add(schluessel); else gedrueckt.delete(schluessel)
             }
           }
+        }
+        // die Knöpfe am Ziel: Strahlen zeigen, der getroffene Knopf wird etwas dunkler
+        strahlen.forEach((l) => { l.visible = menue.visible })
+        if (menue.visible) {
+          const treffer = new Set(steuer.map(getroffen))
+          aktionen.forEach(({ netz }, k) => { (netz.material as THREE.MeshBasicMaterial).color.setScalar(treffer.has(k) ? 0.8 : 1) })
         }
         const lok = zugTeile[0]
         // nur bis zum ersten A; nach einem Halt mit B bleibt er weg (Michael, 2026-10-08)
@@ -1627,6 +1742,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         modell.scale.setScalar(1); modell.position.set(0, 0, 0); modell.rotation.set(0, 0, 0)
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
         zugMass = 1
+        menue.visible = false
         haelt.clear(); griff = null
         nurBild.visible = true; nurBrille.visible = false; seilBild.visible = true; seilBrille.visible = false
         szene.background = hintergrund
@@ -1661,15 +1777,24 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const anfang = pk[0].m, ende = pk[pk.length - 1].m
         if (probe.current !== fahrt.signal) {
           fahrt.signal = probe.current
-          fahrt.s = probe.current === null ? null : anfang
-          // der Zug steht am Anfang, bis A ihn startet (Michael, 2026-10-08: «nicht automatisch starten»)
+          // der ganze Zug steht am Anfang auf der Strecke (sonst lagen die Wagen davor und der Zug war nicht zu
+          // sehen), bis A ihn startet (Michael, 2026-10-08: «nicht automatisch starten»)
+          fahrt.s = probe.current === null ? null : Math.min(ende, anfang + zugLaengeS())
           fahrt.laeuft = false
           fahrt.gestartet = false
           fahrt.tempo = 1
+          fahrt.richtung = 1
         }
         if (fahrt.laeuft && fahrt.s !== null) {
-          fahrt.s += ((ende - anfang) / PROBE_DAUER_S) * fahrt.tempo * dt
-          if (fahrt.s > ende) fahrt.s = anfang + (fahrt.s - ende)
+          fahrt.s += fahrt.richtung * ((ende - anfang) / PROBE_DAUER_S) * fahrt.tempo * dt
+          // am Ziel anhalten und fragen, wie es weitergeht, statt von vorn zu beginnen (Michael, 2026-10-08)
+          const vorneZiel = fahrt.richtung > 0 && fahrt.s >= ende
+          const hintenZiel = fahrt.richtung < 0 && fahrt.s - zugLaengeS() <= anfang
+          if (vorneZiel || hintenZiel) {
+            fahrt.s = vorneZiel ? ende : Math.min(ende, anfang + zugLaengeS())
+            fahrt.laeuft = false
+            menueZeigen?.()
+          }
         }
         eigenerZug.current = fahrt.s
         if (fahrt.s === null) letzte = null
