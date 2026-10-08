@@ -68,6 +68,8 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILL
 const STRICH_PX = 3.5, STRICH_INNEN = 0.5, BAHNHOF_KM = 0.075
 /** so hoch steht der Mast eines Bahnhofs, bevor er mit dem Zoom kürzer wird */
 const MAST_KM = 0.5
+/** in Modellen über 100 km Seite nur Seen ab dieser Fläche beschriften */
+const SEE_NAME_AB_M2 = 8e6
 /** Tunnel auf dem Bildschirm: Strich und Lücke je Kilometer Abstand der Kamera (aus 20 km 300 und 200 m;
  *  Michael, 2026-10-07: «Die Längen verdoppeln») */
 const STRICH_JE_KM = 0.015, LUECKE_JE_KM = 0.01
@@ -1029,12 +1031,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     // Bahnhöfe als dünner Mast senkrecht in den Himmel, oben das Schild mit dem Namen (Michael, 2026-10-07:
     // «Der blaue Punkt wirkte für mich zu grob»); der Mast wird beim Hineinzoomen kürzer wie der Zug
+    // in grossen Modellen (eine ganze Strecke) höher, sonst verschwinden sie in der Brille (Michael, 2026-10-08)
+    const ausdehnungKm = (Math.max(breite, hoehe) * m) / 1000
+    const mastKm = MAST_KM * Math.max(1, ausdehnungKm / 40)
     const masten: Array<{ sp: THREE.Sprite; y: number }> = []
     const mastFarbe = BAHNHOF_GRAU
     r.bahnhoefe.forEach((b, i) => {
       const y = Y(hoeheBei(r, h, b.lage[0], b.lage[1]) + UEBER_M)
       const lg = new LineGeometry()
-      lg.setPositions([0, 0, 0, 0, MAST_KM, 0])
+      lg.setPositions([0, 0, 0, 0, mastKm, 0])
       const lm = new LineMaterial({ color: mastFarbe, linewidth: 1 })
       linienMaterialien.push(lm)
       const mast = new Line2(lg, lm)
@@ -1042,14 +1047,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       nurBild.add(mast)
       zeichen.push(mast)
       if (brille) {
-        const stab = new THREE.Mesh(new THREE.CylinderGeometry(BRILLE_LINIE_M * 0.25 / brilleMass, BRILLE_LINIE_M * 0.25 / brilleMass, MAST_KM, 6),
+        const stab = new THREE.Mesh(new THREE.CylinderGeometry(BRILLE_LINIE_M * 0.25 / brilleMass, BRILLE_LINIE_M * 0.25 / brilleMass, mastKm, 6),
           new THREE.MeshBasicMaterial({ color: mastFarbe }))
-        stab.position.set(X(b.lage[0]), y + MAST_KM / 2, Z(b.lage[1]))
+        stab.position.set(X(b.lage[0]), y + mastKm / 2, Z(b.lage[1]))
         nurBrille.add(stab)
       }
       // Anfang und Ende der Strecke zuerst, dann die übrigen Bahnhöfe, dann die Gipfel
       const ende = i === 0 || i === r.bahnhoefe.length - 1
-      const sp = schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + MAST_KM, Z(b.lage[1]), ende ? 0 : 1, folge.get(i) ?? 0,
+      const sp = schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + mastKm, Z(b.lage[1]), ende ? 0 : 1, folge.get(i) ?? 0,
                         szene, [[0.5, 0], [0, 0], [1, 0]], true)
       masten.push({ sp, y })
     })
@@ -1072,6 +1077,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const eck: Array<[number, number]> = [[ost, nord], [ost + breite * m, nord], [ost + breite * m, nord - hoehe * m], [ost, nord - hoehe * m]]
     // auf dem Luftbild sind die Seen selbst zu sehen, dort ohne blaue Fläche (Michael, 2026-10-07)
     const seeFlaechen = new THREE.Group()
+    const seeMinM2 = (Math.max(breite, hoehe) * m) / 1000 > 100 ? SEE_NAME_AB_M2 : 0
     szene.add(seeFlaechen)
     for (const see of zusatz?.seen?.seen ?? []) {
       const ringe = see.ringe.map((x) => zugInRahmen(zugLesen(x), eck)).filter((q) => q.length >= 3)
@@ -1090,7 +1096,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (see.name && see.name !== 'N_P') {
         const [ne, nn] = see.namenspunkt ? lv95(see.namenspunkt[0], see.namenspunkt[1]) : ringe[0][0]
         // grössere Seen zuerst, vor den Gipfeln gleichen Rangs
-        if (imAusschnitt(ne, nn)) schild(see.name, dunkel ? '#8fb3d4' : '#3f6a93', X(ne), Y(pegel + 3) + 0.1, Z(nn), 2, -flaeche(ringe[0]))
+        // in grossen Modellen nur die grösseren Seen, sonst verdecken ihre Namen alles (Michael, 2026-10-08)
+        if (imAusschnitt(ne, nn) && flaeche(ringe[0]) / 2 >= seeMinM2) schild(see.name, dunkel ? '#8fb3d4' : '#3f6a93', X(ne), Y(pegel + 3) + 0.1, Z(nn), 2, -flaeche(ringe[0]))
       }
     }
     for (const k of zusatz?.s?.kgs ?? []) {
@@ -1555,7 +1562,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         for (const z of zeichen) z.scale.setScalar(f)
         const abstand = kamera.position.distanceTo(steuerung.target)
         for (const lm of strichMaterialien) { lm.dashSize = abstand * STRICH_JE_KM; lm.gapSize = abstand * LUECKE_JE_KM }
-        for (const { sp, y } of masten) sp.position.y = y + MAST_KM * f
+        for (const { sp, y } of masten) sp.position.y = y + mastKm * f
       }
       if (hinterZug?.current) { hinterZug.current = false; letzte = null; if (blick) blick.current = null }
       if (zug) {
