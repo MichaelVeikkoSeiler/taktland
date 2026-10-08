@@ -27,13 +27,15 @@ export interface Spiel {
   bild?: { hell: string; dunkel: string; alt: string }
 }
 
+// Reihenfolge: Modellbahn, Geo, dann die übrigen (Michael, 2026-10-08)
 export const SPIELE: Spiel[] = [
+  // Michael, 2026-10-08: «neues Spiel 3D/VR», Name «Modellbahn»; die Brille gibt es nur hier, nicht unter Fahren
   {
-    id: 'duell', titel: 'Duell', status: 'spielbereit', adresse: '#/duell',
-    kurz: 'Zwei Bahnhöfe, Strecken oder Tunnel: Wer liegt bei einer Zahl vorne?',
-    bild: { hell: duellHell, dunkel: duellDunkel, alt: 'Illustration: ein grosser und ein kleiner Bahnhof nebeneinander.' },
-    beschreibung: 'Zwei Bahnhöfe, Strecken oder Tunnel treten gegeneinander an. Du wählst, wer bei '
-      + 'einer Zahl aus den Daten vorne liegt, und baust Runde um Runde deine Serie auf.',
+    id: 'modellbahn', titel: 'Modellbahn', status: 'spielbereit', adresse: '#/modellbahn',
+    kurz: 'Eine Strecke als Modell im Gelände, auch in der VR-Brille.',
+    bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: eine Bahnlandschaft mit Viadukt und Tunnel.' },
+    beschreibung: 'Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen, mit einer '
+      + 'Brille auch auf dem Tisch vor dir. Ein Modell, kein Abbild der Wirklichkeit.',
   },
   {
     id: 'schweiz11', titel: 'Geo', status: 'spielbereit', adresse: '#/schweiz11',
@@ -43,19 +45,18 @@ export const SPIELE: Spiel[] = [
       + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
   },
   {
+    id: 'duell', titel: 'Duell', status: 'spielbereit', adresse: '#/duell',
+    kurz: 'Zwei Bahnhöfe, Strecken oder Tunnel: Wer liegt bei einer Zahl vorne?',
+    bild: { hell: duellHell, dunkel: duellDunkel, alt: 'Illustration: ein grosser und ein kleiner Bahnhof nebeneinander.' },
+    beschreibung: 'Zwei Bahnhöfe, Strecken oder Tunnel treten gegeneinander an. Du wählst, wer bei '
+      + 'einer Zahl aus den Daten vorne liegt, und baust Runde um Runde deine Serie auf.',
+  },
+  {
     id: 'erraten', titel: 'Bahnhofsuche', status: 'spielbereit', adresse: '#/erraten',
     kurz: 'Sechs verdeckte Hinweise, ein Bahnhof: Wie wenige brauchst du?',
     bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhofsuche» auf dem Tablet.' },
     beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
-  },
-  // Michael, 2026-10-08: «neues Spiel 3D/VR», Name «Modellbahn»; die Brille gibt es nur hier, nicht unter Fahren
-  {
-    id: 'modellbahn', titel: 'Modellbahn', status: 'spielbereit', adresse: '#/modellbahn',
-    kurz: 'Eine Strecke als Modell im Gelände, auch in der VR-Brille.',
-    bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: eine Bahnlandschaft mit Viadukt und Tunnel.' },
-    beschreibung: 'Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen, mit einer '
-      + 'Brille auch auf dem Tisch vor dir. Ein Modell, kein Abbild der Wirklichkeit.',
   },
 ]
 

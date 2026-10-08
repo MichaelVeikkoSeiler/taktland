@@ -23,7 +23,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
         Die Reiter oben führen zu Bahnland (Bahnhöfe, Strecken, Brücken, Tunnel,
-        Bahnübergänge), Spiele (Duell, Geo, Bahnhofsuche, Modellbahn), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
+        Bahnübergänge), Spiele (Modellbahn, Geo, Duell, Bahnhofsuche), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
 
@@ -66,6 +66,17 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       </Abschnitt>
 
       <Abschnitt titel="Spiele">
+        <Spiel titel="Modellbahn">
+          Eine Strecke als Modell im Gelände: eine Bergstrecke oder eine eigene bis etwa 170 km. Drehen, zoomen und einen
+          Zug darüber fahren lassen{xr ? '; mit der Brille steht das Modell vor dir auf dem Tisch' : ''}. Ein Modell, kein Abbild:
+          Zug, Gleise und Masten sind nicht massstäblich, die Fahrt ist ein Zeitraffer.
+        </Spiel>
+        <Spiel titel="Geo">
+          <li>
+            Ein Bahnhof, Tunnel oder eine Brücke wird genannt. Setze den Pin auf der Karte: Je näher,
+            desto mehr Punkte. Jede Hilfe auf der Karte kostet 15 % der möglichen Punkte.
+          </li>
+        </Spiel>
         <Spiel titel="Duell">
           <li>
             Zwei Bahnhöfe, Linien oder Tunnel, eine Frage, etwa: Welcher Tunnel ist länger? Danach
@@ -77,22 +88,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>«Zwei Bahnhöfe selbst wählen» vergleicht zwei bestimmte Bahnhöfe, ohne Serie.</li>
         </Spiel>
-        <Spiel titel="Geo">
-          <li>
-            Ein Bahnhof, Tunnel oder eine Brücke wird genannt. Setze den Pin auf der Karte: Je näher,
-            desto mehr Punkte. Jede Hilfe auf der Karte kostet 15 % der möglichen Punkte.
-          </li>
-        </Spiel>
         <Spiel titel="Bahnhofsuche">
           <li>
             Gesucht ist ein Bahnhof, sechs Hinweiskarten liegen verdeckt. Ohne Karte gibt es 80 Punkte,
             jede aufgedeckte kostet 10, der Bezirk 20. Ein falscher Tipp deckt die nächste Karte auf.
           </li>
-        </Spiel>
-        <Spiel titel="Modellbahn">
-          Eine Strecke als Modell im Gelände: eine Bergstrecke oder eine eigene bis etwa 170 km. Drehen, zoomen und einen
-          Zug darüber fahren lassen{xr ? '; mit der Brille steht das Modell vor dir auf dem Tisch' : ''}. Ein Modell, kein Abbild:
-          Zug, Gleise und Masten sind nicht massstäblich, die Fahrt ist ein Zeitraffer.
         </Spiel>
         <Spiel titel="Zu mehreren">
           <li>Auf einem Gerät: Ihr spielt reihum und gebt das Gerät weiter.</li>
