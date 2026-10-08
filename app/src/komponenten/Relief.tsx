@@ -1529,8 +1529,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         hinweisBis = performance.now() + dauer
       }
       // Tafel mit den Tasten beim Betreten der Brille (Michael, 2026-10-08: «kurze Instruktion … Tastenbelegung»),
-      // mitten im Blick; sie verschwindet mit A oder nach TAFEL_MS
-      const TAFEL_MS = 15000
+      // mitten im Blick; sie bleibt, bis man sie mit «Schliessen» (Strahl und Abzug) oder A schliesst (Michael, 2026-10-08:
+      // «manuell schliessen … per Schliessen-Button»); erst das nächste A startet die Probefahrt
       const tafelLeinwand = document.createElement('canvas')
       tafelLeinwand.width = 1024; tafelLeinwand.height = 640
       {
@@ -1549,16 +1549,17 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           g.font = '38px Helvetica, Arial, sans-serif'; g.fillStyle = '#212121'; g.fillText(was, 340, y)
         })
         g.font = '32px Helvetica, Arial, sans-serif'; g.fillStyle = '#767676'
-        g.fillText('A und B rechts, X und Y links. Mit A geht es los.', 48, 610)
+        g.fillText('A und B rechts, X und Y links.', 48, 610)
       }
       const tafelTextur = new THREE.CanvasTexture(tafelLeinwand)
       tafelTextur.colorSpace = THREE.SRGBColorSpace
-      const tafel = new THREE.Sprite(new THREE.SpriteMaterial({ map: tafelTextur, depthTest: false }))
-      tafel.scale.set(0.44, 0.275, 1)
-      tafel.renderOrder = 7
+      const tafel = new THREE.Group()
+      const tafelFlaeche = new THREE.Mesh(new THREE.PlaneGeometry(0.44, 0.275),
+        new THREE.MeshBasicMaterial({ map: tafelTextur, transparent: true, depthTest: false }))
+      tafelFlaeche.renderOrder = 7
+      tafel.add(tafelFlaeche)
       tafel.visible = false
       szene.add(tafel)
-      let tafelBis = 0
       // ein roter Pfeil zeigt von oben auf die Lok, solange der Zug noch nicht fährt, und wippt dabei
       // (Michael, 2026-10-08: «damit man gleich sieht, wo der Zug jetzt steht»); durch Berge hindurch sichtbar
       const pfeil = new THREE.Group()
@@ -1575,7 +1576,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       pfeil.visible = false
       szene.add(pfeil)
       const lokLage = new THREE.Vector3()
-      tafelZeigen = () => { tafel.visible = true; tafelBis = performance.now() + TAFEL_MS }
+      tafelZeigen = () => { tafel.visible = true }
 
       // am Ziel drei Knöpfe vor den Augen (Michael, 2026-10-08: «Fahrt wiederholen oder zurückfahren oder Fahrt
       // beenden»): mit dem Strahl zielen und mit dem Abzug drücken, oder A, X und B
@@ -1614,6 +1615,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         { netz: knopfFlaeche('Zurückfahren', 'X', false), tun: () => { fahrt.richtung = -fahrt.richtung; fahrt.laeuft = true } },
         { netz: knopfFlaeche('Fahrt beenden', 'B', false), tun: () => { void renderer.xr.getSession()?.end() } },
       ]
+      // «Schliessen» unter der Tafel mit den Tasten
+      const schliessen = knopfFlaeche('Schliessen', 'A', true)
+      schliessen.position.y = -0.175
+      schliessen.renderOrder = 8
+      tafel.add(schliessen)
       titel.position.y = 0.075
       aktionen.forEach(({ netz }, k) => { netz.position.y = -k * 0.075; netz.renderOrder = 9; menue.add(netz) })
       titel.renderOrder = 9
@@ -1644,6 +1650,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         return t ? aktionen.findIndex((x) => x.netz === t.object) : -1
       }
       knopfUnter = (c) => {
+        if (tafel.visible) {
+          strahl.setFromXRController(c as THREE.XRTargetRaySpace)
+          if (!strahl.intersectObject(schliessen, false).length) return false
+          tafel.visible = false
+          return true
+        }
         if (!menue.visible) return false
         const k = getroffen(c)
         if (k < 0) return false
@@ -1683,9 +1695,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
                 if (rechts && nr === 4) waehlen(0)
                 else if (!rechts && nr === 4) waehlen(1)
                 else if (rechts && nr === 5) waehlen(2)
+              } else if (an && !gedrueckt.has(schluessel) && tafel.visible) {
+                // solange die Tafel steht, schliesst A sie, sonst nichts
+                if (quelle.handedness === 'right' && nr === 4) tafel.visible = false
               } else if (an && !gedrueckt.has(schluessel)) {
                 const rechts = quelle.handedness === 'right'
-                if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true; fahrt.gestartet = true; tafel.visible = false }
+                if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true; fahrt.gestartet = true }
                 else if (rechts) fahrt.laeuft = false
                 // X langsamer, Y schneller (Michael, 2026-10-08: «kehre sie um»)
                 else if (nr === 4) fahrt.tempo = Math.max(0.25, fahrt.tempo / 2)
@@ -1697,7 +1712,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           }
         }
         // die Knöpfe am Ziel: Strahlen zeigen, der getroffene Knopf wird etwas dunkler
-        strahlen.forEach((l) => { l.visible = menue.visible })
+        strahlen.forEach((l) => { l.visible = menue.visible || tafel.visible })
+        if (tafel.visible) {
+          const t = steuer.some((c) => { strahl.setFromXRController(c as THREE.XRTargetRaySpace); return strahl.intersectObject(schliessen, false).length > 0 })
+          ;(schliessen.material as THREE.MeshBasicMaterial).color.setScalar(t ? 0.8 : 1)
+        }
         if (menue.visible) {
           const treffer = new Set(steuer.map(getroffen))
           aktionen.forEach(({ netz }, k) => { (netz.material as THREE.MeshBasicMaterial).color.setScalar(treffer.has(k) ? 0.8 : 1) })
@@ -1713,9 +1732,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (tafel.visible) {
           // mitten im Blick, 1 m vor den Augen
           const auge = renderer.xr.getCamera()
-          const vorn = new THREE.Vector3(0, 0.05, -1).normalize().applyQuaternion(auge.getWorldQuaternion(new THREE.Quaternion()))
+          const blick = auge.getWorldQuaternion(new THREE.Quaternion())
+          const vorn = new THREE.Vector3(0, 0.05, -1).normalize().applyQuaternion(blick)
           tafel.position.copy(auge.getWorldPosition(new THREE.Vector3())).addScaledVector(vorn, 1)
-          if (performance.now() > tafelBis) tafel.visible = false
+          tafel.quaternion.copy(blick)
         }
         if (hinweis.visible) {
           // am Blick, nicht am Modell: etwas unter der Mitte der Sicht, 0,9 m vor den Augen, so bleibt er im

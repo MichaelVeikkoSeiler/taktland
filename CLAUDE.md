@@ -165,7 +165,7 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              mit Passthrough, wo die Brille es kann; erscheint nur, wo der Browser WebXR meldet;
              ein Knopf «In der Brille ansehen», der ganze Zug steht am Anfang bereit und fährt nach A in 2,5 Minuten über das
              Modell (Zeitraffer, kein Fahrplan); Hinweise in der Brille hängen am Blick, nicht am Modell; beim Betreten eine
-             Tafel mit den Tasten, bis A oder 15 s; am Ziel hält er und zeigt die Knöpfe «Fahrt wiederholen»,
+             Tafel mit den Tasten und rotem Knopf «Schliessen» (Strahl und Abzug oder A), sie bleibt bis dahin; erst das nächste A startet; am Ziel hält er und zeigt die Knöpfe «Fahrt wiederholen»,
              «Zurückfahren» (Steuerwagen voraus) und «Fahrt beenden», mit dem Strahl oder A, X, B; bis zum ersten A zeigt ein wippender roter Pfeil von oben auf die Lok;
              der Zug ist Lok, 4 Wagen und ein Steuerwagen gleicher Länge (hinten abgeschrägt wie die Lok; rot ist immer die Spitze in Fahrtrichtung), hell mit dunklem Fensterband und dunklen
              Übergängen, der Kopf gerundet mit Frontscheibe, nur die Spitze karminrot; in der Brille näher als 0,8 m
