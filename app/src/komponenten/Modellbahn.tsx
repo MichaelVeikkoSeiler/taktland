@@ -27,7 +27,7 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
   return (
     <div className="px-4 pb-4">
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">Modellbahn</h1>
+      <h1 className="mt-4 text-2xl font-bold tracking-tight">Modellbahn VR</h1>
       <p className="mt-2 leading-relaxed">
         Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen. Mit einer Brille wie der
         Meta Quest steht das Modell vor dir auf dem Tisch.

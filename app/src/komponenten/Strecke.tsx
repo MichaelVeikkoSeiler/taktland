@@ -287,7 +287,7 @@ export function Strecke({ index, wahl, modell = false }: { index: BahnhofIndex |
     <div className="px-4 pb-4">
       {modell ? (
         <>
-          <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />
+          <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn VR" />
           <h1 className="mt-4 text-2xl font-bold tracking-tight">Eigene Strecke als Modell</h1>
           <p className="mt-2 leading-relaxed">
             Start und Ziel wählen: Taktland sucht einen Weg durch das Netz und baut ihn als Modell im Gelände, bis
@@ -750,7 +750,7 @@ function Ergebnis({
             {!wahl.weg && wahl.von && wahl.nach && (
               <a href={streckenAdresse(wahl).replace('#/strecke', '#/modellbahn/strecke')}
                  className="mt-3 flex items-center gap-2 text-sm font-medium underline underline-offset-2">
-                Als Modell ansehen (Spiele, Modellbahn, bis {MODELL_HOECHSTENS_M / 1000} km)
+                Als Modell ansehen (Spiele, Modellbahn VR, bis {MODELL_HOECHSTENS_M / 1000} km)
                 <span className="pfeil" aria-hidden="true">→</span>
               </a>
             )}

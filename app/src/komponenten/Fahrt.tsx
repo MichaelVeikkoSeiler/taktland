@@ -149,7 +149,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
           </p>
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Probefahren zeigt eine Fahrt wie unterwegs, mit Karte, Meldungen und wählbarem Tempo. Die{' '}
-            <a href="#/modellbahn" className="underline underline-offset-2">Modellbahn</a> unter Spiele zeigt eine Strecke als
+            <a href="#/modellbahn" className="underline underline-offset-2">Modellbahn VR</a> unter Spiele zeigt eine Strecke als
             Modell zum Drehen, auch mit VR-Brille.
           </p>
           {index && (
@@ -514,7 +514,7 @@ function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string
       <h2 className="mt-8 text-xl font-bold tracking-tight">Bergstrecken</h2>
       <p className="mt-2 leading-relaxed">
         Bekannte Bergstrecken als Probefahrt, die gleich in 3D beginnt. Als Modell zum Drehen, auch in der Brille, stehen
-        sie unter <a href="#/modellbahn" className="underline underline-offset-2">Spiele, Modellbahn</a>.
+        sie unter <a href="#/modellbahn" className="underline underline-offset-2">Spiele, Modellbahn VR</a>.
       </p>
       {fehler && <p className="mt-4 text-sm">Die Liste konnte nicht geladen werden. {fehler}</p>}
       {!liste && !fehler && <p className="mt-4 text-sbb-metal">Wird geladen …</p>}
