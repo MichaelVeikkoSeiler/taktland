@@ -200,8 +200,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const [raffer, setRaffer] = useState<Zeitraffer>(20)
   const rafferRef = useRef<Zeitraffer>(20)
   // Probefahrt anhalten und weiterfahren (Michael, 2026-09-26: «unterbrechen und wieder starten»)
-  const [angehalten, setAngehalten] = useState(false)
-  const angehaltenRef = useRef(false)
+  // eine Probefahrt wartet auf «Start» (Michael, 2026-10-08: «nicht automatisch starten»)
+  const [angehalten, setAngehalten] = useState(probefahrt)
+  const angehaltenRef = useRef(probefahrt)
+  const [gestartet, setGestartet] = useState(!probefahrt)
   /** In der Probefahrt läuft die Zeit schneller; angehalten steht sie */
   const uhr = () => probefahrt
     ? uhrStart.current.spiel + (angehaltenRef.current ? 0 : (Date.now() - uhrStart.current.echt) * rafferRef.current)
@@ -210,6 +212,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     uhrStart.current = { echt: Date.now(), spiel: uhr() }
     angehaltenRef.current = !angehaltenRef.current
     setAngehalten(angehaltenRef.current)
+    if (!angehaltenRef.current) setGestartet(true)
   }
 
   /** Probefahrt: an eine Stelle springen, vorwärts oder zurück (Michael,
@@ -740,7 +743,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                     className={`min-h-9 shrink-0 rounded-lg px-3 font-bold ${angehalten
                       ? 'bg-sbb-red text-white hover:bg-sbb-red125'
                       : 'border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
-              {angehalten ? 'Weiter' : 'Anhalten'}
+              {angehalten ? (gestartet ? 'Weiter' : 'Start') : 'Anhalten'}
             </button>
             <div className="segmente flex-1 gap-0.5"
                  role="group" aria-label="Tempo der Probefahrt in km/h">
@@ -826,7 +829,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
                     className={`min-h-9 shrink-0 rounded-lg px-3 font-bold ${angehalten
                       ? 'bg-sbb-red text-white hover:bg-sbb-red125'
                       : 'border border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
-              {angehalten ? 'Weiter' : 'Anhalten'}
+              {angehalten ? (gestartet ? 'Weiter' : 'Start') : 'Anhalten'}
             </button>
             <span className="hidden text-sbb-metal sm:inline dark:text-sbb-storm">Zeitraffer</span>
             <div className="segmente flex-1 gap-0.5"
@@ -846,7 +849,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             Bildschirmleser würde sonst ununterbrochen vorlesen */}
         <div className="mt-3 flex items-baseline justify-between gap-3 text-sm text-sbb-metal dark:text-sbb-storm">
           <p>
-            {probefahrt && angehalten ? 'Probefahrt angehalten' : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
+            {probefahrt && angehalten ? (gestartet ? 'Probefahrt angehalten' : 'Bereit, mit «Start» geht es los') : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
             {faehrt && !ohneGps && !angehalten && ` · etwa ${kmhJetzt()} km/h`}
           </p>
           {/* die Probefahrt wiederholen (Michael, 2026-09-30) */}

@@ -270,7 +270,7 @@ export default function ReliefSeite({ name, zurueck }: { name: string; zurueck?:
                 Das Relief steht als Modell vor dir, etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit, der tiefste Punkt
                 auf Tischhöhe. Einen Abzug halten trägt es mit der Hand, beide Abzüge ziehen es grösser oder kleiner und drehen es;
                 der Thumbstick dreht und hebt es, die Greiftaste stellt es zurück. Mit den Händen gilt Daumen an Zeigefinger als
-                Abzug. Probefahrt: A startet, B hält an, X schneller, Y langsamer. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt ein Zug, nicht massstäblich und kein bestimmter Typ, in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
+                Abzug. Probefahrt: der Zug wartet am Anfang, A startet, B hält an, X schneller, Y langsamer. Die Höhe stellst du vorher oben ein. Bei der Probefahrt fährt ein Zug, nicht massstäblich und kein bestimmter Typ, in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze
                 Strecke und beginnt dann von vorn; das Tempo ist ein Zeitraffer, kein Fahrplan. Das Zuggeräusch ist gerechnet,
                 keine Aufnahme; im Zeitraffer klingt es langsamer, als der Zug fährt.
               </p>
@@ -474,7 +474,7 @@ function BrilleFahrt({ fahrweg, objekte, zurueck }: { fahrweg: Fahrweg; objekte:
             swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
             wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert. Bedienung wie bei den Bergstrecken: ein Abzug
             trägt das Modell, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt, die
-            Greiftaste stellt es zurück. Probefahrt: A startet, B hält an, X schneller, Y langsamer; der Zug fährt in
+            Greiftaste stellt es zurück. Probefahrt: der Zug wartet am Anfang, A startet, B hält an, X schneller, Y langsamer; der Zug fährt in
             {' '}{(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke, ein Zeitraffer, kein Fahrplan.
             Die Höhe der Gleise steht in keiner Quelle. Zug nicht massstäblich und kein bestimmter Zugtyp.
           </p>
@@ -1493,7 +1493,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       szene.add(hinweis)
       let hinweisBis = 0
       const tempoText = (t: number) => (t === 1 ? 'im Grundtempo' : `${t.toLocaleString('de-CH')}-fach`)
-      const hinweisZeigen = (text: string) => {
+      const hinweisZeigen = (text: string, dauer = 2000) => {
         const g = hinweisLeinwand.getContext('2d')!
         g.clearRect(0, 0, 512, 96)
         g.fillStyle = 'rgba(255,255,255,0.9)'; g.beginPath(); g.roundRect(0, 0, 512, 96, 16); g.fill()
@@ -1501,7 +1501,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         g.fillText(text, 256, 63)
         hinweisTextur.needsUpdate = true
         hinweis.visible = true
-        hinweisBis = performance.now() + 2000
+        hinweisBis = performance.now() + dauer
       }
       brilleSchritt = (dt) => {
         const h = [...haelt]
@@ -1573,6 +1573,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         renderer.xr.setReferenceSpaceType('local-floor')
         await renderer.xr.setSession(sitzung)
         setzen()
+        if (probe?.current != null) hinweisZeigen('A startet die Probefahrt', 5000)
         for (const z of zeichen) z.scale.setScalar(1)
         nurBild.visible = false; nurBrille.visible = true; seilBild.visible = false; seilBrille.visible = true
         szene.background = ar ? null : hintergrund
@@ -1593,7 +1594,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (probe.current !== fahrt.signal) {
           fahrt.signal = probe.current
           fahrt.s = probe.current === null ? null : anfang
-          fahrt.laeuft = probe.current !== null
+          // der Zug steht am Anfang, bis A ihn startet (Michael, 2026-10-08: «nicht automatisch starten»)
+          fahrt.laeuft = false
           fahrt.tempo = 1
         }
         if (fahrt.laeuft && fahrt.s !== null) {
