@@ -1430,7 +1430,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     let tafelZeigen: (() => void) | null = null
     /** die Probefahrt auf der eigenen Seite: Stelle in Metern, ob sie läuft, Tempo als Vielfaches;
      *  «signal» ist der letzte Start von der Seite (probe), ein neuer beginnt von vorn */
-    const fahrt = { s: null as number | null, laeuft: false, tempo: 1, signal: null as number | null }
+    const fahrt = { s: null as number | null, laeuft: false, tempo: 1, signal: null as number | null, gestartet: false }
     if (brille) {
       let tiefst = Infinity
       for (let i = 1; i < pos.length; i += 3) if (pos[i] !== Y(KEINE_HOEHE)) tiefst = Math.min(tiefst, pos[i])
@@ -1575,7 +1575,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               const schluessel = `${quelle.handedness}${nr}`, an = !!knoepfe[nr]?.pressed
               if (an && !gedrueckt.has(schluessel)) {
                 const rechts = quelle.handedness === 'right'
-                if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true; tafel.visible = false }
+                if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true; fahrt.gestartet = true; tafel.visible = false }
                 else if (rechts) fahrt.laeuft = false
                 else if (nr === 4) fahrt.tempo = Math.min(16, fahrt.tempo * 2)
                 else fahrt.tempo = Math.max(0.25, fahrt.tempo / 2)
@@ -1586,7 +1586,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           }
         }
         const lok = zugTeile[0]
-        pfeil.visible = !!probe && zug === eigenerZug && fahrt.s !== null && !fahrt.laeuft && !!lok?.netz.visible
+        // nur bis zum ersten A; nach einem Halt mit B bleibt er weg (Michael, 2026-10-08)
+        pfeil.visible = !!probe && zug === eigenerZug && fahrt.s !== null && !fahrt.gestartet && !!lok?.netz.visible
         if (pfeil.visible) {
           lok.netz.getWorldPosition(lokLage)
           // knapp über dem Zug, wippt 1,5 cm auf und ab, etwa einmal pro Sekunde
@@ -1657,6 +1658,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           fahrt.s = probe.current === null ? null : anfang
           // der Zug steht am Anfang, bis A ihn startet (Michael, 2026-10-08: «nicht automatisch starten»)
           fahrt.laeuft = false
+          fahrt.gestartet = false
           fahrt.tempo = 1
         }
         if (fahrt.laeuft && fahrt.s !== null) {
