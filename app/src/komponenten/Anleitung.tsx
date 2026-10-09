@@ -310,7 +310,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Taktland ist zum Lernen, Nachschlagen und Mitfahren gedacht, nicht für die
-            Reiseplanung. Es ist ein privates Lernprojekt und kein Angebot einer Bahnunternehmung.
+            Reiseplanung. Es ist ein privates Projekt und kein Angebot einer Bahnunternehmung.
           </li>
           <li>
             Taktland ist ein freiwilliges, kostenloses Angebot. Es besteht kein Anspruch darauf, dass

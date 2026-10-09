@@ -476,7 +476,7 @@ function Blatt({ daten, eintraege, zweiseitig, zuViel }: {
                 + ' keinen Namen: Es gilt die Länge ihrer Zeichnung; Brücken anderer Bahnen mit Namen oder auf der Karte ab 100 m.'}
               {' '}«etwa»: Länge laut Zeichnung von swisstopo, gerundet.
               {' '}Quellen: SBB Open Data (data.sbb.ch), Bundesamt für Verkehr BAV, swisstopo, BFS. Taktland ist ein
-              privates Lernprojekt und kein Angebot einer Bahnunternehmung.
+              privates Projekt und kein Angebot einer Bahnunternehmung.
             </p>
           </div>
         </div>

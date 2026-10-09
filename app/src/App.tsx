@@ -268,7 +268,7 @@ export default function App() {
           <p>
             Daten: SBB, opentransportdata.swiss, Bundesamt für Verkehr BAV, Bundesamt für Landestopografie swisstopo,
             Bundesamt für Statistik BFS, Bundesamt für Bevölkerungsschutz BABS, Bundesamt für Umwelt BAFU.
-            Taktland ist ein privates Lernprojekt und kein Angebot einer Bahnunternehmung.
+            Taktland ist ein privates Projekt und kein Angebot einer Bahnunternehmung.
           </p>
           <details className="klapp mt-2">
             <summary className="flex min-h-11 cursor-pointer items-center text-sm font-medium text-sbb-black underline

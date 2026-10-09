@@ -95,4 +95,4 @@ SBB Open Data ([data.sbb.ch](https://data.sbb.ch)), opentransportdata.swiss, Bun
 Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, Bundesamt für
 Bevölkerungsschutz BABS und Bundesamt für Umwelt BAFU. Was wofür stammt, steht in der App in der
 Fusszeile unter «Alle Datenquellen und Lizenzen» und unter Info. Taktland ist ein privates
-Lernprojekt und kein Angebot einer Bahnunternehmung.
+Projekt und kein Angebot einer Bahnunternehmung.
