@@ -171,7 +171,7 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              Übergängen, der Kopf gerundet mit Frontscheibe, nur die Spitze karminrot; in der Brille näher als 0,8 m
              kleiner (mit der Wurzel des Abstands, höchstens bis 40 %); Bahnhöfe als dünner Mast in Dunkelgrau mit
              dem Namen oben auf eckigem dunkelgrauem Schild, Seilbahnen als feine Linie, Seen auf dem Luftbild ohne Fläche, aus der Nähe kleiner, «nicht massstäblich»;
-             die Höhe der Gleise steht in keiner Quelle: die Linie folgt dem Gelände, gemittelt über 400 m davor und danach;
+             die Höhe der Gleise steht in keiner Quelle: die Linie folgt dem Gelände, gemittelt über 400 m davor und danach, 3 m darüber, höher nur wo das Gelände darüber ragt (LINIE_UEBER_M; vorher 25 m, Michael, 2026-10-10: «deutlich über dem Boden»);
              die Wagen drehen nur um die Senkrechte und neigen sich höchstens 7°, kippen nie zur Seite
 data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Bahnlinie) in Kacheln von 10 km
              zu 50 m aus swissALTIRegio, je Zeile Differenzen und gzip (.hgz, 550 Kacheln, 18 MB;

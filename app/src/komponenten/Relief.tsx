@@ -60,8 +60,11 @@ interface Weg {
 
 /** jedes wievielte Feld des Rasters ins Netz kommt; 2 hält das Netz auch auf dem Handy flüssig */
 const SCHRITT = 2
-/** die Linie liegt so viel über dem Gelände, damit sie nicht darin verschwindet */
+/** Masten und Schilder stehen so viel über dem Gelände */
 const UEBER_M = 25
+/** die Linie liegt so viel über dem gemittelten Gelände; mehr nur dort, wo das Gelände darüber ragt
+ *  (Michael, 2026-10-10: «deutlich über dem Boden»: vorher 25 m überall, bei Höhe 2-fach 50 m) */
+const LINIE_UEBER_M = 3
 /** in der Brille (Michael, 2026-10-06: «Quest 3»): das Relief als Modell so breit, der tiefste Punkt auf
  *  Tischhöhe, so weit vor dir; Linien so dick, dass sie auf diese Grösse noch zu sehen sind */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILLE_LINIE_M = 0.0012
@@ -957,10 +960,39 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const k = anzahl[b] - anzahl[a]
       geglaettet[i] = k ? (summe[b] - summe[a]) / k : 0
     }
+    // Wo das Gelände über die gemittelte Linie ragt (Kuppen, Hänge), hebt sie sich, sonst verschwände sie darin:
+    // der grösste Überstand in der Nähe, dann gemittelt, damit der Zug nicht wieder auf und ab fährt. Im
+    // flachen Land bleibt so fast nichts, und der Zug liegt auf dem Boden statt 25 m darüber
+    const nah = Math.round(150 / HOEHE_SCHRITT_M)
+    // das Netz nimmt nur jedes SCHRITT-te Feld und liegt in Mulden darum etwas höher als das Feld selbst
+    const netzHoehe = (e: number, n: number) => {
+      const x = Math.max(0, Math.min((nx - 1) - 0.001, ((e - ost) / m - 0.5) / SCHRITT))
+      const y = Math.max(0, Math.min((ny - 1) - 0.001, ((nord - n) / m - 0.5) / SCHRITT))
+      const x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0
+      const z = (i: number, j: number) => h[j * SCHRITT * breite + i * SCHRITT]
+      return z(x0, y0) * (1 - fx) * (1 - fy) + z(x0 + 1, y0) * fx * (1 - fy) + z(x0, y0 + 1) * (1 - fx) * fy + z(x0 + 1, y0 + 1) * fx * fy
+    }
+    const ueber = new Float32Array(schritte + 1)
+    for (let i = 0; i <= schritte; i++) {
+      if (anzahl[i + 1] === anzahl[i]) continue
+      const [e, n] = punktBei(m0 + i * HOEHE_SCHRITT_M)
+      ueber[i] = Math.max(0, summe[i + 1] - summe[i] - geglaettet[i], netzHoehe(e, n) - geglaettet[i])
+    }
+    const groesst = new Float32Array(schritte + 1)
+    for (let i = 0; i <= schritte; i++) {
+      let g = 0
+      for (let j = Math.max(0, i - nah); j <= Math.min(schritte, i + nah); j++) g = Math.max(g, ueber[j])
+      groesst[i] = g
+    }
+    for (let i = 0; i <= schritte; i++) {
+      let t = 0, k = 0
+      for (let j = Math.max(0, i - nah); j <= Math.min(schritte, i + nah); j++) { t += groesst[j]; k++ }
+      geglaettet[i] += t / k + LINIE_UEBER_M
+    }
     const gelaendeAmWeg = (meter: number) => {
       const x = Math.max(0, Math.min(schritte, (meter - m0) / HOEHE_SCHRITT_M))
       const i = Math.min(schritte - 1, Math.floor(x)), t = x - i
-      return geglaettet[i] * (1 - t) + geglaettet[i + 1] * t + UEBER_M
+      return geglaettet[i] * (1 - t) + geglaettet[i + 1] * t
     }
     const hoeheAmWeg = (meter: number) => {
       const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
