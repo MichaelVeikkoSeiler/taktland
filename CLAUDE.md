@@ -279,8 +279,8 @@ Anthracite `#5a5a5a` statt Schwarz (Michael, 2026-09-25). Kacheln und Knöpfe si
 einzige Ausnahme von den kantigen Flächen.
 
 Eigene Einträge (Probefahrten, gemerkte Fahrten, Favoriten, Fahrten im Logbuch) lassen sich **nach links wischen**:
-darunter erscheint rot «Löschen», und erst nach einer Rückfrage ist der Eintrag weg (`komponenten/Wischen.tsx`,
-Michael, 2026-10-08). Das × daneben bleibt für Maus und Tastatur.
+der Eintrag bleibt aufgeschoben, und ein Tipp auf die rote Fläche «Löschen» löscht ihn ohne weitere Rückfrage (`komponenten/Wischen.tsx`,
+Michael, 2026-10-08, ohne Rückfrage seit 2026-10-09). Das × daneben bleibt für Maus und Tastatur.
 
 **Die Bildmarke von Taktland** ist ein weisses «T» aus einer Linie mit fünf Haltepunkten auf
 karminrotem (`#a8102e`), abgerundetem Quadrat; alle Haltepunkte sind Ringe, der Stamm biegt
