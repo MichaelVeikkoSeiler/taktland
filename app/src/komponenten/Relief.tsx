@@ -583,6 +583,9 @@ function Hinweise({ r }: { r: Relief }) {
         </p>
       )}
       <p>
+        Im Führerstand nah am Zug Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt.
+      </p>
+      <p>
         Die Höhe der Gleise steht in keiner Quelle. Die Linie ist darum auf das Gelände gelegt, etwas darüber;
         in Tunneln und auf Brücken gerade zwischen ihren beiden Enden. Das zeigt den Verlauf, nicht die
         Höhe der Gleise. Das Gelände ist auf {r.raster.m} m gemittelt; Felsen, Einschnitte und Mauern sind

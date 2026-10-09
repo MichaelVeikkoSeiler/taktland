@@ -144,7 +144,7 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
       {/* unten nach den Strecken, man liest ihn nicht jedes Mal (Michael, 2026-10-09) */}
       <div className="mt-8"><ModellHinweis /></div>
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-        Gelände aus swissALTIRegio, Luftbild SWISSIMAGE (beide swisstopo). Weitere Zugmodelle folgen.
+        Gelände aus swissALTIRegio, im Führerstand nah am Zug aus swissALTI3D, Luftbild SWISSIMAGE (alle swisstopo). Weitere Zugmodelle folgen.
       </p>
     </div>
   )
