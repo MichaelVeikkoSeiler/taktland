@@ -1,86 +1,77 @@
-# Taktland – Bahnhöfe entdecken
+# Taktland – die Schweizer Bahn kennenlernen
 
-Eine Web-App, mit der man jeden Schweizer SBB-Bahnhof auswählen, erkunden und mit
-Selbstkontrollfragen kennenlernen kann. Die Inhalte entstehen automatisch aus offenen
-Daten – für 769 Bahnhöfe, in gleicher Form, je nach Datenlage unterschiedlich ausführlich.
+Eine kostenlose Web-App (PWA) unter [taktland.ch](https://taktland.ch): Bahnhöfe, Strecken, Tunnel,
+Brücken und Bahnübergänge der Schweiz kennenlernen, im Zug mitfahren und alles festhalten.
+Die Inhalte entstehen aus offenen Daten, in gleicher Form für alle Bahnhöfe, je nach Datenlage
+unterschiedlich ausführlich. Ohne Konto, ohne Werbung; der Fortschritt bleibt auf dem Gerät.
 
 **Taktland gibt nur weiter, was belegt ist.** Fehlt etwas, sagt die App es.
-Die Regeln dazu stehen in [CLAUDE.md](CLAUDE.md), geprüft werden sie von
-`generator/validate.py`.
+Die Regeln dazu stehen in [CLAUDE.md](CLAUDE.md), geprüft werden sie mechanisch, ohne Sprachmodell,
+von `generator/validate.py` und den weiteren Prüfern beim Veröffentlichen.
+
+## Was die App kann
+
+| Bereich | Inhalt |
+|---|---|
+| **Bahnland** | 1'189 Bahnhöfe mit Kapiteln und Selbstkontrollfragen, 156 Linienseiten, die Seite «Strecke» (Weg zwischen zwei Bahnhöfen mit Tunneln und Brücken), Übersichten zu Tunneln, Brücken und Bahnübergängen |
+| **Fahren** | «Mitfahren» im Zug: per Standort meldet Taktland Tunnel, Brücken, Bahnhöfe und Bahnübergänge vorher mit einem Ton; Karte nah, ganzer Weg oder Gelände in 3D. «Probefahren» spielt einen Weg im Zeitraffer ab. «Fahrtblatt» zum Ausdrucken |
+| **Spiele** | Modellbahn (Strecken als Modell im Gelände, auch mit VR-Brille), Geo, Duell, Bahnhofsuche; Geo und Bahnhofsuche auch auf mehreren Geräten |
+| **Standort** | was in der Nähe liegt |
+| **Reisetasche** | Logbuch der Fahrten, Sammelheft, Favoriten |
+
+Ein Modell der Modellbahn ist ausdrücklich kein Abbild der Wirklichkeit (Zug und Gleise nicht
+massstäblich, Zeitraffer); die App sagt das auf der Seite Modellbahn.
 
 ## Stand
 
 | Schritt | Status |
 |---|---|
-| Datenquellen geprüft und geladen (21 Datensätze) | fertig |
-| Fakten für alle 769 SBB-Bahnhöfe | fertig |
-| Profile mit Texten und Fragen | 4 Bahnhöfe (Zürich HB, Olten, Pfäffikon SZ, Schönbühl SBB) |
-| App: Suche, Kapitel, Selbstkontrolle | fertig |
-| Offline und Installation auf dem Startbild | eingebaut, **noch nicht auf einem Gerät geprüft** |
+| Fakten für alle Bahnhöfe (`data/facts`) | 1'189, aus offenen Daten erzeugt |
+| Profile mit Texten und Fragen (`data/profiles`) | 1'189, Deutsch, alle geprüft |
+| Linienseiten (`data/linienprofile`) | 156 |
+| App mit Bahnland, Fahren, Spiele, Standort, Reisetasche | in Betrieb unter taktland.ch |
 | Französisch und Italienisch | offen |
 
 ## Schnellstart
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install pandas pillow anthropic
-python3 pipeline/fetch.py                        # Datensätze von data.sbb.ch laden
+python3 pipeline/fetch.py                        # Datensätze laden
 .venv/bin/python pipeline/build_facts.py --all   # Fakten je Bahnhof erzeugen
+.venv/bin/python generator/bauen.py --alle       # Profile aus Fakten und Bauplan bauen
 .venv/bin/python generator/validate.py --alle    # Profile prüfen
 .venv/bin/python pipeline/export_app.py          # Daten für die App bereitstellen
 npm --prefix app run dev                         # App unter http://localhost:5173
 ```
 
-## Profile erzeugen
+Die vollständige Liste der Befehle (Linien, Strecken, Karten, Gelände, Luftbild, Fahrplan) steht in
+[CLAUDE.md](CLAUDE.md) unter «Befehle».
 
-Zuerst den Schlüssel von console.anthropic.com setzen. Dieser Befehl fragt ihn
-ab, ohne ihn auf den Bildschirm zu schreiben - eingetippt oder eingefügt bleibt
-die Zeile leer:
+## Profile
 
-```bash
-read -rs "?Anthropic-Schlüssel einfügen, dann Enter: " ANTHROPIC_API_KEY && export ANTHROPIC_API_KEY
-```
+Ein Profil ist ein Ergebnis, kein Werkstück: `generator/bauen.py` baut es aus der Faktendatei und
+dem Eintrag in `data/bauplan.json`; von Hand wird es nie geändert. Neue Bahnhöfe kommen mit
+`generator/bauplan.py` in den Bauplan. Das Vorgehen steht in [CLAUDE.md](CLAUDE.md), die Regeln für
+Texte und Fragen in [generator/SCHEMA.md](generator/SCHEMA.md).
 
-Den Schlüssel nie in eine Datei schreiben und nie in einem Screenshot zeigen:
-Das Repository ist öffentlich, und ein sichtbarer Schlüssel ist ein
-verbrauchter Schlüssel. Er gilt nur für dieses Terminal-Fenster.
-
-```bash
-python generator/erzeuge.py --auswahl 10 --probelauf   # zeigt Auftrag und Kosten
-python generator/erzeuge.py --auswahl 10               # erzeugen, einzeln
-python generator/erzeuge.py --alle --stapel            # alle offenen, halber Preis
-```
-
-Der Generator erzeugt ein Profil, lässt es prüfen und gibt dem Modell bei
-Fehlern die Liste zurück, bis zu dreimal. **Nur was die Prüfung besteht, wird
-gespeichert.** Für alle 747 noch offenen Bahnhöfe rechnet der Probelauf mit
-rund 55 Dollar einzeln oder 28 Dollar im Stapel.
+Der ältere Weg über ein Sprachmodell (`generator/erzeuge.py`) braucht einen Schlüssel von
+console.anthropic.com. Den Schlüssel nie in eine Datei schreiben und nie in einem Screenshot zeigen:
+Das Repository ist öffentlich.
 
 ## Aufbau
 
 ```
-pipeline/     Rohdaten laden, prüfen, zu Fakten verdichten
-  explore.py      Katalog und Schemas von data.sbb.ch ansehen
-  fetch.py        21 Datensätze als CSV laden
-  coverage.py     Abdeckung und Verknüpfbarkeit prüfen
-  build_facts.py  data/facts/{uic}.json erzeugen
-  export_app.py   Daten für die App bereitstellen
-belegt/       wiederverwendbarer Unterbau: Faktenbasis, Regelwerk, Erzeuger
-              kennt keine Bahnhöfe, siehe belegt/README.md
-generator/    Profile schreiben und prüfen
-  SCHEMA.md       Regeln für die Texte und Fragen
-  taktland.py     die Bahnhofslogik auf dem Unterbau
-  validate.py     mechanische Prüfung gegen die Fakten
-  erzeuge.py      Profile mit Claude erzeugen, einzeln oder als Stapel
-  auswahl.py      wählt Bahnhöfe nach Datenvielfalt aus
-  distraktoren.py schlägt falsche Antworten vor, die keinen echten Wert treffen
-app/          React, Vite, Tailwind
-data/
-  raw/        heruntergeladene CSV (nicht in Git)
-  facts/      769 geprüfte Faktendateien
-  profiles/   fertige Profile je Bahnhof und Sprache
-docs/
-  datenlage.md  was die offenen Daten hergeben und was nicht
+pipeline/     Rohdaten laden und zu Fakten, Netz, Karten, Gelände und Luftbild verdichten
+belegt/       wiederverwendbarer Unterbau: Faktenbasis, Regelwerk, Erzeuger (siehe belegt/README.md)
+generator/    Profile und Linienseiten bauen und prüfen; SCHEMA.md mit den Regeln
+app/          die PWA (React, Vite, Tailwind, three.js für 3D)
+web/          die Seite taktland.ch (reines HTML)
+server/       Zähler und Spielräume auf cyon (von Hand hochgeladen)
+data/         Fakten, Profile, Linien, Netz, Karten, Gelände, Luftbild (Rohdaten nicht in Git)
+docs/         datenlage.md (was die Daten hergeben) und ideen-fahrtmodus.md (Merkliste)
 ```
+
+Einzelheiten zu jeder Datei in `data/` stehen in [CLAUDE.md](CLAUDE.md) unter «Aufbau».
 
 ## Wie die Ehrlichkeit abgesichert ist
 
@@ -95,10 +86,13 @@ docs/
    «Was diese Daten nicht sagen».
 
 Ein Gegentest liegt bei: `generator/tests/halluzination.de.json` enthält zwölf
-erfundene Angaben. `validate.py` findet alle.
+erfundene Angaben. `validate.py` findet alle. Beim Veröffentlichen (`.github/workflows/pages.yml`)
+laufen die Tests, alle Prüfer und der Bau; schlägt etwas fehl, geht nichts online.
 
-## Datenquelle
+## Datenquellen
 
-Alle Angaben stammen von [data.sbb.ch](https://data.sbb.ch). Die Lizenz verlangt eine
-Quellenangabe, die in der App sichtbar ist. Taktland ist ein privates Lernprojekt und
-kein Angebot der SBB.
+SBB Open Data ([data.sbb.ch](https://data.sbb.ch)), opentransportdata.swiss, Bundesamt für Verkehr BAV,
+Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, Bundesamt für
+Bevölkerungsschutz BABS und Bundesamt für Umwelt BAFU. Was wofür stammt, steht in der App in der
+Fusszeile unter «Alle Datenquellen und Lizenzen» und unter Info. Taktland ist ein privates
+Lernprojekt und kein Angebot einer Bahnunternehmung.

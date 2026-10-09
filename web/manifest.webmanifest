@@ -2,7 +2,7 @@
   "id": "./app/",
   "name": "Taktland",
   "short_name": "Taktland",
-  "description": "Schweizer Bahnhöfe kennenlernen, mit Angaben aus offenen Daten der SBB.",
+  "description": "Bahnhöfe, Strecken, Tunnel und Brücken der Schweiz kennenlernen, im Zug mitfahren und spielen. Mit Angaben aus offenen Daten.",
   "lang": "de-CH",
   "dir": "ltr",
   "start_url": "./app/",
