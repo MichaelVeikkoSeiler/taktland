@@ -23,6 +23,8 @@ type Zeitraffer = typeof ZEITRAFFER[number]
 const ZUGLEICH_S = 40
 /** Tempo der Probefahrt, 100 km/h */
 const PROBE_TEMPO = 100 / 3.6
+/** Probefahrt: so lange fährt der Zug an und bremst vor dem Ziel, in Millisekunden echter Zeit */
+const ANFAHREN_MS = 2000
 /** so oft zeichnet die Probefahrt die Anzeige neu, Millisekunden */
 const ANZEIGE_PROBE_MS = 33
 /** Brücken ab dieser Länge zeigen beim Überfahren «Überfahrt» mit Balken */
@@ -196,7 +198,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     ? fahrweg.objekte.filter((o) => o.art !== 'sehenswert' && o.s > fortsetzen.startS && o.s <= fortsetzen.s)
     : [])
   const gemerktUm = useRef(0)
-  const uhrStart = useRef({ echt: Date.now(), spiel: 0 })
+  const uhrStart = useRef({ echt: Date.now(), spiel: 0, anfahren: false })
   const [raffer, setRaffer] = useState<Zeitraffer>(20)
   const rafferRef = useRef<Zeitraffer>(20)
   // Probefahrt anhalten und weiterfahren (Michael, 2026-09-26: «unterbrechen und wieder starten»)
@@ -204,12 +206,34 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const [angehalten, setAngehalten] = useState(probefahrt)
   const angehaltenRef = useRef(probefahrt)
   const [gestartet, setGestartet] = useState(!probefahrt)
-  /** In der Probefahrt läuft die Zeit schneller; angehalten steht sie */
-  const uhr = () => probefahrt
-    ? uhrStart.current.spiel + (angehaltenRef.current ? 0 : (Date.now() - uhrStart.current.echt) * rafferRef.current)
-    : Date.now()
+  /** In der Probefahrt läuft die Zeit schneller; angehalten steht sie. Nach «Start» und «Weiter» fährt der Zug in
+   *  ANFAHREN_MS an, vor dem Ziel bremst er ebenso lang (Michael, 2026-10-09: «langsam anfährt und in 2 sec die normale
+   *  Geschwindigkeit erreicht. Am Schluss ebenso abbremsen»): die Spielzeit läuft dann langsamer */
+  const uhr = () => {
+    if (!probefahrt) return Date.now()
+    const u = uhrStart.current, f = rafferRef.current
+    if (angehaltenRef.current) return u.spiel
+    const e = Date.now() - u.echt
+    // anfahren: in ANFAHREN_MS gleichmässig von 0 auf volle Fahrt
+    const t = u.spiel + f * (u.anfahren && e < ANFAHREN_MS ? (e * e) / (2 * ANFAHREN_MS) : e - (u.anfahren ? ANFAHREN_MS / 2 : 0))
+    // bremsen: so, dass der Zug nach ANFAHREN_MS am Ende des Wegs steht
+    const ziel = (wegEnde(fahrweg) / PROBE_TEMPO) * 1000, ab = ziel - (f * ANFAHREN_MS) / 2
+    if (t <= ab || u.spiel >= ab) return Math.min(t, ziel)
+    const tau = (t - ab) / f
+    return tau >= ANFAHREN_MS ? ziel : ab + f * (tau - (tau * tau) / (2 * ANFAHREN_MS))
+  }
+  /** Anteil der vollen Probefahrt-Geschwindigkeit jetzt, für die Schätzung des Tempos */
+  const fahrtAnteil = () => {
+    if (!probefahrt || angehaltenRef.current) return 0
+    const d = 50, a = uhr()
+    const u = uhrStart.current
+    uhrStart.current = { ...u, echt: u.echt - d }
+    const b = uhr()
+    uhrStart.current = u
+    return Math.max(0, Math.min(1, (b - a) / (d * rafferRef.current)))
+  }
   function anhaltenUmschalten() {
-    uhrStart.current = { echt: Date.now(), spiel: uhr() }
+    uhrStart.current = { echt: Date.now(), spiel: uhr(), anfahren: angehaltenRef.current }
     angehaltenRef.current = !angehaltenRef.current
     setAngehalten(angehaltenRef.current)
     if (!angehaltenRef.current) setGestartet(true)
@@ -220,7 +244,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
    *  liegt, gilt als nicht gemeldet und wird wieder gemeldet. */
   function springen(s: number) {
     const t = (s / PROBE_TEMPO) * 1000
-    uhrStart.current = { echt: Date.now(), spiel: t }
+    uhrStart.current = { echt: Date.now(), spiel: t, anfahren: false }
     for (const o of fahrweg.objekte) {
       if (o.s > s) {
         gemeldet.current.delete(`${o.art} ${o.kennung}`)
@@ -246,7 +270,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
   /** Tempo der Probefahrt wechseln, ohne dass der Zug springt */
   function rafferWaehlen(f: Zeitraffer) {
-    uhrStart.current = { echt: Date.now(), spiel: uhr() }
+    uhrStart.current = { echt: Date.now(), spiel: uhr(), anfahren: false }
     rafferRef.current = f
     setRaffer(f)
   }
@@ -314,7 +338,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   // Probefahrt: ein Standort pro halber Sekunde, im Tunnel keiner, wie im Zug
   useEffect(() => {
     if (!probefahrt) return
-    uhrStart.current = { echt: Date.now(), spiel: 0 }
+    uhrStart.current = { echt: Date.now(), spiel: 0, anfahren: false }
     const id = window.setInterval(() => {
       if (angehaltenRef.current) return
       const t = uhr()
@@ -322,7 +346,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       const imTunnel = fahrweg.objekte.some((o) => o.art === 'tunnel' && o.sAus !== null && s > o.s + 50 && s < o.sAus - 50)
       if (imTunnel) return
       const l = lageBei(fahrweg, s)
-      standort(t, l.lat, l.lon, 10, PROBE_TEMPO)
+      standort(t, l.lat, l.lon, 10, PROBE_TEMPO * fahrtAnteil())
     }, 500)
     return () => window.clearInterval(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps

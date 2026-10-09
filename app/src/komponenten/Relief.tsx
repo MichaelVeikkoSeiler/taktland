@@ -84,6 +84,8 @@ const BAHNHOF_GRAU = '#2a2a2a'
 const BRILLE_ZUG_M = 0.005
 /** näher als so viele Meter wird der Zug in der Brille kleiner */
 const BRILLE_NAH_M = 0.8
+/** so lange fährt der Zug an und bremst er vor dem Ziel, in Sekunden (Michael, 2026-10-09) */
+const ANFAHREN_S = 2
 /** so gross lässt sich jedes Modell in der Brille höchstens ziehen: Meter auf dem Tisch je Kilometer */
 const BRILLE_GROESST_M_JE_KM = 0.3
 /** in der Brille wird bis so nahe vor den Augen gezeichnet; mit 10 cm verschwand das Gelände um den Kopf (Michael,
@@ -257,7 +259,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
-            <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a>
+            <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
           <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -449,7 +451,7 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
-            <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a>
+            <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
           <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
@@ -1512,7 +1514,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
                     /** 1 vorwärts, -1 zurück: dann fährt der Steuerwagen voraus wie bei einem Pendelzug */
                     richtung: 1,
                     /** «Zug fahren» auf dem Bildschirm, im nächsten Bild ausgeführt */
-                    losWunsch: false }
+                    losWunsch: false,
+                    /** Anteil der vollen Geschwindigkeit: steigt nach dem Anfahren in ANFAHREN_S auf 1 */
+                    anteil: 0 }
     if (fahrknopf) {
       fahrknopf.current = {
         los: () => {
@@ -1906,8 +1910,16 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           fahrt.laeuft = true
           fahrt.gestartet = true
         }
+        if (!fahrt.laeuft) fahrt.anteil = 0
         if (fahrt.laeuft && fahrt.s !== null) {
-          fahrt.s += fahrt.richtung * ((ende - anfang) / PROBE_DAUER_S) * fahrt.tempo * dt
+          // langsam anfahren und vor dem Ziel gleichmässig abbremsen, je in ANFAHREN_S (Michael, 2026-10-09: «in 2 sec
+          // die normale Geschwindigkeit … am Schluss ebenso abbremsen»); der Bremsweg ist die halbe Strecke, die der
+          // Zug in ANFAHREN_S mit voller Fahrt zurücklegt
+          const voll = ((ende - anfang) / PROBE_DAUER_S) * fahrt.tempo
+          fahrt.anteil = Math.min(1, fahrt.anteil + dt / ANFAHREN_S)
+          const rest = fahrt.richtung > 0 ? ende - fahrt.s : fahrt.s - zugLaengeS() - anfang
+          const bremsen = Math.sqrt(Math.max(0, rest) / (voll * ANFAHREN_S / 2))
+          fahrt.s += fahrt.richtung * voll * Math.max(0.02, Math.min(fahrt.anteil, bremsen)) * dt
           // am Ziel anhalten und fragen, wie es weitergeht, statt von vorn zu beginnen (Michael, 2026-10-08)
           const vorneZiel = fahrt.richtung > 0 && fahrt.s >= ende
           const hintenZiel = fahrt.richtung < 0 && fahrt.s - zugLaengeS() <= anfang

@@ -47,7 +47,6 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
         Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen. Mit einer Brille wie der
         Meta Quest steht das Modell vor dir auf dem Tisch.
       </p>
-      <ModellHinweis />
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         «Zug fahren» schickt den Zug in 2,5 Minuten über das ganze Modell. Eine Fahrt wie unterwegs, mit Karte, Meldungen und
         wählbarem Tempo, ist <a href="#/fahrt/probe" className="underline underline-offset-2">Probefahren</a> unter Fahren.
@@ -142,6 +141,8 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
           ))}
         </ul>
       )}
+      {/* unten nach den Strecken, man liest ihn nicht jedes Mal (Michael, 2026-10-09) */}
+      <div className="mt-8"><ModellHinweis /></div>
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
         Gelände aus swissALTIRegio, Luftbild SWISSIMAGE (beide swisstopo). Weitere Zugmodelle folgen.
       </p>
