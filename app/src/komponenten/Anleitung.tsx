@@ -384,7 +384,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           oder der Tunnel, den wir soeben passieren? Wann folgt der nächste Tunnel? Aus solchen
           Fragen ist Taktland entstanden: aus offenen Daten, die mit Hilfe von KI miteinander
           verknüpft sind. Taktland soll ein Reisebegleiter sein und auch ausserhalb des Zuges
-          unterhalten. Eines der Ziele: weg vom Auto und rein in den Zug.»
+          unterhalten.»
         </blockquote>
         <p className="mt-3 font-medium">Michael Veikko Seiler</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
