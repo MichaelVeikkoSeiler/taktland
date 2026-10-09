@@ -100,7 +100,7 @@ export function Linie({ nr, zurueck, zurueckText }: {
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">{fragenGesamt} Fragen</p>
         {RELIEF[nr] && (
           <a href={`#/relief/${RELIEF[nr].name}`} className="kachel kachel-link mt-3 flex items-center justify-between gap-3 px-4 py-3">
-            <span className="font-medium">{RELIEF[nr].titel} als Modell (Modellbahn VR)</span>
+            <span className="font-medium">{RELIEF[nr].titel} als Modell (Modellbahn)</span>
             <span className="pfeil shrink-0" aria-hidden="true">→</span>
           </a>
         )}

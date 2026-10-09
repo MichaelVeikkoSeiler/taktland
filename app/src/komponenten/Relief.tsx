@@ -240,7 +240,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
       {/* zurück dorthin, woher man kam: zur Linie oder zur Modellbahn (Michael, 2026-10-08) */}
       {vonLinie && daten
         ? <Zurueck onClick={() => { window.location.hash = `#/linie/${daten.r.linie}` }} text={`Linie ${daten.r.linie}`} />
-        : <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn VR" />}
+        : <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />}
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{daten?.r.titel ?? 'Bergstrecke'} als Modell</h1>
       {daten && (
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -464,7 +464,7 @@ interface Fahrknopf { los: () => void; halt: () => void }
 function ModellHinweis() {
   return (
     <div className="mt-3 border-l-4 border-sbb-red bg-sbb-milk p-3 text-sm dark:bg-sbb-charcoal">
-      <p className="font-bold">Modellbahn VR: ein Modell zum Anschauen, kein Abbild der Wirklichkeit</p>
+      <p className="font-bold">Modellbahn: ein Modell zum Anschauen, kein Abbild der Wirklichkeit</p>
       <p className="mt-1">Anders als im übrigen Taktland stimmt hier nicht alles mit der Wirklichkeit überein:</p>
       <ul className="mt-1 list-disc space-y-0.5 pl-5">
         <li>Der Zug ist nicht massstäblich und kein bestimmter Zugtyp.</li>

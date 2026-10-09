@@ -23,7 +23,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
         Die Reiter oben führen zu Bahnland (Bahnhöfe, Strecken, Brücken, Tunnel,
-        Bahnübergänge), Spiele (Modellbahn VR, Geo, Duell, Bahnhofsuche), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
+        Bahnübergänge), Spiele (Modellbahn, Geo, Duell, Bahnhofsuche), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
 
@@ -66,7 +66,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       </Abschnitt>
 
       <Abschnitt titel="Spiele">
-        <Spiel titel="Modellbahn VR">
+        <Spiel titel="Modellbahn">
           Eine Strecke als Modell im Gelände: eine Bergstrecke oder eine eigene bis etwa 170 km. Drehen, zoomen und einen
           Zug darüber fahren lassen{xr ? '; mit der Brille steht das Modell vor dir auf dem Tisch' : ''}. Ein Modell, kein Abbild:
           Zug, Gleise und Masten sind nicht massstäblich, die Fahrt ist ein Zeitraffer.
@@ -190,7 +190,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             «3D» auf der Karte zeigt auf jeder Fahrt und Probefahrt das Gelände rund um den Zug, zum
             Drehen und Zoomen. Unter «Probefahren» stehen dazu bekannte Bergstrecken als Probefahrt. Als Modell, auch in
-            einer VR-Brille, gibt es sie unter Spiele, «Modellbahn VR». Die
+            einer VR-Brille, gibt es sie unter Spiele, «Modellbahn». Die
             Höhe der Gleise steht in keiner Quelle: Der Weg liegt auf dem Gelände, in Tunneln und auf
             Brücken gerade zwischen den Enden.
           </li>

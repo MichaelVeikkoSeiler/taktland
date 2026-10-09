@@ -208,7 +208,7 @@ function laengeText(m: number) {
 }
 
 /** modell: die Seite «Eigene Strecke» der Modellbahn (Michael, 2026-10-08): dieselbe Wahl, dann das Modell statt der Fahrt */
-/** fest: eine gemerkte Probefahrt in der Modellbahn VR; Start, Ziel und Über stehen da, lassen sich aber nicht ändern,
+/** fest: eine gemerkte Probefahrt in der Modellbahn; Start, Ziel und Über stehen da, lassen sich aber nicht ändern,
  *  und das Modell steht gleich oben (Michael, 2026-10-08: «ohne Editierbarkeit … Karte weiter oben») */
 export function Strecke({ index, wahl, modell = false, fest = false }: { index: BahnhofIndex | null; wahl: StreckenWahl; modell?: boolean; fest?: boolean }) {
   const adresse = (w: StreckenWahl) => (modell ? streckenAdresse(w).replace('#/strecke', '#/modellbahn/strecke') : streckenAdresse(w))
@@ -289,12 +289,12 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
     <div className="px-4 pb-4">
       {modell && fest ? (
         <>
-          <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn VR" />
+          <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />
           <h1 className="mt-4 text-2xl font-bold tracking-tight">Probefahrt als Modell</h1>
         </>
       ) : modell ? (
         <>
-          <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn VR" />
+          <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />
           <h1 className="mt-4 text-2xl font-bold tracking-tight">Eigene Strecke als Modell</h1>
           <p className="mt-2 leading-relaxed">
             Start und Ziel wählen: Taktland sucht einen Weg durch das Netz und baut ihn als Modell im Gelände, bis
@@ -769,7 +769,7 @@ function Ergebnis({
             {!wahl.weg && wahl.von && wahl.nach && (
               <a href={`${streckenAdresse(wahl).replace('#/strecke', '#/modellbahn/strecke')}&fest=1`}
                  className="mt-3 flex items-center gap-2 text-sm font-medium underline underline-offset-2">
-                Als Modell ansehen (Spiele, Modellbahn VR, bis {MODELL_HOECHSTENS_M / 1000} km)
+                Als Modell ansehen (Spiele, Modellbahn, bis {MODELL_HOECHSTENS_M / 1000} km)
                 <span className="pfeil" aria-hidden="true">→</span>
               </a>
             )}
