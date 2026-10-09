@@ -7,6 +7,7 @@ import brueckenHell from '../assets/auftakt-bruecken-hell.webp'
 import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
 import duellHell from '../assets/auftakt-duell-hell.webp'
 import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
+import modellbahnDunkel from '../assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from '../assets/auftakt-modellbahn-hell.webp'
 import logbuchHell from '../assets/auftakt-logbuch-hell.webp'
 import erratenDunkel from '../assets/auftakt-erraten-dunkel.webp'
@@ -132,9 +133,9 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: spieleHell, dunkel: spieleDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Jemand setzt auf einer Brücke eine rote Ortsmarke auf eine Karte im Handy, dahinter ein See mit Dorf, Berge und ein Zug auf einem Viadukt vor einem Tunnel.',
   },
-  // Michael, 2026-10-10: eigenes Bild für die Modellbahn; die Nachtversion folgt, bis dahin auch im Dunkelmodus das helle
+  // Michael, 2026-10-10: eigenes Bildpaar für die Modellbahn, auch oben auf der Übersicht der Spiele
   modellbahn: {
-    hell: modellbahnHell, dunkel: modellbahnHell, breite: 1344, hoehe: 664,
+    hell: modellbahnHell, dunkel: modellbahnDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Jemand mit VR-Brille und zwei Controllern dreht am Tisch das Modell einer Bergstrecke mit Wald, Schnee, Tunneln, einem Viadukt über einen Fluss und einem Zug; daneben liegt ein Handy mit demselben Modell, draussen Berge und ein See.',
   },
   duell: {

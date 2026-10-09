@@ -9,6 +9,7 @@ import duellDunkel from './assets/auftakt-duell-dunkel.webp'
 import duellHell from './assets/auftakt-duell-hell.webp'
 import erratenDunkel from './assets/auftakt-erraten-dunkel.webp'
 import erratenHell from './assets/auftakt-erraten-hell.webp'
+import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
 import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
@@ -34,7 +35,7 @@ export const SPIELE: Spiel[] = [
   {
     id: 'modellbahn', titel: 'Modellbahn', status: 'spielbereit', adresse: '#/modellbahn',
     kurz: 'Eine Strecke als Modell im Gelände, auch in der VR-Brille.',
-    bild: { hell: modellbahnHell, dunkel: modellbahnHell, alt: 'Illustration: Jemand mit VR-Brille dreht am Tisch das Modell einer Bergstrecke mit Zug auf einem Viadukt.' },
+    bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: Jemand mit VR-Brille dreht am Tisch das Modell einer Bergstrecke mit Zug auf einem Viadukt.' },
     beschreibung: 'Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen, mit einer '
       + 'Brille auch auf dem Tisch vor dir. Ein Modell, kein Abbild der Wirklichkeit.',
   },
