@@ -256,21 +256,33 @@ export default function App() {
                         dark:text-sbb-white dark:hover:bg-sbb-charcoal">
             Einstellungen
           </a>
+          {/* eine Zeile mit allen Quellen bleibt immer sichtbar, was wofür ist, klappt auf (Michael, 2026-10-09:
+              «Quellenangaben ein- und ausklappbar», mit Blick auf Barrierefreiheit: details/summary des Browsers) */}
           <p>
-            Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
-            Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
-            Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Luftbild in 3D (SWISSIMAGE), Höhenstufen und das Gelände in 3D (swissALTIRegio, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
-            Gipfel und Ortsnamen (Swiss Map Vector 1000), Brückenlängen und beim Fahren Tunnel und Brücken
-            anderer Bahnen, auch in 3D (swissTLM3D): Bundesamt für Landestopografie swisstopo. Landes- und Kantonsgrenzen:
-            Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für
-            Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
-            Moorlandschaften: Bundesamt für Umwelt BAFU.
+            Daten: SBB, opentransportdata.swiss, Bundesamt für Verkehr BAV, Bundesamt für Landestopografie swisstopo,
+            Bundesamt für Statistik BFS, Bundesamt für Bevölkerungsschutz BABS, Bundesamt für Umwelt BAFU.
             Taktland ist ein privates Lernprojekt und kein Angebot einer Bahnunternehmung.
-            Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
-            Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
-            sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist zum Lernen,
-            Nachschlagen und Mitfahren gedacht, nicht für die Reiseplanung.
           </p>
+          <details className="klapp mt-2">
+            <summary className="flex min-h-11 cursor-pointer items-center text-sm font-medium text-sbb-black underline
+                                underline-offset-2 dark:text-sbb-white">
+              Alle Datenquellen und Lizenzen
+            </summary>
+            <p className="mt-1">
+              Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen: opentransportdata.swiss;
+              Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
+              Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen (swissTLMRegio), Luftbild in 3D (SWISSIMAGE), Höhenstufen und das Gelände in 3D (swissALTIRegio, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
+              Gipfel und Ortsnamen (Swiss Map Vector 1000), Brückenlängen und beim Fahren Tunnel und Brücken
+              anderer Bahnen, auch in 3D (swissTLM3D): Bundesamt für Landestopografie swisstopo. Landes- und Kantonsgrenzen:
+              Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für
+              Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
+              Moorlandschaften: Bundesamt für Umwelt BAFU.
+              Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
+              Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
+              sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist zum Lernen,
+              Nachschlagen und Mitfahren gedacht, nicht für die Reiseplanung.
+            </p>
+          </details>
           <p className="mt-2">
             <a href="#/anleitung" className="underline underline-offset-2 hover:text-sbb-black
                                              dark:hover:text-sbb-white">

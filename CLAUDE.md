@@ -299,5 +299,6 @@ Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen ab 1000 mit Apostrop
 ## Quellenangabe
 
 Die Daten stammen von data.sbb.ch. Die Lizenz verlangt eine Quellenangabe, die in
-der App sichtbar sein muss. Kein SBB-Logo, kein Auftritt, der ein offizielles
+der App sichtbar sein muss: In der Fusszeile steht immer eine Zeile mit allen Quellen, was wofür ist, klappt
+darunter auf («Alle Datenquellen und Lizenzen», details/summary, Michael, 2026-10-09). Kein SBB-Logo, kein Auftritt, der ein offizielles
 SBB-Produkt suggeriert.
