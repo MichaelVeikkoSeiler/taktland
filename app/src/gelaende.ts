@@ -239,3 +239,66 @@ export async function nahbildLaden(e0: number, n0: number, e1: number, n1: numbe
   if (!kacheln.length) return null
   return { kacheln, jahre: [...new Set(kacheln.map(({ ke, kn }) => ix.km[`${ke}_${kn}`]))].sort() }
 }
+
+/* ---------- feines Gelände für den Führerstand ---------- */
+
+interface FeinIndex { km: Record<string, number>; je_km: number; quelle: string }
+/** swissALTI3D auf 10 m, nur Kilometer bis 500 m neben einer Bahnlinie (pipeline/build_gelaende_nah.py) */
+export const feinIndex = () => holen<FeinIndex>('data/gelaende_nah/index.json')
+export const FEIN_JE_KM = 100
+const FEIN_HOECHSTENS = 200
+const feinVorrat = new Map<string, Promise<Float32Array | null>>()
+
+function feinKachel(name: string) {
+  let p = feinVorrat.get(name)
+  if (p) return p
+  while (feinVorrat.size >= FEIN_HOECHSTENS) feinVorrat.delete(feinVorrat.keys().next().value!)
+  p = (async () => {
+    const gepackt = await holenBinaer(`data/gelaende_nah/${name}.hgz`)
+    const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+    // vorne die tiefste Höhe in Dezimetern, dann je Zeile Differenzen zum linken Nachbarn
+    const tief = new DataView(roh).getInt32(0, true), d = new Int16Array(roh, 4)
+    const n = FEIN_JE_KM, h = new Float32Array(n * n)
+    for (let j = 0; j < n; j++) {
+      let v = 0
+      for (let i = 0; i < n; i++) { v += d[j * n + i]; h[j * n + i] = (tief + v) / 10 }
+    }
+    return h
+  })().catch(() => { feinVorrat.delete(name); return null })
+  feinVorrat.set(name, p)
+  return p
+}
+
+/** Höhen je Kilometer im Rechteck, Schlüssel «Ost-km_Nord-km», Zeilen von Norden, Feldmitte bei 5 m */
+export interface Fein { km: Map<string, Float32Array>; jahre: number[] }
+
+export async function feinLaden(e0: number, n0: number, e1: number, n1: number): Promise<Fein | null> {
+  if (!gelaendeMoeglich()) return null
+  const ix = await feinIndex().catch(() => null)
+  if (!ix) return null
+  const namen: string[] = []
+  for (let ke = Math.floor(e0 / 1000); ke <= Math.floor((e1 - 1) / 1000); ke++) {
+    for (let kn = Math.floor(n0 / 1000); kn <= Math.floor((n1 - 1) / 1000); kn++) if (ix.km[`${ke}_${kn}`]) namen.push(`${ke}_${kn}`)
+  }
+  const hoehen = await Promise.all(namen.map(feinKachel))
+  const km = new Map<string, Float32Array>()
+  namen.forEach((name, i) => { if (hoehen[i]) km.set(name, hoehen[i]!) })
+  if (!km.size) return null
+  return { km, jahre: [...new Set([...km.keys()].map((k) => ix.km[k]))].sort() }
+}
+
+/** Höhe des Feldes mit der Mitte bei Ost I*10+5, Nord J*10+5 (Meter), oder null ohne feine Kachel */
+export function feinFeld(f: Fein, I: number, J: number): number | null {
+  const ke = Math.floor(I / FEIN_JE_KM), kn = Math.floor(J / FEIN_JE_KM)
+  const a = f.km.get(`${ke}_${kn}`)
+  if (!a) return null
+  return a[(FEIN_JE_KM - 1 - (J - kn * FEIN_JE_KM)) * FEIN_JE_KM + I - ke * FEIN_JE_KM]
+}
+
+/** Höhe bei Ost, Nord zwischen den Feldern linear, oder null, wo eine Kachel fehlt */
+export function feinHoehe(f: Fein, e: number, n: number): number | null {
+  const x = (e - 5) / 10, y = (n - 5) / 10, I = Math.floor(x), J = Math.floor(y), fx = x - I, fy = y - J
+  const a = feinFeld(f, I, J), b = feinFeld(f, I + 1, J), c = feinFeld(f, I, J + 1), d = feinFeld(f, I + 1, J + 1)
+  if (a === null || b === null || c === null || d === null) return null
+  return a * (1 - fx) * (1 - fy) + b * fx * (1 - fy) + c * (1 - fx) * fy + d * fx * fy
+}

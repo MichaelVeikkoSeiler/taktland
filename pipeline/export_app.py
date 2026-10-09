@@ -139,6 +139,13 @@ def main():
             shutil.rmtree(ZIEL / "luftbild_nah")
         shutil.copytree(nah, ZIEL / "luftbild_nah")
         print(f"luftbild_nah/: {sum(p.stat().st_size for p in (ZIEL / 'luftbild_nah').iterdir())/1e6:.1f} MB")
+    # feines Gelände für den Führerstand: swissALTI3D auf 10 m entlang der Bahnlinien (pipeline/build_gelaende_nah.py)
+    fein = ROOT / "data" / "gelaende_nah"
+    if (fein / "index.json").exists():
+        if (ZIEL / "gelaende_nah").exists():
+            shutil.rmtree(ZIEL / "gelaende_nah")
+        shutil.copytree(fein, ZIEL / "gelaende_nah")
+        print(f"gelaende_nah/: {sum(p.stat().st_size for p in (ZIEL / 'gelaende_nah').iterdir())/1e6:.1f} MB")
     # Gelände der ganzen Schweiz in Kacheln (pipeline/build_gelaende.py), für «3D» auf jeder Fahrt
     gelaende = ROOT / "data" / "gelaende"
     if gelaende.exists():

@@ -9,7 +9,7 @@ import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, Sehen
 import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
-import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden } from '../gelaende'
+import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -64,6 +64,11 @@ const SCHRITT = 2
 const KAMERA_KNOPF = 'rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90'
 /** Führerstand: das Auge so hoch über der Linie, so nah zeichnet die Kamera noch (km) */
 const FUEHRERSTAND_HOEHE_M = 4, FUEHRERSTAND_NAHE_KM = 0.003
+/** Führerstand: feines Gelände (10 m) in einem Quadrat von FEIN_SEITE_M, die Mitte FEIN_VORAUS_M vor dem Zug, neu nach
+ *  FEIN_NACH_M Fahrt; FEIN_RAND_M vor dem Rand geht die Linie wieder in die des groben Geländes über */
+const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4, FEIN_RAND_M = 300
+/** Linie im Führerstand: in Metern breit statt in Bildpunkten; Linie über dem feinen Gelände */
+const FEIN_LINIE_M = 1.5, FEIN_UEBER_M = 1
 /** Nahbild (Luftbild auf 2,5 m entlang der Bahnlinien): so gross um den Blickpunkt, so viele Bildpunkte je Meter;
  *  neu geladen, wenn der Blickpunkt so weit gewandert ist; nur wenn die Kamera näher ist als NAH_BIS_KM */
 const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
@@ -471,7 +476,8 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
             Die ganze Strecke als Modell, mit einem Band von {(BAND_M / 1000).toLocaleString('de-CH').replace('.', ',')} km links und rechts der Strecke; was weiter weg
             liegt, fehlt. Gelände aus swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
-            wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert.
+            wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert. Im Führerstand nah am Zug Gelände aus swissALTI3D
+            (swisstopo) auf 10 m und das Luftbild bis 500 m neben den Bahnlinien auf 2,5 m.
           </p>
         </>
       )}
@@ -748,7 +754,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         </summary>
         <p className="mt-1">
           Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
-          SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Die Höhe der Gleise steht in
+          SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Im Führerstand nah am Zug das
+          Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt. Die Höhe der Gleise steht in
           keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Tunnel, von denen
           die Quelle nur einen Kilometer kennt und keine Länge, fehlen in 3D; beim Fahren meldet Taktland sie trotzdem. Zug nicht
           massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
@@ -950,6 +957,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       auflageTextur.needsUpdate = true
       nahErlaubt = mitBild
       nahZeichnen()
+      feinMalen?.()
     }
     /** Umrisse der Gebiete und das Kilometernetz, auf dem Luftbild und dem Nahbild gleich */
     const linienMalen = (a: Set<Kategorie>, mitBild: boolean, grund: Malgrund) => {
@@ -993,10 +1001,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     nahNetz.visible = false
     szene.add(nahNetz)
     let nahErlaubt = false, nahAuftrag = 0
+    // Führerstand: was dort geladen ist (feinSetzen); solange trägt das feine Netz auch das Nahbild
+    let feinStand: { fein: Fein; e0: number; n0: number } | null = null
+    let feinMalen: (() => void) | null = null
     let nahMitte: [number, number] | null = null
     let nahStand: { bild: Nahbild; e0: number; n1: number } | null = null
     const nahZeichnen = () => {
-      nahNetz.visible = nahErlaubt && !!nahStand
+      nahNetz.visible = nahErlaubt && !!nahStand && !feinStand
       if (!nahStand) return
       const { bild, e0, n1 } = nahStand
       const fx = (e: number) => (e - e0) * NAH_PX_JE_M, fy = (n: number) => (n1 - n) * NAH_PX_JE_M
@@ -1211,6 +1222,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     // grau, wo der Weg selbst dunkel ist (beim Fahren), sonst wären Tunnel kaum zu unterscheiden
     const tunnelFarbe = dunkel || wegFarbe === FARBEN.weg ? '#b4b4b4' : FARBEN.tunnel
+    const wegVon = nurBild.children.length
     for (const [anfang, ende] of weg.stuecke) {
       const grenzen = weg.bauwerke.filter((g) => g.bis > anfang && g.von < ende).sort((a, b) => a.von - b.von)
       let bei = anfang
@@ -1223,6 +1235,194 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (bei < ende) linie(strichVon(bei, ende), wegFarbe, false)
     }
     const imStueck = (meter: number) => weg.stuecke.some(([a, b]) => meter >= a && meter <= b)
+    const wegStriche = nurBild.children.slice(wegVon)
+
+    // Führerstand: um den Zug das Gelände auf 10 m (swissALTI3D) statt auf 100 m, darauf Luftbild und Nahbild, und die
+    // Linie auf diesem Gelände (Michael, 2026-10-10: «die nähere Umgebung in maximaler Qualität … nur 1 bis 2 km um die
+    // Strecke»). Das grobe Gelände sinkt dort unter das feine, und seine Linie ruht, solange der Führerstand gilt
+    const aufloesung = new THREE.Vector2(1, 1)
+    const feinLeinwand = document.createElement('canvas')
+    feinLeinwand.width = feinLeinwand.height = Math.round(FEIN_SEITE_M * FEIN_PX_JE_M)
+    const feinCtx = feinLeinwand.getContext('2d')!
+    const feinTextur = new THREE.CanvasTexture(feinLeinwand)
+    feinTextur.colorSpace = THREE.SRGBColorSpace
+    feinTextur.anisotropy = renderer.capabilities.getMaxAnisotropy()
+    const feinMaterial = new THREE.MeshLambertMaterial({ map: feinTextur })
+    // die Farben des Geländes und das Luftbild sind beide um 1.3 abgedunkelt (grundBild, Luftbild)
+    feinMaterial.color.setScalar(1.3)
+    const feinNetz = new THREE.Mesh(new THREE.BufferGeometry(), feinMaterial)
+    feinNetz.renderOrder = -1
+    feinNetz.visible = false
+    const feinLinien = new THREE.Group()
+    szene.add(feinNetz, feinLinien)
+    const grundY = new Float32Array(netzPunkte)
+    for (let v = 0; v < netzPunkte; v++) grundY[v] = pos[v * 3 + 1]
+    let versenkt: number[] = []
+    let feinNah: Nahbild | null = null
+    let feinAuftrag = 0
+    /** Höhe der Linie im Führerstand: auf dem feinen Gelände, gegen den Rand des Quadrats in die grobe übergehend */
+    const feinLinieHoehe = (meter: number) => {
+      const grob = hoeheAmWeg(meter)
+      if (!feinStand) return grob
+      const { fein, e0, n0 } = feinStand
+      const amBoden = (mm: number) => {
+        const [e, n] = punktBei(mm)
+        return feinHoehe(fein, e, n)
+      }
+      const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
+      // gemittelt über 30 m davor und danach; in Tunneln und auf Brücken gerade zwischen den Enden
+      const gemittelt = (mm: number) => {
+        let t = 0, k = 0
+        for (let d = -30; d <= 30; d += 10) { const z = amBoden(mm + d); if (z !== null) { t += z; k++ } }
+        return k ? t / k + FEIN_UEBER_M : null
+      }
+      let z: number | null
+      if (bau) {
+        const za = gemittelt(bau.von), zb = gemittelt(bau.bis)
+        z = za !== null && zb !== null ? za + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (zb - za) : null
+      } else z = gemittelt(meter)
+      if (z === null) return grob
+      const [e, n] = punktBei(meter)
+      const rand = Math.min(e - e0, e0 + FEIN_SEITE_M - e, n - n0, n0 + FEIN_SEITE_M - n)
+      const a = Math.max(0, Math.min(1, rand / FEIN_RAND_M))
+      return z * a + grob * (1 - a)
+    }
+    const feinPunkt3d = (meter: number) => {
+      const [e, n] = punktBei(meter)
+      return new THREE.Vector3(X(e), Y(feinLinieHoehe(meter)), Z(n))
+    }
+    feinMalen = () => {
+      if (!feinStand) return
+      const { e0, n0 } = feinStand, n1 = n0 + FEIN_SEITE_M, w = feinLeinwand.width
+      const fx = (e: number) => (e - e0) * FEIN_PX_JE_M, fy = (n: number) => (n1 - n) * FEIN_PX_JE_M
+      // darunter die Auflage des ganzen Geländes; ohne Luftbild die Farben des Geländes mit Wald, Siedlung, Gebieten
+      const ausschnitt = (bild: HTMLCanvasElement, je: number) =>
+        feinCtx.drawImage(bild, ((e0 - ost) / m) * je, ((nord - n1) / m) * je, (FEIN_SEITE_M / m) * je, (FEIN_SEITE_M / m) * je, 0, 0, w, w)
+      feinCtx.globalCompositeOperation = 'source-over'
+      feinCtx.imageSmoothingEnabled = true
+      ausschnitt(grundBild(), 1)
+      if (!nahErlaubt) feinCtx.globalCompositeOperation = 'multiply'
+      ausschnitt(leinwand, PX)
+      feinCtx.globalCompositeOperation = 'source-over'
+      if (nahErlaubt && feinNah) {
+        const seite = 1000 * FEIN_PX_JE_M
+        for (const { ke, kn, bild: b } of feinNah.kacheln) feinCtx.drawImage(b, fx(ke * 1000), fy((kn + 1) * 1000), seite, seite)
+        linienMalen(ausJetzt.current, true, { ctx: feinCtx, fx, fy, w, h: w, dicke: (FEIN_PX_JE_M * m) / PX })
+      }
+      feinTextur.needsUpdate = true
+    }
+    /** zurück zum groben Gelände und seiner Linie */
+    const feinWeg = () => {
+      const p = geo.getAttribute('position')
+      for (const v of versenkt) (p.array as Float32Array)[v * 3 + 1] = grundY[v]
+      if (versenkt.length) p.needsUpdate = true
+      versenkt = []
+      feinStand = null
+      feinNetz.visible = false
+      for (const o of feinLinien.children) { (o as Line2).geometry.dispose(); ((o as Line2).material as LineMaterial).dispose() }
+      feinLinien.clear()
+      for (const o of wegStriche) o.visible = true
+      nahZeichnen()
+    }
+    const feinSetzen = async (stelle: number, richtung: number) => {
+      const auftrag = ++feinAuftrag
+      const anfang = pk[0].m, ende = pk[pk.length - 1].m
+      const [ce, cn] = punktBei(Math.max(anfang, Math.min(ende, stelle + richtung * FEIN_VORAUS_M)))
+      const e0 = Math.round((ce - FEIN_SEITE_M / 2) / 10) * 10, n0 = Math.round((cn - FEIN_SEITE_M / 2) / 10) * 10
+      const e1 = e0 + FEIN_SEITE_M, n1 = n0 + FEIN_SEITE_M
+      const [fein, nahBild] = await Promise.all([feinLaden(e0, n0, e1, n1), luftbild ? nahbildLaden(e0, n0, e1, n1) : null])
+      if (!laeuft || auftrag !== feinAuftrag || !imStand) return
+      feinWeg()
+      if (!fein) return
+      feinStand = { fein, e0, n0 }
+      feinNah = nahBild
+      // das Netz: ein Punkt je Feld von 10 m, nur Vierecke mit vier Höhen
+      const I0 = Math.ceil((e0 - 5) / 10), J1 = Math.floor((n1 - 5) / 10), b = FEIN_SEITE_M / 10
+      const p2 = new Float32Array(b * b * 3), uv2 = new Float32Array(b * b * 2), da = new Uint8Array(b * b)
+      for (let j = 0; j < b; j++) {
+        for (let i = 0; i < b; i++) {
+          const k = j * b + i, e = (I0 + i) * 10 + 5, n = (J1 - j) * 10 + 5
+          const z = feinFeld(fein, I0 + i, J1 - j)
+          if (z === null) continue
+          da[k] = 1
+          p2[k * 3] = X(e); p2[k * 3 + 1] = Y(z); p2[k * 3 + 2] = Z(n)
+          uv2[k * 2] = (e - e0) / FEIN_SEITE_M; uv2[k * 2 + 1] = (n - n0) / FEIN_SEITE_M
+        }
+      }
+      const idx: number[] = []
+      for (let j = 0; j < b - 1; j++) {
+        for (let i = 0; i < b - 1; i++) {
+          const k = j * b + i
+          if (da[k] && da[k + 1] && da[k + b] && da[k + b + 1]) idx.push(k, k + b, k + 1, k + 1, k + b, k + b + 1)
+        }
+      }
+      const g = new THREE.BufferGeometry()
+      g.setAttribute('position', new THREE.BufferAttribute(p2, 3))
+      g.setAttribute('uv', new THREE.BufferAttribute(uv2, 2))
+      g.setIndex(idx)
+      g.computeVertexNormals()
+      feinNetz.geometry.dispose()
+      feinNetz.geometry = g
+      feinNetz.visible = true
+      feinMalen?.()
+      // das grobe Gelände sinkt, wo jedes angrenzende Viereck ganz auf feinem Gelände liegt; so bleibt keine Lücke
+      const d = SCHRITT * m, innen = (e: number, n: number) =>
+        e > I0 * 10 + 15 && e < (I0 + b - 1) * 10 - 5 && n < J1 * 10 - 5 && n > (J1 - b + 1) * 10 + 15 && fein.km.has(`${Math.floor(e / 1000)}_${Math.floor(n / 1000)}`)
+      const pa = geo.getAttribute('position'), parr = pa.array as Float32Array
+      for (let j = 0; j < ny; j++) {
+        const n = nord - (j * SCHRITT + 0.5) * m
+        if (n < n0 || n > n1) continue
+        for (let i = 0; i < nx; i++) {
+          const v = nummer[j * nx + i]
+          if (v < 0) continue
+          const e = ost + (i * SCHRITT + 0.5) * m
+          if (e < e0 || e > e1) continue
+          if (innen(e - d, n - d) && innen(e + d, n - d) && innen(e - d, n + d) && innen(e + d, n + d)) {
+            parr[v * 3 + 1] = grundY[v] - Y(300)
+            versenkt.push(v)
+          }
+        }
+      }
+      if (versenkt.length) pa.needsUpdate = true
+      // die Linie auf dem feinen Gelände, 6 km davor und danach, in Metern breit
+      const von = Math.max(anfang, stelle - 6000), bis = Math.min(ende, stelle + 6000)
+      const strich = (punkte: THREE.Vector3[], farbe: string, tunnel: boolean) => {
+        if (punkte.length < 2) return
+        const lg = new LineGeometry()
+        lg.setPositions(punkte.flatMap((q) => [q.x, q.y, q.z]))
+        ;[[randVon(farbe), 1], [farbe, STRICH_INNEN]].forEach(([f, anteil], k) => {
+          const lm = new LineMaterial({ color: f as string, linewidth: (FEIN_LINIE_M * (anteil as number)) / 1000, worldUnits: true,
+                                        depthTest: !tunnel, transparent: tunnel, opacity: tunnel ? 0.9 : 1, depthWrite: k === 1,
+                                        dashed: tunnel, dashSize: 0.02, gapSize: 0.015 })
+          lm.resolution.copy(aufloesung)
+          const l = new Line2(lg, lm)
+          if (tunnel) l.computeLineDistances()
+          l.renderOrder = (tunnel ? 2 : 0) + k
+          feinLinien.add(l)
+        })
+      }
+      const punkteVon = (a: number, z: number) => {
+        const punkte: THREE.Vector3[] = []
+        for (let meter = a; meter < z; meter += 10) punkte.push(feinPunkt3d(meter))
+        punkte.push(feinPunkt3d(z))
+        return punkte
+      }
+      for (const [a0, z0] of weg.stuecke) {
+        const anf = Math.max(a0, von), end = Math.min(z0, bis)
+        if (end <= anf) continue
+        const grenzen = weg.bauwerke.filter((x) => x.bis > anf && x.von < end).sort((x, y) => x.von - y.von)
+        let bei = anf
+        for (const x of grenzen) {
+          if (x.von > bei) strich(punkteVon(bei, x.von), wegFarbe, false)
+          const a = Math.max(x.von, anf, bei), z = Math.min(x.bis, end)
+          if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, x.art === 'tunnel')
+          bei = Math.max(bei, x.bis)
+        }
+        if (bei < end) strich(punkteVon(bei, end), wegFarbe, false)
+      }
+      for (const o of wegStriche) o.visible = false
+      nahZeichnen()
+    }
 
     // Beschriftungen in fester Bildschirmgrösse, auf einem hellen Schild; wo sich zwei
     // überdecken, bleibt die mit dem kleineren Rang stehen (zeichnen() blendet die andere aus)
@@ -1531,7 +1731,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       for (const t of zugTeile) {
         const halb = (t.laenge * zugMass) / 2
         const mitte = s === null ? 0 : s - t.ab * zugMass - halb
-        const sichtbar = s !== null && imStueck(mitte)
+        // im Führerstand sitzt man im Zug selbst
+        const sichtbar = s !== null && imStueck(mitte) && !imStand
         t.netz.visible = sichtbar
         t.durch.visible = false
         if (!sichtbar) continue
@@ -1598,6 +1799,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (!b || !hh) return
       renderer.setSize(b, hh)
       for (const lm of linienMaterialien) lm.resolution.set(b, hh)
+      aufloesung.set(b, hh)
       kamera.aspect = b / hh
       kamera.updateProjectionMatrix()
     }
@@ -2030,6 +2232,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // beim Fahren: die Kamera folgt dem Zug mit demselben Blickwinkel; am Anfang von schräg hinten
     let letzte: THREE.Vector3 | null = null
     let imStand = false
+    let feinAb = -Infinity
     let laeuft = true
     const uhr = new THREE.Clock()
     const zeichenMass = () => Math.min(2, Math.max(0.15, kamera.position.distanceTo(steuerung.target) / ZUG_NORMAL_KM))
@@ -2115,15 +2318,22 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           kamera.updateProjectionMatrix()
           letzte = null
           if (blick) blick.current = null
+          feinAb = -Infinity
+          if (!vorne) { feinAuftrag++; feinWeg() }
         }
         if (vorne && s !== null) {
           const r = zug === eigenerZug ? fahrt.richtung : 1
           const spitze = r > 0 ? s : s - zugLaengeS()
           const bis = (m: number) => Math.max(pk[0].m, Math.min(pk[pk.length - 1].m, m))
-          const auge = punkt3d(bis(spitze + r * 15))
+          // das feine Gelände wandert mit, sobald der Zug FEIN_NACH_M weiter ist
+          if (Math.abs(s - feinAb) > FEIN_NACH_M) {
+            feinAb = s
+            void feinSetzen(s, r)
+          }
+          const auge = feinPunkt3d(bis(spitze + r * 15))
           auge.y += FUEHRERSTAND_HOEHE_M * faktor / 1000
           const ziel = new THREE.Vector3()
-          for (const d of [150, 300, 450]) ziel.add(punkt3d(bis(spitze + r * d)))
+          for (const d of [150, 300, 450]) ziel.add(feinPunkt3d(bis(spitze + r * d)))
           ziel.multiplyScalar(1 / 3)
           ziel.y = Math.max(ziel.y, auge.y - 0.02)
           kamera.position.copy(auge)
@@ -2148,7 +2358,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           letzte = p
         }
       }
-      steuerung.update()
+      // im Führerstand nicht: die Steuerung hielte sonst ihren Mindestabstand und zöge die Kamera hinter den Zug
+      if (!imStand) steuerung.update()
       // das Nahbild folgt dem Blickpunkt, sobald er mehr als NAH_NACH_M weitergewandert ist
       if (luftbild && !renderer.xr.isPresenting && kamera.position.distanceTo(steuerung.target) < NAH_BIS_KM) {
         const e = steuerung.target.x * 1000 + me, n = -steuerung.target.z * 1000 + mn
