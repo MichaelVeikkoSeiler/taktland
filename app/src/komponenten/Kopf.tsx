@@ -7,6 +7,7 @@ import brueckenHell from '../assets/auftakt-bruecken-hell.webp'
 import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
 import duellHell from '../assets/auftakt-duell-hell.webp'
 import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
+import modellbahnHell from '../assets/auftakt-modellbahn-hell.webp'
 import logbuchHell from '../assets/auftakt-logbuch-hell.webp'
 import erratenDunkel from '../assets/auftakt-erraten-dunkel.webp'
 import erratenHell from '../assets/auftakt-erraten-hell.webp'
@@ -131,6 +132,11 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: spieleHell, dunkel: spieleDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Jemand setzt auf einer Brücke eine rote Ortsmarke auf eine Karte im Handy, dahinter ein See mit Dorf, Berge und ein Zug auf einem Viadukt vor einem Tunnel.',
   },
+  // Michael, 2026-10-10: eigenes Bild für die Modellbahn; die Nachtversion folgt, bis dahin auch im Dunkelmodus das helle
+  modellbahn: {
+    hell: modellbahnHell, dunkel: modellbahnHell, breite: 1344, hoehe: 664,
+    alt: 'Illustration: Jemand mit VR-Brille und zwei Controllern dreht am Tisch das Modell einer Bergstrecke mit Wald, Schnee, Tunneln, einem Viadukt über einen Fluss und einem Zug; daneben liegt ein Handy mit demselben Modell, draussen Berge und ein See.',
+  },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration in zwei Hälften: links ein moderner Bahnhof mit Passerelle, Glaslift und Zug, rechts ein kleiner Bahnhof mit Holzdach vor einem Tunnel.',
@@ -159,8 +165,10 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : aktiv === 'einstellungen' ? BILDER.anleitung
     // die Bahnübergänge mit dem Bild der Startseite, darauf ist einer zu sehen
     : aktiv === 'bahnuebergaenge' ? BILDER.start
-    // die Spiele und Geo mit dem Bild der Spiele, das Duell mit seinem
-    : aktiv === 'spiele' || aktiv === 'schweiz11' || aktiv === 'modellbahn' ? BILDER.spiele
+    // die Übersicht der Spiele und die Modellbahn mit dem Bild der Modellbahn (Michael, 2026-10-10), Geo mit dem
+    // bisherigen Bild der Spiele, das Duell mit seinem
+    : aktiv === 'modellbahn' || aktiv === 'spiele' ? BILDER.modellbahn
+    : aktiv === 'schweiz11' ? BILDER.spiele
     : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
