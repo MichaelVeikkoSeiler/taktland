@@ -1,10 +1,9 @@
 import { SPIELE, type Spiel } from '../spiele'
-import { Schiebeleiste } from './Kopf'
 
 /**
- * Übersicht unter «Spiele» (Michael, 2026-10-02): jedes Spiel als Kachel mit kleinem Bild,
- * zwei je Zeile (Michael, 2026-10-03), auf dem Handy nebeneinander zum Wischen (2026-10-04), die übrigen als stille Platzhalter ohne Knopf. Die Liste steht in
- * src/spiele.ts.
+ * Übersicht unter «Spiele» (Michael, 2026-10-02): jedes Spiel als Bild-Knopf mit Titel, zwei Spalten
+ * (Michael, 2026-10-10: «kein beschreibender Text mehr und auch nicht Spielen mit dem roten Pfeil»), die übrigen als
+ * stille Platzhalter ohne Knopf. Die Liste steht in src/spiele.ts.
  */
 export function Spiele() {
   return (
@@ -14,18 +13,8 @@ export function Spiele() {
         Entdecke Taktland spielerisch. Hier findest du die Modellbahn, Geo, das Duell und die Bahnhofsuche; weitere Spiele
         rund um die Bahn in der Schweiz folgen.
       </p>
-      {/* auf dem Handy nebeneinander zum Wischen, wie die Reiter mit Pfeilen und Wischton; die nächste
-          Kachel schaut am Rand hervor, damit man sieht, dass es weitergeht (Michael, 2026-10-04) */}
-      <Schiebeleiste name="Spiele" was="Spiele" aussen="-mx-4 mt-5 md:hidden" grund="bg-sbb-white/90 dark:bg-sbb-midnight/90"
-                     className="snap-x snap-mandatory scroll-px-4 px-4">
-        <ul className="flex w-max gap-3 pb-1">
-          {SPIELE.filter((s) => s.status === 'spielbereit').map((s) => (
-            <Karte key={s.id} spiel={s} klasse="w-[40vw] max-w-64 shrink-0 snap-start" />
-          ))}
-        </ul>
-      </Schiebeleiste>
-      {/* ab Tablet drei je Zeile */}
-      <ul className="mt-5 hidden gap-3 md:grid md:grid-cols-3">
+      {/* zwei Spalten, zwei Zeilen: jedes Spiel ein Bild mit Titel, das Bild ist der Knopf (Michael, 2026-10-10) */}
+      <ul className="mt-5 grid grid-cols-2 gap-3">
         {SPIELE.filter((s) => s.status === 'spielbereit').map((s) => <Karte key={s.id} spiel={s} />)}
       </ul>
       {/* Platzhalter schmal, damit das Spielbare die Hauptsache bleibt (Michael, 2026-10-03) */}
@@ -45,22 +34,18 @@ export function Spiele() {
 
 function Karte({ spiel, klasse = '' }: { spiel: Spiel; klasse?: string }) {
   if (spiel.status === 'spielbereit' && spiel.adresse) {
-    // die ganze Kachel führt zum Spiel; oben ein kleines Bild, darunter Titel und ein Satz
+    // die ganze Kachel führt zum Spiel: oben das Bild, darunter nur der Titel; die Beschreibung steht beim Spiel
     return (
       <li className={`flex ${klasse}`}>
         <a href={spiel.adresse} className="kachel kachel-link flex w-full flex-col overflow-hidden">
           {spiel.bild && (
             <picture>
               <source srcSet={spiel.bild.dunkel} media="(prefers-color-scheme: dark)" />
-              <img src={spiel.bild.hell} alt={spiel.bild.alt} loading="lazy"
-                   className="aspect-[4/3] w-full object-cover" />
+              {/* der Titel steht darunter, das Bild ist nur Schmuck */}
+              <img src={spiel.bild.hell} alt="" loading="lazy" className="aspect-[4/3] w-full object-cover" />
             </picture>
           )}
-          <div className="flex flex-1 flex-col p-3">
-            <h2 className="text-lg font-bold leading-tight tracking-tight">{spiel.titel}</h2>
-            <p className="mt-1 flex-1 text-sm leading-snug">{spiel.kurz ?? spiel.beschreibung}</p>
-            <span className="mt-3 font-bold text-sbb-red">Spielen →</span>
-          </div>
+          <h2 className="px-3 py-2.5 text-lg font-bold leading-tight tracking-tight">{spiel.titel}</h2>
         </a>
       </li>
     )
