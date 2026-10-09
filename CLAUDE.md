@@ -180,7 +180,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              Anthrazit, aus: Kreuz auf Weiss) fürs Zuggeräusch: Rollen und
              Radschläge, gerechnet in src/audio.ts, folgen dem Tempo (im Zeitraffer gestaucht, ab 5000 km/h gleich), steigen beim Anfahren in
              2,5 s an und klingen 2,5 s vor dem Ziel aus, im Tunnel dumpfer und lauter mit Widerhall, auf Brücken
-             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; unter Fahren keine Brille (Michael, 2026-10-08).
+             hohler, am Anfang aus; Knopf «Hinter den Zug» setzt die Kamera schräg hinter den Zug; unter Fahren keine Brille (Michael, 2026-10-08); die Angaben unter dem Bild klappen auf («Modell, nicht massstäblich: Quellen und Grenzen»), Tunnel ohne Länge zeigt 3D nicht (früher eine graue Kugel; Michael, 2026-10-10).
              Spiel «Modellbahn» unter Spiele (2026-10-08 kurz «Modellbahn VR») (komponenten/Modellbahn.tsx, #/modellbahn, für alle, die Brille nur mit WebXR):
              auf der Seite Modellbahn der Kasten «Modellbahn: ein Modell zum Anschauen, kein Abbild der Wirklichkeit»
              (komponenten/ModellHinweis.tsx), unten nach den Strecken (man liest ihn nicht jedes Mal), unter jedem Modell nur ein Satz mit Link «Was nicht stimmt» dorthin; Zug fährt in allen 3D-Ansichten in 2 s an und bremst am Ziel in 2 s ab (ANFAHREN_S in Relief.tsx, ANFAHREN_MS in Fahrtmodus.tsx); eine gemerkte Probefahrt (&fest=1) zeigt Start, Ziel, Über und ihre Linien nur zum Lesen, ohne Felder zum Ändern;

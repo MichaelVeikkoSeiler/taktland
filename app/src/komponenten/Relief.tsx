@@ -74,7 +74,7 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9, BRILL
 /** Radius der Linie und der Bahnhöfe auf dem Bildschirm in km (Michael, 2026-10-06: «ziemlich fett», vorher 60 und 120 m) */
 /** Breite der Linie in Bildpunkten, bei jedem Zoom gleich: aussen der dunkle Rand, innen STRICH_INNEN davon heller
  *  (Michael, 2026-10-07: «halb so dick», dann «Innen heller aussen dunkler») */
-const STRICH_PX = 3.5, STRICH_INNEN = 0.5, BAHNHOF_KM = 0.075
+const STRICH_PX = 3.5, STRICH_INNEN = 0.5
 /** so hoch steht der Mast eines Bahnhofs, bevor er mit dem Zoom kürzer wird */
 const MAST_KM = 0.5
 /** in Modellen über 100 km Seite nur Seen ab dieser Fläche beschriften */
@@ -716,13 +716,20 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
           Hinter den Zug
         </button>
       </div>
-      <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-        Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
-        SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Die Höhe der Gleise steht in
-        keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Zug nicht
-        massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
-        {faktor === 2 && ' Höhe 2-fach überhöht.'}
-      </p>
+      {/* die Angaben aufklappbar, sie nahmen beim Fahren viel Platz (Michael, 2026-10-10); sichtbar bleibt, dass
+          es ein Modell ist und ob die Höhe überhöht ist */}
+      <details className="klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
+        <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">
+          Modell, nicht massstäblich{faktor === 2 && ', Höhe 2-fach überhöht'}: Quellen und Grenzen
+        </summary>
+        <p className="mt-1">
+          Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
+          SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Die Höhe der Gleise steht in
+          keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Tunnel, von denen
+          die Quelle nur einen Kilometer kennt und keine Länge, fehlen in 3D; beim Fahren meldet Taktland sie trotzdem. Zug nicht
+          massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
+        </p>
+      </details>
     </>
   )
 }
@@ -1229,14 +1236,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     /** Zeichen, die auf dem Bildschirm mit dem Zug beim Hineinzoomen kleiner werden */
     const zeichen: THREE.Object3D[] = []
-    const kugel = (farbe: string, x: number, y: number, z: number, groesse = 0.12, durch = false) => {
-      const k = new THREE.Mesh(new THREE.SphereGeometry(groesse, 16, 10), new THREE.MeshBasicMaterial({ color: farbe, depthTest: !durch }))
-      k.position.set(x, y, z)
-      if (durch) k.renderOrder = 4
-      szene.add(k)
-      zeichen.push(k)
-      return k
-    }
     // Reihenfolge der Bahnhöfe zwischen den Enden durch Halbieren: zuerst der mittlere, dann die
     // in der Mitte jeder Hälfte usw., damit die Namen in der Übersicht über die Strecke verteilt sind
     const folge = new Map<number, number>()
@@ -1277,10 +1276,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
                         szene, [[0.5, 0], [0, 0], [1, 0]], true)
       masten.push({ sp, y })
     })
-    for (const t of weg.tunnelPunkte.filter(imStueck)) {
-      const p = punkt3d(t)
-      kugel(tunnelFarbe, p.x, p.y, p.z, BAHNHOF_KM * 0.7)
-    }
+    // Tunnel ohne Länge (nur ein Kilometer in der Quelle) zeigte hier eine graue Kugel auf der Linie; ohne Sinn auf dem
+    // Bild (Michael, 2026-10-10: «Brauchts diese?»), darum weggelassen; beim Fahren meldet Taktland sie weiter
     for (const g of r.gipfel) {
       const y = Y(Math.max(g.hoehe_m ?? 0, hoeheBei(r, h, g.lage[0], g.lage[1])))
       const kegel = new THREE.Mesh(new THREE.ConeGeometry(0.12, 0.25, 4), new THREE.MeshBasicMaterial({ color: FARBEN.gipfel }))
