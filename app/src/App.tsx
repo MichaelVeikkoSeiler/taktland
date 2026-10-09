@@ -36,6 +36,7 @@ import { indexLaden } from './daten'
 import type { BahnhofIndex } from './typen'
 import { Ladefehler } from './komponenten/Ladefehler'
 import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
+import Teilen from './komponenten/Teilen'
 
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
@@ -250,6 +251,7 @@ export default function App() {
             <img src="./logo.svg" alt="" className="size-6" />Taktland
           </p>
           {/* die Einstellungen links über den Quellenangaben, statt als Reiter der Reisetasche (Michael, 2026-10-06) */}
+          <Teilen />
           <a href="#/einstellungen"
              className="mb-3 inline-flex min-h-10 items-center rounded-lg border border-sbb-cloud bg-white px-4 text-sm
                         font-medium text-sbb-black hover:bg-sbb-milk dark:border-sbb-iron dark:bg-sbb-midnight
