@@ -7,6 +7,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { streckenAdresse } from './Strecke'
 import Wischen from './Wischen'
+import { ModellHinweis } from './ModellHinweis'
 
 /**
  * Das Spiel «Modellbahn» (Michael, 2026-10-08: «neues Spiel 3D/VR … dort kann man alle Strecken abbilden»): jede
@@ -46,10 +47,7 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
         Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen. Mit einer Brille wie der
         Meta Quest steht das Modell vor dir auf dem Tisch.
       </p>
-      <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich, die Fahrt ist ein
-        Zeitraffer. Beim Fahren unter «Fahren» bleibt alles bei den Daten.
-      </p>
+      <ModellHinweis />
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         «Zug fahren» schickt den Zug in 2,5 Minuten über das ganze Modell. Eine Fahrt wie unterwegs, mit Karte, Meldungen und
         wählbarem Tempo, ist <a href="#/fahrt/probe" className="underline underline-offset-2">Probefahren</a> unter Fahren.
