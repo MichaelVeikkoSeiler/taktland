@@ -265,7 +265,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Karten: Ortsnamen, Gipfel, Tunnel und Brücken anderer Bahnen und viele Brückenlängen
-            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen und das Gelände in 3D aus swissALTIRegio, das Luftbild in 3D aus SWISSIMAGE,
+            von swisstopo (Swiss Map Vector 1000, swissTLM3D), Höhenstufen und das Gelände in 3D aus swissALTIRegio, das Luftbild in 3D aus SWISSIMAGE (auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m),
             Seen, Flüsse, Lage der Orte, Wald und Siedlung, in Geo auch Bahnlinien und Kantonsgrenzen aus swissTLMRegio; Grenzen vom BFS, Kulturgüter vom
             BABS, Seilbahnen vom BAV, BLN, Pärke und Moorlandschaften vom BAFU. Alle frei
             nutzbar mit Quellenangabe.
@@ -365,6 +365,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             anderen im selben Raum. Dort liegen nur
             diese Angaben, ohne IP-Adresse und ohne Konto; nach sechs Stunden wird der Raum gelöscht.
             Wie jeder Webserver führt auch dieser ein Zugriffsprotokoll, das cyon verwaltet.
+          </li>
+          <li>
+            «Taktland teilen» in der Fusszeile gibt nur die Adresse taktland.ch und einen Satz an das Teilen-Menü deines
+            Geräts weiter, nichts von deinem Fortschritt. Ohne dieses Menü öffnet «WhatsApp» die Seite wa.me von WhatsApp
+            (Meta) und «E-Mail» dein Mailprogramm, beides erst, wenn du es antippst.
           </li>
           <li>
             Gezählt wird nur, wie oft Taktland geöffnet wird: höchstens einmal am Tag

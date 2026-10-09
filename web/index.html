@@ -111,6 +111,13 @@
 
     footer { margin-top: 96px; border-top: 1px solid var(--linie); padding: 32px 0 48px; color: var(--leise); font-size: 14px; }
     footer p { margin: 8px 0 0; max-width: 60em; }
+    footer details { margin-top: 12px; max-width: 60em; }
+    footer summary { cursor: pointer; color: var(--text); font-weight: 500; text-decoration: underline;
+      text-underline-offset: 3px; min-height: 44px; display: flex; align-items: center; list-style: none; }
+    footer summary::-webkit-details-marker { display: none; }
+    /* der rote Pfeil wie in der App, offen nach oben */
+    footer summary::after { content: "↓"; display: inline-block; color: var(--karmin); margin-left: 8px; transition: transform .15s; }
+    footer details[open] summary::after { transform: rotate(180deg); }
   </style>
 </head>
 <body>
@@ -291,21 +298,36 @@
       <p><b style="color: var(--text)">Taktland</b> ist ein privates Lernprojekt und kein Angebot einer
          Bahnunternehmung. Von Michael Veikko Seiler, entstanden mit Unterstützung von KI (Claude Code;
          Auftaktbilder: ChatGPT). Kontakt: <a href="mailto:hallo@taktland.ch">hallo@taktland.ch</a></p>
-      <p>Daten: SBB Open Data (data.sbb.ch), opentransportdata.swiss, Bundesamt für Verkehr BAV,
-         Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, Bundesamt für Umwelt
-         BAFU, Bundesamt für Bevölkerungsschutz BABS. Höhenstufen: swissALTIRegio mit Höhenmodellen
-         aus Italien, Österreich, Deutschland und Frankreich, die volle Quellenangabe steht in der App
-         unter <a href="./app/#/anleitung">Info</a>.</p>
-      <p>Datenschutz: Verantwortlich ist Michael Veikko Seiler, <a href="mailto:hallo@taktland.ch">hallo@taktland.ch</a>.
-         Diese Seite und die App liefert GitHub Pages aus, ein Dienst von GitHub (USA); GitHub speichert laut eigenen
-         Angaben die IP-Adressen der Besucher aus Sicherheitsgründen. Die Adresse taktland.ch ist bei
-         cyon registriert. Mails an hallo@taktland.ch nimmt cyon an und leitet sie an ein Postfach bei
-         GMX weiter. Gezählt wird nur, wie oft Webseite und App geöffnet werden: Ein Zähler bei
-         cyon in der Schweiz (zaehler.taktland.ch) speichert je Tag nur Zahlen, ohne IP-Adresse und
-         ohne Kennung; wie jeder Webserver führt er ein Zugriffsprotokoll, das cyon verwaltet. Bei Geo und
-         der Bahnhofsuche auf mehreren Geräten gehen Name und Tipps über spiel.taktland.ch (cyon), ohne IP-Adresse,
-         und werden nach sechs Stunden gelöscht. Mehr
-         dazu in der App unter <a href="./app/#/anleitung">Info</a>.</p>
+      <!-- eine Zeile mit den Quellen bleibt sichtbar (die Lizenzen verlangen sie), alles Weitere klappt auf und ist
+           zu Beginn zu (Michael, 2026-10-10) -->
+      <p>Daten: SBB, opentransportdata.swiss, Bundesamt für Verkehr BAV, Bundesamt für Landestopografie swisstopo,
+         Bundesamt für Statistik BFS, Bundesamt für Umwelt BAFU, Bundesamt für Bevölkerungsschutz BABS.</p>
+      <details>
+        <summary>Datenquellen und Lizenzen</summary>
+        <p>Bahnhöfe, Linien, Tunnel und Brücken: SBB Open Data (data.sbb.ch); Wartehallen: opentransportdata.swiss.
+           Linien anderer Bahnen: Schienennetz des Bundesamts für Verkehr BAV. Karten, Gelände und Luftbild in 3D:
+           Bundesamt für Landestopografie swisstopo (swissTLMRegio, swissTLM3D, swissALTIRegio, SWISSIMAGE, Swiss Map
+           Vector 1000); swissALTIRegio mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich.
+           Landes- und Kantonsgrenzen: Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für Bevölkerungsschutz BABS.
+           Seilbahnen: BAV. BLN, Pärke und Moorlandschaften: Bundesamt für Umwelt BAFU. Die volle Quellenangabe mit
+           allen Lizenzen steht in der App unter <a href="./app/#/anleitung">Info</a>.</p>
+      </details>
+      <details>
+        <summary>Datenschutz</summary>
+        <p>Verantwortlich ist Michael Veikko Seiler, <a href="mailto:hallo@taktland.ch">hallo@taktland.ch</a>.
+           Kein Konto, keine Werbung, keine Cookies; die Seite lädt keine Schriften oder Programme von fremden Diensten.</p>
+        <p>Diese Seite und die App liefert GitHub Pages aus, ein Dienst von GitHub (USA); GitHub speichert laut eigenen
+           Angaben die IP-Adressen der Besucher aus Sicherheitsgründen. Die Adresse taktland.ch ist bei
+           cyon registriert. Mails an hallo@taktland.ch nimmt cyon an und leitet sie an ein Postfach bei
+           GMX weiter.</p>
+        <p>Gezählt wird nur, wie oft Webseite und App geöffnet werden: Ein Zähler bei
+           cyon in der Schweiz (zaehler.taktland.ch) speichert je Tag nur Zahlen, ohne IP-Adresse und
+           ohne Kennung; wie jeder Webserver führt er ein Zugriffsprotokoll, das cyon verwaltet. Bei Geo und
+           der Bahnhofsuche auf mehreren Geräten gehen Name und Tipps über spiel.taktland.ch (cyon), ohne IP-Adresse,
+           und werden nach sechs Stunden gelöscht.</p>
+        <p>Was die App auf deinem Gerät speichert und wie du es löschst, steht in der App unter
+           <a href="./app/#/anleitung">Info</a>.</p>
+      </details>
     </div>
   </footer>
   <script>
