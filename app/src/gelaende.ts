@@ -139,7 +139,7 @@ function luftbildKachel(name: string, px: number, voll: number) {
 /** Wo swisstopo keine Aufnahme hat (jenseits der Grenze), ist die Kachel reinweiss (Michael, 2026-10-08: «bei der
  *  Furkastrecke nicht alle Kacheln dargestellt»; bei Binn fast die Hälfte). Dort durchsichtig, damit das Gelände in
  *  seinen Farben erscheint wie bei einer fehlenden Kachel; Schnee und Gletscher erreichen nicht in allen drei Farben 250. */
-async function ohneLeeres(bild: ImageBitmap): Promise<ImageBitmap> {
+async function ohneLeeres(bild: ImageBitmap, saum = 0): Promise<ImageBitmap> {
   if (typeof OffscreenCanvas === 'undefined') return bild
   const c = new OffscreenCanvas(bild.width, bild.height)
   // im Speicher statt auf der Grafikkarte, sonst ist das Auslesen sehr langsam
@@ -152,6 +152,19 @@ async function ohneLeeres(bild: ImageBitmap): Promise<ImageBitmap> {
     if (d[i] >= 250 && d[i + 1] >= 250 && d[i + 2] >= 250) { d[i + 3] = 0; leer = true }
   }
   if (!leer) return bild
+  // den Rand um saum Bildpunkte nach innen schieben, je einmal waagrecht und senkrecht
+  const w = c.width, h = c.height
+  for (let schritt = 0; schritt < saum; schritt++) {
+    const weg = new Uint8Array(w * h)
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        if (d[(y * w + x) * 4 + 3] === 0) continue
+        const leerBei = (xx: number, yy: number) => xx >= 0 && yy >= 0 && xx < w && yy < h && d[(yy * w + xx) * 4 + 3] === 0
+        if (leerBei(x - 1, y) || leerBei(x + 1, y) || leerBei(x, y - 1) || leerBei(x, y + 1)) weg[y * w + x] = 1
+      }
+    }
+    for (let k = 0; k < w * h; k++) if (weg[k]) d[k * 4 + 3] = 0
+  }
   g.putImageData(daten, 0, 0)
   bild.close()
   return createImageBitmap(c)
@@ -184,4 +197,45 @@ export async function luftbildLaden(raster: Raster, nurKacheln?: Set<string>): P
   if (!kacheln.length) return null
   const jahre = [...new Set(kacheln.flatMap(({ ex, ny }) => ix.kacheln[`${ex}_${ny}`].jahre))].sort()
   return { kacheln, kachel_m: k, jahre }
+}
+
+/**
+ * Nahbild (Michael, 2026-10-10: «die Landschaft ist sehr verschwommen»): dasselbe Luftbild auf 2,5 m, nur bis 500 m
+ * neben den Bahnlinien, je Kilometer ein Bild (pipeline/build_luftbild_nah.py); weiter weg weiss, hier durchsichtig.
+ * Die Szene legt es nur in ein paar Kilometern um den Blickpunkt über das Luftbild.
+ */
+interface NahbildIndex { je_km: number; nah_m: number; km: Record<string, number> }
+export const nahbildIndex = () => holen<NahbildIndex>('data/luftbild_nah/index.json')
+/** am Rand des Streifens verschmiert das JPEG Weiss ins Bild: so viele Bildpunkte (je 2,5 m) daneben auch durchsichtig */
+const NAH_SAUM = 4
+/** so viele Kilometerbilder bleiben geladen (je 400 × 400 Bildpunkte) */
+const NAH_HOECHSTENS = 120
+const nahVorrat = new Map<string, Promise<ImageBitmap | null>>()
+function nahKachel(name: string) {
+  let p = nahVorrat.get(name)
+  if (p) { nahVorrat.delete(name); nahVorrat.set(name, p); return p }
+  while (nahVorrat.size >= NAH_HOECHSTENS) nahVorrat.delete(nahVorrat.keys().next().value!)
+  p = holenBinaer(`data/luftbild_nah/${name}.jpg`)
+    .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' })))
+    .then((b) => ohneLeeres(b, NAH_SAUM))
+    .catch(() => { nahVorrat.delete(name); return null })
+  nahVorrat.set(name, p)
+  return p
+}
+
+export interface Nahbild { kacheln: Array<{ ke: number; kn: number; bild: ImageBitmap }>; jahre: number[] }
+
+/** die Kilometerbilder im Rechteck (Landeskoordinaten), oder null, wenn es dort keine gibt */
+export async function nahbildLaden(e0: number, n0: number, e1: number, n1: number): Promise<Nahbild | null> {
+  const ix = await nahbildIndex().catch(() => null)
+  if (!ix) return null
+  const namen: Array<[number, number]> = []
+  for (let ke = Math.floor(e0 / 1000); ke <= Math.floor((e1 - 1) / 1000); ke++) {
+    for (let kn = Math.floor(n0 / 1000); kn <= Math.floor((n1 - 1) / 1000); kn++) if (ix.km[`${ke}_${kn}`]) namen.push([ke, kn])
+  }
+  if (!namen.length) return null
+  const bilder = await Promise.all(namen.map(([ke, kn]) => nahKachel(`${ke}_${kn}`)))
+  const kacheln = namen.flatMap(([ke, kn], i) => (bilder[i] ? [{ ke, kn, bild: bilder[i]! }] : []))
+  if (!kacheln.length) return null
+  return { kacheln, jahre: [...new Set(kacheln.map(({ ke, kn }) => ix.km[`${ke}_${kn}`]))].sort() }
 }

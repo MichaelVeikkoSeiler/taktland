@@ -9,7 +9,7 @@ import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, Sehen
 import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
-import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden } from '../gelaende'
+import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -60,6 +60,9 @@ interface Weg {
 
 /** jedes wievielte Feld des Rasters ins Netz kommt; 2 hält das Netz auch auf dem Handy flüssig */
 const SCHRITT = 2
+/** Nahbild (Luftbild auf 2,5 m entlang der Bahnlinien): so gross um den Blickpunkt, so viele Bildpunkte je Meter;
+ *  neu geladen, wenn der Blickpunkt so weit gewandert ist; nur wenn die Kamera näher ist als NAH_BIS_KM */
+const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
 /** Masten und Schilder stehen so viel über dem Gelände */
 const UEBER_M = 25
 /** die Linie liegt so viel über dem gemittelten Gelände; mehr nur dort, wo das Gelände darüber ragt
@@ -554,7 +557,7 @@ function Hinweise({ r }: { r: Relief }) {
     <div className="mt-4 space-y-2 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
       {jahre && (
         <p>
-          Luftbild: SWISSIMAGE (swisstopo), auf 10 m gemittelt, aufgenommen {jahre.length > 1 ? `${jahre[0]} bis ${jahre[jahre.length - 1]}` : jahre[0]};
+          Luftbild: SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, aufgenommen {jahre.length > 1 ? `${jahre[0]} bis ${jahre[jahre.length - 1]}` : jahre[0]};
           je Kilometer die neueste Aufnahme. Was darauf zu sehen ist, zeigt den Stand der Aufnahme, nicht heute.
         </p>
       )}
@@ -715,7 +718,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
       </div>
       <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
         Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
-        SWISSIMAGE (swisstopo), auf 10 m gemittelt, Stand der Aufnahme. Die Höhe der Gleise steht in
+        SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Die Höhe der Gleise steht in
         keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Zug nicht
         massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
         {faktor === 2 && ' Höhe 2-fach überhöht.'}
@@ -852,19 +855,23 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     leinwand.width = Math.round(breite * PX); leinwand.height = Math.round(hoehe * PX)
     const lctx = leinwand.getContext('2d')!
     const lx = (e: number) => ((e - ost) / m) * PX, ly = (n: number) => ((nord - n) / m) * PX
+    const grundLeinwand = { ctx: lctx, fx: lx, fy: ly, w: leinwand.width, h: leinwand.height, dicke: 1 }
     const auflageTextur = new THREE.CanvasTexture(leinwand)
     const gelaendeMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, map: auflageTextur })
     auflageTextur.colorSpace = THREE.SRGBColorSpace
     auflageTextur.anisotropy = renderer.capabilities.getMaxAnisotropy()
     const auflage = zusatz ? auflageFuer(r, zusatz) : null
-    const flaecheMalen = (ringe: Array<Array<[number, number]>>, fuellung: string, rand?: string) => {
-      lctx.beginPath()
+    /** auf eine Leinwand: ctx mit fx, fy von Landeskoordinaten in Bildpunkte, dicke für die Breite der Ränder */
+    type Malgrund = { ctx: CanvasRenderingContext2D; fx: (e: number) => number; fy: (n: number) => number; w: number; h: number; dicke: number }
+    const flaecheMalen = (ringe: Array<Array<[number, number]>>, fuellung: string, rand?: string,
+                          { ctx, fx, fy, dicke }: Malgrund = grundLeinwand) => {
+      ctx.beginPath()
       for (const ring of ringe) {
-        ring.forEach(([e, n], i) => (i ? lctx.lineTo(lx(e), ly(n)) : lctx.moveTo(lx(e), ly(n))))
-        lctx.closePath()
+        ring.forEach(([e, n], i) => (i ? ctx.lineTo(fx(e), fy(n)) : ctx.moveTo(fx(e), fy(n))))
+        ctx.closePath()
       }
-      lctx.fillStyle = fuellung; lctx.fill('evenodd')
-      if (rand) { lctx.strokeStyle = rand; lctx.lineWidth = 1.5; lctx.stroke() }
+      ctx.fillStyle = fuellung; ctx.fill('evenodd')
+      if (rand) { ctx.strokeStyle = rand; ctx.lineWidth = 1.5 * dicke; ctx.stroke() }
     }
     const GEBIET: Record<string, [string, string]> = {
       bln: ['rgba(185, 211, 163, 0.35)', '#9dbf84'], park: ['rgba(127, 174, 102, 0.3)', '#6f9e57'], moor: ['rgba(201, 194, 154, 0.4)', '#b0a77a'],
@@ -906,26 +913,112 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         flaecheMalen(auflage.wald, 'rgba(118, 168, 92, 0.4)')
         flaecheMalen(auflage.siedlung, 'rgba(140, 128, 118, 0.4)')
       }
+      linienMalen(a, mitBild, grundLeinwand)
+      auflageTextur.needsUpdate = true
+      nahErlaubt = mitBild
+      nahZeichnen()
+    }
+    /** Umrisse der Gebiete und das Kilometernetz, auf dem Luftbild und dem Nahbild gleich */
+    const linienMalen = (a: Set<Kategorie>, mitBild: boolean, grund: Malgrund) => {
+      const { ctx, fx, fy, w, h: hp, dicke } = grund
       if (auflage && !a.has('gebiete')) {
         // auf dem Luftbild nur der Umriss, eine Fläche würde das Bild verdecken
-        for (const g of auflage.gebiete) flaecheMalen(g.ringe, mitBild ? 'rgba(0,0,0,0)' : (GEBIET[g.art] ?? GEBIET.bln)[0], (GEBIET[g.art] ?? GEBIET.bln)[1])
+        for (const g of auflage.gebiete) flaecheMalen(g.ringe, mitBild ? 'rgba(0,0,0,0)' : (GEBIET[g.art] ?? GEBIET.bln)[0], (GEBIET[g.art] ?? GEBIET.bln)[1], grund)
       }
       if (!a.has('kmnetz')) {
         // Landeskoordinaten: eine Linie je Kilometer, alle 10 km kräftiger
         for (let e = Math.ceil(ost / 1000) * 1000; e <= ost + breite * m; e += 1000) {
-          lctx.strokeStyle = e % 10000 === 0 ? 'rgba(60, 60, 60, 0.55)' : 'rgba(60, 60, 60, 0.28)'
-          lctx.lineWidth = e % 10000 === 0 ? 2 : 1
-          lctx.beginPath(); lctx.moveTo(lx(e), 0); lctx.lineTo(lx(e), leinwand.height); lctx.stroke()
+          ctx.strokeStyle = e % 10000 === 0 ? 'rgba(60, 60, 60, 0.55)' : 'rgba(60, 60, 60, 0.28)'
+          ctx.lineWidth = (e % 10000 === 0 ? 2 : 1) * dicke
+          ctx.beginPath(); ctx.moveTo(fx(e), 0); ctx.lineTo(fx(e), hp); ctx.stroke()
         }
         for (let n = Math.ceil((nord - hoehe * m) / 1000) * 1000; n <= nord; n += 1000) {
-          lctx.strokeStyle = n % 10000 === 0 ? 'rgba(60, 60, 60, 0.55)' : 'rgba(60, 60, 60, 0.28)'
-          lctx.lineWidth = n % 10000 === 0 ? 2 : 1
-          lctx.beginPath(); lctx.moveTo(0, ly(n)); lctx.lineTo(leinwand.width, ly(n)); lctx.stroke()
+          ctx.strokeStyle = n % 10000 === 0 ? 'rgba(60, 60, 60, 0.55)' : 'rgba(60, 60, 60, 0.28)'
+          ctx.lineWidth = (n % 10000 === 0 ? 2 : 1) * dicke
+          ctx.beginPath(); ctx.moveTo(0, fy(n)); ctx.lineTo(w, fy(n)); ctx.stroke()
         }
       }
-      auflageTextur.needsUpdate = true
     }
-    szene.add(new THREE.Mesh(geo, gelaendeMaterial))
+    const grundNetz = new THREE.Mesh(geo, gelaendeMaterial)
+    grundNetz.renderOrder = -2
+    szene.add(grundNetz)
+
+    // Nahbild: um den Blickpunkt das Luftbild auf 2,5 m statt 10 m (Michael, 2026-10-10: «die Landschaft ist sehr
+    // verschwommen»), nur bis 500 m neben den Bahnlinien. Ein zweites Netz aus denselben Punkten wie das Gelände
+    // liegt genau darauf; wo das Nahbild fehlt, ist es durchsichtig, und das Luftbild darunter bleibt
+    const nahLeinwand = document.createElement('canvas')
+    nahLeinwand.width = nahLeinwand.height = Math.round(NAH_SEITE_M * NAH_PX_JE_M)
+    const nahCtx = nahLeinwand.getContext('2d')!
+    const nahTextur = new THREE.CanvasTexture(nahLeinwand)
+    nahTextur.colorSpace = THREE.SRGBColorSpace
+    nahTextur.anisotropy = renderer.capabilities.getMaxAnisotropy()
+    // ausgeschnitten statt durchscheinend: so liegt es vor den Rändern der Linie im Ablauf, nicht darüber
+    const nahMaterial = new THREE.MeshLambertMaterial({ map: nahTextur, alphaTest: 0.5 })
+    nahMaterial.color.setScalar(1.3)
+    const nahNetz = new THREE.Mesh(new THREE.BufferGeometry(), nahMaterial)
+    nahNetz.renderOrder = -1
+    nahNetz.visible = false
+    szene.add(nahNetz)
+    let nahErlaubt = false, nahAuftrag = 0
+    let nahMitte: [number, number] | null = null
+    let nahStand: { bild: Nahbild; e0: number; n1: number } | null = null
+    const nahZeichnen = () => {
+      nahNetz.visible = nahErlaubt && !!nahStand
+      if (!nahStand) return
+      const { bild, e0, n1 } = nahStand
+      const fx = (e: number) => (e - e0) * NAH_PX_JE_M, fy = (n: number) => (n1 - n) * NAH_PX_JE_M
+      nahCtx.clearRect(0, 0, nahLeinwand.width, nahLeinwand.height)
+      const seite = 1000 * NAH_PX_JE_M
+      for (const { ke, kn, bild: b } of bild.kacheln) nahCtx.drawImage(b, fx(ke * 1000), fy((kn + 1) * 1000), seite, seite)
+      // Umrisse und Kilometernetz wie darunter, nur auf dem Nahbild selbst
+      nahCtx.save()
+      nahCtx.globalCompositeOperation = 'source-atop'
+      linienMalen(ausJetzt.current, true, { ctx: nahCtx, fx, fy, w: nahLeinwand.width, h: nahLeinwand.height, dicke: (NAH_PX_JE_M * m) / PX })
+      nahCtx.restore()
+      nahTextur.needsUpdate = true
+    }
+    /** das Netz aus den Punkten des Geländes im Rechteck, mit seinen Normalen, damit das Licht gleich fällt */
+    const nahNetzBauen = (e0: number, n1: number) => {
+      const normalen = geo.getAttribute('normal').array as Float32Array
+      const iVon = Math.max(0, Math.ceil(((e0 - ost) / m - 0.5) / SCHRITT)), iBis = Math.min(nx - 1, Math.floor(((e0 + NAH_SEITE_M - ost) / m - 0.5) / SCHRITT))
+      const jVon = Math.max(0, Math.ceil(((nord - n1) / m - 0.5) / SCHRITT)), jBis = Math.min(ny - 1, Math.floor(((nord - n1 + NAH_SEITE_M) / m - 0.5) / SCHRITT))
+      const b = iBis - iVon + 1, hh = jBis - jVon + 1
+      if (b < 2 || hh < 2) return new THREE.BufferGeometry()
+      const p2 = new Float32Array(b * hh * 3), n2 = new Float32Array(b * hh * 3), uv2 = new Float32Array(b * hh * 2)
+      const idx: number[] = []
+      for (let j = 0; j < hh; j++) {
+        for (let i = 0; i < b; i++) {
+          const v = nummer[(j + jVon) * nx + i + iVon], k = j * b + i
+          if (v >= 0) for (let c3 = 0; c3 < 3; c3++) { p2[k * 3 + c3] = pos[v * 3 + c3]; n2[k * 3 + c3] = normalen[v * 3 + c3] }
+          const e = ost + ((i + iVon) * SCHRITT + 0.5) * m, n = nord - ((j + jVon) * SCHRITT + 0.5) * m
+          uv2[k * 2] = (e - e0) / NAH_SEITE_M; uv2[k * 2 + 1] = 1 - (n1 - n) / NAH_SEITE_M
+          if (i < b - 1 && j < hh - 1) {
+            const ecken = [nummer[(j + jVon) * nx + i + iVon], nummer[(j + jVon) * nx + i + 1 + iVon], nummer[(j + 1 + jVon) * nx + i + iVon], nummer[(j + 1 + jVon) * nx + i + 1 + iVon]]
+            // dieselben Dreiecke wie im Gelände, sonst liegen die beiden Netze nicht genau aufeinander
+            if (Math.min(...ecken) >= 0) idx.push(k, k + b, k + 1, k + 1, k + b, k + b + 1)
+          }
+        }
+      }
+      const g = new THREE.BufferGeometry()
+      g.setAttribute('position', new THREE.BufferAttribute(p2, 3))
+      g.setAttribute('normal', new THREE.BufferAttribute(n2, 3))
+      g.setAttribute('uv', new THREE.BufferAttribute(uv2, 2))
+      g.setIndex(idx)
+      return g
+    }
+    const nahSetzen = async (e: number, n: number) => {
+      const auftrag = ++nahAuftrag
+      nahMitte = [e, n]
+      const e0 = Math.round(e - NAH_SEITE_M / 2), n1 = Math.round(n + NAH_SEITE_M / 2)
+      const bild = await nahbildLaden(e0, n1 - NAH_SEITE_M, e0 + NAH_SEITE_M, n1)
+      if (!laeuft || auftrag !== nahAuftrag) return
+      nahStand = bild ? { bild, e0, n1 } : null
+      if (bild) {
+        nahNetz.geometry.dispose()
+        nahNetz.geometry = nahNetzBauen(e0, n1)
+      }
+      nahZeichnen()
+    }
     szene.add(new THREE.HemisphereLight('#ffffff', '#8a8a7a', 1.6))
     const sonne = new THREE.DirectionalLight('#ffffff', 2.2)
     // Licht von Nordwesten wie auf der Landeskarte
@@ -2008,6 +2101,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         }
       }
       steuerung.update()
+      // das Nahbild folgt dem Blickpunkt, sobald er mehr als NAH_NACH_M weitergewandert ist
+      if (luftbild && !renderer.xr.isPresenting && kamera.position.distanceTo(steuerung.target) < NAH_BIS_KM) {
+        const e = steuerung.target.x * 1000 + me, n = -steuerung.target.z * 1000 + mn
+        if (!nahMitte || Math.hypot(e - nahMitte[0], n - nahMitte[1]) > NAH_NACH_M) void nahSetzen(e, n)
+      }
       if (blick && letzte) blick.current = kamera.position.clone().sub(steuerung.target)
       schilderOrdnen()
       renderer.render(szene, kamera)

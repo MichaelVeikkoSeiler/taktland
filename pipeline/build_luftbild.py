@@ -52,7 +52,16 @@ def lv95_zu_wgs84(e, n):
 
 
 def holen(url):
-    return json.loads(subprocess.run(["curl", "-sf", "--retry", "3", url], capture_output=True, check=True).stdout)
+    # abgebrochene Antworten kommen vor (2026-10-10, curl 18 oder halbes JSON): mehrmals versuchen
+    for versuch in range(6):
+        r = subprocess.run(["curl", "-sf", "--retry", "5", "--retry-all-errors", url], capture_output=True)
+        if r.returncode == 0:
+            try:
+                return json.loads(r.stdout)
+            except json.JSONDecodeError:
+                pass
+        time.sleep(5 * (versuch + 1))
+    raise SystemExit(f"{url} liess sich nicht laden")
 
 
 def km_kacheln(ex, ny):

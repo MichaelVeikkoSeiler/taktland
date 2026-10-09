@@ -132,6 +132,13 @@ def main():
             shutil.rmtree(ZIEL / "luftbild")
         shutil.copytree(luftbild, ZIEL / "luftbild")
         print(f"luftbild/: {sum(p.stat().st_size for p in (ZIEL / 'luftbild').iterdir())/1e6:.1f} MB")
+    # Nahbild: dasselbe Luftbild auf 2,5 m entlang der Bahnlinien (pipeline/build_luftbild_nah.py)
+    nah = ROOT / "data" / "luftbild_nah"
+    if nah.exists():
+        if (ZIEL / "luftbild_nah").exists():
+            shutil.rmtree(ZIEL / "luftbild_nah")
+        shutil.copytree(nah, ZIEL / "luftbild_nah")
+        print(f"luftbild_nah/: {sum(p.stat().st_size for p in (ZIEL / 'luftbild_nah').iterdir())/1e6:.1f} MB")
     # Gelände der ganzen Schweiz in Kacheln (pipeline/build_gelaende.py), für «3D» auf jeder Fahrt
     gelaende = ROOT / "data" / "gelaende"
     if gelaende.exists():

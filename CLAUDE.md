@@ -204,6 +204,12 @@ data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fas
              105 MB; Kacheln ohne Bild von swisstopo, im Ausland, fehlen; die 2-m-Rohbilder werden je Kachel
              gelöscht); in der App ein Knopf «Luftbild», Gebiete darauf nur als Umriss; fehlt ein Bild oder lädt es nicht,
              zeigt das Gelände dort seine Farben, ebenso wo die Kachel reinweiss ist (keine Aufnahme jenseits der Grenze, ohneLeeres); höchstens 25 Bilder bleiben geladen (src/gelaende.ts)
+data/luftbild_nah/  Nahbild: dasselbe Luftbild auf 2,5 m, nur bis 500 m neben den Bahnlinien aus swissTLMRegio
+             (data/kartenlinien.json), je km ein JPEG von 400 × 400, weiter weg weiss (pipeline/build_luftbild_nah.py, etwa
+             10'000 km, Rohbilder gleich gelöscht; Michael, 2026-10-10: «die Landschaft ist sehr verschwommen»); in der App ein
+             zweites Netz aus denselben Punkten wie das Gelände, 6 km um den Blickpunkt, neu ab 1,5 km Weg, nur näher als 25 km
+             (NAH_SEITE_M in Relief.tsx), Weiss und ein Saum von 4 Bildpunkten durchsichtig (NAH_SAUM in src/gelaende.ts),
+             darauf die Umrisse und das Kilometernetz wie darunter
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -244,6 +250,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_gelaende.py     # Geländekacheln der ganzen Schweiz für «3D» auf jeder Fahrt
 .venv/bin/python pipeline/build_luftbild.py --alle   # Luftbild (SWISSIMAGE) der ganzen Schweiz, Stunden, vor export_app
 .venv/bin/python pipeline/build_luftbild.py --orte Gümmenen Müntschemier   # Luftbild rund um eine Strecke
+.venv/bin/python pipeline/build_luftbild_nah.py      # Nahbild (2,5 m) entlang der Bahnlinien, etwa eine Stunde, vor export_app
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine
