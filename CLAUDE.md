@@ -289,7 +289,7 @@ Eigene Einträge (Probefahrten, gemerkte Fahrten, Favoriten, Fahrten im Logbuch)
 der Eintrag bleibt aufgeschoben, und ein Tipp auf die rote Fläche «Löschen» löscht ihn ohne weitere Rückfrage (`komponenten/Wischen.tsx`,
 Michael, 2026-10-08, ohne Rückfrage seit 2026-10-09). Das × daneben bleibt für Maus und Tastatur.
 
-In der Fusszeile «Taktland teilen» (`komponenten/Teilen.tsx`, Michael, 2026-10-10): auf dem Handy das Teilen-Menü des
+In der Fusszeile rechts neben der Bildmarke zwei Symbole, «Taktland teilen» und «Einstellungen» (`komponenten/Teilen.tsx`, Michael, 2026-10-10): Teilen öffnet auf dem Handy das Teilen-Menü des
 Geräts, sonst E-Mail, WhatsApp und «Link kopieren»; geteilt wird nur https://taktland.ch mit einem Satz, nichts vom Fortschritt.
 
 **Die Bildmarke von Taktland** ist ein weisses «T» aus einer Linie mit fünf Haltepunkten auf

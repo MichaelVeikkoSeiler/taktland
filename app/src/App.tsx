@@ -36,7 +36,7 @@ import { indexLaden } from './daten'
 import type { BahnhofIndex } from './typen'
 import { Ladefehler } from './komponenten/Ladefehler'
 import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
-import Teilen from './komponenten/Teilen'
+import Teilen, { SYMBOL } from './komponenten/Teilen'
 
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
@@ -246,18 +246,23 @@ export default function App() {
 
         <footer className="print:hidden mt-6 border-t border-sbb-cloud px-4 pt-4 pb-6 text-xs
                            text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
-          {/* die Bildmarke klein über den Angaben (Michael, 2026-09-27) */}
-          <p className="mb-3 flex items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
-            <img src="./logo.svg" alt="" className="size-6" />Taktland
-          </p>
-          {/* die Einstellungen links über den Quellenangaben, statt als Reiter der Reisetasche (Michael, 2026-10-06) */}
-          <Teilen />
-          <a href="#/einstellungen"
-             className="mb-3 inline-flex min-h-10 items-center rounded-lg border border-sbb-cloud bg-white px-4 text-sm
-                        font-medium text-sbb-black hover:bg-sbb-milk dark:border-sbb-iron dark:bg-sbb-midnight
-                        dark:text-sbb-white dark:hover:bg-sbb-charcoal">
-            Einstellungen
-          </a>
+          {/* die Bildmarke klein über den Angaben (Michael, 2026-09-27); rechts daneben Teilen und Einstellungen als
+              Symbole (Michael, 2026-10-10: «als Icon rechtsbündig auf Höhe des Logos») */}
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <p className="flex items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
+              <img src="./logo.svg" alt="" className="size-6" />Taktland
+            </p>
+            <div className="flex items-center gap-2">
+              <Teilen />
+              <a href="#/einstellungen" aria-label="Einstellungen" title="Einstellungen" className={SYMBOL}>
+                {/* Zahnrad */}
+                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3" />
+                  <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
+                </svg>
+              </a>
+            </div>
+          </div>
           {/* eine Zeile mit allen Quellen bleibt immer sichtbar, was wofür ist, klappt auf (Michael, 2026-10-09:
               «Quellenangaben ein- und ausklappbar», mit Blick auf Barrierefreiheit: details/summary des Browsers) */}
           <p>
