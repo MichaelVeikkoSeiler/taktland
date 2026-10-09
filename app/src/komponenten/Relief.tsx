@@ -60,6 +60,10 @@ interface Weg {
 
 /** jedes wievielte Feld des Rasters ins Netz kommt; 2 hält das Netz auch auf dem Handy flüssig */
 const SCHRITT = 2
+/** Knöpfe über dem Gelände beim Fahren */
+const KAMERA_KNOPF = 'rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90'
+/** Führerstand: das Auge so hoch über der Linie, so nah zeichnet die Kamera noch (km) */
+const FUEHRERSTAND_HOEHE_M = 4, FUEHRERSTAND_NAHE_KM = 0.003
 /** Nahbild (Luftbild auf 2,5 m entlang der Bahnlinien): so gross um den Blickpunkt, so viele Bildpunkte je Meter;
  *  neu geladen, wenn der Blickpunkt so weit gewandert ist; nur wenn die Kamera näher ist als NAH_BIS_KM */
 const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
@@ -228,6 +232,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
   // in der Brille (Michael, 2026-10-06: «Quest 3»): nur, wo der Browser WebXR kann
   const brille = useRef<(() => Promise<void>) | null>(null)
   const fahrknopf = useRef<Fahrknopf | null>(null)
+  const fuehrerstand = useRef(false)
   const [brilleFehler, setBrilleFehler] = useState<string | null>(null)
   // Probefahrt in der Brille (Michael, 2026-10-06: «Fährt der Zug auf der Brille?»): Startzeit oder null
   const probe = useRef<number | null>(null)
@@ -261,13 +266,14 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
         <>
           <div className="mt-4"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
           <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
-                 probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} className="mt-3 w-full overflow-hidden rounded-lg" />
+                 probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
+                 className="mt-3 w-full overflow-hidden rounded-lg" />
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
             <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
-          <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
+          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
             {faktor === 2 && <span className="font-medium text-sbb-black dark:text-sbb-white"> Die Höhe ist 2-fach überhöht.</span>}
@@ -362,6 +368,7 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
   const probe = useRef<number | null>(null)
   const probeStelle = useRef<number | null>(null)
   const fahrknopf = useRef<Fahrknopf | null>(null)
+  const fuehrerstand = useRef(false)
   const BAND_M = useMemo(() => bandBreite(wegEnde(fahrweg)), [fahrweg])
   useEffect(() => {
     let ab = false
@@ -453,13 +460,14 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
       {daten && weg && (
         <>
           <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
-                 probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} className="mt-3 w-full overflow-hidden rounded-lg" />
+                 probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
+                 className="mt-3 w-full overflow-hidden rounded-lg" />
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
             <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
-          <ModellKnoepfe fahrknopf={fahrknopf} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
+          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
             Die ganze Strecke als Modell, mit einem Band von {(BAND_M / 1000).toLocaleString('de-CH').replace('.', ',')} km links und rechts der Strecke; was weiter weg
             liegt, fehlt. Gelände aus swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
@@ -476,14 +484,16 @@ interface Fahrknopf { los: () => void; halt: () => void }
 
 /** Unter dem Modell: «Mit VR-Brille», der Zug auf dem Bildschirm und das Zuggeräusch (Michael, 2026-10-08: Modellbahn
  *  für alle; der Knopf zur Brille steht immer da, ohne Brille geht er einfach nicht und sagt, was es dafür braucht) */
-function ModellKnoepfe({ fahrknopf, audio, inBrille, brilleFehler }: {
+function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler }: {
   fahrknopf: React.RefObject<Fahrknopf | null>
+  fuehrerstand: React.MutableRefObject<boolean>
   audio: ReturnType<typeof useZuggeraeusch>
   inBrille: () => void
   brilleFehler: string | null
 }) {
   const xr = useBrilleMoeglich()
   const [ohne, setOhne] = useState(false)
+  const [vorne, setVorne] = useState(false)
   const weiss = 'rounded-lg border border-sbb-cloud bg-white px-4 py-2 font-bold dark:border-sbb-iron dark:bg-sbb-midnight'
   return (
     <>
@@ -496,6 +506,11 @@ function ModellKnoepfe({ fahrknopf, audio, inBrille, brilleFehler }: {
           Zug fahren
         </button>
         <button type="button" className={weiss} onClick={() => fahrknopf.current?.halt()}>Anhalten</button>
+        {/* Michael, 2026-10-10: «eine Perspektive aus dem Führerraum»; ein zweiter Tipp zurück ins Modell */}
+        <button type="button" aria-pressed={vorne} className={`${weiss} ${vorne ? '!bg-sbb-anthracite !text-white' : ''}`}
+                onClick={() => { fuehrerstand.current = !vorne; setVorne(!vorne); if (!vorne) fahrknopf.current?.los() }}>
+          Führerstand
+        </button>
         <GeraeuschKnopf audio={audio} className="h-10 w-12" />
       </div>
       {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
@@ -661,6 +676,9 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   const audio = useZuggeraeusch(zug, ende, bauwerke)
   // «Hinter den Zug»: die Kamera wieder schräg hinter den Zug wie am Anfang
   const hinterZug = useRef(false)
+  // «Führerstand»: die Kamera vorne im Zug (Michael, 2026-10-10)
+  const fuehrerstand = useRef(false)
+  const [vorne, setVorne] = useState(false)
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
   const mitteS = useRef(0)
   useEffect(() => {
@@ -708,13 +726,19 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
     <>
       <div className={`${className} relative`}>
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
-               className="absolute inset-0 overflow-hidden" />
+               fuehrerstand={fuehrerstand} className="absolute inset-0 overflow-hidden" />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
         <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 h-9 w-10" />
-        <button type="button" onClick={() => { hinterZug.current = true }}
-                className="absolute bottom-2 left-2 rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
-          Hinter den Zug
-        </button>
+        <div className="absolute bottom-2 left-2 flex gap-2">
+          <button type="button" onClick={() => { fuehrerstand.current = false; setVorne(false); hinterZug.current = true }}
+                  className={KAMERA_KNOPF}>
+            Hinter den Zug
+          </button>
+          <button type="button" aria-pressed={vorne} onClick={() => { fuehrerstand.current = !vorne; setVorne(!vorne) }}
+                  className={`${KAMERA_KNOPF} ${vorne ? '!bg-sbb-anthracite !text-white' : ''}`}>
+            Führerstand
+          </button>
+        </div>
       </div>
       {/* die Angaben aufklappbar, sie nahmen beim Fahren viel Platz (Michael, 2026-10-10); sichtbar bleibt, dass
           es ein Modell ist und ob die Höhe überhöht ist */}
@@ -755,7 +779,7 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fahrknopf, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
@@ -767,6 +791,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   probe?: React.RefObject<number | null>
   /** beim Fahren: true setzt die Kamera wieder schräg hinter den Zug wie am Anfang */
   hinterZug?: React.MutableRefObject<boolean>
+  /** true: die Kamera steht vorne im Zug und schaut die Strecke entlang (Michael, 2026-10-10: «Perspektive aus dem Führerraum») */
+  fuehrerstand?: React.RefObject<boolean>
   /** auf der eigenen Seite: hier führt die Szene die Stelle des Zugs bei der Probefahrt nach (Zuggeräusch) */
   probeStelle?: React.MutableRefObject<number | null>
   /** Modellbahn auf dem Bildschirm: hier legt die Szene ab, wie der Zug losfährt und anhält */
@@ -2003,6 +2029,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
 
     // beim Fahren: die Kamera folgt dem Zug mit demselben Blickwinkel; am Anfang von schräg hinten
     let letzte: THREE.Vector3 | null = null
+    let imStand = false
     let laeuft = true
     const uhr = new THREE.Clock()
     const zeichenMass = () => Math.min(2, Math.max(0.15, kamera.position.distanceTo(steuerung.target) / ZUG_NORMAL_KM))
@@ -2078,7 +2105,31 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           zugMass = zugMassBrille * Math.max(0.4, Math.min(1, Math.sqrt(abstand / BRILLE_NAH_M)))
         }
         zugSetzen(s)
-        if (sichtbar) {
+        // Führerstand: vorne an der Spitze in Fahrtrichtung, knapp über der Linie, der Blick auf einen Punkt
+        // gemittelt 150 bis 450 m voraus, damit er in Kurven nicht zuckt; Drehen und Zoomen ruhen solange
+        const vorne = !renderer.xr.isPresenting && !!fuehrerstand?.current && sichtbar
+        if (vorne !== imStand) {
+          imStand = vorne
+          steuerung.enabled = !vorne
+          kamera.near = vorne ? FUEHRERSTAND_NAHE_KM : 0.1
+          kamera.updateProjectionMatrix()
+          letzte = null
+          if (blick) blick.current = null
+        }
+        if (vorne && s !== null) {
+          const r = zug === eigenerZug ? fahrt.richtung : 1
+          const spitze = r > 0 ? s : s - zugLaengeS()
+          const bis = (m: number) => Math.max(pk[0].m, Math.min(pk[pk.length - 1].m, m))
+          const auge = punkt3d(bis(spitze + r * 15))
+          auge.y += FUEHRERSTAND_HOEHE_M * faktor / 1000
+          const ziel = new THREE.Vector3()
+          for (const d of [150, 300, 450]) ziel.add(punkt3d(bis(spitze + r * d)))
+          ziel.multiplyScalar(1 / 3)
+          ziel.y = Math.max(ziel.y, auge.y - 0.02)
+          kamera.position.copy(auge)
+          steuerung.target.copy(ziel)
+          kamera.lookAt(ziel)
+        } else if (sichtbar) {
           const p = punkt3d(s)
           // in der Brille steht das Modell still, du schaust dem Zug von aussen zu
           if (renderer.xr.isPresenting) letzte = null
