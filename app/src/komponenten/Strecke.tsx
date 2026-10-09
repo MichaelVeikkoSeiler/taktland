@@ -953,7 +953,7 @@ function Ergebnis({
 }
 
 /** Die Linien des Wegs, verlinkt, wo die Linie in Taktland eine Seite hat */
-/** Die eigene Strecke der Modellbahn: gleich nach der Wahl bauen; bis etwa 170 km, länger lädt das Gelände zu langsam */
+/** Die eigene Strecke der Modellbahn: gleich nach der Wahl bauen; bis etwa 200 km, länger lädt das Gelände zu langsam */
 function ModellAusWeg({ titel, laedt, fehler, fahrweg, bauen }: {
   /** null: der Titel steht schon oben (gemerkte Probefahrt) */
   titel: string | null; laedt: boolean; fehler: string | null; fahrweg: Fahrweg | null; bauen: () => void

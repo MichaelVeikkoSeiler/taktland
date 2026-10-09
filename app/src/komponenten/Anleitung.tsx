@@ -67,7 +67,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
 
       <Abschnitt titel="Spiele">
         <Spiel titel="Modellbahn">
-          Eine Strecke als Modell im Gelände: eine Bergstrecke oder eine eigene bis etwa 170 km. Drehen, zoomen und einen
+          Eine Strecke als Modell im Gelände: eine Bergstrecke oder eine eigene bis etwa 200 km. Drehen, zoomen und einen
           Zug darüber fahren lassen{xr ? '; mit der Brille steht das Modell vor dir auf dem Tisch' : ''}. Ein Modell, kein Abbild:
           Zug, Gleise und Masten sind nicht massstäblich, die Fahrt ist ein Zeitraffer.
         </Spiel>

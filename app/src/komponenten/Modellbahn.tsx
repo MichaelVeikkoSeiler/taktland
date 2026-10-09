@@ -55,7 +55,7 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
       <a href="#/modellbahn/strecke" className="kachel kachel-link mt-5 flex min-h-11 items-center justify-between gap-3 px-4 py-3">
         <span className="min-w-0">
           <span className="block font-medium">Eigene Strecke</span>
-          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Von, nach und über wählen, bis etwa 170 km</span>
+          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Von, nach und über wählen, bis etwa 200 km</span>
         </span>
         <span className="pfeil shrink-0" aria-hidden="true">→</span>
       </a>
@@ -115,7 +115,7 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
             })}
           </ul>
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-            Dieselbe Liste wie unter Probefahren; was du hier löschst, fehlt auch dort. Als Modell bis etwa 170 km.
+            Dieselbe Liste wie unter Probefahren; was du hier löschst, fehlt auch dort. Als Modell bis etwa 200 km.
           </p>
         </>
       )}

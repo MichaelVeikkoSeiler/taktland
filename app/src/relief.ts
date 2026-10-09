@@ -36,8 +36,8 @@ export const dreiDGemerkt = () => dreiDVorgemerkt
 export function dreiDVerbrauchen() { dreiDVorgemerkt = false }
 
 /** Die Modellbahn baut eigene Strecken nur bis so lang (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: «Die
- *  Kacheln wurden nicht schnell genug nachgebaut»); die längste Bergstrecke, Lausanne – Solothurn, hat gut 160 km */
-export const MODELL_HOECHSTENS_M = 170_000
+ *  Kacheln wurden nicht schnell genug nachgebaut»; 200 km seit 2026-10-09); die längste Bergstrecke, Lausanne – Solothurn, hat gut 160 km */
+export const MODELL_HOECHSTENS_M = 200_000
 
 /** ob der Browser eine Brille (WebXR) meldet; nur dann gibt es in der Modellbahn Knöpfe für die Brille (Michael, 2026-10-08) */
 export function useBrilleMoeglich() {
