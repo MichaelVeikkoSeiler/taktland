@@ -330,6 +330,17 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Taktland ist kostenlos. Kein Konto, keine Werbung, keine Profile. Der Fortschritt bleibt im Browser; die
             App lädt keine Schriften oder Programme von fremden Diensten.
           </li>
+          {/* Michael, 2026-10-09: «Müssen wir einen Cookie-Hinweis geben?»; informieren und sagen, wie man es entfernt */}
+          <li>
+            Cookies setzt Taktland keine. Damit die App funktioniert, speichert sie im Browser dieses Geräts
+            (localStorage): Lernfortschritt und Bestwerte, Einstellungen, Favoriten, gemerkte Fahrten und
+            Probefahrten, Logbuch und Sammelheft, die laufende Fahrt und den Tag, an dem zuletzt gezählt wurde (siehe
+            unten). Für eine laufende Partie in Geo und der Bahnhofsuche liegt ein Stand bis zum Schliessen des Fensters
+            im Browser (sessionStorage). Damit Taktland auch ohne Netz läuft, hält der Browser die App und die geladenen
+            Daten in einem eigenen Zwischenspeicher. Nichts davon wird an Taktland gesendet. «Fortschritt auf diesem
+            Gerät löschen» in der Fusszeile entfernt Lernfortschritt, Bestwerte im Duell und das Sammelheft; alles
+            andere entfernst du in den Einstellungen des Browsers mit den Websitedaten für taktland.ch.
+          </li>
           <li>
             Den Standort fragt Taktland nur beim Fahren und unter «Standort» ab, nach deiner
             Freigabe. Er wird nie gesendet. Unter «Standort» wird er nur auf dem Gerät
