@@ -191,7 +191,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              geht er nicht und sagt beim Tippen, was es dafür braucht); die
              Bergstrecken und Lausanne–Solothurn als Modell (#/modellbahn/gotthard, alte Adressen #/relief/…, #/fahrt/3d/…
              führen dorthin; #/relief/… kommt von der Linienseite, «Zurück» führt zur Linie), die eigenen Probefahrten aus «Fahren»
-             wie dort (aufklappen, Richtung wählen, × oder wischen löscht, «Rückgängig»; dieselbe Liste), «Als Modell ansehen» auf der Seite Strecke, und «Eigene Strecke» (#/modellbahn/strecke, die Seite Strecke mit modell, bis 200 km Weg,
+             wie dort (aufklappen, Richtung wählen, × oder wischen löscht, «Rückgängig»; dieselbe Liste), «Als Modell ansehen» auf der Seite Strecke, und «Eigene Strecke» (#/modellbahn/strecke, die Seite Strecke mit modell, bis 200 km Weg; ist ein Weg gewählt, steht das Modell gleich unter dem Titel, Von, Nach, Über und die Linien darunter, Michael, 2026-10-10;
              MODELL_HOECHSTENS_M in src/relief.ts: länger lädt das Gelände zu langsam; ModellStrecke): die ganze Strecke als Modell wie die Bergstrecken, Gelände nur in einem Band links und rechts,
              je nach Länge 5 bis 15 km (etwa 2'000 km² wie das Gotthard-Modell, bandBreite) (nur diese Kacheln, das Netz ohne leere Punkte), ab 3 Millionen Feldern im Band gröber,
              Luftbilder verkleinert; Seen, Gipfel und Kulturgüter nur im Band; in Modellen über 100 km nur Seen ab

@@ -285,8 +285,11 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
   // dazu die Ziele ohne Bahnhofsnummer (Iselle)
   const alle = useMemo(() => [...(index?.bahnhoefe ?? []), ...fahrtZiele(index).filter((b) => b.ohne_bahnhofseite)], [index])
 
+  // Modellbahn mit gewähltem Weg: das Modell gleich unter dem Titel, Von, Nach und die Linien darunter (Michael,
+  // 2026-10-10: «Das Bild mit dem Ladebalken ist zu weit unten»)
+  const modellOben = modell && ergebnis?.art === 'weg'
   return (
-    <div className="px-4 pb-4">
+    <div className={`px-4 pb-4 ${modellOben ? 'flex flex-col' : ''}`}>
       {modell && fest ? (
         <>
           <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />
@@ -296,7 +299,7 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
         <>
           <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />
           <h1 className="mt-4 text-2xl font-bold tracking-tight">Eigene Strecke als Modell</h1>
-          <p className="mt-2 leading-relaxed">
+          <p className={`mt-2 leading-relaxed ${modellOben ? 'hidden' : ''}`}>
             Start und Ziel wählen: Taktland sucht einen Weg durch das Netz und baut ihn als Modell im Gelände, bis
             etwa {MODELL_HOECHSTENS_M / 1000} km.
           </p>
@@ -313,7 +316,7 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
 
       {fest && (
         // nur zum Lesen: dieselben Angaben, aber keine Felder zum Ändern (Michael, 2026-10-08)
-        <div className="mt-4 space-y-3">
+        <div className={`mt-4 space-y-3 ${modellOben ? 'order-2 mt-8' : ''}`}>
           {([['Von', wahl.von], ['Nach', wahl.nach], ['Über', wahl.ueber]] as const).filter(([, u]) => u).map(([t, u]) => (
             <div key={t}>
               <span className="block text-xs text-sbb-metal dark:text-sbb-storm">{t}</span>
@@ -323,7 +326,7 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
           ))}
         </div>
       )}
-      {!fest && <div className="mt-6 space-y-3">
+      {!fest && <div className={`mt-6 space-y-3 ${modellOben ? 'order-2 mt-8' : ''}`}>
         <BahnhofFeld bezeichnung="Von" wert={wahl.von} bahnhoefe={alle} name={name}
                      aendern={(u) => waehlen({ von: u })} />
         <BahnhofLinien b={wahl.von ? bahnhof.get(wahl.von) : undefined} verzeichnis={verzeichnis} />
@@ -385,10 +388,10 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
       )}
 
       {netz && tunnel && bruecken && ergebnis?.art === 'weg' && (
-        <Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}-${wahl.weg?.join('.')}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
+        <div className={modellOben ? 'order-1' : ''}><Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}-${wahl.weg?.join('.')}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
                   brueckenIds={ergebnis.bruecken} tunnel={tunnel} bruecken={bruecken}
                   bahnhof={bahnhof} alleBruecken={alleBruecken} verzeichnis={verzeichnis}
-                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} />
+                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} /></div>
       )}
     </div>
   )
@@ -963,7 +966,7 @@ function ModellAusWeg({ titel, laedt, fehler, fahrweg, bauen }: {
   useEffect(() => { bauen() }, [])
   const laenge = fahrweg ? wegEnde(fahrweg) : null
   return (
-    <section className={titel ? 'mt-8' : 'mt-2'}>
+    <section className={titel ? 'mt-4' : 'mt-2'}>
       {titel && <h2 className="text-xl font-bold tracking-tight">{titel}</h2>}
       {(laedt || (!fahrweg && !fehler)) && <p className="mt-2 text-sm text-sbb-metal">Der Weg wird gebaut …</p>}
       {fehler && <p className="mt-2 text-sm">Das Modell konnte nicht gebaut werden. {fehler}</p>}
