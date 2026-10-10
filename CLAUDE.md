@@ -187,7 +187,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              die Linie dunkelgrau mit Rand wie in 3D beim Fahren (FARBEN.weg), in der Brille ein flaches Band statt einer Röhre,
              auf dem der Zug fährt (eine Röhre schluckte ihn aus der Nähe), Tunnel darin gestrichelt mit 12 mm Strich und 8 mm Lücke auf
              dem Tisch wie die Striche auf dem Bildschirm aus der Nähe (BRILLE_STRICH_M),
-             darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Zuggeräusch und «Mit VR-Brille» (immer rot; ohne WebXR
+             darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Tempo «2.5 Min.» über die ganze Strecke oder 1×, 2×, 4×, 8× von 100 km/h (MODELL_TEMPI; das wirkliche Tempo einer Strecke steht in keiner Quelle; Michael, 2026-10-10), bei der Probefahrt 1×, 2×, 4×, 8×, 20×, 50×, 200× (ZEITRAFFER in Fahrtmodus.tsx), das Zuggeräusch und «Mit VR-Brille» (immer rot; ohne WebXR
              geht er nicht und sagt beim Tippen, was es dafür braucht); die
              Bergstrecken und Lausanne–Solothurn als Modell (#/modellbahn/gotthard, alte Adressen #/relief/…, #/fahrt/3d/…
              führen dorthin; #/relief/… kommt von der Linienseite, «Zurück» führt zur Linie), die eigenen Probefahrten aus «Fahren»

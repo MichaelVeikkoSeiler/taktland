@@ -16,8 +16,9 @@ import type { IndexEintrag } from '../typen'
 const VORLAEUFE_S = [20, 10] as const
 type Vorlauf = typeof VORLAEUFE_S[number]
 /** Wie viel schneller die Probefahrt läuft; wählbar (Michael, 2026-09-26) */
-/** 1 = Echtzeit bei PROBE_TEMPO; 1 und 200 dazu (Michael, 2026-09-27) */
-const ZEITRAFFER = [1, 5, 10, 20, 50, 100, 200] as const
+/** 1 = Echtzeit bei PROBE_TEMPO; 1 und 200 dazu (Michael, 2026-09-27); 2, 4 und 8 statt 5, 10 und 100 (Michael, 2026-10-10:
+ *  «doppelte, vierfache, achtfache Geschwindigkeit») */
+const ZEITRAFFER = [1, 2, 4, 8, 20, 50, 200] as const
 type Zeitraffer = typeof ZEITRAFFER[number]
 /** Was so viele Sekunden vor dem Zug liegt, steht als eigene Karte oben */
 const ZUGLEICH_S = 40

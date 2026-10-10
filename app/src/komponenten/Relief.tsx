@@ -487,7 +487,12 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
   )
 }
 
-interface Fahrknopf { los: () => void; halt: () => void }
+/** tempo: null fährt in PROBE_DAUER_S über die ganze Strecke, sonst als Vielfaches von MODELL_TEMPO */
+interface Fahrknopf { los: () => void; halt: () => void; tempo: (t: number | null) => void }
+/** Modellbahn auf dem Bildschirm: wählbares Tempo (Michael, 2026-10-10: «Originalgeschwindigkeit … doppelte, vierfache,
+ *  achtfache»); wie schnell Züge auf einer Strecke fahren, steht in keiner Quelle: 1× ist wie bei der Probefahrt 100 km/h */
+const MODELL_TEMPO = 100 / 3.6
+const MODELL_TEMPI = [null, 1, 2, 4, 8] as const
 
 
 /** Unter dem Modell: «Mit VR-Brille», der Zug auf dem Bildschirm und das Zuggeräusch (Michael, 2026-10-08: Modellbahn
@@ -502,6 +507,7 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler 
   const xr = useBrilleMoeglich()
   const [ohne, setOhne] = useState(false)
   const [vorne, setVorne] = useState(false)
+  const [tempo, setTempo] = useState<number | null>(null)
   const weiss = 'rounded-lg border border-sbb-cloud bg-white px-4 py-2 font-bold dark:border-sbb-iron dark:bg-sbb-midnight'
   return (
     <>
@@ -521,6 +527,15 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler 
         </button>
         <GeraeuschKnopf audio={audio} className="h-10 w-12" />
       </div>
+      <div className="segmente mt-3 gap-0.5" role="group" aria-label="Tempo des Zugs">
+        {MODELL_TEMPI.map((t) => (
+          <button key={String(t)} type="button" aria-pressed={tempo === t} className="segment min-h-9 flex-1 px-1 text-sm tabular-nums"
+                  aria-label={t === null ? `in ${(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke` : t === 1 ? 'etwa 100 km/h' : `${t}-mal 100 km/h`}
+                  onClick={() => { setTempo(t); fahrknopf.current?.tempo(t) }}>
+            {t === null ? `${(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Min.` : `${t}×`}
+          </button>
+        ))}
+      </div>
       {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
       {!xr && ohne && (
         <p className="mt-2 text-sm font-medium" role="status">
@@ -530,8 +545,9 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler 
         </p>
       )}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        «Zug fahren» schickt einen Zug in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke,
-        ein Zeitraffer, kein Fahrplan. Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der
+        Mit «{(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Min.» fährt der Zug in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke,
+        ein Zeitraffer, kein Fahrplan. 1× ist etwa 100 km/h, 2× bis 8× entsprechend schneller; wie schnell Züge auf dieser
+        Strecke wirklich fahren, steht in keiner Quelle von Taktland. Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der
         rechten Maustaste.
         {xr && <> In der Brille steht das Modell etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit auf Tischhöhe: ein
           Abzug trägt es, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt es, die rechte Greiftaste
@@ -1878,7 +1894,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
                     /** «Zug fahren» auf dem Bildschirm, im nächsten Bild ausgeführt */
                     losWunsch: false,
                     /** Anteil der vollen Geschwindigkeit: steigt nach dem Anfahren in ANFAHREN_S auf 1 */
-                    anteil: 0 }
+                    anteil: 0,
+                    /** Tempo auf dem Bildschirm (Fahrknopf.tempo): null über die ganze Strecke in PROBE_DAUER_S */
+                    echt: null as number | null }
     if (fahrknopf) {
       fahrknopf.current = {
         los: () => {
@@ -1886,6 +1904,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           fahrt.losWunsch = true
         },
         halt: () => { fahrt.laeuft = false },
+        tempo: (t) => { fahrt.echt = t },
       }
     }
     /** in der Brille: am Ziel die Knöpfe «Fahrt wiederholen», «Zurückfahren», «Fahrt beenden» zeigen */
@@ -2279,7 +2298,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           // langsam anfahren und vor dem Ziel gleichmässig abbremsen, je in ANFAHREN_S (Michael, 2026-10-09: «in 2 sec
           // die normale Geschwindigkeit … am Schluss ebenso abbremsen»); der Bremsweg ist die halbe Strecke, die der
           // Zug in ANFAHREN_S mit voller Fahrt zurücklegt
-          const voll = ((ende - anfang) / PROBE_DAUER_S) * fahrt.tempo
+          const voll = (fahrt.echt === null || renderer.xr.isPresenting ? (ende - anfang) / PROBE_DAUER_S : MODELL_TEMPO * fahrt.echt) * fahrt.tempo
           fahrt.anteil = Math.min(1, fahrt.anteil + dt / ANFAHREN_S)
           const rest = fahrt.richtung > 0 ? ende - fahrt.s : fahrt.s - zugLaengeS() - anfang
           const bremsen = Math.sqrt(Math.max(0, rest) / (voll * ANFAHREN_S / 2))
