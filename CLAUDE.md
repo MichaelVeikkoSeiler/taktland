@@ -187,7 +187,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              die Linie dunkelgrau mit Rand wie in 3D beim Fahren (FARBEN.weg), in der Brille ein flaches Band statt einer Röhre,
              auf dem der Zug fährt (eine Röhre schluckte ihn aus der Nähe), Tunnel darin gestrichelt mit 12 mm Strich und 8 mm Lücke auf
              dem Tisch wie die Striche auf dem Bildschirm aus der Nähe (BRILLE_STRICH_M),
-             darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Tempo «2.5 Min.» über die ganze Strecke oder 1×, 2×, 4×, 8× von 100 km/h (MODELL_TEMPI; das wirkliche Tempo einer Strecke steht in keiner Quelle; Michael, 2026-10-10), bei der Probefahrt 1×, 2×, 4×, 8×, 20×, 50×, 200× (ZEITRAFFER in Fahrtmodus.tsx), das Zuggeräusch und «Mit VR-Brille» (immer rot; ohne WebXR
+             «Höhe wie echt / 2-fach» unter der Karte (Michael, 2026-10-10: «damit man von der Karte mehr sieht»), rechts oben in der Karte ein Knopf fürs Vollbild (ModellKarte): die Karte füllt den Bildschirm, wo der Browser es kann auch ohne seine Leisten (useEchtesVollbild in Netzkarte.tsx, gilt auch für die Karte beim Fahren), darin Höhe, Zuggeräusch, Zug fahren, Anhalten, Führerstand und Tempo, Namen so gross wie daneben; darunter «Zug fahren» und «Anhalten» auf dem Bildschirm, das Tempo «2.5 Min.» über die ganze Strecke oder 1×, 2×, 4×, 8× von 100 km/h (MODELL_TEMPI; das wirkliche Tempo einer Strecke steht in keiner Quelle; Michael, 2026-10-10), bei der Probefahrt 1×, 2×, 4×, 8×, 20×, 50×, 200× (ZEITRAFFER in Fahrtmodus.tsx), das Zuggeräusch und «Mit VR-Brille» (immer rot; ohne WebXR
              geht er nicht und sagt beim Tippen, was es dafür braucht); die
              Bergstrecken und Lausanne–Solothurn als Modell (#/modellbahn/gotthard, alte Adressen #/relief/…, #/fahrt/3d/…
              führen dorthin; #/relief/… kommt von der Linienseite, «Zurück» führt zur Linie), die eigenen Probefahrten aus «Fahren»
@@ -296,7 +296,7 @@ Michael, 2026-10-08, ohne Rückfrage seit 2026-10-09). Das × daneben bleibt fü
 Was lädt, zeigt oben ein **Ladebalken** in Karmin (`komponenten/Ladebalken.tsx`, Michael, 2026-10-10): er zählt alles, was über
 `holen`, `holenBinaer` oder `ladenVerfolgen` in `src/daten.ts` geht (auch die nachgeladenen Teile für 3D), erscheint erst nach
 250 ms und füllt sich mit dem Anteil der fertigen Dateien; die Abfragen von «Geo» online, der Zähler und status.json zählen nicht mit.
-Beim Laden einer 3D-Szene (szeneLaden) läuft er sofort und mindestens 3 Sekunden sichtbar von 0 bis 100 %, in zufälligen,
+Beim Laden einer 3D-Szene (szeneLaden) steht er ganz oben in deren Karte, nicht oben in der App (`<Ladebalken inKarte />`, Michael, 2026-10-10), läuft sofort und mindestens 3 Sekunden sichtbar von 0 bis 100 %, in zufälligen,
 ungleichen Schritten mit kurzen Halten, ein Spiel, keine Messung (Michael, 2026-10-10); steht der Browser beim Bauen still, zählt
 die Zeit nicht; lädt danach noch etwas, kriecht er bis 98 %. 6 Pixel hoch.
 

@@ -12,6 +12,8 @@ import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zugge
 import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
+import { Ladebalken } from './Ladebalken'
+import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
 
 /**
@@ -236,6 +238,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
   useEffect(() => szeneLaden(), [])
   const { daten, fehler } = useRelief(name)
   const [faktor, setFaktor] = useState<1 | 2>(1)
+  const stand = useModellStand()
   const weg = useMemo(() => (daten ? wegDerLinie(daten.r) : null), [daten])
   // in der Brille (Michael, 2026-10-06: «Quest 3»): nur, wo der Browser WebXR kann
   const brille = useRef<(() => Promise<void>) | null>(null)
@@ -269,19 +272,25 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
         </p>
       )}
       {fehler && <Ladefehler className="mt-6" was="Das Relief konnte nicht geladen werden." fehler={fehler} />}
-      {!daten && !fehler && <p className="mt-6 text-sbb-metal">Das Relief wird geladen …</p>}
+      {!fehler && (
+        <ModellKarte laedt="Das Relief wird geladen …" faktor={faktor} setFaktor={setFaktor} fahrknopf={fahrknopf}
+                     fuehrerstand={fuehrerstand} audio={audio} stand={stand}
+                     szene={daten && weg ? (fuellen, className) => (
+                       <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
+                              probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
+                              fuellen={fuellen} className={className} />
+                     ) : null} />
+      )}
       {daten && weg && (
         <>
-          <div className="mt-4"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
-          <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
-                 probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                 className="mt-3 w-full overflow-hidden rounded-lg" />
+          {/* unter der Karte, damit man von ihr mehr sieht (Michael, 2026-10-10) */}
+          <div className="mt-3"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
             <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
-          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
+          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} stand={stand} />
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
             {faktor === 2 && <span className="font-medium text-sbb-black dark:text-sbb-white"> Die Höhe ist 2-fach überhöht.</span>}
@@ -378,6 +387,7 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
   const probeStelle = useRef<number | null>(null)
   const fahrknopf = useRef<Fahrknopf | null>(null)
   const fuehrerstand = useRef(false)
+  const stand = useModellStand()
   const BAND_M = useMemo(() => bandBreite(wegEnde(fahrweg)), [fahrweg])
   useEffect(() => {
     let ab = false
@@ -465,18 +475,23 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
   return (
     <div>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
-      {!daten && !fehler && <p className="mt-3 text-sm text-sbb-metal">Das Gelände entlang der ganzen Strecke wird geladen …</p>}
+      {!fehler && (
+        <ModellKarte laedt="Das Gelände entlang der ganzen Strecke wird geladen …" fahrknopf={fahrknopf}
+                     fuehrerstand={fuehrerstand} audio={audio} stand={stand}
+                     szene={daten && weg ? (fuellen, className) => (
+                       <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
+                              probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
+                              fuellen={fuellen} className={className} />
+                     ) : null} />
+      )}
       {daten && weg && (
         <>
-          <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
-                 probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                 className="mt-3 w-full overflow-hidden rounded-lg" />
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
             <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
-          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} />
+          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} stand={stand} />
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
             Die ganze Strecke als Modell, mit einem Band von {(BAND_M / 1000).toLocaleString('de-CH').replace('.', ',')} km links und rechts der Strecke; was weiter weg
             liegt, fehlt. Gelände aus swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
@@ -499,17 +514,95 @@ const MODELL_TEMPI = [null, 1, 2, 4, 8] as const
 
 /** Unter dem Modell: «Mit VR-Brille», der Zug auf dem Bildschirm und das Zuggeräusch (Michael, 2026-10-08: Modellbahn
  *  für alle; der Knopf zur Brille steht immer da, ohne Brille geht er einfach nicht und sagt, was es dafür braucht) */
-function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler }: {
+/**
+ * Die Karte eines Modells mit ihrem Ladebalken ganz oben und einem Knopf fürs Vollbild (Michael, 2026-10-10: «Wenn man die
+ * Karte auf Vollbildmodus macht, soll es auch Vollbild sein, mit den nötigen Buttons und Knöpfen darin»): im Vollbild
+ * füllt sie den Bildschirm, und Höhe, Zuggeräusch, Zug fahren, Anhalten, Führerstand und Tempo liegen auf der Karte.
+ * Die Szene bleibt dieselbe, sie wird beim Umschalten nicht neu gebaut.
+ */
+function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand, audio, stand }: {
+  /** die Szene, mit fuellen und className von hier; null, solange die Daten laden */
+  szene: ((fuellen: boolean, className: string) => React.ReactNode) | null
+  /** Text, solange die Daten laden */
+  laedt: React.ReactNode
+  faktor?: 1 | 2
+  setFaktor?: (f: 1 | 2) => void
+  fahrknopf: React.RefObject<Fahrknopf | null>
+  fuehrerstand: React.MutableRefObject<boolean>
+  audio: ReturnType<typeof useZuggeraeusch>
+  stand: ModellStand
+}) {
+  const [voll, setVoll] = useState(false)
+  useEchtesVollbild(voll, setVoll)
+  const { vorne, setVorne } = stand
+  return (
+    <div className={voll
+      ? 'fixed inset-0 z-[80] bg-sbb-white pb-[env(safe-area-inset-bottom)] dark:bg-sbb-midnight'
+      : 'relative mt-4 overflow-hidden rounded-lg'}>
+      {szene ? szene(voll, voll ? 'absolute inset-0 overflow-hidden' : 'relative w-full overflow-hidden rounded-lg')
+        : <div className="flex h-[min(60vh,440px)] items-center justify-center rounded-lg bg-sbb-milk text-sm text-sbb-metal dark:bg-sbb-charcoal">{laedt}</div>}
+      <Ladebalken inKarte />
+      {szene && (
+        <div className="absolute right-2 top-2 flex gap-2">
+          {voll && <GeraeuschKnopf audio={audio} className="h-8 w-9" />}
+          <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
+        </div>
+      )}
+      {szene && voll && (
+        <>
+          {faktor && setFaktor && <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>}
+          <div className="absolute inset-x-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] flex flex-col gap-2">
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className={KAMERA_KNOPF} onClick={() => fahrknopf.current?.los()}>Zug fahren</button>
+              <button type="button" className={KAMERA_KNOPF} onClick={() => fahrknopf.current?.halt()}>Anhalten</button>
+              <button type="button" aria-pressed={vorne} className={`${KAMERA_KNOPF} ${vorne ? '!bg-sbb-anthracite !text-white' : ''}`}
+                      onClick={() => { fuehrerstand.current = !vorne; setVorne(!vorne); if (!vorne) fahrknopf.current?.los() }}>
+                Führerstand
+              </button>
+            </div>
+            <div className="max-w-sm"><TempoWahl stand={stand} fahrknopf={fahrknopf} klein /></div>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+/** was auf dem Bildschirm gewählt ist, für die Knöpfe unter dem Modell und die im Vollbild gleich */
+function useModellStand() {
+  const [vorne, setVorne] = useState(false)
+  const [tempo, setTempo] = useState<number | null>(null)
+  return { vorne, setVorne, tempo, setTempo }
+}
+type ModellStand = ReturnType<typeof useModellStand>
+
+/** Tempo des Zugs: 2,5 Minuten über die ganze Strecke oder ein Vielfaches von 100 km/h */
+function TempoWahl({ stand, fahrknopf, klein = false }: { stand: ModellStand; fahrknopf: React.RefObject<Fahrknopf | null>; klein?: boolean }) {
+  return (
+    <div className={`segmente gap-0.5 ${klein ? 'bg-white/90 dark:bg-sbb-midnight/90' : 'mt-3'}`} role="group" aria-label="Tempo des Zugs">
+      {MODELL_TEMPI.map((t) => (
+        <button key={String(t)} type="button" aria-pressed={stand.tempo === t}
+                className={`segment flex-1 tabular-nums ${klein ? 'min-h-8 px-1.5 text-xs' : 'min-h-9 px-1 text-sm'}`}
+                aria-label={t === null ? `in ${(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke` : t === 1 ? 'etwa 100 km/h' : `${t}-mal 100 km/h`}
+                onClick={() => { stand.setTempo(t); fahrknopf.current?.tempo(t) }}>
+          {t === null ? `${(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Min.` : `${t}×`}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler, stand }: {
   fahrknopf: React.RefObject<Fahrknopf | null>
   fuehrerstand: React.MutableRefObject<boolean>
   audio: ReturnType<typeof useZuggeraeusch>
   inBrille: () => void
   brilleFehler: string | null
+  stand: ModellStand
 }) {
   const xr = useBrilleMoeglich()
   const [ohne, setOhne] = useState(false)
-  const [vorne, setVorne] = useState(false)
-  const [tempo, setTempo] = useState<number | null>(null)
+  const { vorne, setVorne } = stand
   const weiss = 'rounded-lg border border-sbb-cloud bg-white px-4 py-2 font-bold dark:border-sbb-iron dark:bg-sbb-midnight'
   return (
     <>
@@ -529,15 +622,7 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler 
         </button>
         <GeraeuschKnopf audio={audio} className="h-10 w-12" />
       </div>
-      <div className="segmente mt-3 gap-0.5" role="group" aria-label="Tempo des Zugs">
-        {MODELL_TEMPI.map((t) => (
-          <button key={String(t)} type="button" aria-pressed={tempo === t} className="segment min-h-9 flex-1 px-1 text-sm tabular-nums"
-                  aria-label={t === null ? `in ${(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke` : t === 1 ? 'etwa 100 km/h' : `${t}-mal 100 km/h`}
-                  onClick={() => { setTempo(t); fahrknopf.current?.tempo(t) }}>
-            {t === null ? `${(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Min.` : `${t}×`}
-          </button>
-        ))}
-      </div>
+      <TempoWahl stand={stand} fahrknopf={fahrknopf} />
       {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
       {!xr && ohne && (
         <p className="mt-2 text-sm font-medium" role="status">
@@ -751,12 +836,13 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   }, [mitte, fahrweg, objekte, ende])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
   if (fehler) return <div className={className}><Ladefehler was="Das Gelände konnte nicht geladen werden." fehler={fehler} /></div>
-  if (!daten || !weg) return <div className={`${className} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>
+  if (!daten || !weg) return <div className={`${className} relative flex items-center justify-center text-sm text-sbb-metal`}><Ladebalken inKarte />Das Gelände wird geladen …</div>
   return (
     <>
       <div className={`${className} relative`}>
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
                fuehrerstand={fuehrerstand} className="absolute inset-0 overflow-hidden" />
+        <Ladebalken inKarte />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
         <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 h-9 w-10" />
         <div className="absolute bottom-2 left-2 flex gap-2">
@@ -810,7 +896,7 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
@@ -828,8 +914,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   probeStelle?: React.MutableRefObject<number | null>
   /** Modellbahn auf dem Bildschirm: hier legt die Szene ab, wie der Zug losfährt und anhält */
   fahrknopf?: React.MutableRefObject<Fahrknopf | null>
+  /** so hoch wie der Rahmen (Vollbild), sonst richtet sich die Höhe nach der Breite */
+  fuellen?: boolean
   className: string
 }) {
+  const fuellenJetzt = useRef(fuellen)
+  fuellenJetzt.current = fuellen
   const rahmen = useRef<HTMLDivElement>(null)
   // bei der Probefahrt auf der eigenen Seite rechnet die Szene die Stelle des Zugs selbst,
   // in ihrer Schleife: in der Brille läuft keine andere
@@ -876,7 +966,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // an den Portalen über TUNNEL_DUNKEL_M ein- und ausgeblendet; die Knöpfe liegen ausserhalb und bleiben sichtbar
     const dunkelFlaeche = document.createElement('div')
     Object.assign(dunkelFlaeche.style, { position: 'absolute', inset: '0', background: '#050505', opacity: '0', pointerEvents: 'none' })
-    if (getComputedStyle(el).position === 'static') el.style.position = 'relative'
+    // der Rahmen ist positioniert (relative oder absolute in className), sonst läge die Fläche falsch
     el.appendChild(dunkelFlaeche)
 
     // Gelände als Netz, jedes SCHRITT-te Feld
@@ -1840,9 +1930,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const groesseSetzen = () => {
       const b = el.clientWidth
       // auf der eigenen Seite bestimmt die Breite die Höhe, beim Fahren der Rahmen
-      const hh = zug ? el.clientHeight : Math.round(Math.min(window.innerHeight * 0.7, b * 1.1))
+      const hh = zug || fuellenJetzt.current ? el.clientHeight : Math.round(Math.min(window.innerHeight * 0.7, b * 1.1))
       if (!b || !hh) return
       renderer.setSize(b, hh)
+      // Schilder haben eine feste Grösse im Verhältnis zur Höhe des Bildes: im Vollbild der Modellbahn so gross wie
+      // daneben, sonst wachsen sie mit der Höhe des Bildschirms
+      if (fuellenJetzt.current && !zugVonAussen) {
+        const f = Math.min(1, Math.min(window.innerHeight * 0.7, b * 1.1) / hh)
+        for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] * f, grundMass[1] * f, 1)
+      } else if (!renderer.xr.isPresenting) for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
       for (const lm of linienMaterialien) lm.resolution.set(b, hh)
       aufloesung.set(b, hh)
       kamera.aspect = b / hh

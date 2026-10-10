@@ -26,7 +26,10 @@ const zwischenspeicher = new Map<string, unknown>()
 export const laden = { begonnen: 0, fertig: 0,
   /** eine 3D-Szene lädt seit diesem Zeitpunkt (performance.now), sonst null: der Balken läuft dann mindestens
    *  SZENE_MS von 0 bis 100 % (Michael, 2026-10-10: «mindestens 3 Sekunden … nicht linear») */
-  szeneAb: null as number | null }
+  szeneAb: null as number | null,
+  /** so viele Ladebalken stehen gerade in einer Karte (Michael, 2026-10-10: «in der Karte ganz oben»); dann zeigt der
+   *  oben in der App die Szene nicht */
+  inKarte: 0 }
 export const SZENE_MS = 3000
 const zuhoerer = new Set<() => void>()
 export function ladenBeobachten(f: () => void) { zuhoerer.add(f); return () => { zuhoerer.delete(f) } }
@@ -39,7 +42,8 @@ export function szeneLaden() {
   melden()
 }
 /** der Ladebalken ist mit der Szene fertig */
-export function szeneFertig() { laden.szeneAb = null }
+export function szeneFertig() { laden.szeneAb = null; melden() }
+export function balkenInKarte(dazu: 1 | -1) { laden.inKarte += dazu; melden() }
 
 /** Zählt ein Versprechen im Ladebalken mit, bis es erfüllt oder gescheitert ist */
 export function ladenVerfolgen<T>(p: Promise<T>): Promise<T> {

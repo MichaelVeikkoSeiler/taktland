@@ -126,17 +126,38 @@ export function useVollbild(svg: React.RefObject<Element | null>) {
     messen()
     const beobachter = new ResizeObserver(messen)
     if (el) beobachter.observe(el)
+    return () => beobachter.disconnect()
+  }, [voll, svg])
+  useEchtesVollbild(voll, setVoll)
+  return { voll, setVoll, verh }
+}
+
+/**
+ * Vollbild: die Seite rollt nicht mehr, Escape schliesst, und wo der Browser es kann, verschwinden auch seine Leisten
+ * (Fullscreen-API; Michael, 2026-10-10: «soll es auch Vollbild sein»). Schliesst man das Vollbild des Browsers selbst
+ * (Zurück, Wischen), schliesst auch das der Karte.
+ */
+export function useEchtesVollbild(voll: boolean, setVoll: (v: boolean) => void) {
+  useEffect(() => {
+    if (!voll) return
     const taste = (e: KeyboardEvent) => { if (e.key === 'Escape') setVoll(false) }
     document.addEventListener('keydown', taste)
     const vorher = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => {
-      beobachter.disconnect()
-      document.removeEventListener('keydown', taste)
-      document.body.style.overflow = vorher
+    let echt = false
+    const wurzel = document.documentElement
+    if (wurzel.requestFullscreen && !document.fullscreenElement) {
+      wurzel.requestFullscreen().then(() => { echt = true }).catch(() => {})
     }
-  }, [voll, svg])
-  return { voll, setVoll, verh }
+    const wechsel = () => { if (echt && !document.fullscreenElement) setVoll(false) }
+    document.addEventListener('fullscreenchange', wechsel)
+    return () => {
+      document.removeEventListener('keydown', taste)
+      document.removeEventListener('fullscreenchange', wechsel)
+      document.body.style.overflow = vorher
+      if (document.fullscreenElement) void document.exitFullscreen().catch(() => {})
+    }
+  }, [voll, setVoll])
 }
 
 /** Breite der Zeichnung in Bildpunkten. Zeichen und Schrift richten sich danach,
