@@ -344,15 +344,16 @@ export function FrageFlaeche({ pool, e, ziel, index, f, schluessel }: {
         })}
       </div>
       <button type="button" disabled={!pin} onClick={() => f.abgeben(false)}
-              className="mt-3 min-h-12 w-full rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40">
+              className="mt-3 min-h-12 w-full rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40
+                         quer:sticky quer:bottom-0 quer:shadow-[0_-8px_0_0_var(--color-white)] dark:quer:shadow-[0_-8px_0_0_var(--color-sbb-midnight)]">
         {pin ? 'Tipp bestätigen' : 'Tippe auf die Karte für deinen Pin'}
       </button>
     </div>
   )
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-      <div className="px-4 py-3 md:hidden">{aufgabe}</div>
+    <div className="flex min-h-0 flex-1 flex-col md:flex-row quer:flex-row">
+      <div className="px-4 py-3 md:hidden quer:hidden">{aufgabe}</div>
       <div className="relative min-h-0 flex-1">
         <Schweiz11Karte key={schluessel} pool={pool} gebiet={e.gebiet} hilfen={hilfen} ziel={ziel} index={index}
                         pin={pin} setzen={setPin} ausserhalb={() => setMeldung('Ausserhalb des Spielgebiets')}
@@ -372,8 +373,8 @@ export function FrageFlaeche({ pool, e, ziel, index, f, schluessel }: {
           </div>
         )}
       </div>
-      <div className="border-t border-sbb-cloud px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] dark:border-sbb-iron md:w-80 md:shrink-0 md:overflow-y-auto md:border-l md:border-t-0 lg:w-96">
-        <div className="hidden md:mb-5 md:block">{aufgabe}</div>
+      <div className="border-t border-sbb-cloud px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] dark:border-sbb-iron md:w-80 md:shrink-0 md:overflow-y-auto md:border-l md:border-t-0 lg:w-96 quer:w-72 quer:shrink-0 quer:overflow-y-auto quer:border-l quer:border-t-0">
+        <div className="hidden md:mb-5 md:block quer:mb-3 quer:block">{aufgabe}</div>
         {steuerung}
       </div>
     </div>
@@ -485,12 +486,12 @@ export function Aufloesung({ pool, e, ziel, index, spieler, antworten, frage, d0
   const alleHilfen = useMemo(() => new Set<Hilfe>(['kantone', 'seen', 'fluesse', 'orte', 'bahnnetz']), [])
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col md:flex-row">
-      <div className="relative h-[45vh] shrink-0 md:h-auto md:flex-1">
+    <div className="flex min-h-0 flex-1 flex-col md:flex-row quer:flex-row">
+      <div className="relative h-[45vh] shrink-0 md:h-auto md:flex-1 quer:h-auto quer:flex-1">
         <Schweiz11Karte pool={pool} gebiet={e.gebiet} hilfen={alleHilfen} ziel={ziel} index={index} pin={null}
                         aufloesung pins={pins} klasse="absolute inset-0" />
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:w-80 md:flex-none md:border-l md:border-sbb-cloud lg:w-96 md:dark:border-sbb-iron">
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:w-80 md:flex-none md:border-l md:border-sbb-cloud lg:w-96 md:dark:border-sbb-iron quer:w-72 quer:flex-none quer:border-l quer:border-sbb-cloud quer:dark:border-sbb-iron">
         <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">{typText(ziel)} · {STUFE_NAME[ziel.s]}</p>
         <p className="text-2xl font-bold leading-tight">{name}</p>
         {name !== ziel.name && <p className="text-sm text-sbb-metal dark:text-sbb-storm">Name laut Quelle: {ziel.name}</p>}

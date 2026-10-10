@@ -142,7 +142,7 @@ data/tunnel_richtung.json  Anfang und Ende von SBB-Tunneln laut swissTLM3D (pipe
              daneben liegen (Pfaffensprungtunnel)
 data/bruecken_bereich.json  Anfang, Ende und Länge von SBB-Brücken laut Zeichnung von swissTLM3D,
              nur wo eindeutig (pipeline/build_bruecken_bereich.py); die SBB nennt keine Länge
-data/schweiz11.json  Pool für das Spiel «Geo»: Bahnhöfe, Tunnel und Brücken mit Ziel (Mitte des
+data/schweiz11.json  Pool für das Spiel «Geo» (Handy quer: Karte links, Aufgabe und Knöpfe rechts, «Tipp bestätigen» bleibt unten sichtbar; Variante quer in index.css, Michael, 2026-10-10): Bahnhöfe, Tunnel und Brücken mit Ziel (Mitte des
              Bauwerks), Kanton laut Kantonsfläche (BFS) und Stufe nach Rang (pipeline/build_schweiz11.py, nach
              export_app.py); dazu die Kantonsflächen für das Spielgebiet
 data/erraten.json  Pool für das Spiel «Bahnhofsuche»: je Bahnhof die sechs Hinweise aus data/facts (Kanton,

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Handy quer: wenig Höhe, darum Karte und Knöpfe nebeneinander (Michael, 2026-10-10: im Geo-Spiel war «Tipp bestätigen» nicht mehr erreichbar) */
+@custom-variant quer (@media (orientation: landscape) and (max-height: 600px));
 
 /*
  * Farben nach der öffentlichen Designdokumentation der SBB (digital.sbb.ch).
