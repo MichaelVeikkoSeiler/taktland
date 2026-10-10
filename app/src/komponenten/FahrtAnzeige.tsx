@@ -12,9 +12,10 @@ import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertL
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
 import { dreiDGemerkt, dreiDVerbrauchen } from '../relief'
 import { gelaendeMoeglich } from '../gelaende'
+import { ladenVerfolgen } from '../daten'
 
 // three.js nur für die Ansicht «3D», erst dort geladen
-const GelaendeFahrt = lazy(() => import('./Relief').then((m) => ({ default: m.GelaendeFahrt })))
+const GelaendeFahrt = lazy(() => ladenVerfolgen(import('./Relief')).then((m) => ({ default: m.GelaendeFahrt })))
 
 /** So viele Sekunden vor dem Objekt beginnt der Ring sich zu füllen */
 export const RING_S = 60

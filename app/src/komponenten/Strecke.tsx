@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
-import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
+import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, ladenVerfolgen, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { bahnhoefeVorziehen, gerundetM, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegLinieSetzen, wegSetzen } from '../erlebt'
@@ -25,7 +25,7 @@ import { Zurueck } from './Zurueck'
 import { MODELL_HOECHSTENS_M } from '../relief'
 
 // das Modell der Strecke für die Modellbahn, mit three.js, erst dort geladen
-const ModellStrecke = lazy(() => import('./Relief').then((m) => ({ default: m.ModellStrecke })))
+const ModellStrecke = lazy(() => ladenVerfolgen(import('./Relief')).then((m) => ({ default: m.ModellStrecke })))
 
 /** Start, Ziel und wahlweise ein Bahnhof dazwischen, als UIC */
 export interface StreckenWahl {

@@ -4,7 +4,7 @@
  * damit dieselbe Logik später auch ein Spiel auf mehreren Geräten tragen kann.
  * Der Pool entsteht in pipeline/build_schweiz11.py (data/schweiz11.json).
  */
-import { kartengrundLaden } from './daten'
+import { kartengrundLaden, ladenVerfolgen } from './daten'
 import { ohneKuerzel } from './kuerzel'
 import { LAENGE_ZU_BREITE } from './komponenten/Netzkarte'
 import type { KodierterZug } from './typen'
@@ -69,11 +69,11 @@ function ringLesen(z: KodierterZug): Ring {
 
 let poolLaden: Promise<Pool> | null = null
 export function schweiz11Laden(): Promise<Pool> {
-  poolLaden ??= fetch(`${BASIS}data/schweiz11.json`)
+  poolLaden ??= ladenVerfolgen(fetch(`${BASIS}data/schweiz11.json`)
     .then((r) => {
       if (!r.ok) throw new Error(`data/schweiz11.json nicht gefunden (${r.status})`)
       return r.json() as Promise<PoolDaten>
-    })
+    }))
     .then((d) => {
       const kantone = new Map(d.kantone.map((k) => [k.kt, { flaeche_km2: k.flaeche_km2, ringe: k.ringe.map(ringLesen) }]))
       // Datenprüfung: nur Objekte mit Name, Typ, gültiger Lage, Kanton und Stufe

@@ -9,8 +9,9 @@ import { Schweiz11Online } from './komponenten/Schweiz11Online'
 import { Erraten } from './komponenten/Erraten'
 import { ErratenOnline } from './komponenten/ErratenOnline'
 // three.js nur für das 3D-Relief, erst dort geladen
-const ReliefSeite = lazy(() => import('./komponenten/Relief'))
+const ReliefSeite = lazy(() => ladenVerfolgen(import('./komponenten/Relief')))
 import { Zurueck } from './komponenten/Zurueck'
+import { Ladebalken } from './komponenten/Ladebalken'
 import { Fahrt } from './komponenten/Fahrt'
 import { Fortsetzen } from './komponenten/Fortsetzen'
 import { OhneZiel } from './komponenten/OhneZiel'
@@ -32,7 +33,7 @@ import { Suche, type ListenStand } from './komponenten/Suche'
 import {
   ersteSortierung, Uebersicht, type UebersichtArt, type UebersichtStand,
 } from './komponenten/Uebersicht'
-import { indexLaden } from './daten'
+import { indexLaden, ladenVerfolgen } from './daten'
 import type { BahnhofIndex } from './typen'
 import { Ladefehler } from './komponenten/Ladefehler'
 import { EinstellungenSeite } from './komponenten/EinstellungenSeite'
@@ -180,6 +181,7 @@ export default function App() {
 
   return (
     <div className="min-h-dvh bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
+      <Ladebalken />
       {/* auf dem Tablet breiter: 672 Pixel wirkten dort verloren (Michael, 2026-09-22) */}
       <div className="mx-auto max-w-2xl md:max-w-3xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}

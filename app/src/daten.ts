@@ -19,6 +19,25 @@ const eingebettet = (window as unknown as { __TAKTLAND__?: EingebetteteDaten }).
 /** Einmal geladene Daten im Speicher halten, damit Offline-Aufrufe schnell sind. */
 const zwischenspeicher = new Map<string, unknown>()
 
+/* ---------- Ladebalken ---------- */
+
+/** Was gerade lädt, für den Ladebalken oben (komponenten/Ladebalken.tsx; Michael, 2026-10-10: «Egal wo, wenn irgendwo
+ *  etwas am Laden ist, soll eine Progressbar erscheinen»): seit dem letzten Stillstand begonnen und fertig */
+export const laden = { begonnen: 0, fertig: 0 }
+const zuhoerer = new Set<() => void>()
+export function ladenBeobachten(f: () => void) { zuhoerer.add(f); return () => { zuhoerer.delete(f) } }
+const melden = () => zuhoerer.forEach((f) => f())
+
+/** Zählt ein Versprechen im Ladebalken mit, bis es erfüllt oder gescheitert ist */
+export function ladenVerfolgen<T>(p: Promise<T>): Promise<T> {
+  if (laden.begonnen === laden.fertig) { laden.begonnen = 0; laden.fertig = 0 }
+  laden.begonnen++
+  melden()
+  const ende = () => { laden.fertig++; melden() }
+  p.then(ende, ende)
+  return p
+}
+
 /** Bricht die Verbindung ab (schwacher Empfang, GitHub spielt gerade eine neue
  *  Version ein), wird nach einer Sekunde ein zweites Mal geladen. */
 async function abrufen(url: string) {
@@ -37,18 +56,22 @@ async function abrufen(url: string) {
 export async function holen<T>(pfad: string): Promise<T> {
   const treffer = zwischenspeicher.get(pfad)
   if (treffer) return treffer as T
-  const antwort = await abrufen(`${BASIS}${pfad}`)
-  if (!antwort.ok) throw new Error(`${pfad} nicht gefunden (${antwort.status})`)
-  const daten = (await antwort.json()) as T
+  const daten = await ladenVerfolgen((async () => {
+    const antwort = await abrufen(`${BASIS}${pfad}`)
+    if (!antwort.ok) throw new Error(`${pfad} nicht gefunden (${antwort.status})`)
+    return (await antwort.json()) as T
+  })())
   zwischenspeicher.set(pfad, daten)
   return daten
 }
 
 /** Binärdaten wie die Höhen eines Reliefs (pipeline/build_relief.py) */
 export async function holenBinaer(pfad: string): Promise<ArrayBuffer> {
-  const antwort = await abrufen(`${BASIS}${pfad}`)
-  if (!antwort.ok) throw new Error(`${pfad} nicht gefunden (${antwort.status})`)
-  return antwort.arrayBuffer()
+  return ladenVerfolgen((async () => {
+    const antwort = await abrufen(`${BASIS}${pfad}`)
+    if (!antwort.ok) throw new Error(`${pfad} nicht gefunden (${antwort.status})`)
+    return antwort.arrayBuffer()
+  })())
 }
 
 export async function indexLaden(): Promise<BahnhofIndex> {
