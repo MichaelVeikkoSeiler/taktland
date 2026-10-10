@@ -1310,7 +1310,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (nahErlaubt && feinNah) {
         const seite = 1000 * FEIN_PX_JE_M
         for (const { ke, kn, bild: b } of feinNah.kacheln) feinCtx.drawImage(b, fx(ke * 1000), fy((kn + 1) * 1000), seite, seite)
-        linienMalen(ausJetzt.current, true, { ctx: feinCtx, fx, fy, w, h: w, dicke: (FEIN_PX_JE_M * m) / PX })
+        // schmal: aus dem Führerstand gesehen wirkten Ränder in der Breite wie darunter (etwa 10 m) als Streifen neben dem Gleis
+        linienMalen(ausJetzt.current, true, { ctx: feinCtx, fx, fy, w, h: w, dicke: 0.6 })
       }
       feinTextur.needsUpdate = true
     }
