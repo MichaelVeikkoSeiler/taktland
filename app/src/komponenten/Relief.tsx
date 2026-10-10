@@ -119,8 +119,8 @@ const ZUG_BREITE = 0.045, ZUG_HOEHE = 0.05
 const ZUG_NORMAL_KM = 6
 /** beim Fahren (Fahrt und Probefahrt) ist der Zug grösser (Michael, 2026-10-07: «bei der Fahrt Live … 150 %») */
 const ZUG_FAHRT_FAKTOR = 1.5
-/** so stark neigt sich ein Wagen höchstens (im überhöhten Gelände wären es sonst Rampen) */
-const ZUG_NEIGUNG_MAX = 0.12
+/** so stark neigt sich ein Wagen höchstens, 4° (im überhöhten Gelände wären es sonst Rampen; vorher 7°, Michael, 2026-10-10) */
+const ZUG_NEIGUNG_MAX = (4 * Math.PI) / 180
 /** Höhe der Linie: alle HOEHE_SCHRITT_M aus dem Gelände, gemittelt über GLAETTEN_M davor und danach */
 const HOEHE_SCHRITT_M = 50, GLAETTEN_M = 400
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
