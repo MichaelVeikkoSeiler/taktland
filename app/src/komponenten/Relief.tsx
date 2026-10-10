@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { Line2 } from 'three/examples/jsm/lines/Line2.js'
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
-import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, streckenLaden } from '../daten'
+import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, streckenLaden, szeneLaden } from '../daten'
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
 import { lv95, useBrilleMoeglich } from '../relief'
@@ -233,6 +233,7 @@ function auflageFuer(r: Relief, z: Zusatz): Auflage {
 /* ---------- die eigene Seite ---------- */
 
 export default function ReliefSeite({ name, vonLinie = false }: { name: string; vonLinie?: boolean }) {
+  useEffect(() => szeneLaden(), [])
   const { daten, fehler } = useRelief(name)
   const [faktor, setFaktor] = useState<1 | 2>(1)
   const weg = useMemo(() => (daten ? wegDerLinie(daten.r) : null), [daten])
@@ -368,6 +369,7 @@ const BAND_FELDER = 3_000_000
  * die Bergstrecken: «Mit VR-Brille» und die Probefahrt mit A, B, X und Y.
  */
 export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: FahrObjekt[] }) {
+  useEffect(() => szeneLaden(), [])
   const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   const brille = useRef<(() => Promise<void>) | null>(null)
@@ -690,6 +692,7 @@ function lageAufWeg(fahrweg: Fahrweg, s: number): [number, number] {
 export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   fahrweg: Fahrweg; objekte: FahrObjekt[]; sJetzt: number | null; className: string
 }) {
+  useEffect(() => szeneLaden(), [])
   const [faktor, setFaktor] = useState<1 | 2>(1)
   const [mitte, setMitte] = useState<[number, number] | null>(null)
   const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
@@ -834,6 +837,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   const eigenerZug = probeStelle ?? eigenerZugHier
   const zug = zugVonAussen ?? (probe ? eigenerZug : undefined)
   const zusatz = useZusatz()
+  // auch wenn die Szene neu gebaut wird (beim Fahren alle 12 km ein neuer Ausschnitt)
+  useEffect(() => szeneLaden(), [])
   const [luftbild, setLuftbild] = useState<Luftbild | null>(null)
   useEffect(() => {
     let ab = false

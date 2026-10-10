@@ -296,6 +296,9 @@ Michael, 2026-10-08, ohne Rückfrage seit 2026-10-09). Das × daneben bleibt fü
 Was lädt, zeigt oben ein **Ladebalken** in Karmin (`komponenten/Ladebalken.tsx`, Michael, 2026-10-10): er zählt alles, was über
 `holen`, `holenBinaer` oder `ladenVerfolgen` in `src/daten.ts` geht (auch die nachgeladenen Teile für 3D), erscheint erst nach
 250 ms und füllt sich mit dem Anteil der fertigen Dateien; die Abfragen von «Geo» online, der Zähler und status.json zählen nicht mit.
+Beim Laden einer 3D-Szene (szeneLaden) läuft er sofort und mindestens 3 Sekunden sichtbar von 0 bis 100 %, in zufälligen,
+ungleichen Schritten mit kurzen Halten, ein Spiel, keine Messung (Michael, 2026-10-10); steht der Browser beim Bauen still, zählt
+die Zeit nicht; lädt danach noch etwas, kriecht er bis 98 %. 6 Pixel hoch.
 
 In der Fusszeile rechts neben der Bildmarke zwei Symbole, «Taktland teilen» und «Einstellungen» (`komponenten/Teilen.tsx`, Michael, 2026-10-10): Teilen öffnet auf dem Handy das Teilen-Menü des
 Geräts, sonst E-Mail, WhatsApp und «Link kopieren»; geteilt wird nur https://taktland.ch mit einem Satz, nichts vom Fortschritt.

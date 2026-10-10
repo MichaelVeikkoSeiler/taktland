@@ -23,10 +23,23 @@ const zwischenspeicher = new Map<string, unknown>()
 
 /** Was gerade lädt, für den Ladebalken oben (komponenten/Ladebalken.tsx; Michael, 2026-10-10: «Egal wo, wenn irgendwo
  *  etwas am Laden ist, soll eine Progressbar erscheinen»): seit dem letzten Stillstand begonnen und fertig */
-export const laden = { begonnen: 0, fertig: 0 }
+export const laden = { begonnen: 0, fertig: 0,
+  /** eine 3D-Szene lädt seit diesem Zeitpunkt (performance.now), sonst null: der Balken läuft dann mindestens
+   *  SZENE_MS von 0 bis 100 % (Michael, 2026-10-10: «mindestens 3 Sekunden … nicht linear») */
+  szeneAb: null as number | null }
+export const SZENE_MS = 3000
 const zuhoerer = new Set<() => void>()
 export function ladenBeobachten(f: () => void) { zuhoerer.add(f); return () => { zuhoerer.delete(f) } }
 const melden = () => zuhoerer.forEach((f) => f())
+
+/** Eine 3D-Szene beginnt zu laden; läuft der Balken für eine Szene schon, bleibt er, wo er ist */
+export function szeneLaden() {
+  if (laden.szeneAb !== null) return
+  laden.szeneAb = performance.now()
+  melden()
+}
+/** der Ladebalken ist mit der Szene fertig */
+export function szeneFertig() { laden.szeneAb = null }
 
 /** Zählt ein Versprechen im Ladebalken mit, bis es erfüllt oder gescheitert ist */
 export function ladenVerfolgen<T>(p: Promise<T>): Promise<T> {
