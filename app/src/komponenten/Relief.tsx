@@ -1347,7 +1347,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       versenkt = []
       feinStand = null
       feinNetz.visible = false
-      for (const o of feinLinien.children) { (o as Line2).geometry.dispose(); ((o as Line2).material as LineMaterial).dispose() }
+      for (const o of feinLinien.children) { (o as THREE.Mesh).geometry.dispose(); ((o as THREE.Mesh).material as THREE.Material).dispose() }
       feinLinien.clear()
       for (const o of wegStriche) o.visible = true
       nahZeichnen()
@@ -1416,6 +1416,18 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const von = Math.max(anfang, stelle - 6000), bis = Math.min(ende, stelle + 6000)
       const strich = (punkte: THREE.Vector3[], farbe: string, tunnel: boolean) => {
         if (punkte.length < 2) return
+        if (!tunnel) {
+          // ein flaches Band, quer zur Fahrt immer waagrecht (Michael, 2026-10-10: «die Linien … immer schön plan»); eine
+          // Linie in Metern dreht sich zur Kamera und wirkte an Hängen seitlich gekippt
+          ;[[randVon(farbe), 1, 0], [farbe, STRICH_INNEN, 0.05]].forEach(([f, anteil, hoeher], k) => {
+            const netz = new THREE.Mesh(band(punkte, (FEIN_LINIE_M * (anteil as number)) / 2000, Y(hoeher as number)),
+              new THREE.MeshBasicMaterial({ color: f as string, side: THREE.DoubleSide,
+                                            polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
+            netz.renderOrder = k
+            feinLinien.add(netz)
+          })
+          return
+        }
         const lg = new LineGeometry()
         lg.setPositions(punkte.flatMap((q) => [q.x, q.y, q.z]))
         ;[[randVon(farbe), 1], [farbe, STRICH_INNEN]].forEach(([f, anteil], k) => {
