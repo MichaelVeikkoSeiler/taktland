@@ -69,6 +69,8 @@ const FUEHRERSTAND_HOEHE_M = 4, FUEHRERSTAND_NAHE_KM = 0.003
 const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4, FEIN_RAND_M = 300
 /** Linie im Führerstand: in Metern breit statt in Bildpunkten; Linie über dem feinen Gelände */
 const FEIN_LINIE_M = 1.5, FEIN_UEBER_M = 1
+/** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
+const TUNNEL_DUNKEL = 0.97, TUNNEL_DUNKEL_M = 40
 /** Nahbild (Luftbild auf 2,5 m entlang der Bahnlinien): so gross um den Blickpunkt, so viele Bildpunkte je Meter;
  *  neu geladen, wenn der Blickpunkt so weit gewandert ist; nur wenn die Kamera näher ist als NAH_BIS_KM */
 const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
@@ -849,6 +851,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.domElement.style.touchAction = 'none'
     el.appendChild(renderer.domElement)
+    // im Führerstand im Tunnel dunkel (Michael, 2026-10-10: «In Tunneln soll es dunkel werden»): eine Fläche über dem Bild,
+    // an den Portalen über TUNNEL_DUNKEL_M ein- und ausgeblendet; die Knöpfe liegen ausserhalb und bleiben sichtbar
+    const dunkelFlaeche = document.createElement('div')
+    Object.assign(dunkelFlaeche.style, { position: 'absolute', inset: '0', background: '#050505', opacity: '0', pointerEvents: 'none' })
+    if (getComputedStyle(el).position === 'static') el.style.position = 'relative'
+    el.appendChild(dunkelFlaeche)
 
     // Gelände als Netz, jedes SCHRITT-te Feld
     const nx = Math.floor((breite - 1) / SCHRITT) + 1, ny = Math.floor((hoehe - 1) / SCHRITT) + 1
@@ -2316,6 +2324,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         // gemittelt 150 bis 450 m voraus, damit er in Kurven nicht zuckt; Drehen und Zoomen ruhen solange
         const vorne = !renderer.xr.isPresenting && !!fuehrerstand?.current && sichtbar
         if (vorne !== imStand) {
+          if (!vorne) dunkelFlaeche.style.opacity = '0'
           imStand = vorne
           steuerung.enabled = !vorne
           kamera.near = vorne ? FUEHRERSTAND_NAHE_KM : 0.1
@@ -2334,7 +2343,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             feinAb = s
             void feinSetzen(s, r)
           }
-          const auge = feinPunkt3d(bis(spitze + r * 15))
+          const augeM = bis(spitze + r * 15)
+          const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)
+          const tief = tunnel ? Math.min(augeM - tunnel.von, tunnel.bis - augeM) : 0
+          dunkelFlaeche.style.opacity = String(TUNNEL_DUNKEL * Math.min(1, tief / TUNNEL_DUNKEL_M))
+          const auge = feinPunkt3d(augeM)
           auge.y += FUEHRERSTAND_HOEHE_M * faktor / 1000
           const ziel = new THREE.Vector3()
           for (const d of [150, 300, 450]) ziel.add(feinPunkt3d(bis(spitze + r * d)))
@@ -2391,6 +2404,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       anwenden.current = null
       renderer.dispose()
       renderer.domElement.remove()
+      dunkelFlaeche.remove()
     }
   }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
