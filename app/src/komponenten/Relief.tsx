@@ -9,7 +9,7 @@ import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, Sehen
 import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
-import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld } from '../gelaende'
+import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { Ladebalken } from './Ladebalken'
@@ -71,6 +71,9 @@ const FUEHRERSTAND_HOEHE_M = 4, FUEHRERSTAND_NAHE_KM = 0.003
 const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4, FEIN_RAND_M = 300
 /** Linie im Führerstand: in Metern breit statt in Bildpunkten; Linie über dem feinen Gelände */
 const FEIN_LINIE_M = 1.5, FEIN_UEBER_M = 1
+/** scharfe Umgebung (Versuch): Kacheln mit eigenem Luftbild bis SCHARF_BILD_M um einen Punkt SCHARF_VORAUS_M vor dem
+ *  Zug, weiter als SCHARF_LOS_M wieder ohne; darunter sinkt das feine Gelände um SCHARF_TIEFER_M */
+const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TIEFER_M = 5
 /** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
 const TUNNEL_DUNKEL = 0.97, TUNNEL_DUNKEL_M = 40
 /** Nahbild (Luftbild auf 2,5 m entlang der Bahnlinien): so gross um den Blickpunkt, so viele Bildpunkte je Meter;
@@ -1379,6 +1382,50 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     feinNetz.visible = false
     const feinLinien = new THREE.Group()
     szene.add(feinNetz, feinLinien)
+    // scharfe Umgebung, ein Versuch zwischen Müntschemier und Rosshäusern (Michael, 2026-10-11: «Ist dieser Detailgrad
+    // umsetzbar, nur 200 m links und rechts der Bahnlinie?»): je Kachel von 250 m ein Netz auf 2 m (swissALTI3D) mit dem
+    // Luftbild auf 25 cm, nur im Band neben der Linie; bis sein Bild geladen ist, trägt es die Leinwand des feinen Geländes
+    const scharfGruppe = new THREE.Group()
+    szene.add(scharfGruppe)
+    let scharfStand: Scharf | null = null
+    let scharfMitBild = false
+    interface ScharfNetz { name: string; netz: THREE.Mesh; mitte: [number, number]; uvFein: THREE.BufferAttribute; uvEigen: THREE.BufferAttribute; bild: 'nein' | 'laedt' | 'da' }
+    let scharfNetze: ScharfNetz[] = []
+    const scharfWeg = () => {
+      for (const x of scharfNetze) {
+        const mat = x.netz.material as THREE.MeshLambertMaterial
+        if (mat.map !== feinTextur) mat.map?.dispose()
+        mat.dispose(); x.netz.geometry.dispose()
+      }
+      scharfNetze = []
+      scharfGruppe.clear()
+      scharfStand = null
+    }
+    /** eigene Bilder nur nahe beim Punkt e, n; weiter weg wieder die Leinwand des feinen Geländes */
+    const scharfBilderPflegen = (e: number, n: number) => {
+      for (const x of scharfNetze) {
+        const d = Math.hypot(x.mitte[0] - e, x.mitte[1] - n), mat = x.netz.material as THREE.MeshLambertMaterial
+        if (d < SCHARF_BILD_M && x.bild === 'nein') {
+          x.bild = 'laedt'
+          scharfBild(x.name).then((bm) => {
+            if (!scharfNetze.includes(x) || x.bild !== 'laedt') { bm.close(); return }
+            const t = new THREE.Texture(bm)
+            t.flipY = false
+            t.colorSpace = THREE.SRGBColorSpace
+            t.anisotropy = renderer.capabilities.getMaxAnisotropy()
+            t.needsUpdate = true
+            mat.map = t
+            x.netz.geometry.setAttribute('uv', x.uvEigen)
+            x.bild = 'da'
+          }).catch(() => { if (x.bild === 'laedt') x.bild = 'nein' })
+        } else if (d > SCHARF_LOS_M && x.bild !== 'nein') {
+          if (x.bild === 'da') { const t = mat.map!; (t.image as ImageBitmap).close?.(); t.dispose() }
+          mat.map = feinTextur
+          x.netz.geometry.setAttribute('uv', x.uvFein)
+          x.bild = 'nein'
+        }
+      }
+    }
     const grundY = new Float32Array(netzPunkte)
     for (let v = 0; v < netzPunkte; v++) grundY[v] = pos[v * 3 + 1]
     let versenkt: number[] = []
@@ -1391,7 +1438,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const { fein, e0, n0 } = feinStand
       const amBoden = (mm: number) => {
         const [e, n] = punktBei(mm)
-        return feinHoehe(fein, e, n)
+        return (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fein, e, n)
       }
       const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
       // gemittelt über 30 m davor und danach; in Tunneln und auf Brücken gerade zwischen den Enden
@@ -1446,6 +1493,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNetz.visible = false
       for (const o of feinLinien.children) { (o as THREE.Mesh).geometry.dispose(); ((o as THREE.Mesh).material as THREE.Material).dispose() }
       feinLinien.clear()
+      scharfWeg()
       for (const o of wegStriche) o.visible = true
       nahZeichnen()
     }
@@ -1455,20 +1503,26 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const [ce, cn] = punktBei(Math.max(anfang, Math.min(ende, stelle + richtung * FEIN_VORAUS_M)))
       const e0 = Math.round((ce - FEIN_SEITE_M / 2) / 10) * 10, n0 = Math.round((cn - FEIN_SEITE_M / 2) / 10) * 10
       const e1 = e0 + FEIN_SEITE_M, n1 = n0 + FEIN_SEITE_M
-      const [fein, nahBild] = await Promise.all([feinLaden(e0, n0, e1, n1), luftbild ? nahbildLaden(e0, n0, e1, n1) : null])
+      scharfMitBild = nahErlaubt
+      const [fein, nahBild, scharf] = await Promise.all([feinLaden(e0, n0, e1, n1), luftbild ? nahbildLaden(e0, n0, e1, n1) : null,
+                                                          nahErlaubt ? scharfLaden(e0, n0, e1, n1) : null])
       if (!laeuft || auftrag !== feinAuftrag || !imStand) return
       feinWeg()
       if (!fein) return
       feinStand = { fein, e0, n0 }
       feinNah = nahBild
+      scharfStand = scharf
+      // unter dem scharfen Band sinkt das feine Gelände, wo es rundum scharfe Höhen gibt
+      const scharfDa = (e: number, n: number) => !!scharf && [[0, 0], [-10, 0], [10, 0], [0, -10], [0, 10]].every(([de, dn]) => scharfHoehe(scharf, e + de, n + dn) !== null)
       // das Netz: ein Punkt je Feld von 10 m, nur Vierecke mit vier Höhen
       const I0 = Math.ceil((e0 - 5) / 10), J1 = Math.floor((n1 - 5) / 10), b = FEIN_SEITE_M / 10
       const p2 = new Float32Array(b * b * 3), uv2 = new Float32Array(b * b * 2), da = new Uint8Array(b * b)
       for (let j = 0; j < b; j++) {
         for (let i = 0; i < b; i++) {
           const k = j * b + i, e = (I0 + i) * 10 + 5, n = (J1 - j) * 10 + 5
-          const z = feinFeld(fein, I0 + i, J1 - j)
+          let z = feinFeld(fein, I0 + i, J1 - j)
           if (z === null) continue
+          if (scharfDa(e, n)) z -= SCHARF_TIEFER_M
           da[k] = 1
           p2[k * 3] = X(e); p2[k * 3 + 1] = Y(z); p2[k * 3 + 2] = Z(n)
           uv2[k * 2] = (e - e0) / FEIN_SEITE_M; uv2[k * 2 + 1] = (n - n0) / FEIN_SEITE_M
@@ -1490,6 +1544,42 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNetz.geometry = g
       feinNetz.visible = true
       feinMalen?.()
+      if (scharf) {
+        const P = SCHARF_PUNKTE, schritt = SCHARF_KACHEL_M / (P - 1)
+        for (const [name, a] of scharf.kacheln) {
+          const [qe, qn] = name.split('_').map(Number)
+          const p3 = new Float32Array(P * P * 3), uvF = new Float32Array(P * P * 2), uvE = new Float32Array(P * P * 2)
+          for (let j = 0; j < P; j++) {
+            for (let i = 0; i < P; i++) {
+              const k = j * P + i, e = qe * SCHARF_KACHEL_M + i * schritt, n = (qn + 1) * SCHARF_KACHEL_M - j * schritt
+              p3[k * 3] = X(e); p3[k * 3 + 1] = Y(Number.isNaN(a[k]) ? 0 : a[k]); p3[k * 3 + 2] = Z(n)
+              uvF[k * 2] = (e - e0) / FEIN_SEITE_M; uvF[k * 2 + 1] = (n - n0) / FEIN_SEITE_M
+              uvE[k * 2] = i / (P - 1); uvE[k * 2 + 1] = j / (P - 1)
+            }
+          }
+          const idx: number[] = []
+          for (let j = 0; j < P - 1; j++) {
+            for (let i = 0; i < P - 1; i++) {
+              const k = j * P + i
+              if (!Number.isNaN(a[k]) && !Number.isNaN(a[k + 1]) && !Number.isNaN(a[k + P]) && !Number.isNaN(a[k + P + 1])) idx.push(k, k + P, k + 1, k + 1, k + P, k + P + 1)
+            }
+          }
+          if (!idx.length) continue
+          const g = new THREE.BufferGeometry()
+          g.setAttribute('position', new THREE.BufferAttribute(p3, 3))
+          const uvFein = new THREE.BufferAttribute(uvF, 2), uvEigen = new THREE.BufferAttribute(uvE, 2)
+          g.setAttribute('uv', uvFein)
+          g.setIndex(idx)
+          g.computeVertexNormals()
+          const mat = new THREE.MeshLambertMaterial({ map: feinTextur })
+          mat.color.setScalar(1.3)
+          const netz = new THREE.Mesh(g, mat)
+          scharfGruppe.add(netz)
+          scharfNetze.push({ name, netz, mitte: [(qe + 0.5) * SCHARF_KACHEL_M, (qn + 0.5) * SCHARF_KACHEL_M], uvFein, uvEigen, bild: 'nein' })
+        }
+        const [pe, pn] = punktBei(Math.max(anfang, Math.min(ende, stelle + richtung * SCHARF_VORAUS_M)))
+        scharfBilderPflegen(pe, pn)
+      }
       // das grobe Gelände sinkt, wo jedes angrenzende Viereck ganz auf feinem Gelände liegt; so bleibt keine Lücke
       const d = SCHRITT * m, innen = (e: number, n: number) =>
         e > I0 * 10 + 15 && e < (I0 + b - 1) * 10 - 5 && n < J1 * 10 - 5 && n > (J1 - b + 1) * 10 + 15 && fein.km.has(`${Math.floor(e / 1000)}_${Math.floor(n / 1000)}`)
@@ -2484,9 +2574,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const spitze = r > 0 ? s : s - zugLaengeS()
           const bis = (m: number) => Math.max(pk[0].m, Math.min(pk[pk.length - 1].m, m))
           // das feine Gelände wandert mit, sobald der Zug FEIN_NACH_M weiter ist
-          if (Math.abs(s - feinAb) > FEIN_NACH_M) {
+          if (Math.abs(s - feinAb) > FEIN_NACH_M || scharfMitBild !== nahErlaubt) {
             feinAb = s
             void feinSetzen(s, r)
+          }
+          if (scharfNetze.length) {
+            const [pe, pn] = punktBei(bis(spitze + r * SCHARF_VORAUS_M))
+            scharfBilderPflegen(pe, pn)
           }
           const augeM = bis(spitze + r * 15)
           const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)

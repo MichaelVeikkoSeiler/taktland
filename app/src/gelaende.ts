@@ -302,3 +302,66 @@ export function feinHoehe(f: Fein, e: number, n: number): number | null {
   if (a === null || b === null || c === null || d === null) return null
   return a * (1 - fx) * (1 - fy) + b * fx * (1 - fy) + c * (1 - fx) * fy + d * fx * fy
 }
+
+/* ---------- scharfe Umgebung, ein Versuch auf einer kurzen Strecke ---------- */
+
+/** Luftbild auf 25 cm und Gelände auf 2 m, nur 200 m neben den Bahnlinien zwischen Müntschemier und Rosshäusern
+ *  (Michael, 2026-10-11; pipeline/build_scharf.py), in Kacheln von 250 m */
+interface ScharfIndex { kachel_m: number; px: number; punkte: number; band_m: number; kacheln: Record<string, [number, number]> }
+export const scharfIndex = () => holen<ScharfIndex>('data/scharf/index.json')
+export const SCHARF_KACHEL_M = 250, SCHARF_PUNKTE = 126
+const SCHARF_LEER = 65535
+const scharfVorrat = new Map<string, Promise<Float32Array | null>>()
+
+function scharfKachel(name: string) {
+  let p = scharfVorrat.get(name)
+  if (p) return p
+  while (scharfVorrat.size >= 400) scharfVorrat.delete(scharfVorrat.keys().next().value!)
+  p = (async () => {
+    const gepackt = await holenBinaer(`data/scharf/${name}.hgz`)
+    const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+    // vorne die tiefste Höhe in Dezimetern, dann je Punkt die Höhe darüber; LEER ausserhalb des Bands
+    const tief = new DataView(roh).getInt32(0, true), d = new Uint16Array(roh.slice(4))
+    const h = new Float32Array(d.length)
+    for (let k = 0; k < d.length; k++) h[k] = d[k] === SCHARF_LEER ? NaN : (tief + d[k]) / 10
+    return h
+  })().catch(() => { scharfVorrat.delete(name); return null })
+  scharfVorrat.set(name, p)
+  return p
+}
+
+/** Höhen je Kachel im Rechteck, Schlüssel «Ost_Nord» in Kacheln, Punkte von Norden, die Ecken auf den Rändern */
+export interface Scharf { kacheln: Map<string, Float32Array>; jahre: number[] }
+
+export async function scharfLaden(e0: number, n0: number, e1: number, n1: number): Promise<Scharf | null> {
+  if (!gelaendeMoeglich()) return null
+  const ix = await scharfIndex().catch(() => null)
+  if (!ix) return null
+  const k = SCHARF_KACHEL_M, namen: string[] = []
+  for (let qe = Math.floor(e0 / k); qe <= Math.floor((e1 - 1) / k); qe++) {
+    for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (ix.kacheln[`${qe}_${qn}`]) namen.push(`${qe}_${qn}`)
+  }
+  if (!namen.length) return null
+  const hoehen = await Promise.all(namen.map(scharfKachel))
+  const kacheln = new Map<string, Float32Array>()
+  namen.forEach((name, i) => { if (hoehen[i]) kacheln.set(name, hoehen[i]!) })
+  if (!kacheln.size) return null
+  return { kacheln, jahre: [...new Set([...kacheln.keys()].flatMap((n) => ix.kacheln[n]))].sort() }
+}
+
+/** Höhe bei Ost, Nord zwischen den Punkten linear, oder null ausserhalb des Bands */
+export function scharfHoehe(s: Scharf, e: number, n: number): number | null {
+  const k = SCHARF_KACHEL_M, qe = Math.floor(e / k), qn = Math.floor(n / k)
+  const a = s.kacheln.get(`${qe}_${qn}`)
+  if (!a) return null
+  const schritt = k / (SCHARF_PUNKTE - 1)
+  const x = (e - qe * k) / schritt, y = ((qn + 1) * k - n) / schritt
+  const i = Math.min(SCHARF_PUNKTE - 2, Math.floor(x)), j = Math.min(SCHARF_PUNKTE - 2, Math.floor(y)), fx = x - i, fy = y - j
+  const p = (ii: number, jj: number) => a[jj * SCHARF_PUNKTE + ii]
+  const z = p(i, j) * (1 - fx) * (1 - fy) + p(i + 1, j) * fx * (1 - fy) + p(i, j + 1) * (1 - fx) * fy + p(i + 1, j + 1) * fx * fy
+  return Number.isNaN(z) ? null : z
+}
+
+/** das Luftbild einer Kachel (1000 × 1000 Bildpunkte, 25 cm) */
+export const scharfBild = (name: string) =>
+  holenBinaer(`data/scharf/${name}.jpg`).then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' })))
