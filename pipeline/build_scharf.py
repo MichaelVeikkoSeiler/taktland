@@ -52,8 +52,8 @@ STRECKEN = [
     ["Bern", "Zollikofen", "Münchenbuchsee", "Schüpfen", "Suberg-Grossaffoltern", "Lyss", "Brügg BE", "Biel/Bienne"],
     ["Biel/Bienne", "Tüscherz", "Twann", "Ligerz", "La Neuveville", "Le Landeron", "Cressier NE", "St-Blaise CFF",
      "Neuchâtel"],
-    # bis Buttes gewünscht; Travers–Buttes steht nicht im Netz der App (Couvet, Fleurier, Buttes fehlen in strecken.json)
-    ["Neuchâtel", "Auvernier", "Bôle", "Champ-du-Moulin", "Noiraigue", "Travers"],
+    ["Neuchâtel", "Auvernier", "Bôle", "Champ-du-Moulin", "Noiraigue", "Travers", "La Presta Mines d'asphalte", "Couvet",
+     "Môtiers NE", "Fleurier", "Buttes"],
 ]
 ENV = dict(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR", CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif",
            GDAL_HTTP_MAX_RETRY="5", GDAL_HTTP_RETRY_DELAY="3")

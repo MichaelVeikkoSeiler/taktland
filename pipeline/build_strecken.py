@@ -160,7 +160,7 @@ def grenzpunkte_ergaenzen(jahr, kanten, punkte):
 #: der SBB führen die BTI nicht; jeder Abschnitt des Schienennetzes wird ein
 #: Abschnitt des Netzes. Ohne Zugzahlen zählt er für die Wegsuche wie ein
 #: Abschnitt mit einem Zug pro Tag (siehe main).
-BAV_OHNE_ZUGZAHLEN = {"261"}
+BAV_OHNE_ZUGZAHLEN = {"261", "221"}  # 221: Travers – Buttes der transN (Michael, 2026-10-11)
 #: Dazu kommen Stücke weiterer Linien (Michael, 2026-09-26: «Meiringen ist nicht
 #: erfasst»; RhB, MGB, MOB, MVR, zb …), ausgewählt nach den Daten in
 #: bav_stuecke_waehlen(): Jede Linie wird an den Punkten geteilt, die schon im
@@ -171,6 +171,8 @@ BAV_OHNE_ZUGZAHLEN = {"261"}
 #: Ohne: die Museumsbahnen Blonay-Chamby und Furka-Bergstrecke. Ihre Bahnhöfe
 #: liegen an anderen Linien, und ein Weg Brig – Andermatt soll nicht über den Pass.
 BAV_OHNE_DATENHERR = {"cmBC", "DFB"}
+#: und diese Linien: 222 Fleurier – St-Sulpice (Bahn VVT) kam mit Fleurier dazu, gewünscht war nur Travers – Buttes
+BAV_OHNE_LINIEN = {"222"}
 #: Für die Wegsuche zählt ein solches Stück wie ein Abschnitt mit so vielen
 #: Zügen pro Tag (die BTI wie einer mit einem Zug, siehe main). Keine Angabe über
 #: die Züge, nur eine Suchhilfe. Gewählt an 600 zufälligen Wegen zwischen
@@ -203,9 +205,11 @@ def bahn(isb):
 #: Endpunkte, die das Schienennetz als eigenen Betriebspunkt im Bahnhof führt
 #: («Biel/Bienne [Gleis 11/voie 11]»): Sie gelten als dieser Bahnhof, damit die
 #: BTI an Biel/Bienne und Ins anschliesst.
-BAV_GLEIS_IM_BAHNHOF = {8530750: 8504300, 8516177: 8504483}
+BAV_GLEIS_IM_BAHNHOF = {8530750: 8504300, 8516177: 8504483,
+                        # Travers Ouest, 470 m vor Travers, wo die Linie 221 nach Buttes beginnt
+                        8515366: 8504215}
 #: umgekehrt, je Linie: welcher Punkt des Schienennetzes für den Bahnhof steht
-BAV_GLEIS_IM_BAHNHOF_ZURUECK = {261: {8504300: 8530750, 8504483: 8516177}}
+BAV_GLEIS_IM_BAHNHOF_ZURUECK = {261: {8504300: 8530750, 8504483: 8516177}, 221: {8504215: 8515366}}
 #: Punkte des Schienennetzes im Bahnhof, die eine Linie statt des Bahnhofs führt
 #: («Kerzers BLS» 104 m neben «Kerzers», Linie 220): Sie gelten für den Verlauf als
 #: dieser Bahnhof, wenn ihr Name mit dem Namen des Bahnhofs beginnt und sie höchstens
@@ -222,7 +226,8 @@ def bav_stuecke_waehlen(bav, punkte, facts):
     im_netz = {p["uic"] for p in punkte.values() if p.get("uic")}
     raus = {}
     for nummer, l in bav.items():
-        if not nummer.isdigit() or l["datenherr"] in BAV_OHNE_DATENHERR or nummer in BAV_OHNE_ZUGZAHLEN:
+        if not nummer.isdigit() or l["datenherr"] in BAV_OHNE_DATENHERR or nummer in BAV_OHNE_ZUGZAHLEN \
+                or nummer in BAV_OHNE_LINIEN:
             continue
         # Stücke zwischen Punkten im Netz, in der Reihenfolge der Kilometer
         segmente = sorted(l["segmente"], key=lambda g: (min(g["km_anfang"], g["km_ende"]), max(g["km_anfang"], g["km_ende"])))

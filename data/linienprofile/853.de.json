@@ -2,7 +2,7 @@
   "linie": 853,
   "name": "Wil Sud - Wattwil - Uznach",
   "lang": "de",
-  "generated": "2026-09-26",
+  "generated": "2026-10-11",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -226,12 +226,12 @@
           "type": "single_choice",
           "prompt": "Welcher dieser Bahnhöfe liegt laut Schienennetz des BAV auf der Linie 853?",
           "options": [
-            "Lichtensteig",
-            "Pontenet",
-            "Pully-Nord",
-            "Realp"
+            "Degersheim",
+            "Dinhard",
+            "Däniken SO",
+            "Lichtensteig"
           ],
-          "correct": 0,
+          "correct": 3,
           "explanation": "Lichtensteig liegt laut Schienennetz auf der Linie 853, bei km 17.51.",
           "factRef": "weitere_bahnhoefe.items[0].name",
           "difficulty": 2

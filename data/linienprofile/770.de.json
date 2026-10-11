@@ -2,7 +2,7 @@
   "linie": 770,
   "name": "Bulach - Eglisau - Neuhausen",
   "lang": "de",
-  "generated": "2026-09-26",
+  "generated": "2026-10-11",
   "sources": [
     "bahnubergang",
     "brucken",
@@ -235,12 +235,12 @@
           "type": "single_choice",
           "prompt": "Welcher dieser Bahnhöfe liegt laut Schienennetz des BAV auf der Linie 770?",
           "options": [
-            "La Chaudanne-Les Moulins",
-            "La Tine",
-            "Langendorf",
-            "Lottstetten"
+            "Lottstetten",
+            "Oberwangen",
+            "Oron",
+            "Payerne"
           ],
-          "correct": 3,
+          "correct": 0,
           "explanation": "Lottstetten liegt laut Schienennetz auf der Linie 770, bei km 30.155.",
           "factRef": "weitere_bahnhoefe.items[0].name",
           "difficulty": 2

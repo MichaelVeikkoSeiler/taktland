@@ -161,6 +161,13 @@ HALTESTELLEN_OHNE_FREQUENZ = {
     8504466: "Siselen-Finsterhennen",
     8504467: "Brüttelen",
     8504468: "Ins Dorf",
+    # Linie 221 «Travers limite RVT - Buttes» der transN, ebenso ohne Frequenzdaten (Michael, 2026-10-11: «die Linie
+    # Neuchatel nach Butten auch noch aufnehmen»): ihre Zughalte laut Haltestellenverzeichnis; Travers Ouest ist keiner
+    8504284: "La Presta Mines d'asphalte",
+    8504285: "Couvet",
+    8504286: "Môtiers NE",
+    8504287: "Fleurier",
+    8504288: "Buttes",
 }
 
 ATTRIBUTION = "Daten: SBB Open Data (data.sbb.ch), Lizenz mit Quellenangabe"
