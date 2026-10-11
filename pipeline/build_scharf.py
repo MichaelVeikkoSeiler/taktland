@@ -45,13 +45,15 @@ BAND_M = 200
 KORRIDOR_M = 700
 LEER = 65535
 #: die Strecken des Versuchs, je in Fahrtreihenfolge (Michael, 2026-10-11: Müntschemier bis Rosshäusern, dann «weiter bis
-#: nach Bern», dann «Bern - Biel Bienne» und «Biel/Bienne - Neuchâtel»)
+#: nach Bern», dann «Bern - Biel Bienne» «Biel/Bienne - Neuchâtel» und «Neuchatel nach Buttes»)
 STRECKEN = [
     ["Müntschemier", "Kerzers", "Ferenbalm-Gurbrü", "Gümmenen", "Rosshäusern", "Bern Riedbach", "Bern Bümpliz Nord",
      "Bern Stöckacker", "Bern"],
     ["Bern", "Zollikofen", "Münchenbuchsee", "Schüpfen", "Suberg-Grossaffoltern", "Lyss", "Brügg BE", "Biel/Bienne"],
     ["Biel/Bienne", "Tüscherz", "Twann", "Ligerz", "La Neuveville", "Le Landeron", "Cressier NE", "St-Blaise CFF",
      "Neuchâtel"],
+    # bis Buttes gewünscht; Travers–Buttes steht nicht im Netz der App (Couvet, Fleurier, Buttes fehlen in strecken.json)
+    ["Neuchâtel", "Auvernier", "Bôle", "Champ-du-Moulin", "Noiraigue", "Travers"],
 ]
 ENV = dict(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR", CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif",
            GDAL_HTTP_MAX_RETRY="5", GDAL_HTTP_RETRY_DELAY="3")
