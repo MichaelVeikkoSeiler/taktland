@@ -754,9 +754,11 @@ function wegDerFahrt(r: Relief, fahrweg: Fahrweg, objekte: FahrObjekt[]): Weg {
   if (anfang !== null) stuecke.push([anfang, punkte[punkte.length - 1].m])
   return {
     punkte,
-    bauwerke: objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
+    // Tunnel und Brücken immer alle, auch wenn ihre Zeichen ausgeschaltet sind: sie tragen die Höhe der Linie (Michael,
+    // 2026-10-11: mit «Brücken» aus fuhr der Zug bei Gümmenen wieder ins Tal)
+    bauwerke: fahrweg.objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
       .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })),
-    tunnelPunkte: objekte.filter((o) => o.art === 'tunnel' && o.sAus === null).map((o) => o.s),
+    tunnelPunkte: fahrweg.objekte.filter((o) => o.art === 'tunnel' && o.sAus === null).map((o) => o.s),
     stuecke,
   }
 }
@@ -795,8 +797,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
   const blick = useRef<THREE.Vector3 | null>(null)
   useEffect(() => { zug.current = sJetzt }, [sJetzt])
   const ende = useMemo(() => wegEnde(fahrweg), [fahrweg])
-  const bauwerke = useMemo(() => objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
-    .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })), [objekte])
+  const bauwerke = useMemo(() => fahrweg.objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
+    .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })), [fahrweg])
   const audio = useZuggeraeusch(zug, ende, bauwerke)
   // «Hinter den Zug»: die Kamera wieder schräg hinter den Zug wie am Anfang
   const hinterZug = useRef(false)
@@ -2661,16 +2663,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           dunkelFlaeche.style.opacity = String(TUNNEL_DUNKEL * Math.min(1, tief / TUNNEL_DUNKEL_M))
           const auge = feinPunkt3d(augeM)
           auge.y += FUEHRERSTAND_HOEHE_M * faktor / 1000
-          const ziel = new THREE.Vector3()
-          for (const d of [150, 300, 450]) ziel.add(feinPunkt3d(bis(spitze + r * d)))
-          ziel.multiplyScalar(1 / 3)
-          // am Ende des Wegs fallen die Punkte voraus auf das Auge: dann weiter in der bisherigen Richtung schauen
-          const hinten = feinPunkt3d(bis(augeM - r * 60))
-          const flach = Math.hypot(ziel.x - auge.x, ziel.z - auge.z)
-          if (flach < 0.1) {
-            const rx = auge.x - hinten.x, rz = auge.z - hinten.z, l = Math.hypot(rx, rz) || 1
-            ziel.set(auge.x + (rx / l) * 0.3, auge.y - 0.01, auge.z + (rz / l) * 0.3)
-          }
+          // der Blick folgt der Richtung des Gleises unter dem Auge, nicht einem Punkt weit voraus: so schwenkte die Kamera
+          // schon vor jeder Kurve zur Seite (Michael, 2026-10-11: «schwenkt immer schon vor der Kurve … bleibt nicht schön
+          // auf der Strecke»); geneigt zur Linie 300 m voraus
+          const vorn = feinPunkt3d(bis(augeM + r * 40)), hinten = feinPunkt3d(bis(augeM - r * 40))
+          const rx = vorn.x - hinten.x, rz = vorn.z - hinten.z, l = Math.hypot(rx, rz) || 1
+          const ziel = new THREE.Vector3(auge.x + (rx / l) * 0.3, feinPunkt3d(bis(spitze + r * 300)).y, auge.z + (rz / l) * 0.3)
           ziel.y = Math.max(ziel.y, auge.y - 0.02)
           kamera.position.copy(auge)
           steuerung.target.copy(ziel)

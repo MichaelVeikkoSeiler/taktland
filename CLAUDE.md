@@ -221,7 +221,8 @@ data/scharf/   scharfe Umgebung, ein Versuch nur zwischen Müntschemier und Ross
              Geländes, das darunter 5 m sinkt; nur mit Luftbild; im Führerstand Kurven über 80 m davor und danach gerundet (glattBei,
              GLATT_M), Linie an Brücken und Tunneln nur mit dem Gelände davor und danach gemittelt (swissALTI3D zeigt unter
              einer Brücke den Talgrund), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), ein Ende
-             ausserhalb des feinen Geländes mit der groben Höhe, verschoben um den Unterschied am anderen Ende, Brücken als schlichte Platte 7 m breit ohne Pfeiler (Breite und Pfeiler in keiner
+             ausserhalb des feinen Geländes mit der groben Höhe, verschoben um den Unterschied am anderen Ende, Tunnel und Brücken für die Höhe immer alle, auch wenn ihre Zeichen
+             ausgeschaltet sind (wegDerFahrt), Blick in Richtung des Gleises unter dem Auge, geneigt zur Linie 300 m voraus, Brücken als schlichte Platte 7 m breit ohne Pfeiler (Breite und Pfeiler in keiner
              Quelle; Michael, 2026-10-11: «Aufbau von Brücken, damit die Strecke … flach darüber führt»)
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
