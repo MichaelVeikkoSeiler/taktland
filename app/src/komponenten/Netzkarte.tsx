@@ -151,7 +151,15 @@ export function useEchtesVollbild(voll: boolean, setVoll: (v: boolean) => void) 
     }
     const wechsel = () => { if (echt && !document.fullscreenElement) setVoll(false) }
     document.addEventListener('fullscreenchange', wechsel)
+    // die Zurück-Taste (Android) schliesst das Vollbild, statt die Seite zu verlassen (Michael, 2026-10-11: «Der
+    // Vollbildmodus muss ganz einfach schliessbar sein»); ein eigener Eintrag im Verlauf, ohne die Adresse zu ändern
+    history.pushState({ vollbild: true }, '')
+    let zurueck = false
+    const verlauf = () => { zurueck = true; setVoll(false) }
+    window.addEventListener('popstate', verlauf)
     return () => {
+      window.removeEventListener('popstate', verlauf)
+      if (!zurueck && (history.state as { vollbild?: boolean } | null)?.vollbild) history.back()
       document.removeEventListener('keydown', taste)
       document.removeEventListener('fullscreenchange', wechsel)
       document.body.style.overflow = vorher
@@ -185,6 +193,18 @@ export const vollbildKlassen = (voll: boolean, normal: string) => voll
   : { figur: normal, svg: 'mt-1 aspect-[1.6] w-full' }
 
 export function VollbildKnopf({ voll, umschalten }: { voll: boolean; umschalten: () => void }) {
+  // im Vollbild deutlich beschriftet (Michael, 2026-10-11: «muss ganz einfach schliessbar sein»)
+  if (voll) return (
+    <button type="button" onClick={umschalten} aria-label="Vollbild schliessen"
+            className="flex h-8 items-center gap-1.5 rounded-lg bg-sbb-anthracite px-3 text-sm font-bold text-white
+                       hover:bg-sbb-black dark:bg-sbb-white dark:text-sbb-black">
+      <svg viewBox="0 0 16 16" className="size-3.5" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2"
+           strokeLinecap="round">
+        <path d="M3 3l10 10M13 3L3 13" />
+      </svg>
+      Schliessen
+    </button>
+  )
   return (
     <button type="button" onClick={umschalten} aria-label={voll ? 'Vollbild schliessen' : 'Karte als Vollbild'}
             title={voll ? 'Vollbild schliessen' : 'Vollbild'}

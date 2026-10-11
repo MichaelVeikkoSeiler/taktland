@@ -611,6 +611,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           Seen, Flächen und Netz wird nur neu gezeichnet, wenn der Ausschnitt springt, und
           dazwischen als Ganzes verschoben, was die Grafik des Geräts ohne neues Zeichnen
           kann. Darüber, durchsichtig und leicht, der Weg, die Zeichen und der Zug. */}
+      {/* im Vollbild oben, über der Karte: unten legt Android seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
+      {voll && vollbild && <div className="shrink-0">{vollbild}</div>}
       {dreiD && relief ? (
         <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>}>
           <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} />
@@ -674,7 +676,6 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
         )}
       </div>
       )}
-      {voll && vollbild && <div className="shrink-0">{vollbild}</div>}
       {!voll && !dreiD && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
       {!voll && !dreiD && sehenswert.s && <SehenswertLegende gebieteMitBoden />}
       {!voll && dreiD && relief && <SehenswertLegende gebieteMitBoden kmNetz />}

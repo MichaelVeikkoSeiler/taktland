@@ -75,6 +75,8 @@ const FEIN_LINIE_M = 1.5, FEIN_UEBER_M = 1
  *  Zug, weiter als SCHARF_LOS_M wieder ohne; darunter sinkt das feine Gelände um SCHARF_TIEFER_M */
 /** Führerstand: Kurven gerundet über so viele Meter davor und danach (glattBei); Brücken als Platte so breit und dick */
 const GLATT_M = 80, BRUECKE_BREIT_M = 7, BRUECKE_DICK_M = 1.8
+/** Führerstand: Namen erst so nah an der Kamera (km) */
+const SCHILD_FUEHRERSTAND_KM = 1
 /** Führerstand: so weit vor und nach einem Tunnel fährt der Zug gerade auf das Portal zu */
 const TUNNEL_ANLAUF_M = 150
 /** Führerstand: Höhe der Linie als Median über so viele Meter davor und danach, dann gemittelt über so viele, und nach
@@ -584,7 +586,8 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
       {szene && voll && (
         <>
           {faktor && setFaktor && <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>}
-          <div className="absolute inset-x-2 bottom-[max(0.5rem,env(safe-area-inset-bottom))] flex flex-col gap-2">
+          {/* oben: unten legt Android im Vollbild seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
+          <div className="absolute inset-x-2 top-12 flex flex-col gap-2">
             <div className="flex flex-wrap gap-2">
               <button type="button" className={KAMERA_KNOPF} onClick={() => fahrknopf.current?.los()}>Zug fahren</button>
               <button type="button" className={KAMERA_KNOPF} onClick={() => fahrknopf.current?.halt()}>Anhalten</button>
@@ -880,7 +883,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
         <Ladebalken inKarte />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
         <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 h-9 w-10" />
-        <div className="absolute bottom-2 left-2 flex gap-2">
+        {/* oben: unten legt Android im Vollbild seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
+        <div className="absolute left-2 top-12 flex gap-2">
           <button type="button" onClick={() => { fuehrerstand.current = false; setVorne(false); hinterZug.current = true }}
                   className={KAMERA_KNOPF}>
             Hinter den Zug
@@ -2206,6 +2210,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (sp.parent && !sp.parent.visible) continue
         // Kulturgüter nur nah an der Kamera, sonst überdecken ihre Namen im Mittelland alles
         if (rang >= 3 && abstand > NAH_KULTUR ** 2) { sp.visible = false; continue }
+        // im Führerstand alle Namen erst kurz vor dem Ort (Michael, 2026-10-11: «Es reicht, wenn sie einen Kilometer vor
+        // Erreichen des Standorts angezeigt werden»)
+        if (imStand && abstand > SCHILD_FUEHRERSTAND_KM ** 2) { sp.visible = false; continue }
         sp.getWorldPosition(projiziert).project(kam)
         if (projiziert.z > 1 || projiziert.z < -1) { sp.visible = false; continue }
         const breite = sp.scale.x * mass * pm[0] * b / 2, hoehe = sp.scale.y * mass * pm[5] * hh / 2
