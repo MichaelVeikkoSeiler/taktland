@@ -73,6 +73,8 @@ const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M
 const FEIN_LINIE_M = 1.5, FEIN_UEBER_M = 1
 /** scharfe Umgebung (Versuch): Kacheln mit eigenem Luftbild bis SCHARF_BILD_M um einen Punkt SCHARF_VORAUS_M vor dem
  *  Zug, weiter als SCHARF_LOS_M wieder ohne; darunter sinkt das feine Gelände um SCHARF_TIEFER_M */
+/** Führerstand: Kurven gerundet über so viele Meter davor und danach (glattBei); Brücken als Platte so breit und dick */
+const GLATT_M = 80, BRUECKE_BREIT_M = 7, BRUECKE_DICK_M = 1.8
 const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TIEFER_M = 5
 /** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
 const TUNNEL_DUNKEL = 0.97, TUNNEL_DUNKEL_M = 40
@@ -1431,25 +1433,45 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     let versenkt: number[] = []
     let feinNah: Nahbild | null = null
     let feinAuftrag = 0
+    /** Lage im Führerstand: der Verlauf ist ein Zug aus Geraden mit Ecken alle paar hundert Meter; gemittelt über
+     *  GLATT_M davor und danach werden die Kurven rund (Michael, 2026-10-11: «die Kurven noch runder») */
+    const glattBei = (meter: number): readonly [number, number] => {
+      const anfang = pk[0].m, ende = pk[pk.length - 1].m
+      const r = Math.min(GLATT_M, meter - anfang, ende - meter)
+      if (r < 10) return punktBei(meter)
+      let e = 0, n = 0, w = 0
+      for (let d = -r; d <= r; d += 10) {
+        const g = r + 10 - Math.abs(d), [pe, pn] = punktBei(meter + d)
+        e += pe * g; n += pn * g; w += g
+      }
+      return [e / w, n / w]
+    }
     /** Höhe der Linie im Führerstand: auf dem feinen Gelände, gegen den Rand des Quadrats in die grobe übergehend */
     const feinLinieHoehe = (meter: number) => {
       const grob = hoeheAmWeg(meter)
       if (!feinStand) return grob
       const { fein, e0, n0 } = feinStand
       const amBoden = (mm: number) => {
-        const [e, n] = punktBei(mm)
+        const [e, n] = glattBei(mm)
         return (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fein, e, n)
       }
       const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
-      // gemittelt über 30 m davor und danach; in Tunneln und auf Brücken gerade zwischen den Enden
-      const gemittelt = (mm: number) => {
+      const imBau = (mm: number) => weg.bauwerke.some((x) => mm > x.von && mm < x.bis)
+      // gemittelt über 30 m davor und danach, nur ausserhalb von Tunneln und Brücken: das Gelände unter einer Brücke
+      // (swissALTI3D zeigt den Talgrund, nicht die Brücke) zog die Linie vor ihr in die Tiefe (Michael, 2026-10-11:
+      // «wie in ein Tal herunterfährt und dann wieder herauf»)
+      const gemittelt = (mm: number, von = -30, bis = 30) => {
         let t = 0, k = 0
-        for (let d = -30; d <= 30; d += 10) { const z = amBoden(mm + d); if (z !== null) { t += z; k++ } }
+        for (let d = von; d <= bis; d += 10) {
+          if (imBau(mm + d)) continue
+          const z = amBoden(mm + d); if (z !== null) { t += z; k++ }
+        }
         return k ? t / k + FEIN_UEBER_M : null
       }
       let z: number | null
       if (bau) {
-        const za = gemittelt(bau.von), zb = gemittelt(bau.bis)
+        // in Tunneln und auf Brücken gerade zwischen den Enden, jedes Ende gemessen nur auf dem Gelände davor und danach
+        const za = gemittelt(bau.von, -30, 0), zb = gemittelt(bau.bis, 0, 30)
         z = za !== null && zb !== null ? za + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (zb - za) : null
       } else z = gemittelt(meter)
       if (z === null) return grob
@@ -1459,7 +1481,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       return z * a + grob * (1 - a)
     }
     const feinPunkt3d = (meter: number) => {
-      const [e, n] = punktBei(meter)
+      const [e, n] = glattBei(meter)
       return new THREE.Vector3(X(e), Y(feinLinieHoehe(meter)), Z(n))
     }
     feinMalen = () => {
@@ -1634,6 +1656,34 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         punkte.push(feinPunkt3d(z))
         return punkte
       }
+      // eine Brücke als schlichte Platte unter der Linie (Michael, 2026-10-11: «durch Aufbau von Brücken, damit die Strecke
+      // … flach darüber führt»); Breite, Form und Pfeiler stehen in keiner Quelle, darum ohne Pfeiler
+      const platte = (punkte: THREE.Vector3[]) => {
+        const b = BRUECKE_BREIT_M / 2000, oben = Y(-FEIN_UEBER_M + 0.3), unten = Y(-FEIN_UEBER_M - BRUECKE_DICK_M)
+        const pos: number[] = [], index: number[] = []
+        punkte.forEach((p, i) => {
+          const a = punkte[Math.max(0, i - 1)], z = punkte[Math.min(punkte.length - 1, i + 1)]
+          const nx = -(z.z - a.z), nz = z.x - a.x, l = Math.hypot(nx, nz) || 1, qx = (nx / l) * b, qz = (nz / l) * b
+          // je Stelle vier Ecken: oben links, oben rechts, unten rechts, unten links
+          pos.push(p.x + qx, p.y + oben, p.z + qz, p.x - qx, p.y + oben, p.z - qz, p.x - qx, p.y + unten, p.z - qz, p.x + qx, p.y + unten, p.z + qz)
+          if (!i) return
+          const v = 4 * (i - 1), w = 4 * i
+          for (let k = 0; k < 4; k++) {
+            const k2 = (k + 1) % 4
+            index.push(v + k, w + k, v + k2, v + k2, w + k, w + k2)
+          }
+        })
+        const letzte = 4 * (punkte.length - 1)
+        index.push(0, 2, 1, 0, 3, 2, letzte, letzte + 1, letzte + 2, letzte, letzte + 2, letzte + 3)
+        const g = new THREE.BufferGeometry()
+        g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+        g.setIndex(index)
+        // jede Fläche mit eigener Richtung, damit Kanten sichtbar bleiben
+        const flach = g.toNonIndexed()
+        flach.computeVertexNormals()
+        g.dispose()
+        feinLinien.add(new THREE.Mesh(flach, new THREE.MeshLambertMaterial({ color: '#b9b6ae', side: THREE.DoubleSide })))
+      }
       for (const [a0, z0] of weg.stuecke) {
         const anf = Math.max(a0, von), end = Math.min(z0, bis)
         if (end <= anf) continue
@@ -1643,6 +1693,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           if (x.von > bei) strich(punkteVon(bei, x.von), wegFarbe, false)
           const a = Math.max(x.von, anf, bei), z = Math.min(x.bis, end)
           if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, x.art === 'tunnel')
+          if (z > a && x.art === 'bruecke') platte(punkteVon(a, z))
           bei = Math.max(bei, x.bis)
         }
         if (bei < end) strich(punkteVon(bei, end), wegFarbe, false)
@@ -2591,6 +2642,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const ziel = new THREE.Vector3()
           for (const d of [150, 300, 450]) ziel.add(feinPunkt3d(bis(spitze + r * d)))
           ziel.multiplyScalar(1 / 3)
+          // am Ende des Wegs fallen die Punkte voraus auf das Auge: dann weiter in der bisherigen Richtung schauen
+          const hinten = feinPunkt3d(bis(augeM - r * 60))
+          const flach = Math.hypot(ziel.x - auge.x, ziel.z - auge.z)
+          if (flach < 0.1) {
+            const rx = auge.x - hinten.x, rz = auge.z - hinten.z, l = Math.hypot(rx, rz) || 1
+            ziel.set(auge.x + (rx / l) * 0.3, auge.y - 0.01, auge.z + (rz / l) * 0.3)
+          }
           ziel.y = Math.max(ziel.y, auge.y - 0.02)
           kamera.position.copy(auge)
           steuerung.target.copy(ziel)

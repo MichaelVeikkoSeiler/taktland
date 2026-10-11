@@ -218,7 +218,10 @@ data/scharf/   scharfe Umgebung, ein Versuch nur zwischen Müntschemier und Ross
              Höhe, 65535 ausserhalb), je Kachel von 250 m, nur 200 m neben den Bahnlinien aus swissTLMRegio im Rechteck
              um die Orte (pipeline/build_scharf.py, 352 Kacheln, 42 MB); im Führerstand ein Netz je Kachel, eigenes Bild
              nur bis 800 m um einen Punkt 400 m voraus (SCHARF_BILD_M in Relief.tsx), sonst die Leinwand des feinen
-             Geländes, das darunter 5 m sinkt; nur mit Luftbild
+             Geländes, das darunter 5 m sinkt; nur mit Luftbild; im Führerstand Kurven über 80 m davor und danach gerundet (glattBei,
+             GLATT_M), Linie an Brücken und Tunneln nur mit dem Gelände davor und danach gemittelt (swissALTI3D zeigt unter
+             einer Brücke den Talgrund), Brücken als schlichte Platte 7 m breit ohne Pfeiler (Breite und Pfeiler in keiner
+             Quelle; Michael, 2026-10-11: «Aufbau von Brücken, damit die Strecke … flach darüber führt»)
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
