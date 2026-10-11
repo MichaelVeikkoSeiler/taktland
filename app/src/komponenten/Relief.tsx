@@ -86,6 +86,27 @@ const TUNNEL_DUNKEL = 0.97, TUNNEL_DUNKEL_M = 40
 /** Nahbild (Luftbild auf 2,5 m entlang der Bahnlinien): so gross um den Blickpunkt, so viele Bildpunkte je Meter;
  *  neu geladen, wenn der Blickpunkt so weit gewandert ist; nur wenn die Kamera näher ist als NAH_BIS_KM */
 const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
+/** Himmel (Michael, 2026-10-11: «einen hellblauen natürlichen Himmel»): oben kräftiger blau, zum Horizont hin heller
+ *  und dunstig, unter dem Horizont fast weiss; als Rundum-Bild, damit er beim Drehen und Neigen der Kamera stimmt. Ein
+ *  gemaltes Bild, kein Wetter und keine Tageszeit */
+function himmel(dunkel: boolean) {
+  const c = document.createElement('canvas')
+  c.width = 4; c.height = 512
+  const g = c.getContext('2d')!
+  // in der Mitte der Höhe liegt der Horizont
+  const v = g.createLinearGradient(0, 0, 0, c.height)
+  const stufen: Array<[number, string]> = dunkel
+    ? [[0, '#0b1a2e'], [0.3, '#16304d'], [0.46, '#2b4562'], [0.5, '#3a5068'], [0.56, '#2a3440'], [1, '#1c2228']]
+    : [[0, '#4f8fd0'], [0.25, '#76aee2'], [0.42, '#a9cdee'], [0.49, '#dbe9f5'], [0.5, '#e8f0f6'], [1, '#eef2f4']]
+  for (const [t, f] of stufen) v.addColorStop(t, f)
+  g.fillStyle = v
+  g.fillRect(0, 0, c.width, c.height)
+  const t = new THREE.CanvasTexture(c)
+  t.mapping = THREE.EquirectangularReflectionMapping
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
+}
+
 /** Masten und Schilder stehen so viel über dem Gelände */
 const UEBER_M = 25
 /** die Linie liegt so viel über dem gemittelten Gelände; mehr nur dort, wo das Gelände darüber ragt
@@ -966,7 +987,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const Y = (hm: number) => (hm * faktor) / 1000
 
     const szene = new THREE.Scene()
-    szene.background = new THREE.Color(dunkel ? '#141414' : '#f6f6f6')
+    szene.background = himmel(dunkel)
     const kamera = new THREE.PerspectiveCamera(40, 1, 0.1, 500)
     // durchsichtig, damit die Brille im Passthrough die Umgebung zeigt
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
