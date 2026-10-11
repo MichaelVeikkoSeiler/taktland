@@ -221,7 +221,7 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              Geländes, das darunter 5 m sinkt; nur mit Luftbild; im Führerstand Kurven über 80 m davor und danach gerundet (glattBei,
              GLATT_M), Höhe der Linie einmal je feinem Gelände gerechnet (profilRechnen): Gelände unter der Linie ohne Brücken und
              Tunnel (swissALTI3D zeigt dort Talgrund oder Berg), Median über 50 m davor und danach gegen Unterführungen und Gräben, dann
-             Mittel über 40 m, zuletzt über 30 m (PROFIL_MEDIAN_M …; Michael, 2026-10-11: «kleine Unebenheiten»), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), ein Ende
+             Mittel über 40 m, zuletzt über 30 m (PROFIL_MEDIAN_M …; Michael, 2026-10-11: «kleine Unebenheiten»), Täler und Buckel ohne Brücke oder Tunnel in den Daten (schmaler als 1,5 km, mehr als 6 m tief, irgendwo steiler als 8 %) gerade über- oder unterquert, ohne Bauwerk zu zeichnen (TAL_FENSTER_M …; Lorrainebrücke in Bern, deren Länge in keiner Quelle steht), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), ein Ende
              ausserhalb des feinen Geländes mit der groben Höhe, verschoben um den Unterschied am anderen Ende, Tunnel und Brücken für die Höhe immer alle, auch wenn ihre Zeichen
              ausgeschaltet sind (wegDerFahrt), Blick in Richtung des Gleises unter dem Auge, geneigt zur Linie 300 m voraus, Brücken als schlichte Platte 7 m breit ohne Pfeiler (Breite und Pfeiler in keiner
              Quelle; Michael, 2026-10-11: «Aufbau von Brücken, damit die Strecke … flach darüber führt»)

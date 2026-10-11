@@ -82,6 +82,9 @@ const TUNNEL_ANLAUF_M = 150
 /** Führerstand: Höhe der Linie als Median über so viele Meter davor und danach, dann gemittelt über so viele, und nach
  *  Brücken und Tunneln noch einmal über so viele */
 const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 40, PROFIL_UEBERGANG_M = 30
+/** Führerstand: Täler und Buckel unter der Linie ohne Brücke oder Tunnel in den Daten: so breit höchstens, so tief
+ *  mindestens, irgendwo so steil (Anteil, 0.08 = 8 %) */
+const TAL_FENSTER_M = 1500, TAL_TIEFE_M = 6, TAL_STEIGUNG = 0.08
 const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TIEFER_M = 5
 /** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
 const TUNNEL_DUNKEL = 0.97, TUNNEL_DUNKEL_M = 40
@@ -1509,6 +1512,45 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (w.length < 3) { median[i] = NaN; continue }
         w.sort((a, b) => a - b)
         median[i] = w[w.length >> 1]
+      }
+      // Täler und Buckel ohne Brücke oder Tunnel in den Daten (Michael, 2026-10-11, Bern: über die Lorrainebrücke fiel die
+      // Linie 40 m ins Aaretal, weil die Quelle für diese Brücke keine Länge nennt). Ein Gleis steigt und fällt nur
+      // wenige Prozent; ist das Gelände schmaler als TAL_FENSTER_M um mehr als TAL_TIEFE_M tiefer oder höher als
+      // ringsum und dabei steiler als TAL_STEIGUNG, führt die Linie gerade darüber oder darunter durch. Ob dort eine
+      // Brücke oder ein Tunnel steht, sagt das nicht; gezeichnet wird keine
+      const kt = Math.round(TAL_FENSTER_M / 2 / PROFIL_SCHRITT_M)
+      const fenster = (a: Float32Array, i: number, max: boolean) => {
+        let v = NaN
+        for (let k = Math.max(0, i - kt); k <= Math.min(n - 1, i + kt); k++) {
+          if (Number.isNaN(a[k])) continue
+          if (Number.isNaN(v) || (max ? a[k] > v : a[k] < v)) v = a[k]
+        }
+        return v
+      }
+      const huelle = (max: boolean) => {
+        const zuerst = new Float32Array(n), dann = new Float32Array(n)
+        for (let i = 0; i < n; i++) zuerst[i] = fenster(median, i, max)
+        for (let i = 0; i < n; i++) dann[i] = fenster(zuerst, i, !max)
+        return dann
+      }
+      for (const tal of [true, false]) {
+        const h2 = huelle(tal)
+        let i = 0
+        while (i < n) {
+          const tief = (k: number) => !Number.isNaN(median[k]) && !Number.isNaN(h2[k]) && (tal ? h2[k] - median[k] : median[k] - h2[k]) > TAL_TIEFE_M
+          if (!tief(i)) { i++; continue }
+          let z = i
+          while (z + 1 < n && tief(z + 1)) z++
+          const a0 = Math.max(0, i - 3), z0 = Math.min(n - 1, z + 3)
+          let steil = false
+          for (let k = a0; k < z0; k++) {
+            if (!Number.isNaN(median[k]) && !Number.isNaN(median[k + 1]) && Math.abs(median[k + 1] - median[k]) / PROFIL_SCHRITT_M > TAL_STEIGUNG) steil = true
+          }
+          if (steil && !Number.isNaN(median[a0]) && !Number.isNaN(median[z0])) {
+            for (let k = a0 + 1; k < z0; k++) median[k] = median[a0] + ((k - a0) / (z0 - a0)) * (median[z0] - median[a0])
+          }
+          i = z + 1
+        }
       }
       const boden = new Float32Array(n)
       for (let i = 0; i < n; i++) {
