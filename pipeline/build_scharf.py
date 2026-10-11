@@ -1,7 +1,7 @@
 """Scharfe Umgebung, ein Versuch auf einer kurzen Strecke (Michael, 2026-10-11: «Ist dieser Detailgrad umsetzbar,
 nur 200 m links und rechts der Bahnlinie? … die Strecke Müntschemier bis Rosshäusern»).
 
-Nur BAND_M links und rechts der Bahnlinien aus swissTLMRegio (data/kartenlinien.json) im Rechteck um die genannten
+Nur BAND_M links und rechts der Bahnlinien aus swissTLMRegio (data/kartenlinien.json) entlang der genannten
 Bahnhöfe, in Kacheln von KACHEL_M:
 - Luftbild: SWISSIMAGE 10 cm (swisstopo), auf 25 cm gemittelt, je Kachel ein JPEG von PX × PX, Zeilen von Norden;
   weiter weg als das Band weiss (dort zeichnet die App nichts, und das JPEG bleibt klein)
@@ -12,7 +12,8 @@ Höhen als .hgz: vorne die tiefste Höhe in Dezimetern (Int32), dann je Punkt di
 65535 heisst ausserhalb des Bands; gepackt mit gzip. Je Kilometer der neueste Jahrgang; index.json hält je Kachel die
 Jahre von Bild und Höhe fest. Gelesen wird nur der Ausschnitt jeder Kachel aus den GeoTIFF von swisstopo.
 
-    .venv/bin/python pipeline/build_scharf.py Müntschemier Rosshäusern
+    .venv/bin/python pipeline/build_scharf.py                     # Müntschemier bis Bern (ORTE)
+    .venv/bin/python pipeline/build_scharf.py Kerzers Gümmenen    # andere Orte, in Fahrtreihenfolge
 """
 import gzip
 import json
@@ -40,26 +41,31 @@ ZIEL = ROOT / "data" / "scharf"
 KACHEL_M, PX, PUNKTE = 250, 1000, 126
 #: so weit links und rechts der Linie
 BAND_M = 200
-#: so weit um das Rechteck der Bahnhöfe gehören Linien dazu
-RAND_M = 300
+#: so weit neben dem Zug durch die Orte gehören Linien dazu
+KORRIDOR_M = 700
 LEER = 65535
+#: die Strecke des Versuchs (Michael, 2026-10-11: Müntschemier bis Rosshäusern, dann «weiter bis nach Bern»)
+ORTE = ["Müntschemier", "Kerzers", "Ferenbalm-Gurbrü", "Gümmenen", "Rosshäusern", "Bern Riedbach", "Bern Bümpliz Nord",
+        "Bern Stöckacker", "Bern"]
 ENV = dict(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR", CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif",
            GDAL_HTTP_MAX_RETRY="5", GDAL_HTTP_RETRY_DELAY="3")
 
 
-def strecken_im_rechteck(orte):
+def strecken_entlang(orte):
+    """die Stücke Bahnlinie bis KORRIDOR_M neben dem Zug durch die Orte, in dieser Reihenfolge (Müntschemier, Kerzers …
+    Bern): so bleiben Linien weg, die nur das Rechteck um die Orte kreuzen (um Bern sind es viele)"""
     d = json.loads((ROOT / "data" / "strecken.json").read_text(encoding="utf-8"))
     lage = {name: d["lagen"][abk] for abk, name in d["punkte"].items() if abk in d["lagen"]}
     fehlt = [o for o in orte if o not in lage]
     if fehlt:
         raise SystemExit(f"nicht im Netz: {', '.join(fehlt)}")
     pts = [build_relief.wgs84_zu_lv95(*lage[o]) for o in orte]
-    e0, e1 = min(e for e, _ in pts) - RAND_M, max(e for e, _ in pts) + RAND_M
-    n0, n1 = min(n for _, n in pts) - RAND_M, max(n for _, n in pts) + RAND_M
+    kette = [(a[0], a[1], b[0], b[1]) for a, b in zip(pts, pts[1:])]
     raus = []
     for linie in build_luftbild_nah.linien():
         for (a, b), (c, e) in zip(linie, linie[1:]):
-            if max(a, c) >= e0 and min(a, c) <= e1 and max(b, e) >= n0 and min(b, e) <= n1:
+            punkte = np.array([[a, b], [c, e], [(a + c) / 2, (b + e) / 2]])
+            if abstand(kette, punkte[:, 0], punkte[:, 1]).max() <= KORRIDOR_M:
                 raus.append((a, b, c, e))
     return raus
 
@@ -153,8 +159,8 @@ def bild_bauen(qe, qn, href, st):
 
 
 def main():
-    orte = sys.argv[1:] or ["Müntschemier", "Rosshäusern"]
-    strecken = strecken_im_rechteck(orte)
+    orte = sys.argv[1:] or ORTE
+    strecken = strecken_entlang(orte)
     q = kacheln(strecken)
     kms = {(qe * KACHEL_M // 1000, qn * KACHEL_M // 1000) for qe, qn in q}
     print(f"{len(strecken)} Stücke Bahnlinie, {len(q)} Kacheln von {KACHEL_M} m in {len(kms)} Kilometern")
@@ -194,7 +200,7 @@ def main():
         "quelle": "SWISSIMAGE 10 cm (swisstopo) auf 25 cm gemittelt; swissALTI3D 2 m (swisstopo)",
         "geladen": date.today().isoformat(), "kachel_m": KACHEL_M, "px": PX, "punkte": PUNKTE, "band_m": BAND_M,
         "orte": orte,
-        "hinweis": "Versuch: nur band_m neben den Bahnlinien aus swissTLMRegio im Rechteck um die Orte; je Kachel Jahr von Bild und Höhe",
+        "hinweis": "Versuch: nur band_m neben den Bahnlinien aus swissTLMRegio, die höchstens 700 m neben dem Zug durch die Orte liegen; je Kachel Jahr von Bild und Höhe",
         "kacheln": dict(sorted(index.items())),
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     groesse = sum(p.stat().st_size for p in ZIEL.iterdir())

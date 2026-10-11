@@ -77,6 +77,9 @@ const FEIN_LINIE_M = 1.5, FEIN_UEBER_M = 1
 const GLATT_M = 80, BRUECKE_BREIT_M = 7, BRUECKE_DICK_M = 1.8
 /** Führerstand: so weit vor und nach einem Tunnel fährt der Zug gerade auf das Portal zu */
 const TUNNEL_ANLAUF_M = 150
+/** Führerstand: Höhe der Linie als Median über so viele Meter davor und danach, dann gemittelt über so viele, und nach
+ *  Brücken und Tunneln noch einmal über so viele */
+const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 40, PROFIL_UEBERGANG_M = 30
 const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TIEFER_M = 5
 /** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
 const TUNNEL_DUNKEL = 0.97, TUNNEL_DUNKEL_M = 40
@@ -1450,35 +1453,49 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       }
       return [e / w, n / w]
     }
-    /** Höhe der Linie im Führerstand: auf dem feinen Gelände, gegen den Rand des Quadrats in die grobe übergehend */
-    const feinLinieHoehe = (meter: number) => {
-      const grob = hoeheAmWeg(meter)
-      if (!feinStand) return grob
-      const { fein, e0, n0 } = feinStand
-      const amBoden = (mm: number) => {
-        const [e, n] = glattBei(mm)
-        return (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fein, e, n)
-      }
-      const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
-      const imBau = (mm: number) => weg.bauwerke.some((x) => mm > x.von && mm < x.bis)
-      // gemittelt über 30 m davor und danach, nur ausserhalb von Tunneln und Brücken: das Gelände unter einer Brücke
-      // (swissALTI3D zeigt den Talgrund, nicht die Brücke) zog die Linie vor ihr in die Tiefe (Michael, 2026-10-11:
-      // «wie in ein Tal herunterfährt und dann wieder herauf»)
-      const gemittelt = (mm: number, von = -30, bis = 30) => {
-        let t = 0, k = 0
-        for (let d = von; d <= bis; d += 10) {
-          if (imBau(mm + d)) continue
-          const z = amBoden(mm + d); if (z !== null) { t += z; k++ }
-        }
-        return k ? t / k + FEIN_UEBER_M : null
-      }
-      let z: number | null = null
-      // vor einem Tunnel steigt das Gelände zum Hang hinauf, oft schon vor dem Anfang laut swissTLM3D; die Linie stieg mit
-      // und fiel dann in den Tunnel (Michael, 2026-10-11: «kurz vor dem Tunnelportal in die Höhe»). Darum gilt von
-      // TUNNEL_ANLAUF_M davor bis ebenso weit danach eine Gerade, und davor und danach liegt die Linie nie über ihr
+    /** Höhe der Linie im Führerstand, je PROFIL_SCHRITT_M einmal gerechnet, wenn das feine Gelände kommt (profilRechnen) */
+    let profil: { von: number; h: Float32Array } | null = null
+    const PROFIL_SCHRITT_M = 10
+    const profilRechnen = (stelle: number) => {
+      profil = null
+      if (!feinStand) return
+      const { fein } = feinStand
       const anfang = pk[0].m, ende = pk[pk.length - 1].m
-      const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && meter >= x.von - TUNNEL_ANLAUF_M && meter <= x.bis + TUNNEL_ANLAUF_M)
-      const va = tunnel ? Math.max(anfang, tunnel.von - TUNNEL_ANLAUF_M) : 0, vb = tunnel ? Math.min(ende, tunnel.bis + TUNNEL_ANLAUF_M) : 0
+      const von = Math.max(anfang, stelle - 7000), bis = Math.min(ende, stelle + 7000)
+      const n = Math.max(2, Math.floor((bis - von) / PROFIL_SCHRITT_M) + 1)
+      const bei = (i: number) => Math.min(bis, von + i * PROFIL_SCHRITT_M)
+      const imBau = (mm: number) => weg.bauwerke.some((x) => mm > x.von && mm < x.bis)
+      // das Gelände unter der Linie; unter Brücken und über Tunneln zählt es nicht (swissALTI3D zeigt dort den Talgrund
+      // oder den Berg)
+      const roh = new Float32Array(n)
+      for (let i = 0; i < n; i++) {
+        const mm = bei(i), [e, n2] = glattBei(mm)
+        const z = imBau(mm) ? null : (scharfStand && scharfHoehe(scharfStand, e, n2)) ?? feinHoehe(fein, e, n2)
+        roh[i] = z === null ? NaN : z
+      }
+      // Unebenheiten (Michael, 2026-10-11: «teilweise … noch kleine Unebenheiten»): Unterführungen, Gräben, Strassen
+      // unter der Bahn und Bäume am Rand zogen die Linie auf und ab. Zuerst der Median über PROFIL_MEDIAN_M davor und
+      // danach, der einzelne Ausreisser übergeht, dann das Mittel über PROFIL_MITTEL_M
+      const median = new Float32Array(n), w = [] as number[]
+      const km = Math.round(PROFIL_MEDIAN_M / PROFIL_SCHRITT_M), kg = Math.round(PROFIL_MITTEL_M / PROFIL_SCHRITT_M)
+      for (let i = 0; i < n; i++) {
+        w.length = 0
+        for (let k = Math.max(0, i - km); k <= Math.min(n - 1, i + km); k++) if (!Number.isNaN(roh[k])) w.push(roh[k])
+        if (w.length < 3) { median[i] = NaN; continue }
+        w.sort((a, b) => a - b)
+        median[i] = w[w.length >> 1]
+      }
+      const boden = new Float32Array(n)
+      for (let i = 0; i < n; i++) {
+        let t = 0, k2 = 0
+        for (let k = Math.max(0, i - kg); k <= Math.min(n - 1, i + kg); k++) if (!Number.isNaN(median[k])) { t += median[k]; k2++ }
+        boden[i] = k2 ? t / k2 + FEIN_UEBER_M : NaN
+      }
+      const bodenBei = (mm: number) => {
+        const i = Math.round((mm - von) / PROFIL_SCHRITT_M)
+        if (i < 0 || i >= n) return null
+        return Number.isNaN(boden[i]) ? null : boden[i]
+      }
       // liegt ein Ende ausserhalb des feinen Geländes (ein langer Tunnel wie bei Rosshäusern), nimmt es die grobe Höhe dort,
       // um den Unterschied am anderen Ende verschoben; vorher fiel der ganze Tunnel auf die grobe Höhe, 20 m zu hoch
       const enden = (a: number, b: number, za0: number | null, zb0: number | null): [number, number] | null => {
@@ -1487,18 +1504,47 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (zb0 !== null) return [hoeheAmWeg(a) + zb0 - hoeheAmWeg(b), zb0]
         return null
       }
-      const ez = tunnel ? enden(va, vb, gemittelt(va, -30, 0), gemittelt(vb, 0, 30)) : null
-      if (tunnel && ez) {
-        const [za, zb] = ez
-        const gerade = za + ((meter - va) / ((vb - va) || 1)) * (zb - za)
-        const hier = meter > tunnel.von && meter < tunnel.bis ? null : gemittelt(meter)
-        z = hier === null ? gerade : Math.min(hier, gerade)
-      } else if (bau) {
-        // in Tunneln und auf Brücken gerade zwischen den Enden, jedes Ende gemessen nur auf dem Gelände davor und danach
-        const eb = enden(bau.von, bau.bis, gemittelt(bau.von, -30, 0), gemittelt(bau.bis, 0, 30))
-        z = eb ? eb[0] + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (eb[1] - eb[0]) : null
-      } else z = gemittelt(meter)
-      if (z === null) return grob
+      const h = new Float32Array(n)
+      for (let i = 0; i < n; i++) {
+        const meter = bei(i)
+        let z: number | null
+        // vor einem Tunnel steigt das Gelände zum Hang hinauf, oft schon vor dem Anfang laut swissTLM3D; die Linie stieg mit
+        // und fiel dann in den Tunnel (Michael, 2026-10-11: «kurz vor dem Tunnelportal in die Höhe»). Darum gilt von
+        // TUNNEL_ANLAUF_M davor bis ebenso weit danach eine Gerade, und davor und danach liegt die Linie nie über ihr
+        const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && meter >= x.von - TUNNEL_ANLAUF_M && meter <= x.bis + TUNNEL_ANLAUF_M)
+        const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
+        const va = tunnel ? Math.max(anfang, tunnel.von - TUNNEL_ANLAUF_M) : 0, vb = tunnel ? Math.min(ende, tunnel.bis + TUNNEL_ANLAUF_M) : 0
+        const ez = tunnel ? enden(va, vb, bodenBei(va), bodenBei(vb)) : null
+        if (tunnel && ez) {
+          const gerade = ez[0] + ((meter - va) / ((vb - va) || 1)) * (ez[1] - ez[0])
+          const hier = meter > tunnel.von && meter < tunnel.bis ? null : bodenBei(meter)
+          z = hier === null ? gerade : Math.min(hier, gerade)
+        } else if (bau) {
+          // in Tunneln und auf Brücken gerade zwischen den Enden
+          const eb = enden(bau.von, bau.bis, bodenBei(bau.von), bodenBei(bau.bis))
+          z = eb ? eb[0] + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (eb[1] - eb[0]) : null
+        } else z = bodenBei(meter)
+        h[i] = z ?? hoeheAmWeg(meter)
+      }
+      // zuletzt leicht gemittelt, damit auch die Übergänge an Brücken und Tunnelportalen keinen Knick haben
+      const kl = Math.round(PROFIL_UEBERGANG_M / PROFIL_SCHRITT_M), glatt = new Float32Array(n)
+      for (let i = 0; i < n; i++) {
+        let t = 0, k2 = 0
+        for (let k = Math.max(0, i - kl); k <= Math.min(n - 1, i + kl); k++) { t += h[k]; k2++ }
+        glatt[i] = t / k2
+      }
+      h.set(glatt)
+      profil = { von, h }
+    }
+    /** Höhe der Linie im Führerstand: aus dem Profil, gegen den Rand des Quadrats in die grobe übergehend */
+    const feinLinieHoehe = (meter: number) => {
+      const grob = hoeheAmWeg(meter)
+      if (!feinStand || !profil) return grob
+      const { e0, n0 } = feinStand, { von, h } = profil
+      const x = (meter - von) / PROFIL_SCHRITT_M
+      if (x < 0 || x > h.length - 1) return grob
+      const i = Math.min(h.length - 2, Math.floor(x)), t = x - i
+      const z = h[i] * (1 - t) + h[i + 1] * t
       const [e, n] = punktBei(meter)
       const rand = Math.min(e - e0, e0 + FEIN_SEITE_M - e, n - n0, n0 + FEIN_SEITE_M - n)
       const a = Math.max(0, Math.min(1, rand / FEIN_RAND_M))
@@ -1536,6 +1582,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (versenkt.length) p.needsUpdate = true
       versenkt = []
       feinStand = null
+      profil = null
       feinNetz.visible = false
       for (const o of feinLinien.children) { (o as THREE.Mesh).geometry.dispose(); ((o as THREE.Mesh).material as THREE.Material).dispose() }
       feinLinien.clear()
@@ -1558,6 +1605,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinStand = { fein, e0, n0 }
       feinNah = nahBild
       scharfStand = scharf
+      profilRechnen(stelle)
       // unter dem scharfen Band sinkt das feine Gelände, wo es rundum scharfe Höhen gibt
       const scharfDa = (e: number, n: number) => !!scharf && [[0, 0], [-10, 0], [10, 0], [0, -10], [0, 10]].every(([de, dn]) => scharfHoehe(scharf, e + de, n + dn) !== null)
       // das Netz: ein Punkt je Feld von 10 m, nur Vierecke mit vier Höhen

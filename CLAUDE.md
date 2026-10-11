@@ -213,14 +213,15 @@ data/luftbild_nah/  Nahbild: dasselbe Luftbild auf 2,5 m, nur bis 500 m neben de
 data/gelaende_nah/  feines Gelände für den Führerstand: swissALTI3D (swisstopo, 2-m-Fassung, nur deren Übersicht gelesen) auf 10 m,
              dieselben Kilometer wie data/luftbild_nah, je km 100 × 100 Höhen in .hgz (Int32 tiefste Höhe in dm, dann
              Differenzen je Zeile; pipeline/build_gelaende_nah.py, 97 MB, 9'672 km); in der App feinLaden in src/gelaende.ts
-data/scharf/   scharfe Umgebung, ein Versuch nur zwischen Müntschemier und Rosshäusern (Michael, 2026-10-11): SWISSIMAGE
+data/scharf/   scharfe Umgebung, ein Versuch nur zwischen Müntschemier und Bern (Michael, 2026-10-11): SWISSIMAGE
              10 cm auf 25 cm (JPEG 1000 × 1000) und swissALTI3D 2 m (126 × 126 Punkte, .hgz mit UInt16 über der tiefsten
-             Höhe, 65535 ausserhalb), je Kachel von 250 m, nur 200 m neben den Bahnlinien aus swissTLMRegio im Rechteck
-             um die Orte (pipeline/build_scharf.py, 352 Kacheln, 42 MB); im Führerstand ein Netz je Kachel, eigenes Bild
+             Höhe, 65535 ausserhalb), je Kachel von 250 m, nur 200 m neben den Bahnlinien aus swissTLMRegio, die höchstens
+             700 m neben dem Zug durch die Orte (ORTE) liegen (pipeline/build_scharf.py, 297 Kacheln, 37 MB); im Führerstand ein Netz je Kachel, eigenes Bild
              nur bis 800 m um einen Punkt 400 m voraus (SCHARF_BILD_M in Relief.tsx), sonst die Leinwand des feinen
              Geländes, das darunter 5 m sinkt; nur mit Luftbild; im Führerstand Kurven über 80 m davor und danach gerundet (glattBei,
-             GLATT_M), Linie an Brücken und Tunneln nur mit dem Gelände davor und danach gemittelt (swissALTI3D zeigt unter
-             einer Brücke den Talgrund), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), ein Ende
+             GLATT_M), Höhe der Linie einmal je feinem Gelände gerechnet (profilRechnen): Gelände unter der Linie ohne Brücken und
+             Tunnel (swissALTI3D zeigt dort Talgrund oder Berg), Median über 50 m davor und danach gegen Unterführungen und Gräben, dann
+             Mittel über 40 m, zuletzt über 30 m (PROFIL_MEDIAN_M …; Michael, 2026-10-11: «kleine Unebenheiten»), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), ein Ende
              ausserhalb des feinen Geländes mit der groben Höhe, verschoben um den Unterschied am anderen Ende, Tunnel und Brücken für die Höhe immer alle, auch wenn ihre Zeichen
              ausgeschaltet sind (wegDerFahrt), Blick in Richtung des Gleises unter dem Auge, geneigt zur Linie 300 m voraus, Brücken als schlichte Platte 7 m breit ohne Pfeiler (Breite und Pfeiler in keiner
              Quelle; Michael, 2026-10-11: «Aufbau von Brücken, damit die Strecke … flach darüber führt»)
