@@ -12,7 +12,7 @@ Höhen als .hgz: vorne die tiefste Höhe in Dezimetern (Int32), dann je Punkt di
 65535 heisst ausserhalb des Bands; gepackt mit gzip. Je Kilometer der neueste Jahrgang; index.json hält je Kachel die
 Jahre von Bild und Höhe fest. Gelesen wird nur der Ausschnitt jeder Kachel aus den GeoTIFF von swisstopo.
 
-    .venv/bin/python pipeline/build_scharf.py                     # Müntschemier bis Bern (ORTE)
+    .venv/bin/python pipeline/build_scharf.py                     # alle STRECKEN
     .venv/bin/python pipeline/build_scharf.py Kerzers Gümmenen    # andere Orte, in Fahrtreihenfolge
 """
 import gzip
@@ -44,9 +44,13 @@ BAND_M = 200
 #: so weit neben dem Zug durch die Orte gehören Linien dazu
 KORRIDOR_M = 700
 LEER = 65535
-#: die Strecke des Versuchs (Michael, 2026-10-11: Müntschemier bis Rosshäusern, dann «weiter bis nach Bern»)
-ORTE = ["Müntschemier", "Kerzers", "Ferenbalm-Gurbrü", "Gümmenen", "Rosshäusern", "Bern Riedbach", "Bern Bümpliz Nord",
-        "Bern Stöckacker", "Bern"]
+#: die Strecken des Versuchs, je in Fahrtreihenfolge (Michael, 2026-10-11: Müntschemier bis Rosshäusern, dann «weiter bis
+#: nach Bern», dann «Bern - Biel Bienne»)
+STRECKEN = [
+    ["Müntschemier", "Kerzers", "Ferenbalm-Gurbrü", "Gümmenen", "Rosshäusern", "Bern Riedbach", "Bern Bümpliz Nord",
+     "Bern Stöckacker", "Bern"],
+    ["Bern", "Zollikofen", "Münchenbuchsee", "Schüpfen", "Suberg-Grossaffoltern", "Lyss", "Brügg BE", "Biel/Bienne"],
+]
 ENV = dict(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR", CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif",
            GDAL_HTTP_MAX_RETRY="5", GDAL_HTTP_RETRY_DELAY="3")
 
@@ -116,11 +120,8 @@ def hoehen_quellen(kms):
     return raus
 
 
-def hoehen_mosaik(quellen, ke0, kn0, ke1, kn1):
-    """alle 2-m-Höhen der Kilometer ke0..ke1, kn0..kn1 in einem Feld, Zeilen von Norden"""
-    b, h = (ke1 - ke0 + 1) * 500, (kn1 - kn0 + 1) * 500
-    m = np.full((h, b), np.nan, np.float32)
-
+def hoehen_km(quellen):
+    """{(km Ost, km Nord): 2-m-Höhen 500 × 500, Zeilen von Norden}"""
     def lesen(k):
         for _ in range(4):
             try:
@@ -131,11 +132,7 @@ def hoehen_mosaik(quellen, ke0, kn0, ke1, kn1):
         return k, None
 
     with ThreadPoolExecutor(16) as pool:
-        for (ke, kn), a in pool.map(lesen, [k for k in quellen]):
-            if a is not None:
-                y = (kn1 - kn) * 500
-                m[y:y + 500, (ke - ke0) * 500:(ke - ke0 + 1) * 500] = a
-    return m
+        return {k: a for k, a in pool.map(lesen, list(quellen)) if a is not None}
 
 
 def bild_bauen(qe, qn, href, st):
@@ -159,17 +156,18 @@ def bild_bauen(qe, qn, href, st):
 
 
 def main():
-    orte = sys.argv[1:] or ORTE
-    strecken = strecken_entlang(orte)
+    strecken = []
+    for orte in [sys.argv[1:]] if sys.argv[1:] else STRECKEN:
+        strecken += [st for st in strecken_entlang(orte) if st not in strecken]
     q = kacheln(strecken)
     kms = {(qe * KACHEL_M // 1000, qn * KACHEL_M // 1000) for qe, qn in q}
     print(f"{len(strecken)} Stücke Bahnlinie, {len(q)} Kacheln von {KACHEL_M} m in {len(kms)} Kilometern")
     ZIEL.mkdir(parents=True, exist_ok=True)
-    bq, hq = bild_quellen(kms), hoehen_quellen(kms)
-    ke0, ke1 = min(k for k, _ in hq), max(k for k, _ in hq)
-    kn0, kn1 = min(k for _, k in hq), max(k for _, k in hq)
-    mosaik = hoehen_mosaik(hq, ke0, kn0, ke1, kn1)
-    nord = (kn1 + 1) * 1000
+    bq = bild_quellen(kms)
+    # die Höhen auch der Nachbarn: die Punkte am Rand einer Kachel liegen auf der Grenze zum nächsten Kilometer
+    nachbarn = {(ke + de, kn + dn) for ke, kn in kms for de in (-1, 0, 1) for dn in (-1, 0, 1)}
+    hq = hoehen_quellen(nachbarn)
+    hoehen = hoehen_km(hq)
     index = {}
     auftraege = []
     for (qe, qn), st in sorted(q.items()):
@@ -179,8 +177,16 @@ def main():
         e0, n0 = qe * KACHEL_M, qn * KACHEL_M
         s = np.arange(PUNKTE) * (KACHEL_M / (PUNKTE - 1))
         e, n = np.meshgrid(e0 + s, n0 + KACHEL_M - s)
-        # Mitte des Feldes (0, 0) liegt bei 1 m vom Rand des Mosaiks
-        z = map_coordinates(mosaik, [(nord - n) / 2 - 0.5, (e - ke0 * 1000) / 2 - 0.5], order=1, mode="nearest")
+        # ein Feld aus den 3 × 3 Kilometern um die Kachel; die Mitte des Feldes (0, 0) liegt 1 m vom Rand
+        ke, kn = k
+        feld = np.full((1500, 1500), np.nan, np.float32)
+        for de in (-1, 0, 1):
+            for dn in (-1, 0, 1):
+                a = hoehen.get((ke + de, kn + dn))
+                if a is not None:
+                    feld[(1 - dn) * 500:(2 - dn) * 500, (de + 1) * 500:(de + 2) * 500] = a
+        nord = (kn + 2) * 1000
+        z = map_coordinates(feld, [(nord - n) / 2 - 0.5, (e - (ke - 1) * 1000) / 2 - 0.5], order=1, mode="nearest")
         im_band = (abstand(st, e, n) <= BAND_M) & np.isfinite(z)
         if not im_band.any():
             continue
@@ -199,8 +205,8 @@ def main():
     (ZIEL / "index.json").write_text(json.dumps({
         "quelle": "SWISSIMAGE 10 cm (swisstopo) auf 25 cm gemittelt; swissALTI3D 2 m (swisstopo)",
         "geladen": date.today().isoformat(), "kachel_m": KACHEL_M, "px": PX, "punkte": PUNKTE, "band_m": BAND_M,
-        "orte": orte,
-        "hinweis": "Versuch: nur band_m neben den Bahnlinien aus swissTLMRegio, die höchstens 700 m neben dem Zug durch die Orte liegen; je Kachel Jahr von Bild und Höhe",
+        "strecken": [sys.argv[1:]] if sys.argv[1:] else STRECKEN,
+        "hinweis": "Versuch: nur band_m neben den Bahnlinien aus swissTLMRegio, die höchstens 700 m neben dem Zug durch die Orte einer Strecke liegen; je Kachel Jahr von Bild und Höhe",
         "kacheln": dict(sorted(index.items())),
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     groesse = sum(p.stat().st_size for p in ZIEL.iterdir())

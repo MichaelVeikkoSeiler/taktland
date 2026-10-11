@@ -213,10 +213,10 @@ data/luftbild_nah/  Nahbild: dasselbe Luftbild auf 2,5 m, nur bis 500 m neben de
 data/gelaende_nah/  feines Gelände für den Führerstand: swissALTI3D (swisstopo, 2-m-Fassung, nur deren Übersicht gelesen) auf 10 m,
              dieselben Kilometer wie data/luftbild_nah, je km 100 × 100 Höhen in .hgz (Int32 tiefste Höhe in dm, dann
              Differenzen je Zeile; pipeline/build_gelaende_nah.py, 97 MB, 9'672 km); in der App feinLaden in src/gelaende.ts
-data/scharf/   scharfe Umgebung, ein Versuch nur zwischen Müntschemier und Bern (Michael, 2026-10-11): SWISSIMAGE
+data/scharf/   scharfe Umgebung, ein Versuch nur zwischen Müntschemier und Bern und zwischen Bern und Biel/Bienne (Michael, 2026-10-11): SWISSIMAGE
              10 cm auf 25 cm (JPEG 1000 × 1000) und swissALTI3D 2 m (126 × 126 Punkte, .hgz mit UInt16 über der tiefsten
              Höhe, 65535 ausserhalb), je Kachel von 250 m, nur 200 m neben den Bahnlinien aus swissTLMRegio, die höchstens
-             700 m neben dem Zug durch die Orte (ORTE) liegen (pipeline/build_scharf.py, 297 Kacheln, 37 MB); im Führerstand ein Netz je Kachel, eigenes Bild
+             700 m neben dem Zug durch die Orte einer Strecke liegen (STRECKEN in pipeline/build_scharf.py, 639 Kacheln, 84 MB); im Führerstand ein Netz je Kachel, eigenes Bild
              nur bis 800 m um einen Punkt 400 m voraus (SCHARF_BILD_M in Relief.tsx), sonst die Leinwand des feinen
              Geländes, das darunter 5 m sinkt; nur mit Luftbild; im Führerstand Kurven über 80 m davor und danach gerundet (glattBei,
              GLATT_M), Höhe der Linie einmal je feinem Gelände gerechnet (profilRechnen): Gelände unter der Linie ohne Brücken und
