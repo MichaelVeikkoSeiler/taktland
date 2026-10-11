@@ -471,7 +471,7 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
       .catch((e: Error) => { if (!ab) setFehler(e.message) })
     return () => { ab = true }
   }, [fahrweg, objekte, BAND_M])
-  const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
+  const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg) : null), [daten, fahrweg])
   const audio = useZuggeraeusch(probeStelle, useMemo(() => wegEnde(fahrweg), [fahrweg]), useMemo(() => weg?.bauwerke ?? [], [weg]),
                                 true, fahrweg.punkte[0]?.s ?? 0)
   // in der Brille steht der Zug am Anfang bereit, A startet ihn (Michael, 2026-10-08: ein Knopf statt zwei)
@@ -740,7 +740,7 @@ function wegDerLinie(r: Relief): Weg {
 /* ---------- beim Fahren ---------- */
 
 /** Der Weg einer Fahrt im Ausschnitt des Reliefs, Meter entlang des Wegs */
-function wegDerFahrt(r: Relief, fahrweg: Fahrweg, objekte: FahrObjekt[]): Weg {
+function wegDerFahrt(r: Relief, fahrweg: Fahrweg): Weg {
   const { ost, nord, m, breite, hoehe } = r.raster
   const drin = (e: number, n: number) => e >= ost && e <= ost + breite * m && n <= nord && n >= nord - hoehe * m
   const punkte = fahrweg.punkte.map((p) => { const [e, n] = lv95(p.lat, p.lon); return { m: p.s, e, n } })
@@ -845,7 +845,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
       .catch((e: Error) => { if (!ab) setFehler(e.message) })
     return () => { ab = true }
   }, [mitte, fahrweg, objekte, ende])
-  const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg, objekte) : null), [daten, fahrweg, objekte])
+  const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg) : null), [daten, fahrweg])
   if (fehler) return <div className={className}><Ladefehler was="Das Gelände konnte nicht geladen werden." fehler={fehler} /></div>
   if (!daten || !weg) return <div className={`${className} relative flex items-center justify-center text-sm text-sbb-metal`}><Ladebalken inKarte />Das Gelände wird geladen …</div>
   return (
