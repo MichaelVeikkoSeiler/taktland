@@ -119,6 +119,8 @@ const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 5, ZUG_LUECKE_M = 8
 const ZUG_BREITE = 0.045, ZUG_HOEHE = 0.05
 /** in diesem Abstand der Kamera (km) hat der Zug seine Grundgrösse; näher kleiner, weiter weg grösser */
 const ZUG_NORMAL_KM = 6
+/** beim Fahren: so weit nach dem Anfang des Wegs steht der eigene Standort in der Mitte des Zugs statt an seinem Ende */
+const ZUG_VORNE_BIS_M = 800
 /** beim Fahren (Fahrt und Probefahrt) ist der Zug grösser (Michael, 2026-10-07: «bei der Fahrt Live … 150 %») */
 const ZUG_FAHRT_FAKTOR = 1.5
 /** so stark neigt sich ein Wagen höchstens, 4° (im überhöhten Gelände wären es sonst Rampen; vorher 7°, Michael, 2026-10-10) */
@@ -2376,6 +2378,16 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // beim Fahren: die Kamera folgt dem Zug mit demselben Blickwinkel; am Anfang von schräg hinten
     let letzte: THREE.Vector3 | null = null
     let imStand = false
+    /** Beim Fahren (Michael, 2026-10-11: «beim Start mein GPS-Standort der hinterste Punkt … bei allen Zwischenbahnhöfen
+     *  und am Ziel der Mittelpunkt des Zuges»): am Anfang des Wegs steht der ganze Zug vor dem Standort, über die ersten
+     *  ZUG_VORNE_BIS_M rückt der Standort sanft in die Mitte des Zugs und bleibt dort; die Spitze nie über das Ende des Wegs */
+    const stelleDerSpitze = (standort: number | null) => {
+      if (standort === null) return null
+      const anfang = pk[0].m, ende = pk[pk.length - 1].m, laenge = zugLaengeS()
+      const t = Math.max(0, Math.min(1, (standort - anfang) / ZUG_VORNE_BIS_M))
+      const vor = laenge * (1 - 0.5 * t * t * (3 - 2 * t))
+      return Math.min(ende, standort + vor)
+    }
     let feinAb = -Infinity
     let laeuft = true
     const uhr = new THREE.Clock()
@@ -2439,7 +2451,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       }
       if (hinterZug?.current) { hinterZug.current = false; letzte = null; if (blick) blick.current = null }
       if (zug) {
-        const s = zug.current
+        // beim Fahren ist zug.current der eigene Standort; gezeichnet wird der Zug ab seiner Spitze (stelleDerSpitze)
+        const s = zugVonAussen ? stelleDerSpitze(zug.current) : zug.current
         const sichtbar = s !== null && imStueck(s)
         // auf dem Bildschirm wächst der Zug mit dem Abstand der Kamera: beim Hineinzoomen kleiner,
         // aus der Ferne noch zu finden (Michael, 2026-10-07)
