@@ -75,6 +75,8 @@ const FEIN_LINIE_M = 1.5, FEIN_UEBER_M = 1
  *  Zug, weiter als SCHARF_LOS_M wieder ohne; darunter sinkt das feine Gelände um SCHARF_TIEFER_M */
 /** Führerstand: Kurven gerundet über so viele Meter davor und danach (glattBei); Brücken als Platte so breit und dick */
 const GLATT_M = 80, BRUECKE_BREIT_M = 7, BRUECKE_DICK_M = 1.8
+/** Führerstand: so weit vor und nach einem Tunnel fährt der Zug gerade auf das Portal zu */
+const TUNNEL_ANLAUF_M = 150
 const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TIEFER_M = 5
 /** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
 const TUNNEL_DUNKEL = 0.97, TUNNEL_DUNKEL_M = 40
@@ -1468,11 +1470,31 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         }
         return k ? t / k + FEIN_UEBER_M : null
       }
-      let z: number | null
-      if (bau) {
+      let z: number | null = null
+      // vor einem Tunnel steigt das Gelände zum Hang hinauf, oft schon vor dem Anfang laut swissTLM3D; die Linie stieg mit
+      // und fiel dann in den Tunnel (Michael, 2026-10-11: «kurz vor dem Tunnelportal in die Höhe»). Darum gilt von
+      // TUNNEL_ANLAUF_M davor bis ebenso weit danach eine Gerade, und davor und danach liegt die Linie nie über ihr
+      const anfang = pk[0].m, ende = pk[pk.length - 1].m
+      const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && meter >= x.von - TUNNEL_ANLAUF_M && meter <= x.bis + TUNNEL_ANLAUF_M)
+      const va = tunnel ? Math.max(anfang, tunnel.von - TUNNEL_ANLAUF_M) : 0, vb = tunnel ? Math.min(ende, tunnel.bis + TUNNEL_ANLAUF_M) : 0
+      // liegt ein Ende ausserhalb des feinen Geländes (ein langer Tunnel wie bei Rosshäusern), nimmt es die grobe Höhe dort,
+      // um den Unterschied am anderen Ende verschoben; vorher fiel der ganze Tunnel auf die grobe Höhe, 20 m zu hoch
+      const enden = (a: number, b: number, za0: number | null, zb0: number | null): [number, number] | null => {
+        if (za0 !== null && zb0 !== null) return [za0, zb0]
+        if (za0 !== null) return [za0, hoeheAmWeg(b) + za0 - hoeheAmWeg(a)]
+        if (zb0 !== null) return [hoeheAmWeg(a) + zb0 - hoeheAmWeg(b), zb0]
+        return null
+      }
+      const ez = tunnel ? enden(va, vb, gemittelt(va, -30, 0), gemittelt(vb, 0, 30)) : null
+      if (tunnel && ez) {
+        const [za, zb] = ez
+        const gerade = za + ((meter - va) / ((vb - va) || 1)) * (zb - za)
+        const hier = meter > tunnel.von && meter < tunnel.bis ? null : gemittelt(meter)
+        z = hier === null ? gerade : Math.min(hier, gerade)
+      } else if (bau) {
         // in Tunneln und auf Brücken gerade zwischen den Enden, jedes Ende gemessen nur auf dem Gelände davor und danach
-        const za = gemittelt(bau.von, -30, 0), zb = gemittelt(bau.bis, 0, 30)
-        z = za !== null && zb !== null ? za + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (zb - za) : null
+        const eb = enden(bau.von, bau.bis, gemittelt(bau.von, -30, 0), gemittelt(bau.bis, 0, 30))
+        z = eb ? eb[0] + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (eb[1] - eb[0]) : null
       } else z = gemittelt(meter)
       if (z === null) return grob
       const [e, n] = punktBei(meter)
