@@ -88,7 +88,9 @@ server/zaehler/  Zähler auf zaehler.taktland.ch (Webhosting bei cyon, von Hand 
              die App meldet höchstens einmal am Tag (src/zaehlen.ts), liste/ ist mit Passwort geschützt
 server/daten/  daten.taktland.ch (cyon, Ordner public_html/daten, von Hand hochgeladen, Michael, 2026-10-12): grosse Kacheln,
              die nicht in die App passen (GitHub Pages höchstens 1 GB); .htaccess erlaubt den Abruf von taktland.ch (CORS);
-             scharf/ aus data/scharf_extern als ZIP, im Dateimanager «Extrahieren», index.json zuletzt
+             scharf/ aus data/scharf_extern als ZIP-Pakete (pipeline/scharf_pakete.py nach data/scharf_pakete, index.json allein im
+             letzten Paket), im Dateimanager «Extrahieren» oder mit holen.php, das die Pakete von einem GitHub-Release holt, auspackt und
+             sich danach löscht
 server/spiel/  Vermittlung für «Geo» und «Bahnhofsuche» auf mehreren Geräten auf spiel.taktland.ch (cyon,
              von Hand hochladen): raum.php reicht je Raum nur Ereignisse weiter (Beitritt, Start, Tipp,
              Weiter), ohne IP; Räume verfallen nach sechs Stunden. Gerechnet wird auf den Geräten
@@ -295,6 +297,9 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_luftbild.py --orte Gümmenen Müntschemier   # Luftbild rund um eine Strecke
 .venv/bin/python pipeline/build_luftbild_nah.py      # Nahbild (2,5 m) entlang der Bahnlinien, etwa eine Stunde, vor export_app
 .venv/bin/python pipeline/build_gelaende_nah.py      # feines Gelände (10 m) entlang der Bahnlinien für den Führerstand, vor export_app
+.venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch
+.venv/bin/python pipeline/build_scharf.py --extern --weg Bern Olten     # dito entlang des Wegs der App
+.venv/bin/python pipeline/scharf_pakete.py                              # ZIP-Pakete und holen.php für cyon
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

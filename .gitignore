@@ -1,6 +1,7 @@
 # Daten
 data/raw/
 data/scharf_extern/
+data/scharf_pakete/
 *.csv
 *.parquet
 
