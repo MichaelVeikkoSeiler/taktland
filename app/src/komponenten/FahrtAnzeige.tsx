@@ -13,6 +13,7 @@ import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
 import { dreiDGemerkt, dreiDVerbrauchen } from '../relief'
 import { gelaendeMoeglich } from '../gelaende'
 import { ladenVerfolgen } from '../daten'
+import { Klappe } from './Klappe'
 
 // three.js nur für die Ansicht «3D», erst dort geladen
 const GelaendeFahrt = lazy(() => ladenVerfolgen(import('./Relief')).then((m) => ({ default: m.GelaendeFahrt })))
@@ -682,6 +683,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
       <figcaption className={`mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${voll ? 'hidden' : ''}`}>
         {!linien && 'Das Netz wird geladen … '}
         {zurKarte && (
+          <Klappe className="mt-1">
           <p className="mt-1">
         Gezeichnet aus dem Streckennetz der SBB (linienkilometrierung), Linien anderer Bahnen aus
         dem Schienennetz des BAV; auf Strecken anderer Bahnen folgt der Weg dem Schienennetz des
@@ -691,6 +693,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
         {sehenswert.s && ' Gipfel: swisstopo; Kulturgüter von nationaler Bedeutung: BABS; Seilbahnen: BAV; Gebiete von nationaler Bedeutung (BLN, Pärke, Moorlandschaften): BAFU. Kulturgüter erscheinen erst näher; ein Tipp auf ein Zeichen zeigt, was es ist, ein Tipp in der Legende blendet eine Kategorie aus oder ein.'}
         {' Zoomen mit zwei Fingern oder mit «+» und «−»; näher gezoomt lässt sich die Karte verschieben.'}
           </p>
+          </Klappe>
         )}
       </figcaption>
     </figure>

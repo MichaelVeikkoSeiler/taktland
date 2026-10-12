@@ -23,6 +23,7 @@ import { Ladefehler } from './Ladefehler'
 import { BahnenWahl } from './BahnenWahl'
 import { Zurueck } from './Zurueck'
 import { MODELL_HOECHSTENS_M } from '../relief'
+import { Klappe } from './Klappe'
 
 // das Modell der Strecke für die Modellbahn, mit three.js, erst dort geladen
 const ModellStrecke = lazy(() => ladenVerfolgen(import('./Relief')).then((m) => ({ default: m.ModellStrecke })))
@@ -769,12 +770,14 @@ function Ergebnis({
                 Probefahrt
               </button>
             </div>
+            <Klappe className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm" titel="Was «Fahren» und die Probefahrt machen">
             <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
               Im Zug zeigt «Fahren» den nächsten Tunnel, die nächste grössere Brücke und den
               nächsten Bahnhof und meldet sie etwa 20 oder 10 Sekunden vorher mit einem Ton. Was
               gemeldet wird, lässt sich wählen. Dafür braucht Taktland den Standort; dieser
               bleibt auf dem Gerät. Die Probefahrt spielt den Weg zum Ausprobieren ab.
             </p>
+            </Klappe>
             {/* derselbe Weg als Modell in der Modellbahn (Michael, 2026-10-08) */}
             {!wahl.weg && wahl.von && wahl.nach && (
               <a href={`${streckenAdresse(wahl).replace('#/strecke', '#/modellbahn/strecke')}&fest=1`}
@@ -954,10 +957,12 @@ function Ergebnis({
 
       <Luecken luecken={luecken} />
 
+      <Klappe className="mt-6 text-xs text-sbb-metal dark:text-sbb-storm">
       <p className="mt-6 text-xs text-sbb-metal dark:text-sbb-storm">
         Quellen: {netz.quellen.join(', ')}. Datenstand: {netz.datenstand}. Namen und Werte stehen
         wie in den offenen Daten, auch mit Abkürzungen.
       </p>
+      </Klappe>
     </>
   )
 }
@@ -1042,12 +1047,14 @@ function WegLinien({ laeufe, netz, verzeichnis }: {
           )
         })}
       </ol>
+      <Klappe className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm" titel="Was eine Linie ist">
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Eine Linie ist eine Strecke der Infrastruktur, keine Zuglinie. Die Linien stammen aus den
         Daten der SBB. Auf Abschnitten anderer Bahnen steht die Linie aus dem Schienennetz des BAV
         (Stand 2021), wenn dort genau eine Linie beide Enden des Abschnitts führt; sonst «Ohne Linie
         in den Daten».
       </p>
+      </Klappe>
     </section>
   )
 }

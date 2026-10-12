@@ -11,6 +11,7 @@ import { kategorieUmschalten, KurzLang, LANGFORM, useVersteckt } from './Sehensw
 import { Pikto } from './Pikto'
 import { Bahnhof } from './Bahnhof'
 import type { IndexEintrag } from '../typen'
+import { Klappe } from './Klappe'
 
 /** So viele Sekunden vor einem Objekt kann die Meldung kommen; die erste gilt ohne Wahl */
 const VORLAEUFE_S = [20, 10] as const
@@ -1023,6 +1024,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           </p>
         </div>
 
+        <Klappe className="mt-6 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
         <p className="mt-6 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Standort bleibt auf diesem Gerät und wird nie gesendet; für das Logbuch hält Taktland
           den gefahrenen Weg als Punkte auf der Strecke fest, nur in diesem Browser. Die Zeiten
@@ -1046,6 +1048,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           Bahnübergängen sind keine Sicherheitsinformation: Die Daten können unvollständig oder
           veraltet sein, es gelten allein die Signale vor Ort.
         </p>
+        </Klappe>
         </div>
         </div>
       </div>

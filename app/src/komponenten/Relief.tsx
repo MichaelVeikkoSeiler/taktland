@@ -16,6 +16,7 @@ import { Ladefehler } from './Ladefehler'
 import { Ladebalken } from './Ladebalken'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
+import { Klappe } from './Klappe'
 
 /**
  * 3D-Relief einer Strecke (Michael, 2026-10-06: zuerst die Gotthard-Bergstrecke, im Browser,
@@ -548,12 +549,14 @@ export function ModellStrecke({ fahrweg, objekte, text }: {
             <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
           <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} stand={stand} />
+          <Klappe className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
             Die ganze Strecke als Modell, mit einem Band von {(BAND_M / 1000).toLocaleString('de-CH').replace('.', ',')} km links und rechts der Strecke; was weiter weg
             liegt, fehlt. Gelände aus swissALTIRegio (swisstopo){feldM && feldM > 50 ? `, für diese Strecke auf ${feldM.toLocaleString('de-CH')} m vergröbert` : ', auf 50 m gemittelt'};
             wo vorhanden mit Luftbild SWISSIMAGE (swisstopo), verkleinert. Im Führerstand nah am Zug Gelände aus swissALTI3D
             (swisstopo) auf 10 m und das Luftbild bis 500 m neben den Bahnlinien auf 2,5 m.
           </p>
+          </Klappe>
         </>
       )}
       </div>
@@ -750,6 +753,7 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler,
           fahren. Öffne dafür Taktland im Browser der Brille.
         </p>
       )}
+      <Klappe className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm" titel="Bedienung und Tempo">
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Mit «{(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Min.» fährt der Zug in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke,
         ein Zeitraffer, kein Fahrplan. 1× ist etwa 100 km/h, 2× bis 32× entsprechend schneller; wie schnell Züge auf dieser
@@ -759,6 +763,7 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler,
           Abzug trägt es, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt es, die rechte Greiftaste
           stellt es zurück, die linke schaltet das Zuggeräusch ein und aus. Der Zug wartet am Anfang, A startet, B hält an, X langsamer, Y schneller.</>}
       </p>
+      </Klappe>
     </>
   )
 }
@@ -797,6 +802,7 @@ function Hinweise({ r }: { r: Relief }) {
   const [jahre, setJahre] = useState<number[] | null>(null)
   useEffect(() => { void luftbildLaden(r.raster).then((l) => setJahre(l?.jahre ?? null)) }, [r])
   return (
+    <Klappe className="mt-4 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
     <div className="mt-4 space-y-2 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
       {jahre && (
         <p>
@@ -829,6 +835,7 @@ function Hinweise({ r }: { r: Relief }) {
         Kilometer, kräftiger alle 10 km.</p>
       <p>Quellen: {r.quellen.join('; ')}. Datenstand der Linie {r.datenstand.split('-').map(Number).reverse().join('.')}.</p>
     </div>
+    </Klappe>
   )
 }
 

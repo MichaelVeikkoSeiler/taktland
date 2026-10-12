@@ -10,6 +10,7 @@ import { BahnKuerzel } from './Suche'
 import { Zurueck } from './Zurueck'
 import { kantoneText } from '../kanton'
 import { Ladefehler } from './Ladefehler'
+import { Klappe } from './Klappe'
 
 const STUFE_TEXT: Record<string, string> = {
   L: 'Grosser Bahnhof', M: 'Mittlerer Bahnhof', S: 'Kleiner Bahnhof',
@@ -332,9 +333,7 @@ function FaktZeile({ fakt, href, zielText = 'Alle anzeigen' }: {
 export function Quellen({ profil }: { profil: { sources: string[]; generated: string } }) {
   return (
     <section className="mt-8 border-t border-sbb-cloud pt-4 dark:border-sbb-iron">
-      <h2 className="text-sm font-semibold text-sbb-black dark:text-sbb-white">
-        Woher diese Angaben stammen
-      </h2>
+      <Klappe titel={<h2 className="text-sm font-semibold text-sbb-black dark:text-sbb-white">Woher diese Angaben stammen</h2>}>
       <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
         {herkunft(profil.sources)}
       </p>
@@ -352,6 +351,7 @@ export function Quellen({ profil }: { profil: { sources: string[]; generated: st
       <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
         Stand der Aufbereitung: {profil.generated}
       </p>
+      </Klappe>
     </section>
   )
 }

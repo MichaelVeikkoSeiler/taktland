@@ -8,6 +8,7 @@ import { ObjektKarte } from './Karte'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { ohneKuerzel } from '../kuerzel'
+import { Klappe } from './Klappe'
 
 /** einzahl mit Adjektiv: «1 erfasster Tunnel», «1 erfasste Brücke» */
 const TITEL: Record<ListenArt, { mehrzahl: string; einzahl: string; quelle: string }> = {
@@ -163,10 +164,12 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
             ))}
           </ol>
 
+          <Klappe className="mt-3 text-xs text-sbb-metal dark:text-sbb-storm">
           <p className="mt-3 text-xs text-sbb-metal dark:text-sbb-storm">
             Quelle: {t.quelle}. Die Einträge stehen wie in den offenen Daten, auch Namen mit
             Abkürzungen. «keine Angabe» heisst: In den Daten steht nichts.
           </p>
+          </Klappe>
         </>
       )}
     </div>

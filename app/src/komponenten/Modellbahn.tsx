@@ -8,6 +8,7 @@ import { Zurueck } from './Zurueck'
 import { streckenAdresse } from './Strecke'
 import Wischen from './Wischen'
 import { ModellHinweis } from './ModellHinweis'
+import { Klappe } from './Klappe'
 
 /**
  * Das Spiel «Modellbahn» (Michael, 2026-10-08: «neues Spiel 3D/VR … dort kann man alle Strecken abbilden»): jede
@@ -142,7 +143,7 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
         </ul>
       )}
       {/* unten nach den Strecken, man liest ihn nicht jedes Mal (Michael, 2026-10-09) */}
-      <div className="mt-8"><ModellHinweis /></div>
+      <Klappe className="mt-8" titel="Was am Modell nicht stimmt"><ModellHinweis /></Klappe>
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
         Gelände aus swissALTIRegio, im Führerstand nah am Zug aus swissALTI3D, Luftbild SWISSIMAGE (alle swisstopo). Weitere Zugmodelle folgen.
       </p>

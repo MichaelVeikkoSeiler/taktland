@@ -309,6 +309,10 @@ und weisse mit Rand, haben dieselben leicht abgerundeten Ecken (`rounded-lg`, Mi
 Anthracite `#5a5a5a` statt Schwarz (Michael, 2026-09-25). Kacheln und Knöpfe sind die
 einzige Ausnahme von den kantigen Flächen.
 
+Zusatzinformationen, Quellenangaben und Hinweise unter Karten, Modellen, Listen und beim Fahren stehen in einer **Klappe**,
+am Anfang zu («Quellen und Hinweise», `komponenten/Klappe.tsx`, Michael, 2026-10-12: «die ganze Bleiwüste unterhalb der Karte»);
+Lücken bleiben sichtbar (Regel 5), die Quellenzeile der Fusszeile ebenso.
+
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
 Auftaktbild als flaches Band (288 px, Auftakt.tsx); Modelle links (2/3) mit Knöpfen rechts (ZWEI_SPALTEN in Relief.tsx), beim

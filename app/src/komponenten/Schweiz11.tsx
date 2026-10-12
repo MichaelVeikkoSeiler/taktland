@@ -14,6 +14,7 @@ import { genau } from './Objekte'
 import { gerundetM } from '../fahrt'
 import { antwortTon, reiterTon } from '../audio'
 import { raumEroeffnen, teilnahmeMerken } from '../spielraum'
+import { Klappe } from './Klappe'
 
 const KANTONSNAME: Record<string, string> = {
   AG: 'Aargau', AI: 'Appenzell Innerrhoden', AR: 'Appenzell Ausserrhoden',
@@ -209,12 +210,14 @@ export function Schweiz11({ index }: { index: BahnhofIndex | null }) {
               Spiel starten
             </button>
           )}
+          <Klappe className="mt-4 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
           <p className="mt-4 text-xs leading-relaxed text-sbb-metal dark:text-sbb-storm">
             Ziel ist bei Bahnhöfen ihre Lage laut Daten der SBB, bei Tunneln und Brücken die Mitte zwischen Anfang
             und Ende (SBB, swisstopo swissTLM3D), bei Tunneln ohne bekannte Richtung der Punkt laut Quelle. Leicht,
             mittel und schwer ergeben sich aus den Daten: Bahnhöfe nach Ein- und Aussteigenden, Tunnel und Brücken
             nach Länge. Kantonsflächen: BFS. Ergebnisse bleiben auf diesem Gerät.
           </p>
+          </Klappe>
         </div>
       )}
       {partie && pool && index && (

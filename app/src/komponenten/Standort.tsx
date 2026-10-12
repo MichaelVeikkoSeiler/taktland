@@ -11,6 +11,7 @@ import {
 } from './Karte'
 import { Ladefehler } from './Ladefehler'
 import { BahnKuerzel } from './Suche'
+import { Klappe } from './Klappe'
 
 interface Standpunkt extends Lage {
   /** Genauigkeit laut Gerät, in Metern */
@@ -180,6 +181,7 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
               </section>
             )
           })}
+          <Klappe className="mt-8 text-xs text-sbb-metal dark:text-sbb-storm">
           <p className="mt-8 text-xs text-sbb-metal dark:text-sbb-storm">
             Abstände: Luftlinie von deinem Standort, auf dem Gerät gerechnet, kein Weg. Tunnel,
             Brücken und Bahnübergänge stehen an dem Punkt, den ihre Quelle als Lage nennt; ein
@@ -192,6 +194,7 @@ export function Standort({ index }: { index: BahnhofIndex | null }) {
             brucken {daten.datenstand.brucken}, bahnubergang {daten.datenstand.bahnubergang},
             linie {daten.datenstand.linie}.
           </p>
+          </Klappe>
         </>
       )}
       {stand && !treffer && !ladefehler && (
