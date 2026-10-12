@@ -89,7 +89,12 @@ const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 40, PROFIL_UEBERGANG_M = 30
 const TAL_FENSTER_M = 1500, TAL_TIEFE_M = 6, TAL_STEIGUNG = 0.08
 const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TIEFER_M = 5
 /** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
-const TUNNEL_DUNKEL = 0.97, TUNNEL_DUNKEL_M = 40
+const TUNNEL_DUNKEL = 0.2, TUNNEL_DUNKEL_M = 40
+/** Tunnel als Röhre, durch die der Zug fährt und durch die man blicken kann (Michael, 2026-10-12: «in eine Röhre
+ *  fahren … durch den Berg bewegen … durch die Röhre blicken»). Querschnitt, Farbe und Licht stehen in keiner Quelle:
+ *  ein Kreis von 4,5 m Halbmesser, die Mitte 3 m über der Linie, dazu ein Lichtband an der Wand und an den Enden ein
+ *  heller Ring von 1,5 m als Portal */
+const ROEHRE_R_M = 4.5, ROEHRE_MITTE_M = 3, ROEHRE_SEITEN = 18, PORTAL_RAND_M = 1.5
 /** Nahbild (Luftbild auf 2,5 m entlang der Bahnlinien): so gross um den Blickpunkt, so viele Bildpunkte je Meter;
  *  neu geladen, wenn der Blickpunkt so weit gewandert ist; nur wenn die Kamera näher ist als NAH_BIS_KM */
 const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
@@ -1477,6 +1482,52 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     // grau, wo der Weg selbst dunkel ist (beim Fahren), sonst wären Tunnel kaum zu unterscheiden
     const tunnelFarbe = dunkel || wegFarbe === FARBEN.weg ? '#b4b4b4' : FARBEN.tunnel
+    /** die Röhre eines Tunnels um die Punkte der Linie, innen wie aussen sichtbar, dazu ein Lichtband */
+    const tunnelRoehre = (punkte: THREE.Vector3[], ziel: THREE.Object3D) => {
+      if (punkte.length < 2) return
+      const rx = ROEHRE_R_M / 1000, ry = (ROEHRE_R_M * faktor) / 1000, mitte = (ROEHRE_MITTE_M * faktor) / 1000
+      const pos: number[] = [], index: number[] = [], licht: number[] = []
+      punkte.forEach((p, i) => {
+        const a = punkte[Math.max(0, i - 1)], z = punkte[Math.min(punkte.length - 1, i + 1)]
+        const nx = -(z.z - a.z), nz = z.x - a.x, l = Math.hypot(nx, nz) || 1
+        const sx = nx / l, sz = nz / l
+        for (let k = 0; k < ROEHRE_SEITEN; k++) {
+          const w = (k / ROEHRE_SEITEN) * Math.PI * 2
+          pos.push(p.x + sx * Math.cos(w) * rx, p.y + mitte + Math.sin(w) * ry, p.z + sz * Math.cos(w) * rx)
+          if (i) {
+            const k2 = (k + 1) % ROEHRE_SEITEN, v = (i - 1) * ROEHRE_SEITEN, u = i * ROEHRE_SEITEN
+            index.push(v + k, u + k, v + k2, v + k2, u + k, u + k2)
+          }
+        }
+        // Lichtband an einer Wand, etwas über dem Auge
+        const w = 0.35
+        licht.push(p.x + sx * Math.cos(w) * rx * 0.97, p.y + mitte + Math.sin(w) * ry * 0.97, p.z + sz * Math.cos(w) * rx * 0.97)
+      })
+      const g = new THREE.BufferGeometry()
+      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+      g.setIndex(index)
+      g.computeVertexNormals()
+      const netz = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: dunkel ? '#5c5953' : '#8a867e', emissive: '#262421', side: THREE.DoubleSide }))
+      ziel.add(netz)
+      const lg = new THREE.BufferGeometry()
+      lg.setAttribute('position', new THREE.Float32BufferAttribute(licht, 3))
+      ziel.add(new THREE.Line(lg, new THREE.LineBasicMaterial({ color: '#ffe8a3' })))
+      // an beiden Enden ein heller Ring als Portal
+      for (const [p, q] of [[punkte[0], punkte[1]], [punkte[punkte.length - 1], punkte[punkte.length - 2]]]) {
+        const nx = -(q.z - p.z), nz = q.x - p.x, l = Math.hypot(nx, nz) || 1, sx = nx / l, sz = nz / l
+        const rp: number[] = [], ri: number[] = [], aussen = 1 + PORTAL_RAND_M / ROEHRE_R_M
+        for (let k = 0; k <= ROEHRE_SEITEN; k++) {
+          const w = (k / ROEHRE_SEITEN) * Math.PI * 2
+          for (const f of [1, aussen]) rp.push(p.x + sx * Math.cos(w) * rx * f, p.y + mitte + Math.sin(w) * ry * f, p.z + sz * Math.cos(w) * rx * f)
+          if (k) ri.push(2 * k - 2, 2 * k - 1, 2 * k, 2 * k - 1, 2 * k + 1, 2 * k)
+        }
+        const rg = new THREE.BufferGeometry()
+        rg.setAttribute('position', new THREE.Float32BufferAttribute(rp, 3))
+        rg.setIndex(ri)
+        rg.computeVertexNormals()
+        ziel.add(new THREE.Mesh(rg, new THREE.MeshLambertMaterial({ color: '#c9c5bc', side: THREE.DoubleSide })))
+      }
+    }
     const wegVon = nurBild.children.length
     for (const [anfang, ende] of weg.stuecke) {
       const grenzen = weg.bauwerke.filter((g) => g.bis > anfang && g.von < ende).sort((a, b) => a.von - b.von)
@@ -1485,6 +1536,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (g.von > bei) linie(strichVon(bei, g.von), wegFarbe, false)
         const von = Math.max(g.von, anfang, bei), bis = Math.min(g.bis, ende)
         if (bis > von) linie(strichVon(von, bis), g.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, g.art === 'tunnel')
+        if (bis > von && g.art === 'tunnel') tunnelRoehre(strichVon(von, bis), nurBild)
         bei = Math.max(bei, g.bis)
       }
       if (bei < ende) linie(strichVon(bei, ende), wegFarbe, false)
@@ -1924,6 +1976,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const a = Math.max(x.von, anf, bei), z = Math.min(x.bis, end)
           if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, x.art === 'tunnel')
           if (z > a && x.art === 'bruecke') platte(punkteVon(a, z))
+          if (z > a && x.art === 'tunnel') tunnelRoehre(punkteVon(a, z), feinLinien)
           bei = Math.max(bei, x.bis)
         }
         if (bei < end) strich(punkteVon(bei, end), wegFarbe, false)
