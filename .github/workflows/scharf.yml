@@ -1,0 +1,57 @@
+# Baut die scharfe Umgebung für daten.taktland.ch (pipeline/scharf_reihen.sh) und legt die Pakete im Release
+# «scharf-1» ab; auf cyon holt server/daten/holen.php sie von dort und packt sie aus (Michael, 2026-10-12). Nur von
+# Hand zu starten: Actions → Scharfe Umgebung → Run workflow. Die vier Reihen laufen gleichzeitig, je unter sechs Stunden.
+name: Scharfe Umgebung
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scharf
+  cancel-in-progress: false
+
+jobs:
+  vorbereiten:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release anlegen, falls es noch fehlt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view scharf-1 --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1 || gh release create scharf-1 --repo "$GITHUB_REPOSITORY" \
+            --title "Scharfe Umgebung für daten.taktland.ch" \
+            --notes "Kacheln der scharfen Umgebung: SWISSIMAGE 10 cm auf 25 cm gemittelt und swissALTI3D 2 m (swisstopo), nur 200 m neben den Bahnlinien. Nicht Teil der App: server/daten/holen.php auf daten.taktland.ch holt die Pakete von hier."
+
+  bauen:
+    needs: vorbereiten
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        reihe: [1, 2, 3, 4]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pakete installieren
+        run: python -m pip install --quiet numpy scipy rasterio pillow
+
+      - name: Kacheln bauen
+        env:
+          PY: python
+        run: bash pipeline/scharf_reihen.sh ${{ matrix.reihe }}
+
+      - name: Pakete schnüren
+        run: python pipeline/scharf_pakete.py --teil r${{ matrix.reihe }}
+
+      - name: Pakete ins Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload scharf-1 data/scharf_pakete/scharf-r${{ matrix.reihe }}-*.zip --repo "$GITHUB_REPOSITORY" --clobber

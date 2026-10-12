@@ -88,9 +88,11 @@ server/zaehler/  Zähler auf zaehler.taktland.ch (Webhosting bei cyon, von Hand 
              die App meldet höchstens einmal am Tag (src/zaehlen.ts), liste/ ist mit Passwort geschützt
 server/daten/  daten.taktland.ch (cyon, Ordner public_html/daten, von Hand hochgeladen, Michael, 2026-10-12): grosse Kacheln,
              die nicht in die App passen (GitHub Pages höchstens 1 GB); .htaccess erlaubt den Abruf von taktland.ch (CORS);
-             scharf/ aus data/scharf_extern als ZIP-Pakete (pipeline/scharf_pakete.py nach data/scharf_pakete, index.json allein im
-             letzten Paket), im Dateimanager «Extrahieren» oder mit holen.php, das die Pakete von einem GitHub-Release holt, auspackt und
-             sich danach löscht
+             scharf/: der Workflow «Scharfe Umgebung» (.github/workflows/scharf.yml, von Hand zu starten) baut die Strecken aus
+             pipeline/scharf_reihen.sh in vier Reihen gleichzeitig, schnürt Pakete (pipeline/scharf_pakete.py, je höchstens 400 MB,
+             der Index der Reihe als scharf/index-rN.json im letzten) und legt sie ins Release «scharf-1»; holen.php, einmal nach
+             public_html/daten hochgeladen und geöffnet, holt sie, packt sie aus, fügt die Verzeichnisse zu scharf/index.json
+             zusammen und löscht sich (Dateien im Chat höchstens 30 MB, Releases darf die Sitzung nicht anlegen)
 server/spiel/  Vermittlung für «Geo» und «Bahnhofsuche» auf mehreren Geräten auf spiel.taktland.ch (cyon,
              von Hand hochladen): raum.php reicht je Raum nur Ereignisse weiter (Beitritt, Start, Tipp,
              Weiter), ohne IP; Räume verfallen nach sechs Stunden. Gerechnet wird auf den Geräten
@@ -299,7 +301,8 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_gelaende_nah.py      # feines Gelände (10 m) entlang der Bahnlinien für den Führerstand, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch
 .venv/bin/python pipeline/build_scharf.py --extern --weg Bern Olten     # dito entlang des Wegs der App
-.venv/bin/python pipeline/scharf_pakete.py                              # ZIP-Pakete und holen.php für cyon
+bash pipeline/scharf_reihen.sh 1                                       # eine der vier Reihen scharfer Strecken (sonst im Workflow)
+.venv/bin/python pipeline/scharf_pakete.py --teil r1                    # Pakete für das Release scharf-1
 ```
 
 Die Linienseiten folgen denselben Regeln wie die Bahnhöfe. Eine Linie ist eine

@@ -1,12 +1,12 @@
 """Die Kacheln aus data/scharf_extern als ZIP-Pakete für daten.taktland.ch (Michael, 2026-10-12).
 
 Je Paket höchstens GROESSE Bytes, ungepackt gespeichert (JPEG und .hgz sind schon gepackt), Pfade unter scharf/.
-index.json kommt allein ins letzte Paket: erst wenn es ausgepackt ist, sieht die App die neuen Kacheln. Dazu
-server/daten/holen.php mit der Liste der Pakete, für den Weg über ein GitHub-Release.
+Der Index der Reihe kommt als scharf/index-{teil}.json ins letzte Paket; holen.php fügt am Ende alle zu scharf/index.json
+zusammen, erst dann sieht die App die neuen Kacheln.
 
-    .venv/bin/python pipeline/scharf_pakete.py
+    .venv/bin/python pipeline/scharf_pakete.py --teil r1
 """
-import re
+import argparse
 import zipfile
 from pathlib import Path
 
@@ -17,8 +17,11 @@ GROESSE = 400_000_000
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--teil", default="a", help="Name der Reihe, steht im Namen der Pakete und des Index")
+    teil = ap.parse_args().teil
     ZIEL.mkdir(exist_ok=True)
-    for alt in ZIEL.glob("*.zip"):
+    for alt in ZIEL.glob(f"scharf-{teil}-*.zip"):
         alt.unlink()
     dateien = sorted(p for p in QUELLE.iterdir() if p.name != "index.json")
     pakete, jetzt, summe = [], [], 0
@@ -27,19 +30,15 @@ def main():
         if jetzt and summe + g > GROESSE:
             pakete.append(jetzt); jetzt, summe = [], 0
         jetzt.append(p); summe += g
-    if jetzt:
-        pakete.append(jetzt)
-    namen = []
-    for i, teil in enumerate(pakete + [[QUELLE / "index.json"]], 1):
-        name = f"scharf-teil-{i:02d}.zip"
-        with zipfile.ZipFile(ZIEL / name, "w", zipfile.ZIP_STORED) as z:
-            for p in teil:
+    pakete.append(jetzt)
+    for i, inhalt in enumerate(pakete, 1):
+        name = ZIEL / f"scharf-{teil}-{i:02d}.zip"
+        with zipfile.ZipFile(name, "w", zipfile.ZIP_STORED) as z:
+            for p in inhalt:
                 z.write(p, f"scharf/{p.name}")
-        namen.append(name)
-        print(f"{name}: {len(teil)} Dateien, {(ZIEL / name).stat().st_size / 1e6:.0f} MB")
-    php = (ROOT / "server" / "daten" / "holen.php").read_text(encoding="utf-8")
-    php = re.sub(r"const PAKETE = \[.*?\];", "const PAKETE = [" + ", ".join(f"'{n}'" for n in namen) + "];", php)
-    (ZIEL / "holen.php").write_text(php, encoding="utf-8")
+            if i == len(pakete):
+                z.write(QUELLE / "index.json", f"scharf/index-{teil}.json")
+        print(f"{name.name}: {len(inhalt)} Dateien, {name.stat().st_size / 1e6:.0f} MB")
 
 
 if __name__ == "__main__":
