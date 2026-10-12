@@ -14,6 +14,12 @@ Jahre von Bild und Höhe fest. Gelesen wird nur der Ausschnitt jeder Kachel aus 
 
     .venv/bin/python pipeline/build_scharf.py                     # alle STRECKEN
     .venv/bin/python pipeline/build_scharf.py Kerzers Gümmenen    # andere Orte, in Fahrtreihenfolge
+    .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard albula   # entlang der Linie eines Reliefs
+    .venv/bin/python pipeline/build_scharf.py --extern --weg Bern Olten "Zürich HB"   # entlang des Wegs der App
+
+--extern schreibt nach data/scharf_extern statt nach data/scharf: diese Kacheln kommen nicht in die App, sondern auf
+daten.taktland.ch (cyon, von Hand hochgeladen, Michael, 2026-10-12: «eine Subdomain daten.taktland.ch für die Kacheln»).
+Der Index dort wächst mit jedem Lauf; Kacheln, die schon da sind oder schon in data/scharf liegen, entstehen nicht neu.
 """
 import gzip
 import json
@@ -159,11 +165,88 @@ def bild_bauen(qe, qn, href, st):
     return True
 
 
+def strecken_relief(name):
+    """wie strecken_entlang, aber der Zug folgt der Linie eines Reliefs (data/relief/{name}.json, LV95)"""
+    r = json.loads((ROOT / "data" / "relief" / f"{name}.json").read_text(encoding="utf-8"))
+    w = r["weg"][::4] + [r["weg"][-1]]
+    kette = [(a[1], a[2], b[1], b[2]) for a, b in zip(w, w[1:])]
+    e = np.array([p[1] for p in w]); n = np.array([p[2] for p in w])
+    raus = []
+    for linie in build_luftbild_nah.linien():
+        xs = np.array([p[0] for p in linie]); ys = np.array([p[1] for p in linie])
+        if xs.max() < e.min() - KORRIDOR_M or xs.min() > e.max() + KORRIDOR_M or ys.max() < n.min() - KORRIDOR_M \
+                or ys.min() > n.max() + KORRIDOR_M:
+            continue
+        for (a, b), (c, d) in zip(linie, linie[1:]):
+            punkte = np.array([[a, b], [c, d], [(a + c) / 2, (b + d) / 2]])
+            if abstand(kette, punkte[:, 0], punkte[:, 1]).max() <= KORRIDOR_M:
+                raus.append((a, b, c, d))
+    return raus
+
+
+def strecken_weg(namen):
+    """wie strecken_entlang, aber der Zug folgt dem Weg, den die App zwischen den Bahnhöfen sucht (Start, über …, Ziel),
+    mit allen Betriebspunkten dazwischen"""
+    sys.path.insert(0, str(ROOT / "generator"))
+    import strecken as weg_suche  # noqa: E402
+    n = weg_suche.laden()
+    uic = {json.loads(p.read_text(encoding="utf-8"))["name"]: int(p.stem) for p in weg_suche.FACTS.glob("*.json")}
+    fehlt = [x for x in namen if x not in uic]
+    if fehlt:
+        raise SystemExit(f"unbekannt: {', '.join(fehlt)}")
+    punkte = []
+    for a, b in zip(namen, namen[1:]):
+        w = weg_suche.weg(n, uic[a], uic[b])
+        if w is None:
+            raise SystemExit(f"kein Weg {a} – {b}")
+        abk = n["bahnhoefe"][str(uic[a])]
+        kette = [abk]
+        for e in w:
+            abk = e["nach"] if e["von"] == abk else e["von"]
+            kette.append(abk)
+        punkte += [k for k in kette if not punkte or k != punkte[-1]]
+    pts = [build_relief.wgs84_zu_lv95(*n["lagen"][k]) for k in punkte if k in n["lagen"]]
+    kette = [(a[0], a[1], b[0], b[1]) for a, b in zip(pts, pts[1:])]
+    e = np.array([p[0] for p in pts]); nn = np.array([p[1] for p in pts])
+    raus = []
+    for linie in build_luftbild_nah.linien():
+        xs = np.array([p[0] for p in linie]); ys = np.array([p[1] for p in linie])
+        if xs.max() < e.min() - KORRIDOR_M or xs.min() > e.max() + KORRIDOR_M or ys.max() < nn.min() - KORRIDOR_M \
+                or ys.min() > nn.max() + KORRIDOR_M:
+            continue
+        for (a, b), (c, d) in zip(linie, linie[1:]):
+            q = np.array([[a, b], [c, d], [(a + c) / 2, (b + d) / 2]])
+            if abstand(kette, q[:, 0], q[:, 1]).max() <= KORRIDOR_M:
+                raus.append((a, b, c, d))
+    return raus
+
+
 def main():
-    strecken = []
-    for orte in [sys.argv[1:]] if sys.argv[1:] else STRECKEN:
-        strecken += [st for st in strecken_entlang(orte) if st not in strecken]
+    global ZIEL
+    argv = [a for a in sys.argv[1:] if a != "--extern"]
+    extern = "--extern" in sys.argv
+    if extern:
+        ZIEL = ROOT / "data" / "scharf_extern"
+    strecken, beschrieb = [], []
+    if argv[:1] == ["--weg"]:
+        strecken = strecken_weg(argv[1:])
+        beschrieb.append("weg:" + " – ".join(argv[1:]))
+    elif argv[:1] == ["--relief"]:
+        for name in argv[1:]:
+            strecken += [st for st in strecken_relief(name) if st not in strecken]
+            beschrieb.append(f"relief:{name}")
+    else:
+        for orte in [argv] if argv else STRECKEN:
+            strecken += [st for st in strecken_entlang(orte) if st not in strecken]
+            beschrieb.append(orte)
     q = kacheln(strecken)
+    alt = {}
+    if extern and (ZIEL / "index.json").exists():
+        alt = json.loads((ZIEL / "index.json").read_text(encoding="utf-8"))
+    schon = set(alt.get("kacheln", {}))
+    if extern and (ROOT / "data" / "scharf" / "index.json").exists():
+        schon |= set(json.loads((ROOT / "data" / "scharf" / "index.json").read_text(encoding="utf-8"))["kacheln"])
+    q = {k: v for k, v in q.items() if f"{k[0]}_{k[1]}" not in schon}
     kms = {(qe * KACHEL_M // 1000, qn * KACHEL_M // 1000) for qe, qn in q}
     print(f"{len(strecken)} Stücke Bahnlinie, {len(q)} Kacheln von {KACHEL_M} m in {len(kms)} Kilometern")
     ZIEL.mkdir(parents=True, exist_ok=True)
@@ -172,7 +255,7 @@ def main():
     nachbarn = {(ke + de, kn + dn) for ke, kn in kms for de in (-1, 0, 1) for dn in (-1, 0, 1)}
     hq = hoehen_quellen(nachbarn)
     hoehen = hoehen_km(hq)
-    index = {}
+    index = dict(alt.get("kacheln", {})) if extern else {}
     auftraege = []
     for (qe, qn), st in sorted(q.items()):
         k = (qe * KACHEL_M // 1000, qn * KACHEL_M // 1000)
@@ -209,7 +292,8 @@ def main():
     (ZIEL / "index.json").write_text(json.dumps({
         "quelle": "SWISSIMAGE 10 cm (swisstopo) auf 25 cm gemittelt; swissALTI3D 2 m (swisstopo)",
         "geladen": date.today().isoformat(), "kachel_m": KACHEL_M, "px": PX, "punkte": PUNKTE, "band_m": BAND_M,
-        "strecken": [sys.argv[1:]] if sys.argv[1:] else STRECKEN,
+        "strecken": alt.get("strecken", []) + [b for b in beschrieb if b not in alt.get("strecken", [])] if extern
+                    else beschrieb,
         "hinweis": "Versuch: nur band_m neben den Bahnlinien aus swissTLMRegio, die höchstens 700 m neben dem Zug durch die Orte einer Strecke liegen; je Kachel Jahr von Bild und Höhe",
         "kacheln": dict(sorted(index.items())),
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

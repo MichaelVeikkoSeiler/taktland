@@ -153,6 +153,10 @@ const BRILLE_GROESST_M_JE_KM = 0.3
 /** in der Brille wird bis so nahe vor den Augen gezeichnet; mit 10 cm verschwand das Gelände um den Kopf (Michael,
  *  2026-10-08: «Die Landschaft verschwindet dann um einem») */
 const BRILLE_NAHE_M = 0.01
+/** Führerstand in der Brille (Michael, 2026-10-12: «im VR-Modus in der Brille im Führerstand sitzen und sich mit dem Kopf
+ *  wirklich drehen können»): die Welt in Originalgrösse um den Kopf, das Gelände bis 40 km weit; Schilder etwa 5 m hoch;
+ *  der Zug etwa 3 m breit statt der Modellgrösse */
+const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
  *  2026-10-06, Michael: «halb so gross»), sonst wäre er
@@ -766,7 +770,9 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler,
         rechten Maustaste.
         {xr && <> In der Brille steht das Modell etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit auf Tischhöhe: ein
           Abzug trägt es, beide ziehen es grösser oder kleiner und drehen es, der Thumbstick dreht und hebt es, die rechte Greiftaste
-          stellt es zurück, die linke schaltet das Zuggeräusch ein und aus. Der Zug wartet am Anfang, A startet, B hält an, X langsamer, Y schneller.</>}
+          stellt es zurück, die linke schaltet das Zuggeräusch ein und aus. Der Zug wartet am Anfang, A startet, B hält an, X langsamer, Y schneller.
+          Thumbstick drücken setzt dich in den Führerstand: die Landschaft in Originalgrösse um dich, du drehst den Kopf frei;
+          nochmals drücken stellt das Modell zurück auf den Tisch. Ist «Führerstand» hier gewählt, beginnt die Brille dort.</>}
       </p>
       </Klappe>
     </>
@@ -2452,6 +2458,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     /** in der Brille: am Ziel die Knöpfe «Fahrt wiederholen», «Zurückfahren», «Fahrt beenden» zeigen */
     let menueZeigen: (() => void) | null = null
+    /** in der Brille im Führerstand statt vor dem Modell auf dem Tisch; anker: wo der Kopf beim Einsteigen war und wohin er
+     *  schaute, dorthin kommt das Auge im Zug; gier: die Drehung der Welt, geglättet */
+    const kabine = { an: false, anker: null as THREE.Vector3 | null, kopfGier: 0, gier: null as number | null }
+    /** in der Brille: zurück aufs Modell auf dem Tisch */
+    let tischSetzen: (() => void) | null = null
+    /** ob die Brille mit Passthrough läuft (dann ohne Himmel, ausser im Führerstand) */
+    let mitDurchsicht = false
     /** so lang ist der Zug jetzt auf dem Weg, in dessen Metern */
     const zugLaengeS = () => {
       const t = zugTeile[zugTeile.length - 1]
@@ -2472,6 +2485,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         modell.rotation.set(0, 0, 0)
         massAnpassen(brilleMass)
       }
+      tischSetzen = setzen
 
       // Tasten (Michael, 2026-10-06: «die Landschaft mit den beiden Abzügen aufheben und anders hinstellen»):
       // ein Abzug gehalten trägt das Modell mit der Hand, waagrecht; beide Abzüge ziehen es grösser oder
@@ -2499,6 +2513,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         c.addEventListener('selectstart', () => {
           // zeigt der Strahl auf einen Knopf am Ziel, gilt der Knopf, nicht das Tragen
           if (knopfUnter?.(c)) return
+          if (kabine.an) return
           haelt.add(c); anfassen()
         })
         c.addEventListener('selectend', () => { haelt.delete(c); anfassen() })
@@ -2512,6 +2527,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             hinweisZeigen(!jetzt.an ? 'Töne sind in den Einstellungen aus' : jetzt.zuggeraeusch ? 'Zuggeräusch aus' : 'Zuggeräusch an')
             return
           }
+          if (kabine.an) return
           haelt.clear(); griff = null; setzen()
         })
         szene.add(c)
@@ -2556,10 +2572,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           ['A', 'Probefahrt starten'], ['B', 'anhalten'], ['X / Y', 'langsamer / schneller'],
           ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],
           ['Thumbstick', 'drehen, heben, senken'], ['Greiftaste rechts', 'Modell zurück an den Anfang'],
-          ['Greiftaste links', 'Zuggeräusch ein, aus'],
+          ['Greiftaste links', 'Zuggeräusch ein, aus'], ['Thumbstick drücken', 'Führerstand ein, aus'],
         ]
         zeilen.forEach(([taste, was], i) => {
-          const y = 160 + i * 62
+          const y = 150 + i * 56
           g.font = 'bold 38px Helvetica, Arial, sans-serif'; g.fillStyle = '#a8102e'; g.fillText(taste, 48, y)
           g.font = '38px Helvetica, Arial, sans-serif'; g.fillStyle = '#212121'; g.fillText(was, 390, y)
         })
@@ -2765,8 +2781,17 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           hinweis.position.copy(auge.getWorldPosition(new THREE.Vector3())).addScaledVector(vorn, 0.9)
           if (performance.now() > hinweisBis) hinweis.visible = false
         }
-        // Thumbstick: links und rechts dreht, vor und zurück hebt und senkt
+        // Thumbstick drücken: in den Führerstand oder zurück zum Modell auf dem Tisch
         for (const quelle of renderer.xr.getSession()?.inputSources ?? []) {
+          const schluessel = `${quelle.handedness}3`, an = !!quelle.gamepad?.buttons[3]?.pressed
+          if (an && !gedrueckt.has(schluessel) && !tafel.visible) {
+            kabine.an = !kabine.an
+            hinweisZeigen(kabine.an ? 'Führerstand' : 'Modell auf dem Tisch')
+          }
+          if (an) gedrueckt.add(schluessel); else gedrueckt.delete(schluessel)
+        }
+        // Thumbstick: links und rechts dreht, vor und zurück hebt und senkt; im Führerstand nicht
+        for (const quelle of kabine.an ? [] : renderer.xr.getSession()?.inputSources ?? []) {
           const ax = quelle.gamepad?.axes
           if (!ax || ax.length < 4) continue
           const [x, y] = [ax[2], ax[3]].map((v) => (Math.abs(v) < 0.2 ? 0 : v))
@@ -2775,6 +2800,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         }
       }
       renderer.xr.addEventListener('sessionend', () => {
+        kabine.an = false; kabine.anker = null; kabine.gier = null
+        kamera.far = 500
+        imStand = false
         modell.scale.setScalar(1); modell.position.set(0, 0, 0); modell.rotation.set(0, 0, 0)
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
         zugMass = 1
@@ -2799,7 +2827,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (probe?.current != null) tafelZeigen?.()
         for (const z of zeichen) z.scale.setScalar(1)
         nurBild.visible = false; nurBrille.visible = true; seilBild.visible = false; seilBrille.visible = true
+        mitDurchsicht = ar
         szene.background = ar ? null : hintergrund
+        // war auf dem Bildschirm der Führerstand gewählt, beginnt die Brille dort
+        kabine.an = !!fuehrerstand?.current
+        // der Wechsel in den Führerstand der Brille wird im nächsten Bild neu eingerichtet, auch wenn der Bildschirm schon dort war
+        imStand = false
       }
     }
 
@@ -2885,6 +2918,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         // auf dem Bildschirm wächst der Zug mit dem Abstand der Kamera: beim Hineinzoomen kleiner,
         // aus der Ferne noch zu finden (Michael, 2026-10-07)
         if (!renderer.xr.isPresenting) zugMass = zeichenMass() * (zugVonAussen ? ZUG_FAHRT_FAKTOR : 1)
+        else if (kabine.an) zugMass = KABINE_ZUG
         else if (zugTeile.length) {
           // in der Brille aus der Nähe kleiner, aber nicht im gleichen Mass wie der Abstand (Michael, 2026-10-08:
           // «nicht gerade proportional, aber doch etwas verkleinert»): ab BRILLE_NAH_M voll, darunter mit der
@@ -2895,12 +2929,32 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         zugSetzen(s)
         // Führerstand: vorne an der Spitze in Fahrtrichtung, knapp über der Linie, der Blick auf einen Punkt
         // gemittelt 150 bis 450 m voraus, damit er in Kurven nicht zuckt; Drehen und Zoomen ruhen solange
-        const vorne = !renderer.xr.isPresenting && !!fuehrerstand?.current && sichtbar
+        const inBrille = renderer.xr.isPresenting
+        const vorne = (inBrille ? kabine.an : !!fuehrerstand?.current) && sichtbar
         if (vorne !== imStand) {
           if (!vorne) dunkelFlaeche.style.opacity = '0'
           imStand = vorne
           steuerung.enabled = !vorne
-          kamera.near = vorne ? FUEHRERSTAND_NAHE_KM : 0.1
+          if (inBrille) {
+            // die Welt in Originalgrösse um den Kopf; die Linien und Seile für den Tisch sind dann zu dick
+            kamera.near = vorne ? KABINE_NAHE_M : BRILLE_NAHE_M
+            kamera.far = vorne ? KABINE_WEIT_M : 500
+            nurBrille.visible = !vorne; seilBrille.visible = !vorne; nurBild.visible = vorne; seilBild.visible = vorne
+            szene.background = vorne || !mitDurchsicht ? hintergrund : null
+            kabine.anker = null; kabine.gier = null
+            // steht der Zug noch am Anfang, dort mit seiner neuen Länge: sonst stand er mit der Länge des Tischmodells
+            // kilometerweit im Weg
+            if (zug === eigenerZug && !fahrt.gestartet && fahrt.s !== null) {
+              zugMass = vorne ? KABINE_ZUG : zugMassBrille
+              fahrt.s = Math.min(pk[pk.length - 1].m, pk[0].m + zugLaengeS())
+              eigenerZug.current = fahrt.s
+            }
+            // Zeichen (Gipfel, Kulturgüter) sind fürs Modell gross, in Originalgrösse wären sie Dutzende Meter
+            for (const z of zeichen) z.scale.setScalar(vorne ? KABINE_ZEICHEN : 1)
+            if (vorne) {
+              for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] / grundMass[1] * KABINE_SCHILD_KM, KABINE_SCHILD_KM, 1)
+            } else tischSetzen?.()
+          } else kamera.near = vorne ? FUEHRERSTAND_NAHE_KM : 0.1
           kamera.updateProjectionMatrix()
           letzte = null
           if (blick) blick.current = null
@@ -2933,9 +2987,30 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const rx = vorn.x - hinten.x, rz = vorn.z - hinten.z, l = Math.hypot(rx, rz) || 1
           const ziel = new THREE.Vector3(auge.x + (rx / l) * 0.3, feinPunkt3d(bis(spitze + r * 300)).y, auge.z + (rz / l) * 0.3)
           ziel.y = Math.max(ziel.y, auge.y - 0.02)
-          kamera.position.copy(auge)
-          steuerung.target.copy(ziel)
-          kamera.lookAt(ziel)
+          if (inBrille) {
+            // die Welt so legen, dass das Auge im Zug dort ist, wo der Kopf beim Einsteigen war, und die Strecke dorthin
+            // läuft, wohin er schaute; die Welt dreht sich mit dem Gleis (wie ein Wagen in der Kurve), der Kopf bleibt frei
+            if (!kabine.anker) {
+              const kopf = renderer.xr.getCamera()
+              kabine.anker = kopf.getWorldPosition(new THREE.Vector3())
+              const v = new THREE.Vector3(0, 0, -1).applyQuaternion(kopf.getWorldQuaternion(new THREE.Quaternion()))
+              kabine.kopfGier = Math.atan2(-v.x, -v.z)
+            }
+            const soll = kabine.kopfGier - Math.atan2(-rx, -rz)
+            if (kabine.gier === null) kabine.gier = soll
+            else {
+              let d = soll - kabine.gier
+              d = Math.atan2(Math.sin(d), Math.cos(d))
+              kabine.gier += d * Math.min(1, dt * 4)
+            }
+            modell.scale.setScalar(1000)
+            modell.rotation.set(0, kabine.gier, 0)
+            modell.position.copy(kabine.anker).sub(auge.clone().multiplyScalar(1000).applyAxisAngle(new THREE.Vector3(0, 1, 0), kabine.gier))
+          } else {
+            kamera.position.copy(auge)
+            steuerung.target.copy(ziel)
+            kamera.lookAt(ziel)
+          }
         } else if (sichtbar) {
           const p = punkt3d(s)
           // in der Brille steht das Modell still, du schaust dem Zug von aussen zu

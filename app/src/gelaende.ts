@@ -308,7 +308,26 @@ export function feinHoehe(f: Fein, e: number, n: number): number | null {
 /** Luftbild auf 25 cm und Gelände auf 2 m, nur 200 m neben den Bahnlinien zwischen Müntschemier und Rosshäusern
  *  (Michael, 2026-10-11; pipeline/build_scharf.py), in Kacheln von 250 m */
 interface ScharfIndex { kachel_m: number; px: number; punkte: number; band_m: number; kacheln: Record<string, [number, number]> }
-export const scharfIndex = () => holen<ScharfIndex>('data/scharf/index.json')
+/** Weitere Kacheln liegen auf daten.taktland.ch (cyon, Michael, 2026-10-12: «so viel Details wie möglich»), nicht in der
+ *  App: die 1 GB von GitHub Pages reichen dafür nicht. Fehlt der Index dort, gelten nur die Kacheln der App. */
+const DATEN_URL = import.meta.env.VITE_DATEN_URL ?? 'https://daten.taktland.ch/'
+/** je Kachel ihr Pfad ohne Endung und die Jahre von Bild und Höhe */
+interface ScharfVerzeichnis { kacheln: Map<string, { pfad: string; jahre: [number, number] }> }
+let scharfVerz: Promise<ScharfVerzeichnis> | null = null
+export function scharfIndex() {
+  scharfVerz ??= Promise.all([
+    holen<ScharfIndex>('data/scharf/index.json').catch(() => null),
+    holen<ScharfIndex>(`${DATEN_URL}scharf/index.json`).catch(() => null),
+  ]).then(([hier, dort]) => {
+    const kacheln = new Map<string, { pfad: string; jahre: [number, number] }>()
+    for (const [name, jahre] of Object.entries(dort?.kacheln ?? {})) kacheln.set(name, { pfad: `${DATEN_URL}scharf/${name}`, jahre })
+    // die Kacheln der App gehen vor: sie sind da, auch ohne daten.taktland.ch
+    for (const [name, jahre] of Object.entries(hier?.kacheln ?? {})) kacheln.set(name, { pfad: `data/scharf/${name}`, jahre })
+    return { kacheln }
+  })
+  return scharfVerz
+}
+const scharfPfad = async (name: string) => (await scharfIndex()).kacheln.get(name)?.pfad ?? `data/scharf/${name}`
 export const SCHARF_KACHEL_M = 250, SCHARF_PUNKTE = 126
 const SCHARF_LEER = 65535
 const scharfVorrat = new Map<string, Promise<Float32Array | null>>()
@@ -318,7 +337,7 @@ function scharfKachel(name: string) {
   if (p) return p
   while (scharfVorrat.size >= 400) scharfVorrat.delete(scharfVorrat.keys().next().value!)
   p = (async () => {
-    const gepackt = await holenBinaer(`data/scharf/${name}.hgz`)
+    const gepackt = await holenBinaer(`${await scharfPfad(name)}.hgz`)
     const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
     // vorne die tiefste Höhe in Dezimetern, dann je Punkt die Höhe darüber; LEER ausserhalb des Bands
     const tief = new DataView(roh).getInt32(0, true), d = new Uint16Array(roh.slice(4))
@@ -335,18 +354,18 @@ export interface Scharf { kacheln: Map<string, Float32Array>; jahre: number[] }
 
 export async function scharfLaden(e0: number, n0: number, e1: number, n1: number): Promise<Scharf | null> {
   if (!gelaendeMoeglich()) return null
-  const ix = await scharfIndex().catch(() => null)
-  if (!ix) return null
+  const ix = await scharfIndex()
+  if (!ix.kacheln.size) return null
   const k = SCHARF_KACHEL_M, namen: string[] = []
   for (let qe = Math.floor(e0 / k); qe <= Math.floor((e1 - 1) / k); qe++) {
-    for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (ix.kacheln[`${qe}_${qn}`]) namen.push(`${qe}_${qn}`)
+    for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (ix.kacheln.has(`${qe}_${qn}`)) namen.push(`${qe}_${qn}`)
   }
   if (!namen.length) return null
   const hoehen = await Promise.all(namen.map(scharfKachel))
   const kacheln = new Map<string, Float32Array>()
   namen.forEach((name, i) => { if (hoehen[i]) kacheln.set(name, hoehen[i]!) })
   if (!kacheln.size) return null
-  return { kacheln, jahre: [...new Set([...kacheln.keys()].flatMap((n) => ix.kacheln[n]))].sort() }
+  return { kacheln, jahre: [...new Set([...kacheln.keys()].flatMap((n) => ix.kacheln.get(n)!.jahre))].sort() }
 }
 
 /** Höhe bei Ost, Nord zwischen den Punkten linear, oder null ausserhalb des Bands */
@@ -364,4 +383,4 @@ export function scharfHoehe(s: Scharf, e: number, n: number): number | null {
 
 /** das Luftbild einer Kachel (1000 × 1000 Bildpunkte, 25 cm) */
 export const scharfBild = (name: string) =>
-  holenBinaer(`data/scharf/${name}.jpg`).then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' })))
+  scharfPfad(name).then((p) => holenBinaer(`${p}.jpg`)).then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' })))

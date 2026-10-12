@@ -1,0 +1,19 @@
+# daten.taktland.ch: grosse Kacheln für die App (scharfe Umgebung), von Hand hochgeladen (Michael, 2026-10-12).
+# Die App auf taktland.ch holt sie von hier; der Browser erlaubt das nur mit diesem Kopf.
+<IfModule mod_headers.c>
+  Header set Access-Control-Allow-Origin "*"
+  Header set Access-Control-Allow-Methods "GET, HEAD, OPTIONS"
+  # Kacheln ändern sich selten: einen Tag im Browser behalten, der Index nur kurz
+  <FilesMatch "\.(hgz|jpg)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  <FilesMatch "\.json$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+# .hgz ist schon gepackt: nicht noch einmal packen und als Binärdaten ausliefern
+AddType application/octet-stream .hgz
+<IfModule mod_deflate.c>
+  SetEnvIfNoCase Request_URI "\.(hgz|jpg)$" no-gzip
+</IfModule>
+Options -Indexes

@@ -70,11 +70,14 @@ async function abrufen(url: string) {
   }
 }
 
+/** ein Pfad in der App oder eine ganze Adresse (Kacheln auf daten.taktland.ch) */
+const adresseVon = (pfad: string) => (/^https?:\/\//.test(pfad) ? pfad : `${BASIS}${pfad}`)
+
 export async function holen<T>(pfad: string): Promise<T> {
   const treffer = zwischenspeicher.get(pfad)
   if (treffer) return treffer as T
   const daten = await ladenVerfolgen((async () => {
-    const antwort = await abrufen(`${BASIS}${pfad}`)
+    const antwort = await abrufen(adresseVon(pfad))
     if (!antwort.ok) throw new Error(`${pfad} nicht gefunden (${antwort.status})`)
     return (await antwort.json()) as T
   })())
@@ -85,7 +88,7 @@ export async function holen<T>(pfad: string): Promise<T> {
 /** Binärdaten wie die Höhen eines Reliefs (pipeline/build_relief.py) */
 export async function holenBinaer(pfad: string): Promise<ArrayBuffer> {
   return ladenVerfolgen((async () => {
-    const antwort = await abrufen(`${BASIS}${pfad}`)
+    const antwort = await abrufen(adresseVon(pfad))
     if (!antwort.ok) throw new Error(`${pfad} nicht gefunden (${antwort.status})`)
     return antwort.arrayBuffer()
   })())
