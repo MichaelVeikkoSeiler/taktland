@@ -8,6 +8,7 @@ import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, 
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import { type FahrObjekt, type Fahrweg, gerundetM, wegEnde } from '../fahrt'
 import type { ObjektText } from './Fahrtmodus'
+import { type Ankuendigung, Fuehrerpult, type TempoQuelle } from './Fuehrerpult'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE } from '../gelaende'
@@ -156,6 +157,8 @@ const BRILLE_NAHE_M = 0.01
 /** Führerstand in der Brille (Michael, 2026-10-12: «im VR-Modus in der Brille im Führerstand sitzen und sich mit dem Kopf
  *  wirklich drehen können»): die Welt in Originalgrösse um den Kopf, das Gelände bis 40 km weit; Schilder etwa 5 m hoch;
  *  der Zug etwa 3 m breit statt der Modellgrösse */
+/** das Pult auf dem Bildschirm, gegenüber der Lage in der Brille verschoben */
+const PULT_BILD_HOCH_M = -0.02, PULT_BILD_WEG_M = 0.45
 const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
@@ -432,8 +435,10 @@ const BAND_FELDER = 3_000_000
  * projizieren»): das Gelände aus den Kacheln im Rechteck um den Weg, bei langen Strecken gröber gemittelt, sonst wie
  * die Bergstrecken: «Mit VR-Brille» und die Probefahrt mit A, B, X und Y.
  */
-export function ModellStrecke({ fahrweg, objekte, text }: {
+export function ModellStrecke({ fahrweg, objekte, text, name }: {
   fahrweg: Fahrweg; objekte: FahrObjekt[]
+  /** «Start → Ziel» für die Anzeige im Führerstand */
+  name?: string
   /** Name und Baueinheiten der Tunnel und Brücken, für die Vorankündigung */
   text?: (o: FahrObjekt) => ObjektText | undefined
 }) {
@@ -522,6 +527,10 @@ export function ModellStrecke({ fahrweg, objekte, text }: {
     return () => { ab = true }
   }, [fahrweg, objekte, BAND_M])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg) : null), [daten, fahrweg])
+  // Namen der Tunnel und Brücken für die Anzeige «Voraus» im Führerstand
+  const bauNamen = useMemo(() => objekte.flatMap((o): Ankuendigung[] => (o.art === 'tunnel' || o.art === 'bruecke')
+    ? [{ s: o.s, art: o.art, name: text?.(o)?.name ?? (o.tlm?.art === 'galerie' ? 'Galerie ohne Namen' : o.art === 'tunnel' ? 'Tunnel ohne Namen' : 'Brücke ohne Namen') }]
+    : []), [objekte, text])
   const audio = useZuggeraeusch(probeStelle, useMemo(() => wegEnde(fahrweg), [fahrweg]), useMemo(() => weg?.bauwerke ?? [], [weg]),
                                 true, fahrweg.punkte[0]?.s ?? 0)
   // in der Brille steht der Zug am Anfang bereit, A startet ihn (Michael, 2026-10-08: ein Knopf statt zwei)
@@ -539,11 +548,11 @@ export function ModellStrecke({ fahrweg, objekte, text }: {
       {!fehler && (
         <ModellKarte laedt="Das Gelände entlang der ganzen Strecke wird geladen …" fahrknopf={fahrknopf}
                      fuehrerstand={fuehrerstand} audio={audio} stand={stand}
-                     ansage={<Vorankuendigung stelle={probeStelle} objekte={objekte} text={text} />}
+                     ansage={stand.vorne ? null : <Vorankuendigung stelle={probeStelle} objekte={objekte} text={text} />}
                      szene={daten && weg ? (fuellen, className) => (
                        <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                               probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                              fuellen={fuellen} className={className} />
+                              fuellen={fuellen} bauNamen={bauNamen} endNamen={name?.split(' → ') as [string, string] | undefined} className={className} />
                      ) : null} />
       )}
       </div>
@@ -911,9 +920,15 @@ function lageAufWeg(fahrweg: Fahrweg, s: number): [number, number] {
  * darstellen könnte»): ein Ausschnitt von 30 km aus den Geländekacheln um den Zug, der mitwandert,
  * sobald der Zug 8 km von seiner Mitte weg ist. Der Blick der Kamera bleibt dabei, wie er war.
  */
-export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
+export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = null, tempoQuelle = 'gps', start, ziel }: {
+  start?: string; ziel?: string
   fahrweg: Fahrweg; objekte: FahrObjekt[]; sJetzt: number | null; className: string
+  /** m/s für den Tacho im Führerstand, aus dem GPS oder der Probefahrt */
+  tempo?: number | null
+  tempoQuelle?: TempoQuelle
 }) {
+  const tempoRef = useRef<number | null>(tempo)
+  tempoRef.current = tempo
   useEffect(() => szeneLaden(), [])
   const [faktor, setFaktor] = useState<1 | 2>(1)
   const [mitte, setMitte] = useState<[number, number] | null>(null)
@@ -978,7 +993,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
     <>
       <div className={`${className} relative`}>
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
-               fuehrerstand={fuehrerstand} className="absolute inset-0 overflow-hidden" />
+               fuehrerstand={fuehrerstand} tempoAussen={tempoRef} tempoQuelle={tempoQuelle}
+               endNamen={start ? [start, ziel ?? 'ohne Ziel'] : undefined} className="absolute inset-0 overflow-hidden" />
         <Ladebalken inKarte />
         <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
         <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 h-9 w-10" />
@@ -1040,8 +1056,16 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false,
+  tempoAussen, tempoQuelle, bauNamen, endNamen, className }: {
+  /** Start und Ziel für die Anzeige im Führerstand; sonst der erste und letzte Bahnhof des Reliefs */
+  endNamen?: [string, string]
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
+  /** beim Fahren: Tempo in m/s, wie es der Fahrtmodus kennt (GPS oder Probefahrt), für den Tacho im Führerstand */
+  tempoAussen?: React.RefObject<number | null>
+  tempoQuelle?: TempoQuelle
+  /** Namen der Tunnel und Brücken für die Anzeige «Voraus» im Führerstand; sonst aus dem Relief oder ohne Namen */
+  bauNamen?: Ankuendigung[]
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
   /** beim Fahren: wo die Kamera vom Zug aus steht; bleibt, wenn der Ausschnitt weiterwandert */
@@ -1112,6 +1136,19 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     Object.assign(dunkelFlaeche.style, { position: 'absolute', inset: '0', background: '#050505', opacity: '0', pointerEvents: 'none' })
     // der Rahmen ist positioniert (relative oder absolute in className), sonst läge die Fläche falsch
     el.appendChild(dunkelFlaeche)
+    // das Pult im Führerstand (Fuehrerpult.ts), nur wo es einen Führerstand gibt; seine Rückmeldung kurz oben im Bild
+    const pult = fuehrerstand ? new Fuehrerpult() : null
+    const pultMeldung = document.createElement('div')
+    Object.assign(pultMeldung.style, { position: 'absolute', left: '50%', top: '56px', transform: 'translateX(-50%)', padding: '4px 10px',
+      borderRadius: '8px', background: 'rgba(33,33,33,0.85)', color: '#fff', font: 'bold 13px Helvetica, Arial, sans-serif',
+      pointerEvents: 'none', opacity: '0', transition: 'opacity 200ms', whiteSpace: 'nowrap' })
+    pultMeldung.setAttribute('role', 'status')
+    el.appendChild(pultMeldung)
+    let pultMeldungBis = 0
+    const pultMelden = (text: string | null) => {
+      if (!text) return
+      pultMeldung.textContent = text; pultMeldung.style.opacity = '1'; pultMeldungBis = performance.now() + 1600
+    }
 
     // Gelände als Netz, jedes SCHRITT-te Feld
     const nx = Math.floor((breite - 1) / SCHRITT) + 1, ny = Math.floor((hoehe - 1) / SCHRITT) + 1
@@ -1330,6 +1367,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       nahZeichnen()
     }
     szene.add(new THREE.HemisphereLight('#ffffff', '#8a8a7a', 1.6))
+    // Stirnlicht des Zugs im Führerstand; aus heisst Stärke 0, damit das Umschalten die Shader nicht neu baut
+    const stirnlicht = new THREE.SpotLight('#fff3dc', 0, 0.4, 0.38, 0.6, 0)
+    szene.add(stirnlicht, stirnlicht.target)
     const sonne = new THREE.DirectionalLight('#ffffff', 2.2)
     // Licht von Nordwesten wie auf der Landeskarte
     sonne.position.set(-1, 1.2, -1)
@@ -2359,6 +2399,53 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     else kamera.position.set(cx - spanne * 0.3, spanne * 0.85, cz - spanne * 1.0)
     steuerung.update()
 
+    // was die Anzeige «Voraus» nennt: Bahnhöfe des Reliefs, Tunnel und Brücken des Wegs mit Namen, wo sie bekannt sind
+    const ankuendigungen: Ankuendigung[] = [
+      ...r.bahnhoefe.map((b) => ({ s: b.km * 1000, art: 'bahnhof' as const, name: b.name })),
+      ...weg.bauwerke.map((x) => {
+        const genannt = bauNamen?.find((b) => b.art === x.art && Math.abs(b.s - x.von) < 60)?.name
+          ?? (x.art === 'tunnel' ? r.tunnel.find((t) => t.von_km !== undefined && Math.abs(t.von_km * 1000 - x.von) < 60)?.name
+            : r.bruecken.find((b) => Math.abs(b.von_km * 1000 - x.von) < 60)?.name)
+        return { s: x.von, art: x.art, name: genannt ?? (x.art === 'tunnel' ? 'Tunnel ohne Namen' : 'Brücke ohne Namen') }
+      }),
+    ]
+    const bahnhofFolge = [...r.bahnhoefe].sort((a, b) => a.km - b.km)
+    const pultVon = endNamen?.[0] ?? bahnhofFolge[0]?.name ?? r.titel
+    const pultNach = endNamen?.[1] ?? bahnhofFolge[bahnhofFolge.length - 1]?.name ?? r.titel
+    // Tempo für den Tacho, wenn es nicht hier simuliert wird: aus der Stelle des Zugs über die Zeit, geglättet
+    let altS: number | null = null, gemessen = 0
+    // Maus und Finger auf dem Pult: Hover (Hervorheben, Name als Tooltip) und Auslösen
+    const pultStrahl = new THREE.Raycaster()
+    const pultTreffer = (e: PointerEvent) => {
+      if (!pult || !imStand || renderer.xr.isPresenting) return null
+      const rahmen = renderer.domElement.getBoundingClientRect()
+      const ndc = new THREE.Vector2(((e.clientX - rahmen.left) / rahmen.width) * 2 - 1, -((e.clientY - rahmen.top) / rahmen.height) * 2 + 1)
+      pultStrahl.setFromCamera(ndc, pult.kamera)
+      return pultStrahl.intersectObjects(pult.bedienbar, false)[0]?.object ?? null
+    }
+    const pultBewegt = (e: PointerEvent) => {
+      if (!pult) return
+      const t = pultTreffer(e)
+      const name = pult.hover(t)
+      renderer.domElement.style.cursor = t ? 'pointer' : ''
+      renderer.domElement.title = name ?? ''
+    }
+    const pultDruck = (e: PointerEvent) => {
+      const t = pultTreffer(e)
+      if (!t || !pult) return
+      e.preventDefault(); e.stopPropagation()
+      pultMelden(pult.ausloesen(t))
+    }
+    const pultTaste = (e: KeyboardEvent) => {
+      if (!pult || !imStand || renderer.xr.isPresenting) return
+      const ziel = e.target as HTMLElement | null
+      if (ziel && /^(INPUT|TEXTAREA|SELECT)$/.test(ziel.tagName)) return
+      const text = pult.taste_(e.code)
+      if (text) { e.preventDefault(); pultMelden(text) }
+    }
+    renderer.domElement.addEventListener('pointermove', pultBewegt)
+    renderer.domElement.addEventListener('pointerdown', pultDruck, { capture: true })
+    window.addEventListener('keydown', pultTaste)
     const groesseSetzen = () => {
       const b = el.clientWidth
       // auf der eigenen Seite bestimmt die Breite die Höhe, beim Fahren und im Vollbild der Rahmen; nicht bei der Probefahrt
@@ -2513,7 +2600,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         c.addEventListener('selectstart', () => {
           // zeigt der Strahl auf einen Knopf am Ziel, gilt der Knopf, nicht das Tragen
           if (knopfUnter?.(c)) return
-          if (kabine.an) return
+          if (kabine.an) {
+            // im Führerstand: der Strahl bedient das Pult
+            if (pult) {
+              strahl.setFromXRController(c as THREE.XRTargetRaySpace)
+              const t = strahl.intersectObjects(pult.bedienbar, false)[0]?.object
+              if (t) hinweisZeigen(pult.ausloesen(t) ?? '')
+            }
+            return
+          }
           haelt.add(c); anfassen()
         })
         c.addEventListener('selectend', () => { haelt.delete(c); anfassen() })
@@ -2580,7 +2675,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           g.font = '38px Helvetica, Arial, sans-serif'; g.fillStyle = '#212121'; g.fillText(was, 390, y)
         })
         g.font = '32px Helvetica, Arial, sans-serif'; g.fillStyle = '#767676'
-        g.fillText('A und B rechts, X und Y links.', 48, 666)
+        g.fillText('A, B rechts; X, Y links. Im Führerstand: A, B Tempo; X, Y Bremse;', 48, 650)
+        g.fillText('der Strahl bedient das Pult.', 48, 688)
         // wie auf der Seite davor: hier ist ein Modell, kein Abbild (Michael, 2026-10-08)
         g.fillStyle = '#a8102e'; g.font = 'bold 32px Helvetica, Arial, sans-serif'
         g.fillText('Ein Modell, kein Abbild: vieles ist nicht massstäblich.', 48, 732)
@@ -2734,6 +2830,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               } else if (an && !gedrueckt.has(schluessel) && tafel.visible) {
                 // solange die Tafel steht, schliesst A sie, sonst nichts
                 if (quelle.handedness === 'right' && nr === 4) tafel.visible = false
+              } else if (an && !gedrueckt.has(schluessel) && kabine.an && pult) {
+                // im Führerstand bedienen die Tasten das Pult: A schneller, B langsamer, X bremsen, Y Bremse lösen
+                const rechts = quelle.handedness === 'right'
+                fahrt.gestartet = true
+                hinweisZeigen(pult.tun(rechts ? (nr === 4 ? 'sollPlus' : 'sollMinus') : nr === 4 ? 'bremsePlus' : 'bremseMinus'))
               } else if (an && !gedrueckt.has(schluessel)) {
                 const rechts = quelle.handedness === 'right'
                 if (rechts && nr === 4) { fahrt.s ??= pk[0].m; fahrt.laeuft = true; fahrt.gestartet = true }
@@ -2747,8 +2848,16 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             }
           }
         }
-        // die Knöpfe am Ziel: Strahlen zeigen, der getroffene Knopf wird etwas dunkler
-        strahlen.forEach((l) => { l.visible = menue.visible || tafel.visible })
+        // die Knöpfe am Ziel: Strahlen zeigen, der getroffene Knopf wird etwas dunkler; im Führerstand zeigt der Strahl aufs Pult
+        strahlen.forEach((l) => { l.visible = menue.visible || tafel.visible || kabine.an })
+        if (kabine.an && pult) {
+          let t: THREE.Object3D | null = null
+          for (const c of steuer) {
+            strahl.setFromXRController(c as THREE.XRTargetRaySpace)
+            t ??= strahl.intersectObjects(pult.bedienbar, false)[0]?.object ?? null
+          }
+          pult.hover(t)
+        }
         if (tafel.visible) {
           const t = steuer.some((c) => { strahl.setFromXRController(c as THREE.XRTargetRaySpace); return strahl.intersectObject(schliessen, false).length > 0 })
           ;(schliessen.material as THREE.MeshBasicMaterial).color.setScalar(t ? 0.8 : 1)
@@ -2880,7 +2989,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           fahrt.gestartet = true
         }
         if (!fahrt.laeuft) fahrt.anteil = 0
-        if (fahrt.laeuft && fahrt.s !== null) {
+        if (imStand && pult && fahrt.s !== null && fahrt.gestartet) {
+          // im Führerstand fährt der Zug nach dem Pult: gewählte Geschwindigkeit, Bremse, Schnellbremse (Fuehrerpult.schritt)
+          const rest = fahrt.richtung > 0 ? ende - fahrt.s : fahrt.s - zugLaengeS() - anfang
+          fahrt.s += fahrt.richtung * pult.schritt(dt, rest) * dt
+          fahrt.s = Math.max(anfang + Math.min(zugLaengeS(), ende - anfang), Math.min(ende, fahrt.s))
+          fahrt.laeuft = false
+          fahrt.gestartet = true
+        } else if (fahrt.laeuft && fahrt.s !== null) {
           // langsam anfahren und vor dem Ziel gleichmässig abbremsen, je in ANFAHREN_S (Michael, 2026-10-09: «in 2 sec
           // die normale Geschwindigkeit … am Schluss ebenso abbremsen»); der Bremsweg ist die halbe Strecke, die der
           // Zug in ANFAHREN_S mit voller Fahrt zurücklegt
@@ -2954,8 +3070,25 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             if (vorne) {
               for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] / grundMass[1] * KABINE_SCHILD_KM, KABINE_SCHILD_KM, 1)
             } else tischSetzen?.()
-          } else kamera.near = vorne ? FUEHRERSTAND_NAHE_KM : 0.1
+          } else {
+            kamera.near = vorne ? FUEHRERSTAND_NAHE_KM : 0.1
+            // im Führerstand ein weiteres Sichtfeld wie aus einem Fenster, sonst das enge des Modells
+            kamera.fov = vorne && pult ? 60 : 40
+          }
           kamera.updateProjectionMatrix()
+          if (pult) {
+            pult.v = 0
+            if (inBrille && vorne) szene.add(pult.gruppe)
+            else {
+              // auf dem Bildschirm etwas weiter weg und höher als in der Brille: das Sichtfeld ist kleiner als das der Augen,
+              // so bleiben Anzeigen, Tasten und Hebel im Bild
+              pult.szene.add(pult.gruppe)
+              pult.gruppe.position.set(0, PULT_BILD_HOCH_M, -PULT_BILD_WEG_M)
+              pult.gruppe.rotation.set(0, 0, 0)
+            }
+            pult.hover(null)
+            renderer.domElement.style.cursor = ''
+          }
           letzte = null
           if (blick) blick.current = null
           feinAb = -Infinity
@@ -2987,6 +3120,17 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const rx = vorn.x - hinten.x, rz = vorn.z - hinten.z, l = Math.hypot(rx, rz) || 1
           const ziel = new THREE.Vector3(auge.x + (rx / l) * 0.3, feinPunkt3d(bis(spitze + r * 300)).y, auge.z + (rz / l) * 0.3)
           ziel.y = Math.max(ziel.y, auge.y - 0.02)
+          if (pult) {
+            const v = zug === eigenerZug && !zugVonAussen ? pult.v : (() => {
+              const aussen = tempoAussen?.current
+              if (aussen != null) return aussen
+              if (altS !== null && dt > 0) gemessen += ((Math.abs(s - altS) / dt) - gemessen) * Math.min(1, dt * 2)
+              altS = s
+              return gemessen
+            })()
+            pult.aktualisieren(dt, { s: spitze, richtung: r, anfang: pk[0].m, ende: pk[pk.length - 1].m, v,
+              quelle: zug === eigenerZug && !zugVonAussen ? 'simulation' : tempoQuelle ?? 'gps', ankuendigungen, von: pultVon, nach: pultNach })
+          }
           if (inBrille) {
             // die Welt so legen, dass das Auge im Zug dort ist, wo der Kopf beim Einsteigen war, und die Strecke dorthin
             // läuft, wohin er schaute; die Welt dreht sich mit dem Gleis (wie ein Wagen in der Kurve), der Kopf bleibt frei
@@ -3011,6 +3155,22 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             steuerung.target.copy(ziel)
             kamera.lookAt(ziel)
           }
+          if (pult) {
+            // Stirnlicht: vom Auge aus die Strecke entlang, auf dem Bildschirm in Kilometern, in der Brille in Metern
+            const quelle = inBrille ? renderer.xr.getCamera().getWorldPosition(new THREE.Vector3()) : kamera.position.clone()
+            const richtung = inBrille ? new THREE.Vector3(-Math.sin(kabine.kopfGier), -0.06, -Math.cos(kabine.kopfGier))
+              : kamera.getWorldDirection(new THREE.Vector3())
+            const weit = inBrille ? 400 : 0.4
+            stirnlicht.position.copy(quelle).addScaledVector(new THREE.Vector3(0, -1, 0), inBrille ? 1.5 : 0.0015)
+            stirnlicht.target.position.copy(quelle).addScaledVector(richtung, weit * 0.6)
+            stirnlicht.distance = weit
+            stirnlicht.intensity = pult.stirnlicht ? 6 : 0
+            if (inBrille) {
+              // das Pult steht dort, wo der Kopf beim Einsteigen war, in Fahrtrichtung
+              pult.gruppe.position.copy(kabine.anker ?? quelle)
+              pult.gruppe.rotation.set(0, kabine.kopfGier, 0)
+            }
+          }
         } else if (sichtbar) {
           const p = punkt3d(s)
           // in der Brille steht das Modell still, du schaust dem Zug von aussen zu
@@ -3032,6 +3192,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       }
       // im Führerstand nicht: die Steuerung hielte sonst ihren Mindestabstand und zöge die Kamera hinter den Zug
       if (!imStand) steuerung.update()
+      if (!imStand) stirnlicht.intensity = 0
+      if (pultMeldungBis && performance.now() > pultMeldungBis) { pultMeldung.style.opacity = '0'; pultMeldungBis = 0 }
       // das Nahbild folgt dem Blickpunkt, sobald er mehr als NAH_NACH_M weitergewandert ist
       if (luftbild && !renderer.xr.isPresenting && kamera.position.distanceTo(steuerung.target) < NAH_BIS_KM) {
         const e = steuerung.target.x * 1000 + me, n = -steuerung.target.z * 1000 + mn
@@ -3040,6 +3202,16 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (blick && letzte) blick.current = kamera.position.clone().sub(steuerung.target)
       schilderOrdnen()
       renderer.render(szene, kamera)
+      if (pult && imStand && !renderer.xr.isPresenting) {
+        // das Pult in seiner eigenen Szene darüber, mit derselben Blickrichtung zum Bildschirm
+        if (pult.kamera.aspect !== kamera.aspect || pult.kamera.fov !== kamera.fov) {
+          pult.kamera.aspect = kamera.aspect; pult.kamera.fov = kamera.fov; pult.kamera.updateProjectionMatrix()
+        }
+        renderer.autoClear = false
+        renderer.clearDepth()
+        renderer.render(pult.szene, pult.kamera)
+        renderer.autoClear = true
+      }
     }
     // über die Schleife des Renderers, damit dieselbe Zeichnung auch in der Brille läuft
     renderer.setAnimationLoop(zeichnen)
@@ -3060,7 +3232,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       renderer.dispose()
       renderer.domElement.remove()
       dunkelFlaeche.remove()
+      pultMeldung.remove()
+      renderer.domElement.removeEventListener('pointermove', pultBewegt)
+      renderer.domElement.removeEventListener('pointerdown', pultDruck, { capture: true })
+      window.removeEventListener('keydown', pultTaste)
+      pult?.entsorgen()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild, bauNamen, tempoQuelle, tempoAussen, endNamen?.join('→')])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }

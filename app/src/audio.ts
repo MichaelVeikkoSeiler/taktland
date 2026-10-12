@@ -506,3 +506,35 @@ export function zuggeraeuschAus() {
     window.setTimeout(() => { for (const q of g.quellen) q.stop(); g.huelle.disconnect(); g.laut.disconnect(); g.hall.disconnect() }, 1000)
   } catch { /* nichts */ }
 }
+
+/**
+ * Signalhorn im Führerstand (Michael, 2026-10-12): zwei Töne zugleich, die nicht ganz zusammenpassen, wie bei einem
+ * Doppelhorn, mit Sägezahn gefiltert, etwa so lang wie man den Knopf drückt (mindestens 0,5 s). Gerechnet, keine
+ * Aufnahme eines bestimmten Horns. Gilt mit «Alle Töne».
+ */
+export function signalhorn(dauer = 0.8) {
+  if (!stand.an) return
+  const c = audioKontext()
+  if (!c) return
+  try {
+    void c.resume()
+    const jetzt = c.currentTime
+    const filter = c.createBiquadFilter()
+    filter.type = 'lowpass'
+    filter.frequency.value = 1800
+    const laut = c.createGain()
+    laut.gain.setValueAtTime(0.0001, jetzt)
+    laut.gain.exponentialRampToValueAtTime(0.22, jetzt + 0.06)
+    laut.gain.setValueAtTime(0.22, jetzt + dauer)
+    laut.gain.exponentialRampToValueAtTime(0.0001, jetzt + dauer + 0.25)
+    filter.connect(laut).connect(ausgang(c))
+    for (const hz of [370, 466.16]) {
+      const osc = c.createOscillator()
+      osc.type = 'sawtooth'
+      osc.frequency.value = hz
+      osc.connect(filter)
+      osc.start(jetzt)
+      osc.stop(jetzt + dauer + 0.3)
+    }
+  } catch { /* ohne Ton geht alles weiter */ }
+}

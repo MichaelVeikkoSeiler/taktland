@@ -844,7 +844,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <div className="xl:grid xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:items-start xl:gap-8">
         <div className="min-w-0 xl:sticky xl:top-4">
         <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste}
-                    tempo={stand ? stand.v * (probefahrt ? raffer : 1) : null}
+                    tempo={stand ? stand.v * (probefahrt ? raffer : 1) : null} probefahrt={probefahrt}
                     start={titel.split(' → ')[0]} ziel={ohneZiel ? undefined : titel.split(' → ')[1]} />
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}

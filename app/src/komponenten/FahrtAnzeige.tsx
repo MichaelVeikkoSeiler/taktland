@@ -324,8 +324,10 @@ function nahStufe(tempo: number, alt: number | null): number {
  * Die kleine Karte zur Fahrt: grau das Streckennetz, dunkel der Weg vor dem
  * Zug, rot der Standort. «Nah» folgt dem Zug, «Ganzer Weg» zeigt alles.
  */
-export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null }: {
+export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null, probefahrt = false }: {
   fahrweg: Fahrweg
+  /** für den Tacho im Führerstand: das Tempo stammt aus der Probefahrt, nicht aus dem GPS */
+  probefahrt?: boolean
   /** Tempo in Metern pro Sekunde, wie es sich anfühlt (Probefahrt mal Zeitraffer); null ohne Standort */
   tempo?: number | null
   /** Namen von Start und Ziel, beschriftet wie auf dem Fahrtblatt (Michael, 2026-09-29) */
@@ -616,7 +618,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
       {voll && vollbild && <div className="shrink-0">{vollbild}</div>}
       {dreiD && relief ? (
         <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>}>
-          <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} />
+          <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} tempo={tempo} start={start} ziel={ziel}
+                         tempoQuelle={probefahrt ? 'probe' : 'gps'} />
         </Suspense>
       ) : (
       <div onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
