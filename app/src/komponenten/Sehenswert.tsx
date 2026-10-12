@@ -284,6 +284,8 @@ export const LANGFORM: Record<string, string> = { Kultur: 'Kulturgut' }
 
 const LANG: Partial<Record<Kategorie, string>> = {
   kgs: 'Kulturgüter von nationaler Bedeutung',
+  tunnel: 'Tunnel vorher melden',
+  bruecke: 'Grössere Brücken vorher melden',
   seilbahn: 'Seilbahnen mit Bundeskonzession',
   gebiete: 'Gebiete (BLN, Pärke, Moorlandschaften)',
   boden: 'Wald und Siedlung',
@@ -292,9 +294,9 @@ const LANG: Partial<Record<Kategorie, string>> = {
 }
 
 const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
-  // nur in den Modellen (Michael, 2026-10-12: «wählen können, was man alles eingeblendet haben möchte»)
-  ['tunnel', 'Tunnel', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="2.5" strokeDasharray="3 2" stroke="#8a8a8a" /></svg>],
-  ['bruecke', 'Brücken', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="2.5" stroke="#b45309" /></svg>],
+  // nur in den Modellen: melden oder nicht, gezeichnet sind sie immer (Michael, 2026-10-12)
+  ['tunnel', 'Tunnel melden', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="2.5" strokeDasharray="3 2" stroke="#8a8a8a" /></svg>],
+  ['bruecke', 'Brücken melden', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="2.5" stroke="#b45309" /></svg>],
   ['orte', 'Orte', <span className="inline-block size-1.5 rounded-full bg-sbb-metal dark:bg-sbb-storm" />],
   ['gipfel', 'Gipfel', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M5 1L9 9H1Z" className="fill-gipfel" /></svg>],
   ['kgs', 'Kultur', <svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>],
@@ -312,7 +314,7 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
  *  Legende in «Fahren» eine Zeile weniger braucht (Michael, 2026-09-30) */
 export function SehenswertLegende({ orte = false, gebieteMitBoden = false, kmNetz = false, bauwerke = false }: {
   orte?: boolean; gebieteMitBoden?: boolean; kmNetz?: boolean
-  /** Tunnel und Brücken, nur in den Modellen */
+  /** Tunnel und Brücken melden, nur in den Modellen mit Vorankündigung */
   bauwerke?: boolean
 }) {
   const aus = useVersteckt()

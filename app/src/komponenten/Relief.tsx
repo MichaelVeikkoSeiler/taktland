@@ -6,7 +6,8 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, streckenLaden, szeneLaden } from '../daten'
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
-import { type FahrObjekt, type Fahrweg, wegEnde } from '../fahrt'
+import { type FahrObjekt, type Fahrweg, gerundetM, wegEnde } from '../fahrt'
+import type { ObjektText } from './Fahrtmodus'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE } from '../gelaende'
@@ -310,20 +311,24 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
         </p>
       )}
       {fehler && <Ladefehler className="mt-6" was="Das Relief konnte nicht geladen werden." fehler={fehler} />}
+      <div className={ZWEI_SPALTEN}>
+      <div className="min-w-0">
       {!fehler && (
         <ModellKarte laedt="Das Relief wird geladen …" faktor={faktor} setFaktor={setFaktor} fahrknopf={fahrknopf}
                      fuehrerstand={fuehrerstand} audio={audio} stand={stand}
                      szene={daten && weg ? (fuellen, className) => (
                        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                               probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                              fuellen={fuellen} bauSchalter className={className} />
+                              fuellen={fuellen} className={className} />
                      ) : null} />
       )}
+      </div>
+      <div className="min-w-0 xl:pt-4">
       {daten && weg && (
         <>
           {/* unter der Karte, damit man von ihr mehr sieht (Michael, 2026-10-10) */}
           <div className="mt-3"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
-          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz bauwerke /></div>
+          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz /></div>
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
@@ -338,6 +343,8 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
           <Hinweise r={daten.r} />
         </>
       )}
+      </div>
+      </div>
     </div>
   )
 }
@@ -415,7 +422,11 @@ const BAND_FELDER = 3_000_000
  * projizieren»): das Gelände aus den Kacheln im Rechteck um den Weg, bei langen Strecken gröber gemittelt, sonst wie
  * die Bergstrecken: «Mit VR-Brille» und die Probefahrt mit A, B, X und Y.
  */
-export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte: FahrObjekt[] }) {
+export function ModellStrecke({ fahrweg, objekte, text }: {
+  fahrweg: Fahrweg; objekte: FahrObjekt[]
+  /** Name und Baueinheiten der Tunnel und Brücken, für die Vorankündigung */
+  text?: (o: FahrObjekt) => ObjektText | undefined
+}) {
   useEffect(() => szeneLaden(), [])
   const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
@@ -513,15 +524,20 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
   return (
     <div>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
+      <div className={ZWEI_SPALTEN}>
+      <div className="min-w-0">
       {!fehler && (
         <ModellKarte laedt="Das Gelände entlang der ganzen Strecke wird geladen …" fahrknopf={fahrknopf}
                      fuehrerstand={fuehrerstand} audio={audio} stand={stand}
+                     ansage={<Vorankuendigung stelle={probeStelle} objekte={objekte} text={text} />}
                      szene={daten && weg ? (fuellen, className) => (
                        <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                               probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                              fuellen={fuellen} bauSchalter className={className} />
+                              fuellen={fuellen} className={className} />
                      ) : null} />
       )}
+      </div>
+      <div className="min-w-0 xl:pt-4">
       {daten && weg && (
         <>
           {/* was das Modell zeigt (Michael, 2026-10-12: «Kultur, Brücken, Tunnel und so weiter») */}
@@ -540,9 +556,14 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
           </p>
         </>
       )}
+      </div>
+      </div>
     </div>
   )
 }
+
+/** Auf dem Desktop links das Modell, rechts die Knöpfe und Schalter (Michael, 2026-10-12: «links und rechts ist viel Raum») */
+const ZWEI_SPALTEN = 'xl:grid xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)] xl:items-start xl:gap-6'
 
 /** tempo: null fährt in PROBE_DAUER_S über die ganze Strecke, sonst als Vielfaches von MODELL_TEMPO */
 interface Fahrknopf { los: () => void; halt: () => void; tempo: (t: number | null) => void }
@@ -560,7 +581,7 @@ const MODELL_TEMPI = [null, 1, 2, 4, 8, 16, 32] as const
  * füllt sie den Bildschirm, und Höhe, Zuggeräusch, Zug fahren, Anhalten, Führerstand und Tempo liegen auf der Karte.
  * Die Szene bleibt dieselbe, sie wird beim Umschalten nicht neu gebaut.
  */
-function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand, audio, stand }: {
+function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand, audio, stand, ansage }: {
   /** die Szene, mit fuellen und className von hier; null, solange die Daten laden */
   szene: ((fuellen: boolean, className: string) => React.ReactNode) | null
   /** Text, solange die Daten laden */
@@ -571,6 +592,8 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
   fuehrerstand: React.MutableRefObject<boolean>
   audio: ReturnType<typeof useZuggeraeusch>
   stand: ModellStand
+  /** über dem Modell unten: die Vorankündigung der Tunnel und Brücken */
+  ansage?: React.ReactNode
 }) {
   const [voll, setVoll] = useState(false)
   const [filter, setFilter] = useState(false)
@@ -583,6 +606,7 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
       {szene ? szene(voll, voll ? 'absolute inset-0 overflow-hidden' : 'relative w-full overflow-hidden rounded-lg')
         : <div className="flex h-[min(60vh,440px)] items-center justify-center rounded-lg bg-sbb-milk text-sm text-sbb-metal dark:bg-sbb-charcoal">{laedt}</div>}
       <Ladebalken inKarte />
+      {szene && ansage}
       {szene && (
         <div className="absolute right-2 top-2 flex gap-2">
           {voll && <GeraeuschKnopf audio={audio} className="h-8 w-9" />}
@@ -616,6 +640,49 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
           </div>
         </>
       )}
+    </div>
+  )
+}
+
+/** so viele Sekunden im gefahrenen Tempo vorher kündigt das Modell einen Tunnel oder eine Brücke an, mindestens VORAUS_MIN_M */
+const VORAUS_S = 10
+const VORAUS_MIN_M = 200
+
+/**
+ * Vorankündigung im Modell (Michael, 2026-10-12: «Wenn man Tunnel ausblendet, dann sollen nur die Vorankündigungen nicht
+ * mehr kommen»): der nächste Tunnel oder die nächste Brücke vor dem Zug, gezeichnet bleiben sie immer. Brücken wie beim
+ * Fahren erst ab 3 Baueinheiten oder, bei anderen Bahnen, ab 100 m Zeichnung. Die Schalter «Tunnel melden» und «Brücken
+ * melden» stehen in der Legende unter dem Modell.
+ */
+function Vorankuendigung({ stelle, objekte, text }: {
+  stelle: React.RefObject<number | null>; objekte: FahrObjekt[]; text?: (o: FahrObjekt) => ObjektText | undefined
+}) {
+  const aus = useVersteckt()
+  const liste = useMemo(() => objekte.filter((o) => (o.art === 'tunnel' && !aus.has('tunnel'))
+    || (o.art === 'bruecke' && !aus.has('bruecke') && ((text?.(o)?.baueinheiten ?? 0) >= 3 || text?.(o)?.gross === true)))
+    .sort((a, b) => a.s - b.s), [objekte, text, aus])
+  const [jetzt, setJetzt] = useState<{ o: FahrObjekt; d: number } | null>(null)
+  useEffect(() => {
+    let vorher: [number, number] | null = null
+    let v = 0
+    const id = setInterval(() => {
+      const s = stelle.current, t = performance.now()
+      if (s === null) { vorher = null; v = 0; setJetzt(null); return }
+      if (vorher && t > vorher[1]) v = 0.6 * v + 0.4 * Math.max(0, (s - vorher[0]) / ((t - vorher[1]) / 1000))
+      vorher = [s, t]
+      const o = v < 1 ? undefined : liste.find((x) => x.s > s && x.s - s <= Math.max(VORAUS_MIN_M, v * VORAUS_S))
+      setJetzt((alt) => (o ? (alt?.o === o && Math.abs(alt.d - (o.s - s)) < 5 ? alt : { o, d: o.s - s }) : null))
+    }, 250)
+    return () => clearInterval(id)
+  }, [stelle, liste])
+  if (!jetzt) return null
+  const { o, d } = jetzt
+  const art = o.tlm?.art === 'galerie' ? 'Galerie' : o.art === 'tunnel' ? 'Tunnel' : 'Brücke'
+  const name = text?.(o)?.name
+  const m = gerundetM(d)
+  return (
+    <div role="status" className="pointer-events-none absolute bottom-3 left-1/2 max-w-[90%] -translate-x-1/2 rounded-lg bg-sbb-charcoal/90 px-3 py-1.5 text-sm font-bold text-white">
+      {art}{name && name !== art ? ` ${name}` : ''} in {m >= 1000 ? `${(m / 1000).toFixed(1).replace('.', ',')} km` : `${m} m`}
     </div>
   )
 }
@@ -955,10 +1022,8 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false, bauSchalter = false, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
-  /** auf den Modellseiten: Tunnel und Brücken lassen sich in der Legende ausblenden */
-  bauSchalter?: boolean
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
   /** beim Fahren: wo die Kamera vom Zug aus steht; bleibt, wenn der Ausschnitt weiterwandert */
@@ -1341,29 +1406,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     /** gestrichelte Linien auf dem Bildschirm: Strich und Lücke wachsen mit dem Abstand der Kamera, so bleiben
      *  sie auf dem Bildschirm gleich lang (Michael, 2026-10-07: «Wenn man näher geht … viel zu gross») */
     const strichMaterialien: LineMaterial[] = []
-    // Tunnel und Brücken lassen sich auf den Modellseiten ausblenden (Michael, 2026-10-12): ihre Striche bekommen dann die
-    // Farbe der Linie, Tunnel verschwinden im Berg wie die Linie; die Brückenplatten sind aus. bauArt gilt beim Zeichnen
-    type BauTeil = { mat: THREE.Material & { color: THREE.Color }; art: 'tunnel' | 'bruecke'; rand: boolean;
-                     farbe: string; dashed: boolean; depthTest: boolean; transparent: boolean; opacity: number }
-    let bauArt: 'tunnel' | 'bruecke' | null = null
-    const bauTeile: BauTeil[] = [], feinBauTeile: BauTeil[] = [], platten: THREE.Object3D[] = []
-    const bauMerken = (liste: BauTeil[], mat: THREE.Material & { color: THREE.Color }, rand: boolean) => {
-      if (!bauArt || !bauSchalter) return
-      liste.push({ mat, art: bauArt, rand, farbe: '#' + mat.color.getHexString(), dashed: (mat as LineMaterial).dashed ?? false,
-                   depthTest: mat.depthTest, transparent: mat.transparent, opacity: mat.opacity })
-    }
-    const bauAnwenden = (a: Set<Kategorie>) => {
-      for (const t of [...bauTeile, ...feinBauTeile]) {
-        const aus = a.has(t.art)
-        t.mat.color.set(aus ? (t.rand ? randVon(wegFarbe) : wegFarbe) : t.farbe)
-        if (t.mat instanceof LineMaterial && t.mat.dashed !== (aus ? false : t.dashed)) t.mat.dashed = aus ? false : t.dashed
-        t.mat.depthTest = aus ? true : t.depthTest
-        t.mat.transparent = aus ? false : t.transparent
-        t.mat.opacity = aus ? 1 : t.opacity
-        t.mat.needsUpdate = true
-      }
-      for (const p of platten) p.visible = !a.has('bruecke')
-    }
     const roehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean, wo: 'beide' | 'bild' | 'brille' = 'beide') => {
       if (punkte.length < 2) return
       if (wo !== 'brille') bildLinie(punkte, farbe, durch)
@@ -1379,7 +1421,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const lm = new LineMaterial({ color: f as string, linewidth: (breit as number) * (durch ? 0.85 : 1), depthTest: !durch,
                                       transparent: durch, opacity: durch ? 0.9 : 1, depthWrite: k === 1, dashed: durch })
         linienMaterialien.push(lm)
-        bauMerken(bauTeile, lm, k === 0)
         if (durch) strichMaterialien.push(lm)
         const strich = new Line2(lg, lm)
         if (durch) strich.computeLineDistances()
@@ -1413,7 +1454,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
                                           transparent: durch, opacity: durch ? 0.9 : 1,
                                           polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
           netz.renderOrder = (durch ? 2 : 0) + k
-          bauMerken(bauTeile, netz.material as THREE.MeshBasicMaterial, k === 0)
           nurBrille.add(netz)
         })
       }
@@ -1437,9 +1477,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       for (const g of grenzen) {
         if (g.von > bei) linie(strichVon(bei, g.von), wegFarbe, false)
         const von = Math.max(g.von, anfang, bei), bis = Math.min(g.bis, ende)
-        bauArt = g.art
         if (bis > von) linie(strichVon(von, bis), g.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, g.art === 'tunnel')
-        bauArt = null
         bei = Math.max(bei, g.bis)
       }
       if (bei < ende) linie(strichVon(bei, ende), wegFarbe, false)
@@ -1699,8 +1737,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNetz.visible = false
       for (const o of feinLinien.children) { (o as THREE.Mesh).geometry.dispose(); ((o as THREE.Mesh).material as THREE.Material).dispose() }
       feinLinien.clear()
-      feinBauTeile.length = 0
-      platten.length = 0
       scharfWeg()
       for (const o of wegStriche) o.visible = true
       nahZeichnen()
@@ -1820,7 +1856,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               new THREE.MeshBasicMaterial({ color: f as string, side: THREE.DoubleSide,
                                             polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
             netz.renderOrder = k
-            bauMerken(feinBauTeile, netz.material as THREE.MeshBasicMaterial, k === 0)
             feinLinien.add(netz)
           })
           return
@@ -1835,7 +1870,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const l = new Line2(lg, lm)
           if (tunnel) l.computeLineDistances()
           l.renderOrder = (tunnel ? 2 : 0) + k
-          bauMerken(feinBauTeile, lm, k === 0)
           feinLinien.add(l)
         })
       }
@@ -1871,9 +1905,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const flach = g.toNonIndexed()
         flach.computeVertexNormals()
         g.dispose()
-        const p = new THREE.Mesh(flach, new THREE.MeshLambertMaterial({ color: '#b9b6ae', side: THREE.DoubleSide }))
-        if (bauSchalter) { platten.push(p); p.visible = !ausJetzt.current.has('bruecke') }
-        feinLinien.add(p)
+        feinLinien.add(new THREE.Mesh(flach, new THREE.MeshLambertMaterial({ color: '#b9b6ae', side: THREE.DoubleSide })))
       }
       for (const [a0, z0] of weg.stuecke) {
         const anf = Math.max(a0, von), end = Math.min(z0, bis)
@@ -1883,16 +1915,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         for (const x of grenzen) {
           if (x.von > bei) strich(punkteVon(bei, x.von), wegFarbe, false)
           const a = Math.max(x.von, anf, bei), z = Math.min(x.bis, end)
-          bauArt = x.art
           if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, x.art === 'tunnel')
-          bauArt = null
           if (z > a && x.art === 'bruecke') platte(punkteVon(a, z))
           bei = Math.max(bei, x.bis)
         }
         if (bei < end) strich(punkteVon(bei, end), wegFarbe, false)
       }
       for (const o of wegStriche) o.visible = false
-      bauAnwenden(ausJetzt.current)
       nahZeichnen()
     }
 
@@ -2061,7 +2090,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       gruppen.seilbahn.visible = !a.has('seilbahn')
       seeFlaechen.visible = !luftbild || a.has('luftbild')
       auflageMalen(a)
-      bauAnwenden(a)
     }
     anwenden.current(ausJetzt.current)
 
@@ -2161,7 +2189,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           materialien.push(scheibe)
           kopfteil(loft(tReihe(0.55, 0.12, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
         }
-        // im Tunnel derselbe Wagen halb durchsichtig über dem Berg; beide werden am Portal geschnitten, so
+        // im Tunnel derselbe Wagen durchsichtig über dem Berg (Deckkraft 0,28, vorher 0,35; Michael, 2026-10-12); beide werden am Portal geschnitten, so
         // wechselt der Wagen nicht auf einmal, sondern fliessend (Michael, 2026-10-07: «wagen für wagen … verfeinern»)
         const ebeneAussen = new THREE.Plane(), ebeneDrin = new THREE.Plane()
         const durch = g.clone()
@@ -2171,7 +2199,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const alt = o.material as THREE.Material
           if (!ersatz.has(alt)) {
             const m = alt.clone()
-            m.transparent = true; m.opacity = 0.35; m.depthTest = false; m.clippingPlanes = [ebeneDrin]
+            m.transparent = true; m.opacity = 0.28; m.depthTest = false; m.clippingPlanes = [ebeneDrin]
             ersatz.set(alt, m)
           }
           o.material = ersatz.get(alt)!
@@ -2898,6 +2926,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       renderer.domElement.remove()
       dunkelFlaeche.remove()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild, bauSchalter])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }

@@ -85,6 +85,8 @@ export function Linie({ nr, zurueck, zurueckText }: {
 
   return (
     <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
+      {/* auf dem Desktop die Angaben links, die Karte rechts (Michael, 2026-10-12) */}
+      <div className="xl:grid xl:grid-cols-2 xl:items-start xl:gap-2">
       <header className="px-4">
         <h1 className="flex items-center gap-2 text-2xl font-bold text-sbb-black dark:text-sbb-white">
           Linie {profil.linie}
@@ -119,7 +121,7 @@ export function Linie({ nr, zurueck, zurueckText }: {
       </header>
 
       {/* die Linie im Netz, mit ihren Bahnhöfen und Tunneln */}
-      <div className="px-4">
+      <div className="min-w-0 px-4">
         <ObjektKarte art="tunnel" linie={nr} markiert={null}
                      objekte={(profil.listen?.tunnel ?? []).map((t, i) => ({
                        kennung: `${nr}:${i}`, name: t.name, km: t.km }))}
@@ -130,6 +132,7 @@ export function Linie({ nr, zurueck, zurueckText }: {
                        window.location.hash = listenAdresse(nr, 'tunnel', null, Number(kennung.split(':')[1]))
                      }}
                      bahnhofOeffnen={(uic) => { window.location.hash = `#/bahnhof/${uic}` }} />
+      </div>
       </div>
 
       <div className="px-4">

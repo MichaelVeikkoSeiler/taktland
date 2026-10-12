@@ -265,11 +265,22 @@ details.klapp[open] > summary::after { rotate: 180deg; }
     overflow: hidden;
   }
   & > * + * { margin-top: 0.5rem; }
+  /* ungeordnete Listen auf dem Desktop in Spalten, sobald zwei je 26rem Platz haben (Michael, 2026-10-12); auf dem Handy,
+     dem Tablet und in schmalen Spalten eine; Reihenfolgen (ol) bleiben untereinander */
+  @media (min-width: 80rem) {
+    &:is(ul) { display: grid; grid-template-columns: repeat(auto-fill, minmax(26rem, 1fr)); gap: 0.5rem; align-items: start; }
+    &:is(ul) > * + * { margin-top: 0; }
+  }
   & :is(a, button):hover { background-color: var(--color-sbb-silver); }
   @media (prefers-color-scheme: dark) {
     & > * { background-color: var(--color-sbb-charcoal); }
     & :is(a, button):hover { background-color: var(--color-sbb-iron); }
   }
+}
+
+/* Auf dem Desktop ist die Spalte breiter (App.tsx); Fliesstext bleibt lesbar schmal */
+@media (min-width: 80rem) {
+  p { max-width: 48rem; }
 }
 
 /* Fahrtblatt: auf dem Bildschirm verkleinert, gedruckt auf A4 in voller Grösse */

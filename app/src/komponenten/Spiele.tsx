@@ -14,13 +14,13 @@ export function Spiele() {
         rund um die Bahn in der Schweiz folgen.
       </p>
       {/* zwei Spalten, zwei Zeilen: jedes Spiel ein Bild mit Titel, das Bild ist der Knopf (Michael, 2026-10-10) */}
-      <ul className="mt-5 grid grid-cols-2 gap-3">
+      <ul className="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-4">
         {SPIELE.filter((s) => s.status === 'spielbereit').map((s) => <Karte key={s.id} spiel={s} />)}
       </ul>
       {/* Platzhalter schmal, damit das Spielbare die Hauptsache bleibt (Michael, 2026-10-03) */}
       {SPIELE.some((s) => s.status === 'im-bau') && (
         <>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+          <ul className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
             {SPIELE.filter((s) => s.status === 'im-bau').map((s) => <Karte key={s.id} spiel={s} />)}
           </ul>
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">

@@ -95,14 +95,14 @@ export function Auftakt({ bild, oben }: { bild: AuftaktBild; oben?: ReactNode })
     <div className="relative -mx-4 -mt-8 mb-6">
       <img
         src={dunkel ? bild.dunkel : bild.hell} width={bild.breite} height={bild.hoehe} alt={bild.alt}
-        className="block h-auto w-full"
+        className="block h-auto w-full xl:h-72 xl:object-cover"
       />
 
       {anderes && angefragt && (
         <img
           src={anderes} width={bild.breite} height={bild.hoehe} alt="" aria-hidden="true"
           onLoad={() => setGeladen(true)}
-          className={`pointer-events-none absolute inset-0 size-full transition-opacity
+          className={`pointer-events-none absolute inset-0 size-full transition-opacity xl:object-cover
                       ease-in-out motion-reduce:transition-none ${
             sichtbar ? 'opacity-100 duration-700' : 'opacity-0 duration-1000'}`}
         />

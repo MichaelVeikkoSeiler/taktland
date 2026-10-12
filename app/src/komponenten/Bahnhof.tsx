@@ -79,6 +79,8 @@ export function Bahnhof({ uic, zurueck, eintrag, zurueckText }: {
 
   return (
     <Rahmen zurueck={zurueck} zurueckText={zurueckText}>
+      {/* auf dem Desktop der Steckbrief links, die Karte rechts (Michael, 2026-10-12) */}
+      <div className="xl:grid xl:grid-cols-2 xl:items-start xl:gap-2">
       <header className="px-4">
         <h1 className="text-2xl font-bold text-sbb-black dark:text-sbb-white">{profil.name}</h1>
         <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -128,10 +130,11 @@ export function Bahnhof({ uic, zurueck, eintrag, zurueckText }: {
 
       {/* wo der Bahnhof im Netz liegt */}
       {eintrag && (
-        <div className="px-4">
+        <div className="min-w-0 px-4">
           <BahnhofKarte eintrag={eintrag} />
         </div>
       )}
+      </div>
 
       <div className="px-4">
         {profil.chapters.map((k) => (
@@ -191,8 +194,11 @@ export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang, verwe
   // Zeilen mit Bahnhof werden zur Liste mit Links (Linienseite, Kapitel Bahnhöfe)
   const kaesten = kapitel.facts.filter((f) => f.uic === undefined)
   const bahnhoefe = kapitel.facts.filter((f) => f.uic !== undefined)
+  // auf dem Desktop links Text und Fakten, rechts die Fragen dazu (Michael, 2026-10-12)
+  const zweiSpalten = kapitel.questions.length > 0
   return (
-    <section className="mt-8">
+    <section className={`mt-8 ${zweiSpalten ? 'xl:grid xl:grid-cols-2 xl:items-start xl:gap-x-8' : ''}`}>
+      <div className="min-w-0">
       <h2 className="text-xl font-semibold text-sbb-black dark:text-sbb-white">{kapitel.title}</h2>
       <p className="mt-2 leading-relaxed text-sbb-black dark:text-sbb-white">{kapitel.body}</p>
 
@@ -226,7 +232,9 @@ export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang, verwe
           </p>
         </aside>
       )}
+      </div>
 
+      <div className="min-w-0 xl:pt-6">
       {kapitel.questions.map((f) => {
         const id = f.id
         return (
@@ -239,6 +247,7 @@ export function KapitelBlock({ kapitel, antworten, merken, gleise, anhang, verwe
           />
         )
       })}
+      </div>
     </section>
   )
 }

@@ -182,8 +182,9 @@ export default function App() {
   return (
     <div className="min-h-dvh bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <Ladebalken />
-      {/* auf dem Tablet breiter: 672 Pixel wirkten dort verloren (Michael, 2026-09-22) */}
-      <div className="mx-auto max-w-2xl md:max-w-3xl">
+      {/* auf dem Tablet breiter: 672 Pixel wirkten dort verloren (Michael, 2026-09-22); auf dem Desktop noch breiter, der
+          Fliesstext bleibt lesbar schmal (index.css), Listen stehen in Spalten (Michael, 2026-10-12) */}
+      <div className="mx-auto max-w-2xl md:max-w-3xl xl:max-w-6xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
               fahrt={seite.art === 'fahrt' ? seite.teil : seite.art === 'ohneziel' ? 'neu'
                 : seite.art === 'fahrtblatt' ? 'blatt' : null} />

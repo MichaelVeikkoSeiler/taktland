@@ -808,7 +808,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
                     dark:bg-sbb-midnight dark:text-sbb-white" role="dialog" aria-label="Fahren">
-      <div className="mx-auto max-w-2xl px-4 pb-10 pt-4">
+      <div className="mx-auto max-w-2xl px-4 pb-10 pt-4 xl:max-w-7xl">
         {/* Die Meldungen für Bildschirmleser (VoiceOver, TalkBack): nur hier
             gesprochen, nicht bei jeder neuen Zeit */}
         <p ref={ansage} className="sr-only" aria-live="assertive" aria-atomic="true" />
@@ -838,13 +838,18 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
         {/* Karte und Band ganz oben, über Zeitraffer, Tempo und Meldungen: Diese
             wechseln ihre Höhe, Karte und Band sollen nicht springen (Michael,
-            2026-09-26: «Karte noch weiter oben. Oberhalb der Geschwindigkeit») */}
+            2026-09-26: «Karte noch weiter oben. Oberhalb der Geschwindigkeit»); auf dem Desktop links und
+            stehend, alles andere rechts daneben (Michael, 2026-10-12) */}
+        <div className="xl:grid xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:items-start xl:gap-8">
+        <div className="min-w-0 xl:sticky xl:top-4">
         <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste}
                     tempo={stand ? stand.v * (probefahrt ? raffer : 1) : null}
                     start={titel.split(' → ')[0]} ziel={ohneZiel ? undefined : titel.split(' → ')[1]} />
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
                       name={(o) => textVon(o)?.name} springen={probefahrt ? springen : undefined} />
+        </div>
+        <div className="min-w-0">
         {ankunftKarte}
         {bahnhofKnopf}
 
@@ -1041,6 +1046,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           Bahnübergängen sind keine Sicherheitsinformation: Die Daten können unvollständig oder
           veraltet sein, es gelten allein die Signale vor Ort.
         </p>
+        </div>
+        </div>
       </div>
       {offenerBahnhof && (
         <BahnhofFenster uic={offenerBahnhof.uic} eintrag={offenerBahnhof.eintrag}

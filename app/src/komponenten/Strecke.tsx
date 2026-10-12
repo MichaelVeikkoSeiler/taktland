@@ -699,7 +699,7 @@ function Ergebnis({
   if (modell) {
     return (
       <ModellAusWeg titel={fest ? null : titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
-                    bauen={() => void fahrtStarten(true, false, true)} />
+                    bauen={() => void fahrtStarten(true, false, true)} text={objektText} />
     )
   }
 
@@ -964,9 +964,11 @@ function Ergebnis({
 
 /** Die Linien des Wegs, verlinkt, wo die Linie in Taktland eine Seite hat */
 /** Die eigene Strecke der Modellbahn: gleich nach der Wahl bauen; bis etwa 200 km, länger lädt das Gelände zu langsam */
-function ModellAusWeg({ titel, laedt, fehler, fahrweg, bauen }: {
+function ModellAusWeg({ titel, laedt, fehler, fahrweg, bauen, text }: {
   /** null: der Titel steht schon oben (gemerkte Probefahrt) */
   titel: string | null; laedt: boolean; fehler: string | null; fahrweg: Fahrweg | null; bauen: () => void
+  /** Name und Baueinheiten der Tunnel und Brücken, für die Vorankündigung im Modell */
+  text: (o: FahrObjekt) => ObjektText | undefined
 }) {
   // einmal je Weg (die Seite gibt Ergebnis je Wahl einen eigenen Schlüssel)
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -986,7 +988,7 @@ function ModellAusWeg({ titel, laedt, fehler, fahrweg, bauen }: {
       )}
       {fahrweg && laenge !== null && laenge <= MODELL_HOECHSTENS_M && (
         <Suspense fallback={<p className="mt-2 text-sm text-sbb-metal">Das Modell wird geladen …</p>}>
-          <ModellStrecke fahrweg={fahrweg} objekte={fahrweg.objekte} />
+          <ModellStrecke fahrweg={fahrweg} objekte={fahrweg.objekte} text={text} />
         </Suspense>
       )}
     </section>

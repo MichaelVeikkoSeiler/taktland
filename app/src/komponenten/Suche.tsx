@@ -84,7 +84,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
       {favoritenOben.length > 0 && (
         <section aria-labelledby="favoriten-titel" className="mt-4">
           <h2 id="favoriten-titel" className="text-sm font-medium">Favoriten</h2>
-          <ul className="mt-2 space-y-2 md:grid md:grid-cols-2 md:gap-2 md:space-y-0">
+          <ul className="mt-2 space-y-2 md:grid md:grid-cols-2 md:gap-2 xl:grid-cols-3 md:space-y-0">
             {favoritenOben.map((e) => <Eintrag key={e.uic} e={e} oeffnen={oeffnen} favorit />)}
           </ul>
           <h2 className="mt-6 text-sm font-medium">Alle Bahnhöfe</h2>
@@ -95,7 +95,7 @@ export function Suche({ index, oeffnen, stand, aendern }: {
         <Blaettern {...leiste} blaettern={(n) => blaettern(n)} name="Seiten" />
       </div>
 
-      <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 md:grid md:grid-cols-2 md:gap-2 md:space-y-0 dark:border-sbb-iron">
+      <ul className="mt-4 space-y-2 border-t border-sbb-cloud pt-4 md:grid md:grid-cols-2 md:gap-2 xl:grid-cols-3 md:space-y-0 dark:border-sbb-iron">
         {sichtbar.map((e) => <Eintrag key={e.uic} e={e} oeffnen={oeffnen} favorit={favoriten.includes(e.uic)} />)}
       </ul>
 

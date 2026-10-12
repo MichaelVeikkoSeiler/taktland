@@ -186,9 +186,11 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              Spiel «Modellbahn» unter Spiele (2026-10-08 kurz «Modellbahn VR») (komponenten/Modellbahn.tsx, #/modellbahn, für alle, die Brille nur mit WebXR):
              auf der Seite Modellbahn der Kasten «Modellbahn: ein Modell zum Anschauen, kein Abbild der Wirklichkeit»
              (komponenten/ModellHinweis.tsx), unten nach den Strecken (man liest ihn nicht jedes Mal), unter jedem Modell nur ein Satz mit Link «Was nicht stimmt» dorthin; Zug fährt in allen 3D-Ansichten in 2 s an und bremst am Ziel in 2 s ab (ANFAHREN_S in Relief.tsx, ANFAHREN_MS in Fahrtmodus.tsx); eine gemerkte Probefahrt (&fest=1) hat «Start → Ziel» als Titel und zeigt Start, Ziel, Über und ihre Linien nur zum Lesen, ohne Felder zum Ändern;
-             unter jedem Modell und im Vollbild hinter «Ein- und ausblenden» die Schalter Tunnel, Brücken, Gipfel, Kultur, Seilbahnen,
-             Gebiete, Luftbild und Km-Netz (SehenswertLegende mit bauwerke; ausgeblendete Tunnel und Brücken in der Farbe der Linie,
-             Tunnel dann im Berg verborgen, ohne Brückenplatte; bauSchalter in Relief.tsx; Michael, 2026-10-12); das Modell auf der Seite
+             unter jedem Modell und im Vollbild hinter «Ein- und ausblenden» die Schalter Gipfel, Kultur, Seilbahnen, Gebiete, Luftbild
+             und Km-Netz, bei Probefahrten und eigener Strecke dazu «Tunnel melden» und «Brücken melden» (SehenswertLegende mit bauwerke):
+             Tunnel und Brücken sind immer gezeichnet, die Schalter steuern nur die Vorankündigung unten im Modell, «Tunnel … in 400 m»,
+             10 s im gefahrenen Tempo vorher, mindestens 200 m, Brücken wie beim Fahren ab 3 Baueinheiten (Vorankuendigung in Relief.tsx;
+             Michael, 2026-10-12); der Zug im Tunnel mit Deckkraft 0,28 (vorher 0,35); das Modell auf der Seite
              ab 600 px Breite quer, auch nach dem Vollbild (bildHoehe);
              die Linie dunkelgrau mit Rand wie in 3D beim Fahren (FARBEN.weg), in der Brille ein flaches Band statt einer Röhre,
              auf dem der Zug fährt (eine Röhre schluckte ihn aus der Nähe), Tunnel darin gestrichelt mit 12 mm Strich und 8 mm Lücke auf
@@ -306,6 +308,12 @@ Listen und Karten, die zu etwas führen, sind **Kacheln**: helles Grau `#ebebeb`
 und weisse mit Rand, haben dieselben leicht abgerundeten Ecken (`rounded-lg`, Michael, 2026-09-26); gewählte Knöpfe sind
 Anthracite `#5a5a5a` statt Schwarz (Michael, 2026-09-25). Kacheln und Knöpfe sind die
 einzige Ausnahme von den kantigen Flächen.
+
+**Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
+48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
+Auftaktbild als flaches Band (288 px, Auftakt.tsx); Modelle links (2/3) mit Knöpfen rechts (ZWEI_SPALTEN in Relief.tsx), beim
+Fahren Karte und Streckenband links und stehend, alles andere rechts; Bahnhof- und Linienseite oben Angaben links, Karte rechts,
+in jedem Kapitel mit Fragen links Text und Fakten, rechts die Fragen (KapitelBlock). Handy und Tablet bleiben, wie sie sind.
 
 Eigene Einträge (Probefahrten, gemerkte Fahrten, Favoriten, Fahrten im Logbuch) lassen sich **nach links wischen**:
 der Eintrag bleibt aufgeschoben, und ein Tipp auf die rote Fläche «Löschen» löscht ihn ohne weitere Rückfrage (`komponenten/Wischen.tsx`,
