@@ -20,6 +20,11 @@ foreach (array_slice(explode("\n", trim($text)), 1) as $z) {
     if (count($t) === 4) $zeilen[] = $t;
 }
 $zeilen = array_reverse($zeilen);
+// Total über alle Tage (Michael, 2026-10-12). «app» summiert Geräte je Tag: ein Gerät, das an
+// zehn Tagen öffnet, zählt zehnmal. Verschiedene Geräte insgesamt ergibt erst die Summe von «neu».
+$summe = [0, 0, 0];
+foreach ($zeilen as $t) for ($i = 0; $i < 3; $i++) $summe[$i] += (int) $t[$i + 1];
+$zahl = fn($n) => number_format($n, 0, '.', "'");
 $h = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 ?><!doctype html>
 <html lang="de-CH">
@@ -36,6 +41,7 @@ $h = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
   th, td { padding: 6px 14px; text-align: right; border-bottom: 1px solid #e5e5e5; font-variant-numeric: tabular-nums; }
   th:first-child, td:first-child { text-align: left; }
   th { font-weight: 600; }
+  tfoot td { font-weight: 700; border-top: 2px solid #212121; border-bottom: 0; }
 </style>
 </head>
 <body>
@@ -51,7 +57,12 @@ $h = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
   <?php foreach ($zeilen as [$tag, $web, $app, $neu]): ?>
   <tr><td><?= $h($tag) ?></td><td><?= $h($web) ?></td><td><?= $h($app) ?></td><td><?= $h($neu) ?></td></tr>
   <?php endforeach; ?>
+  <tfoot>
+  <tr><td>Total, <?= count($zeilen) ?> Tage</td><td><?= $zahl($summe[0]) ?></td><td><?= $zahl($summe[1]) ?></td><td><?= $zahl($summe[2]) ?></td></tr>
+  </tfoot>
 </table>
+<p style="margin-top:12px">Total: die Summe aller Tage. Bei «app» zählt ein Gerät an jedem Tag, an dem es
+   Taktland öffnet, also mehrmals; wie viele verschiedene Geräte es insgesamt waren, zeigt das Total von «neu».</p>
 <?php endif; ?>
 <p style="margin-top:16px"><a href="?csv">Als CSV herunterladen</a></p>
 </body>
