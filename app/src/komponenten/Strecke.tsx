@@ -288,12 +288,17 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
   // Modellbahn mit gewähltem Weg: das Modell gleich unter dem Titel, Von, Nach und die Linien darunter (Michael,
   // 2026-10-10: «Das Bild mit dem Ladebalken ist zu weit unten»)
   const modellOben = modell && ergebnis?.art === 'weg'
+  // ohne Start und Ziel («Ohne Ziel») die Namen der Betriebspunkte an den Enden des Wegs
+  const ende = (i: 0 | -1) => (ergebnis?.art === 'weg' ? netz?.punkte[ergebnis.weg.punkte.at(i)!] ?? '' : '')
+  const probeTitel = wahl.von && wahl.nach ? `${name(wahl.von)} → ${name(wahl.nach)}`
+    : ergebnis?.art === 'weg' ? `${ende(0)} → ${ende(-1)}` : 'Probefahrt als Modell'
   return (
     <div className={`px-4 pb-4 ${modellOben ? 'flex flex-col' : ''}`}>
       {modell && fest ? (
         <>
           <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />
-          <h1 className="mt-4 text-2xl font-bold tracking-tight">Probefahrt als Modell</h1>
+          {/* Start und Ziel statt «Probefahrt als Modell» (Michael, 2026-10-12) */}
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">{probeTitel}</h1>
         </>
       ) : modell ? (
         <>
@@ -391,17 +396,19 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
         <div className={modellOben ? 'order-1' : ''}><Ergebnis key={`${wahl.von}-${wahl.nach}-${wahl.ueber}-${wahl.weg?.join('.')}`} netz={netz} weg={ergebnis.weg} tunnelIds={ergebnis.tunnel}
                   brueckenIds={ergebnis.bruecken} tunnel={tunnel} bruecken={bruecken}
                   bahnhof={bahnhof} alleBruecken={alleBruecken} verzeichnis={verzeichnis}
-                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} /></div>
+                  zeigeAlle={() => setAlleBruecken(true)} wahl={wahl} modell={modell} fest={fest} /></div>
       )}
     </div>
   )
 }
 
 function Ergebnis({
-  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl, modell,
+  netz, weg, tunnelIds, brueckenIds, tunnel, bruecken, bahnhof, alleBruecken, verzeichnis, zeigeAlle, wahl, modell, fest = false,
 }: {
   wahl: StreckenWahl
   modell: boolean
+  /** gemerkte Probefahrt: Start und Ziel stehen schon im Titel der Seite */
+  fest?: boolean
   netz: StreckenNetz
   weg: Weg
   tunnelIds: string[]
@@ -691,7 +698,7 @@ function Ergebnis({
 
   if (modell) {
     return (
-      <ModellAusWeg titel={titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
+      <ModellAusWeg titel={fest ? null : titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
                     bauen={() => void fahrtStarten(true, false, true)} />
     )
   }

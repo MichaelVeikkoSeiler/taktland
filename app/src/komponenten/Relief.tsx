@@ -316,13 +316,14 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
                      szene={daten && weg ? (fuellen, className) => (
                        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                               probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                              fuellen={fuellen} className={className} />
+                              fuellen={fuellen} bauSchalter className={className} />
                      ) : null} />
       )}
       {daten && weg && (
         <>
           {/* unter der Karte, damit man von ihr mehr sieht (Michael, 2026-10-10) */}
           <div className="mt-3"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
+          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz bauwerke /></div>
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
@@ -334,7 +335,6 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
             {faktor === 2 && <span className="font-medium text-sbb-black dark:text-sbb-white"> Die Höhe ist 2-fach überhöht.</span>}
           </p>
           <Legende wegText="Linie" wegFarbe={FARBEN.weg} />
-          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz /></div>
           <Hinweise r={daten.r} />
         </>
       )}
@@ -519,11 +519,13 @@ export function ModellStrecke({ fahrweg, objekte }: { fahrweg: Fahrweg; objekte:
                      szene={daten && weg ? (fuellen, className) => (
                        <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                               probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                              fuellen={fuellen} className={className} />
+                              fuellen={fuellen} bauSchalter className={className} />
                      ) : null} />
       )}
       {daten && weg && (
         <>
+          {/* was das Modell zeigt (Michael, 2026-10-12: «Kultur, Brücken, Tunnel und so weiter») */}
+          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz bauwerke /></div>
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
@@ -547,7 +549,7 @@ interface Fahrknopf { los: () => void; halt: () => void; tempo: (t: number | nul
 /** Modellbahn auf dem Bildschirm: wählbares Tempo (Michael, 2026-10-10: «Originalgeschwindigkeit … doppelte, vierfache,
  *  achtfache»); wie schnell Züge auf einer Strecke fahren, steht in keiner Quelle: 1× ist wie bei der Probefahrt 100 km/h */
 const MODELL_TEMPO = 100 / 3.6
-const MODELL_TEMPI = [null, 1, 2, 4, 8] as const
+const MODELL_TEMPI = [null, 1, 2, 4, 8, 16, 32] as const
 
 
 /** Unter dem Modell: «Mit VR-Brille», der Zug auf dem Bildschirm und das Zuggeräusch (Michael, 2026-10-08: Modellbahn
@@ -571,6 +573,7 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
   stand: ModellStand
 }) {
   const [voll, setVoll] = useState(false)
+  const [filter, setFilter] = useState(false)
   useEchtesVollbild(voll, setVoll)
   const { vorne, setVorne } = stand
   return (
@@ -598,8 +601,18 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
                       onClick={() => { fuehrerstand.current = !vorne; setVorne(!vorne); if (!vorne) fahrknopf.current?.los() }}>
                 Führerstand
               </button>
+              {/* auch im Vollbild wählen, was das Modell zeigt (Michael, 2026-10-12) */}
+              <button type="button" aria-pressed={filter} aria-expanded={filter}
+                      className={`${KAMERA_KNOPF} ${filter ? '!bg-sbb-anthracite !text-white' : ''}`} onClick={() => setFilter(!filter)}>
+                Ein- und ausblenden
+              </button>
             </div>
-            <div className="max-w-sm"><TempoWahl stand={stand} fahrknopf={fahrknopf} klein /></div>
+            <div className="max-w-md"><TempoWahl stand={stand} fahrknopf={fahrknopf} klein /></div>
+            {filter && (
+              <div className="max-w-xl rounded-lg bg-white/90 p-1.5 dark:bg-sbb-midnight/90">
+                <SehenswertLegende gebieteMitBoden kmNetz bauwerke />
+              </div>
+            )}
           </div>
         </>
       )}
@@ -672,7 +685,7 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler,
       )}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Mit «{(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Min.» fährt der Zug in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke,
-        ein Zeitraffer, kein Fahrplan. 1× ist etwa 100 km/h, 2× bis 8× entsprechend schneller; wie schnell Züge auf dieser
+        ein Zeitraffer, kein Fahrplan. 1× ist etwa 100 km/h, 2× bis 32× entsprechend schneller; wie schnell Züge auf dieser
         Strecke wirklich fahren, steht in keiner Quelle von Taktland. Drehen mit einem Finger, zoomen mit zwei, verschieben mit zwei Fingern oder der
         rechten Maustaste.
         {xr && <> In der Brille steht das Modell etwa {BRILLE_BREITE_M.toLocaleString('de-CH')} m breit auf Tischhöhe: ein
@@ -706,8 +719,6 @@ function Legende({ wegText, wegFarbe, zug = false }: { wegText: string; wegFarbe
     <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
       {zug && <li className="flex items-center gap-1.5"><span aria-hidden="true" className="size-3 rounded-full" style={{ background: FARBEN.zug }} /> Zug</li>}
       <li className="flex items-center gap-1.5">{strich(wegFarbe)} {wegText}</li>
-      <li className="flex items-center gap-1.5">{strich(FARBEN.tunnel, true)} Tunnel</li>
-      <li className="flex items-center gap-1.5">{strich(FARBEN.bruecke)} Brücke</li>
       <li className="flex items-center gap-1.5"><span aria-hidden="true" className="size-2.5 rounded-full" style={{ background: FARBEN.bahnhof }} /> Bahnhof</li>
       <li className="flex items-center gap-1.5"><span aria-hidden="true" style={{ color: FARBEN.gipfel }}>▲</span> Gipfel</li>
     </ul>
@@ -919,6 +930,12 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className }: {
 
 /* ---------- die Zeichnung ---------- */
 
+/** Höhe des Modells auf der Seite: auf dem Handy etwas höher als breit, ab 600 px Breite quer (Michael, 2026-10-12:
+ *  «Dieses Bild kann gerne querformatig sein»), nie höher als 70 % des Fensters */
+function bildHoehe(b: number) {
+  return Math.round(Math.min(window.innerHeight * 0.7, b * (b >= 600 ? 0.62 : 1.1)))
+}
+
 /** Höhe im Raster bei Ost, Nord, zwischen den Feldern linear */
 function hoeheBei(r: Relief, h: Uint16Array, e: number, n: number) {
   const { ost, nord, m, breite, hoehe } = r.raster
@@ -938,8 +955,10 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false, className }: {
+function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false, bauSchalter = false, className }: {
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
+  /** auf den Modellseiten: Tunnel und Brücken lassen sich in der Legende ausblenden */
+  bauSchalter?: boolean
   /** beim Fahren: die Stelle des Zugs in Metern entlang des Wegs, laufend nachgeführt */
   zug?: React.RefObject<number | null>
   /** beim Fahren: wo die Kamera vom Zug aus steht; bleibt, wenn der Ausschnitt weiterwandert */
@@ -1322,6 +1341,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     /** gestrichelte Linien auf dem Bildschirm: Strich und Lücke wachsen mit dem Abstand der Kamera, so bleiben
      *  sie auf dem Bildschirm gleich lang (Michael, 2026-10-07: «Wenn man näher geht … viel zu gross») */
     const strichMaterialien: LineMaterial[] = []
+    // Tunnel und Brücken lassen sich auf den Modellseiten ausblenden (Michael, 2026-10-12): ihre Striche bekommen dann die
+    // Farbe der Linie, Tunnel verschwinden im Berg wie die Linie; die Brückenplatten sind aus. bauArt gilt beim Zeichnen
+    type BauTeil = { mat: THREE.Material & { color: THREE.Color }; art: 'tunnel' | 'bruecke'; rand: boolean;
+                     farbe: string; dashed: boolean; depthTest: boolean; transparent: boolean; opacity: number }
+    let bauArt: 'tunnel' | 'bruecke' | null = null
+    const bauTeile: BauTeil[] = [], feinBauTeile: BauTeil[] = [], platten: THREE.Object3D[] = []
+    const bauMerken = (liste: BauTeil[], mat: THREE.Material & { color: THREE.Color }, rand: boolean) => {
+      if (!bauArt || !bauSchalter) return
+      liste.push({ mat, art: bauArt, rand, farbe: '#' + mat.color.getHexString(), dashed: (mat as LineMaterial).dashed ?? false,
+                   depthTest: mat.depthTest, transparent: mat.transparent, opacity: mat.opacity })
+    }
+    const bauAnwenden = (a: Set<Kategorie>) => {
+      for (const t of [...bauTeile, ...feinBauTeile]) {
+        const aus = a.has(t.art)
+        t.mat.color.set(aus ? (t.rand ? randVon(wegFarbe) : wegFarbe) : t.farbe)
+        if (t.mat instanceof LineMaterial && t.mat.dashed !== (aus ? false : t.dashed)) t.mat.dashed = aus ? false : t.dashed
+        t.mat.depthTest = aus ? true : t.depthTest
+        t.mat.transparent = aus ? false : t.transparent
+        t.mat.opacity = aus ? 1 : t.opacity
+        t.mat.needsUpdate = true
+      }
+      for (const p of platten) p.visible = !a.has('bruecke')
+    }
     const roehre = (punkte: THREE.Vector3[], farbe: string, durch: boolean, wo: 'beide' | 'bild' | 'brille' = 'beide') => {
       if (punkte.length < 2) return
       if (wo !== 'brille') bildLinie(punkte, farbe, durch)
@@ -1337,6 +1379,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const lm = new LineMaterial({ color: f as string, linewidth: (breit as number) * (durch ? 0.85 : 1), depthTest: !durch,
                                       transparent: durch, opacity: durch ? 0.9 : 1, depthWrite: k === 1, dashed: durch })
         linienMaterialien.push(lm)
+        bauMerken(bauTeile, lm, k === 0)
         if (durch) strichMaterialien.push(lm)
         const strich = new Line2(lg, lm)
         if (durch) strich.computeLineDistances()
@@ -1370,6 +1413,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
                                           transparent: durch, opacity: durch ? 0.9 : 1,
                                           polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
           netz.renderOrder = (durch ? 2 : 0) + k
+          bauMerken(bauTeile, netz.material as THREE.MeshBasicMaterial, k === 0)
           nurBrille.add(netz)
         })
       }
@@ -1393,7 +1437,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       for (const g of grenzen) {
         if (g.von > bei) linie(strichVon(bei, g.von), wegFarbe, false)
         const von = Math.max(g.von, anfang, bei), bis = Math.min(g.bis, ende)
+        bauArt = g.art
         if (bis > von) linie(strichVon(von, bis), g.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, g.art === 'tunnel')
+        bauArt = null
         bei = Math.max(bei, g.bis)
       }
       if (bei < ende) linie(strichVon(bei, ende), wegFarbe, false)
@@ -1653,6 +1699,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNetz.visible = false
       for (const o of feinLinien.children) { (o as THREE.Mesh).geometry.dispose(); ((o as THREE.Mesh).material as THREE.Material).dispose() }
       feinLinien.clear()
+      feinBauTeile.length = 0
+      platten.length = 0
       scharfWeg()
       for (const o of wegStriche) o.visible = true
       nahZeichnen()
@@ -1772,6 +1820,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
               new THREE.MeshBasicMaterial({ color: f as string, side: THREE.DoubleSide,
                                             polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
             netz.renderOrder = k
+            bauMerken(feinBauTeile, netz.material as THREE.MeshBasicMaterial, k === 0)
             feinLinien.add(netz)
           })
           return
@@ -1786,6 +1835,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const l = new Line2(lg, lm)
           if (tunnel) l.computeLineDistances()
           l.renderOrder = (tunnel ? 2 : 0) + k
+          bauMerken(feinBauTeile, lm, k === 0)
           feinLinien.add(l)
         })
       }
@@ -1821,7 +1871,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const flach = g.toNonIndexed()
         flach.computeVertexNormals()
         g.dispose()
-        feinLinien.add(new THREE.Mesh(flach, new THREE.MeshLambertMaterial({ color: '#b9b6ae', side: THREE.DoubleSide })))
+        const p = new THREE.Mesh(flach, new THREE.MeshLambertMaterial({ color: '#b9b6ae', side: THREE.DoubleSide }))
+        if (bauSchalter) { platten.push(p); p.visible = !ausJetzt.current.has('bruecke') }
+        feinLinien.add(p)
       }
       for (const [a0, z0] of weg.stuecke) {
         const anf = Math.max(a0, von), end = Math.min(z0, bis)
@@ -1831,13 +1883,16 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         for (const x of grenzen) {
           if (x.von > bei) strich(punkteVon(bei, x.von), wegFarbe, false)
           const a = Math.max(x.von, anf, bei), z = Math.min(x.bis, end)
+          bauArt = x.art
           if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, x.art === 'tunnel')
+          bauArt = null
           if (z > a && x.art === 'bruecke') platte(punkteVon(a, z))
           bei = Math.max(bei, x.bis)
         }
         if (bei < end) strich(punkteVon(bei, end), wegFarbe, false)
       }
       for (const o of wegStriche) o.visible = false
+      bauAnwenden(ausJetzt.current)
       nahZeichnen()
     }
 
@@ -2006,6 +2061,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       gruppen.seilbahn.visible = !a.has('seilbahn')
       seeFlaechen.visible = !luftbild || a.has('luftbild')
       auflageMalen(a)
+      bauAnwenden(a)
     }
     anwenden.current(ausJetzt.current)
 
@@ -2197,7 +2253,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const cx = xs.length ? (Math.min(...xs) + Math.max(...xs)) / 2 : 0
     const cz = zs.length ? (Math.min(...zs) + Math.max(...zs)) / 2 : 0
     // die Breite zählt im Hochformat mehr: sonst ragt eine Strecke von Westen nach Osten links und rechts hinaus
-    const seitenverhaeltnis = Math.max(0.5, el.clientWidth / Math.max(1, zug ? el.clientHeight : Math.min(window.innerHeight * 0.7, el.clientWidth * 1.1)))
+    const seitenverhaeltnis = Math.max(0.5, el.clientWidth / Math.max(1, zugVonAussen || fuellenJetzt.current ? el.clientHeight : bildHoehe(el.clientWidth)))
     const breitX = xs.length ? Math.max(...xs) - Math.min(...xs) : 0, tiefZ = zs.length ? Math.max(...zs) - Math.min(...zs) : 0
     // Strecken von West nach Osten von Westen her ansehen: so läuft die Linie im Bild nach oben,
     // die Namen stehen untereinander statt sich nebeneinander zu drängen
@@ -2211,14 +2267,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
 
     const groesseSetzen = () => {
       const b = el.clientWidth
-      // auf der eigenen Seite bestimmt die Breite die Höhe, beim Fahren der Rahmen
-      const hh = zug || fuellenJetzt.current ? el.clientHeight : Math.round(Math.min(window.innerHeight * 0.7, b * 1.1))
+      // auf der eigenen Seite bestimmt die Breite die Höhe, beim Fahren und im Vollbild der Rahmen; nicht bei der Probefahrt
+      // (zug), sonst behielt das Bild nach dem Vollbild dessen Höhe (Michael, 2026-10-12: «ein sehr hohes Bild»)
+      const hh = zugVonAussen || fuellenJetzt.current ? el.clientHeight : bildHoehe(b)
       if (!b || !hh) return
       renderer.setSize(b, hh)
       // Schilder haben eine feste Grösse im Verhältnis zur Höhe des Bildes: im Vollbild der Modellbahn so gross wie
       // daneben, sonst wachsen sie mit der Höhe des Bildschirms
       if (fuellenJetzt.current && !zugVonAussen) {
-        const f = Math.min(1, Math.min(window.innerHeight * 0.7, b * 1.1) / hh)
+        const f = Math.min(1, bildHoehe(b) / hh)
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] * f, grundMass[1] * f, 1)
       } else if (!renderer.xr.isPresenting) for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0], grundMass[1], 1)
       for (const lm of linienMaterialien) lm.resolution.set(b, hh)
@@ -2841,6 +2898,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       renderer.domElement.remove()
       dunkelFlaeche.remove()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild, bauSchalter])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }

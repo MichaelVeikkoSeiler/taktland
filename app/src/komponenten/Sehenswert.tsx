@@ -119,7 +119,7 @@ const imBild = (z: { x0: number; x1: number; y0: number; y1: number }, box: Box,
  * Welche Kategorien die Karten zeigen: jede lässt sich in der Legende aus- und
  * einblenden (Michael, 2026-09-26), gemerkt auf diesem Gerät, für alle Karten.
  */
-export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden' | 'kmnetz' | 'luftbild'
+export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden' | 'kmnetz' | 'luftbild' | 'tunnel' | 'bruecke'
 const KATEGORIEN_SPEICHER = 'taktland.karte.v1'
 let versteckt: Set<Kategorie> = (() => {
   try {
@@ -292,6 +292,9 @@ const LANG: Partial<Record<Kategorie, string>> = {
 }
 
 const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
+  // nur in den Modellen (Michael, 2026-10-12: «wählen können, was man alles eingeblendet haben möchte»)
+  ['tunnel', 'Tunnel', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="2.5" strokeDasharray="3 2" stroke="#8a8a8a" /></svg>],
+  ['bruecke', 'Brücken', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M1 5H15" strokeWidth="2.5" stroke="#b45309" /></svg>],
   ['orte', 'Orte', <span className="inline-block size-1.5 rounded-full bg-sbb-metal dark:bg-sbb-storm" />],
   ['gipfel', 'Gipfel', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M5 1L9 9H1Z" className="fill-gipfel" /></svg>],
   ['kgs', 'Kultur', <svg viewBox="0 0 10 10" className="size-2.5"><rect x="2" y="2" width="6" height="6" transform="rotate(45 5 5)" className="fill-kgs" /></svg>],
@@ -307,11 +310,14 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
 /** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein.
  *  «gebieteMitBoden»: Gebiete, Wald und Siedlung als ein Knopf «Gebiete», damit die
  *  Legende in «Fahren» eine Zeile weniger braucht (Michael, 2026-09-30) */
-export function SehenswertLegende({ orte = false, gebieteMitBoden = false, kmNetz = false }: {
+export function SehenswertLegende({ orte = false, gebieteMitBoden = false, kmNetz = false, bauwerke = false }: {
   orte?: boolean; gebieteMitBoden?: boolean; kmNetz?: boolean
+  /** Tunnel und Brücken, nur in den Modellen */
+  bauwerke?: boolean
 }) {
   const aus = useVersteckt()
-  const eintraege = LEGENDE.filter(([k]) => (orte || k !== 'orte') && (kmNetz || (k !== 'kmnetz' && k !== 'luftbild')) && !(gebieteMitBoden && k === 'boden'))
+  const eintraege = LEGENDE.filter(([k]) => (orte || k !== 'orte') && (kmNetz || (k !== 'kmnetz' && k !== 'luftbild'))
+    && (bauwerke || (k !== 'tunnel' && k !== 'bruecke')) && !(gebieteMitBoden && k === 'boden'))
   return (
     <div className="mt-1 flex flex-wrap gap-1.5 text-xs" role="group" aria-label="Auf der Karte zeigen">
       {eintraege.map(([k, text, zeichen]) => {
