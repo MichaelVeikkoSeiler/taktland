@@ -288,7 +288,8 @@ export class Fuehrerpult {
   /** auch von der Tastatur */
   tun(aktion: Aktion): string {
     const sim = this.quelle === 'simulation'
-    const gesperrt = 'Beim Fahren bestimmt der Standort das Tempo'
+    const gesperrt = this.quelle === 'probe' ? 'In der Probefahrt bestimmt der Zeitraffer das Tempo'
+      : 'Beim Fahren bestimmt der Standort das Tempo'
     switch (aktion) {
       case 'sollPlus': if (!sim) return gesperrt
         this.soll = Math.min(PULT_HOECHST_KMH, this.soll + SCHRITT_KMH); if (this.bremse === 2) this.bremse = 0; return `${this.soll} km/h gewählt`
@@ -422,7 +423,8 @@ export class Fuehrerpult {
     c.strokeStyle = '#ffffff'; c.lineWidth = 6; c.lineCap = 'round'
     c.beginPath(); c.moveTo(mx, my); c.lineTo(mx + Math.cos(w) * (r - 30), my + Math.sin(w) * (r - 30)); c.stroke()
     c.fillStyle = '#ffffff'; c.beginPath(); c.arc(mx, my, 10, 0, Math.PI * 2); c.fill()
-    c.font = 'bold 64px Helvetica, Arial, sans-serif'; c.fillText(String(Math.round(l.v * 3.6)), mx, my + 100)
+    const zahl = Math.round(l.v * 3.6)
+    c.font = `bold ${zahl >= 1000 ? 44 : 64}px Helvetica, Arial, sans-serif`; c.fillText(zahl.toLocaleString('de-CH'), mx, my + 100)
     c.font = '24px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.grau; c.fillText('km/h', mx, my + 130)
     // rechts: Herkunft des Tempos, Wahl und Bremse
     c.textAlign = 'left'
