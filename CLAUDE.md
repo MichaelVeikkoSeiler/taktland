@@ -257,10 +257,10 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              ausserhalb des feinen Geländes mit der groben Höhe, verschoben um den Unterschied am anderen Ende, Tunnel und Brücken für die Höhe immer alle, auch wenn ihre Zeichen
              ausgeschaltet sind (wegDerFahrt), Blick in Richtung des Gleises unter dem Auge, geneigt zur Linie 300 m voraus, Brücken als schlichte Platte 7 m breit ohne Pfeiler (Breite und Pfeiler in keiner
              Quelle; Michael, 2026-10-11: «Aufbau von Brücken, damit die Strecke … flach darüber führt»)
-data/gebaeude/  Gebäude, ein Versuch auf Gümmenen–Bern (Michael, 2026-10-13): swissBUILDINGS3D 3.0 (swisstopo, CityGML je Kartenblatt,
+data/gebaeude/  Gebäude, ein Versuch, zuerst auf Gümmenen–Bern (Michael, 2026-10-13): swissBUILDINGS3D 3.0 (swisstopo, CityGML je Kartenblatt,
              der neueste Jahrgang), Dach- und Wandflächen in Dreiecke zerlegt (mapbox_earcut), nur Gebäude mit ihrer Mitte bis 400 m neben
              den Bahnlinien, Dächer in der Farbe des Nahbilds (SWISSIMAGE 2,5 m), Wände grau (in keiner Quelle), unten 2 m verlängert;
-             je 500 m eine .bgz (pipeline/build_gebaeude.py, 5'000 Gebäude, 2,7 MB); in der App nur im Führerstand, mit dem feinen
+             je 500 m eine .bgz (pipeline/build_gebaeude.py, 23'732 Gebäude, 10,5 MB; seit 2026-10-13 alle Strecken der scharfen Umgebung von Müntschemier über Bern und Biel/Bienne bis Neuchâtel); in der App nur im Führerstand, mit dem feinen
              Gelände geladen (gebaeudeSetzen in Relief.tsx, gebaeudeKachel in src/gelaende.ts)
 data/scharf_extern/  weitere scharfe Kacheln für daten.taktland.ch, nicht in Git (build_scharf.py --extern, mit --relief NAME
              entlang eines Reliefs oder --weg A B … entlang des Wegs der App); die App liest dort scharf/index.json (DATEN_URL in

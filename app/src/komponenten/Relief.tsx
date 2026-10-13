@@ -867,7 +867,7 @@ function Hinweise({ r }: { r: Relief }) {
       )}
       <p>
         Im Führerstand nah am Zug Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt.
-        Zwischen Gümmenen und Bern, ein Versuch: Gebäude aus swissBUILDINGS3D (swisstopo) bis 400 m neben den Bahnlinien, die Dächer in der
+        Zwischen Müntschemier, Bern, Biel/Bienne und Neuchâtel, ein Versuch: Gebäude aus swissBUILDINGS3D (swisstopo) bis 400 m neben den Bahnlinien, die Dächer in der
         Farbe des Luftbilds, die Wände grau (in keiner Quelle).
       </p>
       <p>
@@ -1056,7 +1056,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
         <p className="mt-1">
           Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
           SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Im Führerstand nah am Zug das
-          Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt; zwischen Gümmenen und Bern, ein
+          Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt; zwischen Müntschemier, Bern, Biel/Bienne und Neuchâtel, ein
           Versuch, Gebäude aus swissBUILDINGS3D (swisstopo), die Dächer in der Farbe des Luftbilds, die Wände grau. Die Höhe der Gleise steht in
           keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Tunnel, von denen
           die Quelle nur einen Kilometer kennt und keine Länge, fehlen in 3D; beim Fahren meldet Taktland sie trotzdem. Zug nicht
