@@ -500,44 +500,56 @@ export class Fuehrerpult {
     const zahl = Math.round(l.v * 3.6)
     c.font = `bold ${zahl >= 1000 ? 44 : 64}px Helvetica, Arial, sans-serif`; c.fillText(zahl.toLocaleString('de-CH'), mx, my + 100)
     c.font = '24px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.grau; c.fillText('km/h', mx, my + 130)
-    // rechts: Herkunft des Tempos, Wahl und Bremse
+    // rechts oben: Herkunft des Tempos, Wahl und Bremse, klein
     c.textAlign = 'left'
     const quelle = { simulation: 'SIMULATION', gps: 'GPS', probe: 'PROBEFAHRT' }[l.quelle]
-    c.fillStyle = l.quelle === 'gps' ? '#7fd38a' : FARBE.gelb; c.font = 'bold 26px Helvetica, Arial, sans-serif'
-    c.fillText(quelle, 410, 60)
-    c.fillStyle = FARBE.grau; c.font = '24px Helvetica, Arial, sans-serif'
+    c.fillStyle = l.quelle === 'gps' ? '#7fd38a' : FARBE.gelb; c.font = 'bold 24px Helvetica, Arial, sans-serif'
+    c.fillText(quelle, 404, 48)
+    c.fillStyle = FARBE.grau; c.font = '22px Helvetica, Arial, sans-serif'
     if (l.quelle === 'simulation') {
-      c.fillText('gewählt', 410, 120)
-      c.fillStyle = FARBE.schrift; c.font = 'bold 40px Helvetica, Arial, sans-serif'; c.fillText(`${this.soll} km/h`, 410, 162)
-      c.fillStyle = FARBE.grau; c.font = '24px Helvetica, Arial, sans-serif'; c.fillText('Bremse', 410, 222)
-      c.fillStyle = this.bremse ? FARBE.karmin : FARBE.schrift; c.font = 'bold 34px Helvetica, Arial, sans-serif'
-      c.fillText(kuerzen(c, ['gelöst', 'bremst', 'Schnellbremse'][this.bremse], 220), 410, 264)
+      c.fillText(`gewählt ${this.soll} km/h`, 404, 80)
+      c.fillStyle = this.bremse ? FARBE.karmin : FARBE.grau
+      c.fillText(kuerzen(c, `Bremse ${['gelöst', 'bremst', 'Schnellbremse'][this.bremse]}`, 226), 404, 108)
     } else {
-      c.fillText(l.quelle === 'gps' ? 'aus dem Standort,' : 'im Zeitraffer', 410, 120)
-      c.fillText(l.quelle === 'gps' ? 'entlang der Strecke' : 'der Probefahrt', 410, 150)
-      c.fillText('Hebel gesperrt', 410, 222)
+      c.fillText(l.quelle === 'gps' ? 'aus dem Standort' : 'Zeitraffer', 404, 80)
+      c.fillText('Hebel gesperrt', 404, 108)
     }
+    c.fillStyle = '#26364d'; c.fillRect(404, 126, 220, 2)
+    // darunter die Vorschau (Michael, 2026-10-13, nach seinem Vorbild): Pfeil, Entfernung und Art des Nächsten voraus
+    const naechstes = vorListe(l)[0]
+    if (!naechstes) {
+      c.fillStyle = FARBE.grau; c.font = '24px Helvetica, Arial, sans-serif'
+      c.fillText('Nichts mehr', 404, 180); c.fillText('voraus', 404, 210)
+      return
+    }
+    c.fillStyle = FARBE.blau
+    c.beginPath(); c.moveTo(426, 148); c.lineTo(446, 172); c.lineTo(434, 172); c.lineTo(434, 196); c.lineTo(418, 196); c.lineTo(418, 172)
+    c.lineTo(406, 172); c.closePath(); c.fill()
+    c.fillStyle = FARBE.schrift; c.font = 'bold 40px Helvetica, Arial, sans-serif'; c.fillText(km(naechstes.d), 460, 190)
+    zeichen(c, naechstes.art, 426, 238)
+    c.fillStyle = FARBE.schrift; c.font = '24px Helvetica, Arial, sans-serif'
+    const [z1, z2] = zweiZeilen(c, naechstes.name, 220)
+    c.fillText(z1, 404, 296)
+    if (z2) c.fillText(z2, 404, 326)
   }
 
   private voranMalen(c: CanvasRenderingContext2D, l: PultLage) {
     kopf(c, 'Voraus')
-    const vor = l.ankuendigungen
-      .map((a) => ({ ...a, d: (a.s - l.s) * l.richtung }))
-      .filter((a) => a.d > 0)
-      .sort((a, b) => a.d - b.d)
-      .slice(0, 3)
+    const vor = vorListe(l).slice(0, 3)
     if (!vor.length) {
       c.fillStyle = FARBE.grau; c.font = '28px Helvetica, Arial, sans-serif'; c.fillText('Nichts mehr bis zum Ende des Wegs', 32, 130)
       return
     }
+    // eine Linie durch die Zeichen, wie die Strecke voraus (Michael, 2026-10-13, nach seinem Vorbild)
+    c.strokeStyle = FARBE.blau; c.globalAlpha *= 0.55; c.lineWidth = 4
+    c.beginPath(); c.moveTo(56, 84); c.lineTo(56, vor.length > 1 ? 118 + (vor.length - 1) * 84 : 150); c.stroke()
+    c.globalAlpha /= 0.55
     vor.forEach((a, i) => {
       const y = 110 + i * 84
-      c.strokeStyle = FARBE.blau; c.fillStyle = FARBE.blau; c.lineWidth = 4
-      if (a.art === 'tunnel') { c.beginPath(); c.arc(56, y + 6, 20, Math.PI, 0); c.lineTo(76, y + 26); c.moveTo(36, y + 6); c.lineTo(36, y + 26); c.stroke() }
-      else if (a.art === 'bruecke') { c.beginPath(); c.moveTo(30, y - 8); c.lineTo(82, y - 8); c.moveTo(38, y + 26); c.quadraticCurveTo(56, y - 8, 74, y + 26); c.stroke() }
-      else { c.beginPath(); c.arc(56, y + 8, 16, 0, Math.PI * 2); c.stroke() }
+      zeichen(c, a.art, 56, y + 8)
       c.fillStyle = FARBE.schrift; c.font = 'bold 34px Helvetica, Arial, sans-serif'; c.fillText(km(a.d), 110, y + 4)
       c.fillStyle = FARBE.grau; c.font = '26px Helvetica, Arial, sans-serif'; c.fillText(kuerzen(c, a.name, 490), 110, y + 36)
+      if (i < vor.length - 1) { c.fillStyle = '#26364d'; c.fillRect(110, y + 56, 498, 2) }
     })
   }
 
@@ -553,6 +565,31 @@ export class Fuehrerpult {
 }
 
 /* ---------- kleine Zeichnungen ---------- */
+
+/** was voraus kommt, das Nächste zuerst, mit Entfernung d in Metern */
+function vorListe(l: PultLage) {
+  return l.ankuendigungen.map((a) => ({ ...a, d: (a.s - l.s) * l.richtung })).filter((a) => a.d > 0).sort((a, b) => a.d - b.d)
+}
+
+/** das Zeichen für Tunnel, Brücke oder Bahnhof um (x, y), auf dem Grund der Anzeige, damit die Linie darunter verschwindet */
+function zeichen(c: CanvasRenderingContext2D, art: Ankuendigung['art'], x: number, y: number) {
+  c.fillStyle = FARBE.anzeige
+  c.beginPath(); c.arc(x, y, 26, 0, Math.PI * 2); c.fill()
+  c.strokeStyle = FARBE.blau; c.fillStyle = FARBE.blau; c.lineWidth = 4
+  if (art === 'tunnel') { c.beginPath(); c.arc(x, y - 2, 20, Math.PI, 0); c.lineTo(x + 20, y + 18); c.moveTo(x - 20, y - 2); c.lineTo(x - 20, y + 18); c.stroke() }
+  else if (art === 'bruecke') { c.beginPath(); c.moveTo(x - 26, y - 16); c.lineTo(x + 26, y - 16); c.moveTo(x - 18, y + 18); c.quadraticCurveTo(x, y - 16, x + 18, y + 18); c.stroke() }
+  else { c.beginPath(); c.arc(x, y, 16, 0, Math.PI * 2); c.stroke(); c.beginPath(); c.arc(x, y, 7, 0, Math.PI * 2); c.fill() }
+}
+
+/** ein Name auf höchstens zwei Zeilen, an Leerzeichen oder Bindestrich getrennt */
+function zweiZeilen(c: CanvasRenderingContext2D, text: string, breite: number): [string, string] {
+  if (c.measureText(text).width <= breite) return [text, '']
+  const teile = text.split(/(?<=[\s-])/)
+  let erste = ''
+  while (teile.length && c.measureText(erste + teile[0]).width <= breite) erste += teile.shift()
+  if (!erste) return [kuerzen(c, text, breite), '']
+  return [erste.trim(), kuerzen(c, teile.join('').trim(), breite)]
+}
 
 function kopf(c: CanvasRenderingContext2D, text: string) {
   c.fillStyle = FARBE.grau; c.font = 'bold 24px Helvetica, Arial, sans-serif'; c.textAlign = 'left'
