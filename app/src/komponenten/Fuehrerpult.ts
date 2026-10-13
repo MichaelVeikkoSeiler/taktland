@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { audioKontext, audioLesen, audioSetzen, signalhorn } from '../audio'
 
 /**
@@ -52,6 +53,12 @@ const NAMEN: Record<Aktion, string> = {
   bremsePlus: 'Bremse: stärker (B)', bremseMinus: 'Bremse: lösen (0)', horn: 'Signalhorn (H)', stirnlicht: 'Stirnlicht (L)',
   pultlicht: 'Pultbeleuchtung (P)', wischer: 'Scheibenwischer (W)', schnellbremse: 'Schnellbremse (Leertaste)',
   zuggeraeusch: 'Zuggeräusch ein, aus (T)', daemmerung: 'Dämmerung ein, aus (N)',
+}
+
+/** Kasten mit gerundeten Kanten; die Flächen bleiben Gruppen wie beim BoxGeometry (Deckel der Tasten mit Zeichen oben) */
+function rund(b: number, h: number, t: number) {
+  const r = Math.min(0.035, 0.45 * Math.min(b, h, t))
+  return new RoundedBoxGeometry(b, h, t, 3, r)
 }
 
 export class Fuehrerpult {
@@ -115,8 +122,12 @@ export class Fuehrerpult {
     return new THREE.MeshLambertMaterial({ color: farbe })
   }
 
+  /** ein Kasten mit gerundeten Kanten (Michael, 2026-10-13: «es ist alles ziemlich kantig und eckig»), Radius bis 3,5 cm,
+   *  bei dünnen Teilen 45 % der kleinsten Seite */
+  private ecken: THREE.CanvasTexture | null = null
+
   private kasten(b: number, h: number, t: number, farbe: string, x: number, y: number, z: number, kippen = 0, ort: THREE.Object3D = this.gruppe) {
-    const n = new THREE.Mesh(new THREE.BoxGeometry(b, h, t), this.material(farbe))
+    const n = new THREE.Mesh(rund(b, h, t), this.material(farbe))
     n.position.set(x, y, z)
     n.rotation.x = kippen
     ort.add(n)
@@ -150,7 +161,7 @@ export class Fuehrerpult {
     halter.rotation.x = kippen
     ort.add(halter)
     this.kasten(gross + 0.014, 0.012, gross + 0.014, FARBE.schwarz, 0, 0, 0, 0, halter)
-    const deckel = new THREE.Mesh(new THREE.BoxGeometry(gross, 0.018, gross), [
+    const deckel = new THREE.Mesh(rund(gross, 0.018, gross), [
       this.material(grund), this.material(grund),
       new THREE.MeshLambertMaterial({ color: '#ffffff', map: this.leinwand(128, 128, (g) => {
         g.fillStyle = grund; g.fillRect(0, 0, 128, 128); zeichen(g)
@@ -248,8 +259,11 @@ export class Fuehrerpult {
       const tex = new THREE.CanvasTexture(lw)
       tex.colorSpace = THREE.SRGBColorSpace
       tex.anisotropy = 4
-      this.kasten(0.58, 0.29, 0.02, FARBE.blende, x, 0, 0.072, 0, konsole)
-      const flaeche = new THREE.Mesh(new THREE.PlaneGeometry(0.52, 0.2925), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }))
+      this.kasten(0.58, 0.29, 0.04, FARBE.blende, x, 0, 0.062, 0, konsole)
+      // der Bildschirm mit runden Ecken wie sein Rahmen
+      const flaeche = new THREE.Mesh(new THREE.PlaneGeometry(0.52, 0.2925), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false,
+        alphaMap: this.ecken ??= this.leinwand(640, 360, (c) => { c.fillStyle = '#fff'; c.beginPath(); c.roundRect(0, 0, 640, 360, 26); c.fill() }),
+        alphaTest: 0.5 }))
       flaeche.position.set(x, 0, 0.0835)
       konsole.add(flaeche)
       this.anzeigen.push({ lw, tex, malen })
@@ -326,7 +340,7 @@ export class Fuehrerpult {
     const stange = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.13, 10), this.material('#1a1e24'))
     stange.position.y = 0.065
     griff.add(stange)
-    const knauf = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.045, 0.06), this.material('#22272e'))
+    const knauf = new THREE.Mesh(rund(0.1, 0.045, 0.06), this.material('#22272e'))
     knauf.position.y = 0.14
     griff.add(knauf)
     // auch der Knauf ist bedienbar: er schiebt nach vorn

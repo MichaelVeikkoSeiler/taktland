@@ -16,8 +16,16 @@ Dezimetern (je Int32), die Zahl der Ecken (UInt32), dann je Ecke Ost, Höhe, Nor
 der tiefsten Höhe (Int16) und die Farbe (3 × UInt8, dazu 1 Byte frei), je drei Ecken ein Dreieck. index.json hält die
 Kacheln und je Kachel die Jahrgänge der Blätter fest.
 
+Mit --kanton BE VS … statt dessen das ganze Band neben allen Bahnlinien eines Kantons (pipeline/umgebung.py) für
+daten.taktland.ch nach data/gebaeude_extern, je Kanton ein Verzeichnis index-{Kanton}.json; die geladenen Blätter werden
+danach gelöscht (Michael, 2026-10-13: «Als erstes den Kanton Bern, dann Kanton Wallis, dann Kanton Neuenburg und Waadt.
+Dann der Rest.»). --alle baut alle Kantone in dieser Reihenfolge.
+
     .venv/bin/python pipeline/build_gebaeude.py
+    .venv/bin/python pipeline/build_gebaeude.py --kanton BE
 """
+import argparse
+import time
 import gzip
 import io
 import json
@@ -52,17 +60,29 @@ GML = "{http://www.opengis.net/gml}"
 BLDG = "{http://www.opengis.net/citygml/building/2.0}"
 
 
-def blaetter(strecken):
-    """die Kartenblätter, die das Band berühren: {Blatt: (Jahr, Adresse der CityGML)}, je Blatt der neueste Jahrgang"""
-    d = json.loads((ROOT / "data" / "strecken.json").read_text(encoding="utf-8"))
-    lage = {name: d["lagen"][abk] for abk, name in d["punkte"].items() if abk in d["lagen"]}
-    orte = [o for st in STRECKEN for o in st]
-    lat = [lage[o][0] for o in orte]; lon = [lage[o][1] for o in orte]
-    bbox = f"{min(lon) - 0.02},{min(lat) - 0.015},{max(lon) + 0.02},{max(lat) + 0.015}"
-    raus, url = {}, f"{STAC}?bbox={bbox}&limit=100"
+def stac(url):
+    for versuch in range(5):
+        try:
+            with urllib.request.urlopen(url, timeout=60) as r:
+                return json.load(r)
+        except Exception as e:  # noqa: BLE001
+            print(f"  STAC: {e}, Versuch {versuch + 2}")
+            time.sleep(5 * (versuch + 1))
+    raise SystemExit("STAC nicht erreichbar")
+
+
+def blaetter(strecken, kacheln=None, bbox=None):
+    """die Kartenblätter, die das Band berühren: {Blatt: (Jahr, Adresse der CityGML)}, je Blatt der neueste Jahrgang;
+    mit kacheln die Blätter, die eine dieser Kacheln berühren"""
+    if bbox is None:
+        d = json.loads((ROOT / "data" / "strecken.json").read_text(encoding="utf-8"))
+        lage = {name: d["lagen"][abk] for abk, name in d["punkte"].items() if abk in d["lagen"]}
+        orte = [o for st in STRECKEN for o in st]
+        lat = [lage[o][0] for o in orte]; lon = [lage[o][1] for o in orte]
+        bbox = (min(lon) - 0.02, min(lat) - 0.015, max(lon) + 0.02, max(lat) + 0.015)
+    raus, url = {}, f"{STAC}?bbox={','.join(f'{v:.5f}' for v in bbox)}&limit=100"
     while url:
-        with urllib.request.urlopen(url, timeout=60) as r:
-            seite = json.load(r)
+        seite = stac(url)
         for f in seite["features"]:
             teile = f["id"].split("_")
             if len(teile) < 5:
@@ -71,7 +91,11 @@ def blaetter(strecken):
             # nur Blätter, die das Band berühren: ein Punkt der Linien im Blatt, um BAND_M vergrössert
             w, s_, o, n_ = f["bbox"]
             e0, n0 = build_relief.wgs84_zu_lv95(s_, w); e1, n1 = build_relief.wgs84_zu_lv95(n_, o)
-            if not any(e0 - BAND_M <= x <= e1 + BAND_M and n0 - BAND_M <= y <= n1 + BAND_M for st in strecken for x, y in
+            if kacheln is not None:
+                k = KACHEL_M
+                if not any(e0 - k <= qe * k <= e1 and n0 - k <= qn * k <= n1 for qe, qn in kacheln):
+                    continue
+            elif not any(e0 - BAND_M <= x <= e1 + BAND_M and n0 - BAND_M <= y <= n1 + BAND_M for st in strecken for x, y in
                        ((st[0], st[1]), (st[2], st[3]))):
                 continue
             gml = [a["href"] for a in f["assets"].values() if a["href"].endswith(".citygml.zip")]
@@ -94,7 +118,8 @@ def laden(blatt, jahr, href):
             datei.with_suffix(".teil").rename(datei)
         except Exception as e:  # abgebrochene Übertragung: noch einmal
             print(f"  {blatt}: {e}, Versuch {versuch + 2}")
-    return datei
+            time.sleep(10 * (versuch + 1))
+    return datei if datei.exists() else None
 
 
 class Luftbild:
@@ -105,6 +130,8 @@ class Luftbild:
     def farbe(self, e, n):
         ke, kn = int(e // 1000), int(n // 1000)
         if (ke, kn) not in self.km:
+            while len(self.km) >= 300:  # ein Kanton hat Tausende km, nur die letzten bleiben im Speicher
+                self.km.pop(next(iter(self.km)))
             p = NAH / f"{ke}_{kn}.jpg"
             self.km[(ke, kn)] = np.asarray(Image.open(p).convert("RGB")) if p.exists() else None
         a = self.km[(ke, kn)]
@@ -158,7 +185,103 @@ def gebaeude(datei):
                     yield flaechen
 
 
+def schreiben(ziel, kacheln):
+    """je Kachel eine .bgz; kacheln: {(qe, qn): [(Dreiecke n × 3 × 3, Farben n × 3)]}; gibt die Grösse zurück"""
+    groesse = 0
+    for (qe, qn), teile in kacheln.items():
+        drei = np.concatenate([d for d, _ in teile]); farben = np.concatenate([f for _, f in teile])
+        e0, n0 = qe * KACHEL_M, qn * KACHEL_M
+        h0 = int(np.floor(drei[:, :, 2].min() * 10))
+        a = np.zeros(len(drei) * 3, dtype=[("x", "<i2"), ("h", "<i2"), ("y", "<i2"), ("f", "u1", 4)])
+        p = drei.reshape(-1, 3)
+        a["x"] = np.round((p[:, 0] - e0) * 10); a["h"] = np.round(p[:, 2] * 10) - h0; a["y"] = np.round((p[:, 1] - n0) * 10)
+        a["f"][:, :3] = np.repeat(farben, 3, axis=0)
+        datei = ziel / f"{qe}_{qn}.bgz"
+        datei.write_bytes(gzip.compress(struct.pack("<iiiI", e0, n0, h0, len(a)) + a.tobytes(), 9))
+        groesse += datei.stat().st_size
+    return groesse
+
+
+def sammeln(fl, bild, ziel):
+    """die Dreiecke eines Gebäudes in die Liste ziel"""
+    alle = np.concatenate([p for _, p in fl])
+    me, mn = alle[:, 0].mean(), alle[:, 1].mean()
+    boden = alle[:, 2].min()
+    dach = bild.farbe(me, mn) or (150, 140, 130)
+    drei, farben = [], []
+    for art, p in fl:
+        if art == "WallSurface":
+            p = p.copy()
+            p[p[:, 2] < boden + 0.3, 2] -= WAND_TIEFER_M
+        for d in dreiecke(p):
+            drei.append(d); farben.append(dach if art == "RoofSurface" else WAND)
+    if drei:
+        ziel.append((np.array(drei, dtype=np.float64), np.array(farben, dtype=np.uint8)))
+
+
+def kanton(kt, band, kt_ringe, bild):
+    """das Band eines Kantons nach data/gebaeude_extern"""
+    import umgebung
+    ziel = ROOT / "data" / "gebaeude_extern"
+    ziel.mkdir(parents=True, exist_ok=True)
+    t0 = time.time()
+    kacheln = band.kacheln(kt, kt_ringe)
+    bl = blaetter(None, kacheln, umgebung.bbox_wgs84(kacheln))
+    print(f"{kt}: {len(kacheln)} Kacheln, {len(bl)} Kartenblätter", flush=True)
+    je, jahre, zahl, groesse = {}, {}, 0, 0
+    for i, (blatt, (jahr, href)) in enumerate(sorted(bl.items()), 1):
+        datei = laden(blatt, jahr, href)
+        if datei is None:
+            print(f"  {blatt}: nicht geladen, fehlt", flush=True)
+            continue
+        n_blatt, hier = 0, {}
+        try:
+            for fl in gebaeude(datei):
+                alle = np.concatenate([p for _, p in fl])
+                me, mn = alle[:, 0].mean(), alle[:, 1].mean()
+                k = (int(me // KACHEL_M), int(mn // KACHEL_M))
+                if k not in kacheln or not band.abstand(k[0], k[1], np.array([me]), np.array([mn]))[0] <= umgebung.BAND_M:
+                    continue
+                sammeln(fl, bild, hier.setdefault(k, []))
+                jahre.setdefault(k, set()).add(jahr)
+                n_blatt += 1
+        except Exception as e:  # noqa: BLE001  ein kaputtes Blatt soll nicht den Kanton anhalten
+            print(f"  {blatt}: {e}", flush=True)
+        for k, v in hier.items():
+            je.setdefault(k, []).extend(v)
+        datei.unlink()
+        zahl += n_blatt
+        print(f"  {i}/{len(bl)} {blatt} ({jahr}): {n_blatt} Gebäude, {time.time() - t0:.0f} s", flush=True)
+    for k in je:
+        (ziel / f"{k[0]}_{k[1]}.bgz").unlink(missing_ok=True)
+    groesse = schreiben(ziel, je)
+    (ziel / f"index-{kt}.json").write_text(json.dumps({
+        "quelle": "swissBUILDINGS3D 3.0 (swisstopo); Dachfarbe aus SWISSIMAGE (swisstopo) auf 2,5 m",
+        "geladen": date.today().isoformat(), "kachel_m": KACHEL_M, "band_m": umgebung.BAND_M, "kanton": kt,
+        "hinweis": "nur Gebäude bis band_m neben den Bahnlinien (swissTLMRegio); Wandfarbe in keiner Quelle; Wände unten "
+                   f"{WAND_TIEFER_M:g} m verlängert",
+        "kacheln": {f"{qe}_{qn}": sorted(jahre[(qe, qn)]) for qe, qn in sorted(je)},
+    }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"{kt}: {zahl} Gebäude in {len(je)} Kacheln, {groesse / 1e6:.1f} MB, {time.time() - t0:.0f} s", flush=True)
+
+
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--kanton", nargs="*", help="Kantone für daten.taktland.ch, z. B. BE VS")
+    ap.add_argument("--alle", action="store_true", help="alle Kantone, zuerst BE, VS, NE, VD")
+    a = ap.parse_args()
+    if a.kanton or a.alle:
+        import umgebung
+        kt_ringe = umgebung.kantone()
+        band = umgebung.Band()
+        bild = Luftbild()
+        for kt in (umgebung.alle_kantone() if a.alle else a.kanton):
+            kanton(kt, band, kt_ringe, bild)
+        return
+    versuch()
+
+
+def versuch():
     strecken = [s for orte in STRECKEN for s in build_scharf.strecken_entlang(orte)]
     print(f"{len(strecken)} Stücke Bahnlinie")
     bl = blaetter(strecken)

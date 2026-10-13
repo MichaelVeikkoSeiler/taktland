@@ -7,8 +7,15 @@
  * Einmal in public_html/daten hochladen und https://daten.taktland.ch/holen.php öffnen: je Aufruf ein Paket, die Seite
  * lädt sich selbst neu, bis alle da sind. Zuletzt fügt es die Verzeichnisse der Reihen (scharf/index-*.json) zu
  * scharf/index.json zusammen, erst dann sieht die App die neuen Kacheln, und löscht sich selbst.
+ *
+ * Seit 2026-10-13 dasselbe für Gebäude und Bäume je Kanton (Workflow «Gebäude und Bäume», .github/workflows/umgebung.yml,
+ * Release «umgebung-1», Ordner gebaeude/ und baeume/). Welches Release, steht in HOLEN; für die scharfe Umgebung dort
+ * 'scharf-1' eintragen.
  */
-const RELEASE = 'https://api.github.com/repos/MichaelVeikkoSeiler/taktland/releases/tags/scharf-1';
+const HOLEN = 'umgebung-1';
+const ARTEN = ['scharf-1' => ['muster' => '/^scharf-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['scharf'], 'workflow' => 'Scharfe Umgebung'],
+               'umgebung-1' => ['muster' => '/^umgebung-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['gebaeude', 'baeume'], 'workflow' => 'Gebäude und Bäume']];
+const RELEASE = 'https://api.github.com/repos/MichaelVeikkoSeiler/taktland/releases/tags/' . HOLEN;
 
 header('Content-Type: text/html; charset=utf-8');
 set_time_limit(900);
@@ -41,31 +48,38 @@ if (!class_exists('ZipArchive')) seite('Fehlt: ZipArchive', 'PHP auf diesem Serv
 
 // die Pakete laut Release, nach Namen geordnet
 [$json, $fehler] = abrufen(RELEASE);
-if ($json === false) seite('Release nicht gefunden', $h($fehler) . ' — Ist der Workflow «Scharfe Umgebung» durchgelaufen?');
+if ($json === false) seite('Release nicht gefunden', $h($fehler) . ' — Ist der Workflow «' . ARTEN[HOLEN]['workflow'] . '» durchgelaufen?');
 $pakete = [];
 foreach (json_decode($json, true)['assets'] ?? [] as $a) {
-    if (preg_match('/^scharf-[a-z0-9]+-\d+\.zip$/', $a['name'])) $pakete[$a['name']] = [$a['browser_download_url'], (int) $a['size']];
+    if (preg_match(ARTEN[HOLEN]['muster'], $a['name'])) $pakete[$a['name']] = [$a['browser_download_url'], (int) $a['size']];
 }
 ksort($pakete);
 $namen = array_keys($pakete);
 if (!$namen) seite('Keine Pakete', 'Im Release liegen noch keine Pakete.');
 
 if ($nr >= count($namen)) {
-    // die Verzeichnisse der Reihen zusammenfügen
-    $alle = null;
-    foreach (glob(__DIR__ . '/scharf/index-*.json') as $datei) {
-        $ix = json_decode(file_get_contents($datei), true);
-        if (!$ix) continue;
-        if ($alle === null) { $alle = $ix; $alle['strecken'] = []; $alle['kacheln'] = []; }
-        $alle['strecken'] = array_merge($alle['strecken'], $ix['strecken'] ?? []);
-        $alle['kacheln'] = array_merge($alle['kacheln'], $ix['kacheln'] ?? []);
+    // die Verzeichnisse der Reihen oder Kantone zusammenfügen
+    $zahl = 0;
+    foreach (ARTEN[HOLEN]['ordner'] as $ordner) {
+        $alle = null;
+        foreach (glob(__DIR__ . '/' . $ordner . '/index-*.json') as $datei) {
+            $ix = json_decode(file_get_contents($datei), true);
+            if (!$ix) continue;
+            if ($alle === null) { $alle = $ix; $alle['strecken'] = []; $alle['kantone'] = []; $alle['kacheln'] = []; }
+            $alle['strecken'] = array_merge($alle['strecken'], $ix['strecken'] ?? []);
+            if (isset($ix['kanton'])) $alle['kantone'][] = $ix['kanton'];
+            // + statt array_merge: Namen wie 5170_2395 bleiben Schlüssel
+            $alle['kacheln'] = $alle['kacheln'] + ($ix['kacheln'] ?? []);
+        }
+        if ($alle === null) seite('Kein Verzeichnis', 'In ' . $h($ordner) . '/ liegt kein index-*.json.');
+        unset($alle['kanton']);
+        ksort($alle['kacheln']);
+        file_put_contents(__DIR__ . '/' . $ordner . '/index.json', json_encode($alle, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+        $zahl += count($alle['kacheln']);
     }
-    if ($alle === null) seite('Kein Verzeichnis', 'In scharf/ liegt kein index-*.json.');
-    ksort($alle['kacheln']);
-    file_put_contents(__DIR__ . '/scharf/index.json', json_encode($alle, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
     @unlink(__DIR__ . '/.holen.sperre');
     @unlink(__FILE__);
-    seite('Fertig', count($namen) . ' Pakete ausgepackt, ' . count($alle['kacheln']) . ' Kacheln im Verzeichnis. Das Skript hat sich gelöscht.');
+    seite('Fertig', count($namen) . ' Pakete ausgepackt, ' . $zahl . ' Kacheln in den Verzeichnissen. Das Skript hat sich gelöscht.');
 }
 
 // nur ein Aufruf zugleich: ein zweiter (Seite doppelt offen, Neuladen während des Ladens) würde dieselbe Datei beschreiben

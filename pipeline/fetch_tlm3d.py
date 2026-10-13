@@ -5,9 +5,14 @@ Das ZIP ist 3,6 GB gross; gelesen werden nur sein Inhaltsverzeichnis und die
 vier Dateien der Ebene (etwa 60 MB), mit HTTP-Range-Anfragen. Ablage:
 data/raw/tlm3d/. Kostenlose Geodaten (OGD) von swisstopo, Quellenangabe Pflicht.
 
+Mit --baeume statt dessen die Ebenen für pipeline/build_baeume.py: von TLM_EINZELBAUM nur die Geometrie (.shp, etwa
+500 MB), von TLM_BODENBEDECKUNG die ganze Ebene (etwa 2,8 GB).
+
     python3 pipeline/fetch_tlm3d.py
+    python3 pipeline/fetch_tlm3d.py --baeume
 """
 import io
+import sys
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -55,13 +60,25 @@ class Fern(io.RawIOBase):
         return len(d)
 
 
+def gewollt(name):
+    if "--baeume" not in sys.argv:
+        return name.startswith(EBENE + ".") and not name.endswith(".lock")
+    if name.startswith("swissTLM3D_TLM_EINZELBAUM_"):
+        return name.endswith(".shp")
+    return name.startswith("swissTLM3D_TLM_BODENBEDECKUNG_") and name.rsplit(".", 1)[-1] in ("shp", "shx", "dbf", "cpg", "CPG")
+
+
 def main():
     AUSGABE.mkdir(parents=True, exist_ok=True)
     z = zipfile.ZipFile(io.BufferedReader(Fern(URL), buffer_size=1 << 20))
     for info in z.infolist():
         name = info.filename.replace("\\", "/").rsplit("/", 1)[-1]
-        if name.startswith(EBENE + ".") and not name.endswith(".lock"):
-            (AUSGABE / name).write_bytes(z.read(info))
+        if gewollt(name):
+            # in Stücken, die grossen Dateien passen nicht am Stück in den Speicher
+            with z.open(info) as quelle, open(AUSGABE / (name + ".teil"), "wb") as ziel:
+                while block := quelle.read(1 << 24):
+                    ziel.write(block)
+            (AUSGABE / (name + ".teil")).rename(AUSGABE / name)
             print("ok", name, info.file_size)
 
 

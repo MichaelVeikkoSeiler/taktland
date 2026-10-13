@@ -11,7 +11,7 @@ import type { ObjektText } from './Fahrtmodus'
 import { type Ankuendigung, Fuehrerpult, type TempoQuelle } from './Fuehrerpult'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
-import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel } from '../gelaende'
+import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { Ladebalken } from './Ladebalken'
@@ -194,6 +194,11 @@ const BRILLE_NAHE_M = 0.01
 const PULT_BILD_HOCH_M = -0.02, PULT_BILD_WEG_M = 0.25
 /** in der Brille sitzt das Auge so viel höher über dem Pult als auf dem Bildschirm */
 const KABINE_HOEHER_M = 0.15
+/** Höhe und Breite der Krone gezeichneter Bäume in Metern je Art (0 Einzelbaum, 1 Wald, 2 Wald offen, 3 Gebüschwald,
+ *  4 Gehölzfläche), in keiner Quelle: swissTLM3D hat Lage und Art, aber keine Höhe (Michael, 2026-10-13: «zuerst ohne
+ *  gemessene Baumhöhen») */
+const BAUM_FORM: [number, number][] = [[12, 3.5], [20, 3.2], [15, 4], [4, 2.2], [9, 3]]
+const OBEN = new THREE.Vector3(0, 1, 0)
 const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
@@ -867,8 +872,10 @@ function Hinweise({ r }: { r: Relief }) {
       )}
       <p>
         Im Führerstand nah am Zug Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt.
-        Zwischen Müntschemier, Bern, Biel/Bienne und Neuchâtel, ein Versuch: Gebäude aus swissBUILDINGS3D (swisstopo) bis 400 m neben den Bahnlinien, die Dächer in der
-        Farbe des Luftbilds, die Wände grau (in keiner Quelle).
+        Ein Versuch, bis 400 m neben den Bahnlinien, wo die Kacheln schon gebaut sind (zwischen Müntschemier, Bern, Biel/Bienne und Neuchâtel, weitere je Kanton):
+        Gebäude aus swissBUILDINGS3D (swisstopo), die Dächer in der Farbe des Luftbilds, die Wände grau (in keiner Quelle); Bäume aus swissTLM3D (swisstopo),
+        Einzelbäume dort, wo die Quelle sie hat, Waldflächen mit gezeichneten Bäumen gefüllt (wo im Wald ein Baum steht, steht in keiner Quelle), die Krone in
+        der Farbe des Luftbilds; Höhe und Form der Bäume in keiner Quelle, je nach Art 4 bis 20 m.
       </p>
       <p>
         Die Höhe der Gleise steht in keiner Quelle. Die Linie ist darum auf das Gelände gelegt, etwas darüber;
@@ -1056,8 +1063,9 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
         <p className="mt-1">
           Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
           SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Im Führerstand nah am Zug das
-          Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt; zwischen Müntschemier, Bern, Biel/Bienne und Neuchâtel, ein
-          Versuch, Gebäude aus swissBUILDINGS3D (swisstopo), die Dächer in der Farbe des Luftbilds, die Wände grau. Die Höhe der Gleise steht in
+          Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt; bis 400 m neben den Bahnlinien, wo
+          schon gebaut, ein Versuch: Gebäude aus swissBUILDINGS3D (swisstopo), die Dächer in der Farbe des Luftbilds, die Wände grau; Bäume aus swissTLM3D
+          (swisstopo), im Wald gezeichnet, Höhe in keiner Quelle. Die Höhe der Gleise steht in
           keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Tunnel, von denen
           die Quelle nur einen Kilometer kennt und keine Länge, fehlen in 3D; beim Fahren meldet Taktland sie trotzdem. Zug nicht
           massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
@@ -1758,6 +1766,76 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         gebaeudeNetze.set(name, netz)
       }
     }
+    // Bäume und Wald, ein Versuch auf den Strecken der Gebäude (Michael, 2026-10-13; pipeline/build_baeume.py): je Kachel ein
+    // InstancedMesh, Einzelbäume wo swissTLM3D sie hat, Waldflächen mit gezeichneten Bäumen gefüllt; Höhe und Breite je Art
+    // in keiner Quelle (BAUM_FORM), je Baum bis 25 % grösser oder kleiner, der Fuss auf dem Gelände der App
+    const baumGruppe = new THREE.Group()
+    baumGruppe.visible = false
+    szene.add(baumGruppe)
+    const baumForm = (() => {
+      const krone = new THREE.IcosahedronGeometry(1, 1)
+      krone.scale(1, 0.62, 1); krone.translate(0, 0.62, 0)
+      const stamm = new THREE.CylinderGeometry(0.06, 0.09, 0.4, 5, 1, true)
+      stamm.translate(0, 0.2, 0)
+      const teile = [krone.toNonIndexed(), stamm.toNonIndexed()]
+      const pos: number[] = [], farbe: number[] = []
+      teile.forEach((t, i) => {
+        const a = t.getAttribute('position').array
+        for (let k = 0; k < a.length; k++) pos.push(a[k])
+        for (let k = 0; k < a.length / 3; k++) farbe.push(...(i === 0 ? [1, 1, 1] : [0.35, 0.22, 0.25]))
+        t.dispose()
+      })
+      krone.dispose(); stamm.dispose()
+      const g = new THREE.BufferGeometry()
+      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+      g.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
+      g.computeVertexNormals()
+      return g
+    })()
+    const baumMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true })
+    const baumNetze = new Map<string, THREE.InstancedMesh>()
+    let baumAuftrag = 0
+    const baumSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
+      const auftrag = ++baumAuftrag
+      const namen = await baumNamen(e0, n0, e1, n1)
+      if (!laeuft || auftrag !== baumAuftrag) return
+      for (const [name, netz] of baumNetze) {
+        if (namen.includes(name)) continue
+        baumGruppe.remove(netz); netz.dispose(); baumNetze.delete(name)
+      }
+      const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), s = new THREE.Vector3(), c = new THREE.Color()
+      for (const name of namen) {
+        if (baumNetze.has(name)) continue
+        const k = await baumKachel(name)
+        if (!laeuft || auftrag !== baumAuftrag) return
+        const fs = feinStand
+        if (!k || !fs || baumNetze.has(name)) continue
+        const n = k.art.length
+        const netz = new THREE.InstancedMesh(baumForm, baumMaterial, n)
+        let z = 0
+        for (let i = 0; i < n; i++) {
+          const e = k.e0 + k.lage[i * 2] / 10, nn = k.n0 + k.lage[i * 2 + 1] / 10
+          const h = (scharfStand && scharfHoehe(scharfStand, e, nn)) ?? feinHoehe(fs.fein, e, nn)
+          if (h === null) continue
+          const [hoehe, breite] = BAUM_FORM[k.art[i]] ?? BAUM_FORM[0]
+          // gleichmässig gestreut, aber je Baum immer gleich
+          const r = Math.sin(e * 12.9898 + nn * 78.233) * 43758.5453, f = 0.75 + 0.5 * (r - Math.floor(r))
+          v.set(X(e), Y(h - 0.5), Z(nn))
+          s.set(X(breite * f) - X(0), Y(hoehe * f) - Y(0), X(breite * f) - X(0))
+          q.setFromAxisAngle(OBEN, f * 20)
+          netz.setMatrixAt(z, m.compose(v, q, s))
+          const lin = (x: number) => { const t = x / 255; return t <= 0.04045 ? t / 12.92 : ((t + 0.055) / 1.055) ** 2.4 }
+          netz.setColorAt(z, c.setRGB(lin(k.farben[i * 3]), lin(k.farben[i * 3 + 1]), lin(k.farben[i * 3 + 2]), THREE.LinearSRGBColorSpace))
+          z++
+        }
+        netz.count = z
+        netz.instanceMatrix.needsUpdate = true
+        if (netz.instanceColor) netz.instanceColor.needsUpdate = true
+        netz.computeBoundingSphere()
+        baumGruppe.add(netz)
+        baumNetze.set(name, netz)
+      }
+    }
     let scharfStand: Scharf | null = null
     let scharfMitBild = false
     interface ScharfNetz { name: string; netz: THREE.Mesh; mitte: [number, number]; uvFein: THREE.BufferAttribute; uvEigen: THREE.BufferAttribute; bild: 'nein' | 'laedt' | 'da' }
@@ -1986,6 +2064,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       profil = null
       feinNetz.visible = false
       gebaeudeGruppe.visible = false
+      baumGruppe.visible = false
       // Röhren haben zwei Materialien; Fels und Boden teilen alle Tunnel
       feinLinien.traverse((o) => {
         const x = o as THREE.Mesh
@@ -2046,6 +2125,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNetz.visible = true
       gebaeudeGruppe.visible = true
       void gebaeudeSetzen(e0, n0, e1, n1)
+      baumGruppe.visible = true
+      void baumSetzen(e0, n0, e1, n1)
       feinMalen?.()
       if (scharf) {
         const P = SCHARF_PUNKTE, schritt = SCHARF_KACHEL_M / (P - 1)

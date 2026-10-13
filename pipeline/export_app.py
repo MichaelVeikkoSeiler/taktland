@@ -160,6 +160,13 @@ def main():
             shutil.rmtree(ZIEL / "gebaeude")
         shutil.copytree(gebaeude, ZIEL / "gebaeude")
         print(f"gebaeude/: {sum(p.stat().st_size for p in (ZIEL / 'gebaeude').iterdir())/1e6:.1f} MB")
+    # Bäume und Wald, ein Versuch auf den Strecken der Gebäude (pipeline/build_baeume.py)
+    baeume = ROOT / "data" / "baeume"
+    if (baeume / "index.json").exists():
+        if (ZIEL / "baeume").exists():
+            shutil.rmtree(ZIEL / "baeume")
+        shutil.copytree(baeume, ZIEL / "baeume")
+        print(f"baeume/: {sum(p.stat().st_size for p in (ZIEL / 'baeume').iterdir())/1e6:.1f} MB")
     # Gelände der ganzen Schweiz in Kacheln (pipeline/build_gelaende.py), für «3D» auf jeder Fahrt
     gelaende = ROOT / "data" / "gelaende"
     if gelaende.exists():

@@ -1,0 +1,97 @@
+# Baut Gebäude (swissBUILDINGS3D) und Bäume (swissTLM3D) im Band neben allen Bahnlinien, je Kanton, für daten.taktland.ch
+# und legt die Pakete im Release «umgebung-1» ab; auf cyon holt server/daten/holen.php sie von dort und packt sie aus
+# (Michael, 2026-10-13: «Als erstes den Kanton Bern, dann Kanton Wallis, dann Kanton Neuenburg und Waadt. Dann der Rest.»).
+# Nur von Hand zu starten: Actions → Gebäude und Bäume → Run workflow. Die Gebäude laufen in Reihen von Kantonen
+# gleichzeitig, die Bäume in einer Reihe (swissTLM3D wird nur einmal geladen), je unter sechs Stunden.
+name: Gebäude und Bäume
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: umgebung
+  cancel-in-progress: false
+
+jobs:
+  vorbereiten:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release anlegen, falls es noch fehlt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view umgebung-1 --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1 || gh release create umgebung-1 --repo "$GITHUB_REPOSITORY" \
+            --title "Gebäude und Bäume für daten.taktland.ch" \
+            --notes "Gebäude aus swissBUILDINGS3D 3.0 und Bäume aus swissTLM3D (swisstopo), nur 400 m neben den Bahnlinien, je Kanton. Nicht Teil der App: server/daten/holen.php auf daten.taktland.ch holt die Pakete von hier."
+
+  gebaeude:
+    needs: vorbereiten
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { teil: gbe, kantone: "BE" }
+          - { teil: gvs, kantone: "VS" }
+          - { teil: gnevd, kantone: "NE VD" }
+          - { teil: gzh, kantone: "ZH" }
+          - { teil: gzentral, kantone: "LU UR SZ OW NW ZG" }
+          - { teil: gost, kantone: "GL SG AR AI" }
+          - { teil: ggr, kantone: "GR" }
+          - { teil: gfrso, kantone: "FR SO" }
+          - { teil: gnw, kantone: "BS BL AG" }
+          - { teil: gshtg, kantone: "SH TG" }
+          - { teil: gti, kantone: "TI" }
+          - { teil: ggeju, kantone: "GE JU" }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pakete installieren
+        run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib
+
+      - name: Gebäude bauen
+        run: python pipeline/build_gebaeude.py --kanton ${{ matrix.kantone }}
+
+      - name: Pakete schnüren
+        run: python pipeline/umgebung_pakete.py --teil ${{ matrix.teil }}
+
+      - name: Pakete ins Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload umgebung-1 data/umgebung_pakete/umgebung-${{ matrix.teil }}-*.zip --repo "$GITHUB_REPOSITORY" --clobber
+
+  baeume:
+    needs: vorbereiten
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pakete installieren
+        run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib pyshp
+
+      - name: swissTLM3D laden (Einzelbaum, Bodenbedeckung)
+        run: python pipeline/fetch_tlm3d.py --baeume
+
+      - name: Bäume bauen
+        run: python pipeline/build_baeume.py --alle
+
+      - name: Pakete schnüren
+        run: python pipeline/umgebung_pakete.py --teil baeume
+
+      - name: Pakete ins Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload umgebung-1 data/umgebung_pakete/umgebung-baeume-*.zip --repo "$GITHUB_REPOSITORY" --clobber

@@ -389,10 +389,31 @@ export const scharfBild = (name: string) =>
 
 /** Gebäude aus swissBUILDINGS3D (swisstopo) bis band_m neben den Bahnlinien (Michael, 2026-10-13; pipeline/build_gebaeude.py),
  *  in Kacheln von kachel_m: je Ecke Ost, Höhe, Nord in Dezimetern ab der Ecke der Kachel und Farbe, je drei Ecken ein Dreieck */
-interface GebaeudeIndex { kachel_m: number; quelle: string; kacheln: Record<string, number[]> }
+/** Kacheln der App und von daten.taktland.ch (je Kanton gebaut, Michael, 2026-10-13); die der App gehen vor */
+interface Umgebung { kachel_m: number; pfad: Map<string, string> }
+function umgebungIndex(ordner: string): Promise<Umgebung | null> {
+  return Promise.all([
+    holen<{ kachel_m: number; kacheln: Record<string, unknown> | string[] }>(`data/${ordner}/index.json`).catch(() => null),
+    holen<{ kachel_m: number; kacheln: Record<string, unknown> }>(`${DATEN_URL}${ordner}/index.json`).catch(() => null),
+  ]).then(([hier, dort]) => {
+    if (!hier && !dort) return null
+    const pfad = new Map<string, string>()
+    for (const name of Object.keys(dort?.kacheln ?? {})) pfad.set(name, `${DATEN_URL}${ordner}/${name}`)
+    const eigene = Array.isArray(hier?.kacheln) ? hier.kacheln : Object.keys(hier?.kacheln ?? {})
+    for (const name of eigene) pfad.set(name, `data/${ordner}/${name}`)
+    return { kachel_m: (hier ?? dort)!.kachel_m, pfad }
+  })
+}
+function umgebungNamen(ix: Umgebung, e0: number, n0: number, e1: number, n1: number) {
+  const k = ix.kachel_m, raus: string[] = []
+  for (let qe = Math.floor(e0 / k); qe <= Math.floor((e1 - 1) / k); qe++) {
+    for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (ix.pfad.has(`${qe}_${qn}`)) raus.push(`${qe}_${qn}`)
+  }
+  return raus
+}
 export interface GebaeudeKachel { e0: number; n0: number; h0: number; ecken: Int16Array; farben: Uint8Array }
-let gebaeudeVerz: Promise<GebaeudeIndex | null> | null = null
-export const gebaeudeIndex = () => (gebaeudeVerz ??= holen<GebaeudeIndex>('data/gebaeude/index.json').catch(() => null))
+let gebaeudeVerz: Promise<Umgebung | null> | null = null
+export const gebaeudeIndex = () => (gebaeudeVerz ??= umgebungIndex('gebaeude'))
 const gebaeudeVorrat = new Map<string, Promise<GebaeudeKachel | null>>()
 
 export function gebaeudeKachel(name: string) {
@@ -400,7 +421,8 @@ export function gebaeudeKachel(name: string) {
   if (p) return p
   while (gebaeudeVorrat.size >= 120) gebaeudeVorrat.delete(gebaeudeVorrat.keys().next().value!)
   p = (async () => {
-    const gepackt = await holenBinaer(`data/gebaeude/${name}.bgz`)
+    const pfad = (await gebaeudeIndex())?.pfad.get(name) ?? `data/gebaeude/${name}`
+    const gepackt = await holenBinaer(`${pfad}.bgz`)
     const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
     const v = new DataView(roh), n = v.getUint32(12, true)
     const ecken = new Int16Array(n * 3), farben = new Uint8Array(n * 3)
@@ -419,10 +441,43 @@ export function gebaeudeKachel(name: string) {
 export async function gebaeudeNamen(e0: number, n0: number, e1: number, n1: number): Promise<string[]> {
   if (!gelaendeMoeglich()) return []
   const ix = await gebaeudeIndex()
-  if (!ix) return []
-  const k = ix.kachel_m, raus: string[] = []
-  for (let qe = Math.floor(e0 / k); qe <= Math.floor((e1 - 1) / k); qe++) {
-    for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (ix.kacheln[`${qe}_${qn}`]) raus.push(`${qe}_${qn}`)
-  }
-  return raus
+  return ix ? umgebungNamen(ix, e0, n0, e1, n1) : []
+}
+
+/* ---------- Bäume und Wald, ein Versuch auf den Strecken der Gebäude ---------- */
+
+/** Bäume aus swissTLM3D (swisstopo) bis band_m neben den Bahnlinien (Michael, 2026-10-13; pipeline/build_baeume.py): je Baum
+ *  Ost und Nord in Dezimetern ab der Ecke der Kachel, die Art (0 Einzelbaum, 1 Wald, 2 Wald offen, 3 Gebüschwald,
+ *  4 Gehölzfläche) und die Farbe; in Flächen sind die einzelnen Bäume gezeichnet, die Höhe steht in keiner Quelle */
+export interface BaumKachel { e0: number; n0: number; lage: Uint16Array; art: Uint8Array; farben: Uint8Array }
+let baumVerz: Promise<Umgebung | null> | null = null
+const baumIndex = () => (baumVerz ??= umgebungIndex('baeume'))
+const baumVorrat = new Map<string, Promise<BaumKachel | null>>()
+
+export function baumKachel(name: string) {
+  let p = baumVorrat.get(name)
+  if (p) return p
+  while (baumVorrat.size >= 120) baumVorrat.delete(baumVorrat.keys().next().value!)
+  p = (async () => {
+    const pfad = (await baumIndex())?.pfad.get(name) ?? `data/baeume/${name}`
+    const gepackt = await holenBinaer(`${pfad}.bmd`)
+    const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+    const v = new DataView(roh), n = v.getUint32(8, true)
+    const lage = new Uint16Array(n * 2), art = new Uint8Array(n), farben = new Uint8Array(n * 3)
+    for (let k = 0; k < n; k++) {
+      const o = 12 + k * 8
+      lage[k * 2] = v.getUint16(o, true); lage[k * 2 + 1] = v.getUint16(o + 2, true); art[k] = v.getUint8(o + 4)
+      farben[k * 3] = v.getUint8(o + 5); farben[k * 3 + 1] = v.getUint8(o + 6); farben[k * 3 + 2] = v.getUint8(o + 7)
+    }
+    return { e0: v.getInt32(0, true), n0: v.getInt32(4, true), lage, art, farben }
+  })().catch(() => { baumVorrat.delete(name); return null })
+  baumVorrat.set(name, p)
+  return p
+}
+
+/** die Namen der Kacheln mit Bäumen im Rechteck */
+export async function baumNamen(e0: number, n0: number, e1: number, n1: number): Promise<string[]> {
+  if (!gelaendeMoeglich()) return []
+  const ix = await baumIndex()
+  return ix ? umgebungNamen(ix, e0, n0, e1, n1) : []
 }

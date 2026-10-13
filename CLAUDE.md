@@ -194,7 +194,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              im Zug dort, wo der Kopf beim Einsteigen war, die Welt dreht mit dem Gleis, der Kopf frei; Zug etwa 3 m breit, Schilder 5 m,
              Zeichen ein Zehntel, Sicht 40 km, Tragen und Thumbstick ruhen (kabine, KABINE_* in Relief.tsx); dort ein ganzer Führerraum um das Pult (Fuehrerpult.raum, nur in der Brille; Michael, 2026-10-13): Boden, Seitenwände mit grossem offenem Seitenfenster (1,45 × 2 m, Michael, 2026-10-13: «viel grösser»), Decke, Rückwand mit Tür (nicht zu öffnen), Stuhl, Masse geschätzt; das Auge 15 cm höher über dem Pult als auf dem Bildschirm (KABINE_HOEHER_M); war «Führerstand» auf dem
              Bildschirm gewählt, beginnt die Brille dort; geprüft mit dem Emulator IWER (Meta), nicht auf einer Quest; im Führerstand ein Pult (komponenten/Fuehrerpult.ts, Michael, 2026-10-12, nach seinem Referenzbild,
-             ohne Markenzeichen): Fensterrahmen mit zwei Wischern (A-Säulen dunkelgrau wie das Pult, flache Bänder, oben breiter und zum Fahrer hin ins Dach gebogen; Michael, 2026-10-13), drei Anzeigen (Strecke: Start, Ziel, gefahren, noch, gemessen entlang der
+             ohne Markenzeichen; alle Kästen mit gerundeten Kanten bis 3,5 cm und die Bildschirme mit runden Ecken, rund(), Michael, 2026-10-13: «alles ziemlich kantig»): Fensterrahmen mit zwei Wischern (A-Säulen dunkelgrau wie das Pult, flache Bänder, oben breiter und zum Fahrer hin ins Dach gebogen; Michael, 2026-10-13), drei Anzeigen (Strecke: Start, Ziel, gefahren, noch, gemessen entlang der
              gezeichneten Strecke; Tacho 0 bis 220 km/h mit Herkunft SIMULATION, GPS oder PROBEFAHRT, daneben die Vorschau: Pfeil, Entfernung, Zeichen und Name des
              Nächsten voraus; Voraus: die nächsten drei Bahnhöfe, Tunnel und Brücken mit Entfernung auf einer Linie durch ihre Zeichen
              (vorListe, Michael, 2026-10-13, nach seinem Vorbild), Namen aus den Daten, sonst «ohne Namen»), Hebel Bremse (0, B, SB) und Geschwindigkeitswahl
@@ -262,6 +262,18 @@ data/gebaeude/  Gebäude, ein Versuch, zuerst auf Gümmenen–Bern (Michael, 202
              den Bahnlinien, Dächer in der Farbe des Nahbilds (SWISSIMAGE 2,5 m), Wände grau (in keiner Quelle), unten 2 m verlängert;
              je 500 m eine .bgz (pipeline/build_gebaeude.py, 23'732 Gebäude, 10,5 MB; seit 2026-10-13 alle Strecken der scharfen Umgebung von Müntschemier über Bern und Biel/Bienne bis Neuchâtel); in der App nur im Führerstand, mit dem feinen
              Gelände geladen (gebaeudeSetzen in Relief.tsx, gebaeudeKachel in src/gelaende.ts)
+data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026-10-13: «zuerst ohne gemessene Baumhöhen»): swissTLM3D
+             (swisstopo), Einzelbäume wo die Quelle sie hat, Waldflächen (Wald, Wald offen, Gebüschwald, Gehölzfläche) mit gezeichneten
+             Bäumen gefüllt (Abstand je Art, DICHTE, in keiner Quelle), Kronenfarbe aus dem Nahbild; je 500 m eine .bmd (gzip; nicht .tgz,
+             das liefert ein Apache oft als gepackt aus), pipeline/build_baeume.py, 201'787 Bäume, 1,4 MB; in der App nur im Führerstand
+             ein InstancedMesh je Kachel, Krone und Stamm, Höhe und Breite je Art in keiner Quelle (BAUM_FORM in Relief.tsx, 4 bis 20 m,
+             je Baum ±25 %), der Fuss auf dem scharfen oder feinen Gelände
+data/gebaeude_extern/, data/baeume_extern/  Gebäude und Bäume je Kanton für daten.taktland.ch, nicht in Git (build_gebaeude.py und
+             build_baeume.py --kanton BE …, --alle; das Band je Kanton in pipeline/umgebung.py: alle Bahnlinien aus swissTLMRegio, 400 m,
+             Kacheln nach dem Kanton ihrer Mitte, BFS g1); Reihenfolge nach Michael (2026-10-13): BE, VS, NE und VD, dann der Rest;
+             gebaut vom Workflow «Gebäude und Bäume» (.github/workflows/umgebung.yml, von Hand zu starten), Pakete
+             (pipeline/umgebung_pakete.py) im Release «umgebung-1», geholt von server/daten/holen.php (HOLEN = 'umgebung-1'); die App
+             liest gebaeude/index.json und baeume/index.json von dort, die Kacheln der App gehen vor
 data/scharf_extern/  weitere scharfe Kacheln für daten.taktland.ch, nicht in Git (build_scharf.py --extern, mit --relief NAME
              entlang eines Reliefs oder --weg A B … entlang des Wegs der App); die App liest dort scharf/index.json (DATEN_URL in
              src/gelaende.ts), die Kacheln der App gehen vor, fehlt der Index, gelten nur diese
@@ -310,6 +322,11 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch
 .venv/bin/python pipeline/build_gebaeude.py       # Gebäude (swissBUILDINGS3D) entlang Gümmenen–Bern, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --weg Bern Olten     # dito entlang des Wegs der App
+python3 pipeline/fetch_tlm3d.py --baeume          # Einzelbaum und Bodenbedeckung aus swissTLM3D (etwa 3,3 GB)
+.venv/bin/python pipeline/build_baeume.py         # Bäume und Wald entlang Gümmenen–Neuchâtel, vor export_app
+.venv/bin/python pipeline/build_gebaeude.py --kanton BE   # Gebäude eines Kantons für daten.taktland.ch (--alle: alle)
+.venv/bin/python pipeline/build_baeume.py --kanton BE     # dito Bäume
+.venv/bin/python pipeline/umgebung_pakete.py --teil be    # Pakete für das Release umgebung-1
 bash pipeline/scharf_reihen.sh 1                                       # eine der vier Reihen scharfer Strecken (sonst im Workflow)
 .venv/bin/python pipeline/scharf_pakete.py --teil r1                    # Pakete für das Release scharf-1
 ```

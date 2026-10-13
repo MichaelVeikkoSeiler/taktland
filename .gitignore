@@ -2,6 +2,9 @@
 data/raw/
 data/scharf_extern/
 data/scharf_pakete/
+data/gebaeude_extern/
+data/baeume_extern/
+data/umgebung_pakete/
 *.csv
 *.parquet
 
