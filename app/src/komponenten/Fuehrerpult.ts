@@ -136,11 +136,11 @@ export class Fuehrerpult {
 
   /** eine Taste mit Zeichen auf dem Deckel */
   private taste(zeichen: (g: CanvasRenderingContext2D) => void, grund: string, x: number, y: number, z: number, aktion: Aktion,
-    kippen: number, gross = 0.075) {
+    kippen: number, gross = 0.075, ort: THREE.Object3D = this.gruppe) {
     const halter = new THREE.Group()
     halter.position.set(x, y, z)
     halter.rotation.x = kippen
-    this.gruppe.add(halter)
+    ort.add(halter)
     this.kasten(gross + 0.014, 0.012, gross + 0.014, FARBE.schwarz, 0, 0, 0, 0, halter)
     const deckel = new THREE.Mesh(new THREE.BoxGeometry(gross, 0.018, gross), [
       this.material(grund), this.material(grund),
@@ -178,12 +178,12 @@ export class Fuehrerpult {
     konsole.position.set(0, -0.33, -0.95)
     konsole.rotation.x = -0.32
     g.add(konsole)
-    this.kasten(2.0, 0.3, 0.14, FARBE.pultHell, 0, 0, 0, 0, konsole)
+    this.kasten(2.26, 0.3, 0.14, FARBE.pultHell, 0, 0, 0, 0, konsole)
     // Blendschutz über den Anzeigen
-    this.kasten(2.1, 0.035, 0.22, FARBE.pult, 0, 0.17, 0.02, 0, konsole)
-    // Seitenteile links und rechts mit je zwei grossen Tasten
-    this.kasten(0.24, 0.42, 0.5, FARBE.pult, -1.08, -0.38, -0.78)
-    this.kasten(0.24, 0.42, 0.5, FARBE.pult, 1.08, -0.38, -0.78)
+    this.kasten(2.36, 0.035, 0.22, FARBE.pult, 0, 0.17, 0.02, 0, konsole)
+    // Seitenteile links und rechts, niedrig, damit die Tasten an der Konsole frei bleiben
+    this.kasten(0.24, 0.2, 0.5, FARBE.pult, -1.08, -0.56, -0.7)
+    this.kasten(0.24, 0.2, 0.5, FARBE.pult, 1.08, -0.56, -0.7)
     // Fensterrahmen dunkelgrau wie das Pult (Michael, 2026-10-13: «aerodynamischer», «etwas dicker und … zur Kamera hin
     // gegen oben abdrehen»): jede Säule ein flaches Band mit gerundetem Rand, unten am Pult schmal, oben breit, die Fläche
     // immer zum Fahrer gedreht; oben biegt sie nach vorn zum Fahrer hin ins Dach
@@ -250,19 +250,24 @@ export class Fuehrerpult {
     anzeige(0, (c, l) => this.tachoMalen(c, l))
     anzeige(0.63, (c, l) => this.voranMalen(c, l))
 
-    // Tasten in der Mitte, vor den Anzeigen
-    const kippen = 0.2, y = -0.5, z = -0.86
-    this.taste((c) => dreieck(c, '#ffffff'), '#b3122f', -0.3, y, z, 'schnellbremse', kippen)
-    this.taste((c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, -0.18, y, z, 'zuggeraeusch', kippen)
-    this.taste((c) => horn(c, FARBE.schrift), FARBE.schwarz, -0.06, y, z, 'horn', kippen)
-    this.taste((c) => sonne(c, FARBE.schrift), FARBE.schwarz, 0.06, y, z, 'stirnlicht', kippen)
-    this.taste((c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 0.18, y, z, 'wischer', kippen)
-    this.taste((c) => mond(c, FARBE.schrift), FARBE.schwarz, 0.3, y, z, 'daemmerung', kippen)
-    // Seitenteile: links Pultlicht und Signalhorn (gelb), rechts Wischer und Stirnlicht
-    this.taste((c) => sonne(c, FARBE.schrift), FARBE.schwarz, -1.06, -0.165, -0.68, 'pultlicht', 0.1, 0.1)
-    this.taste((c) => horn(c, '#1d2229'), FARBE.gelb, -1.06, -0.165, -0.86, 'horn', 0.1, 0.1)
-    this.taste((c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 1.06, -0.165, -0.68, 'wischer', 0.1, 0.1)
-    this.taste((c) => sonne(c, FARBE.schrift), FARBE.schwarz, 1.06, -0.165, -0.86, 'stirnlicht', 0.1, 0.1)
+    // Tasten in der Mitte, vor den Anzeigen, gross und nah (Michael, 2026-10-13: «die Knöpfe sind klein und weit weg»), auf
+    // einer dunklen Leiste wie in seinem Vorbild
+    const kippen = 0.2, y = -0.49, z = -0.83, gross = 0.105, abstand = 0.13
+    const leiste = this.kasten(6 * abstand + 0.03, 0.012, gross + 0.04, FARBE.blende, 0, y - 0.008, z, kippen)
+    leiste.renderOrder = -1
+    const reihe: Array<[(c: CanvasRenderingContext2D) => void, string, Aktion]> = [
+      [(c) => dreieck(c, '#ffffff'), '#b3122f', 'schnellbremse'], [(c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, 'zuggeraeusch'],
+      [(c) => horn(c, FARBE.schrift), FARBE.schwarz, 'horn'], [(c) => sonne(c, FARBE.schrift), FARBE.schwarz, 'stirnlicht'],
+      [(c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 'wischer'], [(c) => mond(c, FARBE.schrift), FARBE.schwarz, 'daemmerung']]
+    reihe.forEach(([zeichen, grund, aktion], i) => this.taste(zeichen, grund, (i - 2.5) * abstand, y, z, aktion, kippen, gross))
+    // neben den Anzeigen je drei Tasten übereinander: links Pultlicht, Signalhorn (gelb), Dämmerung; rechts Wischer,
+    // Stirnlicht, Zuggeräusch
+    const seitlich: Array<[number, (c: CanvasRenderingContext2D) => void, string, Aktion]> = [
+      [-1, (c) => sonne(c, FARBE.schrift), FARBE.schwarz, 'pultlicht'], [-1, (c) => horn(c, '#1d2229'), FARBE.gelb, 'horn'],
+      [-1, (c) => mond(c, FARBE.schrift), FARBE.schwarz, 'daemmerung'], [1, (c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 'wischer'],
+      [1, (c) => sonne(c, FARBE.schrift), FARBE.schwarz, 'stirnlicht'], [1, (c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, 'zuggeraeusch']]
+    seitlich.forEach(([seite, zeichen, grund, aktion], i) =>
+      this.taste(zeichen, grund, seite * 1.02, 0.095 - (i % 3) * 0.095, 0.07, aktion, Math.PI / 2, 0.082, konsole))
 
     // Hebel: links die Bremse (0, B, SB), rechts die Geschwindigkeitswahl (0 bis 160 km/h)
     this.hebel(-0.5, this.bremsHebel, 'bremsePlus', 'bremseMinus', (c) => {
@@ -293,8 +298,10 @@ export class Fuehrerpult {
   /** ein Hebel in einer Kulisse: die vordere Hälfte der Kulisse schiebt ihn nach vorn, die hintere zurück */
   private hebel(x: number, griff: THREE.Group, vorn: Aktion, hinten: Aktion, skala: (c: CanvasRenderingContext2D) => void) {
     const basis = new THREE.Group()
-    basis.position.set(x, -0.52, -0.6)
+    basis.position.set(x * 1.25, -0.56, -0.56)
     basis.rotation.x = 0.2
+    // grösser als zuerst, damit man sie auf dem Handy trifft
+    basis.scale.setScalar(1.15)
     this.gruppe.add(basis)
     this.kasten(0.2, 0.03, 0.3, FARBE.schwarz, 0, 0, 0, 0, basis)
     // Skala neben der Kulisse
