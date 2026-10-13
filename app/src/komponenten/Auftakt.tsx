@@ -95,7 +95,7 @@ export function Auftakt({ bild, oben }: { bild: AuftaktBild; oben?: ReactNode })
     <div className="relative -mx-4 -mt-8 mb-6">
       <img
         src={dunkel ? bild.dunkel : bild.hell} width={bild.breite} height={bild.hoehe} alt={bild.alt}
-        className="block h-auto w-full xl:h-72 xl:object-cover"
+        className="block h-auto w-full xl:h-100 xl:object-cover"
       />
 
       {anderes && angefragt && (

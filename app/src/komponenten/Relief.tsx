@@ -97,7 +97,10 @@ const TUNNEL_TAGESLICHT = 0.07, TUNNEL_DUNKEL_M = 40
  *  fahren … durch den Berg bewegen … durch die Röhre blicken»). Querschnitt, Farbe und Licht stehen in keiner Quelle:
  *  ein Kreis von 4,5 m Halbmesser, die Mitte 3 m über der Linie, dazu ein Lichtband an der Wand und an den Enden ein
  *  heller Ring von 1,5 m als Portal */
-const ROEHRE_R_M = 4.5, ROEHRE_MITTE_M = 3, ROEHRE_SEITEN = 18, PORTAL_RAND_M = 1.5
+const ROEHRE_R_M = 4.5, ROEHRE_MITTE_M = 3, ROEHRE_SEITEN = 28, PORTAL_RAND_M = 1.5
+// Fels an der Wand (Michael, 2026-10-13: «echte Wände mit Fels»): gezeichnet, nicht aus einer Quelle; die Wand weicht bis
+// ROEHRE_RAUH vom Kreis ab, Ringe höchstens ROEHRE_RING_M auseinander, das Felsbild wiederholt sich alle FELS_BILD_M
+const ROEHRE_RAUH = 0.07, ROEHRE_RING_M = 4, FELS_BILD_M = 6
 /** Nahbild (Luftbild auf 2,5 m entlang der Bahnlinien): so gross um den Blickpunkt, so viele Bildpunkte je Meter;
  *  neu geladen, wenn der Blickpunkt so weit gewandert ist; nur wenn die Kamera näher ist als NAH_BIS_KM */
 const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
@@ -1533,33 +1536,97 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     // grau, wo der Weg selbst dunkel ist (beim Fahren), sonst wären Tunnel kaum zu unterscheiden
     const tunnelFarbe = dunkel || wegFarbe === FARBEN.weg ? '#b4b4b4' : FARBEN.tunnel
+    /** Rauheit der Felswand, -1 bis 1, glatt im Raum (Meter/3 entlang, Seite rundum) */
+    const felsZufall = (a: number, b: number) => { const x = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return x - Math.floor(x) }
+    const felsRauh = (t: number, k: number) => {
+      let summe = 0
+      for (const [stufe, gewicht] of [[1, 0.65], [2.7, 0.35]] as const) {
+        const x = t * stufe, i = Math.floor(x), f = x - i, glatt = f * f * (3 - 2 * f)
+        const k1 = Math.floor(k * stufe) % ROEHRE_SEITEN
+        summe += gewicht * ((felsZufall(i, k1) * (1 - glatt) + felsZufall(i + 1, k1) * glatt) * 2 - 1)
+      }
+      return summe
+    }
+    /** ein Felsbild, gezeichnet: Flecken, Schichten und Risse; dasselbe Bild hebt die Wand im Licht (bumpMap) */
+    let fels: THREE.MeshLambertMaterial | null = null
+    const felsMaterial = () => {
+      if (fels) return fels
+      const lw = document.createElement('canvas')
+      lw.width = lw.height = 256
+      const c = lw.getContext('2d')!
+      let zz = 7
+      const z = () => { zz = (zz * 16807) % 2147483647; return zz / 2147483647 }
+      c.fillStyle = '#7d776d'
+      c.fillRect(0, 0, 256, 256)
+      // Flecken, über die Kante hinaus wiederholt, damit das Bild nahtlos kachelt
+      for (let n = 0; n < 900; n++) {
+        const x = z() * 256, y = z() * 256, r = 2 + z() * 14, h = 70 + z() * 90
+        c.fillStyle = `rgba(${h + 8},${h + 4},${h - 4},${0.12 + z() * 0.25})`
+        for (const dx of [-256, 0, 256]) for (const dy of [-256, 0, 256]) {
+          c.beginPath(); c.ellipse(x + dx, y + dy, r, r * (0.5 + z() * 0.5), z() * Math.PI, 0, Math.PI * 2); c.fill()
+        }
+      }
+      // Risse
+      c.strokeStyle = 'rgba(30,27,24,0.55)'
+      for (let n = 0; n < 40; n++) {
+        let x = z() * 256, y = z() * 256
+        c.lineWidth = 0.6 + z() * 1.4
+        c.beginPath(); c.moveTo(x, y)
+        for (let s = 0; s < 6; s++) { x += (z() - 0.5) * 30; y += (z() - 0.3) * 18; c.lineTo(x, y) }
+        c.stroke()
+      }
+      const tex = new THREE.CanvasTexture(lw)
+      tex.wrapS = tex.wrapT = THREE.RepeatWrapping
+      tex.colorSpace = THREE.SRGBColorSpace
+      tex.anisotropy = 4
+      fels = new THREE.MeshLambertMaterial({ color: dunkel ? '#a29d94' : '#ffffff', map: tex, bumpMap: tex, bumpScale: 3,
+        emissive: '#0b0a09', side: THREE.DoubleSide })
+      return fels
+    }
     /** die Röhre eines Tunnels um die Punkte der Linie, innen wie aussen sichtbar, dazu ein Lichtband */
-    const tunnelRoehre = (punkte: THREE.Vector3[], ziel: THREE.Object3D) => {
-      if (punkte.length < 2) return
+    const tunnelRoehre = (roh: THREE.Vector3[], ziel: THREE.Object3D) => {
+      if (roh.length < 2) return
+      // dichter, damit der Fels auch entlang der Röhre Buckel hat
+      const punkte: THREE.Vector3[] = [roh[0]]
+      for (let i = 1; i < roh.length; i++) {
+        const n = Math.ceil((roh[i].distanceTo(roh[i - 1]) * 1000) / ROEHRE_RING_M)
+        for (let j = 1; j <= n; j++) punkte.push(roh[i - 1].clone().lerp(roh[i], j / n))
+      }
       const rx = ROEHRE_R_M / 1000, ry = (ROEHRE_R_M * faktor) / 1000, mitte = (ROEHRE_MITTE_M * faktor) / 1000
-      const pos: number[] = [], index: number[] = [], licht: number[] = []
+      const pos: number[] = [], uv: number[] = [], index: number[] = [], licht: number[] = []
+      const reihe = ROEHRE_SEITEN + 1
+      let laenge = 0
       punkte.forEach((p, i) => {
+        if (i) laenge += Math.hypot(p.x - punkte[i - 1].x, p.z - punkte[i - 1].z) * 1000
+      })
+      let bisher = 0
+      punkte.forEach((p, i) => {
+        if (i) bisher += Math.hypot(p.x - punkte[i - 1].x, p.z - punkte[i - 1].z) * 1000
         const a = punkte[Math.max(0, i - 1)], z = punkte[Math.min(punkte.length - 1, i + 1)]
         const nx = -(z.z - a.z), nz = z.x - a.x, l = Math.hypot(nx, nz) || 1
         const sx = nx / l, sz = nz / l
-        for (let k = 0; k < ROEHRE_SEITEN; k++) {
+        // an den Portalen glatt, damit der Ring anschliesst
+        const rand = Math.min(1, bisher / 6, (laenge - bisher) / 6)
+        for (let k = 0; k <= ROEHRE_SEITEN; k++) {
           const w = (k / ROEHRE_SEITEN) * Math.PI * 2
-          pos.push(p.x + sx * Math.cos(w) * rx, p.y + mitte + Math.sin(w) * ry, p.z + sz * Math.cos(w) * rx)
-          if (i) {
-            const k2 = (k + 1) % ROEHRE_SEITEN, v = (i - 1) * ROEHRE_SEITEN, u = i * ROEHRE_SEITEN
-            index.push(v + k, u + k, v + k2, v + k2, u + k, u + k2)
+          const f = 1 + ROEHRE_RAUH * rand * felsRauh(bisher / 3, k % ROEHRE_SEITEN)
+          pos.push(p.x + sx * Math.cos(w) * rx * f, p.y + mitte + Math.sin(w) * ry * f, p.z + sz * Math.cos(w) * rx * f)
+          uv.push((k / ROEHRE_SEITEN) * ((2 * Math.PI * ROEHRE_R_M) / FELS_BILD_M), bisher / FELS_BILD_M)
+          if (i && k < ROEHRE_SEITEN) {
+            const v = (i - 1) * reihe, u = i * reihe
+            index.push(v + k, u + k, v + k + 1, v + k + 1, u + k, u + k + 1)
           }
         }
         // Lichtband an einer Wand, etwas über dem Auge
         const w = 0.35
-        licht.push(p.x + sx * Math.cos(w) * rx * 0.97, p.y + mitte + Math.sin(w) * ry * 0.97, p.z + sz * Math.cos(w) * rx * 0.97)
+        licht.push(p.x + sx * Math.cos(w) * rx * 0.9, p.y + mitte + Math.sin(w) * ry * 0.9, p.z + sz * Math.cos(w) * rx * 0.9)
       })
       const g = new THREE.BufferGeometry()
       g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+      g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
       g.setIndex(index)
       g.computeVertexNormals()
-      const netz = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: dunkel ? '#5c5953' : '#8a867e', emissive: '#0b0a09', side: THREE.DoubleSide }))
-      ziel.add(netz)
+      ziel.add(new THREE.Mesh(g, felsMaterial()))
       const lg = new THREE.BufferGeometry()
       lg.setAttribute('position', new THREE.Float32BufferAttribute(licht, 3))
       ziel.add(new THREE.Line(lg, new THREE.LineBasicMaterial({ color: '#ffe8a3' })))
