@@ -1,5 +1,6 @@
 """Gebäude entlang der Bahnlinien für den Führerstand, ein Versuch auf Gümmenen–Bern (Michael, 2026-10-13: «Ja, fang mit
-dem Versuch auf Gümmenen Bern an»).
+dem Versuch auf Gümmenen Bern an»), dann auf den Strecken der scharfen Umgebung bis Neuchâtel («Restliche Strecke bis
+Neuchatel»).
 
 Quelle: swissBUILDINGS3D 3.0 (swisstopo), je Kartenblatt als CityGML, der neueste Jahrgang mit CityGML. Gelesen werden die
 Dach- und Wandflächen jedes Gebäudes, nur Gebäude mit ihrer Mitte bis BAND_M neben den Bahnlinien aus swissTLMRegio, die
@@ -34,6 +35,7 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_scharf  # noqa: E402
+import build_relief  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 ZIEL = ROOT / "data" / "gebaeude"
@@ -44,8 +46,8 @@ KACHEL_M = 500
 BAND_M = 400
 WAND_TIEFER_M = 2.0
 WAND = (196, 192, 184)
-#: der Versuch, in Fahrtreihenfolge
-ORTE = ["Gümmenen", "Rosshäusern", "Bern Riedbach", "Bern Bümpliz Nord", "Bern Stöckacker", "Bern"]
+#: die Strecken des Versuchs, je in Fahrtreihenfolge: die der scharfen Umgebung bis Neuchâtel (pipeline/build_scharf.py)
+STRECKEN = build_scharf.STRECKEN[:3]
 GML = "{http://www.opengis.net/gml}"
 BLDG = "{http://www.opengis.net/citygml/building/2.0}"
 
@@ -54,7 +56,8 @@ def blaetter(strecken):
     """die Kartenblätter, die das Band berühren: {Blatt: (Jahr, Adresse der CityGML)}, je Blatt der neueste Jahrgang"""
     d = json.loads((ROOT / "data" / "strecken.json").read_text(encoding="utf-8"))
     lage = {name: d["lagen"][abk] for abk, name in d["punkte"].items() if abk in d["lagen"]}
-    lat = [lage[o][0] for o in ORTE]; lon = [lage[o][1] for o in ORTE]
+    orte = [o for st in STRECKEN for o in st]
+    lat = [lage[o][0] for o in orte]; lon = [lage[o][1] for o in orte]
     bbox = f"{min(lon) - 0.02},{min(lat) - 0.015},{max(lon) + 0.02},{max(lat) + 0.015}"
     raus, url = {}, f"{STAC}?bbox={bbox}&limit=100"
     while url:
@@ -65,6 +68,12 @@ def blaetter(strecken):
             if len(teile) < 5:
                 continue
             jahr, blatt = int(teile[3]), teile[4]
+            # nur Blätter, die das Band berühren: ein Punkt der Linien im Blatt, um BAND_M vergrössert
+            w, s_, o, n_ = f["bbox"]
+            e0, n0 = build_relief.wgs84_zu_lv95(s_, w); e1, n1 = build_relief.wgs84_zu_lv95(n_, o)
+            if not any(e0 - BAND_M <= x <= e1 + BAND_M and n0 - BAND_M <= y <= n1 + BAND_M for st in strecken for x, y in
+                       ((st[0], st[1]), (st[2], st[3]))):
+                continue
             gml = [a["href"] for a in f["assets"].values() if a["href"].endswith(".citygml.zip")]
             if gml and (blatt not in raus or raus[blatt][0] < jahr):
                 raus[blatt] = (jahr, gml[0])
@@ -75,9 +84,16 @@ def blaetter(strecken):
 def laden(blatt, jahr, href):
     ROH.mkdir(parents=True, exist_ok=True)
     datei = ROH / f"{jahr}_{blatt}.citygml.zip"
-    if not datei.exists():
-        with urllib.request.urlopen(href, timeout=600) as r:
-            datei.write_bytes(r.read())
+    for versuch in range(4):
+        if datei.exists():
+            break
+        try:
+            with urllib.request.urlopen(href, timeout=600) as r:
+                daten = r.read()
+            datei.with_suffix(".teil").write_bytes(daten)
+            datei.with_suffix(".teil").rename(datei)
+        except Exception as e:  # abgebrochene Übertragung: noch einmal
+            print(f"  {blatt}: {e}, Versuch {versuch + 2}")
     return datei
 
 
@@ -143,7 +159,7 @@ def gebaeude(datei):
 
 
 def main():
-    strecken = build_scharf.strecken_entlang(ORTE)
+    strecken = [s for orte in STRECKEN for s in build_scharf.strecken_entlang(orte)]
     print(f"{len(strecken)} Stücke Bahnlinie")
     bl = blaetter(strecken)
     print(f"{len(bl)} Kartenblätter: {', '.join(f'{b} ({j})' for b, (j, _) in sorted(bl.items()))}")
@@ -192,7 +208,7 @@ def main():
         groesse += datei.stat().st_size
     (ZIEL / "index.json").write_text(json.dumps({
         "quelle": "swissBUILDINGS3D 3.0 (swisstopo); Dachfarbe aus SWISSIMAGE (swisstopo) auf 2,5 m",
-        "geladen": date.today().isoformat(), "kachel_m": KACHEL_M, "band_m": BAND_M, "orte": ORTE,
+        "geladen": date.today().isoformat(), "kachel_m": KACHEL_M, "band_m": BAND_M, "strecken": STRECKEN,
         "hinweis": "Versuch: nur Gebäude bis band_m neben den Bahnlinien; Wandfarbe in keiner Quelle; Wände unten "
                    f"{WAND_TIEFER_M:g} m verlängert",
         "kacheln": {f"{qe}_{qn}": sorted(jahre[(qe, qn)]) for qe, qn in sorted(kacheln)},
