@@ -192,6 +192,8 @@ const BRILLE_NAHE_M = 0.01
  *  der Zug etwa 3 m breit statt der Modellgrösse */
 /** das Pult auf dem Bildschirm, gegenüber der Lage in der Brille verschoben */
 const PULT_BILD_HOCH_M = -0.02, PULT_BILD_WEG_M = 0.25
+/** in der Brille sitzt das Auge so viel höher über dem Pult als auf dem Bildschirm */
+const KABINE_HOEHER_M = 0.15
 const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
@@ -3184,6 +3186,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           kamera.updateProjectionMatrix()
           if (pult) {
             pult.v = 0
+            pult.raum.visible = inBrille && vorne
             if (inBrille && vorne) szene.add(pult.gruppe)
             else {
               // auf dem Bildschirm etwas weiter weg und höher als in der Brille: das Sichtfeld ist kleiner als das der Augen,
@@ -3274,6 +3277,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             if (inBrille) {
               // das Pult steht dort, wo der Kopf beim Einsteigen war, in Fahrtrichtung
               pult.gruppe.position.copy(kabine.anker ?? quelle)
+              // etwas höher sitzen als zuerst, so ist das Pult leichter zu bedienen (Michael, 2026-10-13)
+              pult.gruppe.position.y -= KABINE_HOEHER_M
               pult.gruppe.rotation.set(0, kabine.kopfGier, 0)
             }
           }

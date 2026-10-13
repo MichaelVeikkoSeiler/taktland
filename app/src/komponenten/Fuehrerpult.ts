@@ -56,6 +56,9 @@ const NAMEN: Record<Aktion, string> = {
 
 export class Fuehrerpult {
   readonly gruppe = new THREE.Group()
+  /** der Führerraum um das Pult: Boden, Seitenwände mit Fenster, Decke, Rückwand mit Tür, Stuhl; nur in der Brille, auf
+   *  dem Bildschirm sähe man ihn nicht und er verdeckte nur die Sicht zur Seite */
+  readonly raum = new THREE.Group()
   readonly szene = new THREE.Scene()
   readonly kamera = new THREE.PerspectiveCamera(60, 1, 0.05, 20)
   /** gewählte Geschwindigkeit km/h, Bremse 0 gelöst, 1 bremsen, 2 Schnellbremse; v simuliert in m/s */
@@ -95,6 +98,9 @@ export class Fuehrerpult {
     this.licht.position.set(0, 0.3, -0.4)
     this.gruppe.add(this.licht)
     this.bauen()
+    this.raumBauen()
+    this.raum.visible = false
+    this.gruppe.add(this.raum)
   }
 
   /** Tageslicht im Führerstand, 1 draussen, kleiner im Tunnel: dort leuchten die Anzeigen, das Pultlicht hilft */
@@ -329,6 +335,60 @@ export class Fuehrerpult {
     griff.add(knauf)
     // auch der Knauf ist bedienbar: er schiebt nach vorn
     this.ziel(knauf, vorn)
+  }
+
+  /**
+   * Der Führerraum (Michael, 2026-10-13: «Im Rücken ist der Führerraum geschlossen. Es hat dort eine Tür, die nicht
+   * interaktiv bedienbar sein soll. Links und rechts … Seitenwände, oben eine Decke … Mit einem Stuhl»). Masse geschätzt,
+   * kein bestimmtes Fahrzeug; das Auge sitzt etwa 1,25 m über dem Boden.
+   */
+  private raumBauen() {
+    const r = this.raum
+    const BODEN = -1.25, DECKE = 1.28, SEITE = 1.32, HINTEN = 1.7, VORN = -1.2
+    const wand = '#c9ccd1', unten = FARBE.pultHell, dunkel = '#2b323c'
+    const k = (b: number, h: number, t: number, f: string, x: number, y: number, z: number) => this.kasten(b, h, t, f, x, y, z, 0, r)
+    // Boden mit dunklem Belag
+    k(2 * SEITE, 0.04, HINTEN - VORN, '#3a3f46', 0, BODEN - 0.02, (HINTEN + VORN) / 2)
+    // Decke, vorn bis zur Dachkante des Fensters
+    k(2 * SEITE, 0.04, HINTEN + 0.75, wand, 0, DECKE, (HINTEN - 0.75) / 2)
+    // Seitenwände: unten geschlossen, darüber ein Fenster, hinten ganz geschlossen
+    for (const x of [-SEITE, SEITE]) {
+      k(0.05, 1.2, HINTEN - VORN, unten, x, BODEN + 0.6, (HINTEN + VORN) / 2)
+      k(0.05, DECKE - 0.85, HINTEN - VORN, wand, x, (DECKE + 0.85) / 2, (HINTEN + VORN) / 2)
+      // Fensterrahmen der Seitenfenster, das Fenster selbst offen
+      k(0.07, 0.06, 1.1, dunkel, x, -0.05, 0.05)
+      k(0.07, 0.06, 1.1, dunkel, x, 0.85, 0.05)
+      k(0.07, 0.96, 0.06, dunkel, x, 0.4, -0.5)
+      k(0.07, 0.96, 0.06, dunkel, x, 0.4, 0.6)
+      // hinter dem Fenster geschlossen bis zur Rückwand
+      k(0.05, 0.9, HINTEN - 0.63, wand, x, 0.4, (HINTEN + 0.63) / 2)
+      // vor dem Fenster bis zur A-Säule
+      k(0.05, 0.9, 0.7, wand, x, 0.4, -0.88)
+    }
+    // Rückwand mit Tür (nicht zu öffnen)
+    k(2 * SEITE, DECKE - BODEN, 0.05, wand, 0, (DECKE + BODEN) / 2, HINTEN)
+    const tuer = new THREE.Group()
+    tuer.position.set(0.25, BODEN, HINTEN - 0.035)
+    r.add(tuer)
+    this.kasten(0.86, 2.0, 0.03, '#8a929c', 0, 1.0, 0, 0, tuer)
+    this.kasten(0.92, 2.04, 0.02, dunkel, 0, 1.01, 0.012, 0, tuer)
+    this.kasten(0.4, 0.5, 0.035, '#1e252e', 0, 1.55, 0, 0, tuer)
+    const griff = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.16, 10), this.material('#d5d5d0'))
+    griff.rotation.z = Math.PI / 2
+    griff.position.set(-0.32, 1.02, -0.035)
+    tuer.add(griff)
+    // Stuhl: Fuss, Sitz, Lehne mit Kopfstütze, Armlehnen
+    const stuhl = new THREE.Group()
+    stuhl.position.set(0, BODEN, 0.35)
+    r.add(stuhl)
+    const fuss = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.22, 0.45, 16), this.material(dunkel))
+    fuss.position.y = 0.225
+    stuhl.add(fuss)
+    this.kasten(0.52, 0.1, 0.5, '#30363f', 0, 0.5, 0, 0, stuhl)
+    const lehne = this.kasten(0.5, 0.7, 0.1, '#30363f', 0, 0.9, 0.27, 0, stuhl)
+    lehne.rotation.x = 0.12
+    this.kasten(0.3, 0.18, 0.08, '#30363f', 0, 1.38, 0.33, 0, stuhl)
+    for (const x of [-0.29, 0.29]) this.kasten(0.06, 0.05, 0.38, dunkel, x, 0.72, 0.02, 0, stuhl)
   }
 
   /* ---------- Bedienung ---------- */
