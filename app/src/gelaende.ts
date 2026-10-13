@@ -384,3 +384,45 @@ export function scharfHoehe(s: Scharf, e: number, n: number): number | null {
 /** das Luftbild einer Kachel (1000 × 1000 Bildpunkte, 25 cm) */
 export const scharfBild = (name: string) =>
   scharfPfad(name).then((p) => holenBinaer(`${p}.jpg`)).then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' })))
+
+/* ---------- Gebäude, ein Versuch auf Gümmenen–Bern ---------- */
+
+/** Gebäude aus swissBUILDINGS3D (swisstopo) bis band_m neben den Bahnlinien (Michael, 2026-10-13; pipeline/build_gebaeude.py),
+ *  in Kacheln von kachel_m: je Ecke Ost, Höhe, Nord in Dezimetern ab der Ecke der Kachel und Farbe, je drei Ecken ein Dreieck */
+interface GebaeudeIndex { kachel_m: number; quelle: string; kacheln: Record<string, number[]> }
+export interface GebaeudeKachel { e0: number; n0: number; h0: number; ecken: Int16Array; farben: Uint8Array }
+let gebaeudeVerz: Promise<GebaeudeIndex | null> | null = null
+export const gebaeudeIndex = () => (gebaeudeVerz ??= holen<GebaeudeIndex>('data/gebaeude/index.json').catch(() => null))
+const gebaeudeVorrat = new Map<string, Promise<GebaeudeKachel | null>>()
+
+export function gebaeudeKachel(name: string) {
+  let p = gebaeudeVorrat.get(name)
+  if (p) return p
+  while (gebaeudeVorrat.size >= 120) gebaeudeVorrat.delete(gebaeudeVorrat.keys().next().value!)
+  p = (async () => {
+    const gepackt = await holenBinaer(`data/gebaeude/${name}.bgz`)
+    const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+    const v = new DataView(roh), n = v.getUint32(12, true)
+    const ecken = new Int16Array(n * 3), farben = new Uint8Array(n * 3)
+    for (let k = 0; k < n; k++) {
+      const o = 16 + k * 10
+      ecken[k * 3] = v.getInt16(o, true); ecken[k * 3 + 1] = v.getInt16(o + 2, true); ecken[k * 3 + 2] = v.getInt16(o + 4, true)
+      farben[k * 3] = v.getUint8(o + 6); farben[k * 3 + 1] = v.getUint8(o + 7); farben[k * 3 + 2] = v.getUint8(o + 8)
+    }
+    return { e0: v.getInt32(0, true), n0: v.getInt32(4, true), h0: v.getInt32(8, true), ecken, farben }
+  })().catch(() => { gebaeudeVorrat.delete(name); return null })
+  gebaeudeVorrat.set(name, p)
+  return p
+}
+
+/** die Namen der Kacheln mit Gebäuden im Rechteck */
+export async function gebaeudeNamen(e0: number, n0: number, e1: number, n1: number): Promise<string[]> {
+  if (!gelaendeMoeglich()) return []
+  const ix = await gebaeudeIndex()
+  if (!ix) return []
+  const k = ix.kachel_m, raus: string[] = []
+  for (let qe = Math.floor(e0 / k); qe <= Math.floor((e1 - 1) / k); qe++) {
+    for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (ix.kacheln[`${qe}_${qn}`]) raus.push(`${qe}_${qn}`)
+  }
+  return raus
+}

@@ -11,7 +11,7 @@ import type { ObjektText } from './Fahrtmodus'
 import { type Ankuendigung, Fuehrerpult, type TempoQuelle } from './Fuehrerpult'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
-import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE } from '../gelaende'
+import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { Ladebalken } from './Ladebalken'
@@ -867,6 +867,8 @@ function Hinweise({ r }: { r: Relief }) {
       )}
       <p>
         Im Führerstand nah am Zug Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt.
+        Zwischen Gümmenen und Bern, ein Versuch: Gebäude aus swissBUILDINGS3D (swisstopo) bis 400 m neben den Bahnlinien, die Dächer in der
+        Farbe des Luftbilds, die Wände grau (in keiner Quelle).
       </p>
       <p>
         Die Höhe der Gleise steht in keiner Quelle. Die Linie ist darum auf das Gelände gelegt, etwas darüber;
@@ -1054,7 +1056,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
         <p className="mt-1">
           Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
           SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Im Führerstand nah am Zug das
-          Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt. Die Höhe der Gleise steht in
+          Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt; zwischen Gümmenen und Bern, ein
+          Versuch, Gebäude aus swissBUILDINGS3D (swisstopo), die Dächer in der Farbe des Luftbilds, die Wände grau. Die Höhe der Gleise steht in
           keiner Quelle; der Weg ist aufs Gelände gelegt, in Tunneln und auf Brücken gerade zwischen den Enden. Tunnel, von denen
           die Quelle nur einen Kilometer kennt und keine Länge, fehlen in 3D; beim Fahren meldet Taktland sie trotzdem. Zug nicht
           massstäblich und kein bestimmter Zugtyp. Das Zuggeräusch ist gerechnet, keine Aufnahme eines Zugs.
@@ -1718,6 +1721,43 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // Luftbild auf 25 cm, nur im Band neben der Linie; bis sein Bild geladen ist, trägt es die Leinwand des feinen Geländes
     const scharfGruppe = new THREE.Group()
     szene.add(scharfGruppe)
+    // Gebäude, ein Versuch auf Gümmenen–Bern (Michael, 2026-10-13; pipeline/build_gebaeude.py): je Kachel ein Netz, nur im
+    // Führerstand, geladen mit dem feinen Gelände, was nicht mehr darin liegt, fällt weg
+    const gebaeudeGruppe = new THREE.Group()
+    gebaeudeGruppe.visible = false
+    szene.add(gebaeudeGruppe)
+    const gebaeudeMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+    const gebaeudeNetze = new Map<string, THREE.Mesh>()
+    let gebaeudeAuftrag = 0
+    const gebaeudeSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
+      const auftrag = ++gebaeudeAuftrag
+      const namen = await gebaeudeNamen(e0, n0, e1, n1)
+      if (!laeuft || auftrag !== gebaeudeAuftrag) return
+      for (const [name, netz] of gebaeudeNetze) {
+        if (namen.includes(name)) continue
+        gebaeudeGruppe.remove(netz); netz.geometry.dispose(); gebaeudeNetze.delete(name)
+      }
+      for (const name of namen) {
+        if (gebaeudeNetze.has(name)) continue
+        const k = await gebaeudeKachel(name)
+        if (!laeuft || auftrag !== gebaeudeAuftrag) return
+        if (!k || gebaeudeNetze.has(name)) continue
+        const n = k.ecken.length / 3, pos = new Float32Array(n * 3), farbe = new Float32Array(n * 3)
+        for (let i = 0; i < n; i++) {
+          pos[i * 3] = X(k.e0 + k.ecken[i * 3] / 10)
+          pos[i * 3 + 1] = Y((k.h0 + k.ecken[i * 3 + 1]) / 10)
+          pos[i * 3 + 2] = Z(k.n0 + k.ecken[i * 3 + 2] / 10)
+          for (let c = 0; c < 3; c++) { const f = k.farben[i * 3 + c] / 255; farbe[i * 3 + c] = f <= 0.04045 ? f / 12.92 : ((f + 0.055) / 1.055) ** 2.4 }
+        }
+        const g = new THREE.BufferGeometry()
+        g.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+        g.setAttribute('color', new THREE.BufferAttribute(farbe, 3))
+        g.computeVertexNormals()
+        const netz = new THREE.Mesh(g, gebaeudeMaterial)
+        gebaeudeGruppe.add(netz)
+        gebaeudeNetze.set(name, netz)
+      }
+    }
     let scharfStand: Scharf | null = null
     let scharfMitBild = false
     interface ScharfNetz { name: string; netz: THREE.Mesh; mitte: [number, number]; uvFein: THREE.BufferAttribute; uvEigen: THREE.BufferAttribute; bild: 'nein' | 'laedt' | 'da' }
@@ -1945,6 +1985,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinStand = null
       profil = null
       feinNetz.visible = false
+      gebaeudeGruppe.visible = false
       // Röhren haben zwei Materialien; Fels und Boden teilen alle Tunnel
       feinLinien.traverse((o) => {
         const x = o as THREE.Mesh
@@ -2003,6 +2044,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNetz.geometry.dispose()
       feinNetz.geometry = g
       feinNetz.visible = true
+      gebaeudeGruppe.visible = true
+      void gebaeudeSetzen(e0, n0, e1, n1)
       feinMalen?.()
       if (scharf) {
         const P = SCHARF_PUNKTE, schritt = SCHARF_KACHEL_M / (P - 1)
