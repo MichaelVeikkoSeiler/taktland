@@ -33,7 +33,7 @@ export interface PultLage {
 }
 
 const FARBE = {
-  pult: '#3b4655', pultHell: '#4a5668', rahmen: '#d5d5d0', schwarz: '#1d2229', blende: '#262d36',
+  pult: '#3b4655', pultHell: '#4a5668', schwarz: '#1d2229', blende: '#262d36',
   anzeige: '#132033', schrift: '#e9eef5', blau: '#4f9cff', karmin: '#d63a55', gelb: '#f2c230', grau: '#8b96a6',
 }
 /** Tempo in km/h: Wahl in Schritten von 10 bis höchstens 160 (Michael, 2026-10-12) */
@@ -164,12 +164,33 @@ export class Fuehrerpult {
     // Seitenteile links und rechts mit je zwei grossen Tasten
     this.kasten(0.24, 0.42, 0.5, FARBE.pult, -1.08, -0.38, -0.78)
     this.kasten(0.24, 0.42, 0.5, FARBE.pult, 1.08, -0.38, -0.78)
-    // Fensterrahmen: Säulen, Balken oben und unten, hell wie im Referenzbild
-    for (const x of [-1.17, 1.17]) {
-      const s = this.kasten(0.16, 1.9, 0.12, FARBE.rahmen, x, 0.42, -1.12)
-      s.rotation.z = x < 0 ? -0.1 : 0.1
+    // Fensterrahmen dunkelgrau wie das Pult (Michael, 2026-10-13: «aerodynamischer»): Säulen schlank, oben schmaler,
+    // im Querschnitt flach gerundet, nach aussen gewölbt, oben nach innen und zum Fahrer geneigt wie eine schräge Frontscheibe
+    for (const seite of [-1, 1]) {
+      const bogen = new THREE.QuadraticBezierCurve3(
+        new THREE.Vector3(seite * 1.18, -0.2, -1.14),
+        new THREE.Vector3(seite * 1.22, 0.65, -1.02),
+        new THREE.Vector3(seite * 0.98, 1.36, -0.88))
+      const teile = 24, rund = 12
+      const geo = new THREE.TubeGeometry(bogen, teile, 0.085, rund, false)
+      const pos = geo.attributes.position
+      const v = new THREE.Vector3(), mitte = new THREE.Vector3()
+      for (let i = 0; i < pos.count; i++) {
+        const t = Math.floor(i / (rund + 1)) / teile
+        bogen.getPoint(t, mitte)
+        v.fromBufferAttribute(pos, i).sub(mitte).multiplyScalar(1 - 0.6 * t)
+        v.z *= 0.6
+        pos.setXYZ(i, mitte.x + v.x, mitte.y + v.y, mitte.z + v.z)
+      }
+      geo.computeVertexNormals()
+      g.add(new THREE.Mesh(geo, this.material(FARBE.pult)))
     }
-    this.kasten(2.6, 0.2, 0.14, FARBE.rahmen, 0, 1.08, -1.05)
+    // Dachkante: ein flacher, runder Balken über die ganze Breite
+    const dach = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 2.1, 20), this.material(FARBE.pult))
+    dach.geometry.scale(1, 1, 0.45)
+    dach.rotation.z = Math.PI / 2
+    dach.position.set(0, 1.36, -0.88)
+    g.add(dach)
     this.kasten(2.6, 0.06, 0.1, FARBE.blende, 0, -0.17, -1.13)
 
     // die drei Anzeigen

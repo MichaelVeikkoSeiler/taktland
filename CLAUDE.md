@@ -194,7 +194,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              im Zug dort, wo der Kopf beim Einsteigen war, die Welt dreht mit dem Gleis, der Kopf frei; Zug etwa 3 m breit, Schilder 5 m,
              Zeichen ein Zehntel, Sicht 40 km, Tragen und Thumbstick ruhen (kabine, KABINE_* in Relief.tsx); war «Führerstand» auf dem
              Bildschirm gewählt, beginnt die Brille dort; geprüft mit dem Emulator IWER (Meta), nicht auf einer Quest; im Führerstand ein Pult (komponenten/Fuehrerpult.ts, Michael, 2026-10-12, nach seinem Referenzbild,
-             ohne Markenzeichen): Fensterrahmen mit zwei Wischern, drei Anzeigen (Strecke: Start, Ziel, gefahren, noch, gemessen entlang der
+             ohne Markenzeichen): Fensterrahmen mit zwei Wischern (A-Säulen dunkelgrau wie das Pult, gewölbt, oben schmal; Michael, 2026-10-13), drei Anzeigen (Strecke: Start, Ziel, gefahren, noch, gemessen entlang der
              gezeichneten Strecke; Tacho 0 bis 160 km/h mit Herkunft SIMULATION, GPS oder PROBEFAHRT; Voraus: die nächsten drei Bahnhöfe,
              Tunnel und Brücken mit Entfernung, Namen aus den Daten, sonst «ohne Namen»), Hebel Bremse (0, B, SB) und Geschwindigkeitswahl
              (0 bis 160 in Zehnern), Tasten Schnellbremse, Zuggeräusch, Signalhorn (gerechnet, signalhorn in src/audio.ts), Stirnlicht
@@ -345,7 +345,7 @@ Lücken bleiben sichtbar (Regel 5), die Quellenzeile der Fusszeile ebenso.
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
 Auftaktbild als flaches Band (288 px, Auftakt.tsx); Modelle links (2/3) mit Knöpfen rechts (ZWEI_SPALTEN in Relief.tsx), beim
 Fahren Karte und Streckenband links und stehend, alles andere rechts; Bahnhof- und Linienseite oben Angaben links, Karte rechts,
-in jedem Kapitel mit Fragen links Text und Fakten, rechts die Fragen (KapitelBlock). Handy und Tablet bleiben, wie sie sind.
+in jedem Kapitel mit Fragen links Text und Fakten, rechts die Fragen (KapitelBlock). Handy und Tablet bleiben, wie sie sind. Handy und Tablet lassen sich drehen (manifest.webmanifest `orientation: any`, Michael, 2026-10-13: quer mehr Sicht nach links und rechts im Führerstand).
 
 Eigene Einträge (Probefahrten, gemerkte Fahrten, Favoriten, Fahrten im Logbuch) lassen sich **nach links wischen**:
 der Eintrag bleibt aufgeschoben, und ein Tipp auf die rote Fläche «Löschen» löscht ihn ohne weitere Rückfrage (`komponenten/Wischen.tsx`,
