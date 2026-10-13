@@ -2109,7 +2109,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (punkte.length < 2) return
         // ein flaches Band, quer zur Fahrt immer waagrecht (Michael, 2026-10-10: «die Linien … immer schön plan»); eine
         // Linie in Metern dreht sich zur Kamera und wirkte an Hängen seitlich gekippt
-        ;[[randVon(farbe), 1, 0], [farbe, STRICH_INNEN, 0.05]].forEach(([f, anteil, hoeher], k) => {
+        // nur der dunkle Rand, ohne den hellen Strich in der Mitte (Michael, 2026-10-13)
+        ;[[randVon(farbe), 1, 0]].forEach(([f, anteil, hoeher], k) => {
           const netz = new THREE.Mesh(band(punkte, (FEIN_LINIE_M * (anteil as number)) / 2000, Y(hoeher as number)),
             new THREE.MeshBasicMaterial({ color: f as string, side: THREE.DoubleSide,
                                           polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))

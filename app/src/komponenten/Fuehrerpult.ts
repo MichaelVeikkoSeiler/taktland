@@ -36,8 +36,8 @@ const FARBE = {
   pult: '#3b4655', pultHell: '#4a5668', schwarz: '#1d2229', blende: '#262d36',
   anzeige: '#132033', schrift: '#e9eef5', blau: '#4f9cff', karmin: '#d63a55', gelb: '#f2c230', grau: '#8b96a6',
 }
-/** Tempo in km/h: Wahl in Schritten von 10 bis höchstens 160 (Michael, 2026-10-12) */
-export const PULT_HOECHST_KMH = 160
+/** Tempo in km/h: Wahl in Schritten von 10 bis höchstens 220 (Michael, 2026-10-12: 160, 2026-10-13: 220) */
+export const PULT_HOECHST_KMH = 220
 const SCHRITT_KMH = 10
 /** gerechnete Beschleunigung und Bremsung in m/s²: Annahmen für die Simulation, aus keiner Quelle */
 const ANFAHREN_MS2 = 0.5, AUSROLLEN_MS2 = 0.3, BREMSEN_MS2 = 0.8, SCHNELLBREMSE_MS2 = 1.4
@@ -268,23 +268,18 @@ export class Fuehrerpult {
       [(c) => horn(c, FARBE.schrift), FARBE.schwarz, 'horn'], [(c) => sonne(c, FARBE.schrift), FARBE.schwarz, 'stirnlicht'],
       [(c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 'wischer'], [(c) => mond(c, FARBE.schrift), FARBE.schwarz, 'daemmerung']]
     reihe.forEach(([zeichen, grund, aktion], i) => this.taste(zeichen, grund, (i - 2.5) * abstand, y, z, aktion, kippen, gross))
-    // neben den Anzeigen je drei Tasten übereinander: links Pultlicht, Signalhorn (gelb), Dämmerung; rechts Wischer,
-    // Stirnlicht, Zuggeräusch
-    const seitlich: Array<[number, (c: CanvasRenderingContext2D) => void, string, Aktion]> = [
-      [-1, (c) => sonne(c, FARBE.schrift), FARBE.schwarz, 'pultlicht'], [-1, (c) => horn(c, '#1d2229'), FARBE.gelb, 'horn'],
-      [-1, (c) => mond(c, FARBE.schrift), FARBE.schwarz, 'daemmerung'], [1, (c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 'wischer'],
-      [1, (c) => sonne(c, FARBE.schrift), FARBE.schwarz, 'stirnlicht'], [1, (c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, 'zuggeraeusch']]
-    seitlich.forEach(([seite, zeichen, grund, aktion], i) =>
-      this.taste(zeichen, grund, seite * 1.02, 0.095 - (i % 3) * 0.095, 0.07, aktion, Math.PI / 2, 0.082, konsole))
+    // neben den Anzeigen links nur noch die Pultbeleuchtung, die es in der Reihe nicht gibt (Michael, 2026-10-13: «Doppelte
+    // Schalter entfernen»)
+    this.taste((c) => sonne(c, FARBE.schrift), FARBE.schwarz, -1.02, 0, 0.07, 'pultlicht', Math.PI / 2, 0.082, konsole)
 
-    // Hebel: links die Bremse (0, B, SB), rechts die Geschwindigkeitswahl (0 bis 160 km/h)
+    // Hebel: links die Bremse (0, B, SB), rechts die Geschwindigkeitswahl (0 bis 220 km/h)
     this.hebel(-0.5, this.bremsHebel, 'bremsePlus', 'bremseMinus', (c) => {
       c.fillStyle = FARBE.schrift; c.font = 'bold 40px Helvetica, Arial, sans-serif'; c.textAlign = 'center'
       BREMSE_TEXT.forEach((t, i) => c.fillText(t, 40, 60 + i * 95))
     })
     this.hebel(0.5, this.sollHebel, 'sollMinus', 'sollPlus', (c) => {
       c.fillStyle = FARBE.schrift; c.font = 'bold 30px Helvetica, Arial, sans-serif'; c.textAlign = 'center'
-      for (let i = 0; i <= 4; i++) c.fillText(String(160 - i * 40), 40, 40 + i * 62)
+      for (let i = 0; i <= 4; i++) c.fillText(String(Math.round(PULT_HOECHST_KMH * (1 - i / 4))), 40, 40 + i * 62)
     })
 
     // Wischer: zwei Arme unten am Fenster, in Ruhe flach
@@ -316,7 +311,8 @@ export class Fuehrerpult {
     const s = new THREE.Mesh(new THREE.PlaneGeometry(0.05, 0.25),
       new THREE.MeshBasicMaterial({ map: this.leinwand(80, 320, (c) => { c.fillStyle = FARBE.schwarz; c.fillRect(0, 0, 80, 320); skala(c) }), toneMapped: false }))
     s.rotation.x = -Math.PI / 2
-    s.position.set(x < 0 ? -0.075 : 0.075, 0.017, 0)
+    // die Skala rechts neben der Kulisse, bei beiden Hebeln (Michael, 2026-10-13)
+    s.position.set(0.075, 0.017, 0)
     basis.add(s)
     // die beiden Hälften als Ziele, kaum sichtbar
     for (const [aktion, z] of [[vorn, -0.075], [hinten, 0.075]] as const) {
@@ -353,17 +349,17 @@ export class Fuehrerpult {
     k(2 * SEITE, 0.04, HINTEN + 0.75, wand, 0, DECKE, (HINTEN - 0.75) / 2)
     // Seitenwände: unten geschlossen, darüber ein Fenster, hinten ganz geschlossen
     for (const x of [-SEITE, SEITE]) {
-      k(0.05, 1.2, HINTEN - VORN, unten, x, BODEN + 0.6, (HINTEN + VORN) / 2)
-      k(0.05, DECKE - 0.85, HINTEN - VORN, wand, x, (DECKE + 0.85) / 2, (HINTEN + VORN) / 2)
-      // Fensterrahmen der Seitenfenster, das Fenster selbst offen
-      k(0.07, 0.06, 1.1, dunkel, x, -0.05, 0.05)
-      k(0.07, 0.06, 1.1, dunkel, x, 0.85, 0.05)
-      k(0.07, 0.96, 0.06, dunkel, x, 0.4, -0.5)
-      k(0.07, 0.96, 0.06, dunkel, x, 0.4, 0.6)
-      // hinter dem Fenster geschlossen bis zur Rückwand
-      k(0.05, 0.9, HINTEN - 0.63, wand, x, 0.4, (HINTEN + 0.63) / 2)
-      // vor dem Fenster bis zur A-Säule
-      k(0.05, 0.9, 0.7, wand, x, 0.4, -0.88)
+      // das Seitenfenster gross (Michael, 2026-10-13: «viel grösser»): FU bis FO hoch, FV bis FH lang, offen
+      const FU = -0.35, FO = 1.1, FV = -0.85, FH = 1.15
+      k(0.05, FU - BODEN, HINTEN - VORN, unten, x, (BODEN + FU) / 2, (HINTEN + VORN) / 2)
+      k(0.05, DECKE - FO, HINTEN - VORN, wand, x, (DECKE + FO) / 2, (HINTEN + VORN) / 2)
+      k(0.07, 0.06, FH - FV, dunkel, x, FU, (FV + FH) / 2)
+      k(0.07, 0.06, FH - FV, dunkel, x, FO, (FV + FH) / 2)
+      k(0.07, FO - FU, 0.06, dunkel, x, (FU + FO) / 2, FV)
+      k(0.07, FO - FU, 0.06, dunkel, x, (FU + FO) / 2, FH)
+      // hinter dem Fenster geschlossen bis zur Rückwand, davor bis zur A-Säule
+      k(0.05, FO - FU, HINTEN - FH, wand, x, (FU + FO) / 2, (HINTEN + FH) / 2)
+      k(0.05, FO - FU, FV - VORN, wand, x, (FU + FO) / 2, (FV + VORN) / 2)
     }
     // Rückwand mit Tür (nicht zu öffnen)
     k(2 * SEITE, DECKE - BODEN, 0.05, wand, 0, (DECKE + BODEN) / 2, HINTEN)
