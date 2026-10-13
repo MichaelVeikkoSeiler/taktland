@@ -199,6 +199,8 @@ const KABINE_HOEHER_M = 0.15
  *  gemessene Baumhöhen») */
 const BAUM_FORM: [number, number][] = [[12, 3.5], [20, 3.2], [15, 4], [4, 2.2], [9, 3]]
 const OBEN = new THREE.Vector3(0, 1, 0)
+/** Bäume nur bis so weit um die Mitte des feinen Geländes (1,2 km voraus), Krone mit 20 Dreiecken: sonst zu viel für Handy und Brille */
+const BAUM_BIS_M = 1700
 const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
@@ -1773,15 +1775,18 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     baumGruppe.visible = false
     szene.add(baumGruppe)
     const baumForm = (() => {
-      const krone = new THREE.IcosahedronGeometry(1, 1)
+      const krone = new THREE.IcosahedronGeometry(1, 0)
       krone.scale(1, 0.62, 1); krone.translate(0, 0.62, 0)
-      const stamm = new THREE.CylinderGeometry(0.06, 0.09, 0.4, 5, 1, true)
+      const stamm = new THREE.CylinderGeometry(0.06, 0.09, 0.4, 4, 1, true)
       stamm.translate(0, 0.2, 0)
       const teile = [krone.toNonIndexed(), stamm.toNonIndexed()]
-      const pos: number[] = [], farbe: number[] = []
+      const pos: number[] = [], farbe: number[] = [], nrm: number[] = []
       teile.forEach((t, i) => {
         const a = t.getAttribute('position').array
         for (let k = 0; k < a.length; k++) pos.push(a[k])
+        // die Krone gerundet beleuchtet wie eine Kugel, mit nur 20 Dreiecken; der Stamm flach
+        if (i === 0) for (let k = 0; k < a.length; k += 3) { const v = new THREE.Vector3(a[k], (a[k + 1] - 0.62) / 0.62, a[k + 2]).normalize(); nrm.push(v.x, v.y, v.z) }
+        else { t.computeVertexNormals(); const n = t.getAttribute('normal').array; for (let k = 0; k < n.length; k++) nrm.push(n[k]) }
         for (let k = 0; k < a.length / 3; k++) farbe.push(...(i === 0 ? [1, 1, 1] : [0.35, 0.22, 0.25]))
         t.dispose()
       })
@@ -1789,15 +1794,20 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const g = new THREE.BufferGeometry()
       g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
       g.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
-      g.computeVertexNormals()
+      g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3))
       return g
     })()
-    const baumMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, flatShading: true })
+    const baumMaterial = new THREE.MeshLambertMaterial({ vertexColors: true })
     const baumNetze = new Map<string, THREE.InstancedMesh>()
     let baumAuftrag = 0
     const baumSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++baumAuftrag
-      const namen = await baumNamen(e0, n0, e1, n1)
+      // nur bis BAUM_BIS_M um die Mitte des feinen Geländes: im dichtesten Wald stehen im ganzen Quadrat bis 67'000 Bäume
+      const ce = (e0 + e1) / 2, cn = (n0 + n1) / 2
+      const namen = (await baumNamen(e0, n0, e1, n1)).filter((name) => {
+        const [qe, qn] = name.split('_').map(Number)
+        return Math.hypot((qe + 0.5) * 500 - ce, (qn + 0.5) * 500 - cn) <= BAUM_BIS_M
+      })
       if (!laeuft || auftrag !== baumAuftrag) return
       for (const [name, netz] of baumNetze) {
         if (namen.includes(name)) continue

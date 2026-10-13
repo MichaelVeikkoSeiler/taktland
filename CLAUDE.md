@@ -271,6 +271,9 @@ data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026
 data/gebaeude_extern/, data/baeume_extern/  Gebäude und Bäume je Kanton für daten.taktland.ch, nicht in Git (build_gebaeude.py und
              build_baeume.py --kanton BE …, --alle; das Band je Kanton in pipeline/umgebung.py: alle Bahnlinien aus swissTLMRegio, 400 m,
              Kacheln nach dem Kanton ihrer Mitte, BFS g1); Reihenfolge nach Michael (2026-10-13): BE, VS, NE und VD, dann der Rest;
+             Gebäude je Kartenblatt der neueste Jahrgang, CityGML oder, wo es nur sie gibt (Wallis, Waadt …), FileGDB über ogr2ogr
+             (gdal-bin); Bäume im Führerstand nur bis 1,7 km um die Mitte voraus, Krone 20 Dreiecke mit Kugelnormalen (BAUM_BIS_M; im
+             dichtesten Wald von Bern sonst bis 67'000 Bäume im Quadrat);
              gebaut vom Workflow «Gebäude und Bäume» (.github/workflows/umgebung.yml, von Hand zu starten), Pakete
              (pipeline/umgebung_pakete.py) im Release «umgebung-1», geholt von server/daten/holen.php (HOLEN = 'umgebung-1'); die App
              liest gebaeude/index.json und baeume/index.json von dort, die Kacheln der App gehen vor

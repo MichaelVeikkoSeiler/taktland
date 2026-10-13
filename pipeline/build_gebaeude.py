@@ -2,7 +2,8 @@
 dem Versuch auf Gümmenen Bern an»), dann auf den Strecken der scharfen Umgebung bis Neuchâtel («Restliche Strecke bis
 Neuchatel»).
 
-Quelle: swissBUILDINGS3D 3.0 (swisstopo), je Kartenblatt als CityGML, der neueste Jahrgang mit CityGML. Gelesen werden die
+Quelle: swissBUILDINGS3D 3.0 (swisstopo), je Kartenblatt der neueste Jahrgang, als CityGML oder, wo es nur sie gibt
+(Wallis, Waadt …), als FileGDB, gelesen mit ogr2ogr (GDAL, apt install gdal-bin); bei gleichem Jahr geht CityGML vor. Gelesen werden die
 Dach- und Wandflächen jedes Gebäudes, nur Gebäude mit ihrer Mitte bis BAND_M neben den Bahnlinien aus swissTLMRegio, die
 höchstens KORRIDOR_M neben dem Zug durch die Orte liegen (wie pipeline/build_scharf.py). Jede Fläche wird in Dreiecke
 zerlegt (Ohrenschneiden, mapbox_earcut); Löcher in Flächen bleiben zu.
@@ -99,15 +100,18 @@ def blaetter(strecken, kacheln=None, bbox=None):
                        ((st[0], st[1]), (st[2], st[3]))):
                 continue
             gml = [a["href"] for a in f["assets"].values() if a["href"].endswith(".citygml.zip")]
-            if gml and (blatt not in raus or raus[blatt][0] < jahr):
-                raus[blatt] = (jahr, gml[0])
+            # viele Blätter (Wallis, Waadt …) gibt es nur als FileGDB: dann diese, CityGML geht bei gleichem Jahr vor
+            gdb = [a["href"] for a in f["assets"].values() if a["href"].endswith(".gdb.zip")]
+            href = (gml or gdb or [None])[0]
+            if href and (blatt not in raus or raus[blatt][0] < jahr or (raus[blatt][0] == jahr and gml)):
+                raus[blatt] = (jahr, href)
         url = next((l["href"] for l in seite.get("links", []) if l["rel"] == "next"), None)
     return raus
 
 
 def laden(blatt, jahr, href):
     ROH.mkdir(parents=True, exist_ok=True)
-    datei = ROH / f"{jahr}_{blatt}.citygml.zip"
+    datei = ROH / f"{jahr}_{blatt}.{'citygml' if href.endswith('.citygml.zip') else 'gdb'}.zip"
     for versuch in range(4):
         if datei.exists():
             break
@@ -164,8 +168,39 @@ def dreiecke(p):
     return [p[idx[i:i + 3]] for i in range(0, len(idx), 3)]
 
 
+def wkt_flaechen(wkt):
+    """die Aussenringe eines TIN Z oder MULTIPOLYGON Z als Punkte k × 3"""
+    innen = wkt[wkt.index("(") + 1:wkt.rindex(")")]
+    for teil in innen.split(")),(("):
+        ring = teil.strip("()").split("),(")[0]
+        yield np.array([[float(v) for v in punkt.split()] for punkt in ring.split(",")])
+
+
+def gebaeude_gdb(datei):
+    """dasselbe aus einer FileGDB (Ebenen Roof und Wall, Dreiecke oder Polygone) mit ogr2ogr von GDAL: je Fläche der
+    Quelle ein Eintrag, die Fläche zählt für das Band mit ihrer eigenen Mitte"""
+    import csv
+    import subprocess
+    with zipfile.ZipFile(datei) as z:
+        gdb = next(n.split("/")[0] for n in z.namelist() if ".gdb/" in n)
+    csv.field_size_limit(1 << 30)
+    for ebene, art in (("Roof", "RoofSurface"), ("Wall", "WallSurface")):
+        aus = subprocess.run(["ogr2ogr", "-f", "CSV", "-lco", "GEOMETRY=AS_WKT", "-select", "UUID", "/vsistdout/",
+                              f"/vsizip/{datei.resolve()}/{gdb}", ebene], capture_output=True, text=True, check=True).stdout
+        for zeile in csv.DictReader(io.StringIO(aus)):
+            wkt = zeile.get("SHAPE") or zeile.get("WKT") or ""
+            if "(" not in wkt:
+                continue
+            flaechen = [(art, p) for p in wkt_flaechen(wkt) if len(p) >= 3]
+            if flaechen:
+                yield flaechen
+
+
 def gebaeude(datei):
     """je Gebäude seine Dach- und Wandflächen: [(art, Punkte k × 3)]"""
+    if datei.name.endswith(".gdb.zip"):
+        yield from gebaeude_gdb(datei)
+        return
     with zipfile.ZipFile(datei) as z:
         name = next(n for n in z.namelist() if n.endswith(".gml"))
         with z.open(name) as f:

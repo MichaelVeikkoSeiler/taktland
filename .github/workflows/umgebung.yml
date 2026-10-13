@@ -57,6 +57,10 @@ jobs:
       - name: Pakete installieren
         run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib
 
+      # viele Blätter gibt es nur als FileGDB, gelesen mit ogr2ogr
+      - name: GDAL installieren
+        run: sudo apt-get update -q && sudo apt-get install -y -q gdal-bin
+
       - name: Gebäude bauen
         run: python pipeline/build_gebaeude.py --kanton ${{ matrix.kantone }}
 
