@@ -90,7 +90,9 @@ const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 40, PROFIL_UEBERGANG_M = 30
 const TAL_FENSTER_M = 1500, TAL_TIEFE_M = 6, TAL_STEIGUNG = 0.08
 const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TIEFER_M = 5
 /** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
-const TUNNEL_DUNKEL = 0.2, TUNNEL_DUNKEL_M = 40
+// im Tunnel bleibt vom Tageslicht nur so viel übrig (Michael, 2026-10-13: «dunkler, so dass es deutlich heller wird, wenn man
+// das Licht anlässt»); das Stirnlicht leuchtet dann die Röhre aus; vorher eine dunkle Fläche über dem Bild (0,97, dann 0,2)
+const TUNNEL_TAGESLICHT = 0.07, TUNNEL_DUNKEL_M = 40
 /** Tunnel als Röhre, durch die der Zug fährt und durch die man blicken kann (Michael, 2026-10-12: «in eine Röhre
  *  fahren … durch den Berg bewegen … durch die Röhre blicken»). Querschnitt, Farbe und Licht stehen in keiner Quelle:
  *  ein Kreis von 4,5 m Halbmesser, die Mitte 3 m über der Linie, dazu ein Lichtband an der Wand und an den Enden ein
@@ -1130,12 +1132,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.domElement.style.touchAction = 'none'
     el.appendChild(renderer.domElement)
-    // im Führerstand im Tunnel dunkel (Michael, 2026-10-10: «In Tunneln soll es dunkel werden»): eine Fläche über dem Bild,
-    // an den Portalen über TUNNEL_DUNKEL_M ein- und ausgeblendet; die Knöpfe liegen ausserhalb und bleiben sichtbar
-    const dunkelFlaeche = document.createElement('div')
-    Object.assign(dunkelFlaeche.style, { position: 'absolute', inset: '0', background: '#050505', opacity: '0', pointerEvents: 'none' })
-    // der Rahmen ist positioniert (relative oder absolute in className), sonst läge die Fläche falsch
-    el.appendChild(dunkelFlaeche)
     // das Pult im Führerstand (Fuehrerpult.ts), nur wo es einen Führerstand gibt; seine Rückmeldung kurz oben im Bild
     const pult = fuehrerstand ? new Fuehrerpult() : null
     const pultMeldung = document.createElement('div')
@@ -1366,14 +1362,23 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       }
       nahZeichnen()
     }
-    szene.add(new THREE.HemisphereLight('#ffffff', '#8a8a7a', 1.6))
+    const himmelLicht = new THREE.HemisphereLight('#ffffff', '#8a8a7a', 1.6)
+    szene.add(himmelLicht)
     // Stirnlicht des Zugs im Führerstand; aus heisst Stärke 0, damit das Umschalten die Shader nicht neu baut
-    const stirnlicht = new THREE.SpotLight('#fff3dc', 0, 0.4, 0.38, 0.6, 0)
+    const stirnlicht = new THREE.SpotLight('#fff3dc', 0, 0.4, 0.55, 0.8, 0)
     szene.add(stirnlicht, stirnlicht.target)
     const sonne = new THREE.DirectionalLight('#ffffff', 2.2)
     // Licht von Nordwesten wie auf der Landeskarte
     sonne.position.set(-1, 1.2, -1)
     szene.add(sonne)
+    /** im Führerstand im Tunnel dunkel (Michael, 2026-10-10: «In Tunneln soll es dunkel werden»): das Tageslicht schwindet an den
+     *  Portalen über TUNNEL_DUNKEL_M; 0 ist draussen, 1 tief im Tunnel */
+    const tunnelDunkel = (k: number) => {
+      const f = 1 - (1 - TUNNEL_TAGESLICHT) * k
+      himmelLicht.intensity = 1.6 * f
+      sonne.intensity = 2.2 * f
+      pult?.umgebung(1 - 0.55 * k)
+    }
 
     // der Weg: auf dem Gelände, in Tunneln und auf Brücken gerade zwischen den Enden
     const pk = weg.punkte
@@ -1553,7 +1558,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
       g.setIndex(index)
       g.computeVertexNormals()
-      const netz = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: dunkel ? '#5c5953' : '#8a867e', emissive: '#262421', side: THREE.DoubleSide }))
+      const netz = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: dunkel ? '#5c5953' : '#8a867e', emissive: '#0b0a09', side: THREE.DoubleSide }))
       ziel.add(netz)
       const lg = new THREE.BufferGeometry()
       lg.setAttribute('position', new THREE.Float32BufferAttribute(licht, 3))
@@ -3048,7 +3053,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const inBrille = renderer.xr.isPresenting
         const vorne = (inBrille ? kabine.an : !!fuehrerstand?.current) && sichtbar
         if (vorne !== imStand) {
-          if (!vorne) dunkelFlaeche.style.opacity = '0'
+          if (!vorne) tunnelDunkel(0)
           imStand = vorne
           steuerung.enabled = !vorne
           if (inBrille) {
@@ -3110,7 +3115,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const augeM = bis(spitze + r * 15)
           const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)
           const tief = tunnel ? Math.min(augeM - tunnel.von, tunnel.bis - augeM) : 0
-          dunkelFlaeche.style.opacity = String(TUNNEL_DUNKEL * Math.min(1, tief / TUNNEL_DUNKEL_M))
+          tunnelDunkel(Math.min(1, tief / TUNNEL_DUNKEL_M))
           const auge = feinPunkt3d(augeM)
           auge.y += FUEHRERSTAND_HOEHE_M * faktor / 1000
           // der Blick folgt der Richtung des Gleises unter dem Auge, nicht einem Punkt weit voraus: so schwenkte die Kamera
@@ -3231,7 +3236,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       anwenden.current = null
       renderer.dispose()
       renderer.domElement.remove()
-      dunkelFlaeche.remove()
       pultMeldung.remove()
       renderer.domElement.removeEventListener('pointermove', pultBewegt)
       renderer.domElement.removeEventListener('pointerdown', pultDruck, { capture: true })

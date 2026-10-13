@@ -74,6 +74,8 @@ export class Fuehrerpult {
   private wischerArme: THREE.Group[] = []
   private wischerZeit = 0
   private licht = new THREE.PointLight('#fff4e0', 0, 3, 1)
+  private himmel = new THREE.HemisphereLight('#ffffff', '#5c6370', 1.4)
+  private sonne = new THREE.DirectionalLight('#ffffff', 1.2)
   private anzeigen: Array<{ lw: HTMLCanvasElement; tex: THREE.CanvasTexture; malen: (g: CanvasRenderingContext2D, l: PultLage) => void }> = []
   private gemalt = -Infinity
   private zeigerWinkel = 0
@@ -81,13 +83,17 @@ export class Fuehrerpult {
 
   constructor() {
     this.szene.add(this.gruppe)
-    this.szene.add(new THREE.HemisphereLight('#ffffff', '#5c6370', 1.4))
-    const sonne = new THREE.DirectionalLight('#ffffff', 1.2)
-    sonne.position.set(0.3, 1, 0.6)
-    this.szene.add(sonne)
+    this.szene.add(this.himmel, this.sonne)
+    this.sonne.position.set(0.3, 1, 0.6)
     this.licht.position.set(0, 0.3, -0.4)
     this.gruppe.add(this.licht)
     this.bauen()
+  }
+
+  /** Tageslicht im Führerstand, 1 draussen, kleiner im Tunnel: dort leuchten die Anzeigen, das Pultlicht hilft */
+  umgebung(f: number) {
+    this.himmel.intensity = 1.4 * f
+    this.sonne.intensity = 1.2 * f
   }
 
   /* ---------- Bau ---------- */
