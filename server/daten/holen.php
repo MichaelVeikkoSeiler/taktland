@@ -13,11 +13,12 @@ const RELEASE = 'https://api.github.com/repos/MichaelVeikkoSeiler/taktland/relea
 header('Content-Type: text/html; charset=utf-8');
 set_time_limit(900);
 $nr = isset($_GET['teil']) ? max(0, (int) $_GET['teil']) : 0;
+$versuch = isset($_GET['versuch']) ? max(0, (int) $_GET['versuch']) : 0;
 $h = fn($s) => htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 
-function seite($titel, $text, $weiter = null) {
+function seite($titel, $text, $weiter = null, $versuch = 0, $warten = 1) {
     echo '<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Taktland Daten</title>';
-    if ($weiter !== null) echo '<meta http-equiv="refresh" content="1;url=?teil=' . (int) $weiter . '">';
+    if ($weiter !== null) echo '<meta http-equiv="refresh" content="' . (int) $warten . ';url=?teil=' . (int) $weiter . ($versuch ? '&versuch=' . (int) $versuch : '') . '">';
     echo '<body style="font-family:Helvetica,Arial,sans-serif;margin:24px">';
     echo '<h1 style="font-size:22px">' . $titel . '</h1><p>' . $text . '</p></body>';
     exit;
@@ -43,7 +44,7 @@ if (!class_exists('ZipArchive')) seite('Fehlt: ZipArchive', 'PHP auf diesem Serv
 if ($json === false) seite('Release nicht gefunden', $h($fehler) . ' — Ist der Workflow «Scharfe Umgebung» durchgelaufen?');
 $pakete = [];
 foreach (json_decode($json, true)['assets'] ?? [] as $a) {
-    if (preg_match('/^scharf-[a-z0-9]+-\d+\.zip$/', $a['name'])) $pakete[$a['name']] = $a['browser_download_url'];
+    if (preg_match('/^scharf-[a-z0-9]+-\d+\.zip$/', $a['name'])) $pakete[$a['name']] = [$a['browser_download_url'], (int) $a['size']];
 }
 ksort($pakete);
 $namen = array_keys($pakete);
@@ -62,17 +63,32 @@ if ($nr >= count($namen)) {
     if ($alle === null) seite('Kein Verzeichnis', 'In scharf/ liegt kein index-*.json.');
     ksort($alle['kacheln']);
     file_put_contents(__DIR__ . '/scharf/index.json', json_encode($alle, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+    @unlink(__DIR__ . '/.holen.sperre');
     @unlink(__FILE__);
     seite('Fertig', count($namen) . ' Pakete ausgepackt, ' . count($alle['kacheln']) . ' Kacheln im Verzeichnis. Das Skript hat sich gelöscht.');
 }
 
+// nur ein Aufruf zugleich: ein zweiter (Seite doppelt offen, Neuladen während des Ladens) würde dieselbe Datei beschreiben
+$sperre = fopen(__DIR__ . '/.holen.sperre', 'c');
+if (!flock($sperre, LOCK_EX | LOCK_NB)) seite('Läuft schon', 'Ein anderer Aufruf lädt gerade. Diese Seite versucht es in 30 Sekunden wieder.', $nr, $versuch, 30);
+
+// misslingt ein Paket, versucht die Seite es von selbst noch zweimal, dann wartet sie auf Neuladen
+$nochmal = function ($titel, $text) use ($nr, $versuch) {
+    if ($versuch < 2) seite($titel, $text . ' Neuer Versuch in 10 Sekunden …', $nr, $versuch + 1, 10);
+    seite($titel, $text . ' Nach drei Versuchen: Seite neu laden versucht es noch einmal.');
+};
+
 $name = $namen[$nr];
+[$url, $groesse] = $pakete[$name];
 $tmp = __DIR__ . '/.' . $name . '.tmp';
-[$ok, $fehler] = abrufen($pakete[$name], $tmp);
-if (!$ok) { @unlink($tmp); seite('Laden fehlgeschlagen', $h($name) . ': ' . $h($fehler) . ' — Seite neu laden versucht es noch einmal.'); }
+[$ok, $fehler] = abrufen($url, $tmp);
+clearstatcache();
+$da = is_file($tmp) ? filesize($tmp) : 0;
+if (!$ok) { @unlink($tmp); $nochmal('Laden fehlgeschlagen', $h($name) . ': ' . $h($fehler) . '.'); }
+if ($da !== $groesse) { @unlink($tmp); $nochmal('Paket unvollständig', $h($name) . ': ' . $da . ' von ' . $groesse . ' Bytes angekommen.'); }
 $zip = new ZipArchive();
-if ($zip->open($tmp) !== true) { @unlink($tmp); seite('Paket kaputt', $h($name) . ' liess sich nicht öffnen. Neu laden versucht es noch einmal.'); }
-$zip->extractTo(__DIR__);
+if ($zip->open($tmp) !== true) { @unlink($tmp); $nochmal('Paket kaputt', $h($name) . ' liess sich nicht öffnen.'); }
+if (!$zip->extractTo(__DIR__)) { $zip->close(); @unlink($tmp); $nochmal('Auspacken fehlgeschlagen', $h($name) . ' liess sich nicht ganz auspacken (Platz?).'); }
 $zip->close();
 @unlink($tmp);
 seite('Paket ' . ($nr + 1) . ' von ' . count($namen), $h($name) . ' ist ausgepackt. Weiter in einer Sekunde …', $nr + 1);
