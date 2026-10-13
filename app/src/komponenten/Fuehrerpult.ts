@@ -164,33 +164,53 @@ export class Fuehrerpult {
     // Seitenteile links und rechts mit je zwei grossen Tasten
     this.kasten(0.24, 0.42, 0.5, FARBE.pult, -1.08, -0.38, -0.78)
     this.kasten(0.24, 0.42, 0.5, FARBE.pult, 1.08, -0.38, -0.78)
-    // Fensterrahmen dunkelgrau wie das Pult (Michael, 2026-10-13: «aerodynamischer»): Säulen schlank, oben schmaler,
-    // im Querschnitt flach gerundet, nach aussen gewölbt, oben nach innen und zum Fahrer geneigt wie eine schräge Frontscheibe
+    // Fensterrahmen dunkelgrau wie das Pult (Michael, 2026-10-13: «aerodynamischer», «etwas dicker und … zur Kamera hin
+    // gegen oben abdrehen»): jede Säule ein flaches Band mit gerundetem Rand, unten am Pult schmal, oben breit, die Fläche
+    // immer zum Fahrer gedreht; oben biegt sie nach vorn zum Fahrer hin ins Dach
+    const auge = new THREE.Vector3(0, 0, 0)
     for (const seite of [-1, 1]) {
       const bogen = new THREE.QuadraticBezierCurve3(
         new THREE.Vector3(seite * 1.18, -0.2, -1.14),
-        new THREE.Vector3(seite * 1.22, 0.65, -1.02),
-        new THREE.Vector3(seite * 0.98, 1.36, -0.88))
-      const teile = 24, rund = 12
-      const geo = new THREE.TubeGeometry(bogen, teile, 0.085, rund, false)
-      const pos = geo.attributes.position
-      const v = new THREE.Vector3(), mitte = new THREE.Vector3()
-      for (let i = 0; i < pos.count; i++) {
-        const t = Math.floor(i / (rund + 1)) / teile
-        bogen.getPoint(t, mitte)
-        v.fromBufferAttribute(pos, i).sub(mitte).multiplyScalar(1 - 0.6 * t)
-        v.z *= 0.6
-        pos.setXYZ(i, mitte.x + v.x, mitte.y + v.y, mitte.z + v.z)
+        new THREE.Vector3(seite * 1.24, 0.8, -1.14),
+        new THREE.Vector3(seite * 0.98, 1.22, -0.6))
+      const teile = 32, rund = 16
+      const ecken: number[] = [], index: number[] = []
+      const c = new THREE.Vector3(), tan = new THREE.Vector3(), zum = new THREE.Vector3(), quer = new THREE.Vector3()
+      for (let i = 0; i <= teile; i++) {
+        const t = i / teile
+        bogen.getPoint(t, c)
+        bogen.getTangent(t, tan)
+        zum.subVectors(auge, c).normalize()
+        quer.crossVectors(tan, zum).normalize()
+        zum.crossVectors(quer, tan).normalize()
+        const breit = 0.09 + 0.09 * t, tief = 0.04
+        for (let j = 0; j < rund; j++) {
+          const w = (j / rund) * Math.PI * 2
+          ecken.push(
+            c.x + Math.cos(w) * breit * quer.x + Math.sin(w) * tief * zum.x,
+            c.y + Math.cos(w) * breit * quer.y + Math.sin(w) * tief * zum.y,
+            c.z + Math.cos(w) * breit * quer.z + Math.sin(w) * tief * zum.z)
+          if (i < teile) {
+            const k = i * rund + j, n = i * rund + (j + 1) % rund
+            index.push(k, n, k + rund, n, n + rund, k + rund)
+          }
+        }
       }
+      const geo = new THREE.BufferGeometry()
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(ecken, 3))
+      geo.setIndex(index)
       geo.computeVertexNormals()
-      g.add(new THREE.Mesh(geo, this.material(FARBE.pult)))
+      const m = this.material(FARBE.pult)
+      m.side = THREE.DoubleSide
+      g.add(new THREE.Mesh(geo, m))
     }
-    // Dachkante: ein flacher, runder Balken über die ganze Breite
-    const dach = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 2.1, 20), this.material(FARBE.pult))
-    dach.geometry.scale(1, 1, 0.45)
+    // Dach: runde Kante über dem Fahrer, wo die Säulen enden, dahinter eine Platte bis zur Scheibe
+    const dach = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 2.15, 20), this.material(FARBE.pult))
+    dach.geometry.scale(1, 1, 0.5)
     dach.rotation.z = Math.PI / 2
-    dach.position.set(0, 1.36, -0.88)
+    dach.position.set(0, 1.22, -0.6)
     g.add(dach)
+    this.kasten(2.3, 0.04, 0.6, FARBE.pult, 0, 1.26, -0.88)
     this.kasten(2.6, 0.06, 0.1, FARBE.blende, 0, -0.17, -1.13)
 
     // die drei Anzeigen

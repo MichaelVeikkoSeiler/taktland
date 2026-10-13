@@ -194,7 +194,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              im Zug dort, wo der Kopf beim Einsteigen war, die Welt dreht mit dem Gleis, der Kopf frei; Zug etwa 3 m breit, Schilder 5 m,
              Zeichen ein Zehntel, Sicht 40 km, Tragen und Thumbstick ruhen (kabine, KABINE_* in Relief.tsx); war «Führerstand» auf dem
              Bildschirm gewählt, beginnt die Brille dort; geprüft mit dem Emulator IWER (Meta), nicht auf einer Quest; im Führerstand ein Pult (komponenten/Fuehrerpult.ts, Michael, 2026-10-12, nach seinem Referenzbild,
-             ohne Markenzeichen): Fensterrahmen mit zwei Wischern (A-Säulen dunkelgrau wie das Pult, gewölbt, oben schmal; Michael, 2026-10-13), drei Anzeigen (Strecke: Start, Ziel, gefahren, noch, gemessen entlang der
+             ohne Markenzeichen): Fensterrahmen mit zwei Wischern (A-Säulen dunkelgrau wie das Pult, flache Bänder, oben breiter und zum Fahrer hin ins Dach gebogen; Michael, 2026-10-13), drei Anzeigen (Strecke: Start, Ziel, gefahren, noch, gemessen entlang der
              gezeichneten Strecke; Tacho 0 bis 160 km/h mit Herkunft SIMULATION, GPS oder PROBEFAHRT; Voraus: die nächsten drei Bahnhöfe,
              Tunnel und Brücken mit Entfernung, Namen aus den Daten, sonst «ohne Namen»), Hebel Bremse (0, B, SB) und Geschwindigkeitswahl
              (0 bis 160 in Zehnern), Tasten Schnellbremse, Zuggeräusch, Signalhorn (gerechnet, signalhorn in src/audio.ts), Stirnlicht
