@@ -200,7 +200,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              (0 bis 160 in Zehnern), Tasten Schnellbremse, Zuggeräusch, Signalhorn (gerechnet, signalhorn in src/audio.ts), Stirnlicht
              (SpotLight, Stärke 0 statt unsichtbar), Pultlicht, Wischer, Dämmerung (N; Michael, 2026-10-13: gemalter Abendhimmel, Licht von Himmel und
              Sonne auf 30 und 25 %, Sonne rötlich, DAEMMERUNG_* in Relief.tsx, eine Stimmung, keine Tageszeit); im Tunnel und in der Dämmerung leuchten
-             die Zeichen der Tasten warm (Fuehrerpult.nacht); Hover hebt hervor und nennt den Namen, Klick, Tastatur (Pfeile, B, 0,
+             die Zeichen der Tasten warm, das Pult ist dann dunkel (Tageslicht im Pult auf 12 %, Pultlicht auf 8 %), damit sie und die Anzeigen hervorstechen (Fuehrerpult.nacht, Michael, 2026-10-13); Hover hebt hervor und nennt den Namen, Klick, Tastatur (Pfeile, B, 0,
              Leertaste, H, L, P, W, T) und in der Brille Strahl und Abzug, dort A, B Tempo, X, Y Bremse; in der Modellbahn fährt der Zug im
              Führerstand nach dem Pult (Fuehrerpult.schritt: 0,5 m/s² anfahren, 0,3 ausrollen, 0,8 bremsen, 1,4 Schnellbremse, Annahmen ohne
              Quelle, hält vor dem Ende), beim Fahren zeigt der Tacho das Tempo aus dem Fahrtmodus (GPS oder Probefahrt mal Zeitraffer) und die

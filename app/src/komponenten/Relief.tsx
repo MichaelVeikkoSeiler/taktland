@@ -1417,7 +1417,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         szene.background = daemmerung ? daemmerHimmel : tagHimmel
       }
       if (pult) {
-        pult.umgebung((1 - 0.7 * k) * (daemmerung ? 0.35 : 1))
+        pult.umgebung((1 - 0.8 * k) * (daemmerung ? 0.12 : 1))
         // im Tunnel und in der Dämmerung leuchten die Tasten (Michael, 2026-10-13)
         pult.nacht = Math.max(k, daemmerung ? 1 : 0)
       }

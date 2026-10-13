@@ -427,7 +427,8 @@ export class Fuehrerpult {
     const ausschlag = (1 - Math.cos(t * Math.PI * 2)) / 2 * 1.75
     this.wischerArme.forEach((arm, i) => { arm.rotation.z = (i === 0 ? -1 : -1) * (Math.PI / 2 - 0.08) + ausschlag })
     // im Dunkeln leuchten die Zeichen der Tasten, das Pultlicht ist heller
-    this.licht.intensity = this.pultlicht ? 1.2 + 0.4 * this.nacht : 0
+    // im Dunkeln nur noch ein schwaches Pultlicht, damit die leuchtenden Zeichen und Anzeigen hervorstechen (Michael, 2026-10-13)
+    this.licht.intensity = this.pultlicht ? 1.2 * (1 - 0.92 * this.nacht) : 0
     for (const m of this.leuchten) m.opacity = this.pultlicht ? this.nacht : 0
     // der Zeiger folgt sanft
     const winkel = Math.min(lage.v * 3.6, PULT_HOECHST_KMH + 5)
