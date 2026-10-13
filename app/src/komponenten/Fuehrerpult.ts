@@ -44,14 +44,14 @@ const ANFAHREN_MS2 = 0.5, AUSROLLEN_MS2 = 0.3, BREMSEN_MS2 = 0.8, SCHNELLBREMSE_
 const BREMSE_TEXT = ['0', 'B', 'SB'] as const
 
 type Aktion = 'sollPlus' | 'sollMinus' | 'bremsePlus' | 'bremseMinus' | 'horn' | 'stirnlicht' | 'pultlicht' | 'wischer'
-  | 'schnellbremse' | 'zuggeraeusch'
+  | 'schnellbremse' | 'zuggeraeusch' | 'daemmerung'
 
 /** Was ein Element tut und wie es heisst (als Tooltip und für Bildschirmleser) */
 const NAMEN: Record<Aktion, string> = {
   sollPlus: 'Geschwindigkeit wählen: schneller (Pfeil hoch)', sollMinus: 'Geschwindigkeit wählen: langsamer (Pfeil runter)',
   bremsePlus: 'Bremse: stärker (B)', bremseMinus: 'Bremse: lösen (0)', horn: 'Signalhorn (H)', stirnlicht: 'Stirnlicht (L)',
   pultlicht: 'Pultbeleuchtung (P)', wischer: 'Scheibenwischer (W)', schnellbremse: 'Schnellbremse (Leertaste)',
-  zuggeraeusch: 'Zuggeräusch ein, aus (T)',
+  zuggeraeusch: 'Zuggeräusch ein, aus (T)', daemmerung: 'Dämmerung ein, aus (N)',
 }
 
 export class Fuehrerpult {
@@ -65,6 +65,11 @@ export class Fuehrerpult {
   stirnlicht = false
   pultlicht = true
   wischer = false
+  /** Dämmerungsstimmung (Michael, 2026-10-13): Relief.tsx dunkelt die Landschaft ab */
+  daemmerung = false
+  /** 0 hell, 1 dunkel (Tunnel oder Dämmerung): dann leuchten die Tasten, das Pultlicht ist heller */
+  nacht = 0
+  private leuchten: THREE.MeshBasicMaterial[] = []
   /** wird gesetzt, sobald das Tempo nicht von hier kommt (GPS, Probefahrt) */
   quelle: TempoQuelle = 'simulation'
   private ziele: Array<{ netz: THREE.Mesh; aktion: Aktion; grund: THREE.Color }> = []
@@ -146,6 +151,15 @@ export class Fuehrerpult {
     ])
     deckel.position.y = 0.012
     halter.add(deckel)
+    // hinterleuchtetes Zeichen, nur im Dunkeln sichtbar; fängt keinen Klick ab
+    const leuchte = new THREE.MeshBasicMaterial({ color: '#ffd9a0', map: this.leinwand(128, 128, (g) => { g.shadowColor = '#ffb347'; g.shadowBlur = 16; zeichen(g); zeichen(g) }), transparent: true,
+      opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false })
+    const glas = new THREE.Mesh(new THREE.PlaneGeometry(gross, gross), leuchte)
+    glas.rotation.x = -Math.PI / 2
+    glas.position.y = 0.0215
+    glas.raycast = () => {}
+    halter.add(glas)
+    this.leuchten.push(leuchte)
     // Hover gilt für den Deckel: ein gemeinsames emissive über alle Seiten
     const mats = deckel.material as THREE.MeshLambertMaterial[]
     deckel.userData.aktion = aktion
@@ -238,11 +252,12 @@ export class Fuehrerpult {
 
     // Tasten in der Mitte, vor den Anzeigen
     const kippen = 0.2, y = -0.5, z = -0.86
-    this.taste((c) => dreieck(c, '#ffffff'), '#b3122f', -0.24, y, z, 'schnellbremse', kippen)
-    this.taste((c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, -0.12, y, z, 'zuggeraeusch', kippen)
-    this.taste((c) => horn(c, FARBE.schrift), FARBE.schwarz, 0, y, z, 'horn', kippen)
-    this.taste((c) => sonne(c, FARBE.schrift), FARBE.schwarz, 0.12, y, z, 'stirnlicht', kippen)
-    this.taste((c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 0.24, y, z, 'wischer', kippen)
+    this.taste((c) => dreieck(c, '#ffffff'), '#b3122f', -0.3, y, z, 'schnellbremse', kippen)
+    this.taste((c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, -0.18, y, z, 'zuggeraeusch', kippen)
+    this.taste((c) => horn(c, FARBE.schrift), FARBE.schwarz, -0.06, y, z, 'horn', kippen)
+    this.taste((c) => sonne(c, FARBE.schrift), FARBE.schwarz, 0.06, y, z, 'stirnlicht', kippen)
+    this.taste((c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 0.18, y, z, 'wischer', kippen)
+    this.taste((c) => mond(c, FARBE.schrift), FARBE.schwarz, 0.3, y, z, 'daemmerung', kippen)
     // Seitenteile: links Pultlicht und Signalhorn (gelb), rechts Wischer und Stirnlicht
     this.taste((c) => sonne(c, FARBE.schrift), FARBE.schwarz, -1.06, -0.165, -0.68, 'pultlicht', 0.1, 0.1)
     this.taste((c) => horn(c, '#1d2229'), FARBE.gelb, -1.06, -0.165, -0.86, 'horn', 0.1, 0.1)
@@ -352,6 +367,7 @@ export class Fuehrerpult {
       case 'stirnlicht': this.stirnlicht = !this.stirnlicht; return this.stirnlicht ? 'Stirnlicht an' : 'Stirnlicht aus'
       case 'pultlicht': this.pultlicht = !this.pultlicht; return this.pultlicht ? 'Pultbeleuchtung an' : 'Pultbeleuchtung aus'
       case 'wischer': this.wischer = !this.wischer; return this.wischer ? 'Scheibenwischer an' : 'Scheibenwischer aus'
+      case 'daemmerung': this.daemmerung = !this.daemmerung; return this.daemmerung ? 'Dämmerung' : 'Tag'
       case 'zuggeraeusch': {
         void audioKontext()?.resume()
         this.zuggeraeuschAn = !audioLesen().zuggeraeusch
@@ -364,7 +380,8 @@ export class Fuehrerpult {
   /** Tastatur auf dem Bildschirm; true, wenn die Taste etwas tat */
   taste_(code: string): string | null {
     const zu: Record<string, Aktion> = { ArrowUp: 'sollPlus', ArrowDown: 'sollMinus', KeyB: 'bremsePlus', Digit0: 'bremseMinus',
-      Space: 'schnellbremse', KeyH: 'horn', KeyL: 'stirnlicht', KeyP: 'pultlicht', KeyW: 'wischer', KeyT: 'zuggeraeusch' }
+      Space: 'schnellbremse', KeyH: 'horn', KeyL: 'stirnlicht', KeyP: 'pultlicht', KeyW: 'wischer', KeyT: 'zuggeraeusch',
+      KeyN: 'daemmerung' }
     return zu[code] ? this.tun(zu[code]) : null
   }
 
@@ -402,7 +419,9 @@ export class Fuehrerpult {
     const t = (this.wischerZeit % 1.6) / 1.6
     const ausschlag = (1 - Math.cos(t * Math.PI * 2)) / 2 * 1.75
     this.wischerArme.forEach((arm, i) => { arm.rotation.z = (i === 0 ? -1 : -1) * (Math.PI / 2 - 0.08) + ausschlag })
-    this.licht.intensity = this.pultlicht ? 1.2 : 0
+    // im Dunkeln leuchten die Zeichen der Tasten, das Pultlicht ist heller
+    this.licht.intensity = this.pultlicht ? 1.2 + 0.4 * this.nacht : 0
+    for (const m of this.leuchten) m.opacity = this.pultlicht ? this.nacht : 0
     // der Zeiger folgt sanft
     const winkel = Math.min(lage.v * 3.6, PULT_HOECHST_KMH + 5)
     this.zeigerWinkel += (winkel - this.zeigerWinkel) * Math.min(1, dt * 6)
@@ -568,6 +587,14 @@ function sonne(c: CanvasRenderingContext2D, farbe: string) {
     c.beginPath(); c.moveTo(64 + Math.cos(w) * 30, 64 + Math.sin(w) * 30); c.lineTo(64 + Math.cos(w) * 44, 64 + Math.sin(w) * 44); c.stroke()
   }
 }
+function mond(c: CanvasRenderingContext2D, farbe: string) {
+  c.fillStyle = farbe
+  c.beginPath(); c.arc(64, 64, 30, 0, Math.PI * 2); c.fill()
+  c.globalCompositeOperation = 'destination-out'
+  c.beginPath(); c.arc(80, 52, 26, 0, Math.PI * 2); c.fill()
+  c.globalCompositeOperation = 'source-over'
+}
+
 function wischerZeichen(c: CanvasRenderingContext2D, farbe: string) {
   c.strokeStyle = farbe; c.lineWidth = 7; c.lineCap = 'round'
   c.beginPath(); c.arc(64, 100, 56, Math.PI * 1.15, Math.PI * 1.85); c.stroke()

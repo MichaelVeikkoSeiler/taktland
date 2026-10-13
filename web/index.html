@@ -83,6 +83,11 @@
     .handy { max-width: 300px; margin: 0 auto; border-radius: 28px; overflow: hidden; border: 8px solid #212121;
              box-shadow: 0 10px 30px rgba(0,0,0,.15); background: #fff; }
     .handy img { width: 100%; }
+    .quer { display: grid; gap: 12px; margin-top: 24px; }
+    @media (min-width: 820px) { .quer { grid-template-columns: 1fr 1fr; } }
+    .quer figure { margin: 0; }
+    .quer img { width: 100%; height: auto; border-radius: 12px; border: 6px solid #212121; box-shadow: 0 10px 30px rgba(0,0,0,.15); }
+    .quer figcaption { color: var(--leise); font-size: 14px; margin-top: 6px; }
     .blatt { max-width: 420px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,.18); transform: rotate(-1.5deg); }
     .dach { color: var(--karmin); font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 8px; }
     ul.punkte { padding-left: 0; list-style: none; margin: 16px 0 0; }
@@ -176,11 +181,37 @@
           <li>Tunnel und Brücken, viele mit Länge, auch auf Strecken von BLS, RhB und anderen Bahnen.</li>
           <li>Sehenswertes, das du täglich siehst, schaltest du einzeln stumm. Am Ziel meldet Taktland die Ankunft.</li>
           <li>Ohne Zug ausprobieren: Die Probefahrt spielt jede Strecke ab.</li>
-          <li>In 3D: das Gelände mit Luftbild rund um den Zug, zum Drehen und Zoomen, nah an der Strecke besonders scharf.</li>
+          <li>In 3D: das Gelände mit Luftbild rund um den Zug, zum Drehen und Zoomen, nah an der Strecke besonders scharf, auch aus dem Führerstand.</li>
         </ul>
       </div>
       <div class="handy"><img src="./bilder/fahren.webp" width="600" height="1298" loading="lazy"
            alt="Bildschirm von Taktland: Probefahrt Zürich HB nach Lugano mit Karte, Streckenband und dem nächsten Bahnhof." /></div>
+    </section>
+
+    <section class="teil" aria-labelledby="fuehrerstand">
+      <p class="dach">Führerstand</p>
+      <h2 id="fuehrerstand">Vorne im Zug sitzen.</h2>
+      <p>
+        In 3D setzt dich «Führerstand» an die Spitze des Zugs, mit Blick die Strecke entlang. Gelände und Luftbild
+        stammen von swisstopo, nah an der Strecke besonders fein.
+      </p>
+      <ul class="punkte">
+        <li>Ein Pult mit drei Anzeigen: die Strecke, der Tacho und die nächsten Bahnhöfe, Tunnel und Brücken mit Entfernung.</li>
+        <li>In der Modellbahn fährst du selbst: Tempo wählen, bremsen, Signalhorn, Stirnlicht und Scheibenwischer.</li>
+        <li>Im Tunnel wird es dunkel, das Stirnlicht leuchtet die Felswand aus, und die Tasten im Pult leuchten.</li>
+        <li>Auf Knopfdruck Dämmerung. Handy quer halten zeigt links und rechts mehr.</li>
+        <li>Mit einer VR-Brille sitzt du in der Modellbahn im Führerstand und drehst den Kopf frei.</li>
+      </ul>
+      <div class="quer">
+        <figure><img src="./bilder/fuehrerstand.webp" width="1200" height="743" loading="lazy"
+             alt="Führerstand in Taktland: Pult mit drei Anzeigen, davor die Strecke zwischen Gümmenen und Bern Bümpliz Nord im Gelände." />
+          <figcaption>Gümmenen nach Bern Bümpliz Nord, am Tag.</figcaption></figure>
+        <figure><img src="./bilder/fuehrerstand-daemmerung.webp" width="1200" height="743" loading="lazy"
+             alt="Derselbe Führerstand in Dämmerungsstimmung, der Himmel rötlich, die Tasten im Pult leuchten." />
+          <figcaption>Dieselbe Stelle in der Dämmerung.</figcaption></figure>
+      </div>
+      <p class="klein-leise">Ein Modell, kein Abbild: Wie hoch die Gleise liegen, wie ein Tunnel innen aussieht und wie das Licht
+         fällt, steht in keiner Quelle. Pult und Fahrverhalten sind gezeichnet und gerechnet.</p>
     </section>
 
     <section class="teil zeile umgekehrt" aria-labelledby="bahnhoefe">

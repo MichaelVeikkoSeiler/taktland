@@ -73,7 +73,8 @@ const FUEHRERSTAND_HOEHE_M = 4, FUEHRERSTAND_NAHE_KM = 0.003
  *  FEIN_NACH_M Fahrt; FEIN_RAND_M vor dem Rand geht die Linie wieder in die des groben Geländes über */
 const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4, FEIN_RAND_M = 300
 /** Linie im Führerstand: in Metern breit statt in Bildpunkten; Linie über dem feinen Gelände */
-const FEIN_LINIE_M = 1.5, FEIN_UEBER_M = 1
+// 1,95 m breit, vorher 1,5 (Michael, 2026-10-13: «ca. 130 %»)
+const FEIN_LINIE_M = 1.95, FEIN_UEBER_M = 1
 /** scharfe Umgebung (Versuch): Kacheln mit eigenem Luftbild bis SCHARF_BILD_M um einen Punkt SCHARF_VORAUS_M vor dem
  *  Zug, weiter als SCHARF_LOS_M wieder ohne; darunter sinkt das feine Gelände um SCHARF_TIEFER_M */
 /** Führerstand: Kurven gerundet über so viele Meter davor und danach (glattBei); Brücken als Platte so breit und dick */
@@ -93,6 +94,9 @@ const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TI
 // im Tunnel bleibt vom Tageslicht nur so viel übrig (Michael, 2026-10-13: «dunkler, so dass es deutlich heller wird, wenn man
 // das Licht anlässt»); das Stirnlicht leuchtet dann die Röhre aus; vorher eine dunkle Fläche über dem Bild (0,97, dann 0,2)
 const TUNNEL_TAGESLICHT = 0.07, TUNNEL_DUNKEL_M = 40
+/** Dämmerung im Führerstand (Michael, 2026-10-13: «Schalter für Dämmerungsstimmung»), eine Stimmung, keine Tageszeit aus einer
+ *  Quelle: so viel vom Licht des Himmels und der Sonne bleibt, die Sonne rötlich, der Himmel gemalt wie himmel() */
+const DAEMMERUNG_HIMMEL = 0.3, DAEMMERUNG_SONNE = 0.25
 /** Tunnel als Röhre, durch die der Zug fährt und durch die man blicken kann (Michael, 2026-10-12: «in eine Röhre
  *  fahren … durch den Berg bewegen … durch die Röhre blicken»). Querschnitt, Farbe und Licht stehen in keiner Quelle:
  *  ein Kreis von 4,5 m Halbmesser, die Mitte 3 m über der Linie, dazu ein Lichtband an der Wand und an den Enden ein
@@ -107,13 +111,15 @@ const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
 /** Himmel (Michael, 2026-10-11: «einen hellblauen natürlichen Himmel»): oben kräftiger blau, zum Horizont hin heller
  *  und dunstig, unter dem Horizont fast weiss; als Rundum-Bild, damit er beim Drehen und Neigen der Kamera stimmt. Ein
  *  gemaltes Bild, kein Wetter und keine Tageszeit */
-function himmel(dunkel: boolean) {
+function himmel(dunkel: boolean, daemmerung = false) {
   const c = document.createElement('canvas')
   c.width = 4; c.height = 512
   const g = c.getContext('2d')!
   // in der Mitte der Höhe liegt der Horizont
   const v = g.createLinearGradient(0, 0, 0, c.height)
-  const stufen: Array<[number, string]> = dunkel
+  const stufen: Array<[number, string]> = daemmerung
+    ? [[0, '#1b2140'], [0.28, '#363b66'], [0.43, '#866c8c'], [0.485, '#e0956a'], [0.5, '#efae7a'], [0.54, '#4a3c40'], [1, '#2a2428']]
+    : dunkel
     ? [[0, '#0b1a2e'], [0.3, '#16304d'], [0.46, '#2b4562'], [0.5, '#3a5068'], [0.56, '#2a3440'], [1, '#1c2228']]
     : [[0, '#4f8fd0'], [0.25, '#76aee2'], [0.42, '#a9cdee'], [0.49, '#dbe9f5'], [0.5, '#e8f0f6'], [1, '#eef2f4']]
   for (const [t, f] of stufen) v.addColorStop(t, f)
@@ -1376,11 +1382,24 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     szene.add(sonne)
     /** im Führerstand im Tunnel dunkel (Michael, 2026-10-10: «In Tunneln soll es dunkel werden»): das Tageslicht schwindet an den
      *  Portalen über TUNNEL_DUNKEL_M; 0 ist draussen, 1 tief im Tunnel */
-    const tunnelDunkel = (k: number) => {
+    const tagHimmel = szene.background
+    let daemmerHimmel: THREE.Texture | null = null
+    const tunnelDunkel = (k: number, daemmerung = false) => {
       const f = 1 - (1 - TUNNEL_TAGESLICHT) * k
-      himmelLicht.intensity = 1.6 * f
-      sonne.intensity = 2.2 * f
-      pult?.umgebung(1 - 0.55 * k)
+      himmelLicht.intensity = 1.6 * f * (daemmerung ? DAEMMERUNG_HIMMEL : 1)
+      himmelLicht.color.set(daemmerung ? '#b9a9cf' : '#ffffff')
+      sonne.intensity = 2.2 * f * (daemmerung ? DAEMMERUNG_SONNE : 1)
+      sonne.color.set(daemmerung ? '#ff9a5c' : '#ffffff')
+      // nur den gemalten Himmel tauschen; in der Brille mit Durchsicht bleibt er leer
+      if (daemmerung && !daemmerHimmel) daemmerHimmel = himmel(dunkel, true)
+      if (szene.background && (szene.background === tagHimmel || szene.background === daemmerHimmel)) {
+        szene.background = daemmerung ? daemmerHimmel : tagHimmel
+      }
+      if (pult) {
+        pult.umgebung((1 - 0.7 * k) * (daemmerung ? 0.35 : 1))
+        // im Tunnel und in der Dämmerung leuchten die Tasten (Michael, 2026-10-13)
+        pult.nacht = Math.max(k, daemmerung ? 1 : 0)
+      }
     }
 
     // der Weg: auf dem Gelände, in Tunneln und auf Brücken gerade zwischen den Enden
@@ -2023,31 +2042,17 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (versenkt.length) pa.needsUpdate = true
       // die Linie auf dem feinen Gelände, 6 km davor und danach, in Metern breit
       const von = Math.max(anfang, stelle - 6000), bis = Math.min(ende, stelle + 6000)
-      const strich = (punkte: THREE.Vector3[], farbe: string, tunnel: boolean) => {
+      // auch im Tunnel durchgezogen (Michael, 2026-10-13), die Röhre zeigt den Tunnel
+      const strich = (punkte: THREE.Vector3[], farbe: string) => {
         if (punkte.length < 2) return
-        if (!tunnel) {
-          // ein flaches Band, quer zur Fahrt immer waagrecht (Michael, 2026-10-10: «die Linien … immer schön plan»); eine
-          // Linie in Metern dreht sich zur Kamera und wirkte an Hängen seitlich gekippt
-          ;[[randVon(farbe), 1, 0], [farbe, STRICH_INNEN, 0.05]].forEach(([f, anteil, hoeher], k) => {
-            const netz = new THREE.Mesh(band(punkte, (FEIN_LINIE_M * (anteil as number)) / 2000, Y(hoeher as number)),
-              new THREE.MeshBasicMaterial({ color: f as string, side: THREE.DoubleSide,
-                                            polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
-            netz.renderOrder = k
-            feinLinien.add(netz)
-          })
-          return
-        }
-        const lg = new LineGeometry()
-        lg.setPositions(punkte.flatMap((q) => [q.x, q.y, q.z]))
-        ;[[randVon(farbe), 1], [farbe, STRICH_INNEN]].forEach(([f, anteil], k) => {
-          const lm = new LineMaterial({ color: f as string, linewidth: (FEIN_LINIE_M * (anteil as number)) / 1000, worldUnits: true,
-                                        depthTest: !tunnel, transparent: tunnel, opacity: tunnel ? 0.9 : 1, depthWrite: k === 1,
-                                        dashed: tunnel, dashSize: 0.02, gapSize: 0.015 })
-          lm.resolution.copy(aufloesung)
-          const l = new Line2(lg, lm)
-          if (tunnel) l.computeLineDistances()
-          l.renderOrder = (tunnel ? 2 : 0) + k
-          feinLinien.add(l)
+        // ein flaches Band, quer zur Fahrt immer waagrecht (Michael, 2026-10-10: «die Linien … immer schön plan»); eine
+        // Linie in Metern dreht sich zur Kamera und wirkte an Hängen seitlich gekippt
+        ;[[randVon(farbe), 1, 0], [farbe, STRICH_INNEN, 0.05]].forEach(([f, anteil, hoeher], k) => {
+          const netz = new THREE.Mesh(band(punkte, (FEIN_LINIE_M * (anteil as number)) / 2000, Y(hoeher as number)),
+            new THREE.MeshBasicMaterial({ color: f as string, side: THREE.DoubleSide,
+                                          polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
+          netz.renderOrder = k
+          feinLinien.add(netz)
         })
       }
       const punkteVon = (a: number, z: number) => {
@@ -2090,14 +2095,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const grenzen = weg.bauwerke.filter((x) => x.bis > anf && x.von < end).sort((x, y) => x.von - y.von)
         let bei = anf
         for (const x of grenzen) {
-          if (x.von > bei) strich(punkteVon(bei, x.von), wegFarbe, false)
+          if (x.von > bei) strich(punkteVon(bei, x.von), wegFarbe)
           const a = Math.max(x.von, anf, bei), z = Math.min(x.bis, end)
-          if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke, x.art === 'tunnel')
+          if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke)
           if (z > a && x.art === 'bruecke') platte(punkteVon(a, z))
           if (z > a && x.art === 'tunnel') tunnelRoehre(punkteVon(a, z), feinLinien)
           bei = Math.max(bei, x.bis)
         }
-        if (bei < end) strich(punkteVon(bei, end), wegFarbe, false)
+        if (bei < end) strich(punkteVon(bei, end), wegFarbe)
       }
       for (const o of wegStriche) o.visible = false
       nahZeichnen()
@@ -3182,7 +3187,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const augeM = bis(spitze + r * 15)
           const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)
           const tief = tunnel ? Math.min(augeM - tunnel.von, tunnel.bis - augeM) : 0
-          tunnelDunkel(Math.min(1, tief / TUNNEL_DUNKEL_M))
+          tunnelDunkel(Math.min(1, tief / TUNNEL_DUNKEL_M), pult?.daemmerung)
           const auge = feinPunkt3d(augeM)
           auge.y += FUEHRERSTAND_HOEHE_M * faktor / 1000
           // der Blick folgt der Richtung des Gleises unter dem Auge, nicht einem Punkt weit voraus: so schwenkte die Kamera
