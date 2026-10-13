@@ -100,11 +100,12 @@ const DAEMMERUNG_HIMMEL = 0.3, DAEMMERUNG_SONNE = 0.25
 /** Tunnel als Röhre, durch die der Zug fährt und durch die man blicken kann (Michael, 2026-10-12: «in eine Röhre
  *  fahren … durch den Berg bewegen … durch die Röhre blicken»). Querschnitt, Farbe und Licht stehen in keiner Quelle.
  *  Seit 2026-10-13 nach Michaels Vorbild einer Modellbahn: ein Hufeisen, senkrechte Wände ROEHRE_HALB_M neben der Linie
- *  bis ROEHRE_KAEMPFER_M über ihr, darüber ein Halbkreis, der Boden flach ROEHRE_BODEN_M unter der Linie; an den Enden ein
- *  gemauertes Portal mit Bogen und Gesims, PORTAL_INNEN_M im Tunnel (Michael: «ca. 20 m in den Tunnel hinein», sonst stand
- *  es vor dem Hang, und dahinter war es gleich wieder hell) */
+ *  bis ROEHRE_KAEMPFER_M über ihr, darüber ein Halbkreis, der Boden flach ROEHRE_BODEN_M unter der Linie. Nur von innen
+ *  gezeichnet: wo das Gelände tiefer liegt als die Röhre, stand sie sonst in der Landschaft. Gemauerte Portale gab es kurz,
+ *  sie waren zu massiv (Michael, 2026-10-13). Dunkel wird es erst PORTAL_INNEN_M im Tunnel (Michael: «ca. 20 m», sonst war
+ *  es hinter dem Eingang gleich wieder hell) */
 const ROEHRE_HALB_M = 4.2, ROEHRE_KAEMPFER_M = 2.8, ROEHRE_BODEN_M = 0.4, ROEHRE_BOGEN_TEILE = 14
-const PORTAL_INNEN_M = 20, PORTAL_BREIT_M = 20, PORTAL_HOCH_M = 10, PORTAL_TIEF_M = 1.5, PORTAL_UNTEN_M = 5
+const PORTAL_INNEN_M = 20
 // Fels an der Wand (Michael, 2026-10-13: «echte Wände mit Fels»): gezeichnet, nicht aus einer Quelle; die Wand weicht bis
 // ROEHRE_RAUH_M von der Form ab, Ringe höchstens ROEHRE_RING_M auseinander, das Felsbild wiederholt sich alle FELS_BILD_M
 const ROEHRE_RAUH_M = 0.3, ROEHRE_RING_M = 4, FELS_BILD_M = 6
@@ -122,7 +123,7 @@ const ROEHRE_PROFIL = (() => {
   for (const t of [0.25, 0.5, 0.75, 1]) p.push({ q: -b + 2 * b * t, h: u, nq: 0, nh: -1, rauh: false })
   return p
 })()
-/** so weit steht das Portal im Tunnel; bei kurzen Tunneln weniger, damit die Röhre bleibt */
+/** erst so weit im Tunnel wird es dunkel; bei kurzen Tunneln weniger */
 const portalInnen = (laenge: number) => Math.min(PORTAL_INNEN_M, laenge / 4)
 /** so viele Abschnitte des Querschnitts gehören zur Wand, der Rest ist Boden */
 const ROEHRE_WAND_TEILE = ROEHRE_PROFIL.length - 1 - 4
@@ -1620,84 +1621,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       tex.colorSpace = THREE.SRGBColorSpace
       tex.anisotropy = 4
       fels = new THREE.MeshLambertMaterial({ color: dunkel ? '#a29d94' : '#ffffff', map: tex, bumpMap: tex, bumpScale: 3,
-        emissive: '#0b0a09', side: THREE.DoubleSide })
+        emissive: '#0b0a09', side: THREE.BackSide })
       return fels
     }
-    /** Mauerwerk fürs Portal, gezeichnet: Reihen behauener Steine mit Fugen; je Bild 4 m */
-    let mauer: THREE.MeshLambertMaterial | null = null
-    const mauerMaterial = () => {
-      if (mauer) return mauer
-      const lw = document.createElement('canvas')
-      lw.width = lw.height = 256
-      const c = lw.getContext('2d')!
-      let zz = 11
-      const z = () => { zz = (zz * 16807) % 2147483647; return zz / 2147483647 }
-      c.fillStyle = '#3d3c3a'
-      c.fillRect(0, 0, 256, 256)
-      const reihen = 8, hoch = 256 / reihen
-      for (let r = 0; r < reihen; r++) {
-        let x = -z() * 40
-        while (x < 256) {
-          const breit = 26 + z() * 40, h = 105 + z() * 55
-          c.fillStyle = `rgb(${h},${h - 2},${h - 6})`
-          for (const dx of [0, 256]) c.fillRect(x + 2 - dx, r * hoch + 2, breit - 4, hoch - 4)
-          // Flecken im Stein
-          for (let n = 0; n < 4; n++) {
-            const fx = x + z() * breit, fy = r * hoch + z() * hoch, g = h - 25 + z() * 30
-            c.fillStyle = `rgba(${g},${g},${g - 4},0.5)`
-            c.beginPath(); c.arc(fx, fy, 2 + z() * 5, 0, Math.PI * 2); c.fill()
-          }
-          x += breit
-        }
-      }
-      const tex = new THREE.CanvasTexture(lw)
-      tex.wrapS = tex.wrapT = THREE.RepeatWrapping
-      tex.repeat.set(1 / 4, 1 / 4)
-      tex.colorSpace = THREE.SRGBColorSpace
-      tex.anisotropy = 4
-      mauer = new THREE.MeshLambertMaterial({ color: dunkel ? '#b3aea6' : '#ffffff', map: tex, bumpMap: tex, bumpScale: 4,
-        emissive: '#0b0a09', side: THREE.DoubleSide })
-      return mauer
-    }
-    const bodenMaterial = new THREE.MeshLambertMaterial({ color: '#4d4943', emissive: '#080706', side: THREE.DoubleSide })
-    /** ein gemauertes Portal mit der Öffnung der Röhre, Bogen und Gesims, in Metern gebaut und auf die Szene gebracht */
-    const portal = (p: THREE.Vector3, raus: THREE.Vector3, ziel: THREE.Object3D) => {
-      const loch = new THREE.Path()
-      ROEHRE_PROFIL.forEach((x, i) => (i ? loch.lineTo(x.q, x.h) : loch.moveTo(x.q, x.h)))
-      const b2 = PORTAL_BREIT_M / 2
-      const wand = new THREE.Shape()
-      wand.moveTo(-b2, -PORTAL_UNTEN_M); wand.lineTo(b2, -PORTAL_UNTEN_M); wand.lineTo(b2, PORTAL_HOCH_M); wand.lineTo(-b2, PORTAL_HOCH_M)
-      wand.lineTo(-b2, -PORTAL_UNTEN_M)
-      wand.holes.push(loch)
-      const teile: THREE.BufferGeometry[] = []
-      const flach = (form: THREE.Shape, tief: number, vor: number) => {
-        const g = new THREE.ExtrudeGeometry(form, { depth: tief, bevelEnabled: false, curveSegments: 16 })
-        g.translate(0, 0, vor - tief / 2)
-        teile.push(g)
-      }
-      flach(wand, PORTAL_TIEF_M, 0)
-      // Bogen aus Steinen um die Öffnung, etwas vorstehend
-      const bogen = new THREE.Shape(), b = ROEHRE_HALB_M, k = ROEHRE_KAEMPFER_M, r = b + 0.9
-      bogen.moveTo(r, k - 0.6)
-      for (let i = 0; i <= 24; i++) bogen.lineTo(Math.cos((i / 24) * Math.PI) * r, k + Math.sin((i / 24) * Math.PI) * r)
-      bogen.lineTo(-r, k - 0.6); bogen.lineTo(-b, k - 0.6)
-      for (let i = 24; i >= 0; i--) bogen.lineTo(Math.cos((i / 24) * Math.PI) * b, k + Math.sin((i / 24) * Math.PI) * b)
-      bogen.lineTo(b, k - 0.6)
-      flach(bogen, PORTAL_TIEF_M + 0.4, 0.15)
-      // Gesims oben
-      const gesims = new THREE.Shape()
-      gesims.moveTo(-b2 - 0.4, PORTAL_HOCH_M); gesims.lineTo(b2 + 0.4, PORTAL_HOCH_M); gesims.lineTo(b2 + 0.4, PORTAL_HOCH_M + 0.6)
-      gesims.lineTo(-b2 - 0.4, PORTAL_HOCH_M + 0.6)
-      flach(gesims, PORTAL_TIEF_M + 0.6, 0.2)
-      const gruppe = new THREE.Group()
-      for (const g of teile) gruppe.add(new THREE.Mesh(g, mauerMaterial()))
-      gruppe.position.copy(p)
-      gruppe.rotation.y = Math.atan2(raus.x, raus.z)
-      gruppe.scale.set(1 / 1000, faktor / 1000, 1 / 1000)
-      ziel.add(gruppe)
-    }
-    /** die Röhre eines Tunnels um die Punkte der Linie, innen wie aussen sichtbar, dazu ein Lichtband und an beiden Enden ein
-     *  Portal, PORTAL_INNEN_M im Tunnel */
+    const bodenMaterial = new THREE.MeshLambertMaterial({ color: '#4d4943', emissive: '#080706', side: THREE.BackSide })
+    /** die Röhre eines Tunnels um die Punkte der Linie, nur von innen sichtbar (die Flächen zeigen nach aussen), dazu ein
+     *  Lichtband */
     const tunnelRoehre = (roh: THREE.Vector3[], ziel: THREE.Object3D) => {
       if (roh.length < 2) return
       // dichter, damit der Fels auch entlang der Röhre Buckel hat
@@ -1706,11 +1635,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const n = Math.ceil((roh[i].distanceTo(roh[i - 1]) * 1000) / ROEHRE_RING_M)
         for (let j = 1; j <= n; j++) dicht.push(roh[i - 1].clone().lerp(roh[i], j / n))
       }
-      const bei: number[] = [0]
-      for (let i = 1; i < dicht.length; i++) bei.push(bei[i - 1] + Math.hypot(dicht[i].x - dicht[i - 1].x, dicht[i].z - dicht[i - 1].z) * 1000)
-      const ganz = bei[bei.length - 1], innen = portalInnen(ganz)
-      const punkte = dicht.filter((_, i) => bei[i] >= innen - 0.01 && bei[i] <= ganz - innen + 0.01)
-      if (punkte.length < 2) return
+      const punkte = dicht
       const pos: number[] = [], uv: number[] = [], wand: number[] = [], boden: number[] = [], licht: number[] = []
       const reihe = ROEHRE_PROFIL.length
       let laenge = 0
@@ -1724,7 +1649,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const a = punkte[Math.max(0, i - 1)], z = punkte[Math.min(punkte.length - 1, i + 1)]
         const nx = -(z.z - a.z), nz = z.x - a.x, l = Math.hypot(nx, nz) || 1
         const sx = nx / l, sz = nz / l
-        // an den Portalen glatt, damit die Öffnung anschliesst
+        // an den Enden glatt
         const rand = Math.min(1, bisher / 6, (laenge - bisher) / 6)
         ROEHRE_PROFIL.forEach((x, k) => {
           const d = x.rauh ? ROEHRE_RAUH_M * rand * felsRauh(bisher / 3, k % (reihe - 1)) : 0
@@ -1751,9 +1676,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const lg = new THREE.BufferGeometry()
       lg.setAttribute('position', new THREE.Float32BufferAttribute(licht, 3))
       ziel.add(new THREE.Line(lg, new THREE.LineBasicMaterial({ color: '#ffe8a3' })))
-      const n = punkte.length
-      portal(punkte[0], punkte[0].clone().sub(punkte[1]).setY(0).normalize(), ziel)
-      portal(punkte[n - 1], punkte[n - 1].clone().sub(punkte[n - 2]).setY(0).normalize(), ziel)
     }
     const wegVon = nurBild.children.length
     for (const [anfang, ende] of weg.stuecke) {
@@ -2021,11 +1943,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinStand = null
       profil = null
       feinNetz.visible = false
-      // Portale sind Gruppen, Röhren haben zwei Materialien; Fels, Mauer und Boden teilen alle Tunnel
+      // Röhren haben zwei Materialien; Fels und Boden teilen alle Tunnel
       feinLinien.traverse((o) => {
         const x = o as THREE.Mesh
         x.geometry?.dispose()
-        if (x.material && !Array.isArray(x.material) && x.material !== fels && x.material !== mauer) x.material.dispose()
+        if (x.material && !Array.isArray(x.material) && x.material !== fels) x.material.dispose()
       })
       feinLinien.clear()
       scharfWeg()
@@ -2048,22 +1970,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNah = nahBild
       scharfStand = scharf
       profilRechnen(stelle)
-      // vor jedem Portal ein Einschnitt bis unter die Linie, sonst läge das Portal PORTAL_INNEN_M im Tunnel unter dem Hang
-      const einschnitt: Array<[number, number, number]> = []
-      for (const t of weg.bauwerke) {
-        if (t.art !== 'tunnel' || t.bis < anfang || t.von > ende) continue
-        const innen = portalInnen(t.bis - t.von)
-        for (const [a, z] of [[t.von - 10, t.von + innen + 2], [t.bis - innen - 2, t.bis + 10]]) {
-          for (let mm = a; mm <= z; mm += 4) {
-            const m2 = Math.max(anfang, Math.min(ende, mm)), [e, n] = punktBei(m2)
-            if (e >= e0 - 20 && e <= e1 + 20 && n >= n0 - 20 && n <= n1 + 20) einschnitt.push([e, n, feinLinieHoehe(m2) - FEIN_UEBER_M - 0.5])
-          }
-        }
-      }
-      const ausheben = (e: number, n: number, z: number, breit: number) => {
-        for (const [ee, nn, h] of einschnitt) if (z > h && Math.hypot(e - ee, n - nn) < breit) z = h
-        return z
-      }
       // unter dem scharfen Band sinkt das feine Gelände, wo es rundum scharfe Höhen gibt
       const scharfDa = (e: number, n: number) => !!scharf && [[0, 0], [-10, 0], [10, 0], [0, -10], [0, 10]].every(([de, dn]) => scharfHoehe(scharf, e + de, n + dn) !== null)
       // das Netz: ein Punkt je Feld von 10 m, nur Vierecke mit vier Höhen
@@ -2075,7 +1981,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           let z = feinFeld(fein, I0 + i, J1 - j)
           if (z === null) continue
           if (scharfDa(e, n)) z -= SCHARF_TIEFER_M
-          if (einschnitt.length) z = ausheben(e, n, z, ROEHRE_HALB_M + 6)
           da[k] = 1
           p2[k * 3] = X(e); p2[k * 3 + 1] = Y(z); p2[k * 3 + 2] = Z(n)
           uv2[k * 2] = (e - e0) / FEIN_SEITE_M; uv2[k * 2 + 1] = (n - n0) / FEIN_SEITE_M
@@ -2105,8 +2010,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           for (let j = 0; j < P; j++) {
             for (let i = 0; i < P; i++) {
               const k = j * P + i, e = qe * SCHARF_KACHEL_M + i * schritt, n = (qn + 1) * SCHARF_KACHEL_M - j * schritt
-              const z = Number.isNaN(a[k]) ? 0 : einschnitt.length ? ausheben(e, n, a[k], ROEHRE_HALB_M + 2) : a[k]
-              p3[k * 3] = X(e); p3[k * 3 + 1] = Y(z); p3[k * 3 + 2] = Z(n)
+              p3[k * 3] = X(e); p3[k * 3 + 1] = Y(Number.isNaN(a[k]) ? 0 : a[k]); p3[k * 3 + 2] = Z(n)
               uvF[k * 2] = (e - e0) / FEIN_SEITE_M; uvF[k * 2 + 1] = (n - n0) / FEIN_SEITE_M
               uvE[k * 2] = i / (P - 1); uvE[k * 2 + 1] = j / (P - 1)
             }
@@ -2212,7 +2116,17 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const a = Math.max(x.von, anf, bei), z = Math.min(x.bis, end)
           if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke)
           if (z > a && x.art === 'bruecke') platte(punkteVon(a, z))
-          if (z > a && x.art === 'tunnel') tunnelRoehre(punkteVon(a, z), feinLinien)
+          if (z > a && x.art === 'tunnel') {
+            // die Röhre nur, wo das Gelände sie ganz überdeckt; sonst stand sie in der Landschaft (Michael, 2026-10-13)
+            const bedeckt = (mm: number) => {
+              const [e, n] = punktBei(mm), h = feinHoehe(fein, e, n)
+              return h !== null && h >= feinLinieHoehe(mm) + ROEHRE_KAEMPFER_M + ROEHRE_HALB_M + 0.5
+            }
+            let a2 = a, z2 = z
+            while (a2 < z2 && !bedeckt(a2)) a2 += 5
+            while (z2 > a2 && !bedeckt(z2)) z2 -= 5
+            if (z2 - a2 >= 10) tunnelRoehre(punkteVon(a2, z2), feinLinien)
+          }
           bei = Math.max(bei, x.bis)
         }
         if (bei < end) strich(punkteVon(bei, end), wegFarbe)
@@ -2728,8 +2642,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         los: () => {
           if (probe && probe.current === null) (probe as React.MutableRefObject<number | null>).current = performance.now()
           fahrt.losWunsch = true
+          // im Führerstand löst «Zug fahren» auch die Bremse (Michael, 2026-10-13: «Man soll aber auch wieder fahren können»)
+          pult?.losfahren()
         },
-        halt: () => { fahrt.laeuft = false },
+        halt: () => { fahrt.laeuft = false; if (imStand) pult?.anhalten() },
         tempo: (t) => { fahrt.echt = t },
       }
     }

@@ -61,6 +61,8 @@ export class Fuehrerpult {
   /** gewählte Geschwindigkeit km/h, Bremse 0 gelöst, 1 bremsen, 2 Schnellbremse; v simuliert in m/s */
   soll = 80
   bremse = 0
+  /** die Wahl vor der Schnellbremse, damit Lösen wieder dorthin fährt */
+  private vorBremse = 80
   v = 0
   stirnlicht = false
   pultlicht = true
@@ -369,7 +371,10 @@ export class Fuehrerpult {
       case 'bremseMinus': if (!sim) return gesperrt
         this.bremse = Math.max(0, this.bremse - 1); return this.bremse ? 'Bremse' : 'Bremse gelöst'
       case 'schnellbremse': if (!sim) return gesperrt
-        this.bremse = 2; this.soll = 0; return 'Schnellbremse'
+        // ein zweites Mal löst sie wieder (Michael, 2026-10-13: «Man soll aber auch wieder fahren können»)
+        if (this.bremse === 2) { this.losfahren(); return `Schnellbremse gelöst, ${this.soll} km/h` }
+        if (this.soll) this.vorBremse = this.soll
+        this.bremse = 2; this.soll = 0; return 'Schnellbremse – nochmals drücken löst sie'
       case 'horn': void audioKontext()?.resume(); signalhorn(); return 'Signalhorn'
       case 'stirnlicht': this.stirnlicht = !this.stirnlicht; return this.stirnlicht ? 'Stirnlicht an' : 'Stirnlicht aus'
       case 'pultlicht': this.pultlicht = !this.pultlicht; return this.pultlicht ? 'Pultbeleuchtung an' : 'Pultbeleuchtung aus'
@@ -382,6 +387,19 @@ export class Fuehrerpult {
         return !audioLesen().an ? 'Töne sind in den Einstellungen aus' : this.zuggeraeuschAn ? 'Zuggeräusch an' : 'Zuggeräusch aus'
       }
     }
+  }
+
+  /** «Zug fahren»: Bremse lösen und wieder auf die Wahl von vorher, wenn keine gewählt ist */
+  losfahren() {
+    this.bremse = 0
+    if (!this.soll) this.soll = this.vorBremse || 80
+  }
+
+  /** «Anhalten»: auf 0 km/h und bremsen */
+  anhalten() {
+    if (this.soll) this.vorBremse = this.soll
+    this.soll = 0
+    this.bremse = 1
   }
 
   /** Tastatur auf dem Bildschirm; true, wenn die Taste etwas tat */
@@ -509,7 +527,7 @@ export class Fuehrerpult {
     if (l.quelle === 'simulation') {
       c.fillText(`gewählt ${this.soll} km/h`, 404, 80)
       c.fillStyle = this.bremse ? FARBE.karmin : FARBE.grau
-      c.fillText(kuerzen(c, `Bremse ${['gelöst', 'bremst', 'Schnellbremse'][this.bremse]}`, 226), 404, 108)
+      c.fillText(kuerzen(c, this.bremse === 2 ? 'Schnellbremse' : `Bremse ${['gelöst', 'bremst'][this.bremse]}`, 226), 404, 108)
     } else {
       c.fillText(l.quelle === 'gps' ? 'aus dem Standort' : 'Zeitraffer', 404, 80)
       c.fillText('Hebel gesperrt', 404, 108)
