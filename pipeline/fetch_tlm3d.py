@@ -6,7 +6,7 @@ vier Dateien der Ebene (etwa 60 MB), mit HTTP-Range-Anfragen. Ablage:
 data/raw/tlm3d/. Kostenlose Geodaten (OGD) von swisstopo, Quellenangabe Pflicht.
 
 Mit --baeume statt dessen die Ebenen für pipeline/build_baeume.py: von TLM_EINZELBAUM nur die Geometrie (.shp, etwa
-500 MB), von TLM_BODENBEDECKUNG die ganze Ebene (etwa 2,8 GB).
+500 MB), von TLM_BODENBEDECKUNG die ganze Ebene (etwa 2,8 GB) und TLM_EISENBAHN für den Lichtraum der Gleise.
 
     python3 pipeline/fetch_tlm3d.py
     python3 pipeline/fetch_tlm3d.py --baeume
@@ -63,6 +63,9 @@ class Fern(io.RawIOBase):
 def gewollt(name):
     if "--baeume" not in sys.argv:
         return name.startswith(EBENE + ".") and not name.endswith(".lock")
+    # die Gleisachsen für den Lichtraum der Bäume
+    if name.startswith(EBENE + ".") and not name.endswith(".lock"):
+        return True
     if name.startswith("swissTLM3D_TLM_EINZELBAUM_"):
         return name.endswith(".shp")
     return name.startswith("swissTLM3D_TLM_BODENBEDECKUNG_") and name.rsplit(".", 1)[-1] in ("shp", "shx", "dbf", "cpg", "CPG")

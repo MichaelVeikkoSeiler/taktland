@@ -47,6 +47,12 @@ ARTEN = {"Einzelbaum": 0, "Wald": 1, "Wald offen": 2, "Gebueschwald": 3, "Gehoel
 #: Abstand der gezeichneten Bäume in einer Fläche, je Art (in keiner Quelle)
 DICHTE = {1: 8.0, 2: 16.0, 3: 6.0, 4: 9.0}
 GRUEN = (70, 95, 55)
+#: Lichtraum fürs Bild (Michael, 2026-10-14: «auch die Bäume an den anderen Gleisen entfernen»): kein Baum, dessen Krone näher
+#: als LICHTRAUM_M an eine Gleisachse aus swissTLM3D käme; Kronenradius je Art wie BAUM_FORM in der App, je Baum bis 25 %
+#: grösser. Nicht im Tunnel und nicht in Galerien, darüber bleibt der Wald. In keiner Quelle.
+LICHTRAUM_M = 5
+KRONE_M = {0: 3.5, 1: 3.2, 2: 4.0, 3: 2.2, 4: 3.0}
+UNTER_TAG = ("Tunnel", "Galerie")
 
 
 def einzelbaeume(e0, n0, e1, n1):
@@ -62,6 +68,47 @@ def einzelbaeume(e0, n0, e1, n1):
         w = (x >= e0) & (x <= e1) & (y >= n0) & (y <= n1)
         raus.append(np.stack([x[w], y[w]], axis=1))
     return np.concatenate(raus)
+
+
+def gleise(e0, n0, e1, n1):
+    """die Gleisachsen aus swissTLM3D im Rechteck, ohne Tunnel und Galerien, als Stücke (n × 4)"""
+    r = shapefile.Reader(str(ROH / "swissTLM3D_TLM_EISENBAHN"))
+    stuecke = []
+    for sr in r.iterShapeRecords(bbox=[e0, n0, e1, n1], fields=["KUNSTBAUTE"]):
+        if sr.record["KUNSTBAUTE"] in UNTER_TAG:
+            continue
+        pts = np.array(sr.shape.points)[:, :2]
+        teile = list(sr.shape.parts) + [len(pts)]
+        for a, z in zip(teile, teile[1:]):
+            q = pts[a:z]
+            if len(q) >= 2:
+                stuecke.append(np.hstack([q[:-1], q[1:]]))
+    return np.concatenate(stuecke) if stuecke else np.zeros((0, 4))
+
+
+def ohne_gleis(b, stuecke):
+    """die Bäume, deren Krone (KRONE_M · 1,25) mehr als LICHTRAUM_M von jeder Gleisachse entfernt bleibt"""
+    if not len(b) or not len(stuecke):
+        return b
+    frei = np.array([KRONE_M.get(int(a), 3.5) * 1.25 + LICHTRAUM_M for a in range(5)])[b[:, 2].astype(int)]
+    rand = frei.max()
+    behalten = np.ones(len(b), bool)
+    qe, qn = (b[:, 0] // KACHEL_M).astype(int), (b[:, 1] // KACHEL_M).astype(int)
+    se0, sn0 = np.minimum(stuecke[:, 0], stuecke[:, 2]), np.minimum(stuecke[:, 1], stuecke[:, 3])
+    se1, sn1 = np.maximum(stuecke[:, 0], stuecke[:, 2]), np.maximum(stuecke[:, 1], stuecke[:, 3])
+    for k in set(zip(qe.tolist(), qn.tolist())):
+        w = np.nonzero((qe == k[0]) & (qn == k[1]))[0]
+        x0, y0 = k[0] * KACHEL_M - rand, k[1] * KACHEL_M - rand
+        x1, y1 = x0 + KACHEL_M + 2 * rand, y0 + KACHEL_M + 2 * rand
+        s = stuecke[(se1 >= x0) & (se0 <= x1) & (sn1 >= y0) & (sn0 <= y1)]
+        if not len(s):
+            continue
+        px, py = b[w, 0][:, None], b[w, 1][:, None]
+        ax, ay, dx, dy = s[:, 0][None], s[:, 1][None], (s[:, 2] - s[:, 0])[None], (s[:, 3] - s[:, 1])[None]
+        t = np.clip(((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy + 1e-9), 0, 1)
+        d = np.hypot(px - ax - t * dx, py - ay - t * dy).min(axis=1)
+        behalten[w] = d >= frei[w]
+    return b[behalten]
 
 
 def innen(px, py, ringe):
@@ -156,6 +203,9 @@ def kanton(kt, band, kt_ringe, bild):
     imKanton = np.array([(int(x // KACHEL_M), int(y // KACHEL_M)) in kacheln for x, y in b[:, :2]], bool) if len(b) else np.zeros(0, bool)
     b = b[imKanton]
     b = b[band.nah(b[:, 0], b[:, 1])]
+    vorher = len(b)
+    b = ohne_gleis(b, gleise(e0, n0, e1, n1))
+    print(f"{kt}: {vorher - len(b)} Bäume im Lichtraum der Gleise weggelassen", flush=True)
     print(f"{kt}: {len(kacheln)} Kacheln, {len(eb)} Einzelbäume und {len(fl)} gezeichnete im Rechteck, {len(b)} am Band, "
           f"{time.time() - t0:.0f} s", flush=True)
     zahl, groesse = schreiben(ziel, b, bild)
@@ -212,6 +262,9 @@ def versuch():
     for k in range(0, len(b), 20000):
         nah[k:k + 20000] = build_scharf.abstand(strecken, b[k:k + 20000, 0], b[k:k + 20000, 1]) <= BAND_M
     b = b[nah]
+    vorher = len(b)
+    b = ohne_gleis(b, gleise(e0, n0, e1, n1))
+    print(f"{vorher - len(b)} Bäume im Lichtraum der Gleise weggelassen")
     print(f"{len(b)} Bäume am Band")
     bild = build_gebaeude.Luftbild()
     je = {}

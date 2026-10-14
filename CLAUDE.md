@@ -274,7 +274,9 @@ data/gebaeude_extern/, data/baeume_extern/  Gebäude und Bäume je Kanton für d
              Gebäude je Kartenblatt der neueste Jahrgang, CityGML oder, wo es nur sie gibt (Wallis, Waadt …), FileGDB über ogr2ogr
              (gdal-bin); Bäume im Führerstand nur bis 1,7 km um die Mitte voraus, Krone 20 Dreiecke mit Kugelnormalen (BAUM_BIS_M; im
              dichtesten Wald von Bern sonst bis 67'000 Bäume im Quadrat);
-             gebaut vom Workflow «Gebäude und Bäume» (.github/workflows/umgebung.yml, von Hand zu starten), Pakete
+             Bäume nicht im Lichtraum der Gleise: keine Krone näher als 5 m an einer Gleisachse aus swissTLM3D (Ebene Eisenbahn, ohne
+             Tunnel und Galerien; LICHTRAUM_M in build_baeume.py; Michael, 2026-10-14: «auch die Bäume an den anderen Gleisen entfernen»);
+             gebaut vom Workflow «Gebäude und Bäume» (.github/workflows/umgebung.yml, von Hand zu starten, Auswahl alles, gebaeude oder baeume), Pakete
              (pipeline/umgebung_pakete.py) im Release «umgebung-1», geholt von server/daten/holen.php (HOLEN = 'umgebung-1'); die App
              liest gebaeude/index.json und baeume/index.json von dort, die Kacheln der App gehen vor
 data/scharf_extern/  weitere scharfe Kacheln für daten.taktland.ch, nicht in Git (build_scharf.py --extern, mit --relief NAME

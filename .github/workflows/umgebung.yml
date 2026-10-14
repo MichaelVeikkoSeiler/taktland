@@ -7,6 +7,12 @@ name: Gebäude und Bäume
 
 on:
   workflow_dispatch:
+    inputs:
+      teil:
+        description: "Was bauen: alles, nur Gebäude oder nur Bäume"
+        type: choice
+        options: [alles, gebaeude, baeume]
+        default: alles
 
 permissions:
   contents: write
@@ -29,6 +35,7 @@ jobs:
 
   gebaeude:
     needs: vorbereiten
+    if: inputs.teil != 'baeume'
     runs-on: ubuntu-latest
     timeout-minutes: 350
     strategy:
@@ -74,6 +81,7 @@ jobs:
 
   baeume:
     needs: vorbereiten
+    if: inputs.teil != 'gebaeude'
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
