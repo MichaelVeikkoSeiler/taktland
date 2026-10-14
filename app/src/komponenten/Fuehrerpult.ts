@@ -284,7 +284,7 @@ export class Fuehrerpult {
     reihe.forEach(([zeichen, grund, aktion], i) => this.taste(zeichen, grund, (i - 2.5) * abstand, y, z, aktion, kippen, gross))
     // neben den Anzeigen links nur noch die Pultbeleuchtung, die es in der Reihe nicht gibt (Michael, 2026-10-13: «Doppelte
     // Schalter entfernen»)
-    this.taste((c) => sonne(c, FARBE.schrift), FARBE.schwarz, -1.02, 0, 0.07, 'pultlicht', Math.PI / 2, 0.082, konsole)
+    this.taste((c) => pultleuchte(c, FARBE.schrift), FARBE.schwarz, -1.02, 0, 0.07, 'pultlicht', Math.PI / 2, 0.082, konsole)
 
     // Hebel: links die Bremse (0, B, SB), rechts die Geschwindigkeitswahl (0 bis 220 km/h)
     this.hebel(-0.5, this.bremsHebel, 'bremsePlus', 'bremseMinus', (c) => {
@@ -719,6 +719,18 @@ function sonne(c: CanvasRenderingContext2D, farbe: string) {
     const w = (i / 8) * Math.PI * 2
     c.beginPath(); c.moveTo(64 + Math.cos(w) * 30, 64 + Math.sin(w) * 30); c.lineTo(64 + Math.cos(w) * 44, 64 + Math.sin(w) * 44); c.stroke()
   }
+}
+/** Pultbeleuchtung: eine Leuchte, die aufs Pult scheint (Michael, 2026-10-14: «ein eigenes Zeichen»; vorher die Sonne wie
+ *  beim Stirnlicht) */
+function pultleuchte(c: CanvasRenderingContext2D, farbe: string) {
+  c.fillStyle = farbe; c.strokeStyle = farbe; c.lineCap = 'round'
+  c.lineWidth = 6
+  c.beginPath(); c.moveTo(64, 14); c.lineTo(64, 32); c.stroke()
+  c.beginPath(); c.moveTo(46, 32); c.lineTo(82, 32); c.lineTo(98, 58); c.lineTo(30, 58); c.closePath(); c.fill()
+  c.lineWidth = 6
+  for (const [x0, x1] of [[44, 34], [64, 64], [84, 94]]) { c.beginPath(); c.moveTo(x0, 70); c.lineTo(x1, 88); c.stroke() }
+  c.lineWidth = 7
+  c.beginPath(); c.moveTo(20, 104); c.lineTo(108, 104); c.stroke()
 }
 function mond(c: CanvasRenderingContext2D, farbe: string) {
   c.fillStyle = farbe

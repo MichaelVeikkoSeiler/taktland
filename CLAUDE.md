@@ -199,7 +199,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              Nächsten voraus; Voraus: die nächsten drei Bahnhöfe, Tunnel und Brücken mit Entfernung auf einer Linie durch ihre Zeichen
              (vorListe, Michael, 2026-10-13, nach seinem Vorbild), Namen aus den Daten, sonst «ohne Namen»), Hebel Bremse (0, B, SB) und Geschwindigkeitswahl
              (0 bis 220 in Zehnern, PULT_HOECHST_KMH; vorher 160, Michael, 2026-10-13), beide Skalen rechts neben dem Hebel, Tasten Schnellbremse (nochmals drücken löst sie, «Zug fahren» löst jede Bremse und fährt wieder mit der Wahl von vorher, «Anhalten» bremst auf 0; Michael, 2026-10-13: «wieder fahren können»), Zuggeräusch, Signalhorn (gerechnet, signalhorn in src/audio.ts), Stirnlicht
-             (SpotLight, Stärke 0 statt unsichtbar), Pultlicht, Wischer, Dämmerung (N; Michael, 2026-10-13: gemalter Abendhimmel, Licht von Himmel und
+             (SpotLight, Stärke 0 statt unsichtbar), Pultlicht (Zeichen: Leuchte über dem Pult, pultleuchte; Michael, 2026-10-14), Wischer, Dämmerung (N; Michael, 2026-10-13: gemalter Abendhimmel, Licht von Himmel und
              Sonne auf 30 und 25 %, Sonne rötlich, DAEMMERUNG_* in Relief.tsx, eine Stimmung, keine Tageszeit); im Tunnel und in der Dämmerung leuchten
              die Zeichen der Tasten warm, das Pult ist dann dunkel (Tageslicht im Pult auf 12 %, Pultlicht auf 8 %), damit sie und die Anzeigen hervorstechen (Fuehrerpult.nacht, Michael, 2026-10-13); Hover hebt hervor und nennt den Namen, Klick, Tastatur (Pfeile, B, 0,
              Leertaste, H, L, P, W, T) und in der Brille Strahl und Abzug, dort A, B Tempo, X, Y Bremse; in der Modellbahn fährt der Zug im
