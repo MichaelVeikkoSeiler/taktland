@@ -74,7 +74,10 @@ const FUEHRERSTAND_HOEHE_M = 4, FUEHRERSTAND_NAHE_KM = 0.003
 const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4, FEIN_RAND_M = 300
 /** Linie im Führerstand: in Metern breit statt in Bildpunkten; Linie über dem feinen Gelände */
 // 1,95 m breit, vorher 1,5 (Michael, 2026-10-13: «ca. 130 %»)
-const FEIN_LINIE_M = 1.95, FEIN_UEBER_M = 1
+const FEIN_UEBER_M = 1
+/** Schienen im Führerstand (Michael, 2026-10-14): Abstand der Mitten und Breite einer Schiene in Metern; Normalspur überall,
+ *  die Spurweite einer Strecke steht in keiner Quelle; breiter als ein echter Schienenkopf (7 cm), sonst aus der Kabine kaum zu sehen */
+const SPUR_M = 1.435 + 0.07, SCHIENE_M = 0.15
 /** scharfe Umgebung (Versuch): Kacheln mit eigenem Luftbild bis SCHARF_BILD_M um einen Punkt SCHARF_VORAUS_M vor dem
  *  Zug, weiter als SCHARF_LOS_M wieder ohne; darunter sinkt das feine Gelände um SCHARF_TIEFER_M */
 /** Führerstand: Kurven gerundet über so viele Meter davor und danach (glattBei); Brücken als Platte so breit und dick */
@@ -1729,6 +1732,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     feinNetz.renderOrder = -1
     feinNetz.visible = false
     const feinLinien = new THREE.Group()
+    const schienenMaterial = new THREE.MeshBasicMaterial({ color: '#c4c8cd', side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 })
     szene.add(feinNetz, feinLinien)
     // scharfe Umgebung, ein Versuch zwischen Müntschemier und Rosshäusern (Michael, 2026-10-11: «Ist dieser Detailgrad
     // umsetzbar, nur 200 m links und rechts der Bahnlinie?»): je Kachel von 250 m ein Netz auf 2 m (swissALTI3D) mit dem
@@ -2095,7 +2099,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinLinien.traverse((o) => {
         const x = o as THREE.Mesh
         x.geometry?.dispose()
-        if (x.material && !Array.isArray(x.material) && x.material !== fels) x.material.dispose()
+        if (x.material && !Array.isArray(x.material) && x.material !== fels && x.material !== schienenMaterial) x.material.dispose()
       })
       feinLinien.clear()
       scharfWeg()
@@ -2217,14 +2221,19 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (punkte.length < 2) return
         // ein flaches Band, quer zur Fahrt immer waagrecht (Michael, 2026-10-10: «die Linien … immer schön plan»); eine
         // Linie in Metern dreht sich zur Kamera und wirkte an Hängen seitlich gekippt
-        // nur der dunkle Rand, ohne den hellen Strich in der Mitte (Michael, 2026-10-13)
-        ;[[randVon(farbe), 1, 0]].forEach(([f, anteil, hoeher], k) => {
-          const netz = new THREE.Mesh(band(punkte, (FEIN_LINIE_M * (anteil as number)) / 2000, Y(hoeher as number)),
-            new THREE.MeshBasicMaterial({ color: f as string, side: THREE.DoubleSide,
-                                          polygonOffset: true, polygonOffsetFactor: -1 - k, polygonOffsetUnits: -1 - k }))
-          netz.renderOrder = k
+        // statt eines Bandes zwei Schienen auf dem Luftbild (Michael, 2026-10-14: «Nur zwei Schienen»; vorher ein dunkelgraues
+        // Band); Spurweite und Schienenbreite stehen in keiner Quelle: überall Normalspur gezeichnet
+        void farbe
+        for (const seite of [-1, 1]) {
+          const versetzt = punkte.map((p, i) => {
+            const a = punkte[Math.max(0, i - 1)], z = punkte[Math.min(punkte.length - 1, i + 1)]
+            const nx = -(z.z - a.z), nz = z.x - a.x, l = Math.hypot(nx, nz) || 1
+            const d = (seite * SPUR_M) / 2 / 1000
+            return new THREE.Vector3(p.x + (nx / l) * d, p.y, p.z + (nz / l) * d)
+          })
+          const netz = new THREE.Mesh(band(versetzt, SCHIENE_M / 2000, 0), schienenMaterial)
           feinLinien.add(netz)
-        })
+        }
       }
       const punkteVon = (a: number, z: number) => {
         const punkte: THREE.Vector3[] = []
