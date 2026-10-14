@@ -78,7 +78,7 @@ const FEIN_LINIE_M = 1.95, FEIN_UEBER_M = 1
 /** scharfe Umgebung (Versuch): Kacheln mit eigenem Luftbild bis SCHARF_BILD_M um einen Punkt SCHARF_VORAUS_M vor dem
  *  Zug, weiter als SCHARF_LOS_M wieder ohne; darunter sinkt das feine Gelände um SCHARF_TIEFER_M */
 /** Führerstand: Kurven gerundet über so viele Meter davor und danach (glattBei); Brücken als Platte so breit und dick */
-const GLATT_M = 80, BRUECKE_BREIT_M = 7, BRUECKE_DICK_M = 1.8
+const BRUECKE_BREIT_M = 7, BRUECKE_DICK_M = 1.8
 /** Führerstand: Namen erst so nah an der Kamera (km) */
 const SCHILD_FUEHRERSTAND_KM = 1
 /** Führerstand: so weit vor und nach einem Tunnel fährt der Zug gerade auf das Portal zu */
@@ -199,6 +199,10 @@ const KABINE_HOEHER_M = 0.15
  *  gemessene Baumhöhen») */
 const BAUM_FORM: [number, number][] = [[12, 3.5], [20, 3.2], [15, 4], [4, 2.2], [9, 3]]
 const OBEN = new THREE.Vector3(0, 1, 0)
+/** Bahnhofsschilder im Führerstand (Michael, 2026-10-14: «in Bodennähe und so dass man es beim Vorbeifahren gut lesen kann»):
+ *  je Bahnhof eines auf jeder Seite, so weit neben der Linie, so breit und hoch, die Unterkante so hoch über der Linie, gegen
+ *  das Gleis gedreht; Lage, Grösse und Gestalt stehen in keiner Quelle, die Stelle ist die des Bahnhofs in den Daten */
+const TAFEL_SEITE_M = 7.5, TAFEL_BREITE_M = 9, TAFEL_HOEHE_M = 1.8, TAFEL_UEBER_M = 1.8, TAFEL_DREHUNG = (35 * Math.PI) / 180
 /** Bäume nur bis so weit um die Mitte des feinen Geländes (1,2 km voraus), Krone mit 20 Dreiecken: sonst zu viel für Handy und Brille */
 const BAUM_BIS_M = 1700
 const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
@@ -1890,18 +1894,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     let versenkt: number[] = []
     let feinNah: Nahbild | null = null
     let feinAuftrag = 0
-    /** Lage im Führerstand: der Verlauf ist ein Zug aus Geraden mit Ecken alle paar hundert Meter; gemittelt über
-     *  GLATT_M davor und danach werden die Kurven rund (Michael, 2026-10-11: «die Kurven noch runder») */
+    /** Lage im Führerstand: der Verlauf ist ein Zug aus Geraden mit Ecken alle 100 bis 350 m. Früher über 80 m davor
+     *  und danach gemittelt (Michael, 2026-10-11: «die Kurven noch runder»), das zog die Linie in jeder Kurve um 5 bis 10 m
+     *  nach innen (Michael, 2026-10-14: «dass die Strecke die Kurven zu stark schneidet»). Jetzt eine Kurve durch jeden Punkt
+     *  der Quelle (Catmull-Rom, zentripetal): dort liegt sie auf dem Gleis, dazwischen folgt sie dem Bogen statt der Sehne */
     const glattBei = (meter: number): readonly [number, number] => {
-      const anfang = pk[0].m, ende = pk[pk.length - 1].m
-      const r = Math.min(GLATT_M, meter - anfang, ende - meter)
-      if (r < 10) return punktBei(meter)
-      let e = 0, n = 0, w = 0
-      for (let d = -r; d <= r; d += 10) {
-        const g = r + 10 - Math.abs(d), [pe, pn] = punktBei(meter + d)
-        e += pe * g; n += pn * g; w += g
+      let lo = 1, hi = pk.length - 1
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (pk[mid].m < meter) lo = mid + 1; else hi = mid }
+      const i1 = Math.max(0, lo - 1), i2 = lo
+      const p1 = pk[i1], p2 = pk[i2]
+      const t = Math.max(0, Math.min(1, (meter - p1.m) / ((p2.m - p1.m) || 1)))
+      // die Nachbarn, an den Enden gespiegelt
+      const p0 = i1 > 0 ? pk[i1 - 1] : { e: 2 * p1.e - p2.e, n: 2 * p1.n - p2.n }
+      const p3 = i2 < pk.length - 1 ? pk[i2 + 1] : { e: 2 * p2.e - p1.e, n: 2 * p2.n - p1.n }
+      const knoten = (a: { e: number; n: number }, b: { e: number; n: number }) => Math.max(1e-3, Math.sqrt(Math.hypot(b.e - a.e, b.n - a.n)))
+      const t0 = 0, t1 = t0 + knoten(p0, p1), t2 = t1 + knoten(p1, p2), t3 = t2 + knoten(p2, p3)
+      const u = t1 + t * (t2 - t1)
+      const mix = (a: number, b: number, ta: number, tb: number) => ((tb - u) * a + (u - ta) * b) / (tb - ta)
+      const wert = (k: 'e' | 'n') => {
+        const a1 = mix(p0[k], p1[k], t0, t1), a2 = mix(p1[k], p2[k], t1, t2), a3 = mix(p2[k], p3[k], t2, t3)
+        const b1 = mix(a1, a2, t0, t2), b2 = mix(a2, a3, t1, t3)
+        return mix(b1, b2, t1, t2)
       }
-      return [e / w, n / w]
+      return [wert('e'), wert('n')]
     }
     /** Höhe der Linie im Führerstand, je PROFIL_SCHRITT_M einmal gerechnet, wenn das feine Gelände kommt (profilRechnen) */
     let profil: { von: number; h: Float32Array } | null = null
@@ -2072,6 +2087,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       versenkt = []
       feinStand = null
       profil = null
+      tafelnSetzen()
       feinNetz.visible = false
       gebaeudeGruppe.visible = false
       baumGruppe.visible = false
@@ -2102,6 +2118,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNah = nahBild
       scharfStand = scharf
       profilRechnen(stelle)
+      tafelnSetzen()
       // unter dem scharfen Band sinkt das feine Gelände, wo es rundum scharfe Höhen gibt
       const scharfDa = (e: number, n: number) => !!scharf && [[0, 0], [-10, 0], [10, 0], [0, -10], [0, 10]].every(([de, dn]) => scharfHoehe(scharf, e + de, n + dn) !== null)
       // das Netz: ein Punkt je Feld von 10 m, nur Vierecke mit vier Höhen
@@ -2327,6 +2344,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const ausdehnungKm = (Math.max(breite, hoehe) * m) / 1000
     const mastKm = MAST_KM * Math.max(1, ausdehnungKm / 40)
     const masten: Array<{ sp: THREE.Sprite; y: number }> = []
+    /** Mast und Fahne der Bahnhöfe: im Führerstand aus, dort stehen die Schilder am Gleis */
+    const mastTeile: THREE.Object3D[] = []
+    const bahnhofSprites = new Set<THREE.Sprite>()
     const mastFarbe = BAHNHOF_GRAU
     r.bahnhoefe.forEach((b, i) => {
       const y = Y(hoeheBei(r, h, b.lage[0], b.lage[1]) + UEBER_M)
@@ -2337,19 +2357,106 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const mast = new Line2(lg, lm)
       mast.position.set(X(b.lage[0]), y, Z(b.lage[1]))
       nurBild.add(mast)
+      mastTeile.push(mast)
       zeichen.push(mast)
       if (brille) {
         const stab = new THREE.Mesh(new THREE.CylinderGeometry(BRILLE_LINIE_M * 0.25 / brilleMass, BRILLE_LINIE_M * 0.25 / brilleMass, mastKm, 6),
           new THREE.MeshBasicMaterial({ color: mastFarbe }))
         stab.position.set(X(b.lage[0]), y + mastKm / 2, Z(b.lage[1]))
         nurBrille.add(stab)
+        mastTeile.push(stab)
       }
       // Anfang und Ende der Strecke zuerst, dann die übrigen Bahnhöfe, dann die Gipfel
       const ende = i === 0 || i === r.bahnhoefe.length - 1
       const sp = schild(b.name, dunkel ? '#9db4ff' : FARBEN.bahnhof, X(b.lage[0]), y + mastKm, Z(b.lage[1]), ende ? 0 : 1, folge.get(i) ?? 0,
                         szene, [[0.5, 0], [0, 0], [1, 0]], true)
       masten.push({ sp, y })
+      bahnhofSprites.add(sp)
     })
+    // Bahnhofsschilder am Gleis, nur im Führerstand: zwei Pfosten, eine dunkelgraue Tafel mit dem Namen in Weiss auf beiden
+    // Seiten; der Name gross genug für die Fahrt vorbei
+    const tafelGruppe = new THREE.Group()
+    tafelGruppe.visible = false
+    szene.add(tafelGruppe)
+    const pfostenForm = new THREE.BoxGeometry(1, 1, 1)
+    const pfostenMaterial = new THREE.MeshLambertMaterial({ color: '#3a3a3a' })
+    const tafelBild = (name: string) => {
+      const lw = document.createElement('canvas')
+      lw.width = 1024; lw.height = Math.round(1024 * TAFEL_HOEHE_M / TAFEL_BREITE_M)
+      const g = lw.getContext('2d')!
+      g.fillStyle = BAHNHOF_GRAU; g.fillRect(0, 0, lw.width, lw.height)
+      g.strokeStyle = '#ffffff'; g.lineWidth = 6; g.strokeRect(10, 10, lw.width - 20, lw.height - 20)
+      let px = 120
+      g.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      while (px > 40 && g.measureText(name).width > lw.width - 80) { px -= 4; g.font = `bold ${px}px Helvetica, Arial, sans-serif` }
+      g.fillStyle = '#ffffff'; g.textAlign = 'center'; g.textBaseline = 'middle'
+      g.fillText(name, lw.width / 2, lw.height / 2 + px * 0.04)
+      const t = new THREE.CanvasTexture(lw)
+      t.colorSpace = THREE.SRGBColorSpace
+      t.anisotropy = 8
+      return t
+    }
+    const tafeln: Array<{ s: number; teile: THREE.Group[] }> = []
+    for (const b of r.bahnhoefe) {
+      const s0 = b.km * 1000
+      if (s0 < pk[0].m || s0 > pk[pk.length - 1].m) continue
+      const material = new THREE.MeshBasicMaterial({ map: tafelBild(b.name), toneMapped: false })
+      const teile: THREE.Group[] = []
+      for (let seite = 0; seite < 2; seite++) {
+        const tafel = new THREE.Group()
+        const flaeche = new THREE.PlaneGeometry(1, 1)
+        // vorne und hinten je eine Fläche, beide von vorn lesbar
+        for (const dreh of [0, Math.PI]) {
+          const f = new THREE.Mesh(flaeche, material)
+          f.rotation.y = dreh
+          f.position.z = dreh ? -0.002 : 0.002
+          tafel.add(f)
+        }
+        const brett = new THREE.Mesh(pfostenForm, pfostenMaterial)
+        brett.scale.set(1.04, 1.08, 0.003)
+        tafel.add(brett)
+        for (const x of [-0.38, 0.38]) {
+          const pfosten = new THREE.Mesh(pfostenForm, pfostenMaterial)
+          pfosten.name = 'pfosten'
+          pfosten.position.x = x
+          tafel.add(pfosten)
+        }
+        tafelGruppe.add(tafel)
+        teile.push(tafel)
+      }
+      tafeln.push({ s: s0, teile })
+    }
+    /** die Schilder auf die Höhe der Linie setzen, im feinen Gelände auf deren feine Höhe */
+    const tafelnSetzen = () => {
+      const breite = X(TAFEL_BREITE_M) - X(0), hoch = Y(TAFEL_HOEHE_M) - Y(0)
+      for (const { s: s0, teile } of tafeln) {
+        const [e1, n1] = punktBei(s0 - 20), [e2, n2] = punktBei(s0 + 20)
+        const l = Math.hypot(e2 - e1, n2 - n1) || 1
+        const de = (e2 - e1) / l, dn = (n2 - n1) / l
+        const [e, n] = punktBei(s0)
+        const linie = feinLinieHoehe(s0)
+        teile.forEach((tafel, i) => {
+          const seite = i === 0 ? 1 : -1
+          // quer zur Linie: rechts von der Fahrtrichtung (de, dn) liegt (dn, -de)
+          const te = e + seite * dn * TAFEL_SEITE_M, tn = n + seite * -de * TAFEL_SEITE_M
+          const boden = Math.min(linie, (scharfStand && scharfHoehe(scharfStand, te, tn)) ?? (feinStand && feinHoehe(feinStand.fein, te, tn)) ?? linie)
+          const unten = linie + TAFEL_UEBER_M
+          tafel.position.set(X(te), Y(unten + TAFEL_HOEHE_M / 2), Z(tn))
+          // die Vorderseite schaut gegen die Fahrtrichtung und zum Gleis hin, um TAFEL_DREHUNG aus der Linie gedreht
+          const gegen = Math.atan2(-de, dn) // Winkel der Richtung (−de, −dn) in der Ebene x, −z
+          tafel.rotation.set(0, gegen + seite * TAFEL_DREHUNG, 0)
+          tafel.scale.set(breite, hoch, breite)
+          // die Pfosten von der Unterkante bis unter den Boden, in Einheiten der Tafel
+          const pfostenHoch = (Y(unten) - Y(boden - 1)) / hoch
+          for (const o of tafel.children) {
+            if (o.name !== 'pfosten') continue
+            o.scale.set(0.012, pfostenHoch, 0.012)
+            o.position.y = -0.5 - pfostenHoch / 2
+          }
+        })
+      }
+    }
+    tafelnSetzen()
     // Tunnel ohne Länge (nur ein Kilometer in der Quelle) zeigte hier eine graue Kugel auf der Linie; ohne Sinn auf dem
     // Bild (Michael, 2026-10-10: «Brauchts diese?»), darum weggelassen; beim Fahren meldet Taktland sie weiter
     for (const g of r.gipfel) {
@@ -2734,6 +2841,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         // im Führerstand alle Namen erst kurz vor dem Ort (Michael, 2026-10-11: «Es reicht, wenn sie einen Kilometer vor
         // Erreichen des Standorts angezeigt werden»)
         if (imStand && abstand > SCHILD_FUEHRERSTAND_KM ** 2) { sp.visible = false; continue }
+        // Bahnhöfe stehen im Führerstand als Schild am Gleis, ohne Fahne (Michael, 2026-10-14)
+        if (imStand && bahnhofSprites.has(sp)) { sp.visible = false; continue }
         sp.getWorldPosition(projiziert).project(kam)
         if (projiziert.z > 1 || projiziert.z < -1) { sp.visible = false; continue }
         const breite = sp.scale.x * mass * pm[0] * b / 2, hoehe = sp.scale.y * mass * pm[5] * hh / 2
@@ -3293,6 +3402,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (vorne !== imStand) {
           if (!vorne) tunnelDunkel(0)
           imStand = vorne
+          for (const o of mastTeile) o.visible = !vorne
+          tafelGruppe.visible = vorne
           steuerung.enabled = !vorne
           if (inBrille) {
             // die Welt in Originalgrösse um den Kopf; die Linien und Seile für den Tisch sind dann zu dick
