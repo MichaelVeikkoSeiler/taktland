@@ -3422,7 +3422,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       }
       // Bahnhöfe, Gipfel und Kulturgüter gleich: aus der Nähe kleiner, aus der Ferne grösser
       if (!renderer.xr.isPresenting) {
-        const f = zeichenMass()
+        // im Führerstand so klein wie in der Brille: sonst schwebte ein Kulturgut als riesiger Klotz am Himmel
+        const f = imStand ? KABINE_ZEICHEN : zeichenMass()
         for (const z of zeichen) z.scale.setScalar(f)
         const abstand = kamera.position.distanceTo(steuerung.target)
         for (const lm of strichMaterialien) { lm.dashSize = abstand * STRICH_JE_KM; lm.gapSize = abstand * LUECKE_JE_KM }
