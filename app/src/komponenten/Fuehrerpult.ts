@@ -279,7 +279,7 @@ export class Fuehrerpult {
     leiste.renderOrder = -1
     const reihe: Array<[(c: CanvasRenderingContext2D) => void, string, Aktion]> = [
       [(c) => dreieck(c, '#ffffff'), '#b3122f', 'schnellbremse'], [(c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, 'zuggeraeusch'],
-      [(c) => horn(c, FARBE.schrift), FARBE.schwarz, 'horn'], [(c) => sonne(c, FARBE.schrift), FARBE.schwarz, 'stirnlicht'],
+      [(c) => horn(c, FARBE.schrift), FARBE.schwarz, 'horn'], [(c) => scheinwerfer(c, FARBE.schrift), FARBE.schwarz, 'stirnlicht'],
       [(c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 'wischer'], [(c) => mond(c, FARBE.schrift), FARBE.schwarz, 'daemmerung']]
     reihe.forEach(([zeichen, grund, aktion], i) => this.taste(zeichen, grund, (i - 2.5) * abstand, y, z, aktion, kippen, gross))
     // neben den Anzeigen links nur noch die Pultbeleuchtung, die es in der Reihe nicht gibt (Michael, 2026-10-13: «Doppelte
@@ -712,13 +712,13 @@ function horn(c: CanvasRenderingContext2D, farbe: string) {
   c.fillStyle = farbe
   c.beginPath(); c.moveTo(22, 54); c.lineTo(58, 54); c.lineTo(100, 32); c.lineTo(100, 96); c.lineTo(58, 74); c.lineTo(22, 74); c.closePath(); c.fill()
 }
-function sonne(c: CanvasRenderingContext2D, farbe: string) {
-  c.strokeStyle = farbe; c.lineWidth = 7
-  c.beginPath(); c.arc(64, 64, 18, 0, Math.PI * 2); c.stroke()
-  for (let i = 0; i < 8; i++) {
-    const w = (i / 8) * Math.PI * 2
-    c.beginPath(); c.moveTo(64 + Math.cos(w) * 30, 64 + Math.sin(w) * 30); c.lineTo(64 + Math.cos(w) * 44, 64 + Math.sin(w) * 44); c.stroke()
-  }
+/** Stirnlicht: Scheinwerfer mit schrägen Strahlen wie das Zeichen fürs Abblendlicht im Auto (Michael, 2026-10-14: «etwas in
+ *  dieser Art»; vorher eine Sonne) */
+function scheinwerfer(c: CanvasRenderingContext2D, farbe: string) {
+  c.strokeStyle = farbe; c.lineCap = 'round'; c.lineJoin = 'round'; c.lineWidth = 8
+  c.beginPath(); c.moveTo(66, 30); c.quadraticCurveTo(114, 30, 114, 64); c.quadraticCurveTo(114, 98, 66, 98); c.closePath(); c.stroke()
+  c.lineWidth = 7
+  for (const y of [38, 55, 72, 89]) { c.beginPath(); c.moveTo(52, y); c.lineTo(16, y + 10); c.stroke() }
 }
 /** Pultbeleuchtung: eine Leuchte, die aufs Pult scheint (Michael, 2026-10-14: «ein eigenes Zeichen»; vorher die Sonne wie
  *  beim Stirnlicht) */
