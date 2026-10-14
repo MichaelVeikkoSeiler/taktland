@@ -316,6 +316,8 @@ export interface StreckenTeil {
   bruecken: string[]
   /** Bahnübergänge, ebenso «Linie:Stelle» (fehlt in älteren Daten) */
   bahnuebergaenge?: string[]
+  /** Brücken aus swissTLM3D ohne SBB-Brücke mit Länge an derselben Stelle (km von, km bis), nur fürs Bild in 3D */
+  bruecken_3d?: Array<[number, number]>
 }
 
 /** Ein Abschnitt mit Personenzügen laut zugzahlen. Ohne teile: keine

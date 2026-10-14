@@ -116,7 +116,11 @@ data/linien_uebersicht.json  was ohne eigene Linienseite bleibt, samt den Brück
 data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzügen, dazu Stücke
              anderer Bahnen aus dem Schienennetz (RhB, MGB, MOB, zb …, die Linien 261 BTI und 221 transN ohne Zugzahlen
              in BAV_OHNE_ZUGZAHLEN, Travers Ouest gilt als Travers), je Abschnitt die
-             Bahn und die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py); dazu
+             Bahn und die Tunnel und Brücken seiner Linie (pipeline/build_strecken.py), dazu je Teil bruecken_3d: Brücken aus
+             swissTLM3D (beide Enden höchstens 50 m neben der Linie, ab 30 m), wo keine SBB-Brücke mit Länge liegt, nur fürs Bild
+             und die Höhe der Linie in 3D, nicht gemeldet und keiner SBB-Brücke zugeschrieben (Fahrweg.nurBild; Michael,
+             2026-10-14: in Bern schwebte das Gleis über der Aare, der Viadukt der Lorraine ist in swissTLM3D ein Stück, bei
+             der SBB vier Brücken ohne Länge); dazu
              Iselle di Trasquera als Ziel ohne Bahnhofsnummer (GRENZPUNKTE, Nummer -1): Lage am
              Ende der Kilometrierung der Linie 100, in der App ohne Bahnhofseite
 data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierung,

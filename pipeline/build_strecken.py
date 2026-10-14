@@ -675,6 +675,39 @@ def tunnel_aus_tlm():
             for k, v in json.loads(pfad.read_text(encoding="utf-8"))["tunnel"].items()}
 
 
+#: Brücken aus swissTLM3D auf SBB-Abschnitten nur fürs Bild in 3D: beide Enden höchstens so weit neben der Linie (km),
+#: mindestens so lang (km), und keine SBB-Brücke mit Länge darin
+BRUECKE_3D_NEBEN_KM = 0.05
+BRUECKE_3D_KUERZESTE_KM = 0.03
+
+
+def bruecken_3d(nr, lo, hi, zuege, tlm_br, sbb_bereiche):
+    """Brücken aus swissTLM3D auf der Linie nr zwischen km lo und hi, als [km von, km bis] auf dieser Linie, ohne
+    jene, die eine SBB-Brücke mit Länge (bruecken_bereich.json) schon abdeckt (Michael, 2026-10-14, Bern: der Viadukt
+    der Lorraine ist in swissTLM3D ein Stück, bei der SBB vier Brücken ohne Länge; ohne ihn schwebte das Gleis in 3D
+    über der Aare). Sie tragen in der App nur das Bild und die Höhe der Linie; gemeldet werden sie nicht, und welche
+    SBB-Brücke es ist, bleibt offen."""
+    from build_tunnel_richtung import punkt_bei
+    zug = zuege.get(nr)
+    if zug is None:
+        return []
+    mitte = punkt_bei(zug, (lo + hi) / 2)
+    raus = []
+    for a, e, lang in tlm_br:
+        if lang < BRUECKE_3D_KUERZESTE_KM or min(math.dist(a, mitte), math.dist(e, mitte)) > (hi - lo) / 2 + lang + 0.3:
+            continue
+        (da, ka), (de, ke) = projektion(a, zug), projektion(e, zug)
+        if da > BRUECKE_3D_NEBEN_KM or de > BRUECKE_3D_NEBEN_KM:
+            continue
+        v, w = max(lo, min(ka, ke)), min(hi, max(ka, ke))
+        if w - v < BRUECKE_3D_KUERZESTE_KM:
+            continue
+        if any(b[0] < w and b[1] > v for b in sbb_bereiche):
+            continue
+        raus.append([round(v, 3), round(w, 3)])
+    return sorted(raus)
+
+
 def bruecken_aus_tlm():
     """Anfang, Ende und Länge laut swissTLM3D für SBB-Brücken
     (pipeline/build_bruecken_bereich.py), «Linie:Stelle» → [von, bis, Meter]"""
@@ -753,6 +786,9 @@ def main():
 
     zuege_bav, nach_lage = linien_zuege(bav_linien), 0
     tlm, tlm_datei = tlm_laden()
+    tlm_br = [((b["pts"][0][1] * KM_LON, b["pts"][0][0] * KM_LAT), (b["pts"][-1][1] * KM_LON, b["pts"][-1][0] * KM_LAT),
+               sum(math.dist((p[1] * KM_LON, p[0] * KM_LAT), (q[1] * KM_LON, q[0] * KM_LAT)) for p, q in zip(b["pts"], b["pts"][1:])))
+              for b in tlm.values() if b["art"] in ("bruecke", "gedeckte_bruecke")]
     tlm_rahmen = {k: (min(p[0] for p in b["pts"]), max(p[0] for p in b["pts"]),
                       min(p[1] for p in b["pts"]), max(p[1] for p in b["pts"])) for k, b in tlm.items()}
     verlaeufe, bauwerke_genutzt = {}, {}
@@ -795,6 +831,11 @@ def main():
                 for i in eintrag["teile"][-1]["bruecken"]:
                     if i in bruecken_tlm:
                         bruecken_bereiche[i] = bruecken_tlm[i]
+                # Brücken aus swissTLM3D ohne SBB-Brücke mit Länge an derselben Stelle, nur fürs Bild in 3D
+                nur_3d = bruecken_3d(nr, lo, hi, zuege, tlm_br, [bruecken_tlm[i] for i in eintrag["teile"][-1]["bruecken"]
+                                                                if i in bruecken_tlm])
+                if nur_3d:
+                    eintrag["teile"][-1]["bruecken_3d"] = nur_3d
         else:
             if k["isb"] == "SBB":
                 ohne_zuordnung.append((a, b, k["km"]))
@@ -859,7 +900,8 @@ def main():
                    "auf Abschnitten anderer Bahnen (strecken_geometrie.json, bauwerke). teile: die Linie der SBB, "
                    "auf der der Abschnitt liegt (selten zwei nacheinander), mit Kilometrierung "
                    "(ein Standort, keine Länge). tunnel, bruecken und bahnuebergaenge: Kennungen «Linie:Stelle» "
-                   "in den Listen der Linienfakten. Ohne teile: keine Tunnel- und Brückendaten; "
+                   "in den Listen der Linienfakten. bruecken_3d: Brücken aus swissTLM3D auf dem Teil (km von, km bis), wo keine "
+                   "SBB-Brücke mit Länge liegt, nur fürs Bild in 3D, nicht gemeldet. Ohne teile: keine Tunnel- und Brückendaten; "
                    "linie_bav: die Linie laut Schienennetz des BAV, wenn genau eine beide Enden führt. "
                    "gewicht dient nur der Wegsuche.",
         "linien_bereich": {str(nr): [round(lo, 3), round(hi, 3)] for nr, (lo, hi) in sorted(bereich.items())

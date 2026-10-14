@@ -62,6 +62,8 @@ export interface Fahrweg {
   seeUfer?: SeeUfer[]
   /** So viele Meter vor dem Ende gilt das Ziel als erreicht: die Hälfte seines längsten Perrons */
   ziel_m?: number
+  /** Brücken nur fürs Bild in 3D (bruecken_3d in strecken.json): sie tragen dort die Linie, gemeldet werden sie nicht */
+  nurBild?: Array<{ von: number; bis: number }>
 }
 
 /** Ohne Perrondaten gilt ein Bahnhof so weit vor seinem Betriebspunkt als erreicht */
@@ -222,6 +224,7 @@ export function fahrwegBauen(netz: StreckenNetz,
   const punkte: Punkt[] = []
   // nach Art getrennt: «660:0» ist der erste Tunnel und die erste Brücke der Linie 660
   const objekte = new Map<string, FahrObjekt>()
+  const nurBild: Array<{ von: number; bis: number }> = []
   let s = 0
   const hinzu = (p: Lage) => {
     const letzter = punkte[punkte.length - 1]
@@ -346,6 +349,10 @@ export function fahrwegBauen(netz: StreckenNetz,
         const km = brueckeKm(id)
         if (km !== undefined) objekte.set(`bruecke ${id}`, { kennung: id, art: 'bruecke', s: sBei(km), sAus: null })
       }
+      for (const [a, b] of t.bruecken_3d ?? []) {
+        const [ein, aus] = [sBei(a), sBei(b)]
+        nurBild.push({ von: Math.min(ein, aus), bis: Math.max(ein, aus) })
+      }
       for (const id of t.bahnuebergaenge ?? []) {
         if (objekte.has(`bahnuebergang ${id}`)) continue
         const km = uebergangKm(id)
@@ -354,7 +361,15 @@ export function fahrwegBauen(netz: StreckenNetz,
     })
     bahnhofSetzen(punkteWeg[i + 1], sEnde)
   })
-  return { punkte, objekte: [...objekte.values()].sort((a, b) => a.s - b.s) }
+  // Stücke über die Grenze zweier Abschnitte (der Viadukt der Lorraine) zusammen
+  nurBild.sort((a, b) => a.von - b.von)
+  const bild: typeof nurBild = []
+  for (const x of nurBild) {
+    const l = bild[bild.length - 1]
+    if (l && x.von <= l.bis + 5) l.bis = Math.max(l.bis, x.bis)
+    else bild.push({ ...x })
+  }
+  return { punkte, objekte: [...objekte.values()].sort((a, b) => a.s - b.s), nurBild: bild }
 }
 
 /** Nächste Stelle auf dem Linienzug. Mit Fenster sucht sie nur zwischen

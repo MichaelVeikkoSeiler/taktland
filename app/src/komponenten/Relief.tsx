@@ -1021,8 +1021,15 @@ function wegDerFahrt(r: Relief, fahrweg: Fahrweg): Weg {
     punkte,
     // Tunnel und Brücken immer alle, auch wenn ihre Zeichen ausgeschaltet sind: sie tragen die Höhe der Linie (Michael,
     // 2026-10-11: mit «Brücken» aus fuhr der Zug bei Gümmenen wieder ins Tal)
-    bauwerke: fahrweg.objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
-      .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })),
+    // dazu Brücken aus swissTLM3D, wo die SBB keine mit Länge kennt (nurBild, Michael, 2026-10-14: in Bern «schwebt» das
+    // Gleis über der Aare, der Viadukt der Lorraine fehlte), nur wo kein anderes Bauwerk liegt
+    bauwerke: (() => {
+      const da = fahrweg.objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
+        .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' }))
+      const dazu = (fahrweg.nurBild ?? []).filter((b) => !da.some((x) => x.von < b.bis && x.bis > b.von))
+        .map((b) => ({ ...b, art: 'bruecke' as const }))
+      return [...da, ...dazu].sort((a, b) => a.von - b.von)
+    })(),
     tunnelPunkte: fahrweg.objekte.filter((o) => o.art === 'tunnel' && o.sAus === null).map((o) => o.s),
     stuecke,
   }
