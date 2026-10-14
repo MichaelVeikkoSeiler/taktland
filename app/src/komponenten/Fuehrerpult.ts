@@ -12,9 +12,34 @@ import { audioKontext, audioLesen, audioSetzen, signalhorn } from '../audio'
  * (szene, kamera), in der Brille in Originalgrösse vor dem Kopf (gruppe in die Welt gehängt).
  *
  * Tempo: in der Modellbahn simuliert (Hebel, Beschleunigen und Bremsen hier gerechnet); beim Fahren das Tempo aus dem
- * GPS-Standort, bei der Probefahrt das der Probefahrt; dann sind die Hebel gesperrt.
+ * GPS-Standort (Hebel gesperrt), bei der Probefahrt das der Probefahrt; dort wählt der rechte Hebel deren Stufe, die Bremse
+ * hält an (aussen.probe).
  */
 export type TempoQuelle = 'simulation' | 'gps' | 'probe'
+
+/** Probefahrt vom Pult aus (Michael, 2026-10-14: «alle Bedienelemente als Knöpfe auf dem Führerpult»): der Hebel rechts wählt
+ *  die Stufe des Zeitraffers, die Bremse hält an, gelöst fährt der Zug weiter */
+export interface PultSteuerung {
+  /** die Stufen in km/h, aufsteigend */
+  stufen: number[]
+  stufe: () => number
+  angehalten: () => boolean
+  waehlen: (i: number) => void
+  anhalten: (an: boolean) => void
+}
+
+export type MeldeArt = 'tunnel' | 'bruecke' | 'bahnhof' | 'bahnuebergang'
+
+/** was ausserhalb des Pults liegt und doch am Pult bedient wird (Michael, 2026-10-14: «alle Knöpfe als reale Knöpfe im
+ *  Führerraum»): Probefahrt, Höhe des Geländes, «Hinter den Zug», was gemeldet wird. Fehlt etwas, tut die Taste nichts. */
+export interface PultAussen {
+  probe?: PultSteuerung
+  hoehe?: () => 1 | 2
+  hoeheSetzen?: (f: 1 | 2) => void
+  hinterZug?: () => void
+  meldet?: (art: MeldeArt) => boolean
+  meldenSetzen?: (art: MeldeArt, an: boolean) => void
+}
 
 export interface Ankuendigung { s: number; art: 'tunnel' | 'bruecke' | 'bahnhof'; name: string }
 
@@ -40,12 +65,15 @@ const FARBE = {
 /** Tempo in km/h: Wahl in Schritten von 10 bis höchstens 220 (Michael, 2026-10-12: 160, 2026-10-13: 220) */
 export const PULT_HOECHST_KMH = 220
 const SCHRITT_KMH = 10
-/** gerechnete Beschleunigung und Bremsung in m/s²: Annahmen für die Simulation, aus keiner Quelle */
-const ANFAHREN_MS2 = 0.5, AUSROLLEN_MS2 = 0.3, BREMSEN_MS2 = 0.8, SCHNELLBREMSE_MS2 = 1.4
+/** gerechnete Beschleunigung und Bremsung in m/s²: Annahmen für die Simulation, aus keiner Quelle; viel schneller als ein
+ *  Zug, damit man nicht minutenlang wartet (Michael, 2026-10-14: «Die Beschleunigung muss … wesentlich schneller laufen»;
+ *  vorher 0,5, 0,3, 0,8 und 1,4) */
+const ANFAHREN_MS2 = 3, AUSROLLEN_MS2 = 1.5, BREMSEN_MS2 = 3, SCHNELLBREMSE_MS2 = 6
 const BREMSE_TEXT = ['0', 'B', 'SB'] as const
 
 type Aktion = 'sollPlus' | 'sollMinus' | 'bremsePlus' | 'bremseMinus' | 'horn' | 'stirnlicht' | 'pultlicht' | 'wischer'
-  | 'schnellbremse' | 'zuggeraeusch' | 'daemmerung'
+  | 'schnellbremse' | 'zuggeraeusch' | 'daemmerung' | 'hinterZug' | 'hoehe1' | 'hoehe2' | 'tunnel' | 'bruecke' | 'bahnhof'
+  | 'bahnuebergang'
 
 /** Was ein Element tut und wie es heisst (als Tooltip und für Bildschirmleser) */
 const NAMEN: Record<Aktion, string> = {
@@ -53,7 +81,11 @@ const NAMEN: Record<Aktion, string> = {
   bremsePlus: 'Bremse: stärker (B)', bremseMinus: 'Bremse: lösen (0)', horn: 'Signalhorn (H)', stirnlicht: 'Stirnlicht (L)',
   pultlicht: 'Pultbeleuchtung (P)', wischer: 'Scheibenwischer (W)', schnellbremse: 'Schnellbremse (Leertaste)',
   zuggeraeusch: 'Zuggeräusch ein, aus (T)', daemmerung: 'Dämmerung ein, aus (N)',
+  hinterZug: 'Hinter den Zug (Z)', hoehe1: 'Höhe wie echt (1)', hoehe2: 'Höhe 2-fach (2)', tunnel: 'Tunnel melden ein, aus',
+  bruecke: 'Brücken melden ein, aus', bahnhof: 'Bahnhöfe melden ein, aus', bahnuebergang: 'Bahnübergänge melden ein, aus',
 }
+/** gemeldete Arten ohne Fahrtmodus: alle an */
+const MELDE_ARTEN: MeldeArt[] = ['tunnel', 'bruecke', 'bahnhof', 'bahnuebergang']
 
 /** Kasten mit gerundeten Kanten; die Flächen bleiben Gruppen wie beim BoxGeometry (Deckel der Tasten mit Zeichen oben) */
 function rund(b: number, h: number, t: number) {
@@ -61,11 +93,18 @@ function rund(b: number, h: number, t: number) {
   return new RoundedBoxGeometry(b, h, t, 3, r)
 }
 
+/** Unterkante des Fensterrahmens; um sie wird er auf dem Bildschirm gestreckt */
+const RAHMEN_FUSS_M = -0.2
+
 export class Fuehrerpult {
   readonly gruppe = new THREE.Group()
   /** der Führerraum um das Pult: Boden, Seitenwände mit Fenster, Decke, Rückwand mit Tür, Stuhl; nur in der Brille, auf
    *  dem Bildschirm sähe man ihn nicht und er verdeckte nur die Sicht zur Seite */
   readonly raum = new THREE.Group()
+  /** Fensterrahmen (Säulen, Dach): auf dem Bildschirm gestreckt, damit er am Rand des Bilds bleibt, in der Brille wie gebaut */
+  readonly rahmen = new THREE.Group()
+  /** die Platte über dem Fahrer: auf dem Bildschirm verdeckte sie den Himmel, dort nur das runde Dach; in der Brille ganz */
+  private dachPlatte: THREE.Object3D | null = null
   readonly szene = new THREE.Scene()
   readonly kamera = new THREE.PerspectiveCamera(60, 1, 0.05, 20)
   /** gewählte Geschwindigkeit km/h, Bremse 0 gelöst, 1 bremsen, 2 Schnellbremse; v simuliert in m/s */
@@ -84,6 +123,14 @@ export class Fuehrerpult {
   private leuchten: THREE.MeshBasicMaterial[] = []
   /** wird gesetzt, sobald das Tempo nicht von hier kommt (GPS, Probefahrt) */
   quelle: TempoQuelle = 'simulation'
+  /** was ausserhalb liegt; in der Probefahrt stellen die Hebel deren Tempo */
+  aussen: { current: PultAussen | null } | null = null
+  /** gemeldete Arten, wenn niemand ausserhalb sie kennt (Modellbahn) */
+  private gemeldet = new Set<MeldeArt>(MELDE_ARTEN)
+  /** Leuchten auf den Tasten, die einen Zustand haben: an, wenn der Zustand gilt */
+  private zustaende: Array<{ m: THREE.MeshBasicMaterial; an: () => boolean }> = []
+  private sollSkala: THREE.MeshBasicMaterial | null = null
+  private skalaStufen: number[] | null = null
   private ziele: Array<{ netz: THREE.Mesh; aktion: Aktion; grund: THREE.Color }> = []
   private ueber: THREE.Mesh | null = null
   private sollHebel = new THREE.Group()
@@ -98,7 +145,11 @@ export class Fuehrerpult {
   private zeigerWinkel = 0
   private zuggeraeuschAn = audioLesen().zuggeraeusch
 
-  constructor() {
+  /** uebergaenge: eine Taste für Bahnübergänge, nur wo sie gemeldet werden (Fahren) */
+  private readonly uebergaenge: boolean
+
+  constructor(uebergaenge = false) {
+    this.uebergaenge = uebergaenge
     this.szene.add(this.gruppe)
     this.szene.add(this.himmel, this.sonne)
     this.sonne.position.set(0.3, 1, 0.6)
@@ -108,6 +159,14 @@ export class Fuehrerpult {
     this.raumBauen()
     this.raum.visible = false
     this.gruppe.add(this.raum)
+    this.gruppe.add(this.rahmen)
+  }
+
+  /** den Rahmen strecken: sx in der Breite, sy in der Höhe über der Fensterkante (1, 1 in der Brille) */
+  rahmenStrecken(sx: number, sy: number) {
+    this.rahmen.scale.set(sx, sy, 1)
+    this.rahmen.position.y = RAHMEN_FUSS_M * (1 - sy)
+    if (this.dachPlatte) this.dachPlatte.visible = sx === 1 && sy === 1
   }
 
   /** Tageslicht im Führerstand, 1 draussen, kleiner im Tunnel: dort leuchten die Anzeigen, das Pultlicht hilft */
@@ -155,7 +214,7 @@ export class Fuehrerpult {
 
   /** eine Taste mit Zeichen auf dem Deckel */
   private taste(zeichen: (g: CanvasRenderingContext2D) => void, grund: string, x: number, y: number, z: number, aktion: Aktion,
-    kippen: number, gross = 0.075, ort: THREE.Object3D = this.gruppe) {
+    kippen: number, gross = 0.075, ort: THREE.Object3D = this.gruppe, zustand?: () => boolean) {
     const halter = new THREE.Group()
     halter.position.set(x, y, z)
     halter.rotation.x = kippen
@@ -179,6 +238,16 @@ export class Fuehrerpult {
     glas.raycast = () => {}
     halter.add(glas)
     this.leuchten.push(leuchte)
+    // ein Leuchtstreifen vorne auf dem Rand: grün, solange die Taste eingeschaltet ist
+    if (zustand) {
+      const m = new THREE.MeshBasicMaterial({ color: '#3a4250', toneMapped: false })
+      const led = new THREE.Mesh(new THREE.PlaneGeometry(gross * 0.6, 0.008), m)
+      led.rotation.x = -Math.PI / 2
+      led.position.set(0, 0.0135, gross / 2 + 0.0045)
+      led.raycast = () => {}
+      halter.add(led)
+      this.zustaende.push({ m, an: zustand })
+    }
     // Hover gilt für den Deckel: ein gemeinsames emissive über alle Seiten
     const mats = deckel.material as THREE.MeshLambertMaterial[]
     deckel.userData.aktion = aktion
@@ -241,15 +310,15 @@ export class Fuehrerpult {
       geo.computeVertexNormals()
       const m = this.material(FARBE.pult)
       m.side = THREE.DoubleSide
-      g.add(new THREE.Mesh(geo, m))
+      this.rahmen.add(new THREE.Mesh(geo, m))
     }
     // Dach: runde Kante über dem Fahrer, wo die Säulen enden, dahinter eine Platte bis zur Scheibe
     const dach = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 2.15, 20), this.material(FARBE.pult))
     dach.geometry.scale(1, 1, 0.5)
     dach.rotation.z = Math.PI / 2
     dach.position.set(0, 1.22, -0.6)
-    g.add(dach)
-    this.kasten(2.3, 0.04, 0.6, FARBE.pult, 0, 1.26, -0.88)
+    this.rahmen.add(dach)
+    this.dachPlatte = this.kasten(2.3, 0.04, 0.6, FARBE.pult, 0, 1.26, -0.88, 0, this.rahmen)
     this.kasten(2.6, 0.06, 0.1, FARBE.blende, 0, -0.17, -1.13)
 
     // die drei Anzeigen
@@ -282,10 +351,35 @@ export class Fuehrerpult {
       [(c) => dreieck(c, '#ffffff'), '#b3122f', 'schnellbremse'], [(c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, 'zuggeraeusch'],
       [(c) => horn(c, FARBE.schrift), FARBE.schwarz, 'horn'], [(c) => scheinwerfer(c, FARBE.schrift), FARBE.schwarz, 'stirnlicht'],
       [(c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 'wischer'], [(c) => mond(c, FARBE.schrift), FARBE.schwarz, 'daemmerung']]
-    reihe.forEach(([zeichen, grund, aktion], i) => this.taste(zeichen, grund, (i - 2.5) * abstand, y, z, aktion, kippen, gross))
+    const zustand: Partial<Record<Aktion, () => boolean>> = {
+      zuggeraeusch: () => audioLesen().zuggeraeusch && audioLesen().an, stirnlicht: () => this.stirnlicht,
+      wischer: () => this.wischer, daemmerung: () => this.daemmerung, pultlicht: () => this.pultlicht,
+      hoehe1: () => (this.aussen?.current?.hoehe?.() ?? 1) === 1, hoehe2: () => this.aussen?.current?.hoehe?.() === 2,
+      tunnel: () => this.meldet('tunnel'), bruecke: () => this.meldet('bruecke'), bahnhof: () => this.meldet('bahnhof'),
+      bahnuebergang: () => this.meldet('bahnuebergang'),
+    }
+    reihe.forEach(([zeichen, grund, aktion], i) => this.taste(zeichen, grund, (i - 2.5) * abstand, y, z, aktion, kippen, gross,
+      this.gruppe, zustand[aktion]))
+    // eine zweite, kleinere Reihe näher beim Fahrer (Michael, 2026-10-14: «alle Knöpfe als reale Knöpfe im Führerraum»):
+    // Sicht hinter den Zug, Höhe des Geländes, was angekündigt wird
+    const zweite: Array<[(c: CanvasRenderingContext2D) => void, Aktion]> = [
+      [(c) => hinterZugZeichen(c, FARBE.schrift), 'hinterZug'], [(c) => berg(c, FARBE.schrift, 1), 'hoehe1'],
+      [(c) => berg(c, FARBE.schrift, 2), 'hoehe2'], [(c) => meldeZeichen(c, 'tunnel', FARBE.schrift), 'tunnel'],
+      [(c) => meldeZeichen(c, 'bruecke', FARBE.schrift), 'bruecke'], [(c) => meldeZeichen(c, 'bahnhof', FARBE.schrift), 'bahnhof'],
+      ...(this.uebergaenge ? [[(c: CanvasRenderingContext2D) => meldeZeichen(c, 'bahnuebergang', FARBE.schrift), 'bahnuebergang'] as [(c: CanvasRenderingContext2D) => void, Aktion]] : [])]
+    const y2 = -0.52, z2 = -0.6, gross2 = 0.085, abstand2 = 0.102
+    // zwischen den Gruppen eine Lücke: Sicht | Höhe | Melden
+    const lage2 = zweite.map((_, i) => i + (i >= 1 ? 0.35 : 0) + (i >= 3 ? 0.35 : 0))
+    const mitte2 = (lage2[0] + lage2[lage2.length - 1]) / 2
+    const leiste2 = this.kasten((lage2[lage2.length - 1] - lage2[0]) * abstand2 + gross2 + 0.03, 0.012, gross2 + 0.04, FARBE.blende,
+      0, y2 - 0.008, z2, kippen)
+    leiste2.renderOrder = -1
+    zweite.forEach(([zeichen, aktion], i) => this.taste(zeichen, FARBE.schwarz, (lage2[i] - mitte2) * abstand2, y2, z2, aktion, kippen,
+      gross2, this.gruppe, zustand[aktion]))
     // neben den Anzeigen links nur noch die Pultbeleuchtung, die es in der Reihe nicht gibt (Michael, 2026-10-13: «Doppelte
     // Schalter entfernen»)
-    this.taste((c) => pultleuchte(c, FARBE.schrift), FARBE.schwarz, -1.02, 0, 0.07, 'pultlicht', Math.PI / 2, 0.082, konsole)
+    this.taste((c) => pultleuchte(c, FARBE.schrift), FARBE.schwarz, -1.02, 0, 0.07, 'pultlicht', Math.PI / 2, 0.082, konsole,
+      () => this.pultlicht)
 
     // Hebel: links die Bremse (0, B, SB), rechts die Geschwindigkeitswahl (0 bis 220 km/h)
     this.hebel(-0.5, this.bremsHebel, 'bremsePlus', 'bremseMinus', (c) => {
@@ -331,6 +425,7 @@ export class Fuehrerpult {
     // die Skala rechts neben der Kulisse, bei beiden Hebeln (Michael, 2026-10-13)
     s.position.set(0.075, 0.017, 0)
     basis.add(s)
+    if (griff === this.sollHebel) this.sollSkala = s.material
     // die beiden Hälften als Ziele, kaum sichtbar
     for (const [aktion, z] of [[vorn, -0.075], [hinten, 0.075]] as const) {
       const h = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.02, 0.14), this.material('#2b323c'))
@@ -431,6 +526,42 @@ export class Fuehrerpult {
 
   /** auch von der Tastatur */
   tun(aktion: Aktion): string {
+    const st = this.quelle === 'probe' ? this.aussen?.current?.probe : null
+    if (st) {
+      const i = st.stufe(), kmh = (k: number) => `${k.toLocaleString('de-CH')} km/h`
+      switch (aktion) {
+        case 'sollPlus':
+          if (st.angehalten()) { st.anhalten(false); return `Weiter, etwa ${kmh(st.stufen[i])}` }
+          st.waehlen(Math.min(st.stufen.length - 1, i + 1)); return `Etwa ${kmh(st.stufen[Math.min(st.stufen.length - 1, i + 1)])}`
+        case 'sollMinus':
+          if (i === 0) { st.anhalten(true); return 'Angehalten' }
+          st.waehlen(i - 1); return `Etwa ${kmh(st.stufen[i - 1])}`
+        case 'bremsePlus': st.anhalten(true); return 'Angehalten'
+        case 'bremseMinus': st.anhalten(false); return `Weiter, etwa ${kmh(st.stufen[i])}`
+        case 'schnellbremse':
+          if (st.angehalten()) { st.anhalten(false); return `Weiter, etwa ${kmh(st.stufen[i])}` }
+          st.anhalten(true); return 'Angehalten – nochmals drücken fährt weiter'
+        default:
+      }
+    }
+    const au = this.aussen?.current
+    const artName: Record<MeldeArt, string> = { tunnel: 'Tunnel', bruecke: 'Brücken', bahnhof: 'Bahnhöfe', bahnuebergang: 'Bahnübergänge' }
+    switch (aktion) {
+      case 'hinterZug': au?.hinterZug?.(); return 'Hinter den Zug'
+      case 'hoehe1': case 'hoehe2': {
+        if (!au?.hoeheSetzen) return 'Hier nur Höhe wie echt'
+        const f = aktion === 'hoehe1' ? 1 : 2
+        au.hoeheSetzen(f); return f === 1 ? 'Höhe wie echt' : 'Höhe 2-fach überhöht'
+      }
+      case 'tunnel': case 'bruecke': case 'bahnhof': case 'bahnuebergang': {
+        const an = !this.meldet(aktion)
+        if (au?.meldenSetzen) au.meldenSetzen(aktion, an)
+        else if (an) this.gemeldet.add(aktion)
+        else this.gemeldet.delete(aktion)
+        return `${artName[aktion]} ${an ? 'melden' : 'nicht melden'}`
+      }
+      default:
+    }
     const sim = this.quelle === 'simulation'
     const gesperrt = this.quelle === 'probe' ? 'In der Probefahrt bestimmt der Zeitraffer das Tempo'
       : 'Beim Fahren bestimmt der Standort das Tempo'
@@ -462,6 +593,12 @@ export class Fuehrerpult {
     }
   }
 
+  /** ob diese Art angekündigt wird: im Fahrtmodus nach dessen Einstellung, sonst hier */
+  meldet(art: MeldeArt) {
+    const au = this.aussen?.current
+    return au?.meldet ? au.meldet(art) : this.gemeldet.has(art)
+  }
+
   /** «Zug fahren»: Bremse lösen und wieder auf die Wahl von vorher, wenn keine gewählt ist */
   losfahren() {
     this.bremse = 0
@@ -479,7 +616,7 @@ export class Fuehrerpult {
   taste_(code: string): string | null {
     const zu: Record<string, Aktion> = { ArrowUp: 'sollPlus', ArrowDown: 'sollMinus', KeyB: 'bremsePlus', Digit0: 'bremseMinus',
       Space: 'schnellbremse', KeyH: 'horn', KeyL: 'stirnlicht', KeyP: 'pultlicht', KeyW: 'wischer', KeyT: 'zuggeraeusch',
-      KeyN: 'daemmerung' }
+      KeyN: 'daemmerung', KeyZ: 'hinterZug', Digit1: 'hoehe1', Digit2: 'hoehe2' }
     return zu[code] ? this.tun(zu[code]) : null
   }
 
@@ -508,9 +645,11 @@ export class Fuehrerpult {
 
   aktualisieren(dt: number, lage: PultLage) {
     this.quelle = lage.quelle
-    // Hebel nach Stellung
-    this.sollHebel.rotation.x = 0.45 - (this.soll / PULT_HOECHST_KMH) * 0.9
-    this.bremsHebel.rotation.x = -0.4 + this.bremse * 0.4
+    // Hebel nach Stellung; in der Probefahrt nach deren Stufe, die Skala zeigt dann deren Tempi
+    const st = this.quelle === 'probe' ? this.aussen?.current?.probe : null
+    this.skalaZeigen(st?.stufen ?? null)
+    this.sollHebel.rotation.x = 0.45 - (st ? st.stufe() / Math.max(1, st.stufen.length - 1) : this.soll / PULT_HOECHST_KMH) * 0.9
+    this.bremsHebel.rotation.x = -0.4 + (st ? (st.angehalten() ? 1 : 0) : this.bremse) * 0.4
     // Wischer: hin und her, etwa einmal in 1,6 s, in Ruhe flach
     if (this.wischer || this.wischerZeit % 1.6 > 0.02) this.wischerZeit += dt
     if (!this.wischer && this.wischerZeit % 1.6 < 0.05) this.wischerZeit = 0
@@ -521,6 +660,7 @@ export class Fuehrerpult {
     // im Dunkeln nur noch ein schwaches Pultlicht, damit die leuchtenden Zeichen und Anzeigen hervorstechen (Michael, 2026-10-13)
     this.licht.intensity = this.pultlicht ? 1.2 * (1 - 0.92 * this.nacht) : 0
     for (const m of this.leuchten) m.opacity = this.pultlicht ? this.nacht : 0
+    for (const z of this.zustaende) z.m.color.set(z.an() ? '#4cd964' : '#3a4250')
     // der Zeiger folgt sanft
     const winkel = Math.min(lage.v * 3.6, PULT_HOECHST_KMH + 5)
     this.zeigerWinkel += (winkel - this.zeigerWinkel) * Math.min(1, dt * 6)
@@ -538,6 +678,27 @@ export class Fuehrerpult {
         a.tex.needsUpdate = true
       }
     }
+  }
+
+  /** die Skala des rechten Hebels: 0 bis PULT_HOECHST_KMH oder die Stufen der Probefahrt, oben die schnellste */
+  private skalaZeigen(stufen: number[] | null) {
+    if (stufen === this.skalaStufen || !this.sollSkala) return
+    this.skalaStufen = stufen
+    const lw = document.createElement('canvas')
+    lw.width = 80; lw.height = 320
+    const c = lw.getContext('2d')!
+    c.fillStyle = FARBE.schwarz; c.fillRect(0, 0, 80, 320)
+    c.fillStyle = FARBE.schrift; c.textAlign = 'center'
+    const texte = stufen ? [...stufen].reverse().map((k) => (k >= 1000 ? `${k / 1000}k` : String(k)))
+      : [0, 1, 2, 3, 4].map((i) => String(Math.round(PULT_HOECHST_KMH * (1 - i / 4))))
+    const n = texte.length
+    c.font = `bold ${n > 5 ? 24 : 30}px Helvetica, Arial, sans-serif`
+    texte.forEach((t, i) => c.fillText(t, 40, 30 + (i * 270) / (n - 1)))
+    const tex = new THREE.CanvasTexture(lw)
+    tex.colorSpace = THREE.SRGBColorSpace
+    this.sollSkala.map?.dispose()
+    this.sollSkala.map = tex
+    this.sollSkala.needsUpdate = true
   }
 
   /* ---------- Anzeigen ---------- */
@@ -601,13 +762,18 @@ export class Fuehrerpult {
       c.fillText(`gewählt ${this.soll} km/h`, 404, 80)
       c.fillStyle = this.bremse ? FARBE.karmin : FARBE.grau
       c.fillText(kuerzen(c, this.bremse === 2 ? 'Schnellbremse' : `Bremse ${['gelöst', 'bremst'][this.bremse]}`, 226), 404, 108)
+    } else if (l.quelle === 'probe' && this.aussen?.current?.probe) {
+      const st = this.aussen.current.probe
+      c.fillText(`Zeitraffer ${st.stufen[st.stufe()].toLocaleString('de-CH')} km/h`, 404, 80)
+      c.fillStyle = st.angehalten() ? FARBE.karmin : FARBE.grau
+      c.fillText(st.angehalten() ? 'angehalten' : 'fährt', 404, 108)
     } else {
       c.fillText(l.quelle === 'gps' ? 'aus dem Standort' : 'Zeitraffer', 404, 80)
       c.fillText('Hebel gesperrt', 404, 108)
     }
     c.fillStyle = '#26364d'; c.fillRect(404, 126, 220, 2)
     // darunter die Vorschau (Michael, 2026-10-13, nach seinem Vorbild): Pfeil, Entfernung und Art des Nächsten voraus
-    const naechstes = vorListe(l)[0]
+    const naechstes = vorListe(l, (a) => this.meldet(a))[0]
     if (!naechstes) {
       c.fillStyle = FARBE.grau; c.font = '24px Helvetica, Arial, sans-serif'
       c.fillText('Nichts mehr', 404, 180); c.fillText('voraus', 404, 210)
@@ -626,7 +792,7 @@ export class Fuehrerpult {
 
   private voranMalen(c: CanvasRenderingContext2D, l: PultLage) {
     kopf(c, 'Voraus')
-    const vor = vorListe(l).slice(0, 3)
+    const vor = vorListe(l, (a) => this.meldet(a)).slice(0, 3)
     if (!vor.length) {
       c.fillStyle = FARBE.grau; c.font = '28px Helvetica, Arial, sans-serif'; c.fillText('Nichts mehr bis zum Ende des Wegs', 32, 130)
       return
@@ -658,8 +824,8 @@ export class Fuehrerpult {
 /* ---------- kleine Zeichnungen ---------- */
 
 /** was voraus kommt, das Nächste zuerst, mit Entfernung d in Metern */
-function vorListe(l: PultLage) {
-  return l.ankuendigungen.map((a) => ({ ...a, d: (a.s - l.s) * l.richtung })).filter((a) => a.d > 0).sort((a, b) => a.d - b.d)
+function vorListe(l: PultLage, meldet: (art: MeldeArt) => boolean) {
+  return l.ankuendigungen.filter((a) => meldet(a.art)).map((a) => ({ ...a, d: (a.s - l.s) * l.richtung })).filter((a) => a.d > 0).sort((a, b) => a.d - b.d)
 }
 
 /** das Zeichen für Tunnel, Brücke oder Bahnhof um (x, y), auf dem Grund der Anzeige, damit die Linie darunter verschwindet */
@@ -734,6 +900,30 @@ function pultleuchte(c: CanvasRenderingContext2D, farbe: string) {
   for (const [x0, x1] of [[44, 34], [64, 64], [84, 94]]) { c.beginPath(); c.moveTo(x0, 70); c.lineTo(x1, 88); c.stroke() }
   c.lineWidth = 7
   c.beginPath(); c.moveTo(20, 104); c.lineTo(108, 104); c.stroke()
+}
+/** Hinter den Zug: ein Zug von der Seite, dahinter ein Auge */
+function hinterZugZeichen(c: CanvasRenderingContext2D, farbe: string) {
+  c.fillStyle = farbe; c.strokeStyle = farbe; c.lineWidth = 6; c.lineJoin = 'round'
+  c.beginPath(); c.moveTo(48, 50); c.lineTo(100, 50); c.quadraticCurveTo(114, 50, 116, 80); c.lineTo(48, 80); c.closePath(); c.fill()
+  c.beginPath(); c.moveTo(44, 92); c.lineTo(118, 92); c.stroke()
+  c.beginPath(); c.ellipse(22, 64, 14, 9, 0, 0, Math.PI * 2); c.stroke()
+  c.beginPath(); c.arc(22, 64, 4, 0, Math.PI * 2); c.fill()
+}
+/** Höhe des Geländes: ein flacher oder ein hoher Berg mit 1× oder 2× */
+function berg(c: CanvasRenderingContext2D, farbe: string, f: 1 | 2) {
+  c.fillStyle = farbe
+  const spitze = f === 1 ? 66 : 26
+  c.beginPath(); c.moveTo(14, 100); c.lineTo(58, spitze); c.lineTo(102, 100); c.closePath(); c.fill()
+  c.font = 'bold 30px Helvetica, Arial, sans-serif'; c.textAlign = 'right'
+  c.fillText(f === 1 ? '1×' : '2×', 122, 36)
+}
+/** was angekündigt wird: Tunnel, Brücke, Bahnhof, Bahnübergang */
+function meldeZeichen(c: CanvasRenderingContext2D, art: MeldeArt, farbe: string) {
+  c.strokeStyle = farbe; c.fillStyle = farbe; c.lineWidth = 9; c.lineCap = 'round'
+  if (art === 'tunnel') { c.beginPath(); c.moveTo(30, 100); c.lineTo(30, 62); c.arc(64, 62, 34, Math.PI, 0); c.lineTo(98, 100); c.stroke() }
+  else if (art === 'bruecke') { c.beginPath(); c.moveTo(14, 46); c.lineTo(114, 46); c.stroke(); c.beginPath(); c.moveTo(28, 100); c.quadraticCurveTo(64, 40, 100, 100); c.stroke() }
+  else if (art === 'bahnhof') { c.beginPath(); c.arc(64, 64, 34, 0, Math.PI * 2); c.stroke(); c.beginPath(); c.arc(64, 64, 14, 0, Math.PI * 2); c.fill() }
+  else { c.beginPath(); c.moveTo(30, 30); c.lineTo(98, 98); c.moveTo(98, 30); c.lineTo(30, 98); c.stroke() }
 }
 function mond(c: CanvasRenderingContext2D, farbe: string) {
   c.fillStyle = farbe

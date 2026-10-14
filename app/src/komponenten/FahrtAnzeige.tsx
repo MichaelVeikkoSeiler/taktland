@@ -14,6 +14,7 @@ import { dreiDGemerkt, dreiDVerbrauchen } from '../relief'
 import { gelaendeMoeglich } from '../gelaende'
 import { ladenVerfolgen } from '../daten'
 import { Klappe } from './Klappe'
+import type { PultAussen } from './Fuehrerpult'
 
 // three.js nur für die Ansicht «3D», erst dort geladen
 const GelaendeFahrt = lazy(() => ladenVerfolgen(import('./Relief')).then((m) => ({ default: m.GelaendeFahrt })))
@@ -324,8 +325,12 @@ function nahStufe(tempo: number, alt: number | null): number {
  * Die kleine Karte zur Fahrt: grau das Streckennetz, dunkel der Weg vor dem
  * Zug, rot der Standort. «Nah» folgt dem Zug, «Ganzer Weg» zeigt alles.
  */
-export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null, probefahrt = false }: {
+export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null, probefahrt = false, aussen, imFuehrerstand }: {
   fahrweg: Fahrweg
+  /** was am Pult im Führerstand bedient wird: Probefahrt, Meldungen */
+  aussen?: { current: PultAussen | null }
+  /** was im Vollbild im Führerstand über dem Bild steht, sonst nichts (Ankunft) */
+  imFuehrerstand?: React.ReactNode
   /** für den Tacho im Führerstand: das Tempo stammt aus der Probefahrt, nicht aus dem GPS */
   probefahrt?: boolean
   /** Tempo in Metern pro Sekunde, wie es sich anfühlt (Probefahrt mal Zeitraffer); null ohne Standort */
@@ -358,6 +363,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const abstand = useRef(0)
   const flaeche = useRef<SVGSVGElement | null>(null)
   const { voll, setVoll, verh } = useVollbild(flaeche)
+  // im Vollbild im Führerstand: nur das Bild, über den ganzen Bildschirm (Michael, 2026-10-14: «ein echtes Vollformat»)
+  const [vorne, setVorne] = useState(false)
+  const cockpit = voll && dreiD && relief && vorne
   // «Zur Karte» unten links in der Karte (Michael, 2026-09-30: «spart vertikalen Platz»)
   const [zurKarte, setZurKarte] = useState(false)
   const breite = useBreite(flaeche)
@@ -496,7 +504,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const vollGrund = vollbildKlassen(voll, 'mt-3')
   // im Vollbild auf dem Handy quer zwei Spalten: links das Bild über die ganze Höhe, rechts schmal die Knöpfe und die Meldung
   // (Michael, 2026-10-14: «Nur das Nötigste … und mehr Sicht auf die Strecke»)
-  const klassen = voll
+  const klassen = cockpit
+    ? { figur: 'fixed inset-0 z-[80] m-0 bg-sbb-black', svg: 'h-full w-full' }
+    : voll
     ? { figur: `${vollGrund.figur} quer:grid quer:grid-cols-[minmax(0,1fr)_16rem] quer:grid-rows-[auto_minmax(0,1fr)] quer:gap-x-3`,
         svg: `${vollGrund.svg} quer:col-start-1 quer:row-span-2 quer:row-start-1 quer:mt-0 quer:h-full` }
     : vollGrund
@@ -579,7 +589,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   return (
     <figure className={klassen.figur}>
       {/* eine Zeile für alle Knöpfe, damit die Karte kompakt oben bleibt */}
-      <div className={`flex items-center justify-between gap-2 text-xs ${voll ? 'quer:col-start-2 quer:row-start-1 quer:flex-wrap' : ''}`}>
+      <div className={`flex items-center justify-between gap-2 text-xs ${voll ? 'quer:col-start-2 quer:row-start-1 quer:flex-wrap' : ''} ${cockpit ? 'hidden' : ''}`}>
         <div className="segmente" role="group" aria-label="Ausschnitt">
           {([[true, 'Nah'], [false, 'Ganzer Weg']] as const).map(([n, t]) => (
             <button key={t} type="button" aria-pressed={!dreiD && nah === n} onClick={() => { setDreiD(false); setNah(n) }}
@@ -621,11 +631,12 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           dazwischen als Ganzes verschoben, was die Grafik des Geräts ohne neues Zeichnen
           kann. Darüber, durchsichtig und leicht, der Weg, die Zeichen und der Zug. */}
       {/* im Vollbild oben, über der Karte: unten legt Android seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
-      {voll && vollbild && <div className="shrink-0 quer:col-start-2 quer:row-start-2 quer:min-h-0 quer:overflow-y-auto">{vollbild}</div>}
+      {voll && !cockpit && vollbild && <div className="shrink-0 quer:col-start-2 quer:row-start-2 quer:min-h-0 quer:overflow-y-auto">{vollbild}</div>}
       {dreiD && relief ? (
         <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>}>
           <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} tempo={tempo} start={start} ziel={ziel}
-                         tempoQuelle={probefahrt ? 'probe' : 'gps'} />
+                         tempoQuelle={probefahrt ? 'probe' : 'gps'} aussen={aussen} voll={voll}
+                         schliessen={() => setVoll(false)} vorneMelden={setVorne} />
         </Suspense>
       ) : (
       <div onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}
@@ -685,6 +696,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           </button>
         )}
       </div>
+      )}
+      {cockpit && imFuehrerstand && (
+        <div className="absolute inset-x-2 top-14 mx-auto max-w-md">{imFuehrerstand}</div>
       )}
       {!voll && !dreiD && <AuswahlZeile auswahl={auswahl} schliessen={() => setAuswahl(null)} />}
       {!voll && !dreiD && sehenswert.s && <SehenswertLegende gebieteMitBoden />}

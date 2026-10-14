@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import type { MeldeArt, PultAussen } from './Fuehrerpult'
 import { neuLadenSperren } from '../serviceWorker'
 import { useAudio } from '../audio'
 import { useEinstellungen } from '../einstellungen'
@@ -275,6 +276,23 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     uhrStart.current = { echt: Date.now(), spiel: uhr(), anfahren: false }
     rafferRef.current = f
     setRaffer(f)
+  }
+
+  // am Pult im Führerstand (Michael, 2026-10-14: «alle Knöpfe als reale Knöpfe im Führerraum»): der rechte Hebel wählt die
+  // Stufe der Probefahrt, die Bremse hält an; die Tasten Tunnel, Brücken, Bahnhöfe und Bahnübergänge schalten die Meldungen
+  const pultAussen = useRef<PultAussen | null>(null)
+  pultAussen.current = {
+    probe: probefahrt ? {
+      stufen: ZEITRAFFER.map((f) => 100 * f),
+      stufe: () => ZEITRAFFER.indexOf(rafferRef.current),
+      angehalten: () => angehaltenRef.current,
+      waehlen: (i) => rafferWaehlen(ZEITRAFFER[Math.max(0, Math.min(ZEITRAFFER.length - 1, i))]),
+      anhalten: (an) => { if (angehaltenRef.current !== an) anhaltenUmschalten() },
+    } : undefined,
+    meldet: (art: MeldeArt) => (art === 'tunnel' ? einstellung.tunnel : art === 'bruecke' ? einstellung.bruecken !== 'keine'
+      : art === 'bahnhof' ? einstellung.bahnhoefe : einstellung.bahnuebergaenge),
+    meldenSetzen: (art: MeldeArt, an: boolean) => aendern(art === 'tunnel' ? { tunnel: an }
+      : art === 'bruecke' ? { bruecken: an ? 'groessere' : 'keine' } : art === 'bahnhof' ? { bahnhoefe: an } : { bahnuebergaenge: an }),
   }
 
   function aendern(neu: Partial<Einstellung>) {
@@ -845,7 +863,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             stehend, alles andere rechts daneben (Michael, 2026-10-12) */}
         <div className="xl:grid xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:items-start xl:gap-8">
         <div className="min-w-0 xl:sticky xl:top-4">
-        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste}
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen}
+                    imFuehrerstand={ankunftKarte}
                     tempo={stand ? stand.v * (probefahrt ? raffer : 1) : null} probefahrt={probefahrt}
                     start={titel.split(' → ')[0]} ziel={ohneZiel ? undefined : titel.split(' → ')[1]} />
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}

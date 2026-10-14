@@ -8,7 +8,7 @@ import { bodenbedeckungLaden, flaechenLaden, holen, seenLaden, sehenswertLaden, 
 import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, SehenswertDaten } from '../typen'
 import { type FahrObjekt, type Fahrweg, gerundetM, wegEnde } from '../fahrt'
 import type { ObjektText } from './Fahrtmodus'
-import { type Ankuendigung, Fuehrerpult, type TempoQuelle } from './Fuehrerpult'
+import { type Ankuendigung, Fuehrerpult, type PultAussen, type TempoQuelle } from './Fuehrerpult'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
@@ -195,11 +195,37 @@ const BRILLE_NAHE_M = 0.01
  *  der Zug etwa 3 m breit statt der Modellgrösse */
 /** das Pult auf dem Bildschirm, gegenüber der Lage in der Brille verschoben */
 const PULT_BILD_HOCH_M = -0.02, PULT_BILD_WEG_M = 0.25
-/** Sichtfeld im Führerstand auf dem Bildschirm: so weit, dass das ganze Pult mit beiden Hebeln hineinpasst (Michael, 2026-10-14:
- *  «auf dem Mobile sieht man die Hebel nicht»): senkrecht bis 0,68 m unter dem Auge in 1 m Abstand, waagrecht 1 m auf jeder Seite;
- *  mindestens 60° wie vorher, auf schmalen Bildschirmen (Handy hoch) weiter */
-const fuehrerstandFov = (aspect: number) =>
-  Math.max(60, (2 * Math.atan(0.68) * 180) / Math.PI, (2 * Math.atan(1 / Math.max(0.3, aspect)) * 180) / Math.PI)
+/** Sichtfeld im Führerstand auf dem Bildschirm, Landschaft und Pult je mit eigenem Ausschnitt (Michael, 2026-10-14: «In beiden
+ *  Formaten soll die Sicht auf die Strecke möglichst attraktiv sein»): das Pult füllt die Breite mit beiden Hebeln, höchstens
+ *  PULT_ANTEIL der Höhe, und sitzt am unteren Rand; die Landschaft hat ihr eigenes, engeres Sichtfeld, der Horizont liegt in
+ *  50 % (quer) oder 55 % (hoch) des Fensters über dem Pult von oben, so sieht man mehr Strecke und weniger Boden hinter dem Pult; der
+ *  Rahmen wird bis an den Bildrand gestreckt. Alles als Tangens bei 1 m Abstand. */
+const PULT_ANTEIL = 0.4
+/** Pult unter dem Auge: Unterkante mit dem Fuss der Hebel und Oberkante der Anzeigen */
+const PULT_UNTEN = 0.74, PULT_OBEN = 0.12
+function fuehrerstandBild(aspect: number) {
+  const a = Math.max(0.3, aspect)
+  const pultX = Math.max(1.1, ((PULT_UNTEN - PULT_OBEN) * a) / (2 * PULT_ANTEIL))
+  const pultHoehe = (2 * pultX) / a
+  const anteil = (PULT_UNTEN - PULT_OBEN) / pultHoehe
+  // die Landschaft: waagrecht etwa 80° quer, 70° hoch
+  const weltX = Math.min(0.84, Math.max(0.7, 0.62 + 0.13 * a))
+  const weltHoehe = (2 * weltX) / a
+  // in der Mitte des Fensters, hoch etwas tiefer: sonst füllte der Boden direkt vor dem Zug das halbe Bild
+  const horizont = a < 1 ? 0.55 : 0.5
+  const oben = horizont * (1 - anteil) * weltHoehe
+  return { pultX, pultOben: pultHoehe - PULT_UNTEN, weltX, weltOben: oben, weltUnten: weltHoehe - oben,
+    fov: (2 * Math.atan(weltHoehe / 2) * 180) / Math.PI }
+}
+const fuehrerstandFov = (aspect: number) => fuehrerstandBild(aspect).fov
+/** schaut man so weit (Bogenmass) zur Seite, ist das Pult nicht mehr zu sehen: nur noch die Landschaft */
+const PULT_WEG_SEITE = 0.2
+/** einen Ausschnitt als Tangens links/rechts, oben/unten setzen */
+function bildAusschnitt(k: THREE.PerspectiveCamera, x: number, oben: number, unten: number) {
+  const n = k.near
+  k.projectionMatrix.makePerspective(-x * n, x * n, oben * n, -unten * n, n, k.far)
+  k.projectionMatrixInverse.copy(k.projectionMatrix).invert()
+}
 /** in der Brille sitzt das Auge so viel höher über dem Pult als auf dem Bildschirm */
 const KABINE_HOEHER_M = 0.15
 /** Höhe und Breite der Krone gezeichneter Bäume in Metern je Art (0 Einzelbaum, 1 Wald, 2 Wald offen, 3 Gebüschwald,
@@ -208,7 +234,7 @@ const KABINE_HOEHER_M = 0.15
 const BAUM_FORM: [number, number][] = [[12, 3.5], [20, 3.2], [15, 4], [4, 2.2], [9, 3]]
 const OBEN = new THREE.Vector3(0, 1, 0)
 /** Bahnhofsschilder im Führerstand (Michael, 2026-10-14: «in Bodennähe und so dass man es beim Vorbeifahren gut lesen kann»):
- *  je Bahnhof eines auf jeder Seite, so weit neben der Linie, so breit und hoch, die Unterkante so hoch über der Linie, gegen
+ *  je Bahnhof eines rechts der Linie in ihrer Richtung (Michael, 2026-10-14: «immer nur eine Ortstafel»), so weit neben ihr, so breit und hoch, die Unterkante so hoch über der Linie, gegen
  *  das Gleis gedreht; Lage, Grösse und Gestalt stehen in keiner Quelle, die Stelle ist die des Bahnhofs in den Daten */
 const TAFEL_SEITE_M = 7.5, TAFEL_BREITE_M = 9, TAFEL_HOEHE_M = 1.8, TAFEL_UEBER_M = 1.8, TAFEL_DREHUNG = (35 * Math.PI) / 180
 /** Bäume nur bis so weit um die Mitte des feinen Geländes (1,2 km voraus), Krone mit 20 Dreiecken: sonst zu viel für Handy und Brille */
@@ -388,7 +414,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
                      szene={daten && weg ? (fuellen, className) => (
                        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                               probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                              fuellen={fuellen} className={className} />
+                              aussen={stand.aussen} seitenblick={stand.seitenblick} fuellen={fuellen} className={className} />
                      ) : null} />
       )}
       </div>
@@ -608,7 +634,7 @@ export function ModellStrecke({ fahrweg, objekte, text, name }: {
                      szene={daten && weg ? (fuellen, className) => (
                        <Szene r={daten.r} h={daten.h} faktor={1} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
                               probe={probe} probeStelle={probeStelle} fahrknopf={fahrknopf} fuehrerstand={fuehrerstand}
-                              fuellen={fuellen} bauNamen={bauNamen} endNamen={name?.split(' → ') as [string, string] | undefined} className={className} />
+                              aussen={stand.aussen} seitenblick={stand.seitenblick} fuellen={fuellen} bauNamen={bauNamen} endNamen={name?.split(' → ') as [string, string] | undefined} className={className} />
                      ) : null} />
       )}
       </div>
@@ -676,6 +702,12 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
   const [filter, setFilter] = useState(false)
   useEchtesVollbild(voll, setVoll)
   const { vorne, setVorne } = stand
+  const cockpit = voll && vorne
+  // am Pult: Höhe und «Hinter den Zug» von hier
+  stand.aussen.current = {
+    hoehe: () => faktor ?? 1, hoeheSetzen: setFaktor,
+    hinterZug: () => { fuehrerstand.current = false; stand.seitenblick.current = 0; setVorne(false) },
+  }
   return (
     <div className={voll
       ? 'fixed inset-0 z-[80] bg-sbb-white pb-[env(safe-area-inset-bottom)] dark:bg-sbb-midnight'
@@ -683,14 +715,17 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
       {szene ? szene(voll, voll ? 'absolute inset-0 overflow-hidden' : 'relative w-full overflow-hidden rounded-lg')
         : <div className="flex h-[min(60vh,440px)] items-center justify-center rounded-lg bg-sbb-milk text-sm text-sbb-metal dark:bg-sbb-charcoal">{laedt}</div>}
       <Ladebalken inKarte />
-      {szene && ansage}
-      {szene && (
+      {szene && !cockpit && ansage}
+      {szene && !cockpit && (
         <div className="absolute right-2 top-2 flex gap-2">
           {voll && <GeraeuschKnopf audio={audio} className="h-8 w-9" />}
           <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </div>
       )}
-      {szene && voll && (
+      {/* im Führerstand im Vollbild nur das Bild (Michael, 2026-10-14: «ein echtes Vollformat … alle Bedienelemente als Knöpfe
+          auf dem Führerpult oder teilweise auch oben»): fahren, bremsen, Tempo und Zuggeräusch am Pult */}
+      {szene && cockpit && <SichtKnoepfe seitenblick={stand.seitenblick} schliessen={() => setVoll(false)} />}
+      {szene && voll && !cockpit && (
         <>
           {faktor && setFaktor && <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>}
           {/* oben: unten legt Android im Vollbild seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
@@ -768,7 +803,36 @@ function Vorankuendigung({ stelle, objekte, text }: {
 function useModellStand() {
   const [vorne, setVorne] = useState(false)
   const [tempo, setTempo] = useState<number | null>(null)
-  return { vorne, setVorne, tempo, setTempo }
+  // im Führerstand: Blick zur Seite und was das Pult ausserhalb bedient
+  const seitenblick = useRef(0)
+  const aussen = useRef<PultAussen | null>(null)
+  return { vorne, setVorne, tempo, setTempo, seitenblick, aussen }
+}
+
+/** im Führerstand im Vollbild oben nur drei Knöpfe (Michael, 2026-10-14: «Oben nur wenige: Sicht gegen links, Schliessen,
+ *  Sicht gegen rechts»): der Blick dreht je SEITENBLICK_SCHRITT, höchstens SEITENBLICK_MAX; alles andere am Pult */
+const SEITENBLICK_SCHRITT = Math.PI / 4, SEITENBLICK_MAX = (3 * Math.PI) / 4
+function SichtKnoepfe({ seitenblick, schliessen }: { seitenblick: React.MutableRefObject<number>; schliessen?: () => void }) {
+  const drehen = (d: number) => {
+    seitenblick.current = Math.max(-SEITENBLICK_MAX, Math.min(SEITENBLICK_MAX, Math.round((seitenblick.current + d) / SEITENBLICK_SCHRITT) * SEITENBLICK_SCHRITT))
+  }
+  const pfeil = (links: boolean) => (
+    <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+         strokeLinejoin="round">
+      <path d={links ? 'M10 3L5 8l5 5' : 'M6 3l5 5-5 5'} />
+    </svg>
+  )
+  return (
+    <div className="absolute inset-x-2 top-[max(0.5rem,env(safe-area-inset-top))] flex items-start justify-between gap-2">
+      <button type="button" className={`${KAMERA_KNOPF} flex items-center gap-1`} onClick={() => drehen(SEITENBLICK_SCHRITT)}>
+        {pfeil(true)} Sicht links
+      </button>
+      {schliessen && <VollbildKnopf voll umschalten={schliessen} />}
+      <button type="button" className={`${KAMERA_KNOPF} flex items-center gap-1`} onClick={() => drehen(-SEITENBLICK_SCHRITT)}>
+        Sicht rechts {pfeil(false)}
+      </button>
+    </div>
+  )
 }
 type ModellStand = ReturnType<typeof useModellStand>
 
@@ -980,8 +1044,15 @@ function lageAufWeg(fahrweg: Fahrweg, s: number): [number, number] {
  * darstellen könnte»): ein Ausschnitt von 30 km aus den Geländekacheln um den Zug, der mitwandert,
  * sobald der Zug 8 km von seiner Mitte weg ist. Der Blick der Kamera bleibt dabei, wie er war.
  */
-export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = null, tempoQuelle = 'gps', start, ziel }: {
+export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = null, tempoQuelle = 'gps', start, ziel, aussen, voll = false,
+  schliessen, vorneMelden }: {
   start?: string; ziel?: string
+  /** Probefahrt: Tempo und Anhalten vom Pult aus */
+  aussen?: { current: PultAussen | null }
+  /** im Vollbild: im Führerstand nur das Bild, «Hinter den Zug» und «Schliessen» oben, alles andere am Pult */
+  voll?: boolean
+  schliessen?: () => void
+  vorneMelden?: (vorne: boolean) => void
   fahrweg: Fahrweg; objekte: FahrObjekt[]; sJetzt: number | null; className: string
   /** m/s für den Tacho im Führerstand, aus dem GPS oder der Probefahrt */
   tempo?: number | null
@@ -994,9 +1065,11 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   const [mitte, setMitte] = useState<[number, number] | null>(null)
   const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
-  const zug = useRef<number | null>(sJetzt)
+  // eine Probefahrt vor dem Start: der Zug steht am Anfang, damit es den Führerstand schon gibt und das Pult ihn starten kann
+  const stelle = sJetzt ?? (tempoQuelle === 'probe' ? 0 : null)
+  const zug = useRef<number | null>(stelle)
   const blick = useRef<THREE.Vector3 | null>(null)
-  useEffect(() => { zug.current = sJetzt }, [sJetzt])
+  useEffect(() => { zug.current = stelle }, [stelle])
   const ende = useMemo(() => wegEnde(fahrweg), [fahrweg])
   const bauwerke = useMemo(() => fahrweg.objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
     .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })), [fahrweg])
@@ -1005,7 +1078,20 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   const hinterZug = useRef(false)
   // «Führerstand»: die Kamera vorne im Zug (Michael, 2026-10-10)
   const fuehrerstand = useRef(false)
-  const [vorne, setVorne] = useState(false)
+  const [vorne, setVorneRoh] = useState(false)
+  const setVorne = (v: boolean) => { setVorneRoh(v); vorneMelden?.(v) }
+  const cockpit = voll && vorne
+  const seitenblick = useRef(0)
+  // was am Pult bedient wird: dazu Höhe und «Hinter den Zug» von hier
+  const pultAussen = useRef<PultAussen | null>(null)
+  pultAussen.current = {
+    ...(aussen?.current ?? {}), hoehe: () => faktor, hoeheSetzen: setFaktor,
+    hinterZug: () => { fuehrerstand.current = false; seitenblick.current = 0; setVorne(false); hinterZug.current = true },
+  }
+  // ohne 3D gibt es keinen Führerstand mehr
+  const melden = useRef(vorneMelden)
+  melden.current = vorneMelden
+  useEffect(() => () => melden.current?.(false), [])
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
   const mitteS = useRef(0)
   useEffect(() => {
@@ -1053,26 +1139,35 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
     <>
       <div className={`${className} relative`}>
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
-               fuehrerstand={fuehrerstand} tempoAussen={tempoRef} tempoQuelle={tempoQuelle}
+               fuehrerstand={fuehrerstand} tempoAussen={tempoRef} tempoQuelle={tempoQuelle} aussen={pultAussen}
+               seitenblick={seitenblick}
                endNamen={start ? [start, ziel ?? 'ohne Ziel'] : undefined} className="absolute inset-0 overflow-hidden" />
         <Ladebalken inKarte />
-        <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
-        <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 h-9 w-10" />
-        {/* oben: unten legt Android im Vollbild seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
-        <div className="absolute left-2 top-12 flex gap-2">
-          <button type="button" onClick={() => { fuehrerstand.current = false; setVorne(false); hinterZug.current = true }}
-                  className={KAMERA_KNOPF}>
-            Hinter den Zug
-          </button>
-          <button type="button" aria-pressed={vorne} onClick={() => { fuehrerstand.current = !vorne; setVorne(!vorne) }}
-                  className={`${KAMERA_KNOPF} ${vorne ? '!bg-sbb-anthracite !text-white' : ''}`}>
-            Führerstand
-          </button>
-        </div>
+        {cockpit ? (
+          // im Führerstand im Vollbild nur das Bild (Michael, 2026-10-14: «ein echtes Vollformat … alle Bedienelemente als
+          // Knöpfe auf dem Führerpult oder teilweise auch oben»): Tempo, Bremse und Zuggeräusch am Pult
+          <SichtKnoepfe seitenblick={seitenblick} schliessen={schliessen} />
+        ) : (
+          <>
+            <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
+            <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 h-9 w-10" />
+            {/* oben: unten legt Android im Vollbild seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
+            <div className="absolute left-2 top-12 flex gap-2">
+              <button type="button" onClick={() => { fuehrerstand.current = false; setVorne(false); hinterZug.current = true }}
+                      className={KAMERA_KNOPF}>
+                Hinter den Zug
+              </button>
+              <button type="button" aria-pressed={vorne} onClick={() => { fuehrerstand.current = !vorne; setVorne(!vorne) }}
+                      className={`${KAMERA_KNOPF} ${vorne ? '!bg-sbb-anthracite !text-white' : ''}`}>
+                Führerstand
+              </button>
+            </div>
+          </>
+        )}
       </div>
       {/* die Angaben aufklappbar, sie nahmen beim Fahren viel Platz (Michael, 2026-10-10); sichtbar bleibt, dass
           es ein Modell ist und ob die Höhe überhöht ist */}
-      <details className="klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
+      <details className={`klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${cockpit ? 'hidden' : ''}`}>
         <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">
           Modell, nicht massstäblich{faktor === 2 && ', Höhe 2-fach überhöht'}: Quellen und Grenzen
         </summary>
@@ -1119,7 +1214,11 @@ function hoehenFarbe(z: number, c: THREE.Color) {
 }
 
 function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false,
-  tempoAussen, tempoQuelle, bauNamen, endNamen, className }: {
+  tempoAussen, tempoQuelle, bauNamen, endNamen, aussen, seitenblick, className }: {
+  /** was am Pult bedient wird und ausserhalb liegt: Probefahrt, Höhe, «Hinter den Zug», Meldungen */
+  aussen?: { current: PultAussen | null }
+  /** im Führerstand: so weit (Bogenmass) blickt man nach links (+) oder rechts (−) */
+  seitenblick?: React.RefObject<number>
   /** Start und Ziel für die Anzeige im Führerstand; sonst der erste und letzte Bahnhof des Reliefs */
   endNamen?: [string, string]
   r: Relief; h: Uint16Array; faktor: 1 | 2; weg: Weg; wegFarbe: string
@@ -1193,7 +1292,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     renderer.domElement.style.touchAction = 'none'
     el.appendChild(renderer.domElement)
     // das Pult im Führerstand (Fuehrerpult.ts), nur wo es einen Führerstand gibt; seine Rückmeldung kurz oben im Bild
-    const pult = fuehrerstand ? new Fuehrerpult() : null
+    const pult = fuehrerstand ? new Fuehrerpult(Boolean(tempoAussen)) : null
+    /** der Blick zur Seite jetzt, folgt seitenblick sanft; ab PULT_WEG_SEITE ist das Pult ausgeblendet */
+    let seitenJetzt = 0
+    if (pult) pult.aussen = aussen ?? null
     const pultMeldung = document.createElement('div')
     Object.assign(pultMeldung.style, { position: 'absolute', left: '50%', top: '56px', transform: 'translateX(-50%)', padding: '4px 10px',
       borderRadius: '8px', background: 'rgba(33,33,33,0.85)', color: '#fff', font: 'bold 13px Helvetica, Arial, sans-serif',
@@ -2452,7 +2554,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (s0 < pk[0].m || s0 > pk[pk.length - 1].m) continue
       const material = new THREE.MeshBasicMaterial({ map: tafelBild(b.name), toneMapped: false })
       const teile: THREE.Group[] = []
-      for (let seite = 0; seite < 2; seite++) {
+      // nur eine Tafel je Bahnhof, rechts der Linie (Michael, 2026-10-14: «braucht es bei den Bahnhöfen immer nur eine Ortstafel»)
+      {
         const tafel = new THREE.Group()
         const flaeche = new THREE.PlaneGeometry(1, 1)
         // vorne und hinten je eine Fläche, beide von vorn lesbar
@@ -2815,7 +2918,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // Maus und Finger auf dem Pult: Hover (Hervorheben, Name als Tooltip) und Auslösen
     const pultStrahl = new THREE.Raycaster()
     const pultTreffer = (e: PointerEvent) => {
-      if (!pult || !imStand || renderer.xr.isPresenting) return null
+      if (!pult || !imStand || renderer.xr.isPresenting || Math.abs(seitenJetzt) >= PULT_WEG_SEITE) return null
       const rahmen = renderer.domElement.getBoundingClientRect()
       const ndc = new THREE.Vector2(((e.clientX - rahmen.left) / rahmen.width) * 2 - 1, -((e.clientY - rahmen.top) / rahmen.height) * 2 + 1)
       pultStrahl.setFromCamera(ndc, pult.kamera)
@@ -3484,7 +3587,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           if (pult) {
             pult.v = 0
             pult.raum.visible = inBrille && vorne
-            if (inBrille && vorne) szene.add(pult.gruppe)
+            if (inBrille && vorne) { szene.add(pult.gruppe); pult.rahmenStrecken(1, 1) }
             else {
               // auf dem Bildschirm etwas weiter weg und höher als in der Brille: das Sichtfeld ist kleiner als das der Augen,
               // so bleiben Anzeigen, Tasten und Hebel im Bild
@@ -3557,6 +3660,12 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             modell.rotation.set(0, kabine.gier, 0)
             modell.position.copy(kabine.anker).sub(auge.clone().multiplyScalar(1000).applyAxisAngle(new THREE.Vector3(0, 1, 0), kabine.gier))
           } else {
+            // Blick zur Seite (Knöpfe «Sicht links», «Sicht rechts»), sanft gedreht um das Auge
+            seitenJetzt += ((seitenblick?.current ?? 0) - seitenJetzt) * Math.min(1, dt * 5)
+            if (Math.abs(seitenJetzt) > 1e-4) {
+              const d = ziel.clone().sub(auge).applyAxisAngle(new THREE.Vector3(0, 1, 0), seitenJetzt)
+              ziel.copy(auge).add(d)
+            }
             kamera.position.copy(auge)
             steuerung.target.copy(ziel)
             kamera.lookAt(ziel)
@@ -3609,20 +3718,20 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       }
       if (blick && letzte) blick.current = kamera.position.clone().sub(steuerung.target)
       schilderOrdnen()
-      renderer.render(szene, kamera)
       if (pult && imStand && !renderer.xr.isPresenting) {
-        // auf schmalen Bildschirmen (Handy hoch) weitet sich das Sichtfeld, bis das Pult mit beiden Hebeln hineinpasst
-        const fov = fuehrerstandFov(kamera.aspect)
-        if (kamera.fov !== fov) { kamera.fov = fov; kamera.updateProjectionMatrix() }
-        // dort sitzt das Pult am unteren Bildrand statt über leerem Boden: mehr Scheibe, mehr Strecke (Michael, 2026-10-14:
-        // «Auf dem Mobile sieht man nicht viel von der Strecke»); die Hebel stehen 0,9 m vor dem Auge, ihr Fuss 0,66 m tiefer
-        // auf flachen Bildschirmen (Handy quer) noch 8 cm tiefer: die Knäufe der Hebel bleiben im Bild, ihr Fuss nicht
-        const flach = renderer.domElement.clientHeight < 500 && kamera.aspect > 1.2 ? -0.08 : 0
-        pult.gruppe.position.y = PULT_BILD_HOCH_M + flach + Math.min(0, 0.66 - 0.9 * Math.tan((fov * Math.PI) / 360))
-        // das Pult in seiner eigenen Szene darüber, mit derselben Blickrichtung zum Bildschirm
-        if (pult.kamera.aspect !== kamera.aspect || pult.kamera.fov !== kamera.fov) {
-          pult.kamera.aspect = kamera.aspect; pult.kamera.fov = kamera.fov; pult.kamera.updateProjectionMatrix()
-        }
+        const bild = fuehrerstandBild(kamera.aspect)
+        if (kamera.fov !== bild.fov) { kamera.fov = bild.fov; kamera.updateProjectionMatrix() }
+        bildAusschnitt(kamera, bild.weltX, bild.weltOben, bild.weltUnten)
+      }
+      renderer.render(szene, kamera)
+      if (pult && imStand && !renderer.xr.isPresenting && Math.abs(seitenJetzt) < PULT_WEG_SEITE) {
+        const bild = fuehrerstandBild(kamera.aspect)
+        // das Pult in seiner eigenen Szene darüber, unten am Bildrand; der Rahmen bis an den Rand gestreckt
+        pult.gruppe.position.y = PULT_BILD_HOCH_M
+        pult.kamera.aspect = kamera.aspect
+        bildAusschnitt(pult.kamera, bild.pultX, bild.pultOben, PULT_UNTEN)
+        // Dachkante 1,11 m über dem Auge in 0,85 m Abstand knapp über den oberen Rand, Säulen 0,87 aussen
+        pult.rahmenStrecken(Math.max(1, bild.pultX / 1.05), Math.max(0.6, (bild.pultOben * 0.85 + 0.25 - PULT_BILD_HOCH_M) / 1.31))
         renderer.autoClear = false
         renderer.clearDepth()
         renderer.render(pult.szene, pult.kamera)
