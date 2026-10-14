@@ -39,6 +39,10 @@ export interface PultAussen {
   hinterZug?: () => void
   meldet?: (art: MeldeArt) => boolean
   meldenSetzen?: (art: MeldeArt, an: boolean) => void
+  /** Blick zur Seite: 1 links, −1 rechts */
+  seite?: (richtung: 1 | -1) => void
+  /** das Vollbild schliessen; fehlt ausserhalb des Vollbilds */
+  schliessen?: () => void
 }
 
 export interface Ankuendigung { s: number; art: 'tunnel' | 'bruecke' | 'bahnhof'; name: string }
@@ -73,7 +77,7 @@ const BREMSE_TEXT = ['0', 'B', 'SB'] as const
 
 type Aktion = 'sollPlus' | 'sollMinus' | 'bremsePlus' | 'bremseMinus' | 'horn' | 'stirnlicht' | 'pultlicht' | 'wischer'
   | 'schnellbremse' | 'zuggeraeusch' | 'daemmerung' | 'hinterZug' | 'hoehe1' | 'hoehe2' | 'tunnel' | 'bruecke' | 'bahnhof'
-  | 'bahnuebergang'
+  | 'bahnuebergang' | 'sichtLinks' | 'sichtRechts' | 'schliessen'
 
 /** Was ein Element tut und wie es heisst (als Tooltip und für Bildschirmleser) */
 const NAMEN: Record<Aktion, string> = {
@@ -83,7 +87,10 @@ const NAMEN: Record<Aktion, string> = {
   zuggeraeusch: 'Zuggeräusch ein, aus (T)', daemmerung: 'Dämmerung ein, aus (N)',
   hinterZug: 'Hinter den Zug (Z)', hoehe1: 'Höhe wie echt (1)', hoehe2: 'Höhe 2-fach (2)', tunnel: 'Tunnel melden ein, aus',
   bruecke: 'Brücken melden ein, aus', bahnhof: 'Bahnhöfe melden ein, aus', bahnuebergang: 'Bahnübergänge melden ein, aus',
+  sichtLinks: 'Sicht nach links (Pfeil links)', sichtRechts: 'Sicht nach rechts (Pfeil rechts)', schliessen: 'Vollbild schliessen (Esc)',
 }
+/** Fuss der Abdeckung über den Anzeigen, an der Unterkante des Fensters */
+const HAUBE_FUSS_M = -0.19
 /** gemeldete Arten ohne Fahrtmodus: alle an */
 const MELDE_ARTEN: MeldeArt[] = ['tunnel', 'bruecke', 'bahnhof', 'bahnuebergang']
 
@@ -95,6 +102,8 @@ function rund(b: number, h: number, t: number) {
 
 /** Unterkante des Fensterrahmens; um sie wird er auf dem Bildschirm gestreckt */
 const RAHMEN_FUSS_M = -0.2
+/** Ebene für den Rahmen auf dem Bildschirm; 1 und 2 braucht WebXR für die Augen */
+export const RAHMEN_EBENE = 3
 
 export class Fuehrerpult {
   readonly gruppe = new THREE.Group()
@@ -103,10 +112,21 @@ export class Fuehrerpult {
   readonly raum = new THREE.Group()
   /** Fensterrahmen (Säulen, Dach): auf dem Bildschirm gestreckt, damit er am Rand des Bilds bleibt, in der Brille wie gebaut */
   readonly rahmen = new THREE.Group()
+  /** Abdeckung über den Anzeigen, nur auf dem Bildschirm (Michael, 2026-10-14: «Das Steuerpult darf doch circa doppelt so hoch
+   *  sein … die Abdeckung des Displays nach oben»), darauf Sicht links, Schliessen, Sicht rechts als Tasten */
+  private haube = new THREE.Group()
+  private haubeWand: THREE.Mesh | null = null
+  private haubeKante: THREE.Mesh | null = null
+  private haubeTasten = new THREE.Group()
+  private schliessTaste: THREE.Object3D | null = null
+  private sichtTasten: THREE.Object3D[] = []
   /** die Platte über dem Fahrer: auf dem Bildschirm verdeckte sie den Himmel, dort nur das runde Dach; in der Brille ganz */
   private dachPlatte: THREE.Object3D | null = null
   readonly szene = new THREE.Scene()
   readonly kamera = new THREE.PerspectiveCamera(60, 1, 0.05, 20)
+  /** auf dem Bildschirm sieht man das Pult hoch von schräg oben (kamera), den Fensterrahmen aber gerade (rahmenKamera): sonst
+   *  liefen die Säulen schräg zusammen; der Rahmen liegt dann auf der Ebene RAHMEN_EBENE */
+  readonly rahmenKamera = new THREE.PerspectiveCamera(60, 1, 0.05, 20)
   /** gewählte Geschwindigkeit km/h, Bremse 0 gelöst, 1 bremsen, 2 Schnellbremse; v simuliert in m/s */
   soll = 80
   bremse = 0
@@ -152,6 +172,8 @@ export class Fuehrerpult {
     this.uebergaenge = uebergaenge
     this.szene.add(this.gruppe)
     this.szene.add(this.himmel, this.sonne)
+    for (const l of [this.himmel, this.sonne, this.licht]) l.layers.enable(RAHMEN_EBENE)
+    this.rahmenKamera.layers.set(RAHMEN_EBENE)
     this.sonne.position.set(0.3, 1, 0.6)
     this.licht.position.set(0, 0.3, -0.4)
     this.gruppe.add(this.licht)
@@ -162,11 +184,26 @@ export class Fuehrerpult {
     this.gruppe.add(this.rahmen)
   }
 
-  /** den Rahmen strecken: sx in der Breite, sy in der Höhe über der Fensterkante (1, 1 in der Brille) */
-  rahmenStrecken(sx: number, sy: number) {
+  /** den Rahmen strecken: sx in der Breite, sy in der Höhe über der Fensterkante (1, 1, false in der Brille) */
+  rahmenStrecken(sx: number, sy: number, bildschirm = true) {
+    // auf dem Bildschirm (gestreckt) mit eigener Kamera, in der Brille mit dem Rest
+    const ebene = bildschirm ? RAHMEN_EBENE : 0
+    if (this.rahmen.layers.mask !== 1 << ebene) this.rahmen.traverse((o) => o.layers.set(ebene))
     this.rahmen.scale.set(sx, sy, 1)
     this.rahmen.position.y = RAHMEN_FUSS_M * (1 - sy)
-    if (this.dachPlatte) this.dachPlatte.visible = sx === 1 && sy === 1
+    if (this.dachPlatte) this.dachPlatte.visible = !bildschirm
+  }
+
+  /** die Abdeckung über den Anzeigen h Meter hoch, 0 ohne (Brille); die Wischer sitzen dann auf ihr */
+  haubeSetzen(h: number) {
+    this.haube.visible = h > 0
+    if (this.haubeWand) { this.haubeWand.scale.y = Math.max(0.001, h); this.haubeWand.position.y = h / 2 }
+    this.haubeKante?.position.setY(h)
+    this.haubeTasten.position.y = h - 0.075
+    for (const arm of this.wischerArme) {
+      arm.position.y = h > 0 ? HAUBE_FUSS_M + h : -0.15
+      arm.position.z = h > 0 ? -1.03 : -1.08
+    }
   }
 
   /** Tageslicht im Führerstand, 1 draussen, kleiner im Tunnel: dort leuchten die Anzeigen, das Pultlicht hilft */
@@ -391,6 +428,26 @@ export class Fuehrerpult {
       for (let i = 0; i <= 4; i++) c.fillText(String(Math.round(PULT_HOECHST_KMH * (1 - i / 4))), 40, 40 + i * 62)
     })
 
+    // Abdeckung über den Anzeigen bis zur Unterkante des Fensters, auf dem Bildschirm so hoch, wie Relief.tsx sie setzt
+    this.haube.position.set(0, HAUBE_FUSS_M, -1.1)
+    this.haube.visible = false
+    g.add(this.haube)
+    const haubeMaterial = this.material(FARBE.pult)
+    this.haubeWand = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1, 0.08), haubeMaterial)
+    this.haube.add(this.haubeWand)
+    this.haubeKante = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 2.5, 20), haubeMaterial)
+    this.haubeKante.rotation.z = Math.PI / 2
+    this.haube.add(this.haubeKante)
+    this.haubeTasten.position.z = 0.04
+    this.haube.add(this.haubeTasten)
+    const haubeTaste = (zeichen: (c: CanvasRenderingContext2D) => void, grund: string, x: number, aktion: Aktion) => {
+      this.taste(zeichen, grund, x, 0, 0, aktion, Math.PI / 2, 0.1, this.haubeTasten)
+      return this.haubeTasten.children[this.haubeTasten.children.length - 1]
+    }
+    this.sichtTasten = [haubeTaste((c) => sichtZeichen(c, FARBE.schrift, true), FARBE.schwarz, -0.95, 'sichtLinks'),
+      haubeTaste((c) => sichtZeichen(c, FARBE.schrift, false), FARBE.schwarz, 0.95, 'sichtRechts')]
+    this.schliessTaste = haubeTaste((c) => schliessZeichen(c, '#ffffff'), '#5a5a5a', 0, 'schliessen')
+
     // Wischer: zwei Arme unten am Fenster, in Ruhe flach
     for (const x of [-0.42, 0.38]) {
       const arm = new THREE.Group()
@@ -502,7 +559,11 @@ export class Fuehrerpult {
   /* ---------- Bedienung ---------- */
 
   /** die bedienbaren Teile, für Strahl und Maus */
-  get bedienbar(): THREE.Object3D[] { return this.ziele.map((z) => z.netz) }
+  get bedienbar(): THREE.Object3D[] {
+    // nur, was zu sehen ist: die Tasten auf der Abdeckung gibt es nicht immer
+    const sichtbar = (o: THREE.Object3D | null): boolean => !o || (o.visible && sichtbar(o.parent))
+    return this.ziele.map((z) => z.netz).filter((n) => sichtbar(n))
+  }
 
   /** das Teil unter Maus oder Strahl, oder keines; gibt seinen Namen zurück */
   hover(netz: THREE.Object3D | null): string | null {
@@ -548,6 +609,9 @@ export class Fuehrerpult {
     const artName: Record<MeldeArt, string> = { tunnel: 'Tunnel', bruecke: 'Brücken', bahnhof: 'Bahnhöfe', bahnuebergang: 'Bahnübergänge' }
     switch (aktion) {
       case 'hinterZug': au?.hinterZug?.(); return 'Hinter den Zug'
+      case 'sichtLinks': au?.seite?.(1); return 'Sicht nach links'
+      case 'sichtRechts': au?.seite?.(-1); return 'Sicht nach rechts'
+      case 'schliessen': au?.schliessen?.(); return ''
       case 'hoehe1': case 'hoehe2': {
         if (!au?.hoeheSetzen) return 'Hier nur Höhe wie echt'
         const f = aktion === 'hoehe1' ? 1 : 2
@@ -616,7 +680,7 @@ export class Fuehrerpult {
   taste_(code: string): string | null {
     const zu: Record<string, Aktion> = { ArrowUp: 'sollPlus', ArrowDown: 'sollMinus', KeyB: 'bremsePlus', Digit0: 'bremseMinus',
       Space: 'schnellbremse', KeyH: 'horn', KeyL: 'stirnlicht', KeyP: 'pultlicht', KeyW: 'wischer', KeyT: 'zuggeraeusch',
-      KeyN: 'daemmerung', KeyZ: 'hinterZug', Digit1: 'hoehe1', Digit2: 'hoehe2' }
+      KeyN: 'daemmerung', KeyZ: 'hinterZug', Digit1: 'hoehe1', Digit2: 'hoehe2', ArrowLeft: 'sichtLinks', ArrowRight: 'sichtRechts' }
     return zu[code] ? this.tun(zu[code]) : null
   }
 
@@ -645,6 +709,9 @@ export class Fuehrerpult {
 
   aktualisieren(dt: number, lage: PultLage) {
     this.quelle = lage.quelle
+    const au = this.aussen?.current
+    for (const t of this.sichtTasten) t.visible = Boolean(au?.seite)
+    if (this.schliessTaste) this.schliessTaste.visible = Boolean(au?.schliessen)
     // Hebel nach Stellung; in der Probefahrt nach deren Stufe, die Skala zeigt dann deren Tempi
     const st = this.quelle === 'probe' ? this.aussen?.current?.probe : null
     this.skalaZeigen(st?.stufen ?? null)
@@ -900,6 +967,20 @@ function pultleuchte(c: CanvasRenderingContext2D, farbe: string) {
   for (const [x0, x1] of [[44, 34], [64, 64], [84, 94]]) { c.beginPath(); c.moveTo(x0, 70); c.lineTo(x1, 88); c.stroke() }
   c.lineWidth = 7
   c.beginPath(); c.moveTo(20, 104); c.lineTo(108, 104); c.stroke()
+}
+/** Sicht zur Seite: ein Auge, daneben ein Pfeil */
+function sichtZeichen(c: CanvasRenderingContext2D, farbe: string, links: boolean) {
+  c.strokeStyle = farbe; c.fillStyle = farbe; c.lineWidth = 7; c.lineCap = 'round'; c.lineJoin = 'round'
+  const x = links ? 78 : 50
+  c.beginPath(); c.ellipse(x, 64, 26, 16, 0, 0, Math.PI * 2); c.stroke()
+  c.beginPath(); c.arc(x, 64, 7, 0, Math.PI * 2); c.fill()
+  const p = links ? 30 : 98, r = links ? 1 : -1
+  c.beginPath(); c.moveTo(p + r * 16, 44); c.lineTo(p, 64); c.lineTo(p + r * 16, 84); c.stroke()
+}
+/** Schliessen: ein Kreuz */
+function schliessZeichen(c: CanvasRenderingContext2D, farbe: string) {
+  c.strokeStyle = farbe; c.lineWidth = 10; c.lineCap = 'round'
+  c.beginPath(); c.moveTo(38, 38); c.lineTo(90, 90); c.moveTo(90, 38); c.lineTo(38, 90); c.stroke()
 }
 /** Hinter den Zug: ein Zug von der Seite, dahinter ein Auge */
 function hinterZugZeichen(c: CanvasRenderingContext2D, farbe: string) {

@@ -196,30 +196,54 @@ const BRILLE_NAHE_M = 0.01
 /** das Pult auf dem Bildschirm, gegenüber der Lage in der Brille verschoben */
 const PULT_BILD_HOCH_M = -0.02, PULT_BILD_WEG_M = 0.25
 /** Sichtfeld im Führerstand auf dem Bildschirm, Landschaft und Pult je mit eigenem Ausschnitt (Michael, 2026-10-14: «In beiden
- *  Formaten soll die Sicht auf die Strecke möglichst attraktiv sein»): das Pult füllt die Breite mit beiden Hebeln, höchstens
- *  PULT_ANTEIL der Höhe, und sitzt am unteren Rand; die Landschaft hat ihr eigenes, engeres Sichtfeld, der Horizont liegt in
- *  50 % (quer) oder 55 % (hoch) des Fensters über dem Pult von oben, so sieht man mehr Strecke und weniger Boden hinter dem Pult; der
- *  Rahmen wird bis an den Bildrand gestreckt. Alles als Tangens bei 1 m Abstand. */
-const PULT_ANTEIL = 0.4
-/** Pult unter dem Auge: Unterkante mit dem Fuss der Hebel und Oberkante der Anzeigen */
-const PULT_UNTEN = 0.74, PULT_OBEN = 0.12
+ *  Formaten soll die Sicht auf die Strecke möglichst attraktiv sein»): das Pult füllt die Breite mit beiden Hebeln und sitzt am
+ *  unteren Rand, quer höchstens PULT_ANTEIL der Höhe. Hoch sieht man es von schräg oben, um PULT_KIPP_HOCH gedreht um seine
+ *  Mitte und PULT_WEITER_HOCH weiter weg: so ist es etwa doppelt so hoch und weniger verzogen (Michael, 2026-10-14: «viel zu
+ *  extrem verzogen … darf doch circa doppelt so hoch sein»), der Rahmen bleibt gerade (rahmenKamera). Die Landschaft hat ihr
+ *  eigenes Sichtfeld, der Horizont liegt in 50 % (quer) oder 55 % (hoch) des Fensters über dem Pult von oben. */
+const PULT_ANTEIL = 0.45, PULT_KIPP_HOCH = (24 * Math.PI) / 180, PULT_WEITER_HOCH = 1.3
+/** Abdeckung über den Anzeigen: so hoch, dass Sicht links, Schliessen und Sicht rechts darauf Platz haben */
+const HAUBE_M = 0.2
+/** Punkte des Pults vom Auge aus (die Gruppe steht PULT_BILD_* verschoben): Mitte, Fuss der Hebel, Oberkante der Abdeckung,
+ *  äusserer Rand der Hebel; unten der Fuss der Hebel, die zweite Tastenreihe und die Knäufe, je nach Blick liegt einer zuunterst */
+const PULT_MITTE = new THREE.Vector3(0, -0.47, -1.0)
+const PULT_FUSS = [new THREE.Vector3(0, -0.666, -0.9), new THREE.Vector3(0, -0.57, -0.78), new THREE.Vector3(0.72, -0.62, -0.74)]
+const PULT_KANTE = new THREE.Vector3(0, -0.165 + HAUBE_M, -1.35)
+const PULT_RAND = new THREE.Vector3(0.92, -0.6, -0.9)
+const pultHilfe = new THREE.PerspectiveCamera()
+let bildZuletzt: { a: number; b: ReturnType<typeof fuehrerstandBildRechnen> } | null = null
 function fuehrerstandBild(aspect: number) {
+  if (bildZuletzt?.a !== aspect) bildZuletzt = { a: aspect, b: fuehrerstandBildRechnen(aspect) }
+  return bildZuletzt.b
+}
+function fuehrerstandBildRechnen(aspect: number) {
   const a = Math.max(0.3, aspect)
-  const pultX = Math.max(1.1, ((PULT_UNTEN - PULT_OBEN) * a) / (2 * PULT_ANTEIL))
+  // hoch: von schräg oben und weiter weg, dazwischen gleitend; quer gerade wie das Auge
+  const t = Math.max(0, Math.min(1, (1 - a) / 0.55))
+  const kipp = PULT_KIPP_HOCH * t, weiter = 1 + (PULT_WEITER_HOCH - 1) * t
+  const lage = PULT_MITTE.clone().add(new THREE.Vector3().sub(PULT_MITTE).multiplyScalar(weiter).applyAxisAngle(new THREE.Vector3(1, 0, 0), -kipp))
+  pultHilfe.position.copy(lage)
+  pultHilfe.rotation.set(-kipp, 0, 0)
+  pultHilfe.updateMatrixWorld()
+  const tan = (p: THREE.Vector3) => { const q = p.clone().applyMatrix4(pultHilfe.matrixWorldInverse); return [q.x / -q.z, q.y / -q.z] }
+  const unten = Math.max(...PULT_FUSS.map((p) => -tan(p)[1]) ) + 0.02, kante = tan(PULT_KANTE)[1]
+  const pultX = Math.max(tan(PULT_RAND)[0], ((unten + kante) * a) / (2 * PULT_ANTEIL))
   const pultHoehe = (2 * pultX) / a
-  const anteil = (PULT_UNTEN - PULT_OBEN) / pultHoehe
+  const anteil = (unten + kante) / pultHoehe
+  // der Rahmen gerade vom Auge aus, seine Unterkante (0,22 m unter dem Auge in 1,39 m) auf der Höhe der Kante des Pults
+  const rahmenX = 1.1, rahmenHoehe = (2 * rahmenX) / a
+  const rahmenUnten = anteil * rahmenHoehe + 0.22 / 1.39
   // die Landschaft: waagrecht etwa 80° quer, 70° hoch
   const weltX = Math.min(0.84, Math.max(0.7, 0.62 + 0.13 * a))
   const weltHoehe = (2 * weltX) / a
   // in der Mitte des Fensters, hoch etwas tiefer: sonst füllte der Boden direkt vor dem Zug das halbe Bild
   const horizont = a < 1 ? 0.55 : 0.5
   const oben = horizont * (1 - anteil) * weltHoehe
-  return { pultX, pultOben: pultHoehe - PULT_UNTEN, weltX, weltOben: oben, weltUnten: weltHoehe - oben,
-    fov: (2 * Math.atan(weltHoehe / 2) * 180) / Math.PI }
+  return { lage, kipp, pultX, pultOben: pultHoehe - unten, pultUnten: unten,
+    rahmenX, rahmenOben: rahmenHoehe - rahmenUnten, rahmenUnten,
+    weltX, weltOben: oben, weltUnten: weltHoehe - oben, fov: (2 * Math.atan(weltHoehe / 2) * 180) / Math.PI }
 }
 const fuehrerstandFov = (aspect: number) => fuehrerstandBild(aspect).fov
-/** schaut man so weit (Bogenmass) zur Seite, ist das Pult nicht mehr zu sehen: nur noch die Landschaft */
-const PULT_WEG_SEITE = 0.2
 /** einen Ausschnitt als Tangens links/rechts, oben/unten setzen */
 function bildAusschnitt(k: THREE.PerspectiveCamera, x: number, oben: number, unten: number) {
   const n = k.near
@@ -707,6 +731,7 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
   stand.aussen.current = {
     hoehe: () => faktor ?? 1, hoeheSetzen: setFaktor,
     hinterZug: () => { fuehrerstand.current = false; stand.seitenblick.current = 0; setVorne(false) },
+    seite: (r) => seitenblickDrehen(stand.seitenblick, r), schliessen: voll ? () => setVoll(false) : undefined,
   }
   return (
     <div className={voll
@@ -724,7 +749,6 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
       )}
       {/* im Führerstand im Vollbild nur das Bild (Michael, 2026-10-14: «ein echtes Vollformat … alle Bedienelemente als Knöpfe
           auf dem Führerpult oder teilweise auch oben»): fahren, bremsen, Tempo und Zuggeräusch am Pult */}
-      {szene && cockpit && <SichtKnoepfe seitenblick={stand.seitenblick} schliessen={() => setVoll(false)} />}
       {szene && voll && !cockpit && (
         <>
           {faktor && setFaktor && <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>}
@@ -809,30 +833,12 @@ function useModellStand() {
   return { vorne, setVorne, tempo, setTempo, seitenblick, aussen }
 }
 
-/** im Führerstand im Vollbild oben nur drei Knöpfe (Michael, 2026-10-14: «Oben nur wenige: Sicht gegen links, Schliessen,
- *  Sicht gegen rechts»): der Blick dreht je SEITENBLICK_SCHRITT, höchstens SEITENBLICK_MAX; alles andere am Pult */
+/** Blick zur Seite im Führerstand (Michael, 2026-10-14: «Sicht gegen links, Schliessen, Sicht gegen rechts», als Tasten auf der
+ *  Abdeckung über den Anzeigen): je SEITENBLICK_SCHRITT, höchstens SEITENBLICK_MAX */
 const SEITENBLICK_SCHRITT = Math.PI / 4, SEITENBLICK_MAX = (3 * Math.PI) / 4
-function SichtKnoepfe({ seitenblick, schliessen }: { seitenblick: React.MutableRefObject<number>; schliessen?: () => void }) {
-  const drehen = (d: number) => {
-    seitenblick.current = Math.max(-SEITENBLICK_MAX, Math.min(SEITENBLICK_MAX, Math.round((seitenblick.current + d) / SEITENBLICK_SCHRITT) * SEITENBLICK_SCHRITT))
-  }
-  const pfeil = (links: boolean) => (
-    <svg viewBox="0 0 16 16" className="size-4" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-         strokeLinejoin="round">
-      <path d={links ? 'M10 3L5 8l5 5' : 'M6 3l5 5-5 5'} />
-    </svg>
-  )
-  return (
-    <div className="absolute inset-x-2 top-[max(0.5rem,env(safe-area-inset-top))] flex items-start justify-between gap-2">
-      <button type="button" className={`${KAMERA_KNOPF} flex items-center gap-1`} onClick={() => drehen(SEITENBLICK_SCHRITT)}>
-        {pfeil(true)} Sicht links
-      </button>
-      {schliessen && <VollbildKnopf voll umschalten={schliessen} />}
-      <button type="button" className={`${KAMERA_KNOPF} flex items-center gap-1`} onClick={() => drehen(-SEITENBLICK_SCHRITT)}>
-        Sicht rechts {pfeil(false)}
-      </button>
-    </div>
-  )
+function seitenblickDrehen(seitenblick: React.MutableRefObject<number>, richtung: 1 | -1) {
+  seitenblick.current = Math.max(-SEITENBLICK_MAX, Math.min(SEITENBLICK_MAX,
+    Math.round((seitenblick.current + richtung * SEITENBLICK_SCHRITT) / SEITENBLICK_SCHRITT) * SEITENBLICK_SCHRITT))
 }
 type ModellStand = ReturnType<typeof useModellStand>
 
@@ -1087,6 +1093,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   pultAussen.current = {
     ...(aussen?.current ?? {}), hoehe: () => faktor, hoeheSetzen: setFaktor,
     hinterZug: () => { fuehrerstand.current = false; seitenblick.current = 0; setVorne(false); hinterZug.current = true },
+    seite: (r) => seitenblickDrehen(seitenblick, r), schliessen: voll ? schliessen : undefined,
   }
   // ohne 3D gibt es keinen Führerstand mehr
   const melden = useRef(vorneMelden)
@@ -1144,9 +1151,9 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
                endNamen={start ? [start, ziel ?? 'ohne Ziel'] : undefined} className="absolute inset-0 overflow-hidden" />
         <Ladebalken inKarte />
         {cockpit ? (
-          // im Führerstand im Vollbild nur das Bild (Michael, 2026-10-14: «ein echtes Vollformat … alle Bedienelemente als
-          // Knöpfe auf dem Führerpult oder teilweise auch oben»): Tempo, Bremse und Zuggeräusch am Pult
-          <SichtKnoepfe seitenblick={seitenblick} schliessen={schliessen} />
+          // im Führerstand im Vollbild nur das Bild (Michael, 2026-10-14: «ein echtes Vollformat», «alle Bedienelemente nicht als
+          // zweidimensionale Steuerknöpfe, sondern visuell dreidimensional»): alles am Pult, auch Sicht links, Schliessen, Sicht rechts
+          null
         ) : (
           <>
             <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
@@ -1293,7 +1300,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     el.appendChild(renderer.domElement)
     // das Pult im Führerstand (Fuehrerpult.ts), nur wo es einen Führerstand gibt; seine Rückmeldung kurz oben im Bild
     const pult = fuehrerstand ? new Fuehrerpult(Boolean(tempoAussen)) : null
-    /** der Blick zur Seite jetzt, folgt seitenblick sanft; ab PULT_WEG_SEITE ist das Pult ausgeblendet */
+    /** der Blick zur Seite jetzt, folgt seitenblick sanft */
     let seitenJetzt = 0
     if (pult) pult.aussen = aussen ?? null
     const pultMeldung = document.createElement('div')
@@ -2918,7 +2925,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // Maus und Finger auf dem Pult: Hover (Hervorheben, Name als Tooltip) und Auslösen
     const pultStrahl = new THREE.Raycaster()
     const pultTreffer = (e: PointerEvent) => {
-      if (!pult || !imStand || renderer.xr.isPresenting || Math.abs(seitenJetzt) >= PULT_WEG_SEITE) return null
+      if (!pult || !imStand || renderer.xr.isPresenting) return null
       const rahmen = renderer.domElement.getBoundingClientRect()
       const ndc = new THREE.Vector2(((e.clientX - rahmen.left) / rahmen.width) * 2 - 1, -((e.clientY - rahmen.top) / rahmen.height) * 2 + 1)
       pultStrahl.setFromCamera(ndc, pult.kamera)
@@ -3587,7 +3594,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           if (pult) {
             pult.v = 0
             pult.raum.visible = inBrille && vorne
-            if (inBrille && vorne) { szene.add(pult.gruppe); pult.rahmenStrecken(1, 1) }
+            if (inBrille && vorne) { szene.add(pult.gruppe); pult.rahmenStrecken(1, 1, false); pult.haubeSetzen(0) }
             else {
               // auf dem Bildschirm etwas weiter weg und höher als in der Brille: das Sichtfeld ist kleiner als das der Augen,
               // so bleiben Anzeigen, Tasten und Hebel im Bild
@@ -3724,15 +3731,25 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         bildAusschnitt(kamera, bild.weltX, bild.weltOben, bild.weltUnten)
       }
       renderer.render(szene, kamera)
-      if (pult && imStand && !renderer.xr.isPresenting && Math.abs(seitenJetzt) < PULT_WEG_SEITE) {
+      if (pult && imStand && !renderer.xr.isPresenting) {
         const bild = fuehrerstandBild(kamera.aspect)
-        // das Pult in seiner eigenen Szene darüber, unten am Bildrand; der Rahmen bis an den Rand gestreckt
+        // das Pult in seiner eigenen Szene darüber, unten am Bildrand; der Rahmen gerade und bis an den Rand gestreckt, das Pult
+        // darüber (hoch von schräg oben)
         pult.gruppe.position.y = PULT_BILD_HOCH_M
+        pult.haubeSetzen(HAUBE_M)
+        // Dachkante 1,33 m über dem Fuss des Rahmens in 0,85 m Abstand knapp über den oberen Rand, Säulen 1,2 m aussen in 1,39 m
+        pult.rahmenStrecken(Math.max(1, (bild.rahmenX * 1.39 * 0.9) / 1.2),
+          Math.max(0.6, (bild.rahmenOben * 0.85 + 0.25 - PULT_BILD_HOCH_M) / 1.31))
+        pult.rahmenKamera.aspect = kamera.aspect
+        bildAusschnitt(pult.rahmenKamera, bild.rahmenX, bild.rahmenOben, bild.rahmenUnten)
+        pult.kamera.position.copy(bild.lage)
+        pult.kamera.rotation.set(-bild.kipp, 0, 0)
+        pult.kamera.updateMatrixWorld()
         pult.kamera.aspect = kamera.aspect
-        bildAusschnitt(pult.kamera, bild.pultX, bild.pultOben, PULT_UNTEN)
-        // Dachkante 1,11 m über dem Auge in 0,85 m Abstand knapp über den oberen Rand, Säulen 0,87 aussen
-        pult.rahmenStrecken(Math.max(1, bild.pultX / 1.05), Math.max(0.6, (bild.pultOben * 0.85 + 0.25 - PULT_BILD_HOCH_M) / 1.31))
+        bildAusschnitt(pult.kamera, bild.pultX, bild.pultOben, bild.pultUnten)
         renderer.autoClear = false
+        renderer.clearDepth()
+        renderer.render(pult.szene, pult.rahmenKamera)
         renderer.clearDepth()
         renderer.render(pult.szene, pult.kamera)
         renderer.autoClear = true
