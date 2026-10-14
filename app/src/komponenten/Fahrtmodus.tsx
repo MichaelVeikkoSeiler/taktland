@@ -731,8 +731,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     const kat = k === 'flaeche' ? 'gebiete' : k
     if (versteckt.has(kat) === an) kategorieUmschalten(kat)
   }
+  // im Querformat auf dem Handy nur das Nötigste über dem Bild, damit mehr von der Strecke zu sehen ist (Michael, 2026-10-14:
+  // «zu viele Bedienelemente … mehr Sicht auf die Strecke»): ohne die Schalter und ohne die Zeile mit dem Tempo
   const vollbildLeiste = (
-    <div className="mt-2 space-y-2">
+    <div className="mt-2 space-y-2 quer:mt-1 quer:space-y-1 quer:[&_.text-lg]:text-base quer:[&>div]:py-1">
       {ankunftKarte}
       {bahnhofKnopf}
       {imTunnel && einstellung.tunnel && sJetzt !== null ? (
@@ -762,7 +764,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       ) : naechsteZeile ?? (
         <p className="kachel px-3 py-2 text-sm">Auf dem Rest dieses Wegs ist nichts mehr zu melden.</p>
       )}
-      <div className="flex items-center gap-2 text-sm">
+      <div className={`flex items-center gap-2 text-sm ${probefahrt ? 'quer:flex-wrap' : 'quer:hidden'}`}>
         {probefahrt ? (
           <>
             <button type="button" onClick={anhaltenUmschalten} aria-pressed={angehalten}
@@ -789,7 +791,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           </p>
         )}
       </div>
-      <div className="flex flex-wrap gap-1.5" role="group" aria-label="Zeigen und melden">
+      <div className="flex flex-wrap gap-1.5 quer:hidden" role="group" aria-label="Zeigen und melden">
         <button type="button" aria-pressed={einstellung.tunnel} className={chip(einstellung.tunnel)}
                 onClick={() => aendern({ tunnel: !einstellung.tunnel })}>Tunnel</button>
         <button type="button" aria-pressed={einstellung.bruecken !== 'keine'} className={chip(einstellung.bruecken !== 'keine')}

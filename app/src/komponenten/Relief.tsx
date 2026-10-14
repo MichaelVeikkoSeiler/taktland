@@ -3613,6 +3613,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         // auf schmalen Bildschirmen (Handy hoch) weitet sich das Sichtfeld, bis das Pult mit beiden Hebeln hineinpasst
         const fov = fuehrerstandFov(kamera.aspect)
         if (kamera.fov !== fov) { kamera.fov = fov; kamera.updateProjectionMatrix() }
+        // dort sitzt das Pult am unteren Bildrand statt über leerem Boden: mehr Scheibe, mehr Strecke (Michael, 2026-10-14:
+        // «Auf dem Mobile sieht man nicht viel von der Strecke»); die Hebel stehen 0,9 m vor dem Auge, ihr Fuss 0,66 m tiefer
+        // auf flachen Bildschirmen (Handy quer) noch 8 cm tiefer: die Knäufe der Hebel bleiben im Bild, ihr Fuss nicht
+        const flach = renderer.domElement.clientHeight < 500 && kamera.aspect > 1.2 ? -0.08 : 0
+        pult.gruppe.position.y = PULT_BILD_HOCH_M + flach + Math.min(0, 0.66 - 0.9 * Math.tan((fov * Math.PI) / 360))
         // das Pult in seiner eigenen Szene darüber, mit derselben Blickrichtung zum Bildschirm
         if (pult.kamera.aspect !== kamera.aspect || pult.kamera.fov !== kamera.fov) {
           pult.kamera.aspect = kamera.aspect; pult.kamera.fov = kamera.fov; pult.kamera.updateProjectionMatrix()

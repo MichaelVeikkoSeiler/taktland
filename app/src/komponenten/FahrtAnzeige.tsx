@@ -493,7 +493,13 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const endNamen = useMemo(() => ([[weg[0], start], [weg[weg.length - 1], ziel]] as const)
     .filter((x): x is [typeof weg[number], string] => Boolean(x[0] && x[1]))
     .map(([p, name]) => ({ p, name, l: namensLage(p.xy, name, px, weg, box, h) })), [weg, start, ziel, px, box, h])
-  const klassen = vollbildKlassen(voll, 'mt-3')
+  const vollGrund = vollbildKlassen(voll, 'mt-3')
+  // im Vollbild auf dem Handy quer zwei Spalten: links das Bild über die ganze Höhe, rechts schmal die Knöpfe und die Meldung
+  // (Michael, 2026-10-14: «Nur das Nötigste … und mehr Sicht auf die Strecke»)
+  const klassen = voll
+    ? { figur: `${vollGrund.figur} quer:grid quer:grid-cols-[minmax(0,1fr)_16rem] quer:grid-rows-[auto_minmax(0,1fr)] quer:gap-x-3`,
+        svg: `${vollGrund.svg} quer:col-start-1 quer:row-span-2 quer:row-start-1 quer:mt-0 quer:h-full` }
+    : vollGrund
   const s = sJetzt ?? 0
 
   const netz = useMemo(() => {
@@ -573,7 +579,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   return (
     <figure className={klassen.figur}>
       {/* eine Zeile für alle Knöpfe, damit die Karte kompakt oben bleibt */}
-      <div className="flex items-center justify-between gap-2 text-xs">
+      <div className={`flex items-center justify-between gap-2 text-xs ${voll ? 'quer:col-start-2 quer:row-start-1 quer:flex-wrap' : ''}`}>
         <div className="segmente" role="group" aria-label="Ausschnitt">
           {([[true, 'Nah'], [false, 'Ganzer Weg']] as const).map(([n, t]) => (
             <button key={t} type="button" aria-pressed={!dreiD && nah === n} onClick={() => { setDreiD(false); setNah(n) }}
@@ -615,7 +621,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           dazwischen als Ganzes verschoben, was die Grafik des Geräts ohne neues Zeichnen
           kann. Darüber, durchsichtig und leicht, der Weg, die Zeichen und der Zug. */}
       {/* im Vollbild oben, über der Karte: unten legt Android seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
-      {voll && vollbild && <div className="shrink-0">{vollbild}</div>}
+      {voll && vollbild && <div className="shrink-0 quer:col-start-2 quer:row-start-2 quer:min-h-0 quer:overflow-y-auto">{vollbild}</div>}
       {dreiD && relief ? (
         <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>}>
           <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} tempo={tempo} start={start} ziel={ziel}
