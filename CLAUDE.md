@@ -266,7 +266,8 @@ data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026
              Bäumen gefüllt (Abstand je Art, DICHTE, in keiner Quelle), Kronenfarbe aus dem Nahbild; je 500 m eine .bmd (gzip; nicht .tgz,
              das liefert ein Apache oft als gepackt aus), pipeline/build_baeume.py, 201'787 Bäume, 1,4 MB; in der App nur im Führerstand
              ein InstancedMesh je Kachel, Krone und Stamm, Höhe und Breite je Art in keiner Quelle (BAUM_FORM in Relief.tsx, 4 bis 20 m,
-             je Baum ±25 %), der Fuss auf dem scharfen oder feinen Gelände
+             je Baum ±25 %), der Fuss auf dem scharfen oder feinen Gelände; keine Krone näher als 5 m an der gezeichneten Strecke
+             (Lichtraum fürs Bild, in keiner Quelle, BAUM_LICHTRAUM_M; Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»)
 data/gebaeude_extern/, data/baeume_extern/  Gebäude und Bäume je Kanton für daten.taktland.ch, nicht in Git (build_gebaeude.py und
              build_baeume.py --kanton BE …, --alle; das Band je Kanton in pipeline/umgebung.py: alle Bahnlinien aus swissTLMRegio, 400 m,
              Kacheln nach dem Kanton ihrer Mitte, BFS g1); Reihenfolge nach Michael (2026-10-13): BE, VS, NE und VD, dann der Rest;

@@ -213,6 +213,8 @@ const OBEN = new THREE.Vector3(0, 1, 0)
 const TAFEL_SEITE_M = 7.5, TAFEL_BREITE_M = 9, TAFEL_HOEHE_M = 1.8, TAFEL_UEBER_M = 1.8, TAFEL_DREHUNG = (35 * Math.PI) / 180
 /** Bäume nur bis so weit um die Mitte des feinen Geländes (1,2 km voraus), Krone mit 20 Dreiecken: sonst zu viel für Handy und Brille */
 const BAUM_BIS_M = 1700
+/** so viel Platz bleibt zwischen Krone und Mitte der gezeichneten Strecke frei (Lichtraum fürs Bild, in keiner Quelle) */
+const BAUM_LICHTRAUM_M = 5
 const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
@@ -1813,6 +1815,37 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const baumMaterial = new THREE.MeshLambertMaterial({ vertexColors: true })
     const baumNetze = new Map<string, THREE.InstancedMesh>()
     let baumAuftrag = 0
+    /** die gezeichnete Strecke im Rechteck als Stücke von 5 m (wie im Führerstand gezeichnet, glattBei) */
+    const gleisIn = (e0: number, n0: number, e1: number, n1: number) => {
+      const rand = 400
+      const stuecke: number[] = []
+      let von: number | null = null, bis = 0
+      const abschliessen = () => {
+        if (von === null) return
+        let alt = glattBei(Math.max(pk[0].m, von - 400))
+        for (let meter = Math.max(pk[0].m, von - 400) + 5; meter <= Math.min(pk[pk.length - 1].m, bis + 400); meter += 5) {
+          const neu = glattBei(meter)
+          stuecke.push(alt[0], alt[1], neu[0], neu[1])
+          alt = neu
+        }
+        von = null
+      }
+      for (const p of pk) {
+        const drin = p.e > e0 - rand && p.e < e1 + rand && p.n > n0 - rand && p.n < n1 + rand
+        if (drin) { if (von === null) von = p.m; bis = p.m } else abschliessen()
+      }
+      abschliessen()
+      return stuecke
+    }
+    const gleisAbstand = (stuecke: number[], e: number, n: number) => {
+      let d = Infinity
+      for (let i = 0; i < stuecke.length; i += 4) {
+        const ax = stuecke[i], ay = stuecke[i + 1], dx = stuecke[i + 2] - ax, dy = stuecke[i + 3] - ay
+        const t = Math.max(0, Math.min(1, ((e - ax) * dx + (n - ay) * dy) / (dx * dx + dy * dy || 1)))
+        d = Math.min(d, Math.hypot(e - ax - t * dx, n - ay - t * dy))
+      }
+      return d
+    }
     const baumSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++baumAuftrag
       // nur bis BAUM_BIS_M um die Mitte des feinen Geländes: im dichtesten Wald stehen im ganzen Quadrat bis 67'000 Bäume
@@ -1835,6 +1868,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         if (!k || !fs || baumNetze.has(name)) continue
         const n = k.art.length
         const netz = new THREE.InstancedMesh(baumForm, baumMaterial, n)
+        const gleis = gleisIn(k.e0, k.n0, k.e0 + 500, k.n0 + 500)
         let z = 0
         for (let i = 0; i < n; i++) {
           const e = k.e0 + k.lage[i * 2] / 10, nn = k.n0 + k.lage[i * 2 + 1] / 10
@@ -1843,6 +1877,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           const [hoehe, breite] = BAUM_FORM[k.art[i]] ?? BAUM_FORM[0]
           // gleichmässig gestreut, aber je Baum immer gleich
           const r = Math.sin(e * 12.9898 + nn * 78.233) * 43758.5453, f = 0.75 + 0.5 * (r - Math.floor(r))
+          // Lichtraum: keine Krone über dem Gleis (Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»)
+          if (gleisAbstand(gleis, e, nn) < breite * f + BAUM_LICHTRAUM_M) continue
           v.set(X(e), Y(h - 0.5), Z(nn))
           s.set(X(breite * f) - X(0), Y(hoehe * f) - Y(0), X(breite * f) - X(0))
           q.setFromAxisAngle(OBEN, f * 20)
