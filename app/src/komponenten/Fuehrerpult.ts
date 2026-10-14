@@ -274,7 +274,8 @@ export class Fuehrerpult {
 
     // Tasten in der Mitte, vor den Anzeigen, gross und nah (Michael, 2026-10-13: «die Knöpfe sind klein und weit weg»), auf
     // einer dunklen Leiste wie in seinem Vorbild
-    const kippen = 0.2, y = -0.49, z = -0.83, gross = 0.105, abstand = 0.13
+    // näher und grösser (Michael, 2026-10-14: «etwas näher und etwas grösser»; vorher 10,5 cm in 0,83 m)
+    const kippen = 0.2, y = -0.46, z = -0.74, gross = 0.12, abstand = 0.145
     const leiste = this.kasten(6 * abstand + 0.03, 0.012, gross + 0.04, FARBE.blende, 0, y - 0.008, z, kippen)
     leiste.renderOrder = -1
     const reihe: Array<[(c: CanvasRenderingContext2D) => void, string, Aktion]> = [
@@ -315,7 +316,9 @@ export class Fuehrerpult {
   /** ein Hebel in einer Kulisse: die vordere Hälfte der Kulisse schiebt ihn nach vorn, die hintere zurück */
   private hebel(x: number, griff: THREE.Group, vorn: Aktion, hinten: Aktion, skala: (c: CanvasRenderingContext2D) => void) {
     const basis = new THREE.Group()
-    basis.position.set(x * 1.25, -0.56, -0.56)
+    // links und rechts der Tastenreihe, auf ihrer Höhe: tiefer und näher lagen sie auf dem Handy unter dem Bildrand
+    // (Michael, 2026-10-14: «auf dem Mobile sieht man die Hebel nicht»; vorher 0,56 m tief und 0,56 m weit)
+    basis.position.set(x * 1.44, -0.53, -0.64)
     basis.rotation.x = 0.2
     // grösser als zuerst, damit man sie auf dem Handy trifft
     basis.scale.setScalar(1.15)

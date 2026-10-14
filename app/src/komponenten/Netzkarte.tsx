@@ -148,7 +148,13 @@ export function useEchtesVollbild(voll: boolean, setVoll: (v: boolean) => void) 
     let echt = false
     const wurzel = document.documentElement
     if (wurzel.requestFullscreen && !document.fullscreenElement) {
-      wurzel.requestFullscreen().then(() => { echt = true }).catch(() => {})
+      wurzel.requestFullscreen().then(() => {
+        echt = true
+        // im Vollbild darf das Gerät drehen, auch wenn die installierte App noch «nur Hochformat» aus einem älteren
+        // Manifest kennt (Michael, 2026-10-14: «Das Drehen um 90 Grad funktioniert bei mir leider nicht»)
+        const o = screen.orientation as ScreenOrientation & { lock?: (art: string) => Promise<void> }
+        o?.lock?.('any').catch(() => {})
+      }).catch(() => {})
     }
     const wechsel = () => { if (echt && !document.fullscreenElement) setVoll(false) }
     document.addEventListener('fullscreenchange', wechsel)
@@ -164,6 +170,7 @@ export function useEchtesVollbild(voll: boolean, setVoll: (v: boolean) => void) 
       document.removeEventListener('keydown', taste)
       document.removeEventListener('fullscreenchange', wechsel)
       document.body.style.overflow = vorher
+      try { screen.orientation?.unlock?.() } catch { /* nicht überall erlaubt */ }
       if (document.fullscreenElement) void document.exitFullscreen().catch(() => {})
     }
   }, [voll, setVoll])

@@ -195,6 +195,11 @@ const BRILLE_NAHE_M = 0.01
  *  der Zug etwa 3 m breit statt der Modellgrösse */
 /** das Pult auf dem Bildschirm, gegenüber der Lage in der Brille verschoben */
 const PULT_BILD_HOCH_M = -0.02, PULT_BILD_WEG_M = 0.25
+/** Sichtfeld im Führerstand auf dem Bildschirm: so weit, dass das ganze Pult mit beiden Hebeln hineinpasst (Michael, 2026-10-14:
+ *  «auf dem Mobile sieht man die Hebel nicht»): senkrecht bis 0,68 m unter dem Auge in 1 m Abstand, waagrecht 1 m auf jeder Seite;
+ *  mindestens 60° wie vorher, auf schmalen Bildschirmen (Handy hoch) weiter */
+const fuehrerstandFov = (aspect: number) =>
+  Math.max(60, (2 * Math.atan(0.68) * 180) / Math.PI, (2 * Math.atan(1 / Math.max(0.3, aspect)) * 180) / Math.PI)
 /** in der Brille sitzt das Auge so viel höher über dem Pult als auf dem Bildschirm */
 const KABINE_HOEHER_M = 0.15
 /** Höhe und Breite der Krone gezeichneter Bäume in Metern je Art (0 Einzelbaum, 1 Wald, 2 Wald offen, 3 Gebüschwald,
@@ -3436,7 +3441,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           } else {
             kamera.near = vorne ? FUEHRERSTAND_NAHE_KM : 0.1
             // im Führerstand ein weiteres Sichtfeld wie aus einem Fenster, sonst das enge des Modells
-            kamera.fov = vorne && pult ? 60 : 40
+            kamera.fov = vorne && pult ? fuehrerstandFov(kamera.aspect) : 40
           }
           kamera.updateProjectionMatrix()
           if (pult) {
@@ -3569,6 +3574,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       schilderOrdnen()
       renderer.render(szene, kamera)
       if (pult && imStand && !renderer.xr.isPresenting) {
+        // auf schmalen Bildschirmen (Handy hoch) weitet sich das Sichtfeld, bis das Pult mit beiden Hebeln hineinpasst
+        const fov = fuehrerstandFov(kamera.aspect)
+        if (kamera.fov !== fov) { kamera.fov = fov; kamera.updateProjectionMatrix() }
         // das Pult in seiner eigenen Szene darüber, mit derselben Blickrichtung zum Bildschirm
         if (pult.kamera.aspect !== kamera.aspect || pult.kamera.fov !== kamera.fov) {
           pult.kamera.aspect = kamera.aspect; pult.kamera.fov = kamera.fov; pult.kamera.updateProjectionMatrix()
