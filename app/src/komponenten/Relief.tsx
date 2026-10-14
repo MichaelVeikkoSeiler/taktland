@@ -9,7 +9,7 @@ import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, Sehen
 import { type FahrObjekt, type Fahrweg, gerundetM, wegEnde } from '../fahrt'
 import type { ObjektText } from './Fahrtmodus'
 import { type Ankuendigung, Fuehrerpult, type PultAussen, type TempoQuelle } from './Fuehrerpult'
-import { lv95, useBrilleMoeglich } from '../relief'
+import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { Zurueck } from './Zurueck'
@@ -536,6 +536,78 @@ const bandBreite = (laengeM: number) =>
   Math.round(Math.min(BAND_MAX_M, Math.max(BAND_MIN_M, BAND_FLAECHE_M2 / (2 * Math.max(1, laengeM)))) / 500) * 500
 const BAND_FELDER = 3_000_000
 
+/** das Band der ganzen Strecke (BAND_M links und rechts) aus den Geländekacheln, für die Modellbahn einer Strecke und für die
+ *  Probefahrt in 3D (Michael, 2026-10-14: an beiden Orten dieselbe 3D-Ansicht, auch mit der Brille) */
+function bandLaden(fahrweg: Fahrweg, objekte: FahrObjekt[], BAND_M: number): Promise<{ r: Relief; h: Uint16Array }> {
+  // Punkte auf dem Weg etwa alle 500 m; um jeden ein Kreis von BAND_M ergibt das Band
+  const lagen: Array<[number, number]> = []
+  let laenge = 0
+  const pk = fahrweg.punkte
+  for (let i = 0; i < pk.length; i++) {
+    const [e, n] = lv95(pk[i].lat, pk[i].lon)
+    if (i) {
+      const [ea, na] = lagen[lagen.length - 1], d = Math.hypot(e - ea, n - na)
+      laenge += d
+      for (let t = 500; t < d; t += 500) lagen.push([ea + ((e - ea) * t) / d, na + ((n - na) * t) / d])
+    }
+    lagen.push([e, n])
+  }
+  let e0 = Infinity, e1 = -Infinity, n0 = Infinity, n1 = -Infinity
+  for (const [e, n] of lagen) { e0 = Math.min(e0, e); e1 = Math.max(e1, e); n0 = Math.min(n0, n); n1 = Math.max(n1, n) }
+  const m = 50
+  const ost = Math.floor((e0 - BAND_M) / m) * m, nord = Math.ceil((n1 + BAND_M) / m) * m
+  const breite = Math.ceil((e1 + BAND_M - ost) / m), hoehe = Math.ceil((nord - n0 + BAND_M) / m)
+  // nur die Kacheln, die das Band berühren
+  const schritte: number[] = []
+  for (let d = -BAND_M; d < BAND_M; d += 5000) schritte.push(d)
+  schritte.push(BAND_M)
+  const kacheln = new Set<string>()
+  for (const [e, n] of lagen) {
+    // in Schritten von 5 km bis zum Rand, damit bei breitem Band keine Kachel dazwischen fehlt
+    for (const de of schritte) for (const dn of schritte) kacheln.add(`${Math.floor((e + de) / 10_000)}_${Math.floor((n + dn) / 10_000)}`)
+  }
+  // so fein, wie das Band es zulässt: seine Fläche etwa Länge mal Breite
+  const flaecheM2 = Math.min(breite * hoehe * m * m, laenge * 2 * BAND_M + Math.PI * BAND_M * BAND_M)
+  const k = Math.max(1, Math.ceil(Math.sqrt(flaecheM2 / (m * m) / BAND_FELDER)))
+  return Promise.all([ausschnittLaden({ ost, nord, m, breite, hoehe }, kacheln), streckenLaden(), sehenswertLaden().catch(() => null)])
+    .then(([f, netz, sw]) => {
+      const b2 = Math.floor(breite / k), h2 = Math.floor(hoehe / k), mitte = Math.floor(k / 2), m2 = m * k
+      const h = new Uint16Array(b2 * h2)
+      // das Band: um jeden Punkt des Wegs ein Kreis, Feld für Feld
+      const im = new Uint8Array(b2 * h2), rz = Math.ceil(BAND_M / m2)
+      for (const [e, n] of lagen) {
+        const ci = Math.floor((e - ost) / m2), cj = Math.floor((nord - n) / m2)
+        for (let dj = -rz; dj <= rz; dj++) {
+          const j = cj + dj
+          if (j < 0 || j >= h2) continue
+          const w = Math.floor(Math.sqrt(rz * rz - dj * dj))
+          for (let i = Math.max(0, ci - w); i <= Math.min(b2 - 1, ci + w); i++) im[j * b2 + i] = 1
+        }
+      }
+      for (let j = 0; j < h2; j++) {
+        for (let i = 0; i < b2; i++) if (im[j * b2 + i]) h[j * b2 + i] = f.h[(j * k + mitte) * breite + i * k + mitte]
+      }
+      const raster = { ost, nord, m: m2, breite: b2, hoehe: h2 }
+      const innen = (e: number, n: number) => {
+        const i = Math.floor((e - ost) / m2), j = Math.floor((nord - n) / m2)
+        return i >= 0 && j >= 0 && i < b2 && j < h2 && im[j * b2 + i] === 1
+      }
+      const bahnhoefe = objekte.filter((o) => o.art === 'bahnhof').flatMap((o, i) => {
+        const lage = lageAufWeg(fahrweg, o.sOrt ?? o.s)
+        return innen(...lage) ? [{ uic: i, name: netz.punkte[o.kennung] ?? o.kennung, km: (o.sOrt ?? o.s) / 1000, lage }] : []
+      })
+      const gipfel = (sw?.gipfel ?? []).flatMap((g) => {
+        const lage = lv95(g.lage[0], g.lage[1])
+        return innen(...lage) ? [{ name: g.name, hoehe_m: g.hoehe_m, lage }] : []
+      })
+      return {
+        r: { titel: 'Strecke', linie: '', linie_name: '', von_km: 0, bis_km: 0, datenstand: '', quellen: [f.quelle],
+             raster, weg: [], bahnhoefe, tunnel: [], bruecken: [], gipfel, kacheln, innen },
+        h,
+      }
+    })
+}
+
 /**
  * Die ganze Strecke einer Fahrt als Modell für die Brille (Michael, 2026-10-08: «diese Probefahrt auf die Brille
  * projizieren»): das Gelände aus den Kacheln im Rechteck um den Weg, bei langen Strecken gröber gemittelt, sonst wie
@@ -561,75 +633,7 @@ export function ModellStrecke({ fahrweg, objekte, text, name }: {
   const BAND_M = useMemo(() => bandBreite(wegEnde(fahrweg)), [fahrweg])
   useEffect(() => {
     let ab = false
-    // Punkte auf dem Weg etwa alle 500 m; um jeden ein Kreis von BAND_M ergibt das Band
-    const lagen: Array<[number, number]> = []
-    let laenge = 0
-    const pk = fahrweg.punkte
-    for (let i = 0; i < pk.length; i++) {
-      const [e, n] = lv95(pk[i].lat, pk[i].lon)
-      if (i) {
-        const [ea, na] = lagen[lagen.length - 1], d = Math.hypot(e - ea, n - na)
-        laenge += d
-        for (let t = 500; t < d; t += 500) lagen.push([ea + ((e - ea) * t) / d, na + ((n - na) * t) / d])
-      }
-      lagen.push([e, n])
-    }
-    let e0 = Infinity, e1 = -Infinity, n0 = Infinity, n1 = -Infinity
-    for (const [e, n] of lagen) { e0 = Math.min(e0, e); e1 = Math.max(e1, e); n0 = Math.min(n0, n); n1 = Math.max(n1, n) }
-    const m = 50
-    const ost = Math.floor((e0 - BAND_M) / m) * m, nord = Math.ceil((n1 + BAND_M) / m) * m
-    const breite = Math.ceil((e1 + BAND_M - ost) / m), hoehe = Math.ceil((nord - n0 + BAND_M) / m)
-    // nur die Kacheln, die das Band berühren
-    const schritte: number[] = []
-    for (let d = -BAND_M; d < BAND_M; d += 5000) schritte.push(d)
-    schritte.push(BAND_M)
-    const kacheln = new Set<string>()
-    for (const [e, n] of lagen) {
-      // in Schritten von 5 km bis zum Rand, damit bei breitem Band keine Kachel dazwischen fehlt
-      for (const de of schritte) for (const dn of schritte) kacheln.add(`${Math.floor((e + de) / 10_000)}_${Math.floor((n + dn) / 10_000)}`)
-    }
-    // so fein, wie das Band es zulässt: seine Fläche etwa Länge mal Breite
-    const flaecheM2 = Math.min(breite * hoehe * m * m, laenge * 2 * BAND_M + Math.PI * BAND_M * BAND_M)
-    const k = Math.max(1, Math.ceil(Math.sqrt(flaecheM2 / (m * m) / BAND_FELDER)))
-    void Promise.all([ausschnittLaden({ ost, nord, m, breite, hoehe }, kacheln), streckenLaden(), sehenswertLaden().catch(() => null)])
-      .then(([f, netz, sw]) => {
-        if (ab) return
-        const b2 = Math.floor(breite / k), h2 = Math.floor(hoehe / k), mitte = Math.floor(k / 2), m2 = m * k
-        const h = new Uint16Array(b2 * h2)
-        // das Band: um jeden Punkt des Wegs ein Kreis, Feld für Feld
-        const im = new Uint8Array(b2 * h2), rz = Math.ceil(BAND_M / m2)
-        for (const [e, n] of lagen) {
-          const ci = Math.floor((e - ost) / m2), cj = Math.floor((nord - n) / m2)
-          for (let dj = -rz; dj <= rz; dj++) {
-            const j = cj + dj
-            if (j < 0 || j >= h2) continue
-            const w = Math.floor(Math.sqrt(rz * rz - dj * dj))
-            for (let i = Math.max(0, ci - w); i <= Math.min(b2 - 1, ci + w); i++) im[j * b2 + i] = 1
-          }
-        }
-        for (let j = 0; j < h2; j++) {
-          for (let i = 0; i < b2; i++) if (im[j * b2 + i]) h[j * b2 + i] = f.h[(j * k + mitte) * breite + i * k + mitte]
-        }
-        const raster = { ost, nord, m: m2, breite: b2, hoehe: h2 }
-        const innen = (e: number, n: number) => {
-          const i = Math.floor((e - ost) / m2), j = Math.floor((nord - n) / m2)
-          return i >= 0 && j >= 0 && i < b2 && j < h2 && im[j * b2 + i] === 1
-        }
-        const bahnhoefe = objekte.filter((o) => o.art === 'bahnhof').flatMap((o, i) => {
-          const lage = lageAufWeg(fahrweg, o.sOrt ?? o.s)
-          return innen(...lage) ? [{ uic: i, name: netz.punkte[o.kennung] ?? o.kennung, km: (o.sOrt ?? o.s) / 1000, lage }] : []
-        })
-        const gipfel = (sw?.gipfel ?? []).flatMap((g) => {
-          const lage = lv95(g.lage[0], g.lage[1])
-          return innen(...lage) ? [{ name: g.name, hoehe_m: g.hoehe_m, lage }] : []
-        })
-        setDaten({
-          r: { titel: 'Strecke', linie: '', linie_name: '', von_km: 0, bis_km: 0, datenstand: '', quellen: [f.quelle],
-               raster, weg: [], bahnhoefe, tunnel: [], bruecken: [], gipfel, kacheln, innen },
-          h,
-        })
-      })
-      .catch((e: Error) => { if (!ab) setFehler(e.message) })
+    bandLaden(fahrweg, objekte, BAND_M).then((d) => { if (!ab) setDaten(d) }).catch((e: Error) => { if (!ab) setFehler(e.message) })
     return () => { ab = true }
   }, [fahrweg, objekte, BAND_M])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg) : null), [daten, fahrweg])
@@ -1106,18 +1110,43 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   const melden = useRef(vorneMelden)
   melden.current = vorneMelden
   useEffect(() => () => melden.current?.(false), [])
+  // bis MODELL_HOECHSTENS_M die ganze Strecke als Band wie in der Modellbahn (Michael, 2026-10-14: an beiden Orten dieselbe
+  // 3D-Ansicht): die Szene wird unterwegs nie neu gebaut, darum geht hier auch die Brille; länger der Ausschnitt, der mitwandert
+  const ganz = ende <= MODELL_HOECHSTENS_M
+  const BAND_M = useMemo(() => bandBreite(ende), [ende])
+  useEffect(() => {
+    if (!ganz) return
+    let ab = false
+    // die Bahnhöfe aus dem ganzen Weg, nicht aus der Auswahl: sonst baute jedes Umschalten der Meldungen das Band neu
+    bandLaden(fahrweg, fahrweg.objekte, BAND_M).then((d) => { if (!ab) setDaten(d) }).catch((e: Error) => { if (!ab) setFehler(e.message) })
+    return () => { ab = true }
+  }, [ganz, fahrweg, BAND_M])
+  const brille = useRef<(() => Promise<void>) | null>(null)
+  const xr = useBrilleMoeglich()
+  const [brilleHinweis, setBrilleHinweis] = useState<string | null>(null)
+  useEffect(() => {
+    if (!brilleHinweis) return
+    const t = setTimeout(() => setBrilleHinweis(null), 8000)
+    return () => clearTimeout(t)
+  }, [brilleHinweis])
+  const inBrille = () => {
+    if (!xr) { setBrilleHinweis('Auf diesem Gerät ist keine VR-Brille zu finden. Öffne Taktland im Browser einer VR-Brille wie der Meta Quest 3.'); return }
+    setBrilleHinweis(null)
+    brille.current?.().catch((e: Error) => setBrilleHinweis(`Die Brille liess sich nicht starten: ${e.message}`))
+  }
   // der Ausschnitt wandert mit dem Zug, auf den Kilometer gerundet
   const mitteS = useRef(0)
   useEffect(() => {
+    if (ganz) return
     const s = Math.min(ende, (sJetzt ?? 0) + VORLAUF_M)
     const [e, n] = lageAufWeg(fahrweg, s)
     if (!mitte || Math.hypot(e - mitte[0], n - mitte[1]) > WANDERN_M) {
       mitteS.current = s
       setMitte([Math.round(e / 1000) * 1000, Math.round(n / 1000) * 1000])
     }
-  }, [fahrweg, sJetzt, mitte, ende])
+  }, [fahrweg, sJetzt, mitte, ende, ganz])
   useEffect(() => {
-    if (!mitte) return
+    if (!mitte || ganz) return
     let ab = false
     void Promise.all([fensterLaden(mitte[0], mitte[1], FENSTER_M), streckenLaden(), sehenswertLaden().catch(() => null)])
       .then(([f, netz, sw]) => {
@@ -1145,7 +1174,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
       })
       .catch((e: Error) => { if (!ab) setFehler(e.message) })
     return () => { ab = true }
-  }, [mitte, fahrweg, objekte, ende])
+  }, [mitte, fahrweg, objekte, ende, ganz])
   const weg = useMemo(() => (daten ? wegDerFahrt(daten.r, fahrweg) : null), [daten, fahrweg])
   if (fehler) return <div className={className}><Ladefehler was="Das Gelände konnte nicht geladen werden." fehler={fehler} /></div>
   if (!daten || !weg) return <div className={`${className} relative flex items-center justify-center text-sm text-sbb-metal`}><Ladebalken inKarte />Das Gelände wird geladen …</div>
@@ -1154,7 +1183,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
       <div className={`${className} relative`}>
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
                fuehrerstand={fuehrerstand} tempoAussen={tempoRef} tempoQuelle={tempoQuelle} aussen={pultAussen}
-               seitenblick={seitenblick}
+               seitenblick={seitenblick} brille={ganz ? brille : undefined}
                endNamen={start ? [start, ziel ?? 'ohne Ziel'] : undefined} className="absolute inset-0 overflow-hidden" />
         <Ladebalken inKarte />
         {cockpit ? (
@@ -1175,7 +1204,19 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
                       className={`${KAMERA_KNOPF} ${vorne ? '!bg-sbb-anthracite !text-white' : ''}`}>
                 Führerstand
               </button>
+              {/* wie in der Modellbahn (Michael, 2026-10-14: «Aktuell kann ich ja nur im Spiel auf die VR-Brille wechseln») */}
+              {ganz && (
+                <button type="button" onClick={inBrille}
+                        className="rounded-lg bg-sbb-red px-2.5 py-1 text-xs font-bold text-white">
+                  Mit VR-Brille
+                </button>
+              )}
             </div>
+            {brilleHinweis && (
+              <p role="status" className="absolute inset-x-2 top-24 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">
+                {brilleHinweis}
+              </p>
+            )}
           </>
         )}
       </div>
@@ -1186,7 +1227,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
           Modell, nicht massstäblich{faktor === 2 && ', Höhe 2-fach überhöht'}: Quellen und Grenzen
         </summary>
         <p className="mt-1">
-          Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, 30 km um den Zug; wo vorhanden mit Luftbild
+          Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, {ganz ? `bis ${(BAND_M / 1000).toLocaleString('de-CH')} km links und rechts der ganzen Strecke wie in der Modellbahn` : '30 km um den Zug'}; wo vorhanden mit Luftbild
           SWISSIMAGE (swisstopo), auf 10 m gemittelt, bis 500 m neben den Bahnlinien auf 2,5 m, Stand der Aufnahme. Im Führerstand nah am Zug das
           Gelände aus swissALTI3D (swisstopo), auf 10 m gemittelt, wo es bis 500 m neben einer Bahnlinie liegt; bis 400 m neben den Bahnlinien, wo
           schon gebaut, ein Versuch: Gebäude aus swissBUILDINGS3D (swisstopo), die Dächer in der Farbe des Luftbilds, die Wände grau; Bäume aus swissTLM3D
@@ -3362,6 +3403,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
                 else if (nr === 4) fahrt.tempo = Math.max(0.25, fahrt.tempo / 2)
                 else fahrt.tempo = Math.min(16, fahrt.tempo * 2)
                 hinweisZeigen(fahrt.laeuft ? `Probefahrt ${tempoText(fahrt.tempo)}` : 'Probefahrt angehalten')
+              }
+              if (an) gedrueckt.add(schluessel); else gedrueckt.delete(schluessel)
+            }
+          }
+        }
+        // bei der Probefahrt aus «Fahren» (Michael, 2026-10-14: «die gleichen Funktionen»): im Führerstand bedienen die Tasten das
+        // Pult wie oben, sonst A weiter, B anhalten, X langsamer, Y schneller, alles über die Probefahrt selbst
+        const probefahrt = zugVonAussen && pult ? pult.aussen?.current?.probe : undefined
+        if (probefahrt) {
+          for (const quelle of renderer.xr.getSession()?.inputSources ?? []) {
+            const knoepfe = quelle.gamepad?.buttons
+            if (!knoepfe) continue
+            for (const nr of [4, 5]) {
+              const schluessel = `${quelle.handedness}${nr}`, an = !!knoepfe[nr]?.pressed
+              if (an && !gedrueckt.has(schluessel)) {
+                const rechts = quelle.handedness === 'right'
+                if (kabine.an) hinweisZeigen(pult!.tun(rechts ? (nr === 4 ? 'sollPlus' : 'sollMinus') : nr === 4 ? 'bremsePlus' : 'bremseMinus'))
+                else if (rechts) { probefahrt.anhalten(nr === 5); hinweisZeigen(nr === 5 ? 'Probefahrt angehalten' : 'Probefahrt') }
+                else {
+                  const i = Math.max(0, Math.min(probefahrt.stufen.length - 1, probefahrt.stufe() + (nr === 4 ? -1 : 1)))
+                  probefahrt.waehlen(i)
+                  hinweisZeigen(`Etwa ${probefahrt.stufen[i].toLocaleString('de-CH')} km/h`)
+                }
               }
               if (an) gedrueckt.add(schluessel); else gedrueckt.delete(schluessel)
             }
