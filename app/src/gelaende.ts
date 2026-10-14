@@ -389,7 +389,7 @@ export const scharfBild = (name: string) =>
 
 /** Gebäude aus swissBUILDINGS3D (swisstopo) bis band_m neben den Bahnlinien (Michael, 2026-10-13; pipeline/build_gebaeude.py),
  *  in Kacheln von kachel_m: je Ecke Ost, Höhe, Nord in Dezimetern ab der Ecke der Kachel und Farbe, je drei Ecken ein Dreieck */
-/** Kacheln der App und von daten.taktland.ch (je Kanton gebaut, Michael, 2026-10-13); die der App gehen vor */
+/** Kacheln der App und von daten.taktland.ch (je Kanton gebaut, Michael, 2026-10-13); die von dort gehen vor */
 interface Umgebung { kachel_m: number; pfad: Map<string, string> }
 function umgebungIndex(ordner: string): Promise<Umgebung | null> {
   return Promise.all([
@@ -397,10 +397,13 @@ function umgebungIndex(ordner: string): Promise<Umgebung | null> {
     holen<{ kachel_m: number; kacheln: Record<string, unknown> }>(`${DATEN_URL}${ordner}/index.json`).catch(() => null),
   ]).then(([hier, dort]) => {
     if (!hier && !dort) return null
+    // die von daten.taktland.ch gehen vor: je Kanton mit allen Bahnlinien gebaut; die der App stammen aus dem ersten Versuch
+    // und haben nur die Gebäude neben den Strecken der scharfen Umgebung (Michael, 2026-10-14: in Biel fehlte im Nordosten
+    // etwa die Hälfte, an der Linie aus dem Jura)
     const pfad = new Map<string, string>()
-    for (const name of Object.keys(dort?.kacheln ?? {})) pfad.set(name, `${DATEN_URL}${ordner}/${name}`)
     const eigene = Array.isArray(hier?.kacheln) ? hier.kacheln : Object.keys(hier?.kacheln ?? {})
     for (const name of eigene) pfad.set(name, `data/${ordner}/${name}`)
+    for (const name of Object.keys(dort?.kacheln ?? {})) pfad.set(name, `${DATEN_URL}${ordner}/${name}`)
     return { kachel_m: (hier ?? dort)!.kachel_m, pfad }
   })
 }
