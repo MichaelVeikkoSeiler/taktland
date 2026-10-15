@@ -38,5 +38,9 @@ case "$1" in
   5)  # Nachträge, einzeln zu bauen (Michael, 2026-10-15: auf der BTI «sehr unscharf … um das Gleis herum»)
     lauf "Biel/Bienne" Täuffelen Ins
     ;;
-  *) echo "Reihe 1 bis 5"; exit 1 ;;
+  6[a-h])  # alle übrigen Bahnlinien aus swissTLMRegio in acht Teilen (Michael, 2026-10-15: «Alles scharf machen»)
+    teil=$(( $(printf '%d' "'${1:1:1}") - 96 ))
+    echo "== Rest $teil/8 $(date +%H:%M)"; $PY pipeline/build_scharf.py --extern --rest "$teil/8" 2>&1 | grep -v Warning | tail -3
+    ;;
+  *) echo "Reihe 1 bis 5 oder 6a bis 6h"; exit 1 ;;
 esac

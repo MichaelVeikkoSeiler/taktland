@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       reihen:
-        description: 'Welche Reihen (pipeline/scharf_reihen.sh), z. B. [5] für die Nachträge'
+        description: 'Welche Reihen (pipeline/scharf_reihen.sh): [5] für die Nachträge, ["6a","6b","6c","6d","6e","6f","6g","6h"] für alle übrigen Bahnlinien'
         default: '[1, 2, 3, 4]'
         required: true
 

@@ -13,9 +13,10 @@
  * 'scharf-1' eintragen, in NUR der Anfang der Pakete, die es holen soll.
  */
 const HOLEN = 'scharf-1';
-// nur Pakete, deren Name so beginnt, leer für alle: 'scharf-r5-' holt nur die Nachträge (Reihe 5, Michael, 2026-10-15: BTI);
+// nur Pakete, deren Name so beginnt, leer für alle: 'scharf-r5-' holt nur die Nachträge (Reihe 5, Michael, 2026-10-15: BTI),
+// 'scharf-r6' alle übrigen Bahnlinien (Reihen 6a bis 6h, Michael, 2026-10-15: «Alles scharf machen»);
 // die Verzeichnisse der anderen Reihen liegen schon da und werden mit zusammengefügt
-const NUR = 'scharf-r5-';
+const NUR = 'scharf-r6';
 const ARTEN = ['scharf-1' => ['muster' => '/^scharf-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['scharf'], 'workflow' => 'Scharfe Umgebung'],
                'umgebung-1' => ['muster' => '/^umgebung-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['gebaeude', 'baeume'], 'workflow' => 'Gebäude und Bäume']];
 const RELEASE = 'https://api.github.com/repos/MichaelVeikkoSeiler/taktland/releases/tags/' . HOLEN;

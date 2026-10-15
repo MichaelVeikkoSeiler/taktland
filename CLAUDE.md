@@ -90,7 +90,9 @@ server/daten/  daten.taktland.ch (cyon, Ordner public_html/daten, von Hand hochg
              die nicht in die App passen (GitHub Pages höchstens 1 GB); .htaccess erlaubt den Abruf von taktland.ch (CORS);
              scharf/: der Workflow «Scharfe Umgebung» (.github/workflows/scharf.yml, von Hand zu starten) baut die Strecken aus
              pipeline/scharf_reihen.sh in vier Reihen gleichzeitig (Reihe 5: Nachträge, einzeln mit reihen = [5], Biel/Bienne–Täuffelen–Ins der BTI; holen.php
-             holt dann mit NUR = 'scharf-r5-' nur deren Pakete), schnürt Pakete (pipeline/scharf_pakete.py, je höchstens 400 MB,
+             holt dann mit NUR = 'scharf-r5-' nur deren Pakete; Reihen 6a bis 6h: alle übrigen Bahnlinien aus swissTLMRegio ohne die Kacheln der
+             Reihen 1 bis 5 und der App, 117'407 Kacheln, etwa 17 GB, in acht Teilen, build_scharf.py --rest 3/8, holen.php mit NUR = 'scharf-r6';
+             Michael, 2026-10-15: «Alles scharf machen»), schnürt Pakete (pipeline/scharf_pakete.py, je höchstens 400 MB,
              der Index der Reihe als scharf/index-rN.json im letzten) und legt sie ins Release «scharf-1»; holen.php, einmal nach
              public_html/daten hochgeladen und geöffnet, holt sie, packt sie aus, fügt die Verzeichnisse zu scharf/index.json
              zusammen und löscht sich (Dateien im Chat höchstens 30 MB, Releases darf die Sitzung nicht anlegen)
@@ -358,6 +360,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch
 .venv/bin/python pipeline/build_gebaeude.py       # Gebäude (swissBUILDINGS3D) entlang Gümmenen–Bern, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --weg Bern Olten     # dito entlang des Wegs der App
+.venv/bin/python pipeline/build_scharf.py --extern --rest 3/8          # alle übrigen Bahnlinien, Teil 3 von 8 (sonst Reihe 6c im Workflow)
 python3 pipeline/fetch_tlm3d.py --baeume          # Einzelbaum und Bodenbedeckung aus swissTLM3D (etwa 3,3 GB)
 python3 pipeline/fetch_tlm3d.py --strassen        # Strassen aus swissTLM3D (520 MB, entpackt 3,3 GB)
 .venv/bin/python pipeline/build_strassenbruecken.py   # Strassenbrücken über der Bahn, vor export_app

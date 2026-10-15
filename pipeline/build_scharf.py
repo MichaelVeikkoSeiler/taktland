@@ -16,6 +16,7 @@ Jahre von Bild und Höhe fest. Gelesen wird nur der Ausschnitt jeder Kachel aus 
     .venv/bin/python pipeline/build_scharf.py Kerzers Gümmenen    # andere Orte, in Fahrtreihenfolge
     .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard albula   # entlang der Linie eines Reliefs
     .venv/bin/python pipeline/build_scharf.py --extern --weg Bern Olten "Zürich HB"   # entlang des Wegs der App
+    .venv/bin/python pipeline/build_scharf.py --extern --rest 3/8   # alle übrigen Bahnlinien, Teil 3 von 8
 
 --extern schreibt nach data/scharf_extern statt nach data/scharf: diese Kacheln kommen nicht in die App, sondern auf
 daten.taktland.ch (cyon, von Hand hochgeladen, Michael, 2026-10-12: «eine Subdomain daten.taktland.ch für die Kacheln»).
@@ -221,14 +222,53 @@ def strecken_weg(namen):
     return raus
 
 
+def kacheln_der_reihen():
+    """die Kacheln, die die Reihen 1 bis 5 in pipeline/scharf_reihen.sh bauen (lauf … und relief …), ohne sie zu bauen"""
+    import shlex
+    raus = set()
+    for zeile in (ROOT / "pipeline" / "scharf_reihen.sh").read_text(encoding="utf-8").splitlines():
+        for teil in zeile.split(";"):
+            w = shlex.split(teil.strip(), comments=True)
+            if not w:
+                continue
+            if w[0] == "lauf":
+                raus |= set(kacheln(strecken_weg(w[1:])))
+            elif w[0] == "for" and "in" in w:
+                for name in w[w.index("in") + 1:]:
+                    raus |= set(kacheln(strecken_relief(name)))
+    return raus
+
+
+def rest(teil, teile):
+    """alle Bahnlinien aus swissTLMRegio (Michael, 2026-10-15: «Alles scharf machen») ohne die Kacheln der Reihen 1 bis 5
+    und der App, nach Lage geordnet und in teile gleiche Stücke geteilt; davon Stück teil (1 …)"""
+    alle = []
+    for linie in build_luftbild_nah.linien():
+        alle += [(a, b, c, d) for (a, b), (c, d) in zip(linie, linie[1:])]
+    q = kacheln(alle)
+    weg = kacheln_der_reihen()
+    if (ROOT / "data" / "scharf" / "index.json").exists():
+        weg |= {tuple(map(int, k.split("_"))) for k in
+                json.loads((ROOT / "data" / "scharf" / "index.json").read_text(encoding="utf-8"))["kacheln"]}
+    namen = sorted(k for k in q if k not in weg)
+    n = len(namen)
+    stueck = namen[(teil - 1) * n // teile:teil * n // teile]
+    print(f"Rest: {n} Kacheln, davon Teil {teil} von {teile}: {len(stueck)}")
+    return {k: q[k] for k in stueck}
+
+
 def main():
     global ZIEL
     argv = [a for a in sys.argv[1:] if a != "--extern"]
     extern = "--extern" in sys.argv
     if extern:
         ZIEL = ROOT / "data" / "scharf_extern"
-    strecken, beschrieb = [], []
-    if argv[:1] == ["--weg"]:
+    strecken, beschrieb, q = [], [], None
+    if argv[:1] == ["--rest"]:
+        teil, teile = map(int, argv[1].split("/"))
+        q = rest(teil, teile)
+        beschrieb.append(f"rest:{teil}/{teile}")
+    elif argv[:1] == ["--weg"]:
         strecken = strecken_weg(argv[1:])
         beschrieb.append("weg:" + " – ".join(argv[1:]))
     elif argv[:1] == ["--relief"]:
@@ -239,7 +279,8 @@ def main():
         for orte in [argv] if argv else STRECKEN:
             strecken += [st for st in strecken_entlang(orte) if st not in strecken]
             beschrieb.append(orte)
-    q = kacheln(strecken)
+    if q is None:
+        q = kacheln(strecken)
     alt = {}
     if extern and (ZIEL / "index.json").exists():
         alt = json.loads((ZIEL / "index.json").read_text(encoding="utf-8"))
