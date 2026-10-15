@@ -8,7 +8,8 @@ die Achsen lückenlos von 1'330 m bei Bergün auf 1'815 m im Albulatunnel. Die A
 daneben und nimmt deren Höhe.
 
 Je Kachel von KACHEL_M die Achsen, die sie berühren, in Stücken, alle SCHRITT_M ein Punkt; gzip von: Int32 tiefste Höhe
-in dm, dann je Stück Int16 Zahl der Punkte und je Punkt Int16 Ost und Nord in halben Metern ab der Ecke der Kachel
+in dm, dann je Stück Int16 Zahl der Punkte (negativ: das Stück liegt laut KUNSTBAUTE in einem Tunnel; Michael, 2026-10-15:
+vor Spiez fuhr der Zug durch den Hondrichtunnel, den die Strecke nicht kannte, und sah die Erde von unten) und je Punkt Int16 Ost und Nord in halben Metern ab der Ecke der Kachel
 (Süd-West) und Int16 Höhe in dm über der tiefsten. Ein Stück reicht einen Punkt über den Rand, damit kein Abschnitt
 fehlt. Standseilbahnen nicht.
 
@@ -48,6 +49,7 @@ def main():
     bahn = shapefile.Reader(str(ROH / "swissTLM3D_TLM_EISENBAHN"), encoding="utf-8")
     namen = [f[0] for f in bahn.fields[1:]]
     iss = namen.index("STANDSEILB")
+    ik = namen.index("KUNSTBAUTE")
     kacheln = {}
     for i, rec in enumerate(bahn.iterRecords()):
         if rec[iss] == "Wahr":
@@ -56,6 +58,7 @@ def main():
         if len(s.points) < 2:
             continue
         pkt = nachfahren(s.points, list(s.z))
+        tunnel = rec[ik] == "Tunnel"
         # in Stücke je Kachel, mit einem Punkt Überlapp
         drin = [(int(e // KACHEL_M), int(n // KACHEL_M)) for e, n, _ in pkt]
         for k in set(drin):
@@ -65,24 +68,24 @@ def main():
                 if nahe:
                     stueck.append(q)
                 elif stueck:
-                    kacheln.setdefault(k, []).append(stueck)
+                    kacheln.setdefault(k, []).append((tunnel, stueck))
                     stueck = []
             if len(stueck) > 1:
-                kacheln.setdefault(k, []).append(stueck)
+                kacheln.setdefault(k, []).append((tunnel, stueck))
     if ZIEL.exists():
         for alt in ZIEL.glob("*.hgz"):
             alt.unlink()
     ZIEL.mkdir(parents=True, exist_ok=True)
     groesse, geschrieben = 0, []
     for (ke, kn), stuecke in sorted(kacheln.items()):
-        stuecke = [s for s in stuecke if len(s) > 1]
+        stuecke = [(t, s) for t, s in stuecke if len(s) > 1]
         if not stuecke:
             continue
         geschrieben.append(f"{ke}_{kn}")
-        z0 = math.floor(min(q[2] for s in stuecke for q in s) * 10)
+        z0 = math.floor(min(q[2] for _, s in stuecke for q in s) * 10)
         roh = bytearray(struct.pack("<i", z0))
-        for s in stuecke:
-            roh += struct.pack("<h", len(s))
+        for t, s in stuecke:
+            roh += struct.pack("<h", -len(s) if t else len(s))
             for e, n, z in s:
                 roh += struct.pack("<hhh", round((e - ke * KACHEL_M) * 2), round((n - kn * KACHEL_M) * 2), round(z * 10) - z0)
         daten = gzip.compress(bytes(roh), 9)

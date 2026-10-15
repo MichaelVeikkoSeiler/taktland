@@ -127,7 +127,10 @@ data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzüg
              Iselle di Trasquera als Ziel ohne Bahnhofsnummer (GRENZPUNKTE, Nummer -1): Lage am
              Ende der Kilometrierung der Linie 100, in der App ohne Bahnhofseite
 data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierung,
-             platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen
+             platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen; Abschnitte anderer Bahnen ohne Verlauf im
+             Schienennetz des BAV bekommen den kürzesten Weg im Gleisnetz von swissTLM3D, höchstens 1,5-mal so lang wie die Luftlinie
+             (verlauf_nach_tlm in build_strecken.py, 9 Abschnitte; Michael, 2026-10-15: Hondrich Süd–Spiez lag als Gerade bis 800 m neben
+             dem Hondrichtunnel, der Zug fuhr durch den Berg und sah Häuser und Bäume von unten)
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte
              bei Tunneln, Brücken und auf den Linienseiten (pipeline/build_karte.py),
              selbst gezeichnet, ohne Kartendienst
@@ -287,7 +290,9 @@ data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026
              ein InstancedMesh je Kachel, Krone und Stamm, Höhe und Breite je Art in keiner Quelle (BAUM_FORM in Relief.tsx, 4 bis 20 m,
              je Baum ±25 %), der Fuss auf dem scharfen oder feinen Gelände; keine Krone näher als 5 m an der gezeichneten Strecke
              (Lichtraum fürs Bild, in keiner Quelle, BAUM_LICHTRAUM_M; Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»)
-data/gleishoehe/  Höhe der Gleise: alle Gleisachsen aus swissTLM3D (TLM_EISENBAHN, PolyLineZ, ohne Standseilbahnen) alle 20 m, in
+data/gleishoehe/  Höhe der Gleise: alle Gleisachsen aus swissTLM3D (TLM_EISENBAHN, PolyLineZ, ohne Standseilbahnen) alle 20 m, je Stück
+             ob laut KUNSTBAUTE im Tunnel (Zahl der Punkte negativ; die App macht daraus Tunnel ab 50 m, wo der Weg keinen kennt, nur fürs Bild,
+             mitGleisTunneln), in
              Kacheln von 10 km (pipeline/build_gleishoehe.py, 340 Kacheln, 4,3 MB); die App sucht alle 10 m die Achse höchstens 25 m neben ihrem
              Weg, höchstens 45° schräg, bei mehreren übereinander (Kehrtunnel) die zur Höhe davor passende, Lücken bis 1,5 km gerade, über 30 m
              gemittelt (gleisHoehenLaden in Relief.tsx); gilt für die Linie in 3D und im Führerstand, auch in Tunneln und auf Brücken; sonst wie früher aus dem Gelände;

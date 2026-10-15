@@ -1505,8 +1505,9 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
  *  schräg); liegen mehrere übereinander (Kehrtunnel), die mit der Höhe, die an den Schritt davor passt. Lücken bis
  *  GLEIS_LUECKE_M gerade überbrückt, sonst NaN: dort bleibt die Höhe aus dem Gelände */
 const GLEIS_SCHRITT_M = 10, GLEIS_NEBEN_M = 25, GLEIS_LUECKE_M = 1500, GLEIS_EINLAUF_M = 200
-/** z: Höhe, d: Abstand der Achse quer zum Weg (positiv nach links, q = (-tn, te)), je GLEIS_SCHRITT_M ab m0, NaN ohne Achse */
-interface GleisHoehen { m0: number; z: Float32Array; d: Float32Array }
+/** z: Höhe, d: Abstand der Achse quer zum Weg (positiv nach links, q = (-tn, te)), je GLEIS_SCHRITT_M ab m0, NaN ohne Achse;
+ *  tunnel: 1, wo die Achse laut swissTLM3D in einem Tunnel liegt */
+interface GleisHoehen { m0: number; z: Float32Array; d: Float32Array; tunnel: Uint8Array }
 async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
   const pk = weg.punkte
   if (pk.length < 2) return null
@@ -1526,11 +1527,12 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
   const stuecke = await gleisLaden(grob)
   if (!stuecke.length) return null
   // die Abschnitte der Achsen in Zellen von 50 m
-  const Z = 50, zellen = new Map<string, number[]>(), ab: number[] = []
+  const Z = 50, zellen = new Map<string, number[]>(), ab: number[] = [], abTunnel: boolean[] = []
   for (const st of stuecke) {
     for (let j = 0; j + 1 < st.e.length; j++) {
       const k = ab.length / 6
       ab.push(st.e[j], st.n[j], st.z[j], st.e[j + 1], st.n[j + 1], st.z[j + 1])
+      abTunnel.push(st.tunnel)
       const e0 = Math.min(st.e[j], st.e[j + 1]), e1 = Math.max(st.e[j], st.e[j + 1]), n0 = Math.min(st.n[j], st.n[j + 1]), n1 = Math.max(st.n[j], st.n[j + 1])
       for (let qe = Math.floor(e0 / Z); qe <= Math.floor(e1 / Z); qe++) {
         for (let qn = Math.floor(n0 / Z); qn <= Math.floor(n1 / Z); qn++) {
@@ -1540,13 +1542,13 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
       }
     }
   }
-  const z = new Float32Array(n).fill(NaN), quer = new Float32Array(n).fill(NaN)
+  const z = new Float32Array(n).fill(NaN), quer = new Float32Array(n).fill(NaN), tunnel = new Uint8Array(n)
   let vorZ = NaN, vorD = 0, vorM = -Infinity
   for (let i = 0; i < n; i++) {
     const mm = von + i * GLEIS_SCHRITT_M
     const [e, nn] = lage(mm), [ve, vn] = lage(mm - 10), [he, hn] = lage(mm + 10)
     const tl = Math.hypot(he - ve, hn - vn) || 1, te = (he - ve) / tl, tn = (hn - vn) / tl
-    const kandidaten: Array<[number, number, number]> = []
+    const kandidaten: Array<[number, number, number, number]> = []
     const gesehen = new Set<number>()
     for (let qe = Math.floor((e - GLEIS_NEBEN_M) / Z); qe <= Math.floor((e + GLEIS_NEBEN_M) / Z); qe++) {
       for (let qn = Math.floor((nn - GLEIS_NEBEN_M) / Z); qn <= Math.floor((nn + GLEIS_NEBEN_M) / Z); qn++) {
@@ -1558,14 +1560,14 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
           if (Math.abs((de * te + dn * tn) / Math.sqrt(l2)) < Math.SQRT1_2) continue
           const t = Math.max(0, Math.min(1, ((e - ae) * de + (nn - an) * dn) / l2))
           const d = Math.hypot(ae + t * de - e, an + t * dn - nn)
-          if (d <= GLEIS_NEBEN_M) kandidaten.push([d, ab[o + 2] + t * (ab[o + 5] - ab[o + 2]), (ae + t * de - e) * -tn + (an + t * dn - nn) * te])
+          if (d <= GLEIS_NEBEN_M) kandidaten.push([d, ab[o + 2] + t * (ab[o + 5] - ab[o + 2]), (ae + t * de - e) * -tn + (an + t * dn - nn) * te, abTunnel[k] ? 1 : 0])
         }
       }
     }
     if (!kandidaten.length) continue
     // gleich hoch wie davor (Kehrtunnel übereinander), dann das Gleis, das seitlich am nächsten bei dem davor liegt
     // (mehrere Gleise nebeneinander), sonst das nächste
-    let wahl: [number, number, number] | null = null
+    let wahl: [number, number, number, number] | null = null
     if (!Number.isNaN(vorZ) && mm - vorM < 300) {
       const passt = kandidaten.filter((c) => Math.abs(c[1] - vorZ) <= 2 + 0.08 * (mm - vorM))
       if (!passt.length) continue
@@ -1573,7 +1575,7 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
     } else {
       for (const c of kandidaten) if (!wahl || c[0] < wahl[0]) wahl = c
     }
-    z[i] = wahl![1]; quer[i] = wahl![2]; vorZ = wahl![1]; vorD = wahl![2]; vorM = mm
+    z[i] = wahl![1]; quer[i] = wahl![2]; tunnel[i] = wahl![3]; vorZ = wahl![1]; vorD = wahl![2]; vorM = mm
   }
   // Lücken gerade überbrücken, dann über 30 m mitteln (die Achsen haben Ecken)
   let letzte = -1
@@ -1599,7 +1601,29 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
     for (let k = Math.max(0, i - 5); k <= Math.min(n - 1, i + 5); k++) if (!Number.isNaN(quer[k])) { t += quer[k]; k2++ }
     d[i] = t / k2
   }
-  return { m0: von, z: glatt, d }
+  return { m0: von, z: glatt, d, tunnel }
+}
+/** Tunnel laut swissTLM3D, die der Weg nicht kennt (Michael, 2026-10-15: vor Spiez fuhr der Zug durch den Hondrichtunnel und sah
+ *  die Erde von unten): jedes Stück ab GLEIS_TUNNEL_KUERZESTE_M, wo die gewählte Achse in einem Tunnel liegt und kein Tunnel
+ *  des Wegs, als Tunnel des Wegs dazu; nur fürs Bild (Röhre, Licht), gemeldet wird er nicht */
+const GLEIS_TUNNEL_KUERZESTE_M = 50
+function mitGleisTunneln(weg: Weg, g: GleisHoehen | null): Weg {
+  if (!g) return weg
+  const dazu: Weg['bauwerke'] = []
+  let ab = -1
+  for (let i = 0; i <= g.tunnel.length; i++) {
+    const drin = i < g.tunnel.length && g.tunnel[i] === 1
+    if (drin && ab < 0) ab = i
+    if (!drin && ab >= 0) {
+      const von = g.m0 + ab * GLEIS_SCHRITT_M, bis = g.m0 + (i - 1) * GLEIS_SCHRITT_M
+      if (bis - von >= GLEIS_TUNNEL_KUERZESTE_M && !weg.bauwerke.some((x) => x.art === 'tunnel' && x.von < bis && x.bis > von)) {
+        dazu.push({ von, bis, art: 'tunnel' })
+      }
+      ab = -1
+    }
+  }
+  if (!dazu.length) return weg
+  return { ...weg, bauwerke: [...weg.bauwerke.filter((x) => !dazu.some((t) => x.art === 'bruecke' && x.von < t.bis && x.bis > t.von)), ...dazu].sort((a, b) => a.von - b.von) }
 }
 /** Höhe aus gleisHoehenLaden an der Stelle meter, oder null */
 function gleisBei(g: GleisHoehen | null, meter: number): number | null {
@@ -1633,7 +1657,7 @@ function hoehenFarbe(z: number, c: THREE.Color) {
   return c.set(a).lerp(new THREE.Color(b), Math.max(0, Math.min(1, (z - z0) / (z1 - z0))))
 }
 
-function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false,
+function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false,
   tempoAussen, tempoQuelle, bauNamen, endNamen, aussen, seitenblick, className }: {
   /** was am Pult bedient wird und ausserhalb liegt: Probefahrt, Höhe, «Hinter den Zug», Meldungen */
   aussen?: { current: PultAussen | null }
@@ -1688,9 +1712,11 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
   const [gleis, setGleis] = useState<GleisHoehen | null>(null)
   useEffect(() => {
     let ab = false
-    void gleisHoehenLaden(weg).catch(() => null).then((g) => { if (!ab) setGleis(g) })
+    void gleisHoehenLaden(wegRoh).catch(() => null).then((g) => { if (!ab) setGleis(g) })
     return () => { ab = true }
-  }, [weg])
+  }, [wegRoh])
+  // dazu die Tunnel laut swissTLM3D, die der Weg nicht kennt (mitGleisTunneln)
+  const weg = useMemo(() => mitGleisTunneln(wegRoh, gleis), [wegRoh, gleis])
   const aus = useVersteckt()
   const ausJetzt = useRef(aus)
   const anwenden = useRef<((a: Set<Kategorie>) => void) | null>(null)

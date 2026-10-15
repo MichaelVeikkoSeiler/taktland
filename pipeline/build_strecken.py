@@ -403,6 +403,145 @@ def verlauf_nach_lage(zuege_bav, wgs_a, wgs_b, km_luft):
     return ([punkt(ib, tb)] + pts[ib + 1:ia + 1] + [punkt(ia, ta)])[::-1]
 
 
+#: Gleisnetz aus swissTLM3D für Abschnitte ohne Verlauf (verlauf_nach_tlm): so weit dürfen die Enden neben einem Gleis liegen,
+#: und so viel länger als die Luftlinie darf der Weg sein
+TLM_NETZ_NAH_M = 150
+TLM_NETZ_UMWEG = 1.5
+_tlm_netz = None
+
+
+def tlm_netz():
+    """das Gleisnetz aus swissTLM3D (TLM_EISENBAHN ohne Standseilbahnen): Knoten an den Enden der Achsen, auf 1 m gerundet;
+    je Kante die Punkte in Metern (LV95) und die Länge"""
+    global _tlm_netz
+    if _tlm_netz is not None:
+        return _tlm_netz
+    pfad = ROOT / "data" / "raw" / "tlm3d" / "swissTLM3D_TLM_EISENBAHN"
+    if not pfad.with_suffix(".shp").exists():
+        _tlm_netz = False
+        return _tlm_netz
+    import shapefile
+    r = shapefile.Reader(str(pfad), encoding="utf-8")
+    namen = [f[0] for f in r.fields[1:]]
+    iss = namen.index("STANDSEILB")
+    kanten, nach = [], defaultdict(list)
+    for i, rec in enumerate(r.iterRecords()):
+        if rec[iss] == "Wahr":
+            continue
+        p = r.shape(i).points
+        if len(p) < 2:
+            continue
+        a, b = (round(p[0][0]), round(p[0][1])), (round(p[-1][0]), round(p[-1][1]))
+        lang = sum(math.dist(p[k], p[k + 1]) for k in range(len(p) - 1))
+        nach[a].append(len(kanten)); nach[b].append(len(kanten))
+        kanten.append((a, b, p, lang))
+    # Zellen von 200 m für die Suche nach dem nächsten Gleis
+    zellen = defaultdict(list)
+    for k, (_, _, p, _) in enumerate(kanten):
+        for x, y in p:
+            zellen[(int(x // 200), int(y // 200))].append(k)
+    _tlm_netz = (kanten, nach, zellen)
+    return _tlm_netz
+
+
+def verlauf_nach_tlm(wgs_a, wgs_b, km_luft):
+    """Der kürzeste Weg im Gleisnetz von swissTLM3D zwischen zwei Lagen, als [(lat, lon)], oder None (Michael,
+    2026-10-15: zwischen Hondrich Süd und Spiez fehlte der Verlauf, die gerade Linie lag bis 800 m neben dem
+    Hondrichtunnel). Die Enden liegen auf dem nächsten Gleis bis TLM_NETZ_NAH_M daneben; zu lang ist der Weg nie"""
+    import heapq
+    netz = tlm_netz()
+    if not netz:
+        return None
+    kanten, nach, zellen = netz
+    from build_relief import wgs84_zu_lv95
+
+    def naechste(e, n):
+        best = None
+        for qx in range(int(e // 200) - 1, int(e // 200) + 2):
+            for qy in range(int(n // 200) - 1, int(n // 200) + 2):
+                for k in set(zellen.get((qx, qy), [])):
+                    p = kanten[k][2]
+                    for j in range(len(p) - 1):
+                        (x0, y0), (x1, y1) = p[j], p[j + 1]
+                        dx, dy = x1 - x0, y1 - y0
+                        t = max(0.0, min(1.0, ((e - x0) * dx + (n - y0) * dy) / ((dx * dx + dy * dy) or 1)))
+                        d = math.hypot(x0 + t * dx - e, y0 + t * dy - n)
+                        if best is None or d < best[0]:
+                            best = (d, k, j, t)
+        return best if best and best[0] <= TLM_NETZ_NAH_M else None
+
+    ea, na = wgs84_zu_lv95(*wgs_a)
+    eb, nb = wgs84_zu_lv95(*wgs_b)
+    sa, sb = naechste(ea, na), naechste(eb, nb)
+    if not sa or not sb:
+        return None
+
+    def teilstueck(k, j, t, zum_anfang):
+        """die Punkte der Kante k von der Stelle (j, t) bis zu ihrem Anfang oder Ende, und die Länge"""
+        p = kanten[k][2]
+        x = (p[j][0] + t * (p[j + 1][0] - p[j][0]), p[j][1] + t * (p[j + 1][1] - p[j][1]))
+        pts = [x] + (p[j::-1] if zum_anfang else p[j + 1:])
+        return pts, sum(math.dist(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
+
+    # Start: von der Stelle auf der Kante zu ihren beiden Enden
+    abstand, vor, heap = {}, {}, []
+    ka = kanten[sa[1]]
+    for zum_anfang, knoten in ((True, ka[0]), (False, ka[1])):
+        pts, lang = teilstueck(sa[1], sa[2], sa[3], zum_anfang)
+        if lang < abstand.get(knoten, math.inf):
+            abstand[knoten] = lang; vor[knoten] = (None, pts)
+            heapq.heappush(heap, (lang, knoten))
+    grenze = max(km_luft * 1000, math.dist((ea, na), (eb, nb))) * 2 + 1000
+    while heap:
+        d, knoten = heapq.heappop(heap)
+        if d > abstand.get(knoten, math.inf) or d > grenze:
+            continue
+        for k in nach[knoten]:
+            a, b, p, lang = kanten[k]
+            weiter = b if a == knoten else a
+            pts = p if a == knoten else p[::-1]
+            if d + lang < abstand.get(weiter, math.inf):
+                abstand[weiter] = d + lang; vor[weiter] = (knoten, pts)
+                heapq.heappush(heap, (d + lang, weiter))
+    # Ende: über einen der beiden Knoten der Kante bei B
+    kb = kanten[sb[1]]
+    best = None
+    for vom_anfang, knoten in ((True, kb[0]), (False, kb[1])):
+        if knoten not in abstand:
+            continue
+        pts, lang = teilstueck(sb[1], sb[2], sb[3], vom_anfang)
+        if best is None or abstand[knoten] + lang < best[0]:
+            best = (abstand[knoten] + lang, knoten, pts[::-1])
+    if sa[1] == sb[1]:
+        # beide Enden auf derselben Kante
+        p = ka[2]
+        a_s = sum(math.dist(p[i], p[i + 1]) for i in range(sa[2])) + sa[3] * math.dist(p[sa[2]], p[sa[2] + 1])
+        b_s = sum(math.dist(p[i], p[i + 1]) for i in range(sb[2])) + sb[3] * math.dist(p[sb[2]], p[sb[2] + 1])
+        if best is None or abs(b_s - a_s) <= best[0]:
+            lo, hi = sorted([(sa[2], sa[3]), (sb[2], sb[3])])
+            x0 = (p[lo[0]][0] + lo[1] * (p[lo[0] + 1][0] - p[lo[0]][0]), p[lo[0]][1] + lo[1] * (p[lo[0] + 1][1] - p[lo[0]][1]))
+            x1 = (p[hi[0]][0] + hi[1] * (p[hi[0] + 1][0] - p[hi[0]][0]), p[hi[0]][1] + hi[1] * (p[hi[0] + 1][1] - p[hi[0]][1]))
+            pts = [x0] + list(p[lo[0] + 1:hi[0] + 1]) + [x1]
+            if (sa[2], sa[3]) > (sb[2], sb[3]):
+                pts = pts[::-1]
+            best = (abs(b_s - a_s), None, pts)
+            return [schienennetz.lv95_zu_wgs84(x, y) for x, y in best[2]]
+    # länger als TLM_NETZ_UMWEG mal die Luftlinie ist eher ein Umweg über andere Gleise als der Abschnitt selbst
+    if best is None or best[0] > math.dist((ea, na), (eb, nb)) * TLM_NETZ_UMWEG + 300:
+        return None
+    # rückwärts zusammensetzen
+    stuecke = [best[2]]
+    knoten = best[1]
+    while knoten is not None:
+        vorher, pts = vor[knoten]
+        stuecke.append(pts)
+        knoten = vorher
+    meter = []
+    for st in reversed(stuecke):
+        meter += st if not meter else st[1:]
+    return [schienennetz.lv95_zu_wgs84(x, y) for x, y in meter]
+
+
 def tlm_laden():
     """Bauwerke aus swissTLM3D (pipeline/build_tlm_bauwerke.py), mit Punkten in Metern"""
     pfad = ROOT / "data" / "tlm_bauwerke.json"
@@ -784,7 +923,7 @@ def main():
     print(f"Punkte des Schienennetzes im Bahnhof: {sum(len(v) for v in IM_BAHNHOF.values())} "
           f"bei {len(IM_BAHNHOF)} Bahnhöfen")
 
-    zuege_bav, nach_lage = linien_zuege(bav_linien), 0
+    zuege_bav, nach_lage, nach_tlm = linien_zuege(bav_linien), 0, 0
     tlm, tlm_datei = tlm_laden()
     tlm_br = [((b["pts"][0][1] * KM_LON, b["pts"][0][0] * KM_LAT), (b["pts"][-1][1] * KM_LON, b["pts"][-1][0] * KM_LAT),
                sum(math.dist((p[1] * KM_LON, p[0] * KM_LAT), (q[1] * KM_LON, q[0] * KM_LAT)) for p, q in zip(b["pts"], b["pts"][1:])))
@@ -867,6 +1006,10 @@ def main():
                 verlauf = verlauf_nach_lage(zuege_bav, punkte[a]["wgs"], punkte[b]["wgs"], k["km"])
                 if verlauf:
                     nach_lage += 1
+            if not verlauf:
+                verlauf = verlauf_nach_tlm(punkte[a]["wgs"], punkte[b]["wgs"], k["km"])
+                if verlauf:
+                    nach_tlm += 1
             if verlauf:
                 eintrag["verlauf_bav"] = True
                 # vereinfacht auf 5 m, in Metern gerechnet; die Datei lädt der Fahrtmodus beim Start
@@ -940,6 +1083,7 @@ def main():
     print(f"  andere Bahnen (keine Tunnel- und Brückendaten): {len(liste) - len(sbb)} Abschnitte, "
           f"davon {sum(1 for e in liste if e['isb'] != 'SBB' and 'linie_bav' in e)} mit Linie laut BAV")
     print(f"  davon {nach_lage} mit Verlauf nach der Lage der Enden (verlauf_nach_lage)")
+    print(f"  davon {nach_tlm} mit Verlauf im Gleisnetz von swissTLM3D (verlauf_nach_tlm)")
     print(f"  andere Bahnen: {len(verlaeufe)} Abschnitte mit Verlauf laut BAV, {len(bauwerke_genutzt)} "
           f"Bauwerke aus swissTLM3D darauf")
     print(f"  Linien anderer Bahnen aus dem Schienennetz: {len(bav_gewaehlt)}: "

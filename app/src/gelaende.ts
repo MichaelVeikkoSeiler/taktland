@@ -490,7 +490,8 @@ export async function baumNamen(e0: number, n0: number, e1: number, n1: number):
 /** Gleisachsen mit Höhe in Kacheln von kachel_m (pipeline/build_gleishoehe.py; Michael, 2026-10-15, Albula: «wie auf einer
  *  Achterbahn»); je Stück die Punkte in Landeskoordinaten und Metern über Meer */
 interface GleisIndex { kachel_m: number; kacheln: string[] }
-export interface GleisStueck { e: Float64Array; n: Float64Array; z: Float32Array }
+/** tunnel: das Stück liegt laut swissTLM3D (KUNSTBAUTE) in einem Tunnel */
+export interface GleisStueck { e: Float64Array; n: Float64Array; z: Float32Array; tunnel: boolean }
 const gleisIndex = () => holen<GleisIndex>('data/gleishoehe/index.json')
 const gleisVorrat = new Map<string, Promise<GleisStueck[] | null>>()
 function gleisKachel(name: string, kachel_m: number) {
@@ -503,7 +504,8 @@ function gleisKachel(name: string, kachel_m: number) {
     const z0 = new DataView(roh).getInt32(0, true), d = new Int16Array(roh, 4)
     const raus: GleisStueck[] = []
     for (let i = 0; i < d.length;) {
-      const k = d[i++], s = { e: new Float64Array(k), n: new Float64Array(k), z: new Float32Array(k) }
+      const roh2 = d[i++], k = Math.abs(roh2)
+      const s = { e: new Float64Array(k), n: new Float64Array(k), z: new Float32Array(k), tunnel: roh2 < 0 }
       for (let j = 0; j < k; j++, i += 3) { s.e[j] = e0 + d[i] / 2; s.n[j] = n0 + d[i + 1] / 2; s.z[j] = (z0 + d[i + 2]) / 10 }
       raus.push(s)
     }
