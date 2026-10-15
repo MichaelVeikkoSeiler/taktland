@@ -260,8 +260,11 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              ausserhalb des feinen Geländes mit der groben Höhe, verschoben um den Unterschied am anderen Ende, Tunnel und Brücken für die Höhe immer alle, auch wenn ihre Zeichen
              ausgeschaltet sind (wegDerFahrt), Blick in Richtung des Gleises unter dem Auge, geneigt zur Linie 300 m voraus, Brücken als schlichte Platte ohne Pfeiler (Pfeiler in keiner
              Quelle; Michael, 2026-10-11: «Aufbau von Brücken, damit die Strecke … flach darüber führt»), so breit wie die Gleise darauf laut
-             data/bahnbruecken.json, 3,5 m über die äussersten hinaus, die anderen Gleise als Schienen darauf (brueckeQuer; Michael, 2026-10-15:
-             «gemäß der Anzahl Gleise»; Rand und Gleisabstand 4,5 m in keiner Quelle); unter jeder gezeichneten Bahn- und Strassenbrücke ist das
+             data/bahnbruecken.json, 3,5 m über die äussersten hinaus, die anderen Gleise als Schienen darauf, je Gleis ein fester Abstand
+             über die ganze Brücke (Median; Michael, 2026-10-15: «parallel zueinander»), die Platte gleich breit (brueckeQuer; Michael, 2026-10-15:
+             «gemäß der Anzahl Gleise»; Rand und Gleisabstand 4,5 m in keiner Quelle); Bahn- und Strassenbrücken mit gemalter Oberfläche
+             (brueckenBild: Beton mit Körnung und Schalungsfugen, Schotter zwischen zwei Randbalken, Belag) und von Hand gesetzter Ambient
+             Occlusion (dunkler in Ecken und unten; Michael, 2026-10-15: «ein bisschen Körnung, ein bisschen Ambient Occlusion»), in keiner Quelle; unter jeder gezeichneten Bahn- und Strassenbrücke ist das
              Luftbild (Nahbild und scharf) retuschiert: quer zur Brücke zwischen den Rändern aufgefüllt, je Rand über 16 m gemittelt, 2,5 m
              breiter als die Brücke (retuschieren; Michael, 2026-10-15: «wegzuretuschieren»; keine KI, nicht aus einer Quelle; gespiegelt
              erfand es Häuser)
