@@ -22,6 +22,9 @@ type Vorlauf = typeof VORLAEUFE_S[number]
  *  «doppelte, vierfache, achtfache Geschwindigkeit») */
 const ZEITRAFFER = [1, 2, 4, 8, 20, 50, 200] as const
 type Zeitraffer = typeof ZEITRAFFER[number]
+/** in 3D höchstens so schnell (8× = 800 km/h): schneller fährt der Zug durch das feine Gelände und die scharfen Bilder, bevor
+ *  sie geladen sind (Michael, 2026-10-14: «tempo drosseln und 2000 nicht mehr anbieten»); auf der Karte bleiben alle Stufen */
+const ZEITRAFFER_3D_HOECHST = 8
 /** Was so viele Sekunden vor dem Zug liegt, steht als eigene Karte oben */
 const ZUGLEICH_S = 40
 /** Tempo der Probefahrt, 100 km/h */
@@ -278,15 +281,22 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     setRaffer(f)
   }
 
+  // in 3D nur die Stufen bis ZEITRAFFER_3D_HOECHST; wer schneller fährt, fährt beim Wechsel in 3D so schnell weiter
+  const [dreiD, setDreiD] = useState(false)
+  const stufen = dreiD ? ZEITRAFFER.filter((f) => f <= ZEITRAFFER_3D_HOECHST) : [...ZEITRAFFER]
+  useEffect(() => {
+    if (dreiD && rafferRef.current > ZEITRAFFER_3D_HOECHST) rafferWaehlen(ZEITRAFFER_3D_HOECHST)
+  }, [dreiD])
+
   // am Pult im Führerstand (Michael, 2026-10-14: «alle Knöpfe als reale Knöpfe im Führerraum»): der rechte Hebel wählt die
   // Stufe der Probefahrt, die Bremse hält an; die Tasten Tunnel, Brücken, Bahnhöfe und Bahnübergänge schalten die Meldungen
   const pultAussen = useRef<PultAussen | null>(null)
   pultAussen.current = {
     probe: probefahrt ? {
-      stufen: ZEITRAFFER.map((f) => 100 * f),
-      stufe: () => ZEITRAFFER.indexOf(rafferRef.current),
+      stufen: stufen.map((f) => 100 * f),
+      stufe: () => Math.max(0, stufen.indexOf(rafferRef.current)),
       angehalten: () => angehaltenRef.current,
-      waehlen: (i) => rafferWaehlen(ZEITRAFFER[Math.max(0, Math.min(ZEITRAFFER.length - 1, i))]),
+      waehlen: (i) => rafferWaehlen(stufen[Math.max(0, Math.min(stufen.length - 1, i))]),
       anhalten: (an) => { if (angehaltenRef.current !== an) anhaltenUmschalten() },
     } : undefined,
     meldet: (art: MeldeArt) => (art === 'tunnel' ? einstellung.tunnel : art === 'bruecke' ? einstellung.bruecken !== 'keine'
@@ -793,7 +803,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             </button>
             <div className="segmente flex-1 gap-0.5"
                  role="group" aria-label="Tempo der Probefahrt in km/h">
-              {ZEITRAFFER.map((f) => (
+              {stufen.map((f) => (
                 <button key={f} type="button" aria-pressed={raffer === f} onClick={() => rafferWaehlen(f)}
                         aria-label={`etwa ${kmh(f)} km/h`}
                         className="segment min-h-8 flex-1 px-0.5 text-xs tabular-nums">
@@ -863,7 +873,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             stehend, alles andere rechts daneben (Michael, 2026-10-12) */}
         <div className="xl:grid xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:items-start xl:gap-8">
         <div className="min-w-0 xl:sticky xl:top-4">
-        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen}
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen} dreiDMelden={setDreiD}
                     imFuehrerstand={ankunftKarte}
                     tempo={stand ? stand.v * (probefahrt ? raffer : 1) : null} probefahrt={probefahrt}
                     start={titel.split(' → ')[0]} ziel={ohneZiel ? undefined : titel.split(' → ')[1]} />
@@ -886,7 +896,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             <span className="hidden text-sbb-metal sm:inline dark:text-sbb-storm">Zeitraffer</span>
             <div className="segmente flex-1 gap-0.5"
                  role="group" aria-label="Tempo der Probefahrt">
-              {ZEITRAFFER.map((f) => (
+              {stufen.map((f) => (
                 <button key={f} type="button" aria-pressed={raffer === f} onClick={() => rafferWaehlen(f)}
                         aria-label={f === 1 ? 'In Echtzeit, etwa 100 km/h' : `${f}-mal schneller`}
                         className="segment min-h-8 flex-1 px-0.5 text-[13px] tabular-nums sm:px-1 sm:text-sm">

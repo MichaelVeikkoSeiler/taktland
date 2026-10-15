@@ -325,8 +325,11 @@ function nahStufe(tempo: number, alt: number | null): number {
  * Die kleine Karte zur Fahrt: grau das Streckennetz, dunkel der Weg vor dem
  * Zug, rot der Standort. «Nah» folgt dem Zug, «Ganzer Weg» zeigt alles.
  */
-export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null, probefahrt = false, aussen, imFuehrerstand }: {
+export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null, probefahrt = false, aussen, imFuehrerstand,
+  dreiDMelden }: {
   fahrweg: Fahrweg
+  /** ob gerade 3D gezeigt wird (dort ein tieferes Höchsttempo der Probefahrt) */
+  dreiDMelden?: (an: boolean) => void
   /** was am Pult im Führerstand bedient wird: Probefahrt, Meldungen */
   aussen?: { current: PultAussen | null }
   /** was im Vollbild im Führerstand über dem Bild steht, sonst nichts (Ankunft) */
@@ -354,6 +357,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const relief = gelaendeMoeglich()
   const [dreiD, setDreiD] = useState(dreiDGemerkt)
   useEffect(() => dreiDVerbrauchen(), [])
+  const meldenRef = useRef(dreiDMelden)
+  meldenRef.current = dreiDMelden
+  useEffect(() => { meldenRef.current?.(dreiD && relief) }, [dreiD, relief])
   // eigener Zoom und Verschiebung, die das Nachführen alle halbe Sekunde
   // nicht zurücksetzt (Michael, 2026-09-26: «springt immer wieder auf den
   // Default-Ausschnitt»); «Nah» folgt dem Zug trotzdem

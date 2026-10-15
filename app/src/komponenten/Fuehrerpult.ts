@@ -150,7 +150,7 @@ export class Fuehrerpult {
   /** Leuchten auf den Tasten, die einen Zustand haben: an, wenn der Zustand gilt */
   private zustaende: Array<{ m: THREE.MeshBasicMaterial; an: () => boolean }> = []
   private sollSkala: THREE.MeshBasicMaterial | null = null
-  private skalaStufen: number[] | null = null
+  private skalaStufen: string | null = null
   private ziele: Array<{ netz: THREE.Mesh; aktion: Aktion; grund: THREE.Color }> = []
   private ueber: THREE.Mesh | null = null
   private sollHebel = new THREE.Group()
@@ -749,8 +749,9 @@ export class Fuehrerpult {
 
   /** die Skala des rechten Hebels: 0 bis PULT_HOECHST_KMH oder die Stufen der Probefahrt, oben die schnellste */
   private skalaZeigen(stufen: number[] | null) {
-    if (stufen === this.skalaStufen || !this.sollSkala) return
-    this.skalaStufen = stufen
+    const schluessel = stufen?.join(',') ?? ''
+    if (schluessel === this.skalaStufen || !this.sollSkala) return
+    this.skalaStufen = schluessel
     const lw = document.createElement('canvas')
     lw.width = 80; lw.height = 320
     const c = lw.getContext('2d')!
