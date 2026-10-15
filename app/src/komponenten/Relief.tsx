@@ -93,6 +93,9 @@ const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 40, PROFIL_UEBERGANG_M = 30
  *  mindestens, irgendwo so steil (Anteil, 0.08 = 8 %) */
 const TAL_FENSTER_M = 1500, TAL_TIEFE_M = 6, TAL_STEIGUNG = 0.08
 const SCHARF_BILD_M = 800, SCHARF_LOS_M = 1300, SCHARF_VORAUS_M = 400, SCHARF_TIEFER_M = 5
+/** mit dem Tempo rückt der Punkt weiter voraus, so viele Sekunden Fahrt, höchstens so weit: bei 2'000 km/h fuhr der Zug sonst
+ *  durch die Kacheln, bevor ihre Bilder geladen waren (Michael, 2026-10-14: bei Wankdorf «alles extrem unscharf») */
+const SCHARF_VORAUS_S = 4, SCHARF_VORAUS_MAX_M = 1600
 /** Führerstand im Tunnel: so dunkel, eingeblendet über so viele Meter ab dem Portal */
 // im Tunnel bleibt vom Tageslicht nur so viel übrig (Michael, 2026-10-13: «dunkler, so dass es deutlich heller wird, wenn man
 // das Licht anlässt»); das Stirnlicht leuchtet dann die Röhre aus; vorher eine dunkle Fläche über dem Bild (0,97, dann 0,2)
@@ -2054,6 +2057,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     let scharfStand: Scharf | null = null
     let scharfMitBild = false
+    /** Tempo des Zugs in m/s, geglättet, und seine letzte Stelle, für das Vorausladen der Bilder */
+    let scharfV = 0, scharfAltS: number | null = null
     interface ScharfNetz { name: string; netz: THREE.Mesh; mitte: [number, number]; uvFein: THREE.BufferAttribute; uvEigen: THREE.BufferAttribute; bild: 'nein' | 'laedt' | 'da' }
     let scharfNetze: ScharfNetz[] = []
     const scharfWeg = () => {
@@ -3691,7 +3696,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             void feinSetzen(s, r)
           }
           if (scharfNetze.length) {
-            const [pe, pn] = punktBei(bis(spitze + r * SCHARF_VORAUS_M))
+            if (scharfAltS !== null && dt > 0) scharfV += (Math.min(2000, Math.abs(spitze - scharfAltS) / dt) - scharfV) * Math.min(1, dt)
+            scharfAltS = spitze
+            const [pe, pn] = punktBei(bis(spitze + r * (SCHARF_VORAUS_M + Math.min(SCHARF_VORAUS_MAX_M, scharfV * SCHARF_VORAUS_S))))
             scharfBilderPflegen(pe, pn)
           }
           const augeM = bis(spitze + r * 15)
