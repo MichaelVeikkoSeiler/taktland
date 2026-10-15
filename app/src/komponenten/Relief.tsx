@@ -68,7 +68,9 @@ const SCHRITT = 2
 /** Knöpfe über dem Gelände beim Fahren */
 const KAMERA_KNOPF = 'rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90'
 /** Führerstand: das Auge so hoch über der Linie, so nah zeichnet die Kamera noch (km) */
-const FUEHRERSTAND_HOEHE_M = 4, FUEHRERSTAND_NAHE_KM = 0.003
+/** das Auge im Führerstand so hoch über der Linie; vorher 4 m, damit fuhr man durch die Dächer der Perrons (Michael, 2026-10-15:
+ *  «circa einen Meter tiefer … unter dem Dach der Bahnsteige durchfahren»), in keiner Quelle */
+const FUEHRERSTAND_HOEHE_M = 3, FUEHRERSTAND_NAHE_KM = 0.003
 /** Führerstand: feines Gelände (10 m) in einem Quadrat von FEIN_SEITE_M, die Mitte FEIN_VORAUS_M vor dem Zug, neu nach
  *  FEIN_NACH_M Fahrt; FEIN_RAND_M vor dem Rand geht die Linie wieder in die des groben Geländes über */
 const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4, FEIN_RAND_M = 300
@@ -1905,7 +1907,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     feinNetz.renderOrder = -1
     feinNetz.visible = false
     const feinLinien = new THREE.Group()
-    const schienenMaterial = new THREE.MeshBasicMaterial({ color: '#c4c8cd', side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 })
+    // halb durchsichtig (Michael, 2026-10-15: «noch etwas markant … mit 50% Transparenz»)
+    const schienenMaterial = new THREE.MeshBasicMaterial({ color: '#c4c8cd', side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
+      transparent: true, opacity: 0.5, depthWrite: false })
     szene.add(feinNetz, feinLinien)
     // scharfe Umgebung, ein Versuch zwischen Müntschemier und Rosshäusern (Michael, 2026-10-11: «Ist dieser Detailgrad
     // umsetzbar, nur 200 m links und rechts der Bahnlinie?»): je Kachel von 250 m ein Netz auf 2 m (swissALTI3D) mit dem
