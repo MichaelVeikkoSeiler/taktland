@@ -1502,8 +1502,9 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
  *  build_gleishoehe.py): alle GLEIS_SCHRITT_M die Achse höchstens GLEIS_NEBEN_M daneben, die dem Weg folgt (höchstens 45°
  *  schräg); liegen mehrere übereinander (Kehrtunnel), die mit der Höhe, die an den Schritt davor passt. Lücken bis
  *  GLEIS_LUECKE_M gerade überbrückt, sonst NaN: dort bleibt die Höhe aus dem Gelände */
-const GLEIS_SCHRITT_M = 10, GLEIS_NEBEN_M = 20, GLEIS_LUECKE_M = 1500
-interface GleisHoehen { m0: number; z: Float32Array }
+const GLEIS_SCHRITT_M = 10, GLEIS_NEBEN_M = 25, GLEIS_LUECKE_M = 1500, GLEIS_EINLAUF_M = 200
+/** z: Höhe, d: Abstand der Achse quer zum Weg (positiv nach links, q = (-tn, te)), je GLEIS_SCHRITT_M ab m0, NaN ohne Achse */
+interface GleisHoehen { m0: number; z: Float32Array; d: Float32Array }
 async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
   const pk = weg.punkte
   if (pk.length < 2) return null
@@ -1537,13 +1538,13 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
       }
     }
   }
-  const z = new Float32Array(n).fill(NaN)
-  let vorZ = NaN, vorM = -Infinity
+  const z = new Float32Array(n).fill(NaN), quer = new Float32Array(n).fill(NaN)
+  let vorZ = NaN, vorD = 0, vorM = -Infinity
   for (let i = 0; i < n; i++) {
     const mm = von + i * GLEIS_SCHRITT_M
     const [e, nn] = lage(mm), [ve, vn] = lage(mm - 10), [he, hn] = lage(mm + 10)
     const tl = Math.hypot(he - ve, hn - vn) || 1, te = (he - ve) / tl, tn = (hn - vn) / tl
-    const kandidaten: Array<[number, number]> = []
+    const kandidaten: Array<[number, number, number]> = []
     const gesehen = new Set<number>()
     for (let qe = Math.floor((e - GLEIS_NEBEN_M) / Z); qe <= Math.floor((e + GLEIS_NEBEN_M) / Z); qe++) {
       for (let qn = Math.floor((nn - GLEIS_NEBEN_M) / Z); qn <= Math.floor((nn + GLEIS_NEBEN_M) / Z); qn++) {
@@ -1555,19 +1556,22 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
           if (Math.abs((de * te + dn * tn) / Math.sqrt(l2)) < Math.SQRT1_2) continue
           const t = Math.max(0, Math.min(1, ((e - ae) * de + (nn - an) * dn) / l2))
           const d = Math.hypot(ae + t * de - e, an + t * dn - nn)
-          if (d <= GLEIS_NEBEN_M) kandidaten.push([d, ab[o + 2] + t * (ab[o + 5] - ab[o + 2])])
+          if (d <= GLEIS_NEBEN_M) kandidaten.push([d, ab[o + 2] + t * (ab[o + 5] - ab[o + 2]), (ae + t * de - e) * -tn + (an + t * dn - nn) * te])
         }
       }
     }
     if (!kandidaten.length) continue
-    let wahl: [number, number] | null = null
+    // gleich hoch wie davor (Kehrtunnel übereinander), dann das Gleis, das seitlich am nächsten bei dem davor liegt
+    // (mehrere Gleise nebeneinander), sonst das nächste
+    let wahl: [number, number, number] | null = null
     if (!Number.isNaN(vorZ) && mm - vorM < 300) {
-      for (const c of kandidaten) if (!wahl || Math.abs(c[1] - vorZ) < Math.abs(wahl[1] - vorZ)) wahl = c
-      if (Math.abs(wahl![1] - vorZ) > 2 + 0.08 * (mm - vorM)) continue
+      const passt = kandidaten.filter((c) => Math.abs(c[1] - vorZ) <= 2 + 0.08 * (mm - vorM))
+      if (!passt.length) continue
+      for (const c of passt) if (!wahl || Math.abs(c[2] - vorD) < Math.abs(wahl[2] - vorD)) wahl = c
     } else {
       for (const c of kandidaten) if (!wahl || c[0] < wahl[0]) wahl = c
     }
-    z[i] = wahl![1]; vorZ = wahl![1]; vorM = mm
+    z[i] = wahl![1]; quer[i] = wahl![2]; vorZ = wahl![1]; vorD = wahl![2]; vorM = mm
   }
   // Lücken gerade überbrücken, dann über 30 m mitteln (die Achsen haben Ecken)
   let letzte = -1
@@ -1585,7 +1589,15 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
     for (let k = Math.max(0, i - 3); k <= Math.min(n - 1, i + 3); k++) if (!Number.isNaN(z[k])) { t += z[k]; k2++ }
     glatt[i] = t / k2
   }
-  return { m0: von, z: glatt }
+  // der Abstand quer: über 50 m gemittelt, Lücken nicht überbrückt (dort gilt der Weg der Quelle)
+  const d = new Float32Array(n)
+  for (let i = 0; i < n; i++) {
+    if (Number.isNaN(quer[i])) { d[i] = NaN; continue }
+    let t = 0, k2 = 0
+    for (let k = Math.max(0, i - 5); k <= Math.min(n - 1, i + 5); k++) if (!Number.isNaN(quer[k])) { t += quer[k]; k2++ }
+    d[i] = t / k2
+  }
+  return { m0: von, z: glatt, d }
 }
 /** Höhe aus gleisHoehenLaden an der Stelle meter, oder null */
 function gleisBei(g: GleisHoehen | null, meter: number): number | null {
@@ -2558,7 +2570,40 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     // Münchenbuchsee und Schüpfen): die Quelle gibt alle 100 m einen Punkt, auf etwa einen Meter gerundet; durch jeden
     // gelegt schlängelte die Kurve. Darum zuerst nach Douglas-Peucker vereinfacht, jeder weggelassene Punkt höchstens
     // GERADE_TOLERANZ_M neben der Vereinfachung; Kurven behalten ihre Punkte
+    // seitlich auf das Gleis aus swissTLM3D (Michael, 2026-10-15, BTI: «die Linie ist manchmal weit neben der Realität»; das
+    // Schienennetz des BAV und die Kilometrierung liegen dort bis über 10 m daneben): alle 10 m um den Abstand der Achse
+    // (gleisHoehenLaden) verschoben, an den Rändern einer Lücke über GLEIS_EINLAUF_M auslaufend; dann vereinfacht wie unten
+    const pkGleis = (() => {
+      if (!gleis) return pk
+      const { m0: g0, d } = gleis, gEnde = g0 + (d.length - 1) * GLEIS_SCHRITT_M
+      const ab = (mm: number) => {
+        const i = Math.round((mm - g0) / GLEIS_SCHRITT_M)
+        return i >= 0 && i < d.length && !Number.isNaN(d[i]) ? d[i] : null
+      }
+      // je Stelle der Abstand, gegen Lücken hin auf 0 auslaufend
+      const versatz = (mm: number) => {
+        const hier = ab(mm)
+        if (hier === null) return 0
+        let rand = GLEIS_EINLAUF_M
+        for (let k = GLEIS_SCHRITT_M; k < GLEIS_EINLAUF_M; k += GLEIS_SCHRITT_M) {
+          if (ab(mm - k) === null || ab(mm + k) === null) { rand = k; break }
+        }
+        return hier * Math.min(1, rand / GLEIS_EINLAUF_M)
+      }
+      const raus: Array<{ m: number; e: number; n: number }> = []
+      for (const p of pk) {
+        if (p.m >= g0 && p.m <= gEnde) continue
+        raus.push(p)
+      }
+      for (let mm = Math.max(g0, pk[0].m); mm <= Math.min(gEnde, pk[pk.length - 1].m); mm += GLEIS_SCHRITT_M) {
+        const [e, n] = punktBei(mm), [ve, vn] = punktBei(mm - 10), [he, hn] = punktBei(mm + 10)
+        const l = Math.hypot(he - ve, hn - vn) || 1, v = versatz(mm)
+        raus.push({ m: mm, e: e - ((hn - vn) / l) * v, n: n + ((he - ve) / l) * v })
+      }
+      return raus.sort((a, b) => a.m - b.m)
+    })()
     const pg = (() => {
+      const pk = pkGleis
       const behalten = new Uint8Array(pk.length)
       behalten[0] = behalten[pk.length - 1] = 1
       const stapel: Array<[number, number]> = [[0, pk.length - 1]]
@@ -3161,10 +3206,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const tafelnSetzen = () => {
       const breite = X(TAFEL_BREITE_M) - X(0), hoch = Y(TAFEL_HOEHE_M) - Y(0)
       for (const { s: s0, teile } of tafeln) {
-        const [e1, n1] = punktBei(s0 - 20), [e2, n2] = punktBei(s0 + 20)
+        const [e1, n1] = glattBei(s0 - 20), [e2, n2] = glattBei(s0 + 20)
         const l = Math.hypot(e2 - e1, n2 - n1) || 1
         const de = (e2 - e1) / l, dn = (n2 - n1) / l
-        const [e, n] = punktBei(s0)
+        const [e, n] = glattBei(s0)
         const linie = feinLinieHoehe(s0)
         teile.forEach((tafel, i) => {
           const seite = i === 0 ? 1 : -1
