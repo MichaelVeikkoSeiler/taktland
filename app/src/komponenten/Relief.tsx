@@ -82,8 +82,8 @@ const FEIN_UEBER_M = 1
 const SPUR_M = 1.435 + 0.07, SCHIENE_M = 0.15
 /** scharfe Umgebung (Versuch): Kacheln mit eigenem Luftbild bis SCHARF_BILD_M um einen Punkt SCHARF_VORAUS_M vor dem
  *  Zug, weiter als SCHARF_LOS_M wieder ohne; darunter sinkt das feine Gelände um SCHARF_TIEFER_M */
-/** Führerstand: Kurven gerundet über so viele Meter davor und danach (glattBei); Brücken als Platte so breit und dick */
-const BRUECKE_BREIT_M = 7, BRUECKE_DICK_M = 1.8
+/** Führerstand: Brücken als Platte so dick (Breite: brueckeQuer) */
+const BRUECKE_DICK_M = 1.8
 /** Führerstand: Namen erst so nah an der Kamera (km) */
 const SCHILD_FUEHRERSTAND_KM = 1
 /** Führerstand: so weit vor und nach einem Tunnel fährt der Zug gerade auf das Portal zu */
@@ -264,10 +264,130 @@ const BAUM_FORM: [number, number][] = [[12, 3.5], [20, 3.2], [15, 4], [4, 2.2], 
 const OBEN = new THREE.Vector3(0, 1, 0)
 /** Breite von Strassenbrücken in m, wo die Klasse in swissTLM3D keine nennt: Annahmen, in keiner Quelle (je Fahrbahn) */
 const STRASSE_BREITE_ANNAHME: Record<string, number> = { Autobahn: 12, Autostrasse: 9, Einfahrt: 6, Ausfahrt: 6, Zufahrt: 4, Dienstzufahrt: 4 }
+/** halbe Breite einer gezeichneten Strassenbrücke mit Brüstung */
+const strasseHalb = (b: { b: number | null; art: string }) => (b.b ?? STRASSE_BREITE_ANNAHME[b.art] ?? 6) / 2 + 0.5
 interface Strassenbruecken { bruecken: Array<{ e: number; n: number; h: number; b: number | null; art: string; d: number[] }> }
 let strassenbrueckenVerz: Promise<Strassenbruecken> | null = null
 const strassenbrueckenLaden = () => (strassenbrueckenVerz ??= holen<Strassenbruecken>('data/strassenbruecken.json')
   .catch((e) => { strassenbrueckenVerz = null; throw e }))
+/** Bahnbrücken im Führerstand so breit wie ihre Gleise (Michael, 2026-10-15: «gemäß der Anzahl Gleise, die du auf der Karte
+ *  siehst»): swissTLM3D hat je Gleis eine Achse (pipeline/build_bahnbruecken.py). Gezählt werden Achsen bis BRUECKE_SUCHE_M
+ *  neben der Linie, die ihr höchstens 30° schräg folgen; die Platte reicht BRUECKE_RAND_M über die äussersten hinaus, trägt
+ *  eine einzelne Achse laut Quelle zwei Gleise, liegen sie GLEISABSTAND_M auseinander. Rand und Abstand in keiner Quelle */
+const BRUECKE_RAND_M = 3.5, GLEISABSTAND_M = 4.5, BRUECKE_SUCHE_M = 20
+interface Bahnbruecken { achsen: Array<{ e: number; n: number; s: number | null; d: number[] }> }
+type AchsStueck = { id: number; ae: number; an: number; be: number; bn: number; s: number | null }
+let bahnbrueckenVerz: Promise<Map<string, AchsStueck[]>> | null = null
+const bahnbrueckenLaden = () => (bahnbrueckenVerz ??= holen<Bahnbruecken>('data/bahnbruecken.json').then((d) => {
+  const zellen = new Map<string, AchsStueck[]>()
+  d.achsen.forEach((x, id) => {
+    for (let i = 0; i + 3 < x.d.length; i += 2) {
+      const st = { id, ae: x.e + x.d[i] / 10, an: x.n + x.d[i + 1] / 10, be: x.e + x.d[i + 2] / 10, bn: x.n + x.d[i + 3] / 10, s: x.s }
+      for (let qe = Math.floor(Math.min(st.ae, st.be) / 100); qe <= Math.floor(Math.max(st.ae, st.be) / 100); qe++) {
+        for (let qn = Math.floor(Math.min(st.an, st.bn) / 100); qn <= Math.floor(Math.max(st.an, st.bn) / 100); qn++) {
+          const k = `${qe}_${qn}`
+          const l = zellen.get(k)
+          if (l) l.push(st); else zellen.set(k, [st])
+        }
+      }
+    }
+  })
+  return zellen
+}).catch((e) => { bahnbrueckenVerz = null; throw e }))
+/** Breite einer Bahnbrücke an der Stelle e, n mit der Richtung te, tn (Einheit): Abstand links und rechts der Linie,
+ *  gemessen quer zu ihr (positiv nach links, q = (-tn, te)) */
+function brueckeQuer(zellen: Map<string, AchsStueck[]> | null, e: number, n: number, te: number, tn: number,
+                     gleise?: Map<number, number>): [number, number] {
+  const qe = -tn, qn = te, lage = new Map<number, { d: number; s: number | null }>()
+  if (zellen) {
+    for (let ze = Math.floor((e - BRUECKE_SUCHE_M) / 100); ze <= Math.floor((e + BRUECKE_SUCHE_M) / 100); ze++) {
+      for (let zn = Math.floor((n - BRUECKE_SUCHE_M) / 100); zn <= Math.floor((n + BRUECKE_SUCHE_M) / 100); zn++) {
+        for (const st of zellen.get(`${ze}_${zn}`) ?? []) {
+          const se = st.be - st.ae, sn = st.bn - st.an, l = Math.hypot(se, sn)
+          if (l < 0.1 || Math.abs((se * te + sn * tn) / l) < Math.cos(Math.PI / 6)) continue
+          // Schnitt der Querlinie durch e, n mit dem Stück
+          const nenner = se * qn - sn * qe
+          if (Math.abs(nenner) < 1e-9) continue
+          const t = ((e - st.ae) * qn - (n - st.an) * qe) / nenner
+          if (t < -0.01 || t > 1.01) continue
+          const d = (st.ae + t * se - e) * qe + (st.an + t * sn - n) * qn
+          if (Math.abs(d) > BRUECKE_SUCHE_M) continue
+          const alt = lage.get(st.id)
+          if (!alt || Math.abs(d) < Math.abs(alt.d)) lage.set(st.id, { d, s: st.s })
+        }
+      }
+    }
+  }
+  let lo = 0, hi = 0
+  for (const [id, { d }] of lage) { lo = Math.min(lo, d); hi = Math.max(hi, d); gleise?.set(id, d) }
+  if (lage.size === 1) {
+    const [x] = lage.values()
+    if (x.s === 2) { lo = Math.min(lo, x.d - GLEISABSTAND_M / 2); hi = Math.max(hi, x.d + GLEISABSTAND_M / 2) }
+  }
+  return [lo - BRUECKE_RAND_M, hi + BRUECKE_RAND_M]
+}
+/** Retusche (Michael, 2026-10-15: «wegzuretuschieren, damit die Straße auf der Brücke und nicht unterhalb … verläuft»):
+ *  das Luftbild ist auf das Gelände gelegt, eine Brücke darin liegt unten im Tal oder auf dem Gleis darunter. Unter jeder
+ *  gezeichneten Brücke wird es quer zur Brücke zwischen den beiden Rändern aufgefüllt, RETUSCHE_RAND_M breiter als die Brücke
+ *  (die Brücke liegt im Luftbild je nach Höhe etwas daneben); keine künstliche Intelligenz, nicht aus einer Quelle */
+const RETUSCHE_RAND_M = 2.5, RETUSCHE_MITTEL_M = 8
+/** ein Streifen unter einer Brücke: Achse in Landeskoordinaten und je Punkt der Abstand links und rechts wie brueckeQuer */
+interface Streifen { p: Array<[number, number]>; lo: number[]; hi: number[] }
+function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: number, n1: number, pxJeM: number, streifen: Streifen[]) {
+  for (const s of streifen) {
+    // Rechteck des Streifens in Bildpunkten
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
+    s.p.forEach(([e, n], i) => {
+      const r = Math.max(-s.lo[i], s.hi[i]) + RETUSCHE_RAND_M + RETUSCHE_MITTEL_M + 3
+      x0 = Math.min(x0, (e - r - e0) * pxJeM); x1 = Math.max(x1, (e + r - e0) * pxJeM)
+      y0 = Math.min(y0, (n1 - n - r) * pxJeM); y1 = Math.max(y1, (n1 - n + r) * pxJeM)
+    })
+    x0 = Math.max(0, Math.floor(x0)); y0 = Math.max(0, Math.floor(y0)); x1 = Math.min(w, Math.ceil(x1)); y1 = Math.min(h, Math.ceil(y1))
+    if (x1 - x0 < 1 || y1 - y0 < 1) continue
+    const bw = x1 - x0, bh = y1 - y0
+    const bild = ctx.getImageData(x0, y0, bw, bh), q = bild.data, z = new Uint8ClampedArray(q)
+    const hol = (e: number, n: number, k: number) => {
+      const x = Math.max(0, Math.min(bw - 1, Math.floor((e - e0) * pxJeM) - x0)), y = Math.max(0, Math.min(bh - 1, Math.floor((n1 - n) * pxJeM) - y0))
+      return q[(y * bw + x) * 4 + k]
+    }
+    const pxM = 1 / pxJeM
+    for (let i = 0; i + 1 < s.p.length; i++) {
+      const [ae, an] = s.p[i], [be, bn] = s.p[i + 1], l = Math.hypot(be - ae, bn - an)
+      if (l < 0.01) continue
+      const ue = (be - ae) / l, un = (bn - an) / l, qe = -un, qn = ue
+      const r = Math.max(-s.lo[i], s.hi[i], -s.lo[i + 1], s.hi[i + 1]) + RETUSCHE_RAND_M
+      const xa = Math.max(x0, Math.floor((Math.min(ae, be) - r - e0) * pxJeM)), xb = Math.min(x1, Math.ceil((Math.max(ae, be) + r - e0) * pxJeM))
+      const ya = Math.max(y0, Math.floor((n1 - Math.max(an, bn) - r) * pxJeM)), yb = Math.min(y1, Math.ceil((n1 - Math.min(an, bn) + r) * pxJeM))
+      for (let y = ya; y < yb; y++) {
+        for (let x = xa; x < xb; x++) {
+          const e = e0 + (x + 0.5) * pxM, n = n1 - (y + 0.5) * pxM
+          const t = (e - ae) * ue + (n - an) * un
+          if (t < 0 || t > l) continue
+          const d = (e - ae) * qe + (n - an) * qn, f = t / l
+          const lo = s.lo[i] + f * (s.lo[i + 1] - s.lo[i]) - RETUSCHE_RAND_M, hi = s.hi[i] + f * (s.hi[i + 1] - s.hi[i]) + RETUSCHE_RAND_M
+          if (d < lo || d > hi) continue
+          // zwischen den beiden Rändern verlaufend; jeder Rand gemittelt über RETUSCHE_MITTEL_M längs und 2 m nach aussen,
+          // sonst zieht jeder Bildpunkt am Rand einen Streifen. Gespiegelt wäre die Zeichnung schärfer, erfand aber Häuser
+          const me = ae + ue * t, mn = an + un * t, g = (d - lo) / ((hi - lo) || 1)
+          const o = ((y - y0) * bw + (x - x0)) * 4
+          let r0 = 0, g0 = 0, b0 = 0, r1 = 0, g1 = 0, b1 = 0, k2 = 0
+          for (const sl of [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1]) {
+            for (const aus of [0.5, 2]) {
+              const ve = me + ue * sl * RETUSCHE_MITTEL_M, vn = mn + un * sl * RETUSCHE_MITTEL_M
+              const le = ve + qe * (lo - aus), ln = vn + qn * (lo - aus), re = ve + qe * (hi + aus), rn = vn + qn * (hi + aus)
+              r0 += hol(le, ln, 0); g0 += hol(le, ln, 1); b0 += hol(le, ln, 2)
+              r1 += hol(re, rn, 0); g1 += hol(re, rn, 1); b1 += hol(re, rn, 2)
+              k2++
+            }
+          }
+          z[o] = (r0 * (1 - g) + r1 * g) / k2; z[o + 1] = (g0 * (1 - g) + g1 * g) / k2; z[o + 2] = (b0 * (1 - g) + b1 * g) / k2
+        }
+      }
+    }
+    bild.data.set(z)
+    ctx.putImageData(bild, x0, y0)
+  }
+}
 /** Bahnhofsschilder im Führerstand (Michael, 2026-10-14: «in Bodennähe und so dass man es beim Vorbeifahren gut lesen kann»):
  *  je Bahnhof eines rechts der Linie in ihrer Richtung (Michael, 2026-10-14: «immer nur eine Ortstafel»), so weit neben ihr, so breit und hoch, die Unterkante so hoch über der Linie, gegen
  *  das Gleis gedreht; Lage, Grösse und Gestalt stehen in keiner Quelle, die Stelle ist die des Bahnhofs in den Daten */
@@ -1973,7 +2093,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const pk: Array<[number, number, number]> = []
         for (let i = 0; i < b.d.length; i += 3) pk.push([b.e + b.d[i] / 10, b.n + b.d[i + 1] / 10, (b.h + b.d[i + 2]) / 10])
         if (pk.length < 2 || !pk.some(([e, n]) => e >= e0 && e <= e1 && n >= n0 && n <= n1)) continue
-        const w = (b.b ?? STRASSE_BREITE_ANNAHME[b.art] ?? 6) / 2 + 0.5
+        const w = strasseHalb(b)
         // Querschnitt quer zur Achse (Abstand, Höhe über der Fahrbahn) und Farbe je Kante: Trog aus Platte und Brüstungen
         const quer: Array<[number, number]> = [[-w, 1], [-w, -1], [w, -1], [w, 1], [w - 0.3, 1], [w - 0.3, 0], [-w + 0.3, 0], [-w + 0.3, 1]]
         const kante = [beton, beton, beton, beton, beton, belag, beton]
@@ -2133,7 +2253,23 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           x.bild = 'laedt'
           scharfBild(x.name).then((bm) => {
             if (!scharfNetze.includes(x) || x.bild !== 'laedt') { bm.close(); return }
-            const t = new THREE.Texture(bm)
+            // unter Brücken retuschiert (retuschieren), sonst das Bild, wie es kommt
+            const [qe, qn] = x.name.split('_').map(Number), ke0 = qe * SCHARF_KACHEL_M, kn1 = (qn + 1) * SCHARF_KACHEL_M
+            const trifft = feinStreifen.filter((st) => st.p.some(([e, n], i) => {
+              const r = Math.max(-st.lo[i], st.hi[i]) + RETUSCHE_RAND_M + 30
+              return e > ke0 - r && e < ke0 + SCHARF_KACHEL_M + r && n > kn1 - SCHARF_KACHEL_M - r && n < kn1 + r
+            }))
+            let quelle: ImageBitmap | HTMLCanvasElement = bm
+            if (trifft.length) {
+              const c = document.createElement('canvas')
+              c.width = bm.width; c.height = bm.height
+              const cx = c.getContext('2d', { willReadFrequently: true })!
+              cx.drawImage(bm, 0, 0)
+              bm.close()
+              retuschieren(cx, c.width, c.height, ke0, kn1, c.width / SCHARF_KACHEL_M, trifft)
+              quelle = c
+            }
+            const t = new THREE.Texture(quelle)
             t.flipY = false
             t.colorSpace = THREE.SRGBColorSpace
             t.anisotropy = renderer.capabilities.getMaxAnisotropy()
@@ -2154,6 +2290,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     for (let v = 0; v < netzPunkte; v++) grundY[v] = pos[v * 3 + 1]
     let versenkt: number[] = []
     let feinNah: Nahbild | null = null
+    /** unter den gezeichneten Brücken: Streifen für die Retusche und je Bahnbrücke die Breite (brueckeQuer) alle 10 m */
+    let feinStreifen: Streifen[] = []
+    let brueckenBreite = new Map<object, { von: number; lo: number[]; hi: number[]; gleise: Array<Array<[number, number]>> }>()
     let feinAuftrag = 0
     /** Lage im Führerstand: der Verlauf ist ein Zug aus Geraden mit Ecken alle 100 bis 350 m. Früher über 80 m davor
      *  und danach gemittelt (Michael, 2026-10-11: «die Kurven noch runder»), das zog die Linie in jeder Kurve um 5 bis 10 m
@@ -2335,6 +2474,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       if (nahErlaubt && feinNah) {
         const seite = 1000 * FEIN_PX_JE_M
         for (const { ke, kn, bild: b } of feinNah.kacheln) feinCtx.drawImage(b, fx(ke * 1000), fy((kn + 1) * 1000), seite, seite)
+        retuschieren(feinCtx, w, w, e0, n1, FEIN_PX_JE_M, feinStreifen)
         // schmal: aus dem Führerstand gesehen wirkten Ränder in der Breite wie darunter (etwa 10 m) als Streifen neben dem Gleis
         linienMalen(ausJetzt.current, true, { ctx: feinCtx, fx, fy, w, h: w, dicke: 0.6 })
       }
@@ -2371,8 +2511,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const e0 = Math.round((ce - FEIN_SEITE_M / 2) / 10) * 10, n0 = Math.round((cn - FEIN_SEITE_M / 2) / 10) * 10
       const e1 = e0 + FEIN_SEITE_M, n1 = n0 + FEIN_SEITE_M
       scharfMitBild = nahErlaubt
-      const [fein, nahBild, scharf] = await Promise.all([feinLaden(e0, n0, e1, n1), luftbild ? nahbildLaden(e0, n0, e1, n1) : null,
-                                                          nahErlaubt ? scharfLaden(e0, n0, e1, n1) : null])
+      const [fein, nahBild, scharf, achsen, strassen] = await Promise.all([feinLaden(e0, n0, e1, n1), luftbild ? nahbildLaden(e0, n0, e1, n1) : null,
+                                                          nahErlaubt ? scharfLaden(e0, n0, e1, n1) : null,
+                                                          bahnbrueckenLaden().catch(() => null), strassenbrueckenLaden().catch(() => null)])
       if (!laeuft || auftrag !== feinAuftrag || !imStand) return
       feinWeg()
       if (!fein) return
@@ -2381,6 +2522,34 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       scharfStand = scharf
       profilRechnen(stelle)
       tafelnSetzen()
+      // Bahnbrücken: Breite alle 10 m, leicht gemittelt; dazu die Strassenbrücken, wie strassenSetzen sie zeichnet
+      feinStreifen = []
+      brueckenBreite = new Map()
+      const wVon = Math.max(anfang, stelle - 6000), wBis = Math.min(ende, stelle + 6000)
+      for (const x of weg.bauwerke) {
+        if (x.art !== 'bruecke' || x.bis <= wVon || x.von >= wBis) continue
+        const a = Math.max(x.von, wVon), z = Math.min(x.bis, wBis), pkt: Array<[number, number]> = [], lo: number[] = [], hi: number[] = []
+        const gleise = new Map<number, Array<[number, number]>>()
+        for (let mm = a; ; mm = Math.min(z, mm + 10)) {
+          const [pe, pn] = glattBei(mm), [ve, vn] = glattBei(Math.max(anfang, mm - 5)), [he, hn] = glattBei(Math.min(ende, mm + 5))
+          const hier = new Map<number, number>()
+          const l = Math.hypot(he - ve, hn - vn) || 1, [l0, h0] = brueckeQuer(achsen, pe, pn, (he - ve) / l, (hn - vn) / l, hier)
+          for (const [id, d] of hier) { const g = gleise.get(id); if (g) g.push([mm, d]); else gleise.set(id, [[mm, d]]) }
+          pkt.push([pe, pn]); lo.push(l0); hi.push(h0)
+          if (mm >= z) break
+        }
+        const glatt = (a2: number[]) => a2.map((_, i) => { const t = a2.slice(Math.max(0, i - 2), i + 3); return t.reduce((u, v) => u + v, 0) / t.length })
+        const lo2 = glatt(lo), hi2 = glatt(hi)
+        brueckenBreite.set(x, { von: a, lo: lo2, hi: hi2, gleise: [...gleise.values()].filter((g) => g.length > 1 && g.some(([, d]) => Math.abs(d) > 2.5)) })
+        feinStreifen.push({ p: pkt, lo: lo2, hi: hi2 })
+      }
+      for (const b of strassen?.bruecken ?? []) {
+        const pk2: Array<[number, number]> = []
+        for (let i = 0; i < b.d.length; i += 3) pk2.push([b.e + b.d[i] / 10, b.n + b.d[i + 1] / 10])
+        if (pk2.length < 2 || !pk2.some(([e, n]) => e >= e0 && e <= e1 && n >= n0 && n <= n1)) continue
+        const w2 = strasseHalb(b)
+        feinStreifen.push({ p: pk2, lo: pk2.map(() => -w2), hi: pk2.map(() => w2) })
+      }
       // unter dem scharfen Band sinkt das feine Gelände, wo es rundum scharfe Höhen gibt
       const scharfDa = (e: number, n: number) => !!scharf && [[0, 0], [-10, 0], [10, 0], [0, -10], [0, 10]].every(([de, dn]) => scharfHoehe(scharf, e + de, n + dn) !== null)
       // das Netz: ein Punkt je Feld von 10 m, nur Vierecke mit vier Höhen
@@ -2502,15 +2671,28 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         return punkte
       }
       // eine Brücke als schlichte Platte unter der Linie (Michael, 2026-10-11: «durch Aufbau von Brücken, damit die Strecke
-      // … flach darüber führt»); Breite, Form und Pfeiler stehen in keiner Quelle, darum ohne Pfeiler
-      const platte = (punkte: THREE.Vector3[]) => {
-        const b = BRUECKE_BREIT_M / 2000, oben = Y(-FEIN_UEBER_M + 0.3), unten = Y(-FEIN_UEBER_M - BRUECKE_DICK_M)
+      // … flach darüber führt»); Form und Pfeiler stehen in keiner Quelle, darum ohne Pfeiler; so breit wie die Gleise
+      // darauf laut swissTLM3D (brueckeQuer, Michael, 2026-10-15)
+      const platte = (x: object, a: number, z: number) => {
+        const br = brueckenBreite.get(x)
+        const quer = (mm: number): [number, number] => {
+          if (!br) return [-BRUECKE_RAND_M, BRUECKE_RAND_M]
+          const f = Math.max(0, Math.min(br.lo.length - 1, (mm - br.von) / 10)), i = Math.min(br.lo.length - 2, Math.floor(f)), t = f - Math.max(0, i)
+          if (br.lo.length < 2) return [br.lo[0], br.hi[0]]
+          return [br.lo[i] + t * (br.lo[i + 1] - br.lo[i]), br.hi[i] + t * (br.hi[i + 1] - br.hi[i])]
+        }
+        const oben = Y(-FEIN_UEBER_M + 0.3), unten = Y(-FEIN_UEBER_M - BRUECKE_DICK_M)
         const pos: number[] = [], index: number[] = []
-        punkte.forEach((p, i) => {
-          const a = punkte[Math.max(0, i - 1)], z = punkte[Math.min(punkte.length - 1, i + 1)]
-          const nx = -(z.z - a.z), nz = z.x - a.x, l = Math.hypot(nx, nz) || 1, qx = (nx / l) * b, qz = (nz / l) * b
-          // je Stelle vier Ecken: oben links, oben rechts, unten rechts, unten links
-          pos.push(p.x + qx, p.y + oben, p.z + qz, p.x - qx, p.y + oben, p.z - qz, p.x - qx, p.y + unten, p.z - qz, p.x + qx, p.y + unten, p.z + qz)
+        const meter: number[] = []
+        for (let mm = a; mm < z; mm += 10) meter.push(mm)
+        meter.push(z)
+        meter.forEach((mm, i) => {
+          const [e, n] = glattBei(mm), [ve, vn] = glattBei(Math.max(anfang, mm - 5)), [he, hn] = glattBei(Math.min(ende, mm + 5))
+          const l = Math.hypot(he - ve, hn - vn) || 1, qe = -(hn - vn) / l, qn = (he - ve) / l, [lo, hi] = quer(mm)
+          const y = Y(feinLinieHoehe(mm))
+          // je Stelle vier Ecken: oben rechts, oben links, unten links, unten rechts (in Fahrtrichtung)
+          const L = [X(e + qe * hi), Z(n + qn * hi)], R = [X(e + qe * lo), Z(n + qn * lo)]
+          pos.push(R[0], y + oben, R[1], L[0], y + oben, L[1], L[0], y + unten, L[1], R[0], y + unten, R[1])
           if (!i) return
           const v = 4 * (i - 1), w = 4 * i
           for (let k = 0; k < 4; k++) {
@@ -2518,7 +2700,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
             index.push(v + k, w + k, v + k2, v + k2, w + k, w + k2)
           }
         })
-        const letzte = 4 * (punkte.length - 1)
+        const letzte = 4 * (meter.length - 1)
         index.push(0, 2, 1, 0, 3, 2, letzte, letzte + 1, letzte + 2, letzte, letzte + 2, letzte + 3)
         const g = new THREE.BufferGeometry()
         g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
@@ -2528,6 +2710,15 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         flach.computeVertexNormals()
         g.dispose()
         feinLinien.add(new THREE.Mesh(flach, new THREE.MeshLambertMaterial({ color: '#b9b6ae', side: THREE.DoubleSide })))
+        // die anderen Gleise auf der Brücke laut swissTLM3D, als Schienen wie das eigene
+        for (const g of br?.gleise ?? []) {
+          const punkte = g.filter(([mm]) => mm >= a - 1 && mm <= z + 1).map(([mm, d]) => {
+            const [e, n] = glattBei(mm), [ve, vn] = glattBei(Math.max(anfang, mm - 5)), [he, hn] = glattBei(Math.min(ende, mm + 5))
+            const l = Math.hypot(he - ve, hn - vn) || 1
+            return new THREE.Vector3(X(e - ((hn - vn) / l) * d), Y(feinLinieHoehe(mm)), Z(n + ((he - ve) / l) * d))
+          })
+          if (punkte.length > 1) strich(punkte, wegFarbe)
+        }
       }
       for (const [a0, z0] of weg.stuecke) {
         const anf = Math.max(a0, von), end = Math.min(z0, bis)
@@ -2538,7 +2729,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           if (x.von > bei) strich(punkteVon(bei, x.von), wegFarbe)
           const a = Math.max(x.von, anf, bei), z = Math.min(x.bis, end)
           if (z > a) strich(punkteVon(a, z), x.art === 'tunnel' ? tunnelFarbe : FARBEN.bruecke)
-          if (z > a && x.art === 'bruecke') platte(punkteVon(a, z))
+          if (z > a && x.art === 'bruecke') platte(x, a, z)
           if (z > a && x.art === 'tunnel') {
             // die Röhre nur, wo das Gelände sie ganz überdeckt; sonst stand sie in der Landschaft (Michael, 2026-10-13)
             const bedeckt = (mm: number) => {
