@@ -10,9 +10,12 @@
  *
  * Seit 2026-10-13 dasselbe für Gebäude und Bäume je Kanton (Workflow «Gebäude und Bäume», .github/workflows/umgebung.yml,
  * Release «umgebung-1», Ordner gebaeude/ und baeume/). Welches Release, steht in HOLEN; für die scharfe Umgebung dort
- * 'scharf-1' eintragen.
+ * 'scharf-1' eintragen, in NUR der Anfang der Pakete, die es holen soll.
  */
-const HOLEN = 'umgebung-1';
+const HOLEN = 'scharf-1';
+// nur Pakete, deren Name so beginnt, leer für alle: 'scharf-r5-' holt nur die Nachträge (Reihe 5, Michael, 2026-10-15: BTI);
+// die Verzeichnisse der anderen Reihen liegen schon da und werden mit zusammengefügt
+const NUR = 'scharf-r5-';
 const ARTEN = ['scharf-1' => ['muster' => '/^scharf-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['scharf'], 'workflow' => 'Scharfe Umgebung'],
                'umgebung-1' => ['muster' => '/^umgebung-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['gebaeude', 'baeume'], 'workflow' => 'Gebäude und Bäume']];
 const RELEASE = 'https://api.github.com/repos/MichaelVeikkoSeiler/taktland/releases/tags/' . HOLEN;
@@ -51,7 +54,7 @@ if (!class_exists('ZipArchive')) seite('Fehlt: ZipArchive', 'PHP auf diesem Serv
 if ($json === false) seite('Release nicht gefunden', $h($fehler) . ' — Ist der Workflow «' . ARTEN[HOLEN]['workflow'] . '» durchgelaufen?');
 $pakete = [];
 foreach (json_decode($json, true)['assets'] ?? [] as $a) {
-    if (preg_match(ARTEN[HOLEN]['muster'], $a['name'])) $pakete[$a['name']] = [$a['browser_download_url'], (int) $a['size']];
+    if (preg_match(ARTEN[HOLEN]['muster'], $a['name']) && str_starts_with($a['name'], NUR)) $pakete[$a['name']] = [$a['browser_download_url'], (int) $a['size']];
 }
 ksort($pakete);
 $namen = array_keys($pakete);

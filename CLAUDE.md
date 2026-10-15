@@ -89,7 +89,8 @@ server/zaehler/  Zähler auf zaehler.taktland.ch (Webhosting bei cyon, von Hand 
 server/daten/  daten.taktland.ch (cyon, Ordner public_html/daten, von Hand hochgeladen, Michael, 2026-10-12): grosse Kacheln,
              die nicht in die App passen (GitHub Pages höchstens 1 GB); .htaccess erlaubt den Abruf von taktland.ch (CORS);
              scharf/: der Workflow «Scharfe Umgebung» (.github/workflows/scharf.yml, von Hand zu starten) baut die Strecken aus
-             pipeline/scharf_reihen.sh in vier Reihen gleichzeitig, schnürt Pakete (pipeline/scharf_pakete.py, je höchstens 400 MB,
+             pipeline/scharf_reihen.sh in vier Reihen gleichzeitig (Reihe 5: Nachträge, einzeln mit reihen = [5], Biel/Bienne–Täuffelen–Ins der BTI; holen.php
+             holt dann mit NUR = 'scharf-r5-' nur deren Pakete), schnürt Pakete (pipeline/scharf_pakete.py, je höchstens 400 MB,
              der Index der Reihe als scharf/index-rN.json im letzten) und legt sie ins Release «scharf-1»; holen.php, einmal nach
              public_html/daten hochgeladen und geöffnet, holt sie, packt sie aus, fügt die Verzeichnisse zu scharf/index.json
              zusammen und löscht sich (Dateien im Chat höchstens 30 MB, Releases darf die Sitzung nicht anlegen)
@@ -184,7 +185,8 @@ data/relief/   3D-Reliefs: Gotthard-Bergstrecke (Linie 600, Erstfeld bis Biasca)
              Übergängen, der Kopf gerundet mit Frontscheibe, nur die Spitze karminrot; in der Brille näher als 0,8 m
              kleiner (mit der Wurzel des Abstands, höchstens bis 40 %); Bahnhöfe als dünner Mast in Dunkelgrau mit
              dem Namen oben auf eckigem dunkelgrauem Schild, Seilbahnen als feine Linie, Seen auf dem Luftbild ohne Fläche, aus der Nähe kleiner, «nicht massstäblich»;
-             die Höhe der Gleise steht in keiner Quelle: die Linie folgt dem Gelände, gemittelt über 400 m davor und danach, 3 m darüber, höher nur wo das Gelände darüber ragt (LINIE_UEBER_M; vorher 25 m, Michael, 2026-10-10: «deutlich über dem Boden»);
+             die Höhe der Gleise aus swissTLM3D (data/gleishoehe, gleisHoehenLaden; Michael, 2026-10-15, Albula: «wie auf einer Achterbahn»), 3 m darüber,
+             höher nur wo das Gelände ausserhalb von Tunneln darüber ragt; wo keine Achse daneben liegt, folgt die Linie wie früher dem Gelände, gemittelt über 400 m davor und danach (LINIE_UEBER_M; vorher 25 m, Michael, 2026-10-10: «deutlich über dem Boden»);
              die Wagen drehen nur um die Senkrechte und neigen sich höchstens 4° (ZUG_NEIGUNG_MAX; vorher 7°, Michael, 2026-10-10), kippen nie zur Seite
 data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Bahnlinie) in Kacheln von 10 km
              zu 50 m aus swissALTIRegio, je Zeile Differenzen und gzip (.hgz, 550 Kacheln, 18 MB;
@@ -258,7 +260,7 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              weggelassene Punkt höchstens 0,8 m daneben, so sind gerade Stücke gerade (GERADE_TOLERANZ_M; Michael, 2026-10-15: «schön gerade»), Höhe der Linie einmal je feinem Gelände gerechnet (profilRechnen): Gelände unter der Linie ohne Brücken und
              Tunnel (swissALTI3D zeigt dort Talgrund oder Berg), Median über 50 m davor und danach gegen Unterführungen und Gräben, dann
              Mittel über 150 m (vorher 40 m; Michael, 2026-10-15: Münchenbuchsee–Schüpfen schlängelte, die Linie liegt einen bis zwei Meter neben
-             dem Gleis und mass Damm und Einschnitt), zuletzt über 30 m (PROFIL_MEDIAN_M …; Michael, 2026-10-11: «kleine Unebenheiten»), Täler und Buckel ohne Brücke oder Tunnel in den Daten (schmaler als 1,5 km, mehr als 6 m tief, irgendwo steiler als 8 %) gerade über- oder unterquert, ohne Bauwerk zu zeichnen (TAL_FENSTER_M …; Lorrainebrücke in Bern, deren Länge in keiner Quelle steht), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), ein Ende
+             dem Gleis und mass Damm und Einschnitt), zuletzt über 30 m (PROFIL_MEDIAN_M …; Michael, 2026-10-11: «kleine Unebenheiten»), Täler und Buckel ohne Brücke oder Tunnel in den Daten (schmaler als 1,5 km, mehr als 6 m tief, irgendwo steiler als 8 %) gerade über- oder unterquert, ohne Bauwerk zu zeichnen (TAL_FENSTER_M …; Lorrainebrücke in Bern, deren Länge in keiner Quelle steht), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), wo es die Höhe der Gleise aus data/gleishoehe gibt, gilt sie (1 m darüber) statt all dessen; ein Ende
              ausserhalb des feinen Geländes mit der groben Höhe, verschoben um den Unterschied am anderen Ende, Tunnel und Brücken für die Höhe immer alle, auch wenn ihre Zeichen
              ausgeschaltet sind (wegDerFahrt), Blick in Richtung des Gleises unter dem Auge, geneigt zur Linie 300 m voraus, Brücken als schlichte Platte ohne Pfeiler (Pfeiler in keiner
              Quelle; Michael, 2026-10-11: «Aufbau von Brücken, damit die Strecke … flach darüber führt»), so breit wie die Gleise darauf laut
@@ -283,6 +285,10 @@ data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026
              ein InstancedMesh je Kachel, Krone und Stamm, Höhe und Breite je Art in keiner Quelle (BAUM_FORM in Relief.tsx, 4 bis 20 m,
              je Baum ±25 %), der Fuss auf dem scharfen oder feinen Gelände; keine Krone näher als 5 m an der gezeichneten Strecke
              (Lichtraum fürs Bild, in keiner Quelle, BAUM_LICHTRAUM_M; Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»)
+data/gleishoehe/  Höhe der Gleise: alle Gleisachsen aus swissTLM3D (TLM_EISENBAHN, PolyLineZ, ohne Standseilbahnen) alle 20 m, in
+             Kacheln von 10 km (pipeline/build_gleishoehe.py, 340 Kacheln, 4,3 MB); die App sucht alle 10 m die Achse höchstens 20 m neben ihrem
+             Weg, höchstens 45° schräg, bei mehreren übereinander (Kehrtunnel) die zur Höhe davor passende, Lücken bis 1,5 km gerade, über 30 m
+             gemittelt (gleisHoehenLaden in Relief.tsx); gilt für die Linie in 3D und im Führerstand, auch in Tunneln und auf Brücken; sonst wie früher aus dem Gelände
 data/bahnbruecken.json  Gleisachsen auf Brücken aus swissTLM3D (TLM_EISENBAHN, KUNSTBAUTE Brücke), je Gleis eine Achse, dazu
              ANZAHL_SPUREN wo genannt (pipeline/build_bahnbruecken.py, 6'708 Achsen, 421 KB); für die Breite der Bahnbrücken im Führerstand
 data/strassenbruecken.json  Strassen- und Wegbrücken über der Bahn aus swissTLM3D (TLM_STRASSE mit Höhe, KUNSTBAUTE Brücke): nur
@@ -353,6 +359,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 python3 pipeline/fetch_tlm3d.py --baeume          # Einzelbaum und Bodenbedeckung aus swissTLM3D (etwa 3,3 GB)
 python3 pipeline/fetch_tlm3d.py --strassen        # Strassen aus swissTLM3D (520 MB, entpackt 3,3 GB)
 .venv/bin/python pipeline/build_strassenbruecken.py   # Strassenbrücken über der Bahn, vor export_app
+.venv/bin/python pipeline/build_gleishoehe.py         # Höhe der Gleise aus swissTLM3D, vor export_app
 .venv/bin/python pipeline/build_bahnbruecken.py       # Gleisachsen auf Brücken (Breite der Bahnbrücken), vor export_app
 .venv/bin/python pipeline/build_baeume.py         # Bäume und Wald entlang Gümmenen–Neuchâtel, vor export_app
 .venv/bin/python pipeline/build_gebaeude.py --kanton BE   # Gebäude eines Kantons für daten.taktland.ch (--alle: alle)

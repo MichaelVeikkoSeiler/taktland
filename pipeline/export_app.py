@@ -174,6 +174,13 @@ def main():
             shutil.rmtree(ZIEL / "gelaende")
         shutil.copytree(gelaende, ZIEL / "gelaende")
         print(f"gelaende/: {sum(p.stat().st_size for p in (ZIEL / 'gelaende').iterdir())/1e6:.1f} MB")
+    # Höhe der Gleise aus swissTLM3D (pipeline/build_gleishoehe.py), für die Linie in 3D
+    gleis = ROOT / "data" / "gleishoehe"
+    if gleis.exists():
+        if (ZIEL / "gleishoehe").exists():
+            shutil.rmtree(ZIEL / "gleishoehe")
+        shutil.copytree(gleis, ZIEL / "gleishoehe")
+        print(f"gleishoehe/: {sum(p.stat().st_size for p in (ZIEL / 'gleishoehe').iterdir())/1e6:.1f} MB")
 
 
 def linien():

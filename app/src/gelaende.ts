@@ -484,3 +484,47 @@ export async function baumNamen(e0: number, n0: number, e1: number, n1: number):
   const ix = await baumIndex()
   return ix ? umgebungNamen(ix, e0, n0, e1, n1) : []
 }
+
+/* ---------- Höhe der Gleise aus swissTLM3D ---------- */
+
+/** Gleisachsen mit Höhe in Kacheln von kachel_m (pipeline/build_gleishoehe.py; Michael, 2026-10-15, Albula: «wie auf einer
+ *  Achterbahn»); je Stück die Punkte in Landeskoordinaten und Metern über Meer */
+interface GleisIndex { kachel_m: number; kacheln: string[] }
+export interface GleisStueck { e: Float64Array; n: Float64Array; z: Float32Array }
+const gleisIndex = () => holen<GleisIndex>('data/gleishoehe/index.json')
+const gleisVorrat = new Map<string, Promise<GleisStueck[] | null>>()
+function gleisKachel(name: string, kachel_m: number) {
+  let p = gleisVorrat.get(name)
+  if (p) return p
+  p = (async () => {
+    const gepackt = await holenBinaer(`data/gleishoehe/${name}.hgz`)
+    const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+    const [ke, kn] = name.split('_').map(Number), e0 = ke * kachel_m, n0 = kn * kachel_m
+    const z0 = new DataView(roh).getInt32(0, true), d = new Int16Array(roh, 4)
+    const raus: GleisStueck[] = []
+    for (let i = 0; i < d.length;) {
+      const k = d[i++], s = { e: new Float64Array(k), n: new Float64Array(k), z: new Float32Array(k) }
+      for (let j = 0; j < k; j++, i += 3) { s.e[j] = e0 + d[i] / 2; s.n[j] = n0 + d[i + 1] / 2; s.z[j] = (z0 + d[i + 2]) / 10 }
+      raus.push(s)
+    }
+    return raus
+  })().catch(() => { gleisVorrat.delete(name); return null })
+  gleisVorrat.set(name, p)
+  return p
+}
+
+/** die Gleisachsen in den Kacheln, die die Punkte berühren (Landeskoordinaten) */
+export async function gleisLaden(punkte: Array<[number, number]>): Promise<GleisStueck[]> {
+  if (!gelaendeMoeglich()) return []
+  const ix = await gleisIndex().catch(() => null)
+  if (!ix) return []
+  const da = new Set(ix.kacheln), namen = new Set<string>()
+  for (const [e, n] of punkte) {
+    for (const de of [-50, 50]) for (const dn of [-50, 50]) {
+      const k = `${Math.floor((e + de) / ix.kachel_m)}_${Math.floor((n + dn) / ix.kachel_m)}`
+      if (da.has(k)) namen.add(k)
+    }
+  }
+  const alle = await Promise.all([...namen].map((k) => gleisKachel(k, ix.kachel_m)))
+  return alle.flatMap((x) => x ?? [])
+}

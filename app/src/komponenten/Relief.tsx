@@ -11,7 +11,7 @@ import type { ObjektText } from './Fahrtmodus'
 import { type Ankuendigung, Fuehrerpult, type PultAussen, type TempoQuelle } from './Fuehrerpult'
 import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
-import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
+import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel, gleisLaden } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { Ladebalken } from './Ladebalken'
@@ -1498,6 +1498,104 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
 
 /** Höhe des Modells auf der Seite: auf dem Handy etwas höher als breit, ab 600 px Breite quer (Michael, 2026-10-12:
  *  «Dieses Bild kann gerne querformatig sein»), nie höher als 70 % des Fensters */
+/** Höhe der Gleise entlang des Wegs aus swissTLM3D (Michael, 2026-10-15, Albula: «wie auf einer Achterbahn»; pipeline/
+ *  build_gleishoehe.py): alle GLEIS_SCHRITT_M die Achse höchstens GLEIS_NEBEN_M daneben, die dem Weg folgt (höchstens 45°
+ *  schräg); liegen mehrere übereinander (Kehrtunnel), die mit der Höhe, die an den Schritt davor passt. Lücken bis
+ *  GLEIS_LUECKE_M gerade überbrückt, sonst NaN: dort bleibt die Höhe aus dem Gelände */
+const GLEIS_SCHRITT_M = 10, GLEIS_NEBEN_M = 20, GLEIS_LUECKE_M = 1500
+interface GleisHoehen { m0: number; z: Float32Array }
+async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
+  const pk = weg.punkte
+  if (pk.length < 2) return null
+  const lage = (meter: number) => {
+    let lo = 1, hi = pk.length - 1
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (pk[mid].m < meter) lo = mid + 1; else hi = mid }
+    const a = pk[Math.max(0, lo - 1)], b = pk[lo]
+    const t = Math.max(0, Math.min(1, (meter - a.m) / ((b.m - a.m) || 1)))
+    return [a.e + t * (b.e - a.e), a.n + t * (b.n - a.n)] as const
+  }
+  const anfang = pk[0].m, ende = pk[pk.length - 1].m
+  const von = weg.stuecke.length ? Math.max(anfang, Math.min(...weg.stuecke.map((x) => x[0])) - 2000) : anfang
+  const bis = weg.stuecke.length ? Math.min(ende, Math.max(...weg.stuecke.map((x) => x[1])) + 2000) : ende
+  const n = Math.max(2, Math.floor((bis - von) / GLEIS_SCHRITT_M) + 1)
+  const grob: Array<[number, number]> = []
+  for (let mm = von; mm <= bis + 200; mm += 200) grob.push(lage(Math.min(bis, mm)) as [number, number])
+  const stuecke = await gleisLaden(grob)
+  if (!stuecke.length) return null
+  // die Abschnitte der Achsen in Zellen von 50 m
+  const Z = 50, zellen = new Map<string, number[]>(), ab: number[] = []
+  for (const st of stuecke) {
+    for (let j = 0; j + 1 < st.e.length; j++) {
+      const k = ab.length / 6
+      ab.push(st.e[j], st.n[j], st.z[j], st.e[j + 1], st.n[j + 1], st.z[j + 1])
+      const e0 = Math.min(st.e[j], st.e[j + 1]), e1 = Math.max(st.e[j], st.e[j + 1]), n0 = Math.min(st.n[j], st.n[j + 1]), n1 = Math.max(st.n[j], st.n[j + 1])
+      for (let qe = Math.floor(e0 / Z); qe <= Math.floor(e1 / Z); qe++) {
+        for (let qn = Math.floor(n0 / Z); qn <= Math.floor(n1 / Z); qn++) {
+          const key = `${qe}_${qn}`, l = zellen.get(key)
+          if (l) l.push(k); else zellen.set(key, [k])
+        }
+      }
+    }
+  }
+  const z = new Float32Array(n).fill(NaN)
+  let vorZ = NaN, vorM = -Infinity
+  for (let i = 0; i < n; i++) {
+    const mm = von + i * GLEIS_SCHRITT_M
+    const [e, nn] = lage(mm), [ve, vn] = lage(mm - 10), [he, hn] = lage(mm + 10)
+    const tl = Math.hypot(he - ve, hn - vn) || 1, te = (he - ve) / tl, tn = (hn - vn) / tl
+    const kandidaten: Array<[number, number]> = []
+    const gesehen = new Set<number>()
+    for (let qe = Math.floor((e - GLEIS_NEBEN_M) / Z); qe <= Math.floor((e + GLEIS_NEBEN_M) / Z); qe++) {
+      for (let qn = Math.floor((nn - GLEIS_NEBEN_M) / Z); qn <= Math.floor((nn + GLEIS_NEBEN_M) / Z); qn++) {
+        for (const k of zellen.get(`${qe}_${qn}`) ?? []) {
+          if (gesehen.has(k)) continue
+          gesehen.add(k)
+          const o = k * 6, ae = ab[o], an = ab[o + 1], de = ab[o + 3] - ae, dn = ab[o + 4] - an, l2 = de * de + dn * dn
+          if (l2 < 1e-6) continue
+          if (Math.abs((de * te + dn * tn) / Math.sqrt(l2)) < Math.SQRT1_2) continue
+          const t = Math.max(0, Math.min(1, ((e - ae) * de + (nn - an) * dn) / l2))
+          const d = Math.hypot(ae + t * de - e, an + t * dn - nn)
+          if (d <= GLEIS_NEBEN_M) kandidaten.push([d, ab[o + 2] + t * (ab[o + 5] - ab[o + 2])])
+        }
+      }
+    }
+    if (!kandidaten.length) continue
+    let wahl: [number, number] | null = null
+    if (!Number.isNaN(vorZ) && mm - vorM < 300) {
+      for (const c of kandidaten) if (!wahl || Math.abs(c[1] - vorZ) < Math.abs(wahl[1] - vorZ)) wahl = c
+      if (Math.abs(wahl![1] - vorZ) > 2 + 0.08 * (mm - vorM)) continue
+    } else {
+      for (const c of kandidaten) if (!wahl || c[0] < wahl[0]) wahl = c
+    }
+    z[i] = wahl![1]; vorZ = wahl![1]; vorM = mm
+  }
+  // Lücken gerade überbrücken, dann über 30 m mitteln (die Achsen haben Ecken)
+  let letzte = -1
+  for (let i = 0; i < n; i++) {
+    if (Number.isNaN(z[i])) continue
+    if (letzte >= 0 && i - letzte > 1 && (i - letzte) * GLEIS_SCHRITT_M <= GLEIS_LUECKE_M) {
+      for (let k = letzte + 1; k < i; k++) z[k] = z[letzte] + ((k - letzte) / (i - letzte)) * (z[i] - z[letzte])
+    }
+    letzte = i
+  }
+  const glatt = new Float32Array(n)
+  for (let i = 0; i < n; i++) {
+    if (Number.isNaN(z[i])) { glatt[i] = NaN; continue }
+    let t = 0, k2 = 0
+    for (let k = Math.max(0, i - 3); k <= Math.min(n - 1, i + 3); k++) if (!Number.isNaN(z[k])) { t += z[k]; k2++ }
+    glatt[i] = t / k2
+  }
+  return { m0: von, z: glatt }
+}
+/** Höhe aus gleisHoehenLaden an der Stelle meter, oder null */
+function gleisBei(g: GleisHoehen | null, meter: number): number | null {
+  if (!g) return null
+  const x = (meter - g.m0) / GLEIS_SCHRITT_M
+  if (x < 0 || x > g.z.length - 1) return null
+  const i = Math.min(g.z.length - 2, Math.floor(x)), t = x - i, a = g.z[i], b = g.z[i + 1]
+  if (Number.isNaN(a) || Number.isNaN(b)) return null
+  return a + t * (b - a)
+}
 function bildHoehe(b: number) {
   return Math.round(Math.min(window.innerHeight * 0.7, b * (b >= 600 ? 0.62 : 1.1)))
 }
@@ -1572,6 +1670,13 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     void luftbildLaden(r.raster, r.kacheln).then((l) => { if (!ab) setLuftbild(l) })
     return () => { ab = true }
   }, [r])
+  // die Höhe der Gleise aus swissTLM3D; bis sie da ist, die aus dem Gelände
+  const [gleis, setGleis] = useState<GleisHoehen | null>(null)
+  useEffect(() => {
+    let ab = false
+    void gleisHoehenLaden(weg).catch(() => null).then((g) => { if (!ab) setGleis(g) })
+    return () => { ab = true }
+  }, [weg])
   const aus = useVersteckt()
   const ausJetzt = useRef(aus)
   const anwenden = useRef<((a: Set<Kategorie>) => void) | null>(null)
@@ -1891,6 +1996,14 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       const k = anzahl[b] - anzahl[a]
       geglaettet[i] = k ? (summe[b] - summe[a]) / k : 0
     }
+    // wo es sie gibt, die Höhe der Gleise aus swissTLM3D statt des gemittelten Geländes (gleisHoehenLaden); in Tunneln hebt
+    // das Gelände darüber die Linie nicht
+    const gleisDa = new Uint8Array(schritte + 1)
+    for (let i = 0; i <= schritte; i++) {
+      const g = gleisBei(gleis, m0 + i * HOEHE_SCHRITT_M)
+      if (g !== null) { geglaettet[i] = g; gleisDa[i] = 1 }
+    }
+    const imTunnel = (mm: number) => weg.bauwerke.some((x) => x.art === 'tunnel' && mm >= x.von && mm <= x.bis)
     // Wo das Gelände über die gemittelte Linie ragt (Kuppen, Hänge), hebt sie sich, sonst verschwände sie darin:
     // der grösste Überstand in der Nähe, dann gemittelt, damit der Zug nicht wieder auf und ab fährt. Im
     // flachen Land bleibt so fast nichts, und der Zug liegt auf dem Boden statt 25 m darüber
@@ -1906,6 +2019,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     const ueber = new Float32Array(schritte + 1)
     for (let i = 0; i <= schritte; i++) {
       if (anzahl[i + 1] === anzahl[i]) continue
+      if (gleisDa[i] && imTunnel(m0 + i * HOEHE_SCHRITT_M)) continue
       const [e, n] = punktBei(m0 + i * HOEHE_SCHRITT_M)
       ueber[i] = Math.max(0, summe[i + 1] - summe[i] - geglaettet[i], netzHoehe(e, n) - geglaettet[i])
     }
@@ -1927,7 +2041,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
     }
     const hoeheAmWeg = (meter: number) => {
       const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
-      if (!bau) return gelaendeAmWeg(meter)
+      if (!bau || gleisBei(gleis, meter) !== null) return gelaendeAmWeg(meter)
       const ha = gelaendeAmWeg(bau.von), hb = gelaendeAmWeg(bau.bis)
       return ha + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (hb - ha)
     }
@@ -2578,6 +2692,9 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         // vor einem Tunnel steigt das Gelände zum Hang hinauf, oft schon vor dem Anfang laut swissTLM3D; die Linie stieg mit
         // und fiel dann in den Tunnel (Michael, 2026-10-11: «kurz vor dem Tunnelportal in die Höhe»). Darum gilt von
         // TUNNEL_ANLAUF_M davor bis ebenso weit danach eine Gerade, und davor und danach liegt die Linie nie über ihr
+        // die Höhe der Gleise aus swissTLM3D, wo es sie gibt (gleisHoehenLaden): auch in Tunneln und auf Brücken
+        const gz = gleisBei(gleis, meter)
+        if (gz !== null) { h[i] = gz + FEIN_UEBER_M; continue }
         const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && meter >= x.von - TUNNEL_ANLAUF_M && meter <= x.bis + TUNNEL_ANLAUF_M)
         const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
         const va = tunnel ? Math.max(anfang, tunnel.von - TUNNEL_ANLAUF_M) : 0, vb = tunnel ? Math.min(ende, tunnel.bis + TUNNEL_ANLAUF_M) : 0
@@ -4257,6 +4374,6 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       window.removeEventListener('keydown', pultTaste)
       pult?.entsorgen()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild, bauNamen, tempoQuelle, tempoAussen, endNamen?.join('→')])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild, gleis, bauNamen, tempoQuelle, tempoAussen, endNamen?.join('→')])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }

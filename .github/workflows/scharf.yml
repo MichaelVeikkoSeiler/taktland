@@ -1,10 +1,15 @@
 # Baut die scharfe Umgebung für daten.taktland.ch (pipeline/scharf_reihen.sh) und legt die Pakete im Release
 # «scharf-1» ab; auf cyon holt server/daten/holen.php sie von dort und packt sie aus (Michael, 2026-10-12). Nur von
-# Hand zu starten: Actions → Scharfe Umgebung → Run workflow. Die vier Reihen laufen gleichzeitig, je unter sechs Stunden.
+# Hand zu starten: Actions → Scharfe Umgebung → Run workflow. Die gewählten Reihen laufen gleichzeitig, je unter sechs Stunden.
 name: Scharfe Umgebung
 
 on:
   workflow_dispatch:
+    inputs:
+      reihen:
+        description: 'Welche Reihen (pipeline/scharf_reihen.sh), z. B. [5] für die Nachträge'
+        default: '[1, 2, 3, 4]'
+        required: true
 
 permissions:
   contents: write
@@ -32,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        reihe: [1, 2, 3, 4]
+        reihe: ${{ fromJSON(inputs.reihen) }}
     steps:
       - uses: actions/checkout@v4
 

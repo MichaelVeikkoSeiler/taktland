@@ -1,6 +1,6 @@
 #!/bin/bash
 # Die Strecken der scharfen Umgebung für daten.taktland.ch (Michael, 2026-10-12: «so viel Details wie möglich»), in vier
-# Reihen, die der Workflow «Scharfe Umgebung» (.github/workflows/scharf.yml) gleichzeitig baut. Jede Reihe schreibt nach
+# Reihen, die der Workflow «Scharfe Umgebung» (.github/workflows/scharf.yml) gleichzeitig baut; welche, wählt man beim Start. Jede Reihe schreibt nach
 # data/scharf_extern; Kacheln, die schon in der App liegen (data/scharf), entstehen nicht neu.
 #   bash pipeline/scharf_reihen.sh 1
 set -e
@@ -35,5 +35,8 @@ case "$1" in
     lauf "Disentis/Mustér" Ilanz; lauf Samedan Pontresina; lauf "St. Moritz" Samedan Zernez; lauf "Le Pont" "Le Brassus"; lauf Aigle Monthey
     lauf "Sierre/Siders" Leuk
     ;;
-  *) echo "Reihe 1 bis 4"; exit 1 ;;
+  5)  # Nachträge, einzeln zu bauen (Michael, 2026-10-15: auf der BTI «sehr unscharf … um das Gleis herum»)
+    lauf "Biel/Bienne" Täuffelen Ins
+    ;;
+  *) echo "Reihe 1 bis 5"; exit 1 ;;
 esac
