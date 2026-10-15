@@ -90,7 +90,9 @@ const SCHILD_FUEHRERSTAND_KM = 1
 const TUNNEL_ANLAUF_M = 150
 /** Führerstand: Höhe der Linie als Median über so viele Meter davor und danach, dann gemittelt über so viele, und nach
  *  Brücken und Tunneln noch einmal über so viele */
-const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 40, PROFIL_UEBERGANG_M = 30
+const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 150, PROFIL_UEBERGANG_M = 30
+/** Führerstand: so weit darf ein Punkt der Quelle neben einer Geraden liegen, die ihn ersetzt (glattBei) */
+const GERADE_TOLERANZ_M = 0.8
 /** Führerstand: Täler und Buckel unter der Linie ohne Brücke oder Tunnel in den Daten: so breit höchstens, so tief
  *  mindestens, irgendwo so steil (Anteil, 0.08 = 8 %) */
 const TAL_FENSTER_M = 1500, TAL_TIEFE_M = 6, TAL_STEIGUNG = 0.08
@@ -414,7 +416,7 @@ function strassenQuerschnitt(w: number): QuerFlaeche[] {
  *  das Luftbild ist auf das Gelände gelegt, eine Brücke darin liegt unten im Tal oder auf dem Gleis darunter. Unter jeder
  *  gezeichneten Brücke wird es quer zur Brücke zwischen den beiden Rändern aufgefüllt, RETUSCHE_RAND_M breiter als die Brücke
  *  (die Brücke liegt im Luftbild je nach Höhe etwas daneben); keine künstliche Intelligenz, nicht aus einer Quelle */
-const RETUSCHE_RAND_M = 2.5, RETUSCHE_MITTEL_M = 8
+const RETUSCHE_RAND_M = 2.5, RETUSCHE_MITTEL_M = 8, RETUSCHE_BLOCK_M = 2, RETUSCHE_KORN_PX = 3, RETUSCHE_KORN_MAX = 22
 /** ein Streifen unter einer Brücke: Achse in Landeskoordinaten und je Punkt der Abstand links und rechts wie brueckeQuer */
 interface Streifen { p: Array<[number, number]>; lo: number[]; hi: number[] }
 function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: number, n1: number, pxJeM: number, streifen: Streifen[]) {
@@ -422,7 +424,7 @@ function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: n
     // Rechteck des Streifens in Bildpunkten
     let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
     s.p.forEach(([e, n], i) => {
-      const r = Math.max(-s.lo[i], s.hi[i]) + RETUSCHE_RAND_M + RETUSCHE_MITTEL_M + 3
+      const r = Math.max(-s.lo[i], s.hi[i]) + RETUSCHE_RAND_M + 2 * RETUSCHE_MITTEL_M + 12
       x0 = Math.min(x0, (e - r - e0) * pxJeM); x1 = Math.max(x1, (e + r - e0) * pxJeM)
       y0 = Math.min(y0, (n1 - n - r) * pxJeM); y1 = Math.max(y1, (n1 - n + r) * pxJeM)
     })
@@ -430,9 +432,36 @@ function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: n
     if (x1 - x0 < 1 || y1 - y0 < 1) continue
     const bw = x1 - x0, bh = y1 - y0
     const bild = ctx.getImageData(x0, y0, bw, bh), q = bild.data, z = new Uint8ClampedArray(q)
-    const hol = (e: number, n: number, k: number) => {
+    const stelle = (e: number, n: number) => {
       const x = Math.max(0, Math.min(bw - 1, Math.floor((e - e0) * pxJeM) - x0)), y = Math.max(0, Math.min(bh - 1, Math.floor((n1 - n) * pxJeM) - y0))
-      return q[(y * bw + x) * 4 + k]
+      return y * bw + x
+    }
+    const hol = (e: number, n: number, k: number) => q[stelle(e, n) * 4 + k]
+    // die feine Struktur des Bildes: Helligkeit weniger ihr Mittel über RETUSCHE_KORN_PX Bildpunkte rundum
+    const hell = new Float32Array(bw * bh)
+    for (let i = 0; i < bw * bh; i++) hell[i] = (q[i * 4] + q[i * 4 + 1] + q[i * 4 + 2]) / 3
+    const mittel = new Float32Array(bw * bh), zw = new Float32Array(bw * bh), R = RETUSCHE_KORN_PX
+    for (let y = 0; y < bh; y++) {
+      let t = 0
+      for (let x = -R; x <= R; x++) t += hell[y * bw + Math.max(0, Math.min(bw - 1, x))]
+      for (let x = 0; x < bw; x++) {
+        zw[y * bw + x] = t / (2 * R + 1)
+        t += hell[y * bw + Math.min(bw - 1, x + R + 1)] - hell[y * bw + Math.max(0, x - R)]
+      }
+    }
+    for (let x = 0; x < bw; x++) {
+      let t = 0
+      for (let y = -R; y <= R; y++) t += zw[Math.max(0, Math.min(bh - 1, y)) * bw + x]
+      for (let y = 0; y < bh; y++) {
+        mittel[y * bw + x] = t / (2 * R + 1)
+        t += zw[Math.min(bh - 1, y + R + 1) * bw + x] - zw[Math.max(0, y - R) * bw + x]
+      }
+    }
+    // Zufall je Block, aber bei jedem Laden gleich
+    const zufall = (a: number, b: number, c: number) => {
+      let h = (a * 374761393 + b * 668265263 + c * 2147483647) | 0
+      h = Math.imul(h ^ (h >>> 13), 1274126177)
+      return ((h ^ (h >>> 16)) >>> 0) / 4294967296
     }
     const pxM = 1 / pxJeM
     for (let i = 0; i + 1 < s.p.length; i++) {
@@ -464,7 +493,16 @@ function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: n
               k2++
             }
           }
-          z[o] = (r0 * (1 - g) + r1 * g) / k2; z[o + 1] = (g0 * (1 - g) + g1 * g) / k2; z[o + 2] = (b0 * (1 - g) + b1 * g) / k2
+          // Körnung aus der Umgebung (Michael, 2026-10-15: «inhaltsbasiertes Auffüllen»): je Block von RETUSCHE_BLOCK_M die
+          // feine Struktur eines gleich grossen Stücks neben der Brücke, auf der nahen Seite, zufällig versetzt; nur sie,
+          // nicht seine Farben, und begrenzt, damit keine Häuser oder Strassen hineinkommen
+          const bt = Math.floor(t / RETUSCHE_BLOCK_M), bd = Math.floor(d / RETUSCHE_BLOCK_M), links = d < (lo + hi) / 2
+          const st = (t - bt * RETUSCHE_BLOCK_M) + (zufall(i, bt, bd) - 0.5) * 4 * RETUSCHE_MITTEL_M
+          const tief = 1 + zufall(bd, bt, i + 7) * Math.min(6, (hi - lo) / 2)
+          const sd = (d - bd * RETUSCHE_BLOCK_M) + (links ? lo - tief - RETUSCHE_BLOCK_M : hi + tief)
+          const k3 = stelle(ae + ue * (bt * RETUSCHE_BLOCK_M + st) + qe * sd, an + un * (bt * RETUSCHE_BLOCK_M + st) + qn * sd)
+          const korn = Math.max(-RETUSCHE_KORN_MAX, Math.min(RETUSCHE_KORN_MAX, hell[k3] - mittel[k3]))
+          z[o] = (r0 * (1 - g) + r1 * g) / k2 + korn; z[o + 1] = (g0 * (1 - g) + g1 * g) / k2 + korn; z[o + 2] = (b0 * (1 - g) + b1 * g) / k2 + korn
         }
       }
     }
@@ -2402,15 +2440,36 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
      *  und danach gemittelt (Michael, 2026-10-11: «die Kurven noch runder»), das zog die Linie in jeder Kurve um 5 bis 10 m
      *  nach innen (Michael, 2026-10-14: «dass die Strecke die Kurven zu stark schneidet»). Jetzt eine Kurve durch jeden Punkt
      *  der Quelle (Catmull-Rom, zentripetal): dort liegt sie auf dem Gleis, dazwischen folgt sie dem Bogen statt der Sehne */
+    // gerade Stücke gerade (Michael, 2026-10-15: «offensichtlich gerad laufende Strecken auch schön gerade», zwischen
+    // Münchenbuchsee und Schüpfen): die Quelle gibt alle 100 m einen Punkt, auf etwa einen Meter gerundet; durch jeden
+    // gelegt schlängelte die Kurve. Darum zuerst nach Douglas-Peucker vereinfacht, jeder weggelassene Punkt höchstens
+    // GERADE_TOLERANZ_M neben der Vereinfachung; Kurven behalten ihre Punkte
+    const pg = (() => {
+      const behalten = new Uint8Array(pk.length)
+      behalten[0] = behalten[pk.length - 1] = 1
+      const stapel: Array<[number, number]> = [[0, pk.length - 1]]
+      while (stapel.length) {
+        const [i, j] = stapel.pop()!
+        if (j - i < 2) continue
+        const a2 = pk[i], b2 = pk[j], de = b2.e - a2.e, dn = b2.n - a2.n, l = Math.hypot(de, dn) || 1
+        let weit = -1, k0 = -1
+        for (let k = i + 1; k < j; k++) {
+          const d = Math.abs((pk[k].e - a2.e) * dn - (pk[k].n - a2.n) * de) / l
+          if (d > weit) { weit = d; k0 = k }
+        }
+        if (weit > GERADE_TOLERANZ_M) { behalten[k0] = 1; stapel.push([i, k0], [k0, j]) }
+      }
+      return pk.filter((_, i) => behalten[i])
+    })()
     const glattBei = (meter: number): readonly [number, number] => {
-      let lo = 1, hi = pk.length - 1
-      while (lo < hi) { const mid = (lo + hi) >> 1; if (pk[mid].m < meter) lo = mid + 1; else hi = mid }
+      let lo = 1, hi = pg.length - 1
+      while (lo < hi) { const mid = (lo + hi) >> 1; if (pg[mid].m < meter) lo = mid + 1; else hi = mid }
       const i1 = Math.max(0, lo - 1), i2 = lo
-      const p1 = pk[i1], p2 = pk[i2]
+      const p1 = pg[i1], p2 = pg[i2]
       const t = Math.max(0, Math.min(1, (meter - p1.m) / ((p2.m - p1.m) || 1)))
       // die Nachbarn, an den Enden gespiegelt
-      const p0 = i1 > 0 ? pk[i1 - 1] : { e: 2 * p1.e - p2.e, n: 2 * p1.n - p2.n }
-      const p3 = i2 < pk.length - 1 ? pk[i2 + 1] : { e: 2 * p2.e - p1.e, n: 2 * p2.n - p1.n }
+      const p0 = i1 > 0 ? pg[i1 - 1] : { e: 2 * p1.e - p2.e, n: 2 * p1.n - p2.n }
+      const p3 = i2 < pg.length - 1 ? pg[i2 + 1] : { e: 2 * p2.e - p1.e, n: 2 * p2.n - p1.n }
       const knoten = (a: { e: number; n: number }, b: { e: number; n: number }) => Math.max(1e-3, Math.sqrt(Math.hypot(b.e - a.e, b.n - a.n)))
       const t0 = 0, t1 = t0 + knoten(p0, p1), t2 = t1 + knoten(p1, p2), t3 = t2 + knoten(p2, p3)
       const u = t1 + t * (t2 - t1)

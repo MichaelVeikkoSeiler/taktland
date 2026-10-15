@@ -254,9 +254,11 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              Höhe, 65535 ausserhalb), je Kachel von 250 m, nur 200 m neben den Bahnlinien aus swissTLMRegio, die höchstens
              700 m neben dem Zug durch die Orte einer Strecke liegen (STRECKEN in pipeline/build_scharf.py, 1'499 Kacheln, 201 MB); im Führerstand ein Netz je Kachel, eigenes Bild
              nur bis 800 m um einen Punkt 400 m voraus, mit dem Tempo weiter voraus, 4 s Fahrt, höchstens 1,6 km mehr (SCHARF_BILD_M, SCHARF_VORAUS_S in Relief.tsx; Michael, 2026-10-14: bei 2'000 km/h fuhr der Zug durch die Kacheln, bevor ihre Bilder da waren), sonst die Leinwand des feinen
-             Geländes, das darunter 5 m sinkt; nur mit Luftbild; im Führerstand Kurven durch die Punkte der Quelle gerundet (glattBei), Höhe der Linie einmal je feinem Gelände gerechnet (profilRechnen): Gelände unter der Linie ohne Brücken und
+             Geländes, das darunter 5 m sinkt; nur mit Luftbild; im Führerstand Kurven durch die Punkte der Quelle gerundet (glattBei), vorher nach Douglas-Peucker vereinfacht, jeder
+             weggelassene Punkt höchstens 0,8 m daneben, so sind gerade Stücke gerade (GERADE_TOLERANZ_M; Michael, 2026-10-15: «schön gerade»), Höhe der Linie einmal je feinem Gelände gerechnet (profilRechnen): Gelände unter der Linie ohne Brücken und
              Tunnel (swissALTI3D zeigt dort Talgrund oder Berg), Median über 50 m davor und danach gegen Unterführungen und Gräben, dann
-             Mittel über 40 m, zuletzt über 30 m (PROFIL_MEDIAN_M …; Michael, 2026-10-11: «kleine Unebenheiten»), Täler und Buckel ohne Brücke oder Tunnel in den Daten (schmaler als 1,5 km, mehr als 6 m tief, irgendwo steiler als 8 %) gerade über- oder unterquert, ohne Bauwerk zu zeichnen (TAL_FENSTER_M …; Lorrainebrücke in Bern, deren Länge in keiner Quelle steht), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), ein Ende
+             Mittel über 150 m (vorher 40 m; Michael, 2026-10-15: Münchenbuchsee–Schüpfen schlängelte, die Linie liegt einen bis zwei Meter neben
+             dem Gleis und mass Damm und Einschnitt), zuletzt über 30 m (PROFIL_MEDIAN_M …; Michael, 2026-10-11: «kleine Unebenheiten»), Täler und Buckel ohne Brücke oder Tunnel in den Daten (schmaler als 1,5 km, mehr als 6 m tief, irgendwo steiler als 8 %) gerade über- oder unterquert, ohne Bauwerk zu zeichnen (TAL_FENSTER_M …; Lorrainebrücke in Bern, deren Länge in keiner Quelle steht), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), ein Ende
              ausserhalb des feinen Geländes mit der groben Höhe, verschoben um den Unterschied am anderen Ende, Tunnel und Brücken für die Höhe immer alle, auch wenn ihre Zeichen
              ausgeschaltet sind (wegDerFahrt), Blick in Richtung des Gleises unter dem Auge, geneigt zur Linie 300 m voraus, Brücken als schlichte Platte ohne Pfeiler (Pfeiler in keiner
              Quelle; Michael, 2026-10-11: «Aufbau von Brücken, damit die Strecke … flach darüber führt»), so breit wie die Gleise darauf laut
@@ -266,7 +268,8 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              (brueckenBild: Beton mit Körnung und Schalungsfugen, Schotter zwischen zwei Randbalken, Belag) und von Hand gesetzter Ambient
              Occlusion (dunkler in Ecken und unten; Michael, 2026-10-15: «ein bisschen Körnung, ein bisschen Ambient Occlusion»), in keiner Quelle; unter jeder gezeichneten Bahn- und Strassenbrücke ist das
              Luftbild (Nahbild und scharf) retuschiert: quer zur Brücke zwischen den Rändern aufgefüllt, je Rand über 16 m gemittelt, 2,5 m
-             breiter als die Brücke (retuschieren; Michael, 2026-10-15: «wegzuretuschieren»; keine KI, nicht aus einer Quelle; gespiegelt
+             breiter als die Brücke, darauf die Körnung des Bodens daneben, je Block von 2 m von einer zufälligen Stelle der nahen Seite, nur die
+             Helligkeit weniger ihr Mittel, begrenzt auf ±22 (Michael, 2026-10-15: «inhaltsbasiertes Auffüllen») (retuschieren; Michael, 2026-10-15: «wegzuretuschieren»; keine KI, nicht aus einer Quelle; gespiegelt
              erfand es Häuser)
 data/gebaeude/  Gebäude, ein Versuch, zuerst auf Gümmenen–Bern (Michael, 2026-10-13): swissBUILDINGS3D 3.0 (swisstopo, CityGML je Kartenblatt,
              der neueste Jahrgang), Dach- und Wandflächen in Dreiecke zerlegt (mapbox_earcut), nur Gebäude mit ihrer Mitte bis 400 m neben
