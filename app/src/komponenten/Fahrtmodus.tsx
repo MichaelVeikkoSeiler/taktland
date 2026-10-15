@@ -299,6 +299,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       waehlen: (i) => rafferWaehlen(stufen[Math.max(0, Math.min(stufen.length - 1, i))]),
       anhalten: (an) => { if (angehaltenRef.current !== an) anhaltenUmschalten() },
     } : undefined,
+    // zurück an den Startbahnhof, angehalten (Michael, 2026-10-15: «das Abfahren beim Start Bahnhof … erleben»)
+    zumStart: probefahrt ? () => {
+      springen(0)
+      setAnkunft(null)
+      if (!angehaltenRef.current) anhaltenUmschalten()
+      setGestartet(false)
+    } : undefined,
     meldet: (art: MeldeArt) => (art === 'tunnel' ? einstellung.tunnel : art === 'bruecke' ? einstellung.bruecken !== 'keine'
       : art === 'bahnhof' ? einstellung.bahnhoefe : einstellung.bahnuebergaenge),
     meldenSetzen: (art: MeldeArt, an: boolean) => aendern(art === 'tunnel' ? { tunnel: an }

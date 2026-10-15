@@ -43,6 +43,8 @@ export interface PultAussen {
   seite?: (richtung: 1 | -1) => void
   /** das Vollbild schliessen; fehlt ausserhalb des Vollbilds */
   schliessen?: () => void
+  /** Probefahrt: zurück an den Startbahnhof, angehalten */
+  zumStart?: () => void
 }
 
 export interface Ankuendigung { s: number; art: 'tunnel' | 'bruecke' | 'bahnhof'; name: string }
@@ -77,7 +79,7 @@ const BREMSE_TEXT = ['0', 'B', 'SB'] as const
 
 type Aktion = 'sollPlus' | 'sollMinus' | 'bremsePlus' | 'bremseMinus' | 'horn' | 'stirnlicht' | 'pultlicht' | 'wischer'
   | 'schnellbremse' | 'zuggeraeusch' | 'daemmerung' | 'hinterZug' | 'hoehe1' | 'hoehe2' | 'tunnel' | 'bruecke' | 'bahnhof'
-  | 'bahnuebergang' | 'sichtLinks' | 'sichtRechts' | 'schliessen'
+  | 'bahnuebergang' | 'sichtLinks' | 'sichtRechts' | 'schliessen' | 'zumStart'
 
 /** Was ein Element tut und wie es heisst (als Tooltip und für Bildschirmleser) */
 const NAMEN: Record<Aktion, string> = {
@@ -88,6 +90,7 @@ const NAMEN: Record<Aktion, string> = {
   hinterZug: 'Hinter den Zug (Z)', hoehe1: 'Höhe wie echt (1)', hoehe2: 'Höhe 2-fach (2)', tunnel: 'Tunnel melden ein, aus',
   bruecke: 'Brücken melden ein, aus', bahnhof: 'Bahnhöfe melden ein, aus', bahnuebergang: 'Bahnübergänge melden ein, aus',
   sichtLinks: 'Sicht nach links (Pfeil links)', sichtRechts: 'Sicht nach rechts (Pfeil rechts)', schliessen: 'Vollbild schliessen (Esc)',
+  zumStart: 'Zum Startbahnhof (S)',
 }
 /** Fuss der Abdeckung über den Anzeigen, an der Unterkante des Fensters */
 const HAUBE_FUSS_M = -0.19
@@ -145,6 +148,8 @@ export class Fuehrerpult {
   quelle: TempoQuelle = 'simulation'
   /** was ausserhalb liegt; in der Probefahrt stellen die Hebel deren Tempo */
   aussen: { current: PultAussen | null } | null = null
+  /** setzt den Zug an den Startbahnhof; false, wo das nicht geht (beim Fahren mit Standort) */
+  zumStartAktion: (() => boolean) | null = null
   /** gemeldete Arten, wenn niemand ausserhalb sie kennt (Modellbahn) */
   private gemeldet = new Set<MeldeArt>(MELDE_ARTEN)
   /** Leuchten auf den Tasten, die einen Zustand haben: an, wenn der Zustand gilt */
@@ -400,13 +405,14 @@ export class Fuehrerpult {
     // eine zweite, kleinere Reihe näher beim Fahrer (Michael, 2026-10-14: «alle Knöpfe als reale Knöpfe im Führerraum»):
     // Sicht hinter den Zug, Höhe des Geländes, was angekündigt wird
     const zweite: Array<[(c: CanvasRenderingContext2D) => void, Aktion]> = [
-      [(c) => hinterZugZeichen(c, FARBE.schrift), 'hinterZug'], [(c) => berg(c, FARBE.schrift, 1), 'hoehe1'],
+      [(c) => hinterZugZeichen(c, FARBE.schrift), 'hinterZug'], [(c) => zumStartZeichen(c, FARBE.schrift), 'zumStart'],
+      [(c) => berg(c, FARBE.schrift, 1), 'hoehe1'],
       [(c) => berg(c, FARBE.schrift, 2), 'hoehe2'], [(c) => meldeZeichen(c, 'tunnel', FARBE.schrift), 'tunnel'],
       [(c) => meldeZeichen(c, 'bruecke', FARBE.schrift), 'bruecke'], [(c) => meldeZeichen(c, 'bahnhof', FARBE.schrift), 'bahnhof'],
       ...(this.uebergaenge ? [[(c: CanvasRenderingContext2D) => meldeZeichen(c, 'bahnuebergang', FARBE.schrift), 'bahnuebergang'] as [(c: CanvasRenderingContext2D) => void, Aktion]] : [])]
     const y2 = -0.52, z2 = -0.6, gross2 = 0.085, abstand2 = 0.102
-    // zwischen den Gruppen eine Lücke: Sicht | Höhe | Melden
-    const lage2 = zweite.map((_, i) => i + (i >= 1 ? 0.35 : 0) + (i >= 3 ? 0.35 : 0))
+    // zwischen den Gruppen eine Lücke: Sicht und Start | Höhe | Melden
+    const lage2 = zweite.map((_, i) => i + (i >= 2 ? 0.35 : 0) + (i >= 4 ? 0.35 : 0))
     const mitte2 = (lage2[0] + lage2[lage2.length - 1]) / 2
     const leiste2 = this.kasten((lage2[lage2.length - 1] - lage2[0]) * abstand2 + gross2 + 0.03, 0.012, gross2 + 0.04, FARBE.blende,
       0, y2 - 0.008, z2, kippen)
@@ -609,6 +615,11 @@ export class Fuehrerpult {
     const artName: Record<MeldeArt, string> = { tunnel: 'Tunnel', bruecke: 'Brücken', bahnhof: 'Bahnhöfe', bahnuebergang: 'Bahnübergänge' }
     switch (aktion) {
       case 'hinterZug': au?.hinterZug?.(); return 'Hinter den Zug'
+      case 'zumStart':
+        // zurück an den Startbahnhof, damit man das Abfahren erlebt (Michael, 2026-10-15)
+        if (!this.zumStartAktion?.()) return 'Beim Fahren bestimmt der Standort, wo der Zug ist'
+        this.stehen()
+        return this.quelle === 'probe' ? 'Am Startbahnhof – Bremse lösen fährt ab' : 'Am Startbahnhof – Geschwindigkeit wählen fährt ab'
       case 'sichtLinks': au?.seite?.(1); return 'Sicht nach links'
       case 'sichtRechts': au?.seite?.(-1); return 'Sicht nach rechts'
       case 'schliessen': au?.schliessen?.(); return ''
@@ -663,6 +674,13 @@ export class Fuehrerpult {
     return au?.meldet ? au.meldet(art) : this.gemeldet.has(art)
   }
 
+  /** steht still, nichts gewählt, keine Bremse: so wartet der Zug am Startbahnhof */
+  stehen() {
+    this.v = 0
+    this.soll = 0
+    this.bremse = 0
+  }
+
   /** «Zug fahren»: Bremse lösen und wieder auf die Wahl von vorher, wenn keine gewählt ist */
   losfahren() {
     this.bremse = 0
@@ -680,7 +698,7 @@ export class Fuehrerpult {
   taste_(code: string): string | null {
     const zu: Record<string, Aktion> = { ArrowUp: 'sollPlus', ArrowDown: 'sollMinus', KeyB: 'bremsePlus', Digit0: 'bremseMinus',
       Space: 'schnellbremse', KeyH: 'horn', KeyL: 'stirnlicht', KeyP: 'pultlicht', KeyW: 'wischer', KeyT: 'zuggeraeusch',
-      KeyN: 'daemmerung', KeyZ: 'hinterZug', Digit1: 'hoehe1', Digit2: 'hoehe2', ArrowLeft: 'sichtLinks', ArrowRight: 'sichtRechts' }
+      KeyN: 'daemmerung', KeyZ: 'hinterZug', KeyS: 'zumStart', Digit1: 'hoehe1', Digit2: 'hoehe2', ArrowLeft: 'sichtLinks', ArrowRight: 'sichtRechts' }
     return zu[code] ? this.tun(zu[code]) : null
   }
 
@@ -990,6 +1008,12 @@ function hinterZugZeichen(c: CanvasRenderingContext2D, farbe: string) {
   c.beginPath(); c.moveTo(44, 92); c.lineTo(118, 92); c.stroke()
   c.beginPath(); c.ellipse(22, 64, 14, 9, 0, 0, Math.PI * 2); c.stroke()
   c.beginPath(); c.arc(22, 64, 4, 0, Math.PI * 2); c.fill()
+}
+/** Zum Startbahnhof: ein Strich, davor zwei Dreiecke nach links wie «an den Anfang» */
+function zumStartZeichen(c: CanvasRenderingContext2D, farbe: string) {
+  c.fillStyle = farbe
+  c.fillRect(18, 34, 10, 60)
+  for (const x of [30, 72]) { c.beginPath(); c.moveTo(x, 64); c.lineTo(x + 42, 34); c.lineTo(x + 42, 94); c.closePath(); c.fill() }
 }
 /** Höhe des Geländes: ein flacher oder ein hoher Berg mit 1× oder 2× */
 function berg(c: CanvasRenderingContext2D, farbe: string, f: 1 | 2) {

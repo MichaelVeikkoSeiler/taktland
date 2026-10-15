@@ -86,6 +86,8 @@ const SPUR_M = 1.435 + 0.07, SCHIENE_M = 0.15
 const BRUECKE_DICK_M = 1.8
 /** Führerstand: Namen erst so nah an der Kamera (km) */
 const SCHILD_FUEHRERSTAND_KM = 1
+/** Führerstand: wer in den ersten so vielen Metern dorthin wechselt, fährt noch einmal vom Startbahnhof ab (Michael, 2026-10-15) */
+const START_NAH_M = 10000
 /** Führerstand: so weit vor und nach einem Tunnel fährt der Zug gerade auf das Portal zu */
 const TUNNEL_ANLAUF_M = 150
 /** Führerstand: Höhe der Linie als Median über so viele Meter davor und danach, dann gemittelt über so viele, und nach
@@ -3671,6 +3673,29 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         tempo: (t) => { fahrt.echt = t },
       }
     }
+    /** an den Startbahnhof, stehend (Michael, 2026-10-15: «das Abfahren beim Start Bahnhof … erleben»): der eigene Zug der
+     *  Modellbahn wartet dort auf das Pult, die Probefahrt hält dort an (PultAussen.zumStart); false beim Fahren */
+    const zumStart = (): boolean => {
+      if (zug === eigenerZug && fahrt.s !== null) {
+        fahrt.richtung = 1
+        fahrt.s = Math.min(pk[pk.length - 1].m, pk[0].m + zugLaengeS())
+        fahrt.laeuft = false
+        fahrt.gestartet = true
+        fahrt.anteil = 0
+        eigenerZug.current = fahrt.s
+        return true
+      }
+      const nachStart = aussen?.current?.zumStart
+      if (!nachStart) return false
+      nachStart()
+      return true
+    }
+    /** beim Wechsel in den Führerstand: so weit hinter dem Start fährt der Zug noch einmal von dort ab */
+    const nahAmStart = () => {
+      if (zug === eigenerZug) return fahrt.s !== null && fahrt.gestartet && fahrt.s - zugLaengeS() - pk[0].m < START_NAH_M
+      return !!aussen?.current?.zumStart && zug?.current != null && zug.current - pk[0].m < START_NAH_M
+    }
+    if (pult) pult.zumStartAktion = zumStart
     /** in der Brille: am Ziel die Knöpfe «Fahrt wiederholen», «Zurückfahren», «Fahrt beenden» zeigen */
     let menueZeigen: (() => void) | null = null
     /** in der Brille im Führerstand statt vor dem Modell auf dem Tisch; anker: wo der Kopf beim Einsteigen war und wohin er
@@ -4201,6 +4226,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         const vorne = (inBrille ? kabine.an : !!fuehrerstand?.current) && sichtbar
         if (vorne !== imStand) {
           if (!vorne) tunnelDunkel(0)
+          // in den ersten START_NAH_M zurück an den Startbahnhof: sonst lag er beim Wechsel oft schon weit zurück
+          if (vorne && nahAmStart() && zumStart()) pult?.stehen()
           imStand = vorne
           for (const o of mastTeile) o.visible = !vorne
           tafelGruppe.visible = vorne
@@ -4279,8 +4306,10 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
           ziel.y = Math.max(ziel.y, auge.y - 0.02)
           if (pult) {
             const v = zug === eigenerZug && !zugVonAussen ? pult.v : (() => {
-              const aussen = tempoAussen?.current
-              if (aussen != null) return aussen
+              // angehalten steht die Probefahrt, auch wenn ihre Stufe ein Tempo hat
+              if (aussen?.current?.probe?.angehalten()) return 0
+              const tempoVonAussen = tempoAussen?.current
+              if (tempoVonAussen != null) return tempoVonAussen
               if (altS !== null && dt > 0) gemessen += ((Math.abs(s - altS) / dt) - gemessen) * Math.min(1, dt * 2)
               altS = s
               return gemessen
