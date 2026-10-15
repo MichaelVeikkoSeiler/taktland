@@ -8,8 +8,12 @@ data/raw/tlm3d/. Kostenlose Geodaten (OGD) von swisstopo, Quellenangabe Pflicht.
 Mit --baeume statt dessen die Ebenen für pipeline/build_baeume.py: von TLM_EINZELBAUM nur die Geometrie (.shp, etwa
 500 MB), von TLM_BODENBEDECKUNG die ganze Ebene (etwa 2,8 GB) und TLM_EISENBAHN für den Lichtraum der Gleise.
 
+Mit --strassen die Ebene TLM_STRASSE (Geometrie mit Höhe und Attribute, etwa 520 MB gepackt, 3,3 GB entpackt) für
+pipeline/build_strassenbruecken.py.
+
     python3 pipeline/fetch_tlm3d.py
     python3 pipeline/fetch_tlm3d.py --baeume
+    python3 pipeline/fetch_tlm3d.py --strassen
 """
 import io
 import sys
@@ -61,6 +65,8 @@ class Fern(io.RawIOBase):
 
 
 def gewollt(name):
+    if "--strassen" in sys.argv:
+        return name.startswith("swissTLM3D_TLM_STRASSE.") and name.rsplit(".", 1)[-1] in ("shp", "shx", "dbf", "cpg")
     if "--baeume" not in sys.argv:
         return name.startswith(EBENE + ".") and not name.endswith(".lock")
     # die Gleisachsen für den Lichtraum der Bäume

@@ -260,6 +260,12 @@ const KABINE_HOEHER_M = 0.15
  *  gemessene Baumhöhen») */
 const BAUM_FORM: [number, number][] = [[12, 3.5], [20, 3.2], [15, 4], [4, 2.2], [9, 3]]
 const OBEN = new THREE.Vector3(0, 1, 0)
+/** Breite von Strassenbrücken in m, wo die Klasse in swissTLM3D keine nennt: Annahmen, in keiner Quelle (je Fahrbahn) */
+const STRASSE_BREITE_ANNAHME: Record<string, number> = { Autobahn: 12, Autostrasse: 9, Einfahrt: 6, Ausfahrt: 6, Zufahrt: 4, Dienstzufahrt: 4 }
+interface Strassenbruecken { bruecken: Array<{ e: number; n: number; h: number; b: number | null; art: string; d: number[] }> }
+let strassenbrueckenVerz: Promise<Strassenbruecken> | null = null
+const strassenbrueckenLaden = () => (strassenbrueckenVerz ??= holen<Strassenbruecken>('data/strassenbruecken.json')
+  .catch((e) => { strassenbrueckenVerz = null; throw e }))
 /** Bahnhofsschilder im Führerstand (Michael, 2026-10-14: «in Bodennähe und so dass man es beim Vorbeifahren gut lesen kann»):
  *  je Bahnhof eines rechts der Linie in ihrer Richtung (Michael, 2026-10-14: «immer nur eine Ortstafel»), so weit neben ihr, so breit und hoch, die Unterkante so hoch über der Linie, gegen
  *  das Gleis gedreht; Lage, Grösse und Gestalt stehen in keiner Quelle, die Stelle ist die des Bahnhofs in den Daten */
@@ -1943,6 +1949,50 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
         gebaeudeNetze.set(name, netz)
       }
     }
+    // Strassen- und Wegbrücken über der Bahn (Michael, 2026-10-15: «Ist es möglich, eine Autobrücke zu konstruieren?»;
+    // pipeline/build_strassenbruecken.py): Verlauf und Höhe der Strassenachse aus swissTLM3D, die Breite aus dem Namen der
+    // Klasse, sonst STRASSE_BREITE_ANNAHME; gezeichnet als Trog mit Platte und zwei Brüstungen, Masse in keiner Quelle
+    const strassenGruppe = new THREE.Group()
+    strassenGruppe.visible = false
+    szene.add(strassenGruppe)
+    const strassenMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+    let strassenAuftrag = 0
+    const strassenSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
+      const auftrag = ++strassenAuftrag
+      const d = await strassenbrueckenLaden().catch(() => null)
+      if (!laeuft || auftrag !== strassenAuftrag || !d) return
+      for (const c of strassenGruppe.children) (c as THREE.Mesh).geometry.dispose()
+      strassenGruppe.clear()
+      const pos: number[] = [], farbe: number[] = []
+      const beton = [0.62, 0.6, 0.57], belag = [0.33, 0.33, 0.34]
+      for (const b of d.bruecken) {
+        const pk: Array<[number, number, number]> = []
+        for (let i = 0; i < b.d.length; i += 3) pk.push([b.e + b.d[i] / 10, b.n + b.d[i + 1] / 10, (b.h + b.d[i + 2]) / 10])
+        if (pk.length < 2 || !pk.some(([e, n]) => e >= e0 && e <= e1 && n >= n0 && n <= n1)) continue
+        const w = (b.b ?? STRASSE_BREITE_ANNAHME[b.art] ?? 6) / 2 + 0.5
+        // Querschnitt quer zur Achse (Abstand, Höhe über der Fahrbahn) und Farbe je Kante: Trog aus Platte und Brüstungen
+        const quer: Array<[number, number]> = [[-w, 1], [-w, -1], [w, -1], [w, 1], [w - 0.3, 1], [w - 0.3, 0], [-w + 0.3, 0], [-w + 0.3, 1]]
+        const kante = [beton, beton, beton, beton, beton, belag, beton]
+        const ringe = pk.map(([e, n, z], i) => {
+          const [ea, na] = pk[Math.max(0, i - 1)], [eb, nb] = pk[Math.min(pk.length - 1, i + 1)]
+          const l = Math.hypot(eb - ea, nb - na) || 1, qe = -(nb - na) / l, qn = (eb - ea) / l
+          return quer.map(([a, h]) => [X(e + qe * a), Y(z + h), Z(n + qn * a)])
+        })
+        for (let i = 0; i < ringe.length - 1; i++) {
+          for (let k = 0; k < quer.length - 1; k++) {
+            const a = ringe[i][k], b2 = ringe[i][k + 1], c = ringe[i + 1][k + 1], dd = ringe[i + 1][k]
+            pos.push(...a, ...b2, ...c, ...a, ...c, ...dd)
+            for (let j = 0; j < 6; j++) farbe.push(...kante[k])
+          }
+        }
+      }
+      if (!pos.length) return
+      const g = new THREE.BufferGeometry()
+      g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+      g.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
+      g.computeVertexNormals()
+      strassenGruppe.add(new THREE.Mesh(g, strassenMaterial))
+    }
     // Bäume und Wald, ein Versuch auf den Strecken der Gebäude (Michael, 2026-10-13; pipeline/build_baeume.py): je Kachel ein
     // InstancedMesh, Einzelbäume wo swissTLM3D sie hat, Waldflächen mit gezeichneten Bäumen gefüllt; Höhe und Breite je Art
     // in keiner Quelle (BAUM_FORM), je Baum bis 25 % grösser oder kleiner, der Fuss auf dem Gelände der App
@@ -2297,6 +2347,7 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       tafelnSetzen()
       feinNetz.visible = false
       gebaeudeGruppe.visible = false
+      strassenGruppe.visible = false
       baumGruppe.visible = false
       // Röhren haben zwei Materialien; Fels und Boden teilen alle Tunnel
       feinLinien.traverse((o) => {
@@ -2359,6 +2410,8 @@ function Szene({ r, h, faktor, weg, wegFarbe, zug: zugVonAussen, blick, brille, 
       feinNetz.visible = true
       gebaeudeGruppe.visible = true
       void gebaeudeSetzen(e0, n0, e1, n1)
+      strassenGruppe.visible = true
+      void strassenSetzen(e0, n0, e1, n1)
       baumGruppe.visible = true
       void baumSetzen(e0, n0, e1, n1)
       feinMalen?.()

@@ -272,6 +272,12 @@ data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026
              ein InstancedMesh je Kachel, Krone und Stamm, Höhe und Breite je Art in keiner Quelle (BAUM_FORM in Relief.tsx, 4 bis 20 m,
              je Baum ±25 %), der Fuss auf dem scharfen oder feinen Gelände; keine Krone näher als 5 m an der gezeichneten Strecke
              (Lichtraum fürs Bild, in keiner Quelle, BAUM_LICHTRAUM_M; Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»)
+data/strassenbruecken.json  Strassen- und Wegbrücken über der Bahn aus swissTLM3D (TLM_STRASSE mit Höhe, KUNSTBAUTE Brücke): nur
+             Stücke, die eine Gleisachse aus TLM_EISENBAHN kreuzen und dort mindestens 3 m über ihr liegen (pipeline/build_strassenbruecken.py,
+             1'858 Brücken, 257 KB; Michael, 2026-10-15: «Ist es möglich, eine Autobrücke zu konstruieren?»); in der App nur im Führerstand,
+             mit dem feinen Gelände gesetzt (strassenSetzen in Relief.tsx): Verlauf und Höhe der Strassenachse aus der Quelle, die Breite
+             aus dem Namen der Klasse («4m Strasse»), sonst eine Annahme (STRASSE_BREITE_ANNAHME: Autobahn 12 m je Fahrbahn …), als Trog
+             mit Platte 1 m dick und Brüstungen 1 m hoch, Beton mit Belag, Masse und Gestalt in keiner Quelle
 data/gebaeude_extern/, data/baeume_extern/  Gebäude und Bäume je Kanton für daten.taktland.ch, nicht in Git (build_gebaeude.py und
              build_baeume.py --kanton BE …, --alle; das Band je Kanton in pipeline/umgebung.py: alle Bahnlinien aus swissTLMRegio, 400 m,
              Kacheln nach dem Kanton ihrer Mitte, BFS g1); Reihenfolge nach Michael (2026-10-13): BE, VS, NE und VD, dann der Rest;
@@ -332,6 +338,8 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_gebaeude.py       # Gebäude (swissBUILDINGS3D) entlang Gümmenen–Bern, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --weg Bern Olten     # dito entlang des Wegs der App
 python3 pipeline/fetch_tlm3d.py --baeume          # Einzelbaum und Bodenbedeckung aus swissTLM3D (etwa 3,3 GB)
+python3 pipeline/fetch_tlm3d.py --strassen        # Strassen aus swissTLM3D (520 MB, entpackt 3,3 GB)
+.venv/bin/python pipeline/build_strassenbruecken.py   # Strassenbrücken über der Bahn, vor export_app
 .venv/bin/python pipeline/build_baeume.py         # Bäume und Wald entlang Gümmenen–Neuchâtel, vor export_app
 .venv/bin/python pipeline/build_gebaeude.py --kanton BE   # Gebäude eines Kantons für daten.taktland.ch (--alle: alle)
 .venv/bin/python pipeline/build_baeume.py --kanton BE     # dito Bäume
