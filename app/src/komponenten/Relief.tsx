@@ -95,6 +95,8 @@ const TUNNEL_ANLAUF_M = 150
 const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 150, PROFIL_UEBERGANG_M = 30
 /** Führerstand: so weit darf ein Punkt der Quelle neben einer Geraden liegen, die ihn ersetzt (glattBei) */
 const GERADE_TOLERANZ_M = 0.8
+/** so lang höchstens ein Stück der Vereinfachung, damit die Kurve durch die Punkte gerade Stücke gerade lässt */
+const GERADE_STUECK_M = 30
 /** Führerstand: Täler und Buckel unter der Linie ohne Brücke oder Tunnel in den Daten: so breit höchstens, so tief
  *  mindestens, irgendwo so steil (Anteil, 0.08 = 8 %) */
 const TAL_FENSTER_M = 1500, TAL_TIEFE_M = 6, TAL_STEIGUNG = 0.08
@@ -2337,6 +2339,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     feinNetz.renderOrder = -1
     feinNetz.visible = false
     const feinLinien = new THREE.Group()
+    /** je Tunnel die ganze Röhre und der Teil, den das Gelände überdeckt: von aussen nur dieser, im Tunnel die ganze */
+    let roehren: Array<{ von: number; bis: number; ganz: THREE.Group; teil: THREE.Group }> = []
     // halb durchsichtig (Michael, 2026-10-15: «noch etwas markant … mit 50% Transparenz»)
     const schienenMaterial = new THREE.MeshBasicMaterial({ color: '#c4c8cd', side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
       transparent: true, opacity: 0.5, depthWrite: false })
@@ -2680,7 +2684,22 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         }
         if (weit > GERADE_TOLERANZ_M) { behalten[k0] = 1; stapel.push([i, k0], [k0, j]) }
       }
-      return pk.filter((_, i) => behalten[i])
+      // lange Sehnen wieder mit Punkten auf ihr: sonst nimmt die Kurve an ihren Enden die Richtung der Nachbarn mit und wölbt
+      // sich über die ganze Länge (Michael, 2026-10-16: zwischen Müntschemier und Kerzers lag die Linie über 2 km bis 5 m
+      // neben dem Gleis)
+      const raus: Array<{ m: number; e: number; n: number }> = []
+      const auswahl = pk.filter((_, i) => behalten[i])
+      auswahl.forEach((p, i) => {
+        if (i) {
+          const a2 = auswahl[i - 1], teile = Math.ceil((p.m - a2.m) / GERADE_STUECK_M)
+          for (let k = 1; k < teile; k++) {
+            const t = k / teile
+            raus.push({ m: a2.m + t * (p.m - a2.m), e: a2.e + t * (p.e - a2.e), n: a2.n + t * (p.n - a2.n) })
+          }
+        }
+        raus.push(p)
+      })
+      return raus
     })()
     const glattBei = (meter: number): readonly [number, number] => {
       let lo = 1, hi = pg.length - 1
@@ -2887,6 +2906,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         if (x.material && !Array.isArray(x.material) && x.material !== fels && x.material !== schienenMaterial && !x.material.userData.geteilt) x.material.dispose()
       })
       feinLinien.clear()
+      roehren = []
       scharfWeg()
       for (const o of wegStriche) o.visible = true
       nahZeichnen()
@@ -3116,7 +3136,14 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
             let a2 = a, z2 = z
             while (a2 < z2 && !bedeckt(a2)) a2 += 5
             while (z2 > a2 && !bedeckt(z2)) z2 -= 5
-            if (z2 - a2 >= 10) tunnelRoehre(punkteVon(a2, z2), feinLinien)
+            // im Tunnel die ganze Röhre (Michael, 2026-10-16: vor Gümmenen, wo wenig Erde darüber liegt, sah man in den
+            // Ecken hinaus): die Teile ohne Erde darüber stehen in der Landschaft, sieht man sie nur von innen
+            const ganz = new THREE.Group(), teil = new THREE.Group()
+            tunnelRoehre(punkteVon(a, z), ganz)
+            if (z2 - a2 >= 10) tunnelRoehre(punkteVon(a2, z2), teil)
+            ganz.visible = false
+            feinLinien.add(ganz, teil)
+            roehren.push({ von: x.von, bis: x.bis, ganz, teil })
           }
           bei = Math.max(bei, x.bis)
         }
@@ -4355,6 +4382,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)
           const tief = tunnel ? Math.min(augeM - tunnel.von, tunnel.bis - augeM) - portalInnen(tunnel.bis - tunnel.von) : 0
           tunnelDunkel(Math.min(1, Math.max(0, tief) / TUNNEL_DUNKEL_M), pult?.daemmerung)
+          for (const x of roehren) { const drin = augeM > x.von && augeM < x.bis; x.ganz.visible = drin; x.teil.visible = !drin }
           const auge = feinPunkt3d(augeM)
           auge.y += FUEHRERSTAND_HOEHE_M * faktor / 1000
           // der Blick folgt der Richtung des Gleises unter dem Auge, nicht einem Punkt weit voraus: so schwenkte die Kamera
