@@ -294,10 +294,11 @@ data/gleishoehe/  Höhe der Gleise: alle Gleisachsen aus swissTLM3D (TLM_EISENBA
              ob laut KUNSTBAUTE im Tunnel (Zahl der Punkte negativ; die App macht daraus Tunnel ab 50 m, wo der Weg keinen kennt, nur fürs Bild,
              mitGleisTunneln), in
              Kacheln von 10 km (pipeline/build_gleishoehe.py, 340 Kacheln, 4,3 MB); die App sucht alle 10 m die Achse höchstens 25 m neben ihrem
-             Weg, höchstens 45° schräg, bei mehreren übereinander (Kehrtunnel) die zur Höhe davor passende, Lücken bis 1,5 km gerade, über 30 m
+             Weg, höchstens 45° schräg; welches Gleis, entscheidet eine Folge über den ganzen Weg (Viterbi): nah am Weg, wenig Sprung quer, teuer
+             nur steiler als 8 % (GLEIS_STEIL; Michael, 2026-10-16, St. Gallen–Gossau: das flache Bündel neben der fallenden Hauptlinie gab
+             «eine kleine Achterbahn», 8 m auf 100 m; Kehrtunnel übereinander bleiben getrennt), Lücken bis 1,5 km gerade, über 30 m
              gemittelt (gleisHoehenLaden in Relief.tsx); gilt für die Linie in 3D und im Führerstand, auch in Tunneln und auf Brücken; sonst wie früher aus dem Gelände;
-             im Führerstand rastet die Linie auch seitlich auf die Achse ein (Abstand über 50 m gemittelt, bei mehreren Gleisen das seitlich nächste
-             zum davor, an Lücken über 200 m auslaufend, pkGleis; Michael, 2026-10-15, BTI: bis 19 m «neben der Realität»), Suche bis 25 m
+             im Führerstand rastet die Linie auch seitlich auf die Achse ein (Abstand über 50 m gemittelt, dasselbe Gleis wie für die Höhe, an Lücken über 200 m auslaufend, pkGleis; Michael, 2026-10-15, BTI: bis 19 m «neben der Realität»), Suche bis 25 m
 data/bahnbruecken.json  Gleisachsen auf Brücken aus swissTLM3D (TLM_EISENBAHN, KUNSTBAUTE Brücke), je Gleis eine Achse, dazu
              ANZAHL_SPUREN wo genannt (pipeline/build_bahnbruecken.py, 6'708 Achsen, 421 KB); für die Breite der Bahnbrücken im Führerstand
 data/strassenbruecken.json  Strassen- und Wegbrücken über der Bahn aus swissTLM3D (TLM_STRASSE mit Höhe, KUNSTBAUTE Brücke): nur

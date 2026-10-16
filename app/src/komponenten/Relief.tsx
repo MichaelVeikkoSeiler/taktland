@@ -1504,6 +1504,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
  *  build_gleishoehe.py): alle GLEIS_SCHRITT_M die Achse höchstens GLEIS_NEBEN_M daneben, die dem Weg folgt (höchstens 45°
  *  schräg); liegen mehrere übereinander (Kehrtunnel), die mit der Höhe, die an den Schritt davor passt. Lücken bis
  *  GLEIS_LUECKE_M gerade überbrückt, sonst NaN: dort bleibt die Höhe aus dem Gelände */
+/** so steil darf ein Gleis zwischen zwei Schritten werden, ohne dass es teuer wird (in keiner Quelle; Adhäsion bis etwa 7 %, Zahnrad steiler kostet nur) */
+const GLEIS_STEIL = 0.08
 const GLEIS_SCHRITT_M = 10, GLEIS_NEBEN_M = 25, GLEIS_LUECKE_M = 1500, GLEIS_EINLAUF_M = 200
 /** z: Höhe, d: Abstand der Achse quer zum Weg (positiv nach links, q = (-tn, te)), je GLEIS_SCHRITT_M ab m0, NaN ohne Achse;
  *  tunnel: 1, wo die Achse laut swissTLM3D in einem Tunnel liegt */
@@ -1543,7 +1545,8 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
     }
   }
   const z = new Float32Array(n).fill(NaN), quer = new Float32Array(n).fill(NaN), tunnel = new Uint8Array(n)
-  let vorZ = NaN, vorD = 0, vorM = -Infinity
+  // je Schritt die Gleise daneben: [Abstand zum Weg, Höhe, Abstand quer, im Tunnel]
+  const alle: Array<Array<[number, number, number, number]>> = []
   for (let i = 0; i < n; i++) {
     const mm = von + i * GLEIS_SCHRITT_M
     const [e, nn] = lage(mm), [ve, vn] = lage(mm - 10), [he, hn] = lage(mm + 10)
@@ -1564,19 +1567,50 @@ async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
         }
       }
     }
-    if (!kandidaten.length) continue
-    // gleich hoch wie davor (Kehrtunnel übereinander), dann das Gleis, das seitlich am nächsten bei dem davor liegt
-    // (mehrere Gleise nebeneinander), sonst das nächste
-    let wahl: [number, number, number, number] | null = null
-    if (!Number.isNaN(vorZ) && mm - vorM < 300) {
-      const passt = kandidaten.filter((c) => Math.abs(c[1] - vorZ) <= 2 + 0.08 * (mm - vorM))
-      if (!passt.length) continue
-      for (const c of passt) if (!wahl || Math.abs(c[2] - vorD) < Math.abs(wahl[2] - vorD)) wahl = c
-    } else {
-      for (const c of kandidaten) if (!wahl || c[0] < wahl[0]) wahl = c
-    }
-    z[i] = wahl![1]; quer[i] = wahl![2]; tunnel[i] = wahl![3]; vorZ = wahl![1]; vorD = wahl![2]; vorM = mm
+    // gleich hohe Gleise am selben Ort zählen einmal
+    kandidaten.sort((x, y) => x[0] - y[0])
+    alle.push(kandidaten.filter((c, j) => !kandidaten.slice(0, j).some((b) => Math.abs(b[1] - c[1]) < 0.3 && Math.abs(b[2] - c[2]) < 1)).slice(0, 12))
   }
+  // die Folge von Gleisen über den ganzen Weg (Michael, 2026-10-15: bei St. Gallen «eine kleine Achterbahn»: das flache
+  // Bündel neben der fallenden Hauptlinie war seitlich näher, an seinem Ende sprang die Höhe 8 m): Kosten sind der Abstand
+  // zum Weg, Sprünge quer und vor allem ein Gefälle steiler als GLEIS_STEIL; über Lücken bis 300 m hinweg, sonst neu
+  let ketteAb = -1
+  const kette = (bis: number) => {
+    if (ketteAb < 0) return
+    const schritte: number[] = []
+    for (let i = ketteAb; i < bis; i++) if (alle[i].length) schritte.push(i)
+    if (!schritte.length) return
+    const kosten: number[][] = [], vor: number[][] = []
+    schritte.forEach((i, s2) => {
+      const c = alle[i]
+      kosten.push(c.map((x) => x[0]))
+      vor.push(c.map(() => -1))
+      if (!s2) return
+      const iv = schritte[s2 - 1], cv = alle[iv], dm = (i - iv) * GLEIS_SCHRITT_M
+      c.forEach((x, k) => {
+        let best = Infinity, bk = -1
+        cv.forEach((y, kv) => {
+          const steil = Math.max(0, Math.abs(x[1] - y[1]) - GLEIS_STEIL * dm - 0.3)
+          const w = kosten[s2 - 1][kv] + 0.3 * Math.abs(x[2] - y[2]) + 200 * steil
+          if (w < best) { best = w; bk = kv }
+        })
+        kosten[s2][k] += best; vor[s2][k] = bk
+      })
+    })
+    let k = kosten[kosten.length - 1].indexOf(Math.min(...kosten[kosten.length - 1]))
+    for (let s2 = schritte.length - 1; s2 >= 0; s2--) {
+      const x = alle[schritte[s2]][k], i = schritte[s2]
+      z[i] = x[1]; quer[i] = x[2]; tunnel[i] = x[3]
+      k = vor[s2][k]
+    }
+  }
+  let zuletzt = -Infinity
+  for (let i = 0; i < n; i++) {
+    if (!alle[i].length) continue
+    if ((i - zuletzt) * GLEIS_SCHRITT_M > 300) { kette(i); ketteAb = i }
+    zuletzt = i
+  }
+  kette(n)
   // Lücken gerade überbrücken, dann über 30 m mitteln (die Achsen haben Ecken)
   let letzte = -1
   for (let i = 0; i < n; i++) {
