@@ -130,7 +130,16 @@ data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierun
              platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen; Abschnitte anderer Bahnen ohne Verlauf im
              Schienennetz des BAV bekommen den kürzesten Weg im Gleisnetz von swissTLM3D, höchstens 1,5-mal so lang wie die Luftlinie
              (verlauf_nach_tlm in build_strecken.py, 9 Abschnitte; Michael, 2026-10-15: Hondrich Süd–Spiez lag als Gerade bis 800 m neben
-             dem Hondrichtunnel, der Zug fuhr durch den Berg und sah Häuser und Bäume von unten)
+             dem Hondrichtunnel, der Zug fuhr durch den Berg und sah Häuser und Bäume von unten), ebenso wo der Verlauf des BAV ein Stück von
+             100 m mehr als 25 m neben jedem Gleis liegt, wenn der Weg höchstens 25 % länger oder 20 % kürzer ist (abseits_m, 27 Abschnitte:
+             Preda–Spinas durch den neuen Albulatunnel, Furka, Oberalp, Kalpetran, Vereina …); im Gleisnetz wird eine Achse geteilt, wo eine
+             andere in sie mündet; Kilometersprünge (dieselben km an zwei Orten, Linien 201, 251, 610, 651, 710) nach der Lage geordnet, die km
+             des doppelten Stücks dazwischen verteilt (sprung_ordnen; vorher sprang die Linie bei Eschenbach LU 300 m vor und zurück);
+             gefunden mit der Prüfung über das ganze Netz (app/scripts/netzpruefung.ts, Michael, 2026-10-16): je Abschnitt dieselben
+             Funktionen wie die App (fahrwegBauen, src/gleisweg.ts) ohne Browser, in etwa 20 s; meldet Stücke neben oder ohne Gleis,
+             Wackler, steile Stellen und Tunnel, die nur das Gleisnetz kennt (Ergebnis in data/raw/netzpruefung, nicht in Git); offen:
+             Biberist Ost–Solothurn und Burgdorf–Burgdorf Steinhof West (Gerade, der Weg im Gleisnetz kehrt um oder ist zu lang),
+             Campocologno–Tirano (Italien, ohne swissTLM3D)
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte
              bei Tunneln, Brücken und auf den Linienseiten (pipeline/build_karte.py),
              selbst gezeichnet, ohne Kartendienst
@@ -262,7 +271,7 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              700 m neben dem Zug durch die Orte einer Strecke liegen (STRECKEN in pipeline/build_scharf.py, 1'499 Kacheln, 201 MB); im Führerstand ein Netz je Kachel, eigenes Bild
              nur bis 800 m um einen Punkt 400 m voraus, mit dem Tempo weiter voraus, 4 s Fahrt, höchstens 1,6 km mehr (SCHARF_BILD_M, SCHARF_VORAUS_S in Relief.tsx; Michael, 2026-10-14: bei 2'000 km/h fuhr der Zug durch die Kacheln, bevor ihre Bilder da waren), sonst die Leinwand des feinen
              Geländes, das darunter 5 m sinkt; nur mit Luftbild; im Führerstand der Verlauf alle 5 m geglättet, mit einer Glockenkurve so breit, dass eine Kurve höchstens 0,5 m nach innen rückt
-             (σ = √(2·R·0,5 m), 6 bis 35 m, glatt und glattBei, GLATT_*; Michael, 2026-10-16, Bern–Zürich: «Kurvenelemente … die es sicher nicht braucht … eckig»; vorher Douglas-Peucker und Catmull-Rom durch jeden Punkt, das gab zwischen Bern und Zollikofen 71 Stellen mit Radien unter 150 m), Höhe der Linie einmal je feinem Gelände gerechnet (profilRechnen): Gelände unter der Linie ohne Brücken und
+             (σ = √(2·R·0,5 m), 6 bis 35 m, an den Enden gespiegelt, glatt und glattBei in src/gleisweg.ts, GLATT_*; Michael, 2026-10-16, Bern–Zürich: «Kurvenelemente … die es sicher nicht braucht … eckig»; vorher Douglas-Peucker und Catmull-Rom durch jeden Punkt, das gab zwischen Bern und Zollikofen 71 Stellen mit Radien unter 150 m), Höhe der Linie einmal je feinem Gelände gerechnet (profilRechnen): Gelände unter der Linie ohne Brücken und
              Tunnel (swissALTI3D zeigt dort Talgrund oder Berg), Median über 50 m davor und danach gegen Unterführungen und Gräben, dann
              Mittel über 150 m (vorher 40 m; Michael, 2026-10-15: Münchenbuchsee–Schüpfen schlängelte, die Linie liegt einen bis zwei Meter neben
              dem Gleis und mass Damm und Einschnitt), zuletzt über 30 m (PROFIL_MEDIAN_M …; Michael, 2026-10-11: «kleine Unebenheiten»), Täler und Buckel ohne Brücke oder Tunnel in den Daten (schmaler als 1,5 km, mehr als 6 m tief, irgendwo steiler als 8 %) gerade über- oder unterquert, ohne Bauwerk zu zeichnen (TAL_FENSTER_M …; Lorrainebrücke in Bern, deren Länge in keiner Quelle steht), 150 m vor und nach einem Tunnel eine Gerade, die Linie nie darüber (TUNNEL_ANLAUF_M), wo es die Höhe der Gleise aus data/gleishoehe gibt, gilt sie (1 m darüber) statt all dessen; ein Ende
@@ -343,6 +352,7 @@ python3 generator/offen.py 8                     # die nächsten Bahnhöfe ohne 
 .venv/bin/python generator/linien.py --alle          # alle Linienseiten bauen
 .venv/bin/python generator/linien.py --validieren    # Linienseiten prüfen
 .venv/bin/python pipeline/build_strecken.py      # Netz für die Seite «Strecke»
+cd app && npx vite build -c scripts/vite.netzpruefung.config.ts && node node_modules/.netzpruefung/netzpruefung.js   # Prüfung über das ganze Netz
 python3 generator/strecken.py --validieren       # Tunnel und Brücken je Abschnitt prüfen
 python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 .venv/bin/python pipeline/build_karte.py         # Netz für die kleine Tunnelkarte
