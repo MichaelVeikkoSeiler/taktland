@@ -184,18 +184,15 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             können unvollständig oder veraltet sein; es gelten allein die Signale vor Ort.
           </li>
           <li>
-            «Probefahren» spielt einen Weg ohne Zug ab, in Echtzeit oder 5- bis 200-mal
-            schneller.
+            Eine Probefahrt spielt einen Weg ohne Zug ab, in Echtzeit oder 2- bis 200-mal
+            schneller. Die eigenen Probefahrten und die Bergstrecken stehen unter Spiele, «Modellbahn», dort auch als Modell,
+            auch in einer VR-Brille.
           </li>
           <li>
             «3D» auf der Karte zeigt auf jeder Fahrt und Probefahrt das Gelände rund um den Zug, zum
-            Drehen und Zoomen. Unter «Probefahren» stehen dazu bekannte Bergstrecken als Probefahrt. Als Modell, auch in
-            einer VR-Brille, gibt es sie unter Spiele, «Modellbahn». Die
-            Höhe der Gleise steht in keiner Quelle: Der Weg liegt auf dem Gelände, in Tunneln und auf
-            Brücken gerade zwischen den Enden.
-          </li>
-          <li> Das «Fahrtblatt» ist ein Druckbogen mit Karte und Liste zum Abhaken,
-            auf einer oder zwei Seiten.
+            Drehen und Zoomen. Im Führerstand zeigt es beim Fahren, was an deiner Stelle im Zug vorbeizieht, bei der
+            Probefahrt, was vorne an der Spitze liegt. Die Höhe der Gleise kommt aus swissTLM3D (swisstopo); wo dort kein
+            Gleis liegt, folgt der Weg dem Gelände.
           </li>
         </Punkte>
       </Abschnitt>
@@ -219,7 +216,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Das Logbuch hält jede Fahrt fest, mit Notizen und von Hand eingetragenen Fahrten.
             Das Sammelheft zeigt, welche Tunnel, Brücken und Bahnhöfe du schon durchfahren
-            hast; «Fehlt noch» kennt nur die der SBB. Favoriten sind Bahnhöfe mit Stern.
+            hast; «Fehlt noch» kennt nur die der SBB. Favoriten sind Bahnhöfe mit Stern. Das «Fahrtblatt» ist
+            ein Druckbogen mit Karte und Liste zum Abhaken, auf einer oder zwei Seiten.
             Die «Einstellungen» öffnest du unten auf jeder Seite, über den Quellenangaben. Dort
             stehen Schriftgrösse und Schriftart, ob der Bildschirm beim Fahren wach bleibt, die
             Standardwerte dafür, was beim Fahren gemeldet wird, und unter «Audio» die Lautstärke und

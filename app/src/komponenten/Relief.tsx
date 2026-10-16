@@ -4378,7 +4378,11 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
             const [pe, pn] = punktBei(bis(spitze + r * (SCHARF_VORAUS_M + Math.min(SCHARF_VORAUS_MAX_M, scharfV * SCHARF_VORAUS_S))))
             scharfBilderPflegen(pe, pn)
           }
-          const augeM = bis(spitze + r * 15)
+          // beim Fahren mit GPS sitzt man im Zug, nicht vorne: das Bild zeigt, was am eigenen Standort vorbeizieht (Michael,
+          // 2026-10-16, Müntschemier–Bern: der Führerstand zeigte, was 70 bis 120 m weiter hinten etwa 4 s später am Fenster
+          // vorbeikam); sonst vorne an der Spitze
+          const blickM = zugVonAussen && tempoQuelle !== 'probe' && zug.current !== null ? bis(zug.current) : spitze
+          const augeM = blickM === spitze ? bis(spitze + r * 15) : blickM
           const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)
           const tief = tunnel ? Math.min(augeM - tunnel.von, tunnel.bis - augeM) - portalInnen(tunnel.bis - tunnel.von) : 0
           tunnelDunkel(Math.min(1, Math.max(0, tief) / TUNNEL_DUNKEL_M), pult?.daemmerung)
@@ -4390,7 +4394,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           // auf der Strecke»); geneigt zur Linie 300 m voraus
           const vorn = feinPunkt3d(bis(augeM + r * 40)), hinten = feinPunkt3d(bis(augeM - r * 40))
           const rx = vorn.x - hinten.x, rz = vorn.z - hinten.z, l = Math.hypot(rx, rz) || 1
-          const ziel = new THREE.Vector3(auge.x + (rx / l) * 0.3, feinPunkt3d(bis(spitze + r * 300)).y, auge.z + (rz / l) * 0.3)
+          const ziel = new THREE.Vector3(auge.x + (rx / l) * 0.3, feinPunkt3d(bis(blickM + r * 300)).y, auge.z + (rz / l) * 0.3)
           ziel.y = Math.max(ziel.y, auge.y - 0.02)
           if (pult) {
             const v = zug === eigenerZug && !zugVonAussen ? pult.v : (() => {
@@ -4402,7 +4406,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
               altS = s
               return gemessen
             })()
-            pult.aktualisieren(dt, { s: spitze, richtung: r, anfang: pk[0].m, ende: pk[pk.length - 1].m, v,
+            pult.aktualisieren(dt, { s: blickM, richtung: r, anfang: pk[0].m, ende: pk[pk.length - 1].m, v,
               quelle: zug === eigenerZug && !zugVonAussen ? 'simulation' : tempoQuelle ?? 'gps', ankuendigungen, von: pultVon, nach: pultNach })
           }
           if (inBrille) {

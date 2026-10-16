@@ -1,18 +1,16 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { tonBereitlegen } from '../fahrt'
 import {
-  favoritUmschalten, gemerktLesen, type GemerkteFahrt, probefahrtEinsetzen, probefahrtUmschalten, probefahrtVerschieben,
+  favoritUmschalten, gemerktLesen, type GemerkteFahrt,
 } from '../fahrten'
 import { alphabetisch, useFavoriten } from '../favoriten'
 import type { BahnhofIndex, IndexEintrag } from '../typen'
 import { abstandM, abstandText, freigabeHilfe } from '../umgebung'
 import { BahnhofFeld, fahrtAdresse, type StreckenWahl } from './Strecke'
-import type { FahrtTeil } from './Kopf'
 import { Stern } from './Stern'
 import Wischen from './Wischen'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
-import { dreiDVormerken, reliefListe } from '../relief'
 
 type Art = 'ziel' | 'beide' | 'ohne'
 const ART_MERKEN = 'taktland.fahrtwahl.v1'
@@ -37,24 +35,11 @@ type Suche =
  * der Seite «Strecke», dazu die gemerkten Fahrten. Gestartet wird
  * auf der Seite «Strecke», die den Weg sucht.
  */
-export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: FahrtTeil }) {
+export function Fahrt({ index }: { index: BahnhofIndex | null }) {
   const [art, setArt] = useState<Art>(artLesen)
   const [wahl, setWahl] = useState<StreckenWahl>({ von: null, nach: null, ueber: null })
   const [suche, setSuche] = useState<Suche>({ art: 'aus' })
   const [gemerkt, setGemerkt] = useState(gemerktLesen)
-  const [entfernt, setEntfernt] = useState<{ f: GemerkteFahrt; stelle: number } | null>(null)
-  const [blatt, setBlatt] = useState<StreckenWahl>({ von: null, nach: null, ueber: null })
-  const blattBereit = blatt.von !== null && blatt.nach !== null && blatt.von !== blatt.nach
-  // welche Probefahrt gerade ihre beiden Richtungen zeigt
-  const [richtungWahl, setRichtungWahl] = useState<string | null>(null)
-  const [ordnen, setOrdnen] = useState(false)
-  const [neueProbe, setNeueProbe] = useState<{ von: number | null; nach: number | null; ueber: number | null } | null>(null)
-  useEffect(() => {
-    if (!entfernt) return
-    const uhr = setTimeout(() => setEntfernt(null), 8000)
-    return () => clearTimeout(uhr)
-  }, [entfernt])
-
   const bahnhof = useMemo(() => new Map((index?.bahnhoefe ?? []).map((b) => [b.uic, b])), [index])
   const zielNamen = useMemo(() => namenFuerFahrt(index), [index])
   const name = useCallback((uic: number | null) => (uic ? bahnhof.get(uic)?.name ?? zielNamen.get(uic) ?? String(uic) : ''),
@@ -100,7 +85,7 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
 
   // «Nur Ziel»: den Start gleich suchen, sobald die Bahnhöfe da sind
   useEffect(() => {
-    if (teil === 'neu' && art === 'ziel' && index && suche.art === 'aus') standortSuchen()
+    if (art === 'ziel' && index && suche.art === 'aus') standortSuchen()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [art, index])
 
@@ -119,7 +104,6 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
 
   return (
     <div className="px-4 pb-4">
-      {teil === 'neu' && (<>
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Mitfahren</h1>
       <p className="mt-2 leading-relaxed">
         Im Zug meldet Taktland Tunnel, Brücken und Bahnhöfe auf deinem Weg, etwa 20 oder 10
@@ -135,206 +119,9 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
                       umschalten={(f) => setGemerkt(favoritUmschalten(f))} />
         </div>
       )}
-      </>)}
 
-      {/* Probefahrten zum Anwählen, Starten, Hinzufügen und Löschen, auf- und
-          zuklappbar (Michael, 2026-09-26) */}
-
-      {teil === 'probe' && (
-        <section>
-          <h1 className="mt-6 text-2xl font-bold tracking-tight">Probefahren</h1>
-          <p className="mt-2 leading-relaxed">
-            Eine Probefahrt spielt den Weg im Zeitraffer ab, ohne Zug und ohne Standort. Erst die
-            Fahrt wählen, dann die Richtung.
-          </p>
-          <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-            Probefahren zeigt eine Fahrt wie unterwegs, mit Karte, Meldungen und wählbarem Tempo. Die{' '}
-            <a href="#/modellbahn" className="underline underline-offset-2">Modellbahn</a> unter Spiele zeigt eine Strecke als
-            Modell zum Drehen, auch mit VR-Brille.
-          </p>
-          {index && (
-            <div className="mt-4">
-              {entfernt && (
-                <div role="status" className="kachel mt-2 flex items-center justify-between gap-3 py-1 pl-4 pr-1">
-                  <span className="min-w-0">{fahrtText(entfernt.f)} entfernt.</span>
-                  <button type="button"
-                          onClick={() => { setGemerkt(probefahrtEinsetzen(entfernt.f, entfernt.stelle)); setEntfernt(null) }}
-                          className="min-h-11 shrink-0 rounded-lg px-3 font-bold text-sbb-red hover:bg-sbb-silver
-                                     dark:hover:bg-sbb-iron">
-                    Rückgängig
-                  </button>
-                </div>
-              )}
-              {gemerkt.probefahrten.length > 1 && (
-                <div className="flex justify-end">
-                  <button type="button" onClick={() => { setOrdnen((o) => !o); setRichtungWahl(null) }}
-                          className="min-h-11 rounded-lg px-3 text-sm font-medium hover:bg-sbb-silver
-                                     dark:hover:bg-sbb-iron">
-                    {ordnen ? 'Fertig' : 'Reihenfolge ändern'}
-                  </button>
-                </div>
-              )}
-              {gemerkt.probefahrten.length > 0 && ordnen && (
-                /* Reihenfolge mit Pfeilen ändern (Michael, 2026-09-30) */
-                <ul className="mt-2 kachelliste">
-                  {gemerkt.probefahrten.map((f, i) => (
-                    <li key={`${f.von}-${f.nach}-${f.ueber}`} className="flex items-center">
-                      <span className="min-w-0 flex-1 px-3 py-3 font-medium">{name(f.von)} – {name(f.nach)}
-                        {f.ueber ? ` (über ${name(f.ueber)})` : ''}</span>
-                      {([[-1, '↑', 'nach oben'], [1, '↓', 'nach unten']] as const).map(([r, z, w]) => (
-                        <button key={r} type="button" aria-label={`${fahrtText(f)} ${w}`} title={`Nach ${r < 0 ? 'oben' : 'unten'}`}
-                                disabled={i + r < 0 || i + r >= gemerkt.probefahrten.length}
-                                onClick={() => setGemerkt(probefahrtVerschieben(i, r))}
-                                className="flex min-h-11 w-12 shrink-0 items-center justify-center self-stretch border-l
-                                           border-sbb-cloud text-xl hover:bg-sbb-milk disabled:opacity-30
-                                           dark:border-sbb-iron dark:hover:bg-sbb-charcoal">
-                          {z}
-                        </button>
-                      ))}
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {gemerkt.probefahrten.length > 0 && !ordnen && (
-                <ul className="mt-2 kachelliste">
-                  {gemerkt.probefahrten.map((f, i) => {
-                    const k = `${f.von}-${f.nach}-${f.ueber}`
-                    const offen = richtungWahl === k
-                    return (
-                    <li key={k}>
-                    {/* nach links wischen und bestätigen löscht die Probefahrt (Michael, 2026-10-08) */}
-                    <Wischen frage={`Probefahrt ${name(f.von)} – ${name(f.nach)}${f.ueber ? ` (über ${name(f.ueber)})` : ''} löschen?`}
-                             loeschen={() => { setEntfernt({ f, stelle: i }); setGemerkt(probefahrtUmschalten(f)) }}>
-                    <div className="flex items-stretch">
-                      {/* erst die Probefahrt wählen, dann die Richtung (Michael, 2026-09-26) */}
-                      <button type="button" onClick={() => setRichtungWahl(offen ? null : k)} aria-expanded={offen}
-                              className="flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3 px-3 py-3
-                                         text-left hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
-                        <span className="min-w-0 font-medium">{name(f.von)} – {name(f.nach)}
-                          {f.ueber ? ` (über ${name(f.ueber)})` : ''}</span>
-                        <span className={`pfeil shrink-0 ${offen ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
-                          {offen ? '↑' : '↓'}
-                        </span>
-                      </button>
-                      <button type="button" aria-label={`${fahrtText(f)} aus den Probefahrten entfernen`}
-                              title="Aus den Probefahrten entfernen"
-                              onClick={() => { setEntfernt({ f, stelle: i }); setGemerkt(probefahrtUmschalten(f)) }}
-                              className="flex min-h-11 w-12 shrink-0 items-center justify-center border-l
-                                         border-sbb-cloud text-xl text-sbb-metal hover:bg-sbb-milk
-                                         hover:text-sbb-black dark:border-sbb-iron dark:text-sbb-storm
-                                         dark:hover:bg-sbb-charcoal dark:hover:text-sbb-white">
-                        ×
-                      </button>
-                    </div>
-                    </Wischen>
-                    {offen && (
-                      <div className="grid gap-2 px-3 pb-3">
-                        {[f, { von: f.nach, nach: f.von, ueber: f.ueber }].map((r) => (
-                          <div key={`${r.von}-${r.nach}`} className="flex gap-2">
-                          <button type="button" onClick={() => starten(r, true)}
-                                  className="flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
-                                             text-left hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
-                            <span className="min-w-0 font-medium">{fahrtText(r)}</span>
-                            <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
-                          </button>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    </li>
-                    )
-                  })}
-                </ul>
-              )}
-              {neueProbe ? (
-                <div className="kachel mt-2 space-y-3 p-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <p className="font-medium">Probefahrt hinzufügen</p>
-                    <button type="button" onClick={() => setNeueProbe(null)}
-                            className="min-h-11 rounded-lg px-3 text-sm font-medium hover:bg-sbb-silver
-                                       dark:hover:bg-sbb-iron">
-                      Abbrechen
-                    </button>
-                  </div>
-                  <BahnhofFeld bezeichnung="Von" wert={neueProbe.von} bahnhoefe={imNetz} name={name}
-                               aendern={(u) => setNeueProbe((w) => w && { ...w, von: u })} />
-                  <BahnhofFeld bezeichnung="Nach" wert={neueProbe.nach} bahnhoefe={imNetz} name={name}
-                               aendern={(u) => setNeueProbe((w) => w && { ...w, nach: u })} />
-                  {/* «Über» wie beim Fahrtblatt (Michael, 2026-10-06: Erstfeld – Biasca über Göschenen) */}
-                  <BahnhofFeld bezeichnung="Über (optional)" wert={neueProbe.ueber ?? null} bahnhoefe={imNetz} name={name}
-                               aendern={(u) => setNeueProbe((w) => w && { ...w, ueber: u })} />
-                  <button type="button"
-                          disabled={neueProbe.von === null || neueProbe.nach === null
-                                    || neueProbe.von === neueProbe.nach
-                                    || neueProbe.ueber === neueProbe.von || neueProbe.ueber === neueProbe.nach}
-                          onClick={() => {
-                            const f = { von: neueProbe.von!, nach: neueProbe.nach!, ueber: neueProbe.ueber ?? null }
-                            if (!gemerkt.probefahrten.some((x) => x.von === f.von && x.nach === f.nach && (x.ueber ?? null) === f.ueber)) {
-                              setGemerkt(probefahrtUmschalten(f))
-                            }
-                            setNeueProbe(null)
-                          }}
-                          className="w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125
-                                     disabled:opacity-40">
-                    Hinzufügen
-                  </button>
-                </div>
-              ) : (
-                <button type="button" onClick={() => setNeueProbe({ von: null, nach: null, ueber: null })}
-                        className="kachel kachel-link mt-2 flex min-h-11 w-full items-center gap-3 px-4 py-3
-                                   text-left font-medium">
-                  <span className="text-2xl leading-none text-sbb-red" aria-hidden="true">+</span>
-                  Probefahrt hinzufügen
-                </button>
-              )}
-              <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-                Neue Probefahrten kommen auch auf der Seite «Strecke» mit «Als Probefahrt merken»
-                dazu. Sie bleiben auf diesem Gerät.
-              </p>
-            </div>
-          )}
-        </section>
-      )}
-      {/* die Bergstrecken, früher ein eigener Reiter «3D» (Michael, 2026-10-08: jede Probefahrt hat 3D) */}
-      {teil === 'probe' && <DreiDStrecken name={name} starten={(w) => { dreiDVormerken(); starten(w, true) }} />}
-
-      {/* Das Fahrtblatt zum Ausdrucken, nur hier (Michael, 2026-09-26) */}
-      {teil === 'blatt' && (
-        <section>
-          <h1 className="mt-6 text-2xl font-bold tracking-tight">Fahrtblatt</h1>
-          <p className="mt-2 leading-relaxed">
-            Ein Blatt A4 zum Ausdrucken für die Fahrt mit Kindern: oben die Karte des Wegs, unten die
-            ausgewählte Tunnel, Brücken, Bahnhöfe, Gipfel und Seen zum Abhaken.
-          </p>
-          {index && (
-            <div className="mt-4 space-y-3">
-              <BahnhofFeld bezeichnung="Von" wert={blatt.von} bahnhoefe={imNetz} name={name}
-                           aendern={(u) => setBlatt((w) => ({ ...w, von: u }))} />
-              <BahnhofFeld bezeichnung="Nach" wert={blatt.nach} bahnhoefe={imNetz} name={name}
-                           aendern={(u) => setBlatt((w) => ({ ...w, nach: u }))} />
-              <BahnhofFeld bezeichnung="Über (optional)" wert={blatt.ueber} bahnhoefe={imNetz} name={name}
-                           aendern={(u) => setBlatt((w) => ({ ...w, ueber: u }))} />
-              <BahnenWahl />
-              <button type="button" disabled={!blattBereit}
-                      onClick={() => {
-                        window.location.hash = `#/fahrtblatt?von=${blatt.von}&nach=${blatt.nach}${blatt.ueber ? `&ueber=${blatt.ueber}` : ''}`
-                      }}
-                      className="w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125
-                                 disabled:opacity-40">
-                Fahrtblatt erstellen
-              </button>
-              {blatt.von !== null && blatt.von === blatt.nach && (
-                <p className="text-sm">Start und Ziel sind derselbe Bahnhof.</p>
-              )}
-            </div>
-          )}
-        </section>
-      )}
-
-      {teil === 'neu' && (
       <section className="mt-6">
-      {/* im Stil der Unterreiter «Mitfahren», «Probefahren», «Fahrtblatt» (Michael, 2026-10-01:
-          «Schaltflächen sind nicht einheitlich») */}
+      {/* im Stil der Segmente der App (Michael, 2026-10-01: «Schaltflächen sind nicht einheitlich») */}
       <div className="segmente grid grid-cols-3" role="group" aria-label="Wie wählen">
         {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel'], ['ohne', 'Ohne Ziel']] as const).map(([a, t]) => (
           <button key={a} type="button" aria-pressed={art === a} onClick={() => artWaehlen(a)}
@@ -417,7 +204,6 @@ export function Fahrt({ index, teil }: { index: BahnhofIndex | null; teil: Fahrt
         Fahrten bleiben auf diesem Gerät.
       </p>
       </section>
-      )}
     </div>
   )
 }
@@ -495,72 +281,6 @@ function FahrtListe({ titel, fahrten, text, favorit, starten, umschalten }: {
           </li>
         ))}
       </ul>
-    </section>
-  )
-}
-
-
-
-/** Die Bergstrecken mit eigenem Relief (Michael, 2026-10-06; seit 2026-10-08 unter «Probefahren» statt eines eigenen
- *  Reiters), zum Anschauen und als Probefahrt in beide Richtungen: erst die Strecke wählen, dann die Richtung */
-function DreiDStrecken({ name, starten }: { name: (uic: number | null) => string; starten: (w: StreckenWahl) => void }) {
-  const [liste, setListe] = useState<Awaited<ReturnType<typeof reliefListe>> | null>(null)
-  const [fehler, setFehler] = useState<string | null>(null)
-  const [offen, setOffen] = useState<string | null>(null)
-  useEffect(() => { reliefListe().then(setListe).catch((e: Error) => setFehler(e.message)) }, [])
-  const text = (w: StreckenWahl) => `${name(w.von)} → ${name(w.nach)}${w.ueber ? ` (über ${name(w.ueber)})` : ''}`
-  return (
-    <section>
-      <h2 className="mt-8 text-xl font-bold tracking-tight">Bergstrecken</h2>
-      <p className="mt-2 leading-relaxed">
-        Bekannte Bergstrecken als Probefahrt, die gleich in 3D beginnt. Als Modell zum Drehen, auch in der Brille, stehen
-        sie unter <a href="#/modellbahn" className="underline underline-offset-2">Spiele, Modellbahn</a>.
-      </p>
-      {fehler && <p className="mt-4 text-sm">Die Liste konnte nicht geladen werden. {fehler}</p>}
-      {!liste && !fehler && <p className="mt-4 text-sbb-metal">Wird geladen …</p>}
-      {liste && (
-        <ul className="kachelliste mt-4">
-          {liste.map((r) => {
-            const auf = offen === r.name
-            const p = r.probefahrt
-            return (
-              <li key={r.name}>
-                <button type="button" onClick={() => setOffen(auf ? null : r.name)} aria-expanded={auf}
-                        className="flex min-h-11 w-full items-center justify-between gap-3 px-4 py-3 text-left
-                                   hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
-                  <span className="min-w-0">
-                    <span className="block font-medium">{r.titel}</span>
-                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">
-                      {(r.linien ?? [r.linie]).length > 1 ? 'Linien' : 'Linie'} {(r.linien ?? [r.linie]).join(' und ')}
-                    </span>
-                  </span>
-                  <span className={`pfeil shrink-0 ${auf ? 'pfeil-oben' : 'pfeil-unten'}`} aria-hidden="true">
-                    {auf ? '↑' : '↓'}
-                  </span>
-                </button>
-                {auf && (
-                  <div className="grid gap-2 px-3 pb-3">
-                    {[p, { von: p.nach, nach: p.von, ueber: p.ueber }].map((w) => (
-                      <div key={`${w.von}-${w.nach}`} className="flex gap-2">
-                      <button type="button" onClick={() => starten(w)}
-                              className="flex min-h-11 min-w-0 flex-1 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
-                                         text-left hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
-                        <span className="min-w-0 font-medium">{text(w)}</span>
-                        <span className="shrink-0 text-sm font-bold text-sbb-red">Abspielen</span>
-                      </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </li>
-            )
-          })}
-        </ul>
-      )}
-      <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-        Gelände aus swissALTIRegio (swisstopo). Die Höhe der Gleise steht in keiner Quelle; die Linie ist aufs
-        Gelände gelegt.
-      </p>
     </section>
   )
 }

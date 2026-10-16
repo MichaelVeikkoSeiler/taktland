@@ -16,6 +16,7 @@ import { Fahrt } from './komponenten/Fahrt'
 import { Fortsetzen } from './komponenten/Fortsetzen'
 import { OhneZiel } from './komponenten/OhneZiel'
 import { Fahrtblatt } from './komponenten/Fahrtblatt'
+import { FahrtblattWahl } from './komponenten/FahrtblattWahl'
 import { Sammelheft } from './komponenten/Sammelheft'
 import { Favoriten } from './komponenten/Favoriten'
 import { Logbuch } from './komponenten/Logbuch'
@@ -44,7 +45,7 @@ import Teilen, { SYMBOL } from './komponenten/Teilen'
 type Seite =
   | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string; vonLinie: boolean } | { art: 'modellbahn' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
-  | { art: 'fahrtblatt'; wahl: StreckenWahl }
+  | { art: 'fahrtblatt'; wahl: StreckenWahl } | { art: 'fahrtblattwahl' }
   | { art: 'uebersicht'; liste: UebersichtArt }
   | { art: 'strecke'; wahl: StreckenWahl; modell?: boolean; fest?: boolean }
   | { art: 'bahnhof'; uic: number } | { art: 'linie'; nr: number }
@@ -79,12 +80,11 @@ function seiteAusAdresse(): Seite {
   const suchRaum = /^#\/erraten\/mit\/([A-Za-z]{4})$/.exec(h)
   if (suchRaum) return { art: 'erratenmit', raum: suchRaum[1].toUpperCase() }
   if (h === '#/standort') return { art: 'standort' }
-  // Fahren mit drei Unterseiten (Michael, 2026-09-29)
+  // Fahren ist nur noch Mitfahren (Michael, 2026-10-16); Probefahren und der frühere Reiter «3D» stehen bei der Modellbahn,
+  // das Fahrtblatt in der Reisetasche, alte Adressen führen dorthin
   if (h === '#/fahrt') return { art: 'fahrt', teil: 'neu' }
-  if (h === '#/fahrt/probe') return { art: 'fahrt', teil: 'probe' }
-  // der Reiter «3D» ist seit 2026-10-08 ein Teil von «Probefahren»; alte Links führen dorthin
-  if (h === '#/fahrt/3d') return { art: 'fahrt', teil: 'probe' }
-  if (h === '#/fahrt/blatt') return { art: 'fahrt', teil: 'blatt' }
+  if (h === '#/fahrt/probe' || h === '#/fahrt/3d') return { art: 'modellbahn' }
+  if (h === '#/fahrt/blatt' || h === '#/fahrtblatt') return { art: 'fahrtblattwahl' }
   if (h === '#/ohneziel') return { art: 'ohneziel' }
   if (h === '#/sammelheft') return { art: 'sammelheft' }
   if (h === '#/logbuch') return { art: 'logbuch' }
@@ -136,7 +136,8 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'favoriten': return 'favoriten'
     case 'einstellungen': return 'einstellungen'
     case 'sammelheft': return 'sammelheft'
-    case 'anleitung': case 'fahrt': case 'ohneziel': case 'fahrtblatt': return null
+    case 'fahrtblatt': case 'fahrtblattwahl': return 'fahrtblatt'
+    case 'anleitung': case 'fahrt': case 'ohneziel': return null
   }
 }
 
@@ -186,8 +187,7 @@ export default function App() {
           Fliesstext bleibt lesbar schmal (index.css), Listen stehen in Spalten (Michael, 2026-10-12) */}
       <div className="mx-auto max-w-2xl md:max-w-3xl xl:max-w-6xl">
         <Kopf aktiv={bereich} startseite={seite.art === 'start'} anleitung={seite.art === 'anleitung'}
-              fahrt={seite.art === 'fahrt' ? seite.teil : seite.art === 'ohneziel' ? 'neu'
-                : seite.art === 'fahrtblatt' ? 'blatt' : null} />
+              fahrt={seite.art === 'fahrt' ? seite.teil : seite.art === 'ohneziel' ? 'neu' : null} />
         <Fortsetzen />
 
         {fehler && (
@@ -213,7 +213,8 @@ export default function App() {
           </>
         )}
         {seite.art === 'standort' && <Standort index={index} />}
-        {seite.art === 'fahrt' && <Fahrt key={seite.teil} index={index} teil={seite.teil} />}
+        {seite.art === 'fahrt' && <Fahrt index={index} />}
+        {seite.art === 'fahrtblattwahl' && <FahrtblattWahl index={index} />}
         {seite.art === 'ohneziel' && <OhneZiel index={index} />}
         {seite.art === 'fahrtblatt' && <Fahrtblatt index={index} wahl={seite.wahl} />}
         {seite.art === 'sammelheft' && <Sammelheft index={index} />}

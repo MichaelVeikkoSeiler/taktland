@@ -34,10 +34,11 @@ export const SPIELE: Spiel[] = [
   // Michael, 2026-10-08: «neues Spiel 3D/VR», Name «Modellbahn»; die Brille gibt es nur hier, nicht unter Fahren
   {
     id: 'modellbahn', titel: 'Modellbahn', status: 'spielbereit', adresse: '#/modellbahn',
-    kurz: 'Eine Strecke als Modell im Gelände, auch in der VR-Brille.',
+    kurz: 'Eine Strecke als Modell im Gelände, auch in der VR-Brille, und deine Probefahrten.',
     bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: Jemand mit VR-Brille dreht am Tisch das Modell einer Bergstrecke mit Zug auf einem Viadukt.' },
     beschreibung: 'Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen, mit einer '
-      + 'Brille auch auf dem Tisch vor dir. Ein Modell, kein Abbild der Wirklichkeit.',
+      + 'Brille auch auf dem Tisch vor dir. Ein Modell, kein Abbild der Wirklichkeit. Dazu die Probefahrten, die einen Weg '
+      + 'wie unterwegs abspielen.',
   },
   {
     id: 'schweiz11', titel: 'Geo', status: 'spielbereit', adresse: '#/schweiz11',

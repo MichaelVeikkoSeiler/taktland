@@ -52,7 +52,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
         meldet einige Sekunden im Voraus, was als Nächstes kommt. Jede Art hat ihren eigenen Ton.
         Dazu kommt Sehenswertes links und rechts der Strecke, etwa Gipfel, Kulturgüter und
         Seilbahnen. Ohne selber im Zug zu sitzen, kannst du deine Wunschstrecken als Probefahrt
-        abfahren.
+        abfahren, unter Spiele bei der Modellbahn.
       </p>
       <p className={absatz}>
         <span className={fett}>Kein Fahrplan.</span> Taktland ist kein Reiseplaner und nicht mit
@@ -63,7 +63,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
       <p className={absatz}>
         <span className={fett}>Ausdrucken.</span> Das Fahrtblatt ist ein Druckbogen für unterwegs:
         oben die Karte des Wegs, unten Tunnel, Brücken, Bahnhöfe, Gipfel und Seen zum Abhaken. Zum
-        Beispiel zur Unterhaltung mit Kindern.
+        Beispiel zur Unterhaltung mit Kindern. Es steht in der Reisetasche.
       </p>
       <p className={absatz}>
         <span className={fett}>Festhalten.</span> Was du durchfährst, sammelt Taktland in der

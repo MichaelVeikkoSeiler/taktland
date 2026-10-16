@@ -30,7 +30,7 @@ import { reiterTon, wischTon } from '../audio'
 import { SPIEL_BEREICHE } from '../spiele'
 import { useEinstellungen } from '../einstellungen'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'modellbahn' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'einstellungen'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'modellbahn' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'fahrtblatt' | 'einstellungen'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -50,19 +50,15 @@ const REISETASCHE: Array<{ bereich: Bereich; text: string; adresse: string }> = 
   { bereich: 'logbuch', text: 'Logbuch', adresse: '#/logbuch' },
   { bereich: 'sammelheft', text: 'Sammelheft', adresse: '#/sammelheft' },
   { bereich: 'favoriten', text: 'Favoriten', adresse: '#/favoriten' },
+  // vorher unter Fahren (Michael, 2026-10-16: «Fahrblatt neuer Reiter (vierter) unter Reisetasche»)
+  { bereich: 'fahrtblatt', text: 'Fahrtblatt', adresse: '#/fahrtblatt' },
   // Audio und Einstellungen waren Reiter hier; seit 2026-10-06 ist Audio ein Teil der Einstellungen,
   // die über die Fusszeile erreichbar sind (Michael)
 ]
 
-/** Die Unterreiter von «Fahren» (Michael, 2026-09-29: «Fahren muss auch drei
- *  Unterseiten haben mit Neue Fahrt, Probefahren, Fahrtblatt») */
-export type FahrtTeil = 'neu' | 'probe' | 'blatt'
-const FAHREN: Array<{ bereich: FahrtTeil; text: string; adresse: string }> = [
-  // bis 2026-10-08 «Neue Fahrt» (Michael: «Mitfahren»)
-  { bereich: 'neu', text: 'Mitfahren', adresse: '#/fahrt' },
-  { bereich: 'probe', text: 'Probefahren', adresse: '#/fahrt/probe' },
-  { bereich: 'blatt', text: 'Fahrtblatt', adresse: '#/fahrt/blatt' },
-]
+/** «Fahren» hat keine Unterreiter mehr, nur noch Mitfahren (Michael, 2026-10-16: «Unter Fahren nur noch das Mitfahren»;
+ *  vorher dazu Probefahren, heute bei der Modellbahn, und Fahrtblatt, heute in der Reisetasche) */
+export type FahrtTeil = 'neu'
 
 /** Die Hauptreiter. Bahnhöfe, Strecken, Brücken und Tunnel sind unter «Bahnland»
  *  zusammengefasst (Michael, 2026-09-25: «ziemlich eng, alle diese Reiter
@@ -161,7 +157,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   const schluessel = anleitung ? 'anleitung' : startseite ? 'start' : aktiv ?? 'bahnhoefe'
   // die ganze Reisetasche mit dem Bild des Logbuchs
   const bild = fahrt ? BILDER.fahrt
-    : aktiv === 'sammelheft' || aktiv === 'favoriten' ? BILDER.logbuch
+    : aktiv === 'sammelheft' || aktiv === 'favoriten' || aktiv === 'fahrtblatt' ? BILDER.logbuch
     // die Einstellungen mit dem Bild von Info
     : aktiv === 'einstellungen' ? BILDER.anleitung
     // die Bahnübergänge mit dem Bild der Startseite, darauf ist einer zu sehen
@@ -174,9 +170,9 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)
   useEffect(() => { if (objekteAktiv) letzteObjekte = objekteAktiv }, [objekteAktiv])
-  // unter «Bahnland», «Reisetasche» und «Fahren» eine zweite Zeile mit den Unterreitern
+  // unter «Bahnland» und «Reisetasche» eine zweite Zeile mit den Unterreitern
   const unter: { name: string; liste: Array<{ bereich: string; text: string; adresse: string }>; raster: string } | null =
-    fahrt ? { name: 'Fahren', liste: FAHREN, raster: 'flex' }
+    fahrt ? null
     : objekteAktiv ? { name: 'Bahnland', liste: OBJEKTE, raster: 'flex' }
     : REISETASCHE.some((l) => l.bereich === aktiv) ? { name: 'Reisetasche', liste: REISETASCHE, raster: 'flex' } : null
   const unterAktiv: string | null = fahrt ?? aktiv
