@@ -93,10 +93,8 @@ const TUNNEL_ANLAUF_M = 150
 /** Führerstand: Höhe der Linie als Median über so viele Meter davor und danach, dann gemittelt über so viele, und nach
  *  Brücken und Tunneln noch einmal über so viele */
 const PROFIL_MEDIAN_M = 50, PROFIL_MITTEL_M = 150, PROFIL_UEBERGANG_M = 30
-/** Führerstand: so weit darf ein Punkt der Quelle neben einer Geraden liegen, die ihn ersetzt (glattBei) */
-const GERADE_TOLERANZ_M = 0.8
-/** so lang höchstens ein Stück der Vereinfachung, damit die Kurve durch die Punkte gerade Stücke gerade lässt */
-const GERADE_STUECK_M = 30
+/** Führerstand: alle so viele Meter ein geglätteter Punkt, eine Kurve rückt höchstens so weit nach innen (glatt) */
+const GLATT_SCHRITT_M = 5, GLATT_FEHLER_M = 0.5
 /** Führerstand: Täler und Buckel unter der Linie ohne Brücke oder Tunnel in den Daten: so breit höchstens, so tief
  *  mindestens, irgendwo so steil (Anteil, 0.08 = 8 %) */
 const TAL_FENSTER_M = 1500, TAL_TIEFE_M = 6, TAL_STEIGUNG = 0.08
@@ -2358,10 +2356,19 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const gebaeudeMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
     const gebaeudeNetze = new Map<string, THREE.Mesh>()
     let gebaeudeAuftrag = 0
+    /** wo der Zug stand, als das feine Gelände zuletzt geladen wurde; Kacheln von 500 m nach ihrem Abstand dazu */
+    let feinZug: readonly [number, number] = [0, 0]
+    const nachNaehe = (namen: string[]) => namen.map((name) => {
+      const [qe, qn] = name.split('_').map(Number)
+      return { name, d: Math.hypot((qe + 0.5) * 500 - feinZug[0], (qn + 0.5) * 500 - feinZug[1]) }
+    }).sort((a, b) => a.d - b.d).map((x) => x.name)
     const gebaeudeSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++gebaeudeAuftrag
-      const namen = await gebaeudeNamen(e0, n0, e1, n1)
+      const namen = nachNaehe(await gebaeudeNamen(e0, n0, e1, n1))
       if (!laeuft || auftrag !== gebaeudeAuftrag) return
+      // alle gleich anfragen, die nahen zuerst (Michael, 2026-10-16: ab Wankdorf keine Gebäude mehr; nacheinander geladen und
+      // bei jedem neuen Ausschnitt abgebrochen, kamen sie beim schnellen Fahren nie an)
+      for (const name of namen) if (!gebaeudeNetze.has(name)) void gebaeudeKachel(name)
       for (const [name, netz] of gebaeudeNetze) {
         if (namen.includes(name)) continue
         gebaeudeGruppe.remove(netz); netz.geometry.dispose(); gebaeudeNetze.delete(name)
@@ -2518,11 +2525,12 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const auftrag = ++baumAuftrag
       // nur bis BAUM_BIS_M um die Mitte des feinen Geländes: im dichtesten Wald stehen im ganzen Quadrat bis 67'000 Bäume
       const ce = (e0 + e1) / 2, cn = (n0 + n1) / 2
-      const namen = (await baumNamen(e0, n0, e1, n1)).filter((name) => {
+      const namen = nachNaehe((await baumNamen(e0, n0, e1, n1)).filter((name) => {
         const [qe, qn] = name.split('_').map(Number)
         return Math.hypot((qe + 0.5) * 500 - ce, (qn + 0.5) * 500 - cn) <= BAUM_BIS_M
-      })
+      }))
       if (!laeuft || auftrag !== baumAuftrag) return
+      for (const name of namen) if (!baumNetze.has(name)) void baumKachel(name)
       for (const [name, netz] of baumNetze) {
         if (namen.includes(name)) continue
         baumGruppe.remove(netz); netz.dispose(); baumNetze.delete(name)
@@ -2569,10 +2577,18 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     let scharfV = 0, scharfAltS: number | null = null
     interface ScharfNetz { name: string; netz: THREE.Mesh; mitte: [number, number]; uvFein: THREE.BufferAttribute; uvEigen: THREE.BufferAttribute; bild: 'nein' | 'laedt' | 'da' }
     let scharfNetze: ScharfNetz[] = []
+    /** die geladenen Luftbilder der scharfen Kacheln, auch wenn das feine Gelände neu gebaut wird (Michael, 2026-10-16:
+     *  «die Umgebung sehr verschwommen»; alle 800 m warf der Neubau alle Bilder weg, beim schnellen Fahren kamen sie nie an) */
+    const scharfBilder = new Map<string, THREE.Texture>()
+    const scharfBildWeg = (name: string) => {
+      const t = scharfBilder.get(name)
+      if (!t) return
+      ;(t.image as ImageBitmap).close?.(); t.dispose(); scharfBilder.delete(name)
+    }
     const scharfWeg = () => {
       for (const x of scharfNetze) {
         const mat = x.netz.material as THREE.MeshLambertMaterial
-        if (mat.map !== feinTextur) mat.map?.dispose()
+        if (mat.map !== feinTextur && mat.map !== scharfBilder.get(x.name)) mat.map?.dispose()
         mat.dispose(); x.netz.geometry.dispose()
       }
       scharfNetze = []
@@ -2609,11 +2625,13 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
             t.anisotropy = renderer.capabilities.getMaxAnisotropy()
             t.needsUpdate = true
             mat.map = t
+            scharfBildWeg(x.name)
+            scharfBilder.set(x.name, t)
             x.netz.geometry.setAttribute('uv', x.uvEigen)
             x.bild = 'da'
           }).catch(() => { if (x.bild === 'laedt') x.bild = 'nein' })
         } else if (d > SCHARF_LOS_M && x.bild !== 'nein') {
-          if (x.bild === 'da') { const t = mat.map!; (t.image as ImageBitmap).close?.(); t.dispose() }
+          if (x.bild === 'da') scharfBildWeg(x.name)
           mat.map = feinTextur
           x.netz.geometry.setAttribute('uv', x.uvFein)
           x.bild = 'nein'
@@ -2628,17 +2646,17 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     let feinStreifen: Streifen[] = []
     let brueckenBreite = new Map<object, { von: number; lo: number[]; hi: number[]; gleise: number[] }>()
     let feinAuftrag = 0
+    /** solange das feine Gelände lädt, wartet der nächste Ausschnitt: sonst brach jeder neue den alten ab, und beim schnellen
+     *  Fahren kam nie einer an (Michael, 2026-10-16, Bern–Zürich: «die Umgebung sehr verschwommen … die nächsten Kilometer») */
+    let feinLaedt = false
     /** Lage im Führerstand: der Verlauf ist ein Zug aus Geraden mit Ecken alle 100 bis 350 m. Früher über 80 m davor
      *  und danach gemittelt (Michael, 2026-10-11: «die Kurven noch runder»), das zog die Linie in jeder Kurve um 5 bis 10 m
-     *  nach innen (Michael, 2026-10-14: «dass die Strecke die Kurven zu stark schneidet»). Jetzt eine Kurve durch jeden Punkt
-     *  der Quelle (Catmull-Rom, zentripetal): dort liegt sie auf dem Gleis, dazwischen folgt sie dem Bogen statt der Sehne */
-    // gerade Stücke gerade (Michael, 2026-10-15: «offensichtlich gerad laufende Strecken auch schön gerade», zwischen
-    // Münchenbuchsee und Schüpfen): die Quelle gibt alle 100 m einen Punkt, auf etwa einen Meter gerundet; durch jeden
-    // gelegt schlängelte die Kurve. Darum zuerst nach Douglas-Peucker vereinfacht, jeder weggelassene Punkt höchstens
-    // GERADE_TOLERANZ_M neben der Vereinfachung; Kurven behalten ihre Punkte
+     *  nach innen (Michael, 2026-10-14: «dass die Strecke die Kurven zu stark schneidet»); dann eine Kurve durch jeden Punkt
+     *  (Catmull-Rom), vereinfacht nach Douglas-Peucker (Michael, 2026-10-15: «schön gerade»), das gab Ecken; jetzt geglättet
+     *  nach dem Radius (glatt) */
     // seitlich auf das Gleis aus swissTLM3D (Michael, 2026-10-15, BTI: «die Linie ist manchmal weit neben der Realität»; das
     // Schienennetz des BAV und die Kilometrierung liegen dort bis über 10 m daneben): alle 10 m um den Abstand der Achse
-    // (gleisHoehenLaden) verschoben, an den Rändern einer Lücke über GLEIS_EINLAUF_M auslaufend; dann vereinfacht wie unten
+    // (gleisHoehenLaden) verschoben, an den Rändern einer Lücke über GLEIS_EINLAUF_M auslaufend; dann geglättet wie unten
     const pkGleis = (() => {
       if (!gleis) return pk
       const { m0: g0, d } = gleis, gEnde = g0 + (d.length - 1) * GLEIS_SCHRITT_M
@@ -2668,58 +2686,61 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       }
       return raus.sort((a, b) => a.m - b.m)
     })()
-    const pg = (() => {
-      const pk = pkGleis
-      const behalten = new Uint8Array(pk.length)
-      behalten[0] = behalten[pk.length - 1] = 1
-      const stapel: Array<[number, number]> = [[0, pk.length - 1]]
-      while (stapel.length) {
-        const [i, j] = stapel.pop()!
-        if (j - i < 2) continue
-        const a2 = pk[i], b2 = pk[j], de = b2.e - a2.e, dn = b2.n - a2.n, l = Math.hypot(de, dn) || 1
-        let weit = -1, k0 = -1
-        for (let k = i + 1; k < j; k++) {
-          const d = Math.abs((pk[k].e - a2.e) * dn - (pk[k].n - a2.n) * de) / l
-          if (d > weit) { weit = d; k0 = k }
-        }
-        if (weit > GERADE_TOLERANZ_M) { behalten[k0] = 1; stapel.push([i, k0], [k0, j]) }
+    // geglättet mit einer Glockenkurve, so breit, wie die Kurve es erlaubt (Michael, 2026-10-16, Bern–Zürich: «Kurvenelemente
+    // drin, die es sicher nicht braucht … nicht schön rund, sondern eckig»): die Punkte der Quelle und die Achsen von swissTLM3D
+    // haben Ecken und streuen um einen Meter; vereinfacht und durch jeden Punkt gelegt (Douglas-Peucker, Catmull-Rom) gab das
+    // zwischen Bern und Zollikofen 71 Stellen mit Radien unter 150 m. Jetzt alle GLATT_SCHRITT_M ein Punkt, gemittelt über
+    // so viel, dass eine Kurve höchstens GLATT_FEHLER_M nach innen rückt (Breite σ = √(2·R·Fehler), 6 bis 35 m; R aus dem
+    // Verlauf über 40 m, die engste Stelle in 60 m Umgebung)
+    const glatt = (() => {
+      const p = pkGleis, m0 = p[0].m, m1 = p[p.length - 1].m
+      const n = Math.max(2, Math.floor((m1 - m0) / GLATT_SCHRITT_M) + 1)
+      const E = new Float64Array(n), N = new Float64Array(n)
+      let j = 0
+      for (let i = 0; i < n; i++) {
+        const mm = Math.min(m1, m0 + i * GLATT_SCHRITT_M)
+        while (j < p.length - 2 && p[j + 1].m < mm) j++
+        const a = p[j], b = p[j + 1] ?? a, t = Math.max(0, Math.min(1, (mm - a.m) / ((b.m - a.m) || 1)))
+        E[i] = a.e + t * (b.e - a.e); N[i] = a.n + t * (b.n - a.n)
       }
-      // lange Sehnen wieder mit Punkten auf ihr: sonst nimmt die Kurve an ihren Enden die Richtung der Nachbarn mit und wölbt
-      // sich über die ganze Länge (Michael, 2026-10-16: zwischen Müntschemier und Kerzers lag die Linie über 2 km bis 5 m
-      // neben dem Gleis)
-      const raus: Array<{ m: number; e: number; n: number }> = []
-      const auswahl = pk.filter((_, i) => behalten[i])
-      auswahl.forEach((p, i) => {
-        if (i) {
-          const a2 = auswahl[i - 1], teile = Math.ceil((p.m - a2.m) / GERADE_STUECK_M)
-          for (let k = 1; k < teile; k++) {
-            const t = k / teile
-            raus.push({ m: a2.m + t * (p.m - a2.m), e: a2.e + t * (p.e - a2.e), n: a2.n + t * (p.n - a2.n) })
+      const mitteln = (sigma: (i: number) => number) => {
+        const e2 = new Float64Array(n), n2 = new Float64Array(n)
+        for (let i = 0; i < n; i++) {
+          const s = sigma(i), r = Math.ceil((3 * s) / GLATT_SCHRITT_M)
+          let se = 0, sn = 0, sg = 0
+          for (let k = Math.max(0, i - r); k <= Math.min(n - 1, i + r); k++) {
+            const x = (k - i) * GLATT_SCHRITT_M, g = Math.exp((-x * x) / (2 * s * s))
+            se += g * E[k]; sn += g * N[k]; sg += g
           }
+          e2[i] = se / sg; n2[i] = sn / sg
         }
-        raus.push(p)
-      })
-      return raus
-    })()
-    const glattBei = (meter: number): readonly [number, number] => {
-      let lo = 1, hi = pg.length - 1
-      while (lo < hi) { const mid = (lo + hi) >> 1; if (pg[mid].m < meter) lo = mid + 1; else hi = mid }
-      const i1 = Math.max(0, lo - 1), i2 = lo
-      const p1 = pg[i1], p2 = pg[i2]
-      const t = Math.max(0, Math.min(1, (meter - p1.m) / ((p2.m - p1.m) || 1)))
-      // die Nachbarn, an den Enden gespiegelt
-      const p0 = i1 > 0 ? pg[i1 - 1] : { e: 2 * p1.e - p2.e, n: 2 * p1.n - p2.n }
-      const p3 = i2 < pg.length - 1 ? pg[i2 + 1] : { e: 2 * p2.e - p1.e, n: 2 * p2.n - p1.n }
-      const knoten = (a: { e: number; n: number }, b: { e: number; n: number }) => Math.max(1e-3, Math.sqrt(Math.hypot(b.e - a.e, b.n - a.n)))
-      const t0 = 0, t1 = t0 + knoten(p0, p1), t2 = t1 + knoten(p1, p2), t3 = t2 + knoten(p2, p3)
-      const u = t1 + t * (t2 - t1)
-      const mix = (a: number, b: number, ta: number, tb: number) => ((tb - u) * a + (u - ta) * b) / (tb - ta)
-      const wert = (k: 'e' | 'n') => {
-        const a1 = mix(p0[k], p1[k], t0, t1), a2 = mix(p1[k], p2[k], t1, t2), a3 = mix(p2[k], p3[k], t2, t3)
-        const b1 = mix(a1, a2, t0, t2), b2 = mix(a2, a3, t1, t3)
-        return mix(b1, b2, t1, t2)
+        return [e2, n2] as const
       }
-      return [wert('e'), wert('n')]
+      const [ge, gn] = mitteln(() => 40)
+      const krumm = new Float64Array(n)
+      for (let i = 1; i < n - 1; i++) {
+        const h1 = Math.atan2(gn[i] - gn[i - 1], ge[i] - ge[i - 1]), h2 = Math.atan2(gn[i + 1] - gn[i], ge[i + 1] - ge[i])
+        krumm[i] = Math.abs(Math.atan2(Math.sin(h2 - h1), Math.cos(h2 - h1))) / GLATT_SCHRITT_M
+      }
+      const um = Math.round(60 / GLATT_SCHRITT_M), sig = new Float64Array(n)
+      for (let i = 0; i < n; i++) {
+        let k = 1e-5
+        for (let q = Math.max(0, i - um); q <= Math.min(n - 1, i + um); q++) k = Math.max(k, krumm[q])
+        sig[i] = Math.max(6, Math.min(35, Math.sqrt((2 * GLATT_FEHLER_M) / k)))
+      }
+      const [fe, fn] = mitteln((i) => sig[i])
+      return { m0, e: fe, n: fn }
+    })()
+    /** Lage im Führerstand: zwischen den geglätteten Punkten eine Kurve (Catmull-Rom, gleichmässig) */
+    const glattBei = (meter: number): readonly [number, number] => {
+      const { m0, e, n } = glatt, z = e.length
+      const x = Math.max(0, Math.min(z - 1, (meter - m0) / GLATT_SCHRITT_M))
+      const i = Math.min(z - 2, Math.floor(x)), t = x - i
+      const w = (a: Float64Array) => {
+        const p0 = a[Math.max(0, i - 1)], p1 = a[i], p2 = a[i + 1], p3 = a[Math.min(z - 1, i + 2)]
+        return 0.5 * (2 * p1 + (p2 - p0) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t + (3 * p1 - p0 - 3 * p2 + p3) * t * t * t)
+      }
+      return [w(e), w(n)]
     }
     /** Höhe der Linie im Führerstand, je PROFIL_SCHRITT_M einmal gerechnet, wenn das feine Gelände kommt (profilRechnen) */
     let profil: { von: number; h: Float32Array } | null = null
@@ -2912,8 +2933,13 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       nahZeichnen()
     }
     const feinSetzen = async (stelle: number, richtung: number) => {
+      feinLaedt = true
+      try { await feinSetzenJetzt(stelle, richtung) } finally { feinLaedt = false }
+    }
+    const feinSetzenJetzt = async (stelle: number, richtung: number) => {
       const auftrag = ++feinAuftrag
       const anfang = pk[0].m, ende = pk[pk.length - 1].m
+      feinZug = punktBei(Math.max(anfang, Math.min(ende, stelle)))
       const [ce, cn] = punktBei(Math.max(anfang, Math.min(ende, stelle + richtung * FEIN_VORAUS_M)))
       const e0 = Math.round((ce - FEIN_SEITE_M / 2) / 10) * 10, n0 = Math.round((cn - FEIN_SEITE_M / 2) / 10) * 10
       const e1 = e0 + FEIN_SEITE_M, n1 = n0 + FEIN_SEITE_M
@@ -3031,12 +3057,16 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           g.setAttribute('uv', uvFein)
           g.setIndex(idx)
           g.computeVertexNormals()
-          const mat = new THREE.MeshLambertMaterial({ map: feinTextur })
+          // schon geladen: das Bild gleich wieder darauf
+          const bild = scharfBilder.get(name)
+          const mat = new THREE.MeshLambertMaterial({ map: bild ?? feinTextur })
           mat.color.setScalar(1.3)
+          if (bild) g.setAttribute('uv', uvEigen)
           const netz = new THREE.Mesh(g, mat)
           scharfGruppe.add(netz)
-          scharfNetze.push({ name, netz, mitte: [(qe + 0.5) * SCHARF_KACHEL_M, (qn + 0.5) * SCHARF_KACHEL_M], uvFein, uvEigen, bild: 'nein' })
+          scharfNetze.push({ name, netz, mitte: [(qe + 0.5) * SCHARF_KACHEL_M, (qn + 0.5) * SCHARF_KACHEL_M], uvFein, uvEigen, bild: bild ? 'da' : 'nein' })
         }
+        for (const name of [...scharfBilder.keys()]) if (!scharfNetze.some((x) => x.name === name)) scharfBildWeg(name)
         const [pe, pn] = punktBei(Math.max(anfang, Math.min(ende, stelle + richtung * SCHARF_VORAUS_M)))
         scharfBilderPflegen(pe, pn)
       }
@@ -4368,7 +4398,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           const spitze = r > 0 ? s : s - zugLaengeS()
           const bis = (m: number) => Math.max(pk[0].m, Math.min(pk[pk.length - 1].m, m))
           // das feine Gelände wandert mit, sobald der Zug FEIN_NACH_M weiter ist
-          if (Math.abs(s - feinAb) > FEIN_NACH_M || scharfMitBild !== nahErlaubt) {
+          if (!feinLaedt && (Math.abs(s - feinAb) > FEIN_NACH_M || scharfMitBild !== nahErlaubt)) {
             feinAb = s
             void feinSetzen(s, r)
           }
@@ -4406,6 +4436,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
               altS = s
               return gemessen
             })()
+            pult.inBrille = inBrille
             pult.aktualisieren(dt, { s: blickM, richtung: r, anfang: pk[0].m, ende: pk[pk.length - 1].m, v,
               quelle: zug === eigenerZug && !zugVonAussen ? 'simulation' : tempoQuelle ?? 'gps', ankuendigungen, von: pultVon, nach: pultNach })
           }
@@ -4531,6 +4562,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         x.geometry?.dispose()
         for (const mat of ([] as Array<THREE.Material & { map?: THREE.Texture }>).concat(x.material ?? [])) { mat.map?.dispose(); mat.dispose() }
       })
+      for (const name of [...scharfBilder.keys()]) scharfBildWeg(name)
       anwenden.current = null
       renderer.dispose()
       renderer.domElement.remove()

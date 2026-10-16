@@ -123,6 +123,11 @@ export class Fuehrerpult {
   private haubeTasten = new THREE.Group()
   private schliessTaste: THREE.Object3D | null = null
   private sichtTasten: THREE.Object3D[] = []
+  /** die zweite Reihe: welche Tasten zu sehen sind, hängt davon ab, was geht (zweiteLegen) */
+  private zweite: { halter: THREE.Object3D[]; aktionen: Aktion[]; leiste: THREE.Object3D; breite: number; abstand: number; gross: number } | null = null
+  private zweiteStand = ''
+  /** in der Brille (setzt Relief.tsx je Bild): dort gibt es «Hinter den Zug» nicht */
+  inBrille = false
   /** die Platte über dem Fahrer: auf dem Bildschirm verdeckte sie den Himmel, dort nur das runde Dach; in der Brille ganz */
   private dachPlatte: THREE.Object3D | null = null
   readonly szene = new THREE.Scene()
@@ -411,14 +416,13 @@ export class Fuehrerpult {
       [(c) => meldeZeichen(c, 'bruecke', FARBE.schrift), 'bruecke'], [(c) => meldeZeichen(c, 'bahnhof', FARBE.schrift), 'bahnhof'],
       ...(this.uebergaenge ? [[(c: CanvasRenderingContext2D) => meldeZeichen(c, 'bahnuebergang', FARBE.schrift), 'bahnuebergang'] as [(c: CanvasRenderingContext2D) => void, Aktion]] : [])]
     const y2 = -0.52, z2 = -0.6, gross2 = 0.085, abstand2 = 0.102
-    // zwischen den Gruppen eine Lücke: Sicht und Start | Höhe | Melden
-    const lage2 = zweite.map((_, i) => i + (i >= 2 ? 0.35 : 0) + (i >= 4 ? 0.35 : 0))
-    const mitte2 = (lage2[0] + lage2[lage2.length - 1]) / 2
-    const leiste2 = this.kasten((lage2[lage2.length - 1] - lage2[0]) * abstand2 + gross2 + 0.03, 0.012, gross2 + 0.04, FARBE.blende,
-      0, y2 - 0.008, z2, kippen)
+    const breite2 = (zweite.length - 1 + 0.7) * abstand2 + gross2 + 0.03
+    const leiste2 = this.kasten(breite2, 0.012, gross2 + 0.04, FARBE.blende, 0, y2 - 0.008, z2, kippen)
     leiste2.renderOrder = -1
-    zweite.forEach(([zeichen, aktion], i) => this.taste(zeichen, FARBE.schwarz, (lage2[i] - mitte2) * abstand2, y2, z2, aktion, kippen,
-      gross2, this.gruppe, zustand[aktion]))
+    const halter2 = zweite.map(([zeichen, aktion]) => this.taste(zeichen, FARBE.schwarz, 0, y2, z2, aktion, kippen,
+      gross2, this.gruppe, zustand[aktion]).parent!)
+    this.zweite = { halter: halter2, aktionen: zweite.map(([, a]) => a), leiste: leiste2, breite: breite2, abstand: abstand2, gross: gross2 }
+    this.zweiteLegen(() => true)
     // neben den Anzeigen links nur noch die Pultbeleuchtung, die es in der Reihe nicht gibt (Michael, 2026-10-13: «Doppelte
     // Schalter entfernen»)
     this.taste((c) => pultleuchte(c, FARBE.schrift), FARBE.schwarz, -1.02, 0, 0.07, 'pultlicht', Math.PI / 2, 0.082, konsole,
@@ -560,6 +564,26 @@ export class Fuehrerpult {
     lehne.rotation.x = 0.12
     this.kasten(0.3, 0.18, 0.08, '#30363f', 0, 1.38, 0.33, 0, stuhl)
     for (const x of [-0.29, 0.29]) this.kasten(0.06, 0.05, 0.38, dunkel, x, 0.72, 0.02, 0, stuhl)
+  }
+
+  /** die zweite Reihe neu legen, nur mit den Tasten, die gehen; zwischen den Gruppen eine Lücke: Sicht und Start | Höhe | Melden
+   *  (Michael, 2026-10-16: «die Knöpfe der Höhe braucht es dort nicht, weil sie auch nicht funktionieren … nimm sie weg») */
+  private zweiteLegen(zeigen: (a: Aktion) => boolean) {
+    const z = this.zweite
+    if (!z) return
+    const gruppe = (a: Aktion) => (a === 'hinterZug' || a === 'zumStart' ? 0 : a === 'hoehe1' || a === 'hoehe2' ? 1 : 2)
+    const lage: number[] = []
+    let x = 0, vorher = -1
+    z.aktionen.forEach((a, i) => {
+      z.halter[i].visible = zeigen(a)
+      if (!z.halter[i].visible) { lage.push(0); return }
+      if (vorher >= 0) x += 1 + (gruppe(a) !== vorher ? 0.35 : 0)
+      vorher = gruppe(a)
+      lage.push(x)
+    })
+    const mitte = x / 2
+    z.aktionen.forEach((_, i) => { z.halter[i].position.x = (lage[i] - mitte) * z.abstand })
+    z.leiste.scale.x = (x * z.abstand + z.gross + 0.03) / z.breite
   }
 
   /* ---------- Bedienung ---------- */
@@ -730,6 +754,12 @@ export class Fuehrerpult {
     const au = this.aussen?.current
     for (const t of this.sichtTasten) t.visible = Boolean(au?.seite)
     if (this.schliessTaste) this.schliessTaste.visible = Boolean(au?.schliessen)
+    // Höhe nur, wo sie sich ändern lässt, «Hinter den Zug» nicht in der Brille
+    const stand = `${Boolean(au?.hoeheSetzen)}${this.inBrille}`
+    if (stand !== this.zweiteStand) {
+      this.zweiteStand = stand
+      this.zweiteLegen((a) => (a === 'hoehe1' || a === 'hoehe2' ? Boolean(au?.hoeheSetzen) : a === 'hinterZug' ? !this.inBrille : true))
+    }
     // Hebel nach Stellung; in der Probefahrt nach deren Stufe, die Skala zeigt dann deren Tempi
     const st = this.quelle === 'probe' ? this.aussen?.current?.probe : null
     this.skalaZeigen(st?.stufen ?? null)

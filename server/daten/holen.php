@@ -12,11 +12,12 @@
  * Release «umgebung-1», Ordner gebaeude/ und baeume/). Welches Release, steht in HOLEN; für die scharfe Umgebung dort
  * 'scharf-1' eintragen, in NUR der Anfang der Pakete, die es holen soll.
  */
-const HOLEN = 'scharf-1';
+const HOLEN = 'umgebung-1';
 // nur Pakete, deren Name so beginnt, leer für alle: 'scharf-r5-' holt nur die Nachträge (Reihe 5, Michael, 2026-10-15: BTI),
 // 'scharf-r6' alle übrigen Bahnlinien (Reihen 6a bis 6h, Michael, 2026-10-15: «Alles scharf machen»);
-// die Verzeichnisse der anderen Reihen liegen schon da und werden mit zusammengefügt
-const NUR = 'scharf-r6';
+// die Verzeichnisse der anderen Reihen liegen schon da und werden mit zusammengefügt;
+// 2026-10-16 Gebäude und Bäume aller Kantone (umgebung-1, alle Pakete): auf dem Server fehlten sie, ab Wankdorf gab es keine
+const NUR = '';
 const ARTEN = ['scharf-1' => ['muster' => '/^scharf-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['scharf'], 'workflow' => 'Scharfe Umgebung'],
                'umgebung-1' => ['muster' => '/^umgebung-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['gebaeude', 'baeume'], 'workflow' => 'Gebäude und Bäume']];
 const RELEASE = 'https://api.github.com/repos/MichaelVeikkoSeiler/taktland/releases/tags/' . HOLEN;
