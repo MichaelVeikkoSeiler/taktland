@@ -314,11 +314,17 @@ const DATEN_URL = import.meta.env.VITE_DATEN_URL ?? 'https://daten.taktland.ch/'
 /** je Kachel ihr Pfad ohne Endung und die Jahre von Bild und Höhe */
 interface ScharfVerzeichnis { kacheln: Map<string, { pfad: string; jahre: [number, number] }> }
 let scharfVerz: Promise<ScharfVerzeichnis> | null = null
+/** Fehlt ein Verzeichnis auf daten.taktland.ch (noch nicht hochgeladen, kein Empfang), fragt die App nach so vielen ms wieder nach,
+ *  statt es bis zum Neustart zu vergessen (Michael, 2026-10-17: auf der Brille fehlten die Gebäude ab Wankdorf noch, als sie auf
+ *  dem Server längst lagen) */
+const NOCHMALS_MS = 60_000
+const spaeterNochmals = (vergessen: () => void) => { setTimeout(vergessen, NOCHMALS_MS) }
 export function scharfIndex() {
   scharfVerz ??= Promise.all([
     holen<ScharfIndex>('data/scharf/index.json').catch(() => null),
     holen<ScharfIndex>(`${DATEN_URL}scharf/index.json`).catch(() => null),
   ]).then(([hier, dort]) => {
+    if (!dort) spaeterNochmals(() => { scharfVerz = null })
     const kacheln = new Map<string, { pfad: string; jahre: [number, number] }>()
     for (const [name, jahre] of Object.entries(dort?.kacheln ?? {})) kacheln.set(name, { pfad: `${DATEN_URL}scharf/${name}`, jahre })
     // die Kacheln der App gehen vor: sie sind da, auch ohne daten.taktland.ch
@@ -396,6 +402,7 @@ function umgebungIndex(ordner: string): Promise<Umgebung | null> {
     holen<{ kachel_m: number; kacheln: Record<string, unknown> | string[] }>(`data/${ordner}/index.json`).catch(() => null),
     holen<{ kachel_m: number; kacheln: Record<string, unknown> }>(`${DATEN_URL}${ordner}/index.json`).catch(() => null),
   ]).then(([hier, dort]) => {
+    if (!dort) spaeterNochmals(() => { if (ordner === 'gebaeude') gebaeudeVerz = null; else baumVerz = null })
     if (!hier && !dort) return null
     // die von daten.taktland.ch gehen vor: je Kanton mit allen Bahnlinien gebaut; die der App stammen aus dem ersten Versuch
     // und haben nur die Gebäude neben den Strecken der scharfen Umgebung (Michael, 2026-10-14: in Biel fehlte im Nordosten

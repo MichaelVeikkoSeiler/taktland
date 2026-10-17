@@ -326,7 +326,8 @@ data/gebaeude_extern/, data/baeume_extern/  Gebäude und Bäume je Kanton für d
              Tunnel und Galerien; LICHTRAUM_M in build_baeume.py; Michael, 2026-10-14: «auch die Bäume an den anderen Gleisen entfernen»);
              gebaut vom Workflow «Gebäude und Bäume» (.github/workflows/umgebung.yml, von Hand zu starten, Auswahl alles, gebaeude oder baeume), Pakete
              (pipeline/umgebung_pakete.py) im Release «umgebung-1», geholt von server/daten/holen.php (HOLEN = 'umgebung-1'); die App
-             liest gebaeude/index.json und baeume/index.json von dort, deren Kacheln gehen vor (die der App haben nur die Strecken des ersten Versuchs; Michael, 2026-10-14: in Biel fehlte die Hälfte), die der App nur, wo dort keine sind
+             liest gebaeude/index.json und baeume/index.json von dort, deren Kacheln gehen vor (die der App haben nur die Strecken des ersten Versuchs; Michael, 2026-10-14: in Biel fehlte die Hälfte), die der App nur, wo dort keine sind; fehlt ein Verzeichnis dort, fragt die App nach einer Minute wieder nach (NOCHMALS_MS in src/gelaende.ts, auch scharf/; Michael,
+             2026-10-17: auf der Brille fehlten die Gebäude noch, als sie längst auf dem Server lagen)
 data/scharf_extern/  weitere scharfe Kacheln für daten.taktland.ch, nicht in Git (build_scharf.py --extern, mit --relief NAME
              entlang eines Reliefs oder --weg A B … entlang des Wegs der App); die App liest dort scharf/index.json (DATEN_URL in
              src/gelaende.ts), die Kacheln der App gehen vor, fehlt der Index, gelten nur diese
