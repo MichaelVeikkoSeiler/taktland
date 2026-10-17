@@ -69,6 +69,8 @@ const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M
 /** Linie im Führerstand: in Metern breit statt in Bildpunkten; Linie über dem feinen Gelände */
 // 1,95 m breit, vorher 1,5 (Michael, 2026-10-13: «ca. 130 %»)
 const FEIN_UEBER_M = 1
+/** Führerstand: so weit neben der Linie liegt das feine Gelände auf der Höhe der Schienen, bis so weit läuft es aus (trasse) */
+const TRASSE_HALB_M = 10, TRASSE_RAND_M = 24
 /** Schienen im Führerstand (Michael, 2026-10-14): Abstand der Mitten und Breite einer Schiene in Metern; Normalspur überall,
  *  die Spurweite einer Strecke steht in keiner Quelle; breiter als ein echter Schienenkopf (7 cm), sonst aus der Kabine kaum zu sehen */
 const SPUR_M = 1.435 + 0.07, SCHIENE_M = 0.15
@@ -2724,6 +2726,36 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       }
       // unter dem scharfen Band sinkt das feine Gelände, wo es rundum scharfe Höhen gibt
       const scharfDa = (e: number, n: number) => !!scharf && [[0, 0], [-10, 0], [10, 0], [0, -10], [0, 10]].every(([de, dn]) => scharfHoehe(scharf, e + de, n + dn) !== null)
+      // die Trasse eingeebnet (Michael, 2026-10-17, Montreux–Zweisimmen: «schneidet die Linie die realen Trassen immer wieder viel
+      // zu stark»): das Gelände auf 10 m kennt die schmale Stufe der Trasse im Hang nicht, das Luftbild des Gleisbetts lag schräg am
+      // Hang neben den Schienen. Bis TRASSE_HALB_M neben der Linie liegt es auf der Höhe der Schienen, bis TRASSE_RAND_M läuft es
+      // aus; nicht auf Brücken und in Tunneln. Breite in keiner Quelle
+      const trasse = (() => {
+        const Zt = 20, zellen = new Map<string, number[]>(), pt: number[] = []
+        const vonT = Math.max(anfang, stelle - 6000), bisT = Math.min(ende, stelle + 6000)
+        const frei = (mm: number) => !weg.bauwerke.some((x) => mm > x.von - 10 && mm < x.bis + 10)
+        for (let mm = vonT; mm <= bisT; mm += 5) {
+          if (!frei(mm)) continue
+          const [e, n] = glattBei(mm)
+          if (e < e0 - TRASSE_RAND_M || e > e1 + TRASSE_RAND_M || n < n0 - TRASSE_RAND_M || n > n1 + TRASSE_RAND_M) continue
+          const k = pt.length / 3
+          pt.push(e, n, feinLinieHoehe(mm) - FEIN_UEBER_M)
+          const key = `${Math.floor(e / Zt)}_${Math.floor(n / Zt)}`, l = zellen.get(key)
+          if (l) l.push(k); else zellen.set(key, [k])
+        }
+        return (e: number, n: number, z: number) => {
+          let best = Infinity, hz = 0
+          for (let qe = Math.floor((e - TRASSE_RAND_M) / Zt); qe <= Math.floor((e + TRASSE_RAND_M) / Zt); qe++)
+            for (let qn = Math.floor((n - TRASSE_RAND_M) / Zt); qn <= Math.floor((n + TRASSE_RAND_M) / Zt); qn++)
+              for (const k of zellen.get(`${qe}_${qn}`) ?? []) {
+                const d = Math.hypot(pt[k * 3] - e, pt[k * 3 + 1] - n)
+                if (d < best) { best = d; hz = pt[k * 3 + 2] }
+              }
+          if (best >= TRASSE_RAND_M) return z
+          const t = Math.max(0, Math.min(1, (best - TRASSE_HALB_M) / (TRASSE_RAND_M - TRASSE_HALB_M))), w = 1 - t * t * (3 - 2 * t)
+          return z * (1 - w) + hz * w
+        }
+      })()
       // das Netz: ein Punkt je Feld von 10 m, nur Vierecke mit vier Höhen
       const I0 = Math.ceil((e0 - 5) / 10), J1 = Math.floor((n1 - 5) / 10), b = FEIN_SEITE_M / 10
       const p2 = new Float32Array(b * b * 3), uv2 = new Float32Array(b * b * 2), da = new Uint8Array(b * b)
@@ -2733,6 +2765,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           let z = feinFeld(fein, I0 + i, J1 - j)
           if (z === null) continue
           if (scharfDa(e, n)) z -= SCHARF_TIEFER_M
+          else z = trasse(e, n, z)
           da[k] = 1
           p2[k * 3] = X(e); p2[k * 3 + 1] = Y(z); p2[k * 3 + 2] = Z(n)
           uv2[k * 2] = (e - e0) / FEIN_SEITE_M; uv2[k * 2 + 1] = (n - n0) / FEIN_SEITE_M
