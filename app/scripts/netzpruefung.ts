@@ -38,21 +38,38 @@ async function main() {
   const netz = await streckenLaden()
   const linien = geometrieLesen(await geometrieLaden())
   const bruecken = nachKennung((await uebersichtLaden<{ linie: number; km: number | null }>('bruecken')).eintraege)
-  const ergebnis: Array<{ von: string; nach: string; bahn: string; laenge: number; befunde: Befund[]; mitGleis: number; lagen: number[][] }> = []
+  const ergebnis: Array<{ von: string; nach: string; bahn: string; laenge: number; befunde: Befund[]; mitGleis: number; lagen: number[][]; d50: number | null; d95: number | null }> = []
   let nr = 0
-  for (const a of netz.abschnitte) {
-    nr++
-    if (nur && !nur.has(`${a.von}-${a.nach}`)) continue
-    const fw = fahrwegBauen(netz, linien, [a.von, a.nach], [a], (id) => bruecken.get(id)?.km ?? undefined, () => false)
-    if (fw.punkte.length < 2) continue
-    const punkte = fw.punkte.map((p) => { const [e, n] = lv95(p.lat, p.lon); return { m: p.s, e, n } })
-    const ende = punkte[punkte.length - 1].m
-    const weg0: Weg = {
-      punkte,
-      bauwerke: fw.objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
-        .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })).sort((x, y) => x.von - y.von),
-      tunnelPunkte: [], stuecke: [[0, ende]],
+  // mit NETZPRUEFUNG_RELIEFS die Linien der Modellbahn (data/relief), wie wegDerLinie in Relief.tsx sie liest, Meter ab ihrem Anfang
+  type Eintrag = { a: { von: string; nach: string; bahn?: string; isb?: string }; weg0: Weg }
+  const eintraege = async function* (): AsyncGenerator<Eintrag> {
+    if (process.env.NETZPRUEFUNG_RELIEFS) {
+      const ix = JSON.parse(readFileSync('public/data/relief/index.json', 'utf8')) as { reliefs: Array<{ name: string }> }
+      for (const { name } of ix.reliefs) {
+        const r = JSON.parse(readFileSync(`public/data/relief/${name}.json`, 'utf8')) as {
+          weg: Array<[number, number, number]>; tunnel: Array<{ von_km?: number; bis_km?: number }>; bruecken: Array<{ von_km: number; bis_km: number }> }
+        const m0 = r.weg[0][0]
+        const punkte = r.weg.map(([m, e, n]) => ({ m: m - m0, e, n }))
+        yield { a: { von: name, nach: name, bahn: 'Modellbahn' }, weg0: { punkte, tunnelPunkte: [], stuecke: [[0, punkte[punkte.length - 1].m]],
+          bauwerke: [...r.tunnel.filter((t) => t.von_km !== undefined).map((t) => ({ von: t.von_km! * 1000 - m0, bis: t.bis_km! * 1000 - m0, art: 'tunnel' as const })),
+            ...r.bruecken.map((x) => ({ von: x.von_km * 1000 - m0, bis: x.bis_km * 1000 - m0, art: 'bruecke' as const }))].sort((x, y) => x.von - y.von) } }
+      }
+      return
     }
+    for (const a of netz.abschnitte) {
+      if (nur && !nur.has(`${a.von}-${a.nach}`)) continue
+      const fw = fahrwegBauen(netz, linien, [a.von, a.nach], [a], (id) => bruecken.get(id)?.km ?? undefined, () => false)
+      if (fw.punkte.length < 2) continue
+      const punkte = fw.punkte.map((p) => { const [e, n] = lv95(p.lat, p.lon); return { m: p.s, e, n } })
+      yield { a, weg0: { punkte, tunnelPunkte: [], stuecke: [[0, punkte[punkte.length - 1].m]],
+        bauwerke: fw.objekte.filter((o) => (o.art === 'tunnel' || o.art === 'bruecke') && o.sAus !== null)
+          .map((o) => ({ von: o.s, bis: o.sAus!, art: o.art as 'tunnel' | 'bruecke' })).sort((x, y) => x.von - y.von) } }
+    }
+  }
+  for await (const { a, weg0 } of eintraege()) {
+    nr++
+    const punkte = weg0.punkte
+    const ende = punkte[punkte.length - 1].m
     const gleis = await gleisHoehenLaden(weg0)
     const weg = mitGleisTunneln(weg0, gleis)
     const { glattBei, pkGleis } = fuehrerstandVerlauf(punkte, gleis)
@@ -140,14 +157,15 @@ async function main() {
       befunde.push({ art: 'tunnel', von: Math.round(t.von), bis: Math.round(t.bis), wert: Math.round(t.bis - t.von), lage: [Math.round(p[0]), Math.round(p[1])] })
     }
     const mitGleis = D.filter((d) => d <= OHNE_M).length / n
+    const Ds = D.filter((d) => d <= OHNE_M).sort((x, y) => x - y)
+    const q = (f: number) => Ds.length ? Math.round(Ds[Math.min(Ds.length - 1, Math.floor(f * Ds.length))] * 10) / 10 : null
     const lagen = P.filter((_, i) => i % 50 === 0).map(([e, n]) => [Math.round(e), Math.round(n)])
-    ergebnis.push({ von: a.von, nach: a.nach, bahn: a.bahn ?? a.isb ?? '', laenge: Math.round(ende), befunde, mitGleis: Math.round(mitGleis * 1000) / 1000, lagen })
+    ergebnis.push({ von: a.von, nach: a.nach, bahn: a.bahn ?? a.isb ?? '', laenge: Math.round(ende), befunde, mitGleis: Math.round(mitGleis * 1000) / 1000, lagen, d50: q(0.5), d95: q(0.95) })
     if (nr % 50 === 0) console.error(`${nr} von ${netz.abschnitte.length}`)
   }
   const ziel = process.env.NETZPRUEFUNG_ZIEL ?? '../data/raw/netzpruefung/ergebnis.json'
   writeFileSync(ziel, JSON.stringify({ geprueft: new Date().toISOString(), abschnitte: ergebnis, namen: netz.punkte }))
   console.error(`fertig: ${ergebnis.length} Abschnitte, ${ziel}`)
-  void readFileSync
 }
 
 void main()
