@@ -432,6 +432,13 @@ Lücken bleiben sichtbar (Regel 5), die Quellenzeile der Fusszeile ebenso.
 oder «Als Modell», Reihenfolge, hinzufügen, löschen; komponenten/Probefahrten.tsx) und die Bergstrecken als Probefahrt stehen bei
 Spiele, Modellbahn (#/fahrt/probe führt dorthin); das Fahrtblatt ist der vierte Reiter der Reisetasche (#/fahrtblatt, FahrtblattWahl.tsx).
 
+**Wo bin ich?** (Spiele, #/wobinich, Michael, 2026-10-18): fünf Runden, je ein zufälliges Stück einer Linie aus data/strecken.json
+(5 bis 45 km Weg, höchstens ein Viertel der Fahrt im Tunnel, beide Enden in der Schweiz; src/wobinich.ts), im Führerstand wie bei der
+Probefahrt (GelaendeFahrt mit verdeckt und vorneAnfang: keine Schilder, keine Ortstafeln, am Pult «?» statt Start und Ziel und nur die Art
+des Nächsten), 45 s Fahrt, Tempo 40 bis 120 km/h am Pult (Fahrzeit und Tempo fürs Spiel gewählt, in keiner Quelle), dann ein Pin auf der
+Karte von «Geo» mit den Hilfen vom Start, gewertet wie dort (punkte, nullGrenzeM für die ganze Schweiz); in der Auflösung die Bahnhöfe
+davor und danach und die Linie. Das Bild der Kachel ist vorerst das des Fahrtmodus.
+
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
 Auftaktbild als flaches Band (400 px, vorher 288; Michael, 2026-10-13: «ca. 140 %», Auftakt.tsx); Modelle links (2/3) mit Knöpfen rechts (ZWEI_SPALTEN in Relief.tsx), beim

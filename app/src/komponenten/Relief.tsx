@@ -1309,8 +1309,12 @@ function lageAufWeg(fahrweg: Fahrweg, s: number): [number, number] {
  * sobald der Zug 8 km von seiner Mitte weg ist. Der Blick der Kamera bleibt dabei, wie er war.
  */
 export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = null, tempoQuelle = 'gps', start, ziel, aussen, voll = false,
-  schliessen, vorneMelden }: {
+  schliessen, vorneMelden, verdeckt = false, vorneAnfang = false }: {
   start?: string; ziel?: string
+  /** «Wo bin ich?»: keine Namen, weder Schilder noch Ortstafeln noch am Pult */
+  verdeckt?: boolean
+  /** gleich im Führerstand beginnen */
+  vorneAnfang?: boolean
   /** Probefahrt: Tempo und Anhalten vom Pult aus */
   aussen?: { current: PultAussen | null }
   /** im Vollbild: im Führerstand nur das Bild, «Hinter den Zug» und «Schliessen» oben, alles andere am Pult */
@@ -1341,8 +1345,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   // «Hinter den Zug»: die Kamera wieder schräg hinter den Zug wie am Anfang
   const hinterZug = useRef(false)
   // «Führerstand»: die Kamera vorne im Zug (Michael, 2026-10-10)
-  const fuehrerstand = useRef(false)
-  const [vorne, setVorneRoh] = useState(false)
+  const fuehrerstand = useRef(vorneAnfang)
+  const [vorne, setVorneRoh] = useState(vorneAnfang)
   const setVorne = (v: boolean) => { setVorneRoh(v); vorneMelden?.(v) }
   const cockpit = voll && vorne
   const seitenblick = useRef(0)
@@ -1431,7 +1435,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
         <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
                fuehrerstand={fuehrerstand} tempoAussen={tempoRef} tempoQuelle={tempoQuelle} aussen={pultAussen}
                seitenblick={seitenblick} brille={ganz ? brille : undefined}
-               endNamen={start ? [start, ziel ?? 'ohne Ziel'] : undefined} className="absolute inset-0 overflow-hidden" />
+               endNamen={verdeckt ? ['?', '?'] : start ? [start, ziel ?? 'ohne Ziel'] : undefined} verdeckt={verdeckt}
+               className="absolute inset-0 overflow-hidden" />
         <Ladebalken inKarte />
         {cockpit ? (
           // im Führerstand im Vollbild nur das Bild (Michael, 2026-10-14: «ein echtes Vollformat», «alle Bedienelemente nicht als
@@ -1516,7 +1521,9 @@ function hoehenFarbe(z: number, c: THREE.Color) {
 }
 
 function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, brille, probe, probeStelle, hinterZug, fuehrerstand, fahrknopf, fuellen = false,
-  tempoAussen, tempoQuelle, bauNamen, endNamen, aussen, seitenblick, className }: {
+  tempoAussen, tempoQuelle, bauNamen, endNamen, aussen, seitenblick, verdeckt = false, className }: {
+  /** «Wo bin ich?»: keine Namen in der Szene und am Pult */
+  verdeckt?: boolean
   /** was am Pult bedient wird und ausserhalb liegt: Probefahrt, Höhe, «Hinter den Zug», Meldungen */
   aussen?: { current: PultAussen | null }
   /** im Führerstand: so weit (Bogenmass) blickt man nach links (+) oder rechts (−) */
@@ -2979,7 +2986,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       sp.position.set(x, y, z)
       sp.renderOrder = 3
       ort.add(sp)
-      schilder.push({ sp, rang, folge, grundMass: [sp.scale.x, sp.scale.y], lagen })
+      // verdeckt: das Schild bleibt unsichtbar, zeichnen() kennt es nicht
+      if (verdeckt) sp.visible = false
+      else schilder.push({ sp, rang, folge, grundMass: [sp.scale.x, sp.scale.y], lagen })
       return sp
     }
     /** Zeichen, die auf dem Bildschirm mit dem Zug beim Hineinzoomen kleiner werden */
@@ -3054,7 +3063,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       return t
     }
     const tafeln: Array<{ s: number; teile: THREE.Group[] }> = []
-    for (const b of r.bahnhoefe) {
+    for (const b of verdeckt ? [] : r.bahnhoefe) {
       const s0 = b.km * 1000
       if (s0 < pk[0].m || s0 > pk[pk.length - 1].m) continue
       const material = new THREE.MeshBasicMaterial({ map: tafelBild(b.name), toneMapped: false })
@@ -3414,7 +3423,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
             : r.bruecken.find((b) => Math.abs(b.von_km * 1000 - x.von) < 60)?.name)
         return { s: x.von, art: x.art, name: genannt ?? (x.art === 'tunnel' ? 'Tunnel ohne Namen' : 'Brücke ohne Namen') }
       }),
-    ]
+    ].map((a) => (verdeckt ? { ...a, name: a.art === 'bahnhof' ? 'Bahnhof' : a.art === 'tunnel' ? 'Tunnel' : 'Brücke' } : a))
     const bahnhofFolge = [...r.bahnhoefe].sort((a, b) => a.km - b.km)
     const pultVon = endNamen?.[0] ?? bahnhofFolge[0]?.name ?? r.titel
     const pultNach = endNamen?.[1] ?? bahnhofFolge[bahnhofFolge.length - 1]?.name ?? r.titel
@@ -4335,6 +4344,6 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       window.removeEventListener('keydown', pultTaste)
       pult?.entsorgen()
     }
-  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild, gleis, bauNamen, tempoQuelle, tempoAussen, endNamen?.join('→')])
+  }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild, gleis, bauNamen, tempoQuelle, tempoAussen, endNamen?.join('→'), verdeckt])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
 }

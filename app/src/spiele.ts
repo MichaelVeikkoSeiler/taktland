@@ -9,6 +9,8 @@ import duellDunkel from './assets/auftakt-duell-dunkel.webp'
 import duellHell from './assets/auftakt-duell-hell.webp'
 import erratenDunkel from './assets/auftakt-erraten-dunkel.webp'
 import erratenHell from './assets/auftakt-erraten-hell.webp'
+import fahrtDunkel from './assets/auftakt-fahrt-dunkel.webp'
+import fahrtHell from './assets/auftakt-fahrt-hell.webp'
 import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
 import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
@@ -46,6 +48,14 @@ export const SPIELE: Spiel[] = [
     bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: Jemand setzt eine Ortsmarke auf eine Karte im Handy.' },
     beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
       + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
+  },
+  // Michael, 2026-10-18: «Wo bin ich passt gut»; das Bild ist vorerst das des Fahrtmodus
+  {
+    id: 'wobinich', titel: 'Wo bin ich?', status: 'spielbereit', adresse: '#/wobinich',
+    kurz: 'Im Führerstand irgendwo in der Schweiz, ohne Namen: Wo warst du?',
+    bild: { hell: fahrtHell, dunkel: fahrtDunkel, alt: 'Illustration: Blick aus dem Zugfenster auf ein Tunnelportal, einen See mit Dorf und Berge.' },
+    beschreibung: 'Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Ortstafeln und Namen. Fahr ein '
+      + 'Stück mit und tippe auf der Karte, wo du warst: je näher, desto mehr Punkte.',
   },
   {
     id: 'duell', titel: 'Duell', status: 'spielbereit', adresse: '#/duell',
