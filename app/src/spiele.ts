@@ -49,6 +49,14 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
       + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
   },
+  // Michael, 2026-10-18: «3D Schweiz heisst das Spiel», vorerst mit den Daten, die es schon gibt; das Bild ist das der Modellbahn
+  {
+    id: 'schweiz3d', titel: '3D Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
+    kurz: 'Die ganze Schweiz als Modell: ein Feld wählen und eintauchen, auch in der VR-Brille.',
+    bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: Jemand mit VR-Brille dreht am Tisch das Modell einer Bergstrecke.' },
+    beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld, schau, was darin liegt, und tauche ein, bis auf ein Stück von 4 km. '
+      + 'Mit einer Brille steht das Modell vor dir auf dem Tisch.',
+  },
   // Michael, 2026-10-18: «Wo bin ich passt gut»; das Bild ist vorerst das des Fahrtmodus
   {
     id: 'wobinich', titel: 'Wo bin ich?', status: 'spielbereit', adresse: '#/wobinich',

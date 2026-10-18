@@ -11,6 +11,7 @@ import { WoBinIch } from './komponenten/WoBinIch'
 import { ErratenOnline } from './komponenten/ErratenOnline'
 // three.js nur für das 3D-Relief, erst dort geladen
 const ReliefSeite = lazy(() => ladenVerfolgen(import('./komponenten/Relief')))
+const Schweiz3D = lazy(() => ladenVerfolgen(import('./komponenten/Schweiz3D')))
 import { Zurueck } from './komponenten/Zurueck'
 import { Ladebalken } from './komponenten/Ladebalken'
 import { Fahrt } from './komponenten/Fahrt'
@@ -44,7 +45,7 @@ import Teilen, { SYMBOL } from './komponenten/Teilen'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'wobinich' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string; vonLinie: boolean } | { art: 'modellbahn' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'wobinich' } | { art: 'schweiz3d' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string; vonLinie: boolean } | { art: 'modellbahn' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl } | { art: 'fahrtblattwahl' }
   | { art: 'uebersicht'; liste: UebersichtArt }
@@ -71,6 +72,7 @@ function seiteAusAdresse(): Seite {
   if (geoRaum) return { art: 'schweiz11mit', raum: geoRaum[1].toUpperCase() }
   if (h === '#/erraten') return { art: 'erraten' }
   if (h === '#/wobinich') return { art: 'wobinich' }
+  if (h === '#/schweiz3d') return { art: 'schweiz3d' }
   // die Modellbahn (Michael, 2026-10-08): eigene Strecke, Bergstrecken; die alten Adressen der Reliefs führen dorthin
   if (h === '#/modellbahn') return { art: 'modellbahn' }
   const modellStrecke = /^#\/modellbahn\/strecke(?:\?(.*))?$/.exec(h)
@@ -134,6 +136,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'schweiz11': case 'schweiz11mit': return 'schweiz11'
     case 'erraten': case 'erratenmit': return 'erraten'
     case 'wobinich': return 'wobinich'
+    case 'schweiz3d': return 'schweiz3d'
     case 'standort': return 'standort'
     case 'logbuch': return 'logbuch'
     case 'favoriten': return 'favoriten'
@@ -206,6 +209,7 @@ export default function App() {
         {seite.art === 'schweiz11mit' && <Schweiz11Online key={seite.raum} raum={seite.raum} index={index} />}
         {seite.art === 'erraten' && <Erraten index={index} />}
         {seite.art === 'wobinich' && <WoBinIch index={index} />}
+        {seite.art === 'schweiz3d' && <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>}><Schweiz3D /></Suspense>}
         {seite.art === 'erratenmit' && <ErratenOnline key={seite.raum} raum={seite.raum} index={index} />}
         {/* das Duell gehört zu «Spiele» (Michael, 2026-10-02); seine Adresse #/duell bleibt */}
         {seite.art === 'duell' && (

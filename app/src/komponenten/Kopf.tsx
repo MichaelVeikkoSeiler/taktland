@@ -30,7 +30,7 @@ import { reiterTon, wischTon } from '../audio'
 import { SPIEL_BEREICHE } from '../spiele'
 import { useEinstellungen } from '../einstellungen'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'wobinich' | 'modellbahn' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'fahrtblatt' | 'einstellungen'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'wobinich' | 'schweiz3d' | 'modellbahn' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'fahrtblatt' | 'einstellungen'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [

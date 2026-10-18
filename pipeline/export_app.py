@@ -125,6 +125,12 @@ def main():
             shutil.rmtree(ZIEL / "relief")
         shutil.copytree(relief, ZIEL / "relief")
         print(f"relief/: {sum(p.stat().st_size for p in (ZIEL / 'relief').iterdir())/1024:.0f} KB")
+    # Übersicht der Schweiz für «3D Schweiz» (pipeline/build_schweiz3d.py)
+    uebersicht = ROOT / "data" / "schweiz3d"
+    if uebersicht.exists():
+        if (ZIEL / "schweiz3d").exists():
+            shutil.rmtree(ZIEL / "schweiz3d")
+        shutil.copytree(uebersicht, ZIEL / "schweiz3d")
     # Luftbild für das Gelände in 3D (pipeline/build_luftbild.py), vorerst für einzelne Bergstrecken
     luftbild = ROOT / "data" / "luftbild"
     if luftbild.exists():
