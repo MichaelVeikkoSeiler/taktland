@@ -1,0 +1,61 @@
+# Baut die Details für «3D Schweiz» (pipeline/build_schweiz3d_details.py: Luftbild auf 2,5 m und Gelände auf 10 m für jeden
+# Kilometer der Schweiz) und legt die Pakete im Release «schweiz3d-1» ab; auf cyon holt server/daten/holen.php sie von dort
+# (Michael, 2026-10-19: «Lade noch mehr Detailkarten für Schweiz 3D»). Nur von Hand zu starten: Actions → 3D Schweiz Details →
+# Run workflow. Die Teile laufen gleichzeitig, je etwa eine halbe Stunde.
+name: 3D Schweiz Details
+
+on:
+  workflow_dispatch:
+    inputs:
+      teile:
+        description: 'Welche Teile von 8, etwa [3] für einen einzelnen Nachtrag'
+        default: '[1, 2, 3, 4, 5, 6, 7, 8]'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: schweiz3d
+  cancel-in-progress: false
+
+jobs:
+  vorbereiten:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release anlegen, falls es noch fehlt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view schweiz3d-1 --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1 || gh release create schweiz3d-1 --repo "$GITHUB_REPOSITORY" \
+            --title "Details für 3D Schweiz auf daten.taktland.ch" \
+            --notes "Je Kilometer der Schweiz SWISSIMAGE auf 2,5 m und swissALTI3D auf 10 m (swisstopo). Nicht Teil der App: server/daten/holen.php auf daten.taktland.ch holt die Pakete von hier."
+
+  bauen:
+    needs: vorbereiten
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        teil: ${{ fromJSON(inputs.teile) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pakete installieren
+        run: python -m pip install --quiet numpy scipy rasterio pillow
+
+      - name: Kacheln bauen
+        run: python pipeline/build_schweiz3d_details.py --teil ${{ matrix.teil }}/8 2>&1 | grep -v Warning
+
+      - name: Pakete schnüren
+        run: python pipeline/scharf_pakete.py --art schweiz3d --teil t${{ matrix.teil }}
+
+      - name: Pakete ins Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload schweiz3d-1 data/schweiz3d_pakete/schweiz3d-t${{ matrix.teil }}-*.zip --repo "$GITHUB_REPOSITORY" --clobber

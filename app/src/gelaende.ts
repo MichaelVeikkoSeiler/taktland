@@ -537,3 +537,70 @@ export async function gleisLaden(punkte: Array<[number, number]>): Promise<Gleis
   const alle = await Promise.all([...namen].map((k) => gleisKachel(k, ix.kachel_m)))
   return alle.flatMap((x) => x ?? [])
 }
+
+/* ---------- Details für «3D Schweiz» auf daten.taktland.ch ---------- */
+
+/** Je Kilometer der Schweiz Luftbild auf 2,5 m und Gelände auf 10 m (Michael, 2026-10-19: «Lade noch mehr Detailkarten für
+ *  Schweiz 3D»; pipeline/build_schweiz3d_details.py), nur auf daten.taktland.ch: für die App zu gross. Fehlt der Index dort,
+ *  gibt es nur die feinen Daten entlang der Bahnlinien. */
+interface Schweiz3dIndex { quelle_bild: string; quelle_hoehe: string; kacheln: Record<string, [number | null, number | null]> }
+let schweiz3dVerz: Promise<Schweiz3dIndex | null> | null = null
+const schweiz3dIndex = () => (schweiz3dVerz ??= holen<Schweiz3dIndex>(`${DATEN_URL}schweiz3d/index.json`).catch(() => {
+  spaeterNochmals(() => { schweiz3dVerz = null })
+  return null
+}))
+
+async function hoeheKmLesen(url: string) {
+  const gepackt = await holenBinaer(url)
+  const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+  const tief = new DataView(roh).getInt32(0, true), d = new Int16Array(roh, 4)
+  const n = FEIN_JE_KM, h = new Float32Array(n * n)
+  for (let j = 0; j < n; j++) {
+    let v = 0
+    for (let i = 0; i < n; i++) { v += d[j * n + i]; h[j * n + i] = (tief + v) / 10 }
+  }
+  return h
+}
+
+export interface Schweiz3dDetails {
+  /** Höhen wie Fein, Schlüssel «Ost-km_Nord-km» */
+  fein: Fein
+  bilder: Array<{ ke: number; kn: number; bild: ImageBitmap }>
+  quelle_bild: string; quelle_hoehe: string
+  bildJahre: number[]
+}
+
+/** Die Details im Rechteck (Landeskoordinaten); px: Bildpunkte je Kilometer, auf die die Bilder verkleinert werden;
+ *  ohneHoehen: nur die Bilder (für die Region) */
+export async function schweiz3dLaden(e0: number, n0: number, e1: number, n1: number, px = 400, ohneHoehen = false): Promise<Schweiz3dDetails | null> {
+  if (!gelaendeMoeglich()) return null
+  const ix = await schweiz3dIndex()
+  if (!ix) return null
+  const namen: string[] = []
+  for (let ke = Math.floor(e0 / 1000); ke <= Math.floor((e1 - 1) / 1000); ke++) {
+    for (let kn = Math.floor(n0 / 1000); kn <= Math.floor((n1 - 1) / 1000); kn++) if (ix.kacheln[`${ke}_${kn}`]) namen.push(`${ke}_${kn}`)
+  }
+  if (!namen.length) return null
+  const [bilder, hoehen] = await Promise.all([
+    Promise.all(namen.map((n) => (ix.kacheln[n][0] === null ? null
+      : holenBinaer(`${DATEN_URL}schweiz3d/${n}.jpg`)
+        .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' }), px < 400 ? { resizeWidth: px, resizeHeight: px, resizeQuality: 'medium' } : undefined))
+        .catch(() => null)))),
+    ohneHoehen ? Promise.resolve([] as Array<Float32Array | null>)
+      : Promise.all(namen.map((n) => (ix.kacheln[n][1] === null ? null : hoeheKmLesen(`${DATEN_URL}schweiz3d/${n}.hgz`).catch(() => null)))),
+  ])
+  const km = new Map<string, Float32Array>()
+  namen.forEach((n, i) => { if (hoehen[i]) km.set(n, hoehen[i]!) })
+  const raus = namen.flatMap((n, i) => {
+    const b = bilder[i]
+    if (!b) return []
+    const [ke, kn] = n.split('_').map(Number)
+    return [{ ke, kn, bild: b }]
+  })
+  if (!raus.length && !km.size) return null
+  return {
+    fein: { km, jahre: [...new Set([...km.keys()].map((k) => ix.kacheln[k][1]!))].sort() },
+    bilder: raus, quelle_bild: ix.quelle_bild, quelle_hoehe: ix.quelle_hoehe,
+    bildJahre: [...new Set(raus.map(({ ke, kn }) => ix.kacheln[`${ke}_${kn}`][0]!))].sort(),
+  }
+}

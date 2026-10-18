@@ -260,7 +260,14 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Gipfel, Seen und den Kanton der Mitte; «Überrasch mich» wählt das Feld um einen zufälligen Gipfel; mit der Brille (WebXR)
              steht das Modell 1,2 m breit auf dem Tisch, die Sitzung bleibt beim Eintauchen, Abzug wählt mit dem Strahl, nochmals
              Abzug im Feld taucht ein, Greiftaste eine Stufe zurück, Thumbstick dreht und vergrössert, eine Tafel nennt das Feld;
-             geprüft mit dem Emulator IWER, nicht auf einer Quest
+             geprüft mit dem Emulator IWER, nicht auf einer Quest; Details der ganzen Schweiz auf daten.taktland.ch (Michael,
+             2026-10-19: «Lade noch mehr Detailkarten für Schweiz 3D»): je Kilometer Luftbild auf 2,5 m und Gelände auf 10 m wie
+             Nahbild und feines Gelände, aber ohne weissen Rand (pipeline/build_schweiz3d_details.py nach data/schweiz3d_extern, nicht
+             in Git, etwa 2,3 GB, 4,5 MB je 10-km-Kachel), gebaut vom Workflow «3D Schweiz Details» (.github/workflows/schweiz3d.yml,
+             von Hand, acht Teile, je etwa 30 Minuten), Pakete mit scharf_pakete.py --art schweiz3d im Release «schweiz3d-1», geholt
+             von holen.php (HOLEN = 'schweiz3d-1') nach schweiz3d/; die App (schweiz3dLaden in src/gelaende.ts) nimmt sie in der
+             Region fürs Bild (so viele Bildpunkte, wie die Leinwand fasst) und im Feld vor allem anderen, fehlt der Index dort,
+             bleibt es bei den Daten entlang der Bahnlinien
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),
              auf 10 m gemittelt, JPEG im 10-km-Raster der Geländekacheln, je km der neueste Jahrgang (2017 bis 2025),
              die Jahre je Kachel in index.json (pipeline/build_luftbild.py --alle: 508 Kacheln der ganzen Schweiz,
@@ -384,6 +391,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_luftbild.py --alle   # Luftbild (SWISSIMAGE) der ganzen Schweiz, Stunden, vor export_app
 .venv/bin/python pipeline/build_luftbild.py --orte Gümmenen Müntschemier   # Luftbild rund um eine Strecke
 .venv/bin/python pipeline/build_schweiz3d.py        # Übersicht der Schweiz für «3D Schweiz», vor export_app
+.venv/bin/python pipeline/build_schweiz3d_details.py --teil 3/8   # Details für «3D Schweiz» (daten.taktland.ch)
 .venv/bin/python pipeline/build_luftbild_nah.py      # Nahbild (2,5 m) entlang der Bahnlinien, etwa eine Stunde, vor export_app
 .venv/bin/python pipeline/build_gelaende_nah.py      # feines Gelände (10 m) entlang der Bahnlinien für den Führerstand, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch

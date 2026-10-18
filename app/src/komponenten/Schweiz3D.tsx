@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { fensterLaden, feinHoehe, feinLaden, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster } from '../gelaende'
+import { fensterLaden, feinHoehe, feinLaden, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, schweiz3dLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
 import type { SeenDaten, SehenswertDaten } from '../typen'
@@ -59,22 +59,28 @@ async function regionLaden(f: Feld): Promise<Gelaende> {
   for (const k of lb?.kacheln ?? []) {
     g.drawImage(k.bild, (k.ex * lb!.kachel_m - ost) * sx, (nord - (k.ny + 1) * lb!.kachel_m) * sy, lb!.kachel_m * sx, lb!.kachel_m * sy)
   }
+  // schärfer, wo daten.taktland.ch die Details hat: je Kilometer so viele Bildpunkte, wie die Leinwand fasst
+  const d = await schweiz3dLaden(ost, nord - hoehe * m, ost + breite * m, nord, Math.ceil(sx * 1000), true).catch(() => null)
+  for (const k of d?.bilder ?? []) g.drawImage(k.bild, (k.ke * 1000 - ost) * sx, (nord - (k.kn + 1) * 1000) * sy, 1000 * sx, 1000 * sy)
   return { raster: a.raster, h: Float32Array.from(a.h), bild: c,
-           quellen: [a.quelle, lb ? `SWISSIMAGE (swisstopo), auf 10 m gemittelt, Aufnahmen ${lb.jahre.join(', ')}` : 'ohne Luftbild'] }
+           quellen: [a.quelle, d?.bilder.length ? `${d.quelle_bild}, hier auf etwa ${Math.round(1 / sx)} m, Aufnahmen ${d.bildJahre.join(', ')}`
+             : lb ? `SWISSIMAGE (swisstopo), auf 10 m gemittelt, Aufnahmen ${lb.jahre.join(', ')}` : 'ohne Luftbild'] }
 }
 
 /** Ort: 4 km im 10-m-Raster; feines Gelände und Nahbild, wo es sie gibt, sonst das Gelände der Region */
 async function ortLaden(f: Feld, region: Gelaende): Promise<Gelaende> {
   const e0 = f.e - f.seite / 2, n1 = f.n + f.seite / 2
   const m = 10, breite = f.seite / m + 1
-  const [fein, nah] = await Promise.all([feinLaden(e0, f.n - f.seite / 2, e0 + f.seite, n1).catch(() => null),
-                                         nahbildLaden(e0, f.n - f.seite / 2, e0 + f.seite, n1).catch(() => null)])
+  const [fein, nah, details] = await Promise.all([feinLaden(e0, f.n - f.seite / 2, e0 + f.seite, n1).catch(() => null),
+                                                  nahbildLaden(e0, f.n - f.seite / 2, e0 + f.seite, n1).catch(() => null),
+                                                  schweiz3dLaden(e0, f.n - f.seite / 2, e0 + f.seite, n1).catch(() => null)])
   const h = new Float32Array(breite * breite)
   let feine = 0
   for (let j = 0; j < breite; j++) {
     for (let i = 0; i < breite; i++) {
       const e = e0 + i * m, n = n1 - j * m
-      const z = fein ? feinHoehe(fein, e, n) : null
+      // zuerst die Details der ganzen Schweiz, dann das feine Gelände entlang der Bahnlinien
+      const z = (details?.fein.km.size ? feinHoehe(details.fein, e, n) : null) ?? (fein ? feinHoehe(fein, e, n) : null)
       if (z !== null) feine++
       h[j * breite + i] = z ?? hoeheIm(region, e, n)
     }
@@ -88,13 +94,17 @@ async function ortLaden(f: Feld, region: Gelaende): Promise<Gelaende> {
   g.drawImage(region.bild, (e0 - r.ost) * fx, (r.nord - n1) * fx, f.seite * fx, f.seite * fx, 0, 0, c.width, c.height)
   const s = c.width / f.seite
   for (const k of nah?.kacheln ?? []) g.drawImage(k.bild, (k.ke * 1000 - e0) * s, (n1 - (k.kn + 1) * 1000) * s, 1000 * s, 1000 * s)
+  for (const k of details?.bilder ?? []) g.drawImage(k.bild, (k.ke * 1000 - e0) * s, (n1 - (k.kn + 1) * 1000) * s, 1000 * s, 1000 * s)
   const anteil = feine / h.length
+  const ganz = !!details?.fein.km.size
   return {
     raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c,
-    quellen: [anteil > 0 ? 'swissALTI3D (swisstopo), auf 10 m gemittelt, nur bis 500 m neben den Bahnlinien' : region.quellen[0],
-              nah ? 'SWISSIMAGE (swisstopo), auf 2,5 m, nur bis 500 m neben den Bahnlinien, sonst auf 10 m' : region.quellen[1]],
+    quellen: [ganz ? `${details!.quelle_hoehe}, Aufnahmen ${details!.fein.jahre.join(', ')}`
+                : anteil > 0 ? 'swissALTI3D (swisstopo), auf 10 m gemittelt, nur bis 500 m neben den Bahnlinien' : region.quellen[0],
+              details?.bilder.length ? `${details.quelle_bild}, Aufnahmen ${details.bildJahre.join(', ')}`
+                : nah ? 'SWISSIMAGE (swisstopo), auf 2,5 m, nur bis 500 m neben den Bahnlinien, sonst auf 10 m' : region.quellen[1]],
     hinweis: anteil < 0.98 ? (anteil === 0 ? 'Hier gibt es noch keine feineren Daten: Gelände auf 50 m, Luftbild auf 10 m wie in der Region.'
-      : 'Feiner nur bis 500 m neben den Bahnlinien, weiter weg wie in der Region.') : undefined,
+      : ganz ? 'Am Rand fehlen feinere Daten, dort wie in der Region.' : 'Feiner nur bis 500 m neben den Bahnlinien, weiter weg wie in der Region.') : undefined,
   }
 }
 
