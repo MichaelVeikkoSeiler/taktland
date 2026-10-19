@@ -56,8 +56,19 @@ function abrufen($url, $datei = null) {
 if (!class_exists('ZipArchive')) seite('Fehlt: ZipArchive', 'PHP auf diesem Server kann keine ZIP-Dateien auspacken.');
 
 // die Pakete laut Release, nach Namen geordnet
-[$json, $fehler] = abrufen(RELEASE);
-if ($json === false) seite('Release nicht gefunden', $h($fehler) . ' — Ist der Workflow «' . ARTEN[HOLEN]['workflow'] . '» durchgelaufen?');
+// einmal gelesen und gemerkt: ohne Anmeldung lässt GitHub je Adresse nur 60 Abfragen in der Stunde zu, mehr als 60 Pakete
+// gaben sonst «403» (Michael, 2026-10-19, schweiz3dfein-1 mit 80 Paketen); die Pakete selbst zählen nicht dazu
+$merk = __DIR__ . '/.holen-' . HOLEN . '.json';
+$fertig_datei = __DIR__ . '/.holen-' . HOLEN . '.fertig';
+$json = is_file($merk) && filemtime($merk) > time() - 86400 ? file_get_contents($merk) : false;
+if ($json === false) {
+    [$json, $fehler] = abrufen(RELEASE);
+    if ($json === false && str_contains((string) $fehler, '403'))
+        seite('GitHub lässt warten', 'GitHub beantwortet von diesem Server gerade keine Abfragen mehr (höchstens 60 in der Stunde). '
+            . 'Die Seite versucht es in 5 Minuten von selbst wieder, schon ausgepackte Pakete bleiben.', $nr, 0, 300);
+    if ($json === false) seite('Release nicht gefunden', $h($fehler) . ' — Ist der Workflow «' . ARTEN[HOLEN]['workflow'] . '» durchgelaufen?');
+    file_put_contents($merk, $json);
+}
 $pakete = [];
 foreach (json_decode($json, true)['assets'] ?? [] as $a) {
     if (preg_match(ARTEN[HOLEN]['muster'], $a['name']) && str_starts_with($a['name'], NUR)) $pakete[$a['name']] = [$a['browser_download_url'], (int) $a['size']];
@@ -65,6 +76,10 @@ foreach (json_decode($json, true)['assets'] ?? [] as $a) {
 ksort($pakete);
 $namen = array_keys($pakete);
 if (!$namen) seite('Keine Pakete', 'Im Release liegen noch keine Pakete.');
+
+// schon ausgepackte Pakete überspringen, auch wenn die Seite neu ohne ?teil= geöffnet wird
+$fertig = is_file($fertig_datei) ? array_flip(file($fertig_datei, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)) : [];
+while ($nr < count($namen) && isset($fertig[$namen[$nr]])) $nr++;
 
 if ($nr >= count($namen)) {
     // die Verzeichnisse der Reihen oder Kantone zusammenfügen
@@ -87,6 +102,8 @@ if ($nr >= count($namen)) {
         $zahl += count($alle['kacheln']);
     }
     @unlink(__DIR__ . '/.holen.sperre');
+    @unlink($merk);
+    @unlink($fertig_datei);
     @unlink(__FILE__);
     seite('Fertig', count($namen) . ' Pakete ausgepackt, ' . $zahl . ' Kacheln in den Verzeichnissen. Das Skript hat sich gelöscht.');
 }
@@ -114,4 +131,5 @@ if ($zip->open($tmp) !== true) { @unlink($tmp); $nochmal('Paket kaputt', $h($nam
 if (!$zip->extractTo(__DIR__)) { $zip->close(); @unlink($tmp); $nochmal('Auspacken fehlgeschlagen', $h($name) . ' liess sich nicht ganz auspacken (Platz?).'); }
 $zip->close();
 @unlink($tmp);
+file_put_contents($fertig_datei, $name . "\n", FILE_APPEND);
 seite('Paket ' . ($nr + 1) . ' von ' . count($namen), $h($name) . ' ist ausgepackt. Weiter in einer Sekunde …', $nr + 1);
