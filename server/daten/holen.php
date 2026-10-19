@@ -13,7 +13,8 @@
  * 'scharf-1' eintragen, in NUR der Anfang der Pakete, die es holen soll.
  */
 // 2026-10-19 die Details für «3D Schweiz» (Workflow «3D Schweiz Details», Release «schweiz3d-1», Ordner schweiz3d/)
-const HOLEN = 'schweiz3d-1';
+// 2026-10-19 das Luftbild auf 50 cm für die Stufe 1 km (Workflow «3D Schweiz fein», Release «schweiz3dfein-1», Ordner schweiz3dfein/)
+const HOLEN = 'schweiz3dfein-1';
 // nur Pakete, deren Name so beginnt, leer für alle: 'scharf-r5-' holt nur die Nachträge (Reihe 5, Michael, 2026-10-15: BTI),
 // 'scharf-r6' alle übrigen Bahnlinien (Reihen 6a bis 6h, Michael, 2026-10-15: «Alles scharf machen»);
 // die Verzeichnisse der anderen Reihen liegen schon da und werden mit zusammengefügt;
@@ -21,7 +22,8 @@ const HOLEN = 'schweiz3d-1';
 const NUR = '';
 const ARTEN = ['scharf-1' => ['muster' => '/^scharf-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['scharf'], 'workflow' => 'Scharfe Umgebung'],
                'umgebung-1' => ['muster' => '/^umgebung-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['gebaeude', 'baeume'], 'workflow' => 'Gebäude und Bäume'],
-               'schweiz3d-1' => ['muster' => '/^schweiz3d-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['schweiz3d'], 'workflow' => '3D Schweiz Details']];
+               'schweiz3d-1' => ['muster' => '/^schweiz3d-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['schweiz3d'], 'workflow' => '3D Schweiz Details'],
+               'schweiz3dfein-1' => ['muster' => '/^schweiz3dfein-[a-z0-9]+-\d+\.zip$/', 'ordner' => ['schweiz3dfein'], 'workflow' => '3D Schweiz fein']];
 const RELEASE = 'https://api.github.com/repos/MichaelVeikkoSeiler/taktland/releases/tags/' . HOLEN;
 
 header('Content-Type: text/html; charset=utf-8');

@@ -112,18 +112,36 @@ async function ortLaden(f: Feld, region: Gelaende): Promise<Gelaende> {
 
 /** Nah: 1 km im 5-m-Raster; wo es die scharfe Umgebung gibt (bis 200 m neben den Bahnlinien), Gelände auf 2 m und Luftbild auf
  *  25 cm, sonst das Gelände und Bild des Felds darüber */
+/** Höhe aus Kilometerkacheln mit je_km × je_km Feldern (Zeilen von Norden, Feldmitten), zwischen ihnen linear, oder null */
+function kmHoehe(km: Map<string, Float32Array>, je_km: number, e: number, n: number): number | null {
+  const z = 1000 / je_km
+  const feld = (I: number, J: number) => {
+    const ke = Math.floor(I / je_km), kn = Math.floor(J / je_km)
+    const a = km.get(`${ke}_${kn}`)
+    return a ? a[(je_km - 1 - (J - kn * je_km)) * je_km + I - ke * je_km] : null
+  }
+  const x = e / z - 0.5, y = n / z - 0.5, I = Math.floor(x), J = Math.floor(y), fx = x - I, fy = y - J
+  const a = feld(I, J), b = feld(I + 1, J), c = feld(I, J + 1), d = feld(I + 1, J + 1)
+  if (a === null || b === null || c === null || d === null) return null
+  return a * (1 - fx) * (1 - fy) + b * fx * (1 - fy) + c * (1 - fx) * fy + d * fx * fy
+}
+
 async function nahLaden(f: Feld, ort: Gelaende): Promise<Gelaende> {
   const e0 = f.e - f.seite / 2, n0 = f.n - f.seite / 2, n1 = f.n + f.seite / 2
   const m = 5, breite = f.seite / m + 1
-  const scharf = await scharfLaden(e0, n0, e0 + f.seite, n1).catch(() => null)
+  // die scharfe Umgebung entlang der Bahnlinien, und für die ganze Schweiz Bild auf 50 cm und Gelände auf 5 m (schweiz3dfein)
+  const [scharf, fein] = await Promise.all([scharfLaden(e0, n0, e0 + f.seite, n1).catch(() => null),
+                                            schweiz3dLaden(e0, n0, e0 + f.seite, n1, 0, false, 'schweiz3dfein').catch(() => null)])
   const h = new Float32Array(breite * breite)
-  let scharfe = 0
+  let scharfe = 0, feine = 0
   for (let j = 0; j < breite; j++) {
     for (let i = 0; i < breite; i++) {
       const e = e0 + i * m, n = n1 - j * m
       const z = scharf ? scharfHoehe(scharf, e, n) : null
+      const zf = z === null && fein?.fein.km.size ? kmHoehe(fein.fein.km, fein.je_km, e, n) : null
       if (z !== null) scharfe++
-      h[j * breite + i] = z ?? hoeheIm(ort, e, n)
+      else if (zf !== null) feine++
+      h[j * breite + i] = z ?? zf ?? hoeheIm(ort, e, n)
     }
   }
   const c = document.createElement('canvas')
@@ -133,6 +151,7 @@ async function nahLaden(f: Feld, ort: Gelaende): Promise<Gelaende> {
   const fx = ort.bild.width / ((r.breite - 1) * r.m)
   g.drawImage(ort.bild, (e0 - r.ost) * fx, (r.nord - n1) * fx, f.seite * fx, f.seite * fx, 0, 0, c.width, c.height)
   const s = c.width / f.seite, k = SCHARF_KACHEL_M
+  for (const b of fein?.bilder ?? []) g.drawImage(b.bild, (b.ke * 1000 - e0) * s, (n1 - (b.kn + 1) * 1000) * s, 1000 * s, 1000 * s)
   const namen = [...(scharf?.kacheln.keys() ?? [])]
   // weiter als 200 m von den Bahnlinien ist das scharfe Bild weiss: dort durchsichtig, sonst deckt es das Bild darunter zu
   // (Michael, 2026-10-19, Brienz: weisse Streifen)
@@ -143,13 +162,17 @@ async function nahLaden(f: Feld, ort: Gelaende): Promise<Gelaende> {
     const [qe, qn] = n.split('_').map(Number)
     g.drawImage(b, (qe * k - e0) * s, (n1 - (qn + 1) * k) * s, k * s, k * s)
   })
-  const anteil = scharfe / h.length
+  const anteil = scharfe / h.length, anteilFein = (scharfe + feine) / h.length
+  const feinBild = !!fein?.bilder.length
   return {
     raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c,
-    quellen: [anteil > 0 ? `swissALTI3D (swisstopo), 2 m, bis 200 m neben den Bahnlinien, sonst ${ort.quellen[0]}` : ort.quellen[0],
-              bilder.some(Boolean) ? `SWISSIMAGE (swisstopo) auf 25 cm, bis 200 m neben den Bahnlinien, sonst ${ort.quellen[1]}` : ort.quellen[1]],
-    hinweis: anteil === 0 ? 'Schärfer als im Feld darüber gibt es hier nichts: Gelände auf 10 m, Luftbild auf 2,5 m. Schärfere Daten gibt es nur nahe an den Bahnlinien.'
-      : anteil < 0.98 ? 'Schärfer nur bis 200 m neben den Bahnlinien, weiter weg wie im Feld darüber.' : undefined,
+    quellen: [[anteil > 0 && 'swissALTI3D (swisstopo), 2 m, bis 200 m neben den Bahnlinien', feine > 0 && fein!.quelle_hoehe,
+               anteilFein < 1 && ort.quellen[0]].filter(Boolean).join('; sonst '),
+              [bilder.some(Boolean) && 'SWISSIMAGE (swisstopo) auf 25 cm, bis 200 m neben den Bahnlinien',
+               feinBild && `${fein!.quelle_bild}, Aufnahmen ${fein!.bildJahre.join(', ')}`, !feinBild && ort.quellen[1]].filter(Boolean).join('; sonst ')],
+    hinweis: anteilFein === 0 && !feinBild
+      ? 'Schärfer als im Feld darüber gibt es hier noch nichts: Gelände auf 10 m, Luftbild auf 2,5 m. Schärfere Daten gibt es bisher nur nahe an den Bahnlinien.'
+      : anteilFein < 0.98 ? 'Am Rand fehlen schärfere Daten, dort wie im Feld darüber.' : undefined,
   }
 }
 
@@ -283,7 +306,10 @@ export default function Schweiz3D() {
           <Ansicht g={aktuell} stufe={stufe} faktor={stufe === 'schweiz' ? UEBERHOEHT : faktor} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
                      const r = RASTER_M[stufe], s = FELD_M[stufe]
-                     setWahl({ e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: s })
+                     const w = { e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: s }
+                     // nur in einer Testfassung (VITE_S3D_TEST): das gewählte Feld in die Konsole
+                     if (import.meta.env.VITE_S3D_TEST) console.log('feld', JSON.stringify(w))
+                     setWahl(w)
                    }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>

@@ -1,0 +1,61 @@
+# Baut das Luftbild auf 50 cm und das Gelände auf 5 m für jeden Kilometer der Schweiz (pipeline/build_schweiz3d_details.py --fein),
+# für die Stufe 1 km von «3D Schweiz» (Michael, 2026-10-19: «nimm mal 50cm»), und legt die Pakete im Release «schweiz3dfein-1» ab;
+# server/daten/holen.php holt sie nach daten.taktland.ch/schweiz3dfein/. Nur von Hand zu starten: Actions → 3D Schweiz fein → Run
+# workflow. 16 Teile gleichzeitig, je etwa eine halbe Stunde, zusammen etwa 34 GB.
+name: 3D Schweiz fein
+
+on:
+  workflow_dispatch:
+    inputs:
+      teile:
+        description: 'Welche Teile von 16, etwa [3] für einen einzelnen Nachtrag'
+        default: '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: schweiz3dfein
+  cancel-in-progress: false
+
+jobs:
+  vorbereiten:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release anlegen, falls es noch fehlt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view schweiz3dfein-1 --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1 || gh release create schweiz3dfein-1 --repo "$GITHUB_REPOSITORY" \
+            --title "Feine Details für 3D Schweiz auf daten.taktland.ch" \
+            --notes "Je Kilometer der Schweiz SWISSIMAGE auf 50 cm und swissALTI3D auf 5 m (swisstopo). Nicht Teil der App: server/daten/holen.php auf daten.taktland.ch holt die Pakete von hier."
+
+  bauen:
+    needs: vorbereiten
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        teil: ${{ fromJSON(inputs.teile) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pakete installieren
+        run: python -m pip install --quiet numpy scipy rasterio pillow
+
+      - name: Kacheln bauen
+        run: python pipeline/build_schweiz3d_details.py --fein --teil ${{ matrix.teil }}/16 2>&1 | grep -v Warning
+
+      - name: Pakete schnüren
+        run: python pipeline/scharf_pakete.py --art schweiz3dfein --teil t${{ matrix.teil }}
+
+      - name: Pakete ins Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload schweiz3dfein-1 data/schweiz3dfein_pakete/schweiz3dfein-t${{ matrix.teil }}-*.zip --repo "$GITHUB_REPOSITORY" --clobber

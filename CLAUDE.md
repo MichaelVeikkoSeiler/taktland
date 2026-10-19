@@ -269,7 +269,11 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              von Hand, acht Teile, je etwa 30 Minuten), Pakete mit scharf_pakete.py --art schweiz3d im Release «schweiz3d-1», geholt
              von holen.php (HOLEN = 'schweiz3d-1') nach schweiz3d/; die App (schweiz3dLaden in src/gelaende.ts) nimmt sie in der
              Region fürs Bild (so viele Bildpunkte, wie die Leinwand fasst) und im Feld vor allem anderen, fehlt der Index dort,
-             bleibt es bei den Daten entlang der Bahnlinien
+             bleibt es bei den Daten entlang der Bahnlinien; für die Stufe 1 km dasselbe noch feiner (Michael, 2026-10-19: «die ganze Schweiz in
+             diesem Detailgrad», «nimm mal 50cm»): je Kilometer Luftbild auf 50 cm (2000 × 2000, aus der Fassung 10 cm) und Gelände auf
+             5 m (200 × 200), build_schweiz3d_details.py --fein nach data/schweiz3dfein_extern (nicht in Git, etwa 34 GB, 67 MB je
+             10-km-Kachel, 45 s), Workflow «3D Schweiz fein» (.github/workflows/schweiz3dfein.yml, 16 Teile), Release «schweiz3dfein-1»,
+             holen.php (HOLEN = 'schweiz3dfein-1') nach schweiz3dfein/; in nahLaden die scharfe Umgebung zuerst, dann diese, dann das Feld
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),
              auf 10 m gemittelt, JPEG im 10-km-Raster der Geländekacheln, je km der neueste Jahrgang (2017 bis 2025),
              die Jahre je Kachel in index.json (pipeline/build_luftbild.py --alle: 508 Kacheln der ganzen Schweiz,
@@ -394,6 +398,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_luftbild.py --orte Gümmenen Müntschemier   # Luftbild rund um eine Strecke
 .venv/bin/python pipeline/build_schweiz3d.py        # Übersicht der Schweiz für «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_schweiz3d_details.py --teil 3/8   # Details für «3D Schweiz» (daten.taktland.ch)
+.venv/bin/python pipeline/build_schweiz3d_details.py --fein --teil 3/16   # dito auf 50 cm und 5 m für die Stufe 1 km
 .venv/bin/python pipeline/build_luftbild_nah.py      # Nahbild (2,5 m) entlang der Bahnlinien, etwa eine Stunde, vor export_app
 .venv/bin/python pipeline/build_gelaende_nah.py      # feines Gelände (10 m) entlang der Bahnlinien für den Führerstand, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch

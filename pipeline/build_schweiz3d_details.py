@@ -12,6 +12,12 @@ Die Kilometer sind die, für die swisstopo ein Bild oder eine Höhe hat, in den 
 
     .venv/bin/python pipeline/build_schweiz3d_details.py --teil 3/8
     .venv/bin/python pipeline/build_schweiz3d_details.py 260_120   # nur diese 10-km-Kacheln, zum Ausprobieren
+
+Mit --fein (Michael, 2026-10-19: «die ganze Schweiz in diesem Detailgrad», «nimm mal 50cm») für die Stufe 1 km: das Luftbild
+aus der Fassung 10 cm auf 50 cm (je Kilometer 2000 × 2000 Bildpunkte) und das Gelände auf 5 m (200 × 200 Höhen), nach
+data/schweiz3dfein_extern, Release «schweiz3dfein-1», auf daten.taktland.ch unter schweiz3dfein/.
+
+    .venv/bin/python pipeline/build_schweiz3d_details.py --fein --teil 3/16
 """
 import json
 import sys
@@ -29,8 +35,11 @@ import build_gelaende_nah  # noqa: E402
 import build_luftbild  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
-ZIEL = ROOT / "data" / "schweiz3d_extern"
-BILD_JE_KM = 400
+FEIN = "--fein" in sys.argv
+ZIEL = ROOT / "data" / ("schweiz3dfein_extern" if FEIN else "schweiz3d_extern")
+#: Bildpunkte und Höhen je Kilometer: 2,5 m und 10 m, mit --fein 50 cm und 5 m
+BILD_JE_KM = 2000 if FEIN else 400
+HOEHE_JE_KM = 200 if FEIN else build_gelaende_nah.JE_KM
 ENV = dict(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR", CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif",
            GDAL_HTTP_MAX_RETRY="5", GDAL_HTTP_RETRY_DELAY="3")
 
@@ -48,7 +57,8 @@ def lesen(href, farbig, seite):
 
 
 def bild_bauen(ke, kn, href):
-    a = lesen(href, True, BILD_JE_KM)
+    # für 50 cm die Fassung mit 10 cm; sie liegt neben der mit 2 m
+    a = lesen(href.replace("_2_2056.tif", "_0.1_2056.tif") if FEIN else href, True, BILD_JE_KM)
     if a is None:
         return False
     Image.fromarray(np.transpose(a, (1, 2, 0)).astype(np.uint8)).save(ZIEL / f"{ke}_{kn}.jpg", quality=72, optimize=True,
@@ -57,7 +67,7 @@ def bild_bauen(ke, kn, href):
 
 
 def hoehe_bauen(ke, kn, href):
-    h = lesen(href, False, build_gelaende_nah.JE_KM)
+    h = lesen(href, False, HOEHE_JE_KM)
     if h is None:
         return False
     (ZIEL / f"{ke}_{kn}.hgz").write_bytes(build_gelaende_nah.packen(h))
@@ -65,7 +75,7 @@ def hoehe_bauen(ke, kn, href):
 
 
 def main():
-    argv = sys.argv[1:]
+    argv = [a for a in sys.argv[1:] if a != "--fein"]
     zehner = sorted(tuple(map(int, n.split("_"))) for n in
                     json.loads((ROOT / "data" / "luftbild" / "index.json").read_text(encoding="utf-8"))["kacheln"])
     if argv[:1] == ["--teil"]:
@@ -90,9 +100,10 @@ def main():
                 kacheln.setdefault(f"{ke}_{kn}", [None, None])[1] = jahr
         teil_datei = index_datei.with_suffix(".teil")
         teil_datei.write_text(json.dumps({
-            "quelle_bild": "SWISSIMAGE 10 cm (swisstopo), Fassung 2 m, auf 2,5 m gemittelt",
-            "quelle_hoehe": "swissALTI3D (swisstopo), Fassung 2 m, auf 10 m gemittelt",
-            "geladen": date.today().isoformat(), "bild_je_km": BILD_JE_KM, "hoehe_je_km": build_gelaende_nah.JE_KM,
+            "quelle_bild": "SWISSIMAGE 10 cm (swisstopo), auf 50 cm gemittelt" if FEIN
+                           else "SWISSIMAGE 10 cm (swisstopo), Fassung 2 m, auf 2,5 m gemittelt",
+            "quelle_hoehe": f"swissALTI3D (swisstopo), Fassung 2 m, auf {1000 // HOEHE_JE_KM} m gemittelt",
+            "geladen": date.today().isoformat(), "bild_je_km": BILD_JE_KM, "hoehe_je_km": HOEHE_JE_KM,
             "strecken": [],
             "hinweis": "je Kilometer: Jahr des Bilds, Jahr der Höhe (null: fehlt); Höhen wie data/gelaende_nah in Dezimetern",
             "kacheln": dict(sorted(kacheln.items())),
