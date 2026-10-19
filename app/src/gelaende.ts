@@ -139,7 +139,7 @@ function luftbildKachel(name: string, px: number, voll: number) {
 /** Wo swisstopo keine Aufnahme hat (jenseits der Grenze), ist die Kachel reinweiss (Michael, 2026-10-08: «bei der
  *  Furkastrecke nicht alle Kacheln dargestellt»; bei Binn fast die Hälfte). Dort durchsichtig, damit das Gelände in
  *  seinen Farben erscheint wie bei einer fehlenden Kachel; Schnee und Gletscher erreichen nicht in allen drei Farben 250. */
-async function ohneLeeres(bild: ImageBitmap, saum = 0): Promise<ImageBitmap> {
+export async function ohneLeeres(bild: ImageBitmap, saum = 0): Promise<ImageBitmap> {
   if (typeof OffscreenCanvas === 'undefined') return bild
   const c = new OffscreenCanvas(bild.width, bild.height)
   // im Speicher statt auf der Grafikkarte, sonst ist das Auslesen sehr langsam

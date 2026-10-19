@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { fensterLaden, feinHoehe, feinLaden, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, SCHARF_KACHEL_M, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
+import { fensterLaden, feinHoehe, feinLaden, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, SCHARF_KACHEL_M, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
 import type { SeenDaten, SehenswertDaten } from '../typen'
@@ -134,7 +134,9 @@ async function nahLaden(f: Feld, ort: Gelaende): Promise<Gelaende> {
   g.drawImage(ort.bild, (e0 - r.ost) * fx, (r.nord - n1) * fx, f.seite * fx, f.seite * fx, 0, 0, c.width, c.height)
   const s = c.width / f.seite, k = SCHARF_KACHEL_M
   const namen = [...(scharf?.kacheln.keys() ?? [])]
-  const bilder = await Promise.all(namen.map((n) => scharfBild(n).catch(() => null)))
+  // weiter als 200 m von den Bahnlinien ist das scharfe Bild weiss: dort durchsichtig, sonst deckt es das Bild darunter zu
+  // (Michael, 2026-10-19, Brienz: weisse Streifen)
+  const bilder = await Promise.all(namen.map((n) => scharfBild(n).then((b) => ohneLeeres(b, 3)).catch(() => null)))
   namen.forEach((n, i) => {
     const b = bilder[i]
     if (!b) return
