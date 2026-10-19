@@ -295,50 +295,12 @@ export default function Schweiz3D() {
 
 /* ---------- die Zeichnung ---------- */
 
-/** Der Sockel unter dem Gelände (Michael, 2026-10-19: «auf einem Holzsockel … damit das wie ein Deko-Element aussieht»; vorher
- *  liefen die Ränder ins Leere): rundum eine Wand aus Holz von der Kante des Geländes bis unter seinen tiefsten Punkt, darunter
- *  eine breitere, dunklere Platte. Masse als Anteil der Breite des Modells, Holz gezeichnet, nicht aus einer Quelle. */
-const SOCKEL_WAND = 0.035, SOCKEL_PLATTE = 0.025, SOCKEL_UEBERSTAND = 0.012
-const holzVorrat = new Map<string, THREE.CanvasTexture>()
-/** Holzbild: Maserung längs, aus Sinuslinien mit Rauschen, hell für die Wand, dunkel für die Platte */
-function holz(hell: boolean) {
-  const schluessel = hell ? 'hell' : 'dunkel'
-  const da = holzVorrat.get(schluessel)
-  if (da) return da
-  const c = document.createElement('canvas')
-  c.width = 1024; c.height = 256
-  const g = c.getContext('2d')!
-  const grund = hell ? [176, 124, 74] : [104, 66, 38]
-  g.fillStyle = `rgb(${grund.join(',')})`
-  g.fillRect(0, 0, c.width, c.height)
-  let z = 7
-  const zufall = () => { z = (z * 16807) % 2147483647; return z / 2147483647 }
-  // Jahresringe als leicht gewellte Bänder
-  for (let y = 0; y < c.height; y += 3 + zufall() * 5) {
-    const dunkler = 0.75 + zufall() * 0.2, phase = zufall() * 10, welle = 2 + zufall() * 4
-    g.strokeStyle = `rgba(${grund.map((v) => Math.round(v * dunkler)).join(',')},${0.35 + zufall() * 0.4})`
-    g.lineWidth = 0.6 + zufall() * 1.6
-    g.beginPath()
-    for (let x = 0; x <= c.width; x += 16) {
-      const yy = y + Math.sin(x / 140 + phase) * welle + Math.sin(x / 37 + phase * 2) * 0.8
-      if (x === 0) g.moveTo(x, yy); else g.lineTo(x, yy)
-    }
-    g.stroke()
-  }
-  // ein paar Äste
-  for (let i = 0; i < 3; i++) {
-    const x = zufall() * c.width, y = zufall() * c.height, r = 6 + zufall() * 8
-    for (let k = 4; k > 0; k--) {
-      g.strokeStyle = `rgba(${grund.map((v) => Math.round(v * 0.55)).join(',')},0.35)`
-      g.beginPath(); g.ellipse(x, y, r * k * 0.6, r * k * 0.25, 0, 0, Math.PI * 2); g.stroke()
-    }
-  }
-  const t = new THREE.CanvasTexture(c)
-  t.colorSpace = THREE.SRGBColorSpace
-  t.wrapS = t.wrapT = THREE.RepeatWrapping
-  holzVorrat.set(schluessel, t)
-  return t
-}
+/** Der Sockel unter dem Gelände (Michael, 2026-10-19: «auf einem Holzsockel … wie ein Deko-Element»; vorher liefen die Ränder ins
+ *  Leere; danach: «kein Holz mehr sondern eine schwarze Wand, die sich aber dennoch schattieren lässt», «etwas höher»): rundum
+ *  eine Wand von der Kante des Geländes bis unter seinen tiefsten Punkt, darunter eine breitere Platte, beide fast schwarz und im
+ *  Licht schattiert. Masse als Anteil der Breite des Modells, nicht aus einer Quelle. */
+const SOCKEL_WAND = 0.06, SOCKEL_PLATTE = 0.025, SOCKEL_UEBERSTAND = 0.012
+const SOCKEL_WAND_FARBE = '#1c1c1c', SOCKEL_PLATTE_FARBE = '#111111'
 
 /** in der Brille: das Modell so breit auf Tischhöhe, so weit vor dir (wie die Modellbahn) */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
@@ -567,9 +529,10 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       kamera.far = weite / 1000 * 6; kamera.updateProjectionMatrix()
       // so weit weg, dass das ganze Modell mit dem Sockel ins Bild passt, auch im Hochformat
       const halbeSicht = Math.atan(Math.tan((kamera.fov * Math.PI) / 360) * Math.min(1, kamera.aspect))
-      // schräg von einer Ecke: so sieht man zwei Seiten des Sockels (die Diagonale ist 1,41-mal so breit)
+      // schräg von Südwesten, der Blick nach Nordosten (Michael, 2026-10-19): so sieht man zwei Seiten des Sockels (die Diagonale
+      // ist 1,41-mal so breit); x zeigt nach Osten, z nach Süden
       const abstand = (weite / 1000) * 0.8 / Math.tan(halbeSicht)
-      kamera.position.set(abstand * 0.5, Y(mittel) + abstand * 0.62, abstand * 0.6)
+      kamera.position.set(-abstand * 0.55, Y(mittel) + abstand * 0.62, abstand * 0.55)
       steuerung.target.set(0, Y(mittel), 0)
       steuerung.minDistance = weite / 1000 * 0.02
       steuerung.maxDistance = weite / 1000 * 2
@@ -606,11 +569,12 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     boden.name = 'boden'
     wurzel.add(boden)
 
-    // der Sockel aus Holz, neu bei jeder Höhe
+    // der Sockel, neu bei jeder Höhe
     const sockel = new THREE.Group()
     wurzel.add(sockel)
-    const wandMaterial = new THREE.MeshLambertMaterial({ map: holz(true), side: THREE.DoubleSide })
-    const platteMaterial = new THREE.MeshLambertMaterial({ map: holz(false) })
+    // matt, damit die Seiten im Licht verschieden hell sind
+    const wandMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_WAND_FARBE, roughness: 0.55, metalness: 0, side: THREE.DoubleSide })
+    const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, roughness: 0.5, metalness: 0 })
     const sockelBauen = () => {
       for (const o of sockel.children) (o as THREE.Mesh).geometry.dispose()
       sockel.clear()
@@ -623,20 +587,15 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         Array.from({ length: hoehe }, (_, j) => (hoehe - 1 - j) * breite),
       ]
       for (const kante of kanten) {
-        const p = new Float32Array(kante.length * 6), u = new Float32Array(kante.length * 4)
-        let weg = 0
+        const p = new Float32Array(kante.length * 6)
         kante.forEach((q, i) => {
           const x = pos[q * 3], y = pos[q * 3 + 1], z = pos[q * 3 + 2]
-          if (i) weg += Math.hypot(x - pos[kante[i - 1] * 3], z - pos[kante[i - 1] * 3 + 2])
           p.set([x, y, z, x, unten, z], i * 6)
-          // die Maserung liegt waagrecht, ein Bild je vier Wandhöhen
-          u.set([weg / (wand * 4), (y - unten) / (wand * 4), weg / (wand * 4), 0], i * 4)
         })
         const ix: number[] = []
         for (let i = 0; i < kante.length - 1; i++) ix.push(i * 2, i * 2 + 1, i * 2 + 2, i * 2 + 2, i * 2 + 1, i * 2 + 3)
         const gw = new THREE.BufferGeometry()
         gw.setAttribute('position', new THREE.BufferAttribute(p, 3))
-        gw.setAttribute('uv', new THREE.BufferAttribute(u, 2))
         gw.setIndex(ix)
         gw.computeVertexNormals()
         sockel.add(new THREE.Mesh(gw, wandMaterial))
@@ -644,8 +603,6 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       // die Platte darunter, etwas breiter
       const bx = (breite - 1) * m / 1000 + 2 * ueber, bz = (hoehe - 1) * m / 1000 + 2 * ueber
       const gp = new THREE.BoxGeometry(bx, platte, bz)
-      const uvp = gp.attributes.uv as THREE.BufferAttribute
-      for (let i = 0; i < uvp.count; i++) uvp.setXY(i, uvp.getX(i) * bx / (platte * 8), uvp.getY(i) * Math.max(platte, bz) / (platte * 8))
       const pl = new THREE.Mesh(gp, platteMaterial)
       pl.position.set(0, unten - platte / 2, 0)
       sockel.add(pl)
@@ -728,9 +685,7 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
           const q = x as THREE.Mesh
           q.geometry?.dispose()
           const mat = q.material as (THREE.Material & { map?: THREE.Texture }) | undefined
-          // das Holz bleibt für die nächste Stufe
-          if (mat?.map && ![...holzVorrat.values()].includes(mat.map as THREE.CanvasTexture)) mat.map.dispose()
-          mat?.dispose?.()
+          mat?.map?.dispose(); mat?.dispose?.()
         })
         wurzel.remove(o)
       }
