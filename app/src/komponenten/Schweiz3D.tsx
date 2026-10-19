@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { fensterLaden, feinHoehe, feinLaden, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, schweiz3dLaden } from '../gelaende'
+import { fensterLaden, feinHoehe, feinLaden, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, SCHARF_KACHEL_M, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
 import type { SeenDaten, SehenswertDaten } from '../typen'
@@ -20,9 +20,11 @@ import { Zurueck } from './Zurueck'
  * unserer Quellen. Was die Karte zum Feld nennt, steht in den Daten: Orte der Landeskarte, Gipfel, Seen, der Kanton der Mitte.
  */
 
-type Stufe = 'schweiz' | 'region' | 'ort'
-const FELD_M: Record<Exclude<Stufe, 'ort'>, number> = { schweiz: 20_000, region: 4_000 }
-const RASTER_M: Record<Exclude<Stufe, 'ort'>, number> = { schweiz: 5_000, region: 1_000 }
+type Stufe = 'schweiz' | 'region' | 'ort' | 'nah'
+/** Grösse des Felds, das man in einer Stufe wählt, und das Raster, auf das es rückt; in der Stufe «nah» wählt man nichts mehr
+ *  (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail») */
+const FELD_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 20_000, region: 4_000, ort: 1_000 }
+const RASTER_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 5_000, region: 1_000, ort: 250 }
 /** in der Übersicht ist die Höhe überhöht, sonst wären die Alpen auf 350 km kaum zu sehen */
 const UEBERHOEHT = 3
 const KARMIN = '#a8102e'
@@ -108,6 +110,47 @@ async function ortLaden(f: Feld, region: Gelaende): Promise<Gelaende> {
   }
 }
 
+/** Nah: 1 km im 5-m-Raster; wo es die scharfe Umgebung gibt (bis 200 m neben den Bahnlinien), Gelände auf 2 m und Luftbild auf
+ *  25 cm, sonst das Gelände und Bild des Felds darüber */
+async function nahLaden(f: Feld, ort: Gelaende): Promise<Gelaende> {
+  const e0 = f.e - f.seite / 2, n0 = f.n - f.seite / 2, n1 = f.n + f.seite / 2
+  const m = 5, breite = f.seite / m + 1
+  const scharf = await scharfLaden(e0, n0, e0 + f.seite, n1).catch(() => null)
+  const h = new Float32Array(breite * breite)
+  let scharfe = 0
+  for (let j = 0; j < breite; j++) {
+    for (let i = 0; i < breite; i++) {
+      const e = e0 + i * m, n = n1 - j * m
+      const z = scharf ? scharfHoehe(scharf, e, n) : null
+      if (z !== null) scharfe++
+      h[j * breite + i] = z ?? hoeheIm(ort, e, n)
+    }
+  }
+  const c = document.createElement('canvas')
+  c.width = c.height = 4096
+  const g = c.getContext('2d')!
+  const r = ort.raster
+  const fx = ort.bild.width / ((r.breite - 1) * r.m)
+  g.drawImage(ort.bild, (e0 - r.ost) * fx, (r.nord - n1) * fx, f.seite * fx, f.seite * fx, 0, 0, c.width, c.height)
+  const s = c.width / f.seite, k = SCHARF_KACHEL_M
+  const namen = [...(scharf?.kacheln.keys() ?? [])]
+  const bilder = await Promise.all(namen.map((n) => scharfBild(n).catch(() => null)))
+  namen.forEach((n, i) => {
+    const b = bilder[i]
+    if (!b) return
+    const [qe, qn] = n.split('_').map(Number)
+    g.drawImage(b, (qe * k - e0) * s, (n1 - (qn + 1) * k) * s, k * s, k * s)
+  })
+  const anteil = scharfe / h.length
+  return {
+    raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c,
+    quellen: [anteil > 0 ? `swissALTI3D (swisstopo), 2 m, bis 200 m neben den Bahnlinien, sonst ${ort.quellen[0]}` : ort.quellen[0],
+              bilder.some(Boolean) ? `SWISSIMAGE (swisstopo) auf 25 cm, bis 200 m neben den Bahnlinien, sonst ${ort.quellen[1]}` : ort.quellen[1]],
+    hinweis: anteil === 0 ? 'Schärfer als im Feld darüber gibt es hier nichts: Gelände auf 10 m, Luftbild auf 2,5 m. Schärfere Daten gibt es nur nahe an den Bahnlinien.'
+      : anteil < 0.98 ? 'Schärfer nur bis 200 m neben den Bahnlinien, weiter weg wie im Feld darüber.' : undefined,
+  }
+}
+
 function hoeheIm(gl: Gelaende, e: number, n: number) {
   const { ost, nord, m, breite, hoehe } = gl.raster
   const x = Math.max(0, Math.min(breite - 1.001, (e - ost) / m - 0.5)), y = Math.max(0, Math.min(hoehe - 1.001, (nord - n) / m - 0.5))
@@ -147,8 +190,8 @@ function wgs(e: number, n: number): [number, number] {
 export default function Schweiz3D() {
   useEffect(() => szeneLaden(), [])
   const [stufe, setStufe] = useState<Stufe>('schweiz')
-  const [gelaende, setGelaende] = useState<Record<Stufe, Gelaende | null>>({ schweiz: null, region: null, ort: null })
-  const [felder, setFelder] = useState<{ region: Feld | null; ort: Feld | null }>({ region: null, ort: null })
+  const [gelaende, setGelaende] = useState<Record<Stufe, Gelaende | null>>({ schweiz: null, region: null, ort: null, nah: null })
+  const [felder, setFelder] = useState<{ region: Feld | null; ort: Feld | null; nah: Feld | null }>({ region: null, ort: null, nah: null })
   const [wahl, setWahl] = useState<Feld | null>(null)
   const [laedt, setLaedt] = useState(false)
   const [fehler, setFehler] = useState<string | null>(null)
@@ -183,10 +226,13 @@ export default function Schweiz3D() {
     try {
       if (stufe === 'schweiz') {
         const g = await regionLaden(wahl)
-        setGelaende((a) => ({ ...a, region: g, ort: null })); setFelder({ region: wahl, ort: null }); setStufe('region')
+        setGelaende((a) => ({ ...a, region: g, ort: null, nah: null })); setFelder({ region: wahl, ort: null, nah: null }); setStufe('region')
       } else if (stufe === 'region') {
         const g = await ortLaden(wahl, gelaende.region!)
-        setGelaende((a) => ({ ...a, ort: g })); setFelder((f) => ({ ...f, ort: wahl })); setStufe('ort')
+        setGelaende((a) => ({ ...a, ort: g, nah: null })); setFelder((f) => ({ ...f, ort: wahl, nah: null })); setStufe('ort')
+      } else if (stufe === 'ort') {
+        const g = await nahLaden(wahl, gelaende.ort!)
+        setGelaende((a) => ({ ...a, nah: g })); setFelder((f) => ({ ...f, nah: wahl })); setStufe('nah')
       }
       setWahl(null)
     } catch (e) { setFehler((e as Error).message) } finally { setLaedt(false) }
@@ -201,7 +247,9 @@ export default function Schweiz3D() {
     setWahl({ e: Math.round(e / RASTER_M.schweiz) * RASTER_M.schweiz, n: Math.round(n / RASTER_M.schweiz) * RASTER_M.schweiz, seite: FELD_M.schweiz })
   }
   const zurueck = (s: Stufe) => { setWahl(null); setStufe(s) }
-  const eineZurueck = () => { if (stufe === 'ort') zurueck('region'); else if (stufe === 'region') zurueck('schweiz'); else setWahl(null) }
+  const eineZurueck = () => {
+    if (stufe === 'nah') zurueck('ort'); else if (stufe === 'ort') zurueck('region'); else if (stufe === 'region') zurueck('schweiz'); else setWahl(null)
+  }
   const titel = (f: Feld | null) => {
     const i = f ? feldInhalt(f, zusatz) : null
     return i?.orte[0] ? `um ${i.orte[0]}` : i?.gipfel ? `am ${i.gipfel.name}` : 'Feld'
@@ -213,7 +261,7 @@ export default function Schweiz3D() {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">3D Schweiz</h1>
       <p className="mt-2 leading-relaxed">
         Die ganze Schweiz als Modell. Tippe auf ein Feld, schau, was darin liegt, und tauche ein: erst in eine Region von 20 km,
-        dort in ein Stück von 4 km.
+        dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
       </p>
       <nav aria-label="Stufe" className="mt-3 flex flex-wrap items-center gap-1 text-sm">
         <button type="button" onClick={() => zurueck('schweiz')} className={`rounded-lg px-2 py-1 ${stufe === 'schweiz' ? 'font-bold' : 'underline'}`}>Schweiz</button>
@@ -221,13 +269,17 @@ export default function Schweiz3D() {
           <>›<button type="button" onClick={() => zurueck('region')} className={`rounded-lg px-2 py-1 ${stufe === 'region' ? 'font-bold' : 'underline'}`}>
             Region {titel(felder.region)}</button></>
         )}
-        {stufe === 'ort' && felder.ort && <>›<span className="px-2 py-1 font-bold">{titel(felder.ort)}</span></>}
+        {(stufe === 'ort' || stufe === 'nah') && felder.ort && gelaende.ort && (
+          <>›<button type="button" onClick={() => zurueck('ort')} className={`rounded-lg px-2 py-1 ${stufe === 'ort' ? 'font-bold' : 'underline'}`}>
+            {titel(felder.ort)}</button></>
+        )}
+        {stufe === 'nah' && felder.nah && <>›<span className="px-2 py-1 font-bold">1 km {titel(felder.nah) === 'Feld' ? '' : titel(felder.nah)}</span></>}
       </nav>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       <div className="relative mt-2 h-[68vh] min-h-[360px] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]">
         {aktuell ? (
           <Ansicht g={aktuell} stufe={stufe} faktor={stufe === 'schweiz' ? UEBERHOEHT : faktor} wahl={wahl}
-                   waehlen={stufe === 'ort' ? undefined : (e, n) => {
+                   waehlen={stufe === 'nah' ? undefined : (e, n) => {
                      const r = RASTER_M[stufe], s = FELD_M[stufe]
                      setWahl({ e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: s })
                    }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz} />
@@ -255,7 +307,7 @@ export default function Schweiz3D() {
             Überrasch mich
           </button>
         )}
-        {wahl && stufe !== 'ort' && (
+        {wahl && stufe !== 'nah' && (
           <div className="absolute inset-x-2 bottom-2 rounded-lg bg-white/95 p-3 shadow-lg dark:bg-sbb-charcoal/95 md:left-auto md:w-80">
             <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
               Feld {(wahl.seite / 1000).toLocaleString('de-CH')} × {(wahl.seite / 1000).toLocaleString('de-CH')} km{inhalt?.kanton ? ` · Mitte im Kanton ${inhalt.kanton}` : ''}
@@ -278,7 +330,7 @@ export default function Schweiz3D() {
       </div>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         {stufe === 'schweiz' ? `Höhe ${UEBERHOEHT}-fach überhöht. ` : faktor === 2 ? 'Höhe 2-fach überhöht. ' : ''}
-        Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'ort' && ' Ein Tipp wählt ein Feld.'}
+        Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'nah' && ' Ein Tipp wählt ein Feld.'}
         {aktuell?.hinweis && <> <strong>{aktuell.hinweis}</strong></>}
       </p>
       {aktuell && (
@@ -300,7 +352,8 @@ export default function Schweiz3D() {
  *  eine Wand von der Kante des Geländes bis unter seinen tiefsten Punkt, darunter eine breitere Platte, beide fast schwarz und im
  *  Licht schattiert. Masse als Anteil der Breite des Modells, nicht aus einer Quelle. */
 const SOCKEL_WAND = 0.06, SOCKEL_PLATTE = 0.025, SOCKEL_UEBERSTAND = 0.012
-const SOCKEL_WAND_FARBE = '#1c1c1c', SOCKEL_PLATTE_FARBE = '#111111'
+/** je Seite ein eigener Grauton (Norden, Osten, Süden, Westen), damit man die Seiten gut unterscheidet; das Licht kommt dazu */
+const SOCKEL_WAND_FARBEN = ['#363636', '#404040', '#4c4c4c', '#3a3a3a'], SOCKEL_PLATTE_FARBE = '#2c2c2c'
 
 /** in der Brille: das Modell so breit auf Tischhöhe, so weit vor dir (wie die Modellbahn) */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
@@ -358,7 +411,9 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     steuerung.maxPolarAngle = Math.PI * 0.47
     szene.add(new THREE.HemisphereLight('#ffffff', '#8a8070', 1.6))
     const sonne = new THREE.DirectionalLight('#ffffff', 1.4)
-    sonne.position.set(-1, 1.2, 0.6)
+    // die Sonne steht hoch im Süden, leicht nach Westen (Michael, 2026-10-19: «von Süden her ganz leicht mehr beleuchten … ungefähr
+    // der realen Sonneneinstrahlung»); x zeigt nach Osten, z nach Süden; ein Sonnenstand, keine Uhrzeit
+    sonne.position.set(-0.35, 1.3, 0.9)
     szene.add(sonne)
     const wurzel = new THREE.Group()
     szene.add(wurzel)
@@ -573,7 +628,7 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     const sockel = new THREE.Group()
     wurzel.add(sockel)
     // matt, damit die Seiten im Licht verschieden hell sind
-    const wandMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_WAND_FARBE, roughness: 0.55, metalness: 0, side: THREE.DoubleSide })
+    const wandMaterialien = SOCKEL_WAND_FARBEN.map((color) => new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0, side: THREE.DoubleSide }))
     const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, roughness: 0.5, metalness: 0 })
     const sockelBauen = () => {
       for (const o of sockel.children) (o as THREE.Mesh).geometry.dispose()
@@ -586,7 +641,7 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         Array.from({ length: breite }, (_, i) => (hoehe - 1) * breite + breite - 1 - i),
         Array.from({ length: hoehe }, (_, j) => (hoehe - 1 - j) * breite),
       ]
-      for (const kante of kanten) {
+      kanten.forEach((kante, seite) => {
         const p = new Float32Array(kante.length * 6)
         kante.forEach((q, i) => {
           const x = pos[q * 3], y = pos[q * 3 + 1], z = pos[q * 3 + 2]
@@ -598,8 +653,8 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         gw.setAttribute('position', new THREE.BufferAttribute(p, 3))
         gw.setIndex(ix)
         gw.computeVertexNormals()
-        sockel.add(new THREE.Mesh(gw, wandMaterial))
-      }
+        sockel.add(new THREE.Mesh(gw, wandMaterialien[seite]))
+      })
       // die Platte darunter, etwas breiter
       const bx = (breite - 1) * m / 1000 + 2 * ueber, bz = (hoehe - 1) * m / 1000 + 2 * ueber
       const gp = new THREE.BoxGeometry(bx, platte, bz)
@@ -635,7 +690,7 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     if (zusatz) {
       const gipfel = zusatz.sw.gipfel.filter((x) => x.hoehe_m !== null).map((x) => ({ x, l: lv95(x.lage[0], x.lage[1]) }))
         .filter(({ l }) => drin(l[0], l[1])).sort((a, b) => b.x.hoehe_m! - a.x.hoehe_m!)
-      const anzahl = stufe === 'schweiz' ? 8 : stufe === 'region' ? 25 : 10
+      const anzahl = stufe === 'schweiz' ? 8 : stufe === 'region' ? 25 : stufe === 'ort' ? 10 : 4
       for (const { x, l } of gipfel.slice(0, anzahl)) schild(`▲ ${x.name} ${x.hoehe_m!.toLocaleString('de-CH')}`, dunkel ? '#e2c9a8' : '#7a4a14', l[0], l[1], x.hoehe_m!)
       const orte = zusatz.orte.map((o) => ({ o, l: lv95(o.lage[0], o.lage[1]) })).filter(({ o, l }) => drin(l[0], l[1]) && (stufe !== 'schweiz' || o.klasse >= 4))
       for (const { o, l } of orte) schild(o.name, dunkel ? '#ffffff' : '#212121', l[0], l[1], hoeheIm(g, l[0], l[1]) + 30)
@@ -699,7 +754,7 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     welt.current?.setzeWahl(wahl)
     const k = kern.current
     if (k?.inBrille()) {
-      k.tafelSetzen(info && wahl ? [...info, 'Nochmals Abzug: eintauchen'] : stufe === 'ort' ? ['Greiftaste: zurück'] : null)
+      k.tafelSetzen(info && wahl ? [...info, 'Nochmals Abzug: eintauchen'] : stufe === 'nah' ? ['Greiftaste: zurück'] : null)
     }
   }, [wahl, info, stufe, g])
   return <div ref={huelle} className="absolute inset-0 touch-none" />
