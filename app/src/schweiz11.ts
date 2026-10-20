@@ -9,7 +9,8 @@ import { ohneKuerzel } from './kuerzel'
 import { LAENGE_ZU_BREITE } from './komponenten/Netzkarte'
 import type { KodierterZug } from './typen'
 
-const BASIS = import.meta.env.BASE_URL
+// auf 3dland.ch von taktland.ch (vite.3dland.config.ts)
+const BASIS: string = import.meta.env.VITE_DATEN_BASIS ?? import.meta.env.BASE_URL
 
 export type ObjektTyp = 'b' | 't' | 'r'
 export type Stufe = 1 | 2 | 3

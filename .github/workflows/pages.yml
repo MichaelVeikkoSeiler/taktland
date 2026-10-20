@@ -74,6 +74,11 @@ jobs:
         working-directory: app
         run: npm run build
 
+      # 3dland.ch baut sein eigenes Repository aus diesem Code; hier nur eine Probe, damit ein Fehler früh auffällt
+      - name: 3dland bauen (Probe)
+        working-directory: app
+        run: npx vite build -c vite.3dland.config.ts && node scripts/3dland_fertig.mjs
+
       # taktland.ch: an der Wurzel die Seite aus web/, die App unter /app/
       # (Michael, 2026-09-30)
       - name: Seite zusammenstellen

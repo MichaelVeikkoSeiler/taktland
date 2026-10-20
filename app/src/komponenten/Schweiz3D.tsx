@@ -257,7 +257,8 @@ async function stufeLaden(s: 'region' | 'ort' | 'nah', f: Feld, unter: Bestand |
 /** welche Knöpfe an den Wänden gehen: Plus bis JE_RICHTUNG und hoechstens(), Minus, solange mehr als ein Stück da ist */
 export interface Knoepfe { plus: Record<Seite, boolean>; minus: Record<Seite, boolean> }
 
-export default function Schweiz3D() {
+/** eigeneSeite: auf 3dland.ch die ganze Seite, ohne den Weg zurück zu den Spielen von Taktland */
+export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boolean }) {
   useEffect(() => szeneLaden(), [])
   const [stufe, setStufe] = useState<Stufe>('schweiz')
   const [gelaende, setGelaende] = useState<Record<Stufe, Bestand | null>>({ schweiz: null, region: null, ort: null, nah: null })
@@ -438,7 +439,7 @@ export default function Schweiz3D() {
 
   return (
     <div className="px-4 pb-4">
-      <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
+      {!eigeneSeite && <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />}
       <h1 className="mt-4 text-2xl font-bold tracking-tight">3D Schweiz</h1>
       <p className="mt-2 leading-relaxed">
         Die ganze Schweiz als Modell. Tippe auf ein Feld, schau, was darin liegt, und tauche ein: erst in eine Region von 20 km,

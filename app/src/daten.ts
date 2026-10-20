@@ -4,7 +4,8 @@ import type {
   Uebersicht, Vergleichsdaten,
 } from './typen'
 
-const BASIS = import.meta.env.BASE_URL
+// 3dland.ch holt die Daten von taktland.ch (vite.3dland.config.ts), Taktland neben sich
+const BASIS: string = import.meta.env.VITE_DATEN_BASIS ?? import.meta.env.BASE_URL
 
 /**
  * Eingebettete Daten, falls die Seite als einzelne Datei ausgeliefert wird.
