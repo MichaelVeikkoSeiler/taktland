@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
+import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
+import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich } from '../relief'
@@ -537,6 +540,9 @@ const BRILLE_SCHRIFT_M = 0.022
  *  3000m Grün, 4000m Blau»), auch als Linie in den Wänden; die Farben sind gewählt, nicht aus einer Quelle */
 const HOEHEN_STUFEN: Array<[number, string, string]> = [[1000, '#e0242b', 'rot'], [2000, '#f2c200', 'gelb'], [3000, '#2b9e4a', 'grün'], [4000, '#2a6fdb', 'blau']]
 const SCHEIBE_DECKKRAFT = 0.24
+/** die Linien der Höhen in Bildpunkten, beim Zoomen gleich breit (Michael, 2026-10-21: «wenn ich hereinzoome werden die Linien
+ *  nicht dicker») */
+const HOEHEN_LINIE_PX = 1.6
 /** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
 const KNOPF_BILD = 0.06, KNOPF_BRILLE_M = 0.045
 /** Höhe und Kronenradius je Art (Einzelbaum, Wald, Wald offen, Gebüschwald, Gehölzfläche), wie im Führerstand (BAUM_FORM in
@@ -774,9 +780,12 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       wurzel.worldToLocal(auge.setFromMatrixPosition(cam.matrixWorld))
       for (const o of kn.children) o.visible = auge.clone().sub(o.position).dot(o.userData.nach as THREE.Vector3) > 0
     }
+    const aufloesung = new THREE.Vector2()
     renderer.setAnimationLoop(() => {
       for (const f of jeBild) f()
       knoepfeZeigen()
+      renderer.getSize(aufloesung)
+      for (const o of wurzel.getObjectByName('hoehen')?.children ?? []) ((o as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
       if (!renderer.xr.isPresenting) steuerung.update()
       renderer.render(szene, kamera)
     })
@@ -940,18 +949,25 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
 
     // die Höhenscheiben und ihre Linien in den Wänden, nur auf Höhen zwischen dem tiefsten und dem höchsten Punkt
     const hoehen = new THREE.Group()
+    hoehen.name = 'hoehen'
     hoehen.visible = scheibenJetzt.current
     wurzel.add(hoehen)
     const scheibenMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity: SCHEIBE_DECKKRAFT,
       side: THREE.DoubleSide, depthWrite: false }))
-    const linienMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }))
-    const kurvenMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide, transparent: true,
+    const linienMaterial = HOEHEN_STUFEN.map(([, color]) => new LineMaterial({ color, linewidth: HOEHEN_LINIE_PX }))
+    const kurvenMaterial = HOEHEN_STUFEN.map(([, color]) => new LineMaterial({ color, linewidth: HOEHEN_LINIE_PX, transparent: true,
       opacity: 0.6, depthWrite: false }))
+    const linienSetzen = (g: THREE.BufferAttribute | number[], m: LineMaterial) => {
+      const geo = new LineSegmentsGeometry()
+      geo.setPositions(g as number[])
+      const l = new LineSegments2(geo, m)
+      l.renderOrder = 3
+      hoehen.add(l)
+    }
     const hoehenBauen = () => {
       for (const o of hoehen.children) (o as THREE.Mesh).geometry.dispose()
       hoehen.clear()
-      // feiner als zuerst (Michael, 2026-10-21: «Linien an den Wänden 3x feiner machen»)
-      const dicke = weiteKm * 0.0028 / 3, raus = weiteKm * 0.0015
+      const raus = weiteKm * 0.0015, heben = weiteKm * 0.0006
       HOEHEN_STUFEN.forEach(([z], s) => {
         if (!(z > tief && z < hoechst)) return
         const y = Y(z)
@@ -969,18 +985,13 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
             if (ay < y) { const t = (y - ay) / (by - ay); ax += (bx - ax) * t; az += (bz - az) * t }
             else if (by < y) { const t = (y - ay) / (by - ay); bx = ax + (bx - ax) * t; bz = az + (bz - az) * t }
             const ox = nx * raus, oz = nz * raus
-            band.push(ax + ox, y - dicke, az + oz, bx + ox, y - dicke, bz + oz, ax + ox, y + dicke, az + oz,
-                      ax + ox, y + dicke, az + oz, bx + ox, y - dicke, bz + oz, bx + ox, y + dicke, bz + oz)
+            band.push(ax + ox, y, az + oz, bx + ox, y, bz + oz)
           }
         }
-        if (band.length) {
-          const gb = new THREE.BufferGeometry()
-          gb.setAttribute('position', new THREE.Float32BufferAttribute(band, 3))
-          hoehen.add(new THREE.Mesh(gb, linienMaterial[s]))
-        }
+        if (band.length) linienSetzen(band, linienMaterial[s])
         // dieselbe Höhe als Linie auf dem Gelände, etwas durchsichtig (Michael, 2026-10-21: «Linie mit etwas Transparenz den
         // Bergen entlang weiterführen. So sieht man die Grenzen besser»): je Stück die Höhenlinie im Raster (Marching Squares),
-        // als flaches Band so breit wie die Linie in der Wand, so hoch darüber, wie es halb breit ist
+        // knapp über dem Gelände
         const kurve: number[] = []
         for (const { g, pos } of netze) {
           const { breite, hoehe } = g.raster
@@ -995,20 +1006,12 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
               const p: Array<[number, number]> = []
               for (const [u, v] of [[a, b], [b, c], [c, d], [d, a]]) if ((hz(u) >= 0) !== (hz(v) >= 0)) p.push(schnitt(u, v))
               for (let k = 0; k + 1 < p.length; k += 2) {
-                const [ax, az] = p[k], [bx, bz] = p[k + 1], l = Math.hypot(bx - ax, bz - az) || 1
-                const ox = (-(bz - az) / l) * dicke, oz = ((bx - ax) / l) * dicke, yy = y + dicke
-                kurve.push(ax - ox, yy, az - oz, bx - ox, yy, bz - oz, ax + ox, yy, az + oz, ax + ox, yy, az + oz, bx - ox, yy, bz - oz, bx + ox, yy, bz + oz)
+                kurve.push(p[k][0], y + heben, p[k][1], p[k + 1][0], y + heben, p[k + 1][1])
               }
             }
           }
         }
-        if (kurve.length) {
-          const gk = new THREE.BufferGeometry()
-          gk.setAttribute('position', new THREE.Float32BufferAttribute(kurve, 3))
-          const lk = new THREE.Mesh(gk, kurvenMaterial[s])
-          lk.renderOrder = 3
-          hoehen.add(lk)
-        }
+        if (kurve.length) linienSetzen(kurve, kurvenMaterial[s])
       })
     }
     hoehenBauen()
