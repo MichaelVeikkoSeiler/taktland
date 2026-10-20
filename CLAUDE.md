@@ -275,7 +275,8 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              10-km-Kachel, 45 s), Workflow «3D Schweiz fein» (.github/workflows/schweiz3dfein.yml, 16 Teile), Release «schweiz3dfein-1»,
              holen.php (HOLEN = 'schweiz3dfein-1') nach schweiz3dfein/; in nahLaden die scharfe Umgebung zuerst, dann diese, dann das Feld;
              Höhenscheiben (Michael, 2026-10-20): auf 1'000, 2'000, 3'000 und 4'000 m (rot, gelb, grün, blau, Farben gewählt) je eine
-             durchsichtige Scheibe über das ganze Modell und eine Linie in den Wänden, nur zwischen tiefstem und höchstem Punkt, Schalter
+             durchsichtige Scheibe über das ganze Modell, eine feine Linie in den Wänden und dieselbe Höhe als halb durchsichtige Linie auf dem
+             Gelände (Marching Squares je Stück; Michael, 2026-10-21: «So sieht man die Grenzen besser»), nur zwischen tiefstem und höchstem Punkt, Schalter
              «Höhen 1'000 m» (HOEHEN_STUFEN); + und − in Kreisen in der Mitte jeder Wand (nur an den Wänden zur Kamera) setzen in den Stufen
              20 km, 4 km und 1 km an dieser Seite eine Reihe Stücke an oder nehmen sie weg (Bestand: je Stück ein eigenes Gelände mit Bild,
              der Sockel um alle), höchstens 3 je Richtung und 9 im Ganzen, auf dem Handy 4 (JE_RICHTUNG, hoechstens(); eine Annahme zum

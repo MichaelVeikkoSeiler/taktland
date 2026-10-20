@@ -945,10 +945,13 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     const scheibenMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity: SCHEIBE_DECKKRAFT,
       side: THREE.DoubleSide, depthWrite: false }))
     const linienMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }))
+    const kurvenMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide, transparent: true,
+      opacity: 0.6, depthWrite: false }))
     const hoehenBauen = () => {
       for (const o of hoehen.children) (o as THREE.Mesh).geometry.dispose()
       hoehen.clear()
-      const dicke = weiteKm * 0.0028, raus = weiteKm * 0.0015
+      // feiner als zuerst (Michael, 2026-10-21: «Linien an den Wänden 3x feiner machen»)
+      const dicke = weiteKm * 0.0028 / 3, raus = weiteKm * 0.0015
       HOEHEN_STUFEN.forEach(([z], s) => {
         if (!(z > tief && z < hoechst)) return
         const y = Y(z)
@@ -974,6 +977,37 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
           const gb = new THREE.BufferGeometry()
           gb.setAttribute('position', new THREE.Float32BufferAttribute(band, 3))
           hoehen.add(new THREE.Mesh(gb, linienMaterial[s]))
+        }
+        // dieselbe Höhe als Linie auf dem Gelände, etwas durchsichtig (Michael, 2026-10-21: «Linie mit etwas Transparenz den
+        // Bergen entlang weiterführen. So sieht man die Grenzen besser»): je Stück die Höhenlinie im Raster (Marching Squares),
+        // als flaches Band so breit wie die Linie in der Wand, so hoch darüber, wie es halb breit ist
+        const kurve: number[] = []
+        for (const { g, pos } of netze) {
+          const { breite, hoehe } = g.raster
+          const hz = (q: number) => (g.h[q] === KEINE_HOEHE ? tief : g.h[q]) - z
+          const schnitt = (a: number, b: number): [number, number] => {
+            const t = hz(a) / (hz(a) - hz(b))
+            return [pos[a * 3] + t * (pos[b * 3] - pos[a * 3]), pos[a * 3 + 2] + t * (pos[b * 3 + 2] - pos[a * 3 + 2])]
+          }
+          for (let j = 0; j < hoehe - 1; j++) {
+            for (let i = 0; i < breite - 1; i++) {
+              const a = j * breite + i, b = a + 1, c = a + breite + 1, d = a + breite
+              const p: Array<[number, number]> = []
+              for (const [u, v] of [[a, b], [b, c], [c, d], [d, a]]) if ((hz(u) >= 0) !== (hz(v) >= 0)) p.push(schnitt(u, v))
+              for (let k = 0; k + 1 < p.length; k += 2) {
+                const [ax, az] = p[k], [bx, bz] = p[k + 1], l = Math.hypot(bx - ax, bz - az) || 1
+                const ox = (-(bz - az) / l) * dicke, oz = ((bx - ax) / l) * dicke, yy = y + dicke
+                kurve.push(ax - ox, yy, az - oz, bx - ox, yy, bz - oz, ax + ox, yy, az + oz, ax + ox, yy, az + oz, bx - ox, yy, bz - oz, bx + ox, yy, bz + oz)
+              }
+            }
+          }
+        }
+        if (kurve.length) {
+          const gk = new THREE.BufferGeometry()
+          gk.setAttribute('position', new THREE.Float32BufferAttribute(kurve, 3))
+          const lk = new THREE.Mesh(gk, kurvenMaterial[s])
+          lk.renderOrder = 3
+          hoehen.add(lk)
         }
       })
     }
@@ -1094,7 +1128,7 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         })
         wurzel.remove(o)
       }
-      for (const m of [...wandMaterialien, platteMaterial, ...scheibenMaterial, ...linienMaterial, kastenMaterial, kantenMaterial]) m.dispose()
+      for (const m of [...wandMaterialien, platteMaterial, ...scheibenMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial]) m.dispose()
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
