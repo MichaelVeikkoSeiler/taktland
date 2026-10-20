@@ -64,8 +64,8 @@ const KAMERA_KNOPF = 'rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1
  *  «circa einen Meter tiefer … unter dem Dach der Bahnsteige durchfahren»), in keiner Quelle */
 const FUEHRERSTAND_HOEHE_M = 3, FUEHRERSTAND_NAHE_KM = 0.003
 /** Führerstand: feines Gelände (10 m) in einem Quadrat von FEIN_SEITE_M, die Mitte FEIN_VORAUS_M vor dem Zug, neu nach
- *  FEIN_NACH_M Fahrt; FEIN_RAND_M vor dem Rand geht die Linie wieder in die des groben Geländes über */
-const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4, FEIN_RAND_M = 300
+ *  FEIN_NACH_M Fahrt; ausserhalb folgt die Linie der des groben Geländes, ohne Sprung (profilRechnen) */
+const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4
 /** Linie im Führerstand: in Metern breit statt in Bildpunkten; Linie über dem feinen Gelände */
 // 1,95 m breit, vorher 1,5 (Michael, 2026-10-13: «ca. 130 %»)
 const FEIN_UEBER_M = 1
@@ -2571,7 +2571,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         if (zb0 !== null) return [hoeheAmWeg(a) + zb0 - hoeheAmWeg(b), zb0]
         return null
       }
-      const h = new Float32Array(n)
+      const h = new Float32Array(n), echt = new Uint8Array(n)
       for (let i = 0; i < n; i++) {
         const meter = bei(i)
         let z: number | null
@@ -2580,7 +2580,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         // TUNNEL_ANLAUF_M davor bis ebenso weit danach eine Gerade, und davor und danach liegt die Linie nie über ihr
         // die Höhe der Gleise aus swissTLM3D, wo es sie gibt (gleisHoehenLaden): auch in Tunneln und auf Brücken
         const gz = gleisBei(gleis, meter)
-        if (gz !== null) { h[i] = gz + FEIN_UEBER_M; continue }
+        if (gz !== null) { h[i] = gz + FEIN_UEBER_M; echt[i] = 1; continue }
         const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && meter >= x.von - TUNNEL_ANLAUF_M && meter <= x.bis + TUNNEL_ANLAUF_M)
         const bau = weg.bauwerke.find((x) => meter >= x.von && meter <= x.bis)
         const va = tunnel ? Math.max(anfang, tunnel.von - TUNNEL_ANLAUF_M) : 0, vb = tunnel ? Math.min(ende, tunnel.bis + TUNNEL_ANLAUF_M) : 0
@@ -2595,6 +2595,23 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           z = eb ? eb[0] + ((meter - bau.von) / ((bau.bis - bau.von) || 1)) * (eb[1] - eb[0]) : null
         } else z = bodenBei(meter)
         h[i] = z ?? hoeheAmWeg(meter)
+        echt[i] = z === null ? 0 : 1
+      }
+      // ausserhalb des feinen Geländes die grobe Höhe, aber um den Unterschied an den Enden verschoben: die grobe Linie liegt
+      // 3 m und an Hängen mehr über dem Boden, das Gleis stieg dort wie eine Schanze an (Michael, 2026-10-21: «Am Schluss
+      // der Strecken … geht das Gleis in die Höhe, wie eine Schanze. Bitte das Gleis einfach normal weiterführen»)
+      let links = -1
+      for (let i = 0; i <= n; i++) {
+        if (i < n && !echt[i]) continue
+        if (i - links > 1 && (links >= 0 || i < n)) {
+          const dl = links >= 0 ? h[links] - hoeheAmWeg(bei(links)) : null, dr = i < n ? h[i] - hoeheAmWeg(bei(i)) : null
+          for (let k = links + 1; k < i; k++) {
+            const t = (k - links) / (i - links)
+            const d = dl !== null && dr !== null ? dl + t * (dr - dl) : (dl ?? dr)!
+            h[k] = hoeheAmWeg(bei(k)) + d
+          }
+        }
+        links = i
       }
       // zuletzt leicht gemittelt, damit auch die Übergänge an Brücken und Tunnelportalen keinen Knick haben
       const kl = Math.round(PROFIL_UEBERGANG_M / PROFIL_SCHRITT_M), glatt = new Float32Array(n)
@@ -2606,19 +2623,18 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       h.set(glatt)
       profil = { von, h }
     }
-    /** Höhe der Linie im Führerstand: aus dem Profil, gegen den Rand des Quadrats in die grobe übergehend */
+    /** Höhe der Linie im Führerstand: aus dem Profil, das ausserhalb des feinen Geländes der groben Linie folgt, aber ohne
+     *  Sprung (profilRechnen); vorher ging sie gegen den Rand des Quadrats in die grobe über und stieg dort an. Hinter dem
+     *  Profil die grobe Höhe, um den Unterschied an seinem Ende verschoben */
     const feinLinieHoehe = (meter: number) => {
       const grob = hoeheAmWeg(meter)
       if (!feinStand || !profil) return grob
-      const { e0, n0 } = feinStand, { von, h } = profil
+      const { von, h } = profil
       const x = (meter - von) / PROFIL_SCHRITT_M
-      if (x < 0 || x > h.length - 1) return grob
+      if (x < 0) return grob + h[0] - hoeheAmWeg(von)
+      if (x > h.length - 1) return grob + h[h.length - 1] - hoeheAmWeg(von + (h.length - 1) * PROFIL_SCHRITT_M)
       const i = Math.min(h.length - 2, Math.floor(x)), t = x - i
-      const z = h[i] * (1 - t) + h[i + 1] * t
-      const [e, n] = punktBei(meter)
-      const rand = Math.min(e - e0, e0 + FEIN_SEITE_M - e, n - n0, n0 + FEIN_SEITE_M - n)
-      const a = Math.max(0, Math.min(1, rand / FEIN_RAND_M))
-      return z * a + grob * (1 - a)
+      return h[i] * (1 - t) + h[i + 1] * t
     }
     const feinPunkt3d = (meter: number) => {
       const [e, n] = glattBei(meter)

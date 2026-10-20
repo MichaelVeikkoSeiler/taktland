@@ -156,9 +156,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Fahren">
         <Punkte>
           <li>
-            «Mitfahren»: «Nur Ziel» (Start ist der nächste Bahnhof per GPS), «Start und
-            Ziel» oder «Ohne Ziel». «Ohne Ziel» erkennt nach einigen hundert Metern Strecke
-            und Richtung und fragt, wenn Strecken nebeneinander liegen.
+            «Mitfahren»: nur das Ziel wählen, der Start ist der nächste Bahnhof per GPS.
           </li>
           <li>
             Etwa 20 oder 10 Sekunden vorher meldet Taktland Tunnel, Brücken, Bahnübergänge,

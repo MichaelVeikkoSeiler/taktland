@@ -12,16 +12,6 @@ import Wischen from './Wischen'
 import { BahnenWahl } from './BahnenWahl'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
 
-type Art = 'ziel' | 'beide' | 'ohne'
-const ART_MERKEN = 'taktland.fahrtwahl.v1'
-
-function artLesen(): Art {
-  try {
-    const x = localStorage.getItem(ART_MERKEN)
-    return x === 'beide' || x === 'ohne' ? x : 'ziel'
-  } catch { return 'ziel' }
-}
-
 /** Ab so vielen Metern bis zum nächsten Bahnhof fragt die Seite nach */
 const WEIT_M = 3000
 
@@ -30,13 +20,11 @@ type Suche =
   | { art: 'gefunden'; uic: number; m: number; genau: number }
 
 /**
- * Der Weg in den Fahrtmodus über den Spezialknopf: nur das Ziel eingeben
- * (Start ist der nächste Bahnhof im Netz, per GPS) oder Start und Ziel wie auf
- * der Seite «Strecke», dazu die gemerkten Fahrten. Gestartet wird
- * auf der Seite «Strecke», die den Weg sucht.
+ * Der Weg in den Fahrtmodus über den Spezialknopf: nur das Ziel eingeben, der Start ist der nächste Bahnhof im Netz,
+ * per GPS (Michael, 2026-10-21: «nur noch mit Ziel. Ohne Start und Ziel und auch ohne "ohne Ziel"»), dazu die gemerkten
+ * Fahrten. Gestartet wird auf der Seite «Strecke», die den Weg sucht.
  */
 export function Fahrt({ index }: { index: BahnhofIndex | null }) {
-  const [art, setArt] = useState<Art>(artLesen)
   const [wahl, setWahl] = useState<StreckenWahl>({ von: null, nach: null, ueber: null })
   const [suche, setSuche] = useState<Suche>({ art: 'aus' })
   const [gemerkt, setGemerkt] = useState(gemerktLesen)
@@ -50,11 +38,6 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
   const favoritenUic = useFavoriten()
   const favoriten = useMemo(() => alphabetisch(favoritenUic.map((u) => bahnhof.get(u))
     .filter((b): b is IndexEintrag => !!b && b.im_netz)), [favoritenUic, bahnhof])
-
-  function artWaehlen(a: Art) {
-    setArt(a)
-    try { localStorage.setItem(ART_MERKEN, a) } catch { /* dann gilt es nur jetzt */ }
-  }
 
   function standortSuchen() {
     if (!('geolocation' in navigator)) {
@@ -83,14 +66,14 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
     )
   }
 
-  // «Nur Ziel»: den Start gleich suchen, sobald die Bahnhöfe da sind
+  // den Start gleich suchen, sobald die Bahnhöfe da sind
   useEffect(() => {
-    if (art === 'ziel' && index && suche.art === 'aus') standortSuchen()
+    if (index && suche.art === 'aus') standortSuchen()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [art, index])
+  }, [index])
 
-  const von = art === 'ziel' ? (suche.art === 'gefunden' ? suche.uic : null) : wahl.von
-  const fahrt: StreckenWahl = { von, nach: wahl.nach, ueber: art === 'ziel' ? null : wahl.ueber }
+  const von = suche.art === 'gefunden' ? suche.uic : null
+  const fahrt: StreckenWahl = { von, nach: wahl.nach, ueber: null }
   const bereit = fahrt.von !== null && fahrt.nach !== null && fahrt.von !== fahrt.nach
 
   function starten(w: StreckenWahl, probe = false) {
@@ -121,40 +104,8 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
       )}
 
       <section className="mt-6">
-      {/* im Stil der Segmente der App (Michael, 2026-10-01: «Schaltflächen sind nicht einheitlich») */}
-      <div className="segmente grid grid-cols-3" role="group" aria-label="Wie wählen">
-        {([['ziel', 'Nur Ziel'], ['beide', 'Start und Ziel'], ['ohne', 'Ohne Ziel']] as const).map(([a, t]) => (
-          <button key={a} type="button" aria-pressed={art === a} onClick={() => artWaehlen(a)}
-                  className="segment px-2 py-1.5 text-sm leading-tight">
-            {t}
-          </button>
-        ))}
-      </div>
-
-      {art === 'ohne' ? (
-        <div className="mt-4">
-          <p className="leading-relaxed">
-            Taktland erkennt aus einigen Standorten Strecke und Richtung und meldet, was auf derselben
-            Linie vorne liegt. Verzweigt sich die Linie, sucht Taktland neu; liegen Strecken
-            nebeneinander, fragt es nach.
-          </p>
-          <button type="button" onClick={() => { tonBereitlegen(); window.location.hash = '#/ohneziel' }}
-                  className="mt-4 w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125">
-            Ohne Ziel starten
-          </button>
-        </div>
-      ) : (<>
       <div className="mt-4 space-y-3">
-        {art === 'ziel' ? (
-          <StartPerGps suche={suche} name={name} neu={standortSuchen}
-                       selbst={() => {
-                         if (suche.art === 'gefunden') setWahl((w) => ({ ...w, von: suche.uic }))
-                         artWaehlen('beide')
-                       }} />
-        ) : (
-          <BahnhofFeld bezeichnung="Von" wert={wahl.von} bahnhoefe={imNetz} name={name}
-                       aendern={(u) => setWahl((w) => ({ ...w, von: u }))} />
-        )}
+        <StartPerGps suche={suche} name={name} neu={standortSuchen} />
         <BahnhofFeld bezeichnung="Nach" wert={wahl.nach} bahnhoefe={imNetz} name={name}
                      aendern={(u) => setWahl((w) => ({ ...w, nach: u }))} />
         {favoriten.length > 0 && (
@@ -176,10 +127,6 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
             </div>
           </div>
         )}
-        {art === 'beide' && (
-          <BahnhofFeld bezeichnung="Über (optional)" wert={wahl.ueber} bahnhoefe={imNetz} name={name}
-                       aendern={(u) => setWahl((w) => ({ ...w, ueber: u }))} />
-        )}
         <BahnenWahl />
       </div>
 
@@ -198,7 +145,6 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
       {fahrt.von !== null && fahrt.von === fahrt.nach && (
         <p className="mt-2 text-sm">Start und Ziel sind derselbe Bahnhof.</p>
       )}
-      </>)}
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
         Zur Auswahl stehen die Bahnhöfe, zu denen Taktland Wege kennt. Gemerkte
         Fahrten bleiben auf diesem Gerät.
@@ -208,11 +154,10 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
   )
 }
 
-function StartPerGps({ suche, name, neu, selbst }: {
+function StartPerGps({ suche, name, neu }: {
   suche: Suche
   name: (uic: number | null) => string
   neu: () => void
-  selbst: () => void
 }) {
   const knopf = 'text-sm text-sbb-metal underline underline-offset-2 hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'
   return (
@@ -232,7 +177,7 @@ function StartPerGps({ suche, name, neu, selbst }: {
         ) : suche.art === 'sucht' ? (
           <p className="text-lg text-sbb-metal dark:text-sbb-storm">Standort wird gesucht …</p>
         ) : suche.art === 'verweigert' ? (
-          <p>{freigabeHilfe('ohne ihn geht «Nur Ziel» nicht')}</p>
+          <p>{freigabeHilfe('ohne ihn findet Taktland den Start nicht')}</p>
         ) : suche.art === 'fehler' ? (
           <p>{suche.text}</p>
         ) : (
@@ -241,7 +186,6 @@ function StartPerGps({ suche, name, neu, selbst }: {
       </div>
       <div className="mt-1 flex gap-4">
         {suche.art !== 'sucht' && <button type="button" onClick={neu} className={knopf}>Neu suchen</button>}
-        <button type="button" onClick={selbst} className={knopf}>Start selbst wählen</button>
       </div>
     </div>
   )

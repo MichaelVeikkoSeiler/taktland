@@ -466,7 +466,7 @@ Zusatzinformationen, Quellenangaben und Hinweise unter Karten, Modellen, Listen 
 am Anfang zu («Quellen und Hinweise», `komponenten/Klappe.tsx`, Michael, 2026-10-12: «die ganze Bleiwüste unterhalb der Karte»);
 Lücken bleiben sichtbar (Regel 5), die Quellenzeile der Fusszeile ebenso.
 
-**Reiter** (Michael, 2026-10-16): «Fahren» ist nur noch Mitfahren, ohne Unterreiter; die Probefahrten (aufklappen, je Richtung «Probefahrt»
+**Reiter** (Michael, 2026-10-16): «Fahren» ist nur noch Mitfahren, ohne Unterreiter, und nur mit Ziel, der Start ist der nächste Bahnhof per GPS (Michael, 2026-10-21: ohne «Start und Ziel» und ohne «Ohne Ziel»; komponenten/Fahrt.tsx); die Probefahrten (aufklappen, je Richtung «Probefahrt»
 oder «Als Modell», Reihenfolge, hinzufügen, löschen; komponenten/Probefahrten.tsx) und die Bergstrecken als Probefahrt stehen bei
 Spiele, Modellbahn (#/fahrt/probe führt dorthin); das Fahrtblatt ist der vierte Reiter der Reisetasche (#/fahrtblatt, FahrtblattWahl.tsx).
 
