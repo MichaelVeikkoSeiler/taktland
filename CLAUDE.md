@@ -273,7 +273,18 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              diesem Detailgrad», «nimm mal 50cm»): je Kilometer Luftbild auf 50 cm (2000 × 2000, aus der Fassung 10 cm) und Gelände auf
              5 m (200 × 200), build_schweiz3d_details.py --fein nach data/schweiz3dfein_extern (nicht in Git, etwa 34 GB, 67 MB je
              10-km-Kachel, 45 s), Workflow «3D Schweiz fein» (.github/workflows/schweiz3dfein.yml, 16 Teile), Release «schweiz3dfein-1»,
-             holen.php (HOLEN = 'schweiz3dfein-1') nach schweiz3dfein/; in nahLaden die scharfe Umgebung zuerst, dann diese, dann das Feld
+             holen.php (HOLEN = 'schweiz3dfein-1') nach schweiz3dfein/; in nahLaden die scharfe Umgebung zuerst, dann diese, dann das Feld;
+             Höhenscheiben (Michael, 2026-10-20): auf 1'000, 2'000, 3'000 und 4'000 m (rot, gelb, grün, blau, Farben gewählt) je eine
+             durchsichtige Scheibe über das ganze Modell und eine Linie in den Wänden, nur zwischen tiefstem und höchstem Punkt, Schalter
+             «Höhen 1'000 m» (HOEHEN_STUFEN); + und − in Kreisen in der Mitte jeder Wand (nur an den Wänden zur Kamera) setzen in den Stufen
+             20 km, 4 km und 1 km an dieser Seite eine Reihe Stücke an oder nehmen sie weg (Bestand: je Stück ein eigenes Gelände mit Bild,
+             der Sockel um alle), höchstens 3 je Richtung und 9 im Ganzen, auf dem Handy 4 (JE_RICHTUNG, hoechstens(); eine Annahme zum
+             Speicher der Grafik, nicht gemessen), ist die Grenze erreicht, ist der Knopf grau und ein Tipp erklärt warum; was darunter fehlt,
+             ergänzt eine Region um das Stück (unterFuer)
+data/schweiz3d_probe/  Gebäude und Bäume für «3D Schweiz» in zwei Probeausschnitten (Michael, 2026-10-20: «Köniz und Gantrisch»):
+             alles in 6 × 6 km um Köniz und 8 × 8 km um den Gantrisch, nicht nur neben der Bahn, Formate wie data/gebaeude und data/baeume,
+             Farben aus SWISSIMAGE 2 m (pipeline/build_schweiz3d_probe.py, 14'864 Gebäude, etwa 630'000 Bäume, etwa 11 MB); in der App in den Stufen
+             4 km und 1 km, Schalter «Gebäude und Bäume» nur dort (probeLaden in src/gelaende.ts)
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),
              auf 10 m gemittelt, JPEG im 10-km-Raster der Geländekacheln, je km der neueste Jahrgang (2017 bis 2025),
              die Jahre je Kachel in index.json (pipeline/build_luftbild.py --alle: 508 Kacheln der ganzen Schweiz,
@@ -399,6 +410,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_schweiz3d.py        # Übersicht der Schweiz für «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_schweiz3d_details.py --teil 3/8   # Details für «3D Schweiz» (daten.taktland.ch)
 .venv/bin/python pipeline/build_schweiz3d_details.py --fein --teil 3/16   # dito auf 50 cm und 5 m für die Stufe 1 km
+.venv/bin/python pipeline/build_schweiz3d_probe.py         # Gebäude und Bäume um Köniz und den Gantrisch für «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_luftbild_nah.py      # Nahbild (2,5 m) entlang der Bahnlinien, etwa eine Stunde, vor export_app
 .venv/bin/python pipeline/build_gelaende_nah.py      # feines Gelände (10 m) entlang der Bahnlinien für den Führerstand, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch

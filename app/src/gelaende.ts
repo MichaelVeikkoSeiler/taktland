@@ -426,22 +426,28 @@ let gebaeudeVerz: Promise<Umgebung | null> | null = null
 export const gebaeudeIndex = () => (gebaeudeVerz ??= umgebungIndex('gebaeude'))
 const gebaeudeVorrat = new Map<string, Promise<GebaeudeKachel | null>>()
 
+const entpacken = (gepackt: ArrayBuffer) =>
+  new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+
+/** eine entpackte .bgz lesen (pipeline/build_gebaeude.py) */
+export function gebaeudeLesen(roh: ArrayBuffer): GebaeudeKachel {
+  const v = new DataView(roh), n = v.getUint32(12, true)
+  const ecken = new Int16Array(n * 3), farben = new Uint8Array(n * 3)
+  for (let k = 0; k < n; k++) {
+    const o = 16 + k * 10
+    ecken[k * 3] = v.getInt16(o, true); ecken[k * 3 + 1] = v.getInt16(o + 2, true); ecken[k * 3 + 2] = v.getInt16(o + 4, true)
+    farben[k * 3] = v.getUint8(o + 6); farben[k * 3 + 1] = v.getUint8(o + 7); farben[k * 3 + 2] = v.getUint8(o + 8)
+  }
+  return { e0: v.getInt32(0, true), n0: v.getInt32(4, true), h0: v.getInt32(8, true), ecken, farben }
+}
+
 export function gebaeudeKachel(name: string) {
   let p = gebaeudeVorrat.get(name)
   if (p) return p
   while (gebaeudeVorrat.size >= 120) gebaeudeVorrat.delete(gebaeudeVorrat.keys().next().value!)
   p = (async () => {
     const pfad = (await gebaeudeIndex())?.pfad.get(name) ?? `data/gebaeude/${name}`
-    const gepackt = await holenBinaer(`${pfad}.bgz`)
-    const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
-    const v = new DataView(roh), n = v.getUint32(12, true)
-    const ecken = new Int16Array(n * 3), farben = new Uint8Array(n * 3)
-    for (let k = 0; k < n; k++) {
-      const o = 16 + k * 10
-      ecken[k * 3] = v.getInt16(o, true); ecken[k * 3 + 1] = v.getInt16(o + 2, true); ecken[k * 3 + 2] = v.getInt16(o + 4, true)
-      farben[k * 3] = v.getUint8(o + 6); farben[k * 3 + 1] = v.getUint8(o + 7); farben[k * 3 + 2] = v.getUint8(o + 8)
-    }
-    return { e0: v.getInt32(0, true), n0: v.getInt32(4, true), h0: v.getInt32(8, true), ecken, farben }
+    return gebaeudeLesen(await entpacken(await holenBinaer(`${pfad}.bgz`)))
   })().catch(() => { gebaeudeVorrat.delete(name); return null })
   gebaeudeVorrat.set(name, p)
   return p
@@ -464,22 +470,25 @@ let baumVerz: Promise<Umgebung | null> | null = null
 const baumIndex = () => (baumVerz ??= umgebungIndex('baeume'))
 const baumVorrat = new Map<string, Promise<BaumKachel | null>>()
 
+/** eine entpackte .bmd lesen (pipeline/build_baeume.py) */
+export function baumLesen(roh: ArrayBuffer): BaumKachel {
+  const v = new DataView(roh), n = v.getUint32(8, true)
+  const lage = new Uint16Array(n * 2), art = new Uint8Array(n), farben = new Uint8Array(n * 3)
+  for (let k = 0; k < n; k++) {
+    const o = 12 + k * 8
+    lage[k * 2] = v.getUint16(o, true); lage[k * 2 + 1] = v.getUint16(o + 2, true); art[k] = v.getUint8(o + 4)
+    farben[k * 3] = v.getUint8(o + 5); farben[k * 3 + 1] = v.getUint8(o + 6); farben[k * 3 + 2] = v.getUint8(o + 7)
+  }
+  return { e0: v.getInt32(0, true), n0: v.getInt32(4, true), lage, art, farben }
+}
+
 export function baumKachel(name: string) {
   let p = baumVorrat.get(name)
   if (p) return p
   while (baumVorrat.size >= 120) baumVorrat.delete(baumVorrat.keys().next().value!)
   p = (async () => {
     const pfad = (await baumIndex())?.pfad.get(name) ?? `data/baeume/${name}`
-    const gepackt = await holenBinaer(`${pfad}.bmd`)
-    const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
-    const v = new DataView(roh), n = v.getUint32(8, true)
-    const lage = new Uint16Array(n * 2), art = new Uint8Array(n), farben = new Uint8Array(n * 3)
-    for (let k = 0; k < n; k++) {
-      const o = 12 + k * 8
-      lage[k * 2] = v.getUint16(o, true); lage[k * 2 + 1] = v.getUint16(o + 2, true); art[k] = v.getUint8(o + 4)
-      farben[k * 3] = v.getUint8(o + 5); farben[k * 3 + 1] = v.getUint8(o + 6); farben[k * 3 + 2] = v.getUint8(o + 7)
-    }
-    return { e0: v.getInt32(0, true), n0: v.getInt32(4, true), lage, art, farben }
+    return baumLesen(await entpacken(await holenBinaer(`${pfad}.bmd`)))
   })().catch(() => { baumVorrat.delete(name); return null })
   baumVorrat.set(name, p)
   return p
@@ -490,6 +499,34 @@ export async function baumNamen(e0: number, n0: number, e1: number, n1: number):
   if (!gelaendeMoeglich()) return []
   const ix = await baumIndex()
   return ix ? umgebungNamen(ix, e0, n0, e1, n1) : []
+}
+
+/** Gebäude und Bäume der Probeausschnitte von «3D Schweiz» (pipeline/build_schweiz3d_probe.py) im Rechteck */
+interface ProbeIndex { kachel_m: number; quelle: string; gebiete: Record<string, [number, number, number, number]>; kacheln: Record<string, unknown> }
+const probeVerz: Record<string, Promise<ProbeIndex | null>> = {}
+export const probeIndex = (art: 'gebaeude' | 'baeume') =>
+  (probeVerz[art] ??= holen<ProbeIndex>(`data/schweiz3d_probe/${art}/index.json`).catch(() => null))
+export async function probeLaden(e0: number, n0: number, e1: number, n1: number) {
+  const [ig, ib] = await Promise.all([probeIndex('gebaeude'), probeIndex('baeume')])
+  const namen = (ix: ProbeIndex | null) => {
+    if (!ix) return []
+    const k = ix.kachel_m, raus: string[] = []
+    for (let qe = Math.floor(e0 / k); qe <= Math.floor((e1 - 1) / k); qe++) {
+      for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (`${qe}_${qn}` in ix.kacheln) raus.push(`${qe}_${qn}`)
+    }
+    return raus
+  }
+  const [gebaeude, baeume] = await Promise.all([
+    Promise.all(namen(ig).map((n) => holenBinaer(`data/schweiz3d_probe/gebaeude/${n}.bgz`).then(entpacken).then(gebaeudeLesen).catch(() => null))),
+    Promise.all(namen(ib).map((n) => holenBinaer(`data/schweiz3d_probe/baeume/${n}.bmd`).then(entpacken).then(baumLesen).catch(() => null))),
+  ])
+  return { gebaeude: gebaeude.filter((x): x is GebaeudeKachel => !!x), baeume: baeume.filter((x): x is BaumKachel => !!x),
+           quellen: [ig?.quelle, ib?.quelle].filter((q): q is string => !!q) }
+}
+/** ob ein Rechteck einen Probeausschnitt berührt */
+export async function probeDa(e0: number, n0: number, e1: number, n1: number) {
+  const ix = await probeIndex('gebaeude')
+  return !!ix && Object.values(ix.gebiete).some(([a, b, c, d]) => a < e1 && c > e0 && b < n1 && d > n0)
 }
 
 /* ---------- Höhe der Gleise aus swissTLM3D ---------- */

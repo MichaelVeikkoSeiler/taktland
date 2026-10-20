@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { fensterLaden, feinHoehe, feinLaden, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, SCHARF_KACHEL_M, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
+import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
 import type { SeenDaten, SehenswertDaten } from '../typen'
@@ -30,8 +30,37 @@ const UEBERHOEHT = 3
 const KARMIN = '#a8102e'
 
 interface Uebersicht { ost: number; nord: number; m: number; breite: number; hoehe: number; quelle_gelaende: string; quelle_luftbild: string }
-interface Gelaende { raster: Raster; h: Float32Array; bild: HTMLCanvasElement; quellen: string[]; hinweis?: string }
+/** rahmen: welches Rechteck das Bild zeigt (Ost und Nord der Ecke links oben, Breite und Höhe in Metern) */
+interface Gelaende { raster: Raster; h: Float32Array; bild: HTMLCanvasElement; rahmen: { e0: number; n1: number; b: number; h: number }; quellen: string[]; hinweis?: string }
 interface Feld { e: number; n: number; seite: number }
+type Seite = 'n' | 'o' | 's' | 'w'
+/** Ein Feld und was an seinen Seiten angesetzt ist (Michael, 2026-10-20: «An den Wänden ein Plus und oder ein Minus … zum
+ *  Erweitern resp. reduzieren der Kacheln»): je Stück ein Gelände, Schlüssel «di_dj» in Feldern Ost und Nord vom Anker */
+interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, number]; dj: [number, number] }
+/** so viele Stücke je Richtung und im Ganzen; jedes hat sein eigenes Bild von bis zu 4096 × 4096 Bildpunkten, das die
+ *  Grafik des Geräts halten muss (etwa 85 MB). Die Grenze ist eine Annahme, nicht gemessen: auf dem Handy 4, sonst 9 */
+const JE_RICHTUNG = 3
+const hoechstens = () => (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 4 : 9)
+
+const einzeln = (anker: Feld, g: Gelaende): Bestand => ({ anker, teile: new Map([['0_0', g]]), di: [0, 0], dj: [0, 0] })
+const teilFeld = (b: Bestand, di: number, dj: number): Feld => ({ e: b.anker.e + di * b.anker.seite, n: b.anker.n + dj * b.anker.seite, seite: b.anker.seite })
+const imRaster = (r: Raster, e: number, n: number) => e >= r.ost && e <= r.ost + r.breite * r.m && n <= r.nord && n >= r.nord - r.hoehe * r.m
+/** Höhe an einer Stelle aus dem Stück, in dem sie liegt, sonst am Rand des ersten */
+function bestandHoehe(b: Bestand, e: number, n: number) {
+  for (const t of b.teile.values()) if (imRaster(t.raster, e, n)) return hoeheIm(t, e, n)
+  return hoeheIm(b.teile.values().next().value!, e, n)
+}
+/** das Bild der Stücke darunter auf eine Leinwand ab Ost e0, Nord n1, s Bildpunkte je Meter */
+function unterZeichnen(g: CanvasRenderingContext2D, b: Bestand, e0: number, n1: number, s: number) {
+  for (const t of b.teile.values()) g.drawImage(t.bild, (t.rahmen.e0 - e0) * s, (n1 - t.rahmen.n1) * s, t.rahmen.b * s, t.rahmen.h * s)
+}
+/** was unter einem Feld liegt: die Stücke der Stufe darüber, wo sie es ganz decken, sonst eine Region um das Feld */
+async function unterFuer(f: Feld, unter: Bestand | null): Promise<Bestand> {
+  const ecken = [[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([a, c]) => [f.e + a * f.seite * 0.499, f.n + c * f.seite * 0.499])
+  if (unter && ecken.every(([e, n]) => [...unter.teile.values()].some((t) => imRaster(t.raster, e, n)))) return unter
+  const r = { e: Math.round(f.e / RASTER_M.schweiz) * RASTER_M.schweiz, n: Math.round(f.n / RASTER_M.schweiz) * RASTER_M.schweiz, seite: FELD_M.schweiz }
+  return einzeln(r, await regionLaden(r))
+}
 interface Zusatz { sw: SehenswertDaten; seen: SeenDaten; orte: Array<{ name: string; klasse: number; lage: [number, number] }>; pool: Pool }
 
 /* ---------- Daten ---------- */
@@ -46,11 +75,13 @@ async function uebersichtLaden(): Promise<Gelaende> {
   c.width = Math.min(4096, bild.width); c.height = Math.round(c.width * bild.height / bild.width)
   c.getContext('2d')!.drawImage(bild, 0, 0, c.width, c.height)
   return { raster: { ost: ix.ost, nord: ix.nord, m: ix.m, breite: ix.breite, hoehe: ix.hoehe }, h: Float32Array.from(u), bild: c,
-           quellen: [ix.quelle_gelaende, ix.quelle_luftbild] }
+           rahmen: { e0: ix.ost, n1: ix.nord, b: ix.breite * ix.m, h: ix.hoehe * ix.m }, quellen: [ix.quelle_gelaende, ix.quelle_luftbild] }
 }
 
 async function regionLaden(f: Feld): Promise<Gelaende> {
-  const a = await fensterLaden(f.e, f.n, f.seite)
+  // ein Feld mehr als die Seite: so stossen angesetzte Stücke ohne Lücke aneinander
+  const { raster_m: rm } = await gelaendeIndex()
+  const a = await ausschnittLaden({ ost: f.e - f.seite / 2, nord: f.n + f.seite / 2, m: rm, breite: f.seite / rm + 1, hoehe: f.seite / rm + 1 })
   const lb = await luftbildLaden(a.raster)
   const { ost, nord, m, breite, hoehe } = a.raster
   const c = document.createElement('canvas')
@@ -64,13 +95,13 @@ async function regionLaden(f: Feld): Promise<Gelaende> {
   // schärfer, wo daten.taktland.ch die Details hat: je Kilometer so viele Bildpunkte, wie die Leinwand fasst
   const d = await schweiz3dLaden(ost, nord - hoehe * m, ost + breite * m, nord, Math.ceil(sx * 1000), true).catch(() => null)
   for (const k of d?.bilder ?? []) g.drawImage(k.bild, (k.ke * 1000 - ost) * sx, (nord - (k.kn + 1) * 1000) * sy, 1000 * sx, 1000 * sy)
-  return { raster: a.raster, h: Float32Array.from(a.h), bild: c,
+  return { raster: a.raster, h: Float32Array.from(a.h), bild: c, rahmen: { e0: ost, n1: nord, b: breite * m, h: hoehe * m },
            quellen: [a.quelle, d?.bilder.length ? `${d.quelle_bild}, hier auf etwa ${Math.round(1 / sx)} m, Aufnahmen ${d.bildJahre.join(', ')}`
              : lb ? `SWISSIMAGE (swisstopo), auf 10 m gemittelt, Aufnahmen ${lb.jahre.join(', ')}` : 'ohne Luftbild'] }
 }
 
 /** Ort: 4 km im 10-m-Raster; feines Gelände und Nahbild, wo es sie gibt, sonst das Gelände der Region */
-async function ortLaden(f: Feld, region: Gelaende): Promise<Gelaende> {
+async function ortLaden(f: Feld, region: Bestand): Promise<Gelaende> {
   const e0 = f.e - f.seite / 2, n1 = f.n + f.seite / 2
   const m = 10, breite = f.seite / m + 1
   const [fein, nah, details] = await Promise.all([feinLaden(e0, f.n - f.seite / 2, e0 + f.seite, n1).catch(() => null),
@@ -84,27 +115,26 @@ async function ortLaden(f: Feld, region: Gelaende): Promise<Gelaende> {
       // zuerst die Details der ganzen Schweiz, dann das feine Gelände entlang der Bahnlinien
       const z = (details?.fein.km.size ? feinHoehe(details.fein, e, n) : null) ?? (fein ? feinHoehe(fein, e, n) : null)
       if (z !== null) feine++
-      h[j * breite + i] = z ?? hoeheIm(region, e, n)
+      h[j * breite + i] = z ?? bestandHoehe(region, e, n)
     }
   }
   // das Bild: das Luftbild der Region darunter, das Nahbild darüber
   const c = document.createElement('canvas')
   c.width = c.height = 4096
   const g = c.getContext('2d')!
-  const r = region.raster
-  const fx = region.bild.width / (r.breite * r.m)
-  g.drawImage(region.bild, (e0 - r.ost) * fx, (r.nord - n1) * fx, f.seite * fx, f.seite * fx, 0, 0, c.width, c.height)
   const s = c.width / f.seite
+  unterZeichnen(g, region, e0, n1, s)
   for (const k of nah?.kacheln ?? []) g.drawImage(k.bild, (k.ke * 1000 - e0) * s, (n1 - (k.kn + 1) * 1000) * s, 1000 * s, 1000 * s)
   for (const k of details?.bilder ?? []) g.drawImage(k.bild, (k.ke * 1000 - e0) * s, (n1 - (k.kn + 1) * 1000) * s, 1000 * s, 1000 * s)
   const anteil = feine / h.length
   const ganz = !!details?.fein.km.size
+  const rq = region.teile.values().next().value!.quellen
   return {
-    raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c,
+    raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c, rahmen: { e0, n1, b: f.seite, h: f.seite },
     quellen: [ganz ? `${details!.quelle_hoehe}, Aufnahmen ${details!.fein.jahre.join(', ')}`
-                : anteil > 0 ? 'swissALTI3D (swisstopo), auf 10 m gemittelt, nur bis 500 m neben den Bahnlinien' : region.quellen[0],
+                : anteil > 0 ? 'swissALTI3D (swisstopo), auf 10 m gemittelt, nur bis 500 m neben den Bahnlinien' : rq[0],
               details?.bilder.length ? `${details.quelle_bild}, Aufnahmen ${details.bildJahre.join(', ')}`
-                : nah ? 'SWISSIMAGE (swisstopo), auf 2,5 m, nur bis 500 m neben den Bahnlinien, sonst auf 10 m' : region.quellen[1]],
+                : nah ? 'SWISSIMAGE (swisstopo), auf 2,5 m, nur bis 500 m neben den Bahnlinien, sonst auf 10 m' : rq[1]],
     hinweis: anteil < 0.98 ? (anteil === 0 ? 'Hier gibt es noch keine feineren Daten: Gelände auf 50 m, Luftbild auf 10 m wie in der Region.'
       : ganz ? 'Am Rand fehlen feinere Daten, dort wie in der Region.' : 'Feiner nur bis 500 m neben den Bahnlinien, weiter weg wie in der Region.') : undefined,
   }
@@ -126,7 +156,7 @@ function kmHoehe(km: Map<string, Float32Array>, je_km: number, e: number, n: num
   return a * (1 - fx) * (1 - fy) + b * fx * (1 - fy) + c * (1 - fx) * fy + d * fx * fy
 }
 
-async function nahLaden(f: Feld, ort: Gelaende): Promise<Gelaende> {
+async function nahLaden(f: Feld, ort: Bestand): Promise<Gelaende> {
   const e0 = f.e - f.seite / 2, n0 = f.n - f.seite / 2, n1 = f.n + f.seite / 2
   const m = 5, breite = f.seite / m + 1
   // die scharfe Umgebung entlang der Bahnlinien, und für die ganze Schweiz Bild auf 50 cm und Gelände auf 5 m (schweiz3dfein)
@@ -141,16 +171,14 @@ async function nahLaden(f: Feld, ort: Gelaende): Promise<Gelaende> {
       const zf = z === null && fein?.fein.km.size ? kmHoehe(fein.fein.km, fein.je_km, e, n) : null
       if (z !== null) scharfe++
       else if (zf !== null) feine++
-      h[j * breite + i] = z ?? zf ?? hoeheIm(ort, e, n)
+      h[j * breite + i] = z ?? zf ?? bestandHoehe(ort, e, n)
     }
   }
   const c = document.createElement('canvas')
   c.width = c.height = 4096
   const g = c.getContext('2d')!
-  const r = ort.raster
-  const fx = ort.bild.width / ((r.breite - 1) * r.m)
-  g.drawImage(ort.bild, (e0 - r.ost) * fx, (r.nord - n1) * fx, f.seite * fx, f.seite * fx, 0, 0, c.width, c.height)
   const s = c.width / f.seite, k = SCHARF_KACHEL_M
+  unterZeichnen(g, ort, e0, n1, s)
   for (const b of fein?.bilder ?? []) g.drawImage(b.bild, (b.ke * 1000 - e0) * s, (n1 - (b.kn + 1) * 1000) * s, 1000 * s, 1000 * s)
   const namen = [...(scharf?.kacheln.keys() ?? [])]
   // weiter als 200 m von den Bahnlinien ist das scharfe Bild weiss: dort durchsichtig, sonst deckt es das Bild darunter zu
@@ -164,12 +192,13 @@ async function nahLaden(f: Feld, ort: Gelaende): Promise<Gelaende> {
   })
   const anteil = scharfe / h.length, anteilFein = (scharfe + feine) / h.length
   const feinBild = !!fein?.bilder.length
+  const oq = ort.teile.values().next().value!.quellen
   return {
-    raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c,
+    raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c, rahmen: { e0, n1, b: f.seite, h: f.seite },
     quellen: [[anteil > 0 && 'swissALTI3D (swisstopo), 2 m, bis 200 m neben den Bahnlinien', feine > 0 && fein!.quelle_hoehe,
-               anteilFein < 1 && ort.quellen[0]].filter(Boolean).join('; sonst '),
+               anteilFein < 1 && oq[0]].filter(Boolean).join('; sonst '),
               [bilder.some(Boolean) && 'SWISSIMAGE (swisstopo) auf 25 cm, bis 200 m neben den Bahnlinien',
-               feinBild && `${fein!.quelle_bild}, Aufnahmen ${fein!.bildJahre.join(', ')}`, !feinBild && ort.quellen[1]].filter(Boolean).join('; sonst ')],
+               feinBild && `${fein!.quelle_bild}, Aufnahmen ${fein!.bildJahre.join(', ')}`, !feinBild && oq[1]].filter(Boolean).join('; sonst ')],
     hinweis: anteilFein === 0 && !feinBild
       ? 'Schärfer als im Feld darüber gibt es hier noch nichts: Gelände auf 10 m, Luftbild auf 2,5 m. Schärfere Daten gibt es bisher nur nahe an den Bahnlinien.'
       : anteilFein < 0.98 ? 'Am Rand fehlen schärfere Daten, dort wie im Feld darüber.' : undefined,
@@ -212,23 +241,52 @@ function wgs(e: number, n: number): [number, number] {
 
 /* ---------- die Seite ---------- */
 
+/** die Stufe darüber, aus der ein Feld dieser Stufe sein Gelände ergänzt */
+const DARUEBER: Record<'region' | 'ort' | 'nah', Stufe> = { region: 'schweiz', ort: 'region', nah: 'ort' }
+async function stufeLaden(s: 'region' | 'ort' | 'nah', f: Feld, unter: Bestand | null) {
+  if (s === 'region') return regionLaden(f)
+  const u = await unterFuer(f, unter)
+  return s === 'ort' ? ortLaden(f, u) : nahLaden(f, u)
+}
+/** welche Knöpfe an den Wänden gehen: Plus bis JE_RICHTUNG und hoechstens(), Minus, solange mehr als ein Stück da ist */
+export interface Knoepfe { plus: Record<Seite, boolean>; minus: Record<Seite, boolean> }
+
 export default function Schweiz3D() {
   useEffect(() => szeneLaden(), [])
   const [stufe, setStufe] = useState<Stufe>('schweiz')
-  const [gelaende, setGelaende] = useState<Record<Stufe, Gelaende | null>>({ schweiz: null, region: null, ort: null, nah: null })
-  const [felder, setFelder] = useState<{ region: Feld | null; ort: Feld | null; nah: Feld | null }>({ region: null, ort: null, nah: null })
+  const [gelaende, setGelaende] = useState<Record<Stufe, Bestand | null>>({ schweiz: null, region: null, ort: null, nah: null })
   const [wahl, setWahl] = useState<Feld | null>(null)
   const [laedt, setLaedt] = useState(false)
   const [fehler, setFehler] = useState<string | null>(null)
   const [zusatz, setZusatz] = useState<Zusatz | null>(null)
   const [faktor, setFaktor] = useState<1 | 2>(1)
+  const [scheiben, setScheiben] = useState(true)
+  const [umwelt, setUmwelt] = useState(true)
+  const [umweltHier, setUmweltHier] = useState(false)
+  const [meldung, setMeldung] = useState<string | null>(null)
   useEffect(() => {
-    uebersichtLaden().then((g) => setGelaende((a) => ({ ...a, schweiz: g }))).catch((e: Error) => setFehler(e.message))
+    uebersichtLaden().then((g) => setGelaende((a) => ({ ...a, schweiz: einzeln({ e: 0, n: 0, seite: 0 }, g) }))).catch((e: Error) => setFehler(e.message))
     Promise.all([sehenswertLaden(), seenLaden(), kartengrundLaden(), schweiz11Laden()])
       .then(([sw, seen, k, pool]) => setZusatz({ sw, seen, orte: k.orte as Zusatz['orte'], pool })).catch(() => {})
   }, [])
+  useEffect(() => {
+    if (!meldung) return
+    const t = setTimeout(() => setMeldung(null), 7000)
+    return () => clearTimeout(t)
+  }, [meldung])
   const inhalt = useMemo(() => (wahl ? feldInhalt(wahl, zusatz) : null), [wahl, zusatz])
   const aktuell = gelaende[stufe]
+  const anker = aktuell?.teile.get('0_0') ?? null
+  // Gebäude und Bäume gibt es vorerst nur in zwei Probeausschnitten
+  useEffect(() => {
+    setUmweltHier(false)
+    if (!aktuell || (stufe !== 'ort' && stufe !== 'nah')) return
+    const r = [...aktuell.teile.values()].map((t) => t.rahmen)
+    let weg = false
+    void probeDa(Math.min(...r.map((x) => x.e0)), Math.min(...r.map((x) => x.n1 - x.h)), Math.max(...r.map((x) => x.e0 + x.b)), Math.max(...r.map((x) => x.n1)))
+      .then((da) => { if (!weg) setUmweltHier(da) })
+    return () => { weg = true }
+  }, [aktuell, stufe])
   const brille = useRef<(() => Promise<void>) | null>(null)
   const xr = useBrilleMoeglich()
   const [brilleHinweis, setBrilleHinweis] = useState<string | null>(null)
@@ -251,14 +309,57 @@ export default function Schweiz3D() {
     try {
       if (stufe === 'schweiz') {
         const g = await regionLaden(wahl)
-        setGelaende((a) => ({ ...a, region: g, ort: null, nah: null })); setFelder({ region: wahl, ort: null, nah: null }); setStufe('region')
+        setGelaende((a) => ({ ...a, region: einzeln(wahl, g), ort: null, nah: null })); setStufe('region')
       } else if (stufe === 'region') {
-        const g = await ortLaden(wahl, gelaende.region!)
-        setGelaende((a) => ({ ...a, ort: g, nah: null })); setFelder((f) => ({ ...f, ort: wahl, nah: null })); setStufe('ort')
+        const g = await stufeLaden('ort', wahl, gelaende.region)
+        setGelaende((a) => ({ ...a, ort: einzeln(wahl, g), nah: null })); setStufe('ort')
       } else if (stufe === 'ort') {
-        const g = await nahLaden(wahl, gelaende.ort!)
-        setGelaende((a) => ({ ...a, nah: g })); setFelder((f) => ({ ...f, nah: wahl })); setStufe('nah')
+        const g = await stufeLaden('nah', wahl, gelaende.ort)
+        setGelaende((a) => ({ ...a, nah: einzeln(wahl, g) })); setStufe('nah')
       }
+      setWahl(null)
+    } catch (e) { setFehler((e as Error).message) } finally { setLaedt(false) }
+  }
+  const knoepfe = useMemo<Knoepfe | null>(() => {
+    if (stufe === 'schweiz' || !aktuell) return null
+    const breit = aktuell.di[1] - aktuell.di[0] + 1, hoch = aktuell.dj[1] - aktuell.dj[0] + 1, max = hoechstens()
+    const ow = breit < JE_RICHTUNG && (breit + 1) * hoch <= max, ns = hoch < JE_RICHTUNG && breit * (hoch + 1) <= max
+    return { plus: { n: ns, s: ns, o: ow, w: ow }, minus: { n: hoch > 1, s: hoch > 1, o: breit > 1, w: breit > 1 } }
+  }, [stufe, aktuell])
+  /** an einer Seite eine Reihe Stücke ansetzen oder wegnehmen; die Stufen darunter gelten dann nicht mehr */
+  async function erweitern(seite: Seite, plus: boolean) {
+    if (stufe === 'schweiz' || !aktuell || !knoepfe || laedt) return
+    const b = aktuell
+    if (plus && !knoepfe.plus[seite]) {
+      const max = hoechstens()
+      setMeldung(`Grösser geht es auf diesem Gerät nicht: höchstens ${JE_RICHTUNG} Stücke in eine Richtung und ${max} im Ganzen. `
+        + 'Jedes Stück ist ein eigenes Luftbild mit bis zu 16 Millionen Bildpunkten, und alle zusammen muss die Grafik des Geräts halten.')
+      return
+    }
+    if (!plus && !knoepfe.minus[seite]) { setMeldung('Ein Stück bleibt immer: kleiner geht es nicht.'); return }
+    const di: [number, number] = [...b.di], dj: [number, number] = [...b.dj]
+    const neu: Array<[number, number]> = []
+    if (plus) {
+      if (seite === 'o' || seite === 'w') {
+        const i = seite === 'o' ? ++di[1] : --di[0]
+        for (let j = dj[0]; j <= dj[1]; j++) neu.push([i, j])
+      } else {
+        const j = seite === 'n' ? ++dj[1] : --dj[0]
+        for (let i = di[0]; i <= di[1]; i++) neu.push([i, j])
+      }
+    } else if (seite === 'o') di[1]--; else if (seite === 'w') di[0]++; else if (seite === 'n') dj[1]--; else dj[0]++
+    setLaedt(true); setFehler(null); setMeldung(null)
+    try {
+      const teile = new Map([...b.teile].filter(([k]) => {
+        const [i, j] = k.split('_').map(Number)
+        return i >= di[0] && i <= di[1] && j >= dj[0] && j <= dj[1]
+      }))
+      const unter = gelaende[DARUEBER[stufe]]
+      const geladen = await Promise.all(neu.map(([i, j]) => stufeLaden(stufe, teilFeld(b, i, j), stufe === 'region' ? null : unter)))
+      neu.forEach(([i, j], x) => teile.set(`${i}_${j}`, geladen[x]))
+      // der Anker bleibt, auch wenn sein Stück wegfällt: die Lage der anderen bezieht sich auf ihn
+      const nb: Bestand = { anker: b.anker, teile, di, dj }
+      setGelaende((a) => ({ ...a, [stufe]: nb, ...(stufe === 'region' ? { ort: null, nah: null } : stufe === 'ort' ? { nah: null } : {}) }))
       setWahl(null)
     } catch (e) { setFehler((e as Error).message) } finally { setLaedt(false) }
   }
@@ -271,6 +372,11 @@ export default function Schweiz3D() {
     const [e, n] = lv95(x.lage[0], x.lage[1])
     setWahl({ e: Math.round(e / RASTER_M.schweiz) * RASTER_M.schweiz, n: Math.round(n / RASTER_M.schweiz) * RASTER_M.schweiz, seite: FELD_M.schweiz })
   }
+  // nur in einer Testfassung (VITE_S3D_TEST): ein Feld von aussen wählen
+  useEffect(() => {
+    if (!import.meta.env.VITE_S3D_TEST) return
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }) }
+  }, [])
   const zurueck = (s: Stufe) => { setWahl(null); setStufe(s) }
   const eineZurueck = () => {
     if (stufe === 'nah') zurueck('ort'); else if (stufe === 'ort') zurueck('region'); else if (stufe === 'region') zurueck('schweiz'); else setWahl(null)
@@ -279,6 +385,10 @@ export default function Schweiz3D() {
     const i = f ? feldInhalt(f, zusatz) : null
     return i?.orte[0] ? `um ${i.orte[0]}` : i?.gipfel ? `am ${i.gipfel.name}` : 'Feld'
   }
+  const hinweis = aktuell ? [...aktuell.teile.values()].find((t) => t.hinweis)?.hinweis : undefined
+  const groesse = aktuell && stufe !== 'schweiz' && (aktuell.teile.size > 1)
+    ? `${((aktuell.di[1] - aktuell.di[0] + 1) * aktuell.anker.seite / 1000).toLocaleString('de-CH')} × ${((aktuell.dj[1] - aktuell.dj[0] + 1) * aktuell.anker.seite / 1000).toLocaleString('de-CH')} km`
+    : null
 
   return (
     <div className="px-4 pb-4">
@@ -286,31 +396,35 @@ export default function Schweiz3D() {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">3D Schweiz</h1>
       <p className="mt-2 leading-relaxed">
         Die ganze Schweiz als Modell. Tippe auf ein Feld, schau, was darin liegt, und tauche ein: erst in eine Region von 20 km,
-        dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
+        dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km. Mit + und − an den Wänden setzt du an einer Seite ein Stück
+        an oder nimmst eines weg.
       </p>
       <nav aria-label="Stufe" className="mt-3 flex flex-wrap items-center gap-1 text-sm">
         <button type="button" onClick={() => zurueck('schweiz')} className={`rounded-lg px-2 py-1 ${stufe === 'schweiz' ? 'font-bold' : 'underline'}`}>Schweiz</button>
-        {felder.region && gelaende.region && (
+        {gelaende.region && (
           <>›<button type="button" onClick={() => zurueck('region')} className={`rounded-lg px-2 py-1 ${stufe === 'region' ? 'font-bold' : 'underline'}`}>
-            Region {titel(felder.region)}</button></>
+            Region {titel(gelaende.region.anker)}</button></>
         )}
-        {(stufe === 'ort' || stufe === 'nah') && felder.ort && gelaende.ort && (
+        {(stufe === 'ort' || stufe === 'nah') && gelaende.ort && (
           <>›<button type="button" onClick={() => zurueck('ort')} className={`rounded-lg px-2 py-1 ${stufe === 'ort' ? 'font-bold' : 'underline'}`}>
-            {titel(felder.ort)}</button></>
+            {titel(gelaende.ort.anker)}</button></>
         )}
-        {stufe === 'nah' && felder.nah && <>›<span className="px-2 py-1 font-bold">1 km {titel(felder.nah) === 'Feld' ? '' : titel(felder.nah)}</span></>}
+        {stufe === 'nah' && gelaende.nah && <>›<span className="px-2 py-1 font-bold">1 km {titel(gelaende.nah.anker) === 'Feld' ? '' : titel(gelaende.nah.anker)}</span></>}
+        {groesse && <span className="px-1 text-sbb-metal dark:text-sbb-storm">({groesse})</span>}
       </nav>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       <div className="relative mt-2 h-[68vh] min-h-[360px] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]">
         {aktuell ? (
-          <Ansicht g={aktuell} stufe={stufe} faktor={stufe === 'schweiz' ? UEBERHOEHT : faktor} wahl={wahl}
+          <Ansicht b={aktuell} stufe={stufe} faktor={stufe === 'schweiz' ? UEBERHOEHT : faktor} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
                      const r = RASTER_M[stufe], s = FELD_M[stufe]
                      const w = { e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: s }
                      // nur in einer Testfassung (VITE_S3D_TEST): das gewählte Feld in die Konsole
                      if (import.meta.env.VITE_S3D_TEST) console.log('feld', JSON.stringify(w))
                      setWahl(w)
-                   }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz} />
+                   }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
+                   knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
+                   umwelt={umwelt && umweltHier} meldung={meldung} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
@@ -322,17 +436,35 @@ export default function Schweiz3D() {
         {brilleHinweis && (
           <p role="status" className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">{brilleHinweis}</p>
         )}
-        {stufe !== 'schweiz' && (
-          <div className="absolute left-2 top-2 flex overflow-hidden rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
-            {([1, 2] as const).map((f) => (
-              <button key={f} type="button" aria-pressed={faktor === f} onClick={() => setFaktor(f)}
-                      className={`px-2.5 py-1 ${faktor === f ? 'bg-sbb-anthracite text-white' : ''}`}>{f === 1 ? 'Höhe wie echt' : 'Höhe 2-fach'}</button>
-            ))}
-          </div>
-        )}
-        {stufe === 'schweiz' && (
-          <button type="button" onClick={zufall} className="absolute left-2 top-2 rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
-            Überrasch mich
+        <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
+          {stufe !== 'schweiz' && (
+            <div className="flex overflow-hidden rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
+              {([1, 2] as const).map((f) => (
+                <button key={f} type="button" aria-pressed={faktor === f} onClick={() => setFaktor(f)}
+                        className={`px-2.5 py-1 ${faktor === f ? 'bg-sbb-anthracite text-white' : ''}`}>{f === 1 ? 'Höhe wie echt' : 'Höhe 2-fach'}</button>
+              ))}
+            </div>
+          )}
+          {stufe === 'schweiz' && (
+            <button type="button" onClick={zufall} className="rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
+              Überrasch mich
+            </button>
+          )}
+          <button type="button" aria-pressed={scheiben} onClick={() => setScheiben((x) => !x)}
+                  className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${scheiben ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
+            Höhen 1'000 m
+          </button>
+          {umweltHier && (
+            <button type="button" aria-pressed={umwelt} onClick={() => setUmwelt((x) => !x)}
+                    className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${umwelt ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
+              Gebäude und Bäume
+            </button>
+          )}
+        </div>
+        {meldung && (
+          <button type="button" onClick={() => setMeldung(null)} role="status"
+                  className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-3 text-left text-sm font-medium shadow-lg dark:bg-sbb-charcoal/95 md:left-auto md:w-96">
+            {meldung}
           </button>
         )}
         {wahl && stufe !== 'nah' && (
@@ -359,14 +491,27 @@ export default function Schweiz3D() {
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         {stufe === 'schweiz' ? `Höhe ${UEBERHOEHT}-fach überhöht. ` : faktor === 2 ? 'Höhe 2-fach überhöht. ' : ''}
         Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'nah' && ' Ein Tipp wählt ein Feld.'}
-        {aktuell?.hinweis && <> <strong>{aktuell.hinweis}</strong></>}
+        {stufe !== 'schweiz' && ' + und − an einer Wand setzen dort ein Stück an oder nehmen eines weg.'}
+        {hinweis && <> <strong>{hinweis}</strong></>}
       </p>
-      {aktuell && (
+      {scheiben && (
+        <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Höhenscheiben">
+          {HOEHEN_STUFEN.map(([z, farbe, name]) => (
+            <span key={z} className="inline-flex items-center gap-1">
+              <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: farbe }} />{z.toLocaleString('de-CH')} m ({name})
+            </span>
+          ))}
+        </p>
+      )}
+      {anker && (
         <details className="klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">Modell, nicht massstäblich: Quellen</summary>
-          <p className="mt-1">Gelände: {aktuell.quellen[0]}. Luftbild: {aktuell.quellen[1]}. Orte der Landeskarte 1:1 Million (swisstopo),
+          <p className="mt-1">Gelände: {anker.quellen[0]}. Luftbild: {anker.quellen[1]}. Orte der Landeskarte 1:1 Million (swisstopo),
             Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone (BFS). Ein Feld ist ein Quadrat, keine Region und kein Tal:
-            deren Grenzen stehen in keiner unserer Quellen.</p>
+            deren Grenzen stehen in keiner unserer Quellen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
+            Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
+            Farbe des Luftbilds, Wände grau (in keiner Quelle). Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
+            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle. Vorerst nur um Köniz und um den Gantrisch.</>}</p>
         </details>
       )}
     </div>
@@ -388,25 +533,57 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
 const BRILLE_SCHRIFT_M = 0.022
 
+/** Scheiben auf ganzen Tausend Metern (Michael, 2026-10-20: «recht transparenten Scheiben alle 1000m … 1000m Rot, 2000m Gelb,
+ *  3000m Grün, 4000m Blau»), auch als Linie in den Wänden; die Farben sind gewählt, nicht aus einer Quelle */
+const HOEHEN_STUFEN: Array<[number, string, string]> = [[1000, '#e0242b', 'rot'], [2000, '#f2c200', 'gelb'], [3000, '#2b9e4a', 'grün'], [4000, '#2a6fdb', 'blau']]
+const SCHEIBE_DECKKRAFT = 0.24
+/** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
+const KNOPF_BILD = 0.06, KNOPF_BRILLE_M = 0.045
+/** Höhe und Kronenradius je Art (Einzelbaum, Wald, Wald offen, Gebüschwald, Gehölzfläche), wie im Führerstand (BAUM_FORM in
+ *  Relief.tsx): in keiner Quelle */
+const BAUM_FORM: Array<[number, number]> = [[12, 3.5], [20, 3.2], [15, 4], [4, 2.2], [9, 3]]
+
 interface Welt {
   setzeWahl: (f: Feld | null) => void
   faktor: (f: number) => void
-  brille: () => Promise<void>
+  scheiben: (an: boolean) => void
+}
+
+/** sRGB → linear, für die Farben der Ecken */
+const LINEAR = Float32Array.from({ length: 256 }, (_, i) => { const c = i / 255; return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4 })
+
+/** ein runder Knopf mit + oder − als Bild */
+function knopfBild(plus: boolean, an: boolean) {
+  const c = document.createElement('canvas')
+  c.width = c.height = 96
+  const x = c.getContext('2d')!
+  x.fillStyle = an ? 'rgba(255,255,255,0.95)' : 'rgba(200,200,200,0.85)'
+  x.strokeStyle = an ? KARMIN : '#8a8a8a'
+  x.lineWidth = 7
+  x.beginPath(); x.arc(48, 48, 42, 0, Math.PI * 2); x.fill(); x.stroke()
+  x.fillStyle = an ? KARMIN : '#8a8a8a'
+  x.fillRect(26, 44, 44, 9)
+  if (plus) x.fillRect(43.5, 26, 9, 44)
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
 }
 
 /**
  * Eine Szene für alle Stufen: Renderer, Kamera und eine laufende Sitzung in der Brille bleiben, nur das Gelände wird neu
  * gebaut. In der Brille (Michael, 2026-10-18: «muss auch immersiv auf der Brille gespielt werden können») steht das Modell
- * auf dem Tisch; der Abzug wählt mit dem Strahl ein Feld, ein zweiter Abzug darauf taucht ein, die Greiftaste geht eine Stufe
- * zurück, der Thumbstick dreht und vergrössert.
+ * auf dem Tisch; der Abzug wählt mit dem Strahl ein Feld oder drückt einen Knopf an der Wand, ein zweiter Abzug auf das Feld
+ * taucht ein, die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und vergrössert.
  */
-function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz }: {
-  g: Gelaende; stufe: Stufe; faktor: number; wahl: Feld | null; waehlen?: (e: number, n: number) => void
+function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung }: {
+  b: Bestand; stufe: Stufe; faktor: number; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
   info: string[] | null
   brilleRef: React.MutableRefObject<(() => Promise<void>) | null>
   zusatz: Zusatz | null
+  knoepfe: Knoepfe | null; erweitern: (s: Seite, plus: boolean) => void
+  scheiben: boolean; umwelt: boolean; meldung: string | null
 }) {
   const huelle = useRef<HTMLDivElement>(null)
   const welt = useRef<Welt | null>(null)
@@ -416,8 +593,12 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void }
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
   } | null>(null)
-  const cb = useRef({ waehlen, eintauchen, zurueck })
-  cb.current = { waehlen, eintauchen, zurueck }
+  const cb = useRef({ waehlen, eintauchen, zurueck, erweitern })
+  cb.current = { waehlen, eintauchen, zurueck, erweitern }
+  const faktorJetzt = useRef(faktor)
+  faktorJetzt.current = faktor
+  const scheibenJetzt = useRef(scheiben)
+  scheibenJetzt.current = scheiben
 
   // einmal: Renderer, Kamera, Steuerung, Brille
   useEffect(() => {
@@ -476,8 +657,18 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       tafel.visible = true
     }
 
-    // Brille: Strahlen der Controller, Abzug wählt, Greiftaste zurück, Thumbstick dreht und vergrössert
+    // ein Strahl trifft zuerst die Knöpfe an den Wänden, dann das Gelände
     const strahl = new THREE.Raycaster()
+    strahl.camera = kamera
+    const treffen = () => {
+      const k = wurzel.getObjectByName('knoepfe')
+      const knopf = k ? strahl.intersectObjects(k.children.filter((o) => o.visible), false)[0] : undefined
+      if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
+      const boeden = wurzel.getObjectByName('boeden')
+      const t = boeden ? strahl.intersectObjects(boeden.children, false)[0] : undefined
+      if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
+    }
+    // Brille: Strahlen der Controller, Abzug wählt, Greiftaste zurück, Thumbstick dreht und vergrössert
     const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void } = { tipp: null, zurueck: () => cb.current.zurueck() }
     const controller = [0, 1].map((i) => {
       const c = renderer.xr.getController(i)
@@ -489,30 +680,30 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         const m = new THREE.Matrix4().extractRotation(c.matrixWorld)
         strahl.ray.origin.setFromMatrixPosition(c.matrixWorld)
         strahl.ray.direction.set(0, 0, -1).applyMatrix4(m)
-        const boden = wurzel.getObjectByName('boden')
-        const t = boden ? strahl.intersectObject(boden, false)[0] : undefined
-        if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
+        treffen()
       })
       c.addEventListener('squeeze', () => wenn.zurueck())
       szene.add(c)
       return c
     })
     let drehung = 0, zoom = 1
+    // Schilder und Knöpfe: auf dem Bildschirm in fester Grösse, in der Brille in Metern
+    const sprites = () => ['schilder', 'knoepfe'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? []) as THREE.Sprite[])
     const brilleSetzen = () => {
       const breite = (wurzel.userData.weiteKm as number) || 1
       const s = (BRILLE_BREITE_M / breite) * zoom
       wurzel.scale.setScalar(s)
       wurzel.rotation.y = drehung
       wurzel.position.set(0, BRILLE_TISCH_M - ((wurzel.userData.untenY as (() => number) | undefined)?.() ?? 0) * s, -BRILLE_ABSTAND_M)
-      for (const sp of (wurzel.getObjectByName('schilder')?.children ?? []) as THREE.Sprite[]) {
+      for (const sp of sprites()) {
         sp.material.sizeAttenuation = true
-        const v = sp.userData.verhaeltnis as number
-        sp.scale.set((BRILLE_SCHRIFT_M / s) * v, BRILLE_SCHRIFT_M / s, 1)
+        const v = sp.userData.verhaeltnis as number, m = (sp.userData.brilleM as number | undefined) ?? BRILLE_SCHRIFT_M
+        sp.scale.set((m / s) * v, m / s, 1)
       }
     }
     const bildschirmSetzen = () => {
       wurzel.scale.setScalar(1); wurzel.rotation.y = 0; wurzel.position.set(0, 0, 0)
-      for (const sp of (wurzel.getObjectByName('schilder')?.children ?? []) as THREE.Sprite[]) {
+      for (const sp of sprites()) {
         sp.material.sizeAttenuation = false
         sp.scale.set(sp.userData.b, sp.userData.h, 1)
       }
@@ -529,7 +720,8 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       await renderer.xr.setSession(sitzung)
       drehung = 0; zoom = 1
       brilleSetzen(); setzeHimmel()
-      tafelSetzen(['3D Schweiz', 'Abzug: Feld wählen, nochmals: eintauchen', 'Greiftaste: eine Stufe zurück', 'Thumbstick: drehen und vergrössern'])
+      tafelSetzen(['3D Schweiz', 'Abzug: Feld wählen, nochmals: eintauchen', 'Abzug auf + oder − an einer Wand: erweitern',
+                   'Greiftaste: eine Stufe zurück', 'Thumbstick: drehen und vergrössern'])
     }
     const jeBild: Array<() => void> = [() => {
       if (!renderer.xr.isPresenting) return
@@ -559,14 +751,32 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       if (!u || Math.hypot(ev.clientX - u.x, ev.clientY - u.y) > 8 || performance.now() - u.t > 500) return
       const r = renderer.domElement.getBoundingClientRect()
       strahl.setFromCamera(new THREE.Vector2(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1), kamera)
-      const boden = wurzel.getObjectByName('boden')
-      const t = boden ? strahl.intersectObject(boden, false)[0] : undefined
-      if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
+      treffen()
+    }
+    // nur in einer Testfassung (VITE_S3D_TEST): wo die Knöpfe im Bild liegen
+    if (import.meta.env.VITE_S3D_TEST) {
+      (window as unknown as { s3dKnoepfe: unknown }).s3dKnoepfe = () => {
+        const r = renderer.domElement.getBoundingClientRect()
+        return (wurzel.getObjectByName('knoepfe')?.children ?? []).filter((o) => o.visible).map((o) => {
+          const v = o.getWorldPosition(new THREE.Vector3()).project(kamera)
+          return { seite: o.userData.seite, plus: o.userData.plus, x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height }
+        })
+      }
     }
     renderer.domElement.addEventListener('pointerdown', runter)
     renderer.domElement.addEventListener('pointerup', hoch)
+    // die Knöpfe nur an den Wänden, die zur Kamera schauen; die hinteren verdeckt das Modell
+    const auge = new THREE.Vector3()
+    const knoepfeZeigen = () => {
+      const kn = wurzel.getObjectByName('knoepfe')
+      if (!kn) return
+      const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera
+      wurzel.worldToLocal(auge.setFromMatrixPosition(cam.matrixWorld))
+      for (const o of kn.children) o.visible = auge.clone().sub(o.position).dot(o.userData.nach as THREE.Vector3) > 0
+    }
     renderer.setAnimationLoop(() => {
       for (const f of jeBild) f()
+      knoepfeZeigen()
       if (!renderer.xr.isPresenting) steuerung.update()
       renderer.render(szene, kamera)
     })
@@ -586,23 +796,42 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     }
   }, [brilleRef])
 
-  // je Stufe: das Gelände, die Namen und der Kasten des gewählten Felds
+  // je Stufe: das Gelände, der Sockel, die Höhenscheiben, die Namen, die Knöpfe und der Kasten des gewählten Felds
   useEffect(() => {
     const k = kern.current
     if (!k) return
     const { renderer, kamera, steuerung, wurzel } = k
     const dunkel = matchMedia('(prefers-color-scheme: dark)').matches
-    const { ost, nord, m, breite, hoehe } = g.raster
-    const weite = Math.max(breite, hoehe) * m
-    const cE = ost + (breite * m) / 2, cN = nord - (hoehe * m) / 2
+    const teile = [...b.teile].map(([schluessel, g]) => {
+      const [di, dj] = schluessel.split('_').map(Number)
+      return { di, dj, g }
+    })
+    // das Rechteck aller Stücke, gemessen an den Mitten der äussersten Felder
+    const rand = (g: Gelaende) => {
+      const { ost, nord, m, breite, hoehe } = g.raster
+      return { e0: ost + m / 2, e1: ost + (breite - 0.5) * m, n0: nord - (hoehe - 0.5) * m, n1: nord - m / 2 }
+    }
+    const r = teile.map((t) => rand(t.g))
+    const E0 = Math.min(...r.map((x) => x.e0)), E1 = Math.max(...r.map((x) => x.e1))
+    const N0 = Math.min(...r.map((x) => x.n0)), N1 = Math.max(...r.map((x) => x.n1))
+    const weite = Math.max(E1 - E0, N1 - N0)
+    const cE = (E0 + E1) / 2, cN = (N0 + N1) / 2
     const X = (e: number) => (e - cE) / 1000, Z = (n: number) => -(n - cN) / 1000
-    let f = faktor
+    let f = faktorJetzt.current
     const Y = (z: number) => (z / 1000) * f
     wurzel.userData.weiteKm = weite / 1000
-    const leer = g.h.reduce((a, z) => (z !== KEINE_HOEHE && z < a ? z : a), Infinity)
+    wurzel.userData.lage = { cE, cN }
+    let leer = Infinity, hoechst = -Infinity, mittel = 0, zahl = 0
+    for (const { g } of teile) {
+      for (let q = 0; q < g.h.length; q++) {
+        const z = g.h[q]
+        if (z === KEINE_HOEHE) continue
+        if (z < leer) leer = z
+        if (z > hoechst) hoechst = z
+        if (q % 7 === 0) { mittel += z; zahl++ }
+      }
+    }
     const tief = leer === Infinity ? 0 : leer
-    let mittel = 0, zahl = 0
-    for (let q = 0; q < g.h.length; q += 7) if (g.h[q] !== KEINE_HOEHE) { mittel += g.h[q]; zahl++ }
     mittel = zahl ? mittel / zahl : tief
     const weiteKm = weite / 1000
     const wand = weiteKm * SOCKEL_WAND, platte = weiteKm * SOCKEL_PLATTE, ueber = weiteKm * SOCKEL_UEBERSTAND
@@ -622,75 +851,133 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       steuerung.update()
     }
 
-    const geo = new THREE.BufferGeometry()
-    const pos = new Float32Array(breite * hoehe * 3), uv = new Float32Array(breite * hoehe * 2)
-    const hoeheSetzen = () => {
-      for (let j = 0; j < hoehe; j++) {
-        for (let i = 0; i < breite; i++) {
-          const q = j * breite + i, z = g.h[q] === KEINE_HOEHE ? leer : g.h[q]
-          pos[q * 3] = X(ost + (i + 0.5) * m); pos[q * 3 + 1] = Y(z); pos[q * 3 + 2] = Z(nord - (j + 0.5) * m)
-        }
+    // je Stück ein Netz mit seinem Luftbild
+    const boeden = new THREE.Group()
+    boeden.name = 'boeden'
+    wurzel.add(boeden)
+    const netze = teile.map(({ di, dj, g }) => {
+      const { ost, nord, m, breite, hoehe } = g.raster
+      const geo = new THREE.BufferGeometry()
+      const pos = new Float32Array(breite * hoehe * 3), uv = new Float32Array(breite * hoehe * 2)
+      for (let j = 0; j < hoehe; j++) for (let i = 0; i < breite; i++) { uv[(j * breite + i) * 2] = (i + 0.5) / breite; uv[(j * breite + i) * 2 + 1] = 1 - (j + 0.5) / hoehe }
+      const idx = new Uint32Array((breite - 1) * (hoehe - 1) * 6)
+      let w = 0
+      for (let j = 0; j < hoehe - 1; j++) for (let i = 0; i < breite - 1; i++) {
+        const a = j * breite + i
+        idx[w++] = a; idx[w++] = a + breite; idx[w++] = a + 1; idx[w++] = a + 1; idx[w++] = a + breite; idx[w++] = a + breite + 1
       }
-      if (geo.attributes.position) geo.attributes.position.needsUpdate = true
-      geo.computeVertexNormals()
-    }
-    for (let j = 0; j < hoehe; j++) for (let i = 0; i < breite; i++) { uv[(j * breite + i) * 2] = (i + 0.5) / breite; uv[(j * breite + i) * 2 + 1] = 1 - (j + 0.5) / hoehe }
-    const idx = new Uint32Array((breite - 1) * (hoehe - 1) * 6)
-    let w = 0
-    for (let j = 0; j < hoehe - 1; j++) for (let i = 0; i < breite - 1; i++) {
-      const a = j * breite + i
-      idx[w++] = a; idx[w++] = a + breite; idx[w++] = a + 1; idx[w++] = a + 1; idx[w++] = a + breite; idx[w++] = a + breite + 1
-    }
-    geo.setIndex(new THREE.BufferAttribute(idx, 1))
-    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-    geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
-    hoeheSetzen()
-    const textur = new THREE.CanvasTexture(g.bild)
-    textur.colorSpace = THREE.SRGBColorSpace
-    textur.anisotropy = renderer.capabilities.getMaxAnisotropy()
-    const boden = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: textur }))
-    boden.name = 'boden'
-    wurzel.add(boden)
+      geo.setIndex(new THREE.BufferAttribute(idx, 1))
+      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+      geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
+      const textur = new THREE.CanvasTexture(g.bild)
+      textur.colorSpace = THREE.SRGBColorSpace
+      textur.anisotropy = renderer.capabilities.getMaxAnisotropy()
+      boeden.add(new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: textur })))
+      const setzen = () => {
+        for (let j = 0; j < hoehe; j++) {
+          for (let i = 0; i < breite; i++) {
+            const q = j * breite + i, z = g.h[q] === KEINE_HOEHE ? tief : g.h[q]
+            pos[q * 3] = X(ost + (i + 0.5) * m); pos[q * 3 + 1] = Y(z); pos[q * 3 + 2] = Z(nord - (j + 0.5) * m)
+          }
+        }
+        geo.attributes.position.needsUpdate = true
+        geo.computeVertexNormals()
+        geo.computeBoundingSphere()
+      }
+      setzen()
+      return { di, dj, g, pos, setzen }
+    })
 
-    // der Sockel, neu bei jeder Höhe
+    // der Sockel, neu bei jeder Höhe; nur an den äusseren Kanten der Stücke
     const sockel = new THREE.Group()
     wurzel.add(sockel)
     // matt, damit die Seiten im Licht verschieden hell sind
     const wandMaterialien = SOCKEL_WAND_FARBEN.map((color) => new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0, side: THREE.DoubleSide }))
     const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, roughness: 0.5, metalness: 0 })
+    // die oberen Kanten der Wände, je mit der Richtung nach aussen (für die Linien der Höhen)
+    let kantenOben: Array<{ p: Float32Array; nx: number; nz: number }> = []
     const sockelBauen = () => {
       for (const o of sockel.children) (o as THREE.Mesh).geometry.dispose()
       sockel.clear()
+      kantenOben = []
       const unten = Y(tief) - wand
-      // die vier Kanten des Geländes als Punktfolgen (Index der Felder)
-      const kanten: number[][] = [
-        Array.from({ length: breite }, (_, i) => i),
-        Array.from({ length: hoehe }, (_, j) => j * breite + breite - 1),
-        Array.from({ length: breite }, (_, i) => (hoehe - 1) * breite + breite - 1 - i),
-        Array.from({ length: hoehe }, (_, j) => (hoehe - 1 - j) * breite),
-      ]
-      kanten.forEach((kante, seite) => {
-        const p = new Float32Array(kante.length * 6)
-        kante.forEach((q, i) => {
-          const x = pos[q * 3], y = pos[q * 3 + 1], z = pos[q * 3 + 2]
-          p.set([x, y, z, x, unten, z], i * 6)
+      for (const { di, dj, g, pos } of netze) {
+        const { breite, hoehe } = g.raster
+        // Norden, Osten, Süden, Westen; nur, wo kein Stück daneben liegt
+        const kanten: Array<[number[], number, number] | null> = [
+          dj === b.dj[1] ? [Array.from({ length: breite }, (_, i) => i), 0, -1] : null,
+          di === b.di[1] ? [Array.from({ length: hoehe }, (_, j) => j * breite + breite - 1), 1, 0] : null,
+          dj === b.dj[0] ? [Array.from({ length: breite }, (_, i) => (hoehe - 1) * breite + breite - 1 - i), 0, 1] : null,
+          di === b.di[0] ? [Array.from({ length: hoehe }, (_, j) => (hoehe - 1 - j) * breite), -1, 0] : null,
+        ]
+        kanten.forEach((kk, seite) => {
+          if (!kk) return
+          const [kante, nx, nz] = kk
+          const p = new Float32Array(kante.length * 6), oben = new Float32Array(kante.length * 3)
+          kante.forEach((q, i) => {
+            const x = pos[q * 3], y = pos[q * 3 + 1], z = pos[q * 3 + 2]
+            p.set([x, y, z, x, unten, z], i * 6)
+            oben.set([x, y, z], i * 3)
+          })
+          kantenOben.push({ p: oben, nx, nz })
+          const ix: number[] = []
+          for (let i = 0; i < kante.length - 1; i++) ix.push(i * 2, i * 2 + 1, i * 2 + 2, i * 2 + 2, i * 2 + 1, i * 2 + 3)
+          const gw = new THREE.BufferGeometry()
+          gw.setAttribute('position', new THREE.BufferAttribute(p, 3))
+          gw.setIndex(ix)
+          gw.computeVertexNormals()
+          sockel.add(new THREE.Mesh(gw, wandMaterialien[seite]))
         })
-        const ix: number[] = []
-        for (let i = 0; i < kante.length - 1; i++) ix.push(i * 2, i * 2 + 1, i * 2 + 2, i * 2 + 2, i * 2 + 1, i * 2 + 3)
-        const gw = new THREE.BufferGeometry()
-        gw.setAttribute('position', new THREE.BufferAttribute(p, 3))
-        gw.setIndex(ix)
-        gw.computeVertexNormals()
-        sockel.add(new THREE.Mesh(gw, wandMaterialien[seite]))
-      })
+      }
       // die Platte darunter, etwas breiter
-      const bx = (breite - 1) * m / 1000 + 2 * ueber, bz = (hoehe - 1) * m / 1000 + 2 * ueber
+      const bx = X(E1) - X(E0) + 2 * ueber, bz = Z(N0) - Z(N1) + 2 * ueber
       const gp = new THREE.BoxGeometry(bx, platte, bz)
       const pl = new THREE.Mesh(gp, platteMaterial)
       pl.position.set(0, unten - platte / 2, 0)
       sockel.add(pl)
     }
     sockelBauen()
+
+    // die Höhenscheiben und ihre Linien in den Wänden, nur auf Höhen zwischen dem tiefsten und dem höchsten Punkt
+    const hoehen = new THREE.Group()
+    hoehen.visible = scheibenJetzt.current
+    wurzel.add(hoehen)
+    const scheibenMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity: SCHEIBE_DECKKRAFT,
+      side: THREE.DoubleSide, depthWrite: false }))
+    const linienMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide }))
+    const hoehenBauen = () => {
+      for (const o of hoehen.children) (o as THREE.Mesh).geometry.dispose()
+      hoehen.clear()
+      const dicke = weiteKm * 0.0028, raus = weiteKm * 0.0015
+      HOEHEN_STUFEN.forEach(([z], s) => {
+        if (!(z > tief && z < hoechst)) return
+        const y = Y(z)
+        const sch = new THREE.Mesh(new THREE.PlaneGeometry(X(E1) - X(E0), Z(N0) - Z(N1)), scheibenMaterial[s])
+        sch.rotation.x = -Math.PI / 2
+        sch.position.set((X(E0) + X(E1)) / 2, y, (Z(N0) + Z(N1)) / 2)
+        sch.renderOrder = 2
+        hoehen.add(sch)
+        // die Linie in den Wänden: wo die Wand über die Höhe reicht, ein schmales Band knapp vor der Wand
+        const band: number[] = []
+        for (const { p, nx, nz } of kantenOben) {
+          for (let i = 0; i < p.length / 3 - 1; i++) {
+            let ax = p[i * 3], ay = p[i * 3 + 1], az = p[i * 3 + 2], bx = p[i * 3 + 3], by = p[i * 3 + 4], bz = p[i * 3 + 5]
+            if (ay < y && by < y) continue
+            if (ay < y) { const t = (y - ay) / (by - ay); ax += (bx - ax) * t; az += (bz - az) * t }
+            else if (by < y) { const t = (y - ay) / (by - ay); bx = ax + (bx - ax) * t; bz = az + (bz - az) * t }
+            const ox = nx * raus, oz = nz * raus
+            band.push(ax + ox, y - dicke, az + oz, bx + ox, y - dicke, bz + oz, ax + ox, y + dicke, az + oz,
+                      ax + ox, y + dicke, az + oz, bx + ox, y - dicke, bz + oz, bx + ox, y + dicke, bz + oz)
+          }
+        }
+        if (band.length) {
+          const gb = new THREE.BufferGeometry()
+          gb.setAttribute('position', new THREE.Float32BufferAttribute(band, 3))
+          hoehen.add(new THREE.Mesh(gb, linienMaterial[s]))
+        }
+      })
+    }
+    hoehenBauen()
 
     // Namen: Gipfel und Orte, auf dem Bildschirm in fester Grösse, in der Brille in Metern
     const schilder = new THREE.Group()
@@ -714,15 +1001,45 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       sp.renderOrder = 3
       schilder.add(sp)
     }
-    const drin = (e: number, n: number) => e > ost && e < ost + breite * m && n < nord && n > nord - hoehe * m
+    const drin = (e: number, n: number) => [...b.teile.values()].some((t) => imRaster(t.raster, e, n))
     if (zusatz) {
       const gipfel = zusatz.sw.gipfel.filter((x) => x.hoehe_m !== null).map((x) => ({ x, l: lv95(x.lage[0], x.lage[1]) }))
-        .filter(({ l }) => drin(l[0], l[1])).sort((a, b) => b.x.hoehe_m! - a.x.hoehe_m!)
-      const anzahl = stufe === 'schweiz' ? 8 : stufe === 'region' ? 25 : stufe === 'ort' ? 10 : 4
+        .filter(({ l }) => drin(l[0], l[1])).sort((a, c) => c.x.hoehe_m! - a.x.hoehe_m!)
+      const anzahl = (stufe === 'schweiz' ? 8 : stufe === 'region' ? 25 : stufe === 'ort' ? 10 : 4) * Math.min(3, b.teile.size)
       for (const { x, l } of gipfel.slice(0, anzahl)) schild(`▲ ${x.name} ${x.hoehe_m!.toLocaleString('de-CH')}`, dunkel ? '#e2c9a8' : '#7a4a14', l[0], l[1], x.hoehe_m!)
       const orte = zusatz.orte.map((o) => ({ o, l: lv95(o.lage[0], o.lage[1]) })).filter(({ o, l }) => drin(l[0], l[1]) && (stufe !== 'schweiz' || o.klasse >= 4))
-      for (const { o, l } of orte) schild(o.name, dunkel ? '#ffffff' : '#212121', l[0], l[1], hoeheIm(g, l[0], l[1]) + 30)
+      for (const { o, l } of orte) schild(o.name, dunkel ? '#ffffff' : '#212121', l[0], l[1], bestandHoehe(b, l[0], l[1]) + 30)
     }
+
+    // + und − an den Wänden, in der Mitte jeder Seite im Sockel unter dem tiefsten Punkt
+    const knopfGruppe = new THREE.Group()
+    knopfGruppe.name = 'knoepfe'
+    wurzel.add(knopfGruppe)
+    const knoepfeSetzen = () => {
+      for (const o of knopfGruppe.children) { const sp = o as THREE.Sprite; sp.material.map?.dispose(); sp.material.dispose() }
+      knopfGruppe.clear()
+      if (!knoepfe) return
+      const y = Y(tief) - wand / 2, raus = weiteKm * 0.01, schritt = weiteKm * 0.13
+      const mitten: Record<Seite, [number, number, number, number]> = {
+        n: [(X(E0) + X(E1)) / 2, Z(N1) - raus, 1, 0], s: [(X(E0) + X(E1)) / 2, Z(N0) + raus, -1, 0],
+        o: [X(E1) + raus, (Z(N0) + Z(N1)) / 2, 0, 1], w: [X(E0) - raus, (Z(N0) + Z(N1)) / 2, 0, -1],
+      }
+      for (const seite of ['n', 'o', 's', 'w'] as Seite[]) {
+        const [x, z, ax, az] = mitten[seite]
+        for (const plus of [true, false]) {
+          const an = plus ? knoepfe.plus[seite] : knoepfe.minus[seite]
+          const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: knopfBild(plus, an), depthTest: false, sizeAttenuation: false }))
+          sp.userData = { b: KNOPF_BILD, h: KNOPF_BILD, verhaeltnis: 1, brilleM: KNOPF_BRILLE_M, aktion: () => cb.current.erweitern(seite, plus), seite, plus,
+                          nach: new THREE.Vector3(az === 0 ? 0 : az > 0 ? 1 : -1, 0, ax === 0 ? 0 : ax > 0 ? -1 : 1) }
+          sp.scale.set(KNOPF_BILD, KNOPF_BILD, 1)
+          const d = (plus ? -1 : 1) * schritt / 2
+          sp.position.set(x + ax * d, y, z + az * d)
+          sp.renderOrder = 4
+          knopfGruppe.add(sp)
+        }
+      }
+    }
+    knoepfeSetzen()
 
     // das gewählte Feld: ein gläserner Kasten in Karmin über dem Gelände
     const kasten = new THREE.Group()
@@ -736,9 +1053,9 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       kasten.clear()
       if (!fd) return
       let hoch = 0
-      for (let j = 0; j <= 10; j++) for (let i = 0; i <= 10; i++) hoch = Math.max(hoch, hoeheIm(g, fd.e - fd.seite / 2 + (i * fd.seite) / 10, fd.n - fd.seite / 2 + (j * fd.seite) / 10))
-      const b = fd.seite / 1000, y0 = Y((leer === Infinity ? 0 : leer) - 50), y1 = Y(hoch) + b * 0.15
-      const box = new THREE.BoxGeometry(b, y1 - y0, b)
+      for (let j = 0; j <= 10; j++) for (let i = 0; i <= 10; i++) hoch = Math.max(hoch, bestandHoehe(b, fd.e - fd.seite / 2 + (i * fd.seite) / 10, fd.n - fd.seite / 2 + (j * fd.seite) / 10))
+      const bb = fd.seite / 1000, y0 = Y(tief - 50), y1 = Y(hoch) + bb * 0.15
+      const box = new THREE.BoxGeometry(bb, y1 - y0, bb)
       const mesh = new THREE.Mesh(box, kastenMaterial)
       const kanten = new THREE.LineSegments(new THREE.EdgesGeometry(box), kantenMaterial)
       for (const o of [mesh, kanten]) { o.position.set(X(fd.e), (y0 + y1) / 2, Z(fd.n)); kasten.add(o) }
@@ -753,11 +1070,16 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     welt.current = {
       setzeWahl,
       faktor: (nf) => {
-        f = nf; hoeheSetzen(); sockelBauen()
+        f = nf
+        for (const n of netze) n.setzen()
+        sockelBauen(); hoehenBauen(); knoepfeSetzen()
         for (const sp of schilder.children) sp.position.y = Y(sp.userData.z)
+        const u = wurzel.getObjectByName('umwelt')
+        if (u) u.scale.y = f
         setzeWahl(feldJetzt)
+        if (renderer.xr.isPresenting) k.jeBild[0]()
       },
-      brille: async () => { await brilleRef.current?.() },
+      scheiben: (an) => { hoehen.visible = an },
     }
     // in der Brille gleich die neue Grösse
     if (renderer.xr.isPresenting) k.jeBild[0]()
@@ -767,23 +1089,107 @@ function Ansicht({ g, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         o.traverse((x) => {
           const q = x as THREE.Mesh
           q.geometry?.dispose()
-          const mat = q.material as (THREE.Material & { map?: THREE.Texture }) | undefined
-          mat?.map?.dispose(); mat?.dispose?.()
+          const mats = (Array.isArray(q.material) ? q.material : [q.material]) as Array<(THREE.Material & { map?: THREE.Texture }) | undefined>
+          for (const mat of mats) { mat?.map?.dispose(); mat?.dispose?.() }
         })
         wurzel.remove(o)
       }
-      textur.dispose()
+      for (const m of [...wandMaterialien, platteMaterial, ...scheibenMaterial, ...linienMaterial, kastenMaterial, kantenMaterial]) m.dispose()
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [g, stufe, zusatz])
+  }, [b, stufe, zusatz, knoepfe])
+
+  // Gebäude und Bäume (vorerst in zwei Probeausschnitten), in einer Gruppe, deren Höhe mit dem Faktor wächst
+  useEffect(() => {
+    const k = kern.current
+    if (!k || !umwelt || (stufe !== 'ort' && stufe !== 'nah')) return
+    const { wurzel } = k
+    const { cE, cN } = wurzel.userData.lage as { cE: number; cN: number }
+    const r = [...b.teile.values()].map((t) => t.rahmen)
+    const e0 = Math.min(...r.map((x) => x.e0)), e1 = Math.max(...r.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...r.map((x) => x.n1 - x.h)), n1 = Math.max(...r.map((x) => x.n1))
+    const gruppe = new THREE.Group()
+    gruppe.name = 'umwelt'
+    gruppe.scale.y = faktorJetzt.current
+    let weg = false
+    void probeLaden(e0, n0, e1, n1).then(({ gebaeude, baeume }) => {
+      if (weg) return
+      gruppe.add(...gebaeudeNetz(gebaeude, cE, cN, e0, n0, e1, n1), ...baumNetz(baeume, b, cE, cN, e0, n0, e1, n1))
+      if (gruppe.children.length) wurzel.add(gruppe)
+    })
+    return () => {
+      weg = true
+      gruppe.traverse((x) => {
+        const q = x as THREE.Mesh
+        q.geometry?.dispose()
+        ;(q.material as THREE.Material | undefined)?.dispose?.()
+      })
+      gruppe.removeFromParent()
+    }
+  }, [b, stufe, umwelt])
+
   useEffect(() => { welt.current?.faktor(faktor) }, [faktor])
+  useEffect(() => { welt.current?.scheiben(scheiben) }, [scheiben])
   useEffect(() => {
     welt.current?.setzeWahl(wahl)
     const k = kern.current
     if (k?.inBrille()) {
-      k.tafelSetzen(info && wahl ? [...info, 'Nochmals Abzug: eintauchen'] : stufe === 'nah' ? ['Greiftaste: zurück'] : null)
+      k.tafelSetzen(meldung ? [meldung.split(': ')[0], ...(meldung.split(': ')[1] ? [meldung.split(': ').slice(1).join(': ')] : [])]
+        : info && wahl ? [...info, 'Nochmals Abzug: eintauchen'] : stufe === 'nah' ? ['Greiftaste: zurück'] : null)
     }
-  }, [wahl, info, stufe, g])
+  }, [wahl, info, stufe, b, meldung])
   return <div ref={huelle} className="absolute inset-0 touch-none" />
+}
+
+/** die Gebäude im Rechteck als Netze (je Kachel eines), in Kilometern um die Mitte, Höhe ungestreckt */
+function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: number, n0: number, e1: number, n1: number) {
+  const material = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+  return kacheln.filter((g) => g.e0 < e1 && g.e0 + 500 > e0 && g.n0 < n1 && g.n0 + 500 > n0).map((g) => {
+    const n = g.ecken.length / 3
+    const pos = new Float32Array(n * 3), farbe = new Float32Array(n * 3)
+    for (let q = 0; q < n; q++) {
+      pos[q * 3] = (g.e0 + g.ecken[q * 3] / 10 - cE) / 1000
+      pos[q * 3 + 1] = (g.h0 + g.ecken[q * 3 + 1]) / 10 / 1000
+      pos[q * 3 + 2] = -(g.n0 + g.ecken[q * 3 + 2] / 10 - cN) / 1000
+      farbe[q * 3] = LINEAR[g.farben[q * 3]]; farbe[q * 3 + 1] = LINEAR[g.farben[q * 3 + 1]]; farbe[q * 3 + 2] = LINEAR[g.farben[q * 3 + 2]]
+    }
+    const geo = new THREE.BufferGeometry()
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+    geo.setAttribute('color', new THREE.BufferAttribute(farbe, 3))
+    geo.computeVertexNormals()
+    return new THREE.Mesh(geo, material)
+  })
+}
+
+/** die Bäume im Rechteck als ein InstancedMesh, der Fuss auf dem Gelände des Bestands */
+function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0: number, n0: number, e1: number, n1: number) {
+  const liste: Array<[number, number, number, number, number, number]> = []
+  for (const k of kacheln) {
+    for (let i = 0; i < k.art.length; i++) {
+      const e = k.e0 + k.lage[i * 2] / 10, n = k.n0 + k.lage[i * 2 + 1] / 10
+      if (e < e0 || e > e1 || n < n0 || n > n1) continue
+      liste.push([e, n, k.art[i], k.farben[i * 3], k.farben[i * 3 + 1], k.farben[i * 3 + 2]])
+    }
+  }
+  if (!liste.length) return []
+  const krone = new THREE.IcosahedronGeometry(0.5, 0)
+  krone.scale(1, 0.85, 1); krone.translate(0, 0.5, 0)
+  const netz = new THREE.InstancedMesh(krone, new THREE.MeshLambertMaterial(), liste.length)
+  const m = new THREE.Matrix4(), v = new THREE.Vector3(), s = new THREE.Vector3(), q = new THREE.Quaternion(), c = new THREE.Color()
+  const oben = new THREE.Vector3(0, 1, 0)
+  liste.forEach(([e, n, art, r, g, bl], i) => {
+    const [hoehe, radius] = BAUM_FORM[art] ?? BAUM_FORM[0]
+    // je Baum bis 25 % grösser oder kleiner, immer gleich
+    const z = Math.sin(e * 12.9898 + n * 78.233) * 43758.5453, f = 0.75 + 0.5 * (z - Math.floor(z))
+    v.set((e - cE) / 1000, (bestandHoehe(b, e, n) - 0.5) / 1000, -(n - cN) / 1000)
+    s.set((2 * radius * f) / 1000, (hoehe * f) / 1000, (2 * radius * f) / 1000)
+    q.setFromAxisAngle(oben, f * 20)
+    netz.setMatrixAt(i, m.compose(v, q, s))
+    netz.setColorAt(i, c.setRGB(LINEAR[r], LINEAR[g], LINEAR[bl]))
+  })
+  netz.instanceMatrix.needsUpdate = true
+  if (netz.instanceColor) netz.instanceColor.needsUpdate = true
+  netz.computeBoundingSphere()
+  return [netz]
 }

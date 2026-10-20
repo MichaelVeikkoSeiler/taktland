@@ -131,6 +131,12 @@ def main():
         if (ZIEL / "schweiz3d").exists():
             shutil.rmtree(ZIEL / "schweiz3d")
         shutil.copytree(uebersicht, ZIEL / "schweiz3d")
+    # Gebäude und Bäume in zwei Probeausschnitten für «3D Schweiz» (pipeline/build_schweiz3d_probe.py)
+    probe = ROOT / "data" / "schweiz3d_probe"
+    if probe.exists():
+        if (ZIEL / "schweiz3d_probe").exists():
+            shutil.rmtree(ZIEL / "schweiz3d_probe")
+        shutil.copytree(probe, ZIEL / "schweiz3d_probe")
     # Luftbild für das Gelände in 3D (pipeline/build_luftbild.py), vorerst für einzelne Bergstrecken
     luftbild = ROOT / "data" / "luftbild"
     if luftbild.exists():
