@@ -7,6 +7,7 @@ import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeome
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich } from '../relief'
+import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
 import type { SeenDaten, SehenswertDaten } from '../typen'
 import { Ladebalken } from './Ladebalken'
@@ -270,6 +271,10 @@ export default function Schweiz3D() {
   const [scheiben, setScheiben] = useState(true)
   const [umwelt, setUmwelt] = useState(true)
   const [wandern, setWandern] = useState(true)
+  // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
+  const [sonnenAn, setSonnenAn] = useState(true)
+  const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
+  const [minuten, setMinuten] = useState(12 * 60)
   const [umweltHier, setUmweltHier] = useState(false)
   const [meldung, setMeldung] = useState<string | null>(null)
   useEffect(() => {
@@ -286,6 +291,40 @@ export default function Schweiz3D() {
   const inhalt = useMemo(() => (wahl ? feldInhalt(wahl, zusatz) : null), [wahl, zusatz])
   const aktuell = gelaende[stufe]
   const anker = aktuell?.teile.get('0_0') ?? null
+  // der Sonnenstand über der Mitte des Modells
+  const stand = useMemo(() => {
+    if (!sonnenAn || !aktuell) return null
+    const r = [...aktuell.teile.values()].map((t) => t.rahmen)
+    const e = (Math.min(...r.map((x) => x.e0)) + Math.max(...r.map((x) => x.e0 + x.b))) / 2
+    const n = (Math.min(...r.map((x) => x.n1 - x.h)) + Math.max(...r.map((x) => x.n1))) / 2
+    const [la, lo] = wgs(e, n)
+    return sonnenstand(schweizerZeit(tag, minuten), la, lo)
+  }, [sonnenAn, aktuell, tag, minuten])
+  const tagText = useMemo(() => {
+    const [j, m, t] = tag.split('-').map(Number)
+    return new Date(Date.UTC(j, m - 1, t)).toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+  }, [tag])
+  const standText = stand ? (stand.hoehe > 0
+    ? `Sonne ${Math.round(stand.hoehe)}° über dem Horizont, im ${himmelsrichtung(stand.richtung)}`
+    : 'Die Sonne steht unter dem Horizont') : null
+  const sonnenZeilen = useMemo(() => (stand ? [`${tagText}, ${uhrzeit(minuten)} Uhr`, standText!] : null), [stand, tagText, minuten, standText])
+  const zeitSchieben = (art: 'stunde' | 'monat' | 'jetzt', um: number) => {
+    if (art === 'jetzt') { const j = jetztInDerSchweiz(); setTag(j.datum); setMinuten(Math.round(j.minuten / 15) * 15 % 1440); return }
+    if (art === 'stunde') {
+      const neu = minuten + um * 60
+      if (neu < 0 || neu >= 1440) {
+        const [j, m, t] = tag.split('-').map(Number)
+        setTag(new Date(Date.UTC(j, m - 1, t + (neu < 0 ? -1 : 1))).toISOString().slice(0, 10))
+      }
+      setMinuten(((neu % 1440) + 1440) % 1440)
+      return
+    }
+    const [j, m, t] = tag.split('-').map(Number)
+    const neu = new Date(Date.UTC(j, m - 1 + um, 1))
+    const letzter = new Date(Date.UTC(neu.getUTCFullYear(), neu.getUTCMonth() + 1, 0)).getUTCDate()
+    neu.setUTCDate(Math.min(t, letzter))
+    setTag(neu.toISOString().slice(0, 10))
+  }
   // Gebäude und Bäume gibt es vorerst nur in zwei Probeausschnitten
   useEffect(() => {
     setUmweltHier(false)
@@ -433,7 +472,8 @@ export default function Schweiz3D() {
                      setWahl(w)
                    }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
-                   umwelt={umwelt && umweltHier} meldung={meldung} wandern={wandern} />
+                   umwelt={umwelt && umweltHier} meldung={meldung} wandern={wandern} sonne={stand} sonnenZeilen={sonnenZeilen}
+                   zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
@@ -503,6 +543,27 @@ export default function Schweiz3D() {
           </div>
         )}
       </div>
+      <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+        <button type="button" aria-pressed={sonnenAn} onClick={() => setSonnenAn((x) => !x)}
+                className={`rounded-lg border px-2.5 py-1.5 text-xs font-bold ${sonnenAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
+          Sonne und Schatten
+        </button>
+        {sonnenAn && (
+          <>
+            <input type="date" value={tag} onChange={(e) => { if (e.target.value) setTag(e.target.value) }} aria-label="Datum"
+                   className="rounded-lg border border-sbb-cloud bg-white px-2 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
+            <label className="flex min-w-48 flex-1 items-center gap-2">
+              <span className="sr-only">Uhrzeit</span>
+              <input type="range" min={0} max={1425} step={15} value={minuten} onChange={(e) => setMinuten(Number(e.target.value))}
+                     className="flex-1 accent-sbb-red" />
+              <span className="w-12 font-bold tabular-nums">{uhrzeit(minuten)}</span>
+            </label>
+            <button type="button" onClick={() => zeitSchieben('jetzt', 0)}
+                    className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1.5 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Jetzt</button>
+          </>
+        )}
+      </div>
+      {standText && <p className="mt-1 text-sm">{standText} ({tagText}, {uhrzeit(minuten)} Uhr, Schweizer Zeit).</p>}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         {stufe === 'schweiz' ? `Höhe ${UEBERHOEHT}-fach überhöht. ` : faktor === 2 ? 'Höhe 2-fach überhöht. ' : ''}
         Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'nah' && ' Ein Tipp wählt ein Feld.'}
@@ -535,7 +596,9 @@ export default function Schweiz3D() {
             die grösseren zuerst nach der Objektart der Quelle, mit Abstand zueinander; Auswahl und Mast gewählt. Ein Feld ist ein Quadrat, keine Region und kein Tal:
             deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
-            folgen den Wegweisern. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
+            folgen den Wegweisern. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
+            des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
+            Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen, bei überhöhter Höhe sind die Schatten zu lang. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle). Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
             gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle. Vorerst nur um Köniz und um den Gantrisch.</>}</p>
@@ -617,7 +680,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * auf dem Tisch; der Abzug wählt mit dem Strahl ein Feld oder drückt einen Knopf an der Wand, ein zweiter Abzug auf das Feld
  * taucht ein, die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und vergrössert.
  */
-function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung, wandern }: {
+function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung, wandern, sonne: stand, sonnenZeilen, zeitSchieben }: {
   b: Bestand; stufe: Stufe; faktor: number; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
@@ -626,6 +689,11 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
   zusatz: Zusatz | null
   knoepfe: Knoepfe | null; erweitern: (s: Seite, plus: boolean) => void
   scheiben: boolean; umwelt: boolean; meldung: string | null
+  /** Sonnenstand zur gewählten Zeit, null: die feste Sonne wie bisher, ohne Schatten */
+  sonne: Sonnenstand | null
+  /** was die Tafel in der Brille zur Zeit sagt, und wie die Brille die Zeit verschiebt */
+  sonnenZeilen: string[] | null
+  zeitSchieben: (art: 'stunde' | 'monat' | 'jetzt', um: number) => void
   /** Wanderwege zeigen (in den Stufen 20 km, 4 km und 1 km) */
   wandern: boolean
 }) {
@@ -636,9 +704,10 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void
     jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void }
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
+    sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight; sonnenTafelSetzen: (zeilen: string[] | null) => void
   } | null>(null)
-  const cb = useRef({ waehlen, eintauchen, zurueck, erweitern })
-  cb.current = { waehlen, eintauchen, zurueck, erweitern }
+  const cb = useRef({ waehlen, eintauchen, zurueck, erweitern, zeitSchieben })
+  cb.current = { waehlen, eintauchen, zurueck, erweitern, zeitSchieben }
   const faktorJetzt = useRef(faktor)
   faktorJetzt.current = faktor
   const scheibenJetzt = useRef(scheiben)
@@ -662,14 +731,20 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     const steuerung = new OrbitControls(kamera, renderer.domElement)
     steuerung.enableDamping = true
     steuerung.maxPolarAngle = Math.PI * 0.47
-    szene.add(new THREE.HemisphereLight('#ffffff', '#8a8070', 1.6))
-    const sonne = new THREE.DirectionalLight('#ffffff', 1.4)
-    // die Sonne steht hoch im Süden, leicht nach Westen (Michael, 2026-10-19: «von Süden her ganz leicht mehr beleuchten … ungefähr
-    // der realen Sonneneinstrahlung»); x zeigt nach Osten, z nach Süden; ein Sonnenstand, keine Uhrzeit
-    sonne.position.set(-0.35, 1.3, 0.9)
-    szene.add(sonne)
+    const himmelLicht = new THREE.HemisphereLight('#ffffff', '#8a8070', 1.6)
+    szene.add(himmelLicht)
     const wurzel = new THREE.Group()
     szene.add(wurzel)
+    // die Sonne gehört zum Modell: dreht man es in der Brille, kommt sie weiter aus derselben Himmelsrichtung über dem Gelände;
+    // mit Schatten (Michael, 2026-10-21: «Sonnen und Schattenzeiten … Realistisch»), die Lage setzt der Effekt zum Sonnenstand
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    const sonne = new THREE.DirectionalLight('#ffffff', 1.4)
+    sonne.shadow.mapSize.setScalar(matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 2048 : 4096)
+    sonne.shadow.bias = -0.0004
+    sonne.userData.bleibt = true
+    sonne.target.userData.bleibt = true
+    wurzel.add(sonne, sonne.target)
 
     // die Tafel in der Brille: Hinweise und was im Feld liegt
     // je Text eine neue Leinwand: eine Textur ändert ihre Grösse nicht mehr, wenn sie einmal auf der Grafikkarte liegt
@@ -701,10 +776,53 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       tafel.visible = true
     }
 
-    // ein Strahl trifft zuerst die Knöpfe an den Wänden, dann das Gelände
+    // in der Brille die Zeit der Sonne: eine Zeile mit Datum, Uhrzeit und Stand, darunter Knöpfe (Michael, 2026-10-21: «Zeit und
+    // Datum auf dem Mobile und Brille wählbar»), vor dem Modell auf der Seite zum Betrachter
+    const sonnenTafel = new THREE.Group()
+    sonnenTafel.visible = false
+    szene.add(sonnenTafel)
+    let sonnenZeilenJetzt: string[] | null = null
+    const sonnenTafelSetzen = (zeilen: string[] | null) => {
+      sonnenZeilenJetzt = zeilen
+      for (const o of sonnenTafel.children) { const sp = o as THREE.Sprite; sp.material.map?.dispose(); sp.material.dispose() }
+      sonnenTafel.clear()
+      sonnenTafel.visible = !!zeilen && renderer.xr.isPresenting
+      if (!zeilen) return
+      const bild = (text: string, knopf: boolean) => {
+        const c = document.createElement('canvas'), x = c.getContext('2d')!, px = 30
+        x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+        c.width = Math.ceil(x.measureText(text).width) + 28; c.height = px + 20
+        x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+        x.fillStyle = knopf ? KARMIN : 'rgba(255,255,255,0.94)'
+        x.beginPath(); x.roundRect(0, 0, c.width, c.height, 12); x.fill()
+        x.fillStyle = knopf ? '#ffffff' : '#212121'; x.fillText(text, 14, px + 4)
+        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+        const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false }))
+        const h = knopf ? 0.045 : 0.04
+        sp.scale.set(h * c.width / c.height, h, 1)
+        sp.renderOrder = 6
+        return sp
+      }
+      const y0 = BRILLE_TISCH_M + 0.16, z0 = -BRILLE_ABSTAND_M + 0.72
+      zeilen.forEach((z, i) => { const sp = bild(z, false); sp.position.set(0, y0 + 0.1 - i * 0.045, z0); sonnenTafel.add(sp) })
+      const knoepfe: Array<[string, 'stunde' | 'monat' | 'jetzt', number]> = [['− 1 Monat', 'monat', -1], ['− 1 h', 'stunde', -1], ['Jetzt', 'jetzt', 0],
+        ['+ 1 h', 'stunde', 1], ['+ 1 Monat', 'monat', 1]]
+      knoepfe.forEach(([text, art, um], i) => {
+        const sp = bild(text, true)
+        sp.position.set((i - 2) * 0.17, y0 - 0.02, z0)
+        sp.userData.aktion = () => cb.current.zeitSchieben(art, um)
+        sonnenTafel.add(sp)
+      })
+    }
+
+    // ein Strahl trifft zuerst die Knöpfe der Sonne und an den Wänden, dann das Gelände
     const strahl = new THREE.Raycaster()
     strahl.camera = kamera
     const treffen = () => {
+      if (sonnenTafel.visible) {
+        const z = strahl.intersectObjects(sonnenTafel.children.filter((o) => o.userData.aktion), false)[0]
+        if (z) { (z.object.userData.aktion as () => void)(); return }
+      }
       const k = wurzel.getObjectByName('knoepfe')
       const knopf = k ? strahl.intersectObjects(k.children.filter((o) => o.visible), false)[0] : undefined
       if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
@@ -753,7 +871,7 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       }
       tafel.visible = false
     }
-    renderer.xr.addEventListener('sessionend', () => { bildschirmSetzen(); setzeHimmel(); kamera.near = 0.01; kamera.updateProjectionMatrix() })
+    renderer.xr.addEventListener('sessionend', () => { bildschirmSetzen(); setzeHimmel(); sonnenTafel.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
     brilleRef.current = async () => {
       const xr = navigator.xr
       if (!xr) throw new Error('Kein WebXR')
@@ -763,7 +881,7 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       kamera.near = 0.01; kamera.updateProjectionMatrix()
       await renderer.xr.setSession(sitzung)
       drehung = 0; zoom = 1
-      brilleSetzen(); setzeHimmel()
+      brilleSetzen(); setzeHimmel(); sonnenTafelSetzen(sonnenZeilenJetzt)
       tafelSetzen(['3D Schweiz', 'Abzug: Feld wählen, nochmals: eintauchen', 'Abzug auf + oder − an einer Wand: erweitern',
                    'Greiftaste: eine Stufe zurück', 'Thumbstick: drehen und vergrössern'])
     }
@@ -778,7 +896,8 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       }
       brilleSetzen()
     }]
-    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, jeBild, wenn, tafel, tafelSetzen }
+    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, jeBild, wenn, tafel, tafelSetzen,
+                     sonne, himmelLicht, sonnenTafelSetzen }
 
     const groesse = () => {
       if (renderer.xr.isPresenting) return
@@ -900,6 +1019,15 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       steuerung.update()
     }
 
+    // die Sonne: ihr Ziel in der Mitte des Modells, der Schattenausschnitt über das ganze Modell
+    wurzel.userData.sonnenMitte = Y(mittel)
+    {
+      const cam = k.sonne.shadow.camera, halb = weiteKm * 0.8
+      cam.left = -halb; cam.right = halb; cam.top = halb; cam.bottom = -halb
+      cam.near = 0.001; cam.far = weiteKm * 8
+      cam.updateProjectionMatrix()
+      k.sonne.target.position.set(0, Y(mittel), 0)
+    }
     // je Stück ein Netz mit seinem Luftbild
     const boeden = new THREE.Group()
     boeden.name = 'boeden'
@@ -921,7 +1049,9 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       const textur = new THREE.CanvasTexture(g.bild)
       textur.colorSpace = THREE.SRGBColorSpace
       textur.anisotropy = renderer.capabilities.getMaxAnisotropy()
-      boeden.add(new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: textur })))
+      const netz = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: textur }))
+      netz.castShadow = netz.receiveShadow = true
+      boeden.add(netz)
       const setzen = () => {
         for (let j = 0; j < hoehe; j++) {
           for (let i = 0; i < breite; i++) {
@@ -1211,6 +1341,7 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     return () => {
       k.wenn.tipp = null
       for (const o of [...wurzel.children]) {
+        if (o.userData.bleibt) continue
         o.traverse((x) => {
           const q = x as THREE.Mesh
           q.geometry?.dispose()
@@ -1315,6 +1446,39 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     }
   }, [b, stufe, wandern])
 
+  // die Sonne: ohne Zeit die feste wie bisher, mit Zeit ihr gerechneter Stand, darunter der Horizont dunkel
+  useEffect(() => {
+    const k = kern.current
+    if (!k) return
+    const { sonne, himmelLicht, wurzel } = k
+    const weiteKm = (wurzel.userData.weiteKm as number) || 1, mitteY = (wurzel.userData.sonnenMitte as number) || 0
+    const d = new THREE.Vector3(-0.35, 1.3, 0.9).normalize()
+    if (!stand) {
+      sonne.castShadow = false; sonne.intensity = 1.4; sonne.color.set('#ffffff')
+      himmelLicht.intensity = 1.6; himmelLicht.color.set('#ffffff')
+    } else {
+      // x nach Osten, z nach Süden, y hinauf
+      const h = stand.hoehe * Math.PI / 180, a = stand.richtung * Math.PI / 180
+      d.set(Math.sin(a) * Math.cos(h), Math.sin(h), -Math.cos(a) * Math.cos(h))
+      const tag = Math.max(0, Math.min(1, stand.hoehe / 6))
+      sonne.castShadow = stand.hoehe > 0
+      sonne.intensity = 2.6 * tag
+      // tief am Himmel wärmer; eine Stimmung, kein gemessenes Licht
+      sonne.color.set(stand.hoehe < 10 ? '#ffc58a' : '#fff6e8')
+      himmelLicht.intensity = 0.35 + 0.55 * Math.min(1, Math.max(0, stand.hoehe + 6) / 36)
+      himmelLicht.color.set(stand.hoehe > 0 ? '#ffffff' : '#9fb3d9')
+    }
+    sonne.position.copy(d.multiplyScalar(weiteKm * 4)).add(new THREE.Vector3(0, mitteY, 0))
+    // nur in einer Testfassung: Schatten aus- und einschalten, zum Vergleich
+    if (import.meta.env.VITE_S3D_TEST) {
+      (window as unknown as { s3dSchatten: unknown }).s3dSchatten = (an: boolean) => {
+        sonne.castShadow = an
+        k.szene.traverse((o) => { const m = (o as THREE.Mesh).material as THREE.Material | undefined; if (m) m.needsUpdate = true })
+      }
+    }
+  }, [stand, b, stufe])
+  useEffect(() => { kern.current?.sonnenTafelSetzen(sonnenZeilen) }, [sonnenZeilen])
+
   useEffect(() => { welt.current?.faktor(faktor) }, [faktor])
   useEffect(() => { welt.current?.scheiben(scheiben) }, [scheiben])
   useEffect(() => {
@@ -1351,7 +1515,9 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
     geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
     geo.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
     geo.computeVertexNormals()
-    return [new THREE.Mesh(geo, material)]
+    const m = new THREE.Mesh(geo, material)
+    m.castShadow = m.receiveShadow = true
+    return [m]
   })
 }
 
@@ -1384,5 +1550,6 @@ function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0:
   netz.instanceMatrix.needsUpdate = true
   if (netz.instanceColor) netz.instanceColor.needsUpdate = true
   netz.computeBoundingSphere()
+  netz.castShadow = true
   return [netz]
 }

@@ -283,6 +283,13 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              der Sockel um alle), höchstens 3 je Richtung und 9 im Ganzen, auf dem Handy 4 (JE_RICHTUNG, hoechstens(); eine Annahme zum
              Speicher der Grafik, nicht gemessen), ist die Grenze erreicht, ist der Knopf grau und ein Tipp erklärt warum; was darunter fehlt,
              ergänzt eine Region um das Stück (unterFuer)
+             Sonne und Schatten (Michael, 2026-10-21: «Sonnen und Schattenzeiten einbauen. Realistisch. Zeit und Datum auf dem Mobile und
+             Brille wählbar»): Schalter «Sonne und Schatten», Datum und Uhrzeit (Schweizer Zeit, je 15 Minuten, «Jetzt»), am Anfang heute
+             12 Uhr; der Sonnenstand über der Mitte des Modells gerechnet (src/sonne.ts, Näherung des Astronomical Almanac, ohne Brechung),
+             die Sonne gehört zum Modell (dreht mit in der Brille), Schatten mit der Schattenkarte von three.js (4096, auf dem Handy 2048),
+             Gelände, Gebäude und Bäume werfen Schatten, Berge ausserhalb des Modells nicht; unter dem Horizont nur Himmelslicht, tief am
+             Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille eine Tafel vor dem Modell mit Datum, Zeit, Stand und Knöpfen
+             ± 1 h, ± 1 Monat, Jetzt (Strahl und Abzug)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
              Modellbahn ein dünner dunkelgrauer Mast (2 Bildpunkte) mit eckigem dunkelgrauem Schild mittig darauf, Name in Weiss, je Stufe ab einem Rang und höchstens
