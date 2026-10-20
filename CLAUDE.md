@@ -285,7 +285,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              ergänzt eine Region um das Stück (unterFuer)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
-             Modellbahn ein dünner dunkelgrauer Mast mit eckigem dunkelgrauem Schild, Name in Weiss, je Stufe ab einem Rang und höchstens
+             Modellbahn ein dünner dunkelgrauer Mast (2 Bildpunkte) mit eckigem dunkelgrauem Schild mittig darauf, Name in Weiss, je Stufe ab einem Rang und höchstens
              so viele, mit Abstand zueinander (ORT_* in Schweiz3D.tsx; in der ganzen Schweiz nur Orte in der Schweiz)
 data/schweiz3d_probe/  Gebäude und Bäume für «3D Schweiz» in zwei Probeausschnitten (Michael, 2026-10-20: «Köniz und Gantrisch»):
              alles in 6 × 6 km um Köniz und 8 × 8 km um den Gantrisch, nicht nur neben der Bahn, Formate wie data/gebaeude und data/baeume,

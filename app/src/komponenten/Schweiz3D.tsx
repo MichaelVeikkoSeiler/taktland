@@ -575,6 +575,8 @@ const WANDER_PX = 2.2, WANDER_RAND_PX = 4
 /** Ortschaften: Mast als Anteil der Breite des Modells, ab welchem Rang und wie viele je Stück, Farbe wie die Bahnhöfe der
  *  Modellbahn (BAHNHOF_GRAU in Relief.tsx); Auswahl und Masse gewählt, nicht aus einer Quelle */
 const ORT_MAST = 0.035, ORT_GRAU = '#2a2a2a'
+/** Breite des Masts in Bildpunkten (Michael, 2026-10-21: «leicht dicker»; vorher 1) */
+const ORT_MAST_PX = 2
 const ORT_AB_RANG: Record<Stufe, number> = { schweiz: 5, region: 1, ort: 0, nah: 0 }
 const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 20, region: 20, ort: 15, nah: 10 }, ORT_ABSTAND = 0.09
 /** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
@@ -1114,13 +1116,13 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: false }))
       sp.userData = { e: o.e, n: o.n, z: o.z, ueber: mastKm, b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height }
       sp.scale.set(sp.userData.b, sp.userData.h, 1)
-      // die Fahne hängt rechts am Mast
-      sp.center.set(0, 0)
+      // die Tafel sitzt mittig auf dem Mast (Michael, 2026-10-21: «eingemittet zur Tafel»)
+      sp.center.set(0.5, 0)
       sp.position.set(X(o.e), Y(o.z) + mastKm, Z(o.n))
       sp.renderOrder = 3
       schilder.add(sp)
     }
-    const mastMaterial = new LineMaterial({ color: ORT_GRAU, linewidth: 1 })
+    const mastMaterial = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX })
     const mastenBauen = () => {
       for (const o of ortGruppe.children) (o as LineSegments2).geometry.dispose()
       ortGruppe.clear()
