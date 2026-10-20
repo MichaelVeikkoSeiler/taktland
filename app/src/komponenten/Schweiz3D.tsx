@@ -267,7 +267,8 @@ export default function Schweiz3D() {
   const [zusatz, setZusatz] = useState<Zusatz | null>(null)
   const [scheiben, setScheiben] = useState(true)
   const [umwelt, setUmwelt] = useState(true)
-  const [wandern, setWandern] = useState(true)
+  // Wanderwege am Anfang aus (Michael, 2026-10-21: «defaultmässig ausgeblendet»)
+  const [wandern, setWandern] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
   const [sonnenAn, setSonnenAn] = useState(true)
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
@@ -469,7 +470,7 @@ export default function Schweiz3D() {
                      setWahl(w)
                    }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
-                   umwelt={umwelt && umweltHier} meldung={meldung} wandern={wandern} sonne={stand} sonnenZeilen={sonnenZeilen}
+                   umwelt={umwelt && umweltHier} meldung={meldung} wandern={wandern} wandernUmschalten={() => setWandern((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen}
                    zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -668,7 +669,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung, wandern, sonne: stand, sonnenZeilen, zeitSchieben }: {
+function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung, wandern, wandernUmschalten, sonne: stand, sonnenZeilen, zeitSchieben }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
@@ -684,6 +685,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
   zeitSchieben: (art: 'stunde' | 'monat' | 'jetzt', um: number) => void
   /** Wanderwege zeigen (in den Stufen 20 km, 4 km und 1 km) */
   wandern: boolean
+  /** Wanderwege ein und aus, in der Brille */
+  wandernUmschalten: () => void
 }) {
   const huelle = useRef<HTMLDivElement>(null)
   const welt = useRef<Welt | null>(null)
@@ -693,10 +696,13 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void }
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight; sonnenTafelSetzen: (zeilen: string[] | null) => void
-    anfangSetzen: () => void
+    anfangSetzen: () => void; leisteSetzen: () => void
   } | null>(null)
-  const cb = useRef({ waehlen, eintauchen, zurueck, erweitern, zeitSchieben })
-  cb.current = { waehlen, eintauchen, zurueck, erweitern, zeitSchieben }
+  const cb = useRef({ waehlen, eintauchen, zurueck, erweitern, zeitSchieben, wandernUmschalten })
+  cb.current = { waehlen, eintauchen, zurueck, erweitern, zeitSchieben, wandernUmschalten }
+  // was die Leiste in der Brille anbietet
+  const leisteJetzt = useRef({ stufe, wandern })
+  leisteJetzt.current = { stufe, wandern }
   const scheibenJetzt = useRef(scheiben)
   scheibenJetzt.current = scheiben
 
@@ -765,41 +771,70 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
 
     // in der Brille die Zeit der Sonne: eine Zeile mit Datum, Uhrzeit und Stand, darunter Knöpfe (Michael, 2026-10-21: «Zeit und
     // Datum auf dem Mobile und Brille wählbar»), vor dem Modell auf der Seite zum Betrachter
+    const SONNE_Y = BRILLE_TISCH_M + 0.16, SONNE_Z = -BRILLE_ABSTAND_M + 0.72
     const sonnenTafel = new THREE.Group()
     sonnenTafel.visible = false
     szene.add(sonnenTafel)
     let sonnenZeilenJetzt: string[] | null = null
+    /** die Tafel der Sonne ist mit «Fertig» weggelegt (Michael, 2026-10-21: «Sobald man die Uhrzeit und das Datum eingestellt hat,
+     *  soll man dieses löschen können»); «Zeit» in der Leiste holt sie zurück */
+    let sonnenZu = false
+    const leeren = (g: THREE.Group) => {
+      for (const o of g.children) { const sp = o as THREE.Sprite; sp.material.map?.dispose(); sp.material.dispose() }
+      g.clear()
+    }
     const sonnenTafelSetzen = (zeilen: string[] | null) => {
       sonnenZeilenJetzt = zeilen
-      for (const o of sonnenTafel.children) { const sp = o as THREE.Sprite; sp.material.map?.dispose(); sp.material.dispose() }
-      sonnenTafel.clear()
-      sonnenTafel.visible = !!zeilen && renderer.xr.isPresenting
+      leeren(sonnenTafel)
+      sonnenTafel.visible = !!zeilen && renderer.xr.isPresenting && !sonnenZu
+      leisteSetzen()
       if (!zeilen) return
-      const bild = (text: string, knopf: boolean) => {
-        const c = document.createElement('canvas'), x = c.getContext('2d')!, px = 30
-        x.font = `bold ${px}px Helvetica, Arial, sans-serif`
-        c.width = Math.ceil(x.measureText(text).width) + 28; c.height = px + 20
-        x.font = `bold ${px}px Helvetica, Arial, sans-serif`
-        x.fillStyle = knopf ? KARMIN : 'rgba(255,255,255,0.94)'
-        x.beginPath(); x.roundRect(0, 0, c.width, c.height, 12); x.fill()
-        x.fillStyle = knopf ? '#ffffff' : '#212121'; x.fillText(text, 14, px + 4)
-        const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
-        const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false }))
-        const h = knopf ? 0.045 : 0.04
-        sp.scale.set(h * c.width / c.height, h, 1)
-        sp.renderOrder = 6
-        return sp
-      }
-      const y0 = BRILLE_TISCH_M + 0.16, z0 = -BRILLE_ABSTAND_M + 0.72
-      zeilen.forEach((z, i) => { const sp = bild(z, false); sp.position.set(0, y0 + 0.1 - i * 0.045, z0); sonnenTafel.add(sp) })
-      const knoepfe: Array<[string, 'stunde' | 'monat' | 'jetzt', number]> = [['− 1 Monat', 'monat', -1], ['− 1 h', 'stunde', -1], ['Jetzt', 'jetzt', 0],
-        ['+ 1 h', 'stunde', 1], ['+ 1 Monat', 'monat', 1]]
-      knoepfe.forEach(([text, art, um], i) => {
-        const sp = bild(text, true)
-        sp.position.set((i - 2) * 0.17, y0 - 0.02, z0)
-        sp.userData.aktion = () => cb.current.zeitSchieben(art, um)
+      zeilen.forEach((z, i) => { const sp = tafelBild(z, false); sp.position.set(0, SONNE_Y + 0.1 - i * 0.045, SONNE_Z); sonnenTafel.add(sp) })
+      const knoepfe: Array<[string, () => void]> = [['− 1 Monat', () => cb.current.zeitSchieben('monat', -1)],
+        ['− 1 h', () => cb.current.zeitSchieben('stunde', -1)], ['Jetzt', () => cb.current.zeitSchieben('jetzt', 0)],
+        ['+ 1 h', () => cb.current.zeitSchieben('stunde', 1)], ['+ 1 Monat', () => cb.current.zeitSchieben('monat', 1)],
+        ['Fertig', () => { sonnenZu = true; sonnenTafel.visible = false; leisteSetzen() }]]
+      knoepfe.forEach(([text, aktion], i) => {
+        const sp = tafelBild(text, true)
+        sp.position.set((i - 2.5) * 0.16, SONNE_Y - 0.02, SONNE_Z)
+        sp.userData.aktion = aktion
         sonnenTafel.add(sp)
       })
+    }
+    // eine Leiste unter der Tafel der Sonne (Michael, 2026-10-21: «Auf der Brille soll man die Wanderwege ein- und ausblenden
+    // können»): Wanderwege ein und aus (ab der Stufe 20 km), «Zeit» holt die weggelegte Tafel der Sonne zurück
+    const leiste = new THREE.Group()
+    leiste.visible = false
+    szene.add(leiste)
+    function leisteSetzen() {
+      leeren(leiste)
+      leiste.visible = renderer.xr.isPresenting
+      if (!leiste.visible) return
+      const { stufe: st, wandern: an } = leisteJetzt.current
+      const knoepfe: Array<[string, () => void]> = []
+      if (st !== 'schweiz') knoepfe.push([an ? 'Wanderwege aus' : 'Wanderwege ein', () => cb.current.wandernUmschalten()])
+      if (sonnenZeilenJetzt && sonnenZu) knoepfe.push(['Zeit', () => { sonnenZu = false; sonnenTafelSetzen(sonnenZeilenJetzt) }])
+      knoepfe.forEach(([text, aktion], i) => {
+        const sp = tafelBild(text, true)
+        sp.position.set((i - (knoepfe.length - 1) / 2) * 0.26, SONNE_Y - 0.15, SONNE_Z)
+        sp.userData.aktion = aktion
+        leiste.add(sp)
+      })
+    }
+    function tafelBild(text: string, knopf: boolean) {
+      const c = document.createElement('canvas'), x = c.getContext('2d')!, px = 30
+      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      c.width = Math.ceil(x.measureText(text).width) + 28; c.height = px + 20
+      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      x.fillStyle = knopf ? KARMIN : 'rgba(255,255,255,0.94)'
+      x.beginPath(); x.roundRect(0, 0, c.width, c.height, 12); x.fill()
+      x.fillStyle = knopf ? '#ffffff' : '#212121'; x.fillText(text, 14, px + 4)
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false }))
+      const h = knopf ? 0.045 : 0.04
+      sp.scale.set(h * c.width / c.height, h, 1)
+      sp.renderOrder = 6
+      return sp
     }
 
     // Tafel mit den Tasten beim Betreten der Brille, wie in der Modellbahn (Michael, 2026-10-21: «eine Instruktion auf der Brille,
@@ -818,7 +853,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         ['Abzug kurz', 'Feld wählen, nochmals: eintauchen'], ['Abzug auf + oder −', 'an dieser Wand erweitern'],
         ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],
         ['Thumbstick', 'drehen, heben, senken'], ['Thumbstick drücken', 'Modell zurück an den Anfang'],
-        ['Greiftaste', 'eine Stufe zurück'], ['Abzug auf die Zeit', 'Datum und Uhrzeit wählen'],
+        ['Greiftaste', 'eine Stufe zurück'], ['Abzug auf die Zeit', 'Datum und Uhrzeit, «Fertig» legt weg'],
       ]
       zeilen.forEach(([taste, was], i) => {
         const y = 160 + i * 58
@@ -856,8 +891,9 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         if (z) (z.object.userData.aktion as () => void)()
         return
       }
-      if (sonnenTafel.visible) {
-        const z = strahl.intersectObjects(sonnenTafel.children.filter((o) => o.userData.aktion), false)[0]
+      for (const g of [sonnenTafel, leiste]) {
+        if (!g.visible) continue
+        const z = strahl.intersectObjects(g.children.filter((o) => o.userData.aktion), false)[0]
         if (z) { (z.object.userData.aktion as () => void)(); return }
       }
       const k = wurzel.getObjectByName('knoepfe')
@@ -940,7 +976,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       }
       tafel.visible = false
     }
-    renderer.xr.addEventListener('sessionend', () => { bildschirmSetzen(); setzeHimmel(); sonnenTafel.visible = false; anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
+    renderer.xr.addEventListener('sessionend', () => { bildschirmSetzen(); setzeHimmel(); sonnenTafel.visible = false; leiste.visible = false; anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
     brilleRef.current = async () => {
       const xr = navigator.xr
       if (!xr) throw new Error('Kein WebXR')
@@ -950,6 +986,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       kamera.near = 0.01; kamera.updateProjectionMatrix()
       await renderer.xr.setSession(sitzung)
       anfangSetzen()
+      sonnenZu = false
       brilleSetzen(); setzeHimmel(); sonnenTafelSetzen(sonnenZeilenJetzt)
       tafelSetzen(null)
       anleitung.visible = true
@@ -992,7 +1029,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       brilleSetzen()
     }]
     kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, jeBild, wenn, tafel, tafelSetzen,
-                     sonne, himmelLicht, sonnenTafelSetzen, anfangSetzen }
+                     sonne, himmelLicht, sonnenTafelSetzen, anfangSetzen, leisteSetzen }
 
     const groesse = () => {
       if (renderer.xr.isPresenting) return
@@ -1557,6 +1594,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     }
   }, [stand, b, stufe])
   useEffect(() => { kern.current?.sonnenTafelSetzen(sonnenZeilen) }, [sonnenZeilen])
+  useEffect(() => { kern.current?.leisteSetzen() }, [stufe, wandern])
 
   useEffect(() => { welt.current?.scheiben(scheiben) }, [scheiben])
   // eine neue Stufe steht in der Brille wieder auf dem Tisch wie am Anfang

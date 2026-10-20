@@ -306,7 +306,9 @@ data/wanderwege/  Wanderwege für «3D Schweiz» (Michael, 2026-10-21: «alle Wa
              Strasse, jedes Stück mit WANDERWEGE Wanderweg, Bergwanderweg oder Alpinwanderweg, ohne Stücke in Tunneln, nur die Lage, nach
              Douglas-Peucker auf 2 m vereinfacht, je 10-km-Kachel eine .wwg (pipeline/build_wanderwege.py, 408'970 Stücke, 9,3 MB); in der
              App ab der Stufe 20 km, auf das Gelände des Modells gelegt und so dicht wie sein Raster unterteilt, gelb, rot und blau mit
-             weissem Rand in Bildpunkten (Farben nach den Wegweisern gewählt, WANDER_FARBEN in Schweiz3D.tsx), Schalter «Wanderwege»
+             weissem Rand in Bildpunkten (Farben nach den Wegweisern gewählt, WANDER_FARBEN in Schweiz3D.tsx), Schalter «Wanderwege», am Anfang aus
+             (Michael, 2026-10-21); in der Brille eine Leiste unter der Tafel der Sonne mit «Wanderwege ein/aus» und, wenn die Tafel mit
+             «Fertig» weggelegt ist, «Zeit», das sie zurückholt
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),
              auf 10 m gemittelt, JPEG im 10-km-Raster der Geländekacheln, je km der neueste Jahrgang (2017 bis 2025),
              die Jahre je Kachel in index.json (pipeline/build_luftbild.py --alle: 508 Kacheln der ganzen Schweiz,
