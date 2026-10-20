@@ -1142,23 +1142,30 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
   return <div ref={huelle} className="absolute inset-0 touch-none" />
 }
 
-/** die Gebäude im Rechteck als Netze (je Kachel eines), in Kilometern um die Mitte, Höhe ungestreckt */
+/** die Gebäude im Rechteck als Netze (je Kachel eines), in Kilometern um die Mitte, Höhe ungestreckt; nur die Dreiecke mit ihrer
+ *  Mitte im Rechteck: eine Kachel von 500 m reicht oft über den Rand des Modells (Michael, 2026-10-21: «stimmen die
+ *  Gebäudeeinblendungen nicht mit den Kacheln überein», sie standen neben dem Sockel in der Luft) */
 function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: number, n0: number, e1: number, n1: number) {
   const material = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
-  return kacheln.filter((g) => g.e0 < e1 && g.e0 + 500 > e0 && g.n0 < n1 && g.n0 + 500 > n0).map((g) => {
+  return kacheln.filter((g) => g.e0 < e1 && g.e0 + 500 > e0 && g.n0 < n1 && g.n0 + 500 > n0).flatMap((g) => {
     const n = g.ecken.length / 3
-    const pos = new Float32Array(n * 3), farbe = new Float32Array(n * 3)
-    for (let q = 0; q < n; q++) {
-      pos[q * 3] = (g.e0 + g.ecken[q * 3] / 10 - cE) / 1000
-      pos[q * 3 + 1] = (g.h0 + g.ecken[q * 3 + 1]) / 10 / 1000
-      pos[q * 3 + 2] = -(g.n0 + g.ecken[q * 3 + 2] / 10 - cN) / 1000
-      farbe[q * 3] = LINEAR[g.farben[q * 3]]; farbe[q * 3 + 1] = LINEAR[g.farben[q * 3 + 1]]; farbe[q * 3 + 2] = LINEAR[g.farben[q * 3 + 2]]
+    const pos: number[] = [], farbe: number[] = []
+    for (let d = 0; d + 2 < n; d += 3) {
+      let me = 0, mn = 0
+      for (let q = d; q < d + 3; q++) { me += g.ecken[q * 3] / 30; mn += g.ecken[q * 3 + 2] / 30 }
+      me += g.e0; mn += g.n0
+      if (me < e0 || me > e1 || mn < n0 || mn > n1) continue
+      for (let q = d; q < d + 3; q++) {
+        pos.push((g.e0 + g.ecken[q * 3] / 10 - cE) / 1000, (g.h0 + g.ecken[q * 3 + 1]) / 10 / 1000, -(g.n0 + g.ecken[q * 3 + 2] / 10 - cN) / 1000)
+        farbe.push(LINEAR[g.farben[q * 3]], LINEAR[g.farben[q * 3 + 1]], LINEAR[g.farben[q * 3 + 2]])
+      }
     }
+    if (!pos.length) return []
     const geo = new THREE.BufferGeometry()
-    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-    geo.setAttribute('color', new THREE.BufferAttribute(farbe, 3))
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
     geo.computeVertexNormals()
-    return new THREE.Mesh(geo, material)
+    return [new THREE.Mesh(geo, material)]
   })
 }
 
