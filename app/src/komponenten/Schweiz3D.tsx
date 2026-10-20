@@ -64,7 +64,11 @@ async function unterFuer(f: Feld, unter: Bestand | null): Promise<Bestand> {
   const r = { e: Math.round(f.e / RASTER_M.schweiz) * RASTER_M.schweiz, n: Math.round(f.n / RASTER_M.schweiz) * RASTER_M.schweiz, seite: FELD_M.schweiz }
   return einzeln(r, await regionLaden(r))
 }
-interface Zusatz { sw: SehenswertDaten; seen: SeenDaten; orte: Array<{ name: string; klasse: number; lage: [number, number] }>; pool: Pool }
+interface Zusatz {
+  sw: SehenswertDaten; seen: SeenDaten; orte: Array<{ name: string; klasse: number; lage: [number, number] }>; pool: Pool
+  /** Ortschaften und Weiler aus swissTLMRegio: Name, Ost, Nord, Rang (data/schweiz3d/orte.json) */
+  ortschaften: Array<[string, number, number, number]>
+}
 
 /* ---------- Daten ---------- */
 
@@ -270,8 +274,9 @@ export default function Schweiz3D() {
   const [meldung, setMeldung] = useState<string | null>(null)
   useEffect(() => {
     uebersichtLaden().then((g) => setGelaende((a) => ({ ...a, schweiz: einzeln({ e: 0, n: 0, seite: 0 }, g) }))).catch((e: Error) => setFehler(e.message))
-    Promise.all([sehenswertLaden(), seenLaden(), kartengrundLaden(), schweiz11Laden()])
-      .then(([sw, seen, k, pool]) => setZusatz({ sw, seen, orte: k.orte as Zusatz['orte'], pool })).catch(() => {})
+    Promise.all([sehenswertLaden(), seenLaden(), kartengrundLaden(), schweiz11Laden(),
+                 holen<{ orte: Zusatz['ortschaften'] }>('data/schweiz3d/orte.json').catch(() => ({ orte: [] }))])
+      .then(([sw, seen, k, pool, o]) => setZusatz({ sw, seen, orte: k.orte as Zusatz['orte'], pool, ortschaften: o.orte })).catch(() => {})
   }, [])
   useEffect(() => {
     if (!meldung) return
@@ -526,7 +531,8 @@ export default function Schweiz3D() {
         <details className="klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">Modell, nicht massstäblich: Quellen</summary>
           <p className="mt-1">Gelände: {anker.quellen[0]}. Luftbild: {anker.quellen[1]}. Orte der Landeskarte 1:1 Million (swisstopo),
-            Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone (BFS). Ein Feld ist ein Quadrat, keine Region und kein Tal:
+            Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone (BFS). Ortschaften auf den Masten: swissTLMRegio (swisstopo),
+            die grösseren zuerst nach der Objektart der Quelle, mit Abstand zueinander; Auswahl und Mast gewählt. Ein Feld ist ein Quadrat, keine Region und kein Tal:
             deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
             folgen den Wegweisern. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
@@ -566,6 +572,11 @@ const HOEHEN_LINIE_PX = 1.6
 const WANDER_FARBEN: Record<number, string> = { 1: '#e6a800', 2: '#d0102b', 3: '#1f5fd6' }
 const WANDER_NAMEN: Array<[number, string]> = [[1, 'Wanderweg'], [2, 'Bergwanderweg'], [3, 'Alpinwanderweg']]
 const WANDER_PX = 2.2, WANDER_RAND_PX = 4
+/** Ortschaften: Mast als Anteil der Breite des Modells, ab welchem Rang und wie viele je Stück, Farbe wie die Bahnhöfe der
+ *  Modellbahn (BAHNHOF_GRAU in Relief.tsx); Auswahl und Masse gewählt, nicht aus einer Quelle */
+const ORT_MAST = 0.035, ORT_GRAU = '#2a2a2a'
+const ORT_AB_RANG: Record<Stufe, number> = { schweiz: 5, region: 1, ort: 0, nah: 0 }
+const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 20, region: 20, ort: 15, nah: 10 }, ORT_ABSTAND = 0.09
 /** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
 const KNOPF_BILD = 0.06, KNOPF_BRILLE_M = 0.045
 /** Höhe und Kronenradius je Art (Einzelbaum, Wald, Wald offen, Gebüschwald, Gehölzfläche), wie im Führerstand (BAUM_FORM in
@@ -810,7 +821,7 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       for (const f of jeBild) f()
       knoepfeZeigen()
       renderer.getSize(aufloesung)
-      for (const name of ['hoehen', 'wanderwege']) {
+      for (const name of ['hoehen', 'wanderwege', 'orte']) {
         for (const o of wurzel.getObjectByName(name)?.children ?? []) ((o as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
       }
       if (!renderer.xr.isPresenting) steuerung.update()
@@ -1071,9 +1082,54 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         .filter(({ l }) => drin(l[0], l[1])).sort((a, c) => c.x.hoehe_m! - a.x.hoehe_m!)
       const anzahl = (stufe === 'schweiz' ? 8 : stufe === 'region' ? 25 : stufe === 'ort' ? 10 : 4) * Math.min(3, b.teile.size)
       for (const { x, l } of gipfel.slice(0, anzahl)) schild(`▲ ${x.name} ${x.hoehe_m!.toLocaleString('de-CH')}`, dunkel ? '#e2c9a8' : '#7a4a14', l[0], l[1], x.hoehe_m!)
-      const orte = zusatz.orte.map((o) => ({ o, l: lv95(o.lage[0], o.lage[1]) })).filter(({ o, l }) => drin(l[0], l[1]) && (stufe !== 'schweiz' || o.klasse >= 4))
-      for (const { o, l } of orte) schild(o.name, dunkel ? '#ffffff' : '#212121', l[0], l[1], bestandHoehe(b, l[0], l[1]) + 30)
     }
+    // Ortschaften wie die Bahnhöfe der Modellbahn (Michael, 2026-10-21: «mit deiner … dunkelgrauen Linie, die sehr dünn ist, und
+    // deiner Fahne oben, wo weiss auf schwarzem Kasten der Ortsname steht»): ein Mast, oben ein eckiges dunkelgraues Schild;
+    // welche, nach dem Rang der Objektart in swissTLMRegio, die grösseren zuerst
+    const ortGruppe = new THREE.Group()
+    ortGruppe.name = 'orte'
+    wurzel.add(ortGruppe)
+    const mastKm = weiteKm * ORT_MAST
+    // in der ganzen Schweiz nur Orte in der Schweiz; überall nur so viele, dass zwei Masten mindestens ORT_ABSTAND der Breite
+    // auseinander stehen, die grösseren zuerst (die Liste ist nach dem Rang geordnet)
+    const ortListe: Array<{ name: string; e: number; n: number; z: number }> = []
+    const abstand = weite * ORT_ABSTAND, hoechstensOrte = ORT_ANZAHL[stufe] * Math.min(3, b.teile.size)
+    for (const [name, e, n, rang] of zusatz?.ortschaften ?? []) {
+      if (ortListe.length >= hoechstensOrte) break
+      if (rang < ORT_AB_RANG[stufe] || !drin(e, n)) continue
+      // derselbe Name steht in der Quelle oft zweimal (Ortschaft und Weiler)
+      if (ortListe.some((o) => o.name === name || Math.hypot(o.e - e, o.n - n) < abstand)) continue
+      if (stufe === 'schweiz' && zusatz && !imGebiet(zusatz.pool, 'CH', ...wgs(e, n))) continue
+      ortListe.push({ name, e, n, z: bestandHoehe(b, e, n) })
+    }
+    for (const o of ortListe) {
+      const c = document.createElement('canvas'), x = c.getContext('2d')!
+      const px = 26, schrift = `normal ${px}px Helvetica, Arial, sans-serif`
+      x.font = schrift
+      c.width = Math.ceil(x.measureText(o.name).width) + 18; c.height = px + 14
+      x.font = schrift
+      x.fillStyle = ORT_GRAU; x.fillRect(0, 0, c.width, c.height)
+      x.fillStyle = '#ffffff'; x.fillText(o.name, 9, px + 1)
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: false }))
+      sp.userData = { e: o.e, n: o.n, z: o.z, ueber: mastKm, b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height }
+      sp.scale.set(sp.userData.b, sp.userData.h, 1)
+      // die Fahne hängt rechts am Mast
+      sp.center.set(0, 0)
+      sp.position.set(X(o.e), Y(o.z) + mastKm, Z(o.n))
+      sp.renderOrder = 3
+      schilder.add(sp)
+    }
+    const mastMaterial = new LineMaterial({ color: ORT_GRAU, linewidth: 1 })
+    const mastenBauen = () => {
+      for (const o of ortGruppe.children) (o as LineSegments2).geometry.dispose()
+      ortGruppe.clear()
+      if (!ortListe.length) return
+      const geo = new LineSegmentsGeometry()
+      geo.setPositions(ortListe.flatMap((o) => [X(o.e), Y(o.z), Z(o.n), X(o.e), Y(o.z) + mastKm, Z(o.n)]))
+      ortGruppe.add(new LineSegments2(geo, mastMaterial))
+    }
+    mastenBauen()
 
     // + und − an den Wänden, in der Mitte jeder Seite im Sockel unter dem tiefsten Punkt
     const knopfGruppe = new THREE.Group()
@@ -1137,7 +1193,8 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         f = nf
         for (const n of netze) n.setzen()
         sockelBauen(); hoehenBauen(); knoepfeSetzen()
-        for (const sp of schilder.children) sp.position.y = Y(sp.userData.z)
+        for (const sp of schilder.children) sp.position.y = Y(sp.userData.z) + ((sp.userData.ueber as number | undefined) ?? 0)
+        mastenBauen()
         for (const name of ['umwelt', 'wanderwege']) {
           const u = wurzel.getObjectByName(name)
           if (u) u.scale.y = f
@@ -1160,7 +1217,7 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         })
         wurzel.remove(o)
       }
-      for (const m of [...wandMaterialien, platteMaterial, ...scheibenMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial]) m.dispose()
+      for (const m of [...wandMaterialien, platteMaterial, ...scheibenMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial]) m.dispose()
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

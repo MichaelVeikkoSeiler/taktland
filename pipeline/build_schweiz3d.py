@@ -2,6 +2,11 @@
 (data/gelaende, swissALTIRegio auf 50 m) und das Luftbild (data/luftbild, SWISSIMAGE auf 10 m), nur gröber, damit die
 ganze Schweiz auf einmal lädt: Höhen auf 500 m (Mittel der 50-m-Felder), ein Luftbild auf 100 m.
 
+Dazu orte.json (Michael, 2026-10-21: «die Ortschaften eintragen … wie wir das bei Taktland schon haben»): alle Ortschaften und
+Weiler aus swissTLMRegio (swisstopo, Namen, Objektart …Ortschaft… und Weiler) mit Lage in LV95 und einem Rang nach der Objektart
+der Quelle (HOrtschaft3 6, HOrtschaft2 5, HOrtschaft1 4, GOrtschaft 3, MOrtschaft 2, KOrtschaft 1, Weiler 0); welche die App
+in welcher Stufe zeigt, entscheidet dieser Rang.
+
     .venv/bin/python pipeline/build_schweiz3d.py
 """
 import gzip
@@ -22,6 +27,27 @@ BILD_M = 100
 def kachel(name, zellen):
     d = np.frombuffer(gzip.decompress((GELAENDE / f"{name}.hgz").read_bytes()), "<i2").reshape(zellen, zellen)
     return np.cumsum(d.astype(np.int32), axis=1).astype(np.float32)
+
+
+RANG = {"HOrtschaft3": 6, "HOrtschaft2": 5, "HOrtschaft1": 4, "GOrtschaft": 3, "MOrtschaft": 2, "KOrtschaft": 1, "Weiler": 0}
+
+
+def orte():
+    """[Name, Ost, Nord, Rang] aller Ortschaften und Weiler aus swissTLMRegio"""
+    import sqlite3
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from build_bodenbedeckung import laden
+    from build_kartengrund import punkt
+    raus = []
+    for geom, n1, n2, art in sqlite3.connect(laden()).execute(
+            "select geom, namn1, namn2, objval from tlmregio_names_namedlocation"):
+        # N_A: kein zweiter Name in der Quelle
+        if art not in RANG or not n1 or n1 == "N_A":
+            continue
+        e, n = punkt(geom)
+        raus.append([n1 if not n2 or n2 == "N_A" else f"{n1}/{n2}", round(e), round(n), RANG[art]])
+    return sorted(raus, key=lambda o: (-o[3], o[0]))
 
 
 def main():
@@ -64,6 +90,13 @@ def main():
         "ost": ex0 * k, "nord": ny1 * k, "m": GROB_M, "breite": breite, "hoehe": hoehe, "bild_m": BILD_M,
         "jahre": sorted(jahre), "hinweis": "Höhen in Metern als UInt16, Zeilen von Norden, 0: keine Höhe.",
     }, ensure_ascii=False), encoding="utf-8")
+    o = orte()
+    (ZIEL / "orte.json").write_text(json.dumps({
+        "quelle": "swissTLMRegio (swisstopo), Namen: Ortschaften und Weiler",
+        "hinweis": "je Ort Name, Ost, Nord (LV95), Rang nach der Objektart der Quelle: 6 HOrtschaft3 … 1 KOrtschaft, 0 Weiler",
+        "orte": o,
+    }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"{len(o)} Orte")
     print(f"{breite} × {hoehe} Höhen, Luftbild {bild.size[0]} × {bild.size[1]}, "
           f"{sum(p.stat().st_size for p in ZIEL.iterdir()) / 1e6:.1f} MB")
 

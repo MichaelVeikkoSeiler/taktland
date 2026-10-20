@@ -283,6 +283,10 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              der Sockel um alle), höchstens 3 je Richtung und 9 im Ganzen, auf dem Handy 4 (JE_RICHTUNG, hoechstens(); eine Annahme zum
              Speicher der Grafik, nicht gemessen), ist die Grenze erreicht, ist der Knopf grau und ein Tipp erklärt warum; was darunter fehlt,
              ergänzt eine Region um das Stück (unterFuer)
+data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
+             und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
+             Modellbahn ein dünner dunkelgrauer Mast mit eckigem dunkelgrauem Schild, Name in Weiss, je Stufe ab einem Rang und höchstens
+             so viele, mit Abstand zueinander (ORT_* in Schweiz3D.tsx; in der ganzen Schweiz nur Orte in der Schweiz)
 data/schweiz3d_probe/  Gebäude und Bäume für «3D Schweiz» in zwei Probeausschnitten (Michael, 2026-10-20: «Köniz und Gantrisch»):
              alles in 6 × 6 km um Köniz und 8 × 8 km um den Gantrisch, nicht nur neben der Bahn, Formate wie data/gebaeude und data/baeume,
              Farben aus SWISSIMAGE 2 m (pipeline/build_schweiz3d_probe.py, 14'864 Gebäude, etwa 630'000 Bäume, etwa 11 MB); in der App in den Stufen
