@@ -13,6 +13,7 @@ import fahrtDunkel from './assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from './assets/auftakt-fahrt-hell.webp'
 import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
+import schweiz3dHell from './assets/auftakt-schweiz3d-hell.webp'
 import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
 
@@ -53,7 +54,7 @@ export const SPIELE: Spiel[] = [
   {
     id: 'schweiz3d', titel: '3D Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
     kurz: 'Die ganze Schweiz als Modell: ein Feld wählen und eintauchen, auch in der VR-Brille.',
-    bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: Jemand mit VR-Brille dreht am Tisch das Modell einer Bergstrecke.' },
+    bild: { hell: schweiz3dHell, dunkel: schweiz3dHell, alt: 'Illustration: Jemand hält ein Tablet mit dem Modell eines Bergs und seinen Höhenstufen vor denselben Berg.' },
     beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld, schau, was darin liegt, und tauche ein, bis auf ein Stück von 4 km. '
       + 'Mit einer Brille steht das Modell vor dir auf dem Tisch.',
   },
