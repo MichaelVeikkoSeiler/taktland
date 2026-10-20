@@ -263,7 +263,8 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              steht das Modell 1,2 m breit auf dem Tisch, die Sitzung bleibt beim Eintauchen, ein kurzer Abzug wählt mit dem Strahl, nochmals
              Abzug im Feld taucht ein; wie in der Modellbahn trägt ein gehaltener Abzug (ab 3 cm oder 0,4 s) das Modell, beide skalieren
              (0,25- bis 8-fach) und drehen es (Michael, 2026-10-21: «gepackt und gedreht … Gleich oder ähnlich wie in Taktland»), Greiftaste
-             eine Stufe zurück, Thumbstick dreht und hebt, drücken stellt es zurück, eine Tafel nennt das Feld; alle Stufen in echter Höhe,
+             eine Stufe zurück, Thumbstick dreht und hebt, drücken stellt es zurück, eine Tafel nennt das Feld; beim Betreten eine Tafel mit den Tasten und rotem Knopf
+             «Schliessen» (Strahl und Abzug oder A), sie bleibt bis dahin, vorher gilt kein anderer Abzug (Michael, 2026-10-21); alle Stufen in echter Höhe,
              ohne Überhöhung (Michael, 2026-10-21: «Keine mehrfachen Erhöhungen mehr»; vorher Schweiz 3-fach, sonst wählbar 2-fach);
              geprüft mit dem Emulator IWER, nicht auf einer Quest; Details der ganzen Schweiz auf daten.taktland.ch (Michael,
              2026-10-19: «Lade noch mehr Detailkarten für Schweiz 3D»): je Kilometer Luftbild auf 2,5 m und Gelände auf 10 m wie

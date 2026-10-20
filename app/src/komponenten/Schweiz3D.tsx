@@ -802,10 +802,60 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       })
     }
 
-    // ein Strahl trifft zuerst die Knöpfe der Sonne und an den Wänden, dann das Gelände
+    // Tafel mit den Tasten beim Betreten der Brille, wie in der Modellbahn (Michael, 2026-10-21: «eine Instruktion auf der Brille,
+    // welche man manuell schliessen muss»): zwischen Kopf und Modell, sie bleibt, bis man «Schliessen» mit Strahl und Abzug oder
+    // A drückt; bis dahin gelten Abzug und Tragen nur für sie
+    const anleitung = new THREE.Group()
+    anleitung.visible = false
+    szene.add(anleitung)
+    {
+      const c = document.createElement('canvas'), x = c.getContext('2d')!
+      c.width = 1024; c.height = 700
+      x.fillStyle = 'rgba(255,255,255,0.96)'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 24); x.fill()
+      x.fillStyle = '#212121'; x.font = 'bold 48px Helvetica, Arial, sans-serif'
+      x.fillText('3D Schweiz: Tasten', 48, 84)
+      const zeilen: Array<[string, string]> = [
+        ['Abzug kurz', 'Feld wählen, nochmals: eintauchen'], ['Abzug auf + oder −', 'an dieser Wand erweitern'],
+        ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],
+        ['Thumbstick', 'drehen, heben, senken'], ['Thumbstick drücken', 'Modell zurück an den Anfang'],
+        ['Greiftaste', 'eine Stufe zurück'], ['Abzug auf die Zeit', 'Datum und Uhrzeit wählen'],
+      ]
+      zeilen.forEach(([taste, was], i) => {
+        const y = 160 + i * 58
+        x.font = 'bold 36px Helvetica, Arial, sans-serif'; x.fillStyle = KARMIN; x.fillText(taste, 48, y)
+        x.font = '36px Helvetica, Arial, sans-serif'; x.fillStyle = '#212121'; x.fillText(was, 440, y)
+      })
+      x.font = '30px Helvetica, Arial, sans-serif'; x.fillStyle = '#767676'
+      x.fillText('Ein Modell zum Anschauen, Höhe wie echt.', 48, 660)
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false }))
+      sp.scale.set(0.5 * c.width / c.height, 0.5, 1)
+      sp.position.set(0, 1.45, -0.75)
+      sp.renderOrder = 8
+      anleitung.add(sp)
+      const kc = document.createElement('canvas'), kx = kc.getContext('2d')!
+      kc.width = 360; kc.height = 96
+      kx.fillStyle = KARMIN; kx.beginPath(); kx.roundRect(0, 0, kc.width, kc.height, 16); kx.fill()
+      kx.fillStyle = '#ffffff'; kx.font = 'bold 48px Helvetica, Arial, sans-serif'; kx.textAlign = 'center'
+      kx.fillText('Schliessen', kc.width / 2, 64)
+      const kt = new THREE.CanvasTexture(kc); kt.colorSpace = THREE.SRGBColorSpace
+      const knopf = new THREE.Sprite(new THREE.SpriteMaterial({ map: kt, depthTest: false }))
+      knopf.scale.set(0.06 * kc.width / kc.height, 0.06, 1)
+      knopf.position.set(0, 1.45 - 0.25 - 0.045, -0.749)
+      knopf.renderOrder = 9
+      knopf.userData.aktion = () => { anleitung.visible = false }
+      anleitung.add(knopf)
+    }
+
+    // ein Strahl trifft zuerst die Tafel mit den Tasten, dann die Knöpfe der Sonne und an den Wänden, dann das Gelände
     const strahl = new THREE.Raycaster()
     strahl.camera = kamera
     const treffen = () => {
+      if (anleitung.visible) {
+        const z = strahl.intersectObjects(anleitung.children.filter((o) => o.userData.aktion), false)[0]
+        if (z) (z.object.userData.aktion as () => void)()
+        return
+      }
       if (sonnenTafel.visible) {
         const z = strahl.intersectObjects(sonnenTafel.children.filter((o) => o.userData.aktion), false)[0]
         if (z) { (z.object.userData.aktion as () => void)(); return }
@@ -890,7 +940,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       }
       tafel.visible = false
     }
-    renderer.xr.addEventListener('sessionend', () => { bildschirmSetzen(); setzeHimmel(); sonnenTafel.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
+    renderer.xr.addEventListener('sessionend', () => { bildschirmSetzen(); setzeHimmel(); sonnenTafel.visible = false; anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
     brilleRef.current = async () => {
       const xr = navigator.xr
       if (!xr) throw new Error('Kein WebXR')
@@ -901,9 +951,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       await renderer.xr.setSession(sitzung)
       anfangSetzen()
       brilleSetzen(); setzeHimmel(); sonnenTafelSetzen(sonnenZeilenJetzt)
-      tafelSetzen(['3D Schweiz', 'Abzug kurz: Feld wählen, nochmals: eintauchen', 'Abzug auf + oder − an einer Wand: erweitern',
-                   'Abzug halten: tragen, beide: grösser, kleiner, drehen', 'Greiftaste: eine Stufe zurück',
-                   'Thumbstick: drehen, heben; drücken: zurück an den Anfang'])
+      tafelSetzen(null)
+      anleitung.visible = true
     }
     const OBEN = new THREE.Vector3(0, 1, 0)
     const stickGedrueckt = new Set<string>()
@@ -912,7 +961,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       const sitzung = renderer.xr.getSession()
       // ein Abzug gilt als gehalten, sobald die Hand 3 cm weiter ist oder er 0,4 s gedrückt bleibt (Grenzen gewählt)
       for (const [c, a] of anfang) {
-        if (a.getragen || (handLage(c).distanceTo(a.p) < 0.03 && performance.now() - a.t < 400)) continue
+        if (a.getragen || anleitung.visible || (handLage(c).distanceTo(a.p) < 0.03 && performance.now() - a.t < 400)) continue
         a.getragen = true
         haelt.add(c); anfassen()
       }
@@ -931,6 +980,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       }
       for (const q of sitzung?.inputSources ?? []) {
         const a = q.gamepad?.axes
+        // A (rechts, Knopf 4 der Quest) schliesst die Tafel mit den Tasten
+        if (anleitung.visible && q.handedness === 'right' && q.gamepad?.buttons[4]?.pressed) anleitung.visible = false
         const knopf = q.gamepad?.buttons[3]?.pressed ?? false
         if (knopf && !stickGedrueckt.has(q.handedness)) anfangSetzen()
         if (knopf) stickGedrueckt.add(q.handedness); else stickGedrueckt.delete(q.handedness)
