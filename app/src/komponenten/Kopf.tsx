@@ -20,6 +20,7 @@ import spieleDunkel from '../assets/auftakt-spiele-dunkel.webp'
 import spieleHell from '../assets/auftakt-spiele-hell.webp'
 import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
 import standortHell from '../assets/auftakt-standort-hell.webp'
+import schweiz3dDunkel from '../assets/auftakt-schweiz3d-dunkel.webp'
 import schweiz3dHell from '../assets/auftakt-schweiz3d-hell.webp'
 import startDunkel from '../assets/auftakt-start-dunkel.webp'
 import startHell from '../assets/auftakt-start-hell.webp'
@@ -135,9 +136,9 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: modellbahnHell, dunkel: modellbahnDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Jemand mit VR-Brille und zwei Controllern dreht am Tisch das Modell einer Bergstrecke mit Wald, Schnee, Tunneln, einem Viadukt über einen Fluss und einem Zug; daneben liegt ein Handy mit demselben Modell, draussen Berge und ein See.',
   },
-  // Michael, 2026-10-21: eigenes Bild für «3D Schweiz»; eine Nachtfassung gibt es noch nicht, im Dunkelmodus dasselbe
+  // Michael, 2026-10-21: eigenes Bildpaar für «3D Schweiz»
   schweiz3d: {
-    hell: schweiz3dHell, dunkel: schweiz3dHell, breite: 1344, hoehe: 664,
+    hell: schweiz3dHell, dunkel: schweiz3dDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Jemand hält auf einem Aussichtspunkt ein Tablet vor einen Berg; auf dem Tablet derselbe Berg als Modell mit farbigen Höhenstufen, dahinter ein See mit Dorf, Wald und Alpen.',
   },
   duell: {
