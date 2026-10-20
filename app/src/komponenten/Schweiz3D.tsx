@@ -29,8 +29,6 @@ type Stufe = 'schweiz' | 'region' | 'ort' | 'nah'
  *  (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail») */
 const FELD_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 20_000, region: 4_000, ort: 1_000 }
 const RASTER_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 5_000, region: 1_000, ort: 250 }
-/** in der Übersicht ist die Höhe überhöht, sonst wären die Alpen auf 350 km kaum zu sehen */
-const UEBERHOEHT = 3
 const KARMIN = '#a8102e'
 
 interface Uebersicht { ost: number; nord: number; m: number; breite: number; hoehe: number; quelle_gelaende: string; quelle_luftbild: string }
@@ -267,7 +265,6 @@ export default function Schweiz3D() {
   const [laedt, setLaedt] = useState(false)
   const [fehler, setFehler] = useState<string | null>(null)
   const [zusatz, setZusatz] = useState<Zusatz | null>(null)
-  const [faktor, setFaktor] = useState<1 | 2>(1)
   const [scheiben, setScheiben] = useState(true)
   const [umwelt, setUmwelt] = useState(true)
   const [wandern, setWandern] = useState(true)
@@ -463,7 +460,7 @@ export default function Schweiz3D() {
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       <div className="relative mt-2 h-[68vh] min-h-[360px] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]">
         {aktuell ? (
-          <Ansicht b={aktuell} stufe={stufe} faktor={stufe === 'schweiz' ? UEBERHOEHT : faktor} wahl={wahl}
+          <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
                      const r = RASTER_M[stufe], s = FELD_M[stufe]
                      const w = { e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: s }
@@ -486,14 +483,6 @@ export default function Schweiz3D() {
           <p role="status" className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">{brilleHinweis}</p>
         )}
         <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
-          {stufe !== 'schweiz' && (
-            <div className="flex overflow-hidden rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
-              {([1, 2] as const).map((f) => (
-                <button key={f} type="button" aria-pressed={faktor === f} onClick={() => setFaktor(f)}
-                        className={`px-2.5 py-1 ${faktor === f ? 'bg-sbb-anthracite text-white' : ''}`}>{f === 1 ? 'Höhe wie echt' : 'Höhe 2-fach'}</button>
-              ))}
-            </div>
-          )}
           {stufe === 'schweiz' && (
             <button type="button" onClick={zufall} className="rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
               Überrasch mich
@@ -565,8 +554,7 @@ export default function Schweiz3D() {
       </div>
       {standText && <p className="mt-1 text-sm">{standText} ({tagText}, {uhrzeit(minuten)} Uhr, Schweizer Zeit).</p>}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        {stufe === 'schweiz' ? `Höhe ${UEBERHOEHT}-fach überhöht. ` : faktor === 2 ? 'Höhe 2-fach überhöht. ' : ''}
-        Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'nah' && ' Ein Tipp wählt ein Feld.'}
+        Höhe wie echt. Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'nah' && ' Ein Tipp wählt ein Feld.'}
         {stufe !== 'schweiz' && ' + und − an einer Wand setzen dort ein Stück an oder nehmen eines weg.'}
         {hinweis && <> <strong>{hinweis}</strong></>}
       </p>
@@ -598,7 +586,7 @@ export default function Schweiz3D() {
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
             folgen den Wegweisern. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
-            Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen, bei überhöhter Höhe sind die Schatten zu lang. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
+            Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle). Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
             gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle. Vorerst nur um Köniz und um den Gantrisch.</>}</p>
@@ -650,7 +638,6 @@ const BAUM_FORM: Array<[number, number]> = [[12, 3.5], [20, 3.2], [15, 4], [4, 2
 
 interface Welt {
   setzeWahl: (f: Feld | null) => void
-  faktor: (f: number) => void
   scheiben: (an: boolean) => void
 }
 
@@ -677,11 +664,12 @@ function knopfBild(plus: boolean, an: boolean) {
 /**
  * Eine Szene für alle Stufen: Renderer, Kamera und eine laufende Sitzung in der Brille bleiben, nur das Gelände wird neu
  * gebaut. In der Brille (Michael, 2026-10-18: «muss auch immersiv auf der Brille gespielt werden können») steht das Modell
- * auf dem Tisch; der Abzug wählt mit dem Strahl ein Feld oder drückt einen Knopf an der Wand, ein zweiter Abzug auf das Feld
- * taucht ein, die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und vergrössert.
+ * auf dem Tisch; ein kurzer Abzug wählt mit dem Strahl ein Feld oder drückt einen Knopf an der Wand, ein zweiter auf das Feld
+ * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
+ * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung, wandern, sonne: stand, sonnenZeilen, zeitSchieben }: {
-  b: Bestand; stufe: Stufe; faktor: number; wahl: Feld | null; waehlen?: (e: number, n: number) => void
+function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung, wandern, sonne: stand, sonnenZeilen, zeitSchieben }: {
+  b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
   info: string[] | null
@@ -705,11 +693,10 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void }
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight; sonnenTafelSetzen: (zeilen: string[] | null) => void
+    anfangSetzen: () => void
   } | null>(null)
   const cb = useRef({ waehlen, eintauchen, zurueck, erweitern, zeitSchieben })
   cb.current = { waehlen, eintauchen, zurueck, erweitern, zeitSchieben }
-  const faktorJetzt = useRef(faktor)
-  faktorJetzt.current = faktor
   const scheibenJetzt = useRef(scheiben)
   scheibenJetzt.current = scheiben
 
@@ -830,15 +817,46 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       const t = boeden ? strahl.intersectObjects(boeden.children, false)[0] : undefined
       if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
     }
-    // Brille: Strahlen der Controller, Abzug wählt, Greiftaste zurück, Thumbstick dreht und vergrössert
+    // Brille (Michael, 2026-10-21: «mit der Brille muss das Land irgendwie gepackt und gedreht werden können. Gleich oder ähnlich
+    // wie in Taktland»): wie in der Modellbahn trägt ein gehaltener Abzug das Modell, beide ziehen es grösser oder kleiner und
+    // drehen es; ein kurzer Abzug wählt mit dem Strahl wie bisher; die Greiftaste geht eine Stufe zurück, der Thumbstick dreht
+    // und hebt, Thumbstick drücken stellt das Modell zurück an den Anfang
     const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void } = { tipp: null, zurueck: () => cb.current.zurueck() }
+    let drehung = 0, zoom = 1
+    /** Lage des Modells, sobald es getragen oder gehoben wurde; null: auf dem Tisch wie am Anfang */
+    let lage: THREE.Vector3 | null = null
+    const haelt = new Set<THREE.Object3D>()
+    const anfang = new Map<THREE.Object3D, { p: THREE.Vector3; t: number; getragen: boolean }>()
+    const handLage = (o: THREE.Object3D) => o.getWorldPosition(new THREE.Vector3())
+    const gieren = (o: THREE.Object3D) => {
+      const v = new THREE.Vector3(0, 0, -1).applyQuaternion(o.getWorldQuaternion(new THREE.Quaternion()))
+      return Math.atan2(-v.x, -v.z)
+    }
+    // was beim Anfassen galt: Lage der Hand oder der Hände und des Modells
+    let griff: { p: THREE.Vector3; gier: number; abstand: number; m: THREE.Vector3; r: number; z: number } | null = null
+    const anfassen = () => {
+      const h = [...haelt]
+      if (!h.length) { griff = null; return }
+      lage ??= wurzel.position.clone()
+      const [a, b] = h.map(handLage)
+      griff = h.length === 1
+        ? { p: a, gier: gieren(h[0]), abstand: 0, m: lage.clone(), r: drehung, z: zoom }
+        : { p: a.clone().add(b).multiplyScalar(0.5), gier: Math.atan2(b.x - a.x, b.z - a.z), abstand: Math.max(0.02, a.distanceTo(b)),
+            m: lage.clone(), r: drehung, z: zoom }
+    }
     const controller = [0, 1].map((i) => {
       const c = renderer.xr.getController(i)
       const linie = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3(0, 0, -1)]),
         new THREE.LineBasicMaterial({ color: KARMIN }))
       linie.scale.z = 3
       c.add(linie)
-      c.addEventListener('select', () => {
+      c.addEventListener('selectstart', () => { anfang.set(c, { p: handLage(c), t: performance.now(), getragen: false }) })
+      c.addEventListener('selectend', () => {
+        const a = anfang.get(c)
+        anfang.delete(c)
+        if (haelt.delete(c)) { anfassen(); return }
+        if (!a || a.getragen) return
+        // kurz gedrückt: wählen wie bisher
         const m = new THREE.Matrix4().extractRotation(c.matrixWorld)
         strahl.ray.origin.setFromMatrixPosition(c.matrixWorld)
         strahl.ray.direction.set(0, 0, -1).applyMatrix4(m)
@@ -848,7 +866,7 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       szene.add(c)
       return c
     })
-    let drehung = 0, zoom = 1
+    const anfangSetzen = () => { drehung = 0; zoom = 1; lage = null; haelt.clear(); griff = null }
     // Schilder und Knöpfe: auf dem Bildschirm in fester Grösse, in der Brille in Metern
     const sprites = () => ['schilder', 'knoepfe'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? []) as THREE.Sprite[])
     const brilleSetzen = () => {
@@ -856,7 +874,8 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       const s = (BRILLE_BREITE_M / breite) * zoom
       wurzel.scale.setScalar(s)
       wurzel.rotation.y = drehung
-      wurzel.position.set(0, BRILLE_TISCH_M - ((wurzel.userData.untenY as (() => number) | undefined)?.() ?? 0) * s, -BRILLE_ABSTAND_M)
+      if (lage) wurzel.position.copy(lage)
+      else wurzel.position.set(0, BRILLE_TISCH_M - ((wurzel.userData.untenY as (() => number) | undefined)?.() ?? 0) * s, -BRILLE_ABSTAND_M)
       for (const sp of sprites()) {
         sp.material.sizeAttenuation = true
         const v = sp.userData.verhaeltnis as number, m = (sp.userData.brilleM as number | undefined) ?? BRILLE_SCHRIFT_M
@@ -880,24 +899,49 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       renderer.xr.setReferenceSpaceType('local-floor')
       kamera.near = 0.01; kamera.updateProjectionMatrix()
       await renderer.xr.setSession(sitzung)
-      drehung = 0; zoom = 1
+      anfangSetzen()
       brilleSetzen(); setzeHimmel(); sonnenTafelSetzen(sonnenZeilenJetzt)
-      tafelSetzen(['3D Schweiz', 'Abzug: Feld wählen, nochmals: eintauchen', 'Abzug auf + oder − an einer Wand: erweitern',
-                   'Greiftaste: eine Stufe zurück', 'Thumbstick: drehen und vergrössern'])
+      tafelSetzen(['3D Schweiz', 'Abzug kurz: Feld wählen, nochmals: eintauchen', 'Abzug auf + oder − an einer Wand: erweitern',
+                   'Abzug halten: tragen, beide: grösser, kleiner, drehen', 'Greiftaste: eine Stufe zurück',
+                   'Thumbstick: drehen, heben; drücken: zurück an den Anfang'])
     }
+    const OBEN = new THREE.Vector3(0, 1, 0)
+    const stickGedrueckt = new Set<string>()
     const jeBild: Array<() => void> = [() => {
       if (!renderer.xr.isPresenting) return
       const sitzung = renderer.xr.getSession()
+      // ein Abzug gilt als gehalten, sobald die Hand 3 cm weiter ist oder er 0,4 s gedrückt bleibt (Grenzen gewählt)
+      for (const [c, a] of anfang) {
+        if (a.getragen || (handLage(c).distanceTo(a.p) < 0.03 && performance.now() - a.t < 400)) continue
+        a.getragen = true
+        haelt.add(c); anfassen()
+      }
+      const h = [...haelt]
+      if (griff && lage && h.length === 1) {
+        const p = handLage(h[0]), d = gieren(h[0]) - griff.gier
+        lage.copy(p).add(griff.m.clone().sub(griff.p).applyAxisAngle(OBEN, d))
+        drehung = griff.r + d
+      } else if (griff && lage && h.length === 2) {
+        const [a, b] = h.map(handLage)
+        zoom = Math.min(8, Math.max(0.25, griff.z * (a.distanceTo(b) / griff.abstand)))
+        const d = Math.atan2(b.x - a.x, b.z - a.z) - griff.gier
+        lage.copy(a).add(b).multiplyScalar(0.5)
+          .add(griff.m.clone().sub(griff.p).multiplyScalar(zoom / griff.z).applyAxisAngle(OBEN, d))
+        drehung = griff.r + d
+      }
       for (const q of sitzung?.inputSources ?? []) {
         const a = q.gamepad?.axes
-        if (!a || a.length < 4) continue
+        const knopf = q.gamepad?.buttons[3]?.pressed ?? false
+        if (knopf && !stickGedrueckt.has(q.handedness)) anfangSetzen()
+        if (knopf) stickGedrueckt.add(q.handedness); else stickGedrueckt.delete(q.handedness)
+        if (!a || a.length < 4 || griff) continue
         if (Math.abs(a[2]) > 0.2) drehung -= a[2] * 0.03
-        if (Math.abs(a[3]) > 0.2) zoom = Math.max(0.5, Math.min(6, zoom * (1 - a[3] * 0.02)))
+        if (Math.abs(a[3]) > 0.2) { lage ??= wurzel.position.clone(); lage.y = Math.max(0.1, Math.min(2.2, lage.y - a[3] * 0.006)) }
       }
       brilleSetzen()
     }]
     kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, jeBild, wenn, tafel, tafelSetzen,
-                     sonne, himmelLicht, sonnenTafelSetzen }
+                     sonne, himmelLicht, sonnenTafelSetzen, anfangSetzen }
 
     const groesse = () => {
       if (renderer.xr.isPresenting) return
@@ -985,8 +1029,7 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     const weite = Math.max(E1 - E0, N1 - N0)
     const cE = (E0 + E1) / 2, cN = (N0 + N1) / 2
     const X = (e: number) => (e - cE) / 1000, Z = (n: number) => -(n - cN) / 1000
-    let f = faktorJetzt.current
-    const Y = (z: number) => (z / 1000) * f
+    const Y = (z: number) => z / 1000
     wurzel.userData.weiteKm = weite / 1000
     wurzel.userData.lage = { cE, cN }
     let leer = Infinity, hoechst = -Infinity, mittel = 0, zahl = 0
@@ -1321,19 +1364,6 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     }
     welt.current = {
       setzeWahl,
-      faktor: (nf) => {
-        f = nf
-        for (const n of netze) n.setzen()
-        sockelBauen(); hoehenBauen(); knoepfeSetzen()
-        for (const sp of schilder.children) sp.position.y = Y(sp.userData.z) + ((sp.userData.ueber as number | undefined) ?? 0)
-        mastenBauen()
-        for (const name of ['umwelt', 'wanderwege']) {
-          const u = wurzel.getObjectByName(name)
-          if (u) u.scale.y = f
-        }
-        setzeWahl(feldJetzt)
-        if (renderer.xr.isPresenting) k.jeBild[0]()
-      },
       scheiben: (an) => { hoehen.visible = an },
     }
     // in der Brille gleich die neue Grösse
@@ -1367,7 +1397,6 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     const n0 = Math.min(...r.map((x) => x.n1 - x.h)), n1 = Math.max(...r.map((x) => x.n1))
     const gruppe = new THREE.Group()
     gruppe.name = 'umwelt'
-    gruppe.scale.y = faktorJetzt.current
     let weg = false
     void probeLaden(e0, n0, e1, n1).then(({ gebaeude, baeume }) => {
       if (weg) return
@@ -1400,7 +1429,6 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
     const weiteKm = (wurzel.userData.weiteKm as number) || 1
     const gruppe = new THREE.Group()
     gruppe.name = 'wanderwege'
-    gruppe.scale.y = faktorJetzt.current
     let weg = false
     void wanderwegeLaden(e0, n0, e1, n1).then((d) => {
       if (weg || !d) return
@@ -1479,8 +1507,9 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
   }, [stand, b, stufe])
   useEffect(() => { kern.current?.sonnenTafelSetzen(sonnenZeilen) }, [sonnenZeilen])
 
-  useEffect(() => { welt.current?.faktor(faktor) }, [faktor])
   useEffect(() => { welt.current?.scheiben(scheiben) }, [scheiben])
+  // eine neue Stufe steht in der Brille wieder auf dem Tisch wie am Anfang
+  useEffect(() => { kern.current?.anfangSetzen() }, [stufe])
   useEffect(() => {
     welt.current?.setzeWahl(wahl)
     const k = kern.current
