@@ -523,6 +523,43 @@ export async function probeLaden(e0: number, n0: number, e1: number, n1: number)
   return { gebaeude: gebaeude.filter((x): x is GebaeudeKachel => !!x), baeume: baeume.filter((x): x is BaumKachel => !!x),
            quellen: [ig?.quelle, ib?.quelle].filter((q): q is string => !!q) }
 }
+/** Wanderwege aus swissTLM3D (pipeline/build_wanderwege.py) im Rechteck: je Stück die Art (1 Wanderweg, 2 Bergwanderweg,
+ *  3 Alpinwanderweg) und die Punkte als Ost, Nord in Metern; die Stücke sind der Kachel ihrer Mitte zugeteilt, darum auch die
+ *  Kacheln rundum */
+export interface Wanderweg { art: number; p: Float64Array }
+interface WanderIndex { kachel_m: number; quelle: string; kacheln: string[] }
+let wanderVerz: Promise<WanderIndex | null> | null = null
+const wanderVorrat = new Map<string, Promise<Wanderweg[]>>()
+export async function wanderwegeLaden(e0: number, n0: number, e1: number, n1: number) {
+  const ix = await (wanderVerz ??= holen<WanderIndex>('data/wanderwege/index.json').catch(() => null))
+  if (!ix) return null
+  const k = ix.kachel_m, da = new Set(ix.kacheln), namen: string[] = []
+  for (let ex = Math.floor(e0 / k) - 1; ex <= Math.floor(e1 / k) + 1; ex++) {
+    for (let ny = Math.floor(n0 / k) - 1; ny <= Math.floor(n1 / k) + 1; ny++) if (da.has(`${ex}_${ny}`)) namen.push(`${ex}_${ny}`)
+  }
+  const teile = await Promise.all(namen.map((name) => {
+    let p = wanderVorrat.get(name)
+    if (!p) {
+      p = holenBinaer(`data/wanderwege/${name}.wwg`).then(entpacken).then((roh) => {
+        const [ex, ny] = name.split('_').map(Number), v = new DataView(roh), raus: Wanderweg[] = []
+        let o = 4
+        for (let i = 0, n = v.getUint32(0, true); i < n; i++) {
+          const art = v.getUint8(o), z = v.getUint16(o + 1, true)
+          o += 3
+          const pt = new Float64Array(z * 2)
+          for (let j = 0; j < z; j++, o += 4) { pt[j * 2] = ex * k + v.getInt16(o, true); pt[j * 2 + 1] = ny * k + v.getInt16(o + 2, true) }
+          raus.push({ art, p: pt })
+        }
+        return raus
+      }).catch(() => { wanderVorrat.delete(name); return [] })
+      while (wanderVorrat.size >= 60) wanderVorrat.delete(wanderVorrat.keys().next().value!)
+      wanderVorrat.set(name, p)
+    }
+    return p
+  }))
+  return { wege: teile.flat(), quelle: ix.quelle }
+}
+
 /** ob ein Rechteck einen Probeausschnitt berührt */
 export async function probeDa(e0: number, n0: number, e1: number, n1: number) {
   const ix = await probeIndex('gebaeude')

@@ -131,6 +131,12 @@ def main():
         if (ZIEL / "schweiz3d").exists():
             shutil.rmtree(ZIEL / "schweiz3d")
         shutil.copytree(uebersicht, ZIEL / "schweiz3d")
+    # Wanderwege für «3D Schweiz» (pipeline/build_wanderwege.py)
+    wander = ROOT / "data" / "wanderwege"
+    if wander.exists():
+        if (ZIEL / "wanderwege").exists():
+            shutil.rmtree(ZIEL / "wanderwege")
+        shutil.copytree(wander, ZIEL / "wanderwege")
     # Gebäude und Bäume in zwei Probeausschnitten für «3D Schweiz» (pipeline/build_schweiz3d_probe.py)
     probe = ROOT / "data" / "schweiz3d_probe"
     if probe.exists():

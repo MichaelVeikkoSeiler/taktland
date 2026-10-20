@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
+import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
 import type { SeenDaten, SehenswertDaten } from '../typen'
@@ -265,6 +265,7 @@ export default function Schweiz3D() {
   const [faktor, setFaktor] = useState<1 | 2>(1)
   const [scheiben, setScheiben] = useState(true)
   const [umwelt, setUmwelt] = useState(true)
+  const [wandern, setWandern] = useState(true)
   const [umweltHier, setUmweltHier] = useState(false)
   const [meldung, setMeldung] = useState<string | null>(null)
   useEffect(() => {
@@ -427,7 +428,7 @@ export default function Schweiz3D() {
                      setWahl(w)
                    }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
-                   umwelt={umwelt && umweltHier} meldung={meldung} />
+                   umwelt={umwelt && umweltHier} meldung={meldung} wandern={wandern} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
@@ -457,6 +458,12 @@ export default function Schweiz3D() {
                   className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${scheiben ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
             Höhen 1'000 m
           </button>
+          {stufe !== 'schweiz' && (
+            <button type="button" aria-pressed={wandern} onClick={() => setWandern((x) => !x)}
+                    className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${wandern ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
+              Wanderwege
+            </button>
+          )}
           {umweltHier && (
             <button type="button" aria-pressed={umwelt} onClick={() => setUmwelt((x) => !x)}
                     className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${umwelt ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
@@ -506,12 +513,23 @@ export default function Schweiz3D() {
           ))}
         </p>
       )}
+      {wandern && stufe !== 'schweiz' && (
+        <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Wanderwege">
+          {WANDER_NAMEN.map(([a, name]) => (
+            <span key={a} className="inline-flex items-center gap-1">
+              <span className="inline-block h-1 w-4 rounded-sm outline outline-1 outline-white" style={{ background: WANDER_FARBEN[a] }} />{name}
+            </span>
+          ))}
+        </p>
+      )}
       {anker && (
         <details className="klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">Modell, nicht massstäblich: Quellen</summary>
           <p className="mt-1">Gelände: {anker.quellen[0]}. Luftbild: {anker.quellen[1]}. Orte der Landeskarte 1:1 Million (swisstopo),
             Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone (BFS). Ein Feld ist ein Quadrat, keine Region und kein Tal:
-            deren Grenzen stehen in keiner unserer Quellen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
+            deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
+            Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
+            folgen den Wegweisern. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle). Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
             gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle. Vorerst nur um Köniz und um den Gantrisch.</>}</p>
@@ -543,6 +561,11 @@ const SCHEIBE_DECKKRAFT = 0.24
 /** die Linien der Höhen in Bildpunkten, beim Zoomen gleich breit (Michael, 2026-10-21: «wenn ich hereinzoome werden die Linien
  *  nicht dicker») */
 const HOEHEN_LINIE_PX = 1.6
+/** Wanderwege (Michael, 2026-10-21: «alle Wanderwege der Schweiz»): Farben nach den Wegweisern, gelb, weiss-rot und weiss-blau,
+ *  hier als Linie in der Farbe auf einem weissen Rand; Breite in Bildpunkten */
+const WANDER_FARBEN: Record<number, string> = { 1: '#e6a800', 2: '#d0102b', 3: '#1f5fd6' }
+const WANDER_NAMEN: Array<[number, string]> = [[1, 'Wanderweg'], [2, 'Bergwanderweg'], [3, 'Alpinwanderweg']]
+const WANDER_PX = 2.2, WANDER_RAND_PX = 4
 /** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
 const KNOPF_BILD = 0.06, KNOPF_BRILLE_M = 0.045
 /** Höhe und Kronenradius je Art (Einzelbaum, Wald, Wald offen, Gebüschwald, Gehölzfläche), wie im Führerstand (BAUM_FORM in
@@ -581,7 +604,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * auf dem Tisch; der Abzug wählt mit dem Strahl ein Feld oder drückt einen Knopf an der Wand, ein zweiter Abzug auf das Feld
  * taucht ein, die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und vergrössert.
  */
-function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung }: {
+function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung, wandern }: {
   b: Bestand; stufe: Stufe; faktor: number; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
@@ -590,6 +613,8 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
   zusatz: Zusatz | null
   knoepfe: Knoepfe | null; erweitern: (s: Seite, plus: boolean) => void
   scheiben: boolean; umwelt: boolean; meldung: string | null
+  /** Wanderwege zeigen (in den Stufen 20 km, 4 km und 1 km) */
+  wandern: boolean
 }) {
   const huelle = useRef<HTMLDivElement>(null)
   const welt = useRef<Welt | null>(null)
@@ -785,7 +810,9 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       for (const f of jeBild) f()
       knoepfeZeigen()
       renderer.getSize(aufloesung)
-      for (const o of wurzel.getObjectByName('hoehen')?.children ?? []) ((o as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
+      for (const name of ['hoehen', 'wanderwege']) {
+        for (const o of wurzel.getObjectByName(name)?.children ?? []) ((o as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
+      }
       if (!renderer.xr.isPresenting) steuerung.update()
       renderer.render(szene, kamera)
     })
@@ -1111,8 +1138,10 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
         for (const n of netze) n.setzen()
         sockelBauen(); hoehenBauen(); knoepfeSetzen()
         for (const sp of schilder.children) sp.position.y = Y(sp.userData.z)
-        const u = wurzel.getObjectByName('umwelt')
-        if (u) u.scale.y = f
+        for (const name of ['umwelt', 'wanderwege']) {
+          const u = wurzel.getObjectByName(name)
+          if (u) u.scale.y = f
+        }
         setzeWahl(feldJetzt)
         if (renderer.xr.isPresenting) k.jeBild[0]()
       },
@@ -1165,6 +1194,67 @@ function Ansicht({ b, stufe, faktor, wahl, waehlen, eintauchen, zurueck, info, b
       gruppe.removeFromParent()
     }
   }, [b, stufe, umwelt])
+
+  // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
+  // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
+  useEffect(() => {
+    const k = kern.current
+    if (!k || !wandern || stufe === 'schweiz') return
+    const { wurzel } = k
+    const { cE, cN } = wurzel.userData.lage as { cE: number; cN: number }
+    const teile = [...b.teile.values()]
+    const r = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...r.map((x) => x.e0)), e1 = Math.max(...r.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...r.map((x) => x.n1 - x.h)), n1 = Math.max(...r.map((x) => x.n1))
+    const schritt = Math.min(...teile.map((t) => t.raster.m))
+    const weiteKm = (wurzel.userData.weiteKm as number) || 1
+    const gruppe = new THREE.Group()
+    gruppe.name = 'wanderwege'
+    gruppe.scale.y = faktorJetzt.current
+    let weg = false
+    void wanderwegeLaden(e0, n0, e1, n1).then((d) => {
+      if (weg || !d) return
+      const je = new Map<number, number[]>()
+      const drin = (e: number, n: number) => e >= e0 && e <= e1 && n >= n0 && n <= n1
+      const heben = weiteKm * 0.0008
+      for (const w of d.wege) {
+        const l = je.get(w.art) ?? []
+        je.set(w.art, l)
+        for (let i = 0; i + 3 < w.p.length; i += 2) {
+          const ae = w.p[i], an = w.p[i + 1], be = w.p[i + 2], bn = w.p[i + 3]
+          if (!drin(ae, an) || !drin(be, bn)) continue
+          const st = Math.max(1, Math.ceil(Math.hypot(be - ae, bn - an) / schritt))
+          let pe = ae, pn = an, pz = bestandHoehe(b, ae, an)
+          for (let s2 = 1; s2 <= st; s2++) {
+            const t = s2 / st, qe = ae + t * (be - ae), qn = an + t * (bn - an), qz = bestandHoehe(b, qe, qn)
+            l.push((pe - cE) / 1000, pz / 1000 + heben, -(pn - cN) / 1000, (qe - cE) / 1000, qz / 1000 + heben, -(qn - cN) / 1000)
+            pe = qe; pn = qn; pz = qz
+          }
+        }
+      }
+      for (const [art, l] of je) {
+        if (!l.length) continue
+        for (const [farbe, px, folge] of [['#ffffff', WANDER_RAND_PX, 3], [WANDER_FARBEN[art] ?? '#e6a800', WANDER_PX, 4]] as const) {
+          const geo = new LineSegmentsGeometry()
+          geo.setPositions(l)
+          // der Rand schreibt keine Tiefe, sonst verdeckt er die Linie in der Farbe
+          const linie = new LineSegments2(geo, new LineMaterial({ color: farbe, linewidth: px, depthWrite: folge === 4 }))
+          linie.renderOrder = folge
+          gruppe.add(linie)
+        }
+      }
+      if (gruppe.children.length) wurzel.add(gruppe)
+    })
+    return () => {
+      weg = true
+      gruppe.traverse((x) => {
+        const q = x as THREE.Mesh
+        q.geometry?.dispose()
+        ;(q.material as THREE.Material | undefined)?.dispose?.()
+      })
+      gruppe.removeFromParent()
+    }
+  }, [b, stufe, wandern])
 
   useEffect(() => { welt.current?.faktor(faktor) }, [faktor])
   useEffect(() => { welt.current?.scheiben(scheiben) }, [scheiben])
