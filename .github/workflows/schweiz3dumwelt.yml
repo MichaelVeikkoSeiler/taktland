@@ -1,0 +1,109 @@
+# Baut Gebäude (swissBUILDINGS3D) und Bäume (swissTLM3D) der ganzen Schweiz für «3D Schweiz» und 3dland.ch
+# (pipeline/build_schweiz3d_umwelt.py; Michael, 2026-10-21: «Bäume und Gebäude für 3DLand») und legt die Pakete im Release
+# «schweiz3dumwelt-1» ab; auf cyon holt server/daten/holen.php (HOLEN = 'schweiz3dumwelt-1') sie von dort. Nur von Hand zu
+# starten: Actions → 3D Schweiz Gebäude und Bäume → Run workflow. Gebäude in 18 Streifen von West nach Ost, Bäume in 9
+# (swissTLM3D, 3,3 GB, lädt jeder Baumlauf einmal); GitHub lässt etwa 20 Läufe gleichzeitig, die übrigen warten.
+name: 3D Schweiz Gebäude und Bäume
+
+on:
+  workflow_dispatch:
+    inputs:
+      teil:
+        description: "Was bauen: alles, nur Gebäude oder nur Bäume"
+        type: choice
+        options: [alles, gebaeude, baeume]
+        default: alles
+      gebaeude:
+        description: 'Welche Streifen der Gebäude von 18, etwa [3] für einen Nachtrag'
+        default: '[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]'
+        required: true
+      baeume:
+        description: 'Welche Streifen der Bäume von 9'
+        default: '[1, 2, 3, 4, 5, 6, 7, 8, 9]'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: schweiz3dumwelt
+  cancel-in-progress: false
+
+jobs:
+  vorbereiten:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Release anlegen, falls es noch fehlt
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view schweiz3dumwelt-1 --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1 || gh release create schweiz3dumwelt-1 --repo "$GITHUB_REPOSITORY" \
+            --title "Gebäude und Bäume der ganzen Schweiz für daten.taktland.ch" \
+            --notes "Gebäude aus swissBUILDINGS3D 3.0 und Bäume aus swissTLM3D (swisstopo), die ganze Schweiz, für 3D Schweiz und 3dland.ch. Nicht Teil der App: server/daten/holen.php auf daten.taktland.ch holt die Pakete von hier."
+
+  gebaeude:
+    needs: vorbereiten
+    if: inputs.teil != 'baeume'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        streifen: ${{ fromJSON(inputs.gebaeude) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pakete installieren
+        run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib pyshp
+
+      # viele Blätter gibt es nur als FileGDB, gelesen mit ogr2ogr
+      - name: GDAL installieren
+        run: sudo apt-get update -q && sudo apt-get install -y -q gdal-bin
+
+      - name: Gebäude bauen
+        run: python pipeline/build_schweiz3d_umwelt.py --art gebaeude --teil ${{ matrix.streifen }}/18 2>&1 | grep -v Warning
+
+      - name: Pakete schnüren
+        run: python pipeline/build_schweiz3d_umwelt.py --packen --teil g${{ matrix.streifen }}
+
+      - name: Pakete ins Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload schweiz3dumwelt-1 data/schweiz3dumwelt_pakete/schweiz3dumwelt-g${{ matrix.streifen }}-*.zip --repo "$GITHUB_REPOSITORY" --clobber
+
+  baeume:
+    needs: vorbereiten
+    if: inputs.teil != 'gebaeude'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        streifen: ${{ fromJSON(inputs.baeume) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Pakete installieren
+        run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib pyshp
+
+      - name: swissTLM3D laden (Einzelbaum, Bodenbedeckung, Eisenbahn)
+        run: python pipeline/fetch_tlm3d.py --baeume
+
+      - name: Bäume bauen
+        run: python pipeline/build_schweiz3d_umwelt.py --art baeume --teil ${{ matrix.streifen }}/9
+
+      - name: Pakete schnüren
+        run: python pipeline/build_schweiz3d_umwelt.py --packen --teil b${{ matrix.streifen }}
+
+      - name: Pakete ins Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload schweiz3dumwelt-1 data/schweiz3dumwelt_pakete/schweiz3dumwelt-b${{ matrix.streifen }}-*.zip --repo "$GITHUB_REPOSITORY" --clobber

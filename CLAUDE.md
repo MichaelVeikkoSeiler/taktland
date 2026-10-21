@@ -306,7 +306,17 @@ data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: 
 data/schweiz3d_probe/  Gebäude und Bäume für «3D Schweiz» in zwei Probeausschnitten (Michael, 2026-10-20: «Köniz und Gantrisch»):
              alles in 6 × 6 km um Köniz und 8 × 8 km um den Gantrisch, nicht nur neben der Bahn, Formate wie data/gebaeude und data/baeume,
              Farben aus SWISSIMAGE 2 m (pipeline/build_schweiz3d_probe.py, 14'864 Gebäude, etwa 630'000 Bäume, etwa 11 MB); in der App in den Stufen
-             4 km und 1 km, Schalter «Gebäude und Bäume» nur dort (probeLaden in src/gelaende.ts)
+             4 km und 1 km, Schalter «Gebäude und Bäume» nur dort (probeLaden in src/gelaende.ts); die ganze Schweiz siehe
+             data/schweiz3dumwelt_extern
+data/schweiz3dumwelt_extern/  Gebäude und Bäume der ganzen Schweiz für «3D Schweiz» und 3dland.ch auf daten.taktland.ch, nicht in Git
+             (Michael, 2026-10-21: «Bäume und Gebäude für 3DLand»): wie die Probeausschnitte alles, nicht nur neben der Bahn,
+             pipeline/build_schweiz3d_umwelt.py --art gebaeude|baeume --teil k/n in Streifen der 10-km-Spalten von West nach Ost
+             (jede Kachel genau einem Streifen), Dächer aus SWISSIMAGE 2 m über das Netz, Kronen aus data/luftbild (10 m); Workflow
+             «3D Schweiz Gebäude und Bäume» (.github/workflows/schweiz3dumwelt.yml, von Hand, Gebäude 18 Streifen, Bäume 9),
+             Release «schweiz3dumwelt-1», holen.php (HOLEN = 'schweiz3dumwelt-1') nach schweiz3dumwelt/gebaeude/ und /baeume/;
+             die App (probeLaden, probeDa, umweltGanz in src/gelaende.ts) nimmt diese vor den Probeausschnitten; in einem Modell
+             höchstens 1,2 Millionen gezeichnete Waldbäume, auf dem Handy 300'000, darüber wird der Wald lichter, Einzelbäume bleiben
+             (BAUM_HOECHSTENS in Schweiz3D.tsx; eine Annahme zur Grafik, nicht gemessen)
 data/wanderwege/  Wanderwege für «3D Schweiz» (Michael, 2026-10-21: «alle Wanderwege der Schweiz»): swissTLM3D (swisstopo), Ebene
              Strasse, jedes Stück mit WANDERWEGE Wanderweg, Bergwanderweg oder Alpinwanderweg, ohne Stücke in Tunneln, nur die Lage, nach
              Douglas-Peucker auf 2 m vereinfacht, je 10-km-Kachel eine .wwg (pipeline/build_wanderwege.py, 408'970 Stücke, 9,3 MB); in der
@@ -441,6 +451,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_schweiz3d_details.py --fein --teil 3/16   # dito auf 50 cm und 5 m für die Stufe 1 km
 .venv/bin/python pipeline/build_wanderwege.py            # Wanderwege der Schweiz für «3D Schweiz» (nach fetch_tlm3d.py --strassen), vor export_app
 .venv/bin/python pipeline/build_schweiz3d_probe.py         # Gebäude und Bäume um Köniz und den Gantrisch für «3D Schweiz», vor export_app
+.venv/bin/python pipeline/build_schweiz3d_umwelt.py --art baeume --teil 3/9   # Gebäude oder Bäume der ganzen Schweiz (daten.taktland.ch)
 .venv/bin/python pipeline/build_luftbild_nah.py      # Nahbild (2,5 m) entlang der Bahnlinien, etwa eine Stunde, vor export_app
 .venv/bin/python pipeline/build_gelaende_nah.py      # feines Gelände (10 m) entlang der Bahnlinien für den Führerstand, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch

@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
+import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -275,6 +275,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
   const [minuten, setMinuten] = useState(12 * 60)
   const [umweltHier, setUmweltHier] = useState(false)
+  const [umweltGanzDa, setUmweltGanzDa] = useState(false)
+  useEffect(() => { void umweltGanz().then(setUmweltGanzDa) }, [])
   const [meldung, setMeldung] = useState<string | null>(null)
   useEffect(() => {
     uebersichtLaden().then((g) => setGelaende((a) => ({ ...a, schweiz: einzeln({ e: 0, n: 0, seite: 0 }, g) }))).catch((e: Error) => setFehler(e.message))
@@ -591,7 +593,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle). Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
-            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle. Vorerst nur um Köniz und um den Gantrisch.</>}</p>
+            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
         </details>
       )}
     </div>
@@ -1641,10 +1643,19 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
 }
 
 /** die Bäume im Rechteck als ein InstancedMesh, der Fuss auf dem Gelände des Bestands */
+/** höchstens so viele gezeichnete Waldbäume in einem Modell, auf dem Handy weniger; eine Annahme zur Grafik, nicht gemessen */
+const BAUM_HOECHSTENS = 1_200_000, BAUM_HOECHSTENS_HANDY = 300_000
+const baumHoechstens = () => (hoechstens() === 4 ? BAUM_HOECHSTENS_HANDY : BAUM_HOECHSTENS)
 function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0: number, n0: number, e1: number, n1: number) {
   const liste: Array<[number, number, number, number, number, number]> = []
+  // zu viele Bäume für die Grafik: der gezeichnete Wald wird lichter, Einzelbäume bleiben alle (BAUM_HOECHSTENS)
+  let wald = 0
+  for (const k of kacheln) for (let i = 0; i < k.art.length; i++) if (k.art[i] > 0) wald++
+  const grenze = baumHoechstens(), jeder = Math.max(1, Math.ceil(wald / grenze))
+  let w = 0
   for (const k of kacheln) {
     for (let i = 0; i < k.art.length; i++) {
+      if (k.art[i] > 0 && w++ % jeder) continue
       const e = k.e0 + k.lage[i * 2] / 10, n = k.n0 + k.lage[i * 2 + 1] / 10
       if (e < e0 || e > e1 || n < n0 || n > n1) continue
       liste.push([e, n, k.art[i], k.farben[i * 3], k.farben[i * 3 + 1], k.farben[i * 3 + 2]])

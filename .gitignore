@@ -9,6 +9,8 @@ data/schweiz3dfein_pakete/
 data/gebaeude_extern/
 data/baeume_extern/
 data/umgebung_pakete/
+data/schweiz3dumwelt_extern/
+data/schweiz3dumwelt_pakete/
 *.csv
 *.parquet
 

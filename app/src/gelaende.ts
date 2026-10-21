@@ -506,22 +506,38 @@ interface ProbeIndex { kachel_m: number; quelle: string; gebiete: Record<string,
 const probeVerz: Record<string, Promise<ProbeIndex | null>> = {}
 export const probeIndex = (art: 'gebaeude' | 'baeume') =>
   (probeVerz[art] ??= holen<ProbeIndex>(`data/schweiz3d_probe/${art}/index.json`).catch(() => null))
+/** dieselben für die ganze Schweiz auf daten.taktland.ch (pipeline/build_schweiz3d_umwelt.py; Michael, 2026-10-21: «Bäume und
+ *  Gebäude für 3DLand»); fehlt das Verzeichnis dort, wird nach einer Minute wieder gefragt */
+interface UmweltIndex { kachel_m: number; quelle: string; kacheln: Record<string, unknown> }
+const umweltVerz: Record<string, Promise<UmweltIndex | null>> = {}
+const umweltIndex = (art: 'gebaeude' | 'baeume') =>
+  (umweltVerz[art] ??= holen<UmweltIndex>(`${DATEN_URL}schweiz3dumwelt/${art}/index.json`).catch(() => {
+    spaeterNochmals(() => { delete umweltVerz[art] })
+    return null
+  }))
+const kachelnIn = (ix: { kachel_m: number; kacheln: Record<string, unknown> } | null, e0: number, n0: number, e1: number, n1: number) => {
+  if (!ix) return []
+  const k = ix.kachel_m, raus: string[] = []
+  for (let qe = Math.floor(e0 / k); qe <= Math.floor((e1 - 1) / k); qe++) {
+    for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (`${qe}_${qn}` in ix.kacheln) raus.push(`${qe}_${qn}`)
+  }
+  return raus
+}
 export async function probeLaden(e0: number, n0: number, e1: number, n1: number) {
-  const [ig, ib] = await Promise.all([probeIndex('gebaeude'), probeIndex('baeume')])
-  const namen = (ix: ProbeIndex | null) => {
-    if (!ix) return []
-    const k = ix.kachel_m, raus: string[] = []
-    for (let qe = Math.floor(e0 / k); qe <= Math.floor((e1 - 1) / k); qe++) {
-      for (let qn = Math.floor(n0 / k); qn <= Math.floor((n1 - 1) / k); qn++) if (`${qe}_${qn}` in ix.kacheln) raus.push(`${qe}_${qn}`)
-    }
-    return raus
+  const [ig, ib, ug, ub] = await Promise.all([probeIndex('gebaeude'), probeIndex('baeume'), umweltIndex('gebaeude'), umweltIndex('baeume')])
+  // die Kacheln der ganzen Schweiz gehen vor, die der Probeausschnitte nur, wo es dort keine gibt
+  const pfade = (art: 'gebaeude' | 'baeume', endung: string, probe: ProbeIndex | null, weit: UmweltIndex | null) => {
+    const dort = kachelnIn(weit, e0, n0, e1, n1)
+    const da = new Set(dort)
+    return [...dort.map((n) => `${DATEN_URL}schweiz3dumwelt/${art}/${n}.${endung}`),
+            ...kachelnIn(probe, e0, n0, e1, n1).filter((n) => !da.has(n)).map((n) => `data/schweiz3d_probe/${art}/${n}.${endung}`)]
   }
   const [gebaeude, baeume] = await Promise.all([
-    Promise.all(namen(ig).map((n) => holenBinaer(`data/schweiz3d_probe/gebaeude/${n}.bgz`).then(entpacken).then(gebaeudeLesen).catch(() => null))),
-    Promise.all(namen(ib).map((n) => holenBinaer(`data/schweiz3d_probe/baeume/${n}.bmd`).then(entpacken).then(baumLesen).catch(() => null))),
+    Promise.all(pfade('gebaeude', 'bgz', ig, ug).map((p) => holenBinaer(p).then(entpacken).then(gebaeudeLesen).catch(() => null))),
+    Promise.all(pfade('baeume', 'bmd', ib, ub).map((p) => holenBinaer(p).then(entpacken).then(baumLesen).catch(() => null))),
   ])
   return { gebaeude: gebaeude.filter((x): x is GebaeudeKachel => !!x), baeume: baeume.filter((x): x is BaumKachel => !!x),
-           quellen: [ig?.quelle, ib?.quelle].filter((q): q is string => !!q) }
+           quellen: [(ug ?? ig)?.quelle, (ub ?? ib)?.quelle].filter((q): q is string => !!q) }
 }
 /** Wanderwege aus swissTLM3D (pipeline/build_wanderwege.py) im Rechteck: je Stück die Art (1 Wanderweg, 2 Bergwanderweg,
  *  3 Alpinwanderweg) und die Punkte als Ost, Nord in Metern; die Stücke sind der Kachel ihrer Mitte zugeteilt, darum auch die
@@ -560,11 +576,14 @@ export async function wanderwegeLaden(e0: number, n0: number, e1: number, n1: nu
   return { wege: teile.flat(), quelle: ix.quelle }
 }
 
-/** ob ein Rechteck einen Probeausschnitt berührt */
+/** ob ein Rechteck Gebäude oder Bäume hat: ganze Schweiz oder ein Probeausschnitt */
 export async function probeDa(e0: number, n0: number, e1: number, n1: number) {
-  const ix = await probeIndex('gebaeude')
+  const [ix, ug, ub] = await Promise.all([probeIndex('gebaeude'), umweltIndex('gebaeude'), umweltIndex('baeume')])
+  if (kachelnIn(ug, e0, n0, e1, n1).length || kachelnIn(ub, e0, n0, e1, n1).length) return true
   return !!ix && Object.values(ix.gebiete).some(([a, b, c, d]) => a < e1 && c > e0 && b < n1 && d > n0)
 }
+/** ob es Gebäude und Bäume der ganzen Schweiz auf daten.taktland.ch gibt */
+export const umweltGanz = async () => !!(await umweltIndex('gebaeude')) || !!(await umweltIndex('baeume'))
 
 /* ---------- Höhe der Gleise aus swissTLM3D ---------- */
 
