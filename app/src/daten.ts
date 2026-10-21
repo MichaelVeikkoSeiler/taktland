@@ -56,15 +56,32 @@ export function ladenVerfolgen<T>(p: Promise<T>): Promise<T> {
   return p
 }
 
+/** Antwortet ein Server so lange nicht, gibt der Abruf auf (Michael, 2026-10-21: cyon hatte PHP abgeschaltet, daten.taktland.ch
+ *  antwortete nicht, und «Wird geladen …» blieb stehen, statt ohne die Details weiterzumachen); gewählt */
+const ANTWORT_MS = 20_000
+
+/** fetch, bis die Antwort beginnt höchstens ANTWORT_MS */
+async function mitFrist(url: string) {
+  const ab = new AbortController()
+  const uhr = setTimeout(() => ab.abort(), ANTWORT_MS)
+  try {
+    return await fetch(url, { signal: ab.signal })
+  } finally {
+    clearTimeout(uhr)
+  }
+}
+
 /** Bricht die Verbindung ab (schwacher Empfang, GitHub spielt gerade eine neue
  *  Version ein), wird nach einer Sekunde ein zweites Mal geladen. */
 async function abrufen(url: string) {
   try {
-    return await fetch(url)
-  } catch {
+    return await mitFrist(url)
+  } catch (e) {
+    // nach der Frist nicht noch einmal warten
+    if ((e as Error).name === 'AbortError') throw new Error('Der Server antwortete nicht.')
     await new Promise((r) => setTimeout(r, 1000))
     try {
-      return await fetch(url)
+      return await mitFrist(url)
     } catch {
       throw new Error('Die Verbindung zum Server kam nicht zustande.')
     }

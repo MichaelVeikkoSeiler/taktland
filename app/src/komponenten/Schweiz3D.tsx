@@ -276,7 +276,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [minuten, setMinuten] = useState(12 * 60)
   const [umweltHier, setUmweltHier] = useState(false)
   const [umweltGanzDa, setUmweltGanzDa] = useState(false)
-  useEffect(() => { void umweltGanz().then(setUmweltGanzDa) }, [])
   const [meldung, setMeldung] = useState<string | null>(null)
   useEffect(() => {
     uebersichtLaden().then((g) => setGelaende((a) => ({ ...a, schweiz: einzeln({ e: 0, n: 0, seite: 0 }, g) }))).catch((e: Error) => setFehler(e.message))
@@ -334,6 +333,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     let weg = false
     void probeDa(Math.min(...r.map((x) => x.e0)), Math.min(...r.map((x) => x.n1 - x.h)), Math.max(...r.map((x) => x.e0 + x.b)), Math.max(...r.map((x) => x.n1)))
       .then((da) => { if (!weg) setUmweltHier(da) })
+    void umweltGanz().then((ganz) => { if (!weg) setUmweltGanzDa(ganz) })
     return () => { weg = true }
   }, [aktuell, stufe])
   const brille = useRef<(() => Promise<void>) | null>(null)

@@ -533,7 +533,8 @@ der Eintrag bleibt aufgeschoben, und ein Tipp auf die rote Fläche «Löschen» 
 Michael, 2026-10-08, ohne Rückfrage seit 2026-10-09). Das × daneben bleibt für Maus und Tastatur.
 
 Was lädt, zeigt oben ein **Ladebalken** in Karmin (`komponenten/Ladebalken.tsx`, Michael, 2026-10-10): er zählt alles, was über
-`holen`, `holenBinaer` oder `ladenVerfolgen` in `src/daten.ts` geht (auch die nachgeladenen Teile für 3D), erscheint erst nach
+`holen`, `holenBinaer` oder `ladenVerfolgen` in `src/daten.ts` geht (auch die nachgeladenen Teile für 3D; antwortet ein Server 20 s nicht,
+gibt der Abruf auf, ANTWORT_MS, Michael, 2026-10-21: cyon hatte PHP abgeschaltet, «Wird geladen …» blieb stehen), erscheint erst nach
 250 ms und füllt sich mit dem Anteil der fertigen Dateien; die Abfragen von «Geo» online, der Zähler und status.json zählen nicht mit.
 Beim Laden einer 3D-Szene (szeneLaden) steht er ganz oben in deren Karte, nicht oben in der App (`<Ladebalken inKarte />`, Michael, 2026-10-10), läuft sofort und mindestens 3 Sekunden sichtbar von 0 bis 100 %, in zufälligen,
 ungleichen Schritten mit kurzen Halten, ein Spiel, keine Messung (Michael, 2026-10-10); steht der Browser beim Bauen still, zählt
