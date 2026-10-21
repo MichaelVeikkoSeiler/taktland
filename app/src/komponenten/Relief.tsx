@@ -271,6 +271,10 @@ const strassenbrueckenLaden = () => (strassenbrueckenVerz ??= holen<Strassenbrue
  *  neben der Linie, die ihr höchstens 30° schräg folgen; die Platte reicht BRUECKE_RAND_M über die äussersten hinaus, trägt
  *  eine einzelne Achse laut Quelle zwei Gleise, liegen sie GLEISABSTAND_M auseinander. Rand und Abstand in keiner Quelle */
 const BRUECKE_RAND_M = 3.5, GLEISABSTAND_M = 4.5, BRUECKE_SUCHE_M = 20, GLEIS_NAH_M = 3
+/** eine Achse aus swissTLM3D zählt auf einer Brücke nur, wenn sie an mindestens diesem Anteil der Messstellen (alle 10 m) liegt
+ *  (Michael, 2026-10-21, Lorraineviadukt: «Realität hat nur 4 Spuren»: kurze Stücke von Weichen und Anschlüssen lagen sonst als
+ *  ganzes Gleis über der ganzen Brücke); die Grenze ist gewählt */
+const GLEIS_BEGLEITET = 0.25
 interface Bahnbruecken { achsen: Array<{ e: number; n: number; s: number | null; d: number[] }> }
 type AchsStueck = { id: number; ae: number; an: number; be: number; bn: number; s: number | null }
 let bahnbrueckenVerz: Promise<Map<string, AchsStueck[]>> | null = null
@@ -2730,8 +2734,14 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         // zueinander laufen»): die Achsen von swissTLM3D und die gezeichnete Linie weichen um ein paar Meter voneinander ab,
         // alle 10 m neu gemessen liefen die Gleise schräg; näher als GLEIS_NAH_M beieinander gilt als dasselbe Gleis
         const median = (a2: number[]) => { const t = [...a2].sort((u, v) => u - v); return t[Math.floor(t.length / 2)] }
+        // die eigene Linie ist eines der Gleise der Quelle, die Achse am nächsten, wenn sie näher liegt als ein Gleisabstand; die
+        // anderen rücken um denselben Versatz mit, so bleiben Zahl und Abstände wie in der Quelle (Michael, 2026-10-21)
+        const messstellen = pkt.length
         const versatz = [0]
-        for (const d of [...gleise.values()].filter((g) => g.length > 1).map((g) => median(g.map(([, d2]) => d2))).sort((u, v) => Math.abs(u) - Math.abs(v))) {
+        const achsLagen = [...gleise.values()].filter((g) => g.length > 1 && g.length >= messstellen * GLEIS_BEGLEITET)
+          .map((g) => median(g.map(([, d2]) => d2))).sort((u, v) => Math.abs(u) - Math.abs(v))
+        const eigene = achsLagen.length && Math.abs(achsLagen[0]) < GLEISABSTAND_M ? achsLagen.shift()! : 0
+        for (const d of achsLagen.map((d2) => d2 - eigene)) {
           if (versatz.every((v) => Math.abs(v - d) >= GLEIS_NAH_M)) versatz.push(d)
         }
         // eine Achse mit zwei Gleisen laut Quelle (brueckeQuer) verbreitert die Platte, ohne eigenes Gleis darauf

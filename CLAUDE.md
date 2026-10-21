@@ -384,7 +384,10 @@ data/gleishoehe/  Höhe der Gleise: alle Gleisachsen aus swissTLM3D (TLM_EISENBA
              gemittelt (gleisHoehenLaden in Relief.tsx); gilt für die Linie in 3D und im Führerstand, auch in Tunneln und auf Brücken; sonst wie früher aus dem Gelände;
              im Führerstand rastet die Linie auch seitlich auf die Achse ein (Abstand über 50 m gemittelt, dasselbe Gleis wie für die Höhe, an Lücken über 200 m auslaufend, pkGleis; Michael, 2026-10-15, BTI: bis 19 m «neben der Realität»), Suche bis 25 m
 data/bahnbruecken.json  Gleisachsen auf Brücken aus swissTLM3D (TLM_EISENBAHN, KUNSTBAUTE Brücke), je Gleis eine Achse, dazu
-             ANZAHL_SPUREN wo genannt (pipeline/build_bahnbruecken.py, 6'708 Achsen, 421 KB); für die Breite der Bahnbrücken im Führerstand
+             ANZAHL_SPUREN wo genannt (pipeline/build_bahnbruecken.py, 6'708 Achsen, 421 KB); für die Breite der Bahnbrücken im Führerstand; die eigene Linie gilt als
+             die nächste Achse (näher als 4,5 m), die anderen rücken um denselben Versatz mit; Achsen an weniger als einem Viertel der
+             Messstellen (kurze Weichenstücke) zählen nicht (GLEIS_BEGLEITET in Relief.tsx; Michael, 2026-10-21, Lorraineviadukt: «Realität
+             hat nur 4 Spuren», gezeichnet waren 6)
 data/strassenbruecken.json  Strassen- und Wegbrücken über der Bahn aus swissTLM3D (TLM_STRASSE mit Höhe, KUNSTBAUTE Brücke): nur
              Stücke, die eine Gleisachse aus TLM_EISENBAHN kreuzen und dort mindestens 3 m über ihr liegen (pipeline/build_strassenbruecken.py,
              1'858 Brücken, 257 KB; Michael, 2026-10-15: «Ist es möglich, eine Autobrücke zu konstruieren?»); in der App nur im Führerstand,
