@@ -17,11 +17,11 @@ function DreiDLand() {
   return (
     <div className="min-h-screen bg-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <div className="mx-auto max-w-2xl md:max-w-3xl xl:max-w-6xl">
-        <Auftakt bild={{ hell: auftaktHell, dunkel: auftaktDunkel, breite: 1717, hoehe: 916, alt: 'Illustration: Jemand hält auf einem Aussichtspunkt ein Tablet vor einen Berg; auf dem Tablet derselbe Berg mit farbigen Höhenstufen, darunter ein See mit Dorf und Wald.' }} />
-        <header className="flex items-center gap-3 px-4 pt-4">
-          <img src="./logo.png" alt="" className="size-9 rounded-lg" />
-          <span className="text-3xl font-bold tracking-tight">3dland</span>
-        </header>
+        {/* Auftakt rückt mit -mx-4 -mt-8 an den Rand der Seite von Taktland; hier dieser Rand */}
+        <div className="px-4 pt-8">
+          <Auftakt bild={{ hell: auftaktHell, dunkel: auftaktDunkel, breite: 1717, hoehe: 916, alt: 'Illustration: Jemand hält auf einem Aussichtspunkt ein Tablet vor einen Berg; auf dem Tablet derselbe Berg mit farbigen Höhenstufen, darunter ein See mit Dorf und Wald.' }}
+                   oben={<img src="./logo.png" alt="3dland" className="absolute left-3 top-3 size-14 rounded-xl shadow-md sm:left-5 sm:top-5 sm:size-20" />} />
+        </div>
         <main>
           <Schweiz3D eigeneSeite />
         </main>
