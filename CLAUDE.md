@@ -317,8 +317,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              (Michael, 2026-10-22: «Gipfel defaultmässig auch nicht einblenden»); die Knöpfe an den Wänden auch auf dem Bildschirm, mit Tipp
              oder Klick («auch in der Standardversion auf dem Display»), die Knöpfe oben im Bild sind weg («braucht es nicht mehr»), Datum
              und Uhrzeit fein unter dem Bild, wenn die Sonne an ist; ein Knopf fürs Vollbild neben «Mit VR-Brille» (useEchtesVollbild);
-             die Wände und die Platte des Sockels aus gemaltem dunklem Holz wie Ebenholz, die Maserung der Wand entlang (holzBild, HOLZ_BILD;
-             Michael, 2026-10-22); das Geräusch beim Ein- und Ausblenden 0,9 s (VERLAUF_TON_S; «noch zu lang»); an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
+             die Wände und die Platte des Sockels wieder dunkelgrau ohne Holz (Michael, 2026-10-22; Ebenholz gab es kurz); das Geräusch beim Ein- und Ausblenden 0,9 s (VERLAUF_TON_S; «noch zu lang»); an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
              Schweiz3D.tsx); alle Schalter am Anfang aus, auch Höhen und Sonne (Michael, 2026-10-22: «Alles defaultmässig ausgeschaltet»)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der

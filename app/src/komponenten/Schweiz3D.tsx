@@ -623,47 +623,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
  *  Licht schattiert. Masse als Anteil der Breite des Modells, nicht aus einer Quelle. */
 const SOCKEL_WAND = 0.06, SOCKEL_PLATTE = 0.025, SOCKEL_UEBERSTAND = 0.012
 /** je Seite ein eigener Grauton (Norden, Osten, Süden, Westen), damit man die Seiten gut unterscheidet; das Licht kommt dazu */
-/** die Wände aus dunklem Holz wie Ebenholz (Michael, 2026-10-22), gemalt, nicht aus einer Quelle; je Seite leicht anders getönt,
- *  damit man die Seiten unterscheidet; ein Bild deckt HOLZ_BILD der Breite des Modells */
-const SOCKEL_WAND_FARBEN = ['#ffffff', '#e8e8e8', '#d4d4d4', '#f2f2f2'], SOCKEL_PLATTE_FARBE = '#cfcfcf'
-const HOLZ_BILD = 0.5
-let holzTextur: THREE.CanvasTexture | null = null
-function holzBild() {
-  if (holzTextur) return holzTextur
-  const B = 2048, H = 512, c = document.createElement('canvas')
-  c.width = B; c.height = H
-  const g = c.getContext('2d')!, bild = g.createImageData(B, H)
-  // kachelbares Wertrauschen mit qx × qy Feldern, weich dazwischen
-  const rauschen = (qx: number, qy: number) => {
-    const gitter = Array.from({ length: qx * qy }, () => Math.random())
-    return (x: number, y: number) => {
-      const fx = (x / B) * qx, fy = (y / H) * qy, i = Math.floor(fx), j = Math.floor(fy), u = fx - i, v = fy - j
-      const w = (a: number, b: number) => gitter[((b % qy + qy) % qy) * qx + ((a % qx + qx) % qx)]
-      const su = u * u * (3 - 2 * u), sv = v * v * (3 - 2 * v)
-      return (w(i, j) * (1 - su) + w(i + 1, j) * su) * (1 - sv) + (w(i, j + 1) * (1 - su) + w(i + 1, j + 1) * su) * sv
-    }
-  }
-  // Fasern: lang der Wand entlang, kurz quer dazu; Jahresringe: Bänder, deren Lage langsam wellt; Poren: feine dunkle Striche
-  const lauf = rauschen(3, 4), fasern = rauschen(8, 160), feinFasern = rauschen(32, 400), flecken = rauschen(6, 12)
-  for (let y = 0; y < H; y++) {
-    for (let x = 0; x < B; x++) {
-      const ring = Math.sin(((y + lauf(x, y) * 90) / H) * Math.PI * 2 * 14) * 0.5 + 0.5
-      const f = fasern(x, y) * 0.6 + feinFasern(x, y) * 0.4
-      const pore = Math.random() < 0.012 ? 0.5 : 1
-      // Ebenholz: fast schwarz, die Ringe und Fasern nur wenig heller und warm
-      const hell = (0.55 + 0.25 * ring ** 3 + 0.35 * f + 0.15 * flecken(x, y)) * pore
-      const k = (y * B + x) * 4
-      const h2 = hell * hell
-      bild.data[k] = 6 + 40 * h2; bild.data[k + 1] = 4 + 24 * h2; bild.data[k + 2] = 3 + 16 * h2; bild.data[k + 3] = 255
-    }
-  }
-  g.putImageData(bild, 0, 0)
-  holzTextur = new THREE.CanvasTexture(c)
-  holzTextur.wrapS = holzTextur.wrapT = THREE.RepeatWrapping
-  holzTextur.colorSpace = THREE.SRGBColorSpace
-  holzTextur.anisotropy = 8
-  return holzTextur
-}
+const SOCKEL_WAND_FARBEN = ['#363636', '#404040', '#4c4c4c', '#3a3a3a'], SOCKEL_PLATTE_FARBE = '#2c2c2c'
 
 /** in der Brille: das Modell so breit auf Tischhöhe, so weit vor dir (wie die Modellbahn) */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
@@ -1253,8 +1213,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     const sockel = new THREE.Group()
     wurzel.add(sockel)
     // matt, damit die Seiten im Licht verschieden hell sind
-    const wandMaterialien = SOCKEL_WAND_FARBEN.map((color) => new THREE.MeshStandardMaterial({ color, map: holzBild(), bumpMap: holzBild(), bumpScale: 0.6, roughness: 0.6, metalness: 0, side: THREE.DoubleSide }))
-    const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, map: holzBild(), bumpMap: holzBild(), bumpScale: 0.6, roughness: 0.6, metalness: 0 })
+    const wandMaterialien = SOCKEL_WAND_FARBEN.map((color) => new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0, side: THREE.DoubleSide }))
+    const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, roughness: 0.5, metalness: 0 })
     // die oberen Kanten der Wände, je mit der Richtung nach aussen (für die Linien der Höhen)
     let kantenOben: Array<{ p: Float32Array; nx: number; nz: number }> = []
     const sockelBauen = () => {
@@ -1274,15 +1234,10 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         kanten.forEach((kk, seite) => {
           if (!kk) return
           const [kante, nx, nz] = kk
-          const p = new Float32Array(kante.length * 6), oben = new Float32Array(kante.length * 3), uv = new Float32Array(kante.length * 4)
-          // die Maserung läuft der Wand entlang
-          const holz = weiteKm * HOLZ_BILD
-          let lang = 0
+          const p = new Float32Array(kante.length * 6), oben = new Float32Array(kante.length * 3)
           kante.forEach((q, i) => {
             const x = pos[q * 3], y = pos[q * 3 + 1], z = pos[q * 3 + 2]
-            if (i) lang += Math.hypot(x - pos[kante[i - 1] * 3], z - pos[kante[i - 1] * 3 + 2])
             p.set([x, y, z, x, unten, z], i * 6)
-            uv.set([lang / holz, (y - unten) / holz, lang / holz, 0], i * 4)
             oben.set([x, y, z], i * 3)
           })
           kantenOben.push({ p: oben, nx, nz })
@@ -1290,7 +1245,6 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
           for (let i = 0; i < kante.length - 1; i++) ix.push(i * 2, i * 2 + 1, i * 2 + 2, i * 2 + 2, i * 2 + 1, i * 2 + 3)
           const gw = new THREE.BufferGeometry()
           gw.setAttribute('position', new THREE.BufferAttribute(p, 3))
-          gw.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
           gw.setIndex(ix)
           gw.computeVertexNormals()
           sockel.add(new THREE.Mesh(gw, wandMaterialien[seite]))
