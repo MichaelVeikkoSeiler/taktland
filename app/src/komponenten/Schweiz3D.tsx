@@ -626,25 +626,35 @@ const SOCKEL_WAND = 0.06, SOCKEL_PLATTE = 0.025, SOCKEL_UEBERSTAND = 0.012
 /** die Wände aus dunklem Holz wie Ebenholz (Michael, 2026-10-22), gemalt, nicht aus einer Quelle; je Seite leicht anders getönt,
  *  damit man die Seiten unterscheidet; ein Bild deckt HOLZ_BILD der Breite des Modells */
 const SOCKEL_WAND_FARBEN = ['#ffffff', '#e8e8e8', '#d4d4d4', '#f2f2f2'], SOCKEL_PLATTE_FARBE = '#cfcfcf'
-const HOLZ_BILD = 0.25
+const HOLZ_BILD = 0.5
 let holzTextur: THREE.CanvasTexture | null = null
 function holzBild() {
   if (holzTextur) return holzTextur
-  const B = 1024, H = 256, c = document.createElement('canvas')
+  const B = 2048, H = 512, c = document.createElement('canvas')
   c.width = B; c.height = H
   const g = c.getContext('2d')!, bild = g.createImageData(B, H)
-  // Maserung: feine Linien längs der Wand, deren Lage langsam wellt, dazu Poren und wenige hellere Adern
-  const welle = Array.from({ length: 8 }, () => [Math.random() * 6, 0.5 + Math.random() * 2, Math.random() * Math.PI * 2])
-  const zeile = Array.from({ length: H }, () => Math.random())
+  // kachelbares Wertrauschen mit qx × qy Feldern, weich dazwischen
+  const rauschen = (qx: number, qy: number) => {
+    const gitter = Array.from({ length: qx * qy }, () => Math.random())
+    return (x: number, y: number) => {
+      const fx = (x / B) * qx, fy = (y / H) * qy, i = Math.floor(fx), j = Math.floor(fy), u = fx - i, v = fy - j
+      const w = (a: number, b: number) => gitter[((b % qy + qy) % qy) * qx + ((a % qx + qx) % qx)]
+      const su = u * u * (3 - 2 * u), sv = v * v * (3 - 2 * v)
+      return (w(i, j) * (1 - su) + w(i + 1, j) * su) * (1 - sv) + (w(i, j + 1) * (1 - su) + w(i + 1, j + 1) * su) * sv
+    }
+  }
+  // Fasern: lang der Wand entlang, kurz quer dazu; Jahresringe: Bänder, deren Lage langsam wellt; Poren: feine dunkle Striche
+  const lauf = rauschen(3, 4), fasern = rauschen(8, 160), feinFasern = rauschen(32, 400), flecken = rauschen(6, 12)
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < B; x++) {
-      let v = y
-      for (const [a, f, ph] of welle) v += a * Math.sin((x / B) * Math.PI * 2 * f + ph)
-      const j = ((Math.floor(v) % H) + H) % H
-      const ader = zeile[j] > 0.93 ? 18 : zeile[j] > 0.7 ? 7 : 0
-      const d = ader + (Math.random() - 0.5) * 6 - (Math.random() < 0.004 ? 10 : 0)
+      const ring = Math.sin(((y + lauf(x, y) * 90) / H) * Math.PI * 2 * 14) * 0.5 + 0.5
+      const f = fasern(x, y) * 0.6 + feinFasern(x, y) * 0.4
+      const pore = Math.random() < 0.012 ? 0.5 : 1
+      // Ebenholz: fast schwarz, die Ringe und Fasern nur wenig heller und warm
+      const hell = (0.55 + 0.25 * ring ** 3 + 0.35 * f + 0.15 * flecken(x, y)) * pore
       const k = (y * B + x) * 4
-      bild.data[k] = 30 + d; bild.data[k + 1] = 21 + d * 0.75; bild.data[k + 2] = 17 + d * 0.6; bild.data[k + 3] = 255
+      const h2 = hell * hell
+      bild.data[k] = 6 + 40 * h2; bild.data[k + 1] = 4 + 24 * h2; bild.data[k + 2] = 3 + 16 * h2; bild.data[k + 3] = 255
     }
   }
   g.putImageData(bild, 0, 0)
@@ -1243,8 +1253,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     const sockel = new THREE.Group()
     wurzel.add(sockel)
     // matt, damit die Seiten im Licht verschieden hell sind
-    const wandMaterialien = SOCKEL_WAND_FARBEN.map((color) => new THREE.MeshStandardMaterial({ color, map: holzBild(), roughness: 0.45, metalness: 0, side: THREE.DoubleSide }))
-    const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, map: holzBild(), roughness: 0.45, metalness: 0 })
+    const wandMaterialien = SOCKEL_WAND_FARBEN.map((color) => new THREE.MeshStandardMaterial({ color, map: holzBild(), bumpMap: holzBild(), bumpScale: 0.6, roughness: 0.6, metalness: 0, side: THREE.DoubleSide }))
+    const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, map: holzBild(), bumpMap: holzBild(), bumpScale: 0.6, roughness: 0.6, metalness: 0 })
     // die oberen Kanten der Wände, je mit der Richtung nach aussen (für die Linien der Höhen)
     let kantenOben: Array<{ p: Float32Array; nx: number; nz: number }> = []
     const sockelBauen = () => {
