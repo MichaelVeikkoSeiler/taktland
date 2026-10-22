@@ -634,6 +634,10 @@ const SOCKEL_WAND_FARBEN = ['#363636', '#404040', '#4c4c4c', '#3a3a3a'], SOCKEL_
 
 /** in der Brille: das Modell so breit auf Tischhöhe, so weit vor dir (wie die Modellbahn) */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
+/** Knöpfe an den Wänden: wie weit sie vorstehen, als Anteil der Breite des Modells (aus, an, die flache Anzeige der Zeit), und
+ *  in welcher Farbe sie leuchten (Gelände gelb, Gebäude und Bäume grün, Sonne rot); gewählt, nicht aus einer Quelle */
+const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
@@ -1490,21 +1494,23 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
   // Schalter an den Wänden, nur in der Brille (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle zu platzieren,
   // so wie Schalter, die man bedienen kann … auf allen vier Seiten»): flach auf jeder Wand im Band unter dem tiefsten Punkt, links
   // der Knöpfe + und − Höhen, Wanderwege, Gebäude und Bäume, rechts die Sonne und, wenn sie an ist, Datum, Uhrzeit und die Knöpfe
-  // für die Zeit; sie drehen und wachsen mit dem Modell; Grösse und Farben gewählt (an: Anthrazit mit grünem Streifen wie am Pult)
+  // für die Zeit; sie drehen und wachsen mit dem Modell; als Knöpfe einer Steuerung (Michael, 2026-10-22: «wie richtige … physische
+  // Knöpfe … wenn sie an sind … grün leuchten oder gelb, je nach Kategorie, oder rot … eingedrückt … abgeschaltet … mehr aus dem
+  // Modell heraus»): aus dunkel und vorstehend, an eingedrückt und leuchtend mit Schein auf der Wand; Grösse und Farben gewählt
   useEffect(() => {
     const k = kern.current
     const w = k?.wurzel.userData.waende as { x0: number; x1: number; z0: number; z1: number; y: number; wand: number; W: number } | undefined
     if (!k || !w) return
     const { W } = w, hoch = w.wand * 0.62, luecke = W * 0.008
-    interface Teil { zeilen: string[]; breite: number; an?: boolean; knopf?: boolean; aktion?: () => void }
+    interface Teil { zeilen: string[]; breite: number; an?: boolean; farbe?: string; knopf?: boolean; aktion?: () => void }
     const umschalten = (art: Schalter) => () => cb.current.schalten(art)
-    const links: Teil[] = [{ zeilen: ['Höhen'], breite: 0.085 * W, an: scheiben, aktion: umschalten('hoehen') }]
-    if (stufe !== 'schweiz') links.push({ zeilen: ['Wanderwege'], breite: 0.085 * W, an: wandern, aktion: umschalten('wandern') })
+    const links: Teil[] = [{ zeilen: ['Höhen'], breite: 0.085 * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') }]
+    if (stufe !== 'schweiz') links.push({ zeilen: ['Wanderwege'], breite: 0.085 * W, an: wandern, farbe: LICHT.gelaende, aktion: umschalten('wandern') })
     if ((stufe === 'ort' || stufe === 'nah') && umweltHier) {
-      links.push({ zeilen: ['Gebäude'], breite: 0.085 * W, an: gebaeude, aktion: umschalten('gebaeude') },
-                 { zeilen: ['Bäume'], breite: 0.085 * W, an: baeume, aktion: umschalten('baeume') })
+      links.push({ zeilen: ['Gebäude'], breite: 0.085 * W, an: gebaeude, farbe: LICHT.umwelt, aktion: umschalten('gebaeude') },
+                 { zeilen: ['Bäume'], breite: 0.085 * W, an: baeume, farbe: LICHT.umwelt, aktion: umschalten('baeume') })
     }
-    const rechts: Teil[] = [{ zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, aktion: umschalten('sonne') }]
+    const rechts: Teil[] = [{ zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') }]
     if (sonnenAn && sonnenZeilen) {
       const [tagZeit] = sonnenZeilen, komma = tagZeit.lastIndexOf(', ')
       rechts.push({ zeilen: [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)], breite: 0.09 * W })
@@ -1515,25 +1521,52 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
                   { zeilen: ['+1', 'Mon.'], breite: 0.034 * W, knopf: true, aktion: zeit('monat', 1) },
                   { zeilen: ['Jetzt'], breite: 0.04 * W, knopf: true, aktion: zeit('jetzt', 0) })
     }
-    // je Teil ein Bild, auf allen vier Wänden dasselbe
+    // je Teil ein Bild für die Vorderseite, auf allen vier Wänden dasselbe; an leuchtet es in der Farbe seiner Art, aus ist es dunkel
     const PX = 128
-    const bild = (t: Teil) => {
+    const bild = (t: Teil, an: boolean) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       c.height = PX; c.width = Math.round(PX * t.breite / hoch)
-      const hinter = t.knopf ? KARMIN : t.an === undefined ? '#ffffff' : t.an ? '#5a5a5a' : '#ffffff'
-      x.fillStyle = hinter; x.beginPath(); x.roundRect(2, 2, c.width - 4, c.height - 4, 16); x.fill()
-      if (t.an === false) { x.strokeStyle = '#767676'; x.lineWidth = 4; x.stroke() }
-      if (t.an !== undefined) { x.fillStyle = t.an ? '#3fbf5a' : '#d2d2d2'; x.fillRect(18, c.height - 26, c.width - 36, 10) }
-      x.fillStyle = t.knopf || t.an ? '#ffffff' : '#212121'; x.textAlign = 'center'
-      const px = t.zeilen.length > 1 ? 34 : 40, oben = t.an !== undefined ? 0 : 6
+      x.fillStyle = t.knopf ? KARMIN : t.an === undefined ? '#10161c' : an ? t.farbe! : '#3a3a3a'
+      x.fillRect(0, 0, c.width, c.height)
+      if (an && t.an !== undefined) {
+        // in der Mitte heller, zum Rand satter: wie ein Licht hinter der Kappe
+        const v = x.createRadialGradient(c.width / 2, c.height / 2, 0, c.width / 2, c.height / 2, c.width / 2)
+        v.addColorStop(0, 'rgba(255,255,255,0.55)'); v.addColorStop(1, 'rgba(255,255,255,0)')
+        x.fillStyle = v; x.fillRect(0, 0, c.width, c.height)
+      }
+      x.fillStyle = t.knopf ? '#ffffff' : t.an === undefined ? '#d8f5dc' : an ? '#1d1d1d' : '#c8c8c8'
+      x.textAlign = 'center'
+      const px = t.zeilen.length > 1 ? 34 : 40
       x.font = `bold ${px}px Helvetica, Arial, sans-serif`
-      t.zeilen.forEach((z, i) => x.fillText(z, c.width / 2, c.height / 2 + oben - (t.zeilen.length - 1) * px * 0.55 + i * px * 1.1 + px * 0.35, c.width - 16))
+      t.zeilen.forEach((z, i) => x.fillText(z, c.width / 2, c.height / 2 - (t.zeilen.length - 1) * px * 0.55 + i * px * 1.1 + px * 0.35, c.width - 16))
       const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
-      return new THREE.MeshBasicMaterial({ map: tex, transparent: true })
+      // was leuchtet (eingeschaltet, die Anzeige der Zeit), hängt nicht vom Licht ab; der Rest ist ein Knopf im Licht
+      return an || t.an === undefined ? new THREE.MeshBasicMaterial({ map: tex }) : new THREE.MeshLambertMaterial({ map: tex })
     }
-    const teile = [...links.map((t) => ({ t, seite: -1 })), ...rechts.map((t) => ({ t, seite: 1 }))]
-    const stoffe = teile.map(({ t }) => bild(t))
-    const geos = teile.map(({ t }) => new THREE.PlaneGeometry(t.breite, hoch))
+    // ein Schein auf der Wand um einen eingeschalteten Knopf
+    const scheinBild = (farbe: string) => {
+      const c = document.createElement('canvas'), x = c.getContext('2d')!
+      c.width = c.height = 128
+      const v = x.createRadialGradient(64, 64, 20, 64, 64, 64)
+      v.addColorStop(0, farbe); v.addColorStop(1, 'rgba(0,0,0,0)')
+      x.fillStyle = v; x.fillRect(0, 0, 128, 128)
+      const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
+      return new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: 0.8 })
+    }
+    const seite = new THREE.MeshLambertMaterial({ color: '#2a2a2a' }), fassung = new THREE.MeshLambertMaterial({ color: '#141414' })
+    const teile = [...links, ...rechts].map((t) => {
+      const an = !!t.an
+      // aus steht der Knopf heraus, an ist er eingedrückt; die Anzeige der Zeit liegt flach in der Wand
+      const tiefe = t.an === undefined && !t.knopf ? KNOPF_FLACH * W : an ? KNOPF_DRIN * W : KNOPF_DRAUSSEN * W
+      const vorne = bild(t, an)
+      const seiten = an ? new THREE.MeshBasicMaterial({ color: t.farbe }) : seite
+      return {
+        t, tiefe, vorne, seiten,
+        kappe: new THREE.BoxGeometry(t.breite, hoch, tiefe),
+        rahmen: new THREE.PlaneGeometry(t.breite + W * 0.006, hoch + W * 0.006),
+        schein: an && t.farbe ? { geo: new THREE.PlaneGeometry(t.breite + W * 0.05, hoch + W * 0.05), stoff: scheinBild(t.farbe) } : null,
+      }
+    })
     // Lage entlang der Wand: links ab 47 % ihrer Länge nach innen, rechts ab 11 % nach aussen (die Mitte gehört + und −); an
     // einer kürzeren Wand (die ganze Schweiz von Norden nach Süden, angesetzte Stücke) alles so viel kleiner, dass es Platz hat
     const summe = (l: Teil[]) => l.reduce((a, t) => a + t.breite, 0) + luecke * Math.max(0, l.length - 1)
@@ -1548,28 +1581,39 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     }
     const gruppe = new THREE.Group()
     gruppe.name = 'schalter'
-    const cx = (w.x0 + w.x1) / 2, cz = (w.z0 + w.z1) / 2, raus = W * 0.004
+    const cx = (w.x0 + w.x1) / 2, cz = (w.z0 + w.z1) / 2
     const waende: Array<[number, number, number, number, number]> = [
-      [cx, w.z0 + raus, 0, 1, w.x1 - w.x0], [cx, w.z1 - raus, 0, -1, w.x1 - w.x0],
-      [w.x1 + raus, cz, 1, 0, w.z0 - w.z1], [w.x0 - raus, cz, -1, 0, w.z0 - w.z1]]
+      [cx, w.z0, 0, 1, w.x1 - w.x0], [cx, w.z1, 0, -1, w.x1 - w.x0], [w.x1, cz, 1, 0, w.z0 - w.z1], [w.x0, cz, -1, 0, w.z0 - w.z1]]
     for (const [mx, mz, nx, nz, L] of waende) {
       const dreh = Math.atan2(nx, nz), qx = Math.cos(dreh), qz = -Math.sin(dreh), { f, lagen } = lagenAn(L)
-      teile.forEach(({ t }, i) => {
-        const m = new THREE.Mesh(geos[i], stoffe[i])
-        m.position.set(mx + qx * lagen[i], w.y, mz + qz * lagen[i])
+      const nach = new THREE.Vector3(nx, 0, nz)
+      // ein Teil um so viel vor der Wand (in Einheiten des Modells, schon mit f)
+      const setzen = (m: THREE.Mesh, u: number, vor: number) => {
+        m.position.set(mx + qx * u + nx * vor, w.y, mz + qz * u + nz * vor)
         m.scale.setScalar(f)
         m.rotation.y = dreh
-        m.renderOrder = 4
         m.visible = false
-        m.userData = { nach: new THREE.Vector3(nx, 0, nz), aktion: t.aktion, text: t.zeilen.join(' ') }
+        m.userData.nach = nach
         gruppe.add(m)
+      }
+      teile.forEach(({ t, tiefe, vorne, seiten, kappe, rahmen, schein }, i) => {
+        if (t.an !== undefined || t.knopf) setzen(new THREE.Mesh(rahmen, fassung), lagen[i], W * 0.0006)
+        if (schein) setzen(new THREE.Mesh(schein.geo, schein.stoff), lagen[i], W * 0.001)
+        const m = new THREE.Mesh(kappe, [seiten, seiten, seiten, seiten, vorne, seiten])
+        setzen(m, lagen[i], f * tiefe / 2 + W * 0.0008)
+        m.userData.aktion = t.aktion
+        m.userData.text = t.zeilen.join(' ')
       })
     }
     k.wurzel.add(gruppe)
     return () => {
       gruppe.removeFromParent()
-      for (const g of geos) g.dispose()
-      for (const m of stoffe) { m.map?.dispose(); m.dispose() }
+      for (const x of teile) {
+        x.kappe.dispose(); x.rahmen.dispose(); x.vorne.map?.dispose(); x.vorne.dispose()
+        if (x.seiten !== seite) x.seiten.dispose()
+        if (x.schein) { x.schein.geo.dispose(); x.schein.stoff.map?.dispose(); x.schein.stoff.dispose() }
+      }
+      seite.dispose(); fassung.dispose()
     }
   }, [b, stufe, zusatz, knoepfe, scheiben, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen])
 
