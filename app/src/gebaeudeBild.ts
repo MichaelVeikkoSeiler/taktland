@@ -7,7 +7,7 @@ import * as THREE from 'three'
 const GEBAEUDE_BILD_M = 4
 const WAND_TIEFER_M = 2
 /** Ambient Occlusion: so dunkel am Boden, bis so hoch darüber ausgelaufen (m); unter dem Dach so dunkel, so weit hinab */
-const AO_BODEN = 0.55, AO_BODEN_M = 3, AO_DACH = 0.8, AO_DACH_M = 0.8
+const AO_BODEN = 0.72, AO_BODEN_M = 8, AO_DACH = 0.8, AO_DACH_M = 0.8
 
 let bild: THREE.CanvasTexture | null = null
 function koernung() {
@@ -52,7 +52,8 @@ export function gebaeudeMaterial() {
       .replace('#include <common>', '#include <common>\nvarying vec2 vGebaeude;')
       .replace('#include <color_fragment>', `#include <color_fragment>
       if (vGebaeude.x >= 0.0) {
-        diffuseColor.rgb *= mix(${AO_BODEN.toFixed(3)}, 1.0, smoothstep(${WAND_TIEFER_M.toFixed(1)}, ${(WAND_TIEFER_M + AO_BODEN_M).toFixed(1)}, vGebaeude.x));
+        float boden = 1.0 - clamp((vGebaeude.x - ${WAND_TIEFER_M.toFixed(1)}) / ${AO_BODEN_M.toFixed(1)}, 0.0, 1.0);
+        diffuseColor.rgb *= mix(1.0, ${AO_BODEN.toFixed(3)}, boden * boden);
         diffuseColor.rgb *= mix(${AO_DACH.toFixed(3)}, 1.0, smoothstep(0.0, ${AO_DACH_M.toFixed(2)}, vGebaeude.y));
       }`)
   }
