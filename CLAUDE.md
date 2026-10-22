@@ -307,7 +307,7 @@ data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: 
 data/schweiz3d_probe/  Gebäude und Bäume für «3D Schweiz» in zwei Probeausschnitten (Michael, 2026-10-20: «Köniz und Gantrisch»):
              alles in 6 × 6 km um Köniz und 8 × 8 km um den Gantrisch, nicht nur neben der Bahn, Formate wie data/gebaeude und data/baeume,
              Farben aus SWISSIMAGE 2 m (pipeline/build_schweiz3d_probe.py, 14'864 Gebäude, etwa 630'000 Bäume, etwa 11 MB); in der App in den Stufen
-             4 km und 1 km, Schalter «Gebäude und Bäume» nur dort (probeLaden in src/gelaende.ts); die ganze Schweiz siehe
+             4 km und 1 km, Schalter «Gebäude und Bäume» nur dort, am Anfang aus (Michael, 2026-10-22: «defaultmässig keine Bäume und keine Gebäude»), in der Brille «Gebäude und Bäume ein/aus» in der Leiste unter der Tafel der Sonne (probeLaden in src/gelaende.ts); die ganze Schweiz siehe
              data/schweiz3dumwelt_extern
 data/schweiz3dumwelt_extern/  Gebäude und Bäume der ganzen Schweiz für «3D Schweiz» und 3dland.ch auf daten.taktland.ch, nicht in Git
              (Michael, 2026-10-21: «Bäume und Gebäude für 3DLand»): wie die Probeausschnitte alles, nicht nur neben der Bahn,

@@ -276,7 +276,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [fehler, setFehler] = useState<string | null>(null)
   const [zusatz, setZusatz] = useState<Zusatz | null>(null)
   const [scheiben, setScheiben] = useState(true)
-  const [umwelt, setUmwelt] = useState(true)
+  // am Anfang aus (Michael, 2026-10-22: «defaultmässig keine Bäume und keine Gebäude … optional zugeschaltet»)
+  const [umwelt, setUmwelt] = useState(false)
   // Wanderwege am Anfang aus (Michael, 2026-10-21: «defaultmässig ausgeblendet»)
   const [wandern, setWandern] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
@@ -483,7 +484,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                      setWahl(w)
                    }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
-                   umwelt={umwelt && umweltHier} meldung={meldung} wandern={wandern} wandernUmschalten={() => setWandern((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen}
+                   umwelt={umwelt && umweltHier} umweltHier={umweltHier} umweltUmschalten={() => setUmwelt((x) => !x)} meldung={meldung} wandern={wandern} wandernUmschalten={() => setWandern((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen}
                    zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -682,7 +683,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, meldung, wandern, wandernUmschalten, sonne: stand, sonnenZeilen, zeitSchieben }: {
+function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, umwelt, umweltHier, umweltUmschalten, meldung, wandern, wandernUmschalten, sonne: stand, sonnenZeilen, zeitSchieben }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
@@ -700,6 +701,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
   wandern: boolean
   /** Wanderwege ein und aus, in der Brille */
   wandernUmschalten: () => void
+  /** Gebäude und Bäume gibt es hier, und ein und aus, in der Brille */
+  umweltHier: boolean; umweltUmschalten: () => void
 }) {
   const huelle = useRef<HTMLDivElement>(null)
   const welt = useRef<Welt | null>(null)
@@ -711,11 +714,11 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight; sonnenTafelSetzen: (zeilen: string[] | null) => void
     anfangSetzen: () => void; leisteSetzen: () => void
   } | null>(null)
-  const cb = useRef({ waehlen, eintauchen, zurueck, erweitern, zeitSchieben, wandernUmschalten })
-  cb.current = { waehlen, eintauchen, zurueck, erweitern, zeitSchieben, wandernUmschalten }
+  const cb = useRef({ waehlen, eintauchen, zurueck, erweitern, zeitSchieben, wandernUmschalten, umweltUmschalten })
+  cb.current = { waehlen, eintauchen, zurueck, erweitern, zeitSchieben, wandernUmschalten, umweltUmschalten }
   // was die Leiste in der Brille anbietet
-  const leisteJetzt = useRef({ stufe, wandern })
-  leisteJetzt.current = { stufe, wandern }
+  const leisteJetzt = useRef({ stufe, wandern, umwelt, umweltHier })
+  leisteJetzt.current = { stufe, wandern, umwelt, umweltHier }
   const scheibenJetzt = useRef(scheiben)
   scheibenJetzt.current = scheiben
 
@@ -823,16 +826,19 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       leeren(leiste)
       leiste.visible = renderer.xr.isPresenting
       if (!leiste.visible) return
-      const { stufe: st, wandern: an } = leisteJetzt.current
+      const { stufe: st, wandern: an, umwelt: uw, umweltHier: uh } = leisteJetzt.current
       const knoepfe: Array<[string, () => void]> = []
       if (st !== 'schweiz') knoepfe.push([an ? 'Wanderwege aus' : 'Wanderwege ein', () => cb.current.wandernUmschalten()])
+      if ((st === 'ort' || st === 'nah') && uh) knoepfe.push([uw ? 'Gebäude und Bäume aus' : 'Gebäude und Bäume ein', () => cb.current.umweltUmschalten()])
       if (sonnenZeilenJetzt && sonnenZu) knoepfe.push(['Zeit', () => { sonnenZu = false; sonnenTafelSetzen(sonnenZeilenJetzt) }])
-      knoepfe.forEach(([text, aktion], i) => {
-        const sp = tafelBild(text, true)
-        sp.position.set((i - (knoepfe.length - 1) / 2) * 0.26, SONNE_Y - 0.15, SONNE_Z)
-        sp.userData.aktion = aktion
+      // nebeneinander, je nach Breite der Schrift, 2 cm dazwischen
+      const bilder = knoepfe.map(([text, aktion]) => { const sp = tafelBild(text, true); sp.userData.aktion = aktion; return sp })
+      let x = -(bilder.reduce((a, sp) => a + sp.scale.x, 0) + 0.02 * (bilder.length - 1)) / 2
+      for (const sp of bilder) {
+        sp.position.set(x + sp.scale.x / 2, SONNE_Y - 0.15, SONNE_Z)
+        x += sp.scale.x + 0.02
         leiste.add(sp)
-      })
+      }
     }
     function tafelBild(text: string, knopf: boolean) {
       const c = document.createElement('canvas'), x = c.getContext('2d')!, px = 30
@@ -1616,7 +1622,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     }
   }, [stand, b, stufe])
   useEffect(() => { kern.current?.sonnenTafelSetzen(sonnenZeilen) }, [sonnenZeilen])
-  useEffect(() => { kern.current?.leisteSetzen() }, [stufe, wandern])
+  useEffect(() => { kern.current?.leisteSetzen() }, [stufe, wandern, umwelt, umweltHier])
 
   useEffect(() => { welt.current?.scheiben(scheiben) }, [scheiben])
   // eine neue Stufe steht in der Brille wieder auf dem Tisch wie am Anfang
