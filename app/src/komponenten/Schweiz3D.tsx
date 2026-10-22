@@ -13,6 +13,7 @@ import type { SeenDaten, SehenswertDaten } from '../typen'
 import { Ladebalken } from './Ladebalken'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
+import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
 
 /**
  * «3D Schweiz» (Michael, 2026-10-18: «die Berge und Täler der Schweiz besser erkunden … von der ganzen Schweiz bis ins
@@ -1618,7 +1619,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
  *  Mitte im Rechteck: eine Kachel von 500 m reicht oft über den Rand des Modells (Michael, 2026-10-21: «stimmen die
  *  Gebäudeeinblendungen nicht mit den Kacheln überein», sie standen neben dem Sockel in der Luft) */
 function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: number, n0: number, e1: number, n1: number) {
-  const material = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+  const material = gebaeudeMaterial()
   return kacheln.filter((g) => g.e0 < e1 && g.e0 + 500 > e0 && g.n0 < n1 && g.n0 + 500 > n0).flatMap((g) => {
     const n = g.ecken.length / 3
     const pos: number[] = [], farbe: number[] = []
@@ -1637,6 +1638,7 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
     geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
     geo.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
     geo.computeVertexNormals()
+    gebaeudeFlaechen(geo, 1000)
     const m = new THREE.Mesh(geo, material)
     m.castShadow = m.receiveShadow = true
     return [m]

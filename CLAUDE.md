@@ -364,7 +364,7 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              erfand es Häuser)
 data/gebaeude/  Gebäude, ein Versuch, zuerst auf Gümmenen–Bern (Michael, 2026-10-13): swissBUILDINGS3D 3.0 (swisstopo, CityGML je Kartenblatt,
              der neueste Jahrgang), Dach- und Wandflächen in Dreiecke zerlegt (mapbox_earcut), nur Gebäude mit ihrer Mitte bis 400 m neben
-             den Bahnlinien, Dächer in der Farbe des Nahbilds (SWISSIMAGE 2,5 m), Wände grau (in keiner Quelle), unten 2 m verlängert;
+             den Bahnlinien, Dächer in der Farbe des Nahbilds (SWISSIMAGE 2,5 m), Wände grau (in keiner Quelle), unten 2 m verlängert; Wände und Dächer mit gemalter Körnung, Wände am Boden und unter dem Dach dunkler (Ambient Occlusion von Hand, src/gebaeudeBild.ts; Michael, 2026-10-22: «etwas Körnung und Schattierung»; in keiner Quelle, auch in «3D Schweiz»);
              je 500 m eine .bgz (pipeline/build_gebaeude.py, 23'732 Gebäude, 10,5 MB; seit 2026-10-13 alle Strecken der scharfen Umgebung von Müntschemier über Bern und Biel/Bienne bis Neuchâtel); in der App nur im Führerstand, mit dem feinen
              Gelände geladen (gebaeudeSetzen in Relief.tsx, gebaeudeKachel in src/gelaende.ts)
 data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026-10-13: «zuerst ohne gemessene Baumhöhen»): swissTLM3D

@@ -19,6 +19,7 @@ import { Ladebalken } from './Ladebalken'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
 import { Klappe } from './Klappe'
+import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
 
 /**
  * 3D-Relief einer Strecke (Michael, 2026-10-06: zuerst die Gotthard-Bergstrecke, im Browser,
@@ -2188,7 +2189,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const gebaeudeGruppe = new THREE.Group()
     gebaeudeGruppe.visible = false
     szene.add(gebaeudeGruppe)
-    const gebaeudeMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+    const gebaeudeStoff = gebaeudeMaterial()
     const gebaeudeNetze = new Map<string, THREE.Mesh>()
     let gebaeudeAuftrag = 0
     /** wo der Zug stand, als das feine Gelände zuletzt geladen wurde; Kacheln von 500 m nach ihrem Abstand dazu */
@@ -2224,7 +2225,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         g.setAttribute('position', new THREE.BufferAttribute(pos, 3))
         g.setAttribute('color', new THREE.BufferAttribute(farbe, 3))
         g.computeVertexNormals()
-        const netz = new THREE.Mesh(g, gebaeudeMaterial)
+        gebaeudeFlaechen(g, 1000, 1000 / faktor)
+        const netz = new THREE.Mesh(g, gebaeudeStoff)
         gebaeudeGruppe.add(netz)
         gebaeudeNetze.set(name, netz)
       }
