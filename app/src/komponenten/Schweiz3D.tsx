@@ -43,6 +43,8 @@ interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, numb
 /** so viele Stücke je Richtung und im Ganzen; jedes hat sein eigenes Bild von bis zu 4096 × 4096 Bildpunkten, das die
  *  Grafik des Geräts halten muss (etwa 85 MB). Die Grenze ist eine Annahme, nicht gemessen: auf dem Handy 4, sonst 9 */
 const JE_RICHTUNG = 3
+/** läuft gerade eine Sitzung in der Brille (für die Grösse der Bilder beim Laden) */
+let inDerBrille = false
 /** Materialien einer Stufe erst wegräumen, wenn die nächste gezeichnet ist (Michael, 2026-10-22, Brille: nach dem zweiten
  *  Eintauchen stand ein Bild vor den Augen und drehte mit dem Kopf): three.js behält ein übersetztes Programm der Grafik nur,
  *  solange ein Material es braucht; räumt die alte Stufe zuerst alles weg, übersetzt die neue alle Programme nochmals, die Seite
@@ -133,9 +135,10 @@ async function ortLaden(f: Feld, region: Bestand): Promise<Gelaende> {
       h[j * breite + i] = z ?? bestandHoehe(region, e, n)
     }
   }
-  // das Bild: das Luftbild der Region darunter, das Nahbild darüber
+  // das Bild: das Luftbild der Region darunter, das Nahbild darüber; 2048 Bildpunkte auf 4 km sind etwa 2 m, feiner als die
+  // Daten (2,5 m); vorher 4096, viermal so viel Speicher der Grafik ohne schärferes Bild (Michael, 2026-10-22: Brille stand)
   const c = document.createElement('canvas')
-  c.width = c.height = 4096
+  c.width = c.height = 2048
   const g = c.getContext('2d')!
   const s = c.width / f.seite
   unterZeichnen(g, region, e0, n1, s)
@@ -189,8 +192,10 @@ async function nahLaden(f: Feld, ort: Bestand): Promise<Gelaende> {
       h[j * breite + i] = z ?? zf ?? bestandHoehe(ort, e, n)
     }
   }
+  // in der Brille 2048 Bildpunkte (50 cm wie die Daten der ganzen Schweiz, das scharfe Bild auf 25 cm nur halb so scharf):
+  // die Grafik der Brille ist die eines Handys und zeichnet jedes Bild zweimal
   const c = document.createElement('canvas')
-  c.width = c.height = 4096
+  c.width = c.height = inDerBrille ? 2048 : 4096
   const g = c.getContext('2d')!
   const s = c.width / f.seite, k = SCHARF_KACHEL_M
   unterZeichnen(g, ort, e0, n1, s)
@@ -623,6 +628,8 @@ const SOCKEL_WAND_FARBEN = ['#363636', '#404040', '#4c4c4c', '#3a3a3a'], SOCKEL_
 
 /** in der Brille: das Modell so breit auf Tischhöhe, so weit vor dir (wie die Modellbahn) */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
+/** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
+const BRILLE_SCHATTEN_PX = 2048
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
 const BRILLE_SCHRIFT_M = 0.022
 
@@ -705,6 +712,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
   umweltHier: boolean; umweltUmschalten: () => void
 }) {
   const huelle = useRef<HTMLDivElement>(null)
+  const [grafikWeg, setGrafikWeg] = useState(false)
   const welt = useRef<Welt | null>(null)
   const kern = useRef<{
     renderer: THREE.WebGLRenderer; szene: THREE.Scene; kamera: THREE.PerspectiveCamera; steuerung: OrbitControls
@@ -749,7 +757,20 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = THREE.PCFSoftShadowMap
     const sonne = new THREE.DirectionalLight('#ffffff', 1.4)
-    sonne.shadow.mapSize.setScalar(matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 2048 : 4096)
+    const schattenPx = matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 2048 : 4096
+    sonne.shadow.mapSize.setScalar(schattenPx)
+    // eine neue Grösse gilt erst mit einer neuen Schattenkarte
+    const schattenGroesse = (px: number) => {
+      if (sonne.shadow.mapSize.x === px) return
+      sonne.shadow.mapSize.setScalar(px); sonne.shadow.map?.dispose(); sonne.shadow.map = null
+    }
+    // verliert die Grafik ihren Zustand (zu wenig Speicher), steht in der Brille das letzte Bild still vor den Augen: dann die
+    // Sitzung beenden und es sagen, statt zu schweigen
+    renderer.domElement.addEventListener('webglcontextlost', (ev) => {
+      ev.preventDefault()
+      void renderer.xr.getSession()?.end().catch(() => {})
+      setGrafikWeg(true)
+    })
     sonne.shadow.bias = -0.0004
     sonne.userData.bleibt = true
     sonne.target.userData.bleibt = true
@@ -995,7 +1016,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       }
       tafel.visible = false
     }
-    renderer.xr.addEventListener('sessionend', () => { bildschirmSetzen(); setzeHimmel(); sonnenTafel.visible = false; leiste.visible = false; anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
+    renderer.xr.addEventListener('sessionend', () => { inDerBrille = false; schattenGroesse(schattenPx); bildschirmSetzen(); setzeHimmel(); sonnenTafel.visible = false; leiste.visible = false; anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
     brilleRef.current = async () => {
       const xr = navigator.xr
       if (!xr) throw new Error('Kein WebXR')
@@ -1004,6 +1025,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       renderer.xr.setReferenceSpaceType('local-floor')
       kamera.near = 0.01; kamera.updateProjectionMatrix()
       await renderer.xr.setSession(sitzung)
+      inDerBrille = true
+      schattenGroesse(BRILLE_SCHATTEN_PX)
       anfangSetzen()
       sonnenZu = false
       brilleSetzen(); setzeHimmel(); sonnenTafelSetzen(sonnenZeilenJetzt)
@@ -1635,7 +1658,15 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         : info && wahl ? [...info, 'Nochmals Abzug: eintauchen'] : stufe === 'nah' ? ['Greiftaste: zurück'] : null)
     }
   }, [wahl, info, stufe, b, meldung])
-  return <div ref={huelle} className="absolute inset-0 touch-none" />
+  return (
+    <div ref={huelle} className="absolute inset-0 touch-none">
+      {grafikWeg && (
+        <p role="status" className="absolute inset-x-2 top-12 z-10 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">
+          Die Grafik des Geräts hat aufgegeben, wohl weil ihr der Speicher ausging. Lade die Seite neu und wähle ein kleineres Modell.
+        </p>
+      )}
+    </div>
+  )
 }
 
 /** die Gebäude im Rechteck als Netze (je Kachel eines), in Kilometern um die Mitte, Höhe ungestreckt; nur die Dreiecke mit ihrer
