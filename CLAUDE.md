@@ -259,7 +259,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              holen ihr Gelände ebenfalls aus den Kacheln
 data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18): die Geländekacheln auf 500 m gemittelt (hoehen.hgz,
              UInt16, nicht .gz, das liefert ein Server als gepackt aus) und das Luftbild auf 100 m (luftbild.jpg), 1,8 MB
-             (pipeline/build_schweiz3d.py, nach build_gelaende und build_luftbild); in der App komponenten/Schweiz3D.tsx (#/schweiz3d):
+             (pipeline/build_schweiz3d.py, nach build_gelaende und build_luftbild; das Ausland ohne Aufnahme überall im selben Grundton #d8d5c2,
+             statt weiss und beige gekachelt, Michael, 2026-10-22); in der App komponenten/Schweiz3D.tsx (#/schweiz3d):
              vier Stufen, die Schweiz, darin ein Feld von 20 km (Gelände 50 m, Luftbild 10 m), darin eines von
              4 km (feines Gelände und Nahbild, wo es sie gibt, sonst wie die Region, mit Hinweis), darin eines von 1 km im 5-m-Raster
              (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail»; nahLaden: die scharfe Umgebung, Gelände 2 m und Luftbild

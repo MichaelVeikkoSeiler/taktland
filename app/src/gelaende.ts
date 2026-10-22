@@ -690,6 +690,8 @@ export async function schweiz3dLaden(e0: number, n0: number, e1: number, n1: num
     Promise.all(namen.map((n) => (ix.kacheln[n][0] === null ? null
       : holenBinaer(`${DATEN_URL}${art}/${n}.jpg`)
         .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' }), px > 0 ? { resizeWidth: px, resizeHeight: px, resizeQuality: 'medium' } : undefined))
+        // jenseits der Grenze weiss: durchsichtig, damit überall derselbe Grundton darunter durchscheint
+        .then((b) => ohneLeeres(b, 1))
         .catch(() => null)))),
     ohneHoehen ? Promise.resolve([] as Array<Float32Array | null>)
       : Promise.all(namen.map((n) => (ix.kacheln[n][1] === null ? null : hoeheKmLesen(`${DATEN_URL}${art}/${n}.hgz`).catch(() => null)))),
