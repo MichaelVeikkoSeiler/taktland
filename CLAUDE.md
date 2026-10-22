@@ -316,8 +316,8 @@ data/schweiz3dumwelt_extern/  Gebäude und Bäume der ganzen Schweiz für «3D S
              «3D Schweiz Gebäude und Bäume» (.github/workflows/schweiz3dumwelt.yml, von Hand, Gebäude 18 Streifen, Bäume 9),
              Release «schweiz3dumwelt-1», holen.php (HOLEN = 'schweiz3dumwelt-1') nach schweiz3dumwelt/gebaeude/ und /baeume/;
              die App (probeLaden, probeDa, umweltGanz in src/gelaende.ts) nimmt diese vor den Probeausschnitten; in einem Modell
-             höchstens 1,2 Millionen gezeichnete Waldbäume, auf dem Handy 300'000, darüber wird der Wald lichter, Einzelbäume bleiben
-             (BAUM_HOECHSTENS in Schweiz3D.tsx; eine Annahme zur Grafik, nicht gemessen)
+             höchstens 1,2 Millionen gezeichnete Waldbäume, auf dem Handy 300'000, in der Brille 50'000 (Michael, 2026-10-22: nach dem Eintauchen ins Feld von 4 km stand die Brille, das letzte Bild drehte mit dem Kopf), darüber wird der Wald lichter, Einzelbäume bleiben
+             (BAUM_HOECHSTENS in Schweiz3D.tsx; eine Annahme zur Grafik, nicht gemessen); ihre Programme der Grafik übersetzt compileAsync, bevor sie erscheinen, und die Materialien einer Stufe werden erst 4 s nach dem Wechsel weggeräumt, damit die nächste die übersetzten Programme weiter nutzt (spaeterWeg; sonst stand die Seite beim Eintauchen Sekunden still)
 data/wanderwege/  Wanderwege für «3D Schweiz» (Michael, 2026-10-21: «alle Wanderwege der Schweiz»): swissTLM3D (swisstopo), Ebene
              Strasse, jedes Stück mit WANDERWEGE Wanderweg, Bergwanderweg oder Alpinwanderweg, ohne Stücke in Tunneln, nur die Lage, nach
              Douglas-Peucker auf 2 m vereinfacht, je 10-km-Kachel eine .wwg (pipeline/build_wanderwege.py, 408'970 Stücke, 9,3 MB); in der

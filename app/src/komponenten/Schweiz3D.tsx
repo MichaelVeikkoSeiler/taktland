@@ -43,6 +43,14 @@ interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, numb
 /** so viele Stücke je Richtung und im Ganzen; jedes hat sein eigenes Bild von bis zu 4096 × 4096 Bildpunkten, das die
  *  Grafik des Geräts halten muss (etwa 85 MB). Die Grenze ist eine Annahme, nicht gemessen: auf dem Handy 4, sonst 9 */
 const JE_RICHTUNG = 3
+/** Materialien einer Stufe erst wegräumen, wenn die nächste gezeichnet ist (Michael, 2026-10-22, Brille: nach dem zweiten
+ *  Eintauchen stand ein Bild vor den Augen und drehte mit dem Kopf): three.js behält ein übersetztes Programm der Grafik nur,
+ *  solange ein Material es braucht; räumt die alte Stufe zuerst alles weg, übersetzt die neue alle Programme nochmals, die Seite
+ *  steht dabei Sekunden still und die Brille zeigt so lange ihr letztes Bild. Die Wartezeit ist gewählt */
+const MATERIAL_WEG_MS = 4000
+const spaeterWeg = (materialien: Array<THREE.Material | undefined>) => {
+  setTimeout(() => { for (const m of materialien) m?.dispose() }, MATERIAL_WEG_MS)
+}
 const hoechstens = () => (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 4 : 9)
 
 const einzeln = (anker: Feld, g: Gelaende): Bestand => ({ anker, teile: new Map([['0_0', g]]), di: [0, 0], dj: [0, 0] })
@@ -1055,6 +1063,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     }
     // nur in einer Testfassung (VITE_S3D_TEST): wo die Knöpfe im Bild liegen
     if (import.meta.env.VITE_S3D_TEST) {
+      (window as unknown as { s3dInfo: unknown }).s3dInfo = () => ({ programme: renderer.info.programs?.length, ...renderer.info.render, ...renderer.info.memory });
       (window as unknown as { s3dKnoepfe: unknown }).s3dKnoepfe = () => {
         const r = renderer.domElement.getBoundingClientRect()
         return (wurzel.getObjectByName('knoepfe')?.children ?? []).filter((o) => o.visible).map((o) => {
@@ -1463,17 +1472,18 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     if (renderer.xr.isPresenting) k.jeBild[0]()
     return () => {
       k.wenn.tipp = null
+      const weg: Array<THREE.Material | undefined> = []
       for (const o of [...wurzel.children]) {
         if (o.userData.bleibt) continue
         o.traverse((x) => {
           const q = x as THREE.Mesh
           q.geometry?.dispose()
           const mats = (Array.isArray(q.material) ? q.material : [q.material]) as Array<(THREE.Material & { map?: THREE.Texture }) | undefined>
-          for (const mat of mats) { mat?.map?.dispose(); mat?.dispose?.() }
+          for (const mat of mats) { mat?.map?.dispose(); weg.push(mat) }
         })
         wurzel.remove(o)
       }
-      for (const m of [...wandMaterialien, platteMaterial, ...scheibenMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial]) m.dispose()
+      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, ...scheibenMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1491,18 +1501,23 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     const gruppe = new THREE.Group()
     gruppe.name = 'umwelt'
     let weg = false
-    void probeLaden(e0, n0, e1, n1).then(({ gebaeude, baeume }) => {
+    void probeLaden(e0, n0, e1, n1).then(async ({ gebaeude, baeume }) => {
       if (weg) return
-      gruppe.add(...gebaeudeNetz(gebaeude, cE, cN, e0, n0, e1, n1), ...baumNetz(baeume, b, cE, cN, e0, n0, e1, n1))
-      if (gruppe.children.length) wurzel.add(gruppe)
+      gruppe.add(...gebaeudeNetz(gebaeude, cE, cN, e0, n0, e1, n1), ...baumNetz(baeume, b, cE, cN, e0, n0, e1, n1, k.inBrille()))
+      if (!gruppe.children.length) return
+      // die Programme für Gebäude und Bäume übersetzen, ohne die Seite anzuhalten (wo der Browser es kann), erst dann zeigen
+      await k.renderer.compileAsync(gruppe, k.kamera, k.szene).catch(() => {})
+      if (!weg) wurzel.add(gruppe)
     })
     return () => {
       weg = true
+      const mats: Array<THREE.Material | undefined> = []
       gruppe.traverse((x) => {
         const q = x as THREE.Mesh
         q.geometry?.dispose()
-        ;(q.material as THREE.Material | undefined)?.dispose?.()
+        mats.push(q.material as THREE.Material | undefined)
       })
+      spaeterWeg(mats)
       gruppe.removeFromParent()
     }
   }, [b, stufe, umwelt])
@@ -1558,11 +1573,13 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     })
     return () => {
       weg = true
+      const mats: Array<THREE.Material | undefined> = []
       gruppe.traverse((x) => {
         const q = x as THREE.Mesh
         q.geometry?.dispose()
-        ;(q.material as THREE.Material | undefined)?.dispose?.()
+        mats.push(q.material as THREE.Material | undefined)
       })
+      spaeterWeg(mats)
       gruppe.removeFromParent()
     }
   }, [b, stufe, wandern])
@@ -1647,14 +1664,17 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
 
 /** die Bäume im Rechteck als ein InstancedMesh, der Fuss auf dem Gelände des Bestands */
 /** höchstens so viele gezeichnete Waldbäume in einem Modell, auf dem Handy weniger; eine Annahme zur Grafik, nicht gemessen */
-const BAUM_HOECHSTENS = 1_200_000, BAUM_HOECHSTENS_HANDY = 300_000
-const baumHoechstens = () => (hoechstens() === 4 ? BAUM_HOECHSTENS_HANDY : BAUM_HOECHSTENS)
-function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0: number, n0: number, e1: number, n1: number) {
+/** in der Brille noch weniger: sie zeichnet jedes Bild zweimal, je Auge, dazu den Schatten, auf der Grafik eines Handys
+ *  (Michael, 2026-10-22: nach dem Eintauchen ins Feld von 4 km stand die Brille; 121'193 Bäume am Gantrisch, je 20 Dreiecke);
+ *  ebenso eine Annahme, nicht auf der Brille gemessen */
+const BAUM_HOECHSTENS = 1_200_000, BAUM_HOECHSTENS_HANDY = 300_000, BAUM_HOECHSTENS_BRILLE = 50_000
+const baumHoechstens = (brille: boolean) => (brille ? BAUM_HOECHSTENS_BRILLE : hoechstens() === 4 ? BAUM_HOECHSTENS_HANDY : BAUM_HOECHSTENS)
+function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0: number, n0: number, e1: number, n1: number, brille = false) {
   const liste: Array<[number, number, number, number, number, number]> = []
   // zu viele Bäume für die Grafik: der gezeichnete Wald wird lichter, Einzelbäume bleiben alle (BAUM_HOECHSTENS)
   let wald = 0
   for (const k of kacheln) for (let i = 0; i < k.art.length; i++) if (k.art[i] > 0) wald++
-  const grenze = baumHoechstens(), jeder = Math.max(1, Math.ceil(wald / grenze))
+  const grenze = baumHoechstens(brille), jeder = Math.max(1, Math.ceil(wald / grenze))
   let w = 0
   for (const k of kacheln) {
     for (let i = 0; i < k.art.length; i++) {
