@@ -13,6 +13,7 @@ import type { SeenDaten, SehenswertDaten } from '../typen'
 import { Ladebalken } from './Ladebalken'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
+import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
 import { knopfTon, verlaufTon } from '../audio'
 
@@ -363,6 +364,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const brille = useRef<(() => Promise<void>) | null>(null)
   const xr = useBrilleMoeglich()
   const [brilleHinweis, setBrilleHinweis] = useState<string | null>(null)
+  // Vollbild auch ohne Brille (Michael, 2026-10-22: «Vollbildmodus muss man auch einschalten können»)
+  const [voll, setVoll] = useState(false)
+  useEchtesVollbild(voll, setVoll)
   const inBrille = () => {
     if (!xr) { setBrilleHinweis('Auf diesem Gerät ist keine VR-Brille zu finden. Öffne Taktland im Browser einer VR-Brille wie der Meta Quest 3.'); return }
     setBrilleHinweis(null)
@@ -487,7 +491,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {groesse && <span className="px-1 text-sbb-metal dark:text-sbb-storm">({groesse})</span>}
       </nav>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
-      <div className="relative mt-2 h-[68vh] min-h-[360px] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]">
+      <div className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
+        : 'relative mt-2 h-[68vh] min-h-[360px] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]'}>
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
@@ -506,10 +511,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
         <Ladebalken inKarte />
-        <button type="button" onClick={inBrille}
-                className="absolute right-2 top-2 rounded-lg bg-sbb-red px-2.5 py-1 text-xs font-bold text-white">
-          Mit VR-Brille
-        </button>
+        <div className="absolute right-2 top-2 flex items-center gap-2">
+          <button type="button" onClick={inBrille} className="rounded-lg bg-sbb-red px-2.5 py-1 text-xs font-bold text-white">
+            Mit VR-Brille
+          </button>
+          <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
+        </div>
         {brilleHinweis && (
           <p role="status" className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">{brilleHinweis}</p>
         )}
@@ -519,30 +526,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               Überrasch mich
             </button>
           )}
-          <button type="button" aria-pressed={scheiben} onClick={() => setScheiben((x) => !x)}
-                  className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${scheiben ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
-            Höhen 1'000 m
-          </button>
-          <button type="button" aria-pressed={orteAn} onClick={() => setOrteAn((x) => !x)}
-                  className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${orteAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
-            Orte
-          </button>
-          <button type="button" aria-pressed={gipfelAn} onClick={() => setGipfelAn((x) => !x)}
-                  className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${gipfelAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
-            Gipfel
-          </button>
-          {stufe !== 'schweiz' && (
-            <button type="button" aria-pressed={wandern} onClick={() => setWandern((x) => !x)}
-                    className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${wandern ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
-              Wanderwege
-            </button>
-          )}
-          {umweltHier && ([['Gebäude', gebaeudeAn, setGebaeudeAn], ['Bäume', baeumeAn, setBaeumeAn]] as const).map(([text, an, setzen]) => (
-            <button key={text} type="button" aria-pressed={an} onClick={() => setzen((x) => !x)}
-                    className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${an ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
-              {text}
-            </button>
-          ))}
         </div>
         {meldung && (
           <button type="button" onClick={() => setMeldung(null)} role="status"
@@ -572,10 +555,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         )}
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-        <button type="button" aria-pressed={sonnenAn} onClick={() => setSonnenAn((x) => !x)}
-                className={`rounded-lg border px-2.5 py-1.5 text-xs font-bold ${sonnenAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
-          Sonne und Schatten
-        </button>
         {sonnenAn && (
           <>
             <input type="date" value={tag} onChange={(e) => { if (e.target.value) setTag(e.target.value) }} aria-label="Datum"
@@ -594,6 +573,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {standText && <p className="mt-1 text-sm">{standText} ({tagText}, {uhrzeit(minuten)} Uhr, Schweizer Zeit).</p>}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Höhe wie echt. Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'nah' && ' Ein Tipp wählt ein Feld.'}
+        {' Die Knöpfe an den Wänden schalten Höhen, Orte, Gipfel, Wanderwege, Gebäude, Bäume und die Sonne ein und aus.'}
         {stufe !== 'schweiz' && ' + und − an einer Wand setzen dort ein Stück an oder nehmen eines weg.'}
         {hinweis && <> <strong>{hinweis}</strong></>}
       </p>
@@ -643,7 +623,37 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
  *  Licht schattiert. Masse als Anteil der Breite des Modells, nicht aus einer Quelle. */
 const SOCKEL_WAND = 0.06, SOCKEL_PLATTE = 0.025, SOCKEL_UEBERSTAND = 0.012
 /** je Seite ein eigener Grauton (Norden, Osten, Süden, Westen), damit man die Seiten gut unterscheidet; das Licht kommt dazu */
-const SOCKEL_WAND_FARBEN = ['#363636', '#404040', '#4c4c4c', '#3a3a3a'], SOCKEL_PLATTE_FARBE = '#2c2c2c'
+/** die Wände aus dunklem Holz wie Ebenholz (Michael, 2026-10-22), gemalt, nicht aus einer Quelle; je Seite leicht anders getönt,
+ *  damit man die Seiten unterscheidet; ein Bild deckt HOLZ_BILD der Breite des Modells */
+const SOCKEL_WAND_FARBEN = ['#ffffff', '#e8e8e8', '#d4d4d4', '#f2f2f2'], SOCKEL_PLATTE_FARBE = '#cfcfcf'
+const HOLZ_BILD = 0.25
+let holzTextur: THREE.CanvasTexture | null = null
+function holzBild() {
+  if (holzTextur) return holzTextur
+  const B = 1024, H = 256, c = document.createElement('canvas')
+  c.width = B; c.height = H
+  const g = c.getContext('2d')!, bild = g.createImageData(B, H)
+  // Maserung: feine Linien längs der Wand, deren Lage langsam wellt, dazu Poren und wenige hellere Adern
+  const welle = Array.from({ length: 8 }, () => [Math.random() * 6, 0.5 + Math.random() * 2, Math.random() * Math.PI * 2])
+  const zeile = Array.from({ length: H }, () => Math.random())
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < B; x++) {
+      let v = y
+      for (const [a, f, ph] of welle) v += a * Math.sin((x / B) * Math.PI * 2 * f + ph)
+      const j = ((Math.floor(v) % H) + H) % H
+      const ader = zeile[j] > 0.93 ? 18 : zeile[j] > 0.7 ? 7 : 0
+      const d = ader + (Math.random() - 0.5) * 6 - (Math.random() < 0.004 ? 10 : 0)
+      const k = (y * B + x) * 4
+      bild.data[k] = 30 + d; bild.data[k + 1] = 21 + d * 0.75; bild.data[k + 2] = 17 + d * 0.6; bild.data[k + 3] = 255
+    }
+  }
+  g.putImageData(bild, 0, 0)
+  holzTextur = new THREE.CanvasTexture(c)
+  holzTextur.wrapS = holzTextur.wrapT = THREE.RepeatWrapping
+  holzTextur.colorSpace = THREE.SRGBColorSpace
+  holzTextur.anisotropy = 8
+  return holzTextur
+}
 
 /** in der Brille: das Modell so breit auf Tischhöhe, so weit vor dir (wie die Modellbahn) */
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
@@ -652,6 +662,8 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
 /** so lange blenden sich Höhenlinien und Orte von vorne nach hinten ein und rückwärts aus (Michael, 2026-10-22: «innerhalb von 2
  *  oder 3 Sekunden») */
 const VERLAUF_S = 2.5
+/** das Geräusch dazu ist kürzer (Michael, 2026-10-22: «noch zu lang») */
+const VERLAUF_TON_S = 0.9
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
@@ -1231,8 +1243,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     const sockel = new THREE.Group()
     wurzel.add(sockel)
     // matt, damit die Seiten im Licht verschieden hell sind
-    const wandMaterialien = SOCKEL_WAND_FARBEN.map((color) => new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0, side: THREE.DoubleSide }))
-    const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, roughness: 0.5, metalness: 0 })
+    const wandMaterialien = SOCKEL_WAND_FARBEN.map((color) => new THREE.MeshStandardMaterial({ color, map: holzBild(), roughness: 0.45, metalness: 0, side: THREE.DoubleSide }))
+    const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, map: holzBild(), roughness: 0.45, metalness: 0 })
     // die oberen Kanten der Wände, je mit der Richtung nach aussen (für die Linien der Höhen)
     let kantenOben: Array<{ p: Float32Array; nx: number; nz: number }> = []
     const sockelBauen = () => {
@@ -1252,10 +1264,15 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         kanten.forEach((kk, seite) => {
           if (!kk) return
           const [kante, nx, nz] = kk
-          const p = new Float32Array(kante.length * 6), oben = new Float32Array(kante.length * 3)
+          const p = new Float32Array(kante.length * 6), oben = new Float32Array(kante.length * 3), uv = new Float32Array(kante.length * 4)
+          // die Maserung läuft der Wand entlang
+          const holz = weiteKm * HOLZ_BILD
+          let lang = 0
           kante.forEach((q, i) => {
             const x = pos[q * 3], y = pos[q * 3 + 1], z = pos[q * 3 + 2]
+            if (i) lang += Math.hypot(x - pos[kante[i - 1] * 3], z - pos[kante[i - 1] * 3 + 2])
             p.set([x, y, z, x, unten, z], i * 6)
+            uv.set([lang / holz, (y - unten) / holz, lang / holz, 0], i * 4)
             oben.set([x, y, z], i * 3)
           })
           kantenOben.push({ p: oben, nx, nz })
@@ -1263,6 +1280,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
           for (let i = 0; i < kante.length - 1; i++) ix.push(i * 2, i * 2 + 1, i * 2 + 2, i * 2 + 2, i * 2 + 1, i * 2 + 3)
           const gw = new THREE.BufferGeometry()
           gw.setAttribute('position', new THREE.BufferAttribute(p, 3))
+          gw.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
           gw.setIndex(ix)
           gw.computeVertexNormals()
           sockel.add(new THREE.Mesh(gw, wandMaterialien[seite]))
@@ -1785,7 +1803,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     if (!k) return
     const neu = { hoehen: scheiben, orte, gipfel }
     const gewechselt = (Object.keys(neu) as Array<keyof typeof neu>).find((n) => k.verlauf[n].ziel !== +neu[n])
-    if (!erstesMal.current && gewechselt) verlaufTon(neu[gewechselt], VERLAUF_S)
+    if (!erstesMal.current && gewechselt) verlaufTon(neu[gewechselt], VERLAUF_TON_S)
     erstesMal.current = false
     for (const n of Object.keys(neu) as Array<keyof typeof neu>) k.verlauf[n].ziel = +neu[n]
   }, [scheiben, orte, gipfel])
