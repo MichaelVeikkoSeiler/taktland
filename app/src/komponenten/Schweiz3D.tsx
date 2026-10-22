@@ -14,6 +14,7 @@ import { Ladebalken } from './Ladebalken'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
+import { knopfTon, verlaufTon } from '../audio'
 
 /**
  * «3D Schweiz» (Michael, 2026-10-18: «die Berge und Täler der Schweiz besser erkunden … von der ganzen Schweiz bis ins
@@ -38,7 +39,7 @@ interface Gelaende { raster: Raster; h: Float32Array; bild: HTMLCanvasElement; r
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
 /** was die Schalter ein- und ausschalten */
-type Schalter = 'hoehen' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne'
+type Schalter = 'hoehen' | 'orte' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne'
 /** Ein Feld und was an seinen Seiten angesetzt ist (Michael, 2026-10-20: «An den Wänden ein Plus und oder ein Minus … zum
  *  Erweitern resp. reduzieren der Kacheln»): je Stück ein Gelände, Schlüssel «di_dj» in Feldern Ost und Nord vom Anker */
 interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, number]; dj: [number, number] }
@@ -286,6 +287,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [scheiben, setScheiben] = useState(false)
   // Gebäude und Bäume je für sich (Michael, 2026-10-22: «Gebäude und Bäume … separate Schalter»)
   const [gebaeudeAn, setGebaeudeAn] = useState(false)
+  // die Ortschaften ein und aus (Michael, 2026-10-22: «auch ein- und ausklickbar, defaultmässig ausgeschaltet»)
+  const [orteAn, setOrteAn] = useState(false)
   const [baeumeAn, setBaeumeAn] = useState(false)
   // Wanderwege am Anfang aus (Michael, 2026-10-21: «defaultmässig ausgeblendet»)
   const [wandern, setWandern] = useState(false)
@@ -494,7 +497,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
-                   sonnenAn={sonnenAn} schalten={(art) => ({ hoehen: setScheiben, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
+                   sonnenAn={sonnenAn} orte={orteAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
                      sonne: setSonnenAn })[art]((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen}
                    zeitSchieben={zeitSchieben} />
         ) : (
@@ -517,6 +520,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <button type="button" aria-pressed={scheiben} onClick={() => setScheiben((x) => !x)}
                   className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${scheiben ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
             Höhen 1'000 m
+          </button>
+          <button type="button" aria-pressed={orteAn} onClick={() => setOrteAn((x) => !x)}
+                  className={`rounded-lg border px-2.5 py-1 text-xs font-bold ${orteAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 dark:border-sbb-iron dark:bg-sbb-midnight/90'}`}>
+            Orte
           </button>
           {stufe !== 'schweiz' && (
             <button type="button" aria-pressed={wandern} onClick={() => setWandern((x) => !x)}
@@ -636,6 +643,9 @@ const SOCKEL_WAND_FARBEN = ['#363636', '#404040', '#4c4c4c', '#3a3a3a'], SOCKEL_
 const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
 /** Knöpfe an den Wänden: wie weit sie vorstehen, als Anteil der Breite des Modells (aus, an, die flache Anzeige der Zeit), und
  *  in welcher Farbe sie leuchten (Gelände gelb, Gebäude und Bäume grün, Sonne rot); gewählt, nicht aus einer Quelle */
+/** so lange blenden sich Höhenlinien und Orte von vorne nach hinten ein und rückwärts aus (Michael, 2026-10-22: «innerhalb von 2
+ *  oder 3 Sekunden») */
+const VERLAUF_S = 2.5
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
@@ -670,7 +680,6 @@ const BAUM_FORM: Array<[number, number]> = [[12, 3.5], [20, 3.2], [15, 4], [4, 2
 
 interface Welt {
   setzeWahl: (f: Feld | null) => void
-  scheiben: (an: boolean) => void
 }
 
 /** sRGB → linear, für die Farben der Ecken */
@@ -700,7 +709,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben }: {
+function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
@@ -708,7 +717,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
   brilleRef: React.MutableRefObject<(() => Promise<void>) | null>
   zusatz: Zusatz | null
   knoepfe: Knoepfe | null; erweitern: (s: Seite, plus: boolean) => void
-  scheiben: boolean; gebaeude: boolean; baeume: boolean; meldung: string | null
+  scheiben: boolean; orte: boolean; gebaeude: boolean; baeume: boolean; meldung: string | null
   /** Sonnenstand zur gewählten Zeit, null: die feste Sonne wie bisher, ohne Schatten */
   sonne: Sonnenstand | null
   /** was der Schalter der Sonne in der Brille zur Zeit sagt, und wie die Brille die Zeit verschiebt */
@@ -731,11 +740,10 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight
     anfangSetzen: () => void
+    verlauf: Record<'hoehen' | 'orte', { p: number; ziel: number; ebene: THREE.Plane }>
   } | null>(null)
   const cb = useRef({ waehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten })
   cb.current = { waehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten }
-  const scheibenJetzt = useRef(scheiben)
-  scheibenJetzt.current = scheiben
 
   // einmal: Renderer, Kamera, Steuerung, Brille
   useEffect(() => {
@@ -762,6 +770,10 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     // die Sonne gehört zum Modell: dreht man es in der Brille, kommt sie weiter aus derselben Himmelsrichtung über dem Gelände;
     // mit Schatten (Michael, 2026-10-21: «Sonnen und Schattenzeiten … Realistisch»), die Lage setzt der Effekt zum Sonnenstand
     renderer.shadowMap.enabled = true
+    // Höhenlinien und Orte blenden sich von vorne nach hinten ein (Michael, 2026-10-22): eine Ebene quer zum Blick schneidet ab, was
+    // noch nicht da ist, und wandert in VERLAUF_S über das Modell; beim Ausblenden rückwärts, hinten zuerst
+    renderer.localClippingEnabled = true
+    const verlauf = { hoehen: { p: 0, ziel: 0, ebene: new THREE.Plane() }, orte: { p: 0, ziel: 0, ebene: new THREE.Plane() } }
     renderer.shadowMap.type = THREE.PCFSoftShadowMap
     const sonne = new THREE.DirectionalLight('#ffffff', 1.4)
     const schattenPx = matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 2048 : 4096
@@ -965,6 +977,32 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     }
     const OBEN = new THREE.Vector3(0, 1, 0)
     const stickGedrueckt = new Set<string>()
+    let verlaufZeit = performance.now()
+    const mitte = new THREE.Vector3(), blick = new THREE.Vector3(), auf = new THREE.Vector3()
+    const verlaufSetzen = () => {
+      const jetzt = performance.now(), dt = Math.min(0.1, (jetzt - verlaufZeit) / 1000)
+      verlaufZeit = jetzt
+      const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera
+      wurzel.getWorldPosition(mitte)
+      blick.setFromMatrixPosition(cam.matrixWorld).sub(mitte).setY(0)
+      if (blick.lengthSq() < 1e-12) blick.set(0, 0, 1)
+      blick.normalize()
+      // halbe Diagonale des Modells in der Welt, etwas mehr, damit am Anfang nichts und am Ende alles zu sehen ist
+      const R = ((wurzel.userData.weiteKm as number) || 1) * wurzel.scale.x * 0.75
+      for (const [name, v] of Object.entries(verlauf)) {
+        v.p = v.ziel > v.p ? Math.min(v.ziel, v.p + dt / VERLAUF_S) : Math.max(v.ziel, v.p - dt / VERLAUF_S)
+        const e = v.p * v.p * (3 - 2 * v.p), s = -R + 2 * R * e
+        v.ebene.set(blick, s - blick.dot(mitte))
+        const g = wurzel.getObjectByName(name)
+        if (g) g.visible = v.p > 0
+        // die Schilder der Orte einzeln, je nachdem, ob die Ebene schon über sie hinweg ist
+        if (name === 'orte') {
+          for (const sp of wurzel.getObjectByName('schilder')?.children ?? []) {
+            if (sp.userData.ort) sp.visible = v.p > 0 && v.ebene.distanceToPoint(sp.getWorldPosition(auf)) >= 0
+          }
+        }
+      }
+    }
     const jeBild: Array<() => void> = [() => {
       if (!renderer.xr.isPresenting) return
       const sitzung = renderer.xr.getSession()
@@ -1000,8 +1038,9 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       }
       brilleSetzen()
     }]
+    jeBild.push(verlaufSetzen)
     kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, jeBild, wenn, tafel, tafelSetzen,
-                     sonne, himmelLicht, anfangSetzen }
+                     sonne, himmelLicht, anfangSetzen, verlauf }
 
     const groesse = () => {
       if (renderer.xr.isPresenting) return
@@ -1228,13 +1267,16 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     // die Höhenscheiben und ihre Linien in den Wänden, nur auf Höhen zwischen dem tiefsten und dem höchsten Punkt
     const hoehen = new THREE.Group()
     hoehen.name = 'hoehen'
-    hoehen.visible = scheibenJetzt.current
+    hoehen.visible = false
     wurzel.add(hoehen)
+    const ebeneH = [k.verlauf.hoehen.ebene]
     const scheibenMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity: SCHEIBE_DECKKRAFT,
-      side: THREE.DoubleSide, depthWrite: false }))
-    const linienMaterial = HOEHEN_STUFEN.map(([, color]) => new LineMaterial({ color, linewidth: HOEHEN_LINIE_PX }))
+      side: THREE.DoubleSide, depthWrite: false, clippingPlanes: ebeneH }))
+    const linienMaterial = HOEHEN_STUFEN.map(([, color]) => new LineMaterial({ color, linewidth: HOEHEN_LINIE_PX, clippingPlanes: ebeneH }))
     const kurvenMaterial = HOEHEN_STUFEN.map(([, color]) => new LineMaterial({ color, linewidth: HOEHEN_LINIE_PX, transparent: true,
-      opacity: 0.6, depthWrite: false }))
+      opacity: 0.6, depthWrite: false, clippingPlanes: ebeneH }))
+    // eine neue Stufe blendet ein, was eingeschaltet ist, wieder von vorne
+    k.verlauf.hoehen.p = 0; k.verlauf.orte.p = 0
     const linienSetzen = (g: THREE.BufferAttribute | number[], m: LineMaterial) => {
       const geo = new LineSegmentsGeometry()
       geo.setPositions(g as number[])
@@ -1352,7 +1394,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       x.fillStyle = '#ffffff'; x.fillText(o.name, 9, px + 1)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: false }))
-      sp.userData = { e: o.e, n: o.n, z: o.z, ueber: mastKm, b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height }
+      sp.visible = false
+      sp.userData = { ort: true, e: o.e, n: o.n, z: o.z, ueber: mastKm, b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height }
       sp.scale.set(sp.userData.b, sp.userData.h, 1)
       // die Tafel sitzt mittig auf dem Mast (Michael, 2026-10-21: «eingemittet zur Tafel»)
       sp.center.set(0.5, 0)
@@ -1360,7 +1403,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       sp.renderOrder = 3
       schilder.add(sp)
     }
-    const mastMaterial = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX })
+    const mastMaterial = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX, clippingPlanes: [k.verlauf.orte.ebene] })
     const mastenBauen = () => {
       for (const o of ortGruppe.children) (o as LineSegments2).geometry.dispose()
       ortGruppe.clear()
@@ -1431,7 +1474,6 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     }
     welt.current = {
       setzeWahl,
-      scheiben: (an) => { hoehen.visible = an },
     }
     // in der Brille gleich die neue Grösse
     if (renderer.xr.isPresenting) k.jeBild[0]()
@@ -1504,7 +1546,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     const { W } = w, hoch = w.wand * 0.62, luecke = W * 0.008
     interface Teil { zeilen: string[]; breite: number; an?: boolean; farbe?: string; knopf?: boolean; aktion?: () => void }
     const umschalten = (art: Schalter) => () => cb.current.schalten(art)
-    const links: Teil[] = [{ zeilen: ['Höhen'], breite: 0.085 * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') }]
+    const links: Teil[] = [{ zeilen: ['Höhen'], breite: 0.085 * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
+                           { zeilen: ['Orte'], breite: 0.085 * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') }]
     if (stufe !== 'schweiz') links.push({ zeilen: ['Wanderwege'], breite: 0.085 * W, an: wandern, farbe: LICHT.gelaende, aktion: umschalten('wandern') })
     if ((stufe === 'ort' || stufe === 'nah') && umweltHier) {
       links.push({ zeilen: ['Gebäude'], breite: 0.085 * W, an: gebaeude, farbe: LICHT.umwelt, aktion: umschalten('gebaeude') },
@@ -1601,7 +1644,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         if (schein) setzen(new THREE.Mesh(schein.geo, schein.stoff), lagen[i], W * 0.001)
         const m = new THREE.Mesh(kappe, [seiten, seiten, seiten, seiten, vorne, seiten])
         setzen(m, lagen[i], f * tiefe / 2 + W * 0.0008)
-        m.userData.aktion = t.aktion
+        // jeder Druck klickt: ein Schalter rastet ein oder löst sich, ein Taster für die Zeit federt zurück
+        m.userData.aktion = t.aktion && (() => { knopfTon(!!t.knopf || !t.an); t.aktion!() })
         m.userData.text = t.zeilen.join(' ')
       })
     }
@@ -1615,7 +1659,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen])
 
   // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
   // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
@@ -1711,7 +1755,17 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     }
   }, [stand, b, stufe])
 
-  useEffect(() => { welt.current?.scheiben(scheiben) }, [scheiben])
+  // Höhenlinien und Orte ein- und ausblenden, mit Geräusch, wenn ein Schalter wechselt (nicht beim ersten Mal)
+  const erstesMal = useRef(true)
+  useEffect(() => {
+    const k = kern.current
+    if (!k) return
+    if (!erstesMal.current && (k.verlauf.hoehen.ziel !== +scheiben || k.verlauf.orte.ziel !== +orte)) {
+      verlaufTon(k.verlauf.hoehen.ziel !== +scheiben ? scheiben : orte, VERLAUF_S)
+    }
+    erstesMal.current = false
+    k.verlauf.hoehen.ziel = +scheiben; k.verlauf.orte.ziel = +orte
+  }, [scheiben, orte])
   // eine neue Stufe steht in der Brille wieder auf dem Tisch wie am Anfang
   useEffect(() => { kern.current?.anfangSetzen() }, [stufe])
   useEffect(() => {

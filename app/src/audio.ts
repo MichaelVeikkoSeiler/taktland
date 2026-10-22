@@ -538,3 +538,78 @@ export function signalhorn(dauer = 0.8) {
     }
   } catch { /* ohne Ton geht alles weiter */ }
 }
+
+/**
+ * Knöpfe an den Wänden von «3D Schweiz» (Michael, 2026-10-22: «wenn man die Knöpfe drückt … ein Soundeffekt … passend und
+ * absolut authentisch»): ein rastender Druckknopf, gerechnet, ohne Aufnahme. Der helle Anschlag der Kappe (Rauschen, Bandpass um
+ * 3,5 kHz), der dumpfe Körper (Sinus, der in 50 ms tiefer wird) und, wo er einrastet, ein zweites, leiseres Klicken der Feder; beim
+ * Lösen ist der zweite Klick früher und heller. Jeder Druck klingt leicht anders.
+ */
+export function knopfTon(rastetEin: boolean) {
+  if (!stand.an) return
+  const c = audioKontext()
+  if (!c) return
+  try {
+    void c.resume()
+    const jetzt = c.currentTime, ziel = ausgang(c)
+    const klick = (t: number, hz: number, staerke: number, dauer: number) => {
+      const puffer = c.createBuffer(1, Math.ceil(c.sampleRate * dauer), c.sampleRate)
+      const d = puffer.getChannelData(0)
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (c.sampleRate * dauer * 0.18))
+      const q = c.createBufferSource(); q.buffer = puffer
+      const f = c.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = hz * (0.93 + Math.random() * 0.14); f.Q.value = 2.5
+      const g = c.createGain(); g.gain.value = staerke
+      q.connect(f).connect(g).connect(ziel)
+      q.start(t); q.stop(t + dauer + 0.01)
+    }
+    const koerper = (t: number, hz: number, staerke: number) => {
+      const o = c.createOscillator(); o.type = 'sine'
+      o.frequency.setValueAtTime(hz, t); o.frequency.exponentialRampToValueAtTime(hz * 0.55, t + 0.05)
+      const g = c.createGain()
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(staerke, t + 0.003)
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06)
+      o.connect(g).connect(ziel); o.start(t); o.stop(t + 0.07)
+    }
+    klick(jetzt, 3500, 0.9, 0.012)
+    koerper(jetzt, rastetEin ? 190 : 230, 0.35)
+    if (rastetEin) klick(jetzt + 0.045, 2600, 0.35, 0.01)
+    else klick(jetzt + 0.022, 4200, 0.3, 0.008)
+  } catch { /* ohne Ton geht alles weiter */ }
+}
+
+/**
+ * Höhenlinien und Orte blenden sich in «3D Schweiz» von vorne nach hinten ein und rückwärts aus (Michael, 2026-10-22: «auch mit
+ * einem passenden Geräusch»): ein leises Rauschen, dessen Filter beim Einblenden steigt und beim Ausblenden fällt, darin viele
+ * kleine Ticks, als schnappe ein Teil nach dem andern ein; so lang wie der Verlauf
+ */
+export function verlaufTon(ein: boolean, dauer: number) {
+  if (!stand.an) return
+  const c = audioKontext()
+  if (!c) return
+  try {
+    void c.resume()
+    const jetzt = c.currentTime, ziel = ausgang(c)
+    const puffer = c.createBuffer(1, Math.ceil(c.sampleRate * dauer), c.sampleRate)
+    const d = puffer.getChannelData(0)
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1
+    const q = c.createBufferSource(); q.buffer = puffer
+    const f = c.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.2
+    const [von, bis] = ein ? [500, 3000] : [3000, 500]
+    f.frequency.setValueAtTime(von, jetzt); f.frequency.exponentialRampToValueAtTime(bis, jetzt + dauer)
+    const g = c.createGain()
+    g.gain.setValueAtTime(0.0001, jetzt); g.gain.exponentialRampToValueAtTime(0.18, jetzt + 0.25)
+    g.gain.setValueAtTime(0.18, jetzt + dauer - 0.4); g.gain.exponentialRampToValueAtTime(0.0001, jetzt + dauer)
+    q.connect(f).connect(g).connect(ziel); q.start(jetzt); q.stop(jetzt + dauer + 0.02)
+    // die Ticks: in der Mitte am dichtesten, die Tonhöhe folgt dem Filter
+    for (let t = 0.05; t < dauer - 0.1; t += 0.03 + Math.random() * 0.06) {
+      const a = t / dauer, dicht = Math.sin(Math.PI * a)
+      if (Math.random() > 0.35 + 0.65 * dicht) continue
+      const o = c.createOscillator(); o.type = 'triangle'
+      o.frequency.value = (ein ? 1200 + 1800 * a : 3000 - 1800 * a) * (0.9 + Math.random() * 0.2)
+      const og = c.createGain(), s = jetzt + t
+      og.gain.setValueAtTime(0.0001, s); og.gain.exponentialRampToValueAtTime(0.06 + 0.05 * dicht, s + 0.002)
+      og.gain.exponentialRampToValueAtTime(0.0001, s + 0.025)
+      o.connect(og).connect(ziel); o.start(s); o.stop(s + 0.03)
+    }
+  } catch { /* ohne Ton geht alles weiter */ }
+}

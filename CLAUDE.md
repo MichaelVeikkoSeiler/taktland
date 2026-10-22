@@ -303,7 +303,11 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Band unter dem tiefsten Punkt, links der Knöpfe + und − Höhen, Wanderwege (ab 20 km), Gebäude und Bäume (wo es sie gibt), rechts
              Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Mon., +1 Mon., Jetzt (Strahl und Abzug); als Knöpfe einer Steuerung
              (Michael, 2026-10-22: «wie richtige … physische Knöpfe»): aus dunkel und 1,1 % der Breite vorstehend, an 0,3 % eingedrückt und
-             leuchtend mit Schein auf der Wand, Gelände gelb, Gebäude und Bäume grün, Sonne rot (KNOPF_*, LICHT), die Zeit als flache Anzeige; an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
+             leuchtend mit Schein auf der Wand, Gelände gelb, Gebäude und Bäume grün, Sonne rot (KNOPF_*, LICHT), die Zeit als flache Anzeige;
+             jeder Druck klickt wie ein rastender Druckknopf, gerechnet (knopfTon in src/audio.ts; Michael, 2026-10-22: «passend und absolut
+             authentisch»); Schalter «Orte» für die Ortschaften, am Anfang aus; Höhenlinien und Orte blenden sich in 2,5 s von vorne
+             (zum Betrachter) nach hinten ein und genau rückwärts aus, eine Ebene quer zum Blick schneidet ab (VERLAUF_S, verlaufSetzen),
+             dazu ein Rauschen mit vielen kleinen Ticks, steigend beim Ein-, fallend beim Ausblenden (verlaufTon); Klang und Dauer gewählt; an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
              Schweiz3D.tsx); alle Schalter am Anfang aus, auch Höhen und Sonne (Michael, 2026-10-22: «Alles defaultmässig ausgeschaltet»)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
