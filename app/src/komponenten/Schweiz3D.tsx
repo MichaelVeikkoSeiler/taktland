@@ -1550,32 +1550,37 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     const w = k?.wurzel.userData.waende as { x0: number; x1: number; z0: number; z1: number; y: number; wand: number; W: number } | undefined
     if (!k || !w) return
     const { W } = w, hoch = w.wand * 0.62, luecke = W * 0.008
-    interface Teil { zeilen: string[]; breite: number; an?: boolean; farbe?: string; knopf?: boolean; aktion?: () => void }
+    interface Teil { zeilen: string[]; breite: number; an?: boolean; farbe?: string; knopf?: boolean; gesperrt?: boolean; aktion?: () => void }
     const umschalten = (art: Schalter) => () => cb.current.schalten(art)
-    const links: Teil[] = [{ zeilen: ['Höhen'], breite: 0.085 * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
-                           { zeilen: ['Orte'], breite: 0.085 * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') }]
-    if (stufe !== 'schweiz') links.push({ zeilen: ['Wanderwege'], breite: 0.085 * W, an: wandern, farbe: LICHT.gelaende, aktion: umschalten('wandern') })
-    if ((stufe === 'ort' || stufe === 'nah') && umweltHier) {
-      links.push({ zeilen: ['Gebäude'], breite: 0.085 * W, an: gebaeude, farbe: LICHT.umwelt, aktion: umschalten('gebaeude') },
-                 { zeilen: ['Bäume'], breite: 0.085 * W, an: baeume, farbe: LICHT.umwelt, aktion: umschalten('baeume') })
-    }
-    const rechts: Teil[] = [{ zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') }]
-    if (sonnenAn && sonnenZeilen) {
-      const [tagZeit] = sonnenZeilen, komma = tagZeit.lastIndexOf(', ')
-      rechts.push({ zeilen: [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)], breite: 0.09 * W })
-      const zeit = (art: 'stunde' | 'monat' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
-      rechts.push({ zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, aktion: zeit('stunde', -1) },
-                  { zeilen: ['+1 h'], breite: 0.034 * W, knopf: true, aktion: zeit('stunde', 1) },
-                  { zeilen: ['−1', 'Mon.'], breite: 0.034 * W, knopf: true, aktion: zeit('monat', -1) },
-                  { zeilen: ['+1', 'Mon.'], breite: 0.034 * W, knopf: true, aktion: zeit('monat', 1) },
-                  { zeilen: ['Jetzt'], breite: 0.04 * W, knopf: true, aktion: zeit('jetzt', 0) })
-    }
+    // jeder Knopf hat seinen festen Platz (Michael, 2026-10-22: «Die Knöpfe haben eine fixe Position»): was in dieser Stufe nicht
+    // geht (Wanderwege in der ganzen Schweiz, Gebäude und Bäume ohne Daten, die Zeit ohne Sonne), bleibt da, aber gesperrt und dunkel
+    const umweltDa = (stufe === 'ort' || stufe === 'nah') && umweltHier
+    const links: Teil[] = [
+      { zeilen: ['Höhen'], breite: 0.085 * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
+      { zeilen: ['Orte'], breite: 0.085 * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
+      { zeilen: ['Wanderwege'], breite: 0.085 * W, an: stufe !== 'schweiz' && wandern, farbe: LICHT.gelaende, gesperrt: stufe === 'schweiz',
+        aktion: umschalten('wandern') },
+      { zeilen: ['Gebäude'], breite: 0.085 * W, an: umweltDa && gebaeude, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
+      { zeilen: ['Bäume'], breite: 0.085 * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
+    ]
+    const zeitDa = sonnenAn && !!sonnenZeilen
+    const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
+    const zeit = (art: 'stunde' | 'monat' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
+    const rechts: Teil[] = [
+      { zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
+      { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
+      { zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
+      { zeilen: ['+1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', 1) },
+      { zeilen: ['−1', 'Mon.'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('monat', -1) },
+      { zeilen: ['+1', 'Mon.'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('monat', 1) },
+      { zeilen: ['Jetzt'], breite: 0.04 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('jetzt', 0) },
+    ]
     // je Teil ein Bild für die Vorderseite, auf allen vier Wänden dasselbe; an leuchtet es in der Farbe seiner Art, aus ist es dunkel
     const PX = 128
     const bild = (t: Teil, an: boolean) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       c.height = PX; c.width = Math.round(PX * t.breite / hoch)
-      x.fillStyle = t.knopf ? KARMIN : t.an === undefined ? '#10161c' : an ? t.farbe! : '#3a3a3a'
+      x.fillStyle = t.gesperrt ? (t.an === undefined && !t.knopf ? '#0c0f12' : '#262626') : t.knopf ? KARMIN : t.an === undefined ? '#10161c' : an ? t.farbe! : '#3a3a3a'
       x.fillRect(0, 0, c.width, c.height)
       if (an && t.an !== undefined) {
         // in der Mitte heller, zum Rand satter: wie ein Licht hinter der Kappe
@@ -1583,11 +1588,13 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         v.addColorStop(0, 'rgba(255,255,255,0.55)'); v.addColorStop(1, 'rgba(255,255,255,0)')
         x.fillStyle = v; x.fillRect(0, 0, c.width, c.height)
       }
-      x.fillStyle = t.knopf ? '#ffffff' : t.an === undefined ? '#d8f5dc' : an ? '#1d1d1d' : '#c8c8c8'
+      x.fillStyle = t.gesperrt ? '#5c5c5c' : t.knopf ? '#ffffff' : t.an === undefined ? '#d8f5dc' : an ? '#1d1d1d' : '#c8c8c8'
       x.textAlign = 'center'
       const px = t.zeilen.length > 1 ? 34 : 40
       x.font = `bold ${px}px Helvetica, Arial, sans-serif`
       t.zeilen.forEach((z, i) => x.fillText(z, c.width / 2, c.height / 2 - (t.zeilen.length - 1) * px * 0.55 + i * px * 1.1 + px * 0.35, c.width - 16))
+      // ein feiner schwarzer Rand um jede Fläche (Michael, 2026-10-22: «eine minime schwarze Umrahmung»)
+      x.strokeStyle = '#000000'; x.lineWidth = 5; x.strokeRect(2.5, 2.5, c.width - 5, c.height - 5)
       const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
       // was leuchtet (eingeschaltet, die Anzeige der Zeit), hängt nicht vom Licht ab; der Rest ist ein Knopf im Licht
       return an || t.an === undefined ? new THREE.MeshBasicMaterial({ map: tex }) : new THREE.MeshLambertMaterial({ map: tex })
@@ -1651,7 +1658,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         const m = new THREE.Mesh(kappe, [seiten, seiten, seiten, seiten, vorne, seiten])
         setzen(m, lagen[i], f * tiefe / 2 + W * 0.0008)
         // jeder Druck klickt: ein Schalter rastet ein oder löst sich, ein Taster für die Zeit federt zurück
-        m.userData.aktion = t.aktion && (() => { knopfTon(!!t.knopf || !t.an); t.aktion!() })
+        m.userData.aktion = t.aktion && !t.gesperrt && (() => { knopfTon(!!t.knopf || !t.an); t.aktion!() })
         m.userData.text = t.zeilen.join(' ')
       })
     }
