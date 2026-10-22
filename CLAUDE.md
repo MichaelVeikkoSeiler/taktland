@@ -298,8 +298,12 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              12 Uhr; der Sonnenstand über der Mitte des Modells gerechnet (src/sonne.ts, Näherung des Astronomical Almanac, ohne Brechung),
              die Sonne gehört zum Modell (dreht mit in der Brille), Schatten mit der Schattenkarte von three.js (4096, auf dem Handy 2048),
              Gelände, Gebäude und Bäume werfen Schatten, Berge ausserhalb des Modells nicht; unter dem Horizont nur Himmelslicht, tief am
-             Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille eine Tafel vor dem Modell mit Datum, Zeit, Stand und Knöpfen
-             ± 1 h, ± 1 Monat, Jetzt (Strahl und Abzug)
+             Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille alle Schalter an den Wänden des Modells, auf allen vier Seiten
+             (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle … so wie Schalter», vorher Tafeln vor der Nase): flach im
+             Band unter dem tiefsten Punkt, links der Knöpfe + und − Höhen, Wanderwege (ab 20 km), Gebäude und Bäume (wo es sie gibt), rechts
+             Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Mon., +1 Mon., Jetzt (Strahl und Abzug); an Anthrazit mit
+             grünem Streifen, aus weiss; an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
+             Schweiz3D.tsx); alle Schalter am Anfang aus, auch Höhen und Sonne (Michael, 2026-10-22: «Alles defaultmässig ausgeschaltet»)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
              Modellbahn ein dünner dunkelgrauer Mast (2 Bildpunkte) mit eckigem dunkelgrauem Schild mittig darauf, Name in Weiss, je Stufe ab einem Rang und höchstens
@@ -307,7 +311,7 @@ data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: 
 data/schweiz3d_probe/  Gebäude und Bäume für «3D Schweiz» in zwei Probeausschnitten (Michael, 2026-10-20: «Köniz und Gantrisch»):
              alles in 6 × 6 km um Köniz und 8 × 8 km um den Gantrisch, nicht nur neben der Bahn, Formate wie data/gebaeude und data/baeume,
              Farben aus SWISSIMAGE 2 m (pipeline/build_schweiz3d_probe.py, 14'864 Gebäude, etwa 630'000 Bäume, etwa 11 MB); in der App in den Stufen
-             4 km und 1 km, Schalter «Gebäude und Bäume» nur dort, am Anfang aus (Michael, 2026-10-22: «defaultmässig keine Bäume und keine Gebäude»), in der Brille «Gebäude und Bäume ein/aus» in der Leiste unter der Tafel der Sonne (probeLaden in src/gelaende.ts); die ganze Schweiz siehe
+             4 km und 1 km, Schalter «Gebäude» und «Bäume» je für sich nur dort, am Anfang aus (Michael, 2026-10-22: «defaultmässig keine Bäume und keine Gebäude», «separate Schalter»), in der Brille an den Wänden (probeLaden in src/gelaende.ts); die ganze Schweiz siehe
              data/schweiz3dumwelt_extern
 data/schweiz3dumwelt_extern/  Gebäude und Bäume der ganzen Schweiz für «3D Schweiz» und 3dland.ch auf daten.taktland.ch, nicht in Git
              (Michael, 2026-10-21: «Bäume und Gebäude für 3DLand»): wie die Probeausschnitte alles, nicht nur neben der Bahn,
@@ -323,8 +327,7 @@ data/wanderwege/  Wanderwege für «3D Schweiz» (Michael, 2026-10-21: «alle Wa
              Douglas-Peucker auf 2 m vereinfacht, je 10-km-Kachel eine .wwg (pipeline/build_wanderwege.py, 408'970 Stücke, 9,3 MB); in der
              App ab der Stufe 20 km, auf das Gelände des Modells gelegt und so dicht wie sein Raster unterteilt, gelb, rot und blau mit
              weissem Rand in Bildpunkten (Farben nach den Wegweisern gewählt, WANDER_FARBEN in Schweiz3D.tsx), Schalter «Wanderwege», am Anfang aus
-             (Michael, 2026-10-21); in der Brille eine Leiste unter der Tafel der Sonne mit «Wanderwege ein/aus» und, wenn die Tafel mit
-             «Fertig» weggelegt ist, «Zeit», das sie zurückholt
+             (Michael, 2026-10-21); in der Brille ein Schalter an den Wänden
 data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fassung je km von data.geo.admin.ch),
              auf 10 m gemittelt, JPEG im 10-km-Raster der Geländekacheln, je km der neueste Jahrgang (2017 bis 2025),
              die Jahre je Kachel in index.json (pipeline/build_luftbild.py --alle: 508 Kacheln der ganzen Schweiz,
