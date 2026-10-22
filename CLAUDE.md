@@ -312,7 +312,9 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              zusammen «etwas zu viel»; in verlaufSetzen);
              jeder Knopf hat seinen festen Platz, was in einer Stufe nicht geht (Wanderwege in der ganzen Schweiz, Gebäude und Bäume ohne
              Daten, die Zeit ohne Sonne), bleibt gesperrt und dunkel stehen (Michael, 2026-10-22: «Die Knöpfe haben eine fixe Position»); jede
-             Fläche mit feinem schwarzem Rand («eine minime schwarze Umrahmung»); an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
+             Fläche mit feinem schwarzem Rand («eine minime schwarze Umrahmung»); Schalter «Gipfel», am Anfang aus, blendet sich ein wie die Orte
+             (Michael, 2026-10-22: «Gipfel defaultmässig auch nicht einblenden»); die Knöpfe an den Wänden auch auf dem Bildschirm, mit Tipp
+             oder Klick («auch in der Standardversion auf dem Display»), dazu weiter die Knöpfe oben im Bild; an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
              Schweiz3D.tsx); alle Schalter am Anfang aus, auch Höhen und Sonne (Michael, 2026-10-22: «Alles defaultmässig ausgeschaltet»)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
