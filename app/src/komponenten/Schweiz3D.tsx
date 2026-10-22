@@ -1002,6 +1002,11 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
           }
         }
       }
+      // in der Brille weniger Last (Michael, 2026-10-22: Höhen und Bäume zusammen «etwas zu viel»): ohne die durchsichtigen
+      // Höhenscheiben, nur ihre Linien auf dem Gelände und in den Wänden, und Bäume ohne eigenen Schatten
+      const brille = renderer.xr.isPresenting
+      for (const o of wurzel.getObjectByName('hoehen')?.children ?? []) if (o.userData.scheibe) o.visible = !brille
+      for (const o of wurzel.getObjectByName('baeume')?.children ?? []) o.castShadow = !brille
     }
     const jeBild: Array<() => void> = [() => {
       if (!renderer.xr.isPresenting) return
@@ -1295,6 +1300,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
         sch.rotation.x = -Math.PI / 2
         sch.position.set((X(E0) + X(E1)) / 2, y, (Z(N0) + Z(N1)) / 2)
         sch.renderOrder = 2
+        sch.userData.scheibe = true
         hoehen.add(sch)
         // die Linie in den Wänden: wo die Wand über die Höhe reicht, ein schmales Band knapp vor der Wand
         const band: number[] = []
