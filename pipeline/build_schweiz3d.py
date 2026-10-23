@@ -52,6 +52,47 @@ def orte():
     return sorted(raus, key=lambda o: (-o[3], o[0]))
 
 
+GIPFEL_RANG = {"HGipfel": 3, "GGipfel": 2, "KGipfel": 1, "Huegel": 0}
+
+
+def gipfel():
+    """[Name, Ost, Nord, Höhe, Rang] aller Gipfel und Hügel aus swissTLMRegio, für die Suche in «3D Schweiz»
+    (Michael, 2026-10-23: «Gipfel und Seen auch in der Suche finden»; die Gipfel von sehenswert.json sind nur 101)"""
+    import sqlite3
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from build_bodenbedeckung import laden
+    from build_kartengrund import punkt
+    raus = []
+    for geom, n1, n2, art, hoehe in sqlite3.connect(laden()).execute(
+            "select geom, namn1, namn2, objval, altitude from tlmregio_names_namedlocation"):
+        if art not in GIPFEL_RANG or not n1 or n1 == "N_A":
+            continue
+        e, n = punkt(geom)
+        raus.append([n1 if not n2 or n2 == "N_A" else f"{n1} / {n2}", round(e), round(n),
+                     round(hoehe) if hoehe and hoehe > 0 else None, GIPFEL_RANG[art]])
+    return sorted(raus, key=lambda g: (-g[4], g[0]))
+
+
+def namen_schreiben():
+    ZIEL.mkdir(parents=True, exist_ok=True)
+    o = orte()
+    (ZIEL / "orte.json").write_text(json.dumps({
+        "quelle": "swissTLMRegio (swisstopo), Namen: Ortschaften und Weiler",
+        "hinweis": "je Ort Name, Ost, Nord (LV95), Rang nach der Objektart der Quelle: 6 HOrtschaft3 … 1 KOrtschaft, 0 Weiler",
+        "orte": o,
+    }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"{len(o)} Orte")
+    g = gipfel()
+    (ZIEL / "gipfel.json").write_text(json.dumps({
+        "quelle": "swissTLMRegio (swisstopo), Namen: Gipfel und Hügel",
+        "hinweis": "je Gipfel Name, Ost, Nord (LV95), Höhe in m laut Quelle (null: keine), Rang nach der Objektart: "
+                   "3 HGipfel, 2 GGipfel, 1 KGipfel, 0 Hügel",
+        "gipfel": g,
+    }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"{len(g)} Gipfel")
+
+
 def main():
     ix = json.loads((GELAENDE / "index.json").read_text(encoding="utf-8"))
     k, m, zellen = ix["kachel_m"], ix["raster_m"], ix["zellen"]
@@ -101,16 +142,12 @@ def main():
         "ost": ex0 * k, "nord": ny1 * k, "m": GROB_M, "breite": breite, "hoehe": hoehe, "bild_m": BILD_M,
         "jahre": sorted(jahre), "hinweis": "Höhen in Metern als UInt16, Zeilen von Norden, 0: keine Höhe.",
     }, ensure_ascii=False), encoding="utf-8")
-    o = orte()
-    (ZIEL / "orte.json").write_text(json.dumps({
-        "quelle": "swissTLMRegio (swisstopo), Namen: Ortschaften und Weiler",
-        "hinweis": "je Ort Name, Ost, Nord (LV95), Rang nach der Objektart der Quelle: 6 HOrtschaft3 … 1 KOrtschaft, 0 Weiler",
-        "orte": o,
-    }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"{len(o)} Orte")
+    namen_schreiben()
     print(f"{breite} × {hoehe} Höhen, Luftbild {bild.size[0]} × {bild.size[1]}, "
           f"{sum(p.stat().st_size for p in ZIEL.iterdir()) / 1e6:.1f} MB")
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    # --namen: nur orte.json und gipfel.json, ohne Gelände und Luftbild
+    namen_schreiben() if "--namen" in sys.argv else main()

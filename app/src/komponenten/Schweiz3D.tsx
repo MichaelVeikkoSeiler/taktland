@@ -243,33 +243,63 @@ function hoeheIm(gl: Gelaende, e: number, n: number) {
 function suchform(t: string) {
   return t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[.\-'’()/]/g, ' ').replace(/\s+/g, ' ').trim()
 }
-const SUCHE_TREFFER = 8
+const SUCHE_TREFFER = 8, SUCHE_PRUEFEN = 40
 
-/** Suche in den Ortschaften und Weilern aus swissTLMRegio (data/schweiz3d/orte.json): zuerst die, deren Name so beginnt,
- *  dann die, in deren Name es vorkommt, je nach Rang der Objektart; dazu der Kanton laut Kantonsfläche (BFS) */
+/** Suche in den Ortschaften und Weilern (data/schweiz3d/orte.json), den Gipfeln und Hügeln (data/schweiz3d/gipfel.json, beide aus
+ *  swissTLMRegio, die Gipfel erst beim ersten Tippen geladen) und den Seen mit Namen (data/seen.json; Michael, 2026-10-23: «Gipfel
+ *  und Seen auch»): zuerst die, deren Name so beginnt, dann die, in deren Name es vorkommt, je nach Rang; Orte mit dem Kanton laut
+ *  Kantonsfläche (BFS), Gipfel mit der Höhe. Der Rang der Gipfel und Seen neben dem der Orte (0 bis 6) ist gewählt, nicht aus einer Quelle */
+/** Seen wie eine grössere Ortschaft, Gipfel nach ihrer Objektart (3 HGipfel … 0 Hügel) zwischen 1,5 und 3 */
+const SUCHE_RANG = { see: 3, gipfelAb: 1.5, gipfelJe: 0.5 }
+interface Eintrag { name: string; e: number; n: number; rang: number; art: 'ort' | 'gipfel' | 'see'; hoehe?: number | null }
 function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n: number) => void }) {
   const [text, setText] = useState('')
   const [offen, setOffen] = useState(false)
-  const formen = useMemo(() => zusatz.ortschaften.map((o) => suchform(o[0])), [zusatz])
+  const [gipfel, setGipfel] = useState<Array<[string, number, number, number | null, number]>>([])
+  const gipfelGeholt = useRef(false)
+  const gipfelHolen = () => {
+    if (gipfelGeholt.current) return
+    gipfelGeholt.current = true
+    holen<{ gipfel: typeof gipfel }>('data/schweiz3d/gipfel.json').then((d) => setGipfel(d.gipfel)).catch(() => { gipfelGeholt.current = false })
+  }
+  const eintraege = useMemo(() => {
+    const l: Eintrag[] = zusatz.ortschaften.map(([name, e, n, rang]) => ({ name, e, n, rang, art: 'ort' }))
+    for (const [name, e, n, hoehe, rang] of gipfel) l.push({ name, e, n, rang: SUCHE_RANG.gipfelAb + rang * SUCHE_RANG.gipfelJe, art: 'gipfel', hoehe })
+    // ein See kann aus mehreren Flächen mit demselben Namen bestehen: nur einmal
+    const seen = new Set<string>()
+    for (const x of zusatz.seen.seen) {
+      if (!x.name || !x.namenspunkt || seen.has(x.name)) continue
+      seen.add(x.name)
+      const [e, n] = lv95(x.namenspunkt[0], x.namenspunkt[1])
+      l.push({ name: x.name, e, n, rang: SUCHE_RANG.see, art: 'see' })
+    }
+    return l
+  }, [zusatz, gipfel])
+  const formen = useMemo(() => eintraege.map((x) => suchform(x.name)), [eintraege])
   const treffer = useMemo(() => {
     const q = suchform(text)
     if (q.length < 2) return []
     const vorne: number[] = [], drin: number[] = []
-    formen.forEach((f, i) => { if (f.startsWith(q)) vorne.push(i); else if (f.includes(' ' + q) || (q.length >= 3 && f.includes(q))) drin.push(i) })
-    const o = zusatz.ortschaften
-    const ordnen = (a: number, b: number) => o[b][3] - o[a][3] || formen[a].length - formen[b].length || o[a][0].localeCompare(o[b][0], 'de-CH')
-    return [...vorne.sort(ordnen), ...drin.sort(ordnen)].slice(0, SUCHE_TREFFER).map((i) => {
-      const [name, e, n] = o[i]
-      const [la, lo] = wgs(e, n)
+    formen.forEach((f, i) => { if (f.startsWith(q)) vorne.push(i); else if (f.includes(' ' + q)) drin.push(i) })
+    const o = eintraege
+    const ordnen = (a: number, b: number) => o[b].rang - o[a].rang || formen[a].length - formen[b].length || o[a].name.localeCompare(o[b].name, 'de-CH')
+    // von den besten SUCHE_PRUEFEN Orten der Kanton: was in der Schweiz liegt, kommt vor das Ausland; Gipfel und Seen ohne, ein Gipfel
+    // auf der Grenze (Matterhorn) liegt in der vereinfachten Kantonsfläche oft knapp ausserhalb
+    const liste = [...vorne.sort(ordnen), ...drin.sort(ordnen)].slice(0, SUCHE_PRUEFEN).map((i) => {
+      const x = o[i]
+      const [la, lo] = wgs(x.e, x.n)
       const kanton = [...zusatz.pool.kantone.keys()].find((k) => imGebiet(zusatz.pool, k, la, lo))
-      return { name, e, n, wo: kanton ?? 'Ausland' }
+      const art = x.art === 'see' ? 'See' : x.art === 'gipfel' ? (x.rang === SUCHE_RANG.gipfelAb ? 'Hügel' : 'Gipfel') : null
+      const wo = art ? `${art}${x.hoehe != null ? ` ${x.hoehe.toLocaleString('de-CH')} m` : ''}` : kanton ?? 'Ausland'
+      return { name: x.name, e: x.e, n: x.n, wo, schweiz: !!kanton || x.art !== 'ort' }
     })
-  }, [text, formen, zusatz])
+    return [...liste.filter((t) => t.schweiz), ...liste.filter((t) => !t.schweiz)].slice(0, SUCHE_TREFFER)
+  }, [text, formen, eintraege, zusatz])
   const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n); setText(t.name); setOffen(false) }
   return (
     <div className="relative w-52 max-w-[48vw]">
-      <input type="search" value={text} placeholder="Ort suchen" aria-label="Ort suchen" autoComplete="off" enterKeyHint="search"
-             onChange={(e) => { setText(e.target.value); setOffen(true) }} onFocus={() => setOffen(true)}
+      <input type="search" value={text} placeholder="Ort, Gipfel, See" aria-label="Ort, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
+             onChange={(e) => { setText(e.target.value); setOffen(true); gipfelHolen() }} onFocus={() => { setOffen(true); gipfelHolen() }}
              onKeyDown={(e) => { if (e.key === 'Enter' && treffer[0]) { nehmen(treffer[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
              className="w-full rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight/90" />
       {offen && suchform(text).length >= 2 && (
@@ -280,7 +310,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
                 <span className="font-medium">{t.name}</span> <span className="text-xs text-sbb-metal dark:text-sbb-storm">{t.wo}</span>
               </button>
             </li>
-          )) : <li className="px-2.5 py-1.5 text-sbb-metal dark:text-sbb-storm">Kein Ort mit diesem Namen</li>}
+          )) : <li className="px-2.5 py-1.5 text-sbb-metal dark:text-sbb-storm">Nichts mit diesem Namen</li>}
         </ul>
       )}
     </div>
@@ -529,7 +559,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D Schweiz' : '3D Schweiz'}</h1>
       <p className="mt-2 leading-relaxed">
-        Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, schau, was darin liegt, und tauche ein: erst in eine Region von 20 km,
+        Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See, schau, was darin liegt, und tauche ein: erst in eine Region von 20 km,
         dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km. Mit + und − an den Wänden setzt du an einer Seite ein Stück
         an oder nimmst eines weg.
       </p>
