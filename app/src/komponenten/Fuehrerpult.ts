@@ -609,7 +609,7 @@ export class Fuehrerpult {
   }
 
   /** 0 gelöst, 1 Bremse, 2 Schnellbremse; in der Probefahrt angehalten als Bremse */
-  private gebremst(): number {
+  gebremst(): number {
     const st = this.quelle === 'probe' ? this.aussen?.current?.probe : null
     return st ? (st.angehalten() ? 1 : 0) : this.quelle === 'simulation' ? this.bremse : 0
   }
