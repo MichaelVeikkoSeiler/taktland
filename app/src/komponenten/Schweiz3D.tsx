@@ -252,7 +252,7 @@ const SUCHE_TREFFER = 8, SUCHE_PRUEFEN = 40
 /** Seen wie eine grössere Ortschaft, Gipfel nach ihrer Objektart (3 HGipfel … 0 Hügel) zwischen 1,5 und 3 */
 const SUCHE_RANG = { see: 3, gipfelAb: 1.5, gipfelJe: 0.5 }
 interface Eintrag { name: string; e: number; n: number; rang: number; art: 'ort' | 'gipfel' | 'see'; hoehe?: number | null }
-function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n: number) => void }) {
+function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n: number, name: string) => void }) {
   const [text, setText] = useState('')
   const [offen, setOffen] = useState(false)
   const [gipfel, setGipfel] = useState<Array<[string, number, number, number | null, number]>>([])
@@ -295,7 +295,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
     })
     return [...liste.filter((t) => t.schweiz), ...liste.filter((t) => !t.schweiz)].slice(0, SUCHE_TREFFER)
   }, [text, formen, eintraege, zusatz])
-  const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n); setText(t.name); setOffen(false) }
+  const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n, t.name); setText(t.name); setOffen(false) }
   return (
     <div className="relative w-52 max-w-[48vw]">
       <input type="search" value={text} placeholder="Ort, Gipfel, See" aria-label="Ort, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
@@ -382,6 +382,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [umweltHier, setUmweltHier] = useState(false)
   const [umweltGanzDa, setUmweltGanzDa] = useState(false)
   const [meldung, setMeldung] = useState<string | null>(null)
+  // der zuletzt gesuchte Ort, Gipfel oder See: sein Feld ist in jeder Stufe gewählt, bis man selbst ein anderes wählt
+  const [gesucht, setGesucht] = useState<{ e: number; n: number; name: string } | null>(null)
   useEffect(() => {
     uebersichtLaden().then((g) => setGelaende((a) => ({ ...a, schweiz: einzeln({ e: 0, n: 0, seite: 0 }, g) }))).catch((e: Error) => setFehler(e.message))
     Promise.all([sehenswertLaden(), seenLaden(), kartengrundLaden(), schweiz11Laden(),
@@ -460,6 +462,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     ...(inhalt.kanton ? [`Mitte im Kanton ${inhalt.kanton}`] : []),
   ] : null), [wahl, inhalt])
 
+  /** das Feld einer Stufe um den gesuchten Ort, in der Stufe 1 km keines mehr (dort wählt man nichts) */
+  const feldUmGesucht = (s: Stufe): Feld | null => {
+    if (!gesucht || s === 'nah') return null
+    const r = RASTER_M[s]
+    return { e: Math.round(gesucht.e / r) * r, n: Math.round(gesucht.n / r) * r, seite: FELD_M[s] }
+  }
   async function eintauchen() {
     if (!wahl || laedt) return
     setLaedt(true); setFehler(null)
@@ -474,7 +482,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         const g = await stufeLaden('nah', wahl, gelaende.ort)
         setGelaende((a) => ({ ...a, nah: einzeln(wahl, g) })); setStufe('nah')
       }
-      setWahl(null)
+      // nach einer Suche auch in der nächsten Stufe das Feld um den Ort (Michael, 2026-10-23: «bei allen Eintauchstufen mit dem roten
+      // Kasten markiert»), sofern er im gewählten Feld liegt
+      const nachher: Stufe = stufe === 'schweiz' ? 'region' : stufe === 'region' ? 'ort' : 'nah'
+      const imGewaehlten = gesucht && Math.abs(gesucht.e - wahl.e) <= wahl.seite / 2 && Math.abs(gesucht.n - wahl.n) <= wahl.seite / 2
+      setWahl(imGewaehlten ? feldUmGesucht(nachher) : null)
     } catch (e) { setFehler((e as Error).message) } finally { setLaedt(false) }
   }
   const knoepfe = useMemo<Knoepfe | null>(() => {
@@ -523,6 +535,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   function zufall() {
     const g = gelaende.schweiz
     if (!g || !zusatz) return
+    setGesucht(null)
     // ein Feld um einen zufälligen Gipfel: dort gibt es etwas zu sehen
     const gipfel = zusatz.sw.gipfel.filter((x) => x.hoehe_m !== null && imGebiet(zusatz.pool, 'CH', x.lage[0], x.lage[1]))
     const x = gipfel[Math.floor(Math.random() * gipfel.length)]
@@ -530,8 +543,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     setWahl({ e: Math.round(e / RASTER_M.schweiz) * RASTER_M.schweiz, n: Math.round(n / RASTER_M.schweiz) * RASTER_M.schweiz, seite: FELD_M.schweiz })
   }
   /** ein gesuchter Ort: zurück in die ganze Schweiz, das Feld um ihn gewählt (Michael, 2026-10-23: «Orte mit einer Suchfunktion orten») */
-  function ortWaehlen(e: number, n: number) {
+  function ortWaehlen(e: number, n: number, name: string) {
     const r = RASTER_M.schweiz
+    setGesucht({ e, n, name })
     setStufe('schweiz')
     setWahl({ e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: FELD_M.schweiz })
   }
@@ -540,7 +554,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     if (!import.meta.env.VITE_S3D_TEST) return
     ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }) }
   }, [])
-  const zurueck = (s: Stufe) => { setWahl(null); setStufe(s) }
+  const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
     if (stufe === 'nah') zurueck('ort'); else if (stufe === 'ort') zurueck('region'); else if (stufe === 'region') zurueck('schweiz'); else setWahl(null)
   }
@@ -586,7 +600,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                      const w = { e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: s }
                      // nur in einer Testfassung (VITE_S3D_TEST): das gewählte Feld in die Konsole
                      if (import.meta.env.VITE_S3D_TEST) console.log('feld', JSON.stringify(w))
-                     setWahl(w)
+                     setWahl(w); setGesucht(null)
                    }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
@@ -627,6 +641,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             </p>
             {inhalt?.orte.length ? <p className="mt-0.5 text-lg font-bold leading-tight">{inhalt.orte.join(', ')}</p>
               : <p className="mt-0.5 text-lg font-bold leading-tight">{inhalt?.gipfel?.name ?? 'Ohne Ort der Landeskarte'}</p>}
+            {gesucht && Math.abs(gesucht.e - wahl.e) <= wahl.seite / 2 && Math.abs(gesucht.n - wahl.n) <= wahl.seite / 2 && (
+              <p className="text-sm">Gesucht: <span className="font-medium">{gesucht.name}</span></p>
+            )}
             {inhalt?.gipfel && <p className="text-sm">▲ {inhalt.gipfel.name} {inhalt.gipfel.hoehe_m!.toLocaleString('de-CH')} m</p>}
             {inhalt?.seen.length ? <p className="text-sm">≈ {inhalt.seen.join(', ')}</p> : null}
             <div className="mt-2 flex gap-2">
@@ -634,7 +651,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                       className="min-h-11 flex-1 rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 disabled:opacity-50">
                 {laedt ? 'Wird geladen …' : 'Eintauchen'}
               </button>
-              <button type="button" onClick={() => setWahl(null)} className="min-h-11 rounded-lg border border-sbb-cloud px-3 text-sm font-medium dark:border-sbb-iron">
+              <button type="button" onClick={() => { setWahl(null); setGesucht(null) }} className="min-h-11 rounded-lg border border-sbb-cloud px-3 text-sm font-medium dark:border-sbb-iron">
                 Andere Wahl
               </button>
             </div>
