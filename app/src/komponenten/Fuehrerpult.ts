@@ -158,6 +158,8 @@ export class Fuehrerpult {
   /** 0 hell, 1 dunkel (Tunnel oder Dämmerung): dann leuchten die Tasten, das Pultlicht ist heller */
   nacht = 0
   private leuchten: THREE.MeshBasicMaterial[] = []
+  /** die Bilder der drei Anzeigen (Strecke, Tacho, Voraus), auch für das Pult als Bild (Fuehrerbild.ts) */
+  get anzeigeBilder(): THREE.Texture[] { return this.anzeigen.map((a) => a.tex) }
   /** wird gesetzt, sobald das Tempo nicht von hier kommt (GPS, Probefahrt) */
   quelle: TempoQuelle = 'simulation'
   /** was ausserhalb liegt; in der Probefahrt stellen die Hebel deren Tempo */

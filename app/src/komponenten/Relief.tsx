@@ -9,6 +9,7 @@ import type { BodenbedeckungDaten, FlaechenDaten, KodierterZug, SeenDaten, Sehen
 import { type FahrObjekt, type Fahrweg, gerundetM, wegEnde } from '../fahrt'
 import type { ObjektText } from './Fahrtmodus'
 import { type Ankuendigung, Fuehrerpult, type PultAussen, type TempoQuelle } from './Fuehrerpult'
+import { Fuehrerbild } from './Fuehrerbild'
 import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
@@ -246,6 +247,13 @@ function fuehrerstandBildRechnen(aspect: number) {
     weltX, weltOben: oben, weltUnten: weltHoehe - oben, fov: (2 * Math.atan(weltHoehe / 2) * 180) / Math.PI }
 }
 const fuehrerstandFov = (aspect: number) => fuehrerstandBild(aspect).fov
+/** die Landschaft hinter dem Pult als Bild (Fuehrerbild.ts): wie oben, das Pult nimmt unten anteil der Höhe ein */
+function weltImBild(aspect: number, anteil: number) {
+  const a = Math.max(0.3, aspect)
+  const weltX = Math.min(0.84, Math.max(0.7, 0.62 + 0.13 * a)), weltHoehe = (2 * weltX) / a
+  const oben = (a < 1 ? 0.55 : 0.5) * (1 - anteil) * weltHoehe
+  return { weltX, weltOben: oben, weltUnten: weltHoehe - oben, fov: (2 * Math.atan(weltHoehe / 2) * 180) / Math.PI }
+}
 /** einen Ausschnitt als Tangens links/rechts, oben/unten setzen */
 function bildAusschnitt(k: THREE.PerspectiveCamera, x: number, oben: number, unten: number) {
   const n = k.near
@@ -1616,6 +1624,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     el.appendChild(renderer.domElement)
     // das Pult im Führerstand (Fuehrerpult.ts), nur wo es einen Führerstand gibt; seine Rückmeldung kurz oben im Bild
     const pult = fuehrerstand ? new Fuehrerpult(Boolean(tempoAussen)) : null
+    // auf dem Bildschirm das Pult als Bild nach Michaels Vorlage (2026-10-23), in der Brille das Pult in 3D
+    const pultBild = pult ? new Fuehrerbild(pult) : null
     /** der Blick zur Seite jetzt, folgt seitenblick sanft */
     let seitenJetzt = 0
     if (pult) pult.aussen = aussen ?? null
@@ -3463,13 +3473,14 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       if (!pult || !imStand || renderer.xr.isPresenting) return null
       const rahmen = renderer.domElement.getBoundingClientRect()
       const ndc = new THREE.Vector2(((e.clientX - rahmen.left) / rahmen.width) * 2 - 1, -((e.clientY - rahmen.top) / rahmen.height) * 2 + 1)
+      if (pultBild) return pultBild.treffen(ndc, pultStrahl)
       pultStrahl.setFromCamera(ndc, pult.kamera)
       return pultStrahl.intersectObjects(pult.bedienbar, false)[0]?.object ?? null
     }
     const pultBewegt = (e: PointerEvent) => {
       if (!pult) return
       const t = pultTreffer(e)
-      const name = pult.hover(t)
+      const name = pultBild ? pultBild.hover(t) : pult.hover(t)
       renderer.domElement.style.cursor = t ? 'pointer' : ''
       renderer.domElement.title = name ?? ''
     }
@@ -4319,12 +4330,18 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       if (blick && letzte) blick.current = kamera.position.clone().sub(steuerung.target)
       schilderOrdnen()
       if (pult && imStand && !renderer.xr.isPresenting) {
-        const bild = fuehrerstandBild(kamera.aspect)
+        const bild = pultBild ? weltImBild(kamera.aspect, pultBild.legen(kamera.aspect, Boolean(pult.aussen?.current?.schliessen)))
+          : fuehrerstandBild(kamera.aspect)
         if (kamera.fov !== bild.fov) { kamera.fov = bild.fov; kamera.updateProjectionMatrix() }
         bildAusschnitt(kamera, bild.weltX, bild.weltOben, bild.weltUnten)
       }
       renderer.render(szene, kamera)
-      if (pult && imStand && !renderer.xr.isPresenting) {
+      if (pultBild && imStand && !renderer.xr.isPresenting) {
+        renderer.autoClear = false
+        renderer.clearDepth()
+        renderer.render(pultBild.szene, pultBild.kamera)
+        renderer.autoClear = true
+      } else if (pult && imStand && !renderer.xr.isPresenting) {
         const bild = fuehrerstandBild(kamera.aspect)
         // das Pult in seiner eigenen Szene darüber, unten am Bildrand; der Rahmen gerade und bis an den Rand gestreckt, das Pult
         // darüber (hoch von schräg oben)
@@ -4371,6 +4388,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       renderer.domElement.removeEventListener('pointerdown', pultDruck, { capture: true })
       window.removeEventListener('keydown', pultTaste)
       pult?.entsorgen()
+      pultBild?.entsorgen()
     }
   }, [r, h, faktor, weg, wegFarbe, zug, blick, brille, probe, zusatz, luftbild, gleis, bauNamen, tempoQuelle, tempoAussen, endNamen?.join('→'), verdeckt])
   return <div ref={rahmen} className={className} aria-label={`3D-Relief ${r.titel}`} role="img" />
