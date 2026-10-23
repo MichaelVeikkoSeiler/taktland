@@ -237,6 +237,56 @@ function hoeheIm(gl: Gelaende, e: number, n: number) {
   return z(i, j) * (1 - fx) * (1 - fy) + z(i + 1, j) * fx * (1 - fy) + z(i, j + 1) * (1 - fx) * fy + z(i + 1, j + 1) * fx * fy
 }
 
+/* ---------- Orte suchen ---------- */
+
+/** klein, ohne Akzente und Satzzeichen, damit «zurich» Zürich und «st gallen» St. Gallen findet */
+function suchform(t: string) {
+  return t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[.\-'’()/]/g, ' ').replace(/\s+/g, ' ').trim()
+}
+const SUCHE_TREFFER = 8
+
+/** Suche in den Ortschaften und Weilern aus swissTLMRegio (data/schweiz3d/orte.json): zuerst die, deren Name so beginnt,
+ *  dann die, in deren Name es vorkommt, je nach Rang der Objektart; dazu der Kanton laut Kantonsfläche (BFS) */
+function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n: number) => void }) {
+  const [text, setText] = useState('')
+  const [offen, setOffen] = useState(false)
+  const formen = useMemo(() => zusatz.ortschaften.map((o) => suchform(o[0])), [zusatz])
+  const treffer = useMemo(() => {
+    const q = suchform(text)
+    if (q.length < 2) return []
+    const vorne: number[] = [], drin: number[] = []
+    formen.forEach((f, i) => { if (f.startsWith(q)) vorne.push(i); else if (f.includes(' ' + q) || (q.length >= 3 && f.includes(q))) drin.push(i) })
+    const o = zusatz.ortschaften
+    const ordnen = (a: number, b: number) => o[b][3] - o[a][3] || formen[a].length - formen[b].length || o[a][0].localeCompare(o[b][0], 'de-CH')
+    return [...vorne.sort(ordnen), ...drin.sort(ordnen)].slice(0, SUCHE_TREFFER).map((i) => {
+      const [name, e, n] = o[i]
+      const [la, lo] = wgs(e, n)
+      const kanton = [...zusatz.pool.kantone.keys()].find((k) => imGebiet(zusatz.pool, k, la, lo))
+      return { name, e, n, wo: kanton ?? 'Ausland' }
+    })
+  }, [text, formen, zusatz])
+  const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n); setText(t.name); setOffen(false) }
+  return (
+    <div className="relative w-52 max-w-[48vw]">
+      <input type="search" value={text} placeholder="Ort suchen" aria-label="Ort suchen" autoComplete="off" enterKeyHint="search"
+             onChange={(e) => { setText(e.target.value); setOffen(true) }} onFocus={() => setOffen(true)}
+             onKeyDown={(e) => { if (e.key === 'Enter' && treffer[0]) { nehmen(treffer[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
+             className="w-full rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight/90" />
+      {offen && suchform(text).length >= 2 && (
+        <ul className="absolute left-0 right-0 top-full z-10 mt-1 max-h-72 overflow-auto rounded-lg bg-white/95 text-sm shadow-lg dark:bg-sbb-charcoal/95">
+          {treffer.length ? treffer.map((t) => (
+            <li key={`${t.name}_${t.e}_${t.n}`}>
+              <button type="button" onClick={() => nehmen(t)} className="w-full px-2.5 py-1.5 text-left hover:bg-sbb-milk dark:hover:bg-sbb-iron">
+                <span className="font-medium">{t.name}</span> <span className="text-xs text-sbb-metal dark:text-sbb-storm">{t.wo}</span>
+              </button>
+            </li>
+          )) : <li className="px-2.5 py-1.5 text-sbb-metal dark:text-sbb-storm">Kein Ort mit diesem Namen</li>}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 /* ---------- was im Feld liegt ---------- */
 
 function imFeld(f: Feld, la: number, lo: number) {
@@ -449,6 +499,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     const [e, n] = lv95(x.lage[0], x.lage[1])
     setWahl({ e: Math.round(e / RASTER_M.schweiz) * RASTER_M.schweiz, n: Math.round(n / RASTER_M.schweiz) * RASTER_M.schweiz, seite: FELD_M.schweiz })
   }
+  /** ein gesuchter Ort: zurück in die ganze Schweiz, das Feld um ihn gewählt (Michael, 2026-10-23: «Orte mit einer Suchfunktion orten») */
+  function ortWaehlen(e: number, n: number) {
+    const r = RASTER_M.schweiz
+    setStufe('schweiz')
+    setWahl({ e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: FELD_M.schweiz })
+  }
   // nur in einer Testfassung (VITE_S3D_TEST): ein Feld von aussen wählen
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
@@ -473,7 +529,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D Schweiz' : '3D Schweiz'}</h1>
       <p className="mt-2 leading-relaxed">
-        Die ganze Schweiz als Modell. Tippe auf ein Feld, schau, was darin liegt, und tauche ein: erst in eine Region von 20 km,
+        Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, schau, was darin liegt, und tauche ein: erst in eine Region von 20 km,
         dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km. Mit + und − an den Wänden setzt du an einer Seite ein Stück
         an oder nimmst eines weg.
       </p>
@@ -526,6 +582,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               Überrasch mich
             </button>
           )}
+          {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
         </div>
         {meldung && (
           <button type="button" onClick={() => setMeldung(null)} role="status"
