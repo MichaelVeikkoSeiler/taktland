@@ -6,9 +6,7 @@ import { audioKontext, audioLesen, audioSetzen, signalhorn } from '../audio'
  * Das Pult im Führerstand (Michael, 2026-10-12: «Überarbeite den bestehenden 3D-Führerstand anhand des Referenzbildes …
  * neutraler Schweizer Führerstand ohne Markenlogos»): Fensterrahmen mit Wischern, drei Anzeigen (Strecke, Tacho,
  * Vorankündigungen), zwei Hebel (Bremse, Geschwindigkeitswahl), Knöpfe für Signalhorn, Stirnlicht, Pultlicht, Wischer,
- * Zuggeräusch und Schnellbremse. Vereinfacht, kein Abbild eines bestimmten Fahrzeugs. Seit 2026-10-23 nach Michaels Vorlage
- * (Bild eines Führerstands): oben ein Band mit Feldern und den Anzeigen, darunter zwei Konsolen mit den Hebeln und ein Sockel
- * mit dem Knüppel für die Sicht zur Seite, kantig und anthrazit.
+ * Zuggeräusch und Schnellbremse. Vereinfacht, kein Abbild eines bestimmten Fahrzeugs.
  *
  * In Metern, das Auge im Ursprung, Blick nach -Z. Auf dem Bildschirm in einer eigenen Szene über der Landschaft
  * (szene, kamera), in der Brille in Originalgrösse vor dem Kopf (gruppe in die Welt gehängt).
@@ -66,10 +64,9 @@ export interface PultLage {
   nach: string
 }
 
-/** anthrazit ohne Blaustich wie in Michaels Vorlage (2026-10-23; vorher blaugrau #3b4655) */
 const FARBE = {
-  pult: '#3d4249', pultHell: '#4a4f57', feld: '#2e3237', schwarz: '#1e2125', blende: '#282c31',
-  anzeige: '#141a22', schrift: '#e9eef5', blau: '#4f9cff', karmin: '#d63a55', gelb: '#f2c230', grau: '#8b96a6',
+  pult: '#3b4655', pultHell: '#4a5668', schwarz: '#1d2229', blende: '#262d36',
+  anzeige: '#132033', schrift: '#e9eef5', blau: '#4f9cff', karmin: '#d63a55', gelb: '#f2c230', grau: '#8b96a6',
 }
 /** Tempo in km/h: Wahl in Schritten von 10 bis höchstens 220 (Michael, 2026-10-12: 160, 2026-10-13: 220) */
 export const PULT_HOECHST_KMH = 220
@@ -126,15 +123,9 @@ export class Fuehrerpult {
   private haubeTasten = new THREE.Group()
   private schliessTaste: THREE.Object3D | null = null
   private sichtTasten: THREE.Object3D[] = []
-  /** Höhe gibt es nur, wo sie sich ändern lässt, «Hinter den Zug» nicht in der Brille */
-  private hoeheTasten: THREE.Object3D[] = []
-  private hinterTaste: THREE.Object3D | null = null
-  /** der Knüppel für die Sicht zur Seite und seine beiden Hälften zum Antippen */
-  private knueppel = new THREE.Group()
-  private knueppelZiele: THREE.Object3D[] = []
-  private knueppelNeigung = 0
-  /** Leuchtfelder im Band: rot bei Schnellbremse, gelb bei Bremse */
-  private leuchtfelder: Array<{ m: THREE.MeshBasicMaterial; an: () => boolean; farbe: string }> = []
+  /** die zweite Reihe: welche Tasten zu sehen sind, hängt davon ab, was geht (zweiteLegen) */
+  private zweite: { halter: THREE.Object3D[]; aktionen: Aktion[]; leiste: THREE.Object3D; breite: number; abstand: number; gross: number } | null = null
+  private zweiteStand = ''
   /** in der Brille (setzt Relief.tsx je Bild): dort gibt es «Hinter den Zug» nicht */
   inBrille = false
   /** die Platte über dem Fahrer: auf dem Bildschirm verdeckte sie den Himmel, dort nur das runde Dach; in der Brille ganz */
@@ -317,34 +308,29 @@ export class Fuehrerpult {
 
   private bauen() {
     const g = this.gruppe
-    // nach Michaels Vorlage (2026-10-23, Bild eines Führerstands: «Dieser Führerstand würde mir sehr gefallen», «das Führerpult soll
-    // diese dreidimensionale Ansicht übernehmen»): oben ein Band über die ganze Breite mit Feldern und drei Anzeigen, darunter eine
-    // Stufe mit zwei Konsolen für die Hebel und einem Sockel mit Knüppel in der Mitte; flach, anthrazit, Masse geschätzt
-    // die untere Stufe: Fläche vor dir, nach vorn leicht ansteigend, vorn eine senkrechte Blende
+    // Pult: die Fläche vor dir, nach vorn leicht ansteigend, darüber die Konsole mit den drei Anzeigen
     this.kasten(2.4, 0.06, 0.7, FARBE.pult, 0, -0.56, -0.62, 0.2)
     this.kasten(2.4, 0.3, 0.06, FARBE.pultHell, 0, -0.74, -0.28)
-    // das Band mit den Anzeigen, leicht zum Fahrer geneigt
     const konsole = new THREE.Group()
     konsole.position.set(0, -0.33, -0.95)
     konsole.rotation.x = -0.32
     g.add(konsole)
-    this.kasten(2.1, 0.3, 0.14, FARBE.pultHell, 0, 0, 0, 0, konsole)
-    // eine dunkle Fuge unter dem Band und ein schmaler Blendschutz darüber
-    this.kasten(2.12, 0.025, 0.16, FARBE.schwarz, 0, -0.16, 0.0, 0, konsole)
-    this.kasten(2.36, 0.03, 0.2, FARBE.pult, 0, 0.165, 0.02, 0, konsole)
-    // Felder links und rechts der Anzeigen, etwas vertieft
-    for (const x of [-0.86, 0.86]) this.kasten(0.28, 0.25, 0.02, FARBE.feld, x, 0, 0.07, 0, konsole)
-    // Fensterrahmen (Michael, 2026-10-23, nach der Vorlage): kantige Säulen, unten am Pult schmaler, oben breiter, die Fläche
-    // zum Fahrer gedreht; oben gehen sie ins Dach über
+    this.kasten(2.26, 0.3, 0.14, FARBE.pultHell, 0, 0, 0, 0, konsole)
+    // Blendschutz über den Anzeigen
+    this.kasten(2.36, 0.035, 0.22, FARBE.pult, 0, 0.17, 0.02, 0, konsole)
+    // Seitenteile links und rechts, niedrig, damit die Tasten an der Konsole frei bleiben
+    this.kasten(0.24, 0.2, 0.5, FARBE.pult, -1.08, -0.56, -0.7)
+    this.kasten(0.24, 0.2, 0.5, FARBE.pult, 1.08, -0.56, -0.7)
+    // Fensterrahmen dunkelgrau wie das Pult (Michael, 2026-10-13: «aerodynamischer», «etwas dicker und … zur Kamera hin
+    // gegen oben abdrehen»): jede Säule ein flaches Band mit gerundetem Rand, unten am Pult schmal, oben breit, die Fläche
+    // immer zum Fahrer gedreht; oben biegt sie nach vorn zum Fahrer hin ins Dach
     const auge = new THREE.Vector3(0, 0, 0)
     for (const seite of [-1, 1]) {
       const bogen = new THREE.QuadraticBezierCurve3(
         new THREE.Vector3(seite * 1.18, -0.2, -1.14),
-        new THREE.Vector3(seite * 1.1, 0.51, -0.88),
-        new THREE.Vector3(seite * 1.02, 1.22, -0.62))
-      const teile = 24
-      // vier Ecken: ein flaches Rechteck im Querschnitt, die Kanten nicht gerundet
-      const quer4 = [[1, 1], [-1, 1], [-1, -1], [1, -1]]
+        new THREE.Vector3(seite * 1.24, 0.8, -1.14),
+        new THREE.Vector3(seite * 0.98, 1.22, -0.6))
+      const teile = 32, rund = 16
       const ecken: number[] = [], index: number[] = []
       const c = new THREE.Vector3(), tan = new THREE.Vector3(), zum = new THREE.Vector3(), quer = new THREE.Vector3()
       for (let i = 0; i <= teile; i++) {
@@ -354,48 +340,66 @@ export class Fuehrerpult {
         zum.subVectors(auge, c).normalize()
         quer.crossVectors(tan, zum).normalize()
         zum.crossVectors(quer, tan).normalize()
-        const breit = 0.11 + 0.06 * t, tief = 0.05
-        for (const [a, b] of quer4) ecken.push(c.x + a * breit * quer.x + b * tief * zum.x, c.y + a * breit * quer.y + b * tief * zum.y,
-          c.z + a * breit * quer.z + b * tief * zum.z)
-        if (i < teile) for (let j = 0; j < 4; j++) {
-          const k = i * 4 + j, n = i * 4 + (j + 1) % 4
-          index.push(k, n, k + 4, n, n + 4, k + 4)
+        const breit = 0.09 + 0.09 * t, tief = 0.04
+        for (let j = 0; j < rund; j++) {
+          const w = (j / rund) * Math.PI * 2
+          ecken.push(
+            c.x + Math.cos(w) * breit * quer.x + Math.sin(w) * tief * zum.x,
+            c.y + Math.cos(w) * breit * quer.y + Math.sin(w) * tief * zum.y,
+            c.z + Math.cos(w) * breit * quer.z + Math.sin(w) * tief * zum.z)
+          if (i < teile) {
+            const k = i * rund + j, n = i * rund + (j + 1) % rund
+            index.push(k, n, k + rund, n, n + rund, k + rund)
+          }
         }
       }
       const geo = new THREE.BufferGeometry()
       geo.setAttribute('position', new THREE.Float32BufferAttribute(ecken, 3))
       geo.setIndex(index)
-      const flach = geo.toNonIndexed()
-      flach.computeVertexNormals()
+      geo.computeVertexNormals()
       const m = this.material(FARBE.pult)
       m.side = THREE.DoubleSide
-      this.rahmen.add(new THREE.Mesh(flach, m))
+      this.rahmen.add(new THREE.Mesh(geo, m))
     }
-    // Dach: kantiger Balken über dem Fahrer, wo die Säulen enden, dahinter eine Platte bis zur Scheibe
-    this.kasten(2.2, 0.14, 0.12, FARBE.pult, 0, 1.22, -0.62, 0, this.rahmen)
-    this.dachPlatte = this.kasten(2.3, 0.04, 0.6, FARBE.pult, 0, 1.26, -0.9, 0, this.rahmen)
+    // Dach: runde Kante über dem Fahrer, wo die Säulen enden, dahinter eine Platte bis zur Scheibe
+    const dach = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 2.15, 20), this.material(FARBE.pult))
+    dach.geometry.scale(1, 1, 0.5)
+    dach.rotation.z = Math.PI / 2
+    dach.position.set(0, 1.22, -0.6)
+    this.rahmen.add(dach)
+    this.dachPlatte = this.kasten(2.3, 0.04, 0.6, FARBE.pult, 0, 1.26, -0.88, 0, this.rahmen)
     this.kasten(2.6, 0.06, 0.1, FARBE.blende, 0, -0.17, -1.13)
 
-    // die drei Anzeigen in der Mitte des Bands
+    // die drei Anzeigen
     const anzeige = (x: number, malen: (g: CanvasRenderingContext2D, l: PultLage) => void) => {
       const lw = document.createElement('canvas')
       lw.width = 640; lw.height = 360
       const tex = new THREE.CanvasTexture(lw)
       tex.colorSpace = THREE.SRGBColorSpace
       tex.anisotropy = 4
-      this.kasten(0.45, 0.255, 0.04, FARBE.blende, x, 0, 0.062, 0, konsole)
+      this.kasten(0.58, 0.29, 0.04, FARBE.blende, x, 0, 0.062, 0, konsole)
       // der Bildschirm mit runden Ecken wie sein Rahmen
-      const flaeche = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.23625), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false,
+      const flaeche = new THREE.Mesh(new THREE.PlaneGeometry(0.52, 0.2925), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false,
         alphaMap: this.ecken ??= this.leinwand(640, 360, (c) => { c.fillStyle = '#fff'; c.beginPath(); c.roundRect(0, 0, 640, 360, 26); c.fill() }),
         alphaTest: 0.5 }))
       flaeche.position.set(x, 0, 0.0835)
       konsole.add(flaeche)
       this.anzeigen.push({ lw, tex, malen })
     }
-    anzeige(-0.475, (c, l) => this.streckeMalen(c, l))
+    anzeige(-0.63, (c, l) => this.streckeMalen(c, l))
     anzeige(0, (c, l) => this.tachoMalen(c, l))
-    anzeige(0.475, (c, l) => this.voranMalen(c, l))
+    anzeige(0.63, (c, l) => this.voranMalen(c, l))
 
+    // Tasten in der Mitte, vor den Anzeigen, gross und nah (Michael, 2026-10-13: «die Knöpfe sind klein und weit weg»), auf
+    // einer dunklen Leiste wie in seinem Vorbild
+    // näher und grösser (Michael, 2026-10-14: «etwas näher und etwas grösser»; vorher 10,5 cm in 0,83 m)
+    const kippen = 0.2, y = -0.46, z = -0.74, gross = 0.12, abstand = 0.145
+    const leiste = this.kasten(6 * abstand + 0.03, 0.012, gross + 0.04, FARBE.blende, 0, y - 0.008, z, kippen)
+    leiste.renderOrder = -1
+    const reihe: Array<[(c: CanvasRenderingContext2D) => void, string, Aktion]> = [
+      [(c) => dreieck(c, '#ffffff'), '#b3122f', 'schnellbremse'], [(c) => lautsprecher(c, FARBE.schrift), FARBE.schwarz, 'zuggeraeusch'],
+      [(c) => horn(c, FARBE.schrift), FARBE.schwarz, 'horn'], [(c) => scheinwerfer(c, FARBE.schrift), FARBE.schwarz, 'stirnlicht'],
+      [(c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, 'wischer'], [(c) => mond(c, FARBE.schrift), FARBE.schwarz, 'daemmerung']]
     const zustand: Partial<Record<Aktion, () => boolean>> = {
       zuggeraeusch: () => audioLesen().zuggeraeusch && audioLesen().an, stirnlicht: () => this.stirnlicht,
       wischer: () => this.wischer, daemmerung: () => this.daemmerung, pultlicht: () => this.pultlicht,
@@ -403,47 +407,28 @@ export class Fuehrerpult {
       tunnel: () => this.meldet('tunnel'), bruecke: () => this.meldet('bruecke'), bahnhof: () => this.meldet('bahnhof'),
       bahnuebergang: () => this.meldet('bahnuebergang'),
     }
-    const imBand = (zeichen: (c: CanvasRenderingContext2D) => void, x: number, y: number, aktion: Aktion) =>
-      this.taste(zeichen, FARBE.schwarz, x, y, 0.08, aktion, Math.PI / 2, 0.072, konsole, zustand[aktion])
-    // links im Band: Zuggeräusch, Signalhorn, Stirnlicht, Pultlicht
-    imBand((c) => lautsprecher(c, FARBE.schrift), -0.92, 0.055, 'zuggeraeusch')
-    imBand((c) => horn(c, FARBE.schrift), -0.8, 0.055, 'horn')
-    imBand((c) => scheinwerfer(c, FARBE.schrift), -0.92, -0.06, 'stirnlicht')
-    imBand((c) => pultleuchte(c, FARBE.schrift), -0.8, -0.06, 'pultlicht')
-    // rechts im Band: zwei Leuchtfelder (rot Schnellbremse, gelb Bremse) wie in der Vorlage, daneben was gemeldet wird
-    for (const [y, an, farbe] of [[0.055, () => this.gebremst() === 2, '#ff3b30'], [-0.06, () => this.gebremst() === 1, '#ffb020']] as const) {
-      const m = new THREE.MeshBasicMaterial({ color: '#3a3f46', toneMapped: false })
-      const feld = new THREE.Mesh(new THREE.PlaneGeometry(0.035, 0.085), m)
-      feld.position.set(0.755, y, 0.081)
-      konsole.add(feld)
-      this.leuchtfelder.push({ m, an, farbe })
-    }
-    const melden: Array<[MeldeArt, number, number]> = [['tunnel', 0.835, 0.055], ['bruecke', 0.945, 0.055], ['bahnhof', 0.835, -0.06]]
-    if (this.uebergaenge) melden.push(['bahnuebergang', 0.945, -0.06])
-    for (const [art, x, y] of melden) imBand((c) => meldeZeichen(c, art, FARBE.schrift), x, y, art)
-
-    // untere Stufe: links und rechts eine Konsole für den Hebel, in der Mitte ein Sockel mit dem Knüppel
-    const kippen = 0.2, yK = -0.49, zK = -0.66, gross = 0.085
-    for (const x of [-0.65, 0.65]) {
-      this.kasten(0.66, 0.05, 0.36, FARBE.feld, x, yK - 0.03, zK, kippen)
-      // ein Schlitz am äusseren Ende, nur zum Ansehen
-      this.kasten(0.04, 0.012, 0.16, FARBE.schwarz, x + Math.sign(x) * 0.28, yK, zK, kippen)
-    }
-    const aufKonsole = (zeichen: (c: CanvasRenderingContext2D) => void, grund: string, x: number, aktion: Aktion) =>
-      this.taste(zeichen, grund, x, yK, zK + 0.03, aktion, kippen, gross, this.gruppe, zustand[aktion]).parent!
-    aufKonsole((c) => dreieck(c, '#ffffff'), '#b3122f', -0.88, 'schnellbremse')
-    aufKonsole((c) => wischerZeichen(c, FARBE.schrift), FARBE.schwarz, -0.53, 'wischer')
-    aufKonsole((c) => mond(c, FARBE.schrift), FARBE.schwarz, -0.42, 'daemmerung')
-    this.hoeheTasten = [aufKonsole((c) => berg(c, FARBE.schrift, 1), FARBE.schwarz, 0.42, 'hoehe1'),
-      aufKonsole((c) => berg(c, FARBE.schrift, 2), FARBE.schwarz, 0.53, 'hoehe2')]
-    // der Sockel in der Mitte, oben die Tasten für Zum Start und Hinter den Zug und der Knüppel für die Sicht zur Seite
-    this.kasten(0.5, 0.12, 0.42, FARBE.pult, 0, -0.5, -0.64, kippen)
-    this.kasten(0.34, 0.012, 0.13, FARBE.schwarz, 0, -0.44, -0.55, kippen)
-    const sockelTaste = (zeichen: (c: CanvasRenderingContext2D) => void, x: number, aktion: Aktion) =>
-      this.taste(zeichen, FARBE.schwarz, x, -0.445, -0.7, aktion, kippen, 0.075, this.gruppe, zustand[aktion]).parent!
-    sockelTaste((c) => zumStartZeichen(c, FARBE.schrift), -0.155, 'zumStart')
-    this.hinterTaste = sockelTaste((c) => hinterZugZeichen(c, FARBE.schrift), 0.155, 'hinterZug')
-    this.knueppelBauen(0, -0.44, -0.66, kippen)
+    reihe.forEach(([zeichen, grund, aktion], i) => this.taste(zeichen, grund, (i - 2.5) * abstand, y, z, aktion, kippen, gross,
+      this.gruppe, zustand[aktion]))
+    // eine zweite, kleinere Reihe näher beim Fahrer (Michael, 2026-10-14: «alle Knöpfe als reale Knöpfe im Führerraum»):
+    // Sicht hinter den Zug, Höhe des Geländes, was angekündigt wird
+    const zweite: Array<[(c: CanvasRenderingContext2D) => void, Aktion]> = [
+      [(c) => hinterZugZeichen(c, FARBE.schrift), 'hinterZug'], [(c) => zumStartZeichen(c, FARBE.schrift), 'zumStart'],
+      [(c) => berg(c, FARBE.schrift, 1), 'hoehe1'],
+      [(c) => berg(c, FARBE.schrift, 2), 'hoehe2'], [(c) => meldeZeichen(c, 'tunnel', FARBE.schrift), 'tunnel'],
+      [(c) => meldeZeichen(c, 'bruecke', FARBE.schrift), 'bruecke'], [(c) => meldeZeichen(c, 'bahnhof', FARBE.schrift), 'bahnhof'],
+      ...(this.uebergaenge ? [[(c: CanvasRenderingContext2D) => meldeZeichen(c, 'bahnuebergang', FARBE.schrift), 'bahnuebergang'] as [(c: CanvasRenderingContext2D) => void, Aktion]] : [])]
+    const y2 = -0.52, z2 = -0.6, gross2 = 0.085, abstand2 = 0.102
+    const breite2 = (zweite.length - 1 + 0.7) * abstand2 + gross2 + 0.03
+    const leiste2 = this.kasten(breite2, 0.012, gross2 + 0.04, FARBE.blende, 0, y2 - 0.008, z2, kippen)
+    leiste2.renderOrder = -1
+    const halter2 = zweite.map(([zeichen, aktion]) => this.taste(zeichen, FARBE.schwarz, 0, y2, z2, aktion, kippen,
+      gross2, this.gruppe, zustand[aktion]).parent!)
+    this.zweite = { halter: halter2, aktionen: zweite.map(([, a]) => a), leiste: leiste2, breite: breite2, abstand: abstand2, gross: gross2 }
+    this.zweiteLegen(() => true)
+    // neben den Anzeigen links nur noch die Pultbeleuchtung, die es in der Reihe nicht gibt (Michael, 2026-10-13: «Doppelte
+    // Schalter entfernen»)
+    this.taste((c) => pultleuchte(c, FARBE.schrift), FARBE.schwarz, -1.02, 0, 0.07, 'pultlicht', Math.PI / 2, 0.082, konsole,
+      () => this.pultlicht)
 
     // Hebel: links die Bremse (0, B, SB), rechts die Geschwindigkeitswahl (0 bis 220 km/h)
     this.hebel(-0.5, this.bremsHebel, 'bremsePlus', 'bremseMinus', (c) => {
@@ -462,8 +447,8 @@ export class Fuehrerpult {
     const haubeMaterial = this.material(FARBE.pult)
     this.haubeWand = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1, 0.08), haubeMaterial)
     this.haube.add(this.haubeWand)
-    // kantig wie der Rahmen (vorher eine runde Kante)
-    this.haubeKante = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.05, 0.12), haubeMaterial)
+    this.haubeKante = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 2.5, 20), haubeMaterial)
+    this.haubeKante.rotation.z = Math.PI / 2
     this.haube.add(this.haubeKante)
     this.haubeTasten.position.z = 0.04
     this.haube.add(this.haubeTasten)
@@ -475,8 +460,8 @@ export class Fuehrerpult {
       haubeTaste((c) => sichtZeichen(c, FARBE.schrift, false), FARBE.schwarz, 0.95, 'sichtRechts')]
     this.schliessTaste = haubeTaste((c) => schliessZeichen(c, '#ffffff'), '#5a5a5a', 0, 'schliessen')
 
-    // ein Wischer rechts wie in der Vorlage, in Ruhe flach
-    for (const x of [0.3]) {
+    // Wischer: zwei Arme unten am Fenster, in Ruhe flach
+    for (const x of [-0.42, 0.38]) {
       const arm = new THREE.Group()
       arm.position.set(x, -0.15, -1.08)
       const stange = new THREE.Mesh(new THREE.BoxGeometry(0.018, 0.82, 0.01), this.material(FARBE.schwarz))
@@ -491,36 +476,12 @@ export class Fuehrerpult {
     }
   }
 
-  /** der Knüppel auf dem Sockel: links antippen dreht die Sicht nach links, rechts nach rechts; er neigt sich kurz dorthin */
-  private knueppelBauen(x: number, y: number, z: number, kippen: number) {
-    const fuss = new THREE.Group()
-    fuss.position.set(x, y, z)
-    fuss.rotation.x = kippen
-    this.gruppe.add(fuss)
-    this.kasten(0.1, 0.02, 0.1, FARBE.schwarz, 0, 0, 0, 0, fuss)
-    this.knueppel.position.y = 0.01
-    fuss.add(this.knueppel)
-    const stange = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.014, 0.07, 10), this.material('#1a1e24'))
-    stange.position.y = 0.035
-    this.knueppel.add(stange)
-    const knauf = new THREE.Mesh(rund(0.045, 0.05, 0.035), this.material('#2a2f36'))
-    knauf.position.y = 0.08
-    this.knueppel.add(knauf)
-    for (const [aktion, dx] of [['sichtLinks', -0.035], ['sichtRechts', 0.035]] as const) {
-      const h = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.11, 0.08), new THREE.MeshLambertMaterial({ color: '#2a2f36', transparent: true, opacity: 0 }))
-      h.position.set(dx, 0.055, 0)
-      fuss.add(h)
-      this.ziel(h, aktion)
-      this.knueppelZiele.push(h)
-    }
-  }
-
   /** ein Hebel in einer Kulisse: die vordere Hälfte der Kulisse schiebt ihn nach vorn, die hintere zurück */
   private hebel(x: number, griff: THREE.Group, vorn: Aktion, hinten: Aktion, skala: (c: CanvasRenderingContext2D) => void) {
     const basis = new THREE.Group()
-    // auf den Konsolen links und rechts (Michael, 2026-10-23, nach der Vorlage); tiefer und näher lagen sie auf dem Handy unter dem
-    // Bildrand (Michael, 2026-10-14: «auf dem Mobile sieht man die Hebel nicht»)
-    basis.position.set(x * 1.44, -0.49, -0.64)
+    // links und rechts der Tastenreihe, auf ihrer Höhe: tiefer und näher lagen sie auf dem Handy unter dem Bildrand
+    // (Michael, 2026-10-14: «auf dem Mobile sieht man die Hebel nicht»; vorher 0,56 m tief und 0,56 m weit)
+    basis.position.set(x * 1.44, -0.53, -0.64)
     basis.rotation.x = 0.2
     // grösser als zuerst, damit man sie auf dem Handy trifft
     basis.scale.setScalar(1.15)
@@ -543,12 +504,11 @@ export class Fuehrerpult {
     }
     griff.position.set(0, 0.02, 0)
     basis.add(griff)
-    // kürzer als zuerst, damit der Hebel die Tasten im Band nicht verdeckt (Michael, 2026-10-23, nach der Vorlage; vorher 13 cm)
-    const stange = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.08, 10), this.material('#1a1e24'))
-    stange.position.y = 0.04
+    const stange = new THREE.Mesh(new THREE.CylinderGeometry(0.011, 0.011, 0.13, 10), this.material('#1a1e24'))
+    stange.position.y = 0.065
     griff.add(stange)
-    const knauf = new THREE.Mesh(rund(0.1, 0.04, 0.06), this.material('#c9ccd1'))
-    knauf.position.y = 0.09
+    const knauf = new THREE.Mesh(rund(0.1, 0.045, 0.06), this.material('#22272e'))
+    knauf.position.y = 0.14
     griff.add(knauf)
     // auch der Knauf ist bedienbar: er schiebt nach vorn
     this.ziel(knauf, vorn)
@@ -608,7 +568,27 @@ export class Fuehrerpult {
     for (const x of [-0.29, 0.29]) this.kasten(0.06, 0.05, 0.38, dunkel, x, 0.72, 0.02, 0, stuhl)
   }
 
-  /** 0 gelöst, 1 Bremse, 2 Schnellbremse; in der Probefahrt angehalten als Bremse */
+  /** die zweite Reihe neu legen, nur mit den Tasten, die gehen; zwischen den Gruppen eine Lücke: Sicht und Start | Höhe | Melden
+   *  (Michael, 2026-10-16: «die Knöpfe der Höhe braucht es dort nicht, weil sie auch nicht funktionieren … nimm sie weg») */
+  private zweiteLegen(zeigen: (a: Aktion) => boolean) {
+    const z = this.zweite
+    if (!z) return
+    const gruppe = (a: Aktion) => (a === 'hinterZug' || a === 'zumStart' ? 0 : a === 'hoehe1' || a === 'hoehe2' ? 1 : 2)
+    const lage: number[] = []
+    let x = 0, vorher = -1
+    z.aktionen.forEach((a, i) => {
+      z.halter[i].visible = zeigen(a)
+      if (!z.halter[i].visible) { lage.push(0); return }
+      if (vorher >= 0) x += 1 + (gruppe(a) !== vorher ? 0.35 : 0)
+      vorher = gruppe(a)
+      lage.push(x)
+    })
+    const mitte = x / 2
+    z.aktionen.forEach((_, i) => { z.halter[i].position.x = (lage[i] - mitte) * z.abstand })
+    z.leiste.scale.x = (x * z.abstand + z.gross + 0.03) / z.breite
+  }
+
+  /** 0 gelöst, 1 Bremse, 2 Schnellbremse; in der Probefahrt angehalten als Bremse (für die Leuchtfelder in Fuehrerbild.ts) */
   gebremst(): number {
     const st = this.quelle === 'probe' ? this.aussen?.current?.probe : null
     return st ? (st.angehalten() ? 1 : 0) : this.quelle === 'simulation' ? this.bremse : 0
@@ -672,8 +652,8 @@ export class Fuehrerpult {
         if (!this.zumStartAktion?.()) return 'Beim Fahren bestimmt der Standort, wo der Zug ist'
         this.stehen()
         return this.quelle === 'probe' ? 'Am Startbahnhof – Bremse lösen fährt ab' : 'Am Startbahnhof – Geschwindigkeit wählen fährt ab'
-      case 'sichtLinks': au?.seite?.(1); this.knueppelNeigung = 0.45; return 'Sicht nach links'
-      case 'sichtRechts': au?.seite?.(-1); this.knueppelNeigung = -0.45; return 'Sicht nach rechts'
+      case 'sichtLinks': au?.seite?.(1); return 'Sicht nach links'
+      case 'sichtRechts': au?.seite?.(-1); return 'Sicht nach rechts'
       case 'schliessen': au?.schliessen?.(); return ''
       case 'hoehe1': case 'hoehe2': {
         if (!au?.hoeheSetzen) return 'Hier nur Höhe wie echt'
@@ -782,13 +762,12 @@ export class Fuehrerpult {
     const au = this.aussen?.current
     for (const t of this.sichtTasten) t.visible = Boolean(au?.seite)
     if (this.schliessTaste) this.schliessTaste.visible = Boolean(au?.schliessen)
-    // Höhe nur, wo sie sich ändern lässt, «Hinter den Zug» nicht in der Brille, der Knüppel nur, wo man zur Seite blicken kann
-    for (const t of this.hoeheTasten) t.visible = Boolean(au?.hoeheSetzen)
-    if (this.hinterTaste) this.hinterTaste.visible = !this.inBrille
-    for (const z of this.knueppelZiele) z.visible = Boolean(au?.seite)
-    this.knueppelNeigung *= Math.max(0, 1 - dt * 5)
-    this.knueppel.rotation.z = this.knueppelNeigung
-    for (const f of this.leuchtfelder) f.m.color.set(f.an() ? f.farbe : '#3a3f46')
+    // Höhe nur, wo sie sich ändern lässt, «Hinter den Zug» nicht in der Brille
+    const stand = `${Boolean(au?.hoeheSetzen)}${this.inBrille}`
+    if (stand !== this.zweiteStand) {
+      this.zweiteStand = stand
+      this.zweiteLegen((a) => (a === 'hoehe1' || a === 'hoehe2' ? Boolean(au?.hoeheSetzen) : a === 'hinterZug' ? !this.inBrille : true))
+    }
     // Hebel nach Stellung; in der Probefahrt nach deren Stufe, die Skala zeigt dann deren Tempi
     const st = this.quelle === 'probe' ? this.aussen?.current?.probe : null
     this.skalaZeigen(st?.stufen ?? null)

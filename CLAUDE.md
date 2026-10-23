@@ -228,12 +228,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              Leuchtknöpfe (Michael, 2026-10-23: «klickbare Knöpfe … möglichst das gleiche sehen»; BELEGUNG in Fuehrerbild.ts, gewählt): oben links Zuggeräusch, Stirnlicht,
              Signalhorn, Dämmerung, rechts Tunnel, Brücken, Bahnhöfe melden, die Leuchtfelder rot und gelb nur bei Schnellbremse und Bremse, unten Schnellbremse, Pultlicht,
              Zum Start, Hinter den Zug, Höhe 1 und 2; ist eine Funktion aus, liegt ein dunkler Schleier auf dem Knopf; die kleinen dunklen Knöpfe sind nur gemalt; im Vollbild ein Kreuz oben rechts; die Landschaft dahinter mit dem
-             Horizont in der Mitte des Fensters (weltImBild in Relief.tsx); in der Brille weiter das Pult in 3D, gebaut nach Michaels zweiter Vorlage (Bild eines Führerstands hoch und quer: «das Führerpult soll diese dreidimensionale
-             Ansicht übernehmen»): anthrazit ohne Blaustich, kantige Säulen und Dachbalken, ein Wischer rechts; oben ein Band über die Breite, links ein Feld mit Zuggeräusch, Signalhorn,
-             Stirnlicht, Pultlicht, dann die drei Anzeigen, rechts zwei Leuchtfelder (rot Schnellbremse, gelb Bremse) und das Melden; darunter links eine Konsole mit
-             Schnellbremse, Bremshebel, Wischer, Dämmerung, rechts eine mit Höhe 1 und 2 und dem Hebel der Geschwindigkeit (Hebel kürzer, Knauf hell), in der Mitte ein
-             Sockel mit Zum Start, Hinter den Zug und einem Knüppel für die Sicht links und rechts (er neigt sich beim Antippen); Masse geschätzt, aus keiner Quelle; das Folgende beschreibt
-             teils noch die erste Fassung: Fensterrahmen mit zwei Wischern (A-Säulen dunkelgrau wie das Pult, flache Bänder, oben breiter und zum Fahrer hin ins Dach gebogen; Michael, 2026-10-13), drei Anzeigen (Strecke: Start, Ziel, gefahren, noch, gemessen entlang der
+             Horizont in der Mitte des Fensters (weltImBild in Relief.tsx); in der Brille weiter das Pult in 3D wie bisher (Michael, 2026-10-23: «auf der Brille noch nichts ändern»; ein Nachbau
+             nach seiner Vorlage in 3D gab es kurz, nicht gewünscht): Fensterrahmen mit zwei Wischern (A-Säulen dunkelgrau wie das Pult, flache Bänder, oben breiter und zum Fahrer hin ins Dach gebogen; Michael, 2026-10-13), drei Anzeigen (Strecke: Start, Ziel, gefahren, noch, gemessen entlang der
              gezeichneten Strecke; Tacho 0 bis 220 km/h mit Herkunft SIMULATION, GPS oder PROBEFAHRT, daneben die Vorschau: Pfeil, Entfernung, Zeichen und Name des
              Nächsten voraus; Voraus: die nächsten drei Bahnhöfe, Tunnel und Brücken mit Entfernung auf einer Linie durch ihre Zeichen
              (vorListe, Michael, 2026-10-13, nach seinem Vorbild), Namen aus den Daten, sonst «ohne Namen»), Hebel Bremse (0, B, SB) und Geschwindigkeitswahl
