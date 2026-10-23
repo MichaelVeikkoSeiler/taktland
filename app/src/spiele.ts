@@ -33,7 +33,7 @@ export interface Spiel {
   bild?: { hell: string; dunkel: string; alt: string }
 }
 
-// Reihenfolge: Modellbahn, Geo, dann die übrigen (Michael, 2026-10-08)
+// Reihenfolge: Modellbahn, Geo, dann die übrigen (Michael, 2026-10-08), 3D Schweiz zuletzt (Michael, 2026-10-23)
 export const SPIELE: Spiel[] = [
   // Michael, 2026-10-08: «neues Spiel 3D/VR», Name «Modellbahn»; die Brille gibt es nur hier, nicht unter Fahren
   {
@@ -50,14 +50,6 @@ export const SPIELE: Spiel[] = [
     bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: Jemand setzt eine Ortsmarke auf eine Karte im Handy.' },
     beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
       + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
-  },
-  // Michael, 2026-10-18: «3D Schweiz heisst das Spiel», vorerst mit den Daten, die es schon gibt; das Bild ist das der Modellbahn
-  {
-    id: 'schweiz3d', titel: '3D Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
-    kurz: 'Die ganze Schweiz als Modell: ein Feld wählen und eintauchen, auch in der VR-Brille.',
-    bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand hält ein Tablet mit dem Modell eines Bergs und seinen Höhenstufen vor denselben Berg.' },
-    beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld, schau, was darin liegt, und tauche ein, bis auf ein Stück von 4 km. '
-      + 'Mit einer Brille steht das Modell vor dir auf dem Tisch.',
   },
   // Michael, 2026-10-18: «Wo bin ich passt gut»; das Bild ist vorerst das des Fahrtmodus
   {
@@ -80,6 +72,14 @@ export const SPIELE: Spiel[] = [
     bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhofsuche» auf dem Tablet.' },
     beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
+  },
+  // an letzter Stelle (Michael, 2026-10-23); Michael, 2026-10-18: «3D Schweiz heisst das Spiel», vorerst mit den Daten, die es schon gibt; das Bild ist das der Modellbahn
+  {
+    id: 'schweiz3d', titel: '3D Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
+    kurz: 'Die ganze Schweiz als Modell: ein Feld wählen und eintauchen, auch in der VR-Brille.',
+    bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand hält ein Tablet mit dem Modell eines Bergs und seinen Höhenstufen vor denselben Berg.' },
+    beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld, schau, was darin liegt, und tauche ein, bis auf ein Stück von 4 km. '
+      + 'Mit einer Brille steht das Modell vor dir auf dem Tisch.',
   },
 ]
 
