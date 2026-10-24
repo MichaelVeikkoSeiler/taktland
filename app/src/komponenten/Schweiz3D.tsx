@@ -573,9 +573,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D Schweiz' : '3D Schweiz'}</h1>
       <p className="mt-2 leading-relaxed">
-        Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See, schau, was darin liegt, und tauche ein: erst in eine Region von 20 km,
-        dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km. Mit + und − an den Wänden setzt du an einer Seite ein Stück
-        an oder nimmst eines weg.
+        {/* kurz, damit das Modell weiter oben steht (Michael, 2026-10-24); + und − erklärt der Text unter dem Bild */}
+        Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See, und tauche ein bis auf 1 km.
       </p>
       <nav aria-label="Stufe" className="mt-3 flex flex-wrap items-center gap-1 text-sm">
         <button type="button" onClick={() => zurueck('schweiz')} className={`rounded-lg px-2 py-1 ${stufe === 'schweiz' ? 'font-bold' : 'underline'}`}>Schweiz</button>
