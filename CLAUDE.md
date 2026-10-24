@@ -323,7 +323,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille alle Schalter an den Wänden des Modells, auf allen vier Seiten
              (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle … so wie Schalter», vorher Tafeln vor der Nase): flach im
              Band unter dem tiefsten Punkt, links der Knöpfe + und − Höhen, Wanderwege (ab 20 km), Gebäude und Bäume (wo es sie gibt), rechts
-             Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Monat, +1 Monat (Michael, 2026-10-24: «Was heisst 1 Mon?»), Jetzt (Strahl und Abzug); als Knöpfe einer Steuerung
+             Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Tag, +1 Tag (Michael, 2026-10-24: «Was heisst 1 Mon?», dann «−1 Monat und +1 Monat durch Tage ersetzen»), Jetzt (Strahl und Abzug); als Knöpfe einer Steuerung
              (Michael, 2026-10-22: «wie richtige … physische Knöpfe»): aus dunkel und 1,1 % der Breite vorstehend, an 0,3 % eingedrückt und
              leuchtend mit Schein auf der Wand, Gelände gelb, Gebäude und Bäume grün, Sonne rot (KNOPF_*, LICHT), die Zeit als flache Anzeige;
              jeder Druck klickt wie ein rastender Druckknopf, gerechnet (knopfTon in src/audio.ts; Michael, 2026-10-22: «passend und absolut

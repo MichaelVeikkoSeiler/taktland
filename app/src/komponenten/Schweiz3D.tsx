@@ -491,7 +491,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     ? `Sonne ${Math.round(stand.hoehe)}° über dem Horizont, im ${himmelsrichtung(stand.richtung)}`
     : 'Die Sonne steht unter dem Horizont') : null
   const sonnenZeilen = useMemo(() => (stand ? [`${tagText}, ${uhrzeit(minuten)} Uhr`, standText!] : null), [stand, tagText, minuten, standText])
-  const zeitSchieben = (art: 'stunde' | 'monat' | 'jetzt', um: number) => {
+  const zeitSchieben = (art: 'stunde' | 'tag' | 'jetzt', um: number) => {
     if (art === 'jetzt') { const j = jetztInDerSchweiz(); setTag(j.datum); setMinuten(Math.round(j.minuten / 15) * 15 % 1440); return }
     if (art === 'stunde') {
       const neu = minuten + um * 60
@@ -502,11 +502,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       setMinuten(((neu % 1440) + 1440) % 1440)
       return
     }
+    // einen Tag vor oder zurück (Michael, 2026-10-24: «−1 Monat und +1 Monat durch Tage ersetzen»)
     const [j, m, t] = tag.split('-').map(Number)
-    const neu = new Date(Date.UTC(j, m - 1 + um, 1))
-    const letzter = new Date(Date.UTC(neu.getUTCFullYear(), neu.getUTCMonth() + 1, 0)).getUTCDate()
-    neu.setUTCDate(Math.min(t, letzter))
-    setTag(neu.toISOString().slice(0, 10))
+    setTag(new Date(Date.UTC(j, m - 1, t + um)).toISOString().slice(0, 10))
   }
   // Gebäude und Bäume gibt es vorerst nur in zwei Probeausschnitten
   useEffect(() => {
@@ -899,7 +897,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   sonne: Sonnenstand | null
   /** was der Schalter der Sonne in der Brille zur Zeit sagt, und wie die Brille die Zeit verschiebt */
   sonnenZeilen: string[] | null
-  zeitSchieben: (art: 'stunde' | 'monat' | 'jetzt', um: number) => void
+  zeitSchieben: (art: 'stunde' | 'tag' | 'jetzt', um: number) => void
   /** Wanderwege zeigen (in den Stufen 20 km, 4 km und 1 km) */
   wandern: boolean
   /** Gebäude und Bäume gibt es hier */
@@ -1754,15 +1752,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     ]
     const zeitDa = sonnenAn && !!sonnenZeilen
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
-    const zeit = (art: 'stunde' | 'monat' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
+    const zeit = (art: 'stunde' | 'tag' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
     const rechts: Teil[] = [
       { zeilen: ['Wind'], breite: 0.065 * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
       { zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
       { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
       { zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
       { zeilen: ['+1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', 1) },
-      { zeilen: ['−1', 'Monat'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('monat', -1) },
-      { zeilen: ['+1', 'Monat'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('monat', 1) },
+      { zeilen: ['−1', 'Tag'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', -1) },
+      { zeilen: ['+1', 'Tag'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', 1) },
       { zeilen: ['Jetzt'], breite: 0.04 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('jetzt', 0) },
     ]
     // je Teil ein Bild für die Vorderseite, auf allen vier Wänden dasselbe; an leuchtet es in der Farbe seiner Art, aus ist es dunkel
