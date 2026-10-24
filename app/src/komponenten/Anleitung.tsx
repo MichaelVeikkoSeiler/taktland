@@ -379,8 +379,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             andere entfernst du in den Einstellungen des Browsers mit den Websitedaten für taktland.ch.
           </li>
           <li>
-            Den Standort fragt Taktland nur beim Fahren und unter «Standort» ab, nach deiner
-            Freigabe. Er wird nie gesendet. Unter «Standort» wird er nur auf dem Gerät
+            Den Standort fragt Taktland nur beim Fahren, unter «Standort» und in «3D Schweiz» mit «Mein Standort» ab, nach deiner
+            Freigabe. Er wird nie gesendet. Unter «Standort» und in «3D Schweiz» wird er nur auf dem Gerät
             verrechnet und nicht gespeichert. Beim Fahren merkt sich Taktland die Stelle auf dem
             Weg, damit eine Fahrt weitergehen kann, und hält für das Logbuch den gefahrenen Weg
             mit Datum fest, als Punkte auf der Strecke. Beides bleibt im Browser dieses Geräts

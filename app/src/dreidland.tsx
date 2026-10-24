@@ -52,7 +52,8 @@ function DreiDLand() {
           </p>
           <p className="mt-1">
             Kein Konto, kein Zähler. Die Seite lädt Gelände, Luftbilder und Wege von taktland.ch und daten.taktland.ch; dabei sieht
-            der Server wie bei jeder Webseite die Adresse des Geräts.
+            der Server wie bei jeder Webseite die Adresse des Geräts. «Mein Standort» fragt den Standort erst nach deiner Freigabe
+            ab; er bleibt auf dem Gerät und wird weder gesendet noch gespeichert.
           </p>
         </footer>
       </div>

@@ -297,13 +297,13 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
   }, [text, formen, eintraege, zusatz])
   const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n, t.name); setText(t.name); setOffen(false) }
   return (
-    <div className="relative w-52 max-w-[48vw]">
+    <div className="relative w-52 max-w-[calc(48vw-2.5rem)]">
       <input type="search" value={text} placeholder="Ort, Gipfel, See" aria-label="Ort, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
              onChange={(e) => { setText(e.target.value); setOffen(true); gipfelHolen() }} onFocus={() => { setOffen(true); gipfelHolen() }}
              onKeyDown={(e) => { if (e.key === 'Enter' && treffer[0]) { nehmen(treffer[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
              className="w-full rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight/90" />
       {offen && suchform(text).length >= 2 && (
-        <ul className="absolute left-0 right-0 top-full z-10 mt-1 max-h-72 overflow-auto rounded-lg bg-white/95 text-sm shadow-lg dark:bg-sbb-charcoal/95">
+        <ul className="absolute left-0 top-full z-10 w-max min-w-full max-w-[80vw] mt-1 max-h-72 overflow-auto rounded-lg bg-white/95 text-sm shadow-lg dark:bg-sbb-charcoal/95">
           {treffer.length ? treffer.map((t) => (
             <li key={`${t.name}_${t.e}_${t.n}`}>
               <button type="button" onClick={() => nehmen(t)} className="w-full px-2.5 py-1.5 text-left hover:bg-sbb-milk dark:hover:bg-sbb-iron">
@@ -384,6 +384,40 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [meldung, setMeldung] = useState<string | null>(null)
   // der zuletzt gesuchte Ort, Gipfel oder See: sein Feld ist in jeder Stufe gewählt, bis man selbst ein anderes wählt
   const [gesucht, setGesucht] = useState<{ e: number; n: number; name: string } | null>(null)
+  // der eigene Standort per GPS (Michael, 2026-10-24: «auf der Karte jeweils sehen mit GPS, wo ich durchfahre»): nur auf dem
+  // Gerät, nie gesendet; der erste wählt das Feld um ihn wie eine Suche, danach wandert nur der Punkt mit
+  const [standort, setStandort] = useState<{ e: number; n: number } | null>(null)
+  const [gpsAn, setGpsAn] = useState(false)
+  const gpsWache = useRef<number | null>(null)
+  const stufeJetzt = useRef(stufe)
+  stufeJetzt.current = stufe
+  function gpsStoppen() {
+    if (gpsWache.current !== null) navigator.geolocation.clearWatch(gpsWache.current)
+    gpsWache.current = null
+    setGpsAn(false); setStandort(null)
+  }
+  function gpsUmschalten() {
+    if (gpsAn) { gpsStoppen(); return }
+    if (!('geolocation' in navigator)) { setMeldung('Dieser Browser kann den Standort nicht bestimmen.'); return }
+    setGpsAn(true)
+    let erster = true
+    gpsWache.current = navigator.geolocation.watchPosition((p) => {
+      const [e, n] = lv95(p.coords.latitude, p.coords.longitude)
+      setStandort({ e, n })
+      if (!erster) return
+      erster = false
+      const s = stufeJetzt.current
+      setGesucht({ e, n, name: 'Dein Standort' })
+      if (s !== 'nah') setWahl({ e: Math.round(e / RASTER_M[s]) * RASTER_M[s], n: Math.round(n / RASTER_M[s]) * RASTER_M[s], seite: FELD_M[s] })
+    }, (f) => {
+      // ohne Freigabe aus; sonst (kein Empfang, zu spät) weiter warten, gemeldet nur, solange es noch keinen Standort gab
+      if (f.code === f.PERMISSION_DENIED) {
+        setMeldung('Der Standort ist nicht freigegeben. Erlaube ihn in den Einstellungen des Browsers.')
+        gpsStoppen()
+      } else if (erster) setMeldung('Der Standort liess sich noch nicht bestimmen. Taktland versucht es weiter.')
+    }, { enableHighAccuracy: true, maximumAge: 5000 })
+  }
+  useEffect(() => () => { if (gpsWache.current !== null) navigator.geolocation.clearWatch(gpsWache.current) }, [])
   useEffect(() => {
     uebersichtLaden().then((g) => setGelaende((a) => ({ ...a, schweiz: einzeln({ e: 0, n: 0, seite: 0 }, g) }))).catch((e: Error) => setFehler(e.message))
     Promise.all([sehenswertLaden(), seenLaden(), kartengrundLaden(), schweiz11Laden(),
@@ -606,7 +640,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn })[art]((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen}
+                     sonne: setSonnenAn })[art]((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
                    zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -627,7 +661,19 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               Überrasch mich
             </button>
           )}
-          {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
+          {/* neben der Suche, damit der Knopf «Eintauchen» darunter nichts verdeckt */}
+          <div className="flex items-center gap-1">
+            {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
+            <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
+                    aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
+                    title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
+                    className={`flex h-9 w-9 flex-none items-center justify-center rounded-lg border ${gpsAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gpsAn && !standort ? 'animate-pulse' : ''}`}>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
+                <path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" />
+              </svg>
+            </button>
+          </div>
         </div>
         {meldung && (
           <button type="button" onClick={() => setMeldung(null)} role="status"
@@ -788,7 +834,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben }: {
+function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
@@ -808,6 +854,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
   umweltHier: boolean
   /** die Sonne mit Zeit ist an; ein Schalter um, in der Brille an den Wänden */
   sonnenAn: boolean; schalten: (art: Schalter) => void
+  /** der eigene Standort per GPS in LV95, null: aus */
+  standort: { e: number; n: number } | null
 }) {
   const huelle = useRef<HTMLDivElement>(null)
   const [grafikWeg, setGrafikWeg] = useState(false)
@@ -1017,7 +1065,7 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     })
     const anfangSetzen = () => { drehung = 0; zoom = 1; lage = null; haelt.clear(); griff = null }
     // Schilder und Knöpfe: auf dem Bildschirm in fester Grösse, in der Brille in Metern
-    const sprites = () => ['schilder', 'knoepfe'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? []) as THREE.Sprite[])
+    const sprites = () => ['schilder', 'knoepfe', 'standort'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? []) as THREE.Sprite[])
     const brilleSetzen = () => {
       const breite = (wurzel.userData.weiteKm as number) || 1
       const s = (BRILLE_BREITE_M / breite) * zoom
@@ -1864,6 +1912,37 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
   }, [scheiben, orte, gipfel])
   // eine neue Stufe steht in der Brille wieder auf dem Tisch wie am Anfang
   useEffect(() => { kern.current?.anfangSetzen() }, [stufe])
+  // der eigene Standort als karminroter Punkt mit weissem Rand auf dem Gelände, durch Berge hindurch sichtbar; nur wo er im Modell
+  // liegt (nach dem Bau des Modells, darum hier und mit dessen Abhängigkeiten)
+  useEffect(() => {
+    const k = kern.current
+    if (!k || !standort) return
+    const { e, n } = standort
+    if (![...b.teile.values()].some((t) => imRaster(t.raster, e, n))) return
+    const z = bestandHoehe(b, e, n)
+    const lage = k.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!lage || !Number.isFinite(z)) return
+    const c = document.createElement('canvas'); c.width = c.height = 64
+    const x = c.getContext('2d')!
+    x.fillStyle = 'rgba(168,16,46,0.25)'; x.beginPath(); x.arc(32, 32, 31, 0, Math.PI * 2); x.fill()
+    x.fillStyle = '#ffffff'; x.beginPath(); x.arc(32, 32, 17, 0, Math.PI * 2); x.fill()
+    x.fillStyle = '#a8102e'; x.beginPath(); x.arc(32, 32, 12, 0, Math.PI * 2); x.fill()
+    const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: false }))
+    // in der Brille in Metern wie die Schilder (sprites() in der Szene)
+    sp.userData = { b: 0.05, h: 0.05, verhaeltnis: 1, brilleM: 0.02 }
+    sp.scale.set(0.05, 0.05, 1)
+    sp.position.set((e - lage.cE) / 1000, z / 1000, -(n - lage.cN) / 1000)
+    sp.renderOrder = 6
+    const gruppe = new THREE.Group()
+    gruppe.name = 'standort'
+    gruppe.userData.bleibt = true
+    gruppe.add(sp)
+    k.wurzel.add(gruppe)
+    if (k.inBrille()) k.jeBild[0]()
+    return () => { k.wurzel.remove(gruppe); t.dispose(); sp.material.dispose() }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [standort, b, stufe, zusatz, knoepfe])
   useEffect(() => {
     welt.current?.setzeWahl(wahl)
     const k = kern.current
