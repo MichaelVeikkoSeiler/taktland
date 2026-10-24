@@ -10,7 +10,10 @@ import { type FahrObjekt, type Fahrweg, gerundetM, wegEnde } from '../fahrt'
 import type { ObjektText } from './Fahrtmodus'
 import { type Ankuendigung, Fuehrerpult, type PultAussen, type TempoQuelle } from './Fuehrerpult'
 import { Fuehrerbild } from './Fuehrerbild'
-import { type Wetter, wetterBei, wetterText } from '../wetter'
+import { type Wetter, wetterBei, wetterText, type Wind } from '../wetter'
+import { createRoot, type Root } from 'react-dom/client'
+import { windhoseBauen } from './Windhose'
+import { WindTafel } from './WindTafel'
 import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
@@ -1932,7 +1935,63 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     sonnenKnopf.addEventListener('pointerdown', (e) => e.stopPropagation())
     const wetterAnzeige = document.createElement('div')
     wetterAnzeige.style.cssText = 'padding:2px 6px;border-radius:6px;font:11px Helvetica,Arial,sans-serif;background:rgba(255,255,255,0.8);color:#212121;pointer-events:none'
-    wetterLeiste.append(sonnenKnopf, wetterAnzeige)
+    // die Windhose (Michael, 2026-10-24: «eine Windhose hinzufügen, wo man sehen kann, wie die Windverhältnisse sind. Auch mit
+    // Prognose für die nächste Woche»): an der Station des Wetters, wenn sie im Ausschnitt steht, sonst am Rand ihr am nächsten;
+    // 3,5-mal so hoch wie die Masten der Bahnhöfe, nicht massstäblich; nicht im Führerstand und nicht bei Schönwetter
+    const windhose = windhoseBauen()
+    windhose.gruppe.visible = false
+    szene.add(windhose.gruppe)
+    {
+      const ausdehnungKm = (Math.max(r.raster.breite, r.raster.hoehe) * r.raster.m) / 1000
+      windhose.gruppe.scale.setScalar(3.5 * MAST_KM * Math.max(1, ausdehnungKm / 40))
+    }
+    /** was die Windhose zeigt: die Messung, oder die in der Tafel gewählte Stunde der Prognose */
+    let windGewaehlt: Wind | null | undefined
+    const windZeigen = () => {
+      const w = windGewaehlt !== undefined ? windGewaehlt : wetter?.wind ?? null
+      windhose.setzen(w?.kmh ?? null, w?.richtung ?? null)
+      if (!wetter) return
+      const { ost, nord, m, breite, hoehe } = r.raster
+      const e = Math.max(ost + m, Math.min(ost + (breite - 1) * m, wetter.station.e))
+      const n = Math.max(nord - (hoehe - 1) * m, Math.min(nord - m, wetter.station.n))
+      windhose.gruppe.position.set(X(e), Y(hoeheBei(r, h, e, n)), Z(n))
+    }
+    const windKnopf = document.createElement('button')
+    windKnopf.type = 'button'
+    windKnopf.setAttribute('aria-label', 'Wind und Prognose')
+    windKnopf.title = 'Wind und Prognose'
+    // ein Windsack am Mast
+    windKnopf.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">'
+      + '<path d="M4 21V3"/><path d="M4 5l15 2.5v5L4 15z" fill="currentColor" fill-opacity="0.25"/><path d="M9 6v8M14 7v6"/></svg>'
+    windKnopf.style.cssText = sonnenKnopf.style.cssText
+    windKnopf.style.background = 'rgba(255,255,255,0.85)'
+    let windTafel: { div: HTMLDivElement; root: Root } | null = null
+    const windTafelZeigen = () => {
+      if (!windTafel || !wetter) return
+      windTafel.root.render(<WindTafel station={wetter.station} jetzt={wetter.wind} jetztZeit={wetter.windZeit}
+        waehlen={(w) => { windGewaehlt = w; windZeigen() }} />)
+    }
+    const windTafelZu = () => {
+      if (!windTafel) return
+      const t = windTafel; windTafel = null
+      // nicht während React rendert abbauen
+      setTimeout(() => { t.root.unmount(); t.div.remove() })
+      windGewaehlt = undefined; windZeigen()
+      windKnopf.setAttribute('aria-pressed', 'false'); windKnopf.style.background = 'rgba(255,255,255,0.85)'
+    }
+    windKnopf.addEventListener('click', (ev) => {
+      ev.stopPropagation()
+      if (windTafel) { windTafelZu(); return }
+      const div = document.createElement('div')
+      div.style.cssText = 'position:absolute;left:8px;right:8px;bottom:52px;max-width:420px;z-index:6'
+      for (const art of ['pointerdown', 'wheel', 'touchstart']) div.addEventListener(art, (x) => x.stopPropagation())
+      el.appendChild(div)
+      windTafel = { div, root: createRoot(div) }
+      windKnopf.setAttribute('aria-pressed', 'true'); windKnopf.style.background = '#5a5a5a'; windKnopf.style.color = '#ffffff'
+      windTafelZeigen()
+    })
+    windKnopf.addEventListener('pointerdown', (ev) => ev.stopPropagation())
+    wetterLeiste.append(sonnenKnopf, windKnopf, wetterAnzeige)
     if (mitWetter) el.appendChild(wetterLeiste)
     let wetterBis = 0, wetterLaedt = false, niederAn = false
     /** Licht, Himmel und die Zeile oben links nach dem Wetter und dem Schalter «Echtes Wetter» */
@@ -1940,6 +1999,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       tunnelDunkel(...letzteDunkel)
       const an = mitWetter && !ausJetzt.current.has('wetter')
       wetterAnzeige.style.display = an ? '' : 'none'
+      windKnopf.style.display = an && wetter ? 'flex' : 'none'
+      if (!an || !wetter) windTafelZu()
+      windKnopf.style.color = windTafel ? '#ffffff' : '#767676'
       // Schönwetter: der Schalter leuchtet gelb
       sonnenKnopf.style.background = an ? 'rgba(255,255,255,0.85)' : '#ffd23c'
       sonnenKnopf.style.color = an ? '#767676' : '#3a2a00'
@@ -1959,6 +2021,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const e = steuerung.target.x * 1000 + me, n = -steuerung.target.z * 1000 + mn
       void wetterBei(e, n).then((w) => {
         wetter = w
+        windZeigen(); windTafelZeigen()
       }).catch(() => {}).finally(() => { wetterLaedt = false; wetterBis = performance.now() + WETTER_NEU_MS; wetterZeigen() })
     }
     /** im Führerstand im Tunnel dunkel (Michael, 2026-10-10: «In Tunneln soll es dunkel werden»): das Tageslicht schwindet an den
@@ -4454,6 +4517,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       }
       // Regen und Schnee fallen im Würfel um die Kamera mit dem Abstand zum Blickpunkt, im Führerstand in einem Kasten vor dem Auge
       if (mitWetter) leisteLegen(imStand)
+      windhose.gruppe.visible = !imStand && wetterGilt()
+      if (windhose.gruppe.visible) windhose.schritt(performance.now() / 1000)
       // auch in der Brille (Michael, 2026-10-24): auf dem Tisch über dem Modell, im Führerstand um den Kopf
       const schnee = wetter?.art === 'schnee'
       const fallend = niederAn
@@ -4566,6 +4631,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       renderer.dispose()
       renderer.domElement.remove()
       pultMeldung.remove()
+      windTafelZu()
+      windhose.entsorgen()
       wetterLeiste.remove()
       renderer.domElement.removeEventListener('pointermove', pultBewegt)
       renderer.domElement.removeEventListener('pointerdown', pultDruck, { capture: true })

@@ -14,6 +14,7 @@ export function ModellHinweis() {
         <li>Die Fahrt ist ein Zeitraffer, kein Fahrplan; das Zuggeräusch ist gerechnet.</li>
         <li>Der Führerstand ist gezeichnet, kein bestimmtes Fahrzeug; Beschleunigen und Bremsen sind gerechnet und viel schneller als bei einem Zug.</li>
         <li>Das Wetter ist die letzte Messung der nächsten Station, nicht das Wetter an jeder Stelle; Wolken, Regen und Schnee sind daraus geschlossen, nicht gemessen.</li>
+        <li>Die Windhose zeigt den Wind der Station oder eine Stunde ihrer Prognose; sie ist gezeichnet und viel grösser als in Wirklichkeit.</li>
       </ul>
     </div>
   )

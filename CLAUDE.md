@@ -465,7 +465,18 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              2026-10-24: «Regentropfen fallen nicht bis zum Boden»), dort Dunst (DUNST_JE_KM); die Nahgrenze im Führerstand 1,2 m statt 3 m
              (FUEHRERSTAND_NAHE_KM; «Schienen hören zu früh vor dem Fahrzeug auf»), in der Brille Regen und Schnee auf dem Tisch in einem Würfel von 1,6 m über dem Modell, im Führerstand um den Kopf
              (NIEDER_TISCH_M; Michael, 2026-10-24; mit dem Emulator nicht geprüft, IWER startete hier keine Sitzung); neben dem Schalter die Zeile
-             «Wetter Station Uhrzeit: …, Temperatur (MeteoSchweiz)»; Quelle in der Fusszeile, Annahmen und Datenschutz unter Info
+             «Wetter Station Uhrzeit: …, Temperatur, Wind (MeteoSchweiz)»; Quelle in der Fusszeile, Annahmen und Datenschutz unter Info;
+             Windhose (Michael, 2026-10-24: «eine Windhose hinzufügen, wo man sehen kann, wie die Windverhältnisse sind. Auch mit Prognose für
+             die nächste Woche»): die Messung (fu3010z0, fu3010z1, dkl010z0) und die lokale Prognose von MeteoSchweiz (ogd-local-forecasting,
+             Punkte vom Typ Station, die Nummer je Station in wetterstationen.json, Stundenwerte fu3010h0, fu3010h1, dkl010h0 bis 192 h, UTC;
+             src/wind.ts: je Grösse etwa 32 MB, nach Punktart und Nummer als Text geordnet, darum Teilabrufe mit Range und Halbieren, nur
+             einige KB; der neueste Lauf mit HEAD gesucht); die Windhose (komponenten/Windhose.ts): Mast, Sack aus fünf Ringen rot und weiss,
+             zeigt wohin der Wind weht, ganz gestreckt ab 28 km/h (VOLL_KMH, 15 Knoten wie an Flugplätzen), ohne Angabe grau und hängend,
+             flattert ein wenig; in der Modellbahn an der Station des Wetters (sonst am Rand ihr am nächsten), 3,5-mal so hoch wie die Masten,
+             nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wind» an
+             den Wänden (blau, am Anfang aus), die Windhose an der Station, sonst an der Ecke im Südwesten, 16 % so hoch wie das Modell breit;
+             die Tafel (komponenten/WindTafel.tsx): Messung, Regler über die Stunden der Prognose, Verlauf der Woche (Stundenmittel und
+             Böen, Striche um Mitternacht); die Windhose zeigt die gewählte Stunde; Gestalt, Grösse und Farben gewählt
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```

@@ -119,7 +119,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             an den Wänden setzt du Stücke an.
           </li>
           <li>
-            Die Knöpfe an den Wänden schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume und Sonne mit Schatten zu
+            Die Knöpfe an den Wänden schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume, die Windhose mit Prognose und Sonne mit Schatten zu
             Datum und Uhrzeit. Alles beginnt ausgeschaltet. Auch als eigene Seite auf 3dland.ch.
           </li>
         </Spiel>
@@ -295,6 +295,13 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             oben links im Bild stellt auf Schönwetter, dann leuchtet er.
           </li>
           <li>
+            Die Windhose in der Modellbahn und in «3D Schweiz» zeigt den zuletzt gemessenen Wind derselben Station (Mittel über 10
+            Minuten, stärkste Böe, Richtung) oder eine Stunde ihrer Prognose: die lokale Prognose von MeteoSchweiz (Open Government
+            Data, stündlich neu, Stundenwerte bis 8 Tage voraus). Der Sack zeigt, wohin der Wind weht, und ist ab 28 km/h ganz
+            gestreckt wie an Flugplätzen; die Windhose selbst ist gezeichnet und nicht massstäblich, sie steht an der Station oder,
+            wenn diese nicht im Modell liegt, am Rand.
+          </li>
+          <li>
             Linien anderer Bahnen und das Kapitel «Netz»: Schienennetz des Bundesamts für
             Verkehr BAV auf{' '}
             <Verweis href="https://data.geo.admin.ch/browser/#/collections/ch.bav.schienennetz">
@@ -391,6 +398,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             In der Modellbahn und beim Fahren holt Taktland, solange der Sonnenschalter nicht leuchtet, alle 10 Minuten die Messung einer Wetterstation
             direkt bei data.geo.admin.ch (Bund). Der Dienst sieht dabei wie jeder Server die IP-Adresse und erfährt, welche
             Station gefragt wird, also in welcher Gegend das Modell oder die Fahrt liegt; den Standort selbst sendet Taktland nicht.
+            Ebenso, wenn die Windhose an ist oder ihre Tafel offen: die Windmessung und die Prognose der Station.
           </li>
           <li>
             Ausgeliefert wird die Seite von GitHub Pages, einem Dienst von GitHub (USA); die

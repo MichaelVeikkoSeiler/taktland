@@ -17,6 +17,9 @@ import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
 import { knopfTon, verlaufTon } from '../audio'
 import { istNadel, NADEL_BREITE } from '../baumart'
+import { messungVon, type Station, stationenBei, type Wind } from '../wetter'
+import { type Windhose, windhoseBauen } from './Windhose'
+import { WindTafel } from './WindTafel'
 
 /**
  * «3D Schweiz» (Michael, 2026-10-18: «die Berge und Täler der Schweiz besser erkunden … von der ganzen Schweiz bis ins
@@ -41,7 +44,7 @@ interface Gelaende { raster: Raster; h: Float32Array; bild: HTMLCanvasElement; r
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
 /** was die Schalter ein- und ausschalten */
-type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne'
+type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind'
 /** Ein Feld und was an seinen Seiten angesetzt ist (Michael, 2026-10-20: «An den Wänden ein Plus und oder ein Minus … zum
  *  Erweitern resp. reduzieren der Kacheln»): je Stück ein Gelände, Schlüssel «di_dj» in Feldern Ost und Nord vom Anker */
 interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, number]; dj: [number, number] }
@@ -378,6 +381,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [wandern, setWandern] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
   const [sonnenAn, setSonnenAn] = useState(false)
+  // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
+  const [windAn, setWindAn] = useState(false)
+  const [windStation, setWindStation] = useState<Station | null>(null)
+  const [windMessung, setWindMessung] = useState<{ wind: Wind | null; zeit: Date | null }>({ wind: null, zeit: null })
+  const [windZeigt, setWindZeigt] = useState<Wind | null>(null)
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
   const [minuten, setMinuten] = useState(12 * 60)
   const [umweltHier, setUmweltHier] = useState(false)
@@ -432,6 +440,22 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }, [meldung])
   const inhalt = useMemo(() => (wahl ? feldInhalt(wahl, zusatz) : null), [wahl, zusatz])
   const aktuell = gelaende[stufe]
+  // der Wind der nächsten Station mit Windmessung zur Mitte des Modells
+  useEffect(() => {
+    if (!windAn || !aktuell) return
+    const r = [...aktuell.teile.values()].map((t) => t.rahmen)
+    const e = r.reduce((a, x) => a + x.e0 + x.b / 2, 0) / r.length, n = r.reduce((a, x) => a + x.n1 - x.h / 2, 0) / r.length
+    let weg = false
+    void stationenBei(e, n).then(async (liste) => {
+      for (const st of liste.slice(0, 3)) {
+        const m = await messungVon(st)
+        if (weg) return
+        if (m?.wind) { setWindStation(st); setWindMessung({ wind: m.wind, zeit: m.windZeit }); return }
+      }
+      if (!weg) { setWindStation(liste[0] ?? null); setWindMessung({ wind: null, zeit: null }) }
+    }).catch(() => {})
+    return () => { weg = true }
+  }, [windAn, aktuell])
   const anker = aktuell?.teile.get('0_0') ?? null
   // der Sonnenstand über der Mitte des Modells
   const stand = useMemo(() => {
@@ -589,7 +613,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // nur in einer Testfassung (VITE_S3D_TEST): ein Feld von aussen wählen
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -641,7 +665,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn })[art]((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
+                     sonne: setSonnenAn, wind: setWindAn })[art]((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
+                   windAn={windAn} wind={windZeigt} windStation={windStation}
                    zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -692,6 +717,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
         )}
       </div>
+      {windAn && (
+        <WindTafel className="mt-2" station={windStation} jetzt={windMessung.wind} jetztZeit={windMessung.zeit} waehlen={setWindZeigt} />
+      )}
       <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
         {sonnenAn && (
           <>
@@ -711,7 +739,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {standText && <p className="mt-1 text-sm">{standText} ({tagText}, {uhrzeit(minuten)} Uhr, Schweizer Zeit).</p>}
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Höhe wie echt. Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'nah' && ' Ein Tipp wählt ein Feld.'}
-        {' Die Knöpfe an den Wänden schalten Höhen, Orte, Gipfel, Wanderwege, Gebäude, Bäume und die Sonne ein und aus.'}
+        {' Die Knöpfe an den Wänden schalten Höhen, Orte, Gipfel, Wanderwege, Gebäude, Bäume, den Wind mit Prognose und die Sonne ein und aus.'}
         {stufe !== 'schweiz' && ' + und − an einer Wand setzen dort ein Stück an oder nehmen eines weg.'}
         {hinweis && <> <strong>{hinweis}</strong></>}
       </p>
@@ -741,7 +769,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             die grösseren zuerst nach der Objektart der Quelle, mit Abstand zueinander; Auswahl und Mast gewählt. Ein Feld ist ein Quadrat, keine Region und kein Tal:
             deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
-            folgen den Wegweisern. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
+            folgen den Wegweisern. Wind: die letzte Messung der nächsten Station von MeteoSchweiz mit Windmessung (SwissMetNet) und ihre
+            lokale Prognose (stündlich, bis 8 Tage); die Windhose steht an der Station oder, wenn sie nicht im Modell liegt, an der Ecke im
+            Südwesten, gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
@@ -774,7 +804,7 @@ const VERLAUF_S = 2.5
 /** das Geräusch dazu ist kürzer (Michael, 2026-10-22: «noch zu lang») */
 const VERLAUF_TON_S = 0.9
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
-const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c' }
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c', wind: '#5ab4ff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
@@ -836,7 +866,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, wind, windStation }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -858,6 +888,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   umweltHier: boolean
   /** die Sonne mit Zeit ist an; ein Schalter um, in der Brille an den Wänden */
   sonnenAn: boolean; schalten: (art: Schalter) => void
+  /** die Windhose: an, was sie zeigt, wo die Station steht */
+  windAn: boolean; wind: Wind | null; windStation: Station | null
   /** der eigene Standort per GPS in LV95, null: aus */
   standort: { e: number; n: number } | null
 }) {
@@ -1704,6 +1736,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
     const zeit = (art: 'stunde' | 'monat' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
     const rechts: Teil[] = [
+      { zeilen: ['Wind'], breite: 0.065 * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
       { zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
       { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
       { zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
@@ -1809,7 +1842,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, windAn])
 
   // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
   // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
@@ -1918,6 +1951,37 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [scheiben, orte, gipfel])
   // eine neue Stufe steht in der Brille wieder auf dem Tisch wie am Anfang
   useEffect(() => { kern.current?.anfangSetzen() }, [stufe])
+  // die Windhose: an der Station, wenn sie im Modell steht, sonst an der Ecke im Südwesten; der Mast 16 % so hoch wie das
+  // Modell breit ist, nicht massstäblich (Windhose.ts)
+  const windhose = useRef<Windhose | null>(null)
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    const W = k?.wurzel.userData.weiteKm as number | undefined
+    if (!k || !lage || !W || !windAn) return
+    const teile = [...b.teile.values()]
+    const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
+    const rand = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), n0 = Math.min(...rand.map((x) => x.n1 - x.h))
+    let [e, n] = windStation && drin(windStation.e, windStation.n) ? [windStation.e, windStation.n] : [e0 + W * 1000 * 0.04, n0 + W * 1000 * 0.04]
+    if (!drin(e, n)) [e, n] = [lage.cE, lage.cN]
+    const w = windhoseBauen()
+    w.gruppe.position.set((e - lage.cE) / 1000, bestandHoehe(b, e, n) / 1000, -(n - lage.cN) / 1000)
+    w.gruppe.scale.setScalar(W * 0.16)
+    w.gruppe.userData.bleibt = true
+    k.wurzel.add(w.gruppe)
+    windhose.current = w
+    if (import.meta.env.VITE_S3D_TEST) console.log('windhose', JSON.stringify({ e, n, p: w.gruppe.position.toArray(), W, st: windStation?.kuerzel }))
+    const start = performance.now()
+    const schritt = () => w.schritt((performance.now() - start) / 1000)
+    k.jeBild.push(schritt)
+    return () => {
+      k.wurzel.remove(w.gruppe); w.entsorgen(); windhose.current = null
+      const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [windAn, windStation, b, stufe, zusatz, knoepfe])
+  useEffect(() => { windhose.current?.setzen(wind?.kmh ?? null, wind?.richtung ?? null) }, [wind, windAn, windStation, b, stufe, zusatz, knoepfe])
   // der eigene Standort als karminroter Punkt mit weissem Rand auf dem Gelände, durch Berge hindurch sichtbar; nur wo er im Modell
   // liegt (nach dem Bau des Modells, darum hier und mit dessen Abhängigkeiten)
   useEffect(() => {

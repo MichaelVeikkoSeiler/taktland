@@ -30,7 +30,7 @@ function DreiDLand() {
             <img src="./logo.png" alt="" className="size-6 rounded" />3dland
           </p>
           <p>
-            Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS. 3dland ist ein privates Projekt
+            Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz. 3dland ist ein privates Projekt
             von <a href="https://taktland.ch" className={LINK}>Taktland</a> und kein Angebot einer Behörde.
           </p>
           <details className="klapp mt-2">
@@ -40,7 +40,8 @@ function DreiDLand() {
             <p className="mt-1">
               Gelände (swissALTIRegio, swissALTI3D), Luftbild (SWISSIMAGE), Seen, Ortschaften und die Gipfel der Suche (swissTLMRegio), Wanderwege, Bäume und
               Wald (swissTLM3D), Gebäude (swissBUILDINGS3D 3.0), Gipfel und Ortsnamen der Landeskarte 1:1 Million (Swiss Map Vector 1000):
-              Bundesamt für Landestopografie swisstopo. Kantone: Bundesamt für Statistik BFS. Was je Modell wofür ist, steht darunter
+              Bundesamt für Landestopografie swisstopo. Kantone: Bundesamt für Statistik BFS. Wind und Windprognose: MeteoSchweiz
+              (SwissMetNet und lokale Prognose, Open Government Data). Was je Modell wofür ist, steht darunter
               unter «Modell, nicht massstäblich: Quellen». Lizenzen der mitgelieferten Bibliotheken:{' '}
               <a href="./lizenzen/drittsoftware.txt" className={LINK}>drittsoftware.txt</a>.
               Entstanden mit Unterstützung von KI (Claude Code; Bildmarke und Auftaktbild: ChatGPT). 3dland kann Fehler enthalten: Die Rohdaten
@@ -53,7 +54,8 @@ function DreiDLand() {
           <p className="mt-1">
             Kein Konto, kein Zähler. Die Seite lädt Gelände, Luftbilder und Wege von taktland.ch und daten.taktland.ch; dabei sieht
             der Server wie bei jeder Webseite die Adresse des Geräts. «Mein Standort» fragt den Standort erst nach deiner Freigabe
-            ab; er bleibt auf dem Gerät und wird weder gesendet noch gespeichert.
+            ab; er bleibt auf dem Gerät und wird weder gesendet noch gespeichert. Ist der Wind an, holt die Seite Messung und Prognose der
+            nächsten Wetterstation bei data.geo.admin.ch (Bund); der Dienst erfährt so, in welcher Gegend das Modell liegt.
           </p>
         </footer>
       </div>
