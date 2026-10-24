@@ -487,6 +487,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       const nachher: Stufe = stufe === 'schweiz' ? 'region' : stufe === 'region' ? 'ort' : 'nah'
       const imGewaehlten = gesucht && Math.abs(gesucht.e - wahl.e) <= wahl.seite / 2 && Math.abs(gesucht.n - wahl.n) <= wahl.seite / 2
       setWahl(imGewaehlten ? feldUmGesucht(nachher) : null)
+      // nach dem Eintauchen die Orte der neuen Stufe mit ihren Masten (Michael, 2026-10-24: «beim Eintauchen wieder neue Ortschaften»)
+      setOrteAn(true)
     } catch (e) { setFehler((e as Error).message) } finally { setLaedt(false) }
   }
   const knoepfe = useMemo<Knoepfe | null>(() => {
@@ -634,29 +636,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
         )}
         {wahl && stufe !== 'nah' && (
-          // oben unter der Suche, unten lag der Kasten auf dem Handy oft unter dem Bildschirmrand (Michael, 2026-10-24: «Der
-          // Eintauchen Button müsste oben sein sonst sieht man ihn nicht»)
-          <div className={`absolute inset-x-2 ${stufe === 'schweiz' ? 'top-[5.25rem]' : 'top-14'} rounded-lg bg-white/95 p-3 shadow-lg dark:bg-sbb-charcoal/95 md:left-auto md:w-80`}>
-            <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
-              Feld {(wahl.seite / 1000).toLocaleString('de-CH')} × {(wahl.seite / 1000).toLocaleString('de-CH')} km{inhalt?.kanton ? ` · Mitte im Kanton ${inhalt.kanton}` : ''}
-            </p>
-            {inhalt?.orte.length ? <p className="mt-0.5 text-lg font-bold leading-tight">{inhalt.orte.join(', ')}</p>
-              : <p className="mt-0.5 text-lg font-bold leading-tight">{inhalt?.gipfel?.name ?? 'Ohne Ort der Landeskarte'}</p>}
-            {gesucht && Math.abs(gesucht.e - wahl.e) <= wahl.seite / 2 && Math.abs(gesucht.n - wahl.n) <= wahl.seite / 2 && (
-              <p className="text-sm">Gesucht: <span className="font-medium">{gesucht.name}</span></p>
-            )}
-            {inhalt?.gipfel && <p className="text-sm">▲ {inhalt.gipfel.name} {inhalt.gipfel.hoehe_m!.toLocaleString('de-CH')} m</p>}
-            {inhalt?.seen.length ? <p className="text-sm">≈ {inhalt.seen.join(', ')}</p> : null}
-            <div className="mt-2 flex gap-2">
-              <button type="button" onClick={() => void eintauchen()} disabled={laedt}
-                      className="min-h-11 flex-1 rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 disabled:opacity-50">
-                {laedt ? 'Wird geladen …' : 'Eintauchen'}
-              </button>
-              <button type="button" onClick={() => { setWahl(null); setGesucht(null) }} className="min-h-11 rounded-lg border border-sbb-cloud px-3 text-sm font-medium dark:border-sbb-iron">
-                Andere Wahl
-              </button>
-            </div>
-          </div>
+          // oben unter der Suche, unten lag er auf dem Handy oft unter dem Bildschirmrand (Michael, 2026-10-24: «Der Eintauchen
+          // Button müsste oben sein sonst sieht man ihn nicht»); nur der Knopf, ohne Orte im Feld und «Andere Wahl» (Michael,
+          // 2026-10-24: «Hier braucht es nur den Eintauchen-Button»), ein anderes Feld wählt ein Tipp ins Modell
+          <button type="button" onClick={() => void eintauchen()} disabled={laedt}
+                  className={`absolute inset-x-2 ${stufe === 'schweiz' ? 'top-[5.25rem]' : 'top-14'} min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 md:left-auto md:w-80`}>
+            {laedt ? 'Wird geladen …' : 'Eintauchen'}
+          </button>
         )}
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
