@@ -412,7 +412,11 @@ data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026
              das liefert ein Apache oft als gepackt aus), pipeline/build_baeume.py, 201'787 Bäume, 1,4 MB; in der App nur im Führerstand
              ein InstancedMesh je Kachel, Krone und Stamm, Höhe und Breite je Art in keiner Quelle (BAUM_FORM in Relief.tsx, 4 bis 20 m,
              je Baum ±25 %), der Fuss auf dem scharfen oder feinen Gelände; keine Krone näher als 5 m an der gezeichneten Strecke
-             (Lichtraum fürs Bild, in keiner Quelle, BAUM_LICHTRAUM_M; Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»)
+             (Lichtraum fürs Bild, in keiner Quelle, BAUM_LICHTRAUM_M; Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»);
+             Laub- oder Nadelbaum nach der Höhe über Meer (src/baumart.ts, istNadel; Michael, 2026-10-24, nach einer Übersicht der Höhenstufen):
+             bis 800 m Laubbäume mit runder Krone, ab 1'500 m Nadelbäume als schlanker Kegel (NADEL_BREITE 0,55 der Breite), dazwischen
+             gleichmässig steigend gemischt, je Stelle immer gleich; im Führerstand und in «3D Schweiz»; eine Annahme fürs Bild, swissTLM3D kennt
+             Wald, aber nicht Laub- oder Nadelwald
 data/gleishoehe/  Höhe der Gleise: alle Gleisachsen aus swissTLM3D (TLM_EISENBAHN, PolyLineZ, ohne Standseilbahnen) alle 20 m, je Stück
              ob laut KUNSTBAUTE im Tunnel (Zahl der Punkte negativ; die App macht daraus Tunnel ab 50 m, wo der Weg keinen kennt, nur fürs Bild,
              mitGleisTunneln), in

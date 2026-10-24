@@ -16,6 +16,7 @@ import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
 import { knopfTon, verlaufTon } from '../audio'
+import { istNadel, NADEL_BREITE } from '../baumart'
 
 /**
  * «3D Schweiz» (Michael, 2026-10-18: «die Berge und Täler der Schweiz besser erkunden … von der ganzen Schweiz bis ins
@@ -745,7 +746,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle). Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
-            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
+            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; bis 800 m über Meer Laubbäume, ab 1'500 m Nadelbäume,
+            dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
         </details>
       )}
     </div>
@@ -2019,24 +2021,36 @@ function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0:
     }
   }
   if (!liste.length) return []
+  // Laubbaum mit runder Krone, Nadelbaum als schlanker Kegel, nach der Höhe über Meer (istNadel in src/baumart.ts, eine Annahme)
   const krone = new THREE.IcosahedronGeometry(0.5, 0)
   krone.scale(1, 0.85, 1); krone.translate(0, 0.5, 0)
-  const netz = new THREE.InstancedMesh(krone, new THREE.MeshLambertMaterial(), liste.length)
+  const kegel = new THREE.ConeGeometry(0.5, 1, 7, 1)
+  kegel.translate(0, 0.5, 0)
+  const stoff = new THREE.MeshLambertMaterial()
+  const hoehen = liste.map(([e, n]) => bestandHoehe(b, e, n))
+  const nadel = liste.map(([e, n], i) => istNadel(e, n, hoehen[i]))
+  const anzahlNadel = nadel.filter(Boolean).length
+  const netze = [new THREE.InstancedMesh(krone, stoff, liste.length - anzahlNadel), new THREE.InstancedMesh(kegel, stoff, anzahlNadel)]
+  const zahl = [0, 0]
   const m = new THREE.Matrix4(), v = new THREE.Vector3(), s = new THREE.Vector3(), q = new THREE.Quaternion(), c = new THREE.Color()
   const oben = new THREE.Vector3(0, 1, 0)
   liste.forEach(([e, n, art, r, g, bl], i) => {
-    const [hoehe, radius] = BAUM_FORM[art] ?? BAUM_FORM[0]
+    const [hoehe, radiusArt] = BAUM_FORM[art] ?? BAUM_FORM[0]
+    const j = nadel[i] ? 1 : 0, netz = netze[j], radius = radiusArt * (nadel[i] ? NADEL_BREITE : 1)
     // je Baum bis 25 % grösser oder kleiner, immer gleich
     const z = Math.sin(e * 12.9898 + n * 78.233) * 43758.5453, f = 0.75 + 0.5 * (z - Math.floor(z))
-    v.set((e - cE) / 1000, (bestandHoehe(b, e, n) - 0.5) / 1000, -(n - cN) / 1000)
+    v.set((e - cE) / 1000, (hoehen[i] - 0.5) / 1000, -(n - cN) / 1000)
     s.set((2 * radius * f) / 1000, (hoehe * f) / 1000, (2 * radius * f) / 1000)
     q.setFromAxisAngle(oben, f * 20)
-    netz.setMatrixAt(i, m.compose(v, q, s))
-    netz.setColorAt(i, c.setRGB(LINEAR[r], LINEAR[g], LINEAR[bl]))
+    netz.setMatrixAt(zahl[j], m.compose(v, q, s))
+    netz.setColorAt(zahl[j], c.setRGB(LINEAR[r], LINEAR[g], LINEAR[bl]))
+    zahl[j]++
   })
-  netz.instanceMatrix.needsUpdate = true
-  if (netz.instanceColor) netz.instanceColor.needsUpdate = true
-  netz.computeBoundingSphere()
-  netz.castShadow = true
-  return [netz]
+  for (const netz of netze) {
+    netz.instanceMatrix.needsUpdate = true
+    if (netz.instanceColor) netz.instanceColor.needsUpdate = true
+    netz.computeBoundingSphere()
+    netz.castShadow = true
+  }
+  return netze.filter((x) => x.count > 0)
 }

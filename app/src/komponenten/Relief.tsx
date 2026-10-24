@@ -17,6 +17,7 @@ import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitG
 import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
+import { istNadel, NADEL_BREITE } from '../baumart'
 import { Ladebalken } from './Ladebalken'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, kategorieUmschalten, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -1239,7 +1240,8 @@ function Hinweise({ r }: { r: Relief }) {
         Ein Versuch, bis 400 m neben den Bahnlinien, wo die Kacheln schon gebaut sind (zwischen Müntschemier, Bern, Biel/Bienne und Neuchâtel, weitere je Kanton):
         Gebäude aus swissBUILDINGS3D (swisstopo), die Dächer in der Farbe des Luftbilds, die Wände grau (in keiner Quelle); Bäume aus swissTLM3D (swisstopo),
         Einzelbäume dort, wo die Quelle sie hat, Waldflächen mit gezeichneten Bäumen gefüllt (wo im Wald ein Baum steht, steht in keiner Quelle), die Krone in
-        der Farbe des Luftbilds; Höhe und Form der Bäume in keiner Quelle, je nach Art 4 bis 20 m.
+        der Farbe des Luftbilds; Höhe und Form der Bäume in keiner Quelle, je nach Art 4 bis 20 m; bis 800 m über Meer Laubbäume, ab 1'500 m Nadelbäume,
+        dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen.
       </p>
       <p>
         Die Höhe der Gleise steht in keiner Quelle. Die Linie ist darum auf das Gelände gelegt, etwas darüber;
@@ -2413,9 +2415,11 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const baumGruppe = new THREE.Group()
     baumGruppe.visible = false
     szene.add(baumGruppe)
-    const baumForm = (() => {
-      const krone = new THREE.IcosahedronGeometry(1, 0)
-      krone.scale(1, 0.62, 1); krone.translate(0, 0.62, 0)
+    // Laubbaum mit runder Krone, Nadelbaum als schlanker Kegel, nach der Höhe über Meer (istNadel in src/baumart.ts, eine Annahme)
+    const baumFormBauen = (nadel: boolean) => {
+      const krone = nadel ? new THREE.ConeGeometry(1, 1.15, 7, 1) : new THREE.IcosahedronGeometry(1, 0)
+      if (nadel) krone.translate(0, 0.25 + 0.575, 0)
+      else { krone.scale(1, 0.62, 1); krone.translate(0, 0.62, 0) }
       const stamm = new THREE.CylinderGeometry(0.06, 0.09, 0.4, 4, 1, true)
       stamm.translate(0, 0.2, 0)
       const teile = [krone.toNonIndexed(), stamm.toNonIndexed()]
@@ -2424,7 +2428,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         const a = t.getAttribute('position').array
         for (let k = 0; k < a.length; k++) pos.push(a[k])
         // die Krone gerundet beleuchtet wie eine Kugel, mit nur 20 Dreiecken; der Stamm flach
-        if (i === 0) for (let k = 0; k < a.length; k += 3) { const v = new THREE.Vector3(a[k], (a[k + 1] - 0.62) / 0.62, a[k + 2]).normalize(); nrm.push(v.x, v.y, v.z) }
+        if (i === 0 && !nadel) for (let k = 0; k < a.length; k += 3) { const v = new THREE.Vector3(a[k], (a[k + 1] - 0.62) / 0.62, a[k + 2]).normalize(); nrm.push(v.x, v.y, v.z) }
+        // der Kegel schräg nach aussen und etwas nach oben beleuchtet
+        else if (i === 0) for (let k = 0; k < a.length; k += 3) { const v = new THREE.Vector3(a[k], 0.6, a[k + 2]).normalize(); nrm.push(v.x, v.y, v.z) }
         else { t.computeVertexNormals(); const n = t.getAttribute('normal').array; for (let k = 0; k < n.length; k++) nrm.push(n[k]) }
         for (let k = 0; k < a.length / 3; k++) farbe.push(...(i === 0 ? [1, 1, 1] : [0.35, 0.22, 0.25]))
         t.dispose()
@@ -2435,9 +2441,10 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       g.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
       g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3))
       return g
-    })()
+    }
+    const baumForm = baumFormBauen(false), nadelForm = baumFormBauen(true)
     const baumMaterial = new THREE.MeshLambertMaterial({ vertexColors: true })
-    const baumNetze = new Map<string, THREE.InstancedMesh>()
+    const baumNetze = new Map<string, THREE.InstancedMesh[]>()
     let baumAuftrag = 0
     /** die gezeichnete Strecke im Rechteck als Stücke von 5 m (wie im Führerstand gezeichnet, glattBei) */
     const gleisIn = (e0: number, n0: number, e1: number, n1: number) => {
@@ -2480,9 +2487,10 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       }))
       if (!laeuft || auftrag !== baumAuftrag) return
       for (const name of namen) if (!baumNetze.has(name)) void baumKachel(name)
-      for (const [name, netz] of baumNetze) {
+      for (const [name, netze] of baumNetze) {
         if (namen.includes(name)) continue
-        baumGruppe.remove(netz); netz.dispose(); baumNetze.delete(name)
+        for (const netz of netze) { baumGruppe.remove(netz); netz.dispose() }
+        baumNetze.delete(name)
       }
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), s = new THREE.Vector3(), c = new THREE.Color()
       for (const name of namen) {
@@ -2492,14 +2500,16 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         const fs = feinStand
         if (!k || !fs || baumNetze.has(name)) continue
         const n = k.art.length
-        const netz = new THREE.InstancedMesh(baumForm, baumMaterial, n)
+        const laub = new THREE.InstancedMesh(baumForm, baumMaterial, n), nadel = new THREE.InstancedMesh(nadelForm, baumMaterial, n)
         const gleis = gleisIn(k.e0, k.n0, k.e0 + 500, k.n0 + 500)
-        let z = 0
+        const zahl = new Map<THREE.InstancedMesh, number>([[laub, 0], [nadel, 0]])
         for (let i = 0; i < n; i++) {
           const e = k.e0 + k.lage[i * 2] / 10, nn = k.n0 + k.lage[i * 2 + 1] / 10
           const h = (scharfStand && scharfHoehe(scharfStand, e, nn)) ?? feinHoehe(fs.fein, e, nn)
           if (h === null) continue
-          const [hoehe, breite] = BAUM_FORM[k.art[i]] ?? BAUM_FORM[0]
+          const [hoehe, breiteArt] = BAUM_FORM[k.art[i]] ?? BAUM_FORM[0]
+          const istN = istNadel(e, nn, h), netz = istN ? nadel : laub, breite = breiteArt * (istN ? NADEL_BREITE : 1)
+          const z = zahl.get(netz)!
           // gleichmässig gestreut, aber je Baum immer gleich
           const r = Math.sin(e * 12.9898 + nn * 78.233) * 43758.5453, f = 0.75 + 0.5 * (r - Math.floor(r))
           // Lichtraum: keine Krone über dem Gleis (Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»)
@@ -2510,14 +2520,16 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           netz.setMatrixAt(z, m.compose(v, q, s))
           const lin = (x: number) => { const t = x / 255; return t <= 0.04045 ? t / 12.92 : ((t + 0.055) / 1.055) ** 2.4 }
           netz.setColorAt(z, c.setRGB(lin(k.farben[i * 3]), lin(k.farben[i * 3 + 1]), lin(k.farben[i * 3 + 2]), THREE.LinearSRGBColorSpace))
-          z++
+          zahl.set(netz, z + 1)
         }
-        netz.count = z
-        netz.instanceMatrix.needsUpdate = true
-        if (netz.instanceColor) netz.instanceColor.needsUpdate = true
-        netz.computeBoundingSphere()
-        baumGruppe.add(netz)
-        baumNetze.set(name, netz)
+        for (const [netz, z] of zahl) {
+          netz.count = z
+          netz.instanceMatrix.needsUpdate = true
+          if (netz.instanceColor) netz.instanceColor.needsUpdate = true
+          netz.computeBoundingSphere()
+          baumGruppe.add(netz)
+        }
+        baumNetze.set(name, [laub, nadel])
       }
     }
     let scharfStand: Scharf | null = null
