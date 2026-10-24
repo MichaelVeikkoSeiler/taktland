@@ -10,6 +10,7 @@ import { type FahrObjekt, type Fahrweg, gerundetM, wegEnde } from '../fahrt'
 import type { ObjektText } from './Fahrtmodus'
 import { type Ankuendigung, Fuehrerpult, type PultAussen, type TempoQuelle } from './Fuehrerpult'
 import { Fuehrerbild } from './Fuehrerbild'
+import { type Wetter, wetterBei, wetterText } from '../wetter'
 import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
@@ -103,6 +104,11 @@ const TUNNEL_TAGESLICHT = 0.07, TUNNEL_DUNKEL_M = 40
 /** Dämmerung im Führerstand (Michael, 2026-10-13: «Schalter für Dämmerungsstimmung»), eine Stimmung, keine Tageszeit aus einer
  *  Quelle: so viel vom Licht des Himmels und der Sonne bleibt, die Sonne rötlich, der Himmel gemalt wie himmel() */
 const DAEMMERUNG_HIMMEL = 0.3, DAEMMERUNG_SONNE = 0.25
+/** echtes Wetter (src/wetter.ts): so viel nehmen Wolken der Sonne und dem Himmelslicht, ganz bedeckt; gewählt, nicht gemessen;
+ *  die Messung alle 10 Minuten neu wie bei MeteoSchweiz */
+const WOLKEN_SONNE = 0.8, WOLKEN_HIMMEL = 0.15, WETTER_NEU_MS = 10 * 60e3
+/** Dunst bei Regen und Schnee im Führerstand (FogExp2, je km), gewählt */
+const DUNST_JE_KM = 0.06
 /** Tunnel als Röhre, durch die der Zug fährt und durch die man blicken kann (Michael, 2026-10-12: «in eine Röhre
  *  fahren … durch den Berg bewegen … durch die Röhre blicken»). Querschnitt, Farbe und Licht stehen in keiner Quelle.
  *  Seit 2026-10-13 nach Michaels Vorbild einer Modellbahn: ein Hufeisen, senkrechte Wände ROEHRE_HALB_M neben der Linie
@@ -139,13 +145,17 @@ const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
 /** Himmel (Michael, 2026-10-11: «einen hellblauen natürlichen Himmel»): oben kräftiger blau, zum Horizont hin heller
  *  und dunstig, unter dem Horizont fast weiss; als Rundum-Bild, damit er beim Drehen und Neigen der Kamera stimmt. Ein
  *  gemaltes Bild, kein Wetter und keine Tageszeit */
-function himmel(dunkel: boolean, daemmerung = false) {
+function himmel(dunkel: boolean, daemmerung = false, bedeckt = false) {
   const c = document.createElement('canvas')
   c.width = 4; c.height = 512
   const g = c.getContext('2d')!
   // in der Mitte der Höhe liegt der Horizont
   const v = g.createLinearGradient(0, 0, 0, c.height)
-  const stufen: Array<[number, string]> = daemmerung
+  // bedeckt (echtes Wetter, src/wetter.ts): grau, zum Horizont heller, gemalt wie der blaue
+  const stufen: Array<[number, string]> = bedeckt && !daemmerung
+    ? dunkel ? [[0, '#1d2228'], [0.35, '#2a3038'], [0.5, '#3a4048'], [0.56, '#2a2e33'], [1, '#1c2024']]
+      : [[0, '#8c959e'], [0.3, '#a3abb3'], [0.45, '#c0c6cb'], [0.5, '#d0d4d7'], [1, '#dcdfe1']]
+    : daemmerung
     ? [[0, '#1b2140'], [0.28, '#363b66'], [0.43, '#866c8c'], [0.485, '#e0956a'], [0.5, '#efae7a'], [0.54, '#4a3c40'], [1, '#2a2428']]
     : dunkel
     ? [[0, '#0b1a2e'], [0.3, '#16304d'], [0.46, '#2b4562'], [0.5, '#3a5068'], [0.56, '#2a3440'], [1, '#1c2228']]
@@ -707,7 +717,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
         <>
           {/* unter der Karte, damit man von ihr mehr sieht (Michael, 2026-10-10) */}
           <div className="mt-3"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
-          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz /></div>
+          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz wetter /></div>
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
@@ -930,7 +940,7 @@ export function ModellStrecke({ fahrweg, objekte, text, name }: {
       {daten && weg && (
         <>
           {/* was das Modell zeigt (Michael, 2026-10-12: «Kultur, Brücken, Tunnel und so weiter») */}
-          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz bauwerke /></div>
+          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz bauwerke wetter /></div>
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
@@ -1034,7 +1044,7 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
             <div className="max-w-md"><TempoWahl stand={stand} fahrknopf={fahrknopf} klein /></div>
             {filter && (
               <div className="max-w-xl rounded-lg bg-white/90 p-1.5 dark:bg-sbb-midnight/90">
-                <SehenswertLegende gebieteMitBoden kmNetz bauwerke />
+                <SehenswertLegende gebieteMitBoden kmNetz bauwerke wetter />
               </div>
             )}
           </div>
@@ -1595,6 +1605,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
   }, [wegRoh])
   // dazu die Tunnel laut swissTLM3D, die der Weg nicht kennt (mitGleisTunneln)
   const weg = useMemo(() => mitGleisTunneln(wegRoh, gleis), [wegRoh, gleis])
+  // das echte Wetter nur in der Modellbahn (ohne Tempo von aussen), nicht beim Fahren und nicht bei «Wo bin ich?»
+  const mitWetter = !verdeckt && !tempoQuelle
   const aus = useVersteckt()
   const ausJetzt = useRef(aus)
   const anwenden = useRef<((a: Set<Kategorie>) => void) | null>(null)
@@ -1866,20 +1878,74 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     // Licht von Nordwesten wie auf der Landeskarte
     sonne.position.set(-1, 1.2, -1)
     szene.add(sonne)
+    // Regen und Schnee: Punkte in einem Würfel um die Kamera, der mit ihr wandert; Dichte, Grösse und Tempo gewählt
+    // Regen als kurze Striche (je zwei Punkte, der zweite REGEN_STRICH darunter), Schnee als Flocken (beide Punkte gleich)
+    const NIEDER_N = 5000, REGEN_STRICH = 0.025
+    const niederMitte = new Float32Array(NIEDER_N * 3).map(() => Math.random() - 0.5)
+    const niederLage = new Float32Array(NIEDER_N * 6)
+    const niederGeo = new THREE.BufferGeometry()
+    niederGeo.setAttribute('position', new THREE.BufferAttribute(niederLage, 3))
+    const niederStoff = new THREE.LineBasicMaterial({ color: '#dfe6ee', transparent: true, opacity: 0.55, depthWrite: false })
+    const flockenStoff = new THREE.PointsMaterial({ color: '#ffffff', size: 3, sizeAttenuation: false, transparent: true, opacity: 0.9, depthWrite: false })
+    const nieder = new THREE.LineSegments(niederGeo, niederStoff)
+    const flocken = new THREE.Points(niederGeo, flockenStoff)
+    flocken.frustumCulled = false
+    flocken.visible = false
+    szene.add(flocken)
+    // Dunst bei Regen und Schnee, nur im Führerstand; immer da, sonst mit Dichte 0, damit die Shader nicht neu gebaut werden
+    const dunst = new THREE.FogExp2(dunkel ? '#2a3038' : '#c3c9ce', 0)
+    if (mitWetter) szene.fog = dunst
+    nieder.frustumCulled = false
+    nieder.visible = false
+    szene.add(nieder)
+    const wetterAnzeige = document.createElement('div')
+    wetterAnzeige.style.cssText = 'position:absolute;left:8px;top:8px;max-width:60%;padding:2px 6px;border-radius:6px;font:11px Helvetica,Arial,sans-serif;'
+      + 'background:rgba(255,255,255,0.8);color:#212121;pointer-events:none;display:none'
+    if (mitWetter) el.appendChild(wetterAnzeige)
+    let wetterBis = 0, wetterLaedt = false, niederAn = false
+    /** Licht, Himmel und die Zeile oben links nach dem Wetter und dem Schalter «Echtes Wetter» */
+    const wetterZeigen = () => {
+      tunnelDunkel(...letzteDunkel)
+      const an = mitWetter && !ausJetzt.current.has('wetter')
+      wetterAnzeige.style.display = an ? '' : 'none'
+      wetterAnzeige.textContent = wetter ? wetterText(wetter) : wetterLaedt ? 'Wetter wird geladen …' : 'Wetter: keine Messung erreichbar, darum Schönwetter'
+      const fallend = wetterGilt() && (wetter!.art === 'regen' || wetter!.art === 'schnee')
+      niederAn = fallend
+      if (fallend) niederGeo.setDrawRange(0, 2 * Math.round(NIEDER_N * wetter!.staerke))
+    }
+    const wetterHolen = () => {
+      if (!mitWetter || wetterLaedt) return
+      wetterLaedt = true
+      wetterZeigen()
+      // die nächste Station zur Mitte des Blicks
+      const e = steuerung.target.x * 1000 + me, n = -steuerung.target.z * 1000 + mn
+      void wetterBei(e, n).then((w) => {
+        wetter = w
+      }).catch(() => {}).finally(() => { wetterLaedt = false; wetterBis = performance.now() + WETTER_NEU_MS; wetterZeigen() })
+    }
     /** im Führerstand im Tunnel dunkel (Michael, 2026-10-10: «In Tunneln soll es dunkel werden»): das Tageslicht schwindet an den
      *  Portalen über TUNNEL_DUNKEL_M; 0 ist draussen, 1 tief im Tunnel */
     const tagHimmel = szene.background
-    let daemmerHimmel: THREE.Texture | null = null
+    let daemmerHimmel: THREE.Texture | null = null, grauHimmel: THREE.Texture | null = null
+    // echtes Wetter in der Modellbahn (Michael, 2026-10-24), aus der Messung der nächsten Station (src/wetter.ts); aus heisst
+    // Schönwetter; wie viel Sonne Wolken schlucken, ist gewählt (WOLKEN_SONNE), nicht gemessen
+    let wetter: Wetter | null = null
+    const wetterGilt = () => mitWetter && !!wetter && !ausJetzt.current.has('wetter')
+    const bedeckt = () => (!wetterGilt() ? 0 : wetter!.art === 'regen' || wetter!.art === 'schnee' ? 1 : wetter!.bewoelkt ?? 0)
+    let letzteDunkel: [number, boolean] = [0, false]
     const tunnelDunkel = (k: number, daemmerung = false) => {
-      const f = 1 - (1 - TUNNEL_TAGESLICHT) * k
-      himmelLicht.intensity = 1.6 * f * (daemmerung ? DAEMMERUNG_HIMMEL : 1)
+      letzteDunkel = [k, daemmerung]
+      const f = 1 - (1 - TUNNEL_TAGESLICHT) * k, b = bedeckt()
+      himmelLicht.intensity = 1.6 * f * (daemmerung ? DAEMMERUNG_HIMMEL : 1) * (1 - WOLKEN_HIMMEL * b)
       himmelLicht.color.set(daemmerung ? '#b9a9cf' : '#ffffff')
-      sonne.intensity = 2.2 * f * (daemmerung ? DAEMMERUNG_SONNE : 1)
+      sonne.intensity = 2.2 * f * (daemmerung ? DAEMMERUNG_SONNE : 1) * (1 - WOLKEN_SONNE * b)
       sonne.color.set(daemmerung ? '#ff9a5c' : '#ffffff')
       // nur den gemalten Himmel tauschen; in der Brille mit Durchsicht bleibt er leer
       if (daemmerung && !daemmerHimmel) daemmerHimmel = himmel(dunkel, true)
-      if (szene.background && (szene.background === tagHimmel || szene.background === daemmerHimmel)) {
-        szene.background = daemmerung ? daemmerHimmel : tagHimmel
+      const grau = !daemmerung && b >= 0.5
+      if (grau && !grauHimmel) grauHimmel = himmel(dunkel, false, true)
+      if (szene.background && (szene.background === tagHimmel || szene.background === daemmerHimmel || szene.background === grauHimmel)) {
+        szene.background = daemmerung ? daemmerHimmel : grau ? grauHimmel : tagHimmel
       }
       if (pult) {
         pult.umgebung((1 - 0.8 * k) * (daemmerung ? 0.12 : 1))
@@ -3249,6 +3315,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       gruppen.seilbahn.visible = !a.has('seilbahn')
       seeFlaechen.visible = !luftbild || a.has('luftbild')
       auflageMalen(a)
+      wetterZeigen()
     }
     anwenden.current(ausJetzt.current)
 
@@ -4067,6 +4134,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const uhr = new THREE.Clock()
     const zeichenMass = () => Math.min(2, Math.max(0.15, kamera.position.distanceTo(steuerung.target) / ZUG_NORMAL_KM))
     const zeichnen = () => {
+      // nur, solange «Echtes Wetter» an ist (so steht es auch beim Datenschutz)
+      if (mitWetter && !ausJetzt.current.has('wetter') && performance.now() > wetterBis) wetterHolen()
       if (!laeuft) return
       const dt = Math.min(0.1, uhr.getDelta())
       if (renderer.xr.isPresenting) brilleSchritt?.(dt)
@@ -4335,6 +4404,30 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         if (kamera.fov !== bild.fov) { kamera.fov = bild.fov; kamera.updateProjectionMatrix() }
         bildAusschnitt(kamera, bild.weltX, bild.weltOben, bild.weltUnten)
       }
+      // Regen und Schnee fallen im Würfel um die Kamera: im Führerstand 60 m, sonst mit dem Abstand zum Blickpunkt
+      // in der Brille vorerst ohne (dort ist das Modell auf dem Tisch)
+      const schnee = wetter?.art === 'schnee'
+      const fallend = niederAn && !renderer.xr.isPresenting
+      nieder.visible = fallend && !schnee
+      flocken.visible = fallend && schnee
+      dunst.density = fallend && imStand ? DUNST_JE_KM * (0.5 + 0.5 * (wetter?.staerke ?? 0)) : 0
+      if (fallend) {
+        const seite = imStand ? 0.06 : Math.min(30, Math.max(0.05, kamera.position.distanceTo(steuerung.target) * 0.8))
+        for (const o of [nieder, flocken]) { o.position.copy(kamera.position); o.scale.setScalar(seite) }
+        const fall = (schnee ? 0.12 : 1.1) * dt, wind = (schnee ? 0.03 : 0.08) * dt
+        for (let i = 0, j = 0; i < NIEDER_N * 3; i += 3, j += 6) {
+          niederMitte[i + 1] -= fall * (0.7 + 0.6 * ((i * 7919) % 100) / 100)
+          niederMitte[i] += wind
+          if (niederMitte[i + 1] < -0.5) niederMitte[i + 1] += 1
+          if (niederMitte[i] > 0.5) niederMitte[i] -= 1
+          niederLage[j] = niederMitte[i]; niederLage[j + 1] = niederMitte[i + 1]; niederLage[j + 2] = niederMitte[i + 2]
+          // der Strich schräg im Wind nach hinten
+          niederLage[j + 3] = niederMitte[i] - (schnee ? 0 : REGEN_STRICH * 0.1)
+          niederLage[j + 4] = niederMitte[i + 1] + (schnee ? 0 : REGEN_STRICH)
+          niederLage[j + 5] = niederMitte[i + 2]
+        }
+        niederGeo.attributes.position.needsUpdate = true
+      }
       renderer.render(szene, kamera)
       if (pultBild && imStand && !renderer.xr.isPresenting) {
         renderer.autoClear = false
@@ -4384,6 +4477,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       renderer.dispose()
       renderer.domElement.remove()
       pultMeldung.remove()
+      wetterAnzeige.remove()
       renderer.domElement.removeEventListener('pointermove', pultBewegt)
       renderer.domElement.removeEventListener('pointerdown', pultDruck, { capture: true })
       window.removeEventListener('keydown', pultTaste)

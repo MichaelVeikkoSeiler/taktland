@@ -119,7 +119,7 @@ const imBild = (z: { x0: number; x1: number; y0: number; y1: number }, box: Box,
  * Welche Kategorien die Karten zeigen: jede lässt sich in der Legende aus- und
  * einblenden (Michael, 2026-09-26), gemerkt auf diesem Gerät, für alle Karten.
  */
-export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden' | 'kmnetz' | 'luftbild' | 'tunnel' | 'bruecke'
+export type Kategorie = 'orte' | 'gipfel' | 'kgs' | 'seilbahn' | 'gebiete' | 'boden' | 'kmnetz' | 'luftbild' | 'tunnel' | 'bruecke' | 'wetter'
 const KATEGORIEN_SPEICHER = 'taktland.karte.v1'
 let versteckt: Set<Kategorie> = (() => {
   try {
@@ -286,6 +286,7 @@ const LANG: Partial<Record<Kategorie, string>> = {
   kgs: 'Kulturgüter von nationaler Bedeutung',
   tunnel: 'Tunnel vorher melden',
   bruecke: 'Grössere Brücken vorher melden',
+  wetter: 'Echtes Wetter (aus: Schönwetter)',
   seilbahn: 'Seilbahnen mit Bundeskonzession',
   gebiete: 'Gebiete (BLN, Pärke, Moorlandschaften)',
   boden: 'Wald und Siedlung',
@@ -306,20 +307,24 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   // nur im 3D-Relief (Michael, 2026-10-06: «ein Kilometernetz über die Reliefs spannen»)
   // nur im 3D-Relief (Michael, 2026-10-06: «die Landschaft ist leer»)
   ['luftbild', 'Luftbild', <span className="inline-block size-2.5 rounded-sm bg-[#7d8f6a]" />],
+  // nur in der Modellbahn: das Wetter der nächsten Station von MeteoSchweiz, aus heisst Schönwetter (Michael, 2026-10-24)
+  ['wetter', 'Echtes Wetter', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M4.5 9.5H12a3 3 0 0 0 .4-6A4 4 0 0 0 5 3.6 3 3 0 0 0 4.5 9.5Z" className="fill-sbb-metal" /></svg>],
   ['kmnetz', 'Km-Netz', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M3.5 0V10M6.5 0V10M0 3.5H10M0 6.5H10" strokeWidth="1" className="stroke-sbb-metal" /></svg>],
 ]
 
 /** Legende der Zeichen; ein Tipp blendet die Kategorie aus oder wieder ein.
  *  «gebieteMitBoden»: Gebiete, Wald und Siedlung als ein Knopf «Gebiete», damit die
  *  Legende in «Fahren» eine Zeile weniger braucht (Michael, 2026-09-30) */
-export function SehenswertLegende({ orte = false, gebieteMitBoden = false, kmNetz = false, bauwerke = false }: {
+export function SehenswertLegende({ orte = false, gebieteMitBoden = false, kmNetz = false, bauwerke = false, wetter = false }: {
   orte?: boolean; gebieteMitBoden?: boolean; kmNetz?: boolean
+  /** echtes Wetter oder Schönwetter, nur in der Modellbahn */
+  wetter?: boolean
   /** Tunnel und Brücken melden, nur in den Modellen mit Vorankündigung */
   bauwerke?: boolean
 }) {
   const aus = useVersteckt()
   const eintraege = LEGENDE.filter(([k]) => (orte || k !== 'orte') && (kmNetz || (k !== 'kmnetz' && k !== 'luftbild'))
-    && (bauwerke || (k !== 'tunnel' && k !== 'bruecke')) && !(gebieteMitBoden && k === 'boden'))
+    && (bauwerke || (k !== 'tunnel' && k !== 'bruecke')) && (wetter || k !== 'wetter') && !(gebieteMitBoden && k === 'boden'))
   return (
     <div className="mt-1 flex flex-wrap gap-1.5 text-xs" role="group" aria-label="Auf der Karte zeigen">
       {eintraege.map(([k, text, zeichen]) => {
