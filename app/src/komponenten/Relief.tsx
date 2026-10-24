@@ -109,6 +109,8 @@ const DAEMMERUNG_HIMMEL = 0.3, DAEMMERUNG_SONNE = 0.25
 const WOLKEN_SONNE = 0.8, WOLKEN_HIMMEL = 0.15, WETTER_NEU_MS = 10 * 60e3
 /** Dunst bei Regen und Schnee im Führerstand (FogExp2, je km), gewählt */
 const DUNST_JE_KM = 0.06
+/** in der Brille auf dem Tisch: so gross ist der Würfel mit Regen und Schnee über dem Modell (m), gewählt */
+const NIEDER_TISCH_M = 1.6
 /** Tunnel als Röhre, durch die der Zug fährt und durch die man blicken kann (Michael, 2026-10-12: «in eine Röhre
  *  fahren … durch den Berg bewegen … durch die Röhre blicken»). Querschnitt, Farbe und Licht stehen in keiner Quelle.
  *  Seit 2026-10-13 nach Michaels Vorbild einer Modellbahn: ein Hufeisen, senkrechte Wände ROEHRE_HALB_M neben der Linie
@@ -1889,6 +1891,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const niederStoff = new THREE.LineBasicMaterial({ color: '#dfe6ee', transparent: true, opacity: 0.55, depthWrite: false })
     const flockenStoff = new THREE.PointsMaterial({ color: '#ffffff', size: 3, sizeAttenuation: false, transparent: true, opacity: 0.9, depthWrite: false })
     const nieder = new THREE.LineSegments(niederGeo, niederStoff)
+    const niederPunkt = new THREE.Vector3()
     const flocken = new THREE.Points(niederGeo, flockenStoff)
     flocken.frustumCulled = false
     flocken.visible = false
@@ -4434,15 +4437,32 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       }
       // Regen und Schnee fallen im Würfel um die Kamera: im Führerstand 60 m, sonst mit dem Abstand zum Blickpunkt
       if (mitWetter) leisteLegen(imStand)
-      // in der Brille vorerst ohne (dort ist das Modell auf dem Tisch)
+      // auch in der Brille (Michael, 2026-10-24): auf dem Tisch über dem Modell, im Führerstand um den Kopf
       const schnee = wetter?.art === 'schnee'
-      const fallend = niederAn && !renderer.xr.isPresenting
+      const fallend = niederAn
       nieder.visible = fallend && !schnee
       flocken.visible = fallend && schnee
-      dunst.density = fallend && imStand ? DUNST_JE_KM * (0.5 + 0.5 * (wetter?.staerke ?? 0)) : 0
+      // der Dunst je Einheit der Welt: auf dem Bildschirm km, in der Brille Meter (das Modell 1000-fach)
+      dunst.density = fallend && imStand ? (DUNST_JE_KM * (0.5 + 0.5 * (wetter?.staerke ?? 0))) / modell.scale.x : 0
       if (fallend) {
-        const seite = imStand ? 0.06 : Math.min(30, Math.max(0.05, kamera.position.distanceTo(steuerung.target) * 0.8))
-        for (const o of [nieder, flocken]) { o.position.copy(kamera.position); o.scale.setScalar(seite) }
+        let seite: number
+        if (renderer.xr.isPresenting) {
+          modell.updateMatrixWorld()
+          if (imStand) {
+            renderer.xr.getCamera().getWorldPosition(niederPunkt)
+            seite = 0.06
+          } else {
+            // ein Würfel von NIEDER_TISCH_M über dem Modell auf dem Tisch, sein Boden auf der Höhe des Modells
+            modell.getWorldPosition(niederPunkt)
+            niederPunkt.y += NIEDER_TISCH_M / 2
+            seite = NIEDER_TISCH_M / modell.scale.x
+          }
+          modell.worldToLocal(niederPunkt)
+        } else {
+          niederPunkt.copy(kamera.position)
+          seite = imStand ? 0.06 : Math.min(30, Math.max(0.05, kamera.position.distanceTo(steuerung.target) * 0.8))
+        }
+        for (const o of [nieder, flocken]) { o.position.copy(niederPunkt); o.scale.setScalar(seite) }
         const fall = (schnee ? 0.12 : 1.1) * dt, wind = (schnee ? 0.03 : 0.08) * dt
         for (let i = 0, j = 0; i < NIEDER_N * 3; i += 3, j += 6) {
           niederMitte[i + 1] -= fall * (0.7 + 0.6 * ((i * 7919) % 100) / 100)

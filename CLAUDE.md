@@ -223,7 +223,8 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              Bildschirm gewählt, beginnt die Brille dort; geprüft mit dem Emulator IWER (Meta), nicht auf einer Quest; im Führerstand ein Pult (komponenten/Fuehrerpult.ts, Michael, 2026-10-12, nach seinem Referenzbild,
              ohne Markenzeichen; alle Kästen mit gerundeten Kanten bis 3,5 cm und die Bildschirme mit runden Ecken, rund(), Michael, 2026-10-13: «alles ziemlich kantig»): auf dem Bildschirm seit 2026-10-23 nicht mehr in 3D, sondern Michaels Vorlage als Bild (komponenten/Fuehrerbild.ts, src/assets/fuehrerstand-quer.webp
              und -hoch.webp, quer 1846 × 852, hoch 1086 × 1448; Michael, 2026-10-23: «dass das Cockpit des Zuges ziemlich genau so aussieht … Alles, was aussen liegt … muss
-             natürlich weg»): das Fenster ausgeschnitten (der Wischer bleibt), aussen dunkel, das Bild füllt die Breite, das Pult unten in seiner Form, Säulen und Fenster
+             natürlich weg»): das Fenster und die Seitenfenster in den Säulen ausgeschnitten (Michael, 2026-10-24: «Bei den Seitenfenstern sieht man
+             noch nicht hinaus»), ebenso Reste der gemalten Landschaft, der Wischer bleibt, aussen dunkel (entwuerfe/fuehrerstand/schneiden.py mit den Vorlagen), das Bild füllt die Breite, das Pult unten in seiner Form, Säulen und Fenster
              darüber in der Höhe gestreckt; auf den gemalten Bildschirmen die drei Anzeigen, bedienbar die beiden Hebel (oben vorn, unten zurück) und die gemalten
              Leuchtknöpfe (Michael, 2026-10-23: «klickbare Knöpfe … möglichst das gleiche sehen»; BELEGUNG in Fuehrerbild.ts, gewählt): oben links Zuggeräusch, Stirnlicht,
              Signalhorn, Dämmerung, rechts Tunnel, Brücken, Bahnhöfe melden, die Leuchtfelder rot und gelb nur bei Schnellbremse und Bremse, unten Schnellbremse, Pultlicht,
@@ -450,7 +451,8 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              fürs Bild: bewölkt nach den Minuten ohne Sonne der letzten 10 Minuten (nur am Tag, nachts klar), Regen ab 0,1 mm in 30
              Minuten, Schnee bis 1 °C; in der Szene (Relief.tsx, in der Modellbahn und beim Fahren, nicht bei «Wo bin
              ich?», dort verriete es die Gegend) grauer Himmel (himmel(…, bedeckt)), weniger Sonne (WOLKEN_SONNE), Regen als Striche und Schnee als Flocken in einem
-             Würfel um die Kamera, im Führerstand Dunst (DUNST_JE_KM), in der Brille vorerst ohne Regen und Schnee; neben dem Schalter die Zeile
+             Würfel um die Kamera, im Führerstand Dunst (DUNST_JE_KM), in der Brille Regen und Schnee auf dem Tisch in einem Würfel von 1,6 m über dem Modell, im Führerstand um den Kopf
+             (NIEDER_TISCH_M; Michael, 2026-10-24; mit dem Emulator nicht geprüft, IWER startete hier keine Sitzung); neben dem Schalter die Zeile
              «Wetter Station Uhrzeit: …, Temperatur (MeteoSchweiz)»; Quelle in der Fusszeile, Annahmen und Datenschutz unter Info
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
