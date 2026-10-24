@@ -629,7 +629,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // nur in einer Testfassung (VITE_S3D_TEST): ein Feld von aussen wählen
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), hoehen: () => setScheiben((x) => !x) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -752,7 +752,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {standText && <p className="mt-1 text-sm">{standText} ({tagText}, {uhrzeit(minuten)} Uhr, Schweizer Zeit).</p>}
       {hinweis && <p className="mt-2 text-sm font-bold">{hinweis}</p>}
       {scheiben && (
-        <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Höhenscheiben">
+        <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Höhenlinien">
           {HOEHEN_STUFEN.map(([z, farbe, name]) => (
             <span key={z} className="inline-flex items-center gap-1">
               <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: farbe }} />{z.toLocaleString('de-CH')} m ({name})
@@ -781,7 +781,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             lokale Prognose (stündlich, bis 8 Tage); immer vier Windhosen in der Mitte der Viertel des Bilds, nach jeder Bewegung neu
             verteilt, jede mit dem Wind der Station, die ihr am nächsten liegt (nicht an der Station; die Tafel nennt sie), die Zahl in km/h, gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
-            Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
+            Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle). Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
             gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; bis 800 m über Meer Laubbäume, ab 1'500 m Nadelbäume,
@@ -857,10 +857,9 @@ const BRILLE_SCHATTEN_PX = 2048
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
 const BRILLE_SCHRIFT_M = 0.022
 
-/** Scheiben auf ganzen Tausend Metern (Michael, 2026-10-20: «recht transparenten Scheiben alle 1000m … 1000m Rot, 2000m Gelb,
- *  3000m Grün, 4000m Blau»), auch als Linie in den Wänden; die Farben sind gewählt, nicht aus einer Quelle */
+/** Höhen auf ganzen Tausend Metern (Michael, 2026-10-20: «alle 1000m … 1000m Rot, 2000m Gelb, 3000m Grün, 4000m Blau»), als Linie
+ *  auf dem Gelände und in den Wänden, ohne Scheiben (Michael, 2026-10-24); die Farben sind gewählt, nicht aus einer Quelle */
 const HOEHEN_STUFEN: Array<[number, string, string]> = [[1000, '#e0242b', 'rot'], [2000, '#f2c200', 'gelb'], [3000, '#2b9e4a', 'grün'], [4000, '#2a6fdb', 'blau']]
-const SCHEIBE_DECKKRAFT = 0.24
 /** die Linien der Höhen in Bildpunkten, beim Zoomen gleich breit (Michael, 2026-10-21: «wenn ich hereinzoome werden die Linien
  *  nicht dicker») */
 const HOEHEN_LINIE_PX = 1.6
@@ -1215,10 +1214,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (sp.userData.art === name) sp.visible = v.p > 0 && v.ebene.distanceToPoint(sp.getWorldPosition(auf)) >= 0
         }
       }
-      // in der Brille weniger Last (Michael, 2026-10-22: Höhen und Bäume zusammen «etwas zu viel»): ohne die durchsichtigen
-      // Höhenscheiben, nur ihre Linien auf dem Gelände und in den Wänden, und Bäume ohne eigenen Schatten
+      // in der Brille weniger Last (Michael, 2026-10-22: Höhen und Bäume zusammen «etwas zu viel»): Bäume ohne eigenen Schatten
       const brille = renderer.xr.isPresenting
-      for (const o of wurzel.getObjectByName('hoehen')?.children ?? []) if (o.userData.scheibe) o.visible = !brille
       for (const o of wurzel.getObjectByName('baeume')?.children ?? []) o.castShadow = !brille
     }
     const jeBild: Array<() => void> = [() => {
@@ -1333,7 +1330,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
   }, [brilleRef])
 
-  // je Stufe: das Gelände, der Sockel, die Höhenscheiben, die Namen, die Knöpfe und der Kasten des gewählten Felds
+  // je Stufe: das Gelände, der Sockel, die Höhenlinien, die Namen, die Knöpfe und der Kasten des gewählten Felds
   useEffect(() => {
     const k = kern.current
     if (!k) return
@@ -1485,14 +1482,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     sockelBauen()
 
-    // die Höhenscheiben und ihre Linien in den Wänden, nur auf Höhen zwischen dem tiefsten und dem höchsten Punkt
+    // die Höhenlinien in den Wänden und auf dem Gelände (die durchsichtigen Scheiben dazwischen gibt es nicht mehr, Michael,
+    // 2026-10-24: «Die Schichten weglassen (Höhen). Die Linien allerdings belassen»), nur auf Höhen zwischen dem tiefsten und dem höchsten Punkt
     const hoehen = new THREE.Group()
     hoehen.name = 'hoehen'
     hoehen.visible = false
     wurzel.add(hoehen)
     const ebeneH = [k.verlauf.hoehen.ebene]
-    const scheibenMaterial = HOEHEN_STUFEN.map(([, color]) => new THREE.MeshBasicMaterial({ color, transparent: true, opacity: SCHEIBE_DECKKRAFT,
-      side: THREE.DoubleSide, depthWrite: false, clippingPlanes: ebeneH }))
     const linienMaterial = HOEHEN_STUFEN.map(([, color]) => new LineMaterial({ color, linewidth: HOEHEN_LINIE_PX, clippingPlanes: ebeneH }))
     const kurvenMaterial = HOEHEN_STUFEN.map(([, color]) => new LineMaterial({ color, linewidth: HOEHEN_LINIE_PX, transparent: true,
       opacity: 0.6, depthWrite: false, clippingPlanes: ebeneH }))
@@ -1512,12 +1508,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       HOEHEN_STUFEN.forEach(([z], s) => {
         if (!(z > tief && z < hoechst)) return
         const y = Y(z)
-        const sch = new THREE.Mesh(new THREE.PlaneGeometry(X(E1) - X(E0), Z(N0) - Z(N1)), scheibenMaterial[s])
-        sch.rotation.x = -Math.PI / 2
-        sch.position.set((X(E0) + X(E1)) / 2, y, (Z(N0) + Z(N1)) / 2)
-        sch.renderOrder = 2
-        sch.userData.scheibe = true
-        hoehen.add(sch)
         // die Linie in den Wänden: wo die Wand über die Höhe reicht, ein schmales Band knapp vor der Wand
         const band: number[] = []
         for (const { p, nx, nz } of kantenOben) {
@@ -1713,7 +1703,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, ...scheibenMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial])
+      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

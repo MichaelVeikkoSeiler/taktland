@@ -306,8 +306,8 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              5 m (200 × 200), build_schweiz3d_details.py --fein nach data/schweiz3dfein_extern (nicht in Git, etwa 34 GB, 67 MB je
              10-km-Kachel, 45 s), Workflow «3D Schweiz fein» (.github/workflows/schweiz3dfein.yml, 16 Teile), Release «schweiz3dfein-1»,
              holen.php (HOLEN = 'schweiz3dfein-1') nach schweiz3dfein/; in nahLaden die scharfe Umgebung zuerst, dann diese, dann das Feld;
-             Höhenscheiben (Michael, 2026-10-20): auf 1'000, 2'000, 3'000 und 4'000 m (rot, gelb, grün, blau, Farben gewählt) je eine
-             durchsichtige Scheibe über das ganze Modell, eine feine Linie in den Wänden und dieselbe Höhe als halb durchsichtige Linie auf dem
+             Höhen (Michael, 2026-10-20): auf 1'000, 2'000, 3'000 und 4'000 m (rot, gelb, grün, blau, Farben gewählt) eine feine Linie in den Wänden
+             (die durchsichtigen Scheiben über das ganze Modell sind weg, Michael, 2026-10-24: «Die Schichten weglassen (Höhen). Die Linien allerdings belassen») und dieselbe Höhe als halb durchsichtige Linie auf dem
              Gelände (Marching Squares je Stück; Michael, 2026-10-21: «So sieht man die Grenzen besser»), beide 1,6 Bildpunkte breit, beim
              Zoomen gleich (LineMaterial, HOEHEN_LINIE_PX), nur zwischen tiefstem und höchstem Punkt, Schalter
              «Höhen 1'000 m» (HOEHEN_STUFEN); + und − in Kreisen in der Mitte jeder Wand (nur an den Wänden zur Kamera) setzen in den Stufen
@@ -330,7 +330,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              authentisch»); Schalter «Orte» für die Ortschaften, am Anfang aus; Höhenlinien und Orte blenden sich in 2,5 s von vorne
              (zum Betrachter) nach hinten ein und genau rückwärts aus, eine Ebene quer zum Blick schneidet ab (VERLAUF_S, verlaufSetzen),
              dazu ein Rauschen mit vielen kleinen Ticks, steigend beim Ein-, fallend beim Ausblenden (verlaufTon); Klang und Dauer gewählt; in der Brille
-             ohne die durchsichtigen Höhenscheiben (nur ihre Linien) und Bäume ohne eigenen Schatten (Michael, 2026-10-22: Höhen und Bäume
+             Bäume ohne eigenen Schatten (Michael, 2026-10-22: Höhen und Bäume
              zusammen «etwas zu viel»; in verlaufSetzen);
              jeder Knopf hat seinen festen Platz, was in einer Stufe nicht geht (Wanderwege in der ganzen Schweiz, Gebäude und Bäume ohne
              Daten, die Zeit ohne Sonne), bleibt gesperrt und dunkel stehen (Michael, 2026-10-22: «Die Knöpfe haben eine fixe Position»); jede
