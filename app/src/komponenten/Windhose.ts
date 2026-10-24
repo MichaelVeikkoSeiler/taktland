@@ -106,7 +106,10 @@ interface Wind { kmh: number | null; boe: number | null; richtung: number | null
  * neuePlaetze: die vier Stellen im Raum der Eltern, wenn sie neu verteilt sind.
  */
 export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.PerspectiveCamera, hoehe: (x: number, z: number) => number | null,
-  inBrille: () => boolean, neuePlaetze: (stellen: THREE.Vector3[]) => void, groesseBrille: number): VierWindhosen {
+  inBrille: () => boolean, neuePlaetze: (stellen: THREE.Vector3[]) => void, groesseBrille: number,
+  /** der Kasten um das Gelände im Raum der Eltern: gesucht wird nur darin (in der Stufe 1 km von «3D Schweiz» ist das Modell
+   *  winzig gegen die Sichtweite, 600 Schritte bis dorthin sprangen darüber hinweg) */
+  kasten?: THREE.Box3): VierWindhosen {
   const hosen = BILDPLAETZE.map(() => windhoseBauen())
   const schilder = hosen.map(() => {
     const sp = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false, transparent: true }))
@@ -120,6 +123,17 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
     strahl.setFromCamera(new THREE.Vector2(bx, by), kamera)
     a.copy(strahl.ray.origin); b.copy(strahl.ray.origin).addScaledVector(strahl.ray.direction, kamera.far)
     eltern.worldToLocal(a); eltern.worldToLocal(b)
+    if (kasten) {
+      // nur das Stück des Strahls im Kasten
+      const r = new THREE.Ray(a.clone(), b.clone().sub(a).normalize()), rein = new THREE.Vector3()
+      const lang = a.distanceTo(b)
+      if (!r.intersectBox(kasten, rein)) return null
+      const t0 = kasten.containsPoint(a) ? 0 : a.distanceTo(rein)
+      const ende = new THREE.Ray(b.clone(), a.clone().sub(b).normalize()), raus = new THREE.Vector3()
+      const t1 = ende.intersectBox(kasten, raus) ? lang - b.distanceTo(raus) : lang
+      const von = a.clone().addScaledVector(r.direction, t0)
+      b.copy(a).addScaledVector(r.direction, Math.max(t0, t1)); a.copy(von)
+    }
     const schritte = 600
     let vorher = a.clone()
     for (let i = 1; i <= schritte; i++) {
@@ -139,9 +153,9 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
   let altPos = new THREE.Vector3(Infinity, 0, 0), altQuat = new THREE.Quaternion(), bewegt = 0, verteilt = false
   const verteilen = () => {
     const stellen = BILDPLAETZE.map(([x, y]) => {
-      // trifft der Strahl kein Gelände (Himmel, neben dem Modell), im selben Viertel weiter unten und zur Mitte hin versuchen
-      for (const [dx, dy] of [[0, 0], [0, -0.2], [0, -0.4], [-0.2, -0.2], [-0.2, -0.4]]) {
-        const t = treffen(x + Math.sign(x) * dx, y + dy)
+      // trifft der Strahl kein Gelände (oben Himmel, unten der Sockel), im selben Viertel zur Mitte des Bilds hin versuchen
+      for (const [dx, dy] of [[0, 0], [0, -0.15], [0, -0.3], [-0.2, -0.15], [-0.2, -0.3], [-0.3, -0.42]]) {
+        const t = treffen(x + Math.sign(x) * dx, y + Math.sign(y) * dy)
         if (t) return t
       }
       return null

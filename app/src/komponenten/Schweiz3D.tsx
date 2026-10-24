@@ -2058,7 +2058,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const vier = vierWindhosenBauen(k.wurzel, k.kamera, (x, z) => {
       const e = lage.cE + x * 1000, n = lage.cN - z * 1000
       return drin(e, n) ? bestandHoehe(b, e, n) / 1000 : null
-    }, k.inBrille, (stellen) => windOrteRef.current(stellen.map((p) => ({ e: lage.cE + p.x * 1000, n: lage.cN - p.z * 1000 }))), W * 0.12)
+    }, k.inBrille, (stellen) => windOrteRef.current(stellen.map((p) => ({ e: lage.cE + p.x * 1000, n: lage.cN - p.z * 1000 }))), W * 0.12, kastenUm(b, lage))
     windhosen.current = vier
     k.jeBild.push(vier.schritt)
     return () => {
@@ -2177,6 +2177,18 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
     m.castShadow = m.receiveShadow = true
     return [m]
   })
+}
+
+/** der Kasten um das Gelände eines Bestands im Raum des Modells (km, y oben, Norden nach −z) */
+function kastenUm(b: Bestand, lage: { cE: number; cN: number }) {
+  let tief = Infinity, hoch = -Infinity
+  for (const t of b.teile.values()) for (const z of t.h) if (z !== KEINE_HOEHE) { if (z < tief) tief = z; if (z > hoch) hoch = z }
+  const rand = [...b.teile.values()].map((t) => t.rahmen)
+  const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+  const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+  if (tief === Infinity) return undefined
+  return new THREE.Box3(new THREE.Vector3((e0 - lage.cE) / 1000, tief / 1000 - 0.01, -(n1 - lage.cN) / 1000),
+    new THREE.Vector3((e1 - lage.cE) / 1000, hoch / 1000 + 0.01, -(n0 - lage.cN) / 1000))
 }
 
 /** die Bäume im Rechteck als ein InstancedMesh, der Fuss auf dem Gelände des Bestands */
