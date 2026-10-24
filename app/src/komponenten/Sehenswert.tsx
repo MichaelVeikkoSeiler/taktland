@@ -307,7 +307,7 @@ const LEGENDE: Array<[Kategorie, string, React.ReactNode]> = [
   // nur im 3D-Relief (Michael, 2026-10-06: «ein Kilometernetz über die Reliefs spannen»)
   // nur im 3D-Relief (Michael, 2026-10-06: «die Landschaft ist leer»)
   ['luftbild', 'Luftbild', <span className="inline-block size-2.5 rounded-sm bg-[#7d8f6a]" />],
-  // nur in der Modellbahn: das Wetter der nächsten Station von MeteoSchweiz, aus heisst Schönwetter (Michael, 2026-10-24)
+  // nur als Zustand: der Sonnenschalter im 3D-Bild (Relief.tsx) schaltet ihn, in der Legende steht er nicht (wetter = false)
   ['wetter', 'Echtes Wetter', <svg viewBox="0 0 16 10" className="h-2.5 w-4"><path d="M4.5 9.5H12a3 3 0 0 0 .4-6A4 4 0 0 0 5 3.6 3 3 0 0 0 4.5 9.5Z" className="fill-sbb-metal" /></svg>],
   ['kmnetz', 'Km-Netz', <svg viewBox="0 0 10 10" className="size-2.5"><path d="M3.5 0V10M6.5 0V10M0 3.5H10M0 6.5H10" strokeWidth="1" className="stroke-sbb-metal" /></svg>],
 ]

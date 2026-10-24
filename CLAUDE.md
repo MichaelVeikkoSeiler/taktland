@@ -442,15 +442,15 @@ data/scharf_extern/  weitere scharfe Kacheln für daten.taktland.ch, nicht in Gi
              entlang eines Reliefs oder --weg A B … entlang des Wegs der App); die App liest dort scharf/index.json (DATEN_URL in
              src/gelaende.ts), die Kacheln der App gehen vor, fehlt der Index, gelten nur diese
 data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open Government Data) mit Kürzel, Name, LV95 und Höhe
-             (pipeline/build_wetterstationen.py, aus ogd-smn_meta_stations.csv) für das echte Wetter in der Modellbahn (Michael, 2026-10-24:
-             «immer das reale Wetter … trotzdem … auf Schönwetter umschalten»): die App (src/wetter.ts) holt alle 10 Minuten die letzte
+             (pipeline/build_wetterstationen.py, aus ogd-smn_meta_stations.csv) für das echte Wetter in der Modellbahn und beim Fahren (Michael, 2026-10-24:
+             «immer das reale Wetter … trotzdem … auf Schönwetter umschalten», «auch das Fahren mit GPS»): die App (src/wetter.ts) holt alle 10 Minuten die letzte
              Messung der nächsten Station zur Mitte des Blicks direkt bei data.geo.admin.ch (CORS offen; erst die nächste, sonst die zwei
-             danach), nur solange der Schalter «Echtes Wetter» an ist (in der Legende des Modells, am Anfang an, aus heisst Schönwetter;
-             Kategorie 'wetter' in Sehenswert.tsx); gemessen sind Sonnenschein, Niederschlag, Temperatur und Strahlung, daraus als Annahmen
+             danach), nur solange der Sonnenschalter nicht leuchtet (im 3D-Bild unten links, im Führerstand oben in der Mitte; leuchtet er gelb, gilt
+             Schönwetter, am Anfang aus; Michael, 2026-10-24: «mit einem Sonnenschalter … (Schalter leuchtet)»; Kategorie 'wetter' in Sehenswert.tsx); gemessen sind Sonnenschein, Niederschlag, Temperatur und Strahlung, daraus als Annahmen
              fürs Bild: bewölkt nach den Minuten ohne Sonne der letzten 10 Minuten (nur am Tag, nachts klar), Regen ab 0,1 mm in 30
-             Minuten, Schnee bis 1 °C; in der Szene (Relief.tsx, nur in der Modellbahn, nicht beim Fahren mit GPS und nicht bei «Wo bin
-             ich?») grauer Himmel (himmel(…, bedeckt)), weniger Sonne (WOLKEN_SONNE), Regen als Striche und Schnee als Flocken in einem
-             Würfel um die Kamera, im Führerstand Dunst (DUNST_JE_KM), in der Brille vorerst ohne Regen und Schnee; oben links die Zeile
+             Minuten, Schnee bis 1 °C; in der Szene (Relief.tsx, in der Modellbahn und beim Fahren, nicht bei «Wo bin
+             ich?», dort verriete es die Gegend) grauer Himmel (himmel(…, bedeckt)), weniger Sonne (WOLKEN_SONNE), Regen als Striche und Schnee als Flocken in einem
+             Würfel um die Kamera, im Führerstand Dunst (DUNST_JE_KM), in der Brille vorerst ohne Regen und Schnee; neben dem Schalter die Zeile
              «Wetter Station Uhrzeit: …, Temperatur (MeteoSchweiz)»; Quelle in der Fusszeile, Annahmen und Datenschutz unter Info
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)

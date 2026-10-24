@@ -254,12 +254,12 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             <Verweis href="https://opentransportdata.swiss">opentransportdata.swiss</Verweis>.
           </li>
           <li>
-            Das Wetter in der Modellbahn: die letzte Messung der nächsten Wetterstation von MeteoSchweiz (SwissMetNet, Open
+            Das Wetter in der Modellbahn und beim Fahren: die letzte Messung der nächsten Wetterstation von MeteoSchweiz (SwissMetNet, Open
             Government Data, alle 10 Minuten neu), abgerufen bei data.geo.admin.ch. Gemessen werden Sonnenschein, Niederschlag und
             Temperatur; Wolken, Regen oder Schnee misst die Station nicht. Taktland zeichnet darum bewölkt, wo in den letzten 10
             Minuten wenig Sonne schien, Regen, wo in den letzten 30 Minuten mindestens 0,1 mm fiel, und Schnee, wenn es dabei
-            höchstens 1 °C war: Annahmen fürs Bild. Nachts misst niemand Sonne, dann bleibt der Himmel klar. Der Schalter
-            «Echtes Wetter» stellt auf Schönwetter.
+            höchstens 1 °C war: Annahmen fürs Bild. Nachts misst niemand Sonne, dann bleibt der Himmel klar. Der Sonnenschalter
+            oben links im Bild stellt auf Schönwetter, dann leuchtet er.
           </li>
           <li>
             Linien anderer Bahnen und das Kapitel «Netz»: Schienennetz des Bundesamts für
@@ -355,9 +355,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             sich mit der Fahrt im Logbuch.
           </li>
           <li>
-            In der Modellbahn holt Taktland, solange «Echtes Wetter» an ist, alle 10 Minuten die Messung einer Wetterstation
+            In der Modellbahn und beim Fahren holt Taktland, solange der Sonnenschalter nicht leuchtet, alle 10 Minuten die Messung einer Wetterstation
             direkt bei data.geo.admin.ch (Bund). Der Dienst sieht dabei wie jeder Server die IP-Adresse und erfährt, welche
-            Station gefragt wird, also in welcher Gegend das Modell liegt, nicht wo du bist.
+            Station gefragt wird, also in welcher Gegend das Modell oder die Fahrt liegt; den Standort selbst sendet Taktland nicht.
           </li>
           <li>
             Ausgeliefert wird die Seite von GitHub Pages, einem Dienst von GitHub (USA); die

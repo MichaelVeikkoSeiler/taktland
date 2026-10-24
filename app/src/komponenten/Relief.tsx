@@ -19,7 +19,7 @@ import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { Ladebalken } from './Ladebalken'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
-import { type Kategorie, SehenswertLegende, useVersteckt } from './Sehenswert'
+import { type Kategorie, kategorieUmschalten, SehenswertLegende, useVersteckt } from './Sehenswert'
 import { Klappe } from './Klappe'
 import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
 
@@ -717,7 +717,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
         <>
           {/* unter der Karte, damit man von ihr mehr sieht (Michael, 2026-10-10) */}
           <div className="mt-3"><FaktorWahl faktor={faktor} setFaktor={setFaktor} /></div>
-          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz wetter /></div>
+          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz /></div>
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
@@ -940,7 +940,7 @@ export function ModellStrecke({ fahrweg, objekte, text, name }: {
       {daten && weg && (
         <>
           {/* was das Modell zeigt (Michael, 2026-10-12: «Kultur, Brücken, Tunnel und so weiter») */}
-          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz bauwerke wetter /></div>
+          <div className="mt-2"><SehenswertLegende gebieteMitBoden kmNetz bauwerke /></div>
           {/* der lange Hinweis steht eine Ebene weiter vorn, auf der Seite Modellbahn (Michael, 2026-10-09) */}
           <p className="mt-3 text-sm">
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
@@ -1044,7 +1044,7 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
             <div className="max-w-md"><TempoWahl stand={stand} fahrknopf={fahrknopf} klein /></div>
             {filter && (
               <div className="max-w-xl rounded-lg bg-white/90 p-1.5 dark:bg-sbb-midnight/90">
-                <SehenswertLegende gebieteMitBoden kmNetz bauwerke wetter />
+                <SehenswertLegende gebieteMitBoden kmNetz bauwerke />
               </div>
             )}
           </div>
@@ -1605,8 +1605,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
   }, [wegRoh])
   // dazu die Tunnel laut swissTLM3D, die der Weg nicht kennt (mitGleisTunneln)
   const weg = useMemo(() => mitGleisTunneln(wegRoh, gleis), [wegRoh, gleis])
-  // das echte Wetter nur in der Modellbahn (ohne Tempo von aussen), nicht beim Fahren und nicht bei «Wo bin ich?»
-  const mitWetter = !verdeckt && !tempoQuelle
+  // das echte Wetter in der Modellbahn und beim Fahren (Michael, 2026-10-24: «auch das Fahren mit GPS soll das reale Wetter
+  // abbilden»), nicht bei «Wo bin ich?»: dort verriete es die Gegend
+  const mitWetter = !verdeckt
   const aus = useVersteckt()
   const ausJetzt = useRef(aus)
   const anwenden = useRef<((a: Set<Kategorie>) => void) | null>(null)
@@ -1898,16 +1899,43 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     nieder.frustumCulled = false
     nieder.visible = false
     szene.add(nieder)
+    // oben links der Sonnenschalter (Michael, 2026-10-24: «einfach mit einem Sonnenschalter aktiviert (Schalter leuchtet) oder
+    // deaktiviert»): leuchtet er, gilt Schönwetter, sonst das echte Wetter; daneben die Zeile mit der Messung
+    const wetterLeiste = document.createElement('div')
+    wetterLeiste.style.cssText = 'position:absolute;display:flex;align-items:center;gap:6px;max-width:70%;z-index:5'
+    // unten links; im Führerstand oben in der Mitte des Fensters, unten liegt dort das Pult (oben links stehen Höhe und Knöpfe)
+    let leisteOben: boolean | null = null
+    const leisteLegen = (oben: boolean) => {
+      if (oben === leisteOben) return
+      leisteOben = oben
+      Object.assign(wetterLeiste.style, oben ? { top: '8px', bottom: '', left: '50%', transform: 'translateX(-50%)' }
+        : { top: '', bottom: '8px', left: '8px', transform: '' })
+    }
+    leisteLegen(false)
+    const sonnenKnopf = document.createElement('button')
+    sonnenKnopf.type = 'button'
+    sonnenKnopf.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/>'
+      + '<g stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></g></svg>'
+    sonnenKnopf.style.cssText = 'display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;border:0;cursor:pointer;flex:none'
+    sonnenKnopf.addEventListener('click', (e) => { e.stopPropagation(); kategorieUmschalten('wetter') })
+    sonnenKnopf.addEventListener('pointerdown', (e) => e.stopPropagation())
     const wetterAnzeige = document.createElement('div')
-    wetterAnzeige.style.cssText = 'position:absolute;left:8px;top:8px;max-width:60%;padding:2px 6px;border-radius:6px;font:11px Helvetica,Arial,sans-serif;'
-      + 'background:rgba(255,255,255,0.8);color:#212121;pointer-events:none;display:none'
-    if (mitWetter) el.appendChild(wetterAnzeige)
+    wetterAnzeige.style.cssText = 'padding:2px 6px;border-radius:6px;font:11px Helvetica,Arial,sans-serif;background:rgba(255,255,255,0.8);color:#212121;pointer-events:none'
+    wetterLeiste.append(sonnenKnopf, wetterAnzeige)
+    if (mitWetter) el.appendChild(wetterLeiste)
     let wetterBis = 0, wetterLaedt = false, niederAn = false
     /** Licht, Himmel und die Zeile oben links nach dem Wetter und dem Schalter «Echtes Wetter» */
     const wetterZeigen = () => {
       tunnelDunkel(...letzteDunkel)
       const an = mitWetter && !ausJetzt.current.has('wetter')
       wetterAnzeige.style.display = an ? '' : 'none'
+      // Schönwetter: der Schalter leuchtet gelb
+      sonnenKnopf.style.background = an ? 'rgba(255,255,255,0.85)' : '#ffd23c'
+      sonnenKnopf.style.color = an ? '#767676' : '#3a2a00'
+      sonnenKnopf.style.boxShadow = an ? 'none' : '0 0 10px rgba(255,210,60,0.9)'
+      sonnenKnopf.setAttribute('aria-pressed', String(!an))
+      sonnenKnopf.title = an ? 'Schönwetter einschalten (jetzt echtes Wetter)' : 'Schönwetter ausschalten, echtes Wetter zeigen'
+      sonnenKnopf.setAttribute('aria-label', 'Schönwetter')
       wetterAnzeige.textContent = wetter ? wetterText(wetter) : wetterLaedt ? 'Wetter wird geladen …' : 'Wetter: keine Messung erreichbar, darum Schönwetter'
       const fallend = wetterGilt() && (wetter!.art === 'regen' || wetter!.art === 'schnee')
       niederAn = fallend
@@ -4405,6 +4433,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         bildAusschnitt(kamera, bild.weltX, bild.weltOben, bild.weltUnten)
       }
       // Regen und Schnee fallen im Würfel um die Kamera: im Führerstand 60 m, sonst mit dem Abstand zum Blickpunkt
+      if (mitWetter) leisteLegen(imStand)
       // in der Brille vorerst ohne (dort ist das Modell auf dem Tisch)
       const schnee = wetter?.art === 'schnee'
       const fallend = niederAn && !renderer.xr.isPresenting
@@ -4477,7 +4506,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       renderer.dispose()
       renderer.domElement.remove()
       pultMeldung.remove()
-      wetterAnzeige.remove()
+      wetterLeiste.remove()
       renderer.domElement.removeEventListener('pointermove', pultBewegt)
       renderer.domElement.removeEventListener('pointerdown', pultDruck, { capture: true })
       window.removeEventListener('keydown', pultTaste)
