@@ -472,9 +472,11 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              src/wind.ts: je Grösse etwa 32 MB, nach Punktart und Nummer als Text geordnet, darum Teilabrufe mit Range und Halbieren, nur
              einige KB; der neueste Lauf mit HEAD gesucht); die Windhose (komponenten/Windhose.ts): Mast, Sack aus fünf Ringen rot und weiss,
              zeigt wohin der Wind weht, ganz gestreckt ab 28 km/h (VOLL_KMH, 15 Knoten wie an Flugplätzen), ohne Angabe grau und hängend,
-             flattert ein wenig; in der Modellbahn an der Station des Wetters (sonst am Rand ihr am nächsten), 3,5-mal so hoch wie die Masten,
+             flattert ein wenig; immer vier (Michael, 2026-10-24: «immer vier davon verteilen»; src/windhosen.ts), jede mit dem Wind der Station
+             mit Windmessung, die ihrem Platz am nächsten liegt (nicht an der Station, die Tafel nennt sie); in der Modellbahn entlang der
+             Strecke bei 1, 3, 5 und 7 Achteln des Wegs rechts neben der Linie, 3,5-mal so hoch wie die Masten,
              nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wind» an
-             den Wänden (blau, am Anfang aus), die Windhose an der Station, sonst an der Ecke im Südwesten, 16 % so hoch wie das Modell breit;
+             den Wänden (blau, am Anfang aus), die Windhosen in der Mitte der vier Viertel des Modells, 12 % so hoch wie das Modell breit;
              die Tafel (komponenten/WindTafel.tsx): Messung, Regler über die Stunden der Prognose, Verlauf der Woche (Stundenmittel und
              Böen, Striche um Mitternacht); die Windhose zeigt die gewählte Stunde; Gestalt, Grösse und Farben gewählt; dazu Regen und
              Schnee aus derselben Prognose (Michael, 2026-10-24: «Regen auch einblenden mit der gleichen Prognose wie die Windhose»):

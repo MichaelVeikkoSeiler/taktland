@@ -7,6 +7,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { type Station, type Wetter, type Wind } from '../wetter'
 import { himmelsrichtungKurz, niederAusStunde, windPrognose, type WindStunde } from '../wind'
+import { type WindPlatz } from '../windhosen'
 
 const zeitText = (z: Date, mitTag: boolean) => z.toLocaleString('de-CH', {
   timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', ...(mitTag ? { weekday: 'short', day: 'numeric', month: 'numeric' } : {}),
@@ -28,12 +29,14 @@ export function niederSatz(s: WindStunde) {
   return n ? `${n.art === 'schnee' ? 'Schnee' : 'Regen'} ${zahl(s.mm, 1)} mm` : 'kein Niederschlag'
 }
 
-export function WindTafel({ station, messung, waehlen, className = '' }: {
+export function WindTafel({ station, messung, waehlen, plaetze, className = '' }: {
   station: Station | null
   /** die letzte Messung der Station, null ohne */
   messung: Wetter | null
   /** was das Modell zeigen soll: eine Stunde der Prognose, null die Messung */
   waehlen: (s: WindStunde | null) => void
+  /** die vier Windhosen im Modell und ihre Stationen */
+  plaetze?: WindPlatz[]
   className?: string
 }) {
   const [prognose, setPrognose] = useState<WindStunde[] | null | 'laedt'>('laedt')
@@ -109,6 +112,12 @@ export function WindTafel({ station, messung, waehlen, className = '' }: {
             MeteoSchweiz für die Station, keine Messung; Regen oder Schnee im Modell ab 0,1 mm, Schnee bis 1 °C.
           </p>
         </>
+      )}
+      {plaetze && plaetze.length > 0 && (
+        <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
+          Die vier Windhosen im Modell zeigen den Wind der Station, die ihrem Platz am nächsten liegt (sie stehen nicht an der Station):{' '}
+          {plaetze.map((p) => `${p.viertel} ${p.station?.name ?? 'keine Station'}`).join(', ')}.
+        </p>
       )}
     </div>
   )

@@ -15,6 +15,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { windhoseBauen } from './Windhose'
 import { niederSatz, WindTafel, windSatz } from './WindTafel'
 import { niederAusStunde, type WindStunde } from '../wind'
+import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
@@ -1936,29 +1937,46 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     sonnenKnopf.addEventListener('pointerdown', (e) => e.stopPropagation())
     const wetterAnzeige = document.createElement('div')
     wetterAnzeige.style.cssText = 'padding:2px 6px;border-radius:6px;font:11px Helvetica,Arial,sans-serif;background:rgba(255,255,255,0.8);color:#212121;pointer-events:none'
-    // die Windhose (Michael, 2026-10-24: «eine Windhose hinzufügen, wo man sehen kann, wie die Windverhältnisse sind. Auch mit
-    // Prognose für die nächste Woche»): an der Station des Wetters, wenn sie im Ausschnitt steht, sonst am Rand ihr am nächsten;
-    // 3,5-mal so hoch wie die Masten der Bahnhöfe, nicht massstäblich; nicht im Führerstand und nicht bei Schönwetter
-    const windhose = windhoseBauen()
-    windhose.gruppe.visible = false
-    szene.add(windhose.gruppe)
-    {
-      const ausdehnungKm = (Math.max(r.raster.breite, r.raster.hoehe) * r.raster.m) / 1000
-      windhose.gruppe.scale.setScalar(3.5 * MAST_KM * Math.max(1, ausdehnungKm / 40))
-    }
+    // die Windhosen (Michael, 2026-10-24: «eine Windhose hinzufügen, wo man sehen kann, wie die Windverhältnisse sind. Auch mit
+    // Prognose für die nächste Woche»; «immer vier davon verteilen»): vier entlang der Strecke, bei einem, drei, fünf und sieben
+    // Achteln des Wegs, etwas neben der Linie (dort gibt es immer Gelände, auch im Band einer ganzen Strecke), jede mit dem Wind
+    // der nächsten Station zu ihrem Platz (src/windhosen.ts); 3,5-mal so hoch wie die Masten der Bahnhöfe, nicht massstäblich;
+    // nicht im Führerstand und nicht bei Schönwetter
+    const windWeiteKm = (Math.max(r.raster.breite, r.raster.hoehe) * r.raster.m) / 1000
+    const windPunkte = [1, 3, 5, 7].map((achtel, i) => {
+      const k = Math.max(1, Math.min(r.weg.length - 2, Math.round((achtel / 8) * (r.weg.length - 1))))
+      const [, ea, na] = r.weg[k - 1], [, e, n] = r.weg[k], [, eb, nb] = r.weg[k + 1]
+      const l = Math.hypot(eb - ea, nb - na) || 1, neben = Math.max(150, windWeiteKm * 6)
+      // rechts der Linie in Fahrrichtung
+      return { e: e + ((nb - na) / l) * neben, n: n - ((eb - ea) / l) * neben, viertel: `${i + 1}. Windhose` }
+    })
+    const windhosen = windPunkte.map((p) => {
+      const w = windhoseBauen()
+      w.gruppe.visible = false
+      w.gruppe.scale.setScalar(3.5 * MAST_KM * Math.max(1, windWeiteKm / 40))
+      w.gruppe.position.set(X(p.e), Y(hoeheBei(r, h, p.e, p.n)), Z(p.n))
+      szene.add(w.gruppe)
+      return w
+    })
+    let windPlaetzeDa: WindPlatz[] = []
     /** was Windhose, Regen und Schnee zeigen: die in der Tafel gewählte Stunde der Prognose, null die Messung */
     let windGewaehlt: WindStunde | null = null
     /** Regen oder Schnee jetzt: aus der gewählten Stunde der Prognose oder aus der Messung */
     const niederJetzt = (): { art: 'regen' | 'schnee'; staerke: number } | null => windGewaehlt ? niederAusStunde(windGewaehlt)
       : wetter && (wetter.art === 'regen' || wetter.art === 'schnee') ? { art: wetter.art, staerke: wetter.staerke } : null
     const windZeigen = () => {
-      const w: Wind | null = windGewaehlt ?? wetter?.wind ?? null
-      windhose.setzen(w?.kmh ?? null, w?.richtung ?? null)
-      if (!wetter) return
-      const { ost, nord, m, breite, hoehe } = r.raster
-      const e = Math.max(ost + m, Math.min(ost + (breite - 1) * m, wetter.station.e))
-      const n = Math.max(nord - (hoehe - 1) * m, Math.min(nord - m, wetter.station.n))
-      windhose.gruppe.position.set(X(e), Y(hoeheBei(r, h, e, n)), Z(n))
+      windhosen.forEach((w, i) => {
+        const p = windPlaetzeDa[i]
+        const wind: Wind | null = p ? windZur(p, windGewaehlt?.zeit ?? null) : null
+        w.setzen(wind?.kmh ?? null, wind?.richtung ?? null)
+      })
+    }
+    let windPlaetzeLaeuft = false
+    const windPlaetzeHolen = () => {
+      if (windPlaetzeLaeuft || !mitWetter) return
+      windPlaetzeLaeuft = true
+      void windPlaetze(windPunkte, () => windZeigen()).then((p) => { windPlaetzeDa = p; windZeigen(); windTafelZeigen() })
+        .catch(() => {}).finally(() => { windPlaetzeLaeuft = false })
     }
     const windKnopf = document.createElement('button')
     windKnopf.type = 'button'
@@ -1972,7 +1990,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     let windTafel: { div: HTMLDivElement; root: Root } | null = null
     const windTafelZeigen = () => {
       if (!windTafel || !wetter) return
-      windTafel.root.render(<WindTafel station={wetter.station} messung={wetter}
+      windTafel.root.render(<WindTafel station={wetter.station} messung={wetter} plaetze={windPlaetzeDa}
         waehlen={(w) => { windGewaehlt = w; windZeigen(); wetterZeigen() }} />)
     }
     const windTafelZu = () => {
@@ -2030,7 +2048,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const e = steuerung.target.x * 1000 + me, n = -steuerung.target.z * 1000 + mn
       void wetterBei(e, n).then((w) => {
         wetter = w
-        windZeigen(); windTafelZeigen()
+        windPlaetzeHolen(); windZeigen(); windTafelZeigen()
       }).catch(() => {}).finally(() => { wetterLaedt = false; wetterBis = performance.now() + WETTER_NEU_MS; wetterZeigen() })
     }
     /** im Führerstand im Tunnel dunkel (Michael, 2026-10-10: «In Tunneln soll es dunkel werden»): das Tageslicht schwindet an den
@@ -4526,8 +4544,10 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       }
       // Regen und Schnee fallen im Würfel um die Kamera mit dem Abstand zum Blickpunkt, im Führerstand in einem Kasten vor dem Auge
       if (mitWetter) leisteLegen(imStand)
-      windhose.gruppe.visible = !imStand && wetterGilt()
-      if (windhose.gruppe.visible) windhose.schritt(performance.now() / 1000)
+      for (const w of windhosen) {
+        w.gruppe.visible = !imStand && wetterGilt()
+        if (w.gruppe.visible) w.schritt(performance.now() / 1000)
+      }
       // auch in der Brille (Michael, 2026-10-24): auf dem Tisch über dem Modell, im Führerstand um den Kopf
       const nj = niederJetzt(), schnee = nj?.art === 'schnee'
       const fallend = niederAn
@@ -4641,7 +4661,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       renderer.domElement.remove()
       pultMeldung.remove()
       windTafelZu()
-      windhose.entsorgen()
+      for (const w of windhosen) w.entsorgen()
       wetterLeiste.remove()
       renderer.domElement.removeEventListener('pointermove', pultBewegt)
       renderer.domElement.removeEventListener('pointerdown', pultDruck, { capture: true })

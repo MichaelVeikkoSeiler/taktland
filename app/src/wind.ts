@@ -38,8 +38,14 @@ const datei = (lauf: Date, groesse: string) => {
   return `${QUELLE}${t}-ch/vnut12.lssw.${t}${zwei(lauf.getUTCHours())}00.${groesse}.csv`
 }
 
-/** der neueste Lauf, den es für alle drei Grössen schon gibt, mit der Grösse jeder Datei */
-async function neuesterLauf(): Promise<{ lauf: Date; laengen: number[] } | null> {
+let laufZwischen: { bis: number; lauf: Promise<{ lauf: Date; laengen: number[] } | null> } | null = null
+/** der neueste Lauf (für alle Stationen gleich, zehn Minuten behalten) */
+function neuesterLauf() {
+  if (!laufZwischen || laufZwischen.bis < Date.now()) laufZwischen = { bis: Date.now() + 600e3, lauf: laufSuchen() }
+  return laufZwischen.lauf
+}
+/** der neueste Lauf, den es für alle Grössen schon gibt, mit der Grösse jeder Datei */
+async function laufSuchen(): Promise<{ lauf: Date; laengen: number[] } | null> {
   const jetzt = new Date(); jetzt.setUTCMinutes(0, 0, 0)
   for (let zurueck = 0; zurueck < 8; zurueck++) {
     const lauf = new Date(jetzt.getTime() - zurueck * 3600e3)
