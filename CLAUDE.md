@@ -312,10 +312,12 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              «Bei den Linien soll klein 1000, 2000, 3000 und 4000 stehen»; zahlSetzen, HOEHEN_ZAHL_*) und dieselbe Höhe als halb durchsichtige Linie auf dem
              Gelände (Marching Squares je Stück; Michael, 2026-10-21: «So sieht man die Grenzen besser»), beide 1,6 Bildpunkte breit, beim
              Zoomen gleich (LineMaterial, HOEHEN_LINIE_PX), nur zwischen tiefstem und höchstem Punkt, Schalter
-             «Höhen 1'000 m» (HOEHEN_STUFEN); + und − in Kreisen in der Mitte jeder Wand (nur an den Wänden zur Kamera) setzen in den Stufen
+             «Höhen 1'000 m» (HOEHEN_STUFEN); + und − in Kreisen in der Mitte jeder Wand, hängend unter der Platte des Sockels, damit sie keine Schalter verdecken (Michael,
+             2026-10-24: «etwas weiter unten … keine Tasten also Knöpfe verdecken»; nur an den Wänden zur Kamera), setzen in den Stufen
              20 km, 4 km und 1 km an dieser Seite eine Reihe Stücke an oder nehmen sie weg (Bestand: je Stück ein eigenes Gelände mit Bild,
              der Sockel um alle), höchstens 3 je Richtung und 9 im Ganzen, auf dem Handy 4 (JE_RICHTUNG, hoechstens(); eine Annahme zum
-             Speicher der Grafik, nicht gemessen), ist die Grenze erreicht, ist der Knopf grau und ein Tipp erklärt warum; was darunter fehlt,
+             Speicher der Grafik, nicht gemessen), ist die Grenze erreicht, fällt beim Plus gegenüber eine Reihe weg und das Modell rückt um ein Stück (Michael, 2026-10-24: «Plus soll es
+             immer geben. Es löst dann einfach entsprechend auf der anderen Seite Kacheln wieder auf»; Knoepfe.wachsen); was darunter fehlt,
              ergänzt eine Region um das Stück (unterFuer)
              Sonne und Schatten (Michael, 2026-10-21: «Sonnen und Schattenzeiten einbauen. Realistisch. Zeit und Datum auf dem Mobile und
              Brille wählbar»): Schalter «Sonne und Schatten», Datum und Uhrzeit (Schweizer Zeit, je 15 Minuten, «Jetzt»), am Anfang heute
@@ -340,7 +342,8 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              zusammen «etwas zu viel»; in verlaufSetzen);
              jeder Knopf hat seinen festen Platz, was in einer Stufe nicht geht (Wanderwege in der ganzen Schweiz, Gebäude und Bäume ohne
              Daten, die Zeit ohne Sonne), bleibt gesperrt und dunkel stehen (Michael, 2026-10-22: «Die Knöpfe haben eine fixe Position»); jede
-             Fläche mit feinem schwarzem Rand («eine minime schwarze Umrahmung»); Schalter «Gipfel», am Anfang aus, blendet sich ein wie die Orte
+             Fläche mit feinem schwarzem Rand («eine minime schwarze Umrahmung»); die Schrift ausgeschalteter Knöpfe leuchtet schwach von selbst,
+             lesbar auch nachts (SCHRIFT_LEUCHTET; Michael, 2026-10-24: «Nicht aktive Tasten sollen aber so leuchten, dass man es trotzdem lesen kann»); Schalter «Gipfel», am Anfang aus, blendet sich ein wie die Orte
              (Michael, 2026-10-22: «Gipfel defaultmässig auch nicht einblenden»); die Knöpfe an den Wänden auch auf dem Bildschirm, mit Tipp
              oder Klick («auch in der Standardversion auf dem Display»), die Knöpfe oben im Bild sind weg («braucht es nicht mehr»), Datum
              und Uhrzeit fein unter dem Bild, wenn die Sonne an ist; ein Knopf fürs Vollbild neben «Mit VR-Brille» (useEchtesVollbild);

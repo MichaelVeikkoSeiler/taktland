@@ -360,8 +360,10 @@ async function stufeLaden(s: 'region' | 'ort' | 'nah', f: Feld, unter: Bestand |
   const u = await unterFuer(f, unter)
   return s === 'ort' ? ortLaden(f, u) : nahLaden(f, u)
 }
-/** welche Knöpfe an den Wänden gehen: Plus bis JE_RICHTUNG und hoechstens(), Minus, solange mehr als ein Stück da ist */
-export interface Knoepfe { plus: Record<Seite, boolean>; minus: Record<Seite, boolean> }
+/** welche Knöpfe an den Wänden gehen: Plus immer (Michael, 2026-10-24: «Plus soll es immer geben. Es löst dann einfach
+ *  entsprechend auf der anderen Seite Kacheln wieder auf»), wachsen: ob das Modell dort grösser werden darf (bis JE_RICHTUNG und
+ *  hoechstens()), sonst fällt die Reihe gegenüber weg; Minus, solange mehr als ein Stück da ist */
+export interface Knoepfe { plus: Record<Seite, boolean>; wachsen: Record<Seite, boolean>; minus: Record<Seite, boolean> }
 
 /** eigeneSeite: auf 3dland.ch die ganze Seite, ohne den Weg zurück zu den Spielen von Taktland */
 export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boolean }) {
@@ -575,21 +577,20 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     if (stufe === 'schweiz' || !aktuell) return null
     const breit = aktuell.di[1] - aktuell.di[0] + 1, hoch = aktuell.dj[1] - aktuell.dj[0] + 1, max = hoechstens()
     const ow = breit < JE_RICHTUNG && (breit + 1) * hoch <= max, ns = hoch < JE_RICHTUNG && breit * (hoch + 1) <= max
-    return { plus: { n: ns, s: ns, o: ow, w: ow }, minus: { n: hoch > 1, s: hoch > 1, o: breit > 1, w: breit > 1 } }
+    return { plus: { n: true, s: true, o: true, w: true }, wachsen: { n: ns, s: ns, o: ow, w: ow }, minus: { n: hoch > 1, s: hoch > 1, o: breit > 1, w: breit > 1 } }
   }, [stufe, aktuell])
   /** an einer Seite eine Reihe Stücke ansetzen oder wegnehmen; die Stufen darunter gelten dann nicht mehr */
   async function erweitern(seite: Seite, plus: boolean) {
     if (stufe === 'schweiz' || !aktuell || !knoepfe || laedt) return
     const b = aktuell
-    if (plus && !knoepfe.plus[seite]) {
-      const max = hoechstens()
-      setMeldung(`Grösser geht es auf diesem Gerät nicht: höchstens ${JE_RICHTUNG} Stücke in eine Richtung und ${max} im Ganzen. `
-        + 'Jedes Stück ist ein eigenes Luftbild mit bis zu 16 Millionen Bildpunkten, und alle zusammen muss die Grafik des Geräts halten.')
-      return
-    }
     if (!plus && !knoepfe.minus[seite]) { setMeldung('Ein Stück bleibt immer: kleiner geht es nicht.'); return }
     const di: [number, number] = [...b.di], dj: [number, number] = [...b.dj]
     const neu: Array<[number, number]> = []
+    // grösser geht es nicht (höchstens JE_RICHTUNG Stücke in eine Richtung und hoechstens() im Ganzen, so viel muss die Grafik
+    // halten): dann fällt gegenüber eine Reihe weg, das Modell rückt um ein Stück
+    if (plus && !knoepfe.wachsen[seite]) {
+      if (seite === 'o') di[0]++; else if (seite === 'w') di[1]--; else if (seite === 'n') dj[0]++; else dj[1]--
+    }
     if (plus) {
       if (seite === 'o' || seite === 'w') {
         const i = seite === 'o' ? ++di[1] : --di[0]
@@ -632,9 +633,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     setWahl({ e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: FELD_M.schweiz })
   }
   // nur in einer Testfassung (VITE_S3D_TEST): ein Feld von aussen wählen
+  const erweiternTest = useRef(erweitern)
+  erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -810,7 +813,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Knöpfe an den Wänden">
           <p>Die Knöpfe an den Wänden des Sockels schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume, Wind und Sonne ein und
             aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
-            einer Wand setzen dort ein Stück an oder nehmen eines weg (ab der Region). Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
+            einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
+            gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
             4'000 m, ihre Zahl steht klein an der Wand.</p>
         </Abschnitt>
         <Abschnitt titel="Wind und Niederschlag">
@@ -859,6 +863,8 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
 const VERLAUF_S = 2.5
 /** das Geräusch dazu ist kürzer (Michael, 2026-10-22: «noch zu lang») */
 const VERLAUF_TON_S = 0.9
+/** so stark leuchtet die Schrift eines ausgeschalteten Knopfs von selbst (gewählt) */
+const SCHRIFT_LEUCHTET = 0.85
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c', wind: '#5ab4ff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
@@ -1680,7 +1686,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     mastenBauen()
 
-    // + und − an den Wänden, in der Mitte jeder Seite im Sockel unter dem tiefsten Punkt
+    // + und − in der Mitte jeder Seite unter der Platte des Sockels, hängend, damit sie keine Schalter an den Wänden verdecken
+    // (Michael, 2026-10-24: «Sie sollen etwas weiter unten stehen und keine Tasten also Knöpfe verdecken»)
     const knopfGruppe = new THREE.Group()
     knopfGruppe.name = 'knoepfe'
     wurzel.add(knopfGruppe)
@@ -1690,7 +1697,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const o of knopfGruppe.children) { const sp = o as THREE.Sprite; sp.material.map?.dispose(); sp.material.dispose() }
       knopfGruppe.clear()
       if (!knoepfe) return
-      const y = Y(tief) - wand / 2, raus = weiteKm * 0.01, schritt = weiteKm * 0.13
+      const y = Y(tief) - wand - platte, raus = ueber + weiteKm * 0.004, schritt = weiteKm * 0.13
       const mitten: Record<Seite, [number, number, number, number]> = {
         n: [(X(E0) + X(E1)) / 2, Z(N1) - raus, 1, 0], s: [(X(E0) + X(E1)) / 2, Z(N0) + raus, -1, 0],
         o: [X(E1) + raus, (Z(N0) + Z(N1)) / 2, 0, 1], w: [X(E0) - raus, (Z(N0) + Z(N1)) / 2, 0, -1],
@@ -1703,6 +1710,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           sp.userData = { b: KNOPF_BILD, h: KNOPF_BILD, verhaeltnis: 1, brilleM: KNOPF_BRILLE_M, aktion: () => cb.current.erweitern(seite, plus), seite, plus,
                           nach: new THREE.Vector3(az === 0 ? 0 : az > 0 ? 1 : -1, 0, ax === 0 ? 0 : ax > 0 ? -1 : 1) }
           sp.scale.set(KNOPF_BILD, KNOPF_BILD, 1)
+          sp.center.set(0.5, 1.08)
           const d = (plus ? -1 : 1) * schritt / 2
           sp.position.set(x + ax * d, y, z + az * d)
           sp.renderOrder = 4
@@ -1839,12 +1847,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     ]
     // je Teil ein Bild für die Vorderseite, auf allen vier Wänden dasselbe; an leuchtet es in der Farbe seiner Art, aus ist es dunkel
     const PX = 128
-    const bild = (t: Teil, an: boolean) => {
+    // nurSchrift: die Schrift allein auf Schwarz, als eigenes Licht der Beschriftung
+    const zeichnen = (t: Teil, an: boolean, nurSchrift = false) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       c.height = PX; c.width = Math.round(PX * t.breite / hoch)
-      x.fillStyle = t.gesperrt ? (t.an === undefined && !t.knopf ? '#0c0f12' : '#262626') : t.knopf ? KARMIN : t.an === undefined ? '#10161c' : an ? t.farbe! : '#3a3a3a'
+      x.fillStyle = nurSchrift ? '#000000' : t.gesperrt ? (t.an === undefined && !t.knopf ? '#0c0f12' : '#262626') : t.knopf ? KARMIN : t.an === undefined ? '#10161c' : an ? t.farbe! : '#3a3a3a'
       x.fillRect(0, 0, c.width, c.height)
-      if (an && t.an !== undefined) {
+      if (an && t.an !== undefined && !nurSchrift) {
         // in der Mitte heller, zum Rand satter: wie ein Licht hinter der Kappe
         const v = x.createRadialGradient(c.width / 2, c.height / 2, 0, c.width / 2, c.height / 2, c.width / 2)
         v.addColorStop(0, 'rgba(255,255,255,0.55)'); v.addColorStop(1, 'rgba(255,255,255,0)')
@@ -1858,8 +1867,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // ein feiner schwarzer Rand um jede Fläche (Michael, 2026-10-22: «eine minime schwarze Umrahmung»)
       x.strokeStyle = '#000000'; x.lineWidth = 5; x.strokeRect(2.5, 2.5, c.width - 5, c.height - 5)
       const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
-      // was leuchtet (eingeschaltet, die Anzeige der Zeit), hängt nicht vom Licht ab; der Rest ist ein Knopf im Licht
-      return an || t.an === undefined ? new THREE.MeshBasicMaterial({ map: tex }) : new THREE.MeshLambertMaterial({ map: tex })
+      return tex
+    }
+    const bild = (t: Teil, an: boolean) => {
+      const tex = zeichnen(t, an)
+      // was leuchtet (eingeschaltet, die Anzeige der Zeit), hängt nicht vom Licht ab; der Rest ist ein Knopf im Licht, seine
+      // Schrift leuchtet aber schwach von selbst, damit man sie auch im Dunkeln und in der Nacht lesen kann (Michael, 2026-10-24:
+      // «Nicht aktive Tasten sollen aber so leuchten, dass man es trotzdem lesen kann»)
+      if (an || t.an === undefined) return new THREE.MeshBasicMaterial({ map: tex })
+      return new THREE.MeshLambertMaterial({ map: tex, emissive: '#ffffff', emissiveMap: zeichnen(t, an, true), emissiveIntensity: SCHRIFT_LEUCHTET })
     }
     // ein Schein auf der Wand um einen eingeschalteten Knopf
     const scheinBild = (farbe: string) => {
@@ -1928,7 +1944,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     return () => {
       gruppe.removeFromParent()
       for (const x of teile) {
-        x.kappe.dispose(); x.rahmen.dispose(); x.vorne.map?.dispose(); x.vorne.dispose()
+        x.kappe.dispose(); x.rahmen.dispose(); x.vorne.map?.dispose()
+        if (x.vorne instanceof THREE.MeshLambertMaterial) x.vorne.emissiveMap?.dispose()
+        x.vorne.dispose()
         if (x.seiten !== seite) x.seiten.dispose()
         if (x.schein) { x.schein.geo.dispose(); x.schein.stoff.map?.dispose(); x.schein.stoff.dispose() }
       }
