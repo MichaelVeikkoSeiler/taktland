@@ -38,7 +38,7 @@ function DreiDLand() {
               Alle Datenquellen und Lizenzen
             </summary>
             <p className="mt-1">
-              Gelände (swissALTIRegio, swissALTI3D), Luftbild (SWISSIMAGE), Seen und Ortschaften (swissTLMRegio), Wanderwege, Bäume und
+              Gelände (swissALTIRegio, swissALTI3D), Luftbild (SWISSIMAGE), Seen, Ortschaften und die Gipfel der Suche (swissTLMRegio), Wanderwege, Bäume und
               Wald (swissTLM3D), Gebäude (swissBUILDINGS3D 3.0), Gipfel und Ortsnamen der Landeskarte 1:1 Million (Swiss Map Vector 1000):
               Bundesamt für Landestopografie swisstopo. Kantone: Bundesamt für Statistik BFS. Was je Modell wofür ist, steht darunter
               unter «Modell, nicht massstäblich: Quellen». Lizenzen der mitgelieferten Bibliotheken:{' '}

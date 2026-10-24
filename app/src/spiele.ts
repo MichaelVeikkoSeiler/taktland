@@ -38,11 +38,11 @@ export const SPIELE: Spiel[] = [
   // Michael, 2026-10-08: «neues Spiel 3D/VR», Name «Modellbahn»; die Brille gibt es nur hier, nicht unter Fahren
   {
     id: 'modellbahn', titel: 'Modellbahn', status: 'spielbereit', adresse: '#/modellbahn',
-    kurz: 'Eine Strecke als Modell im Gelände, auch in der VR-Brille, und deine Probefahrten.',
+    kurz: 'Eine Strecke als Modell im Gelände, im Führerstand selbst fahren, auch in der VR-Brille.',
     bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: Jemand mit VR-Brille dreht am Tisch das Modell einer Bergstrecke mit Zug auf einem Viadukt.' },
     beschreibung: 'Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen, mit einer '
-      + 'Brille auch auf dem Tisch vor dir. Ein Modell, kein Abbild der Wirklichkeit. Dazu die Probefahrten, die einen Weg '
-      + 'wie unterwegs abspielen.',
+      + 'Brille auch auf dem Tisch vor dir. Im Führerstand fährst du selbst, mit dem echten Wetter der nächsten Station. Ein Modell, '
+      + 'kein Abbild der Wirklichkeit. Dazu die Probefahrten, die einen Weg wie unterwegs abspielen.',
   },
   {
     id: 'schweiz11', titel: 'Geo', status: 'spielbereit', adresse: '#/schweiz11',
@@ -76,10 +76,10 @@ export const SPIELE: Spiel[] = [
   // an letzter Stelle (Michael, 2026-10-23); Michael, 2026-10-18: «3D Schweiz heisst das Spiel», vorerst mit den Daten, die es schon gibt; das Bild ist das der Modellbahn
   {
     id: 'schweiz3d', titel: '3D Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
-    kurz: 'Die ganze Schweiz als Modell: ein Feld wählen und eintauchen, auch in der VR-Brille.',
+    kurz: 'Die ganze Schweiz als Modell: einen Ort, Gipfel oder See suchen und eintauchen, auch in der VR-Brille.',
     bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand hält ein Tablet mit dem Modell eines Bergs und seinen Höhenstufen vor denselben Berg.' },
-    beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld, schau, was darin liegt, und tauche ein, bis auf ein Stück von 4 km. '
-      + 'Mit einer Brille steht das Modell vor dir auf dem Tisch.',
+    beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, Gipfel oder See, und tauche ein, bis auf ein Stück '
+      + 'von 1 km. Mit einer Brille steht das Modell vor dir auf dem Tisch.',
   },
 ]
 

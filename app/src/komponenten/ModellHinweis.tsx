@@ -12,6 +12,8 @@ export function ModellHinweis() {
         <li>Die Höhe der Gleise steht in keiner Quelle: Die Linie folgt dem Gelände, Tunnel und Brücken gerade zwischen ihren Enden.</li>
         <li>Gelände und Luftbild sind vereinfacht und gemittelt.</li>
         <li>Die Fahrt ist ein Zeitraffer, kein Fahrplan; das Zuggeräusch ist gerechnet.</li>
+        <li>Der Führerstand ist gezeichnet, kein bestimmtes Fahrzeug; Beschleunigen und Bremsen sind gerechnet und viel schneller als bei einem Zug.</li>
+        <li>Das Wetter ist die letzte Messung der nächsten Station, nicht das Wetter an jeder Stelle; Wolken, Regen und Schnee sind daraus geschlossen, nicht gemessen.</li>
       </ul>
     </div>
   )

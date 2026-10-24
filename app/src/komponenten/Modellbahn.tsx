@@ -37,6 +37,11 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
         Meta Quest steht das Modell vor dir auf dem Tisch.
       </p>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
+        «Führerstand» setzt dich vorne in den Zug: Der rechte Hebel wählt das Tempo, der linke bremst, die Leuchtknöpfe schalten
+        Zuggeräusch, Stirnlicht, Signalhorn, Dämmerung und was gemeldet wird. Zu sehen ist das echte Wetter der nächsten Station
+        von MeteoSchweiz; leuchtet der Sonnenschalter, ist Schönwetter.
+      </p>
+      <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         «Zug fahren» schickt den Zug in 2,5 Minuten über das ganze Modell. Eine Probefahrt spielt den Weg wie unterwegs ab, mit
         Karte, Meldungen und wählbarem Tempo.
       </p>

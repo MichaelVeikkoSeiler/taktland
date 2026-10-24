@@ -23,7 +23,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
         Die Reiter oben führen zu Bahnland (Bahnhöfe, Strecken, Brücken, Tunnel,
-        Bahnübergänge), Spiele (Modellbahn, Geo, Duell, Bahnhofsuche), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
+        Bahnübergänge), Spiele (Modellbahn, Geo, Wo bin ich?, Duell, Bahnhofsuche, 3D Schweiz), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
 
@@ -67,14 +67,32 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
 
       <Abschnitt titel="Spiele">
         <Spiel titel="Modellbahn">
+          <li>
           Eine Strecke als Modell im Gelände: eine Bergstrecke oder eine eigene bis etwa 200 km. Drehen, zoomen und einen
           Zug darüber fahren lassen{xr ? '; mit der Brille steht das Modell vor dir auf dem Tisch' : ''}. Ein Modell, kein Abbild:
           Zug, Gleise und Masten sind nicht massstäblich, die Fahrt ist ein Zeitraffer.
+          </li>
+          <li>
+            «Führerstand» setzt dich vorne in den Zug. Der rechte Hebel wählt das Tempo (oben schneller, unten langsamer), der
+            linke bremst (oben bremsen, unten lösen), die rote Taste ist die Schnellbremse. Die Leuchtknöpfe schalten Zuggeräusch,
+            Stirnlicht, Signalhorn, Dämmerung, Pultlicht, was gemeldet wird und die Höhe; leuchtet ein Knopf, ist er an. Auf
+            dem Bildschirm ist der Führerstand ein Bild, in der Brille ein Pult in 3D.
+          </li>
+          <li>
+            Zu sehen ist das echte Wetter der nächsten Station von MeteoSchweiz (siehe «Woher die Daten stammen»). Leuchtet der
+            Sonnenschalter, ist Schönwetter.
+          </li>
         </Spiel>
         <Spiel titel="Geo">
           <li>
             Ein Bahnhof, Tunnel oder eine Brücke wird genannt. Setze den Pin auf der Karte: Je näher,
             desto mehr Punkte. Jede Hilfe auf der Karte kostet 15 % der möglichen Punkte.
+          </li>
+        </Spiel>
+        <Spiel titel="Wo bin ich?">
+          <li>
+            Fünf Runden: Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Namen und Ortstafeln. Nach
+            der Fahrt setzt du den Pin, wo du warst: Je näher, desto mehr Punkte.
           </li>
         </Spiel>
         <Spiel titel="Duell">
@@ -92,6 +110,17 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Gesucht ist ein Bahnhof, sechs Hinweiskarten liegen verdeckt. Ohne Karte gibt es 80 Punkte,
             jede aufgedeckte kostet 10, der Bezirk 20. Ein falscher Tipp deckt die nächste Karte auf.
+          </li>
+        </Spiel>
+        <Spiel titel="3D Schweiz">
+          <li>
+            Die ganze Schweiz als Modell. Ein Feld antippen oder einen Ort, Gipfel oder See suchen, dann eintauchen: in eine
+            Region von 20 km, ein Feld von 4 km und ein Stück von 1 km; der gesuchte Ort bleibt dabei rot markiert. Mit + und −
+            an den Wänden setzt du Stücke an.
+          </li>
+          <li>
+            Die Knöpfe an den Wänden schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume und Sonne mit Schatten zu
+            Datum und Uhrzeit. Alles beginnt ausgeschaltet. Auch als eigene Seite auf 3dland.ch.
           </li>
         </Spiel>
         <Spiel titel="Zu mehreren">
@@ -191,6 +220,10 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Drehen und Zoomen. Im Führerstand zeigt es beim Fahren, was an deiner Stelle im Zug vorbeizieht, bei der
             Probefahrt, was vorne an der Spitze liegt. Die Höhe der Gleise kommt aus swissTLM3D (swisstopo); wo dort kein
             Gleis liegt, folgt der Weg dem Gelände.
+          </li>
+          <li>
+            In 3D ist das echte Wetter der nächsten Station von MeteoSchweiz zu sehen, bewölkt, Regen oder Schnee. Der
+            Sonnenschalter stellt auf Schönwetter, dann leuchtet er.
           </li>
         </Punkte>
       </Abschnitt>
