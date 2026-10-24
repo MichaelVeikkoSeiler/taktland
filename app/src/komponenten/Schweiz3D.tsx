@@ -636,7 +636,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                      // nur in einer Testfassung (VITE_S3D_TEST): das gewählte Feld in die Konsole
                      if (import.meta.env.VITE_S3D_TEST) console.log('feld', JSON.stringify(w))
                      setWahl(w); setGesucht(null)
-                   }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
+                   }} abwaehlen={() => { setWahl(null); setGesucht(null) }} eintauchen={() => void eintauchen()} zurueck={eineZurueck} info={info} brilleRef={brille} zusatz={zusatz}
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
@@ -834,8 +834,10 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
+  /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
+  abwaehlen: () => void
   eintauchen: () => void; zurueck: () => void
   /** was in der Brille über dem gewählten Feld steht */
   info: string[] | null
@@ -869,8 +871,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
     anfangSetzen: () => void
     verlauf: Record<'hoehen' | 'orte' | 'gipfel', { p: number; ziel: number; ebene: THREE.Plane }>
   } | null>(null)
-  const cb = useRef({ waehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten })
-  cb.current = { waehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten }
+  const cb = useRef({ waehlen, abwaehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten })
+  cb.current = { waehlen, abwaehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten }
 
   // einmal: Renderer, Kamera, Steuerung, Brille
   useEffect(() => {
@@ -1013,6 +1015,8 @@ function Ansicht({ b, stufe, wahl, waehlen, eintauchen, zurueck, info, brilleRef
       const boeden = wurzel.getObjectByName('boeden')
       const t = boeden ? strahl.intersectObjects(boeden.children, false)[0] : undefined
       if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
+      // neben das Gelände (Himmel, Sockel): die Wahl verschwindet
+      else cb.current.abwaehlen()
     }
     // Brille (Michael, 2026-10-21: «mit der Brille muss das Land irgendwie gepackt und gedreht werden können. Gleich oder ähnlich
     // wie in Taktland»): wie in der Modellbahn trägt ein gehaltener Abzug das Modell, beide ziehen es grösser oder kleiner und
