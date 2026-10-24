@@ -772,7 +772,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Wanderwege">
           {WANDER_NAMEN.map(([a, name]) => (
             <span key={a} className="inline-flex items-center gap-1">
-              <span className="inline-block h-1 w-4 rounded-sm outline outline-1 outline-white" style={{ background: WANDER_FARBEN[a] }} />{name}
+              <span className="inline-block h-1 w-4 rounded-sm" style={{ background: WANDER_FARBEN[a] }} />{name}
             </span>
           ))}
         </p>
@@ -881,10 +881,11 @@ const HOEHEN_LINIE_PX = 1.6
 /** die Zahl an der Linie: Grösse auf dem Bildschirm je Bildpunkt ihres Bilds, in der Brille ihre Höhe in Metern (gewählt) */
 const HOEHEN_ZAHL_GROESSE = 0.0007, HOEHEN_ZAHL_BRILLE_M = 0.012
 /** Wanderwege (Michael, 2026-10-21: «alle Wanderwege der Schweiz»): Farben nach den Wegweisern, gelb, weiss-rot und weiss-blau,
- *  hier als Linie in der Farbe auf einem weissen Rand; Breite in Bildpunkten */
+ *  hier als Linie in der Farbe, ohne weissen Rand (Michael, 2026-10-24: «Wanderwege brauchen keine weisse Umrahmungen mehr»);
+ *  Breite in Bildpunkten */
 const WANDER_FARBEN: Record<number, string> = { 1: '#e6a800', 2: '#d0102b', 3: '#1f5fd6' }
 const WANDER_NAMEN: Array<[number, string]> = [[1, 'Wanderweg'], [2, 'Bergwanderweg'], [3, 'Alpinwanderweg']]
-const WANDER_PX = 2.2, WANDER_RAND_PX = 4
+const WANDER_PX = 2.2
 /** Ortschaften: Mast als Anteil der Breite des Modells, ab welchem Rang und wie viele je Stück, Farbe wie die Bahnhöfe der
  *  Modellbahn (BAHNHOF_GRAU in Relief.tsx); Auswahl und Masse gewählt, nicht aus einer Quelle */
 const ORT_MAST = 0.035, ORT_GRAU = '#2a2a2a'
@@ -1992,14 +1993,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       for (const [art, l] of je) {
         if (!l.length) continue
-        for (const [farbe, px, folge] of [['#ffffff', WANDER_RAND_PX, 3], [WANDER_FARBEN[art] ?? '#e6a800', WANDER_PX, 4]] as const) {
-          const geo = new LineSegmentsGeometry()
-          geo.setPositions(l)
-          // der Rand schreibt keine Tiefe, sonst verdeckt er die Linie in der Farbe
-          const linie = new LineSegments2(geo, new LineMaterial({ color: farbe, linewidth: px, depthWrite: folge === 4 }))
-          linie.renderOrder = folge
-          gruppe.add(linie)
-        }
+        const geo = new LineSegmentsGeometry()
+        geo.setPositions(l)
+        const linie = new LineSegments2(geo, new LineMaterial({ color: WANDER_FARBEN[art] ?? '#e6a800', linewidth: WANDER_PX }))
+        linie.renderOrder = 4
+        gruppe.add(linie)
       }
       if (gruppe.children.length) wurzel.add(gruppe)
     })
