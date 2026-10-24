@@ -635,7 +635,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
         )}
         {wahl && stufe !== 'nah' && (
-          <div className="absolute inset-x-2 bottom-2 rounded-lg bg-white/95 p-3 shadow-lg dark:bg-sbb-charcoal/95 md:left-auto md:w-80">
+          // oben unter der Suche, unten lag der Kasten auf dem Handy oft unter dem Bildschirmrand (Michael, 2026-10-24: «Der
+          // Eintauchen Button müsste oben sein sonst sieht man ihn nicht»)
+          <div className={`absolute inset-x-2 ${stufe === 'schweiz' ? 'top-[5.25rem]' : 'top-14'} rounded-lg bg-white/95 p-3 shadow-lg dark:bg-sbb-charcoal/95 md:left-auto md:w-80`}>
             <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">
               Feld {(wahl.seite / 1000).toLocaleString('de-CH')} × {(wahl.seite / 1000).toLocaleString('de-CH')} km{inhalt?.kanton ? ` · Mitte im Kanton ${inhalt.kanton}` : ''}
             </p>
