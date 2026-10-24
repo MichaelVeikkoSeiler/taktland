@@ -300,8 +300,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Data, stündlich neu, Stundenwerte bis 8 Tage voraus). Zur gewählten Stunde der Prognose regnet oder schneit es im Modell nach
             ihrem Niederschlag (ab 0,1 mm in der Stunde, Schnee bis 1 °C), in der Tafel als blaue Balken. Der Sack zeigt, wohin der Wind weht, und ist ab 28 km/h ganz
             gestreckt wie an Flugplätzen. Es sind immer vier Windhosen im Bild: nach jedem Drehen und Zoomen
-            stehen sie wieder verteilt im sichtbaren Gelände, gleich gross; jede zeigt den Wind der Station, die ihrem Platz am nächsten
-            liegt, sie steht aber nicht an der Station. Das Schild darüber nennt Stärke und Station. Die Windhosen sind gezeichnet und nicht massstäblich.
+            stehen sie wieder in der Mitte der vier Viertel des Bilds, gleich gross; jede zeigt den Wind der Station, die ihrem Platz am
+            nächsten liegt, sie steht aber nicht an der Station. Die Zahl über dem Mast ist die Stärke in km/h, die Stationen nennt die Tafel. Die Windhosen sind gezeichnet und nicht massstäblich.
           </li>
           <li>
             Linien anderer Bahnen und das Kapitel «Netz»: Schienennetz des Bundesamts für
@@ -465,7 +465,7 @@ function datum(iso: string) {
 /** ein Thema als aufklappbare Kachel; der Titel bleibt eine Überschrift */
 /** Alle Themen zu, auch beim Zurückkommen auf Info (Michael, 2026-10-02: «alle schliessen,
  *  wenn man Info verlässt»); die Quellen stehen ohnehin in der Fusszeile */
-function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) {
+export function Abschnitt({ titel, children }: { titel: string; children: ReactNode }) {
   return (
     <details className="kachel group">
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3

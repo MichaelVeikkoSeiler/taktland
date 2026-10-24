@@ -83,8 +83,9 @@ export function windhoseBauen(): Windhose {
 const BILD_HOEHE = 0.09
 /** so lange nach der letzten Bewegung der Kamera verteilt sie die Windhosen neu (ms) */
 const RUHE_MS = 500
-/** wo die vier im Bild stehen (Bildkoordinaten −1 bis 1, unten −1): zwei Reihen, die obere etwas unter der Mitte */
-const BILDPLAETZE: Array<[number, number]> = [[-0.45, -0.1], [0.45, -0.1], [-0.45, -0.6], [0.45, -0.6]]
+/** wo die vier im Bild stehen (Bildkoordinaten −1 bis 1, unten −1): in der Mitte jedes Viertels des Bilds (Michael, 2026-10-24:
+ *  «jeweils in die Mitte des Quadrates, wenn man den Ausschnitt in 4 Quadrate teilen würde») */
+const BILDPLAETZE: Array<[number, number]> = [[-0.5, 0.5], [0.5, 0.5], [-0.5, -0.5], [0.5, -0.5]]
 
 export interface VierWindhosen {
   /** je Bild: Grösse nach dem Abstand, Flattern, nach der Ruhe neu verteilen */
@@ -99,8 +100,8 @@ interface Wind { kmh: number | null; boe: number | null; richtung: number | null
 /**
  * Immer vier Windhosen im Bild (Michael, 2026-10-24: «Egal welche Zoomstufe und auch beim von Hand stufenlosen Zoomen: immer 4 Orte»;
  * «Zahl dazu»): nach jeder Bewegung der Kamera stehen sie wieder an vier Stellen des sichtbaren Geländes, gefunden mit dem Strahl
- * durch vier feste Bildpunkte; auf dem Bildschirm immer gleich gross, darüber ein Schild mit der Stärke in km/h und dem Namen der
- * Station. In der Brille bleiben sie, wo sie sind (dort gibt es keinen Bildschirm), ohne Schild.
+ * durch die Mitten der vier Viertel des Bilds; auf dem Bildschirm immer gleich gross, über dem Mast klein die Stärke in km/h (die
+ * Station nennt die Tafel). In der Brille bleiben sie, wo sie sind (dort gibt es keinen Bildschirm), ohne Schild.
  * eltern: wohin sie gehören (ihr Raum ist der des Modells); hoehe: Gelände an x, z im Raum der Eltern, null ausserhalb;
  * neuePlaetze: die vier Stellen im Raum der Eltern, wenn sie neu verteilt sind.
  */
@@ -138,8 +139,11 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
   let altPos = new THREE.Vector3(Infinity, 0, 0), altQuat = new THREE.Quaternion(), bewegt = 0, verteilt = false
   const verteilen = () => {
     const stellen = BILDPLAETZE.map(([x, y]) => {
-      // trifft der Strahl kein Gelände (Himmel, neben dem Modell), etwas weiter unten und zur Mitte hin versuchen
-      for (const [fx, fy] of [[1, 1], [0.6, 1.6], [0.3, 2.2]]) { const t = treffen(x * fx, Math.max(-0.95, y * fy - (fy - 1) * 0.3)); if (t) return t }
+      // trifft der Strahl kein Gelände (Himmel, neben dem Modell), im selben Viertel weiter unten und zur Mitte hin versuchen
+      for (const [dx, dy] of [[0, 0], [0, -0.2], [0, -0.4], [-0.2, -0.2], [-0.2, -0.4]]) {
+        const t = treffen(x + Math.sign(x) * dx, y + dy)
+        if (t) return t
+      }
       return null
     })
     const da = stellen.filter((s): s is THREE.Vector3 => !!s)
@@ -172,7 +176,7 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
         h.schritt(t)
         const sp = schilder[i]
         sp.visible = verteilt && !brille && !!sp.material.map
-        sp.position.copy(h.gruppe.position).y += h.gruppe.scale.y * 1.02
+        sp.position.copy(h.gruppe.position).y += h.gruppe.scale.y * 1.15
       })
     },
     setzen: (werte) => {
@@ -182,16 +186,17 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
         const sp = schilder[i]
         sp.material.map?.dispose(); sp.material.map = null
         if (!w) { sp.material.needsUpdate = true; return }
+        // nur die Zahl in km/h, klein über dem Mast (Michael, 2026-10-24: «Viel zu präsente Infos. Nur Zahl (zB 22)»)
         const kmh = w.wind?.kmh
-        const text = `${kmh === null || kmh === undefined ? '–' : Math.round(kmh)} km/h${w.name ? ` · ${w.name}` : ''}`
+        const text = kmh === null || kmh === undefined ? '–' : String(Math.round(kmh))
         const c = document.createElement('canvas'), x = c.getContext('2d')!
-        const px = 24, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
-        x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 16; c.height = px + 12
+        const px = 22, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
+        x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 12; c.height = px + 8
         x.font = schrift; x.fillStyle = '#2a2a2a'; x.fillRect(0, 0, c.width, c.height)
-        x.fillStyle = '#ffffff'; x.fillText(text, 8, px + 1)
+        x.fillStyle = '#ffffff'; x.fillText(text, 6, px - 1)
         const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
         sp.material.map = tex; sp.material.needsUpdate = true
-        sp.scale.set(c.width * 0.00085, c.height * 0.00085, 1)
+        sp.scale.set(c.width * 0.0007, c.height * 0.0007, 1)
       })
     },
     entsorgen: () => {

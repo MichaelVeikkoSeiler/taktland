@@ -115,8 +115,8 @@ export function WindTafel({ station, messung, waehlen, plaetze, className = '' }
       )}
       {plaetze && plaetze.length > 0 && (
         <p className="mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
-          Die vier Windhosen im Bild stehen nach jeder Bewegung wieder verteilt im sichtbaren Gelände; jede zeigt den Wind der Station, die
-          ihrem Platz am nächsten liegt, das Schild nennt Stärke und Station (sie stehen nicht an der Station):{' '}
+          Die vier Windhosen stehen nach jeder Bewegung wieder in der Mitte der vier Viertel des Bilds; jede zeigt den Wind der Station, die
+          ihrem Platz am nächsten liegt (nicht an der Station), die Zahl über dem Mast ist seine Stärke in km/h. Stationen:{' '}
           {[...new Set(plaetze.map((p) => p.station?.name ?? 'keine Station'))].join(', ')}.
         </p>
       )}

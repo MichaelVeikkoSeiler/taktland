@@ -23,6 +23,7 @@ import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
+import { Abschnitt } from './Anleitung'
 
 /**
  * «3D Schweiz» (Michael, 2026-10-18: «die Berge und Täler der Schweiz besser erkunden … von der ganzen Schweiz bis ins
@@ -648,23 +649,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {!eigeneSeite && <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />}
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D Schweiz' : '3D Schweiz'}</h1>
-      <p className="mt-2 leading-relaxed">
-        {/* kurz, damit das Modell weiter oben steht (Michael, 2026-10-24); + und − erklärt der Text unter dem Bild */}
-        Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See, und tauche ein bis auf 1 km.
-      </p>
-      <nav aria-label="Stufe" className="mt-3 flex flex-wrap items-center gap-1 text-sm">
-        <button type="button" onClick={() => zurueck('schweiz')} className={`rounded-lg px-2 py-1 ${stufe === 'schweiz' ? 'font-bold' : 'underline'}`}>Schweiz</button>
-        {gelaende.region && (
-          <>›<button type="button" onClick={() => zurueck('region')} className={`rounded-lg px-2 py-1 ${stufe === 'region' ? 'font-bold' : 'underline'}`}>
-            Region {titel(gelaende.region.anker)}</button></>
-        )}
-        {(stufe === 'ort' || stufe === 'nah') && gelaende.ort && (
-          <>›<button type="button" onClick={() => zurueck('ort')} className={`rounded-lg px-2 py-1 ${stufe === 'ort' ? 'font-bold' : 'underline'}`}>
-            {titel(gelaende.ort.anker)}</button></>
-        )}
-        {stufe === 'nah' && gelaende.nah && <>›<span className="px-2 py-1 font-bold">1 km {titel(gelaende.nah.anker) === 'Feld' ? '' : titel(gelaende.nah.anker)}</span></>}
-        {groesse && <span className="px-1 text-sbb-metal dark:text-sbb-storm">({groesse})</span>}
-      </nav>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       <div className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
         : 'relative mt-2 h-[68vh] min-h-[360px] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]'}>
@@ -733,6 +717,19 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
         )}
       </div>
+      <nav aria-label="Stufe" className="mt-2 flex flex-wrap items-center gap-1 text-sm">
+        <button type="button" onClick={() => zurueck('schweiz')} className={`rounded-lg px-2 py-1 ${stufe === 'schweiz' ? 'font-bold' : 'underline'}`}>Schweiz</button>
+        {gelaende.region && (
+          <>›<button type="button" onClick={() => zurueck('region')} className={`rounded-lg px-2 py-1 ${stufe === 'region' ? 'font-bold' : 'underline'}`}>
+            Region {titel(gelaende.region.anker)}</button></>
+        )}
+        {(stufe === 'ort' || stufe === 'nah') && gelaende.ort && (
+          <>›<button type="button" onClick={() => zurueck('ort')} className={`rounded-lg px-2 py-1 ${stufe === 'ort' ? 'font-bold' : 'underline'}`}>
+            {titel(gelaende.ort.anker)}</button></>
+        )}
+        {stufe === 'nah' && gelaende.nah && <>›<span className="px-2 py-1 font-bold">1 km {titel(gelaende.nah.anker) === 'Feld' ? '' : titel(gelaende.nah.anker)}</span></>}
+        {groesse && <span className="px-1 text-sbb-metal dark:text-sbb-storm">({groesse})</span>}
+      </nav>
       {windAn && (
         <WindTafel className="mt-2" station={windStation} messung={windMessung} waehlen={setWindZeigt} plaetze={windPl} />
       )}
@@ -753,12 +750,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         )}
       </div>
       {standText && <p className="mt-1 text-sm">{standText} ({tagText}, {uhrzeit(minuten)} Uhr, Schweizer Zeit).</p>}
-      <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        Höhe wie echt. Ziehen dreht, zwei Finger oder das Mausrad zoomen.{stufe !== 'nah' && ' Ein Tipp wählt ein Feld.'}
-        {' Die Knöpfe an den Wänden schalten Höhen, Orte, Gipfel, Wanderwege, Gebäude, Bäume, den Wind mit Prognose und die Sonne ein und aus.'}
-        {stufe !== 'schweiz' && ' + und − an einer Wand setzen dort ein Stück an oder nehmen eines weg.'}
-        {hinweis && <> <strong>{hinweis}</strong></>}
-      </p>
+      {hinweis && <p className="mt-2 text-sm font-bold">{hinweis}</p>}
       {scheiben && (
         <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Höhenscheiben">
           {HOEHEN_STUFEN.map(([z, farbe, name]) => (
@@ -786,8 +778,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
             folgen den Wegweisern. Wind: die letzte Messung der nächsten Station von MeteoSchweiz mit Windmessung (SwissMetNet) und ihre
-            lokale Prognose (stündlich, bis 8 Tage); immer vier Windhosen im Bild, nach jeder Bewegung neu verteilt, jede mit dem Wind der
-            Station, die ihr am nächsten liegt (nicht an der Station; das Schild nennt sie), gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
+            lokale Prognose (stündlich, bis 8 Tage); immer vier Windhosen in der Mitte der Viertel des Bilds, nach jeder Bewegung neu
+            verteilt, jede mit dem Wind der Station, die ihr am nächsten liegt (nicht an der Station; die Tafel nennt sie), die Zahl in km/h, gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
@@ -796,6 +788,45 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
         </details>
       )}
+      {/* die Anleitung unter dem Modell, je Thema auf- und zuklappbar wie bei Taktland (Michael, 2026-10-24: «Einleitungstext streichen
+          und Karte nach oben direkt zum Auftaktbild schieben. Einleitungstext als Anleitung unter der Karte und jeweils kategorisieren») */}
+      <h2 className="mt-6 text-xl font-bold">Anleitung</h2>
+      <div className="mt-2 space-y-2 text-sm leading-relaxed">
+        <Abschnitt titel="Wählen und eintauchen">
+          <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See; «Überrasch mich» wählt ein Feld um
+            einen Gipfel. Mit «Eintauchen» geht es in eine Region von 20 km, dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
+            Ein Tipp neben das Modell nimmt die Wahl zurück. Die Zeile unter dem Modell (Schweiz › Region …) führt eine Stufe zurück.</p>
+        </Abschnitt>
+        <Abschnitt titel="Drehen und zoomen">
+          <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
+            Modell im Vollbild.</p>
+        </Abschnitt>
+        <Abschnitt titel="Knöpfe an den Wänden">
+          <p>Die Knöpfe an den Wänden des Sockels schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume, Wind und Sonne ein und
+            aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
+            einer Wand setzen dort ein Stück an oder nehmen eines weg (ab der Region).</p>
+        </Abschnitt>
+        <Abschnitt titel="Wind und Niederschlag">
+          <p>«Wind» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
+            des Bilds. Die Zahl über dem Mast ist die Windstärke in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
+            nicht an der Station). Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
+            wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde.</p>
+        </Abschnitt>
+        <Abschnitt titel="Sonne und Schatten">
+          <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
+            −1 h und +1 h die Zeit, −1 Tag und +1 Tag das Datum, «Jetzt» setzt beides auf jetzt; unter dem Modell lassen sich Datum und
+            Uhrzeit auch direkt wählen.</p>
+        </Abschnitt>
+        <Abschnitt titel="Mein Standort">
+          <p>Das Fadenkreuz neben der Suche zeigt dich per GPS als roten Punkt im Modell und wählt das Feld um dich. Der Standort bleibt
+            auf dem Gerät.</p>
+        </Abschnitt>
+        <Abschnitt titel="Mit VR-Brille">
+          <p>Mit einer Brille wie der Meta Quest steht das Modell auf dem Tisch. Ein kurzer Abzug wählt ein Feld, nochmals taucht ein;
+            ein gehaltener Abzug trägt das Modell, beide zusammen drehen und skalieren es. Die Greiftaste geht eine Stufe zurück, der
+            Thumbstick dreht und hebt, drücken stellt es zurück. Die Knöpfe an den Wänden gehen mit Strahl und Abzug.</p>
+        </Abschnitt>
+      </div>
     </div>
   )
 }

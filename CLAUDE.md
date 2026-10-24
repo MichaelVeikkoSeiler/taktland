@@ -269,7 +269,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
 data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18): die Geländekacheln auf 500 m gemittelt (hoehen.hgz,
              UInt16, nicht .gz, das liefert ein Server als gepackt aus) und das Luftbild auf 100 m (luftbild.jpg), 1,8 MB
              (pipeline/build_schweiz3d.py, nach build_gelaende und build_luftbild; das Ausland ohne Aufnahme überall im selben Grundton #d8d5c2,
-             statt weiss und beige gekachelt, Michael, 2026-10-22); in der App komponenten/Schweiz3D.tsx (#/schweiz3d):
+             statt weiss und beige gekachelt, Michael, 2026-10-22); in der App komponenten/Schweiz3D.tsx (#/schweiz3d; ohne Einleitung, das Modell gleich unter dem Titel oder Auftaktbild, darunter die Zeile der Stufen und die Anleitung in Abschnitten zum Aufklappen wie bei Taktland, Abschnitt aus Anleitung.tsx; Michael, 2026-10-24: «Einleitungstext streichen und Karte nach oben direkt zum Auftaktbild schieben»):
              vier Stufen, die Schweiz, darin ein Feld von 20 km (Gelände 50 m, Luftbild 10 m), darin eines von
              4 km (feines Gelände und Nahbild, wo es sie gibt, sonst wie die Region, mit Hinweis), darin eines von 1 km im 5-m-Raster
              (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail»; nahLaden: die scharfe Umgebung, Gelände 2 m und Luftbild
@@ -475,8 +475,10 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              flattert ein wenig; immer vier (Michael, 2026-10-24: «immer vier davon verteilen»; src/windhosen.ts), jede mit dem Wind der Station
              mit Windmessung, die ihrem Platz am nächsten liegt (nicht an der Station); immer vier im Bild, egal wie weit gezoomt (Michael,
              2026-10-24: «Egal welche Zoomstufe und auch beim von Hand stufenlosen Zoomen: immer 4 Orte»; vierWindhosenBauen in Windhose.ts):
-             0,5 s nach jeder Bewegung neu verteilt, wo die Strahlen durch vier feste Bildpunkte das Gelände treffen (dem Gelände nach
-             gesucht, ohne Netz), auf dem Bildschirm gleich gross (9 % des Abstands), darüber ein Schild mit Stärke und Station («Zahl dazu»);
+             0,5 s nach jeder Bewegung neu verteilt, wo die Strahlen durch die Mitten der vier Viertel des Bilds das Gelände treffen (Michael,
+             2026-10-24: «in die Mitte des Quadrates»; dem Gelände nach gesucht, ohne Netz; trifft einer nur Himmel, weiter unten im Viertel),
+             auf dem Bildschirm gleich gross (9 % des Abstands), darüber klein nur die Zahl in km/h («Zahl dazu», «Viel zu präsente Infos.
+             Nur Zahl»), die Stationen nennt die Tafel;
              in der Brille bleiben sie stehen, ohne Schild, in der Modellbahn 3,5-mal so hoch wie die Masten,
              nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wind» an
              den Wänden (blau, am Anfang aus), in der Brille 12 % so hoch wie das Modell breit; Messungen fünf Minuten behalten (messungVon);
