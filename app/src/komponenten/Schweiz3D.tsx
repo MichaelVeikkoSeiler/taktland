@@ -19,9 +19,9 @@ import { knopfTon, verlaufTon } from '../audio'
 import { istNadel, NADEL_BREITE } from '../baumart'
 import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
-import { viertelMitten, type WindPlatz, windPlaetze, windZur } from '../windhosen'
+import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { type Niederschlag, niederschlagBauen } from './Niederschlag'
-import { type Windhose, windhoseBauen } from './Windhose'
+import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
 
 /**
@@ -393,6 +393,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // die vier Windhosen (Michael, 2026-10-24: «immer vier davon verteilen»), je Viertel des Modells (src/windhosen.ts)
   const [windPl, setWindPl] = useState<WindPlatz[]>([])
   const [, setWindNeu] = useState(0)
+  // die Plätze kommen aus dem Bild (Ansicht): nach jeder Bewegung der Kamera vier Stellen des sichtbaren Geländes
+  const windAuftrag = useRef(0)
+  const windOrte = (punkte: Array<{ e: number; n: number }>) => {
+    const auftrag = ++windAuftrag.current
+    void windPlaetze(punkte.map((p, i) => ({ ...p, viertel: `${i + 1}.` })), () => setWindNeu((x) => x + 1))
+      .then((p) => { if (auftrag === windAuftrag.current) setWindPl(p) }).catch(() => {})
+  }
   // Regen und Schnee zur selben Stunde (Michael, 2026-10-24: «Regen auch einblenden mit der gleichen Prognose wie die Windhose»)
   const niederJetzt = windZeigt ? niederAusStunde(windZeigt)
     : windMessung && (windMessung.art === 'regen' || windMessung.art === 'schnee') ? { art: windMessung.art, staerke: windMessung.staerke } : null
@@ -464,8 +471,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       }
       if (!weg) { setWindStation(liste[0] ?? null); setWindMessung(null) }
     }).catch(() => {})
-    void windPlaetze(viertelMitten(Math.min(...r.map((x) => x.e0)), Math.min(...r.map((x) => x.n1 - x.h)), Math.max(...r.map((x) => x.e0 + x.b)),
-      Math.max(...r.map((x) => x.n1))), () => { if (!weg) setWindNeu((x) => x + 1) }).then((p) => { if (!weg) setWindPl(p) }).catch(() => {})
     return () => { weg = true }
   }, [windAn, aktuell])
   const anker = aktuell?.teile.get('0_0') ?? null
@@ -678,7 +683,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
                      sonne: setSonnenAn, wind: setWindAn })[art]((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
-                   windAn={windAn} windWinde={windPl.map((p) => windZur(p, windZeigt?.zeit ?? null))} windPlaetze={windPl} nieder={niederJetzt}
+                   windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt}
                    zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -783,8 +788,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
             folgen den Wegweisern. Wind: die letzte Messung der nächsten Station von MeteoSchweiz mit Windmessung (SwissMetNet) und ihre
-            lokale Prognose (stündlich, bis 8 Tage); vier Windhosen, je eine in der Mitte jedes Viertels, jede mit dem Wind der Station, die
-            ihr am nächsten liegt (nicht an der Station), gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
+            lokale Prognose (stündlich, bis 8 Tage); immer vier Windhosen im Bild, nach jeder Bewegung neu verteilt, jede mit dem Wind der
+            Station, die ihr am nächsten liegt (nicht an der Station; das Schild nennt sie), gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Scheiben liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
@@ -879,7 +884,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windPlaetze: windPl, windWinde, nieder }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -902,7 +907,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   /** die Sonne mit Zeit ist an; ein Schalter um, in der Brille an den Wänden */
   sonnenAn: boolean; schalten: (art: Schalter) => void
   /** die Windhose: an, was sie zeigt, wo die Station steht */
-  windAn: boolean; windPlaetze: WindPlatz[]; windWinde: Array<Wind | null>
+  windAn: boolean; windWerte: Array<{ wind: Wind | null; name: string | null }>; windOrte: (punkte: Array<{ e: number; n: number }>) => void
   /** Regen oder Schnee zur gewählten Stunde, null: nichts fällt */
   nieder: { art: 'regen' | 'schnee'; staerke: number } | null
   /** der eigene Standort per GPS in LV95, null: aus */
@@ -1966,40 +1971,32 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [scheiben, orte, gipfel])
   // eine neue Stufe steht in der Brille wieder auf dem Tisch wie am Anfang
   useEffect(() => { kern.current?.anfangSetzen() }, [stufe])
-  // die vier Windhosen in der Mitte der Viertel des Modells, jede mit dem Wind ihrer Station (src/windhosen.ts); der Mast 12 % so hoch
-  // wie das Modell breit ist, nicht massstäblich (Windhose.ts)
-  const windhosen = useRef<Array<Windhose | null>>([])
+  // immer vier Windhosen im Bild, nach jeder Bewegung neu verteilt, jede mit dem Wind der nächsten Station (Windhose.ts, src/windhosen.ts);
+  // in der Brille bleiben sie stehen, 12 % so hoch wie das Modell breit
+  const windhosen = useRef<VierWindhosen | null>(null)
+  const windOrteRef = useRef(windOrte)
+  windOrteRef.current = windOrte
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     const W = k?.wurzel.userData.weiteKm as number | undefined
-    if (!k || !lage || !W || !windAn || !windPl.length) return
+    if (!k || !lage || !W || !windAn) return
     const teile = [...b.teile.values()]
     const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
-    // ein Viertel ohne Gelände (die Stücke bilden nicht immer ein Rechteck) bleibt ohne Windhose
-    const alle = windPl.map((p) => {
-      if (!drin(p.e, p.n)) return null
-      const w = windhoseBauen()
-      w.gruppe.position.set((p.e - lage.cE) / 1000, bestandHoehe(b, p.e, p.n) / 1000, -(p.n - lage.cN) / 1000)
-      w.gruppe.scale.setScalar(W * 0.12)
-      w.gruppe.userData.bleibt = true
-      k.wurzel.add(w.gruppe)
-      return w
-    })
-    windhosen.current = alle
-    const start = performance.now()
-    const schritt = () => { const t = (performance.now() - start) / 1000; for (const w of alle) w?.schritt(t) }
-    k.jeBild.push(schritt)
+    const vier = vierWindhosenBauen(k.wurzel, k.kamera, (x, z) => {
+      const e = lage.cE + x * 1000, n = lage.cN - z * 1000
+      return drin(e, n) ? bestandHoehe(b, e, n) / 1000 : null
+    }, k.inBrille, (stellen) => windOrteRef.current(stellen.map((p) => ({ e: lage.cE + p.x * 1000, n: lage.cN - p.z * 1000 }))), W * 0.12)
+    windhosen.current = vier
+    k.jeBild.push(vier.schritt)
     return () => {
-      for (const w of alle) if (w) { k.wurzel.remove(w.gruppe); w.entsorgen() }
-      windhosen.current = []
-      const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
+      vier.entsorgen(); windhosen.current = null
+      const i = k.jeBild.indexOf(vier.schritt); if (i >= 0) k.jeBild.splice(i, 1)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [windAn, windPl, b, stufe, zusatz, knoepfe])
-  useEffect(() => {
-    windhosen.current.forEach((w, i) => w?.setzen(windWinde[i]?.kmh ?? null, windWinde[i]?.richtung ?? null))
-  }, [windWinde.map((w) => `${w?.kmh}/${w?.richtung}`).join(), windAn, windPl, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [windAn, b, stufe, zusatz, knoepfe])
+  useEffect(() => { windhosen.current?.setzen(windWerte) },
+    [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
   // Regen und Schnee über dem ganzen Modell, vom tiefsten Punkt bis ein Viertel der Breite über den höchsten (Niederschlag.ts)
   const regen = useRef<Niederschlag | null>(null)
   useEffect(() => {

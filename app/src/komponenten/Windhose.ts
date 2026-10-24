@@ -78,3 +78,124 @@ export function windhoseBauen(): Windhose {
   setzen(null, null)
   return { gruppe, setzen, schritt, entsorgen: () => { for (const t of teile) t.dispose() } }
 }
+
+/** wie gross eine Windhose auf dem Bildschirm erscheint: der Mast so hoch wie dieser Teil des Abstands zur Kamera */
+const BILD_HOEHE = 0.09
+/** so lange nach der letzten Bewegung der Kamera verteilt sie die Windhosen neu (ms) */
+const RUHE_MS = 500
+/** wo die vier im Bild stehen (Bildkoordinaten −1 bis 1, unten −1): zwei Reihen, die obere etwas unter der Mitte */
+const BILDPLAETZE: Array<[number, number]> = [[-0.45, -0.1], [0.45, -0.1], [-0.45, -0.6], [0.45, -0.6]]
+
+export interface VierWindhosen {
+  /** je Bild: Grösse nach dem Abstand, Flattern, nach der Ruhe neu verteilen */
+  schritt: () => void
+  /** was jede zeigt (Wind und Name der Station), in der Reihenfolge der Plätze; null: grau */
+  setzen: (werte: Array<{ wind: Wind | null; name: string | null } | null>) => void
+  entsorgen: () => void
+}
+
+interface Wind { kmh: number | null; boe: number | null; richtung: number | null }
+
+/**
+ * Immer vier Windhosen im Bild (Michael, 2026-10-24: «Egal welche Zoomstufe und auch beim von Hand stufenlosen Zoomen: immer 4 Orte»;
+ * «Zahl dazu»): nach jeder Bewegung der Kamera stehen sie wieder an vier Stellen des sichtbaren Geländes, gefunden mit dem Strahl
+ * durch vier feste Bildpunkte; auf dem Bildschirm immer gleich gross, darüber ein Schild mit der Stärke in km/h und dem Namen der
+ * Station. In der Brille bleiben sie, wo sie sind (dort gibt es keinen Bildschirm), ohne Schild.
+ * eltern: wohin sie gehören (ihr Raum ist der des Modells); hoehe: Gelände an x, z im Raum der Eltern, null ausserhalb;
+ * neuePlaetze: die vier Stellen im Raum der Eltern, wenn sie neu verteilt sind.
+ */
+export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.PerspectiveCamera, hoehe: (x: number, z: number) => number | null,
+  inBrille: () => boolean, neuePlaetze: (stellen: THREE.Vector3[]) => void, groesseBrille: number): VierWindhosen {
+  const hosen = BILDPLAETZE.map(() => windhoseBauen())
+  const schilder = hosen.map(() => {
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false, transparent: true }))
+    sp.center.set(0.5, 0); sp.renderOrder = 7; sp.visible = false
+    return sp
+  })
+  hosen.forEach((h, i) => { h.gruppe.visible = false; eltern.add(h.gruppe); eltern.add(schilder[i]) })
+  const strahl = new THREE.Raycaster(), a = new THREE.Vector3(), b = new THREE.Vector3(), auge = new THREE.Vector3()
+  /** wo der Strahl durch den Bildpunkt das Gelände trifft, im Raum der Eltern */
+  const treffen = (bx: number, by: number): THREE.Vector3 | null => {
+    strahl.setFromCamera(new THREE.Vector2(bx, by), kamera)
+    a.copy(strahl.ray.origin); b.copy(strahl.ray.origin).addScaledVector(strahl.ray.direction, kamera.far)
+    eltern.worldToLocal(a); eltern.worldToLocal(b)
+    const schritte = 600
+    let vorher = a.clone()
+    for (let i = 1; i <= schritte; i++) {
+      const p = a.clone().lerp(b, i / schritte)
+      const g = hoehe(p.x, p.z)
+      if (g !== null && p.y <= g) {
+        // zwischen vorher und p halbieren
+        let lo = vorher, hi = p
+        for (let k = 0; k < 12; k++) { const m = lo.clone().lerp(hi, 0.5); const gm = hoehe(m.x, m.z); if (gm !== null && m.y <= gm) hi = m; else lo = m }
+        const y = hoehe(hi.x, hi.z)
+        return y === null ? null : new THREE.Vector3(hi.x, y, hi.z)
+      }
+      vorher = p
+    }
+    return null
+  }
+  let altPos = new THREE.Vector3(Infinity, 0, 0), altQuat = new THREE.Quaternion(), bewegt = 0, verteilt = false
+  const verteilen = () => {
+    const stellen = BILDPLAETZE.map(([x, y]) => {
+      // trifft der Strahl kein Gelände (Himmel, neben dem Modell), etwas weiter unten und zur Mitte hin versuchen
+      for (const [fx, fy] of [[1, 1], [0.6, 1.6], [0.3, 2.2]]) { const t = treffen(x * fx, Math.max(-0.95, y * fy - (fy - 1) * 0.3)); if (t) return t }
+      return null
+    })
+    const da = stellen.filter((s): s is THREE.Vector3 => !!s)
+    if (!da.length) return
+    stellen.forEach((s, i) => { if (s) hosen[i].gruppe.position.copy(s) })
+    neuePlaetze(stellen.map((s, i) => s ?? hosen[i].gruppe.position.clone()))
+    verteilt = true
+  }
+  const start = performance.now()
+  return {
+    schritt: () => {
+      const t = (performance.now() - start) / 1000
+      const brille = inBrille()
+      if (!brille) {
+        // bewegt sich die Kamera, wartet sie die Ruhe ab und verteilt dann neu
+        if (!kamera.position.equals(altPos) || !kamera.quaternion.equals(altQuat)) { altPos = kamera.position.clone(); altQuat = kamera.quaternion.clone(); bewegt = performance.now() }
+        else if (bewegt && performance.now() - bewegt > RUHE_MS) { bewegt = 0; verteilen() }
+        if (!verteilt && !bewegt) verteilen()
+      }
+      kamera.getWorldPosition(auge)
+      hosen.forEach((h, i) => {
+        h.gruppe.visible = verteilt
+        if (brille) h.gruppe.scale.setScalar(groesseBrille)
+        else {
+          // gleich gross auf dem Bildschirm: nach dem Abstand im Raum der Eltern
+          const w = h.gruppe.getWorldPosition(a), d = w.distanceTo(auge)
+          const massstab = eltern.getWorldScale(b).x || 1
+          h.gruppe.scale.setScalar((d * BILD_HOEHE) / massstab)
+        }
+        h.schritt(t)
+        const sp = schilder[i]
+        sp.visible = verteilt && !brille && !!sp.material.map
+        sp.position.copy(h.gruppe.position).y += h.gruppe.scale.y * 1.02
+      })
+    },
+    setzen: (werte) => {
+      hosen.forEach((h, i) => {
+        const w = werte[i]
+        h.setzen(w?.wind?.kmh ?? null, w?.wind?.richtung ?? null)
+        const sp = schilder[i]
+        sp.material.map?.dispose(); sp.material.map = null
+        if (!w) { sp.material.needsUpdate = true; return }
+        const kmh = w.wind?.kmh
+        const text = `${kmh === null || kmh === undefined ? '–' : Math.round(kmh)} km/h${w.name ? ` · ${w.name}` : ''}`
+        const c = document.createElement('canvas'), x = c.getContext('2d')!
+        const px = 24, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
+        x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 16; c.height = px + 12
+        x.font = schrift; x.fillStyle = '#2a2a2a'; x.fillRect(0, 0, c.width, c.height)
+        x.fillStyle = '#ffffff'; x.fillText(text, 8, px + 1)
+        const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
+        sp.material.map = tex; sp.material.needsUpdate = true
+        sp.scale.set(c.width * 0.00085, c.height * 0.00085, 1)
+      })
+    },
+    entsorgen: () => {
+      hosen.forEach((h, i) => { eltern.remove(h.gruppe); h.entsorgen(); eltern.remove(schilder[i]); schilder[i].material.map?.dispose(); schilder[i].material.dispose() })
+    },
+  }
+}

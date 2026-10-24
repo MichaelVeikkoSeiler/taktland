@@ -90,8 +90,15 @@ export async function stationenBei(e: number, n: number) {
 }
 
 /** die Messung der nächsten Station mit Messwerten bei Ost e, Nord n (LV95); null, wenn keine antwortet */
-/** die Messung einer bestimmten Station */
-export function messungVon(s: Station) { return messungLesen(s).catch(() => null) }
+const messungen = new Map<string, { bis: number; m: Promise<Wetter | null> }>()
+/** die Messung einer bestimmten Station, fünf Minuten behalten (die Windhosen fragen nach jeder Bewegung des Bilds) */
+export function messungVon(s: Station) {
+  const alt = messungen.get(s.kuerzel)
+  if (alt && alt.bis > Date.now()) return alt.m
+  const m = messungLesen(s).catch(() => null)
+  messungen.set(s.kuerzel, { bis: Date.now() + 300e3, m })
+  return m
+}
 
 export async function wetterBei(e: number, n: number): Promise<Wetter | null> {
   const liste = await stationenBei(e, n)

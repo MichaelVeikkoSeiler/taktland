@@ -299,9 +299,9 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Minuten, stärkste Böe, Richtung) oder eine Stunde ihrer Prognose: die lokale Prognose von MeteoSchweiz (Open Government
             Data, stündlich neu, Stundenwerte bis 8 Tage voraus). Zur gewählten Stunde der Prognose regnet oder schneit es im Modell nach
             ihrem Niederschlag (ab 0,1 mm in der Stunde, Schnee bis 1 °C), in der Tafel als blaue Balken. Der Sack zeigt, wohin der Wind weht, und ist ab 28 km/h ganz
-            gestreckt wie an Flugplätzen. Es sind immer vier Windhosen, in «3D Schweiz» je eine in jedem Viertel des Modells, in der
-            Modellbahn entlang der Strecke; jede zeigt den Wind der Station, die ihrem Platz am nächsten liegt, sie steht aber nicht an der
-            Station. Welche Station es ist, nennt die Tafel. Die Windhosen sind gezeichnet und nicht massstäblich.
+            gestreckt wie an Flugplätzen. Es sind immer vier Windhosen im Bild: nach jedem Drehen und Zoomen
+            stehen sie wieder verteilt im sichtbaren Gelände, gleich gross; jede zeigt den Wind der Station, die ihrem Platz am nächsten
+            liegt, sie steht aber nicht an der Station. Das Schild darüber nennt Stärke und Station. Die Windhosen sind gezeichnet und nicht massstäblich.
           </li>
           <li>
             Linien anderer Bahnen und das Kapitel «Netz»: Schienennetz des Bundesamts für

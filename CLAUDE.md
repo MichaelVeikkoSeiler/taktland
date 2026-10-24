@@ -473,10 +473,13 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              einige KB; der neueste Lauf mit HEAD gesucht); die Windhose (komponenten/Windhose.ts): Mast, Sack aus fünf Ringen rot und weiss,
              zeigt wohin der Wind weht, ganz gestreckt ab 28 km/h (VOLL_KMH, 15 Knoten wie an Flugplätzen), ohne Angabe grau und hängend,
              flattert ein wenig; immer vier (Michael, 2026-10-24: «immer vier davon verteilen»; src/windhosen.ts), jede mit dem Wind der Station
-             mit Windmessung, die ihrem Platz am nächsten liegt (nicht an der Station, die Tafel nennt sie); in der Modellbahn entlang der
-             Strecke bei 1, 3, 5 und 7 Achteln des Wegs rechts neben der Linie, 3,5-mal so hoch wie die Masten,
+             mit Windmessung, die ihrem Platz am nächsten liegt (nicht an der Station); immer vier im Bild, egal wie weit gezoomt (Michael,
+             2026-10-24: «Egal welche Zoomstufe und auch beim von Hand stufenlosen Zoomen: immer 4 Orte»; vierWindhosenBauen in Windhose.ts):
+             0,5 s nach jeder Bewegung neu verteilt, wo die Strahlen durch vier feste Bildpunkte das Gelände treffen (dem Gelände nach
+             gesucht, ohne Netz), auf dem Bildschirm gleich gross (9 % des Abstands), darüber ein Schild mit Stärke und Station («Zahl dazu»);
+             in der Brille bleiben sie stehen, ohne Schild, in der Modellbahn 3,5-mal so hoch wie die Masten,
              nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wind» an
-             den Wänden (blau, am Anfang aus), die Windhosen in der Mitte der vier Viertel des Modells, 12 % so hoch wie das Modell breit;
+             den Wänden (blau, am Anfang aus), in der Brille 12 % so hoch wie das Modell breit; Messungen fünf Minuten behalten (messungVon);
              die Tafel (komponenten/WindTafel.tsx): Messung, Regler über die Stunden der Prognose, Verlauf der Woche (Stundenmittel und
              Böen, Striche um Mitternacht); die Windhose zeigt die gewählte Stunde; Gestalt, Grösse und Farben gewählt; dazu Regen und
              Schnee aus derselben Prognose (Michael, 2026-10-24: «Regen auch einblenden mit der gleichen Prognose wie die Windhose»):
