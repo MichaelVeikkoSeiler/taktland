@@ -14,7 +14,7 @@ import { Ladebalken } from './Ladebalken'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
-import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
+import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
 import { knopfTon, verlaufTon } from '../audio'
 import { istNadel, NADEL_BREITE } from '../baumart'
 import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '../wetter'
@@ -484,6 +484,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     const [la, lo] = wgs(e, n)
     return sonnenstand(schweizerZeit(tag, minuten), la, lo)
   }, [sonnenAn, aktuell, tag, minuten])
+  // Licht in den Fenstern der Gebäude, wenn die Sonne unter dem Horizont steht (Annahmen in gebaeudeBild.ts): ganz dunkel ab 6° darunter
+  useEffect(() => {
+    fensterLicht(stand ? (2 - stand.hoehe) / 8 : 0, lichtAnteil(minuten / 60))
+    return () => fensterLicht(0, 0)
+  }, [stand, minuten])
   const tagText = useMemo(() => {
     const [j, m, t] = tag.split('-').map(Number)
     return new Date(Date.UTC(j, m - 1, t)).toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
@@ -629,7 +634,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // nur in einer Testfassung (VITE_S3D_TEST): ein Feld von aussen wählen
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), hoehen: () => setScheiben((x) => !x) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -783,7 +788,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
-            Farbe des Luftbilds, Wände grau (in keiner Quelle). Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
+            Farbe des Luftbilds, Wände grau (in keiner Quelle); Fenster und ihr Licht in der Nacht gezeichnet, Stockwerke von 3 m, Fenster
+            alle 3,2 m und der Anteil, der zu jeder Stunde brennt (abends gut ein Drittel, nachts um 3 Uhr wenige), sind Annahmen. Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
             gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; bis 800 m über Meer Laubbäume, ab 1'500 m Nadelbäume,
             dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
         </details>
@@ -804,7 +810,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Knöpfe an den Wänden">
           <p>Die Knöpfe an den Wänden des Sockels schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume, Wind und Sonne ein und
             aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
-            einer Wand setzen dort ein Stück an oder nehmen eines weg (ab der Region).</p>
+            einer Wand setzen dort ein Stück an oder nehmen eines weg (ab der Region). Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
+            4'000 m, ihre Zahl steht klein an der Wand.</p>
         </Abschnitt>
         <Abschnitt titel="Wind und Niederschlag">
           <p>«Wind» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
@@ -815,7 +822,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Sonne und Schatten">
           <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
             −1 h und +1 h die Zeit, −1 Tag und +1 Tag das Datum, «Jetzt» setzt beides auf jetzt; unter dem Modell lassen sich Datum und
-            Uhrzeit auch direkt wählen.</p>
+            Uhrzeit auch direkt wählen. Steht die Sonne unter dem Horizont, brennt Licht in den Fenstern der Gebäude, abends in vielen,
+            nach Mitternacht in wenigen. Fenster und Stockwerke stehen in keiner Quelle: Sie sind gezeichnet, und wie viele brennen, ist
+            eine Annahme.</p>
         </Abschnitt>
         <Abschnitt titel="Mein Standort">
           <p>Das Fadenkreuz neben der Suche zeigt dich per GPS als roten Punkt im Modell und wählt das Feld um dich. Der Standort bleibt
@@ -863,6 +872,8 @@ const HOEHEN_STUFEN: Array<[number, string, string]> = [[1000, '#e0242b', 'rot']
 /** die Linien der Höhen in Bildpunkten, beim Zoomen gleich breit (Michael, 2026-10-21: «wenn ich hereinzoome werden die Linien
  *  nicht dicker») */
 const HOEHEN_LINIE_PX = 1.6
+/** die Zahl an der Linie: Grösse auf dem Bildschirm je Bildpunkt ihres Bilds, in der Brille ihre Höhe in Metern (gewählt) */
+const HOEHEN_ZAHL_GROESSE = 0.0007, HOEHEN_ZAHL_BRILLE_M = 0.012
 /** Wanderwege (Michael, 2026-10-21: «alle Wanderwege der Schweiz»): Farben nach den Wegweisern, gelb, weiss-rot und weiss-blau,
  *  hier als Linie in der Farbe auf einem weissen Rand; Breite in Bildpunkten */
 const WANDER_FARBEN: Record<number, string> = { 1: '#e6a800', 2: '#d0102b', 3: '#1f5fd6' }
@@ -1151,7 +1162,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     })
     const anfangSetzen = () => { drehung = 0; zoom = 1; lage = null; haelt.clear(); griff = null }
     // Schilder und Knöpfe: auf dem Bildschirm in fester Grösse, in der Brille in Metern
-    const sprites = () => ['schilder', 'knoepfe', 'standort'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? []) as THREE.Sprite[])
+    const sprites = () => ['schilder', 'knoepfe', 'standort', 'hoehen'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? [])
+      .filter((o): o is THREE.Sprite => o instanceof THREE.Sprite))
     const brilleSetzen = () => {
       const breite = (wurzel.userData.weiteKm as number) || 1
       const s = (BRILLE_BREITE_M / breite) * zoom
@@ -1299,6 +1311,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       wurzel.worldToLocal(auge.setFromMatrixPosition(cam.matrixWorld))
       for (const o of wurzel.getObjectByName('knoepfe')?.children ?? []) o.visible = auge.clone().sub(o.position).dot(o.userData.nach as THREE.Vector3) > 0
       // die Schalter an den Wänden auch auf dem Bildschirm (Michael, 2026-10-22: «nicht nur auf der Brille … auch in der Standardversion»)
+      // ebenso die Zahlen an den Höhenlinien
+      for (const o of wurzel.getObjectByName('hoehen')?.children ?? []) {
+        if (o instanceof THREE.Sprite) o.visible = auge.clone().sub(o.position).dot(o.userData.nach as THREE.Vector3) > 0
+      }
       for (const o of wurzel.getObjectByName('schalter')?.children ?? []) {
         o.visible = auge.clone().sub(o.position).dot(o.userData.nach as THREE.Vector3) > 0
       }
@@ -1501,8 +1517,34 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       l.renderOrder = 3
       hoehen.add(l)
     }
+    // die Zahl jeder Höhe klein über ihrer Linie in den Wänden (Michael, 2026-10-24: «Bei den Linien soll klein 1000, 2000,
+    // 3000 und 4000 stehen»), je Wand einmal, in der Farbe der Linie
+    const zahlBild = (z: number, farbe: string) => {
+      const c = document.createElement('canvas'), x = c.getContext('2d')!
+      const px = 22, text = `${z.toLocaleString('de-CH')} m`
+      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      c.width = Math.ceil(x.measureText(text).width) + 8; c.height = px + 6
+      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      x.lineWidth = 5; x.lineJoin = 'round'; x.strokeStyle = 'rgba(0,0,0,0.9)'; x.strokeText(text, 4, px)
+      x.fillStyle = farbe; x.fillText(text, 4, px)
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+      return { t, b: c.width, h: c.height }
+    }
+    const zahlSetzen = (z: number, farbe: string, x: number, y: number, zz: number, nx: number, nz: number) => {
+      const { t, b: bw, h } = zahlBild(z, farbe)
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, sizeAttenuation: false, clippingPlanes: ebeneH, depthWrite: false }))
+      sp.userData = { b: bw * HOEHEN_ZAHL_GROESSE, h: h * HOEHEN_ZAHL_GROESSE, verhaeltnis: bw / h, brilleM: HOEHEN_ZAHL_BRILLE_M,
+        nach: new THREE.Vector3(nx, 0, nz) }
+      sp.scale.set(sp.userData.b, sp.userData.h, 1)
+      sp.center.set(0, 0)
+      sp.position.set(x, y, zz)
+      sp.renderOrder = 4
+      hoehen.add(sp)
+    }
     const hoehenBauen = () => {
-      for (const o of hoehen.children) (o as THREE.Mesh).geometry.dispose()
+      for (const o of hoehen.children) {
+        if (o instanceof THREE.Sprite) { o.material.map?.dispose(); o.material.dispose() } else (o as THREE.Mesh).geometry.dispose()
+      }
       hoehen.clear()
       const raus = weiteKm * 0.0015, heben = weiteKm * 0.0006
       HOEHEN_STUFEN.forEach(([z], s) => {
@@ -1511,6 +1553,17 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // die Linie in den Wänden: wo die Wand über die Höhe reicht, ein schmales Band knapp vor der Wand
         const band: number[] = []
         for (const { p, nx, nz } of kantenOben) {
+          // die Zahl zweimal je Wand, je gut ein Fünftel vom Ende (in der Mitte sitzen + und −; ein Ende liegt oft ausserhalb des
+          // Bilds), beim nächsten Stück von dort zur Mitte, an dem die Wand über die Linie reicht
+          const stuecke = p.length / 3 - 1
+          const ueber = (i: number) => p[i * 3 + 1] > y + weiteKm * 0.004 && p[i * 3 + 4] > y + weiteKm * 0.004
+          for (const [von, bis, schritt] of [[Math.floor(stuecke * 0.2), Math.floor(stuecke * 0.42), 1], [Math.ceil(stuecke * 0.8), Math.ceil(stuecke * 0.58), -1]]) {
+            for (let i = von; schritt > 0 ? i < bis : i > bis; i += schritt) {
+              if (!ueber(i)) continue
+              zahlSetzen(z, HOEHEN_STUFEN[s][1], p[i * 3] + nx * raus * 2, y + heben, p[i * 3 + 2] + nz * raus * 2, nx, nz)
+              break
+            }
+          }
           for (let i = 0; i < p.length / 3 - 1; i++) {
             let ax = p[i * 3], ay = p[i * 3 + 1], az = p[i * 3 + 2], bx = p[i * 3 + 3], by = p[i * 3 + 4], bz = p[i * 3 + 5]
             if (ay < y && by < y) continue

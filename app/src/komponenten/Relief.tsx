@@ -27,7 +27,7 @@ import { Ladebalken } from './Ladebalken'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, kategorieUmschalten, SehenswertLegende, useVersteckt } from './Sehenswert'
 import { Klappe } from './Klappe'
-import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
+import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
 
 /**
  * 3D-Relief einer Strecke (Michael, 2026-10-06: zuerst die Gotthard-Bergstrecke, im Browser,
@@ -2049,6 +2049,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     let letzteDunkel: [number, boolean] = [0, false]
     const tunnelDunkel = (k: number, daemmerung = false) => {
       letzteDunkel = [k, daemmerung]
+      // in der Dämmerung brennt Licht in den Fenstern der Gebäude; sie ist eine Stimmung ohne Uhrzeit, darum der Anteil von 20 Uhr
+      fensterLicht(daemmerung ? 1 : 0, lichtAnteil(20))
       const f = 1 - (1 - TUNNEL_TAGESLICHT) * k, b = bedeckt()
       himmelLicht.intensity = 1.6 * f * (daemmerung ? DAEMMERUNG_HIMMEL : 1) * (1 - WOLKEN_HIMMEL * b)
       himmelLicht.color.set(daemmerung ? '#b9a9cf' : '#ffffff')

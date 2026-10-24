@@ -9,6 +9,28 @@ const WAND_TIEFER_M = 2
 /** Ambient Occlusion: so dunkel am Boden, bis so hoch darüber ausgelaufen (m); unter dem Dach so dunkel, so weit hinab */
 const AO_BODEN = 0.72, AO_BODEN_M = 8, AO_DACH = 0.8, AO_DACH_M = 0.8
 
+/** Licht in den Fenstern, wenn es dunkel ist (Michael, 2026-10-24: «Ist es dunkel brennen bei den Gebäuden Lichter. Realistische
+ *  Verteilung»): swissBUILDINGS3D kennt weder Fenster noch Stockwerke noch die Nutzung, alles hier ist eine Annahme fürs Bild.
+ *  Je Wand ein Raster aus Stockwerken von FENSTER_STOCK_M und Achsen von FENSTER_ACHSE_M, in jeder Zelle ein Fenster; welches
+ *  brennt, entscheidet ein fester Zufall je Fenster gegen den Anteil zur Uhrzeit (LICHT_ANTEIL), so brennen mit steigendem Anteil
+ *  dieselben weiter und neue dazu. Weit weg wird jedes Fenster über seinen Bildpunkt gemittelt und etwas heller */
+const FENSTER_STOCK_M = 3, FENSTER_ACHSE_M = 3.2, FENSTER_BREITE_M = 1.3, FENSTER_HOEHE_M = 1.5, FENSTER_BRUESTUNG_M = 0.9
+/** Anteil der brennenden Fenster je Stunde (Schweizer Zeit) an der Stunde 0, 1, …; gewählt, ungefähr: abends die meisten,
+ *  nach Mitternacht wenige, am Morgen wieder mehr; tagsüber zählt es nicht, dann ist es hell */
+const LICHT_ANTEIL = [0.12, 0.07, 0.05, 0.04, 0.04, 0.06, 0.14, 0.22, 0.18, 0.12, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.12, 0.2, 0.3, 0.36,
+  0.38, 0.34, 0.26, 0.18]
+/** der Anteil zu einer Uhrzeit in Stunden, zwischen den vollen Stunden gerade verbunden */
+export function lichtAnteil(stunde: number) {
+  const h = ((stunde % 24) + 24) % 24, i = Math.floor(h), t = h - i
+  return LICHT_ANTEIL[i] * (1 - t) + LICHT_ANTEIL[(i + 1) % 24] * t
+}
+const fenster = { nacht: { value: 0 }, anteil: { value: 0 } }
+/** wie dunkel es ist (0 hell bis 1 Nacht) und welcher Anteil der Fenster brennt; gilt für alle Gebäude */
+export function fensterLicht(nacht: number, anteil: number) {
+  fenster.nacht.value = Math.max(0, Math.min(1, nacht))
+  fenster.anteil.value = Math.max(0, Math.min(1, anteil))
+}
+
 let bild: THREE.CanvasTexture | null = null
 function koernung() {
   if (bild) return bild
@@ -45,11 +67,37 @@ function koernung() {
 export function gebaeudeMaterial() {
   const m = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide, map: koernung() })
   m.onBeforeCompile = (s) => {
+    s.uniforms.uNacht = fenster.nacht
+    s.uniforms.uAnteil = fenster.anteil
     s.vertexShader = s.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute vec2 aGebaeude;\nvarying vec2 vGebaeude;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvGebaeude = aGebaeude;')
+      .replace('#include <common>', '#include <common>\nattribute vec2 aGebaeude;\nvarying vec2 vGebaeude;\nvarying vec2 vWand;')
+      .replace('#include <begin_vertex>', `#include <begin_vertex>\nvGebaeude = aGebaeude;\nvWand = uv * ${GEBAEUDE_BILD_M.toFixed(1)};`)
     s.fragmentShader = s.fragmentShader
-      .replace('#include <common>', '#include <common>\nvarying vec2 vGebaeude;')
+      .replace('#include <common>', '#include <common>\nvarying vec2 vGebaeude;\nvarying vec2 vWand;\nuniform float uNacht;\nuniform float uAnteil;')
+      .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+      if (uNacht > 0.0 && vGebaeude.x >= 0.0) {
+        // Höhe über dem Boden (die Wand reicht in den Daten unter ihn) und Lage entlang der Wand, in Metern
+        float hb = vGebaeude.x - ${WAND_TIEFER_M.toFixed(1)};
+        float stock = floor(hb / ${FENSTER_STOCK_M.toFixed(2)}), achse = floor(vWand.x / ${FENSTER_ACHSE_M.toFixed(2)});
+        float fy = hb - stock * ${FENSTER_STOCK_M.toFixed(2)}, fx = vWand.x - achse * ${FENSTER_ACHSE_M.toFixed(2)};
+        float rx = (${FENSTER_ACHSE_M.toFixed(2)} - ${FENSTER_BREITE_M.toFixed(2)}) * 0.5;
+        // das Fenster über den Bildpunkt gemittelt: ein kleines Fenster weit weg wird ein schwacher Punkt statt zu flimmern
+        float wx = max(fwidth(vWand.x), 0.001), wy = max(fwidth(hb), 0.001);
+        float bx = rx + ${FENSTER_BREITE_M.toFixed(2)}, by = ${(FENSTER_BRUESTUNG_M + FENSTER_HOEHE_M).toFixed(2)};
+        float im = (clamp(fx + wx * 0.5, rx, bx) - clamp(fx - wx * 0.5, rx, bx)) / wx
+          * (clamp(fy + wy * 0.5, ${FENSTER_BRUESTUNG_M.toFixed(2)}, by) - clamp(fy - wy * 0.5, ${FENSTER_BRUESTUNG_M.toFixed(2)}, by)) / wy;
+        // nicht unter dem Boden und nicht im Dach: das Fenster ganz unter der Oberkante der Wand
+        float drin = step(0.0, hb) * step(${(FENSTER_BRUESTUNG_M + FENSTER_HOEHE_M).toFixed(2)} - fy + 0.3, vGebaeude.y);
+        // fester Zufall je Fenster: Stockwerk, Achse und der Fuss der Wand (unterscheidet die Gebäude)
+        float fuss = floor((vWand.y - vGebaeude.x) * 2.0);
+        float zufall = fract(sin(dot(vec3(stock, achse, fuss), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+        float brennt = step(zufall, uAnteil);
+        // warm, je Fenster etwas anders
+        vec3 farbe = mix(vec3(1.0, 0.62, 0.28), vec3(1.0, 0.86, 0.6), fract(zufall * 7.31));
+        // weit weg heller, damit der Punkt eines Fensters noch zu sehen ist
+        float hell = 1.6 * clamp(max(wx, wy) / 0.6, 1.0, 4.0);
+        totalEmissiveRadiance += farbe * min(1.0, im * hell) * brennt * drin * uNacht * 1.6;
+      }`)
       .replace('#include <color_fragment>', `#include <color_fragment>
       if (vGebaeude.x >= 0.0) {
         float boden = 1.0 - clamp((vGebaeude.x - ${WAND_TIEFER_M.toFixed(1)}) / ${AO_BODEN_M.toFixed(1)}, 0.0, 1.0);

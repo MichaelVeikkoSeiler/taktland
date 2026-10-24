@@ -307,7 +307,9 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              10-km-Kachel, 45 s), Workflow «3D Schweiz fein» (.github/workflows/schweiz3dfein.yml, 16 Teile), Release «schweiz3dfein-1»,
              holen.php (HOLEN = 'schweiz3dfein-1') nach schweiz3dfein/; in nahLaden die scharfe Umgebung zuerst, dann diese, dann das Feld;
              Höhen (Michael, 2026-10-20): auf 1'000, 2'000, 3'000 und 4'000 m (rot, gelb, grün, blau, Farben gewählt) eine feine Linie in den Wänden
-             (die durchsichtigen Scheiben über das ganze Modell sind weg, Michael, 2026-10-24: «Die Schichten weglassen (Höhen). Die Linien allerdings belassen») und dieselbe Höhe als halb durchsichtige Linie auf dem
+             (die durchsichtigen Scheiben über das ganze Modell sind weg, Michael, 2026-10-24: «Die Schichten weglassen (Höhen). Die Linien allerdings belassen»),
+             klein die Zahl über der Linie in den Wänden, je Wand zweimal gut ein Fünftel vom Ende, nur an den Wänden zur Kamera (Michael, 2026-10-24:
+             «Bei den Linien soll klein 1000, 2000, 3000 und 4000 stehen»; zahlSetzen, HOEHEN_ZAHL_*) und dieselbe Höhe als halb durchsichtige Linie auf dem
              Gelände (Marching Squares je Stück; Michael, 2026-10-21: «So sieht man die Grenzen besser»), beide 1,6 Bildpunkte breit, beim
              Zoomen gleich (LineMaterial, HOEHEN_LINIE_PX), nur zwischen tiefstem und höchstem Punkt, Schalter
              «Höhen 1'000 m» (HOEHEN_STUFEN); + und − in Kreisen in der Mitte jeder Wand (nur an den Wänden zur Kamera) setzen in den Stufen
@@ -319,7 +321,11 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Brille wählbar»): Schalter «Sonne und Schatten», Datum und Uhrzeit (Schweizer Zeit, je 15 Minuten, «Jetzt»), am Anfang heute
              12 Uhr; der Sonnenstand über der Mitte des Modells gerechnet (src/sonne.ts, Näherung des Astronomical Almanac, ohne Brechung),
              die Sonne gehört zum Modell (dreht mit in der Brille), Schatten mit der Schattenkarte von three.js (4096, auf dem Handy 2048),
-             Gelände, Gebäude und Bäume werfen Schatten, Berge ausserhalb des Modells nicht; unter dem Horizont nur Himmelslicht, tief am
+             Gelände, Gebäude und Bäume werfen Schatten, Berge ausserhalb des Modells nicht; steht die Sonne unter dem Horizont (ganz ab 6° darunter),
+             brennt Licht in den Fenstern (Michael, 2026-10-24: «Ist es dunkel brennen bei den Gebäuden Lichter. Realistische Verteilung»; fensterLicht in
+             src/gebaeudeBild.ts): je Wand Stockwerke von 3 m und Achsen von 3,2 m, je Fenster ein fester Zufall gegen den Anteil der Stunde (LICHT_ANTEIL:
+             abends bis 38 %, um 3 Uhr 4 %), warm, weit weg über den Bildpunkt gemittelt; Fenster, Stockwerke und Anteile in keiner Quelle, swissBUILDINGS3D
+             kennt sie nicht; auch im Führerstand der Modellbahn in der Dämmerung, mit dem Anteil von 20 Uhr; unter dem Horizont nur Himmelslicht, tief am
              Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille alle Schalter an den Wänden des Modells, auf allen vier Seiten
              (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle … so wie Schalter», vorher Tafeln vor der Nase): flach im
              Band unter dem tiefsten Punkt, links der Knöpfe + und − Höhen, Wanderwege (ab 20 km), Gebäude und Bäume (wo es sie gibt), rechts
