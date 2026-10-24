@@ -500,6 +500,12 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              Dateien eines Laufs nur in ±256 KB um die Stelle der ersten gesucht; in der Modellbahn statt der Messung (Himmel, Regen, Zeile
              «Prognose Station Zeit: …»), in «3D Schweiz» in einem Kasten über dem ganzen Modell bis ein Viertel der Breite über den höchsten
              Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wind»; im Vollbild von «3D Schweiz» steht das Fadenkreuz unter der Suche
+data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-10-24: «Himmel nachts dunkler und mit Sternen machen»):
+             alle 5'044 Sterne bis zur Helligkeit 6 aus dem Hipparcos-Katalog (ESA), wie ihn d3-celestial 0.7.35 (Olaf Frohn, BSD, Lizenz in
+             drittsoftware.txt) aufbereitet, aus dem npm-Paket (pipeline/build_sterne.py, 98 KB); die App (src/sterne.ts) rechnet ihren Ort
+             über der Mitte des Modells zur gewählten Zeit wie die Sonne, ohne Präzession seit 2000, ohne Mond und Planeten; mit «Sonne» an
+             wird der Himmel von 3° über bis 12° unter dem Horizont dunkel (HIMMEL_NACHT), die Sterne erscheinen ab 4° darunter, als
+             Punkte um das Auge, gedreht wie das Modell, nicht im Durchblick der Brille; Farbe nach B−V, Grösse und Helligkeit gewählt
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -538,6 +544,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_erraten.py      # Pool für «Bahnhofsuche» aus data/facts
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 python3 pipeline/build_wetterstationen.py          # Wetterstationen von MeteoSchweiz für das echte Wetter in der Modellbahn
+python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-celestial) für den Nachthimmel in «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_relief.py       # Bergstrecken in 3D (Ausschnitt, Linie, Bauwerke; Gelände aus den Kacheln)
 .venv/bin/python pipeline/build_gelaende.py     # Geländekacheln der ganzen Schweiz für «3D» auf jeder Fahrt
 .venv/bin/python pipeline/build_luftbild.py --alle   # Luftbild (SWISSIMAGE) der ganzen Schweiz, Stunden, vor export_app

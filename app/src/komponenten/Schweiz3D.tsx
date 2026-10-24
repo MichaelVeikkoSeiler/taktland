@@ -24,6 +24,7 @@ import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
 import { Abschnitt } from './Anleitung'
+import { sterneLaden, sternenhimmel } from '../sterne'
 
 /**
  * «3D Schweiz» (Michael, 2026-10-18: «die Berge und Täler der Schweiz besser erkunden … von der ganzen Schweiz bis ins
@@ -484,7 +485,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     const e = (Math.min(...r.map((x) => x.e0)) + Math.max(...r.map((x) => x.e0 + x.b))) / 2
     const n = (Math.min(...r.map((x) => x.n1 - x.h)) + Math.max(...r.map((x) => x.n1))) / 2
     const [la, lo] = wgs(e, n)
-    return sonnenstand(schweizerZeit(tag, minuten), la, lo)
+    const zeit = schweizerZeit(tag, minuten)
+    return { ...sonnenstand(zeit, la, lo), zeit, la, lo }
   }, [sonnenAn, aktuell, tag, minuten])
   // Licht in den Fenstern der Gebäude, wenn die Sonne unter dem Horizont steht (Annahmen in gebaeudeBild.ts): ganz dunkel ab 6° darunter
   useEffect(() => {
@@ -789,7 +791,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             lokale Prognose (stündlich, bis 8 Tage); immer vier Windhosen in der Mitte der Viertel des Bilds, nach jeder Bewegung neu
             verteilt, jede mit dem Wind der Station, die ihr am nächsten liegt (nicht an der Station; die Tafel nennt sie), die Zahl in km/h, gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
-            Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
+            Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Sterne: alle bis zur Helligkeit 6 aus dem Hipparcos-Katalog der ESA,
+            aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz), ihr Ort am Himmel gerechnet, ohne die Bewegung der Erdachse seit 2000
+            (etwa ein Drittel Grad), ohne Mond und Planeten; Farbe nach dem Farbindex, Grösse und Helligkeit der Punkte und die Farben
+            des Himmels in der Dämmerung gewählt. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle); Fenster und ihr Licht in der Nacht gezeichnet, Stockwerke von 3 m, Fenster
             alle 3,2 m und der Anteil, der zu jeder Stunde brennt (abends gut ein Drittel, nachts um 3 Uhr wenige), sind Annahmen. Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
@@ -828,7 +833,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             −1 h und +1 h die Zeit, −1 Tag und +1 Tag das Datum, «Jetzt» setzt beides auf jetzt; unter dem Modell lassen sich Datum und
             Uhrzeit auch direkt wählen. Steht die Sonne unter dem Horizont, brennt Licht in den Fenstern der Gebäude, abends in vielen,
             nach Mitternacht in wenigen. Fenster und Stockwerke stehen in keiner Quelle: Sie sind gezeichnet, und wie viele brennen, ist
-            eine Annahme.</p>
+            eine Annahme. Nachts wird der Himmel dunkel, und es stehen die Sterne bis zur Helligkeit 6 dort, wo sie zu dieser Zeit über
+            der Mitte des Modells stehen.</p>
         </Abschnitt>
         <Abschnitt titel="Mein Standort">
           <p>Das Fadenkreuz neben der Suche zeigt dich per GPS als roten Punkt im Modell und wählt das Feld um dich. Der Standort bleibt
@@ -865,6 +871,8 @@ const VERLAUF_S = 2.5
 const VERLAUF_TON_S = 0.9
 /** so stark leuchtet die Schrift eines ausgeschalteten Knopfs von selbst (gewählt) */
 const SCHRIFT_LEUCHTET = 0.85
+/** der Himmel ganz in der Nacht und die Grösse der hellsten Sterne in Bildpunkten (gewählt) */
+const HIMMEL_NACHT = new THREE.Color('#070d1a'), STERN_PX = 4.6
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c', wind: '#5ab4ff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
@@ -941,8 +949,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   zusatz: Zusatz | null
   knoepfe: Knoepfe | null; erweitern: (s: Seite, plus: boolean) => void
   scheiben: boolean; orte: boolean; gipfel: boolean; gebaeude: boolean; baeume: boolean; meldung: string | null
-  /** Sonnenstand zur gewählten Zeit, null: die feste Sonne wie bisher, ohne Schatten */
-  sonne: Sonnenstand | null
+  /** Sonnenstand zur gewählten Zeit über dem Ort (für die Sterne), null: die feste Sonne wie bisher, ohne Schatten */
+  sonne: (Sonnenstand & { zeit: Date; la: number; lo: number }) | null
   /** was der Schalter der Sonne in der Brille zur Zeit sagt, und wie die Brille die Zeit verschiebt */
   sonnenZeilen: string[] | null
   zeitSchieben: (art: 'stunde' | 'tag' | 'jetzt', um: number) => void
@@ -964,7 +972,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   const welt = useRef<Welt | null>(null)
   const kern = useRef<{
     renderer: THREE.WebGLRenderer; szene: THREE.Scene; kamera: THREE.PerspectiveCamera; steuerung: OrbitControls
-    wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void
+    wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color
+    sterne: THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial>
     jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void }
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight
@@ -984,9 +993,32 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     renderer.xr.enabled = true
     el.appendChild(renderer.domElement)
     const szene = new THREE.Scene()
-    const himmel = new THREE.Color(dunkel ? '#0d1b2a' : '#cfe3f5')
+    // der Himmel; mit der Sonne unter dem Horizont dunkler, dazu die Sterne (Effekt zum Sonnenstand)
+    const himmelTag = new THREE.Color(dunkel ? '#0d1b2a' : '#cfe3f5'), himmel = himmelTag.clone()
     let durchsicht = false
-    const setzeHimmel = () => { szene.background = renderer.xr.isPresenting && durchsicht ? null : himmel }
+    const sterne = new THREE.Points(new THREE.BufferGeometry(), new THREE.ShaderMaterial({
+      uniforms: { uSicht: { value: 0 }, uPunkt: { value: Math.min(2, devicePixelRatio) } },
+      vertexShader: `attribute float mag; attribute vec3 farbe; uniform float uPunkt; uniform float uSicht; varying vec3 vFarbe; varying float vHell;
+        void main() {
+          vec4 mv = modelViewMatrix * vec4(position, 1.0);
+          gl_Position = projectionMatrix * mv;
+          // hellere Sterne grösser und deutlicher; Grösse und Helligkeit fürs Bild gewählt
+          gl_PointSize = clamp(${STERN_PX.toFixed(2)} - 0.42 * mag, 0.9, 4.2) * uPunkt;
+          vHell = clamp(1.25 - 0.17 * mag, 0.18, 1.0) * uSicht; vFarbe = farbe;
+        }`,
+      fragmentShader: `varying vec3 vFarbe; varying float vHell;
+        void main() {
+          float r = length(gl_PointCoord - 0.5) * 2.0;
+          gl_FragColor = vec4(vFarbe, vHell * smoothstep(1.0, 0.25, r));
+        }`,
+      // nicht «transparent»: so zeichnet three.js die Sterne vor allem anderen (renderOrder), alles danach liegt darüber
+      transparent: false, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending,
+    }))
+    sterne.frustumCulled = false; sterne.renderOrder = -10; sterne.visible = false
+    szene.add(sterne)
+    const setzeHimmel = () => {
+      szene.background = renderer.xr.isPresenting && durchsicht ? null : himmel
+    }
     setzeHimmel()
     const kamera = new THREE.PerspectiveCamera(45, el.clientWidth / el.clientHeight, 0.01, 2000)
     const steuerung = new OrbitControls(kamera, renderer.domElement)
@@ -1273,7 +1305,18 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       brilleSetzen()
     }]
     jeBild.push(verlaufSetzen)
-    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, jeBild, wenn, tafel, tafelSetzen,
+    // die Sterne um das Auge, gedreht wie das Modell (die Himmelsrichtungen gehören zu ihm, wie die Sonne)
+    const sternAuge = new THREE.Vector3()
+    jeBild.push(() => {
+      // nicht im Durchblick der Brille (dort ist kein Himmel)
+      sterne.visible = sterne.material.uniforms.uSicht.value > 0 && !!szene.background
+      if (!sterne.visible) return
+      const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera
+      sterne.position.copy(sternAuge.setFromMatrixPosition(cam.matrixWorld))
+      wurzel.getWorldQuaternion(sterne.quaternion)
+      sterne.scale.setScalar(Math.max(1e-3, cam.near * 50))
+    })
+    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, sterne, jeBild, wenn, tafel, tafelSetzen,
                      sonne, himmelLicht, anfangSetzen, verlauf }
 
     const groesse = () => {
@@ -2018,9 +2061,26 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => {
     const k = kern.current
     if (!k) return
-    const { sonne, himmelLicht, wurzel } = k
+    const { sonne, himmelLicht, wurzel, himmel, himmelTag, sterne } = k
     const weiteKm = (wurzel.userData.weiteKm as number) || 1, mitteY = (wurzel.userData.sonnenMitte as number) || 0
     const d = new THREE.Vector3(-0.35, 1.3, 0.9).normalize()
+    // nachts der Himmel dunkel mit Sternen (Michael, 2026-10-24): von 3° über dem Horizont bis 12° darunter (nautische Dämmerung)
+    // wird er dunkel, die Sterne erscheinen ab 4° darunter und sind ab 12° ganz da; Farben gewählt
+    const nacht = stand ? Math.max(0, Math.min(1, (3 - stand.hoehe) / 15)) : 0
+    himmel.copy(himmelTag).lerp(HIMMEL_NACHT, nacht)
+    sterne.material.uniforms.uSicht.value = stand ? Math.max(0, Math.min(1, (-4 - stand.hoehe) / 8)) : 0
+    let weg = false
+    if (stand && sterne.material.uniforms.uSicht.value > 0) {
+      void sterneLaden().then((kat) => {
+        if (weg) return
+        const { lage, farben, mag } = sternenhimmel(kat, stand.zeit, stand.la, stand.lo)
+        const g = new THREE.BufferGeometry()
+        g.setAttribute('position', new THREE.BufferAttribute(lage, 3))
+        g.setAttribute('farbe', new THREE.BufferAttribute(farben, 3))
+        g.setAttribute('mag', new THREE.BufferAttribute(mag, 1))
+        sterne.geometry.dispose(); sterne.geometry = g
+      }).catch(() => undefined)
+    }
     if (!stand) {
       sonne.castShadow = false; sonne.intensity = 1.4; sonne.color.set('#ffffff')
       himmelLicht.intensity = 1.6; himmelLicht.color.set('#ffffff')
@@ -2044,6 +2104,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         k.szene.traverse((o) => { const m = (o as THREE.Mesh).material as THREE.Material | undefined; if (m) m.needsUpdate = true })
       }
     }
+    return () => { weg = true }
   }, [stand, b, stufe])
 
   // Höhenlinien und Orte ein- und ausblenden, mit Geräusch, wenn ein Schalter wechselt (nicht beim ersten Mal)
