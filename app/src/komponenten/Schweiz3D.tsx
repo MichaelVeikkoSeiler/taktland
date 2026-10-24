@@ -816,14 +816,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Modell im Vollbild.</p>
         </Abschnitt>
         <Abschnitt titel="Knöpfe an den Wänden">
-          <p>Die Knöpfe an den Wänden des Sockels schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume, Wind und Sonne ein und
+          <p>Die Knöpfe an den Wänden des Sockels schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume, Wetter und Sonne ein und
             aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
             einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
             4'000 m, ihre Zahl steht klein an der Wand.</p>
         </Abschnitt>
-        <Abschnitt titel="Wind und Niederschlag">
-          <p>«Wind» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
+        <Abschnitt titel="Wetter: Wind und Niederschlag">
+          <p>«Wetter» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
             des Bilds. Die Zahl über dem Mast ist die Windstärke in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
             nicht an der Station). Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
             wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde.</p>
@@ -1880,7 +1880,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
     const zeit = (art: 'stunde' | 'tag' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
     const rechts: Teil[] = [
-      { zeilen: ['Wind'], breite: 0.065 * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
+      { zeilen: ['Wetter'], breite: 0.08 * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
       { zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
       { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
       { zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },

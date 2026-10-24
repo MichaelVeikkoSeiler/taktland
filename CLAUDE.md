@@ -490,7 +490,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              auf dem Bildschirm gleich gross (9 % des Abstands), darüber klein nur die Zahl in km/h («Zahl dazu», «Viel zu präsente Infos.
              Nur Zahl»), die Stationen nennt die Tafel;
              in der Brille bleiben sie stehen, ohne Schild, in der Modellbahn 3,5-mal so hoch wie die Masten,
-             nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wind» an
+             nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wetter» (bis 2026-10-24 «Wind»; Michael: «Knopf Wind soll Wetter heissen») an
              den Wänden (blau, am Anfang aus), in der Brille 12 % so hoch wie das Modell breit; Messungen fünf Minuten behalten (messungVon);
              die Tafel (komponenten/WindTafel.tsx): Messung, Regler über die Stunden der Prognose, Verlauf der Woche (Stundenmittel und
              Böen, Striche um Mitternacht); die Windhose zeigt die gewählte Stunde; Gestalt, Grösse und Farben gewählt; dazu Regen und
@@ -499,7 +499,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              src/wind.ts), Bewölkung der Stunde aus sre000h0 und gre000h0 wie bei der Messung; in der Tafel als blaue Balken; die weiteren
              Dateien eines Laufs nur in ±256 KB um die Stelle der ersten gesucht; in der Modellbahn statt der Messung (Himmel, Regen, Zeile
              «Prognose Station Zeit: …»), in «3D Schweiz» in einem Kasten über dem ganzen Modell bis ein Viertel der Breite über den höchsten
-             Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wind»; im Vollbild von «3D Schweiz» steht das Fadenkreuz unter der Suche
+             Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wetter»; im Vollbild von «3D Schweiz» steht das Fadenkreuz unter der Suche
 data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-10-24: «Himmel nachts dunkler und mit Sternen machen»):
              alle 5'044 Sterne bis zur Helligkeit 6 aus dem Hipparcos-Katalog (ESA), wie ihn d3-celestial 0.7.35 (Olaf Frohn, BSD, Lizenz in
              drittsoftware.txt) aufbereitet, aus dem npm-Paket (pipeline/build_sterne.py, 98 KB); die App (src/sterne.ts) rechnet ihren Ort
