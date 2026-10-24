@@ -451,7 +451,9 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              fürs Bild: bewölkt nach den Minuten ohne Sonne der letzten 10 Minuten (nur am Tag, nachts klar), Regen ab 0,1 mm in 30
              Minuten, Schnee bis 1 °C; in der Szene (Relief.tsx, in der Modellbahn und beim Fahren, nicht bei «Wo bin
              ich?», dort verriete es die Gegend) grauer Himmel (himmel(…, bedeckt)), weniger Sonne (WOLKEN_SONNE), Regen als Striche und Schnee als Flocken in einem
-             Würfel um die Kamera, im Führerstand Dunst (DUNST_JE_KM), in der Brille Regen und Schnee auf dem Tisch in einem Würfel von 1,6 m über dem Modell, im Führerstand um den Kopf
+             Würfel um die Kamera, im Führerstand in einem Kasten 100 × 100 m, 30 m hoch, 35 m voraus bis unter die Linie (NIEDER_STAND_KM; Michael,
+             2026-10-24: «Regentropfen fallen nicht bis zum Boden»), dort Dunst (DUNST_JE_KM); die Nahgrenze im Führerstand 1,2 m statt 3 m
+             (FUEHRERSTAND_NAHE_KM; «Schienen hören zu früh vor dem Fahrzeug auf»), in der Brille Regen und Schnee auf dem Tisch in einem Würfel von 1,6 m über dem Modell, im Führerstand um den Kopf
              (NIEDER_TISCH_M; Michael, 2026-10-24; mit dem Emulator nicht geprüft, IWER startete hier keine Sitzung); neben dem Schalter die Zeile
              «Wetter Station Uhrzeit: …, Temperatur (MeteoSchweiz)»; Quelle in der Fusszeile, Annahmen und Datenschutz unter Info
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der

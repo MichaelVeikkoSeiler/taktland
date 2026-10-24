@@ -65,7 +65,9 @@ const KAMERA_KNOPF = 'rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1
 /** Führerstand: das Auge so hoch über der Linie, so nah zeichnet die Kamera noch (km) */
 /** das Auge im Führerstand so hoch über der Linie; vorher 4 m, damit fuhr man durch die Dächer der Perrons (Michael, 2026-10-15:
  *  «circa einen Meter tiefer … unter dem Dach der Bahnsteige durchfahren»), in keiner Quelle */
-const FUEHRERSTAND_HOEHE_M = 3, FUEHRERSTAND_NAHE_KM = 0.003
+// die Nahgrenze im Führerstand: hoch sieht das Bild unten den Boden schon 1,8 m vor dem Auge, bei 3 m endeten die Schienen
+// zu früh vor dem Fahrzeug (Michael, 2026-10-24)
+const FUEHRERSTAND_HOEHE_M = 3, FUEHRERSTAND_NAHE_KM = 0.0012
 /** Führerstand: feines Gelände (10 m) in einem Quadrat von FEIN_SEITE_M, die Mitte FEIN_VORAUS_M vor dem Zug, neu nach
  *  FEIN_NACH_M Fahrt; ausserhalb folgt die Linie der des groben Geländes, ohne Sprung (profilRechnen) */
 const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M = 0.4
@@ -1883,7 +1885,11 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     szene.add(sonne)
     // Regen und Schnee: Punkte in einem Würfel um die Kamera, der mit ihr wandert; Dichte, Grösse und Tempo gewählt
     // Regen als kurze Striche (je zwei Punkte, der zweite REGEN_STRICH darunter), Schnee als Flocken (beide Punkte gleich)
-    const NIEDER_N = 5000, REGEN_STRICH = 0.025
+    // im Führerstand ein flacher Kasten vor dem Auge bis unter die Linie, sonst fiel der Regen nur in 30 m und nicht bis zum
+    // Boden (Michael, 2026-10-24); darum dort mehr Tropfen
+    const NIEDER_N = 8000, NIEDER_SONST = 5000, REGEN_STRICH = 0.025
+    const NIEDER_STAND_KM = { breit: 0.1, hoch: 0.03, voraus: 0.035, unter: 0.008 }
+    const niederRichtung = new THREE.Vector3(), niederVorn = new THREE.Vector3()
     const niederMitte = new Float32Array(NIEDER_N * 3).map(() => Math.random() - 0.5)
     const niederLage = new Float32Array(NIEDER_N * 6)
     const niederGeo = new THREE.BufferGeometry()
@@ -1942,7 +1948,6 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       wetterAnzeige.textContent = wetter ? wetterText(wetter) : wetterLaedt ? 'Wetter wird geladen …' : 'Wetter: keine Messung erreichbar, darum Schönwetter'
       const fallend = wetterGilt() && (wetter!.art === 'regen' || wetter!.art === 'schnee')
       niederAn = fallend
-      if (fallend) niederGeo.setDrawRange(0, 2 * Math.round(NIEDER_N * wetter!.staerke))
     }
     const wetterHolen = () => {
       if (!mitWetter || wetterLaedt) return
@@ -4435,7 +4440,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         if (kamera.fov !== bild.fov) { kamera.fov = bild.fov; kamera.updateProjectionMatrix() }
         bildAusschnitt(kamera, bild.weltX, bild.weltOben, bild.weltUnten)
       }
-      // Regen und Schnee fallen im Würfel um die Kamera: im Führerstand 60 m, sonst mit dem Abstand zum Blickpunkt
+      // Regen und Schnee fallen im Würfel um die Kamera mit dem Abstand zum Blickpunkt, im Führerstand in einem Kasten vor dem Auge
       if (mitWetter) leisteLegen(imStand)
       // auch in der Brille (Michael, 2026-10-24): auf dem Tisch über dem Modell, im Führerstand um den Kopf
       const schnee = wetter?.art === 'schnee'
@@ -4445,34 +4450,57 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       // der Dunst je Einheit der Welt: auf dem Bildschirm km, in der Brille Meter (das Modell 1000-fach)
       dunst.density = fallend && imStand ? (DUNST_JE_KM * (0.5 + 0.5 * (wetter?.staerke ?? 0))) / modell.scale.x : 0
       if (fallend) {
-        let seite: number
-        if (renderer.xr.isPresenting) {
-          modell.updateMatrixWorld()
-          if (imStand) {
-            renderer.xr.getCamera().getWorldPosition(niederPunkt)
-            seite = 0.06
+        // Höhe und Breite des Kastens um die Kamera in Einheiten des Modells (km)
+        let seite: number, hoch: number
+        const k = NIEDER_STAND_KM
+        if (imStand) {
+          // vor dem Auge, waagrecht in Blickrichtung, sein Boden unter der Linie (darunter verdeckt ihn das Gelände)
+          if (renderer.xr.isPresenting) {
+            modell.updateMatrixWorld()
+            const xk = renderer.xr.getCamera()
+            xk.getWorldPosition(niederPunkt)
+            xk.getWorldDirection(niederRichtung)
+            niederVorn.copy(niederPunkt).add(niederRichtung)
+            modell.worldToLocal(niederPunkt)
+            modell.worldToLocal(niederVorn)
+            niederRichtung.subVectors(niederVorn, niederPunkt)
           } else {
-            // ein Würfel von NIEDER_TISCH_M über dem Modell auf dem Tisch, sein Boden auf der Höhe des Modells
-            modell.getWorldPosition(niederPunkt)
-            niederPunkt.y += NIEDER_TISCH_M / 2
-            seite = NIEDER_TISCH_M / modell.scale.x
+            niederPunkt.copy(kamera.position)
+            kamera.getWorldDirection(niederRichtung)
           }
+          niederRichtung.y = 0
+          if (niederRichtung.lengthSq() < 1e-12) niederRichtung.set(0, 0, -1)
+          niederRichtung.normalize()
+          niederPunkt.addScaledVector(niederRichtung, k.voraus)
+          niederPunkt.y += k.hoch / 2 - k.unter
+          seite = k.breit
+          hoch = k.hoch
+        } else if (renderer.xr.isPresenting) {
+          // ein Würfel von NIEDER_TISCH_M über dem Modell auf dem Tisch, sein Boden auf der Höhe des Modells
+          modell.updateMatrixWorld()
+          modell.getWorldPosition(niederPunkt)
+          niederPunkt.y += NIEDER_TISCH_M / 2
           modell.worldToLocal(niederPunkt)
+          seite = hoch = NIEDER_TISCH_M / modell.scale.x
         } else {
           niederPunkt.copy(kamera.position)
-          seite = imStand ? 0.06 : Math.min(30, Math.max(0.05, kamera.position.distanceTo(steuerung.target) * 0.8))
+          seite = hoch = Math.min(30, Math.max(0.05, kamera.position.distanceTo(steuerung.target) * 0.8))
         }
-        for (const o of [nieder, flocken]) { o.position.copy(niederPunkt); o.scale.setScalar(seite) }
-        const fall = (schnee ? 0.12 : 1.1) * dt, wind = (schnee ? 0.03 : 0.08) * dt
-        for (let i = 0, j = 0; i < NIEDER_N * 3; i += 3, j += 6) {
+        for (const o of [nieder, flocken]) { o.position.copy(niederPunkt); o.scale.set(seite, hoch, seite) }
+        const anzahl = Math.round((imStand ? NIEDER_N : NIEDER_SONST) * (wetter?.staerke ?? 0))
+        niederGeo.setDrawRange(0, 2 * anzahl)
+        // Tempo und Strich in Metern wie im Würfel von 60 m vorher
+        const mass = imStand ? 0.06 / hoch : 1
+        const fall = (schnee ? 0.12 : 1.1) * dt * mass, wind = (schnee ? 0.03 : 0.08) * dt * (imStand ? 0.06 / seite : 1), strich = REGEN_STRICH * mass
+        for (let i = 0, j = 0; i < anzahl * 3; i += 3, j += 6) {
           niederMitte[i + 1] -= fall * (0.7 + 0.6 * ((i * 7919) % 100) / 100)
           niederMitte[i] += wind
           if (niederMitte[i + 1] < -0.5) niederMitte[i + 1] += 1
           if (niederMitte[i] > 0.5) niederMitte[i] -= 1
           niederLage[j] = niederMitte[i]; niederLage[j + 1] = niederMitte[i + 1]; niederLage[j + 2] = niederMitte[i + 2]
           // der Strich schräg im Wind nach hinten
-          niederLage[j + 3] = niederMitte[i] - (schnee ? 0 : REGEN_STRICH * 0.1)
-          niederLage[j + 4] = niederMitte[i + 1] + (schnee ? 0 : REGEN_STRICH)
+          niederLage[j + 3] = niederMitte[i] - (schnee ? 0 : strich * 0.1 * hoch / seite)
+          niederLage[j + 4] = niederMitte[i + 1] + (schnee ? 0 : strich)
           niederLage[j + 5] = niederMitte[i + 2]
         }
         niederGeo.attributes.position.needsUpdate = true
