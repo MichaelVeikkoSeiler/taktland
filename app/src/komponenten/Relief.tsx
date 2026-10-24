@@ -13,7 +13,8 @@ import { Fuehrerbild } from './Fuehrerbild'
 import { type Wetter, wetterBei, wetterText, type Wind } from '../wetter'
 import { createRoot, type Root } from 'react-dom/client'
 import { windhoseBauen } from './Windhose'
-import { WindTafel } from './WindTafel'
+import { niederSatz, WindTafel, windSatz } from './WindTafel'
+import { niederAusStunde, type WindStunde } from '../wind'
 import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich } from '../relief'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
@@ -1945,10 +1946,13 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const ausdehnungKm = (Math.max(r.raster.breite, r.raster.hoehe) * r.raster.m) / 1000
       windhose.gruppe.scale.setScalar(3.5 * MAST_KM * Math.max(1, ausdehnungKm / 40))
     }
-    /** was die Windhose zeigt: die Messung, oder die in der Tafel gewählte Stunde der Prognose */
-    let windGewaehlt: Wind | null | undefined
+    /** was Windhose, Regen und Schnee zeigen: die in der Tafel gewählte Stunde der Prognose, null die Messung */
+    let windGewaehlt: WindStunde | null = null
+    /** Regen oder Schnee jetzt: aus der gewählten Stunde der Prognose oder aus der Messung */
+    const niederJetzt = (): { art: 'regen' | 'schnee'; staerke: number } | null => windGewaehlt ? niederAusStunde(windGewaehlt)
+      : wetter && (wetter.art === 'regen' || wetter.art === 'schnee') ? { art: wetter.art, staerke: wetter.staerke } : null
     const windZeigen = () => {
-      const w = windGewaehlt !== undefined ? windGewaehlt : wetter?.wind ?? null
+      const w: Wind | null = windGewaehlt ?? wetter?.wind ?? null
       windhose.setzen(w?.kmh ?? null, w?.richtung ?? null)
       if (!wetter) return
       const { ost, nord, m, breite, hoehe } = r.raster
@@ -1968,15 +1972,15 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     let windTafel: { div: HTMLDivElement; root: Root } | null = null
     const windTafelZeigen = () => {
       if (!windTafel || !wetter) return
-      windTafel.root.render(<WindTafel station={wetter.station} jetzt={wetter.wind} jetztZeit={wetter.windZeit}
-        waehlen={(w) => { windGewaehlt = w; windZeigen() }} />)
+      windTafel.root.render(<WindTafel station={wetter.station} messung={wetter}
+        waehlen={(w) => { windGewaehlt = w; windZeigen(); wetterZeigen() }} />)
     }
     const windTafelZu = () => {
       if (!windTafel) return
       const t = windTafel; windTafel = null
       // nicht während React rendert abbauen
       setTimeout(() => { t.root.unmount(); t.div.remove() })
-      windGewaehlt = undefined; windZeigen()
+      windGewaehlt = null; windZeigen(); wetterZeigen()
       windKnopf.setAttribute('aria-pressed', 'false'); windKnopf.style.background = 'rgba(255,255,255,0.85)'
     }
     windKnopf.addEventListener('click', (ev) => {
@@ -2010,7 +2014,12 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       sonnenKnopf.title = an ? 'Schönwetter einschalten (jetzt echtes Wetter)' : 'Schönwetter ausschalten, echtes Wetter zeigen'
       sonnenKnopf.setAttribute('aria-label', 'Schönwetter')
       wetterAnzeige.textContent = wetter ? wetterText(wetter) : wetterLaedt ? 'Wetter wird geladen …' : 'Wetter: keine Messung erreichbar, darum Schönwetter'
-      const fallend = wetterGilt() && (wetter!.art === 'regen' || wetter!.art === 'schnee')
+      const fallend = wetterGilt() && !!niederJetzt()
+      // eine gewählte Stunde der Prognose statt der Messung
+      if (an && wetter && windGewaehlt) {
+        wetterAnzeige.textContent = `Prognose ${wetter.station.name} ${windGewaehlt.zeit.toLocaleString('de-CH', { timeZone: 'Europe/Zurich', weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}: `
+          + `${niederSatz(windGewaehlt)}, ${windSatz(windGewaehlt)} (MeteoSchweiz)`
+      }
       niederAn = fallend
     }
     const wetterHolen = () => {
@@ -2032,7 +2041,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     // Schönwetter; wie viel Sonne Wolken schlucken, ist gewählt (WOLKEN_SONNE), nicht gemessen
     let wetter: Wetter | null = null
     const wetterGilt = () => mitWetter && !!wetter && !ausJetzt.current.has('wetter')
-    const bedeckt = () => (!wetterGilt() ? 0 : wetter!.art === 'regen' || wetter!.art === 'schnee' ? 1 : wetter!.bewoelkt ?? 0)
+    const bedeckt = () => (!wetterGilt() ? 0 : niederJetzt() ? 1 : windGewaehlt ? windGewaehlt.bewoelkt ?? 0 : wetter!.bewoelkt ?? 0)
     let letzteDunkel: [number, boolean] = [0, false]
     const tunnelDunkel = (k: number, daemmerung = false) => {
       letzteDunkel = [k, daemmerung]
@@ -4520,12 +4529,12 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       windhose.gruppe.visible = !imStand && wetterGilt()
       if (windhose.gruppe.visible) windhose.schritt(performance.now() / 1000)
       // auch in der Brille (Michael, 2026-10-24): auf dem Tisch über dem Modell, im Führerstand um den Kopf
-      const schnee = wetter?.art === 'schnee'
+      const nj = niederJetzt(), schnee = nj?.art === 'schnee'
       const fallend = niederAn
       nieder.visible = fallend && !schnee
       flocken.visible = fallend && schnee
       // der Dunst je Einheit der Welt: auf dem Bildschirm km, in der Brille Meter (das Modell 1000-fach)
-      dunst.density = fallend && imStand ? (DUNST_JE_KM * (0.5 + 0.5 * (wetter?.staerke ?? 0))) / modell.scale.x : 0
+      dunst.density = fallend && imStand ? (DUNST_JE_KM * (0.5 + 0.5 * (nj?.staerke ?? 0))) / modell.scale.x : 0
       if (fallend) {
         // Höhe und Breite des Kastens um die Kamera in Einheiten des Modells (km)
         let seite: number, hoch: number
@@ -4564,7 +4573,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           seite = hoch = Math.min(30, Math.max(0.05, kamera.position.distanceTo(steuerung.target) * 0.8))
         }
         for (const o of [nieder, flocken]) { o.position.copy(niederPunkt); o.scale.set(seite, hoch, seite) }
-        const anzahl = Math.round((imStand ? NIEDER_N : NIEDER_SONST) * (wetter?.staerke ?? 0))
+        const anzahl = Math.round((imStand ? NIEDER_N : NIEDER_SONST) * (nj?.staerke ?? 0))
         niederGeo.setDrawRange(0, 2 * anzahl)
         // Tempo und Strich in Metern wie im Würfel von 60 m vorher
         const mass = imStand ? 0.06 / hoch : 1

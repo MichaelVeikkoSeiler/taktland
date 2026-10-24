@@ -3,19 +3,34 @@
  * wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»): die Messung kommt mit dem Wetter (src/wetter.ts), die
  * Prognose aus der lokalen Prognose von MeteoSchweiz (ogd-local-forecasting, Open Government Data, stündlich neu, je Station
  * Stundenwerte bis 192 Stunden voraus): Windgeschwindigkeit als Stundenmittel (fu3010h0), Böenspitze als Stundenmaximum
- * (fu3010h1) und Windrichtung als Stundenmittel (dkl010h0), alle Zeiten in UTC.
+ * (fu3010h1) und Windrichtung als Stundenmittel (dkl010h0), alle Zeiten in UTC; dazu der Niederschlag als Stundensumme (rre150h0) und die
+ * Temperatur als Stundenmittel (tre200h0) für Regen und Schnee zur gewählten Stunde (Michael, 2026-10-24: «Regen auch einblenden mit der
+ * gleichen Prognose wie die Windhose»), gezeichnet nach denselben Annahmen wie bei der Messung (src/wetter.ts).
  *
  * Eine Datei je Grösse und Lauf ist etwa 32 MB gross, die Zeilen nach Punktart und Nummer (als Text) geordnet; die App sucht die
  * Zeilen ihrer Station mit Teilabrufen (Range) und holt so nur einige Kilobyte.
  */
-import type { Station, Wind } from './wetter'
+import { NASS_AB_MM, SCHNEE_BIS_C, STARK_AB_MM, type Station, type Wind } from './wetter'
 
 const QUELLE = 'https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/'
-const GROESSEN = ['fu3010h0', 'fu3010h1', 'dkl010h0'] as const
+// Sonnenscheindauer in Minuten (sre000h0) und Globalstrahlung (gre000h0) je Stunde für die Bewölkung, wie bei der Messung
+const GROESSEN = ['fu3010h0', 'fu3010h1', 'dkl010h0', 'rre150h0', 'tre200h0', 'sre000h0', 'gre000h0'] as const
 /** die Punktart «Station» in der Prognose */
 const STATION = '1'
 
-export interface WindStunde extends Wind { zeit: Date }
+/** eine Stunde der Prognose: Wind, Niederschlag in mm in dieser Stunde, Temperatur in °C */
+export interface WindStunde extends Wind {
+  zeit: Date; mm: number | null; temperatur: number | null
+  /** 0 klar bis 1 bedeckt aus der Sonnenscheindauer der Stunde, null nachts oder ohne Angabe */
+  bewoelkt: number | null
+}
+
+/** was gezeichnet wird: Regen oder Schnee und wie stark (0 bis 1), nach denselben Annahmen wie bei der Messung; die Schwelle gilt dort
+ *  für 30 Minuten, hier für eine Stunde, darum die Stärke erst beim Doppelten voll */
+export function niederAusStunde(s: WindStunde): { art: 'regen' | 'schnee'; staerke: number } | null {
+  if (s.mm === null || s.mm < NASS_AB_MM) return null
+  return { art: s.temperatur !== null && s.temperatur <= SCHNEE_BIS_C ? 'schnee' : 'regen', staerke: Math.min(1, 0.3 + s.mm / (2 * STARK_AB_MM)) }
+}
 
 const zwei = (x: number) => String(x).padStart(2, '0')
 const datei = (lauf: Date, groesse: string) => {
@@ -46,10 +61,25 @@ async function stueck(url: string, von: number, bis: number) {
 /** [Punktart, Nummer] einer Zeile; so ist die Datei geordnet (als Text) */
 const vergleich = (a: [string, string], b: [string, string]) => (a[0] !== b[0] ? (a[0] < b[0] ? -1 : 1) : a[1] === b[1] ? 0 : a[1] < b[1] ? -1 : 1)
 
-/** alle Zeilen eines Punkts in einer Datei: halbieren, bis der Bereich klein ist, dann ihn ganz holen */
-async function zeilenVon(url: string, laenge: number, punkt: number): Promise<Array<[Date, number | null]>> {
+/** wie bei der Messung: am Tag (Strahlung ab 10 W/m²) der Teil der Stunde ohne Sonne */
+function bewoelktAus(sonneMin: number | null, strahlung: number | null) {
+  return sonneMin === null || strahlung === null || strahlung < 10 ? null : Math.max(0, Math.min(1, 1 - sonneMin / 60))
+}
+
+/** alle Zeilen eines Punkts in einer Datei: halbieren, bis der Bereich klein ist, dann ihn ganz holen; anteil: wo der Punkt in einer
+ *  anderen Datei desselben Laufs lag (die Dateien sind gleich geordnet), dann nur in dessen Nähe suchen */
+async function zeilenVon(url: string, laenge: number, punkt: number, anteil?: number): Promise<{ zeilen: Array<[Date, number | null]>; anteil: number }> {
   const ziel: [string, string] = [STATION, String(punkt)]
   let lo = 0, hi = laenge
+  if (anteil !== undefined) {
+    // erst prüfen, ob der Punkt im Fenster liegt, sonst wie gewohnt
+    const a = Math.max(0, Math.floor(anteil * laenge) - 262144), b = Math.min(laenge, Math.floor(anteil * laenge) + 262144)
+    const schluessel = async (bei: number) => {
+      const t = (await stueck(url, bei, bei + 400)).split('\n')[1]?.split(';')
+      return t && t.length >= 4 ? vergleich([t[1], t[0]], ziel) : 1
+    }
+    if ((a === 0 || await schluessel(a) < 0) && (b === laenge || await schluessel(b) >= 0)) { lo = a; hi = b }
+  }
   while (hi - lo > 16384) {
     const mitte = Math.floor((lo + hi) / 2)
     const text = await stueck(url, mitte, mitte + 400)
@@ -68,7 +98,7 @@ async function zeilenVon(url: string, laenge: number, punkt: number): Promise<Ar
     const zeit = new Date(Date.UTC(+d.slice(0, 4), +d.slice(4, 6) - 1, +d.slice(6, 8), +d.slice(8, 10), +d.slice(10, 12)))
     aus.push([zeit, t[3].trim() === '' ? null : Number(t[3])])
   }
-  return aus
+  return { zeilen: aus, anteil: lo / laenge }
 }
 
 const zwischen = new Map<string, { bis: number; daten: Promise<WindStunde[] | null> }>()
@@ -81,11 +111,16 @@ export function windPrognose(s: Station): Promise<WindStunde[] | null> {
   const daten = (async () => {
     const l = await neuesterLauf()
     if (!l) return null
-    const reihen = await Promise.all(GROESSEN.map((g, i) => zeilenVon(datei(l.lauf, g), l.laengen[i], s.prognose!)))
+    // die erste Datei ganz durchsuchen, die anderen nur um dieselbe Stelle
+    const erste = await zeilenVon(datei(l.lauf, GROESSEN[0]), l.laengen[0], s.prognose!)
+    const reihen = [erste.zeilen, ...(await Promise.all(GROESSEN.slice(1).map((g, i) =>
+      zeilenVon(datei(l.lauf, g), l.laengen[i + 1], s.prognose!, erste.anteil)))).map((x) => x.zeilen)]
     const nach = reihen.map((r) => new Map(r.map(([z, w]) => [z.getTime(), w])))
     const ab = Date.now() - 3600e3
     return reihen[0].filter(([z]) => z.getTime() >= ab).map(([z, kmh]) => ({
       zeit: z, kmh, boe: nach[1].get(z.getTime()) ?? null, richtung: nach[2].get(z.getTime()) ?? null,
+      mm: nach[3].get(z.getTime()) ?? null, temperatur: nach[4].get(z.getTime()) ?? null,
+      bewoelkt: bewoelktAus(nach[5].get(z.getTime()) ?? null, nach[6].get(z.getTime()) ?? null),
     }))
   })().catch(() => null)
   // eine Stunde behalten, einen Fehler nur kurz

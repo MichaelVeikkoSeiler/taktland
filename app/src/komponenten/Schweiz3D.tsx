@@ -17,7 +17,9 @@ import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { gebaeudeFlaechen, gebaeudeMaterial } from '../gebaeudeBild'
 import { knopfTon, verlaufTon } from '../audio'
 import { istNadel, NADEL_BREITE } from '../baumart'
-import { messungVon, type Station, stationenBei, type Wind } from '../wetter'
+import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '../wetter'
+import { niederAusStunde, type WindStunde } from '../wind'
+import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type Windhose, windhoseBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
 
@@ -384,8 +386,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
   const [windAn, setWindAn] = useState(false)
   const [windStation, setWindStation] = useState<Station | null>(null)
-  const [windMessung, setWindMessung] = useState<{ wind: Wind | null; zeit: Date | null }>({ wind: null, zeit: null })
-  const [windZeigt, setWindZeigt] = useState<Wind | null>(null)
+  const [windMessung, setWindMessung] = useState<Wetter | null>(null)
+  // die in der Tafel gewählte Stunde der Prognose, null die Messung
+  const [windZeigt, setWindZeigt] = useState<WindStunde | null>(null)
+  const windJetzt: Wind | null = windZeigt ?? windMessung?.wind ?? null
+  // Regen und Schnee zur selben Stunde (Michael, 2026-10-24: «Regen auch einblenden mit der gleichen Prognose wie die Windhose»)
+  const niederJetzt = windZeigt ? niederAusStunde(windZeigt)
+    : windMessung && (windMessung.art === 'regen' || windMessung.art === 'schnee') ? { art: windMessung.art, staerke: windMessung.staerke } : null
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
   const [minuten, setMinuten] = useState(12 * 60)
   const [umweltHier, setUmweltHier] = useState(false)
@@ -450,9 +457,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       for (const st of liste.slice(0, 3)) {
         const m = await messungVon(st)
         if (weg) return
-        if (m?.wind) { setWindStation(st); setWindMessung({ wind: m.wind, zeit: m.windZeit }); return }
+        if (m?.wind) { setWindStation(st); setWindMessung(m); return }
       }
-      if (!weg) { setWindStation(liste[0] ?? null); setWindMessung({ wind: null, zeit: null }) }
+      if (!weg) { setWindStation(liste[0] ?? null); setWindMessung(null) }
     }).catch(() => {})
     return () => { weg = true }
   }, [windAn, aktuell])
@@ -666,7 +673,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
                      sonne: setSonnenAn, wind: setWindAn })[art]((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
-                   windAn={windAn} wind={windZeigt} windStation={windStation}
+                   windAn={windAn} wind={windJetzt} nieder={niederJetzt} windStation={windStation}
                    zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -688,7 +695,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             </button>
           )}
           {/* neben der Suche, damit der Knopf «Eintauchen» darunter nichts verdeckt */}
-          <div className="flex items-center gap-1">
+          {/* im Vollbild ist rechts «Schliessen» breiter: dort das Fadenkreuz unter der Suche */}
+          <div className={voll ? 'flex flex-col items-start gap-1' : 'flex items-center gap-1'}>
             {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
             <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
                     aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
@@ -712,13 +720,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           // Button müsste oben sein sonst sieht man ihn nicht»); nur der Knopf, ohne Orte im Feld und «Andere Wahl» (Michael,
           // 2026-10-24: «Hier braucht es nur den Eintauchen-Button»), ein anderes Feld wählt ein Tipp ins Modell
           <button type="button" onClick={() => void eintauchen()} disabled={laedt}
-                  className={`absolute inset-x-2 ${stufe === 'schweiz' ? 'top-[5.25rem]' : 'top-14'} min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 md:left-auto md:w-80`}>
+                  className={`absolute inset-x-2 ${voll ? (stufe === 'schweiz' ? 'top-[7.75rem]' : 'top-[5.5rem]') : stufe === 'schweiz' ? 'top-[5.25rem]' : 'top-14'} min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 md:left-auto md:w-80`}>
             {laedt ? 'Wird geladen …' : 'Eintauchen'}
           </button>
         )}
       </div>
       {windAn && (
-        <WindTafel className="mt-2" station={windStation} jetzt={windMessung.wind} jetztZeit={windMessung.zeit} waehlen={setWindZeigt} />
+        <WindTafel className="mt-2" station={windStation} messung={windMessung} waehlen={setWindZeigt} />
       )}
       <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
         {sonnenAn && (
@@ -866,7 +874,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, wind, windStation }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, wind, nieder, windStation }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -890,6 +898,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   sonnenAn: boolean; schalten: (art: Schalter) => void
   /** die Windhose: an, was sie zeigt, wo die Station steht */
   windAn: boolean; wind: Wind | null; windStation: Station | null
+  /** Regen oder Schnee zur gewählten Stunde, null: nichts fällt */
+  nieder: { art: 'regen' | 'schnee'; staerke: number } | null
   /** der eigene Standort per GPS in LV95, null: aus */
   standort: { e: number; n: number } | null
 }) {
@@ -1741,8 +1751,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
       { zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
       { zeilen: ['+1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', 1) },
-      { zeilen: ['−1', 'Mon.'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('monat', -1) },
-      { zeilen: ['+1', 'Mon.'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('monat', 1) },
+      { zeilen: ['−1', 'Monat'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('monat', -1) },
+      { zeilen: ['+1', 'Monat'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('monat', 1) },
       { zeilen: ['Jetzt'], breite: 0.04 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('jetzt', 0) },
     ]
     // je Teil ein Bild für die Vorderseite, auf allen vier Wänden dasselbe; an leuchtet es in der Farbe seiner Art, aus ist es dunkel
@@ -1982,6 +1992,36 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [windAn, windStation, b, stufe, zusatz, knoepfe])
   useEffect(() => { windhose.current?.setzen(wind?.kmh ?? null, wind?.richtung ?? null) }, [wind, windAn, windStation, b, stufe, zusatz, knoepfe])
+  // Regen und Schnee über dem ganzen Modell, vom tiefsten Punkt bis ein Viertel der Breite über den höchsten (Niederschlag.ts)
+  const regen = useRef<Niederschlag | null>(null)
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    const W = k?.wurzel.userData.weiteKm as number | undefined
+    if (!k || !lage || !W || !windAn) return
+    let tief = Infinity, hoch = -Infinity
+    for (const t of b.teile.values()) for (const z of t.h) if (z !== KEINE_HOEHE) { if (z < tief) tief = z; if (z > hoch) hoch = z }
+    if (tief === Infinity) return
+    const rand = [...b.teile.values()].map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    const unten = tief / 1000, oben = hoch / 1000 + W * 0.25
+    const ns = niederschlagBauen()
+    ns.gruppe.position.set(((e0 + e1) / 2 - lage.cE) / 1000, (unten + oben) / 2, -((n0 + n1) / 2 - lage.cN) / 1000)
+    ns.gruppe.scale.set((e1 - e0) / 1000, oben - unten, (n1 - n0) / 1000)
+    ns.gruppe.userData.bleibt = true
+    k.wurzel.add(ns.gruppe)
+    regen.current = ns
+    let alt = performance.now()
+    const schritt = () => { const t = performance.now(); ns.schritt(Math.min(0.1, (t - alt) / 1000)); alt = t }
+    k.jeBild.push(schritt)
+    return () => {
+      k.wurzel.remove(ns.gruppe); ns.entsorgen(); regen.current = null
+      const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [windAn, b, stufe, zusatz, knoepfe])
+  useEffect(() => { regen.current?.setzen(nieder?.art ?? null, nieder?.staerke ?? 0) }, [nieder?.art, nieder?.staerke, windAn, b, stufe, zusatz, knoepfe])
   // der eigene Standort als karminroter Punkt mit weissem Rand auf dem Gelände, durch Berge hindurch sichtbar; nur wo er im Modell
   // liegt (nach dem Bau des Modells, darum hier und mit dessen Abhängigkeiten)
   useEffect(() => {

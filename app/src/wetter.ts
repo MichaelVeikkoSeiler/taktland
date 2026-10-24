@@ -36,7 +36,8 @@ export interface Wetter {
 
 const QUELLE = 'https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/'
 /** Annahmen fürs Bild, nicht aus der Quelle */
-const NASS_AB_MM = 0.1, SCHNEE_BIS_C = 1, STARK_AB_MM = 2, TAG_AB_WM2 = 10, BEWOELKT_AB = 0.5
+export const NASS_AB_MM = 0.1, SCHNEE_BIS_C = 1, STARK_AB_MM = 2
+const TAG_AB_WM2 = 10, BEWOELKT_AB = 0.5
 
 let stationen: Promise<Station[]> | null = null
 function stationenLaden() {

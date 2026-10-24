@@ -323,7 +323,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille alle Schalter an den Wänden des Modells, auf allen vier Seiten
              (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle … so wie Schalter», vorher Tafeln vor der Nase): flach im
              Band unter dem tiefsten Punkt, links der Knöpfe + und − Höhen, Wanderwege (ab 20 km), Gebäude und Bäume (wo es sie gibt), rechts
-             Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Mon., +1 Mon., Jetzt (Strahl und Abzug); als Knöpfe einer Steuerung
+             Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Monat, +1 Monat (Michael, 2026-10-24: «Was heisst 1 Mon?»), Jetzt (Strahl und Abzug); als Knöpfe einer Steuerung
              (Michael, 2026-10-22: «wie richtige … physische Knöpfe»): aus dunkel und 1,1 % der Breite vorstehend, an 0,3 % eingedrückt und
              leuchtend mit Schein auf der Wand, Gelände gelb, Gebäude und Bäume grün, Sonne rot (KNOPF_*, LICHT), die Zeit als flache Anzeige;
              jeder Druck klickt wie ein rastender Druckknopf, gerechnet (knopfTon in src/audio.ts; Michael, 2026-10-22: «passend und absolut
@@ -476,7 +476,13 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wind» an
              den Wänden (blau, am Anfang aus), die Windhose an der Station, sonst an der Ecke im Südwesten, 16 % so hoch wie das Modell breit;
              die Tafel (komponenten/WindTafel.tsx): Messung, Regler über die Stunden der Prognose, Verlauf der Woche (Stundenmittel und
-             Böen, Striche um Mitternacht); die Windhose zeigt die gewählte Stunde; Gestalt, Grösse und Farben gewählt
+             Böen, Striche um Mitternacht); die Windhose zeigt die gewählte Stunde; Gestalt, Grösse und Farben gewählt; dazu Regen und
+             Schnee aus derselben Prognose (Michael, 2026-10-24: «Regen auch einblenden mit der gleichen Prognose wie die Windhose»):
+             rre150h0 (mm je Stunde) und tre200h0, Regen ab 0,1 mm, Schnee bis 1 °C, voll ab 4 mm in der Stunde (niederAusStunde in
+             src/wind.ts), Bewölkung der Stunde aus sre000h0 und gre000h0 wie bei der Messung; in der Tafel als blaue Balken; die weiteren
+             Dateien eines Laufs nur in ±256 KB um die Stelle der ersten gesucht; in der Modellbahn statt der Messung (Himmel, Regen, Zeile
+             «Prognose Station Zeit: …»), in «3D Schweiz» in einem Kasten über dem ganzen Modell bis ein Viertel der Breite über den höchsten
+             Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wind»; im Vollbild von «3D Schweiz» steht das Fadenkreuz unter der Suche
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```

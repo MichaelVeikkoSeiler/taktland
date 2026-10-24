@@ -297,7 +297,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Die Windhose in der Modellbahn und in «3D Schweiz» zeigt den zuletzt gemessenen Wind derselben Station (Mittel über 10
             Minuten, stärkste Böe, Richtung) oder eine Stunde ihrer Prognose: die lokale Prognose von MeteoSchweiz (Open Government
-            Data, stündlich neu, Stundenwerte bis 8 Tage voraus). Der Sack zeigt, wohin der Wind weht, und ist ab 28 km/h ganz
+            Data, stündlich neu, Stundenwerte bis 8 Tage voraus). Zur gewählten Stunde der Prognose regnet oder schneit es im Modell nach
+            ihrem Niederschlag (ab 0,1 mm in der Stunde, Schnee bis 1 °C), in der Tafel als blaue Balken. Der Sack zeigt, wohin der Wind weht, und ist ab 28 km/h ganz
             gestreckt wie an Flugplätzen; die Windhose selbst ist gezeichnet und nicht massstäblich, sie steht an der Station oder,
             wenn diese nicht im Modell liegt, am Rand.
           </li>
