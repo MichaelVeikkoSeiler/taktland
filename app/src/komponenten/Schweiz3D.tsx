@@ -1201,10 +1201,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     el.appendChild(renderer.domElement)
     const szene = new THREE.Scene()
     // der Himmel; mit der Sonne unter dem Horizont dunkler, dazu die Sterne (Effekt zum Sonnenstand)
-    const himmelTag = new THREE.Color(dunkel ? '#0d1b2a' : '#cfe3f5'), himmel = himmelTag.clone()
-    // gegen oben dunkler (Michael, 2026-10-25: «Himmel gegen oben dunkler»): ein Verlauf über das Bild vom Ton unten bis zu diesem
+    const himmelTag = new THREE.Color(dunkel ? '#0d1b2a' : '#e6f1fb'), himmel = himmelTag.clone()
+    // gegen oben dunkler (Michael, 2026-10-25: «Himmel gegen oben dunkler», dann «unten noch heller und oben kräftigeres Blau»): ein Verlauf über das Bild vom Ton unten bis zu diesem
     // oben, als Bild hinter dem Modell, nicht nach der Blickrichtung; Farben gewählt
-    const himmelObenTag = new THREE.Color(dunkel ? '#050c16' : '#86b4e0'), himmelOben = himmelObenTag.clone()
+    const himmelObenTag = new THREE.Color(dunkel ? '#050c16' : '#4f8fd0'), himmelOben = himmelObenTag.clone()
     const himmelBild = document.createElement('canvas')
     himmelBild.width = 2; himmelBild.height = 256
     const himmelTextur = new THREE.CanvasTexture(himmelBild)
