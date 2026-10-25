@@ -783,10 +783,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D Schweiz' : '3D Schweiz'}</h1>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       <div className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
-        // 5 breit, 7 hoch (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch»), auf breiten Bildschirmen so schmal,
-        // dass es in 85 % der Höhe passt; bis an den Rand der Seite, ohne Rand und runde Ecken (Michael, 2026-10-25: «Weissen Rahmen um
+        // 25 breit, 28 hoch (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch», dann «20% weniger hoch»), auf breiten
+        // Bildschirmen so schmal, dass es in 85 % der Höhe passt; bis an den Rand der Seite, ohne Rand und runde Ecken (Michael, 2026-10-25: «Weissen Rahmen um
         // die Karte weglassen. Kartenbild bis an den Rand»), auf 3dland.ch gleich unter dem Auftaktbild
-        : `relative -mx-4 ${eigeneSeite ? '' : 'mt-2'} aspect-[5/7] w-[calc(100%+2rem)] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a] sm:mx-auto sm:w-full sm:max-w-[calc(85vh*5/7)]`}>
+        : `relative -mx-4 ${eigeneSeite ? '' : 'mt-2'} aspect-[25/28] w-[calc(100%+2rem)] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a] sm:mx-auto sm:w-full sm:max-w-[calc(85vh*25/28)]`}>
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
