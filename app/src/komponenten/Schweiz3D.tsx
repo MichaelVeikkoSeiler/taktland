@@ -999,6 +999,11 @@ const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 200, region: 300, ort: 200,
 const ORT_MIN = 3, ORT_MAX = 5
 /** das Wasser der Seen über dem Grund: Farbe und Deckkraft gewählt */
 const WASSER_FARBE = '#2f6f9a', WASSER_DECKKRAFT = 0.55
+// das Wasser im Schnitt der Wände: oben etwas heller als die Fläche, nach unten deutlich dunkler, ganz dunkel ab WASSER_DUNKEL_M Tiefe
+// (Michael, 2026-10-25: «wesentlich dunkler als die Oberfläche … gegen unten … deutlicher»); Farben gewählt, nicht gemessen
+const WASSER_SCHNITT_OBEN = '#3f86b5', WASSER_SCHNITT_MITTE = '#123a58', WASSER_SCHNITT_UNTEN = '#061a30', WASSER_DUNKEL_M = 120
+// Anteile der Tiefe für die Punkte einer Säule im Schnitt, oben dichter
+const WASSER_SCHNITT_STUFEN = [0, 0.04, 0.1, 0.2, 0.35, 0.55, 0.8, 1]
 /** das Lockergestein über dem Fels im Schnitt der Wände (swissBEDROCK): Farbe gewählt, der Fels bleibt die dunkle Wand */
 const LOCKER_FARBE = '#a8875a'
 /** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
@@ -1614,7 +1619,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, roughness: 0.5, metalness: 0 })
     // die oberen Kanten der Wände, je mit der Richtung nach aussen (für die Linien der Höhen)
     let kantenOben: Array<{ p: Float32Array; nx: number; nz: number }> = []
-    const wandWasserMaterial = new THREE.MeshBasicMaterial({ color: WASSER_FARBE, transparent: true, opacity: 0.8, side: THREE.DoubleSide })
+    const wandWasserMaterial = new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.92, side: THREE.DoubleSide })
+    const schnittOben = new THREE.Color(WASSER_SCHNITT_OBEN), schnittMitte = new THREE.Color(WASSER_SCHNITT_MITTE), schnittUnten = new THREE.Color(WASSER_SCHNITT_UNTEN)
+    const schnittFarbe = new THREE.Color()
     const lockerMaterial = new THREE.MeshLambertMaterial({ color: LOCKER_FARBE, side: THREE.DoubleSide })
     const sockelBauen = () => {
       for (const o of sockel.children) (o as THREE.Mesh).geometry.dispose()
@@ -1668,15 +1675,30 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           // im Schnitt der Wand das Wasser eines Sees zwischen Grund und Spiegel, knapp vor der Wand
           const w = g.wasser
           if (w) {
-            const vor = weiteKm * 0.0008, bp: number[] = [], bi: number[] = []
+            // je Säule mehrere Punkte vom Spiegel zum Grund, damit es schon in den oberen Metern dunkel wird, nicht erst unten
+            const vor = weiteKm * 0.0008, bp: number[] = [], bi: number[] = [], bf: number[] = []
+            const n = WASSER_SCHNITT_STUFEN.length
             kante.forEach((q, i) => {
               const x = pos[q * 3] + nx * vor, y = pos[q * 3 + 1], z = pos[q * 3 + 2] + nz * vor
-              bp.push(x, y, z, x, Number.isNaN(w[q]) ? y : Y(w[q]), z)
-              if (i && !Number.isNaN(w[q]) && !Number.isNaN(w[kante[i - 1]])) bi.push((i - 1) * 2, (i - 1) * 2 + 1, i * 2, i * 2, (i - 1) * 2 + 1, i * 2 + 1)
+              const spiegel = Number.isNaN(w[q]) ? y * 1000 : w[q], tiefe = Math.max(0, spiegel - y * 1000)
+              for (const f of WASSER_SCHNITT_STUFEN) {
+                const d = f * tiefe
+                bp.push(x, Y(spiegel - d), z)
+                const t = Math.min(1, d / WASSER_DUNKEL_M)
+                schnittFarbe.copy(schnittOben).lerp(schnittMitte, Math.min(1, t * 4)).lerp(schnittUnten, Math.max(0, (t - 0.25) / 0.75))
+                bf.push(schnittFarbe.r, schnittFarbe.g, schnittFarbe.b)
+              }
+              if (i && !Number.isNaN(w[q]) && !Number.isNaN(w[kante[i - 1]])) {
+                for (let r = 0; r < n - 1; r++) {
+                  const a0 = (i - 1) * n + r, a1 = a0 + 1, b0 = i * n + r, b1 = b0 + 1
+                  bi.push(a0, a1, b0, b0, a1, b1)
+                }
+              }
             })
             if (bi.length) {
               const gb = new THREE.BufferGeometry()
               gb.setAttribute('position', new THREE.Float32BufferAttribute(bp, 3))
+              gb.setAttribute('color', new THREE.Float32BufferAttribute(bf, 3))
               gb.setIndex(bi)
               sockel.add(new THREE.Mesh(gb, wandWasserMaterial))
             }
