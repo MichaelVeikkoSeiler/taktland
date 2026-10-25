@@ -9,6 +9,8 @@ const ANZAHL = 6000, STRICH = 0.03
 /** aus der Ferne weniger und blassere Tropfen (Michael, 2026-10-25: «aus der Ferne etwas zu überproportional viel»): ab so viel
  *  Abstand der Kamera, gemessen an der Breite des Modells, wird es weniger, höchstens bis auf FERN_MIN (gewählt) */
 const FERN_AB = 1.2, FERN_MIN = 0.15
+/** und kürzere Striche, kleinere Flocken (Michael, 2026-10-25: «Regentropfen kleiner machen, wenn man wegzoomt»), bis auf KLEIN_MIN (gewählt) */
+const KLEIN_MIN = 0.3
 
 export interface Niederschlag {
   gruppe: THREE.Group
@@ -30,7 +32,7 @@ export function niederschlagBauen(strich = STRICH): Niederschlag {
   const flockenStoff = new THREE.PointsMaterial({ color: '#ffffff', size: 3, sizeAttenuation: false, transparent: true, opacity: 0.9, depthWrite: false })
   const striche = new THREE.LineSegments(geo, strichStoff), flocken = new THREE.Points(geo, flockenStoff)
   for (const o of [striche, flocken]) { o.frustumCulled = false; o.visible = false; gruppe.add(o) }
-  let art: 'regen' | 'schnee' | null = null, voll = 0, anzahl = 0
+  let art: 'regen' | 'schnee' | null = null, voll = 0, anzahl = 0, laenge = strich
   return {
     gruppe,
     setzen: (a, staerke) => {
@@ -47,6 +49,8 @@ export function niederschlagBauen(strich = STRICH): Niederschlag {
         anzahl = Math.round(voll * f)
         geo.setDrawRange(0, 2 * anzahl)
         strichStoff.opacity = 0.6 * (0.5 + 0.5 * f); flockenStoff.opacity = 0.9 * (0.5 + 0.5 * f)
+        const klein = Math.max(KLEIN_MIN, Math.min(1, FERN_AB / Math.max(1e-6, ferne)))
+        laenge = strich * klein; flockenStoff.size = Math.max(1, 3 * klein)
       }
       const schnee = art === 'schnee'
       const fall = (schnee ? 0.08 : 0.7) * dt, wind = (schnee ? 0.02 : 0.04) * dt
@@ -56,7 +60,7 @@ export function niederschlagBauen(strich = STRICH): Niederschlag {
         if (mitte[i + 1] < -0.5) mitte[i + 1] += 1
         if (mitte[i] > 0.5) mitte[i] -= 1
         lage[j] = mitte[i]; lage[j + 1] = mitte[i + 1]; lage[j + 2] = mitte[i + 2]
-        lage[j + 3] = mitte[i] - (schnee ? 0 : strich * 0.1); lage[j + 4] = mitte[i + 1] + (schnee ? 0 : strich); lage[j + 5] = mitte[i + 2]
+        lage[j + 3] = mitte[i] - (schnee ? 0 : laenge * 0.1); lage[j + 4] = mitte[i + 1] + (schnee ? 0 : laenge); lage[j + 5] = mitte[i + 2]
       }
       geo.attributes.position.needsUpdate = true
     },

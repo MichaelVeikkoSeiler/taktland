@@ -507,7 +507,8 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              Regengeräusch. Bei Wind, Windgeräusch»; wetterGeraeusch in src/audio.ts): Regen helles Rauschen mit einzelnen Tropfen nach der Stärke, Wind
              tiefes, an- und abschwellendes Rauschen nach dem Mittel der vier Windhosen, voll ab 40 km/h, Schnee still; in «3D Schweiz» mit dem Knopf
              «Wetter», in der Modellbahn und beim Fahren mit dem Lautsprecher des Zuggeräuschs; Klang und Lautstärke gewählt; ein Strich 1,2 % der Breite des Modells lang, aus der Ferne (ab 1,2-mal der Breite) weniger
-             und blasser, bis auf 15 % (FERN_AB, FERN_MIN; Michael, 2026-10-25: «aus der Ferne etwas zu überproportional viel»)
+             und blasser, bis auf 15 % (FERN_AB, FERN_MIN; Michael, 2026-10-25: «aus der Ferne etwas zu überproportional viel»), dazu kürzere Striche und
+             kleinere Flocken, bis auf 30 % (KLEIN_MIN; Michael, 2026-10-25: «Regentropfen kleiner machen, wenn man wegzoomt»)
 data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetiefen will ich dann zuerst einmal anschauen»): swissBATHY3D
              (swisstopo, gemessenes Höhenmodell des Grunds von 22 Seen, je km auf 1 m) auf 25 m gemittelt, ein Feld mit Grund, wenn mindestens die
              Hälfte seiner Meter gemessen ist, in den 10-km-Kacheln des Geländes (.sgz: Int32 tiefster Grund in dm, UInt16 je Feld darüber, UInt8
