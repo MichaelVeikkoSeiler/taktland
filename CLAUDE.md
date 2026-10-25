@@ -326,7 +326,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Gelände, Gebäude und Bäume werfen Schatten, Berge ausserhalb des Modells nicht; steht die Sonne unter dem Horizont (ganz ab 6° darunter),
              brennt Licht in den Fenstern (Michael, 2026-10-24: «Ist es dunkel brennen bei den Gebäuden Lichter. Realistische Verteilung»; fensterLicht in
              src/gebaeudeBild.ts): je Wand Stockwerke von 3 m und Achsen von 3,2 m, je Fenster ein fester Zufall gegen den Anteil der Stunde (LICHT_ANTEIL:
-             abends bis 38 %, um 3 Uhr 4 %), warm, Helligkeit FENSTER_HELL (Michael, 2026-10-25: «10% weniger hell»), weit weg über den Bildpunkt gemittelt; Fenster, Stockwerke und Anteile in keiner Quelle, swissBUILDINGS3D
+             abends bis 38 %, um 3 Uhr 4 %), warm, Helligkeit FENSTER_HELL (Michael, 2026-10-25: zweimal «10% weniger hell», 1,6 → 1,44 → 1,3), weit weg über den Bildpunkt gemittelt; Fenster, Stockwerke und Anteile in keiner Quelle, swissBUILDINGS3D
              kennt sie nicht; auch im Führerstand der Modellbahn in der Dämmerung, mit dem Anteil von 20 Uhr; unter dem Horizont nur Himmelslicht, tief am
              Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille alle Schalter an den Wänden des Modells, auf allen vier Seiten
              (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle … so wie Schalter», vorher Tafeln vor der Nase): flach im
