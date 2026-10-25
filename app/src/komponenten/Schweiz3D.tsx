@@ -785,9 +785,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
         <Ladebalken inKarte />
-        {/* oben rechts Mein Standort neben dem Vollbild, gleich gross; unten rechts die Brille (Michael, 2026-10-25: «Mein
-            GPS-Standort soll neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander. Mit VR-Brille soll unten sein») */}
+        {/* oben rechts XR, Mein Standort und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll neben
+            dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; danach «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
+            den anderen Icons») */}
         <div className="absolute right-2 top-2 flex items-center gap-2">
+          <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
+                  className="flex size-8 flex-none items-center justify-center rounded-lg bg-sbb-red text-xs font-bold text-white">
+            XR
+          </button>
           <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
                   aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
                   title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
@@ -799,9 +804,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
           <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </div>
-        <button type="button" onClick={inBrille} className="absolute bottom-2 right-2 rounded-lg bg-sbb-red px-2.5 py-1 text-xs font-bold text-white">
-          Mit VR-Brille
-        </button>
         {brilleHinweis && (
           <p role="status" className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">{brilleHinweis}</p>
         )}
@@ -961,7 +963,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             auf dem Gerät.</p>
         </Abschnitt>
         <Abschnitt titel="Mit VR-Brille">
-          <p>Mit einer Brille wie der Meta Quest steht das Modell auf dem Tisch. Ein kurzer Abzug wählt ein Feld, nochmals taucht ein;
+          <p>Der Knopf «XR» oben rechts im Bild startet die Brille. Mit einer Brille wie der Meta Quest steht das Modell auf dem Tisch. Ein kurzer Abzug wählt ein Feld, nochmals taucht ein;
             ein gehaltener Abzug trägt das Modell, beide zusammen drehen und skalieren es. Die Greiftaste geht eine Stufe zurück, der
             Thumbstick dreht und hebt, drücken stellt es zurück. Die Knöpfe an den Wänden gehen mit Strahl und Abzug.</p>
         </Abschnitt>
