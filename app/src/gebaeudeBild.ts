@@ -13,10 +13,13 @@ const AO_BODEN = 0.72, AO_BODEN_M = 8, AO_DACH = 0.8, AO_DACH_M = 0.8
  *  Verteilung»): swissBUILDINGS3D kennt weder Fenster noch Stockwerke noch die Nutzung, alles hier ist eine Annahme fürs Bild.
  *  Je Wand ein Raster aus Stockwerken von FENSTER_STOCK_M und Achsen von FENSTER_ACHSE_M, in jeder Zelle ein Fenster; welches
  *  brennt, entscheidet ein fester Zufall je Fenster gegen den Anteil zur Uhrzeit (LICHT_ANTEIL), so brennen mit steigendem Anteil
- *  dieselben weiter und neue dazu. Weit weg wird jedes Fenster über seinen Bildpunkt gemittelt und etwas heller */
+ *  dieselben weiter und neue dazu. Weit weg wird jedes Fenster über seinen Bildpunkt gemittelt und schwächer */
 /** wie hell ein brennendes Fenster leuchtet (gewählt; Michael, 2026-10-25: «10% weniger hell», vorher 1,6, dann 1,44; danach
- *  «weitere 10%») */
-const FENSTER_HELL = 1.3
+ *  «weitere 10%», 1,3; dann «noch immer etwas zu hell») */
+const FENSTER_HELL = 1.0
+/** weit weg schwächer (Michael, 2026-10-25: «wenn man in die Ferne schaut, sollen sie dort wesentlich weniger hell scheinen»): ab
+ *  FERN_AB_M je Bildpunkt sinkt die Helligkeit mit dem Abstand bis auf FERN_MIN (gewählt; vorher wurden sie weit weg heller) */
+const FERN_AB_M = 0.5, FERN_MIN = 0.12
 const FENSTER_STOCK_M = 3, FENSTER_ACHSE_M = 3.2, FENSTER_BREITE_M = 1.3, FENSTER_HOEHE_M = 1.5, FENSTER_BRUESTUNG_M = 0.9
 /** Anteil der brennenden Fenster je Stunde (Schweizer Zeit) an der Stunde 0, 1, …; gewählt, ungefähr: abends die meisten,
  *  nach Mitternacht wenige, am Morgen wieder mehr; tagsüber zählt es nicht, dann ist es hell */
@@ -97,8 +100,8 @@ export function gebaeudeMaterial() {
         float brennt = step(zufall, uAnteil);
         // warm, je Fenster etwas anders
         vec3 farbe = mix(vec3(1.0, 0.62, 0.28), vec3(1.0, 0.86, 0.6), fract(zufall * 7.31));
-        // weit weg heller, damit der Punkt eines Fensters noch zu sehen ist
-        float hell = 1.6 * clamp(max(wx, wy) / 0.6, 1.0, 4.0);
+        // weit weg schwächer: mit der Grösse des Bildpunkts in Metern
+        float hell = 1.6 * clamp(${FERN_AB_M.toFixed(2)} / max(wx, wy), ${FERN_MIN.toFixed(2)}, 1.0);
         totalEmissiveRadiance += farbe * min(1.0, im * hell) * brennt * drin * uNacht * ${FENSTER_HELL.toFixed(3)};
       }`)
       .replace('#include <color_fragment>', `#include <color_fragment>

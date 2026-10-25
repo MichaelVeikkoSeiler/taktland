@@ -326,7 +326,8 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Gelände, Gebäude und Bäume werfen Schatten, Berge ausserhalb des Modells nicht; steht die Sonne unter dem Horizont (ganz ab 6° darunter),
              brennt Licht in den Fenstern (Michael, 2026-10-24: «Ist es dunkel brennen bei den Gebäuden Lichter. Realistische Verteilung»; fensterLicht in
              src/gebaeudeBild.ts): je Wand Stockwerke von 3 m und Achsen von 3,2 m, je Fenster ein fester Zufall gegen den Anteil der Stunde (LICHT_ANTEIL:
-             abends bis 38 %, um 3 Uhr 4 %), warm, Helligkeit FENSTER_HELL (Michael, 2026-10-25: zweimal «10% weniger hell», 1,6 → 1,44 → 1,3), weit weg über den Bildpunkt gemittelt; Fenster, Stockwerke und Anteile in keiner Quelle, swissBUILDINGS3D
+             abends bis 38 %, um 3 Uhr 4 %), warm, Helligkeit FENSTER_HELL (Michael, 2026-10-25: zweimal «10% weniger hell», 1,6 → 1,44 → 1,3, dann «noch immer etwas zu hell», 1,0), weit weg über den Bildpunkt gemittelt
+             und schwächer, bis auf 12 % (FERN_AB_M, FERN_MIN; «in der Ferne … wesentlich weniger hell»; vorher weit weg heller); Fenster, Stockwerke und Anteile in keiner Quelle, swissBUILDINGS3D
              kennt sie nicht; auch im Führerstand der Modellbahn in der Dämmerung, mit dem Anteil von 20 Uhr; unter dem Horizont nur Himmelslicht, tief am
              Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille alle Schalter an den Wänden des Modells, auf allen vier Seiten
              (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle … so wie Schalter», vorher Tafeln vor der Nase): flach im
@@ -518,9 +519,10 @@ data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetief
              lief über und der Grund fiel am Ufer senkrecht bis auf den Sockel, Michael: «wenn es beim Ufer einfach senkrecht hinuntergeht»);
              zum Ufer steigt der Grund die letzten 40 m (bei groben Stufen 1,5 Felder) gleichmässig auf den Spiegel an (uferAnlegen, eine Annäherung); in der App (seegrundLaden in src/gelaende.ts, seegrundSetzen in Schweiz3D.tsx) ab der Region:
              wo das Gelände höchstens 1,5 m über dem Spiegel liegt und Grund gemessen ist, sinkt es auf den Grund, darüber eine durchsichtige
-             Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), begrenzt vom Ufer aus data/seeufer (swissTLM3D, 1 m; Michael, 2026-10-25: «Warum ist das Wasser hier über das Ufer getreten?»), sonst aus data/seen.json (swissTLMRegio, 25 m), Spiegel der häufigste im Umriss,
-             Spiegelung schwach (specular #33414c; Michael, 2026-10-25: «nicht so stark»),
-             auf das Modell zugeschnitten, nur wo es nicht reicht Felder des Rasters, mit Stencil nie doppelt (Michael, 2026-10-25: «Warum hat es diese Zacken am Ufer?»), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, immer etwas dunkler als die Fläche, nach unten dunkler, am dunkelsten ab
+             Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), auf der Höhe des Geländemodells wie ohne Seegrund, nicht auf einem Spiegel
+             (Michael, 2026-10-25, Erlach: «die Höhe der Seeoberflächenspiegel von vorher nehmen … da war alles wunderbar»; ein Spiegel aus dem Median
+             überschwemmte flache Ufer und Häfen, auch mit Umrissen aus swissTLMRegio und swissTLM3D), am Ufer übers Feld zum Land, wo das Gelände sie verdeckt
+             (polygonOffset), so ohne Zacken; Spiegelung schwach (specular #33414c; Michael, 2026-10-25: «nicht so stark»), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, immer etwas dunkler als die Fläche, nach unten dunkler, am dunkelsten ab
              120 m Tiefe, im selben Licht wie die Fläche (Normale nach oben, beide Seiten) (WASSER_SCHNITT_*, gewählt; Michael, 2026-10-25: «Die Wasseroberfläche muss immer
              mindestens so hell sein wie die Schnittkante»), Masten,
              Windhosen und Wanderwege auf dem Wasser (hoeheIm); andere Seen nur mit ihrer Oberfläche (so in der Anleitung und den Quellen);
@@ -528,9 +530,6 @@ data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetief
              «Seegrund auch in der ganzen Schweiz einbauen»); der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund, ein tieferer Grund ist am Boden des Sockels
              abgeschnitten, die Knöpfe dürfen auf dem Wasser in der Wand sitzen (Michael, 2026-10-25: «Die Tiefe des Modells soll durch die Seen nicht höher
              als vorher sein. Die Wandknöpfe können auch an einer Seewand sein»)
-data/seeufer/  Ufer der Seen mit Grund: «Stehende Gewaesser» aus swissTLM3D (swisstopo, Bodenbedeckung), nur Flächen mit Grund aus data/seegrund,
-             auf 1 m vereinfacht, je See eine .ugz (Ringe in dm, Ufer im Uhrzeigersinn, Inseln andersherum; pipeline/build_seeufer.py nach
-             fetch_tlm3d.py --seen, 19 Seen, 244 KB; Bodensee, Genfersee und Lago Maggiore fehlen in der Ebene); in der App seeuferLaden in src/gelaende.ts
 data/fels/   Felsoberfläche für die Wände von «3D Schweiz»: swissBEDROCK (swisstopo, Band BEM, 10 m) auf 50 m gemittelt, je 10-km-Kachel
              eine .fgz (Int16 m ü. M., -32768 ohne Angabe; pipeline/build_fels.py liest über das Netz nur dieses Band, 370 Kacheln, 8 MB);
              in den Wänden ein ockerfarbenes Band Lockergestein von der Oberfläche (oder dem Seegrund) bis auf den Fels (Farbe gewählt, LOCKER_FARBE #8a6e48; Michael, 2026-10-25: «nicht ganz so hell»),
@@ -586,8 +585,6 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 python3 pipeline/build_wetterstationen.py          # Wetterstationen von MeteoSchweiz für das echte Wetter in der Modellbahn
 .venv/bin/python pipeline/build_seegrund.py          # Seegrund von 22 Seen (swissBATHY3D) für «3D Schweiz», etwa 3 GB laden, vor export_app
-python3 pipeline/fetch_tlm3d.py --seen            # nur die Bodenbedeckung aus swissTLM3D (etwa 2,8 GB) für die Ufer der Seen
-.venv/bin/python pipeline/build_seeufer.py           # Ufer der Seen mit Grund (swissTLM3D) für «3D Schweiz», nach build_seegrund, vor export_app
 .venv/bin/python pipeline/build_fels.py              # Felsoberfläche (swissBEDROCK) für die Wände von «3D Schweiz», vor export_app
 python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-celestial) für den Nachthimmel in «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_relief.py       # Bergstrecken in 3D (Ausschnitt, Linie, Bauwerke; Gelände aus den Kacheln)

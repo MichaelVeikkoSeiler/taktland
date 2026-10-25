@@ -65,9 +65,6 @@ class Fern(io.RawIOBase):
 
 
 def gewollt(name):
-    if "--seen" in sys.argv:
-        # nur die Bodenbedeckung, für das Ufer der Seen (pipeline/build_seeufer.py)
-        return name.startswith("swissTLM3D_TLM_BODENBEDECKUNG_") and name.rsplit(".", 1)[-1] in ("shp", "shx", "dbf", "cpg", "CPG")
     if "--strassen" in sys.argv:
         return name.startswith("swissTLM3D_TLM_STRASSE.") and name.rsplit(".", 1)[-1] in ("shp", "shx", "dbf", "cpg")
     if "--baeume" not in sys.argv:
