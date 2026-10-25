@@ -515,7 +515,13 @@ data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetief
              wo das Gelände höchstens 1,5 m über dem Spiegel liegt und Grund gemessen ist, sinkt es auf den Grund, darüber eine durchsichtige
              Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, Masten,
              Windhosen und Wanderwege auf dem Wasser (hoeheIm); andere Seen nur mit ihrer Oberfläche (so in der Anleitung und den Quellen);
-             in der ganzen Schweiz noch nicht; geologischer Untergrund (swissBEDROCK, GeoMol, Lithologie 1:500'000) erst geprüft, nicht eingebaut.
+             in der ganzen Schweiz noch nicht; der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund, ein tieferer Grund ist am Boden des Sockels
+             abgeschnitten, die Knöpfe dürfen auf dem Wasser in der Wand sitzen (Michael, 2026-10-25: «Die Tiefe des Modells soll durch die Seen nicht höher
+             als vorher sein. Die Wandknöpfe können auch an einer Seewand sein»)
+data/fels/   Felsoberfläche für die Wände von «3D Schweiz»: swissBEDROCK (swisstopo, Band BEM, 10 m) auf 50 m gemittelt, je 10-km-Kachel
+             eine .fgz (Int16 m ü. M., -32768 ohne Angabe; pipeline/build_fels.py liest über das Netz nur dieses Band, 370 Kacheln, 8 MB);
+             in den Wänden ein ockerfarbenes Band Lockergestein von der Oberfläche (oder dem Seegrund) bis auf den Fels (Farbe gewählt),
+             die Unsicherheit der Quelle nicht gezeigt; GeoMol und Lithologie 1:500'000 erst geprüft, nicht eingebaut.
              Die Anleitung unter dem Modell hat dazu «Seen und Seetiefe», «Woher die Daten stammen» und «Was gezeichnet oder angenommen ist»
              (Michael, 2026-10-25: «informiere das Zielpublikum über alle Informationen»)
 data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-10-24: «Himmel nachts dunkler und mit Sternen machen»):
@@ -567,6 +573,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 python3 pipeline/build_wetterstationen.py          # Wetterstationen von MeteoSchweiz für das echte Wetter in der Modellbahn
 .venv/bin/python pipeline/build_seegrund.py          # Seegrund von 22 Seen (swissBATHY3D) für «3D Schweiz», etwa 3 GB laden, vor export_app
+.venv/bin/python pipeline/build_fels.py              # Felsoberfläche (swissBEDROCK) für die Wände von «3D Schweiz», vor export_app
 python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-celestial) für den Nachthimmel in «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_relief.py       # Bergstrecken in 3D (Ausschnitt, Linie, Bauwerke; Gelände aus den Kacheln)
 .venv/bin/python pipeline/build_gelaende.py     # Geländekacheln der ganzen Schweiz für «3D» auf jeder Fahrt

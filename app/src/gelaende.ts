@@ -778,3 +778,49 @@ export async function seegrundLaden(e0: number, n0: number, e1: number, n1: numb
   }
   return { quelle: ix.quelle, get seen() { return [...seen] }, bei }
 }
+
+/**
+ * Felsoberfläche (Michael, 2026-10-25: «geologischer Untergrund … damit auch die Wände entsprechend realistisch sind»): swissBEDROCK
+ * (swisstopo), die Höhe des Felses unter dem Lockergestein, auf 50 m gemittelt in den 10-km-Kacheln des Geländes
+ * (pipeline/build_fels.py). Wo die Quelle nichts angibt, null.
+ */
+interface FelsIndex { quelle: string; kachel_m: number; raster_m: number; zellen: number; kacheln: string[] }
+export const felsIndex = () => holen<FelsIndex>('data/fels/index.json')
+const felsVorrat = new Map<string, Promise<Int16Array | null>>()
+function felsKachel(name: string) {
+  let p = felsVorrat.get(name)
+  if (!p) {
+    p = (async () => {
+      const gepackt = await holenBinaer(`data/fels/${name}.fgz`)
+      return new Int16Array(await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer())
+    })().catch(() => { felsVorrat.delete(name); return null })
+    felsVorrat.set(name, p)
+  }
+  return p
+}
+export async function felsLaden(e0: number, n0: number, e1: number, n1: number) {
+  const ix = await felsIndex().catch(() => null)
+  if (!ix) return null
+  const { kachel_m: k, raster_m: m, zellen } = ix
+  const da = new Set(ix.kacheln), geladen = new Map<string, Int16Array>()
+  const namen: string[] = []
+  for (let ex = Math.floor(e0 / k); ex <= Math.floor(e1 / k); ex++) {
+    for (let ny = Math.floor(n0 / k); ny <= Math.floor(n1 / k); ny++) if (da.has(`${ex}_${ny}`)) namen.push(`${ex}_${ny}`)
+  }
+  if (!namen.length) return null
+  await Promise.all(namen.map(async (n) => { const t = await felsKachel(n); if (t) geladen.set(n, t) }))
+  const feld = (I: number, J: number) => {
+    const ex = Math.floor(I * m / k), ny = Math.floor(J * m / k), t = geladen.get(`${ex}_${ny}`)
+    if (!t) return null
+    const v = t[((ny + 1) * zellen - 1 - J) * zellen + (I - ex * zellen)]
+    return v === -32768 ? null : v
+  }
+  /** Höhe des Felses in m ü. M., zwischen den Feldern linear, oder null */
+  const bei = (e: number, n: number) => {
+    const x = e / m - 0.5, y = n / m - 0.5, I = Math.floor(x), J = Math.floor(y), fx = x - I, fy = y - J
+    const a = feld(I, J), b = feld(I + 1, J), c = feld(I, J + 1), d = feld(I + 1, J + 1)
+    if (a === null || b === null || c === null || d === null) return feld(Math.floor(e / m), Math.floor(n / m))
+    return a * (1 - fx) * (1 - fy) + b * fx * (1 - fy) + c * (1 - fx) * fy + d * fx * fy
+  }
+  return { quelle: ix.quelle, bei }
+}

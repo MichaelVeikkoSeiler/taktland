@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden } from '../gelaende'
+import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -52,6 +52,8 @@ interface Gelaende {
   wasser?: Float32Array
   /** die Seen mit gemessenem Grund in diesem Stück */
   seen?: string[]
+  /** die Höhe des Felses unter dem Lockergestein je Feld (swissBEDROCK), NaN ohne Angabe (untergrundSetzen) */
+  fels?: Float32Array
 }
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
@@ -132,7 +134,7 @@ async function regionLaden(f: Feld): Promise<Gelaende> {
   // schärfer, wo daten.taktland.ch die Details hat: je Kilometer so viele Bildpunkte, wie die Leinwand fasst
   const d = await schweiz3dLaden(ost, nord - hoehe * m, ost + breite * m, nord, Math.ceil(sx * 1000), true).catch(() => null)
   for (const k of d?.bilder ?? []) g.drawImage(k.bild, (k.ke * 1000 - ost) * sx, (nord - (k.kn + 1) * 1000) * sy, 1000 * sx, 1000 * sy)
-  return seegrundSetzen({ raster: a.raster, h: Float32Array.from(a.h), bild: c, rahmen: { e0: ost, n1: nord, b: breite * m, h: hoehe * m },
+  return untergrundSetzen({ raster: a.raster, h: Float32Array.from(a.h), bild: c, rahmen: { e0: ost, n1: nord, b: breite * m, h: hoehe * m },
            quellen: [a.quelle, d?.bilder.length ? `${d.quelle_bild}, hier auf etwa ${Math.round(1 / sx)} m, Aufnahmen ${d.bildJahre.join(', ')}`
              : lb ? `SWISSIMAGE (swisstopo), auf 10 m gemittelt, Aufnahmen ${lb.jahre.join(', ')}` : 'ohne Luftbild'] })
 }
@@ -167,7 +169,7 @@ async function ortLaden(f: Feld, region: Bestand): Promise<Gelaende> {
   const anteil = feine / h.length
   const ganz = !!details?.fein.km.size
   const rq = region.teile.values().next().value!.quellen
-  return seegrundSetzen({
+  return untergrundSetzen({
     raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c, rahmen: { e0, n1, b: f.seite, h: f.seite },
     quellen: [ganz ? `${details!.quelle_hoehe}, Aufnahmen ${details!.fein.jahre.join(', ')}`
                 : anteil > 0 ? 'swissALTI3D (swisstopo), auf 10 m gemittelt, nur bis 500 m neben den Bahnlinien' : rq[0],
@@ -233,7 +235,7 @@ async function nahLaden(f: Feld, ort: Bestand): Promise<Gelaende> {
   const anteil = scharfe / h.length, anteilFein = (scharfe + feine) / h.length
   const feinBild = !!fein?.bilder.length
   const oq = ort.teile.values().next().value!.quellen
-  return seegrundSetzen({
+  return untergrundSetzen({
     raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c, rahmen: { e0, n1, b: f.seite, h: f.seite },
     quellen: [[anteil > 0 && 'swissALTI3D (swisstopo), 2 m, bis 200 m neben den Bahnlinien', feine > 0 && fein!.quelle_hoehe,
                anteilFein < 1 && oq[0]].filter(Boolean).join('; sonst '),
@@ -254,6 +256,24 @@ function hoeheIm(gl: Gelaende, e: number, n: number) {
   // über einem See zählt seine Oberfläche (Masten, Windhosen, Wanderwege stehen auf dem Wasser, nicht auf dem Grund)
   const w = gl.wasser?.[Math.round(y) * breite + Math.round(x)]
   return w !== undefined && !Number.isNaN(w) ? Math.max(boden, w) : boden
+}
+
+/** Seegrund und Fels zu einem Gelände */
+async function untergrundSetzen(g: Gelaende): Promise<Gelaende> {
+  const mitSee = await seegrundSetzen(g)
+  const { ost, nord, m, breite, hoehe } = mitSee.raster
+  const f = await felsLaden(ost, nord - hoehe * m, ost + breite * m, nord).catch(() => null)
+  if (!f) return mitSee
+  const fels = new Float32Array(breite * hoehe).fill(NaN)
+  // nur die Ränder: dort liegen die Wände
+  for (let j = 0; j < hoehe; j++) {
+    for (let i = 0; i < breite; i++) {
+      if (j !== 0 && j !== hoehe - 1 && i !== 0 && i !== breite - 1) continue
+      const z = f.bei(ost + (i + 0.5) * m, nord - (j + 0.5) * m)
+      if (z !== null) fels[j * breite + i] = z
+    }
+  }
+  return { ...mitSee, fels }
 }
 
 /** Seegrund (swissBATHY3D, src/gelaende.ts) auf ein Gelände: wo es den Spiegel eines Sees zeigt (höchstens 1,5 m darüber) und der
@@ -807,7 +827,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">Modell, nicht massstäblich: Quellen</summary>
           <p className="mt-1">Gelände: {anker.quellen[0]}. Luftbild: {anker.quellen[1]}. {seenHier.length
             ? `Seegrund: swissBATHY3D (swisstopo), auf 25 m gemittelt, hier ${seenHier.join(', ')}; der Spiegel aus swissALTIRegio, auf den Meter. `
-            : 'Seegrund: in diesem Ausschnitt keiner gemessen (swissBATHY3D kennt 22 Seen), Seen zeigen hier nur ihre Oberfläche. '}Orte der Landeskarte 1:1 Million (swisstopo),
+            : 'Seegrund: in diesem Ausschnitt keiner gemessen (swissBATHY3D kennt 22 Seen), Seen zeigen hier nur ihre Oberfläche. '}{stufe !== 'schweiz'
+            ? 'Lockergestein in den Wänden bis auf den Fels: swissBEDROCK (swisstopo), Felsoberfläche auf 50 m gemittelt. ' : ''}Orte der Landeskarte 1:1 Million (swisstopo),
             Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone (BFS). Ortschaften auf den Masten: swissTLMRegio (swisstopo),
             die grösseren zuerst nach der Objektart der Quelle, mit Abstand zueinander; Auswahl und Mast gewählt. Ein Feld ist ein Quadrat, keine Region und kein Tal:
             deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
@@ -864,12 +885,21 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Seen und Seetiefe">
           <p>Bei 22 Seen ist der Grund gemessen: swissBATHY3D von swisstopo, ein Höhenmodell des Seegrunds. Dort liegt das Modell auf
             dem echten Seegrund, darüber steht das Wasser als durchsichtige Fläche, und in den Wänden sieht man den See im Schnitt, von
-            seinem Grund bis zum Spiegel. Die Höhen sind echt, auch unter Wasser. Es sind: Ägerisee, Baldeggersee, Bielersee, Bodensee,
+            seinem Grund bis zum Spiegel. Die Höhen sind echt, auch unter Wasser. Der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund: Reicht ein See tiefer als der Sockel, ist sein Grund am Boden des Sockels abgeschnitten. Es sind: Ägerisee, Baldeggersee, Bielersee, Bodensee,
             Brienzersee, Genfersee, Hallwilersee, Lac de Joux, Lago Maggiore, Lungerersee, Murtensee, Neuenburgersee, Rotsee, Sarnersee,
             Sempachersee, Silsersee, Silvaplanersee, Thunersee, Vierwaldstättersee, Walensee, Zürichsee und Zugersee. Alle anderen Seen
             zeigen nur ihre Oberfläche; wie tief sie sind, steht in unseren Quellen nicht. Der Grund ist auf 25 m gemittelt, der Spiegel
             stammt aus dem Gelände und ist auf den Meter genau; Farbe und Durchsicht des Wassers sind gewählt. In der ganzen Schweiz von
             oben ist der Seegrund noch nicht eingesetzt, erst ab der Region.</p>
+        </Abschnitt>
+        <Abschnitt titel="Untergrund in den Wänden">
+          <p>Die Wände des Sockels zeigen, was unter der Oberfläche liegt, so weit es gemessen oder kartiert ist: Das helle, ockerfarbene Band
+            ist das Lockergestein über dem Fels, also alles, was nicht fester Fels ist, etwa Kies, Sand, Moräne oder Ablagerungen in Seen.
+            Darunter beginnt der Fels, dort bleibt die Wand dunkel. Wie tief der Fels liegt, stammt aus swissBEDROCK von swisstopo, einem
+            Modell der Felsoberfläche für die ganze Schweiz; die Quelle gibt dazu an, wie unsicher es ist (hier nicht gezeigt). Hier ist es
+            auf 50 m gemittelt. Wo die Wand ganz dunkel ist, liegt der Fels an der Oberfläche oder
+            swissBEDROCK gibt dort nichts an. Welches Gestein der Fels ist und wie die Schichten darin liegen, zeigt das Modell nicht. Das
+            Band gibt es ab der Region, nicht in der ganzen Schweiz von oben.</p>
         </Abschnitt>
         <Abschnitt titel="Mein Standort">
           <p>Das Fadenkreuz oben rechts neben dem Vollbild zeigt dich per GPS als roten Punkt im Modell und wählt das Feld um dich. Der Standort bleibt
@@ -886,6 +916,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               der Bahnlinien 2 m).</li>
             <li>Luftbild: SWISSIMAGE (swisstopo), je Kilometer die neueste Aufnahme; was darauf zu sehen ist, zeigt den Stand der Aufnahme, nicht heute.</li>
             <li>Seegrund: swissBATHY3D (swisstopo) für 22 Seen, siehe «Seen und Seetiefe».</li>
+            <li>Felsoberfläche unter dem Lockergestein: swissBEDROCK (swisstopo), siehe «Untergrund in den Wänden».</li>
             <li>Ortschaften, Gipfel und Seen der Suche: swissTLMRegio (swisstopo); Orte und Gipfel der Landeskarte 1:1 Million; Kantone: Bundesamt für Statistik BFS.</li>
             <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind.</li>
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
@@ -902,7 +933,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station; Regen- und Windgeräusch gerechnet.</li>
-            <li>Farben der Höhenlinien, der Wanderwege, des Wassers und des Himmels in Dämmerung und Nacht.</li>
+            <li>Farben der Höhenlinien, der Wanderwege, des Wassers, des Lockergesteins in den Wänden und des Himmels in Dämmerung und Nacht.</li>
+            <li>Die Tiefe des Sockels: Er reicht bis etwas unter den tiefsten Punkt der Oberfläche, bei Seen unter ihren Spiegel; die Knöpfe sitzen in diesem Band, auch dort, wo ein See im Schnitt liegt; was unter dem Fels liegt, steht in keiner unserer Quellen.</li>
             <li>Schatten wirft nur, was im Modell liegt; Berge ausserhalb, Wolken und Dunst fehlen.</li>
           </ul>
         </Abschnitt>
@@ -967,6 +999,8 @@ const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 200, region: 300, ort: 200,
 const ORT_MIN = 3, ORT_MAX = 5
 /** das Wasser der Seen über dem Grund: Farbe und Deckkraft gewählt */
 const WASSER_FARBE = '#2f6f9a', WASSER_DECKKRAFT = 0.55
+/** das Lockergestein über dem Fels im Schnitt der Wände (swissBEDROCK): Farbe gewählt, der Fels bleibt die dunkle Wand */
+const LOCKER_FARBE = '#a8875a'
 /** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
 const KNOPF_BILD = 0.06, KNOPF_BRILLE_M = 0.045
 /** Höhe und Kronenradius je Art (Einzelbaum, Wald, Wald offen, Gebüschwald, Gehölzfläche), wie im Führerstand (BAUM_FORM in
@@ -1460,9 +1494,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     wurzel.userData.weiteKm = weite / 1000
     wurzel.userData.lage = { cE, cN }
     let leer = Infinity, hoechst = -Infinity, mittel = 0, zahl = 0
+    // die Höhe des Sockels nach der Oberfläche, über Seen nach dem Spiegel, nicht nach dem Grund (Michael, 2026-10-25: «Die Tiefe
+    // des Modells soll durch die Seen nicht höher als vorher sein»)
     for (const { g } of teile) {
       for (let q = 0; q < g.h.length; q++) {
-        const z = g.h[q]
+        const w = g.wasser?.[q]
+        const z = w !== undefined && !Number.isNaN(w) ? Math.max(g.h[q], w) : g.h[q]
         if (z === KEINE_HOEHE) continue
         if (z < leer) leer = z
         if (z > hoechst) hoechst = z
@@ -1473,6 +1510,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     mittel = zahl ? mittel / zahl : tief
     const weiteKm = weite / 1000
     const wand = weiteKm * SOCKEL_WAND, platte = weiteKm * SOCKEL_PLATTE, ueber = weiteKm * SOCKEL_UEBERSTAND
+    const boden = tief - wand * 1000 * 0.98
     // in der Brille steht der Sockel auf dem Tisch
     wurzel.userData.untenY = () => Y(tief) - wand - platte
     if (!renderer.xr.isPresenting) {
@@ -1525,7 +1563,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const setzen = () => {
         for (let j = 0; j < hoehe; j++) {
           for (let i = 0; i < breite; i++) {
-            const q = j * breite + i, z = g.h[q] === KEINE_HOEHE ? tief : g.h[q]
+            // ein Seegrund unter dem Boden des Sockels wird dort abgeschnitten
+            const q = j * breite + i, z = g.h[q] === KEINE_HOEHE ? tief : Math.max(g.h[q], boden)
             pos[q * 3] = X(ost + (i + 0.5) * m); pos[q * 3 + 1] = Y(z); pos[q * 3 + 2] = Z(nord - (j + 0.5) * m)
           }
         }
@@ -1576,6 +1615,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // die oberen Kanten der Wände, je mit der Richtung nach aussen (für die Linien der Höhen)
     let kantenOben: Array<{ p: Float32Array; nx: number; nz: number }> = []
     const wandWasserMaterial = new THREE.MeshBasicMaterial({ color: WASSER_FARBE, transparent: true, opacity: 0.8, side: THREE.DoubleSide })
+    const lockerMaterial = new THREE.MeshLambertMaterial({ color: LOCKER_FARBE, side: THREE.DoubleSide })
     const sockelBauen = () => {
       for (const o of sockel.children) (o as THREE.Mesh).geometry.dispose()
       sockel.clear()
@@ -1607,6 +1647,24 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           gw.setIndex(ix)
           gw.computeVertexNormals()
           sockel.add(new THREE.Mesh(gw, wandMaterialien[seite]))
+          // im Schnitt der Wand das Lockergestein: von der Oberfläche (oder dem Seegrund) bis auf den Fels laut swissBEDROCK
+          const fe = g.fels
+          if (fe) {
+            const vor = weiteKm * 0.0005, lp: number[] = [], li: number[] = []
+            const hat = (q: number) => !Number.isNaN(fe[q]) && Y(fe[q]) < pos[q * 3 + 1]
+            kante.forEach((q, i) => {
+              const x = pos[q * 3] + nx * vor, y = pos[q * 3 + 1], z = pos[q * 3 + 2] + nz * vor
+              lp.push(x, y, z, x, Number.isNaN(fe[q]) ? y : Math.max(unten, Math.min(y, Y(fe[q]))), z)
+              if (i && (hat(q) || hat(kante[i - 1])) && !Number.isNaN(fe[q]) && !Number.isNaN(fe[kante[i - 1]])) li.push((i - 1) * 2, i * 2, (i - 1) * 2 + 1, i * 2, i * 2 + 1, (i - 1) * 2 + 1)
+            })
+            if (li.length) {
+              const gl = new THREE.BufferGeometry()
+              gl.setAttribute('position', new THREE.Float32BufferAttribute(lp, 3))
+              gl.setIndex(li)
+              gl.computeVertexNormals()
+              sockel.add(new THREE.Mesh(gl, lockerMaterial))
+            }
+          }
           // im Schnitt der Wand das Wasser eines Sees zwischen Grund und Spiegel, knapp vor der Wand
           const w = g.wasser
           if (w) {
@@ -1946,7 +2004,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial])
+      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -2278,7 +2336,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const W = k?.wurzel.userData.weiteKm as number | undefined
     if (!k || !lage || !W || !windAn) return
     let tief = Infinity, hoch = -Infinity
-    for (const t of b.teile.values()) for (const z of t.h) if (z !== KEINE_HOEHE) { if (z < tief) tief = z; if (z > hoch) hoch = z }
+    for (const t of b.teile.values()) t.h.forEach((h, q) => { if (h === KEINE_HOEHE) return; const w = t.wasser?.[q], z = w !== undefined && !Number.isNaN(w) ? Math.max(h, w) : h; if (z < tief) tief = z; if (z > hoch) hoch = z })
     if (tief === Infinity) return
     const rand = [...b.teile.values()].map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
@@ -2391,7 +2449,7 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
 /** der Kasten um das Gelände eines Bestands im Raum des Modells (km, y oben, Norden nach −z) */
 function kastenUm(b: Bestand, lage: { cE: number; cN: number }) {
   let tief = Infinity, hoch = -Infinity
-  for (const t of b.teile.values()) for (const z of t.h) if (z !== KEINE_HOEHE) { if (z < tief) tief = z; if (z > hoch) hoch = z }
+  for (const t of b.teile.values()) t.h.forEach((h, q) => { if (h === KEINE_HOEHE) return; const w = t.wasser?.[q], z = w !== undefined && !Number.isNaN(w) ? Math.max(h, w) : h; if (z < tief) tief = z; if (z > hoch) hoch = z })
   const rand = [...b.teile.values()].map((t) => t.rahmen)
   const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
   const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
