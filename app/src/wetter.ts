@@ -37,6 +37,10 @@ export interface Wetter {
 const QUELLE = 'https://data.geo.admin.ch/ch.meteoschweiz.ogd-smn/'
 /** Annahmen fürs Bild, nicht aus der Quelle */
 export const NASS_AB_MM = 0.1, SCHNEE_BIS_C = 1, STARK_AB_MM = 2
+/** wie viel Regen oder Schnee gezeichnet wird (0 bis 1): gleichmässig mit der Menge, voll ab STARK_AB_MM in 30 Minuten, schwacher Regen nur
+ *  wenig (Michael, 2026-10-25: «je nach Regenmenge weniger oder eben mehr»; vorher begann es bei 30 %, so sah schwacher Regen fast wie
+ *  starker aus); eine Annahme fürs Bild */
+export const staerkeAus = (mmIn30Min: number) => Math.max(0.05, Math.min(1, mmIn30Min / STARK_AB_MM))
 const TAG_AB_WM2 = 10, BEWOELKT_AB = 0.5
 
 let stationen: Promise<Station[]> | null = null
@@ -80,7 +84,7 @@ async function messungLesen(s: Station): Promise<Wetter | null> {
   const w = mitWind[mitWind.length - 1]
   const windZeit = w ? zeitLesen(w[iZeit] ?? '') : null
   const wind = w && windZeit && Date.now() - windZeit.getTime() <= 2 * 3600e3 ? { kmh: zahl(w, iW), boe: zahl(w, iB), richtung: zahl(w, iD) } : null
-  return { station: s, zeit, temperatur, niederschlag, bewoelkt, art, staerke: nass ? Math.min(1, 0.3 + (niederschlag ?? 0) / STARK_AB_MM) : 0,
+  return { station: s, zeit, temperatur, niederschlag, bewoelkt, art, staerke: nass ? staerkeAus(niederschlag ?? 0) : 0,
            wind, windZeit: wind ? windZeit : null }
 }
 

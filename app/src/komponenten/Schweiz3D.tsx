@@ -1056,13 +1056,14 @@ const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 200, region: 300, ort: 200,
 const ORT_MIN = 3, ORT_MAX = 5
 /** das Wasser der Seen über dem Grund: Farbe und Deckkraft gewählt */
 const WASSER_FARBE = '#2f6f9a', WASSER_DECKKRAFT = 0.55
-// das Wasser im Schnitt der Wände: oben etwas heller als die Fläche, nach unten deutlich dunkler, ganz dunkel ab WASSER_DUNKEL_M Tiefe
-// (Michael, 2026-10-25: «wesentlich dunkler als die Oberfläche … gegen unten … deutlicher»); Farben gewählt, nicht gemessen
-const WASSER_SCHNITT_OBEN = '#3f86b5', WASSER_SCHNITT_MITTE = '#123a58', WASSER_SCHNITT_UNTEN = '#061a30', WASSER_DUNKEL_M = 120
+// das Wasser im Schnitt der Wände: immer etwas dunkler als die Fläche, damit man die Kante klar sieht, nach unten zum Grund hin dunkler,
+// am dunkelsten ab WASSER_DUNKEL_M Tiefe (Michael, 2026-10-25: «Die Wasseroberfläche muss immer mindestens so hell sein wie die
+// Schnittkante … gegen unten zum Grund her leicht dunkler»); im selben Licht wie die Fläche (Normale nach oben), Farben gewählt, nicht gemessen
+const WASSER_SCHNITT_OBEN = '#3478a6', WASSER_SCHNITT_MITTE = '#285f86', WASSER_SCHNITT_UNTEN = '#1a4464', WASSER_DUNKEL_M = 120
 // Anteile der Tiefe für die Punkte einer Säule im Schnitt, oben dichter
 const WASSER_SCHNITT_STUFEN = [0, 0.04, 0.1, 0.2, 0.35, 0.55, 0.8, 1]
 /** das Lockergestein über dem Fels im Schnitt der Wände (swissBEDROCK): Farbe gewählt, der Fels bleibt die dunkle Wand */
-const LOCKER_FARBE = '#a8875a'
+const LOCKER_FARBE = '#8a6e48'
 /** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
 const KNOPF_BILD = 0.06, KNOPF_BRILLE_M = 0.045
 /** Höhe und Kronenradius je Art (Einzelbaum, Wald, Wald offen, Gebüschwald, Gehölzfläche), wie im Führerstand (BAUM_FORM in
@@ -1676,7 +1677,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const platteMaterial = new THREE.MeshStandardMaterial({ color: SOCKEL_PLATTE_FARBE, roughness: 0.5, metalness: 0 })
     // die oberen Kanten der Wände, je mit der Richtung nach aussen (für die Linien der Höhen)
     let kantenOben: Array<{ p: Float32Array; nx: number; nz: number }> = []
-    const wandWasserMaterial = new THREE.MeshBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.92, side: THREE.DoubleSide })
+    const wandWasserMaterial = new THREE.MeshLambertMaterial({ vertexColors: true, transparent: true, opacity: 0.92 })
     const schnittOben = new THREE.Color(WASSER_SCHNITT_OBEN), schnittMitte = new THREE.Color(WASSER_SCHNITT_MITTE), schnittUnten = new THREE.Color(WASSER_SCHNITT_UNTEN)
     const schnittFarbe = new THREE.Color()
     const lockerMaterial = new THREE.MeshLambertMaterial({ color: LOCKER_FARBE, side: THREE.DoubleSide })
@@ -1748,7 +1749,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               if (i && !Number.isNaN(w[q]) && !Number.isNaN(w[kante[i - 1]])) {
                 for (let r = 0; r < n - 1; r++) {
                   const a0 = (i - 1) * n + r, a1 = a0 + 1, b0 = i * n + r, b1 = b0 + 1
-                  bi.push(a0, a1, b0, b0, a1, b1)
+                  // beide Seiten mit der Normalen nach oben (DoubleSide drehte sie von hinten nach unten, der Schnitt wurde schwarz)
+                  bi.push(a0, a1, b0, b0, a1, b1, a0, b0, a1, b0, b1, a1)
                 }
               }
             })
@@ -1756,6 +1758,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               const gb = new THREE.BufferGeometry()
               gb.setAttribute('position', new THREE.Float32BufferAttribute(bp, 3))
               gb.setAttribute('color', new THREE.Float32BufferAttribute(bf, 3))
+              // beleuchtet wie die Wasserfläche, so bleibt der Schnitt bei jedem Sonnenstand dunkler als sie
+              gb.setAttribute('normal', new THREE.Float32BufferAttribute(new Float32Array(bp.length).map((_, k) => (k % 3 === 1 ? 1 : 0)), 3))
               gb.setIndex(bi)
               sockel.add(new THREE.Mesh(gb, wandWasserMaterial))
             }

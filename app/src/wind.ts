@@ -10,7 +10,7 @@
  * Eine Datei je Grösse und Lauf ist etwa 32 MB gross, die Zeilen nach Punktart und Nummer (als Text) geordnet; die App sucht die
  * Zeilen ihrer Station mit Teilabrufen (Range) und holt so nur einige Kilobyte.
  */
-import { NASS_AB_MM, SCHNEE_BIS_C, STARK_AB_MM, type Station, type Wind } from './wetter'
+import { NASS_AB_MM, SCHNEE_BIS_C, staerkeAus, type Station, type Wind } from './wetter'
 
 const QUELLE = 'https://data.geo.admin.ch/ch.meteoschweiz.ogd-local-forecasting/'
 // Sonnenscheindauer in Minuten (sre000h0) und Globalstrahlung (gre000h0) je Stunde für die Bewölkung, wie bei der Messung
@@ -29,7 +29,7 @@ export interface WindStunde extends Wind {
  *  für 30 Minuten, hier für eine Stunde, darum die Stärke erst beim Doppelten voll */
 export function niederAusStunde(s: WindStunde): { art: 'regen' | 'schnee'; staerke: number } | null {
   if (s.mm === null || s.mm < NASS_AB_MM) return null
-  return { art: s.temperatur !== null && s.temperatur <= SCHNEE_BIS_C ? 'schnee' : 'regen', staerke: Math.min(1, 0.3 + s.mm / (2 * STARK_AB_MM)) }
+  return { art: s.temperatur !== null && s.temperatur <= SCHNEE_BIS_C ? 'schnee' : 'regen', staerke: staerkeAus(s.mm / 2) }
 }
 
 const zwei = (x: number) => String(x).padStart(2, '0')
