@@ -15,7 +15,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
-import { knopfTon, verlaufTon } from '../audio'
+import { knopfTon } from '../audio'
 import { istNadel, NADEL_BREITE } from '../baumart'
 import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -847,8 +847,6 @@ const BRILLE_BREITE_M = 1.2, BRILLE_TISCH_M = 0.8, BRILLE_ABSTAND_M = 0.9
 /** so lange blenden sich Höhenlinien und Orte von vorne nach hinten ein und rückwärts aus (Michael, 2026-10-22: «innerhalb von 2
  *  oder 3 Sekunden») */
 const VERLAUF_S = 2.5
-/** das Geräusch dazu ist kürzer (Michael, 2026-10-22: «noch zu lang») */
-const VERLAUF_TON_S = 0.9
 /** so stark leuchtet die Schrift eines ausgeschalteten Knopfs von selbst (gewählt) */
 const SCHRIFT_LEUCHTET = 0.85
 /** der Himmel ganz in der Nacht und die Grösse der hellsten Sterne in Bildpunkten (gewählt) */
@@ -2105,15 +2103,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
   }, [stand, b, stufe])
 
-  // Höhenlinien und Orte ein- und ausblenden, mit Geräusch, wenn ein Schalter wechselt (nicht beim ersten Mal)
-  const erstesMal = useRef(true)
+  // Höhenlinien und Orte ein- und ausblenden; zu hören ist nur der Klick des Knopfs wie bei Wanderwegen und Gebäuden (Michael,
+  // 2026-10-25: «nicht mehr so lange Geräusche. Neu die gleichen wie bei Wanderwege, Gebäude»; vorher ein Rauschen, verlaufTon)
   useEffect(() => {
     const k = kern.current
     if (!k) return
     const neu = { hoehen: scheiben, orte, gipfel }
-    const gewechselt = (Object.keys(neu) as Array<keyof typeof neu>).find((n) => k.verlauf[n].ziel !== +neu[n])
-    if (!erstesMal.current && gewechselt) verlaufTon(neu[gewechselt], VERLAUF_TON_S)
-    erstesMal.current = false
     for (const n of Object.keys(neu) as Array<keyof typeof neu>) k.verlauf[n].ziel = +neu[n]
   }, [scheiben, orte, gipfel])
   // eine neue Stufe steht in der Brille wieder auf dem Tisch wie am Anfang

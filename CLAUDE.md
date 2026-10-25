@@ -337,7 +337,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              jeder Druck klickt wie ein rastender Druckknopf, gerechnet (knopfTon in src/audio.ts; Michael, 2026-10-22: «passend und absolut
              authentisch»); Schalter «Orte» für die Ortschaften, am Anfang aus; Höhenlinien und Orte blenden sich in 2,5 s von vorne
              (zum Betrachter) nach hinten ein und genau rückwärts aus, eine Ebene quer zum Blick schneidet ab (VERLAUF_S, verlaufSetzen),
-             dazu ein Rauschen mit vielen kleinen Ticks, steigend beim Ein-, fallend beim Ausblenden (verlaufTon); Klang und Dauer gewählt; in der Brille
+             dabei nur der Klick des Knopfs wie bei Wanderwegen und Gebäuden (Michael, 2026-10-25: «nicht mehr so lange Geräusche»; vorher ein Rauschen); in der Brille
              Bäume ohne eigenen Schatten (Michael, 2026-10-22: Höhen und Bäume
              zusammen «etwas zu viel»; in verlaufSetzen);
              jeder Knopf hat seinen festen Platz, was in einer Stufe nicht geht (Wanderwege in der ganzen Schweiz, Gebäude und Bäume ohne
@@ -347,7 +347,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              (Michael, 2026-10-22: «Gipfel defaultmässig auch nicht einblenden»); die Knöpfe an den Wänden auch auf dem Bildschirm, mit Tipp
              oder Klick («auch in der Standardversion auf dem Display»), die Knöpfe oben im Bild sind weg («braucht es nicht mehr»), Datum
              und Uhrzeit fein unter dem Bild, wenn die Sonne an ist; ein Knopf fürs Vollbild oben rechts (useEchtesVollbild), «Mit VR-Brille» unten rechts im Bild (Michael, 2026-10-25: «soll unten sein»); das Bild 5 breit und 7 hoch, auf breiten Bildschirmen höchstens 85 % der Höhe (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch»);
-             die Wände und die Platte des Sockels wieder dunkelgrau ohne Holz (Michael, 2026-10-22; Ebenholz gab es kurz); das Geräusch beim Ein- und Ausblenden 0,9 s (VERLAUF_TON_S; «noch zu lang»); an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
+             die Wände und die Platte des Sockels wieder dunkelgrau ohne Holz (Michael, 2026-10-22; Ebenholz gab es kurz); an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
              Schweiz3D.tsx); alle Schalter am Anfang aus, auch Höhen und Sonne (Michael, 2026-10-22: «Alles defaultmässig ausgeschaltet»)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
