@@ -9,6 +9,7 @@ import './index.css'
 import auftaktDunkel from './assets/auftakt-3dland-dunkel.webp'
 import auftaktHell from './assets/auftakt-3dland-hell.webp'
 import { Auftakt } from './komponenten/Auftakt'
+import { aufklappenHoeren } from './audio'
 import Schweiz3D from './komponenten/Schweiz3D'
 
 const LINK = 'underline underline-offset-2 hover:text-sbb-black dark:hover:text-sbb-white'
@@ -65,6 +66,9 @@ function DreiDLand() {
     </div>
   )
 }
+
+// Klick beim Auf- und Zuklappen wie in Taktland (Michael, 2026-10-25: «Klickgeräusche beim Öffnen und schliessen der Klappen»)
+aufklappenHoeren()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
