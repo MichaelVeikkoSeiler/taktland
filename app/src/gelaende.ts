@@ -824,3 +824,41 @@ export async function felsLaden(e0: number, n0: number, e1: number, n1: number) 
   }
   return { quelle: ix.quelle, bei }
 }
+
+/**
+ * Ufer der Seen mit gemessenem Grund (Michael, 2026-10-25: «Warum ist das Wasser hier über das Ufer getreten?»): «Stehende Gewaesser»
+ * aus swissTLM3D (swisstopo), auf 1 m vereinfacht (pipeline/build_seeufer.py), je See eine Datei. Ringe in LV95, Ufer im Uhrzeigersinn,
+ * Inseln andersherum. Fehlt etwas, null.
+ */
+interface SeeuferIndex { quelle: string; seen: Array<{ datei: string; see: number; titel: string; rahmen: [number, number, number, number] }> }
+export const seeuferIndex = () => holen<SeeuferIndex>('data/seeufer/index.json')
+const uferVorrat = new Map<string, Promise<Array<Array<[number, number]>> | null>>()
+function uferDatei(datei: string) {
+  let p = uferVorrat.get(datei)
+  if (!p) {
+    p = (async () => {
+      const gepackt = await holenBinaer(`data/seeufer/${datei}`)
+      const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+      const v = new DataView(roh)
+      let o = 0
+      const zahl = v.getUint32(o, true); o += 4
+      const ringe: Array<Array<[number, number]>> = []
+      for (let r = 0; r < zahl; r++) {
+        const n = v.getUint32(o, true); let e = v.getInt32(o + 4, true), nn = v.getInt32(o + 8, true); o += 12
+        const ring: Array<[number, number]> = [[e / 10, nn / 10]]
+        for (let k = 1; k < n; k++) { e += v.getInt16(o, true); nn += v.getInt16(o + 2, true); o += 4; ring.push([e / 10, nn / 10]) }
+        ringe.push(ring)
+      }
+      return ringe
+    })().catch(() => null)
+    uferVorrat.set(datei, p)
+  }
+  return p
+}
+export async function seeuferLaden(e0: number, n0: number, e1: number, n1: number) {
+  const ix = await seeuferIndex().catch(() => null)
+  if (!ix) return []
+  const hier = ix.seen.filter((s) => s.rahmen[0] <= e1 && s.rahmen[2] >= e0 && s.rahmen[1] <= n1 && s.rahmen[3] >= n0)
+  const geladen = await Promise.all(hier.map(async (s) => ({ datei: s.datei, titel: s.titel, ringe: await uferDatei(s.datei) })))
+  return geladen.filter((s): s is { datei: string; titel: string; ringe: Array<Array<[number, number]>> } => !!s.ringe)
+}

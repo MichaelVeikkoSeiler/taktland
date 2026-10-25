@@ -111,7 +111,10 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
   inBrille: () => boolean, neuePlaetze: (stellen: THREE.Vector3[]) => void, groesseBrille: number,
   /** der Kasten um das Gelände im Raum der Eltern: gesucht wird nur darin (in der Stufe 1 km von «3D Schweiz» ist das Modell
    *  winzig gegen die Sichtweite, 600 Schritte bis dorthin sprangen darüber hinweg) */
-  kasten?: THREE.Box3): VierWindhosen {
+  kasten?: THREE.Box3,
+  /** feste Plätze im Raum der Eltern (in «3D Schweiz» die Mitten der vier Viertel des Modells, Michael, 2026-10-25: «Die Windhosen sollen
+   *  nicht mitwandern»); dann wird nicht nach der Kamera verteilt */
+  feste?: THREE.Vector3[]): VierWindhosen {
   const hosen = BILDPLAETZE.map(() => windhoseBauen())
   const schilder = hosen.map(() => {
     const sp = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false, transparent: true }))
@@ -173,7 +176,12 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
     schritt: () => {
       const t = (performance.now() - start) / 1000
       const brille = inBrille()
-      if (!brille) {
+      if (feste && !verteilt) {
+        feste.forEach((p, i) => hosen[i]?.gruppe.position.copy(p))
+        neuePlaetze(hosen.map((h) => h.gruppe.position.clone()))
+        verteilt = true
+      }
+      if (!brille && !feste) {
         // bewegt sich die Kamera, wartet sie die Ruhe ab und verteilt dann neu; als Bewegung zählt nur, was man sieht (das
         // Ausschwingen der Steuerung rückt sie noch lange um winzige Beträge, Michael, 2026-10-25: «Warum sehe ich hier keine
         // Windhosen?»), und wer lange dreht, sieht sie spätestens alle LAENGSTENS_MS neu

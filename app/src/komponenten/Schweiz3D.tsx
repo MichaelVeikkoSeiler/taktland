@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
+import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden, seeuferLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -54,6 +54,8 @@ interface Gelaende {
   seen?: string[]
   /** die Höhe des Felses unter dem Lockergestein je Feld (swissBEDROCK), NaN ohne Angabe (untergrundSetzen) */
   fels?: Float32Array
+  /** genaue Ufer der Seen mit Grund in diesem Stück (swissTLM3D, seeuferLaden), Ringe in LV95 */
+  ufer?: Array<{ datei: string; ringe: Array<Array<[number, number]>> }>
 }
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
@@ -262,7 +264,10 @@ function hoeheIm(gl: Gelaende, e: number, n: number) {
 
 /** Seegrund und Fels zu einem Gelände */
 async function untergrundSetzen(g: Gelaende): Promise<Gelaende> {
-  const mitSee = await seegrundSetzen(g)
+  const mitSee0 = await seegrundSetzen(g)
+  const r = mitSee0.raster
+  const mitSee = mitSee0.wasser
+    ? { ...mitSee0, ufer: await seeuferLaden(r.ost, r.nord - r.hoehe * r.m, r.ost + r.breite * r.m, r.nord).catch(() => []) } : mitSee0
   const { ost, nord, m, breite, hoehe } = mitSee.raster
   const f = await felsLaden(ost, nord - hoehe * m, ost + breite * m, nord).catch(() => null)
   if (!f) return mitSee
@@ -941,7 +946,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         <Abschnitt titel="Seen und Seetiefe">
           <p>Bei 22 Seen ist der Grund gemessen: swissBATHY3D von swisstopo, ein Höhenmodell des Seegrunds. Dort liegt das Modell auf
-            dem echten Seegrund, darüber steht das Wasser als durchsichtige Fläche, begrenzt vom Ufer aus swissTLMRegio (auf 25 m vereinfacht; wo es nicht reicht, ergänzen Felder des Rasters), und in den Wänden sieht man den See im Schnitt, von
+            dem echten Seegrund, darüber steht das Wasser als durchsichtige Fläche, begrenzt vom Ufer aus swissTLM3D von swisstopo (auf 1 m vereinfacht; beim Bodensee, Genfersee und Lago Maggiore, die dort fehlen, aus swissTLMRegio auf 25 m; wo es nicht reicht, ergänzen Felder des Rasters), und in den Wänden sieht man den See im Schnitt, von
             seinem Grund bis zum Spiegel. Die Höhen sind echt, auch unter Wasser. Der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund: Reicht ein See tiefer als der Sockel, ist sein Grund am Boden des Sockels abgeschnitten. Es sind: Ägerisee, Baldeggersee, Bielersee, Bodensee,
             Brienzersee, Genfersee, Hallwilersee, Lac de Joux, Lago Maggiore, Lungerersee, Murtensee, Neuenburgersee, Rotsee, Sarnersee,
             Sempachersee, Silsersee, Silvaplanersee, Thunersee, Vierwaldstättersee, Walensee, Zürichsee und Zugersee. Alle anderen Seen
@@ -1647,23 +1652,18 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     wasserGruppe.name = 'wasser'
     wurzel.add(wasserGruppe)
     const wasserMaterial = new THREE.MeshPhongMaterial({ color: WASSER_FARBE, transparent: true, opacity: WASSER_DECKKRAFT, depthWrite: false,
-      side: THREE.DoubleSide, shininess: 80, specular: '#9fc4e0',
+      // Spiegelung schwach (Michael, 2026-10-25: «Es darf Reflexionen geben, aber nicht so stark»; vorher #9fc4e0)
+      side: THREE.DoubleSide, shininess: 40, specular: '#33414c',
       // wo Umriss und Rasterfelder sich überlappen, nicht doppelt (sonst eine dunkle Naht)
       stencilWrite: true, stencilRef: 1, stencilFunc: THREE.NotEqualStencilFunc, stencilZPass: THREE.ReplaceStencilOp })
     const imUmriss = new Map<Gelaende, Uint8Array>()
-    if (zusatz && netze.some(({ g }) => g.wasser)) {
-      for (const see of zusatz.seen.seen) {
-        const ringe = see.ringe.map(({ start, d }) => {
-          const q: Array<[number, number]> = []
-          let la = start[0], lo = start[1]
-          q.push(lv95(la / 1e5, lo / 1e5))
-          for (let k = 0; k + 1 < d.length; k += 2) { la += d[k]; lo += d[k + 1]; q.push(lv95(la / 1e5, lo / 1e5)) }
-          return q
-        })
+    const gesetzt = new Set<number>()
+    // eine Fläche: das Ufer ringe[0], dahinter ihre Inseln; gibt den Spiegel zurück oder undefined
+    const flaecheSetzen = (ringe: Array<Array<[number, number]>>, nurNeu = false): number | undefined => {
         const aussen = ringe[0]
-        if (!aussen || aussen.length < 3) continue
+        if (!aussen || aussen.length < 3) return undefined
         if (Math.max(...aussen.map((p) => p[0])) < E0 || Math.min(...aussen.map((p) => p[0])) > E1 ||
-            Math.max(...aussen.map((p) => p[1])) < N0 || Math.min(...aussen.map((p) => p[1])) > N1) continue
+            Math.max(...aussen.map((p) => p[1])) < N0 || Math.min(...aussen.map((p) => p[1])) > N1) return undefined
         // je Stück die Felder im Umriss (gerade-ungerade über alle Ringe, also ohne Inseln) und wie oft welcher Spiegel darin liegt
         const zaehler = new Map<number, number>()
         const masken: Array<[Gelaende, Uint8Array]> = []
@@ -1694,7 +1694,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (drin) masken.push([g, maske])
         }
         const spiegel = [...zaehler].sort((u, v) => v[1] - u[1])[0]?.[0]
-        if (spiegel === undefined) continue
+        if (spiegel === undefined) return undefined
+        // ein See mit genauem Ufer bekommt nicht noch den groben Umriss dazu
+        if (nurNeu && gesetzt.has(spiegel)) return undefined
         for (const [g, maske] of masken) {
           const alt = imUmriss.get(g)
           if (alt) for (let q = 0; q < maske.length; q++) alt[q] |= maske[q]
@@ -1717,7 +1719,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           return q
         }
         const umriss = schneiden(aussen)
-        if (!umriss) continue
+        if (!umriss) return undefined
         const form = new THREE.Shape(umriss.map(([e, n]) => new THREE.Vector2(X(e), Z(n))))
         for (const insel of ringe.slice(1)) { const h = schneiden(insel); if (h) form.holes.push(new THREE.Path(h.map(([e, n]) => new THREE.Vector2(X(e), Z(n))))) }
         const geo = new THREE.ShapeGeometry(form)
@@ -1732,6 +1734,37 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const flaeche = new THREE.Mesh(geo, wasserMaterial)
         flaeche.renderOrder = 1
         wasserGruppe.add(flaeche)
+        return spiegel
+    }
+    // zuerst die genauen Ufer aus swissTLM3D (je Fläche das Ufer und die Inseln darin), dann für übrige Seen der Umriss aus swissTLMRegio
+    const genau = new Map<string, Array<Array<[number, number]>>>()
+    for (const { g } of netze) for (const u of g.ufer ?? []) genau.set(u.datei, u.ringe)
+    const flaecheVon = (r: Array<[number, number]>) => { let a = 0; for (let k = 0; k < r.length; k++) { const p = r[k], q = r[(k + 1) % r.length]; a += p[0] * q[1] - q[0] * p[1] } return a / 2 }
+    const liegtIn = (p: [number, number], r: Array<[number, number]>) => {
+      let drin = false
+      for (let k = 0, l = r.length - 1; k < r.length; l = k++) {
+        const [x1, y1] = r[k], [x2, y2] = r[l]
+        if ((y1 > p[1]) !== (y2 > p[1]) && p[0] < x1 + (p[1] - y1) / (y2 - y1) * (x2 - x1)) drin = !drin
+      }
+      return drin
+    }
+    for (const ringe of genau.values()) {
+      const ufer = ringe.filter((r) => flaecheVon(r) < 0), inseln = ringe.filter((r) => flaecheVon(r) >= 0)
+      for (const u of ufer) {
+        const sp = flaecheSetzen([u, ...inseln.filter((i) => liegtIn(i[0], u))])
+        if (sp !== undefined) gesetzt.add(sp)
+      }
+    }
+    if (zusatz && netze.some(({ g }) => g.wasser)) {
+      for (const see of zusatz.seen.seen) {
+        const ringe = see.ringe.map(({ start, d }) => {
+          const q: Array<[number, number]> = []
+          let la = start[0], lo = start[1]
+          q.push(lv95(la / 1e5, lo / 1e5))
+          for (let k = 0; k + 1 < d.length; k += 2) { la += d[k]; lo += d[k + 1]; q.push(lv95(la / 1e5, lo / 1e5)) }
+          return q
+        })
+        flaecheSetzen(ringe, true)
       }
     }
     // wo kein Umriss passt: die Felder des Rasters, nur wo alle vier Ecken im See und nicht im Umriss liegen
@@ -2492,7 +2525,19 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const vier = vierWindhosenBauen(k.wurzel, k.kamera, (x, z) => {
       const e = lage.cE + x * 1000, n = lage.cN - z * 1000
       return drin(e, n) ? bestandHoehe(b, e, n) / 1000 : null
-    }, k.inBrille, (stellen) => windOrteRef.current(stellen.map((p) => ({ e: lage.cE + p.x * 1000, n: lage.cN - p.z * 1000 }))), W * 0.12, kastenUm(b, lage))
+    }, k.inBrille, (stellen) => windOrteRef.current(stellen.map((p) => ({ e: lage.cE + p.x * 1000, n: lage.cN - p.z * 1000 }))), W * 0.12, kastenUm(b, lage),
+    // fest auf den Mitten der vier Viertel des Modells, beim Drehen und Zoomen bleiben sie stehen (Michael, 2026-10-25: «Die Windhosen
+    // sollen nicht mitwandern … verteilt auf die vier Viertel jeweils zentriert»)
+    (() => {
+      const rand = teile.map((t) => t.rahmen)
+      const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+      const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+      // links oben, rechts oben, links unten, rechts unten wie die Viertel des Bilds vorher
+      return [[0.25, 0.75], [0.75, 0.75], [0.25, 0.25], [0.75, 0.25]].map(([fx, fy]) => {
+        const e = e0 + fx * (e1 - e0), n = n0 + fy * (n1 - n0)
+        return new THREE.Vector3((e - lage.cE) / 1000, bestandHoehe(b, e, n) / 1000, -(n - lage.cN) / 1000)
+      })
+    })())
     windhosen.current = vier
     k.jeBild.push(vier.schritt)
     return () => {

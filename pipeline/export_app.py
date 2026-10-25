@@ -149,6 +149,12 @@ def main():
         if (ZIEL / "seegrund").exists():
             shutil.rmtree(ZIEL / "seegrund")
         shutil.copytree(seegrund, ZIEL / "seegrund")
+    # Ufer der Seen mit Grund für «3D Schweiz» (pipeline/build_seeufer.py)
+    seeufer = ROOT / "data" / "seeufer"
+    if seeufer.exists():
+        if (ZIEL / "seeufer").exists():
+            shutil.rmtree(ZIEL / "seeufer")
+        shutil.copytree(seeufer, ZIEL / "seeufer")
     # Gebäude und Bäume in zwei Probeausschnitten für «3D Schweiz» (pipeline/build_schweiz3d_probe.py)
     probe = ROOT / "data" / "schweiz3d_probe"
     if probe.exists():
