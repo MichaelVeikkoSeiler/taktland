@@ -427,7 +427,7 @@ data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026
              je Baum ±25 %), der Fuss auf dem scharfen oder feinen Gelände; keine Krone näher als 5 m an der gezeichneten Strecke
              (Lichtraum fürs Bild, in keiner Quelle, BAUM_LICHTRAUM_M; Michael, 2026-10-14: «Teilweise liegen Bäume auf der Strecke»);
              Laub- oder Nadelbaum nach der Höhe über Meer (src/baumart.ts, istNadel; Michael, 2026-10-24, nach einer Übersicht der Höhenstufen):
-             bis 800 m Laubbäume mit runder Krone, ab 1'500 m Nadelbäume als schlanker Kegel (NADEL_BREITE 0,55 der Breite), dazwischen
+             bis 800 m Laubbäume mit runder Krone, ab 1'500 m Nadelbäume als schlanker Kegel (NADEL_BREITE 0,55 der Breite, NADEL_HOEHE 0,8 der Höhe; Michael, 2026-10-25: «Nadelbäume 20% weniger hoch»), dazwischen
              gleichmässig steigend gemischt, je Stelle immer gleich; im Führerstand und in «3D Schweiz»; eine Annahme fürs Bild, swissTLM3D kennt
              Wald, aber nicht Laub- oder Nadelwald
 data/gleishoehe/  Höhe der Gleise: alle Gleisachsen aus swissTLM3D (TLM_EISENBAHN, PolyLineZ, ohne Standseilbahnen) alle 20 m, je Stück

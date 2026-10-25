@@ -14,3 +14,6 @@ export function istNadel(e: number, n: number, hoeheM: number): boolean {
 
 /** ein Nadelbaum ist schmaler als ein Laubbaum gleicher Art: so viel seiner Breite (gewählt, in keiner Quelle) */
 export const NADEL_BREITE = 0.55
+
+/** und so viel seiner Höhe (gewählt, in keiner Quelle; Michael, 2026-10-25: «Nadelbäume 20% weniger hoch») */
+export const NADEL_HOEHE = 0.8
