@@ -761,7 +761,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -1617,7 +1617,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const k = kern.current
     if (!k) return
     const { renderer, kamera, steuerung, wurzel } = k
-    const dunkel = matchMedia('(prefers-color-scheme: dark)').matches
     const teile = [...b.teile].map(([schluessel, g]) => {
       const [di, dj] = schluessel.split('_').map(Number)
       return { di, dj, g }
@@ -1939,19 +1938,20 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const schilder = new THREE.Group()
     schilder.name = 'schilder'
     wurzel.add(schilder)
-    const schild = (text: string, farbe: string, e: number, n: number, z: number) => {
+    // Gipfel mit demselben eckigen Schild wie die Orte, nur umgekehrt: weiss mit dunkelgrauer Schrift (Michael, 2026-10-25: «Gipfel
+    // sollen gleiche Schilder haben wie Orte nur invertiert»)
+    const schild = (text: string, e: number, n: number, z: number) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      const px = 26
-      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
-      c.width = Math.ceil(x.measureText(text).width) + 16; c.height = px + 12
-      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
-      x.fillStyle = dunkel ? 'rgba(20,20,20,0.8)' : 'rgba(255,255,255,0.85)'
-      x.beginPath(); x.roundRect(0, 0, c.width, c.height, 6); x.fill()
-      x.fillStyle = farbe; x.fillText(text, 8, px)
+      const px = 26, schrift = `normal ${px}px Helvetica, Arial, sans-serif`
+      x.font = schrift
+      c.width = Math.ceil(x.measureText(text).width) + 18; c.height = px + 14
+      x.font = schrift
+      x.fillStyle = '#ffffff'; x.fillRect(0, 0, c.width, c.height)
+      x.fillStyle = ORT_GRAU; x.fillText(text, 9, px + 1)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: false }))
       sp.visible = false
-      sp.userData = { art: 'gipfel', e, n, z, b: c.width * 0.0009, h: c.height * 0.0009, verhaeltnis: c.width / c.height }
+      sp.userData = { art: 'gipfel', e, n, z, b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height }
       sp.scale.set(sp.userData.b, sp.userData.h, 1)
       sp.center.set(0.5, 0)
       sp.position.set(X(e), Y(z), Z(n))
@@ -1963,7 +1963,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const gipfel = zusatz.sw.gipfel.filter((x) => x.hoehe_m !== null).map((x) => ({ x, l: lv95(x.lage[0], x.lage[1]) }))
         .filter(({ l }) => drin(l[0], l[1])).sort((a, c) => c.x.hoehe_m! - a.x.hoehe_m!)
       const anzahl = (stufe === 'schweiz' ? 8 : stufe === 'region' ? 25 : stufe === 'ort' ? 10 : 4) * Math.min(3, b.teile.size)
-      for (const { x, l } of gipfel.slice(0, anzahl)) schild(`▲ ${x.name} ${x.hoehe_m!.toLocaleString('de-CH')}`, dunkel ? '#e2c9a8' : '#7a4a14', l[0], l[1], x.hoehe_m!)
+      for (const { x, l } of gipfel.slice(0, anzahl)) schild(`▲ ${x.name} ${x.hoehe_m!.toLocaleString('de-CH')}`, l[0], l[1], x.hoehe_m!)
     }
     // Ortschaften wie die Bahnhöfe der Modellbahn (Michael, 2026-10-21: «mit deiner … dunkelgrauen Linie, die sehr dünn ist, und
     // deiner Fahne oben, wo weiss auf schwarzem Kasten der Ortsname steht»): ein Mast, oben ein eckiges dunkelgraues Schild;
