@@ -1592,7 +1592,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const f of jeBild) f()
       knoepfeZeigen()
       renderer.getSize(aufloesung)
-      for (const name of ['hoehen', 'wanderwege', 'orte']) {
+      for (const name of ['hoehen', 'wanderwege', 'orte', 'gipfel']) {
         for (const o of wurzel.getObjectByName(name)?.children ?? []) ((o as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
       }
       if (!renderer.xr.isPresenting) steuerung.update()
@@ -1940,6 +1940,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const schilder = new THREE.Group()
     schilder.name = 'schilder'
     wurzel.add(schilder)
+    const gipfelMastKm = weiteKm * ORT_MAST
+    const gipfelGruppe = new THREE.Group()
+    gipfelGruppe.name = 'gipfel'
+    wurzel.add(gipfelGruppe)
+    const gipfelMast = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX, clippingPlanes: [k.verlauf.gipfel.ebene] })
     // Gipfel mit demselben eckigen Schild wie die Orte, nur umgekehrt: weiss mit dunkelgrauer Schrift (Michael, 2026-10-25: «Gipfel
     // sollen gleiche Schilder haben wie Orte nur invertiert»)
     const schild = (text: string, e: number, n: number, z: number) => {
@@ -1957,8 +1962,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       sp.scale.set(sp.userData.b, sp.userData.h, 1)
       sp.center.set(0.5, 0)
       sp.position.set(X(e), Y(z), Z(n))
+      // auf einem Mast wie die Orte (Michael, 2026-10-25: «Auch Mast»)
+      sp.position.y += gipfelMastKm
       sp.renderOrder = 3
       schilder.add(sp)
+      const geo = new LineSegmentsGeometry()
+      geo.setPositions([X(e), Y(z), Z(n), X(e), Y(z) + gipfelMastKm, Z(n)])
+      gipfelGruppe.add(new LineSegments2(geo, gipfelMast))
     }
     const drin = (e: number, n: number) => [...b.teile.values()].some((t) => imRaster(t.raster, e, n))
     if (zusatz) {
@@ -2149,7 +2159,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial])
+      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial, gipfelMast])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
