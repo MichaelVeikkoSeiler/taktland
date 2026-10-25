@@ -41,7 +41,7 @@ function DreiDLand() {
               Gelände (swissALTIRegio, swissALTI3D), Luftbild (SWISSIMAGE), Seen, Ortschaften und die Gipfel der Suche (swissTLMRegio), Wanderwege, Bäume und
               Wald (swissTLM3D), Gebäude (swissBUILDINGS3D 3.0), Gipfel und Ortsnamen der Landeskarte 1:1 Million (Swiss Map Vector 1000):
               Bundesamt für Landestopografie swisstopo. Kantone: Bundesamt für Statistik BFS. Wind und Windprognose: MeteoSchweiz
-              (SwissMetNet und lokale Prognose, Open Government Data). Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial
+              (SwissMetNet und lokale Prognose, Open Government Data). Seegrund von 22 Seen: swissBATHY3D, swisstopo. Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial
               (Olaf Frohn, BSD-Lizenz). Was je Modell wofür ist, steht darunter
               unter «Modell, nicht massstäblich: Quellen». Lizenzen der mitgelieferten Bibliotheken:{' '}
               <a href="./lizenzen/drittsoftware.txt" className={LINK}>drittsoftware.txt</a>.

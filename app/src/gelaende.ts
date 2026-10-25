@@ -711,3 +711,70 @@ export async function schweiz3dLaden(e0: number, n0: number, e1: number, n1: num
     bildJahre: [...new Set(raus.map(({ ke, kn }) => ix.kacheln[`${ke}_${kn}`][0]!))].sort(),
   }
 }
+
+/**
+ * Seegrund (Michael, 2026-10-25: «Seetiefe»): swissBATHY3D (swisstopo) für 22 Seen, auf 25 m gemittelt, in den 10-km-Kacheln des
+ * Geländes (pipeline/build_seegrund.py), dazu je See sein Spiegel aus dem Gelände. Wo es keinen gemessenen Grund gibt, bleibt das
+ * Gelände, wie es ist.
+ */
+interface SeegrundIndex {
+  quelle: string; kachel_m: number; raster_m: number; zellen: number; kacheln: string[]
+  seen: Array<{ name: string; titel: string; spiegel_m: number | null }>
+}
+export const seegrundIndex = () => holen<SeegrundIndex>('data/seegrund/index.json')
+const seegrundVorrat = new Map<string, Promise<{ grund: Float32Array; see: Uint8Array } | null>>()
+function seegrundKachel(name: string, zellen: number) {
+  let p = seegrundVorrat.get(name)
+  if (!p) {
+    p = (async () => {
+      const gepackt = await holenBinaer(`data/seegrund/${name}.sgz`)
+      const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
+      const unten = new DataView(roh).getInt32(0, true), n = zellen * zellen
+      const u = new Uint16Array(roh.slice(4, 4 + 2 * n)), see = new Uint8Array(roh, 4 + 2 * n, n)
+      const grund = new Float32Array(n)
+      for (let i = 0; i < n; i++) grund[i] = u[i] === 65535 ? NaN : (unten + u[i]) / 10
+      return { grund, see }
+    })().catch(() => { seegrundVorrat.delete(name); return null })
+    seegrundVorrat.set(name, p)
+  }
+  return p
+}
+export interface Seegrund {
+  quelle: string
+  /** die Seen mit Grund in diesem Ausschnitt */
+  seen: string[]
+  /** Grund und Spiegel in m ü. M. an einer Stelle, oder null (kein gemessener Grund); der Grund zwischen den Feldern linear */
+  bei: (e: number, n: number) => { grund: number; spiegel: number } | null
+}
+export async function seegrundLaden(e0: number, n0: number, e1: number, n1: number): Promise<Seegrund | null> {
+  const ix = await seegrundIndex().catch(() => null)
+  if (!ix) return null
+  const { kachel_m: k, raster_m: m, zellen } = ix
+  const da = new Set(ix.kacheln), namen: string[] = []
+  for (let ex = Math.floor(e0 / k); ex <= Math.floor(e1 / k); ex++) {
+    for (let ny = Math.floor(n0 / k); ny <= Math.floor(n1 / k); ny++) if (da.has(`${ex}_${ny}`)) namen.push(`${ex}_${ny}`)
+  }
+  if (!namen.length) return null
+  const geladen = new Map<string, { grund: Float32Array; see: Uint8Array }>()
+  await Promise.all(namen.map(async (n) => { const t = await seegrundKachel(n, zellen); if (t) geladen.set(n, t) }))
+  const feld = (I: number, J: number) => {
+    const ex = Math.floor(I * m / k), ny = Math.floor(J * m / k), t = geladen.get(`${ex}_${ny}`)
+    if (!t) return null
+    const q = ((ny + 1) * zellen - 1 - J) * zellen + (I - ex * zellen)
+    const g = t.grund[q]
+    return Number.isNaN(g) ? null : { g, see: t.see[q] }
+  }
+  const seen = new Set<string>()
+  const bei = (e: number, n: number) => {
+    const x = e / m - 0.5, y = n / m - 0.5, I = Math.floor(x), J = Math.floor(y), fx = x - I, fy = y - J
+    const mitte = feld(Math.floor(e / m), Math.floor(n / m))
+    if (!mitte) return null
+    const spiegel = ix.seen[mitte.see]?.spiegel_m
+    if (spiegel === null || spiegel === undefined) return null
+    seen.add(ix.seen[mitte.see].titel)
+    const a = feld(I, J), b = feld(I + 1, J), c = feld(I, J + 1), d = feld(I + 1, J + 1)
+    const grund = a && b && c && d ? a.g * (1 - fx) * (1 - fy) + b.g * fx * (1 - fy) + c.g * (1 - fx) * fy + d.g * fx * fy : mitte.g
+    return { grund: Math.min(grund, spiegel), spiegel }
+  }
+  return { quelle: ix.quelle, get seen() { return [...seen] }, bei }
+}

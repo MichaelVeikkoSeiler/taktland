@@ -1,0 +1,177 @@
+{
+ "quelle": "swissBATHY3D, Bundesamt für Landestopografie swisstopo, auf 25 m gemittelt; Seespiegel aus swissALTIRegio (swisstopo)",
+ "geladen": "2026-10-25",
+ "kachel_m": 10000,
+ "raster_m": 25,
+ "zellen": 400,
+ "hinweis": "Int32 tiefster Grund in dm, je Feld UInt16 Grund in dm darüber (65535 keiner), je Feld UInt8 Nummer des Sees (255 keiner); ein Feld hat Grund, wenn mindestens die Hälfte seiner Meter gemessen ist; der Spiegel ist der Median des Geländes über dem See",
+ "seen": [
+  {
+   "name": "aegerisee",
+   "titel": "Ägerisee",
+   "spiegel_m": 724.0
+  },
+  {
+   "name": "baldeggersee",
+   "titel": "Baldeggersee",
+   "spiegel_m": 463.0
+  },
+  {
+   "name": "bielersee",
+   "titel": "Bielersee",
+   "spiegel_m": 429.0
+  },
+  {
+   "name": "bodensee",
+   "titel": "Bodensee",
+   "spiegel_m": 396.0
+  },
+  {
+   "name": "brienzersee",
+   "titel": "Brienzersee",
+   "spiegel_m": 564.0
+  },
+  {
+   "name": "hallwilersee",
+   "titel": "Hallwilersee",
+   "spiegel_m": 449.0
+  },
+  {
+   "name": "lacdejoux",
+   "titel": "Lac de Joux",
+   "spiegel_m": 1014.0
+  },
+  {
+   "name": "lacleman",
+   "titel": "Genfersee",
+   "spiegel_m": 372.0
+  },
+  {
+   "name": "lacneuchatel",
+   "titel": "Neuenburgersee",
+   "spiegel_m": 429.0
+  },
+  {
+   "name": "lagomaggiore",
+   "titel": "Lago Maggiore",
+   "spiegel_m": 193.0
+  },
+  {
+   "name": "lungernsee",
+   "titel": "Lungerersee",
+   "spiegel_m": 713.0
+  },
+  {
+   "name": "murtensee",
+   "titel": "Murtensee",
+   "spiegel_m": 429.0
+  },
+  {
+   "name": "rotsee",
+   "titel": "Rotsee",
+   "spiegel_m": 419.0
+  },
+  {
+   "name": "sarnersee",
+   "titel": "Sarnersee",
+   "spiegel_m": 469.0
+  },
+  {
+   "name": "sempachersee",
+   "titel": "Sempachersee",
+   "spiegel_m": 504.0
+  },
+  {
+   "name": "silsersee",
+   "titel": "Silsersee",
+   "spiegel_m": 1799.0
+  },
+  {
+   "name": "silvaplanersee",
+   "titel": "Silvaplanersee",
+   "spiegel_m": 1793.0
+  },
+  {
+   "name": "thunersee",
+   "titel": "Thunersee",
+   "spiegel_m": 558.0
+  },
+  {
+   "name": "vierwaldstaettersee",
+   "titel": "Vierwaldstättersee",
+   "spiegel_m": 434.0
+  },
+  {
+   "name": "walensee",
+   "titel": "Walensee",
+   "spiegel_m": 420.0
+  },
+  {
+   "name": "zuerichsee",
+   "titel": "Zürichsee",
+   "spiegel_m": 406.0
+  },
+  {
+   "name": "zugersee",
+   "titel": "Zugersee",
+   "spiegel_m": 414.0
+  }
+ ],
+ "kacheln": [
+  "250_116",
+  "251_116",
+  "253_118",
+  "254_118",
+  "254_119",
+  "255_118",
+  "255_119",
+  "255_120",
+  "256_119",
+  "256_120",
+  "257_119",
+  "257_120",
+  "257_121",
+  "258_121",
+  "258_122",
+  "261_117",
+  "262_116",
+  "262_117",
+  "263_116",
+  "263_117",
+  "264_117",
+  "265_118",
+  "265_119",
+  "265_121",
+  "265_122",
+  "265_123",
+  "265_124",
+  "266_119",
+  "266_120",
+  "266_121",
+  "266_122",
+  "266_123",
+  "267_120",
+  "267_121",
+  "267_122",
+  "268_119",
+  "268_120",
+  "268_121",
+  "268_122",
+  "268_123",
+  "268_124",
+  "269_119",
+  "269_120",
+  "269_121",
+  "269_122",
+  "269_123",
+  "270_122",
+  "270_123",
+  "272_122",
+  "273_121",
+  "273_122",
+  "274_121",
+  "274_122",
+  "277_114",
+  "278_114"
+ ]
+}

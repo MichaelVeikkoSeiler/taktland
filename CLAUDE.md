@@ -507,6 +507,17 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              tiefes, an- und abschwellendes Rauschen nach dem Mittel der vier Windhosen, voll ab 40 km/h, Schnee still; in «3D Schweiz» mit dem Knopf
              «Wetter», in der Modellbahn und beim Fahren mit dem Lautsprecher des Zuggeräuschs; Klang und Lautstärke gewählt; ein Strich 1,2 % der Breite des Modells lang, aus der Ferne (ab 1,2-mal der Breite) weniger
              und blasser, bis auf 15 % (FERN_AB, FERN_MIN; Michael, 2026-10-25: «aus der Ferne etwas zu überproportional viel»)
+data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetiefen will ich dann zuerst einmal anschauen»): swissBATHY3D
+             (swisstopo, gemessenes Höhenmodell des Grunds von 22 Seen, je km auf 1 m) auf 25 m gemittelt, ein Feld mit Grund, wenn mindestens die
+             Hälfte seiner Meter gemessen ist, in den 10-km-Kacheln des Geländes (.sgz: Int32 tiefster Grund in dm, UInt16 je Feld darüber, UInt8
+             Nummer des Sees), je See der Spiegel als Median von swissALTIRegio (50 m) über seinen Feldern, auf den Meter (pipeline/build_seegrund.py,
+             etwa 3 GB laden, je See gleich gelöscht); in der App (seegrundLaden in src/gelaende.ts, seegrundSetzen in Schweiz3D.tsx) ab der Region:
+             wo das Gelände höchstens 1,5 m über dem Spiegel liegt und Grund gemessen ist, sinkt es auf den Grund, darüber eine durchsichtige
+             Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, Masten,
+             Windhosen und Wanderwege auf dem Wasser (hoeheIm); andere Seen nur mit ihrer Oberfläche (so in der Anleitung und den Quellen);
+             in der ganzen Schweiz noch nicht; geologischer Untergrund (swissBEDROCK, GeoMol, Lithologie 1:500'000) erst geprüft, nicht eingebaut.
+             Die Anleitung unter dem Modell hat dazu «Seen und Seetiefe», «Woher die Daten stammen» und «Was gezeichnet oder angenommen ist»
+             (Michael, 2026-10-25: «informiere das Zielpublikum über alle Informationen»)
 data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-10-24: «Himmel nachts dunkler und mit Sternen machen»):
              alle 5'044 Sterne bis zur Helligkeit 6 aus dem Hipparcos-Katalog (ESA), wie ihn d3-celestial 0.7.35 (Olaf Frohn, BSD, Lizenz in
              drittsoftware.txt) aufbereitet, aus dem npm-Paket (pipeline/build_sterne.py, 98 KB); die App (src/sterne.ts) rechnet ihren Ort
@@ -555,6 +566,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_erraten.py      # Pool für «Bahnhofsuche» aus data/facts
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 python3 pipeline/build_wetterstationen.py          # Wetterstationen von MeteoSchweiz für das echte Wetter in der Modellbahn
+.venv/bin/python pipeline/build_seegrund.py          # Seegrund von 22 Seen (swissBATHY3D) für «3D Schweiz», etwa 3 GB laden, vor export_app
 python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-celestial) für den Nachthimmel in «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_relief.py       # Bergstrecken in 3D (Ausschnitt, Linie, Bauwerke; Gelände aus den Kacheln)
 .venv/bin/python pipeline/build_gelaende.py     # Geländekacheln der ganzen Schweiz für «3D» auf jeder Fahrt
