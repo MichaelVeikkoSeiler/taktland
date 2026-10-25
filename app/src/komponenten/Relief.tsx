@@ -3242,8 +3242,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       lw.width = Math.ceil(ctx.measureText(text).width) + 2 * rand; lw.height = px + 16
       ctx.font = schrift
       if (ortsschild) {
+        // leicht abgerundet wie alle Schilder (Michael, 2026-10-25: «Alle Schilder leicht abgerundete Ecken»)
         ctx.fillStyle = BAHNHOF_GRAU
-        ctx.fillRect(0, 0, lw.width, lw.height)
+        ctx.beginPath(); ctx.roundRect(0, 0, lw.width, lw.height, 6); ctx.fill()
       } else {
         ctx.fillStyle = dunkel ? 'rgba(20,20,20,0.82)' : 'rgba(255,255,255,0.85)'
         ctx.beginPath(); ctx.roundRect(0, 0, lw.width, lw.height, 8); ctx.fill()
