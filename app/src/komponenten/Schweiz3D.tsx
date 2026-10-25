@@ -2153,14 +2153,22 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
     const unten = tief / 1000, oben = hoch / 1000 + W * 0.25
-    const ns = niederschlagBauen()
+    // ein Regenstrich etwa 1,2 % der Breite des Modells lang, nicht ein Anteil seiner Höhe (sonst lang in steilen Feldern)
+    const ns = niederschlagBauen(Math.min(0.03, (W * 0.012) / Math.max(1e-6, oben - unten)))
     ns.gruppe.position.set(((e0 + e1) / 2 - lage.cE) / 1000, (unten + oben) / 2, -((n0 + n1) / 2 - lage.cN) / 1000)
     ns.gruppe.scale.set((e1 - e0) / 1000, oben - unten, (n1 - n0) / 1000)
     ns.gruppe.userData.bleibt = true
     k.wurzel.add(ns.gruppe)
     regen.current = ns
     let alt = performance.now()
-    const schritt = () => { const t = performance.now(); ns.schritt(Math.min(0.1, (t - alt) / 1000)); alt = t }
+    const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
+    const schritt = () => {
+      const t = performance.now()
+      const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
+      ns.gruppe.getWorldPosition(mitte); auge.setFromMatrixPosition(cam.matrixWorld)
+      ns.schritt(Math.min(0.1, (t - alt) / 1000), mitte.distanceTo(auge) / (W * k.wurzel.scale.x))
+      alt = t
+    }
     k.jeBild.push(schritt)
     return () => {
       k.wurzel.remove(ns.gruppe); ns.entsorgen(); regen.current = null
