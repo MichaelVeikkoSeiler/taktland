@@ -56,6 +56,9 @@ export function windhoseBauen(): Windhose {
   halter.rotateY(Math.PI / 2)
   teile.push(halter)
   neigen.add(new THREE.Mesh(halter, mastStoff))
+  // Mast und Sack werfen Schatten, wo die Sonne mit Schatten scheint (Michael, 2026-10-25: «Windhosen sollen reale Schatten werfen wenn
+  // die Sonne scheint»); ohne Schattenkarte der Szene wirkt das nicht
+  gruppe.traverse((o) => { if (o instanceof THREE.Mesh) o.castShadow = true })
 
   let staerke = 0, ziel = 0, gierZiel = 0, gier = 0, bekannt = false
   const setzen = (kmh: number | null, richtung: number | null) => {
