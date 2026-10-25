@@ -16,7 +16,7 @@ import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
 import { knopfTon, wetterGeraeusch, wetterGeraeuschAus } from '../audio'
-import { istNadel, NADEL_BREITE } from '../baumart'
+import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
@@ -2631,8 +2631,8 @@ function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0:
   const m = new THREE.Matrix4(), v = new THREE.Vector3(), s = new THREE.Vector3(), q = new THREE.Quaternion(), c = new THREE.Color()
   const oben = new THREE.Vector3(0, 1, 0)
   liste.forEach(([e, n, art, r, g, bl], i) => {
-    const [hoehe, radiusArt] = BAUM_FORM[art] ?? BAUM_FORM[0]
-    const j = nadel[i] ? 1 : 0, netz = netze[j], radius = radiusArt * (nadel[i] ? NADEL_BREITE : 1)
+    const [hoeheArt, radiusArt] = BAUM_FORM[art] ?? BAUM_FORM[0]
+    const j = nadel[i] ? 1 : 0, netz = netze[j], radius = radiusArt * (nadel[i] ? NADEL_BREITE : 1), hoehe = hoeheArt * (nadel[i] ? NADEL_HOEHE : 1)
     // je Baum bis 25 % grösser oder kleiner, immer gleich
     const z = Math.sin(e * 12.9898 + n * 78.233) * 43758.5453, f = 0.75 + 0.5 * (z - Math.floor(z))
     v.set((e - cE) / 1000, (hoehen[i] - 0.5) / 1000, -(n - cN) / 1000)
