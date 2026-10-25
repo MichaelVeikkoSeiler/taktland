@@ -1065,7 +1065,7 @@ const VERLAUF_S = 2.5
 /** so stark leuchtet die Schrift eines ausgeschalteten Knopfs von selbst (gewählt) */
 const SCHRIFT_LEUCHTET = 0.85
 /** der Himmel ganz in der Nacht und die Grösse der hellsten Sterne in Bildpunkten (gewählt) */
-const HIMMEL_NACHT = new THREE.Color('#070d1a')
+const HIMMEL_NACHT = new THREE.Color('#070d1a'), HIMMEL_NACHT_OBEN = new THREE.Color('#02050b')
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 // Sonne orange (Michael, 2026-10-25: «Der Knopf Sonne soll orangefarben sein»; vorher rot)
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff9a1f', wind: '#5ab4ff' }
@@ -1178,7 +1178,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   const welt = useRef<Welt | null>(null)
   const kern = useRef<{
     renderer: THREE.WebGLRenderer; szene: THREE.Scene; kamera: THREE.PerspectiveCamera; steuerung: OrbitControls
-    wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color
+    wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color; himmelOben: THREE.Color; himmelObenTag: THREE.Color
+    himmelMalen: () => void
     sterne: Sternenhimmel
     jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void }
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
@@ -1201,11 +1202,26 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const szene = new THREE.Scene()
     // der Himmel; mit der Sonne unter dem Horizont dunkler, dazu die Sterne (Effekt zum Sonnenstand)
     const himmelTag = new THREE.Color(dunkel ? '#0d1b2a' : '#cfe3f5'), himmel = himmelTag.clone()
+    // gegen oben dunkler (Michael, 2026-10-25: «Himmel gegen oben dunkler»): ein Verlauf über das Bild vom Ton unten bis zu diesem
+    // oben, als Bild hinter dem Modell, nicht nach der Blickrichtung; Farben gewählt
+    const himmelObenTag = new THREE.Color(dunkel ? '#050c16' : '#86b4e0'), himmelOben = himmelObenTag.clone()
+    const himmelBild = document.createElement('canvas')
+    himmelBild.width = 2; himmelBild.height = 256
+    const himmelTextur = new THREE.CanvasTexture(himmelBild)
+    himmelTextur.colorSpace = THREE.SRGBColorSpace
+    const himmelMalen = () => {
+      const x = himmelBild.getContext('2d')!, v = x.createLinearGradient(0, 0, 0, himmelBild.height)
+      v.addColorStop(0, `#${himmelOben.getHexString(THREE.SRGBColorSpace)}`)
+      v.addColorStop(1, `#${himmel.getHexString(THREE.SRGBColorSpace)}`)
+      x.fillStyle = v; x.fillRect(0, 0, himmelBild.width, himmelBild.height)
+      himmelTextur.needsUpdate = true
+    }
+    himmelMalen()
     let durchsicht = false
     const sterne = sternenhimmelBauen()
     szene.add(sterne.punkte)
     const setzeHimmel = () => {
-      szene.background = renderer.xr.isPresenting && durchsicht ? null : himmel
+      szene.background = renderer.xr.isPresenting && durchsicht ? null : himmelTextur
     }
     setzeHimmel()
     const kamera = new THREE.PerspectiveCamera(45, el.clientWidth / el.clientHeight, 0.01, 2000)
@@ -1516,7 +1532,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     jeBild.push(verlaufSetzen)
     // die Sterne um das Auge, gedreht wie das Modell (die Himmelsrichtungen gehören zu ihm, wie die Sonne)
     jeBild.push(() => sterne.schritt(renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera, wurzel, !!szene.background))
-    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, sterne, jeBild, wenn, tafel, tafelSetzen,
+    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, himmelOben, himmelObenTag, himmelMalen, sterne, jeBild, wenn, tafel, tafelSetzen,
                      sonne, himmelLicht, anfangSetzen, verlauf }
 
     const groesse = () => {
@@ -2384,13 +2400,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => {
     const k = kern.current
     if (!k) return
-    const { sonne, himmelLicht, wurzel, himmel, himmelTag, sterne } = k
+    const { sonne, himmelLicht, wurzel, himmel, himmelTag, himmelOben, himmelObenTag, himmelMalen, sterne } = k
     const weiteKm = (wurzel.userData.weiteKm as number) || 1, mitteY = (wurzel.userData.sonnenMitte as number) || 0
     const d = new THREE.Vector3(-0.35, 1.3, 0.9).normalize()
     // nachts der Himmel dunkel mit Sternen (Michael, 2026-10-24): von 3° über dem Horizont bis 12° darunter (nautische Dämmerung)
     // wird er dunkel, die Sterne erscheinen ab 4° darunter und sind ab 12° ganz da; Farben gewählt
     const nacht = stand ? himmelNacht(stand.hoehe) : 0
     himmel.copy(himmelTag).lerp(HIMMEL_NACHT, nacht)
+    himmelOben.copy(himmelObenTag).lerp(HIMMEL_NACHT_OBEN, nacht)
+    himmelMalen()
     const sicht = stand ? sternSicht(stand.hoehe) : 0
     sterne.sicht(sicht)
     if (stand && sicht > 0) sterne.setzen(stand.zeit, stand.la, stand.lo)
