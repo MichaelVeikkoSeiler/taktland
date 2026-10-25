@@ -333,7 +333,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Band unter dem tiefsten Punkt, links der Knöpfe + und − Höhen, Wanderwege (ab 20 km), Gebäude und Bäume (wo es sie gibt), rechts
              Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Tag, +1 Tag (Michael, 2026-10-24: «Was heisst 1 Mon?», dann «−1 Monat und +1 Monat durch Tage ersetzen»), Jetzt (Strahl und Abzug); als Knöpfe einer Steuerung
              (Michael, 2026-10-22: «wie richtige … physische Knöpfe»): aus dunkel und 1,1 % der Breite vorstehend, an 0,3 % eingedrückt und
-             leuchtend mit Schein auf der Wand, Gelände gelb, Gebäude und Bäume grün, Sonne rot (KNOPF_*, LICHT), die Zeit als flache Anzeige;
+             leuchtend mit Schein auf der Wand, Gelände gelb, Gebäude und Bäume grün, Sonne orange (seit 2026-10-25, vorher rot; Michael: «orangefarben») (KNOPF_*, LICHT), die Zeit als flache Anzeige;
              jeder Druck klickt wie ein rastender Druckknopf, gerechnet (knopfTon in src/audio.ts; Michael, 2026-10-22: «passend und absolut
              authentisch»); Schalter «Orte» für die Ortschaften, am Anfang aus; Höhenlinien und Orte blenden sich in 2,5 s von vorne
              (zum Betrachter) nach hinten ein und genau rückwärts aus, eine Ebene quer zum Blick schneidet ab (VERLAUF_S, verlaufSetzen),
@@ -487,7 +487,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              flattert ein wenig; immer vier (Michael, 2026-10-24: «immer vier davon verteilen»; src/windhosen.ts), jede mit dem Wind der Station
              mit Windmessung, die ihrem Platz am nächsten liegt (nicht an der Station); immer vier im Bild, egal wie weit gezoomt (Michael,
              2026-10-24: «Egal welche Zoomstufe und auch beim von Hand stufenlosen Zoomen: immer 4 Orte»; vierWindhosenBauen in Windhose.ts):
-             0,5 s nach jeder Bewegung neu verteilt, wo die Strahlen durch die Mitten der vier Viertel des Bilds das Gelände treffen (Michael,
+             0,5 s nach jeder Bewegung neu verteilt (als Bewegung zählt nur, was man sieht; beim langen Drehen spätestens alle 2 s, LAENGSTENS_MS; Michael, 2026-10-25: «Warum sehe ich hier keine Windhosen?»), wo die Strahlen durch die Mitten der vier Viertel des Bilds das Gelände treffen (Michael,
              2026-10-24: «in die Mitte des Quadrates»; dem Gelände nach gesucht, ohne Netz; trifft einer nur Himmel oder Sockel, im selben Viertel zur Mitte des Bilds hin; gesucht nur im Kasten um das Gelände, sonst sprang
              der Strahl in der Stufe 1 km über das kleine Modell hinweg, Michael, 2026-10-24: «Warum keine Windhosen?»),
              auf dem Bildschirm gleich gross (9 % des Abstands), darüber klein nur die Zahl in km/h («Zahl dazu», «Viel zu präsente Infos.

@@ -83,6 +83,8 @@ export function windhoseBauen(): Windhose {
 const BILD_HOEHE = 0.09
 /** so lange nach der letzten Bewegung der Kamera verteilt sie die Windhosen neu (ms) */
 const RUHE_MS = 500
+/** auch während die Kamera sich bewegt, spätestens so oft (ms) */
+const LAENGSTENS_MS = 2000
 /** wo die vier im Bild stehen (Bildkoordinaten −1 bis 1, unten −1): in der Mitte jedes Viertels des Bilds (Michael, 2026-10-24:
  *  «jeweils in die Mitte des Quadrates, wenn man den Ausschnitt in 4 Quadrate teilen würde») */
 const BILDPLAETZE: Array<[number, number]> = [[-0.5, 0.5], [0.5, 0.5], [-0.5, -0.5], [0.5, -0.5]]
@@ -150,7 +152,7 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
     }
     return null
   }
-  let altPos = new THREE.Vector3(Infinity, 0, 0), altQuat = new THREE.Quaternion(), bewegt = 0, verteilt = false
+  let altPos = new THREE.Vector3(Infinity, 0, 0), altQuat = new THREE.Quaternion(), bewegt = 0, verteilt = false, zuletzt = 0
   const verteilen = () => {
     const stellen = BILDPLAETZE.map(([x, y]) => {
       // trifft der Strahl kein Gelände (oben Himmel, unten der Sockel), im selben Viertel zur Mitte des Bilds hin versuchen
@@ -172,10 +174,14 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
       const t = (performance.now() - start) / 1000
       const brille = inBrille()
       if (!brille) {
-        // bewegt sich die Kamera, wartet sie die Ruhe ab und verteilt dann neu
-        if (!kamera.position.equals(altPos) || !kamera.quaternion.equals(altQuat)) { altPos = kamera.position.clone(); altQuat = kamera.quaternion.clone(); bewegt = performance.now() }
-        else if (bewegt && performance.now() - bewegt > RUHE_MS) { bewegt = 0; verteilen() }
-        if (!verteilt && !bewegt) verteilen()
+        // bewegt sich die Kamera, wartet sie die Ruhe ab und verteilt dann neu; als Bewegung zählt nur, was man sieht (das
+        // Ausschwingen der Steuerung rückt sie noch lange um winzige Beträge, Michael, 2026-10-25: «Warum sehe ich hier keine
+        // Windhosen?»), und wer lange dreht, sieht sie spätestens alle LAENGSTENS_MS neu
+        const jetzt = performance.now()
+        const weit = kamera.position.distanceTo(altPos) > 1e-5 * Math.max(1e-9, kamera.position.length())
+        if (weit || kamera.quaternion.angleTo(altQuat) > 1e-4) { altPos = kamera.position.clone(); altQuat = kamera.quaternion.clone(); bewegt = jetzt }
+        else if (bewegt && jetzt - bewegt > RUHE_MS) { bewegt = 0; zuletzt = jetzt; verteilen() }
+        if ((!verteilt && jetzt - zuletzt > RUHE_MS) || (bewegt && jetzt - zuletzt > LAENGSTENS_MS)) { zuletzt = jetzt; verteilen() }
       }
       kamera.getWorldPosition(auge)
       hosen.forEach((h, i) => {

@@ -852,7 +852,8 @@ const SCHRIFT_LEUCHTET = 0.85
 /** der Himmel ganz in der Nacht und die Grösse der hellsten Sterne in Bildpunkten (gewählt) */
 const HIMMEL_NACHT = new THREE.Color('#070d1a')
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
-const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c', wind: '#5ab4ff' }
+// Sonne orange (Michael, 2026-10-25: «Der Knopf Sonne soll orangefarben sein»; vorher rot)
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff9a1f', wind: '#5ab4ff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
