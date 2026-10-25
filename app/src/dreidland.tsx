@@ -18,7 +18,9 @@ function DreiDLand() {
     <div className="min-h-screen bg-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <div className="mx-auto max-w-2xl md:max-w-3xl xl:max-w-6xl">
         {/* Auftakt rückt mit -mx-4 -mt-8 an den Rand der Seite von Taktland; hier dieser Rand */}
-        <div className="px-4 pt-8">
+        {/* -mb-6 hebt den Abstand unter dem Auftaktbild auf, das Modell schliesst gleich an (Michael, 2026-10-25: «Weissen Rahmen um die
+            Karte weglassen») */}
+        <div className="-mb-6 px-4 pt-8">
           <Auftakt bild={{ hell: auftaktHell, dunkel: auftaktDunkel, breite: 1536, hoehe: 1024, alt: 'Illustration: Jemand mit XR-Brille und zwei Controllern blickt auf ein quadratisches Modell einer Landschaft mit zwei Seen, Dörfern und Wald auf einem dunklen Sockel; darauf zwei rot-weisse Windhosen, im Hintergrund Regen über Seen und Hügeln.'}}
                    oben={<img src="./logo.png" alt="3dland" className="absolute left-3 top-3 size-14 rounded-xl shadow-md sm:left-5 sm:top-5 sm:size-20" />} />
         </div>

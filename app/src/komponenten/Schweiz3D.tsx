@@ -437,7 +437,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
              onKeyDown={(e) => { if (e.key === 'Enter' && treffer[0]) { nehmen(treffer[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
              className="w-full rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight/90" />
       {offen && suchform(text).length >= 2 && (
-        <ul className="absolute left-0 top-full z-10 w-max min-w-full max-w-[80vw] mt-1 max-h-72 overflow-auto rounded-lg bg-white/95 text-sm shadow-lg dark:bg-sbb-charcoal/95">
+        <ul className="absolute bottom-full right-0 z-10 mb-1 w-max min-w-full max-w-[80vw] max-h-72 overflow-auto rounded-lg bg-white/95 text-sm shadow-lg dark:bg-sbb-charcoal/95">
           {treffer.length ? treffer.map((t) => (
             <li key={`${t.name}_${t.e}_${t.n}`}>
               <button type="button" onClick={() => nehmen(t)} className="w-full px-2.5 py-1.5 text-left hover:bg-sbb-milk dark:hover:bg-sbb-iron">
@@ -784,8 +784,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       <div className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
         // 5 breit, 7 hoch (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch»), auf breiten Bildschirmen so schmal,
-        // dass es in 85 % der Höhe passt
-        : 'relative mx-auto mt-2 aspect-[5/7] w-full max-w-[calc(85vh*5/7)] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]'}>
+        // dass es in 85 % der Höhe passt; bis an den Rand der Seite, ohne Rand und runde Ecken (Michael, 2026-10-25: «Weissen Rahmen um
+        // die Karte weglassen. Kartenbild bis an den Rand»), auf 3dland.ch gleich unter dem Auftaktbild
+        : `relative -mx-4 ${eigeneSeite ? '' : 'mt-2'} aspect-[5/7] w-[calc(100%+2rem)] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a] sm:mx-auto sm:w-full sm:max-w-[calc(85vh*5/7)]`}>
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
@@ -805,10 +806,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
         <Ladebalken inKarte />
-        {/* oben rechts XR, Mein Standort und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll neben
-            dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; danach «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
-            den anderen Icons») */}
-        <div className="absolute right-2 top-2 flex items-center gap-2">
+        {/* unten rechts die Suche, XR, Mein Standort und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll
+            neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
+            den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
+        <div className="absolute bottom-2 right-2 flex items-center gap-2">
+          {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
           <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
                   className="flex size-8 flex-none items-center justify-center rounded-lg bg-sbb-red text-xs font-bold text-white">
             XR
@@ -827,9 +829,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {brilleHinweis && (
           <p role="status" className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">{brilleHinweis}</p>
         )}
-        <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
-          {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
-        </div>
         {meldung && (
           <button type="button" onClick={() => setMeldung(null)} role="status"
                   className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-3 text-left text-sm font-medium shadow-lg dark:bg-sbb-charcoal/95 md:left-auto md:w-96">
@@ -837,12 +836,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
         )}
         {wahl && stufe !== 'nah' && (
-          // oben unter der Suche, unten lag er auf dem Handy oft unter dem Bildschirmrand (Michael, 2026-10-24: «Der Eintauchen
+          // oben links, unten lag er auf dem Handy oft unter dem Bildschirmrand (Michael, 2026-10-24: «Der Eintauchen
           // Button müsste oben sein sonst sieht man ihn nicht»); nur der Knopf, ohne Orte im Feld und «Andere Wahl» (Michael,
           // 2026-10-24: «Hier braucht es nur den Eintauchen-Button»), ein anderes Feld wählt ein Tipp ins Modell
           <button type="button" onClick={() => void eintauchen()} disabled={laedt}
                   // so gross wie «Fahren» im Kopf (Michael, 2026-10-25: «gleiche Grösse wie der Button Fahren»)
-                  className="absolute left-2 top-14 rounded-lg bg-sbb-red px-3 py-1.5 text-base font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 max-[359px]:text-[14px]">
+                  className="absolute left-2 top-2 rounded-lg bg-sbb-red px-3 py-1.5 text-base font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 max-[359px]:text-[14px]">
             {laedt ? 'Wird geladen …' : 'Eintauchen'}
           </button>
         )}
