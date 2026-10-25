@@ -311,7 +311,44 @@ async function seegrundSetzen(g: Gelaende): Promise<Gelaende> {
       wasser[q] = s.spiegel; g.h[q] = Math.min(z, grund); da = true
     }
   }
+  if (da) uferAnlegen(g.h, wasser, breite, hoehe, m)
   return da ? { ...g, wasser, seen: sg.seen } : g
+}
+
+/** Der Grund liegt auf 25 m gemittelt vor; am Ufer fiele er sonst senkrecht auf die Tiefe des ersten Felds (Michael, 2026-10-25: «Was gar
+ *  nicht gut wäre, ist, wenn es beim Ufer einfach senkrecht hinuntergeht»). Darum steigt er zum Ufer hin an: bis UFER_M vom nächsten Feld
+ *  ohne Wasser von der Tiefe laut Quelle gleichmässig bis auf den Spiegel. Eine Annäherung, die Form des Ufers dazwischen steht nicht in
+ *  unseren Daten (swissBATHY3D hätte sie auf 1 m) */
+const UFER_M = 40
+function uferAnlegen(h: Float32Array, wasser: Float32Array, breite: number, hoehe: number, m: number) {
+  const R = Math.max(UFER_M, 1.5 * m)
+  // Abstand zum nächsten Feld ohne Wasser (Fasen-Abstand in zwei Durchgängen), in Metern
+  const d = new Float32Array(breite * hoehe)
+  for (let q = 0; q < d.length; q++) d[q] = Number.isNaN(wasser[q]) ? 0 : Infinity
+  const diag = m * Math.SQRT2
+  const nimm = (q: number, r: number, w: number) => { if (d[r] + w < d[q]) d[q] = d[r] + w }
+  for (let j = 0; j < hoehe; j++) {
+    for (let i = 0; i < breite; i++) {
+      const q = j * breite + i
+      if (!d[q]) continue
+      if (i > 0) nimm(q, q - 1, m)
+      if (j > 0) { nimm(q, q - breite, m); if (i > 0) nimm(q, q - breite - 1, diag); if (i < breite - 1) nimm(q, q - breite + 1, diag) }
+    }
+  }
+  for (let j = hoehe - 1; j >= 0; j--) {
+    for (let i = breite - 1; i >= 0; i--) {
+      const q = j * breite + i
+      if (!d[q]) continue
+      if (i < breite - 1) nimm(q, q + 1, m)
+      if (j < hoehe - 1) { nimm(q, q + breite, m); if (i < breite - 1) nimm(q, q + breite + 1, diag); if (i > 0) nimm(q, q + breite - 1, diag) }
+    }
+  }
+  for (let q = 0; q < d.length; q++) {
+    // am Rand des Modells ohne Ufer in der Nähe bleibt die Tiefe (d ist dort Infinity oder gross)
+    if (Number.isNaN(wasser[q]) || d[q] >= R) continue
+    const t = d[q] / R
+    h[q] = wasser[q] - (wasser[q] - h[q]) * t
+  }
 }
 
 /* ---------- Orte suchen ---------- */
@@ -908,7 +945,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Sempachersee, Silsersee, Silvaplanersee, Thunersee, Vierwaldstättersee, Walensee, Zürichsee und Zugersee. Alle anderen Seen
             zeigen nur ihre Oberfläche; wie tief sie sind, steht in unseren Quellen nicht. Der Grund ist auf 25 m gemittelt, der Spiegel
             stammt aus dem Gelände und ist auf den Meter genau; Farbe und Durchsicht des Wassers sind gewählt. In der ganzen Schweiz ist der
-            Grund auf 500 m gemittelt, dort nur, wo mindestens die Hälfte eines Felds gemessen ist.</p>
+            Grund auf 500 m gemittelt, dort nur, wo mindestens die Hälfte eines Felds gemessen ist. Weil der Grund auf 25 m gemittelt ist, steigt er die letzten 40 m zum Ufer gleichmässig bis auf den Spiegel an, damit es dort nicht senkrecht hinuntergeht; wie das Ufer dazwischen wirklich verläuft, zeigt das Modell nicht.</p>
         </Abschnitt>
         <Abschnitt titel="Untergrund in den Wänden">
           <p>Die Wände des Sockels zeigen, was unter der Oberfläche liegt, so weit es gemessen oder kartiert ist: Das helle, ockerfarbene Band

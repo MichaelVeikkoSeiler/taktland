@@ -511,7 +511,9 @@ data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetief
              (swisstopo, gemessenes Höhenmodell des Grunds von 22 Seen, je km auf 1 m) auf 25 m gemittelt, ein Feld mit Grund, wenn mindestens die
              Hälfte seiner Meter gemessen ist, in den 10-km-Kacheln des Geländes (.sgz: Int32 tiefster Grund in dm, UInt16 je Feld darüber, UInt8
              Nummer des Sees), je See der Spiegel als Median von swissALTIRegio (50 m) über seinen Feldern, auf den Meter (pipeline/build_seegrund.py,
-             etwa 3 GB laden, je See gleich gelöscht); in der App (seegrundLaden in src/gelaende.ts, seegrundSetzen in Schweiz3D.tsx) ab der Region:
+             etwa 3 GB laden, je See gleich gelöscht; der Platzhalter −9999 der Quelle gilt als «nicht gemessen», bis 2026-10-25 als Grund gelesen, der Bereich
+             lief über und der Grund fiel am Ufer senkrecht bis auf den Sockel, Michael: «wenn es beim Ufer einfach senkrecht hinuntergeht»);
+             zum Ufer steigt der Grund die letzten 40 m (bei groben Stufen 1,5 Felder) gleichmässig auf den Spiegel an (uferAnlegen, eine Annäherung); in der App (seegrundLaden in src/gelaende.ts, seegrundSetzen in Schweiz3D.tsx) ab der Region:
              wo das Gelände höchstens 1,5 m über dem Spiegel liegt und Grund gemessen ist, sinkt es auf den Grund, darüber eine durchsichtige
              Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, oben etwas heller als die Fläche, nach unten deutlich dunkler, ganz dunkel ab
              120 m Tiefe (WASSER_SCHNITT_*, gewählt; Michael, 2026-10-25: «wesentlich dunkler als die Oberfläche … gegen unten … deutlicher»), Masten,

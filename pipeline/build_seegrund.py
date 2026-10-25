@@ -74,6 +74,11 @@ def asc_lesen(roh: bytes):
         a = np.fromstring(rest, dtype=np.float32, sep=" ")
     a = a.reshape(int(k["nrows"]), int(k["ncols"]))
     a[a < -1e30] = np.nan
+    # der Platzhalter der Quelle für «nicht gemessen» ist keine Tiefe (vorher als Grund gelesen: der Bereich lief über, der Grund
+    # sank bis auf den Boden des Sockels, Michael, 2026-10-25: «wenn es beim Ufer einfach senkrecht hinuntergeht»)
+    if "nodata_value" in k:
+        a[a == np.float32(k["nodata_value"])] = np.nan
+    a[a < -1000] = np.nan
     return k, a
 
 
