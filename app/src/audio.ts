@@ -576,3 +576,83 @@ export function knopfTon(rastetEin: boolean) {
     else klick(jetzt + 0.022, 4200, 0.3, 0.008)
   } catch { /* ohne Ton geht alles weiter */ }
 }
+
+/**
+ * Wetter zum Hören (Michael, 2026-10-25: «Bei Regen, Regengeräusch. Bei Wind, Windgeräusch»), gerechnet wie das Zuggeräusch:
+ * Regen ein helles Rauschen mit einzelnen Tropfen, so dicht wie der Regen stark ist; Wind ein tiefes Rauschen, das langsam auf- und
+ * abschwillt, lauter und heller mit der Stärke, voll ab WIND_VOLL_KMH. Schnee bleibt still. Klang und Lautstärke gewählt, kein Messwert.
+ */
+const WIND_VOLL_KMH = 40
+let wetterTon: {
+  regen: GainNode; wind: GainNode; windFilter: BiquadFilterNode; quellen: AudioScheduledSourceNode[]
+  tropfen: number | null; regenStaerke: number
+} | null = null
+
+/** regen: Stärke 0 bis 1 (null oder Schnee: still), windKmh: Mittel in km/h (null: ohne Messung, still) */
+export function wetterGeraeusch(regen: number | null, windKmh: number | null) {
+  if (!stand.an) { wetterGeraeuschAus(); return }
+  const c = audioKontext()
+  if (!c) return
+  void c.resume()
+  if (!wetterTon) {
+    const ziel = ausgang(c)
+    // Regen: weisses Rauschen, unten und oben beschnitten
+    const r = rauschenSchleife(c, false)
+    const hoch = c.createBiquadFilter(); hoch.type = 'highpass'; hoch.frequency.value = 900
+    const tief = c.createBiquadFilter(); tief.type = 'lowpass'; tief.frequency.value = 7000
+    const regenG = c.createGain(); regenG.gain.value = 0
+    r.connect(hoch).connect(tief).connect(regenG).connect(ziel)
+    // Wind: braunes Rauschen durch ein Band, das langsam wandert; die Lautstärke schwillt mit zwei langsamen Schwingungen
+    const w = rauschenSchleife(c, true)
+    const band = c.createBiquadFilter(); band.type = 'bandpass'; band.frequency.value = 350; band.Q.value = 0.8
+    const windG = c.createGain(); windG.gain.value = 0
+    const boeen = c.createGain(); boeen.gain.value = 1
+    const lfo1 = c.createOscillator(); lfo1.frequency.value = 0.13
+    const lfo2 = c.createOscillator(); lfo2.frequency.value = 0.047
+    const tiefe1 = c.createGain(); tiefe1.gain.value = 0.35
+    const tiefe2 = c.createGain(); tiefe2.gain.value = 0.25
+    lfo1.connect(tiefe1).connect(boeen.gain); lfo2.connect(tiefe2).connect(boeen.gain)
+    const lfo3 = c.createOscillator(); lfo3.frequency.value = 0.09
+    const tiefe3 = c.createGain(); tiefe3.gain.value = 120
+    lfo3.connect(tiefe3).connect(band.frequency)
+    w.connect(band).connect(boeen).connect(windG).connect(ziel)
+    const quellen = [r, w, lfo1, lfo2, lfo3]
+    for (const q of quellen) q.start()
+    wetterTon = { regen: regenG, wind: windG, windFilter: band, quellen, tropfen: null, regenStaerke: 0 }
+  }
+  const t = c.currentTime, s = Math.max(0, Math.min(1, regen ?? 0))
+  wetterTon.regen.gain.setTargetAtTime(s > 0 ? 0.05 + 0.22 * s : 0, t, 0.6)
+  const wf = windKmh === null ? 0 : Math.max(0, Math.min(1, windKmh / WIND_VOLL_KMH))
+  wetterTon.wind.gain.setTargetAtTime(wf > 0.03 ? 0.08 + 0.5 * wf : 0, t, 1.2)
+  wetterTon.windFilter.Q.setTargetAtTime(0.8 - 0.4 * wf, t, 1.2)
+  wetterTon.regenStaerke = s
+  // einzelne Tropfen: kurze, helle Knackser, so viele je Sekunde wie der Regen stark ist
+  if (s > 0 && wetterTon.tropfen === null) {
+    const ton = wetterTon
+    ton.tropfen = window.setInterval(() => {
+      const cc = audioKontext()
+      if (!cc || ton.regenStaerke <= 0) return
+      const n = Math.round(ton.regenStaerke * 6 * Math.random() * 2)
+      for (let i = 0; i < n; i++) {
+        const wann = cc.currentTime + Math.random() * 0.25, dauer = 0.012
+        const p = cc.createBuffer(1, Math.ceil(cc.sampleRate * dauer), cc.sampleRate), d = p.getChannelData(0)
+        for (let k = 0; k < d.length; k++) d[k] = (Math.random() * 2 - 1) * Math.exp(-k / (cc.sampleRate * 0.002))
+        const q = cc.createBufferSource(); q.buffer = p
+        const f = cc.createBiquadFilter(); f.type = 'bandpass'; f.frequency.value = 2500 + Math.random() * 4000; f.Q.value = 3
+        const g = cc.createGain(); g.gain.value = 0.05 + Math.random() * 0.1
+        q.connect(f).connect(g).connect(ausgang(cc)); q.start(wann); q.stop(wann + dauer + 0.01)
+      }
+    }, 250)
+  } else if (s <= 0 && wetterTon.tropfen !== null) { window.clearInterval(wetterTon.tropfen); wetterTon.tropfen = null }
+}
+
+export function wetterGeraeuschAus() {
+  if (!wetterTon) return
+  const ton = wetterTon
+  wetterTon = null
+  if (ton.tropfen !== null) window.clearInterval(ton.tropfen)
+  const c = audioKontext()
+  const t = c?.currentTime ?? 0
+  ton.regen.gain.setTargetAtTime(0, t, 0.3); ton.wind.gain.setTargetAtTime(0, t, 0.3)
+  window.setTimeout(() => { for (const q of ton.quellen) { try { q.stop() } catch { /* schon aus */ } } }, 1500)
+}

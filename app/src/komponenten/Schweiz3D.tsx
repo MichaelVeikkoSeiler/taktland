@@ -15,7 +15,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
-import { knopfTon } from '../audio'
+import { knopfTon, wetterGeraeusch, wetterGeraeuschAus } from '../audio'
 import { istNadel, NADEL_BREITE } from '../baumart'
 import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -401,6 +401,17 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // Regen und Schnee zur selben Stunde (Michael, 2026-10-24: «Regen auch einblenden mit der gleichen Prognose wie die Windhose»)
   const niederJetzt = windZeigt ? niederAusStunde(windZeigt)
     : windMessung && (windMessung.art === 'regen' || windMessung.art === 'schnee') ? { art: windMessung.art, staerke: windMessung.staerke } : null
+  // Regen und Wind zum Hören, solange «Wetter» an ist (Michael, 2026-10-25: «Bei Regen, Regengeräusch. Bei Wind, Windgeräusch»):
+  // der Wind der vier Windhosen gemittelt, nur für die Lautstärke, nirgends als Zahl gezeigt
+  const windHoeren = (() => {
+    const v = windPl.map((p) => windZur(p, windZeigt?.zeit ?? null)?.kmh).filter((x): x is number => typeof x === 'number')
+    return v.length ? v.reduce((a, x) => a + x, 0) / v.length : null
+  })()
+  useEffect(() => {
+    if (!windAn) { wetterGeraeuschAus(); return }
+    wetterGeraeusch(niederJetzt?.art === 'regen' ? niederJetzt.staerke : null, windHoeren)
+  }, [windAn, niederJetzt?.art, niederJetzt?.staerke, windHoeren])
+  useEffect(() => () => wetterGeraeuschAus(), [])
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
   const [minuten, setMinuten] = useState(12 * 60)
   const [umweltHier, setUmweltHier] = useState(false)
@@ -806,7 +817,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>«Wetter» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
             des Bilds. Die Zahl über dem Mast ist die Windstärke in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
             nicht an der Station). Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
-            wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde.</p>
+            wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde. Regen und Wind sind auch zu hören, gerechnete Geräusche,
+            lauter mit der Stärke; Schnee bleibt still.</p>
         </Abschnitt>
         <Abschnitt titel="Sonne und Schatten">
           <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben

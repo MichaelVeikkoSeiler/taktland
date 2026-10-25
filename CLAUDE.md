@@ -502,7 +502,10 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              src/wind.ts), Bewölkung der Stunde aus sre000h0 und gre000h0 wie bei der Messung; in der Tafel als blaue Balken; die weiteren
              Dateien eines Laufs nur in ±256 KB um die Stelle der ersten gesucht; in der Modellbahn statt der Messung (Himmel, Regen, Zeile
              «Prognose Station Zeit: …»), in «3D Schweiz» in einem Kasten über dem ganzen Modell bis ein Viertel der Breite über den höchsten
-             Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wetter»; ein Strich 1,2 % der Breite des Modells lang, aus der Ferne (ab 1,2-mal der Breite) weniger
+             Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wetter»; Regen und Wind auch zu hören (Michael, 2026-10-25: «Bei Regen,
+             Regengeräusch. Bei Wind, Windgeräusch»; wetterGeraeusch in src/audio.ts): Regen helles Rauschen mit einzelnen Tropfen nach der Stärke, Wind
+             tiefes, an- und abschwellendes Rauschen nach dem Mittel der vier Windhosen, voll ab 40 km/h, Schnee still; in «3D Schweiz» mit dem Knopf
+             «Wetter», in der Modellbahn und beim Fahren mit dem Lautsprecher des Zuggeräuschs; Klang und Lautstärke gewählt; ein Strich 1,2 % der Breite des Modells lang, aus der Ferne (ab 1,2-mal der Breite) weniger
              und blasser, bis auf 15 % (FERN_AB, FERN_MIN; Michael, 2026-10-25: «aus der Ferne etwas zu überproportional viel»)
 data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-10-24: «Himmel nachts dunkler und mit Sternen machen»):
              alle 5'044 Sterne bis zur Helligkeit 6 aus dem Hipparcos-Katalog (ESA), wie ihn d3-celestial 0.7.35 (Olaf Frohn, BSD, Lizenz in

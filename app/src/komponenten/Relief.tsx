@@ -20,7 +20,7 @@ import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich, wgs } from '../relief'
 import { sonnenstand } from '../sonne'
 import { himmelNacht, sternSicht } from '../sterne'
 import { sternenhimmelBauen } from './Sternenhimmel'
-import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
+import { audioKontext, audioLesen, audioSetzen, useAudio, wetterGeraeusch, wetterGeraeuschAus, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
 import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { Zurueck } from './Zurueck'
@@ -2010,7 +2010,16 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     if (mitWetter) el.appendChild(wetterLeiste)
     let wetterBis = 0, wetterLaedt = false, niederAn = false
     /** Licht, Himmel und die Zeile oben links nach dem Wetter und dem Schalter «Echtes Wetter» */
+    // Regen und Wind zum Hören (Michael, 2026-10-25), wenn echtes Wetter gilt und der Lautsprecher fürs Zuggeräusch an ist
+    const wetterHoeren = () => {
+      const a = audioLesen()
+      if (!wetterGilt() || !a.an || !a.zuggeraeusch) { wetterGeraeuschAus(); return }
+      const n = niederJetzt()
+      wetterGeraeusch(n?.art === 'regen' ? n.staerke : null, (windGewaehlt ?? wetter?.wind)?.kmh ?? null)
+    }
+    let wetterHoerenZeit = 0
     const wetterZeigen = () => {
+      wetterHoeren()
       nachtRechnen()
       tunnelDunkel(...letzteDunkel)
       const an = mitWetter && !ausJetzt.current.has('wetter')
@@ -4632,6 +4641,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         niederGeo.attributes.position.needsUpdate = true
       }
       sterne.schritt(renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera, modell, !!szene.background)
+      // der Lautsprecher kann jederzeit wechseln: einmal je Sekunde nachsehen
+      if (performance.now() - wetterHoerenZeit > 1000) { wetterHoerenZeit = performance.now(); wetterHoeren() }
       renderer.render(szene, kamera)
       if (pultBild && imStand && !renderer.xr.isPresenting) {
         renderer.autoClear = false
@@ -4666,7 +4677,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     renderer.setAnimationLoop(zeichnen)
     return () => {
       laeuft = false
-      renderer.setAnimationLoop(null)
+      renderer.setAnimationLoop(null); wetterGeraeuschAus()
       void renderer.xr.getSession()?.end()
       if (brille) brille.current = null
       beobachter.disconnect()
