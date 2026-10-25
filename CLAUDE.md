@@ -486,7 +486,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              src/wind.ts: je Grösse etwa 32 MB, nach Punktart und Nummer als Text geordnet, darum Teilabrufe mit Range und Halbieren, nur
              einige KB; der neueste Lauf mit HEAD gesucht); die Windhose (komponenten/Windhose.ts): Mast, Sack aus fünf Ringen rot und weiss,
              zeigt wohin der Wind weht, ganz gestreckt ab 28 km/h (VOLL_KMH, 15 Knoten wie an Flugplätzen), ohne Angabe grau und hängend,
-             flattert ein wenig; immer vier (Michael, 2026-10-24: «immer vier davon verteilen»; src/windhosen.ts), jede mit dem Wind der Station
+             flattert ein wenig, Mast und Sack werfen Schatten, wo die Szene Schatten hat (Michael, 2026-10-25: «Windhosen sollen reale Schatten werfen wenn die Sonne scheint»); immer vier (Michael, 2026-10-24: «immer vier davon verteilen»; src/windhosen.ts), jede mit dem Wind der Station
              mit Windmessung, die ihrem Platz am nächsten liegt (nicht an der Station); immer vier im Bild, egal wie weit gezoomt (Michael,
              2026-10-24: «Egal welche Zoomstufe und auch beim von Hand stufenlosen Zoomen: immer 4 Orte»; vierWindhosenBauen in Windhose.ts):
              in «3D Schweiz» fest auf den Mitten der vier Viertel des Modells, sie wandern beim Drehen nicht mit (Michael, 2026-10-25: «Die Windhosen sollen nicht mitwandern»; feste in vierWindhosenBauen), in der Modellbahn
