@@ -966,7 +966,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Mit VR-Brille">
           <p>Der Knopf «XR» oben rechts im Bild startet die Brille. Mit einer Brille wie der Meta Quest steht das Modell auf dem Tisch. Ein kurzer Abzug wählt ein Feld, nochmals taucht ein;
             ein gehaltener Abzug trägt das Modell, beide zusammen drehen und skalieren es. Die Greiftaste geht eine Stufe zurück, der
-            Thumbstick dreht und hebt, drücken stellt es zurück. Die Knöpfe an den Wänden gehen mit Strahl und Abzug.</p>
+            Thumbstick dreht und hebt, drücken stellt es zurück. Die Knöpfe an den Wänden gehen mit Strahl und Abzug. Auf dem Handy, wo der Browser es kann, beendet der Knopf «Schliessen» oben rechts die Ansicht.</p>
         </Abschnitt>
         <Abschnitt titel="Woher die Daten stammen">
           <ul className="list-disc space-y-1 pl-5">
@@ -1399,7 +1399,27 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const xr = navigator.xr
       if (!xr) throw new Error('Kein WebXR')
       durchsicht = await xr.isSessionSupported('immersive-ar').catch(() => false)
-      const sitzung = await xr.requestSession(durchsicht ? 'immersive-ar' : 'immersive-vr', { optionalFeatures: ['local-floor', 'hand-tracking'] })
+      // auf dem Handy gibt es keine Tasten der Brille: ein Knopf «Schliessen» über dem Bild (Michael, 2026-10-25: «Wenn ich XR auf dem
+      // Mobile Device anschaue, habe ich keinen Button, um zurückzukehren»), wo der Browser dom-overlay kann
+      const ueber = document.createElement('div')
+      ueber.style.cssText = 'position:fixed;inset:0;pointer-events:none'
+      const zu = document.createElement('button')
+      zu.type = 'button'; zu.textContent = '✕ Schliessen'
+      zu.style.cssText = 'position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;pointer-events:auto;padding:10px 16px;' +
+        'border:0;border-radius:8px;background:#5a5a5a;color:#fff;font:700 16px Helvetica,Arial,sans-serif'
+      ueber.appendChild(zu)
+      document.body.appendChild(ueber)
+      let sitzung: XRSession
+      try {
+        sitzung = await xr.requestSession(durchsicht ? 'immersive-ar' : 'immersive-vr',
+          { optionalFeatures: ['local-floor', 'hand-tracking', 'dom-overlay'], domOverlay: { root: ueber } } as XRSessionInit)
+      } catch (e) { ueber.remove(); throw e }
+      zu.addEventListener('click', () => { void sitzung.end() })
+      // ein Tipp auf den Knopf gilt nicht zugleich als Tipp ins Modell
+      ueber.addEventListener('beforexrselect', (ev) => ev.preventDefault())
+      sitzung.addEventListener('end', () => ueber.remove())
+      // ohne dom-overlay (Brille) bleibt der Knopf weg
+      if (!(sitzung as XRSession & { domOverlayState?: unknown }).domOverlayState) ueber.style.display = 'none'
       renderer.xr.setReferenceSpaceType('local-floor')
       kamera.near = 0.01; kamera.updateProjectionMatrix()
       await renderer.xr.setSession(sitzung)
@@ -1408,7 +1428,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       anfangSetzen()
       brilleSetzen(); setzeHimmel()
       tafelSetzen(null)
-      anleitung.visible = true
+      // die Tafel mit den Tasten der Brille nur mit Brille; auf dem Handy (Bildschirm als Eingabe) gibt es diese Tasten nicht
+      anleitung.visible = sitzung.interactionMode !== 'screen-space'
     }
     const OBEN = new THREE.Vector3(0, 1, 0)
     const stickGedrueckt = new Set<string>()
