@@ -518,16 +518,16 @@ data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetief
              etwa 3 GB laden, je See gleich gelöscht; der Platzhalter −9999 der Quelle gilt als «nicht gemessen», bis 2026-10-25 als Grund gelesen, der Bereich
              lief über und der Grund fiel am Ufer senkrecht bis auf den Sockel, Michael: «wenn es beim Ufer einfach senkrecht hinuntergeht»);
              zum Ufer steigt der Grund die letzten 40 m (bei groben Stufen 1,5 Felder) gleichmässig auf den Spiegel an (uferAnlegen, eine Annäherung); in der App (seegrundLaden in src/gelaende.ts, seegrundSetzen in Schweiz3D.tsx) ab der Region:
-             wo das Gelände höchstens 1,5 m über dem Spiegel liegt und Grund gemessen ist, sinkt es auf den Grund, darüber eine durchsichtige
-             Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), auf der Höhe des Geländemodells wie ohne Seegrund, nicht auf einem Spiegel
-             (Michael, 2026-10-25, Erlach: «die Höhe der Seeoberflächenspiegel von vorher nehmen … da war alles wunderbar»; ein Spiegel aus dem Median
-             überschwemmte flache Ufer und Häfen, auch mit Umrissen aus swissTLMRegio und swissTLM3D), am Ufer übers Feld zum Land, wo das Gelände sie verdeckt
-             (polygonOffset), so ohne Zacken; Spiegelung schwach (specular #33414c; Michael, 2026-10-25: «nicht so stark»), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, immer etwas dunkler als die Fläche, nach unten dunkler, am dunkelsten ab
+             keine eigene Wasserfläche: die Oberfläche der Seen bleibt das Gelände mit dem Luftbild wie vor dem Seegrund (Michael, 2026-10-25:
+             «keine generische Farbfläche, sondern das Bild der Landkarten»; eine Wasserfläche darüber stieg mit polygonOffset beim Zoomen und
+             flimmerte; ein Spiegel aus dem Median oder aus Umrissen von swissTLMRegio und swissTLM3D überschwemmte flache Ufer und Häfen); als See
+             gilt ein Feld mit gemessenem Grund, dessen Gelände höchstens 0,1 m über dem Median des Geländes dieser Felder im See liegt (SEE_FLACH_M),
+             der Grund nur in den Wänden: das Wasser im Schnitt von der Oberfläche bis zum Grund, nach unten dunkler, am dunkelsten ab
              120 m Tiefe, im selben Licht wie die Fläche (Normale nach oben, beide Seiten) (WASSER_SCHNITT_*, gewählt; Michael, 2026-10-25: «Die Wasseroberfläche muss immer
-             mindestens so hell sein wie die Schnittkante»), Masten,
-             Windhosen und Wanderwege auf dem Wasser (hoeheIm); andere Seen nur mit ihrer Oberfläche (so in der Anleitung und den Quellen);
+             mindestens so hell sein wie die Schnittkante»);
+             andere Seen nur mit ihrer Oberfläche (so in der Anleitung und den Quellen);
              in der ganzen Schweiz der Grund je Feld von 500 m gemittelt, nur wo mindestens die Hälfte gemessen ist, ohne Fels (Michael, 2026-10-25:
-             «Seegrund auch in der ganzen Schweiz einbauen»); der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund, ein tieferer Grund ist am Boden des Sockels
+             «Seegrund auch in der ganzen Schweiz einbauen»); der Sockel richtet sich nach der Oberfläche, nicht nach dem Grund, ein tieferer Grund ist am Boden des Sockels
              abgeschnitten, die Knöpfe dürfen auf dem Wasser in der Wand sitzen (Michael, 2026-10-25: «Die Tiefe des Modells soll durch die Seen nicht höher
              als vorher sein. Die Wandknöpfe können auch an einer Seewand sein»)
 data/fels/   Felsoberfläche für die Wände von «3D Schweiz»: swissBEDROCK (swisstopo, Band BEM, 10 m) auf 50 m gemittelt, je 10-km-Kachel

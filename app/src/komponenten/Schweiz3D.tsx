@@ -48,8 +48,10 @@ interface Uebersicht { ost: number; nord: number; m: number; breite: number; hoe
 /** rahmen: welches Rechteck das Bild zeigt (Ost und Nord der Ecke links oben, Breite und Höhe in Metern) */
 interface Gelaende {
   raster: Raster; h: Float32Array; bild: HTMLCanvasElement; rahmen: { e0: number; n1: number; b: number; h: number }; quellen: string[]; hinweis?: string
-  /** über gemessenem Seegrund die Höhe der Wasseroberfläche laut Geländemodell (sonst NaN), h ist dort der Grund (seegrundSetzen) */
+  /** über gemessenem Seegrund die Höhe der Seeoberfläche laut Geländemodell (sonst NaN); h bleibt dort die Oberfläche (seegrundSetzen) */
   wasser?: Float32Array
+  /** der Grund des Sees je Feld, wo wasser gilt (swissBATHY3D), nur für den Schnitt in den Wänden */
+  seegrund?: Float32Array
   /** die Seen mit gemessenem Grund in diesem Stück */
   seen?: string[]
   /** die Höhe des Felses unter dem Lockergestein je Feld (swissBEDROCK), NaN ohne Angabe (untergrundSetzen) */
@@ -281,12 +283,16 @@ async function untergrundSetzen(g: Gelaende): Promise<Gelaende> {
 /** Seegrund (swissBATHY3D, src/gelaende.ts) auf ein Gelände: wo es den Spiegel eines Sees zeigt (höchstens 1,5 m darüber) und der
  *  Grund gemessen ist, sinkt es auf den Grund, und darüber steht das Wasser (Michael, 2026-10-25: «die Seetiefe») */
 const SEEGRUND_M = 25
+/** so viel darf ein Feld über der Wasserfläche liegen und noch als See gelten (Rauschen im Geländemodell; gewählt) */
+const SEE_FLACH_M = 0.1
 async function seegrundSetzen(g: Gelaende): Promise<Gelaende> {
   const { ost, nord, m, breite, hoehe } = g.raster
   const sg = await seegrundLaden(ost, nord - hoehe * m, ost + breite * m, nord).catch(() => null)
   if (!sg) return g
-  const wasser = new Float32Array(breite * hoehe).fill(NaN)
+  const wasser = new Float32Array(breite * hoehe).fill(NaN), seegrund = new Float32Array(breite * hoehe).fill(NaN)
   let da = false
+  // erst die Felder, die See sein könnten, je See (nach seinem Spiegel aus der Quelle)
+  const kandidaten = new Map<number, Array<{ q: number; z: number; grund: number }>>()
   for (let j = 0; j < hoehe; j++) {
     for (let i = 0; i < breite; i++) {
       const q = j * breite + i, z = g.h[q]
@@ -308,12 +314,25 @@ async function seegrundSetzen(g: Gelaende): Promise<Gelaende> {
         if (zahl < k * k / 2) continue
         grund = summe / zahl
       }
-      // das Wasser auf der Höhe des Geländemodells, nicht auf dem gerechneten Spiegel (Michael, 2026-10-25: «die Höhe … von vorher»)
-      wasser[q] = z; g.h[q] = Math.min(z, grund); da = true
+      const liste = kandidaten.get(s.spiegel) ?? []
+      liste.push({ q, z, grund }); kandidaten.set(s.spiegel, liste)
     }
   }
-  if (da) uferAnlegen(g.h, wasser, breite, hoehe, m)
-  return da ? { ...g, wasser, seen: sg.seen } : g
+  // je See eine starre, waagrechte Wasserfläche auf der Höhe, die das Geländemodell über ihm zeigt (Median, das Modell zeigt Seen flach);
+  // See ist nur, was nicht höher liegt, alles darüber bleibt Land und schaut aus dem Wasser (Michael, 2026-10-25, Erlach: «damit wir eine
+  // starre Seeoberfläche haben»; vorher galt Land bis 1,5 m über dem Spiegel als See und überschwemmte flache Ufer)
+  for (const liste of kandidaten.values()) {
+    const zs = liste.map((k) => k.z).sort((a, b) => a - b)
+    const flaeche = zs[Math.floor(zs.length / 2)]
+    for (const { q, z, grund } of liste) {
+      if (z > flaeche + SEE_FLACH_M) continue
+      // die Oberfläche bleibt das Gelände mit dem Luftbild, wie vor dem Seegrund (Michael, 2026-10-25: «Es ist keine generische
+      // Farbfläche, sondern das Bild der Landkarten, das ich haben möchte»); der Grund zeigt sich nur im Schnitt der Wände
+      wasser[q] = z; seegrund[q] = Math.min(z, grund); da = true
+    }
+  }
+  if (da) uferAnlegen(seegrund, wasser, breite, hoehe, m)
+  return da ? { ...g, wasser, seegrund, seen: sg.seen } : g
 }
 
 /** Der Grund liegt auf 25 m gemittelt vor; am Ufer fiele er sonst senkrecht auf die Tiefe des ersten Felds (Michael, 2026-10-25: «Was gar
@@ -884,7 +903,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <details className="klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">Modell, nicht massstäblich: Quellen</summary>
           <p className="mt-1">Gelände: {anker.quellen[0]}. Luftbild: {anker.quellen[1]}. {seenHier.length
-            ? `Seegrund: swissBATHY3D (swisstopo), auf 25 m gemittelt, hier ${seenHier.join(', ')}; die Wasseroberfläche auf der Höhe des Geländemodells. `
+            ? `Seegrund: swissBATHY3D (swisstopo), auf 25 m gemittelt, hier ${seenHier.join(', ')}, nur im Schnitt der Wände; die Oberfläche ist das Gelände mit dem Luftbild. `
             : 'Seegrund: in diesem Ausschnitt keiner gemessen (swissBATHY3D kennt 22 Seen), Seen zeigen hier nur ihre Oberfläche. '}{stufe !== 'schweiz'
             ? 'Lockergestein in den Wänden bis auf den Fels: swissBEDROCK (swisstopo), Felsoberfläche auf 50 m gemittelt. ' : ''}Orte der Landeskarte 1:1 Million (swisstopo),
             Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone (BFS). Ortschaften auf den Masten: swissTLMRegio (swisstopo),
@@ -941,14 +960,16 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             der Mitte des Modells stehen.</p>
         </Abschnitt>
         <Abschnitt titel="Seen und Seetiefe">
-          <p>Bei 22 Seen ist der Grund gemessen: swissBATHY3D von swisstopo, ein Höhenmodell des Seegrunds. Dort liegt das Modell auf
-            dem echten Seegrund, darüber steht das Wasser als durchsichtige Fläche, auf der Höhe, die das Geländemodell dort zeigt, und in den Wänden sieht man den See im Schnitt, von
-            seinem Grund bis zum Spiegel. Die Höhen sind echt, auch unter Wasser. Der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund: Reicht ein See tiefer als der Sockel, ist sein Grund am Boden des Sockels abgeschnitten. Es sind: Ägerisee, Baldeggersee, Bielersee, Bodensee,
+          <p>Bei 22 Seen ist der Grund gemessen: swissBATHY3D von swisstopo, ein Höhenmodell des Seegrunds. Die Oberfläche der Seen bleibt
+            das Gelände mit dem Luftbild, wie man sie von oben kennt; den See sieht man in den Wänden im Schnitt, von seiner Oberfläche bis
+            zum Grund, nach unten dunkler. Die Tiefen sind gemessen. Der Sockel richtet sich nach der Oberfläche: Reicht ein See tiefer als
+            der Sockel, ist sein Grund am Boden des Sockels abgeschnitten. Es sind: Ägerisee, Baldeggersee, Bielersee, Bodensee,
             Brienzersee, Genfersee, Hallwilersee, Lac de Joux, Lago Maggiore, Lungerersee, Murtensee, Neuenburgersee, Rotsee, Sarnersee,
             Sempachersee, Silsersee, Silvaplanersee, Thunersee, Vierwaldstättersee, Walensee, Zürichsee und Zugersee. Alle anderen Seen
-            zeigen nur ihre Oberfläche; wie tief sie sind, steht in unseren Quellen nicht. Der Grund ist auf 25 m gemittelt, die Wasseroberfläche
-            liegt auf der Höhe des Geländemodells, wie ohne Seegrund; welcher See dort liegt, entscheidet ein Spiegel aus dem Gelände, auf den Meter; Farbe und Durchsicht des Wassers sind gewählt. In der ganzen Schweiz ist der
-            Grund auf 500 m gemittelt, dort nur, wo mindestens die Hälfte eines Felds gemessen ist. Weil der Grund auf 25 m gemittelt ist, steigt er die letzten 40 m zum Ufer gleichmässig bis auf den Spiegel an, damit es dort nicht senkrecht hinuntergeht; wie das Ufer dazwischen wirklich verläuft, zeigt das Modell nicht.</p>
+            zeigen nur ihre Oberfläche; wie tief sie sind, steht in unseren Quellen nicht. Der Grund ist auf 25 m gemittelt, in der ganzen
+            Schweiz auf 500 m, dort nur, wo mindestens die Hälfte eines Felds gemessen ist. Weil er gemittelt ist, steigt er die letzten 40 m
+            zum Ufer gleichmässig an, damit es dort nicht senkrecht hinuntergeht; wie das Ufer dazwischen wirklich verläuft, zeigt das Modell
+            nicht. Farben des Schnitts sind gewählt.</p>
         </Abschnitt>
         <Abschnitt titel="Untergrund in den Wänden">
           <p>Die Wände des Sockels zeigen, was unter der Oberfläche liegt, so weit es gemessen oder kartiert ist: Das helle, ockerfarbene Band
@@ -991,7 +1012,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station; Regen- und Windgeräusch gerechnet.</li>
-            <li>Farben der Höhenlinien, der Wanderwege, des Wassers, des Lockergesteins in den Wänden und des Himmels in Dämmerung und Nacht.</li>
+            <li>Farben der Höhenlinien, der Wanderwege, des Wassers im Schnitt, des Lockergesteins in den Wänden und des Himmels in Dämmerung und Nacht.</li>
             <li>Die Tiefe des Sockels: Er reicht bis etwas unter den tiefsten Punkt der Oberfläche, bei Seen unter ihren Spiegel; die Knöpfe sitzen in diesem Band, auch dort, wo ein See im Schnitt liegt; was unter dem Fels liegt, steht in keiner unserer Quellen.</li>
             <li>Schatten wirft nur, was im Modell liegt; Berge ausserhalb, Wolken und Dunst fehlen.</li>
           </ul>
@@ -1079,8 +1100,6 @@ const ORT_MAST_PX = 2
 const ORT_AB_RANG: Record<Stufe, number> = { schweiz: 4, region: 1, ort: 0, nah: 0 }
 const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 200, region: 300, ort: 200, nah: 60 }, ORT_ABSTAND = 0.012
 const ORT_MIN = 3, ORT_MAX = 5
-/** das Wasser der Seen über dem Grund: Farbe und Deckkraft gewählt */
-const WASSER_FARBE = '#2f6f9a', WASSER_DECKKRAFT = 0.55
 // das Wasser im Schnitt der Wände: immer etwas dunkler als die Fläche, damit man die Kante klar sieht, nach unten zum Grund hin dunkler,
 // am dunkelsten ab WASSER_DUNKEL_M Tiefe (Michael, 2026-10-25: «Die Wasseroberfläche muss immer mindestens so hell sein wie die
 // Schnittkante … gegen unten zum Grund her leicht dunkler»); im selben Licht wie die Fläche (Normale nach oben), Farben gewählt, nicht gemessen
@@ -1684,43 +1703,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       setzen()
       return { di, dj, g, pos, setzen }
     })
-    // das Wasser der Seen über dem gemessenen Grund (seegrundSetzen): eine durchsichtige Fläche auf der Höhe des Geländemodells, wie
-    // das Modell den See ohne Seegrund zeigte (Michael, 2026-10-25: «die Höhe der Seeoberflächenspiegel von vorher nehmen … da war alles
-    // wunderbar»; vorher ein Spiegel aus dem Mittel des Geländes, der flache Ufer und Häfen überschwemmte). Am Ufer läuft sie über das
-    // Feld zum Land weiter, wo das Gelände sie verdeckt; Farbe und Durchsicht gewählt
-    const wasserGruppe = new THREE.Group()
-    wasserGruppe.name = 'wasser'
-    wurzel.add(wasserGruppe)
-    const wasserMaterial = new THREE.MeshPhongMaterial({ color: WASSER_FARBE, transparent: true, opacity: WASSER_DECKKRAFT, depthWrite: false,
-      // Spiegelung schwach (Michael, 2026-10-25: «Es darf Reflexionen geben, aber nicht so stark»; vorher #9fc4e0)
-      side: THREE.DoubleSide, shininess: 40, specular: '#33414c',
-      // hinter dem Gelände, wo beide gleich hoch sind (am Ufer auf dem Land)
-      polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 })
-    for (const { g } of netze) {
-      const w = g.wasser
-      if (!w) continue
-      const { ost, nord, m, breite, hoehe } = g.raster
-      const pos = new Float32Array(breite * hoehe * 3), idx: number[] = []
-      for (let j = 0; j < hoehe; j++) for (let i = 0; i < breite; i++) {
-        const q = j * breite + i, z = Number.isNaN(w[q]) ? (g.h[q] === KEINE_HOEHE ? 0 : g.h[q]) : w[q]
-        pos.set([X(ost + (i + 0.5) * m), Y(z), Z(nord - (j + 0.5) * m)], q * 3)
-      }
-      for (let j = 0; j < hoehe - 1; j++) for (let i = 0; i < breite - 1; i++) {
-        const a = j * breite + i
-        if (Number.isNaN(w[a]) && Number.isNaN(w[a + 1]) && Number.isNaN(w[a + breite]) && Number.isNaN(w[a + breite + 1])) continue
-        idx.push(a, a + breite, a + 1, a + 1, a + breite, a + breite + 1)
-      }
-      if (!idx.length) continue
-      const geo = new THREE.BufferGeometry()
-      geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-      geo.setIndex(idx)
-      const nn = new Float32Array(pos.length)
-      for (let k = 1; k < nn.length; k += 3) nn[k] = 1
-      geo.setAttribute('normal', new THREE.BufferAttribute(nn, 3))
-      const flaeche = new THREE.Mesh(geo, wasserMaterial)
-      flaeche.renderOrder = 1
-      wasserGruppe.add(flaeche)
-    }
+    // über den Seen keine eigene Wasserfläche: das Gelände mit dem Luftbild ist die Oberfläche wie vor dem Seegrund (Michael, 2026-10-25:
+    // die Seeoberflächen «flimmern», «das Bild der Landkarten, das ich haben möchte»); der See zeigt sich im Schnitt der Wände
 
     // der Sockel, neu bei jeder Höhe; nur an den äusseren Kanten der Stücke
     const sockel = new THREE.Group()
@@ -1769,9 +1753,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const fe = g.fels
           if (fe) {
             const vor = weiteKm * 0.0005, lp: number[] = [], li: number[] = []
-            const hat = (q: number) => !Number.isNaN(fe[q]) && Y(fe[q]) < pos[q * 3 + 1]
+            // über einem See beginnt das Lockergestein am Grund
+            const oberkante = (q: number) => { const sg = g.seegrund?.[q]; return sg !== undefined && !Number.isNaN(sg) ? Math.max(unten, Y(sg)) : pos[q * 3 + 1] }
+            const hat = (q: number) => !Number.isNaN(fe[q]) && Y(fe[q]) < oberkante(q)
             kante.forEach((q, i) => {
-              const x = pos[q * 3] + nx * vor, y = pos[q * 3 + 1], z = pos[q * 3 + 2] + nz * vor
+              const x = pos[q * 3] + nx * vor, y = oberkante(q), z = pos[q * 3 + 2] + nz * vor
               lp.push(x, y, z, x, Number.isNaN(fe[q]) ? y : Math.max(unten, Math.min(y, Y(fe[q]))), z)
               if (i && (hat(q) || hat(kante[i - 1])) && !Number.isNaN(fe[q]) && !Number.isNaN(fe[kante[i - 1]])) li.push((i - 1) * 2, i * 2, (i - 1) * 2 + 1, i * 2, i * 2 + 1, (i - 1) * 2 + 1)
             })
@@ -1790,8 +1776,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             const vor = weiteKm * 0.0008, bp: number[] = [], bi: number[] = [], bf: number[] = []
             const n = WASSER_SCHNITT_STUFEN.length
             kante.forEach((q, i) => {
-              const x = pos[q * 3] + nx * vor, y = pos[q * 3 + 1], z = pos[q * 3 + 2] + nz * vor
-              const spiegel = Number.isNaN(w[q]) ? y * 1000 : w[q], tiefe = Math.max(0, spiegel - y * 1000)
+              const x = pos[q * 3] + nx * vor, z = pos[q * 3 + 2] + nz * vor
+              // von der Oberfläche bis zum Grund, am Boden des Sockels abgeschnitten
+              const sg = g.seegrund?.[q], oben = pos[q * 3 + 1] * 1000
+              const spiegel = oben
+              const tiefe = sg === undefined || Number.isNaN(sg) ? 0 : Math.max(0, spiegel - Math.max(unten * 1000, sg))
               for (const f of WASSER_SCHNITT_STUFEN) {
                 const d = f * tiefe
                 bp.push(x, Y(spiegel - d), z)
