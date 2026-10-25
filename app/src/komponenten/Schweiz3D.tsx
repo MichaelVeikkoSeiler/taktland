@@ -1019,7 +1019,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {/* wie 3D-Land entstanden ist, für Leute ohne Erfahrung mit Programmieren per Gespräch (Michael, 2026-10-25: «damit sich
             jemand, der nichts mit Vibe-Coding macht, vorstellen kann, wie 3D-Land sich Schritt für Schritt aufgebaut und entwickelt hat») */}
         <Abschnitt titel={eigeneSeite ? 'Über 3D-Land' : 'Über 3D Schweiz'}>
-          <p>3D-Land ist nicht in einem Programmierbüro entstanden, sondern im Gespräch. Michael hat beschrieben, was er sehen möchte, und
+          <p>3D-Land ist nicht in einem Programmierbüro entstanden, sondern im Gespräch. Veikko Seiler hat beschrieben, was zu sehen sein soll, und
             Claude, eine künstliche Intelligenz von Anthropic, hat den Programmcode dazu geschrieben. Dazwischen lagen sehr viele genaue Wünsche,
             Rückmeldungen und Bildschirmfotos.</p>
           <p className="mt-2">Angefangen hat es am 18. Oktober 2026 als Spiel «3D Schweiz» in Taktland, einer App über die Bahn in der Schweiz.
@@ -1027,15 +1027,15 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             hinunter auf einen Kilometer, der Sockel mit den Knöpfen an den Wänden, die VR-Brille, Sonne und Schatten, Gebäude, Bäume und Wanderwege,
             das Wetter mit Windhosen und Regen, der Sternenhimmel, die Tiefe der Seen und der Untergrund in den Wänden. Seit dem
             21. Oktober 2026 gibt es «3D Schweiz» auch als eigene Seite, 3dland.ch.</p>
-          <p className="mt-2"><strong>Was Michael gemacht hat:</strong> die Idee und die Richtung vorgeben, die Schritte auf dem Handy und
+          <p className="mt-2"><strong>Was Veikko Seiler gemacht hat:</strong> die Idee und die Richtung vorgeben, die Schritte auf dem Handy und
             mit der Brille ausprobieren, Fehler finden und genau beschreiben, entscheiden, was bleibt und was wieder wegkommt, und jeden
-            Stand selbst freigeben. Erst wenn er «Zu main» sagt, wird eine Änderung veröffentlicht.</p>
+            Stand selbst freigeben. Erst nach «Zu main» wird eine Änderung veröffentlicht.</p>
           <p className="mt-2"><strong>Was Claude gemacht hat:</strong> die offenen Daten von swisstopo, MeteoSchweiz und anderen Stellen
             suchen, laden und aufbereiten, den Code schreiben, die Änderungen in einem Browser testen und Bilder davon zurückschicken, Fehler
             suchen und erklären, woher sie kamen.</p>
-          <p className="mt-2"><strong>Die Regeln, die Michael aufgestellt hat:</strong> Nichts wird erfunden. Was im Modell steht, stammt
+          <p className="mt-2"><strong>Die Regeln, die Veikko Seiler aufgestellt hat:</strong> Nichts wird erfunden. Was im Modell steht, stammt
             aus einer genannten Quelle; was gezeichnet oder angenommen ist, wird als Annahme bezeichnet; was fehlt, wird als Lücke genannt.
-            Jede Entscheidung wird mit Datum und seinen eigenen Worten festgehalten, damit später nachvollziehbar bleibt, warum etwas so
+            Jede Entscheidung wird mit Datum und im Wortlaut festgehalten, damit später nachvollziehbar bleibt, warum etwas so
             ist. Deshalb stehen auf dieser Seite die Abschnitte «Woher die Daten stammen» und «Was gezeichnet oder angenommen ist».</p>
           <p className="mt-2">So ist 3D-Land in vielen kleinen Runden gewachsen: ein Wunsch, ein Versuch, ein Blick darauf, eine Korrektur.
             Manches musste mehrmals neu gemacht werden, bis es stimmte, etwa das Ufer der Seen.</p>
