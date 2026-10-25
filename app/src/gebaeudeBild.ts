@@ -14,6 +14,8 @@ const AO_BODEN = 0.72, AO_BODEN_M = 8, AO_DACH = 0.8, AO_DACH_M = 0.8
  *  Je Wand ein Raster aus Stockwerken von FENSTER_STOCK_M und Achsen von FENSTER_ACHSE_M, in jeder Zelle ein Fenster; welches
  *  brennt, entscheidet ein fester Zufall je Fenster gegen den Anteil zur Uhrzeit (LICHT_ANTEIL), so brennen mit steigendem Anteil
  *  dieselben weiter und neue dazu. Weit weg wird jedes Fenster über seinen Bildpunkt gemittelt und etwas heller */
+/** wie hell ein brennendes Fenster leuchtet (gewählt; Michael, 2026-10-25: «10% weniger hell», vorher 1,6) */
+const FENSTER_HELL = 1.44
 const FENSTER_STOCK_M = 3, FENSTER_ACHSE_M = 3.2, FENSTER_BREITE_M = 1.3, FENSTER_HOEHE_M = 1.5, FENSTER_BRUESTUNG_M = 0.9
 /** Anteil der brennenden Fenster je Stunde (Schweizer Zeit) an der Stunde 0, 1, …; gewählt, ungefähr: abends die meisten,
  *  nach Mitternacht wenige, am Morgen wieder mehr; tagsüber zählt es nicht, dann ist es hell */
@@ -96,7 +98,7 @@ export function gebaeudeMaterial() {
         vec3 farbe = mix(vec3(1.0, 0.62, 0.28), vec3(1.0, 0.86, 0.6), fract(zufall * 7.31));
         // weit weg heller, damit der Punkt eines Fensters noch zu sehen ist
         float hell = 1.6 * clamp(max(wx, wy) / 0.6, 1.0, 4.0);
-        totalEmissiveRadiance += farbe * min(1.0, im * hell) * brennt * drin * uNacht * 1.6;
+        totalEmissiveRadiance += farbe * min(1.0, im * hell) * brennt * drin * uNacht * ${FENSTER_HELL.toFixed(3)};
       }`)
       .replace('#include <color_fragment>', `#include <color_fragment>
       if (vGebaeude.x >= 0.0) {

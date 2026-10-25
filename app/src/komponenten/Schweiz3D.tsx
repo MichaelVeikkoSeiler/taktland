@@ -617,16 +617,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       setWahl(null)
     } catch (e) { setFehler((e as Error).message) } finally { setLaedt(false) }
   }
-  function zufall() {
-    const g = gelaende.schweiz
-    if (!g || !zusatz) return
-    setGesucht(null)
-    // ein Feld um einen zufälligen Gipfel: dort gibt es etwas zu sehen
-    const gipfel = zusatz.sw.gipfel.filter((x) => x.hoehe_m !== null && imGebiet(zusatz.pool, 'CH', x.lage[0], x.lage[1]))
-    const x = gipfel[Math.floor(Math.random() * gipfel.length)]
-    const [e, n] = lv95(x.lage[0], x.lage[1])
-    setWahl({ e: Math.round(e / RASTER_M.schweiz) * RASTER_M.schweiz, n: Math.round(n / RASTER_M.schweiz) * RASTER_M.schweiz, seite: FELD_M.schweiz })
-  }
+
   /** ein gesuchter Ort: zurück in die ganze Schweiz, das Feld um ihn gewählt (Michael, 2026-10-23: «Orte mit einer Suchfunktion orten») */
   function ortWaehlen(e: number, n: number, name: string) {
     const r = RASTER_M.schweiz
@@ -691,11 +682,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p role="status" className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">{brilleHinweis}</p>
         )}
         <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
-          {stufe === 'schweiz' && (
-            <button type="button" onClick={zufall} className="rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight/90">
-              Überrasch mich
-            </button>
-          )}
           {/* neben der Suche, damit der Knopf «Eintauchen» darunter nichts verdeckt */}
           {/* im Vollbild ist rechts «Schliessen» breiter: dort das Fadenkreuz unter der Suche */}
           <div className={voll ? 'flex flex-col items-start gap-1' : 'flex items-center gap-1'}>
@@ -807,8 +793,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <h2 className="mt-6 text-xl font-bold">Anleitung</h2>
       <div className="mt-2 space-y-2 text-sm leading-relaxed">
         <Abschnitt titel="Wählen und eintauchen">
-          <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See; «Überrasch mich» wählt ein Feld um
-            einen Gipfel. Mit «Eintauchen» geht es in eine Region von 20 km, dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
+          <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See. Mit «Eintauchen» geht es in eine Region von 20 km, dort in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
             Ein Tipp neben das Modell nimmt die Wahl zurück. Die Zeile unter dem Modell (Schweiz › Region …) führt eine Stufe zurück.</p>
         </Abschnitt>
         <Abschnitt titel="Drehen und zoomen">
@@ -899,8 +884,12 @@ const WANDER_PX = 2.2
 const ORT_MAST = 0.035, ORT_GRAU = '#2a2a2a'
 /** Breite des Masts in Bildpunkten (Michael, 2026-10-21: «leicht dicker»; vorher 1) */
 const ORT_MAST_PX = 2
-const ORT_AB_RANG: Record<Stufe, number> = { schweiz: 5, region: 1, ort: 0, nah: 0 }
-const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 20, region: 20, ort: 15, nah: 10 }, ORT_ABSTAND = 0.09
+/** welche Orte bereitstehen (ab Rang, höchstens so viele, Abstand als Anteil der Breite); gezeigt werden davon nur die im Bild,
+ *  mindestens ORT_MIN und höchstens ORT_MAX (Michael, 2026-10-25: «Immer mindestens 3, wenn vorhanden, und maximal 5. Wenn man
+ *  einzoomt und wegzoomt, muss diese Zahl 3 bis 5 … berücksichtigt werden») */
+const ORT_AB_RANG: Record<Stufe, number> = { schweiz: 4, region: 1, ort: 0, nah: 0 }
+const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 200, region: 300, ort: 200, nah: 60 }, ORT_ABSTAND = 0.012
+const ORT_MIN = 3, ORT_MAX = 5
 /** Knöpfe an den Wänden: auf dem Bildschirm als Anteil der Bildhöhe, in der Brille in Metern */
 const KNOPF_BILD = 0.06, KNOPF_BRILLE_M = 0.045
 /** Höhe und Kronenradius je Art (Einzelbaum, Wald, Wald offen, Gebüschwald, Gehölzfläche), wie im Führerstand (BAUM_FORM in
@@ -1262,7 +1251,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (g) g.visible = v.p > 0
         // die Schilder der Orte und Gipfel einzeln, je nachdem, ob die Ebene schon über sie hinweg ist
         for (const sp of wurzel.getObjectByName('schilder')?.children ?? []) {
-          if (sp.userData.art === name) sp.visible = v.p > 0 && v.ebene.distanceToPoint(sp.getWorldPosition(auf)) >= 0
+          if (sp.userData.art === name) sp.visible = v.p > 0 && sp.userData.gezeigt !== false && v.ebene.distanceToPoint(sp.getWorldPosition(auf)) >= 0
         }
       }
       // in der Brille weniger Last (Michael, 2026-10-22: Höhen und Bäume zusammen «etwas zu viel»): Bäume ohne eigenen Schatten
@@ -1684,13 +1673,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // Ortschaften wie die Bahnhöfe der Modellbahn (Michael, 2026-10-21: «mit deiner … dunkelgrauen Linie, die sehr dünn ist, und
     // deiner Fahne oben, wo weiss auf schwarzem Kasten der Ortsname steht»): ein Mast, oben ein eckiges dunkelgraues Schild;
     // welche, nach dem Rang der Objektart in swissTLMRegio, die grösseren zuerst
+    const ortSchilder: Array<{ sp: THREE.Sprite; rang: number; mast: LineSegments2 | null }> = []
+    const ortPunkt = new THREE.Vector3(), ortVorne = new THREE.Vector3(), bildGroesse = new THREE.Vector2()
     const ortGruppe = new THREE.Group()
     ortGruppe.name = 'orte'
     wurzel.add(ortGruppe)
     const mastKm = weiteKm * ORT_MAST
     // in der ganzen Schweiz nur Orte in der Schweiz; überall nur so viele, dass zwei Masten mindestens ORT_ABSTAND der Breite
-    // auseinander stehen, die grösseren zuerst (die Liste ist nach dem Rang geordnet)
-    const ortListe: Array<{ name: string; e: number; n: number; z: number }> = []
+    // auseinander stehen, die grösseren zuerst (die Liste ist nach dem Rang geordnet); welche davon zu sehen sind, wählt ortAuswahl
+    const ortListe: Array<{ name: string; e: number; n: number; z: number; rang: number }> = []
     const abstand = weite * ORT_ABSTAND, hoechstensOrte = ORT_ANZAHL[stufe] * Math.min(3, b.teile.size)
     for (const [name, e, n, rang] of zusatz?.ortschaften ?? []) {
       if (ortListe.length >= hoechstensOrte) break
@@ -1698,7 +1689,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // derselbe Name steht in der Quelle oft zweimal (Ortschaft und Weiler)
       if (ortListe.some((o) => o.name === name || Math.hypot(o.e - e, o.n - n) < abstand)) continue
       if (stufe === 'schweiz' && zusatz && !imGebiet(zusatz.pool, 'CH', ...wgs(e, n))) continue
-      ortListe.push({ name, e, n, z: bestandHoehe(b, e, n) })
+      ortListe.push({ name, e, n, z: bestandHoehe(b, e, n), rang })
     }
     for (const o of ortListe) {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
@@ -1717,18 +1708,67 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       sp.center.set(0.5, 0)
       sp.position.set(X(o.e), Y(o.z) + mastKm, Z(o.n))
       sp.renderOrder = 3
+      sp.userData.gezeigt = false
       schilder.add(sp)
+      ortSchilder.push({ sp, rang: o.rang, mast: null })
     }
     const mastMaterial = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX, clippingPlanes: [k.verlauf.orte.ebene] })
     const mastenBauen = () => {
       for (const o of ortGruppe.children) (o as LineSegments2).geometry.dispose()
       ortGruppe.clear()
-      if (!ortListe.length) return
-      const geo = new LineSegmentsGeometry()
-      geo.setPositions(ortListe.flatMap((o) => [X(o.e), Y(o.z), Z(o.n), X(o.e), Y(o.z) + mastKm, Z(o.n)]))
-      ortGruppe.add(new LineSegments2(geo, mastMaterial))
+      // je Ort ein eigener Mast, damit er mit seinem Schild kommt und geht
+      ortListe.forEach((o, i) => {
+        const geo = new LineSegmentsGeometry()
+        geo.setPositions([X(o.e), Y(o.z), Z(o.n), X(o.e), Y(o.z) + mastKm, Z(o.n)])
+        const mast = new LineSegments2(geo, mastMaterial)
+        mast.visible = !!ortSchilder[i].sp.userData.gezeigt
+        ortSchilder[i].mast = mast
+        ortGruppe.add(mast)
+      })
     }
     mastenBauen()
+    // welche Orte zu sehen sind: von denen im Bild die grössten (Rang der Objektart), bei gleichem Rang die näher an der Mitte des
+    // Bilds, ohne dass sich ihre Schilder überdecken, höchstens ORT_MAX; sind es so weniger als ORT_MIN, kommen weitere dazu, auch
+    // wenn sie sich überdecken. Neu gewählt, wenn die Kamera 0,25 s ruht, in der Brille alle 0,5 s
+    const ortAuswahl = () => {
+      const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : k.kamera
+      k.renderer.getSize(bildGroesse)
+      const H = bildGroesse.y, W = bildGroesse.x, f = H / (2 * Math.tan((k.kamera.fov * Math.PI) / 360))
+      const imBild: Array<{ o: typeof ortSchilder[number]; x: number; y: number; w: number; h: number; mitte: number }> = []
+      for (const o of ortSchilder) {
+        o.sp.getWorldPosition(ortPunkt)
+        // hinter der Kamera nicht (die Tiefe nach project liegt bei weiter Sicht knapp an 1 und taugt dafür nicht)
+        if (ortVorne.copy(ortPunkt).applyMatrix4(cam.matrixWorldInverse).z >= 0) continue
+        const p = ortPunkt.project(cam)
+        if (Math.abs(p.x) > 0.95 || Math.abs(p.y) > 0.95) continue
+        imBild.push({ o, x: (p.x + 1) / 2 * W, y: (1 - p.y) / 2 * H, w: o.sp.userData.b * f, h: o.sp.userData.h * f, mitte: Math.hypot(p.x, p.y) })
+      }
+      imBild.sort((a, c) => c.o.rang - a.o.rang || a.mitte - c.mitte)
+      const gewaehlt: typeof imBild = []
+      const deckt = (a: typeof imBild[number], c: typeof imBild[number]) =>
+        Math.abs(a.x - c.x) < (a.w + c.w) / 2 + 6 && a.y - a.h - 4 < c.y && c.y - c.h - 4 < a.y
+      for (const q of imBild) {
+        if (gewaehlt.length >= ORT_MAX) break
+        if (!gewaehlt.some((g) => deckt(g, q))) gewaehlt.push(q)
+      }
+      for (const q of imBild) { if (gewaehlt.length >= ORT_MIN) break; if (!gewaehlt.includes(q)) gewaehlt.push(q) }
+      const an = new Set(gewaehlt.map((g) => g.o))
+      for (const o of ortSchilder) {
+        o.sp.userData.gezeigt = an.has(o)
+        if (o.mast) o.mast.visible = an.has(o)
+      }
+    }
+    let ortZeit = 0, ortRuhe = 0
+    const ortLage = new THREE.Vector3(Infinity, 0, 0), ortDreh = new THREE.Quaternion()
+    const ortSchritt = () => {
+      if (!ortSchilder.length) return
+      const jetzt = performance.now()
+      if (renderer.xr.isPresenting) { if (jetzt - ortZeit > 500) { ortZeit = jetzt; ortAuswahl() } return }
+      const kam = k.kamera
+      if (!kam.position.equals(ortLage) || !kam.quaternion.equals(ortDreh)) { ortLage.copy(kam.position); ortDreh.copy(kam.quaternion); ortRuhe = jetzt; return }
+      if (ortRuhe && jetzt - ortRuhe > 250) { ortRuhe = 0; ortAuswahl() }
+    }
+    k.jeBild.push(ortSchritt)
 
     // + und − in der Mitte jeder Seite unter der Platte des Sockels, hängend, damit sie keine Schalter an den Wänden verdecken
     // (Michael, 2026-10-24: «Sie sollen etwas weiter unten stehen und keine Tasten also Knöpfe verdecken»)
@@ -1797,6 +1837,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     if (renderer.xr.isPresenting) k.jeBild[0]()
     return () => {
       k.wenn.tipp = null
+      const i = k.jeBild.indexOf(ortSchritt); if (i >= 0) k.jeBild.splice(i, 1)
       const weg: Array<THREE.Material | undefined> = []
       for (const o of [...wurzel.children]) {
         if (o.userData.bleibt) continue

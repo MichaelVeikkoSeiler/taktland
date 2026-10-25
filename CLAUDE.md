@@ -275,7 +275,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail»; nahLaden: die scharfe Umgebung, Gelände 2 m und Luftbild
              25 cm, wo es sie gibt, bis 200 m neben den Bahnlinien, sonst wie das Feld darüber, mit Hinweis); gewählt wird ein Quadrat, keine
              Region und kein Tal (deren Grenzen stehen in keiner Quelle), die Karte zum Feld nennt Orte der Landeskarte, den höchsten
-             Gipfel, Seen und den Kanton der Mitte; «Überrasch mich» wählt das Feld um einen zufälligen Gipfel; ein Suchfeld darunter findet Ortschaften und Weiler aus data/schweiz3d/orte.json, Gipfel und Hügel mit Höhe aus
+             Gipfel, Seen und den Kanton der Mitte («Überrasch mich» gibt es nicht mehr, Michael, 2026-10-25); ein Suchfeld darunter findet Ortschaften und Weiler aus data/schweiz3d/orte.json, Gipfel und Hügel mit Höhe aus
              data/schweiz3d/gipfel.json (swissTLMRegio, 3'364, build_schweiz3d.py --namen; erst beim ersten Tippen geladen) und Seen mit Namen (Michael, 2026-10-23: «Gipfel und Seen auch»; ohne Akzente, Anfang vor Mitte des Namens, nach Rang, Gipfel und
              Seen mit gewähltem Rang zwischen den Orten, SUCHE_RANG; nur Wortanfänge; Orte mit dem Kanton laut BFS oder «Ausland», diese
              zuletzt; Gipfel ohne Kanton, auf der Grenze schneidet sie die vereinfachte Kantonsfläche ab) und wählt das Feld um den Ort, aus jeder Stufe, danach beim Eintauchen und Zurückgehen in jeder Stufe wieder das Feld
@@ -326,7 +326,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Gelände, Gebäude und Bäume werfen Schatten, Berge ausserhalb des Modells nicht; steht die Sonne unter dem Horizont (ganz ab 6° darunter),
              brennt Licht in den Fenstern (Michael, 2026-10-24: «Ist es dunkel brennen bei den Gebäuden Lichter. Realistische Verteilung»; fensterLicht in
              src/gebaeudeBild.ts): je Wand Stockwerke von 3 m und Achsen von 3,2 m, je Fenster ein fester Zufall gegen den Anteil der Stunde (LICHT_ANTEIL:
-             abends bis 38 %, um 3 Uhr 4 %), warm, weit weg über den Bildpunkt gemittelt; Fenster, Stockwerke und Anteile in keiner Quelle, swissBUILDINGS3D
+             abends bis 38 %, um 3 Uhr 4 %), warm, Helligkeit FENSTER_HELL (Michael, 2026-10-25: «10% weniger hell»), weit weg über den Bildpunkt gemittelt; Fenster, Stockwerke und Anteile in keiner Quelle, swissBUILDINGS3D
              kennt sie nicht; auch im Führerstand der Modellbahn in der Dämmerung, mit dem Anteil von 20 Uhr; unter dem Horizont nur Himmelslicht, tief am
              Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille alle Schalter an den Wänden des Modells, auf allen vier Seiten
              (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle … so wie Schalter», vorher Tafeln vor der Nase): flach im
@@ -352,7 +352,10 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
              Modellbahn ein dünner dunkelgrauer Mast (2 Bildpunkte) mit eckigem dunkelgrauem Schild mittig darauf, Name in Weiss, je Stufe ab einem Rang und höchstens
-             so viele, mit Abstand zueinander (ORT_* in Schweiz3D.tsx; in der ganzen Schweiz nur Orte in der Schweiz)
+             so viele, mit Abstand zueinander (ORT_* in Schweiz3D.tsx; in der ganzen Schweiz nur Orte in der Schweiz); zu sehen sind davon nur die im
+             Bild, mindestens 3, wenn es so viele gibt, und höchstens 5 (Michael, 2026-10-25: «nicht so viele Ortschaften … mindestens 3 … maximal 5», auch
+             beim Zoomen): die grössten nach dem Rang, bei gleichem Rang die näher an der Mitte des Bilds, ohne dass sich die Schilder überdecken,
+             neu gewählt, wenn die Kamera 0,25 s ruht, in der Brille alle 0,5 s (ortAuswahl, ORT_MIN, ORT_MAX), je Ort ein eigener Mast
 data/schweiz3d_probe/  Gebäude und Bäume für «3D Schweiz» in zwei Probeausschnitten (Michael, 2026-10-20: «Köniz und Gantrisch»):
              alles in 6 × 6 km um Köniz und 8 × 8 km um den Gantrisch, nicht nur neben der Bahn, Formate wie data/gebaeude und data/baeume,
              Farben aus SWISSIMAGE 2 m (pipeline/build_schweiz3d_probe.py, 14'864 Gebäude, etwa 630'000 Bäume, etwa 11 MB); in der App in den Stufen
