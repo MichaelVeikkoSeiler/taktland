@@ -517,7 +517,8 @@ data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetief
              lief über und der Grund fiel am Ufer senkrecht bis auf den Sockel, Michael: «wenn es beim Ufer einfach senkrecht hinuntergeht»);
              zum Ufer steigt der Grund die letzten 40 m (bei groben Stufen 1,5 Felder) gleichmässig auf den Spiegel an (uferAnlegen, eine Annäherung); in der App (seegrundLaden in src/gelaende.ts, seegrundSetzen in Schweiz3D.tsx) ab der Region:
              wo das Gelände höchstens 1,5 m über dem Spiegel liegt und Grund gemessen ist, sinkt es auf den Grund, darüber eine durchsichtige
-             Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, immer etwas dunkler als die Fläche, nach unten dunkler, am dunkelsten ab
+             Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), begrenzt vom Ufer aus data/seen.json (swissTLMRegio, 25 m), Spiegel der häufigste im Umriss,
+             auf das Modell zugeschnitten, nur wo es nicht reicht Felder des Rasters, mit Stencil nie doppelt (Michael, 2026-10-25: «Warum hat es diese Zacken am Ufer?»), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, immer etwas dunkler als die Fläche, nach unten dunkler, am dunkelsten ab
              120 m Tiefe, im selben Licht wie die Fläche (Normale nach oben, beide Seiten) (WASSER_SCHNITT_*, gewählt; Michael, 2026-10-25: «Die Wasseroberfläche muss immer
              mindestens so hell sein wie die Schnittkante»), Masten,
              Windhosen und Wanderwege auf dem Wasser (hoeheIm); andere Seen nur mit ihrer Oberfläche (so in der Anleitung und den Quellen);

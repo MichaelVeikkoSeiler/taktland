@@ -941,7 +941,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         <Abschnitt titel="Seen und Seetiefe">
           <p>Bei 22 Seen ist der Grund gemessen: swissBATHY3D von swisstopo, ein Höhenmodell des Seegrunds. Dort liegt das Modell auf
-            dem echten Seegrund, darüber steht das Wasser als durchsichtige Fläche, und in den Wänden sieht man den See im Schnitt, von
+            dem echten Seegrund, darüber steht das Wasser als durchsichtige Fläche, begrenzt vom Ufer aus swissTLMRegio (auf 25 m vereinfacht; wo es nicht reicht, ergänzen Felder des Rasters), und in den Wänden sieht man den See im Schnitt, von
             seinem Grund bis zum Spiegel. Die Höhen sind echt, auch unter Wasser. Der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund: Reicht ein See tiefer als der Sockel, ist sein Grund am Boden des Sockels abgeschnitten. Es sind: Ägerisee, Baldeggersee, Bielersee, Bodensee,
             Brienzersee, Genfersee, Hallwilersee, Lac de Joux, Lago Maggiore, Lungerersee, Murtensee, Neuenburgersee, Rotsee, Sarnersee,
             Sempachersee, Silsersee, Silvaplanersee, Thunersee, Vierwaldstättersee, Walensee, Zürichsee und Zugersee. Alle anderen Seen
@@ -1150,7 +1150,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => {
     const el = huelle.current!
     const dunkel = matchMedia('(prefers-color-scheme: dark)').matches
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    // mit Stencil: das Wasser der Seen deckt jeden Bildpunkt nur einmal (wasserMaterial)
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, stencil: true })
     renderer.setPixelRatio(Math.min(2, devicePixelRatio))
     renderer.setSize(el.clientWidth, el.clientHeight)
     renderer.xr.enabled = true
@@ -1638,16 +1639,106 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       setzen()
       return { di, dj, g, pos, setzen }
     })
-    // das Wasser der Seen über dem gemessenen Grund (seegrundSetzen): eine durchsichtige Fläche auf dem Spiegel, nur wo alle vier
-    // Ecken eines Felds im See liegen; Farbe und Durchsicht gewählt (Michael, 2026-10-25: «die Seetiefe»)
+    // das Wasser der Seen über dem gemessenen Grund (seegrundSetzen): eine durchsichtige Fläche auf dem Spiegel, Farbe und Durchsicht
+    // gewählt (Michael, 2026-10-25: «die Seetiefe»). Ihr Rand ist das Ufer aus swissTLMRegio (data/seen.json, auf 25 m vereinfacht),
+    // nicht das Raster des Geländes, das am Ufer Zacken gab (Michael, 2026-10-25: «Warum hat es diese Zacken am Ufer?»); der Spiegel
+    // ist der des Sees, dessen Grund im Umriss am häufigsten liegt. Nur wo kein Umriss passt, bleiben die Felder des Rasters
     const wasserGruppe = new THREE.Group()
     wasserGruppe.name = 'wasser'
     wurzel.add(wasserGruppe)
     const wasserMaterial = new THREE.MeshPhongMaterial({ color: WASSER_FARBE, transparent: true, opacity: WASSER_DECKKRAFT, depthWrite: false,
-      side: THREE.DoubleSide, shininess: 80, specular: '#9fc4e0' })
+      side: THREE.DoubleSide, shininess: 80, specular: '#9fc4e0',
+      // wo Umriss und Rasterfelder sich überlappen, nicht doppelt (sonst eine dunkle Naht)
+      stencilWrite: true, stencilRef: 1, stencilFunc: THREE.NotEqualStencilFunc, stencilZPass: THREE.ReplaceStencilOp })
+    const imUmriss = new Map<Gelaende, Uint8Array>()
+    if (zusatz && netze.some(({ g }) => g.wasser)) {
+      for (const see of zusatz.seen.seen) {
+        const ringe = see.ringe.map(({ start, d }) => {
+          const q: Array<[number, number]> = []
+          let la = start[0], lo = start[1]
+          q.push(lv95(la / 1e5, lo / 1e5))
+          for (let k = 0; k + 1 < d.length; k += 2) { la += d[k]; lo += d[k + 1]; q.push(lv95(la / 1e5, lo / 1e5)) }
+          return q
+        })
+        const aussen = ringe[0]
+        if (!aussen || aussen.length < 3) continue
+        if (Math.max(...aussen.map((p) => p[0])) < E0 || Math.min(...aussen.map((p) => p[0])) > E1 ||
+            Math.max(...aussen.map((p) => p[1])) < N0 || Math.min(...aussen.map((p) => p[1])) > N1) continue
+        // je Stück die Felder im Umriss (gerade-ungerade über alle Ringe, also ohne Inseln) und wie oft welcher Spiegel darin liegt
+        const zaehler = new Map<number, number>()
+        const masken: Array<[Gelaende, Uint8Array]> = []
+        for (const { g } of netze) {
+          const w = g.wasser
+          if (!w) continue
+          const { ost, nord, m, breite, hoehe } = g.raster
+          const maske = new Uint8Array(breite * hoehe)
+          let drin = 0
+          for (let j = 0; j < hoehe; j++) {
+            const n = nord - (j + 0.5) * m
+            const xs: number[] = []
+            for (const r of ringe) for (let k = 0; k < r.length; k++) {
+              const [e1, n1] = r[k], [e2, n2] = r[(k + 1) % r.length]
+              if ((n1 > n) !== (n2 > n)) xs.push(e1 + (n - n1) / (n2 - n1) * (e2 - e1))
+            }
+            if (!xs.length) continue
+            xs.sort((u, v) => u - v)
+            for (let k = 0; k + 1 < xs.length; k += 2) {
+              const i0 = Math.max(0, Math.ceil((xs[k] - ost) / m - 0.5)), i1 = Math.min(breite - 1, Math.floor((xs[k + 1] - ost) / m - 0.5))
+              for (let i = i0; i <= i1; i++) {
+                const q = j * breite + i
+                maske[q] = 1; drin++
+                if (!Number.isNaN(w[q])) zaehler.set(w[q], (zaehler.get(w[q]) ?? 0) + 1)
+              }
+            }
+          }
+          if (drin) masken.push([g, maske])
+        }
+        const spiegel = [...zaehler].sort((u, v) => v[1] - u[1])[0]?.[0]
+        if (spiegel === undefined) continue
+        for (const [g, maske] of masken) {
+          const alt = imUmriss.get(g)
+          if (alt) for (let q = 0; q < maske.length; q++) alt[q] |= maske[q]
+          else imUmriss.set(g, maske)
+        }
+        // der Umriss, auf das Modell zugeschnitten (Sutherland-Hodgman an den vier Kanten), als Fläche auf dem Spiegel
+        const schneiden = (r: Array<[number, number]>) => {
+          let q = r
+          const kanten: Array<[(p: [number, number]) => number, number]> = [[(p) => p[0] - E0, 0], [(p) => E1 - p[0], 0], [(p) => p[1] - N0, 1], [(p) => N1 - p[1], 1]]
+          for (const [abst] of kanten) {
+            const neu: Array<[number, number]> = []
+            for (let k = 0; k < q.length; k++) {
+              const p1 = q[k], p2 = q[(k + 1) % q.length], d1 = abst(p1), d2 = abst(p2)
+              if (d1 >= 0) neu.push(p1)
+              if ((d1 >= 0) !== (d2 >= 0)) { const t = d1 / (d1 - d2); neu.push([p1[0] + t * (p2[0] - p1[0]), p1[1] + t * (p2[1] - p1[1])]) }
+            }
+            q = neu
+            if (q.length < 3) return null
+          }
+          return q
+        }
+        const umriss = schneiden(aussen)
+        if (!umriss) continue
+        const form = new THREE.Shape(umriss.map(([e, n]) => new THREE.Vector2(X(e), Z(n))))
+        for (const insel of ringe.slice(1)) { const h = schneiden(insel); if (h) form.holes.push(new THREE.Path(h.map(([e, n]) => new THREE.Vector2(X(e), Z(n))))) }
+        const geo = new THREE.ShapeGeometry(form)
+        const pp = geo.attributes.position as THREE.BufferAttribute
+        for (let k = 0; k < pp.count; k++) pp.setXYZ(k, pp.getX(k), Y(spiegel), pp.getY(k))
+        const nn = geo.attributes.normal as THREE.BufferAttribute
+        for (let k = 0; k < nn.count; k++) nn.setXYZ(k, 0, 1, 0)
+        // Norden zeigt nach −z: die Dreiecke umdrehen, sonst liegt die Rückseite oben und bekommt das Licht von unten (dunkel)
+        const ix = geo.index!
+        for (let k = 0; k < ix.count; k += 3) { const t = ix.getX(k + 1); ix.setX(k + 1, ix.getX(k + 2)); ix.setX(k + 2, t) }
+        geo.computeBoundingSphere()
+        const flaeche = new THREE.Mesh(geo, wasserMaterial)
+        flaeche.renderOrder = 1
+        wasserGruppe.add(flaeche)
+      }
+    }
+    // wo kein Umriss passt: die Felder des Rasters, nur wo alle vier Ecken im See und nicht im Umriss liegen
     for (const { g } of netze) {
       const w = g.wasser
       if (!w) continue
+      const um = imUmriss.get(g)
       const { ost, nord, m, breite, hoehe } = g.raster
       const pos = new Float32Array(breite * hoehe * 3), idx: number[] = []
       for (let j = 0; j < hoehe; j++) for (let i = 0; i < breite; i++) {
@@ -1657,6 +1748,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (let j = 0; j < hoehe - 1; j++) for (let i = 0; i < breite - 1; i++) {
         const a = j * breite + i
         if (Number.isNaN(w[a]) || Number.isNaN(w[a + 1]) || Number.isNaN(w[a + breite]) || Number.isNaN(w[a + breite + 1])) continue
+        if (um && um[a] && um[a + 1] && um[a + breite] && um[a + breite + 1]) continue
         idx.push(a, a + breite, a + 1, a + 1, a + breite, a + breite + 1)
       }
       if (!idx.length) continue
