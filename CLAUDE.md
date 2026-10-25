@@ -104,7 +104,7 @@ server/spiel/  Vermittlung für «Geo» und «Bahnhofsuche» auf mehreren Gerät
              Ausprobieren mit VITE_SPIEL_URL gegen php -S
 dreidland/   3dland.ch (Michael, 2026-10-21): nur «3D Schweiz» als eigene Seite aus demselben Code (app/3dland.html,
              src/dreidland.tsx, vite.3dland.config.ts, scripts/3dland_fertig.mjs; eigene Bildmarke und Auftaktbild als
-             Platzhalter von Michael, 2026-10-21: app/public-3dland, src/assets/auftakt-3dland.webp, seit 2026-10-25 Michaels Bild mit XR-Brille, Windhosen und Regen, eines für hell und dunkel; sonst die Farben von Taktland),
+             Platzhalter von Michael, 2026-10-21: app/public-3dland, src/assets/auftakt-3dland-*.webp, seit 2026-10-25 Michaels Bilder mit XR-Brille, Windhosen und Regen, dunkel bei Nacht; sonst die Farben von Taktland),
              ohne eigene Daten: holt sie von taktland.ch/app/ (VITE_DATEN_BASIS in src/daten.ts und src/schweiz11.ts) und
              daten.taktland.ch; das Repository 3dland enthält nur den Workflow dreidland/veroeffentlichen.yml (je Repository nur eine
              eigene Domain bei GitHub Pages), der täglich und von Hand baut; Einrichten in dreidland/LIESMICH.md

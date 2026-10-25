@@ -1,12 +1,13 @@
 /**
  * 3dland.ch (Michael, 2026-10-21: «setzen wir jetzt 3dland.ch um»): «3D Schweiz» als eigene Seite, aus demselben Code wie
- * Taktland, mit eigener Bildmarke und eigenem Auftaktbild (Michael, 2026-10-21: «als Platzhalter»; seit 2026-10-25 eines für hell und dunkel), sonst den Farben von Taktland. Die Daten kommen von taktland.ch und daten.taktland.ch
+ * Taktland, mit eigener Bildmarke und eigenem Auftaktbild (Michael, 2026-10-21: «als Platzhalter»; seit 2026-10-25 mit XR-Brille, Windhosen und Regen, dunkel bei Nacht), sonst den Farben von Taktland. Die Daten kommen von taktland.ch und daten.taktland.ch
  * (vite.3dland.config.ts). Ohne Zähler, ohne Konto; Einstellungen wie Datum und Uhrzeit bleiben nur, solange die Seite offen ist.
  */
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import auftakt from './assets/auftakt-3dland.webp'
+import auftaktDunkel from './assets/auftakt-3dland-dunkel.webp'
+import auftaktHell from './assets/auftakt-3dland-hell.webp'
 import { Auftakt } from './komponenten/Auftakt'
 import Schweiz3D from './komponenten/Schweiz3D'
 
@@ -18,7 +19,7 @@ function DreiDLand() {
       <div className="mx-auto max-w-2xl md:max-w-3xl xl:max-w-6xl">
         {/* Auftakt rückt mit -mx-4 -mt-8 an den Rand der Seite von Taktland; hier dieser Rand */}
         <div className="px-4 pt-8">
-          <Auftakt bild={{ hell: auftakt, dunkel: auftakt, breite: 1536, hoehe: 1024, alt: 'Illustration: Jemand mit XR-Brille und zwei Controllern blickt auf ein quadratisches Modell einer Landschaft mit zwei Seen, Dörfern und Wald auf einem dunklen Sockel; darauf zwei rot-weisse Windhosen, im Hintergrund Regen über Seen und Hügeln.'}}
+          <Auftakt bild={{ hell: auftaktHell, dunkel: auftaktDunkel, breite: 1536, hoehe: 1024, alt: 'Illustration: Jemand mit XR-Brille und zwei Controllern blickt auf ein quadratisches Modell einer Landschaft mit zwei Seen, Dörfern und Wald auf einem dunklen Sockel; darauf zwei rot-weisse Windhosen, im Hintergrund Regen über Seen und Hügeln.'}}
                    oben={<img src="./logo.png" alt="3dland" className="absolute left-3 top-3 size-14 rounded-xl shadow-md sm:left-5 sm:top-5 sm:size-20" />} />
         </div>
         <main>
