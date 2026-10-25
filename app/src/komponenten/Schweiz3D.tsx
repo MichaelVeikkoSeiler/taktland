@@ -2044,7 +2044,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const jetzt = performance.now()
       if (renderer.xr.isPresenting) { if (jetzt - ortZeit > 500) { ortZeit = jetzt; ortAuswahl() } return }
       const kam = k.kamera
-      if (!kam.position.equals(ortLage) || !kam.quaternion.equals(ortDreh)) { ortLage.copy(kam.position); ortDreh.copy(kam.quaternion); ortRuhe = jetzt; return }
+      // ruhig heisst: je Bild weniger als ein Hunderttausendstel der Weite verschoben und kaum gedreht; die gedämpfte Steuerung läuft nach einer Geste
+      // noch lange um winzige Beträge nach, mit genauem Vergleich ruhte die Kamera nie und es erschien kein Ort (Michael, 2026-10-25:
+      // «keine Orte angezeigt obwohl der Schalter ON ist»)
+      if (kam.position.distanceTo(ortLage) > weiteKm * 1e-5 || kam.quaternion.angleTo(ortDreh) > 1e-5) { ortLage.copy(kam.position); ortDreh.copy(kam.quaternion); ortRuhe = jetzt; return }
       if (ortRuhe && jetzt - ortRuhe > 250) { ortRuhe = 0; ortAuswahl() }
     }
     k.jeBild.push(ortSchritt)
