@@ -744,7 +744,7 @@ export interface Seegrund {
   /** die Seen mit Grund in diesem Ausschnitt */
   seen: string[]
   /** Grund und Spiegel in m ü. M. an einer Stelle, oder null (kein gemessener Grund); der Grund zwischen den Feldern linear */
-  bei: (e: number, n: number) => { grund: number; spiegel: number } | null
+  bei: (e: number, n: number) => { grund: number; spiegel: number; see: number } | null
 }
 export async function seegrundLaden(e0: number, n0: number, e1: number, n1: number): Promise<Seegrund | null> {
   const ix = await seegrundIndex().catch(() => null)
@@ -774,7 +774,7 @@ export async function seegrundLaden(e0: number, n0: number, e1: number, n1: numb
     seen.add(ix.seen[mitte.see].titel)
     const a = feld(I, J), b = feld(I + 1, J), c = feld(I, J + 1), d = feld(I + 1, J + 1)
     const grund = a && b && c && d ? a.g * (1 - fx) * (1 - fy) + b.g * fx * (1 - fy) + c.g * (1 - fx) * fy + d.g * fx * fy : mitte.g
-    return { grund: Math.min(grund, spiegel), spiegel }
+    return { grund: Math.min(grund, spiegel), spiegel, see: mitte.see }
   }
   return { quelle: ix.quelle, get seen() { return [...seen] }, bei }
 }

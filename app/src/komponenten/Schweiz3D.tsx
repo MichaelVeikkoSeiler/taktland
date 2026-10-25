@@ -291,7 +291,7 @@ async function seegrundSetzen(g: Gelaende): Promise<Gelaende> {
   if (!sg) return g
   const wasser = new Float32Array(breite * hoehe).fill(NaN), seegrund = new Float32Array(breite * hoehe).fill(NaN)
   let da = false
-  // erst die Felder, die See sein könnten, je See (nach seinem Spiegel aus der Quelle)
+  // erst die Felder, die See sein könnten, je See (nach seiner Nummer in der Quelle; Bieler-, Neuenburger- und Murtensee haben denselben Spiegel)
   const kandidaten = new Map<number, Array<{ q: number; z: number; grund: number }>>()
   for (let j = 0; j < hoehe; j++) {
     for (let i = 0; i < breite; i++) {
@@ -308,19 +308,19 @@ async function seegrundSetzen(g: Gelaende): Promise<Gelaende> {
         for (let b = 0; b < k; b++) {
           for (let a = 0; a < k; a++) {
             const t = sg.bei(e - m / 2 + (a + 0.5) * m / k, n - m / 2 + (b + 0.5) * m / k)
-            if (t && t.spiegel === s.spiegel) { summe += t.grund; zahl++ }
+            if (t && t.see === s.see) { summe += t.grund; zahl++ }
           }
         }
         if (zahl < k * k / 2) continue
         grund = summe / zahl
       }
-      const liste = kandidaten.get(s.spiegel) ?? []
-      liste.push({ q, z, grund }); kandidaten.set(s.spiegel, liste)
+      const liste = kandidaten.get(s.see) ?? []
+      liste.push({ q, z, grund }); kandidaten.set(s.see, liste)
     }
   }
-  // je See eine starre, waagrechte Wasserfläche auf der Höhe, die das Geländemodell über ihm zeigt (Median, das Modell zeigt Seen flach);
-  // See ist nur, was nicht höher liegt, alles darüber bleibt Land und schaut aus dem Wasser (Michael, 2026-10-25, Erlach: «damit wir eine
-  // starre Seeoberfläche haben»; vorher galt Land bis 1,5 m über dem Spiegel als See und überschwemmte flache Ufer)
+  // je See gilt als Wasser nur, was nicht höher liegt als der Median des Geländemodells über ihm (das Modell zeigt Seen flach), alles
+  // darüber bleibt Land (Michael, 2026-10-25, Erlach: vorher galt Land bis 1,5 m über dem Spiegel als See und überschwemmte flache Ufer);
+  // so für jeden See mit gemessenem Grund (Michael, 2026-10-25: «gilt für alle Seen, die du identifizieren kannst»)
   for (const liste of kandidaten.values()) {
     const zs = liste.map((k) => k.z).sort((a, b) => a - b)
     const flaeche = zs[Math.floor(zs.length / 2)]
