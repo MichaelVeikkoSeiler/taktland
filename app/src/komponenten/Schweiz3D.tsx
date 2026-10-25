@@ -1091,6 +1091,8 @@ const WANDER_PX = 1.4
 /** Ortschaften: Mast als Anteil der Breite des Modells, ab welchem Rang und wie viele je Stück, Farbe wie die Bahnhöfe der
  *  Modellbahn (BAHNHOF_GRAU in Relief.tsx); Auswahl und Masse gewählt, nicht aus einer Quelle */
 const ORT_MAST = 0.035, ORT_GRAU = '#2a2a2a'
+/** alle Schilder mit leicht abgerundeten Ecken, in Bildpunkten des Schildbilds (Michael, 2026-10-25: «Alle Schilder leicht abgerundete Ecken») */
+const SCHILD_RUND_PX = 6
 /** Breite des Masts in Bildpunkten (Michael, 2026-10-21: «leicht dicker»; vorher 1) */
 const ORT_MAST_PX = 2
 /** welche Orte bereitstehen (ab Rang, höchstens so viele, Abstand als Anteil der Breite); gezeigt werden davon nur die im Bild,
@@ -1946,7 +1948,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       x.font = schrift
       c.width = Math.ceil(x.measureText(text).width) + 18; c.height = px + 14
       x.font = schrift
-      x.fillStyle = '#ffffff'; x.fillRect(0, 0, c.width, c.height)
+      x.fillStyle = '#ffffff'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, SCHILD_RUND_PX); x.fill()
       x.fillStyle = ORT_GRAU; x.fillText(text, 9, px + 1)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: false }))
@@ -1992,7 +1994,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       x.font = schrift
       c.width = Math.ceil(x.measureText(o.name).width) + 18; c.height = px + 14
       x.font = schrift
-      x.fillStyle = ORT_GRAU; x.fillRect(0, 0, c.width, c.height)
+      x.fillStyle = ORT_GRAU; x.beginPath(); x.roundRect(0, 0, c.width, c.height, SCHILD_RUND_PX); x.fill()
       x.fillStyle = '#ffffff'; x.fillText(o.name, 9, px + 1)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: false }))

@@ -223,7 +223,7 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
         const c = document.createElement('canvas'), x = c.getContext('2d')!
         const px = 22, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
         x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 12; c.height = px + 8
-        x.font = schrift; x.fillStyle = '#2a2a2a'; x.fillRect(0, 0, c.width, c.height)
+        x.font = schrift; x.fillStyle = '#2a2a2a'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 5); x.fill()
         x.fillStyle = '#ffffff'; x.fillText(text, 6, px - 1)
         const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
         sp.material.map = tex; sp.material.needsUpdate = true
