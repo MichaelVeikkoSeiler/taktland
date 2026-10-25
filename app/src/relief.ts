@@ -7,6 +7,14 @@ import { holen } from './daten'
  */
 
 /** Näherungsformel von swisstopo, wie in pipeline/build_relief.py */
+/** LV95 → WGS84 (Breite, Länge in Grad), die Näherung von swisstopo */
+export function wgs(e: number, n: number): [number, number] {
+  const y = (e - 2_600_000) / 1e6, x = (n - 1_200_000) / 1e6
+  const la = 16.9023892 + 3.238272 * x - 0.270978 * y * y - 0.002528 * x * x - 0.0447 * y * y * x - 0.014 * x ** 3
+  const lo = 2.6779094 + 4.728982 * y + 0.791484 * y * x + 0.1306 * y * x * x - 0.0436 * y ** 3
+  return [la * 100 / 36, lo * 100 / 36]
+}
+
 export function lv95(lat: number, lon: number): [number, number] {
   const p = (lat * 3600 - 169028.66) / 10000
   const l = (lon * 3600 - 26782.5) / 10000

@@ -16,7 +16,10 @@ import { vierWindhosenBauen } from './Windhose'
 import { niederSatz, WindTafel, windSatz } from './WindTafel'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
-import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich } from '../relief'
+import { lv95, MODELL_HOECHSTENS_M, useBrilleMoeglich, wgs } from '../relief'
+import { sonnenstand } from '../sonne'
+import { himmelNacht, sternSicht } from '../sterne'
+import { sternenhimmelBauen } from './Sternenhimmel'
 import { audioKontext, audioLesen, audioSetzen, useAudio, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
 import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
@@ -155,14 +158,18 @@ const NAH_SEITE_M = 6000, NAH_PX_JE_M = 0.4, NAH_NACH_M = 1500, NAH_BIS_KM = 25
 /** Himmel (Michael, 2026-10-11: «einen hellblauen natürlichen Himmel»): oben kräftiger blau, zum Horizont hin heller
  *  und dunstig, unter dem Horizont fast weiss; als Rundum-Bild, damit er beim Drehen und Neigen der Kamera stimmt. Ein
  *  gemaltes Bild, kein Wetter und keine Tageszeit */
-function himmel(dunkel: boolean, daemmerung = false, bedeckt = false) {
+function himmel(dunkel: boolean, daemmerung = false, bedeckt = false, nacht = false) {
   const c = document.createElement('canvas')
   c.width = 4; c.height = 512
   const g = c.getContext('2d')!
   // in der Mitte der Höhe liegt der Horizont
   const v = g.createLinearGradient(0, 0, 0, c.height)
   // bedeckt (echtes Wetter, src/wetter.ts): grau, zum Horizont heller, gemalt wie der blaue
-  const stufen: Array<[number, string]> = bedeckt && !daemmerung
+  // nachts (echtes Wetter, der Sonnenstand über dem Modell; Michael, 2026-10-25: «auch in der Modellbahn mit Sternen»): fast schwarz,
+  // am Horizont ein wenig heller; gewählt
+  const stufen: Array<[number, string]> = nacht
+    ? [[0, '#03060d'], [0.3, '#060b17'], [0.46, '#0d1526'], [0.5, '#141d31'], [0.54, '#0b0f18'], [1, '#07090e']]
+    : bedeckt && !daemmerung
     ? dunkel ? [[0, '#1d2228'], [0.35, '#2a3038'], [0.5, '#3a4048'], [0.56, '#2a2e33'], [1, '#1c2024']]
       : [[0, '#8c959e'], [0.3, '#a3abb3'], [0.45, '#c0c6cb'], [0.5, '#d0d4d7'], [1, '#dcdfe1']]
     : daemmerung
@@ -2004,6 +2011,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     let wetterBis = 0, wetterLaedt = false, niederAn = false
     /** Licht, Himmel und die Zeile oben links nach dem Wetter und dem Schalter «Echtes Wetter» */
     const wetterZeigen = () => {
+      nachtRechnen()
       tunnelDunkel(...letzteDunkel)
       const an = mitWetter && !ausJetzt.current.has('wetter')
       wetterAnzeige.style.display = an ? '' : 'none'
@@ -2047,26 +2055,52 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const wetterGilt = () => mitWetter && !!wetter && !ausJetzt.current.has('wetter')
     const bedeckt = () => (!wetterGilt() ? 0 : niederJetzt() ? 1 : windGewaehlt ? windGewaehlt.bewoelkt ?? 0 : wetter!.bewoelkt ?? 0)
     let letzteDunkel: [number, boolean] = [0, false]
+    // Tag und Nacht (Michael, 2026-10-25: «Himmel nachts auch in der Modellbahn mit Sternen»): solange echtes Wetter gilt, der Stand
+    // der Sonne über der Mitte des Modells jetzt oder zur gewählten Stunde der Prognose (src/sonne.ts); bei Schönwetter immer Tag
+    const [laMitte, loMitte] = wgs(me, mn)
+    let nachtStand: { hoehe: number; zeit: Date } | null = null
+    const nachtRechnen = () => {
+      const zeit = windGewaehlt?.zeit ?? new Date()
+      nachtStand = wetterGilt() ? { hoehe: sonnenstand(zeit, laMitte, loMitte).hoehe, zeit } : null
+    }
+    let nachtHimmel: THREE.Texture | null = null
+    const sterne = sternenhimmelBauen()
+    szene.add(sterne.punkte)
+    const stundeInZuerich = (z: Date) => {
+      const [h, mi] = z.toLocaleString('de-CH', { timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).split(':').map(Number)
+      return h + mi / 60
+    }
     const tunnelDunkel = (k: number, daemmerung = false) => {
       letzteDunkel = [k, daemmerung]
-      // in der Dämmerung brennt Licht in den Fenstern der Gebäude; sie ist eine Stimmung ohne Uhrzeit, darum der Anteil von 20 Uhr
-      fensterLicht(daemmerung ? 1 : 0, lichtAnteil(20))
       const f = 1 - (1 - TUNNEL_TAGESLICHT) * k, b = bedeckt()
-      himmelLicht.intensity = 1.6 * f * (daemmerung ? DAEMMERUNG_HIMMEL : 1) * (1 - WOLKEN_HIMMEL * b)
-      himmelLicht.color.set(daemmerung ? '#b9a9cf' : '#ffffff')
-      sonne.intensity = 2.2 * f * (daemmerung ? DAEMMERUNG_SONNE : 1) * (1 - WOLKEN_SONNE * b)
-      sonne.color.set(daemmerung ? '#ff9a5c' : '#ffffff')
-      // nur den gemalten Himmel tauschen; in der Brille mit Durchsicht bleibt er leer
-      if (daemmerung && !daemmerHimmel) daemmerHimmel = himmel(dunkel, true)
-      const grau = !daemmerung && b >= 0.5
+      // wie dunkel die Nacht ist (0 Tag, 1 Nacht) und wie viel von der Sonne bleibt
+      const n = nachtStand ? himmelNacht(nachtStand.hoehe) : 0
+      const sonneTag = nachtStand ? Math.max(0, Math.min(1, nachtStand.hoehe / 6)) : 1
+      // Licht in den Fenstern: in der Dämmerung, einer Stimmung ohne Uhrzeit, der Anteil von 20 Uhr; nachts der Anteil der Stunde
+      const fensterNacht = nachtStand ? Math.max(0, Math.min(1, (2 - nachtStand.hoehe) / 8)) : 0
+      fensterLicht(Math.max(daemmerung ? 1 : 0, fensterNacht), lichtAnteil(fensterNacht > 0 && nachtStand ? stundeInZuerich(nachtStand.zeit) : 20))
+      himmelLicht.intensity = 1.6 * f * (daemmerung ? DAEMMERUNG_HIMMEL : 1) * (1 - WOLKEN_HIMMEL * b) * (1 - 0.75 * n)
+      himmelLicht.color.set(daemmerung ? '#b9a9cf' : n > 0.5 ? '#9fb3d9' : '#ffffff')
+      sonne.intensity = 2.2 * f * (daemmerung ? DAEMMERUNG_SONNE : 1) * (1 - WOLKEN_SONNE * b) * sonneTag
+      sonne.color.set(daemmerung || (nachtStand && nachtStand.hoehe < 10) ? '#ff9a5c' : '#ffffff')
+      // nur den gemalten Himmel tauschen; in der Brille mit Durchsicht bleibt er leer; nachts der Nachthimmel, in der Dämmerung
+      // der Abendhimmel (wie der Schalter Dämmerung im Führerstand)
+      const nacht = !daemmerung && n >= 0.65, abend = daemmerung || (!nacht && n >= 0.25)
+      if (abend && !daemmerHimmel) daemmerHimmel = himmel(dunkel, true)
+      if (nacht && !nachtHimmel) nachtHimmel = himmel(dunkel, false, false, true)
+      const grau = !abend && !nacht && b >= 0.5
       if (grau && !grauHimmel) grauHimmel = himmel(dunkel, false, true)
-      if (szene.background && (szene.background === tagHimmel || szene.background === daemmerHimmel || szene.background === grauHimmel)) {
-        szene.background = daemmerung ? daemmerHimmel : grau ? grauHimmel : tagHimmel
+      if (szene.background && [tagHimmel, daemmerHimmel, grauHimmel, nachtHimmel].includes(szene.background as THREE.Texture)) {
+        szene.background = nacht ? nachtHimmel : abend ? daemmerHimmel : grau ? grauHimmel : tagHimmel
       }
+      // die Sterne zur selben Zeit, hinter Wolken und im Regen weniger
+      const sicht = nachtStand ? sternSicht(nachtStand.hoehe) * (1 - b) : 0
+      sterne.sicht(sicht)
+      if (sicht > 0 && nachtStand) sterne.setzen(nachtStand.zeit, laMitte, loMitte)
       if (pult) {
-        pult.umgebung((1 - 0.8 * k) * (daemmerung ? 0.12 : 1))
-        // im Tunnel und in der Dämmerung leuchten die Tasten (Michael, 2026-10-13)
-        pult.nacht = Math.max(k, daemmerung ? 1 : 0)
+        pult.umgebung((1 - 0.8 * k) * (daemmerung ? 0.12 : 1) * (1 - 0.85 * n))
+        // im Tunnel, in der Dämmerung und nachts leuchten die Tasten (Michael, 2026-10-13)
+        pult.nacht = Math.max(k, daemmerung ? 1 : 0, n > 0.5 ? 1 : 0)
       }
     }
 
@@ -4597,6 +4631,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         }
         niederGeo.attributes.position.needsUpdate = true
       }
+      sterne.schritt(renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera, modell, !!szene.background)
       renderer.render(szene, kamera)
       if (pultBild && imStand && !renderer.xr.isPresenting) {
         renderer.autoClear = false

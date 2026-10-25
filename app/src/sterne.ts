@@ -8,6 +8,11 @@ import { holen } from './daten'
 
 const RAD = Math.PI / 180
 
+/** wie dunkel der Himmel ist (0 Tag, 1 Nacht) zur Höhe der Sonne in Grad: von 3° über bis 12° unter dem Horizont (nautische
+ *  Dämmerung) gleichmässig; die Sterne erscheinen ab 4° darunter und sind ab 12° ganz da (Übergänge gewählt) */
+export const himmelNacht = (hoehe: number) => Math.max(0, Math.min(1, (3 - hoehe) / 15))
+export const sternSicht = (hoehe: number) => Math.max(0, Math.min(1, (-4 - hoehe) / 8))
+
 interface Katalog { sterne: Array<[number, number, number, number | null]> }
 let katalog: Promise<Katalog> | null = null
 export const sterneLaden = () => (katalog ??= holen<Katalog>('data/sterne.json'))

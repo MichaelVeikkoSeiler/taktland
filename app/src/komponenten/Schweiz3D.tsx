@@ -6,7 +6,7 @@ import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden } from '../gelaende'
-import { lv95, useBrilleMoeglich } from '../relief'
+import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
 import type { SeenDaten, SehenswertDaten } from '../typen'
@@ -24,7 +24,8 @@ import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
 import { Abschnitt } from './Anleitung'
-import { sterneLaden, sternenhimmel } from '../sterne'
+import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
+import { himmelNacht, sternSicht } from '../sterne'
 
 /**
  * «3D Schweiz» (Michael, 2026-10-18: «die Berge und Täler der Schweiz besser erkunden … von der ganzen Schweiz bis ins
@@ -344,13 +345,6 @@ function feldInhalt(f: Feld, z: Zusatz | null) {
   return { orte, gipfel, seen, kanton }
 }
 
-/** LV95 → WGS84, die Näherung von swisstopo */
-function wgs(e: number, n: number): [number, number] {
-  const y = (e - 2_600_000) / 1e6, x = (n - 1_200_000) / 1e6
-  const la = 16.9023892 + 3.238272 * x - 0.270978 * y * y - 0.002528 * x * x - 0.0447 * y * y * x - 0.014 * x ** 3
-  const lo = 2.6779094 + 4.728982 * y + 0.791484 * y * x + 0.1306 * y * x * x - 0.0436 * y ** 3
-  return [la * 100 / 36, lo * 100 / 36]
-}
 
 /* ---------- die Seite ---------- */
 
@@ -652,7 +646,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D Schweiz' : '3D Schweiz'}</h1>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       <div className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
-        : 'relative mt-2 h-[68vh] min-h-[360px] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]'}>
+        // 5 breit, 7 hoch (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch»), auf breiten Bildschirmen so schmal,
+        // dass es in 85 % der Höhe passt
+        : 'relative mx-auto mt-2 aspect-[5/7] w-full max-w-[calc(85vh*5/7)] overflow-hidden rounded-lg bg-[#cfe3f5] dark:bg-[#0d1b2a]'}>
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
@@ -672,30 +668,28 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
         <Ladebalken inKarte />
+        {/* oben rechts Mein Standort neben dem Vollbild, gleich gross; unten rechts die Brille (Michael, 2026-10-25: «Mein
+            GPS-Standort soll neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander. Mit VR-Brille soll unten sein») */}
         <div className="absolute right-2 top-2 flex items-center gap-2">
-          <button type="button" onClick={inBrille} className="rounded-lg bg-sbb-red px-2.5 py-1 text-xs font-bold text-white">
-            Mit VR-Brille
+          <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
+                  aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
+                  title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
+                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${gpsAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gpsAn && !standort ? 'animate-pulse' : ''}`}>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
+              <path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" />
+            </svg>
           </button>
           <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </div>
+        <button type="button" onClick={inBrille} className="absolute bottom-2 right-2 rounded-lg bg-sbb-red px-2.5 py-1 text-xs font-bold text-white">
+          Mit VR-Brille
+        </button>
         {brilleHinweis && (
           <p role="status" className="absolute inset-x-2 top-12 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">{brilleHinweis}</p>
         )}
         <div className="absolute left-2 top-2 flex flex-col items-start gap-1">
-          {/* neben der Suche, damit der Knopf «Eintauchen» darunter nichts verdeckt */}
-          {/* im Vollbild ist rechts «Schliessen» breiter: dort das Fadenkreuz unter der Suche */}
-          <div className={voll ? 'flex flex-col items-start gap-1' : 'flex items-center gap-1'}>
-            {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
-            <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
-                    aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
-                    title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
-                    className={`flex h-9 w-9 flex-none items-center justify-center rounded-lg border ${gpsAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gpsAn && !standort ? 'animate-pulse' : ''}`}>
-              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
-                <path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" />
-              </svg>
-            </button>
-          </div>
+          {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
         </div>
         {meldung && (
           <button type="button" onClick={() => setMeldung(null)} role="status"
@@ -708,7 +702,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           // Button müsste oben sein sonst sieht man ihn nicht»); nur der Knopf, ohne Orte im Feld und «Andere Wahl» (Michael,
           // 2026-10-24: «Hier braucht es nur den Eintauchen-Button»), ein anderes Feld wählt ein Tipp ins Modell
           <button type="button" onClick={() => void eintauchen()} disabled={laedt}
-                  className={`absolute inset-x-2 ${voll ? (stufe === 'schweiz' ? 'top-[7.75rem]' : 'top-[5.5rem]') : stufe === 'schweiz' ? 'top-[5.25rem]' : 'top-14'} min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 md:left-auto md:w-80`}>
+                  // so gross wie «Fahren» im Kopf (Michael, 2026-10-25: «gleiche Grösse wie der Button Fahren»)
+                  className="absolute left-2 top-14 rounded-lg bg-sbb-red px-3 py-1.5 text-base font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 max-[359px]:text-[14px]">
             {laedt ? 'Wird geladen …' : 'Eintauchen'}
           </button>
         )}
@@ -822,7 +817,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             der Mitte des Modells stehen.</p>
         </Abschnitt>
         <Abschnitt titel="Mein Standort">
-          <p>Das Fadenkreuz neben der Suche zeigt dich per GPS als roten Punkt im Modell und wählt das Feld um dich. Der Standort bleibt
+          <p>Das Fadenkreuz oben rechts neben dem Vollbild zeigt dich per GPS als roten Punkt im Modell und wählt das Feld um dich. Der Standort bleibt
             auf dem Gerät.</p>
         </Abschnitt>
         <Abschnitt titel="Mit VR-Brille">
@@ -857,7 +852,7 @@ const VERLAUF_TON_S = 0.9
 /** so stark leuchtet die Schrift eines ausgeschalteten Knopfs von selbst (gewählt) */
 const SCHRIFT_LEUCHTET = 0.85
 /** der Himmel ganz in der Nacht und die Grösse der hellsten Sterne in Bildpunkten (gewählt) */
-const HIMMEL_NACHT = new THREE.Color('#070d1a'), STERN_PX = 4.6
+const HIMMEL_NACHT = new THREE.Color('#070d1a')
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff5a3c', wind: '#5ab4ff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
@@ -962,7 +957,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   const kern = useRef<{
     renderer: THREE.WebGLRenderer; szene: THREE.Scene; kamera: THREE.PerspectiveCamera; steuerung: OrbitControls
     wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color
-    sterne: THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial>
+    sterne: Sternenhimmel
     jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void }
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight
@@ -985,26 +980,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // der Himmel; mit der Sonne unter dem Horizont dunkler, dazu die Sterne (Effekt zum Sonnenstand)
     const himmelTag = new THREE.Color(dunkel ? '#0d1b2a' : '#cfe3f5'), himmel = himmelTag.clone()
     let durchsicht = false
-    const sterne = new THREE.Points(new THREE.BufferGeometry(), new THREE.ShaderMaterial({
-      uniforms: { uSicht: { value: 0 }, uPunkt: { value: Math.min(2, devicePixelRatio) } },
-      vertexShader: `attribute float mag; attribute vec3 farbe; uniform float uPunkt; uniform float uSicht; varying vec3 vFarbe; varying float vHell;
-        void main() {
-          vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          gl_Position = projectionMatrix * mv;
-          // hellere Sterne grösser und deutlicher; Grösse und Helligkeit fürs Bild gewählt
-          gl_PointSize = clamp(${STERN_PX.toFixed(2)} - 0.42 * mag, 0.9, 4.2) * uPunkt;
-          vHell = clamp(1.25 - 0.17 * mag, 0.18, 1.0) * uSicht; vFarbe = farbe;
-        }`,
-      fragmentShader: `varying vec3 vFarbe; varying float vHell;
-        void main() {
-          float r = length(gl_PointCoord - 0.5) * 2.0;
-          gl_FragColor = vec4(vFarbe, vHell * smoothstep(1.0, 0.25, r));
-        }`,
-      // nicht «transparent»: so zeichnet three.js die Sterne vor allem anderen (renderOrder), alles danach liegt darüber
-      transparent: false, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending,
-    }))
-    sterne.frustumCulled = false; sterne.renderOrder = -10; sterne.visible = false
-    szene.add(sterne)
+    const sterne = sternenhimmelBauen()
+    szene.add(sterne.punkte)
     const setzeHimmel = () => {
       szene.background = renderer.xr.isPresenting && durchsicht ? null : himmel
     }
@@ -1295,16 +1272,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }]
     jeBild.push(verlaufSetzen)
     // die Sterne um das Auge, gedreht wie das Modell (die Himmelsrichtungen gehören zu ihm, wie die Sonne)
-    const sternAuge = new THREE.Vector3()
-    jeBild.push(() => {
-      // nicht im Durchblick der Brille (dort ist kein Himmel)
-      sterne.visible = sterne.material.uniforms.uSicht.value > 0 && !!szene.background
-      if (!sterne.visible) return
-      const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera
-      sterne.position.copy(sternAuge.setFromMatrixPosition(cam.matrixWorld))
-      wurzel.getWorldQuaternion(sterne.quaternion)
-      sterne.scale.setScalar(Math.max(1e-3, cam.near * 50))
-    })
+    jeBild.push(() => sterne.schritt(renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera, wurzel, !!szene.background))
     kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, sterne, jeBild, wenn, tafel, tafelSetzen,
                      sonne, himmelLicht, anfangSetzen, verlauf }
 
@@ -2107,21 +2075,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const d = new THREE.Vector3(-0.35, 1.3, 0.9).normalize()
     // nachts der Himmel dunkel mit Sternen (Michael, 2026-10-24): von 3° über dem Horizont bis 12° darunter (nautische Dämmerung)
     // wird er dunkel, die Sterne erscheinen ab 4° darunter und sind ab 12° ganz da; Farben gewählt
-    const nacht = stand ? Math.max(0, Math.min(1, (3 - stand.hoehe) / 15)) : 0
+    const nacht = stand ? himmelNacht(stand.hoehe) : 0
     himmel.copy(himmelTag).lerp(HIMMEL_NACHT, nacht)
-    sterne.material.uniforms.uSicht.value = stand ? Math.max(0, Math.min(1, (-4 - stand.hoehe) / 8)) : 0
-    let weg = false
-    if (stand && sterne.material.uniforms.uSicht.value > 0) {
-      void sterneLaden().then((kat) => {
-        if (weg) return
-        const { lage, farben, mag } = sternenhimmel(kat, stand.zeit, stand.la, stand.lo)
-        const g = new THREE.BufferGeometry()
-        g.setAttribute('position', new THREE.BufferAttribute(lage, 3))
-        g.setAttribute('farbe', new THREE.BufferAttribute(farben, 3))
-        g.setAttribute('mag', new THREE.BufferAttribute(mag, 1))
-        sterne.geometry.dispose(); sterne.geometry = g
-      }).catch(() => undefined)
-    }
+    const sicht = stand ? sternSicht(stand.hoehe) : 0
+    sterne.sicht(sicht)
+    if (stand && sicht > 0) sterne.setzen(stand.zeit, stand.la, stand.lo)
     if (!stand) {
       sonne.castShadow = false; sonne.intensity = 1.4; sonne.color.set('#ffffff')
       himmelLicht.intensity = 1.6; himmelLicht.color.set('#ffffff')
@@ -2145,7 +2103,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         k.szene.traverse((o) => { const m = (o as THREE.Mesh).material as THREE.Material | undefined; if (m) m.needsUpdate = true })
       }
     }
-    return () => { weg = true }
   }, [stand, b, stufe])
 
   // Höhenlinien und Orte ein- und ausblenden, mit Geräusch, wenn ein Schalter wechselt (nicht beim ersten Mal)

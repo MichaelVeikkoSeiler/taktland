@@ -281,9 +281,9 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              zuletzt; Gipfel ohne Kanton, auf der Grenze schneidet sie die vereinfachte Kantonsfläche ab) und wählt das Feld um den Ort, aus jeder Stufe, danach beim Eintauchen und Zurückgehen in jeder Stufe wieder das Feld
              um ihn mit «Gesucht: …» (gesucht, feldUmGesucht; Michael, 2026-10-23: «bei allen Eintauchstufen mit dem roten Kasten markiert»; in der
              Stufe 1 km wählt man nichts mehr), bis man selbst ein Feld wählt (OrtSuche;
-             nur der Knopf «Eintauchen» oben unter der Suche, ohne Orte im Feld und «Andere Wahl», Michael, 2026-10-24: «müsste oben sein sonst sieht man ihn nicht»,
+             nur der Knopf «Eintauchen» oben unter der Suche, so gross wie «Fahren» im Kopf (Michael, 2026-10-25), ohne Orte im Feld und «Andere Wahl», Michael, 2026-10-24: «müsste oben sein sonst sieht man ihn nicht»,
              «Hier braucht es nur den Eintauchen-Button»; nach dem Eintauchen ist der Schalter «Orte» an, «beim Eintauchen wieder neue Ortschaften»;
-             neben der Suche «Mein Standort» (Fadenkreuz; Michael, 2026-10-24: «auf der Karte jeweils sehen mit GPS, wo ich durchfahre»): watchPosition,
+             oben rechts neben dem Vollbild und gleich gross «Mein Standort» (Fadenkreuz; Michael, 2026-10-25: «neben dem … Vollbild-Icon»; Michael, 2026-10-24: «auf der Karte jeweils sehen mit GPS, wo ich durchfahre»): watchPosition,
              ein karminroter Punkt mit weissem Rand auf dem Gelände in jeder Stufe, wo er im Modell liegt, durch Berge sichtbar, wandert mit; der erste
              Standort wählt das Feld um ihn wie eine Suche («Gesucht: Dein Standort»), nur auf dem Gerät, nie gesendet;
              ein Tipp neben das Gelände (Himmel, Sockel) nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet»);
@@ -346,7 +346,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              lesbar auch nachts (SCHRIFT_LEUCHTET; Michael, 2026-10-24: «Nicht aktive Tasten sollen aber so leuchten, dass man es trotzdem lesen kann»); Schalter «Gipfel», am Anfang aus, blendet sich ein wie die Orte
              (Michael, 2026-10-22: «Gipfel defaultmässig auch nicht einblenden»); die Knöpfe an den Wänden auch auf dem Bildschirm, mit Tipp
              oder Klick («auch in der Standardversion auf dem Display»), die Knöpfe oben im Bild sind weg («braucht es nicht mehr»), Datum
-             und Uhrzeit fein unter dem Bild, wenn die Sonne an ist; ein Knopf fürs Vollbild neben «Mit VR-Brille» (useEchtesVollbild);
+             und Uhrzeit fein unter dem Bild, wenn die Sonne an ist; ein Knopf fürs Vollbild oben rechts (useEchtesVollbild), «Mit VR-Brille» unten rechts im Bild (Michael, 2026-10-25: «soll unten sein»); das Bild 5 breit und 7 hoch, auf breiten Bildschirmen höchstens 85 % der Höhe (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch»);
              die Wände und die Platte des Sockels wieder dunkelgrau ohne Holz (Michael, 2026-10-22; Ebenholz gab es kurz); das Geräusch beim Ein- und Ausblenden 0,9 s (VERLAUF_TON_S; «noch zu lang»); an kürzeren Wänden kleiner; nur die Wände zur Brille; Grösse und Farben gewählt (Schalter-Effekt in
              Schweiz3D.tsx); alle Schalter am Anfang aus, auch Höhen und Sonne (Michael, 2026-10-22: «Alles defaultmässig ausgeschaltet»)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
@@ -502,13 +502,17 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              src/wind.ts), Bewölkung der Stunde aus sre000h0 und gre000h0 wie bei der Messung; in der Tafel als blaue Balken; die weiteren
              Dateien eines Laufs nur in ±256 KB um die Stelle der ersten gesucht; in der Modellbahn statt der Messung (Himmel, Regen, Zeile
              «Prognose Station Zeit: …»), in «3D Schweiz» in einem Kasten über dem ganzen Modell bis ein Viertel der Breite über den höchsten
-             Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wetter»; im Vollbild von «3D Schweiz» steht das Fadenkreuz unter der Suche
+             Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wetter»
 data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-10-24: «Himmel nachts dunkler und mit Sternen machen»):
              alle 5'044 Sterne bis zur Helligkeit 6 aus dem Hipparcos-Katalog (ESA), wie ihn d3-celestial 0.7.35 (Olaf Frohn, BSD, Lizenz in
              drittsoftware.txt) aufbereitet, aus dem npm-Paket (pipeline/build_sterne.py, 98 KB); die App (src/sterne.ts) rechnet ihren Ort
              über der Mitte des Modells zur gewählten Zeit wie die Sonne, ohne Präzession seit 2000, ohne Mond und Planeten; mit «Sonne» an
              wird der Himmel von 3° über bis 12° unter dem Horizont dunkel (HIMMEL_NACHT), die Sterne erscheinen ab 4° darunter, als
              Punkte um das Auge, gedreht wie das Modell, nicht im Durchblick der Brille; Farbe nach B−V, Grösse und Helligkeit gewählt
+             (komponenten/Sternenhimmel.ts); auch in der Modellbahn und beim Fahren (Michael, 2026-10-25: «Himmel nachts auch in der Modellbahn mit
+             Sternen»): solange echtes Wetter gilt, der Stand der Sonne über der Mitte des Modells jetzt oder zur gewählten Stunde der Prognose
+             (nachtRechnen in Relief.tsx), nachts ein gemalter Nachthimmel, weniger Licht, Licht in den Fenstern zur Stunde, Tasten am Pult
+             leuchtend, in der Dämmerung der Abendhimmel, Sterne hinter Wolken schwächer; bei Schönwetter und in «Wo bin ich?» immer Tag
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
