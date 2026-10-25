@@ -516,7 +516,8 @@ data/seegrund/  Seegrund für «3D Schweiz» (Michael, 2026-10-25: «die Seetief
              Wasserfläche (WASSER_FARBE, WASSER_DECKKRAFT, gewählt), in den Wänden das Wasser im Schnitt vom Grund bis zum Spiegel, oben etwas heller als die Fläche, nach unten deutlich dunkler, ganz dunkel ab
              120 m Tiefe (WASSER_SCHNITT_*, gewählt; Michael, 2026-10-25: «wesentlich dunkler als die Oberfläche … gegen unten … deutlicher»), Masten,
              Windhosen und Wanderwege auf dem Wasser (hoeheIm); andere Seen nur mit ihrer Oberfläche (so in der Anleitung und den Quellen);
-             in der ganzen Schweiz noch nicht; der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund, ein tieferer Grund ist am Boden des Sockels
+             in der ganzen Schweiz der Grund je Feld von 500 m gemittelt, nur wo mindestens die Hälfte gemessen ist, ohne Fels (Michael, 2026-10-25:
+             «Seegrund auch in der ganzen Schweiz einbauen»); der Sockel richtet sich nach dem Spiegel, nicht nach dem Grund, ein tieferer Grund ist am Boden des Sockels
              abgeschnitten, die Knöpfe dürfen auf dem Wasser in der Wand sitzen (Michael, 2026-10-25: «Die Tiefe des Modells soll durch die Seen nicht höher
              als vorher sein. Die Wandknöpfe können auch an einer Seewand sein»)
 data/fels/   Felsoberfläche für die Wände von «3D Schweiz»: swissBEDROCK (swisstopo, Band BEM, 10 m) auf 50 m gemittelt, je 10-km-Kachel

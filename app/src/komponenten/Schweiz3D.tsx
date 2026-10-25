@@ -113,8 +113,10 @@ async function uebersichtLaden(): Promise<Gelaende> {
   const c = document.createElement('canvas')
   c.width = Math.min(4096, bild.width); c.height = Math.round(c.width * bild.height / bild.width)
   c.getContext('2d')!.drawImage(bild, 0, 0, c.width, c.height)
-  return { raster: { ost: ix.ost, nord: ix.nord, m: ix.m, breite: ix.breite, hoehe: ix.hoehe }, h: Float32Array.from(u), bild: c,
-           rahmen: { e0: ix.ost, n1: ix.nord, b: ix.breite * ix.m, h: ix.hoehe * ix.m }, quellen: [ix.quelle_gelaende, ix.quelle_luftbild] }
+  // auch in der ganzen Schweiz der Seegrund (Michael, 2026-10-25: «Seegrund auch in der ganzen Schweiz einbauen»), ohne Fels: die Wände
+  // liegen dort fast überall im Ausland, wo swissBEDROCK nichts angibt
+  return seegrundSetzen({ raster: { ost: ix.ost, nord: ix.nord, m: ix.m, breite: ix.breite, hoehe: ix.hoehe }, h: Float32Array.from(u), bild: c,
+           rahmen: { e0: ix.ost, n1: ix.nord, b: ix.breite * ix.m, h: ix.hoehe * ix.m }, quellen: [ix.quelle_gelaende, ix.quelle_luftbild] })
 }
 
 async function regionLaden(f: Feld): Promise<Gelaende> {
@@ -278,6 +280,7 @@ async function untergrundSetzen(g: Gelaende): Promise<Gelaende> {
 
 /** Seegrund (swissBATHY3D, src/gelaende.ts) auf ein Gelände: wo es den Spiegel eines Sees zeigt (höchstens 1,5 m darüber) und der
  *  Grund gemessen ist, sinkt es auf den Grund, und darüber steht das Wasser (Michael, 2026-10-25: «die Seetiefe») */
+const SEEGRUND_M = 25
 async function seegrundSetzen(g: Gelaende): Promise<Gelaende> {
   const { ost, nord, m, breite, hoehe } = g.raster
   const sg = await seegrundLaden(ost, nord - hoehe * m, ost + breite * m, nord).catch(() => null)
@@ -288,9 +291,24 @@ async function seegrundSetzen(g: Gelaende): Promise<Gelaende> {
     for (let i = 0; i < breite; i++) {
       const q = j * breite + i, z = g.h[q]
       if (z === KEINE_HOEHE) continue
-      const s = sg.bei(ost + (i + 0.5) * m, nord - (j + 0.5) * m)
+      const e = ost + (i + 0.5) * m, n = nord - (j + 0.5) * m
+      const s = sg.bei(e, n)
       if (!s || z > s.spiegel + 1.5) continue
-      wasser[q] = s.spiegel; g.h[q] = Math.min(z, s.grund); da = true
+      let grund = s.grund
+      // ein grobes Feld (Schweiz, 500 m) bekommt das Mittel des Grunds darin, wenn mindestens die Hälfte gemessen ist
+      if (m > SEEGRUND_M * 2) {
+        const k = Math.min(20, Math.round(m / SEEGRUND_M))
+        let summe = 0, zahl = 0
+        for (let b = 0; b < k; b++) {
+          for (let a = 0; a < k; a++) {
+            const t = sg.bei(e - m / 2 + (a + 0.5) * m / k, n - m / 2 + (b + 0.5) * m / k)
+            if (t && t.spiegel === s.spiegel) { summe += t.grund; zahl++ }
+          }
+        }
+        if (zahl < k * k / 2) continue
+        grund = summe / zahl
+      }
+      wasser[q] = s.spiegel; g.h[q] = Math.min(z, grund); da = true
     }
   }
   return da ? { ...g, wasser, seen: sg.seen } : g
@@ -889,8 +907,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Brienzersee, Genfersee, Hallwilersee, Lac de Joux, Lago Maggiore, Lungerersee, Murtensee, Neuenburgersee, Rotsee, Sarnersee,
             Sempachersee, Silsersee, Silvaplanersee, Thunersee, Vierwaldstättersee, Walensee, Zürichsee und Zugersee. Alle anderen Seen
             zeigen nur ihre Oberfläche; wie tief sie sind, steht in unseren Quellen nicht. Der Grund ist auf 25 m gemittelt, der Spiegel
-            stammt aus dem Gelände und ist auf den Meter genau; Farbe und Durchsicht des Wassers sind gewählt. In der ganzen Schweiz von
-            oben ist der Seegrund noch nicht eingesetzt, erst ab der Region.</p>
+            stammt aus dem Gelände und ist auf den Meter genau; Farbe und Durchsicht des Wassers sind gewählt. In der ganzen Schweiz ist der
+            Grund auf 500 m gemittelt, dort nur, wo mindestens die Hälfte eines Felds gemessen ist.</p>
         </Abschnitt>
         <Abschnitt titel="Untergrund in den Wänden">
           <p>Die Wände des Sockels zeigen, was unter der Oberfläche liegt, so weit es gemessen oder kartiert ist: Das helle, ockerfarbene Band
