@@ -1094,6 +1094,8 @@ const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff9a1f', wind: 
 const BRILLE_SCHATTEN_PX = 2048
 /** ein Zug so lang, eine Annahme fürs Bild (die Länge eines Zugs steht nicht im Fahrplan); höchstens so viele zugleich */
 const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
+/** aus der Ferne ist ein Zug mindestens so lang wie dieser Anteil des Abstands der Kamera (vorher 1,2 %, Michael, 2026-10-26: «Züge aus der Ferne etwas grösser»), gewählt */
+const ZUG_FERN = 0.018
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
 const BRILLE_SCHRIFT_M = 0.022
 
@@ -2582,11 +2584,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         for (const u of unterwegs) { const st = zugStelle(u.f, jetzt.tag, jetzt.minuten); if (st) u.st = st }
       }
       let zahl = 0, neueWege = 0
-      // aus der Ferne grösser, damit man die Züge in der ganzen Region sieht: mindestens 1,2 % des Abstands der Kamera lang
+      // aus der Ferne grösser, damit man die Züge in der ganzen Region sieht: mindestens ZUG_FERN des Abstands der Kamera lang
       k.wurzel.getWorldPosition(mitte)
       const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
       const abstand = cam.getWorldPosition(auge).distanceTo(mitte) / Math.max(1e-9, k.wurzel.scale.x)
-      gross.setScalar(Math.max(1, (abstand * 0.012) / laenge))
+      gross.setScalar(Math.max(1, (abstand * ZUG_FERN) / laenge))
       skala.copy(gross).multiplyScalar(mass)
       for (const u of unterwegs) {
         if (zahl >= ZUEGE_HOECHSTENS) break
