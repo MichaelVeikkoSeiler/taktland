@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
-import { holen, holenBinaer, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
+import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
@@ -958,8 +958,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
               fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
               wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
-              Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten laut Fahrplan; ein Tipp daneben
-              blendet es aus. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
+              Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
+              Buchstaben sind die Sektoren, wie sie der Fahrplan nennt); oben im Bild ein Link zur Seite dieses Bahnhofs auf taktland.ch
+              mit Perrons und Gleisen, wo Taktland eine hat. Ein Tipp daneben blendet es aus. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
               gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
           </Abschnitt>
         )}
@@ -1104,6 +1105,8 @@ const ZUG_GLATT_M = 300
 /** so viele Zugbreiten liegt die Mitte eines Zugs links neben dem Weg: zwei Züge in Gegenrichtung fahren nebeneinander, wie bei Linksverkehr
  *  auf zwei Gleisen (Michael, 2026-10-26: «aneinander vorbeifahren und nicht … durcheinander»); welches Gleis, steht in keiner unserer Quellen, gewählt */
 const ZUG_LINKS = 0.7
+/** die App von Taktland, auf deren Bahnhofseiten das Zugschild verweist */
+const TAKTLAND_APP = 'https://taktland.ch/app/'
 /** so weit neben einem Wagen (Winkel vom Auge) trifft ein Tipp den Zug noch, 2,5°, gewählt */
 const ZUG_TIPP_WINKEL = (2.5 * Math.PI) / 180
 /** in der Brille, wo der Strahl mit der Hand zittert, 4°, gewählt */
@@ -2562,11 +2565,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // Züge laut Fahrplan (src/zuege3d.ts), nur auf 3dland.ch und ab der Stufe 20 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
   // wie der Zug der Modellbahn auf dem Gelände in Fahrtrichtung
   const [zugZeile, setZugZeile] = useState<string | null>(null)
+  /** zum gewählten Zug der Bahnhof, an dem er steht oder als Nächstes hält, mit seiner Seite auf taktland.ch (Perrons, Gleise, Sektoren;
+   *  Michael, 2026-10-26: «Gleis mit Link»), nur wenn Taktland eine Seite für ihn hat */
+  const [zugLink, setZugLink] = useState<{ name: string; url: string } | null>(null)
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     const W = k?.wurzel.userData.weiteKm as number | undefined
-    if (!k || !lage || !W || !zuege || stufe === 'schweiz') { setZugZeile(null); return }
+    if (!k || !lage || !W || !zuege || stufe === 'schweiz') { setZugZeile(null); setZugLink(null); return }
     let weg = false
     const gruppe = new THREE.Group()
     gruppe.name = 'zuege'
@@ -2612,15 +2618,26 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const m = ((Math.round(min) % 1440) + 1440) % 1440
       return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`
     }
+    // Betriebspunkt → Bahnhofsnummer, und welche Bahnhöfe eine Seite in Taktland haben
+    let uicVon: Map<string, number> | null = null, mitSeite: Set<number> | null = null, linkAbk: string | null = null
+    void indexLaden().then((ix) => { mitSeite = new Set(ix.bahnhoefe.filter((b) => b.sprachen.length && !b.ohne_bahnhofseite).map((b) => b.uic)) }).catch(() => undefined)
+    const linkSetzen = (abk: string | null) => {
+      if (abk === linkAbk) return
+      linkAbk = abk
+      if (abk && zn && !uicVon) uicVon = new Map(Object.entries(zn.netz.bahnhoefe).map(([u, a]) => [a, Number(u)]))
+      const uic = abk ? uicVon?.get(abk) : undefined
+      setZugLink(abk && uic && mitSeite?.has(uic) ? { name: zn?.netz.punkte[abk] ?? abk, url: `${TAKTLAND_APP}#/bahnhof/${uic}` } : null)
+    }
     const zeilenVon = (f: ZugFahrt, st: ZugStelle): string[] => {
       const name = (abk: string) => zn?.netz.punkte[abk] ?? abk
       const titel = `${f.linie && f.linie !== f.gattung ? f.linie : f.gattung} ${f.nummer}`.trim()
       const h = f.halte
       const halt = st.art === 'halt' ? h[st.i] : h[st.i + 1]
+      const gleis = halt.gleis ? `, Gleis ${halt.gleis}` : ''
       const zweite = st.art === 'halt'
-        ? (st.i === h.length - 1 ? `in ${name(halt.abk)}, an ${uhr(halt.an)}` : st.i === 0 ? `in ${name(halt.abk)}, ab ${uhr(halt.ab)}`
-          : `in ${name(halt.abk)}, an ${uhr(halt.an)}, ab ${uhr(halt.ab)}`)
-        : `nächster Halt ${name(halt.abk)}, an ${uhr(halt.an ?? halt.ab)}`
+        ? (st.i === h.length - 1 ? `in ${name(halt.abk)}${gleis}, an ${uhr(halt.an)}` : st.i === 0 ? `in ${name(halt.abk)}${gleis}, ab ${uhr(halt.ab)}`
+          : `in ${name(halt.abk)}${gleis}, an ${uhr(halt.an)}, ab ${uhr(halt.ab)}`)
+        : `nächster Halt ${name(halt.abk)}${gleis}, an ${uhr(halt.an ?? halt.ab)}`
       return [`${titel} nach ${f.ziel}`, zweite, 'laut Fahrplan']
     }
     gruppe.userData.wahl = (o: THREE.Object3D, i: number) => {
@@ -2763,11 +2780,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           schild.position.set((lokE - lage.cE) / 1000, (glatt[0] + glatt[1]) / 2000 + hoehe * gross.y * 1.6, -(lokN - lage.cN) / 1000)
           const zeilen = zeilenVon(u.f, st), text = zeilen.join('|')
           if (text !== schildText) { schildText = text; schildMalen(zeilen) }
+          linkSetzen((st.art === 'halt' ? u.f.halte[st.i] : u.f.halte[st.i + 1]).abk)
         }
         zahl++
       }
       gezeichnet.length = zahl
       schild.visible = zeigt
+      if (!zeigt) linkSetzen(null)
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
       for (const n of Object.values(netze)) n.instanceMatrix.needsUpdate = true
     }
@@ -2869,6 +2888,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         <p className="pointer-events-none absolute left-2 top-14 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
           {zugZeile}
         </p>
+      )}
+      {zugZeile && zugLink && (
+        <a href={zugLink.url} target="_blank" rel="noopener"
+          className="absolute left-2 top-[4.6rem] max-w-[70%] rounded bg-white/90 px-1.5 py-0.5 text-[11px] font-medium leading-tight text-sbb-red underline dark:bg-sbb-midnight/90">
+          Bahnhof {zugLink.name}: Perrons und Gleise auf taktland.ch ↗
+        </a>
       )}
     </div>
   )
