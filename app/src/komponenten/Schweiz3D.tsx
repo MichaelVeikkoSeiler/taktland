@@ -951,7 +951,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {eigeneSeite && (
           <Abschnitt titel="Züge">
             <p>«Züge» zeigt ab der Stufe 20 km jeden Zug dort, wo er jetzt laut Fahrplan ist: als karminroten Kasten auf dem Gelände, in
-              Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still. Es ist der Fahrplan von opentransportdata.swiss, nicht
+              Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
+              Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, eine Annahme: wie lange er dort wirklich steht,
+              steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, nicht
               die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
               fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
               wirklich nimmt, steht in keiner Quelle. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
@@ -1024,7 +1026,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern gezeichnet oder angenommen ist:</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
-            {eigeneSeite && <li>Züge: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen.</li>}
+            {eigeneSeite && <li>Züge: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof.</li>}
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>

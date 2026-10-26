@@ -551,7 +551,7 @@ data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Mich
              kürzeste Weg im Netz (Dijkstra wie wegSuchen, das dafür in src/wegsuche.ts steht), jede Fahrt in jeder 10-km-Kachel, die ihr Weg
              berührt (etwa 17'000 Fahrten, 296 Kacheln, 26 MB, nicht in Git); gebaut im Workflow von 3dland (dreidland/veroeffentlichen.yml,
              täglich, ohne Züge, wenn es nicht klappt) und neben die Seite gelegt (zuege3d/); in der App src/zuege3d.ts (wo ein Zug laut Fahrplan
-             jetzt ist: am Halt zwischen Ankunft und Abfahrt, sonst gleichmässig auf dem Weg zum nächsten, eine Annahme) und in Schweiz3D.tsx
+             jetzt ist: am Halt zwischen Ankunft und Abfahrt, sonst gleichmässig auf dem Weg zum nächsten, eine Annahme; am Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, ZUG_STEHT_MIN, Annahme, Michael, 2026-10-26: «Wenn sie halten verschwinden sie»; block_id fehlt bei fast allen Zügen) und in Schweiz3D.tsx
              ein Knopf «Züge» an der Wand (nur mit eigeneSeite, ab der Stufe 20 km, Farbe gewählt), je Zug ein karminroter Kasten 200 m lang
              (ZUG_LAENGE_KM, Annahme), in der Region grösser, aus der Ferne mindestens 1,2 % des Abstands der Kamera, darüber die Zeile «Züge laut
              Fahrplan vom …, nicht live»; in Anleitung, Quellen und Fusszeile von 3dland genannt
