@@ -22,6 +22,7 @@ import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { lageBei, wegEnde } from '../fahrt'
+import { ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
@@ -950,14 +951,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         {eigeneSeite && (
           <Abschnitt titel="Züge">
-            <p>«Züge» zeigt ab der Stufe 20 km jeden Zug dort, wo er jetzt laut Fahrplan ist: als karminroten Kasten auf dem Gelände, in
-              Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
+            <p>«Züge» zeigt ab der Stufe 20 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
+              (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
               Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, eine Annahme: wie lange er dort wirklich steht,
               steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, nicht
               die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
               fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
               wirklich nimmt, steht in keiner Quelle. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
-              gezeichnet, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
+              gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
           </Abschnitt>
         )}
         <Abschnitt titel="Wetter: Wind und Niederschlag">
@@ -2525,7 +2526,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => { windhosen.current?.setzen(windWerte) },
     [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
   // Züge laut Fahrplan (src/zuege3d.ts), nur auf 3dland.ch und ab der Stufe 20 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
-  // als karminroter Kasten auf dem Gelände in Fahrtrichtung
+  // wie der Zug der Modellbahn auf dem Gelände in Fahrtrichtung
   const [zugZeile, setZugZeile] = useState<string | null>(null)
   useEffect(() => {
     const k = kern.current
@@ -2537,13 +2538,20 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     gruppe.name = 'zuege'
     gruppe.userData.bleibt = true
     k.wurzel.add(gruppe)
-    // ein Zug ZUG_LAENGE_KM lang, in der Region etwas länger, damit man ihn sieht; Breite und Höhe ebenso (Masse in keiner Quelle)
-    const laenge = Math.max(ZUG_LAENGE_KM, W * 0.015), breite = Math.max(0.0035, W * 0.0016), hoehe = breite * 1.1
-    const form = new THREE.BoxGeometry(laenge, hoehe, breite)
-    const stoff = new THREE.MeshLambertMaterial({ color: '#a8102e' })
-    const netz = new THREE.InstancedMesh(form, stoff, ZUEGE_HOECHSTENS)
-    netz.count = 0; netz.castShadow = true; netz.frustumCulled = false
-    gruppe.add(netz)
+    // ein Zug ZUG_LAENGE_KM lang, in der Region etwas länger, damit man ihn sieht; die Form wie in der Modellbahn von Taktland
+    // (ZugForm.ts; Michael, 2026-10-26: «das Design der Züge von Taktland übernehmen»): Lok, vier Wagen, Steuerwagen, in ihren
+    // Verhältnissen verkleinert (Masse in keiner Quelle)
+    const laenge = Math.max(ZUG_LAENGE_KM, W * 0.015)
+    const ganzM = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M), mass = laenge / (ganzM / 1000), hoehe = ZUG_HOEHE * mass
+    const formen = zugFormen()
+    const stoff = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+    const netzVon = (geo: THREE.BufferGeometry, je: number) => {
+      const n = new THREE.InstancedMesh(geo, stoff, ZUEGE_HOECHSTENS * je)
+      n.count = 0; n.castShadow = true; n.frustumCulled = false
+      gruppe.add(n)
+      return n
+    }
+    const netze = { lok: netzVon(formen.lok, 1), wagen: netzVon(formen.wagen, ZUG_WAGEN - 1), steuer: netzVon(formen.steuer, 1) }
     const teile = [...b.teile.values()]
     const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
     const rand = teile.map((t) => t.rahmen)
@@ -2551,7 +2559,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
     let fahrten: ZugFahrt[] = [], ix: ZugIndex | null = null, zn: ZugNetz | null = null
     let unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = [], neuUm = 0
-    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), gross = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
+    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), gross = new THREE.Vector3(1, 1, 1), skala = new THREE.Vector3(), oben = new THREE.Vector3(0, 1, 0)
     const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
     void (async () => {
       ix = await zugIndexLaden()
@@ -2579,37 +2587,64 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
       const abstand = cam.getWorldPosition(auge).distanceTo(mitte) / Math.max(1e-9, k.wurzel.scale.x)
       gross.setScalar(Math.max(1, (abstand * 0.012) / laenge))
+      skala.copy(gross).multiplyScalar(mass)
       for (const u of unterwegs) {
         if (zahl >= ZUEGE_HOECHSTENS) break
         const st = zugStelle(u.f, jetzt.tag, jetzt.minuten)
         if (!st) continue
         const h = u.f.halte
-        // am Halt: am Anfang des Wegs zum nächsten Halt, am Ende am Schluss des Wegs vom letzten
-        const [a, b2, anteil] = st.art === 'fahrt' ? [h[st.i].abk, h[st.i + 1].abk, st.anteil]
-          : st.i + 1 < h.length ? [h[st.i].abk, h[st.i + 1].abk, 0] : [h[st.i - 1].abk, h[st.i].abk, 1]
+        // am Halt: am Anfang des Wegs zum nächsten Halt, am Ende am Schluss des Wegs vom letzten; j ist der Halt am Anfang des Wegs
+        const [j, anteil] = st.art === 'fahrt' ? [st.i, st.anteil] : st.i + 1 < h.length ? [st.i, 0] : [st.i - 1, 1]
         // neue Wege nur einige je Bild, sonst stockt das Bild beim Einschalten
-        const schluessel = `${a}>${b2}`
-        if (!gerechnet.has(schluessel)) { if (neueWege++ > 6) continue; gerechnet.add(schluessel) }
-        const fw = zn.weg(a, b2)
+        const wegVon = (i: number) => {
+          const schluessel = `${h[i].abk}>${h[i + 1].abk}`
+          if (!gerechnet.has(schluessel)) { if (neueWege++ > 6) return undefined; gerechnet.add(schluessel) }
+          return zn!.weg(h[i].abk, h[i + 1].abk)
+        }
+        const fw = wegVon(j)
         if (!fw) continue
         const ende = wegEnde(fw), sM = anteil * ende
-        const p = lageBei(fw, Math.min(sM, ende - 1)), p2 = lageBei(fw, Math.min(ende, sM + 60))
-        const [e, n] = lv95(p.lat, p.lon), [ee, nn] = lv95(p2.lat, p2.lon)
-        if (!drin(e, n)) continue
-        v.set((e - lage.cE) / 1000, bestandHoehe(b, e, n) / 1000 + hoehe / 2, -(n - lage.cN) / 1000)
-        q.setFromAxisAngle(oben, Math.atan2(nn - n, ee - e))
-        v.y += (hoehe / 2) * (gross.y - 1)
-        netz.setMatrixAt(zahl++, m.compose(v, q, gross))
+        // die Wagen hinter der Spitze: vor dem Anfang des Wegs auf dem Weg davor, ohne ihn gerade nach hinten
+        const vorher = j > 0 ? wegVon(j - 1) : null
+        const stelle = (sm: number): [number, number] => {
+          let p
+          if (sm >= 0) p = lageBei(fw, Math.min(sm, ende))
+          else if (vorher) p = lageBei(vorher, Math.max(0, wegEnde(vorher) + sm))
+          else {
+            const a0 = lageBei(fw, 0), a1 = lageBei(fw, Math.min(ende, 60)), [e0, n0] = lv95(a0.lat, a0.lon), [e1, n1] = lv95(a1.lat, a1.lon)
+            const d = Math.hypot(e1 - e0, n1 - n0) || 1
+            return [e0 + ((e1 - e0) / d) * sm, n0 + ((n1 - n0) / d) * sm]
+          }
+          return lv95(p.lat, p.lon)
+        }
+        const [es, ns] = stelle(sM)
+        if (!drin(es, ns)) continue
+        const mJeM = mass * gross.x
+        let ab = 0
+        for (let w = 0; w <= ZUG_WAGEN; w++) {
+          const lM = (w === 0 ? ZUG_LOK_M : ZUG_WAGEN_M) * mJeM
+          const [ev, nv] = stelle(sM - ab), [eh, nh] = stelle(sM - ab - lM)
+          const e = (ev + eh) / 2, n = (nv + nh) / 2
+          v.set((e - lage.cE) / 1000, bestandHoehe(b, e, n) / 1000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
+          q.setFromAxisAngle(oben, Math.atan2(ev - eh, -(nv - nh)))
+          m.compose(v, q, skala)
+          if (w === 0) netze.lok.setMatrixAt(zahl, m)
+          else if (w === ZUG_WAGEN) netze.steuer.setMatrixAt(zahl, m)
+          else netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)
+          ab += lM + ZUG_LUECKE_M * mJeM
+        }
+        zahl++
       }
-      netz.count = zahl
-      netz.instanceMatrix.needsUpdate = true
+      netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
+      for (const n of Object.values(netze)) n.instanceMatrix.needsUpdate = true
     }
     const gerechnet = new Set<string>()
     k.jeBild.push(schritt)
     return () => {
       weg = true
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
-      k.wurzel.remove(gruppe); form.dispose(); stoff.dispose(); netz.dispose()
+      k.wurzel.remove(gruppe); stoff.dispose()
+      for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
     }
   }, [zuege, b, stufe, knoepfe])
   // Regen und Schnee über dem ganzen Modell, vom tiefsten Punkt bis ein Viertel der Breite über den höchsten (Niederschlag.ts)
