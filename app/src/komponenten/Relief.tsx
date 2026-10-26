@@ -720,7 +720,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
       <div className={ZWEI_SPALTEN}>
       <div className="min-w-0">
       {!fehler && (
-        <ModellKarte laedt="Das Relief wird geladen …" faktor={faktor} setFaktor={setFaktor} fahrknopf={fahrknopf}
+        <ModellKarte inBrille={inBrille} laedt="Das Relief wird geladen …" faktor={faktor} setFaktor={setFaktor} fahrknopf={fahrknopf}
                      fuehrerstand={fuehrerstand} audio={audio} stand={stand}
                      szene={daten && weg ? (fuellen, className) => (
                        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} brille={brille}
@@ -740,7 +740,7 @@ export default function ReliefSeite({ name, vonLinie = false }: { name: string; 
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
             <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
-          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} stand={stand} />
+          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} brilleFehler={brilleFehler} stand={stand} />
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Namen, die sich überdecken würden, erscheinen beim Heranzoomen.
             {faktor === 2 && <span className="font-medium text-sbb-black dark:text-sbb-white"> Die Höhe ist 2-fach überhöht.</span>}
@@ -943,7 +943,7 @@ export function ModellStrecke({ fahrweg, objekte, text, name }: {
       <div className={ZWEI_SPALTEN}>
       <div className="min-w-0">
       {!fehler && (
-        <ModellKarte laedt="Das Gelände entlang der ganzen Strecke wird geladen …" fahrknopf={fahrknopf}
+        <ModellKarte inBrille={inBrille} laedt="Das Gelände entlang der ganzen Strecke wird geladen …" fahrknopf={fahrknopf}
                      fuehrerstand={fuehrerstand} audio={audio} stand={stand}
                      ansage={stand.vorne ? null : <Vorankuendigung stelle={probeStelle} objekte={objekte} text={text} />}
                      szene={daten && weg ? (fuellen, className) => (
@@ -963,7 +963,7 @@ export function ModellStrecke({ fahrweg, objekte, text, name }: {
             Ein Modell, kein Abbild der Wirklichkeit: Zug, Gleise und Masten sind nicht massstäblich.{' '}
             <a href="#/modellbahn" className="underline underline-offset-2">Was nicht stimmt</a> (unten auf der Seite Modellbahn)
           </p>
-          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} inBrille={inBrille} brilleFehler={brilleFehler} stand={stand} />
+          <ModellKnoepfe fahrknopf={fahrknopf} fuehrerstand={fuehrerstand} audio={audio} brilleFehler={brilleFehler} stand={stand} />
           <Klappe className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
           <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">
             Die ganze Strecke als Modell, mit einem Band von {(BAND_M / 1000).toLocaleString('de-CH').replace('.', ',')} km links und rechts der Strecke; was weiter weg
@@ -999,7 +999,10 @@ const MODELL_TEMPI = [null, 1, 2, 4, 8, 16, 32] as const
  * füllt sie den Bildschirm, und Höhe, Zuggeräusch, Zug fahren, Anhalten, Führerstand und Tempo liegen auf der Karte.
  * Die Szene bleibt dieselbe, sie wird beim Umschalten nicht neu gebaut.
  */
-function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand, audio, stand, ansage }: {
+/** der Knopf zur Brille, gleich wie die Knöpfe daneben (Michael, 2026-10-26) */
+const XR_KNOPF = 'flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'
+
+function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand, audio, stand, ansage, inBrille }: {
   /** die Szene, mit fuellen und className von hier; null, solange die Daten laden */
   szene: ((fuellen: boolean, className: string) => React.ReactNode) | null
   /** Text, solange die Daten laden */
@@ -1012,7 +1015,11 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
   stand: ModellStand
   /** über dem Modell unten: die Vorankündigung der Tunnel und Brücken */
   ansage?: React.ReactNode
+  /** der Knopf XR oben rechts neben dem Vollbild, wie in «3D Schweiz» */
+  inBrille: () => void
 }) {
+  const xr = useBrilleMoeglich()
+  const [ohneBrille, setOhneBrille] = useState(false)
   const [voll, setVoll] = useState(false)
   const [filter, setFilter] = useState(false)
   useEchtesVollbild(voll, setVoll)
@@ -1035,8 +1042,20 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
       {szene && !cockpit && (
         <div className="absolute right-2 top-2 flex gap-2">
           {voll && <GeraeuschKnopf audio={audio} className="h-8 w-9" />}
+          {/* «XR» wie in «3D Schweiz»: gleich gross und gleich weiss wie das Vollbild daneben (Michael, 2026-10-26: «Den XR Knopf kannst
+              du bei Taktland genauso umsetzen wie bei 3DLand»; vorher ein roter Knopf «Mit VR-Brille» unter dem Modell) */}
+          <button type="button" onClick={() => (xr ? inBrille() : setOhneBrille(!ohneBrille))} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
+                  className={XR_KNOPF}>XR</button>
           <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </div>
+      )}
+      {szene && !xr && ohneBrille && (
+        <button type="button" role="status" onClick={() => setOhneBrille(false)}
+                className="absolute inset-x-2 top-12 z-10 rounded-lg bg-white/95 p-3 text-left text-sm font-medium shadow-lg dark:bg-sbb-charcoal/95 md:left-auto md:w-96">
+          Auf diesem Gerät ist keine VR-Brille zu finden. Mit einer VR-Brille wie der Meta Quest 3 steht das Modell in deinem Raum auf
+          dem Tisch; du siehst deine Umgebung, wo die Brille es kann, und lässt den Zug mit den Controllern fahren. Öffne dafür Taktland
+          im Browser der Brille.
+        </button>
       )}
       {/* im Führerstand im Vollbild nur das Bild (Michael, 2026-10-14: «ein echtes Vollformat … alle Bedienelemente als Knöpfe
           auf dem Führerpult oder teilweise auch oben»): fahren, bremsen, Tempo und Zuggeräusch am Pult */}
@@ -1149,25 +1168,19 @@ function TempoWahl({ stand, fahrknopf, klein = false }: { stand: ModellStand; fa
   )
 }
 
-function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler, stand }: {
+function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, brilleFehler, stand }: {
   fahrknopf: React.RefObject<Fahrknopf | null>
   fuehrerstand: React.MutableRefObject<boolean>
   audio: ReturnType<typeof useZuggeraeusch>
-  inBrille: () => void
   brilleFehler: string | null
   stand: ModellStand
 }) {
   const xr = useBrilleMoeglich()
-  const [ohne, setOhne] = useState(false)
   const { vorne, setVorne } = stand
   const weiss = 'rounded-lg border border-sbb-cloud bg-white px-4 py-2 font-bold dark:border-sbb-iron dark:bg-sbb-midnight'
   return (
     <>
       <div className="mt-3 flex flex-wrap gap-2">
-        <button type="button" className="rounded-lg bg-sbb-red px-4 py-2 font-bold text-white"
-                onClick={() => (xr ? inBrille() : setOhne(true))}>
-          Mit VR-Brille
-        </button>
         <button type="button" className={weiss} onClick={() => fahrknopf.current?.los()}>
           Zug fahren
         </button>
@@ -1181,13 +1194,6 @@ function ModellKnoepfe({ fahrknopf, fuehrerstand, audio, inBrille, brilleFehler,
       </div>
       <TempoWahl stand={stand} fahrknopf={fahrknopf} />
       {brilleFehler && <p className="mt-1 text-sm">Die Brille liess sich nicht starten: {brilleFehler}</p>}
-      {!xr && ohne && (
-        <p className="mt-2 text-sm font-medium" role="status">
-          Auf diesem Gerät ist keine VR-Brille zu finden. Mit einer VR-Brille wie der Meta Quest 3 steht das Modell in
-          deinem Raum auf dem Tisch; du siehst deine Umgebung, wo die Brille es kann, und lässt den Zug mit den Controllern
-          fahren. Öffne dafür Taktland im Browser der Brille.
-        </p>
-      )}
       <Klappe className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm" titel="Bedienung und Tempo">
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
         Mit «{(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Min.» fährt der Zug in {(PROBE_DAUER_S / 60).toLocaleString('de-CH')} Minuten über die ganze Strecke,
@@ -1486,7 +1492,11 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
         ) : (
           <>
             <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
-            <GeraeuschKnopf audio={audio} className="absolute right-2 top-2 h-9 w-10" />
+            <div className="absolute right-2 top-2 flex gap-2">
+              {/* «XR» wie in «3D Schweiz» und der Modellbahn (Michael, 2026-10-26) */}
+              {ganz && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille" className={`${XR_KNOPF} !size-9`}>XR</button>}
+              <GeraeuschKnopf audio={audio} className="h-9 w-10" />
+            </div>
             {/* oben: unten legt Android im Vollbild seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
             <div className="absolute left-2 top-12 flex gap-2">
               <button type="button" onClick={() => { fuehrerstand.current = false; setVorne(false); hinterZug.current = true }}
@@ -1498,12 +1508,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
                 Führerstand
               </button>
               {/* wie in der Modellbahn (Michael, 2026-10-14: «Aktuell kann ich ja nur im Spiel auf die VR-Brille wechseln») */}
-              {ganz && (
-                <button type="button" onClick={inBrille}
-                        className="rounded-lg bg-sbb-red px-2.5 py-1 text-xs font-bold text-white">
-                  Mit VR-Brille
-                </button>
-              )}
+
             </div>
             {brilleHinweis && (
               <p role="status" className="absolute inset-x-2 top-24 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">
