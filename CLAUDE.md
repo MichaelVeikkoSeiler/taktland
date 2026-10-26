@@ -494,7 +494,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              der Strahl in der Stufe 1 km über das kleine Modell hinweg, Michael, 2026-10-24: «Warum keine Windhosen?»),
              auf dem Bildschirm gleich gross (9 % des Abstands), darüber klein nur die Zahl in km/h («Zahl dazu», «Viel zu präsente Infos.
              Nur Zahl»), die Stationen nennt die Tafel;
-             in der Brille bleiben sie stehen, ohne Schild, in der Modellbahn 3,5-mal so hoch wie die Masten,
+             in der Brille bleiben sie stehen, die Zahl darüber dort so hoch wie gut ein Fünftel der Windhose (BRILLE_ZAHL; vorher ohne Schild, Michael, 2026-10-26: «In der VR-Brille sehe ich keine Windgeschwindigkeiten»), in der Modellbahn 3,5-mal so hoch wie die Masten,
              nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wetter» (bis 2026-10-24 «Wind»; Michael: «Knopf Wind soll Wetter heissen») an
              den Wänden (blau, am Anfang aus), in der Brille 12 % so hoch wie das Modell breit; Messungen fünf Minuten behalten (messungVon);
              die Tafel (komponenten/WindTafel.tsx): Messung, Regler über die Stunden der Prognose, Verlauf der Woche (Stundenmittel und

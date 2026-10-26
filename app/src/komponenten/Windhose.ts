@@ -106,10 +106,14 @@ interface Wind { kmh: number | null; boe: number | null; richtung: number | null
  * Immer vier Windhosen im Bild (Michael, 2026-10-24: «Egal welche Zoomstufe und auch beim von Hand stufenlosen Zoomen: immer 4 Orte»;
  * «Zahl dazu»): nach jeder Bewegung der Kamera stehen sie wieder an vier Stellen des sichtbaren Geländes, gefunden mit dem Strahl
  * durch die Mitten der vier Viertel des Bilds; auf dem Bildschirm immer gleich gross, über dem Mast klein die Stärke in km/h (die
- * Station nennt die Tafel). In der Brille bleiben sie, wo sie sind (dort gibt es keinen Bildschirm), ohne Schild.
+ * Station nennt die Tafel). In der Brille bleiben sie, wo sie sind (dort gibt es keinen Bildschirm), die Zahl dort in fester Grösse zur Windhose
+ * (Michael, 2026-10-26: «In der VR-Brille sehe ich keine Windgeschwindigkeiten»).
  * eltern: wohin sie gehören (ihr Raum ist der des Modells); hoehe: Gelände an x, z im Raum der Eltern, null ausserhalb;
  * neuePlaetze: die vier Stellen im Raum der Eltern, wenn sie neu verteilt sind.
  */
+/** in der Brille: so hoch wie dieser Teil der Windhose ist die Zahl über dem Mast, gewählt */
+const BRILLE_ZAHL = 0.22
+
 export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.PerspectiveCamera, hoehe: (x: number, z: number) => number | null,
   inBrille: () => boolean, neuePlaetze: (stellen: THREE.Vector3[]) => void, groesseBrille: number,
   /** der Kasten um das Gelände im Raum der Eltern: gesucht wird nur darin (in der Stufe 1 km von «3D Schweiz» ist das Modell
@@ -206,8 +210,13 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
         }
         h.schritt(t)
         const sp = schilder[i]
-        sp.visible = verteilt && !brille && !!sp.material.map
+        sp.visible = verteilt && !!sp.material.map
         sp.position.copy(h.gruppe.position).y += h.gruppe.scale.y * 1.15
+        // in der Brille im Raum des Modells, so hoch wie ein Fünftel der Windhose (BRILLE_ZAHL), sonst fest auf dem Bildschirm
+        if (sp.material.sizeAttenuation !== brille) { sp.material.sizeAttenuation = brille; sp.material.needsUpdate = true }
+        const v = (sp.userData.verhaeltnis as number | undefined) ?? 1
+        if (brille) sp.scale.set(h.gruppe.scale.y * BRILLE_ZAHL * v, h.gruppe.scale.y * BRILLE_ZAHL, 1)
+        else if (sp.userData.b) sp.scale.set(sp.userData.b as number, sp.userData.h as number, 1)
       })
     },
     setzen: (werte) => {
@@ -227,6 +236,7 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
         x.fillStyle = '#ffffff'; x.fillText(text, 6, px - 1)
         const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
         sp.material.map = tex; sp.material.needsUpdate = true
+        sp.userData = { b: c.width * 0.0007, h: c.height * 0.0007, verhaeltnis: c.width / c.height }
         sp.scale.set(c.width * 0.0007, c.height * 0.0007, 1)
       })
     },
