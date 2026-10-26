@@ -957,7 +957,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, nicht
               die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
               fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
-              wirklich nimmt, steht in keiner Quelle. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
+              wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
+              Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten laut Fahrplan; ein Tipp daneben
+              blendet es aus. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
               gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
           </Abschnitt>
         )}
@@ -1381,6 +1383,17 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const k = ['knoepfe', 'schalter'].flatMap((n) => wurzel.getObjectByName(n)?.children.filter((o) => o.visible && o.userData.aktion) ?? [])
       const knopf = strahl.intersectObjects(k, false)[0]
       if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
+      // ein Zug: sein Schild (nur 3dland.ch); sonst verschwindet ein offenes Schild
+      const zuege = wurzel.getObjectByName('zuege')
+      if (zuege?.visible) {
+        const netze = zuege.children.filter((o): o is THREE.InstancedMesh => o instanceof THREE.InstancedMesh)
+        // die Züge fahren: die Kugel um alle Instanzen jedes Mal neu, sonst trifft der Strahl die alte
+        for (const n of netze) n.computeBoundingSphere()
+        const z = strahl.intersectObjects(netze, false)[0]
+        const wahl = zuege.userData.wahl as ((netz: THREE.Object3D, i: number) => boolean) | undefined
+        if (z && z.instanceId !== undefined && wahl?.(z.object, z.instanceId)) return
+        ;(zuege.userData.abwahl as (() => void) | undefined)?.()
+      }
       const boeden = wurzel.getObjectByName('boeden')
       const t = boeden ? strahl.intersectObjects(boeden.children, false)[0] : undefined
       if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
@@ -1438,7 +1451,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     })
     const anfangSetzen = () => { drehung = 0; zoom = 1; lage = null; haelt.clear(); griff = null }
     // Schilder und Knöpfe: auf dem Bildschirm in fester Grösse, in der Brille in Metern
-    const sprites = () => ['schilder', 'knoepfe', 'standort', 'hoehen'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? [])
+    const sprites = () => ['schilder', 'knoepfe', 'standort', 'hoehen', 'zuege'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? [])
       .filter((o): o is THREE.Sprite => o instanceof THREE.Sprite))
     const brilleSetzen = () => {
       const breite = (wurzel.userData.weiteKm as number) || 1
@@ -2558,6 +2571,52 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return n
     }
     const netze = { lok: netzVon(formen.lok, 1), wagen: netzVon(formen.wagen, ZUG_WAGEN - 1), steuer: netzVon(formen.steuer, 1) }
+    // welcher Zug welcher ist (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»): ein Tipp auf einen Zug zeigt über
+    // ihm ein Schild mit Zug, Ziel und dem Halt laut Fahrplan; nur was im Fahrplan steht
+    let gezeichnet: ZugFahrt[] = [], gewaehlt: number | null = null, schildText = ''
+    const schild = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false }))
+    schild.center.set(0.5, 0); schild.renderOrder = 6; schild.visible = false
+    gruppe.add(schild)
+    const schildMalen = (zeilen: string[]) => {
+      const c = document.createElement('canvas'), x = c.getContext('2d')!
+      const px = 26, klein = 21, fett = `bold ${px}px Helvetica, Arial, sans-serif`, normal = `normal ${klein}px Helvetica, Arial, sans-serif`
+      x.font = fett; let breit = x.measureText(zeilen[0]).width
+      x.font = normal; for (const z of zeilen.slice(1)) breit = Math.max(breit, x.measureText(z).width)
+      c.width = Math.ceil(breit) + 20; c.height = px + 16 + (zeilen.length - 1) * (klein + 6)
+      x.fillStyle = ORT_GRAU; x.beginPath(); x.roundRect(0, 0, c.width, c.height, SCHILD_RUND_PX); x.fill()
+      x.fillStyle = '#ffffff'; x.font = fett; x.fillText(zeilen[0], 10, px + 4)
+      x.font = normal; zeilen.slice(1).forEach((z, i) => x.fillText(z, 10, px + 8 + (i + 1) * (klein + 6)))
+      schild.material.map?.dispose()
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+      schild.material.map = t; schild.material.needsUpdate = true
+      schild.userData = { b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height, brilleM: 0.03 }
+      if (!k.renderer.xr.isPresenting) schild.scale.set(schild.userData.b, schild.userData.h, 1)
+    }
+    const uhr = (min: number | null) => {
+      if (min === null) return ''
+      const m = ((Math.round(min) % 1440) + 1440) % 1440
+      return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`
+    }
+    const zeilenVon = (f: ZugFahrt, st: ZugStelle): string[] => {
+      const name = (abk: string) => zn?.netz.punkte[abk] ?? abk
+      const titel = `${f.linie && f.linie !== f.gattung ? f.linie : f.gattung} ${f.nummer}`.trim()
+      const h = f.halte
+      const halt = st.art === 'halt' ? h[st.i] : h[st.i + 1]
+      const zweite = st.art === 'halt'
+        ? (st.i === h.length - 1 ? `in ${name(halt.abk)}, an ${uhr(halt.an)}` : st.i === 0 ? `in ${name(halt.abk)}, ab ${uhr(halt.ab)}`
+          : `in ${name(halt.abk)}, an ${uhr(halt.an)}, ab ${uhr(halt.ab)}`)
+        : `nächster Halt ${name(halt.abk)}, an ${uhr(halt.an ?? halt.ab)}`
+      return [`${titel} nach ${f.ziel}`, zweite, 'laut Fahrplan']
+    }
+    gruppe.userData.wahl = (o: THREE.Object3D, i: number) => {
+      const zug = o === netze.wagen ? Math.floor(i / (ZUG_WAGEN - 1)) : o === netze.lok || o === netze.steuer ? i : -1
+      const f = gezeichnet[zug]
+      if (!f) return false
+      gewaehlt = gewaehlt === f.id ? null : f.id
+      knopfTon(gewaehlt !== null)
+      return true
+    }
+    gruppe.userData.abwahl = () => { gewaehlt = null }
     const teile = [...b.teile.values()]
     const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
     const rand = teile.map((t) => t.rahmen)
@@ -2587,7 +2646,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         for (const f of fahrten) { const st = zugStelle(f, jetzt.tag, jetzt.minuten); if (st) unterwegs.push({ f, st: st }) }
         for (const u of unterwegs) { const st = zugStelle(u.f, jetzt.tag, jetzt.minuten); if (st) u.st = st }
       }
-      let zahl = 0, neueWege = 0
+      let zahl = 0, neueWege = 0, zeigt = false
       // aus der Ferne grösser, damit man die Züge in der ganzen Region sieht: mindestens ZUG_FERN des Abstands der Kamera lang
       k.wurzel.getWorldPosition(mitte)
       const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
@@ -2656,8 +2715,18 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           else if (w === ZUG_WAGEN) netze.steuer.setMatrixAt(zahl, m)
           else netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)
         }
+        gezeichnet[zahl] = u.f
+        if (u.f.id === gewaehlt) {
+          zeigt = true
+          const vo = enden[0], hi = enden[1]
+          schild.position.set(((vo.e + hi.e) / 2 - lage.cE) / 1000, (glatt[0] + glatt[1]) / 2000 + hoehe * gross.y * 1.6, -((vo.n + hi.n) / 2 - lage.cN) / 1000)
+          const zeilen = zeilenVon(u.f, st), text = zeilen.join('|')
+          if (text !== schildText) { schildText = text; schildMalen(zeilen) }
+        }
         zahl++
       }
+      gezeichnet.length = zahl
+      schild.visible = zeigt
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
       for (const n of Object.values(netze)) n.instanceMatrix.needsUpdate = true
     }
@@ -2666,7 +2735,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     return () => {
       weg = true
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
-      k.wurzel.remove(gruppe); stoff.dispose()
+      k.wurzel.remove(gruppe); stoff.dispose(); schild.material.map?.dispose(); schild.material.dispose()
       for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
     }
   }, [zuege, b, stufe, knoepfe])
