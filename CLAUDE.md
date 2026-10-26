@@ -553,7 +553,7 @@ data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Mich
              täglich, ohne Züge, wenn es nicht klappt) und neben die Seite gelegt (zuege3d/); in der App src/zuege3d.ts (wo ein Zug laut Fahrplan
              jetzt ist: am Halt zwischen Ankunft und Abfahrt, sonst gleichmässig auf dem Weg zum nächsten, eine Annahme; am Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, ZUG_STEHT_MIN, Annahme, Michael, 2026-10-26: «Wenn sie halten verschwinden sie»; block_id fehlt bei fast allen Zügen) und in Schweiz3D.tsx
              ein Knopf «Züge» an der Wand (nur mit eigeneSeite, ab der Stufe 20 km, Farbe gewählt), je Zug 200 m lang (ZUG_LAENGE_KM, Annahme) in der Form der Modellbahn: Lok, vier Wagen und Steuerwagen, die Spitze
-             karminrot, jeder Wagen folgt dem Weg (komponenten/ZugForm.ts, auch für Relief.tsx; Michael, 2026-10-26: «das Design der Züge von Taktland»), in der Region grösser, aus der Ferne mindestens 1,2 % des Abstands der Kamera, darüber die Zeile «Züge laut
+             karminrot, jeder Wagen folgt dem Weg (komponenten/ZugForm.ts, auch für Relief.tsx; Michael, 2026-10-26: «das Design der Züge von Taktland»), in der Region grösser, aus der Ferne mindestens 1,8 % des Abstands der Kamera (ZUG_FERN; vorher 1,2 %, Michael, 2026-10-26: «aus der Ferne etwas grösser»), darüber die Zeile «Züge laut
              Fahrplan vom …, nicht live»; in Anleitung, Quellen und Fusszeile von 3dland genannt
 data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
