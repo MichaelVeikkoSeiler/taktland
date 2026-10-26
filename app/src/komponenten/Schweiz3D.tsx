@@ -816,7 +816,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <div className="absolute bottom-2 right-2 flex items-center gap-2">
           {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
           <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
-                  className="flex size-8 flex-none items-center justify-center rounded-lg bg-sbb-red text-xs font-bold text-white">
+                  // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
+                  className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
             XR
           </button>
           <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
