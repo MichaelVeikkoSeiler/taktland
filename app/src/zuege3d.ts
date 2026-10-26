@@ -65,6 +65,10 @@ export function jetztImFahrplan(ix: ZugIndex, zeit = new Date(Date.now() + zugTe
   return { tag, minuten: Number(teile.hour) * 60 + Number(teile.minute) + Number(teile.second) / 60 }
 }
 
+/** so lange steht ein Zug vor der ersten Abfahrt und nach der letzten Ankunft am Bahnhof (Michael, 2026-10-26: «Wenn sie halten
+ *  verschwinden sie»); eine Annahme, gewählt: wie lange er dort steht, steht nicht im Fahrplan (block_id fehlt bei fast allen Zügen) */
+export const ZUG_STEHT_MIN = 5
+
 export type ZugStelle =
   | { art: 'halt'; i: number }
   | { art: 'fahrt'; i: number; anteil: number }
@@ -73,11 +77,13 @@ export type ZugStelle =
 export function zugStelle(f: ZugFahrt, tag: number, minuten: number): ZugStelle | null {
   for (const [d, m] of [[tag, minuten], [tag - 1, minuten + 1440]] as const) {
     if (d < 0 || !((f.tage >> d) & 1)) continue
-    const h = f.halte
-    const erst = h[0].ab ?? h[0].an, letzt = h[h.length - 1].an ?? h[h.length - 1].ab
-    if (erst === null || letzt === null || m < erst || m > letzt) continue
-    for (let i = 0; i < h.length; i++) {
-      const an = h[i].an ?? h[i].ab!, ab = h[i].ab ?? h[i].an!
+    const h = f.halte, z = h.length - 1
+    const erst = h[0].ab ?? h[0].an, letzt = h[z].an ?? h[z].ab
+    if (erst === null || letzt === null || m < erst - ZUG_STEHT_MIN || m > letzt + ZUG_STEHT_MIN) continue
+    for (let i = 0; i <= z; i++) {
+      let an = h[i].an ?? h[i].ab!, ab = h[i].ab ?? h[i].an!
+      if (i === 0) an = Math.min(an, erst - ZUG_STEHT_MIN)
+      if (i === z) ab = Math.max(ab, letzt + ZUG_STEHT_MIN)
       if (m >= an && m <= ab) return { art: 'halt', i }
       const weiter = h[i + 1]
       if (!weiter) break
