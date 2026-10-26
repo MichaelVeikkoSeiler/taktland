@@ -597,9 +597,7 @@ def verlauf_nach_tlm(wgs_a, wgs_b, km_luft, hoechstens_m=None):
                 pts = pts[::-1]
             best = (abs(b_s - a_s), None, pts)
             return [schienennetz.lv95_zu_wgs84(x, y) for x, y in best[2]]
-    # länger als TLM_NETZ_UMWEG mal die Luftlinie ist eher ein Umweg über andere Gleise als der Abschnitt selbst
-    # hoechstens_m: ersetzt der Weg einen Verlauf, den es schon gibt, darf er so lang sein wie dieser (Kehrtunnel, Zahnstangen)
-    if best is None or best[0] > (hoechstens_m or math.dist((ea, na), (eb, nb)) * TLM_NETZ_UMWEG + 300):
+    if best is None:
         return None
     # rückwärts zusammensetzen
     stuecke = [best[2]]
@@ -611,6 +609,27 @@ def verlauf_nach_tlm(wgs_a, wgs_b, km_luft, hoechstens_m=None):
     meter = []
     for st in reversed(stuecke):
         meter += st if not meter else st[1:]
+    # länger als TLM_NETZ_UMWEG mal die Luftlinie ist eher ein Umweg über andere Gleise als der Abschnitt selbst
+    # hoechstens_m: ersetzt der Weg einen Verlauf, den es schon gibt, darf er so lang sein wie dieser (Kehrtunnel, Zahnstangen)
+    grenze_m = hoechstens_m or math.dist((ea, na), (eb, nb)) * TLM_NETZ_UMWEG + 300
+    lang = sum(math.dist(meter[i], meter[i + 1]) for i in range(len(meter) - 1))
+    if lang <= grenze_m:
+        return [schienennetz.lv95_zu_wgs84(x, y) for x, y in meter]
+    # zu lang: liegt der Bahnhof auf einem anderen Gleis, fährt der Weg an ihm vorbei, wendet an einer Weiche und kommt
+    # zurück; dann endet er dort, wo er dem Bahnhof nahe ist und sich wieder entfernt, und beginnt ebenso (Michael,
+    # 2026-10-26: «in Solothurn fährt der Zug durchs Wohnquartier», Biberist Ost – Solothurn war eine Gerade, der Weg 5,1 km
+    # statt etwa 4,6); nur dann, sonst kürzte es Wege, die in Kurven am Bahnhof vorbeiführen (Klosters Platz – Selfranga)
+    nah = TLM_NETZ_NAH_M * 2
+    da = [math.dist(p, (ea, na)) for p in meter]
+    db = [math.dist(p, (eb, nb)) for p in meter]
+    # der erste Punkt nahe beim Ziel, ab dem der Weg sich wieder entfernt, und der letzte nahe beim Anfang, bis zu dem er sich nähert
+    i1 = next((i for i in range(len(meter)) if db[i] <= nah and (i == len(meter) - 1 or db[i + 1] > db[i])), len(meter) - 1)
+    i0 = next((i for i in range(i1, -1, -1) if da[i] <= nah and (i == 0 or da[i - 1] > da[i])), 0)
+    if i1 - i0 >= 1:
+        meter = meter[i0:i1 + 1]
+    lang = sum(math.dist(meter[i], meter[i + 1]) for i in range(len(meter) - 1))
+    if lang > grenze_m:
+        return None
     return [schienennetz.lv95_zu_wgs84(x, y) for x, y in meter]
 
 
