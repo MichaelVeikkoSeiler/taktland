@@ -22,7 +22,7 @@ import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
-import { ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
+import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
@@ -1029,7 +1029,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern gezeichnet oder angenommen ist:</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
-            {eigeneSeite && <li>Züge: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof.</li>}
+            {eigeneSeite && <li>Züge: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, und dass jeder Zug links neben dem Weg fährt,
+              damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>}
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
@@ -1100,6 +1101,9 @@ const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
 const ZUG_FERN = 0.018
 /** über so viele Meter des Zugs (in seiner Grösse im Modell) wird die Höhe unter ihm gemittelt, gewählt */
 const ZUG_GLATT_M = 300
+/** so viele Zugbreiten liegt die Mitte eines Zugs links neben dem Weg: zwei Züge in Gegenrichtung fahren nebeneinander, wie bei Linksverkehr
+ *  auf zwei Gleisen (Michael, 2026-10-26: «aneinander vorbeifahren und nicht … durcheinander»); welches Gleis, steht in keiner unserer Quellen, gewählt */
+const ZUG_LINKS = 0.7
 /** so stark neigt sich ein Wagen höchstens, 6° (wie in der Modellbahn ZUG_NEIGUNG_MAX, dort 4°), gewählt */
 const ZUG_NEIGUNG = (6 * Math.PI) / 180
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
@@ -2697,6 +2701,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           ab += lM + ZUG_LUECKE_M * mJeM
         }
         const fenster = ZUG_GLATT_M * mJeM
+        let lokE = 0, lokN = 0
         const glatt = enden.map((x) => {
           let summe = 0, zahlH = 0
           for (const y of enden) if (Math.abs(y.s - x.s) <= fenster && Number.isFinite(y.h)) { summe += y.h; zahlH++ }
@@ -2704,7 +2709,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         for (let w = 0; w <= ZUG_WAGEN; w++) {
           const vo = enden[2 * w], hi = enden[2 * w + 1], hv = glatt[2 * w], hh = glatt[2 * w + 1]
-          const e = (vo.e + hi.e) / 2, n = (vo.n + hi.n) / 2
+          // nach links versetzt, damit Züge in Gegenrichtung aneinander vorbeifahren statt durcheinander
+          const lang = Math.hypot(vo.e - hi.e, vo.n - hi.n) || 1, versatz = ZUG_BREITE * mass * gross.x * 1000 * ZUG_LINKS
+          const e = (vo.e + hi.e) / 2 - ((vo.n - hi.n) / lang) * versatz, n = (vo.n + hi.n) / 2 + ((vo.e - hi.e) / lang) * versatz
+          if (w === 0) { lokE = e; lokN = n }
           v.set((e - lage.cE) / 1000, (hv + hh) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
           q.setFromAxisAngle(oben, Math.atan2(vo.e - hi.e, -(vo.n - hi.n)))
           const quer = Math.hypot(vo.e - hi.e, vo.n - hi.n)
@@ -2718,8 +2726,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         gezeichnet[zahl] = u.f
         if (u.f.id === gewaehlt) {
           zeigt = true
-          const vo = enden[0], hi = enden[1]
-          schild.position.set(((vo.e + hi.e) / 2 - lage.cE) / 1000, (glatt[0] + glatt[1]) / 2000 + hoehe * gross.y * 1.6, -((vo.n + hi.n) / 2 - lage.cN) / 1000)
+          schild.position.set((lokE - lage.cE) / 1000, (glatt[0] + glatt[1]) / 2000 + hoehe * gross.y * 1.6, -(lokN - lage.cN) / 1000)
           const zeilen = zeilenVon(u.f, st), text = zeilen.join('|')
           if (text !== schildText) { schildText = text; schildMalen(zeilen) }
         }
