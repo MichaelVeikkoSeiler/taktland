@@ -1104,6 +1104,8 @@ const ZUG_GLATT_M = 300
 /** so viele Zugbreiten liegt die Mitte eines Zugs links neben dem Weg: zwei Züge in Gegenrichtung fahren nebeneinander, wie bei Linksverkehr
  *  auf zwei Gleisen (Michael, 2026-10-26: «aneinander vorbeifahren und nicht … durcheinander»); welches Gleis, steht in keiner unserer Quellen, gewählt */
 const ZUG_LINKS = 0.7
+/** so weit neben einem Wagen (Winkel vom Auge) trifft ein Tipp den Zug noch, 2,5°, gewählt */
+const ZUG_TIPP_WINKEL = (2.5 * Math.PI) / 180
 /** so stark neigt sich ein Wagen höchstens, 6° (wie in der Modellbahn ZUG_NEIGUNG_MAX, dort 4°), gewählt */
 const ZUG_NEIGUNG = (6 * Math.PI) / 180
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
@@ -1396,6 +1398,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const z = strahl.intersectObjects(netze, false)[0]
         const wahl = zuege.userData.wahl as ((netz: THREE.Object3D, i: number) => boolean) | undefined
         if (z && z.instanceId !== undefined && wahl?.(z.object, z.instanceId)) return
+        // knapp daneben gilt auch: der Zug, dessen Wagen dem Strahl am nächsten liegt, bis ZUG_TIPP_WINKEL (Michael, 2026-10-26: «Man
+        // kann den Zug schwierig antippen ohne dass es einen neuen roten Kasten … gibt»)
+        const nahe = zuege.userData.nahe as ((r: THREE.Ray) => boolean) | undefined
+        if (nahe?.(strahl.ray)) return
         ;(zuege.userData.abwahl as (() => void) | undefined)?.()
       }
       const boeden = wurzel.getObjectByName('boeden')
@@ -2621,6 +2627,28 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return true
     }
     gruppe.userData.abwahl = () => { gewaehlt = null }
+    // die Mitten der Wagen jedes gezeichneten Zugs im Raum des Modells, für den Tipp knapp daneben
+    const mitten: THREE.Vector3[][] = []
+    gruppe.userData.nahe = (r: THREE.Ray) => {
+      let best = -1, bestWinkel = ZUG_TIPP_WINKEL
+      const w = new THREE.Vector3(), zu = new THREE.Vector3()
+      mitten.forEach((liste, i) => {
+        if (i >= gezeichnet.length) return
+        for (const p of liste) {
+          w.copy(p); k.wurzel.localToWorld(w)
+          zu.copy(w).sub(r.origin)
+          const lang = zu.length()
+          if (lang < 1e-9 || zu.dot(r.direction) <= 0) continue
+          const winkel = zu.angleTo(r.direction)
+          if (winkel < bestWinkel) { bestWinkel = winkel; best = i }
+        }
+      })
+      const f = gezeichnet[best]
+      if (!f) return false
+      gewaehlt = gewaehlt === f.id ? null : f.id
+      knopfTon(gewaehlt !== null)
+      return true
+    }
     const teile = [...b.teile.values()]
     const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
     const rand = teile.map((t) => t.rahmen)
@@ -2719,6 +2747,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           neigung.setFromAxisAngle(querAchse, quer > 1 ? -Math.max(-ZUG_NEIGUNG, Math.min(ZUG_NEIGUNG, Math.atan2(hv - hh, quer))) : 0)
           q.multiply(neigung)
           m.compose(v, q, skala)
+          ;(mitten[zahl] ??= [])[w] = (mitten[zahl][w] ?? new THREE.Vector3()).copy(v)
           if (w === 0) netze.lok.setMatrixAt(zahl, m)
           else if (w === ZUG_WAGEN) netze.steuer.setMatrixAt(zahl, m)
           else netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)

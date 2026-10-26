@@ -136,7 +136,7 @@ data/strecken.json  Netz für die Seite «Strecke»: Abschnitte mit Personenzüg
 data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierung,
              platzsparend als Differenzen), erst beim Start des Fahrtmodus geladen; Abschnitte anderer Bahnen ohne Verlauf im
              Schienennetz des BAV bekommen den kürzesten Weg im Gleisnetz von swissTLM3D, höchstens 1,5-mal so lang wie die Luftlinie
-             (verlauf_nach_tlm in build_strecken.py, 9 Abschnitte; Michael, 2026-10-15: Hondrich Süd–Spiez lag als Gerade bis 800 m neben
+             (verlauf_nach_tlm in build_strecken.py, 10 Abschnitte; Michael, 2026-10-15: Hondrich Süd–Spiez lag als Gerade bis 800 m neben
              dem Hondrichtunnel, der Zug fuhr durch den Berg und sah Häuser und Bäume von unten), ebenso wo der Verlauf des BAV ein Stück von
              100 m mehr als 25 m neben jedem Gleis liegt, wenn der Weg höchstens 25 % länger oder 20 % kürzer ist (abseits_m, 27 Abschnitte:
              Preda–Spinas durch den neuen Albulatunnel, Furka, Oberalp, Kalpetran, Vereina …); im Gleisnetz wird eine Achse geteilt, wo eine
@@ -144,8 +144,10 @@ data/strecken_geometrie.json  Lage der Linien für den Fahrtmodus (Kilometrierun
              des doppelten Stücks dazwischen verteilt (sprung_ordnen; vorher sprang die Linie bei Eschenbach LU 300 m vor und zurück);
              gefunden mit der Prüfung über das ganze Netz (app/scripts/netzpruefung.ts, Michael, 2026-10-16): je Abschnitt dieselben
              Funktionen wie die App (fahrwegBauen, src/gleisweg.ts) ohne Browser, in etwa 20 s; meldet Stücke neben oder ohne Gleis,
-             Wackler, steile Stellen und Tunnel, die nur das Gleisnetz kennt (Ergebnis in data/raw/netzpruefung, nicht in Git); offen:
-             Biberist Ost–Solothurn und Burgdorf–Burgdorf Steinhof West (Gerade, der Weg im Gleisnetz kehrt um oder ist zu lang),
+             Wackler, steile Stellen und Tunnel, die nur das Gleisnetz kennt (Ergebnis in data/raw/netzpruefung, nicht in Git); ist der Weg im Gleisnetz zu lang, weil er am Bahnhof vorbei
+             zu einer Weiche fährt und zurück, endet er dort, wo er dem Bahnhof nahe ist und sich wieder entfernt (Biberist Ost–Solothurn, 4,6 km statt 5,1;
+             Michael, 2026-10-26: «in Solothurn fährt der Zug durchs Wohnquartier»); offen:
+             Burgdorf–Burgdorf Steinhof West (Gerade, der Weg im Gleisnetz kehrt um oder ist zu lang),
              Campocologno–Tirano (Italien, ohne swissTLM3D)
 data/karte.json  vereinfachtes Streckennetz und Tunnelbereiche für die kleine Karte
              bei Tunneln, Brücken und auf den Linienseiten (pipeline/build_karte.py),
