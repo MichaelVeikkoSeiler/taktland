@@ -1106,6 +1106,8 @@ const ZUG_GLATT_M = 300
 const ZUG_LINKS = 0.7
 /** so weit neben einem Wagen (Winkel vom Auge) trifft ein Tipp den Zug noch, 2,5°, gewählt */
 const ZUG_TIPP_WINKEL = (2.5 * Math.PI) / 180
+/** in der Brille, wo der Strahl mit der Hand zittert, 4°, gewählt */
+const ZUG_TIPP_WINKEL_BRILLE = (4 * Math.PI) / 180
 /** so stark neigt sich ein Wagen höchstens, 6° (wie in der Modellbahn ZUG_NEIGUNG_MAX, dort 4°), gewählt */
 const ZUG_NEIGUNG = (6 * Math.PI) / 180
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
@@ -1388,8 +1390,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       const k = ['knoepfe', 'schalter'].flatMap((n) => wurzel.getObjectByName(n)?.children.filter((o) => o.visible && o.userData.aktion) ?? [])
       const knopf = strahl.intersectObjects(k, false)[0]
-      if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
-      // ein Zug: sein Schild (nur 3dland.ch); sonst verschwindet ein offenes Schild
+      // ein Zug: sein Schild (nur 3dland.ch); sonst verschwindet ein offenes Schild. Ein Zug vor einem Knopf geht vor (in der Brille
+      // fährt er oft am Rand, vor der Wand mit den Knöpfen; Michael, 2026-10-26: «dass man den Zug ganz einfach anstrahlen kann»)
       const zuege = wurzel.getObjectByName('zuege')
       if (zuege?.visible) {
         const netze = zuege.children.filter((o): o is THREE.InstancedMesh => o instanceof THREE.InstancedMesh)
@@ -1397,13 +1399,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         for (const n of netze) n.computeBoundingSphere()
         const z = strahl.intersectObjects(netze, false)[0]
         const wahl = zuege.userData.wahl as ((netz: THREE.Object3D, i: number) => boolean) | undefined
-        if (z && z.instanceId !== undefined && wahl?.(z.object, z.instanceId)) return
-        // knapp daneben gilt auch: der Zug, dessen Wagen dem Strahl am nächsten liegt, bis ZUG_TIPP_WINKEL (Michael, 2026-10-26: «Man
-        // kann den Zug schwierig antippen ohne dass es einen neuen roten Kasten … gibt»)
-        const nahe = zuege.userData.nahe as ((r: THREE.Ray) => boolean) | undefined
-        if (nahe?.(strahl.ray)) return
-        ;(zuege.userData.abwahl as (() => void) | undefined)?.()
+        if (z && z.instanceId !== undefined && (!knopf || z.distance < knopf.distance) && wahl?.(z.object, z.instanceId)) return
+        if (!knopf) {
+          // knapp daneben gilt auch: der Zug, dessen Wagen dem Strahl am nächsten liegt, bis ZUG_TIPP_WINKEL, in der Brille weiter
+          // (die Hand zittert; Michael, 2026-10-26: «Man kann den Zug schwierig antippen ohne dass es einen neuen roten Kasten … gibt»)
+          const nahe = zuege.userData.nahe as ((r: THREE.Ray, winkel: number) => boolean) | undefined
+          if (nahe?.(strahl.ray, renderer.xr.isPresenting ? ZUG_TIPP_WINKEL_BRILLE : ZUG_TIPP_WINKEL)) return
+          ;(zuege.userData.abwahl as (() => void) | undefined)?.()
+        }
       }
+      if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
       const boeden = wurzel.getObjectByName('boeden')
       const t = boeden ? strahl.intersectObjects(boeden.children, false)[0] : undefined
       if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
@@ -2629,8 +2634,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     gruppe.userData.abwahl = () => { gewaehlt = null }
     // die Mitten der Wagen jedes gezeichneten Zugs im Raum des Modells, für den Tipp knapp daneben
     const mitten: THREE.Vector3[][] = []
-    gruppe.userData.nahe = (r: THREE.Ray) => {
-      let best = -1, bestWinkel = ZUG_TIPP_WINKEL
+    gruppe.userData.nahe = (r: THREE.Ray, grenze: number) => {
+      let best = -1, bestWinkel = grenze
       const w = new THREE.Vector3(), zu = new THREE.Vector3()
       mitten.forEach((liste, i) => {
         if (i >= gezeichnet.length) return

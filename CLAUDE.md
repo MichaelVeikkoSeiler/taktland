@@ -559,7 +559,8 @@ data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Mich
              geneigt, höchstens 6°, jeder Zug 0,7 Zugbreiten links neben dem Weg, damit Züge in Gegenrichtung aneinander vorbeifahren (ZUG_LINKS; Michael,
              2026-10-26: «aneinander vorbeifahren und nicht … durcheinander»; das Gleis steht in keiner unserer Quellen) (ZUG_GLATT_M, ZUG_NEIGUNG; Michael, 2026-10-26: «nicht so holpern»; die Höhe ist die des Geländes, nicht des Gleises) (komponenten/ZugForm.ts, auch für Relief.tsx; Michael, 2026-10-26: «das Design der Züge von Taktland»), in der Region grösser, aus der Ferne mindestens 1,8 % des Abstands der Kamera (ZUG_FERN; vorher 1,2 %, Michael, 2026-10-26: «aus der Ferne etwas grösser»), darüber die Zeile «Züge laut
              Fahrplan vom …, nicht live»; ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild wie die Orte: Linie oder Gattung, Nummer, Ziel,
-             der Halt, an dem er steht, oder der nächste mit den Zeiten laut Fahrplan, «laut Fahrplan» (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»); ein Tipp daneben blendet es aus; in Anleitung, Quellen und Fusszeile von 3dland genannt
+             der Halt, an dem er steht, oder der nächste mit den Zeiten laut Fahrplan, «laut Fahrplan» (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»); ein Tipp daneben blendet es aus; knapp daneben trifft er den Zug noch, bis 2,5° vom Auge, in der Brille 4°, vor dem Gelände (kein roter Kasten), ein Zug vor einem
+             Wandknopf geht dem Knopf vor (ZUG_TIPP_WINKEL, ZUG_TIPP_WINKEL_BRILLE; Michael, 2026-10-26: «schwierig antippen ohne dass es einen neuen roten Kasten … gibt», «Auch bei der Brille»); in Anleitung, Quellen und Fusszeile von 3dland genannt
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
