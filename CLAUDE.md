@@ -551,7 +551,7 @@ data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Mich
              3DLand, nicht für Taktland»; zuerst Fahrplan, Echtzeit wäre ein zweiter Schritt mit Schlüssel): pipeline/build_zuege3d.py aus dem
              GTFS von opentransportdata.swiss (fetch_fahrplan.py), nur Züge und Halte an Bahnhöfen im Netz, 14 Tage ab gestern, je Paar Halte der
              kürzeste Weg im Netz (Dijkstra wie wegSuchen, das dafür in src/wegsuche.ts steht), jede Fahrt in jeder 10-km-Kachel, die ihr Weg
-             berührt (etwa 17'000 Fahrten, 296 Kacheln, 26 MB, nicht in Git); gebaut im Workflow von 3dland (dreidland/veroeffentlichen.yml,
+             berührt (etwa 23'000 Fahrten, 296 Kacheln, 49 MB, nicht in Git); gebaut im Workflow von 3dland (dreidland/veroeffentlichen.yml,
              täglich, ohne Züge, wenn es nicht klappt) und neben die Seite gelegt (zuege3d/); in der App src/zuege3d.ts (wo ein Zug laut Fahrplan
              jetzt ist: am Halt zwischen Ankunft und Abfahrt, sonst gleichmässig auf dem Weg zum nächsten, eine Annahme; am Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, ZUG_STEHT_MIN, Annahme, Michael, 2026-10-26: «Wenn sie halten verschwinden sie»; block_id fehlt bei fast allen Zügen) und in Schweiz3D.tsx
              ein Knopf «Züge» an der Wand (nur mit eigeneSeite, ab der Stufe 20 km, Farbe gewählt), je Zug 200 m lang (ZUG_LAENGE_KM, Annahme) in der Form der Modellbahn: Lok, vier Wagen und Steuerwagen, die Spitze
@@ -559,7 +559,9 @@ data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Mich
              geneigt, höchstens 6°, jeder Zug 0,7 Zugbreiten links neben dem Weg, damit Züge in Gegenrichtung aneinander vorbeifahren (ZUG_LINKS; Michael,
              2026-10-26: «aneinander vorbeifahren und nicht … durcheinander»; das Gleis steht in keiner unserer Quellen) (ZUG_GLATT_M, ZUG_NEIGUNG; Michael, 2026-10-26: «nicht so holpern»; die Höhe ist die des Geländes, nicht des Gleises) (komponenten/ZugForm.ts, auch für Relief.tsx; Michael, 2026-10-26: «das Design der Züge von Taktland»), in der Region grösser, aus der Ferne mindestens 1,8 % des Abstands der Kamera (ZUG_FERN; vorher 1,2 %, Michael, 2026-10-26: «aus der Ferne etwas grösser»), darüber die Zeile «Züge laut
              Fahrplan vom …, nicht live»; ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild wie die Orte: Linie oder Gattung, Nummer, Ziel,
-             der Halt, an dem er steht, oder der nächste mit den Zeiten laut Fahrplan, «laut Fahrplan» (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»); ein Tipp daneben blendet es aus; knapp daneben trifft er den Zug noch, bis 2,5° vom Auge, in der Brille 4°, vor dem Gelände (kein roter Kasten), ein Zug vor einem
+             der Halt, an dem er steht, oder der nächste mit den Zeiten und dem Gleis laut Fahrplan (platform_code der Haltekante, mit Sektoren wie «2A-D»; zwei
+             Haltekanten am selben Bahnhof «a / b»; je Halt ein viertes Feld, je_halt im Index; Fahrten mit anderem Gleis an anderen Tagen bleiben getrennt, darum 49 MB statt 26),
+             «laut Fahrplan», oben im Bild ein Link «Bahnhof …: Perrons und Gleise auf taktland.ch», wo Taktland eine Seite hat (TAKTLAND_APP; Michael, 2026-10-26: «Gleis mit Link») (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»); ein Tipp daneben blendet es aus; knapp daneben trifft er den Zug noch, bis 2,5° vom Auge, in der Brille 4°, vor dem Gelände (kein roter Kasten), ein Zug vor einem
              Wandknopf geht dem Knopf vor (ZUG_TIPP_WINKEL, ZUG_TIPP_WINKEL_BRILLE; Michael, 2026-10-26: «schwierig antippen ohne dass es einen neuen roten Kasten … gibt», «Auch bei der Brille»); in Anleitung, Quellen und Fusszeile von 3dland genannt
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)

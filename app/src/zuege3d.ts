@@ -13,6 +13,8 @@ import { type Nachbarn, wegSuchen } from './wegsuche'
 export interface ZugIndex {
   quelle: string; datei: string; stand: string; von: string; bis: string; kachel_m: number; hinweis: string
   tage: string[]; kacheln: string[]
+  /** Werte je Halt: 3 (Betriebspunkt, Ankunft, Abfahrt), seit 2026-10-26 4 mit dem Gleis */
+  je_halt?: number
 }
 
 export interface ZugFahrt {
@@ -20,7 +22,7 @@ export interface ZugFahrt {
   /** Verkehrstage, Bit 0 = index.von */
   tage: number
   /** die Halte: Betriebspunkt, Ankunft und Abfahrt in Minuten ab Mitternacht des Verkehrstags (null am Anfang und Ende) */
-  halte: Array<{ abk: string; an: number | null; ab: number | null }>
+  halte: Array<{ abk: string; an: number | null; ab: number | null; gleis: string | null }>
 }
 
 /** die Daten liegen auf 3dland.ch neben der Seite, nicht bei taktland.ch */
@@ -46,7 +48,11 @@ export async function zuegeLaden(ix: ZugIndex, e0: number, n0: number, e1: numbe
     for (const [id, nummer, gattung, linie, ziel, t, flach] of liste) {
       if (alle.has(id)) continue
       const halte: ZugFahrt['halte'] = []
-      for (let i = 0; i + 2 < flach.length; i += 3) halte.push({ abk: flach[i] as string, an: flach[i + 1] as number | null, ab: flach[i + 2] as number | null })
+      const je = ix.je_halt ?? 3
+      for (let i = 0; i + 2 < flach.length; i += je) {
+        halte.push({ abk: flach[i] as string, an: flach[i + 1] as number | null, ab: flach[i + 2] as number | null,
+          gleis: je >= 4 ? (flach[i + 3] as string | null) : null })
+      }
       alle.set(id, { id, nummer, gattung, linie, ziel, tage: tage[t] ?? 0, halte })
     }
   }

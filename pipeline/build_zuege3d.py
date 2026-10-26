@@ -14,8 +14,8 @@ Stand der Datei beschlossen wurden; Halte an Orten ohne Bahnhof im Netz; Fahrten
 Ausgabe nach data/zuege3d/ (nicht in Git, der Workflow von 3dland.ch baut es täglich):
 - index.json        Quelle, Stand, Zeitraum, Verkehrstage (je eine Bitfolge als Hex, Bit 0 = von), Kacheln
 - {ost}_{nord}.json je Kachel die Fahrten: [Nummer, Name, Gattung, Linie, Ziel, Verkehrstage, [Betriebspunkt,
-                    Ankunft, Abfahrt, …]] mit den Zeiten in Minuten ab Mitternacht des Verkehrstags (über 1440
-                    nach Mitternacht)
+                    Ankunft, Abfahrt, Gleis, …]] mit den Zeiten in Minuten ab Mitternacht des Verkehrstags (über 1440
+                    nach Mitternacht) und dem Gleis laut Fahrplan oder null
 
     .venv/bin/python pipeline/build_zuege3d.py
 """
@@ -131,11 +131,14 @@ def main():
         return raus
 
     # Haltestelle (auch Gleis) → Betriebspunkt des Bahnhofs
-    halt_von = {}
+    # und die Gleisbezeichnung der Haltekante laut Fahrplan (platform_code, mit Sektoren wie «2A-D»; Michael, 2026-10-26: «Gleis mit Link»)
+    halt_von, gleis_von = {}, {}
     for s in lesen(g / "stops.txt"):
         d = s.get("didok") or ""
         if d.isdigit() and int(d) in abk_von and abk_von[int(d)] in lagen:
             halt_von[s["stop_id"]] = abk_von[int(d)]
+            if s.get("platform_code"):
+                gleis_von[s["stop_id"]] = s["platform_code"]
 
     linien = {}
     for r in lesen(g / "routes.txt"):
@@ -188,7 +191,8 @@ def main():
         # weder Ein- noch Ausstieg: kein Halt
         if s["pickup_type"] == "1" and s["drop_off_type"] == "1":
             continue
-        halte[tid].append((int(s["stop_sequence"]), abk, minuten(s["arrival_time"]), minuten(s["departure_time"])))
+        halte[tid].append((int(s["stop_sequence"]), abk, minuten(s["arrival_time"]), minuten(s["departure_time"]),
+                           gleis_von.get(s["stop_id"])))
 
     # gleiche Fahrt an verschiedenen Tagen (andere service_id): eine Fahrt, Tage vereint
     zusammen = {}
@@ -196,11 +200,13 @@ def main():
         h.sort()
         # derselbe Bahnhof zweimal hintereinander (zwei Haltekanten): zusammenlegen
         folge = []
-        for _, abk, a, b in h:
+        for _, abk, a, b, gl in h:
             if folge and folge[-1][0] == abk:
-                folge[-1] = (abk, folge[-1][1], b)
+                # zwei Haltekanten: beide Gleise, wie sie im Fahrplan stehen
+                alt = folge[-1][3]
+                folge[-1] = (abk, folge[-1][1], b, alt if not gl or gl == alt else gl if not alt else f"{alt} / {gl}")
             else:
-                folge.append((abk, a, b))
+                folge.append((abk, a, b, gl))
         if len(folge) < 2:
             continue
         rid, sid, nr, ziel = fahrten[tid]
@@ -212,12 +218,12 @@ def main():
     tage_liste, tage_index = [], {}
     je_kachel = defaultdict(list)
     ohne_weg = 0
-    for n, ((gattung, linie, nr, ziel, folge), bits) in enumerate(sorted(zusammen.items())):
+    for n, ((gattung, linie, nr, ziel, folge), bits) in enumerate(sorted(zusammen.items(), key=lambda x: repr(x[0]))):
         if bits not in tage_index:
             tage_index[bits] = len(tage_liste)
             tage_liste.append(format(bits, "x"))
         ks = set()
-        for (a, _, _), (b, _, _) in zip(folge, folge[1:]):
+        for (a, *_), (b, *_) in zip(folge, folge[1:]):
             w = weg(a, b)
             if w is None:
                 ohne_weg += 1
@@ -242,8 +248,10 @@ def main():
         "von": von.isoformat(),
         "bis": bis.isoformat(),
         "kachel_m": KACHEL_M,
+        "je_halt": 4,
         "hinweis": "Nur Züge und nur Halte an Bahnhöfen im Netz der Seite «Strecke», mit den Zeiten laut Fahrplan "
-                   "(Minuten ab Mitternacht des Verkehrstags, über 1440 nach Mitternacht). Der Weg zwischen zwei "
+                   "(Minuten ab Mitternacht des Verkehrstags, über 1440 nach Mitternacht), je Halt Betriebspunkt, Ankunft, Abfahrt "
+                   "und Gleis laut Fahrplan (null ohne Angabe). Der Weg zwischen zwei "
                    "Halten ist der kürzeste im Netz. Nicht darin: Verspätungen, Ausfälle, Extrazüge, Ersatzbusse, "
                    "Baustellen nach dem Stand der Datei, Fahrten nur als Takt.",
         "tage": tage_liste,
