@@ -21,7 +21,7 @@ import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
-import { lageBei, wegEnde } from '../fahrt'
+import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
@@ -1096,6 +1096,10 @@ const BRILLE_SCHATTEN_PX = 2048
 const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
 /** aus der Ferne ist ein Zug mindestens so lang wie dieser Anteil des Abstands der Kamera (vorher 1,2 %, Michael, 2026-10-26: «Züge aus der Ferne etwas grösser»), gewählt */
 const ZUG_FERN = 0.018
+/** über so viele Meter des Zugs (in seiner Grösse im Modell) wird die Höhe unter ihm gemittelt, gewählt */
+const ZUG_GLATT_M = 300
+/** so stark neigt sich ein Wagen höchstens, 6° (wie in der Modellbahn ZUG_NEIGUNG_MAX, dort 4°), gewählt */
+const ZUG_NEIGUNG = (6 * Math.PI) / 180
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
 const BRILLE_SCHRIFT_M = 0.022
 
@@ -2561,7 +2565,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
     let fahrten: ZugFahrt[] = [], ix: ZugIndex | null = null, zn: ZugNetz | null = null
     let unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = [], neuUm = 0
-    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), gross = new THREE.Vector3(1, 1, 1), skala = new THREE.Vector3(), oben = new THREE.Vector3(0, 1, 0)
+    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), gross = new THREE.Vector3(1, 1, 1), skala = new THREE.Vector3(), neigung = new THREE.Quaternion(), querAchse = new THREE.Vector3(1, 0, 0), oben = new THREE.Vector3(0, 1, 0)
     const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
     void (async () => {
       ix = await zugIndexLaden()
@@ -2608,32 +2612,49 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const ende = wegEnde(fw), sM = anteil * ende
         // die Wagen hinter der Spitze: vor dem Anfang des Wegs auf dem Weg davor, ohne ihn gerade nach hinten
         const vorher = j > 0 ? wegVon(j - 1) : null
+        const geradeZurueck = (w: Fahrweg, sm: number): [number, number] => {
+          const a0 = lageBei(w, 0), a1 = lageBei(w, Math.min(wegEnde(w), 60)), [e0, n0] = lv95(a0.lat, a0.lon), [e1, n1] = lv95(a1.lat, a1.lon)
+          const d = Math.hypot(e1 - e0, n1 - n0) || 1
+          return [e0 + ((e1 - e0) / d) * sm, n0 + ((n1 - n0) / d) * sm]
+        }
         const stelle = (sm: number): [number, number] => {
-          let p
-          if (sm >= 0) p = lageBei(fw, Math.min(sm, ende))
-          else if (vorher) p = lageBei(vorher, Math.max(0, wegEnde(vorher) + sm))
-          else {
-            const a0 = lageBei(fw, 0), a1 = lageBei(fw, Math.min(ende, 60)), [e0, n0] = lv95(a0.lat, a0.lon), [e1, n1] = lv95(a1.lat, a1.lon)
-            const d = Math.hypot(e1 - e0, n1 - n0) || 1
-            return [e0 + ((e1 - e0) / d) * sm, n0 + ((n1 - n0) / d) * sm]
-          }
+          if (sm >= 0) { const p = lageBei(fw, Math.min(sm, ende)); return lv95(p.lat, p.lon) }
+          if (!vorher) return geradeZurueck(fw, sm)
+          const sv = wegEnde(vorher) + sm
+          if (sv < 0) return geradeZurueck(vorher, sv)
+          const p = lageBei(vorher, sv)
           return lv95(p.lat, p.lon)
         }
         const [es, ns] = stelle(sM)
         if (!drin(es, ns)) continue
         const mJeM = mass * gross.x
+        // Anfang und Ende jedes Wagens; die Höhe dort geglättet über ZUG_GLATT_M entlang des Zugs, jeder Wagen von seinem
+        // Ende zum Anfang geneigt: so liegen die Wagen aneinander statt in Stufen (Michael, 2026-10-26: «nicht so holpern»)
+        const enden: Array<{ s: number; e: number; n: number; h: number }> = []
         let ab = 0
         for (let w = 0; w <= ZUG_WAGEN; w++) {
           const lM = (w === 0 ? ZUG_LOK_M : ZUG_WAGEN_M) * mJeM
-          const [ev, nv] = stelle(sM - ab), [eh, nh] = stelle(sM - ab - lM)
-          const e = (ev + eh) / 2, n = (nv + nh) / 2
-          v.set((e - lage.cE) / 1000, bestandHoehe(b, e, n) / 1000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
-          q.setFromAxisAngle(oben, Math.atan2(ev - eh, -(nv - nh)))
+          for (const sm of [sM - ab, sM - ab - lM]) { const [e, n] = stelle(sm); enden.push({ s: sm, e, n, h: bestandHoehe(b, e, n) }) }
+          ab += lM + ZUG_LUECKE_M * mJeM
+        }
+        const fenster = ZUG_GLATT_M * mJeM
+        const glatt = enden.map((x) => {
+          let summe = 0, zahlH = 0
+          for (const y of enden) if (Math.abs(y.s - x.s) <= fenster && Number.isFinite(y.h)) { summe += y.h; zahlH++ }
+          return zahlH ? summe / zahlH : x.h
+        })
+        for (let w = 0; w <= ZUG_WAGEN; w++) {
+          const vo = enden[2 * w], hi = enden[2 * w + 1], hv = glatt[2 * w], hh = glatt[2 * w + 1]
+          const e = (vo.e + hi.e) / 2, n = (vo.n + hi.n) / 2
+          v.set((e - lage.cE) / 1000, (hv + hh) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
+          q.setFromAxisAngle(oben, Math.atan2(vo.e - hi.e, -(vo.n - hi.n)))
+          const quer = Math.hypot(vo.e - hi.e, vo.n - hi.n)
+          neigung.setFromAxisAngle(querAchse, quer > 1 ? -Math.max(-ZUG_NEIGUNG, Math.min(ZUG_NEIGUNG, Math.atan2(hv - hh, quer))) : 0)
+          q.multiply(neigung)
           m.compose(v, q, skala)
           if (w === 0) netze.lok.setMatrixAt(zahl, m)
           else if (w === ZUG_WAGEN) netze.steuer.setMatrixAt(zahl, m)
           else netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)
-          ab += lM + ZUG_LUECKE_M * mJeM
         }
         zahl++
       }
