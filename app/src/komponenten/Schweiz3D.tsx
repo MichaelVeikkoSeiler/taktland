@@ -20,6 +20,8 @@ import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
+import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
+import { lageBei, wegEnde } from '../fahrt'
 import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
@@ -60,7 +62,7 @@ interface Gelaende {
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
 /** was die Schalter ein- und ausschalten */
-type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind'
+type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege'
 /** Ein Feld und was an seinen Seiten angesetzt ist (Michael, 2026-10-20: «An den Wänden ein Plus und oder ein Minus … zum
  *  Erweitern resp. reduzieren der Kacheln»): je Stück ein Gelände, Schlüssel «di_dj» in Feldern Ost und Nord vom Anker */
 interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, number]; dj: [number, number] }
@@ -504,6 +506,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [baeumeAn, setBaeumeAn] = useState(false)
   // Wanderwege am Anfang aus (Michael, 2026-10-21: «defaultmässig ausgeblendet»)
   const [wandern, setWandern] = useState(false)
+  // Züge laut Fahrplan, nur auf 3dland.ch (Michael, 2026-10-26: «Aber NUR für 3DLand, nicht für Taktland»)
+  const [zuegeAn, setZuegeAn] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
   const [sonnenAn, setSonnenAn] = useState(false)
   // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
@@ -761,7 +765,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -799,7 +803,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn, wind: setWindAn })[art]((x) => !x)} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
+                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn })[art]((x) => !x)} zuegeDa={eigeneSeite} zuege={eigeneSeite && zuegeAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt}
                    zeitSchieben={zeitSchieben} />
         ) : (
@@ -943,6 +947,16 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
             4'000 m, ihre Zahl steht klein an der Wand.</p>
         </Abschnitt>
+        {eigeneSeite && (
+          <Abschnitt titel="Züge">
+            <p>«Züge» zeigt ab der Stufe 20 km jeden Zug dort, wo er jetzt laut Fahrplan ist: als karminroten Kasten auf dem Gelände, in
+              Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still. Es ist der Fahrplan von opentransportdata.swiss, nicht
+              die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
+              fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
+              wirklich nimmt, steht in keiner Quelle. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
+              gezeichnet, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
+          </Abschnitt>
+        )}
         <Abschnitt titel="Wetter: Wind und Niederschlag">
           <p>«Wetter» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
             des Bilds. Die Zahl über dem Mast ist die Windstärke in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
@@ -998,6 +1012,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Ortschaften, Gipfel und Seen der Suche: swissTLMRegio (swisstopo); Orte und Gipfel der Landeskarte 1:1 Million; Kantone: Bundesamt für Statistik BFS.</li>
             <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind.</li>
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
+            {eigeneSeite && <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, täglich neu geladen; Weg zwischen den Halten aus dem
+              Netz von Taktland (Linien und Kilometrierung der SBB, Schienennetz des BAV).</li>}
             <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
@@ -1007,6 +1023,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern gezeichnet oder angenommen ist:</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
+            {eigeneSeite && <li>Züge: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen.</li>}
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
@@ -1068,9 +1085,11 @@ const SCHRIFT_LEUCHTET = 0.85
 const HIMMEL_NACHT = new THREE.Color('#070d1a'), HIMMEL_NACHT_OBEN = new THREE.Color('#02050b')
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 // Sonne orange (Michael, 2026-10-25: «Der Knopf Sonne soll orangefarben sein»; vorher rot)
-const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff9a1f', wind: '#5ab4ff' }
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
+/** ein Zug so lang, eine Annahme fürs Bild (die Länge eines Zugs steht nicht im Fahrplan); höchstens so viele zugleich */
+const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
 const BRILLE_SCHRIFT_M = 0.022
 
@@ -1146,7 +1165,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -1164,6 +1183,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   zeitSchieben: (art: 'stunde' | 'tag' | 'jetzt', um: number) => void
   /** Wanderwege zeigen (in den Stufen 20 km, 4 km und 1 km) */
   wandern: boolean
+  /** Züge laut Fahrplan zeigen (ab der Stufe 20 km), zuegeDa: der Knopf dazu, nur auf 3dland.ch */
+  zuege: boolean; zuegeDa: boolean
   /** Gebäude und Bäume gibt es hier */
   umweltHier: boolean
   /** die Sonne mit Zeit ist an; ein Schalter um, in der Brille an den Wänden */
@@ -2226,6 +2247,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         aktion: umschalten('wandern') },
       { zeilen: ['Gebäude'], breite: 0.085 * W, an: umweltDa && gebaeude, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
       { zeilen: ['Bäume'], breite: 0.085 * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
+      // nur auf 3dland.ch, wie die Wanderwege erst ab der Stufe 20 km
+      ...(zuegeDa ? [{ zeilen: ['Züge'], breite: 0.085 * W, an: stufe !== 'schweiz' && zuege, farbe: LICHT.zuege, gesperrt: stufe === 'schweiz',
+        aktion: umschalten('zuege') }] : []),
     ]
     const zeitDa = sonnenAn && !!sonnenZeilen
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
@@ -2347,7 +2371,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, windAn])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, windAn, zuege, zuegeDa])
 
   // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
   // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
@@ -2497,6 +2521,94 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [windAn, b, stufe, zusatz, knoepfe])
   useEffect(() => { windhosen.current?.setzen(windWerte) },
     [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
+  // Züge laut Fahrplan (src/zuege3d.ts), nur auf 3dland.ch und ab der Stufe 20 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
+  // als karminroter Kasten auf dem Gelände in Fahrtrichtung
+  const [zugZeile, setZugZeile] = useState<string | null>(null)
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    const W = k?.wurzel.userData.weiteKm as number | undefined
+    if (!k || !lage || !W || !zuege || stufe === 'schweiz') { setZugZeile(null); return }
+    let weg = false
+    const gruppe = new THREE.Group()
+    gruppe.name = 'zuege'
+    gruppe.userData.bleibt = true
+    k.wurzel.add(gruppe)
+    // ein Zug ZUG_LAENGE_KM lang, in der Region etwas länger, damit man ihn sieht; Breite und Höhe ebenso (Masse in keiner Quelle)
+    const laenge = Math.max(ZUG_LAENGE_KM, W * 0.015), breite = Math.max(0.0035, W * 0.0016), hoehe = breite * 1.1
+    const form = new THREE.BoxGeometry(laenge, hoehe, breite)
+    const stoff = new THREE.MeshLambertMaterial({ color: '#a8102e' })
+    const netz = new THREE.InstancedMesh(form, stoff, ZUEGE_HOECHSTENS)
+    netz.count = 0; netz.castShadow = true; netz.frustumCulled = false
+    gruppe.add(netz)
+    const teile = [...b.teile.values()]
+    const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
+    const rand = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    let fahrten: ZugFahrt[] = [], ix: ZugIndex | null = null, zn: ZugNetz | null = null
+    let unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = [], neuUm = 0
+    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), gross = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
+    const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
+    void (async () => {
+      ix = await zugIndexLaden()
+      if (weg) return
+      if (!ix) { setZugZeile('Züge: der Fahrplan ist hier nicht geladen.'); return }
+      const [liste, netzDa] = await Promise.all([zuegeLaden(ix, e0, n0, e1, n1).catch(() => []), zugNetzLaden().catch(() => null)])
+      if (weg) return
+      fahrten = liste; zn = netzDa
+      const st = /^\d{8}$/.test(ix.stand) ? `${Number(ix.stand.slice(6))}.${Number(ix.stand.slice(4, 6))}.${ix.stand.slice(0, 4)}` : ix.stand
+      setZugZeile(zn ? `Züge laut Fahrplan vom ${st}, nicht live` : 'Züge: das Netz konnte nicht geladen werden.')
+    })()
+    const schritt = () => {
+      if (!ix || !zn) return
+      const jetzt = jetztImFahrplan(ix)
+      // wer unterwegs ist, alle 2 s neu; wo genau, in jedem Bild
+      if (performance.now() > neuUm) {
+        neuUm = performance.now() + 2000
+        unterwegs = []
+        for (const f of fahrten) { const st = zugStelle(f, jetzt.tag, jetzt.minuten); if (st) unterwegs.push({ f, st: st }) }
+        for (const u of unterwegs) { const st = zugStelle(u.f, jetzt.tag, jetzt.minuten); if (st) u.st = st }
+      }
+      let zahl = 0, neueWege = 0
+      // aus der Ferne grösser, damit man die Züge in der ganzen Region sieht: mindestens 1,2 % des Abstands der Kamera lang
+      k.wurzel.getWorldPosition(mitte)
+      const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
+      const abstand = cam.getWorldPosition(auge).distanceTo(mitte) / Math.max(1e-9, k.wurzel.scale.x)
+      gross.setScalar(Math.max(1, (abstand * 0.012) / laenge))
+      for (const u of unterwegs) {
+        if (zahl >= ZUEGE_HOECHSTENS) break
+        const st = zugStelle(u.f, jetzt.tag, jetzt.minuten)
+        if (!st) continue
+        const h = u.f.halte
+        // am Halt: am Anfang des Wegs zum nächsten Halt, am Ende am Schluss des Wegs vom letzten
+        const [a, b2, anteil] = st.art === 'fahrt' ? [h[st.i].abk, h[st.i + 1].abk, st.anteil]
+          : st.i + 1 < h.length ? [h[st.i].abk, h[st.i + 1].abk, 0] : [h[st.i - 1].abk, h[st.i].abk, 1]
+        // neue Wege nur einige je Bild, sonst stockt das Bild beim Einschalten
+        const schluessel = `${a}>${b2}`
+        if (!gerechnet.has(schluessel)) { if (neueWege++ > 6) continue; gerechnet.add(schluessel) }
+        const fw = zn.weg(a, b2)
+        if (!fw) continue
+        const ende = wegEnde(fw), sM = anteil * ende
+        const p = lageBei(fw, Math.min(sM, ende - 1)), p2 = lageBei(fw, Math.min(ende, sM + 60))
+        const [e, n] = lv95(p.lat, p.lon), [ee, nn] = lv95(p2.lat, p2.lon)
+        if (!drin(e, n)) continue
+        v.set((e - lage.cE) / 1000, bestandHoehe(b, e, n) / 1000 + hoehe / 2, -(n - lage.cN) / 1000)
+        q.setFromAxisAngle(oben, Math.atan2(nn - n, ee - e))
+        v.y += (hoehe / 2) * (gross.y - 1)
+        netz.setMatrixAt(zahl++, m.compose(v, q, gross))
+      }
+      netz.count = zahl
+      netz.instanceMatrix.needsUpdate = true
+    }
+    const gerechnet = new Set<string>()
+    k.jeBild.push(schritt)
+    return () => {
+      weg = true
+      const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
+      k.wurzel.remove(gruppe); form.dispose(); stoff.dispose(); netz.dispose()
+    }
+  }, [zuege, b, stufe, knoepfe])
   // Regen und Schnee über dem ganzen Modell, vom tiefsten Punkt bis ein Viertel der Breite über den höchsten (Niederschlag.ts)
   const regen = useRef<Niederschlag | null>(null)
   useEffect(() => {
@@ -2579,6 +2691,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {grafikWeg && (
         <p role="status" className="absolute inset-x-2 top-12 z-10 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">
           Die Grafik des Geräts hat aufgegeben, wohl weil ihr der Speicher ausging. Lade die Seite neu und wähle ein kleineres Modell.
+        </p>
+      )}
+      {/* die Züge sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind */}
+      {zugZeile && (
+        <p className="pointer-events-none absolute left-2 top-14 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
+          {zugZeile}
         </p>
       )}
     </div>

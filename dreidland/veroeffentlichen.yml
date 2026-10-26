@@ -27,7 +27,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: MichaelVeikkoSeiler/taktland
-          sparse-checkout: app
+          # die Züge brauchen dazu die Pipeline und das Netz (Michael, 2026-10-26: «die Züge … NUR für 3DLand»)
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            app/
+            pipeline/fetch_fahrplan.py
+            pipeline/build_zuege3d.py
+            data/strecken.json
 
       - uses: actions/setup-node@v4
         with:
@@ -42,6 +48,14 @@ jobs:
       - name: Bauen
         working-directory: app
         run: npx tsc -b && npx vite build -c vite.3dland.config.ts && node scripts/3dland_fertig.mjs
+
+      # Züge laut Fahrplan (pipeline/build_zuege3d.py): das GTFS von opentransportdata.swiss, täglich neu, wie es die
+      # Nutzungsbedingungen verlangen; klappt es nicht, erscheint 3dland ohne Züge
+      - name: Züge laut Fahrplan
+        continue-on-error: true
+        run: |
+          python3 pipeline/fetch_fahrplan.py && python3 pipeline/build_zuege3d.py && cp -r data/zuege3d app/dist-3dland/zuege3d
+          rm -rf data/raw/gtfs
 
       - uses: actions/upload-pages-artifact@v3
         with:

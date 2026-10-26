@@ -546,6 +546,16 @@ data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-1
              Sternen»): solange echtes Wetter gilt, der Stand der Sonne über der Mitte des Modells jetzt oder zur gewählten Stunde der Prognose
              (nachtRechnen in Relief.tsx), nachts ein gemalter Nachthimmel, weniger Licht, Licht in den Fenstern zur Stunde, Tasten am Pult
              leuchtend, in der Dämmerung der Abendhimmel, Sterne hinter Wolken schwächer; bei Schönwetter und in «Wo bin ich?» immer Tag
+data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Michael, 2026-10-26: «gehen wir mal die Züge an. Aber NUR für
+             3DLand, nicht für Taktland»; zuerst Fahrplan, Echtzeit wäre ein zweiter Schritt mit Schlüssel): pipeline/build_zuege3d.py aus dem
+             GTFS von opentransportdata.swiss (fetch_fahrplan.py), nur Züge und Halte an Bahnhöfen im Netz, 14 Tage ab gestern, je Paar Halte der
+             kürzeste Weg im Netz (Dijkstra wie wegSuchen, das dafür in src/wegsuche.ts steht), jede Fahrt in jeder 10-km-Kachel, die ihr Weg
+             berührt (etwa 17'000 Fahrten, 296 Kacheln, 26 MB, nicht in Git); gebaut im Workflow von 3dland (dreidland/veroeffentlichen.yml,
+             täglich, ohne Züge, wenn es nicht klappt) und neben die Seite gelegt (zuege3d/); in der App src/zuege3d.ts (wo ein Zug laut Fahrplan
+             jetzt ist: am Halt zwischen Ankunft und Abfahrt, sonst gleichmässig auf dem Weg zum nächsten, eine Annahme) und in Schweiz3D.tsx
+             ein Knopf «Züge» an der Wand (nur mit eigeneSeite, ab der Stufe 20 km, Farbe gewählt), je Zug ein karminroter Kasten 200 m lang
+             (ZUG_LAENGE_KM, Annahme), in der Region grösser, aus der Ferne mindestens 1,2 % des Abstands der Kamera, darüber die Zeile «Züge laut
+             Fahrplan vom …, nicht live»; in Anleitung, Quellen und Fusszeile von 3dland genannt
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -576,6 +586,8 @@ python3 generator/strecken.py "Zürich HB" "Lugano"   # Weg zeigen
 python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbahnen, Flächen
 .venv/bin/python pipeline/build_bodenbedeckung.py  # Wald und Siedlung (swissTLMRegio)
 .venv/bin/python pipeline/build_kartengrund.py   # Grenzen, Flüsse, Höhenstufen für die Karten
+python3 pipeline/fetch_fahrplan.py              # Fahrplan (GTFS) laden, 290 MB, entpackt 4,5 GB
+.venv/bin/python pipeline/build_zuege3d.py       # Züge laut Fahrplan je Kachel für 3dland.ch (data/zuege3d), sonst im Workflow von 3dland
 python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D

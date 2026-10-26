@@ -33,7 +33,7 @@ function DreiDLand() {
             <img src="./logo.png" alt="" className="size-6 rounded" />3dland
           </p>
           <p>
-            Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz. 3dland ist ein privates Projekt
+            Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz, Fahrplan opentransportdata.swiss. 3dland ist ein privates Projekt
             von <a href="https://taktland.ch" className={LINK}>Taktland</a> und kein Angebot einer Behörde.
           </p>
           <details className="klapp mt-2">
