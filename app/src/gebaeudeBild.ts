@@ -15,8 +15,8 @@ const AO_BODEN = 0.72, AO_BODEN_M = 8, AO_DACH = 0.8, AO_DACH_M = 0.8
  *  brennt, entscheidet ein fester Zufall je Fenster gegen den Anteil zur Uhrzeit (LICHT_ANTEIL), so brennen mit steigendem Anteil
  *  dieselben weiter und neue dazu. Weit weg wird jedes Fenster über seinen Bildpunkt gemittelt und schwächer */
 /** wie hell ein brennendes Fenster leuchtet (gewählt; Michael, 2026-10-25: «10% weniger hell», vorher 1,6, dann 1,44; danach
- *  «weitere 10%», 1,3; dann «noch immer etwas zu hell») */
-const FENSTER_HELL = 1.0
+ *  «weitere 10%», 1,3; dann «noch immer etwas zu hell», 1,0; 2026-10-27: «noch leicht abdunkeln. Circa 10%») */
+const FENSTER_HELL = 0.9
 /** weit weg schwächer (Michael, 2026-10-25: «wenn man in die Ferne schaut, sollen sie dort wesentlich weniger hell scheinen»): ab
  *  FERN_AB_M je Bildpunkt sinkt die Helligkeit mit dem Abstand bis auf FERN_MIN (gewählt; vorher wurden sie weit weg heller) */
 const FERN_AB_M = 0.5, FERN_MIN = 0.12
@@ -25,10 +25,12 @@ const FENSTER_STOCK_M = 3, FENSTER_ACHSE_M = 3.2, FENSTER_BREITE_M = 1.3, FENSTE
  *  nach Mitternacht wenige, am Morgen wieder mehr; tagsüber zählt es nicht, dann ist es hell */
 const LICHT_ANTEIL = [0.12, 0.07, 0.05, 0.04, 0.04, 0.06, 0.14, 0.22, 0.18, 0.12, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.12, 0.2, 0.3, 0.36,
   0.38, 0.34, 0.26, 0.18]
+/** so viel der Anteile oben brennt wirklich (Michael, 2026-10-27: «um die Hälfte reduzieren. Sonst ist es unrealistisch») */
+const LICHT_MASS = 0.5
 /** der Anteil zu einer Uhrzeit in Stunden, zwischen den vollen Stunden gerade verbunden */
 export function lichtAnteil(stunde: number) {
   const h = ((stunde % 24) + 24) % 24, i = Math.floor(h), t = h - i
-  return LICHT_ANTEIL[i] * (1 - t) + LICHT_ANTEIL[(i + 1) % 24] * t
+  return (LICHT_ANTEIL[i] * (1 - t) + LICHT_ANTEIL[(i + 1) % 24] * t) * LICHT_MASS
 }
 const fenster = { nacht: { value: 0 }, anteil: { value: 0 } }
 /** wie dunkel es ist (0 hell bis 1 Nacht) und welcher Anteil der Fenster brennt; gilt für alle Gebäude */
