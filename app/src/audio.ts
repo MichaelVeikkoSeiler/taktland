@@ -623,7 +623,8 @@ export function wetterGeraeusch(regen: number | null, windKmh: number | null) {
   const t = c.currentTime, s = Math.max(0, Math.min(1, regen ?? 0))
   wetterTon.regen.gain.setTargetAtTime(s > 0 ? 0.05 + 0.22 * s : 0, t, 0.6)
   const wf = windKmh === null ? 0 : Math.max(0, Math.min(1, windKmh / WIND_VOLL_KMH))
-  wetterTon.wind.gain.setTargetAtTime(wf > 0.03 ? 0.08 + 0.5 * wf : 0, t, 1.2)
+  // im Quadrat der Stärke: 5 km/h etwa 2 %, 10 km/h 6 %, 20 km/h 25 % von voll (Michael, 2026-10-27: «bei 3, 5 oder 10 km/h … leiser»)
+  wetterTon.wind.gain.setTargetAtTime(wf > 0.05 ? 0.58 * wf * wf : 0, t, 1.2)
   wetterTon.windFilter.Q.setTargetAtTime(0.8 - 0.4 * wf, t, 1.2)
   wetterTon.regenStaerke = s
   // einzelne Tropfen: kurze, helle Knackser, so viele je Sekunde wie der Regen stark ist

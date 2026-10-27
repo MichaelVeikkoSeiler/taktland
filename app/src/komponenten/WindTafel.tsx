@@ -29,7 +29,7 @@ export function niederSatz(s: WindStunde) {
   return n ? `${n.art === 'schnee' ? 'Schnee' : 'Regen'} ${zahl(s.mm, 1)} mm` : 'kein Niederschlag'
 }
 
-export function WindTafel({ station, messung, waehlen, plaetze, className = '' }: {
+export function WindTafel({ station, messung, waehlen, plaetze, schliessen, className = '' }: {
   station: Station | null
   /** die letzte Messung der Station, null ohne */
   messung: Wetter | null
@@ -37,6 +37,8 @@ export function WindTafel({ station, messung, waehlen, plaetze, className = '' }
   waehlen: (s: WindStunde | null) => void
   /** die vier Windhosen im Modell und ihre Stationen */
   plaetze?: WindPlatz[]
+  /** wenn gesetzt: ein Knopf «Schliessen» oben rechts (Michael, 2026-10-27: im Führerstand quer liess sich die Tafel nicht mehr schliessen) */
+  schliessen?: () => void
   className?: string
 }) {
   const [prognose, setPrognose] = useState<WindStunde[] | null | 'laedt'>('laedt')
@@ -83,7 +85,15 @@ export function WindTafel({ station, messung, waehlen, plaetze, className = '' }
   }
   return (
     <div className={`rounded-lg bg-white/95 p-3 text-sm shadow-lg dark:bg-sbb-charcoal/95 ${className}`}>
-      <p className="text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">Wind und Niederschlag bei {station.name} (MeteoSchweiz)</p>
+      <div className="flex items-start gap-2">
+        <p className="flex-1 text-xs uppercase tracking-wide text-sbb-metal dark:text-sbb-storm">Wind und Niederschlag bei {station.name} (MeteoSchweiz)</p>
+        {schliessen && (
+          <button type="button" onClick={schliessen} aria-label="Schliessen"
+            className="-mr-1 -mt-1 shrink-0 rounded-lg border border-sbb-cloud bg-white px-2 py-1 text-xs font-bold text-sbb-charcoal dark:border-sbb-metal dark:bg-sbb-charcoal dark:text-white">
+            ✕ Schliessen
+          </button>
+        )}
+      </div>
       <p className="mt-0.5 font-bold">
         {stunde ? `Prognose ${zeitText(stunde.zeit, true)}: ${windSatz(stunde)}, ${niederSatz(stunde)}` : messText()}
       </p>

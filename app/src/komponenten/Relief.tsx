@@ -1985,7 +1985,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const windTafelZeigen = () => {
       if (!windTafel || !wetter) return
       windTafel.root.render(<WindTafel station={wetter.station} messung={wetter} plaetze={windPlaetzeDa}
-        waehlen={(w) => { windGewaehlt = w; windZeigen(); wetterZeigen() }} />)
+        waehlen={(w) => { windGewaehlt = w; windZeigen(); wetterZeigen() }} schliessen={windTafelZu} />)
     }
     const windTafelZu = () => {
       if (!windTafel) return
@@ -1999,7 +1999,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       ev.stopPropagation()
       if (windTafel) { windTafelZu(); return }
       const div = document.createElement('div')
-      div.style.cssText = 'position:absolute;left:8px;right:8px;bottom:52px;max-width:420px;z-index:6'
+      // quer im Führerstand ist das Bild flach: die Tafel bleibt im Bild und rollt, statt oben hinauszuragen
+      div.style.cssText = 'position:absolute;left:8px;right:8px;bottom:52px;max-width:420px;max-height:calc(100% - 60px);overflow-y:auto;z-index:20'
       for (const art of ['pointerdown', 'wheel', 'touchstart']) div.addEventListener(art, (x) => x.stopPropagation())
       el.appendChild(div)
       windTafel = { div, root: createRoot(div) }

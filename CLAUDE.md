@@ -500,7 +500,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              in der Brille bleiben sie stehen, die Zahl darüber dort so hoch wie gut ein Fünftel der Windhose (BRILLE_ZAHL; vorher ohne Schild, Michael, 2026-10-26: «In der VR-Brille sehe ich keine Windgeschwindigkeiten»), in der Modellbahn 3,5-mal so hoch wie die Masten,
              nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wetter» (bis 2026-10-24 «Wind»; Michael: «Knopf Wind soll Wetter heissen») an
              den Wänden (blau, am Anfang aus), in der Brille 12 % so hoch wie das Modell breit; Messungen fünf Minuten behalten (messungVon);
-             die Tafel (komponenten/WindTafel.tsx): Messung, Regler über die Stunden der Prognose, Verlauf der Woche (Stundenmittel und
+             die Tafel (komponenten/WindTafel.tsx; in der Modellbahn und beim Fahren mit «✕ Schliessen» oben rechts, höchstens so hoch wie das Bild, sonst rollt sie; Michael, 2026-10-27: im Führerstand quer «kann man es nicht mehr schließen»): Messung, Regler über die Stunden der Prognose, Verlauf der Woche (Stundenmittel und
              Böen, Striche um Mitternacht); die Windhose zeigt die gewählte Stunde; Gestalt, Grösse und Farben gewählt; dazu Regen und
              Schnee aus derselben Prognose (Michael, 2026-10-24: «Regen auch einblenden mit der gleichen Prognose wie die Windhose»):
              rre150h0 (mm je Stunde) und tre200h0, Regen ab 0,1 mm, Schnee bis 1 °C, voll ab 4 mm in der Stunde (niederAusStunde in
@@ -509,7 +509,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              «Prognose Station Zeit: …»), in «3D Schweiz» in einem Kasten über dem ganzen Modell bis ein Viertel der Breite über den höchsten
              Punkt (komponenten/Niederschlag.ts), mit dem Knopf «Wetter»; Regen und Wind auch zu hören (Michael, 2026-10-25: «Bei Regen,
              Regengeräusch. Bei Wind, Windgeräusch»; wetterGeraeusch in src/audio.ts): Regen helles Rauschen mit einzelnen Tropfen nach der Stärke, Wind
-             tiefes, an- und abschwellendes Rauschen nach dem Mittel der vier Windhosen, voll ab 40 km/h, Schnee still; in «3D Schweiz» mit dem Knopf
+             tiefes, an- und abschwellendes Rauschen nach dem Mittel der vier Windhosen, voll ab 40 km/h, darunter im Quadrat leiser, unter 2 km/h still (Michael, 2026-10-27: «Wenn wenig Wind herrscht, zum Beispiel 3, 5 oder 10 Stundenkilometer, soll das Windgeräusch entsprechend leiser sein»), Schnee still; in «3D Schweiz» mit dem Knopf
              «Wetter», in der Modellbahn und beim Fahren mit dem Lautsprecher des Zuggeräuschs; Klang und Lautstärke gewählt; ein Strich 1,2 % der Breite des Modells lang, aus der Ferne (ab 1,2-mal der Breite) weniger
              und blasser, bis auf 15 % (FERN_AB, FERN_MIN; Michael, 2026-10-25: «aus der Ferne etwas zu überproportional viel»), dazu kürzere Striche und
              kleinere Flocken, bis auf 30 % (KLEIN_MIN; Michael, 2026-10-25: «Regentropfen kleiner machen, wenn man wegzoomt»)
