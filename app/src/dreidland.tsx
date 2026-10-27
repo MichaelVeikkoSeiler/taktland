@@ -63,7 +63,7 @@ function DreiDLand() {
           <p className="mt-1">
             Kein Konto, kein Zähler. «3dland teilen» gibt nur die Adresse 3dland.ch und einen Satz an das Teilen-Menü des Geräts, an E-Mail oder WhatsApp weiter. Die Seite lädt Gelände, Luftbilder und Wege von taktland.ch und daten.taktland.ch; dabei sieht
             der Server wie bei jeder Webseite die Adresse des Geräts. «Mein Standort» fragt den Standort erst nach deiner Freigabe
-            ab; er bleibt auf dem Gerät und wird weder gesendet noch gespeichert. Ist der Wind an, holt die Seite Messung und Prognose der
+            ab; er bleibt auf dem Gerät und wird weder gesendet noch gespeichert. Ist «Wetter» an, holt die Seite Messung und Prognose der
             nächsten Wetterstation bei data.geo.admin.ch (Bund); der Dienst erfährt so, in welcher Gegend das Modell liegt.
           </p>
         </footer>
