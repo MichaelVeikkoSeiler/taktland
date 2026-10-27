@@ -15,7 +15,10 @@ const KNOPF = 'inline-flex min-h-10 items-center rounded-lg border border-sbb-cl
  * (Handy), sein eigenes Menü mit allen Apps; sonst E-Mail, WhatsApp und Link kopieren. Geteilt wird nur die Adresse
  * von taktland.ch, nichts vom eigenen Fortschritt.
  */
-export default function Teilen() {
+export default function Teilen({ name = 'Taktland', adresse = ADRESSE, text = TEXT }: {
+  /** auf 3dland.ch dessen Name, Adresse und Satz (Michael, 2026-10-27: «Teilen Button … so wie bei Taktland») */
+  name?: string; adresse?: string; text?: string
+} = {}) {
   const [auswahl, setAuswahl] = useState(false)
   const [kopiert, setKopiert] = useState(false)
   const rahmen = useRef<HTMLDivElement>(null)
@@ -30,7 +33,7 @@ export default function Teilen() {
   const teilen = async () => {
     if ('share' in navigator) {
       try {
-        await navigator.share({ title: 'Taktland', text: TEXT, url: ADRESSE })
+        await navigator.share({ title: name, text, url: adresse })
         return
       } catch (e) {
         // abgebrochen: nichts weiter; sonst unten die Auswahl
@@ -41,18 +44,18 @@ export default function Teilen() {
   }
   const kopieren = async () => {
     try {
-      await navigator.clipboard.writeText(ADRESSE)
+      await navigator.clipboard.writeText(adresse)
       setKopiert(true)
       window.setTimeout(() => setKopiert(false), 3000)
     } catch {
-      window.prompt('Link zum Kopieren', ADRESSE)
+      window.prompt('Link zum Kopieren', adresse)
     }
   }
 
   return (
     <div ref={rahmen} className="relative">
       <button type="button" onClick={() => void teilen()} aria-expanded={'share' in navigator ? undefined : auswahl}
-              aria-label="Taktland teilen" title="Taktland teilen" className={SYMBOL}>
+              aria-label={`${name} teilen`} title={`${name} teilen`} className={SYMBOL}>
         {/* Teilen: drei verbundene Punkte */}
         <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <circle cx="18" cy="5" r="2.5" /><circle cx="6" cy="12" r="2.5" /><circle cx="18" cy="19" r="2.5" />
@@ -61,10 +64,10 @@ export default function Teilen() {
       </button>
       {auswahl && (
         <div className="absolute right-0 top-full z-20 mt-2 flex w-max flex-col gap-2 rounded-lg bg-sbb-milk p-2 shadow-sm dark:bg-sbb-charcoal">
-          <a className={KNOPF} href={`mailto:?subject=${encodeURIComponent('Taktland')}&body=${encodeURIComponent(`${TEXT}\n${ADRESSE}`)}`}>
+          <a className={KNOPF} href={`mailto:?subject=${encodeURIComponent(name)}&body=${encodeURIComponent(`${text}\n${adresse}`)}`}>
             E-Mail
           </a>
-          <a className={KNOPF} href={`https://wa.me/?text=${encodeURIComponent(`${TEXT} ${ADRESSE}`)}`} target="_blank" rel="noopener noreferrer">
+          <a className={KNOPF} href={`https://wa.me/?text=${encodeURIComponent(`${text} ${adresse}`)}`} target="_blank" rel="noopener noreferrer">
             WhatsApp
           </a>
           <button type="button" className={KNOPF} onClick={() => void kopieren()}>
