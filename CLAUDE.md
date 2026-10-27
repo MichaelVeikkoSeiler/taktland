@@ -562,7 +562,8 @@ data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Mich
              der Halt, an dem er steht, oder der nächste mit den Zeiten und dem Gleis laut Fahrplan (platform_code der Haltekante, mit Sektoren wie «2A-D»; zwei
              Haltekanten am selben Bahnhof «a / b»; je Halt ein viertes Feld, je_halt im Index; Fahrten mit anderem Gleis an anderen Tagen bleiben getrennt, darum 49 MB statt 26),
              «laut Fahrplan», oben im Bild ein Link «Bahnhof …: Perrons und Gleise auf taktland.ch», wo Taktland eine Seite hat (TAKTLAND_APP; Michael, 2026-10-26: «Gleis mit Link») (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»); ein Tipp daneben blendet es aus; knapp daneben trifft er den Zug noch, bis 2,5° vom Auge, in der Brille 4°, vor dem Gelände (kein roter Kasten), ein Zug vor einem
-             Wandknopf geht dem Knopf vor (ZUG_TIPP_WINKEL, ZUG_TIPP_WINKEL_BRILLE; Michael, 2026-10-26: «schwierig antippen ohne dass es einen neuen roten Kasten … gibt», «Auch bei der Brille»); in Anleitung, Quellen und Fusszeile von 3dland genannt
+             Wandknopf geht dem Knopf vor (ZUG_TIPP_WINKEL, ZUG_TIPP_WINKEL_BRILLE; schon beim Zielen leuchtet der Zug unter dem Strahl
+             jedes Controllers, auf dem Bildschirm unter der Maus, gelblich auf, Farbe je Instanz, ZUG_ZIEL_HELL, gewählt; Michael, 2026-10-26: «Zug unter dem Strahl beim Zielen aufleuchten lassen»; Michael, 2026-10-26: «schwierig antippen ohne dass es einen neuen roten Kasten … gibt», «Auch bei der Brille»); in Anleitung, Quellen und Fusszeile von 3dland genannt
 data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
