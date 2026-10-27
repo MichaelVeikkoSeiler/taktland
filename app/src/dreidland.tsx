@@ -11,6 +11,7 @@ import auftaktHell from './assets/auftakt-3dland-hell.webp'
 import { Auftakt } from './komponenten/Auftakt'
 import { aufklappenHoeren } from './audio'
 import Schweiz3D from './komponenten/Schweiz3D'
+import Teilen from './komponenten/Teilen'
 
 const LINK = 'underline underline-offset-2 hover:text-sbb-black dark:hover:text-sbb-white'
 
@@ -29,9 +30,13 @@ function DreiDLand() {
           <Schweiz3D eigeneSeite />
         </main>
         <footer className="mt-6 border-t border-sbb-cloud px-4 pt-4 pb-6 text-xs text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm">
-          <p className="mb-3 flex items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
-            <img src="./logo.png" alt="" className="size-6 rounded" />3dland
-          </p>
+          {/* rechts neben der Bildmarke «3dland teilen» wie in Taktland (Michael, 2026-10-27: «Teilen Button … so wie bei Taktland») */}
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <p className="flex items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
+              <img src="./logo.png" alt="" className="size-6 rounded" />3dland
+            </p>
+            <Teilen name="3dland" adresse="https://3dland.ch" text="3dland: die Schweiz als 3D-Modell zum Eintauchen, auch mit XR-Brille." />
+          </div>
           <p>
             Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz, Fahrplan opentransportdata.swiss. 3dland ist ein privates Projekt
             von <a href="https://taktland.ch" className={LINK}>Taktland</a> und kein Angebot einer Behörde.
@@ -56,7 +61,7 @@ function DreiDLand() {
             Kontakt: <a href="mailto:hallo@taktland.ch" className={LINK}>hallo@taktland.ch</a>
           </p>
           <p className="mt-1">
-            Kein Konto, kein Zähler. Die Seite lädt Gelände, Luftbilder und Wege von taktland.ch und daten.taktland.ch; dabei sieht
+            Kein Konto, kein Zähler. «3dland teilen» gibt nur die Adresse 3dland.ch und einen Satz an das Teilen-Menü des Geräts, an E-Mail oder WhatsApp weiter. Die Seite lädt Gelände, Luftbilder und Wege von taktland.ch und daten.taktland.ch; dabei sieht
             der Server wie bei jeder Webseite die Adresse des Geräts. «Mein Standort» fragt den Standort erst nach deiner Freigabe
             ab; er bleibt auf dem Gerät und wird weder gesendet noch gespeichert. Ist der Wind an, holt die Seite Messung und Prognose der
             nächsten Wetterstation bei data.geo.admin.ch (Bund); der Dienst erfährt so, in welcher Gegend das Modell liegt.

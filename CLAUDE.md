@@ -107,7 +107,8 @@ dreidland/   3dland.ch (Michael, 2026-10-21): nur «3D Schweiz» als eigene Seit
              Platzhalter von Michael, 2026-10-21: app/public-3dland, src/assets/auftakt-3dland-*.webp, seit 2026-10-25 Michaels Bilder mit XR-Brille, Windhosen und Regen, dunkel bei Nacht; sonst die Farben von Taktland),
              ohne eigene Daten: holt sie von taktland.ch/app/ (VITE_DATEN_BASIS in src/daten.ts und src/schweiz11.ts) und
              daten.taktland.ch; das Repository 3dland enthält nur den Workflow dreidland/veroeffentlichen.yml (je Repository nur eine
-             eigene Domain bei GitHub Pages), der täglich und von Hand baut; Einrichten in dreidland/LIESMICH.md
+             eigene Domain bei GitHub Pages), der täglich und von Hand baut; Einrichten in dreidland/LIESMICH.md; in der Fusszeile rechts neben der Bildmarke «3dland teilen» wie in Taktland (komponenten/Teilen.tsx mit name, adresse, text;
+             geteilt wird nur https://3dland.ch mit einem Satz; Michael, 2026-10-27: «Teilen Button … so wie bei Taktland»)
 data/raw/    heruntergeladene CSV, nicht in Git
 data/facts/  geprüfte Fakten je Bahnhof: 1194, die mit SBB-Infrastruktur, die anderer
              Bahnen (BLS, RhB, MGB, MOB, ZB, SOB, MVR …) mit Daten für mindestens drei
