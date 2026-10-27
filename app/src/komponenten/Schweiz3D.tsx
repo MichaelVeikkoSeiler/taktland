@@ -1111,6 +1111,8 @@ const TAKTLAND_APP = 'https://taktland.ch/app/'
 const ZUG_TIPP_WINKEL = (2.5 * Math.PI) / 180
 /** in der Brille, wo der Strahl mit der Hand zittert, 4°, gewählt */
 const ZUG_TIPP_WINKEL_BRILLE = (4 * Math.PI) / 180
+/** so leuchtet ein Zug unter dem Strahl, gelblich wie die eingeschalteten Knöpfe (Faktor je Farbe, über 1 hellt auf), gewählt */
+const ZUG_ZIEL_HELL: [number, number, number] = [1.5, 1.25, 0.45]
 /** so stark neigt sich ein Wagen höchstens, 6° (wie in der Modellbahn ZUG_NEIGUNG_MAX, dort 4°), gewählt */
 const ZUG_NEIGUNG = (6 * Math.PI) / 180
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
@@ -2592,6 +2594,39 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return n
     }
     const netze = { lok: netzVon(formen.lok, 1), wagen: netzVon(formen.wagen, ZUG_WAGEN - 1), steuer: netzVon(formen.steuer, 1) }
+    // der Zug unter dem Strahl leuchtet schon beim Zielen auf, in der Brille unter dem Strahl jedes Controllers, auf dem Bildschirm unter der
+    // Maus (Michael, 2026-10-26: «Zug unter dem Strahl beim Zielen aufleuchten lassen»); Farbe je Instanz, sonst weiss
+    const hell = new THREE.Color(...ZUG_ZIEL_HELL), normal = new THREE.Color(1, 1, 1)
+    for (const n of Object.values(netze)) { for (let i = 0; i < n.instanceMatrix.count; i++) n.setColorAt(i, normal) }
+    let maus: THREE.Vector2 | null = null
+    const mausZiel = (ev: PointerEvent) => {
+      if (ev.pointerType !== 'mouse') return
+      const r = k.renderer.domElement.getBoundingClientRect()
+      maus = new THREE.Vector2(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1)
+    }
+    const mausWeg = () => { maus = null }
+    k.renderer.domElement.addEventListener('pointermove', mausZiel)
+    k.renderer.domElement.addEventListener('pointerleave', mausWeg)
+    const zielStrahl = new THREE.Raycaster(), handDreh = new THREE.Matrix4()
+    let geleuchtet = new Set<number>()
+    const zielen = () => {
+      const ziele = new Set<number>()
+      if (k.renderer.xr.isPresenting) {
+        for (const i of [0, 1]) {
+          const c = k.renderer.xr.getController(i)
+          if (!c.visible) continue
+          zielStrahl.ray.origin.setFromMatrixPosition(c.matrixWorld)
+          zielStrahl.ray.direction.set(0, 0, -1).applyMatrix4(handDreh.extractRotation(c.matrixWorld))
+          const z = finden(zielStrahl.ray, ZUG_TIPP_WINKEL_BRILLE)
+          if (z >= 0) ziele.add(gezeichnet[z].id)
+        }
+      } else if (maus) {
+        zielStrahl.setFromCamera(maus, k.kamera)
+        const z = finden(zielStrahl.ray, ZUG_TIPP_WINKEL)
+        if (z >= 0) ziele.add(gezeichnet[z].id)
+      }
+      return ziele
+    }
     // welcher Zug welcher ist (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»): ein Tipp auf einen Zug zeigt über
     // ihm ein Schild mit Zug, Ziel und dem Halt laut Fahrplan; nur was im Fahrplan steht
     let gezeichnet: ZugFahrt[] = [], gewaehlt: number | null = null, schildText = ''
@@ -2651,7 +2686,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     gruppe.userData.abwahl = () => { gewaehlt = null }
     // die Mitten der Wagen jedes gezeichneten Zugs im Raum des Modells, für den Tipp knapp daneben
     const mitten: THREE.Vector3[][] = []
-    gruppe.userData.nahe = (r: THREE.Ray, grenze: number) => {
+    /** welcher gezeichnete Zug dem Strahl am nächsten liegt, bis grenze (Winkel vom Ursprung des Strahls), sonst -1 */
+    const finden = (r: THREE.Ray, grenze: number) => {
       let best = -1, bestWinkel = grenze
       const w = new THREE.Vector3(), zu = new THREE.Vector3()
       mitten.forEach((liste, i) => {
@@ -2665,7 +2701,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (winkel < bestWinkel) { bestWinkel = winkel; best = i }
         }
       })
-      const f = gezeichnet[best]
+      return best
+    }
+    gruppe.userData.nahe = (r: THREE.Ray, grenze: number) => {
+      const f = gezeichnet[finden(r, grenze)]
       if (!f) return false
       gewaehlt = gewaehlt === f.id ? null : f.id
       knopfTon(gewaehlt !== null)
@@ -2789,6 +2828,17 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (!zeigt) linkSetzen(null)
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
       for (const n of Object.values(netze)) n.instanceMatrix.needsUpdate = true
+      // aufleuchten: nur neu färben, wenn sich etwas ändert oder ein Zug leuchtet (die Reihenfolge der Züge wechselt alle 2 s)
+      const ziele = zielen()
+      if (ziele.size || geleuchtet.size) {
+        for (let z = 0; z < zahl; z++) {
+          const farbe = ziele.has(gezeichnet[z].id) ? hell : normal
+          netze.lok.setColorAt(z, farbe); netze.steuer.setColorAt(z, farbe)
+          for (let w = 0; w < ZUG_WAGEN - 1; w++) netze.wagen.setColorAt(z * (ZUG_WAGEN - 1) + w, farbe)
+        }
+        for (const n of Object.values(netze)) if (n.instanceColor) n.instanceColor.needsUpdate = true
+      }
+      geleuchtet = ziele
     }
     const gerechnet = new Set<string>()
     k.jeBild.push(schritt)
@@ -2796,6 +2846,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       weg = true
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
       k.wurzel.remove(gruppe); stoff.dispose(); schild.material.map?.dispose(); schild.material.dispose()
+      k.renderer.domElement.removeEventListener('pointermove', mausZiel); k.renderer.domElement.removeEventListener('pointerleave', mausWeg)
       for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
     }
   }, [zuege, b, stufe, knoepfe])
