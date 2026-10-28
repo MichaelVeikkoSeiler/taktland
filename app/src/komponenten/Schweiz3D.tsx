@@ -3342,27 +3342,28 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           Die Grafik des Geräts hat aufgegeben, wohl weil ihr der Speicher ausging. Lade die Seite neu und wähle ein kleineres Modell.
         </p>
       )}
-      {/* die Züge sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind */}
-      {zugZeile && (
-        <p className="pointer-events-none absolute left-2 top-14 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
-          {zugZeile}
-        </p>
+      {/* Züge und Schiffe sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind; oben rechts, eng untereinander, damit
+          sie nicht ins Bild ragen und «Eintauchen» oben links frei bleibt (Michael, 2026-10-28: «Die Hinweise oben links sollen weiter oben stehen») */}
+      {(zugZeile || schiffZeile) && (
+        <div className="pointer-events-none absolute right-2 top-2 flex max-w-[60%] flex-col items-end gap-0.5 text-right">
+          {zugZeile && (
+            <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{zugZeile}</p>
+          )}
+          {zugZeile && zugLink && (
+            <a href={zugLink.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
+              className="pointer-events-auto rounded bg-white/90 px-1.5 py-0.5 text-[11px] font-medium leading-tight text-sbb-red underline dark:bg-sbb-midnight/90">
+              Bahnhof {zugLink.name}: Perrons und Gleise{AUF_3DLAND ? ' auf taktland.ch ↗' : ''}
+            </a>
+          )}
+          {schiffZeile && (
+            <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{schiffZeile}</p>
+          )}
+        </div>
       )}
       {(wolkenZeile || niederZeile) && (
         <p className="pointer-events-none absolute bottom-16 left-2 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
           {wolkenZeile}{wolkenZeile && niederZeile && <br />}{niederZeile}
         </p>
-      )}
-      {schiffZeile && (
-        <p className={`pointer-events-none absolute left-2 ${zugZeile ? 'top-[6.2rem]' : 'top-14'} max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white`}>
-          {schiffZeile}
-        </p>
-      )}
-      {zugZeile && zugLink && (
-        <a href={zugLink.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
-          className="absolute left-2 top-[4.6rem] max-w-[70%] rounded bg-white/90 px-1.5 py-0.5 text-[11px] font-medium leading-tight text-sbb-red underline dark:bg-sbb-midnight/90">
-          Bahnhof {zugLink.name}: Perrons und Gleise{AUF_3DLAND ? ' auf taktland.ch ↗' : ''}
-        </a>
       )}
     </div>
   )
