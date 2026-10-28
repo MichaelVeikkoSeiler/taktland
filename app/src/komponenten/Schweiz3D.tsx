@@ -17,7 +17,7 @@ import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
 import { knopfTon, wetterGeraeusch, wetterGeraeuschAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
-import { messungVon, type Station, stationenBei, type Wetter, type Wind } from '../wetter'
+import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
@@ -25,8 +25,8 @@ import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
-import { bewoelkung, type Wolken, wolkenLaden, wolkenStunde } from '../wolken'
-import { type Niederschlag, niederschlagBauen } from './Niederschlag'
+import { bewoelkung, niederschlagBei, type Wolken, wolkenLaden, wolkenStunde } from '../wolken'
+import { type Niederschlag, niederschlagBauen, type Saeule } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
 import { Abschnitt } from './Anleitung'
@@ -534,6 +534,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // Regen und Schnee zur selben Stunde (Michael, 2026-10-24: «Regen auch einblenden mit der gleichen Prognose wie die Windhose»)
   const niederJetzt = windZeigt ? niederAusStunde(windZeigt)
     : windMessung && (windMessung.art === 'regen' || windMessung.art === 'schnee') ? { art: windMessung.art, staerke: windMessung.staerke } : null
+  // laut Wettermodell über dem Modell (Niederschlag.ts), sonst die Station
+  const [niederBild, setNiederBild] = useState<{ art: 'regen' | 'schnee'; staerke: number } | null | undefined>(undefined)
+  const hoerNieder = niederBild !== undefined ? niederBild : niederJetzt
   // Regen und Wind zum Hören, solange «Wetter» an ist (Michael, 2026-10-25: «Bei Regen, Regengeräusch. Bei Wind, Windgeräusch»):
   // der Wind der vier Windhosen gemittelt, nur für die Lautstärke, nirgends als Zahl gezeigt
   const windHoeren = (() => {
@@ -542,8 +545,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   })()
   useEffect(() => {
     if (!windAn) { wetterGeraeuschAus(); return }
-    wetterGeraeusch(niederJetzt?.art === 'regen' ? niederJetzt.staerke : null, windHoeren)
-  }, [windAn, niederJetzt?.art, niederJetzt?.staerke, windHoeren])
+    wetterGeraeusch(hoerNieder?.art === 'regen' ? hoerNieder.staerke : null, windHoeren)
+  }, [windAn, hoerNieder?.art, hoerNieder?.staerke, windHoeren])
   useEffect(() => () => wetterGeraeuschAus(), [])
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
   const [minuten, setMinuten] = useState(12 * 60)
@@ -809,7 +812,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
                      sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
-                   windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt}
+                   windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
                    zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -988,6 +991,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             alle 3 Stunden neu, bis gut einen Tag voraus. Gezeichnet ist jede Schicht als Fläche auf einer gewählten Höhe (1'500, 4'200 und
             9'000 m ü. M., etwa die Mitte ihres Druckbereichs), so viel davon deckend, wie die Prognose Bewölkung nennt. Die Form der Wolken,
             ihre Dicke und wo genau in der Schicht sie liegen, stehen nicht in der Quelle.</p>
+          <p>Regen und Schnee kommen aus demselben Wettermodell: je Stelle von 2 km, wie stark es zu dieser Stunde fällt, und die
+            Schneefallgrenze. Sie fallen von der untersten gezeichneten Wolke darüber bis auf den Boden, über der Schneefallgrenze als
+            Schnee, darunter als Regen; in jeder Stufe dasselbe Wetter (in den Feldern von 4 km und 1 km, wo keine Wolken gezeichnet sind,
+            höchstens ein Viertel der Breite über dem höchsten Punkt). Unter einer dichten Wolke sieht man den Regen von oben nicht. Fehlen die
+            Daten des Modells, fällt wie früher der Niederschlag der Station gleichmässig über das ganze Modell.</p>
         </Abschnitt>
         <Abschnitt titel="Sonne und Schatten">
           <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
@@ -1042,7 +1050,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
               Ländten: swissTLMRegio (swisstopo).</li>
             <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
-            <li>Wolken: Wettermodell ICON-CH1-EPS von MeteoSchweiz (Open Government Data, CC-BY), Kontrolllauf, Bewölkung tief, mittel und hoch, alle 3 Stunden neu.</li>
+            <li>Wolken: Wettermodell ICON-CH1-EPS von MeteoSchweiz (Open Government Data, CC-BY), Kontrolllauf, Bewölkung tief, mittel und hoch, dazu Niederschlagsrate (TOT_PR) und Schneefallgrenze (SNOWLMT), alle 3 Stunden neu.</li>
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
           </ul>
@@ -1057,7 +1065,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
-            <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station; Regen- und Windgeräusch gerechnet.</li>
+            <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station, wo das Wettermodell fehlt; Dichte, Tempo und Grösse
+              der Tropfen und Flocken; dass sie an der untersten gezeichneten Wolke beginnen; Regen- und Windgeräusch gerechnet.</li>
             <li>Farben der Höhenlinien, der Wanderwege, des Wassers im Schnitt, des Lockergesteins in den Wänden und des Himmels in Dämmerung und Nacht.</li>
             <li>Die Tiefe des Sockels: Er reicht bis etwas unter den tiefsten Punkt der Oberfläche, bei Seen unter ihren Spiegel; die Knöpfe sitzen in diesem Band, auch dort, wo ein See im Schnitt liegt; was unter dem Fels liegt, steht in keiner unserer Quellen.</li>
             <li>Schatten wirft nur, was im Modell liegt; Berge ausserhalb, Wolken und Dunst fehlen.</li>
@@ -1283,7 +1292,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -1313,6 +1322,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   windAn: boolean; windWerte: Array<{ wind: Wind | null; name: string | null }>; windOrte: (punkte: Array<{ e: number; n: number }>) => void
   /** Regen oder Schnee zur gewählten Stunde, null: nichts fällt */
   nieder: { art: 'regen' | 'schnee'; staerke: number } | null
+  /** was laut Wettermodell über dem Modell fällt (fürs Geräusch), undefined ohne dessen Daten */
+  niederModell: (x: { art: 'regen' | 'schnee'; staerke: number } | null | undefined) => void
   /** der eigene Standort per GPS in LV95, null: aus */
   standort: { e: number; n: number } | null
 }) {
@@ -3199,44 +3210,92 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [windAn, b, stufe, zusatz, knoepfe, wolkenViertel, jetztTakt])
-  // Regen und Schnee über dem ganzen Modell, vom tiefsten Punkt bis ein Viertel der Breite über den höchsten (Niederschlag.ts)
+  // Regen und Schnee (Niederschlag.ts; Michael, 2026-10-28: «Regen soll aus den Wolken kommen und nicht von viel weiter oben»): laut
+  // Wettermodell ICON-CH1 (src/wolken.ts) je Zelle von 2 km, wo und wie stark es fällt, von der untersten gezeichneten Wolke darüber bis
+  // zum Boden, über der Schneefallgrenze als Schnee; in jeder Stufe dasselbe Wetter; ohne diese Daten wie bisher die Station über dem ganzen Modell
   const regen = useRef<Niederschlag | null>(null)
+  const [niederZeile, setNiederZeile] = useState<string | null>(null)
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     const W = k?.wurzel.userData.weiteKm as number | undefined
-    if (!k || !lage || !W || !windAn) return
+    if (!k || !lage || !W || !windAn) { niederModell(undefined); setNiederZeile(null); return }
     let tief = Infinity, hoch = -Infinity
     for (const t of b.teile.values()) t.h.forEach((h, q) => { if (h === KEINE_HOEHE) return; const w = t.wasser?.[q], z = w !== undefined && !Number.isNaN(w) ? Math.max(h, w) : h; if (z < tief) tief = z; if (z > hoch) hoch = z })
     if (tief === Infinity) return
     const rand = [...b.teile.values()].map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
-    const unten = tief / 1000, oben = hoch / 1000 + W * 0.25
-    // ein Regenstrich etwa 1,2 % der Breite des Modells lang, nicht ein Anteil seiner Höhe (sonst lang in steilen Feldern)
-    const ns = niederschlagBauen(Math.min(0.03, (W * 0.012) / Math.max(1e-6, oben - unten)))
-    ns.gruppe.position.set(((e0 + e1) / 2 - lage.cE) / 1000, (unten + oben) / 2, -((n0 + n1) / 2 - lage.cN) / 1000)
-    ns.gruppe.scale.set((e1 - e0) / 1000, oben - unten, (n1 - n0) / 1000)
+    const ns = niederschlagBauen()
     ns.gruppe.userData.bleibt = true
     k.wurzel.add(ns.gruppe)
     regen.current = ns
+    const zuX = (e: number) => (e - lage.cE) / 1000, zuZ = (n: number) => -(n - lage.cN) / 1000
+    const boden = (x: number, z: number) => bestandHoehe(b, lage.cE + x * 1000, lage.cN - z * 1000) / 1000
+    const flaeche = ((e1 - e0) / 1000) * ((n1 - n0) / 1000)
+    // ein Regenstrich etwa 1,2 % der Breite des Modells lang
+    const strich = W * 0.012
+    // wo keine Wolken gezeichnet sind (Felder von 4 km und 1 km), beginnt er höchstens ein Viertel der Breite über dem höchsten Punkt
+    const deckel = stufe === 'schweiz' || stufe === 'region' ? Infinity : hoch / 1000 + W * 0.25
+    let weg = false
+    const zeit = stand?.zeit ?? new Date()
+    const station = () => {
+      // die Station: gleichmässig über dem ganzen Modell, von der tiefen Wolkenschicht oder 300 m über dem höchsten Punkt
+      const oben = Math.min(deckel, Math.max(WOLKEN_HOEHE_M[0], hoch + 300) / 1000)
+      ns.setzen(nieder ? [{ x0: zuX(e0), x1: zuX(e1), z0: zuZ(n1), z1: zuZ(n0), oben, staerke: nieder.staerke,
+        schneeAb: nieder.art === 'schnee' ? -Infinity : Infinity }] : [], boden, flaeche, strich)
+      niederModell(undefined); setNiederZeile(null)
+    }
+    void wolkenLaden().then((w) => {
+      if (weg) return
+      const st = w ? wolkenStunde(w, zeit) : null
+      if (!w || st === null || !w.nieder) { station(); return }
+      const s = w.ix.schritt_m, saeulen: Saeule[] = []
+      let regenSumme = 0, schneeSumme = 0
+      for (let ze = Math.floor(e0 / s) * s; ze < e1; ze += s) {
+        for (let zn = Math.floor(n0 / s) * s; zn < n1; zn += s) {
+          const a0 = Math.max(e0, ze), a1 = Math.min(e1, ze + s), b0 = Math.max(n0, zn), b1 = Math.min(n1, zn + s)
+          if (a1 <= a0 || b1 <= b0) continue
+          const me = (a0 + a1) / 2, mn = (b0 + b1) / 2
+          const nd = niederschlagBei(w, st, me, mn)
+          if (!nd || nd.mm < NASS_AB_MM) continue
+          // die Stärke wie bei der Prognose der Station (voll ab 4 mm in der Stunde)
+          const staerke = staerkeAus(nd.mm / 2)
+          // die unterste gezeichnete Wolke über dem Boden dieser Zelle, sonst die unterste Schicht über dem Boden
+          const grund = bestandHoehe(b, me, mn)
+          const ueber = WOLKEN_HOEHE_M.filter((hm) => hm > grund + 50)
+          const mitWolke = ueber.find((hm) => (bewoelkung(w, st, WOLKEN_HOEHE_M.indexOf(hm), me, mn) ?? 0) >= 0.1)
+          const obenM = mitWolke ?? ueber[0] ?? grund + 300
+          const schneeAb = nd.schneeAbM === null ? Infinity : nd.schneeAbM / 1000
+          saeulen.push({ x0: zuX(a0), x1: zuX(a1), z0: zuZ(b1), z1: zuZ(b0), oben: Math.min(deckel, obenM / 1000), staerke, schneeAb })
+          const anteil = ((a1 - a0) * (b1 - b0)) / 1e6 / flaeche
+          if (nd.schneeAbM !== null && grund >= nd.schneeAbM) schneeSumme += staerke * anteil; else regenSumme += staerke * anteil
+        }
+      }
+      ns.setzen(saeulen, boden, flaeche, strich)
+      // fürs Geräusch der Mittel über das Modell, Regen vor Schnee
+      niederModell(regenSumme > 0.002 ? { art: 'regen', staerke: Math.min(1, regenSumme) } : schneeSumme > 0.002 ? { art: 'schnee', staerke: Math.min(1, schneeSumme) } : null)
+      const uhr = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }).format(w.zeiten[st])
+      setNiederZeile(saeulen.length ? `Regen und Schnee laut Prognose von MeteoSchweiz für ${uhr}` : null)
+    })
     let alt = performance.now()
     const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
     const schritt = () => {
       const t = performance.now()
       const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
-      ns.gruppe.getWorldPosition(mitte); auge.setFromMatrixPosition(cam.matrixWorld)
+      mitte.set(((e0 + e1) / 2 - lage.cE) / 1000, (tief + hoch) / 2000, -((n0 + n1) / 2 - lage.cN) / 1000).applyMatrix4(k.wurzel.matrixWorld)
+      auge.setFromMatrixPosition(cam.matrixWorld)
       ns.schritt(Math.min(0.1, (t - alt) / 1000), mitte.distanceTo(auge) / (W * k.wurzel.scale.x))
       alt = t
     }
     k.jeBild.push(schritt)
     return () => {
+      weg = true
       k.wurzel.remove(ns.gruppe); ns.entsorgen(); regen.current = null
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [windAn, b, stufe, zusatz, knoepfe])
-  useEffect(() => { regen.current?.setzen(nieder?.art ?? null, nieder?.staerke ?? 0) }, [nieder?.art, nieder?.staerke, windAn, b, stufe, zusatz, knoepfe])
+  }, [windAn, b, stufe, zusatz, knoepfe, wolkenViertel, jetztTakt, nieder?.art, nieder?.staerke])
   // der eigene Standort als karminroter Punkt mit weissem Rand auf dem Gelände, durch Berge hindurch sichtbar; nur wo er im Modell
   // liegt (nach dem Bau des Modells, darum hier und mit dessen Abhängigkeiten)
   useEffect(() => {
@@ -3289,9 +3348,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           {zugZeile}
         </p>
       )}
-      {wolkenZeile && (
+      {(wolkenZeile || niederZeile) && (
         <p className="pointer-events-none absolute bottom-16 left-2 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
-          {wolkenZeile}
+          {wolkenZeile}{wolkenZeile && niederZeile && <br />}{niederZeile}
         </p>
       )}
       {schiffZeile && (

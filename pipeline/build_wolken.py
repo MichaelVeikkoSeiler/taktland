@@ -17,6 +17,7 @@ der sie hat; lauf_je_stunde im Index), damit auch die Zeit am Anfang von «Sonne
 Ausgabe nach data/wolken/ (nicht in Git, der Workflow von 3dland.ch baut es alle 3 Stunden):
 - index.json   Quelle, Lauf (UTC), Stunden (UTC), Raster (e0, n1, schritt_m, nx, ny), Schichten
 - wolken.wgz   gzip: je Stunde je Schicht ny × nx Werte UInt8 in Prozent (255 ohne Angabe), Zeile 0 im Norden
+- niederschlag.wgz  gzip: je Stunde TOT_PR (0,1 mm je Stunde) und SNOWLMT (50 m) je ny × nx Werte UInt8 (255 ohne Angabe)
 
     pip install eccodes numpy; python3 pipeline/build_wolken.py
 """
@@ -37,6 +38,11 @@ ZIEL = ROOT / "data" / "wolken"
 STAC = "https://data.geo.admin.ch/api/stac/v1"
 SAMMLUNG = "ch.meteoschweiz.ogd-forecasting-icon-ch1"
 SCHICHTEN = [("CLCL", "tief", "800 hPa bis Boden"), ("CLCM", "mittel", "400 bis 800 hPa"), ("CLCH", "hoch", "0 bis 400 hPa")]
+#: Niederschlag aus demselben Lauf (Michael, 2026-10-28: «Regen soll aus den Wolken kommen»): TOT_PR, die Rate in kg m⁻² s⁻¹ im Augenblick
+#: der Stunde (mal 3600 mm je Stunde), und SNOWLMT, die Schneefallgrenze in m ü. M.
+NIEDER = ["TOT_PR", "SNOWLMT"]
+#: Niederschlag in Schritten von 0,1 mm je Stunde, mehr als 25,4 mm je Stunde als 25,4; Schneefallgrenze in Schritten von 50 m
+NIEDER_MM_SCHRITT, GRENZE_M_SCHRITT = 0.1, 50
 #: Raster in LV95, etwas grösser als die Schweiz; Zellen von 2 km (das Modell rechnet mit etwa 1 km)
 E0, E1, N0, N1, RASTER_M = 2_470_000, 2_850_000, 1_060_000, 1_310_000, 2000
 #: so viele Stunden vor dem neuesten Lauf kommen aus früheren Läufen, soweit die STAC-Sammlung sie noch hat
@@ -89,6 +95,7 @@ def wgs84_zu_lv95(lat, lon):
 
 def main():
     je = {v: eintraege(v) for v, _, _ in SCHICHTEN}
+    nieder_je = {v: eintraege(v) for v in NIEDER}
     stunden_je_lauf = defaultdict(set)
     for v, eintr in je.items():
         for (lauf, st) in eintr:
@@ -133,6 +140,20 @@ def main():
         print(f"Raster {nx} × {ny} zu {RASTER_M} m, {drin.sum()} Zellen des Modells darin")
 
         gitter = np.full((len(zeiten), len(SCHICHTEN), ny * nx), 255, dtype=np.uint8)
+        nieder = np.full((len(zeiten), len(NIEDER), ny * nx), 255, dtype=np.uint8)
+
+        def gemittelt(v, eintr, l, st):
+            """Mittel je Zelle des Rasters, nur über Modellzellen mit Wert (eccodes meldet fehlende als 9999); None ohne Datei"""
+            if (l, st) not in eintr:
+                return None
+            pfad = Path(tmp) / f"{v}-{st}.grib2"
+            pfad.write_bytes(holen(eintr[(l, st)]))
+            feld = next(iter(werte(pfad).values()))[0][drin]
+            pfad.unlink()
+            gut = np.isfinite(feld) & (feld < 9000)
+            n = np.bincount(zelle, weights=gut.astype(float), minlength=nx * ny)
+            summe = np.bincount(zelle, weights=np.where(gut, feld, 0), minlength=nx * ny)
+            return np.divide(summe, n, out=np.full(nx * ny, np.nan), where=n > 0)
         for i, z in enumerate(zeiten):
             l, st = quelle_je_zeit[z]
             for j, (v, _, _) in enumerate(SCHICHTEN):
@@ -143,13 +164,22 @@ def main():
                 summe = np.bincount(zelle, weights=feld[drin], minlength=nx * ny)
                 mittel = np.divide(summe, anzahl, out=np.zeros_like(summe), where=anzahl > 0)
                 gitter[i, j] = np.where(anzahl > 0, np.clip(np.round(mittel), 0, 100), 255).astype(np.uint8)
-            print(f"  {z:%d.%m. %H} UTC (Lauf {l}, Stunde {st}): tief {gitter[i, 0][gitter[i, 0] < 255].mean():.0f} %, "
+            rate = gemittelt("TOT_PR", nieder_je["TOT_PR"], l, st)
+            if rate is not None:
+                mm = rate * 3600
+                nieder[i, 0] = np.where(np.isfinite(mm), np.clip(np.round(mm / NIEDER_MM_SCHRITT), 0, 254), 255).astype(np.uint8)
+            grenze = gemittelt("SNOWLMT", nieder_je["SNOWLMT"], l, st)
+            if grenze is not None:
+                nieder[i, 1] = np.where(np.isfinite(grenze), np.clip(np.round(grenze / GRENZE_M_SCHRITT), 0, 254), 255).astype(np.uint8)
+            nass = nieder[i, 0][(nieder[i, 0] < 255)]
+            print(f"  {z:%d.%m. %H} UTC (Lauf {l}, Stunde {st}): nass {(nass >= 1).mean() * 100:.0f} %, tief {gitter[i, 0][gitter[i, 0] < 255].mean():.0f} %, "
                   f"mittel {gitter[i, 1][gitter[i, 1] < 255].mean():.0f} %, hoch {gitter[i, 2][gitter[i, 2] < 255].mean():.0f} %")
 
     if ZIEL.exists():
         shutil.rmtree(ZIEL)
     ZIEL.mkdir(parents=True)
     (ZIEL / "wolken.wgz").write_bytes(gzip.compress(gitter.tobytes(), 9))
+    (ZIEL / "niederschlag.wgz").write_bytes(gzip.compress(nieder.tobytes(), 9))
     (ZIEL / "index.json").write_text(json.dumps({
         "quelle": "ICON-CH1-EPS, Kontrolllauf, MeteoSchweiz (Open Government Data, CC-BY)",
         "lauf": beginn.strftime("%Y-%m-%dT%H:%MZ"),
@@ -157,10 +187,17 @@ def main():
         "lauf_je_stunde": [quelle_je_zeit[z][0] for z in zeiten],
         "e0": E0, "n1": N1, "schritt_m": RASTER_M, "nx": int(nx), "ny": int(ny),
         "schichten": [{"name": name, "modell": v, "druck": druck} for v, name, druck in SCHICHTEN],
+        "niederschlag": {"datei": "niederschlag.wgz", "felder": [
+            {"name": "mm_je_stunde", "modell": "TOT_PR", "schritt": NIEDER_MM_SCHRITT,
+             "text": "Niederschlagsrate im Augenblick der Stunde, in Schritten von 0,1 mm je Stunde, 254 heisst 25,4 oder mehr"},
+            {"name": "schneefallgrenze_m", "modell": "SNOWLMT", "schritt": GRENZE_M_SCHRITT,
+             "text": "Schneefallgrenze in m ü. M., in Schritten von 50 m"}],
+            "hinweis": "je Stunde je Feld ny × nx Werte UInt8, 255 ohne Angabe"},
         "hinweis": "Bewölkung je Schicht in Prozent, je Zelle das Mittel der Modellzellen darin; 255 ohne Angabe. "
                    "In welcher Höhe innerhalb der Schicht die Wolken liegen, sagt diese Grösse nicht.",
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print(f"data/wolken: {(ZIEL / 'wolken.wgz').stat().st_size / 1e3:.0f} KB")
+    print(f"data/wolken: {(ZIEL / 'wolken.wgz').stat().st_size / 1e3:.0f} KB, "
+          f"niederschlag.wgz {(ZIEL / 'niederschlag.wgz').stat().st_size / 1e3:.0f} KB")
 
 
 if __name__ == "__main__":
