@@ -25,6 +25,7 @@ import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
+import { bewoelkung, type Wolken, wolkenLaden, wolkenStunde } from '../wolken'
 import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
@@ -981,6 +982,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             nicht an der Station). Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
             wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde. Regen und Wind sind auch zu hören, gerechnete Geräusche,
             lauter mit der Stärke; Schnee bleibt still.</p>
+          <p>In der ganzen Schweiz und in der Region zeigt «Wetter» auch die Wolken laut dem Wettermodell ICON-CH1 von MeteoSchweiz,
+            zur Zeit der Sonne oder, wenn die Sonne aus ist, jetzt. Das Modell nennt je Stelle von etwa 1 km, wie viel des Himmels in drei
+            Schichten bewölkt ist: tief (vom Boden bis 800 hPa), mittel (800 bis 400 hPa) und hoch (über 400 hPa); hier auf 2 km gemittelt,
+            alle 3 Stunden neu, bis gut einen Tag voraus. Gezeichnet ist jede Schicht als Fläche auf einer gewählten Höhe (1'500, 4'200 und
+            9'000 m ü. M., etwa die Mitte ihres Druckbereichs), so viel davon deckend, wie die Prognose Bewölkung nennt. Die Form der Wolken,
+            ihre Dicke und wo genau in der Schicht sie liegen, stehen nicht in der Quelle.</p>
         </Abschnitt>
         <Abschnitt titel="Sonne und Schatten">
           <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
@@ -1035,6 +1042,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
               Ländten: swissTLMRegio (swisstopo).</li>
             <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
+            <li>Wolken: Wettermodell ICON-CH1-EPS von MeteoSchweiz (Open Government Data, CC-BY), Kontrolllauf, Bewölkung tief, mittel und hoch, alle 3 Stunden neu.</li>
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
           </ul>
@@ -1043,6 +1051,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern gezeichnet oder angenommen ist:</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
+            <li>Wolken: ihre Form, ihre Dicke und die Höhe jeder Schicht (gewählt nach der Mitte ihres Druckbereichs); die Quelle nennt nur, wie viel bewölkt ist.</li>
             <li>Züge und Schiffe: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, und dass jeder Zug links neben dem Weg fährt,
               damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
@@ -1114,6 +1123,70 @@ const BRILLE_SCHATTEN_PX = 2048
 const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
 /** so viele Schiffe höchstens im Modell, und aus der Ferne mindestens so lang wie dieser Anteil des Abstands der Kamera (gewählt) */
 const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
+/** auf diesen Höhen über Meer liegen die drei Schichten tief, mittel und hoch; die Quelle nennt nur ihre Druckbereiche (800 hPa bis Boden,
+ *  400 bis 800, unter 400), die Höhen sind gewählt, etwa nach der Standardatmosphäre (800 hPa gut 1'900 m, 600 hPa gut 4'200 m, 300 hPa gut 9'000 m) */
+const WOLKEN_HOEHE_M = [1500, 4200, 9000]
+/** so gross sind die gezeichneten Wolken je Schicht etwa, in km (gewählt, nicht aus der Quelle) */
+const WOLKEN_KORN_KM = [3, 6, 12]
+
+/** fester Zufall je Gitterpunkt, für das gezeichnete Muster der Wolken */
+function wolkenZufall(x: number, y: number, s: number) {
+  let h = (x * 374761393 + y * 668265263 + s * 2147483647) | 0
+  h = Math.imul(h ^ (h >>> 13), 1274126177)
+  return ((h ^ (h >>> 16)) >>> 0) / 4294967295
+}
+/** Rauschen aus mehreren Lagen, 0 bis 1, an einer Stelle in km; überall dasselbe, damit die Wolken beim Eintauchen gleich bleiben */
+function wolkenMuster(xKm: number, yKm: number, kornKm: number, s: number) {
+  let summe = 0, gewicht = 0, f = 1 / kornKm, g = 1
+  for (let o = 0; o < 4; o++) {
+    const x = xKm * f, y = yKm * f, x0 = Math.floor(x), y0 = Math.floor(y), tx = x - x0, ty = y - y0
+    const sx = tx * tx * (3 - 2 * tx), sy = ty * ty * (3 - 2 * ty)
+    const a = wolkenZufall(x0, y0, s + o), bb = wolkenZufall(x0 + 1, y0, s + o), c = wolkenZufall(x0, y0 + 1, s + o), d = wolkenZufall(x0 + 1, y0 + 1, s + o)
+    summe += g * ((a * (1 - sx) + bb * sx) * (1 - sy) + (c * (1 - sx) + d * sx) * sy)
+    gewicht += g; g *= 0.5; f *= 2
+  }
+  return summe / gewicht
+}
+/** das Muster gleichmässig verteilt (0 bis 1 nach seinem Rang unter 4'000 Proben), damit «deckend über 1 − Anteil» wirklich etwa
+ *  diesen Anteil der Fläche deckt; je Schicht einmal gerechnet */
+const musterRang: Array<Float32Array | null> = [null, null, null]
+function gleichmaessig(m: number, schicht: number) {
+  let r = musterRang[schicht]
+  if (!r) {
+    r = new Float32Array(4000)
+    for (let i = 0; i < r.length; i++) r[i] = wolkenMuster(wolkenZufall(i, 1, 99) * 997, wolkenZufall(i, 2, 99) * 997, WOLKEN_KORN_KM[schicht], schicht * 7)
+    r.sort(); musterRang[schicht] = r
+  }
+  let lo = 0, hi = r.length
+  while (lo < hi) { const mi = (lo + hi) >> 1; if (r[mi] < m) lo = mi + 1; else hi = mi }
+  return lo / r.length
+}
+/** das Bild einer Schicht über dem Rechteck: so viel Fläche deckend, wie die Prognose Bewölkung nennt; das Muster ist gezeichnet */
+function wolkenBild(w: Wolken, stunde: number, schicht: number, e0: number, n0: number, e1: number, n1: number) {
+  const breit = Math.min(1024, Math.max(128, Math.round(((e1 - e0) / w.ix.schritt_m) * 12)))
+  const hoch = Math.max(16, Math.round((breit * (n1 - n0)) / (e1 - e0)))
+  const c = document.createElement('canvas'); c.width = breit; c.height = hoch
+  const x = c.getContext('2d')!, bild = x.createImageData(breit, hoch)
+  let etwas = false
+  for (let py = 0; py < hoch; py++) {
+    const n = n1 - ((py + 0.5) / hoch) * (n1 - n0)
+    for (let px = 0; px < breit; px++) {
+      const e = e0 + ((px + 0.5) / breit) * (e1 - e0)
+      const anteil = bewoelkung(w, stunde, schicht, e, n)
+      if (anteil === null || anteil <= 0.02) continue
+      // deckend, wo das Muster über 1 − Anteil liegt: so deckt die Schicht etwa den Anteil der Fläche, den die Prognose nennt
+      const m = gleichmaessig(wolkenMuster(e / 1000, n / 1000, WOLKEN_KORN_KM[schicht], schicht * 7), schicht)
+      const a = Math.max(0, Math.min(1, (m - (1 - anteil)) / 0.08 + 0.5))
+      if (a <= 0) continue
+      const i = (py * breit + px) * 4
+      bild.data[i] = 250; bild.data[i + 1] = 251; bild.data[i + 2] = 253; bild.data[i + 3] = Math.round(a * 235)
+      etwas = true
+    }
+  }
+  if (!etwas) return null
+  x.putImageData(bild, 0, 0)
+  return c
+}
 /** aus der Ferne ist ein Zug mindestens so lang wie dieser Anteil des Abstands der Kamera (vorher 1,2 %, Michael, 2026-10-26: «Züge aus der Ferne etwas grösser»), gewählt */
 const ZUG_FERN = 0.018
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
@@ -3074,6 +3147,58 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       k.renderer.domElement.removeEventListener('pointermove', mausZiel); k.renderer.domElement.removeEventListener('pointerleave', mausWeg)
     }
   }, [schiffe, b, stufe, knoepfe])
+  // Wolken aus dem Wettermodell ICON-CH1-EPS von MeteoSchweiz (src/wolken.ts; Michael, 2026-10-28: «Jetzt die Wolken angehen»), mit dem Knopf
+  // «Wetter», in der ganzen Schweiz und in der Region; zur gewählten Zeit der Sonne, sonst jetzt
+  const [wolkenZeile, setWolkenZeile] = useState<string | null>(null)
+  const wolkenViertel = stand ? Math.round(stand.zeit.getTime() / 900_000) : -1
+  const [jetztTakt, setJetztTakt] = useState(() => Math.floor(Date.now() / 600_000))
+  useEffect(() => {
+    if (stand) return
+    const t = window.setInterval(() => setJetztTakt(Math.floor(Date.now() / 600_000)), 60_000)
+    return () => window.clearInterval(t)
+  }, [stand])
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || !windAn || (stufe !== 'schweiz' && stufe !== 'region')) { setWolkenZeile(null); return }
+    let weg = false
+    const gruppe = new THREE.Group()
+    gruppe.name = 'wolken'
+    gruppe.userData.bleibt = true
+    k.wurzel.add(gruppe)
+    const rand = [...b.teile.values()].map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    const weg3: Array<{ dispose: () => void }> = []
+    const zeit = stand?.zeit ?? new Date()
+    void wolkenLaden().then((w) => {
+      if (weg) return
+      if (!w) { setWolkenZeile('Wolken: die Prognose von MeteoSchweiz ist hier nicht geladen.'); return }
+      const uhr = (ms: number) => new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }).format(ms)
+      const st = wolkenStunde(w, zeit)
+      if (st === null) { setWolkenZeile(`Wolken: für ${uhr(zeit.getTime())} gibt es keine Prognose (Lauf ${uhr(Date.parse(w.ix.lauf))}).`); return }
+      WOLKEN_HOEHE_M.forEach((hoeheM, j) => {
+        const bild = wolkenBild(w, st, j, e0, n0, e1, n1)
+        if (!bild) return
+        const tex = new THREE.CanvasTexture(bild); tex.colorSpace = THREE.SRGBColorSpace
+        const geo = new THREE.PlaneGeometry((e1 - e0) / 1000, (n1 - n0) / 1000); geo.rotateX(-Math.PI / 2)
+        const stoff = new THREE.MeshLambertMaterial({ map: tex, transparent: true, depthWrite: false, side: THREE.DoubleSide })
+        const tiefe = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: tex, alphaTest: 0.5 })
+        const netz = new THREE.Mesh(geo, stoff)
+        netz.position.set(((e0 + e1) / 2 - lage.cE) / 1000, hoeheM / 1000, -((n0 + n1) / 2 - lage.cN) / 1000)
+        netz.castShadow = true; netz.customDepthMaterial = tiefe; netz.renderOrder = 3
+        gruppe.add(netz)
+        weg3.push(tex, geo, stoff, tiefe)
+      })
+      setWolkenZeile(`Wolken laut Prognose von MeteoSchweiz für ${uhr(w.zeiten[st])}`)
+    })
+    return () => {
+      weg = true
+      k.wurzel.remove(gruppe)
+      for (const x of weg3) x.dispose()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [windAn, b, stufe, zusatz, knoepfe, wolkenViertel, jetztTakt])
   // Regen und Schnee über dem ganzen Modell, vom tiefsten Punkt bis ein Viertel der Breite über den höchsten (Niederschlag.ts)
   const regen = useRef<Niederschlag | null>(null)
   useEffect(() => {
@@ -3162,6 +3287,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {zugZeile && (
         <p className="pointer-events-none absolute left-2 top-14 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
           {zugZeile}
+        </p>
+      )}
+      {wolkenZeile && (
+        <p className="pointer-events-none absolute bottom-16 left-2 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
+          {wolkenZeile}
         </p>
       )}
       {schiffZeile && (

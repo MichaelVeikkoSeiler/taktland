@@ -582,6 +582,18 @@ data/schiffe3d/  Schiffe laut Fahrplan für «3D Schweiz» auf 3dland.ch und in 
              Strahl und Aufleuchten wie bei den Zügen (der nähere Treffer von Zug und Schiff gilt): «Schiff» oder «Fähre», Kursnummer, Ziel, die
              Ländte, an der es liegt, oder die nächste mit den Zeiten, «laut Fahrplan»; die Zeile «Schiffe laut Fahrplan vom …, nicht live»; in
              Anleitung, Quellen und Fusszeile von 3dland genannt
+data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolken angehen»): pipeline/build_wolken.py aus dem Wettermodell ICON-CH1-EPS
+             von MeteoSchweiz (Open Government Data, CC-BY; STAC ch.meteoschweiz.ogd-forecasting-icon-ch1 auf data.geo.admin.ch, Dateien auf
+             rgw.cscs.ch, GRIB2 über eccodes), der neueste vollständige Lauf, nur der Kontrolllauf, je Stunde die Bewölkung CLCL (800 hPa bis Boden),
+             CLCM (400 bis 800 hPa) und CLCH (0 bis 400 hPa) in Prozent, die Modellzellen (etwa 1 km, Lage aus horizontal_constants) auf 2 km in LV95
+             gemittelt (index.json und wolken.wgz, etwa 530 KB, nicht in Git); CEILING bleibt weg (die Quelle nennt nicht, ob über Meer oder Boden),
+             HBAS_SC und HTOP_SC gelten nur für flache Konvektion; gebaut im Workflow von 3dland.ch, dazu alle 3 Stunden (cron, Züge und Schiffe dann
+             aus actions/cache vom selben Tag), neben die Seite gelegt (wolken/), Taktland liest sie bei https://3dland.ch/wolken/; in der App
+             src/wolken.ts und in Schweiz3D.tsx mit dem Knopf «Wetter» in der ganzen Schweiz und in der Region, zur Zeit der Sonne oder jetzt (die Stunde
+             der Prognose am nächsten, höchstens eine Stunde daneben): je Schicht eine Fläche auf 1'500, 4'200 und 9'000 m ü. M. (WOLKEN_HOEHE_M,
+             gewählt nach der Mitte der Druckbereiche in der Standardatmosphäre), deckend, wo ein gezeichnetes Rauschen (WOLKEN_KORN_KM 3, 6, 12 km,
+             nach Rang gleichmässig verteilt) über 1 − Bewölkung liegt, mit Schatten; die Zeile «Wolken laut Prognose von MeteoSchweiz für …»; Form,
+             Dicke und Höhe in der Schicht in keiner Quelle, in Anleitung, Quellen und Fusszeile genannt
 data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
@@ -619,6 +631,7 @@ python3 pipeline/fetch_fahrplan.py              # Fahrplan (GTFS) laden, 290 MB,
 .venv/bin/python pipeline/build_fahrplan.py      # Züge und Halte für «Welcher Zug?», vor export_app
 .venv/bin/python pipeline/build_zuege3d.py       # Züge laut Fahrplan je Kachel für 3dland.ch (data/zuege3d) und Schiffe (data/schiffe3d), sonst im Workflow von 3dland
 .venv/bin/python pipeline/build_schifflinien.py   # Kurslinien der Schiffe aus swissTLMRegio (data/schifflinien.json), vor build_zuege3d
+.venv/bin/python pipeline/build_wolken.py         # Wolken aus ICON-CH1-EPS (MeteoSchweiz) für «3D Schweiz» (data/wolken), braucht eccodes, sonst im Workflow von 3dland
 python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D
