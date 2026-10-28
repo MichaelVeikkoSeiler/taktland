@@ -13,6 +13,8 @@ export interface WolkenIndex {
   e0: number; n1: number; schritt_m: number; nx: number; ny: number
   schichten: Array<{ name: string; modell: string; druck: string }>
   hinweis: string
+  /** Niederschlag aus demselben Lauf (TOT_PR, SNOWLMT), in älteren Fassungen nicht dabei */
+  niederschlag?: { datei: string; felder: Array<{ name: string; modell: string; schritt: number }> }
 }
 
 export interface Wolken {
@@ -21,6 +23,8 @@ export interface Wolken {
   zeiten: number[]
   /** Bewölkung in Prozent bei Stunde, Schicht und Zelle (Zeile 0 im Norden), 255 ohne Angabe */
   werte: Uint8Array
+  /** je Stunde Niederschlag (0,1 mm je Stunde) und Schneefallgrenze (50 m) je Zelle, 255 ohne Angabe; null ohne Datei */
+  nieder: Uint8Array | null
 }
 
 /** auf 3dland.ch neben der Seite, in Taktland bei 3dland.ch (GitHub Pages erlaubt den Abruf von überall) */
@@ -36,8 +40,11 @@ export function wolkenLaden(): Promise<Wolken | null> {
     vorrat = (async () => {
       const ix = await holen<WolkenIndex>(`${basis()}index.json?${Math.floor(Date.now() / 3_600_000)}`)
       const gepackt = await holenBinaer(`${basis()}wolken.wgz?${encodeURIComponent(ix.lauf)}`)
-      const roh = await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer()
-      return { ix, zeiten: ix.stunden.map((s) => Date.parse(s)), werte: new Uint8Array(roh) }
+      const entpacken = async (b: ArrayBuffer) => new Uint8Array(await new Response(new Blob([b]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer())
+      // der Niederschlag ist eine eigene Datei; fehlt sie, bleiben die Wolken
+      const nieder = ix.niederschlag
+        ? await holenBinaer(`${basis()}${ix.niederschlag.datei}?${encodeURIComponent(ix.lauf)}`).then(entpacken).catch(() => null) : null
+      return { ix, zeiten: ix.stunden.map((s) => Date.parse(s)), werte: await entpacken(gepackt), nieder }
     })().catch(() => null)
   }
   return vorrat
@@ -65,4 +72,27 @@ export function bewoelkung(w: Wolken, stunde: number, schicht: number, e: number
   }
   if (fx < -0.5 || fy < -0.5 || fx > nx - 0.5 || fy > ny - 0.5 || gewicht === 0) return null
   return summe / gewicht / 100
+}
+
+/** Niederschlag in mm je Stunde (zwischen den Mitten der Zellen gemittelt) und die Schneefallgrenze der Zelle in m ü. M. (null ohne Angabe)
+ *  an einer Stelle; null ohne Niederschlagsdaten oder ausserhalb */
+export function niederschlagBei(w: Wolken, stunde: number, e: number, n: number): { mm: number; schneeAbM: number | null } | null {
+  const f = w.ix.niederschlag, d = w.nieder
+  if (!f || !d) return null
+  const { e0, n1, schritt_m: s, nx, ny } = w.ix
+  const fx = (e - e0) / s - 0.5, fy = (n1 - n) / s - 0.5
+  if (fx < -0.5 || fy < -0.5 || fx > nx - 0.5 || fy > ny - 0.5) return null
+  const x0 = Math.floor(fx), y0 = Math.floor(fy), tx = fx - x0, ty = fy - y0
+  const basisI = stunde * 2 * nx * ny
+  let summe = 0, gewicht = 0
+  for (const [dx, dy, g] of [[0, 0, (1 - tx) * (1 - ty)], [1, 0, tx * (1 - ty)], [0, 1, (1 - tx) * ty], [1, 1, tx * ty]] as const) {
+    const x = Math.min(nx - 1, Math.max(0, x0 + dx)), y = Math.min(ny - 1, Math.max(0, y0 + dy))
+    const v = d[basisI + y * nx + x]
+    if (v === 255 || g <= 0) continue
+    summe += v * g; gewicht += g
+  }
+  if (gewicht === 0) return null
+  const xm = Math.min(nx - 1, Math.max(0, Math.round(fx))), ym = Math.min(ny - 1, Math.max(0, Math.round(fy)))
+  const gr = d[basisI + nx * ny + ym * nx + xm]
+  return { mm: (summe / gewicht) * f.felder[0].schritt, schneeAbM: gr === 255 ? null : gr * f.felder[1].schritt }
 }
