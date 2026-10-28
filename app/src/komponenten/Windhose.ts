@@ -84,6 +84,9 @@ export function windhoseBauen(): Windhose {
 
 /** wie gross eine Windhose auf dem Bildschirm erscheint: der Mast so hoch wie dieser Teil des Abstands zur Kamera */
 const BILD_HOEHE = 0.09
+/** im Querformat zählt die Höhe des Bilds weniger: so viel grösser mit der Wurzel des Seitenverhältnisses, im Hochformat 1 (Michael,
+ *  2026-10-28: «im Querformat sollen die Windhosen beim hineinzoomen nicht so klein werden»), gewählt */
+const querMass = (kamera: THREE.PerspectiveCamera) => Math.sqrt(Math.max(1, kamera.aspect))
 /** so lange nach der letzten Bewegung der Kamera verteilt sie die Windhosen neu (ms) */
 const RUHE_MS = 500
 /** auch während die Kamera sich bewegt, spätestens so oft (ms) */
@@ -206,7 +209,7 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
           // gleich gross auf dem Bildschirm: nach dem Abstand im Raum der Eltern
           const w = h.gruppe.getWorldPosition(a), d = w.distanceTo(auge)
           const massstab = eltern.getWorldScale(b).x || 1
-          h.gruppe.scale.setScalar((d * BILD_HOEHE) / massstab)
+          h.gruppe.scale.setScalar((d * BILD_HOEHE * querMass(kamera)) / massstab)
         }
         h.schritt(t)
         const sp = schilder[i]

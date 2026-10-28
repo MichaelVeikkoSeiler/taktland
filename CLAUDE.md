@@ -495,7 +495,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              0,5 s nach jeder Bewegung neu verteilt (als Bewegung zählt nur, was man sieht; beim langen Drehen spätestens alle 2 s, LAENGSTENS_MS; Michael, 2026-10-25: «Warum sehe ich hier keine Windhosen?»), wo die Strahlen durch die Mitten der vier Viertel des Bilds das Gelände treffen (Michael,
              2026-10-24: «in die Mitte des Quadrates»; dem Gelände nach gesucht, ohne Netz; trifft einer nur Himmel oder Sockel, im selben Viertel zur Mitte des Bilds hin; gesucht nur im Kasten um das Gelände, sonst sprang
              der Strahl in der Stufe 1 km über das kleine Modell hinweg, Michael, 2026-10-24: «Warum keine Windhosen?»),
-             auf dem Bildschirm gleich gross (9 % des Abstands), darüber klein nur die Zahl in km/h («Zahl dazu», «Viel zu präsente Infos.
+             auf dem Bildschirm gleich gross (9 % des Abstands, im Querformat mal der Wurzel des Seitenverhältnisses, querMass; Michael, 2026-10-28: «im Querformat sollen die Windhosen beim hineinzoomen nicht so klein werden»), darüber klein nur die Zahl in km/h («Zahl dazu», «Viel zu präsente Infos.
              Nur Zahl»), die Stationen nennt die Tafel;
              in der Brille bleiben sie stehen, die Zahl darüber dort so hoch wie gut ein Fünftel der Windhose (BRILLE_ZAHL; vorher ohne Schild, Michael, 2026-10-26: «In der VR-Brille sehe ich keine Windgeschwindigkeiten»), in der Modellbahn 3,5-mal so hoch wie die Masten,
              nicht im Führerstand und nicht bei Schönwetter, daneben ein Knopf (Windsack) für die Tafel; in «3D Schweiz» ein Knopf «Wetter» (bis 2026-10-24 «Wind»; Michael: «Knopf Wind soll Wetter heissen») an
