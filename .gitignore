@@ -43,3 +43,4 @@ server/spiel/daten/r-*.json
 # Züge für 3dland.ch: entstehen im Workflow von 3dland aus dem GTFS (pipeline/build_zuege3d.py)
 data/zuege3d/
 data/schiffe3d/
+data/wolken/

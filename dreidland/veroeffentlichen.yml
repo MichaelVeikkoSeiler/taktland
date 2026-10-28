@@ -10,6 +10,8 @@ on:
   # Änderungen an Taktland erreichen 3dland so spätestens am nächsten Morgen (Zeit in UTC)
   schedule:
     - cron: '41 4 * * *'
+    # die Wolken (pipeline/build_wolken.py): MeteoSchweiz rechnet ICON-CH1 alle 3 Stunden neu (Michael, 2026-10-28)
+    - cron: '50 1-22/3 * * *'
 
 permissions:
   contents: read
@@ -34,6 +36,7 @@ jobs:
             pipeline/fetch_fahrplan.py
             pipeline/build_zuege3d.py
             pipeline/build_schiffe3d.py
+            pipeline/build_wolken.py
             data/strecken.json
             data/schifflinien.json
 
@@ -53,12 +56,34 @@ jobs:
 
       # Züge und Schiffe laut Fahrplan (pipeline/build_zuege3d.py, build_schiffe3d.py): das GTFS von opentransportdata.swiss,
       # täglich neu, wie es die Nutzungsbedingungen verlangen; klappt es nicht, erscheint 3dland ohne Züge und Schiffe
+      # alle 3 Stunden neu nur für die Wolken: Züge und Schiffe vom selben Tag und derselben Pipeline aus dem Zwischenspeicher
+      - id: tag
+        run: echo "tag=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+      - id: zuege
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/zuege3d
+            data/schiffe3d
+          key: zuege3d-${{ steps.tag.outputs.tag }}-${{ hashFiles('pipeline/build_zuege3d.py', 'pipeline/build_schiffe3d.py', 'data/strecken.json', 'data/schifflinien.json') }}
       - name: Züge und Schiffe laut Fahrplan
+        if: steps.zuege.outputs.cache-hit != 'true'
         continue-on-error: true
         run: |
-          python3 pipeline/fetch_fahrplan.py && python3 pipeline/build_zuege3d.py && cp -r data/zuege3d app/dist-3dland/zuege3d
-          if [ -d data/schiffe3d ]; then cp -r data/schiffe3d app/dist-3dland/schiffe3d; fi
+          python3 pipeline/fetch_fahrplan.py && python3 pipeline/build_zuege3d.py
           rm -rf data/raw/gtfs
+      - name: Züge und Schiffe neben die Seite
+        run: |
+          if [ -d data/zuege3d ]; then cp -r data/zuege3d app/dist-3dland/zuege3d; fi
+          if [ -d data/schiffe3d ]; then cp -r data/schiffe3d app/dist-3dland/schiffe3d; fi
+
+      # Wolken aus ICON-CH1-EPS von MeteoSchweiz (pipeline/build_wolken.py, braucht eccodes); Taktland liest sie hier; klappt es nicht,
+      # erscheint 3dland ohne Wolken
+      - name: Wolken
+        continue-on-error: true
+        run: |
+          python3 -m venv /tmp/wolken && /tmp/wolken/bin/pip install --quiet eccodes numpy
+          /tmp/wolken/bin/python pipeline/build_wolken.py && cp -r data/wolken app/dist-3dland/wolken
 
       - uses: actions/upload-pages-artifact@v3
         with:
