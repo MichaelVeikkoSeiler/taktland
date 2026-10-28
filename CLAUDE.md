@@ -565,6 +565,21 @@ data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Mich
              «laut Fahrplan», oben im Bild ein Link «Bahnhof …: Perrons und Gleise auf taktland.ch», wo Taktland eine Seite hat (TAKTLAND_APP; Michael, 2026-10-26: «Gleis mit Link») (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»); ein Tipp daneben blendet es aus; knapp daneben trifft er den Zug noch, bis 2,5° vom Auge, in der Brille 4°, vor dem Gelände (kein roter Kasten), ein Zug vor einem
              Wandknopf geht dem Knopf vor (ZUG_TIPP_WINKEL, ZUG_TIPP_WINKEL_BRILLE; schon beim Zielen leuchtet der Zug unter dem Strahl
              jedes Controllers, auf dem Bildschirm unter der Maus, gelblich auf, Farbe je Instanz, ZUG_ZIEL_HELL, gewählt; Michael, 2026-10-26: «Zug unter dem Strahl beim Zielen aufleuchten lassen»; Michael, 2026-10-26: «schwierig antippen ohne dass es einen neuen roten Kasten … gibt», «Auch bei der Brille»); in Anleitung, Quellen und Fusszeile von 3dland genannt
+data/schiffe3d/  Schiffe laut Fahrplan nur für 3dland.ch wie die Züge (Michael, 2026-10-28: «Ja gern, tolle Idee. Vielleicht findest du ja die
+             Routen aus Flyern oder Seekarten der ÖV»): pipeline/build_schiffe3d.py, aufgerufen von build_zuege3d.py im selben Durchgang durch den
+             Fahrplan, Kursschiffe und Fähren (GTFS route_type 4 und 1000) mit ihren Ländten, 14 Tage; der Weg zwischen zwei Ländten auf den
+             Kurslinien von swissTLMRegio (Ebene tlmregio_transportation_ship, Kursschiff_Linie und Autofaehre, wie auf der Landeskarte;
+             data/schifflinien.json aus pipeline/build_schifflinien.py, 780 Linien, 130 KB, in Git, weil der Workflow kein swissTLMRegio hat),
+             der kürzeste darauf, eine Ländte an der nächsten Stelle einer Linie bis 600 m (ANLEGEN_M; gemessen fast alle unter 300 m),
+             Enden bis 60 m verbunden, höchstens 2,2-mal die Luftlinie plus 1 km (UMWEG; sonst Bellevue–Corsier GE 15 km statt 4,4), ohne Weg fehlt
+             das Schiff auf diesem Stück; eine Datei schiffe.json (etwa 930 Fahrten im Oktober, 140 KB, nicht in Git), im Workflow neben die
+             Seite (schiffe3d/); in der App src/schiffe3d.ts (zugStelle wie bei den Zügen) und in Schweiz3D.tsx ein Knopf «Schiffe» an der Wand
+             neben «Züge» (ab der Stufe 20 km, Farbe gewählt), je Schiff eine gezeichnete Form (komponenten/SchiffForm.ts: Rumpf weiss mit
+             dunkler Wasserlinie und karminrotem Band, zwei Decks mit Fensterband, 60 × 11 m, kein bestimmtes Schiff, gewählt), auf der Höhe des
+             Geländes (der Oberfläche des Sees), in der Region grösser, aus der Ferne mindestens 2 % des Abstands der Kamera (SCHIFF_FERN); Tipp,
+             Strahl und Aufleuchten wie bei den Zügen (der nähere Treffer von Zug und Schiff gilt): «Schiff» oder «Fähre», Kursnummer, Ziel, die
+             Ländte, an der es liegt, oder die nächste mit den Zeiten, «laut Fahrplan»; die Zeile «Schiffe laut Fahrplan vom …, nicht live»; in
+             Anleitung, Quellen und Fusszeile von 3dland genannt
 data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
@@ -600,7 +615,8 @@ python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbah
 .venv/bin/python pipeline/build_kartengrund.py   # Grenzen, Flüsse, Höhenstufen für die Karten
 python3 pipeline/fetch_fahrplan.py              # Fahrplan (GTFS) laden, 290 MB, entpackt 4,5 GB
 .venv/bin/python pipeline/build_fahrplan.py      # Züge und Halte für «Welcher Zug?», vor export_app
-.venv/bin/python pipeline/build_zuege3d.py       # Züge laut Fahrplan je Kachel für 3dland.ch (data/zuege3d), sonst im Workflow von 3dland
+.venv/bin/python pipeline/build_zuege3d.py       # Züge laut Fahrplan je Kachel für 3dland.ch (data/zuege3d) und Schiffe (data/schiffe3d), sonst im Workflow von 3dland
+.venv/bin/python pipeline/build_schifflinien.py   # Kurslinien der Schiffe aus swissTLMRegio (data/schifflinien.json), vor build_zuege3d
 python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3D (60 MB von 3,6 GB)
 .venv/bin/python pipeline/build_tlm_bauwerke.py  # Tunnel und Brücken aller Bahnen, vor build_strecken
 .venv/bin/python pipeline/build_tunnel_richtung.py  # Anfang und Ende der SBB-Tunnel laut swissTLM3D

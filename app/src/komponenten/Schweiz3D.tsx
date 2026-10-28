@@ -23,6 +23,8 @@ import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
+import { SCHIFF_M, schiffForm } from './SchiffForm'
+import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
 import { type Niederschlag, niederschlagBauen } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
@@ -63,7 +65,7 @@ interface Gelaende {
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
 /** was die Schalter ein- und ausschalten */
-type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege'
+type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege' | 'schiffe'
 /** Ein Feld und was an seinen Seiten angesetzt ist (Michael, 2026-10-20: «An den Wänden ein Plus und oder ein Minus … zum
  *  Erweitern resp. reduzieren der Kacheln»): je Stück ein Gelände, Schlüssel «di_dj» in Feldern Ost und Nord vom Anker */
 interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, number]; dj: [number, number] }
@@ -509,6 +511,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [wandern, setWandern] = useState(false)
   // Züge laut Fahrplan, nur auf 3dland.ch (Michael, 2026-10-26: «Aber NUR für 3DLand, nicht für Taktland»)
   const [zuegeAn, setZuegeAn] = useState(false)
+  const [schiffeAn, setSchiffeAn] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
   const [sonnenAn, setSonnenAn] = useState(false)
   // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
@@ -766,7 +769,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -804,7 +807,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn })[art]((x) => !x)} zuegeDa={eigeneSeite} zuege={eigeneSeite && zuegeAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
+                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn })[art]((x) => !x)} zuegeDa={eigeneSeite} zuege={eigeneSeite && zuegeAn} schiffe={eigeneSeite && schiffeAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt}
                    zeitSchieben={zeitSchieben} />
         ) : (
@@ -964,6 +967,18 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
           </Abschnitt>
         )}
+        {eigeneSeite && (
+          <Abschnitt titel="Schiffe">
+            <p>«Schiffe» zeigt ab der Stufe 20 km jedes Kursschiff und jede Fähre dort, wo sie jetzt laut Fahrplan sind, auf dem Wasser in
+              Fahrtrichtung. Zwischen zwei Ländten fährt ein Schiff gleichmässig auf den Kurslinien, wie sie swisstopo für die Landeskarte
+              führt (swissTLMRegio), auf dem kürzesten Weg darauf; wie nah diese Linien dem wirklichen Kurs folgen, steht in keiner
+              Quelle. Findet sich auf den Linien kein Weg zwischen zwei Ländten, fehlt das Schiff auf diesem Stück, statt quer übers Land zu
+              fahren. An der Ländte steht es zwischen Ankunft und Abfahrt, am Anfang und am Ende je 5 Minuten, eine Annahme wie bei den
+              Zügen. Es ist der Fahrplan von opentransportdata.swiss, nicht die wirkliche Lage: Verspätungen, Ausfälle und Extrafahrten
+              fehlen. Ein Tipp auf ein Schiff zeigt Kursnummer, Ziel und die Ländte, an der es liegt, oder die nächste, mit den Zeiten
+              laut Fahrplan. Ein Schiff ist gezeichnet, kein bestimmtes Schiff, aus der Ferne grösser, damit man es sieht.</p>
+          </Abschnitt>
+        )}
         <Abschnitt titel="Wetter: Wind und Niederschlag">
           <p>«Wetter» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
             des Bilds. Die Zahl über dem Mast ist die Windstärke in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
@@ -1021,6 +1036,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
             {eigeneSeite && <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, täglich neu geladen; Weg zwischen den Halten aus dem
               Netz von Taktland (Linien und Kilometrierung der SBB, Schienennetz des BAV).</li>}
+            {eigeneSeite && <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, täglich neu geladen; Kurslinien zwischen den
+              Ländten: swissTLMRegio (swisstopo).</li>}
             <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
@@ -1093,11 +1110,13 @@ const SCHRIFT_LEUCHTET = 0.85
 const HIMMEL_NACHT = new THREE.Color('#070d1a'), HIMMEL_NACHT_OBEN = new THREE.Color('#02050b')
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 // Sonne orange (Michael, 2026-10-25: «Der Knopf Sonne soll orangefarben sein»; vorher rot)
-const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d' }
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** ein Zug so lang, eine Annahme fürs Bild (die Länge eines Zugs steht nicht im Fahrplan); höchstens so viele zugleich */
 const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
+/** so viele Schiffe höchstens im Modell, und aus der Ferne mindestens so lang wie dieser Anteil des Abstands der Kamera (gewählt) */
+const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 /** aus der Ferne ist ein Zug mindestens so lang wie dieser Anteil des Abstands der Kamera (vorher 1,2 %, Michael, 2026-10-26: «Züge aus der Ferne etwas grösser»), gewählt */
 const ZUG_FERN = 0.018
 /** über so viele Meter des Zugs (in seiner Grösse im Modell) wird die Höhe unter ihm gemittelt, gewählt */
@@ -1190,7 +1209,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -1210,6 +1229,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   wandern: boolean
   /** Züge laut Fahrplan zeigen (ab der Stufe 20 km), zuegeDa: der Knopf dazu, nur auf 3dland.ch */
   zuege: boolean; zuegeDa: boolean
+  /** Schiffe laut Fahrplan zeigen (ab der Stufe 20 km), nur auf 3dland.ch wie die Züge */
+  schiffe: boolean
   /** Gebäude und Bäume gibt es hier */
   umweltHier: boolean
   /** die Sonne mit Zeit ist an; ein Schalter um, in der Brille an den Wänden */
@@ -1397,20 +1418,28 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const knopf = strahl.intersectObjects(k, false)[0]
       // ein Zug: sein Schild (nur 3dland.ch); sonst verschwindet ein offenes Schild. Ein Zug vor einem Knopf geht vor (in der Brille
       // fährt er oft am Rand, vor der Wand mit den Knöpfen; Michael, 2026-10-26: «dass man den Zug ganz einfach anstrahlen kann»)
-      const zuege = wurzel.getObjectByName('zuege')
-      if (zuege?.visible) {
-        const netze = zuege.children.filter((o): o is THREE.InstancedMesh => o instanceof THREE.InstancedMesh)
-        // die Züge fahren: die Kugel um alle Instanzen jedes Mal neu, sonst trifft der Strahl die alte
-        for (const n of netze) n.computeBoundingSphere()
-        const z = strahl.intersectObjects(netze, false)[0]
-        const wahl = zuege.userData.wahl as ((netz: THREE.Object3D, i: number) => boolean) | undefined
-        if (z && z.instanceId !== undefined && (!knopf || z.distance < knopf.distance) && wahl?.(z.object, z.instanceId)) return
+      // Schiffe wie Züge (Michael, 2026-10-28); der nähere Treffer gilt, die andere Art verliert ihr Schild
+      const fahrzeuge = ['zuege', 'schiffe'].map((n) => wurzel.getObjectByName(n)).filter((g): g is THREE.Object3D => !!g?.visible)
+      if (fahrzeuge.length) {
+        const abwahl = (ausser?: THREE.Object3D) => { for (const g of fahrzeuge) if (g !== ausser) (g.userData.abwahl as (() => void) | undefined)?.() }
+        let best: { g: THREE.Object3D; z: THREE.Intersection } | null = null
+        for (const g of fahrzeuge) {
+          const netze = g.children.filter((o): o is THREE.InstancedMesh => o instanceof THREE.InstancedMesh)
+          // sie fahren: die Kugel um alle Instanzen jedes Mal neu, sonst trifft der Strahl die alte
+          for (const n of netze) n.computeBoundingSphere()
+          const z = strahl.intersectObjects(netze, false)[0]
+          if (z && z.instanceId !== undefined && (!best || z.distance < best.z.distance)) best = { g, z }
+        }
+        const wahl = best?.g.userData.wahl as ((netz: THREE.Object3D, i: number) => boolean) | undefined
+        if (best && (!knopf || best.z.distance < knopf.distance) && wahl?.(best.z.object, best.z.instanceId!)) { abwahl(best.g); return }
         if (!knopf) {
           // knapp daneben gilt auch: der Zug, dessen Wagen dem Strahl am nächsten liegt, bis ZUG_TIPP_WINKEL, in der Brille weiter
           // (die Hand zittert; Michael, 2026-10-26: «Man kann den Zug schwierig antippen ohne dass es einen neuen roten Kasten … gibt»)
-          const nahe = zuege.userData.nahe as ((r: THREE.Ray, winkel: number) => boolean) | undefined
-          if (nahe?.(strahl.ray, renderer.xr.isPresenting ? ZUG_TIPP_WINKEL_BRILLE : ZUG_TIPP_WINKEL)) return
-          ;(zuege.userData.abwahl as (() => void) | undefined)?.()
+          for (const g of fahrzeuge) {
+            const nahe = g.userData.nahe as ((r: THREE.Ray, winkel: number) => boolean) | undefined
+            if (nahe?.(strahl.ray, renderer.xr.isPresenting ? ZUG_TIPP_WINKEL_BRILLE : ZUG_TIPP_WINKEL)) { abwahl(g); return }
+          }
+          abwahl()
         }
       }
       if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
@@ -1471,7 +1500,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     })
     const anfangSetzen = () => { drehung = 0; zoom = 1; lage = null; haelt.clear(); griff = null }
     // Schilder und Knöpfe: auf dem Bildschirm in fester Grösse, in der Brille in Metern
-    const sprites = () => ['schilder', 'knoepfe', 'standort', 'hoehen', 'zuege'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? [])
+    const sprites = () => ['schilder', 'knoepfe', 'standort', 'hoehen', 'zuege', 'schiffe'].flatMap((n) => (wurzel.getObjectByName(n)?.children ?? [])
       .filter((o): o is THREE.Sprite => o instanceof THREE.Sprite))
     const brilleSetzen = () => {
       const breite = (wurzel.userData.weiteKm as number) || 1
@@ -2292,7 +2321,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: ['Bäume'], breite: 0.085 * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
       // nur auf 3dland.ch, wie die Wanderwege erst ab der Stufe 20 km
       ...(zuegeDa ? [{ zeilen: ['Züge'], breite: 0.085 * W, an: stufe !== 'schweiz' && zuege, farbe: LICHT.zuege, gesperrt: stufe === 'schweiz',
-        aktion: umschalten('zuege') }] : []),
+        aktion: umschalten('zuege') },
+        // Schiffe laut Fahrplan auf den Kurslinien von swissTLMRegio (Michael, 2026-10-28)
+        { zeilen: ['Schiffe'], breite: 0.085 * W, an: stufe !== 'schweiz' && schiffe, farbe: LICHT.schiffe, gesperrt: stufe === 'schweiz',
+          aktion: umschalten('schiffe') }] : []),
     ]
     const zeitDa = sonnenAn && !!sonnenZeilen
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
@@ -2414,7 +2446,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, windAn, zuege, zuegeDa])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, windAn, zuege, zuegeDa, schiffe])
 
   // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
   // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
@@ -2850,6 +2882,185 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
     }
   }, [zuege, b, stufe, knoepfe])
+  // Schiffe laut Fahrplan, nur auf 3dland.ch (Michael, 2026-10-28: «Ja gern, tolle Idee»): auf den Kurslinien von swissTLMRegio
+  // zwischen den Ländten, wo sie laut Fahrplan jetzt sind (zugStelle wie bei den Zügen); ein Tipp zeigt ein Schild
+  const [schiffZeile, setSchiffZeile] = useState<string | null>(null)
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    const W = k?.wurzel.userData.weiteKm as number | undefined
+    if (!k || !lage || !W || !schiffe || stufe === 'schweiz') { setSchiffZeile(null); return }
+    let weg = false
+    const gruppe = new THREE.Group()
+    gruppe.name = 'schiffe'
+    gruppe.userData.bleibt = true
+    k.wurzel.add(gruppe)
+    // ein Schiff SCHIFF_M lang, in der Region etwas länger, damit man es sieht; die Form gewählt (SchiffForm.ts)
+    const laenge = Math.max(SCHIFF_M / 1000, W * 0.01), mass = laenge / (SCHIFF_M / 1000)
+    const stoff = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+    const netz = new THREE.InstancedMesh(schiffForm(), stoff, SCHIFFE_HOECHSTENS)
+    netz.count = 0; netz.castShadow = true; netz.frustumCulled = false
+    const normal = new THREE.Color(1, 1, 1), hell = new THREE.Color(...ZUG_ZIEL_HELL)
+    for (let i = 0; i < SCHIFFE_HOECHSTENS; i++) netz.setColorAt(i, normal)
+    gruppe.add(netz)
+    const schild = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false }))
+    schild.center.set(0.5, 0); schild.renderOrder = 6; schild.visible = false
+    gruppe.add(schild)
+    const schildMalen = (zeilen: string[]) => {
+      const c = document.createElement('canvas'), x = c.getContext('2d')!
+      const px = 26, klein = 21, fett = `bold ${px}px Helvetica, Arial, sans-serif`, duenn = `normal ${klein}px Helvetica, Arial, sans-serif`
+      x.font = fett; let breit = x.measureText(zeilen[0]).width
+      x.font = duenn; for (const z of zeilen.slice(1)) breit = Math.max(breit, x.measureText(z).width)
+      c.width = Math.ceil(breit) + 20; c.height = px + 16 + (zeilen.length - 1) * (klein + 6)
+      x.fillStyle = ORT_GRAU; x.beginPath(); x.roundRect(0, 0, c.width, c.height, SCHILD_RUND_PX); x.fill()
+      x.fillStyle = '#ffffff'; x.font = fett; x.fillText(zeilen[0], 10, px + 4)
+      x.font = duenn; zeilen.slice(1).forEach((z, i) => x.fillText(z, 10, px + 8 + (i + 1) * (klein + 6)))
+      schild.material.map?.dispose()
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
+      schild.material.map = t; schild.material.needsUpdate = true
+      schild.userData = { b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height, brilleM: 0.03 }
+      if (!k.renderer.xr.isPresenting) schild.scale.set(schild.userData.b, schild.userData.h, 1)
+    }
+    const uhr = (min: number | null) => {
+      if (min === null) return ''
+      const m = ((Math.round(min) % 1440) + 1440) % 1440
+      return `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`
+    }
+    let daten: Schiffe | null = null, unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = [], neuUm = 0
+    let gezeichnet: ZugFahrt[] = [], gewaehlt: number | null = null, schildText = ''
+    const mitten: THREE.Vector3[] = []
+    const zeilenVon = (f: ZugFahrt, st: ZugStelle): string[] => {
+      const name = (i: string) => daten?.laendten[Number(i)]?.name ?? i
+      const h = f.halte, halt = st.art === 'halt' ? h[st.i] : h[st.i + 1]
+      const titel = `${f.gattung === 'FAE' ? 'Fähre' : 'Schiff'} ${f.nummer}`.trim()
+      const zweite = st.art === 'halt'
+        ? (st.i === h.length - 1 ? `in ${name(halt.abk)}, an ${uhr(halt.an)}` : st.i === 0 ? `in ${name(halt.abk)}, ab ${uhr(halt.ab)}`
+          : `in ${name(halt.abk)}, an ${uhr(halt.an)}, ab ${uhr(halt.ab)}`)
+        : `nächster Halt ${name(halt.abk)}, an ${uhr(halt.an ?? halt.ab)}`
+      return [`${titel} nach ${f.ziel}`, zweite, 'laut Fahrplan']
+    }
+    const finden = (r: THREE.Ray, grenze: number) => {
+      let best = -1, bestWinkel = grenze
+      const w = new THREE.Vector3(), zu = new THREE.Vector3()
+      mitten.forEach((p, i) => {
+        if (i >= gezeichnet.length) return
+        w.copy(p); k.wurzel.localToWorld(w)
+        zu.copy(w).sub(r.origin)
+        if (zu.lengthSq() < 1e-18 || zu.dot(r.direction) <= 0) return
+        const winkel = zu.angleTo(r.direction)
+        if (winkel < bestWinkel) { bestWinkel = winkel; best = i }
+      })
+      return best
+    }
+    const waehlen = (f: ZugFahrt | undefined) => {
+      if (!f) return false
+      gewaehlt = gewaehlt === f.id ? null : f.id
+      knopfTon(gewaehlt !== null)
+      return true
+    }
+    gruppe.userData.wahl = (o: THREE.Object3D, i: number) => o === netz && waehlen(gezeichnet[i])
+    gruppe.userData.nahe = (r: THREE.Ray, grenze: number) => waehlen(gezeichnet[finden(r, grenze)])
+    gruppe.userData.abwahl = () => { gewaehlt = null }
+    let maus: THREE.Vector2 | null = null
+    const mausZiel = (ev: PointerEvent) => {
+      if (ev.pointerType !== 'mouse') return
+      const r = k.renderer.domElement.getBoundingClientRect()
+      maus = new THREE.Vector2(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1)
+    }
+    const mausWeg = () => { maus = null }
+    k.renderer.domElement.addEventListener('pointermove', mausZiel)
+    k.renderer.domElement.addEventListener('pointerleave', mausWeg)
+    const zielStrahl = new THREE.Raycaster(), handDreh = new THREE.Matrix4()
+    let geleuchtet = new Set<number>()
+    const zielen = () => {
+      const ziele = new Set<number>()
+      if (k.renderer.xr.isPresenting) {
+        for (const i of [0, 1]) {
+          const c = k.renderer.xr.getController(i)
+          if (!c.visible) continue
+          zielStrahl.ray.origin.setFromMatrixPosition(c.matrixWorld)
+          zielStrahl.ray.direction.set(0, 0, -1).applyMatrix4(handDreh.extractRotation(c.matrixWorld))
+          const z = finden(zielStrahl.ray, ZUG_TIPP_WINKEL_BRILLE)
+          if (z >= 0) ziele.add(gezeichnet[z].id)
+        }
+      } else if (maus) {
+        zielStrahl.setFromCamera(maus, k.kamera)
+        const z = finden(zielStrahl.ray, ZUG_TIPP_WINKEL)
+        if (z >= 0) ziele.add(gezeichnet[z].id)
+      }
+      return ziele
+    }
+    const teile = [...b.teile.values()]
+    const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
+    void schiffeLaden().then((d) => {
+      if (weg) return
+      daten = d
+      if (!d) { setSchiffZeile('Schiffe: der Fahrplan ist hier nicht geladen.'); return }
+      const st = /^\d{8}$/.test(d.stand) ? `${Number(d.stand.slice(6))}.${Number(d.stand.slice(4, 6))}.${d.stand.slice(0, 4)}` : d.stand
+      setSchiffZeile(`Schiffe laut Fahrplan vom ${st}, nicht live`)
+    })
+    const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), skala = new THREE.Vector3(), oben = new THREE.Vector3(0, 1, 0)
+    const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
+    const schritt = () => {
+      if (!daten) return
+      const jetzt = jetztImFahrplan(daten)
+      if (performance.now() > neuUm) {
+        neuUm = performance.now() + 2000
+        unterwegs = []
+        for (const f of daten.fahrten) { const st = zugStelle(f, jetzt.tag, jetzt.minuten); if (st) unterwegs.push({ f, st }) }
+      }
+      // aus der Ferne grösser, wie die Züge: mindestens SCHIFF_FERN des Abstands der Kamera lang
+      k.wurzel.getWorldPosition(mitte)
+      const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
+      const abstand = cam.getWorldPosition(auge).distanceTo(mitte) / Math.max(1e-9, k.wurzel.scale.x)
+      const gross = Math.max(1, (abstand * SCHIFF_FERN) / laenge)
+      skala.setScalar(mass * gross)
+      let zahl = 0, zeigt = false
+      for (const u of unterwegs) {
+        if (zahl >= SCHIFFE_HOECHSTENS) break
+        const st = zugStelle(u.f, jetzt.tag, jetzt.minuten)
+        if (!st) continue
+        const h = u.f.halte
+        const [j, anteil] = st.art === 'fahrt' ? [st.i, st.anteil] : st.i + 1 < h.length ? [st.i, 0] : [st.i - 1, 1]
+        const w = daten.weg(h[j].abk, h[j + 1].abk)
+        if (!w) continue
+        const p = schiffBei(w, anteil * w.laenge)
+        if (!drin(p.e, p.n)) continue
+        const z = bestandHoehe(b, p.e, p.n)
+        if (!Number.isFinite(z)) continue
+        v.set((p.e - lage.cE) / 1000, z / 1000, -(p.n - lage.cN) / 1000)
+        q.setFromAxisAngle(oben, Math.atan2(p.de, -p.dn))
+        m.compose(v, q, skala)
+        netz.setMatrixAt(zahl, m)
+        ;(mitten[zahl] ??= new THREE.Vector3()).copy(v)
+        gezeichnet[zahl] = u.f
+        if (u.f.id === gewaehlt) {
+          zeigt = true
+          schild.position.set(v.x, v.y + 0.012 * mass * gross, v.z)
+          const zeilen = zeilenVon(u.f, st), text = zeilen.join('|')
+          if (text !== schildText) { schildText = text; schildMalen(zeilen) }
+        }
+        zahl++
+      }
+      gezeichnet.length = zahl
+      schild.visible = zeigt
+      netz.count = zahl
+      netz.instanceMatrix.needsUpdate = true
+      const ziele = zielen()
+      if (ziele.size || geleuchtet.size) {
+        for (let i = 0; i < zahl; i++) netz.setColorAt(i, ziele.has(gezeichnet[i].id) ? hell : normal)
+        if (netz.instanceColor) netz.instanceColor.needsUpdate = true
+      }
+      geleuchtet = ziele
+    }
+    k.jeBild.push(schritt)
+    return () => {
+      weg = true
+      const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
+      k.wurzel.remove(gruppe); stoff.dispose(); netz.geometry.dispose(); netz.dispose(); schild.material.map?.dispose(); schild.material.dispose()
+      k.renderer.domElement.removeEventListener('pointermove', mausZiel); k.renderer.domElement.removeEventListener('pointerleave', mausWeg)
+    }
+  }, [schiffe, b, stufe, knoepfe])
   // Regen und Schnee über dem ganzen Modell, vom tiefsten Punkt bis ein Viertel der Breite über den höchsten (Niederschlag.ts)
   const regen = useRef<Niederschlag | null>(null)
   useEffect(() => {
@@ -2938,6 +3149,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {zugZeile && (
         <p className="pointer-events-none absolute left-2 top-14 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
           {zugZeile}
+        </p>
+      )}
+      {schiffZeile && (
+        <p className={`pointer-events-none absolute left-2 ${zugZeile ? 'top-[6.2rem]' : 'top-14'} max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white`}>
+          {schiffZeile}
         </p>
       )}
       {zugZeile && zugLink && (

@@ -11,6 +11,8 @@ Nicht darin, und so in der App benannt: Verspätungen, Ausfälle, Extrazüge, Er
 Stand der Datei beschlossen wurden; Halte an Orten ohne Bahnhof im Netz; Fahrten, die der Fahrplan nur als Takt
 (frequencies.txt) führt; der wirkliche Weg zwischen zwei Halten, wo es mehrere gibt (es gilt der kürzeste im Netz).
 
+Dazu die Schiffe nach data/schiffe3d/ (pipeline/build_schiffe3d.py, im selben Durchgang durch den Fahrplan).
+
 Ausgabe nach data/zuege3d/ (nicht in Git, der Workflow von 3dland.ch baut es täglich):
 - index.json        Quelle, Stand, Zeitraum, Verkehrstage (je eine Bitfolge als Hex, Bit 0 = von), Kacheln
 - {ost}_{nord}.json je Kachel die Fahrten: [Nummer, Name, Gattung, Linie, Ziel, Verkehrstage, [Betriebspunkt,
@@ -28,6 +30,8 @@ import shutil
 import sys
 from collections import defaultdict
 from pathlib import Path
+
+import build_schiffe3d
 
 ROOT = Path(__file__).resolve().parent.parent
 QUELLE = ROOT / "data" / "raw" / "gtfs"
@@ -133,22 +137,31 @@ def main():
     # Haltestelle (auch Gleis) → Betriebspunkt des Bahnhofs
     # und die Gleisbezeichnung der Haltekante laut Fahrplan (platform_code, mit Sektoren wie «2A-D»; Michael, 2026-10-26: «Gleis mit Link»)
     halt_von, gleis_von = {}, {}
+    # für die Schiffe (pipeline/build_schiffe3d.py): Haltestelle → Ländte (Nummer des Halts) mit Name und Lage
+    laendte_von, laendten = {}, {}
     for s in lesen(g / "stops.txt"):
         d = s.get("didok") or ""
+        if d.isdigit() and s["stop_lat"]:
+            laendte_von[s["stop_id"]] = d
+            laendten.setdefault(d, (s["stop_name"], *wgs84_zu_lv95(float(s["stop_lat"]), float(s["stop_lon"]))))
         if d.isdigit() and int(d) in abk_von and abk_von[int(d)] in lagen:
             halt_von[s["stop_id"]] = abk_von[int(d)]
             if s.get("platform_code"):
                 gleis_von[s["stop_id"]] = s["platform_code"]
 
-    linien = {}
+    linien, schiff_linien = {}, {}
     for r in lesen(g / "routes.txt"):
         if int(r["route_type"]) in ZUG:
             linien[r["route_id"]] = (r["route_desc"], r["route_short_name"])
-    fahrten = {}
+        elif int(r["route_type"]) in build_schiffe3d.SCHIFF:
+            schiff_linien[r["route_id"]] = (r["route_desc"], r["route_short_name"])
+    fahrten, schiff_fahrten = {}, {}
     for t in lesen(g / "trips.txt"):
         if t["route_id"] in linien:
             fahrten[t["trip_id"]] = (t["route_id"], t["service_id"], t["trip_short_name"], t["trip_headsign"])
-    dienste = {f[1] for f in fahrten.values()}
+        elif t["route_id"] in schiff_linien:
+            schiff_fahrten[t["trip_id"]] = (t["route_id"], t["service_id"], t["trip_short_name"], t["trip_headsign"])
+    dienste = {f[1] for f in fahrten.values()} | {f[1] for f in schiff_fahrten.values()}
 
     tage = {}
     for c in lesen(g / "calendar.txt"):
@@ -177,12 +190,18 @@ def main():
     takt = {f["trip_id"] for f in lesen(g / "frequencies.txt")}
     aktiv = {tid for tid, f in fahrten.items() if tage.get(f[1]) and tid not in takt}
     print(f"Züge: {len(fahrten)} Fahrten, im Zeitraum {len(aktiv)}")
+    schiff_aktiv = {tid for tid, f in schiff_fahrten.items() if tage.get(f[1]) and tid not in takt}
 
-    halte = defaultdict(list)
+    halte, schiff_halte = defaultdict(list), defaultdict(list)
     for i, s in enumerate(lesen(g / "stop_times.txt")):
         if i % 5_000_000 == 0 and i:
             print(f"  stop_times: {i // 1_000_000} Mio. Zeilen")
         tid = s["trip_id"]
+        if tid in schiff_aktiv:
+            k = laendte_von.get(s["stop_id"])
+            if k and not (s["pickup_type"] == "1" and s["drop_off_type"] == "1"):
+                schiff_halte[tid].append((int(s["stop_sequence"]), k, minuten(s["arrival_time"]), minuten(s["departure_time"])))
+            continue
         if tid not in aktiv:
             continue
         abk = halt_von.get(s["stop_id"])
@@ -260,6 +279,13 @@ def main():
     groesse = sum(p.stat().st_size for p in ZIEL.glob("*.json"))
     print(f"data/zuege3d: {len(zusammen)} Fahrten, {len(je_kachel)} Kacheln, {len(tage_liste)} Verkehrstage-Muster, "
           f"{groesse / 1e6:.1f} MB")
+
+    # dieselbe Lesung des Fahrplans für die Schiffe (Michael, 2026-10-28)
+    # geht dabei etwas schief, bleiben die Züge (3dland erscheint dann ohne Schiffe)
+    try:
+        build_schiffe3d.bauen(info, g.name, von, bis, tage, schiff_linien, schiff_fahrten, schiff_halte, laendten)
+    except Exception as fehler:  # noqa: BLE001
+        print(f"Schiffe nicht gebaut: {fehler!r}")
 
 
 if __name__ == "__main__":
