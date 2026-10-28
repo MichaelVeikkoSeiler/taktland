@@ -1106,7 +1106,8 @@ const SCHRIFT_LEUCHTET = 0.85
 const HIMMEL_NACHT = new THREE.Color('#070d1a'), HIMMEL_NACHT_OBEN = new THREE.Color('#02050b')
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 // Sonne orange (Michael, 2026-10-25: «Der Knopf Sonne soll orangefarben sein»; vorher rot)
-const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6' }
+// Gebäude gräulich statt grün wie die Bäume (Michael, 2026-10-28: «Den Knopf Gebäude gräulich machen»), Farbe gewählt
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** ein Zug so lang, eine Annahme fürs Bild (die Länge eines Zugs steht nicht im Fahrplan); höchstens so viele zugleich */
@@ -2317,7 +2318,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: ['Gipfel'], breite: 0.085 * W, an: gipfel, farbe: LICHT.gelaende, aktion: umschalten('gipfel') },
       { zeilen: ['Wanderwege'], breite: 0.085 * W, an: stufe !== 'schweiz' && wandern, farbe: LICHT.gelaende, gesperrt: stufe === 'schweiz',
         aktion: umschalten('wandern') },
-      { zeilen: ['Gebäude'], breite: 0.085 * W, an: umweltDa && gebaeude, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
+      { zeilen: ['Gebäude'], breite: 0.085 * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
       { zeilen: ['Bäume'], breite: 0.085 * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
       // wie die Wanderwege erst ab der Stufe 20 km
       ...(zuegeDa ? [{ zeilen: ['Züge'], breite: 0.085 * W, an: stufe !== 'schweiz' && zuege, farbe: LICHT.zuege, gesperrt: stufe === 'schweiz',

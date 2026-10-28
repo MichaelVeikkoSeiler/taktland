@@ -336,7 +336,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Band unter dem tiefsten Punkt, links der Knöpfe + und − Höhen, Wanderwege (ab 20 km), Gebäude und Bäume (wo es sie gibt), rechts
              Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Tag, +1 Tag (Michael, 2026-10-24: «Was heisst 1 Mon?», dann «−1 Monat und +1 Monat durch Tage ersetzen»), Jetzt (Strahl und Abzug); als Knöpfe einer Steuerung
              (Michael, 2026-10-22: «wie richtige … physische Knöpfe»): aus dunkel und 1,1 % der Breite vorstehend, an 0,3 % eingedrückt und
-             leuchtend mit Schein auf der Wand, Gelände gelb, Gebäude und Bäume grün, Sonne orange (seit 2026-10-25, vorher rot; Michael: «orangefarben») (KNOPF_*, LICHT), die Zeit als flache Anzeige;
+             leuchtend mit Schein auf der Wand, Gelände gelb, Bäume grün, Gebäude grau (seit 2026-10-28, vorher grün; Michael: «Den Knopf Gebäude gräulich machen»), Sonne orange (seit 2026-10-25, vorher rot; Michael: «orangefarben») (KNOPF_*, LICHT), die Zeit als flache Anzeige;
              jeder Druck klickt wie ein rastender Druckknopf, gerechnet (knopfTon in src/audio.ts; Michael, 2026-10-22: «passend und absolut
              authentisch»); Schalter «Orte» für die Ortschaften, am Anfang aus; Höhenlinien und Orte blenden sich in 2,5 s von vorne
              (zum Betrachter) nach hinten ein und genau rückwärts aus, eine Ebene quer zum Blick schneidet ab (VERLAUF_S, verlaufSetzen),
