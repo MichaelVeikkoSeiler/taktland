@@ -3176,7 +3176,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (!w) { setWolkenZeile('Wolken: die Prognose von MeteoSchweiz ist hier nicht geladen.'); return }
       const uhr = (ms: number) => new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }).format(ms)
       const st = wolkenStunde(w, zeit)
-      if (st === null) { setWolkenZeile(`Wolken: für ${uhr(zeit.getTime())} gibt es keine Prognose (Lauf ${uhr(Date.parse(w.ix.lauf))}).`); return }
+      if (st === null) { setWolkenZeile(`Wolken: für ${uhr(zeit.getTime())} gibt es keine Prognose, nur für ${uhr(w.zeiten[0])} bis ${uhr(w.zeiten[w.zeiten.length - 1])}.`); return }
       WOLKEN_HOEHE_M.forEach((hoeheM, j) => {
         const bild = wolkenBild(w, st, j, e0, n0, e1, n1)
         if (!bild) return
