@@ -1,6 +1,6 @@
 /**
- * Schiffe laut Fahrplan für 3D-Land (3dland.ch), nicht für Taktland (Michael, 2026-10-28: «Ja gern, tolle Idee»). Die Daten baut
- * pipeline/build_schiffe3d.py im Workflow von 3dland.ch und legt sie neben die Seite (schiffe3d/schiffe.json): die Fahrten mit
+ * Schiffe laut Fahrplan für «3D Schweiz» auf 3dland.ch und in Taktland (Michael, 2026-10-28: «Ja gern, tolle Idee»). Die Daten baut
+ * pipeline/build_schiffe3d.py in den Workflows von 3dland.ch und Taktland und legt sie neben die Seite (schiffe3d/schiffe.json): die Fahrten mit
  * ihren Ländten und je Paar von Ländten der Weg auf den Kurslinien von swissTLMRegio. Wo ein Schiff zu einer Zeit ist, rechnet
  * zugStelle wie bei den Zügen: zwischen zwei Ländten gleichmässig auf diesem Weg, eine Annahme.
  */

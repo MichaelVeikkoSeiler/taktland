@@ -5,6 +5,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Züge und Schiffe gelten 14 Tage ab dem Bau, und die Bedingungen von opentransportdata.swiss verlangen, den Fahrplan
+  # regelmässig nachzuführen: montags und donnerstags früh neu veröffentlichen (Zeit in UTC)
+  schedule:
+    - cron: '17 3 * * 1,4'
 
 permissions:
   contents: read
@@ -65,6 +69,15 @@ jobs:
       - name: Streckennetz gegen die Linienfakten prüfen
         run: python3 generator/strecken.py --validieren
 
+      # Züge und Schiffe für «3D Schweiz» aus dem Fahrplan von opentransportdata.swiss (290 MB; pipeline/build_zuege3d.py,
+      # build_schiffe3d.py; Michael, 2026-10-28: «Bitte diese Sachen auch für Taktland»); klappt es nicht, erscheint
+      # «3D Schweiz» ohne
+      - name: Züge und Schiffe für 3D Schweiz
+        run: |
+          python3 pipeline/fetch_fahrplan.py && python3 pipeline/build_zuege3d.py \
+            || echo "::warning::Züge und Schiffe nicht gebaut, «3D Schweiz» erscheint ohne"
+          rm -rf data/raw/gtfs
+
       # Stellt sicher, dass die App die aktuellen Profile ausliefert, auch wenn
       # jemand vergessen hat, export_app.py vor dem Einchecken laufen zu lassen
       - name: Daten für die App bereitstellen
@@ -82,7 +95,9 @@ jobs:
       # taktland.ch: an der Wurzel die Seite aus web/, die App unter /app/
       # (Michael, 2026-09-30)
       - name: Seite zusammenstellen
-        run: python3 pipeline/export_web.py
+        run: |
+          python3 pipeline/export_web.py
+          for d in zuege3d schiffe3d; do if [ -d data/$d ]; then cp -r data/$d _site/app/$d; fi; done
 
       - uses: actions/upload-pages-artifact@v3
         with:
