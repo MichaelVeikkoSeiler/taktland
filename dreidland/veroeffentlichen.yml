@@ -33,7 +33,9 @@ jobs:
             app/
             pipeline/fetch_fahrplan.py
             pipeline/build_zuege3d.py
+            pipeline/build_schiffe3d.py
             data/strecken.json
+            data/schifflinien.json
 
       - uses: actions/setup-node@v4
         with:
@@ -49,12 +51,13 @@ jobs:
         working-directory: app
         run: npx tsc -b && npx vite build -c vite.3dland.config.ts && node scripts/3dland_fertig.mjs
 
-      # Züge laut Fahrplan (pipeline/build_zuege3d.py): das GTFS von opentransportdata.swiss, täglich neu, wie es die
-      # Nutzungsbedingungen verlangen; klappt es nicht, erscheint 3dland ohne Züge
-      - name: Züge laut Fahrplan
+      # Züge und Schiffe laut Fahrplan (pipeline/build_zuege3d.py, build_schiffe3d.py): das GTFS von opentransportdata.swiss,
+      # täglich neu, wie es die Nutzungsbedingungen verlangen; klappt es nicht, erscheint 3dland ohne Züge und Schiffe
+      - name: Züge und Schiffe laut Fahrplan
         continue-on-error: true
         run: |
           python3 pipeline/fetch_fahrplan.py && python3 pipeline/build_zuege3d.py && cp -r data/zuege3d app/dist-3dland/zuege3d
+          if [ -d data/schiffe3d ]; then cp -r data/schiffe3d app/dist-3dland/schiffe3d; fi
           rm -rf data/raw/gtfs
 
       - uses: actions/upload-pages-artifact@v3
