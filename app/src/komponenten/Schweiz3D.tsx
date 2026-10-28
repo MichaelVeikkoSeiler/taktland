@@ -1115,6 +1115,8 @@ const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
 const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 /** aus der Ferne ist ein Zug mindestens so lang wie dieser Anteil des Abstands der Kamera (vorher 1,2 %, Michael, 2026-10-26: «Züge aus der Ferne etwas grösser»), gewählt */
 const ZUG_FERN = 0.018
+/** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
+const ZUG_NAH_MASS = 0.6
 /** über so viele Meter des Zugs (in seiner Grösse im Modell) wird die Höhe unter ihm gemittelt, gewählt */
 const ZUG_GLATT_M = 300
 /** so viele Zugbreiten liegt die Mitte eines Zugs links neben dem Weg: zwei Züge in Gegenrichtung fahren nebeneinander, wie bei Linksverkehr
@@ -2774,7 +2776,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       k.wurzel.getWorldPosition(mitte)
       const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
       const abstand = cam.getWorldPosition(auge).distanceTo(mitte) / Math.max(1e-9, k.wurzel.scale.x)
-      gross.setScalar(Math.max(1, (abstand * ZUG_FERN) / laenge))
+      // in den Feldern von 4 km und 1 km kleiner, sonst ragen die Züge über die Dächer (Michael, 2026-10-28, Bern: «ungefähr 60% von dieser
+      // jetzigen Größe»)
+      gross.setScalar(Math.max(1, (abstand * ZUG_FERN) / laenge) * (stufe === 'ort' || stufe === 'nah' ? ZUG_NAH_MASS : 1))
       skala.copy(gross).multiplyScalar(mass)
       for (const u of unterwegs) {
         if (zahl >= ZUEGE_HOECHSTENS) break
