@@ -77,6 +77,12 @@ jobs:
         run: |
           python3 pipeline/fetch_fahrplan.py && python3 pipeline/build_fahrplan.py \
             || echo "::warning::Fahrplan nicht gebaut, die App erscheint ohne"
+
+      # Züge und Schiffe für «3D Schweiz» aus demselben Fahrplan (pipeline/build_zuege3d.py, build_schiffe3d.py; Michael,
+      # 2026-10-28: «Bitte diese Sachen auch für Taktland»); klappt es nicht, erscheint «3D Schweiz» ohne
+      - name: Züge und Schiffe für 3D Schweiz
+        run: |
+          python3 pipeline/build_zuege3d.py || echo "::warning::Züge und Schiffe nicht gebaut, «3D Schweiz» erscheint ohne"
           rm -rf data/raw/gtfs
 
       # Stellt sicher, dass die App die aktuellen Profile ausliefert, auch wenn
@@ -96,7 +102,9 @@ jobs:
       # taktland.ch: an der Wurzel die Seite aus web/, die App unter /app/
       # (Michael, 2026-09-30)
       - name: Seite zusammenstellen
-        run: python3 pipeline/export_web.py
+        run: |
+          python3 pipeline/export_web.py
+          for d in zuege3d schiffe3d; do if [ -d data/$d ]; then cp -r data/$d _site/app/$d; fi; done
 
       - uses: actions/upload-pages-artifact@v3
         with:

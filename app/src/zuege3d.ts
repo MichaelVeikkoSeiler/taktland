@@ -1,6 +1,6 @@
 /**
- * Züge laut Fahrplan für 3D-Land (3dland.ch), nicht für Taktland (Michael, 2026-10-26: «gehen wir mal die Züge an. Aber NUR für
- * 3DLand»). Die Daten baut pipeline/build_zuege3d.py im Workflow von 3dland.ch und legt sie neben die Seite (zuege3d/); je
+ * Züge laut Fahrplan für «3D Schweiz», seit 2026-10-28 auch in Taktland (Michael, 2026-10-28: «Bitte diese Sachen auch für Taktland»), zuerst nur für 3dland.ch (Michael, 2026-10-26: «gehen wir mal die Züge an. Aber NUR für
+ * 3DLand»). Die Daten baut pipeline/build_zuege3d.py in den Workflows von 3dland.ch und Taktland (pages.yml) und legt sie neben die Seite (zuege3d/); je
  * 10-km-Kachel die Fahrten, deren Weg sie berührt. Hier steht, wo ein Zug zu einer Zeit laut Fahrplan ist: an einem Halt
  * zwischen Ankunft und Abfahrt, sonst zwischen zwei Halten. Zwischen zwei Halten fährt er gleichmässig auf dem kürzesten
  * Weg im Netz, eine Annahme: Anfahren, Bremsen und der wirkliche Weg stehen in keiner unserer Quellen.

@@ -548,8 +548,10 @@ data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-1
              Sternen»): solange echtes Wetter gilt, der Stand der Sonne über der Mitte des Modells jetzt oder zur gewählten Stunde der Prognose
              (nachtRechnen in Relief.tsx), nachts ein gemalter Nachthimmel, weniger Licht, Licht in den Fenstern zur Stunde, Tasten am Pult
              leuchtend, in der Dämmerung der Abendhimmel, Sterne hinter Wolken schwächer; bei Schönwetter und in «Wo bin ich?» immer Tag
-data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Michael, 2026-10-26: «gehen wir mal die Züge an. Aber NUR für
-             3DLand, nicht für Taktland»; zuerst Fahrplan, Echtzeit wäre ein zweiter Schritt mit Schlüssel): pipeline/build_zuege3d.py aus dem
+data/zuege3d/  Züge laut Fahrplan für «3D Schweiz», zuerst nur für 3dland.ch (Michael, 2026-10-26: «gehen wir mal die Züge an. Aber NUR für
+             3DLand, nicht für Taktland»), seit 2026-10-28 auch in Taktland (Michael: «Bitte diese Sachen auch für Taktland»: der Knopf «Züge», gebaut
+             auch in pages.yml nach build_fahrplan, montags und donnerstags, neben die App gelegt, _site/app/zuege3d; der Link zum Bahnhof führt dort
+             auf dessen Seite in der App, AUF_3DLAND; zuerst Fahrplan, Echtzeit wäre ein zweiter Schritt mit Schlüssel): pipeline/build_zuege3d.py aus dem
              GTFS von opentransportdata.swiss (fetch_fahrplan.py), nur Züge und Halte an Bahnhöfen im Netz, 14 Tage ab gestern, je Paar Halte der
              kürzeste Weg im Netz (Dijkstra wie wegSuchen, das dafür in src/wegsuche.ts steht), jede Fahrt in jeder 10-km-Kachel, die ihr Weg
              berührt (etwa 23'000 Fahrten, 296 Kacheln, 49 MB, nicht in Git); gebaut im Workflow von 3dland (dreidland/veroeffentlichen.yml,
@@ -565,14 +567,14 @@ data/zuege3d/  Züge laut Fahrplan nur für 3dland.ch, nicht für Taktland (Mich
              «laut Fahrplan», oben im Bild ein Link «Bahnhof …: Perrons und Gleise auf taktland.ch», wo Taktland eine Seite hat (TAKTLAND_APP; Michael, 2026-10-26: «Gleis mit Link») (Michael, 2026-10-26: «welcher Zug welcher ist … nur bei 3DLand»); ein Tipp daneben blendet es aus; knapp daneben trifft er den Zug noch, bis 2,5° vom Auge, in der Brille 4°, vor dem Gelände (kein roter Kasten), ein Zug vor einem
              Wandknopf geht dem Knopf vor (ZUG_TIPP_WINKEL, ZUG_TIPP_WINKEL_BRILLE; schon beim Zielen leuchtet der Zug unter dem Strahl
              jedes Controllers, auf dem Bildschirm unter der Maus, gelblich auf, Farbe je Instanz, ZUG_ZIEL_HELL, gewählt; Michael, 2026-10-26: «Zug unter dem Strahl beim Zielen aufleuchten lassen»; Michael, 2026-10-26: «schwierig antippen ohne dass es einen neuen roten Kasten … gibt», «Auch bei der Brille»); in Anleitung, Quellen und Fusszeile von 3dland genannt
-data/schiffe3d/  Schiffe laut Fahrplan nur für 3dland.ch wie die Züge (Michael, 2026-10-28: «Ja gern, tolle Idee. Vielleicht findest du ja die
+data/schiffe3d/  Schiffe laut Fahrplan für «3D Schweiz» auf 3dland.ch und in Taktland wie die Züge (Michael, 2026-10-28: «Ja gern, tolle Idee. Vielleicht findest du ja die
              Routen aus Flyern oder Seekarten der ÖV»): pipeline/build_schiffe3d.py, aufgerufen von build_zuege3d.py im selben Durchgang durch den
              Fahrplan, Kursschiffe und Fähren (GTFS route_type 4 und 1000) mit ihren Ländten, 14 Tage; der Weg zwischen zwei Ländten auf den
              Kurslinien von swissTLMRegio (Ebene tlmregio_transportation_ship, Kursschiff_Linie und Autofaehre, wie auf der Landeskarte;
              data/schifflinien.json aus pipeline/build_schifflinien.py, 780 Linien, 130 KB, in Git, weil der Workflow kein swissTLMRegio hat),
              der kürzeste darauf, eine Ländte an der nächsten Stelle einer Linie bis 600 m (ANLEGEN_M; gemessen fast alle unter 300 m),
              Enden bis 60 m verbunden, höchstens 2,2-mal die Luftlinie plus 1 km (UMWEG; sonst Bellevue–Corsier GE 15 km statt 4,4), ohne Weg fehlt
-             das Schiff auf diesem Stück; eine Datei schiffe.json (etwa 930 Fahrten im Oktober, 140 KB, nicht in Git), im Workflow neben die
+             das Schiff auf diesem Stück; eine Datei schiffe.json (etwa 930 Fahrten im Oktober, 140 KB, nicht in Git), in beiden Workflows neben die
              Seite (schiffe3d/); in der App src/schiffe3d.ts (zugStelle wie bei den Zügen) und in Schweiz3D.tsx ein Knopf «Schiffe» an der Wand
              neben «Züge» (ab der Stufe 20 km, Farbe gewählt), je Schiff eine gezeichnete Form (komponenten/SchiffForm.ts: Rumpf weiss mit
              dunkler Wasserlinie und karminrotem Band, zwei Decks mit Fensterband, 60 × 11 m, kein bestimmtes Schiff, gewählt), auf der Höhe des

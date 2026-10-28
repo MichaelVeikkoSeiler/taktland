@@ -509,7 +509,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [baeumeAn, setBaeumeAn] = useState(false)
   // Wanderwege am Anfang aus (Michael, 2026-10-21: «defaultmässig ausgeblendet»)
   const [wandern, setWandern] = useState(false)
-  // Züge laut Fahrplan, nur auf 3dland.ch (Michael, 2026-10-26: «Aber NUR für 3DLand, nicht für Taktland»)
+  // Züge laut Fahrplan, zuerst nur auf 3dland.ch (Michael, 2026-10-26), seit 2026-10-28 auch in Taktland (Michael, 2026-10-28: «Bitte diese Sachen auch für Taktland»)
   const [zuegeAn, setZuegeAn] = useState(false)
   const [schiffeAn, setSchiffeAn] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
@@ -807,7 +807,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn })[art]((x) => !x)} zuegeDa={eigeneSeite} zuege={eigeneSeite && zuegeAn} schiffe={eigeneSeite && schiffeAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
+                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt}
                    zeitSchieben={zeitSchieben} />
         ) : (
@@ -952,33 +952,29 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
             4'000 m, ihre Zahl steht klein an der Wand.</p>
         </Abschnitt>
-        {eigeneSeite && (
-          <Abschnitt titel="Züge">
-            <p>«Züge» zeigt ab der Stufe 20 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
-              (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
-              Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, eine Annahme: wie lange er dort wirklich steht,
-              steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, nicht
-              die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
-              fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
-              wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
-              Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
-              Buchstaben sind die Sektoren, wie sie der Fahrplan nennt); oben im Bild ein Link zur Seite dieses Bahnhofs auf taktland.ch
-              mit Perrons und Gleisen, wo Taktland eine hat. Ein Tipp daneben blendet es aus. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
-              gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
-          </Abschnitt>
-        )}
-        {eigeneSeite && (
-          <Abschnitt titel="Schiffe">
-            <p>«Schiffe» zeigt ab der Stufe 20 km jedes Kursschiff und jede Fähre dort, wo sie jetzt laut Fahrplan sind, auf dem Wasser in
-              Fahrtrichtung. Zwischen zwei Ländten fährt ein Schiff gleichmässig auf den Kurslinien, wie sie swisstopo für die Landeskarte
-              führt (swissTLMRegio), auf dem kürzesten Weg darauf; wie nah diese Linien dem wirklichen Kurs folgen, steht in keiner
-              Quelle. Findet sich auf den Linien kein Weg zwischen zwei Ländten, fehlt das Schiff auf diesem Stück, statt quer übers Land zu
-              fahren. An der Ländte steht es zwischen Ankunft und Abfahrt, am Anfang und am Ende je 5 Minuten, eine Annahme wie bei den
-              Zügen. Es ist der Fahrplan von opentransportdata.swiss, nicht die wirkliche Lage: Verspätungen, Ausfälle und Extrafahrten
-              fehlen. Ein Tipp auf ein Schiff zeigt Kursnummer, Ziel und die Ländte, an der es liegt, oder die nächste, mit den Zeiten
-              laut Fahrplan. Ein Schiff ist gezeichnet, kein bestimmtes Schiff, aus der Ferne grösser, damit man es sieht.</p>
-          </Abschnitt>
-        )}
+        <Abschnitt titel="Züge">
+          <p>«Züge» zeigt ab der Stufe 20 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
+            (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
+            Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, eine Annahme: wie lange er dort wirklich steht,
+            steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, nicht
+            die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
+            fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
+            wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
+            Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
+            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt); oben im Bild ein Link zur Seite dieses Bahnhofs auf taktland.ch
+            mit Perrons und Gleisen, wo Taktland eine hat. Ein Tipp daneben blendet es aus. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
+            gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
+        </Abschnitt>
+        <Abschnitt titel="Schiffe">
+          <p>«Schiffe» zeigt ab der Stufe 20 km jedes Kursschiff und jede Fähre dort, wo sie jetzt laut Fahrplan sind, auf dem Wasser in
+            Fahrtrichtung. Zwischen zwei Ländten fährt ein Schiff gleichmässig auf den Kurslinien, wie sie swisstopo für die Landeskarte
+            führt (swissTLMRegio), auf dem kürzesten Weg darauf; wie nah diese Linien dem wirklichen Kurs folgen, steht in keiner
+            Quelle. Findet sich auf den Linien kein Weg zwischen zwei Ländten, fehlt das Schiff auf diesem Stück, statt quer übers Land zu
+            fahren. An der Ländte steht es zwischen Ankunft und Abfahrt, am Anfang und am Ende je 5 Minuten, eine Annahme wie bei den
+            Zügen. Es ist der Fahrplan von opentransportdata.swiss, nicht die wirkliche Lage: Verspätungen, Ausfälle und Extrafahrten
+            fehlen. Ein Tipp auf ein Schiff zeigt Kursnummer, Ziel und die Ländte, an der es liegt, oder die nächste, mit den Zeiten
+            laut Fahrplan. Ein Schiff ist gezeichnet, kein bestimmtes Schiff, aus der Ferne grösser, damit man es sieht.</p>
+        </Abschnitt>
         <Abschnitt titel="Wetter: Wind und Niederschlag">
           <p>«Wetter» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
             des Bilds. Die Zahl über dem Mast ist die Windstärke in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
@@ -1034,10 +1030,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Ortschaften, Gipfel und Seen der Suche: swissTLMRegio (swisstopo); Orte und Gipfel der Landeskarte 1:1 Million; Kantone: Bundesamt für Statistik BFS.</li>
             <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind.</li>
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
-            {eigeneSeite && <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, täglich neu geladen; Weg zwischen den Halten aus dem
-              Netz von Taktland (Linien und Kilometrierung der SBB, Schienennetz des BAV).</li>}
-            {eigeneSeite && <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, täglich neu geladen; Kurslinien zwischen den
-              Ländten: swissTLMRegio (swisstopo).</li>}
+            <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Weg zwischen den Halten aus dem
+              Netz von Taktland (Linien und Kilometrierung der SBB, Schienennetz des BAV).</li>
+            <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
+              Ländten: swissTLMRegio (swisstopo).</li>
             <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
@@ -1047,8 +1043,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern gezeichnet oder angenommen ist:</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
-            {eigeneSeite && <li>Züge: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, und dass jeder Zug links neben dem Weg fährt,
-              damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>}
+            <li>Züge und Schiffe: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, und dass jeder Zug links neben dem Weg fährt,
+              damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
@@ -1126,6 +1122,8 @@ const ZUG_GLATT_M = 300
 const ZUG_LINKS = 0.7
 /** die App von Taktland, auf deren Bahnhofseiten das Zugschild verweist */
 const TAKTLAND_APP = 'https://taktland.ch/app/'
+/** auf 3dland.ch (auch in dessen Testfassung) führt der Link des Zugs zu taktland.ch, in Taktland selbst auf die Seite des Bahnhofs */
+const AUF_3DLAND = /3dland/.test(window.location.hostname) || /3dland\.html$/.test(window.location.pathname)
 /** so weit neben einem Wagen (Winkel vom Auge) trifft ein Tipp den Zug noch, 2,5°, gewählt */
 const ZUG_TIPP_WINKEL = (2.5 * Math.PI) / 180
 /** in der Brille, wo der Strahl mit der Hand zittert, 4°, gewählt */
@@ -1227,9 +1225,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   zeitSchieben: (art: 'stunde' | 'tag' | 'jetzt', um: number) => void
   /** Wanderwege zeigen (in den Stufen 20 km, 4 km und 1 km) */
   wandern: boolean
-  /** Züge laut Fahrplan zeigen (ab der Stufe 20 km), zuegeDa: der Knopf dazu, nur auf 3dland.ch */
+  /** Züge laut Fahrplan zeigen (ab der Stufe 20 km), zuegeDa: der Knopf dazu */
   zuege: boolean; zuegeDa: boolean
-  /** Schiffe laut Fahrplan zeigen (ab der Stufe 20 km), nur auf 3dland.ch wie die Züge */
+  /** Schiffe laut Fahrplan zeigen (ab der Stufe 20 km) */
   schiffe: boolean
   /** Gebäude und Bäume gibt es hier */
   umweltHier: boolean
@@ -2319,7 +2317,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         aktion: umschalten('wandern') },
       { zeilen: ['Gebäude'], breite: 0.085 * W, an: umweltDa && gebaeude, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
       { zeilen: ['Bäume'], breite: 0.085 * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
-      // nur auf 3dland.ch, wie die Wanderwege erst ab der Stufe 20 km
+      // wie die Wanderwege erst ab der Stufe 20 km
       ...(zuegeDa ? [{ zeilen: ['Züge'], breite: 0.085 * W, an: stufe !== 'schweiz' && zuege, farbe: LICHT.zuege, gesperrt: stufe === 'schweiz',
         aktion: umschalten('zuege') },
         // Schiffe laut Fahrplan auf den Kurslinien von swissTLMRegio (Michael, 2026-10-28)
@@ -2596,7 +2594,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [windAn, b, stufe, zusatz, knoepfe])
   useEffect(() => { windhosen.current?.setzen(windWerte) },
     [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
-  // Züge laut Fahrplan (src/zuege3d.ts), nur auf 3dland.ch und ab der Stufe 20 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
+  // Züge laut Fahrplan (src/zuege3d.ts), ab der Stufe 20 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
   // wie der Zug der Modellbahn auf dem Gelände in Fahrtrichtung
   const [zugZeile, setZugZeile] = useState<string | null>(null)
   /** zum gewählten Zug der Bahnhof, an dem er steht oder als Nächstes hält, mit seiner Seite auf taktland.ch (Perrons, Gleise, Sektoren;
@@ -2693,7 +2691,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       linkAbk = abk
       if (abk && zn && !uicVon) uicVon = new Map(Object.entries(zn.netz.bahnhoefe).map(([u, a]) => [a, Number(u)]))
       const uic = abk ? uicVon?.get(abk) : undefined
-      setZugLink(abk && uic && mitSeite?.has(uic) ? { name: zn?.netz.punkte[abk] ?? abk, url: `${TAKTLAND_APP}#/bahnhof/${uic}` } : null)
+      setZugLink(abk && uic && mitSeite?.has(uic) ? { name: zn?.netz.punkte[abk] ?? abk, url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/bahnhof/${uic}` } : null)
     }
     const zeilenVon = (f: ZugFahrt, st: ZugStelle): string[] => {
       const name = (abk: string) => zn?.netz.punkte[abk] ?? abk
@@ -2882,7 +2880,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
     }
   }, [zuege, b, stufe, knoepfe])
-  // Schiffe laut Fahrplan, nur auf 3dland.ch (Michael, 2026-10-28: «Ja gern, tolle Idee»): auf den Kurslinien von swissTLMRegio
+  // Schiffe laut Fahrplan (Michael, 2026-10-28: «Ja gern, tolle Idee»), auf 3dland.ch und in Taktland: auf den Kurslinien von swissTLMRegio
   // zwischen den Ländten, wo sie laut Fahrplan jetzt sind (zugStelle wie bei den Zügen); ein Tipp zeigt ein Schild
   const [schiffZeile, setSchiffZeile] = useState<string | null>(null)
   useEffect(() => {
@@ -3054,6 +3052,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       geleuchtet = ziele
     }
     k.jeBild.push(schritt)
+    // nur in einer Testfassung (VITE_S3D_TEST): wo die Schiffe auf dem Bild sind, in Bildpunkten
+    if (import.meta.env.VITE_S3D_TEST) {
+      ;(window as unknown as { s3dSchiffe: unknown }).s3dSchiffe = () => {
+        const r = k.renderer.domElement.getBoundingClientRect()
+        return mitten.slice(0, gezeichnet.length).map((p) => {
+          const w = k.wurzel.localToWorld(p.clone()).project(k.kamera)
+          return [r.left + ((w.x + 1) / 2) * r.width, r.top + ((1 - w.y) / 2) * r.height]
+        })
+      }
+    }
     return () => {
       weg = true
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
@@ -3157,9 +3165,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         </p>
       )}
       {zugZeile && zugLink && (
-        <a href={zugLink.url} target="_blank" rel="noopener"
+        <a href={zugLink.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
           className="absolute left-2 top-[4.6rem] max-w-[70%] rounded bg-white/90 px-1.5 py-0.5 text-[11px] font-medium leading-tight text-sbb-red underline dark:bg-sbb-midnight/90">
-          Bahnhof {zugLink.name}: Perrons und Gleise auf taktland.ch ↗
+          Bahnhof {zugLink.name}: Perrons und Gleise{AUF_3DLAND ? ' auf taktland.ch ↗' : ''}
         </a>
       )}
     </div>
