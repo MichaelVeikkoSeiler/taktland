@@ -584,9 +584,11 @@ data/schiffe3d/  Schiffe laut Fahrplan für «3D Schweiz» auf 3dland.ch und in 
              Anleitung, Quellen und Fusszeile von 3dland genannt
 data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolken angehen»): pipeline/build_wolken.py aus dem Wettermodell ICON-CH1-EPS
              von MeteoSchweiz (Open Government Data, CC-BY; STAC ch.meteoschweiz.ogd-forecasting-icon-ch1 auf data.geo.admin.ch, Dateien auf
-             rgw.cscs.ch, GRIB2 über eccodes), der neueste vollständige Lauf, nur der Kontrolllauf, je Stunde die Bewölkung CLCL (800 hPa bis Boden),
+             rgw.cscs.ch, GRIB2 über eccodes), der neueste vollständige Lauf, davor bis 24 Stunden zurück je Stunde der neueste frühere Lauf, der sie
+             hat (ZURUECK_H, lauf_je_stunde; Michael, 2026-10-28: «Ich sehe keine Wolken»: mit «Sonne» an beginnt die Zeit um 12 Uhr, der neueste
+             Lauf erst am Abend), nur der Kontrolllauf, je Stunde die Bewölkung CLCL (800 hPa bis Boden),
              CLCM (400 bis 800 hPa) und CLCH (0 bis 400 hPa) in Prozent, die Modellzellen (etwa 1 km, Lage aus horizontal_constants) auf 2 km in LV95
-             gemittelt (index.json und wolken.wgz, etwa 530 KB, nicht in Git); CEILING bleibt weg (die Quelle nennt nicht, ob über Meer oder Boden),
+             gemittelt (index.json und wolken.wgz, etwa 1,2 MB, nicht in Git); CEILING bleibt weg (die Quelle nennt nicht, ob über Meer oder Boden),
              HBAS_SC und HTOP_SC gelten nur für flache Konvektion; gebaut im Workflow von 3dland.ch, dazu alle 3 Stunden (cron, Züge und Schiffe dann
              aus actions/cache vom selben Tag), neben die Seite gelegt (wolken/), Taktland liest sie bei https://3dland.ch/wolken/; in der App
              src/wolken.ts und in Schweiz3D.tsx mit dem Knopf «Wetter» in der ganzen Schweiz und in der Region, zur Zeit der Sonne oder jetzt (die Stunde

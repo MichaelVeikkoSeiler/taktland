@@ -8,6 +8,8 @@ import { holen, holenBinaer } from './daten'
 
 export interface WolkenIndex {
   quelle: string; lauf: string; stunden: string[]
+  /** je Stunde der Lauf, aus dem sie stammt (vor dem neuesten Lauf aus früheren) */
+  lauf_je_stunde?: string[]
   e0: number; n1: number; schritt_m: number; nx: number; ny: number
   schichten: Array<{ name: string; modell: string; druck: string }>
   hinweis: string
