@@ -565,6 +565,14 @@ const ZUG_VORNE_BIS_M = 800
 /** beim Fahren (Fahrt und Probefahrt) ist der Zug grösser (Michael, 2026-10-07: «bei der Fahrt Live … 150 %») */
 const ZUG_FAHRT_FAKTOR = 1.5
 /** so stark neigt sich ein Wagen höchstens, 4° (im überhöhten Gelände wären es sonst Rampen; vorher 7°, Michael, 2026-10-10) */
+/** so nah muss der Zug einer Seilbahn kommen, damit sie erscheint (Michael, 2026-10-28: «in der Nähe von 3 Kilometern»), in km */
+const SEILBAHN_NAH_KM = 3
+/** Abstand eines Punkts zur Strecke a–b, waagrecht, in den Einheiten der Szene (km) */
+function abstandZurStrecke(p: THREE.Vector3, a: THREE.Vector3, b: THREE.Vector3) {
+  const dx = b.x - a.x, dz = b.z - a.z, l2 = dx * dx + dz * dz
+  const t = l2 > 0 ? Math.max(0, Math.min(1, ((p.x - a.x) * dx + (p.z - a.z) * dz) / l2)) : 0
+  return Math.hypot(p.x - (a.x + dx * t), p.z - (a.z + dz * t))
+}
 const ZUG_NEIGUNG_MAX = (4 * Math.PI) / 180
 /** Höhe der Linie: alle HOEHE_SCHRITT_M aus dem Gelände, gemittelt über GLAETTEN_M davor und danach */
 const HOEHE_SCHRITT_M = 50, GLAETTEN_M = 400
@@ -1275,7 +1283,8 @@ function Hinweise({ r }: { r: Relief }) {
         mittleren Höhe ihres Ufers im Gelände, nicht auf einem gemessenen Seespiegel.</p>
       <p>Kulturgüter von nationaler Bedeutung (BABS), Seilbahnen mit Bundeskonzession (BAV), Gebiete (BAFU), Wald und
         Siedlung (swissTLMRegio) wie auf den Karten. Seilbahnen sind gerade von Station zu Station gezogen; wie hoch
-        das Seil hängt, steht in keiner Quelle. Das Kilometernetz folgt den Landeskoordinaten (LV95), eine Linie je
+        das Seil hängt, steht in keiner Quelle. Beim Fahren und bei der Probefahrt erscheint eine Seilbahn erst, wenn der Zug
+        höchstens 3 km von ihr entfernt ist. Das Kilometernetz folgt den Landeskoordinaten (LV95), eine Linie je
         Kilometer, kräftiger alle 10 km.</p>
       <p>Quellen: {r.quellen.join('; ')}. Datenstand der Linie {r.datenstand.split('-').map(Number).reverse().join('.')}.</p>
     </div>
@@ -3456,6 +3465,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const seilBild = new THREE.Group(), seilBrille = new THREE.Group()
     seilBrille.visible = false
     gruppen.seilbahn.add(seilBild, seilBrille)
+    /** je Seilbahn ihre Teile und Stationen, damit sie mit dem Zug nur in der Nähe erscheint (SEILBAHN_NAH_KM) */
+    const seilbahnen: Array<{ teile: THREE.Object3D[]; a: THREE.Vector3; b: THREE.Vector3 }> = []
     for (const b of zusatz?.s?.seilbahnen ?? []) {
       const pts = b.verlauf.flatMap((v) => zugLesen(v))
       if (pts.length < 2 || !pts.some(([e, n]) => imAusschnitt(e, n))) continue
@@ -3469,17 +3480,21 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       lg.setPositions([a.x, a.y, a.z, z2.x, z2.y, z2.z])
       const lm = new LineMaterial({ color: seilFarbe, linewidth: 1.5 })
       linienMaterialien.push(lm)
-      seilBild.add(new Line2(lg, lm))
+      const teile: THREE.Object3D[] = [new Line2(lg, lm)]
+      seilBild.add(teile[0])
       if (brille) {
-        seilBrille.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.LineCurve3(a, z2), 8, BRILLE_LINIE_M * 0.5 / brilleMass, 5, false),
-          new THREE.MeshBasicMaterial({ color: seilFarbe })))
+        const roehre = new THREE.Mesh(new THREE.TubeGeometry(new THREE.LineCurve3(a, z2), 8, BRILLE_LINIE_M * 0.5 / brilleMass, 5, false),
+          new THREE.MeshBasicMaterial({ color: seilFarbe }))
+        seilBrille.add(roehre); teile.push(roehre)
       }
       for (const p of [a, z2]) {
         const st = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.04), new THREE.MeshBasicMaterial({ color: seilFarbe }))
         st.position.copy(p)
         gruppen.seilbahn.add(st)
         zeichen.push(st)
+        teile.push(st)
       }
+      seilbahnen.push({ teile, a, b: z2 })
     }
     anwenden.current = (a: Set<Kategorie>) => {
       gruppen.gipfel.visible = !a.has('gipfel')
@@ -4291,6 +4306,16 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         // beim Fahren ist zug.current der eigene Standort; gezeichnet wird der Zug ab seiner Spitze (stelleDerSpitze)
         const s = zugVonAussen ? stelleDerSpitze(zug.current) : zug.current
         const sichtbar = s !== null && imStueck(s)
+        // Seilbahnen nur, wenn der Zug höchstens SEILBAHN_NAH_KM von ihnen entfernt ist (Michael, 2026-10-28: «von Müntschemier aus schon eine
+        // Standseilbahn in Neuchâtel. Das braucht es nicht … in der Nähe von 3 Kilometern»); nur beim Fahren und bei der Probefahrt,
+        // in den Modellen der Modellbahn alle
+        if (seilbahnen.length) {
+          const lok = (zugVonAussen || probe) && sichtbar ? zugTeile[0]?.netz.position : undefined
+          for (const sb of seilbahnen) {
+            const da = !lok || abstandZurStrecke(lok, sb.a, sb.b) <= SEILBAHN_NAH_KM
+            for (const t of sb.teile) t.visible = da
+          }
+        }
         // auf dem Bildschirm wächst der Zug mit dem Abstand der Kamera: beim Hineinzoomen kleiner,
         // aus der Ferne noch zu finden (Michael, 2026-10-07)
         if (!renderer.xr.isPresenting) zugMass = zeichenMass() * (zugVonAussen ? ZUG_FAHRT_FAKTOR : 1)
