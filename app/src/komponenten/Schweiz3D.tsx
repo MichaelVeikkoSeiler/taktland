@@ -1362,10 +1362,10 @@ const ZUG_ZIEL_HELL: [number, number, number] = [1.5, 1.25, 0.45]
 const ZUG_NEIGUNG = (6 * Math.PI) / 180
 /** nachts, wenn in den Gebäuden Licht brennt (fensterNacht), leuchten die Züge (Michael, 2026-10-29: «sollen auch die fahrenden Züge eine
  *  Innenbeleuchtung aufweisen, sowie die Stirnlichter sollen auf die Strecke leuchten. Nur dezent, aber sichtbar»): das Fensterband warm von
- *  innen und vor der Lok ein Lichtkegel auf dem Boden, so lang wie die Lok und vorne so breit wie dreimal der Zug; Farben und Stärke
+ *  innen und vor der Lok ein Lichtkegel auf dem Boden, dreimal so lang wie die Lok und vorne viermal so breit wie der Zug; Farben und Stärke
  *  gewählt, in keiner Quelle */
 const ZUG_INNEN_FARBE = '#ffd49a', ZUG_INNEN_HELL = 0.75
-const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.45, ZUG_STIRN_LAENGE = 1, ZUG_STIRN_BREITE = 3
+const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.6, ZUG_STIRN_LAENGE = 3, ZUG_STIRN_BREITE = 4
 /** der Lichtkegel als Bild: hell an der Lok, nach vorne breiter und schwächer */
 function stirnBild() {
   const c = document.createElement('canvas'), x = c.getContext('2d')!
