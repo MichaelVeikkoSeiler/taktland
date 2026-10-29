@@ -6,7 +6,7 @@
  * Weg im Netz, eine Annahme: Anfahren, Bremsen und der wirkliche Weg stehen in keiner unserer Quellen.
  */
 import { geometrieLaden, holen, streckenLaden } from './daten'
-import { type Fahrweg, fahrwegBauen, geometrieLesen } from './fahrt'
+import { type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, type Punkt, wegEnde } from './fahrt'
 import type { StreckenNetz } from './typen'
 import { type Nachbarn, wegSuchen } from './wegsuche'
 
@@ -101,7 +101,28 @@ export function zugStelle(f: ZugFahrt, tag: number, minuten: number): ZugStelle 
 }
 
 /** Netz, Linien und Wege zwischen zwei Halten, einmal geladen und gerechnet */
-export interface ZugNetz { netz: StreckenNetz; weg: (a: string, b: string) => Fahrweg | null }
+/** Der Weg eines Zugs: geglättet, mit den Tunneln, deren Anfang und Ende die Daten kennen, in Metern entlang des Wegs */
+export type ZugWeg = Fahrweg & { tunnel: Array<readonly [number, number]> }
+export interface ZugNetz { netz: StreckenNetz; weg: (a: string, b: string) => ZugWeg | null }
+
+/** Glättung des Wegs für die Züge (Michael, 2026-10-29, Zürich HB: «sehr enge Kurve beim Gleiswechsel»): wo der Weg von einer Linie auf
+ *  die nächste wechselt, stossen ihre Zeichnungen oft in einem Knick aneinander; alle GLATT_SCHRITT_M ein Punkt, gemittelt mit einer
+ *  Glockenkurve der Breite GLATT_SIGMA_M (gewählt: ein Knick wird eine Kurve, eine gewöhnliche Kurve rückt nur wenig nach innen) */
+const GLATT_SCHRITT_M = 10, GLATT_SIGMA_M = 40
+function geglaettet(fw: Fahrweg): Fahrweg {
+  const ende = wegEnde(fw), n = Math.max(2, Math.ceil(ende / GLATT_SCHRITT_M) + 1)
+  const roh = Array.from({ length: n }, (_, i) => { const s = (i / (n - 1)) * ende; return { s, ...lageBei(fw, s) } })
+  const k = Math.ceil((3 * GLATT_SIGMA_M) / GLATT_SCHRITT_M)
+  const w = Array.from({ length: 2 * k + 1 }, (_, j) => Math.exp(-(((j - k) * GLATT_SCHRITT_M) ** 2) / (2 * GLATT_SIGMA_M ** 2)))
+  const punkte: Punkt[] = roh.map((p, i) => {
+    // die Enden bleiben, wo sie sind: das Fenster schrumpft dort auf beiden Seiten gleich
+    const kk = Math.min(k, i, n - 1 - i)
+    let la = 0, lo = 0, sw = 0
+    for (let j = -kk; j <= kk; j++) { const q = roh[i + j], g = w[j + k]; la += q.lat * g; lo += q.lon * g; sw += g }
+    return { s: p.s, lat: la / sw, lon: lo / sw }
+  })
+  return { ...fw, punkte }
+}
 let netzVorrat: Promise<ZugNetz> | null = null
 export function zugNetzLaden(): Promise<ZugNetz> {
   netzVorrat ??= (async () => {
@@ -112,14 +133,21 @@ export function zugNetzLaden(): Promise<ZugNetz> {
       nachbarn.set(e.von, [...(nachbarn.get(e.von) ?? []), [e.nach, e]])
       nachbarn.set(e.nach, [...(nachbarn.get(e.nach) ?? []), [e.von, e]])
     }
-    const wege = new Map<string, Fahrweg | null>()
+    const wege = new Map<string, ZugWeg | null>()
     const weg = (a: string, b: string) => {
       const s = `${a}>${b}`
       if (!wege.has(s)) {
         const w = wegSuchen(nachbarn, a, b)
-        let fw: Fahrweg | null = null
+        let fw: ZugWeg | null = null
         if (w && w.abschnitte.length) {
-          try { fw = fahrwegBauen(netz, linien, w.punkte, w.abschnitte, () => undefined, () => false) } catch { fw = null }
+          try {
+            const roh = fahrwegBauen(netz, linien, w.punkte, w.abschnitte, () => undefined, () => false)
+            // im Tunnel ist der Zug nicht zu sehen (Michael, 2026-10-29, Zürich HB: die Züge «fahren … durch ein Gebäude»: der Weg ging durch
+            // den Tunnel zum Bahnhof Museumstrasse); nur Tunnel mit bekanntem Ende
+            const tunnel = roh.objekte.filter((o) => o.art === 'tunnel' && o.sAus !== null)
+              .map((o) => [Math.min(o.s, o.sAus!), Math.max(o.s, o.sAus!)] as const)
+            fw = { ...geglaettet(roh), tunnel }
+          } catch { fw = null }
         }
         wege.set(s, fw)
       }

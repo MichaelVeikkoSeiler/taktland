@@ -3246,6 +3246,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const ve = wegEnde(vorher), [be, bn] = r(lageBei(vorher, Math.max(0, ve - 60)), lageBei(vorher, ve))
           if ((ae * be + an * bn) < -0.5 * Math.hypot(ae, an) * Math.hypot(be, bn)) sM = Math.min(ende, ZUG_GANZ_M * mass * gross.x)
         }
+        const imTunnel = (sm: number) => {
+          if (sm >= 0) return fw.tunnel.some(([a, z]) => sm >= a && sm <= z)
+          if (!vorher) return false
+          const sv = wegEnde(vorher) + sm
+          return vorher.tunnel.some(([a, z]) => sv >= a && sv <= z)
+        }
         const stelle = (sm: number): [number, number] => {
           if (sm >= 0) { const p = lageBei(fw, Math.min(sm, ende)); return lv95(p.lat, p.lon) }
           if (!vorher) return geradeZurueck(fw, sm)
@@ -3285,6 +3291,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           neigung.setFromAxisAngle(querAchse, quer > 1 ? -Math.max(-ZUG_NEIGUNG, Math.min(ZUG_NEIGUNG, Math.atan2(hv - hh, quer))) : 0)
           q.multiply(neigung)
           m.compose(v, q, skala)
+          // im Tunnel nicht zu sehen, mit seinen Lampen
+          const verdeckt = imTunnel((vo.s + hi.s) / 2)
+          if (verdeckt) m.makeScale(0, 0, 0)
           ;(mitten[zahl] ??= [])[w] = (mitten[zahl][w] ?? new THREE.Vector3()).copy(v)
           if (w === 0) {
             for (const seite of [-1, 1]) {
@@ -3296,7 +3305,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               lampeSetzen(ZUG_LAMPEN * zahl + 3 + (seite + 1) / 2, seite * ZUG_LAMPE_SEITE * ZUG_BREITE, ZUG_LAMPE_HOEHE * ZUG_HOEHE, -ZUG_WAGEN_M / 2000)
             }
           }
-          if (w === 0 && fensterNacht.value > 0) {
+          if (w === 0 && verdeckt) {
+            m.makeScale(0, 0, 0)
+            for (const seite of [0, 1]) stirn.setMatrixAt(2 * zahl + seite, m)
+          } else if (w === 0 && fensterNacht.value > 0) {
             // je Lampe ein Kegel vor der Spitze der Lok, drei Loks lang (am Halt kürzer und schwächer), um denselben Versatz nach links,
             // geneigt vom Boden an der Spitze zum Boden vorne
             const halt = st.art === 'halt'
