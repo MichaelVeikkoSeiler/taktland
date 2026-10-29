@@ -1125,6 +1125,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
+            <li>Strassen- und Bahnhofslicht bei Nacht: die Lampen sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
+              Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe und Helligkeit der Lampen sind gewählt. Ebenso die
+              Innenbeleuchtung der Züge, ihre zwei Stirnlampen und deren Lichtkegel.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station, wo das Wettermodell fehlt; Dichte, Tempo und Grösse
               der Tropfen und Flocken; dass sie an der untersten gezeichneten Wolke beginnen; Regen- und Windgeräusch gerechnet.</li>
@@ -1369,6 +1372,8 @@ const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.6, ZUG_STIRN_LAENGE = 3, Z
 /** Strassen- und Bahnhofslicht: Radius des Lichtflecks auf dem Boden (m), Farben und Stärke gewählt, in keiner Quelle (die Lampen sind
  *  erfunden, belegt ist nur, wo Strassen und Gleise liegen); höchstens so viele Lampen in einem Modell (eine Annahme zur Grafik) */
 const LICHT_STRASSE_M = 11, LICHT_BAHNHOF_M = 16, LICHT_STRASSE_FARBE = '#ffc98a', LICHT_BAHNHOF_FARBE = '#eef3ff', LICHT_HELL = 0.55
+/** am Bahnhof liegen die Lampen über vielen Gleisen nebeneinander und addieren sich: dort schwächer (Bern war ein weisser Fleck) */
+const LICHT_BAHNHOF_STAERKE = 0.6
 const LICHT_HOECHSTENS = 60_000
 /** ein Lichtfleck: in der Mitte hell, nach aussen weich */
 function lichtBild() {
@@ -2916,7 +2921,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const n = new THREE.InstancedMesh(geo, stoff, anzahl)
       n.frustumCulled = false; n.renderOrder = 2
       const m = new THREE.Matrix4(), v = new THREE.Vector3(), q = new THREE.Quaternion(), sk = new THREE.Vector3()
-      const warm = new THREE.Color(LICHT_STRASSE_FARBE), kuehl = new THREE.Color(LICHT_BAHNHOF_FARBE)
+      const warm = new THREE.Color(LICHT_STRASSE_FARBE), kuehl = new THREE.Color(LICHT_BAHNHOF_FARBE).multiplyScalar(LICHT_BAHNHOF_STAERKE)
       // bei sehr vielen Lampen jede soundsovielte
       const schritt = l.e.length / anzahl
       for (let i = 0; i < anzahl; i++) {
@@ -3222,7 +3227,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               lampen.setMatrixAt(2 * zahl + (seite + 1) / 2, lampeM)
             }
           }
-          if (w === 0 && fensterNacht.value > 0) {
+          if (w === 0 && fensterNacht.value > 0 && st.art === 'halt') {
+            // am Halt kein Kegel: in grossen Bahnhöfen stehen viele Züge nebeneinander, ihre Kegel addierten sich zu einem weissen Fleck
+            m.makeScale(0, 0, 0)
+            for (const seite of [0, 1]) stirn.setMatrixAt(2 * zahl + seite, m)
+            m.compose(v, q, skala)
+          } else if (w === 0 && fensterNacht.value > 0) {
             // je Lampe ein Kegel vor der Spitze der Lok, drei Loks lang, um denselben Versatz nach links, geneigt vom Boden an der Spitze
             // zum Boden vorne
             const lM = ZUG_LOK_M * mJeM, lang0 = ZUG_STIRN_LAENGE * lM

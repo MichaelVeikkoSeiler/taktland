@@ -617,6 +617,14 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              Boden) bis auf den Boden, darüber Schnee, unter der Schneefallgrenze Regen (komponenten/Niederschlag.ts, Säulen), in jeder Stufe; das Geräusch nach dem Mittel über das Modell; ohne diese Daten wie vorher die
              Station gleichmässig über dem Modell (vorher bis ein Viertel der Breite über dem höchsten Punkt, in der ganzen Schweiz also bis
              etwa 90 km hoch); die Zeile «Regen und Schnee laut Prognose von MeteoSchweiz für …»
+data/strassenlicht/  Strassen- und Bahnhofslicht bei Nacht für «3D Schweiz» (Michael, 2026-10-29: «Irgendwie fehlt schon noch eine Straßen- und allgemeine
+             Bahnhofbeleuchtung. Kannst du das nicht erfinden und einbauen?»): pipeline/build_strassenlicht.py (nach fetch_tlm3d.py --strassen), die Lampen
+             erfunden, belegt nur die Lage: Strassen von 3 bis 10 m aus swissTLM3D (ohne Tunnel) in Siedlungen (swissTLMRegio Siedl, Stadtzentr) alle 35 m,
+             Gleise (nur Bahn, ohne Tram, Metro, Tunnel, Standseilbahnen) bis 250 m um die Bahnhöfe des Netzes alle 30 m, je Zelle von 15 m und 25 m höchstens
+             eine (sonst wurde das Gleisfeld von Bern ein weisser Fleck), etwa 1,2 Millionen und 32'000 Lampen, 440 Kacheln, 5 MB (.lgz); in der App
+             strassenlichtLaden in src/gelaende.ts, in Schweiz3D.tsx ab der Stufe 20 km, sobald in den Gebäuden Licht brennt: je Lampe ein weicher Lichtfleck
+             auf dem Boden, warm auf Strassen (11 m), kühler und schwächer an Bahnhöfen (16 m), höchstens 60'000 im Modell (LICHT_*, gewählt); im Halt ohne
+             Lichtkegel der Stirnlampen (die Kegel der vielen Züge in Bern addierten sich); in «Was gezeichnet oder angenommen ist» genannt
 data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
