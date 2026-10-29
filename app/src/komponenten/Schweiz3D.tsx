@@ -1351,6 +1351,17 @@ const ZUG_GLATT_M = 300
 /** so viele Zugbreiten liegt die Mitte eines Zugs links neben dem Weg: zwei Züge in Gegenrichtung fahren nebeneinander, wie bei Linksverkehr
  *  auf zwei Gleisen (Michael, 2026-10-26: «aneinander vorbeifahren und nicht … durcheinander»); welches Gleis, steht in keiner unserer Quellen, gewählt */
 const ZUG_LINKS = 0.7
+/** im Bahnhof liegt jeder Zug auf einer eigenen Spur nach seinem Gleis laut Fahrplan (Michael, 2026-10-29, Biel: «fahren Züge in stehende Züge.
+ *  Könnten die einfahrenden … frühzeitig einen Gleiswechsel machen?»): die Gleise des Bahnhofs, die in den geladenen Fahrten vorkommen, nach
+ *  ihrer Nummer nebeneinander, je ZUG_SPUR Zugbreiten, um die Mitte des Wegs; in den letzten und ersten ZUG_SPUR_ANLAUF_M vor und nach dem Halt
+ *  gleitet der Zug auf seine Spur (Abstand, Anlauf und dass die Nummern der Reihe nach liegen, gewählt: wo die Gleise wirklich liegen, steht in
+ *  keiner unserer Quellen) */
+const ZUG_SPUR = 1.6, ZUG_SPUR_ANLAUF_M = 600
+/** die Nummer eines Gleises laut Fahrplan, die Zahl am Anfang; ohne Zahl null */
+function gleisNummer(g: string | null) {
+  const m = g ? /^\s*(\d+)/.exec(g) : null
+  return m ? Number(m[1]) : null
+}
 /** die App von Taktland, auf deren Bahnhofseiten das Zugschild verweist */
 const TAKTLAND_APP = 'https://taktland.ch/app/'
 /** auf 3dland.ch (auch in dessen Testfassung) führt der Link des Zugs zu taktland.ch, in Taktland selbst auf die Seite des Bahnhofs */
@@ -3181,6 +3192,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
     let fahrten: ZugFahrt[] = [], ix: ZugIndex | null = null, zn: ZugNetz | null = null
+    const spuren = new Map<string, number[]>()
+    // je Bahnhof die Richtung «links» des ersten Zugs dort: so liegt eine Spur für Züge beider Richtungen auf derselben Seite
+    const spurSeite = new Map<string, [number, number]>()
+    /** wie weit (in Spuren um die Mitte) das Gleis eines Halts neben dem Weg liegt, null ohne Gleis */
+    const spurVon = (abk: string, gleis: string | null) => {
+      const g = gleisNummer(gleis), liste = spuren.get(abk)
+      if (g === null || !liste) return null
+      return liste.indexOf(g) - (liste.length - 1) / 2
+    }
     let unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = [], neuUm = 0
     const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), gross = new THREE.Vector3(1, 1, 1), skala = new THREE.Vector3(), neigung = new THREE.Quaternion(), querAchse = new THREE.Vector3(1, 0, 0), oben = new THREE.Vector3(0, 1, 0)
     const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
@@ -3191,6 +3211,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const [liste, netzDa] = await Promise.all([zuegeLaden(ix, e0, n0, e1, n1).catch(() => []), zugNetzLaden().catch(() => null)])
       if (weg) return
       fahrten = liste; zn = netzDa
+      // je Bahnhof die Gleise der Reihe nach (nur die Zahl am Anfang: «2A-D» ist Gleis 2, «7 / 8» Gleis 7)
+      const je = new Map<string, Set<number>>()
+      for (const f of liste) for (const x of f.halte) {
+        const g = gleisNummer(x.gleis)
+        if (g !== null) (je.get(x.abk) ?? je.set(x.abk, new Set()).get(x.abk)!).add(g)
+      }
+      for (const [abk, g] of je) spuren.set(abk, [...g].sort((a, z) => a - z))
       const st = /^\d{8}$/.test(ix.stand) ? `${Number(ix.stand.slice(6))}.${Number(ix.stand.slice(4, 6))}.${ix.stand.slice(0, 4)}` : ix.stand
       setZugZeile(zn ? `Züge laut Fahrplan vom ${st}, nicht live` : 'Züge: das Netz konnte nicht geladen werden.')
     })()
@@ -3273,6 +3300,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           ab += lM + ZUG_LUECKE_M * mJeM
         }
         const fenster = ZUG_GLATT_M * mJeM
+        // die Spur im Bahnhof: am Halt ganz, davor und danach gleitend (ZUG_SPUR_ANLAUF_M), dazwischen ZUG_LINKS
+        const spurA = spurVon(h[j].abk, h[j].gleis), spurB = spurVon(h[j + 1].abk, h[j + 1].gleis)
+        const anlauf = ZUG_SPUR_ANLAUF_M * Math.max(1, gross.x)
+        let gA = spurA === null ? 0 : Math.max(0, 1 - sM / anlauf), gB = spurB === null ? 0 : Math.max(0, 1 - (ende - sM) / anlauf)
+        if (gA + gB > 1) { const t = gA + gB; gA /= t; gB /= t }
+        const seiteBei = (abk: string, le: number, ln: number) => {
+          const ref = spurSeite.get(abk) ?? (spurSeite.set(abk, [le, ln]), [le, ln])
+          return le * ref[0] + ln * ref[1] >= 0 ? 1 : -1
+        }
         let lokE = 0, lokN = 0
         const glatt = enden.map((x) => {
           let summe = 0, zahlH = 0
@@ -3282,7 +3318,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         for (let w = 0; w <= ZUG_WAGEN; w++) {
           const vo = enden[2 * w], hi = enden[2 * w + 1], hv = glatt[2 * w], hh = glatt[2 * w + 1]
           // nach links versetzt, damit Züge in Gegenrichtung aneinander vorbeifahren statt durcheinander
-          const lang = Math.hypot(vo.e - hi.e, vo.n - hi.n) || 1, versatz = ZUG_BREITE * mass * gross.x * 1000 * ZUG_LINKS
+          const lang = Math.hypot(vo.e - hi.e, vo.n - hi.n) || 1
+          // links des Wagens (wie unten: −(vo.n − hi.n), vo.e − hi.e), für die Seite der Spur im Bahnhof
+          const le = -(vo.n - hi.n) / lang, ln = (vo.e - hi.e) / lang
+          const links = ZUG_LINKS * (1 - gA - gB)
+            + (gA ? gA * spurA! * ZUG_SPUR * seiteBei(h[j].abk, le, ln) : 0) + (gB ? gB * spurB! * ZUG_SPUR * seiteBei(h[j + 1].abk, le, ln) : 0)
+          const versatz = ZUG_BREITE * mass * gross.x * 1000 * links
           const e = (vo.e + hi.e) / 2 - ((vo.n - hi.n) / lang) * versatz, n = (vo.n + hi.n) / 2 + ((vo.e - hi.e) / lang) * versatz
           if (w === 0) { lokE = e; lokN = n }
           v.set((e - lage.cE) / 1000, (hv + hh) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)

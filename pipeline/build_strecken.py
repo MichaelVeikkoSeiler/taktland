@@ -853,6 +853,10 @@ def projektion(p, zug):
     return float(d[i]), float(km[i] + t[i] * (km[i + 1] - km[i]))
 
 
+#: (Betriebspunkt, Linie), die linie-mit-betriebspunkten nennt; gefüllt von lagen
+AMTLICH = {}
+
+
 def lagen(punkte, zuege):
     """Je Betriebspunkt: {linie: (abstand, km)} für Linien bis UEBERGANG_KM.
 
@@ -863,6 +867,7 @@ def lagen(punkte, zuege):
     for r in load("linie-mit-betriebspunkten").itertuples():
         amtlich[(r.abkurzung_bpk, int(r.linie))].append(float(r.km))
     mitte = {nr: (z[0].mean(), z[1].mean(), max(np.ptp(z[0]), np.ptp(z[1]))) for nr, z in zuege.items()}
+    AMTLICH.update(amtlich)
     raus = {}
     for abk, p in punkte.items():
         x, y = p["lage"]
@@ -911,7 +916,11 @@ def zuordnen(a, b, geo, lage, sbb_linien, auf_linie):
         if not (geo * 0.9 - 0.2 <= strecke <= geo * 3 + 0.5):
             continue
         nah = da <= NAH_KM and db <= NAH_KM
-        kandidaten.append((dazwischen(nr, ka, kb, a, b, auf_linie), not nah, da + db, nr, ka, kb))
+        # nennt linie-mit-betriebspunkten beide Enden auf dieser Linie, geht sie vor: Langstrasse – Zürich HB lag sonst auf der Linie 745
+        # zum unterirdischen Bahnhof Museumstrasse, Zürich HB steht nur auf der Linie 710 (Michael, 2026-10-29: die Züge fuhren «durch ein
+        # Gebäude»)
+        amtlich = (a, nr) in AMTLICH and (b, nr) in AMTLICH
+        kandidaten.append((dazwischen(nr, ka, kb, a, b, auf_linie), not nah, not amtlich, da + db, nr, ka, kb))
     if not kandidaten:
         return None
     *_, nr, ka, kb = min(kandidaten)
