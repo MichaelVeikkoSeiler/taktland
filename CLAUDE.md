@@ -624,7 +624,7 @@ data/strassenlicht/  Strassen- und Bahnhofslicht bei Nacht für «3D Schweiz» (
              eine (sonst wurde das Gleisfeld von Bern ein weisser Fleck), etwa 1,2 Millionen und 32'000 Lampen, 440 Kacheln, 5 MB (.lgz); in der App
              strassenlichtLaden in src/gelaende.ts, in Schweiz3D.tsx nur mit dem Schalter «Gebäude» (Michael, 2026-10-29: «Strassen und Bahnhofbeleuchtung nur aktivieren
              wenn Gebäude eingeschaltet sind»), sobald in den Gebäuden Licht brennt: je Lampe ein weicher Lichtfleck
-             auf dem Boden, warm auf Strassen (11 m), kühler und schwächer an Bahnhöfen (16 m), höchstens 60'000 im Modell (LICHT_*, gewählt); je Lampe
+             auf dem Boden, warm auf Strassen (14 m), kühler und schwächer an Bahnhöfen (20 m; vorher 11 und 16 m und heller, Michael, 2026-10-29: «Lichtkegel etwas breiter und etwas weniger hell»), höchstens 60'000 im Modell (LICHT_*, gewählt); je Lampe
              auch am Tag ein schlichter dunkelgrauer Mast, 8 m an Strassen, 10 m an Bahnhöfen, 3 m neben der Lampe in einer je Lampe festen Richtung
              (die Datei kennt die Achse der Strasse nicht), oben ein Kopf, der nachts leuchtet (LICHT_MAST_*, gewählt; Michael, 2026-10-29: «Kann man bei den
              Lichtkegel doch noch einen Masten am Strassenrand einfügen? Nur was ganz simples?»); im Halt ohne
