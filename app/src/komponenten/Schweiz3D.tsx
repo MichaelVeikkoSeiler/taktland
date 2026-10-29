@@ -14,7 +14,7 @@ import { Ladebalken } from './Ladebalken'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
-import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
+import { fensterLicht, fensterNacht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
 import { knopfTon, wetterGeraeusch, wetterGeraeuschAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
@@ -1360,6 +1360,29 @@ const ZUG_TIPP_WINKEL_BRILLE = (4 * Math.PI) / 180
 const ZUG_ZIEL_HELL: [number, number, number] = [1.5, 1.25, 0.45]
 /** so stark neigt sich ein Wagen höchstens, 6° (wie in der Modellbahn ZUG_NEIGUNG_MAX, dort 4°), gewählt */
 const ZUG_NEIGUNG = (6 * Math.PI) / 180
+/** nachts, wenn in den Gebäuden Licht brennt (fensterNacht), leuchten die Züge (Michael, 2026-10-29: «sollen auch die fahrenden Züge eine
+ *  Innenbeleuchtung aufweisen, sowie die Stirnlichter sollen auf die Strecke leuchten. Nur dezent, aber sichtbar»): das Fensterband warm von
+ *  innen und vor der Lok ein Lichtkegel auf dem Boden, so lang wie die Lok und vorne so breit wie dreimal der Zug; Farben und Stärke
+ *  gewählt, in keiner Quelle */
+const ZUG_INNEN_FARBE = '#ffd49a', ZUG_INNEN_HELL = 0.75
+const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.45, ZUG_STIRN_LAENGE = 1, ZUG_STIRN_BREITE = 3
+/** der Lichtkegel als Bild: hell an der Lok, nach vorne breiter und schwächer */
+function stirnBild() {
+  const c = document.createElement('canvas'), x = c.getContext('2d')!
+  c.width = 64; c.height = 128
+  const d = x.createImageData(c.width, c.height)
+  for (let j = 0; j < c.height; j++) {
+    const t = j / (c.height - 1), breit = 0.18 + 0.82 * t
+    for (let i = 0; i < c.width; i++) {
+      const u = (i / (c.width - 1)) * 2 - 1, a = Math.pow(1 - t, 1.4) * Math.exp(-((u / breit) ** 2) * 3)
+      const o = (j * c.width + i) * 4
+      d.data[o] = d.data[o + 1] = d.data[o + 2] = 255; d.data[o + 3] = Math.round(255 * Math.min(1, a * 1.3))
+    }
+  }
+  x.putImageData(d, 0, 0)
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
+  return tex
+}
 /** Schrift in der Brille, Höhe eines Schilds in Metern */
 const BRILLE_SCHRIFT_M = 0.022
 
@@ -2880,6 +2903,23 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const ganzM = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M), mass = laenge / (ganzM / 1000), hoehe = ZUG_HOEHE * mass
     const formen = zugFormen()
     const stoff = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+    // die Innenbeleuchtung: das Fensterband (Attribut leuchte) leuchtet mit der Nacht der Gebäude
+    stoff.onBeforeCompile = (sh) => {
+      sh.uniforms.zugNacht = fensterNacht
+      sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float leuchte;\nvarying float vLeuchte;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvLeuchte = leuchte;')
+      sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nuniform float zugNacht;\nvarying float vLeuchte;')
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+          totalEmissiveRadiance += vLeuchte * zugNacht * ${ZUG_INNEN_HELL.toFixed(3)} * vec3(${new THREE.Color(ZUG_INNEN_FARBE).toArray().map((x) => x.toFixed(3)).join(', ')});`)
+    }
+    // die Stirnlichter: je Zug ein Lichtkegel vor der Lok auf dem Boden
+    const stirnStoff = new THREE.MeshBasicMaterial({ map: stirnBild(), color: ZUG_STIRN_FARBE, transparent: true, depthWrite: false,
+      blending: THREE.AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })
+    const stirnGeo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2).translate(0, 0, 0.5)
+    const stirn = new THREE.InstancedMesh(stirnGeo, stirnStoff, ZUEGE_HOECHSTENS)
+    stirn.count = 0; stirn.frustumCulled = false; stirn.renderOrder = 2
+    gruppe.add(stirn)
+    const stirnQ = new THREE.Quaternion(), stirnV = new THREE.Vector3(), stirnS = new THREE.Vector3()
     const netzVon = (geo: THREE.BufferGeometry, je: number) => {
       const n = new THREE.InstancedMesh(geo, stoff, ZUEGE_HOECHSTENS * je)
       n.count = 0; n.castShadow = true; n.frustumCulled = false
@@ -3104,6 +3144,23 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           q.multiply(neigung)
           m.compose(v, q, skala)
           ;(mitten[zahl] ??= [])[w] = (mitten[zahl][w] ?? new THREE.Vector3()).copy(v)
+          if (w === 0 && fensterNacht.value > 0) {
+            // vor der Spitze der Lok, eine Lok lang, um denselben Versatz nach links, geneigt vom Boden an der Spitze zum Boden vorne
+            const lM = ZUG_LOK_M * mJeM, lang0 = ZUG_STIRN_LAENGE * lM
+            const [ev, nv] = stelle(sM + lang0)
+            const ex = -((vo.n - hi.n) / lang) * versatz, nx = ((vo.e - hi.e) / lang) * versatz
+            const hA = bestandHoehe(b, vo.e, vo.n), hB = bestandHoehe(b, ev, nv)
+            const hA2 = Number.isFinite(hA) ? hA : hv, hB2 = Number.isFinite(hB) ? hB : hA2
+            const dE = ev - vo.e, dN = nv - vo.n, flach = Math.hypot(dE, dN) || lang0
+            stirnV.set((vo.e + ex - lage.cE) / 1000, hA2 / 1000 + hoehe * gross.y * 0.05, -(vo.n + nx - lage.cN) / 1000)
+            stirnQ.setFromAxisAngle(oben, Math.atan2(dE, -dN))
+            neigung.setFromAxisAngle(querAchse, -Math.atan2(hB2 - hA2, flach))
+            stirnQ.multiply(neigung)
+            stirnS.set(ZUG_STIRN_BREITE * ZUG_BREITE * mass * gross.x, 1, Math.hypot(flach, hB2 - hA2) / 1000)
+            m.compose(stirnV, stirnQ, stirnS)
+            stirn.setMatrixAt(zahl, m)
+            m.compose(v, q, skala)
+          }
           if (w === 0) netze.lok.setMatrixAt(zahl, m)
           else if (w === ZUG_WAGEN) netze.steuer.setMatrixAt(zahl, m)
           else netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)
@@ -3122,6 +3179,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       schild.visible = zeigt
       if (!zeigt) linkSetzen(null)
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
+      stirn.visible = fensterNacht.value > 0; stirn.count = stirn.visible ? zahl : 0; stirn.instanceMatrix.needsUpdate = true
+      stirnStoff.opacity = ZUG_STIRN_HELL * fensterNacht.value
       for (const n of Object.values(netze)) n.instanceMatrix.needsUpdate = true
       // aufleuchten: nur neu färben, wenn sich etwas ändert oder ein Zug leuchtet (die Reihenfolge der Züge wechselt alle 2 s)
       const ziele = zielen()
@@ -3141,6 +3200,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       weg = true
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
       k.wurzel.remove(gruppe); stoff.dispose(); schild.material.map?.dispose(); schild.material.dispose()
+      stirnStoff.map?.dispose(); stirnStoff.dispose(); stirnGeo.dispose(); stirn.dispose()
       k.renderer.domElement.removeEventListener('pointermove', mausZiel); k.renderer.domElement.removeEventListener('pointerleave', mausWeg)
       for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
     }

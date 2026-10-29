@@ -39,7 +39,10 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   mesh(new THREE.BoxGeometry(W * 0.86, unten + h, L * 0.96), schwarz).position.y = (-h + unten) / 2
   // Fensterband auf beiden Seiten, knapp vor der Wand
   const band = new THREE.BoxGeometry(W * 1.03, H * 0.22, (L - kopf) * 0.92)
-  mesh(band, schwarz).position.set(0, h - r - H * 0.08, hinten ? kopf / 2 : -kopf / 2)
+  const fenster = mesh(band, schwarz)
+  fenster.position.set(0, h - r - H * 0.08, hinten ? kopf / 2 : -kopf / 2)
+  // das Fensterband leuchtet nachts von innen (zugFormen: Attribut leuchte)
+  fenster.userData.fenster = true
   // Übergang zum nächsten Wagen
   if (i < ZUG_WAGEN) {
     const luecke = ZUG_LUECKE_M / 1000
@@ -104,7 +107,8 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   return { g, materialien }
 }
 
-/** Lok, Wagen und Steuerwagen je als eine Geometrie mit Farben je Ecke, für InstancedMesh; die Spitze der Lok rot */
+/** Lok, Wagen und Steuerwagen je als eine Geometrie mit Farben je Ecke, für InstancedMesh; die Spitze der Lok rot; leuchte 1 auf
+ *  dem Fensterband, sonst 0 (für die Innenbeleuchtung bei Nacht) */
 export function zugFormen(): { lok: THREE.BufferGeometry; wagen: THREE.BufferGeometry; steuer: THREE.BufferGeometry } {
   const eins = (i: number) => {
     const { g, materialien } = wagenBauen(i, i === 0 ? ZUG_LOK_M : ZUG_WAGEN_M)
@@ -120,6 +124,7 @@ export function zugFormen(): { lok: THREE.BufferGeometry; wagen: THREE.BufferGeo
       const farbe = new Float32Array(geo.attributes.position.count * 3)
       for (let k = 0; k < farbe.length; k += 3) { farbe[k] = c.r; farbe[k + 1] = c.g; farbe[k + 2] = c.b }
       geo.setAttribute('color', new THREE.BufferAttribute(farbe, 3))
+      geo.setAttribute('leuchte', new THREE.BufferAttribute(new Float32Array(geo.attributes.position.count).fill(o.userData.fenster ? 1 : 0), 1))
       teile.push(geo)
     })
     const ganz = mergeGeometries(teile)!
