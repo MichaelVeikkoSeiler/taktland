@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
+import { strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -1366,6 +1366,21 @@ const ZUG_NEIGUNG = (6 * Math.PI) / 180
  *  gewählt, in keiner Quelle */
 const ZUG_INNEN_FARBE = '#ffd49a', ZUG_INNEN_HELL = 0.75
 const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.6, ZUG_STIRN_LAENGE = 3, ZUG_STIRN_BREITE = 4
+/** Strassen- und Bahnhofslicht: Radius des Lichtflecks auf dem Boden (m), Farben und Stärke gewählt, in keiner Quelle (die Lampen sind
+ *  erfunden, belegt ist nur, wo Strassen und Gleise liegen); höchstens so viele Lampen in einem Modell (eine Annahme zur Grafik) */
+const LICHT_STRASSE_M = 11, LICHT_BAHNHOF_M = 16, LICHT_STRASSE_FARBE = '#ffc98a', LICHT_BAHNHOF_FARBE = '#eef3ff', LICHT_HELL = 0.55
+const LICHT_HOECHSTENS = 60_000
+/** ein Lichtfleck: in der Mitte hell, nach aussen weich */
+function lichtBild() {
+  const c = document.createElement('canvas'), x = c.getContext('2d')!
+  c.width = c.height = 64
+  const v = x.createRadialGradient(32, 32, 0, 32, 32, 32)
+  v.addColorStop(0, 'rgba(255,255,255,1)'); v.addColorStop(0.15, 'rgba(255,255,255,0.8)'); v.addColorStop(0.5, 'rgba(255,255,255,0.25)')
+  v.addColorStop(1, 'rgba(255,255,255,0)')
+  x.fillStyle = v; x.fillRect(0, 0, 64, 64)
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
+  return tex
+}
 /** zwei Stirnlampen vorne unten an der Lok, links und rechts, immer an wie bei echten Zügen und dem Vorbild (Michael, 2026-10-29:
  *  «Bitte zwei Lichter machen ähnlich wie bei diesem Modell», sein Bild eines Zugs mit zwei Lampen unten an der Front): je Lampe ein
  *  heller Punkt und nachts ein eigener Lichtkegel; Lage und Grösse als Anteil von Breite und Höhe des Zugs, gewählt */
@@ -2875,6 +2890,60 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [windAn, b, stufe, zusatz, knoepfe])
   useEffect(() => { windhosen.current?.setzen(windWerte) },
     [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
+  // Strassen- und Bahnhofslicht bei Nacht (pipeline/build_strassenlicht.py; Michael, 2026-10-29: «Irgendwie fehlt schon noch eine
+  // Straßen- und allgemeine Bahnhofbeleuchtung. Kannst du das nicht erfinden und einbauen?»): je Lampe ein Lichtfleck auf dem Boden, warm auf
+  // Strassen, kühler und grösser an Bahnhöfen; erst geladen, wenn es dunkel wird, ab der Stufe 20 km
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || !sonnenAn || grob(stufe)) return
+    let weg = false, geladen = false
+    const gruppe = new THREE.Group()
+    gruppe.name = 'strassenlicht'
+    k.wurzel.add(gruppe)
+    const stoff = new THREE.MeshBasicMaterial({ map: lichtBild(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+      polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4, toneMapped: false })
+    const geo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2)
+    let netz: THREE.InstancedMesh | null = null
+    const teile = [...b.teile.values()]
+    const rand = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    const laden = async () => {
+      const l = await strassenlichtLaden(e0, n0, e1, n1).catch(() => null)
+      if (weg || !l || !l.e.length) return
+      const anzahl = Math.min(l.e.length, LICHT_HOECHSTENS)
+      const n = new THREE.InstancedMesh(geo, stoff, anzahl)
+      n.frustumCulled = false; n.renderOrder = 2
+      const m = new THREE.Matrix4(), v = new THREE.Vector3(), q = new THREE.Quaternion(), sk = new THREE.Vector3()
+      const warm = new THREE.Color(LICHT_STRASSE_FARBE), kuehl = new THREE.Color(LICHT_BAHNHOF_FARBE)
+      // bei sehr vielen Lampen jede soundsovielte
+      const schritt = l.e.length / anzahl
+      for (let i = 0; i < anzahl; i++) {
+        const j = Math.floor(i * schritt), bahnhof = l.art[j] === 2
+        const h = bestandHoehe(b, l.e[j], l.n[j]), r = (bahnhof ? LICHT_BAHNHOF_M : LICHT_STRASSE_M) / 1000
+        v.set((l.e[j] - lage.cE) / 1000, (Number.isFinite(h) ? h : 0) / 1000 + 0.0005, -(l.n[j] - lage.cN) / 1000)
+        sk.set(2 * r, 1, 2 * r)
+        m.compose(v, q, sk)
+        n.setMatrixAt(i, m)
+        n.setColorAt(i, bahnhof ? kuehl : warm)
+      }
+      netz = n
+      gruppe.add(n)
+    }
+    const schritt = () => {
+      const nacht = fensterNacht.value
+      if (nacht > 0 && !geladen) { geladen = true; void laden() }
+      gruppe.visible = nacht > 0
+      stoff.opacity = LICHT_HELL * nacht
+    }
+    k.jeBild.push(schritt)
+    return () => {
+      weg = true
+      const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
+      k.wurzel.remove(gruppe); stoff.map?.dispose(); stoff.dispose(); geo.dispose(); netz?.dispose()
+    }
+  }, [b, stufe, sonnenAn, knoepfe])
   // Züge laut Fahrplan (src/zuege3d.ts), ab der Stufe 20 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
   // wie der Zug der Modellbahn auf dem Gelände in Fahrtrichtung
   const [zugZeile, setZugZeile] = useState<string | null>(null)
