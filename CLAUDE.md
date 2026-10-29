@@ -283,7 +283,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              zuletzt; Gipfel ohne Kanton, auf der Grenze schneidet sie die vereinfachte Kantonsfläche ab) und wählt das Feld um den Ort, aus jeder Stufe, danach beim Eintauchen und Zurückgehen in jeder Stufe wieder das Feld
              um ihn mit «Gesucht: …» (gesucht, feldUmGesucht; Michael, 2026-10-23: «bei allen Eintauchstufen mit dem roten Kasten markiert»; in der
              Stufe 1 km wählt man nichts mehr), bis man selbst ein Feld wählt (OrtSuche;
-             nur der Knopf «Eintauchen» oben links, so gross wie «Fahren» im Kopf (Michael, 2026-10-25), ohne Orte im Feld und «Andere Wahl», Michael, 2026-10-24: «müsste oben sein sonst sieht man ihn nicht»,
+             nur der Knopf «Eintauchen» oben links, so gross wie «Fahren» im Kopf (Michael, 2026-10-25), auf dem Tablet (Touch, kürzere Seite ab 700 Bildpunkten, istTablet) unten links und 1,5-mal so gross (Michael, 2026-10-29: «auf dem Tablet … unten links sein. Und noch 150% größer»), ohne Orte im Feld und «Andere Wahl», Michael, 2026-10-24: «müsste oben sein sonst sieht man ihn nicht»,
              «Hier braucht es nur den Eintauchen-Button»; nach dem Eintauchen ist der Schalter «Orte» an, «beim Eintauchen wieder neue Ortschaften»;
              neben dem Vollbild und gleich gross «Mein Standort» (Fadenkreuz; Michael, 2026-10-25: «neben dem … Vollbild-Icon»; Michael, 2026-10-24: «auf der Karte jeweils sehen mit GPS, wo ich durchfahre»): watchPosition,
              ein karminroter Punkt mit weissem Rand auf dem Gelände in jeder Stufe, wo er im Modell liegt, durch Berge sichtbar, wandert mit; der erste

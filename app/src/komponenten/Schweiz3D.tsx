@@ -83,6 +83,8 @@ const MATERIAL_WEG_MS = 4000
 const spaeterWeg = (materialien: Array<THREE.Material | undefined>) => {
   setTimeout(() => { for (const m of materialien) m?.dispose() }, MATERIAL_WEG_MS)
 }
+/** ein Tablet: Touch und die kürzere Seite des Bildschirms ab 700 Bildpunkten (wie bei hoechstens und den Schatten) */
+const istTablet = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) >= 700
 const hoechstens = () => (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 4 : 9)
 
 const einzeln = (anker: Feld, g: Gelaende): Bestand => ({ anker, teile: new Map([['0_0', g]]), di: [0, 0], dj: [0, 0] })
@@ -555,6 +557,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // «Jetzt» ist gedrückt, solange die Zeit die jetzige ist; erst eine Verschiebung von Hand löst ihn (Michael, 2026-10-29: «Darum dieser
   // Knopf aktiv gedrückt. Erst eine manuelle Zeitverschiebung deaktiviert ihn»); gedrückt folgt die Zeit der Uhr, je 15 Minuten
   const [jetztAn, setJetztAn] = useState(true)
+  const [tablet] = useState(istTablet)
   const [umweltHier, setUmweltHier] = useState(false)
   const [umweltGanzDa, setUmweltGanzDa] = useState(false)
   const [meldung, setMeldung] = useState<string | null>(null)
@@ -864,10 +867,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {wahl && stufe !== 'nah' && (
           // oben links, unten lag er auf dem Handy oft unter dem Bildschirmrand (Michael, 2026-10-24: «Der Eintauchen
           // Button müsste oben sein sonst sieht man ihn nicht»); nur der Knopf, ohne Orte im Feld und «Andere Wahl» (Michael,
-          // 2026-10-24: «Hier braucht es nur den Eintauchen-Button»), ein anderes Feld wählt ein Tipp ins Modell
+          // 2026-10-24: «Hier braucht es nur den Eintauchen-Button»), ein anderes Feld wählt ein Tipp ins Modell; auf dem Tablet unten
+          // links und 1,5-mal so gross (Michael, 2026-10-29: «auf dem Tablet … unten links sein. Und noch 150% größer»)
           <button type="button" onClick={() => void eintauchen()} disabled={laedt}
                   // so gross wie «Fahren» im Kopf (Michael, 2026-10-25: «gleiche Grösse wie der Button Fahren»)
-                  className="absolute left-2 top-2 rounded-lg bg-sbb-red px-3 py-1.5 text-base font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 max-[359px]:text-[14px]">
+                  className={'absolute left-2 rounded-lg bg-sbb-red font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 ' + (tablet
+                    ? 'bottom-2 px-[18px] py-[9px] text-2xl' : 'top-2 px-3 py-1.5 text-base max-[359px]:text-[14px]')}>
             {laedt ? 'Wird geladen …' : 'Eintauchen'}
           </button>
         )}
@@ -1458,6 +1463,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     anfangSetzen: () => void
     verlauf: Record<'hoehen' | 'orte' | 'gipfel', { p: number; ziel: number; ebene: THREE.Plane }>
   } | null>(null)
+  const [tablet] = useState(istTablet)
   const cb = useRef({ waehlen, abwaehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten })
   cb.current = { waehlen, abwaehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten }
 
@@ -3507,7 +3513,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         </div>
       )}
       {(wolkenZeile || niederZeile) && (
-        <p className="pointer-events-none absolute bottom-16 left-2 max-w-[70%] rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
+        <p className={'pointer-events-none absolute left-2 max-w-[70%] ' + (tablet ? 'bottom-20' : 'bottom-16') + ' rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white'}>
           {wolkenZeile}{wolkenZeile && niederZeile && <br />}{niederZeile}
         </p>
       )}
