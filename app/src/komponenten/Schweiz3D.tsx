@@ -1127,7 +1127,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
-              Innenbeleuchtung der Züge, ihre zwei Stirnlampen und deren Lichtkegel.</li>
+              Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station, wo das Wettermodell fehlt; Dichte, Tempo und Grösse
               der Tropfen und Flocken; dass sie an der untersten gezeichneten Wolke beginnen; Regen- und Windgeräusch gerechnet.</li>
@@ -1402,6 +1402,10 @@ function lichtBild() {
  *  «Bitte zwei Lichter machen ähnlich wie bei diesem Modell», sein Bild eines Zugs mit zwei Lampen unten an der Front): je Lampe ein
  *  heller Punkt und nachts ein eigener Lichtkegel; Lage und Grösse als Anteil von Breite und Höhe des Zugs, gewählt */
 const ZUG_LAMPE_SEITE = 0.28, ZUG_LAMPE_HOEHE = -0.21, ZUG_LAMPE_R = 0.07, ZUG_LAMPE_FARBE = '#fffaf0'
+/** dazu wie bei Schweizer Zügen (Michael, 2026-10-29: «inkl dem Vorschlag mit den drei Lampen und roten Lampen»): vorne eine dritte
+ *  weisse Lampe oben in der Mitte, das Dreieck des Zugspitzensignals, und am Steuerwagen hinten zwei rote Schlusslampen an der Stelle
+ *  der unteren; die Lage oben (Höhe und Abstand von der Spitze als Anteil der Höhe des Zugs) und das Rot gewählt */
+const ZUG_LAMPE_OBEN_HOEHE = -0.02, ZUG_LAMPE_OBEN_ZURUECK = 0.012, ZUG_SCHLUSS_FARBE = '#ff2a1a', ZUG_LAMPEN = 5
 /** der Lichtkegel als Bild: hell an der Lok, nach vorne breiter und schwächer */
 function stirnBild() {
   const c = document.createElement('canvas'), x = c.getContext('2d')!
@@ -3033,10 +3037,19 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     for (let i = 0; i < 2 * ZUEGE_HOECHSTENS; i++) stirn.setColorAt(i, stirnFarbe)
     // die Lampen selbst: kleine helle Kugeln vorne an der Lok, im Raum der Lok gesetzt
     const lampenGeo = new THREE.SphereGeometry(1, 10, 8), lampenStoff = new THREE.MeshBasicMaterial({ color: ZUG_LAMPE_FARBE, toneMapped: false })
-    const lampen = new THREE.InstancedMesh(lampenGeo, lampenStoff, 2 * ZUEGE_HOECHSTENS)
+    const lampen = new THREE.InstancedMesh(lampenGeo, lampenStoff, ZUG_LAMPEN * ZUEGE_HOECHSTENS)
     lampen.count = 0; lampen.frustumCulled = false
     gruppe.add(lampen)
-    const lampeM = new THREE.Matrix4(), lampeT = new THREE.Matrix4()
+    const lampeM = new THREE.Matrix4(), lampeT = new THREE.Matrix4(), lampeS = new THREE.Matrix4()
+    // je Zug drei weisse vorne, zwei rote hinten; die Farbe je Lampe steht fest
+    const weiss = new THREE.Color(1, 1, 1), rot = new THREE.Color(ZUG_SCHLUSS_FARBE)
+    for (let i = 0; i < ZUG_LAMPEN * ZUEGE_HOECHSTENS; i++) lampen.setColorAt(i, i % ZUG_LAMPEN < 3 ? weiss : rot)
+    const lampeSetzen = (nr: number, x: number, y: number, z: number) => {
+      const r0 = ZUG_LAMPE_R * ZUG_BREITE
+      lampeT.makeTranslation(x, y, z)
+      lampeM.copy(m).multiply(lampeT).multiply(lampeS.makeScale(r0, r0, r0 * 0.5))
+      lampen.setMatrixAt(nr, lampeM)
+    }
     const netzVon = (geo: THREE.BufferGeometry, je: number) => {
       const n = new THREE.InstancedMesh(geo, stoff, ZUEGE_HOECHSTENS * je)
       n.count = 0; n.castShadow = true; n.frustumCulled = false
@@ -3263,10 +3276,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           ;(mitten[zahl] ??= [])[w] = (mitten[zahl][w] ?? new THREE.Vector3()).copy(v)
           if (w === 0) {
             for (const seite of [-1, 1]) {
-              const r0 = ZUG_LAMPE_R * ZUG_BREITE
-              lampeT.makeTranslation(seite * ZUG_LAMPE_SEITE * ZUG_BREITE, ZUG_LAMPE_HOEHE * ZUG_HOEHE, ZUG_LOK_M / 2000)
-              lampeM.copy(m).multiply(lampeT).multiply(new THREE.Matrix4().makeScale(r0, r0, r0 * 0.5))
-              lampen.setMatrixAt(2 * zahl + (seite + 1) / 2, lampeM)
+              lampeSetzen(ZUG_LAMPEN * zahl + (seite + 1) / 2, seite * ZUG_LAMPE_SEITE * ZUG_BREITE, ZUG_LAMPE_HOEHE * ZUG_HOEHE, ZUG_LOK_M / 2000)
+            }
+            lampeSetzen(ZUG_LAMPEN * zahl + 2, 0, ZUG_LAMPE_OBEN_HOEHE * ZUG_HOEHE, ZUG_LOK_M / 2000 - ZUG_LAMPE_OBEN_ZURUECK * ZUG_HOEHE)
+          } else if (w === ZUG_WAGEN) {
+            for (const seite of [-1, 1]) {
+              lampeSetzen(ZUG_LAMPEN * zahl + 3 + (seite + 1) / 2, seite * ZUG_LAMPE_SEITE * ZUG_BREITE, ZUG_LAMPE_HOEHE * ZUG_HOEHE, -ZUG_WAGEN_M / 2000)
             }
           }
           if (w === 0 && fensterNacht.value > 0) {
@@ -3315,7 +3330,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
       stirn.visible = fensterNacht.value > 0; stirn.count = stirn.visible ? 2 * zahl : 0; stirn.instanceMatrix.needsUpdate = true
       if (stirn.instanceColor) stirn.instanceColor.needsUpdate = true
-      lampen.count = 2 * zahl; lampen.instanceMatrix.needsUpdate = true
+      lampen.count = ZUG_LAMPEN * zahl; lampen.instanceMatrix.needsUpdate = true
       stirnStoff.opacity = ZUG_STIRN_HELL * fensterNacht.value
       for (const n of Object.values(netze)) n.instanceMatrix.needsUpdate = true
       // aufleuchten: nur neu färben, wenn sich etwas ändert oder ein Zug leuchtet (die Reihenfolge der Züge wechselt alle 2 s)
