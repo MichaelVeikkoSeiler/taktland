@@ -1373,8 +1373,9 @@ const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.6, ZUG_STIRN_LAENGE = 3, Z
  *  erfunden, belegt ist nur, wo Strassen und Gleise liegen); höchstens so viele Lampen in einem Modell (eine Annahme zur Grafik) */
 /** (Michael, 2026-10-29: «Lichtkegel etwas breiter und etwas weniger hell»; vorher 11 m, 16 m und 0,55) */
 const LICHT_STRASSE_M = 14, LICHT_BAHNHOF_M = 20, LICHT_STRASSE_FARBE = '#ffc98a', LICHT_BAHNHOF_FARBE = '#eef3ff', LICHT_HELL = 0.4
-/** am Bahnhof liegen die Lampen über vielen Gleisen nebeneinander und addieren sich: dort schwächer (Bern war ein weisser Fleck) */
-const LICHT_BAHNHOF_STAERKE = 0.6
+/** am Bahnhof liegen die Lampen über vielen Gleisen nebeneinander und addieren sich: dort schwächer (Bern war ein weisser Fleck; Michael,
+ *  2026-10-29, Thun: «Die Lichtkegel bei den Bahnhöfen 15% weniger hell», vorher 0,6) */
+const LICHT_BAHNHOF_STAERKE = 0.51
 const LICHT_HOECHSTENS = 60_000
 /** je Lampe ein schlichter Mast am Ort der Lampe (Michael, 2026-10-29: «Kann man bei den Lichtkegel doch noch einen Masten am Strassenrand
  *  einfügen? Nur was ganz simples?»): ein dunkelgrauer Pfosten mit einem Kopf, der nachts leuchtet; Höhe und Dicke gewählt, in keiner
