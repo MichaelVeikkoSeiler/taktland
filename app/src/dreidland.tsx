@@ -58,10 +58,16 @@ function DreiDLand() {
             </p>
           </details>
           <p className="mt-2">
-            Kontakt: <a href="mailto:hallo@taktland.ch" className={LINK}>hallo@taktland.ch</a>
+            Verantwortlich: Michael Veikko Seiler, <a href="mailto:hallo@taktland.ch" className={LINK}>hallo@taktland.ch</a>, auch für Fragen zu deinen Daten.
           </p>
           <p className="mt-1">
-            Kein Konto, kein Zähler. «3dland teilen» gibt nur die Adresse 3dland.ch und einen Satz an das Teilen-Menü des Geräts, an E-Mail oder WhatsApp weiter. Die Seite lädt Gelände, Luftbilder und Wege von taktland.ch und daten.taktland.ch; dabei sieht
+            Ein privates Projekt zum Anschauen, nicht für die Reiseplanung: Züge und Schiffe zeigen den Fahrplan, nicht die Wirklichkeit; Wetter,
+            Wolken, Regen und Schnee sind Messungen und Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen. Alle Angaben ohne
+            Gewähr; die Seite kann ohne Ankündigung geändert oder eingestellt werden.
+          </p>
+          <p className="mt-1">
+            Kein Konto, kein Zähler, keine Cookies; Einstellungen wie der Ton bleiben im Browser dieses Geräts (localStorage) und werden nicht gesendet. Ausgeliefert wird die Seite von GitHub Pages, einem Dienst von GitHub (USA); die Daten können
+            dabei in die USA gelangen, GitHub speichert laut eigenen Angaben die IP-Adressen aus Sicherheitsgründen. «3dland teilen» gibt nur die Adresse 3dland.ch und einen Satz an das Teilen-Menü des Geräts, an E-Mail oder WhatsApp weiter. Die Seite lädt Gelände, Luftbilder und Wege von taktland.ch (GitHub Pages) und daten.taktland.ch (cyon, Schweiz); dabei sieht
             der Server wie bei jeder Webseite die Adresse des Geräts. «Mein Standort» fragt den Standort erst nach deiner Freigabe
             ab; er bleibt auf dem Gerät und wird weder gesendet noch gespeichert. Ist «Wetter» an, holt die Seite Messung und Prognose der
             nächsten Wetterstation bei data.geo.admin.ch (Bund); der Dienst erfährt so, in welcher Gegend das Modell liegt.
