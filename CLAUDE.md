@@ -598,7 +598,14 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              der Prognose am nächsten, höchstens eine Stunde daneben): je Schicht eine Fläche auf 1'500, 4'200 und 9'000 m ü. M. (WOLKEN_HOEHE_M,
              gewählt nach der Mitte der Druckbereiche in der Standardatmosphäre), deckend, wo ein gezeichnetes Rauschen (WOLKEN_KORN_KM 3, 6, 12 km,
              nach Rang gleichmässig verteilt) über 1 − Bewölkung liegt, mit Schatten; die Zeile «Wolken laut Prognose von MeteoSchweiz für …»; Form,
-             Dicke und Höhe in der Schicht in keiner Quelle, in Anleitung, Quellen und Fusszeile genannt; dazu aus demselben Lauf Regen und Schnee
+             Dicke und Höhe in der Schicht in keiner Quelle, in Anleitung, Quellen und Fusszeile genannt; für die ersten 24 Stunden des neuesten Laufs
+             in echter Höhe (Michael, 2026-10-29: «stimmen die Höhen und Höhenverhältnisse?», «kannst du ihnen eine Dicke geben?», dann «Ja, so
+             bauen»: nur 24 Stunden, weil CLC je Stunde etwa 150 MB lädt, für die Nutzer bleibt es klein): CLC, die Bewölkung in den 80 Schichten des
+             Modells, mit HHL (Höhe der Grenzen über Meer, vertical_constants), je Stufe von 250 m bis 12'000 m der Wert der Schicht, in der ihre
+             Mitte liegt, auf 2 km gemittelt (wolken3d.wgz, VORAUS3D_H, STUFE_M, HOCH_M); in der App Ebenen in der Mitte jeder Stufe mit Wolken, bei
+             mehr als 24 je zwei oder mehr zusammen, Deckkraft 200 von 255, das Muster aus zwei Rauschfeldern je Stufe anders gemischt
+             (wolkenEbenen3d, WOLKEN3D_*, gewählt); Regen beginnt dann an der Unterkante der untersten Wolke ab 10 %; die Zeile «… in der Höhe des
+             Modells»; dazu aus demselben Lauf Regen und Schnee
              (Michael, 2026-10-28: «Warum zeigt die Schweiz Regen an aber im Ausschnitt nicht mehr? Regen soll aus den Wolken kommen»):
              niederschlag.wgz mit TOT_PR (Rate im Augenblick der Stunde, 0,1 mm je Stunde) und SNOWLMT (Schneefallgrenze, 50 m) je Zelle von 2 km
              (niederschlagBei in src/wolken.ts); in Schweiz3D.tsx in jeder Stufe je Zelle, wo es ab 0,1 mm je Stunde fällt, Stärke wie bei der

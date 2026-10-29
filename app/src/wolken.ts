@@ -15,6 +15,8 @@ export interface WolkenIndex {
   hinweis: string
   /** Niederschlag aus demselben Lauf (TOT_PR, SNOWLMT), in älteren Fassungen nicht dabei */
   niederschlag?: { datei: string; felder: Array<{ name: string; modell: string; schritt: number }> }
+  /** Wolken in echter Höhe (CLC mit HHL) für die ersten Stunden des neuesten Laufs: Nummern in stunden, Stufen von unten_m an */
+  wolken3d?: { datei: string; stunden: number[]; unten_m: number; schritt_m: number; stufen: number }
 }
 
 export interface Wolken {
@@ -25,6 +27,8 @@ export interface Wolken {
   werte: Uint8Array
   /** je Stunde Niederschlag (0,1 mm je Stunde) und Schneefallgrenze (50 m) je Zelle, 255 ohne Angabe; null ohne Datei */
   nieder: Uint8Array | null
+  /** je Stunde von wolken3d.stunden, je Stufe von unten, je Zelle die Bewölkung in Prozent, 255 unter dem Boden; null ohne Datei */
+  w3d: Uint8Array | null
 }
 
 /** auf 3dland.ch neben der Seite, in Taktland bei 3dland.ch (GitHub Pages erlaubt den Abruf von überall) */
@@ -44,7 +48,9 @@ export function wolkenLaden(): Promise<Wolken | null> {
       // der Niederschlag ist eine eigene Datei; fehlt sie, bleiben die Wolken
       const nieder = ix.niederschlag
         ? await holenBinaer(`${basis()}${ix.niederschlag.datei}?${encodeURIComponent(ix.lauf)}`).then(entpacken).catch(() => null) : null
-      return { ix, zeiten: ix.stunden.map((s) => Date.parse(s)), werte: await entpacken(gepackt), nieder }
+      const w3d = ix.wolken3d
+        ? await holenBinaer(`${basis()}${ix.wolken3d.datei}?${encodeURIComponent(ix.lauf)}`).then(entpacken).catch(() => null) : null
+      return { ix, zeiten: ix.stunden.map((s) => Date.parse(s)), werte: await entpacken(gepackt), nieder, w3d }
     })().catch(() => null)
   }
   return vorrat
@@ -95,4 +101,31 @@ export function niederschlagBei(w: Wolken, stunde: number, e: number, n: number)
   const xm = Math.min(nx - 1, Math.max(0, Math.round(fx))), ym = Math.min(ny - 1, Math.max(0, Math.round(fy)))
   const gr = d[basisI + nx * ny + ym * nx + xm]
   return { mm: (summe / gewicht) * f.felder[0].schritt, schneeAbM: gr === 255 ? null : gr * f.felder[1].schritt }
+}
+
+/** für die Stunde (Nummer in stunden) die Nummer in den Wolken in echter Höhe, oder null, wenn es sie für diese Stunde nicht gibt */
+export function wolken3dStunde(w: Wolken, stunde: number): number | null {
+  if (!w.w3d || !w.ix.wolken3d) return null
+  const j = w.ix.wolken3d.stunden.indexOf(stunde)
+  return j >= 0 ? j : null
+}
+
+/** Bewölkung (0 bis 1) in echter Höhe an einer Stelle, Stufe von unten, zwischen den Mitten der Zellen gemittelt; null ohne Angabe
+ *  (unter dem Boden oder ausserhalb) */
+export function bewoelkung3d(w: Wolken, j: number, stufe: number, e: number, n: number): number | null {
+  const d = w.w3d, z = w.ix.wolken3d
+  if (!d || !z) return null
+  const { e0, n1, schritt_m: s, nx, ny } = w.ix
+  const fx = (e - e0) / s - 0.5, fy = (n1 - n) / s - 0.5
+  if (fx < -0.5 || fy < -0.5 || fx > nx - 0.5 || fy > ny - 0.5) return null
+  const x0 = Math.floor(fx), y0 = Math.floor(fy), tx = fx - x0, ty = fy - y0
+  const basisI = (j * z.stufen + stufe) * nx * ny
+  let summe = 0, gewicht = 0
+  for (const [dx, dy, g] of [[0, 0, (1 - tx) * (1 - ty)], [1, 0, tx * (1 - ty)], [0, 1, (1 - tx) * ty], [1, 1, tx * ty]] as const) {
+    const x = Math.min(nx - 1, Math.max(0, x0 + dx)), y = Math.min(ny - 1, Math.max(0, y0 + dy))
+    const v = d[basisI + y * nx + x]
+    if (v === 255 || g <= 0) continue
+    summe += v * g; gewicht += g
+  }
+  return gewicht === 0 ? null : summe / gewicht / 100
 }

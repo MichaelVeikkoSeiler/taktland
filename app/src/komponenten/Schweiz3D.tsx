@@ -25,7 +25,7 @@ import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
-import { bewoelkung, niederschlagBei, type Wolken, wolkenLaden, wolkenStunde } from '../wolken'
+import { bewoelkung, bewoelkung3d, niederschlagBei, type Wolken, wolken3dStunde, wolkenLaden, wolkenStunde } from '../wolken'
 import { type Niederschlag, niederschlagBauen, type Saeule } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
@@ -989,8 +989,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             zur Zeit der Sonne oder, wenn die Sonne aus ist, jetzt. Das Modell nennt je Stelle von etwa 1 km, wie viel des Himmels in drei
             Schichten bewölkt ist: tief (vom Boden bis 800 hPa), mittel (800 bis 400 hPa) und hoch (über 400 hPa); hier auf 2 km gemittelt,
             alle 3 Stunden neu, bis gut einen Tag voraus. Gezeichnet ist jede Schicht als Fläche auf einer gewählten Höhe (1'500, 4'200 und
-            9'000 m ü. M., etwa die Mitte ihres Druckbereichs), so viel davon deckend, wie die Prognose Bewölkung nennt. Die Form der Wolken,
-            ihre Dicke und wo genau in der Schicht sie liegen, stehen nicht in der Quelle.</p>
+            9'000 m ü. M., etwa die Mitte ihres Druckbereichs), so viel davon deckend, wie die Prognose Bewölkung nennt. Für die nächsten
+            24 Stunden des neuesten Laufs gibt es mehr: die Bewölkung in jeder der 80 Schichten des Modells mit deren Höhe über Meer. Dann
+            liegen die Wolken in der Höhe, die das Modell rechnet, als Ebenen alle 250 m übereinander, so dick, wie sie dort sind; die Zeile
+            sagt dann «in der Höhe des Modells». Die Form der Wolken ist gezeichnet, nicht aus der Quelle.</p>
           <p>Regen und Schnee kommen aus demselben Wettermodell: je Stelle von 2 km, wie stark es zu dieser Stunde fällt, und die
             Schneefallgrenze. Sie fallen von der untersten gezeichneten Wolke darüber bis auf den Boden, über der Schneefallgrenze als
             Schnee, darunter als Regen; in jeder Stufe dasselbe Wetter (in den Feldern von 4 km und 1 km, wo keine Wolken gezeichnet sind,
@@ -1050,7 +1052,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
               Ländten: swissTLMRegio (swisstopo).</li>
             <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
-            <li>Wolken: Wettermodell ICON-CH1-EPS von MeteoSchweiz (Open Government Data, CC-BY), Kontrolllauf, Bewölkung tief, mittel und hoch, dazu Niederschlagsrate (TOT_PR) und Schneefallgrenze (SNOWLMT), alle 3 Stunden neu.</li>
+            <li>Wolken: Wettermodell ICON-CH1-EPS von MeteoSchweiz (Open Government Data, CC-BY), Kontrolllauf, Bewölkung tief, mittel und hoch, für die nächsten 24 Stunden die Bewölkung in allen 80 Schichten (CLC) mit deren Höhe (HHL), dazu Niederschlagsrate (TOT_PR) und Schneefallgrenze (SNOWLMT), alle 3 Stunden neu.</li>
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
           </ul>
@@ -1059,7 +1061,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern gezeichnet oder angenommen ist:</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
-            <li>Wolken: ihre Form, ihre Dicke und die Höhe jeder Schicht (gewählt nach der Mitte ihres Druckbereichs); die Quelle nennt nur, wie viel bewölkt ist.</li>
+            <li>Wolken: ihre Form; ausserhalb der nächsten 24 Stunden auch ihre Dicke und die Höhe jeder Schicht (gewählt nach der Mitte ihres
+              Druckbereichs); in der Höhe des Modells sind die Stufen von 250 m und die Deckkraft jeder Ebene gewählt.</li>
             <li>Züge und Schiffe: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, und dass jeder Zug links neben dem Weg fährt,
               damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
@@ -1208,6 +1211,73 @@ function wolkenBild(w: Wolken, stunde: number, schicht: number, e0: number, n0: 
   if (!etwas) return null
   x.putImageData(bild, 0, 0)
   return c
+}
+/** Wolken in echter Höhe: so viele Ebenen höchstens (bei mehr Stufen mit Wolken je zwei oder mehr zusammen), Bildpunkte höchstens,
+ *  Deckkraft einer Ebene (sie liegen übereinander); gewählt */
+const WOLKEN3D_EBENEN = 24, WOLKEN3D_PX = 512, WOLKEN3D_DECKT = 200
+/** das Muster in echter Höhe: zwei Rauschfelder (Körnung in km, gewählt), je Stufe anders gemischt, damit eine Wolke nach oben ihre Form
+ *  ändert, aber zusammenhängt */
+const WOLKEN3D_KORN_KM = [4, 2.5]
+/** die Bilder der Ebenen mit Wolken über dem Rechteck aus den Wolken in echter Höhe (Stunde j); Höhe der Ebene über Meer in m */
+function wolkenEbenen3d(w: Wolken, j: number, e0: number, n0: number, e1: number, n1: number) {
+  const z = w.ix.wolken3d!
+  const breit = Math.min(WOLKEN3D_PX, Math.max(128, Math.round(((e1 - e0) / w.ix.schritt_m) * 12)))
+  const hoch = Math.max(16, Math.round((breit * (n1 - n0)) / (e1 - e0)))
+  // je Stufe, ob und wie viel Wolke über dem Rechteck liegt (grob abgetastet)
+  const mit: number[] = []
+  for (let k = 0; k < z.stufen; k++) {
+    let max = 0
+    for (let a = 0; a <= 12 && max < 0.03; a++) for (let c = 0; c <= 12; c++) {
+      const v = bewoelkung3d(w, j, k, e0 + (a / 12) * (e1 - e0), n0 + (c / 12) * (n1 - n0)) ?? 0
+      if (v > max) max = v
+    }
+    if (max >= 0.03) mit.push(k)
+  }
+  if (!mit.length) return []
+  // die beiden Rauschfelder, gleichmässig verteilt
+  const U1 = new Float32Array(breit * hoch), U2 = new Float32Array(breit * hoch)
+  for (let py = 0; py < hoch; py++) {
+    const n = n1 - ((py + 0.5) / hoch) * (n1 - n0)
+    for (let px = 0; px < breit; px++) {
+      const e = e0 + ((px + 0.5) / breit) * (e1 - e0), q = py * breit + px
+      U1[q] = gleichmaessig(wolkenMuster(e / 1000, n / 1000, WOLKEN3D_KORN_KM[0], 101), 0)
+      U2[q] = gleichmaessig(wolkenMuster(e / 1000, n / 1000, WOLKEN3D_KORN_KM[1], 202), 1)
+    }
+  }
+  const schritt = Math.ceil(mit.length / WOLKEN3D_EBENEN)
+  const raus: Array<{ hoeheM: number; bild: HTMLCanvasElement }> = []
+  for (let g = 0; g < mit.length; g += schritt) {
+    const gruppe = mit.slice(g, g + schritt)
+    const t = 0.5 + 0.5 * Math.sin(gruppe[0] * 0.45)
+    // die Mischung wieder gleichmässig verteilen, nach dem Rang unter 2'000 Proben
+    const probe = new Float32Array(2000)
+    for (let i = 0; i < probe.length; i++) { const q = Math.floor((i / probe.length) * U1.length); probe[i] = U1[q] * (1 - t) + U2[q] * t }
+    probe.sort()
+    const rang = (m: number) => { let lo = 0, hi = probe.length; while (lo < hi) { const mi = (lo + hi) >> 1; if (probe[mi] < m) lo = mi + 1; else hi = mi } return lo / probe.length }
+    const c = document.createElement('canvas'); c.width = breit; c.height = hoch
+    const x = c.getContext('2d')!, bild = x.createImageData(breit, hoch)
+    let etwas = false
+    for (let py = 0; py < hoch; py++) {
+      const n = n1 - ((py + 0.5) / hoch) * (n1 - n0)
+      for (let px = 0; px < breit; px++) {
+        const e = e0 + ((px + 0.5) / breit) * (e1 - e0)
+        let anteil = 0
+        for (const k of gruppe) anteil = Math.max(anteil, bewoelkung3d(w, j, k, e, n) ?? 0)
+        if (anteil <= 0.02) continue
+        const q = py * breit + px, m = rang(U1[q] * (1 - t) + U2[q] * t)
+        const a = Math.max(0, Math.min(1, (m - (1 - anteil)) / 0.08 + 0.5))
+        if (a <= 0) continue
+        const i = q * 4
+        bild.data[i] = 250; bild.data[i + 1] = 251; bild.data[i + 2] = 253; bild.data[i + 3] = Math.round(a * WOLKEN3D_DECKT)
+        etwas = true
+      }
+    }
+    if (!etwas) continue
+    x.putImageData(bild, 0, 0)
+    const mitteK = (gruppe[0] + gruppe[gruppe.length - 1]) / 2
+    raus.push({ hoeheM: z.unten_m + (mitteK + 0.5) * z.schritt_m, bild: c })
+  }
+  return raus
 }
 /** aus der Ferne ist ein Zug mindestens so lang wie dieser Anteil des Abstands der Kamera (vorher 1,2 %, Michael, 2026-10-26: «Züge aus der Ferne etwas grösser»), gewählt */
 const ZUG_FERN = 0.018
@@ -3224,8 +3294,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const uhr = (ms: number) => new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }).format(ms)
       const st = wolkenStunde(w, zeit)
       if (st === null) { setWolkenZeile(`Wolken: für ${uhr(zeit.getTime())} gibt es keine Prognose, nur für ${uhr(w.zeiten[0])} bis ${uhr(w.zeiten[w.zeiten.length - 1])}.`); return }
-      WOLKEN_HOEHE_M.forEach((hoeheM, j) => {
-        const bild = wolkenBild(w, st, j, e0, n0, e1, n1)
+      // in echter Höhe, wo es sie für diese Stunde gibt (Michael, 2026-10-29), sonst die drei Schichten auf gewählten Höhen
+      const j3 = wolken3dStunde(w, st)
+      const ebenen = j3 !== null ? wolkenEbenen3d(w, j3, e0, n0, e1, n1)
+        : WOLKEN_HOEHE_M.map((hoeheM, j) => ({ hoeheM, bild: wolkenBild(w, st, j, e0, n0, e1, n1) }))
+      ebenen.forEach(({ hoeheM, bild }) => {
         if (!bild) return
         const tex = new THREE.CanvasTexture(bild); tex.colorSpace = THREE.SRGBColorSpace
         const geo = new THREE.PlaneGeometry((e1 - e0) / 1000, (n1 - n0) / 1000); geo.rotateX(-Math.PI / 2)
@@ -3237,7 +3310,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         gruppe.add(netz)
         weg3.push(tex, geo, stoff, tiefe)
       })
-      setWolkenZeile(`Wolken laut Prognose von MeteoSchweiz für ${uhr(w.zeiten[st])}`)
+      setWolkenZeile(`Wolken laut Prognose von MeteoSchweiz für ${uhr(w.zeiten[st])}${j3 !== null ? ', in der Höhe des Modells' : ''}`)
     })
     return () => {
       weg = true
@@ -3299,9 +3372,21 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const staerke = staerkeAus(nd.mm / 2)
           // die unterste gezeichnete Wolke über dem Boden dieser Zelle, sonst die unterste Schicht über dem Boden
           const grund = bestandHoehe(b, me, mn)
-          const ueber = WOLKEN_HOEHE_M.filter((hm) => hm > grund + 50)
-          const mitWolke = ueber.find((hm) => (bewoelkung(w, st, WOLKEN_HOEHE_M.indexOf(hm), me, mn) ?? 0) >= 0.1)
-          const obenM = mitWolke ?? ueber[0] ?? grund + 300
+          let obenM: number | undefined
+          const j3 = wolken3dStunde(w, st), z3 = w.ix.wolken3d
+          if (j3 !== null && z3) {
+            // die Unterkante der untersten Wolke in echter Höhe über dem Boden
+            for (let k = 0; k < z3.stufen && obenM === undefined; k++) {
+              const unterkante = z3.unten_m + k * z3.schritt_m
+              if (unterkante + z3.schritt_m <= grund) continue
+              if ((bewoelkung3d(w, j3, k, me, mn) ?? 0) >= 0.1) obenM = Math.max(grund + 50, unterkante)
+            }
+          }
+          if (obenM === undefined) {
+            const ueber = WOLKEN_HOEHE_M.filter((hm) => hm > grund + 50)
+            const mitWolke = ueber.find((hm) => (bewoelkung(w, st, WOLKEN_HOEHE_M.indexOf(hm), me, mn) ?? 0) >= 0.1)
+            obenM = mitWolke ?? ueber[0] ?? grund + 300
+          }
           const schneeAb = nd.schneeAbM === null ? Infinity : nd.schneeAbM / 1000
           saeulen.push({ x0: zuX(a0), x1: zuX(a1), z0: zuZ(b1), z1: zuZ(b0), oben: Math.min(deckel, obenM / 1000), staerke, schneeAb })
           const anteil = ((a1 - a0) * (b1 - b0)) / 1e6 / flaeche
