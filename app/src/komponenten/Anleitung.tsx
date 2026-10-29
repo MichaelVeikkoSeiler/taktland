@@ -406,7 +406,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             direkt bei data.geo.admin.ch (Bund). Der Dienst sieht dabei wie jeder Server die IP-Adresse und erfährt, welche
             Station gefragt wird, also in welcher Gegend das Modell oder die Fahrt liegt; den Standort selbst sendet Taktland nicht.
             Ebenso, wenn die Windhose an ist oder ihre Tafel offen: die Windmessung und die Prognose der Station. In «3D Schweiz» holt
-            «Wetter» dasselbe und dazu Wolken, Regen und Schnee laut Wettermodell bei 3dland.ch (ebenfalls GitHub Pages, siehe unten).
+            «Wetter» dasselbe und dazu Regen und Schnee laut Wettermodell bei 3dland.ch (ebenfalls GitHub Pages, siehe unten), «Wolken» die Wolken von dort.
           </li>
           <li>
             Gelände, Luftbilder, Gebäude und Bäume für die 3D-Ansichten lädt Taktland zum Teil von daten.taktland.ch (cyon, Schweiz); wie
