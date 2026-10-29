@@ -1374,6 +1374,8 @@ const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.48, ZUG_STIRN_LAENGE = 3, 
  *  welche Richtung er abfährt»), der Kegel dort kürzer und schwächer, damit sich die vielen Züge in grossen Bahnhöfen nicht zu einem weissen
  *  Fleck addieren (Länge in Loks und Anteil der Stärke gewählt) */
 const ZUG_STIRN_HALT_LAENGE = 1.5, ZUG_STIRN_HALT_HELL = 0.5
+/** die ganze Länge des Zugs in den Einheiten der Form (Lok, Wagen und Lücken) */
+const ZUG_GANZ_M = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M)
 /** Strassen- und Bahnhofslicht: Radius des Lichtflecks auf dem Boden (m), Farben und Stärke gewählt, in keiner Quelle (die Lampen sind
  *  erfunden, belegt ist nur, wo Strassen und Gleise liegen); höchstens so viele Lampen in einem Modell (eine Annahme zur Grafik) */
 /** (Michael, 2026-10-29: «Lichtkegel etwas breiter und etwas weniger hell»; vorher 11 m, 16 m und 0,55) */
@@ -3226,13 +3228,23 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         }
         const fw = wegVon(j)
         if (!fw) continue
-        const ende = wegEnde(fw), sM = anteil * ende
+        const ende = wegEnde(fw)
+        let sM = anteil * ende
         // die Wagen hinter der Spitze: vor dem Anfang des Wegs auf dem Weg davor, ohne ihn gerade nach hinten
         const vorher = j > 0 ? wegVon(j - 1) : null
         const geradeZurueck = (w: Fahrweg, sm: number): [number, number] => {
           const a0 = lageBei(w, 0), a1 = lageBei(w, Math.min(wegEnde(w), 60)), [e0, n0] = lv95(a0.lat, a0.lon), [e1, n1] = lv95(a1.lat, a1.lon)
           const d = Math.hypot(e1 - e0, n1 - n0) || 1
           return [e0 + ((e1 - e0) / d) * sm, n0 + ((n1 - n0) / d) * sm]
+        }
+        // kehrt der Zug am Halt um (Kopfbahnhof, Michael, 2026-10-29: «die roten Lichter vorne in Fahrtrichtung»), lägen die Wagen hinter der
+        // Lok auf dem Weg davor, also vor ihr auf demselben Gleis, und der Steuerwagen führte; dann steht der ganze Zug auf dem Weg danach, die
+        // Lok eine Zuglänge weiter (eine Annahme: wie der Zug wirklich wendet, steht in keiner Quelle)
+        if (vorher && sM < ZUG_GANZ_M * mass * gross.x) {
+          const r = (a: { lat: number; lon: number }, z: { lat: number; lon: number }) => { const [e0, n0] = lv95(a.lat, a.lon), [e1, n1] = lv95(z.lat, z.lon); return [e1 - e0, n1 - n0] }
+          const [ae, an] = r(lageBei(fw, 0), lageBei(fw, Math.min(ende, 60)))
+          const ve = wegEnde(vorher), [be, bn] = r(lageBei(vorher, Math.max(0, ve - 60)), lageBei(vorher, ve))
+          if ((ae * be + an * bn) < -0.5 * Math.hypot(ae, an) * Math.hypot(be, bn)) sM = Math.min(ende, ZUG_GANZ_M * mass * gross.x)
         }
         const stelle = (sm: number): [number, number] => {
           if (sm >= 0) { const p = lageBei(fw, Math.min(sm, ende)); return lv95(p.lat, p.lon) }
