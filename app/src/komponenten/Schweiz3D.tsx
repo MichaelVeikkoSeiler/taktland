@@ -515,7 +515,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [schiffeAn, setSchiffeAn] = useState(false)
   // die Wolken mit eigenem Knopf, nicht mehr mit «Wetter» (Michael, 2026-10-29: «Wolken ein separater Knopf machen (weiss)»)
   const [wolkenAn, setWolkenAn] = useState(false)
-  // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
+  // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang jetzt (Michael, 2026-10-29: «Beim ersten Laden soll immer Jetzt sein»)
   const [sonnenAn, setSonnenAn] = useState(false)
   // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
   const [windAn, setWindAn] = useState(false)
@@ -551,7 +551,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }, [windAn, hoerNieder?.art, hoerNieder?.staerke, windHoeren])
   useEffect(() => () => wetterGeraeuschAus(), [])
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
-  const [minuten, setMinuten] = useState(12 * 60)
+  const [minuten, setMinuten] = useState(() => Math.round(jetztInDerSchweiz().minuten / 15) * 15 % 1440)
+  // «Jetzt» ist gedrückt, solange die Zeit die jetzige ist; erst eine Verschiebung von Hand löst ihn (Michael, 2026-10-29: «Darum dieser
+  // Knopf aktiv gedrückt. Erst eine manuelle Zeitverschiebung deaktiviert ihn»); gedrückt folgt die Zeit der Uhr, je 15 Minuten
+  const [jetztAn, setJetztAn] = useState(true)
   const [umweltHier, setUmweltHier] = useState(false)
   const [umweltGanzDa, setUmweltGanzDa] = useState(false)
   const [meldung, setMeldung] = useState<string | null>(null)
@@ -646,8 +649,16 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     ? `Sonne ${Math.round(stand.hoehe)}° über dem Horizont, im ${himmelsrichtung(stand.richtung)}`
     : 'Die Sonne steht unter dem Horizont') : null
   const sonnenZeilen = useMemo(() => (stand ? [`${tagText}, ${uhrzeit(minuten)} Uhr`, standText!] : null), [stand, tagText, minuten, standText])
+  useEffect(() => {
+    if (!jetztAn) return
+    const nachstellen = () => { const j = jetztInDerSchweiz(); setTag(j.datum); setMinuten(Math.round(j.minuten / 15) * 15 % 1440) }
+    nachstellen()
+    const t = window.setInterval(nachstellen, 60_000)
+    return () => window.clearInterval(t)
+  }, [jetztAn])
   const zeitSchieben = (art: 'stunde' | 'tag' | 'jetzt', um: number) => {
-    if (art === 'jetzt') { const j = jetztInDerSchweiz(); setTag(j.datum); setMinuten(Math.round(j.minuten / 15) * 15 % 1440); return }
+    if (art === 'jetzt') { const j = jetztInDerSchweiz(); setTag(j.datum); setMinuten(Math.round(j.minuten / 15) * 15 % 1440); setJetztAn(true); return }
+    setJetztAn(false)
     if (art === 'stunde') {
       const neu = minuten + um * 60
       if (neu < 0 || neu >= 1440) {
@@ -775,7 +786,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => { setJetztAn(false); setMinuten(m) }, plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -813,7 +824,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
+                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
                    zeitSchieben={zeitSchieben} />
         ) : (
@@ -880,16 +891,17 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
         {sonnenAn && (
           <>
-            <input type="date" value={tag} onChange={(e) => { if (e.target.value) setTag(e.target.value) }} aria-label="Datum"
+            <input type="date" value={tag} onChange={(e) => { if (e.target.value) { setJetztAn(false); setTag(e.target.value) } }} aria-label="Datum"
                    className="rounded-lg border border-sbb-cloud bg-white px-2 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
             <label className="flex min-w-48 flex-1 items-center gap-2">
               <span className="sr-only">Uhrzeit</span>
-              <input type="range" min={0} max={1425} step={15} value={minuten} onChange={(e) => setMinuten(Number(e.target.value))}
+              <input type="range" min={0} max={1425} step={15} value={minuten} onChange={(e) => { setJetztAn(false); setMinuten(Number(e.target.value)) }}
                      className="flex-1 accent-sbb-red" />
               <span className="w-12 font-bold tabular-nums">{uhrzeit(minuten)}</span>
             </label>
-            <button type="button" onClick={() => zeitSchieben('jetzt', 0)}
-                    className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1.5 text-xs font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Jetzt</button>
+            <button type="button" onClick={() => zeitSchieben('jetzt', 0)} aria-pressed={jetztAn}
+                    className={'rounded-lg border px-2.5 py-1.5 text-xs font-bold ' + (jetztAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
+                      : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>Jetzt</button>
           </>
         )}
       </div>
@@ -1002,7 +1014,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         <Abschnitt titel="Sonne und Schatten">
           <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
-            −1 h und +1 h die Zeit, −1 Tag und +1 Tag das Datum, «Jetzt» setzt beides auf jetzt; unter dem Modell lassen sich Datum und
+            −1 h und +1 h die Zeit, −1 Tag und +1 Tag das Datum, «Jetzt» setzt beides auf jetzt. Am Anfang gilt die jetzige Zeit, «Jetzt» leuchtet dann und die Zeit läuft mit der Uhr mit,
+            bis man sie selbst verschiebt; unter dem Modell lassen sich Datum und
             Uhrzeit auch direkt wählen. Steht die Sonne unter dem Horizont, brennt Licht in den Fenstern der Gebäude, abends in vielen,
             nach Mitternacht in wenigen. Fenster und Stockwerke stehen in keiner Quelle: Sie sind gezeichnet, und wie viele brennen, ist
             eine Annahme. Nachts wird der Himmel dunkel, und es stehen die Sterne bis zur Helligkeit 6 dort, wo sie zu dieser Zeit über
@@ -1142,6 +1155,8 @@ function useGeraetDunkel() {
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 // Sonne orange (Michael, 2026-10-25: «Der Knopf Sonne soll orangefarben sein»; vorher rot)
 // Gebäude gräulich statt grün wie die Bäume (Michael, 2026-10-28: «Den Knopf Gebäude gräulich machen»), Farbe gewählt
+/** Breite der Knöpfe rechts an der Wand, je Anteil der Breite des Modells (gewählt) */
+const KNOPF_B = 0.075
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
@@ -1390,7 +1405,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -1405,6 +1420,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   sonne: (Sonnenstand & { zeit: Date; la: number; lo: number }) | null
   /** was der Schalter der Sonne in der Brille zur Zeit sagt, und wie die Brille die Zeit verschiebt */
   sonnenZeilen: string[] | null
+  /** «Jetzt» gedrückt: die Zeit ist die jetzige */
+  jetztAn: boolean
   zeitSchieben: (art: 'stunde' | 'tag' | 'jetzt', um: number) => void
   /** Wanderwege zeigen (in den Stufen 20 km, 4 km und 1 km) */
   wandern: boolean
@@ -2522,17 +2539,18 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
     const zeit = (art: 'stunde' | 'tag' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
     const rechts: Teil[] = [
-      { zeilen: ['Wetter'], breite: 0.08 * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
-      // wie bisher nur in der ganzen Schweiz und in der Region
+      // alle Knöpfe rechts gleich breit, «Jetzt» gleich rechts neben Datum und Uhrzeit und gedrückt, solange die Zeit die jetzige ist
+      // (Michael, 2026-10-29: «Stunden und Tage Knöpfe gleich breit wie andere, Jetzt auch», «KNOPF jetzt rechts neben das Datum und Uhrzeit»)
+      { zeilen: ['Wetter'], breite: KNOPF_B * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
       // in jeder Stufe (Michael, 2026-10-29: «Wolken auch in den Feldern 4 km und 1 km zeigen»)
-      { zeilen: ['Wolken'], breite: 0.08 * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
-      { zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
+      { zeilen: ['Wolken'], breite: KNOPF_B * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
+      { zeilen: ['Sonne'], breite: KNOPF_B * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
       { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
-      { zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
-      { zeilen: ['+1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', 1) },
-      { zeilen: ['−1', 'Tag'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', -1) },
-      { zeilen: ['+1', 'Tag'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', 1) },
-      { zeilen: ['Jetzt'], breite: 0.04 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('jetzt', 0) },
+      { zeilen: ['Jetzt'], breite: KNOPF_B * W, an: zeitDa && jetztAn, farbe: LICHT.sonne, gesperrt: !zeitDa, aktion: zeit('jetzt', 0) },
+      { zeilen: ['−1 h'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
+      { zeilen: ['+1 h'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', 1) },
+      { zeilen: ['−1 Tag'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', -1) },
+      { zeilen: ['+1 Tag'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', 1) },
     ]
     // je Teil ein Bild für die Vorderseite, auf allen vier Wänden dasselbe; an leuchtet es in der Farbe seiner Art, aus ist es dunkel
     const PX = 128
@@ -2641,7 +2659,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, windAn, zuege, zuegeDa, schiffe, wolken])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, wolken])
 
   // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
   // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
