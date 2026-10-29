@@ -66,7 +66,7 @@ interface Gelaende {
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
 /** was die Schalter ein- und ausschalten */
-type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege' | 'schiffe'
+type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege' | 'schiffe' | 'wolken'
 /** Ein Feld und was an seinen Seiten angesetzt ist (Michael, 2026-10-20: «An den Wänden ein Plus und oder ein Minus … zum
  *  Erweitern resp. reduzieren der Kacheln»): je Stück ein Gelände, Schlüssel «di_dj» in Feldern Ost und Nord vom Anker */
 interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, number]; dj: [number, number] }
@@ -513,6 +513,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // Züge laut Fahrplan, zuerst nur auf 3dland.ch (Michael, 2026-10-26), seit 2026-10-28 auch in Taktland (Michael, 2026-10-28: «Bitte diese Sachen auch für Taktland»)
   const [zuegeAn, setZuegeAn] = useState(false)
   const [schiffeAn, setSchiffeAn] = useState(false)
+  // die Wolken mit eigenem Knopf, nicht mehr mit «Wetter» (Michael, 2026-10-29: «Wolken ein separater Knopf machen (weiss)»)
+  const [wolkenAn, setWolkenAn] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang heute um 12 Uhr
   const [sonnenAn, setSonnenAn] = useState(false)
   // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
@@ -773,7 +775,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => setMinuten(m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -811,7 +813,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
+                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
                    zeitSchieben={zeitSchieben} />
         ) : (
@@ -985,7 +987,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             nicht an der Station). Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
             wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde. Regen und Wind sind auch zu hören, gerechnete Geräusche,
             lauter mit der Stärke; Schnee bleibt still.</p>
-          <p>In der ganzen Schweiz und in der Region zeigt «Wetter» auch die Wolken laut dem Wettermodell ICON-CH1 von MeteoSchweiz,
+          <p>In der ganzen Schweiz und in der Region zeigt der weisse Knopf «Wolken» die Wolken laut dem Wettermodell ICON-CH1 von MeteoSchweiz,
             zur Zeit der Sonne oder, wenn die Sonne aus ist, jetzt. Das Modell nennt je Stelle von etwa 1 km, wie viel des Himmels in drei
             Schichten bewölkt ist: tief (vom Boden bis 800 hPa), mittel (800 bis 400 hPa) und hoch (über 400 hPa); hier auf 2 km gemittelt,
             alle 3 Stunden neu, bis gut einen Tag voraus. Gezeichnet ist jede Schicht als Fläche auf einer gewählten Höhe (1'500, 4'200 und
@@ -1141,7 +1143,7 @@ function useGeraetDunkel() {
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 // Sonne orange (Michael, 2026-10-25: «Der Knopf Sonne soll orangefarben sein»; vorher rot)
 // Gebäude gräulich statt grün wie die Bäume (Michael, 2026-10-28: «Den Knopf Gebäude gräulich machen»), Farbe gewählt
-const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6' }
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** ein Zug so lang, eine Annahme fürs Bild (die Länge eines Zugs steht nicht im Fahrplan); höchstens so viele zugleich */
@@ -1389,7 +1391,7 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -1411,6 +1413,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   zuege: boolean; zuegeDa: boolean
   /** Schiffe laut Fahrplan zeigen (ab der Stufe 20 km) */
   schiffe: boolean
+  /** die Wolken laut Wettermodell, ein eigener Knopf */
+  wolken: boolean
   /** Gebäude und Bäume gibt es hier */
   umweltHier: boolean
   /** die Sonne mit Zeit ist an; ein Schalter um, in der Brille an den Wänden */
@@ -2519,6 +2523,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const zeit = (art: 'stunde' | 'tag' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
     const rechts: Teil[] = [
       { zeilen: ['Wetter'], breite: 0.08 * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
+      // wie bisher nur in der ganzen Schweiz und in der Region
+      { zeilen: ['Wolken'], breite: 0.08 * W, an: (stufe === 'schweiz' || stufe === 'region') && wolken, farbe: LICHT.wolken,
+        gesperrt: stufe !== 'schweiz' && stufe !== 'region', aktion: umschalten('wolken') },
       { zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
       { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
       { zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
@@ -2634,7 +2641,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, windAn, zuege, zuegeDa, schiffe])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, windAn, zuege, zuegeDa, schiffe, wolken])
 
   // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
   // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
@@ -3277,7 +3284,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
-    if (!k || !lage || !windAn || (stufe !== 'schweiz' && stufe !== 'region')) { setWolkenZeile(null); return }
+    if (!k || !lage || !wolken || (stufe !== 'schweiz' && stufe !== 'region')) { setWolkenZeile(null); return }
     let weg = false
     const gruppe = new THREE.Group()
     gruppe.name = 'wolken'
@@ -3318,7 +3325,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const x of weg3) x.dispose()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [windAn, b, stufe, zusatz, knoepfe, wolkenViertel, jetztTakt])
+  }, [wolken, b, stufe, zusatz, knoepfe, wolkenViertel, jetztTakt])
   // Regen und Schnee (Niederschlag.ts; Michael, 2026-10-28: «Regen soll aus den Wolken kommen und nicht von viel weiter oben»): laut
   // Wettermodell ICON-CH1 (src/wolken.ts) je Zelle von 2 km, wo und wie stark es fällt, von der untersten gezeichneten Wolke darüber bis
   // zum Boden, über der Schneefallgrenze als Schnee; in jeder Stufe dasselbe Wetter; ohne diese Daten wie bisher die Station über dem ganzen Modell

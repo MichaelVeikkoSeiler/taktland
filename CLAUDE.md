@@ -594,7 +594,7 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              gemittelt (index.json, wolken.wgz und niederschlag.wgz, etwa 1,7 MB, nicht in Git); CEILING bleibt weg (die Quelle nennt nicht, ob über Meer oder Boden),
              HBAS_SC und HTOP_SC gelten nur für flache Konvektion; gebaut im Workflow von 3dland.ch, dazu alle 3 Stunden (cron, Züge und Schiffe dann
              aus actions/cache vom selben Tag), neben die Seite gelegt (wolken/), Taktland liest sie bei https://3dland.ch/wolken/; in der App
-             src/wolken.ts und in Schweiz3D.tsx mit dem Knopf «Wetter» in der ganzen Schweiz und in der Region, zur Zeit der Sonne oder jetzt (die Stunde
+             src/wolken.ts und in Schweiz3D.tsx mit dem eigenen weissen Knopf «Wolken» an der Wand rechts neben «Wetter» (seit 2026-10-29, vorher mit «Wetter»; Michael: «Wolken ein separater Knopf machen (weiss)»; in 4 km und 1 km gesperrt) in der ganzen Schweiz und in der Region, zur Zeit der Sonne oder jetzt (die Stunde
              der Prognose am nächsten, höchstens eine Stunde daneben): je Schicht eine Fläche auf 1'500, 4'200 und 9'000 m ü. M. (WOLKEN_HOEHE_M,
              gewählt nach der Mitte der Druckbereiche in der Standardatmosphäre), deckend, wo ein gezeichnetes Rauschen (WOLKEN_KORN_KM 3, 6, 12 km,
              nach Rang gleichmässig verteilt) über 1 − Bewölkung liegt, mit Schatten; die Zeile «Wolken laut Prognose von MeteoSchweiz für …»; Form,
