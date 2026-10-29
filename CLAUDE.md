@@ -622,9 +622,16 @@ data/strassenlicht/  Strassen- und Bahnhofslicht bei Nacht für «3D Schweiz» (
              erfunden, belegt nur die Lage: Strassen von 3 bis 10 m aus swissTLM3D (ohne Tunnel) in Siedlungen (swissTLMRegio Siedl, Stadtzentr) alle 35 m,
              Gleise (nur Bahn, ohne Tram, Metro, Tunnel, Standseilbahnen) bis 250 m um die Bahnhöfe des Netzes alle 30 m, je Zelle von 15 m und 25 m höchstens
              eine (sonst wurde das Gleisfeld von Bern ein weisser Fleck), etwa 1,2 Millionen und 32'000 Lampen, 440 Kacheln, 5 MB (.lgz); in der App
-             strassenlichtLaden in src/gelaende.ts, in Schweiz3D.tsx ab der Stufe 20 km, sobald in den Gebäuden Licht brennt: je Lampe ein weicher Lichtfleck
-             auf dem Boden, warm auf Strassen (11 m), kühler und schwächer an Bahnhöfen (16 m), höchstens 60'000 im Modell (LICHT_*, gewählt); im Halt ohne
+             strassenlichtLaden in src/gelaende.ts, in Schweiz3D.tsx nur mit dem Schalter «Gebäude» (Michael, 2026-10-29: «Strassen und Bahnhofbeleuchtung nur aktivieren
+             wenn Gebäude eingeschaltet sind»), sobald in den Gebäuden Licht brennt: je Lampe ein weicher Lichtfleck
+             auf dem Boden, warm auf Strassen (11 m), kühler und schwächer an Bahnhöfen (16 m), höchstens 60'000 im Modell (LICHT_*, gewählt); je Lampe
+             auch am Tag ein schlichter dunkelgrauer Mast, 8 m an Strassen, 10 m an Bahnhöfen, 3 m neben der Lampe in einer je Lampe festen Richtung
+             (die Datei kennt die Achse der Strasse nicht), oben ein Kopf, der nachts leuchtet (LICHT_MAST_*, gewählt; Michael, 2026-10-29: «Kann man bei den
+             Lichtkegel doch noch einen Masten am Strassenrand einfügen? Nur was ganz simples?»); im Halt ohne
              Lichtkegel der Stirnlampen (die Kegel der vielen Züge in Bern addierten sich); in «Was gezeichnet oder angenommen ist» genannt
+             Licht in den Fenstern (src/gebaeudeBild.ts): deckt ein Bildpunkt mehr als etwa ein halbes Fenster samt Wand, gilt statt des einzelnen
+             Fensters der Anteil, gemittelt (Michael, 2026-10-29: «Die Lichter bei den Gebäuden flackern»; die Fenster sind keine eigene Fläche,
+             sie sind auf die Wand gerechnet, beim Bewegen sprang die Mitte eines Bildpunkts zwischen brennenden und dunklen Fenstern)
 data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
