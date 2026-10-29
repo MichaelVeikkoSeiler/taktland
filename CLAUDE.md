@@ -770,3 +770,8 @@ Die Daten stammen von data.sbb.ch. Die Lizenz verlangt eine Quellenangabe, die i
 der App sichtbar sein muss: In der Fusszeile steht immer eine Zeile mit allen Quellen, was wofür ist, klappt
 darunter auf («Alle Datenquellen und Lizenzen», details/summary, Michael, 2026-10-09). Kein SBB-Logo, kein Auftritt, der ein offizielles
 SBB-Produkt suggeriert.
+
+**LICENSE** (Michael, 2026-10-29: «Weg A, mit hallo@taktland.ch»): alle Rechte vorbehalten für Taktland und 3D-Land, Code, Texte,
+Gestaltung, Illustrationen, Auftaktbilder und Bildmarken; ausgenommen die Daten Dritter und die mitgelieferten Bibliotheken
+(app/public/lizenzen/drittsoftware.txt); Erlaubnis über hallo@taktland.ch; dieselbe LICENSE im Repository 3DLand. Neue Datenquellen
+dort ergänzen.
