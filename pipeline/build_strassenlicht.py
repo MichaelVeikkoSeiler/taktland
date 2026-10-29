@@ -37,6 +37,8 @@ STRASSEN = {"3m Strasse", "4m Strasse", "6m Strasse", "8m Strasse", "10m Strasse
 STRASSE_ABSTAND_M = 35
 GLEIS_ABSTAND_M = 30
 BAHNHOF_M = 250
+#: höchstens eine Lampe je Zelle so vieler Meter (gewählt)
+ZELLE_M = {1: 15, 2: 25}
 #: Raster der Siedlungsmaske
 MASKE_M = 25
 RAHMEN = (2_480_000, 1_070_000, 2_840_000, 1_300_000)
@@ -119,7 +121,16 @@ def main():
     lampen = {}
     zahl = {1: 0, 2: 0}
 
+    belegt = set()
+
     def setzen(e, n, art):
+        # höchstens eine Lampe je Zelle: viele kurze Stücke (Weichen, Kreuzungen) bekämen sonst je eine eigene, im Gleisfeld von Bern
+        # wurde das ein weisser Fleck
+        z = ZELLE_M[art]
+        zelle = (art, int(e // z), int(n // z))
+        if zelle in belegt:
+            return
+        belegt.add(zelle)
         k = (int(e // KACHEL_M), int(n // KACHEL_M))
         lampen.setdefault(k, []).append((round(e - k[0] * KACHEL_M), round(n - k[1] * KACHEL_M), art))
         zahl[art] += 1
@@ -179,7 +190,7 @@ def main():
         "geladen": date.today().isoformat(), "kachel_m": KACHEL_M,
         "hinweis": "Lampen erfunden: in keiner Quelle; nur die Lage von Strassen, Gleisen, Siedlungen und Bahnhöfen ist belegt. "
                    f"Strassen ({', '.join(sorted(STRASSEN))}) in Siedlungen alle {STRASSE_ABSTAND_M} m, Gleise bis {BAHNHOF_M} m um "
-                   f"Bahnhöfe alle {GLEIS_ABSTAND_M} m",
+                   f"Bahnhöfe alle {GLEIS_ABSTAND_M} m, je Zelle von {ZELLE_M[1]} m (Strasse) und {ZELLE_M[2]} m (Bahnhof) höchstens eine",
         "arten": {"1": "Strasse", "2": "Bahnhof"}, "lampen": {"strasse": zahl[1], "bahnhof": zahl[2]},
         "kacheln": sorted(f"{ex}_{ny}" for ex, ny in lampen),
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
