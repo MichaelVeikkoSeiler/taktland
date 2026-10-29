@@ -323,8 +323,8 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              immer geben. Es löst dann einfach entsprechend auf der anderen Seite Kacheln wieder auf»; Knoepfe.wachsen); was darunter fehlt,
              ergänzt eine Region um das Stück (unterFuer)
              Sonne und Schatten (Michael, 2026-10-21: «Sonnen und Schattenzeiten einbauen. Realistisch. Zeit und Datum auf dem Mobile und
-             Brille wählbar»): Schalter «Sonne und Schatten», Datum und Uhrzeit (Schweizer Zeit, je 15 Minuten, «Jetzt»), am Anfang heute
-             12 Uhr; der Sonnenstand über der Mitte des Modells gerechnet (src/sonne.ts, Näherung des Astronomical Almanac, ohne Brechung),
+             Brille wählbar»): Schalter «Sonne und Schatten», Datum und Uhrzeit (Schweizer Zeit, je 15 Minuten, «Jetzt»), am Anfang jetzt
+             (Michael, 2026-10-29: «Beim ersten Laden soll immer Jetzt sein»; vorher heute 12 Uhr), «Jetzt» dann gedrückt und die Zeit folgt der Uhr, erst eine Verschiebung von Hand (±1 h, ±1 Tag, Regler, Datum) löst ihn (jetztAn); der Sonnenstand über der Mitte des Modells gerechnet (src/sonne.ts, Näherung des Astronomical Almanac, ohne Brechung),
              die Sonne gehört zum Modell (dreht mit in der Brille), Schatten mit der Schattenkarte von three.js (4096, auf dem Handy 2048),
              Gelände, Gebäude und Bäume werfen Schatten, Berge ausserhalb des Modells nicht; steht die Sonne unter dem Horizont (ganz ab 6° darunter),
              brennt Licht in den Fenstern (Michael, 2026-10-24: «Ist es dunkel brennen bei den Gebäuden Lichter. Realistische Verteilung»; fensterLicht in
@@ -335,7 +335,7 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              Himmel wärmer (Stimmung, kein gemessenes Licht); in der Brille alle Schalter an den Wänden des Modells, auf allen vier Seiten
              (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle … so wie Schalter», vorher Tafeln vor der Nase): flach im
              Band unter dem tiefsten Punkt, links der Knöpfe + und − Höhen, Wanderwege (ab 20 km), Gebäude und Bäume (wo es sie gibt), rechts
-             Sonne und, wenn sie an ist, Datum und Uhrzeit mit −1 h, +1 h, −1 Tag, +1 Tag (Michael, 2026-10-24: «Was heisst 1 Mon?», dann «−1 Monat und +1 Monat durch Tage ersetzen»), Jetzt (Strahl und Abzug); als Knöpfe einer Steuerung
+             Sonne und, wenn sie an ist, Datum und Uhrzeit, gleich rechts daneben Jetzt (leuchtet orange, solange die Zeit die jetzige ist), dann −1 h, +1 h, −1 Tag, +1 Tag (Michael, 2026-10-24: «Was heisst 1 Mon?», dann «−1 Monat und +1 Monat durch Tage ersetzen»), alle Knöpfe rechts gleich breit (KNOPF_B; Michael, 2026-10-29: «Stunden und Tage Knöpfe gleich breit wie andere, Jetzt auch», «KNOPF jetzt rechts neben das Datum und Uhrzeit») (Strahl und Abzug); als Knöpfe einer Steuerung
              (Michael, 2026-10-22: «wie richtige … physische Knöpfe»): aus dunkel und 1,1 % der Breite vorstehend, an 0,3 % eingedrückt und
              leuchtend mit Schein auf der Wand, Gelände gelb, Bäume grün, Gebäude grau (seit 2026-10-28, vorher grün; Michael: «Den Knopf Gebäude gräulich machen»), Sonne orange (seit 2026-10-25, vorher rot; Michael: «orangefarben») (KNOPF_*, LICHT), die Zeit als flache Anzeige;
              jeder Druck klickt wie ein rastender Druckknopf, gerechnet (knopfTon in src/audio.ts; Michael, 2026-10-22: «passend und absolut
@@ -588,7 +588,7 @@ data/schiffe3d/  Schiffe laut Fahrplan für «3D Schweiz» auf 3dland.ch und in 
 data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolken angehen»): pipeline/build_wolken.py aus dem Wettermodell ICON-CH1-EPS
              von MeteoSchweiz (Open Government Data, CC-BY; STAC ch.meteoschweiz.ogd-forecasting-icon-ch1 auf data.geo.admin.ch, Dateien auf
              rgw.cscs.ch, GRIB2 über eccodes), der neueste vollständige Lauf, davor bis 24 Stunden zurück je Stunde der neueste frühere Lauf, der sie
-             hat (ZURUECK_H, lauf_je_stunde; Michael, 2026-10-28: «Ich sehe keine Wolken»: mit «Sonne» an beginnt die Zeit um 12 Uhr, der neueste
+             hat (ZURUECK_H, lauf_je_stunde; Michael, 2026-10-28: «Ich sehe keine Wolken»: mit «Sonne» an begann die Zeit damals um 12 Uhr, der neueste
              Lauf erst am Abend), nur der Kontrolllauf, je Stunde die Bewölkung CLCL (800 hPa bis Boden),
              CLCM (400 bis 800 hPa) und CLCH (0 bis 400 hPa) in Prozent, die Modellzellen (etwa 1 km, Lage aus horizontal_constants) auf 2 km in LV95
              gemittelt (index.json, wolken.wgz und niederschlag.wgz, etwa 1,7 MB, nicht in Git); CEILING bleibt weg (die Quelle nennt nicht, ob über Meer oder Boden),
