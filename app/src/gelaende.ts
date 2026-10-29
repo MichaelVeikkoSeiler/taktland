@@ -576,6 +576,41 @@ export async function wanderwegeLaden(e0: number, n0: number, e1: number, n1: nu
   return { wege: teile.flat(), quelle: ix.quelle }
 }
 
+/** Strassen- und Bahnhofslampen (pipeline/build_strassenlicht.py) im Rechteck: Ost, Nord und Art (1 Strasse, 2 Bahnhof); die Lampen sind
+ *  erfunden, nur die Lage der Strassen und Gleise ist belegt */
+export interface Lampen { e: Float64Array; n: Float64Array; art: Uint8Array }
+interface LichtIndex { kachel_m: number; quelle: string; kacheln: string[] }
+let lichtVerz: Promise<LichtIndex | null> | null = null
+const lichtVorrat = new Map<string, Promise<Lampen | null>>()
+export async function strassenlichtLaden(e0: number, n0: number, e1: number, n1: number): Promise<Lampen | null> {
+  const ix = await (lichtVerz ??= holen<LichtIndex>('data/strassenlicht/index.json').catch(() => null))
+  if (!ix) return null
+  const k = ix.kachel_m, da = new Set(ix.kacheln), namen: string[] = []
+  for (let ex = Math.floor(e0 / k); ex <= Math.floor(e1 / k); ex++) {
+    for (let ny = Math.floor(n0 / k); ny <= Math.floor(n1 / k); ny++) if (da.has(`${ex}_${ny}`)) namen.push(`${ex}_${ny}`)
+  }
+  const teile = await Promise.all(namen.map((name) => {
+    let p = lichtVorrat.get(name)
+    if (!p) {
+      p = holenBinaer(`data/strassenlicht/${name}.lgz`).then(entpacken).then((roh) => {
+        const [ex, ny] = name.split('_').map(Number), v = new DataView(roh), n = v.getUint32(0, true)
+        const l: Lampen = { e: new Float64Array(n), n: new Float64Array(n), art: new Uint8Array(n) }
+        for (let i = 0, o = 4; i < n; i++, o += 5) { l.e[i] = ex * k + v.getUint16(o, true); l.n[i] = ny * k + v.getUint16(o + 2, true); l.art[i] = v.getUint8(o + 4) }
+        return l
+      }).catch(() => { lichtVorrat.delete(name); return null })
+      while (lichtVorrat.size >= 60) lichtVorrat.delete(lichtVorrat.keys().next().value!)
+      lichtVorrat.set(name, p)
+    }
+    return p
+  }))
+  const e: number[] = [], n: number[] = [], art: number[] = []
+  for (const t of teile) {
+    if (!t) continue
+    for (let i = 0; i < t.e.length; i++) if (t.e[i] >= e0 && t.e[i] <= e1 && t.n[i] >= n0 && t.n[i] <= n1) { e.push(t.e[i]); n.push(t.n[i]); art.push(t.art[i]) }
+  }
+  return { e: Float64Array.from(e), n: Float64Array.from(n), art: Uint8Array.from(art) }
+}
+
 /** ob ein Rechteck Gebäude oder Bäume hat: ganze Schweiz oder ein Probeausschnitt */
 export async function probeDa(e0: number, n0: number, e1: number, n1: number) {
   const [ix, ug, ub] = await Promise.all([probeIndex('gebaeude'), umweltIndex('gebaeude'), umweltIndex('baeume')])
