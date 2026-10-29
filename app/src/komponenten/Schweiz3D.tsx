@@ -1368,7 +1368,8 @@ const ZUG_NEIGUNG = (6 * Math.PI) / 180
  *  innen und vor der Lok ein Lichtkegel auf dem Boden, dreimal so lang wie die Lok und vorne viermal so breit wie der Zug; Farben und Stärke
  *  gewählt, in keiner Quelle */
 const ZUG_INNEN_FARBE = '#ffd49a', ZUG_INNEN_HELL = 0.75
-const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.6, ZUG_STIRN_LAENGE = 3, ZUG_STIRN_BREITE = 4
+/** (Michael, 2026-10-29: «Die Stirnlichter der Züge 20% weniger hell», vorher 0,6) */
+const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.48, ZUG_STIRN_LAENGE = 3, ZUG_STIRN_BREITE = 4
 /** Strassen- und Bahnhofslicht: Radius des Lichtflecks auf dem Boden (m), Farben und Stärke gewählt, in keiner Quelle (die Lampen sind
  *  erfunden, belegt ist nur, wo Strassen und Gleise liegen); höchstens so viele Lampen in einem Modell (eine Annahme zur Grafik) */
 /** (Michael, 2026-10-29: «Lichtkegel etwas breiter und etwas weniger hell»; vorher 11 m, 16 m und 0,55) */
