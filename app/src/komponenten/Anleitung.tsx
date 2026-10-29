@@ -450,21 +450,33 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       </Abschnitt>
 
       <Abschnitt titel="Über Taktland">
-        {/* persönlich statt Aufzählung (Michael, 2026-10-01: «etwas auflockern», Variante B); Text von Michael, 2026-10-05 */}
-        <blockquote className="mt-2 border-l-2 border-sbb-red pl-4 text-lg leading-relaxed">
-          «Ich bin gerne mit dem Zug unterwegs und wollte mehr über das wissen, woran ich
-          vorbeifahre. Wie heisst der Bahnhof, an dem ich gerade vorbeifahre? Wie heisst die Brücke
-          oder der Tunnel, den wir soeben passieren? Wann folgt der nächste Tunnel? Aus solchen
-          Fragen ist Taktland entstanden: aus offenen Daten, die mit Hilfe von KI miteinander
-          verknüpft sind. Taktland soll ein Reisebegleiter sein und auch ausserhalb des Zuges
-          unterhalten.»
-        </blockquote>
+        {/* persönlich statt Aufzählung (Michael, 2026-10-01: «etwas auflockern», Variante B); Text von Michael, 2026-10-05; seit 2026-10-29 in
+            der Ich-Form mit der Entstehung, unterschrieben (Michael: «wie die Produktion und Entwicklung und die Idee gewesen ist», «Erwähne aber
+            auch, dass Diverses eben doch erfunden ist»), derselbe Text für LinkedIn */}
+        <div className="mt-2 space-y-3 border-l-2 border-sbb-red pl-4 leading-relaxed">
+          <p className="text-lg">Ich bin gerne mit dem Zug unterwegs und wollte mehr über das wissen, woran ich vorbeifahre. Wie heisst der
+            Bahnhof, an dem ich gerade vorbeifahre? Wie heisst die Brücke oder der Tunnel, den wir soeben passieren? Wann folgt der nächste
+            Tunnel? Aus solchen Fragen ist Taktland entstanden.</p>
+          <p>Dazu muss man wissen: Ich kann keine einzige Zeile Code schreiben. Taktland ist trotzdem eine App mit über tausend Bahnhöfen, mit
+            Linien, Spielen, Mitfahren per GPS und einem Führerstand in 3D. Möglich wurde das mit Claude, einer künstlichen Intelligenz von
+            Anthropic. Ich habe beschrieben, was ich sehen will. Claude hat die offenen Daten von SBB, BAV, swisstopo und MeteoSchweiz gesucht
+            und aufbereitet und den Code geschrieben. Angefangen hat es im September 2026.</p>
+          <p>Meine Arbeit war, auszuprobieren und genau zu sagen, was nicht stimmt: im Zug, auf dem Handy und mit der VR-Brille. Und am Anfang
+            stimmte vieles nicht. Einmal fuhr der Zug mitten durch einen Berg und sah Häuser und Bäume von unten. In Solothurn fuhr er durchs
+            Wohnquartier, und auf der Albulalinie ging es zu wie auf einer Achterbahn. Dann folgten ein Bildschirmfoto, ein Satz dazu und die
+            nächste Runde. Mein wichtigster Beitrag zum Code besteht aus zwei Wörtern: «Zu main». Erst dann wird eine Änderung veröffentlicht.</p>
+          <p>Eine Regel war mir von Anfang an wichtig: Die Angaben werden nicht erfunden. Jede Zahl zu einem Bahnhof, einer Linie oder einem
+            Tunnel stammt aus einer genannten Quelle, und was fehlt, steht als Lücke da. Ehrlicherweise ist aber manches doch erfunden, nämlich
+            wie es aussieht. Der Zug hat kein echtes Vorbild. Der Führerstand ist ein Bild, das ich mit ChatGPT gestaltet habe. Die
+            Tunnelwände, der gemalte Himmel, die Ortstafeln am Gleis, die Helligkeit im Tunnel und das Licht in den Fenstern hat niemand
+            gemessen. Das ist gezeichnet und gewählt, und in der App steht es auch so.</p>
+          <p>Von Hand wäre so etwas ein Projekt für ein ganzes Team gewesen. Für mich allein, ohne Programmierkenntnisse, wäre es gar nicht
+            möglich gewesen. Die KI hat mir das Handwerk abgenommen, die Idee, die Entscheidungen und das Ausprobieren blieben bei mir.</p>
+        </div>
         <p className="mt-3 font-medium">Michael Veikko Seiler</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
         <p className="mt-4 text-sm leading-relaxed text-sbb-metal dark:text-sbb-storm">
-          Der Name spielt auf den Taktfahrplan der Schweiz an. Umgesetzt mit Claude Code, die
-          Auftaktbilder und das Bild des Führerstands mit ChatGPT. Die Texte zu Bahnhöfen und Linien setzt ein Programm aus den
-          offenen Daten zusammen.
+          Der Name spielt auf den Taktfahrplan der Schweiz an. Die Texte zu Bahnhöfen und Linien setzt ein Programm aus den offenen Daten zusammen.
         </p>
       </Abschnitt>
       </div>
