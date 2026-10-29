@@ -33,6 +33,8 @@ export function lichtAnteil(stunde: number) {
   return (LICHT_ANTEIL[i] * (1 - t) + LICHT_ANTEIL[(i + 1) % 24] * t) * LICHT_MASS
 }
 const fenster = { nacht: { value: 0 }, anteil: { value: 0 } }
+/** wie dunkel es ist (0 hell bis 1 Nacht), dieselbe Grösse für die Innenbeleuchtung und die Stirnlichter der Züge */
+export const fensterNacht = fenster.nacht
 /** wie dunkel es ist (0 hell bis 1 Nacht) und welcher Anteil der Fenster brennt; gilt für alle Gebäude */
 export function fensterLicht(nacht: number, anteil: number) {
   fenster.nacht.value = Math.max(0, Math.min(1, nacht))
