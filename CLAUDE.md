@@ -594,7 +594,7 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              gemittelt (index.json, wolken.wgz und niederschlag.wgz, etwa 1,7 MB, nicht in Git); CEILING bleibt weg (die Quelle nennt nicht, ob über Meer oder Boden),
              HBAS_SC und HTOP_SC gelten nur für flache Konvektion; gebaut im Workflow von 3dland.ch, dazu alle 3 Stunden (cron, Züge und Schiffe dann
              aus actions/cache vom selben Tag), neben die Seite gelegt (wolken/), Taktland liest sie bei https://3dland.ch/wolken/; in der App
-             src/wolken.ts und in Schweiz3D.tsx mit dem eigenen weissen Knopf «Wolken» an der Wand rechts neben «Wetter» (seit 2026-10-29, vorher mit «Wetter»; Michael: «Wolken ein separater Knopf machen (weiss)»; in 4 km und 1 km gesperrt) in der ganzen Schweiz und in der Region, zur Zeit der Sonne oder jetzt (die Stunde
+             src/wolken.ts und in Schweiz3D.tsx mit dem eigenen weissen Knopf «Wolken» an der Wand rechts neben «Wetter» (seit 2026-10-29, vorher mit «Wetter»; Michael: «Wolken ein separater Knopf machen (weiss)») in jeder Stufe (seit 2026-10-29, vorher nur Schweiz und Region; Michael: «Wolken auch in den Feldern 4 km und 1 km zeigen»; die Kamera sieht dafür mindestens 16 km weit), zur Zeit der Sonne oder jetzt (die Stunde
              der Prognose am nächsten, höchstens eine Stunde daneben): je Schicht eine Fläche auf 1'500, 4'200 und 9'000 m ü. M. (WOLKEN_HOEHE_M,
              gewählt nach der Mitte der Druckbereiche in der Standardatmosphäre), deckend, wo ein gezeichnetes Rauschen (WOLKEN_KORN_KM 3, 6, 12 km,
              nach Rang gleichmässig verteilt) über 1 − Bewölkung liegt, mit Schatten; die Zeile «Wolken laut Prognose von MeteoSchweiz für …»; Form,
@@ -610,8 +610,7 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              niederschlag.wgz mit TOT_PR (Rate im Augenblick der Stunde, 0,1 mm je Stunde) und SNOWLMT (Schneefallgrenze, 50 m) je Zelle von 2 km
              (niederschlagBei in src/wolken.ts); in Schweiz3D.tsx in jeder Stufe je Zelle, wo es ab 0,1 mm je Stunde fällt, Stärke wie bei der
              Station (voll ab 4 mm), von der untersten gezeichneten Wolke über dem Boden (ab 10 % Bewölkung, sonst die unterste Schicht über dem
-             Boden) bis auf den Boden, darüber Schnee, unter der Schneefallgrenze Regen (komponenten/Niederschlag.ts, Säulen); in 4 km und 1 km
-             höchstens ein Viertel der Breite über dem höchsten Punkt; das Geräusch nach dem Mittel über das Modell; ohne diese Daten wie vorher die
+             Boden) bis auf den Boden, darüber Schnee, unter der Schneefallgrenze Regen (komponenten/Niederschlag.ts, Säulen), in jeder Stufe; das Geräusch nach dem Mittel über das Modell; ohne diese Daten wie vorher die
              Station gleichmässig über dem Modell (vorher bis ein Viertel der Breite über dem höchsten Punkt, in der ganzen Schweiz also bis
              etwa 90 km hoch); die Zeile «Regen und Schnee laut Prognose von MeteoSchweiz für …»
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der

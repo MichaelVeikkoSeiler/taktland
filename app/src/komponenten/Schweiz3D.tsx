@@ -987,7 +987,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             nicht an der Station). Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
             wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde. Regen und Wind sind auch zu hören, gerechnete Geräusche,
             lauter mit der Stärke; Schnee bleibt still.</p>
-          <p>In der ganzen Schweiz und in der Region zeigt der weisse Knopf «Wolken» die Wolken laut dem Wettermodell ICON-CH1 von MeteoSchweiz,
+          <p>In jeder Stufe zeigt der weisse Knopf «Wolken» die Wolken laut dem Wettermodell ICON-CH1 von MeteoSchweiz,
             zur Zeit der Sonne oder, wenn die Sonne aus ist, jetzt. Das Modell nennt je Stelle von etwa 1 km, wie viel des Himmels in drei
             Schichten bewölkt ist: tief (vom Boden bis 800 hPa), mittel (800 bis 400 hPa) und hoch (über 400 hPa); hier auf 2 km gemittelt,
             alle 3 Stunden neu, bis gut einen Tag voraus. Gezeichnet ist jede Schicht als Fläche auf einer gewählten Höhe (1'500, 4'200 und
@@ -997,8 +997,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             sagt dann «in der Höhe des Modells». Die Form der Wolken ist gezeichnet, nicht aus der Quelle.</p>
           <p>Regen und Schnee kommen aus demselben Wettermodell: je Stelle von 2 km, wie stark es zu dieser Stunde fällt, und die
             Schneefallgrenze. Sie fallen von der untersten gezeichneten Wolke darüber bis auf den Boden, über der Schneefallgrenze als
-            Schnee, darunter als Regen; in jeder Stufe dasselbe Wetter (in den Feldern von 4 km und 1 km, wo keine Wolken gezeichnet sind,
-            höchstens ein Viertel der Breite über dem höchsten Punkt). Unter einer dichten Wolke sieht man den Regen von oben nicht. Fehlen die
+            Schnee, darunter als Regen; in jeder Stufe dasselbe Wetter. Unter einer dichten Wolke sieht man den Regen von oben nicht. Fehlen die
             Daten des Modells, fällt wie früher der Niederschlag der Station gleichmässig über das ganze Modell.</p>
         </Abschnitt>
         <Abschnitt titel="Sonne und Schatten">
@@ -1941,7 +1940,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // in der Brille steht der Sockel auf dem Tisch
     wurzel.userData.untenY = () => Y(tief) - wand - platte
     if (!renderer.xr.isPresenting) {
-      kamera.far = weite / 1000 * 6; kamera.updateProjectionMatrix()
+      // auch über kleinen Feldern bis zu den hohen Wolken (bis 12 km über Meer)
+      kamera.far = Math.max(weite / 1000 * 6, 16); kamera.updateProjectionMatrix()
       // so weit weg, dass das ganze Modell mit dem Sockel ins Bild passt, auch im Hochformat
       const halbeSicht = Math.atan(Math.tan((kamera.fov * Math.PI) / 360) * Math.min(1, kamera.aspect))
       // schräg von Südwesten, der Blick nach Nordosten (Michael, 2026-10-19): so sieht man zwei Seiten des Sockels (die Diagonale
@@ -2524,8 +2524,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const rechts: Teil[] = [
       { zeilen: ['Wetter'], breite: 0.08 * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
       // wie bisher nur in der ganzen Schweiz und in der Region
-      { zeilen: ['Wolken'], breite: 0.08 * W, an: (stufe === 'schweiz' || stufe === 'region') && wolken, farbe: LICHT.wolken,
-        gesperrt: stufe !== 'schweiz' && stufe !== 'region', aktion: umschalten('wolken') },
+      // in jeder Stufe (Michael, 2026-10-29: «Wolken auch in den Feldern 4 km und 1 km zeigen»)
+      { zeilen: ['Wolken'], breite: 0.08 * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
       { zeilen: ['Sonne'], breite: 0.075 * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
       { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
       { zeilen: ['−1 h'], breite: 0.034 * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
@@ -3284,7 +3284,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
-    if (!k || !lage || !wolken || (stufe !== 'schweiz' && stufe !== 'region')) { setWolkenZeile(null); return }
+    if (!k || !lage || !wolken) { setWolkenZeile(null); return }
     let weg = false
     const gruppe = new THREE.Group()
     gruppe.name = 'wolken'
@@ -3351,8 +3351,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const flaeche = ((e1 - e0) / 1000) * ((n1 - n0) / 1000)
     // ein Regenstrich etwa 1,2 % der Breite des Modells lang
     const strich = W * 0.012
-    // wo keine Wolken gezeichnet sind (Felder von 4 km und 1 km), beginnt er höchstens ein Viertel der Breite über dem höchsten Punkt
-    const deckel = stufe === 'schweiz' || stufe === 'region' ? Infinity : hoch / 1000 + W * 0.25
+    // seit die Wolken in jeder Stufe stehen (2026-10-29), beginnt der Regen auch in den Feldern an der Wolke
+    const deckel = Infinity
     let weg = false
     const zeit = stand?.zeit ?? new Date()
     const station = () => {
