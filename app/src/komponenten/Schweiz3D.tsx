@@ -1370,6 +1370,10 @@ const ZUG_NEIGUNG = (6 * Math.PI) / 180
 const ZUG_INNEN_FARBE = '#ffd49a', ZUG_INNEN_HELL = 0.75
 /** (Michael, 2026-10-29: «Die Stirnlichter der Züge 20% weniger hell», vorher 0,6) */
 const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.48, ZUG_STIRN_LAENGE = 3, ZUG_STIRN_BREITE = 4
+/** am Halt leuchten die Stirnlampen weiter (Michael, 2026-10-29: «Stehende Züge sollen das Frontlicht aktiv haben … So würde man sehen in
+ *  welche Richtung er abfährt»), der Kegel dort kürzer und schwächer, damit sich die vielen Züge in grossen Bahnhöfen nicht zu einem weissen
+ *  Fleck addieren (Länge in Loks und Anteil der Stärke gewählt) */
+const ZUG_STIRN_HALT_LAENGE = 1.5, ZUG_STIRN_HALT_HELL = 0.5
 /** Strassen- und Bahnhofslicht: Radius des Lichtflecks auf dem Boden (m), Farben und Stärke gewählt, in keiner Quelle (die Lampen sind
  *  erfunden, belegt ist nur, wo Strassen und Gleise liegen); höchstens so viele Lampen in einem Modell (eine Annahme zur Grafik) */
 /** (Michael, 2026-10-29: «Lichtkegel etwas breiter und etwas weniger hell»; vorher 11 m, 16 m und 0,55) */
@@ -3025,6 +3029,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     stirn.count = 0; stirn.frustumCulled = false; stirn.renderOrder = 2
     gruppe.add(stirn)
     const stirnQ = new THREE.Quaternion(), stirnV = new THREE.Vector3(), stirnS = new THREE.Vector3()
+    const stirnFarbe = new THREE.Color(1, 1, 1)
+    for (let i = 0; i < 2 * ZUEGE_HOECHSTENS; i++) stirn.setColorAt(i, stirnFarbe)
     // die Lampen selbst: kleine helle Kugeln vorne an der Lok, im Raum der Lok gesetzt
     const lampenGeo = new THREE.SphereGeometry(1, 10, 8), lampenStoff = new THREE.MeshBasicMaterial({ color: ZUG_LAMPE_FARBE, toneMapped: false })
     const lampen = new THREE.InstancedMesh(lampenGeo, lampenStoff, 2 * ZUEGE_HOECHSTENS)
@@ -3263,15 +3269,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               lampen.setMatrixAt(2 * zahl + (seite + 1) / 2, lampeM)
             }
           }
-          if (w === 0 && fensterNacht.value > 0 && st.art === 'halt') {
-            // am Halt kein Kegel: in grossen Bahnhöfen stehen viele Züge nebeneinander, ihre Kegel addierten sich zu einem weissen Fleck
-            m.makeScale(0, 0, 0)
-            for (const seite of [0, 1]) stirn.setMatrixAt(2 * zahl + seite, m)
-            m.compose(v, q, skala)
-          } else if (w === 0 && fensterNacht.value > 0) {
-            // je Lampe ein Kegel vor der Spitze der Lok, drei Loks lang, um denselben Versatz nach links, geneigt vom Boden an der Spitze
-            // zum Boden vorne
-            const lM = ZUG_LOK_M * mJeM, lang0 = ZUG_STIRN_LAENGE * lM
+          if (w === 0 && fensterNacht.value > 0) {
+            // je Lampe ein Kegel vor der Spitze der Lok, drei Loks lang (am Halt kürzer und schwächer), um denselben Versatz nach links,
+            // geneigt vom Boden an der Spitze zum Boden vorne
+            const halt = st.art === 'halt'
+            const lM = ZUG_LOK_M * mJeM, lang0 = (halt ? ZUG_STIRN_HALT_LAENGE : ZUG_STIRN_LAENGE) * lM
+            stirnFarbe.setScalar(halt ? ZUG_STIRN_HALT_HELL : 1)
             const [ev, nv] = stelle(sM + lang0)
             const ex = -((vo.n - hi.n) / lang) * versatz, nx = ((vo.e - hi.e) / lang) * versatz
             const hA = bestandHoehe(b, vo.e, vo.n), hB = bestandHoehe(b, ev, nv)
@@ -3288,6 +3291,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               stirnV.set((vo.e + ex + dN * quer - lage.cE) / 1000, hA2 / 1000 + hoehe * gross.y * 0.05, -(vo.n + nx - dE * quer - lage.cN) / 1000)
               m.compose(stirnV, stirnQ, stirnS)
               stirn.setMatrixAt(2 * zahl + (seite + 1) / 2, m)
+              stirn.setColorAt(2 * zahl + (seite + 1) / 2, stirnFarbe)
             }
             m.compose(v, q, skala)
           }
@@ -3310,6 +3314,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (!zeigt) linkSetzen(null)
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
       stirn.visible = fensterNacht.value > 0; stirn.count = stirn.visible ? 2 * zahl : 0; stirn.instanceMatrix.needsUpdate = true
+      if (stirn.instanceColor) stirn.instanceColor.needsUpdate = true
       lampen.count = 2 * zahl; lampen.instanceMatrix.needsUpdate = true
       stirnStoff.opacity = ZUG_STIRN_HELL * fensterNacht.value
       for (const n of Object.values(netze)) n.instanceMatrix.needsUpdate = true
