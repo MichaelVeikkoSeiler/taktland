@@ -102,6 +102,12 @@ export function gebaeudeMaterial() {
         float fuss = floor((vWand.y - vGebaeude.x) * 2.0);
         float zufall = fract(sin(dot(vec3(stock, achse, fuss), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
         float brennt = step(zufall, uAnteil);
+        // deckt ein Bildpunkt mehr als ein halbes Fenster samt Wand, gilt statt des einzelnen Fensters der Anteil: sonst springt die
+        // Mitte des Bildpunkts beim Bewegen von einem brennenden zu einem dunklen Fenster, und die Lichter flackern
+        float zelle = max(wx / ${FENSTER_ACHSE_M.toFixed(2)}, wy / ${FENSTER_STOCK_M.toFixed(2)});
+        float gemittelt = smoothstep(0.3, 0.8, zelle);
+        brennt = mix(brennt, uAnteil, gemittelt);
+        im = mix(im, ${((FENSTER_BREITE_M * FENSTER_HOEHE_M) / (FENSTER_ACHSE_M * FENSTER_STOCK_M)).toFixed(3)}, gemittelt);
         // warm, je Fenster etwas anders
         vec3 farbe = mix(vec3(1.0, 0.62, 0.28), vec3(1.0, 0.86, 0.6), fract(zufall * 7.31));
         // weit weg schwächer: mit der Grösse des Bildpunkts in Metern
