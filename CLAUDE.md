@@ -777,4 +777,4 @@ und Wetter keine Wirklichkeit und keine Warnungen; auf 3dland.ch in der Fusszeil
 (USA), cyon, localStorage und derselbe Haftungssatz. Neue Dienste, die die App abruft, dort nennen.
 KI-Bilder (Michael, 2026-10-29: «Führerstand und andere Bilder habe ich mit meinem Chat GPT Plus Account und meinen Promts dort generieren
 lassen»): Auftaktbilder, Bildmarke von 3D-Land und Führerstand mit ChatGPT; so genannt in der Fusszeile (App.tsx, dreidland.tsx), unter
-«Über Taktland» und «Über 3D-Land».
+«Über Taktland» und «Über 3D-Land»; der Führerstand ohne Vorlage Dritter (Michael, 2026-10-29).
