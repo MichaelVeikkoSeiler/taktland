@@ -1122,6 +1122,19 @@ const VERLAUF_S = 2.5
 const SCHRIFT_LEUCHTET = 0.85
 /** der Himmel ganz in der Nacht und die Grösse der hellsten Sterne in Bildpunkten (gewählt) */
 const HIMMEL_NACHT = new THREE.Color('#070d1a'), HIMMEL_NACHT_OBEN = new THREE.Color('#02050b')
+/** der Himmel am Tag unten und oben, hell und im Dunkelmodus des Geräts; mit «Sonne» an gilt am Tag immer der helle, wie draussen
+ *  (Michael, 2026-10-29: «Warum so dunkler Himmel?» um 10:15 Uhr im Dunkelmodus) */
+const HIMMEL_HELL = ['#f2f8fd', '#74a9dd'], HIMMEL_DUNKEL = ['#0d1b2a', '#050c16']
+/** ob das Gerät gerade im Dunkelmodus ist; folgt dem Wechsel (er geschah vorher nur beim Öffnen, danach blieb der Himmel wie er war) */
+function useGeraetDunkel() {
+  const [dunkel, setDunkel] = useState(() => matchMedia('(prefers-color-scheme: dark)').matches)
+  useEffect(() => {
+    const m = matchMedia('(prefers-color-scheme: dark)'), f = () => setDunkel(m.matches)
+    m.addEventListener('change', f)
+    return () => m.removeEventListener('change', f)
+  }, [])
+  return dunkel
+}
 const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 // Sonne orange (Michael, 2026-10-25: «Der Knopf Sonne soll orangefarben sein»; vorher rot)
 // Gebäude gräulich statt grün wie die Bäume (Michael, 2026-10-28: «Den Knopf Gebäude gräulich machen»), Farbe gewählt
@@ -1241,6 +1254,20 @@ const ORT_MAST = 0.035, ORT_GRAU = '#2a2a2a'
 const SCHILD_RUND_PX = 6
 /** Breite des Masts in Bildpunkten (Michael, 2026-10-21: «leicht dicker»; vorher 1) */
 const ORT_MAST_PX = 2
+/** um den Mast ein heller Rand, damit er auch vor dunklem Gelände und Nachthimmel zu sehen ist (Michael, 2026-10-29: «Den dunklen Masten sieht
+ *  man je nach Hintergrund nicht mehr»); Breite in Bildpunkten und Deckkraft gewählt */
+const ORT_MAST_RAND_PX = 4, ORT_MAST_RAND_DECKT = 0.75
+/** ein Mast: dunkelgrau mit hellem Rand dahinter (der Rand hängt am Mast und kommt und geht mit ihm) */
+function mastMitRand(geo: LineSegmentsGeometry, kern: LineMaterial, rand: LineMaterial) {
+  const mast = new LineSegments2(geo, kern)
+  mast.renderOrder = 2
+  const saum = new LineSegments2(geo, rand)
+  saum.renderOrder = 1
+  mast.add(saum)
+  return mast
+}
+const mastRandMaterial = (ebene: THREE.Plane) => new LineMaterial({ color: '#f2f2f2', linewidth: ORT_MAST_RAND_PX, transparent: true,
+  opacity: ORT_MAST_RAND_DECKT, depthWrite: false, clippingPlanes: [ebene] })
 /** welche Orte bereitstehen (ab Rang, höchstens so viele, Abstand als Anteil der Breite); gezeigt werden davon nur die im Bild,
  *  mindestens ORT_MIN und höchstens ORT_MAX (Michael, 2026-10-25: «Immer mindestens 3, wenn vorhanden, und maximal 5. Wenn man
  *  einzoomt und wegzoomt, muss diese Zahl 3 bis 5 … berücksichtigt werden») */
@@ -1771,7 +1798,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       knoepfeZeigen()
       renderer.getSize(aufloesung)
       for (const name of ['hoehen', 'wanderwege', 'orte', 'gipfel']) {
-        for (const o of wurzel.getObjectByName(name)?.children ?? []) ((o as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
+        for (const o of wurzel.getObjectByName(name)?.children ?? []) {
+          ((o as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
+          // der helle Rand der Masten hängt am Mast
+          for (const c of o.children) ((c as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
+        }
       }
       if (!renderer.xr.isPresenting) steuerung.update()
       renderer.render(szene, kamera)
@@ -2123,6 +2154,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     gipfelGruppe.name = 'gipfel'
     wurzel.add(gipfelGruppe)
     const gipfelMast = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX, clippingPlanes: [k.verlauf.gipfel.ebene] })
+    const gipfelMastRand = mastRandMaterial(k.verlauf.gipfel.ebene)
     // Gipfel mit demselben eckigen Schild wie die Orte, nur umgekehrt: weiss mit dunkelgrauer Schrift (Michael, 2026-10-25: «Gipfel
     // sollen gleiche Schilder haben wie Orte nur invertiert»)
     const schild = (text: string, e: number, n: number, z: number) => {
@@ -2146,7 +2178,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       schilder.add(sp)
       const geo = new LineSegmentsGeometry()
       geo.setPositions([X(e), Y(z), Z(n), X(e), Y(z) + gipfelMastKm, Z(n)])
-      gipfelGruppe.add(new LineSegments2(geo, gipfelMast))
+      gipfelGruppe.add(mastMitRand(geo, gipfelMast, gipfelMastRand))
     }
     const drin = (e: number, n: number) => [...b.teile.values()].some((t) => imRaster(t.raster, e, n))
     if (zusatz) {
@@ -2198,6 +2230,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       ortSchilder.push({ sp, rang: o.rang, mast: null })
     }
     const mastMaterial = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX, clippingPlanes: [k.verlauf.orte.ebene] })
+    const mastRand = mastRandMaterial(k.verlauf.orte.ebene)
     const mastenBauen = () => {
       for (const o of ortGruppe.children) (o as LineSegments2).geometry.dispose()
       ortGruppe.clear()
@@ -2205,7 +2238,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       ortListe.forEach((o, i) => {
         const geo = new LineSegmentsGeometry()
         geo.setPositions([X(o.e), Y(o.z), Z(o.n), X(o.e), Y(o.z) + mastKm, Z(o.n)])
-        const mast = new LineSegments2(geo, mastMaterial)
+        const mast = mastMitRand(geo, mastMaterial, mastRand)
         mast.visible = !!ortSchilder[i].sp.userData.gezeigt
         ortSchilder[i].mast = mast
         ortGruppe.add(mast)
@@ -2337,7 +2370,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial, gipfelMast])
+      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial, gipfelMast, mastRand, gipfelMastRand])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -2593,6 +2626,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [b, stufe, wandern])
 
   // die Sonne: ohne Zeit die feste wie bisher, mit Zeit ihr gerechneter Stand, darunter der Horizont dunkel
+  const geraetDunkel = useGeraetDunkel()
   useEffect(() => {
     const k = kern.current
     if (!k) return
@@ -2602,6 +2636,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // nachts der Himmel dunkel mit Sternen (Michael, 2026-10-24): von 3° über dem Horizont bis 12° darunter (nautische Dämmerung)
     // wird er dunkel, die Sterne erscheinen ab 4° darunter und sind ab 12° ganz da; Farben gewählt
     const nacht = stand ? himmelNacht(stand.hoehe) : 0
+    const [unten, oben] = stand || !geraetDunkel ? HIMMEL_HELL : HIMMEL_DUNKEL
+    himmelTag.set(unten); himmelObenTag.set(oben)
     himmel.copy(himmelTag).lerp(HIMMEL_NACHT, nacht)
     himmelOben.copy(himmelObenTag).lerp(HIMMEL_NACHT_OBEN, nacht)
     himmelMalen()
@@ -2631,7 +2667,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         k.szene.traverse((o) => { const m = (o as THREE.Mesh).material as THREE.Material | undefined; if (m) m.needsUpdate = true })
       }
     }
-  }, [stand, b, stufe])
+  }, [stand, b, stufe, geraetDunkel])
 
   // Höhenlinien und Orte ein- und ausblenden; zu hören ist nur der Klick des Knopfs wie bei Wanderwegen und Gebäuden (Michael,
   // 2026-10-25: «nicht mehr so lange Geräusche. Neu die gleichen wie bei Wanderwege, Gebäude»; vorher ein Rauschen, verlaufTon)
