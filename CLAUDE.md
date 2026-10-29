@@ -163,7 +163,7 @@ data/sehenswert.json  Gipfel mit Höhe (swisstopo), Kulturgüter von nationaler 
 data/bodenbedeckung.json  Wald und Siedlung aus swissTLMRegio (swisstopo), vereinfacht,
              kleine Flächen fehlen, nur zum Zeichnen (pipeline/build_bodenbedeckung.py)
 data/flaechen.json  BLN, Pärke und Moorlandschaften (BAFU), vereinfachte Umrisse
-data/kartengrund.json  Grund aller Karten: Schweiz und Kantone (BFS g1), Flüsse mit Namen
+data/kartengrund.json  Grund aller Karten: Schweiz und Kantone (BFS g1), Einwohnerzahl der Gemeinde je Ort (swissBOUNDARIES3D), Flüsse mit Namen
              (swissTLMRegio, beschriftet in der App), Höhenstufen ab 1000, 2000 und 3000 m (swissALTIRegio), Ortsnamen der
              Landeskarte 1:1 Million ab 2000 Einwohnern, gesetzt auf den Ortspunkt aus swissTLMRegio, nur zum
              Zeichnen (pipeline/build_kartengrund.py, braucht rasterio, scipy, scikit-image)
@@ -278,7 +278,9 @@ data/schweiz3d/  Übersicht für das Spiel «3D Schweiz» (Michael, 2026-10-18):
              4 km (feines Gelände und Nahbild, wo es sie gibt, sonst wie die Region, mit Hinweis), darin eines von 1 km im 5-m-Raster
              (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail»; nahLaden: die scharfe Umgebung, Gelände 2 m und Luftbild
              25 cm, wo es sie gibt, bis 200 m neben den Bahnlinien, sonst wie das Feld darüber, mit Hinweis); gewählt wird ein Quadrat, keine
-             Region und kein Tal (deren Grenzen stehen in keiner Quelle), die Karte zum Feld nennt Orte der Landeskarte, den höchsten
+             Region und kein Tal (deren Grenzen stehen in keiner Quelle), benannt («Region um …») nach dem grössten Ort der Landeskarte darin nach der Einwohnerzahl seiner Gemeinde
+             (swissBOUNDARIES3D 2026-01, einwohner_gemeinde in data/kartengrund.json, build_kartengrund.py --einwohner; nur wo der Ort der Gemeinde den Namen gibt, Littau liegt in Luzern;
+             sonst und im Ausland nach der untersten Grenze seiner Einwohnerklasse, KLASSE_AB; Michael, 2026-10-29: «bei der Region immer die am grössten von der Einwohnerzahl Stadt»), die Karte zum Feld nennt Orte der Landeskarte, den höchsten
              Gipfel, Seen und den Kanton der Mitte («Überrasch mich» gibt es nicht mehr, Michael, 2026-10-25); ein Suchfeld darunter findet Ortschaften und Weiler aus data/schweiz3d/orte.json, Gipfel und Hügel mit Höhe aus
              data/schweiz3d/gipfel.json (swissTLMRegio, 3'364, build_schweiz3d.py --namen; erst beim ersten Tippen geladen) und Seen mit Namen (Michael, 2026-10-23: «Gipfel und Seen auch»; ohne Akzente, Anfang vor Mitte des Namens, nach Rang, Gipfel und
              Seen mit gewähltem Rang zwischen den Orten, SUCHE_RANG; nur Wortanfänge; Orte mit dem Kanton laut BFS oder «Ausland», diese

@@ -265,6 +265,112 @@ def orte():
     return sorted(raus, key=lambda o: (-o["klasse"], o["name"]))
 
 
+#: swissBOUNDARIES3D von swisstopo, Gemeindegebiete mit der Einwohnerzahl der Gemeinde (Michael, 2026-10-29: «bei der Region immer
+#: die am grössten von der Einwohnerzahl Stadt in diesem Ausschnitt»); die Landeskarte 1:1 Million nennt nur Klassen
+SB_STAND = "2026-01"
+SB_URL = (f"https://data.geo.admin.ch/ch.swisstopo.swissboundaries3d/swissboundaries3d_{SB_STAND}/"
+          f"swissboundaries3d_{SB_STAND}_2056_5728.gpkg.zip")
+SB_ORDNER = ROOT / "data" / "raw" / "swissboundaries"
+
+
+def wgs84_zu_lv95(la, lo):
+    """WGS84 → LV95, Näherung von swisstopo (etwa 1 m)"""
+    p = (la * 3600 - 169028.66) / 10000
+    l = (lo * 3600 - 26782.5) / 10000
+    e = 2600072.37 + 211455.93 * l - 10938.51 * l * p - 0.36 * l * p * p - 44.54 * l ** 3
+    n = 1200147.07 + 308807.95 * p + 3745.25 * l * l + 76.63 * p * p - 194.56 * l * l * p + 119.79 * p ** 3
+    return e, n
+
+
+def polygone_z(b):
+    """Polygone aus einer GeoPackage-Geometrie mit oder ohne Höhe: je Polygon die Ringe als (Ost, Nord)"""
+    pos = 8 + {0: 0, 1: 32, 2: 48, 3: 48, 4: 64}[(b[3] >> 1) & 7]
+
+    def lies(pos):
+        o = "<" if b[pos] == 1 else ">"
+        roh = struct.unpack_from(o + "I", b, pos + 1)[0]
+        typ, dim = roh % 1000, 2 + (roh // 1000 in (1, 2)) + (roh // 1000 == 3) * 2
+        pos += 5
+        if typ == 3:
+            ringe = []
+            n = struct.unpack_from(o + "I", b, pos)[0]
+            pos += 4
+            for _ in range(n):
+                m = struct.unpack_from(o + "I", b, pos)[0]
+                pos += 4
+                w = struct.unpack_from(o + "d" * (dim * m), b, pos)
+                pos += 8 * dim * m
+                ringe.append(list(zip(w[0::dim], w[1::dim])))
+            return [ringe], pos
+        if typ == 6:
+            n = struct.unpack_from(o + "I", b, pos)[0]
+            pos += 4
+            alle = []
+            for _ in range(n):
+                t, pos = lies(pos)
+                alle += t
+            return alle, pos
+        raise ValueError(f"Geometrietyp {roh} nicht erwartet")
+    return lies(pos)[0]
+
+
+def gemeinden():
+    """Die Gemeindegebiete: Rahmen, Polygone, Name, Einwohnerzahl (einmal geladen, in data/raw)"""
+    gpkg = next(SB_ORDNER.glob("*.gpkg"), None)
+    if gpkg is None:
+        import urllib.request
+        import zipfile
+        SB_ORDNER.mkdir(parents=True, exist_ok=True)
+        zipdatei = SB_ORDNER / "swissboundaries3d.gpkg.zip"
+        urllib.request.urlretrieve(SB_URL, zipdatei)
+        with zipfile.ZipFile(zipdatei) as z:
+            z.extractall(SB_ORDNER)
+        gpkg = next(SB_ORDNER.glob("*.gpkg"))
+    raus = []
+    for geom, name, ew in sqlite3.connect(gpkg).execute(
+            "select geom, name, einwohnerzahl from tlm_hoheitsgebiet where objektart = 'Gemeindegebiet'"):
+        polys = polygone_z(geom)
+        pts = [p for poly in polys for p in poly[0]]
+        raus.append(((min(p[0] for p in pts), min(p[1] for p in pts), max(p[0] for p in pts), max(p[1] for p in pts)), polys, name, ew))
+    return raus
+
+
+def _namensform(t):
+    t = t.replace("\n", "").replace("St-", "Saint-").replace("Ste-", "Sainte-").lower()
+    return t
+
+
+def gibt_namen(ort, gemeinde):
+    """ob der Ort der Gemeinde den Namen gibt: gleich, oder die Gemeinde beginnt mit seinem ersten Wort (Brig → Brig-Glis,
+    Muri b. B. → Muri bei Bern); sonst nicht (Littau liegt in Luzern, Peseux in Neuchâtel: deren Zahl ist nicht die des Orts)"""
+    import re
+    o, g = _namensform(ort), _namensform(gemeinde)
+    erstes = re.split(r"[ \-./]", o)[0]
+    return o == g or (len(erstes) >= 4 and re.split(r"[ \-./]", g)[0] == erstes)
+
+
+def einwohner_setzen(liste):
+    """Je Ort die Gemeinde, in der sein Punkt liegt, und deren Einwohnerzahl (einwohner_gemeinde): die Zahl der Gemeinde,
+    nicht der Ortschaft; im Ausland keine"""
+    from build_seen import innen
+    gem = gemeinden()
+    ohne = 0
+    for o in liste:
+        e, n = wgs84_zu_lv95(*o["lage"])
+        o.pop("gemeinde", None); o.pop("einwohner_gemeinde", None)
+        for (x0, y0, x1, y1), polys, name, ew in gem:
+            if x0 <= e <= x1 and y0 <= n <= y1 and any(innen((e, n), poly[0]) and not any(innen((e, n), r) for r in poly[1:])
+                                                       for poly in polys):
+                if ew is not None and gibt_namen(o["name"], name):
+                    o["gemeinde"], o["einwohner_gemeinde"] = name, ew
+                break
+        else:
+            ohne += 1
+    mit = sum("einwohner_gemeinde" in o for o in liste)
+    print(f"orte: {mit} mit Gemeinde und Einwohnerzahl, {ohne} im Ausland, {len(liste) - mit - ohne} in einer Gemeinde anderen Namens")
+    return liste
+
+
 def hoehen_raster():
     """Mittlere Höhe je RASTER_M-Feld aus swissALTIRegio (Übersicht des COG, nur
     der Rahmen), einmal geladen und in data/raw gespeichert"""
@@ -307,18 +413,29 @@ def hoehen():
 
 
 def main():
+    if "--einwohner" in sys.argv:
+        # nur die Einwohnerzahlen in die bestehende Datei, ohne alles neu zu bauen
+        raus = json.loads(ZIEL.read_text(encoding="utf-8"))
+        einwohner_setzen(raus["orte"])
+        q = f"swisstopo, swissBOUNDARIES3D {SB_STAND} (Einwohnerzahl der Gemeinden)"
+        raus["quellen"] = [x for x in raus["quellen"] if "swissBOUNDARIES3D" not in x] + [q]
+        if "einwohner_gemeinde" not in raus["hinweis"]:
+            raus["hinweis"] = raus["hinweis"].replace("lage = Mitte der Beschriftung;", "lage = Mitte der Beschriftung; gemeinde, einwohner_gemeinde: "
+                "die Gemeinde, in der der Ort liegt, und ihre Einwohnerzahl laut swissBOUNDARIES3D (nicht die der Ortschaft), nur wo der Ort der Gemeinde den Namen gibt, sonst und im Ausland keine;")
+        ZIEL.write_text(json.dumps(raus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+        return
     raus = {
         "quellen": ["BFS, generalisierte Gemeindegrenzen g1 (Stand 2026-01-01)",
                     "swisstopo, Swiss Map Vector 1000", "swisstopo, swissTLMRegio (Flüsse)",
-                    "swisstopo, swissALTIRegio"],
+                    "swisstopo, swissALTIRegio", f"swisstopo, swissBOUNDARIES3D {SB_STAND} (Einwohnerzahl der Gemeinden)"],
         "geladen": date.today().isoformat(),
         "hinweis": "Nur zum Zeichnen: Ringe und Linien als [Breite, Länge] mal 100000, start und "
                    f"Differenzen d. Höhen gemittelt auf {RASTER_M} m und geglättet; keine Angaben. "
                    "fluesse: k = klasse der Quelle (4 die grössten). orte: klasse 1 = 2000-9999 Einwohner, 2 = 10000-49999, 3 = 50000-99999, "
-                   "4 = 100000-1000000, 5 = über 1 Million laut Quelle; lage = Mitte der Beschriftung; name mit \\n, wo die Landeskarte ihn auf zwei Zeilen setzt.",
+                   "4 = 100000-1000000, 5 = über 1 Million laut Quelle; lage = Mitte der Beschriftung; gemeinde, einwohner_gemeinde: die Gemeinde, in der der Ort liegt, und ihre Einwohnerzahl laut swissBOUNDARIES3D (nicht die der Ortschaft), nur wo der Ort der Gemeinde den Namen gibt, sonst und im Ausland keine; name mit \\n, wo die Landeskarte ihn auf zwei Zeilen setzt.",
         **grenzen(),
         "fluesse": fluesse(),
-        "orte": orte(),
+        "orte": einwohner_setzen(orte()),
         "hoehen": hoehen(),
     }
     ZIEL.write_text(json.dumps(raus, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")

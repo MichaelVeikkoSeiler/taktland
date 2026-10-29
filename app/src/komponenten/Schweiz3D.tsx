@@ -113,7 +113,7 @@ async function unterFuer(f: Feld, unter: Bestand | null): Promise<Bestand> {
   return einzeln(r, await regionLaden(r))
 }
 interface Zusatz {
-  sw: SehenswertDaten; seen: SeenDaten; orte: Array<{ name: string; klasse: number; lage: [number, number] }>; pool: Pool
+  sw: SehenswertDaten; seen: SeenDaten; orte: Array<{ name: string; klasse: number; lage: [number, number]; einwohner_gemeinde?: number }>; pool: Pool
   /** Ortschaften und Weiler aus swissTLMRegio: Name, Ost, Nord, Rang (data/schweiz3d/orte.json) */
   ortschaften: Array<[string, number, number, number]>
 }
@@ -496,9 +496,16 @@ function imFeld(f: Feld, la: number, lo: number) {
   return Math.abs(e - f.e) <= f.seite / 2 && Math.abs(n - f.n) <= f.seite / 2
 }
 
+/** die unterste Grenze der Einwohnerklassen der Landeskarte 1:1 Million (1 = 2'000 bis 9'999 … 5 = über 1 Million) */
+const KLASSE_AB = [0, 2_000, 10_000, 50_000, 100_000, 1_000_000]
+const ortGroesse = (o: Zusatz['orte'][number]) => o.einwohner_gemeinde ?? KLASSE_AB[o.klasse] ?? 0
 function feldInhalt(f: Feld, z: Zusatz | null) {
   if (!z) return null
-  const orte = z.orte.filter((o) => imFeld(f, o.lage[0], o.lage[1])).sort((a, b) => b.klasse - a.klasse).slice(0, 3).map((o) => o.name)
+  // der grösste nach der Einwohnerzahl seiner Gemeinde (swissBOUNDARIES3D; Michael, 2026-10-29: «bei der Region immer die am grössten
+  // von der Einwohnerzahl Stadt in diesem Ausschnitt»), wo es sie nicht gibt (Ausland, Ort in einer Gemeinde anderen Namens), nach
+  // der untersten Grenze seiner Einwohnerklasse auf der Landeskarte
+  const orte = z.orte.filter((o) => imFeld(f, o.lage[0], o.lage[1]))
+    .sort((a, b) => ortGroesse(b) - ortGroesse(a) || b.klasse - a.klasse).slice(0, 3).map((o) => o.name)
   const gipfel = z.sw.gipfel.filter((g) => g.hoehe_m !== null && imFeld(f, g.lage[0], g.lage[1]))
     .sort((a, b) => b.hoehe_m! - a.hoehe_m!)[0] ?? null
   const seen = z.seen.seen.filter((s) => s.name && s.namenspunkt && imFeld(f, s.namenspunkt[0], s.namenspunkt[1])).map((s) => s.name!).slice(0, 3)
@@ -968,7 +975,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p className="mt-1">Gelände: {anker.quellen[0]}. Luftbild: {anker.quellen[1]}. {seenHier.length
             ? `Seegrund: swissBATHY3D (swisstopo), auf 25 m gemittelt, hier ${seenHier.join(', ')}, nur im Schnitt der Wände; die Oberfläche ist das Gelände mit dem Luftbild. `
             : 'Seegrund: in diesem Ausschnitt keiner gemessen (swissBATHY3D kennt 22 Seen), Seen zeigen hier nur ihre Oberfläche. '}{stufe !== 'schweiz'
-            ? 'Lockergestein in den Wänden bis auf den Fels: swissBEDROCK (swisstopo), Felsoberfläche auf 50 m gemittelt. ' : ''}Orte der Landeskarte 1:1 Million (swisstopo),
+            ? 'Lockergestein in den Wänden bis auf den Fels: swissBEDROCK (swisstopo), Felsoberfläche auf 50 m gemittelt. ' : ''}Orte der Landeskarte 1:1 Million (swisstopo), ein Feld benannt nach dem grössten nach der Einwohnerzahl seiner Gemeinde (swissBOUNDARIES3D, swisstopo),
             Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone (BFS). Ortschaften auf den Masten: swissTLMRegio (swisstopo),
             die grösseren zuerst nach der Objektart der Quelle, mit Abstand zueinander; Auswahl und Mast gewählt. Ein Feld ist ein Quadrat, keine Region und kein Tal:
             deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
