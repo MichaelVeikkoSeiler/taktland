@@ -365,6 +365,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Reiseplanung. Es ist ein privates Projekt und kein Angebot einer Bahnunternehmung.
           </li>
           <li>
+            Züge und Schiffe in «3D Schweiz» zeigen den Fahrplan, nicht die Wirklichkeit; Wetter, Wolken, Regen und Schnee sind Messungen und
+            Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen. Für Reisen gelten der offizielle Fahrplan und die Angaben der
+            Bahnen, für das Wetter MeteoSchweiz.
+          </li>
+          <li>
             Taktland ist ein freiwilliges, kostenloses Angebot. Es besteht kein Anspruch darauf, dass
             es jederzeit verfügbar ist, fehlerfrei läuft oder weiter betrieben wird; es kann ohne
             Ankündigung geändert, eingeschränkt oder eingestellt werden.
@@ -406,7 +411,12 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             In der Modellbahn und beim Fahren holt Taktland, solange der Sonnenschalter nicht leuchtet, alle 10 Minuten die Messung einer Wetterstation
             direkt bei data.geo.admin.ch (Bund). Der Dienst sieht dabei wie jeder Server die IP-Adresse und erfährt, welche
             Station gefragt wird, also in welcher Gegend das Modell oder die Fahrt liegt; den Standort selbst sendet Taktland nicht.
-            Ebenso, wenn die Windhose an ist oder ihre Tafel offen: die Windmessung und die Prognose der Station.
+            Ebenso, wenn die Windhose an ist oder ihre Tafel offen: die Windmessung und die Prognose der Station. In «3D Schweiz» holt
+            «Wetter» dasselbe und dazu Wolken, Regen und Schnee laut Wettermodell bei 3dland.ch (ebenfalls GitHub Pages, siehe unten).
+          </li>
+          <li>
+            Gelände, Luftbilder, Gebäude und Bäume für die 3D-Ansichten lädt Taktland zum Teil von daten.taktland.ch (cyon, Schweiz); wie
+            jeder Webserver führt er ein Zugriffsprotokoll, das cyon verwaltet, und erfährt dabei, welche Gegend geladen wird.
           </li>
           <li>
             Ausgeliefert wird die Seite von GitHub Pages, einem Dienst von GitHub (USA); die
