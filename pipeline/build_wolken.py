@@ -45,6 +45,10 @@ NIEDER = ["TOT_PR", "SNOWLMT"]
 NIEDER_MM_SCHRITT, GRENZE_M_SCHRITT = 0.1, 50
 #: Raster in LV95, etwas grösser als die Schweiz; Zellen von 2 km (das Modell rechnet mit etwa 1 km)
 E0, E1, N0, N1, RASTER_M = 2_470_000, 2_850_000, 1_060_000, 1_310_000, 2000
+#: Wolken in echter Höhe (Michael, 2026-10-29: «stimmen die Höhen und Höhenverhältnisse?», «kannst du ihnen eine Dicke geben?»): CLC,
+#: die Bewölkung in jeder der 80 Schichten des Modells, mit der Höhe ihrer Grenzen über Meer (HHL); nur die ersten VORAUS3D_H Stunden
+#: des neuesten Laufs (je Stunde etwa 150 MB; Michael: «so bauen»), auf Stufen von STUFE_M bis HOCH_M über Meer
+VORAUS3D_H, STUFE_M, HOCH_M = 24, 250, 12000
 #: so viele Stunden vor dem neuesten Lauf kommen aus früheren Läufen, soweit die STAC-Sammlung sie noch hat
 ZURUECK_H = 24
 
@@ -72,6 +76,16 @@ def eintraege(variable):
         weiter = next((l for l in seite.get("links", []) if l.get("rel") == "next"), None)
         # die nächste Seite: derselbe Filter mit dem Zeiger der Antwort («merge»)
         url, daten = (weiter["href"], {**daten, **weiter.get("body", {})} if weiter.get("merge") else weiter.get("body")) if weiter else (None, None)
+    return raus
+
+
+def je_stufe(pfad, drin):
+    """die Werte einer Grösse mit vielen Schichten, je Schicht (level) nur die Modellzellen im Raster"""
+    raus = {}
+    with open(pfad, "rb") as f:
+        while (h := eccodes.codes_grib_new_from_file(f)) is not None:
+            raus[eccodes.codes_get(h, "level")] = eccodes.codes_get_values(h)[drin].astype(np.float32)
+            eccodes.codes_release(h)
     return raus
 
 
@@ -175,11 +189,51 @@ def main():
             print(f"  {z:%d.%m. %H} UTC (Lauf {l}, Stunde {st}): nass {(nass >= 1).mean() * 100:.0f} %, tief {gitter[i, 0][gitter[i, 0] < 255].mean():.0f} %, "
                   f"mittel {gitter[i, 1][gitter[i, 1] < 255].mean():.0f} %, hoch {gitter[i, 2][gitter[i, 2] < 255].mean():.0f} %")
 
+        # Wolken in echter Höhe: je Modellzelle und Stufe die Schicht des Modells, in der die Mitte der Stufe liegt
+        clc = eintraege("CLC")
+        stunden3d = [(i, z) for i, z in enumerate(zeiten) if quelle_je_zeit[z][0] == lauf
+                     and quelle_je_zeit[z][1] <= VORAUS3D_H and (lauf, quelle_je_zeit[z][1]) in clc]
+        stufen = HOCH_M // STUFE_M
+        gitter3d = np.full((len(stunden3d), stufen, ny * nx), 255, dtype=np.uint8)
+        if stunden3d:
+            vc_url = next(a["href"] for a in konst if a["id"].startswith("vertical_constants"))
+            vc = Path(tmp) / "vc.grib2"
+            vc.write_bytes(holen(vc_url))
+            hhl = je_stufe(vc, drin)
+            vc.unlink()
+            H = np.stack([hhl[k] for k in sorted(hhl)])  # 81 Grenzen, oben zuerst
+            mitte = (np.arange(stufen) + 0.5) * STUFE_M
+            # Zahl der Grenzen über der Mitte minus 1 ist die Schicht (0 oben); unter dem Boden oder über dem Modell keine
+            schicht = np.stack([(H > zc).sum(axis=0) - 1 for zc in mitte])
+            gueltig = (schicht >= 0) & (schicht < H.shape[0] - 1)
+            schicht = np.clip(schicht, 0, H.shape[0] - 2)
+            del H, hhl
+            spalte = np.arange(schicht.shape[1])
+            for j, (i, z) in enumerate(stunden3d):
+                st = quelle_je_zeit[z][1]
+                pfad = Path(tmp) / f"CLC-{st}.grib2"
+                pfad.write_bytes(holen(clc[(lauf, st)]))
+                c = je_stufe(pfad, drin)
+                pfad.unlink()
+                C = np.stack([c[k] for k in sorted(c)])  # 80 Schichten, oben zuerst
+                del c
+                for k in range(stufen):
+                    v = C[schicht[k], spalte]
+                    ok = gueltig[k] & np.isfinite(v)
+                    n = np.bincount(zelle, weights=ok.astype(float), minlength=nx * ny)
+                    summe = np.bincount(zelle, weights=np.where(ok, v, 0), minlength=nx * ny)
+                    mittel = np.divide(summe, n, out=np.zeros(nx * ny), where=n > 0)
+                    gitter3d[j, k] = np.where(n > 0, np.clip(np.round(mittel), 0, 100), 255).astype(np.uint8)
+                wolkig = (gitter3d[j] >= 50) & (gitter3d[j] < 255)
+                print(f"  3D {z:%d.%m. %H} UTC: Zellen mit Wolke ab 50 % {wolkig.any(axis=0).mean() * 100:.0f} %")
+
     if ZIEL.exists():
         shutil.rmtree(ZIEL)
     ZIEL.mkdir(parents=True)
     (ZIEL / "wolken.wgz").write_bytes(gzip.compress(gitter.tobytes(), 9))
     (ZIEL / "niederschlag.wgz").write_bytes(gzip.compress(nieder.tobytes(), 9))
+    if stunden3d:
+        (ZIEL / "wolken3d.wgz").write_bytes(gzip.compress(gitter3d.tobytes(), 9))
     (ZIEL / "index.json").write_text(json.dumps({
         "quelle": "ICON-CH1-EPS, Kontrolllauf, MeteoSchweiz (Open Government Data, CC-BY)",
         "lauf": beginn.strftime("%Y-%m-%dT%H:%MZ"),
@@ -193,9 +247,15 @@ def main():
             {"name": "schneefallgrenze_m", "modell": "SNOWLMT", "schritt": GRENZE_M_SCHRITT,
              "text": "Schneefallgrenze in m ü. M., in Schritten von 50 m"}],
             "hinweis": "je Stunde je Feld ny × nx Werte UInt8, 255 ohne Angabe"},
+        **({"wolken3d": {"datei": "wolken3d.wgz", "stunden": [i for i, _ in stunden3d], "unten_m": 0, "schritt_m": STUFE_M,
+                         "stufen": int(stufen), "modell": "CLC mit HHL",
+                         "hinweis": "Bewölkung in Prozent je Stunde (Nummer in stunden), je Stufe (von unten), je Feld; die Stufe hat den Wert "
+                                    "der Schicht des Modells, in der ihre Mitte liegt; 255 unter dem Boden oder ohne Angabe"}} if stunden3d else {}),
         "hinweis": "Bewölkung je Schicht in Prozent, je Zelle das Mittel der Modellzellen darin; 255 ohne Angabe. "
                    "In welcher Höhe innerhalb der Schicht die Wolken liegen, sagt diese Grösse nicht.",
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    if stunden3d:
+        print(f"wolken3d.wgz: {len(stunden3d)} Stunden, {(ZIEL / 'wolken3d.wgz').stat().st_size / 1e3:.0f} KB")
     print(f"data/wolken: {(ZIEL / 'wolken.wgz').stat().st_size / 1e3:.0f} KB, "
           f"niederschlag.wgz {(ZIEL / 'niederschlag.wgz').stat().st_size / 1e3:.0f} KB")
 
