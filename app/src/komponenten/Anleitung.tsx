@@ -463,7 +463,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
         <p className="mt-4 text-sm leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Name spielt auf den Taktfahrplan der Schweiz an. Umgesetzt mit Claude Code, die
-          Auftaktbilder mit ChatGPT. Die Texte zu Bahnhöfen und Linien setzt ein Programm aus den
+          Auftaktbilder und das Bild des Führerstands mit ChatGPT. Die Texte zu Bahnhöfen und Linien setzt ein Programm aus den
           offenen Daten zusammen.
         </p>
       </Abschnitt>

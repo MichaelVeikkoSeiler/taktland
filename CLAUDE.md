@@ -779,3 +779,6 @@ Datenschutz und Haftung (Michael, 2026-10-29: «was jetzt livegeschaltet ist …
 (komponenten/Anleitung.tsx) auch «Wetter» in «3D Schweiz» (3dland.ch) und daten.taktland.ch, unter «Fehler und Verfügbarkeit» Fahrplan
 und Wetter keine Wirklichkeit und keine Warnungen; auf 3dland.ch in der Fusszeile (src/dreidland.tsx) der Verantwortliche, GitHub Pages
 (USA), cyon, localStorage und derselbe Haftungssatz. Neue Dienste, die die App abruft, dort nennen.
+KI-Bilder (Michael, 2026-10-29: «Führerstand und andere Bilder habe ich mit meinem Chat GPT Plus Account und meinen Promts dort generieren
+lassen»): Auftaktbilder, Bildmarke von 3D-Land und Führerstand mit ChatGPT; so genannt in der Fusszeile (App.tsx, dreidland.tsx), unter
+«Über Taktland» und «Über 3D-Land».

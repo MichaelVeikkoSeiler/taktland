@@ -1083,7 +1083,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             hinunter auf einen Kilometer, der Sockel mit den Knöpfen an den Wänden, die VR-Brille, Sonne und Schatten, Gebäude, Bäume und Wanderwege,
             das Wetter mit Windhosen und Regen, der Sternenhimmel, die Tiefe der Seen und der Untergrund in den Wänden. Seit dem
             21. Oktober 2026 gibt es «3D Schweiz» auch als eigene Seite, 3dland.ch.</p>
-          <p className="mt-2"><strong>Was Veikko Seiler gemacht hat:</strong> die Idee und die Richtung vorgeben, die Schritte auf dem Handy und
+          <p className="mt-2"><strong>Was Veikko Seiler gemacht hat:</strong> die Idee und die Richtung vorgeben, die Bildmarke und das Auftaktbild mit ChatGPT gestalten, die Schritte auf dem Handy und
             mit der Brille ausprobieren, Fehler finden und genau beschreiben, entscheiden, was bleibt und was wieder wegkommt, und jeden
             Stand selbst freigeben. Erst nach «Zu main» wird eine Änderung veröffentlicht.</p>
           <p className="mt-2"><strong>Was Claude gemacht hat:</strong> die offenen Daten von swisstopo, MeteoSchweiz und anderen Stellen

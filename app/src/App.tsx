@@ -296,7 +296,7 @@ export default function App() {
               Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für
               Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
               Moorlandschaften: Bundesamt für Umwelt BAFU. Wetter in der Modellbahn und beim Fahren, Wind und Windprognose dort und in «3D Schweiz»: MeteoSchweiz (SwissMetNet und lokale Prognose, Open Government Data); Wolken in «3D Schweiz»: Wettermodell ICON-CH1-EPS, MeteoSchweiz (CC-BY), geladen über 3dland.ch. Seegrund und Felsoberfläche in «3D Schweiz»: swissBATHY3D und swissBEDROCK (swisstopo). Sterne in «3D Schweiz»: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).
-              Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder: ChatGPT).
+              Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder und Führerstand: ChatGPT).
               Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
               sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist zum Lernen,
               Nachschlagen und Mitfahren gedacht, nicht für die Reiseplanung.
