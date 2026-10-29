@@ -1366,6 +1366,10 @@ const ZUG_NEIGUNG = (6 * Math.PI) / 180
  *  gewählt, in keiner Quelle */
 const ZUG_INNEN_FARBE = '#ffd49a', ZUG_INNEN_HELL = 0.75
 const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.6, ZUG_STIRN_LAENGE = 3, ZUG_STIRN_BREITE = 4
+/** zwei Stirnlampen vorne unten an der Lok, links und rechts, immer an wie bei echten Zügen und dem Vorbild (Michael, 2026-10-29:
+ *  «Bitte zwei Lichter machen ähnlich wie bei diesem Modell», sein Bild eines Zugs mit zwei Lampen unten an der Front): je Lampe ein
+ *  heller Punkt und nachts ein eigener Lichtkegel; Lage und Grösse als Anteil von Breite und Höhe des Zugs, gewählt */
+const ZUG_LAMPE_SEITE = 0.28, ZUG_LAMPE_HOEHE = -0.21, ZUG_LAMPE_R = 0.07, ZUG_LAMPE_FARBE = '#fffaf0'
 /** der Lichtkegel als Bild: hell an der Lok, nach vorne breiter und schwächer */
 function stirnBild() {
   const c = document.createElement('canvas'), x = c.getContext('2d')!
@@ -1407,20 +1411,13 @@ const ORT_MAST = 0.035, ORT_GRAU = '#2a2a2a'
 const SCHILD_RUND_PX = 6
 /** Breite des Masts in Bildpunkten (Michael, 2026-10-21: «leicht dicker»; vorher 1) */
 const ORT_MAST_PX = 2
-/** um den Mast ein heller Rand, damit er auch vor dunklem Gelände und Nachthimmel zu sehen ist (Michael, 2026-10-29: «Den dunklen Masten sieht
- *  man je nach Hintergrund nicht mehr»); Breite in Bildpunkten und Deckkraft gewählt */
-const ORT_MAST_RAND_PX = 4, ORT_MAST_RAND_DECKT = 0.75
-/** ein Mast: dunkelgrau mit hellem Rand dahinter (der Rand hängt am Mast und kommt und geht mit ihm) */
-function mastMitRand(geo: LineSegmentsGeometry, kern: LineMaterial, rand: LineMaterial) {
+/** der Mast so dunkelgrau wie das Schild, ohne Rand (Michael, 2026-10-29: «Die Masten sind zu dick und sollen gleichfarbig wie die Tafel
+ *  sein»; vorher kurz mit einem hellen Rand von 4 Bildpunkten, damit man sie vor dunklem Hintergrund sieht) */
+function mastMitRand(geo: LineSegmentsGeometry, kern: LineMaterial) {
   const mast = new LineSegments2(geo, kern)
   mast.renderOrder = 2
-  const saum = new LineSegments2(geo, rand)
-  saum.renderOrder = 1
-  mast.add(saum)
   return mast
 }
-const mastRandMaterial = (ebene: THREE.Plane) => new LineMaterial({ color: '#f2f2f2', linewidth: ORT_MAST_RAND_PX, transparent: true,
-  opacity: ORT_MAST_RAND_DECKT, depthWrite: false, clippingPlanes: [ebene] })
 /** welche Orte bereitstehen (ab Rang, höchstens so viele, Abstand als Anteil der Breite); gezeigt werden davon nur die im Bild,
  *  mindestens ORT_MIN und höchstens ORT_MAX (Michael, 2026-10-25: «Immer mindestens 3, wenn vorhanden, und maximal 5. Wenn man
  *  einzoomt und wegzoomt, muss diese Zahl 3 bis 5 … berücksichtigt werden») */
@@ -2313,7 +2310,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     gipfelGruppe.name = 'gipfel'
     wurzel.add(gipfelGruppe)
     const gipfelMast = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX, clippingPlanes: [k.verlauf.gipfel.ebene] })
-    const gipfelMastRand = mastRandMaterial(k.verlauf.gipfel.ebene)
     // Gipfel mit demselben eckigen Schild wie die Orte, nur umgekehrt: weiss mit dunkelgrauer Schrift (Michael, 2026-10-25: «Gipfel
     // sollen gleiche Schilder haben wie Orte nur invertiert»)
     const schild = (text: string, e: number, n: number, z: number) => {
@@ -2337,7 +2333,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       schilder.add(sp)
       const geo = new LineSegmentsGeometry()
       geo.setPositions([X(e), Y(z), Z(n), X(e), Y(z) + gipfelMastKm, Z(n)])
-      gipfelGruppe.add(mastMitRand(geo, gipfelMast, gipfelMastRand))
+      gipfelGruppe.add(mastMitRand(geo, gipfelMast))
     }
     const drin = (e: number, n: number) => [...b.teile.values()].some((t) => imRaster(t.raster, e, n))
     if (zusatz) {
@@ -2389,7 +2385,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       ortSchilder.push({ sp, rang: o.rang, mast: null })
     }
     const mastMaterial = new LineMaterial({ color: ORT_GRAU, linewidth: ORT_MAST_PX, clippingPlanes: [k.verlauf.orte.ebene] })
-    const mastRand = mastRandMaterial(k.verlauf.orte.ebene)
     const mastenBauen = () => {
       for (const o of ortGruppe.children) (o as LineSegments2).geometry.dispose()
       ortGruppe.clear()
@@ -2397,7 +2392,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       ortListe.forEach((o, i) => {
         const geo = new LineSegmentsGeometry()
         geo.setPositions([X(o.e), Y(o.z), Z(o.n), X(o.e), Y(o.z) + mastKm, Z(o.n)])
-        const mast = mastMitRand(geo, mastMaterial, mastRand)
+        const mast = mastMitRand(geo, mastMaterial)
         mast.visible = !!ortSchilder[i].sp.userData.gezeigt
         ortSchilder[i].mast = mast
         ortGruppe.add(mast)
@@ -2529,7 +2524,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial, gipfelMast, mastRand, gipfelMastRand])
+      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial, gipfelMast])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -2916,10 +2911,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const stirnStoff = new THREE.MeshBasicMaterial({ map: stirnBild(), color: ZUG_STIRN_FARBE, transparent: true, depthWrite: false,
       blending: THREE.AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })
     const stirnGeo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2).translate(0, 0, 0.5)
-    const stirn = new THREE.InstancedMesh(stirnGeo, stirnStoff, ZUEGE_HOECHSTENS)
+    const stirn = new THREE.InstancedMesh(stirnGeo, stirnStoff, 2 * ZUEGE_HOECHSTENS)
     stirn.count = 0; stirn.frustumCulled = false; stirn.renderOrder = 2
     gruppe.add(stirn)
     const stirnQ = new THREE.Quaternion(), stirnV = new THREE.Vector3(), stirnS = new THREE.Vector3()
+    // die Lampen selbst: kleine helle Kugeln vorne an der Lok, im Raum der Lok gesetzt
+    const lampenGeo = new THREE.SphereGeometry(1, 10, 8), lampenStoff = new THREE.MeshBasicMaterial({ color: ZUG_LAMPE_FARBE, toneMapped: false })
+    const lampen = new THREE.InstancedMesh(lampenGeo, lampenStoff, 2 * ZUEGE_HOECHSTENS)
+    lampen.count = 0; lampen.frustumCulled = false
+    gruppe.add(lampen)
+    const lampeM = new THREE.Matrix4(), lampeT = new THREE.Matrix4()
     const netzVon = (geo: THREE.BufferGeometry, je: number) => {
       const n = new THREE.InstancedMesh(geo, stoff, ZUEGE_HOECHSTENS * je)
       n.count = 0; n.castShadow = true; n.frustumCulled = false
@@ -3144,21 +3145,35 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           q.multiply(neigung)
           m.compose(v, q, skala)
           ;(mitten[zahl] ??= [])[w] = (mitten[zahl][w] ?? new THREE.Vector3()).copy(v)
+          if (w === 0) {
+            for (const seite of [-1, 1]) {
+              const r0 = ZUG_LAMPE_R * ZUG_BREITE
+              lampeT.makeTranslation(seite * ZUG_LAMPE_SEITE * ZUG_BREITE, ZUG_LAMPE_HOEHE * ZUG_HOEHE, ZUG_LOK_M / 2000)
+              lampeM.copy(m).multiply(lampeT).multiply(new THREE.Matrix4().makeScale(r0, r0, r0 * 0.5))
+              lampen.setMatrixAt(2 * zahl + (seite + 1) / 2, lampeM)
+            }
+          }
           if (w === 0 && fensterNacht.value > 0) {
-            // vor der Spitze der Lok, eine Lok lang, um denselben Versatz nach links, geneigt vom Boden an der Spitze zum Boden vorne
+            // je Lampe ein Kegel vor der Spitze der Lok, drei Loks lang, um denselben Versatz nach links, geneigt vom Boden an der Spitze
+            // zum Boden vorne
             const lM = ZUG_LOK_M * mJeM, lang0 = ZUG_STIRN_LAENGE * lM
             const [ev, nv] = stelle(sM + lang0)
             const ex = -((vo.n - hi.n) / lang) * versatz, nx = ((vo.e - hi.e) / lang) * versatz
             const hA = bestandHoehe(b, vo.e, vo.n), hB = bestandHoehe(b, ev, nv)
             const hA2 = Number.isFinite(hA) ? hA : hv, hB2 = Number.isFinite(hB) ? hB : hA2
             const dE = ev - vo.e, dN = nv - vo.n, flach = Math.hypot(dE, dN) || lang0
-            stirnV.set((vo.e + ex - lage.cE) / 1000, hA2 / 1000 + hoehe * gross.y * 0.05, -(vo.n + nx - lage.cN) / 1000)
             stirnQ.setFromAxisAngle(oben, Math.atan2(dE, -dN))
             neigung.setFromAxisAngle(querAchse, -Math.atan2(hB2 - hA2, flach))
             stirnQ.multiply(neigung)
-            stirnS.set(ZUG_STIRN_BREITE * ZUG_BREITE * mass * gross.x, 1, Math.hypot(flach, hB2 - hA2) / 1000)
-            m.compose(stirnV, stirnQ, stirnS)
-            stirn.setMatrixAt(zahl, m)
+            const zugB = ZUG_BREITE * mass * gross.x
+            stirnS.set(0.6 * ZUG_STIRN_BREITE * zugB, 1, Math.hypot(flach, hB2 - hA2) / 1000)
+            for (const seite of [-1, 1]) {
+              // die Lampe sitzt seite · ZUG_LAMPE_SEITE Zugbreiten neben der Mitte, quer zur Fahrt (rechts von (dE, dN) ist (dN, −dE))
+              const quer = (seite * ZUG_LAMPE_SEITE * zugB * 1000) / flach
+              stirnV.set((vo.e + ex + dN * quer - lage.cE) / 1000, hA2 / 1000 + hoehe * gross.y * 0.05, -(vo.n + nx - dE * quer - lage.cN) / 1000)
+              m.compose(stirnV, stirnQ, stirnS)
+              stirn.setMatrixAt(2 * zahl + (seite + 1) / 2, m)
+            }
             m.compose(v, q, skala)
           }
           if (w === 0) netze.lok.setMatrixAt(zahl, m)
@@ -3179,7 +3194,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       schild.visible = zeigt
       if (!zeigt) linkSetzen(null)
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
-      stirn.visible = fensterNacht.value > 0; stirn.count = stirn.visible ? zahl : 0; stirn.instanceMatrix.needsUpdate = true
+      stirn.visible = fensterNacht.value > 0; stirn.count = stirn.visible ? 2 * zahl : 0; stirn.instanceMatrix.needsUpdate = true
+      lampen.count = 2 * zahl; lampen.instanceMatrix.needsUpdate = true
       stirnStoff.opacity = ZUG_STIRN_HELL * fensterNacht.value
       for (const n of Object.values(netze)) n.instanceMatrix.needsUpdate = true
       // aufleuchten: nur neu färben, wenn sich etwas ändert oder ein Zug leuchtet (die Reihenfolge der Züge wechselt alle 2 s)
@@ -3200,7 +3216,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       weg = true
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
       k.wurzel.remove(gruppe); stoff.dispose(); schild.material.map?.dispose(); schild.material.dispose()
-      stirnStoff.map?.dispose(); stirnStoff.dispose(); stirnGeo.dispose(); stirn.dispose()
+      stirnStoff.map?.dispose(); stirnStoff.dispose(); stirnGeo.dispose(); stirn.dispose(); lampenGeo.dispose(); lampenStoff.dispose(); lampen.dispose()
       k.renderer.domElement.removeEventListener('pointermove', mausZiel); k.renderer.domElement.removeEventListener('pointerleave', mausWeg)
       for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
     }
