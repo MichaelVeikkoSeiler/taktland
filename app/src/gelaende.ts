@@ -617,6 +617,47 @@ export interface Masten { e: Float64Array; n: Float64Array; winkel: Float32Array
 interface MastIndex { kachel_m: number; kacheln: string[] }
 let mastVerz: Promise<MastIndex | null> | null = null
 const mastVorrat = new Map<string, Promise<Masten | null>>()
+/** Brücken für «3D Schweiz» (pipeline/build_bruecken3d.py): je Stück die Art (0 Gleis, 1 Strasse, 2 Weg), die Breite laut Klasse oder null
+ *  und die Punkte der Achse mit Höhe in Metern */
+export interface Bruecke3d { art: number; breite: number | null; e: Float64Array; n: Float64Array; h: Float32Array }
+let brueckenVerz: Promise<MastIndex | null> | null = null
+const brueckenVorrat = new Map<string, Promise<Bruecke3d[] | null>>()
+export async function brueckenLaden(e0: number, n0: number, e1: number, n1: number): Promise<Bruecke3d[]> {
+  const ix = await (brueckenVerz ??= holen<MastIndex>('data/bruecken3d/index.json').catch(() => null))
+  if (!ix) return []
+  const k = ix.kachel_m, da = new Set(ix.kacheln), namen: string[] = []
+  for (let ex = Math.floor(e0 / k); ex <= Math.floor(e1 / k); ex++) {
+    for (let ny = Math.floor(n0 / k); ny <= Math.floor(n1 / k); ny++) if (da.has(`${ex}_${ny}`)) namen.push(`${ex}_${ny}`)
+  }
+  const teile = await Promise.all(namen.map((name) => {
+    let p = brueckenVorrat.get(name)
+    if (!p) {
+      p = holenBinaer(`data/bruecken3d/${name}.bjz`).then(entpacken).then((roh) => {
+        const liste = JSON.parse(new TextDecoder().decode(roh)) as Array<[number, number | null, number, number, number, number[]]>
+        return liste.map(([art, breite, e, n, h, d]) => {
+          const z = d.length / 3, b: Bruecke3d = { art, breite, e: new Float64Array(z), n: new Float64Array(z), h: new Float32Array(z) }
+          for (let i = 0; i < z; i++) { b.e[i] = e + d[3 * i]; b.n[i] = n + d[3 * i + 1]; b.h[i] = (h + d[3 * i + 2]) / 10 }
+          return b
+        })
+      }).catch(() => { brueckenVorrat.delete(name); return null })
+      while (brueckenVorrat.size >= 60) brueckenVorrat.delete(brueckenVorrat.keys().next().value!)
+      brueckenVorrat.set(name, p)
+    }
+    return p
+  }))
+  // ein Stück liegt in jeder Kachel, die es berührt: nur einmal, und nur was den Ausschnitt berührt
+  const gesehen = new Set<string>(), raus: Bruecke3d[] = []
+  for (const t of teile) for (const b of t ?? []) {
+    const schl = `${b.art}/${b.e[0]}/${b.n[0]}/${b.e[b.e.length - 1]}/${b.n[b.n.length - 1]}`
+    if (gesehen.has(schl)) continue
+    gesehen.add(schl)
+    let drin = false
+    for (let i = 0; i < b.e.length && !drin; i++) drin = b.e[i] >= e0 && b.e[i] <= e1 && b.n[i] >= n0 && b.n[i] <= n1
+    if (drin) raus.push(b)
+  }
+  return raus
+}
+
 export async function mastenLaden(e0: number, n0: number, e1: number, n1: number): Promise<Masten | null> {
   const ix = await (mastVerz ??= holen<MastIndex>('data/fahrleitung/index.json').catch(() => null))
   if (!ix) return null
