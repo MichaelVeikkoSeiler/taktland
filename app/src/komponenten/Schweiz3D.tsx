@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
+import { brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -1119,6 +1119,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Weg zwischen den Halten aus dem
               Netz von Taktland (Linien und Kilometrierung der SBB, Schienennetz des BAV).</li>
             <li>Masten der Fahrleitung: nur wo das Schienennetz des BAV die Strecke elektrifiziert nennt, auf den Gleisachsen aus swissTLM3D (swisstopo).</li>
+            <li>Brücken der Bahn, der Strassen und Wege: Lage und Höhe der Achsen auf Brücken aus swissTLM3D (swisstopo).</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
               Ländten: swissTLMRegio (swisstopo).</li>
             <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
@@ -1138,7 +1139,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Masten der Fahrleitung in den Feldern von 4 km und 1 km: Lage, Abstand (alle 50 m, 3 m neben dem Gleis), Höhe und Gestalt sind erfunden,
-              belegt ist nur, dass die Strecke elektrifiziert ist. Die Züge fahren nicht auf den Gleisachsen, sie fahren darum nicht genau unter den Auslegern durch.</li>
+              belegt ist nur, dass die Strecke elektrifiziert ist. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
+            <li>Brücken in den Feldern von 4 km und 1 km: belegt sind Lage und Höhe. Breite (bei Strassen ohne Angabe in der Klasse), Dicke und Farbe der
+              Platten sind gewählt, Pfeiler fehlen; Stücke unter 12 m fehlen.</li>
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
@@ -1377,6 +1380,10 @@ const ZUG_LINKS = 0.7
  *  gleitet der Zug auf seine Spur (Abstand, Anlauf und dass die Nummern der Reihe nach liegen, gewählt: wo die Gleise wirklich liegen, steht in
  *  keiner unserer Quellen) */
 const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 300
+/** Brücken: Breite je Gleis, ohne Angabe je Strasse, Dicke der Platte, wie tief ihre Oberkante unter der Gleisachse liegt, Farben; alles
+ *  gewählt, in keiner Quelle */
+const BRUECKE_GLEIS_M = 5.5, BRUECKE_STRASSE_M = 8, BRUECKE_DICKE_M = 1.6, BRUECKE_STEG_DICKE_M = 0.6, BRUECKE_GLEIS_UNTER_M = 0.5
+const BRUECKE_SEITE = '#a29f98', BRUECKE_SCHOTTER = '#7d7468', BRUECKE_BELAG = '#5c5c5c'
 /** freie Spuren zum Ausweichen der Reihe nach (in ZUG_SPUR) und wie schnell ein Zug hingleitet, gewählt */
 const ZUG_AUSWEICHEN = [0, 1, -1, 2, -2, 3, -3], ZUG_AUSWEICHEN_JE_S = 0.5
 /** so weit sucht ein Zug in den Feldern von 4 km und 1 km die nächste Gleisachse, gewählt */
@@ -3027,6 +3034,82 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       weg = true
       if (netz) { k.wurzel.remove(netz); netz.dispose() }
       geo.dispose(); stoff.dispose()
+    }
+  }, [b, stufe, knoepfe])
+  // Brücken (pipeline/build_bruecken3d.py; Michael, 2026-10-30: «Kannst du die Brücken, hier Lorraineviadukt bauen? … Ebenso grössere
+  // Autobrücken oder die Brücken an der Aare um Bern herum bauen»): in den Feldern von 4 km und 1 km je Stück der Bahn, Strassen und Wege
+  // auf Brücken laut swissTLM3D eine schlichte Platte unter der Achse, auf ihrer Höhe, ohne Pfeiler; Breite (wo die Klasse keine nennt),
+  // Dicke und Farben gewählt (BRUECKE_*)
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || (stufe !== 'ort' && stufe !== 'nah')) return
+    let weg = false, netz: THREE.Mesh | null = null
+    const stoff = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+    const teile = [...b.teile.values()], rand = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    void brueckenLaden(e0, n0, e1, n1).catch(() => []).then((liste) => {
+      if (weg || !liste.length) return
+      const pos: number[] = [], farbe: number[] = []
+      const oben = new THREE.Color(), seite = new THREE.Color(BRUECKE_SEITE)
+      const X = (e: number) => (e - lage.cE) / 1000, Z = (n: number) => -(n - lage.cN) / 1000
+      // am Rand des Modells abschneiden: die Achse alle 5 m, nur die Läufe von Punkten im Modell (ein Stück ist oft länger als das Feld)
+      const stuecke: Array<{ art: number; breite: number | null; e: number[]; n: number[]; h: number[] }> = []
+      for (const br of liste) {
+        let lauf: { art: number; breite: number | null; e: number[]; n: number[]; h: number[] } | null = null
+        for (let i = 0; i + 1 < br.e.length; i++) {
+          const l = Math.hypot(br.e[i + 1] - br.e[i], br.n[i + 1] - br.n[i]), schritte = Math.max(1, Math.ceil(l / 5))
+          for (let j = i === 0 ? 0 : 1; j <= schritte; j++) {
+            const t = j / schritte, e = br.e[i] + t * (br.e[i + 1] - br.e[i]), n = br.n[i] + t * (br.n[i + 1] - br.n[i])
+            if (e < e0 || e > e1 || n < n0 || n > n1) { lauf = null; continue }
+            if (!lauf) { lauf = { art: br.art, breite: br.breite, e: [], n: [], h: [] }; stuecke.push(lauf) }
+            lauf.e.push(e); lauf.n.push(n); lauf.h.push(br.h[i] + t * (br.h[i + 1] - br.h[i]))
+          }
+        }
+      }
+      for (const br of stuecke) {
+        const z = br.e.length
+        if (z < 2) continue
+        const breite = br.art === 0 ? BRUECKE_GLEIS_M : br.art === 1 ? (br.breite ?? BRUECKE_STRASSE_M) + 1 : Math.max(br.breite ?? 0, 1.5) + 0.5
+        const dicke = br.art === 2 ? BRUECKE_STEG_DICKE_M : BRUECKE_DICKE_M, unter = br.art === 0 ? BRUECKE_GLEIS_UNTER_M : 0.1
+        oben.set(br.art === 0 ? BRUECKE_SCHOTTER : br.art === 1 ? BRUECKE_BELAG : BRUECKE_SEITE)
+        // je Punkt links und rechts, oben und unten
+        const ecken: number[][] = []
+        for (let i = 0; i < z; i++) {
+          const a = Math.max(0, i - 1), c = Math.min(z - 1, i + 1)
+          const de = br.e[c] - br.e[a], dn = br.n[c] - br.n[a], l = Math.hypot(de, dn) || 1
+          const qe = (-dn / l) * breite / 2, qn = (de / l) * breite / 2, top = (br.h[i] - unter) / 1000, bot = top - dicke / 1000
+          ecken.push([X(br.e[i] + qe), Z(br.n[i] + qn), X(br.e[i] - qe), Z(br.n[i] - qn), top, bot])
+        }
+        const vier = (p: number[][], f: THREE.Color) => {
+          for (const i of [0, 1, 2, 0, 2, 3]) { pos.push(...p[i]); farbe.push(f.r, f.g, f.b) }
+        }
+        for (let i = 0; i + 1 < z; i++) {
+          const [lx, lz, rx, rz, t, u] = ecken[i], [lx2, lz2, rx2, rz2, t2, u2] = ecken[i + 1]
+          vier([[lx, t, lz], [rx, t, rz], [rx2, t2, rz2], [lx2, t2, lz2]], oben)
+          vier([[lx, u, lz], [lx2, u2, lz2], [rx2, u2, rz2], [rx, u, rz]], seite)
+          vier([[lx, t, lz], [lx2, t2, lz2], [lx2, u2, lz2], [lx, u, lz]], seite)
+          vier([[rx, t, rz], [rx, u, rz], [rx2, u2, rz2], [rx2, t2, rz2]], seite)
+        }
+        for (const i of [0, z - 1]) {
+          const [lx, lz, rx, rz, t, u] = ecken[i]
+          vier([[lx, t, lz], [rx, t, rz], [rx, u, rz], [lx, u, lz]], seite)
+        }
+      }
+      const geo = new THREE.BufferGeometry()
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+      geo.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
+      geo.computeVertexNormals()
+      const m = new THREE.Mesh(geo, stoff)
+      m.castShadow = true; m.receiveShadow = true
+      netz = m
+      k.wurzel.add(m)
+    })
+    return () => {
+      weg = true
+      if (netz) { k.wurzel.remove(netz); netz.geometry.dispose() }
+      stoff.dispose()
     }
   }, [b, stufe, knoepfe])
   // Strassen- und Bahnhofslicht bei Nacht (pipeline/build_strassenlicht.py; Michael, 2026-10-29: «Irgendwie fehlt schon noch eine

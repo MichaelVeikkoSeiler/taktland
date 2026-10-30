@@ -643,6 +643,13 @@ data/fahrleitung/  Masten der Fahrleitung für «3D Schweiz» und den Führersta
              7,5 m mit Ausleger 3,6 m auf 6,6 m und Strebe, grau (gewählt); in «3D Schweiz» in den Feldern von 4 km und 1 km (mastenLaden in src/gelaende.ts), im
              Führerstand mit dem feinen Gelände (mastSetzen in Relief.tsx), keiner näher als 2,2 m an der gezeichneten Linie, bis 25 m neben ihr auf ihrer Höhe,
              sonst auf dem Gelände (MAST_LICHTRAUM_M, MAST_AUF_LINIE_M, gewählt); in Anleitung und Quellen genannt
+data/bruecken3d/  Brücken für «3D Schweiz» (Michael, 2026-10-30: «Kannst du die Brücken, hier Lorraineviadukt bauen? … Ebenso grössere Autobrücken oder die
+             Brücken an der Aare um Bern herum bauen», dann «Jetzt die Brücken bauen, Lorraineviadukt zuerst»): pipeline/build_bruecken3d.py, aus swissTLM3D
+             (TLM_EISENBAHN nur Bahn, Tram, Metro ohne Standseilbahnen, und TLM_STRASSE, KUNSTBAUTE Brücke, Steg …) je Stück die Achse mit Höhe, ab 12 m,
+             Gleise 5'115, Strassen 13'651, Wege 9'708, 474 Kacheln, 0,9 MB (.bjz, gzip-JSON, in Git, export_app kopiert sie); in der App brueckenLaden in
+             src/gelaende.ts, in Schweiz3D.tsx in den Feldern von 4 km und 1 km je Stück eine Platte unter der Achse auf ihrer Höhe, ohne Pfeiler, am Rand des
+             Modells abgeschnitten: Gleis 5,5 m breit, Oberkante 0,5 m unter der Achse, Schotter oben; Strasse Breite laut Klasse plus 1 m, sonst 8 m, Belag;
+             Weg und Steg schmal und 0,6 m dick; sonst 1,6 m dick, Seiten in Beton (BRUECKE_*, alles gewählt); in Anleitung und Quellen genannt
 data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
@@ -711,6 +718,7 @@ python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-
 python3 pipeline/fetch_tlm3d.py --baeume          # Einzelbaum und Bodenbedeckung aus swissTLM3D (etwa 3,3 GB)
 python3 pipeline/fetch_tlm3d.py --strassen        # Strassen aus swissTLM3D (520 MB, entpackt 3,3 GB)
 .venv/bin/python pipeline/build_strassenbruecken.py   # Strassenbrücken über der Bahn, vor export_app
+.venv/bin/python pipeline/build_bruecken3d.py          # Brücken der Bahn und Strassen für «3D Schweiz» (nach fetch_tlm3d.py --strassen), vor export_app
 .venv/bin/python pipeline/build_fahrleitung.py         # Masten der Fahrleitung (Elektrifizierung laut BAV, Gleisachsen swissTLM3D), vor export_app
 .venv/bin/python pipeline/build_gleishoehe.py         # Höhe der Gleise aus swissTLM3D, vor export_app
 .venv/bin/python pipeline/build_bahnbruecken.py       # Gleisachsen auf Brücken (Breite der Bahnbrücken), vor export_app
