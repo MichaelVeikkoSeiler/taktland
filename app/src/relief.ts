@@ -42,6 +42,11 @@ let dreiDVorgemerkt = false
 export function dreiDVormerken() { dreiDVorgemerkt = true }
 export const dreiDGemerkt = () => dreiDVorgemerkt
 export function dreiDVerbrauchen() { dreiDVorgemerkt = false }
+/** aus «3D Schweiz» mit «Im Führerstand mitfahren» gestartet (fuehrerstand=1 in der Adresse): die Fahrt beginnt in 3D im Führerstand */
+let fuehrerstandVorgemerkt = false
+export function fuehrerstandVormerken() { fuehrerstandVorgemerkt = true }
+export const fuehrerstandGemerkt = () => fuehrerstandVorgemerkt
+export function fuehrerstandVerbrauchen() { fuehrerstandVorgemerkt = false }
 
 /** Die Modellbahn baut eigene Strecken nur bis so lang (Michael, 2026-10-08, Romanshorn – Genève-Aéroport: «Die
  *  Kacheln wurden nicht schnell genug nachgebaut»; 200 km seit 2026-10-09); die längste Bergstrecke, Lausanne – Solothurn, hat gut 160 km */

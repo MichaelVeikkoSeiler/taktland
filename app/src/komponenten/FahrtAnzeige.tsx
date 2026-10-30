@@ -10,7 +10,7 @@ import { lage, pfad, type Stueck, useBreite, useKarte, useVollbild, vollbildKlas
 import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert } from './Sehenswert'
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
-import { dreiDGemerkt, dreiDVerbrauchen } from '../relief'
+import { dreiDGemerkt, dreiDVerbrauchen, fuehrerstandGemerkt, fuehrerstandVerbrauchen } from '../relief'
 import { gelaendeMoeglich } from '../gelaende'
 import { ladenVerfolgen } from '../daten'
 import { Klappe } from './Klappe'
@@ -357,6 +357,9 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const relief = gelaendeMoeglich()
   const [dreiD, setDreiD] = useState(dreiDGemerkt)
   useEffect(() => dreiDVerbrauchen(), [])
+  // aus «3D Schweiz» mit «Im Führerstand mitfahren»: gleich im Führerstand
+  const [vorneStart] = useState(fuehrerstandGemerkt)
+  useEffect(() => fuehrerstandVerbrauchen(), [])
   const meldenRef = useRef(dreiDMelden)
   meldenRef.current = dreiDMelden
   useEffect(() => { meldenRef.current?.(dreiD && relief) }, [dreiD, relief])
@@ -642,7 +645,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
         <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>}>
           <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} tempo={tempo} start={start} ziel={ziel}
                          tempoQuelle={probefahrt ? 'probe' : 'gps'} aussen={aussen} voll={voll}
-                         schliessen={() => setVoll(false)} vorneMelden={setVorne} />
+                         schliessen={() => setVoll(false)} vorneMelden={setVorne} vorneAnfang={vorneStart} />
         </Suspense>
       ) : (
       <div onPointerDown={runter} onPointerMove={bewegt} onPointerUp={hoch} onPointerCancel={hoch}

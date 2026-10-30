@@ -25,7 +25,7 @@ import { genau } from './Objekte'
 import { Ladefehler } from './Ladefehler'
 import { BahnenWahl } from './BahnenWahl'
 import { Zurueck } from './Zurueck'
-import { MODELL_HOECHSTENS_M } from '../relief'
+import { dreiDVormerken, fuehrerstandVormerken, MODELL_HOECHSTENS_M } from '../relief'
 import { Klappe } from './Klappe'
 
 // das Modell der Strecke für die Modellbahn, mit three.js, erst dort geladen
@@ -551,6 +551,8 @@ function Ergebnis({
     const art = startWunsch
     if (!art) return
     setStartWunsch(null)
+    // aus «3D Schweiz»: gleich in 3D im Führerstand (Michael, 2026-10-30: «auf Mitfahren klicken … sodass man gleich im Führerstand mitfährt»)
+    if (new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('fuehrerstand') === '1') { dreiDVormerken(); fuehrerstandVormerken() }
     window.history.replaceState(null, '', streckenAdresse(wahl))
     void fahrtStarten(art === 'probe', art === 'weiter')
     // eslint-disable-next-line react-hooks/exhaustive-deps
