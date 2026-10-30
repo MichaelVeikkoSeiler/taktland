@@ -2706,7 +2706,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: ['Höhen'], breite: 0.085 * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
       { zeilen: ['Orte'], breite: 0.085 * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
       { zeilen: ['Gipfel'], breite: 0.085 * W, an: gipfel, farbe: LICHT.gelaende, aktion: umschalten('gipfel') },
-      { zeilen: ['Wanderwege'], breite: 0.085 * W, an: !grob(stufe) && wandern, farbe: LICHT.gelaende, gesperrt: grob(stufe),
+      { zeilen: ['Wandern'], breite: 0.085 * W, an: !grob(stufe) && wandern, farbe: LICHT.gelaende, gesperrt: grob(stufe),
         aktion: umschalten('wandern') },
       { zeilen: ['Gebäude'], breite: 0.085 * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
       { zeilen: ['Bäume'], breite: 0.085 * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
