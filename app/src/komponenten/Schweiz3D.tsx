@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
+import { gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -1218,6 +1218,8 @@ const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 // Gebäude gräulich statt grün wie die Bäume (Michael, 2026-10-28: «Den Knopf Gebäude gräulich machen»), Farbe gewählt
 /** Breite der Knöpfe rechts an der Wand, je Anteil der Breite des Modells (gewählt) */
 const KNOPF_B = 0.075
+/** so viel der Länge einer Wand füllen die Knöpfe, so viel des Bands ihre Höhe an der längsten Wand (gewählt) */
+const KNOPF_WAND_ANTEIL = 0.94, KNOPF_HOCH = 0.62
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
@@ -1370,11 +1372,50 @@ const ZUG_LINKS = 0.7
  *  ihrer Nummer nebeneinander, je ZUG_SPUR Zugbreiten, um die Mitte des Wegs; in den letzten und ersten ZUG_SPUR_ANLAUF_M vor und nach dem Halt
  *  gleitet der Zug auf seine Spur (Abstand, Anlauf und dass die Nummern der Reihe nach liegen, gewählt: wo die Gleise wirklich liegen, steht in
  *  keiner unserer Quellen) */
-const ZUG_SPUR = 1.6, ZUG_SPUR_ANLAUF_M = 600
+const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 600
+/** höchstens so viele Zugbreiten liegt die äusserste Spur neben dem Weg; in grossen Bahnhöfen rücken die Spuren dafür enger (Michael, 2026-10-30,
+ *  Zürich HB: «Die Züge … verkehren ziemlich weit nördlich des Hauptbahnhofes. Sie fahren auf den Autostrassen»: bis 2026-10-30 je 1,6 Zugbreiten
+ *  der alten Form ohne Grenze, bei gut 25 Gleisnummern bis 125 m neben dem Weg), gewählt */
+const ZUG_SPUR_HOECHSTENS = 12
 /** die Nummer eines Gleises laut Fahrplan, die Zahl am Anfang; ohne Zahl null */
 function gleisNummer(g: string | null) {
   const m = g ? /^\s*(\d+)/.exec(g) : null
   return m ? Number(m[1]) : null
+}
+/** das Gleisfeld eines Bahnhofs quer zum Weg (Michael, 2026-10-30, Zürich HB: die Züge fuhren auf den Strassen nördlich des Bahnhofs, der Weg
+ *  liegt dort am Nordrand des Felds): wo die Gleisachsen aus swissTLM3D ohne Tunnel, höchstens GLEISFELD_WINKEL schräg zum Weg, drei Linien
+ *  quer zum Weg (am Halt und GLEISFELD_VERSATZ_M davor und danach) schneiden; das Feld reicht von der Achse nächst dem Weg (höchstens
+ *  GLEISFELD_NAH_M daneben) so weit, wie die Achsen höchstens GLEISFELD_LUECKE_M auseinander liegen (alles gewählt). t in Metern links der
+ *  Richtung (le, ln); welche Nummer auf welchem Gleis liegt, steht in keiner unserer Quellen */
+const GLEISFELD_WINKEL = Math.cos((30 * Math.PI) / 180), GLEISFELD_VERSATZ_M = 80, GLEISFELD_NAH_M = 25, GLEISFELD_LUECKE_M = 15, GLEISFELD_WEIT_M = 250
+function gleisFeld(stuecke: GleisStueck[], pe: number, pn: number, le: number, ln: number): { t0: number; t1: number } | null {
+  const de = ln, dn = -le, ts: number[] = []
+  for (const st of stuecke) {
+    if (st.tunnel) continue
+    for (let i = 1; i < st.e.length; i++) {
+      const ae = st.e[i - 1], an = st.n[i - 1], be = st.e[i], bn = st.n[i]
+      const se = be - ae, sn = bn - an, sl = Math.hypot(se, sn)
+      if (sl === 0 || Math.abs((se * de + sn * dn) / sl) < GLEISFELD_WINKEL) continue
+      for (const v of [-GLEISFELD_VERSATZ_M, 0, GLEISFELD_VERSATZ_M]) {
+        // Schnitt der Linie q + t·(le, ln) mit dem Stück a + u·s
+        const qe = pe + de * v, qn = pn + dn * v, nenner = se * ln - sn * le
+        if (Math.abs(nenner) < 1e-9) continue
+        const u = ((qe - ae) * ln - (qn - an) * le) / nenner
+        if (u < 0 || u > 1) continue
+        const t = ((ae + u * se - qe) * le + (an + u * sn - qn) * ln)
+        if (Math.abs(t) <= GLEISFELD_WEIT_M) ts.push(t)
+      }
+    }
+  }
+  if (!ts.length) return null
+  ts.sort((a, z) => a - z)
+  let k = 0
+  for (let i = 1; i < ts.length; i++) if (Math.abs(ts[i]) < Math.abs(ts[k])) k = i
+  if (Math.abs(ts[k]) > GLEISFELD_NAH_M) return null
+  let a = k, z = k
+  while (a > 0 && ts[a] - ts[a - 1] <= GLEISFELD_LUECKE_M) a--
+  while (z < ts.length - 1 && ts[z + 1] - ts[z] <= GLEISFELD_LUECKE_M) z++
+  return ts[z] - ts[a] > 1 ? { t0: ts[a], t1: ts[z] } : null
 }
 /** die App von Taktland, auf deren Bahnhofseiten das Zugschild verweist */
 const TAKTLAND_APP = 'https://taktland.ch/app/'
@@ -2640,7 +2681,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const k = kern.current
     const w = k?.wurzel.userData.waende as { x0: number; x1: number; z0: number; z1: number; y: number; wand: number; W: number } | undefined
     if (!k || !w) return
-    const { W } = w, hoch = w.wand * 0.62, luecke = W * 0.008
+    const { W } = w, luecke = W * 0.008
     interface Teil { zeilen: string[]; breite: number; an?: boolean; farbe?: string; knopf?: boolean; gesperrt?: boolean; aktion?: () => void }
     const umschalten = (art: Schalter) => () => cb.current.schalten(art)
     // jeder Knopf hat seinen festen Platz (Michael, 2026-10-22: «Die Knöpfe haben eine fixe Position»): was in dieser Stufe nicht
@@ -2678,6 +2719,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: ['−1 Tag'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', -1) },
       { zeilen: ['+1 Tag'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', 1) },
     ]
+    // alle Knöpfe ohne Lücke in der Mitte über die ganze Wand, so gross, wie es dort Platz hat (Michael, 2026-10-30: «Bitte verteile sie auf
+    // die ganze Breite, ohne die Lücke dazwischen. So sollten sie jeweils größer sein»; + und − hängen unter der Platte); die Höhe wächst
+    // mit, an der längsten Wand bis 62 % des Bands (KNOPF_WAND_ANTEIL, KNOPF_HOCH, gewählt)
+    const alle = [...links, ...rechts]
+    const summe = alle.reduce((a, t) => a + t.breite, 0) + luecke * Math.max(0, alle.length - 1)
+    const fuer = (L: number) => Math.min(1, (KNOPF_WAND_ANTEIL * L) / summe)
+    const lang = Math.max(w.x1 - w.x0, Math.abs(w.z0 - w.z1))
+    const hoch = (w.wand * KNOPF_HOCH) / fuer(lang)
     // je Teil ein Bild für die Vorderseite, auf allen vier Wänden dasselbe; an leuchtet es in der Farbe seiner Art, aus ist es dunkel
     const PX = 128
     // nurSchrift: die Schrift allein auf Schwarz, als eigenes Licht der Beschriftung
@@ -2694,8 +2743,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       x.fillStyle = t.gesperrt ? '#5c5c5c' : t.knopf ? '#ffffff' : t.an === undefined ? '#d8f5dc' : an ? '#1d1d1d' : '#c8c8c8'
       x.textAlign = 'center'
-      const px = t.zeilen.length > 1 ? 34 : 40
+      // so gross, wie die Zeile in den Knopf passt (er ist jetzt höher und schmaler im Verhältnis)
+      let px = t.zeilen.length > 1 ? 34 : 44
       x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      const breitest = Math.max(...t.zeilen.map((z) => x.measureText(z).width))
+      if (breitest > c.width - 20) { px = Math.max(16, Math.floor(px * (c.width - 20) / breitest)); x.font = `bold ${px}px Helvetica, Arial, sans-serif` }
       t.zeilen.forEach((z, i) => x.fillText(z, c.width / 2, c.height / 2 - (t.zeilen.length - 1) * px * 0.55 + i * px * 1.1 + px * 0.35, c.width - 16))
       // ein feiner schwarzer Rand um jede Fläche (Michael, 2026-10-22: «eine minime schwarze Umrahmung»)
       x.strokeStyle = '#000000'; x.lineWidth = 5; x.strokeRect(2.5, 2.5, c.width - 5, c.height - 5)
@@ -2721,7 +2773,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return new THREE.MeshBasicMaterial({ map: tex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: 0.8 })
     }
     const seite = new THREE.MeshLambertMaterial({ color: '#2a2a2a' }), fassung = new THREE.MeshLambertMaterial({ color: '#141414' })
-    const teile = [...links, ...rechts].map((t) => {
+    const teile = alle.map((t) => {
       const an = !!t.an
       // aus steht der Knopf heraus, an ist er eingedrückt; die Anzeige der Zeit liegt flach in der Wand
       const tiefe = t.an === undefined && !t.knopf ? KNOPF_FLACH * W : an ? KNOPF_DRIN * W : KNOPF_DRAUSSEN * W
@@ -2734,16 +2786,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         schein: an && t.farbe ? { geo: new THREE.PlaneGeometry(t.breite + W * 0.05, hoch + W * 0.05), stoff: scheinBild(t.farbe) } : null,
       }
     })
-    // Lage entlang der Wand: links ab 47 % ihrer Länge nach innen, rechts ab 11 % nach aussen (die Mitte gehört + und −); an
-    // einer kürzeren Wand (die ganze Schweiz von Norden nach Süden, angesetzte Stücke) alles so viel kleiner, dass es Platz hat
-    const summe = (l: Teil[]) => l.reduce((a, t) => a + t.breite, 0) + luecke * Math.max(0, l.length - 1)
+    // Lage entlang der Wand: von links nach rechts in der Mitte; an einer kürzeren Wand (die ganze Schweiz von Norden nach Süden,
+    // angesetzte Stücke) alles so viel kleiner, dass es Platz hat
     const lagenAn = (L: number) => {
-      const f = Math.min(1, (0.36 * L) / Math.max(summe(links), summe(rechts)))
+      const f = fuer(L)
       const lagen: number[] = []
-      let u = -0.47 * L
-      for (const t of links) { lagen.push(u + f * t.breite / 2); u += f * (t.breite + luecke) }
-      u = 0.11 * L
-      for (const t of rechts) { lagen.push(u + f * t.breite / 2); u += f * (t.breite + luecke) }
+      let u = -f * summe / 2
+      for (const t of alle) { lagen.push(u + f * t.breite / 2); u += f * (t.breite + luecke) }
       return { f, lagen }
     }
     const gruppe = new THREE.Group()
@@ -3243,11 +3292,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const spuren = new Map<string, number[]>()
     // je Bahnhof die Richtung «links» des ersten Zugs dort: so liegt eine Spur für Züge beider Richtungen auf derselben Seite
     const spurSeite = new Map<string, [number, number]>()
+    // je Bahnhof das Gleisfeld quer zum Weg laut swissTLM3D, in Metern links der Richtung in spurSeite; 'laedt', solange es lädt, null ohne Feld
+    const felder = new Map<string, { t0: number; t1: number } | null | 'laedt'>()
     /** wie weit (in Spuren um die Mitte) das Gleis eines Halts neben dem Weg liegt, null ohne Gleis */
     const spurVon = (abk: string, gleis: string | null) => {
       const g = gleisNummer(gleis), liste = spuren.get(abk)
       if (g === null || !liste) return null
-      return liste.indexOf(g) - (liste.length - 1) / 2
+      // in Zugbreiten der gezeichneten Form
+      const halb = (liste.length - 1) / 2
+      return (liste.indexOf(g) - halb) * Math.min(ZUG_SPUR, halb ? ZUG_SPUR_HOECHSTENS / halb : ZUG_SPUR)
     }
     let unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = [], neuUm = 0
     const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), gross = new THREE.Vector3(1, 1, 1), skala = new THREE.Vector3(), neigung = new THREE.Quaternion(), querAchse = new THREE.Vector3(1, 0, 0), oben = new THREE.Vector3(0, 1, 0)
@@ -3362,6 +3415,21 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const ref = spurSeite.get(abk) ?? (spurSeite.set(abk, [le, ln]), [le, ln])
           return le * ref[0] + ln * ref[1] >= 0 ? 1 : -1
         }
+        // die Spur eines Gleises in Metern links der Richtung in spurSeite: im Gleisfeld laut swissTLM3D die Nummern der Reihe nach
+        // vom einen Rand zum andern, ohne Feld um den Weg (spurVon in Zugbreiten)
+        const spurM = (abk: string, gleis: string | null, roh: number, an: { lat: number; lon: number }) => {
+          let feld = felder.get(abk)
+          if (feld === undefined) {
+            felder.set(abk, 'laedt')
+            const ref = spurSeite.get(abk)!, [pe, pn] = lv95(an.lat, an.lon)
+            void gleisLaden([[pe, pn]]).then((st) => { felder.set(abk, gleisFeld(st, pe, pn, ref[0], ref[1])) }).catch(() => felder.set(abk, null))
+            feld = 'laedt'
+          }
+          const liste = spuren.get(abk)!, g = gleisNummer(gleis)!
+          if (feld && feld !== 'laedt' && liste.length > 1) return feld.t0 + ((feld.t1 - feld.t0) * liste.indexOf(g)) / (liste.length - 1)
+          return roh * ZUG_BREITE * mass * gross.x * 1000
+        }
+        const anfang = spurA === null ? null : lageBei(fw, 0), schluss = spurB === null ? null : lageBei(fw, ende)
         let lokE = 0, lokN = 0
         const glatt = enden.map((x) => {
           let summe = 0, zahlH = 0
@@ -3376,9 +3444,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const le = -(vo.n - hi.n) / lang, ln = (vo.e - hi.e) / lang
           const versatzBei = (s: number) => {
             const [gA, gB] = anteile(s)
-            const links = ZUG_LINKS * (1 - gA - gB)
-              + (gA ? gA * spurA! * ZUG_SPUR * seiteBei(h[j].abk, le, ln) : 0) + (gB ? gB * spurB! * ZUG_SPUR * seiteBei(h[j + 1].abk, le, ln) : 0)
-            return ZUG_MASS_BREITE * mass * gross.x * 1000 * links
+            const spur = (gA ? gA * seiteBei(h[j].abk, le, ln) * spurM(h[j].abk, h[j].gleis, spurA!, anfang!) : 0)
+              + (gB ? gB * seiteBei(h[j + 1].abk, le, ln) * spurM(h[j + 1].abk, h[j + 1].gleis, spurB!, schluss!) : 0)
+            return mass * gross.x * 1000 * ZUG_MASS_BREITE * ZUG_LINKS * (1 - gA - gB) + spur
           }
           // vorne und hinten je mit dem eigenen Versatz, der Wagen liegt schräg dazwischen wie auf einer Weiche
           const versatz = versatzBei(vo.s), versatzH = versatzBei(hi.s)
