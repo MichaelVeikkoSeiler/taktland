@@ -1180,6 +1180,12 @@ function Hinweise({ r }: { r: Relief }) {
         dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen.
       </p>
       <p>
+        Im Führerstand ausserdem wie in «3D Schweiz»: alle Brücken aus swissTLM3D (swisstopo) nah am Zug, Lage und Höhe belegt, Breite (wo die Klasse
+        keine nennt), Querschnitt und Aussehen gewählt, ohne Pfeiler; und andere Züge laut Fahrplan (opentransportdata.swiss), nicht live: wo ein Zug
+        zwischen zwei Halten ist, ist angenommen (gleichmässig), welches Gleis er nimmt, steht in keiner Quelle (gewählt das linke), Form und Grösse
+        sind gewählt. Der eigene Zug fährt nicht nach dem Fahrplan; ein Zug laut Fahrplan kann ihn kreuzen.
+      </p>
+      <p>
         Die Höhe der Gleise steht in keiner Quelle. Die Linie ist darum auf das Gelände gelegt, etwas darüber;
         in Tunneln und auf Brücken gerade zwischen ihren beiden Enden. Das zeigt den Verlauf, nicht die
         Höhe der Gleise. Das Gelände ist auf {r.raster.m} m gemittelt; Felsen, Einschnitte und Mauern sind
