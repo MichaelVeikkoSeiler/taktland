@@ -627,7 +627,11 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              Station (voll ab 4 mm), von der untersten gezeichneten Wolke über dem Boden (ab 10 % Bewölkung, sonst die unterste Schicht über dem
              Boden) bis auf den Boden, darüber Schnee, unter der Schneefallgrenze Regen (komponenten/Niederschlag.ts, Säulen), in jeder Stufe; das Geräusch nach dem Mittel über das Modell; ohne diese Daten wie vorher die
              Station gleichmässig über dem Modell (vorher bis ein Viertel der Breite über dem höchsten Punkt, in der ganzen Schweiz also bis
-             etwa 90 km hoch); die Zeile «Regen und Schnee laut Prognose von MeteoSchweiz für …»
+             etwa 90 km hoch); die Zeile «Regen und Schnee laut Prognose von MeteoSchweiz für …»;
+             seit 2026-10-30 auch im Führerstand von Taktland (komponenten/WolkenBild.ts für beide Apps; Michael, 2026-10-30: «die beiden evtl zu koppeln …
+             dann den Rest auch noch»): dieselben Ebenen über einem Quadrat von 40 km um den Zug, neu nach 8 km Weg oder zur nächsten Stunde, alle 10 s
+             geprüft (WOLKEN_FUEHRER_M, WOLKEN_NEU_M, gewählt), nur solange echtes Wetter gilt (der Sonnenschalter nicht leuchtet), zur Stunde der Prognose
+             oder jetzt; der graue Himmel nach der Station bleibt
 data/strassenlicht/  Strassen- und Bahnhofslicht bei Nacht für «3D Schweiz» (Michael, 2026-10-29: «Irgendwie fehlt schon noch eine Straßen- und allgemeine
              Bahnhofbeleuchtung. Kannst du das nicht erfinden und einbauen?»): pipeline/build_strassenlicht.py (nach fetch_tlm3d.py --strassen), die Lampen
              erfunden, belegt nur die Lage: Strassen von 3 bis 10 m aus swissTLM3D (ohne Tunnel) in Siedlungen (swissTLMRegio Siedl, Stadtzentr) alle 35 m,

@@ -26,6 +26,8 @@ import { type Bruecke3d, brueckenLaden, strassenlichtLaden, mastenLaden, ausschn
 import { FAHRLEITUNG_FARBE, fahrleitungsMast } from './Fahrleitung'
 import { fahrplanZuegeBauen } from './FahrplanZuege'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
+import { WOLKEN_HOEHE_M, wolkenBild, wolkenEbenen3d } from './WolkenBild'
+import { wolken3dStunde, wolkenLaden, wolkenStunde } from '../wolken'
 import { bahnQuerschnitt, BRUECKE_RAND_M, brueckenMaterialien, type BrueckenStueck, GLEISABSTAND_M, gleisPlatten, type QuerFlaeche, type QuerStelle, querschnittNetzeBauen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
@@ -465,6 +467,8 @@ const TAFEL_SEITE_M = 7.5, TAFEL_BREITE_M = 9, TAFEL_HOEHE_M = 1.8, TAFEL_UEBER_
 const BAUM_BIS_M = 1700
 /** so viel Platz bleibt zwischen Krone und Mitte der gezeichneten Strecke frei (Lichtraum fürs Bild, in keiner Quelle) */
 const BAUM_LICHTRAUM_M = 5
+/** Wolken im Führerstand: Seite des Quadrats um den Zug und nach wie viel Weg neu (m, gewählt) */
+const WOLKEN_FUEHRER_M = 40_000, WOLKEN_NEU_M = 8_000
 /** Masten der Fahrleitung: keiner näher an der gezeichneten Linie als MAST_LICHTRAUM_M; bis MAST_AUF_LINIE_M neben ihr steht der Fuss auf
  *  ihrer Höhe (Gleise daneben liegen etwa gleich hoch, auch auf Brücken), weiter weg auf dem Gelände; gewählt */
 const MAST_LICHTRAUM_M = 2.2, MAST_AUF_LINIE_M = 25
@@ -2532,7 +2536,45 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     lampenGruppe.visible = false
     szene.add(lampenGruppe)
     let lampenAuftrag = 0
-    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { reliefLampen: unknown }).reliefLampen = () => { const m = new THREE.Matrix4(), v = new THREE.Vector3(); let best = Infinity, bv: number[] = []; if (lampen) for (let i = 0; i < lampen.masten.count; i++) { lampen.masten.getMatrixAt(i, m); v.setFromMatrixPosition(m); const d = v.distanceTo(kamera.position); if (d < best) { best = d; bv = v.toArray() } }; return [lampen?.licht.count, lampenNacht, best * 1000, bv, kamera.position.toArray(), lampenGruppe.parent?.type] }
+    // Wolken laut Wettermodell im Führerstand, wie in «3D Schweiz» (komponenten/WolkenBild.ts; Michael, 2026-10-30: «dann den Rest auch noch»):
+    // nur solange echtes Wetter gilt, über einem Quadrat von WOLKEN_FUEHRER_M um den Zug, neu nach WOLKEN_NEU_M Weg oder zur nächsten Stunde
+    const wolkenGruppe = new THREE.Group()
+    wolkenGruppe.visible = false
+    szene.add(wolkenGruppe)
+    let wolkenMitte: [number, number] | null = null, wolkenStundeDa = -1, wolkenBaut = false, wolkenPruefen = 0
+    const wolkenLeeren = () => {
+      for (const c of wolkenGruppe.children) {
+        const m = c as THREE.Mesh
+        m.geometry.dispose(); (m.material as THREE.MeshLambertMaterial).map?.dispose(); (m.material as THREE.Material).dispose()
+      }
+      wolkenGruppe.clear()
+    }
+    const wolkenSetzen = async (e: number, n: number) => {
+      if (wolkenBaut || !wetterGilt()) return
+      const w = await wolkenLaden()
+      const st = w ? wolkenStunde(w, windGewaehlt?.zeit ?? new Date()) : null
+      if (!laeuft) return
+      if (wolkenMitte && Math.hypot(e - wolkenMitte[0], n - wolkenMitte[1]) < WOLKEN_NEU_M && (st ?? -1) === wolkenStundeDa) return
+      wolkenBaut = true
+      wolkenLeeren()
+      wolkenMitte = [e, n]; wolkenStundeDa = st ?? -1
+      if (w && st !== null) {
+        const e0 = e - WOLKEN_FUEHRER_M / 2, e1 = e + WOLKEN_FUEHRER_M / 2, n0 = n - WOLKEN_FUEHRER_M / 2, n1 = n + WOLKEN_FUEHRER_M / 2
+        const j3 = wolken3dStunde(w, st)
+        const ebenen = j3 !== null ? wolkenEbenen3d(w, j3, e0, n0, e1, n1)
+          : WOLKEN_HOEHE_M.map((hoeheM, j) => ({ hoeheM, bild: wolkenBild(w, st, j, e0, n0, e1, n1) }))
+        for (const { hoeheM, bild } of ebenen) {
+          if (!bild) continue
+          const tex = new THREE.CanvasTexture(bild); tex.colorSpace = THREE.SRGBColorSpace
+          const geo = new THREE.PlaneGeometry(X(e1) - X(e0), Z(n0) - Z(n1)).rotateX(-Math.PI / 2)
+          const netz = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: tex, transparent: true, depthWrite: false, side: THREE.DoubleSide }))
+          netz.position.set(X(e), Y(hoeheM), Z(n)); netz.renderOrder = 3
+          wolkenGruppe.add(netz)
+        }
+      }
+      wolkenBaut = false
+    }
+    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { reliefLampen: unknown }).reliefLampen = () => { const m = new THREE.Matrix4(), v = new THREE.Vector3(); let best = Infinity, bv: number[] = []; if (lampen) for (let i = 0; i < lampen.masten.count; i++) { lampen.masten.getMatrixAt(i, m); v.setFromMatrixPosition(m); const d = v.distanceTo(kamera.position); if (d < best) { best = d; bv = v.toArray() } }; return [lampen?.licht.count, lampenNacht, best * 1000, bv, kamera.position.toArray(), lampenGruppe.parent?.type, wolkenGruppe.children.length, wolkenGruppe.visible, wolkenStundeDa, wetterGilt()] }
     const lampenSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++lampenAuftrag
       const l = await strassenlichtLaden(e0, n0, e1, n1).catch(() => null)
@@ -2935,6 +2977,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const auftrag = ++feinAuftrag
       const anfang = pk[0].m, ende = pk[pk.length - 1].m
       feinZug = punktBei(Math.max(anfang, Math.min(ende, stelle)))
+      void wolkenSetzen(feinZug[0], feinZug[1])
       const [ce, cn] = punktBei(Math.max(anfang, Math.min(ende, stelle + richtung * FEIN_VORAUS_M)))
       const e0 = Math.round((ce - FEIN_SEITE_M / 2) / 10) * 10, n0 = Math.round((cn - FEIN_SEITE_M / 2) / 10) * 10
       const e1 = e0 + FEIN_SEITE_M, n1 = n0 + FEIN_SEITE_M
@@ -4219,6 +4262,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const dt = Math.min(0.1, uhr.getDelta())
       if (renderer.xr.isPresenting) brilleSchritt?.(dt)
       fahrplanZuege?.schritt(imStand && feinStand !== null)
+      wolkenGruppe.visible = imStand && wetterGilt()
+      // auch wenn der Zug steht oder das Wetter erst später geladen ist: alle 10 s prüfen, ob die Wolken noch stimmen
+      if (imStand && feinStand !== null && performance.now() > wolkenPruefen) { wolkenPruefen = performance.now() + 10_000; void wolkenSetzen(feinZug[0], feinZug[1]) }
       if (probe && zug === eigenerZug) {
         const anfang = pk[0].m, ende = pk[pk.length - 1].m
         if (probe.current !== fahrt.signal) {
@@ -4598,7 +4644,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     renderer.setAnimationLoop(zeichnen)
     return () => {
       laeuft = false
-      renderer.setAnimationLoop(null); wetterGeraeuschAus(); fahrplanZuege?.weg(); lampen?.weg()
+      renderer.setAnimationLoop(null); wetterGeraeuschAus(); fahrplanZuege?.weg(); lampen?.weg(); wolkenLeeren()
       void renderer.xr.getSession()?.end()
       if (brille) brille.current = null
       beobachter.disconnect()
