@@ -110,7 +110,7 @@ def main():
     uebersichten()
     # das Streckennetz unverändert, geprüft mit generator/strecken.py
     for name in ("strecken.json", "strecken_geometrie.json", "karte.json", "standort.json", "seen.json",
-                 "sehenswert.json", "wetterstationen.json", "sterne.json", "flaechen.json", "kartengrund.json", "bodenbedeckung.json", "strassenbruecken.json", "bahnbruecken.json", "kartenlinien.json",
+                 "sehenswert.json", "wetterstationen.json", "sterne.json", "flaechen.json", "kartengrund.json", "bodenbedeckung.json", "strassenbruecken.json", "bahnbruecken.json", "gleise3d.json", "kartenlinien.json",
                  # der Pool für das Spiel «Geo» (pipeline/build_schweiz11.py)
                  "schweiz11.json",
                  # der Pool für «Bahnhofsuche» (pipeline/build_erraten.py)
