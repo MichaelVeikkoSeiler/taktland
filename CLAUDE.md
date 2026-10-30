@@ -640,7 +640,9 @@ data/strassenlicht/  Strassen- und Bahnhofslicht bei Nacht für «3D Schweiz» (
              (die Datei kennt die Achse der Strasse nicht), oben ein Kopf, der nachts leuchtet (LICHT_MAST_*, gewählt; Michael, 2026-10-29: «Kann man bei den
              Lichtkegel doch noch einen Masten am Strassenrand einfügen? Nur was ganz simples?»); im Halt ohne
              Lichtkegel der Stirnlampen (die Kegel der vielen Züge in Bern addierten sich; seit 2026-10-29 am Halt wieder, 1,5 Loks lang und halb so stark,
-             ZUG_STIRN_HALT_*; Michael: «Stehende Züge sollen das Frontlicht aktiv haben … So würde man sehen in welche Richtung er abfährt»); in «Was gezeichnet oder angenommen ist» genannt
+             ZUG_STIRN_HALT_*; Michael: «Stehende Züge sollen das Frontlicht aktiv haben … So würde man sehen in welche Richtung er abfährt»); in «Was gezeichnet oder angenommen ist» genannt;
+             seit 2026-10-30 auch im Führerstand im feinen Gelände, gleich gezeichnet (komponenten/Strassenlicht.ts, lampenBauen für beide Apps; Michael,
+             2026-10-30: «die beiden evtl zu koppeln … dann den Rest auch noch»), nachts und in der Dämmerung wie das Licht in den Fenstern, ohne Schalter
              Licht in den Fenstern (src/gebaeudeBild.ts): deckt ein Bildpunkt mehr als etwa ein halbes Fenster samt Wand, gilt statt des einzelnen
              Fensters der Anteil, gemittelt (Michael, 2026-10-29: «Die Lichter bei den Gebäuden flackern»; die Fenster sind keine eigene Fläche,
              sie sind auf die Wand gerechnet, beim Bewegen sprang die Mitte eines Bildpunkts zwischen brennenden und dunklen Fenstern)

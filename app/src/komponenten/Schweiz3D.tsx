@@ -5,6 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
+import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1463,30 +1464,6 @@ const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.48, ZUG_STIRN_LAENGE = 3, 
 const ZUG_STIRN_HALT_LAENGE = 1.5, ZUG_STIRN_HALT_HELL = 0.5
 /** die ganze Länge des Zugs in den Einheiten der Form (Lok, Wagen und Lücken) */
 const ZUG_GANZ_M = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M)
-/** Strassen- und Bahnhofslicht: Radius des Lichtflecks auf dem Boden (m), Farben und Stärke gewählt, in keiner Quelle (die Lampen sind
- *  erfunden, belegt ist nur, wo Strassen und Gleise liegen); höchstens so viele Lampen in einem Modell (eine Annahme zur Grafik) */
-/** (Michael, 2026-10-29: «Lichtkegel etwas breiter und etwas weniger hell»; vorher 11 m, 16 m und 0,55) */
-const LICHT_STRASSE_M = 14, LICHT_BAHNHOF_M = 20, LICHT_STRASSE_FARBE = '#ffc98a', LICHT_BAHNHOF_FARBE = '#eef3ff', LICHT_HELL = 0.4
-/** am Bahnhof liegen die Lampen über vielen Gleisen nebeneinander und addieren sich: dort schwächer (Bern war ein weisser Fleck; Michael,
- *  2026-10-29, Thun: «Die Lichtkegel bei den Bahnhöfen 15% weniger hell», vorher 0,6) */
-const LICHT_BAHNHOF_STAERKE = 0.51
-const LICHT_HOECHSTENS = 60_000
-/** je Lampe ein schlichter Mast am Ort der Lampe (Michael, 2026-10-29: «Kann man bei den Lichtkegel doch noch einen Masten am Strassenrand
- *  einfügen? Nur was ganz simples?»): ein dunkelgrauer Pfosten mit einem Kopf, der nachts leuchtet; Höhe und Dicke gewählt, in keiner
- *  Quelle; die Lage ist die erfundene Lampe auf der Achse der Strasse oder des Gleises, um den halben Abstand zum Rand versetzt
- *  (LICHT_RAND_M, gewählt, die Breite der Strasse kennt die Datei nicht) */
-const LICHT_MAST_M = { strasse: 8, bahnhof: 10 }, LICHT_MAST_DICKE_M = 0.25, LICHT_RAND_M = 3, LICHT_MAST_FARBE = '#3a3a3a'
-/** ein Lichtfleck: in der Mitte hell, nach aussen weich */
-function lichtBild() {
-  const c = document.createElement('canvas'), x = c.getContext('2d')!
-  c.width = c.height = 64
-  const v = x.createRadialGradient(32, 32, 0, 32, 32, 32)
-  v.addColorStop(0, 'rgba(255,255,255,1)'); v.addColorStop(0.15, 'rgba(255,255,255,0.8)'); v.addColorStop(0.5, 'rgba(255,255,255,0.25)')
-  v.addColorStop(1, 'rgba(255,255,255,0)')
-  x.fillStyle = v; x.fillRect(0, 0, 64, 64)
-  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
-  return tex
-}
 /** zwei Stirnlampen vorne unten an der Lok, links und rechts, immer an wie bei echten Zügen und dem Vorbild (Michael, 2026-10-29:
  *  «Bitte zwei Lichter machen ähnlich wie bei diesem Modell», sein Bild eines Zugs mit zwei Lampen unten an der Front): je Lampe ein
  *  heller Punkt und nachts ein eigener Lichtkegel; Lage und Grösse als Anteil von Breite und Höhe des Zugs, gewählt */
@@ -3178,77 +3155,23 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     if (!k || !lage || !gebaeude || grob(stufe)) return
     let weg = false
-    const gruppe = new THREE.Group()
-    gruppe.name = 'strassenlicht'
-    k.wurzel.add(gruppe)
-    const stoff = new THREE.MeshBasicMaterial({ map: lichtBild(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-      polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4, toneMapped: false })
-    const geo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2)
-    let netz: THREE.InstancedMesh | null = null, masten: THREE.InstancedMesh | null = null, koepfe: THREE.InstancedMesh | null = null
-    // Mast: Pfosten von 1 m Höhe mit dem Fuss im Ursprung, je Lampe skaliert; Kopf ein flaches Kästchen oben, zur Strasse hin
-    const mastGeo = new THREE.BoxGeometry(1, 1, 1).translate(0, 0.5, 0)
-    const mastStoff = new THREE.MeshLambertMaterial({ color: LICHT_MAST_FARBE })
-    const kopfGeo = new THREE.BoxGeometry(1, 1, 1)
-    const kopfStoff = new THREE.MeshBasicMaterial({ color: LICHT_STRASSE_FARBE, toneMapped: false })
-    const kopfDunkel = new THREE.Color(LICHT_MAST_FARBE), kopfHell = new THREE.Color(LICHT_STRASSE_FARBE)
+    let lampen: Strassenlampen | null = null
     const teile = [...b.teile.values()]
     const rand = teile.map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
-    const laden = async () => {
-      const l = await strassenlichtLaden(e0, n0, e1, n1).catch(() => null)
+    void strassenlichtLaden(e0, n0, e1, n1).catch(() => null).then((l) => {
       if (weg || !l || !l.e.length) return
-      const anzahl = Math.min(l.e.length, LICHT_HOECHSTENS)
-      const n = new THREE.InstancedMesh(geo, stoff, anzahl)
-      n.frustumCulled = false; n.renderOrder = 2
-      const m = new THREE.Matrix4(), v = new THREE.Vector3(), q = new THREE.Quaternion(), sk = new THREE.Vector3()
-      const warm = new THREE.Color(LICHT_STRASSE_FARBE), kuehl = new THREE.Color(LICHT_BAHNHOF_FARBE).multiplyScalar(LICHT_BAHNHOF_STAERKE)
-      // bei sehr vielen Lampen jede soundsovielte
-      const schritt = l.e.length / anzahl
-      const mn = new THREE.InstancedMesh(mastGeo, mastStoff, anzahl), kn = new THREE.InstancedMesh(kopfGeo, kopfStoff, anzahl)
-      mn.castShadow = true; mn.frustumCulled = kn.frustumCulled = false
-      const d = LICHT_MAST_DICKE_M / 1000, oben = new THREE.Vector3(), seite = new THREE.Vector3()
-      for (let i = 0; i < anzahl; i++) {
-        const j = Math.floor(i * schritt), bahnhof = l.art[j] === 2
-        const h = bestandHoehe(b, l.e[j], l.n[j]), r = (bahnhof ? LICHT_BAHNHOF_M : LICHT_STRASSE_M) / 1000
-        v.set((l.e[j] - lage.cE) / 1000, (Number.isFinite(h) ? h : 0) / 1000 + 0.0005, -(l.n[j] - lage.cN) / 1000)
-        sk.set(2 * r, 1, 2 * r)
-        m.compose(v, q, sk)
-        n.setMatrixAt(i, m)
-        n.setColorAt(i, bahnhof ? kuehl : warm)
-        // der Mast neben der Lampe, die Richtung je Lampe fest gewürfelt (die Achse der Strasse kennt die Datei nicht)
-        const w = ((l.e[j] * 7919 + l.n[j] * 104729) % 360) * Math.PI / 180
-        seite.set(Math.cos(w), 0, Math.sin(w)).multiplyScalar(LICHT_RAND_M / 1000)
-        const hoch = (bahnhof ? LICHT_MAST_M.bahnhof : LICHT_MAST_M.strasse) / 1000
-        oben.copy(v).add(seite).setY(v.y - 0.0005 - 0.001)
-        m.compose(oben, q, sk.set(d, hoch + 0.001, d))
-        mn.setMatrixAt(i, m)
-        // der Kopf oben: ein Kästchen 0,8 × 0,25 × 0,4 m, zur Lampe hin
-        oben.copy(v).addScaledVector(seite, 0.85).setY(v.y - 0.0005 + hoch)
-        q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), -w)
-        m.compose(oben, q, sk.set(0.0008, 0.00025, 0.0004))
-        q.identity()
-        kn.setMatrixAt(i, m)
-      }
-      netz = n; masten = mn; koepfe = kn
-      gruppe.add(n)
-      k.wurzel.add(mn, kn)
-    }
-    void laden()
-    const schritt = () => {
-      const nacht = fensterNacht.value
-      gruppe.visible = nacht > 0
-      stoff.opacity = LICHT_HELL * nacht
-      kopfStoff.color.copy(kopfDunkel).lerp(kopfHell, nacht)
-    }
+      lampen = lampenBauen(l, (e, n) => bestandHoehe(b, e, n), (e) => (e - lage.cE) / 1000, (h) => h / 1000, (n) => -(n - lage.cN) / 1000)
+      lampen.licht.name = 'strassenlicht'
+      k.wurzel.add(lampen.licht, lampen.masten, lampen.koepfe)
+    })
+    const schritt = () => { lampen?.nacht(fensterNacht.value) }
     k.jeBild.push(schritt)
     return () => {
       weg = true
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
-      k.wurzel.remove(gruppe); stoff.map?.dispose(); stoff.dispose(); geo.dispose(); netz?.dispose()
-      if (masten) k.wurzel.remove(masten)
-      if (koepfe) k.wurzel.remove(koepfe)
-      masten?.dispose(); koepfe?.dispose(); mastGeo.dispose(); mastStoff.dispose(); kopfGeo.dispose(); kopfStoff.dispose()
+      lampen?.weg()
     }
   }, [b, stufe, gebaeude, knoepfe])
   // Züge laut Fahrplan (src/zuege3d.ts), ab der Stufe 20 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,

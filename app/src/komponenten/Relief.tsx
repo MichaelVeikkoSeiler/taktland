@@ -22,9 +22,10 @@ import { himmelNacht, sternSicht } from '../sterne'
 import { sternenhimmelBauen } from './Sternenhimmel'
 import { audioKontext, audioLesen, audioSetzen, useAudio, wetterGeraeusch, wetterGeraeuschAus, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
-import { type Bruecke3d, brueckenLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
+import { type Bruecke3d, brueckenLaden, strassenlichtLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { FAHRLEITUNG_FARBE, fahrleitungsMast } from './Fahrleitung'
 import { fahrplanZuegeBauen } from './FahrplanZuege'
+import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { bahnQuerschnitt, BRUECKE_RAND_M, brueckenMaterialien, type BrueckenStueck, GLEISABSTAND_M, gleisPlatten, type QuerFlaeche, type QuerStelle, querschnittNetzeBauen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
@@ -2010,6 +2011,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const [h, mi] = z.toLocaleString('de-CH', { timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).split(':').map(Number)
       return h + mi / 60
     }
+    // die Strassenlampen im Führerstand (lampenSetzen) und wie dunkel es für sie ist
+    let lampen: Strassenlampen | null = null, lampenNacht = 0
     const tunnelDunkel = (k: number, daemmerung = false) => {
       letzteDunkel = [k, daemmerung]
       const f = 1 - (1 - TUNNEL_TAGESLICHT) * k, b = bedeckt()
@@ -2019,6 +2022,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       // Licht in den Fenstern: in der Dämmerung, einer Stimmung ohne Uhrzeit, der Anteil von 20 Uhr; nachts der Anteil der Stunde
       const fensterNacht = nachtStand ? Math.max(0, Math.min(1, (2 - nachtStand.hoehe) / 8)) : 0
       fensterLicht(Math.max(daemmerung ? 1 : 0, fensterNacht), lichtAnteil(fensterNacht > 0 && nachtStand ? stundeInZuerich(nachtStand.zeit) : 20))
+      lampenNacht = Math.max(daemmerung ? 1 : 0, fensterNacht)
+      lampen?.nacht(lampenNacht)
       himmelLicht.intensity = 1.6 * f * (daemmerung ? DAEMMERUNG_HIMMEL : 1) * (1 - WOLKEN_HIMMEL * b) * (1 - 0.75 * n)
       himmelLicht.color.set(daemmerung ? '#b9a9cf' : n > 0.5 ? '#9fb3d9' : '#ffffff')
       sonne.intensity = 2.2 * f * (daemmerung ? DAEMMERUNG_SONNE : 1) * (1 - WOLKEN_SONNE * b) * sonneTag
@@ -2522,6 +2527,23 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     // Züge laut Fahrplan im feinen Gelände, wie in «3D Schweiz» (komponenten/FahrplanZuege.ts; Michael, 2026-10-30: «dann den Rest auch noch»);
     // nicht bei «Wo bin ich?», sie verrieten die Gegend
     const fahrplanZuege = verdeckt ? null : fahrplanZuegeBauen(szene, X, Y, Z)
+    // Strassen- und Bahnhofslicht bei Nacht im feinen Gelände, wie in «3D Schweiz» (komponenten/Strassenlicht.ts; die Lampen sind erfunden)
+    const lampenGruppe = new THREE.Group()
+    lampenGruppe.visible = false
+    szene.add(lampenGruppe)
+    let lampenAuftrag = 0
+    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { reliefLampen: unknown }).reliefLampen = () => { const m = new THREE.Matrix4(), v = new THREE.Vector3(); let best = Infinity, bv: number[] = []; if (lampen) for (let i = 0; i < lampen.masten.count; i++) { lampen.masten.getMatrixAt(i, m); v.setFromMatrixPosition(m); const d = v.distanceTo(kamera.position); if (d < best) { best = d; bv = v.toArray() } }; return [lampen?.licht.count, lampenNacht, best * 1000, bv, kamera.position.toArray(), lampenGruppe.parent?.type] }
+    const lampenSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
+      const auftrag = ++lampenAuftrag
+      const l = await strassenlichtLaden(e0, n0, e1, n1).catch(() => null)
+      if (!laeuft || auftrag !== lampenAuftrag) return
+      lampen?.weg(); lampen = null
+      const fs = feinStand
+      if (!l || !l.e.length || !fs) return
+      lampen = lampenBauen(l, (e, n) => (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fs.fein, e, n) ?? NaN, X, Y, Z)
+      lampenGruppe.add(lampen.licht, lampen.masten, lampen.koepfe)
+      lampen.nacht(lampenNacht)
+    }
     if (import.meta.env.VITE_S3D_TEST) (window as unknown as { reliefKamera: unknown }).reliefKamera = () => [kamera.position.x * 1000 + me, -kamera.position.z * 1000 + mn, kamera.position.y * 1000 / faktor, szene.children.length]
     const mastForm = fahrleitungsMast(), mastStoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
     let mastAuftrag = 0
@@ -2892,6 +2914,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       strassenGruppe.visible = false
       baumGruppe.visible = false
       mastGruppe.visible = false
+      lampenGruppe.visible = false
       // Röhren haben zwei Materialien; Fels und Boden teilen alle Tunnel
       feinLinien.traverse((o) => {
         const x = o as THREE.Mesh
@@ -3035,6 +3058,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       void baumSetzen(e0, n0, e1, n1)
       mastGruppe.visible = true
       void mastSetzen(e0, n0, e1, n1)
+      lampenGruppe.visible = true
+      void lampenSetzen(e0, n0, e1, n1)
       fahrplanZuege?.setzen(e0, n0, e1, n1)
       feinMalen?.()
       if (scharf) {
@@ -4573,7 +4598,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     renderer.setAnimationLoop(zeichnen)
     return () => {
       laeuft = false
-      renderer.setAnimationLoop(null); wetterGeraeuschAus(); fahrplanZuege?.weg()
+      renderer.setAnimationLoop(null); wetterGeraeuschAus(); fahrplanZuege?.weg(); lampen?.weg()
       void renderer.xr.getSession()?.end()
       if (brille) brille.current = null
       beobachter.disconnect()
