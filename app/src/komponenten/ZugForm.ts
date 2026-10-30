@@ -10,8 +10,9 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 export const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 5, ZUG_LUECKE_M = 8
 /** nach dieser Breite (der der Form bis 2026-10-30) rechnen Abstände der Spuren und der Massstab in der Brille, damit sie bleiben */
 export const ZUG_MASS_BREITE = 0.045
-/** die Form 15 % schmaler (Michael, 2026-10-30: «Die Züge sind etwas zu breit. Bitte um 15% schmaler machen») */
-export const ZUG_BREITE = ZUG_MASS_BREITE * 0.85, ZUG_HOEHE = 0.05
+/** die Form 15 % schmaler (Michael, 2026-10-30: «Die Züge sind etwas zu breit. Bitte um 15% schmaler machen»), dann noch 10 % («Züge noch 10%
+ *  schmaler») */
+export const ZUG_BREITE = ZUG_MASS_BREITE * 0.85 * 0.9, ZUG_HOEHE = 0.05
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
 export const ZUG_HELL = '#dcdcdc', ZUG_DUNKEL = '#2e2e2e', ZUG_ROT = '#a8102e'
 
