@@ -1188,7 +1188,9 @@ function Hinweise({ r }: { r: Relief }) {
         Im Führerstand ausserdem wie in «3D Schweiz»: alle Brücken aus swissTLM3D (swisstopo) nah am Zug, Lage und Höhe belegt, Breite (wo die Klasse
         keine nennt), Querschnitt und Aussehen gewählt, ohne Pfeiler; und andere Züge laut Fahrplan (opentransportdata.swiss), nicht live: wo ein Zug
         zwischen zwei Halten ist, ist angenommen (gleichmässig), welches Gleis er nimmt, steht in keiner Quelle (gewählt das linke), Form und Grösse
-        sind gewählt. Der eigene Zug fährt nicht nach dem Fahrplan; ein Zug laut Fahrplan kann ihn kreuzen.
+        sind gewählt. Der eigene Zug fährt nicht nach dem Fahrplan; ein Zug laut Fahrplan kann ihn kreuzen. Nachts Strassen- und Bahnhofslicht: die
+        Lampen sind erfunden, belegt ist nur, wo Strassen und Gleise liegen. Solange echtes Wetter gilt, Wolken laut Wettermodell ICON-CH1-EPS von
+        MeteoSchweiz, je Zelle von 2 km; Form und Muster der Wolken sind gezeichnet.
       </p>
       <p>
         Die Höhe der Gleise steht in keiner Quelle. Die Linie ist darum auf das Gelände gelegt, etwas darüber;
