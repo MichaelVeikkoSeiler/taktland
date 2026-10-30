@@ -657,3 +657,86 @@ export function wetterGeraeuschAus() {
   ton.regen.gain.setTargetAtTime(0, t, 0.3); ton.wind.gain.setTargetAtTime(0, t, 0.3)
   window.setTimeout(() => { for (const q of ton.quellen) { try { q.stop() } catch { /* schon aus */ } } }, 1500)
 }
+
+/**
+ * Züge laut Fahrplan in «3D Schweiz» (Michael, 2026-10-30: «Zuggeräusch einschalten. Wenn Züge aktiviert sind. Je näher ein Zug ist umso
+ * lauter. Fährt einer vorbei entsprechend authentisch machen»): je einer der nächsten Züge eine Stimme aus Rollen, Zischen und Radschlägen
+ * wie das Zuggeräusch beim Fahren, leiser mit dem Abstand (VORBEI_NAH_M, ab VORBEI_STILL_M still), links und rechts nach seiner Lage im Bild
+ * und mit dem Dopplereffekt: nähert er sich, klingt er höher, fährt er weg, tiefer (Schall 343 m/s). Gerechnet, keine Aufnahme; Klang,
+ * Abstände und Lautstärke gewählt.
+ */
+export interface VorbeiZug { abstandM: number; naeherMs: number; tempoMs: number; seite: number }
+const VORBEI_NAH_M = 120, VORBEI_STILL_M = 2500, SCHALL_MS = 343, VORBEI_STIMMEN = 2
+interface Stimme {
+  laut: GainNode; pan: StereoPannerNode; tief: BiquadFilterNode; hoch: BiquadFilterNode; rollen: GainNode; zischen: GainNode
+  tempo: number; doppler: number; naechster: number
+}
+let vorbei: { stimmen: Stimme[]; quellen: AudioScheduledSourceNode[]; uhr: number } | null = null
+
+export function zuegeHoeren(zuege: VorbeiZug[]) {
+  if (!stand.an) { zuegeHoerenAus(); return }
+  const c = audioKontext()
+  if (!c) return
+  try {
+    if (!vorbei) {
+      void c.resume()
+      const ziel = ausgang(c), quellen: AudioScheduledSourceNode[] = []
+      const stimmen = Array.from({ length: VORBEI_STIMMEN }, (): Stimme => {
+        const laut = c.createGain(); laut.gain.value = 0
+        const pan = c.createStereoPanner()
+        laut.connect(pan).connect(ziel)
+        const braun = rauschenSchleife(c, true), weiss = rauschenSchleife(c, false)
+        const tief = c.createBiquadFilter(); tief.type = 'lowpass'; tief.frequency.value = 220
+        const hoch = c.createBiquadFilter(); hoch.type = 'bandpass'; hoch.frequency.value = 2600; hoch.Q.value = 0.6
+        const rollen = c.createGain(), zischen = c.createGain()
+        rollen.gain.value = 0; zischen.gain.value = 0
+        braun.connect(tief).connect(rollen).connect(laut)
+        weiss.connect(hoch).connect(zischen).connect(laut)
+        braun.start(); weiss.start(); quellen.push(braun, weiss)
+        return { laut, pan, tief, hoch, rollen, zischen, tempo: 0, doppler: 1, naechster: c.currentTime + 0.1 }
+      })
+      const uhr = window.setInterval(() => {
+        const t = c.currentTime
+        for (const s of vorbei?.stimmen ?? []) {
+          if (s.tempo < 1) { s.naechster = t + 0.1; continue }
+          if (s.naechster < t) s.naechster = t + 0.05
+          // die Schläge kommen mit dem Dopplereffekt dichter oder weiter auseinander an
+          const schritt = STOSS_M / s.tempo / s.doppler
+          while (s.naechster < t + 0.5) {
+            const staerke = 0.2 + 0.3 * Math.min(1, s.tempo / VOLL_MS)
+            for (const a of ACHSEN_M) schlag(c, s.laut, s.naechster + a / s.tempo / s.doppler, staerke)
+            s.naechster += schritt
+          }
+        }
+      }, 80)
+      vorbei = { stimmen, quellen, uhr }
+    }
+    const t = c.currentTime
+    const naechste = [...zuege].filter((z) => z.abstandM < VORBEI_STILL_M).sort((a, b) => a.abstandM - b.abstandM).slice(0, VORBEI_STIMMEN)
+    vorbei.stimmen.forEach((s, i) => {
+      const z = naechste[i]
+      if (!z || z.tempoMs < 1) { s.laut.gain.setTargetAtTime(0, t, 0.3); s.tempo = 0; return }
+      // im Quadrat leiser mit dem Abstand, zum Rand hin ganz aus
+      const nah = 1 / (1 + (z.abstandM / VORBEI_NAH_M) ** 2), rand = Math.max(0, 1 - z.abstandM / VORBEI_STILL_M)
+      const anteil = Math.min(1, z.tempoMs / VOLL_MS)
+      s.doppler = Math.max(0.7, Math.min(1.4, SCHALL_MS / (SCHALL_MS - Math.max(-120, Math.min(120, z.naeherMs)))))
+      s.tempo = Math.min(z.tempoMs, GERAEUSCH_HOECHST_MS)
+      s.laut.gain.setTargetAtTime(1.1 * nah * rand, t, 0.15)
+      s.pan.pan.setTargetAtTime(Math.max(-1, Math.min(1, z.seite)), t, 0.15)
+      s.rollen.gain.setTargetAtTime(0.55 * Math.sqrt(anteil), t, 0.3)
+      s.zischen.gain.setTargetAtTime(0.05 * anteil, t, 0.3)
+      s.tief.frequency.setTargetAtTime(220 * s.doppler, t, 0.15)
+      s.hoch.frequency.setTargetAtTime(2600 * s.doppler, t, 0.15)
+    })
+  } catch { /* ohne Ton geht alles weiter */ }
+}
+
+export function zuegeHoerenAus() {
+  if (!vorbei) return
+  const v = vorbei
+  vorbei = null
+  window.clearInterval(v.uhr)
+  const c = audioKontext()
+  for (const s of v.stimmen) s.laut.gain.setTargetAtTime(0, c?.currentTime ?? 0, 0.2)
+  window.setTimeout(() => { for (const q of v.quellen) { try { q.stop() } catch { /* schon aus */ } } for (const s of v.stimmen) s.pan.disconnect() }, 1200)
+}

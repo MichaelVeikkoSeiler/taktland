@@ -15,7 +15,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
-import { knopfTon, wetterGeraeusch, wetterGeraeuschAus } from '../audio'
+import { knopfTon, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -3631,11 +3631,32 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         for (const n of Object.values(netze)) if (n.instanceColor) n.instanceColor.needsUpdate = true
       }
       geleuchtet = ziele
+      // zu hören, je näher, desto lauter, mit dem Dopplereffekt (zuegeHoeren in src/audio.ts); Abstand und Tempo in Metern der Wirklichkeit
+      if (performance.now() >= hoerUm) {
+        const jetztH = performance.now(), dtH = (jetztH - hoerLetzt) / 1000
+        hoerUm = jetztH + 100; hoerLetzt = jetztH
+        const augeLokal = k.wurzel.worldToLocal(auge.clone()), liste: VorbeiZug[] = [], neu = new Map<number, { p: THREE.Vector3; d: number }>()
+        for (let z = 0; z < zahl; z++) {
+          const p = mitten[z]?.[0]
+          if (!p) continue
+          const d = p.distanceTo(augeLokal) * 1000, alt = hoerAlt.get(gezeichnet[z].id)
+          neu.set(gezeichnet[z].id, { p: p.clone(), d })
+          if (d > 3000) continue
+          const tempo = alt && dtH > 0 && dtH < 1 ? (alt.p.distanceTo(p) * 1000) / dtH : 0
+          const naeher = alt && dtH > 0 && dtH < 1 ? (alt.d - d) / dtH : 0
+          const seite = k.wurzel.localToWorld(p.clone()).project(cam).x
+          liste.push({ abstandM: d, naeherMs: naeher, tempoMs: tempo, seite })
+        }
+        hoerAlt = neu
+        zuegeHoeren(liste)
+      }
     }
+    let hoerUm = 0, hoerLetzt = performance.now(), hoerAlt = new Map<number, { p: THREE.Vector3; d: number }>()
     const gerechnet = new Set<string>()
     k.jeBild.push(schritt)
     return () => {
       weg = true
+      zuegeHoerenAus()
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
       k.wurzel.remove(gruppe); stoff.dispose(); schild.material.map?.dispose(); schild.material.dispose()
       stirnStoff.map?.dispose(); stirnStoff.dispose(); stirnGeo.dispose(); stirn.dispose(); lampenGeo.dispose(); lampenStoff.dispose(); lampen.dispose()
