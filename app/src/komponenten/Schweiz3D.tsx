@@ -1223,6 +1223,9 @@ const KNOPF_DRAUSSEN = 0.011, KNOPF_DRIN = 0.003, KNOPF_FLACH = 0.0015
 const KNOPF_B = 0.075
 /** so viel der Länge einer Wand füllen die Knöpfe, so viel des Bands ihre Höhe an der längsten Wand (gewählt) */
 const KNOPF_WAND_ANTEIL = 0.94, KNOPF_HOCH = 0.62
+// mit «Sonne» an wird der Sockel um so viel der Wand höher, darin eine zweite Reihe mit Datum, Uhrzeit und den Knöpfen für die Zeit;
+// zwischen den Gruppen der ersten Reihe ein Abstand so breit (Teil der Breite des Modells; Michael, 2026-10-30, gewählt)
+const SOCKEL_ZEIT = 0.75, KNOPF_ABSTAND = 0.03
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
@@ -1627,6 +1630,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   /** der eigene Standort per GPS in LV95, null: aus */
   standort: { e: number; n: number } | null
 }) {
+  // für den Bau des Sockels, ohne dass er bei jedem Schalten neu gebaut wird
+  const sonneFuerSockel = useRef(false)
+  sonneFuerSockel.current = sonnenAn
   const huelle = useRef<HTMLDivElement>(null)
   const [grafikWeg, setGrafikWeg] = useState(false)
   const welt = useRef<Welt | null>(null)
@@ -2138,8 +2144,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const weiteKm = weite / 1000
     const wand = weiteKm * SOCKEL_WAND, platte = weiteKm * SOCKEL_PLATTE, ueber = weiteKm * SOCKEL_UEBERSTAND
     const boden = tief - wand * 1000 * 0.98
+    // mit «Sonne» an ist der Sockel um das Band für die Zeit höher (sockelTiefer, unten)
+    let zeitBand = sonneFuerSockel.current ? wand * SOCKEL_ZEIT : 0
     // in der Brille steht der Sockel auf dem Tisch
-    wurzel.userData.untenY = () => Y(tief) - wand - platte
+    wurzel.userData.untenY = () => Y(tief) - wand - zeitBand - platte
     if (!renderer.xr.isPresenting) {
       // auch über kleinen Feldern bis zu den hohen Wolken (bis 12 km über Meer)
       kamera.far = Math.max(weite / 1000 * 6, 16); kamera.updateProjectionMatrix()
@@ -2222,7 +2230,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const o of sockel.children) (o as THREE.Mesh).geometry.dispose()
       sockel.clear()
       kantenOben = []
-      const unten = Y(tief) - wand
+      const unten = Y(tief) - wand - zeitBand
       for (const { di, dj, g, pos } of netze) {
         const { breite, hoehe } = g.raster
         // Norden, Osten, Süden, Westen; nur, wo kein Stück daneben liegt
@@ -2570,12 +2578,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     knopfGruppe.name = 'knoepfe'
     wurzel.add(knopfGruppe)
     // wo die Wände stehen, für die Schalter (eigener Effekt)
-    wurzel.userData.waende = { x0: X(E0), x1: X(E1), z0: Z(N0), z1: Z(N1), y: Y(tief) - wand / 2, wand, W: weiteKm }
+    wurzel.userData.waende = { x0: X(E0), x1: X(E1), z0: Z(N0), z1: Z(N1), y: Y(tief) - wand / 2, wand, zeit: wand * SOCKEL_ZEIT, W: weiteKm }
     const knoepfeSetzen = () => {
       for (const o of knopfGruppe.children) { const sp = o as THREE.Sprite; sp.material.map?.dispose(); sp.material.dispose() }
       knopfGruppe.clear()
       if (!knoepfe) return
-      const y = Y(tief) - wand - platte, raus = ueber + weiteKm * 0.004, schritt = weiteKm * 0.13
+      const y = Y(tief) - wand - zeitBand - platte, raus = ueber + weiteKm * 0.004, schritt = weiteKm * 0.13
       const mitten: Record<Seite, [number, number, number, number]> = {
         n: [(X(E0) + X(E1)) / 2, Z(N1) - raus, 1, 0], s: [(X(E0) + X(E1)) / 2, Z(N0) + raus, -1, 0],
         o: [X(E1) + raus, (Z(N0) + Z(N1)) / 2, 0, 1], w: [X(E0) - raus, (Z(N0) + Z(N1)) / 2, 0, -1],
@@ -2597,6 +2605,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
     }
     knoepfeSetzen()
+    // Sonne an oder aus: der Sockel wächst um das Band für die Zeit oder schrumpft wieder, + und − rücken mit
+    wurzel.userData.sockelTiefer = (an: boolean) => {
+      const neu = an ? wand * SOCKEL_ZEIT : 0
+      if (neu === zeitBand) return
+      zeitBand = neu
+      sockelBauen()
+      knoepfeSetzen()
+    }
 
     // das gewählte Feld: ein gläserner Kasten in Karmin über dem Gelände
     const kasten = new THREE.Group()
@@ -2648,6 +2664,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [b, stufe, zusatz, knoepfe])
+  // mit «Sonne» an der Sockel höher (Michael, 2026-10-30: «Sobald Sonne eingeschaltet wird der Sockel etwas höher und darunter die Knöpfe für Zeitreisen»)
+  useEffect(() => { (kern.current?.wurzel.userData.sockelTiefer as ((an: boolean) => void) | undefined)?.(sonnenAn) }, [b, stufe, zusatz, knoepfe, sonnenAn])
 
   // Gebäude und Bäume, je in einer eigenen Gruppe und mit eigenem Schalter (Michael, 2026-10-22: «separate Schalter»)
   const umweltSetzen = (art: 'gebaeude' | 'baeume') => {
@@ -2694,54 +2712,61 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // Modell heraus»): aus dunkel und vorstehend, an eingedrückt und leuchtend mit Schein auf der Wand; Grösse und Farben gewählt
   useEffect(() => {
     const k = kern.current
-    const w = k?.wurzel.userData.waende as { x0: number; x1: number; z0: number; z1: number; y: number; wand: number; W: number } | undefined
+    const w = k?.wurzel.userData.waende as { x0: number; x1: number; z0: number; z1: number; y: number; wand: number; zeit: number; W: number } | undefined
     if (!k || !w) return
     const { W } = w, luecke = W * 0.008
-    interface Teil { zeilen: string[]; breite: number; an?: boolean; farbe?: string; knopf?: boolean; gesperrt?: boolean; aktion?: () => void }
+    interface Teil { zeilen: string[]; breite: number; an?: boolean; farbe?: string; knopf?: boolean; gesperrt?: boolean; leer?: boolean; aktion?: () => void }
     const umschalten = (art: Schalter) => () => cb.current.schalten(art)
     // jeder Knopf hat seinen festen Platz (Michael, 2026-10-22: «Die Knöpfe haben eine fixe Position»): was in dieser Stufe nicht
     // geht (Wanderwege in der ganzen Schweiz, Gebäude und Bäume ohne Daten, die Zeit ohne Sonne), bleibt da, aber gesperrt und dunkel
     const umweltDa = (stufe === 'ort' || stufe === 'nah') && umweltHier
-    const links: Teil[] = [
-      { zeilen: ['Höhen'], breite: 0.085 * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
-      { zeilen: ['Orte'], breite: 0.085 * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
-      { zeilen: ['Gipfel'], breite: 0.085 * W, an: gipfel, farbe: LICHT.gelaende, aktion: umschalten('gipfel') },
-      { zeilen: ['Wandern'], breite: 0.085 * W, an: !grob(stufe) && wandern, farbe: LICHT.gelaende, gesperrt: grob(stufe),
-        aktion: umschalten('wandern') },
-      { zeilen: ['Gebäude'], breite: 0.085 * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
-      { zeilen: ['Bäume'], breite: 0.085 * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
+    // die Reihenfolge in drei Gruppen mit etwas Abstand dazwischen (Michael, 2026-10-30: «Orte, Gebäude, Bäume -> etwas Abstand Züge,
+    // Schiffe -> etwas Abstand Wandern, Gipfel, Wolken, Wetter, Sonne»; Höhen hat er nicht genannt, sie stehen vorne bei den Orten)
+    const abstand: Teil = { zeilen: [], breite: KNOPF_ABSTAND * W, leer: true }
+    const eins: Teil[] = [
+      { zeilen: ['Höhen'], breite: KNOPF_B * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
+      { zeilen: ['Orte'], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
+      { zeilen: ['Gebäude'], breite: KNOPF_B * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
+      { zeilen: ['Bäume'], breite: KNOPF_B * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
       // wie die Wanderwege erst ab der Stufe 20 km
-      ...(zuegeDa ? [{ zeilen: ['Züge'], breite: 0.085 * W, an: !grob(stufe) && zuege, farbe: LICHT.zuege, gesperrt: grob(stufe),
+      ...(zuegeDa ? [abstand, { zeilen: ['Züge'], breite: KNOPF_B * W, an: !grob(stufe) && zuege, farbe: LICHT.zuege, gesperrt: grob(stufe),
         aktion: umschalten('zuege') },
         // Schiffe laut Fahrplan auf den Kurslinien von swissTLMRegio (Michael, 2026-10-28)
-        { zeilen: ['Schiffe'], breite: 0.085 * W, an: !grob(stufe) && schiffe, farbe: LICHT.schiffe, gesperrt: grob(stufe),
+        { zeilen: ['Schiffe'], breite: KNOPF_B * W, an: !grob(stufe) && schiffe, farbe: LICHT.schiffe, gesperrt: grob(stufe),
           aktion: umschalten('schiffe') }] : []),
+      abstand,
+      { zeilen: ['Wandern'], breite: KNOPF_B * W, an: !grob(stufe) && wandern, farbe: LICHT.gelaende, gesperrt: grob(stufe),
+        aktion: umschalten('wandern') },
+      { zeilen: ['Gipfel'], breite: KNOPF_B * W, an: gipfel, farbe: LICHT.gelaende, aktion: umschalten('gipfel') },
+      // in jeder Stufe (Michael, 2026-10-29: «Wolken auch in den Feldern 4 km und 1 km zeigen»)
+      { zeilen: ['Wolken'], breite: KNOPF_B * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
+      { zeilen: ['Wetter'], breite: KNOPF_B * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
+      { zeilen: ['Sonne'], breite: KNOPF_B * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
     ]
     const zeitDa = sonnenAn && !!sonnenZeilen
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
     const zeit = (art: 'stunde' | 'tag' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
-    const rechts: Teil[] = [
-      // alle Knöpfe rechts gleich breit, «Jetzt» gleich rechts neben Datum und Uhrzeit und gedrückt, solange die Zeit die jetzige ist
-      // (Michael, 2026-10-29: «Stunden und Tage Knöpfe gleich breit wie andere, Jetzt auch», «KNOPF jetzt rechts neben das Datum und Uhrzeit»)
-      { zeilen: ['Wetter'], breite: KNOPF_B * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
-      // in jeder Stufe (Michael, 2026-10-29: «Wolken auch in den Feldern 4 km und 1 km zeigen»)
-      { zeilen: ['Wolken'], breite: KNOPF_B * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
-      { zeilen: ['Sonne'], breite: KNOPF_B * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
-      { zeilen: zeitDa ? [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)] : ['–'], breite: 0.09 * W, gesperrt: !zeitDa },
-      { zeilen: ['Jetzt'], breite: KNOPF_B * W, an: zeitDa && jetztAn, farbe: LICHT.sonne, gesperrt: !zeitDa, aktion: zeit('jetzt', 0) },
-      { zeilen: ['−1 h'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', -1) },
-      { zeilen: ['+1 h'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('stunde', 1) },
-      { zeilen: ['−1 Tag'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', -1) },
-      { zeilen: ['+1 Tag'], breite: KNOPF_B * W, knopf: true, gesperrt: !zeitDa, aktion: zeit('tag', 1) },
-    ]
-    // alle Knöpfe ohne Lücke in der Mitte über die ganze Wand, so gross, wie es dort Platz hat (Michael, 2026-10-30: «Bitte verteile sie auf
-    // die ganze Breite, ohne die Lücke dazwischen. So sollten sie jeweils größer sein»; + und − hängen unter der Platte); die Höhe wächst
-    // mit, an der längsten Wand bis 62 % des Bands (KNOPF_WAND_ANTEIL, KNOPF_HOCH, gewählt)
-    const alle = [...links, ...rechts]
-    const summe = alle.reduce((a, t) => a + t.breite, 0) + luecke * Math.max(0, alle.length - 1)
+    // die zweite Reihe nur mit «Sonne» an, im Band, um das der Sockel dann höher ist; alle Knöpfe gleich breit, «Jetzt» gleich rechts neben
+    // Datum und Uhrzeit und gedrückt, solange die Zeit die jetzige ist (Michael, 2026-10-29: «Stunden und Tage Knöpfe gleich breit wie andere,
+    // Jetzt auch», «KNOPF jetzt rechts neben das Datum und Uhrzeit»)
+    const zwei: Teil[] = zeitDa ? [
+      { zeilen: [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)], breite: 0.09 * W },
+      { zeilen: ['Jetzt'], breite: KNOPF_B * W, an: jetztAn, farbe: LICHT.sonne, aktion: zeit('jetzt', 0) },
+      { zeilen: ['−1 h'], breite: KNOPF_B * W, knopf: true, aktion: zeit('stunde', -1) },
+      { zeilen: ['+1 h'], breite: KNOPF_B * W, knopf: true, aktion: zeit('stunde', 1) },
+      { zeilen: ['−1 Tag'], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', -1) },
+      { zeilen: ['+1 Tag'], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', 1) },
+    ] : []
+    // je Reihe alles ohne Lücke über die Wand, so gross, wie es in der längeren Reihe Platz hat (Michael, 2026-10-30: «Bitte verteile sie auf
+    // die ganze Breite, ohne die Lücke dazwischen»; + und − hängen unter der Platte); die Höhe wächst mit, an der längsten Wand bis 62 % des
+    // Bands (KNOPF_WAND_ANTEIL, KNOPF_HOCH, gewählt)
+    const reihen = [eins, zwei].filter((r) => r.length)
+    const summeVon = (r: Teil[]) => r.reduce((a, t) => a + t.breite, 0) + luecke * Math.max(0, r.length - 1)
+    const summe = Math.max(...reihen.map(summeVon))
     const fuer = (L: number) => Math.min(1, (KNOPF_WAND_ANTEIL * L) / summe)
     const lang = Math.max(w.x1 - w.x0, Math.abs(w.z0 - w.z1))
     const hoch = (w.wand * KNOPF_HOCH) / fuer(lang)
+    const alle = reihen.flat().filter((t) => !t.leer)
     // je Teil ein Bild für die Vorderseite, auf allen vier Wänden dasselbe; an leuchtet es in der Farbe seiner Art, aus ist es dunkel
     const PX = 128
     // nurSchrift: die Schrift allein auf Schwarz, als eigenes Licht der Beschriftung
@@ -2803,11 +2828,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     })
     // Lage entlang der Wand: von links nach rechts in der Mitte; an einer kürzeren Wand (die ganze Schweiz von Norden nach Süden,
     // angesetzte Stücke) alles so viel kleiner, dass es Platz hat
+    // Lage entlang der Wand: jede Reihe für sich in der Mitte, die erste im Band der Wand, die zweite darunter im Band für die Zeit; an einer
+    // kürzeren Wand (die ganze Schweiz von Norden nach Süden, angesetzte Stücke) alles so viel kleiner, dass es Platz hat
     const lagenAn = (L: number) => {
       const f = fuer(L)
-      const lagen: number[] = []
-      let u = -f * summe / 2
-      for (const t of alle) { lagen.push(u + f * t.breite / 2); u += f * (t.breite + luecke) }
+      const lagen = new Map<Teil, [number, number]>()
+      reihen.forEach((r, ri) => {
+        let u = -f * summeVon(r) / 2
+        const y = ri === 0 ? w.y : w.y - w.wand / 2 - w.zeit / 2
+        for (const t of r) { lagen.set(t, [u + f * t.breite / 2, y]); u += f * (t.breite + luecke) }
+      })
       return { f, lagen }
     }
     const gruppe = new THREE.Group()
@@ -2819,19 +2849,20 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const dreh = Math.atan2(nx, nz), qx = Math.cos(dreh), qz = -Math.sin(dreh), { f, lagen } = lagenAn(L)
       const nach = new THREE.Vector3(nx, 0, nz)
       // ein Teil um so viel vor der Wand (in Einheiten des Modells, schon mit f)
-      const setzen = (m: THREE.Mesh, u: number, vor: number) => {
-        m.position.set(mx + qx * u + nx * vor, w.y, mz + qz * u + nz * vor)
+      const setzen = (m: THREE.Mesh, [u, y]: [number, number], vor: number) => {
+        m.position.set(mx + qx * u + nx * vor, y, mz + qz * u + nz * vor)
         m.scale.setScalar(f)
         m.rotation.y = dreh
         m.visible = false
         m.userData.nach = nach
         gruppe.add(m)
       }
-      teile.forEach(({ t, tiefe, vorne, seiten, kappe, rahmen, schein }, i) => {
-        if (t.an !== undefined || t.knopf) setzen(new THREE.Mesh(rahmen, fassung), lagen[i], W * 0.0006)
-        if (schein) setzen(new THREE.Mesh(schein.geo, schein.stoff), lagen[i], W * 0.001)
+      teile.forEach(({ t, tiefe, vorne, seiten, kappe, rahmen, schein }) => {
+        const lage = lagen.get(t)!
+        if (t.an !== undefined || t.knopf) setzen(new THREE.Mesh(rahmen, fassung), lage, W * 0.0006)
+        if (schein) setzen(new THREE.Mesh(schein.geo, schein.stoff), lage, W * 0.001)
         const m = new THREE.Mesh(kappe, [seiten, seiten, seiten, seiten, vorne, seiten])
-        setzen(m, lagen[i], f * tiefe / 2 + W * 0.0008)
+        setzen(m, lage, f * tiefe / 2 + W * 0.0008)
         // jeder Druck klickt: ein Schalter rastet ein oder löst sich, ein Taster für die Zeit federt zurück
         m.userData.aktion = t.aktion && !t.gesperrt && (() => { knopfTon(!!t.knopf || !t.an); t.aktion!() })
         m.userData.text = t.zeilen.join(' ')
