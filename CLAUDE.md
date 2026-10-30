@@ -633,6 +633,14 @@ data/strassenlicht/  Strassen- und Bahnhofslicht bei Nacht für «3D Schweiz» (
              Licht in den Fenstern (src/gebaeudeBild.ts): deckt ein Bildpunkt mehr als etwa ein halbes Fenster samt Wand, gilt statt des einzelnen
              Fensters der Anteil, gemittelt (Michael, 2026-10-29: «Die Lichter bei den Gebäuden flackern»; die Fenster sind keine eigene Fläche,
              sie sind auf die Wand gerechnet, beim Bewegen sprang die Mitte eines Bildpunkts zwischen brennenden und dunklen Fenstern)
+data/fahrleitung/  Masten der Fahrleitung für «3D Schweiz» und den Führerstand (Michael, 2026-10-30: «Kann man auf den Bahnstrecken auch Masten für die
+             Fahrleitungen setzen?», dann «An beiden Orten bitte»): pipeline/build_fahrleitung.py, belegt nur die Elektrifizierung je Netzsegment im Schienennetz
+             des BAV (bis 60 m neben der Gleisachse, sonst kein Mast), die Masten erfunden: auf den Gleisachsen aus swissTLM3D (nur Bahn, ohne Tunnel, Galerien,
+             Unterführungen, Gebäude, Standseilbahnen) alle 50 m, 3 m daneben auf der Seite ohne anderes Gleis bis 2,6 m, zwischen zwei Gleisen keiner, je Zelle
+             von 15 m höchstens einer, 155'601 Masten, 330 Kacheln, 0,7 MB (.mgz, in Git, export_app kopiert sie); Gestalt in komponenten/Fahrleitung.ts: Pfosten
+             7,5 m mit Ausleger 3,6 m auf 6,6 m und Strebe, grau (gewählt); in «3D Schweiz» in den Feldern von 4 km und 1 km (mastenLaden in src/gelaende.ts), im
+             Führerstand mit dem feinen Gelände (mastSetzen in Relief.tsx), keiner näher als 2,2 m an der gezeichneten Linie, bis 25 m neben ihr auf ihrer Höhe,
+             sonst auf dem Gelände (MAST_LICHTRAUM_M, MAST_AUF_LINIE_M, gewählt); in Anleitung und Quellen genannt
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -697,6 +705,7 @@ python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-
 python3 pipeline/fetch_tlm3d.py --baeume          # Einzelbaum und Bodenbedeckung aus swissTLM3D (etwa 3,3 GB)
 python3 pipeline/fetch_tlm3d.py --strassen        # Strassen aus swissTLM3D (520 MB, entpackt 3,3 GB)
 .venv/bin/python pipeline/build_strassenbruecken.py   # Strassenbrücken über der Bahn, vor export_app
+.venv/bin/python pipeline/build_fahrleitung.py         # Masten der Fahrleitung (Elektrifizierung laut BAV, Gleisachsen swissTLM3D), vor export_app
 .venv/bin/python pipeline/build_gleishoehe.py         # Höhe der Gleise aus swissTLM3D, vor export_app
 .venv/bin/python pipeline/build_bahnbruecken.py       # Gleisachsen auf Brücken (Breite der Bahnbrücken), vor export_app
 .venv/bin/python pipeline/build_baeume.py         # Bäume und Wald entlang Gümmenen–Neuchâtel, vor export_app
