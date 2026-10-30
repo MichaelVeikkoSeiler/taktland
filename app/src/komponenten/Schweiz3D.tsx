@@ -2034,6 +2034,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         kamera.position.set(ziel.x + Math.cos(r) * Math.cos(w) * d, ziel.y + Math.sin(w) * d, ziel.z - Math.sin(r) * Math.cos(w) * d)
         kamera.near = d / 50; kamera.updateProjectionMatrix(); steuerung.update()
       };
+      (window as unknown as { s3dLicht: unknown }).s3dLicht = () => { const o = wurzel.getObjectByName('strassenlicht') as THREE.InstancedMesh | undefined; return o ? [o.count, o.visible, (o.material as THREE.MeshBasicMaterial).opacity] : null };
       (window as unknown as { s3dInfo: unknown }).s3dInfo = () => ({ programme: renderer.info.programs?.length, ...renderer.info.render, ...renderer.info.memory });
       (window as unknown as { s3dKnoepfe: unknown }).s3dKnoepfe = () => {
         const r = renderer.domElement.getBoundingClientRect()
