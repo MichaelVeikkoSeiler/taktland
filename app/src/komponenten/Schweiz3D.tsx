@@ -1387,7 +1387,7 @@ const BRUECKE_SEITE = '#a29f98', BRUECKE_SCHOTTER = '#7d7468', BRUECKE_BELAG = '
 /** freie Spuren zum Ausweichen der Reihe nach (in ZUG_SPUR) und wie schnell ein Zug hingleitet, gewählt */
 const ZUG_AUSWEICHEN = [0, 1, -1, 2, -2, 3, -3], ZUG_AUSWEICHEN_JE_S = 0.5
 /** so weit sucht ein Zug in den Feldern von 4 km und 1 km die nächste Gleisachse, gewählt */
-const ZUG_GLEIS_SUCHE_M = 30, ZUG_TUNNEL_NAH_M = 10, ZUG_GLEIS_WINKEL = Math.cos((25 * Math.PI) / 180)
+const ZUG_GLEIS_SUCHE_M = 30, ZUG_GLEIS_EIN_M = 2.5, ZUG_TUNNEL_NAH_M = 10, ZUG_GLEIS_WINKEL = Math.cos((25 * Math.PI) / 180)
 /** höchstens so viele Zugbreiten liegt die äusserste Spur neben dem Weg; in grossen Bahnhöfen rücken die Spuren dafür enger (Michael, 2026-10-30,
  *  Zürich HB: «Die Züge … verkehren ziemlich weit nördlich des Hauptbahnhofes. Sie fahren auf den Autostrassen»: bis 2026-10-30 je 1,6 Zugbreiten
  *  der alten Form ohne Grenze, bei gut 25 Gleisnummern bis 125 m neben dem Weg), gewählt */
@@ -3408,6 +3408,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const spurSeite = new Map<string, [number, number]>()
     // je Bahnhof das Gleisfeld quer zum Weg laut swissTLM3D, in Metern links der Richtung in spurSeite; 'laedt', solange es lädt, null ohne Feld
     const felder = new Map<string, { t0: number; t1: number } | null | 'laedt'>()
+    // je Bahnhof die Lage seiner Gleise laut Sektortafeln der SBB auf den Achsen von swissTLM3D (pipeline/build_gleise3d.py; Michael,
+    // 2026-10-30: «Kann man die Züge auf den richtigen Gleisen fahren lassen? … Unterirdische Gleise nicht berücksichtigen»)
+    let gleisLage: Record<string, Record<string, [number, number, number]>> | null = null
+    void holen<{ bahnhoefe: Record<string, Record<string, [number, number, number]>> }>('data/gleise3d.json')
+      .then((d) => { gleisLage = d.bahnhoefe }).catch(() => undefined)
     /** wie weit (in Spuren um die Mitte) das Gleis eines Halts neben dem Weg liegt, null ohne Gleis */
     const spurVon = (abk: string, gleis: string | null) => {
       const g = gleisNummer(gleis), liste = spuren.get(abk)
@@ -3468,12 +3473,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }).catch(() => {})
     }
     /** der nächste Punkt einer Gleisachse bis ZUG_GLEIS_SUCHE_M, mit Höhe und ob sie im Tunnel liegt; die Stücke sind höchstens 20 m lang, darum genügt der Umkreis */
-    const gleisBei = (e: number, n: number, de: number, dn: number): [number, number, number, boolean] | null => {
+    const gleisBei = (e: number, n: number, de: number, dn: number, weit = ZUG_GLEIS_SUCHE_M): [number, number, number, boolean] | null => {
       if (!gleisNetz) return null
       // Achsen ausserhalb von Tunneln gehen vor (unter der Halle von Zürich HB liegen die Bahnhöfe Löwenstrasse und Museumstrasse im Tunnel)
-      let best = ZUG_GLEIS_SUCHE_M * ZUG_GLEIS_SUCHE_M, raus: [number, number, number, boolean] | null = null
+      let best = weit * weit, raus: [number, number, number, boolean] | null = null
       let bestT = best, rausT: [number, number, number, boolean] | null = null
-      const ce = Math.floor(e / ZELLE), cn = Math.floor(n / ZELLE), r = Math.ceil(ZUG_GLEIS_SUCHE_M / ZELLE) + 1
+      const ce = Math.floor(e / ZELLE), cn = Math.floor(n / ZELLE), r = Math.ceil(weit / ZELLE) + 1
       for (let i = -r; i <= r; i++) for (let j = -r; j <= r; j++) for (const a of gleisNetz.get(`${ce + i}_${cn + j}`) ?? []) {
         const se = a[3] - a[0], sn = a[4] - a[1], l2 = se * se + sn * sn
         // nur Achsen etwa in Richtung des Wegs, und nur quer zum Weg auf sie geschoben: Weichen und quer liegende Stücke am Prellbock
@@ -3583,7 +3588,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const mJeM = mass * gross.x
         // Anfang und Ende jedes Wagens; die Höhe dort geglättet über ZUG_GLATT_M entlang des Zugs, jeder Wagen von seinem
         // Ende zum Anfang geneigt: so liegen die Wagen aneinander statt in Stufen (Michael, 2026-10-26: «nicht so holpern»)
-        const enden: Array<{ s: number; e: number; n: number; h: number; tunnel: boolean }> = []
+        const enden: Array<{ s: number; e: number; n: number; h: number; tunnel: boolean; er: number; nr: number }> = []
         let ab = 0
         for (let w = 0; w <= ZUG_WAGEN; w++) {
           const lM = (w === 0 ? ZUG_LOK_M : ZUG_WAGEN_M) * mJeM
@@ -3591,8 +3596,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             const [e, n] = stelle(sm), [e2, n2] = stelle(sm - 10), dl = Math.hypot(e - e2, n - n2) || 1
             const g = gleisBei(e, n, (e - e2) / dl, (n - n2) / dl)
             // eine Achse im Tunnel verschiebt den Zug nicht (unter der Halle von Zürich HB zerriss es sonst die Züge), sie verdeckt ihn nur
-            enden.push(g && !g[3] ? { s: sm, e: g[0], n: g[1], h: g[2], tunnel: false }
-              : { s: sm, e, n, h: bestandHoehe(b, e, n), tunnel: !!g && (g[0] - e) ** 2 + (g[1] - n) ** 2 < ZUG_TUNNEL_NAH_M ** 2 })
+            enden.push(g && !g[3] ? { s: sm, e: g[0], n: g[1], h: g[2], tunnel: false, er: e, nr: n }
+              : { s: sm, e, n, h: bestandHoehe(b, e, n), tunnel: !!g && (g[0] - e) ** 2 + (g[1] - n) ** 2 < ZUG_TUNNEL_NAH_M ** 2, er: e, nr: n })
           }
           ab += lM + ZUG_LUECKE_M * mJeM
         }
@@ -3614,6 +3619,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // die Spur eines Gleises in Metern links der Richtung in spurSeite: im Gleisfeld laut swissTLM3D die Nummern der Reihe nach
         // vom einen Rand zum andern, ohne Feld um den Weg (spurVon in Zugbreiten)
         const spurM = (abk: string, gleis: string | null, roh: number, an: { lat: number; lon: number }) => {
+          // das Gleis laut Sektortafeln: sein Abstand quer zur Richtung in spurSeite vom Halt im Netz
+          if (!uicVon && zn) uicVon = new Map(Object.entries(zn.netz.bahnhoefe).map(([u, a]) => [a, Number(u)]))
+          const gn = gleisNummer(gleis), uic = uicVon?.get(abk), lg = uic && gn !== null ? gleisLage?.[String(uic)]?.[String(gn)] : undefined
+          if (lg) {
+            const ref = spurSeite.get(abk)!, [pe, pn] = lv95(an.lat, an.lon)
+            return (lg[0] - pe) * ref[0] + (lg[1] - pn) * ref[1]
+          }
           let feld = felder.get(abk)
           if (feld === undefined) {
             felder.set(abk, 'laedt')
@@ -3647,7 +3659,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           }
           // vorne und hinten je mit dem eigenen Versatz, der Wagen liegt schräg dazwischen wie auf einer Weiche
           const versatz = versatzBei(vo.s), versatzH = versatzBei(hi.s)
-          const voE = vo.e + le * versatz, voN = vo.n + ln * versatz, hiE = hi.e + le * versatzH, hiN = hi.n + ln * versatzH
+          // am Halt gilt der Versatz zum Gleis vom Weg im Netz aus, nicht von der Achse, auf die der Weg gerückt ist; danach rastet der Wagen auf
+          // die Achse des Gleises ein, wenn eine bis ZUG_GLEIS_EIN_M daneben liegt
+          const anVor = anteile(vo.s), anHin = anteile(hi.s), wv = anVor[0] + anVor[1], wh = anHin[0] + anHin[1]
+          let voE = vo.e + (vo.er - vo.e) * wv + le * versatz, voN = vo.n + (vo.nr - vo.n) * wv + ln * versatz
+          let hiE = hi.e + (hi.er - hi.e) * wh + le * versatzH, hiN = hi.n + (hi.nr - hi.n) * wh + ln * versatzH
+          if (wv > 0) { const g = gleisBei(voE, voN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { voE = g[0]; voN = g[1] } }
+          if (wh > 0) { const g = gleisBei(hiE, hiN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { hiE = g[0]; hiN = g[1] } }
           const e = (voE + hiE) / 2, n = (voN + hiN) / 2
           if (w === 0) { lokE = e; lokN = n }
           if (w === ZUG_WAGEN) { steuerE = e; steuerN = n }
