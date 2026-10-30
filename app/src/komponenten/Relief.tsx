@@ -24,6 +24,7 @@ import { audioKontext, audioLesen, audioSetzen, useAudio, wetterGeraeusch, wette
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
 import { type Bruecke3d, brueckenLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { FAHRLEITUNG_FARBE, fahrleitungsMast } from './Fahrleitung'
+import { fahrplanZuegeBauen } from './FahrplanZuege'
 import { bahnQuerschnitt, BRUECKE_RAND_M, brueckenMaterialien, type BrueckenStueck, GLEISABSTAND_M, gleisPlatten, type QuerFlaeche, type QuerStelle, querschnittNetzeBauen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
@@ -2512,6 +2513,10 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const mastGruppe = new THREE.Group()
     mastGruppe.visible = false
     szene.add(mastGruppe)
+    // Züge laut Fahrplan im feinen Gelände, wie in «3D Schweiz» (komponenten/FahrplanZuege.ts; Michael, 2026-10-30: «dann den Rest auch noch»);
+    // nicht bei «Wo bin ich?», sie verrieten die Gegend
+    const fahrplanZuege = verdeckt ? null : fahrplanZuegeBauen(szene, X, Y, Z)
+    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { reliefKamera: unknown }).reliefKamera = () => [kamera.position.x * 1000 + me, -kamera.position.z * 1000 + mn, kamera.position.y * 1000 / faktor, szene.children.length]
     const mastForm = fahrleitungsMast(), mastStoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
     let mastAuftrag = 0
     const mastSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
@@ -3024,6 +3029,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       void baumSetzen(e0, n0, e1, n1)
       mastGruppe.visible = true
       void mastSetzen(e0, n0, e1, n1)
+      fahrplanZuege?.setzen(e0, n0, e1, n1)
       feinMalen?.()
       if (scharf) {
         const P = SCHARF_PUNKTE, schritt = SCHARF_KACHEL_M / (P - 1)
@@ -4181,6 +4187,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       if (!laeuft) return
       const dt = Math.min(0.1, uhr.getDelta())
       if (renderer.xr.isPresenting) brilleSchritt?.(dt)
+      fahrplanZuege?.schritt(imStand && feinStand !== null)
       if (probe && zug === eigenerZug) {
         const anfang = pk[0].m, ende = pk[pk.length - 1].m
         if (probe.current !== fahrt.signal) {
@@ -4560,7 +4567,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     renderer.setAnimationLoop(zeichnen)
     return () => {
       laeuft = false
-      renderer.setAnimationLoop(null); wetterGeraeuschAus()
+      renderer.setAnimationLoop(null); wetterGeraeuschAus(); fahrplanZuege?.weg()
       void renderer.xr.getSession()?.end()
       if (brille) brille.current = null
       beobachter.disconnect()
