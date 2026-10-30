@@ -1379,7 +1379,7 @@ const ZUG_LINKS = 0.7
  *  ihrer Nummer nebeneinander, je ZUG_SPUR Zugbreiten, um die Mitte des Wegs; in den letzten und ersten ZUG_SPUR_ANLAUF_M vor und nach dem Halt
  *  gleitet der Zug auf seine Spur (Abstand, Anlauf und dass die Nummern der Reihe nach liegen, gewählt: wo die Gleise wirklich liegen, steht in
  *  keiner unserer Quellen) */
-const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 300
+const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 600, ZUG_SPUR_GERADE_M = 200
 /** Brücken: Breite je Gleis, ohne Angabe je Strasse, Dicke der Platte, wie tief ihre Oberkante unter der Gleisachse liegt, Farben; alles
  *  gewählt, in keiner Quelle */
 const BRUECKE_GLEIS_M = 5.5, BRUECKE_STRASSE_M = 8, BRUECKE_DICKE_M = 1.6, BRUECKE_STEG_DICKE_M = 0.6, BRUECKE_GLEIS_UNTER_M = 0.5
@@ -3601,14 +3601,34 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           }
           ab += lM + ZUG_LUECKE_M * mJeM
         }
+        // ein Versatz für den ganzen Zug: der Median der Versätze quer zum Weg, mit denen die Enden auf ihre Achse rückten; sonst rastet im
+        // Gleisfeld jeder Wagen auf ein anderes Gleis (Michael, 2026-10-30, vor Zürich HB: «noch viele Kurven, Zickzackfahrten»)
+        {
+          const quer: number[] = []
+          const normale = enden.map((x) => {
+            const [e2, n2] = stelle(x.s - 10), dl = Math.hypot(x.er - e2, x.nr - n2) || 1
+            return [-(x.nr - n2) / dl, (x.er - e2) / dl]
+          })
+          enden.forEach((x, i) => { if (x.e !== x.er || x.n !== x.nr) quer.push((x.e - x.er) * normale[i][0] + (x.n - x.nr) * normale[i][1]) })
+          if (quer.length) {
+            quer.sort((a, z) => a - z)
+            const med = quer[quer.length >> 1]
+            enden.forEach((x, i) => { x.e = x.er + normale[i][0] * med; x.n = x.nr + normale[i][1] * med })
+          }
+        }
         const fenster = ZUG_GLATT_M * mJeM
         // die Spur im Bahnhof: am Halt ganz, davor und danach gleitend (ZUG_SPUR_ANLAUF_M), dazwischen ZUG_LINKS
         const spurA = spurVon(h[j].abk, h[j].gleis), spurB = spurVon(h[j + 1].abk, h[j + 1].gleis)
         const anlauf = ZUG_SPUR_ANLAUF_M * Math.max(1, gross.x)
         // je Wagen nach seiner eigenen Stelle: so wechselt jeder Wagen dort die Spur, wo die Lok es tat, statt dass der ganze Zug
         // auf einmal quer rückt (Michael, 2026-10-30, Zürich HB: «verschiebt sich der ganze Zug schräg über die Gleise»)
+        // von ZUG_SPUR_ANLAUF_M bis ZUG_SPUR_GERADE_M vor und nach dem Halt sanft auf die Spur (Glockenform), näher ganz darauf, damit der Zug
+        // gerade einfährt (Michael, 2026-10-30: «200 bis 600 Meter vor dem Bahnhof langsam aber sicher in die richtige Gleise einspuren … Das Gleiche
+        // gilt fürs Ausfahren»)
+        const gerade = ZUG_SPUR_GERADE_M * Math.max(1, gross.x)
+        const weich = (d: number) => { const t = Math.max(0, Math.min(1, (anlauf - d) / (anlauf - gerade))); return t * t * (3 - 2 * t) }
         const anteile = (s: number) => {
-          let a = spurA === null ? 0 : Math.max(0, 1 - Math.abs(s) / anlauf), c = spurB === null ? 0 : Math.max(0, 1 - Math.abs(ende - s) / anlauf)
+          let a = spurA === null ? 0 : weich(Math.abs(s)), c = spurB === null ? 0 : weich(Math.abs(ende - s))
           if (a + c > 1) { const t = a + c; a /= t; c /= t }
           return [a, c]
         }
@@ -3664,8 +3684,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const anVor = anteile(vo.s), anHin = anteile(hi.s), wv = anVor[0] + anVor[1], wh = anHin[0] + anHin[1]
           let voE = vo.e + (vo.er - vo.e) * wv + le * versatz, voN = vo.n + (vo.nr - vo.n) * wv + ln * versatz
           let hiE = hi.e + (hi.er - hi.e) * wh + le * versatzH, hiN = hi.n + (hi.nr - hi.n) * wh + ln * versatzH
-          if (wv > 0) { const g = gleisBei(voE, voN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { voE = g[0]; voN = g[1] } }
-          if (wh > 0) { const g = gleisBei(hiE, hiN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { hiE = g[0]; hiN = g[1] } }
+          if (wv > 0.999) { const g = gleisBei(voE, voN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { voE = g[0]; voN = g[1] } }
+          if (wh > 0.999) { const g = gleisBei(hiE, hiN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { hiE = g[0]; hiN = g[1] } }
           const e = (voE + hiE) / 2, n = (voN + hiN) / 2
           if (w === 0) { lokE = e; lokN = n }
           if (w === ZUG_WAGEN) { steuerE = e; steuerN = n }
