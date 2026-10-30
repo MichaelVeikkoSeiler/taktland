@@ -470,7 +470,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
   }, [text, formen, eintraege, zusatz])
   const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n, t.name); setText(t.name); setOffen(false) }
   return (
-    <div className="relative w-52 max-w-[calc(48vw-2.5rem)]">
+    <div className="relative w-52 min-w-0 max-w-[calc(48vw-2.5rem)] shrink">
       <input type="search" value={text} placeholder="Ort, Gipfel, See" aria-label="Ort, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
              onChange={(e) => { setText(e.target.value); setOffen(true); gipfelHolen() }} onFocus={() => { setOffen(true); gipfelHolen() }}
              onKeyDown={(e) => { if (e.key === 'Enter' && treffer[0]) { nehmen(treffer[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
@@ -873,8 +873,18 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {/* unten rechts die Suche, XR, Mein Standort und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll
             neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
             den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
-        <div className="absolute bottom-2 right-2 flex items-center gap-2">
+        <div className="absolute bottom-2 right-2 flex max-w-[calc(100%-1rem)] items-center gap-2">
           {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
+          {/* im Vollbild eine Stufe hinaus, die Stufen darunter stehen dort nicht; hinein geht es mit «Eintauchen» (Michael, 2026-10-30:
+              «Die Fokusstufen müssen auch im Vollformat-Modus umgeschaltet werden können … wobei man nur hinauszoomen muss») */}
+          {voll && stufe !== 'schweiz' && (
+            <button type="button" onClick={eineZurueck} aria-label="Eine Stufe hinaus" title="Eine Stufe hinaus"
+                    className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.2 15.2L21 21M7.5 10.5h6" />
+              </svg>
+            </button>
+          )}
           <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
                   // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
                   className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
