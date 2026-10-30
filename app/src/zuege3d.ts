@@ -113,7 +113,11 @@ export function zugStelle(f: ZugFahrt, tag: number, minuten: number): ZugStelle 
 /** Netz, Linien und Wege zwischen zwei Halten, einmal geladen und gerechnet */
 /** Der Weg eines Zugs: geglättet, mit den Tunneln, deren Anfang und Ende die Daten kennen, in Metern entlang des Wegs */
 export type ZugWeg = Fahrweg & { tunnel: Array<readonly [number, number]> }
-export interface ZugNetz { netz: StreckenNetz; weg: (a: string, b: string) => ZugWeg | null }
+export interface ZugNetz {
+  netz: StreckenNetz; weg: (a: string, b: string) => ZugWeg | null
+  /** die Betriebspunkte des kürzesten Wegs von a nach b im Netz, für «Mitfahren» (die Seite «Strecke» nimmt sie als weg=) */
+  punkte: (a: string, b: string) => string[] | null
+}
 
 /** Glättung des Wegs für die Züge (Michael, 2026-10-29, Zürich HB: «sehr enge Kurve beim Gleiswechsel»): wo der Weg von einer Linie auf
  *  die nächste wechselt, stossen ihre Zeichnungen oft in einem Knick aneinander; alle GLATT_SCHRITT_M ein Punkt, gemittelt mit einer
@@ -163,7 +167,8 @@ export function zugNetzLaden(): Promise<ZugNetz> {
       }
       return wege.get(s)!
     }
-    return { netz, weg }
+    const punkte = (a: string, b: string) => wegSuchen(nachbarn, a, b)?.punkte ?? null
+    return { netz, weg, punkte }
   })()
   return netzVorrat
 }

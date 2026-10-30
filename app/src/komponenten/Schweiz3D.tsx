@@ -3200,6 +3200,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   /** zum gewählten Zug der Bahnhof, an dem er steht oder als Nächstes hält, mit seiner Seite auf taktland.ch (Perrons, Gleise, Sektoren;
    *  Michael, 2026-10-26: «Gleis mit Link»), nur wenn Taktland eine Seite für ihn hat */
   const [zugLink, setZugLink] = useState<{ name: string; url: string } | null>(null)
+  // im Führerstand von Taktland mitfahren, vom jetzigen oder letzten Halt bis zum Ziel des Zugs (Michael, 2026-10-30: «Man sollte auf Mitfahren
+  // klicken/tippen können sodass man gleich im Führerstand mitfährt. So landet man bei Taktland»); eine Probefahrt auf dem Weg im Netz, kein Fahrplan
+  const [mitfahren, setMitfahren] = useState<{ name: string; url: string } | null>(null)
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
@@ -3320,6 +3323,26 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // Betriebspunkt → Bahnhofsnummer, und welche Bahnhöfe eine Seite in Taktland haben
     let uicVon: Map<string, number> | null = null, mitSeite: Set<number> | null = null, linkAbk: string | null = null
     void indexLaden().then((ix) => { mitSeite = new Set(ix.bahnhoefe.filter((b) => b.sprachen.length && !b.ohne_bahnhofseite).map((b) => b.uic)) }).catch(() => undefined)
+    let mitfahrenSchl = ''
+    const mitfahrenSetzen = (f: ZugFahrt | null, st: ZugStelle | null) => {
+      const ab = f && st ? f.halte[st.i].abk : null, bis = f ? f.halte[f.halte.length - 1].abk : null
+      const schl = f && ab ? `${f.id}/${ab}` : ''
+      if (schl === mitfahrenSchl) return
+      mitfahrenSchl = schl
+      if (!f || !ab || !bis || ab === bis || !zn) { setMitfahren(null); return }
+      // der Weg über alle Halte des Zugs von hier bis zum Ziel, als Betriebspunkte der Seite «Strecke»
+      const halte = f.halte.slice(st!.i).map((x) => x.abk), weg: string[] = []
+      for (let i = 0; i + 1 < halte.length; i++) {
+        const p = zn.punkte(halte[i], halte[i + 1])
+        if (!p) { setMitfahren(null); return }
+        weg.push(...(weg.length ? p.slice(1) : p))
+      }
+      if (!uicVon) uicVon = new Map(Object.entries(zn.netz.bahnhoefe).map(([u, a]) => [a, Number(u)]))
+      const von = uicVon.get(ab), nach = uicVon.get(bis)
+      if (!von || !nach || weg.some((x) => !/^[A-Z]+$/.test(x))) { setMitfahren(null); return }
+      const titel = `${f.linie && f.linie !== f.gattung ? f.linie : f.gattung} ${f.nummer}`.trim()
+      setMitfahren({ name: `${titel} nach ${f.ziel}`, url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1` })
+    }
     const linkSetzen = (abk: string | null) => {
       if (abk === linkAbk) return
       linkAbk = abk
@@ -3691,12 +3714,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const zeilen = zeilenVon(u.f, st), text = zeilen.join('|')
           if (text !== schildText) { schildText = text; schildMalen(zeilen) }
           linkSetzen((st.art === 'halt' ? u.f.halte[st.i] : u.f.halte[st.i + 1]).abk)
+          mitfahrenSetzen(u.f, st)
         }
         zahl++
       }
       gezeichnet.length = zahl
       schild.visible = zeigt
-      if (!zeigt) linkSetzen(null)
+      if (!zeigt) { linkSetzen(null); mitfahrenSetzen(null, null) }
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
       stirn.visible = fensterNacht.value > 0; stirn.count = stirn.visible ? 2 * zahl : 0; stirn.instanceMatrix.needsUpdate = true
       if (stirn.instanceColor) stirn.instanceColor.needsUpdate = true
@@ -4144,6 +4168,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             <a href={zugLink.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
               className="pointer-events-auto rounded bg-white/90 px-1.5 py-0.5 text-[11px] font-medium leading-tight text-sbb-red underline dark:bg-sbb-midnight/90">
               Bahnhof {zugLink.name}: Perrons und Gleise{AUF_3DLAND ? ' auf taktland.ch ↗' : ''}
+            </a>
+          )}
+          {zugZeile && mitfahren && (
+            <a href={mitfahren.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
+              className="pointer-events-auto rounded bg-sbb-red px-2 py-1 text-xs font-bold leading-tight text-white">
+              Im Führerstand mitfahren: {mitfahren.name}{AUF_3DLAND ? ' ↗' : ''}
             </a>
           )}
           {schiffZeile && (
