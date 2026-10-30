@@ -31,7 +31,7 @@ import { Ladebalken } from './Ladebalken'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, kategorieUmschalten, SehenswertLegende, useVersteckt } from './Sehenswert'
 import { Klappe } from './Klappe'
-import { wagenBauen, ZUG_BREITE, ZUG_HELL, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M } from './ZugForm'
+import { wagenBauen, ZUG_HELL, ZUG_MASS_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M } from './ZugForm'
 import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
 
 /**
@@ -3864,7 +3864,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       // Schilder und Zug behalten ihre Grösse, die Gruppe darüber schrumpft sie sonst mit
       const massAnpassen = (s: number) => {
         for (const { sp, grundMass } of schilder) sp.scale.set(grundMass[0] / s, grundMass[1] / s, 1)
-        zugMassBrille = Math.max(1, BRILLE_ZUG_M / (ZUG_BREITE * s))
+        zugMassBrille = Math.max(1, BRILLE_ZUG_M / (ZUG_MASS_BREITE * s))
         zugMass = zugMassBrille
       }
       const setzen = () => {

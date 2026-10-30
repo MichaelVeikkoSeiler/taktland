@@ -22,7 +22,7 @@ import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
-import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
+import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 import { FAHRLEITUNG_FARBE, fahrleitungsMast } from './Fahrleitung'
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
@@ -3341,8 +3341,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // die Spur im Bahnhof: am Halt ganz, davor und danach gleitend (ZUG_SPUR_ANLAUF_M), dazwischen ZUG_LINKS
         const spurA = spurVon(h[j].abk, h[j].gleis), spurB = spurVon(h[j + 1].abk, h[j + 1].gleis)
         const anlauf = ZUG_SPUR_ANLAUF_M * Math.max(1, gross.x)
-        let gA = spurA === null ? 0 : Math.max(0, 1 - sM / anlauf), gB = spurB === null ? 0 : Math.max(0, 1 - (ende - sM) / anlauf)
-        if (gA + gB > 1) { const t = gA + gB; gA /= t; gB /= t }
+        // je Wagen nach seiner eigenen Stelle: so wechselt jeder Wagen dort die Spur, wo die Lok es tat, statt dass der ganze Zug
+        // auf einmal quer rückt (Michael, 2026-10-30, Zürich HB: «verschiebt sich der ganze Zug schräg über die Gleise»)
+        const anteile = (s: number) => {
+          let a = spurA === null ? 0 : Math.max(0, 1 - Math.abs(s) / anlauf), c = spurB === null ? 0 : Math.max(0, 1 - Math.abs(ende - s) / anlauf)
+          if (a + c > 1) { const t = a + c; a /= t; c /= t }
+          return [a, c]
+        }
         const seiteBei = (abk: string, le: number, ln: number) => {
           const ref = spurSeite.get(abk) ?? (spurSeite.set(abk, [le, ln]), [le, ln])
           return le * ref[0] + ln * ref[1] >= 0 ? 1 : -1
@@ -3359,13 +3364,19 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const lang = Math.hypot(vo.e - hi.e, vo.n - hi.n) || 1
           // links des Wagens (wie unten: −(vo.n − hi.n), vo.e − hi.e), für die Seite der Spur im Bahnhof
           const le = -(vo.n - hi.n) / lang, ln = (vo.e - hi.e) / lang
-          const links = ZUG_LINKS * (1 - gA - gB)
-            + (gA ? gA * spurA! * ZUG_SPUR * seiteBei(h[j].abk, le, ln) : 0) + (gB ? gB * spurB! * ZUG_SPUR * seiteBei(h[j + 1].abk, le, ln) : 0)
-          const versatz = ZUG_BREITE * mass * gross.x * 1000 * links
-          const e = (vo.e + hi.e) / 2 - ((vo.n - hi.n) / lang) * versatz, n = (vo.n + hi.n) / 2 + ((vo.e - hi.e) / lang) * versatz
+          const versatzBei = (s: number) => {
+            const [gA, gB] = anteile(s)
+            const links = ZUG_LINKS * (1 - gA - gB)
+              + (gA ? gA * spurA! * ZUG_SPUR * seiteBei(h[j].abk, le, ln) : 0) + (gB ? gB * spurB! * ZUG_SPUR * seiteBei(h[j + 1].abk, le, ln) : 0)
+            return ZUG_MASS_BREITE * mass * gross.x * 1000 * links
+          }
+          // vorne und hinten je mit dem eigenen Versatz, der Wagen liegt schräg dazwischen wie auf einer Weiche
+          const versatz = versatzBei(vo.s), versatzH = versatzBei(hi.s)
+          const voE = vo.e + le * versatz, voN = vo.n + ln * versatz, hiE = hi.e + le * versatzH, hiN = hi.n + ln * versatzH
+          const e = (voE + hiE) / 2, n = (voN + hiN) / 2
           if (w === 0) { lokE = e; lokN = n }
           v.set((e - lage.cE) / 1000, (hv + hh) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
-          q.setFromAxisAngle(oben, Math.atan2(vo.e - hi.e, -(vo.n - hi.n)))
+          q.setFromAxisAngle(oben, Math.atan2(voE - hiE, -(voN - hiN)))
           const quer = Math.hypot(vo.e - hi.e, vo.n - hi.n)
           neigung.setFromAxisAngle(querAchse, quer > 1 ? -Math.max(-ZUG_NEIGUNG, Math.min(ZUG_NEIGUNG, Math.atan2(hv - hh, quer))) : 0)
           q.multiply(neigung)
