@@ -74,10 +74,11 @@ export function jetztImFahrplan(ix: Pick<ZugIndex, 'von'>, zeit = new Date(Date.
 /** so lange steht ein Zug vor der ersten Abfahrt und nach der letzten Ankunft am Bahnhof (Michael, 2026-10-26: «Wenn sie halten
  *  verschwinden sie»); eine Annahme, gewählt: wie lange er dort steht, steht nicht im Fahrplan (block_id fehlt bei fast allen Zügen) */
 export const ZUG_STEHT_MIN = 5
-/** nennt der Fahrplan für einen Halt Ankunft und Abfahrt in derselben Minute, steht der Zug so lange um diese Minute herum (Michael, 2026-10-30:
- *  «Sonst fahren sie bei den Halten ja nur durch»; der Fahrplan nennt nur ganze Minuten, wie lange der Zug wirklich steht, steht in keiner unserer
- *  Quellen; 30 Sekunden gewählt, die Zeit geht der Fahrt davor und danach ab) */
-export const ZUG_KURZHALT_MIN = 0.5
+/** nennt der Fahrplan für einen Halt Ankunft und Abfahrt in derselben Minute, kommt der Zug so viele Minuten vorher an und fährt so viele
+ *  danach ab (Michael, 2026-10-30: «Sonst fahren sie bei den Halten ja nur durch», dann «Realistisch wäre in solchen Fällen, wenn er 10 Sek vor
+ *  Ankunft und 20 Sek nach Abfahrt abfährt»; der Fahrplan nennt nur ganze Minuten, wie lange der Zug wirklich steht, steht in keiner unserer
+ *  Quellen; die Zeit geht der Fahrt davor und danach ab) */
+export const ZUG_KURZHALT_VOR_MIN = 10 / 60, ZUG_KURZHALT_NACH_MIN = 20 / 60
 
 export type ZugStelle =
   | { art: 'halt'; i: number }
@@ -94,7 +95,7 @@ export function zugStelle(f: ZugFahrt, tag: number, minuten: number): ZugStelle 
       let an = h[i].an ?? h[i].ab!, ab = h[i].ab ?? h[i].an!
       if (i === 0) an = Math.min(an, erst - ZUG_STEHT_MIN)
       if (i === z) ab = Math.max(ab, letzt + ZUG_STEHT_MIN)
-      if (i > 0 && i < z && an === ab) { an -= ZUG_KURZHALT_MIN / 2; ab += ZUG_KURZHALT_MIN / 2 }
+      if (i > 0 && i < z && an === ab) { an -= ZUG_KURZHALT_VOR_MIN; ab += ZUG_KURZHALT_NACH_MIN }
       return [an, ab]
     }
     for (let i = 0; i <= z; i++) {
