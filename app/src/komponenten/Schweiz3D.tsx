@@ -1121,7 +1121,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
             <li>Wolken: ihre Form; ausserhalb der nächsten 24 Stunden auch ihre Dicke und die Höhe jeder Schicht (gewählt nach der Mitte ihres
               Druckbereichs); in der Höhe des Modells sind die Stufen von 250 m und die Deckkraft jeder Ebene gewählt.</li>
-            <li>Züge und Schiffe: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, 30 Sekunden an Halten, für die der Fahrplan Ankunft und Abfahrt in derselben Minute nennt, und dass jeder Zug links neben dem Weg fährt,
+            <li>Züge und Schiffe: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, an Halten, für die der Fahrplan Ankunft und Abfahrt in derselben Minute nennt, Ankunft 10 Sekunden davor und Abfahrt 20 Sekunden danach, und dass jeder Zug links neben dem Weg fährt,
               damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
