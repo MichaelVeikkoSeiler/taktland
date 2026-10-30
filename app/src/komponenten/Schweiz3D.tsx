@@ -3631,7 +3631,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         for (const n of Object.values(netze)) if (n.instanceColor) n.instanceColor.needsUpdate = true
       }
       geleuchtet = ziele
-      // zu hören, je näher, desto lauter, mit dem Dopplereffekt (zuegeHoeren in src/audio.ts); Abstand und Tempo in Metern der Wirklichkeit
+      // zu hören, je näher, desto lauter, mit dem Zuggeräusch von Taktland (zuegeHoeren in src/audio.ts); Abstand und Tempo in Metern der Wirklichkeit
       if (performance.now() >= hoerUm) {
         const jetztH = performance.now(), dtH = (jetztH - hoerLetzt) / 1000
         hoerUm = jetztH + 100; hoerLetzt = jetztH
@@ -3643,9 +3643,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           neu.set(gezeichnet[z].id, { p: p.clone(), d })
           if (d > 3000) continue
           const tempo = alt && dtH > 0 && dtH < 1 ? (alt.p.distanceTo(p) * 1000) / dtH : 0
-          const naeher = alt && dtH > 0 && dtH < 1 ? (alt.d - d) / dtH : 0
-          const seite = k.wurzel.localToWorld(p.clone()).project(cam).x
-          liste.push({ abstandM: d, naeherMs: naeher, tempoMs: tempo, seite })
+          liste.push({ abstandM: d, tempoMs: tempo })
         }
         hoerAlt = neu
         zuegeHoeren(liste)
