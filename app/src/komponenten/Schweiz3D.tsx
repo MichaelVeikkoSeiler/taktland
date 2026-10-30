@@ -2721,10 +2721,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // geht (Wanderwege in der ganzen Schweiz, Gebäude und Bäume ohne Daten, die Zeit ohne Sonne), bleibt da, aber gesperrt und dunkel
     const umweltDa = (stufe === 'ort' || stufe === 'nah') && umweltHier
     // die Reihenfolge in drei Gruppen mit etwas Abstand dazwischen (Michael, 2026-10-30: «Orte, Gebäude, Bäume -> etwas Abstand Züge,
-    // Schiffe -> etwas Abstand Wandern, Gipfel, Wolken, Wetter, Sonne»; Höhen hat er nicht genannt, sie stehen vorne bei den Orten)
+    // Schiffe -> etwas Abstand Wandern, Gipfel, Wolken, Wetter, Sonne»; Höhen zwischen Wandern und Gipfel, «Nimm ihn in die Mitte der anderen gelben»)
     const abstand: Teil = { zeilen: [], breite: KNOPF_ABSTAND * W, leer: true }
     const eins: Teil[] = [
-      { zeilen: ['Höhen'], breite: KNOPF_B * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
       { zeilen: ['Orte'], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
       { zeilen: ['Gebäude'], breite: KNOPF_B * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
       { zeilen: ['Bäume'], breite: KNOPF_B * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
@@ -2737,6 +2736,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       abstand,
       { zeilen: ['Wandern'], breite: KNOPF_B * W, an: !grob(stufe) && wandern, farbe: LICHT.gelaende, gesperrt: grob(stufe),
         aktion: umschalten('wandern') },
+      { zeilen: ['Höhen'], breite: KNOPF_B * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
       { zeilen: ['Gipfel'], breite: KNOPF_B * W, an: gipfel, farbe: LICHT.gelaende, aktion: umschalten('gipfel') },
       // in jeder Stufe (Michael, 2026-10-29: «Wolken auch in den Feldern 4 km und 1 km zeigen»)
       { zeilen: ['Wolken'], breite: KNOPF_B * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
@@ -2746,16 +2746,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const zeitDa = sonnenAn && !!sonnenZeilen
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
     const zeit = (art: 'stunde' | 'tag' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
-    // die zweite Reihe nur mit «Sonne» an, im Band, um das der Sockel dann höher ist; alle Knöpfe gleich breit, «Jetzt» gleich rechts neben
-    // Datum und Uhrzeit und gedrückt, solange die Zeit die jetzige ist (Michael, 2026-10-29: «Stunden und Tage Knöpfe gleich breit wie andere,
-    // Jetzt auch», «KNOPF jetzt rechts neben das Datum und Uhrzeit»)
+    // die zweite Reihe nur mit «Sonne» an, im Band, um das der Sockel dann höher ist, rechtsbündig unter der ersten, Datum und Uhrzeit ganz
+    // rechts (Michael, 2026-10-30: «Die untere Zeile rechtsbündig machen. Datum ganz rechts»), «Jetzt» gleich daneben und gedrückt, solange die
+    // Zeit die jetzige ist; alle Knöpfe gleich breit (Michael, 2026-10-29: «Stunden und Tage Knöpfe gleich breit wie andere, Jetzt auch»)
     const zwei: Teil[] = zeitDa ? [
-      { zeilen: [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)], breite: 0.09 * W },
-      { zeilen: ['Jetzt'], breite: KNOPF_B * W, an: jetztAn, farbe: LICHT.sonne, aktion: zeit('jetzt', 0) },
       { zeilen: ['−1 h'], breite: KNOPF_B * W, knopf: true, aktion: zeit('stunde', -1) },
       { zeilen: ['+1 h'], breite: KNOPF_B * W, knopf: true, aktion: zeit('stunde', 1) },
       { zeilen: ['−1 Tag'], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', -1) },
       { zeilen: ['+1 Tag'], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', 1) },
+      { zeilen: ['Jetzt'], breite: KNOPF_B * W, an: jetztAn, farbe: LICHT.sonne, aktion: zeit('jetzt', 0) },
+      { zeilen: [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)], breite: 0.09 * W },
     ] : []
     // je Reihe alles ohne Lücke über die Wand, so gross, wie es in der längeren Reihe Platz hat (Michael, 2026-10-30: «Bitte verteile sie auf
     // die ganze Breite, ohne die Lücke dazwischen»; + und − hängen unter der Platte); die Höhe wächst mit, an der längsten Wand bis 62 % des
@@ -2828,13 +2828,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     })
     // Lage entlang der Wand: von links nach rechts in der Mitte; an einer kürzeren Wand (die ganze Schweiz von Norden nach Süden,
     // angesetzte Stücke) alles so viel kleiner, dass es Platz hat
-    // Lage entlang der Wand: jede Reihe für sich in der Mitte, die erste im Band der Wand, die zweite darunter im Band für die Zeit; an einer
+    // Lage entlang der Wand: die erste Reihe in der Mitte im Band der Wand, die zweite darunter im Band für die Zeit, rechts bündig mit ihr; an einer
     // kürzeren Wand (die ganze Schweiz von Norden nach Süden, angesetzte Stücke) alles so viel kleiner, dass es Platz hat
     const lagenAn = (L: number) => {
       const f = fuer(L)
       const lagen = new Map<Teil, [number, number]>()
       reihen.forEach((r, ri) => {
-        let u = -f * summeVon(r) / 2
+        let u = ri === 0 ? -f * summeVon(r) / 2 : f * (summeVon(reihen[0]) / 2 - summeVon(r))
         const y = ri === 0 ? w.y : w.y - w.wand / 2 - w.zeit / 2
         for (const t of r) { lagen.set(t, [u + f * t.breite / 2, y]); u += f * (t.breite + luecke) }
       })
