@@ -22,7 +22,8 @@ import { himmelNacht, sternSicht } from '../sterne'
 import { sternenhimmelBauen } from './Sternenhimmel'
 import { audioKontext, audioLesen, audioSetzen, useAudio, wetterGeraeusch, wetterGeraeuschAus, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
-import { ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
+import { mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
+import { FAHRLEITUNG_FARBE, fahrleitungsMast } from './Fahrleitung'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
@@ -553,6 +554,9 @@ const TAFEL_SEITE_M = 7.5, TAFEL_BREITE_M = 9, TAFEL_HOEHE_M = 1.8, TAFEL_UEBER_
 const BAUM_BIS_M = 1700
 /** so viel Platz bleibt zwischen Krone und Mitte der gezeichneten Strecke frei (Lichtraum fürs Bild, in keiner Quelle) */
 const BAUM_LICHTRAUM_M = 5
+/** Masten der Fahrleitung: keiner näher an der gezeichneten Linie als MAST_LICHTRAUM_M; bis MAST_AUF_LINIE_M neben ihr steht der Fuss auf
+ *  ihrer Höhe (Gleise daneben liegen etwa gleich hoch, auch auf Brücken), weiter weg auf dem Gelände; gewählt */
+const MAST_LICHTRAUM_M = 2.2, MAST_AUF_LINIE_M = 25
 const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
@@ -2609,6 +2613,51 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       }
       return d
     }
+    // Masten der Fahrleitung (pipeline/build_fahrleitung.py, komponenten/Fahrleitung.ts; Michael, 2026-10-30: «Kann man auf den Bahnstrecken
+    // auch Masten für die Fahrleitungen setzen?»): nur im Führerstand, mit dem feinen Gelände; erfunden, belegt ist nur die Elektrifizierung
+    const mastGruppe = new THREE.Group()
+    mastGruppe.visible = false
+    szene.add(mastGruppe)
+    const mastForm = fahrleitungsMast(), mastStoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
+    let mastAuftrag = 0
+    const mastSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
+      const auftrag = ++mastAuftrag
+      const ms = await mastenLaden(e0, n0, e1, n1).catch(() => null)
+      if (!laeuft || auftrag !== mastAuftrag) return
+      for (const c of mastGruppe.children) (c as THREE.InstancedMesh).dispose()
+      mastGruppe.clear()
+      const fs = feinStand
+      if (!ms || !ms.e.length || !fs) return
+      // die gezeichnete Linie alle 5 m mit ihrer Höhe: Masten nahe an ihr stehen auf ihrer Höhe (auf Brücken und in Einschnitten
+      // nicht auf dem Gelände), weiter weg auf dem Gelände
+      const linie: number[] = []
+      for (let meter = pk[0].m; meter <= pk[pk.length - 1].m; meter += 5) {
+        const [e, n] = glattBei(meter)
+        if (e > e0 - 50 && e < e1 + 50 && n > n0 - 50 && n < n1 + 50) linie.push(e, n, feinLinieHoehe(meter))
+      }
+      const netz = new THREE.InstancedMesh(mastForm, mastStoff, ms.e.length)
+      const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(X(1) - X(0), Y(1) - Y(0), X(1) - X(0))
+      let zahl = 0
+      for (let i = 0; i < ms.e.length; i++) {
+        const e = ms.e[i], n = ms.n[i]
+        let d = Infinity, hl = 0
+        for (let j = 0; j < linie.length; j += 3) {
+          const dj = Math.hypot(linie[j] - e, linie[j + 1] - n)
+          if (dj < d) { d = dj; hl = linie[j + 2] }
+        }
+        // nicht im Lichtraum der gezeichneten Linie (Annahme fürs Bild)
+        if (d < MAST_LICHTRAUM_M) continue
+        const h = d < MAST_AUF_LINIE_M ? hl - 1 : (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fs.fein, e, n)
+        if (h === null) continue
+        v.set(X(e), Y(h), Z(n))
+        q.setFromAxisAngle(OBEN, ms.winkel[i])
+        netz.setMatrixAt(zahl++, m.compose(v, q, sk))
+      }
+      netz.count = zahl
+      netz.instanceMatrix.needsUpdate = true
+      netz.computeBoundingSphere()
+      mastGruppe.add(netz)
+    }
     const baumSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++baumAuftrag
       // nur bis BAUM_BIS_M um die Mitte des feinen Geländes: im dichtesten Wald stehen im ganzen Quadrat bis 67'000 Bäume
@@ -2937,6 +2986,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       gebaeudeGruppe.visible = false
       strassenGruppe.visible = false
       baumGruppe.visible = false
+      mastGruppe.visible = false
       // Röhren haben zwei Materialien; Fels und Boden teilen alle Tunnel
       feinLinien.traverse((o) => {
         const x = o as THREE.Mesh
@@ -3083,6 +3133,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       void strassenSetzen(e0, n0, e1, n1)
       baumGruppe.visible = true
       void baumSetzen(e0, n0, e1, n1)
+      mastGruppe.visible = true
+      void mastSetzen(e0, n0, e1, n1)
       feinMalen?.()
       if (scharf) {
         const P = SCHARF_PUNKTE, schritt = SCHARF_KACHEL_M / (P - 1)

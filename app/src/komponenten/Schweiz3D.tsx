@@ -5,7 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
+import { mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -23,6 +23,7 @@ import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
+import { FAHRLEITUNG_FARBE, fahrleitungsMast } from './Fahrleitung'
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
 import { bewoelkung, bewoelkung3d, niederschlagBei, type Wolken, wolken3dStunde, wolkenLaden, wolkenStunde } from '../wolken'
@@ -1107,6 +1108,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
             <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Weg zwischen den Halten aus dem
               Netz von Taktland (Linien und Kilometrierung der SBB, Schienennetz des BAV).</li>
+            <li>Masten der Fahrleitung: nur wo das Schienennetz des BAV die Strecke elektrifiziert nennt, auf den Gleisachsen aus swissTLM3D (swisstopo).</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
               Ländten: swissTLMRegio (swisstopo).</li>
             <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
@@ -1125,6 +1127,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
+            <li>Masten der Fahrleitung in den Feldern von 4 km und 1 km: Lage, Abstand (alle 50 m, 3 m neben dem Gleis), Höhe und Gestalt sind erfunden,
+              belegt ist nur, dass die Strecke elektrifiziert ist. Die Züge fahren nicht auf den Gleisachsen, sie fahren darum nicht genau unter den Auslegern durch.</li>
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
@@ -2924,6 +2928,40 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [windAn, b, stufe, zusatz, knoepfe])
   useEffect(() => { windhosen.current?.setzen(windWerte) },
     [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
+  // Masten der Fahrleitung (pipeline/build_fahrleitung.py; Michael, 2026-10-30: «Kann man auf den Bahnstrecken auch Masten für die
+  // Fahrleitungen setzen?»): in den Feldern von 4 km und 1 km, wo die Strecke laut BAV elektrifiziert ist; die Masten sind erfunden
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || (stufe !== 'ort' && stufe !== 'nah')) return
+    let weg = false, netz: THREE.InstancedMesh | null = null
+    const geo = fahrleitungsMast(), stoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
+    const teile = [...b.teile.values()], rand = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    void mastenLaden(e0, n0, e1, n1).catch(() => null).then((ms) => {
+      if (weg || !ms || !ms.e.length) return
+      const n = new THREE.InstancedMesh(geo, stoff, ms.e.length)
+      n.castShadow = true; n.frustumCulled = false
+      const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(0.001, 0.001, 0.001), oben = new THREE.Vector3(0, 1, 0)
+      let zahl = 0
+      for (let i = 0; i < ms.e.length; i++) {
+        const h = bestandHoehe(b, ms.e[i], ms.n[i])
+        if (!Number.isFinite(h)) continue
+        v.set((ms.e[i] - lage.cE) / 1000, h / 1000, -(ms.n[i] - lage.cN) / 1000)
+        q.setFromAxisAngle(oben, ms.winkel[i])
+        n.setMatrixAt(zahl++, m.compose(v, q, sk))
+      }
+      n.count = zahl
+      netz = n
+      k.wurzel.add(n)
+    })
+    return () => {
+      weg = true
+      if (netz) { k.wurzel.remove(netz); netz.dispose() }
+      geo.dispose(); stoff.dispose()
+    }
+  }, [b, stufe, knoepfe])
   // Strassen- und Bahnhofslicht bei Nacht (pipeline/build_strassenlicht.py; Michael, 2026-10-29: «Irgendwie fehlt schon noch eine
   // Straßen- und allgemeine Bahnhofbeleuchtung. Kannst du das nicht erfinden und einbauen?»): je Lampe ein Lichtfleck auf dem Boden, warm auf
   // Strassen, kühler und grösser an Bahnhöfen; nur mit «Gebäude» (Michael, 2026-10-29: «Strassen und Bahnhofbeleuchtung nur aktivieren wenn
