@@ -456,7 +456,8 @@ data/bahnbruecken.json  Gleisachsen auf Brücken aus swissTLM3D (TLM_EISENBAHN, 
              hat nur 4 Spuren», gezeichnet waren 6)
 data/strassenbruecken.json  Strassen- und Wegbrücken über der Bahn aus swissTLM3D (TLM_STRASSE mit Höhe, KUNSTBAUTE Brücke): nur
              Stücke, die eine Gleisachse aus TLM_EISENBAHN kreuzen und dort mindestens 3 m über ihr liegen (pipeline/build_strassenbruecken.py,
-             1'858 Brücken, 257 KB; Michael, 2026-10-15: «Ist es möglich, eine Autobrücke zu konstruieren?»); in der App nur im Führerstand,
+             1'858 Brücken, 257 KB; Michael, 2026-10-15: «Ist es möglich, eine Autobrücke zu konstruieren?»); seit 2026-10-30 liest die App statt dessen
+             data/bruecken3d (alle Brücken, siehe dort), was folgt, galt bis dahin; in der App nur im Führerstand,
              mit dem feinen Gelände gesetzt (strassenSetzen in Relief.tsx): Verlauf und Höhe der Strassenachse aus der Quelle, die Breite
              aus dem Namen der Klasse («4m Strasse»), sonst eine Annahme (STRASSE_BREITE_ANNAHME: Autobahn 12 m je Fahrbahn …), als Trog
              mit Platte 1 m dick und Brüstungen 1 m hoch, Beton mit Belag, Masse und Gestalt in keiner Quelle
@@ -654,10 +655,18 @@ data/gleise3d.json  welches Gleis wo liegt, für die Züge in «3D Schweiz» (Mi
 data/bruecken3d/  Brücken für «3D Schweiz» (Michael, 2026-10-30: «Kannst du die Brücken, hier Lorraineviadukt bauen? … Ebenso grössere Autobrücken oder die
              Brücken an der Aare um Bern herum bauen», dann «Jetzt die Brücken bauen, Lorraineviadukt zuerst»): pipeline/build_bruecken3d.py, aus swissTLM3D
              (TLM_EISENBAHN nur Bahn, Tram, Metro ohne Standseilbahnen, und TLM_STRASSE, KUNSTBAUTE Brücke, Steg …) je Stück die Achse mit Höhe, ab 12 m,
-             Gleise 5'115, Strassen 13'651, Wege 9'708, 474 Kacheln, 0,9 MB (.bjz, gzip-JSON, in Git, export_app kopiert sie); in der App brueckenLaden in
-             src/gelaende.ts, in Schweiz3D.tsx in den Feldern von 4 km und 1 km je Stück eine Platte unter der Achse auf ihrer Höhe, ohne Pfeiler, am Rand des
-             Modells abgeschnitten: Gleis 5,5 m breit, Oberkante 0,5 m unter der Achse, Schotter oben; Strasse Breite laut Klasse plus 1 m, sonst 8 m, Belag;
-             Weg und Steg schmal und 0,6 m dick; sonst 1,6 m dick, Seiten in Beton (BRUECKE_*, alles gewählt); in Anleitung und Quellen genannt
+             bei Gleisen ANZAHL_SPUREN, bei Strassen die Klasse (OBJEKTART), Gleise 5'115, Strassen 13'651, Wege 9'708, 474 Kacheln, 1 MB (.bjz, gzip-JSON,
+             in Git, export_app kopiert sie); in der App brueckenLaden in src/gelaende.ts; seit 2026-10-30 in beiden Apps gleich gezeichnet (komponenten/
+             Bruecken.ts; Michael, 2026-10-30: «die beiden evtl zu koppeln … wenn hier was vorhanden ist kann das andere vielleicht profitieren. ZB die
+             Brücken»): Bahnbrücken als eine Platte unter allen parallelen Gleisen, so breit wie sie, 3,5 m über die äussersten hinaus (gleisPlatten: je
+             Stück alle 10 m quer die anderen Gleise bis 20 m, höchstens 30° schräg, gezeichnet nur das äusserste, von zwei Platten über denselben Gleisen
+             die breitere; eine einzelne Achse mit zwei Spuren laut Quelle 4,5 m breit), Schotter zwischen zwei Randbalken; Strassen und Wege als Trog mit
+             Platte und Brüstungen, Breite laut Klasse, sonst eine Annahme (Autobahn 12 m …, Wege 1,5 m), Beton mit Körnung, gemalt (brueckenBild), alles
+             gewählt, ohne Pfeiler; in «3D Schweiz» in den Feldern von 4 km und 1 km, am Rand des Modells abgeschnitten, der Schotter 0,5 m unter der Achse,
+             die Masten der Fahrleitung bis 6 m neben einer Gleisachse auf einer Brücke auf ihr statt unten im Gelände (MAST_AUF_BRUECKE_M; am Lorraineviadukt
+             standen sie im Hang); im Führerstand alle Brücken im feinen Gelände ausser denen der eigenen Linie (fremdeBruecken in Relief.tsx: ein Gleisstück,
+             das an mehr als der Hälfte seiner Punkte höchstens 20 m neben der gezeichneten Strecke liegt, gehört zur eigenen Brücke), mit Retusche darunter,
+             statt nur der Strassenbrücken über der Bahn aus data/strassenbruecken.json, das die App nicht mehr liest; in Anleitung und Quellen genannt
 data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
