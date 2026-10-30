@@ -1362,6 +1362,10 @@ function wolkenEbenen3d(w: Wolken, j: number, e0: number, n0: number, e1: number
 const ZUG_FERN = 0.018
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
+/** im Feld von 1 km noch kleiner, etwa 3 m breit und 4 m hoch, damit Züge im Bahnhof nebeneinander und unter den Perrondächern Platz haben
+ *  (Michael, 2026-10-30, Bern: «Bei dieser Ansicht sind die Züge etwas zu gross … unter der Decke sind und nicht an der Decke ankommen»; vorher
+ *  wie im Feld von 4 km gut 5 m breit und fast 7 m hoch), gewählt */
+const ZUG_NAH_1KM_MASS = 0.35
 /** über so viele Meter des Zugs (in seiner Grösse im Modell) wird die Höhe unter ihm gemittelt, gewählt */
 const ZUG_GLATT_M = 300
 /** so viele Zugbreiten liegt die Mitte eines Zugs links neben dem Weg: zwei Züge in Gegenrichtung fahren nebeneinander, wie bei Linksverkehr
@@ -1372,7 +1376,11 @@ const ZUG_LINKS = 0.7
  *  ihrer Nummer nebeneinander, je ZUG_SPUR Zugbreiten, um die Mitte des Wegs; in den letzten und ersten ZUG_SPUR_ANLAUF_M vor und nach dem Halt
  *  gleitet der Zug auf seine Spur (Abstand, Anlauf und dass die Nummern der Reihe nach liegen, gewählt: wo die Gleise wirklich liegen, steht in
  *  keiner unserer Quellen) */
-const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 600
+const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 300
+/** freie Spuren zum Ausweichen der Reihe nach (in ZUG_SPUR) und wie schnell ein Zug hingleitet, gewählt */
+const ZUG_AUSWEICHEN = [0, 1, -1, 2, -2, 3, -3], ZUG_AUSWEICHEN_JE_S = 0.5
+/** so weit sucht ein Zug in den Feldern von 4 km und 1 km die nächste Gleisachse, gewählt */
+const ZUG_GLEIS_SUCHE_M = 30, ZUG_TUNNEL_NAH_M = 10, ZUG_GLEIS_WINKEL = Math.cos((25 * Math.PI) / 180)
 /** höchstens so viele Zugbreiten liegt die äusserste Spur neben dem Weg; in grossen Bahnhöfen rücken die Spuren dafür enger (Michael, 2026-10-30,
  *  Zürich HB: «Die Züge … verkehren ziemlich weit nördlich des Hauptbahnhofes. Sie fahren auf den Autostrassen»: bis 2026-10-30 je 1,6 Zugbreiten
  *  der alten Form ohne Grenze, bei gut 25 Gleisnummern bis 125 m neben dem Weg), gewählt */
@@ -3303,8 +3311,77 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return (liste.indexOf(g) - halb) * Math.min(ZUG_SPUR, halb ? ZUG_SPUR_HOECHSTENS / halb : ZUG_SPUR)
     }
     let unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = [], neuUm = 0
+    // Ausweichen (Michael, 2026-10-30, Zürich Vorbahnhof: zwei Züge in derselben Richtung fuhren ineinander, «Das sollte nicht passieren»): je Zug
+    // die Lage im letzten Bild (Lok und Steuerwagen); alle 2 s bekommt jeder Zug, der neben einem anderen in derselben Richtung liegt, eine freie
+    // Spur daneben (ZUG_AUSWEICHEN), und gleitet mit ZUG_AUSWEICHEN_JE_S Spuren je Sekunde hin
+    const zugLage = new Map<number, { ve: number; vn: number; he: number; hn: number }>()
+    const ausweich = new Map<number, { ziel: number; jetzt: number }>()
+    let letztesBild = performance.now()
     const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), gross = new THREE.Vector3(1, 1, 1), skala = new THREE.Vector3(), neigung = new THREE.Quaternion(), querAchse = new THREE.Vector3(1, 0, 0), oben = new THREE.Vector3(0, 1, 0)
     const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
+    const ausweichenWaehlen = () => {
+      const breite = ZUG_BREITE * mass * gross.x * 1000, schrittM = ZUG_SPUR * breite, laengeM = ZUG_GANZ_M * mass * gross.x
+      const da = unterwegs.map((u) => u.f.id).filter((id) => zugLage.has(id)).sort((a, z) => a - z)
+      const gesetzt: Array<{ id: number; me: number; mn: number; de: number; dn: number; ziel: number }> = []
+      for (const id of da) {
+        const l = zugLage.get(id)!, a = ausweich.get(id) ?? { ziel: 0, jetzt: 0 }
+        const lang = Math.hypot(l.ve - l.he, l.vn - l.hn) || 1, de = (l.ve - l.he) / lang, dn = (l.vn - l.hn) / lang
+        // die Mitte ohne den eigenen Ausweichversatz, links ist (−dn, de)
+        const me = (l.ve + l.he) / 2 + dn * a.jetzt * schrittM, mn = (l.vn + l.hn) / 2 - de * a.jetzt * schrittM
+        const frei = (c: number) => gesetzt.every((o) => {
+          if (de * o.de + dn * o.dn < 0.7) return true
+          const ae = me - dn * c * schrittM - (o.me - o.dn * o.ziel * schrittM), an = mn + de * c * schrittM - (o.mn + o.de * o.ziel * schrittM)
+          return Math.abs(ae * de + an * dn) > laengeM || Math.abs(-ae * dn + an * de) > breite * 1.05
+        })
+        const ziel = ZUG_AUSWEICHEN.find(frei) ?? a.ziel
+        if (ziel || a.jetzt) ausweich.set(id, { ziel, jetzt: a.jetzt }); else ausweich.delete(id)
+        gesetzt.push({ id, me, mn, de, dn, ziel })
+      }
+      for (const id of [...ausweich.keys()]) if (!zugLage.has(id)) ausweich.delete(id)
+      zugLage.clear()
+    }
+    // in den Feldern von 4 km und 1 km auf die Gleisachsen aus swissTLM3D (data/gleishoehe): der Weg rückt auf die nächste Achse bis
+    // ZUG_GLEIS_SUCHE_M daneben, die Höhe ist die der Achse (Michael, 2026-10-30, Bern Brünnen Westside: «Zug fährt … durch den Platz statt auf den
+    // Schienen»; die Gleise liegen dort unter der Überdeckung, unter dem Gelände ist der Zug nun verdeckt, ebenso in Tunneln); weiter weg sind die
+    // Züge viel grösser als das Gleisfeld, dort bleibt es beim Weg und beim Gelände
+    let gleisNetz: Map<string, Array<[number, number, number, number, number, number, boolean]>> | null = null
+    const ZELLE = 25
+    if (stufe === 'ort' || stufe === 'nah') {
+      const punkte: Array<[number, number]> = []
+      for (let e = e0; e <= e1 + 1; e += 5000) for (let n = n0; n <= n1 + 1; n += 5000) punkte.push([Math.min(e, e1), Math.min(n, n1)])
+      void gleisLaden(punkte).then((st) => {
+        if (weg) return
+        const netz = new Map<string, Array<[number, number, number, number, number, number, boolean]>>()
+        for (const g of st) for (let i = 1; i < g.e.length; i++) {
+          const a: [number, number, number, number, number, number, boolean] = [g.e[i - 1], g.n[i - 1], g.z[i - 1], g.e[i], g.n[i], g.z[i], g.tunnel]
+          if (Math.max(a[0], a[3]) < e0 - 100 || Math.min(a[0], a[3]) > e1 + 100 || Math.max(a[1], a[4]) < n0 - 100 || Math.min(a[1], a[4]) > n1 + 100) continue
+          const k = `${Math.floor((a[0] + a[3]) / 2 / ZELLE)}_${Math.floor((a[1] + a[4]) / 2 / ZELLE)}`
+          ;(netz.get(k) ?? netz.set(k, []).get(k)!).push(a)
+        }
+        gleisNetz = netz
+      }).catch(() => {})
+    }
+    /** der nächste Punkt einer Gleisachse bis ZUG_GLEIS_SUCHE_M, mit Höhe und ob sie im Tunnel liegt; die Stücke sind höchstens 20 m lang, darum genügt der Umkreis */
+    const gleisBei = (e: number, n: number, de: number, dn: number): [number, number, number, boolean] | null => {
+      if (!gleisNetz) return null
+      // Achsen ausserhalb von Tunneln gehen vor (unter der Halle von Zürich HB liegen die Bahnhöfe Löwenstrasse und Museumstrasse im Tunnel)
+      let best = ZUG_GLEIS_SUCHE_M * ZUG_GLEIS_SUCHE_M, raus: [number, number, number, boolean] | null = null
+      let bestT = best, rausT: [number, number, number, boolean] | null = null
+      const ce = Math.floor(e / ZELLE), cn = Math.floor(n / ZELLE), r = Math.ceil(ZUG_GLEIS_SUCHE_M / ZELLE) + 1
+      for (let i = -r; i <= r; i++) for (let j = -r; j <= r; j++) for (const a of gleisNetz.get(`${ce + i}_${cn + j}`) ?? []) {
+        const se = a[3] - a[0], sn = a[4] - a[1], l2 = se * se + sn * sn
+        // nur Achsen etwa in Richtung des Wegs, und nur quer zum Weg auf sie geschoben: Weichen und quer liegende Stücke am Prellbock
+        // zerrissen sonst den Zug
+        if (!l2 || Math.abs(se * de + sn * dn) < ZUG_GLEIS_WINKEL * Math.sqrt(l2)) continue
+        const qe = -dn, qn = de, nenner = se * qn - sn * qe
+        const t = ((e - a[0]) * qn - (n - a[1]) * qe) / nenner
+        if (t < 0 || t > 1) continue
+        const pe = a[0] + t * se, pn = a[1] + t * sn, d = (pe - e) ** 2 + (pn - n) ** 2
+        if (a[6]) { if (d < bestT) { bestT = d; rausT = [pe, pn, a[2] + t * (a[5] - a[2]), true] } }
+        else if (d < best) { best = d; raus = [pe, pn, a[2] + t * (a[5] - a[2]), false] }
+      }
+      return raus ?? rausT
+    }
     void (async () => {
       ix = await zugIndexLaden()
       if (weg) return
@@ -3331,6 +3408,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         unterwegs = []
         for (const f of fahrten) { const st = zugStelle(f, jetzt.tag, jetzt.minuten); if (st) unterwegs.push({ f, st: st }) }
         for (const u of unterwegs) { const st = zugStelle(u.f, jetzt.tag, jetzt.minuten); if (st) u.st = st }
+        ausweichenWaehlen()
+      }
+      const jetztMs = performance.now(), dt = Math.min(0.5, (jetztMs - letztesBild) / 1000)
+      letztesBild = jetztMs
+      for (const a of ausweich.values()) {
+        const d = a.ziel - a.jetzt, gehen = ZUG_AUSWEICHEN_JE_S * dt
+        a.jetzt = Math.abs(d) <= gehen ? a.ziel : a.jetzt + Math.sign(d) * gehen
       }
       let zahl = 0, neueWege = 0, zeigt = false
       // aus der Ferne grösser, damit man die Züge in der ganzen Region sieht: mindestens ZUG_FERN des Abstands der Kamera lang
@@ -3339,7 +3423,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const abstand = cam.getWorldPosition(auge).distanceTo(mitte) / Math.max(1e-9, k.wurzel.scale.x)
       // in den Feldern von 4 km und 1 km kleiner, sonst ragen die Züge über die Dächer (Michael, 2026-10-28, Bern: «ungefähr 60% von dieser
       // jetzigen Größe»)
-      gross.setScalar(Math.max(1, (abstand * ZUG_FERN) / laenge) * (stufe === 'ort' || stufe === 'nah' ? ZUG_NAH_MASS : 1))
+      gross.setScalar(Math.max(1, (abstand * ZUG_FERN) / laenge) * (stufe === 'nah' ? ZUG_NAH_1KM_MASS : stufe === 'ort' ? ZUG_NAH_MASS : 1))
       skala.copy(gross).multiplyScalar(mass)
       for (const u of unterwegs) {
         if (zahl >= ZUEGE_HOECHSTENS) break
@@ -3393,11 +3477,17 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const mJeM = mass * gross.x
         // Anfang und Ende jedes Wagens; die Höhe dort geglättet über ZUG_GLATT_M entlang des Zugs, jeder Wagen von seinem
         // Ende zum Anfang geneigt: so liegen die Wagen aneinander statt in Stufen (Michael, 2026-10-26: «nicht so holpern»)
-        const enden: Array<{ s: number; e: number; n: number; h: number }> = []
+        const enden: Array<{ s: number; e: number; n: number; h: number; tunnel: boolean }> = []
         let ab = 0
         for (let w = 0; w <= ZUG_WAGEN; w++) {
           const lM = (w === 0 ? ZUG_LOK_M : ZUG_WAGEN_M) * mJeM
-          for (const sm of [sM - ab, sM - ab - lM]) { const [e, n] = stelle(sm); enden.push({ s: sm, e, n, h: bestandHoehe(b, e, n) }) }
+          for (const sm of [sM - ab, sM - ab - lM]) {
+            const [e, n] = stelle(sm), [e2, n2] = stelle(sm - 10), dl = Math.hypot(e - e2, n - n2) || 1
+            const g = gleisBei(e, n, (e - e2) / dl, (n - n2) / dl)
+            // eine Achse im Tunnel verschiebt den Zug nicht (unter der Halle von Zürich HB zerriss es sonst die Züge), sie verdeckt ihn nur
+            enden.push(g && !g[3] ? { s: sm, e: g[0], n: g[1], h: g[2], tunnel: false }
+              : { s: sm, e, n, h: bestandHoehe(b, e, n), tunnel: !!g && (g[0] - e) ** 2 + (g[1] - n) ** 2 < ZUG_TUNNEL_NAH_M ** 2 })
+          }
           ab += lM + ZUG_LUECKE_M * mJeM
         }
         const fenster = ZUG_GLATT_M * mJeM
@@ -3430,7 +3520,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           return roh * ZUG_BREITE * mass * gross.x * 1000
         }
         const anfang = spurA === null ? null : lageBei(fw, 0), schluss = spurB === null ? null : lageBei(fw, ende)
-        let lokE = 0, lokN = 0
+        let lokE = 0, lokN = 0, steuerE = 0, steuerN = 0
+        const aus = ausweich.get(u.f.id)?.jetzt ?? 0
         const glatt = enden.map((x) => {
           let summe = 0, zahlH = 0
           for (const y of enden) if (Math.abs(y.s - x.s) <= fenster && Number.isFinite(y.h)) { summe += y.h; zahlH++ }
@@ -3446,13 +3537,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             const [gA, gB] = anteile(s)
             const spur = (gA ? gA * seiteBei(h[j].abk, le, ln) * spurM(h[j].abk, h[j].gleis, spurA!, anfang!) : 0)
               + (gB ? gB * seiteBei(h[j + 1].abk, le, ln) * spurM(h[j + 1].abk, h[j + 1].gleis, spurB!, schluss!) : 0)
-            return mass * gross.x * 1000 * ZUG_MASS_BREITE * ZUG_LINKS * (1 - gA - gB) + spur
+            return mass * gross.x * 1000 * (ZUG_MASS_BREITE * ZUG_LINKS * (1 - gA - gB) + ZUG_BREITE * ZUG_SPUR * aus) + spur
           }
           // vorne und hinten je mit dem eigenen Versatz, der Wagen liegt schräg dazwischen wie auf einer Weiche
           const versatz = versatzBei(vo.s), versatzH = versatzBei(hi.s)
           const voE = vo.e + le * versatz, voN = vo.n + ln * versatz, hiE = hi.e + le * versatzH, hiN = hi.n + ln * versatzH
           const e = (voE + hiE) / 2, n = (voN + hiN) / 2
           if (w === 0) { lokE = e; lokN = n }
+          if (w === ZUG_WAGEN) { steuerE = e; steuerN = n }
           v.set((e - lage.cE) / 1000, (hv + hh) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
           q.setFromAxisAngle(oben, Math.atan2(voE - hiE, -(voN - hiN)))
           const quer = Math.hypot(vo.e - hi.e, vo.n - hi.n)
@@ -3460,7 +3552,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           q.multiply(neigung)
           m.compose(v, q, skala)
           // im Tunnel nicht zu sehen, mit seinen Lampen
-          const verdeckt = imTunnel((vo.s + hi.s) / 2)
+          // auch wo die Gleisachse laut swissTLM3D im Tunnel liegt, etwa unter einer Überdeckung: swissALTI3D ist dort das Gelände ohne Bauten,
+          // auf der Höhe der Gleise, das Luftbild zeigt den Platz darüber (Brünnen Westside)
+          const verdeckt = imTunnel((vo.s + hi.s) / 2) || (vo.tunnel && hi.tunnel)
           if (verdeckt) m.makeScale(0, 0, 0)
           ;(mitten[zahl] ??= [])[w] = (mitten[zahl][w] ?? new THREE.Vector3()).copy(v)
           if (w === 0) {
@@ -3507,6 +3601,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           else netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)
         }
         gezeichnet[zahl] = u.f
+        zugLage.set(u.f.id, { ve: lokE, vn: lokN, he: steuerE, hn: steuerN })
         if (u.f.id === gewaehlt) {
           zeigt = true
           schild.position.set((lokE - lage.cE) / 1000, (glatt[0] + glatt[1]) / 2000 + hoehe * gross.y * 1.6, -(lokN - lage.cN) / 1000)
