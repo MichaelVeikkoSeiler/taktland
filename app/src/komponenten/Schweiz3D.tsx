@@ -5,6 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
+import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
@@ -1383,10 +1384,11 @@ const ZUG_LINKS = 0.7
  *  gleitet der Zug auf seine Spur (Abstand, Anlauf und dass die Nummern der Reihe nach liegen, gewählt: wo die Gleise wirklich liegen, steht in
  *  keiner unserer Quellen) */
 const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 600, ZUG_SPUR_GERADE_M = 200
-/** Brücken: Breite je Gleis, ohne Angabe je Strasse, Dicke der Platte, wie tief ihre Oberkante unter der Gleisachse liegt, Farben; alles
- *  gewählt, in keiner Quelle */
-const BRUECKE_GLEIS_M = 5.5, BRUECKE_STRASSE_M = 8, BRUECKE_DICKE_M = 1.6, BRUECKE_STEG_DICKE_M = 0.6, BRUECKE_GLEIS_UNTER_M = 0.5
-const BRUECKE_SEITE = '#a29f98', BRUECKE_SCHOTTER = '#7d7468', BRUECKE_BELAG = '#5c5c5c'
+/** Bahnbrücken: Dicke der Platte und wie tief der Schotter unter der Gleisachse liegt; gewählt, in keiner Quelle (die übrigen Masse und das
+ *  Aussehen in komponenten/Bruecken.ts) */
+const BRUECKE_DICKE_M = 1.6, BRUECKE_GLEIS_UNTER_M = 0.5
+/** ein Mast der Fahrleitung so nah an einer Gleisachse auf einer Brücke steht auf ihr (m, gewählt) */
+const MAST_AUF_BRUECKE_M = 6
 /** freie Spuren zum Ausweichen der Reihe nach (in ZUG_SPUR) und wie schnell ein Zug hingleitet, gewählt */
 const ZUG_AUSWEICHEN = [0, 1, -1, 2, -2, 3, -3], ZUG_AUSWEICHEN_JE_S = 0.5
 /** so weit sucht ein Zug in den Feldern von 4 km und 1 km die nächste Gleisachse, gewählt */
@@ -2046,6 +2048,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const p = o.getWorldPosition(new THREE.Vector3()), v = p.clone().project(kamera), r = renderer.domElement.getBoundingClientRect()
           return { text: o.userData.text, p: p.toArray(), x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height }
         });
+      // die Kamera auf eine Stelle (LV95, m ü. M.) richten, aus abstandM, von Richtung (Grad ab Osten) und Höhe (Grad über dem Horizont)
+      (window as unknown as { s3dBlick: unknown }).s3dBlick = (e: number, n: number, h: number, abstandM: number, richtung: number, hoehe: number) => {
+        const l = wurzel.userData.lage as { cE: number; cN: number }, d = abstandM / 1000, r = richtung * Math.PI / 180, w = hoehe * Math.PI / 180
+        const ziel = new THREE.Vector3((e - l.cE) / 1000, h / 1000, -(n - l.cN) / 1000)
+        steuerung.target.copy(ziel)
+        kamera.position.set(ziel.x + Math.cos(r) * Math.cos(w) * d, ziel.y + Math.sin(w) * d, ziel.z - Math.sin(r) * Math.cos(w) * d)
+        kamera.near = d / 50; kamera.updateProjectionMatrix(); steuerung.update()
+      };
       (window as unknown as { s3dInfo: unknown }).s3dInfo = () => ({ programme: renderer.info.programs?.length, ...renderer.info.render, ...renderer.info.memory });
       (window as unknown as { s3dKnoepfe: unknown }).s3dKnoepfe = () => {
         const r = renderer.domElement.getBoundingClientRect()
@@ -3044,14 +3054,40 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const teile = [...b.teile.values()], rand = teile.map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
-    void mastenLaden(e0, n0, e1, n1).catch(() => null).then((ms) => {
+    void Promise.all([mastenLaden(e0, n0, e1, n1).catch(() => null), brueckenLaden(e0, n0, e1, n1).catch(() => [])]).then(([ms, bruecken]) => {
       if (weg || !ms || !ms.e.length) return
+      // auf Bahnbrücken steht der Mast auf der Brücke, nicht unten im Gelände: die Höhe der nächsten Gleisachse auf einer Brücke bis
+      // MAST_AUF_BRUECKE_M daneben (die Masten stehen 3 m neben dem Gleis, build_fahrleitung.py)
+      const zellen = new Map<string, number[]>(), punkte: number[] = []
+      for (const br of bruecken) {
+        if (br.art !== 0) continue
+        for (let i = 0; i < br.e.length; i++) {
+          const nach = i + 1 < br.e.length ? Math.max(1, Math.ceil(Math.hypot(br.e[i + 1] - br.e[i], br.n[i + 1] - br.n[i]) / 5)) : 1
+          for (let j = 0; j < nach; j++) {
+            const t = j / nach, e = br.e[i] + t * ((br.e[i + 1] ?? br.e[i]) - br.e[i]), nn = br.n[i] + t * ((br.n[i + 1] ?? br.n[i]) - br.n[i])
+            const h = br.h[i] + t * ((br.h[i + 1] ?? br.h[i]) - br.h[i]), key = `${Math.floor(e / 20)}_${Math.floor(nn / 20)}`
+            const l = zellen.get(key) ?? []
+            l.push(punkte.length); zellen.set(key, l); punkte.push(e, nn, h)
+          }
+        }
+      }
+      const aufBruecke = (e: number, nn: number) => {
+        let best = MAST_AUF_BRUECKE_M, h: number | null = null
+        for (let qe = Math.floor(e / 20) - 1; qe <= Math.floor(e / 20) + 1; qe++)
+          for (let qn = Math.floor(nn / 20) - 1; qn <= Math.floor(nn / 20) + 1; qn++)
+            for (const k2 of zellen.get(`${qe}_${qn}`) ?? []) {
+              const d = Math.hypot(punkte[k2] - e, punkte[k2 + 1] - nn)
+              if (d < best) { best = d; h = punkte[k2 + 2] }
+            }
+        return h
+      }
       const n = new THREE.InstancedMesh(geo, stoff, ms.e.length)
       n.castShadow = true; n.frustumCulled = false
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(0.001, 0.001, 0.001), oben = new THREE.Vector3(0, 1, 0)
       let zahl = 0
       for (let i = 0; i < ms.e.length; i++) {
-        const h = bestandHoehe(b, ms.e[i], ms.n[i])
+        const boden = bestandHoehe(b, ms.e[i], ms.n[i]), hb = aufBruecke(ms.e[i], ms.n[i])
+        const h = hb !== null && hb - BRUECKE_GLEIS_UNTER_M > boden ? hb - BRUECKE_GLEIS_UNTER_M : boden
         if (!Number.isFinite(h)) continue
         v.set((ms.e[i] - lage.cE) / 1000, h / 1000, -(ms.n[i] - lage.cN) / 1000)
         q.setFromAxisAngle(oben, ms.winkel[i])
@@ -3069,78 +3105,67 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [b, stufe, knoepfe])
   // Brücken (pipeline/build_bruecken3d.py; Michael, 2026-10-30: «Kannst du die Brücken, hier Lorraineviadukt bauen? … Ebenso grössere
   // Autobrücken oder die Brücken an der Aare um Bern herum bauen»): in den Feldern von 4 km und 1 km je Stück der Bahn, Strassen und Wege
-  // auf Brücken laut swissTLM3D eine schlichte Platte unter der Achse, auf ihrer Höhe, ohne Pfeiler; Breite (wo die Klasse keine nennt),
-  // Dicke und Farben gewählt (BRUECKE_*)
+  // auf Brücken laut swissTLM3D eine Platte unter der Achse, auf ihrer Höhe, ohne Pfeiler; gezeichnet wie im Führerstand (komponenten/
+  // Bruecken.ts; Michael, 2026-10-30: «die beiden evtl zu koppeln … ZB die Brücken»): Bahnbrücken mit Schotter zwischen Randbalken, so breit
+  // wie alle ihre Gleise (gleisPlatten), Strassen und Wege als Trog mit Brüstungen, Beton mit Körnung; Breite (wo die Klasse keine nennt),
+  // Querschnitt und Aussehen gewählt
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     if (!k || !lage || (stufe !== 'ort' && stufe !== 'nah')) return
-    let weg = false, netz: THREE.Mesh | null = null
-    const stoff = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
+    let weg = false
+    const gruppe = new THREE.Group()
+    gruppe.name = 'bruecken'
+    const material = brueckenMaterialien()
     const teile = [...b.teile.values()], rand = teile.map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
     void brueckenLaden(e0, n0, e1, n1).catch(() => []).then((liste) => {
       if (weg || !liste.length) return
-      const pos: number[] = [], farbe: number[] = []
-      const oben = new THREE.Color(), seite = new THREE.Color(BRUECKE_SEITE)
-      const X = (e: number) => (e - lage.cE) / 1000, Z = (n: number) => -(n - lage.cN) / 1000
+      const X = (e: number) => (e - lage.cE) / 1000, Y = (z: number) => z / 1000, Z = (n: number) => -(n - lage.cN) / 1000
       // am Rand des Modells abschneiden: die Achse alle 5 m, nur die Läufe von Punkten im Modell (ein Stück ist oft länger als das Feld)
-      const stuecke: Array<{ art: number; breite: number | null; e: number[]; n: number[]; h: number[] }> = []
+      type Lauf = BrueckenStueck & { art: number; breite: number | null; klasse: string | null }
+      const stuecke: Lauf[] = []
       for (const br of liste) {
-        let lauf: { art: number; breite: number | null; e: number[]; n: number[]; h: number[] } | null = null
+        let lauf: Lauf | null = null
         for (let i = 0; i + 1 < br.e.length; i++) {
           const l = Math.hypot(br.e[i + 1] - br.e[i], br.n[i + 1] - br.n[i]), schritte = Math.max(1, Math.ceil(l / 5))
           for (let j = i === 0 ? 0 : 1; j <= schritte; j++) {
             const t = j / schritte, e = br.e[i] + t * (br.e[i + 1] - br.e[i]), n = br.n[i] + t * (br.n[i + 1] - br.n[i])
             if (e < e0 || e > e1 || n < n0 || n > n1) { lauf = null; continue }
-            if (!lauf) { lauf = { art: br.art, breite: br.breite, e: [], n: [], h: [] }; stuecke.push(lauf) }
+            if (!lauf) { lauf = { art: br.art, breite: br.breite, klasse: br.klasse, spuren: br.spuren, e: [], n: [], h: [] }; stuecke.push(lauf) }
             lauf.e.push(e); lauf.n.push(n); lauf.h.push(br.h[i] + t * (br.h[i + 1] - br.h[i]))
           }
         }
       }
-      for (const br of stuecke) {
-        const z = br.e.length
-        if (z < 2) continue
-        const breite = br.art === 0 ? BRUECKE_GLEIS_M : br.art === 1 ? (br.breite ?? BRUECKE_STRASSE_M) + 1 : Math.max(br.breite ?? 0, 1.5) + 0.5
-        const dicke = br.art === 2 ? BRUECKE_STEG_DICKE_M : BRUECKE_DICKE_M, unter = br.art === 0 ? BRUECKE_GLEIS_UNTER_M : 0.1
-        oben.set(br.art === 0 ? BRUECKE_SCHOTTER : br.art === 1 ? BRUECKE_BELAG : BRUECKE_SEITE)
-        // je Punkt links und rechts, oben und unten
-        const ecken: number[][] = []
+      const zeichnen = (st: BrueckenStueck, z0: number, quer: ReturnType<typeof bahnQuerschnitt>) => {
+        const z = st.e.length
+        if (z < 2) return
+        let lang = 0
+        const stellen: QuerStelle[] = []
         for (let i = 0; i < z; i++) {
           const a = Math.max(0, i - 1), c = Math.min(z - 1, i + 1)
-          const de = br.e[c] - br.e[a], dn = br.n[c] - br.n[a], l = Math.hypot(de, dn) || 1
-          const qe = (-dn / l) * breite / 2, qn = (de / l) * breite / 2, top = (br.h[i] - unter) / 1000, bot = top - dicke / 1000
-          ecken.push([X(br.e[i] + qe), Z(br.n[i] + qn), X(br.e[i] - qe), Z(br.n[i] - qn), top, bot])
+          const de = st.e[c] - st.e[a], dn = st.n[c] - st.n[a], l = Math.hypot(de, dn) || 1
+          if (i) lang += Math.hypot(st.e[i] - st.e[i - 1], st.n[i] - st.n[i - 1])
+          stellen.push({ e: st.e[i], n: st.n[i], qe: -dn / l, qn: de / l, z: st.h[i] + z0, s: lang, quer })
         }
-        const vier = (p: number[][], f: THREE.Color) => {
-          for (const i of [0, 1, 2, 0, 2, 3]) { pos.push(...p[i]); farbe.push(f.r, f.g, f.b) }
-        }
-        for (let i = 0; i + 1 < z; i++) {
-          const [lx, lz, rx, rz, t, u] = ecken[i], [lx2, lz2, rx2, rz2, t2, u2] = ecken[i + 1]
-          vier([[lx, t, lz], [rx, t, rz], [rx2, t2, rz2], [lx2, t2, lz2]], oben)
-          vier([[lx, u, lz], [lx2, u2, lz2], [rx2, u2, rz2], [rx, u, rz]], seite)
-          vier([[lx, t, lz], [lx2, t2, lz2], [lx2, u2, lz2], [lx, u, lz]], seite)
-          vier([[rx, t, rz], [rx, u, rz], [rx2, u2, rz2], [rx2, t2, rz2]], seite)
-        }
-        for (const i of [0, z - 1]) {
-          const [lx, lz, rx, rz, t, u] = ecken[i]
-          vier([[lx, t, lz], [rx, t, rz], [rx, u, rz], [lx, u, lz]], seite)
-        }
+        for (const m of querschnittNetzeBauen(stellen, X, Y, Z, material)) { m.castShadow = true; m.receiveShadow = true; gruppe.add(m) }
       }
-      const geo = new THREE.BufferGeometry()
-      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
-      geo.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
-      geo.computeVertexNormals()
-      const m = new THREE.Mesh(geo, stoff)
-      m.castShadow = true; m.receiveShadow = true
-      netz = m
-      k.wurzel.add(m)
+      // Gleise: eine Platte unter allen parallelen Gleisen, der Schotter BRUECKE_GLEIS_UNTER_M unter der Achse
+      for (const p of gleisPlatten(stuecke.filter((s) => s.art === 0)))
+        zeichnen(p.stueck, 0, bahnQuerschnitt(p.lo, p.hi, -BRUECKE_GLEIS_UNTER_M, BRUECKE_DICKE_M))
+      // Strassen und Wege: der Belag knapp unter der Achse
+      for (const s of stuecke) {
+        if (s.art === 0) continue
+        zeichnen(s, -0.1, strassenQuerschnitt(strassenHalbe(s.breite, s.klasse, s.art === 2)))
+      }
+      if (gruppe.children.length) k.wurzel.add(gruppe)
     })
     return () => {
       weg = true
-      if (netz) { k.wurzel.remove(netz); netz.geometry.dispose() }
-      stoff.dispose()
+      gruppe.removeFromParent()
+      for (const c of gruppe.children) (c as THREE.Mesh).geometry.dispose()
+      for (const m of material.values()) m.dispose()
     }
   }, [b, stufe, knoepfe])
   // Strassen- und Bahnhofslicht bei Nacht (pipeline/build_strassenlicht.py; Michael, 2026-10-29: «Irgendwie fehlt schon noch eine

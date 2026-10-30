@@ -8,8 +8,9 @@ je Stück eine schlichte Platte unter der Achse, ohne Pfeiler. Bei Strassen nenn
 sie leer. Gleise: nur Bahn, Tram und Metro, ohne Standseilbahnen; je Gleis ein Stück.
 
 Je 10-km-Kachel eine Datei {Ost}_{Nord}.bjz (gzip, JSON): [art, breite_m oder null, Ost, Nord, Höhe in dm, [Ost, Nord, Höhe in dm ab dem
-ersten Punkt …]], art 0 Gleis, 1 Strasse, 2 Weg; ein Stück gehört zu jeder Kachel, die einer seiner Punkte berührt. Nach data/bruecken3d,
-mit index.json.
+ersten Punkt …], zusatz], art 0 Gleis, 1 Strasse, 2 Weg; zusatz bei Gleisen ANZAHL_SPUREN (1, 2 oder null), bei Strassen und Wegen die
+Klasse (OBJEKTART, «Autobahn» …; für die Breite, wo der Name keine nennt, wie im Führerstand); ein Stück gehört zu jeder Kachel, die einer
+seiner Punkte berührt. Nach data/bruecken3d, mit index.json.
 
     python3 pipeline/fetch_tlm3d.py --strassen
     .venv/bin/python pipeline/build_bruecken3d.py
@@ -42,14 +43,14 @@ def main():
     kacheln = defaultdict(list)
     zahl = defaultdict(int)
 
-    def legen(art, breite, p, z):
+    def legen(art, breite, p, z, zusatz=None):
         if laenge(p) < MIN_M:
             return
         e0, n0, h0 = round(p[0][0]), round(p[0][1]), round(z[0] * 10)
         d = []
         for (e, n), h in zip(p, z):
             d += [round(e - e0, 1), round(n - n0, 1), round(h * 10) - h0]
-        eintrag = [art, breite, e0, n0, h0, d]
+        eintrag = [art, breite, e0, n0, h0, d, zusatz]
         for k in {(int(e // KACHEL_M), int(n // KACHEL_M)) for e, n in p}:
             kacheln[k].append(eintrag)
         zahl[art] += 1
@@ -62,9 +63,10 @@ def main():
                 or d.get("STANDSEILB") not in ("Falsch", None, ""):
             continue
         s = bahn.shape(i)
+        spuren = int(d["ANZAHL_SPU"]) if str(d.get("ANZAHL_SPU") or "").isdigit() else None
         teile = list(s.parts) + [len(s.points)]
         for a, b in zip(teile, teile[1:]):
-            legen(0, None, [q[:2] for q in s.points[a:b]], list(s.z[a:b]))
+            legen(0, None, [q[:2] for q in s.points[a:b]], list(s.z[a:b]), spuren)
 
     strasse = shapefile.Reader(str(ROH / "swissTLM3D_TLM_STRASSE"), encoding="utf-8")
     for i, (art, kb) in enumerate(strasse.iterRecords(fields=["OBJEKTART", "KUNSTBAUTE"])):
@@ -74,7 +76,7 @@ def main():
         m = re.match(r"(\d+)m ", art)
         teile = list(s.parts) + [len(s.points)]
         for a, b in zip(teile, teile[1:]):
-            legen(2 if art in WEGE or kb == "Steg" else 1, int(m.group(1)) if m else None, [q[:2] for q in s.points[a:b]], list(s.z[a:b]))
+            legen(2 if art in WEGE or kb == "Steg" else 1, int(m.group(1)) if m else None, [q[:2] for q in s.points[a:b]], list(s.z[a:b]), art)
 
     ZIEL.mkdir(parents=True, exist_ok=True)
     for p in ZIEL.glob("*.bjz"):

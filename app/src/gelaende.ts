@@ -619,7 +619,9 @@ let mastVerz: Promise<MastIndex | null> | null = null
 const mastVorrat = new Map<string, Promise<Masten | null>>()
 /** Brücken für «3D Schweiz» (pipeline/build_bruecken3d.py): je Stück die Art (0 Gleis, 1 Strasse, 2 Weg), die Breite laut Klasse oder null
  *  und die Punkte der Achse mit Höhe in Metern */
-export interface Bruecke3d { art: number; breite: number | null; e: Float64Array; n: Float64Array; h: Float32Array }
+/** ein Stück einer Achse auf einer Brücke laut swissTLM3D: art 0 Gleis, 1 Strasse, 2 Weg; breite aus dem Namen der Klasse; spuren bei
+ *  Gleisen ANZAHL_SPUREN, klasse bei Strassen und Wegen OBJEKTART (beides fehlt in Dateien vor 2026-10-30) */
+export interface Bruecke3d { art: number; breite: number | null; e: Float64Array; n: Float64Array; h: Float32Array; spuren: number | null; klasse: string | null }
 let brueckenVerz: Promise<MastIndex | null> | null = null
 const brueckenVorrat = new Map<string, Promise<Bruecke3d[] | null>>()
 export async function brueckenLaden(e0: number, n0: number, e1: number, n1: number): Promise<Bruecke3d[]> {
@@ -633,9 +635,10 @@ export async function brueckenLaden(e0: number, n0: number, e1: number, n1: numb
     let p = brueckenVorrat.get(name)
     if (!p) {
       p = holenBinaer(`data/bruecken3d/${name}.bjz`).then(entpacken).then((roh) => {
-        const liste = JSON.parse(new TextDecoder().decode(roh)) as Array<[number, number | null, number, number, number, number[]]>
-        return liste.map(([art, breite, e, n, h, d]) => {
-          const z = d.length / 3, b: Bruecke3d = { art, breite, e: new Float64Array(z), n: new Float64Array(z), h: new Float32Array(z) }
+        const liste = JSON.parse(new TextDecoder().decode(roh)) as Array<[number, number | null, number, number, number, number[], (number | string | null)?]>
+        return liste.map(([art, breite, e, n, h, d, zusatz]) => {
+          const z = d.length / 3, b: Bruecke3d = { art, breite, e: new Float64Array(z), n: new Float64Array(z), h: new Float32Array(z),
+                                                   spuren: typeof zusatz === 'number' ? zusatz : null, klasse: typeof zusatz === 'string' ? zusatz : null }
           for (let i = 0; i < z; i++) { b.e[i] = e + d[3 * i]; b.n[i] = n + d[3 * i + 1]; b.h[i] = (h + d[3 * i + 2]) / 10 }
           return b
         })
