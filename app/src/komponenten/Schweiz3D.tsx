@@ -22,7 +22,8 @@ import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
-import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
+import { jetztImFahrplan, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
+import { planText } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
@@ -3208,7 +3209,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const von = uicVon.get(ab), nach = uicVon.get(bis)
       if (!von || !nach || weg.some((x) => !/^[A-Z]+$/.test(x))) { setMitfahren(null); return }
       const titel = `${f.linie && f.linie !== f.gattung ? f.linie : f.gattung} ${f.nummer}`.trim()
-      setMitfahren({ name: `${titel} nach ${f.ziel}`, url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1` })
+      // nach dem Fahrplan des Zugs, von jetzt an (Michael, 2026-10-31: «in den Live-Zug hineinversetzt … gleich am Fahren»; mitfahren.ts)
+      const jetzt = ix ? jetztImFahrplan(ix) : null, plan = jetzt ? zugPlan(f, jetzt.tag, jetzt.minuten, st!.i) : null
+      const planTeil = plan ? `&plan=${planText({ t0: Date.now() / 1000, halte: plan.map((x) => ({ abk: x.abk, an: x.an * 60, ab: x.ab * 60 })) })}` : ''
+      setMitfahren({ name: `${titel} nach ${f.ziel}`,
+                     url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1${planTeil}` })
     }
     const linkSetzen = (abk: string | null) => {
       if (abk === linkAbk) return

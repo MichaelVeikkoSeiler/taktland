@@ -15,7 +15,7 @@ import { audioKontext, audioLesen, audioSetzen, signalhorn } from '../audio'
  * GPS-Standort (Hebel gesperrt), bei der Probefahrt das der Probefahrt; dort wählt der rechte Hebel deren Stufe, die Bremse
  * hält an (aussen.probe).
  */
-export type TempoQuelle = 'simulation' | 'gps' | 'probe'
+export type TempoQuelle = 'simulation' | 'gps' | 'probe' | 'fahrplan'
 
 /** Probefahrt vom Pult aus (Michael, 2026-10-14: «alle Bedienelemente als Knöpfe auf dem Führerpult»): der Hebel rechts wählt
  *  die Stufe des Zeitraffers, die Bremse hält an, gelöst fährt der Zug weiter */
@@ -671,7 +671,7 @@ export class Fuehrerpult {
     }
     const sim = this.quelle === 'simulation'
     const gesperrt = this.quelle === 'probe' ? 'In der Probefahrt bestimmt der Zeitraffer das Tempo'
-      : 'Beim Fahren bestimmt der Standort das Tempo'
+      : this.quelle === 'fahrplan' ? 'Der Fahrplan bestimmt das Tempo' : 'Beim Fahren bestimmt der Standort das Tempo'
     switch (aktion) {
       case 'sollPlus': if (!sim) return gesperrt
         this.soll = Math.min(PULT_HOECHST_KMH, this.soll + SCHRITT_KMH); if (this.bremse === 2) this.bremse = 0; return `${this.soll} km/h gewählt`
@@ -878,7 +878,7 @@ export class Fuehrerpult {
     c.font = '24px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.grau; c.fillText('km/h', mx, my + 130)
     // rechts oben: Herkunft des Tempos, Wahl und Bremse, klein
     c.textAlign = 'left'
-    const quelle = { simulation: 'SIMULATION', gps: 'GPS', probe: 'PROBEFAHRT' }[l.quelle]
+    const quelle = { simulation: 'SIMULATION', gps: 'GPS', probe: 'PROBEFAHRT', fahrplan: 'FAHRPLAN' }[l.quelle]
     c.fillStyle = l.quelle === 'gps' ? '#7fd38a' : FARBE.gelb; c.font = 'bold 24px Helvetica, Arial, sans-serif'
     c.fillText(quelle, 404, 48)
     c.fillStyle = FARBE.grau; c.font = '22px Helvetica, Arial, sans-serif'
@@ -892,7 +892,7 @@ export class Fuehrerpult {
       c.fillStyle = st.angehalten() ? FARBE.karmin : FARBE.grau
       c.fillText(st.angehalten() ? 'angehalten' : 'fährt', 404, 108)
     } else {
-      c.fillText(l.quelle === 'gps' ? 'aus dem Standort' : 'Zeitraffer', 404, 80)
+      c.fillText(l.quelle === 'gps' ? 'aus dem Standort' : l.quelle === 'fahrplan' ? 'laut Fahrplan' : 'Zeitraffer', 404, 80)
       c.fillText('Hebel gesperrt', 404, 108)
     }
     c.fillStyle = '#26364d'; c.fillRect(404, 126, 220, 2)

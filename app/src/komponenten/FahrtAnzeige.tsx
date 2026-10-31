@@ -325,7 +325,7 @@ function nahStufe(tempo: number, alt: number | null): number {
  * Die kleine Karte zur Fahrt: grau das Streckennetz, dunkel der Weg vor dem
  * Zug, rot der Standort. «Nah» folgt dem Zug, «Ganzer Weg» zeigt alles.
  */
-export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null, probefahrt = false, aussen, imFuehrerstand,
+export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null, probefahrt = false, nachPlan = false, aussen, imFuehrerstand,
   dreiDMelden }: {
   fahrweg: Fahrweg
   /** ob gerade 3D gezeigt wird (dort ein tieferes Höchsttempo der Probefahrt) */
@@ -336,6 +336,8 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   imFuehrerstand?: React.ReactNode
   /** für den Tacho im Führerstand: das Tempo stammt aus der Probefahrt, nicht aus dem GPS */
   probefahrt?: boolean
+  /** die Probefahrt folgt dem Fahrplan eines Zugs (mitfahren.ts): Tempo laut Fahrplan, Hebel gesperrt */
+  nachPlan?: boolean
   /** Tempo in Metern pro Sekunde, wie es sich anfühlt (Probefahrt mal Zeitraffer); null ohne Standort */
   tempo?: number | null
   /** Namen von Start und Ziel, beschriftet wie auf dem Fahrtblatt (Michael, 2026-09-29) */
@@ -644,7 +646,7 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
       {dreiD && relief ? (
         <Suspense fallback={<div className={`${klassen.svg} flex items-center justify-center text-sm text-sbb-metal`}>Das Gelände wird geladen …</div>}>
           <GelaendeFahrt fahrweg={fahrweg} objekte={objekte} sJetzt={sJetzt} className={klassen.svg} tempo={tempo} start={start} ziel={ziel}
-                         tempoQuelle={probefahrt ? 'probe' : 'gps'} aussen={aussen} voll={voll}
+                         tempoQuelle={nachPlan ? 'fahrplan' : probefahrt ? 'probe' : 'gps'} aussen={aussen} voll={voll}
                          schliessen={() => setVoll(false)} vorneMelden={setVorne} vorneAnfang={vorneStart} />
         </Suspense>
       ) : (
