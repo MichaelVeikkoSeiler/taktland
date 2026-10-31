@@ -36,6 +36,29 @@ export function fahrleitungsMast() {
  *  der Hänger gewählt; welche Masten am selben Draht hängen, steht in keiner Quelle: verbunden wird je Mast der nächste in Richtung des Gleises
  *  (quer zum Ausleger) in SPANN_MIN_M bis SPANN_MAX_M, der etwa gleich steht */
 export const FAHRDRAHT_FARBE = '#2b2b2b'
+/** die Drähte sind Linien von einem Bildpunkt, aus der Ferne viel dicker als ein Draht von gut 1 cm (Michael, 2026-10-31: «Wenn man weiter
+ *  weg ist sind sie zu dick»): bis DRAHT_VOLL_KM vom Auge ganz, bis DRAHT_WEG_KM ausgeblendet, gemessen in den Einheiten der Szene (km); gewählt */
+const DRAHT_VOLL_KM = 0.12, DRAHT_WEG_KM = 0.45
+/** Stoff und Linien der Drähte: blendet je Punkt nach dem Abstand zum Auge aus (in den Koordinaten der Linien, also unabhängig vom Massstab
+ *  einer Gruppe darüber) */
+export function drahtStoff() {
+  const stoff = new THREE.LineBasicMaterial({ color: FAHRDRAHT_FARBE, transparent: true, opacity: 0.8, depthWrite: false })
+  const kamera = { value: new THREE.Vector3() }
+  stoff.onBeforeCompile = (sh) => {
+    sh.uniforms.uDrahtAuge = kamera
+    sh.vertexShader = 'uniform vec3 uDrahtAuge;\nvarying float vDrahtFern;\n' + sh.vertexShader.replace('#include <begin_vertex>',
+      '#include <begin_vertex>\nvDrahtFern = distance(position, uDrahtAuge);')
+    sh.fragmentShader = 'varying float vDrahtFern;\n' + sh.fragmentShader.replace('#include <opaque_fragment>',
+      `diffuseColor.a *= 1.0 - smoothstep(${DRAHT_VOLL_KM.toFixed(3)}, ${DRAHT_WEG_KM.toFixed(3)}, vDrahtFern);\nif (diffuseColor.a < 0.01) discard;\n#include <opaque_fragment>`)
+  }
+  const linien = (geo: THREE.BufferGeometry) => {
+    const l = new THREE.LineSegments(geo, stoff)
+    l.frustumCulled = false
+    l.onBeforeRender = (_r, _s, cam) => { kamera.value.setFromMatrixPosition(cam.matrixWorld); l.worldToLocal(kamera.value) }
+    return l
+  }
+  return { stoff, linien }
+}
 const UEBER_GLEIS_M = 3, FAHRDRAHT_M = 5.5, TRAGSEIL_M = 6.9, DURCHHANG_M = 0.9, HAENGER = 4, SPANN_MIN_M = 25, SPANN_MAX_M = 75
 /** die Drähte als Liniensegmente, je Punkt Ost, Nord und Höhe in m ü. M.: e, n, winkel wie die Masten (winkel: Richtung des Auslegers,
  *  gegen den Uhrzeigersinn ab Osten), fuss die Höhe des Mastfusses oder null, wenn der Mast nicht steht */
