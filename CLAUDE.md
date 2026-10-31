@@ -684,7 +684,7 @@ data/bruecken3d/  Brücken für «3D Schweiz» (Michael, 2026-10-30: «Kannst du
              standen sie im Hang); im Führerstand alle Brücken im feinen Gelände ausser denen der eigenen Linie (fremdeBruecken in Relief.tsx: ein Gleisstück,
              das an mehr als der Hälfte seiner Punkte höchstens 20 m neben der gezeichneten Strecke liegt, gehört zur eigenen Brücke), mit Retusche darunter,
              statt nur der Strassenbrücken über der Bahn aus data/strassenbruecken.json, das die App nicht mehr liest; in Anleitung und Quellen genannt
-data/fahrplan/  Fahrplan für «Welcher Zug?»: nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
+data/fahrplan/  Fahrplan für «Welcher Zug?» (seit 2026-10-31 auf main, vorher nur auf dem Branch; Michael: «Nimm jetzt Welcher Zug»): nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
