@@ -23,9 +23,11 @@ export interface LaufendeFahrt {
   zeit: number
   /** «Ohne Ziel»: Beim Fortsetzen sucht Taktland die Linie neu */
   ohne?: boolean
-  /** der gewählte Zug, falls einer gewählt wurde */
-  zug?: string
+  /** der gewählte Zug, falls einer gewählt wurde: Fahrt im Fahrplan, Verkehrstag, Nummer zur Kontrolle */
+  zug?: GemerkterZug
 }
+
+export interface GemerkterZug { id: number; tag: number; n: string; text: string }
 
 const SCHLUESSEL = 'taktland.laufend.v1'
 const EREIGNIS = 'taktland-laufend'
@@ -62,7 +64,7 @@ export function laufendStelle(beginn: number, startS: number, s: number) {
   try { localStorage.setItem(SCHLUESSEL, JSON.stringify({ ...x, startS, s, zeit: Date.now() })) } catch { /* */ }
 }
 
-export function laufendZug(beginn: number, zug: string | undefined) {
+export function laufendZug(beginn: number, zug: GemerkterZug | undefined) {
   const x = laufendLesen()
   if (x && x.beginn === beginn) schreiben({ ...x, zug })
 }

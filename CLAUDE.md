@@ -559,7 +559,7 @@ data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-1
              leuchtend, in der Dämmerung der Abendhimmel, Sterne hinter Wolken schwächer; bei Schönwetter und in «Wo bin ich?» immer Tag
 data/zuege3d/  Züge laut Fahrplan für «3D Schweiz», zuerst nur für 3dland.ch (Michael, 2026-10-26: «gehen wir mal die Züge an. Aber NUR für
              3DLand, nicht für Taktland»), seit 2026-10-28 auch in Taktland (Michael: «Bitte diese Sachen auch für Taktland»: der Knopf «Züge», gebaut
-             auch in pages.yml, montags und donnerstags, neben die App gelegt, _site/app/zuege3d; der Link zum Bahnhof führt dort
+             auch in pages.yml nach build_fahrplan, montags und donnerstags, neben die App gelegt, _site/app/zuege3d; der Link zum Bahnhof führt dort
              auf dessen Seite in der App, AUF_3DLAND; zuerst Fahrplan, Echtzeit wäre ein zweiter Schritt mit Schlüssel): pipeline/build_zuege3d.py aus dem
              GTFS von opentransportdata.swiss (fetch_fahrplan.py), nur Züge und Halte an Bahnhöfen im Netz, 14 Tage ab gestern, je Paar Halte der
              kürzeste Weg im Netz (Dijkstra wie wegSuchen, das dafür in src/wegsuche.ts steht), jede Fahrt in jeder 10-km-Kachel, die ihr Weg
@@ -684,6 +684,9 @@ data/bruecken3d/  Brücken für «3D Schweiz» (Michael, 2026-10-30: «Kannst du
              standen sie im Hang); im Führerstand alle Brücken im feinen Gelände ausser denen der eigenen Linie (fremdeBruecken in Relief.tsx: ein Gleisstück,
              das an mehr als der Hälfte seiner Punkte höchstens 20 m neben der gezeichneten Strecke liegt, gehört zur eigenen Brücke), mit Retusche darunter,
              statt nur der Strassenbrücken über der Bahn aus data/strassenbruecken.json, das die App nicht mehr liest; in Anleitung und Quellen genannt
+data/fahrplan/  Fahrplan für «Welcher Zug?» (seit 2026-10-31 auf main, vorher nur auf dem Branch; Michael: «Nimm jetzt Welcher Zug»): nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
+             ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
+             nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
 data/standort.json  Lage jedes Tunnels, jeder Brücke und jedes Bahnübergangs aus der
              Quelle, für die Seite «Standort» (pipeline/build_linien.py)
 ```
@@ -715,6 +718,7 @@ python3 pipeline/build_sehenswert.py             # Gipfel, Kulturgüter, Seilbah
 .venv/bin/python pipeline/build_bodenbedeckung.py  # Wald und Siedlung (swissTLMRegio)
 .venv/bin/python pipeline/build_kartengrund.py   # Grenzen, Flüsse, Höhenstufen für die Karten
 python3 pipeline/fetch_fahrplan.py              # Fahrplan (GTFS) laden, 290 MB, entpackt 4,5 GB
+.venv/bin/python pipeline/build_fahrplan.py      # Züge und Halte für «Welcher Zug?», vor export_app
 .venv/bin/python pipeline/build_zuege3d.py       # Züge laut Fahrplan je Kachel für 3dland.ch (data/zuege3d) und Schiffe (data/schiffe3d), sonst im Workflow von 3dland
 .venv/bin/python pipeline/build_schifflinien.py   # Kurslinien der Schiffe aus swissTLMRegio (data/schifflinien.json), vor build_zuege3d
 .venv/bin/python pipeline/build_wolken.py         # Wolken aus ICON-CH1-EPS (MeteoSchweiz) für «3D Schweiz» (data/wolken), braucht eccodes, sonst im Workflow von 3dland
