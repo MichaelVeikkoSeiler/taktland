@@ -25,7 +25,7 @@ import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
-import { FAHRDRAHT_FARBE, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
+import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
 import { bewoelkung, bewoelkung3d, niederschlagBei, wolken3dStunde, wolkenLaden, wolkenStunde } from '../wolken'
@@ -2903,7 +2903,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     if (!k || !lage || (stufe !== 'ort' && stufe !== 'nah')) return
     let weg = false, netz: THREE.InstancedMesh | null = null, draehte: THREE.LineSegments | null = null
     const geo = fahrleitungsMast(), stoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
-    const drahtGeo = new THREE.BufferGeometry(), drahtStoff = new THREE.LineBasicMaterial({ color: FAHRDRAHT_FARBE, transparent: true, opacity: 0.8 })
+    const drahtGeo = new THREE.BufferGeometry(), draht = drahtStoffBauen(), drahtStoff = draht.stoff
     const teile = [...b.teile.values()], rand = teile.map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
@@ -2957,8 +2957,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const pos = new Float32Array(roh.length)
         for (let i = 0; i < roh.length; i += 3) { pos[i] = (roh[i] - lage.cE) / 1000; pos[i + 1] = roh[i + 2] / 1000; pos[i + 2] = -(roh[i + 1] - lage.cN) / 1000 }
         drahtGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-        draehte = new THREE.LineSegments(drahtGeo, drahtStoff)
-        draehte.frustumCulled = false
+        draehte = draht.linien(drahtGeo)
         k.wurzel.add(draehte)
       }
     })

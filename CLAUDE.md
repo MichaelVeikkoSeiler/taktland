@@ -661,7 +661,8 @@ data/fahrleitung/  Masten der Fahrleitung für «3D Schweiz» und den Führersta
              (25 bis 75 m entlang des Gleises, kaum quer versetzt, fast gleiche Richtung) zwei Drähte über dem Gleis, 3 m am Ausleger entlang (Michael, 2026-10-31:
              «Bitte mach einen Fahrdraht bei den Fahrleitungen. Ich glaube, in der Realität sind es zwei. Einer oben und einer unten»): unten der Fahrdraht gerade
              auf 5,5 m, oben das Tragseil auf 6,9 m mit 0,9 m Durchhang, dazwischen vier Hänger, dunkelgraue feine Linien (fahrleitungsDraehte in Fahrleitung.ts,
-             Höhen, Durchhang und Paarung gewählt, in keiner Quelle)
+             Höhen, Durchhang und Paarung gewählt, in keiner Quelle), bis 120 m vom Auge ganz, bis 450 m ausgeblendet (DRAHT_VOLL_KM, DRAHT_WEG_KM, gewählt;
+             Michael, 2026-10-31: «Wenn man weiter weg ist sind sie zu dick»: eine Linie ist immer einen Bildpunkt breit)
 data/gleise3d.json  welches Gleis wo liegt, für die Züge in «3D Schweiz» (Michael, 2026-10-30: «Kann man die Züge auf den richtigen Gleisen fahren lassen?
              Erkennst du sie und auf welchem Gleis der entsprechende Zug ankommt? Unterirdische Gleise nicht berücksichtigen»): pipeline/build_gleise3d.py aus den
              Sektortafeln der SBB (sektortafel, Lage und Kundengleisnummer) und den Gleisachsen aus swissTLM3D ohne Tunnel: je Tafel die Achsen bis 9 m, höchstens

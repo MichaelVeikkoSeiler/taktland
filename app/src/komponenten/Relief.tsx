@@ -23,7 +23,7 @@ import { sternenhimmelBauen } from './Sternenhimmel'
 import { audioKontext, audioLesen, audioSetzen, useAudio, wetterGeraeusch, wetterGeraeuschAus, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
 import { type Bruecke3d, brueckenLaden, strassenlichtLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
-import { FAHRDRAHT_FARBE, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
+import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
 import { fahrplanZuegeBauen } from './FahrplanZuege'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { WOLKEN_HOEHE_M, wolkenBild, wolkenEbenen3d } from './WolkenBild'
@@ -2590,7 +2590,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     }
     if (import.meta.env.VITE_S3D_TEST) (window as unknown as { reliefKamera: unknown }).reliefKamera = () => [kamera.position.x * 1000 + me, -kamera.position.z * 1000 + mn, kamera.position.y * 1000 / faktor, szene.children.length]
     const mastForm = fahrleitungsMast(), mastStoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
-    const drahtStoff = new THREE.LineBasicMaterial({ color: FAHRDRAHT_FARBE, transparent: true, opacity: 0.8 })
+    const draht = drahtStoffBauen()
     let mastAuftrag = 0
     const mastSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++mastAuftrag
@@ -2642,8 +2642,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         }
         const g = new THREE.BufferGeometry()
         g.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-        const linien = new THREE.LineSegments(g, drahtStoff)
-        linien.frustumCulled = false
+        const linien = draht.linien(g)
         mastGruppe.add(linien)
       }
     }
