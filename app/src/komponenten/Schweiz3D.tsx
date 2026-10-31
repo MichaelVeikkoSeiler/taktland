@@ -1259,6 +1259,9 @@ const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 600, ZUG_SPUR_GERADE_M = 200
 /** Bahnbrücken: Dicke der Platte und wie tief der Schotter unter der Gleisachse liegt; gewählt, in keiner Quelle (die übrigen Masse und das
  *  Aussehen in komponenten/Bruecken.ts) */
 const BRUECKE_DICKE_M = 1.6, BRUECKE_GLEIS_UNTER_M = 0.5
+/** so weit neben einer Gleisachse darf ein Zug mit seinem Versatz zur Spur liegen, sonst rückt er zum Weg zurück (m, gewählt; Gleise liegen etwa
+ *  4,5 m auseinander) */
+const ZUG_IM_FELD_M = 5
 /** ein Mast der Fahrleitung so nah an einer Gleisachse auf einer Brücke steht auf ihr (m, gewählt) */
 const MAST_AUF_BRUECKE_M = 6
 /** freie Spuren zum Ausweichen der Reihe nach (in ZUG_SPUR) und wie schnell ein Zug hingleitet, gewählt */
@@ -3511,6 +3514,18 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const anfang = spurA === null ? null : lageBei(fw, 0), schluss = spurB === null ? null : lageBei(fw, ende)
         let lokE = 0, lokN = 0, steuerE = 0, steuerN = 0
         const aus = ausweich.get(u.f.id)?.jetzt ?? 0
+        // im Gleisfeld bleiben (Michael, 2026-10-31, Lausanne: «Bei der östlichen Ausfahrt … fährt der Zug irgendwo in der Luft»): der Versatz zur
+        // Spur des Gleises gilt quer zum Weg; wo die Gleise in der Weichenzone zusammenlaufen, lag der Zug so neben dem Gleisfeld, über der Strasse,
+        // auf der Höhe der Gleise. Liegt an der versetzten Stelle keine Gleisachse bis ZUG_IM_FELD_M daneben, rückt er zum Weg zurück, bis eine da ist,
+        // und nimmt ihre Höhe; ohne Gleisachsen (Region) bleibt alles wie es war
+        const imGleisfeld = (be: number, bn: number, oe: number, on: number, de: number, dn: number): [number, number, number | null] => {
+          if (!gleisNetz) return [be + oe, bn + on, null]
+          for (const t of [1, 0.75, 0.5, 0.25, 0]) {
+            const g = gleisBei(be + oe * t, bn + on * t, de, dn, ZUG_IM_FELD_M)
+            if (g && !g[3]) return [be + oe * t, bn + on * t, t === 1 ? null : g[2]]
+          }
+          return [be + oe, bn + on, null]
+        }
         const glatt = enden.map((x) => {
           let summe = 0, zahlH = 0
           for (const y of enden) if (Math.abs(y.s - x.s) <= fenster && Number.isFinite(y.h)) { summe += y.h; zahlH++ }
@@ -3533,14 +3548,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           // am Halt gilt der Versatz zum Gleis vom Weg im Netz aus, nicht von der Achse, auf die der Weg gerückt ist; danach rastet der Wagen auf
           // die Achse des Gleises ein, wenn eine bis ZUG_GLEIS_EIN_M daneben liegt
           const anVor = anteile(vo.s), anHin = anteile(hi.s), wv = anVor[0] + anVor[1], wh = anHin[0] + anHin[1]
-          let voE = vo.e + (vo.er - vo.e) * wv + le * versatz, voN = vo.n + (vo.nr - vo.n) * wv + ln * versatz
-          let hiE = hi.e + (hi.er - hi.e) * wh + le * versatzH, hiN = hi.n + (hi.nr - hi.n) * wh + ln * versatzH
-          if (wv > 0.999) { const g = gleisBei(voE, voN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { voE = g[0]; voN = g[1] } }
-          if (wh > 0.999) { const g = gleisBei(hiE, hiN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { hiE = g[0]; hiN = g[1] } }
+          let [voE, voN, hvG] = imGleisfeld(vo.e + (vo.er - vo.e) * wv, vo.n + (vo.nr - vo.n) * wv, le * versatz, ln * versatz, ln, -le)
+          let [hiE, hiN, hhG] = imGleisfeld(hi.e + (hi.er - hi.e) * wh, hi.n + (hi.nr - hi.n) * wh, le * versatzH, ln * versatzH, ln, -le)
+          if (wv > 0.999) { const g = gleisBei(voE, voN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { voE = g[0]; voN = g[1]; hvG = g[2] } }
+          if (wh > 0.999) { const g = gleisBei(hiE, hiN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { hiE = g[0]; hiN = g[1]; hhG = g[2] } }
           const e = (voE + hiE) / 2, n = (voN + hiN) / 2
           if (w === 0) { lokE = e; lokN = n }
+          if (import.meta.env.VITE_S3D_TEST && w === 0) { const g = gleisBei(e, n, ln, -le, 30); (window as unknown as { s3dZugTest: unknown[] }).s3dZugTest?.push([u.f.nummer, h[j].abk, h[j + 1].abk, Math.round(e), Math.round(n), Math.round(versatz), wv.toFixed(2), g ? Math.round(Math.hypot(g[0] - e, g[1] - n) * 10) / 10 : null, g?.[3], Math.round(vo.e - vo.er), Math.round(vo.n - vo.nr), (() => { const ae = vo.e + (vo.er - vo.e) * wv + le * versatz, an = vo.n + (vo.nr - vo.n) * wv + ln * versatz, g2 = gleisBei(ae, an, ln, -le, 40); return g2 ? Math.round(Math.hypot(g2[0] - ae, g2[1] - an)) : 'keins' })()]) }
           if (w === ZUG_WAGEN) { steuerE = e; steuerN = n }
-          v.set((e - lage.cE) / 1000, (hv + hh) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
+          v.set((e - lage.cE) / 1000, ((hvG ?? hv) + (hhG ?? hh)) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
           q.setFromAxisAngle(oben, Math.atan2(voE - hiE, -(voN - hiN)))
           const quer = Math.hypot(vo.e - hi.e, vo.n - hi.n)
           neigung.setFromAxisAngle(querAchse, quer > 1 ? -Math.max(-ZUG_NEIGUNG, Math.min(ZUG_NEIGUNG, Math.atan2(hv - hh, quer))) : 0)
