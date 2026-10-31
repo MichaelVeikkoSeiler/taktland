@@ -25,7 +25,7 @@ import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
 import { jetztImFahrplan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
-import { FAHRLEITUNG_FARBE, fahrleitungsMast } from './Fahrleitung'
+import { FAHRDRAHT_FARBE, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
 import { bewoelkung, bewoelkung3d, niederschlagBei, wolken3dStunde, wolkenLaden, wolkenStunde } from '../wolken'
@@ -2901,8 +2901,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     if (!k || !lage || (stufe !== 'ort' && stufe !== 'nah')) return
-    let weg = false, netz: THREE.InstancedMesh | null = null
+    let weg = false, netz: THREE.InstancedMesh | null = null, draehte: THREE.LineSegments | null = null
     const geo = fahrleitungsMast(), stoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
+    const drahtGeo = new THREE.BufferGeometry(), drahtStoff = new THREE.LineBasicMaterial({ color: FAHRDRAHT_FARBE, transparent: true, opacity: 0.8 })
     const teile = [...b.teile.values()], rand = teile.map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
@@ -2937,9 +2938,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       n.castShadow = true; n.frustumCulled = false
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(0.001, 0.001, 0.001), oben = new THREE.Vector3(0, 1, 0)
       let zahl = 0
+      const fuesse: Array<number | null> = []
       for (let i = 0; i < ms.e.length; i++) {
         const boden = bestandHoehe(b, ms.e[i], ms.n[i]), hb = aufBruecke(ms.e[i], ms.n[i])
         const h = hb !== null && hb - BRUECKE_GLEIS_UNTER_M > boden ? hb - BRUECKE_GLEIS_UNTER_M : boden
+        fuesse.push(Number.isFinite(h) ? h : null)
         if (!Number.isFinite(h)) continue
         v.set((ms.e[i] - lage.cE) / 1000, h / 1000, -(ms.n[i] - lage.cN) / 1000)
         q.setFromAxisAngle(oben, ms.winkel[i])
@@ -2948,11 +2951,22 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       n.count = zahl
       netz = n
       k.wurzel.add(n)
+      // Fahrdraht und Tragseil von Mast zu Mast (fahrleitungsDraehte in Fahrleitung.ts)
+      const roh = fahrleitungsDraehte(ms.e, ms.n, ms.winkel, (i) => fuesse[i])
+      if (roh.length) {
+        const pos = new Float32Array(roh.length)
+        for (let i = 0; i < roh.length; i += 3) { pos[i] = (roh[i] - lage.cE) / 1000; pos[i + 1] = roh[i + 2] / 1000; pos[i + 2] = -(roh[i + 1] - lage.cN) / 1000 }
+        drahtGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+        draehte = new THREE.LineSegments(drahtGeo, drahtStoff)
+        draehte.frustumCulled = false
+        k.wurzel.add(draehte)
+      }
     })
     return () => {
       weg = true
       if (netz) { k.wurzel.remove(netz); netz.dispose() }
-      geo.dispose(); stoff.dispose()
+      if (draehte) k.wurzel.remove(draehte)
+      geo.dispose(); stoff.dispose(); drahtGeo.dispose(); drahtStoff.dispose()
     }
   }, [b, stufe, knoepfe])
   // Brücken (pipeline/build_bruecken3d.py; Michael, 2026-10-30: «Kannst du die Brücken, hier Lorraineviadukt bauen? … Ebenso grössere
