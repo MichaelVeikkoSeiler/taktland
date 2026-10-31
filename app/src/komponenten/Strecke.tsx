@@ -1,4 +1,5 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react'
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { type PlanAdresse, type PlanHalt, planAufWeg, planLesen } from '../mitfahren'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, ladenVerfolgen, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
 import { bahnhoefeVorziehen, gerundetM, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
@@ -371,7 +372,10 @@ function Ergebnis({
   }, [])
   const uebergaengeNach = useMemo(() => (uebergaenge ? nachKennung(uebergaenge) : new Map<string, UebergangEintrag & { linie: number }>()),
                                   [uebergaenge])
+  const planVorgemerkt = useRef<PlanAdresse | null>(null)
   const [fahrt, setFahrt] = useState<{ fahrweg: Fahrweg; probe: boolean; piepen: Ton
+                                        /** aus «3D Schweiz»: nach dem Fahrplan eines Zugs (mitfahren.ts) */
+                                        plan?: PlanHalt[] | null
                                         beginn: number | null
                                         fortsetzen: { startS: number; s: number } | null
                                         zug: GemerkterZug | null
@@ -486,7 +490,14 @@ function Ergebnis({
         ? heftLesen().fahrten.find((f) => f.beginn === beginn)?.weg_m ?? 0 : 0
       const wegTeil = beginn !== null && wahl.ohne && gleich
         ? heftLesen().fahrten.find((f) => f.beginn === beginn)?.wege?.length ?? 0 : 0
-      setFahrt({ fahrweg, probe, piepen, beginn, fortsetzen, zug: fortsetzen && alt?.zug ? alt.zug : null, wegVorher, wegTeil })
+      // aus «3D Schweiz» nach dem Fahrplan eines Zugs: die Halte auf den Weg, am Betriebspunkt des Bahnhofs
+      const planRoh = probe ? planVorgemerkt.current : null
+      planVorgemerkt.current = null
+      const plan = planRoh ? planAufWeg(planRoh, wegEnde(fahrweg), (abk) => {
+        const o = fahrweg.objekte.find((x) => x.art === 'bahnhof' && x.kennung === abk)
+        return o ? o.sOrt ?? o.s : undefined
+      }) : null
+      setFahrt({ fahrweg, probe, plan, piepen, beginn, fortsetzen, zug: fortsetzen && alt?.zug ? alt.zug : null, wegVorher, wegTeil })
     } catch (e) {
       setFahrtFehler((e as Error).message)
     } finally {
@@ -553,6 +564,8 @@ function Ergebnis({
     setStartWunsch(null)
     // aus «3D Schweiz»: gleich in 3D im Führerstand (Michael, 2026-10-30: «auf Mitfahren klicken … sodass man gleich im Führerstand mitfährt»)
     if (new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('fuehrerstand') === '1') { dreiDVormerken(); fuehrerstandVormerken() }
+    // … und nach dem Fahrplan des Zugs, gleich fahrend (Michael, 2026-10-31: «in den Live-Zug hineinversetzt»)
+    planVorgemerkt.current = art === 'probe' ? planLesen(new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('plan')) : null
     window.history.replaceState(null, '', streckenAdresse(wahl))
     void fahrtStarten(art === 'probe', art === 'weiter')
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -756,7 +769,7 @@ function Ergebnis({
       </section>
 
       {fahrt && (
-        <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe}
+        <Fahrtmodus fahrweg={fahrt.fahrweg} text={objektText} probefahrt={fahrt.probe} fahrplan={fahrt.plan}
                     piepen={fahrt.piepen} fortsetzen={fahrt.fortsetzen}
                     bahnhofSeite={(o) => {
                       const uic = uicVon.get(o.kennung)
@@ -764,7 +777,7 @@ function Ergebnis({
                       return b ? { uic: b.uic, eintrag: b } : null
                     }}
                     startKennung={weg.punkte[0]}
-                    retour={!fahrt.probe || wahl.ohne || !wahl.von || !wahl.nach ? undefined : () => {
+                    retour={!fahrt.probe || fahrt.plan || wahl.ohne || !wahl.von || !wahl.nach ? undefined : () => {
                       // die Probefahrt in Gegenrichtung (Michael, 2026-10-02: «nur bei der Probefahrt»)
                       leereFahrtenWeg()
                       tonWeitergeben(fahrt.piepen)

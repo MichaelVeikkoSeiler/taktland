@@ -1313,7 +1313,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   const [daten, setDaten] = useState<{ r: Relief; h: Uint16Array } | null>(null)
   const [fehler, setFehler] = useState<string | null>(null)
   // eine Probefahrt vor dem Start: der Zug steht am Anfang, damit es den Führerstand schon gibt und das Pult ihn starten kann
-  const stelle = sJetzt ?? (tempoQuelle === 'probe' ? 0 : null)
+  const stelle = sJetzt ?? (tempoQuelle === 'probe' || tempoQuelle === 'fahrplan' ? 0 : null)
   const zug = useRef<number | null>(stelle)
   const blick = useRef<THREE.Vector3 | null>(null)
   useEffect(() => { zug.current = stelle }, [stelle])
@@ -4446,7 +4446,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           // beim Fahren mit GPS sitzt man im Zug, nicht vorne: das Bild zeigt, was am eigenen Standort vorbeizieht (Michael,
           // 2026-10-16, Müntschemier–Bern: der Führerstand zeigte, was 70 bis 120 m weiter hinten etwa 4 s später am Fenster
           // vorbeikam); sonst vorne an der Spitze
-          const blickM = zugVonAussen && tempoQuelle !== 'probe' && zug.current !== null ? bis(zug.current) : spitze
+          const blickM = zugVonAussen && tempoQuelle !== 'probe' && tempoQuelle !== 'fahrplan' && zug.current !== null ? bis(zug.current) : spitze
           const augeM = blickM === spitze ? bis(spitze + r * 15) : blickM
           const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)
           const tief = tunnel ? Math.min(augeM - tunnel.von, tunnel.bis - augeM) - portalInnen(tunnel.bis - tunnel.von) : 0

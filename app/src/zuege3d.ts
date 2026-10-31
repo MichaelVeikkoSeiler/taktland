@@ -84,6 +84,33 @@ export type ZugStelle =
   | { art: 'halt'; i: number }
   | { art: 'fahrt'; i: number; anteil: number }
 
+/** die Halte einer Fahrt ab dem Halt i mit Ankunft und Abfahrt in Minuten ab jetzt, so wie zugStelle sie rechnet (mit den Minuten
+ *  vor der ersten Abfahrt und nach der letzten Ankunft und den kurzen Halten); null: heute nicht unterwegs */
+export function zugPlan(f: ZugFahrt, tag: number, minuten: number, i0: number): Array<{ abk: string; an: number; ab: number }> | null {
+  for (const [d, m] of [[tag, minuten], [tag - 1, minuten + 1440]] as const) {
+    if (d < 0 || !((f.tage >> d) & 1)) continue
+    const h = f.halte, z = h.length - 1
+    const erst = h[0].ab ?? h[0].an, letzt = h[z].an ?? h[z].ab
+    if (erst === null || letzt === null || m < erst - ZUG_STEHT_MIN || m > letzt + ZUG_STEHT_MIN) continue
+    return h.slice(i0).map((x, j) => {
+      const [an, ab] = haltZeiten(f, i0 + j)
+      return { abk: x.abk, an: an - m, ab: ab - m }
+    })
+  }
+  return null
+}
+
+/** Ankunft und Abfahrt am Halt i in Minuten ab Mitternacht des Verkehrstags, wie die Züge sie fahren */
+function haltZeiten(f: ZugFahrt, i: number): [number, number] {
+  const h = f.halte, z = h.length - 1
+  const erst = h[0].ab ?? h[0].an!, letzt = h[z].an ?? h[z].ab!
+  let an = h[i].an ?? h[i].ab!, ab = h[i].ab ?? h[i].an!
+  if (i === 0) an = Math.min(an, erst - ZUG_STEHT_MIN)
+  if (i === z) ab = Math.max(ab, letzt + ZUG_STEHT_MIN)
+  if (i > 0 && i < z && an === ab) { an -= ZUG_KURZHALT_VOR_MIN; ab += ZUG_KURZHALT_NACH_MIN }
+  return [an, ab]
+}
+
 /** wo eine Fahrt am Tag und zur Minute laut Fahrplan ist, null: heute nicht unterwegs; auch Fahrten des Vortags nach Mitternacht */
 export function zugStelle(f: ZugFahrt, tag: number, minuten: number): ZugStelle | null {
   for (const [d, m] of [[tag, minuten], [tag - 1, minuten + 1440]] as const) {
@@ -91,13 +118,7 @@ export function zugStelle(f: ZugFahrt, tag: number, minuten: number): ZugStelle 
     const h = f.halte, z = h.length - 1
     const erst = h[0].ab ?? h[0].an, letzt = h[z].an ?? h[z].ab
     if (erst === null || letzt === null || m < erst - ZUG_STEHT_MIN || m > letzt + ZUG_STEHT_MIN) continue
-    const zeiten = (i: number): [number, number] => {
-      let an = h[i].an ?? h[i].ab!, ab = h[i].ab ?? h[i].an!
-      if (i === 0) an = Math.min(an, erst - ZUG_STEHT_MIN)
-      if (i === z) ab = Math.max(ab, letzt + ZUG_STEHT_MIN)
-      if (i > 0 && i < z && an === ab) { an -= ZUG_KURZHALT_VOR_MIN; ab += ZUG_KURZHALT_NACH_MIN }
-      return [an, ab]
-    }
+    const zeiten = (i: number) => haltZeiten(f, i)
     for (let i = 0; i <= z; i++) {
       const [an, ab] = zeiten(i)
       if (m >= an && m <= ab) return { art: 'halt', i }

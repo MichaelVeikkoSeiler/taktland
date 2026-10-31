@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { type PlanHalt, planStelle } from '../mitfahren'
 import type { MeldeArt, PultAussen } from './Fuehrerpult'
 import { neuLadenSperren } from '../serviceWorker'
 import { useAudio } from '../audio'
@@ -158,7 +159,7 @@ type Meldung =
  * offen ist: Ein Browser darf im Hintergrund nicht weiterrechnen.
  */
 export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, durchfahren, fortsetzen, stelle, ohneZiel,
-                            zugStrecke, zugAnfang, zugGewaehlt, halt, bahnhofSeite, startKennung, retour }: {
+                            zugStrecke, zugAnfang, zugGewaehlt, halt, bahnhofSeite, startKennung, retour, fahrplan }: {
   fahrweg: Fahrweg
   text: (o: FahrObjekt) => ObjektText | undefined
   probefahrt: boolean
@@ -187,7 +188,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   startKennung?: string
   /** nur in der Probefahrt: dieselbe Strecke in Gegenrichtung */
   retour?: () => void
+  /** aus «3D Schweiz»: die Probefahrt fährt nach dem Fahrplan eines Zugs, ab jetzt, ohne Zeitraffer und ohne Anhalten (mitfahren.ts) */
+  fahrplan?: PlanHalt[] | null
 }) {
+  // nach Fahrplan: die Uhr ist die echte, Tempo und Anhalten lassen sich nicht wählen (Michael, 2026-10-31: «Somit kann man das Tempo …
+  // nicht variieren»)
+  const nachPlan = probefahrt && !!fahrplan && fahrplan.length >= 2
+  const steuerbar = probefahrt && !nachPlan
   const [einstellung, setEinstellung] = useState(einstellungLesen)
   const [stumm, setStumm] = useState(stummLesen)
   const stummSetzen = (neu: Record<string, string>) => {
@@ -232,18 +239,18 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     : [])
   const gemerktUm = useRef(0)
   const uhrStart = useRef({ echt: Date.now(), spiel: 0, anfahren: false })
-  const [raffer, setRaffer] = useState<Zeitraffer>(20)
-  const rafferRef = useRef<Zeitraffer>(20)
+  const [raffer, setRaffer] = useState<Zeitraffer>(nachPlan ? 1 : 20)
+  const rafferRef = useRef<Zeitraffer>(nachPlan ? 1 : 20)
   // Probefahrt anhalten und weiterfahren (Michael, 2026-09-26: «unterbrechen und wieder starten»)
   // eine Probefahrt wartet auf «Start» (Michael, 2026-10-08: «nicht automatisch starten»)
-  const [angehalten, setAngehalten] = useState(probefahrt)
-  const angehaltenRef = useRef(probefahrt)
-  const [gestartet, setGestartet] = useState(!probefahrt)
+  const [angehalten, setAngehalten] = useState(steuerbar)
+  const angehaltenRef = useRef(steuerbar)
+  const [gestartet, setGestartet] = useState(!steuerbar)
   /** In der Probefahrt läuft die Zeit schneller; angehalten steht sie. Nach «Start» und «Weiter» fährt der Zug in
    *  ANFAHREN_MS an, vor dem Ziel bremst er ebenso lang (Michael, 2026-10-09: «langsam anfährt und in 2 sec die normale
    *  Geschwindigkeit erreicht. Am Schluss ebenso abbremsen»): die Spielzeit läuft dann langsamer */
   const uhr = () => {
-    if (!probefahrt) return Date.now()
+    if (!probefahrt || nachPlan) return Date.now()
     const u = uhrStart.current, f = rafferRef.current
     if (angehaltenRef.current) return u.spiel
     const e = Date.now() - u.echt
@@ -319,7 +326,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   // Stufe der Probefahrt, die Bremse hält an; die Tasten Tunnel, Brücken, Bahnhöfe und Bahnübergänge schalten die Meldungen
   const pultAussen = useRef<PultAussen | null>(null)
   pultAussen.current = {
-    probe: probefahrt ? {
+    probe: steuerbar ? {
       stufen: stufen.map((f) => 100 * f),
       stufe: () => Math.max(0, stufen.indexOf(rafferRef.current)),
       angehalten: () => angehaltenRef.current,
@@ -327,7 +334,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       anhalten: (an) => { if (angehaltenRef.current !== an) anhaltenUmschalten() },
     } : undefined,
     // zurück an den Startbahnhof, angehalten (Michael, 2026-10-15: «das Abfahren beim Start Bahnhof … erleben»)
-    zumStart: probefahrt ? () => {
+    zumStart: steuerbar ? () => {
       springen(0)
       setAnkunft(null)
       if (!angehaltenRef.current) anhaltenUmschalten()
@@ -406,11 +413,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     const id = window.setInterval(() => {
       if (angehaltenRef.current) return
       const t = uhr()
-      const s = Math.min(wegEnde(fahrweg), PROBE_TEMPO * t / 1000)
+      const plan = nachPlan ? planStelle(fahrplan!, t) : null
+      const s = plan ? plan.s : Math.min(wegEnde(fahrweg), PROBE_TEMPO * t / 1000)
       const imTunnel = fahrweg.objekte.some((o) => o.art === 'tunnel' && o.sAus !== null && s > o.s + 50 && s < o.sAus - 50)
-      if (imTunnel) return
+      if (imTunnel && !plan) return
       const l = lageBei(fahrweg, s)
-      standort(t, l.lat, l.lon, 10, PROBE_TEMPO * fahrtAnteil())
+      standort(t, l.lat, l.lon, 10, plan ? plan.v : PROBE_TEMPO * fahrtAnteil())
     }, 500)
     return () => window.clearInterval(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -457,7 +465,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const seit = stand ? Math.max(0, (jetzt - stand.t) / 1000) : 0
   // in der Probefahrt vergehen zwischen zwei Standorten 10 Sekunden Spielzeit
   const ohneGps = stand !== null && seit > OHNE_GPS_NACH_S * (probefahrt ? raffer : 1)
-  const sJetzt = stand && stand.abseits === null
+  // nach Fahrplan: die Stelle laut Fahrplan in jedem Bild, nicht geschätzt
+  const planJetzt = nachPlan && stand ? planStelle(fahrplan!, jetzt) : null
+  const sJetzt = planJetzt ? planJetzt.s : stand && stand.abseits === null
     ? Math.min(wegEnde(fahrweg), stand.s + (seit < OHNE_GPS_MAX_S ? stand.v * seit : 0))
     : null
   const faehrt = stand !== null && stand.v >= STEHT_UNTER
@@ -498,7 +508,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   const [offenerBahnhof, setOffenerBahnhof] = useState<{ uic: number; eintrag: IndexEintrag | undefined } | null>(null)
   const bahnhofSchliessen = useCallback(() => setOffenerBahnhof(null), [])
   const amBahnhof = (() => {
-    if (sJetzt === null || !bahnhofSeite || (probefahrt ? !angehalten : faehrt)) return null
+    if (sJetzt === null || !bahnhofSeite || (steuerbar ? !angehalten : faehrt)) return null
     let best: FahrObjekt | null = null
     const start: FahrObjekt[] = startKennung ? [{ art: 'bahnhof', kennung: startKennung, s: 0, sAus: null }] : []
     for (const o of [...start, ...fahrweg.objekte]) {
@@ -551,7 +561,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           Zur Bilanz
         </button>
         {/* Wiederholen und Retour nur in der Probefahrt (Michael, 2026-10-02) */}
-        {probefahrt && (
+        {steuerbar && (
           <button type="button" onClick={vonVorn}
                   className="rounded-lg border border-white/70 px-2 py-2.5 font-medium">
             Wiederholen
@@ -610,7 +620,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   // des Perrons hinter sich hat; solange wird nichts gemeldet, was danach kommt (Michael,
   // 2026-10-06). Der Zielbahnhof bleibt, bis «Am Ziel» erscheint. Gemeldet wird ein Bahnhof vor
   // der Mitte des Perrons (bahnhoefeVorziehen), das Ende liegt gleich weit dahinter.
-  const rollt = probefahrt ? !angehalten : faehrt
+  const rollt = steuerbar ? !angehalten : faehrt
   // wo der Zug schon gehalten hat: beim Weiterfahren aus dem Perron nicht nochmals «Gleich»
   const gehaltenBei = useRef(new Set<string>())
   const haltBahnhof = (() => {
@@ -843,8 +853,8 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
       ) : naechsteZeile ?? (
         <p className="kachel px-3 py-2 text-sm">Auf dem Rest dieses Wegs ist nichts mehr zu melden.</p>
       )}
-      <div className={`flex items-center gap-2 text-sm ${probefahrt ? 'quer:flex-wrap' : 'quer:hidden'}`}>
-        {probefahrt ? (
+      <div className={`flex items-center gap-2 text-sm ${steuerbar ? 'quer:flex-wrap' : 'quer:hidden'}`}>
+        {steuerbar ? (
           <>
             <button type="button" onClick={anhaltenUmschalten} aria-pressed={angehalten}
                     className={`min-h-9 shrink-0 rounded-lg px-3 font-bold ${angehalten
@@ -896,7 +906,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <p ref={ansage} className="sr-only" aria-live="assertive" aria-atomic="true" />
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <p className="font-bold">{probefahrt ? 'Probefahrt' : 'Fahren'}</p>
+            <p className="font-bold">{nachPlan ? 'Mitfahren laut Fahrplan' : probefahrt ? 'Probefahrt' : 'Fahren'}</p>
             <p className="truncate text-sm text-sbb-metal dark:text-sbb-storm">
               {titel}
             </p>
@@ -927,17 +937,17 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         <div className="min-w-0 xl:sticky xl:top-4">
         <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen} dreiDMelden={setDreiD}
                     imFuehrerstand={ankunftKarte}
-                    tempo={stand ? stand.v * (probefahrt ? raffer : 1) : null} probefahrt={probefahrt}
+                    tempo={planJetzt ? planJetzt.v : stand ? stand.v * (probefahrt ? raffer : 1) : null} probefahrt={probefahrt} nachPlan={nachPlan}
                     start={titel.split(' → ')[0]} ziel={ohneZiel ? undefined : titel.split(' → ')[1]} />
         <Streckenband fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} fliessend={probefahrt}
                       start={titel.split(' → ')[0]} ziel={titel.split(' → ')[1] ?? ''}
-                      name={(o) => textVon(o)?.name} springen={probefahrt ? springen : undefined} />
+                      name={(o) => textVon(o)?.name} springen={steuerbar ? springen : undefined} />
         </div>
         <div className="min-w-0">
         {ankunftKarte}
         {bahnhofKnopf}
 
-        {probefahrt && (
+        {steuerbar && (
           <div className="mt-4 flex items-center gap-3 text-sm">
             <button type="button" onClick={anhaltenUmschalten} aria-pressed={angehalten}
                     className={`min-h-9 shrink-0 rounded-lg px-3 font-bold ${angehalten
@@ -963,11 +973,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             Bildschirmleser würde sonst ununterbrochen vorlesen */}
         <div className="mt-3 flex items-baseline justify-between gap-3 text-sm text-sbb-metal dark:text-sbb-storm">
           <p>
-            {probefahrt && angehalten ? (gestartet ? 'Probefahrt angehalten' : 'Bereit, mit «Start» geht es los') : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
+            {nachPlan ? 'Stelle laut Fahrplan, nicht live'
+              : probefahrt && angehalten ? (gestartet ? 'Probefahrt angehalten' : 'Bereit, mit «Start» geht es los') : zustand(meldung, stand, ohneGps, imTunnel !== null, probefahrt)}
             {faehrt && !ohneGps && !angehalten && ` · etwa ${kmhJetzt()} km/h`}
           </p>
           {/* die Probefahrt wiederholen (Michael, 2026-09-30) */}
-          {probefahrt && (
+          {steuerbar && (
             <button type="button" onClick={vonVorn}
                     className="shrink-0 underline underline-offset-2 hover:text-sbb-black dark:hover:text-sbb-white">
               Von vorn
