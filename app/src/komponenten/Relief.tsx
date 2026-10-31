@@ -23,7 +23,7 @@ import { sternenhimmelBauen } from './Sternenhimmel'
 import { audioKontext, audioLesen, audioSetzen, useAudio, wetterGeraeusch, wetterGeraeuschAus, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
 import { type Bruecke3d, brueckenLaden, strassenlichtLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
-import { FAHRLEITUNG_FARBE, fahrleitungsMast } from './Fahrleitung'
+import { FAHRDRAHT_FARBE, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
 import { fahrplanZuegeBauen } from './FahrplanZuege'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { WOLKEN_HOEHE_M, wolkenBild, wolkenEbenen3d } from './WolkenBild'
@@ -2590,12 +2590,13 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     }
     if (import.meta.env.VITE_S3D_TEST) (window as unknown as { reliefKamera: unknown }).reliefKamera = () => [kamera.position.x * 1000 + me, -kamera.position.z * 1000 + mn, kamera.position.y * 1000 / faktor, szene.children.length]
     const mastForm = fahrleitungsMast(), mastStoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
+    const drahtStoff = new THREE.LineBasicMaterial({ color: FAHRDRAHT_FARBE, transparent: true, opacity: 0.8 })
     let mastAuftrag = 0
     const mastSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++mastAuftrag
       const ms = await mastenLaden(e0, n0, e1, n1).catch(() => null)
       if (!laeuft || auftrag !== mastAuftrag) return
-      for (const c of mastGruppe.children) (c as THREE.InstancedMesh).dispose()
+      for (const c of mastGruppe.children) { if (c instanceof THREE.InstancedMesh) c.dispose(); else (c as THREE.LineSegments).geometry.dispose() }
       mastGruppe.clear()
       const fs = feinStand
       if (!ms || !ms.e.length || !fs) return
@@ -2609,8 +2610,10 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const netz = new THREE.InstancedMesh(mastForm, mastStoff, ms.e.length)
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(X(1) - X(0), Y(1) - Y(0), X(1) - X(0))
       let zahl = 0
+      const fuesse: Array<number | null> = []
       for (let i = 0; i < ms.e.length; i++) {
         const e = ms.e[i], n = ms.n[i]
+        fuesse.push(null)
         let d = Infinity, hl = 0
         for (let j = 0; j < linie.length; j += 3) {
           const dj = Math.hypot(linie[j] - e, linie[j + 1] - n)
@@ -2620,6 +2623,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         if (d < MAST_LICHTRAUM_M) continue
         const h = d < MAST_AUF_LINIE_M ? hl - 1 : (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fs.fein, e, n)
         if (h === null) continue
+        fuesse[i] = h
         v.set(X(e), Y(h), Z(n))
         q.setFromAxisAngle(OBEN, ms.winkel[i])
         netz.setMatrixAt(zahl++, m.compose(v, q, sk))
@@ -2628,6 +2632,20 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       netz.instanceMatrix.needsUpdate = true
       netz.computeBoundingSphere()
       mastGruppe.add(netz)
+      // Fahrdraht und Tragseil von Mast zu Mast (fahrleitungsDraehte in Fahrleitung.ts), auf die Höhe der Szene gebracht
+      const roh = fahrleitungsDraehte(ms.e, ms.n, ms.winkel, (i) => fuesse[i])
+      if (roh.length) {
+        const pos = new Float32Array(roh.length)
+        for (let i = 0; i < roh.length; i += 3) {
+          // wie die Masten (sk) mit der Überhöhung, damit die Drähte am Ausleger hängen
+          pos[i] = X(roh[i]); pos[i + 2] = Z(roh[i + 1]); pos[i + 1] = Y(roh[i + 2])
+        }
+        const g = new THREE.BufferGeometry()
+        g.setAttribute('position', new THREE.BufferAttribute(pos, 3))
+        const linien = new THREE.LineSegments(g, drahtStoff)
+        linien.frustumCulled = false
+        mastGruppe.add(linien)
+      }
     }
     const baumSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++baumAuftrag
