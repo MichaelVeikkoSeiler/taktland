@@ -670,7 +670,7 @@ data/fahrleitung/  Masten der Fahrleitung für «3D Schweiz» und den Führersta
              (Michael, 2026-11-01, Thun: «Kannst du die Fahrleitungen bei Thun optimieren?»: von Mast zu Mast verbunden liefen sie schräg über die Gleise, und über
              den inneren Gleisen fehlten sie; ob ein Gleis selbst elektrifiziert ist, steht in keiner unserer Quellen, ACHSE_UNTER_DRAHT_M): unten der Fahrdraht
              5,5 m über der Achse, oben das Tragseil auf 6,9 m mit 0,9 m Durchhang zwischen den Stellen der Masten bis 4,5 m neben der Achse (ohne Mast alle 50 m),
-             Hänger alle 10 m, dunkelgraue feine Linien (fahrleitungsDraehte in Fahrleitung.ts, Höhen und Abstände gewählt, in keiner Quelle), bis 120 m vom Auge ganz, bis 450 m ausgeblendet (DRAHT_VOLL_KM, DRAHT_WEG_KM, gewählt;
+             Hänger alle 10 m, schwarze feine Linien mit Deckkraft 0,5 (seit 2026-11-01, vorher dunkelgrau mit 0,8; Michael: «Bitte die Fahrleitungen schwarz machen und noch etwas dünner»; fahrleitungsDraehte in Fahrleitung.ts, Höhen und Abstände gewählt, in keiner Quelle), bis 120 m vom Auge ganz, bis 450 m ausgeblendet (DRAHT_VOLL_KM, DRAHT_WEG_KM, gewählt;
              Michael, 2026-10-31: «Wenn man weiter weg ist sind sie zu dick»: eine Linie ist immer einen Bildpunkt breit)
 data/gleise3d.json  welches Gleis wo liegt, für die Züge in «3D Schweiz» (Michael, 2026-10-30: «Kann man die Züge auf den richtigen Gleisen fahren lassen?
              Erkennst du sie und auf welchem Gleis der entsprechende Zug ankommt? Unterirdische Gleise nicht berücksichtigen»): pipeline/build_gleise3d.py aus den
