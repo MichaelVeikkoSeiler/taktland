@@ -14,9 +14,15 @@ import { himmelsrichtungKurz } from './wind'
 /** prognose: Nummer des Punkts in der lokalen Prognose von MeteoSchweiz (src/wind.ts), null ohne */
 export interface Station { kuerzel: string; name: string; e: number; n: number; hoehe: number; prognose: number | null }
 /** Wind: Mittel über 10 Minuten (Messung) oder eine Stunde (Prognose) in km/h, die stärkste Böe, woher er weht in Grad (0 Nord, 90 Ost) */
-export interface Wind { kmh: number | null; boe: number | null; richtung: number | null }
+export interface Wind { kmh: number | null; boe: number | null; richtung: number | null
+  /** Lufttemperatur 2 m über Boden in °C, wo sie gemessen oder vorhergesagt ist */
+  temperatur?: number | null }
+/** eine Messung des Winds mit ihrer Zeit (UTC) */
+export interface WindZeit extends Wind { zeit: Date; temperatur: number | null }
 export interface Wetter {
   station: Station
+  /** die Messungen des Winds von heute (alle 10 Minuten) */
+  verlauf?: WindZeit[]
   /** Zeit der Messung (UTC aus der Quelle) */
   zeit: Date
   temperatur: number | null
@@ -83,9 +89,48 @@ async function messungLesen(s: Station): Promise<Wetter | null> {
   const mitWind = zeilen.slice(1).filter((z) => zahl(z, iW) !== null)
   const w = mitWind[mitWind.length - 1]
   const windZeit = w ? zeitLesen(w[iZeit] ?? '') : null
-  const wind = w && windZeit && Date.now() - windZeit.getTime() <= 2 * 3600e3 ? { kmh: zahl(w, iW), boe: zahl(w, iB), richtung: zahl(w, iD) } : null
+  const wind = w && windZeit && Date.now() - windZeit.getTime() <= 2 * 3600e3
+    ? { kmh: zahl(w, iW), boe: zahl(w, iB), richtung: zahl(w, iD), temperatur: zahl(w, iT) } : null
+  // alle Messungen von heute (die Datei beginnt um 0 Uhr UTC), für die Windhosen bei einer Zeit von heute
+  const verlauf: WindZeit[] = []
+  for (const z of mitWind) {
+    const t = zeitLesen(z[iZeit] ?? '')
+    if (t) verlauf.push({ zeit: t, kmh: zahl(z, iW), boe: zahl(z, iB), richtung: zahl(z, iD), temperatur: zahl(z, iT) })
+  }
   return { station: s, zeit, temperatur, niederschlag, bewoelkt, art, staerke: nass ? staerkeAus(niederschlag ?? 0) : 0,
-           wind, windZeit: wind ? windZeit : null }
+           wind, windZeit: wind ? windZeit : null, verlauf }
+}
+
+/** ungefähr so viele Bytes hat eine Zeile der Stundenwerte (gemessen bei Bern 130 bis 140) */
+const STUNDE_BYTES = 160
+const verlaeufe = new Map<string, { ab: number; m: Promise<WindZeit[]> }>()
+/** die Stundenwerte des Winds einer Station ab der Zeit ab bis gestern 23 Uhr UTC (Datei _h_recent, seit dem 1. Januar; Michael, 2026-11-01:
+ *  «quasi als Historie nach hinten»); gelesen wird nur das Ende der Datei, in ganzen Wochen zurück; früher als der 1. Januar gibt es nichts */
+export function windVerlauf(s: Station, ab: Date): Promise<WindZeit[]> {
+  const alt = verlaeufe.get(s.kuerzel)
+  if (alt && alt.ab <= ab.getTime()) return alt.m
+  const tage = Math.min(400, Math.ceil(Math.max(1, (Date.now() - ab.getTime()) / 864e5) / 7) * 7 + 2)
+  const m = verlaufLesen(s, tage).catch(() => { verlaeufe.delete(s.kuerzel); return [] as WindZeit[] })
+  verlaeufe.set(s.kuerzel, { ab: Date.now() - (tage - 1) * 864e5, m })
+  return m
+}
+async function verlaufLesen(s: Station, tage: number): Promise<WindZeit[]> {
+  const k = s.kuerzel.toLowerCase(), url = `${QUELLE}${k}/ogd-smn_${k}_h_recent.csv`
+  const [a, b] = await Promise.all([
+    fetch(url, { headers: { Range: 'bytes=0-4095' }, signal: AbortSignal.timeout(20000) }),
+    fetch(url, { headers: { Range: `bytes=-${tage * 24 * STUNDE_BYTES}` }, signal: AbortSignal.timeout(20000) })])
+  if (!a.ok || !b.ok) return []
+  const kopf = (await a.text()).split(/\r?\n/)[0].split(';')
+  const [iZeit, iT, iW, iB, iD] = ['reference_timestamp', 'tre200h0', 'fu3010h0', 'fu3010h1', 'dkl010h0'].map((n) => kopf.indexOf(n))
+  if (iZeit < 0 || iW < 0) return []
+  const zahl = (z: string[], i: number) => (i >= 0 && z[i] !== undefined && z[i] !== '' ? Number(z[i]) : null)
+  // die erste Zeile ist angeschnitten oder der Kopf
+  const aus: WindZeit[] = []
+  for (const zeile of (await b.text()).split(/\r?\n/).slice(1)) {
+    const z = zeile.split(';'), t = zeitLesen(z[iZeit] ?? '')
+    if (t && zahl(z, iW) !== null) aus.push({ zeit: t, kmh: zahl(z, iW), boe: zahl(z, iB), richtung: zahl(z, iD), temperatur: zahl(z, iT) })
+  }
+  return aus
 }
 
 /** die Stationen nach dem Abstand zu Ost e, Nord n (LV95) */

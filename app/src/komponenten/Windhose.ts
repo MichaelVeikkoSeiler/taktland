@@ -103,7 +103,7 @@ export interface VierWindhosen {
   entsorgen: () => void
 }
 
-interface Wind { kmh: number | null; boe: number | null; richtung: number | null }
+interface Wind { kmh: number | null; boe: number | null; richtung: number | null; temperatur?: number | null }
 
 /**
  * Immer vier Windhosen im Bild (Michael, 2026-10-24: «Egal welche Zoomstufe und auch beim von Hand stufenlosen Zoomen: immer 4 Orte»;
@@ -116,6 +116,23 @@ interface Wind { kmh: number | null; boe: number | null; richtung: number | null
  */
 /** in der Brille: so hoch wie dieser Teil der Windhose ist die Zahl über dem Mast, gewählt */
 const BRILLE_ZAHL = 0.22
+/** auf dieser Höhe des Masts (1 oben) steht die Temperatur, gewählt */
+const MAST_MITTE = 0.5
+
+/** ein Schild mit weisser Schrift auf Dunkelgrau, fett 22 Bildpunkte; null leert es */
+function schildMalen(sp: THREE.Sprite, text: string | null) {
+  sp.material.map?.dispose(); sp.material.map = null
+  if (text === null) { sp.material.needsUpdate = true; return }
+  const c = document.createElement('canvas'), x = c.getContext('2d')!
+  const px = 22, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
+  x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 12; c.height = px + 8
+  x.font = schrift; x.fillStyle = '#2a2a2a'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 5); x.fill()
+  x.fillStyle = '#ffffff'; x.fillText(text, 6, px - 1)
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
+  sp.material.map = tex; sp.material.needsUpdate = true
+  sp.userData = { b: c.width * 0.0007, h: c.height * 0.0007, verhaeltnis: c.width / c.height }
+  sp.scale.set(c.width * 0.0007, c.height * 0.0007, 1)
+}
 
 export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.PerspectiveCamera, hoehe: (x: number, z: number) => number | null,
   inBrille: () => boolean, neuePlaetze: (stellen: THREE.Vector3[]) => void, groesseBrille: number,
@@ -131,7 +148,14 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
     sp.center.set(0.5, 0); sp.renderOrder = 7; sp.visible = false
     return sp
   })
-  hosen.forEach((h, i) => { h.gruppe.visible = false; eltern.add(h.gruppe); eltern.add(schilder[i]) })
+  // die Temperatur in °C in der Mitte des Masts, in derselben Schrift, Grösse und Farbe wie die Zahlen darüber (Michael, 2026-11-01: «in der
+  // Mitte des Mastes oben in der gleichen Schrift und Schriftgröße und Schriftfarbe die Temperatur in Celsius»)
+  const temps = hosen.map(() => {
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false, transparent: true }))
+    sp.center.set(0.5, 0.5); sp.renderOrder = 7; sp.visible = false
+    return sp
+  })
+  hosen.forEach((h, i) => { h.gruppe.visible = false; eltern.add(h.gruppe); eltern.add(schilder[i]); eltern.add(temps[i]) })
   const strahl = new THREE.Raycaster(), a = new THREE.Vector3(), b = new THREE.Vector3(), auge = new THREE.Vector3()
   /** wo der Strahl durch den Bildpunkt das Gelände trifft, im Raum der Eltern */
   const treffen = (bx: number, by: number): THREE.Vector3 | null => {
@@ -212,41 +236,35 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
           h.gruppe.scale.setScalar((d * BILD_HOEHE * querMass(kamera)) / massstab)
         }
         h.schritt(t)
-        const sp = schilder[i]
-        sp.visible = verteilt && !!sp.material.map
-        sp.position.copy(h.gruppe.position).y += h.gruppe.scale.y * 1.15
-        // in der Brille im Raum des Modells, so hoch wie ein Fünftel der Windhose (BRILLE_ZAHL), sonst fest auf dem Bildschirm
-        if (sp.material.sizeAttenuation !== brille) { sp.material.sizeAttenuation = brille; sp.material.needsUpdate = true }
-        const v = (sp.userData.verhaeltnis as number | undefined) ?? 1
-        if (brille) sp.scale.set(h.gruppe.scale.y * BRILLE_ZAHL * v, h.gruppe.scale.y * BRILLE_ZAHL, 1)
-        else if (sp.userData.b) sp.scale.set(sp.userData.b as number, sp.userData.h as number, 1)
+        for (const [sp, y] of [[schilder[i], 1.15], [temps[i], MAST_MITTE]] as const) {
+          sp.visible = verteilt && !!sp.material.map
+          sp.position.copy(h.gruppe.position).y += h.gruppe.scale.y * y
+          // in der Brille im Raum des Modells, so hoch wie ein Fünftel der Windhose (BRILLE_ZAHL), sonst fest auf dem Bildschirm
+          if (sp.material.sizeAttenuation !== brille) { sp.material.sizeAttenuation = brille; sp.material.needsUpdate = true }
+          const v = (sp.userData.verhaeltnis as number | undefined) ?? 1
+          if (brille) sp.scale.set(h.gruppe.scale.y * BRILLE_ZAHL * v, h.gruppe.scale.y * BRILLE_ZAHL, 1)
+          else if (sp.userData.b) sp.scale.set(sp.userData.b as number, sp.userData.h as number, 1)
+        }
       })
     },
     setzen: (werte) => {
       hosen.forEach((h, i) => {
         const w = werte[i]
         h.setzen(w?.wind?.kmh ?? null, w?.wind?.richtung ?? null)
-        const sp = schilder[i]
-        sp.material.map?.dispose(); sp.material.map = null
-        if (!w) { sp.material.needsUpdate = true; return }
+        const zahl = (v: number | null | undefined) => (v === null || v === undefined ? '–' : String(Math.round(v)))
         // nur die Zahlen in km/h, klein über dem Mast (Michael, 2026-10-24: «Viel zu präsente Infos. Nur Zahl (zB 22)»): links der Mittelwind
         // der letzten 10 Minuten, rechts die Böenspitze (Michael, 2026-11-01: «Links Windgeschwindigkeit, rechts in Böen. Nur die Zahlen»;
         // der Strich wie bei SRF Meteo «17 | 59», gewählt)
-        const zahl = (v: number | null | undefined) => (v === null || v === undefined ? '–' : String(Math.round(v)))
-        const text = `${zahl(w.wind?.kmh)} | ${zahl(w.wind?.boe)}`
-        const c = document.createElement('canvas'), x = c.getContext('2d')!
-        const px = 22, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
-        x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 12; c.height = px + 8
-        x.font = schrift; x.fillStyle = '#2a2a2a'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 5); x.fill()
-        x.fillStyle = '#ffffff'; x.fillText(text, 6, px - 1)
-        const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace
-        sp.material.map = tex; sp.material.needsUpdate = true
-        sp.userData = { b: c.width * 0.0007, h: c.height * 0.0007, verhaeltnis: c.width / c.height }
-        sp.scale.set(c.width * 0.0007, c.height * 0.0007, 1)
+        schildMalen(schilder[i], w ? `${zahl(w.wind?.kmh)} | ${zahl(w.wind?.boe)}` : null)
+        const t = w?.wind?.temperatur
+        schildMalen(temps[i], w && t !== null && t !== undefined ? `${Math.round(t)} °C` : null)
       })
     },
     entsorgen: () => {
-      hosen.forEach((h, i) => { eltern.remove(h.gruppe); h.entsorgen(); eltern.remove(schilder[i]); schilder[i].material.map?.dispose(); schilder[i].material.dispose() })
+      hosen.forEach((h, i) => {
+        eltern.remove(h.gruppe); h.entsorgen()
+        for (const sp of [schilder[i], temps[i]]) { eltern.remove(sp); sp.material.map?.dispose(); sp.material.dispose() }
+      })
     },
   }
 }
