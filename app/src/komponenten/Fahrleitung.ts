@@ -35,14 +35,18 @@ export function fahrleitungsMast() {
  *  daneben), unten der gerade Fahrdraht, oben das Tragseil, das zwischen zwei Masten durchhängt, dazwischen Hänger. Höhen, Durchhang und Zahl
  *  der Hänger gewählt; welche Masten am selben Draht hängen, steht in keiner Quelle: verbunden wird je Mast der nächste in Richtung des Gleises
  *  (quer zum Ausleger) in SPANN_MIN_M bis SPANN_MAX_M, der etwa gleich steht */
-export const FAHRDRAHT_FARBE = '#2b2b2b'
+/** schwarz und halb durchsichtig (Michael, 2026-11-01: «Bitte die Fahrleitungen schwarz machen und noch etwas dünner»; vorher #2b2b2b mit 0,8:
+ *  eine Linie leuchtet nicht mit, nachts stand das Dunkelgrau hell vor dem dunklen Gelände; dünner als einen Bildpunkt zeichnet WebGL keine
+ *  Linie, darum wirkt sie mit weniger Deckkraft feiner), gewählt */
+export const FAHRDRAHT_FARBE = '#000000'
+const FAHRDRAHT_DECKKRAFT = 0.5
 /** die Drähte sind Linien von einem Bildpunkt, aus der Ferne viel dicker als ein Draht von gut 1 cm (Michael, 2026-10-31: «Wenn man weiter
  *  weg ist sind sie zu dick»): bis DRAHT_VOLL_KM vom Auge ganz, bis DRAHT_WEG_KM ausgeblendet, gemessen in den Einheiten der Szene (km); gewählt */
 const DRAHT_VOLL_KM = 0.12, DRAHT_WEG_KM = 0.45
 /** Stoff und Linien der Drähte: blendet je Punkt nach dem Abstand zum Auge aus (in den Koordinaten der Linien, also unabhängig vom Massstab
  *  einer Gruppe darüber) */
 export function drahtStoff() {
-  const stoff = new THREE.LineBasicMaterial({ color: FAHRDRAHT_FARBE, transparent: true, opacity: 0.8, depthWrite: false })
+  const stoff = new THREE.LineBasicMaterial({ color: FAHRDRAHT_FARBE, transparent: true, opacity: FAHRDRAHT_DECKKRAFT, depthWrite: false })
   const kamera = { value: new THREE.Vector3() }
   stoff.onBeforeCompile = (sh) => {
     sh.uniforms.uDrahtAuge = kamera
