@@ -2908,7 +2908,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const teile = [...b.teile.values()], rand = teile.map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
-    void Promise.all([mastenLaden(e0, n0, e1, n1).catch(() => null), brueckenLaden(e0, n0, e1, n1).catch(() => [])]).then(([ms, bruecken]) => {
+    // die Gleisachsen des Felds (data/gleishoehe) für die Drähte über den Gleisen
+    const raster: Array<[number, number]> = []
+    for (let e = e0; e <= e1 + 4999; e += 5000) for (let n = n0; n <= n1 + 4999; n += 5000) raster.push([Math.min(e, e1), Math.min(n, n1)])
+    void Promise.all([mastenLaden(e0, n0, e1, n1).catch(() => null), brueckenLaden(e0, n0, e1, n1).catch(() => []),
+                      gleisLaden(raster).catch(() => [])]).then(([ms, bruecken, achsen]) => {
       if (weg || !ms || !ms.e.length) return
       // auf Bahnbrücken steht der Mast auf der Brücke, nicht unten im Gelände: die Höhe der nächsten Gleisachse auf einer Brücke bis
       // MAST_AUF_BRUECKE_M daneben (die Masten stehen 3 m neben dem Gleis, build_fahrleitung.py)
@@ -2939,11 +2943,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       n.castShadow = true; n.frustumCulled = false
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(0.001, 0.001, 0.001), oben = new THREE.Vector3(0, 1, 0)
       let zahl = 0
-      const fuesse: Array<number | null> = []
       for (let i = 0; i < ms.e.length; i++) {
         const boden = bestandHoehe(b, ms.e[i], ms.n[i]), hb = aufBruecke(ms.e[i], ms.n[i])
         const h = hb !== null && hb - BRUECKE_GLEIS_UNTER_M > boden ? hb - BRUECKE_GLEIS_UNTER_M : boden
-        fuesse.push(Number.isFinite(h) ? h : null)
         if (!Number.isFinite(h)) continue
         v.set((ms.e[i] - lage.cE) / 1000, h / 1000, -(ms.n[i] - lage.cN) / 1000)
         q.setFromAxisAngle(oben, ms.winkel[i])
@@ -2952,8 +2954,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       n.count = zahl
       netz = n
       k.wurzel.add(n)
-      // Fahrdraht und Tragseil von Mast zu Mast (fahrleitungsDraehte in Fahrleitung.ts)
-      const roh = fahrleitungsDraehte(ms.e, ms.n, ms.winkel, (i) => fuesse[i])
+      // Fahrdraht und Tragseil über den Gleisachsen, wo Masten stehen (fahrleitungsDraehte in Fahrleitung.ts), am Rand des Modells abgeschnitten
+      const imFeld = (e: number, nn: number) => e >= e0 && e <= e1 && nn >= n0 && nn <= n1
+      const roh = fahrleitungsDraehte(achsen.filter((a) => Array.from(a.e).some((e, i) => imFeld(e, a.n[i]))), ms.e, ms.n, imFeld)
       if (roh.length) {
         const pos = new Float32Array(roh.length)
         for (let i = 0; i < roh.length; i += 3) { pos[i] = (roh[i] - lage.cE) / 1000; pos[i + 1] = roh[i + 2] / 1000; pos[i + 2] = -(roh[i + 1] - lage.cN) / 1000 }
