@@ -1001,7 +1001,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
             folgen den Wegweisern. Wind: die letzte Messung der nächsten Station von MeteoSchweiz mit Windmessung (SwissMetNet) und ihre
             lokale Prognose (stündlich, bis 8 Tage); immer vier Windhosen in der Mitte der Viertel des Bilds, nach jeder Bewegung neu
-            verteilt, jede mit dem Wind der Station, die ihr am nächsten liegt (nicht an der Station; die Tafel nennt sie), die Zahl in km/h, gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
+            verteilt, jede mit dem Wind der Station, die ihr am nächsten liegt (nicht an der Station; die Tafel nennt sie), darüber Mittelwind und Böen in km/h, am Mast die Temperatur; mit «Sonne» zur gewählten Zeit: früher gemessen (heute alle 10 Minuten, frühere Tage seit dem 1. Januar je Stunde), später die Prognose; gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Sterne: alle bis zur Helligkeit 6 aus dem Hipparcos-Katalog der ESA,
             aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz), ihr Ort am Himmel gerechnet, ohne die Bewegung der Erdachse seit 2000
@@ -1027,8 +1027,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Modell im Vollbild.</p>
         </Abschnitt>
         <Abschnitt titel="Knöpfe an den Wänden">
-          <p>Die Knöpfe an den Wänden des Sockels schalten Höhenlinien, Orte, Gipfel, Wanderwege, Gebäude, Bäume, Wetter und Sonne ein und
-            aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
+          <p>Die Knöpfe an den Wänden des Sockels schalten Orte, Gebäude, Bäume, Züge, Schiffe, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
+            Wetter und Sonne ein und aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
             einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
             4'000 m, ihre Zahl steht klein an der Wand.</p>
@@ -1043,7 +1043,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
             Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
             Buchstaben sind die Sektoren, wie sie der Fahrplan nennt); oben im Bild ein Link zur Seite dieses Bahnhofs auf taktland.ch
-            mit Perrons und Gleisen, wo Taktland eine hat. Ein Tipp daneben blendet es aus. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
+            mit Perrons und Gleisen, wo Taktland eine hat. Ein Tipp daneben blendet es aus. Darunter führt «Im Führerstand mitfahren» in den Führerstand von Taktland: Der Zug fährt
+            dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
         </Abschnitt>
         <Abschnitt titel="Schiffe">
@@ -1058,8 +1059,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         <Abschnitt titel="Wetter: Wind und Niederschlag">
           <p>«Wetter» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
-            des Bilds. Die Zahl über dem Mast ist die Windstärke in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
-            nicht an der Station). Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
+            des Bilds. Die Zahlen über dem Mast sind der Wind in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
+            nicht an der Station): links das Mittel über 10 Minuten, rechts die stärkste Böe; am Mast steht die Temperatur in °C. Ist
+            «Sonne» an, zeigen die Windhosen die gewählte Zeit: in der Vergangenheit die Messung (heute alle 10 Minuten, frühere Tage seit
+            dem 1. Januar je Stunde), in der Zukunft die Prognose; wo es für diese Zeit keine Angabe gibt, steht «–» und der Sack hängt grau. Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
             wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde. Regen und Wind sind auch zu hören, gerechnete Geräusche,
             lauter mit der Stärke; Schnee bleibt still.</p>
           <p>In jeder Stufe zeigt der weisse Knopf «Wolken» die Wolken laut dem Wettermodell ICON-CH1 von MeteoSchweiz,
@@ -1125,12 +1128,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind.</li>
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
             <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Weg zwischen den Halten aus dem
-              Netz von Taktland (Linien und Kilometrierung der SBB, Schienennetz des BAV).</li>
+              Netz von Taktland (Linien und Kilometrierung der SBB, SBB Open Data, data.sbb.ch; Schienennetz des BAV).</li>
             <li>Masten der Fahrleitung: nur wo das Schienennetz des BAV die Strecke elektrifiziert nennt, auf den Gleisachsen aus swissTLM3D (swisstopo).</li>
             <li>Brücken der Bahn, der Strassen und Wege: Lage und Höhe der Achsen auf Brücken aus swissTLM3D (swisstopo).</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
               Ländten: swissTLMRegio (swisstopo).</li>
-            <li>Wind, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten) und deren lokale Prognose, stündlich bis 8 Tage.</li>
+            <li>Wind, Temperatur, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten, für frühere Tage die Stundenwerte seit dem 1. Januar) und deren lokale Prognose, stündlich bis 8 Tage.</li>
+            <li>Gleis der Züge: Gleis laut Fahrplan (opentransportdata.swiss); wo welches Gleis liegt, aus den Sektortafeln der SBB (SBB Open Data, data.sbb.ch) und den Gleisachsen aus swissTLM3D (swisstopo).</li>
             <li>Wolken: Wettermodell ICON-CH1-EPS von MeteoSchweiz (Open Government Data, CC-BY), Kontrolllauf, Bewölkung tief, mittel und hoch, für die nächsten 24 Stunden die Bewölkung in allen 80 Schichten (CLC) mit deren Höhe (HHL), dazu Niederschlagsrate (TOT_PR) und Schneefallgrenze (SNOWLMT), alle 3 Stunden neu.</li>
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
@@ -1143,11 +1147,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Wolken: ihre Form; ausserhalb der nächsten 24 Stunden auch ihre Dicke und die Höhe jeder Schicht (gewählt nach der Mitte ihres
               Druckbereichs); in der Höhe des Modells sind die Stufen von 250 m und die Deckkraft jeder Ebene gewählt.</li>
             <li>Züge und Schiffe: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, an Halten, für die der Fahrplan Ankunft und Abfahrt in derselben Minute nennt, Ankunft 10 Sekunden davor und Abfahrt 20 Sekunden danach, und dass jeder Zug links neben dem Weg fährt,
-              damit Züge in Gegenrichtung aneinander vorbeifahren (welches Gleis er nimmt, steht nicht in den Daten).</li>
+              damit Züge in Gegenrichtung aneinander vorbeifahren. Im Bahnhof gilt das Gleis laut Fahrplan; welche Gleisachse zu welcher Gleisnummer gehört,
+              ist aus der Lage der Sektortafeln geschlossen, nicht angegeben, und unterirdische Gleise fehlen. Wie die Züge davor und danach einspuren, ist gewählt.</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
             <li>Masten der Fahrleitung in den Feldern von 4 km und 1 km: Lage, Abstand (alle 50 m, 3 m neben dem Gleis), Höhe und Gestalt sind erfunden,
-              belegt ist nur, dass die Strecke elektrifiziert ist. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
+              belegt ist nur, dass die Strecke elektrifiziert ist. Ebenso Fahrdraht und Tragseil darüber: Höhe, Durchhang und Hänger sind gewählt, und
+              ob ein einzelnes Gleis elektrifiziert ist, steht in keiner unserer Quellen. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
             <li>Brücken in den Feldern von 4 km und 1 km: belegt sind Lage und Höhe und bei Bahnbrücken, wie viele Gleise nebeneinander liegen. Breite (bei
               Strassen ohne Angabe in der Klasse), Querschnitt mit Schotter, Belag und Brüstungen und das gemalte Aussehen sind gewählt, gleich wie im
               Führerstand von Taktland; Pfeiler fehlen, Stücke unter 12 m fehlen.</li>

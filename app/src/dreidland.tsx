@@ -38,7 +38,7 @@ function DreiDLand() {
             <Teilen name="3dland" adresse="https://3dland.ch" text="3dland: die Schweiz als 3D-Modell zum Eintauchen, auch mit XR-Brille." />
           </div>
           <p>
-            Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz, Fahrplan opentransportdata.swiss. 3dland ist ein privates Projekt
+            Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz, Fahrplan opentransportdata.swiss, SBB Open Data, Bundesamt für Verkehr BAV. 3dland ist ein privates Projekt
             von <a href="https://taktland.ch" className={LINK}>Taktland</a> und kein Angebot einer Behörde.
           </p>
           <details className="klapp mt-2">
@@ -47,9 +47,9 @@ function DreiDLand() {
             </summary>
             <p className="mt-1">
               Gelände (swissALTIRegio, swissALTI3D), Luftbild (SWISSIMAGE), Seen, Ortschaften und die Gipfel der Suche (swissTLMRegio), Wanderwege, Bäume und
-              Wald (swissTLM3D), Gebäude (swissBUILDINGS3D 3.0), Gipfel und Ortsnamen der Landeskarte 1:1 Million (Swiss Map Vector 1000):
-              Bundesamt für Landestopografie swisstopo. Kantone: Bundesamt für Statistik BFS. Wind und Windprognose: MeteoSchweiz
-              (SwissMetNet und lokale Prognose, Open Government Data). Wolken: Wettermodell ICON-CH1-EPS, MeteoSchweiz (Open Government Data, CC-BY). Seegrund von 22 Seen: swissBATHY3D; Felsoberfläche: swissBEDROCK; Einwohnerzahl der Gemeinden für den Namen eines Felds: swissBOUNDARIES3D; alle swisstopo. Züge und Schiffe: Fahrplan als GTFS, opentransportdata.swiss; Elektrifizierung der Strecken für die Masten der Fahrleitung: Schienennetz, Bundesamt für Verkehr BAV; Kurslinien der Schiffe: swissTLMRegio, swisstopo. Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial
+              Wald, Gleisachsen, Brücken und Strassen (swissTLM3D), Gebäude (swissBUILDINGS3D 3.0), Gipfel und Ortsnamen der Landeskarte 1:1 Million (Swiss Map Vector 1000):
+              Bundesamt für Landestopografie swisstopo. Kantone: Bundesamt für Statistik BFS. Wind, Temperatur und Prognose: MeteoSchweiz
+              (SwissMetNet mit Messungen seit dem 1. Januar und lokale Prognose, Open Government Data). Wolken: Wettermodell ICON-CH1-EPS, MeteoSchweiz (Open Government Data, CC-BY). Seegrund von 22 Seen: swissBATHY3D; Felsoberfläche: swissBEDROCK; Einwohnerzahl der Gemeinden für den Namen eines Felds: swissBOUNDARIES3D; alle swisstopo. Züge und Schiffe: Fahrplan als GTFS, opentransportdata.swiss; Weg der Züge: Linien und Kilometrierung der SBB und Sektortafeln für die Lage der Gleise, SBB Open Data (data.sbb.ch); Elektrifizierung der Strecken für die Masten der Fahrleitung: Schienennetz, Bundesamt für Verkehr BAV; Kurslinien der Schiffe: swissTLMRegio, swisstopo. Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial
               (Olaf Frohn, BSD-Lizenz). Was je Modell wofür ist, steht darunter
               unter «Modell, nicht massstäblich: Quellen». Lizenzen der mitgelieferten Bibliotheken:{' '}
               <a href="./lizenzen/drittsoftware.txt" className={LINK}>drittsoftware.txt</a>.
