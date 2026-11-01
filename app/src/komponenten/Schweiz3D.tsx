@@ -2835,7 +2835,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       sonne.intensity = 2.6 * tag
       // tief am Himmel wärmer; eine Stimmung, kein gemessenes Licht
       sonne.color.set(stand.hoehe < 10 ? '#ffc58a' : '#fff6e8')
-      himmelLicht.intensity = 0.35 + 0.55 * Math.min(1, Math.max(0, stand.hoehe + 6) / 36)
+      // das Licht des Himmels: am Tag fast so hell wie ohne Sonne (Michael, 2026-11-01, Müntschemier um 16:14, die Sonne gut 8° hoch: «Es ist
+      // heller als 3D land aktuell darstellt»; vorher 0,35 + 0,55 bis 30° Sonnenhöhe, bei tiefer Sonne etwa ein Drittel), von 6° über bis 6°
+      // unter dem Horizont auf das Licht der Nacht; gewählt, kein gemessenes Licht
+      himmelLicht.intensity = stand.hoehe >= 6 ? 1.3 + 0.3 * Math.min(1, (stand.hoehe - 6) / 30)
+        : 0.35 + 0.95 * Math.min(1, Math.max(0, (stand.hoehe + 6) / 12))
       himmelLicht.color.set(stand.hoehe > 0 ? '#ffffff' : '#9fb3d9')
     }
     sonne.position.copy(d.multiplyScalar(weiteKm * 4)).add(new THREE.Vector3(0, mitteY, 0))
