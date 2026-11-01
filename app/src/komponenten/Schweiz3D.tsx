@@ -21,7 +21,7 @@ import { knopfTon, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoe
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
-import { type WindPlatz, windPlaetze, windZur } from '../windhosen'
+import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
 import { jetztImFahrplan, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { planText } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
@@ -588,16 +588,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // laut Wettermodell über dem Modell (Niederschlag.ts), sonst die Station
   const [niederBild, setNiederBild] = useState<{ art: 'regen' | 'schnee'; staerke: number } | null | undefined>(undefined)
   const hoerNieder = niederBild !== undefined ? niederBild : niederJetzt
-  // Regen und Wind zum Hören, solange «Wetter» an ist (Michael, 2026-10-25: «Bei Regen, Regengeräusch. Bei Wind, Windgeräusch»):
-  // der Wind der vier Windhosen gemittelt, nur für die Lautstärke, nirgends als Zahl gezeigt
-  const windHoeren = (() => {
-    const v = windPl.map((p) => windZur(p, windZeigt?.zeit ?? null)?.kmh).filter((x): x is number => typeof x === 'number')
-    return v.length ? v.reduce((a, x) => a + x, 0) / v.length : null
-  })()
-  useEffect(() => {
-    if (!windAn) { wetterGeraeuschAus(); return }
-    wetterGeraeusch(hoerNieder?.art === 'regen' ? hoerNieder.staerke : null, windHoeren)
-  }, [windAn, hoerNieder?.art, hoerNieder?.staerke, windHoeren])
   useEffect(() => () => wetterGeraeuschAus(), [])
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
   const [minuten, setMinuten] = useState(() => Math.round(jetztInDerSchweiz().minuten / 15) * 15 % 1440)
@@ -691,6 +681,20 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     fensterLicht(stand ? (2 - stand.hoehe) / 8 : 0, lichtAnteil(minuten / 60))
     return () => fensterLicht(0, 0)
   }, [stand, minuten])
+  // die Zeit der Windhosen: die Stunde aus der Tafel, sonst mit «Sonne» die gewählte Zeit, sonst jetzt (Michael, 2026-11-01: «wenn man die
+  // Zeit nach vorne oder zurückspult, die Windgeschwindigkeiten sich entsprechend nicht verändern. Das müsste aber der Fall sein»)
+  const windZeit = windZeigt?.zeit ?? (stand && !jetztAn ? stand.zeit : null)
+  useEffect(() => { windFrueher(windPl, windZeit, () => setWindNeu((x) => x + 1)) }, [windPl, windZeit?.getTime()]) // eslint-disable-line react-hooks/exhaustive-deps
+  // Regen und Wind zum Hören, solange «Wetter» an ist (Michael, 2026-10-25: «Bei Regen, Regengeräusch. Bei Wind, Windgeräusch»):
+  // der Wind der vier Windhosen gemittelt, nur für die Lautstärke, nirgends als Zahl gezeigt
+  const windHoeren = (() => {
+    const v = windPl.map((p) => windBei(p, windZeit)?.kmh).filter((x): x is number => typeof x === 'number')
+    return v.length ? v.reduce((a, x) => a + x, 0) / v.length : null
+  })()
+  useEffect(() => {
+    if (!windAn) { wetterGeraeuschAus(); return }
+    wetterGeraeusch(hoerNieder?.art === 'regen' ? hoerNieder.staerke : null, windHoeren)
+  }, [windAn, hoerNieder?.art, hoerNieder?.staerke, windHoeren])
   const tagText = useMemo(() => {
     const [j, m, t] = tag.split('-').map(Number)
     return new Date(Date.UTC(j, m - 1, t)).toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
@@ -868,7 +872,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
                      sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
-                   windAn={windAn} windWerte={windPl.map((p) => ({ wind: windZur(p, windZeigt?.zeit ?? null), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
+                   windAn={windAn} windWerte={windPl.map((p) => ({ wind: windBei(p, windZeit), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
                    zeitSchieben={zeitSchieben} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -2899,7 +2903,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [windAn, b, stufe, zusatz, knoepfe])
   useEffect(() => { windhosen.current?.setzen(windWerte) },
-    [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
+    [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.boe}/${w.wind?.richtung}/${w.wind?.temperatur}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
   // Masten der Fahrleitung (pipeline/build_fahrleitung.py; Michael, 2026-10-30: «Kann man auf den Bahnstrecken auch Masten für die
   // Fahrleitungen setzen?»): in den Feldern von 4 km und 1 km, wo die Strecke laut BAV elektrifiziert ist; die Masten sind erfunden
   useEffect(() => {
