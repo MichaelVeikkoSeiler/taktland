@@ -229,9 +229,11 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
         const sp = schilder[i]
         sp.material.map?.dispose(); sp.material.map = null
         if (!w) { sp.material.needsUpdate = true; return }
-        // nur die Zahl in km/h, klein über dem Mast (Michael, 2026-10-24: «Viel zu präsente Infos. Nur Zahl (zB 22)»)
-        const kmh = w.wind?.kmh
-        const text = kmh === null || kmh === undefined ? '–' : String(Math.round(kmh))
+        // nur die Zahlen in km/h, klein über dem Mast (Michael, 2026-10-24: «Viel zu präsente Infos. Nur Zahl (zB 22)»): links der Mittelwind
+        // der letzten 10 Minuten, rechts die Böenspitze (Michael, 2026-11-01: «Links Windgeschwindigkeit, rechts in Böen. Nur die Zahlen»;
+        // der Strich wie bei SRF Meteo «17 | 59», gewählt)
+        const zahl = (v: number | null | undefined) => (v === null || v === undefined ? '–' : String(Math.round(v)))
+        const text = `${zahl(w.wind?.kmh)} | ${zahl(w.wind?.boe)}`
         const c = document.createElement('canvas'), x = c.getContext('2d')!
         const px = 22, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
         x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 12; c.height = px + 8
