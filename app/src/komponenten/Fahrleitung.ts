@@ -59,48 +59,90 @@ export function drahtStoff() {
   }
   return { stoff, linien }
 }
-const UEBER_GLEIS_M = 3, FAHRDRAHT_M = 5.5, TRAGSEIL_M = 6.9, DURCHHANG_M = 0.9, HAENGER = 4, SPANN_MIN_M = 25, SPANN_MAX_M = 75
-/** die Drähte als Liniensegmente, je Punkt Ost, Nord und Höhe in m ü. M.: e, n, winkel wie die Masten (winkel: Richtung des Auslegers,
- *  gegen den Uhrzeigersinn ab Osten), fuss die Höhe des Mastfusses oder null, wenn der Mast nicht steht */
-export function fahrleitungsDraehte(e: ArrayLike<number>, n: ArrayLike<number>, winkel: ArrayLike<number>, fuss: (i: number) => number | null): number[] {
-  const Z = SPANN_MAX_M, zellen = new Map<string, number[]>(), ae: number[] = [], an: number[] = [], ah: Array<number | null> = []
-  for (let i = 0; i < e.length; i++) {
-    const h = fuss(i)
-    ae.push(e[i] + Math.cos(winkel[i]) * UEBER_GLEIS_M); an.push(n[i] + Math.sin(winkel[i]) * UEBER_GLEIS_M); ah.push(h)
-    if (h === null) continue
-    const k = `${Math.floor(ae[i] / Z)}_${Math.floor(an[i] / Z)}`, l = zellen.get(k)
+const FAHRDRAHT_M = 5.5, TRAGSEIL_M = 6.9, DURCHHANG_M = 0.9, HAENGER_M = 10, SPANN_M = 50, SPANN_LUECKE_M = 70
+/** ein Mast gehört zu der Gleisachse, die bis so weit neben ihm liegt (build_fahrleitung.py stellt ihn 3 m daneben) */
+const MAST_AN_ACHSE_M = 4.5
+/** eine Gleisachse bekommt Drähte, wo bis so weit ein Mast steht: auch die inneren Gleise eines Gleisfelds, an denen keine Masten stehen
+ *  (zwischen zwei Gleisen setzt build_fahrleitung.py keine); eine Annahme, gewählt: ob ein Gleis selbst elektrifiziert ist, steht in
+ *  keiner unserer Quellen, das BAV nennt es je Netzsegment */
+const ACHSE_UNTER_DRAHT_M = 30
+
+/** Fahrdraht und Tragseil über den Gleisachsen aus swissTLM3D (Michael, 2026-10-31: «Bitte mach einen Fahrdraht bei den Fahrleitungen …
+ *  Einer oben und einer unten»; 2026-11-01, Thun: «Kannst du die Fahrleitungen bei Thun optimieren?»: von Mast zu Mast verbunden liefen
+ *  die Drähte im Gleisfeld schräg über die Gleise, und über den inneren Gleisen fehlten sie): je Achse ausserhalb von Tunneln, wo bis
+ *  ACHSE_UNTER_DRAHT_M ein Mast steht, der Fahrdraht FAHRDRAHT_M über der Achse, das Tragseil darüber mit Durchhang zwischen den Stellen
+ *  der Masten an dieser Achse (ohne Mast alle SPANN_M), Hänger alle HAENGER_M; Höhen und Abstände gewählt. Liniensegmente, je Punkt Ost,
+ *  Nord und Höhe in m ü. M.; drin: nur dort zeichnen (der Rand des Modells) */
+export function fahrleitungsDraehte(achsen: Array<{ e: ArrayLike<number>; n: ArrayLike<number>; z: ArrayLike<number>; tunnel: boolean }>,
+  mastE: ArrayLike<number>, mastN: ArrayLike<number>, drin: (e: number, n: number) => boolean = () => true): number[] {
+  const Z = ACHSE_UNTER_DRAHT_M, zellen = new Map<string, number[]>()
+  for (let i = 0; i < mastE.length; i++) {
+    const k = `${Math.floor(mastE[i] / Z)}_${Math.floor(mastN[i] / Z)}`, l = zellen.get(k)
     if (l) l.push(i); else zellen.set(k, [i])
   }
-  const raus: number[] = [], gesehen = new Set<string>()
-  for (let i = 0; i < e.length; i++) {
-    const hi = ah[i]
-    if (hi === null) continue
-    // entlang des Gleises: quer zum Ausleger
-    const te = -Math.sin(winkel[i]), tn = Math.cos(winkel[i])
-    for (const richtung of [1, -1]) {
-      let best = -1, bestL = Infinity
-      for (let qe = Math.floor(ae[i] / Z) - 1; qe <= Math.floor(ae[i] / Z) + 1; qe++) for (let qn = Math.floor(an[i] / Z) - 1; qn <= Math.floor(an[i] / Z) + 1; qn++) {
-        for (const j of zellen.get(`${qe}_${qn}`) ?? []) {
-          if (j === i) continue
-          const de = ae[j] - ae[i], dn = an[j] - an[i], lang = (de * te + dn * tn) * richtung, quer = Math.abs(de * tn - dn * te)
-          // in Kurven liegt der nächste Mast etwas seitlich; der Ausleger zeigt etwa gleich (nicht vom anderen Gleis her)
-          if (lang < SPANN_MIN_M || lang > SPANN_MAX_M || quer > 1.5 + 0.12 * lang || Math.cos(winkel[j] - winkel[i]) < 0.9) continue
-          if (lang < bestL) { bestL = lang; best = j }
-        }
+  const naechster = (e: number, n: number) => {
+    let d = Infinity
+    for (let qe = Math.floor(e / Z) - 1; qe <= Math.floor(e / Z) + 1; qe++) for (let qn = Math.floor(n / Z) - 1; qn <= Math.floor(n / Z) + 1; qn++)
+      for (const j of zellen.get(`${qe}_${qn}`) ?? []) d = Math.min(d, Math.hypot(mastE[j] - e, mastN[j] - n))
+    return d
+  }
+  const raus: number[] = []
+  for (const a of achsen) {
+    if (a.tunnel || a.e.length < 2) continue
+    // Meter entlang der Achse je Punkt
+    const s: number[] = [0]
+    for (let i = 1; i < a.e.length; i++) s.push(s[i - 1] + Math.hypot(a.e[i] - a.e[i - 1], a.n[i] - a.n[i - 1]))
+    const bei = (m: number): [number, number, number] => {
+      let i = 1
+      while (i < s.length - 1 && s[i] < m) i++
+      const t = s[i] > s[i - 1] ? Math.max(0, Math.min(1, (m - s[i - 1]) / (s[i] - s[i - 1]))) : 0
+      return [a.e[i - 1] + (a.e[i] - a.e[i - 1]) * t, a.n[i - 1] + (a.n[i] - a.n[i - 1]) * t, a.z[i - 1] + (a.z[i] - a.z[i - 1]) * t]
+    }
+    // die Stücke unter Draht: Punkte, bei denen ein Mast nah genug steht
+    const unter = Array.from({ length: a.e.length }, (_, i) => naechster(a.e[i], a.n[i]) <= ACHSE_UNTER_DRAHT_M)
+    // die Stellen der Masten an dieser Achse, in Metern entlang
+    const stellen: number[] = [], nahe = new Set<number>()
+    for (let i = 0; i < a.e.length; i++) {
+      const ce = Math.floor(a.e[i] / Z), cn = Math.floor(a.n[i] / Z)
+      for (let qe = ce - 1; qe <= ce + 1; qe++) for (let qn = cn - 1; qn <= cn + 1; qn++) for (const j of zellen.get(`${qe}_${qn}`) ?? []) nahe.add(j)
+    }
+    for (const j of nahe) {
+      let best = MAST_AN_ACHSE_M, an = -1
+      for (let i = 1; i < a.e.length; i++) {
+        const de = a.e[i] - a.e[i - 1], dn = a.n[i] - a.n[i - 1], l2 = de * de + dn * dn || 1
+        const t = Math.max(0, Math.min(1, ((mastE[j] - a.e[i - 1]) * de + (mastN[j] - a.n[i - 1]) * dn) / l2))
+        const d = Math.hypot(a.e[i - 1] + de * t - mastE[j], a.n[i - 1] + dn * t - mastN[j])
+        if (d < best) { best = d; an = s[i - 1] + (s[i] - s[i - 1]) * t }
       }
-      if (best < 0) continue
-      const schl = i < best ? `${i}_${best}` : `${best}_${i}`
-      if (gesehen.has(schl)) continue
-      gesehen.add(schl)
-      const j = best, hj = ah[j]!
-      raus.push(ae[i], an[i], hi + FAHRDRAHT_M, ae[j], an[j], hj + FAHRDRAHT_M)
-      // das Tragseil in Stücken, mit Durchhang; die Hänger senkrecht zum Fahrdraht
-      const stuecke = HAENGER + 1
-      const seil = (t: number) => [ae[i] + (ae[j] - ae[i]) * t, an[i] + (an[j] - an[i]) * t, hi + (hj - hi) * t + TRAGSEIL_M - DURCHHANG_M * 4 * t * (1 - t)]
-      for (let s = 0; s < stuecke; s++) raus.push(...seil(s / stuecke), ...seil((s + 1) / stuecke))
-      for (let s = 1; s < stuecke; s++) {
-        const t = s / stuecke, [pe, pn, pz] = seil(t)
-        raus.push(pe, pn, pz, pe, pn, hi + (hj - hi) * t + FAHRDRAHT_M)
+      if (an >= 0) stellen.push(an)
+    }
+    stellen.sort((x, y) => x - y)
+    for (let i0 = 0; i0 < a.e.length;) {
+      if (!unter[i0]) { i0++; continue }
+      let i1 = i0
+      while (i1 + 1 < a.e.length && unter[i1 + 1]) i1++
+      const m0 = s[i0], m1 = s[i1]
+      i0 = i1 + 1
+      if (m1 - m0 < HAENGER_M) continue
+      // Stützpunkte: die Masten, dazu Lücken über SPANN_LUECKE_M gleichmässig geteilt
+      const roh = [m0, ...stellen.filter((m) => m > m0 + 5 && m < m1 - 5), m1], stuetzen = [roh[0]]
+      for (let k = 1; k < roh.length; k++) {
+        const luecke = roh[k] - roh[k - 1], teile = luecke > SPANN_LUECKE_M ? Math.round(luecke / SPANN_M) : 1
+        for (let t = 1; t <= teile; t++) stuetzen.push(roh[k - 1] + (luecke * t) / teile)
+      }
+      for (let k = 1; k < stuetzen.length; k++) {
+        const a0 = stuetzen[k - 1], a1 = stuetzen[k], stuecke = Math.max(1, Math.round((a1 - a0) / HAENGER_M))
+        let vorher: [number, number, number] | null = null, vorherSeil: number | null = null
+        for (let t = 0; t <= stuecke; t++) {
+          const m = a0 + ((a1 - a0) * t) / stuecke, p = bei(m), f = t / stuecke
+          const seil = p[2] + TRAGSEIL_M - DURCHHANG_M * 4 * f * (1 - f)
+          if (vorher && vorherSeil !== null && drin(p[0], p[1]) && drin(vorher[0], vorher[1])) {
+            raus.push(vorher[0], vorher[1], vorher[2] + FAHRDRAHT_M, p[0], p[1], p[2] + FAHRDRAHT_M)
+            raus.push(vorher[0], vorher[1], vorherSeil, p[0], p[1], seil)
+          }
+          if (t > 0 && t < stuecke && drin(p[0], p[1])) raus.push(p[0], p[1], seil, p[0], p[1], p[2] + FAHRDRAHT_M)
+          vorher = p; vorherSeil = seil
+        }
       }
     }
   }

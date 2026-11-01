@@ -661,11 +661,13 @@ data/fahrleitung/  Masten der Fahrleitung für «3D Schweiz» und den Führersta
              von 15 m höchstens einer, 155'601 Masten, 330 Kacheln, 0,7 MB (.mgz, in Git, export_app kopiert sie); Gestalt in komponenten/Fahrleitung.ts: Pfosten
              7,5 m mit Ausleger 3,6 m auf 6,6 m und Strebe, grau (gewählt); in «3D Schweiz» in den Feldern von 4 km und 1 km (mastenLaden in src/gelaende.ts), im
              Führerstand mit dem feinen Gelände (mastSetzen in Relief.tsx), keiner näher als 2,2 m an der gezeichneten Linie, bis 25 m neben ihr auf ihrer Höhe,
-             sonst auf dem Gelände (MAST_LICHTRAUM_M, MAST_AUF_LINIE_M, gewählt); in Anleitung und Quellen genannt; dazu zwischen zwei Masten derselben Gleisachse
-             (25 bis 75 m entlang des Gleises, kaum quer versetzt, fast gleiche Richtung) zwei Drähte über dem Gleis, 3 m am Ausleger entlang (Michael, 2026-10-31:
-             «Bitte mach einen Fahrdraht bei den Fahrleitungen. Ich glaube, in der Realität sind es zwei. Einer oben und einer unten»): unten der Fahrdraht gerade
-             auf 5,5 m, oben das Tragseil auf 6,9 m mit 0,9 m Durchhang, dazwischen vier Hänger, dunkelgraue feine Linien (fahrleitungsDraehte in Fahrleitung.ts,
-             Höhen, Durchhang und Paarung gewählt, in keiner Quelle), bis 120 m vom Auge ganz, bis 450 m ausgeblendet (DRAHT_VOLL_KM, DRAHT_WEG_KM, gewählt;
+             sonst auf dem Gelände (MAST_LICHTRAUM_M, MAST_AUF_LINIE_M, gewählt); in Anleitung und Quellen genannt; dazu zwei Drähte (Michael, 2026-10-31:
+             «Bitte mach einen Fahrdraht bei den Fahrleitungen. Ich glaube, in der Realität sind es zwei. Einer oben und einer unten»): seit 2026-11-01 über jeder
+             Gleisachse aus swissTLM3D (data/gleishoehe) ausserhalb von Tunneln, wo bis 30 m ein Mast steht, auch über den inneren Gleisen eines Gleisfelds
+             (Michael, 2026-11-01, Thun: «Kannst du die Fahrleitungen bei Thun optimieren?»: von Mast zu Mast verbunden liefen sie schräg über die Gleise, und über
+             den inneren Gleisen fehlten sie; ob ein Gleis selbst elektrifiziert ist, steht in keiner unserer Quellen, ACHSE_UNTER_DRAHT_M): unten der Fahrdraht
+             5,5 m über der Achse, oben das Tragseil auf 6,9 m mit 0,9 m Durchhang zwischen den Stellen der Masten bis 4,5 m neben der Achse (ohne Mast alle 50 m),
+             Hänger alle 10 m, dunkelgraue feine Linien (fahrleitungsDraehte in Fahrleitung.ts, Höhen und Abstände gewählt, in keiner Quelle), bis 120 m vom Auge ganz, bis 450 m ausgeblendet (DRAHT_VOLL_KM, DRAHT_WEG_KM, gewählt;
              Michael, 2026-10-31: «Wenn man weiter weg ist sind sie zu dick»: eine Linie ist immer einen Bildpunkt breit)
 data/gleise3d.json  welches Gleis wo liegt, für die Züge in «3D Schweiz» (Michael, 2026-10-30: «Kann man die Züge auf den richtigen Gleisen fahren lassen?
              Erkennst du sie und auf welchem Gleis der entsprechende Zug ankommt? Unterirdische Gleise nicht berücksichtigen»): pipeline/build_gleise3d.py aus den

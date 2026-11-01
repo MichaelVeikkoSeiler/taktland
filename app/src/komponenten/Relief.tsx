@@ -22,7 +22,7 @@ import { himmelNacht, sternSicht } from '../sterne'
 import { sternenhimmelBauen } from './Sternenhimmel'
 import { audioKontext, audioLesen, audioSetzen, useAudio, wetterGeraeusch, wetterGeraeuschAus, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
-import { type Bruecke3d, brueckenLaden, strassenlichtLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
+import { type Bruecke3d, brueckenLaden, gleisLaden, strassenlichtLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
 import { fahrplanZuegeBauen } from './FahrplanZuege'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
@@ -2594,7 +2594,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     let mastAuftrag = 0
     const mastSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++mastAuftrag
-      const ms = await mastenLaden(e0, n0, e1, n1).catch(() => null)
+      const raster: Array<[number, number]> = []
+      for (let e = e0; e <= e1 + 4999; e += 5000) for (let n = n0; n <= n1 + 4999; n += 5000) raster.push([Math.min(e, e1), Math.min(n, n1)])
+      const [ms, achsen] = await Promise.all([mastenLaden(e0, n0, e1, n1).catch(() => null), gleisLaden(raster).catch(() => [])])
       if (!laeuft || auftrag !== mastAuftrag) return
       for (const c of mastGruppe.children) { if (c instanceof THREE.InstancedMesh) c.dispose(); else (c as THREE.LineSegments).geometry.dispose() }
       mastGruppe.clear()
@@ -2610,10 +2612,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const netz = new THREE.InstancedMesh(mastForm, mastStoff, ms.e.length)
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(X(1) - X(0), Y(1) - Y(0), X(1) - X(0))
       let zahl = 0
-      const fuesse: Array<number | null> = []
       for (let i = 0; i < ms.e.length; i++) {
         const e = ms.e[i], n = ms.n[i]
-        fuesse.push(null)
         let d = Infinity, hl = 0
         for (let j = 0; j < linie.length; j += 3) {
           const dj = Math.hypot(linie[j] - e, linie[j + 1] - n)
@@ -2623,7 +2623,6 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         if (d < MAST_LICHTRAUM_M) continue
         const h = d < MAST_AUF_LINIE_M ? hl - 1 : (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fs.fein, e, n)
         if (h === null) continue
-        fuesse[i] = h
         v.set(X(e), Y(h), Z(n))
         q.setFromAxisAngle(OBEN, ms.winkel[i])
         netz.setMatrixAt(zahl++, m.compose(v, q, sk))
@@ -2632,8 +2631,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       netz.instanceMatrix.needsUpdate = true
       netz.computeBoundingSphere()
       mastGruppe.add(netz)
-      // Fahrdraht und Tragseil von Mast zu Mast (fahrleitungsDraehte in Fahrleitung.ts), auf die Höhe der Szene gebracht
-      const roh = fahrleitungsDraehte(ms.e, ms.n, ms.winkel, (i) => fuesse[i])
+      // Fahrdraht und Tragseil über den Gleisachsen, wo Masten stehen (fahrleitungsDraehte in Fahrleitung.ts), auf die Höhe der Szene gebracht
+      const imFeld = (e: number, n: number) => e >= e0 && e <= e1 && n >= n0 && n <= n1
+      const roh = fahrleitungsDraehte(achsen.filter((a) => Array.from(a.e).some((e, i) => imFeld(e, a.n[i]))), ms.e, ms.n, imFeld)
       if (roh.length) {
         const pos = new Float32Array(roh.length)
         for (let i = 0; i < roh.length; i += 3) {
