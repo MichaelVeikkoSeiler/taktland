@@ -3716,7 +3716,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (!p) continue
           const d = p.distanceTo(augeLokal) * 1000, alt = hoerAlt.get(gezeichnet[z].id)
           neu.set(gezeichnet[z].id, { p: p.clone(), d })
-          if (d > 3000) continue
+          if (d > 50_000) continue
           const tempo = alt && dtH > 0 && dtH < 1 ? (alt.p.distanceTo(p) * 1000) / dtH : 0
           liste.push({ abstandM: d, tempoMs: tempo })
         }

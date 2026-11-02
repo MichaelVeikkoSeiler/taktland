@@ -661,15 +661,20 @@ export function wetterGeraeuschAus() {
 /**
  * Züge laut Fahrplan in «3D Schweiz» (Michael, 2026-10-30: «Zuggeräusch einschalten. Wenn Züge aktiviert sind. Je näher ein Zug ist umso
  * lauter»; dann «Das Geräusch ist nicht gut. Nimm einfach das Geräusch von Taktland»): das Zuggeräusch beim Fahren (zuggeraeuschTempo), mit
- * dem Tempo des nächsten fahrenden Zugs, im Quadrat leiser mit seinem Abstand (VORBEI_NAH_M, ab VORBEI_STILL_M still); Abstände gewählt.
+ * dem Tempo des nächsten fahrenden Zugs, im Quadrat leiser mit seinem Abstand (VORBEI_NAH_M, VORBEI_STILL_M), aus der Ferne leise (FERN_*); Abstände gewählt.
  */
 export interface VorbeiZug { abstandM: number; tempoMs: number }
 const VORBEI_NAH_M = 150, VORBEI_STILL_M = 2500
+/** leise auch aus der Ferne (Michael, 2026-11-02: «Ja, leise auch aus der Ferne»): nie leiser als FERN_LAUT bis FERN_VOLL_M, bis FERN_STILL_M
+ *  auslaufend; Lautstärke und Abstände gewählt */
+const FERN_LAUT = 0.06, FERN_VOLL_M = 25_000, FERN_STILL_M = 50_000
 
 export function zuegeHoeren(zuege: VorbeiZug[]) {
-  const z = zuege.filter((x) => x.tempoMs > 1 && x.abstandM < VORBEI_STILL_M).sort((a, b) => a.abstandM - b.abstandM)[0]
+  const z = zuege.filter((x) => x.tempoMs > 1 && x.abstandM < FERN_STILL_M).sort((a, b) => a.abstandM - b.abstandM)[0]
   if (!z) { zuggeraeuschTempo(null, Infinity, null, 1, true); return }
-  const laut = Math.max(0, 1 - z.abstandM / VORBEI_STILL_M) / (1 + (z.abstandM / VORBEI_NAH_M) ** 2)
+  const nah = Math.max(0, 1 - z.abstandM / VORBEI_STILL_M) / (1 + (z.abstandM / VORBEI_NAH_M) ** 2)
+  const fern = FERN_LAUT * Math.min(1, Math.max(0, (FERN_STILL_M - z.abstandM) / (FERN_STILL_M - FERN_VOLL_M)))
+  const laut = Math.max(nah, fern)
   zuggeraeuschTempo(z.tempoMs, Infinity, null, laut, true)
 }
 
