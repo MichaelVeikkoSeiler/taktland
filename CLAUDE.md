@@ -492,7 +492,7 @@ data/wetterstationen.json  die 159 Stationen von MeteoSchweiz (SwissMetNet, Open
              2026-10-24: «Regentropfen fallen nicht bis zum Boden»), dort Dunst (DUNST_JE_KM); die Nahgrenze im Führerstand 1,2 m statt 3 m
              (FUEHRERSTAND_NAHE_KM; «Schienen hören zu früh vor dem Fahrzeug auf»), in der Brille Regen und Schnee auf dem Tisch in einem Würfel von 1,6 m über dem Modell, im Führerstand um den Kopf
              (NIEDER_TISCH_M; Michael, 2026-10-24; mit dem Emulator nicht geprüft, IWER startete hier keine Sitzung); neben dem Schalter die Zeile
-             «Wetter Station Uhrzeit: …, Temperatur, Wind (MeteoSchweiz)»; Quelle in der Fusszeile, Annahmen und Datenschutz unter Info;
+             «Wetter Station Uhrzeit: …, Temperatur, Wind (MeteoSchweiz)»; ohne Bewölkung mit Grund: «an dieser Station nicht gemessen» (kein Sonnenschein oder keine Strahlung, etwa Courtelary) oder «im Dunkeln nicht messbar» (unter 10 W/m², bewoelktOhne; vorher immer «nachts nicht gemessen», Michael, 2026-11-02, Bildschirmfoto um 15:20); Quelle in der Fusszeile, Annahmen und Datenschutz unter Info;
              Windhose (Michael, 2026-10-24: «eine Windhose hinzufügen, wo man sehen kann, wie die Windverhältnisse sind. Auch mit Prognose für
              die nächste Woche»): die Messung (fu3010z0, fu3010z1, dkl010z0) und die lokale Prognose von MeteoSchweiz (ogd-local-forecasting,
              Punkte vom Typ Station, die Nummer je Station in wetterstationen.json, Stundenwerte fu3010h0, fu3010h1, dkl010h0 bis 192 h, UTC;
