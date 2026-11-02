@@ -1462,6 +1462,10 @@ function knopfBild(plus: boolean, an: boolean) {
  * taucht ein; ein gehaltener Abzug trägt das Modell, beide ziehen es grösser oder kleiner und drehen es (wie die Modellbahn);
  * die Greiftaste geht eine Stufe zurück, der Thumbstick dreht und hebt.
  */
+/** Anfangsblick in einem Ausschnitt (nicht in der ganzen Schweiz): so viel der Breite des Ausschnitts an der Mitte im Bild, so hoch über dem
+ *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
+const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
+
 function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell }: {
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
@@ -2035,8 +2039,17 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const halbeSicht = Math.atan(Math.tan((kamera.fov * Math.PI) / 360) * Math.min(1, kamera.aspect))
       // schräg von Südwesten, der Blick nach Nordosten (Michael, 2026-10-19): so sieht man zwei Seiten des Sockels (die Diagonale
       // ist 1,41-mal so breit); x zeigt nach Osten, z nach Süden
-      const abstand = (weite / 1000) * 0.8 / Math.tan(halbeSicht)
-      kamera.position.set(-abstand * 0.55, Y(mittel) + abstand * 0.62, abstand * 0.55)
+      if (stufe === 'schweiz') {
+        const abstand = (weite / 1000) * 0.8 / Math.tan(halbeSicht)
+        kamera.position.set(-abstand * 0.55, Y(mittel) + abstand * 0.62, abstand * 0.55)
+      } else {
+        // in einem Ausschnitt näher und flacher, von Süden leicht von Westen, Norden oben (Michael, 2026-11-02, Bildschirmfoto «80 km um
+        // Bern»: «Standardmässig soll diese Perspektive auf einen Ausschnitt sein»): an der Mitte etwa die Breite des Ausschnitts im Bild,
+        // 26° über dem Horizont, 20° westlich von Süden (BLICK_*, gewählt nach dem Bild)
+        const abstand = (weite / 1000) * BLICK_AUSSCHNITT_BREITE / 2 / Math.tan(halbeSicht)
+        const h = BLICK_AUSSCHNITT_HOEHE * Math.PI / 180, r = BLICK_AUSSCHNITT_WEST * Math.PI / 180
+        kamera.position.set(-Math.sin(r) * Math.cos(h) * abstand, Y(mittel) + Math.sin(h) * abstand, Math.cos(r) * Math.cos(h) * abstand)
+      }
       steuerung.target.set(0, Y(mittel), 0)
       steuerung.minDistance = weite / 1000 * 0.02
       steuerung.maxDistance = weite / 1000 * 2
