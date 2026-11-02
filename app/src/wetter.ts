@@ -30,6 +30,8 @@ export interface Wetter {
   niederschlag: number | null
   /** 0 klar bis 1 bedeckt; null nachts oder ohne Messung der Sonne */
   bewoelkt: number | null
+  /** warum bewoelkt fehlt: die Station misst Sonnenschein oder Strahlung nicht, oder es ist zu dunkel (unter 10 W/m²) */
+  bewoelktOhne?: 'station' | 'dunkel' | null
   /** was gezeichnet wird */
   art: 'klar' | 'bewoelkt' | 'regen' | 'schnee'
   /** 0 bis 1, wie stark es regnet oder schneit */
@@ -82,6 +84,7 @@ async function messungLesen(s: Station): Promise<Wetter | null> {
   const niederschlag = regen.every((r) => r === null) ? null : regen.reduce<number>((a, r) => a + (r ?? 0), 0)
   const sonne = zahl(letzte, iS), strahlung = zahl(letzte, iG)
   const bewoelkt = sonne === null || strahlung === null || strahlung < TAG_AB_WM2 ? null : Math.max(0, Math.min(1, 1 - sonne / 10))
+  const bewoelktOhne = sonne === null || strahlung === null ? 'station' as const : strahlung < TAG_AB_WM2 ? 'dunkel' as const : null
   const temperatur = zahl(letzte, iT)
   const nass = (niederschlag ?? 0) >= NASS_AB_MM
   const art = nass ? (temperatur !== null && temperatur <= SCHNEE_BIS_C ? 'schnee' : 'regen') : (bewoelkt ?? 0) >= BEWOELKT_AB ? 'bewoelkt' : 'klar'
@@ -97,7 +100,7 @@ async function messungLesen(s: Station): Promise<Wetter | null> {
     const t = zeitLesen(z[iZeit] ?? '')
     if (t) verlauf.push({ zeit: t, kmh: zahl(z, iW), boe: zahl(z, iB), richtung: zahl(z, iD), temperatur: zahl(z, iT) })
   }
-  return { station: s, zeit, temperatur, niederschlag, bewoelkt, art, staerke: nass ? staerkeAus(niederschlag ?? 0) : 0,
+  return { station: s, zeit, temperatur, niederschlag, bewoelkt, bewoelktOhne, art, staerke: nass ? staerkeAus(niederschlag ?? 0) : 0,
            wind, windZeit: wind ? windZeit : null, verlauf }
 }
 
@@ -162,7 +165,9 @@ export async function wetterBei(e: number, n: number): Promise<Wetter | null> {
 /** kurz für die Anzeige im Bild */
 export function wetterText(w: Wetter) {
   const art = { klar: 'sonnig', bewoelkt: 'bewölkt', regen: 'Regen', schnee: 'Schnee' }[w.art]
-  const nacht = w.bewoelkt === null && w.art !== 'regen' && w.art !== 'schnee' ? 'Bewölkung nachts nicht gemessen' : art
+  // ohne Bewölkung sagen, warum (Courtelary misst weder Sonnenschein noch Strahlung, dort stand am Tag «nachts nicht gemessen»)
+  const nacht = w.bewoelkt === null && w.art !== 'regen' && w.art !== 'schnee'
+    ? (w.bewoelktOhne === 'dunkel' ? 'Bewölkung im Dunkeln nicht messbar' : 'Bewölkung an dieser Station nicht gemessen') : art
   const t = w.temperatur !== null ? `, ${w.temperatur.toLocaleString('de-CH', { maximumFractionDigits: 1 })} °C` : ''
   const uhr = w.zeit.toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Zurich' })
   const wind = w.wind?.kmh != null ? `, Wind ${Math.round(w.wind.kmh)} km/h${w.wind.richtung !== null && w.wind.kmh >= 1 ? ` aus ${himmelsrichtungKurz(w.wind.richtung)}` : ''}` : ''
