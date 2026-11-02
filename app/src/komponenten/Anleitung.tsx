@@ -114,8 +114,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         </Spiel>
         <Spiel titel="3D Schweiz">
           <li>
-            Die ganze Schweiz als Modell. Ein Feld antippen oder einen Ort, Gipfel oder See suchen, dann eintauchen: in eine
-            Region von 20 km, ein Feld von 4 km und ein Stück von 1 km; der gesuchte Ort bleibt dabei rot markiert. Mit + und −
+            Die ganze Schweiz als Modell. Ein Feld antippen oder einen Ort, Gipfel oder See suchen, dann eintauchen: in Gebiete von 128 und 64 km, eine
+            Region von 16 km, ein Feld von 4 km und ein Stück von 1 km; der gesuchte Ort bleibt dabei rot markiert. Mit + und −
             an den Wänden setzt du Stücke an.
           </li>
           <li>
