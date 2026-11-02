@@ -591,7 +591,7 @@ data/zuege3d/  Züge laut Fahrplan für «3D Schweiz», zuerst nur für 3dland.c
              … Somit kann man das Tempo … nicht variieren»): plan= in der Adresse (t0 und je Halt Ankunft und Abfahrt in Sekunden danach, mit den Minuten am Start
              und Ziel und den kurzen Halten wie in zugStelle; zugPlan in src/zuege3d.ts, src/mitfahren.ts), die Halte am Betriebspunkt ihres Bahnhofs auf dem Weg,
              dazwischen gleichmässig (Annahme wie in «3D Schweiz»), die echte Uhr, ohne Zeitraffer, Anhalten, Springen, Von vorn und Retour, am Pult «FAHRPLAN»,
-             Hebel gesperrt, Titel «Mitfahren laut Fahrplan», «Stelle laut Fahrplan, nicht live»; kein Echtzeit-Zug, Verspätungen fehlen
+             Hebel gesperrt, Titel «Mitfahren laut Fahrplan», «Stelle laut Fahrplan, nicht live»; kein Echtzeit-Zug, Verspätungen fehlen; von 3dland.ch mit &von3d=1, dann neben «Beenden» der Knopf «Zurück zu 3D-Land»: window.close, wo der Browser es erlaubt, sonst nach 0,3 s https://3dland.ch (von3d in Fahrtmodus.tsx; Michael, 2026-11-02: «keinen Zurück-Button mehr zu 3D-Land»; auf einem Handy nicht geprüft)
 data/schiffe3d/  Schiffe laut Fahrplan für «3D Schweiz» auf 3dland.ch und in Taktland wie die Züge (Michael, 2026-10-28: «Ja gern, tolle Idee. Vielleicht findest du ja die
              Routen aus Flyern oder Seekarten der ÖV»): pipeline/build_schiffe3d.py, aufgerufen von build_zuege3d.py im selben Durchgang durch den
              Fahrplan, Kursschiffe und Fähren (GTFS route_type 4 und 1000) mit ihren Ländten, 14 Tage; der Weg zwischen zwei Ländten auf den
