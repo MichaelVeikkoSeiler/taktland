@@ -897,6 +897,13 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     </div>
   )
 
+  // von 3dland.ch hierher gekommen (Michael, 2026-11-02: «keinen Zurück-Button mehr zu 3D-Land»): der Knopf schliesst den Tab, den
+  // 3dland.ch geöffnet hat, wo der Browser es erlaubt, sonst öffnet er 3dland.ch
+  const [von3d] = useState(() => new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('von3d') === '1')
+  const zurueckZu3dland = () => {
+    window.close()
+    window.setTimeout(() => { window.location.href = 'https://3dland.ch/' }, 300)
+  }
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
                     dark:bg-sbb-midnight dark:text-sbb-white" role="dialog" aria-label="Fahren">
@@ -920,6 +927,15 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
               </p>
             )}
           </div>
+          {von3d && (
+            <button
+              type="button" onClick={zurueckZu3dland}
+              className="shrink-0 rounded-lg border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
+                         dark:border-sbb-iron dark:hover:border-sbb-white"
+            >
+              Zurück zu 3D-Land
+            </button>
+          )}
           <button
             type="button" onClick={fahrtBeenden}
             className="shrink-0 rounded-lg border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black

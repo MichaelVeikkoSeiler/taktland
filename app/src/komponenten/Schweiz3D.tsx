@@ -1044,7 +1044,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
             Buchstaben sind die Sektoren, wie sie der Fahrplan nennt); oben im Bild ein Link zur Seite dieses Bahnhofs auf taktland.ch
             mit Perrons und Gleisen, wo Taktland eine hat. Ein Tipp daneben blendet es aus. Darunter führt «Im Führerstand mitfahren» in den Führerstand von Taktland: Der Zug fährt
-            dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
+            dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
         </Abschnitt>
         <Abschnitt titel="Schiffe">
@@ -3237,7 +3237,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const jetzt = ix ? jetztImFahrplan(ix) : null, plan = jetzt ? zugPlan(f, jetzt.tag, jetzt.minuten, st!.i) : null
       const planTeil = plan ? `&plan=${planText({ t0: Date.now() / 1000, halte: plan.map((x) => ({ abk: x.abk, an: x.an * 60, ab: x.ab * 60 })) })}` : ''
       setMitfahren({ name: `${titel} nach ${f.ziel}`,
-                     url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1${planTeil}` })
+                     url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1${planTeil}${AUF_3DLAND ? '&von3d=1' : ''}` })
     }
     const linkSetzen = (abk: string | null) => {
       if (abk === linkAbk) return
