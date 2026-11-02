@@ -1175,6 +1175,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               auch, dass Diverses eben doch erfunden ist»), derselbe Text für LinkedIn */}
           <p>Eigentlich wollte ich nur die Schweiz in 3D sehen. Daraus ist 3D-Land geworden. Angefangen hat es am 18. Oktober 2026 als Spiel
             «3D Schweiz» in Taktland, seit dem 21. Oktober gibt es dafür eine eigene Seite: 3dland.ch.</p>
+          {/* das Zielpublikum (Michael, 2026-11-02: «Personen, die ein Bahnerlebnis wollen», «für Wanderer, die die Wanderwege auch mal
+              dreidimensional auf einer Schweizer Karte sehen möchten. Auch zur Nachverfolgung») */}
+          <p className="mt-2">Für wen ist 3D-Land? Für alle, die die Bahn erleben wollen: Die Züge fahren nach Fahrplan durch das Modell, man
+            tippt einen an und fährt in Taktland im Führerstand mit, bis an sein Ziel. Für Wanderinnen und Wanderer, die ihre Wege einmal
+            dreidimensional sehen möchten: Alle Wanderwege der Schweiz liegen auf dem Gelände, gelb, rot und blau wie auf den Wegweisern. Mit
+            «Mein Standort» wandert ein roter Punkt mit, auf der Wanderung wie im Zug, und man sieht im Modell, wo man gerade unterwegs ist. Und
+            für alle, die die Schweiz einfach gern von oben anschauen, mit dem Wetter von heute und der Sonne zu jeder Stunde.</p>
           <p className="mt-2">Ich kann nicht programmieren, keine einzige Zeile. 3D-Land ist im Gespräch entstanden. Ich habe beschrieben, was ich
             sehen möchte, und Claude, eine künstliche Intelligenz von Anthropic, hat den Code geschrieben. Claude hat auch die offenen Daten von
             swisstopo, MeteoSchweiz und dem öffentlichen Verkehr gesucht und aufbereitet. Schritt für Schritt kam dazu: Stufe um Stufe bis
