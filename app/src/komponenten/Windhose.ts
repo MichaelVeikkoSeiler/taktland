@@ -116,8 +116,9 @@ interface Wind { kmh: number | null; boe: number | null; richtung: number | null
  */
 /** in der Brille: so hoch wie dieser Teil der Windhose ist die Zahl über dem Mast, gewählt */
 const BRILLE_ZAHL = 0.22
-/** auf dieser Höhe des Masts (1 oben) steht die Temperatur, gewählt */
-const MAST_MITTE = 0.5
+/** die Temperatur steht zentriert über den Windzahlen, ihr Fuss so viele Schildhöhen über deren Fuss: eine Höhe und etwas Abstand (Michael,
+ *  2026-11-02: «Termo über den Windzahlen etwas Abstand zentriert»; vorher in der Mitte des Masts, gewählt) */
+const TEMP_UEBER = 1.25
 
 /** ein Schild mit weisser Schrift auf Dunkelgrau, fett 22 Bildpunkte; null leert es */
 function schildMalen(sp: THREE.Sprite, text: string | null) {
@@ -148,11 +149,11 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
     sp.center.set(0.5, 0); sp.renderOrder = 7; sp.visible = false
     return sp
   })
-  // die Temperatur in °C in der Mitte des Masts, in derselben Schrift, Grösse und Farbe wie die Zahlen darüber (Michael, 2026-11-01: «in der
+  // die Temperatur in °C über den Windzahlen (TEMP_UEBER), in derselben Schrift, Grösse und Farbe wie die Zahlen darüber (Michael, 2026-11-01: «in der
   // Mitte des Mastes oben in der gleichen Schrift und Schriftgröße und Schriftfarbe die Temperatur in Celsius»)
   const temps = hosen.map(() => {
     const sp = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false, transparent: true }))
-    sp.center.set(0.5, 0.5); sp.renderOrder = 7; sp.visible = false
+    sp.center.set(0.5, -TEMP_UEBER); sp.renderOrder = 7; sp.visible = false
     return sp
   })
   hosen.forEach((h, i) => { h.gruppe.visible = false; eltern.add(h.gruppe); eltern.add(schilder[i]); eltern.add(temps[i]) })
@@ -236,7 +237,7 @@ export function vierWindhosenBauen(eltern: THREE.Object3D, kamera: THREE.Perspec
           h.gruppe.scale.setScalar((d * BILD_HOEHE * querMass(kamera)) / massstab)
         }
         h.schritt(t)
-        for (const [sp, y] of [[schilder[i], 1.15], [temps[i], MAST_MITTE]] as const) {
+        for (const [sp, y] of [[schilder[i], 1.15], [temps[i], 1.15]] as const) {
           sp.visible = verteilt && !!sp.material.map
           sp.position.copy(h.gruppe.position).y += h.gruppe.scale.y * y
           // in der Brille im Raum des Modells, so hoch wie ein Fünftel der Windhose (BRILLE_ZAHL), sonst fest auf dem Bildschirm
