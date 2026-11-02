@@ -114,8 +114,8 @@ export function boxUm(stuecke: Stueck[], mindestens: number): Box {
  * sondern eine Fläche über der ganzen Seite. Das Seitenverhältnis folgt dann
  * dem Bildschirm; Escape schliesst.
  */
-export function useVollbild(svg: React.RefObject<Element | null>) {
-  const [voll, setVoll] = useState(false)
+export function useVollbild(svg: React.RefObject<Element | null>, anfang = false) {
+  const [voll, setVoll] = useState(anfang)
   const [verh, setVerh] = useState(SEITENVERHAELTNIS)
   useEffect(() => {
     if (!voll) { setVerh(SEITENVERHAELTNIS); return }
@@ -146,6 +146,7 @@ export function useEchtesVollbild(voll: boolean, setVoll: (v: boolean) => void) 
     const vorher = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     let echt = false
+    const weg: Array<() => void> = []
     const wurzel = document.documentElement
     if (wurzel.requestFullscreen && !document.fullscreenElement) {
       wurzel.requestFullscreen().then(() => {
@@ -154,7 +155,14 @@ export function useEchtesVollbild(voll: boolean, setVoll: (v: boolean) => void) 
         // Manifest kennt (Michael, 2026-10-14: «Das Drehen um 90 Grad funktioniert bei mir leider nicht»)
         const o = screen.orientation as ScreenOrientation & { lock?: (art: string) => Promise<void> }
         o?.lock?.('any').catch(() => {})
-      }).catch(() => {})
+      }).catch(() => {
+        // ohne Geste lehnt der Browser ab (Vollbild gleich beim Öffnen, aus «3D Schweiz»): dann beim ersten Tipp
+        const nochmals = () => {
+          if (!document.fullscreenElement) wurzel.requestFullscreen().then(() => { echt = true }).catch(() => {})
+        }
+        document.addEventListener('pointerdown', nochmals, { once: true })
+        weg.push(() => document.removeEventListener('pointerdown', nochmals))
+      })
     }
     const wechsel = () => { if (echt && !document.fullscreenElement) setVoll(false) }
     document.addEventListener('fullscreenchange', wechsel)
@@ -165,6 +173,7 @@ export function useEchtesVollbild(voll: boolean, setVoll: (v: boolean) => void) 
     const verlauf = () => { zurueck = true; setVoll(false) }
     window.addEventListener('popstate', verlauf)
     return () => {
+      weg.forEach((f) => f())
       window.removeEventListener('popstate', verlauf)
       if (!zurueck && (history.state as { vollbild?: boolean } | null)?.vollbild) history.back()
       document.removeEventListener('keydown', taste)

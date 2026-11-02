@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { type PlanHalt, planStelle } from '../mitfahren'
+import { type PlanHalt, planStelle, von3dland } from '../mitfahren'
 import type { MeldeArt, PultAussen } from './Fuehrerpult'
 import { neuLadenSperren } from '../serviceWorker'
 import { useAudio } from '../audio'
@@ -899,7 +899,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
 
   // von 3dland.ch hierher gekommen (Michael, 2026-11-02: «keinen Zurück-Button mehr zu 3D-Land»): der Knopf schliesst den Tab, den
   // 3dland.ch geöffnet hat, wo der Browser es erlaubt, sonst öffnet er 3dland.ch
-  const [von3d] = useState(() => new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('von3d') === '1')
+  const [von3d] = useState(() => von3dland || new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('von3d') === '1')
   const zurueckZu3dland = () => {
     window.close()
     window.setTimeout(() => { window.location.href = 'https://3dland.ch/' }, 300)
@@ -951,7 +951,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             stehend, alles andere rechts daneben (Michael, 2026-10-12) */}
         <div className="xl:grid xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:items-start xl:gap-8">
         <div className="min-w-0 xl:sticky xl:top-4">
-        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen} dreiDMelden={setDreiD}
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen} zurueckKnopf={von3d ? { text: '3D-Land', aktion: zurueckZu3dland } : undefined} dreiDMelden={setDreiD}
                     imFuehrerstand={ankunftKarte}
                     tempo={planJetzt ? planJetzt.v : stand ? stand.v * (probefahrt ? raffer : 1) : null} probefahrt={probefahrt} nachPlan={nachPlan}
                     start={titel.split(' → ')[0]} ziel={ohneZiel ? undefined : titel.split(' → ')[1]} />

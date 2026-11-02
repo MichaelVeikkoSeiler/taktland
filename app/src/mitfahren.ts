@@ -54,3 +54,9 @@ export function planStelle(plan: PlanHalt[], t: number): { s: number; v: number 
   }
   return { s: plan[plan.length - 1].s, v: 0 }
 }
+
+/** von 3dland.ch hierher gekommen (von3d=1 in der Adresse): gemerkt, bevor die Seite «Strecke» die Adresse ersetzt */
+export let von3dland = false
+export function von3dlandMerken(hash: string) {
+  if (new URLSearchParams(hash.split('?')[1] ?? '').get('von3d') === '1') von3dland = true
+}
