@@ -48,17 +48,19 @@ import { himmelNacht, sternSicht } from '../sterne'
  * unserer Quellen. Was die Karte zum Feld nennt, steht in den Daten: Orte der Landeskarte, Gipfel, Seen, der Kanton der Mitte.
  */
 
-type Stufe = 'schweiz' | 'gross' | 'region' | 'ort' | 'nah'
+type Stufe = 'schweiz' | 'gross' | 'mittel' | 'region' | 'ort' | 'nah'
 /** die Stufen von aussen nach innen; «gross» ist das Gebiet von 80 km zwischen der Schweiz und der Region (Michael, 2026-10-29:
  *  «noch eine Zoom-Stufe mit Seitenlänge 80 km») */
-const STUFEN: Stufe[] = ['schweiz', 'gross', 'region', 'ort', 'nah']
-/** in der Schweiz und im Gebiet von 80 km gibt es keine Wanderwege, Züge und Schiffe (wie bisher erst ab 20 km) und keine
+const STUFEN: Stufe[] = ['schweiz', 'gross', 'mittel', 'region', 'ort', 'nah']
+/* seit 2026-11-02 128 km, 64 km, 16 km, 4 km und 1 km (Michael: «Bitte Ausschnitte so machen: 1km, 4km, 16km, 64, 128km»; vorher 80, 20, 4, 1):
+   «gross» 128 km, «mittel» 64 km, «region» 16 km */
+/** in der Schweiz und in den Gebieten von 128 und 64 km gibt es keine Wanderwege, Züge und Schiffe (erst ab 16 km) und keine
  *  angesetzten Stücke */
-const grob = (s: Stufe) => s === 'schweiz' || s === 'gross'
+const grob = (s: Stufe) => s === 'schweiz' || s === 'gross' || s === 'mittel'
 /** Grösse des Felds, das man in einer Stufe wählt, und das Raster, auf das es rückt; in der Stufe «nah» wählt man nichts mehr
  *  (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail») */
-const FELD_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 80_000, gross: 20_000, region: 4_000, ort: 1_000 }
-const RASTER_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 10_000, gross: 5_000, region: 1_000, ort: 250 }
+const FELD_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 128_000, gross: 64_000, mittel: 16_000, region: 4_000, ort: 1_000 }
+const RASTER_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 8_000, gross: 4_000, mittel: 2_000, region: 1_000, ort: 250 }
 const KARMIN = '#a8102e'
 
 interface Uebersicht { ost: number; nord: number; m: number; breite: number; hoehe: number; quelle_gelaende: string; quelle_luftbild: string }
@@ -114,7 +116,7 @@ function unterZeichnen(g: CanvasRenderingContext2D, b: Bestand, e0: number, n1: 
 async function unterFuer(f: Feld, unter: Bestand | null): Promise<Bestand> {
   const ecken = [[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([a, c]) => [f.e + a * f.seite * 0.499, f.n + c * f.seite * 0.499])
   if (unter && ecken.every(([e, n]) => [...unter.teile.values()].some((t) => imRaster(t.raster, e, n)))) return unter
-  const r = { e: Math.round(f.e / RASTER_M.gross) * RASTER_M.gross, n: Math.round(f.n / RASTER_M.gross) * RASTER_M.gross, seite: FELD_M.gross }
+  const r = { e: Math.round(f.e / RASTER_M.mittel) * RASTER_M.mittel, n: Math.round(f.n / RASTER_M.mittel) * RASTER_M.mittel, seite: FELD_M.mittel }
   return einzeln(r, await regionLaden(r))
 }
 interface Zusatz {
@@ -162,13 +164,13 @@ async function regionLaden(f: Feld): Promise<Gelaende> {
              : lb ? `SWISSIMAGE (swisstopo), auf 10 m gemittelt, Aufnahmen ${lb.jahre.join(', ')}` : 'ohne Luftbild'] })
 }
 
-/** Gebiet: 80 km (Michael, 2026-10-29: «eine Zoom-Stufe mit Seitenlänge 80 km»), das Gelände der Kacheln (50 m) auf jeden zweiten
- *  Punkt ausgedünnt, also 100 m, und das Luftbild auf 4096 Bildpunkte, etwa 20 m (auf dem Handy 2048, etwa 40 m); ohne die Details von
+/** Gebiete von 128 und 64 km (bis 2026-11-02 eines von 80 km, Michael, 2026-10-29: «eine Zoom-Stufe mit Seitenlänge 80 km»), das Gelände
+ *  der Kacheln (50 m) auf jeden vierten oder zweiten Punkt ausgedünnt, also 200 oder 100 m, und das Luftbild auf 4096 Bildpunkte, etwa 20 m (auf dem Handy 2048, etwa 40 m); ohne die Details von
  *  daten.taktland.ch, die wären hier je 10 km einige MB. Raster und Bildgrösse gewählt, damit die Grafik es hält */
-async function grossLaden(f: Feld): Promise<Gelaende> {
+async function grossLaden(f: Feld, schritt = 2): Promise<Gelaende> {
   const { raster_m: rm } = await gelaendeIndex()
   const a = await ausschnittLaden({ ost: f.e - f.seite / 2, nord: f.n + f.seite / 2, m: rm, breite: f.seite / rm + 1, hoehe: f.seite / rm + 1 })
-  const schritt = 2, m = rm * schritt, breite = f.seite / m + 1
+  const m = rm * schritt, breite = f.seite / m + 1
   const h = new Float32Array(breite * breite)
   for (let j = 0; j < breite; j++) for (let i = 0; i < breite; i++) h[j * breite + i] = a.h[j * schritt * a.raster.breite + i * schritt]
   const raster = { ost: a.raster.ost, nord: a.raster.nord, m, breite, hoehe: breite }
@@ -182,7 +184,7 @@ async function grossLaden(f: Feld): Promise<Gelaende> {
     g.drawImage(k.bild, (k.ex * lb!.kachel_m - raster.ost) * sx, (raster.nord - (k.ny + 1) * lb!.kachel_m) * sy, lb!.kachel_m * sx, lb!.kachel_m * sy)
   }
   return untergrundSetzen({ raster, h, bild: c, rahmen: { e0: raster.ost, n1: raster.nord, b: breite * m, h: breite * m },
-           quellen: [`${a.quelle}, hier jeder zweite Punkt, also 100 m`,
+           quellen: [`${a.quelle}, hier jeder ${schritt === 2 ? 'zweite' : `${schritt}.`} Punkt, also ${m} m`,
              lb ? `SWISSIMAGE (swisstopo), hier auf etwa ${Math.round(1 / sx)} m, Aufnahmen ${lb.jahre.join(', ')}` : 'ohne Luftbild'] })
 }
 
@@ -523,13 +525,15 @@ function feldInhalt(f: Feld, z: Zusatz | null) {
 /* ---------- die Seite ---------- */
 
 /** die Stufe darüber, aus der ein Feld dieser Stufe sein Gelände ergänzt */
-const DARUEBER: Record<Exclude<Stufe, 'schweiz'>, Stufe> = { gross: 'schweiz', region: 'gross', ort: 'region', nah: 'ort' }
+const DARUEBER: Record<Exclude<Stufe, 'schweiz'>, Stufe> = { gross: 'schweiz', mittel: 'gross', region: 'mittel', ort: 'region', nah: 'ort' }
 /** die Stufe darunter, in die man aus einer Stufe eintaucht */
-const DARUNTER: Record<Exclude<Stufe, 'nah'>, Exclude<Stufe, 'schweiz'>> = { schweiz: 'gross', gross: 'region', region: 'ort', ort: 'nah' }
+const DARUNTER: Record<Exclude<Stufe, 'nah'>, Exclude<Stufe, 'schweiz'>> = { schweiz: 'gross', gross: 'mittel', mittel: 'region', region: 'ort', ort: 'nah' }
 /** die Stufen nach s, die nicht mehr gelten, wenn s neu geladen ist */
 const danach = (s: Stufe) => Object.fromEntries(STUFEN.slice(STUFEN.indexOf(s) + 1).map((x) => [x, null]))
 async function stufeLaden(s: Exclude<Stufe, 'schweiz'>, f: Feld, unter: Bestand | null) {
-  if (s === 'gross') return grossLaden(f)
+  // 128 km auf 200 m (jeder vierte Punkt), 64 km auf 100 m, beide etwa 640 Punkte je Seite (gewählt)
+  if (s === 'gross') return grossLaden(f, 4)
+  if (s === 'mittel') return grossLaden(f, 2)
   if (s === 'region') return regionLaden(f)
   const u = await unterFuer(f, unter)
   return s === 'ort' ? ortLaden(f, u) : nahLaden(f, u)
@@ -543,7 +547,7 @@ export interface Knoepfe { plus: Record<Seite, boolean>; wachsen: Record<Seite, 
 export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boolean }) {
   useEffect(() => szeneLaden(), [])
   const [stufe, setStufe] = useState<Stufe>('schweiz')
-  const [gelaende, setGelaende] = useState<Record<Stufe, Bestand | null>>({ schweiz: null, gross: null, region: null, ort: null, nah: null })
+  const [gelaende, setGelaende] = useState<Record<Stufe, Bestand | null>>({ schweiz: null, gross: null, mittel: null, region: null, ort: null, nah: null })
   const [wahl, setWahl] = useState<Feld | null>(null)
   const [laedt, setLaedt] = useState(false)
   const [fehler, setFehler] = useState<string | null>(null)
@@ -935,7 +939,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <button type="button" onClick={() => zurueck('schweiz')} className={`rounded-lg px-2 py-1 ${stufe === 'schweiz' ? 'font-bold' : 'underline'}`}>Schweiz</button>
         {gelaende.gross && (
           <>›<button type="button" onClick={() => zurueck('gross')} className={`rounded-lg px-2 py-1 ${stufe === 'gross' ? 'font-bold' : 'underline'}`}>
-            80 km {titel(gelaende.gross.anker) === 'Feld' ? '' : titel(gelaende.gross.anker)}</button></>
+            128 km {titel(gelaende.gross.anker) === 'Feld' ? '' : titel(gelaende.gross.anker)}</button></>
+        )}
+        {gelaende.mittel && (
+          <>›<button type="button" onClick={() => zurueck('mittel')} className={`rounded-lg px-2 py-1 ${stufe === 'mittel' ? 'font-bold' : 'underline'}`}>
+            64 km {titel(gelaende.mittel.anker) === 'Feld' ? '' : titel(gelaende.mittel.anker)}</button></>
         )}
         {gelaende.region && (
           <>›<button type="button" onClick={() => zurueck('region')} className={`rounded-lg px-2 py-1 ${stufe === 'region' ? 'font-bold' : 'underline'}`}>
@@ -1019,7 +1027,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <h2 className="mt-6 text-xl font-bold">Anleitung</h2>
       <div className="mt-2 space-y-2 text-sm leading-relaxed">
         <Abschnitt titel="Wählen und eintauchen">
-          <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See. Mit «Eintauchen» geht es in ein Gebiet von 80 km, dort in eine Region von 20 km, dann in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
+          <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See. Mit «Eintauchen» geht es in ein Gebiet von 128 km, dann von 64 km, dort in eine Region von 16 km, dann in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
             Ein Tipp neben das Modell nimmt die Wahl zurück. Die Zeile unter dem Modell (Schweiz › Region …) führt eine Stufe zurück.</p>
         </Abschnitt>
         <Abschnitt titel="Drehen und zoomen">
@@ -1034,7 +1042,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             4'000 m, ihre Zahl steht klein an der Wand.</p>
         </Abschnitt>
         <Abschnitt titel="Züge">
-          <p>«Züge» zeigt ab der Stufe 20 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
+          <p>«Züge» zeigt ab der Stufe 16 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
             (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
             Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, eine Annahme: wie lange er dort wirklich steht,
             steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, nicht
@@ -1048,7 +1056,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
         </Abschnitt>
         <Abschnitt titel="Schiffe">
-          <p>«Schiffe» zeigt ab der Stufe 20 km jedes Kursschiff und jede Fähre dort, wo sie jetzt laut Fahrplan sind, auf dem Wasser in
+          <p>«Schiffe» zeigt ab der Stufe 16 km jedes Kursschiff und jede Fähre dort, wo sie jetzt laut Fahrplan sind, auf dem Wasser in
             Fahrtrichtung. Zwischen zwei Ländten fährt ein Schiff gleichmässig auf den Kurslinien, wie sie swisstopo für die Landeskarte
             führt (swissTLMRegio), auf dem kürzesten Weg darauf; wie nah diese Linien dem wirklichen Kurs folgen, steht in keiner
             Quelle. Findet sich auf den Linien kein Weg zwischen zwei Ländten, fehlt das Schiff auf diesem Stück, statt quer übers Land zu
@@ -1106,7 +1114,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Modell der Felsoberfläche für die ganze Schweiz; die Quelle gibt dazu an, wie unsicher es ist (hier nicht gezeigt). Hier ist es
             auf 50 m gemittelt. Wo die Wand ganz dunkel ist, liegt der Fels an der Oberfläche oder
             swissBEDROCK gibt dort nichts an. Welches Gestein der Fels ist und wie die Schichten darin liegen, zeigt das Modell nicht. Das
-            Band gibt es ab dem Gebiet von 80 km, nicht in der ganzen Schweiz von oben.</p>
+            Band gibt es ab dem Gebiet von 128 km, nicht in der ganzen Schweiz von oben.</p>
         </Abschnitt>
         <Abschnitt titel="Mein Standort">
           <p>Das Fadenkreuz oben rechts neben dem Vollbild zeigt dich per GPS als roten Punkt im Modell und wählt das Feld um dich. Der Standort bleibt
@@ -1414,8 +1422,8 @@ function mastMitRand(geo: LineSegmentsGeometry, kern: LineMaterial) {
 /** welche Orte bereitstehen (ab Rang, höchstens so viele, Abstand als Anteil der Breite); gezeigt werden davon nur die im Bild,
  *  mindestens ORT_MIN und höchstens ORT_MAX (Michael, 2026-10-25: «Immer mindestens 3, wenn vorhanden, und maximal 5. Wenn man
  *  einzoomt und wegzoomt, muss diese Zahl 3 bis 5 … berücksichtigt werden») */
-const ORT_AB_RANG: Record<Stufe, number> = { schweiz: 4, gross: 2, region: 1, ort: 0, nah: 0 }
-const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 200, gross: 250, region: 300, ort: 200, nah: 60 }, ORT_ABSTAND = 0.012
+const ORT_AB_RANG: Record<Stufe, number> = { schweiz: 4, gross: 2, mittel: 2, region: 1, ort: 0, nah: 0 }
+const ORT_ANZAHL: Record<Stufe, number> = { schweiz: 200, gross: 250, mittel: 250, region: 300, ort: 200, nah: 60 }, ORT_ABSTAND = 0.012
 const ORT_MIN = 3, ORT_MAX = 5
 // das Wasser im Schnitt der Wände: immer etwas dunkler als die Fläche, damit man die Kante klar sieht, nach unten zum Grund hin dunkler,
 // am dunkelsten ab WASSER_DUNKEL_M Tiefe (Michael, 2026-10-25: «Die Wasseroberfläche muss immer mindestens so hell sein wie die
@@ -1484,11 +1492,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   /** «Jetzt» gedrückt: die Zeit ist die jetzige */
   jetztAn: boolean
   zeitSchieben: (art: 'stunde' | 'tag' | 'jetzt', um: number) => void
-  /** Wanderwege zeigen (in den Stufen 20 km, 4 km und 1 km) */
+  /** Wanderwege zeigen (in den Stufen 16 km, 4 km und 1 km) */
   wandern: boolean
-  /** Züge laut Fahrplan zeigen (ab der Stufe 20 km), zuegeDa: der Knopf dazu */
+  /** Züge laut Fahrplan zeigen (ab der Stufe 16 km), zuegeDa: der Knopf dazu */
   zuege: boolean; zuegeDa: boolean
-  /** Schiffe laut Fahrplan zeigen (ab der Stufe 20 km) */
+  /** Schiffe laut Fahrplan zeigen (ab der Stufe 16 km) */
   schiffe: boolean
   /** die Wolken laut Wettermodell, ein eigener Knopf */
   wolken: boolean
@@ -2359,7 +2367,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     if (zusatz) {
       const gipfel = zusatz.sw.gipfel.filter((x) => x.hoehe_m !== null).map((x) => ({ x, l: lv95(x.lage[0], x.lage[1]) }))
         .filter(({ l }) => drin(l[0], l[1])).sort((a, c) => c.x.hoehe_m! - a.x.hoehe_m!)
-      const anzahl = (stufe === 'schweiz' ? 8 : stufe === 'gross' ? 15 : stufe === 'region' ? 25 : stufe === 'ort' ? 10 : 4) * Math.min(3, b.teile.size)
+      const anzahl = (stufe === 'schweiz' ? 8 : stufe === 'gross' || stufe === 'mittel' ? 15 : stufe === 'region' ? 25 : stufe === 'ort' ? 10 : 4) * Math.min(3, b.teile.size)
       for (const { x, l } of gipfel.slice(0, anzahl)) schild(`▲ ${x.name} ${x.hoehe_m!.toLocaleString('de-CH')}`, l[0], l[1], x.hoehe_m!)
     }
     // Ortschaften wie die Bahnhöfe der Modellbahn (Michael, 2026-10-21: «mit deiner … dunkelgrauen Linie, die sehr dünn ist, und
@@ -2620,7 +2628,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: ['Orte'], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
       { zeilen: ['Gebäude'], breite: KNOPF_B * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
       { zeilen: ['Bäume'], breite: KNOPF_B * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
-      // wie die Wanderwege erst ab der Stufe 20 km
+      // wie die Wanderwege erst ab der Stufe 16 km
       ...(zuegeDa ? [abstand, { zeilen: ['Züge'], breite: KNOPF_B * W, an: !grob(stufe) && zuege, farbe: LICHT.zuege, gesperrt: grob(stufe),
         aktion: umschalten('zuege') },
         // Schiffe laut Fahrplan auf den Kurslinien von swissTLMRegio (Michael, 2026-10-28)
@@ -3099,7 +3107,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       lampen?.weg()
     }
   }, [b, stufe, gebaeude, knoepfe])
-  // Züge laut Fahrplan (src/zuege3d.ts), ab der Stufe 20 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
+  // Züge laut Fahrplan (src/zuege3d.ts), ab der Stufe 16 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
   // wie der Zug der Modellbahn auf dem Gelände in Fahrtrichtung
   const [zugZeile, setZugZeile] = useState<string | null>(null)
   /** zum gewählten Zug der Bahnhof, an dem er steht oder als Nächstes hält, mit seiner Seite auf taktland.ch (Perrons, Gleise, Sektoren;
