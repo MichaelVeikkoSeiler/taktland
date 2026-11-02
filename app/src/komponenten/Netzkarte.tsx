@@ -157,11 +157,20 @@ export function useEchtesVollbild(voll: boolean, setVoll: (v: boolean) => void) 
         o?.lock?.('any').catch(() => {})
       }).catch(() => {
         // ohne Geste lehnt der Browser ab (Vollbild gleich beim Öffnen, aus «3D Schweiz»): dann beim ersten Tipp
+        // auf dem Handy gilt erst das Loslassen als Geste (pointerup, touchend), nicht das Berühren; im Capture, damit die 3D-Ansicht
+        // den Tipp nicht vorher abfängt; wieder weg, sobald das Vollbild steht (Michael, 2026-11-02: oben blieb die Leiste des Browsers)
         const nochmals = () => {
-          if (!document.fullscreenElement) wurzel.requestFullscreen().then(() => { echt = true }).catch(() => {})
+          if (document.fullscreenElement) { aus(); return }
+          wurzel.requestFullscreen().then(() => {
+            echt = true; aus()
+            const o = screen.orientation as ScreenOrientation & { lock?: (art: string) => Promise<void> }
+            o?.lock?.('any').catch(() => {})
+          }).catch(() => {})
         }
-        document.addEventListener('pointerdown', nochmals, { once: true })
-        weg.push(() => document.removeEventListener('pointerdown', nochmals))
+        const arten = ['pointerup', 'touchend', 'click', 'keydown'] as const
+        const aus = () => arten.forEach((a) => document.removeEventListener(a, nochmals, true))
+        arten.forEach((a) => document.addEventListener(a, nochmals, true))
+        weg.push(aus)
       })
     }
     const wechsel = () => { if (echt && !document.fullscreenElement) setVoll(false) }
