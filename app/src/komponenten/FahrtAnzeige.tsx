@@ -326,8 +326,10 @@ function nahStufe(tempo: number, alt: number | null): number {
  * Zug, rot der Standort. «Nah» folgt dem Zug, «Ganzer Weg» zeigt alles.
  */
 export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, tempo = null, probefahrt = false, nachPlan = false, aussen, imFuehrerstand,
-  dreiDMelden }: {
+  dreiDMelden, zurueckKnopf }: {
   fahrweg: Fahrweg
+  /** im Vollbild oben links ein Knopf zurück, etwa zu 3D-Land (Michael, 2026-11-02: «Von der Vollformatansicht soll ein Button zurückführen zu 3D-Land») */
+  zurueckKnopf?: { text: string; aktion: () => void }
   /** ob gerade 3D gezeigt wird (dort ein tieferes Höchsttempo der Probefahrt) */
   dreiDMelden?: (an: boolean) => void
   /** was am Pult im Führerstand bedient wird: Probefahrt, Meldungen */
@@ -373,9 +375,11 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
   const zeiger = useRef(new Map<number, { x: number; y: number }>())
   const abstand = useRef(0)
   const flaeche = useRef<SVGSVGElement | null>(null)
-  const { voll, setVoll, verh } = useVollbild(flaeche)
+  // aus «3D Schweiz» gleich im Vollbild im Führerstand (Michael, 2026-11-02: «direkt im Führerstand und Vollformat landet, hoch oder quer»)
+  const { voll, setVoll, verh } = useVollbild(flaeche, vorneStart)
   // im Vollbild im Führerstand: nur das Bild, über den ganzen Bildschirm (Michael, 2026-10-14: «ein echtes Vollformat»)
-  const [vorne, setVorne] = useState(false)
+  // beim Start im Führerstand gleich vorne: die 3D-Ansicht meldet den Anfang nicht, darum stand sonst rechts die Spalte mit den Knöpfen
+  const [vorne, setVorne] = useState(vorneStart)
   const cockpit = voll && dreiD && relief && vorne
   // «Zur Karte» unten links in der Karte (Michael, 2026-09-30: «spart vertikalen Platz»)
   const [zurKarte, setZurKarte] = useState(false)
@@ -707,6 +711,13 @@ export function FahrtKarte({ fahrweg, objekte, sJetzt, vollbild, start, ziel, te
           </button>
         )}
       </div>
+      )}
+      {voll && zurueckKnopf && (
+        <button type="button" onClick={zurueckKnopf.aktion}
+                className="absolute left-2 top-2 z-[90] rounded-lg bg-sbb-white/90 px-3 py-1.5 text-sm font-bold text-sbb-black shadow
+                           hover:bg-sbb-white dark:bg-sbb-charcoal/90 dark:text-sbb-white">
+          ‹ {zurueckKnopf.text}
+        </button>
       )}
       {cockpit && imFuehrerstand && (
         <div className="absolute inset-x-2 top-14 mx-auto max-w-md">{imFuehrerstand}</div>
