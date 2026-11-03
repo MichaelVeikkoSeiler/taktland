@@ -228,7 +228,7 @@ data/gelaende/  Gelände der ganzen Schweiz (5 km Rand, dazu 3 km neben jeder Ba
              und -hoch.webp, quer 1846 × 852, hoch 1086 × 1448; Michael, 2026-10-23: «dass das Cockpit des Zuges ziemlich genau so aussieht … Alles, was aussen liegt … muss
              natürlich weg»): das Fenster und die Seitenfenster in den Säulen ausgeschnitten (Michael, 2026-10-24: «Bei den Seitenfenstern sieht man
              noch nicht hinaus»), ebenso Reste der gemalten Landschaft, der Wischer bleibt, aussen dunkel (entwuerfe/fuehrerstand/schneiden.py mit den Vorlagen), das Bild füllt die Breite, das Pult unten in seiner Form, Säulen und Fenster
-             darüber in der Höhe gestreckt; auf den gemalten Bildschirmen die drei Anzeigen, bedienbar die beiden Hebel (oben vorn, unten zurück) und die gemalten
+             darüber in der Höhe gestreckt; auf den gemalten Bildschirmen die drei Anzeigen (dort grösser geschrieben und mit weniger Zeilen als in der Brille, Fuehrerpult.gross; Michael, 2026-11-03: «Kann man die Infos auf den Monitoren etwas grösser darstellen?»), bedienbar die beiden Hebel (oben vorn, unten zurück) und die gemalten
              Leuchtknöpfe (Michael, 2026-10-23: «klickbare Knöpfe … möglichst das gleiche sehen»; BELEGUNG in Fuehrerbild.ts, gewählt): oben links Zuggeräusch, Stirnlicht,
              Signalhorn, Dämmerung, rechts Tunnel, Brücken, Bahnhöfe melden, die Leuchtfelder rot und gelb nur bei Schnellbremse und Bremse, unten Schnellbremse, Pultlicht,
              Zum Start, Hinter den Zug, Höhe 1 und 2; ist eine Funktion aus, liegt ein dunkler Schleier auf dem Knopf; die kleinen dunklen Knöpfe sind nur gemalt; im Vollbild ein Kreuz oben rechts; die Landschaft dahinter mit dem

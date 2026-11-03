@@ -4476,6 +4476,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
               return gemessen
             })()
             pult.inBrille = inBrille
+            pult.gross = !renderer.xr.isPresenting
             pult.aktualisieren(dt, { s: blickM, richtung: r, anfang: pk[0].m, ende: pk[pk.length - 1].m, v,
               quelle: zug === eigenerZug && !zugVonAussen ? 'simulation' : tempoQuelle ?? 'gps', ankuendigungen, von: pultVon, nach: pultNach })
           }
