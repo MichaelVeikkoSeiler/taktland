@@ -20,14 +20,19 @@ const LINKS_M = 2.25, GLEIS_SUCHE_M = 10, GLEIS_WINKEL = Math.cos((25 * Math.PI)
 /** höchstens so viele Züge, neu gerechnet so oft je Sekunde (gewählt) */
 const ZUEGE_HOECHSTENS = 40, JE_SEKUNDE = 10
 const ZELLE = 50
+/** ein Zug laut Fahrplan in derselben Richtung, von dem ein Wagen höchstens EIGEN_QUER_M quer und EIGEN_LAENGS_M längs neben der eigenen Stelle
+ *  liegt, ist wohl der eigene und bleibt weg (Michael, 2026-11-03: «Wenn ich im … Führerstand bin und der Zug aus dem Fahrplan (mein Zug) in ca
+ *  selber Position ist soll er ausgeblendet werden»; welcher Zug man ist, weiss die App nicht; Abstände gewählt, längs auch für einen Zug, der
+ *  laut Fahrplan etwas voraus oder zurück ist) */
+const EIGEN_QUER_M = 12, EIGEN_LAENGS_M = 400
 
 type Achse = [number, number, number, number, number, number, boolean]
 
 export interface FahrplanZuege {
   /** die Fahrten und Gleise im Rechteck (LV95) laden */
   setzen: (e0: number, n0: number, e1: number, n1: number) => void
-  /** die Züge an ihre Stelle von jetzt setzen; sichtbar: nur im Führerstand */
-  schritt: (sichtbar: boolean) => void
+  /** die Züge an ihre Stelle von jetzt setzen; sichtbar: nur im Führerstand; eigen: wo man selbst ist und wohin es geht (LV95) */
+  schritt: (sichtbar: boolean, eigen?: { e: number; n: number; de: number; dn: number } | null) => void
   weg: () => void
 }
 
@@ -91,7 +96,7 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
   const testOrte: Array<[string, number, number, number]> = []
   const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(), eul = new THREE.Euler(0, 0, 0, 'YXZ')
   const sx = BREITE_M / (ZUG_BREITE * 1000), sy = HOEHE_M / (ZUG_HOEHE * 1000)
-  const schritt = (sichtbar: boolean) => {
+  const schritt = (sichtbar: boolean, eigen?: { e: number; n: number; de: number; dn: number } | null) => {
     for (const m of netze) m.visible = sichtbar
     if (!sichtbar || !ix || !netz || !rahmen) return
     const jetzt = performance.now()
@@ -131,6 +136,12 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
         wagen.push({ art: k === 0 ? 0 : k === ZUG_WAGEN ? 2 : 1, a, b })
       }
       if (!ok) continue
+      if (eigen && wagen.some(({ a, b }) => {
+        const l = Math.hypot(a.e - b.e, a.n - b.n) || 1
+        if (((a.e - b.e) * eigen.de + (a.n - b.n) * eigen.dn) / l < 0.5) return false
+        const me = (a.e + b.e) / 2 - eigen.e, mn = (a.n + b.n) / 2 - eigen.n
+        return Math.abs(me * eigen.de + mn * eigen.dn) <= EIGEN_LAENGS_M && Math.abs(-me * eigen.dn + mn * eigen.de) <= EIGEN_QUER_M
+      })) continue
       zuege++
       if (import.meta.env.VITE_S3D_TEST) { if (zuege === 1) testOrte.length = 0; testOrte.push([f.nummer, Math.round(wagen[0].a.e), Math.round(wagen[0].a.n), Math.round(wagen[0].a.z)]) }
       for (const { art, a, b } of wagen) {
