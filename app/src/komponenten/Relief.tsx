@@ -4260,6 +4260,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     // beim Fahren: die Kamera folgt dem Zug mit demselben Blickwinkel; am Anfang von schräg hinten
     let letzte: THREE.Vector3 | null = null
     let imStand = false
+    /** wo man im Führerstand ist und wohin es geht (LV95), damit FahrplanZuege den Zug laut Fahrplan an derselben Stelle ausblendet */
+    let eigenLage: { e: number; n: number; de: number; dn: number } | null = null
     /** Beim Fahren (Michael, 2026-10-11: «beim Start mein GPS-Standort der hinterste Punkt … bei allen Zwischenbahnhöfen
      *  und am Ziel der Mittelpunkt des Zuges»): am Anfang des Wegs steht der ganze Zug vor dem Standort, über die ersten
      *  ZUG_VORNE_BIS_M rückt der Standort sanft in die Mitte des Zugs und bleibt dort; die Spitze nie über das Ende des Wegs */
@@ -4280,7 +4282,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       if (!laeuft) return
       const dt = Math.min(0.1, uhr.getDelta())
       if (renderer.xr.isPresenting) brilleSchritt?.(dt)
-      fahrplanZuege?.schritt(imStand && feinStand !== null)
+      fahrplanZuege?.schritt(imStand && feinStand !== null, imStand ? eigenLage : null)
       wolkenGruppe.visible = imStand && wetterGilt()
       // auch wenn der Zug steht oder das Wetter erst später geladen ist: alle 10 s prüfen, ob die Wolken noch stimmen
       if (imStand && feinStand !== null && performance.now() > wolkenPruefen) { wolkenPruefen = performance.now() + 10_000; void wolkenSetzen(feinZug[0], feinZug[1]) }
@@ -4448,6 +4450,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           // vorbeikam); sonst vorne an der Spitze
           const blickM = zugVonAussen && tempoQuelle !== 'probe' && tempoQuelle !== 'fahrplan' && zug.current !== null ? bis(zug.current) : spitze
           const augeM = blickM === spitze ? bis(spitze + r * 15) : blickM
+          { const [ae, an] = punktBei(blickM), [be, bn] = punktBei(bis(blickM + r * 20)), l = Math.hypot(be - ae, bn - an)
+            eigenLage = l > 0.1 ? { e: ae, n: an, de: (be - ae) / l, dn: (bn - an) / l } : null }
           const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)
           const tief = tunnel ? Math.min(augeM - tunnel.von, tunnel.bis - augeM) - portalInnen(tunnel.bis - tunnel.von) : 0
           tunnelDunkel(Math.min(1, Math.max(0, tief) / TUNNEL_DUNKEL_M), pult?.daemmerung)
