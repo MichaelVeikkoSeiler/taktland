@@ -882,14 +882,15 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
         <Ladebalken inKarte />
-        {/* unten rechts die Suche, XR, Mein Standort und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll
+        {/* unten rechts die Suche, die Lupe, Mein Standort, XR und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll
             neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
             den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
         <div className="absolute bottom-2 right-2 flex max-w-[calc(100%-1rem)] items-center gap-2">
           {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
-          {/* im Vollbild eine Stufe hinaus, die Stufen darunter stehen dort nicht; hinein geht es mit «Eintauchen» (Michael, 2026-10-30:
-              «Die Fokusstufen müssen auch im Vollformat-Modus umgeschaltet werden können … wobei man nur hinauszoomen muss») */}
-          {voll && stufe !== 'schweiz' && (
+          {/* eine Stufe hinaus, hinein geht es mit «Eintauchen» (Michael, 2026-10-30: «Die Fokusstufen müssen auch im Vollformat-Modus
+              umgeschaltet werden können … wobei man nur hinauszoomen muss»; seit 2026-11-03 auch ausserhalb des Vollbilds, Michael: «Die Lupe zum
+              Wegzoomen integrieren. Xr als zweitletztes») */}
+          {stufe !== 'schweiz' && (
             <button type="button" onClick={eineZurueck} aria-label="Eine Stufe hinaus" title="Eine Stufe hinaus"
                     className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
@@ -897,11 +898,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               </svg>
             </button>
           )}
-          <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
-                  // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
-                  className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
-            XR
-          </button>
           <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
                   aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
                   title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
@@ -910,6 +906,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               <circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
               <path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" />
             </svg>
+          </button>
+          <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
+                  // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
+                  className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
+            XR
           </button>
           <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />
         </div>
