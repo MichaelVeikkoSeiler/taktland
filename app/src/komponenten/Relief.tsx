@@ -602,6 +602,9 @@ function auflageFuer(r: Relief, z: Zusatz): Auflage {
 
 /* ---------- die eigene Seite ---------- */
 
+/** ab dieser Breite des Bilds steht die Zeile zum Wetter im Bild, schmaler nur in der Tafel des Windsacks (gewählt) */
+const WETTER_ZEILE_AB_PX = 640
+
 export default function ReliefSeite({ name, vonLinie = false }: { name: string; vonLinie?: boolean }) {
   useEffect(() => szeneLaden(), [])
   const { daten, fehler } = useRelief(name)
@@ -1864,12 +1867,19 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const wetterLeiste = document.createElement('div')
     wetterLeiste.style.cssText = 'position:absolute;display:flex;align-items:center;gap:6px;max-width:70%;z-index:5'
     // unten links; im Führerstand oben in der Mitte des Fensters, unten liegt dort das Pult (oben links stehen Höhe und Knöpfe)
-    let leisteOben: boolean | null = null
+    // auf schmalen Bildern (Handy hoch) nur die beiden Knöpfe, die Zeile steht dann in der Tafel des Windsacks, und im Führerstand rechts
+    // unter XR und Lautsprecher statt in der Mitte, wo Höhe und «Hinter den Zug» liegen (Michael, 2026-11-03: «Die Infos über das Wetter
+    // sind hier zu präsent und überdecken Sachen die relevanter sind»; Breite und Lage gewählt)
+    let leisteLage = ''
     const leisteLegen = (oben: boolean) => {
-      if (oben === leisteOben) return
-      leisteOben = oben
-      Object.assign(wetterLeiste.style, oben ? { top: '8px', bottom: '', left: '50%', transform: 'translateX(-50%)' }
-        : { top: '', bottom: '8px', left: '8px', transform: '' })
+      const schmal = el.clientWidth < WETTER_ZEILE_AB_PX
+      const lage = `${oben}${schmal}`
+      if (lage === leisteLage) return
+      leisteLage = lage
+      wetterAnzeige.hidden = schmal
+      Object.assign(wetterLeiste.style, oben && schmal ? { top: '84px', bottom: '', left: '', right: '8px', transform: '' }
+        : oben ? { top: '8px', bottom: '', left: '50%', right: '', transform: 'translateX(-50%)' }
+        : { top: '', bottom: '8px', left: '8px', right: '', transform: '' })
     }
     leisteLegen(false)
     const sonnenKnopf = document.createElement('button')
@@ -1920,7 +1930,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     let windTafel: { div: HTMLDivElement; root: Root } | null = null
     const windTafelZeigen = () => {
       if (!windTafel || !wetter) return
-      windTafel.root.render(<WindTafel station={wetter.station} messung={wetter} plaetze={windPlaetzeDa}
+      windTafel.root.render(<WindTafel station={wetter.station} messung={wetter} plaetze={windPlaetzeDa} zeile={wetterAnzeige.hidden ? wetterAnzeige.textContent : null}
         waehlen={(w) => { windGewaehlt = w; windZeigen(); wetterZeigen() }} schliessen={windTafelZu} />)
     }
     const windTafelZu = () => {
@@ -1980,6 +1990,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           + `${niederSatz(windGewaehlt)}, ${windSatz(windGewaehlt)} (MeteoSchweiz)`
       }
       niederAn = fallend
+      if (wetterAnzeige.hidden) windTafelZeigen()
     }
     const wetterHolen = () => {
       if (!mitWetter || wetterLaedt) return

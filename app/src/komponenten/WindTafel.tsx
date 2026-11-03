@@ -29,7 +29,9 @@ export function niederSatz(s: WindStunde) {
   return n ? `${n.art === 'schnee' ? 'Schnee' : 'Regen'} ${zahl(s.mm, 1)} mm` : 'kein Niederschlag'
 }
 
-export function WindTafel({ station, messung, waehlen, plaetze, schliessen, className = '' }: {
+export function WindTafel({ station, messung, waehlen, plaetze, schliessen, zeile = null, className = '' }: {
+  /** die Zeile zum Wetter, wenn sie nicht im Bild steht */
+  zeile?: string | null
   station: Station | null
   /** die letzte Messung der Station, null ohne */
   messung: Wetter | null
@@ -94,6 +96,7 @@ export function WindTafel({ station, messung, waehlen, plaetze, schliessen, clas
           </button>
         )}
       </div>
+      {zeile && <p className="mt-0.5 text-xs text-sbb-charcoal dark:text-white">{zeile}</p>}
       <p className="mt-0.5 font-bold">
         {stunde ? `Prognose ${zeitText(stunde.zeit, true)}: ${windSatz(stunde)}, ${niederSatz(stunde)}` : messText()}
       </p>
