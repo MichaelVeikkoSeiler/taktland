@@ -1881,7 +1881,6 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         : oben ? { top: '8px', bottom: '', left: '50%', right: '', transform: 'translateX(-50%)' }
         : { top: '', bottom: '8px', left: '8px', right: '', transform: '' })
     }
-    leisteLegen(false)
     const sonnenKnopf = document.createElement('button')
     sonnenKnopf.type = 'button'
     sonnenKnopf.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/>'
@@ -1955,6 +1954,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     })
     windKnopf.addEventListener('pointerdown', (ev) => ev.stopPropagation())
     wetterLeiste.append(sonnenKnopf, windKnopf, wetterAnzeige)
+    // erst hier: leisteLegen braucht wetterAnzeige (vorher davor aufgerufen, die Seite blieb weiss)
+    leisteLegen(false)
     if (mitWetter) el.appendChild(wetterLeiste)
     let wetterBis = 0, wetterLaedt = false, niederAn = false
     /** Licht, Himmel und die Zeile oben links nach dem Wetter und dem Schalter «Echtes Wetter» */
