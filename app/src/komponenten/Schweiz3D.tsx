@@ -35,6 +35,7 @@ import { type Niederschlag, niederschlagBauen, type Saeule } from './Niederschla
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
 import { perronNetz, perronsIn } from './Perrons'
+import { deckeAufBild, deckenIn, unterDecke } from './Decken'
 import { Abschnitt } from './Anleitung'
 import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
 import { himmelNacht, sternSicht } from '../sterne'
@@ -1163,8 +1164,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               ist aus der Lage der Sektortafeln geschlossen, nicht angegeben, und unterirdische Gleise fehlen. Wie die Züge davor und danach einspuren, ist gewählt.</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
-            <li>Perrons: Wo die SBB nur eine Kante nennt (Aussen- und Hausperrons), ist der Perron 4 m breit gezeichnet; Farbe gewählt. Dächer,
-              Treppen und Unterführungen fehlen, sie stehen in keiner unserer Quellen mit ihrer Form, unterirdische Perrons ebenso.</li>
+            <li>Perrons: Die SBB nennt die Lage am Gleis; die Kante ist 1,65 m neben der Gleisachse gezeichnet und folgt zwischen den Punkten der SBB
+              dem Gleis laut swissTLM3D. Wo die SBB nur eine Kante nennt (Aussen- und Hausperrons), ist der Perron 4 m breit, auf der Seite seiner
+              Sektortafeln; ist die Seite nicht bekannt, fehlt er. Farbe gewählt. Dächer, Treppen und Unterführungen fehlen, sie stehen in keiner
+              unserer Quellen mit ihrer Form, unterirdische Perrons ebenso.</li>
+            <li>Decken über Gleisen (etwa das Parking über dem Bahnhof Bern), wo es Gebäude gibt: Das Luftbild zeigt dort das Dach; es liegt auf der
+              Decke, darunter ist der Boden anthrazit und gekörnt gezeichnet (gewählt). Als Decke gilt ein Dach aus swissBUILDINGS3D mindestens 4 m über
+              einem Gleis laut swissTLM3D; bisher nur entlang der Strecken von Müntschemier über Bern und Biel/Bienne nach Neuchâtel.</li>
             <li>Masten der Fahrleitung in den Feldern von 4 km und 1 km: Lage, Abstand (alle 50 m, 3 m neben dem Gleis), Höhe und Gestalt sind erfunden,
               belegt ist nur, dass die Strecke elektrifiziert ist. Ebenso Fahrdraht und Tragseil darüber: Höhe, Durchhang und Hänger sind gewählt, und
               ob ein einzelnes Gleis elektrifiziert ist, steht in keiner unserer Quellen. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
@@ -3121,7 +3127,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const rand = teile.map((t) => t.rahmen)
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
-    void strassenlichtLaden(e0, n0, e1, n1).catch(() => null).then((l) => {
+    void Promise.all([strassenlichtLaden(e0, n0, e1, n1).catch(() => null), deckenIn(e0, n0, e1, n1)]).then(([roh, decken]) => {
+      // keine Lampe unter einer Decke über den Gleisen, sie stach durch das Dach (Michael, 2026-11-05, Bern: «als würden Straßenlampen durch die Decke dringen»)
+      let l = roh
+      if (l && decken.length) {
+        const bleibt: number[] = []
+        for (let i = 0; i < l.e.length; i++) if (!unterDecke(decken, l.e[i], l.n[i])) bleibt.push(i)
+        l = { e: Float64Array.from(bleibt, (i) => roh!.e[i]), n: Float64Array.from(bleibt, (i) => roh!.n[i]), art: Uint8Array.from(bleibt, (i) => roh!.art[i]) }
+      }
       if (weg || !l || !l.e.length) return
       lampen = lampenBauen(l, (e, n) => bestandHoehe(b, e, n), (e) => (e - lage.cE) / 1000, (h) => h / 1000, (n) => -(n - lage.cN) / 1000)
       lampen.licht.name = 'strassenlicht'
@@ -3133,6 +3146,37 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       weg = true
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
       lampen?.weg()
+    }
+  }, [b, stufe, gebaeude, knoepfe])
+  // Decken über Gleisen (pipeline/build_decken.py; Michael, 2026-11-05, Bern: «Bitte setze diese Textur auf die Decke oberhalb … Unterhalb,
+  // dort wo die Perrons sind, verwendest du einfach eine anthrazitfarbene Textur»): nur mit «Gebäude», sonst gibt es keine Decke
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || !gebaeude || (stufe !== 'ort' && stufe !== 'nah')) return
+    let weg = false
+    const zurueck: Array<() => void> = [], netze: THREE.Mesh[] = []
+    const teile = [...b.teile.values()]
+    const rand = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    void deckenIn(e0, n0, e1, n1).then((decken) => {
+      if (weg || !decken.length) return
+      const boeden = k.wurzel.getObjectByName('boeden')
+      for (const o of boeden?.children ?? []) {
+        const map = ((o as THREE.Mesh).material as THREE.MeshLambertMaterial).map
+        const t = teile.find((x) => x.bild === map?.image)
+        if (!map || !t) continue
+        const { netz, zurueck: z } = deckeAufBild(decken, t.bild, t.rahmen, (e, n, h) => new THREE.Vector3((e - lage.cE) / 1000, h / 1000, -(n - lage.cN) / 1000))
+        map.needsUpdate = true
+        zurueck.push(() => { z(); map.needsUpdate = true })
+        if (netz) { k.wurzel.add(netz); netze.push(netz) }
+      }
+    })
+    return () => {
+      weg = true
+      for (const z of zurueck) z()
+      for (const n of netze) { n.removeFromParent(); n.geometry.dispose(); (n.material as THREE.Material).dispose() }
     }
   }, [b, stufe, gebaeude, knoepfe])
   // Züge laut Fahrplan (src/zuege3d.ts), ab der Stufe 16 km: jede Fahrt dort, wo sie jetzt laut Fahrplan ist,
