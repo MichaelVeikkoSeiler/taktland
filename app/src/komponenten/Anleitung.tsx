@@ -473,8 +473,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             wie es aussieht. Der Zug hat kein echtes Vorbild. Der Führerstand ist ein Bild, das ich mit ChatGPT gestaltet habe. Die
             Tunnelwände, der gemalte Himmel, die Ortstafeln am Gleis, die Helligkeit im Tunnel und das Licht in den Fenstern hat niemand
             gemessen.</p>
-          <p>Von Hand wäre so etwas wie Taktland wohl ein Projekt für ein ganzes Team gewesen. Für mich allein, ohne Programmierkenntnisse,
-            wäre es gar nicht möglich gewesen. Die KI hat mir die Programmierung abgenommen. Die Idee, die Entscheidungen und das Ausprobieren
+          <p>Vor ein paar Jahren wäre ein Projekt wie Taktland sicher ein wesentlich grösseres Unterfangen gewesen. Für mich allein,
+            ohne Programmierkenntnisse, wäre es gar nicht möglich gewesen. Die KI hat mir die Programmierung abgenommen. Die Idee, die Entscheidungen und das Ausprobieren
             des Ganzen, mit mehreren Hundert, wenn nicht sogar gegen tausend Anforderungen an die KI, blieben bei mir.</p>
         </div>
         <p className="mt-3 font-medium">Michael Veikko Seiler</p>
