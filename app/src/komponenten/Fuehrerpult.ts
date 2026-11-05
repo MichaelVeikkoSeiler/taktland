@@ -765,11 +765,11 @@ export class Fuehrerpult {
     const au = this.aussen?.current
     for (const t of this.sichtTasten) t.visible = Boolean(au?.seite)
     if (this.schliessTaste) this.schliessTaste.visible = Boolean(au?.schliessen)
-    // Höhe nur, wo sie sich ändern lässt, «Hinter den Zug» nicht in der Brille
-    const stand = `${Boolean(au?.hoeheSetzen)}${this.inBrille}`
+    // Höhe nur, wo sie sich ändern lässt, «Hinter den Zug» nicht in der Brille und nicht bei «Wo bin ich?»
+    const stand = `${Boolean(au?.hoeheSetzen)}${Boolean(au?.hinterZug)}${this.inBrille}`
     if (stand !== this.zweiteStand) {
       this.zweiteStand = stand
-      this.zweiteLegen((a) => (a === 'hoehe1' || a === 'hoehe2' ? Boolean(au?.hoeheSetzen) : a === 'hinterZug' ? !this.inBrille : true))
+      this.zweiteLegen((a) => (a === 'hoehe1' || a === 'hoehe2' ? Boolean(au?.hoeheSetzen) : a === 'hinterZug' ? Boolean(au?.hinterZug) && !this.inBrille : true))
     }
     // Hebel nach Stellung; in der Probefahrt nach deren Stufe, die Skala zeigt dann deren Tempi
     const st = this.quelle === 'probe' ? this.aussen?.current?.probe : null
