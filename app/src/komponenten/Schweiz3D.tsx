@@ -34,6 +34,7 @@ import { WOLKEN_HOEHE_M, wolkenBild, wolkenEbenen3d } from './WolkenBild'
 import { type Niederschlag, niederschlagBauen, type Saeule } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
+import { perronNetz, perronsIn } from './Perrons'
 import { Abschnitt } from './Anleitung'
 import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
 import { himmelNacht, sternSicht } from '../sterne'
@@ -1139,6 +1140,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Weg zwischen den Halten aus dem
               Netz von Taktland (Linien und Kilometrierung der SBB, SBB Open Data, data.sbb.ch; Schienennetz des BAV).</li>
             <li>Masten der Fahrleitung: nur wo das Schienennetz des BAV die Strecke elektrifiziert nennt, auf den Gleisachsen aus swissTLM3D (swisstopo).</li>
+            <li>Perrons in den Feldern von 4 km und 1 km: Lage der Kanten und ihre Höhe über dem Gleis (etwa 35 oder 55 cm) laut SBB Open Data
+              (BehiG Haltekantesegment, data.sbb.ch), auf der Höhe der Gleisachsen aus swissTLM3D (swisstopo).</li>
             <li>Brücken der Bahn, der Strassen und Wege: Lage und Höhe der Achsen auf Brücken aus swissTLM3D (swisstopo).</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
               Ländten: swissTLMRegio (swisstopo).</li>
@@ -1160,6 +1163,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               ist aus der Lage der Sektortafeln geschlossen, nicht angegeben, und unterirdische Gleise fehlen. Wie die Züge davor und danach einspuren, ist gewählt.</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
+            <li>Perrons: Wo die SBB nur eine Kante nennt (Aussen- und Hausperrons), ist der Perron 4 m breit gezeichnet; Farbe gewählt. Dächer,
+              Treppen und Unterführungen fehlen, sie stehen in keiner unserer Quellen mit ihrer Form, unterirdische Perrons ebenso.</li>
             <li>Masten der Fahrleitung in den Feldern von 4 km und 1 km: Lage, Abstand (alle 50 m, 3 m neben dem Gleis), Höhe und Gestalt sind erfunden,
               belegt ist nur, dass die Strecke elektrifiziert ist. Ebenso Fahrdraht und Tragseil darüber: Höhe, Durchhang und Hänger sind gewählt, und
               ob ein einzelnes Gleis elektrifiziert ist, steht in keiner unserer Quellen. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
@@ -3016,6 +3021,27 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       geo.dispose(); stoff.dispose(); drahtGeo.dispose(); drahtStoff.dispose()
     }
   }, [b, stufe, knoepfe])
+  // Perrons (komponenten/Perrons.ts, pipeline/build_perrons3d.py; Michael, 2026-11-05: «An beiden Orten bitte, Perrons bauen»): in den Feldern
+  // von 4 km und 1 km, die Kanten und ihre Höhe laut SBB, auf der Höhe der Gleise laut swissTLM3D; Perrons am Rand des Modells fallen weg
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || (stufe !== 'ort' && stufe !== 'nah')) return
+    let weg = false, netz: THREE.Mesh | null = null
+    const rand = [...b.teile.values()].map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    const innen = (e: number, n: number) => rand.some((x) => e >= x.e0 && e <= x.e0 + x.b && n <= x.n1 && n >= x.n1 - x.h)
+    void perronsIn(e0, n0, e1, n1).catch(() => []).then((liste) => {
+      if (weg || !liste.length) return
+      netz = perronNetz(liste, (e, n, h) => new THREE.Vector3((e - lage.cE) / 1000, h / 1000, -(n - lage.cN) / 1000), () => 0, innen)
+      if (netz) k.wurzel.add(netz)
+    })
+    return () => {
+      weg = true
+      if (netz) { k.wurzel.remove(netz); netz.geometry.dispose(); (netz.material as THREE.Material).dispose() }
+    }
+  }, [b, stufe])
   // Brücken (pipeline/build_bruecken3d.py; Michael, 2026-10-30: «Kannst du die Brücken, hier Lorraineviadukt bauen? … Ebenso grössere
   // Autobrücken oder die Brücken an der Aare um Bern herum bauen»): in den Feldern von 4 km und 1 km je Stück der Bahn, Strassen und Wege
   // auf Brücken laut swissTLM3D eine Platte unter der Achse, auf ihrer Höhe, ohne Pfeiler; gezeichnet wie im Führerstand (komponenten/
