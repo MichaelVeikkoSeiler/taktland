@@ -1181,31 +1181,32 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             jemand, der nichts mit Vibe-Coding macht, vorstellen kann, wie 3D-Land sich Schritt für Schritt aufgebaut und entwickelt hat») */}
         <Abschnitt titel={eigeneSeite ? 'Über 3D-Land' : 'Über 3D Schweiz'}>
           {/* in der Ich-Form, unterschrieben (Michael, 2026-10-29: «wie die Produktion und Entwicklung und die Idee gewesen ist», «Erwähne aber
-              auch, dass Diverses eben doch erfunden ist»), derselbe Text für LinkedIn */}
-          <p>Eigentlich wollte ich nur die Schweiz in 3D sehen. Daraus ist 3D-Land geworden. Angefangen hat es am 18. Oktober 2026 als Spiel
-            «3D Schweiz» in Taktland, seit dem 21. Oktober gibt es dafür eine eigene Seite: 3dland.ch.</p>
+              auch, dass Diverses eben doch erfunden ist»), derselbe Text für LinkedIn; 2026-11-05 nach Michaels Wortlaut überarbeitet (nur
+              «Oktober» statt der Tage, Wanderer zuerst, «im Dialog mit der KI», seine Fehlerbeispiele, Unschönheiten, Schlusssatz) */}
+          <p>Eigentlich wollte ich nur die Schweiz in 3D sehen. Daraus ist 3D-Land geworden. Angefangen hat es im Oktober 2026 als Spiel
+            «3D Schweiz» in Taktland, seither gibt es dafür eine eigene Seite: 3dland.ch.</p>
           {/* das Zielpublikum (Michael, 2026-11-02: «Personen, die ein Bahnerlebnis wollen», «für Wanderer, die die Wanderwege auch mal
               dreidimensional auf einer Schweizer Karte sehen möchten. Auch zur Nachverfolgung») */}
-          <p className="mt-2">Für wen ist 3D-Land? Für alle, die die Bahn erleben wollen: Die Züge fahren nach Fahrplan durch das Modell, man
-            tippt einen an und fährt in Taktland im Führerstand mit, bis an sein Ziel. Für Wanderinnen und Wanderer, die ihre Wege einmal
-            dreidimensional sehen möchten: Alle Wanderwege der Schweiz liegen auf dem Gelände, gelb, rot und blau wie auf den Wegweisern. Mit
+          <p className="mt-2">Für wen ist 3D-Land? Für Wanderinnen und Wanderer, die ihre Wege einmal dreidimensional sehen möchten: Alle
+            Wanderwege der Schweiz liegen auf dem Gelände, gelb, rot und blau wie auf den Wegweisern. Für alle, die die Bahn erleben wollen: Die
+            Züge fahren nach Fahrplan durch das Modell, man tippt einen an und fährt in Taktland im Führerstand mit, bis an sein Ziel. Mit
             «Mein Standort» wandert ein roter Punkt mit, auf der Wanderung wie im Zug, und man sieht im Modell, wo man gerade unterwegs ist. Und
             für alle, die die Schweiz einfach gern von oben anschauen, mit dem Wetter von heute und der Sonne zu jeder Stunde.</p>
-          <p className="mt-2">Ich kann nicht programmieren, keine einzige Zeile. 3D-Land ist im Gespräch entstanden. Ich habe beschrieben, was ich
+          <p className="mt-2">Selber kann ich keine einzige Zeile programmieren. 3D-Land ist im Dialog mit der KI entstanden. Ich habe beschrieben, was ich
             sehen möchte, und Claude, eine künstliche Intelligenz von Anthropic, hat den Code geschrieben. Claude hat auch die offenen Daten von
             swisstopo, MeteoSchweiz und dem öffentlichen Verkehr gesucht und aufbereitet. Schritt für Schritt kam dazu: Stufe um Stufe bis
             hinunter auf einen Kilometer, Sonne und Schatten, Gebäude und Bäume, Wanderwege, Wetter mit Windhosen, Regen und Wolken aus dem
             Wettermodell, der Sternenhimmel, die Tiefe der Seen, Züge und Schiffe nach Fahrplan und die VR-Brille.</p>
-          <p className="mt-2">Meine Rolle: Ideen haben, ausprobieren, Fehler finden und entscheiden. Fehler gab es reichlich. Der Seegrund fiel am
-            Ufer senkrecht bis auf den Sockel ab, in Bern ragten die Züge über die Dächer, und in der Brille drehte sich die ganze Landschaft mit
-            meinem Kopf. Den Himmel habe ich mehr als einmal heller, dunkler und wieder heller bestellt. So ist 3D-Land in vielen kleinen Runden
-            gewachsen: ein Wunsch, ein Versuch, ein Blick darauf, eine Korrektur.</p>
-          <p className="mt-2">Wichtig war mir, dass die Daten echt sind. Gelände, Luftbild, Gebäude, Seetiefen, Wetter und Fahrplan stammen aus
+          <p className="mt-2">Meine Rolle: Ideen haben, ausprobieren, Fehler machen und Fehler finden. Entscheiden. Fehler gab es viele. Der
+            Seegrund fiel zum Beispiel am Ufer senkrecht bis auf den Sockelgrund ab, in Bern ragten die Züge über die Dächer, und in diversen
+            Bergstrecken fuhren die Züge Achterbahn. So ist 3D-Land in vielen kleinen Runden gewachsen: ein Wunsch, ein Versuch, ein Blick darauf,
+            eine Korrektur. Noch immer hat es diverse Unschönheiten, die ich Schritt für Schritt korrigieren will.</p>
+          <p className="mt-2">Wichtig war mir, dass so viele Daten wie möglich echt sind. Gelände, Luftbild, Gebäude, Seetiefen, Wetter und Fahrplan stammen aus
             genannten Quellen. Erfunden ist dagegen vieles am Aussehen: die Farben des Himmels, die Form der Züge und Schiffe, wie viele Fenster
-            abends brennen und wie hell, die Lichtkegel der Züge, Form und Dicke der Wolken, ob ein Baum ein Laub- oder ein Nadelbaum ist. Das
-            habe ich gewählt, damit es stimmig aussieht, und auf der Seite steht es unter «Was gezeichnet oder angenommen ist».</p>
+            abends brennen und wie hell, die Lichtkegel der Züge, Form und Dicke der Wolken, ob ein Baum ein Laub- oder ein Nadelbaum ist.</p>
           <p className="mt-2">Ohne künstliche Intelligenz gäbe es 3D-Land nicht, jedenfalls nicht von mir. Die Bildmarke und das Auftaktbild habe
             ich mit ChatGPT gestaltet.</p>
+          <p className="mt-2">Und nun viel Spass beim Entdecken der Schweiz. In einer neuen Perspektive.</p>
           <p className="mt-3 font-medium">Michael Veikko Seiler</p>
         </Abschnitt>
       </div>
