@@ -832,7 +832,7 @@ Spiele, Modellbahn (#/fahrt/probe führt dorthin); das Fahrtblatt ist der vierte
 **Wo bin ich?** (Spiele, #/wobinich, Michael, 2026-10-18): fünf Runden, je ein zufälliges Stück einer Linie aus data/strecken.json
 (5 bis 45 km Weg, höchstens ein Viertel der Fahrt im Tunnel, beide Enden in der Schweiz; src/wobinich.ts), im Führerstand wie bei der
 Probefahrt (GelaendeFahrt mit verdeckt und vorneAnfang: keine Schilder, keine Ortstafeln, am Pult «?» statt Start und Ziel und nur die Art
-des Nächsten), 45 s Fahrt, Tempo 40 bis 120 km/h am Pult (Fahrzeit und Tempo fürs Spiel gewählt, in keiner Quelle), dann ein Pin auf der
+des Nächsten; ohne «Hinter den Zug», «Führerstand» und XR, auch nicht am Pult, Michael, 2026-11-05: «darf man nicht die Auswahl haben, hinter dem Zug zu fahren … Man muss im Führerstand bleiben»; das Luftbild immer, Gipfel, Kultur, Seilbahnen, Gebiete und Km-Netz nie, was auf dem Gerät für die Karten gemerkt ist, gilt dort nicht: ein gemerktes «Luftbild aus» liess nur eine Fläche, «Es hat nur eine Fläche, aber keine Karte»), 45 s Fahrt, Tempo 40 bis 120 km/h am Pult (Fahrzeit und Tempo fürs Spiel gewählt, in keiner Quelle), dann ein Pin auf der
 Karte von «Geo» mit den Hilfen vom Start, gewertet wie dort (punkte, nullGrenzeM für die ganze Schweiz); in der Auflösung die Bahnhöfe
 davor und danach und die Linie. Das Bild der Kachel ist vorerst das des Fahrtmodus.
 

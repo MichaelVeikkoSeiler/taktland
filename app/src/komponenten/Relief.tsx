@@ -1339,7 +1339,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   const pultAussen = useRef<PultAussen | null>(null)
   pultAussen.current = {
     ...(aussen?.current ?? {}), hoehe: () => faktor, hoeheSetzen: setFaktor,
-    hinterZug: () => { fuehrerstand.current = false; seitenblick.current = 0; setVorne(false); hinterZug.current = true },
+    // «Wo bin ich?»: nur der Führerstand, sonst sähe man von hinter dem Zug die ganze Gegend (Michael, 2026-11-05)
+    hinterZug: verdeckt ? undefined : () => { fuehrerstand.current = false; seitenblick.current = 0; setVorne(false); hinterZug.current = true },
     seite: (r) => seitenblickDrehen(seitenblick, r), schliessen: voll ? schliessen : undefined,
   }
   // ohne 3D gibt es keinen Führerstand mehr
@@ -1432,11 +1433,11 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
             <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
             <div className="absolute right-2 top-2 flex gap-2">
               {/* «XR» wie in «3D Schweiz» und der Modellbahn (Michael, 2026-10-26) */}
-              {ganz && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille" className={`${XR_KNOPF} !size-9`}>XR</button>}
+              {ganz && !verdeckt && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille" className={`${XR_KNOPF} !size-9`}>XR</button>}
               <GeraeuschKnopf audio={audio} className="h-9 w-10" />
             </div>
             {/* oben: unten legt Android im Vollbild seinen Hinweis zum Beenden darüber (Michael, 2026-10-11) */}
-            <div className="absolute left-2 top-12 flex gap-2">
+            <div className={`absolute left-2 top-12 flex gap-2 ${verdeckt ? 'hidden' : ''}`}>
               <button type="button" onClick={() => { fuehrerstand.current = false; setVorne(false); hinterZug.current = true }}
                       className={KAMERA_KNOPF}>
                 Hinter den Zug
@@ -1569,7 +1570,13 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
   // das echte Wetter in der Modellbahn und beim Fahren (Michael, 2026-10-24: «auch das Fahren mit GPS soll das reale Wetter
   // abbilden»), nicht bei «Wo bin ich?»: dort verriete es die Gegend
   const mitWetter = !verdeckt
-  const aus = useVersteckt()
+  // bei «Wo bin ich?» gilt nicht, was auf dem Gerät für die Karten gemerkt ist: das Luftbild immer, Gipfel, Kultur, Seilbahnen,
+  // Gebiete und Km-Netz nie, sonst verrieten sie die Gegend, und ein gemerktes «Luftbild aus» liess nur eine Fläche ohne Bild
+  // (Michael, 2026-11-05: «die Landschaft nicht eingezeichnet. Es hat nur eine Fläche, aber keine Karte»)
+  const ausGemerkt = useVersteckt()
+  const aus = useMemo(() => (verdeckt
+    ? new Set<Kategorie>(['gipfel', 'kgs', 'seilbahn', 'gebiete', 'kmnetz', 'wetter', ...[...ausGemerkt].filter((k) => k === 'tunnel' || k === 'bruecke')])
+    : ausGemerkt), [ausGemerkt, verdeckt])
   const ausJetzt = useRef(aus)
   const anwenden = useRef<((a: Set<Kategorie>) => void) | null>(null)
   // ein- und ausblenden, ohne das Relief neu zu bauen
