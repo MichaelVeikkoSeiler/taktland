@@ -25,6 +25,7 @@ import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitG
 import { type Bruecke3d, brueckenLaden, gleisLaden, strassenlichtLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
 import { fahrplanZuegeBauen } from './FahrplanZuege'
+import { perronNetz, perronsIn } from './Perrons'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { WOLKEN_HOEHE_M, wolkenBild, wolkenEbenen3d } from './WolkenBild'
 import { wolken3dStunde, wolkenLaden, wolkenStunde } from '../wolken'
@@ -92,6 +93,8 @@ const FEIN_SEITE_M = 4000, FEIN_VORAUS_M = 1200, FEIN_NACH_M = 800, FEIN_PX_JE_M
 const FEIN_UEBER_M = 1
 /** Führerstand: so weit neben der Linie liegt das feine Gelände auf der Höhe der Schienen, bis so weit läuft es aus (trasse) */
 const TRASSE_HALB_M = 10, TRASSE_RAND_M = 24
+/** so weit darf die gezeichnete Linie neben einem Perron liegen, damit seine Höhe sich nach ihr richtet (gewählt) */
+const PERRON_LINIE_M = 30
 /** Schienen im Führerstand (Michael, 2026-10-14): Abstand der Mitten und Breite einer Schiene in Metern; Normalspur überall,
  *  die Spurweite einer Strecke steht in keiner Quelle; breiter als ein echter Schienenkopf (7 cm), sonst aus der Kabine kaum zu sehen */
 const SPUR_M = 1.435 + 0.07, SCHIENE_M = 0.15
@@ -2542,6 +2545,11 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const mastGruppe = new THREE.Group()
     mastGruppe.visible = false
     szene.add(mastGruppe)
+    // Perrons (komponenten/Perrons.ts; Michael, 2026-11-05: «An beiden Orten bitte, Perrons bauen»): nur im Führerstand, mit dem feinen
+    // Gelände; die Kante so hoch über der gezeichneten Linie, wie die SBB sie angibt, die Linie liegt nicht genau auf der Höhe des Gleises
+    const perronGruppe = new THREE.Group()
+    perronGruppe.visible = false
+    szene.add(perronGruppe)
     // Züge laut Fahrplan im feinen Gelände, wie in «3D Schweiz» (komponenten/FahrplanZuege.ts; Michael, 2026-10-30: «dann den Rest auch noch»);
     // nicht bei «Wo bin ich?», sie verrieten die Gegend
     const fahrplanZuege = verdeckt ? null : fahrplanZuegeBauen(szene, X, Y, Z)
@@ -2603,6 +2611,31 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     if (import.meta.env.VITE_S3D_TEST) (window as unknown as { reliefKamera: unknown }).reliefKamera = () => [kamera.position.x * 1000 + me, -kamera.position.z * 1000 + mn, kamera.position.y * 1000 / faktor, szene.children.length]
     const mastForm = fahrleitungsMast(), mastStoff = new THREE.MeshLambertMaterial({ color: FAHRLEITUNG_FARBE })
     const draht = drahtStoffBauen()
+    let perronAuftrag = 0
+    const perronSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
+      const auftrag = ++perronAuftrag
+      const liste = await perronsIn(e0, n0, e1, n1).catch(() => [])
+      if (!laeuft || auftrag !== perronAuftrag) return
+      for (const c of perronGruppe.children) { const mm = c as THREE.Mesh; mm.geometry.dispose(); (mm.material as THREE.Material).dispose() }
+      perronGruppe.clear()
+      if (!liste.length) return
+      // die gezeichnete Linie alle 5 m mit ihrer Höhe; je Perron der Unterschied zwischen Linie und Gleis laut swissTLM3D an der nächsten
+      // Stelle bis PERRON_LINIE_M, damit die Kante über den gezeichneten Schienen liegt; weiter weg die Trasse wie das Gelände (FEIN_UEBER_M)
+      const linie: number[] = []
+      for (let meter = pk[0].m; meter <= pk[pk.length - 1].m; meter += 5) {
+        const [e, n] = glattBei(meter)
+        if (e > e0 - 100 && e < e1 + 100 && n > n0 - 100 && n < n1 + 100) linie.push(e, n, feinLinieHoehe(meter))
+      }
+      const netz = perronNetz(liste, (e, n, h) => new THREE.Vector3(X(e), Y(h), Z(n)), (p) => {
+        let best = PERRON_LINIE_M, ueber = FEIN_UEBER_M
+        for (let i = 0; i < p.e.length; i++) for (let j = 0; j < linie.length; j += 3) {
+          const d = Math.hypot(linie[j] - p.e[i], linie[j + 1] - p.n[i])
+          if (d < best) { best = d; ueber = linie[j + 2] - p.z[i] }
+        }
+        return ueber
+      }, (e, n) => e >= e0 && e <= e1 && n >= n0 && n <= n1)
+      if (netz) perronGruppe.add(netz)
+    }
     let mastAuftrag = 0
     const mastSetzen = async (e0: number, n0: number, e1: number, n1: number) => {
       const auftrag = ++mastAuftrag
@@ -2987,6 +3020,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       strassenGruppe.visible = false
       baumGruppe.visible = false
       mastGruppe.visible = false
+      perronGruppe.visible = false
       lampenGruppe.visible = false
       // Röhren haben zwei Materialien; Fels und Boden teilen alle Tunnel
       feinLinien.traverse((o) => {
@@ -3132,6 +3166,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       void baumSetzen(e0, n0, e1, n1)
       mastGruppe.visible = true
       void mastSetzen(e0, n0, e1, n1)
+      perronGruppe.visible = true
+      void perronSetzen(e0, n0, e1, n1)
       lampenGruppe.visible = true
       void lampenSetzen(e0, n0, e1, n1)
       fahrplanZuege?.setzen(e0, n0, e1, n1)

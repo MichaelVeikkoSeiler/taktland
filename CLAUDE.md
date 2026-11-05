@@ -696,6 +696,17 @@ data/bruecken3d/  Brücken für «3D Schweiz» (Michael, 2026-10-30: «Kannst du
              standen sie im Hang); im Führerstand alle Brücken im feinen Gelände ausser denen der eigenen Linie (fremdeBruecken in Relief.tsx: ein Gleisstück,
              das an mehr als der Hälfte seiner Punkte höchstens 20 m neben der gezeichneten Strecke liegt, gehört zur eigenen Brücke), mit Retusche darunter,
              statt nur der Strassenbrücken über der Bahn aus data/strassenbruecken.json, das die App nicht mehr liest; in Anleitung und Quellen genannt
+data/perrons3d.json  Perrons für «3D Schweiz» und den Führerstand (Michael, 2026-11-04: «Bahnhof Bern kann man Perrons und Gleise (Vertiefungen)
+             bauen? So ist alles flach», 2026-11-05: «An beiden Orten bitte, Perrons bauen»): pipeline/build_perrons3d.py aus den Perronkanten der SBB
+             (BehiG Haltekantesegment, data/raw/21197_behig-haltekantesegment.csv, Punkte in LV95 je Haltekante, Höhe der Kante aus der Legende, «P 55» = 55 cm,
+             «<=P20» gezeichnet mit 20 cm, ohne Hilfskanten) und der Höhe der Gleisachsen aus swissTLM3D (ohne Tunnel, Unterführungen, Gebäude); zwei Kanten
+             eines Perrons (bis 30 m auseinander) umschliessen die Fläche, bei nur einer Kante 4 m breit auf der vom Gleis abgewandten Seite (gewählt); ohne
+             Gleisachse bis 4 m neben der Kante fehlt der Perron (unterirdisch); 1'536 Perrons, 549 KB, in Git, export_app kopiert sie; in der App
+             komponenten/Perrons.ts für beide: Belag grau, Wand bis 0,6 m unter das Gleis (Farben gewählt), keine Dächer, Treppen, Unterführungen (in keiner
+             Quelle mit Form); in «3D Schweiz» in den Feldern von 4 km und 1 km auf der Höhe der Gleise, Perrons am Rand fallen weg; im Führerstand mit dem
+             feinen Gelände, die Kante so hoch über der gezeichneten Linie (bis 30 m neben ihr, PERRON_LINIE_M), sonst 1 m wie die Trasse; geprüft in
+             «3D Schweiz» in Bern ohne die Daten von daten.taktland.ch: wo Gleise unter einer Überdeckung liegen (Parking über den Gleisen in Bern), liegt das
+             Luftbild des Dachs neben den Perrons; Quellen und Annahmen in der Anleitung von «3D Schweiz» und der Fusszeile von 3dland
 data/fahrplan/  Fahrplan für «Welcher Zug?» (seit 2026-10-31 auf main, vorher nur auf dem Branch; Michael: «Nimm jetzt Welcher Zug»): nur Züge, nur Halte an Bahnhöfen im Netz, 60 Tage
              ab dem Bau (pipeline/build_fahrplan.py aus dem GTFS von opentransportdata.swiss);
              nicht in Git, entsteht beim Veröffentlichen, montags und donnerstags neu
@@ -764,6 +775,7 @@ python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-
 python3 pipeline/fetch_tlm3d.py --baeume          # Einzelbaum und Bodenbedeckung aus swissTLM3D (etwa 3,3 GB)
 python3 pipeline/fetch_tlm3d.py --strassen        # Strassen aus swissTLM3D (520 MB, entpackt 3,3 GB)
 .venv/bin/python pipeline/build_strassenbruecken.py   # Strassenbrücken über der Bahn, vor export_app
+.venv/bin/python pipeline/build_perrons3d.py           # Perrons (Perronkanten der SBB, Gleishöhe swissTLM3D) für «3D Schweiz» und den Führerstand, vor export_app
 .venv/bin/python pipeline/build_gleise3d.py            # welches Gleis wo liegt (Sektortafeln der SBB, Achsen swissTLM3D) für die Züge in «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_bruecken3d.py          # Brücken der Bahn und Strassen für «3D Schweiz» (nach fetch_tlm3d.py --strassen), vor export_app
 .venv/bin/python pipeline/build_fahrleitung.py         # Masten der Fahrleitung (Elektrifizierung laut BAV, Gleisachsen swissTLM3D), vor export_app
