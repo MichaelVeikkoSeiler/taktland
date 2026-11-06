@@ -1968,13 +1968,15 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     leisteLegen(false)
     if (mitWetter) el.appendChild(wetterLeiste)
     let wetterBis = 0, wetterLaedt = false, niederAn = false
+    /** im Führerstand im Tunnel: kein Regen, kein Schnee, kein Regengeräusch (Michael, 2026-11-06: «Im Tunnel sollte es nicht regnen») */
+    let imTunnelStand = false, augeImTunnel = false
     /** Licht, Himmel und die Zeile oben links nach dem Wetter und dem Schalter «Echtes Wetter» */
     // Regen und Wind zum Hören (Michael, 2026-10-25), wenn echtes Wetter gilt und der Lautsprecher fürs Zuggeräusch an ist
     const wetterHoeren = () => {
       const a = audioLesen()
       if (!wetterGilt() || !a.an || !a.zuggeraeusch) { wetterGeraeuschAus(); return }
       const n = niederJetzt()
-      wetterGeraeusch(n?.art === 'regen' ? n.staerke : null, (windGewaehlt ?? wetter?.wind)?.kmh ?? null)
+      wetterGeraeusch(n?.art === 'regen' && !imTunnelStand ? n.staerke : null, imTunnelStand ? null : (windGewaehlt ?? wetter?.wind)?.kmh ?? null)
     }
     let wetterHoerenZeit = 0
     const wetterZeigen = () => {
@@ -4435,7 +4437,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         const inBrille = renderer.xr.isPresenting
         const vorne = (inBrille ? kabine.an : !!fuehrerstand?.current) && sichtbar
         if (vorne !== imStand) {
-          if (!vorne) tunnelDunkel(0)
+          if (!vorne) { tunnelDunkel(0); augeImTunnel = false }
           // in den ersten START_NAH_M zurück an den Startbahnhof: sonst lag er beim Wechsel oft schon weit zurück
           if (vorne && nahAmStart() && zumStart()) pult?.stehen()
           imStand = vorne
@@ -4511,6 +4513,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           const tunnel = weg.bauwerke.find((x) => x.art === 'tunnel' && augeM > x.von && augeM < x.bis)
           const tief = tunnel ? Math.min(augeM - tunnel.von, tunnel.bis - augeM) - portalInnen(tunnel.bis - tunnel.von) : 0
           tunnelDunkel(Math.min(1, Math.max(0, tief) / TUNNEL_DUNKEL_M), pult?.daemmerung)
+          augeImTunnel = Boolean(tunnel)
           for (const x of roehren) { const drin = augeM > x.von && augeM < x.bis; x.ganz.visible = drin; x.teil.visible = !drin }
           const auge = feinPunkt3d(augeM)
           auge.y += FUEHRERSTAND_HOEHE_M * faktor / 1000
@@ -4626,7 +4629,10 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       if (windGruppe.visible) windhosen.schritt()
       // auch in der Brille (Michael, 2026-10-24): auf dem Tisch über dem Modell, im Führerstand um den Kopf
       const nj = niederJetzt(), schnee = nj?.art === 'schnee'
-      const fallend = niederAn
+      // im Tunnel (ab dem Portal) regnet es nicht; das Geräusch folgt mit wetterHoeren
+      const tunnelJetzt = imStand && augeImTunnel
+      if (tunnelJetzt !== imTunnelStand) { imTunnelStand = tunnelJetzt; wetterHoeren() }
+      const fallend = niederAn && !tunnelJetzt
       nieder.visible = fallend && !schnee
       flocken.visible = fallend && schnee
       // der Dunst je Einheit der Welt: auf dem Bildschirm km, in der Brille Meter (das Modell 1000-fach)
