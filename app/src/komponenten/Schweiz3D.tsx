@@ -768,6 +768,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     const r = RASTER_M[s]
     return { e: Math.round(gesucht.e / r) * r, n: Math.round(gesucht.n / r) * r, seite: FELD_M[s] }
   }
+  // für den Doppelklick: die Wahl des zweiten Klicks ist erst nach dem nächsten Zeichnen da
+  const zuletztGewaehlt = useRef(0)
+  const eintauchenAktuell = useRef<() => void>(() => {})
+  eintauchenAktuell.current = () => { if (wahl && stufe !== 'nah' && !laedt) void eintauchen() }
   async function eintauchen() {
     if (!wahl || laedt) return
     setLaedt(true); setFehler(null)
@@ -860,7 +864,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : '3D-Land'}</h1>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
-      <div className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
+      {/* am Desktop taucht ein Doppelklick ins Feld ein, statt jedes Mal «Eintauchen» (Michael, 2026-11-06: «auf der Desktop-Version soll man, wenn man einen
+          Ausschnitt gewählt hat, diesen doppelklicken können»); nur wenn beide Klicks das Gelände trafen, nicht einen Knopf an der Wand */}
+      <div onDoubleClick={() => {
+        if (!window.matchMedia('(pointer: fine)').matches || performance.now() - zuletztGewaehlt.current > 700) return
+        window.setTimeout(() => eintauchenAktuell.current(), 30)
+      }}
+        className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
         // 25 breit, 28 hoch (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch», dann «20% weniger hoch»), auf breiten
         // Bildschirmen so schmal, dass es in 85 % der Höhe passt; bis an den Rand der Seite, ohne Rand und runde Ecken (Michael, 2026-10-25: «Weissen Rahmen um
         // die Karte weglassen. Kartenbild bis an den Rand»), auf 3dland.ch gleich unter dem Auftaktbild
@@ -868,6 +878,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
+                     zuletztGewaehlt.current = performance.now()
                      const r = RASTER_M[stufe], s = FELD_M[stufe]
                      const w = { e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: s }
                      // nur in einer Testfassung (VITE_S3D_TEST): das gewählte Feld in die Konsole
