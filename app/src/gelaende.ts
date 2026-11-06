@@ -193,6 +193,13 @@ export async function luftbildLaden(raster: Raster, nurKacheln?: Set<string>): P
   }
   if (!namen.length) return null
   const bilder = await Promise.all(namen.map(([ex, ny]) => luftbildKachel(`${ex}_${ny}`, px, ix.pixel)))
+  // was nicht kam (in der Stufe 128 km sind es gegen 170 Bilder auf einmal, eines kann länger als ANTWORT_MS brauchen), noch zweimal
+  // einzeln nachfragen; sonst blieb dort der Grundton als Fleck (Michael, 2026-11-06: «einen Flecken, der keine Landkartentextur hat»)
+  for (let versuch = 0; versuch < 2; versuch++) {
+    for (let i = 0; i < namen.length; i++) {
+      if (!bilder[i]) bilder[i] = await luftbildKachel(`${namen[i][0]}_${namen[i][1]}`, px, ix.pixel)
+    }
+  }
   const kacheln = namen.flatMap(([ex, ny], i) => (bilder[i] ? [{ ex, ny, bild: bilder[i]! }] : []))
   if (!kacheln.length) return null
   const jahre = [...new Set(kacheln.flatMap(({ ex, ny }) => ix.kacheln[`${ex}_${ny}`].jahre))].sort()
