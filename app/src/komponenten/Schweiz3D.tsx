@@ -1280,6 +1280,8 @@ const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 const ZUG_FERN = 0.018
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
+/** so hoch bleibt die Kamera mindestens über dem Gelände, als Anteil der Breite des Modells (im Feld von 1 km 4 m; gewählt) */
+const KAMERA_UEBER_GELAENDE = 0.004
 /** so weit knickt ein Wagen gegen den davor (etwa ein Wagen von 33 m in einem Bogen von 150 m) und so weit steht er schräg zum Weg
  *  (gewählt; Michael, 2026-11-06: «Völlig verbogen. Sieht sonst nach Unfall aus») */
 const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (25 * Math.PI) / 180
@@ -1588,6 +1590,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const steuerung = new OrbitControls(kamera, renderer.domElement)
     steuerung.enableDamping = true
     steuerung.maxPolarAngle = Math.PI * 0.47
+    // nicht unter das Gelände (kameraUnten, je Stufe gesetzt)
+    steuerung.addEventListener('change', () => {
+      if (renderer.xr.isPresenting) return
+      const unten = wurzel.userData.kameraUnten as ((x: number, z: number) => number) | undefined
+      if (!unten) return
+      const zu = wurzel.userData.zielUnten as number
+      if (steuerung.target.y < zu) steuerung.target.y = zu
+      const min = unten(kamera.position.x, kamera.position.z)
+      if (kamera.position.y < min) kamera.position.y = min
+    })
     const himmelLicht = new THREE.HemisphereLight('#ffffff', '#8a8070', 1.6)
     szene.add(himmelLicht)
     const wurzel = new THREE.Group()
@@ -2056,6 +2068,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     let zeitBand = sonneFuerSockel.current ? wand * SOCKEL_ZEIT : 0
     // in der Brille steht der Sockel auf dem Tisch
     wurzel.userData.untenY = () => Y(tief) - wand - zeitBand - platte
+    // die Kamera nie unter dem Gelände und nie tiefer als sein tiefster Punkt (Michael, 2026-11-06: «Man soll die "Welt" nicht von unten
+    // sehen können. Bringt kein Mehrwert»): über dem Modell mindestens KAMERA_UEBER_GELAENDE der Breite über dem Gelände, daneben nicht unter
+    // den tiefsten Punkt; das Ziel nie unter den tiefsten Punkt
+    wurzel.userData.kameraUnten = (x: number, z: number) => {
+      const e = cE + x * 1000, n = cN - z * 1000
+      const drin = e >= E0 && e <= E1 && n >= N0 && n <= N1
+      return drin ? Math.max(Y(tief), Y(bestandHoehe(b, e, n)) + weiteKm * KAMERA_UEBER_GELAENDE) : Y(tief)
+    }
+    wurzel.userData.zielUnten = Y(tief)
     if (!renderer.xr.isPresenting) {
       // auch über kleinen Feldern bis zu den hohen Wolken (bis 12 km über Meer)
       kamera.far = Math.max(weite / 1000 * 6, 16); kamera.updateProjectionMatrix()
