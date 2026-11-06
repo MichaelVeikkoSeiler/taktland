@@ -893,6 +893,12 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
           <button key={k} type="button" aria-pressed={einstellung.sehenswert[k]} className={chip(einstellung.sehenswert[k])}
                   onClick={() => sorteZeigen(k, !einstellung.sehenswert[k])}>{t}</button>
         ))}
+        {/* in 3D auch das Luftbild: im Vollbild fehlte die Legende, ein auf dem Gerät gemerktes «Luftbild aus» liess sich nicht mehr
+            einschalten (Michael, 2026-11-06: «die Karten fehlen auf der Oberfläche») */}
+        {dreiD && (
+          <button type="button" aria-pressed={!versteckt.has('luftbild')} className={chip(!versteckt.has('luftbild'))}
+                  onClick={() => kategorieUmschalten('luftbild')}>Luftbild</button>
+        )}
       </div>
     </div>
   )
