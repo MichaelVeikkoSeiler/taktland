@@ -621,7 +621,7 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              src/wolken.ts und in Schweiz3D.tsx mit dem eigenen weissen Knopf «Wolken» an der Wand rechts neben «Wetter» (seit 2026-10-29, vorher mit «Wetter»; Michael: «Wolken ein separater Knopf machen (weiss)») in jeder Stufe (seit 2026-10-29, vorher nur Schweiz und Region; Michael: «Wolken auch in den Feldern 4 km und 1 km zeigen»; die Kamera sieht dafür mindestens 16 km weit), zur Zeit der Sonne oder jetzt (die Stunde
              der Prognose am nächsten, höchstens eine Stunde daneben): je Schicht eine Fläche auf 1'500, 4'200 und 9'000 m ü. M. (WOLKEN_HOEHE_M,
              gewählt nach der Mitte der Druckbereiche in der Standardatmosphäre), deckend, wo ein gezeichnetes Rauschen (WOLKEN_KORN_KM 3, 6, 12 km,
-             nach Rang gleichmässig verteilt) über 1 − Bewölkung liegt, mit Schatten; die Zeile «Wolken laut Prognose von MeteoSchweiz für …»; Form,
+             nach Rang gleichmässig verteilt) über 1 − Bewölkung liegt, mit Schatten; ohne Zeile im Bild (bis 2026-11-06 «Wolken laut Prognose von MeteoSchweiz für …»; Michael: «Diese Infos braucht es nicht beim Einschalten von Wetter resp Wolken. Wie es funktioniert steht ja im Beschrieb auf der Seite»), nur fehlt die Prognose, steht es dort; Form,
              Dicke und Höhe in der Schicht in keiner Quelle, in Anleitung, Quellen und Fusszeile genannt; für die ersten 24 Stunden des neuesten Laufs
              in echter Höhe (Michael, 2026-10-29: «stimmen die Höhen und Höhenverhältnisse?», «kannst du ihnen eine Dicke geben?», dann «Ja, so
              bauen»: nur 24 Stunden, weil CLC je Stunde etwa 150 MB lädt, für die Nutzer bleibt es klein): CLC, die Bewölkung in den 80 Schichten des
@@ -636,7 +636,7 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              Station (voll ab 4 mm), von der untersten gezeichneten Wolke über dem Boden (ab 10 % Bewölkung, sonst die unterste Schicht über dem
              Boden) bis auf den Boden, darüber Schnee, unter der Schneefallgrenze Regen (komponenten/Niederschlag.ts, Säulen), in jeder Stufe; das Geräusch nach dem Mittel über das Modell; ohne diese Daten wie vorher die
              Station gleichmässig über dem Modell (vorher bis ein Viertel der Breite über dem höchsten Punkt, in der ganzen Schweiz also bis
-             etwa 90 km hoch); die Zeile «Regen und Schnee laut Prognose von MeteoSchweiz für …»;
+             etwa 90 km hoch); ohne Zeile im Bild (bis 2026-11-06 «Regen und Schnee laut Prognose von MeteoSchweiz für …», Michael, siehe Wolken);
              seit 2026-10-30 auch im Führerstand von Taktland (komponenten/WolkenBild.ts für beide Apps; Michael, 2026-10-30: «die beiden evtl zu koppeln …
              dann den Rest auch noch»): dieselben Ebenen über einem Quadrat von 40 km um den Zug, neu nach 8 km Weg oder zur nächsten Stunde, alle 10 s
              geprüft (WOLKEN_FUEHRER_M, WOLKEN_NEU_M, gewählt), nur solange echtes Wetter gilt (der Sonnenschalter nicht leuchtet), zur Stunde der Prognose

@@ -4044,7 +4044,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         gruppe.add(netz)
         weg3.push(tex, geo, stoff, tiefe)
       })
-      setWolkenZeile(`Wolken laut Prognose von MeteoSchweiz für ${uhr(w.zeiten[st])}${j3 !== null ? ', in der Höhe des Modells' : ''}`)
+      // keine Zeile, wenn alles da ist: Quelle und Zeit stehen in der Anleitung (Michael, 2026-11-06: «Diese Infos braucht es nicht beim
+      // Einschalten von Wetter resp Wolken»); eine Lücke bleibt gemeldet
+      setWolkenZeile(null)
     })
     return () => {
       weg = true
@@ -4130,8 +4132,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       ns.setzen(saeulen, boden, flaeche, strich)
       // fürs Geräusch der Mittel über das Modell, Regen vor Schnee
       niederModell(regenSumme > 0.002 ? { art: 'regen', staerke: Math.min(1, regenSumme) } : schneeSumme > 0.002 ? { art: 'schnee', staerke: Math.min(1, schneeSumme) } : null)
-      const uhr = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }).format(w.zeiten[st])
-      setNiederZeile(saeulen.length ? `Regen und Schnee laut Prognose von MeteoSchweiz für ${uhr}` : null)
+      // ebenso ohne Zeile (Michael, 2026-11-06)
+      setNiederZeile(null)
     })
     let alt = performance.now()
     const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
