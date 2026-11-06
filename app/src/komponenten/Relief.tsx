@@ -1963,7 +1963,26 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       windTafelZeigen()
     })
     windKnopf.addEventListener('pointerdown', (ev) => ev.stopPropagation())
-    wetterLeiste.append(sonnenKnopf, windKnopf, wetterAnzeige)
+    // Regen und Schnee ausblenden (Michael, 2026-11-06: «Wenn es REGNET SOLL MAN DEN Regen per Regen Icon ausschalten können»): nur zu sehen, wenn es
+    // regnet oder schneit; aus heisst: keine Tropfen und Flocken, kein Dunst, kein Regengeräusch, der graue Himmel bleibt; gemerkt auf dem Gerät
+    const REGEN_AUS_SCHLUESSEL = 'taktland-regen-aus'
+    let regenAus = false
+    try { regenAus = localStorage.getItem(REGEN_AUS_SCHLUESSEL) === '1' } catch { /* ohne Speicher nur für jetzt */ }
+    const regenKnopf = document.createElement('button')
+    regenKnopf.type = 'button'
+    regenKnopf.style.cssText = sonnenKnopf.style.cssText
+    regenKnopf.style.background = 'rgba(255,255,255,0.85)'
+    const regenZeichen = (aus: boolean) => '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">'
+      + '<path d="M7 14a4 4 0 0 1 .5-8 5 5 0 0 1 9.5 1.5A3.3 3.3 0 0 1 17 14z" fill="currentColor" stroke="none"/>'
+      + '<path d="M8 17l-1 3M12 17l-1 3M16 17l-1 3"/>' + (aus ? '<path d="M3 3l18 18" stroke-width="2.4"/>' : '') + '</svg>'
+    regenKnopf.addEventListener('click', (ev) => {
+      ev.stopPropagation()
+      regenAus = !regenAus
+      try { localStorage.setItem(REGEN_AUS_SCHLUESSEL, regenAus ? '1' : '0') } catch { /* nur für jetzt */ }
+      wetterZeigen()
+    })
+    regenKnopf.addEventListener('pointerdown', (ev) => ev.stopPropagation())
+    wetterLeiste.append(sonnenKnopf, windKnopf, regenKnopf, wetterAnzeige)
     // erst hier: leisteLegen braucht wetterAnzeige (vorher davor aufgerufen, die Seite blieb weiss)
     leisteLegen(false)
     if (mitWetter) el.appendChild(wetterLeiste)
@@ -1976,7 +1995,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const a = audioLesen()
       if (!wetterGilt() || !a.an || !a.zuggeraeusch) { wetterGeraeuschAus(); return }
       const n = niederJetzt()
-      wetterGeraeusch(n?.art === 'regen' && !imTunnelStand ? n.staerke : null, imTunnelStand ? null : (windGewaehlt ?? wetter?.wind)?.kmh ?? null)
+      wetterGeraeusch(n?.art === 'regen' && !imTunnelStand && !regenAus ? n.staerke : null, imTunnelStand ? null : (windGewaehlt ?? wetter?.wind)?.kmh ?? null)
     }
     let wetterHoerenZeit = 0
     const wetterZeigen = () => {
@@ -2002,7 +2021,14 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         wetterAnzeige.textContent = `Prognose ${wetter.station.name} ${windGewaehlt.zeit.toLocaleString('de-CH', { timeZone: 'Europe/Zurich', weekday: 'short', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}: `
           + `${niederSatz(windGewaehlt)}, ${windSatz(windGewaehlt)} (MeteoSchweiz)`
       }
-      niederAn = fallend
+      const art = niederJetzt()?.art === 'schnee' ? 'Schnee' : 'Regen'
+      regenKnopf.style.display = an && fallend ? 'flex' : 'none'
+      regenKnopf.innerHTML = regenZeichen(regenAus)
+      regenKnopf.style.color = regenAus ? '#a8102e' : '#767676'
+      regenKnopf.setAttribute('aria-pressed', String(!regenAus))
+      regenKnopf.setAttribute('aria-label', `${art} zeigen`)
+      regenKnopf.title = regenAus ? `${art} wieder zeigen` : `${art} ausblenden`
+      niederAn = fallend && !regenAus
       if (wetterAnzeige.hidden) windTafelZeigen()
     }
     const wetterHolen = () => {
