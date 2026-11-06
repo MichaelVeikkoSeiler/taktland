@@ -1372,7 +1372,9 @@ const TAKTLAND_APP = 'https://taktland.ch/app/'
 /** auf 3dland.ch (auch in dessen Testfassung) führt der Link des Zugs zu taktland.ch, in Taktland selbst auf die Seite des Bahnhofs */
 const AUF_3DLAND = /3dland/.test(window.location.hostname) || /3dland\.html$/.test(window.location.pathname)
 /** so weit neben einem Wagen (Winkel vom Auge) trifft ein Tipp den Zug noch, 2,5°, gewählt */
-const ZUG_TIPP_WINKEL = (2.5 * Math.PI) / 180
+// halb so weit wie vorher (2,5°; Michael, 2026-11-06: «wenn man einen Ausschnitt wählen will man einen Zugdetail angezeigt bekommt wenn man auf einen
+// Bahnhof klickt. Bitte … die Toleranz etwas enger machen»)
+const ZUG_TIPP_WINKEL = (1.25 * Math.PI) / 180
 /** in der Brille, wo der Strahl mit der Hand zittert, 4°, gewählt */
 const ZUG_TIPP_WINKEL_BRILLE = (4 * Math.PI) / 180
 /** so leuchtet ein Zug unter dem Strahl, gelblich wie die eingeschalteten Knöpfe (Faktor je Farbe, über 1 hellt auf), gewählt */
