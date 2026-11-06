@@ -1280,6 +1280,9 @@ const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 const ZUG_FERN = 0.018
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
+/** so weit knickt ein Wagen gegen den davor (etwa ein Wagen von 33 m in einem Bogen von 150 m) und so weit steht er schräg zum Weg
+ *  (gewählt; Michael, 2026-11-06: «Völlig verbogen. Sieht sonst nach Unfall aus») */
+const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (25 * Math.PI) / 180
 /** im Feld von 1 km noch kleiner, etwa 3 m breit und 4 m hoch, damit Züge im Bahnhof nebeneinander und unter den Perrondächern Platz haben
  *  (Michael, 2026-10-30, Bern: «Bei dieser Ansicht sind die Züge etwas zu gross … unter der Decke sind und nicht an der Decke ankommen»; vorher
  *  wie im Feld von 4 km gut 5 m breit und fast 7 m hoch), gewählt */
@@ -3666,6 +3669,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           for (const y of enden) if (Math.abs(y.s - x.s) <= fenster && Number.isFinite(y.h)) { summe += y.h; zahlH++ }
           return zahlH ? summe / zahlH : x.h
         })
+        // der Wagen davor: sein hinteres Ende und seine Richtung, damit der Zug zusammenhängt (kette)
+        let kE = 0, kN = 0, kR = 0
         for (let w = 0; w <= ZUG_WAGEN; w++) {
           const vo = enden[2 * w], hi = enden[2 * w + 1], hv = glatt[2 * w], hh = glatt[2 * w + 1]
           // nach links versetzt, damit Züge in Gegenrichtung aneinander vorbeifahren statt durcheinander
@@ -3687,6 +3692,24 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           let [hiE, hiN, hhG] = imGleisfeld(hi.e + (hi.er - hi.e) * wh, hi.n + (hi.nr - hi.n) * wh, le * versatzH, ln * versatzH, ln, -le)
           if (wv > 0.999) { const g = gleisBei(voE, voN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { voE = g[0]; voN = g[1]; hvG = g[2] } }
           if (wh > 0.999) { const g = gleisBei(hiE, hiN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { hiE = g[0]; hiN = g[1]; hhG = g[2] } }
+          // der Zug hängt zusammen (Michael, 2026-11-06, Kerzers: «Züge dürfen nie so dargestellt werden. Völlig verbogen. Sieht sonst nach Unfall
+          // aus»): jedes Ende rastete für sich auf die nächste Gleisachse ein, lagen vorne und hinten verschiedene Gleise, stand der Wagen quer.
+          // Jetzt behält jeder Wagen seine Länge, hängt am Wagen davor und knickt gegen ihn höchstens ZUG_KNICK, gegen den Weg höchstens ZUG_SCHRAEG
+          ;[voE, voN, hiE, hiN] = (() => {
+            const wegR = Math.atan2(vo.n - hi.n, vo.e - hi.e), laenge = Math.hypot(vo.e - hi.e, vo.n - hi.n)
+            const nah = (r: number, um: number, max: number) => { const d = Math.atan2(Math.sin(r - um), Math.cos(r - um)); return um + Math.max(-max, Math.min(max, d)) }
+            let fe = voE, fn = voN
+            if (w > 0) {
+              const vorHi = enden[2 * w - 1], luecke = Math.hypot(vorHi.e - vo.e, vorHi.n - vo.n)
+              fe = kE - Math.cos(kR) * luecke; fn = kN - Math.sin(kR) * luecke
+            }
+            let r = Math.atan2(fn - hiN, fe - hiE)
+            if (!Number.isFinite(r)) r = wegR
+            r = nah(r, wegR, ZUG_SCHRAEG)
+            if (w > 0) r = nah(r, kR, ZUG_KNICK)
+            kE = fe - Math.cos(r) * laenge; kN = fn - Math.sin(r) * laenge; kR = r
+            return [fe, fn, kE, kN]
+          })()
           const e = (voE + hiE) / 2, n = (voN + hiN) / 2
           if (w === 0) { lokE = e; lokN = n }
           if (import.meta.env.VITE_S3D_TEST && w === 0) { const g = gleisBei(e, n, ln, -le, 30); (window as unknown as { s3dZugTest: unknown[] }).s3dZugTest?.push([u.f.nummer, h[j].abk, h[j + 1].abk, Math.round(e), Math.round(n), Math.round(versatz), wv.toFixed(2), g ? Math.round(Math.hypot(g[0] - e, g[1] - n) * 10) / 10 : null, g?.[3], Math.round(vo.e - vo.er), Math.round(vo.n - vo.nr), (() => { const ae = vo.e + (vo.er - vo.e) * wv + le * versatz, an = vo.n + (vo.nr - vo.n) * wv + ln * versatz, g2 = gleisBei(ae, an, ln, -le, 40); return g2 ? Math.round(Math.hypot(g2[0] - ae, g2[1] - an)) : 'keins' })()]) }
