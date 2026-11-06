@@ -23,7 +23,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
         Die Reiter oben führen zu Bahnland (Bahnhöfe, Strecken, Brücken, Tunnel,
-        Bahnübergänge), Spiele (Modellbahn, Geo, Wo bin ich?, Duell, Bahnhofsuche, 3D Schweiz), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
+        Bahnübergänge), Spiele (Modellbahn, Geo, Wo bin ich?, Duell, Bahnhofsuche, 3D-Land), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
 
@@ -112,7 +112,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             jede aufgedeckte kostet 10, der Bezirk 20. Ein falscher Tipp deckt die nächste Karte auf.
           </li>
         </Spiel>
-        <Spiel titel="3D Schweiz">
+        <Spiel titel="3D-Land">
           <li>
             Die ganze Schweiz als Modell. Ein Feld antippen oder einen Ort, Gipfel oder See suchen, dann eintauchen: in Gebiete von 128 und 64 km, eine
             Region von 16 km, ein Feld von 4 km und ein Stück von 1 km; der gesuchte Ort bleibt dabei rot markiert. Mit + und −
@@ -295,8 +295,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             oben links im Bild stellt auf Schönwetter, dann leuchtet er.
           </li>
           <li>
-            Die Windhose in der Modellbahn und in «3D Schweiz» zeigt den zuletzt gemessenen Wind derselben Station (Mittel über 10
-            Minuten, stärkste Böe, Richtung, am Mast die Temperatur), in «3D Schweiz» mit «Sonne» auch zur gewählten Zeit (früher gemessen,
+            Die Windhose in der Modellbahn und in «3D-Land» zeigt den zuletzt gemessenen Wind derselben Station (Mittel über 10
+            Minuten, stärkste Böe, Richtung, am Mast die Temperatur), in «3D-Land» mit «Sonne» auch zur gewählten Zeit (früher gemessen,
             frühere Tage seit dem 1. Januar je Stunde), oder eine Stunde ihrer Prognose: die lokale Prognose von MeteoSchweiz (Open Government
             Data, stündlich neu, Stundenwerte bis 8 Tage voraus). Zur gewählten Stunde der Prognose regnet oder schneit es im Modell nach
             ihrem Niederschlag (ab 0,1 mm in der Stunde, Schnee bis 1 °C), in der Tafel als blaue Balken. Der Sack zeigt, wohin der Wind weht, und ist ab 28 km/h ganz
@@ -366,7 +366,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Reiseplanung. Es ist ein privates Projekt und kein Angebot einer Bahnunternehmung.
           </li>
           <li>
-            Züge und Schiffe in «3D Schweiz» zeigen den Fahrplan, nicht die Wirklichkeit; Wetter, Wolken, Regen und Schnee sind Messungen und
+            Züge und Schiffe in «3D-Land» zeigen den Fahrplan, nicht die Wirklichkeit; Wetter, Wolken, Regen und Schnee sind Messungen und
             Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen. Für Reisen gelten der offizielle Fahrplan und die Angaben der
             Bahnen, für das Wetter MeteoSchweiz.
           </li>
@@ -400,8 +400,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             andere entfernst du in den Einstellungen des Browsers mit den Websitedaten für taktland.ch.
           </li>
           <li>
-            Den Standort fragt Taktland nur beim Fahren, unter «Standort» und in «3D Schweiz» mit «Mein Standort» ab, nach deiner
-            Freigabe. Er wird nie gesendet. Unter «Standort» und in «3D Schweiz» wird er nur auf dem Gerät
+            Den Standort fragt Taktland nur beim Fahren, unter «Standort» und in «3D-Land» mit «Mein Standort» ab, nach deiner
+            Freigabe. Er wird nie gesendet. Unter «Standort» und in «3D-Land» wird er nur auf dem Gerät
             verrechnet und nicht gespeichert. Beim Fahren merkt sich Taktland die Stelle auf dem
             Weg, damit eine Fahrt weitergehen kann, und hält für das Logbuch den gefahrenen Weg
             mit Datum fest, als Punkte auf der Strecke. Beides bleibt im Browser dieses Geräts
@@ -412,7 +412,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             In der Modellbahn und beim Fahren holt Taktland, solange der Sonnenschalter nicht leuchtet, alle 10 Minuten die Messung einer Wetterstation
             direkt bei data.geo.admin.ch (Bund). Der Dienst sieht dabei wie jeder Server die IP-Adresse und erfährt, welche
             Station gefragt wird, also in welcher Gegend das Modell oder die Fahrt liegt; den Standort selbst sendet Taktland nicht.
-            Ebenso, wenn die Windhose an ist oder ihre Tafel offen: die Windmessung und die Prognose der Station. In «3D Schweiz» holt
+            Ebenso, wenn die Windhose an ist oder ihre Tafel offen: die Windmessung und die Prognose der Station. In «3D-Land» holt
             «Wetter» dasselbe und dazu Regen und Schnee laut Wettermodell bei 3dland.ch (ebenfalls GitHub Pages, siehe unten), «Wolken» die Wolken von dort. Im Führerstand holt Taktland, solange der Sonnenschalter nicht leuchtet,
             die Wolken ebenfalls dort; die Datei ist für die ganze Schweiz dieselbe, sie verrät die Gegend nicht.
           </li>

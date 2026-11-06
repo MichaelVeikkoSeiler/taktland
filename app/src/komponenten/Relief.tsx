@@ -944,7 +944,7 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
   stand: ModellStand
   /** über dem Modell unten: die Vorankündigung der Tunnel und Brücken */
   ansage?: React.ReactNode
-  /** der Knopf XR oben rechts neben dem Vollbild, wie in «3D Schweiz» */
+  /** der Knopf XR oben rechts neben dem Vollbild, wie in «3D-Land» */
   inBrille: () => void
 }) {
   const xr = useBrilleMoeglich()
@@ -971,7 +971,7 @@ function ModellKarte({ szene, laedt, faktor, setFaktor, fahrknopf, fuehrerstand,
       {szene && !cockpit && (
         <div className="absolute right-2 top-2 flex gap-2">
           {voll && <GeraeuschKnopf audio={audio} className="h-8 w-9" />}
-          {/* «XR» wie in «3D Schweiz»: gleich gross und gleich weiss wie das Vollbild daneben (Michael, 2026-10-26: «Den XR Knopf kannst
+          {/* «XR» wie in «3D-Land»: gleich gross und gleich weiss wie das Vollbild daneben (Michael, 2026-10-26: «Den XR Knopf kannst
               du bei Taktland genauso umsetzen wie bei 3DLand»; vorher ein roter Knopf «Mit VR-Brille» unter dem Modell) */}
           <button type="button" onClick={() => (xr ? inBrille() : setOhneBrille(!ohneBrille))} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
                   className={XR_KNOPF}>XR</button>
@@ -1191,7 +1191,7 @@ function Hinweise({ r }: { r: Relief }) {
         dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen.
       </p>
       <p>
-        Im Führerstand ausserdem wie in «3D Schweiz»: alle Brücken aus swissTLM3D (swisstopo) nah am Zug, Lage und Höhe belegt, Breite (wo die Klasse
+        Im Führerstand ausserdem wie in «3D-Land»: alle Brücken aus swissTLM3D (swisstopo) nah am Zug, Lage und Höhe belegt, Breite (wo die Klasse
         keine nennt), Querschnitt und Aussehen gewählt, ohne Pfeiler; und andere Züge laut Fahrplan (opentransportdata.swiss), nicht live: wo ein Zug
         zwischen zwei Halten ist, ist angenommen (gleichmässig), welches Gleis er nimmt, steht in keiner Quelle (gewählt das linke), Form und Grösse
         sind gewählt. Der eigene Zug fährt nicht nach dem Fahrplan; ein Zug laut Fahrplan kann ihn kreuzen. Nachts Strassen- und Bahnhofslicht: die
@@ -1432,7 +1432,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
           <>
             <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
             <div className="absolute right-2 top-2 flex gap-2">
-              {/* «XR» wie in «3D Schweiz» und der Modellbahn (Michael, 2026-10-26) */}
+              {/* «XR» wie in «3D-Land» und der Modellbahn (Michael, 2026-10-26) */}
               {ganz && !verdeckt && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille" className={`${XR_KNOPF} !size-9`}>XR</button>}
               <GeraeuschKnopf audio={audio} className="h-9 w-10" />
             </div>
@@ -2431,7 +2431,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       }
     }
     // Brücken neben der eigenen Linie (Michael, 2026-10-15: «Ist es möglich, eine Autobrücke zu konstruieren?»; seit 2026-10-30 aus
-    // data/bruecken3d wie in «3D Schweiz», Michael: «die beiden evtl zu koppeln … ZB die Brücken»): alle Strassen-, Weg- und Bahnbrücken
+    // data/bruecken3d wie in «3D-Land», Michael: «die beiden evtl zu koppeln … ZB die Brücken»): alle Strassen-, Weg- und Bahnbrücken
     // laut swissTLM3D im feinen Gelände, vorher nur Strassen über der Bahn (data/strassenbruecken.json); die eigene Bahnbrücke zeichnet
     // platte. Verlauf und Höhe der Achse aus der Quelle, die Breite aus dem Namen der Klasse, sonst eine Annahme (komponenten/Bruecken.ts);
     // Strassen als Trog mit Platte und zwei Brüstungen, Gleise als Platte unter allen parallelen Gleisen, Masse in keiner Quelle
@@ -2557,15 +2557,15 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     const perronGruppe = new THREE.Group()
     perronGruppe.visible = false
     szene.add(perronGruppe)
-    // Züge laut Fahrplan im feinen Gelände, wie in «3D Schweiz» (komponenten/FahrplanZuege.ts; Michael, 2026-10-30: «dann den Rest auch noch»);
+    // Züge laut Fahrplan im feinen Gelände, wie in «3D-Land» (komponenten/FahrplanZuege.ts; Michael, 2026-10-30: «dann den Rest auch noch»);
     // nicht bei «Wo bin ich?», sie verrieten die Gegend
     const fahrplanZuege = verdeckt ? null : fahrplanZuegeBauen(szene, X, Y, Z)
-    // Strassen- und Bahnhofslicht bei Nacht im feinen Gelände, wie in «3D Schweiz» (komponenten/Strassenlicht.ts; die Lampen sind erfunden)
+    // Strassen- und Bahnhofslicht bei Nacht im feinen Gelände, wie in «3D-Land» (komponenten/Strassenlicht.ts; die Lampen sind erfunden)
     const lampenGruppe = new THREE.Group()
     lampenGruppe.visible = false
     szene.add(lampenGruppe)
     let lampenAuftrag = 0
-    // Wolken laut Wettermodell im Führerstand, wie in «3D Schweiz» (komponenten/WolkenBild.ts; Michael, 2026-10-30: «dann den Rest auch noch»):
+    // Wolken laut Wettermodell im Führerstand, wie in «3D-Land» (komponenten/WolkenBild.ts; Michael, 2026-10-30: «dann den Rest auch noch»):
     // nur solange echtes Wetter gilt, über einem Quadrat von WOLKEN_FUEHRER_M um den Zug, neu nach WOLKEN_NEU_M Weg oder zur nächsten Stunde
     const wolkenGruppe = new THREE.Group()
     wolkenGruppe.visible = false

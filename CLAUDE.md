@@ -102,7 +102,12 @@ server/spiel/  Vermittlung für «Geo» und «Bahnhofsuche» auf mehreren Gerät
              Weiter), ohne IP; Räume verfallen nach sechs Stunden. Gerechnet wird auf den Geräten
              (src/spielraum.ts, komponenten/Raum.tsx, Schweiz11Online.tsx, ErratenOnline.tsx), zum
              Ausprobieren mit VITE_SPIEL_URL gegen php -S
-dreidland/   3dland.ch (Michael, 2026-10-21): nur «3D Schweiz» als eigene Seite aus demselben Code (app/3dland.html,
+dreidland/   seit 2026-11-06 läuft 3D-Land auch ganz in Taktland (Michael: «strategisch sinnvoller … alles auf Taktland laufen zu lassen … 3D Schweiz heisst
+             dann 3D Land und hat die genau identischen Funktionen wie bei 3DLand.ch», «bei LinkedIn nur auf Taktland.ch hinweisen»): das Spiel heisst
+             «3D-Land» mit den Bildern und der Bildmarke von 3dland.ch (public/logo-3dland.png oben rechts im Auftaktbild), Adresse #/schweiz3d oder
+             #/3dland, die Wolken baut pages.yml alle 3 Stunden neben die App (wolken/; vorher nur bei 3dland.ch), Fahrplan, Züge und Schiffe täglich
+             (actions/cache je Tag); geplant: 3dland.ch leitet danach auf taktland.ch/app/#/3dland weiter, erst wenn Michael zufrieden ist;
+             3dland.ch (Michael, 2026-10-21): nur «3D Schweiz» als eigene Seite aus demselben Code (app/3dland.html,
              src/dreidland.tsx, vite.3dland.config.ts, scripts/3dland_fertig.mjs; eigene Bildmarke (oben rechts im Auftaktbild, Michael, 2026-10-25) und Auftaktbild als
              Platzhalter von Michael, 2026-10-21: app/public-3dland, src/assets/auftakt-3dland-*.webp, seit 2026-10-25 Michaels Bilder mit XR-Brille, Windhosen und Regen, dunkel bei Nacht; sonst die Farben von Taktland),
              ohne eigene Daten: holt sie von taktland.ch/app/ (VITE_DATEN_BASIS in src/daten.ts und src/schweiz11.ts) und
@@ -564,7 +569,7 @@ data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-1
              leuchtend, in der Dämmerung der Abendhimmel, Sterne hinter Wolken schwächer; bei Schönwetter und in «Wo bin ich?» immer Tag
 data/zuege3d/  Züge laut Fahrplan für «3D Schweiz», zuerst nur für 3dland.ch (Michael, 2026-10-26: «gehen wir mal die Züge an. Aber NUR für
              3DLand, nicht für Taktland»), seit 2026-10-28 auch in Taktland (Michael: «Bitte diese Sachen auch für Taktland»: der Knopf «Züge», gebaut
-             auch in pages.yml nach build_fahrplan, montags und donnerstags, neben die App gelegt, _site/app/zuege3d; der Link zum Bahnhof führt dort
+             auch in pages.yml nach build_fahrplan, seit 2026-11-06 täglich (vorher montags und donnerstags), neben die App gelegt, _site/app/zuege3d; der Link zum Bahnhof führt dort
              auf dessen Seite in der App, AUF_3DLAND; zuerst Fahrplan, Echtzeit wäre ein zweiter Schritt mit Schlüssel): pipeline/build_zuege3d.py aus dem
              GTFS von opentransportdata.swiss (fetch_fahrplan.py), nur Züge und Halte an Bahnhöfen im Netz, 14 Tage ab gestern, je Paar Halte der
              kürzeste Weg im Netz (Dijkstra wie wegSuchen, das dafür in src/wegsuche.ts steht), jede Fahrt in jeder 10-km-Kachel, die ihr Weg
@@ -617,7 +622,7 @@ data/wolken/   Wolken für «3D Schweiz» (Michael, 2026-10-28: «Jetzt die Wolk
              CLCM (400 bis 800 hPa) und CLCH (0 bis 400 hPa) in Prozent, die Modellzellen (etwa 1 km, Lage aus horizontal_constants) auf 2 km in LV95
              gemittelt (index.json, wolken.wgz und niederschlag.wgz, etwa 1,7 MB, nicht in Git); CEILING bleibt weg (die Quelle nennt nicht, ob über Meer oder Boden),
              HBAS_SC und HTOP_SC gelten nur für flache Konvektion; gebaut im Workflow von 3dland.ch, dazu alle 3 Stunden (cron, Züge und Schiffe dann
-             aus actions/cache vom selben Tag), neben die Seite gelegt (wolken/), Taktland liest sie bei https://3dland.ch/wolken/; in der App
+             aus actions/cache vom selben Tag), neben die Seite gelegt (wolken/), Taktland liest sie seit 2026-11-06 neben sich (pages.yml, alle 3 Stunden), vorher bei https://3dland.ch/wolken/; in der App
              src/wolken.ts und in Schweiz3D.tsx mit dem eigenen weissen Knopf «Wolken» an der Wand rechts neben «Wetter» (seit 2026-10-29, vorher mit «Wetter»; Michael: «Wolken ein separater Knopf machen (weiss)») in jeder Stufe (seit 2026-10-29, vorher nur Schweiz und Region; Michael: «Wolken auch in den Feldern 4 km und 1 km zeigen»; die Kamera sieht dafür mindestens 16 km weit), zur Zeit der Sonne oder jetzt (die Stunde
              der Prognose am nächsten, höchstens eine Stunde daneben): je Schicht eine Fläche auf 1'500, 4'200 und 9'000 m ü. M. (WOLKEN_HOEHE_M,
              gewählt nach der Mitte der Druckbereiche in der Standardatmosphäre), deckend, wo ein gezeichnetes Rauschen (WOLKEN_KORN_KM 3, 6, 12 km,

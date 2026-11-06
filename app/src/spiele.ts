@@ -13,8 +13,8 @@ import fahrtDunkel from './assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from './assets/auftakt-fahrt-hell.webp'
 import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
-import schweiz3dDunkel from './assets/auftakt-schweiz3d-dunkel.webp'
-import schweiz3dHell from './assets/auftakt-schweiz3d-hell.webp'
+import schweiz3dDunkel from './assets/auftakt-3dland-dunkel.webp'
+import schweiz3dHell from './assets/auftakt-3dland-hell.webp'
 import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
 
@@ -75,9 +75,11 @@ export const SPIELE: Spiel[] = [
   },
   // an letzter Stelle (Michael, 2026-10-23); Michael, 2026-10-18: «3D Schweiz heisst das Spiel», vorerst mit den Daten, die es schon gibt; das Bild ist das der Modellbahn
   {
-    id: 'schweiz3d', titel: '3D Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
+    // seit 2026-11-06 «3D-Land» wie 3dland.ch, mit dessen Bildern (Michael: «alles auf Taktland laufen … 3D Schweiz heisst dann 3D Land und hat
+    // die genau identischen Funktionen wie bei 3DLand.ch»)
+    id: 'schweiz3d', titel: '3D-Land', status: 'spielbereit', adresse: '#/schweiz3d',
     kurz: 'Die ganze Schweiz als Modell: einen Ort, Gipfel oder See suchen und eintauchen, auch in der VR-Brille.',
-    bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand hält ein Tablet mit dem Modell eines Bergs und seinen Höhenstufen vor denselben Berg.' },
+    bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand mit XR-Brille blickt auf ein Modell einer Landschaft mit zwei Seen auf einem dunklen Sockel.' },
     beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, Gipfel oder See, und tauche ein, bis auf ein Stück '
       + 'von 1 km. Mit einer Brille steht das Modell vor dir auf dem Tisch.',
   },

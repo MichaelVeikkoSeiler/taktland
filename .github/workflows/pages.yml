@@ -10,6 +10,10 @@ on:
   # donnerstags früh neu veröffentlichen (Zeit in UTC)
   schedule:
     - cron: '17 3 * * 1,4'
+    # 3D-Land läuft seit 2026-11-06 hier (Michael: «alles auf Taktland laufen lassen»): täglich der Fahrplan für die Züge, wie bei 3dland.ch,
+    # und alle 3 Stunden die Wolken (pipeline/build_wolken.py), MeteoSchweiz rechnet ICON-CH1 alle 3 Stunden neu
+    - cron: '41 4 * * *'
+    - cron: '50 1-22/3 * * *'
 
 permissions:
   contents: read
@@ -73,16 +77,29 @@ jobs:
       # Fahrplan für «Welcher Zug?»: neueste Datei laden (290 MB) und auf Züge und
       # Bahnhöfe im Netz verdichten. Klappt es nicht, erscheint die App ohne
       # Fahrplan; der Fahrtmodus sagt dann, dass er fehlt.
+      # Fahrplan, Züge und Schiffe einmal am Tag; die Läufe alle 3 Stunden für die Wolken nehmen sie aus dem Zwischenspeicher vom selben Tag
+      - id: tag
+        run: echo "tag=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+      - id: fahrplan
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/fahrplan
+            data/zuege3d
+            data/schiffe3d
+          key: fahrplan-${{ steps.tag.outputs.tag }}-${{ hashFiles('pipeline/fetch_fahrplan.py', 'pipeline/build_fahrplan.py', 'pipeline/build_zuege3d.py', 'pipeline/build_schiffe3d.py', 'data/strecken.json', 'data/schifflinien.json') }}
       - name: Fahrplan laden und verdichten
+        if: steps.fahrplan.outputs.cache-hit != 'true'
         run: |
           python3 pipeline/fetch_fahrplan.py && python3 pipeline/build_fahrplan.py \
             || echo "::warning::Fahrplan nicht gebaut, die App erscheint ohne"
 
-      # Züge und Schiffe für «3D Schweiz» aus demselben Fahrplan (pipeline/build_zuege3d.py, build_schiffe3d.py; Michael,
-      # 2026-10-28: «Bitte diese Sachen auch für Taktland»); klappt es nicht, erscheint «3D Schweiz» ohne
-      - name: Züge und Schiffe für 3D Schweiz
+      # Züge und Schiffe für 3D-Land aus demselben Fahrplan (pipeline/build_zuege3d.py, build_schiffe3d.py; Michael,
+      # 2026-10-28: «Bitte diese Sachen auch für Taktland»); klappt es nicht, erscheint 3D-Land ohne
+      - name: Züge und Schiffe für 3D-Land
+        if: steps.fahrplan.outputs.cache-hit != 'true'
         run: |
-          python3 pipeline/build_zuege3d.py || echo "::warning::Züge und Schiffe nicht gebaut, «3D Schweiz» erscheint ohne"
+          python3 pipeline/build_zuege3d.py || echo "::warning::Züge und Schiffe nicht gebaut, 3D-Land erscheint ohne"
           rm -rf data/raw/gtfs
 
       # Stellt sicher, dass die App die aktuellen Profile ausliefert, auch wenn
@@ -105,6 +122,14 @@ jobs:
         run: |
           python3 pipeline/export_web.py
           for d in zuege3d schiffe3d; do if [ -d data/$d ]; then cp -r data/$d _site/app/$d; fi; done
+
+      # Wolken, Regen und Schnee aus ICON-CH1-EPS von MeteoSchweiz für 3D-Land und den Führerstand (pipeline/build_wolken.py, braucht eccodes),
+      # neben die App; bis 2026-11-06 las Taktland sie bei 3dland.ch; klappt es nicht, erscheint die App ohne Wolken
+      - name: Wolken
+        continue-on-error: true
+        run: |
+          python3 -m venv /tmp/wolken && /tmp/wolken/bin/pip install --quiet eccodes numpy
+          /tmp/wolken/bin/python pipeline/build_wolken.py && cp -r data/wolken _site/app/wolken
 
       - uses: actions/upload-pages-artifact@v3
         with:
