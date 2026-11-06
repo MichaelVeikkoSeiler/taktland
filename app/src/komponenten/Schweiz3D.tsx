@@ -1292,10 +1292,16 @@ const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
 const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 /** aus der Ferne ist ein Zug mindestens so lang wie dieser Anteil des Abstands der Kamera (vorher 1,2 %, Michael, 2026-10-26: «Züge aus der Ferne etwas grösser»), gewählt */
 const ZUG_FERN = 0.018
+/** fürs Zuggeräusch: ein Zug dort, wo die Kamera hinschaut, klingt wie aus so vielen Metern, nähere und fernere im selben Verhältnis (gewählt) */
+const ZUG_HOEREN_BLICK_M = 150
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
-/** so hoch bleibt die Kamera mindestens über dem Gelände, als Anteil der Breite des Modells (im Feld von 1 km 4 m; gewählt) */
-const KAMERA_UEBER_GELAENDE = 0.004
+/** so hoch bleibt die Kamera mindestens über dem Gelände, in km (Michael, 2026-11-06: «bis circa 3 Meter über den Boden die Perspektive richten
+ *  können»; vorher 0,4 % der Breite des Modells, im Feld von 1 km 4 m, in dem von 4 km 16 m); gewählt */
+const KAMERA_UEBER_GELAENDE_KM = 0.003
+/** die vordere Schnittebene der Kamera: höchstens 10 m, nah am Boden die Hälfte der Höhe darüber, mindestens 0,5 m (sonst fehlt der Boden vor
+ *  dem Auge); gewählt */
+const KAMERA_NAH_KM = 0.01, KAMERA_NAH_MIN_KM = 0.0005
 /** so weit knickt ein Wagen gegen den davor (etwa ein Wagen von 33 m in einem Bogen von 150 m) und so weit steht er schräg zum Weg
  *  (gewählt; Michael, 2026-11-06: «Völlig verbogen. Sieht sonst nach Unfall aus») */
 const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (25 * Math.PI) / 180
@@ -1615,6 +1621,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (steuerung.target.y < zu) steuerung.target.y = zu
       const min = unten(kamera.position.x, kamera.position.z)
       if (kamera.position.y < min) kamera.position.y = min
+      // nah am Boden die vordere Schnittebene näher, sonst schneidet sie den Boden vor dem Auge weg
+      const ueber = kamera.position.y - (min - KAMERA_UEBER_GELAENDE_KM)
+      const nah = Math.max(KAMERA_NAH_MIN_KM, Math.min(KAMERA_NAH_KM, ueber / 2))
+      if (Math.abs(nah - kamera.near) > 1e-5) { kamera.near = nah; kamera.updateProjectionMatrix() }
     })
     const himmelLicht = new THREE.HemisphereLight('#ffffff', '#8a8070', 1.6)
     szene.add(himmelLicht)
@@ -2085,12 +2095,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // in der Brille steht der Sockel auf dem Tisch
     wurzel.userData.untenY = () => Y(tief) - wand - zeitBand - platte
     // die Kamera nie unter dem Gelände und nie tiefer als sein tiefster Punkt (Michael, 2026-11-06: «Man soll die "Welt" nicht von unten
-    // sehen können. Bringt kein Mehrwert»): über dem Modell mindestens KAMERA_UEBER_GELAENDE der Breite über dem Gelände, daneben nicht unter
+    // sehen können. Bringt kein Mehrwert»): über dem Modell mindestens KAMERA_UEBER_GELAENDE_KM über dem Gelände, daneben nicht unter
     // den tiefsten Punkt; das Ziel nie unter den tiefsten Punkt
     wurzel.userData.kameraUnten = (x: number, z: number) => {
       const e = cE + x * 1000, n = cN - z * 1000
       const drin = e >= E0 && e <= E1 && n >= N0 && n <= N1
-      return drin ? Math.max(Y(tief), Y(bestandHoehe(b, e, n)) + weiteKm * KAMERA_UEBER_GELAENDE) : Y(tief)
+      return drin ? Math.max(Y(tief), Y(bestandHoehe(b, e, n)) + KAMERA_UEBER_GELAENDE_KM) : Y(tief)
     }
     wurzel.userData.zielUnten = Y(tief)
     if (!renderer.xr.isPresenting) {
@@ -3268,6 +3278,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
           totalEmissiveRadiance += vLeuchte * zugNacht * ${ZUG_INNEN_HELL.toFixed(3)} * vec3(${new THREE.Color(ZUG_INNEN_FARBE).toArray().map((x) => x.toFixed(3)).join(', ')});`)
     }
+    randSchnitt(stoff, b, lage)
     // die Stirnlichter: je Zug ein Lichtkegel vor der Lok auf dem Boden
     const stirnStoff = new THREE.MeshBasicMaterial({ map: stirnBild(), color: ZUG_STIRN_FARBE, transparent: true, depthWrite: false,
       blending: THREE.AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })
@@ -3280,6 +3291,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     for (let i = 0; i < 2 * ZUEGE_HOECHSTENS; i++) stirn.setColorAt(i, stirnFarbe)
     // die Lampen selbst: kleine helle Kugeln vorne an der Lok, im Raum der Lok gesetzt
     const lampenGeo = new THREE.SphereGeometry(1, 10, 8), lampenStoff = new THREE.MeshBasicMaterial({ color: ZUG_LAMPE_FARBE, toneMapped: false })
+    randSchnitt(stirnStoff, b, lage); randSchnitt(lampenStoff, b, lage)
     const lampen = new THREE.InstancedMesh(lampenGeo, lampenStoff, ZUG_LAMPEN * ZUEGE_HOECHSTENS)
     lampen.count = 0; lampen.frustumCulled = false
     gruppe.add(lampen)
@@ -3627,8 +3639,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           return lv95(p.lat, p.lon)
         }
         const [es, ns] = stelle(sM)
-        if (!drin(es, ns)) continue
         const mJeM = mass * gross.x
+        // gezeichnet, solange die Spitze oder das Ende im Modell ist; was über den Rand ragt, schneidet randSchnitt ab
+        if (!drin(es, ns)) { const [ee, ne] = stelle(sM - ganzM * mJeM); if (!drin(ee, ne)) continue }
         // Anfang und Ende jedes Wagens; die Höhe dort geglättet über ZUG_GLATT_M entlang des Zugs, jeder Wagen von seinem
         // Ende zum Anfang geneigt: so liegen die Wagen aneinander statt in Stufen (Michael, 2026-10-26: «nicht so holpern»)
         const enden: Array<{ s: number; e: number; n: number; h: number; tunnel: boolean; er: number; nr: number }> = []
@@ -3857,6 +3870,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const jetztH = performance.now(), dtH = (jetztH - hoerLetzt) / 1000
         hoerUm = jetztH + 100; hoerLetzt = jetztH
         const augeLokal = k.wurzel.worldToLocal(auge.clone()), liste: VorbeiZug[] = [], neu = new Map<number, { p: THREE.Vector3; d: number }>()
+        // der Abstand fürs Ohr nach dem Blick (Michael, 2026-11-06: «Ich höre die Züge noch immer nicht»: aus 1 bis 4 km Abstand der Kamera
+        // blieb es bei der leisen Ferne): wie weit die Kamera vom Punkt ist, den sie anschaut, gilt als ZUG_HOEREN_BLICK_M; in der Brille der
+        // Abstand zur Mitte des Modells
+        const blickM = 1000 * (k.renderer.xr.isPresenting ? abstand : k.kamera.position.distanceTo(k.steuerung.target) / Math.max(1e-9, k.wurzel.scale.x))
+        const ohr = ZUG_HOEREN_BLICK_M / Math.max(ZUG_HOEREN_BLICK_M, blickM)
         for (let z = 0; z < zahl; z++) {
           const p = mitten[z]?.[0]
           if (!p) continue
@@ -3864,7 +3882,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           neu.set(gezeichnet[z].id, { p: p.clone(), d })
           if (d > 50_000) continue
           const tempo = alt && dtH > 0 && dtH < 1 ? (alt.p.distanceTo(p) * 1000) / dtH : 0
-          liste.push({ abstandM: d, tempoMs: tempo })
+          liste.push({ abstandM: d * ohr, tempoMs: tempo })
         }
         hoerAlt = neu
         zuegeHoeren(liste)
@@ -4304,6 +4322,38 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       )}
     </div>
   )
+}
+
+/** höchstens so viele Stücke kennt der Schnitt am Rand */
+const RAND_HOECHSTENS = 16
+/** Züge am Rand des Modells: was über die Kante ragt, schneidet der Shader ab, statt den ganzen Zug wegzulassen (Michael, 2026-11-06:
+ *  «Ist es möglich, dass der Zug gemäß der Kante stufenlos verschwindet und nicht als ganzes Objekt?»). Die Rechtecke der Stücke im Raum des
+ *  Modells (km, x Osten, z Süden), die Lage der Ecken nach instanceMatrix, ohne die Matrix der Gruppe (die Züge liegen direkt im Modell) */
+function randSchnitt(material: THREE.Material, b: Bestand, lage: { cE: number; cN: number }) {
+  const rechtecke = [...b.teile.values()].slice(0, RAND_HOECHSTENS).map(({ rahmen: r }) =>
+    new THREE.Vector4((r.e0 - lage.cE) / 1000, -(r.n1 - lage.cN) / 1000, (r.e0 + r.b - lage.cE) / 1000, -(r.n1 - r.h - lage.cN) / 1000))
+  while (rechtecke.length < RAND_HOECHSTENS) rechtecke.push(new THREE.Vector4(0, 0, -1, -1))
+  const quelle = String(material.onBeforeCompile), vorher = material.onBeforeCompile.bind(material)
+  material.onBeforeCompile = (sh, r) => {
+    vorher(sh, r)
+    sh.uniforms.randStuecke = { value: rechtecke }
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec2 vRand;')
+      .replace('#include <project_vertex>', `#include <project_vertex>
+      vec4 randP = vec4(transformed, 1.0);
+      #ifdef USE_INSTANCING
+      randP = instanceMatrix * randP;
+      #endif
+      vRand = randP.xz;`)
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\nvarying vec2 vRand;\nuniform vec4 randStuecke[${RAND_HOECHSTENS}];`)
+      .replace('#include <clipping_planes_fragment>', `#include <clipping_planes_fragment>
+      bool randDrin = false;
+      for (int i = 0; i < ${RAND_HOECHSTENS}; i++) {
+        vec4 q = randStuecke[i];
+        if (vRand.x >= q.x && vRand.x <= q.z && vRand.y >= q.y && vRand.y <= q.w) randDrin = true;
+      }
+      if (!randDrin) discard;`)
+  }
+  material.customProgramCacheKey = () => `rand${RAND_HOECHSTENS}:${material.type}:${quelle}`
 }
 
 /** die Gebäude im Rechteck als Netze (je Kachel eines), in Kilometern um die Mitte, Höhe ungestreckt; nur die Dreiecke mit ihrer
