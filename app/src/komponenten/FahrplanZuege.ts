@@ -25,6 +25,8 @@ const ZELLE = 50
  *  selber Position ist soll er ausgeblendet werden»; welcher Zug man ist, weiss die App nicht; Abstände gewählt, längs auch für einen Zug, der
  *  laut Fahrplan etwas voraus oder zurück ist) */
 const EIGEN_QUER_M = 12, EIGEN_LAENGS_M = 400
+/** so weit knickt ein Wagen gegen den davor und steht er schräg zum Weg (gewählt, wie ZUG_KNICK und ZUG_SCHRAEG in Schweiz3D.tsx) */
+const KNICK = (15 * Math.PI) / 180, SCHRAEG = (25 * Math.PI) / 180
 
 type Achse = [number, number, number, number, number, number, boolean]
 
@@ -124,7 +126,7 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
       if (ke < e0 - ganz || ke > e1 + ganz || kn < n0 - ganz || kn > n1 + ganz) continue
       const punkt = (ss: number) => { const l = lageBei(w!, Math.max(0, ss)); return lv95(l.lat, l.lon) }
       let ab = 0, ok = true
-      const wagen: Array<{ art: number; a: { e: number; n: number; z: number }; b: { e: number; n: number; z: number } }> = []
+      const wagen: Array<{ art: number; a: { e: number; n: number; z: number }; b: { e: number; n: number; z: number }; r: number }> = []
       for (let k = 0; k <= ZUG_WAGEN && ok; k++) {
         const vorne = s - ab, hinten = vorne - laengen[k]
         ab += laengen[k] + LUECKE_M
@@ -133,9 +135,26 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
         const links = (pe: number, pn: number) => gleis(pe - dn * LINKS_M, pn + de * LINKS_M, de, dn)
         const a = links(ve, vn), b = links(he, hn)
         if (!a || !b || a.tunnel || b.tunnel) { ok = false; break }
-        wagen.push({ art: k === 0 ? 0 : k === ZUG_WAGEN ? 2 : 1, a, b })
+        wagen.push({ art: k === 0 ? 0 : k === ZUG_WAGEN ? 2 : 1, a, b, r: Math.atan2(dn, de) })
       }
       if (!ok) continue
+      // der Zug hängt zusammen (Michael, 2026-11-06: «Züge dürfen nie so dargestellt werden. Völlig verbogen»; dasselbe in «3D Schweiz»): jedes
+      // Ende rastet für sich auf eine Gleisachse ein, lagen vorne und hinten verschiedene Gleise, stand der Wagen quer. Jeder Wagen behält seine
+      // Länge, hängt am Wagen davor und knickt gegen ihn höchstens KNICK, gegen den Weg höchstens SCHRAEG; die Höhen bleiben die der Achsen
+      {
+        const nah = (r: number, um: number, max: number) => { const d = Math.atan2(Math.sin(r - um), Math.cos(r - um)); return um + Math.max(-max, Math.min(max, d)) }
+        let kE = 0, kN = 0, kR = 0
+        wagen.forEach((x, k) => {
+          let fe = x.a.e, fn = x.a.n
+          if (k > 0) { fe = kE - Math.cos(kR) * LUECKE_M; fn = kN - Math.sin(kR) * LUECKE_M }
+          let r = Math.atan2(fn - x.b.n, fe - x.b.e)
+          if (!Number.isFinite(r)) r = x.r
+          r = nah(r, x.r, SCHRAEG)
+          if (k > 0) r = nah(r, kR, KNICK)
+          kE = fe - Math.cos(r) * WAGEN_M; kN = fn - Math.sin(r) * WAGEN_M; kR = r
+          x.a = { e: fe, n: fn, z: x.a.z }; x.b = { e: kE, n: kN, z: x.b.z }
+        })
+      }
       if (eigen && wagen.some(({ a, b }) => {
         const l = Math.hypot(a.e - b.e, a.n - b.n) || 1
         if (((a.e - b.e) * eigen.de + (a.n - b.n) * eigen.dn) / l < 0.5) return false
