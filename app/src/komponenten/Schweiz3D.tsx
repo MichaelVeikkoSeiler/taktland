@@ -858,7 +858,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     <div className="px-4 pb-4">
       {!eigeneSeite && <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />}
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
-      <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D Schweiz' : '3D Schweiz'}</h1>
+      <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : '3D-Land'}</h1>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       <div className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
         // 25 breit, 28 hoch (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch», dann «20% weniger hoch»), auf breiten
@@ -1190,12 +1190,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         {/* wie 3D-Land entstanden ist, für Leute ohne Erfahrung mit Programmieren per Gespräch (Michael, 2026-10-25: «damit sich
             jemand, der nichts mit Vibe-Coding macht, vorstellen kann, wie 3D-Land sich Schritt für Schritt aufgebaut und entwickelt hat») */}
-        <Abschnitt titel={eigeneSeite ? 'Über 3D-Land' : 'Über 3D Schweiz'}>
+        <Abschnitt titel="Über 3D-Land">
           {/* in der Ich-Form, unterschrieben (Michael, 2026-10-29: «wie die Produktion und Entwicklung und die Idee gewesen ist», «Erwähne aber
               auch, dass Diverses eben doch erfunden ist»), derselbe Text für LinkedIn; 2026-11-05 nach Michaels Wortlaut überarbeitet (nur
               «Oktober» statt der Tage, Wanderer zuerst, «im Dialog mit der KI», seine Fehlerbeispiele, Unschönheiten, Schlusssatz) */}
           <p>Eigentlich wollte ich nur die Schweiz in 3D sehen. Daraus ist 3D-Land geworden. Angefangen hat es im Oktober 2026 als Spiel
-            «3D Schweiz» in Taktland, seither gibt es dafür eine eigene Seite: 3dland.ch.</p>
+            «3D Schweiz» in Taktland, seither heisst es 3D-Land.</p>
           {/* das Zielpublikum (Michael, 2026-11-02: «Personen, die ein Bahnerlebnis wollen», «für Wanderer, die die Wanderwege auch mal
               dreidimensional auf einer Schweizer Karte sehen möchten. Auch zur Nachverfolgung») */}
           <p className="mt-2">Für wen ist 3D-Land? Für Wanderinnen und Wanderer, die ihre Wege einmal dreidimensional sehen möchten: Alle
@@ -1674,7 +1674,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       c.width = 1024; c.height = 700
       x.fillStyle = 'rgba(255,255,255,0.96)'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 24); x.fill()
       x.fillStyle = '#212121'; x.font = 'bold 48px Helvetica, Arial, sans-serif'
-      x.fillText('3D Schweiz: Tasten', 48, 84)
+      x.fillText('3D-Land: Tasten', 48, 84)
       const zeilen: Array<[string, string]> = [
         ['Abzug kurz', 'Feld wählen, nochmals: eintauchen'], ['Abzug auf + oder −', 'an dieser Wand erweitern'],
         ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],

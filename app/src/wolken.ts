@@ -31,9 +31,9 @@ export interface Wolken {
   w3d: Uint8Array | null
 }
 
-/** auf 3dland.ch neben der Seite, in Taktland bei 3dland.ch (GitHub Pages erlaubt den Abruf von überall) */
-const basis = () => /3dland/.test(window.location.hostname) || /3dland\.html$/.test(window.location.pathname)
-  ? new URL('wolken/', window.location.href).href : 'https://3dland.ch/wolken/'
+/** neben der Seite: auf 3dland.ch und seit 2026-11-06 auch in Taktland (pages.yml baut sie alle 3 Stunden; Michael: «alles auf Taktland laufen
+ *  lassen»), vorher las Taktland sie bei 3dland.ch */
+const basis = () => new URL('wolken/', window.location.href).href
 
 let vorrat: Promise<Wolken | null> | null = null
 let geholtUm = 0

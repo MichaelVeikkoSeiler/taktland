@@ -20,8 +20,8 @@ import spieleDunkel from '../assets/auftakt-spiele-dunkel.webp'
 import spieleHell from '../assets/auftakt-spiele-hell.webp'
 import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
 import standortHell from '../assets/auftakt-standort-hell.webp'
-import schweiz3dDunkel from '../assets/auftakt-schweiz3d-dunkel.webp'
-import schweiz3dHell from '../assets/auftakt-schweiz3d-hell.webp'
+import schweiz3dDunkel from '../assets/auftakt-3dland-dunkel.webp'
+import schweiz3dHell from '../assets/auftakt-3dland-hell.webp'
 import startDunkel from '../assets/auftakt-start-dunkel.webp'
 import startHell from '../assets/auftakt-start-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
@@ -136,10 +136,10 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: modellbahnHell, dunkel: modellbahnDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Jemand mit VR-Brille und zwei Controllern dreht am Tisch das Modell einer Bergstrecke mit Wald, Schnee, Tunneln, einem Viadukt über einen Fluss und einem Zug; daneben liegt ein Handy mit demselben Modell, draussen Berge und ein See.',
   },
-  // Michael, 2026-10-21: eigenes Bildpaar für «3D Schweiz»
+  // Michael, 2026-10-21: eigenes Bildpaar für «3D Schweiz»; seit 2026-11-06 «3D-Land» mit den Bildern von 3dland.ch
   schweiz3d: {
-    hell: schweiz3dHell, dunkel: schweiz3dDunkel, breite: 1344, hoehe: 664,
-    alt: 'Illustration: Jemand hält auf einem Aussichtspunkt ein Tablet vor einen Berg; auf dem Tablet derselbe Berg als Modell mit farbigen Höhenstufen, dahinter ein See mit Dorf, Wald und Alpen.',
+    hell: schweiz3dHell, dunkel: schweiz3dDunkel, breite: 1536, hoehe: 1024,
+    alt: 'Illustration: Jemand mit XR-Brille und zwei Controllern blickt auf ein quadratisches Modell einer Landschaft mit zwei Seen, Dörfern und Wald auf einem dunklen Sockel; darauf zwei rot-weisse Windhosen, im Hintergrund Regen über Seen und Hügeln.',
   },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
@@ -198,7 +198,9 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     <header className="print:hidden border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* ohne Knopf «Aktualisieren»: neue Versionen lädt die App von selbst (serviceWorker.ts;
           Michael, 2026-10-01: «benötigen wir nicht mehr») */}
-      {bild && <Auftakt key={schluessel} bild={bild} />}
+      {/* in 3D-Land die Bildmarke von 3D-Land oben rechts im Bild wie auf 3dland.ch */}
+      {bild && <Auftakt key={schluessel} bild={bild}
+                        oben={aktiv === 'schweiz3d' && !fahrt ? <img src="./logo-3dland.png" alt="3D-Land" className="absolute right-3 top-3 size-14 rounded-xl shadow-md sm:right-5 sm:top-5 sm:size-20" /> : undefined} />}
       <div className="flex items-center justify-between gap-4">
         {/* die Bildmarke vor dem Namen, statt des roten Strichs (Michael, 2026-09-27) */}
         {startseite
