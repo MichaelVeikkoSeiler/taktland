@@ -16,7 +16,7 @@ import { Ladebalken } from './Ladebalken'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
-import { fensterLicht, fensterNacht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
+import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
 import { knopfTon, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
@@ -35,7 +35,7 @@ import { type Niederschlag, niederschlagBauen, type Saeule } from './Niederschla
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
 import { perronNetz, perronsIn } from './Perrons'
-import { deckeAufBild, deckenIn, unterDecke } from './Decken'
+import { deckeAufBild, deckenIn, unterDecke, type Decke } from './Decken'
 import { Abschnitt } from './Anleitung'
 import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
 import { himmelNacht, sternSicht } from '../sterne'
@@ -1174,10 +1174,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               damit Züge in Gegenrichtung aneinander vorbeifahren. Im Bahnhof gilt das Gleis laut Fahrplan; welche Gleisachse zu welcher Gleisnummer gehört,
               ist aus der Lage der Sektortafeln geschlossen, nicht angegeben, und unterirdische Gleise fehlen. Wie die Züge davor und danach einspuren, ist gewählt.</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
-            <li>Wände der Gebäude grau, Fenster, Stockwerke und wie viele Fenster nachts brennen.</li>
+            <li>Wände der Gebäude: je Gebäude einer von acht hellen Putztönen, etwas heller oder dunkler, immer derselbe am selben Ort (gewählt, die
+              Fassadenfarbe steht in keiner Quelle); Fenster, Stockwerke und wie viele Fenster nachts brennen. Auf den Dächern liegt das Luftbild
+              (SWISSIMAGE): Es ist von oben aufgenommen, bei hohen Gebäuden liegt das Dach im Bild etwas daneben.</li>
             <li>Perrons: Die SBB nennt die Lage am Gleis; die Kante ist 1,65 m neben der Gleisachse gezeichnet und folgt zwischen den Punkten der SBB
               dem Gleis laut swissTLM3D. Wo die SBB nur eine Kante nennt (Aussen- und Hausperrons), ist der Perron 4 m breit, auf der Seite seiner
-              Sektortafeln; ist die Seite nicht bekannt, fehlt er. Farbe gewählt. Dächer, Treppen und Unterführungen fehlen, sie stehen in keiner
+              Sektortafeln; ist die Seite nicht bekannt, fehlt er. Die Perrons stehen 50 cm höher als laut Daten, sonst deckt sie das gemittelte
+              Gelände teils zu. Farbe gewählt. Dächer, Treppen und Unterführungen fehlen, sie stehen in keiner
               unserer Quellen mit ihrer Form, unterirdische Perrons ebenso.</li>
             <li>Decken über Gleisen (etwa das Parking über dem Bahnhof Bern), wo es Gebäude gibt: Das Luftbild zeigt dort das Dach; es liegt auf der
               Decke, darunter ist der Boden anthrazit und gekörnt gezeichnet (gewählt). Als Decke gilt ein Dach aus swissBUILDINGS3D mindestens 4 m über
@@ -2630,9 +2633,19 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const gruppe = new THREE.Group()
     gruppe.name = art
     let weg = false
+    // je Stück des Bestands sein Rahmen und die Textur des Bodens, für die Dächer
+    const bodenBilder = () => {
+      const teile = [...b.teile.values()]
+      return (wurzel.getObjectByName('boeden')?.children ?? []).flatMap((o) => {
+        const map = ((o as THREE.Mesh).material as THREE.MeshLambertMaterial).map
+        const t = teile.find((x) => x.bild === map?.image)
+        return map && t ? [{ rahmen: t.rahmen, textur: map }] : []
+      })
+    }
     void probeLaden(e0, n0, e1, n1).then(async ({ gebaeude: g, baeume: bm }) => {
+      const decken = art === 'gebaeude' ? await deckenIn(e0, n0, e1, n1).catch(() => []) : []
       if (weg) return
-      gruppe.add(...(art === 'gebaeude' ? gebaeudeNetz(g, cE, cN, e0, n0, e1, n1) : baumNetz(bm, b, cE, cN, e0, n0, e1, n1, k.inBrille())))
+      gruppe.add(...(art === 'gebaeude' ? gebaeudeNetz(g, cE, cN, e0, n0, e1, n1, bodenBilder(), decken) : baumNetz(bm, b, cE, cN, e0, n0, e1, n1, k.inBrille())))
       if (!gruppe.children.length) return
       // die Programme der Grafik übersetzen, ohne die Seite anzuhalten (wo der Browser es kann), erst dann zeigen
       await k.renderer.compileAsync(gruppe, k.kamera, k.szene).catch(() => {})
@@ -3064,6 +3077,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       geo.dispose(); stoff.dispose(); drahtGeo.dispose(); drahtStoff.dispose()
     }
   }, [b, stufe, knoepfe])
+  /** so viel höher als laut Daten stehen die Perrons (Michael, 2026-11-06, Interlaken, Luzern: «die Perron teilweise mit dem Untergrund etwas
+   *  überdeckt … um ca 50cm höher stellen»): das Gelände (swissALTI3D, im Modell auf 5 bis 10 m gemittelt) liegt neben den Gleisen oft höher als
+   *  die Gleisachse laut swissTLM3D; gewählt */
+  const PERRON_HOEHER_M = 0.5
   // Perrons (komponenten/Perrons.ts, pipeline/build_perrons3d.py; Michael, 2026-11-05: «An beiden Orten bitte, Perrons bauen»): in den Feldern
   // von 4 km und 1 km, die Kanten und ihre Höhe laut SBB, auf der Höhe der Gleise laut swissTLM3D; Perrons am Rand des Modells fallen weg
   useEffect(() => {
@@ -3077,7 +3094,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const innen = (e: number, n: number) => rand.some((x) => e >= x.e0 && e <= x.e0 + x.b && n <= x.n1 && n >= x.n1 - x.h)
     void perronsIn(e0, n0, e1, n1).catch(() => []).then((liste) => {
       if (weg || !liste.length) return
-      netz = perronNetz(liste, (e, n, h) => new THREE.Vector3((e - lage.cE) / 1000, h / 1000, -(n - lage.cN) / 1000), () => 0, innen)
+      netz = perronNetz(liste, (e, n, h) => new THREE.Vector3((e - lage.cE) / 1000, h / 1000, -(n - lage.cN) / 1000), () => PERRON_HOEHER_M, innen)
       if (netz) k.wurzel.add(netz)
     })
     return () => {
@@ -4292,19 +4309,34 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
 /** die Gebäude im Rechteck als Netze (je Kachel eines), in Kilometern um die Mitte, Höhe ungestreckt; nur die Dreiecke mit ihrer
  *  Mitte im Rechteck: eine Kachel von 500 m reicht oft über den Rand des Modells (Michael, 2026-10-21: «stimmen die
  *  Gebäudeeinblendungen nicht mit den Kacheln überein», sie standen neben dem Sockel in der Luft) */
-function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: number, n0: number, e1: number, n1: number) {
+function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: number, n0: number, e1: number, n1: number,
+  bilder: Array<{ rahmen: { e0: number; n1: number; b: number; h: number }; textur: THREE.Texture }> = [], decken: Decke[] = []) {
   const material = gebaeudeMaterial()
-  return kacheln.filter((g) => g.e0 < e1 && g.e0 + 500 > e0 && g.n0 < n1 && g.n0 + 500 > n0).flatMap((g) => {
+  // die Dächer mit dem Luftbild des Geländes darunter (Michael, 2026-11-06: «Bitte mal 1 und 3 machen», 1: Luftbild auf die Dächer):
+  // dieselbe Textur wie der Boden, je Stück des Bestands ein Netz; was in keinem Stück liegt, behält die Farbe der Daten
+  const daecher = bilder.map(() => ({ pos: [] as number[], uv: [] as number[] }))
+  const netze = kacheln.filter((g) => g.e0 < e1 && g.e0 + 500 > e0 && g.n0 < n1 && g.n0 + 500 > n0).flatMap((g) => {
     const n = g.ecken.length / 3
+    const farben = gebaeudeFarben(g)
     const pos: number[] = [], farbe: number[] = []
     for (let d = 0; d + 2 < n; d += 3) {
       let me = 0, mn = 0
       for (let q = d; q < d + 3; q++) { me += g.ecken[q * 3] / 30; mn += g.ecken[q * 3 + 2] / 30 }
       me += g.e0; mn += g.n0
       if (me < e0 || me > e1 || mn < n0 || mn > n1) continue
+      // über einer Decke ist das Luftbild darunter anthrazit (komponenten/Decken.ts), dort bleibt die Farbe der Daten
+      const dach = !istWandFarbe(g.farben, d) && !unterDecke(decken, me, mn) ? bilder.findIndex(({ rahmen: r }) => me >= r.e0 && me < r.e0 + r.b && mn <= r.n1 && mn > r.n1 - r.h) : -1
       for (let q = d; q < d + 3; q++) {
-        pos.push((g.e0 + g.ecken[q * 3] / 10 - cE) / 1000, (g.h0 + g.ecken[q * 3 + 1]) / 10 / 1000, -(g.n0 + g.ecken[q * 3 + 2] / 10 - cN) / 1000)
-        farbe.push(LINEAR[g.farben[q * 3]], LINEAR[g.farben[q * 3 + 1]], LINEAR[g.farben[q * 3 + 2]])
+        const e = g.e0 + g.ecken[q * 3] / 10, nn = g.n0 + g.ecken[q * 3 + 2] / 10
+        const x = (e - cE) / 1000, y = (g.h0 + g.ecken[q * 3 + 1]) / 10 / 1000, z = -(nn - cN) / 1000
+        if (dach >= 0) {
+          const r = bilder[dach].rahmen
+          daecher[dach].pos.push(x, y, z)
+          daecher[dach].uv.push((e - r.e0) / r.b, 1 - (r.n1 - nn) / r.h)
+          continue
+        }
+        pos.push(x, y, z)
+        farbe.push(LINEAR[farben[q * 3]], LINEAR[farben[q * 3 + 1]], LINEAR[farben[q * 3 + 2]])
       }
     }
     if (!pos.length) return []
@@ -4317,6 +4349,19 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
     m.castShadow = m.receiveShadow = true
     return [m]
   })
+  daecher.forEach(({ pos, uv }, i) => {
+    if (!pos.length) return
+    const geo = new THREE.BufferGeometry()
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+    geo.computeVertexNormals()
+    // die Textur gehört dem Boden: nicht mit dem Dach wegräumen (userData.fremdeTextur)
+    const m = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: bilder[i].textur, side: THREE.DoubleSide }))
+    m.userData.fremdeTextur = true
+    m.castShadow = m.receiveShadow = true
+    netze.push(m)
+  })
+  return netze
 }
 
 /** der Kasten um das Gelände eines Bestands im Raum des Modells (km, y oben, Norden nach −z) */

@@ -176,3 +176,52 @@ export function gebaeudeFlaechen(geo: THREE.BufferGeometry, meter = 1, hoeheMete
   geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
   geo.setAttribute('aGebaeude', new THREE.BufferAttribute(ao, 2))
 }
+
+/** die Wandfarbe der Daten (pipeline/build_gebaeude.py, WAND): ein Grau, das in keiner Quelle steht; Dächer haben die Farbe des Luftbilds */
+const WAND_DATEN = [196, 192, 184]
+/** helle Putztöne, je Gebäude einer (Michael, 2026-11-06: «Bitte mal 1 und 3 machen», 3: Wandfarben leicht variieren); gewählt,
+ *  die echte Fassadenfarbe steht in keiner Quelle */
+const PUTZ: Array<[number, number, number]> = [
+  [214, 210, 200], [222, 214, 196], [206, 198, 182], [198, 198, 194], [216, 202, 182], [212, 202, 196], [200, 204, 198], [226, 222, 214],
+]
+/** je Gebäude die Helligkeit dazu etwas anders, ± so viel (gewählt) */
+const PUTZ_STREUUNG = 0.04
+const putzVorrat = new WeakMap<object, Uint8Array>()
+
+/** ist die Ecke eine Wand (Farbe der Daten für Wände)? */
+export const istWandFarbe = (farben: Uint8Array, i: number) =>
+  farben[i * 3] === WAND_DATEN[0] && farben[i * 3 + 1] === WAND_DATEN[1] && farben[i * 3 + 2] === WAND_DATEN[2]
+
+/** die Farben einer Kachel mit einem Putzton je Gebäude statt des einen Graus. Ein Gebäude ist, was über gemeinsame Ecken
+ *  zusammenhängt (die Datei kennt keine Gebäude); der Ton hängt nur von seiner Lage ab, ist also in jeder Stufe und auf jedem
+ *  Gerät derselbe. Zusammengebaute Häuser mit gemeinsamen Ecken bekommen denselben Ton */
+export function gebaeudeFarben(k: { e0: number; n0: number; ecken: Int16Array; farben: Uint8Array }) {
+  const da = putzVorrat.get(k)
+  if (da) return da
+  const n = k.ecken.length / 3, eltern = new Int32Array(n).map((_, i) => i)
+  const wurzel = (i: number): number => { while (eltern[i] !== i) { eltern[i] = eltern[eltern[i]]; i = eltern[i] } return i }
+  const erste = new Map<string, number>()
+  for (let i = 0; i < n; i++) {
+    const s = `${k.ecken[i * 3]},${k.ecken[i * 3 + 1]},${k.ecken[i * 3 + 2]}`
+    const j = erste.get(s)
+    if (j === undefined) erste.set(s, i); else eltern[wurzel(i)] = wurzel(j)
+    // die drei Ecken eines Dreiecks gehören zusammen
+    if (i % 3) eltern[wurzel(i)] = wurzel(i - (i % 3))
+  }
+  // je Gebäude die Ecke am weitesten südwestlich, in Dezimetern der Landeskoordinaten
+  const anker = new Map<number, [number, number]>()
+  for (let i = 0; i < n; i++) {
+    const r = wurzel(i), e = k.e0 * 10 + k.ecken[i * 3], nn = k.n0 * 10 + k.ecken[i * 3 + 2], a = anker.get(r)
+    if (!a || e + nn < a[0] + a[1]) anker.set(r, [e, nn])
+  }
+  const aus = new Uint8Array(k.farben)
+  for (let i = 0; i < n; i++) {
+    if (!istWandFarbe(k.farben, i)) continue
+    const [e, nn] = anker.get(wurzel(i))!
+    const z = Math.abs(Math.sin(e * 12.9898 + nn * 78.233) * 43758.5453) % 1, z2 = Math.abs(Math.sin(e * 39.346 + nn * 11.135) * 24634.6345) % 1
+    const ton = PUTZ[Math.floor(z * PUTZ.length) % PUTZ.length], f = 1 + PUTZ_STREUUNG * (z2 * 2 - 1)
+    for (let c = 0; c < 3; c++) aus[i * 3 + c] = Math.max(0, Math.min(255, Math.round(ton[c] * f)))
+  }
+  putzVorrat.set(k, aus)
+  return aus
+}

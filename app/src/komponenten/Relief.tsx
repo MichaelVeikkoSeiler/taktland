@@ -38,7 +38,7 @@ import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, kategorieUmschalten, SehenswertLegende, useVersteckt } from './Sehenswert'
 import { Klappe } from './Klappe'
 import { wagenBauen, ZUG_HELL, ZUG_MASS_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_WAGEN, ZUG_WAGEN_M } from './ZugForm'
-import { fensterLicht, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
+import { fensterLicht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, lichtAnteil } from '../gebaeudeBild'
 
 /**
  * 3D-Relief einer Strecke (Michael, 2026-10-06: zuerst die Gotthard-Bergstrecke, im Browser,
@@ -2414,11 +2414,12 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         if (!laeuft || auftrag !== gebaeudeAuftrag) return
         if (!k || gebaeudeNetze.has(name)) continue
         const n = k.ecken.length / 3, pos = new Float32Array(n * 3), farbe = new Float32Array(n * 3)
+        const farben = gebaeudeFarben(k)
         for (let i = 0; i < n; i++) {
           pos[i * 3] = X(k.e0 + k.ecken[i * 3] / 10)
           pos[i * 3 + 1] = Y((k.h0 + k.ecken[i * 3 + 1]) / 10)
           pos[i * 3 + 2] = Z(k.n0 + k.ecken[i * 3 + 2] / 10)
-          for (let c = 0; c < 3; c++) { const f = k.farben[i * 3 + c] / 255; farbe[i * 3 + c] = f <= 0.04045 ? f / 12.92 : ((f + 0.055) / 1.055) ** 2.4 }
+          for (let c = 0; c < 3; c++) { const f = farben[i * 3 + c] / 255; farbe[i * 3 + c] = f <= 0.04045 ? f / 12.92 : ((f + 0.055) / 1.055) ** 2.4 }
         }
         const g = new THREE.BufferGeometry()
         g.setAttribute('position', new THREE.BufferAttribute(pos, 3))

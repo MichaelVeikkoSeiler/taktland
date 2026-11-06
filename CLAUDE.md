@@ -435,7 +435,11 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              erfand es Häuser)
 data/gebaeude/  Gebäude, ein Versuch, zuerst auf Gümmenen–Bern (Michael, 2026-10-13): swissBUILDINGS3D 3.0 (swisstopo, CityGML je Kartenblatt,
              der neueste Jahrgang), Dach- und Wandflächen in Dreiecke zerlegt (mapbox_earcut), nur Gebäude mit ihrer Mitte bis 400 m neben
-             den Bahnlinien, Dächer in der Farbe des Nahbilds (SWISSIMAGE 2,5 m), Wände grau (in keiner Quelle), unten 2 m verlängert; Wände und Dächer mit gemalter Körnung, Wände am Boden und unter dem Dach dunkler (Ambient Occlusion von Hand, src/gebaeudeBild.ts; Michael, 2026-10-22: «etwas Körnung und Schattierung»; in keiner Quelle, auch in «3D Schweiz»);
+             den Bahnlinien, Dächer in der Farbe des Nahbilds (SWISSIMAGE 2,5 m), Wände grau (in keiner Quelle), unten 2 m verlängert; Wände und Dächer mit gemalter Körnung, Wände am Boden und unter dem Dach dunkler (Ambient Occlusion von Hand, src/gebaeudeBild.ts; Michael, 2026-10-22: «etwas Körnung und Schattierung»; in keiner Quelle, auch in «3D Schweiz»); seit 2026-11-06 (Michael: «Bitte mal 1 und 3 machen», nach «Gibt es eine Möglichkeit die Gebäude etwas realer darzustellen?»)
+             in «3D Schweiz» das Luftbild des Bodens auf den Dächern (dieselbe Textur, je Stück ein Netz, gebaeudeNetz; über Decken die Farbe der Daten, dort
+             ist das Bild anthrazit), die Wände je Gebäude in einem von acht hellen Putztönen ±4 % statt Grau, auch im Führerstand (gebaeudeFarben in
+             src/gebaeudeBild.ts: ein Gebäude ist, was über gemeinsame Ecken zusammenhängt, der Ton nach seiner Ecke im Südwesten; gewählt, in keiner Quelle);
+             offen: Fenster am Tag (Vorschlag 2);
              je 500 m eine .bgz (pipeline/build_gebaeude.py, 23'732 Gebäude, 10,5 MB; seit 2026-10-13 alle Strecken der scharfen Umgebung von Müntschemier über Bern und Biel/Bienne bis Neuchâtel); in der App nur im Führerstand, mit dem feinen
              Gelände geladen (gebaeudeSetzen in Relief.tsx, gebaeudeKachel in src/gelaende.ts)
 data/baeume/  Bäume und Wald, ein Versuch auf denselben Strecken (Michael, 2026-10-13: «zuerst ohne gemessene Baumhöhen»): swissTLM3D
@@ -717,7 +721,8 @@ data/perrons3d.json  Perrons für «3D Schweiz» und den Führerstand (Michael, 
              komponenten/Perrons.ts für beide: Belag grau, Wand bis 0,6 m unter das Gleis (Farben gewählt), keine Dächer, Treppen, Unterführungen (in keiner
              Quelle mit Form); in «3D Schweiz» in den Feldern von 4 km und 1 km auf der Höhe der Gleise, Perrons am Rand fallen weg; im Führerstand mit dem
              feinen Gelände, die Kante so hoch über der gezeichneten Linie (bis 30 m neben ihr, PERRON_LINIE_M), sonst 1 m wie die Trasse; wo Gleise
-             unter einer Decke liegen, siehe data/decken.json; Quellen und Annahmen in der Anleitung von «3D Schweiz» und der Fusszeile von 3dland
+             unter einer Decke liegen, siehe data/decken.json; Quellen und Annahmen in der Anleitung von «3D Schweiz» und der Fusszeile von 3dland; in «3D Schweiz» 50 cm höher als laut Daten (PERRON_HOEHER_M, gewählt; Michael, 2026-11-06, Interlaken, Luzern: «die Perron teilweise mit dem
+             Untergrund etwas überdeckt … um ca 50cm höher stellen»)
 data/decken.json  Decken über Gleisen für «3D Schweiz» (Michael, 2026-11-05, Bern: «bei den Perrons unter der Decke sieht man Autos. Das ist wohl die
              Textur des Parkings. Bitte setze diese Textur auf die Decke oberhalb … Unterhalb, dort wo die Perrons sind, verwendest du einfach eine
              anthrazitfarbene Textur, am liebsten etwas gekörnt»): pipeline/build_decken.py aus den Gebäuden in data/gebaeude (swissBUILDINGS3D, nur die
