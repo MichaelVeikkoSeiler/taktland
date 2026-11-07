@@ -1143,6 +1143,19 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
             4'000 m, ihre Zahl steht klein an der Wand.</p>
         </Abschnitt>
+        {/* was an den Gebäuden echt und was gezeichnet ist (Michael, 2026-11-07: «Erkläre doch hier unter neuen bereich Gebäude was echt und was
+            gezeichnet ist») */}
+        <Abschnitt titel="Gebäude">
+          <p>«Gebäude» zeigt in den Feldern von 4 km und 1 km die Gebäude der ganzen Schweiz.</p>
+          <p className="mt-2"><b>Echt</b>, aus swissBUILDINGS3D 3.0 von swisstopo (je Kartenblatt die neueste Ausgabe): wo jedes Gebäude steht, sein
+            Grundriss, seine Höhe und die Form des Dachs, so wie die Quelle sie als Dach- und Wandflächen beschreibt. Auf den Dächern liegt das
+            Luftbild SWISSIMAGE von swisstopo, also das, was man von oben wirklich sieht. Weil es von oben aufgenommen ist, liegt das Dach im Bild bei
+            hohen Gebäuden etwas daneben, und es zeigt den Stand der Aufnahme, nicht heute.</p>
+          <p className="mt-2"><b>Gezeichnet</b>, weil es in keiner Quelle steht: die Farbe der Wände (je Gebäude einer von acht Putztönen, gewählt),
+            die Fenster und Stockwerke (am Tag dunkle Scheiben, nachts zum Teil beleuchtet, wie viele, ist eine Annahme), die Körnung und die
+            dunkleren Stellen am Boden und unter dem Dach. Die Wände reichen unten 2 m tiefer als in den Daten. Türen, Balkone, Vordächer und Fassaden, wie sie wirklich aussehen, zeigt das Modell nicht. Ebenso erfunden sind die Strassen- und
+            Bahnhofslampen, die mit «Gebäude» nachts leuchten; belegt ist nur, wo Strassen und Gleise liegen.</p>
+        </Abschnitt>
         <Abschnitt titel="Züge">
           <p>«Züge» zeigt ab der Stufe 16 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
             (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
