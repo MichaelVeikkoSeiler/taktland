@@ -232,12 +232,14 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
         <Schiebeleiste name={unter.name} leiste={unterLeiste}
              aussen="-mx-4 border-t border-sbb-cloud bg-sbb-milk dark:border-sbb-iron dark:bg-sbb-charcoal"
              grund="bg-sbb-milk dark:bg-sbb-charcoal"
-             className={`${unter.raster} gap-x-1 px-4 py-2 text-sm max-[359px]:text-[13px] sm:gap-x-2`}>
+             // auf dem Handy enger, damit die vier der Reisetasche ohne Schieben Platz haben (Michael, 2026-11-07: «Oder die unteren Register leicht
+             // zusammenrücken»), verteilt über die Breite
+             className={`${unter.raster} justify-between gap-x-0 px-2 py-2 text-sm max-[359px]:text-[13px] sm:justify-start sm:gap-x-2 sm:px-4`}>
           {unter.liste.map((o) => {
             const hier = o.bereich === unterAktiv
             return (
               <a key={o.bereich} href={o.adresse} aria-current={hier ? 'page' : undefined} onClick={reiterTon}
-                 className={`shrink-0 whitespace-nowrap rounded-lg py-1.5 text-center font-medium ${unter.raster === 'flex' ? 'px-3' : 'px-1'} transition-colors sm:px-3 ${hier
+                 className={`shrink-0 whitespace-nowrap rounded-lg py-1.5 text-center font-medium ${unter.raster === 'flex' ? 'px-[7px]' : 'px-1'} transition-colors sm:px-3 ${hier
                    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                    : 'text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
                 {o.text}
