@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { type PlanAdresse, type PlanHalt, planAufWeg, planLesen, von3dlandMerken } from '../mitfahren'
 import { fahrtZiele, flaechenLaden, geometrieLaden, linienLaden, ladenVerfolgen, namenFuerFahrt, seenLaden, sehenswertLaden, streckenLaden, uebersichtLaden } from '../daten'
-import { bahnhoefeVorziehen, gerundetM, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonWeitergeben, wegEnde } from '../fahrt'
+import { bahnhoefeVorziehen, gerundetM, zugLaengeM, type FahrObjekt, type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, seeUferAufWeg, sehenswertAufWeg, type Ton, tonAbholen, tonBereitlegen, tonWeitergeben, wegEnde } from '../fahrt'
 import { favoritUmschalten, istFavorit, istProbefahrt, letzteMerken, probefahrtUmschalten } from '../fahrten'
 import { durchfahren, fahrtBeginnen, heftLesen, leereFahrtenWeg, wegLinieSetzen, wegSetzen, zugEintragen } from '../erlebt'
 import {
@@ -228,7 +228,7 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
 
   // Modellbahn mit gewähltem Weg: das Modell gleich unter dem Titel, Von, Nach und die Linien darunter (Michael,
   // 2026-10-10: «Das Bild mit dem Ladebalken ist zu weit unten»)
-  const modellOben = modell && ergebnis?.art === 'weg'
+  const modellOben = modell && fest && ergebnis?.art === 'weg'
   // ohne Start und Ziel («Ohne Ziel») die Namen der Betriebspunkte an den Enden des Wegs
   const ende = (i: 0 | -1) => (ergebnis?.art === 'weg' ? netz?.punkte[ergebnis.weg.punkte.at(i)!] ?? '' : '')
   const probeTitel = wahl.von && wahl.nach ? `${name(wahl.von)} → ${name(wahl.nach)}`
@@ -244,10 +244,10 @@ export function Strecke({ index, wahl, modell = false, fest = false }: { index: 
       ) : modell ? (
         <>
           <Zurueck onClick={() => { window.location.hash = '#/modellbahn' }} text="Modellbahn" />
-          <h1 className="mt-4 text-2xl font-bold tracking-tight">Eigene Strecke als Modell</h1>
-          <p className={`mt-2 leading-relaxed ${modellOben ? 'hidden' : ''}`}>
-            Start und Ziel wählen: Taktland sucht einen Weg durch das Netz und baut ihn als Modell im Gelände, bis
-            etwa {MODELL_HOECHSTENS_M / 1000} km.
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">Eigene Strecke</h1>
+          <p className="mt-2 leading-relaxed">
+            Start und Ziel wählen: Taktland sucht einen Weg durch das Netz, «Probefahren» fährt ihn in 3D ab, bis
+            etwa {MODELL_HOECHSTENS_M / 1000} km mit der ganzen Strecke als Modell.
           </p>
         </>
       ) : (
@@ -653,6 +653,19 @@ function Ergebnis({
     },
   ]
 
+  // «Eigene Strecke» der Modellbahn: statt des Modells ein Knopf «Probefahren», die Probefahrt beginnt gleich in 3D (Michael, 2026-11-07:
+  // Probefahrt und Modell zusammenlegen); alte Adressen mit fest=1 zeigen das Modell noch, bis die Modellansicht aufgeräumt ist
+  if (modell && !fest) {
+    return (
+      <section className="mt-6">
+        <h2 className="text-xl font-bold tracking-tight">{titelText}</h2>
+        <button type="button" onClick={() => { tonBereitlegen(); dreiDVormerken(); window.location.hash = fahrtAdresse(wahl, true) }}
+                className="mt-4 w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125">
+          Probefahren
+        </button>
+      </section>
+    )
+  }
   if (modell) {
     return (
       <ModellAusWeg titel={fest ? null : titelText} name={titelText} laedt={laedt} fehler={fahrtFehler} fahrweg={modellWeg}
@@ -723,7 +736,7 @@ function Ergebnis({
                            disabled:opacity-60 dark:border-sbb-iron dark:bg-sbb-midnight
                            dark:hover:border-sbb-white"
               >
-                Probefahrt
+                Probefahren
               </button>
             </div>
             <Klappe className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm" titel="Was «Fahren» und die Probefahrt machen">
@@ -734,14 +747,6 @@ function Ergebnis({
               bleibt auf dem Gerät. Die Probefahrt spielt den Weg zum Ausprobieren ab.
             </p>
             </Klappe>
-            {/* derselbe Weg als Modell in der Modellbahn (Michael, 2026-10-08) */}
-            {!wahl.weg && wahl.von && wahl.nach && (
-              <a href={`${streckenAdresse(wahl).replace('#/strecke', '#/modellbahn/strecke')}&fest=1`}
-                 className="mt-3 flex items-center gap-2 text-sm font-medium underline underline-offset-2">
-                Als Modell ansehen (Spiele, Modellbahn, bis {MODELL_HOECHSTENS_M / 1000} km)
-                <span className="pfeil" aria-hidden="true">→</span>
-              </a>
-            )}
             {gemerkt && (
               <button
                 type="button" aria-pressed={favorit}
