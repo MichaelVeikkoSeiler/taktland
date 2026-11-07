@@ -1210,7 +1210,7 @@ function Hinweise({ r }: { r: Relief }) {
         dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen.
       </p>
       <p>
-        Im Führerstand ausserdem wie in «3D-Land»: alle Brücken aus swissTLM3D (swisstopo) nah am Zug, Lage und Höhe belegt, Breite (wo die Klasse
+        Im Führerstand ausserdem wie in «Virtuelle Schweiz»: alle Brücken aus swissTLM3D (swisstopo) nah am Zug, Lage und Höhe belegt, Breite (wo die Klasse
         keine nennt), Querschnitt und Aussehen gewählt, ohne Pfeiler; und andere Züge laut Fahrplan (opentransportdata.swiss), nicht live: wo ein Zug
         zwischen zwei Halten ist, ist angenommen (gleichmässig), welches Gleis er nimmt, steht in keiner Quelle (gewählt das linke), Form und Grösse
         sind gewählt. Der eigene Zug fährt nicht nach dem Fahrplan; ein Zug laut Fahrplan kann ihn kreuzen. Nachts Strassen- und Bahnhofslicht: die

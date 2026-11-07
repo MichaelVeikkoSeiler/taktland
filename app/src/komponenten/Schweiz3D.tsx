@@ -909,7 +909,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     <div className="px-4 pb-4">
       {!eigeneSeite && <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />}
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
-      <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : '3D-Land'}</h1>
+      <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : 'Virtuelle Schweiz'}</h1>
       {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       {/* am Desktop taucht ein Doppelklick ins Feld ein, statt jedes Mal «Eintauchen» (Michael, 2026-11-06: «auf der Desktop-Version soll man, wenn man einen
           Ausschnitt gewählt hat, diesen doppelklicken können»); nur wenn beide Klicks das Gelände trafen, nicht einen Knopf an der Wand */}
@@ -1308,7 +1308,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         {/* wie 3D-Land entstanden ist, für Leute ohne Erfahrung mit Programmieren per Gespräch (Michael, 2026-10-25: «damit sich
             jemand, der nichts mit Vibe-Coding macht, vorstellen kann, wie 3D-Land sich Schritt für Schritt aufgebaut und entwickelt hat») */}
-        <Abschnitt titel="Über 3D-Land">
+        <Abschnitt titel={eigeneSeite ? 'Über 3D-Land' : 'Über die Virtuelle Schweiz'}>
           {/* in der Ich-Form, unterschrieben (Michael, 2026-10-29: «wie die Produktion und Entwicklung und die Idee gewesen ist», «Erwähne aber
               auch, dass Diverses eben doch erfunden ist»), derselbe Text für LinkedIn; 2026-11-05 nach Michaels Wortlaut überarbeitet (nur
               «Oktober» statt der Tage, Wanderer zuerst, «im Dialog mit der KI», seine Fehlerbeispiele, Unschönheiten, Schlusssatz) */}
@@ -1806,7 +1806,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       c.width = 1024; c.height = 700
       x.fillStyle = 'rgba(255,255,255,0.96)'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 24); x.fill()
       x.fillStyle = '#212121'; x.font = 'bold 48px Helvetica, Arial, sans-serif'
-      x.fillText('3D-Land: Tasten', 48, 84)
+      x.fillText(`${AUF_3DLAND ? '3D-Land' : 'Virtuelle Schweiz'}: Tasten`, 48, 84)
       const zeilen: Array<[string, string]> = [
         ['Abzug kurz', 'Feld wählen, nochmals: eintauchen'], ['Abzug auf + oder −', 'an dieser Wand erweitern'],
         ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],
