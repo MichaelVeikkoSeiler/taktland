@@ -1313,8 +1313,8 @@ const KAMERA_UEBER_GELAENDE_KM = 0.003
  *  dem Auge); gewählt */
 const KAMERA_NAH_KM = 0.01, KAMERA_NAH_MIN_KM = 0.0005
 /** so weit knickt ein Wagen gegen den davor (etwa ein Wagen von 33 m in einem Bogen von 150 m) und so weit steht er schräg zum Weg
- *  (gewählt; Michael, 2026-11-06: «Völlig verbogen. Sieht sonst nach Unfall aus») */
-const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (25 * Math.PI) / 180
+ *  (gewählt; Michael, 2026-11-06: «Völlig verbogen. Sieht sonst nach Unfall aus»; schräg bis 2026-11-07 25°, Michael: «nicht gerade auf einem Gleis») */
+const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (8 * Math.PI) / 180
 /** im Feld von 1 km noch kleiner, etwa 3 m breit und 4 m hoch, damit Züge im Bahnhof nebeneinander und unter den Perrondächern Platz haben
  *  (Michael, 2026-10-30, Bern: «Bei dieser Ansicht sind die Züge etwas zu gross … unter der Decke sind und nicht an der Decke ankommen»; vorher
  *  wie im Feld von 4 km gut 5 m breit und fast 7 m hoch), gewählt */
@@ -3577,6 +3577,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const st = /^\d{8}$/.test(ix.stand) ? `${Number(ix.stand.slice(6))}.${Number(ix.stand.slice(4, 6))}.${ix.stand.slice(0, 4)}` : ix.stand
       setZugZeile(zn ? `Züge laut Fahrplan vom ${st}, nicht live` : 'Züge: das Netz konnte nicht geladen werden.')
     })()
+    /** je stehendem Zug, der hinter anderen auf demselben Gleis steht, wie viele Züge vor ihm stehen */
+    const hintereinander = new Map<number, number>()
     const schritt = () => {
       if (!ix || !zn) return
       const jetzt = jetztImFahrplan(ix)
@@ -3586,6 +3588,23 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         unterwegs = []
         for (const f of fahrten) { const st = zugStelle(f, jetzt.tag, jetzt.minuten); if (st) unterwegs.push({ f, st: st }) }
         for (const u of unterwegs) { const st = zugStelle(u.f, jetzt.tag, jetzt.minuten); if (st) u.st = st }
+        // stehen mehrere Züge zugleich am selben Bahnhof auf demselben Gleis, steht der später angekommene hinter dem ersten (Michael, 2026-11-07,
+        // Lausanne um 03:16: «zwei Züge ineinander … zudem verkeilt»: der N1 und der N9 halten laut Fahrplan beide auf Gleis 5, sie standen an
+        // derselben Stelle, das Ausweichen schob den einen schräg aufs Nachbargleis); die Reihenfolge nach der Ankunft, eine Annahme
+        hintereinander.clear()
+        const gruppen = new Map<string, Array<{ id: number; an: number }>>()
+        for (const u of unterwegs) {
+          if (u.st.art !== 'halt') continue
+          const hh = u.f.halte[u.st.i], g = gleisNummer(hh.gleis)
+          if (g === null) continue
+          const schluessel = `${hh.abk}|${g}`
+          ;(gruppen.get(schluessel) ?? gruppen.set(schluessel, []).get(schluessel)!).push({ id: u.f.id, an: hh.an ?? hh.ab ?? 0 })
+        }
+        for (const liste of gruppen.values()) {
+          if (liste.length < 2) continue
+          liste.sort((x, y) => x.an - y.an || x.id - y.id)
+          liste.forEach((x, i) => { if (i) hintereinander.set(x.id, i) })
+        }
         ausweichenWaehlen()
       }
       const jetztMs = performance.now(), dt = Math.min(0.5, (jetztMs - letztesBild) / 1000)
@@ -3636,6 +3655,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const ve = wegEnde(vorher), [be, bn] = r(lageBei(vorher, Math.max(0, ve - 60)), lageBei(vorher, ve))
           if ((ae * be + an * bn) < -0.5 * Math.hypot(ae, an) * Math.hypot(be, bn)) sM = Math.min(ende, ZUG_GANZ_M * mass * gross.x)
         }
+        // hinter den Zügen davor auf demselben Gleis, je eine Zuglänge und eine Lücke
+        sM -= (hintereinander.get(u.f.id) ?? 0) * (ZUG_GANZ_M + ZUG_LUECKE_M) * mass * gross.x
         const imTunnel = (sm: number) => {
           if (sm >= 0) return fw.tunnel.some(([a, z]) => sm >= a && sm <= z)
           if (!vorher) return false
