@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { linienProfilLaden } from '../daten'
+import { linienProfilLaden, standortLaden } from '../daten'
 import type {
   BrueckenEintrag, ListenArt, LinienProfil, NetzEintrag, TunnelEintrag, UebergangEintrag,
 } from '../typen'
@@ -71,6 +71,21 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
   // Seite zu ihm in die Liste, und Bild und Titel waren weg (Simplontunnel:
   // 1000 Pixel nach unten); das wirkte wie ein Sprung.
   const gewaehlt = markiert !== null && !filter ? alle[markiert] : undefined
+
+  // Lage des gewählten Eintrags laut Quelle (data/standort.json, Linie und Stelle wie hier) für den Link in die
+  // Virtuelle Schweiz, wie bei den Bahnhöfen (Michael, 2026-11-07: «Kann man neben Bahnhöfen auch Tunnel, Brücken
+  // und Bahnübergänge in 3D anschauen?»); erst geladen, wenn ein Eintrag gewählt ist
+  const [lage3d, setLage3d] = useState<{ lat: number; lon: number } | null>(null)
+  useEffect(() => {
+    setLage3d(null)
+    if (markiert === null || filter || art === 'netz') return
+    let ab = false
+    standortLaden().then((d) => {
+      const z = d[art].find((r) => r[0] === nr && r[1] === markiert)
+      if (!ab && z && z[3] !== null && z[4] !== null) setLage3d({ lat: z[3], lon: z[4] })
+    }).catch(() => {})
+    return () => { ab = true }
+  }, [nr, art, markiert, filter])
   // Auf der Karte: Tunnel und Brücken immer alle, damit man sie im Netz sieht.
   // Abschnitte nur die der gezeigten Liste, sonst wäre die ganze Linie rot.
   const karteObjekte = (art === 'netz'
@@ -118,6 +133,16 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
           >
             In der Liste zeigen
           </button>
+          {lage3d && (
+            <p className="mt-1 text-sm">
+              <a href={`#/3dland?lat=${lage3d.lat}&lon=${lage3d.lon}&name=${encodeURIComponent(
+                   gewaehlt.name == null ? `${{ tunnel: 'Tunnel', bruecken: 'Brücke', bahnuebergaenge: 'Bahnübergang', netz: '' }[art]} ohne Namen` : ohneKuerzel(String(gewaehlt.name)))}`}
+                 className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
+                            dark:text-sbb-storm dark:hover:text-sbb-white">
+                In der Virtuellen Schweiz ansehen: 1 km um die Lage laut Quelle
+              </a>
+            </p>
+          )}
         </div>
       )}
 
