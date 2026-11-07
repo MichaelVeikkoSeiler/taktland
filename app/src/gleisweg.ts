@@ -22,6 +22,10 @@ export interface Weg {
 /** so steil darf ein Gleis zwischen zwei Schritten werden, ohne dass es teuer wird (in keiner Quelle; Adhäsion bis etwa 7 %, Zahnrad steiler kostet nur) */
 const GLEIS_STEIL = 0.08
 const GLEIS_SCHRITT_M = 10, GLEIS_NEBEN_M = 25, GLEIS_LUECKE_M = 1500, GLEIS_EINLAUF_M = 200
+/** links fahren (Michael, 2026-11-07: «dass ein Zug, wenn zwei Gleise vorhanden sind, stets auf der linken Seite fährt»): liegt links neben einer
+ *  Achse eine zweite gleich hohe im Abstand eines Nachbargleises (GLEIS_NACHBAR_M), kostet die rechte je Schritt so viel wie GLEIS_RECHTS_KOSTEN m
+ *  Abstand zum Weg; welches Gleis ein Zug wirklich nimmt, steht in keiner Quelle, in der Schweiz fahren die Züge in der Regel links */
+const GLEIS_RECHTS_KOSTEN = 4, GLEIS_NACHBAR_M: [number, number] = [3, 6.5]
 /** z: Höhe, d: Abstand der Achse quer zum Weg (positiv nach links, q = (-tn, te)), je GLEIS_SCHRITT_M ab m0, NaN ohne Achse;
  *  tunnel: 1, wo die Achse laut swissTLM3D in einem Tunnel liegt */
 export interface GleisHoehen { m0: number; z: Float32Array; d: Float32Array; tunnel: Uint8Array }
@@ -98,7 +102,9 @@ export async function gleisHoehenLaden(weg: Weg): Promise<GleisHoehen | null> {
     const kosten: number[][] = [], vor: number[][] = []
     schritte.forEach((i, s2) => {
       const c = alle[i]
-      kosten.push(c.map((x) => x[0]))
+      // rechts von einem Nachbargleis (links liegt eins im Abstand eines Nachbargleises, gleich hoch): teurer
+      kosten.push(c.map((x) => x[0] + (c.some((y) => y !== x && y[2] - x[2] >= GLEIS_NACHBAR_M[0] && y[2] - x[2] <= GLEIS_NACHBAR_M[1]
+        && Math.abs(y[1] - x[1]) < 1.5 && y[3] === x[3]) ? GLEIS_RECHTS_KOSTEN : 0)))
       vor.push(c.map(() => -1))
       if (!s2) return
       const iv = schritte[s2 - 1], cv = alle[iv], dm = (i - iv) * GLEIS_SCHRITT_M

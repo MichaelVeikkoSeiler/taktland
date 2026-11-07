@@ -475,6 +475,25 @@ const WOLKEN_FUEHRER_M = 40_000, WOLKEN_NEU_M = 8_000
 /** Masten der Fahrleitung: keiner näher an der gezeichneten Linie als MAST_LICHTRAUM_M; bis MAST_AUF_LINIE_M neben ihr steht der Fuss auf
  *  ihrer Höhe (Gleise daneben liegen etwa gleich hoch, auch auf Brücken), weiter weg auf dem Gelände; gewählt */
 const MAST_LICHTRAUM_M = 2.2, MAST_AUF_LINIE_M = 25
+/** so weit rückt ein Mast der Fahrleitung oder einer Lampe von der gezeichneten Linie weg, wenn er näher steht (m, gewählt; Michael, 2026-11-07:
+ *  «dass keine Beleuchtungsmasten und Fahrleitungsmasten direkt auf der Strecke liegen … mit einem gewissen Abstand zu deinem hergestellten Gleis»):
+ *  die Linie liegt nicht immer auf der Achse, an der die Masten stehen; näher als MAST_UNKLAR_M weiss man nicht, auf welche Seite, dann fällt er weg */
+const MAST_ABSTAND_M = 3.2, MAST_UNKLAR_M = 0.3
+/** ein Punkt (LV95) weg von der Linie (e, n, … je drei Zahlen): unverändert, wenn weiter als abstand, sonst quer zu ihr auf abstand gerückt, oder null */
+function vonLinieWeg(linie: number[], e: number, n: number, abstand: number): [number, number] | null {
+  let d = Infinity, le = 0, ln = 0
+  for (let j = 0; j < linie.length; j += 3) {
+    const dj = Math.hypot(linie[j] - e, linie[j + 1] - n)
+    if (dj < d) { d = dj; le = linie[j]; ln = linie[j + 1] }
+  }
+  if (d >= abstand) return [e, n]
+  if (d < MAST_UNKLAR_M) return null
+  const f = abstand / d
+  const p: [number, number] = [le + (e - le) * f, ln + (n - ln) * f]
+  // die Linie ist alle 5 m abgetastet: der gerückte Punkt darf keinem anderen Stück näher kommen
+  for (let j = 0; j < linie.length; j += 3) if (Math.hypot(linie[j] - p[0], linie[j + 1] - p[1]) < abstand - 0.5) return null
+  return p
+}
 const KABINE_NAHE_M = 0.3, KABINE_WEIT_M = 40_000, KABINE_SCHILD_KM = 0.005, KABINE_ZUG = 0.003 / 0.045, KABINE_ZEICHEN = 0.1
 /** der Zug (Michael, 2026-10-06: «Lok plus 6 Wagen, Grau mit karminroter Front»): Längen in Metern
  *  entlang der Linie, Breite und Höhe in km; etwa fünfmal so lang wie ein echter Zug (halbiert am
@@ -1195,7 +1214,10 @@ function Hinweise({ r }: { r: Relief }) {
         keine nennt), Querschnitt und Aussehen gewählt, ohne Pfeiler; und andere Züge laut Fahrplan (opentransportdata.swiss), nicht live: wo ein Zug
         zwischen zwei Halten ist, ist angenommen (gleichmässig), welches Gleis er nimmt, steht in keiner Quelle (gewählt das linke), Form und Grösse
         sind gewählt. Der eigene Zug fährt nicht nach dem Fahrplan; ein Zug laut Fahrplan kann ihn kreuzen. Nachts Strassen- und Bahnhofslicht: die
-        Lampen sind erfunden, belegt ist nur, wo Strassen und Gleise liegen. Solange echtes Wetter gilt, Wolken laut Wettermodell ICON-CH1-EPS von
+        Lampen sind erfunden, belegt ist nur, wo Strassen und Gleise liegen. Masten von Lampen und Fahrleitung, die näher als 3,2 m an der gezeichneten
+        Linie stünden, rücken von ihr weg (gewählt). Auf zwei Gleisen nebeneinander fährt der eigene Zug auf dem linken, wo die Achsen aus
+        swissTLM3D es zeigen (welches Gleis er wirklich nimmt, steht in keiner Quelle). Beim Mitfahren laut Fahrplan steht der Zug an jedem Halt,
+        dazwischen fährt er mit 0,5 m/s² an und bremst ebenso, wenn die Zeit laut Fahrplan reicht, sonst stärker (gewählt). Solange echtes Wetter gilt, Wolken laut Wettermodell ICON-CH1-EPS von
         MeteoSchweiz, je Zelle von 2 km; Form und Muster der Wolken sind gezeichnet.
       </p>
       <p>
@@ -2630,7 +2652,14 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       lampen?.weg(); lampen = null
       const fs = feinStand
       if (!l || !l.e.length || !fs) return
-      lampen = lampenBauen(l, (e, n) => (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fs.fein, e, n) ?? NaN, X, Y, Z)
+      // die gezeichnete Linie alle 5 m: kein Lampenmast auf ihr (vonLinieWeg)
+      const linie: number[] = []
+      for (let meter = pk[0].m; meter <= pk[pk.length - 1].m; meter += 5) {
+        const [e, n] = glattBei(meter)
+        if (e > e0 - 50 && e < e1 + 50 && n > n0 - 50 && n < n1 + 50) linie.push(e, n, 0)
+      }
+      lampen = lampenBauen(l, (e, n) => (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fs.fein, e, n) ?? NaN, X, Y, Z,
+        (e, n) => vonLinieWeg(linie, e, n, MAST_ABSTAND_M))
       lampenGruppe.add(lampen.licht, lampen.masten, lampen.koepfe)
       lampen.nacht(lampenNacht)
     }
@@ -2684,13 +2713,15 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), sk = new THREE.Vector3(X(1) - X(0), Y(1) - Y(0), X(1) - X(0))
       let zahl = 0
       for (let i = 0; i < ms.e.length; i++) {
-        const e = ms.e[i], n = ms.n[i]
+        // nicht auf der gezeichneten Linie: näher als MAST_ABSTAND_M rückt der Mast quer von ihr weg (Annahme fürs Bild)
+        const wo = vonLinieWeg(linie, ms.e[i], ms.n[i], MAST_ABSTAND_M)
+        if (!wo) continue
+        const [e, n] = wo
         let d = Infinity, hl = 0
         for (let j = 0; j < linie.length; j += 3) {
           const dj = Math.hypot(linie[j] - e, linie[j + 1] - n)
           if (dj < d) { d = dj; hl = linie[j + 2] }
         }
-        // nicht im Lichtraum der gezeichneten Linie (Annahme fürs Bild)
         if (d < MAST_LICHTRAUM_M) continue
         const h = d < MAST_AUF_LINIE_M ? hl - 1 : (scharfStand && scharfHoehe(scharfStand, e, n)) ?? feinHoehe(fs.fein, e, n)
         if (h === null) continue

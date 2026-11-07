@@ -39,7 +39,9 @@ export interface Strassenlampen {
 }
 /** die Lampen in die Szene: hoehe gibt das Gelände in m ü. M., X, Y, Z rechnen Landeskoordinaten und Höhe in die Szene (Einheit km) */
 export function lampenBauen(l: Lampen, hoehe: (e: number, n: number) => number, X: (e: number) => number, Y: (h: number) => number,
-                            Z: (n: number) => number): Strassenlampen {
+                            Z: (n: number) => number,
+                            /** wohin der Mast rückt, wenn er an seiner Stelle (LV95) im Weg steht, null: kein Mast (im Führerstand die gezeichnete Linie) */
+                            frei?: (e: number, n: number) => [number, number] | null): Strassenlampen {
   const stoff = new THREE.MeshBasicMaterial({ map: lichtBild(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
     polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4, toneMapped: false })
   const geo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2)
@@ -70,13 +72,22 @@ export function lampenBauen(l: Lampen, hoehe: (e: number, n: number) => number, 
     // der Mast neben der Lampe, die Richtung je Lampe fest gewürfelt (die Achse der Strasse kennt die Datei nicht)
     const w = ((l.e[j] * 7919 + l.n[j] * 104729) % 360) * Math.PI / 180
     seite.set(Math.cos(w), 0, Math.sin(w)).multiplyScalar(LICHT_RAND_M / 1000)
+    let mastWinkel = w
+    if (frei) {
+      const me = l.e[j] + Math.cos(w) * LICHT_RAND_M, mn2 = l.n[j] - Math.sin(w) * LICHT_RAND_M, wo = frei(me, mn2)
+      if (!wo) { m.makeScale(0, 0, 0); mn.setMatrixAt(i, m); kn.setMatrixAt(i, m); continue }
+      if (wo[0] !== me || wo[1] !== mn2) {
+        seite.set(X(wo[0]) - v.x, 0, Z(wo[1]) - v.z)
+        mastWinkel = Math.atan2(seite.z, seite.x)
+      }
+    }
     const hoch = (bahnhof ? LICHT_MAST_M.bahnhof : LICHT_MAST_M.strasse) / 1000
     oben.copy(v).add(seite).setY(v.y - 0.0005 - 0.001)
     m.compose(oben, q, sk.set(d, hoch + 0.001, d))
     mn.setMatrixAt(i, m)
     // der Kopf oben: ein Kästchen 0,8 × 0,25 × 0,4 m, zur Lampe hin
     oben.copy(v).addScaledVector(seite, 0.85).setY(v.y - 0.0005 + hoch)
-    q.setFromAxisAngle(achse, -w)
+    q.setFromAxisAngle(achse, -mastWinkel)
     m.compose(oben, q, sk.set(0.0008, 0.00025, 0.0004))
     q.identity()
     kn.setMatrixAt(i, m)
