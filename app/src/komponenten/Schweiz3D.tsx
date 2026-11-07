@@ -770,6 +770,31 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }
   // für den Doppelklick: die Wahl des zweiten Klicks ist erst nach dem nächsten Zeichnen da
   const zuletztGewaehlt = useRef(0)
+  // von einer Bahnhofseite: gleich im Feld von 1 km um den Ort (Michael, 2026-11-07: «Klickt man auf einen Bahnhof soll man optional die 3D Ansicht
+  // sehen können (nähster Ausschnitt aus 3DLand)»); #/3dland?lat=…&lon=…&name=…; alle Stufen darüber werden mitgeladen wie beim Eintauchen, damit
+  // man mit der Lupe hinaus kann, und überall gilt das Feld um den Ort wie nach einer Suche
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
+    const lat = Number(q.get('lat')), lon = Number(q.get('lon')), name = q.get('name') ?? 'Bahnhof'
+    if (!q.get('lat') || !Number.isFinite(lat) || !Number.isFinite(lon)) return
+    // die Adresse ohne den Ort, damit «Zurück» und Neuladen nicht wieder eintauchen
+    history.replaceState(history.state, '', window.location.pathname + window.location.search + window.location.hash.split('?')[0])
+    const [e, n] = lv95(lat, lon)
+    const um = (s: Exclude<Stufe, 'nah'>): Feld => ({ e: Math.round(e / RASTER_M[s]) * RASTER_M[s], n: Math.round(n / RASTER_M[s]) * RASTER_M[s], seite: FELD_M[s] })
+    let weg = false
+    setGesucht({ e, n, name }); setWahl(um('schweiz')); setLaedt(true); setFehler(null)
+    void (async () => {
+      const [gross, mittel, region] = await Promise.all([stufeLaden('gross', um('schweiz'), null), stufeLaden('mittel', um('gross'), null), stufeLaden('region', um('mittel'), null)])
+      const bRegion = einzeln(um('mittel'), region)
+      const ort = await stufeLaden('ort', um('region'), bRegion)
+      const bOrt = einzeln(um('region'), ort)
+      const nah = await stufeLaden('nah', um('ort'), bOrt)
+      if (weg) return
+      setGelaende((a) => ({ ...a, gross: einzeln(um('schweiz'), gross), mittel: einzeln(um('gross'), mittel), region: bRegion, ort: bOrt, nah: einzeln(um('ort'), nah) }))
+      setStufe('nah'); setWahl(null); setOrteAn(true)
+    })().catch((x) => { if (!weg) setFehler((x as Error).message) }).finally(() => { if (!weg) setLaedt(false) })
+    return () => { weg = true }
+  }, [])
   const eintauchenAktuell = useRef<() => void>(() => {})
   eintauchenAktuell.current = () => { if (wahl && stufe !== 'nah' && !laedt) void eintauchen() }
   async function eintauchen() {
