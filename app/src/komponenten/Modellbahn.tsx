@@ -31,7 +31,7 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
   return (
     <div className="px-4 pb-4">
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">Modellbahn</h1>
+      <h1 className="mt-4 text-2xl font-bold tracking-tight">Probefahren</h1>
       <p className="mt-2 leading-relaxed">
         Eine Strecke in 3D im Gelände: «Probefahren» fährt den Zug von A nach B, bis etwa 200 km mit der ganzen Strecke als Modell zum
         Drehen und Zoomen. Mit einer Brille wie der Meta Quest steht das Modell vor dir auf dem Tisch.

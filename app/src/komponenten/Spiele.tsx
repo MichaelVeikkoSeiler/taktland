@@ -10,7 +10,7 @@ export function Spiele() {
     <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Spiele</h1>
       <p className="mt-2 leading-relaxed">
-        Entdecke Taktland spielerisch. Hier findest du die Virtuelle Schweiz, die Modellbahn, Geo, «Wo bin ich?», das Duell und die Bahnhofsuche; weitere Spiele
+        Entdecke Taktland spielerisch. Hier findest du «Virtuell», «Probefahren», Geo, «Wo bin ich?», das Duell und die Bahnhofsuche; weitere Spiele
         rund um die Bahn in der Schweiz folgen.
       </p>
       {/* zwei Spalten, zwei Zeilen: jedes Spiel ein Bild mit Titel, das Bild ist der Knopf (Michael, 2026-10-10) */}
