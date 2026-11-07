@@ -115,6 +115,17 @@ export function Bahnhof({ uic, zurueck, eintrag, zurueckText }: {
             </a>
           </p>
         )}
+        {/* der Bahnhof in 3D-Land, gleich im Feld von 1 km (Michael, 2026-11-07: «Klickt man auf einen Bahnhof soll man optional die 3D Ansicht
+            sehen können (nähster Ausschnitt aus 3DLand)») */}
+        {eintrag && eintrag.lat !== null && eintrag.lon !== null && (
+          <p className="mt-1 text-sm">
+            <a href={`#/3dland?lat=${eintrag.lat}&lon=${eintrag.lon}&name=${encodeURIComponent(profil.name)}`}
+               className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
+                          dark:text-sbb-storm dark:hover:text-sbb-white">
+              In 3D-Land ansehen: 1 km um den Bahnhof
+            </a>
+          </p>
+        )}
         {beantwortet > 0 && (
           <p className="mt-2 flex items-center gap-3 text-sm text-sbb-metal dark:text-sbb-storm">
             <span>{richtig} von {beantwortet} richtig</span>
