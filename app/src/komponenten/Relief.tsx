@@ -27,8 +27,8 @@ import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, 
 import { fahrplanZuegeBauen } from './FahrplanZuege'
 import { perronNetz, perronsIn } from './Perrons'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
-import { WOLKEN_HOEHE_M, wolkenBild, wolkenEbenen3d } from './WolkenBild'
-import { wolken3dStunde, wolkenLaden, wolkenStunde } from '../wolken'
+import { BALLEN_HOECHSTENS, BALLEN_HOECHSTENS_HANDY, wolkenBallen } from './WolkenBild'
+import { wolkenLaden, wolkenStunde } from '../wolken'
 import { bahnQuerschnitt, BRUECKE_RAND_M, brueckenMaterialien, type BrueckenStueck, GLEISABSTAND_M, gleisPlatten, type QuerFlaeche, type QuerStelle, querschnittNetzeBauen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
@@ -2601,10 +2601,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     szene.add(wolkenGruppe)
     let wolkenMitte: [number, number] | null = null, wolkenStundeDa = -1, wolkenBaut = false, wolkenPruefen = 0
     const wolkenLeeren = () => {
-      for (const c of wolkenGruppe.children) {
-        const m = c as THREE.Mesh
-        m.geometry.dispose(); (m.material as THREE.MeshLambertMaterial).map?.dispose(); (m.material as THREE.Material).dispose()
-      }
+      for (const c of wolkenGruppe.children) (c.userData.weg as (() => void) | undefined)?.()
       wolkenGruppe.clear()
     }
     const wolkenSetzen = async (e: number, n: number) => {
@@ -2618,17 +2615,10 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       wolkenMitte = [e, n]; wolkenStundeDa = st ?? -1
       if (w && st !== null) {
         const e0 = e - WOLKEN_FUEHRER_M / 2, e1 = e + WOLKEN_FUEHRER_M / 2, n0 = n - WOLKEN_FUEHRER_M / 2, n1 = n + WOLKEN_FUEHRER_M / 2
-        const j3 = wolken3dStunde(w, st)
-        const ebenen = j3 !== null ? wolkenEbenen3d(w, j3, e0, n0, e1, n1)
-          : WOLKEN_HOEHE_M.map((hoeheM, j) => ({ hoeheM, bild: wolkenBild(w, st, j, e0, n0, e1, n1) }))
-        for (const { hoeheM, bild } of ebenen) {
-          if (!bild) continue
-          const tex = new THREE.CanvasTexture(bild); tex.colorSpace = THREE.SRGBColorSpace
-          const geo = new THREE.PlaneGeometry(X(e1) - X(e0), Z(n0) - Z(n1)).rotateX(-Math.PI / 2)
-          const netz = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: tex, transparent: true, depthWrite: false, side: THREE.DoubleSide }))
-          netz.position.set(X(e), Y(hoeheM), Z(n)); netz.renderOrder = 3
-          wolkenGruppe.add(netz)
-        }
+        // als Ballen wie in «3D-Land» (WolkenBild.ts; Michael, 2026-11-07: «Hört sich genial an - ja bitte»)
+        const ballen = wolkenBallen(w, st, e0, n0, e1, n1, (e, n, h) => [X(e), Y(h), Z(n)], 1 / 1000,
+          matchMedia('(pointer: coarse)').matches ? BALLEN_HOECHSTENS_HANDY : BALLEN_HOECHSTENS)
+        if (ballen) { ballen.netz.castShadow = false; ballen.netz.userData.weg = ballen.weg; wolkenGruppe.add(ballen.netz) }
       }
       wolkenBaut = false
     }

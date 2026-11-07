@@ -30,7 +30,7 @@ import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, 
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
 import { bewoelkung, bewoelkung3d, niederschlagBei, wolken3dStunde, wolkenLaden, wolkenStunde } from '../wolken'
-import { WOLKEN_HOEHE_M, wolkenBild, wolkenEbenen3d } from './WolkenBild'
+import { BALLEN_HOECHSTENS, BALLEN_HOECHSTENS_HANDY, WOLKEN_HOEHE_M, wolkenBallen } from './WolkenBild'
 import { type Niederschlag, niederschlagBauen, type Saeule } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
 import { WindTafel } from './WindTafel'
@@ -1191,11 +1191,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>In jeder Stufe zeigt der weisse Knopf «Wolken» die Wolken laut dem Wettermodell ICON-CH1 von MeteoSchweiz,
             zur Zeit der Sonne oder, wenn die Sonne aus ist, jetzt. Das Modell nennt je Stelle von etwa 1 km, wie viel des Himmels in drei
             Schichten bewölkt ist: tief (vom Boden bis 800 hPa), mittel (800 bis 400 hPa) und hoch (über 400 hPa); hier auf 2 km gemittelt,
-            alle 3 Stunden neu, bis gut einen Tag voraus. Gezeichnet ist jede Schicht als Fläche auf einer gewählten Höhe (1'500, 4'200 und
-            9'000 m ü. M., etwa die Mitte ihres Druckbereichs), so viel davon deckend, wie die Prognose Bewölkung nennt. Für die nächsten
-            24 Stunden des neuesten Laufs gibt es mehr: die Bewölkung in jeder der 80 Schichten des Modells mit deren Höhe über Meer. Dann
-            liegen die Wolken in der Höhe, die das Modell rechnet, als Ebenen alle 250 m übereinander, so dick, wie sie dort sind; die Zeile
-            sagt dann «in der Höhe des Modells». Die Form der Wolken ist gezeichnet, nicht aus der Quelle.</p>
+            alle 3 Stunden neu, bis gut einen Tag voraus. Gezeichnet sind die Wolken als viele weiche, runde Ballen, die immer zum Betrachter
+            schauen, so viele, wie die Prognose Bewölkung nennt; ohne mehr Angaben liegt jede Schicht um eine gewählte Höhe (1'500, 4'200 und
+            9'000 m ü. M., etwa die Mitte ihres Druckbereichs) mit gewählter Dicke (800, 1'400 und 900 m). Für die nächsten 24 Stunden des
+            neuesten Laufs gibt es mehr: die Bewölkung in jeder der 80 Schichten des Modells mit deren Höhe über Meer. Dann liegen die Ballen in
+            der Höhe, die das Modell rechnet, und eine Wolke ist so dick, wie sie dort ist. Form, Grösse, Abstand und Helligkeit der Ballen sind
+            gezeichnet, nicht aus der Quelle; je grösser das Modell, desto grösser und weiter auseinander die Ballen, damit Handy und Brille sie
+            zeichnen können.</p>
           <p>Regen und Schnee kommen aus demselben Wettermodell: je Stelle von 2 km, wie stark es zu dieser Stunde fällt, und die
             Schneefallgrenze. Sie fallen von der untersten gezeichneten Wolke darüber bis auf den Boden, über der Schneefallgrenze als
             Schnee, darunter als Regen; in jeder Stufe dasselbe Wetter. Unter einer dichten Wolke sieht man den Regen von oben nicht. Fehlen die
@@ -1270,8 +1272,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern gezeichnet oder angenommen ist:</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
-            <li>Wolken: ihre Form; ausserhalb der nächsten 24 Stunden auch ihre Dicke und die Höhe jeder Schicht (gewählt nach der Mitte ihres
-              Druckbereichs); in der Höhe des Modells sind die Stufen von 250 m und die Deckkraft jeder Ebene gewählt.</li>
+            <li>Wolken: ihre Form als Ballen, deren Grösse, Abstand und Helligkeit (unten grauer); ausserhalb der nächsten 24 Stunden auch ihre Dicke
+              und die Höhe jeder Schicht (gewählt nach der Mitte ihres Druckbereichs).</li>
             <li>Züge und Schiffe: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, an Halten, für die der Fahrplan Ankunft und Abfahrt in derselben Minute nennt, Ankunft 10 Sekunden davor und Abfahrt 20 Sekunden danach, und dass jeder Zug links neben dem Weg fährt,
               damit Züge in Gegenrichtung aneinander vorbeifahren. Im Bahnhof gilt das Gleis laut Fahrplan; welche Gleisachse zu welcher Gleisnummer gehört,
               ist aus der Lage der Sektortafeln geschlossen, nicht angegeben, und unterirdische Gleise fehlen. Wie die Züge davor und danach einspuren, ist gewählt.</li>
@@ -4247,22 +4249,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const uhr = (ms: number) => new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }).format(ms)
       const st = wolkenStunde(w, zeit)
       if (st === null) { setWolkenZeile(`Wolken: für ${uhr(zeit.getTime())} gibt es keine Prognose, nur für ${uhr(w.zeiten[0])} bis ${uhr(w.zeiten[w.zeiten.length - 1])}.`); return }
-      // in echter Höhe, wo es sie für diese Stunde gibt (Michael, 2026-10-29), sonst die drei Schichten auf gewählten Höhen
-      const j3 = wolken3dStunde(w, st)
-      const ebenen = j3 !== null ? wolkenEbenen3d(w, j3, e0, n0, e1, n1)
-        : WOLKEN_HOEHE_M.map((hoeheM, j) => ({ hoeheM, bild: wolkenBild(w, st, j, e0, n0, e1, n1) }))
-      ebenen.forEach(({ hoeheM, bild }) => {
-        if (!bild) return
-        const tex = new THREE.CanvasTexture(bild); tex.colorSpace = THREE.SRGBColorSpace
-        const geo = new THREE.PlaneGeometry((e1 - e0) / 1000, (n1 - n0) / 1000); geo.rotateX(-Math.PI / 2)
-        const stoff = new THREE.MeshLambertMaterial({ map: tex, transparent: true, depthWrite: false, side: THREE.DoubleSide })
-        const tiefe = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: tex, alphaTest: 0.5 })
-        const netz = new THREE.Mesh(geo, stoff)
-        netz.position.set(((e0 + e1) / 2 - lage.cE) / 1000, hoeheM / 1000, -((n0 + n1) / 2 - lage.cN) / 1000)
-        netz.castShadow = true; netz.customDepthMaterial = tiefe; netz.renderOrder = 3
-        gruppe.add(netz)
-        weg3.push(tex, geo, stoff, tiefe)
-      })
+      // als Ballen (WolkenBild.ts; Michael, 2026-11-07, zu den flachen Ebenen: «Diese dünnen Wolkenschichten sehen visuell nicht schön aus»,
+      // dann «Hört sich genial an - ja bitte»), in echter Höhe, wo es sie für diese Stunde gibt (Michael, 2026-10-29), sonst in den drei Schichten
+      const ballen = wolkenBallen(w, st, e0, n0, e1, n1, (e, n, h) => [(e - lage.cE) / 1000, h / 1000, -(n - lage.cN) / 1000], 1 / 1000,
+        hoechstens() === 4 ? BALLEN_HOECHSTENS_HANDY : BALLEN_HOECHSTENS)
+      if (ballen) { gruppe.add(ballen.netz); weg3.push({ dispose: ballen.weg }) }
       // keine Zeile, wenn alles da ist: Quelle und Zeit stehen in der Anleitung (Michael, 2026-11-06: «Diese Infos braucht es nicht beim
       // Einschalten von Wetter resp Wolken»); eine Lücke bleibt gemeldet
       setWolkenZeile(null)
