@@ -289,14 +289,14 @@ export default function App() {
               Alle Datenquellen und Lizenzen
             </summary>
             <p className="mt-1">
-              Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen und Fahrplan, auch für die Züge und Schiffe in «3D-Land»: opentransportdata.swiss;
+              Datenquelle: SBB Open Data, data.sbb.ch; Wartehallen und Fahrplan, auch für die Züge und Schiffe in «Virtuelle Schweiz»: opentransportdata.swiss;
               Linien anderer Bahnen und Netz: Bundesamt für Verkehr BAV, Schienennetz;
-              Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen, in «3D-Land» die Kurslinien der Schiffe (swissTLMRegio), Luftbild in 3D (SWISSIMAGE), Höhenstufen und das Gelände in 3D (swissALTIRegio, im Führerstand swissALTI3D, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
+              Seen, Flüsse, Wald, Siedlung, Lage der Orte und in Geo Bahnlinien und Kantonsgrenzen, in «Virtuelle Schweiz» die Kurslinien der Schiffe (swissTLMRegio), Luftbild in 3D (SWISSIMAGE), Höhenstufen und das Gelände in 3D (swissALTIRegio, im Führerstand swissALTI3D, mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich, Quellen unter Info),
               Gipfel und Ortsnamen (Swiss Map Vector 1000), Brückenlängen und beim Fahren Tunnel und Brücken
               anderer Bahnen, auch in 3D (swissTLM3D): Bundesamt für Landestopografie swisstopo. Landes- und Kantonsgrenzen:
               Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für
               Bevölkerungsschutz BABS. Seilbahnen: Bundesamt für Verkehr BAV. BLN, Pärke und
-              Moorlandschaften: Bundesamt für Umwelt BAFU. Wetter in der Modellbahn und beim Fahren, Wind und Windprognose dort und in «3D-Land»: MeteoSchweiz (SwissMetNet und lokale Prognose, Open Government Data); Wolken in «3D-Land»: Wettermodell ICON-CH1-EPS, MeteoSchweiz (CC-BY), geladen über 3dland.ch. Seegrund und Felsoberfläche in «3D-Land»: swissBATHY3D und swissBEDROCK (swisstopo); Einwohnerzahl der Gemeinden für den Namen eines Felds dort: swissBOUNDARIES3D (swisstopo). Sterne in «3D-Land»: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).
+              Moorlandschaften: Bundesamt für Umwelt BAFU. Wetter in der Modellbahn und beim Fahren, Wind und Windprognose dort und in «Virtuelle Schweiz»: MeteoSchweiz (SwissMetNet und lokale Prognose, Open Government Data); Wolken in «Virtuelle Schweiz»: Wettermodell ICON-CH1-EPS, MeteoSchweiz (CC-BY), geladen über 3dland.ch. Seegrund und Felsoberfläche in «Virtuelle Schweiz»: swissBATHY3D und swissBEDROCK (swisstopo); Einwohnerzahl der Gemeinden für den Namen eines Felds dort: swissBOUNDARIES3D (swisstopo). Sterne in «Virtuelle Schweiz»: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).
               Entstanden mit Unterstützung von KI (Claude Code; Auftaktbilder und Führerstand: ChatGPT).
               Taktland kann Fehler enthalten. Die Rohdaten können unvollständig oder veraltet
               sein, und auch beim Aufbereiten können Fehler passieren. Taktland ist zum Lernen,

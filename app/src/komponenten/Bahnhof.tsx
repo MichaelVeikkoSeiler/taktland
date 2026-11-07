@@ -122,7 +122,7 @@ export function Bahnhof({ uic, zurueck, eintrag, zurueckText }: {
             <a href={`#/3dland?lat=${eintrag.lat}&lon=${eintrag.lon}&name=${encodeURIComponent(profil.name)}`}
                className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
                           dark:text-sbb-storm dark:hover:text-sbb-white">
-              In 3D-Land ansehen: 1 km um den Bahnhof
+              In der Virtuellen Schweiz ansehen: 1 km um den Bahnhof
             </a>
           </p>
         )}

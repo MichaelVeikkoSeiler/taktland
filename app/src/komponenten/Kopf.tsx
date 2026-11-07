@@ -66,9 +66,10 @@ export type FahrtTeil = 'neu'
  *  zusammengefasst (Michael, 2026-09-25: «ziemlich eng, alle diese Reiter
  *  nebeneinander»); ihre Unterreiter erscheinen, sobald man dort ist. */
 const HAUPT: Array<{ schluessel: string; text: string; bereiche: Bereich[]; adresse?: string }> = [
-  { schluessel: 'objekte', text: 'Bahnland', bereiche: OBJEKTE.map((o) => o.bereich) },  // Name: Michael, 2026-09-25
-  // «Spiele» statt «Duell» (Michael, 2026-10-02): die Übersicht und jedes Spiel darin (src/spiele.ts)
+  // «Spiele» statt «Duell» (Michael, 2026-10-02): die Übersicht und jedes Spiel darin (src/spiele.ts); seit 2026-11-07 vor Bahnland
+  // (Michael: «Spiele vor Bahnland»)
   { schluessel: 'spiele', text: 'Spiele', bereiche: SPIEL_BEREICHE as Bereich[], adresse: '#/spiele' },
+  { schluessel: 'objekte', text: 'Bahnland', bereiche: OBJEKTE.map((o) => o.bereich) },  // Name: Michael, 2026-09-25
   { schluessel: 'standort', text: 'Standort', bereiche: ['standort'], adresse: '#/standort' },
   // erst «Logbuch», seit 2026-09-25 «Reisetasche» (Michael)
   { schluessel: 'reisetasche', text: 'Reisetasche', bereiche: REISETASCHE.map((r) => r.bereich), adresse: '#/logbuch' },
