@@ -4,6 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
+import { Line2 } from 'three/examples/jsm/lines/Line2.js'
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
@@ -58,6 +60,13 @@ const STUFEN: Stufe[] = ['schweiz', 'gross', 'mittel', 'region', 'ort', 'nah']
    «gross» 128 km, «mittel» 64 km, «region» 16 km */
 /** in der Schweiz und in den Gebieten von 128 und 64 km gibt es keine Wanderwege, Züge und Schiffe (erst ab 16 km) und keine
  *  angesetzten Stücke */
+/** Tunnel von seiner Seite: so viel grösser als sein Verlauf muss das Feld sein, dazu das Raster der Stufe darüber (gewählt) */
+const TUNNEL_RAND = 1.15
+/** gestrichelter Verlauf eines Tunnels: Karmin, Breite in Bildpunkten, Strich und Lücke als Anteil der Breite des Modells (gewählt) */
+const STRICH_FARBE = '#a8102e'
+const STRICH_PX = 3
+const STRICH_ANTEIL = 0.012
+const STRICH_LUECKE = 0.008
 const grob = (s: Stufe) => s === 'schweiz' || s === 'gross' || s === 'mittel'
 /** Grösse des Felds, das man in einer Stufe wählt, und das Raster, auf das es rückt; in der Stufe «nah» wählt man nichts mehr
  *  (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail») */
@@ -613,6 +622,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [meldung, setMeldung] = useState<string | null>(null)
   // der zuletzt gesuchte Ort, Gipfel oder See: sein Feld ist in jeder Stufe gewählt, bis man selbst ein anderes wählt
   const [gesucht, setGesucht] = useState<{ e: number; n: number; name: string } | null>(null)
+  // Verlauf eines Tunnels von seiner Seite (LV95), gestrichelt auf dem Gelände (Michael, 2026-11-07: «Die Strecke mit einer gestrichelten Linie anzeigen»)
+  const [strich, setStrich] = useState<Array<[number, number]> | null>(null)
   // der eigene Standort per GPS (Michael, 2026-10-24: «auf der Karte jeweils sehen mit GPS, wo ich durchfahre»): nur auf dem
   // Gerät, nie gesendet; der erste wählt das Feld um ihn wie eine Suche, danach wandert nur der Punkt mit
   const [standort, setStandort] = useState<{ e: number; n: number } | null>(null)
@@ -801,19 +812,35 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     if (!q.get('lat') || !Number.isFinite(lat) || !Number.isFinite(lon)) return
     // die Adresse ohne den Ort, damit «Zurück» und Neuladen nicht wieder eintauchen
     history.replaceState(history.state, '', window.location.pathname + window.location.search + window.location.hash.split('?')[0])
-    const [e, n] = lv95(lat, lon)
+    let [e, n] = lv95(lat, lon)
+    // ein Tunnel mit seinem Verlauf (weg=Breite,Länge_…): die Mitte seines Verlaufs und die kleinste Stufe, in die er ganz passt, auch wenn das
+    // Feld auf das Raster der Stufe darüber rückt (Michael, 2026-11-07: «Beim Anzeigen von Tunnel mit grosser Länge muss ein entsprechend anderer
+    // Ausschnitt angezeigt werden»); ohne Verlauf wie beim Bahnhof das Feld von 1 km
+    const punkte = (q.get('weg') ?? '').split('_').map((t) => t.split(',').map(Number))
+      .filter((t) => t.length === 2 && t.every(Number.isFinite)).map(([la, lo]) => lv95(la, lo) as [number, number])
+    let ziel: Stufe = 'nah'
+    if (punkte.length > 1) {
+      const es = punkte.map((p) => p[0]), ns = punkte.map((p) => p[1])
+      e = (Math.min(...es) + Math.max(...es)) / 2; n = (Math.min(...ns) + Math.max(...ns)) / 2
+      const weite = Math.max(Math.max(...es) - Math.min(...es), Math.max(...ns) - Math.min(...ns))
+      const kette: Array<[Stufe, Exclude<Stufe, 'nah'>]> = [['nah', 'ort'], ['ort', 'region'], ['region', 'mittel'], ['mittel', 'gross'], ['gross', 'schweiz']]
+      ziel = (kette.find(([, ueber]) => FELD_M[ueber] >= weite * TUNNEL_RAND + RASTER_M[ueber]) ?? kette[kette.length - 1])[0]
+      setStrich(punkte)
+    } else setStrich(null)
+    const tief = (s: Stufe) => STUFEN.indexOf(s) <= STUFEN.indexOf(ziel)
     const um = (s: Exclude<Stufe, 'nah'>): Feld => ({ e: Math.round(e / RASTER_M[s]) * RASTER_M[s], n: Math.round(n / RASTER_M[s]) * RASTER_M[s], seite: FELD_M[s] })
     let weg = false
     setGesucht({ e, n, name }); setWahl(um('schweiz')); setLaedt(true); setFehler(null)
     void (async () => {
-      const [gross, mittel, region] = await Promise.all([stufeLaden('gross', um('schweiz'), null), stufeLaden('mittel', um('gross'), null), stufeLaden('region', um('mittel'), null)])
-      const bRegion = einzeln(um('mittel'), region)
-      const ort = await stufeLaden('ort', um('region'), bRegion)
-      const bOrt = einzeln(um('region'), ort)
-      const nah = await stufeLaden('nah', um('ort'), bOrt)
+      const [gross, mittel, region] = await Promise.all([stufeLaden('gross', um('schweiz'), null),
+        tief('mittel') ? stufeLaden('mittel', um('gross'), null) : null, tief('region') ? stufeLaden('region', um('mittel'), null) : null])
+      const bRegion = region && einzeln(um('mittel'), region)
+      const ort = bRegion && tief('ort') ? await stufeLaden('ort', um('region'), bRegion) : null
+      const bOrt = ort && einzeln(um('region'), ort)
+      const nah = bOrt && tief('nah') ? await stufeLaden('nah', um('ort'), bOrt) : null
       if (weg) return
-      setGelaende((a) => ({ ...a, gross: einzeln(um('schweiz'), gross), mittel: einzeln(um('gross'), mittel), region: bRegion, ort: bOrt, nah: einzeln(um('ort'), nah) }))
-      setStufe('nah'); setWahl(null); setOrteAn(true)
+      setGelaende((a) => ({ ...a, gross: einzeln(um('schweiz'), gross), mittel: mittel && einzeln(um('gross'), mittel), region: bRegion, ort: bOrt, nah: nah && einzeln(um('ort'), nah) }))
+      setStufe(ziel); setWahl(null); setOrteAn(true)
     })().catch((x) => { if (!weg) setFehler((x as Error).message) }).finally(() => { if (!weg) setLaedt(false) })
     return () => { weg = true }
   }, [])
@@ -937,7 +964,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
                      sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windBei(p, windZeit), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
-                   zeitSchieben={zeitSchieben} vollbild={voll} />
+                   zeitSchieben={zeitSchieben} vollbild={voll} strich={strich} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
@@ -1618,9 +1645,11 @@ function knopfBild(plus: boolean, an: boolean) {
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null }: {
   /** im Vollbild steht oben rechts das Kreuz, die Zeilen dort rücken darunter */
   vollbild?: boolean
+  /** Verlauf eines Tunnels in LV95, gestrichelt auf dem Gelände */
+  strich?: Array<[number, number]> | null
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -2129,7 +2158,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const f of jeBild) f()
       knoepfeZeigen()
       renderer.getSize(aufloesung)
-      for (const name of ['hoehen', 'wanderwege', 'orte', 'gipfel']) {
+      for (const name of ['hoehen', 'wanderwege', 'orte', 'gipfel', 'strichlinie']) {
         for (const o of wurzel.getObjectByName(name)?.children ?? []) {
           ((o as LineSegments2).material as LineMaterial).resolution?.copy(aufloesung)
           // der helle Rand der Masten hängt am Mast
@@ -3022,6 +3051,61 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       gruppe.removeFromParent()
     }
   }, [b, stufe, wandern])
+
+  // der Verlauf eines Tunnels: gestrichelt auf das Gelände gelegt wie die Wanderwege (so dicht wie das Raster), nur im Modell,
+  // Strich und Lücke nach der Breite des Modells (STRICH_*, gewählt; Michael, 2026-11-07: «Die Strecke mit einer gestrichelten Linie anzeigen»)
+  useEffect(() => {
+    const k = kern.current
+    if (!k || !strich || strich.length < 2) return
+    const { wurzel } = k
+    const { cE, cN } = wurzel.userData.lage as { cE: number; cN: number }
+    const teile = [...b.teile.values()]
+    const r = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...r.map((x) => x.e0)), e1 = Math.max(...r.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...r.map((x) => x.n1 - x.h)), n1 = Math.max(...r.map((x) => x.n1))
+    const schritt = Math.min(...teile.map((t) => t.raster.m))
+    const weiteKm = (wurzel.userData.weiteKm as number) || 1
+    const heben = weiteKm * 0.0012
+    const drin = (e: number, n: number) => e >= e0 && e <= e1 && n >= n0 && n <= n1
+    const gruppe = new THREE.Group()
+    gruppe.name = 'strichlinie'
+    // je zusammenhängendes Stück im Modell eine Linie, damit die Striche durchlaufen
+    let l: number[] = []
+    const fertig = () => {
+      if (l.length >= 6) {
+        const geo = new LineGeometry()
+        geo.setPositions(l)
+        const mat = new LineMaterial({ color: STRICH_FARBE, linewidth: STRICH_PX, dashed: true,
+          dashSize: weiteKm * STRICH_ANTEIL, gapSize: weiteKm * STRICH_LUECKE, depthTest: false })
+        const linie = new Line2(geo, mat)
+        linie.computeLineDistances()
+        linie.renderOrder = 6
+        gruppe.add(linie)
+      }
+      l = []
+    }
+    for (let i = 1; i < strich.length; i++) {
+      const [ae, an] = strich[i - 1], [be, bn] = strich[i]
+      const st = Math.max(1, Math.ceil(Math.hypot(be - ae, bn - an) / schritt))
+      for (let s2 = i === 1 ? 0 : 1; s2 <= st; s2++) {
+        const t = s2 / st, qe = ae + t * (be - ae), qn = an + t * (bn - an)
+        if (!drin(qe, qn)) { fertig(); continue }
+        l.push((qe - cE) / 1000, bestandHoehe(b, qe, qn) / 1000 + heben, -(qn - cN) / 1000)
+      }
+    }
+    fertig()
+    if (gruppe.children.length) wurzel.add(gruppe)
+    return () => {
+      const mats: Array<THREE.Material | undefined> = []
+      gruppe.traverse((x) => {
+        const q = x as THREE.Mesh
+        q.geometry?.dispose()
+        mats.push(q.material as THREE.Material | undefined)
+      })
+      spaeterWeg(mats)
+      gruppe.removeFromParent()
+    }
+  }, [b, stufe, strich])
 
   // die Sonne: ohne Zeit die feste wie bisher, mit Zeit ihr gerechneter Stand, darunter der Horizont dunkel
   const geraetDunkel = useGeraetDunkel()

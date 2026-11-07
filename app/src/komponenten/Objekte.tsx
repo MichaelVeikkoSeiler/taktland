@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { linienProfilLaden, standortLaden } from '../daten'
+import { karteLaden, linienProfilLaden, standortLaden } from '../daten'
+import { LAENGE_ZU_BREITE, lesen, zwischen } from './Netzkarte'
 import type {
   BrueckenEintrag, ListenArt, LinienProfil, NetzEintrag, TunnelEintrag, UebergangEintrag,
 } from '../typen'
@@ -75,14 +76,26 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
   // Lage des gewählten Eintrags laut Quelle (data/standort.json, Linie und Stelle wie hier) für den Link in die
   // Virtuelle Schweiz, wie bei den Bahnhöfen (Michael, 2026-11-07: «Kann man neben Bahnhöfen auch Tunnel, Brücken
   // und Bahnübergänge in 3D anschauen?»); erst geladen, wenn ein Eintrag gewählt ist
-  const [lage3d, setLage3d] = useState<{ lat: number; lon: number } | null>(null)
+  // Bei Tunneln dazu ihr Verlauf aus der Karte der App (data/karte.json: Linie auf 30 m vereinfacht, km von und bis, Anfang und Ende
+  // laut swissTLM3D, wo es sie gibt), als weg=Breite,Länge_…; die Virtuelle Schweiz wählt danach den Ausschnitt und zeichnet ihn gestrichelt
+  // (Michael, 2026-11-07: «Beim Anzeigen von Tunnel mit grosser Länge muss ein entsprechend anderer Ausschnitt angezeigt werden. Die Strecke
+  // mit einer gestrichelten Linie anzeigen»)
+  const [lage3d, setLage3d] = useState<{ lat: number; lon: number; weg: string } | null>(null)
   useEffect(() => {
     setLage3d(null)
     if (markiert === null || filter || art === 'netz') return
     let ab = false
-    standortLaden().then((d) => {
+    Promise.all([standortLaden(), art === 'tunnel' ? karteLaden().catch(() => null) : null]).then(([d, k]) => {
       const z = d[art].find((r) => r[0] === nr && r[1] === markiert)
-      if (!ab && z && z[3] !== null && z[4] !== null) setLage3d({ lat: z[3], lon: z[4] })
+      if (ab || !z || z[3] === null || z[4] === null) return
+      let weg = ''
+      const bereich = k?.tunnel[`${nr}:${markiert}`]
+      const stuecke = k && lesen(k).get(nr)
+      if (bereich && stuecke && bereich[1] > bereich[0]) {
+        const pts = zwischen(stuecke, bereich[0], bereich[1])
+        if (pts.length > 1) weg = pts.map(([x, y]) => `${(-y).toFixed(5)},${(x / LAENGE_ZU_BREITE).toFixed(5)}`).join('_')
+      }
+      setLage3d({ lat: z[3], lon: z[4], weg })
     }).catch(() => {})
     return () => { ab = true }
   }, [nr, art, markiert, filter])
@@ -135,11 +148,11 @@ export function Objekte({ nr, art, filter, markiert, zurueck }: {
           </button>
           {lage3d && (
             <p className="mt-1 text-sm">
-              <a href={`#/3dland?lat=${lage3d.lat}&lon=${lage3d.lon}&name=${encodeURIComponent(
+              <a href={`#/3dland?lat=${lage3d.lat}&lon=${lage3d.lon}${lage3d.weg ? `&weg=${lage3d.weg}` : ''}&name=${encodeURIComponent(
                    gewaehlt.name == null ? `${{ tunnel: 'Tunnel', bruecken: 'Brücke', bahnuebergaenge: 'Bahnübergang', netz: '' }[art]} ohne Namen` : ohneKuerzel(String(gewaehlt.name)))}`}
                  className="text-sbb-metal underline underline-offset-2 hover:text-sbb-black
                             dark:text-sbb-storm dark:hover:text-sbb-white">
-                In der Virtuellen Schweiz ansehen: 1 km um die Lage laut Quelle
+                {lage3d.weg ? 'In der Virtuellen Schweiz ansehen: der Tunnel gestrichelt' : 'In der Virtuellen Schweiz ansehen: 1 km um die Lage laut Quelle'}
               </a>
             </p>
           )}
