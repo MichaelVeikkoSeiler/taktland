@@ -22,7 +22,7 @@ import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
-import { jetztImFahrplan, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
+import { jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { planText } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
@@ -545,6 +545,9 @@ async function stufeLaden(s: Exclude<Stufe, 'schweiz'>, f: Feld, unter: Bestand 
  *  hoechstens()), sonst fällt die Reihe gegenüber weg; Minus, solange mehr als ein Stück da ist */
 export interface Knoepfe { plus: Record<Seite, boolean>; wachsen: Record<Seite, boolean>; minus: Record<Seite, boolean> }
 
+/** 2026-11-19 als 19.11.2026 */
+const datumKurz = (d: string) => { const [j, m, t] = d.split('-').map(Number); return `${t}.${m}.${j}` }
+
 /** eigeneSeite: auf 3dland.ch die ganze Seite, ohne den Weg zurück zu den Spielen von Taktland */
 export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boolean }) {
   useEffect(() => szeneLaden(), [])
@@ -596,7 +599,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const hoerNieder = niederBild !== undefined ? niederBild : niederJetzt
   useEffect(() => () => wetterGeraeuschAus(), [])
   const [tag, setTag] = useState(() => jetztInDerSchweiz().datum)
-  const [minuten, setMinuten] = useState(() => Math.round(jetztInDerSchweiz().minuten / 15) * 15 % 1440)
+  const [minuten, setMinuten] = useState(() => jetztInDerSchweiz().minuten)
+  // die Zeit der Szene als Abstand zu jetzt: sie läuft mit der Uhr weiter, auch nach einer Zeitreise (Michael, 2026-11-07: «Oben soll man immer die
+  // Uhrzeit der aktuell angezeigten Szenerie sehen … Und die Züge sollen entsprechend der gewählten Zeit angezeigt werden»)
+  const [versatzMs, setVersatzMs] = useState(0)
+  useEffect(() => { szenenZeit.versatzMs = versatzMs; return () => { szenenZeit.versatzMs = 0 } }, [versatzMs])
   // «Jetzt» ist gedrückt, solange die Zeit die jetzige ist; erst eine Verschiebung von Hand löst ihn (Michael, 2026-10-29: «Darum dieser
   // Knopf aktiv gedrückt. Erst eine manuelle Zeitverschiebung deaktiviert ihn»); gedrückt folgt die Zeit der Uhr, je 15 Minuten
   const [jetztAn, setJetztAn] = useState(true)
@@ -709,28 +716,43 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     ? `Sonne ${Math.round(stand.hoehe)}° über dem Horizont, im ${himmelsrichtung(stand.richtung)}`
     : 'Die Sonne steht unter dem Horizont') : null
   const sonnenZeilen = useMemo(() => (stand ? [`${tagText}, ${uhrzeit(minuten)} Uhr`, standText!] : null), [stand, tagText, minuten, standText])
+  // die Uhr der Szene läuft weiter, ob jetzt oder nach einer Zeitreise
   useEffect(() => {
-    if (!jetztAn) return
-    const nachstellen = () => { const j = jetztInDerSchweiz(); setTag(j.datum); setMinuten(Math.round(j.minuten / 15) * 15 % 1440) }
+    const nachstellen = () => { const j = jetztInDerSchweiz(new Date(Date.now() + versatzMs)); setTag(j.datum); setMinuten(j.minuten) }
     nachstellen()
-    const t = window.setInterval(nachstellen, 60_000)
+    const t = window.setInterval(nachstellen, 5_000)
     return () => window.clearInterval(t)
-  }, [jetztAn])
-  const zeitSchieben = (art: 'stunde' | 'tag' | 'jetzt', um: number) => {
-    if (art === 'jetzt') { const j = jetztInDerSchweiz(); setTag(j.datum); setMinuten(Math.round(j.minuten / 15) * 15 % 1440); setJetztAn(true); return }
-    setJetztAn(false)
+  }, [versatzMs])
+  /** die Szene auf ein Schweizer Datum und eine Minute setzen */
+  const zeitSetzen = (datum: string, min: number) => {
+    setJetztAn(false); setTag(datum); setMinuten(min)
+    setVersatzMs(schweizerZeit(datum, min).getTime() - Date.now())
+  }
+  const zeitSetzenRef = useRef(zeitSetzen); zeitSetzenRef.current = zeitSetzen
+  const [uhrOffen, setUhrOffen] = useState(false)
+  const szenenText = useMemo(() => schweizerZeit(tag, minuten).toLocaleString('de-CH', { timeZone: 'Europe/Zurich', weekday: 'short', day: 'numeric',
+    month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }), [tag, minuten])
+  // welche Tage der Fahrplan der Züge kennt, für den Hinweis bei einer Zeitreise ausserhalb
+  const [fahrplanTage, setFahrplanTage] = useState<{ von: string; bis: string } | null>(null)
+  useEffect(() => { void zugIndexLaden().then((ix) => { if (ix) setFahrplanTage({ von: ix.von, bis: ix.bis }) }) }, [])
+  const tagRef = useRef(tag); tagRef.current = tag
+  const zeitSchieben = (art: 'stunde' | 'tag' | 'monat' | 'jetzt', um: number) => {
+    if (art === 'jetzt') { const j = jetztInDerSchweiz(); setTag(j.datum); setMinuten(j.minuten); setJetztAn(true); setVersatzMs(0); return }
+    const [j, m, t] = tag.split('-').map(Number)
     if (art === 'stunde') {
-      const neu = minuten + um * 60
-      if (neu < 0 || neu >= 1440) {
-        const [j, m, t] = tag.split('-').map(Number)
-        setTag(new Date(Date.UTC(j, m - 1, t + (neu < 0 ? -1 : 1))).toISOString().slice(0, 10))
-      }
-      setMinuten(((neu % 1440) + 1440) % 1440)
+      const d = new Date(Date.UTC(j, m - 1, t, 0, minuten + um * 60))
+      zeitSetzen(d.toISOString().slice(0, 10), d.getUTCHours() * 60 + d.getUTCMinutes())
+      return
+    }
+    // Monate wieder dazu (Michael, 2026-11-07: «Bitte Monate ergänzen»; 2026-10-24 durch Tage ersetzt): am 31. ein Monat weiter ist der letzte Tag
+    // des nächsten Monats
+    if (art === 'monat') {
+      const letzter = new Date(Date.UTC(j, m - 1 + um + 1, 0)).getUTCDate()
+      zeitSetzen(new Date(Date.UTC(j, m - 1 + um, Math.min(t, letzter))).toISOString().slice(0, 10), minuten)
       return
     }
     // einen Tag vor oder zurück (Michael, 2026-10-24: «−1 Monat und +1 Monat durch Tage ersetzen»)
-    const [j, m, t] = tag.split('-').map(Number)
-    setTag(new Date(Date.UTC(j, m - 1, t + um)).toISOString().slice(0, 10))
+    zeitSetzen(new Date(Date.UTC(j, m - 1, t + um)).toISOString().slice(0, 10), minuten)
   }
   // Gebäude und Bäume gibt es vorerst nur in zwei Probeausschnitten
   useEffect(() => {
@@ -868,7 +890,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => { setJetztAn(false); setMinuten(m) }, plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -952,6 +974,37 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
           {!voll && <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />}
         </div>
+        {/* oben rechts immer die Uhr der Szene, ein Tipp öffnet die Eingabe auf die Minute (Michael, 2026-11-07: «Oben soll man immer die Uhrzeit der
+            aktuell angezeigten Szenerie sehen. Dient der Orientierung … Man soll auch eine spezifische Zeit auf Minuten genau eingeben können») */}
+        <div className={`absolute right-2 z-10 flex flex-col items-end gap-1 ${voll ? 'top-14' : 'top-2'}`}>
+          <button type="button" onClick={() => setUhrOffen((x) => !x)} aria-expanded={uhrOffen} title="Zeit der Szene wählen"
+                  className={`flex items-center gap-1.5 rounded-lg border px-2 py-1 text-xs font-bold tabular-nums shadow-sm ${jetztAn
+                    ? 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'
+                    : 'border-sbb-red bg-white/95 text-sbb-red dark:bg-sbb-midnight/95'}`}>
+            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
+            </svg>
+            {szenenText}{jetztAn ? '' : ' · Zeitreise'}
+          </button>
+          {uhrOffen && (
+            <div className="w-64 rounded-lg bg-white/95 p-2 text-xs shadow-lg dark:bg-sbb-midnight/95">
+              <label className="block font-bold" htmlFor="szenenzeit">Zeit der Szene (Schweizer Zeit)</label>
+              <input id="szenenzeit" type="datetime-local" step={60} value={`${tag}T${uhrzeit(minuten)}`}
+                     onChange={(e) => { const [d, z] = e.target.value.split('T'); if (d && z) { const [h, mi] = z.split(':').map(Number); zeitSetzen(d, h * 60 + mi) } }}
+                     className="mt-1 w-full rounded-lg border border-sbb-cloud bg-white px-2 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight" />
+              <div className="mt-2 flex gap-2">
+                <button type="button" onClick={() => zeitSchieben('jetzt', 0)} aria-pressed={jetztAn}
+                        className={'rounded-lg border px-2.5 py-1 font-bold ' + (jetztAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>Jetzt</button>
+                <button type="button" onClick={() => setUhrOffen(false)} className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Schliessen</button>
+              </div>
+              <p className="mt-2 text-sbb-metal dark:text-sbb-storm">
+                Die Zeit läuft von dort an weiter. Sie gilt für die Züge und Schiffe und, mit «Sonne», für Licht, Schatten, Sterne, Wetter und Wolken.
+                {fahrplanTage && (tag < fahrplanTage.von || tag > fahrplanTage.bis)
+                  && ` Für diesen Tag gibt es keinen Fahrplan: geladen ist der ${datumKurz(fahrplanTage.von)} bis ${datumKurz(fahrplanTage.bis)}.`}
+              </p>
+            </div>
+          )}
+        </div>
         {/* im Vollbild ein Kreuz oben rechts in der Ecke statt «Schliessen» unten (Michael, 2026-11-07: «Lieber ein passendes Schliessen-Icon an
             der Ecke»; unten legt Chrome auf Android seinen Hinweis zum Beenden darüber) */}
         {voll && (
@@ -1011,11 +1064,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
         {sonnenAn && (
           <>
-            <input type="date" value={tag} onChange={(e) => { if (e.target.value) { setJetztAn(false); setTag(e.target.value) } }} aria-label="Datum"
+            <input type="date" value={tag} onChange={(e) => { if (e.target.value) zeitSetzen(e.target.value, minuten) }} aria-label="Datum"
                    className="rounded-lg border border-sbb-cloud bg-white px-2 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
             <label className="flex min-w-48 flex-1 items-center gap-2">
               <span className="sr-only">Uhrzeit</span>
-              <input type="range" min={0} max={1425} step={15} value={minuten} onChange={(e) => { setJetztAn(false); setMinuten(Number(e.target.value)) }}
+              <input type="range" min={0} max={1439} step={1} value={minuten} onChange={(e) => zeitSetzen(tag, Number(e.target.value))}
                      className="flex-1 accent-sbb-red" />
               <span className="w-12 font-bold tabular-nums">{uhrzeit(minuten)}</span>
             </label>
@@ -1137,11 +1190,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         <Abschnitt titel="Sonne und Schatten">
           <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
-            −1 h und +1 h die Zeit, −1 Tag und +1 Tag das Datum, «Jetzt» setzt beides auf jetzt. Am Anfang gilt die jetzige Zeit, «Jetzt» leuchtet dann und die Zeit läuft mit der Uhr mit,
-            bis man sie selbst verschiebt; unter dem Modell lassen sich Datum und
-            Uhrzeit auch direkt wählen. Steht die Sonne unter dem Horizont, brennt Licht in den Fenstern der Gebäude, abends in vielen,
-            nach Mitternacht in wenigen. Fenster und Stockwerke stehen in keiner Quelle: Sie sind gezeichnet, und wie viele brennen, ist
-            eine Annahme. Nachts wird der Himmel dunkel, und es stehen die Sterne bis zur Helligkeit 6 dort, wo sie zu dieser Zeit über
+            −1 h und +1 h die Zeit, −1 Tag und +1 Tag sowie −1 Monat und +1 Monat das Datum, «Jetzt» setzt beides auf jetzt. Am Anfang gilt die
+            jetzige Zeit, «Jetzt» leuchtet dann. Oben rechts im Bild steht immer die Zeit der Szene; ein Tipp darauf öffnet ein Feld, in dem sich Datum
+            und Uhrzeit auf die Minute eingeben lassen, unter dem Modell auch mit einem Regler. Von der gewählten Zeit an läuft die Uhr weiter. Die Zeit
+            gilt auch für die Züge und Schiffe laut Fahrplan, so weit der geladene Fahrplan reicht (etwa zwei Wochen ab gestern). Steht die Sonne unter
+            dem Horizont, brennt Licht in den Fenstern der Gebäude, abends in vielen, nach Mitternacht in wenigen. Fenster und Stockwerke stehen in
+            keiner Quelle: Sie sind gezeichnet, am Tag als dunkle Scheiben, und wie viele nachts brennen, ist eine Annahme. Nachts wird der Himmel dunkel, und es stehen die Sterne bis zur Helligkeit 6 dort, wo sie zu dieser Zeit über
             der Mitte des Modells stehen.</p>
         </Abschnitt>
         <Abschnitt titel="Seen und Seetiefe">
@@ -1568,7 +1622,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   sonnenZeilen: string[] | null
   /** «Jetzt» gedrückt: die Zeit ist die jetzige */
   jetztAn: boolean
-  zeitSchieben: (art: 'stunde' | 'tag' | 'jetzt', um: number) => void
+  zeitSchieben: (art: 'stunde' | 'tag' | 'monat' | 'jetzt', um: number) => void
   /** Wanderwege zeigen (in den Stufen 16 km, 4 km und 1 km) */
   wandern: boolean
   /** Züge laut Fahrplan zeigen (ab der Stufe 16 km), zuegeDa: der Knopf dazu */
@@ -2756,7 +2810,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     ]
     const zeitDa = sonnenAn && !!sonnenZeilen
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
-    const zeit = (art: 'stunde' | 'tag' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
+    const zeit = (art: 'stunde' | 'tag' | 'monat' | 'jetzt', um: number) => () => cb.current.zeitSchieben(art, um)
     // die zweite Reihe nur mit «Sonne» an, im Band, um das der Sockel dann höher ist, rechtsbündig unter der ersten, Datum und Uhrzeit ganz
     // rechts (Michael, 2026-10-30: «Die untere Zeile rechtsbündig machen. Datum ganz rechts»), «Jetzt» gleich daneben und gedrückt, solange die
     // Zeit die jetzige ist; alle Knöpfe gleich breit (Michael, 2026-10-29: «Stunden und Tage Knöpfe gleich breit wie andere, Jetzt auch»)
@@ -2765,6 +2819,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: ['+1 h'], breite: KNOPF_B * W, knopf: true, aktion: zeit('stunde', 1) },
       { zeilen: ['−1 Tag'], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', -1) },
       { zeilen: ['+1 Tag'], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', 1) },
+      { zeilen: ['−1 Monat'], breite: KNOPF_B * W, knopf: true, aktion: zeit('monat', -1) },
+      { zeilen: ['+1 Monat'], breite: KNOPF_B * W, knopf: true, aktion: zeit('monat', 1) },
       { zeilen: ['Jetzt'], breite: KNOPF_B * W, an: jetztAn, farbe: LICHT.sonne, aktion: zeit('jetzt', 0) },
       { zeilen: [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)], breite: 0.09 * W },
     ] : []
@@ -4352,7 +4408,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {/* Züge und Schiffe sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind; oben rechts, eng untereinander, damit
           sie nicht ins Bild ragen und «Eintauchen» oben links frei bleibt (Michael, 2026-10-28: «Die Hinweise oben links sollen weiter oben stehen») */}
       {(zugZeile || schiffZeile) && (
-        <div className={`pointer-events-none absolute right-2 ${vollbild ? 'top-14' : 'top-2'} flex max-w-[60%] flex-col items-end gap-0.5 text-right`}>
+        <div className={`pointer-events-none absolute right-2 ${vollbild ? 'top-[6.5rem]' : 'top-12'} flex max-w-[60%] flex-col items-end gap-0.5 text-right`}>
           {zugZeile && (
             <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{zugZeile}</p>
           )}

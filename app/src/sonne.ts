@@ -41,9 +41,9 @@ export function schweizerZeit(datum: string, minuten: number): Date {
 }
 
 /** heute und jetzt als Schweizer Datum und Minuten */
-export function jetztInDerSchweiz(): { datum: string; minuten: number } {
+export function jetztInDerSchweiz(zeit = new Date()): { datum: string; minuten: number } {
   const teile = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Zurich', year: 'numeric', month: '2-digit',
-    day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map((p) => [p.type, p.value]))
+    day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(zeit).map((p) => [p.type, p.value]))
   return { datum: `${teile.year}-${teile.month}-${teile.day}`, minuten: Number(teile.hour) * 60 + Number(teile.minute) }
 }
 

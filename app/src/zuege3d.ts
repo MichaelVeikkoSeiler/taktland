@@ -62,7 +62,10 @@ export async function zuegeLaden(ix: ZugIndex, e0: number, n0: number, e1: numbe
 /** jetzt in der Schweiz: Tag ab index.von und Minuten ab Mitternacht mit Bruchteil */
 /** nur in der Testfassung (VITE_S3D_TEST): so viele Minuten später als jetzt */
 export const zugTest = { versatzMin: 0 }
-export function jetztImFahrplan(ix: Pick<ZugIndex, 'von'>, zeit = new Date(Date.now() + zugTest.versatzMin * 60_000)): { tag: number; minuten: number } {
+/** die Zeit der Szene in «3D-Land» als Abstand zu jetzt (Michael, 2026-11-07: «die Züge sollen entsprechend der gewählten Zeit angezeigt werden»);
+ *  0 ist jetzt, beim Verlassen von 3D-Land wieder 0 */
+export const szenenZeit = { versatzMs: 0 }
+export function jetztImFahrplan(ix: Pick<ZugIndex, 'von'>, zeit = new Date(Date.now() + szenenZeit.versatzMs + zugTest.versatzMin * 60_000)): { tag: number; minuten: number } {
   const teile = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Zurich', year: 'numeric', month: '2-digit',
     day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23' }).formatToParts(zeit).map((p) => [p.type, p.value]))
   const heute = Date.UTC(Number(teile.year), Number(teile.month) - 1, Number(teile.day))

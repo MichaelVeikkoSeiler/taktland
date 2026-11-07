@@ -21,6 +21,8 @@ const FENSTER_HELL = 0.9
  *  FERN_AB_M je Bildpunkt sinkt die Helligkeit mit dem Abstand bis auf FERN_MIN (gewählt; vorher wurden sie weit weg heller) */
 const FERN_AB_M = 0.5, FERN_MIN = 0.12
 const FENSTER_STOCK_M = 3, FENSTER_ACHSE_M = 3.2, FENSTER_BREITE_M = 1.3, FENSTER_HOEHE_M = 1.5, FENSTER_BRUESTUNG_M = 0.9
+/** die Fenster am Tag: Farbe des Glases (dunkel, leicht bläulich) und wie stark sie die Wand abdunkeln (gewählt, in keiner Quelle) */
+const FENSTER_GLAS = [0.13, 0.16, 0.2], FENSTER_TAG = 0.75
 /** Anteil der brennenden Fenster je Stunde (Schweizer Zeit) an der Stunde 0, 1, …; gewählt, ungefähr: abends die meisten,
  *  nach Mitternacht wenige, am Morgen wieder mehr; tagsüber zählt es nicht, dann ist es hell */
 const LICHT_ANTEIL = [0.12, 0.07, 0.05, 0.04, 0.04, 0.06, 0.14, 0.22, 0.18, 0.12, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.12, 0.2, 0.3, 0.36,
@@ -119,6 +121,19 @@ export function gebaeudeMaterial() {
         float boden = 1.0 - clamp((vGebaeude.x - ${WAND_TIEFER_M.toFixed(1)}) / ${AO_BODEN_M.toFixed(1)}, 0.0, 1.0);
         diffuseColor.rgb *= mix(1.0, ${AO_BODEN.toFixed(3)}, boden * boden);
         diffuseColor.rgb *= mix(${AO_DACH.toFixed(3)}, 1.0, smoothstep(0.0, ${AO_DACH_M.toFixed(2)}, vGebaeude.y));
+        // die Fenster auch am Tag als dunkle Scheiben, im selben Raster wie das Licht nachts (Michael, 2026-11-07: «Bitte die fiktiven Fenster der
+        // Gebäude leicht stärker hervorheben»; Vorschlag 2 vom 2026-11-06); weit weg über den Bildpunkt gemittelt wie nachts
+        float hbT = vGebaeude.x - ${WAND_TIEFER_M.toFixed(1)};
+        float stT = floor(hbT / ${FENSTER_STOCK_M.toFixed(2)}), acT = floor(vWand.x / ${FENSTER_ACHSE_M.toFixed(2)});
+        float fyT = hbT - stT * ${FENSTER_STOCK_M.toFixed(2)}, fxT = vWand.x - acT * ${FENSTER_ACHSE_M.toFixed(2)};
+        float rxT = (${FENSTER_ACHSE_M.toFixed(2)} - ${FENSTER_BREITE_M.toFixed(2)}) * 0.5, bxT = rxT + ${FENSTER_BREITE_M.toFixed(2)};
+        float byT = ${(FENSTER_BRUESTUNG_M + FENSTER_HOEHE_M).toFixed(2)};
+        float wxT = max(fwidth(vWand.x), 0.001), wyT = max(fwidth(hbT), 0.001);
+        float imT = (clamp(fxT + wxT * 0.5, rxT, bxT) - clamp(fxT - wxT * 0.5, rxT, bxT)) / wxT
+          * (clamp(fyT + wyT * 0.5, ${FENSTER_BRUESTUNG_M.toFixed(2)}, byT) - clamp(fyT - wyT * 0.5, ${FENSTER_BRUESTUNG_M.toFixed(2)}, byT)) / wyT;
+        float drinT = step(0.0, hbT) * step(byT - fyT + 0.3, vGebaeude.y);
+        imT = mix(imT, ${((FENSTER_BREITE_M * FENSTER_HOEHE_M) / (FENSTER_ACHSE_M * FENSTER_STOCK_M)).toFixed(3)}, smoothstep(0.3, 0.8, max(wxT / ${FENSTER_ACHSE_M.toFixed(2)}, wyT / ${FENSTER_STOCK_M.toFixed(2)})));
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(${FENSTER_GLAS.map((x) => x.toFixed(3)).join(', ')}), imT * drinT * ${FENSTER_TAG.toFixed(2)});
       }`)
   }
   return m
@@ -180,9 +195,10 @@ export function gebaeudeFlaechen(geo: THREE.BufferGeometry, meter = 1, hoeheMete
 /** die Wandfarbe der Daten (pipeline/build_gebaeude.py, WAND): ein Grau, das in keiner Quelle steht; Dächer haben die Farbe des Luftbilds */
 const WAND_DATEN = [196, 192, 184]
 /** helle Putztöne, je Gebäude einer (Michael, 2026-11-06: «Bitte mal 1 und 3 machen», 3: Wandfarben leicht variieren); gewählt,
- *  die echte Fassadenfarbe steht in keiner Quelle */
+ *  die echte Fassadenfarbe steht in keiner Quelle; seit 2026-11-07 etwas dunkler, nahe beim früheren Grau: zu hell gingen die Wände neben den
+ *  Dächern mit dem Luftbild unter (Michael, Genf Flughafen: «haben Gebäude keine Wände») */
 const PUTZ: Array<[number, number, number]> = [
-  [214, 210, 200], [222, 214, 196], [206, 198, 182], [198, 198, 194], [216, 202, 182], [212, 202, 196], [200, 204, 198], [226, 222, 214],
+  [198, 194, 184], [206, 198, 180], [190, 182, 166], [182, 182, 178], [200, 186, 166], [196, 186, 180], [184, 188, 182], [210, 206, 198],
 ]
 /** je Gebäude die Helligkeit dazu etwas anders, ± so viel (gewählt) */
 const PUTZ_STREUUNG = 0.04
