@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { tonBereitlegen } from '../fahrt'
+import { dreiDVormerken } from '../relief'
 import {
   gemerktLesen, type GemerkteFahrt, probefahrtEinsetzen, probefahrtUmschalten, probefahrtVerschieben,
 } from '../fahrten'
@@ -19,19 +20,16 @@ export const modellAdresse = (w: StreckenWahl) => `${streckenAdresse(w).replace(
 const unterKnopf = `flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2 text-left
                     hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal`
 
-/** Je Richtung zwei Wege: abspielen wie unterwegs oder als Modell */
+/** Je Richtung ein Knopf «Probefahren» (Michael, 2026-11-07: Probefahrt und Modell Schritt für Schritt zusammenlegen, «Weniger Verwirrung …
+ *  Ist eben schon der grosse Störfaktor», Name «Probefahren»): die Probefahrt beginnt gleich in 3D, bis etwa 200 km mit der ganzen Strecke als
+ *  Modell; vorher je Richtung «Probefahrt» und «Als Modell» */
 export function RichtungKnoepfe({ w, text, vorher }: { w: StreckenWahl; text: string; vorher?: () => void }) {
   return (
     <div className="grid gap-1">
       <span className="px-1 pt-1 text-sm font-medium">{text}</span>
-      <div className="grid grid-cols-2 gap-2">
-        <button type="button" onClick={() => { vorher?.(); probeStarten(w) }} className={unterKnopf}>
-          <span className="text-sm font-bold text-sbb-red">Probefahrt</span>
-        </button>
-        <a href={modellAdresse(w)} className={unterKnopf}>
-          <span className="text-sm font-bold text-sbb-red">Als Modell</span>
-        </a>
-      </div>
+      <button type="button" onClick={() => { vorher?.(); dreiDVormerken(); probeStarten(w) }} className={unterKnopf}>
+        <span className="text-sm font-bold text-sbb-red">Probefahren</span>
+      </button>
     </div>
   )
 }
@@ -59,8 +57,8 @@ export function Probefahrten({ imNetz, name }: { imNetz: IndexEintrag[]; name: (
     <section>
       <h2 className="mt-8 text-xl font-bold tracking-tight">Deine Probefahrten</h2>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        Die Probefahrt spielt den Weg wie unterwegs ab, mit Karte, Meldungen und wählbarem Tempo, ohne Zug und ohne
-        Standort. Als Modell steht die Strecke zum Drehen da, bis etwa 200 km.
+        «Probefahren» fährt den Weg in 3D ab, bis etwa 200 km mit der ganzen Strecke als Modell zum Drehen, dazu Karte, Meldungen und
+        wählbares Tempo, ohne Standort.
       </p>
       {entfernt && (
         <div role="status" className="kachel mt-4 flex items-center justify-between gap-3 py-1 pl-4 pr-1">

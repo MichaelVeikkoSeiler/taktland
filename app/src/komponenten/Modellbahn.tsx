@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { fahrtZiele, namenFuerFahrt } from '../daten'
 import type { BahnhofIndex } from '../typen'
-import { dreiDVormerken, reliefListe } from '../relief'
+import { reliefListe } from '../relief'
 import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import type { StreckenWahl } from './Strecke'
-import { probeStarten, Probefahrten } from './Probefahrten'
+import { Probefahrten, RichtungKnoepfe } from './Probefahrten'
 import { ModellHinweis } from './ModellHinweis'
 import { Klappe } from './Klappe'
 
@@ -33,23 +33,18 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">Modellbahn</h1>
       <p className="mt-2 leading-relaxed">
-        Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen. Mit einer Brille wie der
-        Meta Quest steht das Modell vor dir auf dem Tisch.
+        Eine Strecke in 3D im Gelände: «Probefahren» fährt den Zug von A nach B, bis etwa 200 km mit der ganzen Strecke als Modell zum
+        Drehen und Zoomen. Mit einer Brille wie der Meta Quest steht das Modell vor dir auf dem Tisch.
       </p>
       <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        «Führerstand» setzt dich vorne in den Zug: Der rechte Hebel wählt das Tempo, der linke bremst, die Leuchtknöpfe schalten
-        Zuggeräusch, Stirnlicht, Signalhorn, Dämmerung und was gemeldet wird. Zu sehen ist das echte Wetter der nächsten Station
-        von MeteoSchweiz; leuchtet der Sonnenschalter, ist Schönwetter.
-      </p>
-      <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
-        «Zug fahren» schickt den Zug in 2,5 Minuten über das ganze Modell. Eine Probefahrt spielt den Weg wie unterwegs ab, mit
-        Karte, Meldungen und wählbarem Tempo.
+        «Führerstand» setzt dich vorne in den Zug, die Leuchtknöpfe am Pult schalten Zuggeräusch, Stirnlicht, Signalhorn, Dämmerung und was
+        gemeldet wird. Zu sehen ist das echte Wetter der nächsten Station von MeteoSchweiz; leuchtet der Sonnenschalter, ist Schönwetter.
       </p>
 
       <a href="#/modellbahn/strecke" className="kachel kachel-link mt-5 flex min-h-11 items-center justify-between gap-3 px-4 py-3">
         <span className="min-w-0">
           <span className="block font-medium">Eigene Strecke</span>
-          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Von, nach und über wählen, bis etwa 200 km</span>
+          <span className="block text-sm text-sbb-metal dark:text-sbb-storm">Von, nach und über wählen</span>
         </span>
         <span className="pfeil shrink-0" aria-hidden="true">→</span>
       </a>
@@ -79,22 +74,9 @@ export function Modellbahn({ index }: { index: BahnhofIndex | null }) {
                 </button>
                 {auf && (
                   <div className="grid gap-3 px-3 pb-3">
-                    <a href={`#/modellbahn/${r.name}`}
-                       className="flex min-h-11 items-center justify-between gap-3 rounded-lg bg-white px-3 py-2
-                                  hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
-                      <span className="min-w-0 font-medium">Ganze Strecke als Modell</span>
-                      <span className="shrink-0 text-sm font-bold text-sbb-red">Als Modell</span>
-                    </a>
                     {/* als Probefahrt beginnt sie gleich in 3D (früher unter «Probefahren», Bergstrecken) */}
                     {p && [p, { von: p.nach, nach: p.von, ueber: p.ueber }].map((w) => (
-                      <div key={`${w.von}-${w.nach}`} className="grid gap-1">
-                        <span className="px-1 pt-1 text-sm font-medium">{text(w)}</span>
-                        <button type="button" onClick={() => { dreiDVormerken(); probeStarten(w) }}
-                                className="flex min-h-11 items-center rounded-lg bg-white px-3 py-2 text-left hover:bg-sbb-milk
-                                           dark:bg-sbb-midnight dark:hover:bg-sbb-charcoal">
-                          <span className="text-sm font-bold text-sbb-red">Probefahrt</span>
-                        </button>
-                      </div>
+                      <RichtungKnoepfe key={`${w.von}-${w.nach}`} w={w} text={text(w)} />
                     ))}
                   </div>
                 )}
