@@ -853,7 +853,7 @@ Lücken bleiben sichtbar (Regel 5), die Quellenzeile der Fusszeile ebenso.
 
 **Reiter** (Michael, 2026-10-16): «Fahren» ist nur noch Mitfahren, ohne Unterreiter, und nur mit Ziel, der Start ist der nächste Bahnhof per GPS (Michael, 2026-10-21: ohne «Start und Ziel» und ohne «Ohne Ziel»; komponenten/Fahrt.tsx); die Probefahrten (aufklappen, je Richtung «Probefahrt»
 oder «Als Modell», Reihenfolge, hinzufügen, löschen; komponenten/Probefahrten.tsx) und die Bergstrecken als Probefahrt stehen bei
-Spiele, Modellbahn (#/fahrt/probe führt dorthin); das Fahrtblatt ist der vierte Reiter der Reisetasche (#/fahrtblatt, FahrtblattWahl.tsx).
+Spiele, Modellbahn (#/fahrt/probe führt dorthin); das Fahrtblatt ist der vierte Reiter der Reisetasche (#/fahrtblatt, FahrtblattWahl.tsx); die Unterreiter auf dem Handy enger (je 7 px Rand, ohne Abstand, über die Breite verteilt), damit die vier der Reisetasche ab 360 Bildpunkten ohne Schieben Platz haben (Kopf.tsx; Michael, 2026-11-07: «Geht auch Fahrblatt statt Fahrtblatt? So müsste man nicht seitwärts scrollen. Oder die unteren Register leicht zusammenrücken»; der Name bleibt).
 
 **Wo bin ich?** (Spiele, #/wobinich, Michael, 2026-10-18): fünf Runden, je ein zufälliges Stück einer Linie aus data/strecken.json
 (5 bis 45 km Weg, höchstens ein Viertel der Fahrt im Tunnel, beide Enden in der Schweiz; src/wobinich.ts), im Führerstand wie bei der
