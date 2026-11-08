@@ -706,6 +706,16 @@ data/bruecken3d/  Brücken für «3D Schweiz» (Michael, 2026-10-30: «Kannst du
              standen sie im Hang); seit 2026-11-08 darunter das Luftbild retuschiert wie im Führerstand (retuschieren, jetzt in komponenten/Bruecken.ts für beide; Michael, Bern: «bei Brücken … darunter auf der Oberfläche einfach noch die Brücke als zweite Texturierung … inhaltsbasiert aufzufüllen, wie bei Photoshop»): auf dem Bild jedes Stücks des Felds, breiter als die gezeichnete Brücke, Strassen und Wege die halbe Breite mal 1,5 und 3 m dazu, Gleise 2 m über die Platte (RETUSCHE_STRASSE_*, RETUSCHE_GLEIS_PLUS_M, gewählt; die Klasse nennt oft nur die Fahrbahn, die Kornhausbrücke ist eine «6m Strasse»), in «Was erfunden ist» genannt: unter der Brücke aus dem Bild daneben aufgefüllt, keine Aufnahme (Michael: «Du könntest es ja erwähnen, dass unterhalb von Brücken gezeichnet und erfunden ist»); im Führerstand alle Brücken im feinen Gelände ausser denen der eigenen Linie (fremdeBruecken in Relief.tsx: ein Gleisstück,
              das an mehr als der Hälfte seiner Punkte höchstens 20 m neben der gezeichneten Strecke liegt, gehört zur eigenen Brücke), mit Retusche darunter,
              statt nur der Strassenbrücken über der Bahn aus data/strassenbruecken.json, das die App nicht mehr liest; in Anleitung und Quellen genannt
+data/brueckenart.json  Bauart der Brücken für «3D Schweiz» (Michael, 2026-11-08: «kannst du auch recherchieren, wie die Brücke architektonisch ungefähr
+             aussieht, damit du diese ungefähr so nachbauen kannst? Torbogen, Stahlbrücke, etc.», dann «Ja gern»): pipeline/build_brueckenart.py fragt Wikidata (CC0)
+             nach Brücken in der Schweiz mit Lage, Arten (P31) und Material (P186), 1'360 Brücken; die Sitzung erreicht Wikidata nicht, der Workflow «Brückenart»
+             (.github/workflows/brueckenart.yml, von Hand) legt die Datei auf main, export_app kopiert sie; in der App komponenten/Bauart.ts: je Eintrag mit Bogen
+             oder Fachwerk (ohne zerstörte, ehemalige und Holzbrücken, die meist gedeckt sind) das nächste Stück aus data/bruecken3d bis 40 m, dazu anschliessende
+             Stücke in derselben Richtung bis zur Länge laut Wikidata (sonst lief die Kette über die Gegenfahrbahn zurück), in den Feldern von 4 km und 1 km:
+             Bogen unter der Fahrbahn, wo die Luft mindestens 60 % der grössten ist, Stein als voller Körper, Beton über die ganze Breite mit Stützen, Stahl als
+             zwei Rippen mit dünnen Stützen, ausserhalb Pfeiler alle 16 m; Fachwerk 7,5 m hoch über der Fahrbahn, Felder von 8 m; Farben Stein, Beton und Stahl;
+             belegt nur die Bauart und das Material, Form, Spannweite, Stützen und Masse erfunden (BOGEN_*, PFEILER_*, FACHWERK_* in Bauart.ts, gewählt), so in
+             «Was erfunden ist»; ohne Gelände unter der Brücke (Rand des Modells) keine Bauart
 data/perrons3d.json  Perrons für «3D Schweiz» und den Führerstand (Michael, 2026-11-04: «Bahnhof Bern kann man Perrons und Gleise (Vertiefungen)
              bauen? So ist alles flach», 2026-11-05: «An beiden Orten bitte, Perrons bauen»): pipeline/build_perrons3d.py aus den Perronkanten der SBB
              (BehiG Haltekantesegment, data/raw/21197_behig-haltekantesegment.csv, Punkte in LV95 je Haltekante, Höhe der Kante aus der Legende, «P 55» = 55 cm,

@@ -8,6 +8,7 @@ import { Line2 } from 'three/examples/jsm/lines/Line2.js'
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
+import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1230,7 +1231,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Luftbild SWISSIMAGE von swisstopo, also das, was man von oben wirklich sieht. Weil es von oben aufgenommen ist, liegt das Dach im Bild bei
             hohen Gebäuden etwas daneben, und es zeigt den Stand der Aufnahme, nicht heute.</p>
           <p className="mt-2"><b>Gezeichnet</b>, weil es in keiner Quelle steht: die Farbe der Wände (je Gebäude einer von acht Putztönen, gewählt),
-            die Fenster und Stockwerke (je Gebäude eine eigene Art: Raster, Grösse und Tönung der Fenster, bei manchen Schaufenster im Erdgeschoss; am Tag dunkle Scheiben, nachts zum Teil beleuchtet, wie viele, ist eine Annahme; runde Gebäude wie Tanks und Silos ohne Fenster, an der Form erkannt, darum auch ein runder Wohnturm), die Körnung und die
+            die Fenster und Stockwerke (je Gebäude eine eigene Art: Raster, Grösse und Tönung der Fenster, bei manchen Schaufenster im Erdgeschoss; am Tag dunkle Scheiben, nachts zum Teil beleuchtet, wie viele, ist eine Annahme; runde Gebäude wie Tanks und Silos ohne Fenster, an der Form erkannt, darum auch ein runder Wohnturm; ebenso ohne Fenster, was das Gebäude- und Wohnungsregister des BFS als Industriegebäude, Silo oder Lager führt), die Körnung und die
             dunkleren Stellen am Boden und unter dem Dach. Die Wände reichen unten 2 m tiefer als in den Daten. Türen, Balkone, Vordächer und Fassaden, wie sie wirklich aussehen, zeigt das Modell nicht. Ebenso erfunden sind die Strassen- und
             Bahnhofslampen, die mit «Gebäude» nachts leuchten; belegt ist nur, wo Strassen und Gleise liegen.</p>
         </Abschnitt>
@@ -1351,6 +1352,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Perrons in den Feldern von 4 km und 1 km: Lage der Kanten und ihre Höhe über dem Gleis (etwa 35 oder 55 cm) laut SBB Open Data
               (BehiG Haltekantesegment, data.sbb.ch), auf der Höhe der Gleisachsen aus swissTLM3D (swisstopo).</li>
             <li>Brücken der Bahn, der Strassen und Wege: Lage und Höhe der Achsen auf Brücken aus swissTLM3D (swisstopo).</li>
+            <li>Bauart von Brücken: ob eine Brücke eine Bogen- oder Fachwerkbrücke ist und aus Stein, Beton oder Stahl, laut Wikidata (CC0), wo es
+              die Brücke dort mit Lage gibt.</li>
+            <li>Gebäude ohne Fenster: Gebäudeklasse Industriegebäude oder Behälter, Silos und Lagergebäude laut Gebäude- und Wohnungsregister (GWR),
+              Bundesamt für Statistik BFS.</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
               Ländten: swissTLMRegio (swisstopo).</li>
             <li>Wind, Temperatur, Regen und Schnee: Messungen von MeteoSchweiz (SwissMetNet, alle 10 Minuten, für frühere Tage die Stundenwerte seit dem 1. Januar) und deren lokale Prognose, stündlich bis 8 Tage.</li>
@@ -1387,7 +1392,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               ob ein einzelnes Gleis elektrifiziert ist, steht in keiner unserer Quellen. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
             <li>Brücken in den Feldern von 4 km und 1 km: belegt sind Lage und Höhe und bei Bahnbrücken, wie viele Gleise nebeneinander liegen. Breite (bei
               Strassen ohne Angabe in der Klasse), Querschnitt mit Schotter, Belag und Brüstungen und das gemalte Aussehen sind gewählt, gleich wie im
-              Führerstand von Taktland; Pfeiler fehlen, Stücke unter 12 m fehlen. Unter jeder gezeichneten Brücke ist das Luftbild übermalt: Die Brücke
+              Führerstand von Taktland; Pfeiler fehlen, Stücke unter 12 m fehlen. Wo Wikidata eine Bogen- oder Fachwerkbrücke nennt, steht darunter
+              ein Bogen mit Stützen und Pfeilern oder darüber ein Fachwerk in der Farbe des Materials: belegt ist nur die Bauart, Form, Spannweite,
+              Zahl der Stützen und Masse sind erfunden. Unter jeder gezeichneten Brücke ist das Luftbild übermalt: Die Brücke
               auf dem Luftbild läge sonst als zweite Brücke unten im Tal. Was dort zu sehen ist, Wasser, Hang oder Boden, ist aus dem Bild daneben
               aufgefüllt und erfunden, keine Aufnahme.</li>
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
@@ -3731,13 +3738,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       // unter jeder gezeichneten Brücke das Luftbild retuschiert wie im Führerstand (Bruecken.ts, retuschieren; Michael, 2026-11-08, Bern:
       // «bei Brücken … darunter auf der Oberfläche einfach noch die Brücke als zweite Texturierung … inhaltsbasiert aufzufüllen, wie bei Photoshop»)
-      const streifen: Streifen[] = []
+      const streifen: Streifen[] = [], kandidaten: Kandidat[] = []
       const streifenVon = (st: BrueckenStueck, lo: number, hi: number) =>
         streifen.push({ p: st.e.map((e, i) => [e, st.n[i]] as [number, number]), lo: st.e.map(() => lo), hi: st.e.map(() => hi) })
       // Gleise: eine Platte unter allen parallelen Gleisen, der Schotter BRUECKE_GLEIS_UNTER_M unter der Achse
       for (const p of gleisPlatten(stuecke.filter((s) => s.art === 0))) {
         zeichnen(p.stueck, 0, bahnQuerschnitt(p.lo, p.hi, -BRUECKE_GLEIS_UNTER_M, BRUECKE_DICKE_M))
         streifenVon(p.stueck, p.lo - RETUSCHE_GLEIS_PLUS_M, p.hi + RETUSCHE_GLEIS_PLUS_M)
+        kandidaten.push({ e: p.stueck.e, n: p.stueck.n, h: p.stueck.h.map((z) => z - BRUECKE_GLEIS_UNTER_M - BRUECKE_DICKE_M), lo: p.lo, hi: p.hi, bahn: true })
       }
       // Strassen und Wege: der Belag knapp unter der Achse
       for (const s of stuecke) {
@@ -3745,6 +3753,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const halb = strassenHalbe(s.breite, s.klasse, s.art === 2)
         zeichnen(s, -0.1, strassenQuerschnitt(halb))
         streifenVon(s, -(halb * RETUSCHE_STRASSE_MAL + RETUSCHE_STRASSE_PLUS_M), halb * RETUSCHE_STRASSE_MAL + RETUSCHE_STRASSE_PLUS_M)
+        kandidaten.push({ e: s.e, n: s.n, h: s.h.map((z) => z - 1.1), lo: -halb, hi: halb, bahn: false })
       }
       for (const t of teile) {
         const r = t.rahmen, c = t.bild
@@ -3758,11 +3767,20 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
       }
       if (gruppe.children.length) k.wurzel.add(gruppe)
+      // die Bauart laut Wikidata (data/brueckenart.json, komponenten/Bauart.ts): Bogen unter der Fahrbahn oder Fachwerk darüber, gezeichnet
+      void holen<{ bruecken: BrueckenArtEintrag[] }>('data/brueckenart.json').catch(() => null).then((ba) => {
+        if (weg || !ba) return
+        const hier = ba.bruecken.filter((x) => x.e > e0 - 300 && x.e < e1 + 300 && x.n > n0 - 300 && x.n < n1 + 300)
+        for (const z of zuordnen(hier, kandidaten)) {
+          for (const m of bauartNetze(z.achse, z.bauart, z.stoff, (e, n) => bestandHoehe(b, e, n), X, Y, Z)) { m.name = `bauart ${z.name ?? ''}`; gruppe.add(m) }
+        }
+        if (gruppe.children.length && !gruppe.parent) k.wurzel.add(gruppe)
+      })
     })
     return () => {
       weg = true
       gruppe.removeFromParent()
-      for (const c of gruppe.children) (c as THREE.Mesh).geometry.dispose()
+      for (const c of gruppe.children) { (c as THREE.Mesh).geometry.dispose(); if (c.name.startsWith('bauart')) ((c as THREE.Mesh).material as THREE.Material).dispose() }
       for (const m of material.values()) m.dispose()
     }
   }, [b, stufe, knoepfe])
