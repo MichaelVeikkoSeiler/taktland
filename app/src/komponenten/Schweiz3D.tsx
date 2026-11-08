@@ -1387,7 +1387,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               ob ein einzelnes Gleis elektrifiziert ist, steht in keiner unserer Quellen. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
             <li>Brücken in den Feldern von 4 km und 1 km: belegt sind Lage und Höhe und bei Bahnbrücken, wie viele Gleise nebeneinander liegen. Breite (bei
               Strassen ohne Angabe in der Klasse), Querschnitt mit Schotter, Belag und Brüstungen und das gemalte Aussehen sind gewählt, gleich wie im
-              Führerstand von Taktland; Pfeiler fehlen, Stücke unter 12 m fehlen.</li>
+              Führerstand von Taktland; Pfeiler fehlen, Stücke unter 12 m fehlen. Unter jeder gezeichneten Brücke ist das Luftbild übermalt: Die Brücke
+              auf dem Luftbild läge sonst als zweite Brücke unten im Tal. Was dort zu sehen ist, Wasser, Hang oder Boden, ist aus dem Bild daneben
+              aufgefüllt und erfunden, keine Aufnahme.</li>
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
