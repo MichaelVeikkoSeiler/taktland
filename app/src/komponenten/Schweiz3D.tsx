@@ -1341,8 +1341,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
           </ul>
         </Abschnitt>
-        <Abschnitt titel="Was gezeichnet oder angenommen ist">
-          <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern gezeichnet oder angenommen ist:</p>
+        {/* Michael, 2026-11-08: «Nicht Was gezeichnet oder angenommen ist sondern Was erfunden ist» */}
+        <Abschnitt titel="Was erfunden ist">
+          <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern erfunden ist (gezeichnet, gewählt oder angenommen):</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
             <li>Wolken: ihre Form als Ballen, deren Grösse, Abstand und Helligkeit (unten grauer); ausserhalb der nächsten 24 Stunden auch ihre Dicke

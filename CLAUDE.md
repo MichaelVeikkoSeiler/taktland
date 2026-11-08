@@ -559,7 +559,7 @@ data/fels/   Felsoberfläche für die Wände von «3D Schweiz»: swissBEDROCK (s
              eine .fgz (Int16 m ü. M., -32768 ohne Angabe; pipeline/build_fels.py liest über das Netz nur dieses Band, 370 Kacheln, 8 MB);
              in den Wänden ein ockerfarbenes Band Lockergestein von der Oberfläche (oder dem Seegrund) bis auf den Fels (Farbe gewählt, LOCKER_FARBE #8a6e48; Michael, 2026-10-25: «nicht ganz so hell»),
              die Unsicherheit der Quelle nicht gezeigt; GeoMol und Lithologie 1:500'000 erst geprüft, nicht eingebaut.
-             Die Anleitung unter dem Modell hat dazu «Seen und Seetiefe», «Woher die Daten stammen» und «Was gezeichnet oder angenommen ist»
+             Die Anleitung unter dem Modell hat dazu «Seen und Seetiefe», «Woher die Daten stammen» und «Was gezeichnet oder angenommen ist» (seit 2026-11-08 «Was erfunden ist»; Michael: «Nicht Was gezeichnet oder angenommen ist sondern Was erfunden ist»)
              (Michael, 2026-10-25: «informiere das Zielpublikum über alle Informationen»)
 data/sterne.json  Sterne für den Nachthimmel in «3D Schweiz» (Michael, 2026-10-24: «Himmel nachts dunkler und mit Sternen machen»):
              alle 5'044 Sterne bis zur Helligkeit 6 aus dem Hipparcos-Katalog (ESA), wie ihn d3-celestial 0.7.35 (Olaf Frohn, BSD, Lizenz in
