@@ -2639,7 +2639,11 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         const e0 = e - WOLKEN_FUEHRER_M / 2, e1 = e + WOLKEN_FUEHRER_M / 2, n0 = n - WOLKEN_FUEHRER_M / 2, n1 = n + WOLKEN_FUEHRER_M / 2
         // als Ballen wie in «3D-Land» (WolkenBild.ts; Michael, 2026-11-07: «Hört sich genial an - ja bitte»)
         const ballen = wolkenBallen(w, st, e0, n0, e1, n1, (e, n, h) => [X(e), Y(h), Z(n)], 1 / 1000,
-          matchMedia('(pointer: coarse)').matches ? BALLEN_HOECHSTENS_HANDY : BALLEN_HOECHSTENS)
+          matchMedia('(pointer: coarse)').matches ? BALLEN_HOECHSTENS_HANDY : BALLEN_HOECHSTENS, undefined, (e, n) => {
+            // ausserhalb des Geländes keine Angabe, statt der Höhe am Rand
+            const { ost, nord, m, breite, hoehe } = r.raster
+            return e < ost || n > nord || e > ost + breite * m || n < nord - hoehe * m ? NaN : hoeheBei(r, h, e, n)
+          })
         if (ballen) { ballen.netz.castShadow = false; ballen.netz.userData.weg = ballen.weg; wolkenGruppe.add(ballen.netz) }
       }
       wolkenBaut = false

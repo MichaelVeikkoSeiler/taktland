@@ -62,6 +62,10 @@ const BALLEN_GROESSE = 1.5
 export const BALLEN_HOECHSTENS = 9000, BALLEN_HOECHSTENS_HANDY = 3500, BALLEN_HOECHSTENS_BRILLE = 2500
 /** Unterseite der Ballen dunkler als die Oberseite, und Ballen am Fuss einer Wolke nochmals (gewählt) */
 const BALLEN_UNTEN_HELL = 0.72, BALLEN_FUSS_HELL = 0.88
+/** weiche Ränder (Michael, 2026-11-08: «diese scharfen Kanten entfernen? Dann würde man richtig langsam zb während einer Zugfahrt in den Nebel
+ *  eintauchen»): ein Ballen wird über dem höchsten Gelände unter ihm nach unten durchsichtig, über so viele Durchmesser, damit er nie mit einer
+ *  harten Kante im Boden steckt, und je näher die Kamera kommt, desto durchsichtiger, ganz weg ab NAH_WEG Durchmessern (gewählt) */
+const BALLEN_BODEN_WEICH = 0.4, BALLEN_NAH_WEG = 0.15, BALLEN_NAH_VOLL = 1.4
 
 let ballenBildVorrat: THREE.CanvasTexture | null = null
 /** das Bild eines Ballens: einige weiche, runde Flecken übereinander, aussen durchsichtig (gezeichnet) */
@@ -93,6 +97,31 @@ function zurKamera(shader: { vertexShader: string }) {
     gl_Position = projectionMatrix * mvPosition;`)
 }
 
+/** wie zurKamera, dazu die weichen Ränder: die Höhe jeder Ecke im Raum des Netzes, der Boden des Ballens und sein Abstand zur Kamera */
+function zurKameraWeich(shader: { vertexShader: string; fragmentShader: string }) {
+  shader.vertexShader = shader.vertexShader
+    .replace('#include <common>', `#include <common>
+    attribute float ballenBoden;
+    varying float vBallenY; varying float vBallenBoden; varying float vBallenGr; varying float vBallenNah;`)
+    .replace('#include <project_vertex>', `
+    mat4 ballenMv = modelViewMatrix * instanceMatrix;
+    vec4 mvPosition = ballenMv * vec4(0.0, 0.0, 0.0, 1.0);
+    vec2 ballenOff = position.xy * length(ballenMv[0].xyz);
+    vBallenNah = length(mvPosition.xyz) / length(ballenMv[0].xyz);
+    vec3 ballenHoch = modelViewMatrix[1].xyz;
+    vBallenY = instanceMatrix[3].y + dot(vec3(ballenOff, 0.0), ballenHoch) / dot(ballenHoch, ballenHoch);
+    vBallenGr = length(instanceMatrix[0].xyz);
+    vBallenBoden = ballenBoden;
+    mvPosition.xy += ballenOff;
+    gl_Position = projectionMatrix * mvPosition;`)
+  shader.fragmentShader = shader.fragmentShader
+    .replace('#include <common>', `#include <common>
+    varying float vBallenY; varying float vBallenBoden; varying float vBallenGr; varying float vBallenNah;`)
+    .replace('#include <alphatest_fragment>', `diffuseColor.a *= smoothstep(vBallenBoden, vBallenBoden + ${BALLEN_BODEN_WEICH.toFixed(3)} * vBallenGr, vBallenY)
+      * smoothstep(${BALLEN_NAH_WEG.toFixed(3)}, ${BALLEN_NAH_VOLL.toFixed(3)}, vBallenNah);
+    #include <alphatest_fragment>`)
+}
+
 export interface Ballen {
   netz: THREE.InstancedMesh
   /** wie viele es sind */
@@ -103,7 +132,8 @@ export interface Ballen {
 /** Wolkenballen über dem Rechteck (LV95) zur Stunde st; zu: von LV95 und Höhe über Meer in die Szene, jeM: Einheiten der Szene je m;
  *  hoechstens: so viele Ballen höchstens, brille: so viele in der Brille. null, wenn keine Wolke darüber liegt */
 export function wolkenBallen(w: Wolken, st: number, e0: number, n0: number, e1: number, n1: number,
-  zu: (e: number, n: number, hM: number) => [number, number, number], jeM: number, hoechstens: number, brille = BALLEN_HOECHSTENS_BRILLE): Ballen | null {
+  zu: (e: number, n: number, hM: number) => [number, number, number], jeM: number, hoechstens: number, brille = BALLEN_HOECHSTENS_BRILLE,
+  boden?: (e: number, n: number) => number): Ballen | null {
   // die Säulen: je Lage von unten nach oben Höhenbereiche, je mit der Bewölkung an einer Stelle
   const j3 = wolken3dStunde(w, st)
   type Lage = { unten: number; oben: number; anteil: (e: number, n: number) => number }
@@ -151,7 +181,19 @@ export function wolkenBallen(w: Wolken, st: number, e0: number, n0: number, e1: 
   if (!lagen.length) return null
   // die Ballen: je Feld des Rasters (fest in LV95, damit sie beim Eintauchen am selben Ort bleiben) und Lage einer, wo das gezeichnete
   // Muster über 1 − Bewölkung liegt; so deckt die Wolke etwa den Anteil, den die Prognose nennt
-  const lage: number[] = [], groesse: number[] = [], hell: number[] = []
+  const lage: number[] = [], groesse: number[] = [], hell: number[] = [], unten: number[] = []
+  // das höchste Gelände unter einem Ballen (Mitte und zwei Ringe), in m
+  const hoechstesUnter = (e: number, n: number, rM: number) => {
+    if (!boden) return -1e6
+    let m = -1e6
+    const c = boden(e, n)
+    if (Number.isFinite(c)) m = c
+    for (const f of [0.6, 1]) for (let w = 0; w < 8; w++) {
+      const v = boden(e + Math.cos(w * Math.PI / 4) * rM * f, n + Math.sin(w * Math.PI / 4) * rM * f)
+      if (Number.isFinite(v)) m = Math.max(m, v)
+    }
+    return m
+  }
   const i0 = Math.floor(e0 / abstand), i1 = Math.ceil(e1 / abstand), k0 = Math.floor(n0 / abstand), k1 = Math.ceil(n1 / abstand)
   const s = Math.round(abstand)
   for (let i = i0; i <= i1; i++) for (let k = k0; k <= k1; k++) {
@@ -176,6 +218,7 @@ export function wolkenBallen(w: Wolken, st: number, e0: number, n0: number, e1: 
       const [x, y, z] = zu(e, n, h)
       lage.push(x, y, z)
       groesse.push(durch * jeM)
+      unten.push(zu(e, n, hoechstesUnter(e, n, durch / 2))[1])
       hell.push((darunter ? 1 : BALLEN_FUSS_HELL) * (0.94 + 0.06 * wolkenZufall(i, k, s + 5 + li)))
       darunter = true
     })
@@ -190,8 +233,10 @@ export function wolkenBallen(w: Wolken, st: number, e0: number, n0: number, e1: 
   for (let v = 0; v < 4; v++) geo.attributes.normal.setXYZ(v, 0, 1, 0)
   const bild = ballenBild()
   const stoff = new THREE.MeshLambertMaterial({ map: bild, transparent: true, depthWrite: false, vertexColors: true })
-  stoff.onBeforeCompile = zurKamera
-  stoff.customProgramCacheKey = () => 'wolkenballen'
+  stoff.onBeforeCompile = zurKameraWeich
+  stoff.customProgramCacheKey = () => 'wolkenballen-weich'
+  const bodenAttr = new THREE.InstancedBufferAttribute(new Float32Array(zahl), 1)
+  geo.setAttribute('ballenBoden', bodenAttr)
   const tiefe = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: bild, alphaTest: 0.35 })
   tiefe.onBeforeCompile = zurKamera
   tiefe.customProgramCacheKey = () => 'wolkenballen-tiefe'
@@ -224,9 +269,11 @@ export function wolkenBallen(w: Wolken, st: number, e0: number, n0: number, e1: 
       m[o] = g; m[o + 5] = g; m[o + 10] = g; m[o + 15] = 1
       m[o + 12] = lage[q * 3]; m[o + 13] = lage[q * 3 + 1]; m[o + 14] = lage[q * 3 + 2]
       netz.setColorAt(r, f.setScalar(hell[q]))
+      bodenAttr.array[r] = unten[q]
     }
     netz.count = n
     netz.instanceMatrix.needsUpdate = true
+    bodenAttr.needsUpdate = true
     if (netz.instanceColor) netz.instanceColor.needsUpdate = true
   }
   const schwelle = (abstand * jeM * 0.25) ** 2
