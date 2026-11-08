@@ -1409,7 +1409,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             abends brennen und wie hell, die Lichtkegel der Züge, Form und Dicke der Wolken, ob ein Baum ein Laub- oder ein Nadelbaum ist.</p>
           <p className="mt-2">Ohne künstliche Intelligenz gäbe es 3D-Land nicht, jedenfalls nicht von mir. Die Bildmarke und das Auftaktbild habe
             ich mit ChatGPT gestaltet.</p>
-          <p className="mt-2">Und nun viel Spass beim Entdecken der Schweiz. In einer neuen Perspektive.</p>
+          <p className="mt-2">Und nun viel Spass beim Entdecken der Schweiz. In einer etwas anderen Perspektive.</p>
           {/* in Taktland ohne Namen darunter (Michael, 2026-11-08: «Hier braucht es meinen Namen nicht»), auf 3dland.ch weiter mit */}
           {eigeneSeite && <p className="mt-3 font-medium">Michael Veikko Seiler</p>}
         </Abschnitt>
