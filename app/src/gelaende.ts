@@ -428,7 +428,8 @@ function umgebungNamen(ix: Umgebung, e0: number, n0: number, e1: number, n1: num
   }
   return raus
 }
-export interface GebaeudeKachel { e0: number; n0: number; h0: number; ecken: Int16Array; farben: Uint8Array }
+/** art: je Ecke 1, wenn das Gebäude laut GWR ohne Fenster gezeichnet wird (pipeline/build_gebaeude.py, viertes Byte der Farbe), sonst 0 */
+export interface GebaeudeKachel { e0: number; n0: number; h0: number; ecken: Int16Array; farben: Uint8Array; art: Uint8Array }
 let gebaeudeVerz: Promise<Umgebung | null> | null = null
 export const gebaeudeIndex = () => (gebaeudeVerz ??= umgebungIndex('gebaeude'))
 const gebaeudeVorrat = new Map<string, Promise<GebaeudeKachel | null>>()
@@ -439,13 +440,14 @@ const entpacken = (gepackt: ArrayBuffer) =>
 /** eine entpackte .bgz lesen (pipeline/build_gebaeude.py) */
 export function gebaeudeLesen(roh: ArrayBuffer): GebaeudeKachel {
   const v = new DataView(roh), n = v.getUint32(12, true)
-  const ecken = new Int16Array(n * 3), farben = new Uint8Array(n * 3)
+  const ecken = new Int16Array(n * 3), farben = new Uint8Array(n * 3), art = new Uint8Array(n)
   for (let k = 0; k < n; k++) {
     const o = 16 + k * 10
     ecken[k * 3] = v.getInt16(o, true); ecken[k * 3 + 1] = v.getInt16(o + 2, true); ecken[k * 3 + 2] = v.getInt16(o + 4, true)
     farben[k * 3] = v.getUint8(o + 6); farben[k * 3 + 1] = v.getUint8(o + 7); farben[k * 3 + 2] = v.getUint8(o + 8)
+    art[k] = v.getUint8(o + 9)
   }
-  return { e0: v.getInt32(0, true), n0: v.getInt32(4, true), h0: v.getInt32(8, true), ecken, farben }
+  return { e0: v.getInt32(0, true), n0: v.getInt32(4, true), h0: v.getInt32(8, true), ecken, farben, art }
 }
 
 export function gebaeudeKachel(name: string) {

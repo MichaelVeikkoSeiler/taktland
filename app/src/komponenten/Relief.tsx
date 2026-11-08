@@ -2376,6 +2376,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         const g = new THREE.BufferGeometry()
         g.setAttribute('position', new THREE.BufferAttribute(pos, 3))
         g.setAttribute('color', new THREE.BufferAttribute(farbe, 3))
+        g.setAttribute('aOhne', new THREE.BufferAttribute(Float32Array.from(k.art, (a) => (a === 1 ? 1 : 0)), 1))
         g.computeVertexNormals()
         gebaeudeFlaechen(g, 1000, 1000 / faktor)
         const netz = new THREE.Mesh(g, gebaeudeStoff)

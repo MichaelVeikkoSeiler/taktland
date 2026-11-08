@@ -278,7 +278,9 @@ export function gebaeudeFlaechen(geo: THREE.BufferGeometry, meter = 1, hoeheMete
   }
   if (istRund.size) for (let d = 0; d < n / 3; d++) if (wand[d]) for (let q = d * 3; q < d * 3 + 3; q++) if (istRund.has(wurzel(q))) rund[q] = 1
   const attr = new Float32Array(n * 3)
-  for (let q = 0; q < n; q++) { attr[q * 3] = ao[q * 2]; attr[q * 3 + 1] = ao[q * 2 + 1]; attr[q * 3 + 2] = rund[q] }
+  // dazu Gebäude, die laut GWR ohne Fenster gezeichnet werden (Attribut aOhne aus der vierten Farbe der Daten, pipeline/build_gebaeude.py)
+  const ohne = geo.getAttribute('aOhne')?.array as ArrayLike<number> | undefined
+  for (let q = 0; q < n; q++) { attr[q * 3] = ao[q * 2]; attr[q * 3 + 1] = ao[q * 2 + 1]; attr[q * 3 + 2] = Math.max(rund[q], ohne?.[q] ?? 0) }
   geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
   geo.setAttribute('aGebaeude', new THREE.BufferAttribute(attr, 3))
 }

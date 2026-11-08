@@ -230,15 +230,19 @@ def schreiben(ziel, kacheln):
         a = np.zeros(len(drei) * 3, dtype=[("x", "<i2"), ("h", "<i2"), ("y", "<i2"), ("f", "u1", 4)])
         p = drei.reshape(-1, 3)
         a["x"] = np.round((p[:, 0] - e0) * 10); a["h"] = np.round(p[:, 2] * 10) - h0; a["y"] = np.round((p[:, 1] - n0) * 10)
-        a["f"][:, :3] = np.repeat(farben, 3, axis=0)
+        # vier Werte je Ecke: Farbe und, wo vorhanden, die Art laut GWR (pipeline/gwr.py; ältere Teile nur mit drei, dort 0)
+        a["f"][:, :farben.shape[1]] = np.repeat(farben, 3, axis=0)
         datei = ziel / f"{qe}_{qn}.bgz"
         datei.write_bytes(gzip.compress(struct.pack("<iiiI", e0, n0, h0, len(a)) + a.tobytes(), 9))
         groesse += datei.stat().st_size
     return groesse
 
 
-def sammeln(fl, bild, ziel):
-    """die Dreiecke eines Gebäudes in die Liste ziel"""
+def sammeln(fl, bild, ziel, gwr_raster=None):
+    """die Dreiecke eines Gebäudes in die Liste ziel; Farben mit einem vierten Wert: 1, wenn das Gebäude laut GWR ohne Fenster
+    gezeichnet wird (pipeline/gwr.py), sonst 0"""
+    import gwr
+    art_gwr = gwr.ohne_fenster(gwr_raster, fl) if gwr_raster else 0
     alle = np.concatenate([p for _, p in fl])
     me, mn = alle[:, 0].mean(), alle[:, 1].mean()
     boden = alle[:, 2].min()
@@ -249,7 +253,7 @@ def sammeln(fl, bild, ziel):
             p = p.copy()
             p[p[:, 2] < boden + 0.3, 2] -= WAND_TIEFER_M
         for d in dreiecke(p):
-            drei.append(d); farben.append(dach if art == "RoofSurface" else WAND)
+            drei.append(d); farben.append((*(dach if art == "RoofSurface" else WAND), art_gwr))
     if drei:
         ziel.append((np.array(drei, dtype=np.float64), np.array(farben, dtype=np.uint8)))
 
