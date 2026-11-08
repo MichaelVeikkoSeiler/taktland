@@ -232,7 +232,7 @@ export function gleisPlatten(stuecke: BrueckenStueck[]): GleisPlatte[] {
  *  das Luftbild ist auf das Gelände gelegt, eine Brücke darin liegt unten im Tal oder auf dem Gleis darunter. Unter jeder
  *  gezeichneten Brücke wird es quer zur Brücke zwischen den beiden Rändern aufgefüllt, RETUSCHE_RAND_M breiter als die Brücke
  *  (die Brücke liegt im Luftbild je nach Höhe etwas daneben); keine künstliche Intelligenz, nicht aus einer Quelle */
-export const RETUSCHE_RAND_M = 2.5, RETUSCHE_MITTEL_M = 8, RETUSCHE_BLOCK_M = 2, RETUSCHE_KORN_PX = 3, RETUSCHE_KORN_MAX = 22
+export const RETUSCHE_RAND_M = 2.5, RETUSCHE_MITTEL_M = 8, RETUSCHE_BLOCK_M = 2, RETUSCHE_KLON_MAX = 40
 /** ein Streifen unter einer Brücke: Achse in Landeskoordinaten und je Punkt der Abstand links und rechts wie brueckeQuer */
 export interface Streifen { p: Array<[number, number]>; lo: number[]; hi: number[] }
 export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: number, n1: number, pxJeM: number, streifen: Streifen[]) {
@@ -240,7 +240,7 @@ export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number
     // Rechteck des Streifens in Bildpunkten
     let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
     s.p.forEach(([e, n], i) => {
-      const r = Math.max(-s.lo[i], s.hi[i]) + RETUSCHE_RAND_M + 2 * RETUSCHE_MITTEL_M + 12
+      const r = 3 * Math.max(-s.lo[i], s.hi[i]) + 3 * RETUSCHE_RAND_M + RETUSCHE_BLOCK_M + 2 * RETUSCHE_MITTEL_M + 12
       x0 = Math.min(x0, (e - r - e0) * pxJeM); x1 = Math.max(x1, (e + r - e0) * pxJeM)
       y0 = Math.min(y0, (n1 - n - r) * pxJeM); y1 = Math.max(y1, (n1 - n + r) * pxJeM)
     })
@@ -251,33 +251,6 @@ export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number
     const stelle = (e: number, n: number) => {
       const x = Math.max(0, Math.min(bw - 1, Math.floor((e - e0) * pxJeM) - x0)), y = Math.max(0, Math.min(bh - 1, Math.floor((n1 - n) * pxJeM) - y0))
       return y * bw + x
-    }
-    const hol = (e: number, n: number, k: number) => q[stelle(e, n) * 4 + k]
-    // die feine Struktur des Bildes: Helligkeit weniger ihr Mittel über RETUSCHE_KORN_PX Bildpunkte rundum
-    const hell = new Float32Array(bw * bh)
-    for (let i = 0; i < bw * bh; i++) hell[i] = (q[i * 4] + q[i * 4 + 1] + q[i * 4 + 2]) / 3
-    const mittel = new Float32Array(bw * bh), zw = new Float32Array(bw * bh), R = RETUSCHE_KORN_PX
-    for (let y = 0; y < bh; y++) {
-      let t = 0
-      for (let x = -R; x <= R; x++) t += hell[y * bw + Math.max(0, Math.min(bw - 1, x))]
-      for (let x = 0; x < bw; x++) {
-        zw[y * bw + x] = t / (2 * R + 1)
-        t += hell[y * bw + Math.min(bw - 1, x + R + 1)] - hell[y * bw + Math.max(0, x - R)]
-      }
-    }
-    for (let x = 0; x < bw; x++) {
-      let t = 0
-      for (let y = -R; y <= R; y++) t += zw[Math.max(0, Math.min(bh - 1, y)) * bw + x]
-      for (let y = 0; y < bh; y++) {
-        mittel[y * bw + x] = t / (2 * R + 1)
-        t += zw[Math.min(bh - 1, y + R + 1) * bw + x] - zw[Math.max(0, y - R) * bw + x]
-      }
-    }
-    // Zufall je Block, aber bei jedem Laden gleich
-    const zufall = (a: number, b: number, c: number) => {
-      let h = (a * 374761393 + b * 668265263 + c * 2147483647) | 0
-      h = Math.imul(h ^ (h >>> 13), 1274126177)
-      return ((h ^ (h >>> 16)) >>> 0) / 4294967296
     }
     const pxM = 1 / pxJeM
     for (let i = 0; i + 1 < s.p.length; i++) {
@@ -299,26 +272,33 @@ export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number
           // sonst zieht jeder Bildpunkt am Rand einen Streifen. Gespiegelt wäre die Zeichnung schärfer, erfand aber Häuser
           const me = ae + ue * t, mn = an + un * t, g = (d - lo) / ((hi - lo) || 1)
           const o = ((y - y0) * bw + (x - x0)) * 4
-          let r0 = 0, g0 = 0, b0 = 0, r1 = 0, g1 = 0, b1 = 0, k2 = 0
+          const breite = hi - lo + RETUSCHE_BLOCK_M
+          // je Rand die mittlere Farbe (Index 0 bis 2) und die mittlere Farbe dort, woher das Bild für diesen Rand geholt wird (3 bis 5)
+          const L = [0, 0, 0, 0, 0, 0], R = [0, 0, 0, 0, 0, 0]
+          let k2 = 0
           for (const sl of [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1]) {
             for (const aus of [0.5, 2]) {
               const ve = me + ue * sl * RETUSCHE_MITTEL_M, vn = mn + un * sl * RETUSCHE_MITTEL_M
-              const le = ve + qe * (lo - aus), ln = vn + qn * (lo - aus), re = ve + qe * (hi + aus), rn = vn + qn * (hi + aus)
-              r0 += hol(le, ln, 0); g0 += hol(le, ln, 1); b0 += hol(le, ln, 2)
-              r1 += hol(re, rn, 0); g1 += hol(re, rn, 1); b1 += hol(re, rn, 2)
+              const kl = stelle(ve + qe * (lo - aus), vn + qn * (lo - aus)) * 4, kr = stelle(ve + qe * (hi + aus), vn + qn * (hi + aus)) * 4
+              const kL = stelle(ve + qe * (lo - aus - breite), vn + qn * (lo - aus - breite)) * 4
+              const kR = stelle(ve + qe * (hi + aus + breite), vn + qn * (hi + aus + breite)) * 4
+              for (let c = 0; c < 3; c++) { L[c] += q[kl + c]; R[c] += q[kr + c]; L[c + 3] += q[kL + c]; R[c + 3] += q[kR + c] }
               k2++
             }
           }
-          // Körnung aus der Umgebung (Michael, 2026-10-15: «inhaltsbasiertes Auffüllen»): je Block von RETUSCHE_BLOCK_M die
-          // feine Struktur eines gleich grossen Stücks neben der Brücke, auf der nahen Seite, zufällig versetzt; nur sie,
-          // nicht seine Farben, und begrenzt, damit keine Häuser oder Strassen hineinkommen
-          const bt = Math.floor(t / RETUSCHE_BLOCK_M), bd = Math.floor(d / RETUSCHE_BLOCK_M), links = d < (lo + hi) / 2
-          const st = (t - bt * RETUSCHE_BLOCK_M) + (zufall(i, bt, bd) - 0.5) * 4 * RETUSCHE_MITTEL_M
-          const tief = 1 + zufall(bd, bt, i + 7) * Math.min(6, (hi - lo) / 2)
-          const sd = (d - bd * RETUSCHE_BLOCK_M) + (links ? lo - tief - RETUSCHE_BLOCK_M : hi + tief)
-          const k3 = stelle(ae + ue * (bt * RETUSCHE_BLOCK_M + st) + qe * sd, an + un * (bt * RETUSCHE_BLOCK_M + st) + qn * sd)
-          const korn = Math.max(-RETUSCHE_KORN_MAX, Math.min(RETUSCHE_KORN_MAX, hell[k3] - mittel[k3]))
-          z[o] = (r0 * (1 - g) + r1 * g) / k2 + korn; z[o + 1] = (g0 * (1 - g) + g1 * g) / k2 + korn; z[o + 2] = (b0 * (1 - g) + b1 * g) / k2 + korn
+          // das Bild gleich neben der Brücke, um die Breite des Streifens verschoben (nicht gespiegelt), von beiden Seiten zur Mitte
+          // überblendet, je Seite um den Unterschied am Rand angeglichen, damit keine Naht bleibt (wie ein Reparaturpinsel); so laufen Wellen,
+          // Uferlinien und Bewuchs mit ihren Farben durch (seit 2026-11-08, Michael: «Gibt es noch eine realistischer aussehende Füllmethode?»;
+          // vorher die Farbe zwischen den Rändern verlaufend und darauf je Block von 2 m die Helligkeit eines zufällig versetzten Stücks, das
+          // wirkte verschmiert und fleckig); höchstens RETUSCHE_KLON_MAX vom Verlauf zwischen den Rändern weg, damit keine Häuser oder Strassen
+          // hineinkommen (Michael, 2026-10-15: «inhaltsbasiertes Auffüllen»)
+          const sL = stelle(me + qe * (d - breite), mn + qn * (d - breite)) * 4, sR = stelle(me + qe * (d + breite), mn + qn * (d + breite)) * 4
+          const gw = g * g * (3 - 2 * g)
+          for (let c = 0; c < 3; c++) {
+            const verlauf = (L[c] * (1 - g) + R[c] * g) / k2
+            const klon = (q[sL + c] + (L[c] - L[c + 3]) / k2) * (1 - gw) + (q[sR + c] + (R[c] - R[c + 3]) / k2) * gw
+            z[o + c] = verlauf + Math.max(-RETUSCHE_KLON_MAX, Math.min(RETUSCHE_KLON_MAX, klon - verlauf))
+          }
         }
       }
     }

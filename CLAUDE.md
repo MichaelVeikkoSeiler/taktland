@@ -432,7 +432,7 @@ data/scharf/   scharfe Umgebung, ein Versuch nur auf Müntschemier–Bern, Bern�
              Occlusion (dunkler in Ecken und unten; Michael, 2026-10-15: «ein bisschen Körnung, ein bisschen Ambient Occlusion»), in keiner Quelle; unter jeder gezeichneten Bahn- und Strassenbrücke ist das
              Luftbild (Nahbild und scharf) retuschiert: quer zur Brücke zwischen den Rändern aufgefüllt, je Rand über 16 m gemittelt, 2,5 m
              breiter als die Brücke, darauf die Körnung des Bodens daneben, je Block von 2 m von einer zufälligen Stelle der nahen Seite, nur die
-             Helligkeit weniger ihr Mittel, begrenzt auf ±22 (Michael, 2026-10-15: «inhaltsbasiertes Auffüllen») (retuschieren; Michael, 2026-10-15: «wegzuretuschieren»; keine KI, nicht aus einer Quelle; gespiegelt
+             Helligkeit weniger ihr Mittel, begrenzt auf ±22 (Michael, 2026-10-15: «inhaltsbasiertes Auffüllen»); seit 2026-11-08 statt dessen das Bild gleich neben der Brücke, um die Breite des Streifens verschoben (nicht gespiegelt), von beiden Seiten zur Mitte überblendet, je Seite um den Farbunterschied am Rand angeglichen wie ein Reparaturpinsel, höchstens 40 vom Verlauf zwischen den Rändern weg (RETUSCHE_KLON_MAX; Michael: «Gibt es noch eine realistischer aussehende Füllmethode?»; vorher wirkte es verschmiert und fleckig), im Führerstand und in «3D Schweiz» (retuschieren; Michael, 2026-10-15: «wegzuretuschieren»; keine KI, nicht aus einer Quelle; gespiegelt
              erfand es Häuser)
 data/gebaeude/  Gebäude, ein Versuch, zuerst auf Gümmenen–Bern (Michael, 2026-10-13): swissBUILDINGS3D 3.0 (swisstopo, CityGML je Kartenblatt,
              der neueste Jahrgang), Dach- und Wandflächen in Dreiecke zerlegt (mapbox_earcut), nur Gebäude mit ihrer Mitte bis 400 m neben
