@@ -114,6 +114,9 @@ def gebaeude(teil):
     bl = build_gebaeude.blaetter(None, kacheln, (lo0 - 0.02, la0, lo1 + 0.02, la1))
     print(f"Teil {teil}: Ost {e_von} bis {e_bis}, {len(bl)} Kartenblätter", flush=True)
     bild, jahre, zahl = Dachbild(), {}, 0
+    # die Gebäudeklasse aus dem GWR (pipeline/gwr.py): Industriegebäude, Behälter und Silos ohne Fenster
+    import gwr
+    gwr_raster = gwr.laden(e_von - 200, e_bis + 200)
     for i, (blatt, (jahr, href)) in enumerate(sorted(bl.items()), 1):
         datei = build_gebaeude.laden(blatt, jahr, href)
         if datei is None:
@@ -127,7 +130,7 @@ def gebaeude(teil):
                 if not e_von <= me < e_bis:
                     continue
                 k = (int(me // K), int(mn // K))
-                build_gebaeude.sammeln(fl, bild, hier.setdefault(k, []))
+                build_gebaeude.sammeln(fl, bild, hier.setdefault(k, []), gwr_raster)
                 jahre.setdefault(k, set()).add(jahr)
                 n_blatt += 1
         except Exception as e:  # noqa: BLE001  ein kaputtes Blatt soll nicht den Streifen anhalten
@@ -138,7 +141,7 @@ def gebaeude(teil):
                 for d, fa in teile:
                     f.write(struct.pack("<I", len(d)))
                     f.write(d.astype("<f8").tobytes())
-                    f.write(fa.astype("u1").tobytes())
+                    f.write(np.asarray(fa, dtype="u1").reshape(-1, 4).tobytes())
         datei.unlink()
         zahl += n_blatt
         print(f"  {i}/{len(bl)} {blatt} ({jahr}): {n_blatt} Gebäude, {time.time() - t0:.0f} s", flush=True)
@@ -149,7 +152,7 @@ def gebaeude(teil):
         while o < len(roh):
             (m,) = struct.unpack_from("<I", roh, o); o += 4
             d = np.frombuffer(roh, "<f8", m * 9, o).reshape(m, 3, 3); o += m * 72
-            fa = np.frombuffer(roh, "u1", m * 3, o).reshape(m, 3); o += m * 3
+            fa = np.frombuffer(roh, "u1", m * 4, o).reshape(m, 4); o += m * 4
             teile.append((d, fa))
         groesse += build_gebaeude.schreiben(ziel, {(qe, qn): teile})
     shutil.rmtree(tmp, ignore_errors=True)
@@ -157,7 +160,7 @@ def gebaeude(teil):
     (ziel / f"index-g{name}.json").write_text(json.dumps({
         "quelle": "swissBUILDINGS3D 3.0 (swisstopo); Dachfarbe aus SWISSIMAGE (swisstopo) auf 2,5 m",
         "geladen": date.today().isoformat(), "kachel_m": K,
-        "hinweis": "alle Gebäude der Quelle; Wandfarbe in keiner Quelle; Wände unten "
+        "hinweis": "alle Gebäude der Quelle; ohne Fenster gezeichnet, wo das GWR (BFS) im Grundriss nur Industriegebäude oder Behälter, Silos und Lagergebäude nennt; Wandfarbe in keiner Quelle; Wände unten "
                    f"{build_gebaeude.WAND_TIEFER_M:g} m verlängert",
         "kacheln": {f"{qe}_{qn}": sorted(j) for (qe, qn), j in sorted(jahre.items())},
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

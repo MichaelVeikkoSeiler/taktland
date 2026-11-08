@@ -4967,7 +4967,7 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
   const netze = kacheln.filter((g) => g.e0 < e1 && g.e0 + 500 > e0 && g.n0 < n1 && g.n0 + 500 > n0).flatMap((g) => {
     const n = g.ecken.length / 3
     const farben = gebaeudeFarben(g)
-    const pos: number[] = [], farbe: number[] = []
+    const pos: number[] = [], farbe: number[] = [], ohne: number[] = []
     for (let d = 0; d + 2 < n; d += 3) {
       let me = 0, mn = 0
       for (let q = d; q < d + 3; q++) { me += g.ecken[q * 3] / 30; mn += g.ecken[q * 3 + 2] / 30 }
@@ -4986,12 +4986,14 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
         }
         pos.push(x, y, z)
         farbe.push(LINEAR[farben[q * 3]], LINEAR[farben[q * 3 + 1]], LINEAR[farben[q * 3 + 2]])
+        ohne.push(g.art[q] === 1 ? 1 : 0)
       }
     }
     if (!pos.length) return []
     const geo = new THREE.BufferGeometry()
     geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
     geo.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
+    geo.setAttribute('aOhne', new THREE.Float32BufferAttribute(ohne, 1))
     geo.computeVertexNormals()
     gebaeudeFlaechen(geo, 1000)
     const m = new THREE.Mesh(geo, material)
