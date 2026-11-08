@@ -4371,7 +4371,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // als Ballen (WolkenBild.ts; Michael, 2026-11-07, zu den flachen Ebenen: «Diese dünnen Wolkenschichten sehen visuell nicht schön aus»,
       // dann «Hört sich genial an - ja bitte»), in echter Höhe, wo es sie für diese Stunde gibt (Michael, 2026-10-29), sonst in den drei Schichten
       const ballen = wolkenBallen(w, st, e0, n0, e1, n1, (e, n, h) => [(e - lage.cE) / 1000, h / 1000, -(n - lage.cN) / 1000], 1 / 1000,
-        hoechstens() === 4 ? BALLEN_HOECHSTENS_HANDY : BALLEN_HOECHSTENS)
+        hoechstens() === 4 ? BALLEN_HOECHSTENS_HANDY : BALLEN_HOECHSTENS, undefined, (e, n) => bestandHoehe(b, e, n))
       if (ballen) { gruppe.add(ballen.netz); weg3.push({ dispose: ballen.weg }) }
       // keine Zeile, wenn alles da ist: Quelle und Zeit stehen in der Anleitung (Michael, 2026-11-06: «Diese Infos braucht es nicht beim
       // Einschalten von Wetter resp Wolken»); eine Lücke bleibt gemeldet
