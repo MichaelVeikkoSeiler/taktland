@@ -1217,6 +1217,18 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             dunkleren Stellen am Boden und unter dem Dach. Die Wände reichen unten 2 m tiefer als in den Daten. Türen, Balkone, Vordächer und Fassaden, wie sie wirklich aussehen, zeigt das Modell nicht. Ebenso erfunden sind die Strassen- und
             Bahnhofslampen, die mit «Gebäude» nachts leuchten; belegt ist nur, wo Strassen und Gleise liegen.</p>
         </Abschnitt>
+        {/* eigener Abschnitt fürs Licht in der Nacht (Michael, 2026-11-08: «Hier noch die Erfundene Strasse und Bahnhofs Beleuchtung auflisten? Macht Sinn oder?») */}
+        <Abschnitt titel="Licht in der Nacht">
+          <p>Ist «Sonne» an und steht die Sonne unter dem Horizont, wird es im Modell Nacht. Mit «Gebäude» leuchten dann in den Feldern von 4 km und 1 km
+            Fenster, Strassen und Bahnhöfe, und die Züge fahren mit Licht.</p>
+          <p className="mt-2"><b>Echt</b> ist nur, wo das Licht steht: Strassen (swissTLM3D von swisstopo) in Siedlungen und Stadtzentren (swissTLMRegio), Gleise rund um
+            die Bahnhöfe und die Gebäude selbst.</p>
+          <p className="mt-2"><b>Erfunden</b>, weil keine Quelle Lampen kennt: die Strassenlampen alle 35 m, die Lampen an den Bahnhöfen alle 30 m bis 250 m um
+            den Bahnhof, ihre Masten (8 m an Strassen, 10 m an Bahnhöfen, auch am Tag zu sehen), die Lichtflecken auf dem Boden, warm an Strassen, kühler
+            an Bahnhöfen, und wie hell sie sind. Ebenso die beleuchteten Fenster (wie viele zu welcher Stunde brennen, ist eine Annahme, weit weg gemittelt),
+            das Licht in den Zügen, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel vor der Lok. Unter Decken über den Gleisen
+            stehen keine Lampen.</p>
+        </Abschnitt>
         <Abschnitt titel="Züge">
           <p>«Züge» zeigt ab der Stufe 16 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
             (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
