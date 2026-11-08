@@ -200,9 +200,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     <header className="print:hidden border-b border-sbb-cloud px-4 pt-8 dark:border-sbb-iron">
       {/* ohne Knopf «Aktualisieren»: neue Versionen lädt die App von selbst (serviceWorker.ts;
           Michael, 2026-10-01: «benötigen wir nicht mehr») */}
-      {/* in 3D-Land die Bildmarke von 3D-Land oben rechts im Bild wie auf 3dland.ch */}
-      {bild && <Auftakt key={schluessel} bild={bild}
-                        oben={aktiv === 'schweiz3d' && !fahrt ? <img src="./logo-3dland.png" alt="3D-Land" className="absolute right-3 top-3 size-14 rounded-xl shadow-md sm:right-5 sm:top-5 sm:size-20" /> : undefined} />}
+      {/* ohne die Bildmarke von 3D-Land oben rechts (Michael, 2026-11-08: «Das Logo oben rechts bei Taktland kann weg»); auf 3dland.ch bleibt sie */}
+      {bild && <Auftakt key={schluessel} bild={bild} />}
       <div className="flex items-center justify-between gap-4">
         {/* die Bildmarke vor dem Namen, statt des roten Strichs (Michael, 2026-09-27) */}
         {startseite
