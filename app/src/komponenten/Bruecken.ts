@@ -235,7 +235,12 @@ export function gleisPlatten(stuecke: BrueckenStueck[]): GleisPlatte[] {
 export const RETUSCHE_RAND_M = 2.5, RETUSCHE_MITTEL_M = 8, RETUSCHE_BLOCK_M = 2, RETUSCHE_KLON_MAX = 40
 /** ein Streifen unter einer Brücke: Achse in Landeskoordinaten und je Punkt der Abstand links und rechts wie brueckeQuer */
 export interface Streifen { p: Array<[number, number]>; lo: number[]; hi: number[] }
-export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: number, n1: number, pxJeM: number, streifen: Streifen[]) {
+/** ein retuschiertes Rechteck des Bilds: vorher und nachher, damit Dächer über einer Brücke (gedeckte Brücken wie die Kapellbrücke) wieder ihr
+ *  Luftbild bekommen (Michael, 2026-11-08: «Kannst du das Dach der Kapellbrücke realistisch umsetzen?») */
+export interface Retusche { x: number; y: number; vor: ImageData; nach: ImageData }
+
+export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: number, n1: number, pxJeM: number, streifen: Streifen[]): Retusche[] {
+  const raus: Retusche[] = []
   for (const s of streifen) {
     // Rechteck des Streifens in Bildpunkten
     let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
@@ -302,7 +307,10 @@ export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number
         }
       }
     }
+    const vor = new ImageData(new Uint8ClampedArray(q), bw, bh)
     bild.data.set(z)
     ctx.putImageData(bild, x0, y0)
+    raus.push({ x: x0, y: y0, vor, nach: bild })
   }
+  return raus
 }

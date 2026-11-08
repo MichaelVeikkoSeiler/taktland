@@ -9,7 +9,7 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
+import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
@@ -94,6 +94,8 @@ interface Uebersicht { ost: number; nord: number; m: number; breite: number; hoe
 /** rahmen: welches Rechteck das Bild zeigt (Ost und Nord der Ecke links oben, Breite und Höhe in Metern) */
 interface Gelaende {
   raster: Raster; h: Float32Array; bild: HTMLCanvasElement; rahmen: { e0: number; n1: number; b: number; h: number }; quellen: string[]; hinweis?: string
+  /** was unter Brücken retuschiert ist (Bruecken.ts), für die Dächer darüber (gebaeudeNetz) */
+  retusche?: Retusche[]
   /** über gemessenem Seegrund die Höhe der Seeoberfläche laut Geländemodell (sonst NaN); h bleibt dort die Oberfläche (seegrundSetzen) */
   wasser?: Float32Array
   /** der Grund des Sees je Feld, wo wasser gilt (swissBATHY3D), nur für den Schnitt in den Wänden */
@@ -120,6 +122,8 @@ let inDerBrille = false
  *  solange ein Material es braucht; räumt die alte Stufe zuerst alles weg, übersetzt die neue alle Programme nochmals, die Seite
  *  steht dabei Sekunden still und die Brille zeigt so lange ihr letztes Bild. Die Wartezeit ist gewählt */
 const MATERIAL_WEG_MS = 4000
+/** so lange steht ein kurzer Hinweis im Bild (Michael, 2026-11-08: «Evtl für 3 Sek. Einblenden»), danach weg */
+const HINWEIS_KURZ_MS = 3000
 const spaeterWeg = (materialien: Array<THREE.Material | undefined>) => {
   setTimeout(() => { for (const m of materialien) m?.dispose() }, MATERIAL_WEG_MS)
 }
@@ -460,6 +464,8 @@ const SUCHE_TREFFER = 8, SUCHE_PRUEFEN = 40
 /** Seen wie eine grössere Ortschaft, Gipfel nach ihrer Objektart (3 HGipfel … 0 Hügel) zwischen 1,5 und 3 */
 const SUCHE_RANG = { see: 3, gipfelAb: 1.5, gipfelJe: 0.5 }
 interface Eintrag { name: string; e: number; n: number; rang: number; art: 'ort' | 'gipfel' | 'see'; hoehe?: number | null }
+/** Suche von swisstopo für Adressen: ab so vielen Zeichen, so lange nach dem letzten Tippen, höchstens so viele (gewählt) */
+const ADRESSE_URL = 'https://api3.geo.admin.ch/rest/services/api/SearchServer', ADRESSE_AB = 3, ADRESSE_WARTE_MS = 400, ADRESSE_HOECHSTENS = 5
 function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n: number, name: string) => void }) {
   const [text, setText] = useState('')
   const [offen, setOffen] = useState(false)
@@ -503,22 +509,44 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
     })
     return [...liste.filter((t) => t.schweiz), ...liste.filter((t) => !t.schweiz)].slice(0, SUCHE_TREFFER)
   }, [text, formen, eintraege, zusatz])
+  // Adressen über die Suche von swisstopo (Michael, 2026-11-08: «Beim Virtuell soll man neben Ort auch eine Adresse suchen können»): erst ab
+  // ADRESSE_AB Zeichen und ADRESSE_WARTE_MS nach dem letzten Tippen; das Eingetippte geht dabei an swisstopo (so unter Datenschutz)
+  const [adressen, setAdressen] = useState<Array<{ name: string; e: number; n: number; wo: string }>>([])
+  useEffect(() => {
+    const q = text.trim()
+    if (q.length < ADRESSE_AB || !offen) { setAdressen([]); return }
+    let weg = false
+    const t = setTimeout(() => {
+      fetch(`${ADRESSE_URL}?type=locations&origins=address&sr=2056&limit=${ADRESSE_HOECHSTENS}&searchText=${encodeURIComponent(q)}`)
+        .then((a) => (a.ok ? a.json() : null))
+        .then((d: { results?: Array<{ attrs?: { label?: string; x?: number; y?: number } }> } | null) => {
+          if (weg) return
+          setAdressen((d?.results ?? []).flatMap(({ attrs: a }) => a?.label && a.x && a.y
+            // in LV95 nennt die Suche Nord als x und Ost als y
+            ? [{ name: a.label.replace(/\s*<b>/, ', ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(), e: a.y, n: a.x, wo: 'Adresse' }] : []))
+        })
+        .catch(() => { if (!weg) setAdressen([]) })
+    }, ADRESSE_WARTE_MS)
+    return () => { weg = true; clearTimeout(t) }
+  }, [text, offen])
+  const alle = [...treffer, ...adressen]
   const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n, t.name); setText(t.name); setOffen(false) }
   return (
     <div className="relative w-52 min-w-0 max-w-[calc(48vw-2.5rem)] shrink">
-      <input type="search" value={text} placeholder="Ort, Gipfel, See" aria-label="Ort, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
+      <input type="search" value={text} placeholder="Ort, Adresse, Gipfel" aria-label="Ort, Adresse, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
              onChange={(e) => { setText(e.target.value); setOffen(true); gipfelHolen() }} onFocus={() => { setOffen(true); gipfelHolen() }}
-             onKeyDown={(e) => { if (e.key === 'Enter' && treffer[0]) { nehmen(treffer[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
+             onKeyDown={(e) => { if (e.key === 'Enter' && alle[0]) { nehmen(alle[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
              className="w-full rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight/90" />
       {offen && suchform(text).length >= 2 && (
         <ul className="absolute bottom-full right-0 z-10 mb-1 w-max min-w-full max-w-[80vw] max-h-72 overflow-auto rounded-lg bg-white/95 text-sm shadow-lg dark:bg-sbb-charcoal/95">
-          {treffer.length ? treffer.map((t) => (
+          {alle.length ? alle.map((t) => (
             <li key={`${t.name}_${t.e}_${t.n}`}>
               <button type="button" onClick={() => nehmen(t)} className="w-full px-2.5 py-1.5 text-left hover:bg-sbb-milk dark:hover:bg-sbb-iron">
                 <span className="font-medium">{t.name}</span> <span className="text-xs text-sbb-metal dark:text-sbb-storm">{t.wo}</span>
               </button>
             </li>
           )) : <li className="px-2.5 py-1.5 text-sbb-metal dark:text-sbb-storm">Nichts mit diesem Namen</li>}
+          {adressen.length > 0 && <li className="px-2.5 py-1 text-[11px] text-sbb-metal dark:text-sbb-storm">Adressen: Suche von swisstopo</li>}
         </ul>
       )}
     </div>
@@ -978,7 +1006,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : 'Virtuelle Schweiz'}</h1>
       {ansicht !== 'karte' && (
         <>
-          {ansicht === 'wahl' && <p className="mt-2 leading-relaxed">Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, Gipfel oder See, und tauche ein, bis auf ein Stück
+          {ansicht === 'wahl' && <p className="mt-2 leading-relaxed">Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See, und tauche ein, bis auf ein Stück
             von 1 km. Mit einer Brille steht das Modell vor dir auf dem Tisch.</p>}
           <div className="mt-4 flex flex-wrap gap-3">
             <a href="#/schweiz3d?karte" className={EINTAUCHEN_KNOPF}>Eintauchen</a>
@@ -1208,7 +1236,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <h2 className="mt-6 text-xl font-bold">Anleitung</h2>
       <div className="mt-2 space-y-2 text-sm leading-relaxed">
         <Abschnitt titel="Wählen und eintauchen">
-          <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, Gipfel oder See. Mit «Eintauchen» geht es in ein Gebiet von 128 km, dann von 64 km, dort in eine Region von 16 km, dann in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
+          <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See. Mit «Eintauchen» geht es in ein Gebiet von 128 km, dann von 64 km, dort in eine Region von 16 km, dann in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
             Ein Tipp neben das Modell nimmt die Wahl zurück. Die Zeile unter dem Modell (Schweiz › Region …) führt eine Stufe zurück.</p>
         </Abschnitt>
         <Abschnitt titel="Drehen und zoomen">
@@ -1256,8 +1284,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
             Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
-            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt); oben im Bild ein Link zur Seite dieses Bahnhofs auf taktland.ch
-            mit Perrons und Gleisen, wo Taktland eine hat. Ein Tipp daneben blendet es aus. Darunter führt «Im Führerstand mitfahren» in den Führerstand von Taktland: Der Zug fährt
+            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt). Ein Tipp daneben blendet es aus. Oben im Bild führt «In den Führerstand nach …» in den Führerstand von Taktland: Der Zug fährt
             dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
         </Abschnitt>
@@ -1288,7 +1315,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             neuesten Laufs gibt es mehr: die Bewölkung in jeder der 80 Schichten des Modells mit deren Höhe über Meer. Dann liegen die Ballen in
             der Höhe, die das Modell rechnet, und eine Wolke ist so dick, wie sie dort ist. Form, Grösse, Abstand und Helligkeit der Ballen sind
             gezeichnet, nicht aus der Quelle; je grösser das Modell, desto grösser und weiter auseinander die Ballen, damit Handy und Brille sie
-            zeichnen können.</p>
+            zeichnen können. Gibt es für die gewählte Zeit keine Prognose (etwa spät am Abend, bevor der nächste Lauf da ist, oder weit in der
+            Vergangenheit), fehlen die Wolken; ein Hinweis im Bild steht dann nicht.</p>
           <p>Regen und Schnee kommen aus demselben Wettermodell: je Stelle von 2 km, wie stark es zu dieser Stunde fällt, und die
             Schneefallgrenze. Sie fallen von der untersten gezeichneten Wolke darüber bis auf den Boden, über der Schneefallgrenze als
             Schnee, darunter als Regen; in jeder Stufe dasselbe Wetter. Unter einer dichten Wolke sieht man den Regen von oben nicht. Fehlen die
@@ -1344,6 +1372,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Seegrund: swissBATHY3D (swisstopo) für 22 Seen, siehe «Seen und Seetiefe».</li>
             <li>Felsoberfläche unter dem Lockergestein: swissBEDROCK (swisstopo), siehe «Untergrund in den Wänden».</li>
             <li>Ortschaften, Gipfel und Seen der Suche: swissTLMRegio (swisstopo); Orte und Gipfel der Landeskarte 1:1 Million; Kantone: Bundesamt für Statistik BFS.</li>
+            <li>Adressen der Suche: Suche von swisstopo (api3.geo.admin.ch), beim Tippen abgefragt.</li>
             <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind.</li>
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
             <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Weg zwischen den Halten aus dem
@@ -1771,6 +1800,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   sonneFuerSockel.current = sonnenAn
   const huelle = useRef<HTMLDivElement>(null)
   const [grafikWeg, setGrafikWeg] = useState(false)
+  // zählt die Retuschen unter Brücken: die Gebäude werden danach neu gesetzt, damit Dächer über Brücken ihr eigenes Bild bekommen
+  const [retuschen, setRetuschen] = useState(0)
   const welt = useRef<Welt | null>(null)
   const kern = useRef<{
     renderer: THREE.WebGLRenderer; szene: THREE.Scene; kamera: THREE.PerspectiveCamera; steuerung: OrbitControls
@@ -1783,7 +1814,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     anfangSetzen: () => void
     verlauf: Record<'hoehen' | 'orte' | 'gipfel', { p: number; ziel: number; ebene: THREE.Plane }>
   } | null>(null)
-  const [tablet] = useState(istTablet)
   const cb = useRef({ waehlen, abwaehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten })
   cb.current = { waehlen, abwaehlen, eintauchen, zurueck, erweitern, zeitSchieben, schalten }
 
@@ -2862,7 +2892,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return (wurzel.getObjectByName('boeden')?.children ?? []).flatMap((o) => {
         const map = ((o as THREE.Mesh).material as THREE.MeshLambertMaterial).map
         const t = teile.find((x) => x.bild === map?.image)
-        return map && t ? [{ rahmen: t.rahmen, textur: map }] : []
+        return map && t ? [{ rahmen: t.rahmen, textur: map, retusche: t.retusche }] : []
       })
     }
     void probeLaden(e0, n0, e1, n1).then(async ({ gebaeude: g, baeume: bm }) => {
@@ -2881,13 +2911,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const q = x as THREE.Mesh
         q.geometry?.dispose()
         mats.push(q.material as THREE.Material | undefined)
+        if (q.userData.eigeneTextur) ((q.material as THREE.MeshLambertMaterial).map)?.dispose()
       })
       spaeterWeg(mats)
       gruppe.removeFromParent()
     }
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => (gebaeude ? umweltSetzen('gebaeude') : undefined), [b, stufe, gebaeude])
+  useEffect(() => (gebaeude ? umweltSetzen('gebaeude') : undefined), [b, stufe, gebaeude, retuschen])
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => (baeume ? umweltSetzen('baeume') : undefined), [b, stufe, baeume])
 
@@ -3756,17 +3787,20 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         streifenVon(s, -(halb * RETUSCHE_STRASSE_MAL + RETUSCHE_STRASSE_PLUS_M), halb * RETUSCHE_STRASSE_MAL + RETUSCHE_STRASSE_PLUS_M)
         kandidaten.push({ e: s.e, n: s.n, h: s.h.map((z) => z - 1.1), lo: -halb, hi: halb, bahn: false })
       }
+      let neuRetuschiert = false
       for (const t of teile) {
         const r = t.rahmen, c = t.bild
         const hier = streifen.filter((st) => st.p.some(([e, n]) => e > r.e0 - 50 && e < r.e0 + r.b + 50 && n < r.n1 + 50 && n > r.n1 - r.h - 50))
         const ctx = hier.length ? c.getContext('2d', { willReadFrequently: true }) : null
         if (!ctx || (import.meta.env.VITE_S3D_TEST && (window as unknown as { s3dOhneRetusche?: boolean }).s3dOhneRetusche)) continue
-        retuschieren(ctx, c.width, c.height, r.e0, r.n1, c.width / r.b, hier)
+        t.retusche = retuschieren(ctx, c.width, c.height, r.e0, r.n1, c.width / r.b, hier)
+        if (t.retusche.length) neuRetuschiert = true
         k.wurzel.traverse((o) => {
           const m = (o as THREE.Mesh).material as THREE.MeshLambertMaterial | undefined
           if (m && !Array.isArray(m) && m.map?.image === c) m.map.needsUpdate = true
         })
       }
+      if (neuRetuschiert) setRetuschen((x) => x + 1)
       if (gruppe.children.length) k.wurzel.add(gruppe)
       // die Bauart laut Wikidata (data/brueckenart.json, komponenten/Bauart.ts): Bogen unter der Fahrbahn oder Fachwerk darüber, gezeichnet
       void holen<{ bruecken: BrueckenArtEintrag[] }>('data/brueckenart.json').catch(() => null).then((ba) => {
@@ -3856,7 +3890,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   const [zugZeile, setZugZeile] = useState<string | null>(null)
   /** zum gewählten Zug der Bahnhof, an dem er steht oder als Nächstes hält, mit seiner Seite auf taktland.ch (Perrons, Gleise, Sektoren;
    *  Michael, 2026-10-26: «Gleis mit Link»), nur wenn Taktland eine Seite für ihn hat */
-  const [zugLink, setZugLink] = useState<{ name: string; url: string } | null>(null)
+  const [, setZugLink] = useState<{ name: string; url: string } | null>(null)
   // im Führerstand von Taktland mitfahren, vom jetzigen oder letzten Halt bis zum Ziel des Zugs (Michael, 2026-10-30: «Man sollte auf Mitfahren
   // klicken/tippen können sodass man gleich im Führerstand mitfährt. So landet man bei Taktland»); eine Probefahrt auf dem Weg im Netz, kein Fahrplan
   const [mitfahren, setMitfahren] = useState<{ name: string; url: string } | null>(null)
@@ -4003,7 +4037,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // nach dem Fahrplan des Zugs, von jetzt an (Michael, 2026-10-31: «in den Live-Zug hineinversetzt … gleich am Fahren»; mitfahren.ts)
       const jetzt = ix ? jetztImFahrplan(ix) : null, plan = jetzt ? zugPlan(f, jetzt.tag, jetzt.minuten, st!.i) : null
       const planTeil = plan ? `&plan=${planText({ t0: Date.now() / 1000, halte: plan.map((x) => ({ abk: x.abk, an: x.an * 60, ab: x.ab * 60 })) })}` : ''
-      setMitfahren({ name: `${titel} nach ${f.ziel}`,
+      void titel
+      // ohne Zugnummer (Michael, 2026-11-08: «"In den Führerstand nach..." ohne Zugnummer etc»)
+      setMitfahren({ name: `In den Führerstand nach ${f.ziel}`,
                      url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1${planTeil}${AUF_3DLAND ? '&von3d=1' : ''}` })
     }
     const linkSetzen = (abk: string | null) => {
@@ -4171,7 +4207,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       for (const [abk, g] of je) spuren.set(abk, [...g].sort((a, z) => a - z))
       const st = /^\d{8}$/.test(ix.stand) ? `${Number(ix.stand.slice(6))}.${Number(ix.stand.slice(4, 6))}.${ix.stand.slice(0, 4)}` : ix.stand
-      setZugZeile(zn ? `Züge laut Fahrplan vom ${st}, nicht live` : 'Züge: das Netz konnte nicht geladen werden.')
+      // nur kurz, was es heisst, steht in der Anleitung (Michael, 2026-11-08: «Züge nach Fahrplan... weg. Das steht ja im Beschrieb. Evtl für 3 Sek.
+      // Einblenden "Züge fahren nach Fahrplan und nicht live"»)
+      void st
+      if (!zn) { setZugZeile('Züge: das Netz konnte nicht geladen werden.'); return }
+      setZugZeile('Züge fahren nach Fahrplan und nicht live')
+      setTimeout(() => { if (!weg) setZugZeile(null) }, HINWEIS_KURZ_MS)
     })()
     /** je stehendem Zug, der hinter anderen auf demselben Gleis steht, wie viele Züge vor ihm stehen */
     const hintereinander = new Map<number, number>()
@@ -4645,7 +4686,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       daten = d
       if (!d) { setSchiffZeile('Schiffe: der Fahrplan ist hier nicht geladen.'); return }
       const st = /^\d{8}$/.test(d.stand) ? `${Number(d.stand.slice(6))}.${Number(d.stand.slice(4, 6))}.${d.stand.slice(0, 4)}` : d.stand
-      setSchiffZeile(`Schiffe laut Fahrplan vom ${st}, nicht live`)
+      void st
+      setSchiffZeile('Schiffe fahren nach Fahrplan und nicht live')
+      setTimeout(() => { if (!weg) setSchiffZeile(null) }, HINWEIS_KURZ_MS)
     })
     const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), skala = new THREE.Vector3(), oben = new THREE.Vector3(0, 1, 0)
     const mitte = new THREE.Vector3(), auge = new THREE.Vector3()
@@ -4721,7 +4764,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [schiffe, b, stufe, knoepfe])
   // Wolken aus dem Wettermodell ICON-CH1-EPS von MeteoSchweiz (src/wolken.ts; Michael, 2026-10-28: «Jetzt die Wolken angehen»), mit dem Knopf
   // «Wetter», in der ganzen Schweiz und in der Region; zur gewählten Zeit der Sonne, sonst jetzt
-  const [wolkenZeile, setWolkenZeile] = useState<string | null>(null)
+  const [, setWolkenZeile] = useState<string | null>(null)
   const wolkenViertel = stand ? Math.round(stand.zeit.getTime() / 900_000) : -1
   const [jetztTakt, setJetztTakt] = useState(() => Math.floor(Date.now() / 600_000))
   useEffect(() => {
@@ -4769,7 +4812,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // Wettermodell ICON-CH1 (src/wolken.ts) je Zelle von 2 km, wo und wie stark es fällt, von der untersten gezeichneten Wolke darüber bis
   // zum Boden, über der Schneefallgrenze als Schnee; in jeder Stufe dasselbe Wetter; ohne diese Daten wie bisher die Station über dem ganzen Modell
   const regen = useRef<Niederschlag | null>(null)
-  const [niederZeile, setNiederZeile] = useState<string | null>(null)
+  const [, setNiederZeile] = useState<string | null>(null)
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
@@ -4911,21 +4954,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       )}
       {/* Züge und Schiffe sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind; oben rechts, eng untereinander, damit
           sie nicht ins Bild ragen und «Eintauchen» oben links frei bleibt (Michael, 2026-10-28: «Die Hinweise oben links sollen weiter oben stehen») */}
-      {(zugZeile || schiffZeile) && (
+      {(zugZeile || schiffZeile || mitfahren) && (
         <div className={`pointer-events-none absolute right-2 ${vollbild ? 'top-[6.5rem]' : 'top-12'} flex max-w-[60%] flex-col items-end gap-0.5 text-right`}>
           {zugZeile && (
             <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{zugZeile}</p>
           )}
-          {zugZeile && zugLink && (
-            <a href={zugLink.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
-              className="pointer-events-auto rounded bg-white/90 px-1.5 py-0.5 text-[11px] font-medium leading-tight text-sbb-red underline dark:bg-sbb-midnight/90">
-              Bahnhof {zugLink.name}: Perrons und Gleise{AUF_3DLAND ? ' auf taktland.ch ↗' : ''}
-            </a>
-          )}
-          {zugZeile && mitfahren && (
+          {/* der Link zum Bahnhof ist weg (Michael, 2026-11-08: «Infos zum Bahnhof entfernen») */}
+          {mitfahren && (
             <a href={mitfahren.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
               className="pointer-events-auto rounded bg-sbb-red px-2 py-1 text-xs font-bold leading-tight text-white">
-              Im Führerstand mitfahren: {mitfahren.name}{AUF_3DLAND ? ' ↗' : ''}
+              {mitfahren.name}{AUF_3DLAND ? ' ↗' : ''}
             </a>
           )}
           {schiffZeile && (
@@ -4933,11 +4971,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           )}
         </div>
       )}
-      {(wolkenZeile || niederZeile) && (
-        <p className={'pointer-events-none absolute left-2 max-w-[70%] ' + (tablet ? 'bottom-20' : 'bottom-16') + ' rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white'}>
-          {wolkenZeile}{wolkenZeile && niederZeile && <br />}{niederZeile}
-        </p>
-      )}
+      {/* keine Zeilen zum Wetter im Bild (Michael, 2026-11-08: «Wetterinfos alle weg»); was fehlt, steht in der Anleitung */}
     </div>
   )
 }
@@ -4978,11 +5012,24 @@ function randSchnitt(material: THREE.Material, b: Bestand, lage: { cE: number; c
  *  Mitte im Rechteck: eine Kachel von 500 m reicht oft über den Rand des Modells (Michael, 2026-10-21: «stimmen die
  *  Gebäudeeinblendungen nicht mit den Kacheln überein», sie standen neben dem Sockel in der Luft) */
 function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: number, n0: number, e1: number, n1: number,
-  bilder: Array<{ rahmen: { e0: number; n1: number; b: number; h: number }; textur: THREE.Texture }> = [], decken: Decke[] = []) {
+  bilder: Array<{ rahmen: { e0: number; n1: number; b: number; h: number }; textur: THREE.Texture; retusche?: Retusche[] }> = [], decken: Decke[] = []) {
   const material = gebaeudeMaterial()
   // die Dächer mit dem Luftbild des Geländes darunter (Michael, 2026-11-06: «Bitte mal 1 und 3 machen», 1: Luftbild auf die Dächer):
   // dieselbe Textur wie der Boden, je Stück des Bestands ein Netz; was in keinem Stück liegt, behält die Farbe der Daten
   const daecher = bilder.map(() => ({ pos: [] as number[], uv: [] as number[] }))
+  // Dächer über einer retuschierten Brücke (gedeckte Brücken wie die Kapellbrücke) mit eigenem Bild aus dem Luftbild vor der Retusche, sonst hätten
+  // sie ein Dach aus Wasser; der Boden bleibt retuschiert (Michael, 2026-11-08: «Kannst du das Dach der Kapellbrücke realistisch umsetzen?»)
+  const ueberBruecke = bilder.map(() => ({ pos: [] as number[], en: [] as number[] }))
+  const retuschiert = (i: number, e: number, n: number) => {
+    const { rahmen: r, retusche } = bilder[i]
+    if (!retusche?.length) return false
+    const px = (bilder[i].textur.image as HTMLCanvasElement).width / r.b, x = Math.floor((e - r.e0) * px), y = Math.floor((r.n1 - n) * px)
+    return retusche.some((q) => {
+      if (x < q.x || y < q.y || x >= q.x + q.vor.width || y >= q.y + q.vor.height) return false
+      const o = ((y - q.y) * q.vor.width + (x - q.x)) * 4
+      return q.vor.data[o] !== q.nach.data[o] || q.vor.data[o + 1] !== q.nach.data[o + 1] || q.vor.data[o + 2] !== q.nach.data[o + 2]
+    })
+  }
   const netze = kacheln.filter((g) => g.e0 < e1 && g.e0 + 500 > e0 && g.n0 < n1 && g.n0 + 500 > n0).flatMap((g) => {
     const n = g.ecken.length / 3
     const farben = gebaeudeFarben(g)
@@ -4994,9 +5041,15 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
       if (me < e0 || me > e1 || mn < n0 || mn > n1) continue
       // über einer Decke ist das Luftbild darunter anthrazit (komponenten/Decken.ts), dort bleibt die Farbe der Daten
       const dach = !istWandFarbe(g.farben, d) && !unterDecke(decken, me, mn) ? bilder.findIndex(({ rahmen: r }) => me >= r.e0 && me < r.e0 + r.b && mn <= r.n1 && mn > r.n1 - r.h) : -1
+      const dachUeberBruecke = dach >= 0 && retuschiert(dach, me, mn)
       for (let q = d; q < d + 3; q++) {
         const e = g.e0 + g.ecken[q * 3] / 10, nn = g.n0 + g.ecken[q * 3 + 2] / 10
         const x = (e - cE) / 1000, y = (g.h0 + g.ecken[q * 3 + 1]) / 10 / 1000, z = -(nn - cN) / 1000
+        if (dach >= 0 && dachUeberBruecke) {
+          ueberBruecke[dach].pos.push(x, y, z)
+          ueberBruecke[dach].en.push(e, nn)
+          continue
+        }
         if (dach >= 0) {
           const r = bilder[dach].rahmen
           daecher[dach].pos.push(x, y, z)
@@ -5031,6 +5084,39 @@ function gebaeudeNetz(kacheln: GebaeudeKachel[], cE: number, cN: number, e0: num
     m.castShadow = m.receiveShadow = true
     netze.push(m)
   })
+  // je Bild ein kleines eigenes Bild über alle Dächer über Brücken: der Ausschnitt des Bilds, darauf das Rechteck vor jeder Retusche, das früheste zuletzt
+  ueberBruecke.forEach(({ pos, en }, i) => {
+    if (!pos.length) return
+    const { rahmen: r, retusche, textur } = bilder[i], quelle = textur.image as HTMLCanvasElement, px = quelle.width / r.b
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity
+    for (let q = 0; q < en.length; q += 2) {
+      const x = (en[q] - r.e0) * px, y = (r.n1 - en[q + 1]) * px
+      x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y)
+    }
+    x0 = Math.max(0, Math.floor(x0) - 2); y0 = Math.max(0, Math.floor(y0) - 2)
+    x1 = Math.min(quelle.width, Math.ceil(x1) + 2); y1 = Math.min(quelle.height, Math.ceil(y1) + 2)
+    const w = Math.max(1, x1 - x0), h = Math.max(1, y1 - y0)
+    const c = document.createElement('canvas')
+    c.width = w; c.height = h
+    const ctx = c.getContext('2d')
+    if (!ctx) return
+    ctx.drawImage(quelle, x0, y0, w, h, 0, 0, w, h)
+    for (const q of [...(retusche ?? [])].reverse()) ctx.putImageData(q.vor, q.x - x0, q.y - y0)
+    const t = new THREE.CanvasTexture(c)
+    t.colorSpace = textur.colorSpace
+    t.anisotropy = textur.anisotropy
+    const uv: number[] = []
+    for (let q = 0; q < en.length; q += 2) uv.push(((en[q] - r.e0) * px - x0) / w, 1 - ((r.n1 - en[q + 1]) * px - y0) / h)
+    const geo = new THREE.BufferGeometry()
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+    geo.computeVertexNormals()
+    const m = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ map: t, side: THREE.DoubleSide }))
+    m.userData.eigeneTextur = true
+    m.castShadow = m.receiveShadow = true
+    netze.push(m)
+  })
+
   return netze
 }
 
