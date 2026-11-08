@@ -63,6 +63,17 @@ const STUFEN: Stufe[] = ['schweiz', 'gross', 'mittel', 'region', 'ort', 'nah']
 /** Tunnel von seiner Seite: so viel grösser als sein Verlauf muss das Feld sein, dazu das Raster der Stufe darüber (gewählt) */
 const TUNNEL_RAND = 1.15
 /** gestrichelter Verlauf eines Tunnels: Karmin, Breite in Bildpunkten, Strich und Lücke als Anteil der Breite des Modells (gewählt) */
+/** Namen der Gewässer: Darstellung (gewählt; Michael, 2026-11-08: «Mach mir Vorschläge»): flach auf dem Wasser oder schwebend in fester
+ *  Grösse, hell: Anteil der Helligkeit des Wassers im Luftbild, Sättigung mal, heller Rand in Bildpunkten, gesperrt bei Seen */
+type GewaesserStil = 'a' | 'b' | 'c'
+const GEWAESSER_STILE: Record<GewaesserStil, { flach: boolean; hell: number; saettigung: number; rand: number; fett: boolean; gesperrt: boolean }> = {
+  a: { flach: true, hell: 0.4, saettigung: 1.4, rand: 0, fett: true, gesperrt: true },
+  b: { flach: false, hell: 0.45, saettigung: 1.4, rand: 3, fett: true, gesperrt: false },
+  c: { flach: false, hell: 0.55, saettigung: 1.2, rand: 0, fett: false, gesperrt: true },
+}
+const GEWAESSER_STIL: GewaesserStil = 'a'
+/** wie viele Seen und Flüsse höchstens, und wie gross mindestens im Verhältnis zur Breite des Modells (gewählt) */
+const GEWAESSER_SEEN_HOECHSTENS = 8, GEWAESSER_FLUESSE_HOECHSTENS = 5, GEWAESSER_SEE_AB = 0.02, GEWAESSER_FLUSS_AB = 0.12
 const STRICH_FARBE = '#a8102e'
 const STRICH_PX = 3
 const STRICH_ANTEIL = 0.012
@@ -134,6 +145,8 @@ interface Zusatz {
   sw: SehenswertDaten; seen: SeenDaten; orte: Array<{ name: string; klasse: number; lage: [number, number]; einwohner_gemeinde?: number }>; pool: Pool
   /** Ortschaften und Weiler aus swissTLMRegio: Name, Ost, Nord, Rang (data/schweiz3d/orte.json) */
   ortschaften: Array<[string, number, number, number]>
+  /** Flüsse mit Namen aus swissTLMRegio (data/kartengrund.json), für die Namen der Gewässer */
+  fluesse?: Array<{ k: number; name?: string; start: [number, number]; d: number[] }>
 }
 
 /* ---------- Daten ---------- */
@@ -681,7 +694,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     uebersichtLaden().then((g) => setGelaende((a) => ({ ...a, schweiz: einzeln({ e: 0, n: 0, seite: 0 }, g) }))).catch((e: Error) => setFehler(e.message))
     Promise.all([sehenswertLaden(), seenLaden(), kartengrundLaden(), schweiz11Laden(),
                  holen<{ orte: Zusatz['ortschaften'] }>('data/schweiz3d/orte.json').catch(() => ({ orte: [] }))])
-      .then(([sw, seen, k, pool, o]) => setZusatz({ sw, seen, orte: k.orte as Zusatz['orte'], pool, ortschaften: o.orte })).catch(() => {})
+      .then(([sw, seen, k, pool, o]) => setZusatz({ sw, seen, orte: k.orte as Zusatz['orte'], pool, ortschaften: o.orte, fluesse: k.fluesse })).catch(() => {})
   }, [])
   useEffect(() => {
     if (!meldung) return
@@ -3155,6 +3168,199 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       gruppe.removeFromParent()
     }
   }, [b, stufe, strich])
+
+  // Namen der Gewässer (Michael, 2026-11-08: «Wäre es nicht ein absoluter Mehrwert wenn Gewässer … eingeblendet würden?», dann «Ohne Knopf und
+  // immer einblenden. Nicht zwingend dunkelblau sondern dunkler in der jeweiligen Seefarbe. Mach mir Vorschläge»): Seen aus data/seen.json (Name und
+  // Namenspunkt laut swissTLMRegio, ohne den Platzhalter N_P), Flüsse aus data/kartengrund.json (Namen laut swissTLMRegio), kursiv in der Farbe des
+  // Luftbilds an dieser Stelle, abgedunkelt; die grössten Seen und die längsten Flüsse im Modell, Darstellung nach GEWAESSER_STIL (gewählt)
+  const [gewaesserStil, setGewaesserStil] = useState<GewaesserStil>(GEWAESSER_STIL)
+  useEffect(() => {
+    if (!import.meta.env.VITE_S3D_TEST) return
+    ;(window as unknown as { s3dGewaesser: unknown }).s3dGewaesser = (st: GewaesserStil) => setGewaesserStil(st)
+  }, [])
+  useEffect(() => {
+    const k = kern.current
+    if (!k || !zusatz) return
+    const { wurzel } = k
+    const { cE, cN } = wurzel.userData.lage as { cE: number; cN: number }
+    const teile = [...b.teile.values()]
+    const r = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...r.map((x) => x.e0)), e1 = Math.max(...r.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...r.map((x) => x.n1 - x.h)), n1 = Math.max(...r.map((x) => x.n1))
+    const weite = Math.max(e1 - e0, n1 - n0)
+    const drin = (e: number, n: number, rand = 0) => e > e0 + rand && e < e1 - rand && n > n0 + rand && n < n1 - rand
+    const zug = (z: { start: [number, number]; d: number[] }) => {
+      let [la, lo] = z.start
+      const p: Array<[number, number]> = [lv95(la / 1e5, lo / 1e5) as [number, number]]
+      for (let i = 0; i + 1 < z.d.length; i += 2) { la += z.d[i]; lo += z.d[i + 1]; p.push(lv95(la / 1e5, lo / 1e5) as [number, number]) }
+      return p
+    }
+    // die Farbe des Luftbilds an einer Stelle, gemittelt über einige Bildpunkte
+    const farbeBei = (e: number, n: number) => {
+      for (const t of teile) {
+        const q = t.rahmen
+        if (e < q.e0 || e > q.e0 + q.b || n > q.n1 || n < q.n1 - q.h) continue
+        const x = Math.round(((e - q.e0) / q.b) * t.bild.width), y = Math.round(((q.n1 - n) / q.h) * t.bild.height)
+        try {
+          const d = t.bild.getContext('2d')!.getImageData(Math.max(0, x - 3), Math.max(0, y - 3), 7, 7).data
+          let rr = 0, gg = 0, bb = 0, z = 0
+          for (let i = 0; i < d.length; i += 4) { rr += d[i]; gg += d[i + 1]; bb += d[i + 2]; z++ }
+          return new THREE.Color().setRGB(rr / z / 255, gg / z / 255, bb / z / 255, THREE.SRGBColorSpace)
+        } catch { return null }
+      }
+      return null
+    }
+    const stil = GEWAESSER_STILE[gewaesserStil]
+    // die Farbe des Wassers abgedunkelt (im sRGB, wie man sie sieht); ein Fluss ist im Luftbild oft schmaler als ein Bildpunkt und zeigt das
+    // Ufer, darum gilt für ihn der Farbton des Sees daneben oder, ohne See, ein Blaugrün (gewählt)
+    let seeTon: { h: number; s: number; l: number } | null = null
+    const tinte = (c: THREE.Color | null, fluss: boolean) => {
+      const hsl = { h: 0.55, s: 0.35, l: 0.3 }
+      if (c && !fluss) c.getHSL(hsl, THREE.SRGBColorSpace)
+      if (fluss && seeTon) { hsl.h = seeTon.h; hsl.s = seeTon.s }
+      if (hsl.s < 0.12) hsl.s = 0.25
+      if (!fluss && !seeTon) seeTon = { h: hsl.h, s: hsl.s, l: hsl.l }
+      // dunkler als das Wasser: ein Anteil seiner Helligkeit, nicht unter 6 %
+      const l = Math.max(0.06, (c && !fluss ? hsl.l : seeTon?.l ?? 0.3) * stil.hell)
+      return new THREE.Color().setHSL(hsl.h, Math.min(1, hsl.s * stil.saettigung), l, THREE.SRGBColorSpace).getStyle(THREE.SRGBColorSpace)
+    }
+    // Seen: je Name die grösste Fläche im Modell
+    const seen = new Map<string, { e: number; n: number; flaeche: number; richtung: number; tief: number }>()
+    for (const x of zusatz.seen.seen) {
+      if (!x.name || x.name === 'N_P' || !x.ringe.length) continue
+      const ring = zug(x.ringe[0])
+      const re = ring.map((q) => q[0]), rn = ring.map((q) => q[1])
+      const be0 = Math.max(e0 + weite * 0.03, Math.min(...re)), be1 = Math.min(e1 - weite * 0.03, Math.max(...re))
+      const bn0 = Math.max(n0 + weite * 0.03, Math.min(...rn)), bn1 = Math.min(n1 - weite * 0.03, Math.max(...rn))
+      if (be0 >= be1 || bn0 >= bn1) continue
+      // der Namenspunkt der Quelle, wenn er im Modell liegt, sonst die Stelle des Sees im Modell, die am weitesten vom Ufer liegt (auf einem Raster gesucht)
+      const imSee = (pe: number, pn: number) => {
+        let innen = false
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+          const [ae, an] = ring[i], [ce, cn] = ring[j]
+          if ((an > pn) !== (cn > pn) && pe < ((ce - ae) * (pn - an)) / (cn - an) + ae) innen = !innen
+        }
+        return innen
+      }
+      const zumUfer = (pe: number, pn: number) => {
+        let m = Infinity
+        for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+          const [ae, an] = ring[j], [ce, cn] = ring[i], de = ce - ae, dn = cn - an, l2 = de * de + dn * dn
+          const t = l2 ? Math.max(0, Math.min(1, ((pe - ae) * de + (pn - an) * dn) / l2)) : 0
+          m = Math.min(m, Math.hypot(pe - ae - t * de, pn - an - t * dn))
+        }
+        return Math.min(m, pe - e0, e1 - pe, pn - n0, n1 - pn)
+      }
+      let e = NaN, n = NaN, tief = 0
+      if (x.namenspunkt) { const q = lv95(x.namenspunkt[0], x.namenspunkt[1]); if (drin(q[0], q[1], weite * 0.04) && imSee(q[0], q[1])) { e = q[0]; n = q[1]; tief = zumUfer(e, n) } }
+      if (!Number.isFinite(e)) {
+        for (let a = 0; a <= 20; a++) for (let c = 0; c <= 20; c++) {
+          const pe = be0 + (a / 20) * (be1 - be0), pn = bn0 + (c / 20) * (bn1 - bn0)
+          if (!imSee(pe, pn)) continue
+          const d = zumUfer(pe, pn)
+          if (d > tief) { tief = d; e = pe; n = pn }
+        }
+      }
+      if (!Number.isFinite(e)) continue
+      let fl = 0, xe = 0, xn = 0, mx = 0, mn = 0
+      ring.forEach(([a, c], i) => { const [a2, c2] = ring[(i + 1) % ring.length]; fl += a * c2 - a2 * c; mx += a; mn += c })
+      mx /= ring.length; mn /= ring.length
+      for (const [a, c] of ring) { xe += (a - mx) ** 2; xn += (a - mx) * (c - mn) }
+      let yy = 0
+      for (const [, c] of ring) yy += (c - mn) ** 2
+      // die lange Achse des Sees (Hauptachse der Uferpunkte), damit der Name ihr folgt
+      const richtung = 0.5 * Math.atan2(2 * xn, xe - yy)
+      fl = Math.abs(fl) / 2
+      const alt = seen.get(x.name)
+      if (!alt || alt.flaeche < fl) seen.set(x.name, { e, n, flaeche: fl, richtung, tief })
+    }
+    const seeListe = [...seen.entries()].filter(([, v]) => v.flaeche > (weite * GEWAESSER_SEE_AB) ** 2)
+      .sort((a, c) => c[1].flaeche - a[1].flaeche).slice(0, GEWAESSER_SEEN_HOECHSTENS)
+    // Flüsse: je Name die Länge im Modell und die Stelle in der Mitte des längsten Stücks
+    const fluesse = new Map<string, { laenge: number; e: number; n: number; richtung: number; stueck: number }>()
+    for (const f of zusatz.fluesse ?? []) {
+      if (!f.name) continue
+      const p = zug(f)
+      let stueck: Array<[number, number]> = [], laenge = 0
+      const fertig = () => {
+        if (stueck.length < 2) { stueck = []; return }
+        let l = 0
+        for (let i = 1; i < stueck.length; i++) l += Math.hypot(stueck[i][0] - stueck[i - 1][0], stueck[i][1] - stueck[i - 1][1])
+        laenge += l
+        const alt = fluesse.get(f.name!)
+        if (!alt || alt.stueck < l) {
+          let halb = l / 2, i = 1
+          for (; i < stueck.length; i++) { const s2 = Math.hypot(stueck[i][0] - stueck[i - 1][0], stueck[i][1] - stueck[i - 1][1]); if (halb <= s2) break; halb -= s2 }
+          const a = stueck[Math.min(i, stueck.length - 1) - 1], c = stueck[Math.min(i, stueck.length - 1)]
+          const t = Math.hypot(c[0] - a[0], c[1] - a[1]) ? halb / Math.hypot(c[0] - a[0], c[1] - a[1]) : 0
+          fluesse.set(f.name!, { laenge: (alt?.laenge ?? 0), e: a[0] + t * (c[0] - a[0]), n: a[1] + t * (c[1] - a[1]), richtung: Math.atan2(c[1] - a[1], c[0] - a[0]), stueck: l })
+        }
+        stueck = []
+      }
+      for (const q of p) { if (drin(q[0], q[1], weite * 0.03)) stueck.push(q); else fertig() }
+      fertig()
+      const v = fluesse.get(f.name)
+      if (v) v.laenge += laenge
+    }
+    // ein Fluss, der im Modell einen beschrifteten See durchfliesst, behält seinen Namen nur ausserhalb des Sees
+    const flussListe = [...fluesse.entries()].filter(([name, v]) => v.stueck > weite * GEWAESSER_FLUSS_AB && !seen.has(name))
+      .sort((a, c) => c[1].laenge - a[1].laenge).slice(0, GEWAESSER_FLUESSE_HOECHSTENS)
+    const gruppe = new THREE.Group()
+    gruppe.name = 'gewaesser'
+    const weg: Array<{ dispose: () => void }> = []
+    const gesetzt: Array<[number, number]> = []
+    const bild = (text: string, farbe: string, gross: boolean) => {
+      const c = document.createElement('canvas'), x = c.getContext('2d')!
+      const px = gross ? 30 : 24, schrift = `italic ${stil.fett ? '600 ' : ''}${px}px Helvetica, Arial, sans-serif`
+      x.font = schrift
+      const sperr = stil.gesperrt && gross ? px * 0.18 : 0
+      const breite = x.measureText(text).width + sperr * (text.length - 1)
+      c.width = Math.ceil(breite) + 16; c.height = px + 16
+      x.font = schrift
+      x.textBaseline = 'middle'
+      let px0 = 8
+      for (const z of text) {
+        if (stil.rand) { x.lineWidth = stil.rand; x.strokeStyle = 'rgba(255,255,255,0.45)'; x.lineJoin = 'round'; x.strokeText(z, px0, c.height / 2) }
+        x.fillStyle = farbe; x.fillText(z, px0, c.height / 2)
+        px0 += x.measureText(z).width + sperr
+      }
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4
+      weg.push(t)
+      return { t, verhaeltnis: c.width / c.height, hoehePx: c.height }
+    }
+    const setzen = (name: string, e: number, n: number, richtung: number, farbe: string, gross: boolean, breiteM: number) => {
+      if (gesetzt.some(([a, c]) => Math.hypot(a - e, c - n) < weite * 0.12)) return
+      gesetzt.push([e, n])
+      const { t, verhaeltnis, hoehePx } = bild(name, farbe, gross)
+      const y = bestandHoehe(b, e, n) / 1000 + weite / 1000 * 0.002
+      if (stil.flach) {
+        // flach auf dem Wasser, entlang der langen Achse, nie auf dem Kopf
+        let w = richtung
+        if (w > Math.PI / 2) w -= Math.PI; if (w < -Math.PI / 2) w += Math.PI
+        const lang = Math.max(gross ? weite * 0.18 : weite * 0.1, Math.min(breiteM, gross ? weite * 0.3 : weite * 0.14)) / 1000
+        const geo = new THREE.PlaneGeometry(lang, lang / verhaeltnis)
+        const mat = new THREE.MeshBasicMaterial({ map: t, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4 })
+        const m = new THREE.Mesh(geo, mat)
+        m.rotation.set(-Math.PI / 2, 0, w)
+        m.position.set((e - cE) / 1000, y, -(n - cN) / 1000)
+        m.renderOrder = 5
+        gruppe.add(m); weg.push(geo, mat)
+      } else {
+        const mat = new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: false })
+        const sp = new THREE.Sprite(mat)
+        const h = hoehePx * 0.00085 * (gross ? 1 : 0.9)
+        sp.scale.set(h * verhaeltnis, h, 1)
+        sp.position.set((e - cE) / 1000, y, -(n - cN) / 1000)
+        sp.renderOrder = 3
+        gruppe.add(sp); weg.push(mat)
+      }
+    }
+    for (const [name, v] of seeListe) setzen(name, v.e, v.n, v.richtung, tinte(farbeBei(v.e, v.n), false), true, v.tief * 3)
+    for (const [name, v] of flussListe) setzen(name, v.e, v.n, v.richtung, tinte(farbeBei(v.e, v.n), true), false, Math.min(v.stueck * 0.5, weite * 0.12))
+    if (import.meta.env.VITE_S3D_TEST) console.log('gewaesser', JSON.stringify(gruppe.children.map((o) => [o.type, o.position.toArray().map((v) => Math.round(v * 1000))])), JSON.stringify([...seeListe.map((x) => x[0]), ...flussListe.map((x) => x[0])]))
+    wurzel.add(gruppe)
+    return () => { gruppe.removeFromParent(); for (const x of weg) x.dispose() }
+  }, [b, stufe, zusatz, gewaesserStil])
 
   // die Sonne: ohne Zeit die feste wie bisher, mit Zeit ihr gerechneter Stand, darunter der Horizont dunkel
   const geraetDunkel = useGeraetDunkel()
