@@ -1218,7 +1218,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Luftbild SWISSIMAGE von swisstopo, also das, was man von oben wirklich sieht. Weil es von oben aufgenommen ist, liegt das Dach im Bild bei
             hohen Gebäuden etwas daneben, und es zeigt den Stand der Aufnahme, nicht heute.</p>
           <p className="mt-2"><b>Gezeichnet</b>, weil es in keiner Quelle steht: die Farbe der Wände (je Gebäude einer von acht Putztönen, gewählt),
-            die Fenster und Stockwerke (je Gebäude eine eigene Art: Raster, Grösse und Tönung der Fenster, bei manchen Schaufenster im Erdgeschoss; am Tag dunkle Scheiben, nachts zum Teil beleuchtet, wie viele, ist eine Annahme), die Körnung und die
+            die Fenster und Stockwerke (je Gebäude eine eigene Art: Raster, Grösse und Tönung der Fenster, bei manchen Schaufenster im Erdgeschoss; am Tag dunkle Scheiben, nachts zum Teil beleuchtet, wie viele, ist eine Annahme; runde Gebäude wie Tanks und Silos ohne Fenster, an der Form erkannt, darum auch ein runder Wohnturm), die Körnung und die
             dunkleren Stellen am Boden und unter dem Dach. Die Wände reichen unten 2 m tiefer als in den Daten. Türen, Balkone, Vordächer und Fassaden, wie sie wirklich aussehen, zeigt das Modell nicht. Ebenso erfunden sind die Strassen- und
             Bahnhofslampen, die mit «Gebäude» nachts leuchten; belegt ist nur, wo Strassen und Gleise liegen.</p>
         </Abschnitt>
