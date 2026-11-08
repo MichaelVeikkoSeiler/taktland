@@ -140,10 +140,10 @@ export function gebaeudeMaterial() {
     s.uniforms.uNacht = fenster.nacht
     s.uniforms.uAnteil = fenster.anteil
     s.vertexShader = s.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute vec2 aGebaeude;\nvarying vec2 vGebaeude;\nvarying vec2 vWand;')
+      .replace('#include <common>', '#include <common>\nattribute vec3 aGebaeude;\nvarying vec3 vGebaeude;\nvarying vec2 vWand;')
       .replace('#include <begin_vertex>', `#include <begin_vertex>\nvGebaeude = aGebaeude;\nvWand = uv * ${GEBAEUDE_BILD_M.toFixed(1)};`)
     s.fragmentShader = s.fragmentShader
-      .replace('#include <common>', '#include <common>\nvarying vec2 vGebaeude;\nvarying vec2 vWand;\nuniform float uNacht;\nuniform float uAnteil;\n' + FENSTER_GLSL)
+      .replace('#include <common>', '#include <common>\nvarying vec3 vGebaeude;\nvarying vec2 vWand;\nuniform float uNacht;\nuniform float uAnteil;\n' + FENSTER_GLSL)
       .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
       if (uNacht > 0.0 && vGebaeude.x >= 0.0) {
         // Höhe über dem Boden (die Wand reicht in den Daten unter ihn) und Lage entlang der Wand, in Metern
@@ -163,7 +163,7 @@ export function gebaeudeMaterial() {
         vec3 farbe = mix(vec3(1.0, 0.62, 0.28), vec3(1.0, 0.86, 0.6), fract(zufall * 7.31));
         // weit weg schwächer: mit der Grösse des Bildpunkts in Metern
         float hell = 1.6 * clamp(${FERN_AB_M.toFixed(2)} / max(wx, wy), ${FERN_MIN.toFixed(2)}, 1.0);
-        totalEmissiveRadiance += farbe * min(1.0, f.x * hell) * brennt * f.y * uNacht * ${FENSTER_HELL.toFixed(3)};
+        totalEmissiveRadiance += farbe * min(1.0, f.x * hell) * brennt * f.y * (1.0 - vGebaeude.z) * uNacht * ${FENSTER_HELL.toFixed(3)};
       }`)
       .replace('#include <color_fragment>', `#include <color_fragment>
       if (vGebaeude.x >= 0.0) {
@@ -175,12 +175,16 @@ export function gebaeudeMaterial() {
         FensterStil fsT = fensterStil(vColor.rgb);
         float hbT = vGebaeude.x - ${WAND_TIEFER_M.toFixed(1)};
         vec4 fT = fensterBei(fsT, vWand.x, hbT, max(fwidth(vWand.x), 0.001), max(fwidth(hbT), 0.001), vGebaeude.y);
-        diffuseColor.rgb = mix(diffuseColor.rgb, fsT.glas, fT.x * fT.y * fsT.tag);
+        // runde Gebäude (Tanks, Silos) ohne Fenster (gebaeudeFlaechen)
+        diffuseColor.rgb = mix(diffuseColor.rgb, fsT.glas, fT.x * fT.y * fsT.tag * (1.0 - vGebaeude.z));
       }`)
   }
   return m
 }
 
+/** runde Gebäude (Tanks, Silos): so viele Stellen der Wand mindestens, so weit dürfen sie vom mittleren Radius abweichen (Anteil),
+ *  so gross darf die grösste Lücke ringsum sein, so gross muss der Radius sein (alles gewählt) */
+const RUND_ECKEN = 10, RUND_STREUUNG = 0.08, RUND_LUECKE = Math.PI / 3, RUND_AB_M = 2
 /** UV und Ambient Occlusion für Dreiecke ohne Index (je drei Ecken eines), Lage in Einheiten zu je `meter` m, y oben.
  *  (in der Höhe `hoeheMeter`, bei Überhöhung weniger). Wände (fast senkrecht): Bild entlang der Wand und in der Höhe, dazu Höhe über ihrem Fuss und Abstand zu ihrer Oberkante.
  *  Der Fuss ist der tiefste Wandpunkt am selben Ort (Raster 0,5 m), so zählt auch das Dreieck unter dem First eines Giebels
@@ -230,8 +234,53 @@ export function gebaeudeFlaechen(geo: THREE.BufferGeometry, meter = 1, hoeheMete
       ao[q * 2] = y - fuss; ao[q * 2 + 1] = oben - y
     }
   }
+  // runde Gebäude ohne Fenster (Michael, 2026-11-08, Raffinerie bei Cressier: «Bei einer Raffinerie wie hier brauchen die Silos keine
+  // Fenster»): swissBUILDINGS3D nennt die Art nicht, erkannt wird die Form. Ein Gebäude ist, was über gemeinsame Ecken seiner Wände
+  // zusammenhängt; rund ist es, wenn seine Wand mindestens RUND_ECKEN Stellen hat, die alle fast gleich weit von ihrer Mitte liegen
+  // (Abweichung höchstens RUND_STREUUNG des Radius), ringsum ohne Lücke über RUND_LUECKE, Radius ab RUND_AB_M (alles gewählt)
+  const rund = new Float32Array(n)
+  const eltern = new Int32Array(n).map((_, i) => i)
+  const wurzel = (i: number): number => { while (eltern[i] !== i) { eltern[i] = eltern[eltern[i]]; i = eltern[i] } return i }
+  const erste = new Map<string, number>()
+  for (let d = 0; d < n / 3; d++) {
+    if (!wand[d]) continue
+    for (let q = d * 3; q < d * 3 + 3; q++) {
+      const k = `${Math.round((p[q * 3] * meter) / 0.1)},${Math.round((p[q * 3 + 1] * hoeheMeter) / 0.1)},${Math.round((p[q * 3 + 2] * meter) / 0.1)}`
+      const j = erste.get(k)
+      if (j === undefined) erste.set(k, q); else eltern[wurzel(q)] = wurzel(j)
+      if (q % 3) eltern[wurzel(q)] = wurzel(q - (q % 3))
+    }
+  }
+  const stellen = new Map<number, Map<string, [number, number]>>()
+  for (let d = 0; d < n / 3; d++) {
+    if (!wand[d]) continue
+    for (let q = d * 3; q < d * 3 + 3; q++) {
+      const r = wurzel(q)
+      let m = stellen.get(r)
+      if (!m) stellen.set(r, (m = new Map()))
+      if (m.size <= 4000) m.set(zelle(q), [p[q * 3] * meter, p[q * 3 + 2] * meter])
+    }
+  }
+  const istRund = new Set<number>()
+  for (const [r, m] of stellen) {
+    if (m.size < RUND_ECKEN || m.size > 4000) continue
+    let ce = 0, cn = 0
+    for (const [e, nn] of m.values()) { ce += e; cn += nn }
+    ce /= m.size; cn /= m.size
+    const abst: number[] = [], winkel: number[] = []
+    for (const [e, nn] of m.values()) { abst.push(Math.hypot(e - ce, nn - cn)); winkel.push(Math.atan2(nn - cn, e - ce)) }
+    const mittel = abst.reduce((a, b) => a + b, 0) / abst.length
+    if (mittel < RUND_AB_M || abst.some((a) => Math.abs(a - mittel) > RUND_STREUUNG * mittel)) continue
+    winkel.sort((a, b) => a - b)
+    let luecke = winkel[0] + 2 * Math.PI - winkel[winkel.length - 1]
+    for (let i = 1; i < winkel.length; i++) luecke = Math.max(luecke, winkel[i] - winkel[i - 1])
+    if (luecke <= RUND_LUECKE) istRund.add(r)
+  }
+  if (istRund.size) for (let d = 0; d < n / 3; d++) if (wand[d]) for (let q = d * 3; q < d * 3 + 3; q++) if (istRund.has(wurzel(q))) rund[q] = 1
+  const attr = new Float32Array(n * 3)
+  for (let q = 0; q < n; q++) { attr[q * 3] = ao[q * 2]; attr[q * 3 + 1] = ao[q * 2 + 1]; attr[q * 3 + 2] = rund[q] }
   geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2))
-  geo.setAttribute('aGebaeude', new THREE.BufferAttribute(ao, 2))
+  geo.setAttribute('aGebaeude', new THREE.BufferAttribute(attr, 3))
 }
 
 /** die Wandfarbe der Daten (pipeline/build_gebaeude.py, WAND): ein Grau, das in keiner Quelle steht; Dächer haben die Farbe des Luftbilds */

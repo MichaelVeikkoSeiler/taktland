@@ -3229,17 +3229,20 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       return Math.min(m, pe - e0, e1 - pe, pn - n0, n1 - pn)
     }
-    type Name = { name: string; e: number; n: number; z: number; sp: THREE.Sprite; rang: number; ring?: Array<[number, number]>; inseln?: Array<Array<[number, number]>>; linie?: Array<[number, number]> }
+    type Name = { name: string; e: number; n: number; z: number; sp: THREE.Sprite; rang: number; ring?: Array<[number, number]>; inseln?: Array<Array<[number, number]>>; linie?: Array<[number, number]>; hoehen?: number[] }
     const namen: Name[] = []
     const gruppe = new THREE.Group()
     gruppe.name = 'gewaesser'
     const weg: Array<{ dispose: () => void }> = []
-    const sprite = (text: string, farbe: string) => {
+    const sprite = (text: string, farbe: string, rand = false) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       const px = 26, schrift = `italic normal ${px}px Helvetica, Arial, sans-serif`
       x.font = schrift
       c.width = Math.ceil(x.measureText(text).width) + 12; c.height = px + 14
       x.font = schrift
+      // Flüsse mit feinem hellem Rand: ein Fluss ist schmaler als der Name, die dunkle Schrift läge sonst halb auf dem Ufer, halb auf
+      // dunklem Wasser (Zihlkanal; Breite und Deckkraft gewählt)
+      if (rand) { x.lineJoin = 'round'; x.lineWidth = 5; x.strokeStyle = 'rgba(255, 255, 255, 0.55)'; x.strokeText(text, 6, px + 1) }
       x.fillStyle = farbe; x.fillText(text, 6, px + 1)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const mat = new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: !!k.inBrille(), toneMapped: false })
@@ -3280,7 +3283,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       gruppe.add(sp)
       namen.push({ name, e, n, z, sp, rang: v.flaeche, ring: v.ring, inseln: v.inseln })
     }
-    // Flüsse nur in den Feldern von 4 km und 1 km: je Name das längste Stück im Modell, der Name in seiner Mitte
+    // Flüsse nur in den Feldern von 4 km und 1 km: je Name das längste Stück im Modell, wo der Name steht, entscheidet die Prüfung
     if (stufe === 'ort' || stufe === 'nah') {
       const fluesse = new Map<string, Array<[number, number]>>()
       for (const f of zusatz.fluesse ?? []) {
@@ -3304,17 +3307,22 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           for (let s2 = 0; s2 < st; s2++) dicht.push([ae + (s2 / st) * (ce - ae), an + (s2 / st) * (cn - an)])
         }
         dicht.push(linie[linie.length - 1])
+        // je Punkt die Höhe des Geländes; wo das Gelände keine Höhe hat (0, ausserhalb der Schweiz), die mittlere der anderen
+        // (vorher eine Höhe für die ganze Linie, am Zihlkanal 0 m: der Name stand im Bild weit neben dem Kanal)
+        const roh = dicht.map(([pe, pn]) => bestandHoehe(b, pe, pn)), gut = roh.filter((v) => v > 150).sort((a, c) => a - c)
+        const median = gut.length ? gut[Math.floor(gut.length / 2)] : 0
+        const hoehen = roh.map((v) => (v > 150 ? v : median))
         const [e, n] = dicht[Math.floor(dicht.length / 2)]
-        const z = bestandHoehe(b, e, n)
-        const sp = sprite(name, tinte(null, true))
+        const z = median
+        const sp = sprite(name, tinte(null, true), true)
         sp.position.set((e - cE) / 1000, z / 1000, -(n - cN) / 1000)
         gruppe.add(sp)
-        namen.push({ name, e, n, z, sp, rang: laenge(linie) / 1e3, linie: dicht })
+        namen.push({ name, e, n, z, sp, rang: laenge(linie) / 1e3, linie: dicht, hoehen })
       }
     }
     wurzel.add(gruppe)
     // die Prüfung: für jeden Namen Punkte über seine Fläche im Bild, je ein Strahl von der Kamera auf die Höhe des Wassers; ein See braucht sie alle im See
-    // (nicht auf einer Insel, im Modell), ein Fluss muss im Bild unter dem Anfang, der Mitte und dem Ende des Namens durchlaufen
+    // (nicht auf einer Insel, im Modell), ein Fluss sucht die Stelle nahe der Mitte des Bilds, wo er unter dem ganzen Namen durchläuft
     const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), ebene = new THREE.Plane(), treffer = new THREE.Vector3(), mitte = new THREE.Vector3(), vor = new THREE.Vector3(), groesse = new THREE.Vector2()
     const pruefen = () => {
       const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
@@ -3324,39 +3332,74 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const gezeigt: Array<{ x: number; y: number; w: number; h: number }> = []
       for (const x of [...namen].sort((a, c) => (a.ring ? 0 : 1) - (c.ring ? 0 : 1) || c.rang - a.rang)) {
         x.sp.visible = false
-        x.sp.getWorldPosition(mitte)
-        if (vor.copy(mitte).applyMatrix4(cam.matrixWorldInverse).z >= 0) continue
-        const p = mitte.clone().project(cam)
-        const cx = (p.x + 1) / 2 * W, cy = (1 - p.y) / 2 * H, w = x.sp.userData.b * f, h = x.sp.userData.h * f
-        if (cx - w / 2 < 0 || cx + w / 2 > W || cy - h < 0 || cy + h > H) continue
-        if (gezeigt.some((g) => Math.abs(g.x - cx) < (g.w + w) / 2 + 8 && Math.abs(g.y - cy) < (g.h + h) / 2 + 4)) continue
-        let passt = true
+        const w0 = x.sp.userData.b * f, h = x.sp.userData.h * f
+        let cx = 0, cy = 0, cos = 1, sin = 0, passt = true
+        if (x.linie) {
+          // Flüsse (Michael, 2026-11-08, Zihlkanal: «Weisst du warum hier Ziel (Name des Kanals) nicht angezeigt wird?»: der Name stand
+          // waagrecht in der Mitte des Stücks im Modell, oft am Rand des Bilds, und passte nur auf einen Fluss, der dort fast waagrecht lief):
+          // der Name an der Stelle der Linie, die der Mitte des Bilds am nächsten liegt und wo er Platz hat, gedreht entlang der Sehne über
+          // seine Länge, höchstens bis senkrecht, damit er lesbar bleibt; die Linie dazwischen höchstens die Höhe des Namens neben ihr
+          gruppe.updateMatrixWorld()
+          const bild = x.linie.map(([pe, pn], j) => { const q = new THREE.Vector3((pe - cE) / 1000, x.hoehen![j] / 1000, -(pn - cN) / 1000).applyMatrix4(gruppe.matrixWorld); const v = q.clone().applyMatrix4(cam.matrixWorldInverse); q.project(cam); return [(q.x + 1) / 2 * W, (1 - q.y) / 2 * H, v.z] as [number, number, number] })
+          const kand = bild.map((_, i) => i).filter((i) => bild[i][2] < 0 && bild[i][0] > w0 / 2 && bild[i][0] < W - w0 / 2 && bild[i][1] > w0 / 2 && bild[i][1] < H - w0 / 2)
+            .sort((i, j) => Math.hypot(bild[i][0] - W / 2, bild[i][1] - H / 2) - Math.hypot(bild[j][0] - W / 2, bild[j][1] - H / 2))
+          passt = false
+          const versucht: number[] = []
+          for (const i of kand) {
+            if (versucht.length >= 12) break
+            if (versucht.some((j) => Math.hypot(bild[i][0] - bild[j][0], bild[i][1] - bild[j][1]) < w0 / 3)) continue
+            versucht.push(i)
+            // die Enden: entlang der Linie je die halbe Länge des Namens im Bild
+            const ende = (s2: number) => { let j = i, l = 0; while (j + s2 >= 0 && j + s2 < bild.length && l < w0 / 2) { l += Math.hypot(bild[j + s2][0] - bild[j][0], bild[j + s2][1] - bild[j][1]); j += s2 } return l >= w0 / 2 ? j : -1 }
+            const i0 = ende(-1), i1 = ende(1)
+            if (i0 < 0 || i1 < 0) continue
+            let dx = bild[i1][0] - bild[i0][0], dy = bild[i1][1] - bild[i0][1]
+            const l = Math.hypot(dx, dy)
+            if (l < w0 * 0.8) continue
+            dx /= l; dy /= l
+            let ok = true
+            for (let j = i0; j <= i1 && ok; j++) if (Math.abs((bild[j][0] - bild[i0][0]) * dy - (bild[j][1] - bild[i0][1]) * dx) > h) ok = false
+            if (!ok) continue
+            if (dx < 0) { dx = -dx; dy = -dy }
+            cos = dx; sin = dy
+            cx = (bild[i0][0] + bild[i1][0]) / 2; cy = (bild[i0][1] + bild[i1][1]) / 2
+            // der Name in der Mitte der Sehne, im Gelände
+            ndc.set((cx / W) * 2 - 1, -((cy / H) * 2 - 1))
+            ray.setFromCamera(ndc, cam)
+            // die Ebene des Wassers in der Welt (das Modell kann verschoben und gedreht sein), der Treffer zurück ins Modell
+            ebene.set(new THREE.Vector3(0, 1, 0), 0).applyMatrix4(new THREE.Matrix4().copy(gruppe.matrixWorld).multiply(new THREE.Matrix4().makeTranslation(0, x.hoehen![i] / 1000, 0)))
+            if (!ray.ray.intersectPlane(ebene, treffer)) continue
+            gruppe.worldToLocal(treffer)
+            x.sp.position.set(treffer.x, x.hoehen![i] / 1000, treffer.z)
+            ;(x.sp.material as THREE.SpriteMaterial).rotation = -Math.atan2(sin, cos)
+            passt = true
+            break
+          }
+          if (!passt) continue
+        } else {
+          x.sp.getWorldPosition(mitte)
+          if (vor.copy(mitte).applyMatrix4(cam.matrixWorldInverse).z >= 0) continue
+          const p = mitte.clone().project(cam)
+          cx = (p.x + 1) / 2 * W; cy = (1 - p.y) / 2 * H
+        }
+        // die Fläche des Namens im Bild, gedreht
+        const w = w0 * Math.abs(cos) + h * Math.abs(sin), hh = w0 * Math.abs(sin) + h * Math.abs(cos)
+        if (cx - w / 2 < 0 || cx + w / 2 > W || cy - hh < 0 || cy + hh > H) continue
+        if (gezeigt.some((g) => Math.abs(g.x - cx) < (g.w + w) / 2 + 8 && Math.abs(g.y - cy) < (g.h + hh) / 2 + 4)) continue
         if (x.ring) {
           ebene.set(new THREE.Vector3(0, 1, 0), -mitte.y)
           for (const fx of [-0.5, -0.25, 0, 0.25, 0.5]) for (const fy of [-0.35, 0.35]) {
             ndc.set(((cx + fx * w * 1.08) / W) * 2 - 1, -(((cy + fy * h) / H) * 2 - 1))
             ray.setFromCamera(ndc, cam)
             if (!ray.ray.intersectPlane(ebene, treffer)) { passt = false; break }
+            gruppe.worldToLocal(treffer)
             const pe = treffer.x * 1000 + cE, pn = -treffer.z * 1000 + cN
             if (!drin(pe, pn) || !inRing(x.ring, pe, pn) || x.inseln!.some((ins) => inRing(ins, pe, pn))) { passt = false; break }
-          }
-        } else if (x.linie) {
-          // die Linie im Bild, und je ein Punkt am Anfang, in der Mitte und am Ende des Namens, der höchstens die Höhe des Namens von ihr entfernt ist
-          const bild = x.linie.map(([pe, pn]) => { const q = new THREE.Vector3((pe - cE) / 1000, x.z / 1000, -(pn - cN) / 1000).project(cam); return [(q.x + 1) / 2 * W, (1 - q.y) / 2 * H] as [number, number] })
-          for (const fx of [-0.5, 0, 0.5]) {
-            const sx = cx + fx * w, sy = cy
-            let best = Infinity
-            for (let i = 1; i < bild.length; i++) {
-              const [ax, ay] = bild[i - 1], [bx, by] = bild[i], dx = bx - ax, dy = by - ay, l2 = dx * dx + dy * dy
-              const t = l2 ? Math.max(0, Math.min(1, ((sx - ax) * dx + (sy - ay) * dy) / l2)) : 0
-              best = Math.min(best, Math.hypot(sx - ax - t * dx, sy - ay - t * dy))
-            }
-            if (best > h) { passt = false; break }
           }
         }
         if (!passt) continue
         x.sp.visible = true
-        gezeigt.push({ x: cx, y: cy, w, h })
+        gezeigt.push({ x: cx, y: cy, w, h: hh })
       }
     }
     // neu geprüft, wenn die Kamera 0,25 s ruht (wie die Orte), in der Brille alle 0,5 s
