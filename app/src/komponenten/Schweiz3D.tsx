@@ -65,6 +65,14 @@ const TUNNEL_RAND = 1.15
 /** gestrichelter Verlauf eines Tunnels: Karmin, Breite in Bildpunkten, Strich und Lücke als Anteil der Breite des Modells (gewählt) */
 /** Namen der Gewässer: Helligkeit als Anteil der Helligkeit des Wassers im Luftbild, Sättigung mal (gewählt); wie viele Seen und Flüsse höchstens im Modell */
 const GEWAESSER_HELL = 0.5, GEWAESSER_SATT = 1.3
+/** ist ein See dunkler als das (Helligkeit in HSL), wird sein Name um so viel heller statt dunkler (gewählt) */
+const GEWAESSER_DUNKEL = 0.22, GEWAESSER_HELLER = 0.32
+/** so viele Felder je Seite hat das Raster, in dem der Name eines Sees seine Mitte im Bild sucht (gewählt) */
+const GEWAESSER_RASTER = 48
+/** so viel unten im Bild liegt unter der Suche und den Knöpfen (gewählt) */
+const GEWAESSER_UNTEN_PX = 60
+/** so viel Platz braucht der Name eines Sees um seine Mitte, in seiner Breite und Höhe (0,5 genau; gewählt) */
+const GEWAESSER_PLATZ = 0.62
 const GEWAESSER_SEEN_HOECHSTENS = 12, GEWAESSER_FLUESSE_HOECHSTENS = 6
 const STRICH_FARBE = '#a8102e'
 const STRICH_PX = 3
@@ -3210,7 +3218,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (fluss && seeTon) { hsl.h = seeTon.h; hsl.s = seeTon.s; hsl.l = seeTon.l }
       if (hsl.s < 0.12) hsl.s = 0.25
       if (!fluss && !seeTon) seeTon = { ...hsl }
-      return new THREE.Color().setHSL(hsl.h, Math.min(1, hsl.s * GEWAESSER_SATT), Math.max(0.05, hsl.l * GEWAESSER_HELL), THREE.SRGBColorSpace).getStyle(THREE.SRGBColorSpace)
+      // ein dunkler See (Michael, 2026-11-08, Zugersee: «Kann bei einem so dunkeln See der Name etwas heller als der See sein?»): heller statt dunkler
+      const hell = hsl.l < GEWAESSER_DUNKEL
+      const l = hell ? Math.min(0.85, hsl.l + GEWAESSER_HELLER) : Math.max(0.05, hsl.l * GEWAESSER_HELL)
+      return { farbe: new THREE.Color().setHSL(hsl.h, Math.min(1, hsl.s * GEWAESSER_SATT), l, THREE.SRGBColorSpace).getStyle(THREE.SRGBColorSpace), hell }
     }
     const inRing = (ring: Array<[number, number]>, pe: number, pn: number) => {
       let innen = false
@@ -3229,12 +3240,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       return Math.min(m, pe - e0, e1 - pe, pn - n0, n1 - pn)
     }
-    type Name = { name: string; e: number; n: number; z: number; sp: THREE.Sprite; rang: number; ring?: Array<[number, number]>; inseln?: Array<Array<[number, number]>>; linie?: Array<[number, number]>; hoehen?: number[] }
+    type Name = { name: string; e: number; n: number; z: number; sp: THREE.Sprite; rang: number; ring?: Array<[number, number]>; inseln?: Array<Array<[number, number]>>; linie?: Array<[number, number]>; hoehen?: number[]; kasten?: [number, number, number, number] }
     const namen: Name[] = []
     const gruppe = new THREE.Group()
     gruppe.name = 'gewaesser'
     const weg: Array<{ dispose: () => void }> = []
-    const sprite = (text: string, farbe: string, rand = false) => {
+    const sprite = (text: string, { farbe, hell }: { farbe: string; hell: boolean }, rand = false) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       const px = 26, schrift = `italic normal ${px}px Helvetica, Arial, sans-serif`
       x.font = schrift
@@ -3242,7 +3253,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       x.font = schrift
       // Flüsse mit feinem hellem Rand: ein Fluss ist schmaler als der Name, die dunkle Schrift läge sonst halb auf dem Ufer, halb auf
       // dunklem Wasser (Zihlkanal; Breite und Deckkraft gewählt)
-      if (rand) { x.lineJoin = 'round'; x.lineWidth = 5; x.strokeStyle = 'rgba(255, 255, 255, 0.55)'; x.strokeText(text, 6, px + 1) }
+      if (rand) { x.lineJoin = 'round'; x.lineWidth = 5; x.strokeStyle = hell ? 'rgba(0, 0, 0, 0.45)' : 'rgba(255, 255, 255, 0.55)'; x.strokeText(text, 6, px + 1) }
       x.fillStyle = farbe; x.fillText(text, 6, px + 1)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const mat = new THREE.SpriteMaterial({ map: t, depthTest: false, sizeAttenuation: !!k.inBrille(), toneMapped: false })
@@ -3281,7 +3292,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const sp = sprite(name, tinte(farbeBei(e, n), false))
       sp.position.set((e - cE) / 1000, z / 1000, -(n - cN) / 1000)
       gruppe.add(sp)
-      namen.push({ name, e, n, z, sp, rang: v.flaeche, ring: v.ring, inseln: v.inseln })
+      namen.push({ name, e, n, z, sp, rang: v.flaeche, ring: v.ring, inseln: v.inseln, kasten: [Math.min(...re), Math.max(...re), Math.min(...rn), Math.max(...rn)] })
     }
     // Flüsse nur in den Feldern von 4 km und 1 km: je Name das längste Stück im Modell, wo der Name steht, entscheidet die Prüfung
     if (stufe === 'ort' || stufe === 'nah') {
@@ -3330,6 +3341,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       k.renderer.getSize(groesse)
       const W = groesse.x, H = groesse.y, f = H / (2 * Math.tan((k.kamera.fov * Math.PI) / 360))
       const gezeigt: Array<{ x: number; y: number; w: number; h: number }> = []
+      let schilder: Array<[number, number, number, number]> | null = null
       for (const x of [...namen].sort((a, c) => (a.ring ? 0 : 1) - (c.ring ? 0 : 1) || c.rang - a.rang)) {
         x.sp.visible = false
         const w0 = x.sp.userData.b * f, h = x.sp.userData.h * f
@@ -3376,6 +3388,61 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             break
           }
           if (!passt) continue
+        } else if (x.ring) {
+          // Seen (Michael, 2026-11-08, Zugersee: «immer schön optisch eingemittet zum grossen Teil des Sees»): der Name in der Mitte des grössten
+          // sichtbaren Teils des Sees im Bild: ein Raster über das Bild, je Feld ein Strahl auf die Höhe des Wassers, ob er den See im Modell
+          // trifft; gewählt das Feld, um das der Name am meisten Platz hat (Abstand zum nächsten Feld ohne See und zum Bildrand, gemessen in
+          // Breite und Höhe des Namens), so folgt er dem Drehen und Zoomen
+          gruppe.updateMatrixWorld()
+          ebene.set(new THREE.Vector3(0, 1, 0), 0).applyMatrix4(new THREE.Matrix4().copy(gruppe.matrixWorld).multiply(new THREE.Matrix4().makeTranslation(0, x.z / 1000, 0)))
+          const G = GEWAESSER_RASTER, innen: Array<[number, number]> = [], aussen: Array<[number, number]> = []
+          // Schilder der Orte und Gipfel sind im Weg (sonst stand «Rotkreuz» über «Zugersee»)
+          if (!schilder) {
+            schilder = []
+            k.wurzel.traverse((o) => {
+              if (!(o instanceof THREE.Sprite) || !o.visible || (o.userData.art !== 'orte' && o.userData.art !== 'gipfel')) return
+              let sichtbar = true
+              for (let q: THREE.Object3D | null = o.parent; q; q = q.parent) if (!q.visible) sichtbar = false
+              if (!sichtbar) return
+              const q = o.getWorldPosition(new THREE.Vector3())
+              if (q.clone().applyMatrix4(cam.matrixWorldInverse).z >= 0) return
+              q.project(cam)
+              const sx = (q.x + 1) / 2 * W, sy = (1 - q.y) / 2 * H, sw = o.userData.b * f, sh = o.userData.h * f
+              schilder!.push([sx - o.center.x * sw - 4, sx + (1 - o.center.x) * sw + 4, sy - (1 - o.center.y) * sh - 4, sy + o.center.y * sh + 4])
+            })
+          }
+          for (let gi = 0; gi < G; gi++) for (let gj = 0; gj < G; gj++) {
+            const px = ((gi + 0.5) / G) * W, py = ((gj + 0.5) / G) * H
+            if (py > H - GEWAESSER_UNTEN_PX || schilder.some(([x0, x1, y0, y1]) => px > x0 && px < x1 && py > y0 && py < y1)) { aussen.push([px, py]); continue }
+            ndc.set((px / W) * 2 - 1, -((py / H) * 2 - 1))
+            ray.setFromCamera(ndc, cam)
+            let see = false
+            if (ray.ray.intersectPlane(ebene, treffer)) {
+              gruppe.worldToLocal(treffer)
+              const pe = treffer.x * 1000 + cE, pn = -treffer.z * 1000 + cN
+              const [b0, b1, b2, b3] = x.kasten!
+              see = pe >= b0 && pe <= b1 && pn >= b2 && pn <= b3 && drin(pe, pn) && inRing(x.ring, pe, pn) && !x.inseln!.some((ins) => inRing(ins, pe, pn))
+            }
+            ;(see ? innen : aussen).push([px, py])
+          }
+          // je Feld der Platz um den Namen; bei fast gleichem Platz das Feld näher an der Mitte der Seefläche im Bild
+          let mx = 0, my = 0
+          for (const [px, py] of innen) { mx += px / innen.length; my += py / innen.length }
+          let platz = 0, abstand = Infinity
+          for (const [px, py] of innen) {
+            let d = Math.min(px / w0, (W - px) / w0, py / h, (H - GEWAESSER_UNTEN_PX - py) / h)
+            for (const [ax, ay] of aussen) { const q = Math.max(Math.abs(ax - px) / w0, Math.abs(ay - py) / h); if (q < d) { d = q; if (d < platz * 0.97) break } }
+            const zm = Math.hypot(px - mx, py - my)
+            if (d > platz * 1.03 || (d >= platz * 0.97 && zm < abstand)) { platz = Math.max(platz, d); abstand = zm; cx = px; cy = py }
+          }
+          // der Name braucht seine halbe Breite und Höhe, dazu etwas Rand gegen das grobe Raster (gewählt)
+          if (platz < GEWAESSER_PLATZ) continue
+          ndc.set((cx / W) * 2 - 1, -((cy / H) * 2 - 1))
+          ray.setFromCamera(ndc, cam)
+          if (!ray.ray.intersectPlane(ebene, treffer)) continue
+          gruppe.worldToLocal(treffer)
+          x.sp.position.set(treffer.x, x.z / 1000, treffer.z)
+          x.sp.getWorldPosition(mitte)
         } else {
           x.sp.getWorldPosition(mitte)
           if (vor.copy(mitte).applyMatrix4(cam.matrixWorldInverse).z >= 0) continue
@@ -3386,17 +3453,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const w = w0 * Math.abs(cos) + h * Math.abs(sin), hh = w0 * Math.abs(sin) + h * Math.abs(cos)
         if (cx - w / 2 < 0 || cx + w / 2 > W || cy - hh < 0 || cy + hh > H) continue
         if (gezeigt.some((g) => Math.abs(g.x - cx) < (g.w + w) / 2 + 8 && Math.abs(g.y - cy) < (g.h + hh) / 2 + 4)) continue
-        if (x.ring) {
-          ebene.set(new THREE.Vector3(0, 1, 0), -mitte.y)
-          for (const fx of [-0.5, -0.25, 0, 0.25, 0.5]) for (const fy of [-0.35, 0.35]) {
-            ndc.set(((cx + fx * w * 1.08) / W) * 2 - 1, -(((cy + fy * h) / H) * 2 - 1))
-            ray.setFromCamera(ndc, cam)
-            if (!ray.ray.intersectPlane(ebene, treffer)) { passt = false; break }
-            gruppe.worldToLocal(treffer)
-            const pe = treffer.x * 1000 + cE, pn = -treffer.z * 1000 + cN
-            if (!drin(pe, pn) || !inRing(x.ring, pe, pn) || x.inseln!.some((ins) => inRing(ins, pe, pn))) { passt = false; break }
-          }
-        }
         if (!passt) continue
         x.sp.visible = true
         gezeigt.push({ x: cx, y: cy, w, h: hh })
@@ -3410,7 +3466,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (k.renderer.xr.isPresenting) { if (jetzt - zeit > 500) { zeit = jetzt; pruefen() } return }
       const kam = k.kamera
       if (kam.position.distanceTo(lageVor) > ((wurzel.userData.weiteKm as number) || 1) * 1e-5 || kam.quaternion.angleTo(drehVor) > 1e-5) { lageVor.copy(kam.position); drehVor.copy(kam.quaternion); ruhe = jetzt; return }
-      if (ruhe && jetzt - ruhe > 250) { ruhe = 0; pruefen() }
+      if (ruhe && jetzt - ruhe > 300) { ruhe = 0; pruefen() }
     }
     k.jeBild.push(schritt)
     if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dGewaesser: unknown }).s3dGewaesser = () => { pruefen(); return namen.map((x) => [x.name, x.sp.visible]) }
