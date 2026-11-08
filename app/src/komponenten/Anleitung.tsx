@@ -68,7 +68,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <Abschnitt titel="Spiele">
         <Spiel titel="Virtuelle Schweiz">
           <li>
-            Die ganze Schweiz als Modell. Ein Feld antippen oder einen Ort, Gipfel oder See suchen, dann eintauchen: in Gebiete von 128 und 64 km, eine
+            Die ganze Schweiz als Modell. Ein Feld antippen oder einen Ort, eine Adresse, einen Gipfel oder See suchen, dann eintauchen: in Gebiete von 128 und 64 km, eine
             Region von 16 km, ein Feld von 4 km und ein Stück von 1 km; der gesuchte Ort bleibt dabei rot markiert. Mit + und −
             an den Wänden setzt du Stücke an.
           </li>
@@ -415,6 +415,10 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Ebenso, wenn die Windhose an ist oder ihre Tafel offen: die Windmessung und die Prognose der Station. In «Virtuelle Schweiz» holt
             «Wetter» dasselbe und dazu Regen und Schnee laut Wettermodell bei 3dland.ch (ebenfalls GitHub Pages, siehe unten), «Wolken» die Wolken von dort. Im Führerstand holt Taktland, solange der Sonnenschalter nicht leuchtet,
             die Wolken ebenfalls dort; die Datei ist für die ganze Schweiz dieselbe, sie verrät die Gegend nicht.
+          </li>
+          <li>
+            Die Suche in «Virtuelle Schweiz» findet Orte, Gipfel und Seen auf dem Gerät. Ab drei Zeichen schickt sie das Eingetippte zudem an die
+            Suche von swisstopo (api3.geo.admin.ch, Bund), damit sie auch Adressen findet; der Dienst sieht dabei die IP-Adresse und den Suchtext.
           </li>
           <li>
             Gelände, Luftbilder, Gebäude und Bäume für die 3D-Ansichten lädt Taktland zum Teil von daten.taktland.ch (cyon, Schweiz); wie
