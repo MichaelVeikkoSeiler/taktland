@@ -1232,7 +1232,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             hohen Gebäuden etwas daneben, und es zeigt den Stand der Aufnahme, nicht heute.</p>
           <p className="mt-2"><b>Gezeichnet</b>, weil es in keiner Quelle steht: die Farbe der Wände (je Gebäude einer von acht Putztönen, gewählt),
             die Fenster und Stockwerke (je Gebäude eine eigene Art: Raster, Grösse und Tönung der Fenster, bei manchen Schaufenster im Erdgeschoss; am Tag dunkle Scheiben, nachts zum Teil beleuchtet, wie viele, ist eine Annahme; runde Gebäude wie Tanks und Silos ohne Fenster, an der Form erkannt, darum auch ein runder Wohnturm; ebenso ohne Fenster, was das Gebäude- und Wohnungsregister des BFS als Industriegebäude, Silo oder Lager führt), die Körnung und die
-            dunkleren Stellen am Boden und unter dem Dach. Die Wände reichen unten 2 m tiefer als in den Daten. Türen, Balkone, Vordächer und Fassaden, wie sie wirklich aussehen, zeigt das Modell nicht. Ebenso erfunden sind die Strassen- und
+            dunkleren Stellen am Boden und unter dem Dach. Die Wände reichen unten 2 m tiefer als in den Daten. Wo die Quelle Wände und Grundfläche, aber kein Dach darüber nennt, liegt dort ein flaches Dach auf der mittleren Höhe der Wände, damit das Haus nicht offen ist. Türen, Balkone, Vordächer und Fassaden, wie sie wirklich aussehen, zeigt das Modell nicht. Ebenso erfunden sind die Strassen- und
             Bahnhofslampen, die mit «Gebäude» nachts leuchten; belegt ist nur, wo Strassen und Gleise liegen.</p>
         </Abschnitt>
         {/* eigener Abschnitt fürs Licht in der Nacht (Michael, 2026-11-08: «Hier noch die Erfundene Strasse und Bahnhofs Beleuchtung auflisten? Macht Sinn oder?») */}
@@ -1377,7 +1377,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               ist aus der Lage der Sektortafeln geschlossen, nicht angegeben, und unterirdische Gleise fehlen. Wie die Züge davor und danach einspuren, ist gewählt.</li>
             <li>Ein Feld ist ein Quadrat, keine Region und kein Tal: Deren Grenzen stehen in keiner Quelle.</li>
             <li>Wände der Gebäude: je Gebäude einer von acht hellen Putztönen, etwas heller oder dunkler, immer derselbe am selben Ort (gewählt, die
-              Fassadenfarbe steht in keiner Quelle); Fenster, Stockwerke und wie viele Fenster nachts brennen. Auf den Dächern liegt das Luftbild
+              Fassadenfarbe steht in keiner Quelle); Fenster, Stockwerke und wie viele Fenster nachts brennen; ein flaches Dach, wo die Quelle
+              Wände und Grundfläche, aber kein Dach nennt. Auf den Dächern liegt das Luftbild
               (SWISSIMAGE): Es ist von oben aufgenommen, bei hohen Gebäuden liegt das Dach im Bild etwas daneben.</li>
             <li>Perrons: Die SBB nennt die Lage am Gleis; die Kante ist 1,65 m neben der Gleisachse gezeichnet und folgt zwischen den Punkten der SBB
               dem Gleis laut swissTLM3D. Wo die SBB nur eine Kante nennt (Aussen- und Hausperrons), ist der Perron 4 m breit, auf der Seite seiner

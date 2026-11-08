@@ -207,17 +207,54 @@ def gebaeude(datei):
             for _, el in iterparse(f, events=("end",)):
                 if el.tag != BLDG + "Building":
                     continue
-                flaechen = []
-                for art in ("RoofSurface", "WallSurface"):
+                flaechen, grund = [], []
+                for art in ("RoofSurface", "WallSurface", "GroundSurface"):
                     for fl in el.iter(BLDG + art):
                         for pl in fl.iter(GML + "exterior"):
                             pos = pl.find(f".//{GML}posList")
                             if pos is None or not pos.text:
                                 continue
-                            flaechen.append((art, np.array(pos.text.split(), dtype=float).reshape(-1, 3)))
+                            p = np.array(pos.text.split(), dtype=float).reshape(-1, 3)
+                            (grund if art == "GroundSurface" else flaechen).append(p if art == "GroundSurface" else (art, p))
                 el.clear()
                 if flaechen:
-                    yield flaechen
+                    yield flaechen + dach_ergaenzen(flaechen, grund)
+
+
+# Wo swissBUILDINGS3D eine Grundfläche mit Wänden, aber ohne Dach darüber nennt (Michael, 2026-11-08, Leimiswil, Graben 74: «Hier am Graben
+# in Leimiswil fehlt ein Dach»: 254 m² Grundfläche, 135 m² Dach), ein flaches Dach auf der mittleren Höhe (Median) der Wände rundum, damit das Haus
+# nicht offen ist. Erfunden, nicht aus der Quelle; ab DACH_LUECKE_M2, Ränder um DACH_RAND_M geschoben (gewählt). Nur in CityGML, die FileGDB
+# führt die Flächen nicht je Gebäude.
+DACH_LUECKE_M2, DACH_RAND_M, DACH_WAND_M = 4.0, 0.3, 2.0
+
+
+def dach_ergaenzen(flaechen, grund):
+    if not grund:
+        return []
+    try:
+        from shapely.geometry import Polygon, LineString
+        from shapely.ops import unary_union
+    except ImportError:
+        return []
+    def flach(ps):
+        return unary_union([Polygon(p[:, :2]).buffer(0) for p in ps if len(p) >= 3])
+    dach = flach([p for art, p in flaechen if art == "RoofSurface"])
+    luecke = flach(grund).difference(dach.buffer(DACH_RAND_M)).buffer(-DACH_RAND_M / 3).buffer(DACH_RAND_M / 3 + DACH_RAND_M)
+    luecke = luecke.intersection(flach(grund)).difference(dach)
+    raus = []
+    for teil in getattr(luecke, "geoms", [luecke]):
+        if teil.is_empty or teil.geom_type != "Polygon" or teil.area < DACH_LUECKE_M2:
+            continue
+        rand = teil.exterior.buffer(0.5)
+        # Wände am Rand, die mindestens DACH_WAND_M hoch sind (kurze Stücke am Boden zählen nicht)
+        hoehen = [p[:, 2].max() for art, p in flaechen if art == "WallSurface" and len(p) >= 2
+                  and p[:, 2].max() - p[:, 2].min() >= DACH_WAND_M and rand.intersects(LineString(p[:, :2]))]
+        if not hoehen:
+            continue
+        h = float(np.median(hoehen))
+        xy = np.array(teil.simplify(0.2).exterior.coords)[:-1]
+        raus.append(("RoofSurface", np.column_stack([xy, np.full(len(xy), h)])))
+    return raus
 
 
 def schreiben(ziel, kacheln):

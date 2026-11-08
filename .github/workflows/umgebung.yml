@@ -62,7 +62,7 @@ jobs:
           python-version: '3.11'
 
       - name: Pakete installieren
-        run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib
+        run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib shapely
 
       # viele Blätter gibt es nur als FileGDB, gelesen mit ogr2ogr
       - name: GDAL installieren
@@ -92,7 +92,7 @@ jobs:
           python-version: '3.11'
 
       - name: Pakete installieren
-        run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib pyshp
+        run: python -m pip install --quiet numpy scipy rasterio pillow mapbox_earcut matplotlib pyshp shapely
 
       - name: swissTLM3D laden (Einzelbaum, Bodenbedeckung)
         run: python pipeline/fetch_tlm3d.py --baeume
