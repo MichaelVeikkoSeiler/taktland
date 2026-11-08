@@ -557,8 +557,27 @@ export interface Knoepfe { plus: Record<Seite, boolean>; wachsen: Record<Seite, 
 /** 2026-11-19 als 19.11.2026 */
 const datumKurz = (d: string) => { const [j, m, t] = d.split('-').map(Number); return `${t}.${m}.${j}` }
 
+/** welcher Schritt der Virtuellen Schweiz laut Adresse */
+function ansichtAusAdresse(eigeneSeite: boolean): 'wahl' | 'anleitung' | 'karte' {
+  if (eigeneSeite) return 'karte'
+  const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
+  return q.has('lat') || q.has('karte') ? 'karte' : q.has('anleitung') ? 'anleitung' : 'wahl'
+}
+const EINTAUCHEN_KNOPF = 'inline-block shrink-0 rounded-lg bg-sbb-red px-3 py-1.5 text-base font-bold text-white hover:bg-sbb-red125'
+const ANLEITUNG_KNOPF = 'inline-block shrink-0 rounded-lg border border-sbb-cloud bg-white px-3 py-1.5 text-base font-bold hover:border-sbb-black '
+  + 'dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'
+
 /** eigeneSeite: auf 3dland.ch die ganze Seite, ohne den Weg zurück zu den Spielen von Taktland */
 export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boolean }) {
+  // in Taktland zuerst eine Wahl zwischen Anleitung und Eintauchen, erst dann das Modell (Michael, 2026-11-08: «Beim Spiel Virtuell nicht direkt
+  // zur 3D Karte, es braucht folgenden Zwischenschritt mit dieser Auswahl: Anleitung, Eintauchen (gleicher Button-Stil wie "Fahren")»);
+  // in der Adresse (#/schweiz3d?anleitung, ?karte), damit «Zurück» des Geräts zur Wahl führt; mit einem Ort (lat=…) und auf 3dland.ch gleich das Modell
+  const [ansicht, setAnsicht] = useState<'wahl' | 'anleitung' | 'karte'>(() => ansichtAusAdresse(eigeneSeite))
+  useEffect(() => {
+    const f = () => setAnsicht(ansichtAusAdresse(eigeneSeite))
+    window.addEventListener('hashchange', f)
+    return () => window.removeEventListener('hashchange', f)
+  }, [eigeneSeite])
   useEffect(() => szeneLaden(), [])
   const [stufe, setStufe] = useState<Stufe>('schweiz')
   const [gelaende, setGelaende] = useState<Record<Stufe, Bestand | null>>({ schweiz: null, gross: null, mittel: null, region: null, ort: null, nah: null })
@@ -934,10 +953,23 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
 
   return (
     <div className="px-4 pb-4">
-      {!eigeneSeite && <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />}
+      {!eigeneSeite && (ansicht === 'wahl'
+        ? <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
+        : <Zurueck onClick={() => { window.location.hash = '#/schweiz3d' }} text="Virtuell" />)}
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : 'Virtuelle Schweiz'}</h1>
-      {fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
+      {ansicht !== 'karte' && (
+        <>
+          {ansicht === 'wahl' && <p className="mt-2 leading-relaxed">Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, Gipfel oder See, und tauche ein, bis auf ein Stück
+            von 1 km. Mit einer Brille steht das Modell vor dir auf dem Tisch.</p>}
+          <div className="mt-4 flex flex-wrap gap-3">
+            <a href="#/schweiz3d?karte" className={EINTAUCHEN_KNOPF}>Eintauchen</a>
+            {ansicht === 'wahl' && <a href="#/schweiz3d?anleitung" className={ANLEITUNG_KNOPF}>Anleitung</a>}
+          </div>
+        </>
+      )}
+      {ansicht === 'karte' && fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
+      {ansicht === 'karte' && (<>
       {/* am Desktop taucht ein Doppelklick ins Feld ein, statt jedes Mal «Eintauchen» (Michael, 2026-11-06: «auf der Desktop-Version soll man, wenn man einen
           Ausschnitt gewählt hat, diesen doppelklicken können»); nur wenn beide Klicks das Gelände trafen, nicht einen Knopf an der Wand */}
       <div onDoubleClick={() => {
@@ -1151,8 +1183,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
         </details>
       )}
+      </>)}
       {/* die Anleitung unter dem Modell, je Thema auf- und zuklappbar wie bei Taktland (Michael, 2026-10-24: «Einleitungstext streichen
           und Karte nach oben direkt zum Auftaktbild schieben. Einleitungstext als Anleitung unter der Karte und jeweils kategorisieren») */}
+      {ansicht !== 'wahl' && (<>
       <h2 className="mt-6 text-xl font-bold">Anleitung</h2>
       <div className="mt-2 space-y-2 text-sm leading-relaxed">
         <Abschnitt titel="Wählen und eintauchen">
@@ -1366,6 +1400,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p className="mt-3 font-medium">Michael Veikko Seiler</p>
         </Abschnitt>
       </div>
+      </>)}
     </div>
   )
 }
