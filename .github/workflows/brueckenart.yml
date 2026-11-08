@@ -1,0 +1,29 @@
+# Holt die Bauart der Brücken in der Schweiz aus Wikidata (pipeline/build_brueckenart.py; Michael, 2026-11-08: «wie die Brücke
+# architektonisch ungefähr aussieht … Torbogen, Stahlbrücke, etc.») und legt data/brueckenart.json in den Zweig, auf dem er läuft.
+# Nur von Hand zu starten: Actions → Brückenart → Run workflow. Die Sitzung von Claude erreicht Wikidata nicht, GitHub schon.
+name: Brückenart
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  holen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Wikidata abfragen
+        run: python pipeline/build_brueckenart.py
+      - name: Ins Repository legen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git add data/brueckenart.json
+          if git diff --cached --quiet; then echo "unverändert"; exit 0; fi
+          git commit -m "Brückenart aus Wikidata neu geholt"
+          git push
