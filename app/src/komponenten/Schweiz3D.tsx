@@ -8,7 +8,7 @@ import { Line2 } from 'three/examples/jsm/lines/Line2.js'
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
-import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
+import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
@@ -64,6 +64,10 @@ const STUFEN: Stufe[] = ['schweiz', 'gross', 'mittel', 'region', 'ort', 'nah']
 const TUNNEL_RAND = 1.15
 /** gestrichelter Verlauf eines Tunnels: Karmin, Breite in Bildpunkten, Strich und Lücke als Anteil der Breite des Modells (gewählt) */
 /** Namen der Gewässer: Helligkeit als Anteil der Helligkeit des Wassers im Luftbild, Sättigung mal (gewählt); wie viele Seen und Flüsse höchstens im Modell */
+/** die Retusche unter Brücken ist breiter als die gezeichnete Brücke: die Klasse in swissTLM3D nennt oft nur die Fahrbahn (die Kornhausbrücke
+ *  in Bern ist eine «6m Strasse», auf dem Luftbild mit Trottoirs und Tram etwa dreimal so breit); halbe Breite mal so viel und so viel dazu,
+ *  bei Gleisen so viel über die Platte hinaus (gewählt) */
+const RETUSCHE_STRASSE_MAL = 1.5, RETUSCHE_STRASSE_PLUS_M = 3, RETUSCHE_GLEIS_PLUS_M = 2
 const GEWAESSER_HELL = 0.5, GEWAESSER_SATT = 1.3
 /** ist ein See dunkler als das (Helligkeit in HSL), wird sein Name um so viel heller statt dunkler (gewählt) */
 const GEWAESSER_DUNKEL = 0.22, GEWAESSER_HELLER = 0.32
@@ -3723,13 +3727,33 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         }
         for (const m of querschnittNetzeBauen(stellen, X, Y, Z, material)) { m.castShadow = true; m.receiveShadow = true; gruppe.add(m) }
       }
+      // unter jeder gezeichneten Brücke das Luftbild retuschiert wie im Führerstand (Bruecken.ts, retuschieren; Michael, 2026-11-08, Bern:
+      // «bei Brücken … darunter auf der Oberfläche einfach noch die Brücke als zweite Texturierung … inhaltsbasiert aufzufüllen, wie bei Photoshop»)
+      const streifen: Streifen[] = []
+      const streifenVon = (st: BrueckenStueck, lo: number, hi: number) =>
+        streifen.push({ p: st.e.map((e, i) => [e, st.n[i]] as [number, number]), lo: st.e.map(() => lo), hi: st.e.map(() => hi) })
       // Gleise: eine Platte unter allen parallelen Gleisen, der Schotter BRUECKE_GLEIS_UNTER_M unter der Achse
-      for (const p of gleisPlatten(stuecke.filter((s) => s.art === 0)))
+      for (const p of gleisPlatten(stuecke.filter((s) => s.art === 0))) {
         zeichnen(p.stueck, 0, bahnQuerschnitt(p.lo, p.hi, -BRUECKE_GLEIS_UNTER_M, BRUECKE_DICKE_M))
+        streifenVon(p.stueck, p.lo - RETUSCHE_GLEIS_PLUS_M, p.hi + RETUSCHE_GLEIS_PLUS_M)
+      }
       // Strassen und Wege: der Belag knapp unter der Achse
       for (const s of stuecke) {
         if (s.art === 0) continue
-        zeichnen(s, -0.1, strassenQuerschnitt(strassenHalbe(s.breite, s.klasse, s.art === 2)))
+        const halb = strassenHalbe(s.breite, s.klasse, s.art === 2)
+        zeichnen(s, -0.1, strassenQuerschnitt(halb))
+        streifenVon(s, -(halb * RETUSCHE_STRASSE_MAL + RETUSCHE_STRASSE_PLUS_M), halb * RETUSCHE_STRASSE_MAL + RETUSCHE_STRASSE_PLUS_M)
+      }
+      for (const t of teile) {
+        const r = t.rahmen, c = t.bild
+        const hier = streifen.filter((st) => st.p.some(([e, n]) => e > r.e0 - 50 && e < r.e0 + r.b + 50 && n < r.n1 + 50 && n > r.n1 - r.h - 50))
+        const ctx = hier.length ? c.getContext('2d', { willReadFrequently: true }) : null
+        if (!ctx || (import.meta.env.VITE_S3D_TEST && (window as unknown as { s3dOhneRetusche?: boolean }).s3dOhneRetusche)) continue
+        retuschieren(ctx, c.width, c.height, r.e0, r.n1, c.width / r.b, hier)
+        k.wurzel.traverse((o) => {
+          const m = (o as THREE.Mesh).material as THREE.MeshLambertMaterial | undefined
+          if (m && !Array.isArray(m) && m.map?.image === c) m.map.needsUpdate = true
+        })
       }
       if (gruppe.children.length) k.wurzel.add(gruppe)
     })

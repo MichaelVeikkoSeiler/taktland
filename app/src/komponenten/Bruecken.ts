@@ -227,3 +227,102 @@ export function gleisPlatten(stuecke: BrueckenStueck[]): GleisPlatte[] {
   }
   return bleibt
 }
+
+/** Retusche, im Führerstand und seit 2026-11-08 auch in «3D Schweiz» (Michael, 2026-10-15: «wegzuretuschieren, damit die Straße auf der Brücke und nicht unterhalb … verläuft»):
+ *  das Luftbild ist auf das Gelände gelegt, eine Brücke darin liegt unten im Tal oder auf dem Gleis darunter. Unter jeder
+ *  gezeichneten Brücke wird es quer zur Brücke zwischen den beiden Rändern aufgefüllt, RETUSCHE_RAND_M breiter als die Brücke
+ *  (die Brücke liegt im Luftbild je nach Höhe etwas daneben); keine künstliche Intelligenz, nicht aus einer Quelle */
+export const RETUSCHE_RAND_M = 2.5, RETUSCHE_MITTEL_M = 8, RETUSCHE_BLOCK_M = 2, RETUSCHE_KORN_PX = 3, RETUSCHE_KORN_MAX = 22
+/** ein Streifen unter einer Brücke: Achse in Landeskoordinaten und je Punkt der Abstand links und rechts wie brueckeQuer */
+export interface Streifen { p: Array<[number, number]>; lo: number[]; hi: number[] }
+export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number, e0: number, n1: number, pxJeM: number, streifen: Streifen[]) {
+  for (const s of streifen) {
+    // Rechteck des Streifens in Bildpunkten
+    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity
+    s.p.forEach(([e, n], i) => {
+      const r = Math.max(-s.lo[i], s.hi[i]) + RETUSCHE_RAND_M + 2 * RETUSCHE_MITTEL_M + 12
+      x0 = Math.min(x0, (e - r - e0) * pxJeM); x1 = Math.max(x1, (e + r - e0) * pxJeM)
+      y0 = Math.min(y0, (n1 - n - r) * pxJeM); y1 = Math.max(y1, (n1 - n + r) * pxJeM)
+    })
+    x0 = Math.max(0, Math.floor(x0)); y0 = Math.max(0, Math.floor(y0)); x1 = Math.min(w, Math.ceil(x1)); y1 = Math.min(h, Math.ceil(y1))
+    if (x1 - x0 < 1 || y1 - y0 < 1) continue
+    const bw = x1 - x0, bh = y1 - y0
+    const bild = ctx.getImageData(x0, y0, bw, bh), q = bild.data, z = new Uint8ClampedArray(q)
+    const stelle = (e: number, n: number) => {
+      const x = Math.max(0, Math.min(bw - 1, Math.floor((e - e0) * pxJeM) - x0)), y = Math.max(0, Math.min(bh - 1, Math.floor((n1 - n) * pxJeM) - y0))
+      return y * bw + x
+    }
+    const hol = (e: number, n: number, k: number) => q[stelle(e, n) * 4 + k]
+    // die feine Struktur des Bildes: Helligkeit weniger ihr Mittel über RETUSCHE_KORN_PX Bildpunkte rundum
+    const hell = new Float32Array(bw * bh)
+    for (let i = 0; i < bw * bh; i++) hell[i] = (q[i * 4] + q[i * 4 + 1] + q[i * 4 + 2]) / 3
+    const mittel = new Float32Array(bw * bh), zw = new Float32Array(bw * bh), R = RETUSCHE_KORN_PX
+    for (let y = 0; y < bh; y++) {
+      let t = 0
+      for (let x = -R; x <= R; x++) t += hell[y * bw + Math.max(0, Math.min(bw - 1, x))]
+      for (let x = 0; x < bw; x++) {
+        zw[y * bw + x] = t / (2 * R + 1)
+        t += hell[y * bw + Math.min(bw - 1, x + R + 1)] - hell[y * bw + Math.max(0, x - R)]
+      }
+    }
+    for (let x = 0; x < bw; x++) {
+      let t = 0
+      for (let y = -R; y <= R; y++) t += zw[Math.max(0, Math.min(bh - 1, y)) * bw + x]
+      for (let y = 0; y < bh; y++) {
+        mittel[y * bw + x] = t / (2 * R + 1)
+        t += zw[Math.min(bh - 1, y + R + 1) * bw + x] - zw[Math.max(0, y - R) * bw + x]
+      }
+    }
+    // Zufall je Block, aber bei jedem Laden gleich
+    const zufall = (a: number, b: number, c: number) => {
+      let h = (a * 374761393 + b * 668265263 + c * 2147483647) | 0
+      h = Math.imul(h ^ (h >>> 13), 1274126177)
+      return ((h ^ (h >>> 16)) >>> 0) / 4294967296
+    }
+    const pxM = 1 / pxJeM
+    for (let i = 0; i + 1 < s.p.length; i++) {
+      const [ae, an] = s.p[i], [be, bn] = s.p[i + 1], l = Math.hypot(be - ae, bn - an)
+      if (l < 0.01) continue
+      const ue = (be - ae) / l, un = (bn - an) / l, qe = -un, qn = ue
+      const r = Math.max(-s.lo[i], s.hi[i], -s.lo[i + 1], s.hi[i + 1]) + RETUSCHE_RAND_M
+      const xa = Math.max(x0, Math.floor((Math.min(ae, be) - r - e0) * pxJeM)), xb = Math.min(x1, Math.ceil((Math.max(ae, be) + r - e0) * pxJeM))
+      const ya = Math.max(y0, Math.floor((n1 - Math.max(an, bn) - r) * pxJeM)), yb = Math.min(y1, Math.ceil((n1 - Math.min(an, bn) + r) * pxJeM))
+      for (let y = ya; y < yb; y++) {
+        for (let x = xa; x < xb; x++) {
+          const e = e0 + (x + 0.5) * pxM, n = n1 - (y + 0.5) * pxM
+          const t = (e - ae) * ue + (n - an) * un
+          if (t < 0 || t > l) continue
+          const d = (e - ae) * qe + (n - an) * qn, f = t / l
+          const lo = s.lo[i] + f * (s.lo[i + 1] - s.lo[i]) - RETUSCHE_RAND_M, hi = s.hi[i] + f * (s.hi[i + 1] - s.hi[i]) + RETUSCHE_RAND_M
+          if (d < lo || d > hi) continue
+          // zwischen den beiden Rändern verlaufend; jeder Rand gemittelt über RETUSCHE_MITTEL_M längs und 2 m nach aussen,
+          // sonst zieht jeder Bildpunkt am Rand einen Streifen. Gespiegelt wäre die Zeichnung schärfer, erfand aber Häuser
+          const me = ae + ue * t, mn = an + un * t, g = (d - lo) / ((hi - lo) || 1)
+          const o = ((y - y0) * bw + (x - x0)) * 4
+          let r0 = 0, g0 = 0, b0 = 0, r1 = 0, g1 = 0, b1 = 0, k2 = 0
+          for (const sl of [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1]) {
+            for (const aus of [0.5, 2]) {
+              const ve = me + ue * sl * RETUSCHE_MITTEL_M, vn = mn + un * sl * RETUSCHE_MITTEL_M
+              const le = ve + qe * (lo - aus), ln = vn + qn * (lo - aus), re = ve + qe * (hi + aus), rn = vn + qn * (hi + aus)
+              r0 += hol(le, ln, 0); g0 += hol(le, ln, 1); b0 += hol(le, ln, 2)
+              r1 += hol(re, rn, 0); g1 += hol(re, rn, 1); b1 += hol(re, rn, 2)
+              k2++
+            }
+          }
+          // Körnung aus der Umgebung (Michael, 2026-10-15: «inhaltsbasiertes Auffüllen»): je Block von RETUSCHE_BLOCK_M die
+          // feine Struktur eines gleich grossen Stücks neben der Brücke, auf der nahen Seite, zufällig versetzt; nur sie,
+          // nicht seine Farben, und begrenzt, damit keine Häuser oder Strassen hineinkommen
+          const bt = Math.floor(t / RETUSCHE_BLOCK_M), bd = Math.floor(d / RETUSCHE_BLOCK_M), links = d < (lo + hi) / 2
+          const st = (t - bt * RETUSCHE_BLOCK_M) + (zufall(i, bt, bd) - 0.5) * 4 * RETUSCHE_MITTEL_M
+          const tief = 1 + zufall(bd, bt, i + 7) * Math.min(6, (hi - lo) / 2)
+          const sd = (d - bd * RETUSCHE_BLOCK_M) + (links ? lo - tief - RETUSCHE_BLOCK_M : hi + tief)
+          const k3 = stelle(ae + ue * (bt * RETUSCHE_BLOCK_M + st) + qe * sd, an + un * (bt * RETUSCHE_BLOCK_M + st) + qn * sd)
+          const korn = Math.max(-RETUSCHE_KORN_MAX, Math.min(RETUSCHE_KORN_MAX, hell[k3] - mittel[k3]))
+          z[o] = (r0 * (1 - g) + r1 * g) / k2 + korn; z[o + 1] = (g0 * (1 - g) + g1 * g) / k2 + korn; z[o + 2] = (b0 * (1 - g) + b1 * g) / k2 + korn
+        }
+      }
+    }
+    bild.data.set(z)
+    ctx.putImageData(bild, x0, y0)
+  }
+}
