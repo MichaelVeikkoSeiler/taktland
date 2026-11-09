@@ -1288,7 +1288,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Verkehr, ab und zu eine Hupe oder einen Bus, auf dem Land am Tag Krähen, von Mai bis Oktober Kühe und Kuhglocken, von März bis Oktober
             einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug. Je näher man ist, desto lauter; aus der Ferne ist es still.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen und Flüsse liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit der Szene.</p>
-          <p className="mt-2">Der Verkehr in der Stadt ist eine <b>Aufnahme</b> («Background traffic noise» von froey, freesound.org, CC0), nicht vom Ort,
+          <p className="mt-2">Der Verkehr in der Stadt ist eine <b>Aufnahme</b> («Background traffic noise» von Froey_, freesound.org, CC0), nicht vom Ort,
             an dem man ist, und läuft als Schleife.</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird.</p>
@@ -1401,7 +1401,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Brücken der Bahn, der Strassen und Wege: Lage und Höhe der Achsen auf Brücken aus swissTLM3D (swisstopo).</li>
             <li>Bauart von Brücken: ob eine Brücke eine Bogen- oder Fachwerkbrücke ist und aus Stein, Beton oder Stahl, laut Wikidata (CC0), wo es
               die Brücke dort mit Lage gibt.</li>
-            <li>Verkehr in der Stadt: Aufnahme «Background traffic noise» von froey, freesound.org (CC0).</li>
+            <li>Verkehr in der Stadt: Aufnahme «Background traffic noise» von Froey_, freesound.org (CC0).</li>
             <li>Gebäude ohne Fenster: Gebäudeklasse Industriegebäude oder Behälter, Silos und Lagergebäude laut Gebäude- und Wohnungsregister (GWR),
               Bundesamt für Statistik BFS.</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
