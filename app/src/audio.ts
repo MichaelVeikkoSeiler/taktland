@@ -697,6 +697,8 @@ export interface Umgebung {
   stadt: number; fluss: number; nah: number
   /** Stunde (0 bis 24) und Monat (1 bis 12) der Szene */
   stunde: number; monat: number
+  /** Höhe des Geländes an der Stelle, m ü. M. */
+  hoehe: number
 }
 /** Lautstärke des Rauschens der Stadt und des Flusses, der einzelnen Geräusche (gewählt) */
 const UMGEBUNG_STADT = 0.09, UMGEBUNG_FLUSS = 0.16, UMGEBUNG_EINZEL = 0.5
@@ -706,13 +708,34 @@ const UMGEBUNG_JE_S = { hupe: 0.025, bus: 0.018, kuh: 0.03, glocke: 0.035, trakt
  *  freesound.org/s/700948, zu einer Schleife von 62 s geschnitten (3 s überblendet, auf −20 dB gebracht), vorne und hinten 0,5 s aus der Schleife als
  *  Rand, damit die Lücke des MP3 am Anfang nicht hörbar ist (STADT_RAND_S); Lautstärke gegen das Erzeugte gewählt */
 const STADT_RAND_S = 0.5, STADT_AUFNAHME = 2.5
-let stadtPuffer: Promise<AudioBuffer | null> | null = null
-function stadtAufnahme(c: AudioContext) {
-  if (!stadtPuffer) stadtPuffer = holenBinaer('klang/stadt.mp3').then((b) => c.decodeAudioData(b)).catch(() => { stadtPuffer = null; return null })
-  return stadtPuffer
+/** Kuhglocken einer Herde als Aufnahme (Michael, 2026-11-09: «Kühe. Soll man nur auf dem Land oder in kleinen Dörfern hören. Auch Berge bis 2000m»):
+ *  «cowbells2» von deleted_user_229898, freesound.org/s/59901, CC0, Schleife von 40 s (2,5 s überblendet), auf −22 dB, Rand wie bei der Stadt; nach dem
+ *  Anteil Land, Mai bis Oktober am Tag, bis GLOCKEN_BIS_M über Meer; die Herde schwillt langsam an und ab (GLOCKEN_*, gewählt) */
+const GLOCKEN_AUFNAHME = 2.5, GLOCKEN_BIS_M = 2000, UMGEBUNG_GLOCKEN = 0.12
+const aufnahmen = new Map<string, Promise<AudioBuffer | null>>()
+function aufnahme(c: AudioContext, pfad: string) {
+  let p = aufnahmen.get(pfad)
+  if (!p) {
+    p = holenBinaer(pfad).then((b) => c.decodeAudioData(b)).catch(() => { aufnahmen.delete(pfad); return null })
+    aufnahmen.set(pfad, p)
+  }
+  return p
+}
+/** eine Aufnahme als Schleife in ziel, an einer zufälligen Stelle begonnen; danach weg() (das Erzeugte leiser) */
+function schleifeAus(c: AudioContext, pfad: string, ziel: AudioNode, laut: number, gilt: () => boolean, weg?: () => void) {
+  aufnahme(c, pfad).then((puffer) => {
+    if (!puffer || !umgebungTon || !gilt()) return
+    const q = c.createBufferSource(); q.buffer = puffer; q.loop = true
+    q.loopStart = STADT_RAND_S; q.loopEnd = puffer.duration - STADT_RAND_S
+    const g = c.createGain(); g.gain.value = laut
+    q.connect(g).connect(ziel)
+    q.start(c.currentTime, STADT_RAND_S + Math.random() * (puffer.duration - 2 * STADT_RAND_S))
+    weg?.()
+    umgebungTon.quellen.push(q)
+  }).catch(() => {})
 }
 let umgebungTon: {
-  stadt: GainNode; fluss: GainNode; flussWelle: OscillatorNode; quellen: AudioScheduledSourceNode[]; uhr: number; jetzt: Umgebung | null
+  stadt: GainNode; fluss: GainNode; glocken: GainNode; glockenDa: boolean; flussWelle: OscillatorNode; quellen: AudioScheduledSourceNode[]; uhr: number; jetzt: Umgebung | null
   /** bis wann ein Geräusch dieser Art noch klingt (nicht zwei Traktoren übereinander) */
   bis: Record<string, number>
 } | null = null
@@ -734,16 +757,15 @@ export function umgebungHoeren(u: Umgebung | null) {
       // erzeugt, bis die Aufnahme geladen ist (oder wenn sie fehlt)
       const erzeugt = c.createGain()
       sb.connect(st1).connect(erzeugt); sw.connect(st2).connect(st2g).connect(erzeugt); erzeugt.connect(stadt); stadt.connect(ziel)
-      stadtAufnahme(c).then((puffer) => {
-        if (!puffer || !umgebungTon || umgebungTon.stadt !== stadt) return
-        const q = c.createBufferSource(); q.buffer = puffer; q.loop = true
-        q.loopStart = STADT_RAND_S; q.loopEnd = puffer.duration - STADT_RAND_S
-        const g = c.createGain(); g.gain.value = STADT_AUFNAHME
-        q.connect(g).connect(stadt)
-        q.start(c.currentTime, STADT_RAND_S + Math.random() * (puffer.duration - 2 * STADT_RAND_S))
-        erzeugt.gain.setTargetAtTime(0, c.currentTime, 0.5)
-        umgebungTon.quellen.push(q)
-      }).catch(() => {})
+      schleifeAus(c, 'klang/stadt.mp3', stadt, STADT_AUFNAHME, () => umgebungTon?.stadt === stadt, () => erzeugt.gain.setTargetAtTime(0, c.currentTime, 0.5))
+      // Kuhglocken: die Aufnahme, langsam an- und abschwellend; bis sie da ist, die erzeugten einzeln (umgebungEinzeln)
+      const glocken = c.createGain(); glocken.gain.value = 0
+      const herde = c.createGain(); herde.gain.value = 0.7
+      const schwell = c.createOscillator(); schwell.frequency.value = 0.045
+      const schwellG = c.createGain(); schwellG.gain.value = 0.3
+      schwell.connect(schwellG).connect(herde.gain)
+      herde.connect(glocken).connect(ziel)
+      schleifeAus(c, 'klang/glocken.mp3', herde, GLOCKEN_AUFNAHME, () => umgebungTon?.glocken === glocken, () => { if (umgebungTon) umgebungTon.glockenDa = true })
       // Fluss: helles Rauschen, langsam an- und abschwellend
       const fw = rauschenSchleife(c, false)
       const f1 = c.createBiquadFilter(); f1.type = 'bandpass'; f1.frequency.value = 1100; f1.Q.value = 0.35
@@ -753,8 +775,8 @@ export function umgebungHoeren(u: Umgebung | null) {
       const welleG = c.createGain(); welleG.gain.value = 0
       welle.connect(welleG).connect(fluss.gain)
       fw.connect(f1).connect(f2).connect(fluss).connect(ziel)
-      for (const q of [sb, sw, fw, welle]) q.start()
-      umgebungTon = { stadt, fluss, flussWelle: welle, quellen: [sb, sw, fw, welle], uhr: window.setInterval(() => umgebungEinzeln(), 1000), jetzt: null, bis: {} }
+      for (const q of [sb, sw, fw, welle, schwell]) q.start()
+      umgebungTon = { stadt, fluss, glocken, glockenDa: false, flussWelle: welle, quellen: [sb, sw, fw, welle, schwell], uhr: window.setInterval(() => umgebungEinzeln(), 1000), jetzt: null, bis: {} }
       ;(umgebungTon as unknown as { welleG: GainNode }).welleG = welleG
     }
     const t = umgebungTon, jetzt = c.currentTime
@@ -765,6 +787,7 @@ export function umgebungHoeren(u: Umgebung | null) {
     const f = UMGEBUNG_FLUSS * u.fluss * u.nah
     t.fluss.gain.setTargetAtTime(f, jetzt, 0.8)
     ;(t as unknown as { welleG: GainNode }).welleG.gain.setTargetAtTime(f * 0.25, jetzt, 0.8)
+    t.glocken.gain.setTargetAtTime(weideJetzt(u) ? UMGEBUNG_GLOCKEN * (1 - u.stadt) * u.nah : 0, jetzt, 1.5)
   } catch { /* ohne Ton */ }
 }
 
@@ -775,9 +798,14 @@ export function umgebungHoerenAus() {
   window.clearInterval(t.uhr)
   const c = audioKontext()
   try {
-    if (c) { t.stadt.gain.setTargetAtTime(0, c.currentTime, 0.3); t.fluss.gain.setTargetAtTime(0, c.currentTime, 0.3) }
+    if (c) for (const g of [t.stadt, t.fluss, t.glocken]) g.gain.setTargetAtTime(0, c.currentTime, 0.3)
     window.setTimeout(() => { for (const q of t.quellen) { try { q.stop() } catch { /* schon aus */ } } }, 1500)
   } catch { /* ohne Ton */ }
+}
+
+/** Kühe auf der Weide: Mai bis Oktober, am Tag, bis GLOCKEN_BIS_M über Meer (gewählt) */
+function weideJetzt(u: Umgebung) {
+  return u.stunde >= 6 && u.stunde < 21 && u.monat >= 5 && u.monat <= 10 && u.hoehe <= GLOCKEN_BIS_M
 }
 
 /** einmal je Sekunde: vielleicht ein einzelnes Geräusch */
@@ -785,7 +813,7 @@ function umgebungEinzeln() {
   const t = umgebungTon, c = audioKontext()
   if (!t || !c || !t.jetzt || !stand.an) return
   const u = t.jetzt, jetzt = c.currentTime
-  const tag = u.stunde >= 6 && u.stunde < 21, weide = u.monat >= 5 && u.monat <= 10, feld = u.monat >= 3 && u.monat <= 10
+  const tag = u.stunde >= 6 && u.stunde < 21, weide = weideJetzt(u), feld = u.monat >= 3 && u.monat <= 10
   const land = (1 - u.stadt) * u.nah, stadt = u.stadt * u.nah
   const frei = (art: string) => (t.bis[art] ?? 0) <= jetzt
   const versuch = (art: keyof typeof UMGEBUNG_JE_S, anteil: number) => anteil > 0.05 && frei(art) && Math.random() < UMGEBUNG_JE_S[art] * anteil
@@ -802,7 +830,7 @@ function umgebungEinzeln() {
     if (versuch('hupe', stadt * (tag ? 1 : 0.3))) t.bis.hupe = hupe(c, quelle(stadt), jetzt)
     if (versuch('bus', stadt * (tag ? 1 : 0.4))) t.bis.bus = bus(c, quelle(stadt), jetzt)
     if (tag && weide && versuch('kuh', land)) t.bis.kuh = kuh(c, quelle(land), jetzt)
-    if (tag && weide && versuch('glocke', land)) t.bis.glocke = glocken(c, quelle(land * 0.6), jetzt)
+    if (weide && !t.glockenDa && versuch('glocke', land)) t.bis.glocke = glocken(c, quelle(land * 0.6), jetzt)
     if (tag && feld && versuch('traktor', land)) t.bis.traktor = traktor(c, quelle(land), jetzt)
     if (tag && versuch('kraehe', land)) t.bis.kraehe = kraehe(c, quelle(land * 0.7), jetzt)
     if (u.stunde >= 6 && u.stunde < 23 && versuch('flugzeug', u.nah)) t.bis.flugzeug = flugzeug(c, quelle(0.7), jetzt)
