@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { holenBinaer } from './daten'
 
 /**
  * Audio-Einstellungen (Michael, 2026-10-01: Reiter «Audio» in der Reisetasche, seit 2026-10-06
@@ -701,6 +702,15 @@ export interface Umgebung {
 const UMGEBUNG_STADT = 0.09, UMGEBUNG_FLUSS = 0.16, UMGEBUNG_EINZEL = 0.5
 /** je Sekunde die Aussicht auf ein Geräusch, bei vollem Anteil (gewählt) */
 const UMGEBUNG_JE_S = { hupe: 0.025, bus: 0.018, kuh: 0.03, glocke: 0.035, traktor: 0.007, kraehe: 0.02, flugzeug: 0.004 }
+/** Verkehr in der Stadt als Aufnahme (Michael, 2026-11-09: «Das ist das Geräusch von freesound.org für die Stadt»): froey, «Background traffic noise»,
+ *  freesound.org/s/700948, zu einer Schleife von 62 s geschnitten (3 s überblendet, auf −20 dB gebracht), vorne und hinten 0,5 s aus der Schleife als
+ *  Rand, damit die Lücke des MP3 am Anfang nicht hörbar ist (STADT_RAND_S); Lautstärke gegen das Erzeugte gewählt */
+const STADT_RAND_S = 0.5, STADT_AUFNAHME = 2.5
+let stadtPuffer: Promise<AudioBuffer | null> | null = null
+function stadtAufnahme(c: AudioContext) {
+  if (!stadtPuffer) stadtPuffer = holenBinaer('klang/stadt.mp3').then((b) => c.decodeAudioData(b)).catch(() => { stadtPuffer = null; return null })
+  return stadtPuffer
+}
 let umgebungTon: {
   stadt: GainNode; fluss: GainNode; flussWelle: OscillatorNode; quellen: AudioScheduledSourceNode[]; uhr: number; jetzt: Umgebung | null
   /** bis wann ein Geräusch dieser Art noch klingt (nicht zwei Traktoren übereinander) */
@@ -721,7 +731,19 @@ export function umgebungHoeren(u: Umgebung | null) {
       const st1 = c.createBiquadFilter(); st1.type = 'lowpass'; st1.frequency.value = 380
       const st2 = c.createBiquadFilter(); st2.type = 'bandpass'; st2.frequency.value = 900; st2.Q.value = 0.5
       const st2g = c.createGain(); st2g.gain.value = 0.25
-      sb.connect(st1).connect(stadt); sw.connect(st2).connect(st2g).connect(stadt); stadt.connect(ziel)
+      // erzeugt, bis die Aufnahme geladen ist (oder wenn sie fehlt)
+      const erzeugt = c.createGain()
+      sb.connect(st1).connect(erzeugt); sw.connect(st2).connect(st2g).connect(erzeugt); erzeugt.connect(stadt); stadt.connect(ziel)
+      stadtAufnahme(c).then((puffer) => {
+        if (!puffer || !umgebungTon || umgebungTon.stadt !== stadt) return
+        const q = c.createBufferSource(); q.buffer = puffer; q.loop = true
+        q.loopStart = STADT_RAND_S; q.loopEnd = puffer.duration - STADT_RAND_S
+        const g = c.createGain(); g.gain.value = STADT_AUFNAHME
+        q.connect(g).connect(stadt)
+        q.start(c.currentTime, STADT_RAND_S + Math.random() * (puffer.duration - 2 * STADT_RAND_S))
+        erzeugt.gain.setTargetAtTime(0, c.currentTime, 0.5)
+        umgebungTon.quellen.push(q)
+      }).catch(() => {})
       // Fluss: helles Rauschen, langsam an- und abschwellend
       const fw = rauschenSchleife(c, false)
       const f1 = c.createBiquadFilter(); f1.type = 'bandpass'; f1.frequency.value = 1100; f1.Q.value = 0.35
