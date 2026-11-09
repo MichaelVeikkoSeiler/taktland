@@ -702,7 +702,7 @@ export interface Umgebung {
 const UMGEBUNG_STADT = 0.09, UMGEBUNG_FLUSS = 0.16, UMGEBUNG_EINZEL = 0.5
 /** je Sekunde die Aussicht auf ein Geräusch, bei vollem Anteil (gewählt) */
 const UMGEBUNG_JE_S = { hupe: 0.025, bus: 0.018, kuh: 0.03, glocke: 0.035, traktor: 0.007, kraehe: 0.02, flugzeug: 0.004 }
-/** Verkehr in der Stadt als Aufnahme (Michael, 2026-11-09: «Das ist das Geräusch von freesound.org für die Stadt»): froey, «Background traffic noise»,
+/** Verkehr in der Stadt als Aufnahme (Michael, 2026-11-09: «Das ist das Geräusch von freesound.org für die Stadt»): Froey_, «Background traffic noise»,
  *  freesound.org/s/700948, zu einer Schleife von 62 s geschnitten (3 s überblendet, auf −20 dB gebracht), vorne und hinten 0,5 s aus der Schleife als
  *  Rand, damit die Lücke des MP3 am Anfang nicht hörbar ist (STADT_RAND_S); Lautstärke gegen das Erzeugte gewählt */
 const STADT_RAND_S = 0.5, STADT_AUFNAHME = 2.5
