@@ -669,11 +669,13 @@ const VORBEI_NAH_M = 150, VORBEI_STILL_M = 2500
  *  auslaufend; Lautstärke und Abstände gewählt */
 const FERN_LAUT = 0.06, FERN_VOLL_M = 25_000, FERN_STILL_M = 50_000
 
-export function zuegeHoeren(zuege: VorbeiZug[]) {
+/** ohneFerne: ohne das leise Geräusch aus der Ferne, nur je näher, desto lauter, bis still (in der Brille; Michael, 2026-11-09: «wenn ich mich
+ *  entferne, soll es auch wieder leiser sein, bis zum Verstummen») */
+export function zuegeHoeren(zuege: VorbeiZug[], ohneFerne = false) {
   const z = zuege.filter((x) => x.tempoMs > 1 && x.abstandM < FERN_STILL_M).sort((a, b) => a.abstandM - b.abstandM)[0]
   if (!z) { zuggeraeuschTempo(null, Infinity, null, 1, true); return }
   const nah = Math.max(0, 1 - z.abstandM / VORBEI_STILL_M) / (1 + (z.abstandM / VORBEI_NAH_M) ** 2)
-  const fern = FERN_LAUT * Math.min(1, Math.max(0, (FERN_STILL_M - z.abstandM) / (FERN_STILL_M - FERN_VOLL_M)))
+  const fern = ohneFerne ? 0 : FERN_LAUT * Math.min(1, Math.max(0, (FERN_STILL_M - z.abstandM) / (FERN_STILL_M - FERN_VOLL_M)))
   const laut = Math.max(nah, fern)
   zuggeraeuschTempo(z.tempoMs, Infinity, null, laut, true)
 }
