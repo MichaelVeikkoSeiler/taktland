@@ -1288,8 +1288,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Verkehr, ab und zu eine Hupe oder einen Bus, auf dem Land und in kleinen Siedlungen am Tag Krähen, von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
             einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug. Je näher man ist, desto lauter; aus der Ferne ist es still.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen und Flüsse liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit der Szene.</p>
-          <p className="mt-2">Der Verkehr in der Stadt und die Kuhglocken sind <b>Aufnahmen</b> («Background traffic noise» von Froey_ und «cowbells2» von
-            einem gelöschten Konto, beide freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife.</p>
+          <p className="mt-2">Der Verkehr in der Stadt, die Kuhglocken und der Fluss sind <b>Aufnahmen</b> («Background traffic noise» von Froey_, «cowbells2» von
+            einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife.</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird.</p>
         </Abschnitt>
@@ -1402,7 +1402,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Bauart von Brücken: ob eine Brücke eine Bogen- oder Fachwerkbrücke ist und aus Stein, Beton oder Stahl, laut Wikidata (CC0), wo es
               die Brücke dort mit Lage gibt.</li>
             <li>Verkehr in der Stadt: Aufnahme «Background traffic noise» von Froey_, freesound.org (CC0); Kuhglocken: Aufnahme «cowbells2»
-              von deleted_user_229898, freesound.org (CC0).</li>
+              von deleted_user_229898, freesound.org (CC0); Fluss: Aufnahme «Rapidly Flowing Water (loopable)» von Osiruswaltz, freesound.org (CC0).</li>
             <li>Gebäude ohne Fenster: Gebäudeklasse Industriegebäude oder Behälter, Silos und Lagergebäude laut Gebäude- und Wohnungsregister (GWR),
               Bundesamt für Statistik BFS.</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
@@ -1450,7 +1450,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
-            <li>Geräusche der Umgebung: Hupe, Bus, Krähen, Kühe, Traktor, Flugzeug und Flussrauschen sind im Programm erzeugt, Verkehr und Kuhglocken
+            <li>Geräusche der Umgebung: Hupe, Bus, Krähen, Kühe, Traktor und Flugzeug sind im Programm erzeugt, Verkehr, Kuhglocken und Fluss
               sind Aufnahmen von einem anderen Ort; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station, wo das Wettermodell fehlt; Dichte, Tempo und Grösse
