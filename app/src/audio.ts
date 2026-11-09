@@ -711,6 +711,9 @@ const STADT_RAND_S = 0.5, STADT_AUFNAHME = 2.5
 /** Kuhglocken einer Herde als Aufnahme (Michael, 2026-11-09: «Kühe. Soll man nur auf dem Land oder in kleinen Dörfern hören. Auch Berge bis 2000m»):
  *  «cowbells2» von deleted_user_229898, freesound.org/s/59901, CC0, Schleife von 40 s (2,5 s überblendet), auf −22 dB, Rand wie bei der Stadt; nach dem
  *  Anteil Land, Mai bis Oktober am Tag, bis GLOCKEN_BIS_M über Meer; die Herde schwillt langsam an und ab (GLOCKEN_*, gewählt) */
+/** Fluss als Aufnahme (Michael, 2026-11-09): «Rapidly Flowing Water (loopable)» von Osiruswaltz, freesound.org/s/530168, CC0, die ganzen 16 s als
+ *  Schleife (schon so aufgenommen), auf −20 dB; Lautstärke gegen das Erzeugte gewählt */
+const FLUSS_AUFNAHME = 3
 const GLOCKEN_AUFNAHME = 2.5, GLOCKEN_BIS_M = 2000, UMGEBUNG_GLOCKEN = 0.12
 const aufnahmen = new Map<string, Promise<AudioBuffer | null>>()
 function aufnahme(c: AudioContext, pfad: string) {
@@ -774,7 +777,9 @@ export function umgebungHoeren(u: Umgebung | null) {
       const welle = c.createOscillator(); welle.frequency.value = 0.17
       const welleG = c.createGain(); welleG.gain.value = 0
       welle.connect(welleG).connect(fluss.gain)
-      fw.connect(f1).connect(f2).connect(fluss).connect(ziel)
+      const erzeugtF = c.createGain()
+      fw.connect(f1).connect(f2).connect(erzeugtF).connect(fluss).connect(ziel)
+      schleifeAus(c, 'klang/fluss.mp3', fluss, FLUSS_AUFNAHME, () => umgebungTon?.fluss === fluss, () => erzeugtF.gain.setTargetAtTime(0, c.currentTime, 0.5))
       for (const q of [sb, sw, fw, welle, schwell]) q.start()
       umgebungTon = { stadt, fluss, glocken, glockenDa: false, flussWelle: welle, quellen: [sb, sw, fw, welle, schwell], uhr: window.setInterval(() => umgebungEinzeln(), 1000), jetzt: null, bis: {} }
       ;(umgebungTon as unknown as { welleG: GainNode }).welleG = welleG
