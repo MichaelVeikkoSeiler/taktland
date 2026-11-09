@@ -12,6 +12,10 @@ const ANZAHL = 6000
 const FERN_AB = 1.2, FERN_MIN = 0.15
 /** und kürzere Striche, kleinere Flocken (Michael, 2026-10-25: «Regentropfen kleiner machen, wenn man wegzoomt»), bis auf KLEIN_MIN (gewählt) */
 const KLEIN_MIN = 0.3
+/** in der Brille (Michael, 2026-11-09: «Regentropfen, die weiter weg sind, kleiner … Die in meiner Nähe sind dafür sehr groß. Kannst du alles ein
+ *  bisschen kleiner machen und je weiter weg noch kleiner?»): jeder Strich BRILLE_KLEINER so lang wie auf dem Bildschirm, und mit dem Abstand zum
+ *  Auge kürzer, bei BRILLE_HALB_ANTEIL der Breite des Modells halb so lang (gewählt) */
+const BRILLE_KLEINER = 0.45, BRILLE_HALB_ANTEIL = 0.25
 /** so viel ihrer Säule fällt ein Tropfen je Sekunde, eine Flocke (gewählt, nicht die wirkliche Fallgeschwindigkeit) */
 const REGEN_JE_S = 0.7, SCHNEE_JE_S = 0.12
 
@@ -30,8 +34,9 @@ export interface Niederschlag {
   gruppe: THREE.Group
   /** die Säulen (leer: nichts fällt), der Boden unter jeder Stelle, die Fläche des ganzen Modells (für die Dichte), die Länge eines Strichs */
   setzen: (saeulen: Saeule[], boden: (x: number, z: number) => number, flaeche: number, strich: number) => void
-  /** ferne: Abstand der Kamera zur Mitte geteilt durch die Breite des Modells */
-  schritt: (dt: number, ferne?: number) => void
+  /** ferne: Abstand der Kamera zur Mitte geteilt durch die Breite des Modells; auge: in der Brille die Stelle des Auges in der Gruppe, breite
+   *  des Modells in denselben Einheiten */
+  schritt: (dt: number, ferne?: number, auge?: { x: number; y: number; z: number; breite: number }) => void
   entsorgen: () => void
 }
 
@@ -72,7 +77,7 @@ export function niederschlagBauen(): Niederschlag {
       for (let i = 0; i < voll; i++) { neu(i); weg[i] = Math.random() }
       striche.visible = flocken.visible = voll > 0
     },
-    schritt: (dt, ferne) => {
+    schritt: (dt, ferne, auge) => {
       if (!voll) return
       let klein = 1
       if (ferne !== undefined) {
@@ -95,7 +100,11 @@ export function niederschlagBauen(): Niederschlag {
           schneeLage[f * 3] = x[i]; schneeLage[f * 3 + 1] = y; schneeLage[f * 3 + 2] = z[i]; f++
         } else {
           // der Strich nie länger als ein Viertel seiner Säule (in der ganzen Schweiz ist die Säule unter einer tiefen Wolke kurz)
-          const l = Math.min(laenge, 0.25 * (oben[i] - unten[i]))
+          let l = Math.min(laenge, 0.25 * (oben[i] - unten[i]))
+          if (auge) {
+            const d = Math.hypot(x[i] - auge.x, y - auge.y, z[i] - auge.z)
+            l *= BRILLE_KLEINER / (1 + d / (BRILLE_HALB_ANTEIL * auge.breite))
+          }
           const j = r * 6
           regenLage[j] = x[i]; regenLage[j + 1] = y; regenLage[j + 2] = z[i]
           regenLage[j + 3] = x[i]; regenLage[j + 4] = Math.min(oben[i], y + l); regenLage[j + 5] = z[i]; r++

@@ -553,6 +553,12 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
   )
 }
 
+/** der Kasten um das gewählte Feld: einmal für alle Stufen (nie weggeräumt, damit die Grafik ihre Programme behält) */
+const kastenStoffe = Object.assign(() => (kastenStoffe.stoffe ??= {
+  kastenMaterial: new THREE.MeshBasicMaterial({ color: KARMIN, transparent: true, opacity: 0.18, side: THREE.DoubleSide, depthWrite: false }),
+  kantenMaterial: new THREE.LineBasicMaterial({ color: KARMIN }),
+}), { stoffe: undefined as undefined | { kastenMaterial: THREE.MeshBasicMaterial; kantenMaterial: THREE.LineBasicMaterial }, uebersetzt: false })
+
 /* ---------- was im Feld liegt ---------- */
 
 function imFeld(f: Feld, la: number, lo: number) {
@@ -1532,6 +1538,9 @@ const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 const ZUG_FERN = 0.018
 /** fürs Zuggeräusch: ein Zug dort, wo die Kamera hinschaut, klingt wie aus so vielen Metern, nähere und fernere im selben Verhältnis (gewählt) */
 const ZUG_HOEREN_BLICK_M = 150
+/** in der Brille: so viele Meter fürs Ohr je Meter zwischen Kopf und Zug im Raum (gewählt): 3 cm klingen wie 30 m, laut; 15 cm wie 150 m,
+ *  halb so laut; ab 2,5 m still */
+const ZUG_HOEREN_BRILLE = 1000
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
 /** so hoch bleibt die Kamera mindestens über dem Gelände, in km (Michael, 2026-11-06: «bis circa 3 Meter über den Boden die Perspektive richten
@@ -1924,8 +1933,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       tafelTextur?.dispose()
       tafelTextur = new THREE.CanvasTexture(tafelLeinwand)
       tafelTextur.colorSpace = THREE.SRGBColorSpace
+      // ein Bild statt eines anderen braucht kein neues Programm der Grafik; nur beim ersten Mal (sonst stockt jeder Wechsel der Tafel)
+      const hatteBild = !!tafel.material.map
       tafel.material.map = tafelTextur
-      tafel.material.needsUpdate = true
+      if (!hatteBild) tafel.material.needsUpdate = true
       const h = 0.03 * zeilen.length + 0.015
       tafel.scale.set(h * tafelLeinwand.width / tafelLeinwand.height, h, 1)
       tafel.position.copy(ueber ?? new THREE.Vector3(0, BRILLE_TISCH_M + 0.35, -BRILLE_ABSTAND_M))
@@ -2226,6 +2237,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const p = o.getWorldPosition(new THREE.Vector3()), v = p.clone().project(kamera), r = renderer.domElement.getBoundingClientRect()
           return { text: o.userData.text, p: p.toArray(), x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height }
         });
+      ;(window as unknown as { s3dProgramme: unknown }).s3dProgramme = () => (renderer.info.programs ?? []).map((q) => `${q.name}#${q.usedTimes}`);
       // die Kamera auf eine Stelle (LV95, m ü. M.) richten, aus abstandM, von Richtung (Grad ab Osten) und Höhe (Grad über dem Horizont)
       (window as unknown as { s3dBlick: unknown }).s3dBlick = (e: number, n: number, h: number, abstandM: number, richtung: number, hoehe: number) => {
         const l = wurzel.userData.lage as { cE: number; cN: number }, d = abstandM / 1000, r = richtung * Math.PI / 180, w = hoehe * Math.PI / 180
@@ -2824,8 +2836,25 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // das gewählte Feld: ein gläserner Kasten in Karmin über dem Gelände
     const kasten = new THREE.Group()
     wurzel.add(kasten)
-    const kastenMaterial = new THREE.MeshBasicMaterial({ color: KARMIN, transparent: true, opacity: 0.18, side: THREE.DoubleSide, depthWrite: false })
-    const kantenMaterial = new THREE.LineBasicMaterial({ color: KARMIN })
+    // die Materialien bleiben über alle Stufen dieselben und sind schon übersetzt, bevor man wählt: sonst übersetzte die Grafik ihre Programme
+    // beim ersten Wählen in jeder Stufe neu, und das Bild stand still (Michael, 2026-11-09, Brille: «beim Auswählen eines Ausschnittes stockt
+    // es ziemlich stark»; im Browser hier gut 1 s beim ersten Wählen)
+    const { kastenMaterial, kantenMaterial } = kastenStoffe()
+    if (!kastenStoffe.uebersetzt) {
+      kastenStoffe.uebersetzt = true
+      // einmal winzig mitgezeichnet: erst das Zeichnen übersetzt sicher (compileAsync wartet nicht, wo die Grafik nicht nebenher übersetzen kann)
+      const probe = new THREE.Group(), g = new THREE.BoxGeometry(1e-6, 1e-6, 1e-6), eg = new THREE.EdgesGeometry(g)
+      probe.add(new THREE.Mesh(g, kastenMaterial), new THREE.LineSegments(eg, kantenMaterial))
+      probe.traverse((o) => { o.frustumCulled = false })
+      k.szene.add(probe)
+      let bilder = 0
+      const weg = () => {
+        if (++bilder < 3) return
+        k.szene.remove(probe); g.dispose(); eg.dispose()
+        const i = k.jeBild.indexOf(weg); if (i >= 0) k.jeBild.splice(i, 1)
+      }
+      k.jeBild.push(weg)
+    }
     let feldJetzt: Feld | null = null
     const setzeWahl = (fd: Feld | null) => {
       feldJetzt = fd
@@ -2866,7 +2895,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, kastenMaterial, kantenMaterial, mastMaterial, gipfelMast])
+      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, mastMaterial, gipfelMast])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -4545,6 +4574,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // Abstand zur Mitte des Modells
         const blickM = 1000 * (k.renderer.xr.isPresenting ? abstand : k.kamera.position.distanceTo(k.steuerung.target) / Math.max(1e-9, k.wurzel.scale.x))
         const ohr = ZUG_HOEREN_BLICK_M / Math.max(ZUG_HOEREN_BLICK_M, blickM)
+        // in der Brille der Abstand des Kopfs zum Zug in Metern des Raums, mal ZUG_HOEREN_BRILLE: wer mit dem Kopf nah an einen Zug geht,
+        // hört ihn laut, weiter weg leiser bis still (Michael, 2026-11-09: «Wenn ich mit dem Kopf in die Nähe gehe eines Zuges … das gleiche
+        // Geräusch, wie wenn ich im Führerstand sitze … wenn ich mich entferne, soll es auch wieder leiser sein, bis zum Verstummen»)
+        const brille = k.renderer.xr.isPresenting, welt = new THREE.Vector3()
         for (let z = 0; z < zahl; z++) {
           const p = mitten[z]?.[0]
           if (!p) continue
@@ -4552,10 +4585,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           neu.set(gezeichnet[z].id, { p: p.clone(), d })
           if (d > 50_000) continue
           const tempo = alt && dtH > 0 && dtH < 1 ? (alt.p.distanceTo(p) * 1000) / dtH : 0
-          liste.push({ abstandM: d * ohr, tempoMs: tempo })
+          const abstandM = brille ? k.wurzel.localToWorld(welt.copy(p)).distanceTo(auge) * ZUG_HOEREN_BRILLE : d * ohr
+          liste.push({ abstandM, tempoMs: tempo })
         }
         hoerAlt = neu
-        zuegeHoeren(liste)
+        zuegeHoeren(liste, brille)
       }
     }
     let hoerUm = 0, hoerLetzt = performance.now(), hoerAlt = new Map<number, { p: THREE.Vector3; d: number }>()
@@ -4895,7 +4929,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
       mitte.set(((e0 + e1) / 2 - lage.cE) / 1000, (tief + hoch) / 2000, -((n0 + n1) / 2 - lage.cN) / 1000).applyMatrix4(k.wurzel.matrixWorld)
       auge.setFromMatrixPosition(cam.matrixWorld)
-      ns.schritt(Math.min(0.1, (t - alt) / 1000), mitte.distanceTo(auge) / (W * k.wurzel.scale.x))
+      // in der Brille die Stelle des Auges im Modell: dort werden die Striche mit dem Abstand kürzer (Niederschlag.ts, BRILLE_*)
+      const lokal = k.renderer.xr.isPresenting ? ns.gruppe.worldToLocal(auge.clone()) : null
+      ns.schritt(Math.min(0.1, (t - alt) / 1000), mitte.distanceTo(auge) / (W * k.wurzel.scale.x),
+        lokal ? { x: lokal.x, y: lokal.y, z: lokal.z, breite: W } : undefined)
       alt = t
     }
     k.jeBild.push(schritt)
