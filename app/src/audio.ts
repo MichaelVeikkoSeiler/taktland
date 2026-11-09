@@ -803,9 +803,9 @@ export function umgebungHoerenAus() {
   } catch { /* ohne Ton */ }
 }
 
-/** Kühe auf der Weide: Mai bis Oktober, am Tag, bis GLOCKEN_BIS_M über Meer (gewählt) */
+/** Kühe auf der Weide: Mai bis Oktober, von 6 bis 20 Uhr (Michael, 2026-11-09: «Nur tagsüber von 6 bis 20 Uhr»), bis GLOCKEN_BIS_M über Meer */
 function weideJetzt(u: Umgebung) {
-  return u.stunde >= 6 && u.stunde < 21 && u.monat >= 5 && u.monat <= 10 && u.hoehe <= GLOCKEN_BIS_M
+  return u.stunde >= 6 && u.stunde < 20 && u.monat >= 5 && u.monat <= 10 && u.hoehe <= GLOCKEN_BIS_M
 }
 
 /** einmal je Sekunde: vielleicht ein einzelnes Geräusch */
