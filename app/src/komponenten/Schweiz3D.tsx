@@ -1285,7 +1285,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {/* Michael, 2026-11-09: «Wenn ich in der Stadt bin, möchte ich ein Stadtgeräusch hören … auf dem Land … saisonale Geräusche … ein Flussgeräusch» */}
         <Abschnitt titel="Geräusche">
           <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
-            Verkehr, ab und zu eine Hupe oder einen Bus, auf dem Land und in kleinen Siedlungen am Tag Krähen, von Mai bis Oktober bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
+            Verkehr, ab und zu eine Hupe oder einen Bus, auf dem Land und in kleinen Siedlungen am Tag Krähen, von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
             einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug. Je näher man ist, desto lauter; aus der Ferne ist es still.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen und Flüsse liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit der Szene.</p>
           <p className="mt-2">Der Verkehr in der Stadt und die Kuhglocken sind <b>Aufnahmen</b> («Background traffic noise» von Froey_ und «cowbells2» von
