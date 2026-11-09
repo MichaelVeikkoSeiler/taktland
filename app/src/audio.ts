@@ -695,12 +695,16 @@ export function zuegeHoerenAus() {
 export interface Umgebung {
   /** 0 bis 1: Anteil Siedlung um die Stelle, Nähe eines Flusses, und wie nah man ist (aus der Ferne still) */
   stadt: number; fluss: number; nah: number
+  /** Anteil Siedlung bis gut 1 km weit und wie nah man dafür ist (der Verkehr trägt weiter) */
+  stadtFern: number; nahStadt: number
   /** Stunde (0 bis 24) und Monat (1 bis 12) der Szene */
   stunde: number; monat: number
   /** Höhe des Geländes an der Stelle, m ü. M. */
   hoehe: number
 }
 /** Lautstärke des Rauschens der Stadt und des Flusses, der einzelnen Geräusche (gewählt) */
+/** der Verkehr aus der Ferne höchstens so laut wie mitten in der Stadt mal UMGEBUNG_STADT_FERN (gewählt) */
+const UMGEBUNG_STADT_FERN = 0.6
 const UMGEBUNG_STADT = 0.09, UMGEBUNG_FLUSS = 0.16, UMGEBUNG_EINZEL = 0.5
 /** je Sekunde die Aussicht auf ein Geräusch, bei vollem Anteil (gewählt) */
 const UMGEBUNG_JE_S = { hupe: 0.025, bus: 0.018, kuh: 0.03, glocke: 0.035, traktor: 0.007, kraehe: 0.02, flugzeug: 0.004 }
@@ -744,7 +748,7 @@ let umgebungTon: {
 } | null = null
 
 export function umgebungHoeren(u: Umgebung | null) {
-  if (!stand.an || !u || u.nah <= 0) { umgebungHoerenAus(); return }
+  if (!stand.an || !u || (u.nah <= 0 && u.nahStadt <= 0)) { umgebungHoerenAus(); return }
   const c = audioKontext()
   if (!c) return
   try {
@@ -788,7 +792,8 @@ export function umgebungHoeren(u: Umgebung | null) {
     t.jetzt = u
     // nachts weniger Verkehr (gewählt)
     const nacht = u.stunde < 6 || u.stunde >= 22
-    t.stadt.gain.setTargetAtTime(UMGEBUNG_STADT * u.stadt * u.nah * (nacht ? 0.4 : 1), jetzt, 0.8)
+    const verkehr = Math.max(u.stadt * u.nah, UMGEBUNG_STADT_FERN * u.stadtFern * u.nahStadt)
+    t.stadt.gain.setTargetAtTime(UMGEBUNG_STADT * verkehr * (nacht ? 0.4 : 1), jetzt, 0.8)
     const f = UMGEBUNG_FLUSS * u.fluss * u.nah
     t.fluss.gain.setTargetAtTime(f, jetzt, 0.8)
     ;(t as unknown as { welleG: GainNode }).welleG.gain.setTargetAtTime(f * 0.25, jetzt, 0.8)
