@@ -1286,7 +1286,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Geräusche">
           <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
             Verkehr, ab und zu eine Hupe oder einen Bus, auf dem Land und in kleinen Siedlungen am Tag Krähen, von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
-            einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug. Je näher man ist, desto lauter; aus der Ferne ist es still.</p>
+            einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
+            einer Stadt hört man weiter, auch im Feld von 16 km und noch gut einen Kilometer neben der Siedlung, leiser.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen und Flüsse liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit der Szene.</p>
           <p className="mt-2">Der Verkehr in der Stadt, die Kuhglocken und der Fluss sind <b>Aufnahmen</b> («Background traffic noise» von Froey_, «cowbells2» von
             einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife.</p>
@@ -1561,6 +1562,9 @@ const ZUG_HOEREN_BRILLE = 1000
  *  des Kopfs zum Gelände unter ihm in Metern des Raums; ein Fluss voll bis 60 m, still ab 400 m; Siedlung in 3 × 3 Punkten im Abstand von 150 m;
  *  Siedlung und Flüsse auch so weit ausserhalb des Modells (alles gewählt) */
 const UMGEBUNG_BLICK_VOLL_M = 1500, UMGEBUNG_BLICK_BIS_M = 6000, UMGEBUNG_BRILLE_VOLL_M = 0.25, UMGEBUNG_BRILLE_BIS_M = 0.9
+/** der Verkehr der Stadt weiter (Michael, 2026-11-09: «Stadtrauschen hört man teilweise kilometerweit»): auch im Feld von 16 km, voll bis 5 km Abstand der
+ *  Kamera, still ab 25 km, in der Brille still ab 1,5 m; die Siedlung dafür in 5 × 5 Punkten im Abstand von 600 m (bis 1,2 km weit; gewählt) */
+const UMGEBUNG_STADT_BLICK_VOLL_M = 5000, UMGEBUNG_STADT_BLICK_BIS_M = 25000, UMGEBUNG_STADT_BRILLE_BIS_M = 1.5, UMGEBUNG_STADT_FERN_SCHRITT_M = 600
 const UMGEBUNG_FLUSS_VOLL_M = 60, UMGEBUNG_FLUSS_BIS_M = 400, UMGEBUNG_STADT_SCHRITT_M = 150, UMGEBUNG_RAND_M = 500
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
@@ -4635,7 +4639,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
-    if (!k || !lage || !zusatz || (stufe !== 'ort' && stufe !== 'nah')) { umgebungHoerenAus(); return }
+    if (!k || !lage || !zusatz || (stufe !== 'region' && stufe !== 'ort' && stufe !== 'nah')) { umgebungHoerenAus(); return }
     let weg = false
     const teile = [...b.teile.values()].map((t) => t.rahmen)
     const e0 = Math.min(...teile.map((x) => x.e0)) - UMGEBUNG_RAND_M, e1 = Math.max(...teile.map((x) => x.e0 + x.b)) + UMGEBUNG_RAND_M
@@ -4673,6 +4677,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       return z / 9
     }
+    // Siedlung weiter weg (Michael, 2026-11-09: «Stadtrauschen hört man teilweise kilometerweit»): 5 × 5 Punkte im Abstand von UMGEBUNG_STADT_FERN_SCHRITT_M
+    const stadtFernBei = (e: number, n: number) => {
+      let z = 0
+      for (let a = -2; a <= 2; a++) for (let c = -2; c <= 2; c++) {
+        let innen = false
+        for (const r of siedlung) if (drinnen(r, e + a * UMGEBUNG_STADT_FERN_SCHRITT_M, n + c * UMGEBUNG_STADT_FERN_SCHRITT_M)) innen = !innen
+        if (innen) z++
+      }
+      return z / 25
+    }
     const flussBei = (e: number, n: number) => {
       let d = Infinity
       for (const q of fluesse) for (let i = 1; i < q.length; i++) {
@@ -4686,7 +4700,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const uhr = window.setInterval(() => {
       if (weg) return
       const brille = k.renderer.xr.isPresenting
-      let nah: number
+      let nah: number, nahStadt: number
       if (brille) {
         // in der Brille: der Kopf über dem Modell; je näher am Gelände unter ihm, desto lauter
         k.renderer.xr.getCamera().getWorldPosition(p)
@@ -4697,19 +4711,21 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const kopf = k.renderer.xr.getCamera().getWorldPosition(new THREE.Vector3())
         const d = kopf.distanceTo(boden)
         nah = Math.max(0, Math.min(1, (UMGEBUNG_BRILLE_BIS_M - d) / (UMGEBUNG_BRILLE_BIS_M - UMGEBUNG_BRILLE_VOLL_M)))
+        nahStadt = Math.max(0, Math.min(1, (UMGEBUNG_STADT_BRILLE_BIS_M - d) / (UMGEBUNG_STADT_BRILLE_BIS_M - UMGEBUNG_BRILLE_VOLL_M)))
       } else {
         p.copy(k.steuerung.target)
         k.wurzel.worldToLocal(p)
         const blickM = (1000 * k.kamera.position.distanceTo(k.steuerung.target)) / Math.max(1e-9, k.wurzel.scale.x)
         nah = Math.max(0, Math.min(1, (UMGEBUNG_BLICK_BIS_M - blickM) / (UMGEBUNG_BLICK_BIS_M - UMGEBUNG_BLICK_VOLL_M)))
+        nahStadt = Math.max(0, Math.min(1, (UMGEBUNG_STADT_BLICK_BIS_M - blickM) / (UMGEBUNG_STADT_BLICK_BIS_M - UMGEBUNG_STADT_BLICK_VOLL_M)))
       }
       const e = lage.cE + p.x * 1000, n = lage.cN - p.z * 1000
-      if (e < e0 || e > e1 || n < n0 || n > n1) nah = 0
+      if (e < e0 || e > e1 || n < n0 || n > n1) nah = nahStadt = 0
       const zeit = standRef.current?.zeit ?? new Date()
       // Stunde und Monat in Schweizer Zeit
       const zt = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric', hourCycle: 'h23', month: 'numeric' }).formatToParts(zeit)
       const teil = (art: string) => Number(zt.find((x) => x.type === art)?.value ?? NaN)
-      const u = nah > 0 ? { stadt: stadtBei(e, n), fluss: flussBei(e, n), nah, stunde: teil('hour'), monat: teil('month'), hoehe: bestandHoehe(b, e, n) } : null
+      const u = nahStadt > 0 ? { stadt: nah > 0 ? stadtBei(e, n) : 0, stadtFern: stadtFernBei(e, n), nahStadt, fluss: nah > 0 ? flussBei(e, n) : 0, nah, stunde: teil('hour'), monat: teil('month'), hoehe: bestandHoehe(b, e, n) } : null
       if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dUmgebung: unknown }).s3dUmgebung = { ...u, e, n, siedlung: siedlung.length, fluesse: fluesse.length }
       umgebungHoeren(u)
     }, 500)
