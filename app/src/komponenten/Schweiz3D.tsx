@@ -6,7 +6,7 @@ import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { Line2 } from 'three/examples/jsm/lines/Line2.js'
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
-import { holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
+import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
@@ -20,7 +20,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
-import { knopfTon, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
+import { knopfTon, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -911,7 +911,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       const nah = bOrt && tief('nah') ? await stufeLaden('nah', um('ort'), bOrt) : null
       if (weg) return
       setGelaende((a) => ({ ...a, gross: einzeln(um('schweiz'), gross), mittel: mittel && einzeln(um('gross'), mittel), region: bRegion, ort: bOrt, nah: nah && einzeln(um('ort'), nah) }))
-      setStufe(ziel); setWahl(null); setOrteAn(true)
+      setStufe(ziel); setWahl(null); if (!inDerBrille) setOrteAn(true)
     })().catch((x) => { if (!weg) setFehler((x as Error).message) }).finally(() => { if (!weg) setLaedt(false) })
     return () => { weg = true }
   }, [])
@@ -930,7 +930,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       const imGewaehlten = gesucht && Math.abs(gesucht.e - wahl.e) <= wahl.seite / 2 && Math.abs(gesucht.n - wahl.n) <= wahl.seite / 2
       setWahl(imGewaehlten ? feldUmGesucht(nachher) : null)
       // nach dem Eintauchen die Orte der neuen Stufe mit ihren Masten (Michael, 2026-10-24: «beim Eintauchen wieder neue Ortschaften»)
-      setOrteAn(true)
+      // in der Brille bleibt «Orte», wie es gestellt ist (Michael, 2026-11-09)
+      if (!inDerBrille) setOrteAn(true)
     } catch (e) { setFehler((e as Error).message) } finally { setLaedt(false) }
   }
   const knoepfe = useMemo<Knoepfe | null>(() => {
@@ -1281,6 +1282,15 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             das Licht in den Zügen, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel vor der Lok. Unter Decken über den Gleisen
             stehen keine Lampen.</p>
         </Abschnitt>
+        {/* Michael, 2026-11-09: «Wenn ich in der Stadt bin, möchte ich ein Stadtgeräusch hören … auf dem Land … saisonale Geräusche … ein Flussgeräusch» */}
+        <Abschnitt titel="Geräusche">
+          <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
+            Verkehr, ab und zu eine Hupe oder einen Bus, auf dem Land am Tag Krähen, von Mai bis Oktober Kühe und Kuhglocken, von März bis Oktober
+            einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug. Je näher man ist, desto lauter; aus der Ferne ist es still.</p>
+          <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen und Flüsse liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit der Szene.</p>
+          <p className="mt-2"><b>Erfunden</b> sind alle Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt. Keine
+            Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird.</p>
+        </Abschnitt>
         <Abschnitt titel="Züge">
           <p>«Züge» zeigt ab der Stufe 16 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
             (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
@@ -1436,6 +1446,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
+            <li>Geräusche der Umgebung: Verkehr, Hupe, Bus, Krähen, Kühe, Kuhglocken, Traktor, Flugzeug und Flussrauschen sind im Programm erzeugt, wie oft
+              sie kommen, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station, wo das Wettermodell fehlt; Dichte, Tempo und Grösse
               der Tropfen und Flocken; dass sie an der untersten gezeichneten Wolke beginnen; Regen- und Windgeräusch gerechnet.</li>
@@ -1541,6 +1553,11 @@ const ZUG_HOEREN_BLICK_M = 150
 /** in der Brille: so viele Meter fürs Ohr je Meter zwischen Kopf und Zug im Raum (gewählt): 3 cm klingen wie 30 m, laut; 15 cm wie 150 m,
  *  halb so laut; ab 2,5 m still */
 const ZUG_HOEREN_BRILLE = 1000
+/** Geräusche der Umgebung (Michael, 2026-11-09): voll bis so viel Abstand der Kamera zur Mitte des Blicks, still ab BIS; in der Brille der Abstand
+ *  des Kopfs zum Gelände unter ihm in Metern des Raums; ein Fluss voll bis 60 m, still ab 400 m; Siedlung in 3 × 3 Punkten im Abstand von 150 m;
+ *  Siedlung und Flüsse auch so weit ausserhalb des Modells (alles gewählt) */
+const UMGEBUNG_BLICK_VOLL_M = 1500, UMGEBUNG_BLICK_BIS_M = 6000, UMGEBUNG_BRILLE_VOLL_M = 0.25, UMGEBUNG_BRILLE_BIS_M = 0.9
+const UMGEBUNG_FLUSS_VOLL_M = 60, UMGEBUNG_FLUSS_BIS_M = 400, UMGEBUNG_STADT_SCHRITT_M = 150, UMGEBUNG_RAND_M = 500
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
 /** so hoch bleibt die Kamera mindestens über dem Gelände, in km (Michael, 2026-11-06: «bis circa 3 Meter über den Boden die Perspektive richten
@@ -4605,6 +4622,95 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
     }
   }, [zuege, b, stufe, knoepfe])
+  // Geräusche der Umgebung in den Feldern von 4 km und 1 km (Michael, 2026-11-09: «Wenn ich in der Stadt bin, möchte ich ein Stadtgeräusch hören …
+  // Wenn ich auf dem Land bin, dürfen saisonale Geräusche erklingen … Wenn ich einen Fluss vor mir habe, ein Flussgeräusch»): wo man hinhört (in der
+  // Brille unter dem Kopf, sonst die Mitte des Blicks), wie viel Siedlung dort liegt (swissTLMRegio, data/bodenbedeckung.json) und wie nah ein Fluss
+  // (data/kartengrund.json); die Geräusche selbst erfunden (umgebungHoeren in src/audio.ts)
+  const standRef = useRef(stand)
+  standRef.current = stand
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || !zusatz || (stufe !== 'ort' && stufe !== 'nah')) { umgebungHoerenAus(); return }
+    let weg = false
+    const teile = [...b.teile.values()].map((t) => t.rahmen)
+    const e0 = Math.min(...teile.map((x) => x.e0)) - UMGEBUNG_RAND_M, e1 = Math.max(...teile.map((x) => x.e0 + x.b)) + UMGEBUNG_RAND_M
+    const n0 = Math.min(...teile.map((x) => x.n1 - x.h)) - UMGEBUNG_RAND_M, n1 = Math.max(...teile.map((x) => x.n1)) + UMGEBUNG_RAND_M
+    // ein Ring oder eine Linie, deren Umriss den Kasten berührt (eine grosse Siedlung hat oft keinen Punkt darin)
+    const imKasten = (q: Array<[number, number]>) => {
+      let a0 = Infinity, a1 = -Infinity, c0 = Infinity, c1 = -Infinity
+      for (const [e, n] of q) { a0 = Math.min(a0, e); a1 = Math.max(a1, e); c0 = Math.min(c0, n); c1 = Math.max(c1, n) }
+      return a1 > e0 && a0 < e1 && c1 > n0 && c0 < n1
+    }
+    const linie = (z: { start: [number, number]; d: number[] }, faktor: number) => {
+      let [la, lo] = z.start
+      const p: Array<[number, number]> = [lv95(la / faktor, lo / faktor) as [number, number]]
+      for (let i = 0; i + 1 < z.d.length; i += 2) { la += z.d[i]; lo += z.d[i + 1]; p.push(lv95(la / faktor, lo / faktor) as [number, number]) }
+      return p
+    }
+    const fluesse = (zusatz.fluesse ?? []).map((f) => linie(f, 1e5)).filter(imKasten)
+    let siedlung: Array<Array<[number, number]>> = []
+    bodenbedeckungLaden().then((d) => { if (!weg) siedlung = d.siedlung.map((r) => linie(r, d.faktor)).filter(imKasten) }).catch(() => {})
+    const drinnen = (ring: Array<[number, number]>, e: number, n: number) => {
+      let innen = false
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [ae, an] = ring[i], [ce, cn] = ring[j]
+        if (an > n !== cn > n && e < ((ce - ae) * (n - an)) / (cn - an) + ae) innen = !innen
+      }
+      return innen
+    }
+    // Siedlung: Anteil von 3 × 3 Punkten um die Stelle, Löcher sind eigene Ringe (gerade/ungerade)
+    const stadtBei = (e: number, n: number) => {
+      let z = 0
+      for (let a = -1; a <= 1; a++) for (let c = -1; c <= 1; c++) {
+        let innen = false
+        for (const r of siedlung) if (drinnen(r, e + a * UMGEBUNG_STADT_SCHRITT_M, n + c * UMGEBUNG_STADT_SCHRITT_M)) innen = !innen
+        if (innen) z++
+      }
+      return z / 9
+    }
+    const flussBei = (e: number, n: number) => {
+      let d = Infinity
+      for (const q of fluesse) for (let i = 1; i < q.length; i++) {
+        const [ae, an] = q[i - 1], [ce, cn] = q[i], dx = ce - ae, dy = cn - an, l2 = dx * dx + dy * dy
+        const t = l2 ? Math.max(0, Math.min(1, ((e - ae) * dx + (n - an) * dy) / l2)) : 0
+        d = Math.min(d, Math.hypot(e - ae - t * dx, n - an - t * dy))
+      }
+      return Math.max(0, Math.min(1, (UMGEBUNG_FLUSS_BIS_M - d) / (UMGEBUNG_FLUSS_BIS_M - UMGEBUNG_FLUSS_VOLL_M)))
+    }
+    const p = new THREE.Vector3(), boden = new THREE.Vector3()
+    const uhr = window.setInterval(() => {
+      if (weg) return
+      const brille = k.renderer.xr.isPresenting
+      let nah: number
+      if (brille) {
+        // in der Brille: der Kopf über dem Modell; je näher am Gelände unter ihm, desto lauter
+        k.renderer.xr.getCamera().getWorldPosition(p)
+        k.wurzel.worldToLocal(p)
+        const e = lage.cE + p.x * 1000, n = lage.cN - p.z * 1000
+        boden.set(p.x, bestandHoehe(b, e, n) / 1000, p.z)
+        k.wurzel.localToWorld(boden)
+        const kopf = k.renderer.xr.getCamera().getWorldPosition(new THREE.Vector3())
+        const d = kopf.distanceTo(boden)
+        nah = Math.max(0, Math.min(1, (UMGEBUNG_BRILLE_BIS_M - d) / (UMGEBUNG_BRILLE_BIS_M - UMGEBUNG_BRILLE_VOLL_M)))
+      } else {
+        p.copy(k.steuerung.target)
+        k.wurzel.worldToLocal(p)
+        const blickM = (1000 * k.kamera.position.distanceTo(k.steuerung.target)) / Math.max(1e-9, k.wurzel.scale.x)
+        nah = Math.max(0, Math.min(1, (UMGEBUNG_BLICK_BIS_M - blickM) / (UMGEBUNG_BLICK_BIS_M - UMGEBUNG_BLICK_VOLL_M)))
+      }
+      const e = lage.cE + p.x * 1000, n = lage.cN - p.z * 1000
+      if (e < e0 || e > e1 || n < n0 || n > n1) nah = 0
+      const zeit = standRef.current?.zeit ?? new Date()
+      // Stunde und Monat in Schweizer Zeit
+      const zt = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric', hourCycle: 'h23', month: 'numeric' }).formatToParts(zeit)
+      const teil = (art: string) => Number(zt.find((x) => x.type === art)?.value ?? NaN)
+      const u = nah > 0 ? { stadt: stadtBei(e, n), fluss: flussBei(e, n), nah, stunde: teil('hour'), monat: teil('month') } : null
+      if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dUmgebung: unknown }).s3dUmgebung = { ...u, e, n, siedlung: siedlung.length, fluesse: fluesse.length }
+      umgebungHoeren(u)
+    }, 500)
+    return () => { weg = true; window.clearInterval(uhr); umgebungHoerenAus() }
+  }, [b, stufe, zusatz])
   // Schiffe laut Fahrplan (Michael, 2026-10-28: «Ja gern, tolle Idee»), auf 3dland.ch und in Taktland: auf den Kurslinien von swissTLMRegio
   // zwischen den Ländten, wo sie laut Fahrplan jetzt sind (zugStelle wie bei den Zügen); ein Tipp zeigt ein Schild
   const [schiffZeile, setSchiffZeile] = useState<string | null>(null)

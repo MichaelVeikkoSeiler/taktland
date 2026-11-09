@@ -683,3 +683,218 @@ export function zuegeHoeren(zuege: VorbeiZug[], ohneFerne = false) {
 export function zuegeHoerenAus() {
   zuggeraeuschAus()
 }
+
+/**
+ * Geräusche der Umgebung in «3D Schweiz» (Michael, 2026-11-09: «Wenn ich in der Stadt bin, möchte ich ein Stadtgeräusch hören. Vielleicht mal ein
+ * Hupen eines Autos, vielleicht ein Bus … Wenn ich auf dem Land bin, dürfen saisonale Geräusche erklingen. Zum Beispiel Kühe, ein Traktor, mal ein
+ * Flugzeug … Wenn ich einen Fluss vor mir habe, ein Flussgeräusch»; im Programm erzeugt, wie er gewählt hat): ein Rauschen der Stadt und eines Flusses
+ * nach ihrem Anteil, dazu ab und zu einzelne Geräusche, nach Ort, Tageszeit und Monat der Szene. Belegt ist nur, wo Siedlung und Flüsse liegen
+ * (swissTLMRegio); welche Geräusche, wie oft und wie sie klingen, ist erfunden (alle UMGEBUNG_* gewählt).
+ */
+export interface Umgebung {
+  /** 0 bis 1: Anteil Siedlung um die Stelle, Nähe eines Flusses, und wie nah man ist (aus der Ferne still) */
+  stadt: number; fluss: number; nah: number
+  /** Stunde (0 bis 24) und Monat (1 bis 12) der Szene */
+  stunde: number; monat: number
+}
+/** Lautstärke des Rauschens der Stadt und des Flusses, der einzelnen Geräusche (gewählt) */
+const UMGEBUNG_STADT = 0.09, UMGEBUNG_FLUSS = 0.16, UMGEBUNG_EINZEL = 0.5
+/** je Sekunde die Aussicht auf ein Geräusch, bei vollem Anteil (gewählt) */
+const UMGEBUNG_JE_S = { hupe: 0.025, bus: 0.018, kuh: 0.03, glocke: 0.035, traktor: 0.007, kraehe: 0.02, flugzeug: 0.004 }
+let umgebungTon: {
+  stadt: GainNode; fluss: GainNode; flussWelle: OscillatorNode; quellen: AudioScheduledSourceNode[]; uhr: number; jetzt: Umgebung | null
+  /** bis wann ein Geräusch dieser Art noch klingt (nicht zwei Traktoren übereinander) */
+  bis: Record<string, number>
+} | null = null
+
+export function umgebungHoeren(u: Umgebung | null) {
+  if (!stand.an || !u || u.nah <= 0) { umgebungHoerenAus(); return }
+  const c = audioKontext()
+  if (!c) return
+  try {
+    void c.resume()
+    if (!umgebungTon) {
+      const ziel = ausgang(c)
+      // Stadt: tiefes, gleichmässiges Rauschen des Verkehrs
+      const sb = rauschenSchleife(c, true), sw = rauschenSchleife(c, false)
+      const stadt = c.createGain(); stadt.gain.value = 0
+      const st1 = c.createBiquadFilter(); st1.type = 'lowpass'; st1.frequency.value = 380
+      const st2 = c.createBiquadFilter(); st2.type = 'bandpass'; st2.frequency.value = 900; st2.Q.value = 0.5
+      const st2g = c.createGain(); st2g.gain.value = 0.25
+      sb.connect(st1).connect(stadt); sw.connect(st2).connect(st2g).connect(stadt); stadt.connect(ziel)
+      // Fluss: helles Rauschen, langsam an- und abschwellend
+      const fw = rauschenSchleife(c, false)
+      const f1 = c.createBiquadFilter(); f1.type = 'bandpass'; f1.frequency.value = 1100; f1.Q.value = 0.35
+      const f2 = c.createBiquadFilter(); f2.type = 'lowpass'; f2.frequency.value = 3500
+      const fluss = c.createGain(); fluss.gain.value = 0
+      const welle = c.createOscillator(); welle.frequency.value = 0.17
+      const welleG = c.createGain(); welleG.gain.value = 0
+      welle.connect(welleG).connect(fluss.gain)
+      fw.connect(f1).connect(f2).connect(fluss).connect(ziel)
+      for (const q of [sb, sw, fw, welle]) q.start()
+      umgebungTon = { stadt, fluss, flussWelle: welle, quellen: [sb, sw, fw, welle], uhr: window.setInterval(() => umgebungEinzeln(), 1000), jetzt: null, bis: {} }
+      ;(umgebungTon as unknown as { welleG: GainNode }).welleG = welleG
+    }
+    const t = umgebungTon, jetzt = c.currentTime
+    t.jetzt = u
+    // nachts weniger Verkehr (gewählt)
+    const nacht = u.stunde < 6 || u.stunde >= 22
+    t.stadt.gain.setTargetAtTime(UMGEBUNG_STADT * u.stadt * u.nah * (nacht ? 0.4 : 1), jetzt, 0.8)
+    const f = UMGEBUNG_FLUSS * u.fluss * u.nah
+    t.fluss.gain.setTargetAtTime(f, jetzt, 0.8)
+    ;(t as unknown as { welleG: GainNode }).welleG.gain.setTargetAtTime(f * 0.25, jetzt, 0.8)
+  } catch { /* ohne Ton */ }
+}
+
+export function umgebungHoerenAus() {
+  if (!umgebungTon) return
+  const t = umgebungTon
+  umgebungTon = null
+  window.clearInterval(t.uhr)
+  const c = audioKontext()
+  try {
+    if (c) { t.stadt.gain.setTargetAtTime(0, c.currentTime, 0.3); t.fluss.gain.setTargetAtTime(0, c.currentTime, 0.3) }
+    window.setTimeout(() => { for (const q of t.quellen) { try { q.stop() } catch { /* schon aus */ } } }, 1500)
+  } catch { /* ohne Ton */ }
+}
+
+/** einmal je Sekunde: vielleicht ein einzelnes Geräusch */
+function umgebungEinzeln() {
+  const t = umgebungTon, c = audioKontext()
+  if (!t || !c || !t.jetzt || !stand.an) return
+  const u = t.jetzt, jetzt = c.currentTime
+  const tag = u.stunde >= 6 && u.stunde < 21, weide = u.monat >= 5 && u.monat <= 10, feld = u.monat >= 3 && u.monat <= 10
+  const land = (1 - u.stadt) * u.nah, stadt = u.stadt * u.nah
+  const frei = (art: string) => (t.bis[art] ?? 0) <= jetzt
+  const versuch = (art: keyof typeof UMGEBUNG_JE_S, anteil: number) => anteil > 0.05 && frei(art) && Math.random() < UMGEBUNG_JE_S[art] * anteil
+  const ziel = ausgang(c)
+  // jedes Geräusch an einer zufälligen Seite, verschieden weit weg
+  const quelle = (laut: number) => {
+    const g = c.createGain(); g.gain.value = UMGEBUNG_EINZEL * laut * (0.4 + 0.6 * Math.random())
+    let n: AudioNode = g
+    try { const p = c.createStereoPanner(); p.pan.value = Math.random() * 1.6 - 0.8; g.connect(p); n = p } catch { /* ohne Seite */ }
+    n.connect(ziel)
+    return g
+  }
+  try {
+    if (versuch('hupe', stadt * (tag ? 1 : 0.3))) t.bis.hupe = hupe(c, quelle(stadt), jetzt)
+    if (versuch('bus', stadt * (tag ? 1 : 0.4))) t.bis.bus = bus(c, quelle(stadt), jetzt)
+    if (tag && weide && versuch('kuh', land)) t.bis.kuh = kuh(c, quelle(land), jetzt)
+    if (tag && weide && versuch('glocke', land)) t.bis.glocke = glocken(c, quelle(land * 0.6), jetzt)
+    if (tag && feld && versuch('traktor', land)) t.bis.traktor = traktor(c, quelle(land), jetzt)
+    if (tag && versuch('kraehe', land)) t.bis.kraehe = kraehe(c, quelle(land * 0.7), jetzt)
+    if (u.stunde >= 6 && u.stunde < 23 && versuch('flugzeug', u.nah)) t.bis.flugzeug = flugzeug(c, quelle(0.7), jetzt)
+  } catch { /* ohne Ton */ }
+}
+
+/** ein Hupen: zwei Töne zugleich, kurz, manchmal zweimal; gibt zurück, bis wann es klingt */
+function hupe(c: AudioContext, ziel: GainNode, t0: number) {
+  const mal = Math.random() < 0.35 ? 2 : 1, dauer = 0.25 + Math.random() * 0.35
+  const tief = c.createBiquadFilter(); tief.type = 'lowpass'; tief.frequency.value = 2400
+  const h = c.createGain(); h.gain.value = 0
+  h.connect(tief).connect(ziel)
+  const grund = 380 + Math.random() * 80
+  for (const hz of [grund, grund * 1.26]) { const o = c.createOscillator(); o.type = 'square'; o.frequency.value = hz; o.connect(h); o.start(t0); o.stop(t0 + mal * (dauer + 0.15) + 0.2) }
+  for (let i = 0; i < mal; i++) {
+    const a = t0 + i * (dauer + 0.15)
+    h.gain.setValueAtTime(0, a); h.gain.linearRampToValueAtTime(0.18, a + 0.02); h.gain.setValueAtTime(0.18, a + dauer); h.gain.linearRampToValueAtTime(0, a + dauer + 0.05)
+  }
+  return t0 + mal * (dauer + 0.15) + 0.5
+}
+
+/** ein Bus fährt vorbei: Rollen und Motor schwellen an und ab, von einer Seite zur anderen */
+function bus(c: AudioContext, ziel: GainNode, t0: number) {
+  const dauer = 7 + Math.random() * 3
+  const g = c.createGain(); g.gain.value = 0
+  const r = rauschenSchleife(c, true), tief = c.createBiquadFilter(); tief.type = 'lowpass'; tief.frequency.value = 500
+  const m = c.createOscillator(); m.type = 'sawtooth'; m.frequency.value = 55 + Math.random() * 15
+  const mt = c.createBiquadFilter(); mt.type = 'lowpass'; mt.frequency.value = 260
+  const mg = c.createGain(); mg.gain.value = 0.25
+  r.connect(tief).connect(g); m.connect(mt).connect(mg).connect(g); g.connect(ziel)
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.5, t0 + dauer * 0.45); g.gain.linearRampToValueAtTime(0, t0 + dauer)
+  m.frequency.setValueAtTime(m.frequency.value * 1.06, t0); m.frequency.linearRampToValueAtTime(m.frequency.value * 0.94, t0 + dauer)
+  r.start(t0); m.start(t0); r.stop(t0 + dauer + 0.1); m.stop(t0 + dauer + 0.1)
+  return t0 + dauer + 2
+}
+
+/** eine Kuh: ein tiefer Ton durch zwei Formanten, erst steigend, dann fallend */
+function kuh(c: AudioContext, ziel: GainNode, t0: number) {
+  const dauer = 1.2 + Math.random() * 0.9, f0 = 105 + Math.random() * 30
+  const o = c.createOscillator(); o.type = 'sawtooth'
+  o.frequency.setValueAtTime(f0, t0); o.frequency.linearRampToValueAtTime(f0 * 1.25, t0 + dauer * 0.35); o.frequency.linearRampToValueAtTime(f0 * 0.85, t0 + dauer)
+  const vib = c.createOscillator(); vib.frequency.value = 5; const vg = c.createGain(); vg.gain.value = 2.5; vib.connect(vg).connect(o.frequency)
+  const g = c.createGain(); g.gain.value = 0
+  for (const [hz, q, s] of [[480, 4, 1], [950, 5, 0.6], [2300, 6, 0.15]] as const) {
+    const b = c.createBiquadFilter(); b.type = 'bandpass'; b.frequency.value = hz; b.Q.value = q
+    const bg = c.createGain(); bg.gain.value = s
+    o.connect(b).connect(bg).connect(g)
+  }
+  g.connect(ziel)
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.9, t0 + 0.25); g.gain.setValueAtTime(0.9, t0 + dauer - 0.4); g.gain.linearRampToValueAtTime(0, t0 + dauer)
+  o.start(t0); vib.start(t0); o.stop(t0 + dauer + 0.1); vib.stop(t0 + dauer + 0.1)
+  return t0 + dauer + 3
+}
+
+/** Kuhglocken: einige metallische Schläge in unregelmässigem Abstand */
+function glocken(c: AudioContext, ziel: GainNode, t0: number) {
+  const zahl = 3 + Math.floor(Math.random() * 6), grund = 520 + Math.random() * 260
+  let t = t0
+  for (let i = 0; i < zahl; i++) {
+    for (const [mal, s] of [[1, 0.5], [2.4, 0.3], [3.9, 0.18], [5.4, 0.1]] as const) {
+      const o = c.createOscillator(); o.frequency.value = grund * mal
+      const g = c.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(s * 0.35, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0005, t + 0.5)
+      o.connect(g).connect(ziel); o.start(t); o.stop(t + 0.55)
+    }
+    t += 0.25 + Math.random() * 0.7
+  }
+  return t + 2
+}
+
+/** ein Traktor: tiefes Tuckern, kommt näher und entfernt sich */
+function traktor(c: AudioContext, ziel: GainNode, t0: number) {
+  const dauer = 14 + Math.random() * 8, takt = 11 + Math.random() * 4
+  const o = c.createOscillator(); o.type = 'square'; o.frequency.value = takt * 2.5
+  const o2 = c.createOscillator(); o2.type = 'sawtooth'; o2.frequency.value = takt * 5
+  const tief = c.createBiquadFilter(); tief.type = 'lowpass'; tief.frequency.value = 220
+  const klopf = c.createOscillator(); klopf.frequency.value = takt
+  const kg = c.createGain(); kg.gain.value = 0.35
+  const g = c.createGain(); g.gain.value = 0
+  const am = c.createGain(); am.gain.value = 0.65
+  klopf.connect(kg).connect(am.gain)
+  o.connect(tief); o2.connect(tief); tief.connect(am).connect(g).connect(ziel)
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.45, t0 + dauer * 0.4); g.gain.setValueAtTime(0.45, t0 + dauer * 0.55); g.gain.linearRampToValueAtTime(0, t0 + dauer)
+  for (const q of [o, o2, klopf]) { q.start(t0); q.stop(t0 + dauer + 0.1) }
+  return t0 + dauer + 20
+}
+
+/** ein Flugzeug hoch oben: breites Rauschen, langsam an- und abschwellend und tiefer werdend */
+function flugzeug(c: AudioContext, ziel: GainNode, t0: number) {
+  const dauer = 22 + Math.random() * 10
+  const r = rauschenSchleife(c, true), w = rauschenSchleife(c, false)
+  const tief = c.createBiquadFilter(); tief.type = 'lowpass'; tief.frequency.setValueAtTime(900, t0); tief.frequency.linearRampToValueAtTime(380, t0 + dauer)
+  const wg = c.createGain(); wg.gain.value = 0.2
+  const g = c.createGain(); g.gain.value = 0
+  r.connect(tief); w.connect(wg).connect(tief); tief.connect(g).connect(ziel)
+  g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.35, t0 + dauer * 0.45); g.gain.linearRampToValueAtTime(0, t0 + dauer)
+  r.start(t0); w.start(t0); r.stop(t0 + dauer + 0.1); w.stop(t0 + dauer + 0.1)
+  return t0 + dauer + 60
+}
+
+/** eine Krähe, das ganze Jahr: zwei bis vier rauhe «Kraa» */
+function kraehe(c: AudioContext, ziel: GainNode, t0: number) {
+  const zahl = 2 + Math.floor(Math.random() * 3), f0 = 520 + Math.random() * 120
+  let t = t0
+  for (let i = 0; i < zahl; i++) {
+    const d = 0.28 + Math.random() * 0.12
+    const o = c.createOscillator(); o.type = 'sawtooth'
+    o.frequency.setValueAtTime(f0 * 1.1, t); o.frequency.linearRampToValueAtTime(f0 * 0.85, t + d)
+    // rauh: schnelles Zittern der Tonhöhe
+    const z = c.createOscillator(); z.type = 'square'; z.frequency.value = 70; const zg = c.createGain(); zg.gain.value = 40; z.connect(zg).connect(o.frequency)
+    const b1 = c.createBiquadFilter(); b1.type = 'bandpass'; b1.frequency.value = 1400; b1.Q.value = 2.5
+    const g = c.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.7, t + 0.03); g.gain.setValueAtTime(0.7, t + d - 0.08); g.gain.linearRampToValueAtTime(0, t + d)
+    o.connect(b1).connect(g).connect(ziel)
+    o.start(t); z.start(t); o.stop(t + d + 0.05); z.stop(t + d + 0.05)
+    t += d + 0.2 + Math.random() * 0.3
+  }
+  return t + 4
+}
