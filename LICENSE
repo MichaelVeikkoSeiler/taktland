@@ -14,7 +14,7 @@ Ausgenommen sind:
   anderem SBB Open Data (data.sbb.ch), opentransportdata.swiss, das Bundesamt
   für Verkehr BAV, swisstopo, MeteoSchweiz, das Bundesamt für Umwelt BAFU, das
   Bundesamt für Bevölkerungsschutz BABS, das Bundesamt für Statistik BFS und der
-  Hipparcos-Katalog der ESA. Für sie gelten die Lizenzen und
+  Hipparcos-Katalog der ESA, dazu Aufnahmen von freesound.org (CC0). Für sie gelten die Lizenzen und
   Nutzungsbedingungen der jeweiligen Quelle;
 - die mitgelieferten Bibliotheken Dritter (etwa three.js, React, d3-celestial).
   Für sie gelten ihre eigenen Lizenzen, aufgeführt in
