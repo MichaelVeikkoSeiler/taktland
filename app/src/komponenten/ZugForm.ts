@@ -17,8 +17,8 @@ export const ZUG_BREITE = ZUG_MASS_BREITE * 0.85 * 0.9 * 0.85, ZUG_HOEHE = 0.05
 /** Stromabnehmer auf Lok und Steuerwagen (Michael, 2026-11-10: «Der Triebwagen und der letzte Wagen sollen einen Pantograf auf dem Dach haben»):
  *  ein Einholmstromabnehmer, seit 2026-11-10 schmaler (vorher 0,8 der Breite; Michael: «die Stromabnehmer weniger breit»), Masse in Teilen der Höhe und Breite, Lage hinter dem Kopf; Gestalt und Masse gewählt, in keiner Quelle */
 const PANTO_HOCH = 0.42, PANTO_BREIT = 0.5, PANTO_ZURUECK = 2.6
-/** Dicke der Arme in Teilen der Höhe (seit 2026-11-10 dünner, vorher 0,035) */
-const PANTO_DICK = 0.02
+/** Dicke der Arme in Teilen der Höhe (seit 2026-11-10 dünner, vorher 0,035, dann 0,02; Michael: «wieder etwas fetter, aber nicht so wie vorher») */
+const PANTO_DICK = 0.027
 /** wie weit das Fahrwerk am Kopf zurückweicht, in Teilen seiner Höhe; gewählt */
 const FAHRWERK_SCHRAEG = 1.6
 /** Frontscheibe: halbe Breite in Teilen der Zugbreite, oben und unten auf der Rundung des Kopfs (0 vorne unten, 0,62 am Dach); gewählt */
@@ -66,8 +66,9 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   if (i === 0 || i === ZUG_WAGEN) {
     const vz = i === 0 ? 1 : -1, ende = L * 0.48, schraeg = (unten + h) * FAHRWERK_SCHRAEG
     const seite = new THREE.Shape()
-    seite.moveTo(-ende, -h); seite.lineTo(ende - schraeg, -h); seite.lineTo(ende, unten); seite.lineTo(-ende, unten); seite.closePath()
-    const fw = new THREE.ExtrudeGeometry(seite, { depth: W * 0.86, bevelEnabled: false })
+    // gerundet statt einer schrägen Kante (Michael, 2026-11-10: «nicht wie jetzt eine Kante sondern abgerundet»)
+    seite.moveTo(-ende, -h); seite.lineTo(ende - schraeg, -h); seite.quadraticCurveTo(ende, -h, ende, unten); seite.lineTo(-ende, unten); seite.closePath()
+    const fw = new THREE.ExtrudeGeometry(seite, { depth: W * 0.86, bevelEnabled: false, curveSegments: 8 })
     // der Riss liegt in x (längs) und y, ausgezogen in z: so drehen, dass längs z ist und quer x
     fw.rotateY(-Math.PI / 2); fw.translate(W * 0.43, 0, 0)
     if (vz < 0) fw.rotateY(Math.PI)
