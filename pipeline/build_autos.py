@@ -8,8 +8,8 @@ Zählstellen des ASTRA (Strassenverkehrszählung übergeordnetes Netz, data.geo.
 Tag (6 bis 22 Uhr), Nn in der Nacht (22 bis 6 Uhr), beide Richtungen zusammen (16 Nt + 8 Nn ergibt den DTV). Erfunden sind die Autos selbst,
 ihre Lage, ihr Tempo und ihre Spur.
 
-Je Fahrbahn: Autobahnen haben getrennte Fahrbahnen (RICHTUNGSG Wahr), die Richtung der Zeichnung ist nicht die Fahrtrichtung. Angenommen
-wird Rechtsverkehr: die Gegenfahrbahn liegt links. Autostrassen ohne Trennung tragen beide Richtungen auf einer Achse. Die Stücke werden zu
+Je Fahrbahn: Autobahnen haben getrennte Fahrbahnen (RICHTUNGSG Wahr), in Fahrtrichtung gezeichnet (Rechtsverkehr: die Gegenfahrbahn liegt
+links, an 5'570 von 5'581 Fahrbahnen mit gegenläufiger Nachbarin geprüft). Autostrassen ohne Trennung tragen beide Richtungen auf einer Achse. Die Stücke werden zu
 Ketten verbunden, wo genau eines weiterführt; Tunnel, Galerien, Unterführungen und Stücke in Gebäuden zählen zur Länge der Kette (die Autos
 fahren hindurch), sind aber nicht in den Kacheln. Je Kette gilt die Zählstelle, die über das Netz der Fahrbahnen am nächsten liegt (höchstens
 ZAEHL_BIS_M); ohne eine bleibt der Verkehr leer, die App nimmt dann eine gewählte Dichte.
@@ -47,8 +47,6 @@ BRUECKE = {"Bruecke", "Gedeckte Bruecke", "Bruecke mit Galerie"}
 ZAEHL_AN_M = 120
 #: so weit über das Netz der Fahrbahnen gilt eine Zählstelle, gewählt
 ZAEHL_BIS_M = 40_000
-#: die Gegenfahrbahn: parallel (höchstens 30° schräg), 6 bis 80 m daneben, gewählt
-GEGEN_MIN_M, GEGEN_MAX_M, GEGEN_GRAD = 6, 80, 30
 KNOTEN_M = 2.0
 
 
@@ -129,44 +127,10 @@ def main():
                         raus.append((d, k, i, de, dn))
         return raus
 
-    # Fahrtrichtung der getrennten Fahrbahnen: die Gegenfahrbahn liegt links (Rechtsverkehr, angenommen)
-    gedreht = unklar = 0
-    for k, st in enumerate(stuecke):
-        if not st["einweg"]:
-            continue
-        p = st["p"]
-        stimmen = 0
-        for i in range(len(p) - 1):
-            a, b = p[i], p[i + 1]
-            de, dn = b[0] - a[0], b[1] - a[1]
-            l = math.hypot(de, dn)
-            if l < 1:
-                continue
-            me, mn = (a[0] + b[0]) / 2, (a[1] + b[1]) / 2
-            ue, un = de / l, dn / l
-            best = None
-            for d, k2, i2, de2, dn2 in naechste(me, mn, GEGEN_MAX_M, lambda x: x != k and stuecke[x]["einweg"]):
-                if d < GEGEN_MIN_M:
-                    continue
-                l2 = math.hypot(de2, dn2)
-                cos = (ue * de2 + un * dn2) / l2
-                if abs(cos) < math.cos(math.radians(GEGEN_GRAD)):
-                    continue
-                if best is None or d < best[0]:
-                    best = (d, k2, i2, cos)
-            if not best:
-                continue
-            q = stuecke[best[1]]["p"]
-            qe, qn = (q[best[2]][0] + q[best[2] + 1][0]) / 2, (q[best[2]][1] + q[best[2] + 1][1]) / 2
-            links = (ue * (qn - mn) - un * (qe - me)) > 0
-            # gegenläufig gezeichnet oder nicht: entscheidend ist nur, auf welcher Seite die andere Fahrbahn liegt
-            stimmen += (1 if links else -1) * l
-        if stimmen < 0:
-            st["p"] = st["p"][::-1]
-            gedreht += 1
-        elif stimmen == 0:
-            unklar += 1
-    print(f"Fahrbahnen gedreht: {gedreht}, ohne Gegenfahrbahn: {unklar}")
+    # Fahrtrichtung der getrennten Fahrbahnen: swissTLM3D zeichnet sie in Fahrtrichtung (geprüft 2026-11-10: von 5'581 Fahrbahnen mit einer
+    # gegenläufigen Nachbarfahrbahn 6 bis 80 m daneben liegt diese bei 5'570 links, Rechtsverkehr); bis dahin wurden sie nach der nächsten
+    # parallelen Fahrbahn gedreht, das drehte 408 falsch, wo die nächste in dieselbe Richtung führt (Michael, 2026-11-10, Grauholz:
+    # «fahren die Autos teils auf der Gegenspur»)
 
     # Ketten: Knoten an den Enden, verbunden, wo genau ein Stück weiterführt
     knoten = lambda q: (round(q[0] / KNOTEN_M), round(q[1] / KNOTEN_M))

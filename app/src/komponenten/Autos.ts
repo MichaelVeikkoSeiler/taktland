@@ -53,7 +53,7 @@ export function autoForm(): THREE.BufferGeometry {
 export function autoLichter(): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
   const lampe = (x: number, z: number, farbe: string) => {
-    const g = new THREE.BoxGeometry(0.35 / 1000, 0.15 / 1000, 0.06 / 1000).toNonIndexed()
+    const g = new THREE.BoxGeometry(0.45 / 1000, 0.2 / 1000, 0.08 / 1000).toNonIndexed()
     g.deleteAttribute('uv')
     g.translate(x / 1000, 0.75 / 1000, z / 1000)
     const c = new THREE.Color(farbe), f = new Float32Array(g.attributes.position.count * 3)
@@ -61,11 +61,14 @@ export function autoLichter(): THREE.BufferGeometry {
     g.setAttribute('color', new THREE.BufferAttribute(f, 3))
     teile.push(g)
   }
-  for (const x of [-0.6, 0.6]) { lampe(x, AUTO_LANG_M / 2 + 0.02, '#fff6dc'); lampe(x, -AUTO_LANG_M / 2 - 0.02, '#ff2a1a') }
+  for (const x of [-0.6, 0.6]) { lampe(x, AUTO_LANG_M / 2 + 0.03, '#ffffff'); lampe(x, -AUTO_LANG_M / 2 - 0.03, '#ff3020') }
   const ganz = mergeGeometries(teile)!
   teile.forEach((t) => t.dispose())
   return ganz
 }
+
+/** nachts vor jedem Auto ein Lichtkegel auf der Fahrbahn wie bei den Zügen: so lang und vorne so breit, Stärke, gewählt */
+export const AUTO_KEGEL_LANG_M = 28, AUTO_KEGEL_BREIT_M = 7, AUTO_KEGEL_HELL = 0.55
 
 export function lackFarbe(i: number): THREE.Color {
   return new THREE.Color(LACK[Math.floor(zufall(i * 7.31 + 1.7) * LACK.length)])
