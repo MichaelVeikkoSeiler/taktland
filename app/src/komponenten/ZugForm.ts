@@ -17,8 +17,10 @@ export const ZUG_BREITE = ZUG_MASS_BREITE * 0.85 * 0.9 * 0.85, ZUG_HOEHE = 0.05
 /** Stromabnehmer auf Lok und Steuerwagen (Michael, 2026-11-10: «Der Triebwagen und der letzte Wagen sollen einen Pantograf auf dem Dach haben»):
  *  ein Einholmstromabnehmer, Masse in Teilen der Höhe und Breite, Lage hinter dem Kopf; Gestalt und Masse gewählt, in keiner Quelle */
 const PANTO_HOCH = 0.42, PANTO_BREIT = 0.8, PANTO_ZURUECK = 2.6
+/** Dicke der Arme in Teilen der Höhe (seit 2026-11-10 dünner, vorher 0,035) */
+const PANTO_DICK = 0.02
 /** Frontscheibe: halbe Breite in Teilen der Zugbreite, oben und unten auf der Rundung des Kopfs (0 vorne unten, 0,62 am Dach); gewählt */
-const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
+const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1, SCHEIBE_RAHMEN = '#555555'
 /** Kasten des oberen Lichts auf dem Dach, Lage in Teilen der Höhe vom vorderen Ende, Breite in Teilen der Zugbreite; gewählt */
 /** Puffer: Abstand von der Mitte in Teilen der Breite, Höhe der Mitte, Radius der Stange und des Tellers und Länge in Teilen der Höhe; gewählt */
 /** wie weit das Fensterband in den Kopf reicht, in Teilen seiner Länge (bis das Dach sinkt); gewählt */
@@ -26,7 +28,8 @@ const FENSTER_IM_KOPF = 0.55
 /** Höhe des Fensterbands und wie weit seine Mitte unter dem Beginn der Dachrundung liegt, in Teilen der Höhe (Michael, 2026-11-10: «Seitenstreifen etwas
  *  höher und etwas weiter unten», dann «noch etwas weiter unten und noch etwas höher»; vorher 0,22 und 0,08, dann 0,28 und 0,14) */
 const FENSTER_HOCH = 0.34, FENSTER_TIEFER = 0.21
-const PUFFER_SEITE = 0.3, PUFFER_HOEHE = -0.3, PUFFER_R = 0.045, PUFFER_TELLER = 0.085, PUFFER_LANG = 0.2
+// feiner seit 2026-11-10 (Michael: «Ja, setz alle vier um», darunter: Puffer zu gross; vorher 0,045, 0,085, 0,2)
+const PUFFER_SEITE = 0.3, PUFFER_HOEHE = -0.3, PUFFER_R = 0.032, PUFFER_TELLER = 0.058, PUFFER_LANG = 0.12
 export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNTEN = 0.4, LICHTKASTEN_OBEN = 0.56, LICHTKASTEN_BREIT = 0.32
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
 export const ZUG_HELL = '#dcdcdc', ZUG_DUNKEL = '#2e2e2e', ZUG_ROT = '#a8102e'
@@ -71,7 +74,7 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   if (i === 0 || hinten) {
     // Stromabnehmer: Sockel, unterer Arm schräg nach hinten, oberer Arm schräg nach vorne, oben die Schleifleiste quer
     const vorn = hinten ? -1 : 1, z0p = vorn * (L / 2 - PANTO_ZURUECK * H)
-    const dick = H * 0.035, hoch = PANTO_HOCH * H, arm = hoch / 2
+    const dick = H * PANTO_DICK, hoch = PANTO_HOCH * H, arm = hoch / 2
     mesh(new THREE.BoxGeometry(W * 0.5, H * 0.04, H * 0.5), schwarz).position.set(0, h + H * 0.02, z0p)
     // unterer Arm vom Sockel nach hinten oben, oberer von dort nach vorne oben bis über den Sockel
     const knieZ = z0p - vorn * H * 0.45, knieY = h + arm
@@ -144,11 +147,19 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     const scheibe = new THREE.MeshLambertMaterial({ color: ZUG_DUNKEL, side: THREE.DoubleSide })
     materialien.push(scheibe)
     kopfteil(loft(tReihe(SCHEIBE_OBEN_T, SCHEIBE_UNTEN_T, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
+    // am Steuerwagen fasst ein schmaler dunkelgrauer Rahmen die Scheibe, wie vorne das Rot (seit 2026-11-10; Farbe gewählt)
+    if (hinten) {
+      const rahmenSchnitt = schnitt.filter((q) => q.y >= unten + 0.44 * (h - unten) && Math.abs(q.x) <= W * (SCHEIBE_BREIT + 0.06))
+      const rahmen = new THREE.MeshLambertMaterial({ color: SCHEIBE_RAHMEN, side: THREE.DoubleSide })
+      materialien.push(rahmen)
+      kopfteil(loft(tReihe(Math.min(0.99, SCHEIBE_OBEN_T + 0.07), SCHEIBE_UNTEN_T + 0.01, 8).map(zBei), rahmenSchnitt, false, 1.007), rahmen)
+    }
     // auf dem Dach vor dem Stromabnehmer ein kleiner, vorne abgerundeter weisser Kasten für das obere Licht (Michael, 2026-11-10: «Das obere Licht darfst du gerne
     // in einen kleinen aerodynamisch anmutenden kleinen weissen Kasten auf dem Dach einfügen»; Gestalt gewählt): Seitenriss in z und y, quer ausgezogen
     const kz0 = L / 2 - LICHTKASTEN_HINTEN * H, kz1 = L / 2 - LICHTKASTEN_VORN * H, ky0 = LICHTKASTEN_UNTEN * H, ky1 = LICHTKASTEN_OBEN * H
     const riss = new THREE.Shape()
-    riss.moveTo(kz0, ky0); riss.lineTo(kz0, ky1); riss.lineTo(kz1 - (ky1 - ky0) * 0.8, ky1)
+    // hinten flach auslaufend statt mit gerader Kante (seit 2026-11-10)
+    riss.moveTo(kz0, ky0); riss.quadraticCurveTo(kz0 + (ky1 - ky0) * 1.2, ky1, kz0 + (ky1 - ky0) * 2.6, ky1); riss.lineTo(kz1 - (ky1 - ky0) * 0.8, ky1)
     riss.quadraticCurveTo(kz1, ky1, kz1, ky0 + (ky1 - ky0) * 0.25); riss.lineTo(kz1 - (ky1 - ky0) * 0.3, ky0); riss.closePath()
     const kb = W * LICHTKASTEN_BREIT
     const kasten2 = new THREE.ExtrudeGeometry(riss, { depth: kb, bevelEnabled: false, curveSegments: 6 })
