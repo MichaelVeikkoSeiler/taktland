@@ -1522,7 +1522,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             auf ihrem Gerät ein oder öffnet den kopierten Link. Wer eröffnet, führt: Die anderen sehen dasselbe Feld in derselben Stufe, dieselben
             Schalter und dieselbe Zeit, ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung.
             Jede Person sieht die anderen als blaue Figur dort, wo sie ins Modell schaut, mit einer Linie zur Stelle, auf die sie zeigt (Maus,
-            in der Brille der Strahl). Drehen und Zoomen bleiben bei jedem für sich. Ein Gespräch gibt es nicht, dafür braucht es ein Telefon
+            in der Brille der Strahl). Wer folgt, sieht am Anfang auch mit dem Blick der führenden Person, die Kamera gleitet ihr nach; wer selbst dreht oder zoomt, schaut wieder selbst, «Blick folgen» holt den Blick zurück (nicht in der Brille). Ein Gespräch gibt es nicht, dafür braucht es ein Telefon
             daneben. Ein Raum verfällt nach sechs Stunden.</p>
         </Abschnitt>
         <Abschnitt titel="Woher die Daten stammen">

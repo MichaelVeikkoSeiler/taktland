@@ -383,7 +383,7 @@ Zu zweit in «3D Schweiz» (Michael, 2026-11-10, Vorschlag 13: «Erklär mir noc
              letzte Lage, überschrieben, nach 60 s ohne Neues weg, LAGE_ALT_S, höchstens 8) und a=lagen, Herkunft auch 3dland.ch; src/zuzweit.ts schickt und holt
              jede Sekunde: Blick (Kamera oder Kopf), wohin man zeigt (Maus oder Strahl auf dem Gelände), beim Führenden dazu Stufe, Felder, Wahl, Schalter und
              Zeit (versatzMs); wer zuletzt «Führen» drückt (seit), führt, die anderen folgen (folgen in Schweiz3D.tsx: Schalter, Zeit, je Stufe das Feld, die
-             Kette wird geladen wie beim Eintauchen); Drehen und Zoomen bleiben je Gerät; die anderen als blaue Figur (Kopf, Nase in Blickrichtung, Linie zur
+             Kette wird geladen wie beim Eintauchen); seit 2026-11-10 auch der Blick (Michael: «dass die folgende Person auch gleich die Perspektive der führenden Person sehen würde»): Knopf «Blick folgen», am Anfang an, Kamera und Ziel gleiten zu Kopf und Blick des Führenden (FOLGEN_JE_S), dessen Kopf ist dann unsichtbar, Ziehen über FOLGEN_LOS_PX oder das Mausrad beendet es, ein Tipp nicht, nicht in der Brille und nicht auf Augenhöhe; sonst bleiben Drehen und Zoomen je Gerät; die anderen als blaue Figur (Kopf, Nase in Blickrichtung, Linie zur
              gezeigten Stelle, ANDERE_* gewählt); kein Ton; in Anleitung («Zu zweit») und Datenschutz genannt; das neue raum.php muss Michael von Hand
              auf spiel.taktland.ch laden; mit zwei Browsern und php -S geprüft, nicht auf einer Quest
 Stufe Schweiz nur das Land (Michael, 2026-11-10: «dieses Bild mit dem Kasten und den verpixelten Rändern und de hellblaue Himmen wirken wenig harmonisch»,
