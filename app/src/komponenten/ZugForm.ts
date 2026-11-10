@@ -20,6 +20,8 @@ const PANTO_HOCH = 0.42, PANTO_BREIT = 0.8, PANTO_ZURUECK = 2.6
 /** Frontscheibe: halbe Breite in Teilen der Zugbreite, oben und unten auf der Rundung des Kopfs (0 vorne unten, 0,62 am Dach); gewählt */
 const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 /** Kasten des oberen Lichts auf dem Dach, Lage in Teilen der Höhe vom vorderen Ende, Breite in Teilen der Zugbreite; gewählt */
+/** Puffer: Abstand von der Mitte in Teilen der Breite, Höhe der Mitte, Radius der Stange und des Tellers und Länge in Teilen der Höhe; gewählt */
+const PUFFER_SEITE = 0.3, PUFFER_HOEHE = -0.3, PUFFER_R = 0.045, PUFFER_TELLER = 0.085, PUFFER_LANG = 0.2
 export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNTEN = 0.4, LICHTKASTEN_OBEN = 0.56, LICHTKASTEN_BREIT = 0.32
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
 export const ZUG_HELL = '#dcdcdc', ZUG_DUNKEL = '#2e2e2e', ZUG_ROT = '#a8102e'
@@ -143,6 +145,16 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     const kasten2 = new THREE.ExtrudeGeometry(riss, { depth: kb, bevelEnabled: false, curveSegments: 6 })
     kasten2.rotateY(-Math.PI / 2); kasten2.translate(kb / 2, 0, 0)
     kopfteil(kasten2, hell)
+    // vorne zwei Puffer (Michael, 2026-11-10: «Und vorne noch die Puffer?»): Stange und Teller, dunkel; Lage und Masse gewählt
+    for (const seite of [-1, 1]) {
+      const x = seite * W * PUFFER_SEITE, y = PUFFER_HOEHE * H
+      const stange = new THREE.CylinderGeometry(PUFFER_R * H, PUFFER_R * H, PUFFER_LANG * H, 10).rotateX(Math.PI / 2)
+      stange.translate(x, y, L / 2 + PUFFER_LANG * H / 2 - PUFFER_R * H)
+      kopfteil(stange, schwarz)
+      const teller = new THREE.CylinderGeometry(PUFFER_TELLER * H, PUFFER_TELLER * H, PUFFER_R * H * 0.5, 14).rotateX(Math.PI / 2)
+      teller.translate(x, y, L / 2 + PUFFER_LANG * H - PUFFER_R * H)
+      kopfteil(teller, schwarz)
+    }
   }
   return { g, materialien }
 }
