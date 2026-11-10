@@ -670,6 +670,53 @@ export async function brueckenLaden(e0: number, n0: number, e1: number, n1: numb
   return raus
 }
 
+/** Autos für «3D Schweiz» (pipeline/build_autos.py): Fahrbahnen der Autobahnen und Autostrassen aus swissTLM3D, zu Ketten verbunden; je Stück
+ *  die Kette, art 0 eine Richtung (in Richtung der Punkte, Rechtsverkehr angenommen), 1 beide Richtungen, die Länge der Kette, s0 der Abstand
+ *  des ersten Punkts vom Anfang der Kette, ob auf einer Brücke, die Achse mit Höhe laut swissTLM3D; verkehr je Kette [Nt, Nn] laut Zählstelle
+ *  des ASTRA (mittlerer Verkehr je Stunde am Tag und in der Nacht, beide Richtungen) oder null */
+export interface AutoStueck { kette: number; art: number; L: number; s0: number; bruecke: boolean; e: Float64Array; n: Float64Array; h: Float32Array; s: Float64Array }
+export interface AutoIndex { kachel_m: number; kacheln: string[]; jahr_zaehlung: number; zaehlstellen: Array<[string, string, string, number, number, number]>; ketten: Array<number | null> }
+let autoVerz: Promise<AutoIndex | null> | null = null
+const autoVorrat = new Map<string, Promise<AutoStueck[] | null>>()
+export async function autosLaden(e0: number, n0: number, e1: number, n1: number): Promise<{ index: AutoIndex; stuecke: AutoStueck[] } | null> {
+  const ix = await (autoVerz ??= holen<AutoIndex>('data/autos/index.json').catch(() => { autoVerz = null; return null }))
+  if (!ix) return null
+  const k = ix.kachel_m, da = new Set(ix.kacheln), namen: string[] = []
+  for (let ex = Math.floor(e0 / k); ex <= Math.floor(e1 / k); ex++) {
+    for (let ny = Math.floor(n0 / k); ny <= Math.floor(n1 / k); ny++) if (da.has(`${ex}_${ny}`)) namen.push(`${ex}_${ny}`)
+  }
+  const teile = await Promise.all(namen.map((name) => {
+    let p = autoVorrat.get(name)
+    if (!p) {
+      p = holenBinaer(`data/autos/${name}.agz`).then(entpacken).then((roh) => {
+        const liste = JSON.parse(new TextDecoder().decode(roh)) as Array<[number, number, number, number, number, number, number, number, number[]]>
+        return liste.map(([kette, art, L, s0, br, e, n, h, d]) => {
+          const z = d.length / 3
+          const a: AutoStueck = { kette, art, L, s0, bruecke: br === 1, e: new Float64Array(z), n: new Float64Array(z), h: new Float32Array(z), s: new Float64Array(z) }
+          for (let i = 0; i < z; i++) {
+            a.e[i] = e + d[3 * i]; a.n[i] = n + d[3 * i + 1]; a.h[i] = (h + d[3 * i + 2]) / 10
+            a.s[i] = i ? a.s[i - 1] + Math.hypot(a.e[i] - a.e[i - 1], a.n[i] - a.n[i - 1]) : s0
+          }
+          return a
+        })
+      }).catch(() => { autoVorrat.delete(name); return null })
+      while (autoVorrat.size >= 40) autoVorrat.delete(autoVorrat.keys().next().value!)
+      autoVorrat.set(name, p)
+    }
+    return p
+  }))
+  const gesehen = new Set<string>(), raus: AutoStueck[] = []
+  for (const t of teile) for (const a of t ?? []) {
+    const schl = `${a.kette}/${a.s0}`
+    if (gesehen.has(schl)) continue
+    gesehen.add(schl)
+    let drin = false
+    for (let i = 0; i < a.e.length && !drin; i++) drin = a.e[i] >= e0 && a.e[i] <= e1 && a.n[i] >= n0 && a.n[i] <= n1
+    if (drin) raus.push(a)
+  }
+  return { index: ix, stuecke: raus }
+}
+
 export async function mastenLaden(e0: number, n0: number, e1: number, n1: number): Promise<Masten | null> {
   const ix = await (mastVerz ??= holen<MastIndex>('data/fahrleitung/index.json').catch(() => null))
   if (!ix) return null

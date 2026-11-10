@@ -413,7 +413,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             direkt bei data.geo.admin.ch (Bund). Der Dienst sieht dabei wie jeder Server die IP-Adresse und erfährt, welche
             Station gefragt wird, also in welcher Gegend das Modell oder die Fahrt liegt; den Standort selbst sendet Taktland nicht.
             Ebenso, wenn die Windhose an ist oder ihre Tafel offen: die Windmessung und die Prognose der Station. In «Virtuelle Schweiz» holt
-            «Wetter» dasselbe und dazu Regen und Schnee laut Wettermodell bei 3dland.ch (ebenfalls GitHub Pages, siehe unten), «Wolken» die Wolken von dort. Im Führerstand holt Taktland, solange der Sonnenschalter nicht leuchtet,
+            «Wetter» dasselbe und dazu Regen und Schnee laut Wettermodell, abgelegt bei Taktland selbst (GitHub Pages, siehe unten), «Wolken» die Wolken von dort. Im Führerstand holt Taktland, solange der Sonnenschalter nicht leuchtet,
             die Wolken ebenfalls dort; die Datei ist für die ganze Schweiz dieselbe, sie verrät die Gegend nicht.
           </li>
           <li>
