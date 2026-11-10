@@ -29,7 +29,7 @@ const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 const FENSTER_IM_KOPF = 0.55
 /** Türen: an oder aus (für die Vorschau), Breite in Teilen der Höhe, Abstand der Mitte vom Wagenende in Teilen der Länge, Farbe des Felds; gewählt */
 export const zugTueren = { an: false }
-const TUER_BREIT = 0.34, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#b9b9b9'
+const TUER_BREIT = 0.34, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#808080', TUER_LINIE = 0.014
 /** Höhe des Fensterbands und wie weit seine Mitte unter dem Beginn der Dachrundung liegt, in Teilen der Höhe (Michael, 2026-11-10: «Seitenstreifen etwas
  *  höher und etwas weiter unten», dann «noch etwas weiter unten und noch etwas höher»; vorher 0,22 und 0,08, dann 0,28 und 0,14) */
 const FENSTER_HOCH = 0.34, FENSTER_TIEFER = 0.21
@@ -84,26 +84,30 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   // das Fensterband leuchtet nachts von innen (zugFormen: Attribut leuchte)
   fenster.userData.fenster = true
   // Türen, nur gemalt (Michael, 2026-11-10: «Braucht es bei den Wagen noch Türen, also nicht richtige, aber damit es den Anschein macht?»): je Seite zwei nahe
-  // den Enden, an Lok und Steuerwagen eine hinter dem Kopf; dunkler Rahmen, etwas dunkleres Feld, oben ein Fenster im Band; Zahl, Lage und Masse gewählt
+  // den Enden, an Lok und Steuerwagen eine hinter dem Kopf; Zahl, Lage und Masse gewählt
   if (zugTueren.an) {
     const unterkante = unten + H * 0.03, oberkante = h - r - H * FENSTER_TIEFER + H * FENSTER_HOCH / 2 + H * 0.03
-    const hoch = oberkante - unterkante, mitteY = (oberkante + unterkante) / 2, b = H * TUER_BREIT
+    const b = H * TUER_BREIT
     // an Lok und Steuerwagen gleich hinter dem Kopf, dort, wo das Fensterband im Kopf endet
     const amKopf = L / 2 - kopf * (1 - FENSTER_IM_KOPF) - b * 0.6
     const stellen = i === 0 ? [amKopf] : hinten ? [-amKopf] : [L / 2 - L * TUER_VOM_ENDE, -(L / 2 - L * TUER_VOM_ENDE)]
-    const tuerFeld = new THREE.MeshLambertMaterial({ color: TUER_FARBE })
-    materialien.push(tuerFeld)
+    // nur ein dünner grauer Rahmen links, oben und rechts mit leicht gerundeten Ecken (Michael, 2026-11-10: «wesentlich einfacher darstellen, nur dünner grauer
+    // Rahmen links oben und rechts. Leicht abgerundete Ecken»): eine flache Form in z und y, zur Seite gedreht
+    const d = H * TUER_LINIE, rr = b * 0.22
+    const umriss = new THREE.Shape()
+    umriss.moveTo(-b / 2, unterkante); umriss.lineTo(-b / 2, oberkante - rr); umriss.quadraticCurveTo(-b / 2, oberkante, -b / 2 + rr, oberkante)
+    umriss.lineTo(b / 2 - rr, oberkante); umriss.quadraticCurveTo(b / 2, oberkante, b / 2, oberkante - rr); umriss.lineTo(b / 2, unterkante)
+    umriss.lineTo(b / 2 - d, unterkante); umriss.lineTo(b / 2 - d, oberkante - rr); umriss.quadraticCurveTo(b / 2 - d, oberkante - d, b / 2 - rr, oberkante - d)
+    umriss.lineTo(-b / 2 + rr, oberkante - d); umriss.quadraticCurveTo(-b / 2 + d, oberkante - d, -b / 2 + d, oberkante - rr); umriss.lineTo(-b / 2 + d, unterkante)
+    umriss.closePath()
+    const tuerLinie = new THREE.MeshLambertMaterial({ color: TUER_FARBE, side: THREE.DoubleSide })
+    materialien.push(tuerLinie)
     for (const z of stellen) {
       for (const sx of [-1, 1]) {
-        const x = (d: number) => sx * W * (0.515 + d)
-        mesh(new THREE.BoxGeometry(W * 0.002, hoch + H * 0.03, b + H * 0.03), schwarz).position.set(x(0.002), mitteY, z)
-        mesh(new THREE.BoxGeometry(W * 0.002, hoch, b), tuerFeld).position.set(x(0.004), mitteY, z)
-        // Mittelfuge der zweiflügligen Tür und oben das Fenster
-        mesh(new THREE.BoxGeometry(W * 0.002, hoch, H * 0.008), schwarz).position.set(x(0.006), mitteY, z)
-        const fh = H * FENSTER_HOCH * 0.8
-        const tf = mesh(new THREE.BoxGeometry(W * 0.002, fh, b * 0.8), schwarz)
-        tf.position.set(x(0.006), oberkante - H * 0.05 - fh / 2, z)
-        tf.userData.fenster = true
+        const g2 = new THREE.ShapeGeometry(umriss, 6)
+        g2.rotateY(sx * Math.PI / 2)
+        g2.translate(sx * W * 0.522, 0, z)
+        mesh(g2, tuerLinie)
       }
     }
   }
