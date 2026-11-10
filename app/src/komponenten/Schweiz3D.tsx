@@ -1736,7 +1736,7 @@ const KAMERA_UEBER_GELAENDE_KM = 0.003
 /** zu zweit: Farbe der anderen und ihr Kopf auf dem Bildschirm so gross wie dieser Teil des Abstands (gewählt) */
 const ANDERE_FARBE = '#1f6fd1', ANDERE_BILD = 0.012
 /** wie schnell die Kamera dem Blick des Führenden nachgleitet (je Sekunde, gewählt) */
-const FOLGEN_JE_S = 2.5
+const FOLGEN_JE_S = 2.5, FOLGEN_LOS_PX = 6
 const ICH_FLUSS_M = 15, ICH_TASTEN_KM = 0.002
 const ICH_BOGEN_MS = 12, ICH_HIMMEL_GRAD = 45, ICH_MANN_TISCH_M = 0.06, ICH_BOGEN_PUNKTE = 40
 const STEHEN_AUGE_M = 1.7, STEHEN_DREH_KM = 0.00001, STEHEN_NAH_KM = 0.0001, STEHEN_GEHEN_MS = 4, STEHEN_DREHEN_RS = 1.6
@@ -3743,33 +3743,37 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   const blickLosRef = useRef(blickLos)
   blickLosRef.current = blickLos
   // mit dem Blick des Führenden: Kamera und Ziel gleiten zu seinem Kopf und Blick (jede Sekunde kommt eine Lage); dreht oder zoomt man selbst
-  // (die Kamera bewegt sich zwischen start und end der Steuerung um mehr als 1 % ihres Abstands), endet es; nicht in der Brille und nicht auf Augenhöhe
+  // (mehr als FOLGEN_LOS_PX mit gedrückter Maus oder Finger, oder das Mausrad), endet es; ein Tipp ohne Bewegung nicht; nicht in der Brille und nicht auf Augenhöhe
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     if (!k || !lage) return
     const lokal = (p: Punkt) => new THREE.Vector3((p[0] - lage.cE) / 1000, p[2] / 1000, -(p[1] - lage.cN) / 1000)
-    let selbst: THREE.Vector3 | null = null, zeit = performance.now()
-    const start = () => { selbst = k.kamera.position.clone() }
-    const ende = () => {
-      if (selbst && folgeRef.current && selbst.distanceTo(k.kamera.position) > k.kamera.position.distanceTo(k.steuerung.target) * 0.01) blickLosRef.current?.()
-      selbst = null
-    }
-    k.steuerung.addEventListener('start', start)
-    k.steuerung.addEventListener('end', ende)
+    const el = k.renderer.domElement
+    let gedrueckt: { x: number; y: number } | null = null, zeit = performance.now()
+    const los = () => { if (folgeRef.current) blickLosRef.current?.() }
+    const runter = (e: PointerEvent) => { gedrueckt = { x: e.clientX, y: e.clientY } }
+    const ziehen = (e: PointerEvent) => { if (gedrueckt && Math.hypot(e.clientX - gedrueckt.x, e.clientY - gedrueckt.y) > FOLGEN_LOS_PX) los() }
+    const hoch = () => { gedrueckt = null }
+    el.addEventListener('pointerdown', runter)
+    el.addEventListener('pointermove', ziehen)
+    addEventListener('pointerup', hoch)
+    el.addEventListener('wheel', los, { passive: true })
     const schritt = () => {
       const jetzt = performance.now(), f = 1 - Math.exp(-((jetzt - zeit) / 1000) * FOLGEN_JE_S)
       zeit = jetzt
       const a = folgeRef.current ? andereRef.current.find((x) => x.id === folgeRef.current) : undefined
-      if (!a || selbst || k.renderer.xr.isPresenting || stehenAn) return
+      if (!a || k.renderer.xr.isPresenting || stehenAn) return
       k.kamera.position.lerp(lokal(a.kopf), f)
       k.steuerung.target.lerp(lokal(a.blick), f)
     }
     k.jeBild.push(schritt)
     return () => {
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
-      k.steuerung.removeEventListener('start', start)
-      k.steuerung.removeEventListener('end', ende)
+      el.removeEventListener('pointerdown', runter)
+      el.removeEventListener('pointermove', ziehen)
+      removeEventListener('pointerup', hoch)
+      el.removeEventListener('wheel', los)
     }
   }, [b, stufe])
   useEffect(() => {
