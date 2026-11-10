@@ -69,7 +69,7 @@ STRASSEN = {"10m Strasse": (10, 35, 80), "8m Strasse": (8, 35, 80), "6m Strasse"
 #: Probe alle so viele Meter, Abschnitt des Modells bis so weit daneben und höchstens so schräg (gewählt)
 ARE_PROBE_M, ARE_BIS_M, ARE_WINKEL = 20, 12, 25
 #: ohne Autos unter so vielen Fahrzeugen am Tag (DTV laut Modell, beide Richtungen; gewählt)
-STRASSE_AB_DTV = 500
+STRASSE_AB_DTV = 200
 #: Achsen auf so viele Meter vereinfacht (Douglas-Peucker, gewählt)
 EINFACH_M = 0.5
 
@@ -449,9 +449,11 @@ def main():
                     if st["kb"] not in VERSTECKT:
                         q = einfach(p)
                         e0, n0, h0 = round(q[0][0], 1), round(q[0][1], 1), round(q[0][2] * 10)
+                        # die Höhe braucht die App nur auf Brücken (sonst das gezeichnete Gelände): ausserhalb 0, das spart Platz
+                        auf = st["kb"] in BRUECKE
                         d = []
                         for pp in q:
-                            d += [round(pp[0] - e0, 1), round(pp[1] - n0, 1), round(pp[2] * 10) - h0]
+                            d += [round(pp[0] - e0, 1), round(pp[1] - n0, 1), round(pp[2] * 10) - h0 if auf else 0]
                         eintrag = [c, 3 if einweg else 2, round(L, 1), round(s0, 1), 1 if st["kb"] in BRUECKE else 0, e0, n0, h0, d, *v]
                         for kk in {(int(pp[0] // KACHEL_M), int(pp[1] // KACHEL_M)) for pp in q}:
                             kacheln[kk].append(eintrag)

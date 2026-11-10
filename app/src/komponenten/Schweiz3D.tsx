@@ -11,7 +11,7 @@ import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, 
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, autoLichter, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
+import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1476,10 +1476,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Verkehrsmodell des Bundesamts für Raumentwicklung ARE (Nationales Personenverkehrsmodell 2023 und Güterverkehr des UVEK): Es rechnet für
             jeden Abschnitt, wie viele Fahrzeuge im Mittel am Tag fahren und wie viele davon Lastwagen sind. Das ist ein Modell, keine Messung.
             Auf Tag und Nacht aufgeteilt ist es so wie im Mittel an den Zählstellen des ASTRA, die Lastwagen gleich je Tag und Nacht. Strassen, auf
-            denen laut Modell weniger als 500 Fahrzeuge am Tag fahren, bleiben leer. Erfunden sind hier dazu das Tempo (innerorts 25 bis 35 km/h als Mittel
+            denen laut Modell weniger als 200 Fahrzeuge am Tag fahren, bleiben leer. Erfunden sind hier dazu das Tempo (innerorts 25 bis 35 km/h als Mittel
             samt Halten, ausserorts 50 bis 80 km/h, nach der Breite der Strasse), eine Spur je Richtung, und dass an Kreuzungen alle durchfahren: Ampeln,
             Vortritt und Abbiegen gibt es nicht, ein Auto kann an einer Kreuzung verschwinden und ein anderes erscheinen. Weggemalt sind die Autos im
-            Luftbild nur auf Strassen ab 6 m Breite.</p>
+            Luftbild nur auf Strassen ab 6 m Breite. Innerorts hält hie und da ein Auto, weil ein Fussgänger die Strasse quert; die Autos dahinter
+            warten, fahren danach an und holen auf, manchmal hupt einer. Auch das ist erfunden: Fussgängerstreifen und Fussgänger stehen in keiner
+            unserer Quellen.</p>
         </Abschnitt>
         <Abschnitt titel="Wetter: Wind und Niederschlag">
           <p>«Wetter» zeigt immer vier Windhosen, je eine in der Mitte jedes Viertels des Modells. Die Zahlen über dem Mast sind der Wind in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
@@ -1634,9 +1636,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Autos und Lastwagen: ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn, alle Lastwagen rechts;
               auf den übrigen Strassen eine Spur je Richtung, das Tempo nach der Breite, Kreuzungen ohne Ampeln und Vortritt.
               Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA; auf den übrigen
-              Strassen ist die Menge aus dem Verkehrsmodell des ARE gerechnet, nicht gezählt. Unter den fahrenden Autos ist das Luftbild übermalt.</li>
+              Strassen ist die Menge aus dem Verkehrsmodell des ARE gerechnet, nicht gezählt. Unter den fahrenden Autos ist das Luftbild übermalt. Die Halte für
+              Fussgänger, die Fussgänger selbst, das Bremsen, Anfahren und Hupen dabei.</li>
             <li>Geräusche der Umgebung: Bus, Kühe, Traktor und das Flugzeug hoch oben sind im Programm erzeugt, Verkehr, Kuhglocken, Fluss, Möwen, das
-              vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; das Flugzeug und der Helikopter, die man dazu fliegen sieht, sind erfunden: Gestalt, Farben, Höhe (150 und 120 m über dem Gelände), Richtung und Tempo; wann gehupt wird, ist gewählt; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
+              vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; die Fussgänger, für die Autos halten, und wann dabei gehupt wird, sind erfunden; das Flugzeug und der Helikopter, die man dazu fliegen sieht, sind erfunden: Gestalt, Farben, Höhe (150 und 120 m über dem Gelände), Richtung und Tempo; wann gehupt wird, ist gewählt; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
             <li>Kirchenglocken, Pfiff zur Abfahrt und Schiffshorn: im Programm erzeugt; belegt sind nur die Lage der Kirchen und die Abfahrten laut Fahrplan.</li>
@@ -5932,7 +5935,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     let kegel: THREE.InstancedMesh | null = null
     randSchnitt(kegelStoff, b, lage)
     let netz: THREE.InstancedMesh | null = null, lichter: THREE.InstancedMesh | null = null, lkwNetz: THREE.InstancedMesh | null = null, lkwLichter: THREE.InstancedMesh | null = null
-    let schritt: (() => void) | null = null
+    let schritt: (() => void) | null = null, fussAufraeumen: (() => void) | null = null
     void autosLaden(e0, n0, e1, n1).catch(() => null).then((d) => {
       if (weg || !d || !d.stuecke.length) return
       // Retusche unter den Fahrbahnen ausserhalb von Brücken (auf Brücken liegt die gezeichnete Brücke darüber)
@@ -6029,9 +6032,61 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (kk.art === 0 && Math.random() < AUTO_HUPE_ANTEIL) hupe(laut)
       }
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), eins = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
+      // Halten für Fussgänger (Autos.ts; Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»)
+      const halte: Halt[] = [], verzug = new Map<AutoPlatz, Verzug>(), gestaut = new Set<AutoKette>()
+      const kandidaten: Array<{ kk: AutoKette; a: AutoPlatz; lauf: number; lang: number }> = []
+      let zuletztS = performance.now() / 1000, haltNr = 0
+      const zielLokal = new THREE.Vector3()
+      fussAufraeumen = () => { for (const h of halte) if (h.fuss) fussWeg(h.fuss); halte.length = 0 }
+      const haltBeginnen = (jetzt: number, nachtsWeniger: boolean, immer = false) => {
+        if (!kandidaten.length || halte.length >= HALT_HOECHSTENS || (!immer && Math.random() > HALT_JE_S * 0.1 * (nachtsWeniger ? 0.3 : 1))) return
+        const c = kandidaten[Math.floor(Math.random() * kandidaten.length)]
+        if (halte.some((h) => h.kk === c.kk)) return
+        const S = c.lauf + 15 + c.lang / 2
+        if (S + 5 > c.kk.L) return
+        const p = autoBei(c.kk, c.a.richtung === 1 ? S + FUSS_VOR_M : c.kk.L - S - FUSS_VOR_M)
+        if (!p || p.bruecke || !drin(p.e, p.n)) return
+        const halb = (c.kk.stuecke[0].strasse?.breite ?? 6) / 2 + 1
+        const fussAb = jetzt + 15 / c.a.ms + 0.3, fussBis = fussAb + (2 * halb) / FUSS_MS
+        const fuss = fussgaenger(haltNr++)
+        fuss.visible = false
+        gruppe.add(fuss)
+        halte.push({ kk: c.kk, richtung: c.a.richtung, S, bis: fussBis + 0.6, fussAb, fussBis, e: p.e, n: p.n, de: p.de * c.a.richtung, dn: p.dn * c.a.richtung,
+          halb, hupenUm: Math.random() < HALT_HUPE ? fussAb + 1.5 + Math.random() * 2 : null, fuss })
+        gestaut.add(c.kk)
+      }
+      const fussSetzen = (jetzt: number) => {
+        for (let i = halte.length - 1; i >= 0; i--) {
+          const h = halte[i]
+          if (jetzt > h.bis && !(h.fuss?.visible)) {
+            if (h.fuss) fussWeg(h.fuss)
+            halte.splice(i, 1); continue
+          }
+          if (h.hupenUm !== null && jetzt >= h.hupenUm) {
+            h.hupenUm = null
+            const d = ohrAbstand(h.e, h.n, bestandHoehe(b, h.e, h.n))
+            if (d < AUTO_HOEREN_BIS_M) hupe(Math.min(1, (AUTO_HOEREN_BIS_M - d) / (AUTO_HOEREN_BIS_M - AUTO_HOEREN_VOLL_M)) ** 2)
+          }
+          const f = h.fuss
+          if (!f) continue
+          const t = (jetzt - h.fussAb) / (h.fussBis - h.fussAb)
+          f.visible = t >= 0 && t <= 1
+          if (!f.visible) { if (t > 1) { fussWeg(f); h.fuss = null } continue }
+          // von rechts nach links quer über die Strasse; rechts der Fahrtrichtung ist (dn, -de)
+          const quer = h.halb * (1 - 2 * t), e = h.e + h.dn * quer, n = h.n - h.de * quer
+          const z = bestandHoehe(b, e, n)
+          f.position.set((e - lage.cE) / 1000, (Number.isFinite(z) ? z : 0) / 1000, -(n - lage.cN) / 1000)
+          f.rotation.y = Math.atan2(-h.dn, -h.de)
+          const schwung = Math.sin(jetzt * 7) * 0.45
+          let j = 0
+          for (const o of f.children) if (o.name === 'bein') o.rotation.x = j++ ? schwung : -schwung
+        }
+      }
       schritt = () => {
         if (!netz) return
         const ms = Date.now() + szenenZeit.versatzMs, sek = ms / 1000
+        const jetztS = performance.now() / 1000, dt = Math.min(0.5, jetztS - zuletztS)
+        zuletztS = jetztS
         // Anteil der grössten Dichte dieser Stunde: Tag 6 bis 22 Uhr, sonst Nacht (Schweizer Zeit der Szene)
         const stunde = jetztImFahrplan({ von: '2000-01-01' }, new Date(ms)).minuten / 60, tag = stunde >= 6 && stunde < 22
         let zahl = 0, lkwZahl = 0, kegelZahl = 0
@@ -6046,12 +6101,28 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const blickM = 1000 * k.kamera.position.distanceTo(k.steuerung.target) / Math.max(1e-9, k.wurzel.scale.x)
           ohr = ZUG_HOEREN_BLICK_M / Math.max(ZUG_HOEREN_BLICK_M, blickM)
         }
+        if (hoeren) {
+          kandidaten.length = 0
+          if (brille) zielLokal.copy(augeLokal); else { zielLokal.copy(k.steuerung.target); k.wurzel.worldToLocal(zielLokal) }
+        }
+        const zielE = lage.cE + zielLokal.x * 1000, zielN = lage.cN - zielLokal.z * 1000
         for (const kk of ketten.values()) {
           const anteil = (tag ? kk.tag : kk.nacht) / Math.max(1, kk.tag, kk.nacht), lkwAnteil = tag ? kk.lkwTag : kk.lkwNacht
+          // gestaut: zuerst alle sichtbaren Autos der Kette, dann je Auto der Verzug
+          if (gestaut.has(kk)) {
+            const liste: Array<{ a: AutoPlatz; lauf: number; lang: number }> = []
+            for (const a of kk.autos) {
+              if (a.ab >= anteil) continue
+              liste.push({ a, lauf: (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L, lang: a.lkw < lkwAnteil ? LKW_LANG_M : AUTO_LANG_M })
+            }
+            if (!stauRechnen(liste, halte.filter((h) => h.kk === kk), verzug, jetztS, dt)) gestaut.delete(kk)
+          }
+          // innerorts (Tempo höchstens 35 km/h) kann ein Halt beginnen
+          const innerorts = kk.art >= 2 && (kk.stuecke[0].strasse?.kmh ?? 99) <= 35
           for (const a of kk.autos) {
             if (a.ab >= anteil || zahl >= hoechstens || lkwZahl >= hoechstens) continue
             const lkw = a.lkw < lkwAnteil, lang = lkw ? LKW_LANG_M : AUTO_LANG_M
-            const lauf = (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L, s = a.richtung === 1 ? lauf : kk.L - lauf
+            const lauf = (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L - (verzug.get(a)?.v ?? 0), s = a.richtung === 1 ? lauf : kk.L - lauf
             const p = autoBei(kk, s)
             if (!p) continue
             const de = p.de * a.richtung, dn = p.dn * a.richtung
@@ -6067,7 +6138,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             q.setFromAxisAngle(oben, Math.atan2(de, -dn))
             m.compose(v, q, eins)
             if (lkw) lkwNetz!.setMatrixAt(lkwZahl, m); else netz.setMatrixAt(zahl, m)
-            if (hoeren) hoerenPruefen(kk, a, lauf, e, n, z)
+            if (hoeren) {
+              hoerenPruefen(kk, a, lauf, e, n, z)
+              if (innerorts && !verzug.has(a) && Math.hypot(e - zielE, n - zielN) < HALT_NAH_M) kandidaten.push({ kk, a, lauf, lang })
+            }
             if (nacht) {
               if (lkw) lkwLichter!.setMatrixAt(lkwZahl, m); else lichter!.setMatrixAt(zahl, m)
               kegelV.set((e + de * lang / 2 - lage.cE) / 1000, (z + 0.1) / 1000, -(n + dn * lang / 2 - lage.cN) / 1000)
@@ -6078,6 +6152,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             else netz.setColorAt(zahl++, farben[a.farbe])
           }
         }
+        if (hoeren) haltBeginnen(jetztS, !tag, !!(import.meta.env.VITE_S3D_TEST && (window as unknown as { s3dHalt?: boolean }).s3dHalt))
+        if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHalte: unknown }).s3dHalte = { orte: halte.map((h) => [Math.round(h.e), Math.round(h.n), Math.round(bestandHoehe(b, h.e, h.n))]), halte: halte.length, gestaut: gestaut.size, verzug: [...verzug.values()].map((x) => Math.round(x.v)), kandidaten: kandidaten.length }
+        fussSetzen(jetztS)
         netz.count = zahl
         netz.instanceMatrix.needsUpdate = true
         if (netz.instanceColor) netz.instanceColor.needsUpdate = true
@@ -6102,6 +6179,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (lichter) { lichter.geometry.dispose(); lichter.dispose() }
       for (const x of [lkwNetz, lkwLichter]) if (x) { x.geometry.dispose(); x.dispose() }
       kegelStoff.map?.dispose(); kegelStoff.dispose(); kegelGeo.dispose(); kegel?.dispose()
+      fussAufraeumen?.()
       for (const r of retuschiert) { retuscheZurueck(r.ctx, r.liste); bildNeu(r.bild) }
     }
   }, [autos, b, stufe, knoepfe])
