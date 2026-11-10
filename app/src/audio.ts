@@ -711,7 +711,7 @@ let glockeViertel: number | null = null
 const UMGEBUNG_STADT_FERN = 0.6
 const UMGEBUNG_STADT = 0.09, UMGEBUNG_FLUSS = 0.16, UMGEBUNG_EINZEL = 0.5
 /** je Sekunde die Aussicht auf ein Geräusch, bei vollem Anteil (gewählt) */
-const UMGEBUNG_JE_S = { hupe: 0.025, bus: 0.018, kuh: 0.03, glocke: 0.035, traktor: 0.007, kraehe: 0.02, flugzeug: 0.004 }
+const UMGEBUNG_JE_S = { bus: 0.018, kuh: 0.03, glocke: 0.035, traktor: 0.007, flugzeug: 0.004 }
 /** Verkehr in der Stadt als Aufnahme (Michael, 2026-11-09: «Das ist das Geräusch von freesound.org für die Stadt»): Froey_, «Background traffic noise»,
  *  freesound.org/s/700948, zu einer Schleife von 62 s geschnitten (3 s überblendet, auf −20 dB gebracht), vorne und hinten 0,5 s aus der Schleife als
  *  Rand, damit die Lücke des MP3 am Anfang nicht hörbar ist (STADT_RAND_S); Lautstärke gegen das Erzeugte gewählt */
@@ -850,29 +850,12 @@ function umgebungEinzeln() {
     return g
   }
   try {
-    if (versuch('hupe', stadt * (tag ? 1 : 0.3))) t.bis.hupe = hupe(c, quelle(stadt), jetzt)
     if (versuch('bus', stadt * (tag ? 1 : 0.4))) t.bis.bus = bus(c, quelle(stadt), jetzt)
     if (tag && weide && versuch('kuh', land)) t.bis.kuh = kuh(c, quelle(land), jetzt)
     if (weide && !t.glockenDa && versuch('glocke', land)) t.bis.glocke = glocken(c, quelle(land * 0.6), jetzt)
     if (tag && feld && versuch('traktor', land)) t.bis.traktor = traktor(c, quelle(land), jetzt)
-    if (tag && versuch('kraehe', land)) t.bis.kraehe = kraehe(c, quelle(land * 0.7), jetzt)
     if (u.stunde >= 6 && u.stunde < 23 && versuch('flugzeug', u.nah)) t.bis.flugzeug = flugzeug(c, quelle(0.7), jetzt)
   } catch { /* ohne Ton */ }
-}
-
-/** ein Hupen: zwei Töne zugleich, kurz, manchmal zweimal; gibt zurück, bis wann es klingt */
-function hupe(c: AudioContext, ziel: GainNode, t0: number) {
-  const mal = Math.random() < 0.35 ? 2 : 1, dauer = 0.25 + Math.random() * 0.35
-  const tief = c.createBiquadFilter(); tief.type = 'lowpass'; tief.frequency.value = 2400
-  const h = c.createGain(); h.gain.value = 0
-  h.connect(tief).connect(ziel)
-  const grund = 380 + Math.random() * 80
-  for (const hz of [grund, grund * 1.26]) { const o = c.createOscillator(); o.type = 'square'; o.frequency.value = hz; o.connect(h); o.start(t0); o.stop(t0 + mal * (dauer + 0.15) + 0.2) }
-  for (let i = 0; i < mal; i++) {
-    const a = t0 + i * (dauer + 0.15)
-    h.gain.setValueAtTime(0, a); h.gain.linearRampToValueAtTime(0.18, a + 0.02); h.gain.setValueAtTime(0.18, a + dauer); h.gain.linearRampToValueAtTime(0, a + dauer + 0.05)
-  }
-  return t0 + mal * (dauer + 0.15) + 0.5
 }
 
 /** ein Bus fährt vorbei: Rollen und Motor schwellen an und ab, von einer Seite zur anderen */
@@ -951,25 +934,6 @@ function flugzeug(c: AudioContext, ziel: GainNode, t0: number) {
   g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(0.35, t0 + dauer * 0.45); g.gain.linearRampToValueAtTime(0, t0 + dauer)
   r.start(t0); w.start(t0); r.stop(t0 + dauer + 0.1); w.stop(t0 + dauer + 0.1)
   return t0 + dauer + 60
-}
-
-/** eine Krähe, das ganze Jahr: zwei bis vier rauhe «Kraa» */
-function kraehe(c: AudioContext, ziel: GainNode, t0: number) {
-  const zahl = 2 + Math.floor(Math.random() * 3), f0 = 520 + Math.random() * 120
-  let t = t0
-  for (let i = 0; i < zahl; i++) {
-    const d = 0.28 + Math.random() * 0.12
-    const o = c.createOscillator(); o.type = 'sawtooth'
-    o.frequency.setValueAtTime(f0 * 1.1, t); o.frequency.linearRampToValueAtTime(f0 * 0.85, t + d)
-    // rauh: schnelles Zittern der Tonhöhe
-    const z = c.createOscillator(); z.type = 'square'; z.frequency.value = 70; const zg = c.createGain(); zg.gain.value = 40; z.connect(zg).connect(o.frequency)
-    const b1 = c.createBiquadFilter(); b1.type = 'bandpass'; b1.frequency.value = 1400; b1.Q.value = 2.5
-    const g = c.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.7, t + 0.03); g.gain.setValueAtTime(0.7, t + d - 0.08); g.gain.linearRampToValueAtTime(0, t + d)
-    o.connect(b1).connect(g).connect(ziel)
-    o.start(t); z.start(t); o.stop(t + d + 0.05); z.stop(t + d + 0.05)
-    t += d + 0.2 + Math.random() * 0.3
-  }
-  return t + 4
 }
 
 /** ein kurzer Ton aus Teiltönen, die je eigen abklingen (für Glocke und Horn gebraucht) */
