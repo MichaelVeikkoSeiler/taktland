@@ -1852,7 +1852,8 @@ const ZUG_LAMPE_SEITE = 0.28, ZUG_LAMPE_HOEHE = -0.21, ZUG_LAMPE_R = 0.07, ZUG_L
  *  weisse Lampe oben in der Mitte, das Dreieck des Zugspitzensignals, und am Steuerwagen hinten zwei rote Schlusslampen an der Stelle
  *  der unteren; die Lage oben (Höhe und Abstand von der Spitze als Anteil der Höhe des Zugs) und das Rot gewählt */
 // die dritte Lampe über der Frontscheibe (Michael, 2026-11-10: «das mittlere Licht muss allerdings weiter oben, überhalb der Windschutzscheibe sein»; vorher -0,02 und 0,012)
-const ZUG_LAMPE_OBEN_HOEHE = 0.44, ZUG_LAMPE_OBEN_ZURUECK = 0.4, ZUG_SCHLUSS_FARBE = '#ff2a1a', ZUG_LAMPEN = 5
+// seit 2026-11-10 vorne im Kasten auf dem Dach (LICHTKASTEN_* in ZugForm.ts)
+const ZUG_LAMPE_OBEN_HOEHE = 0.49, ZUG_LAMPE_OBEN_ZURUECK = 0.415, ZUG_SCHLUSS_FARBE = '#ff2a1a', ZUG_LAMPEN = 5
 /** der Lichtkegel als Bild: hell an der Lok, nach vorne breiter und schwächer */
 function stirnBild() {
   const c = document.createElement('canvas'), x = c.getContext('2d')!

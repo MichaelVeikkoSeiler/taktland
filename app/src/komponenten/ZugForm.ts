@@ -17,6 +17,10 @@ export const ZUG_BREITE = ZUG_MASS_BREITE * 0.85 * 0.9 * 0.85, ZUG_HOEHE = 0.05
 /** Stromabnehmer auf Lok und Steuerwagen (Michael, 2026-11-10: «Der Triebwagen und der letzte Wagen sollen einen Pantograf auf dem Dach haben»):
  *  ein Einholmstromabnehmer, Masse in Teilen der Höhe und Breite, Lage hinter dem Kopf; Gestalt und Masse gewählt, in keiner Quelle */
 const PANTO_HOCH = 0.42, PANTO_BREIT = 0.8, PANTO_ZURUECK = 2.6
+/** Frontscheibe: halbe Breite in Teilen der Zugbreite, oben und unten auf der Rundung des Kopfs (0 vorne unten, 0,62 am Dach); gewählt */
+const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
+/** Kasten des oberen Lichts auf dem Dach, Lage in Teilen der Höhe vom vorderen Ende, Breite in Teilen der Zugbreite; gewählt */
+export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNTEN = 0.4, LICHTKASTEN_OBEN = 0.56, LICHTKASTEN_BREIT = 0.32
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
 export const ZUG_HELL = '#dcdcdc', ZUG_DUNKEL = '#2e2e2e', ZUG_ROT = '#a8102e'
 
@@ -123,11 +127,22 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     const kopfteil = (geo: THREE.BufferGeometry, mat: THREE.Material) => { if (hinten) geo.rotateY(Math.PI); return mesh(geo, mat) }
     kopfteil(loft([z0, ...tReihe(1, T, 6).map(zBei)], schnitt, true), hell)
     kopfteil(loft(tReihe(T, 0, stufen).map(zBei), schnitt, true, 1, true), spitze).userData.spitze = hinten ? 'hinten' : 'vorn'
-    // Frontscheibe: der obere Teil des Querschnitts, eng auf der Rundung
-    const scheibeSchnitt = schnitt.filter((q) => q.y >= unten + 0.55 * (h - unten))
+    // Frontscheibe: der obere Teil des Querschnitts, eng auf der Rundung; seit 2026-11-10 schmaler und nicht bis zum Dach, so bleibt ringsum ein roter
+    // Rahmen wie beim Referenzbild (Michael: «kannst du das Fenster der Triebzüge noch etwas abändern? So im Stil dieses Referenzbildes?»; Masse gewählt)
+    const scheibeSchnitt = schnitt.filter((q) => q.y >= unten + 0.5 * (h - unten) && Math.abs(q.x) <= W * SCHEIBE_BREIT)
     const scheibe = new THREE.MeshLambertMaterial({ color: ZUG_DUNKEL, side: THREE.DoubleSide })
     materialien.push(scheibe)
-    kopfteil(loft(tReihe(0.55, 0.12, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
+    kopfteil(loft(tReihe(SCHEIBE_OBEN_T, SCHEIBE_UNTEN_T, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
+    // auf dem Dach vor dem Stromabnehmer ein kleiner, vorne abgerundeter weisser Kasten für das obere Licht (Michael, 2026-11-10: «Das obere Licht darfst du gerne
+    // in einen kleinen aerodynamisch anmutenden kleinen weissen Kasten auf dem Dach einfügen»; Gestalt gewählt): Seitenriss in z und y, quer ausgezogen
+    const kz0 = L / 2 - LICHTKASTEN_HINTEN * H, kz1 = L / 2 - LICHTKASTEN_VORN * H, ky0 = LICHTKASTEN_UNTEN * H, ky1 = LICHTKASTEN_OBEN * H
+    const riss = new THREE.Shape()
+    riss.moveTo(kz0, ky0); riss.lineTo(kz0, ky1); riss.lineTo(kz1 - (ky1 - ky0) * 0.8, ky1)
+    riss.quadraticCurveTo(kz1, ky1, kz1, ky0 + (ky1 - ky0) * 0.25); riss.lineTo(kz1 - (ky1 - ky0) * 0.3, ky0); riss.closePath()
+    const kb = W * LICHTKASTEN_BREIT
+    const kasten2 = new THREE.ExtrudeGeometry(riss, { depth: kb, bevelEnabled: false, curveSegments: 6 })
+    kasten2.rotateY(-Math.PI / 2); kasten2.translate(kb / 2, 0, 0)
+    kopfteil(kasten2, hell)
   }
   return { g, materialien }
 }
