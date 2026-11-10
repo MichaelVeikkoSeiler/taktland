@@ -701,7 +701,11 @@ export interface Umgebung {
   stunde: number; monat: number
   /** Höhe des Geländes an der Stelle, m ü. M. */
   hoehe: number
+  /** wie nah die nächste Kirche ist, 0 bis 1, und die Zeit der Szene in ms (für die Glocken) */
+  kirche: number; zeitMs: number
 }
+/** die Viertelstunde der Szene beim letzten Mal; schlägt nur, wenn die Zeit von selbst in die nächste läuft (nicht bei einer Zeitreise) */
+let glockeViertel: number | null = null
 /** Lautstärke des Rauschens der Stadt und des Flusses, der einzelnen Geräusche (gewählt) */
 /** der Verkehr aus der Ferne höchstens so laut wie mitten in der Stadt mal UMGEBUNG_STADT_FERN (gewählt) */
 const UMGEBUNG_STADT_FERN = 0.6
@@ -749,6 +753,14 @@ let umgebungTon: {
 
 export function umgebungHoeren(u: Umgebung | null) {
   if (!stand.an || !u || (u.nah <= 0 && u.nahStadt <= 0)) { umgebungHoerenAus(); return }
+  // Kirchenglocken zur Viertelstunde, von 6 bis 22 Uhr (gewählt)
+  const viertel = Math.floor(u.zeitMs / 900_000)
+  if (glockeViertel !== null && viertel === glockeViertel + 1 && u.kirche > 0.02) {
+    const q = ((viertel % 4) + 4) % 4
+    if (q === 0 && u.stunde >= 6 && u.stunde <= 22) kirchenSchlag(4, u.stunde % 12 || 12, u.kirche)
+    else if (q !== 0 && u.stunde >= 6 && u.stunde < 22) kirchenSchlag(q, null, u.kirche)
+  }
+  glockeViertel = viertel
   const c = audioKontext()
   if (!c) return
   try {
@@ -802,6 +814,7 @@ export function umgebungHoeren(u: Umgebung | null) {
 }
 
 export function umgebungHoerenAus() {
+  glockeViertel = null
   if (!umgebungTon) return
   const t = umgebungTon
   umgebungTon = null
@@ -957,4 +970,74 @@ function kraehe(c: AudioContext, ziel: GainNode, t0: number) {
     t += d + 0.2 + Math.random() * 0.3
   }
   return t + 4
+}
+
+/** ein kurzer Ton aus Teiltönen, die je eigen abklingen (für Glocke und Horn gebraucht) */
+function teiltoene(c: AudioContext, ziel: AudioNode, t0: number, grund: number, teile: Array<[number, number, number]>, laut: number) {
+  for (const [mal, staerke, abkling] of teile) {
+    const o = c.createOscillator(); o.frequency.value = grund * mal
+    const g = c.createGain()
+    g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(staerke * laut, t0 + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t0 + abkling)
+    o.connect(g).connect(ziel); o.start(t0); o.stop(t0 + abkling + 0.05)
+  }
+}
+
+/** Teiltöne einer Kirchenglocke (Unterton, Prim, kleine Terz, Quinte, Oktave …), Verhältnis, Stärke, Abklingen in s; gewählt, keine Aufnahme */
+const GLOCKE_TEILE: Array<[number, number, number]> = [[0.5, 0.45, 7], [1, 0.8, 5], [1.19, 0.55, 3.5], [1.5, 0.3, 2.6], [2, 0.6, 2.2], [2.52, 0.2, 1.5], [3.01, 0.14, 1.1], [4.17, 0.08, 0.7]]
+/** Abstand zwischen zwei Schlägen in s, Grundton der Viertel- und der Stundenglocke in Hz, Lautstärke (gewählt) */
+const GLOCKE_TAKT_S = 2.1, GLOCKE_VIERTEL_HZ = 392, GLOCKE_STUNDE_HZ = 262, GLOCKE_LAUT = 0.18
+
+/**
+ * Kirchenglocken (Michael, 2026-11-10: Vorschlag «Kirchenglocken zur vollen Stunde», gewählt): zur Viertelstunde so viele helle Schläge wie
+ * Viertel, zur vollen Stunde vier helle und so viele tiefe wie die Stunde (1 bis 12). Ob und wie eine Kirche schlägt, steht in keiner Quelle.
+ */
+export function kirchenSchlag(viertel: number, stunde: number | null, laut: number) {
+  const c = audioKontext()
+  if (!c || !stand.an || laut <= 0.01) return
+  try {
+    const ziel = ausgang(c), g = c.createGain(); g.gain.value = GLOCKE_LAUT * Math.min(1, laut); g.connect(ziel)
+    let t = c.currentTime + 0.1
+    for (let i = 0; i < viertel; i++) { teiltoene(c, g, t, GLOCKE_VIERTEL_HZ * (i % 2 ? 0.84 : 1), GLOCKE_TEILE, 0.7); t += GLOCKE_TAKT_S * 0.7 }
+    if (stunde !== null) { t += GLOCKE_TAKT_S; for (let i = 0; i < stunde; i++) { teiltoene(c, g, t, GLOCKE_STUNDE_HZ, GLOCKE_TEILE, 1); t += GLOCKE_TAKT_S } }
+  } catch { /* ohne Ton */ }
+}
+
+/** Pfiff zur Abfahrt eines Zugs (Michael, 2026-11-10: «5 (Pfiff)»): ein trillernder Pfiff wie aus einer Trillerpfeife, gerechnet, gewählt */
+export function abfahrtsPfiff(laut: number) {
+  const c = audioKontext()
+  if (!c || !stand.an || laut <= 0.01) return
+  try {
+    const t = c.currentTime + 0.05, dauer = 0.9 + Math.random() * 0.4
+    const o = c.createOscillator(); o.type = 'sine'; o.frequency.value = 2900 + Math.random() * 300
+    const triller = c.createOscillator(); triller.type = 'square'; triller.frequency.value = 28
+    const tg = c.createGain(); tg.gain.value = 180
+    triller.connect(tg).connect(o.frequency)
+    const hauch = rauschenSchleife(c, false), hb = c.createBiquadFilter(); hb.type = 'bandpass'; hb.frequency.value = 3000; hb.Q.value = 3
+    const hg = c.createGain(); hg.gain.value = 0.12
+    const g = c.createGain(); g.gain.value = 0
+    o.connect(g); hauch.connect(hb).connect(hg).connect(g); g.connect(ausgang(c))
+    const l = 0.16 * Math.min(1, laut)
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(l, t + 0.03); g.gain.setValueAtTime(l, t + dauer - 0.08); g.gain.linearRampToValueAtTime(0, t + dauer)
+    for (const q of [o, triller, hauch]) { q.start(t); q.stop(t + dauer + 0.05) }
+  } catch { /* ohne Ton */ }
+}
+
+/** Horn eines Schiffs beim Ablegen (Michael, 2026-11-10: Vorschlag «Schiffshorn, wenn ein Schiff laut Fahrplan ablegt», gewählt): ein langer, tiefer
+ *  Ton aus zwei Stimmen, gerechnet, gewählt */
+export function schiffshorn(laut: number) {
+  const c = audioKontext()
+  if (!c || !stand.an || laut <= 0.01) return
+  try {
+    const t = c.currentTime + 0.05, dauer = 2.6
+    const g = c.createGain(); g.gain.value = 0
+    const tief = c.createBiquadFilter(); tief.type = 'lowpass'; tief.frequency.value = 900
+    tief.connect(g).connect(ausgang(c))
+    for (const hz of [110, 138.6]) {
+      const o = c.createOscillator(); o.type = 'sawtooth'; o.frequency.value = hz
+      const v = c.createOscillator(); v.frequency.value = 4.5; const vg = c.createGain(); vg.gain.value = 0.6; v.connect(vg).connect(o.frequency)
+      o.connect(tief); o.start(t); v.start(t); o.stop(t + dauer + 0.6); v.stop(t + dauer + 0.6)
+    }
+    const l = 0.22 * Math.min(1, laut)
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(l, t + 0.25); g.gain.setValueAtTime(l, t + dauer); g.gain.linearRampToValueAtTime(0, t + dauer + 0.5)
+  } catch { /* ohne Ton */ }
 }

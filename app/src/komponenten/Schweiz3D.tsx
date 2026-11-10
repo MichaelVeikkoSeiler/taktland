@@ -20,7 +20,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
-import { knopfTon, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
+import { abfahrtsPfiff, knopfTon, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -108,7 +108,7 @@ interface Gelaende {
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
 /** was die Schalter ein- und ausschalten */
-type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege' | 'schiffe' | 'wolken'
+type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege' | 'schiffe' | 'wolken' | 'stehen'
 /** Ein Feld und was an seinen Seiten angesetzt ist (Michael, 2026-10-20: «An den Wänden ein Plus und oder ein Minus … zum
  *  Erweitern resp. reduzieren der Kacheln»): je Stück ein Gelände, Schlüssel «di_dj» in Feldern Ost und Nord vom Anker */
 interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, number]; dj: [number, number] }
@@ -117,6 +117,8 @@ interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, numb
 const JE_RICHTUNG = 3
 /** läuft gerade eine Sitzung in der Brille (für die Grösse der Bilder beim Laden) */
 let inDerBrille = false
+/** auf Augenhöhe: Abstände für die Geräusche in Metern der Wirklichkeit, nicht des Tischs */
+let stehenAn = false
 /** Materialien einer Stufe erst wegräumen, wenn die nächste gezeichnet ist (Michael, 2026-10-22, Brille: nach dem zweiten
  *  Eintauchen stand ein Bild vor den Augen und drehte mit dem Kopf): three.js behält ein übersetztes Programm der Grafik nur,
  *  solange ein Material es braucht; räumt die alte Stufe zuerst alles weg, übersetzt die neue alle Programme nochmals, die Seite
@@ -653,6 +655,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [schiffeAn, setSchiffeAn] = useState(false)
   // die Wolken mit eigenem Knopf, nicht mehr mit «Wetter» (Michael, 2026-10-29: «Wolken ein separater Knopf machen (weiss)»)
   const [wolkenAn, setWolkenAn] = useState(false)
+  // auf Augenhöhe (Michael, 2026-11-10: «12 (Icon mit Männchen) alle Devices»), nur in den Feldern von 4 km und 1 km; ein neues Feld beendet es
+  const [stehen, setStehen] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang jetzt (Michael, 2026-10-29: «Beim ersten Laden soll immer Jetzt sein»)
   const [sonnenAn, setSonnenAn] = useState(false)
   // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
@@ -742,6 +746,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }, [meldung])
   const inhalt = useMemo(() => (wahl ? feldInhalt(wahl, zusatz) : null), [wahl, zusatz])
   const aktuell = gelaende[stufe]
+  useEffect(() => { setStehen(false) }, [aktuell, stufe])
   // der Wind der nächsten Station mit Windmessung zur Mitte des Modells
   useEffect(() => {
     if (!windAn || !aktuell) return
@@ -989,7 +994,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), baeume: () => setBaeumeAn((x) => !x), wetter: () => setWindAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -1047,7 +1052,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn })[art]((x) => !x)} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
+                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn, stehen: setStehen })[art]((x: boolean) => !x)} stehen={stehen && (stufe === 'ort' || stufe === 'nah')} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windBei(p, windZeit), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
                    zeitSchieben={zeitSchieben} vollbild={voll} strich={strich} />
         ) : (
@@ -1079,6 +1084,15 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               <path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" />
             </svg>
           </button>
+          {(stufe === 'ort' || stufe === 'nah') && (
+            <button type="button" onClick={() => setStehen((x) => !x)} aria-pressed={stehen}
+                    aria-label={stehen ? 'Augenhöhe beenden' : 'Auf Augenhöhe stellen'} title={stehen ? 'Augenhöhe beenden' : 'Auf Augenhöhe: hinstellen und umschauen'}
+                    className={`flex size-8 flex-none items-center justify-center rounded-lg border ${stehen ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'}`}>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="4.2" r="2.2" fill="currentColor" stroke="none" /><path d="M12 8v7M12 15l-3 6.5M12 15l3 6.5M7 11.5l5-2.5 5 2.5" />
+              </svg>
+            </button>
+          )}
           <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
                   // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
                   className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
@@ -1227,7 +1241,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Sterne: alle bis zur Helligkeit 6 aus dem Hipparcos-Katalog der ESA,
             aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz), ihr Ort am Himmel gerechnet, ohne die Bewegung der Erdachse seit 2000
-            (etwa ein Drittel Grad), ohne Mond und Planeten; Farbe nach dem Farbindex, Grösse und Helligkeit der Punkte und die Farben
+            (etwa ein Drittel Grad), ohne Planeten; der Mond mit seiner Phase gerechnet nach einer kurzen Näherung seiner Bahn (auf etwa ein Grad,
+            ohne Parallaxe), grösser gezeichnet als am Himmel, seine Flecken erfunden; Farbe nach dem Farbindex, Grösse und Helligkeit der Punkte und die Farben
             des Himmels in der Dämmerung gewählt. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und 4'000 m über Meer, wo das
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle); Fenster und ihr Licht in der Nacht gezeichnet, Stockwerke von 3 m, Fenster
@@ -1250,8 +1265,16 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
             Modell im Vollbild.</p>
         </Abschnitt>
+        {/* Michael, 2026-11-10: Vorschlag «Auf Augenhöhe stehen … und sich umschauen», gewählt mit «Icon mit Männchen», «alle Devices» */}
+        <Abschnitt titel="Auf Augenhöhe">
+          <p>In den Feldern von 4 km und 1 km stellt der Knopf mit dem Männchen (an den Wänden «Augenhöhe») einen auf das Gelände, 1,7 m über dem Boden,
+            dort, wohin man gerade schaut. Ziehen dreht den Blick, ein Tipp ins Gelände stellt einen dorthin, am Computer gehen die Pfeiltasten oder
+            W, A, S, D (mit der Umschalttaste schneller). In der Brille steht man im Modell in Originalgrösse: der Thumbstick geht vor und zurück und
+            dreht, ein Abzug ins Gelände stellt einen dorthin, Thumbstick drücken oder nochmals der Knopf beendet es. Die Höhe des Auges und das Tempo
+            sind gewählt; aus der Nähe ist das Gelände so grob wie seine Daten (im Feld von 1 km auf 5 m, das Luftbild auf 50 cm).</p>
+        </Abschnitt>
         <Abschnitt titel="Knöpfe an den Wänden">
-          <p>Die Knöpfe an den Wänden des Sockels schalten Orte, Gebäude, Bäume, Züge, Schiffe, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
+          <p>Die Knöpfe an den Wänden des Sockels schalten Orte, Gebäude, Bäume, Augenhöhe, Züge, Schiffe, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
             Wetter und Sonne ein und aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
             einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
@@ -1286,13 +1309,16 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Geräusche">
           <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
             Verkehr, ab und zu eine Hupe oder einen Bus, auf dem Land und in kleinen Siedlungen am Tag Krähen, von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
-            einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
+            einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
+            Viertelstunde (zur vollen Stunde mit den Stundenschlägen), mit «Züge» ein Pfiff, wenn in der Nähe ein Zug laut Fahrplan abfährt, mit
+            «Schiffe» das Horn, wenn ein Schiff ablegt. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
             einer Stadt hört man weiter, auch im Feld von 16 km und noch gut einen Kilometer neben der Siedlung, leiser.</p>
-          <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen und Flüsse liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit der Szene.</p>
+          <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen, Flüsse und Kirchen liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit
+            der Szene und wann Züge und Schiffe laut Fahrplan abfahren.</p>
           <p className="mt-2">Der Verkehr in der Stadt, die Kuhglocken und der Fluss sind <b>Aufnahmen</b> («Background traffic noise» von Froey_, «cowbells2» von
             einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife.</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
-            Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird.</p>
+            Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird, ob und wann eine Kirche läutet und wie ein Zug oder Schiff abfährt.</p>
         </Abschnitt>
         <Abschnitt titel="Züge">
           <p>«Züge» zeigt ab der Stufe 16 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
@@ -1349,7 +1375,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             gilt auch für die Züge und Schiffe laut Fahrplan, so weit der geladene Fahrplan reicht (etwa zwei Wochen ab gestern). Steht die Sonne unter
             dem Horizont, brennt Licht in den Fenstern der Gebäude, abends in vielen, nach Mitternacht in wenigen. Fenster und Stockwerke stehen in
             keiner Quelle: Sie sind gezeichnet, am Tag als dunkle Scheiben, und wie viele nachts brennen, ist eine Annahme. Nachts wird der Himmel dunkel, und es stehen die Sterne bis zur Helligkeit 6 dort, wo sie zu dieser Zeit über
-            der Mitte des Modells stehen.</p>
+            der Mitte des Modells stehen, dazu der Mond mit der Phase dieses Tages, die helle Seite zur Sonne.</p>
         </Abschnitt>
         <Abschnitt titel="Seen und Seetiefe">
           <p>Bei 22 Seen ist der Grund gemessen: swissBATHY3D von swisstopo, ein Höhenmodell des Seegrunds. Die Oberfläche der Seen bleibt
@@ -1412,7 +1438,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Gleis der Züge: Gleis laut Fahrplan (opentransportdata.swiss); wo welches Gleis liegt, aus den Sektortafeln der SBB (SBB Open Data, data.sbb.ch) und den Gleisachsen aus swissTLM3D (swisstopo).</li>
             <li>Wolken: Wettermodell ICON-CH1-EPS von MeteoSchweiz (Open Government Data, CC-BY), Kontrolllauf, Bewölkung tief, mittel und hoch, für die nächsten 24 Stunden die Bewölkung in allen 80 Schichten (CLC) mit deren Höhe (HHL), dazu Niederschlagsrate (TOT_PR) und Schneefallgrenze (SNOWLMT), alle 3 Stunden neu.</li>
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
-            <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac.</li>
+            <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac; der Mond nach einer kurzen Näherung seiner Bahn.</li>
+            <li>Kirchen für die Glocken: swissTLMRegio (swisstopo).</li>
           </ul>
         </Abschnitt>
         {/* Michael, 2026-11-08: «Nicht Was gezeichnet oder angenommen ist sondern Was erfunden ist» */}
@@ -1453,7 +1480,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
             <li>Geräusche der Umgebung: Hupe, Bus, Krähen, Kühe, Traktor und Flugzeug sind im Programm erzeugt, Verkehr, Kuhglocken und Fluss
               sind Aufnahmen von einem anderen Ort; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
-            <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen.</li>
+            <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
+              nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
+            <li>Kirchenglocken, Pfiff zur Abfahrt und Schiffshorn: im Programm erzeugt; belegt sind nur die Lage der Kirchen und die Abfahrten laut Fahrplan.</li>
+            <li>Der Mond: grösser als am Himmel, seine Flecken gezeichnet; Ort und Phase gerechnet.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station, wo das Wettermodell fehlt; Dichte, Tempo und Grösse
               der Tropfen und Flocken; dass sie an der untersten gezeichneten Wolke beginnen; Regen- und Windgeräusch gerechnet.</li>
             <li>Farben der Höhenlinien, der Wanderwege, des Wassers im Schnitt, des Lockergesteins in den Wänden und des Himmels in Dämmerung und Nacht.</li>
@@ -1555,6 +1585,10 @@ const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 const ZUG_FERN = 0.018
 /** fürs Zuggeräusch: ein Zug dort, wo die Kamera hinschaut, klingt wie aus so vielen Metern, nähere und fernere im selben Verhältnis (gewählt) */
 const ZUG_HOEREN_BLICK_M = 150
+/** Pfiff zur Abfahrt (Michael, 2026-11-10: «5 (Pfiff)»): nur bei einem Zug bis so viele Meter (wie fürs Zuggeräusch gerechnet), nach aussen leiser (gewählt) */
+const PFIFF_BIS_M = 600
+/** Horn eines Schiffs beim Ablegen (Michael, 2026-11-10, gewählt): bis so viele Meter wie fürs Zuggeräusch gerechnet, ein Horn trägt weiter (gewählt) */
+const HORN_BIS_M = 2500
 /** in der Brille: so viele Meter fürs Ohr je Meter zwischen Kopf und Zug im Raum (gewählt): 3 cm klingen wie 30 m, laut; 15 cm wie 150 m,
  *  halb so laut; ab 2,5 m still */
 const ZUG_HOEREN_BRILLE = 1000
@@ -1565,12 +1599,17 @@ const UMGEBUNG_BLICK_VOLL_M = 1500, UMGEBUNG_BLICK_BIS_M = 6000, UMGEBUNG_BRILLE
 /** der Verkehr der Stadt weiter (Michael, 2026-11-09: «Stadtrauschen hört man teilweise kilometerweit»): auch im Feld von 16 km, voll bis 5 km Abstand der
  *  Kamera, still ab 25 km, in der Brille still ab 1,5 m; die Siedlung dafür in 5 × 5 Punkten im Abstand von 600 m (bis 1,2 km weit; gewählt) */
 const UMGEBUNG_STADT_BLICK_VOLL_M = 5000, UMGEBUNG_STADT_BLICK_BIS_M = 25000, UMGEBUNG_STADT_BRILLE_BIS_M = 1.5, UMGEBUNG_STADT_FERN_SCHRITT_M = 600
+/** Kirchenglocken (Michael, 2026-11-10, gewählt): voll bis 150 m neben einer Kirche, still ab 1,5 km, mit der Nähe wie der Stadtverkehr (gewählt) */
+const KIRCHE_VOLL_M = 150, KIRCHE_BIS_M = 1500
 const UMGEBUNG_FLUSS_VOLL_M = 60, UMGEBUNG_FLUSS_BIS_M = 400, UMGEBUNG_STADT_SCHRITT_M = 150, UMGEBUNG_RAND_M = 500
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
 /** so hoch bleibt die Kamera mindestens über dem Gelände, in km (Michael, 2026-11-06: «bis circa 3 Meter über den Boden die Perspektive richten
  *  können»; vorher 0,4 % der Breite des Modells, im Feld von 1 km 4 m, in dem von 4 km 16 m); gewählt */
 const KAMERA_UEBER_GELAENDE_KM = 0.003
+/** auf Augenhöhe (Michael, 2026-11-10): das Auge so hoch über dem Gelände, die Kamera so weit hinter dem Drehpunkt, die vordere Schnittebene,
+ *  Tempo beim Gehen (Pfeiltasten, Thumbstick; mit Umschalt zehnmal so schnell) und Drehen in der Brille (alles gewählt) */
+const STEHEN_AUGE_M = 1.7, STEHEN_DREH_KM = 0.00001, STEHEN_NAH_KM = 0.0001, STEHEN_GEHEN_MS = 4, STEHEN_DREHEN_RS = 1.6
 /** die vordere Schnittebene der Kamera: höchstens 10 m, nah am Boden die Hälfte der Höhe darüber, mindestens 0,5 m (sonst fehlt der Boden vor
  *  dem Auge); gewählt */
 const KAMERA_NAH_KM = 0.01, KAMERA_NAH_MIN_KM = 0.0005
@@ -1786,7 +1825,9 @@ function knopfBild(plus: boolean, an: boolean) {
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false }: {
+  /** auf Augenhöhe: die Kamera auf dem Gelände, in der Brille das Modell in Originalgrösse */
+  stehen?: boolean
   /** im Vollbild steht oben rechts das Kreuz, die Zeilen dort rücken darunter */
   vollbild?: boolean
   /** Verlauf eines Tunnels in LV95, gestrichelt auf dem Gelände */
@@ -1842,7 +1883,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color; himmelOben: THREE.Color; himmelObenTag: THREE.Color
     himmelMalen: () => void
     sterne: Sternenhimmel
-    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void }
+    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void }
+    stehenSetzen: (p: THREE.Vector3 | null) => void
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight
     anfangSetzen: () => void
@@ -1891,7 +1933,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     steuerung.maxPolarAngle = Math.PI * 0.47
     // nicht unter das Gelände (kameraUnten, je Stufe gesetzt)
     steuerung.addEventListener('change', () => {
-      if (renderer.xr.isPresenting) return
+      if (renderer.xr.isPresenting || stehenBild) return
       const unten = wurzel.userData.kameraUnten as ((x: number, z: number) => number) | undefined
       if (!unten) return
       const zu = wurzel.userData.zielUnten as number
@@ -2053,6 +2095,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
       const boeden = wurzel.getObjectByName('boeden')
       const t = boeden ? strahl.intersectObjects(boeden.children, false)[0] : undefined
+      // auf Augenhöhe stellt ein Tipp ins Gelände an diese Stelle, statt ein Feld zu wählen
+      if (t && wenn.stehen) { wenn.stehen(wurzel.worldToLocal(t.point.clone())); return }
       if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
       // neben das Gelände (Himmel, Sockel): die Wahl verschwindet
       else cb.current.abwaehlen()
@@ -2061,7 +2105,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // wie in Taktland»): wie in der Modellbahn trägt ein gehaltener Abzug das Modell, beide ziehen es grösser oder kleiner und
     // drehen es; ein kurzer Abzug wählt mit dem Strahl wie bisher; die Greiftaste geht eine Stufe zurück, der Thumbstick dreht
     // und hebt, Thumbstick drücken stellt das Modell zurück an den Anfang
-    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void } = { tipp: null, zurueck: () => cb.current.zurueck() }
+    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void } =
+      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen') }
     let drehung = 0, zoom = 1
     /** Lage des Modells, sobald es getragen oder gehoben wurde; null: auf dem Tisch wie am Anfang */
     let lage: THREE.Vector3 | null = null
@@ -2118,10 +2163,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (lage) wurzel.position.copy(lage)
       else wurzel.position.set(0, BRILLE_TISCH_M - ((wurzel.userData.untenY as (() => number) | undefined)?.() ?? 0) * s, -BRILLE_ABSTAND_M)
       for (const sp of sprites()) {
+        // auf Augenhöhe in fester Grösse wie auf dem Bildschirm, sonst wären die Schilder in der Ferne winzig
+        if (stehenBrille) { sp.material.sizeAttenuation = false; sp.scale.set(sp.userData.b, sp.userData.h, 1); continue }
         sp.material.sizeAttenuation = true
         const v = sp.userData.verhaeltnis as number, m = (sp.userData.brilleM as number | undefined) ?? BRILLE_SCHRIFT_M
         sp.scale.set((m / s) * v, m / s, 1)
       }
+      const wh = wurzel.getObjectByName('windhose')
+      if (wh) wh.visible = !stehenBrille
     }
     const bildschirmSetzen = () => {
       wurzel.scale.setScalar(1); wurzel.rotation.y = 0; wurzel.position.set(0, 0, 0)
@@ -2131,7 +2180,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       tafel.visible = false
     }
-    renderer.xr.addEventListener('sessionend', () => { inDerBrille = false; schattenGroesse(schattenPx); bildschirmSetzen(); setzeHimmel(); anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
+    renderer.xr.addEventListener('sessionend', () => { if (stehenBrille) { stehenBrille = false; wenn.stehenAus() } inDerBrille = false; schattenGroesse(schattenPx); bildschirmSetzen(); setzeHimmel(); anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
     brilleRef.current = async () => {
       const xr = navigator.xr
       if (!xr) throw new Error('Kein WebXR')
@@ -2197,12 +2246,76 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const brille = renderer.xr.isPresenting
       for (const o of wurzel.getObjectByName('baeume')?.children ?? []) o.castShadow = !brille
     }
-    const jeBild: Array<() => void> = [() => {
+    // auf Augenhöhe (Michael, 2026-11-10: Vorschlag «Auf Augenhöhe stehen … und sich umschauen», «Icon mit Männchen», alle Geräte): auf dem
+    // Bildschirm steht die Kamera STEHEN_AUGE_M über dem Gelände und dreht sich um sich selbst, ein Tipp ins Gelände stellt dorthin, am Computer
+    // gehen Pfeiltasten oder W, A, S, D; in der Brille ist das Modell in Originalgrösse um einen herum, die Stelle unter den Füssen
+    let stehenBild: { pos: THREE.Vector3; ziel: THREE.Vector3; min: number; max: number; polarMax: number; polarMin: number; dreh: number; near: number } | null = null
+    let stehenBrille = false
+    const tasten = new Set<string>()
+    const tasteRunter = (ev: KeyboardEvent) => { if (stehenBild && !(ev.target instanceof HTMLInputElement)) tasten.add(ev.key.toLowerCase()) }
+    const tasteHoch = (ev: KeyboardEvent) => { tasten.delete(ev.key.toLowerCase()) }
+    addEventListener('keydown', tasteRunter); addEventListener('keyup', tasteHoch)
+    const bodenY = (x: number, z: number) => (wurzel.userData.bodenY as ((x: number, z: number) => number) | undefined)?.(x, z) ?? 0
+    const stehenSetzen = (p: THREE.Vector3 | null) => {
+      if (renderer.xr.isPresenting) {
+        if (!p) { if (!stehenBrille) return; stehenBrille = false; kamera.near = 0.01; kamera.far = 2000; kamera.updateProjectionMatrix(); anfangSetzen(); return }
+        const kopf = renderer.xr.getCamera().getWorldPosition(new THREE.Vector3())
+        const breite = (wurzel.userData.weiteKm as number) || 1, s = 1000
+        zoom = s / (BRILLE_BREITE_M / breite)
+        const boden = new THREE.Vector3(p.x, bodenY(p.x, p.z), p.z).multiplyScalar(s).applyAxisAngle(OBEN, drehung)
+        lage = new THREE.Vector3(kopf.x, 0, kopf.z).sub(boden)
+        haelt.clear(); griff = null; stehenBrille = true
+        kamera.near = 0.05; kamera.far = 40000; kamera.updateProjectionMatrix()
+        return
+      }
+      if (!p) {
+        if (stehenBild) {
+          kamera.position.copy(stehenBild.pos); steuerung.target.copy(stehenBild.ziel)
+          steuerung.minDistance = stehenBild.min; steuerung.maxDistance = stehenBild.max
+          steuerung.maxPolarAngle = stehenBild.polarMax; steuerung.minPolarAngle = stehenBild.polarMin; steuerung.rotateSpeed = stehenBild.dreh
+          steuerung.enableZoom = true; steuerung.enablePan = true
+          kamera.near = stehenBild.near; kamera.updateProjectionMatrix(); stehenBild = null; steuerung.update()
+        }
+        tasten.clear(); return
+      }
+      // die Blickrichtung bleibt, nur waagrecht
+      const richtung = steuerung.target.clone().sub(kamera.position).setY(0)
+      if (richtung.lengthSq() < 1e-12) richtung.set(0, 0, -1)
+      richtung.normalize()
+      stehenBild ??= { pos: kamera.position.clone(), ziel: steuerung.target.clone(), min: steuerung.minDistance, max: steuerung.maxDistance,
+        polarMax: steuerung.maxPolarAngle, polarMin: steuerung.minPolarAngle, dreh: steuerung.rotateSpeed, near: kamera.near }
+      const auge = new THREE.Vector3(p.x, bodenY(p.x, p.z) + STEHEN_AUGE_M / 1000, p.z)
+      steuerung.target.copy(auge)
+      kamera.position.copy(auge).addScaledVector(richtung, -STEHEN_DREH_KM)
+      steuerung.minDistance = steuerung.maxDistance = STEHEN_DREH_KM
+      steuerung.maxPolarAngle = Math.PI * 0.95; steuerung.minPolarAngle = Math.PI * 0.05; steuerung.rotateSpeed = -0.4
+      steuerung.enableZoom = false; steuerung.enablePan = false
+      kamera.near = STEHEN_NAH_KM; kamera.updateProjectionMatrix(); steuerung.update()
+    }
+    let gehenZeit = performance.now()
+    const gehen = () => {
+      const jetzt = performance.now(), dt = Math.min(0.1, (jetzt - gehenZeit) / 1000)
+      gehenZeit = jetzt
+      if (!stehenBild || renderer.xr.isPresenting || !tasten.size) return
+      const vor = steuerung.target.clone().sub(kamera.position).setY(0).normalize(), quer = new THREE.Vector3(-vor.z, 0, vor.x)
+      const v = new THREE.Vector3()
+      if (tasten.has('arrowup') || tasten.has('w')) v.add(vor)
+      if (tasten.has('arrowdown') || tasten.has('s')) v.sub(vor)
+      if (tasten.has('arrowright') || tasten.has('d')) v.add(quer)
+      if (tasten.has('arrowleft') || tasten.has('a')) v.sub(quer)
+      if (v.lengthSq() < 1e-9) return
+      v.normalize().multiplyScalar((STEHEN_GEHEN_MS * (tasten.has('shift') ? 10 : 1) * dt) / 1000)
+      const ziel = steuerung.target.clone().add(v)
+      ziel.y = bodenY(ziel.x, ziel.z) + STEHEN_AUGE_M / 1000
+      const um = ziel.clone().sub(steuerung.target)
+      steuerung.target.copy(ziel); kamera.position.add(um); steuerung.update()
+    }
+    const jeBild: Array<() => void> = [gehen, () => {
       if (!renderer.xr.isPresenting) return
       const sitzung = renderer.xr.getSession()
-      // ein Abzug gilt als gehalten, sobald die Hand 3 cm weiter ist oder er 0,4 s gedrückt bleibt (Grenzen gewählt)
+      // ein Abzug gilt als gehalten, sobald die Hand 3 cm weiter ist oder er 0,4 s gedrückt bleibt (Grenzen gewählt); auf Augenhöhe trägt er nicht
       for (const [c, a] of anfang) {
-        if (a.getragen || anleitung.visible || (handLage(c).distanceTo(a.p) < 0.03 && performance.now() - a.t < 400)) continue
+        if (a.getragen || anleitung.visible || stehenBrille || (handLage(c).distanceTo(a.p) < 0.03 && performance.now() - a.t < 400)) continue
         a.getragen = true
         haelt.add(c); anfassen()
       }
@@ -2224,8 +2337,19 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // A (rechts, Knopf 4 der Quest) schliesst die Tafel mit den Tasten
         if (anleitung.visible && q.handedness === 'right' && q.gamepad?.buttons[4]?.pressed) anleitung.visible = false
         const knopf = q.gamepad?.buttons[3]?.pressed ?? false
-        if (knopf && !stickGedrueckt.has(q.handedness)) anfangSetzen()
+        if (knopf && !stickGedrueckt.has(q.handedness)) { if (stehenBrille) wenn.stehenAus(); else anfangSetzen() }
         if (knopf) stickGedrueckt.add(q.handedness); else stickGedrueckt.delete(q.handedness)
+        // auf Augenhöhe: der Thumbstick geht vor und zurück und dreht um den Kopf
+        if (stehenBrille && a && a.length >= 4 && lage) {
+          const dt = 1 / 72, kopf = renderer.xr.getCamera().getWorldPosition(new THREE.Vector3())
+          const vor = new THREE.Vector3(0, 0, -1).applyQuaternion(renderer.xr.getCamera().getWorldQuaternion(new THREE.Quaternion())).setY(0)
+          if (vor.lengthSq() > 1e-6 && Math.abs(a[3]) > 0.2) lage.addScaledVector(vor.normalize(), a[3] * STEHEN_GEHEN_MS * dt)
+          if (Math.abs(a[2]) > 0.2) {
+            const d = -a[2] * STEHEN_DREHEN_RS * dt
+            lage.sub(kopf).applyAxisAngle(OBEN, d).add(kopf); drehung += d
+          }
+          continue
+        }
         if (!a || a.length < 4 || griff) continue
         if (Math.abs(a[2]) > 0.2) drehung -= a[2] * 0.03
         if (Math.abs(a[3]) > 0.2) { lage ??= wurzel.position.clone(); lage.y = Math.max(0.1, Math.min(2.2, lage.y - a[3] * 0.006)) }
@@ -2235,7 +2359,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     jeBild.push(verlaufSetzen)
     // die Sterne um das Auge, gedreht wie das Modell (die Himmelsrichtungen gehören zu ihm, wie die Sonne)
     jeBild.push(() => sterne.schritt(renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera, wurzel, !!szene.background))
-    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, himmelOben, himmelObenTag, himmelMalen, sterne, jeBild, wenn, tafel, tafelSetzen,
+    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, himmelOben, himmelObenTag, himmelMalen, sterne, jeBild, wenn, stehenSetzen, tafel, tafelSetzen,
                      sonne, himmelLicht, anfangSetzen, verlauf }
 
     const groesse = () => {
@@ -2262,6 +2386,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const p = o.getWorldPosition(new THREE.Vector3()), v = p.clone().project(kamera), r = renderer.domElement.getBoundingClientRect()
           return { text: o.userData.text, p: p.toArray(), x: r.left + (v.x + 1) / 2 * r.width, y: r.top + (1 - v.y) / 2 * r.height }
         });
+      ;(window as unknown as { s3dBaeume: unknown }).s3dBaeume = () => ({ wind: BAUM_WIND.uWind.value, richtung: BAUM_WIND.uRichtung.value.toArray(),
+        netze: (wurzel.getObjectByName('baeume')?.children ?? []).map((o) => (o as THREE.InstancedMesh).count), kamera: kamera.position.toArray(), ziel: steuerung.target.toArray() })
+      ;(window as unknown as { s3dZumMond: unknown }).s3dZumMond = () => {
+        const m = sterne.punkte.children[0], dir = m.getWorldPosition(new THREE.Vector3()).sub(kamera.position).normalize()
+        kamera.position.copy(steuerung.target).addScaledVector(dir, -STEHEN_DREH_KM); steuerung.update()
+        return [m.visible, sterne.punkte.visible, dir.y]
+      }
       ;(window as unknown as { s3dProgramme: unknown }).s3dProgramme = () => (renderer.info.programs ?? []).map((q) => `${q.name}#${q.usedTimes}`);
       // die Kamera auf eine Stelle (LV95, m ü. M.) richten, aus abstandM, von Richtung (Grad ab Osten) und Höhe (Grad über dem Horizont)
       (window as unknown as { s3dBlick: unknown }).s3dBlick = (e: number, n: number, h: number, abstandM: number, richtung: number, hoehe: number) => {
@@ -2317,6 +2448,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       renderer.setAnimationLoop(null)
       void renderer.xr.getSession()?.end().catch(() => {})
       ro.disconnect()
+      removeEventListener('keydown', tasteRunter); removeEventListener('keyup', tasteHoch)
       steuerung.dispose()
       renderer.domElement.removeEventListener('pointerdown', runter)
       renderer.domElement.removeEventListener('pointerup', hoch)
@@ -2383,6 +2515,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return drin ? Math.max(Y(tief), Y(bestandHoehe(b, e, n)) + KAMERA_UEBER_GELAENDE_KM) : Y(tief)
     }
     wurzel.userData.zielUnten = Y(tief)
+    // der Boden für die Augenhöhe: das Gelände, daneben der tiefste Punkt
+    wurzel.userData.bodenY = (x: number, z: number) => {
+      const e = cE + x * 1000, n = cN - z * 1000
+      const h = e >= E0 && e <= E1 && n >= N0 && n <= N1 ? bestandHoehe(b, e, n) : NaN
+      return Number.isFinite(h) ? Y(h) : Y(tief)
+    }
     if (!renderer.xr.isPresenting) {
       // auch über kleinen Feldern bis zu den hohen Wolken (bis 12 km über Meer)
       kamera.far = Math.max(weite / 1000 * 6, 16); kamera.updateProjectionMatrix()
@@ -2999,6 +3137,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: ['Orte'], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
       { zeilen: ['Gebäude'], breite: KNOPF_B * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
       { zeilen: ['Bäume'], breite: KNOPF_B * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
+      // auf Augenhöhe wie der Knopf mit dem Männchen (Michael, 2026-11-10: «alle Devices»), nur in den Feldern von 4 km und 1 km
+      { zeilen: ['Augenhöhe'], breite: KNOPF_B * W, an: stehen, farbe: LICHT.gebaeude, gesperrt: stufe !== 'ort' && stufe !== 'nah', aktion: umschalten('stehen') },
       // wie die Wanderwege erst ab der Stufe 16 km
       ...(zuegeDa ? [abstand, { zeilen: ['Züge'], breite: KNOPF_B * W, an: !grob(stufe) && zuege, farbe: LICHT.zuege, gesperrt: grob(stufe),
         aktion: umschalten('zuege') },
@@ -3154,7 +3294,22 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, wolken])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, wolken, stehen])
+  // auf Augenhöhe: auf dem Bildschirm an der Stelle, die die Kamera anschaut, in der Brille unter dem Kopf (ausserhalb des Modells in seiner Mitte);
+  // danach stellt ein Tipp ins Gelände an diese Stelle
+  useEffect(() => {
+    const k = kern.current
+    if (!k || !stehen) return
+    stehenAn = true
+    const brille = k.renderer.xr.isPresenting
+    const p = brille ? k.wurzel.worldToLocal(k.renderer.xr.getCamera().getWorldPosition(new THREE.Vector3())) : k.steuerung.target.clone()
+    const lage = k.wurzel.userData.lage as { cE: number; cN: number }
+    const e = lage.cE + p.x * 1000, n = lage.cN - p.z * 1000
+    if (![...b.teile.values()].some((t) => imRaster(t.raster, e, n))) p.set(0, 0, 0)
+    k.stehenSetzen(p)
+    k.wenn.stehen = (q) => k.stehenSetzen(q)
+    return () => { k.wenn.stehen = null; k.stehenSetzen(null); stehenAn = false }
+  }, [stehen, b])
 
   // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
   // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
@@ -3673,6 +3828,34 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [windAn, b, stufe, zusatz, knoepfe])
   useEffect(() => { windhosen.current?.setzen(windWerte) },
     [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.boe}/${w.wind?.richtung}/${w.wind?.temperatur}/${w.name}`).join(), windAn, b, stufe, zusatz, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
+  // Bäume im Wind: das Mittel der vier Windhosen als Stärke und Richtung, wohin er weht (dkl010 nennt, woher er kommt); mit «Bäume» auch ohne «Wetter»
+  // die Windhosen holen, an den Mitten der vier Viertel des Modells wie diese
+  useEffect(() => {
+    let x = 0, z = 0, kmh = 0, zahl = 0
+    for (const { wind } of windWerte) {
+      if (!wind || typeof wind.kmh !== 'number') continue
+      kmh += wind.kmh; zahl++
+      if (typeof wind.richtung === 'number') { const a = ((wind.richtung + 180) * Math.PI) / 180; x += Math.sin(a) * wind.kmh; z += -Math.cos(a) * wind.kmh }
+    }
+    BAUM_WIND.uWind.value = zahl ? Math.min(1, kmh / zahl / BAUM_WIND_VOLL_KMH) : 0
+    if (Math.hypot(x, z) > 1e-6) BAUM_WIND.uRichtung.value.set(x, z).normalize()
+  }, [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}`).join()]) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || !baeume || windAn || (stufe !== 'ort' && stufe !== 'nah')) return
+    const rand = [...b.teile.values()].map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    windOrteRef.current([[0.25, 0.75], [0.75, 0.75], [0.25, 0.25], [0.75, 0.25]].map(([fx, fy]) => ({ e: e0 + fx * (e1 - e0), n: n0 + fy * (n1 - n0) })))
+  }, [baeume, windAn, b, stufe]) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const k = kern.current
+    if (!k) return
+    const takt = () => { BAUM_WIND.uZeit.value = (performance.now() / 1000) % 10_000 }
+    k.jeBild.push(takt)
+    return () => { const i = k.jeBild.indexOf(takt); if (i >= 0) k.jeBild.splice(i, 1) }
+  }, [])
   // Masten der Fahrleitung (pipeline/build_fahrleitung.py; Michael, 2026-10-30: «Kann man auf den Bahnstrecken auch Masten für die
   // Fahrleitungen setzen?»): in den Feldern von 4 km und 1 km, wo die Strecke laut BAV elektrifiziert ist; die Masten sind erfunden
   useEffect(() => {
@@ -4610,14 +4793,24 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           neu.set(gezeichnet[z].id, { p: p.clone(), d })
           if (d > 50_000) continue
           const tempo = alt && dtH > 0 && dtH < 1 ? (alt.p.distanceTo(p) * 1000) / dtH : 0
-          const abstandM = brille ? k.wurzel.localToWorld(welt.copy(p)).distanceTo(auge) * ZUG_HOEREN_BRILLE : d * ohr
+          const abstandM = brille ? k.wurzel.localToWorld(welt.copy(p)).distanceTo(auge) * (stehenAn ? 1 : ZUG_HOEREN_BRILLE) : d * ohr
           liste.push({ abstandM, tempoMs: tempo })
+          // Pfiff zur Abfahrt: der Zug stand am Halt i und fährt jetzt von dort weg (nur wenn die Zeit von selbst läuft, nicht bei einer Zeitreise)
+          const stJ = zugStelle(gezeichnet[z], jetzt.tag, jetzt.minuten)
+          const vorher = haltVorher.get(gezeichnet[z].id)
+          if (stJ?.art === 'fahrt' && vorher === stJ.i && Math.abs(jetzt.minuten - pfiffMinute) < 0.2 && abstandM < PFIFF_BIS_M) pfiffAbstand = Math.min(pfiffAbstand, abstandM)
+          haltNeu.set(gezeichnet[z].id, stJ?.art === 'halt' ? stJ.i : -1)
         }
         hoerAlt = neu
+        haltVorher = haltNeu; haltNeu = new Map()
+        pfiffMinute = jetzt.minuten
+        if (pfiffAbstand < PFIFF_BIS_M) abfahrtsPfiff((1 - pfiffAbstand / PFIFF_BIS_M) ** 2)
+        pfiffAbstand = Infinity
         zuegeHoeren(liste, brille)
       }
     }
     let hoerUm = 0, hoerLetzt = performance.now(), hoerAlt = new Map<number, { p: THREE.Vector3; d: number }>()
+    let haltVorher = new Map<number, number>(), haltNeu = new Map<number, number>(), pfiffMinute = NaN, pfiffAbstand = Infinity
     const gerechnet = new Set<string>()
     k.jeBild.push(schritt)
     return () => {
@@ -4658,6 +4851,23 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     const fluesse = (zusatz.fluesse ?? []).map((f) => linie(f, 1e5)).filter(imKasten)
     let siedlung: Array<Array<[number, number]>> = []
+    // Kirchen (swissTLMRegio, data/kirchen.json) im Kasten, für die Glocken
+    let kirchen: number[] = []
+    holen<{ kirchen: number[] }>('data/kirchen.json').then((d) => {
+      if (weg) return
+      let ke = 0, kn = 0
+      const da: number[] = []
+      for (let i = 0; i + 1 < d.kirchen.length; i += 2) {
+        ke += d.kirchen[i]; kn += d.kirchen[i + 1]
+        if (ke > e0 - KIRCHE_BIS_M && ke < e1 + KIRCHE_BIS_M && kn > n0 - KIRCHE_BIS_M && kn < n1 + KIRCHE_BIS_M) da.push(ke, kn)
+      }
+      kirchen = da
+    }).catch(() => {})
+    const kircheBei = (e: number, n: number) => {
+      let d = Infinity
+      for (let i = 0; i < kirchen.length; i += 2) d = Math.min(d, Math.hypot(kirchen[i] - e, kirchen[i + 1] - n))
+      return Math.max(0, Math.min(1, (KIRCHE_BIS_M - d) / (KIRCHE_BIS_M - KIRCHE_VOLL_M)))
+    }
     bodenbedeckungLaden().then((d) => { if (!weg) siedlung = d.siedlung.map((r) => linie(r, d.faktor)).filter(imKasten) }).catch(() => {})
     const drinnen = (ring: Array<[number, number]>, e: number, n: number) => {
       let innen = false
@@ -4712,6 +4922,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const d = kopf.distanceTo(boden)
         nah = Math.max(0, Math.min(1, (UMGEBUNG_BRILLE_BIS_M - d) / (UMGEBUNG_BRILLE_BIS_M - UMGEBUNG_BRILLE_VOLL_M)))
         nahStadt = Math.max(0, Math.min(1, (UMGEBUNG_STADT_BRILLE_BIS_M - d) / (UMGEBUNG_STADT_BRILLE_BIS_M - UMGEBUNG_BRILLE_VOLL_M)))
+        // auf Augenhöhe steht man mitten drin
+        if (stehenAn) nah = nahStadt = 1
       } else {
         p.copy(k.steuerung.target)
         k.wurzel.worldToLocal(p)
@@ -4725,7 +4937,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // Stunde und Monat in Schweizer Zeit
       const zt = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric', hourCycle: 'h23', month: 'numeric' }).formatToParts(zeit)
       const teil = (art: string) => Number(zt.find((x) => x.type === art)?.value ?? NaN)
-      const u = nahStadt > 0 ? { stadt: nah > 0 ? stadtBei(e, n) : 0, stadtFern: stadtFernBei(e, n), nahStadt, fluss: nah > 0 ? flussBei(e, n) : 0, nah, stunde: teil('hour'), monat: teil('month'), hoehe: bestandHoehe(b, e, n) } : null
+      const u = nahStadt > 0 ? { stadt: nah > 0 ? stadtBei(e, n) : 0, stadtFern: stadtFernBei(e, n), nahStadt, fluss: nah > 0 ? flussBei(e, n) : 0, nah, stunde: teil('hour'), monat: teil('month'), hoehe: bestandHoehe(b, e, n), kirche: kircheBei(e, n) * nahStadt, zeitMs: zeit.getTime() } : null
       if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dUmgebung: unknown }).s3dUmgebung = { ...u, e, n, siedlung: siedlung.length, fluesse: fluesse.length }
       umgebungHoeren(u)
     }, 500)
@@ -4885,6 +5097,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         netz.setMatrixAt(zahl, m)
         ;(mitten[zahl] ??= new THREE.Vector3()).copy(v)
         gezeichnet[zahl] = u.f
+        // Horn beim Ablegen: das Schiff lag an der Ländte i und fährt jetzt von dort weg (nur wenn die Zeit von selbst läuft)
+        const vorher = liegtVorher.get(u.f.id)
+        if (st.art === 'fahrt' && vorher === st.i && Math.abs(jetzt.minuten - hornMinute) < 0.2) {
+          const brille = k.renderer.xr.isPresenting
+          const d = brille ? k.wurzel.localToWorld(welt.copy(v)).distanceTo(auge) * (stehenAn ? 1 : ZUG_HOEREN_BRILLE)
+            : v.distanceTo(k.wurzel.worldToLocal(welt.copy(auge))) * 1000 * ZUG_HOEREN_BLICK_M
+              / Math.max(ZUG_HOEREN_BLICK_M, (1000 * k.kamera.position.distanceTo(k.steuerung.target)) / Math.max(1e-9, k.wurzel.scale.x))
+          if (d < HORN_BIS_M) hornAbstand = Math.min(hornAbstand, d)
+        }
+        liegtNeu.set(u.f.id, st.art === 'halt' ? st.i : -1)
         if (u.f.id === gewaehlt) {
           zeigt = true
           schild.position.set(v.x, v.y + 0.012 * mass * gross, v.z)
@@ -4894,6 +5116,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         zahl++
       }
       gezeichnet.length = zahl
+      liegtVorher = liegtNeu; liegtNeu = new Map(); hornMinute = jetzt.minuten
+      if (hornAbstand < HORN_BIS_M) schiffshorn((1 - hornAbstand / HORN_BIS_M) ** 2)
+      hornAbstand = Infinity
       schild.visible = zeigt
       netz.count = zahl
       netz.instanceMatrix.needsUpdate = true
@@ -4904,6 +5129,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       geleuchtet = ziele
     }
+    let liegtVorher = new Map<number, number>(), liegtNeu = new Map<number, number>(), hornMinute = NaN, hornAbstand = Infinity
+    const welt = new THREE.Vector3()
     k.jeBild.push(schritt)
     // nur in einer Testfassung (VITE_S3D_TEST): wo die Schiffe auf dem Bild sind, in Bildpunkten
     if (import.meta.env.VITE_S3D_TEST) {
@@ -5300,6 +5527,32 @@ function kastenUm(b: Bestand, lage: { cE: number; cN: number }) {
 /** in der Brille noch weniger: sie zeichnet jedes Bild zweimal, je Auge, dazu den Schatten, auf der Grafik eines Handys
  *  (Michael, 2026-10-22: nach dem Eintauchen ins Feld von 4 km stand die Brille; 121'193 Bäume am Gantrisch, je 20 Dreiecke);
  *  ebenso eine Annahme, nicht auf der Brille gemessen */
+/**
+ * Bäume im Wind (Michael, 2026-11-10: Vorschlag «Bäume, die sich im Wind bewegen, je nach gemessenem Wind der Windhosen», gewählt): jede Krone neigt
+ * sich in die Richtung, in die der Wind weht, und wiegt hin und her, je mehr Wind, desto mehr und schneller; ganz ab BAUM_WIND_VOLL_KMH, still ohne
+ * Messung. Der Wind ist das Mittel der vier Windhosen (MeteoSchweiz); wie ein Baum sich bewegt, ist gezeichnet, nicht gemessen (Mass und Takt gewählt).
+ * Der Schatten bewegt sich nicht mit.
+ */
+const BAUM_WIND_VOLL_KMH = 45
+const BAUM_WIND = { uZeit: { value: 0 }, uWind: { value: 0 }, uRichtung: { value: new THREE.Vector2(1, 0) } }
+function baumWiegen(stoff: THREE.Material) {
+  stoff.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, BAUM_WIND)
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nuniform float uZeit; uniform float uWind; uniform vec2 uRichtung;')
+      .replace('#include <project_vertex>', `#ifdef USE_INSTANCING
+      {
+        float hBaum = length(instanceMatrix[1].xyz);
+        float phase = instanceMatrix[3].x * 3700.0 + instanceMatrix[3].z * 2900.0;
+        float wiegen = 0.6 + 0.4 * sin(uZeit * (1.1 + 1.8 * uWind) + phase);
+        float boe = 0.5 + 0.5 * sin(uZeit * 0.37 + phase * 0.21);
+        float biegen = position.y * position.y * hBaum * uWind * (0.05 * wiegen + 0.025 * boe);
+        transformed += inverse(mat3(instanceMatrix)) * (vec3(uRichtung.x, 0.0, uRichtung.y) * biegen);
+      }
+      #endif
+      #include <project_vertex>`)
+  }
+  stoff.customProgramCacheKey = () => 'baumWind'
+}
 const BAUM_HOECHSTENS = 1_200_000, BAUM_HOECHSTENS_HANDY = 300_000, BAUM_HOECHSTENS_BRILLE = 50_000
 const baumHoechstens = (brille: boolean) => (brille ? BAUM_HOECHSTENS_BRILLE : hoechstens() === 4 ? BAUM_HOECHSTENS_HANDY : BAUM_HOECHSTENS)
 function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0: number, n0: number, e1: number, n1: number, brille = false) {
@@ -5324,6 +5577,7 @@ function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0:
   const kegel = new THREE.ConeGeometry(0.5, 1, 7, 1)
   kegel.translate(0, 0.5, 0)
   const stoff = new THREE.MeshLambertMaterial()
+  baumWiegen(stoff)
   const hoehen = liste.map(([e, n]) => bestandHoehe(b, e, n))
   const nadel = liste.map(([e, n], i) => istNadel(e, n, hoehen[i]))
   const anzahlNadel = nadel.filter(Boolean).length
