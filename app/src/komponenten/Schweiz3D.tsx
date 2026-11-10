@@ -1851,7 +1851,8 @@ const ZUG_LAMPE_SEITE = 0.28, ZUG_LAMPE_HOEHE = -0.21, ZUG_LAMPE_R = 0.07, ZUG_L
 /** dazu wie bei Schweizer Zügen (Michael, 2026-10-29: «inkl dem Vorschlag mit den drei Lampen und roten Lampen»): vorne eine dritte
  *  weisse Lampe oben in der Mitte, das Dreieck des Zugspitzensignals, und am Steuerwagen hinten zwei rote Schlusslampen an der Stelle
  *  der unteren; die Lage oben (Höhe und Abstand von der Spitze als Anteil der Höhe des Zugs) und das Rot gewählt */
-const ZUG_LAMPE_OBEN_HOEHE = -0.02, ZUG_LAMPE_OBEN_ZURUECK = 0.012, ZUG_SCHLUSS_FARBE = '#ff2a1a', ZUG_LAMPEN = 5
+// die dritte Lampe über der Frontscheibe (Michael, 2026-11-10: «das mittlere Licht muss allerdings weiter oben, überhalb der Windschutzscheibe sein»; vorher -0,02 und 0,012)
+const ZUG_LAMPE_OBEN_HOEHE = 0.4, ZUG_LAMPE_OBEN_ZURUECK = 0.44, ZUG_SCHLUSS_FARBE = '#ff2a1a', ZUG_LAMPEN = 5
 /** der Lichtkegel als Bild: hell an der Lok, nach vorne breiter und schwächer */
 function stirnBild() {
   const c = document.createElement('canvas'), x = c.getContext('2d')!
@@ -2068,7 +2069,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const kamera = new THREE.PerspectiveCamera(45, el.clientWidth / el.clientHeight, 0.01, 2000)
     const steuerung = new OrbitControls(kamera, renderer.domElement)
     steuerung.enableDamping = true
-    steuerung.maxPolarAngle = Math.PI * 0.47
+    // fast waagrecht, damit man auf der Höhe eines Zugs schauen kann (Michael, 2026-11-10: «manchmal wünsche ich mir, dass man auf Höhe des Zuges sein kann
+    // wenn er vorbeifährt»; vorher 0,47); unter das Gelände verhindert kameraUnten
+    steuerung.maxPolarAngle = Math.PI * 0.495
     // nicht unter das Gelände (kameraUnten, je Stufe gesetzt)
     steuerung.addEventListener('change', () => {
       if (renderer.xr.isPresenting || stehenBild) return
@@ -2841,7 +2844,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         kamera.position.set(-Math.sin(r) * Math.cos(h) * abstand, Y(mittel) + Math.sin(h) * abstand, Math.cos(r) * Math.cos(h) * abstand)
       }
       steuerung.target.set(0, Y(mittel), 0)
-      steuerung.minDistance = weite / 1000 * 0.02
+      // in den Feldern von 4 km und 1 km näher heran (vorher überall 2 % der Breite, im Feld von 1 km 20 m)
+      steuerung.minDistance = weite / 1000 * (stufe === 'ort' || stufe === 'nah' ? 0.004 : 0.02)
       steuerung.maxDistance = weite / 1000 * 2
       steuerung.update()
     }
@@ -5375,6 +5379,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (pfiffAbstand < PFIFF_BIS_M) abfahrtsPfiff((1 - pfiffAbstand / PFIFF_BIS_M) ** 2)
         pfiffAbstand = Infinity
         zuegeHoeren(liste, brille)
+        if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHoeren: unknown }).s3dHoeren = { liste: liste.slice().sort((x, y) => x.abstandM - y.abstandM).slice(0, 3), ohr, blickM, zahl }
       }
     }
     let hoerUm = 0, hoerLetzt = performance.now(), hoerAlt = new Map<number, { p: THREE.Vector3; d: number }>()
