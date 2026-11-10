@@ -23,6 +23,9 @@ const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 /** Puffer: Abstand von der Mitte in Teilen der Breite, Höhe der Mitte, Radius der Stange und des Tellers und Länge in Teilen der Höhe; gewählt */
 /** wie weit das Fensterband in den Kopf reicht, in Teilen seiner Länge (bis das Dach sinkt); gewählt */
 const FENSTER_IM_KOPF = 0.55
+/** Höhe des Fensterbands und wie weit seine Mitte unter dem Beginn der Dachrundung liegt, in Teilen der Höhe (Michael, 2026-11-10: «Seitenstreifen etwas
+ *  höher und etwas weiter unten»; vorher 0,22 und 0,08) */
+const FENSTER_HOCH = 0.28, FENSTER_TIEFER = 0.14
 const PUFFER_SEITE = 0.3, PUFFER_HOEHE = -0.3, PUFFER_R = 0.045, PUFFER_TELLER = 0.085, PUFFER_LANG = 0.2
 export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNTEN = 0.4, LICHTKASTEN_OBEN = 0.56, LICHTKASTEN_BREIT = 0.32
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
@@ -55,9 +58,9 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   // Fahrwerk dunkel und etwas schmaler
   mesh(new THREE.BoxGeometry(W * 0.86, unten + h, L * 0.96), schwarz).position.y = (-h + unten) / 2
   // Fensterband auf beiden Seiten, knapp vor der Wand
-  const band = new THREE.BoxGeometry(W * 1.03, H * 0.22, (L - kopf) * 0.92)
+  const band = new THREE.BoxGeometry(W * 1.03, H * FENSTER_HOCH, (L - kopf) * 0.92)
   const fenster = mesh(band, schwarz)
-  fenster.position.set(0, h - r - H * 0.08, hinten ? kopf / 2 : -kopf / 2)
+  fenster.position.set(0, h - r - H * FENSTER_TIEFER, hinten ? kopf / 2 : -kopf / 2)
   // das Fensterband leuchtet nachts von innen (zugFormen: Attribut leuchte)
   fenster.userData.fenster = true
   // Übergang zum nächsten Wagen
@@ -154,7 +157,7 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     // das Fensterband weiter nach vorne in den Kopf, bis dort, wo sein Dach sinkt (Michael, 2026-11-10: «die Seitenfenster können weiter nach vorne kommen»)
     // es schliesst ans Band des Kastens an, das 4 % vor dessen Ende aufhört
     const bandVon = L / 2 - kopf - (L - kopf) * 0.04, bandLang = L / 2 - kopf * (1 - FENSTER_IM_KOPF) - bandVon
-    const bandKopf = kopfteil(new THREE.BoxGeometry(W * 1.03, H * 0.22, bandLang).translate(0, h - r - H * 0.08, bandVon + bandLang / 2), schwarz)
+    const bandKopf = kopfteil(new THREE.BoxGeometry(W * 1.03, H * FENSTER_HOCH, bandLang).translate(0, h - r - H * FENSTER_TIEFER, bandVon + bandLang / 2), schwarz)
     bandKopf.userData.fenster = true
     // vorne zwei Puffer (Michael, 2026-11-10: «Und vorne noch die Puffer?»): Stange und Teller, dunkel; Lage und Masse gewählt
     for (const seite of [-1, 1]) {
