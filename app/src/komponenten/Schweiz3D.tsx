@@ -5,6 +5,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js'
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js'
 import { Line2 } from 'three/examples/jsm/lines/Line2.js'
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
@@ -4741,8 +4742,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const stirnQ = new THREE.Quaternion(), stirnV = new THREE.Vector3(), stirnS = new THREE.Vector3()
     const stirnFarbe = new THREE.Color(1, 1, 1)
     for (let i = 0; i < 2 * ZUEGE_HOECHSTENS; i++) stirn.setColorAt(i, stirnFarbe)
-    // die Lampen selbst: kleine helle Kugeln vorne an der Lok, im Raum der Lok gesetzt
-    const lampenGeo = new THREE.SphereGeometry(1, 10, 8), lampenStoff = new THREE.MeshBasicMaterial({ color: ZUG_LAMPE_FARBE, toneMapped: false })
+    // die Lampen selbst: kleine helle Rechtecke mit leicht gerundeten Ecken (Michael, 2026-11-10: «Ja, rechteckig einbauen»; vorher Kugeln, Masse gewählt)
+    const lampenGeo = new RoundedBoxGeometry(2.4, 1.4, 0.6, 3, 0.35), lampenStoff = new THREE.MeshBasicMaterial({ color: ZUG_LAMPE_FARBE, toneMapped: false })
     randSchnitt(stirnStoff, b, lage); randSchnitt(lampenStoff, b, lage)
     const lampen = new THREE.InstancedMesh(lampenGeo, lampenStoff, ZUG_LAMPEN * ZUEGE_HOECHSTENS)
     lampen.count = 0; lampen.frustumCulled = false
