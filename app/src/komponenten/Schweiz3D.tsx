@@ -9,11 +9,12 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
+import { anteilStunde, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, TROTTOIR_M, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
-import { autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
+import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -39,7 +40,7 @@ import { bewoelkung, bewoelkung3d, niederschlagBei, wolken3dStunde, wolkenLaden,
 import { BALLEN_HOECHSTENS, BALLEN_HOECHSTENS_HANDY, WOLKEN_HOEHE_M, wolkenBallen } from './WolkenBild'
 import { type Niederschlag, niederschlagBauen, type Saeule } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
-import { perronNetz, perronsIn } from './Perrons'
+import { perronNetz, perronsIn, perronsLaden } from './Perrons'
 import { deckeAufBild, deckenIn, unterDecke, type Decke } from './Decken'
 import { Abschnitt } from './Anleitung'
 import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
@@ -112,7 +113,7 @@ interface Gelaende {
 interface Feld { e: number; n: number; seite: number }
 type Seite = 'n' | 'o' | 's' | 'w'
 /** was die Schalter ein- und ausschalten */
-type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege' | 'schiffe' | 'autos' | 'wolken' | 'stehen'
+type Schalter = 'hoehen' | 'orte' | 'gipfel' | 'wandern' | 'gebaeude' | 'baeume' | 'sonne' | 'wind' | 'zuege' | 'schiffe' | 'autos' | 'menschen' | 'wolken' | 'stehen'
 /** Ein Feld und was an seinen Seiten angesetzt ist (Michael, 2026-10-20: «An den Wänden ein Plus und oder ein Minus … zum
  *  Erweitern resp. reduzieren der Kacheln»): je Stück ein Gelände, Schlüssel «di_dj» in Feldern Ost und Nord vom Anker */
 interface Bestand { anker: Feld; teile: Map<string, Gelaende>; di: [number, number]; dj: [number, number] }
@@ -662,6 +663,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [schiffeAn, setSchiffeAn] = useState(false)
   // Autos auf Autobahnen und Autostrassen, eigener Knopf, am Anfang aus (Michael, 2026-11-10)
   const [autosAn, setAutosAn] = useState(false)
+  const [menschenAn, setMenschenAn] = useState(false)
   // die Wolken mit eigenem Knopf, nicht mehr mit «Wetter» (Michael, 2026-10-29: «Wolken ein separater Knopf machen (weiss)»)
   const [wolkenAn, setWolkenAn] = useState(false)
   // auf Augenhöhe (Michael, 2026-11-10: «12 (Icon mit Männchen) alle Devices»), nur in den Feldern von 4 km und 1 km; ein neues Feld beendet es
@@ -946,7 +948,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     felder: Object.fromEntries((['gross', 'mittel', 'region', 'ort', 'nah'] as const)
       .filter((s) => gelaende[s] && STUFEN.indexOf(s) <= STUFEN.indexOf(stufe)).map((s) => [s, gelaende[s]!.anker])),
     wahl,
-    schalter: { orte: orteAn, gebaeude: gebaeudeAn, baeume: baeumeAn, zuege: zuegeAn, schiffe: schiffeAn, autos: autosAn, wandern, hoehen: scheiben, gipfel: gipfelAn,
+    schalter: { orte: orteAn, gebaeude: gebaeudeAn, baeume: baeumeAn, zuege: zuegeAn, schiffe: schiffeAn, autos: autosAn, menschen: menschenAn, wandern, hoehen: scheiben, gipfel: gipfelAn,
       wolken: wolkenAn, wind: windAn, sonne: sonnenAn },
     zeit: jetztAn ? null : versatzMs,
   }
@@ -970,7 +972,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const folgtLaedt = useRef(false), folgtNochmals = useRef<Stand | null>(null)
   const folgen = (st: Stand) => {
     const setzen: Record<string, [boolean, (v: boolean) => void]> = { orte: [orteAn, setOrteAn], gebaeude: [gebaeudeAn, setGebaeudeAn],
-      baeume: [baeumeAn, setBaeumeAn], zuege: [zuegeAn, setZuegeAn], schiffe: [schiffeAn, setSchiffeAn], autos: [autosAn, setAutosAn], wandern: [wandern, setWandern],
+      baeume: [baeumeAn, setBaeumeAn], zuege: [zuegeAn, setZuegeAn], schiffe: [schiffeAn, setSchiffeAn], autos: [autosAn, setAutosAn], menschen: [menschenAn, setMenschenAn], wandern: [wandern, setWandern],
       hoehen: [scheiben, setScheiben], gipfel: [gipfelAn, setGipfelAn], wolken: [wolkenAn, setWolkenAn], wind: [windAn, setWindAn], sonne: [sonnenAn, setSonnenAn] }
     for (const [k, v] of Object.entries(st.schalter)) if (setzen[k] && setzen[k][0] !== v) setzen[k][1](v)
     if (st.zeit === null) { if (!jetztAn) zeitSchieben('jetzt', 0) }
@@ -1071,7 +1073,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), autos: () => setAutosAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), baeume: () => setBaeumeAn((x) => !x), wetter: () => setWindAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), autos: () => setAutosAn((x) => !x), menschen: () => setMenschenAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), baeume: () => setBaeumeAn((x) => !x), wetter: () => setWindAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -1129,7 +1131,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    knoepfe={knoepfe} erweitern={(s, p) => void erweitern(s, p)} scheiben={scheiben}
                    gebaeude={gebaeudeAn && umweltHier} baeume={baeumeAn && umweltHier} umweltHier={umweltHier} meldung={meldung} wandern={wandern}
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
-                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, autos: setAutosAn, wolken: setWolkenAn, stehen: setStehen })[art]((x: boolean) => !x)} stehen={stehen && (stufe === 'ort' || stufe === 'nah')} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} autos={autosAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
+                     sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, autos: setAutosAn, menschen: setMenschenAn, wolken: setWolkenAn, stehen: setStehen })[art]((x: boolean) => !x)} stehen={stehen && (stufe === 'ort' || stufe === 'nah')} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} autos={autosAn} menschen={menschenAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windBei(p, windZeit), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
                    zeitSchieben={zeitSchieben} vollbild={voll} strich={strich} andere={andere} lageRef={lageRef}
                    folgeId={blickFolgen && fuehrer ? fuehrer.id : null} blickLos={() => setBlickFolgen(false)} />
@@ -1483,6 +1485,16 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             warten, fahren danach an und holen auf, manchmal hupt einer. Auch das ist erfunden: Fussgängerstreifen und Fussgänger stehen in keiner
             unserer Quellen.</p>
         </Abschnitt>
+        <Abschnitt titel="Menschen">
+          <p>«Menschen» zeigt in den Feldern von 4 km und 1 km Wartende auf den Perrons, Fussgänger auf den Trottoirs und Wanderer auf den
+            Wanderwegen. Belegt ist, wo Perrons, Strassen und Wanderwege liegen, wie viele Menschen an einem Bahnhof am Werktag ein- und aussteigen (SBB)
+            und wie viele in einer Hektare wohnen (STATPOP, Bundesamt für Statistik). Wie viele daraus unterwegs sind, zählt keine Quelle, das ist
+            gewählt: Auf den Perrons warten so viele, wie wenn die Hälfte der Ein- und Aussteigenden einsteigt, verteilt auf 18 Betriebsstunden, und
+            jede Person 5 Minuten wartet; nachts von 1 bis 5 Uhr niemand. Auf den Trottoirs von Strassen in Siedlungen geht je km ein Viertel der
+            Einwohner einer Hektare rundum, am Abend und in der Nacht weniger. Auf den Wanderwegen ist es am Tag etwa ein Wanderer alle 1,7 km. Die
+            Menschen selbst sind erfunden: Gestalt, Kleider, wo genau sie stehen, wohin sie gehen und wie schnell. Sie gehen an Kreuzungen weiter
+            und können am Ende eines Wegs verschwinden.</p>
+        </Abschnitt>
         <Abschnitt titel="Wetter: Wind und Niederschlag">
           <p>«Wetter» zeigt immer vier Windhosen, je eine in der Mitte jedes Viertels des Modells. Die Zahlen über dem Mast sind der Wind in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
             nicht an der Station): links das Mittel über 10 Minuten, rechts die stärkste Böe; am Mast steht die Temperatur in °C. Ist
@@ -1589,6 +1601,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Sterne: Hipparcos-Katalog der ESA, aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz).</li>
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac; der Mond nach einer kurzen Näherung seiner Bahn.</li>
             <li>Kirchen für die Glocken: swissTLMRegio (swisstopo).</li>
+            <li>Menschen: Perrons (SBB Open Data), Ein- und Aussteigende am Werktag je Bahnhof (SBB Open Data), Einwohner je Hektare (STATPOP 2025,
+              Bundesamt für Statistik BFS, data.geo.admin.ch), Strassen und Wanderwege (swissTLM3D), Siedlungen (swissTLMRegio).</li>
             <li>Autos: Fahrbahnen der Autobahnen und Autostrassen aus swissTLM3D (swisstopo); Verkehr je Stunde am Tag und in der Nacht an den Zählstellen
               der Strassenverkehrszählung, übergeordnetes Netz, Bundesamt für Strassen ASTRA (data.geo.admin.ch); auf den übrigen Strassen die
               Fahrbahnen aus swissTLM3D und der Tagesverkehr laut Modell «Belastung Personen- und Güterverkehr Strasse», Bundesamt für
@@ -1633,6 +1647,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
+            <li>Menschen: alle, ihre Gestalt, Kleider, Lage, Richtung und Tempo, und die Anteile, mit denen aus den Ein- und Aussteigenden und den
+              Einwohnern eine Menge wird.</li>
             <li>Autos und Lastwagen: ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn, alle Lastwagen rechts;
               auf den übrigen Strassen eine Spur je Richtung, das Tempo nach der Breite, Kreuzungen ohne Ampeln und Vortritt.
               Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA; auf den übrigen
@@ -1738,7 +1754,7 @@ const SOCKEL_ZEIT = 0.75, KNOPF_ABSTAND = 0.03
 // könnten ästhetisch schöner sein»): das Gelände ausserhalb der Landesgrenze (BFS g1, data/kartengrund.json) ausgeblendet, eine Wand entlang
 // der Grenze bis zum tiefsten Punkt, darunter der Sockel mit den Knöpfen wie bisher, oben mit einem dunklen Deckel; Farben und Masse gewählt
 const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', LAND_DECKEL_FARBE = '#262626', LAND_DECKEL_TIEFER = 0.0005
-const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', autos: '#ff9de2', wolken: '#ffffff' }
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', autos: '#ff9de2', menschen: '#ffb38a', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** ein Zug so lang, eine Annahme fürs Bild (die Länge eines Zugs steht nicht im Fahrplan); höchstens so viele zugleich */
@@ -2005,7 +2021,7 @@ function knopfBild(plus: boolean, an: boolean) {
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos }: {
   /** zu zweit: die anderen im Raum und wohin die eigene Lage geht */
   andere?: Andere[]
   /** zu zweit: wessen Blick die Kamera folgt (auf dem Bildschirm), und was eigenes Drehen meldet */
@@ -2043,6 +2059,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   schiffe: boolean
   /** Autos auf Autobahnen und Autostrassen (in den Feldern von 4 km und 1 km) */
   autos: boolean
+  menschen: boolean
   /** die Wolken laut Wettermodell, ein eigener Knopf */
   wolken: boolean
   /** Gebäude und Bäume gibt es hier */
@@ -3617,7 +3634,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           aktion: umschalten('schiffe') },
         // Autos auf Autobahnen und Autostrassen nur in den Feldern von 4 km und 1 km (Michael, 2026-11-10)
         { zeilen: ['Autos'], breite: KNOPF_B * W, an: (stufe === 'ort' || stufe === 'nah') && autos, farbe: LICHT.autos,
-          gesperrt: stufe !== 'ort' && stufe !== 'nah', aktion: umschalten('autos') }] : []),
+          gesperrt: stufe !== 'ort' && stufe !== 'nah', aktion: umschalten('autos') },
+        // Menschen auf Perrons, in Siedlungen und auf Wanderwegen (Michael, 2026-11-11: «Gerne gemäss deinen Vorschlägen umsetzen»)
+        { zeilen: ['Menschen'], breite: KNOPF_B * W, an: (stufe === 'ort' || stufe === 'nah') && menschen, farbe: LICHT.menschen,
+          gesperrt: stufe !== 'ort' && stufe !== 'nah', aktion: umschalten('menschen') }] : []),
       abstand,
       { zeilen: ['Wandern'], breite: KNOPF_B * W, an: !grob(stufe) && wandern, farbe: LICHT.gelaende, gesperrt: grob(stufe),
         aktion: umschalten('wandern') },
@@ -3767,7 +3787,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, autos, wolken])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, autos, menschen, wolken])
   // auf Augenhöhe: auf dem Bildschirm an der Stelle, die die Kamera anschaut, in der Brille unter dem Kopf (ausserhalb des Modells in seiner Mitte);
   // danach stellt ein Tipp ins Gelände an diese Stelle
   useEffect(() => {
@@ -6183,6 +6203,100 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const r of retuschiert) { retuscheZurueck(r.ctx, r.liste); bildNeu(r.bild) }
     }
   }, [autos, b, stufe, knoepfe])
+  // Menschen (komponenten/Menschen.ts; Michael, 2026-11-11: «Heisst dass du kannst Taktland tatsächlich bevölkern???», «Gerne gemäss deinen
+  // Vorschlägen umsetzen»): mit dem Knopf «Menschen» in den Feldern von 4 km und 1 km Wartende auf den Perrons nach den Ein- und Aussteigenden,
+  // Fussgänger auf den Trottoirs der Strassen in Siedlungen nach den Einwohnern (STATPOP) und Wanderer auf den Wanderwegen
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage || !menschen || (stufe !== 'ort' && stufe !== 'nah')) return
+    let weg = false, schritt: (() => void) | null = null
+    const gruppe = new THREE.Group()
+    gruppe.name = 'menschen'
+    gruppe.userData.bleibt = true
+    k.wurzel.add(gruppe)
+    const teile = [...b.teile.values()], rand = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
+    const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
+    const form = menschForm(), stoff = new THREE.MeshLambertMaterial({ vertexColors: true })
+    const netze: THREE.InstancedMesh[] = []
+    void Promise.all([
+      perronsIn(e0, n0, e1, n1).catch(() => []), perronsLaden().catch(() => []), indexLaden().catch(() => null),
+      autosLaden(e0, n0, e1, n1).catch(() => null), wanderwegeLaden(e0, n0, e1, n1).catch(() => null),
+    ]).then(([hier, alle, ix, autosDa, wander]) => {
+      if (weg) return
+      const dwv = new Map((ix?.bahnhoefe ?? []).map((x) => [x.uic, x.dwv]))
+      const stehen = wartende(hier, alle, (u) => dwv.get(u) ?? null, PERRON_HOEHER_M).filter((w) => drin(w.e, w.n))
+      const geher: Geher[] = []
+      // Trottoirs: je Kette der übrigen Strassen innerorts ihre Stücke hintereinander, auf beiden Seiten
+      const jeKette = new Map<number, AutoStueck[]>()
+      for (const st of autosDa?.stuecke ?? []) if (st.strasse && st.strasse.fuss > 0) { const l = jeKette.get(st.kette) ?? []; l.push(st); jeKette.set(st.kette, l) }
+      for (const [nr, liste] of jeKette) {
+        liste.sort((a, c) => a.s0 - c.s0)
+        const e: number[] = [], n: number[] = []
+        for (const st of liste) for (let i = 0; i < st.e.length; i++) { e.push(st.e[i]); n.push(st.n[i]) }
+        const w = gehweg(e, n), halb = liste[0].strasse!.breite / 2 + TROTTOIR_M
+        geher.push(...geherAuf(w, liste[0].strasse!.fuss, nr, 'strasse', (i) => (menschZufall(nr * 0.3 + i * 4.1) < 0.5 ? -halb : halb)))
+      }
+      ;(wander?.wege ?? []).forEach((ww, i) => {
+        const z = ww.p.length / 2, e = new Float64Array(z), n = new Float64Array(z)
+        for (let j = 0; j < z; j++) { e[j] = ww.p[2 * j]; n[j] = ww.p[2 * j + 1] }
+        if (e[0] < e0 - 500 || e[0] > e1 + 500 || n[0] < n0 - 500 || n[0] > n1 + 500) return
+        geher.push(...geherAuf(gehweg(e, n), WANDERER_JE_KM, 100_000 + i + Math.round(e[0]) % 9973, 'wandern', (j) => (menschZufall(i + j * 1.7) - 0.5)))
+      })
+      const hoechstens = Math.min(stehen.length + geher.length, hoechstensFelder() === 4 ? 3000 : 9000)
+      if (!hoechstens) return
+      const oberteil = new THREE.InstancedMesh(form.oberteil, stoff, hoechstens), rest = new THREE.InstancedMesh(form.rest, stoff, hoechstens)
+      for (const x of [oberteil, rest]) { x.count = 0; x.castShadow = true; x.frustumCulled = false; gruppe.add(x); netze.push(x) }
+      const farben = Array.from({ length: 997 }, (_, i) => kleidFarbe(i))
+      const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), eins = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
+      schritt = () => {
+        const ms = Date.now() + szenenZeit.versatzMs, sek = ms / 1000
+        const stunde = jetztImFahrplan({ von: '2000-01-01' }, new Date(ms)).minuten / 60
+        const aP = anteilStunde('perron', stunde), aS = anteilStunde('strasse', stunde), aW = anteilStunde('wandern', stunde)
+        let zahl = 0
+        const setzen = (e: number, n: number, z: number, drehung: number, farbe: number) => {
+          v.set((e - lage.cE) / 1000, z / 1000, -(n - lage.cN) / 1000)
+          q.setFromAxisAngle(oben, drehung)
+          m.compose(v, q, eins)
+          oberteil.setMatrixAt(zahl, m); rest.setMatrixAt(zahl, m)
+          oberteil.setColorAt(zahl, farben[farbe])
+          zahl++
+        }
+        for (const w of stehen) {
+          if (zahl >= hoechstens) break
+          if (w.ab >= aP) continue
+          setzen(w.e, w.n, w.z, w.drehung, w.farbe)
+        }
+        for (const g of geher) {
+          if (zahl >= hoechstens) break
+          if (g.ab >= (g.art === 'wandern' ? aW : aS)) continue
+          const lauf = (((g.s0 + g.ms * sek) % g.weg.L) + g.weg.L) % g.weg.L, s = g.richtung === 1 ? lauf : g.weg.L - lauf
+          const p = wegBei(g.weg, s)
+          if (!p) continue
+          const de = p.de * g.richtung, dn = p.dn * g.richtung
+          const e = p.e + p.dn * g.quer, n = p.n - p.de * g.quer
+          if (!drin(e, n)) continue
+          const z = bestandHoehe(b, e, n)
+          if (!Number.isFinite(z)) continue
+          // beim Gehen leicht auf und ab (gewählt)
+          setzen(e, n, z + 0.03 * Math.abs(Math.sin(sek * 6 + g.s0)), Math.atan2(de, -dn), g.farbe)
+        }
+        for (const x of [oberteil, rest]) { x.count = zahl; x.instanceMatrix.needsUpdate = true }
+        if (oberteil.instanceColor) oberteil.instanceColor.needsUpdate = true
+      }
+      k.jeBild.push(schritt)
+      if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dMenschen: unknown }).s3dMenschen = () => ({ stehen: stehen.length, geher: geher.length, gezeigt: oberteil.count })
+    })
+    return () => {
+      weg = true
+      if (schritt) { const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1) }
+      k.wurzel.remove(gruppe)
+      for (const x of netze) x.dispose()
+      form.oberteil.dispose(); form.rest.dispose(); stoff.dispose()
+    }
+  }, [menschen, b, stufe, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
   // Wolken aus dem Wettermodell ICON-CH1-EPS von MeteoSchweiz (src/wolken.ts; Michael, 2026-10-28: «Jetzt die Wolken angehen»), mit dem Knopf
   // «Wetter», in der ganzen Schweiz und in der Region; zur gewählten Zeit der Sonne, sonst jetzt
   const [, setWolkenZeile] = useState<string | null>(null)
@@ -6577,9 +6691,12 @@ function baumWiegen(stoff: THREE.Material) {
       {
         float hBaum = length(instanceMatrix[1].xyz);
         float phase = instanceMatrix[3].x * 3700.0 + instanceMatrix[3].z * 2900.0;
-        float wiegen = 0.6 + 0.4 * sin(uZeit * (1.1 + 1.8 * uWind) + phase);
+        // Neigung, Wiegen, Flattern und Böen als Anteil der Baumhöhe an der Spitze bei vollem Wind (gewählt; bis 2026-11-11 etwa ein Viertel
+        // davon, Michael: «die Bäume bewegen sich nicht... schau mal»: bei 25 km/h schwankte ein Baum von 15 m um 15 cm)
+        float wiegen = sin(uZeit * (1.6 + 2.0 * uWind) + phase);
+        float flattern = sin(uZeit * 5.3 + phase * 1.7);
         float boe = 0.5 + 0.5 * sin(uZeit * 0.37 + phase * 0.21);
-        float biegen = position.y * position.y * hBaum * uWind * (0.05 * wiegen + 0.025 * boe);
+        float biegen = position.y * position.y * hBaum * uWind * (0.05 + 0.07 * wiegen + 0.02 * flattern + 0.04 * boe);
         transformed += inverse(mat3(instanceMatrix)) * (vec3(uRichtung.x, 0.0, uRichtung.y) * biegen);
       }
       #endif

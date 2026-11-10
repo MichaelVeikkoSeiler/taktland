@@ -9,6 +9,7 @@
  */
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import type { AutoStueck } from '../gelaende'
 import type { Retusche, Streifen } from './Bruecken'
 
@@ -71,10 +72,21 @@ export function autoForm(): THREE.BufferGeometry {
     g.setAttribute('color', new THREE.BufferAttribute(f, 3))
     teile.push(g)
   }
-  kasten(AUTO_LANG_M, AUTO_BREIT_M, 0.25, 0.15, 0, '#202020')
-  kasten(AUTO_LANG_M, AUTO_BREIT_M, 0.55, 0.4, 0, '#ffffff')
-  kasten(2.3, AUTO_BREIT_M * 0.9, 0.42, 0.95, -0.3, '#1c2228')
-  kasten(2.1, AUTO_BREIT_M * 0.86, 0.08, 1.37, -0.3, '#ffffff')
+  // leicht gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»): Karosserie und Kabine mit abgerundeten Kanten, Radius gewählt,
+  // je eine Stufe, damit es bei vielen Autos leicht bleibt
+  const rund = (l: number, b: number, h: number, r: number, y: number, z: number, farbe: string) => {
+    const g = new RoundedBoxGeometry(b / 1000, h / 1000, l / 1000, 1, r / 1000).toNonIndexed()
+    g.deleteAttribute('uv')
+    g.translate(0, (y + h / 2) / 1000, z / 1000)
+    const c = new THREE.Color(farbe), f = new Float32Array(g.attributes.position.count * 3)
+    for (let i = 0; i < f.length; i += 3) { f[i] = c.r; f[i + 1] = c.g; f[i + 2] = c.b }
+    g.setAttribute('color', new THREE.BufferAttribute(f, 3))
+    teile.push(g)
+  }
+  kasten(AUTO_LANG_M * 0.94, AUTO_BREIT_M * 0.96, 0.25, 0.15, 0, '#202020')
+  rund(AUTO_LANG_M, AUTO_BREIT_M, 0.6, 0.2, 0.37, 0, '#ffffff')
+  rund(2.3, AUTO_BREIT_M * 0.88, 0.5, 0.16, 0.9, -0.3, '#1c2228')
+  rund(2.0, AUTO_BREIT_M * 0.84, 0.1, 0.05, 1.33, -0.3, '#ffffff')
   const ganz = mergeGeometries(teile)!
   teile.forEach((t) => t.dispose())
   return ganz

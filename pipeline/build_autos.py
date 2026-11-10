@@ -70,6 +70,11 @@ STRASSEN = {"10m Strasse": (10, 35, 80), "8m Strasse": (8, 35, 80), "6m Strasse"
 ARE_PROBE_M, ARE_BIS_M, ARE_WINKEL = 20, 12, 25
 #: ohne Autos unter so vielen Fahrzeugen am Tag (DTV laut Modell, beide Richtungen; gewählt)
 STRASSE_AB_DTV = 200
+#: Fussgänger auf Strassen in Siedlungen (Michael, 2026-11-11): Einwohner je Hektare laut STATPOP des BFS (Mittel der 3 × 3 Hektaren um die Punkte
+#: der Kette) mal FUSS_JE_EINWOHNER ergibt Fussgänger je km Strasse, beide Seiten (gewählt, keine Quelle zählt Fussgänger)
+STATPOP_URL = ("https://data.geo.admin.ch/ch.bfs.statistik-bevoelkerung_haushalte/statistik-bevoelkerung_haushalte_2025/"
+               "statistik-bevoelkerung_haushalte_2025_ha_2056.csv")
+FUSS_JE_EINWOHNER = 0.25
 #: Achsen auf so viele Meter vereinfacht (Douglas-Peucker, gewählt)
 EINFACH_M = 0.5
 
@@ -414,6 +419,17 @@ def main():
                 strassen.append({"p": p, "einweg": rg == "Wahr", "kb": kb, "klasse": art})
     print(f"übrige Strassen: {len(strassen)} Stücke")
     werte = are_werte(strassen)
+    roh_sp = ROOT / "data" / "raw" / "statpop_2025_ha.csv"
+    if not roh_sp.exists():
+        roh_sp.write_bytes(urllib.request.urlopen(STATPOP_URL, timeout=600).read())
+    import pandas as pd
+    sp = pd.read_csv(roh_sp, sep=";", usecols=["E_KOORD", "N_KOORD", "BBTOT"])
+    einwohner = dict(zip(zip((sp.E_KOORD // 100).astype(int), (sp.N_KOORD // 100).astype(int)), sp.BBTOT.astype(float)))
+    print(f"STATPOP: {len(einwohner)} Hektaren")
+
+    def einwohner_bei(e, n):
+        x, y = int(e // 100), int(n // 100)
+        return sum(einwohner.get((x + i, y + j), 0.0) for i in (-1, 0, 1) for j in (-1, 0, 1)) / 9
     nr0 = len(ketten)
     zahl_s, km_s = 0, 0.0
     for klasse in STRASSEN:
@@ -440,8 +456,13 @@ def main():
                 zahl_s += 1; km_s += L / 1000
                 drin = sum(l for (x, _), l in zip(kette, laengen) if in_siedlung(*teil[x]["p"][len(teil[x]["p"]) // 2][:2]))
                 breite, kmh_in, kmh_aus = STRASSEN[klasse]
+                innerorts = drin >= L / 2
+                fuss = 0.0
+                if innerorts:
+                    proben = [pp for x, _ in kette for pp in teil[x]["p"][::4]]
+                    fuss = round(sum(einwohner_bei(pp[0], pp[1]) for pp in proben) / len(proben) * FUSS_JE_EINWOHNER, 1)
                 v = [round(dtv_ * tag_anteil / 16, 1), round(dtv_ * (1 - tag_anteil) / 8, 1), round(schwer_, 1), breite,
-                     kmh_in if drin >= L / 2 else kmh_aus]
+                     kmh_in if innerorts else kmh_aus, fuss]
                 s0 = 0.0
                 for (x, umg), l in zip(kette, laengen):
                     st = teil[x]
