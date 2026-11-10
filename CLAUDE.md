@@ -417,6 +417,20 @@ Verkehr auf den übrigen Strassen in «3D Schweiz» (Michael, 2026-11-10: «Jetz
              12'000 Autos im Modell, auf dem Handy 5'000; in Anleitung («Autos», Quellen, «Was erfunden ist»), Fusszeile beider Seiten und LICENSE genannt
              dabei gefunden: die Maske der Siedlungen (siedlung in build_strassenlicht.py) zeichnete Stadtzentren vor den Siedlungen, deren Löcher sie
              wieder löschten (Bern, Zürich innen ohne Siedlung, ohne Strassenlicht); seither nach objval geordnet, data/strassenlicht neu gebaut
+Menschen in «3D Schweiz» (Michael, 2026-11-11: «Heisst dass du kannst Taktland tatsächlich bevölkern???», auf die Vorschläge Perrons, Stadt, Wanderwege:
+             «Gerne gemäss deinen Vorschlägen umsetzen»): Knopf «Menschen» an der Wand nach «Autos» (Farbe gewählt), in den Feldern von 4 km und 1 km
+             (komponenten/Menschen.ts): Wartende auf den Perrons (data/perrons3d.json) = DWV der SBB / 432 (Hälfte steigt ein, 18 Betriebsstunden, 5 Minuten
+             warten, WARTENDE_TEILER), je Perron nach seiner Fläche, zufällig mindestens 0,8 m vom Rand, nachts 1 bis 5 Uhr niemand, 22 bis 6 Uhr 35 %;
+             Fussgänger auf den Trottoirs der übrigen Strassen innerorts, 1,4 m neben dem Rand der Fahrbahn (TROTTOIR_M), je km Einwohner je Hektare laut
+             STATPOP 2025 (BFS, data.geo.admin.ch, data/raw/statpop_2025_ha.csv, Mittel der 3 × 3 Hektaren um jeden vierten Punkt der Kette) mal 0,25
+             (FUSS_JE_EINWOHNER in build_autos.py, als 15. Wert der Strassen in data/autos), 7 bis 20 Uhr ganz, bis 23 Uhr 40 %, sonst 6 %; Wanderer auf den
+             Wanderwegen 0,6 je km (WANDERER_JE_KM), 8 bis 18 Uhr; 1,3 m/s ±20 %, Wanderer 1,1 m/s; Figur 1,75 m aus Kästen, Oberteil in 12 gewählten Farben;
+             höchstens 9'000, auf dem Handy 3'000; alles ausser den Quellen gewählt, in Anleitung («Menschen», Quellen, «Was erfunden ist») und Fusszeile;
+             in Bern 408 Wartende und 139 Fussgänger im Feld von 1 km
+Bäume im Wind stärker (Michael, 2026-11-11: «Übrigens bewegen sich die Bäume nicht... schau mal», Bildschirmfoto mit 25 | 35 km/h): an der Spitze bei vollem
+             Wind 5 % der Höhe Neigung, ±7 % Wiegen, ±2 % Flattern und bis 4 % Böen (vorher etwa ein Viertel; bei 25 km/h schwankte ein Baum von 15 m um 15 cm)
+Autos gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»): Karosserie, Kabine und Dach als RoundedBoxGeometry mit einer Stufe
+             (Radius 20, 16 und 5 cm, gewählt), 108 Dreiecke je Kasten
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Halten für Fussgänger in «3D Schweiz» (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): innerorts
