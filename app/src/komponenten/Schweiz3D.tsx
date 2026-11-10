@@ -1421,7 +1421,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Geräusche">
           <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
             Verkehr, ab und zu einen Bus, auf dem Land von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
-            einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug (ein Propellerflugzeug nur von 6 bis 20 Uhr), mit «Autos» jedes Auto, das nahe vorbeifährt, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
+            einen Traktor, nahe an einem Fluss sein Rauschen, an Seen ab 15 km² am Tag Möwen, überall ab und zu ein Flugzeug (ein Propellerflugzeug nur von 6 bis 20 Uhr), mit «Autos» jedes Auto, das nahe vorbeifährt, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
             Viertelstunde (zur vollen Stunde mit den Stundenschlägen), mit «Züge» ein Pfiff, wenn in der Nähe ein Zug laut Fahrplan abfährt, mit
             «Schiffe» das Horn, wenn ein Schiff ablegt. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
             einer Stadt hört man weiter, auch im Feld von 16 km und noch gut einen Kilometer neben der Siedlung, leiser.</p>
@@ -1429,7 +1429,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             der Szene und wann Züge und Schiffe laut Fahrplan abfahren.</p>
           <p className="mt-2">Der Verkehr in der Stadt, die Kuhglocken und der Fluss sind <b>Aufnahmen</b> («Background traffic noise» von Froey_, «cowbells2» von
             einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife;
-            ebenso das vorbeifahrende Auto («car9» von lndip) und das Propellerflugzeug («Propeller plane» von Breviceps, beide freesound.org, CC0).</p>
+            ebenso die Möwen («ES Seagulls from Window 01» von se2001), das vorbeifahrende Auto («car9» von lndip) und das Propellerflugzeug («Propeller plane» von Breviceps, alle freesound.org, CC0).</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird, ob und wann eine Kirche läutet und wie ein Zug oder Schiff abfährt.</p>
         </Abschnitt>
@@ -1561,7 +1561,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               die Brücke dort mit Lage gibt.</li>
             <li>Verkehr in der Stadt: Aufnahme «Background traffic noise» von Froey_, freesound.org (CC0); Kuhglocken: Aufnahme «cowbells2»
               von deleted_user_229898, freesound.org (CC0); Fluss: Aufnahme «Rapidly Flowing Water (loopable)» von Osiruswaltz, freesound.org (CC0); vorbeifahrendes
-              Auto: Aufnahme «car9» von lndip, freesound.org (CC0); Propellerflugzeug: Aufnahme «Propeller plane» von Breviceps, freesound.org (CC0).</li>
+              Auto: Aufnahme «car9» von lndip, freesound.org (CC0); Propellerflugzeug: Aufnahme «Propeller plane» von Breviceps, freesound.org (CC0); Möwen: Aufnahme «ES Seagulls from Window 01» von se2001, freesound.org (CC0); Fläche der Seen aus ihrem Umriss laut swissTLMRegio (swisstopo).</li>
             <li>Gebäude ohne Fenster: Gebäudeklasse Industriegebäude oder Behälter, Silos und Lagergebäude laut Gebäude- und Wohnungsregister (GWR),
               Bundesamt für Statistik BFS.</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
@@ -1615,8 +1615,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Autos: die Autos, ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn.
               Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA. Unter den
               fahrenden Autos ist das Luftbild übermalt.</li>
-            <li>Geräusche der Umgebung: Bus, Kühe, Traktor und das Flugzeug hoch oben sind im Programm erzeugt, Verkehr, Kuhglocken, Fluss, das
-              vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
+            <li>Geräusche der Umgebung: Bus, Kühe, Traktor und das Flugzeug hoch oben sind im Programm erzeugt, Verkehr, Kuhglocken, Fluss, Möwen, das
+              vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
             <li>Kirchenglocken, Pfiff zur Abfahrt und Schiffshorn: im Programm erzeugt; belegt sind nur die Lage der Kirchen und die Abfahrten laut Fahrplan.</li>
@@ -1744,6 +1744,8 @@ const UMGEBUNG_BLICK_VOLL_M = 1500, UMGEBUNG_BLICK_BIS_M = 6000, UMGEBUNG_BRILLE
 const UMGEBUNG_STADT_BLICK_VOLL_M = 5000, UMGEBUNG_STADT_BLICK_BIS_M = 25000, UMGEBUNG_STADT_BRILLE_BIS_M = 1.5, UMGEBUNG_STADT_FERN_SCHRITT_M = 600
 /** Kirchenglocken (Michael, 2026-11-10, gewählt): voll bis 150 m neben einer Kirche, still ab 1,5 km, mit der Nähe wie der Stadtverkehr (gewählt) */
 const KIRCHE_VOLL_M = 150, KIRCHE_BIS_M = 1500
+/** Möwen: Seen ab 15 km² (Michael), am Ufer voll bis 150 m, still ab 600 m (gewählt) */
+const UMGEBUNG_SEE_KM2 = 15, UMGEBUNG_SEE_VOLL_M = 150, UMGEBUNG_SEE_BIS_M = 600
 const UMGEBUNG_FLUSS_VOLL_M = 60, UMGEBUNG_FLUSS_BIS_M = 400, UMGEBUNG_STADT_SCHRITT_M = 150, UMGEBUNG_RAND_M = 500
 /** so viel der Grösse haben die Züge in den Feldern von 4 km und 1 km (Michael, 2026-10-28: «ungefähr 60%»), gewählt */
 const ZUG_NAH_MASS = 0.6
@@ -5462,6 +5464,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return p
     }
     const fluesse = (zusatz.fluesse ?? []).map((f) => linie(f, 1e5)).filter(imKasten)
+    // Seen ab UMGEBUNG_SEE_KM2 (Fläche aus dem Umriss laut swissTLMRegio, ohne Inseln) für die Möwen (Michael, 2026-11-10: «Nur bei Seen ab 15km2»)
+    const flaeche = (q: Array<[number, number]>) => { let s = 0; for (let i = 0, j = q.length - 1; i < q.length; j = i++) s += (q[j][0] + q[i][0]) * (q[j][1] - q[i][1]); return Math.abs(s) / 2 }
+    const grosseSeen = zusatz.seen.seen.map((x) => x.ringe.map((r) => linie(r, 1e5)))
+      .filter((ringe) => ringe.length && imKasten(ringe[0]) && flaeche(ringe[0]) - ringe.slice(1).reduce((a, q) => a + flaeche(q), 0) >= UMGEBUNG_SEE_KM2 * 1e6)
     let siedlung: Array<Array<[number, number]>> = []
     // Kirchen (swissTLMRegio, data/kirchen.json) im Kasten, für die Glocken
     let kirchen: number[] = []
@@ -5509,6 +5515,21 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       return z / 25
     }
+    // im See voll, am Ufer voll bis UMGEBUNG_SEE_VOLL_M, still ab UMGEBUNG_SEE_BIS_M
+    const seeBei = (e: number, n: number) => {
+      let best = 0
+      for (const [aussen] of grosseSeen) {
+        if (drinnen(aussen, e, n)) return 1
+        let d = Infinity
+        for (let i = 1; i < aussen.length; i++) {
+          const [ae, an] = aussen[i - 1], [ce, cn] = aussen[i], dx = ce - ae, dy = cn - an, l2 = dx * dx + dy * dy
+          const t = l2 ? Math.max(0, Math.min(1, ((e - ae) * dx + (n - an) * dy) / l2)) : 0
+          d = Math.min(d, Math.hypot(e - ae - t * dx, n - an - t * dy))
+        }
+        best = Math.max(best, Math.max(0, Math.min(1, (UMGEBUNG_SEE_BIS_M - d) / (UMGEBUNG_SEE_BIS_M - UMGEBUNG_SEE_VOLL_M))))
+      }
+      return best
+    }
     const flussBei = (e: number, n: number) => {
       let d = Infinity
       for (const q of fluesse) for (let i = 1; i < q.length; i++) {
@@ -5549,7 +5570,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // Stunde und Monat in Schweizer Zeit
       const zt = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric', hourCycle: 'h23', month: 'numeric' }).formatToParts(zeit)
       const teil = (art: string) => Number(zt.find((x) => x.type === art)?.value ?? NaN)
-      const u = nahStadt > 0 ? { stadt: nah > 0 ? stadtBei(e, n) : 0, stadtFern: stadtFernBei(e, n), nahStadt, fluss: nah > 0 ? flussBei(e, n) : 0, nah, stunde: teil('hour'), monat: teil('month'), hoehe: bestandHoehe(b, e, n), kirche: kircheBei(e, n) * nahStadt, zeitMs: zeit.getTime() } : null
+      const u = nahStadt > 0 ? { stadt: nah > 0 ? stadtBei(e, n) : 0, stadtFern: stadtFernBei(e, n), nahStadt, fluss: nah > 0 ? flussBei(e, n) : 0, see: nah > 0 ? seeBei(e, n) : 0, nah, stunde: teil('hour'), monat: teil('month'), hoehe: bestandHoehe(b, e, n), kirche: kircheBei(e, n) * nahStadt, zeitMs: zeit.getTime() } : null
       if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dUmgebung: unknown }).s3dUmgebung = { ...u, e, n, siedlung: siedlung.length, fluesse: fluesse.length }
       umgebungHoeren(u)
     }, 500)
