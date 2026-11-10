@@ -1853,7 +1853,7 @@ const ZUG_LAMPE_SEITE = 0.28, ZUG_LAMPE_HOEHE = -0.21, ZUG_LAMPE_R = 0.07, ZUG_L
  *  der unteren; die Lage oben (Höhe und Abstand von der Spitze als Anteil der Höhe des Zugs) und das Rot gewählt */
 // die dritte Lampe über der Frontscheibe (Michael, 2026-11-10: «das mittlere Licht muss allerdings weiter oben, überhalb der Windschutzscheibe sein»; vorher -0,02 und 0,012)
 // seit 2026-11-10 vorne im Kasten auf dem Dach (LICHTKASTEN_* in ZugForm.ts)
-const ZUG_LAMPE_OBEN_HOEHE = 0.49, ZUG_LAMPE_OBEN_ZURUECK = 0.415, ZUG_SCHLUSS_FARBE = '#ff2a1a', ZUG_LAMPEN = 5
+const ZUG_LAMPE_OBEN_HOEHE = 0.49, ZUG_LAMPE_OBEN_ZURUECK = 0.415, ZUG_SCHLUSS_FARBE = '#ff2a1a', ZUG_LAMPEN = 6
 /** der Lichtkegel als Bild: hell an der Lok, nach vorne breiter und schwächer */
 function stirnBild() {
   const c = document.createElement('canvas'), x = c.getContext('2d')!
@@ -5279,6 +5279,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             for (const seite of [-1, 1]) {
               lampeSetzen(ZUG_LAMPEN * zahl + 3 + (seite + 1) / 2, seite * ZUG_LAMPE_SEITE * ZUG_BREITE, ZUG_LAMPE_HOEHE * ZUG_HOEHE, -ZUG_WAGEN_M / 2000)
             }
+            // am Schluss dieselben drei Lampen wie vorne, nur rot, die obere im Kasten auf dem Dach (Michael, 2026-11-10: «Beim hintersten Wagen soll alles
+            // genau gleich sein, ausser dass die Spitze weiss und nicht rot ist und die Lichter rot sind»)
+            lampeSetzen(ZUG_LAMPEN * zahl + 5, 0, ZUG_LAMPE_OBEN_HOEHE * ZUG_HOEHE, -(ZUG_WAGEN_M / 2000 - ZUG_LAMPE_OBEN_ZURUECK * ZUG_HOEHE))
           }
           if (w === 0 && verdeckt) {
             m.makeScale(0, 0, 0)
