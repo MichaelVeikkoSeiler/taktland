@@ -15,10 +15,12 @@ export const ZUG_MASS_BREITE = 0.045
 export const ZUG_BREITE = ZUG_MASS_BREITE * 0.85 * 0.9 * 0.85, ZUG_HOEHE = 0.05
 /** und nochmals 15 % (Michael, 2026-11-10: «Bitte die Züge grundsätzlich 15% schmaler machen») */
 /** Stromabnehmer auf Lok und Steuerwagen (Michael, 2026-11-10: «Der Triebwagen und der letzte Wagen sollen einen Pantograf auf dem Dach haben»):
- *  ein Einholmstromabnehmer, Masse in Teilen der Höhe und Breite, Lage hinter dem Kopf; Gestalt und Masse gewählt, in keiner Quelle */
-const PANTO_HOCH = 0.42, PANTO_BREIT = 0.8, PANTO_ZURUECK = 2.6
+ *  ein Einholmstromabnehmer, seit 2026-11-10 schmaler (vorher 0,8 der Breite; Michael: «die Stromabnehmer weniger breit»), Masse in Teilen der Höhe und Breite, Lage hinter dem Kopf; Gestalt und Masse gewählt, in keiner Quelle */
+const PANTO_HOCH = 0.42, PANTO_BREIT = 0.5, PANTO_ZURUECK = 2.6
 /** Dicke der Arme in Teilen der Höhe (seit 2026-11-10 dünner, vorher 0,035) */
 const PANTO_DICK = 0.02
+/** wie weit das Fahrwerk am Kopf zurückweicht, in Teilen seiner Höhe; gewählt */
+const FAHRWERK_SCHRAEG = 1.6
 /** Frontscheibe: halbe Breite in Teilen der Zugbreite, oben und unten auf der Rundung des Kopfs (0 vorne unten, 0,62 am Dach); gewählt */
 const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 /** Kasten des oberen Lichts auf dem Dach, Lage in Teilen der Höhe vom vorderen Ende, Breite in Teilen der Zugbreite; gewählt */
@@ -59,7 +61,18 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   kasten.translate(0, 0, hinten ? -L / 2 + kopf : -L / 2)
   mesh(kasten, hell)
   // Fahrwerk dunkel und etwas schmaler
-  mesh(new THREE.BoxGeometry(W * 0.86, unten + h, L * 0.96), schwarz).position.y = (-h + unten) / 2
+  // an Lok und Steuerwagen am Kopf von oben nach unten zurück abgeschrägt (Michael, 2026-11-10: «dort wo die Räder sind also der dunkelgraue kasten etwas
+  // von vorne gegen hinten abschrägen»; Schräge gewählt)
+  if (i === 0 || i === ZUG_WAGEN) {
+    const vz = i === 0 ? 1 : -1, ende = L * 0.48, schraeg = (unten + h) * FAHRWERK_SCHRAEG
+    const seite = new THREE.Shape()
+    seite.moveTo(-ende, -h); seite.lineTo(ende - schraeg, -h); seite.lineTo(ende, unten); seite.lineTo(-ende, unten); seite.closePath()
+    const fw = new THREE.ExtrudeGeometry(seite, { depth: W * 0.86, bevelEnabled: false })
+    // der Riss liegt in x (längs) und y, ausgezogen in z: so drehen, dass längs z ist und quer x
+    fw.rotateY(-Math.PI / 2); fw.translate(W * 0.43, 0, 0)
+    if (vz < 0) fw.rotateY(Math.PI)
+    mesh(fw, schwarz)
+  } else mesh(new THREE.BoxGeometry(W * 0.86, unten + h, L * 0.96), schwarz).position.y = (-h + unten) / 2
   // Fensterband auf beiden Seiten, knapp vor der Wand
   const band = new THREE.BoxGeometry(W * 1.03, H * FENSTER_HOCH, (L - kopf) * 0.92)
   const fenster = mesh(band, schwarz)
@@ -75,7 +88,7 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     // Stromabnehmer: Sockel, unterer Arm schräg nach hinten, oberer Arm schräg nach vorne, oben die Schleifleiste quer
     const vorn = hinten ? -1 : 1, z0p = vorn * (L / 2 - PANTO_ZURUECK * H)
     const dick = H * PANTO_DICK, hoch = PANTO_HOCH * H, arm = hoch / 2
-    mesh(new THREE.BoxGeometry(W * 0.5, H * 0.04, H * 0.5), schwarz).position.set(0, h + H * 0.02, z0p)
+    mesh(new THREE.BoxGeometry(W * 0.32, H * 0.04, H * 0.5), schwarz).position.set(0, h + H * 0.02, z0p)
     // unterer Arm vom Sockel nach hinten oben, oberer von dort nach vorne oben bis über den Sockel
     const knieZ = z0p - vorn * H * 0.45, knieY = h + arm
     const stab = (ax: number, ay: number, az: number, bx: number, by: number, bz: number) => {
