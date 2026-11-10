@@ -275,3 +275,71 @@ export function retuscheZurueck(ctx: CanvasRenderingContext2D, liste: Retusche[]
     ctx.putImageData(jetzt, r.x, r.y)
   }
 }
+
+/**
+ * Halten für Fussgänger (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): ab und zu hält
+ * innerorts ein Auto vor einer Stelle, an der ein gezeichneter Fussgänger die Strasse quert; die Autos dahinter stauen sich und fahren danach
+ * wieder an. Erfunden: wo, wann und wie oft, die Fussgänger, das Bremsen und Anfahren; Fussgängerstreifen stehen in keiner unserer Quellen.
+ */
+/** Bremsen und Anfahren in m/s², Lücke zum Vordermann im Stau, Aufholen danach (Anteil des Tempos), gewählt */
+export const HALT_BREMSEN = 3, HALT_ANFAHREN = 2, HALT_LUECKE_M = 2, HALT_AUFHOLEN = 1.3
+/** so oft je Sekunde beginnt ein Halt, wenn innerorts Autos in der Nähe der Hörstelle fahren, höchstens so viele zugleich, so nah, gewählt */
+export const HALT_JE_S = 0.07, HALT_HOECHSTENS = 2, HALT_NAH_M = 450
+/** der Fussgänger quert so schnell, so weit vor der Haltelinie; so oft hupt einer dahinter, gewählt */
+export const FUSS_MS = 1.3, FUSS_VOR_M = 2.5, HALT_HUPE = 0.3
+
+export interface Halt { kk: AutoKette; richtung: 1 | -1; S: number; bis: number; fussAb: number; fussBis: number
+  e: number; n: number; de: number; dn: number; halb: number; hupenUm: number | null; fuss: THREE.Object3D | null }
+/** je Auto im Stau: wie viele Meter hinter seinem Platz laut der Kette (lauf) und sein Tempo jetzt in m/s */
+export interface Verzug { v: number; sp: number }
+
+/** die Plätze einer gestauten Kette neu: jedes Auto bremst vor der Haltelinie oder seinem Vordermann (höchstens HALT_BREMSEN), fährt danach mit
+ *  HALT_ANFAHREN an und holt mit HALT_AUFHOLEN seines Tempos auf, bis es wieder an seinem Platz ist; gibt zurück, ob noch etwas gestaut ist */
+export function stauRechnen(liste: Array<{ a: AutoPlatz; lauf: number; lang: number }>, halte: Halt[], verzug: Map<AutoPlatz, Verzug>, jetzt: number, dt: number): boolean {
+  let noch = halte.some((h) => jetzt < h.bis)
+  for (const r of [1, -1] as const) {
+    const halt = halte.find((h) => h.richtung === r && jetzt < h.bis) ?? null
+    const reihe = liste.filter((x) => x.a.richtung === r).map((x) => {
+      const z = verzug.get(x.a) ?? { v: 0, sp: x.a.ms }
+      return { ...x, z, pos: x.lauf - z.v }
+    })
+    reihe.sort((u, w) => w.pos - u.pos)
+    let vor = halt ? halt.S : Infinity, vorHalb = 0, linie = !!halt
+    for (const x of reihe) {
+      const grenze = linie ? vor - x.lang / 2 - 1 : vor - vorHalb - x.lang / 2 - HALT_LUECKE_M
+      // schon über der Linie und frei: fährt weiter, ist kein Vordermann der anderen
+      if (linie && x.z.v === 0 && x.pos > grenze) continue
+      linie = false
+      const ziel = x.a.ms * (x.z.v > 0.01 ? HALT_AUFHOLEN : 1)
+      const erlaubt = Math.sqrt(2 * HALT_BREMSEN * Math.max(0, grenze - x.pos))
+      x.z.sp = Math.max(0, Math.min(x.z.sp + HALT_ANFAHREN * dt, ziel, erlaubt))
+      x.z.v = Math.max(0, x.z.v + (x.a.ms - x.z.sp) * dt)
+      x.pos = x.lauf - x.z.v
+      if (x.pos > grenze) { x.pos = grenze; x.z.v = Math.max(0, x.lauf - grenze); x.z.sp = 0 }
+      vor = x.pos; vorHalb = x.lang / 2
+      if (x.z.v > 0.01 || x.z.sp < x.a.ms - 0.01) { verzug.set(x.a, x.z); noch = true } else verzug.delete(x.a)
+    }
+  }
+  return noch
+}
+
+/** ein Fussgänger, gezeichnet: Beine, Körper, Kopf, 1,75 m; Farbe des Oberteils gewählt */
+const FUSS_FARBEN = ['#2b5d34', '#1f3f7a', '#a8102e', '#c9a227', '#f2f2f2', '#3c3c3c', '#8a1a1a']
+export function fussgaenger(nr: number): THREE.Group {
+  const g = new THREE.Group()
+  const teil = (b: number, h: number, t: number, y: number, farbe: string, x = 0) => {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(b / 1000, h / 1000, t / 1000), new THREE.MeshLambertMaterial({ color: farbe }))
+    m.position.set(x / 1000, y / 1000, 0); m.castShadow = true
+    g.add(m)
+    return m
+  }
+  teil(0.16, 0.85, 0.18, 0.425, '#2a2d33', -0.11).name = 'bein'
+  teil(0.16, 0.85, 0.18, 0.425, '#2a2d33', 0.11).name = 'bein'
+  teil(0.46, 0.62, 0.26, 1.16, FUSS_FARBEN[Math.floor(zufall(nr * 1.7) * FUSS_FARBEN.length)])
+  teil(0.22, 0.24, 0.22, 1.6, '#d9b08c')
+  return g
+}
+export function fussWeg(g: THREE.Object3D) {
+  g.removeFromParent()
+  g.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh) { m.geometry.dispose(); (m.material as THREE.Material).dispose() } })
+}

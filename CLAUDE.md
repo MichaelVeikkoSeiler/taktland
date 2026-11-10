@@ -407,7 +407,7 @@ Verkehr auf den übrigen Strassen in «3D Schweiz» (Michael, 2026-11-10: «Jetz
              swissTLM3D 10m, 8m, 6m, 4m und 3m Strasse, Ein- und Ausfahrt (STRASSEN in build_autos.py); die Menge laut Verkehrsmodell des ARE (Belastung Personen- und
              Güterverkehr Strasse, NPVM 2023 und AMG des UVEK, data.geo.admin.ch, gpkg 100 MB, data/raw/are_belastung_strasse.gpkg; ein Modell, keine Zählung):
              alle 20 m der nächste Abschnitt bis 12 m daneben und höchstens 25° schräg, je Stück der Median, wenn die Hälfte trifft; Ketten je Klasse an
-             Knoten mit genau zwei, je Kette der Median nach Länge, ohne Autos unter 500 Fahrzeugen am Tag (STRASSE_AB_DTV, gewählt); Tag und Nacht nach dem
+             Knoten mit genau zwei, je Kette der Median nach Länge, ohne Autos unter 200 Fahrzeugen am Tag (STRASSE_AB_DTV, gewählt; zuerst 500); Tag und Nacht nach dem
              Anteil am Tag an den Zählstellen des ASTRA (Median von 16 Nt / DTV), der Anteil Lastwagen (LW und LZ) gleich für Tag und Nacht; in den Kacheln
              art 2 (beide Richtungen, je eine Spur ein Viertel der Breite rechts, 1,1 bis 2,6 m, STRASSE_QUER_M) und 3 (eine Richtung, auf der Achse), je
              Stück dazu Verkehr je Stunde am Tag und in der Nacht, Anteil Schwerverkehr, Breite und Tempo; Tempo gewählt nach Klasse in und ausserhalb von
@@ -417,6 +417,13 @@ Verkehr auf den übrigen Strassen in «3D Schweiz» (Michael, 2026-11-10: «Jetz
              12'000 Autos im Modell, auf dem Handy 5'000; in Anleitung («Autos», Quellen, «Was erfunden ist»), Fusszeile beider Seiten und LICENSE genannt
              dabei gefunden: die Maske der Siedlungen (siedlung in build_strassenlicht.py) zeichnete Stadtzentren vor den Siedlungen, deren Löcher sie
              wieder löschten (Bern, Zürich innen ohne Siedlung, ohne Strassenlicht); seither nach objval geordnet, data/strassenlicht neu gebaut
+Halten für Fussgänger in «3D Schweiz» (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): innerorts
+             (Ketten der übrigen Strassen mit Tempo bis 35 km/h) beginnt je Sekunde mit 7 % ein Halt (nachts 30 % davon), wenn Autos bis 450 m um die Hörstelle fahren,
+             höchstens 2 zugleich (HALT_* in Autos.ts): das Auto hält 15 m weiter vor einer Linie, ein gezeichneter Fussgänger (1,75 m, fussgaenger) quert 2,5 m davor
+             mit 1,3 m/s die ganze Breite und 1 m mehr; die Autos dahinter bremsen höchstens mit 3 m/s², halten 2 m Lücke, fahren mit 2 m/s² an und holen mit 1,3-fachem
+             Tempo auf (stauRechnen, je Auto Verzug und Tempo, nur in gestauten Ketten); in 30 % der Halte hupt es 1,5 bis 3,5 s nach Beginn (hupe, dieselben
+             Aufnahmen); alles erfunden, Fussgängerstreifen in keiner unserer Quellen; übrige Strassen seither ab 200 Fahrzeugen am Tag (vorher 500), 32'189 km,
+             ausserhalb von Brücken ohne Höhe in den Kacheln (die App nimmt dort das Gelände), 14,3 MB
 Autos auf Brücken in «3D Schweiz» (Michael, 2026-11-10: «Autos fahren nicht sauber auf den Brücken. Teilweise darunter in der Luft»): auf einem Brückenstück
              nimmt ein Auto die Höhe der gezeichneten Fahrbahn an seiner Stelle (deckSuche in Bruecken.ts, deckRef in Schweiz3D.tsx: nächste Achse bis zur halben
              Breite und 1 m, höchstens 8 m von der Höhe laut swissTLM3D, DECK_HOEHE_M), statt einer eigenen Rechnung über die Stücke der Autos
