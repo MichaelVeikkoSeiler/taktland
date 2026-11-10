@@ -417,6 +417,8 @@ Verkehr auf den übrigen Strassen in «3D Schweiz» (Michael, 2026-11-10: «Jetz
              12'000 Autos im Modell, auf dem Handy 5'000; in Anleitung («Autos», Quellen, «Was erfunden ist»), Fusszeile beider Seiten und LICENSE genannt
              dabei gefunden: die Maske der Siedlungen (siedlung in build_strassenlicht.py) zeichnete Stadtzentren vor den Siedlungen, deren Löcher sie
              wieder löschten (Bern, Zürich innen ohne Siedlung, ohne Strassenlicht); seither nach objval geordnet, data/strassenlicht neu gebaut
+Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
+             fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Halten für Fussgänger in «3D Schweiz» (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): innerorts
              (Ketten der übrigen Strassen mit Tempo bis 35 km/h) beginnt je Sekunde mit 7 % ein Halt (nachts 30 % davon), wenn Autos bis 450 m um die Hörstelle fahren,
              höchstens 2 zugleich (HALT_* in Autos.ts): das Auto hält 15 m weiter vor einer Linie, ein gezeichneter Fussgänger (1,75 m, fussgaenger) quert 2,5 m davor
