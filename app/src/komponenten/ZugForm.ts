@@ -127,9 +127,7 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
       geo.computeVertexNormals()
       return geo
     }
-    // wo das Weisse in die rote Spitze übergeht: dort, wo das Fensterband im Kopf endet (Michael, 2026-11-10: «den roten Teil bis an die Kante des
-    // Seitenstreifens ziehen»; vorher 0,62), aus z = z1 − c·t²
-    const T = Math.min(0.99, Math.sqrt((kopf * (1 - FENSTER_IM_KOPF)) / c)), stufen = 14
+    const T = 0.62, stufen = 14
     const tReihe = (von: number, bis: number, k: number) => Array.from({ length: k + 1 }, (_, i) => von + (bis - von) * (i / k))
     hell.side = THREE.DoubleSide
     // beim Steuerwagen ist die Spitze hell, und alles ist um die Senkrechte gedreht, nach hinten gerichtet
