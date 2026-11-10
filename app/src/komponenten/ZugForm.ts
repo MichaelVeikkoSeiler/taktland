@@ -21,6 +21,8 @@ const PANTO_HOCH = 0.42, PANTO_BREIT = 0.8, PANTO_ZURUECK = 2.6
 const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 /** Kasten des oberen Lichts auf dem Dach, Lage in Teilen der Höhe vom vorderen Ende, Breite in Teilen der Zugbreite; gewählt */
 /** Puffer: Abstand von der Mitte in Teilen der Breite, Höhe der Mitte, Radius der Stange und des Tellers und Länge in Teilen der Höhe; gewählt */
+/** wie weit das Fensterband in den Kopf reicht, in Teilen seiner Länge (bis das Dach sinkt); gewählt */
+const FENSTER_IM_KOPF = 0.55
 const PUFFER_SEITE = 0.3, PUFFER_HOEHE = -0.3, PUFFER_R = 0.045, PUFFER_TELLER = 0.085, PUFFER_LANG = 0.2
 export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNTEN = 0.4, LICHTKASTEN_OBEN = 0.56, LICHTKASTEN_BREIT = 0.32
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
@@ -46,7 +48,8 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   // der Steuerwagen am Schluss hat den Kopf hinten
   const hinten = i === ZUG_WAGEN
   const kopf = i === 0 || hinten ? H * 1.6 : 0
-  const kasten = new THREE.ExtrudeGeometry(quer, { depth: L - kopf, bevelEnabled: false, curveSegments: 4 })
+  // so fein wie der Querschnitt des Kopfs (getPoints(6)), sonst stand das Dach am Übergang vor (Michael, 2026-11-10: «hier ist eine unschöne Kante»)
+  const kasten = new THREE.ExtrudeGeometry(quer, { depth: L - kopf, bevelEnabled: false, curveSegments: 6 })
   kasten.translate(0, 0, hinten ? -L / 2 + kopf : -L / 2)
   mesh(kasten, hell)
   // Fahrwerk dunkel und etwas schmaler
@@ -92,6 +95,9 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     }
     let schnitt = quer.getPoints(6)
     if (schnitt[0].equals(schnitt[schnitt.length - 1])) schnitt = schnitt.slice(0, -1)
+    // offen unten: ohne den Boden im Ring bekommen die Seiten unten keine Normalen nach unten, sonst wurde die Seite des Kopfs nach unten dunkel und
+    // stiess mit einer Kante an den Kasten (Michael, 2026-11-10: «hier ist eine unschöne Kante»); der Boden liegt ohnehin über dem Fahrwerk
+    const offen = [...schnitt.slice(1), schnitt[0]]
     /** Ringe des Querschnitts an den Stellen zs, je nach oben gestaucht; offen = nur ein Stück des Rings */
     const loft = (zs: number[], punkte: THREE.Vector2[], geschlossen: boolean, weiter = 1, deckel = false) => {
       const pos: number[] = [], idx: number[] = []
@@ -127,8 +133,8 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     const spitze = new THREE.MeshLambertMaterial({ color: hinten ? ZUG_HELL : ZUG_ROT, side: THREE.DoubleSide })
     materialien.push(spitze)
     const kopfteil = (geo: THREE.BufferGeometry, mat: THREE.Material) => { if (hinten) geo.rotateY(Math.PI); return mesh(geo, mat) }
-    kopfteil(loft([z0, ...tReihe(1, T, 6).map(zBei)], schnitt, true), hell)
-    kopfteil(loft(tReihe(T, 0, stufen).map(zBei), schnitt, true, 1, true), spitze).userData.spitze = hinten ? 'hinten' : 'vorn'
+    kopfteil(loft([z0, ...tReihe(1, T, 6).map(zBei)], offen, false), hell)
+    kopfteil(loft(tReihe(T, 0, stufen).map(zBei), offen, false, 1, true), spitze).userData.spitze = hinten ? 'hinten' : 'vorn'
     // Frontscheibe: der obere Teil des Querschnitts, eng auf der Rundung; seit 2026-11-10 schmaler und nicht bis zum Dach, so bleibt ringsum ein roter
     // Rahmen wie beim Referenzbild (Michael: «kannst du das Fenster der Triebzüge noch etwas abändern? So im Stil dieses Referenzbildes?»; Masse gewählt)
     const scheibeSchnitt = schnitt.filter((q) => q.y >= unten + 0.5 * (h - unten) && Math.abs(q.x) <= W * SCHEIBE_BREIT)
@@ -145,6 +151,11 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     const kasten2 = new THREE.ExtrudeGeometry(riss, { depth: kb, bevelEnabled: false, curveSegments: 6 })
     kasten2.rotateY(-Math.PI / 2); kasten2.translate(kb / 2, 0, 0)
     kopfteil(kasten2, hell)
+    // das Fensterband weiter nach vorne in den Kopf, bis dort, wo sein Dach sinkt (Michael, 2026-11-10: «die Seitenfenster können weiter nach vorne kommen»)
+    // es schliesst ans Band des Kastens an, das 4 % vor dessen Ende aufhört
+    const bandVon = L / 2 - kopf - (L - kopf) * 0.04, bandLang = L / 2 - kopf * (1 - FENSTER_IM_KOPF) - bandVon
+    const bandKopf = kopfteil(new THREE.BoxGeometry(W * 1.03, H * 0.22, bandLang).translate(0, h - r - H * 0.08, bandVon + bandLang / 2), schwarz)
+    bandKopf.userData.fenster = true
     // vorne zwei Puffer (Michael, 2026-11-10: «Und vorne noch die Puffer?»): Stange und Teller, dunkel; Lage und Masse gewählt
     for (const seite of [-1, 1]) {
       const x = seite * W * PUFFER_SEITE, y = PUFFER_HOEHE * H
