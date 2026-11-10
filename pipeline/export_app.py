@@ -150,6 +150,12 @@ def main():
         if (ZIEL / "fahrleitung").exists():
             shutil.rmtree(ZIEL / "fahrleitung")
         shutil.copytree(masten, ZIEL / "fahrleitung")
+    # Autos auf Autobahnen und Autostrassen für «3D Schweiz» (pipeline/build_autos.py)
+    autos = ROOT / "data" / "autos"
+    if autos.exists():
+        if (ZIEL / "autos").exists():
+            shutil.rmtree(ZIEL / "autos")
+        shutil.copytree(autos, ZIEL / "autos")
     # Brücken für «3D Schweiz» (pipeline/build_bruecken3d.py)
     bruecken = ROOT / "data" / "bruecken3d"
     if bruecken.exists():
