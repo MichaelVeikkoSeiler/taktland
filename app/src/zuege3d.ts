@@ -71,7 +71,9 @@ export function jetztImFahrplan(ix: Pick<ZugIndex, 'von'>, zeit = new Date(Date.
   const heute = Date.UTC(Number(teile.year), Number(teile.month) - 1, Number(teile.day))
   const [j, m, t] = ix.von.split('-').map(Number)
   const tag = Math.round((heute - Date.UTC(j, m - 1, t)) / 86_400_000)
-  return { tag, minuten: Number(teile.hour) * 60 + Number(teile.minute) + Number(teile.second) / 60 }
+  // mit den Millisekunden (Michael, 2026-11-10: «Leider höre ich den Zug nicht, wenn er an mir vorbeifährt»: auf ganze Sekunden sprang jeder Zug einmal je
+  // Sekunde, dazwischen galt er fürs Ohr als stehend und das Zuggeräusch setzte nie ein)
+  return { tag, minuten: Number(teile.hour) * 60 + Number(teile.minute) + (Number(teile.second) + zeit.getMilliseconds() / 1000) / 60 }
 }
 
 /** so lange steht ein Zug vor der ersten Abfahrt und nach der letzten Ankunft am Bahnhof (Michael, 2026-10-26: «Wenn sie halten
