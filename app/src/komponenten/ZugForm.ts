@@ -12,7 +12,11 @@ export const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 5, ZUG_LUECKE_M = 8
 export const ZUG_MASS_BREITE = 0.045
 /** die Form 15 % schmaler (Michael, 2026-10-30: «Die Züge sind etwas zu breit. Bitte um 15% schmaler machen»), dann noch 10 % («Züge noch 10%
  *  schmaler») */
-export const ZUG_BREITE = ZUG_MASS_BREITE * 0.85 * 0.9, ZUG_HOEHE = 0.05
+export const ZUG_BREITE = ZUG_MASS_BREITE * 0.85 * 0.9 * 0.85, ZUG_HOEHE = 0.05
+/** und nochmals 15 % (Michael, 2026-11-10: «Bitte die Züge grundsätzlich 15% schmaler machen») */
+/** Stromabnehmer auf Lok und Steuerwagen (Michael, 2026-11-10: «Der Triebwagen und der letzte Wagen sollen einen Pantograf auf dem Dach haben»):
+ *  ein Einholmstromabnehmer, Masse in Teilen der Höhe und Breite, Lage hinter dem Kopf; Gestalt und Masse gewählt, in keiner Quelle */
+const PANTO_HOCH = 0.42, PANTO_BREIT = 0.8, PANTO_ZURUECK = 2.6
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
 export const ZUG_HELL = '#dcdcdc', ZUG_DUNKEL = '#2e2e2e', ZUG_ROT = '#a8102e'
 
@@ -51,6 +55,23 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   if (i < ZUG_WAGEN) {
     const luecke = ZUG_LUECKE_M / 1000
     mesh(new THREE.BoxGeometry(W * 0.8, H * 0.78, luecke + 0.002), schwarz).position.set(0, unten / 2 + h / 2 - H * 0.02, -L / 2 - luecke / 2)
+  }
+  if (i === 0 || hinten) {
+    // Stromabnehmer: Sockel, unterer Arm schräg nach hinten, oberer Arm schräg nach vorne, oben die Schleifleiste quer
+    const vorn = hinten ? -1 : 1, z0p = vorn * (L / 2 - PANTO_ZURUECK * H)
+    const dick = H * 0.035, hoch = PANTO_HOCH * H, arm = hoch / 2
+    mesh(new THREE.BoxGeometry(W * 0.5, H * 0.04, H * 0.5), schwarz).position.set(0, h + H * 0.02, z0p)
+    // unterer Arm vom Sockel nach hinten oben, oberer von dort nach vorne oben bis über den Sockel
+    const knieZ = z0p - vorn * H * 0.45, knieY = h + arm
+    const stab = (ax: number, ay: number, az: number, bx: number, by: number, bz: number) => {
+      const lang = Math.hypot(bx - ax, by - ay, bz - az)
+      const st = mesh(new THREE.BoxGeometry(dick, dick, lang), schwarz)
+      st.position.set((ax + bx) / 2, (ay + by) / 2, (az + bz) / 2)
+      st.lookAt(st.position.clone().add(new THREE.Vector3(bx - ax, by - ay, bz - az)))
+    }
+    stab(0, h + H * 0.04, z0p, 0, knieY, knieZ)
+    stab(0, knieY, knieZ, 0, h + hoch, z0p + vorn * H * 0.05)
+    mesh(new THREE.BoxGeometry(W * PANTO_BREIT, dick * 1.4, dick * 2), schwarz).position.set(0, h + hoch, z0p + vorn * H * 0.05)
   }
   if (i === 0 || hinten) {
     // Kopf: derselbe Querschnitt wie der Kasten, der nach vorne in einer Rundung niedriger wird, so geht er
