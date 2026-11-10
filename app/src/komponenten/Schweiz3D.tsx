@@ -5207,7 +5207,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (!gleisNetz) return [be + oe, bn + on, null]
           for (const t of [1, 0.75, 0.5, 0.25, 0]) {
             const g = gleisBei(be + oe * t, bn + on * t, de, dn, ZUG_IM_FELD_M)
-            if (g && !g[3]) return [be + oe * t, bn + on * t, t === 1 ? null : g[2]]
+            // auf die Achse selbst, nicht nur in ihre Nähe (Michael, 2026-11-10, Schüpfen: «Ein Zug Linie Bern Biel Bienne fährt ziemlich neben der
+            // Strecke»: der Versatz nach links liess den Zug bis ZUG_IM_FELD_M neben dem linken Gleis im Gras stehen)
+            if (g && !g[3]) return [g[0], g[1], t === 1 ? null : g[2]]
           }
           return [be + oe, bn + on, null]
         }
