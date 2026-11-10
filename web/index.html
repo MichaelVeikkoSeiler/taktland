@@ -88,6 +88,9 @@
     .quer figure { margin: 0; }
     .quer img { width: 100%; height: auto; border-radius: 12px; border: 6px solid #212121; box-shadow: 0 10px 30px rgba(0,0,0,.15); }
     .quer figcaption { color: var(--leise); font-size: 14px; margin-top: 6px; }
+    .breitbild { margin: 24px 0 0; }
+    .breitbild img { width: 100%; height: auto; max-height: 520px; object-fit: cover; border-radius: 12px; }
+    .breitbild figcaption { color: var(--leise); font-size: 14px; margin-top: 6px; }
     .blatt { max-width: 420px; margin: 0 auto; box-shadow: 0 10px 30px rgba(0,0,0,.18); transform: rotate(-1.5deg); }
     .dach { color: var(--karmin); font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; margin: 0 0 8px; }
     ul.punkte { padding-left: 0; list-style: none; margin: 16px 0 0; }
@@ -148,8 +151,8 @@
       </picture>
       <h1>Die Schweizer Bahn kennenlernen.</h1>
       <p class="lead">
-        Bahnhöfe, Tunnel und Brücken entdecken, im Zug mitfahren und festhalten, was du
-        durchfahren hast. Jede Angabe stammt aus offenen Daten, mit Quelle.
+        Bahnhöfe, Tunnel und Brücken entdecken, die ganze Schweiz in 3D erkunden, im Zug mitfahren und
+        festhalten, was du durchfahren hast. Jede Angabe stammt aus offenen Daten, mit Quelle.
       </p>
       <div class="knoepfe">
         <a class="knopf rot nur-gross" href="./app/">Taktland öffnen →</a>
@@ -180,7 +183,8 @@
           <li>Die Karte zeigt Gipfel, Kulturgüter, Seilbahnen, Wald und Seen am Weg.</li>
           <li>Tunnel und Brücken, viele mit Länge, auch auf Strecken von BLS, RhB und anderen Bahnen.</li>
           <li>Sehenswertes, das du täglich siehst, schaltest du einzeln stumm. Am Ziel meldet Taktland die Ankunft.</li>
-          <li>Ohne Zug ausprobieren: Die Probefahrt spielt jede Strecke ab.</li>
+          <li>Welcher Zug? Beim Start zeigt Taktland die Züge, die laut Fahrplan gerade vom Start zum Ziel fahren; der gewählte steht danach im Logbuch.</li>
+          <li>Ohne Zug ausprobieren: «Probefahren» spielt jede Strecke ab, gleich in 3D.</li>
           <li>In 3D: das Gelände mit Luftbild rund um den Zug, zum Drehen und Zoomen, nah an der Strecke besonders scharf, auch aus dem Führerstand.</li>
           <li>In 3D das echte Wetter der nächsten Station von MeteoSchweiz: Wolken, Regen oder Schnee. Der Sonnenschalter stellt auf Schönwetter.</li>
         </ul>
@@ -198,21 +202,55 @@
       </p>
       <ul class="punkte">
         <li>Ein gezeichneter Führerstand mit Seitenfenstern und drei Anzeigen: die Strecke, der Tacho und die nächsten Bahnhöfe, Tunnel und Brücken mit Entfernung.</li>
-        <li>In der Modellbahn fährst du selbst: Ein Hebel wählt das Tempo, der andere bremst, dazu die Schnellbremse.</li>
+        <li>Beim Probefahren fährst du selbst: Ein Hebel wählt das Tempo, der andere bremst, dazu die Schnellbremse.</li>
+          <li>Unterwegs begegnen dir die Züge laut Fahrplan auf den Gleisen daneben, dazu Perrons, Brücken, Fahrleitungen, Gebäude und Bäume.</li>
+          <li>Mitfahren laut Fahrplan: Aus der Virtuellen Schweiz steigst du in den Führerstand eines Zugs und fährst seinen Weg zu seinen Zeiten mit.</li>
+          <li>Nachts Sterne, Mond und Licht in den Fenstern, dazu die Wolken laut Wettermodell von MeteoSchweiz.</li>
         <li>Die Leuchtknöpfe schalten Zuggeräusch, Stirnlicht, Signalhorn, Dämmerung und was gemeldet wird. Leuchtet ein Knopf, ist er an.</li>
         <li>Draussen das echte Wetter der nächsten Station, mit Regen und Schnee, oder auf Knopfdruck Schönwetter.</li>
-        <li>Mit einer VR-Brille sitzt du in der Modellbahn an einem Pult in 3D und drehst den Kopf frei.</li>
+        <li>Mit einer VR-Brille sitzt du an einem Pult in 3D und drehst den Kopf frei.</li>
       </ul>
       <div class="quer">
         <figure><img src="./bilder/fuehrerstand.webp" width="1200" height="743" loading="lazy"
              alt="Führerstand in Taktland: gezeichnetes Pult mit drei Anzeigen und zwei Hebeln, davor die Gotthard-Bergstrecke bei Erstfeld im Gelände, der Sonnenschalter leuchtet." />
-          <figcaption>Gotthard-Bergstrecke bei Erstfeld in der Modellbahn, mit Schönwetter.</figcaption></figure>
+          <figcaption>Gotthard-Bergstrecke bei Erstfeld beim Probefahren, mit Schönwetter.</figcaption></figure>
         <figure><img src="./bilder/fuehrerstand-wetter.webp" width="1200" height="743" loading="lazy"
              alt="Derselbe Führerstand mit Regen: graue Wolken, Regenstriche vor dem Fenster." />
           <figcaption>Dieselbe Stelle, wie Taktland Regen zeichnet.</figcaption></figure>
       </div>
       <p class="klein-leise">Ein Modell, kein Abbild: Wie hoch die Gleise liegen, wie ein Tunnel innen aussieht und wie das Licht
-         fällt, steht in keiner Quelle. Führerstand und Fahrverhalten sind gezeichnet und gerechnet, Wolken, Regen und Schnee aus der Messung geschlossen.</p>
+         fällt, steht in keiner Quelle. Führerstand und Fahrverhalten sind gezeichnet und gerechnet, Wolken, Regen und Schnee aus Messung und Prognose geschlossen.
+        Wo ein Zug laut Fahrplan gerade ist und auf welchem Gleis er fährt, ist eine Annahme, nicht live.</p>
+    </section>
+
+    <!-- Michael, 2026-11-10: «Kannst du die Marketingseite aktualisieren? Es hat sich ja das eine oder andere geändert» -->
+    <section class="teil" aria-labelledby="virtuell">
+      <p class="dach">Virtuelle Schweiz</p>
+      <h2 id="virtuell">Die ganze Schweiz als Modell auf dem Tisch.</h2>
+      <p>
+        Such einen Ort, eine Adresse, einen Gipfel oder See und tauche ein, in Stufen von der ganzen Schweiz bis auf ein Stück
+        von 1 km. Gelände, Luftbild, Gebäude und Seegrund stammen von swisstopo.
+      </p>
+      <ul class="punkte">
+        <li>Züge und Schiffe fahren laut Fahrplan, mit Zuggeräusch, Pfiff und Schiffshorn. Ein Tipp auf einen Zug zeigt Ziel, nächsten Halt und Gleis; von dort geht es in den Führerstand.</li>
+        <li>Gebäude, Bäume, Wanderwege, Brücken, Perrons und Fahrleitungen, dazu Höhenlinien, Gipfel und die Namen der Seen und Flüsse.</li>
+        <li>Sonne und Schatten zu jeder Zeit, auch als Zeitreise. Nachts Licht in Fenstern und Strassen, Sterne und Mond.</li>
+        <li>Das Wetter: Wolken, Regen und Schnee laut Wettermodell, Windhosen mit Wind und Temperatur von MeteoSchweiz.</li>
+        <li>Geräusche der Umgebung: Stadtverkehr, Fluss, Kuhglocken, Kirchenglocken.</li>
+        <li>Auf Augenhöhe durch das Modell gehen, zu zweit im selben Modell, und mit einer VR-Brille steht es vor dir auf dem Tisch.</li>
+        <li>Von jedem Bahnhof, Tunnel, jeder Brücke und jedem Bahnübergang in Taktland ein Tipp in die Virtuelle Schweiz.</li>
+      </ul>
+      <figure class="breitbild">
+        <picture>
+          <source srcset="./bilder/virtuell-dunkel.webp" media="(prefers-color-scheme: dark)" />
+          <img src="./bilder/virtuell-hell.webp" width="1200" height="800" loading="lazy"
+               alt="Illustration: Jemand mit XR-Brille blickt auf ein Modell einer Landschaft mit zwei Seen auf einem dunklen Sockel." />
+        </picture>
+        <figcaption>Illustration (ChatGPT), kein Bildschirmbild.</figcaption>
+      </figure>
+      <p class="klein-leise">Was echt ist und was gezeichnet: Lage, Grundriss und Höhe der Gebäude, Gelände, Gleise und Fahrplan stammen aus den
+        Daten. Fenster, Lampen, die Form der Wolken und der Bäume, die Geräusche und das Aussehen der Züge sind erfunden; die Anleitung
+        unter dem Modell nennt alles. Auch auf <a href="https://3dland.ch">3dland.ch</a>.</p>
     </section>
 
     <section class="teil zeile umgekehrt" aria-labelledby="bahnhoefe">
@@ -226,7 +264,7 @@
           Nach jeder Antwort steht der Beleg.
         </p>
         <ul class="punkte">
-          <li>Dazu Strecken, Tunnel und Brücken mit eigener Karte.</li>
+          <li>Dazu Strecken, Tunnel, Brücken und Bahnübergänge mit eigener Karte.</li>
           <li>Was die Daten nicht wissen, steht dort als Lücke.</li>
         </ul>
       </div>
@@ -239,20 +277,19 @@
         <p class="dach">Spiele</p>
         <h2 id="spiele">Spielen mit Bahnhöfen, Strecken und Karten.</h2>
         <ul class="punkte">
-          <li><b>Modellbahn:</b> eine Strecke als Modell im Gelände, etwa der Gotthard, die Albula oder deine eigene.
-            Drehen, zoomen und einen Zug darüber fahren lassen; mit einer VR-Brille wie der Meta Quest steht das Modell
-            vor dir auf dem Tisch. Im Führerstand fährst du selbst, mit dem echten Wetter. Ein Modell, kein Abbild der Wirklichkeit.</li>
+          <li><b>Virtuell:</b> die ganze Schweiz als Modell, siehe oben.</li>
+          <li><b>Probefahren:</b> eine Strecke als Modell im Gelände, etwa der Gotthard, die Albula oder deine eigene, und gleich
+            im Zug darüber. Im Führerstand fährst du selbst, mit dem echten Wetter; mit einer VR-Brille wie der Meta Quest steht das Modell
+            vor dir auf dem Tisch. Ein Modell, kein Abbild der Wirklichkeit.</li>
           <li><b>Geo:</b> Wo liegt dieser Bahnhof, Tunnel oder diese Brücke? Setze deinen Pin auf die Karte.</li>
           <li><b>Wo bin ich?</b> Eine Fahrt im Führerstand ohne Namen und Ortstafeln. Wo warst du? Setze den Pin auf die Karte.</li>
           <li><b>Duell:</b> Zwei Bahnhöfe, Strecken oder Tunnel: Wer liegt bei einer Zahl vorne?</li>
           <li><b>Bahnhofsuche:</b> Sechs verdeckte Hinweise, ein Bahnhof. Wie wenige brauchst du?</li>
-          <li><b>3D-Land:</b> die ganze Schweiz als Modell. Such einen Ort, Gipfel oder See und tauche ein, bis auf ein Stück von 1 km,
-            mit Höhenlinien, Wanderwegen, Gebäuden, Bäumen und Sonne mit Schatten. Auch auf 3dland.ch.</li>
         </ul>
-        <p class="klein-leise">Geo und Bahnhofsuche auch zu mehreren, auf einem Gerät oder auf mehreren.</p>
+        <p class="klein-leise">Geo und Bahnhofsuche auch zu mehreren, auf einem Gerät oder auf mehreren; die Virtuelle Schweiz zu zweit.</p>
       </div>
       <div class="handy"><img src="./bilder/modellbahn.webp" width="600" height="1298" loading="lazy"
-           alt="Bildschirm von Taktland: die Gotthard-Bergstrecke als Modell im Gelände mit Luftbild." /></div>
+           alt="Bildschirm von Taktland: die Gotthard-Bergstrecke beim Probefahren als Modell im Gelände mit Luftbild." /></div>
     </section>
 
     <section class="teil zeile umgekehrt" aria-labelledby="logbuch">
@@ -302,7 +339,7 @@
         <div class="kachel">
           <h3>Lücken stehen da</h3>
           <p>Fehlt eine Angabe, sagt Taktland das, statt zu raten. Keine Deutungen; was gerundet
-             oder geschätzt ist, steht mit «etwa» da.</p>
+             oder geschätzt ist, steht mit «etwa» da. Was in 3D gezeichnet ist, steht als erfunden da.</p>
         </div>
         <div class="kachel">
           <h3>Deine Daten bleiben bei dir</h3>
@@ -342,7 +379,7 @@
       <!-- eine Zeile mit den Quellen bleibt sichtbar (die Lizenzen verlangen sie), alles Weitere klappt auf und ist
            zu Beginn zu (Michael, 2026-10-10) -->
       <p>Daten: SBB, opentransportdata.swiss, Bundesamt für Verkehr BAV, Bundesamt für Landestopografie swisstopo,
-         Bundesamt für Statistik BFS, Bundesamt für Umwelt BAFU, Bundesamt für Bevölkerungsschutz BABS.</p>
+         Bundesamt für Statistik BFS, Bundesamt für Umwelt BAFU, Bundesamt für Bevölkerungsschutz BABS, MeteoSchweiz.</p>
       <details>
         <summary>Datenquellen und Lizenzen</summary>
         <p>Bahnhöfe, Linien, Tunnel und Brücken: SBB Open Data (data.sbb.ch); Wartehallen: opentransportdata.swiss.
@@ -350,7 +387,11 @@
            Bundesamt für Landestopografie swisstopo (swissTLMRegio, swissTLM3D, swissALTIRegio, SWISSIMAGE, swissBUILDINGS3D, Swiss Map
            Vector 1000); swissALTIRegio mit Höhenmodellen aus Italien, Österreich, Deutschland und Frankreich.
            Landes- und Kantonsgrenzen: Bundesamt für Statistik BFS. Kulturgüter: Bundesamt für Bevölkerungsschutz BABS.
-           Seilbahnen: BAV. BLN, Pärke und Moorlandschaften: Bundesamt für Umwelt BAFU. Die volle Quellenangabe mit
+           Seilbahnen: BAV. BLN, Pärke und Moorlandschaften: Bundesamt für Umwelt BAFU. Fahrplan, auch für die Züge und Schiffe
+          in der Virtuellen Schweiz: opentransportdata.swiss. Wetter, Wind, Wolken, Regen und Schnee: MeteoSchweiz (Messnetz, lokale
+          Prognose, Wettermodell ICON-CH1-EPS). Seegrund und Fels: swissBATHY3D und swissBEDROCK (swisstopo). Bauart der Brücken:
+          Wikidata. Gebäude ohne Fenster: Gebäude- und Wohnungsregister, BFS. Sterne: Hipparcos-Katalog der ESA. Geräusche:
+          Aufnahmen von freesound.org (CC0). Die volle Quellenangabe mit
            allen Lizenzen steht in der App unter <a href="./app/#/anleitung">Info</a>.</p>
       </details>
       <details>
@@ -365,7 +406,11 @@
            cyon in der Schweiz (zaehler.taktland.ch) speichert je Tag nur Zahlen, ohne IP-Adresse und
            ohne Kennung; wie jeder Webserver führt er ein Zugriffsprotokoll, das cyon verwaltet. Bei Geo und
            der Bahnhofsuche auf mehreren Geräten gehen Name und Tipps über spiel.taktland.ch (cyon), ohne IP-Adresse,
-           und werden nach sechs Stunden gelöscht.</p>
+           und werden nach sechs Stunden gelöscht. «Zu zweit» in der Virtuellen Schweiz schickt dorthin nur, wohin das Gerät im Modell
+          schaut und zeigt, ohne Namen; nach einer Minute ohne Neues fällt es weg.</p>
+        <p>Für Wetter und Wind fragt die App bei data.geo.admin.ch (Bund) nach, für die Suche nach Adressen bei api3.geo.admin.ch (Bund),
+          für Gelände, Gebäude und Bäume in 3D bei daten.taktland.ch (cyon). Diese Dienste sehen wie jeder Server die IP-Adresse und die
+          gefragte Gegend oder den Suchtext; den Standort sendet die App nie.</p>
         <p>Was die App auf deinem Gerät speichert und wie du es löschst, steht in der App unter
            <a href="./app/#/anleitung">Info</a>.</p>
       </details>

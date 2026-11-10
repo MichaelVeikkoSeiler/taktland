@@ -82,7 +82,9 @@ app/         PWA (React, Vite, Tailwind); Lizenztexte mitgelieferter Bibliotheke
 app/public/status.json  Schalter: "verfuegbar": false macht Taktland auf allen Geräten unbenutzbar
              (src/verfuegbar.ts), fehlt die Datei ebenso; ohne Empfang höchstens 30 Tage weiter
 web/         Seite für taktland.ch (reines HTML); pipeline/export_web.py stellt sie mit der App unter
-             /app/ zusammen und setzt die Zahlen (data-zahl) aus dem Index der App ein
+             /app/ zusammen und setzt die Zahlen (data-zahl) aus dem Index der App ein; seit 2026-11-10 mit einem Abschnitt «Virtuelle Schweiz» (Bild: die Illustration von 3D-Land, als solche
+             beschriftet, bilder/virtuell-*.webp), «Probefahren» statt Modellbahn, Züge laut Fahrplan, Welcher Zug?, MeteoSchweiz und weitere Quellen,
+             Datenschutz mit data.geo.admin.ch, api3.geo.admin.ch, daten.taktland.ch und «Zu zweit» (Michael: «Kannst du die Marketingseite aktualisieren?»)
 server/zaehler/  Zähler auf zaehler.taktland.ch (Webhosting bei cyon, von Hand hochladen): je Tag nur
              die Zahl der Aufrufe (web), der Geräte (app) und der neuen Geräte (neu), ohne IP und Kennung;
              die App meldet höchstens einmal am Tag (src/zaehlen.ts), liste/ ist mit Passwort geschützt
