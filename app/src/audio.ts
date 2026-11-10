@@ -854,7 +854,11 @@ function umgebungEinzeln() {
     if (tag && weide && versuch('kuh', land)) t.bis.kuh = kuh(c, quelle(land), jetzt)
     if (weide && !t.glockenDa && versuch('glocke', land)) t.bis.glocke = glocken(c, quelle(land * 0.6), jetzt)
     if (tag && feld && versuch('traktor', land)) t.bis.traktor = traktor(c, quelle(land), jetzt)
-    if (u.stunde >= 6 && u.stunde < 23 && versuch('flugzeug', u.nah)) t.bis.flugzeug = flugzeug(c, quelle(0.7), jetzt)
+    // ein Propellerflugzeug nur am Tag, 6 bis 20 Uhr (Michael, 2026-11-10: «Propeller Flugzeug nur Tagsüber»), dann jedes zweite Mal; sonst das
+    // Flugzeug hoch oben wie bisher, bis 23 Uhr (Anteil gewählt)
+    if (u.stunde >= 6 && u.stunde < 23 && versuch('flugzeug', u.nah)) {
+      t.bis.flugzeug = u.stunde < PROPELLER_BIS_H && Math.random() < 0.5 ? propeller(c, quelle(0.7), jetzt) : flugzeug(c, quelle(0.7), jetzt)
+    }
   } catch { /* ohne Ton */ }
 }
 
@@ -923,6 +927,21 @@ function traktor(c: AudioContext, ziel: GainNode, t0: number) {
   return t0 + dauer + 20
 }
 
+/** ein Propellerflugzeug als Aufnahme (Michael, 2026-11-10): «Propeller plane» von Breviceps, freesound.org/s/515293, CC0, 29,7 s, einmal von Anfang
+ *  bis Ende; lädt sie noch, bleibt es diesmal still */
+const PROPELLER_BIS_H = 20, PROPELLER_LAUT = 1.4
+function propeller(c: AudioContext, ziel: GainNode, t0: number) {
+  void aufnahme(c, 'klang/propeller.mp3').then((puffer) => {
+    if (!puffer || !umgebungTon) return
+    const q = c.createBufferSource(); q.buffer = puffer
+    const g = c.createGain(); g.gain.value = PROPELLER_LAUT
+    q.connect(g).connect(ziel)
+    q.start(Math.max(c.currentTime, t0))
+    umgebungTon.quellen.push(q)
+  }).catch(() => {})
+  return t0 + 30 + 60
+}
+
 /** ein Flugzeug hoch oben: breites Rauschen, langsam an- und abschwellend und tiefer werdend */
 function flugzeug(c: AudioContext, ziel: GainNode, t0: number) {
   const dauer = 22 + Math.random() * 10
@@ -988,6 +1007,35 @@ export function abfahrtsPfiff(laut: number) {
 
 /** Horn eines Schiffs beim Ablegen (Michael, 2026-11-10: Vorschlag «Schiffshorn, wenn ein Schiff laut Fahrplan ablegt», gewählt): ein langer, tiefer
  *  Ton aus zwei Stimmen, gerechnet, gewählt */
+/** ein Auto fährt vorbei (Michael, 2026-11-10): Aufnahme «car9» von lndip, freesound.org/s/660324, CC0, 6,8 s, ein Auto, das an einem vorbeifährt,
+ *  am lautesten nach AUTO_SPITZE_S; die App startet sie so, dass diese Stelle mit dem nächsten Punkt des Autos zusammenfällt. Höchstens
+ *  AUTO_STIMMEN zugleich, Lautstärke gewählt */
+export const AUTO_SPITZE_S = 4.0
+const AUTO_STIMMEN = 6, AUTO_LAUT = 0.9
+let autoStimmen = 0
+/** lädt die Aufnahme schon vorher, damit der erste Wagen nicht still vorbeifährt */
+export function autoKlangLaden() {
+  const c = audioKontext()
+  if (c) void aufnahme(c, 'klang/auto.mp3')
+}
+export function autoVorbei(laut: number) {
+  const c = audioKontext()
+  if (!c || !stand.an || laut <= 0.01 || autoStimmen >= AUTO_STIMMEN) return
+  void aufnahme(c, 'klang/auto.mp3').then((puffer) => {
+    if (!puffer || autoStimmen >= AUTO_STIMMEN) return
+    try {
+      const q = c.createBufferSource(); q.buffer = puffer
+      // ein wenig anderes Tempo je Wagen, damit nicht jedes Auto gleich klingt (gewählt)
+      q.playbackRate.value = 0.94 + Math.random() * 0.12
+      const g = c.createGain(); g.gain.value = AUTO_LAUT * Math.min(1, laut)
+      q.connect(g).connect(ausgang(c))
+      autoStimmen++
+      q.onended = () => { autoStimmen-- }
+      q.start(c.currentTime)
+    } catch { /* ohne Ton */ }
+  }).catch(() => {})
+}
+
 export function schiffshorn(laut: number) {
   const c = audioKontext()
   if (!c || !stand.an || laut <= 0.01) return

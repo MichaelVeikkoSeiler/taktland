@@ -10,7 +10,7 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { AUTO_GEGEN_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, autoLichter, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
+import { AUTO_GEGEN_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, autoLichter, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
 import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -22,7 +22,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
-import { abfahrtsPfiff, knopfTon, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
+import { abfahrtsPfiff, AUTO_SPITZE_S, autoKlangLaden, autoVorbei, knopfTon, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -1421,14 +1421,15 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Geräusche">
           <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
             Verkehr, ab und zu einen Bus, auf dem Land von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
-            einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
+            einen Traktor, nahe an einem Fluss sein Rauschen, überall ab und zu ein Flugzeug (ein Propellerflugzeug nur von 6 bis 20 Uhr), mit «Autos» jedes Auto, das nahe vorbeifährt, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
             Viertelstunde (zur vollen Stunde mit den Stundenschlägen), mit «Züge» ein Pfiff, wenn in der Nähe ein Zug laut Fahrplan abfährt, mit
             «Schiffe» das Horn, wenn ein Schiff ablegt. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
             einer Stadt hört man weiter, auch im Feld von 16 km und noch gut einen Kilometer neben der Siedlung, leiser.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen, Flüsse und Kirchen liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit
             der Szene und wann Züge und Schiffe laut Fahrplan abfahren.</p>
           <p className="mt-2">Der Verkehr in der Stadt, die Kuhglocken und der Fluss sind <b>Aufnahmen</b> («Background traffic noise» von Froey_, «cowbells2» von
-            einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife.</p>
+            einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife;
+            ebenso das vorbeifahrende Auto («car9» von lndip) und das Propellerflugzeug («Propeller plane» von Breviceps, beide freesound.org, CC0).</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird, ob und wann eine Kirche läutet und wie ein Zug oder Schiff abfährt.</p>
         </Abschnitt>
@@ -1559,7 +1560,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Bauart von Brücken: ob eine Brücke eine Bogen- oder Fachwerkbrücke ist und aus Stein, Beton oder Stahl, laut Wikidata (CC0), wo es
               die Brücke dort mit Lage gibt.</li>
             <li>Verkehr in der Stadt: Aufnahme «Background traffic noise» von Froey_, freesound.org (CC0); Kuhglocken: Aufnahme «cowbells2»
-              von deleted_user_229898, freesound.org (CC0); Fluss: Aufnahme «Rapidly Flowing Water (loopable)» von Osiruswaltz, freesound.org (CC0).</li>
+              von deleted_user_229898, freesound.org (CC0); Fluss: Aufnahme «Rapidly Flowing Water (loopable)» von Osiruswaltz, freesound.org (CC0); vorbeifahrendes
+              Auto: Aufnahme «car9» von lndip, freesound.org (CC0); Propellerflugzeug: Aufnahme «Propeller plane» von Breviceps, freesound.org (CC0).</li>
             <li>Gebäude ohne Fenster: Gebäudeklasse Industriegebäude oder Behälter, Silos und Lagergebäude laut Gebäude- und Wohnungsregister (GWR),
               Bundesamt für Statistik BFS.</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
@@ -1613,8 +1615,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Autos: die Autos, ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn.
               Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA. Unter den
               fahrenden Autos ist das Luftbild übermalt.</li>
-            <li>Geräusche der Umgebung: Bus, Kühe, Traktor und Flugzeug sind im Programm erzeugt, Verkehr, Kuhglocken und Fluss
-              sind Aufnahmen von einem anderen Ort; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
+            <li>Geräusche der Umgebung: Bus, Kühe, Traktor und das Flugzeug hoch oben sind im Programm erzeugt, Verkehr, Kuhglocken, Fluss, das
+              vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
             <li>Kirchenglocken, Pfiff zur Abfahrt und Schiffshorn: im Programm erzeugt; belegt sind nur die Lage der Kirchen und die Abfahrten laut Fahrplan.</li>
@@ -1731,6 +1733,8 @@ const HORN_BIS_M = 2500
 /** in der Brille: so viele Meter fürs Ohr je Meter zwischen Kopf und Zug im Raum (gewählt): 3 cm klingen wie 30 m, laut; 15 cm wie 150 m,
  *  halb so laut; ab 2,5 m still */
 const ZUG_HOEREN_BRILLE = 1000
+/** Autos: Vorbeifahrt voll bis 20 m, im Quadrat leiser, still ab 300 m (Abstand fürs Ohr wie bei den Zügen, gewählt) */
+const AUTO_HOEREN_VOLL_M = 20, AUTO_HOEREN_BIS_M = 300
 /** Geräusche der Umgebung (Michael, 2026-11-09): voll bis so viel Abstand der Kamera zur Mitte des Blicks, still ab BIS; in der Brille der Abstand
  *  des Kopfs zum Gelände unter ihm in Metern des Raums; ein Fluss voll bis 60 m, still ab 400 m; Siedlung in 3 × 3 Punkten im Abstand von 150 m;
  *  Siedlung und Flüsse auch so weit ausserhalb des Modells (alles gewählt) */
@@ -5826,6 +5830,36 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       kegel.count = 0; kegel.frustumCulled = false; kegel.renderOrder = 2
       gruppe.add(kegel)
       const kegelS = new THREE.Vector3(AUTO_KEGEL_BREIT_M / 1000, 1, AUTO_KEGEL_LANG_M / 1000), kegelV = new THREE.Vector3()
+      // Vorbeifahrt (Aufnahme in src/audio.ts): je Auto der Abstand fürs Ohr jetzt und in AUTO_SPITZE_S ± 0,1 s; liegt dort sein nächster Punkt,
+      // beginnt die Aufnahme jetzt, so fällt ihre lauteste Stelle auf die Vorbeifahrt; voll bis AUTO_HOEREN_VOLL_M, still ab AUTO_HOEREN_BIS_M
+      autoKlangLaden()
+      let hoerUm = 0, brille = false, ohr = 1
+      const auge = new THREE.Vector3(), augeLokal = new THREE.Vector3(), hv = new THREE.Vector3()
+      const zuletzt = new WeakMap<object, number>()
+      const ohrAbstand = (e: number, n: number, z: number) => {
+        hv.set((e - lage.cE) / 1000, z / 1000, -(n - lage.cN) / 1000)
+        if (brille) return k.wurzel.localToWorld(hv).distanceTo(auge) * (stehenAn ? 1 : ZUG_HOEREN_BRILLE)
+        return (hv.distanceTo(augeLokal) * 1000 * ohr)
+      }
+      const hoerenPruefen = (kk: AutoKette, a: { richtung: 1 | -1; ms: number },
+        lauf: number, e: number, n: number, z: number) => {
+        const jetztD = ohrAbstand(e, n, z)
+        // weit weg: in AUTO_SPITZE_S nicht nah genug (in der Brille grob, ihr Massstab wechselt)
+        if (brille ? jetztD > 3 * AUTO_HOEREN_BIS_M : jetztD > AUTO_HOEREN_BIS_M + a.ms * (AUTO_SPITZE_S + 1) * ohr) return
+        const bei = (dt: number) => {
+          const l = (((lauf + a.ms * dt) % kk.L) + kk.L) % kk.L, p = autoBei(kk, a.richtung === 1 ? l : kk.L - l)
+          if (!p) return Infinity
+          return ohrAbstand(p.e, p.n, p.bruecke ? p.h : z)
+        }
+        const d0 = bei(AUTO_SPITZE_S - 0.1), d1 = bei(AUTO_SPITZE_S), d2 = bei(AUTO_SPITZE_S + 0.1)
+        if (!(d1 <= d0 && d1 <= d2) || d1 >= AUTO_HOEREN_BIS_M) return
+        const jetztMs = performance.now()
+        if ((zuletzt.get(a) ?? -Infinity) > jetztMs - 6000) return
+        zuletzt.set(a, jetztMs)
+        // nur in einer Testfassung (VITE_S3D_TEST): wie viele Vorbeifahrten erklungen sind
+        if (import.meta.env.VITE_S3D_TEST) { const w = window as unknown as { s3dAutoTon?: number }; w.s3dAutoTon = (w.s3dAutoTon ?? 0) + 1 }
+        autoVorbei(Math.min(1, ((AUTO_HOEREN_BIS_M - d1) / (AUTO_HOEREN_BIS_M - AUTO_HOEREN_VOLL_M))) ** 2)
+      }
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), eins = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
       schritt = () => {
         if (!netz) return
@@ -5834,6 +5868,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const stunde = jetztImFahrplan({ von: '2000-01-01' }, new Date(ms)).minuten / 60, tag = stunde >= 6 && stunde < 22
         let zahl = 0
         const nacht = fensterNacht.value > 0
+        // zu hören: alle 0,1 s, ob ein Auto in AUTO_SPITZE_S am nächsten an der Stelle ist, wo man hinhört (wie bei den Zügen)
+        const hoeren = performance.now() >= hoerUm
+        if (hoeren) {
+          hoerUm = performance.now() + 100
+          brille = k.renderer.xr.isPresenting
+          const cam = brille ? k.renderer.xr.getCamera() : k.kamera
+          cam.getWorldPosition(auge); augeLokal.copy(auge); k.wurzel.worldToLocal(augeLokal)
+          const blickM = 1000 * k.kamera.position.distanceTo(k.steuerung.target) / Math.max(1e-9, k.wurzel.scale.x)
+          ohr = ZUG_HOEREN_BLICK_M / Math.max(ZUG_HOEREN_BLICK_M, blickM)
+        }
         for (const kk of ketten.values()) {
           const anteil = (tag ? kk.tag : kk.nacht) / Math.max(1, kk.tag, kk.nacht)
           for (const a of kk.autos) {
@@ -5852,6 +5896,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             q.setFromAxisAngle(oben, Math.atan2(de, -dn))
             m.compose(v, q, eins)
             netz.setMatrixAt(zahl, m)
+            if (hoeren) hoerenPruefen(kk, a, lauf, e, n, z)
             if (nacht) {
               lichter!.setMatrixAt(zahl, m)
               kegelV.set((e + de * AUTO_LANG_M / 2 - lage.cE) / 1000, (z + 0.1) / 1000, -(n + dn * AUTO_LANG_M / 2 - lage.cN) / 1000)
