@@ -24,8 +24,8 @@ const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 /** wie weit das Fensterband in den Kopf reicht, in Teilen seiner Länge (bis das Dach sinkt); gewählt */
 const FENSTER_IM_KOPF = 0.55
 /** Höhe des Fensterbands und wie weit seine Mitte unter dem Beginn der Dachrundung liegt, in Teilen der Höhe (Michael, 2026-11-10: «Seitenstreifen etwas
- *  höher und etwas weiter unten»; vorher 0,22 und 0,08) */
-const FENSTER_HOCH = 0.28, FENSTER_TIEFER = 0.14
+ *  höher und etwas weiter unten», dann «noch etwas weiter unten und noch etwas höher»; vorher 0,22 und 0,08, dann 0,28 und 0,14) */
+const FENSTER_HOCH = 0.34, FENSTER_TIEFER = 0.21
 const PUFFER_SEITE = 0.3, PUFFER_HOEHE = -0.3, PUFFER_R = 0.045, PUFFER_TELLER = 0.085, PUFFER_LANG = 0.2
 export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNTEN = 0.4, LICHTKASTEN_OBEN = 0.56, LICHTKASTEN_BREIT = 0.32
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
