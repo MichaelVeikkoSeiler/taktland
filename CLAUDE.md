@@ -393,7 +393,12 @@ Autos in «3D Schweiz» (Michael, 2026-11-10: «Möglich Autos aus den Autobahne
              solange der Knopf an ist, das Luftbild unter den Fahrbahnen ausserhalb von Brücken retuschiert (fahrbahnRetusche: je Bildpunkt bis 9 m neben der Achse, ohne Trennung 6 m, der
              Median der Farben entlang der Fahrbahn über 16 m davor und danach; an einem Bild von SWISSIMAGE 10 cm bei Mattstetten geprüft, Randlinien bleiben, unterbrochene werden blasser,
              im Stau bleiben Autos), aus wieder zurück, nur wo seither nichts anderes gemalt hat (retuscheZurueck); in Anleitung («Autos», Quellen, «Was erfunden ist»), Fusszeile beider
-             Seiten und LICENSE genannt; im Führerstand nicht (gewählt)
+             Seiten und LICENSE genannt; im Führerstand nicht (gewählt); zu hören (Michael, 2026-11-10, schickte «car9» von lndip, freesound.org/s/660324, CC0): die Aufnahme
+             eines vorbeifahrenden Autos (klang/auto.mp3, 6,8 s, am lautesten nach 4,0 s, AUTO_SPITZE_S in src/audio.ts), je Auto alle 0,1 s geprüft, ob es in 4,0 s
+             am nächsten an der Stelle ist, wo man hinhört (Abstand fürs Ohr wie bei den Zügen), dann gestartet, voll bis 20 m, im Quadrat leiser, still ab 300 m, je Auto
+             höchstens alle 6 s, höchstens 6 zugleich, Tempo der Aufnahme je Wagen ±6 % (AUTO_HOEREN_* in Schweiz3D.tsx, autoVorbei, gewählt)
+Propellerflugzeug in «3D Schweiz» (Michael, 2026-11-10: «Propeller plane» von Breviceps, freesound.org/s/515293, CC0, «Propeller Flugzeug nur Tagsüber»): klang/propeller.mp3,
+             29,7 s einmal ganz; von 6 bis 20 Uhr jedes zweite Flugzeug (PROPELLER_BIS_H, propeller in src/audio.ts), sonst und bis 23 Uhr das erzeugte hoch oben
 Hupe und Krähen in «3D Schweiz» seit 2026-11-10 weg (Michael: «Bitte Hupe wieder entfernen und den Vogel auch»); Bus, Kühe, Traktor und Flugzeug bleiben
 Stadtverkehr in «3D Schweiz» weiter zu hören (Michael, 2026-11-09: «Stadtrauschen hört man teilweise kilometerweit», auf die Frage, ob auch im Feld von 16 km: «Ja gern»): auch im Feld von 16 km, voll bis 5 km Abstand der Kamera, still ab 25 km, in der Brille still ab 1,5 m über dem Gelände; dazu die Siedlung in 5 × 5 Punkten im Abstand von 600 m, aus der Ferne höchstens 60 % so laut wie mitten in der Stadt (UMGEBUNG_STADT_* in Schweiz3D.tsx, UMGEBUNG_STADT_FERN in src/audio.ts, gewählt); die anderen Geräusche bleiben in den Feldern von 4 km und 1 km
 Mehr Immersion in «3D Schweiz» (Michael, 2026-11-10, aus einer Liste von Vorschlägen: «Baue bitte ein: 6, 5 (Pfiff), 2, 4, 8, 12 (Icon mit Männchen) alle Devices»; Nummer 13, zu zweit im selben Modell, nur erklärt, bräuchte ein neues raum.php, das die letzte Lage je Teilnehmer überschreibt):
