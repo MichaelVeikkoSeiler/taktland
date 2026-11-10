@@ -1848,6 +1848,8 @@ const ZUG_GANZ_M = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M)
 /** zwei Stirnlampen vorne unten an der Lok, links und rechts, immer an wie bei echten Zügen und dem Vorbild (Michael, 2026-10-29:
  *  «Bitte zwei Lichter machen ähnlich wie bei diesem Modell», sein Bild eines Zugs mit zwei Lampen unten an der Front): je Lampe ein
  *  heller Punkt und nachts ein eigener Lichtkegel; Lage und Grösse als Anteil von Breite und Höhe des Zugs, gewählt */
+/** so weit liegt der Zug mindestens über dem gezeichneten Gelände (gewählt) */
+const ZUG_UEBER_BODEN_M = 0.2
 const ZUG_LAMPE_SEITE = 0.28, ZUG_LAMPE_HOEHE = -0.21, ZUG_LAMPE_R = 0.07, ZUG_LAMPE_FARBE = '#fffaf0'
 /** dazu wie bei Schweizer Zügen (Michael, 2026-10-29: «inkl dem Vorschlag mit den drei Lampen und roten Lampen»): vorne eine dritte
  *  weisse Lampe oben in der Mitte, das Dreieck des Zugspitzensignals, und am Steuerwagen hinten zwei rote Schlusslampen an der Stelle
@@ -5259,7 +5261,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (w === 0) { lokE = e; lokN = n }
           if (import.meta.env.VITE_S3D_TEST && w === 0) { const g = gleisBei(e, n, ln, -le, 30); (window as unknown as { s3dZugTest: unknown[] }).s3dZugTest?.push([u.f.nummer, h[j].abk, h[j + 1].abk, Math.round(e), Math.round(n), Math.round(versatz), wv.toFixed(2), g ? Math.round(Math.hypot(g[0] - e, g[1] - n) * 10) / 10 : null, g?.[3], Math.round(vo.e - vo.er), Math.round(vo.n - vo.nr), (() => { const ae = vo.e + (vo.er - vo.e) * wv + le * versatz, an = vo.n + (vo.nr - vo.n) * wv + ln * versatz, g2 = gleisBei(ae, an, ln, -le, 40); return g2 ? Math.round(Math.hypot(g2[0] - ae, g2[1] - an)) : 'keins' })()]) }
           if (w === ZUG_WAGEN) { steuerE = e; steuerN = n }
-          v.set((e - lage.cE) / 1000, ((hvG ?? hv) + (hhG ?? hh)) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
+          // nie unter das gezeichnete Gelände (Michael, 2026-11-10, Wankdorf Ost: «Störend ist dass der Zug im Untergrund versinkt»): die Gleisachse aus
+          // swissTLM3D liegt in Einschnitten tiefer als das Gelände des Modells, das dort gemittelt ist; in Tunneln ist der Zug ohnehin verdeckt
+          const bodenV = bestandHoehe(b, voE, voN), bodenH = bestandHoehe(b, hiE, hiN)
+          const hV = Math.max(hvG ?? hv, Number.isFinite(bodenV) ? bodenV + ZUG_UEBER_BODEN_M : -Infinity)
+          const hH = Math.max(hhG ?? hh, Number.isFinite(bodenH) ? bodenH + ZUG_UEBER_BODEN_M : -Infinity)
+          v.set((e - lage.cE) / 1000, (hV + hH) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
           q.setFromAxisAngle(oben, Math.atan2(voE - hiE, -(voN - hiN)))
           const quer = Math.hypot(vo.e - hi.e, vo.n - hi.n)
           neigung.setFromAxisAngle(querAchse, quer > 1 ? -Math.max(-ZUG_NEIGUNG, Math.min(ZUG_NEIGUNG, Math.atan2(hv - hh, quer))) : 0)
