@@ -1332,7 +1332,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             ? `Seegrund: swissBATHY3D (swisstopo), auf 25 m gemittelt, hier ${seenHier.join(', ')}, nur im Schnitt der Wände; die Oberfläche ist das Gelände mit dem Luftbild. `
             : 'Seegrund: in diesem Ausschnitt keiner gemessen (swissBATHY3D kennt 22 Seen), Seen zeigen hier nur ihre Oberfläche. '}{stufe !== 'schweiz'
             ? 'Lockergestein in den Wänden bis auf den Fels: swissBEDROCK (swisstopo), Felsoberfläche auf 50 m gemittelt. ' : ''}Orte der Landeskarte 1:1 Million (swisstopo), ein Feld benannt nach dem grössten nach der Einwohnerzahl seiner Gemeinde (swissBOUNDARIES3D, swisstopo),
-            Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone (BFS). Ortschaften auf den Masten: swissTLMRegio (swisstopo),
+            Gipfel (swisstopo), Seen aus swissTLMRegio (swisstopo), Kantone und in der ganzen Schweiz der Umriss des Landes (BFS). Ortschaften auf den Masten: swissTLMRegio (swisstopo),
             die grösseren zuerst nach der Objektart der Quelle, mit Abstand zueinander; Auswahl und Mast gewählt. Ein Feld ist ein Quadrat, keine Region und kein Tal:
             deren Grenzen stehen in keiner unserer Quellen. Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg,
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
@@ -1684,6 +1684,10 @@ const KNOPF_WAND_ANTEIL = 0.94, KNOPF_HOCH = 0.62
 // mit «Sonne» an wird der Sockel um so viel der Wand höher, darin eine zweite Reihe mit Datum, Uhrzeit und den Knöpfen für die Zeit;
 // zwischen den Gruppen der ersten Reihe ein Abstand so breit (Teil der Breite des Modells; Michael, 2026-10-30, gewählt)
 const SOCKEL_ZEIT = 0.75, KNOPF_ABSTAND = 0.03
+// Stufe Schweiz nur das Land (Michael, 2026-11-10: «A) Nur die Schweiz zeigen», nach «dieses Bild mit dem Kasten und den verpixelten Rändern …
+// könnten ästhetisch schöner sein»): das Gelände ausserhalb der Landesgrenze (BFS g1, data/kartengrund.json) ausgeblendet, eine Wand entlang
+// der Grenze bis zum tiefsten Punkt, darunter der Sockel mit den Knöpfen wie bisher, oben mit einem dunklen Deckel; Farben und Masse gewählt
+const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', LAND_DECKEL_FARBE = '#262626', LAND_DECKEL_TIEFER = 0.0005
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
@@ -2216,7 +2220,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
       const boeden = wurzel.getObjectByName('boeden')
-      const t = boeden ? strahl.intersectObjects(boeden.children, false)[0] : undefined
+      // in der Stufe Schweiz zählt das ausgeblendete Gelände ausserhalb der Grenze nicht (LAND_*)
+      const aussen = wurzel.userData.ausserLand as ((x: number, z: number) => boolean) | null | undefined
+      const t = boeden ? strahl.intersectObjects(boeden.children, false).find((h) => { const q = wurzel.worldToLocal(h.point.clone()); return !aussen?.(q.x, q.z) }) : undefined
       // auf Augenhöhe stellt ein Tipp ins Gelände an diese Stelle, statt ein Feld zu wählen
       if (t && wenn.stehen) { wenn.stehen(wurzel.worldToLocal(t.point.clone())); return }
       if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
@@ -2873,7 +2879,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         geo.computeBoundingSphere()
       }
       setzen()
-      return { di, dj, g, pos, setzen }
+      return { di, dj, g, pos, setzen, netz }
     })
     // über den Seen keine eigene Wasserfläche: das Gelände mit dem Luftbild ist die Oberfläche wie vor dem Seegrund (Michael, 2026-10-25:
     // die Seeoberflächen «flimmern», «das Bild der Landkarten, das ich haben möchte»); der See zeigt sich im Schnitt der Wände
@@ -2890,10 +2896,24 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const schnittOben = new THREE.Color(WASSER_SCHNITT_OBEN), schnittMitte = new THREE.Color(WASSER_SCHNITT_MITTE), schnittUnten = new THREE.Color(WASSER_SCHNITT_UNTEN)
     const schnittFarbe = new THREE.Color()
     const lockerMaterial = new THREE.MeshLambertMaterial({ color: LOCKER_FARBE, side: THREE.DoubleSide })
+    // Stufe Schweiz: die Ringe der Landesgrenze in Modellkoordinaten und die Maske (weiss im Land), sobald geladen
+    let land: Array<Float32Array> | null = null
+    let maske: { d: Uint8ClampedArray; w: number; h: number; x0: number; z0: number; sx: number; sz: number } | null = null
+    const imLand = (x: number, z: number) => {
+      if (!maske) return true
+      const i = Math.floor((x - maske.x0) * maske.sx), j = Math.floor((z - maske.z0) * maske.sz)
+      return i >= 0 && j >= 0 && i < maske.w && j < maske.h && maske.d[(j * maske.w + i) * 4] > 127
+    }
+    wurzel.userData.ausserLand = (x: number, z: number) => !imLand(x, z)
+    const landWandMaterial = new THREE.MeshStandardMaterial({ color: LAND_WAND_FARBE, roughness: 0.6, metalness: 0, side: THREE.DoubleSide })
+    const deckelMaterial = new THREE.MeshStandardMaterial({ color: LAND_DECKEL_FARBE, roughness: 0.7, metalness: 0 })
+    // die oberen Kanten der Wand entlang der Grenze, je Stück mit der Richtung nach aussen (nur für die Linien der Höhen, ohne Zahlen)
+    let landKanten: number[][] = []
     const sockelBauen = () => {
       for (const o of sockel.children) (o as THREE.Mesh).geometry.dispose()
       sockel.clear()
       kantenOben = []
+      landKanten = []
       const unten = Y(tief) - wand - zeitBand
       for (const { di, dj, g, pos } of netze) {
         const { breite, hoehe } = g.raster
@@ -2909,7 +2929,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const [kante, nx, nz] = kk
           const p = new Float32Array(kante.length * 6), oben = new Float32Array(kante.length * 3)
           kante.forEach((q, i) => {
-            const x = pos[q * 3], y = pos[q * 3 + 1], z = pos[q * 3 + 2]
+            // mit dem Land endet die Wand des Sockels am tiefsten Punkt, darüber steht das Land
+            const x = pos[q * 3], y = land ? Y(tief) : pos[q * 3 + 1], z = pos[q * 3 + 2]
             p.set([x, y, z, x, unten, z], i * 6)
             oben.set([x, y, z], i * 3)
           })
@@ -2922,7 +2943,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           gw.computeVertexNormals()
           sockel.add(new THREE.Mesh(gw, wandMaterialien[seite]))
           // im Schnitt der Wand das Lockergestein: von der Oberfläche (oder dem Seegrund) bis auf den Fels laut swissBEDROCK
-          const fe = g.fels
+          const fe = land ? undefined : g.fels
           if (fe) {
             const vor = weiteKm * 0.0005, lp: number[] = [], li: number[] = []
             // über einem See beginnt das Lockergestein am Grund
@@ -2942,7 +2963,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             }
           }
           // im Schnitt der Wand das Wasser eines Sees zwischen Grund und Spiegel, knapp vor der Wand
-          const w = g.wasser
+          const w = land ? undefined : g.wasser
           if (w) {
             // je Säule mehrere Punkte vom Spiegel zum Grund, damit es schon in den oberen Metern dunkel wird, nicht erst unten
             const vor = weiteKm * 0.0008, bp: number[] = [], bi: number[] = [], bf: number[] = []
@@ -2986,6 +3007,51 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const pl = new THREE.Mesh(gp, platteMaterial)
       pl.position.set(0, unten - platte / 2, 0)
       sockel.add(pl)
+      if (land) {
+        // der Deckel des Sockels knapp unter dem tiefsten Punkt, darauf das Land mit seiner Wand bis hinunter
+        const yd = Y(tief) - weiteKm * LAND_DECKEL_TIEFER
+        // mit dem Land als Loch, sonst kämpfen Deckel und flaches Gelände in der Tiefe des Bilds; die Enklaven (Büsingen, Campione) gehören
+        // zum Deckel; die Form liegt in x und −z, rotateX legt sie flach
+        const pfad = (r: Float32Array) => { const v: THREE.Vector2[] = []; for (let i = 0; i + 1 < r.length; i += 2) v.push(new THREE.Vector2(r[i], -r[i + 1])); return v }
+        const gross = land.reduce((a, r) => (r.length > a.length ? r : a))
+        const rahmen = new THREE.Shape([new THREE.Vector2(X(E0), -Z(N0)), new THREE.Vector2(X(E1), -Z(N0)), new THREE.Vector2(X(E1), -Z(N1)), new THREE.Vector2(X(E0), -Z(N1))])
+        rahmen.holes.push(new THREE.Path(pfad(gross)))
+        const gd = new THREE.ShapeGeometry([rahmen, ...land.filter((r) => r !== gross).map((r) => new THREE.Shape(pfad(r)))])
+        gd.rotateX(-Math.PI / 2)
+        const de = new THREE.Mesh(gd, deckelMaterial)
+        de.position.y = yd
+        de.receiveShadow = true
+        sockel.add(de)
+        const raus = weiteKm * 0.0015
+        for (const ring of land) {
+          const n = ring.length / 2, p = new Float32Array(n * 6), ix: number[] = [], oben: number[] = []
+          for (let i = 0; i < n; i++) {
+            const x = ring[i * 2], z = ring[i * 2 + 1]
+            const h = bestandHoehe(b, cE + x * 1000, cN - z * 1000)
+            const y = Number.isFinite(h) && h !== KEINE_HOEHE ? Y(Math.max(h, boden)) : Y(tief)
+            p.set([x, y, z, x, yd, z], i * 6)
+            oben.push(x, y, z)
+            if (i) ix.push((i - 1) * 2, (i - 1) * 2 + 1, i * 2, i * 2, (i - 1) * 2 + 1, i * 2 + 1)
+          }
+          const gw = new THREE.BufferGeometry()
+          gw.setAttribute('position', new THREE.BufferAttribute(p, 3))
+          gw.setIndex(ix)
+          gw.computeVertexNormals()
+          const m = new THREE.Mesh(gw, landWandMaterial)
+          m.castShadow = m.receiveShadow = true
+          sockel.add(m)
+          // je Stück der Kante die Richtung nach aussen, geprüft an der Maske (Löcher wie Büsingen zeigen nach innen)
+          const k: number[] = []
+          for (let i = 0; i + 1 < n; i++) {
+            const ax = oben[i * 3], az = oben[i * 3 + 2], bx = oben[i * 3 + 3], bz = oben[i * 3 + 5]
+            const l = Math.hypot(bx - ax, bz - az) || 1
+            let nx = (bz - az) / l, nz = -(bx - ax) / l
+            if (imLand((ax + bx) / 2 + nx * raus * 3, (az + bz) / 2 + nz * raus * 3)) { nx = -nx; nz = -nz }
+            k.push(ax + nx * raus, oben[i * 3 + 1], az + nz * raus, bx + nx * raus, oben[i * 3 + 4], bz + nz * raus)
+          }
+          landKanten.push(k)
+        }
+      }
     }
     sockelBauen()
 
@@ -3064,6 +3130,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             band.push(ax + ox, y, az + oz, bx + ox, y, bz + oz)
           }
         }
+        // die Wand entlang der Landesgrenze
+        for (const k of landKanten) {
+          for (let i = 0; i < k.length; i += 6) {
+            let ax = k[i], ay = k[i + 1], az = k[i + 2], bx = k[i + 3], by = k[i + 4], bz = k[i + 5]
+            if (ay < y && by < y) continue
+            if (ay < y) { const t = (y - ay) / (by - ay); ax += (bx - ax) * t; az += (bz - az) * t }
+            else if (by < y) { const t = (y - ay) / (by - ay); bx = ax + (bx - ax) * t; bz = az + (bz - az) * t }
+            band.push(ax, y, az, bx, y, bz)
+          }
+        }
         if (band.length) linienSetzen(band, linienMaterial[s])
         // dieselbe Höhe als Linie auf dem Gelände, etwas durchsichtig (Michael, 2026-10-21: «Linie mit etwas Transparenz den
         // Bergen entlang weiterführen. So sieht man die Grenzen besser»): je Stück die Höhenlinie im Raster (Marching Squares),
@@ -3082,6 +3158,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               const p: Array<[number, number]> = []
               for (const [u, v] of [[a, b], [b, c], [c, d], [d, a]]) if ((hz(u) >= 0) !== (hz(v) >= 0)) p.push(schnitt(u, v))
               for (let k = 0; k + 1 < p.length; k += 2) {
+                if (!imLand((p[k][0] + p[k + 1][0]) / 2, (p[k][1] + p[k + 1][1]) / 2)) continue
                 kurve.push(p[k][0], y + heben, p[k][1], p[k + 1][0], y + heben, p[k + 1][1])
               }
             }
@@ -3091,6 +3168,47 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       })
     }
     hoehenBauen()
+
+    // Stufe Schweiz: nur das Land (LAND_*); die Landesgrenze laden, die Maske zeichnen, das Gelände daneben ausblenden, Wand und Deckel bauen
+    let landWeg = false
+    if (stufe === 'schweiz' && netze.length === 1) {
+      void kartengrundLaden().then((kg) => {
+        if (landWeg) return
+        const { g } = netze[0], { ost, nord, m, breite, hoehe } = g.raster
+        const ringe = kg.land.map((r: { start: [number, number]; d: number[] }) => {
+          let la = r.start[0], lo = r.start[1]
+          const pkt: Array<[number, number]> = [lv95(la / 1e5, lo / 1e5)]
+          for (let i = 0; i + 1 < r.d.length; i += 2) { la += r.d[i]; lo += r.d[i + 1]; pkt.push(lv95(la / 1e5, lo / 1e5)) }
+          if (pkt.length > 2 && (pkt[0][0] !== pkt[pkt.length - 1][0] || pkt[0][1] !== pkt[pkt.length - 1][1])) pkt.push(pkt[0])
+          return pkt
+        })
+        // die Maske über das Bild des Stücks, wie seine uv
+        const bw = breite * m, bh = hoehe * m
+        const w = LAND_MASKE_PX, h = Math.max(1, Math.round(LAND_MASKE_PX * bh / bw))
+        const c = document.createElement('canvas'); c.width = w; c.height = h
+        const x = c.getContext('2d', { willReadFrequently: true })!
+        x.fillStyle = '#000'; x.fillRect(0, 0, w, h)
+        x.beginPath()
+        for (const r of ringe) r.forEach(([e, n], i) => { const px = (e - ost) / bw * w, py = (nord - n) / bh * h; if (i) x.lineTo(px, py); else x.moveTo(px, py) })
+        x.fillStyle = '#fff'; x.fill('evenodd')
+        maske = { d: x.getImageData(0, 0, w, h).data, w, h, x0: X(ost), z0: Z(nord), sx: w / (bw / 1000), sz: h / (bh / 1000) }
+        const t = new THREE.CanvasTexture(c)
+        const mat = netze[0].netz.material as THREE.MeshLambertMaterial
+        mat.alphaMap = t; mat.alphaTest = 0.5; mat.needsUpdate = true
+        // die Ringe alle LAND_SCHRITT_M unterteilt, damit die Wand dem Gelände folgt
+        land = ringe.map((r) => {
+          const a: number[] = []
+          for (let i = 0; i + 1 < r.length; i++) {
+            const [e0, n0] = r[i], [e1, n1] = r[i + 1], st = Math.max(1, Math.ceil(Math.hypot(e1 - e0, n1 - n0) / LAND_SCHRITT_M))
+            for (let s2 = 0; s2 < st; s2++) a.push(X(e0 + (e1 - e0) * s2 / st), Z(n0 + (n1 - n0) * s2 / st))
+          }
+          a.push(X(r[r.length - 1][0]), Z(r[r.length - 1][1]))
+          return new Float32Array(a)
+        })
+        sockelBauen()
+        hoehenBauen()
+      }).catch(() => {})
+    }
 
     // Namen: Gipfel und Orte, auf dem Bildschirm in fester Grösse, in der Brille in Metern
     const schilder = new THREE.Group()
@@ -3327,6 +3445,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // in der Brille gleich die neue Grösse
     if (renderer.xr.isPresenting) k.jeBild[0]()
     return () => {
+      landWeg = true
+      wurzel.userData.ausserLand = null
       k.wenn.tipp = null
       const i = k.jeBild.indexOf(ortSchritt); if (i >= 0) k.jeBild.splice(i, 1)
       const weg: Array<THREE.Material | undefined> = []
@@ -3340,7 +3460,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, mastMaterial, gipfelMast])
+      spaeterWeg([...weg, ...wandMaterialien, landWandMaterial, deckelMaterial, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, mastMaterial, gipfelMast])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
