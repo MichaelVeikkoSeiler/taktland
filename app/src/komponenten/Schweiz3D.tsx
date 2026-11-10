@@ -3819,7 +3819,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         kg.position.copy(fig.kopf); kg.scale.setScalar(r); kg.lookAt(k.wurzel.localToWorld(fig.blick.clone()))
         kg.rotateY(Math.PI)
         // wessen Blick man folgt, dessen Kopf sitzt in der Kamera
-        kg.visible = !(a.id === folgeRef.current && !brille && !stehenAn)
+        // wer folgt, sitzt mit seinem Kopf in der eigenen Kamera: dort nicht zeichnen (näher als 5 % des Abstands zum Ziel)
+        const inMir = !brille && fig.kopf.distanceTo(k.kamera.position) < k.kamera.position.distanceTo(k.steuerung.target) * 0.05
+        kg.visible = !(a.id === folgeRef.current && !brille && !stehenAn) && !inMir
         fig.strahl.visible = fig.ring.visible = !!fig.zeigt
         if (fig.zeigt) {
           const pos = fig.strahl.geometry.attributes.position as THREE.BufferAttribute
