@@ -92,7 +92,7 @@ const FENSTER_TOENE = [[0.13, 0.16, 0.2], [0.17, 0.17, 0.18], [0.12, 0.16, 0.15]
 const FENSTER_TAG_VON = 0.6, FENSTER_TAG_BIS = 0.85
 const g = (x: number) => x.toFixed(3)
 const FENSTER_GLSL = `
-struct FensterStil { float stock; float achse; float breite; float hoehe; float bruestung; float versatz; float laden; vec3 glas; float tag; };
+struct FensterStil { float stock; float achse; float breite; float hoehe; float bruestung; float versatz; float laden; vec3 glas; float tag; float seed; };
 float fensterZufall(float s, float i) { return fract(sin(s * 91.7 + i * 17.13) * 43758.5453); }
 FensterStil fensterStil(vec3 c) {
   vec3 q = floor(c * 1023.0 + 0.5);
@@ -113,6 +113,7 @@ FensterStil fensterStil(vec3 c) {
   f.laden = step(fensterZufall(s, 6.0), ${g(FENSTER_LADEN)});
   float t = fensterZufall(s, 7.0) * ${FENSTER_TOENE.length}.0;
   ${FENSTER_TOENE.map((c, k) => `${k ? 'else ' : ''}${k === FENSTER_TOENE.length - 1 ? '' : `if (t < ${k + 1}.0) `}f.glas = vec3(${c.map(g).join(', ')});`).join('\n  ')}
+  f.seed = s;
   f.tag = mix(${g(FENSTER_TAG_VON)}, ${g(FENSTER_TAG_BIS)}, fensterZufall(s, 8.0));
   return f;
 }
@@ -151,9 +152,10 @@ export function gebaeudeMaterial() {
         float hb = vGebaeude.x - ${WAND_TIEFER_M.toFixed(1)};
         float wx = max(fwidth(vWand.x), 0.001), wy = max(fwidth(hb), 0.001);
         vec4 f = fensterBei(fs, vWand.x, hb, wx, wy, vGebaeude.y);
-        // fester Zufall je Fenster: Stockwerk, Achse und der Fuss der Wand (unterscheidet die Gebäude)
-        float fuss = floor((vWand.y - vGebaeude.x) * 2.0);
-        float zufall = fract(sin(dot(vec3(f.z, f.w, fuss), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+        // fester Zufall je Fenster: Stockwerk, Achse und das Gebäude (aus seiner Wandfarbe, fensterStil). Bis 2026-11-10 statt des Gebäudes der
+        // Fuss der Wand, auf den halben Meter abgerundet; lag er auf einer Grenze, sprang er von Bildpunkt zu Bildpunkt, und ein Fenster flimmerte
+        // halb hell, halb dunkel (Michael: «Siehst du das Flimmern teilweise bei den Fenstern?»)
+        float zufall = fract(sin(dot(vec3(f.z, f.w, fs.seed * 997.0), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
         float brennt = step(zufall, uAnteil);
         // deckt ein Bildpunkt mehr als ein halbes Fenster samt Wand, gilt statt des einzelnen Fensters der Anteil: sonst springt die
         // Mitte des Bildpunkts beim Bewegen von einem brennenden zu einem dunklen Fenster, und die Lichter flackern
