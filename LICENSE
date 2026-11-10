@@ -13,7 +13,7 @@ Ausgenommen sind:
 - die Daten Dritter, aus denen Taktland und 3D-Land ihre Angaben beziehen, unter
   anderem SBB Open Data (data.sbb.ch), opentransportdata.swiss, das Bundesamt
   für Verkehr BAV, swisstopo, MeteoSchweiz, das Bundesamt für Umwelt BAFU, das
-  Bundesamt für Bevölkerungsschutz BABS, das Bundesamt für Statistik BFS, das Bundesamt für Strassen ASTRA und der
+  Bundesamt für Bevölkerungsschutz BABS, das Bundesamt für Statistik BFS, das Bundesamt für Strassen ASTRA, das Bundesamt für Raumentwicklung ARE und der
   Hipparcos-Katalog der ESA, dazu Aufnahmen von freesound.org (CC0). Für sie gelten die Lizenzen und
   Nutzungsbedingungen der jeweiligen Quelle;
 - die mitgelieferten Bibliotheken Dritter (etwa three.js, React, d3-celestial).

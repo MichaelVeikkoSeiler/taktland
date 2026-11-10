@@ -3,7 +3,8 @@
  * fahrende Modelle zu ersetzen?»; gewählt: nur Autobahnen und Autostrassen, nur in der Virtuellen Schweiz, Dichte laut ASTRA, eigener Knopf).
  *
  * Belegt: die Lage der Fahrbahnen (swissTLM3D) und der Verkehr je Stunde an den Zählstellen des ASTRA, am Tag (6 bis 22 Uhr) und in der Nacht
- * (pipeline/build_autos.py). Erfunden: die Autos, ihre Farben, Lage, Spur und ihr Tempo, die Zahl der Spuren, die Breite der Fahrbahn und was
+ * (pipeline/build_autos.py); auf den übrigen Strassen (Michael, 2026-11-10: «Jetzt mehr Verkehr auf anderen Strassen») der Tagesverkehr laut
+ * Verkehrsmodell des ARE (NPVM 2023 und AMG des UVEK), ein Modell, keine Zählung. Erfunden: die Autos, ihre Farben, Lage, Spur und ihr Tempo, die Zahl der Spuren, die Breite der Fahrbahn und was
  * die Retusche ins Luftbild malt.
  */
 import * as THREE from 'three'
@@ -114,12 +115,21 @@ export function zufall(x: number): number {
 /** je Kette ihre Stücke nach dem Abstand vom Anfang und die Autos darauf */
 export interface AutoKette { L: number; art: number; tag: number; nacht: number; stuecke: AutoStueck[]; autos: AutoPlatz[]
   /** Anteil Lastwagen auf der rechten Spur (0 bis 1) am Tag und in der Nacht */
-  lkwTag: number; lkwNacht: number }
+  lkwTag: number; lkwNacht: number
+  /** übrige Strassen: so weit rechts der Achse fährt man (m) */
+  quer: number }
 /** ein Auto: Richtung (1 mit den Punkten, -1 dagegen), Spur, Tempo in m/s, Platz in der Kette zur Zeit 0, ab welchem Anteil der grössten
  *  Dichte es fährt */
 export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: number; ab: number; farbe: number
   /** ein fester Zufall 0 bis 1: ein Lastwagen, solange er unter dem Anteil Lastwagen der Stunde liegt */
   lkw: number }
+
+/** übrige Strassen ohne Trennung: je Richtung eine Spur, so weit rechts der Achse wie ein Viertel der Breite laut Klasse, mindestens und
+ *  höchstens (gewählt) */
+export const STRASSE_QUER_M: [number, number] = [1.1, 2.6]
+/** übrige Strassen: Retusche nur ab dieser Breite laut Klasse (schmalere tragen kaum Verkehr; parkierte Autos bleiben), je Seite die halbe
+ *  Breite und so viel dazu, gewählt */
+export const STRASSE_RETUSCHE_AB_M = 6, STRASSE_RETUSCHE_PLUS_M = 1.5
 
 /** je Kette eine feste Menge Autos, so viele, wie bei der grössten Dichte (am Tag oder in der Nacht) auf ihr fahren; welche fahren, entscheidet
  *  der Anteil der Stunde (ab) */
@@ -128,22 +138,29 @@ export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [
   for (const st of stuecke) {
     let k = ketten.get(st.kette)
     if (!k) {
-      const v = verkehr(st.kette) ?? [...AUTO_OHNE_ZAEHLUNG, null, null]
+      const v: [number, number, number | null, number | null] = st.strasse
+        ? [st.strasse.tag, st.strasse.nacht, st.strasse.lkw, st.strasse.lkw]
+        : verkehr(st.kette) ?? [...AUTO_OHNE_ZAEHLUNG, null, null]
       // auf getrennten Fahrbahnen alle Lastwagen rechts: dort doppelt so viele wie im Mittel (die Spuren tragen gleich viel), höchstens alle
       const rechts = st.art === 0 ? AUTO_SPUREN : 1
       const anteil = (p: number | null) => Math.min(1, ((p ?? AUTO_LKW_OHNE_ZAEHLUNG) / 100) * rechts)
-      k = { L: st.L, art: st.art, tag: v[0], nacht: v[1], stuecke: [], autos: [], lkwTag: anteil(v[2]), lkwNacht: anteil(v[3]) }
+      const quer = st.art === 2 ? Math.min(STRASSE_QUER_M[1], Math.max(STRASSE_QUER_M[0], (st.strasse?.breite ?? 6) / 4))
+        : st.art === 3 ? 0 : AUTO_GEGEN_M
+      k = { L: st.L, art: st.art, tag: v[0], nacht: v[1], stuecke: [], autos: [], lkwTag: anteil(v[2]), lkwNacht: anteil(v[3]), quer }
       ketten.set(st.kette, k)
     }
     k.stuecke.push(st)
   }
   for (const [id, k] of ketten) {
     k.stuecke.sort((a, c) => a.s0 - c.s0)
+    const kmh = k.stuecke[0].strasse?.kmh ?? AUTO_KMH_GEGEN
     const spuren: Array<{ richtung: 1 | -1; spur: number; kmh: number }> = k.art === 0
       ? AUTO_KMH.map((kmh, spur) => ({ richtung: 1 as const, spur, kmh }))
-      : [{ richtung: 1, spur: 0, kmh: AUTO_KMH_GEGEN }, { richtung: -1, spur: 0, kmh: AUTO_KMH_GEGEN }]
-    // je Richtung die Hälfte des Verkehrs beider Richtungen, auf die Spuren gleich verteilt (gewählt); Dichte = Verkehr je Stunde / Tempo
-    const groesst = Math.max(k.tag, k.nacht) / 2 / (k.art === 0 ? AUTO_SPUREN : 1)
+      : k.art === 3 ? [{ richtung: 1, spur: 0, kmh }]
+        : [{ richtung: 1, spur: 0, kmh }, { richtung: -1, spur: 0, kmh }]
+    // je Richtung die Hälfte des Verkehrs beider Richtungen, auf die Spuren gleich verteilt (gewählt); Dichte = Verkehr je Stunde / Tempo;
+    // auf Strassen einer Richtung (art 3) gilt der Verkehr dieser Richtung ganz
+    const groesst = Math.max(k.tag, k.nacht) / (k.art === 3 ? 1 : 2) / (k.art === 0 ? AUTO_SPUREN : 1)
     let nr = 0
     for (const sp of spuren) {
       const jeKm = groesst / sp.kmh

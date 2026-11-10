@@ -9,9 +9,10 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
+import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, AUTO_GEGEN_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, autoLichter, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
-import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
+import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, autoLichter, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
+import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
@@ -22,7 +23,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
-import { abfahrtsPfiff, AUTO_SPITZE_S, autoKlangLaden, autoVorbei, knopfTon, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
+import { abfahrtsPfiff, AUTO_SPITZE_S, autoKlangLaden, autoVorbei, HELIKOPTER_DAUER_S, HELIKOPTER_SPITZE_S, helikopterZeigen, hupe, knopfTon, propellerZeigen, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -135,6 +136,9 @@ const spaeterWeg = (materialien: Array<THREE.Material | undefined>) => {
 /** ein Tablet: Touch und die kürzere Seite des Bildschirms ab 700 Bildpunkten (wie bei hoechstens und den Schatten) */
 const istTablet = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) >= 700
 const hoechstens = () => (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 4 : 9)
+const hoechstensFelder = hoechstens
+/** so oft hupt es bei einer Vorbeifahrt auf der Autobahn (dazu höchstens alle 15 bis 35 s, src/audio.ts), gewählt */
+const AUTO_HUPE_ANTEIL = 0.12
 
 const einzeln = (anker: Feld, g: Gelaende): Bestand => ({ anker, teile: new Map([['0_0', g]]), di: [0, 0], dj: [0, 0] })
 const teilFeld = (b: Bestand, di: number, dj: number): Feld => ({ e: b.anker.e + di * b.anker.seite, n: b.anker.n + dj * b.anker.seite, seite: b.anker.seite })
@@ -1429,7 +1433,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             der Szene und wann Züge und Schiffe laut Fahrplan abfahren.</p>
           <p className="mt-2">Der Verkehr in der Stadt, die Kuhglocken und der Fluss sind <b>Aufnahmen</b> («Background traffic noise» von Froey_, «cowbells2» von
             einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife;
-            ebenso die Möwen («ES Seagulls from Window 01» von se2001), das vorbeifahrende Auto («car9» von lndip) und das Propellerflugzeug («Propeller plane» von Breviceps, alle freesound.org, CC0).</p>
+            ebenso die Möwen («ES Seagulls from Window 01» von se2001), das vorbeifahrende Auto («car9» von lndip), das Propellerflugzeug («Propeller plane» von Breviceps), der Helikopter («Helicopter Swirling» von Tiagorlp)
+            und die Hupen an Autobahnen, wenn «Autos» an ist («Beeping car horn from inside car» von misperpodcast, «car horn 1» von 3863, «Car Horn Honk 01» von
+            Brett+Butter; alle freesound.org, CC0). Das Flugzeug und der rote Helikopter, die man dazu fliegen sieht, sind gezeichnet und erfunden.</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird, ob und wann eine Kirche läutet und wie ein Zug oder Schiff abfährt.</p>
         </Abschnitt>
@@ -1457,7 +1463,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             laut Fahrplan. Ein Schiff ist gezeichnet, kein bestimmtes Schiff, aus der Ferne grösser, damit man es sieht.</p>
         </Abschnitt>
         <Abschnitt titel="Autos">
-          <p>«Autos» zeigt in den Feldern von 4 km und 1 km fahrende Autos auf den Autobahnen und Autostrassen. Belegt ist, wo die Fahrbahnen
+          <p>«Autos» zeigt in den Feldern von 4 km und 1 km fahrende Autos auf den Autobahnen und Autostrassen und auf den übrigen Strassen. Auf Autobahnen und Autostrassen belegt ist, wo die Fahrbahnen
             liegen (swissTLM3D) und wie viel Verkehr dort fährt: Das Bundesamt für Strassen ASTRA zählt an seinen Zählstellen, wie viele Fahrzeuge
             im Mittel je Stunde am Tag (6 bis 22 Uhr) und in der Nacht fahren. Jede Strecke nimmt die Zählstelle, die über das Netz am nächsten
             liegt; so viele Autos fahren dort zur Uhrzeit der Szene, nachts weniger. Wo im Umkreis von 40 km keine Zählstelle liegt, ist die
@@ -1466,6 +1472,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Nachts leuchten Scheinwerfer, Rücklichter und ein Lichtkegel vor jedem Auto. Im Tunnel sind
             sie nicht zu sehen. Solange der Knopf an ist, sind die stehenden Autos auf dem Luftbild weggemalt: Jeder Bildpunkt auf der Fahrbahn
             nimmt die mittlere Farbe der Fahrbahn davor und danach. Unterbrochene Linien werden dabei blasser, im Stau bleiben Autos stehen.</p>
+          <p>Auf den übrigen Strassen (Haupt- und Nebenstrassen, Ein- und Ausfahrten) gibt es keine Zählung für jedes Stück. Dort gilt das
+            Verkehrsmodell des Bundesamts für Raumentwicklung ARE (Nationales Personenverkehrsmodell 2023 und Güterverkehr des UVEK): Es rechnet für
+            jeden Abschnitt, wie viele Fahrzeuge im Mittel am Tag fahren und wie viele davon Lastwagen sind. Das ist ein Modell, keine Messung.
+            Auf Tag und Nacht aufgeteilt ist es so wie im Mittel an den Zählstellen des ASTRA, die Lastwagen gleich je Tag und Nacht. Strassen, auf
+            denen laut Modell weniger als 500 Fahrzeuge am Tag fahren, bleiben leer. Erfunden sind hier dazu das Tempo (innerorts 25 bis 35 km/h als Mittel
+            samt Halten, ausserorts 50 bis 80 km/h, nach der Breite der Strasse), eine Spur je Richtung, und dass an Kreuzungen alle durchfahren: Ampeln,
+            Vortritt und Abbiegen gibt es nicht, ein Auto kann an einer Kreuzung verschwinden und ein anderes erscheinen. Weggemalt sind die Autos im
+            Luftbild nur auf Strassen ab 6 m Breite.</p>
         </Abschnitt>
         <Abschnitt titel="Wetter: Wind und Niederschlag">
           <p>«Wetter» zeigt immer vier Windhosen, je eine in der Mitte jedes Viertels des Modells. Die Zahlen über dem Mast sind der Wind in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
@@ -1562,7 +1576,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               die Brücke dort mit Lage gibt.</li>
             <li>Verkehr in der Stadt: Aufnahme «Background traffic noise» von Froey_, freesound.org (CC0); Kuhglocken: Aufnahme «cowbells2»
               von deleted_user_229898, freesound.org (CC0); Fluss: Aufnahme «Rapidly Flowing Water (loopable)» von Osiruswaltz, freesound.org (CC0); vorbeifahrendes
-              Auto: Aufnahme «car9» von lndip, freesound.org (CC0); Propellerflugzeug: Aufnahme «Propeller plane» von Breviceps, freesound.org (CC0); Möwen: Aufnahme «ES Seagulls from Window 01» von se2001, freesound.org (CC0); Fläche der Seen aus ihrem Umriss laut swissTLMRegio (swisstopo).</li>
+              Auto: Aufnahme «car9» von lndip, freesound.org (CC0); Propellerflugzeug: Aufnahme «Propeller plane» von Breviceps, freesound.org (CC0); Helikopter: Aufnahme «Helicopter Swirling» von Tiagorlp, freesound.org (CC0); Hupen: Aufnahmen «Beeping car horn from inside car, engine off» von misperpodcast, «car horn 1» von 3863 und «Car Horn Honk 01 - Single, Distant» von Brett+Butter, freesound.org (CC0); Möwen: Aufnahme «ES Seagulls from Window 01» von se2001, freesound.org (CC0); Fläche der Seen aus ihrem Umriss laut swissTLMRegio (swisstopo).</li>
             <li>Gebäude ohne Fenster: Gebäudeklasse Industriegebäude oder Behälter, Silos und Lagergebäude laut Gebäude- und Wohnungsregister (GWR),
               Bundesamt für Statistik BFS.</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
@@ -1574,7 +1588,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Sonnenstand und Sternenhimmel: gerechnet nach den Näherungen des Astronomical Almanac; der Mond nach einer kurzen Näherung seiner Bahn.</li>
             <li>Kirchen für die Glocken: swissTLMRegio (swisstopo).</li>
             <li>Autos: Fahrbahnen der Autobahnen und Autostrassen aus swissTLM3D (swisstopo); Verkehr je Stunde am Tag und in der Nacht an den Zählstellen
-              der Strassenverkehrszählung, übergeordnetes Netz, Bundesamt für Strassen ASTRA (data.geo.admin.ch).</li>
+              der Strassenverkehrszählung, übergeordnetes Netz, Bundesamt für Strassen ASTRA (data.geo.admin.ch); auf den übrigen Strassen die
+              Fahrbahnen aus swissTLM3D und der Tagesverkehr laut Modell «Belastung Personen- und Güterverkehr Strasse», Bundesamt für
+              Raumentwicklung ARE (NPVM 2023 und AMG des UVEK, data.geo.admin.ch).</li>
           </ul>
         </Abschnitt>
         {/* Michael, 2026-11-08: «Nicht Was gezeichnet oder angenommen ist sondern Was erfunden ist» */}
@@ -1615,11 +1631,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
-            <li>Autos und Lastwagen: ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn, alle Lastwagen rechts.
-              Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA. Unter den
-              fahrenden Autos ist das Luftbild übermalt.</li>
+            <li>Autos und Lastwagen: ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn, alle Lastwagen rechts;
+              auf den übrigen Strassen eine Spur je Richtung, das Tempo nach der Breite, Kreuzungen ohne Ampeln und Vortritt.
+              Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA; auf den übrigen
+              Strassen ist die Menge aus dem Verkehrsmodell des ARE gerechnet, nicht gezählt. Unter den fahrenden Autos ist das Luftbild übermalt.</li>
             <li>Geräusche der Umgebung: Bus, Kühe, Traktor und das Flugzeug hoch oben sind im Programm erzeugt, Verkehr, Kuhglocken, Fluss, Möwen, das
-              vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
+              vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; das Flugzeug und der Helikopter, die man dazu fliegen sieht, sind erfunden: Gestalt, Farben, Höhe (150 und 120 m über dem Gelände), Richtung und Tempo; wann gehupt wird, ist gewählt; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
             <li>Kirchenglocken, Pfiff zur Abfahrt und Schiffshorn: im Programm erzeugt; belegt sind nur die Lage der Kirchen und die Abfahrten laut Fahrplan.</li>
@@ -2045,6 +2062,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   const [grafikWeg, setGrafikWeg] = useState(false)
   // zählt die Retuschen unter Brücken: die Gebäude werden danach neu gesetzt, damit Dächer über Brücken ihr eigenes Bild bekommen
   const [retuschen, setRetuschen] = useState(0)
+  // Höhe der gezeichneten Strassenbrücken für die Autos (deckSuche in Bruecken.ts)
+  const deckRef = useRef<((e: number, n: number, h: number) => number | null) | null>(null)
   const welt = useRef<Welt | null>(null)
   const kern = useRef<{
     renderer: THREE.WebGLRenderer; szene: THREE.Scene; kamera: THREE.PerspectiveCamera; steuerung: OrbitControls
@@ -4605,6 +4624,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const enden = new Map<string, number>()
       for (const br of liste) if (br.art !== 0) for (const i of [0, br.e.length - 1]) { const k = endeSchl(br.e[i], br.n[i]); enden.set(k, (enden.get(k) ?? 0) + 1) }
       for (const s of stuecke) if (s.art !== 0) brueckeAnschliessen(s.e, s.n, s.h, (e, n) => (enden.get(endeSchl(e, n)) === 1 ? bestandHoehe(b, e, n) : NaN))
+      // die Autos fahren auf der gezeichneten Fahrbahn (Michael, 2026-11-10: «Autos fahren nicht sauber auf den Brücken»); die Höhe laut
+      // swissTLM3D am Auto wählt die Brücke, wo zwei übereinander liegen
+      deckRef.current = deckSuche(stuecke.filter((s) => s.art !== 0).map((s) => ({ e: s.e, n: s.n, h: s.h, halb: strassenHalbe(s.breite, s.klasse, s.art === 2) })))
       // der Belag in der Farbe der Strasse an beiden Enden im Luftbild (Michael, 2026-11-10: «Bei den Brücken: kannst du diese gleich wie die Strasse
       // einfärben, generell überall?»): je Ende 6 bis 30 m über die Brücke hinaus, quer bis ein Drittel der halben Breite, der Median je Farbe;
       // gelesen vor der Retusche, ohne Treffer der gemalte Belag (gewählt)
@@ -4699,6 +4721,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     })
     return () => {
       weg = true
+      deckRef.current = null
       gruppe.removeFromParent()
       for (const c of gruppe.children) { (c as THREE.Mesh).geometry.dispose(); if (c.name.startsWith('bauart')) ((c as THREE.Mesh).material as THREE.Material).dispose() }
       for (const m of material.values()) m.dispose()
@@ -5584,6 +5607,50 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       return Math.max(0, Math.min(1, (UMGEBUNG_FLUSS_BIS_M - d) / (UMGEBUNG_FLUSS_BIS_M - UMGEBUNG_FLUSS_VOLL_M)))
     }
+    // das Propellerflugzeug zu sehen, solange es erklingt (Flugzeug.ts; Michael, 2026-11-10: «kannst du ein Flugzeug einblenden (Propellermodell)
+    // wenn eines erklingt?»): in FLUGZEUG_HOEHE_M über dem Gelände der Hörstelle, in einer zufälligen Richtung, am nächsten bei ihr, wenn die
+    // Aufnahme am lautesten ist; aus der Ferne grösser, damit man es sieht (wie die Züge); nur über dem Modell
+    const hoerStelle = { e: NaN, n: NaN, blickM: 0 }
+    const flieger: Array<{ gruppe: THREE.Group; blatt: THREE.Mesh; t0: number; e: number; n: number; z: number; de: number; dn: number; mass: number
+      dauer: number; spitze: number; ms: number; heli: boolean }> = []
+    const form = flugzeugForm(), heliForm = helikopterForm(), fliegerStoff = new THREE.MeshLambertMaterial({ vertexColors: true })
+    const zeigen = (inS: number, heli: boolean) => {
+      if (weg || !Number.isFinite(hoerStelle.e)) return
+      const w = Math.random() * Math.PI * 2, de = Math.cos(w), dn = Math.sin(w)
+      const boden = bestandHoehe(b, hoerStelle.e, hoerStelle.n)
+      const gruppe = new THREE.Group()
+      gruppe.name = 'flugzeug'
+      gruppe.userData.bleibt = true
+      const f = heli ? heliForm : form
+      const rumpf = new THREE.Mesh(f.rumpf, fliegerStoff); rumpf.castShadow = true
+      const blatt = new THREE.Mesh(f.propeller, fliegerStoff)
+      if (heli) blatt.position.y = f.propellerZ; else blatt.position.z = f.propellerZ
+      gruppe.add(rumpf, blatt)
+      gruppe.rotation.y = Math.atan2(de, -dn)
+      const brille = k.renderer.xr.isPresenting
+      const mass = brille ? 3 : Math.max(1, (hoerStelle.blickM * 0.02) / 8)
+      gruppe.scale.setScalar(mass)
+      gruppe.visible = false
+      k.wurzel.add(gruppe)
+      flieger.push({ gruppe, blatt, t0: performance.now() / 1000 + inS, e: hoerStelle.e, n: hoerStelle.n,
+        z: (Number.isFinite(boden) ? boden : 500) + (heli ? HELIKOPTER_HOEHE_M : FLUGZEUG_HOEHE_M), de, dn, mass,
+        dauer: heli ? HELIKOPTER_DAUER_S : FLUGZEUG_DAUER_S, spitze: heli ? HELIKOPTER_SPITZE_S : FLUGZEUG_SPITZE_S, ms: heli ? HELIKOPTER_MS : FLUGZEUG_MS, heli })
+    }
+    propellerZeigen.bei = (inS) => zeigen(inS, false)
+    helikopterZeigen.bei = (inS) => zeigen(inS, true)
+    const fliegen = () => {
+      const jetzt = performance.now() / 1000
+      for (let i = flieger.length - 1; i >= 0; i--) {
+        const f = flieger[i], t = jetzt - f.t0
+        if (t > f.dauer) { f.gruppe.removeFromParent(); flieger.splice(i, 1); continue }
+        const s = (t - f.spitze) * f.ms, e = f.e + f.de * s, n = f.n + f.dn * s
+        f.gruppe.visible = t >= 0 && e > e0 && e < e1 && n > n0 && n < n1
+        f.gruppe.position.set((e - lage.cE) / 1000, f.z / 1000, -(n - lage.cN) / 1000)
+        if (f.heli) f.blatt.rotation.y = jetzt * 30; else f.blatt.rotation.z = jetzt * 60
+      }
+    }
+    k.jeBild.push(fliegen)
+    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dFlieger: (heli?: boolean) => void }).s3dFlieger = (heli = false) => zeigen(-(heli ? HELIKOPTER_SPITZE_S : FLUGZEUG_SPITZE_S) + 2, heli)
     const p = new THREE.Vector3(), boden = new THREE.Vector3()
     const uhr = window.setInterval(() => {
       if (weg) return
@@ -5611,6 +5678,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       const e = lage.cE + p.x * 1000, n = lage.cN - p.z * 1000
       if (e < e0 || e > e1 || n < n0 || n > n1) nah = nahStadt = 0
+      hoerStelle.e = e; hoerStelle.n = n
+      hoerStelle.blickM = brille ? 0 : (1000 * k.kamera.position.distanceTo(k.steuerung.target)) / Math.max(1e-9, k.wurzel.scale.x)
       const zeit = standRef.current?.zeit ?? new Date()
       // Stunde und Monat in Schweizer Zeit
       const zt = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', hour: 'numeric', hourCycle: 'h23', month: 'numeric' }).formatToParts(zeit)
@@ -5619,7 +5688,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dUmgebung: unknown }).s3dUmgebung = { ...u, e, n, siedlung: siedlung.length, fluesse: fluesse.length }
       umgebungHoeren(u)
     }, 500)
-    return () => { weg = true; window.clearInterval(uhr); umgebungHoerenAus() }
+    return () => {
+      weg = true; window.clearInterval(uhr); umgebungHoerenAus()
+      propellerZeigen.bei = null; helikopterZeigen.bei = null
+      const i = k.jeBild.indexOf(fliegen); if (i >= 0) k.jeBild.splice(i, 1)
+      for (const f of flieger) f.gruppe.removeFromParent()
+      for (const x of [form, heliForm]) { x.rumpf.dispose(); x.propeller.dispose() }
+      fliegerStoff.dispose()
+    }
   }, [b, stufe, zusatz])
   // Schiffe laut Fahrplan (Michael, 2026-10-28: «Ja gern, tolle Idee»), auf 3dland.ch und in Taktland: auf den Kurslinien von swissTLMRegio
   // zwischen den Ländten, wo sie laut Fahrplan jetzt sind (zugStelle wie bei den Zügen); ein Tipp zeigt ein Schild
@@ -5863,7 +5939,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const streifen: Streifen[] = []
       for (const st of d.stuecke) {
         if (st.bruecke) continue
-        const r = st.art === 0 ? AUTO_RETUSCHE_EINWEG_M : AUTO_RETUSCHE_BEIDE_M
+        // übrige Strassen: nur ab STRASSE_RETUSCHE_AB_M Breite laut Klasse, je Seite die halbe Breite und etwas
+        if (st.strasse && st.strasse.breite < STRASSE_RETUSCHE_AB_M) continue
+        const r = st.strasse ? st.strasse.breite / 2 + STRASSE_RETUSCHE_PLUS_M : st.art === 0 ? AUTO_RETUSCHE_EINWEG_M : AUTO_RETUSCHE_BEIDE_M
         const p = Array.from(st.e, (e, i) => [e, st.n[i]] as [number, number])
         streifen.push({ p, lo: p.map(() => -r), hi: p.map(() => r) })
       }
@@ -5892,7 +5970,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         return zs ? [zs[3], zs[4], zs[6] ?? null, zs[7] ?? null] : null
       })
       const zahlAlle = [...ketten.values()].reduce((a, x) => a + x.autos.length, 0)
-      const hoechstens = Math.min(zahlAlle, 6000)
+      // mit den übrigen Strassen mehr (Annahme zur Grafik, nicht gemessen)
+      const handy = hoechstensFelder() === 4
+      const hoechstens = Math.min(zahlAlle, handy ? 5000 : 12000)
       if (!hoechstens) return
       netz = new THREE.InstancedMesh(autoForm(), stoff, hoechstens)
       netz.count = 0; netz.castShadow = true; netz.receiveShadow = false; netz.frustumCulled = false
@@ -5943,7 +6023,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         zuletzt.set(a, jetztMs)
         // nur in einer Testfassung (VITE_S3D_TEST): wie viele Vorbeifahrten erklungen sind
         if (import.meta.env.VITE_S3D_TEST) { const w = window as unknown as { s3dAutoTon?: number }; w.s3dAutoTon = (w.s3dAutoTon ?? 0) + 1 }
-        autoVorbei(Math.min(1, ((AUTO_HOEREN_BIS_M - d1) / (AUTO_HOEREN_BIS_M - AUTO_HOEREN_VOLL_M))) ** 2)
+        const laut = Math.min(1, ((AUTO_HOEREN_BIS_M - d1) / (AUTO_HOEREN_BIS_M - AUTO_HOEREN_VOLL_M))) ** 2
+        autoVorbei(laut)
+        // ab und zu eine Hupe, nur an Autobahnen (getrennte Fahrbahnen; Michael, 2026-11-10: «Nur bei Autobahnen»); Anteil gewählt
+        if (kk.art === 0 && Math.random() < AUTO_HUPE_ANTEIL) hupe(laut)
       }
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), eins = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
       schritt = () => {
@@ -5973,10 +6056,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             if (!p) continue
             const de = p.de * a.richtung, dn = p.dn * a.richtung
             // rechts der Fahrtrichtung: (dn, -de); Fahrbahn einer Richtung: die Spuren um die Achse, die langsame rechts
-            const quer = kk.art === 0 ? ((AUTO_SPUREN - 1) / 2 - a.spur) * AUTO_SPUR_M : AUTO_GEGEN_M
+            const quer = kk.art === 0 ? ((AUTO_SPUREN - 1) / 2 - a.spur) * AUTO_SPUR_M : kk.quer
             const e = p.e + dn * quer, n = p.n - de * quer
             if (!drin(e, n)) continue
-            const z = p.bruecke ? p.h - 0.1 : bestandHoehe(b, e, n)
+            // auf Brücken die gezeichnete Fahrbahn an der Stelle des Autos (deckRef), sonst die eigene Rechnung wie die Brücke
+            const deck = p.bruecke ? deckRef.current?.(e, n, p.h) : null
+            const z = p.bruecke ? (deck ?? p.h) - 0.1 : bestandHoehe(b, e, n)
             if (!Number.isFinite(z)) continue
             v.set((e - lage.cE) / 1000, z / 1000, -(n - lage.cN) / 1000)
             q.setFromAxisAngle(oben, Math.atan2(de, -dn))

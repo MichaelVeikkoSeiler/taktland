@@ -713,7 +713,7 @@ let glockeViertel: number | null = null
 const UMGEBUNG_STADT_FERN = 0.6
 const UMGEBUNG_STADT = 0.09, UMGEBUNG_FLUSS = 0.16, UMGEBUNG_EINZEL = 0.5
 /** je Sekunde die Aussicht auf ein Geräusch, bei vollem Anteil (gewählt) */
-const UMGEBUNG_JE_S = { bus: 0.018, kuh: 0.03, glocke: 0.035, traktor: 0.007, flugzeug: 0.004 }
+const UMGEBUNG_JE_S = { bus: 0.018, kuh: 0.03, glocke: 0.035, traktor: 0.007, flugzeug: 0.004, helikopter: 0.0015 }
 /** Verkehr in der Stadt als Aufnahme (Michael, 2026-11-09: «Das ist das Geräusch von freesound.org für die Stadt»): Froey_, «Background traffic noise»,
  *  freesound.org/s/700948, zu einer Schleife von 62 s geschnitten (3 s überblendet, auf −20 dB gebracht), vorne und hinten 0,5 s aus der Schleife als
  *  Rand, damit die Lücke des MP3 am Anfang nicht hörbar ist (STADT_RAND_S); Lautstärke gegen das Erzeugte gewählt */
@@ -869,6 +869,11 @@ function umgebungEinzeln() {
     if (u.stunde >= 6 && u.stunde < 23 && versuch('flugzeug', u.nah)) {
       t.bis.flugzeug = u.stunde < PROPELLER_BIS_H && Math.random() < 0.5 ? propeller(c, quelle(0.7), jetzt) : flugzeug(c, quelle(0.7), jetzt)
     }
+    // seltener ein Helikopter (Michael, 2026-11-10: «Etwas seltener auch mal ein Helikopter. Rotes Modell das durchfliegt»), am Tag von 7 bis 21 Uhr
+    // (gewählt), nicht zugleich mit einem Flugzeug
+    if (u.stunde >= 7 && u.stunde < 21 && frei('flugzeug') && versuch('helikopter', u.nah)) {
+      t.bis.helikopter = helikopter(c, quelle(0.7), jetzt); t.bis.flugzeug = t.bis.helikopter - 60
+    }
   } catch { /* ohne Ton */ }
 }
 
@@ -940,16 +945,60 @@ function traktor(c: AudioContext, ziel: GainNode, t0: number) {
 /** ein Propellerflugzeug als Aufnahme (Michael, 2026-11-10): «Propeller plane» von Breviceps, freesound.org/s/515293, CC0, 29,7 s, einmal von Anfang
  *  bis Ende; lädt sie noch, bleibt es diesmal still */
 const PROPELLER_BIS_H = 20, PROPELLER_LAUT = 1.4
+/** wer das Flugzeug zeigt, wenn die Aufnahme beginnt: in so vielen Sekunden */
+export const propellerZeigen: { bei: ((inS: number) => void) | null } = { bei: null }
 function propeller(c: AudioContext, ziel: GainNode, t0: number) {
   void aufnahme(c, 'klang/propeller.mp3').then((puffer) => {
     if (!puffer || !umgebungTon) return
     const q = c.createBufferSource(); q.buffer = puffer
     const g = c.createGain(); g.gain.value = PROPELLER_LAUT
     q.connect(g).connect(ziel)
-    q.start(Math.max(c.currentTime, t0))
+    const ab = Math.max(c.currentTime, t0)
+    q.start(ab)
     umgebungTon.quellen.push(q)
+    // zu sehen, solange es erklingt (Michael, 2026-11-10: «kannst du ein Flugzeug einblenden (Propellermodell) wenn eines erklingt?»)
+    propellerZeigen.bei?.(ab - c.currentTime)
   }).catch(() => {})
   return t0 + 30 + 60
+}
+
+/** ein Helikopter als Aufnahme (Michael, 2026-11-10): «Helicopter Swirling» von Tiagorlp, freesound.org/s/693511, CC0, 45,4 s, einmal ganz, am
+ *  lautesten nach etwa 26 s (gemessen) */
+export const HELIKOPTER_DAUER_S = 45.4, HELIKOPTER_SPITZE_S = 26
+const HELIKOPTER_LAUT = 2.2
+export const helikopterZeigen: { bei: ((inS: number) => void) | null } = { bei: null }
+function helikopter(c: AudioContext, ziel: GainNode, t0: number) {
+  void aufnahme(c, 'klang/helikopter.mp3').then((puffer) => {
+    if (!puffer || !umgebungTon) return
+    const q = c.createBufferSource(); q.buffer = puffer
+    const g = c.createGain(); g.gain.value = HELIKOPTER_LAUT
+    q.connect(g).connect(ziel)
+    const ab = Math.max(c.currentTime, t0)
+    q.start(ab)
+    umgebungTon.quellen.push(q)
+    helikopterZeigen.bei?.(ab - c.currentTime)
+  }).catch(() => {})
+  return t0 + HELIKOPTER_DAUER_S + 120
+}
+
+/** Hupen an Autobahnen (Michael, 2026-11-10, schickte drei Aufnahmen, «Nur bei Autobahnen»): «Beeping car horn from inside car, engine off» von
+ *  misperpodcast (freesound.org/s/733553), «car horn 1» von 3863 (freesound.org/s/235363), «Car Horn Honk 01 - Single, Distant» von Brett+Butter
+ *  (freesound.org/s/553150), alle CC0; eine zufällig, höchstens alle HUPE_PAUSE_S Sekunden (gewählt) */
+const HUPEN = ['klang/hupe1.mp3', 'klang/hupe2.mp3', 'klang/hupe3.mp3'], HUPE_LAUT = 0.5, HUPE_PAUSE_S = 25
+let hupeBis = 0
+export function hupe(laut: number) {
+  const c = audioKontext()
+  if (!c || !stand.an || laut <= 0.01 || c.currentTime < hupeBis) return
+  hupeBis = c.currentTime + HUPE_PAUSE_S * (0.6 + 0.8 * Math.random())
+  void aufnahme(c, HUPEN[Math.floor(Math.random() * HUPEN.length)]).then((puffer) => {
+    if (!puffer) return
+    try {
+      const q = c.createBufferSource(); q.buffer = puffer
+      const g = c.createGain(); g.gain.value = HUPE_LAUT * Math.min(1, laut)
+      q.connect(g).connect(ausgang(c))
+      q.start(c.currentTime)
+    } catch { /* ohne Ton */ }
+  }).catch(() => {})
 }
 
 /** ein Flugzeug hoch oben: breites Rauschen, langsam an- und abschwellend und tiefer werdend */
