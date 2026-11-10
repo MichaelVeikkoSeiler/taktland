@@ -102,7 +102,30 @@ export function strassenQuerschnitt(w: number): QuerFlaeche[] {
 
 /** eine Stelle entlang einer Achse: Lage (e, n), Richtung quer (qe, qn, Einheit), Höhe der Achse (m), Meter entlang ihr und der
  *  Querschnitt dort */
-export interface QuerStelle { e: number; n: number; qe: number; qn: number; z: number; s: number; quer: QuerFlaeche[] }
+export interface QuerStelle { e: number; n: number; qe: number; qn: number; z: number; s: number; quer: QuerFlaeche[]
+  /** Faktor je Farbe für den Belag, damit er die Farbe der Strasse daneben im Luftbild bekommt (belagFaktor) */
+  belag?: [number, number, number] }
+/** der Faktor auf das Bild des Belags (Grundton 84 von 255), damit der Belag im Mittel die Farbe rgb (0 bis 255, sRGB) hat */
+export function belagFaktor(rgb: [number, number, number]): [number, number, number] {
+  const lin = (c: number) => (c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4)
+  const grund = lin(84 / 255)
+  return rgb.map((c) => lin(c / 255) / grund) as [number, number, number]
+}
+/** Brücken nahtlos an die Strasse (Michael, 2026-11-10: «diese nahtlos machen sonst springen die Autos»): an beiden Enden liegt die Achse auf
+ *  dem gezeichneten Gelände, dazwischen verschiebt sich die Höhe laut swissTLM3D gleichmässig um den Unterschied an den Enden. Gibt boden an
+ *  einem Ende NaN (dort geht die Brücke als anderes Stück weiter, oder es ist der Rand des Modells), bleibt dort die Höhe laut swissTLM3D. h wird
+ *  ersetzt */
+export function brueckeAnschliessen(e: ArrayLike<number>, n: ArrayLike<number>, h: number[] | Float32Array, boden: (e: number, n: number) => number) {
+  const z = h.length
+  if (z < 2) return
+  let a = boden(e[0], n[0]) - h[0], b = boden(e[z - 1], n[z - 1]) - h[z - 1]
+  if (!Number.isFinite(a)) a = 0
+  if (!Number.isFinite(b)) b = 0
+  let lang = 0
+  const s = [0]
+  for (let i = 1; i < z; i++) { lang += Math.hypot(e[i] - e[i - 1], n[i] - n[i - 1]); s.push(lang) }
+  for (let i = 0; i < z; i++) h[i] += a + (b - a) * (lang ? s[i] / lang : 0)
+}
 /** je Bild ein Material, die Helligkeit des Querschnitts als Farbe der Ecken */
 export function brueckenMaterialien() {
   const m = new Map<BrueckenArt, THREE.MeshLambertMaterial>()
@@ -124,7 +147,8 @@ export function querschnittNetzeBauen(stellen: QuerStelle[], X: (e: number) => n
       const ecke = (S: QuerStelle, a: number, h: number, hell: number) => {
         t!.pos.push(X(S.e + S.qe * a), Y(S.z + h), Z(S.n + S.qn * a))
         t!.uv.push(S.s / BRUECKE_BILD_M, (flach ? a : h) / BRUECKE_BILD_M)
-        t!.farbe.push(hell, hell, hell)
+        const f = fa.art === 'belag' && S.belag ? S.belag : null
+        if (f) t!.farbe.push(hell * f[0], hell * f[1], hell * f[2]); else t!.farbe.push(hell, hell, hell)
       }
       const e1 = () => ecke(A, fa.a0, fa.h0, fa.hell0), e2 = () => ecke(A, fa.a1, fa.h1, fa.hell1)
       const e3 = () => ecke(B, fb.a1, fb.h1, fb.hell1), e4 = () => ecke(B, fb.a0, fb.h0, fb.hell0)

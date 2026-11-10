@@ -11,7 +11,7 @@ import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, 
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { AUTO_GEGEN_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, autoLichter, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
-import { bahnQuerschnitt, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
+import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
@@ -1604,7 +1604,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               ob ein einzelnes Gleis elektrifiziert ist, steht in keiner unserer Quellen. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
             <li>Brücken in den Feldern von 4 km und 1 km: belegt sind Lage und Höhe und bei Bahnbrücken, wie viele Gleise nebeneinander liegen. Breite (bei
               Strassen ohne Angabe in der Klasse), Querschnitt mit Schotter, Belag und Brüstungen und das gemalte Aussehen sind gewählt, gleich wie im
-              Führerstand von Taktland; Pfeiler fehlen, Stücke unter 12 m fehlen. Wo Wikidata eine Bogen- oder Fachwerkbrücke nennt, steht darunter
+              Führerstand von Taktland; Pfeiler fehlen, Stücke unter 12 m fehlen. Der Belag der Strassenbrücken hat die Farbe der Strasse an ihren
+              Enden im Luftbild, und an ihren Enden liegt die Brücke auf dem gezeichneten Gelände, dazwischen ist ihre Höhe laut swissTLM3D um diesen
+              Unterschied gleichmässig verschoben, damit sie ohne Stufe an die Strasse anschliesst. Wo Wikidata eine Bogen- oder Fachwerkbrücke nennt, steht darunter
               ein Bogen mit Stützen und Pfeilern oder darüber ein Fachwerk in der Farbe des Materials: belegt ist nur die Bauart, Form, Spannweite,
               Zahl der Stützen und Masse sind erfunden. Unter jeder gezeichneten Brücke ist das Luftbild übermalt: Die Brücke
               auf dem Luftbild läge sonst als zweite Brücke unten im Tal. Was dort zu sehen ist, Wasser, Hang oder Boden, ist aus dem Bild daneben
@@ -4595,7 +4597,48 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           }
         }
       }
-      const zeichnen = (st: BrueckenStueck, z0: number, quer: ReturnType<typeof bahnQuerschnitt>) => {
+      // Strassen und Wege nahtlos: an beiden Enden auf dem gezeichneten Gelände (brueckeAnschliessen in Bruecken.ts; Michael, 2026-11-10: «diese
+      // nahtlos machen sonst springen die Autos»), die Autos rechnen ihre Höhe auf Brücken gleich
+      // nur an echten Enden: nicht wo ein anderes Brückenstück der Strasse anschliesst (ein Viadukt in mehreren Stücken) und nicht am Rand des Modells
+      const endeSchl = (e: number, n: number) => `${Math.round(e)}_${Math.round(n)}`
+      const enden = new Map<string, number>()
+      for (const br of liste) if (br.art !== 0) for (const i of [0, br.e.length - 1]) { const k = endeSchl(br.e[i], br.n[i]); enden.set(k, (enden.get(k) ?? 0) + 1) }
+      for (const s of stuecke) if (s.art !== 0) brueckeAnschliessen(s.e, s.n, s.h, (e, n) => (enden.get(endeSchl(e, n)) === 1 ? bestandHoehe(b, e, n) : NaN))
+      // der Belag in der Farbe der Strasse an beiden Enden im Luftbild (Michael, 2026-11-10: «Bei den Brücken: kannst du diese gleich wie die Strasse
+      // einfärben, generell überall?»): je Ende 6 bis 30 m über die Brücke hinaus, quer bis ein Drittel der halben Breite, der Median je Farbe;
+      // gelesen vor der Retusche, ohne Treffer der gemalte Belag (gewählt)
+      const bildDaten = new Map<HTMLCanvasElement, ImageData | null>()
+      const pixel = (e: number, n: number): [number, number, number] | null => {
+        for (const t of teile) {
+          const r = t.rahmen
+          if (e < r.e0 || e >= r.e0 + r.b || n > r.n1 || n <= r.n1 - r.h) continue
+          let d = bildDaten.get(t.bild)
+          if (d === undefined) {
+            try { d = t.bild.getContext('2d', { willReadFrequently: true })?.getImageData(0, 0, t.bild.width, t.bild.height) ?? null } catch { d = null }
+            bildDaten.set(t.bild, d)
+          }
+          if (!d) return null
+          const px = d.width / r.b, x = Math.floor((e - r.e0) * px), y = Math.floor((r.n1 - n) * px), o = (y * d.width + x) * 4
+          return [d.data[o], d.data[o + 1], d.data[o + 2]]
+        }
+        return null
+      }
+      const strassenFarbe = (st: BrueckenStueck, halb: number): [number, number, number] | null => {
+        const z = st.e.length
+        if (z < 2) return null
+        const r: number[] = [], g: number[] = [], bl: number[] = []
+        for (const [i, j] of [[0, 1], [z - 1, z - 2]]) {
+          const de = st.e[i] - st.e[j], dn = st.n[i] - st.n[j], l = Math.hypot(de, dn) || 1, ue = de / l, un = dn / l
+          for (let d = 6; d <= 30; d += 3) for (const q of [-halb / 3, 0, halb / 3]) {
+            const p = pixel(st.e[i] + ue * d - un * q, st.n[i] + un * d + ue * q)
+            if (p) { r.push(p[0]); g.push(p[1]); bl.push(p[2]) }
+          }
+        }
+        if (r.length < 6) return null
+        const med = (a: number[]) => a.sort((u, v) => u - v)[a.length >> 1]
+        return [med(r), med(g), med(bl)]
+      }
+      const zeichnen = (st: BrueckenStueck, z0: number, quer: ReturnType<typeof bahnQuerschnitt>, belag?: [number, number, number]) => {
         const z = st.e.length
         if (z < 2) return
         let lang = 0
@@ -4604,7 +4647,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const a = Math.max(0, i - 1), c = Math.min(z - 1, i + 1)
           const de = st.e[c] - st.e[a], dn = st.n[c] - st.n[a], l = Math.hypot(de, dn) || 1
           if (i) lang += Math.hypot(st.e[i] - st.e[i - 1], st.n[i] - st.n[i - 1])
-          stellen.push({ e: st.e[i], n: st.n[i], qe: -dn / l, qn: de / l, z: st.h[i] + z0, s: lang, quer })
+          stellen.push({ e: st.e[i], n: st.n[i], qe: -dn / l, qn: de / l, z: st.h[i] + z0, s: lang, quer, belag })
         }
         for (const m of querschnittNetzeBauen(stellen, X, Y, Z, material)) { m.castShadow = true; m.receiveShadow = true; gruppe.add(m) }
       }
@@ -4623,7 +4666,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const s of stuecke) {
         if (s.art === 0) continue
         const halb = strassenHalbe(s.breite, s.klasse, s.art === 2)
-        zeichnen(s, -0.1, strassenQuerschnitt(halb))
+        const farbe = strassenFarbe(s, halb)
+        zeichnen(s, -0.1, strassenQuerschnitt(halb), farbe ? belagFaktor(farbe) : undefined)
         streifenVon(s, -(halb * RETUSCHE_STRASSE_MAL + RETUSCHE_STRASSE_PLUS_M), halb * RETUSCHE_STRASSE_MAL + RETUSCHE_STRASSE_PLUS_M)
         kandidaten.push({ e: s.e, n: s.n, h: s.h.map((z) => z - 1.1), lo: -halb, hi: halb, bahn: false })
       }
@@ -5830,7 +5874,18 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const liste = fahrbahnRetusche(ctx, c.width, c.height, r.e0, r.n1, c.width / r.b, hier)
         if (liste.length) { retuschiert.push({ ctx, bild: c, liste }); bildNeu(c) }
       }
-      const ketten = kettenBauen(d.stuecke, (kette) => {
+      // auf Brücken nahtlos wie die gezeichnete Brücke (brueckeAnschliessen): eine Kopie, die geladenen Stücke bleiben für andere Felder
+      // nicht angeschlossen, wo in derselben Kette gleich ein weiteres Brückenstück folgt (wie bei der gezeichneten Brücke)
+      const brueckenEnden = new Map<string, number>()
+      const endeSchl = (e: number, n: number) => `${Math.round(e)}_${Math.round(n)}`
+      for (const st of d.stuecke) if (st.bruecke) for (const i of [0, st.e.length - 1]) { const k = endeSchl(st.e[i], st.n[i]); brueckenEnden.set(k, (brueckenEnden.get(k) ?? 0) + 1) }
+      const stuecke = d.stuecke.map((st) => {
+        if (!st.bruecke) return st
+        const h = Float32Array.from(st.h)
+        brueckeAnschliessen(st.e, st.n, h, (e, n) => (brueckenEnden.get(endeSchl(e, n)) === 1 ? bestandHoehe(b, e, n) : NaN))
+        return { ...st, h }
+      })
+      const ketten = kettenBauen(stuecke, (kette) => {
         const z = d.index.ketten[kette]
         return z === null || z === undefined ? null : [d.index.zaehlstellen[z][3], d.index.zaehlstellen[z][4]]
       })

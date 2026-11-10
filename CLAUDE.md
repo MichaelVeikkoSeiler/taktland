@@ -397,6 +397,14 @@ Autos in «3D Schweiz» (Michael, 2026-11-10: «Möglich Autos aus den Autobahne
              eines vorbeifahrenden Autos (klang/auto.mp3, 6,8 s, am lautesten nach 4,0 s, AUTO_SPITZE_S in src/audio.ts), je Auto alle 0,1 s geprüft, ob es in 4,0 s
              am nächsten an der Stelle ist, wo man hinhört (Abstand fürs Ohr wie bei den Zügen), dann gestartet, voll bis 20 m, im Quadrat leiser, still ab 300 m, je Auto
              höchstens alle 6 s, höchstens 6 zugleich, Tempo der Aufnahme je Wagen ±6 % (AUTO_HOEREN_* in Schweiz3D.tsx, autoVorbei, gewählt)
+Strassenbrücken in «3D Schweiz» (Michael, 2026-11-10, Bern Forsthaus, mit «Autos»: «Bei den Brücken: kannst du diese gleich wie die Strasse einfärben, generell überall?
+             Und diese nahtlos machen sonst springen die Autos»): der Belag in der Farbe der Strasse an beiden Enden im Luftbild (je Ende 6 bis 30 m über die Brücke hinaus,
+             quer bis ein Drittel der halben Breite, Median je Farbe, vor der Retusche; als Faktor auf das gemalte Belagsbild über die Farben der Ecken, belagFaktor und
+             QuerStelle.belag in komponenten/Bruecken.ts, strassenFarbe in Schweiz3D.tsx; ohne Treffer der gemalte Belag), Strassen und Wege; nahtlos: an echten Enden
+             liegt die Achse auf dem gezeichneten Gelände, dazwischen um den Unterschied an den Enden gleichmässig verschoben (brueckeAnschliessen); kein Ende ist, wo ein
+             anderes Brückenstück der Strasse am selben Punkt anschliesst (auf den Meter gerundet; Viadukte in mehreren Stücken) oder der Rand des Modells, dort bleibt die
+             Höhe laut swissTLM3D; die Autos rechnen ihre Höhe auf Brücken gleich (Kopie der Stücke); alles gewählt; im Führerstand nicht geändert; im Browser hier nur grob
+             (ohne die feinen Daten) bei Mattstetten angeschaut
 Propellerflugzeug in «3D Schweiz» (Michael, 2026-11-10: «Propeller plane» von Breviceps, freesound.org/s/515293, CC0, «Propeller Flugzeug nur Tagsüber»): klang/propeller.mp3,
              29,7 s einmal ganz; von 6 bis 20 Uhr jedes zweite Flugzeug (PROPELLER_BIS_H, propeller in src/audio.ts), sonst und bis 23 Uhr das erzeugte hoch oben
 Möwen in «3D Schweiz» (Michael, 2026-11-10: «ES Seagulls from Window 01» von se2001, freesound.org/s/510204, CC0, «Nur bei Seen ab 15km2»): klang/moewen.mp3, Schleife von
