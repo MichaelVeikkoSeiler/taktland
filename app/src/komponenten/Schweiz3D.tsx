@@ -1754,7 +1754,7 @@ const SOCKEL_ZEIT = 0.75, KNOPF_ABSTAND = 0.03
 // könnten ästhetisch schöner sein»): das Gelände ausserhalb der Landesgrenze (BFS g1, data/kartengrund.json) ausgeblendet, eine Wand entlang
 // der Grenze bis zum tiefsten Punkt, darunter der Sockel mit den Knöpfen wie bisher, oben mit einem dunklen Deckel; Farben und Masse gewählt
 const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', LAND_DECKEL_FARBE = '#262626', LAND_DECKEL_TIEFER = 0.0005
-const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', autos: '#ff9de2', menschen: '#ffb38a', wolken: '#ffffff' }
+const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', autos: '#ff9de2', menschen: '#e8b48f', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** ein Zug so lang, eine Annahme fürs Bild (die Länge eines Zugs steht nicht im Fahrplan); höchstens so viele zugleich */

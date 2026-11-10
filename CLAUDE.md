@@ -418,7 +418,7 @@ Verkehr auf den übrigen Strassen in «3D Schweiz» (Michael, 2026-11-10: «Jetz
              dabei gefunden: die Maske der Siedlungen (siedlung in build_strassenlicht.py) zeichnete Stadtzentren vor den Siedlungen, deren Löcher sie
              wieder löschten (Bern, Zürich innen ohne Siedlung, ohne Strassenlicht); seither nach objval geordnet, data/strassenlicht neu gebaut
 Menschen in «3D Schweiz» (Michael, 2026-11-11: «Heisst dass du kannst Taktland tatsächlich bevölkern???», auf die Vorschläge Perrons, Stadt, Wanderwege:
-             «Gerne gemäss deinen Vorschlägen umsetzen»): Knopf «Menschen» an der Wand nach «Autos» (Farbe gewählt), in den Feldern von 4 km und 1 km
+             «Gerne gemäss deinen Vorschlägen umsetzen»): Knopf «Menschen» an der Wand nach «Autos» (hautfarben #e8b48f, Michael, 2026-11-11: «Knopf Menschen Hautfarbig»), in den Feldern von 4 km und 1 km
              (komponenten/Menschen.ts): Wartende auf den Perrons (data/perrons3d.json) = DWV der SBB / 432 (Hälfte steigt ein, 18 Betriebsstunden, 5 Minuten
              warten, WARTENDE_TEILER), je Perron nach seiner Fläche, zufällig mindestens 0,8 m vom Rand, nachts 1 bis 5 Uhr niemand, 22 bis 6 Uhr 35 %;
              Fussgänger auf den Trottoirs der übrigen Strassen innerorts, 1,4 m neben dem Rand der Fahrbahn (TROTTOIR_M), je km Einwohner je Hektare laut
