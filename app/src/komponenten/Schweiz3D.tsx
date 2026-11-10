@@ -1267,14 +1267,15 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         {/* Michael, 2026-11-10: Vorschlag «Auf Augenhöhe stehen … und sich umschauen», gewählt mit «Icon mit Männchen», «alle Devices» */}
         <Abschnitt titel="Auf Augenhöhe">
-          <p>In den Feldern von 4 km und 1 km stellt der Knopf mit dem Männchen (an den Wänden «Augenhöhe») einen auf das Gelände, 1,7 m über dem Boden,
-            dort, wohin man gerade schaut. Ziehen dreht den Blick, ein Tipp ins Gelände stellt einen dorthin, am Computer gehen die Pfeiltasten oder
-            W, A, S, D (mit der Umschalttaste schneller). In der Brille steht man im Modell in Originalgrösse: der Thumbstick geht vor und zurück und
-            dreht, ein Abzug ins Gelände stellt einen dorthin, Thumbstick drücken oder nochmals der Knopf beendet es. Die Höhe des Auges und das Tempo
+          <p>In den Feldern von 4 km und 1 km stellt der Knopf mit dem Männchen einen auf das Gelände, 1,7 m über dem Boden, dort, wohin man gerade
+            schaut. Ziehen dreht den Blick, ein Tipp ins Gelände stellt einen dorthin, am Computer gehen die Pfeiltasten oder W, A, S, D (mit der
+            Umschalttaste schneller). In der Brille ohne Knopf: im Feld von 1 km zeigt der Strahl auf dem Gelände ein Männchen (nicht auf Wasser,
+            Knöpfen, Zügen und Schiffen), ein Abzug stellt einen dorthin, im Modell in Originalgrösse. Dort zeigt ein Bogen, wohin man springt, ein
+            Abzug springt; der Thumbstick geht und dreht; zum Himmel gezielt bringt ein Abzug zurück auf den Tisch. Die Höhe des Auges und das Tempo
             sind gewählt; aus der Nähe ist das Gelände so grob wie seine Daten (im Feld von 1 km auf 5 m, das Luftbild auf 50 cm).</p>
         </Abschnitt>
         <Abschnitt titel="Knöpfe an den Wänden">
-          <p>Die Knöpfe an den Wänden des Sockels schalten Orte, Gebäude, Bäume, Augenhöhe, Züge, Schiffe, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
+          <p>Die Knöpfe an den Wänden des Sockels schalten Orte, Gebäude, Bäume, Züge, Schiffe, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
             Wetter und Sonne ein und aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
             einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
@@ -1609,6 +1610,10 @@ const ZUG_NAH_MASS = 0.6
 const KAMERA_UEBER_GELAENDE_KM = 0.003
 /** auf Augenhöhe (Michael, 2026-11-10): das Auge so hoch über dem Gelände, die Kamera so weit hinter dem Drehpunkt, die vordere Schnittebene,
  *  Tempo beim Gehen (Pfeiltasten, Thumbstick; mit Umschalt zehnmal so schnell) und Drehen in der Brille (alles gewählt) */
+/** Ich-Blick in der Brille: Tempo des Bogens in m/s (so weit springt man, etwa 15 m), ab so viel Grad nach oben gilt der Himmel, Höhe des Männchens
+ *  auf dem Tisch, Punkte des Bogens (gewählt) */
+const ICH_FLUSS_M = 15, ICH_TASTEN_KM = 0.002
+const ICH_BOGEN_MS = 12, ICH_HIMMEL_GRAD = 45, ICH_MANN_TISCH_M = 0.06, ICH_BOGEN_PUNKTE = 40
 const STEHEN_AUGE_M = 1.7, STEHEN_DREH_KM = 0.00001, STEHEN_NAH_KM = 0.0001, STEHEN_GEHEN_MS = 4, STEHEN_DREHEN_RS = 1.6
 /** die vordere Schnittebene der Kamera: höchstens 10 m, nah am Boden die Hälfte der Höhe darüber, mindestens 0,5 m (sonst fehlt der Boden vor
  *  dem Auge); gewählt */
@@ -1883,7 +1888,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color; himmelOben: THREE.Color; himmelObenTag: THREE.Color
     himmelMalen: () => void
     sterne: Sternenhimmel
-    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void }
+    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null }
     stehenSetzen: (p: THREE.Vector3 | null) => void
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight
@@ -2018,7 +2023,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     szene.add(anleitung)
     {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      c.width = 1024; c.height = 700
+      c.width = 1024; c.height = 820
       x.fillStyle = 'rgba(255,255,255,0.96)'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 24); x.fill()
       x.fillStyle = '#212121'; x.font = 'bold 48px Helvetica, Arial, sans-serif'
       x.fillText(`${AUF_3DLAND ? '3D-Land' : 'Virtuelle Schweiz'}: Tasten`, 48, 84)
@@ -2027,6 +2032,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],
         ['Thumbstick', 'drehen, heben, senken'], ['Thumbstick drücken', 'Modell zurück an den Anfang'],
         ['Greiftaste', 'eine Stufe zurück'], ['Abzug auf einen Schalter', 'an den Wänden: ein, aus, Zeit der Sonne'],
+        ['1 km: Abzug aufs Männchen', 'dort hinstellen, Ich-Blick'], ['Drin: Bogen, Abzug', 'springen; zum Himmel: zurück'],
       ]
       zeilen.forEach(([taste, was], i) => {
         const y = 160 + i * 58
@@ -2034,7 +2040,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         x.font = '36px Helvetica, Arial, sans-serif'; x.fillStyle = '#212121'; x.fillText(was, 440, y)
       })
       x.font = '30px Helvetica, Arial, sans-serif'; x.fillStyle = '#767676'
-      x.fillText('Ein Modell zum Anschauen, Höhe wie echt.', 48, 660)
+      x.fillText('Ein Modell zum Anschauen, Höhe wie echt.', 48, 780)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false }))
       sp.scale.set(0.5 * c.width / c.height, 0.5, 1)
@@ -2105,8 +2111,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // wie in Taktland»): wie in der Modellbahn trägt ein gehaltener Abzug das Modell, beide ziehen es grösser oder kleiner und
     // drehen es; ein kurzer Abzug wählt mit dem Strahl wie bisher; die Greiftaste geht eine Stufe zurück, der Thumbstick dreht
     // und hebt, Thumbstick drücken stellt das Modell zurück an den Anfang
-    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void } =
-      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen') }
+    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null } =
+      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen'), stehenStart: null }
     let drehung = 0, zoom = 1
     /** Lage des Modells, sobald es getragen oder gehoben wurde; null: auf dem Tisch wie am Anfang */
     let lage: THREE.Vector3 | null = null
@@ -2141,6 +2147,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         anfang.delete(c)
         if (haelt.delete(c)) { anfassen(); return }
         if (!a || a.getragen) return
+        // der Ich-Blick (Michael, 2026-11-10): ein Abzug aufs Männchen stellt einen dorthin, auf den Himmel zurück auf den Tisch
+        const z = ziele.get(c)
+        if (z?.art === 'himmel' && stehenBrille) { wenn.stehenAus(); return }
+        if (z?.art === 'boden') {
+          if (stehenBrille) stehenSetzen(z.p)
+          else { wenn.stehenStart = z.p.clone(); wenn.stehenAus() }
+          return
+        }
         // kurz gedrückt: wählen wie bisher
         const m = new THREE.Matrix4().extractRotation(c.matrixWorld)
         strahl.ray.origin.setFromMatrixPosition(c.matrixWorld)
@@ -2310,7 +2324,117 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const um = ziel.clone().sub(steuerung.target)
       steuerung.target.copy(ziel); kamera.position.add(um); steuerung.update()
     }
-    const jeBild: Array<() => void> = [gehen, () => {
+    // Ich-Blick in der Brille (Michael, 2026-11-10: «bitte kein Knopf sondern beim 1km Ausschnitt … irgendwo (ausser Gewässer) anstrahlen und es erscheint
+    // ein Männchen am Ziel. Klickt man mit den Abzügen … ist man dort in der 1 Person Ansicht. Übliches Bewegen mit Bogen … Zurück muss auf den Himmel
+    // gezielt und gedrückt werden»): auf dem Tisch im Feld von 1 km zeigt der Strahl ein Männchen auf dem Gelände, wo nichts anderes getroffen wird
+    // und kein Gewässer ist; drin zeigt ein Bogen, wohin man springt; steiler als ICH_HIMMEL_GRAD nach oben gilt als Himmel
+    type Ziel = { art: 'boden'; p: THREE.Vector3; bogen?: THREE.Vector3[] } | { art: 'himmel' }
+    const ziele = new Map<THREE.Object3D, Ziel | null>()
+    const maennchenStoff = new THREE.MeshBasicMaterial({ color: KARMIN, transparent: true, opacity: 0.85, depthTest: false })
+    const maennchenBauen = () => {
+      const g = new THREE.Group()
+      const koerper = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.2, 0.62, 12), maennchenStoff); koerper.position.y = 0.95
+      const kopf = new THREE.Mesh(new THREE.SphereGeometry(0.13, 14, 10), maennchenStoff); kopf.position.y = 1.42
+      const beine = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.1, 0.64, 10), maennchenStoff); beine.position.y = 0.32
+      const ring = new THREE.Mesh(new THREE.RingGeometry(0.28, 0.4, 32).rotateX(-Math.PI / 2), maennchenStoff); ring.position.y = 0.01
+      for (const o of [koerper, kopf, beine, ring]) { o.renderOrder = 20; g.add(o) }
+      g.visible = false; szene.add(g)
+      return g
+    }
+    const bogenBauen = () => {
+      const l = new THREE.Line(new THREE.BufferGeometry().setFromPoints(Array.from({ length: ICH_BOGEN_PUNKTE }, () => new THREE.Vector3())),
+        new THREE.LineBasicMaterial({ color: KARMIN, transparent: true, opacity: 0.9, depthTest: false }))
+      l.frustumCulled = false; l.renderOrder = 20; l.visible = false; szene.add(l)
+      return l
+    }
+    const zielBilder = [0, 1].map(() => ({ mann: maennchenBauen(), bogen: bogenBauen() }))
+    const wasser = (p: THREE.Vector3) => !!(wurzel.userData.wasserBei as ((x: number, z: number) => boolean) | undefined)?.(p.x, p.z)
+    const zielen = (c: THREE.Object3D): Ziel | null => {
+      if (anleitung.visible || haelt.size) return null
+      const o = new THREE.Vector3().setFromMatrixPosition(c.matrixWorld)
+      const d = new THREE.Vector3(0, 0, -1).applyMatrix4(new THREE.Matrix4().extractRotation(c.matrixWorld)).normalize()
+      if (stehenBrille) {
+        if (d.y > Math.sin(ICH_HIMMEL_GRAD * Math.PI / 180)) return { art: 'himmel' }
+        // der Bogen eines Wurfs, bis er das Gelände trifft
+        const v = d.clone().multiplyScalar(ICH_BOGEN_MS), punkte: THREE.Vector3[] = [o.clone()]
+        const l = new THREE.Vector3()
+        for (let i = 1; i < 200; i++) {
+          const t = i * 0.03, w = o.clone().addScaledVector(v, t); w.y -= 4.9 * t * t
+          punkte.push(w)
+          wurzel.worldToLocal(l.copy(w))
+          if (l.y <= bodenY(l.x, l.z)) {
+            const drin = wurzel.userData.drinBei as ((x: number, z: number) => boolean) | undefined
+            if (drin && !drin(l.x, l.z)) return null
+            l.y = bodenY(l.x, l.z); return wasser(l) ? null : { art: 'boden', p: l.clone(), bogen: punkte }
+          }
+        }
+        return null
+      }
+      if (wurzel.userData.stufe !== 'nah') return null
+      strahl.ray.origin.copy(o); strahl.ray.direction.copy(d)
+      const knoepfe = ['knoepfe', 'schalter'].flatMap((n) => wurzel.getObjectByName(n)?.children.filter((x) => x.visible && x.userData.aktion) ?? [])
+      if (strahl.intersectObjects(knoepfe, false)[0]) return null
+      for (const g of ['zuege', 'schiffe'].map((n) => wurzel.getObjectByName(n)).filter((x): x is THREE.Object3D => !!x?.visible)) {
+        if ((g.userData.nahe as ((r: THREE.Ray, w: number) => boolean) | undefined)?.(strahl.ray, ZUG_TIPP_WINKEL_BRILLE)) return null
+      }
+      // dem Strahl entlang die Höhe des Geländes abtasten, alle 2 m (schneller als jedes Dreieck des Geländes zu prüfen)
+      const oL = wurzel.worldToLocal(o.clone()), dL = d.clone().transformDirection(new THREE.Matrix4().copy(wurzel.matrixWorld).invert())
+      const drin = wurzel.userData.drinBei as ((x: number, z: number) => boolean) | undefined
+      const weite = ((wurzel.userData.weiteKm as number) || 1) * 3
+      const p = new THREE.Vector3()
+      for (let t = 0; t < weite; t += ICH_TASTEN_KM) {
+        p.copy(oL).addScaledVector(dL, t)
+        if (drin && !drin(p.x, p.z)) continue
+        if (p.y <= bodenY(p.x, p.z)) {
+          // zwischen dem letzten Schritt und diesem genauer
+          let a = t - ICH_TASTEN_KM, b2 = t
+          for (let i = 0; i < 8; i++) { const m = (a + b2) / 2; p.copy(oL).addScaledVector(dL, m); if (p.y <= bodenY(p.x, p.z)) b2 = m; else a = m }
+          p.copy(oL).addScaledVector(dL, b2); p.y = bodenY(p.x, p.z)
+          return wasser(p) ? null : { art: 'boden', p: p.clone() }
+        }
+      }
+      return null
+    }
+    const zielZeigen = () => {
+      controller.forEach((c, i) => {
+        const z = renderer.xr.isPresenting ? zielen(c) : null
+        ziele.set(c, z)
+        const { mann, bogen } = zielBilder[i]
+        mann.visible = z?.art === 'boden'
+        bogen.visible = z?.art === 'boden' && !!z.bogen
+        // der rote Strahl des Controllers nur, wo kein Bogen ist
+        const linie = c.children[0]; if (linie) linie.visible = !bogen.visible
+        if (z?.art !== 'boden') return
+        mann.position.copy(wurzel.localToWorld(z.p.clone()))
+        // auf dem Tisch 6 cm hoch, drin in Lebensgrösse
+        mann.scale.setScalar(stehenBrille ? 1 : ICH_MANN_TISCH_M / 1.55)
+        if (z.bogen) {
+          const pos = bogen.geometry.attributes.position as THREE.BufferAttribute
+          for (let j = 0; j < ICH_BOGEN_PUNKTE; j++) {
+            const q = z.bogen[Math.min(z.bogen.length - 1, Math.round((j / (ICH_BOGEN_PUNKTE - 1)) * (z.bogen.length - 1)))]
+            pos.setXYZ(j, q.x, q.y, q.z)
+          }
+          pos.needsUpdate = true
+        }
+      })
+    }
+    // nur in einer Testfassung: zielen wie ein Controller an der Stelle der Kamera mit ihrem Blick
+    if (import.meta.env.VITE_S3D_TEST) {
+      ;(window as unknown as { s3dZiel: unknown }).s3dZiel = (dx = 0, dy = 0) => {
+        const c = new THREE.Object3D(); c.position.copy(kamera.position)
+        c.lookAt(steuerung.target.clone().add(new THREE.Vector3(dx, dy, 0))); c.rotateY(Math.PI); c.updateMatrixWorld()
+        const z = zielen(c)
+        if (!z) return null
+        if (z.art === 'himmel') return 'himmel'
+        const l = wurzel.userData.lage as { cE: number; cN: number }
+        return { e: Math.round(l.cE + z.p.x * 1000), n: Math.round(l.cN - z.p.z * 1000), wasser: wasser(z.p), ziel: steuerung.target.toArray().map((v) => Math.round(v * 1000)) }
+      }
+      ;(window as unknown as { s3dWasser: unknown }).s3dWasser = (e: number, n: number) => {
+        const l = wurzel.userData.lage as { cE: number; cN: number }
+        return wasser(new THREE.Vector3((e - l.cE) / 1000, 0, -(n - l.cN) / 1000))
+      }
+    }
+    const jeBild: Array<() => void> = [gehen, zielZeigen, () => {
       if (!renderer.xr.isPresenting) return
       const sitzung = renderer.xr.getSession()
       // ein Abzug gilt als gehalten, sobald die Hand 3 cm weiter ist oder er 0,4 s gedrückt bleibt (Grenzen gewählt); auf Augenhöhe trägt er nicht
@@ -2515,6 +2639,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return drin ? Math.max(Y(tief), Y(bestandHoehe(b, e, n)) + KAMERA_UEBER_GELAENDE_KM) : Y(tief)
     }
     wurzel.userData.zielUnten = Y(tief)
+    wurzel.userData.drinBei = (x: number, z: number) => {
+      const e = cE + x * 1000, n = cN - z * 1000
+      return e >= E0 && e <= E1 && n >= N0 && n <= N1
+    }
     // der Boden für die Augenhöhe: das Gelände, daneben der tiefste Punkt
     wurzel.userData.bodenY = (x: number, z: number) => {
       const e = cE + x * 1000, n = cN - z * 1000
@@ -3137,8 +3265,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       { zeilen: ['Orte'], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
       { zeilen: ['Gebäude'], breite: KNOPF_B * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
       { zeilen: ['Bäume'], breite: KNOPF_B * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
-      // auf Augenhöhe wie der Knopf mit dem Männchen (Michael, 2026-11-10: «alle Devices»), nur in den Feldern von 4 km und 1 km
-      { zeilen: ['Augenhöhe'], breite: KNOPF_B * W, an: stehen, farbe: LICHT.gebaeude, gesperrt: stufe !== 'ort' && stufe !== 'nah', aktion: umschalten('stehen') },
       // wie die Wanderwege erst ab der Stufe 16 km
       ...(zuegeDa ? [abstand, { zeilen: ['Züge'], breite: KNOPF_B * W, an: !grob(stufe) && zuege, farbe: LICHT.zuege, gesperrt: grob(stufe),
         aktion: umschalten('zuege') },
@@ -3294,7 +3420,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, wolken, stehen])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, wolken])
   // auf Augenhöhe: auf dem Bildschirm an der Stelle, die die Kamera anschaut, in der Brille unter dem Kopf (ausserhalb des Modells in seiner Mitte);
   // danach stellt ein Tipp ins Gelände an diese Stelle
   useEffect(() => {
@@ -3302,7 +3428,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     if (!k || !stehen) return
     stehenAn = true
     const brille = k.renderer.xr.isPresenting
-    const p = brille ? k.wurzel.worldToLocal(k.renderer.xr.getCamera().getWorldPosition(new THREE.Vector3())) : k.steuerung.target.clone()
+    const p = k.wenn.stehenStart ?? (brille ? k.wurzel.worldToLocal(k.renderer.xr.getCamera().getWorldPosition(new THREE.Vector3())) : k.steuerung.target.clone())
+    k.wenn.stehenStart = null
     const lage = k.wurzel.userData.lage as { cE: number; cN: number }
     const e = lage.cE + p.x * 1000, n = lage.cN - p.z * 1000
     if (![...b.teile.values()].some((t) => imRaster(t.raster, e, n))) p.set(0, 0, 0)
@@ -3310,6 +3437,45 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     k.wenn.stehen = (q) => k.stehenSetzen(q)
     return () => { k.wenn.stehen = null; k.stehenSetzen(null); stehenAn = false }
   }, [stehen, b])
+  // für den Ich-Blick in der Brille: die Stufe und wo Wasser ist (Seen aus data/seen.json ohne Inseln, Flüsse aus data/kartengrund.json bis ICH_FLUSS_M
+  // daneben, deren Breite in keiner unserer Quellen steht)
+  useEffect(() => {
+    const k = kern.current
+    if (!k) return
+    k.wurzel.userData.stufe = stufe
+    const lage = k.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!lage || !zusatz || stufe !== 'nah') { k.wurzel.userData.wasserBei = undefined; return }
+    const r = [...b.teile.values()].map((t) => t.rahmen)
+    const e0 = Math.min(...r.map((x) => x.e0)) - 500, e1 = Math.max(...r.map((x) => x.e0 + x.b)) + 500
+    const n0 = Math.min(...r.map((x) => x.n1 - x.h)) - 500, n1 = Math.max(...r.map((x) => x.n1)) + 500
+    const zug = (z: { start: [number, number]; d: number[] }) => {
+      let [la, lo] = z.start
+      const q: Array<[number, number]> = [lv95(la / 1e5, lo / 1e5) as [number, number]]
+      for (let i = 0; i + 1 < z.d.length; i += 2) { la += z.d[i]; lo += z.d[i + 1]; q.push(lv95(la / 1e5, lo / 1e5) as [number, number]) }
+      return q
+    }
+    const imKasten = (q: Array<[number, number]>) => q.some(([e, n]) => e > e0 && e < e1 && n > n0 && n < n1)
+    const inRing = (ring: Array<[number, number]>, e: number, n: number) => {
+      let innen = false
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [ae, an] = ring[i], [ce, cn] = ring[j]
+        if (an > n !== cn > n && e < ((ce - ae) * (n - an)) / (cn - an) + ae) innen = !innen
+      }
+      return innen
+    }
+    const seen = zusatz.seen.seen.map((x) => x.ringe.map(zug)).filter((ringe) => ringe.length && (imKasten(ringe[0]) || inRing(ringe[0], (e0 + e1) / 2, (n0 + n1) / 2)))
+    const fluesse = (zusatz.fluesse ?? []).map(zug).filter(imKasten)
+    k.wurzel.userData.wasserBei = (x: number, z: number) => {
+      const e = lage.cE + x * 1000, n = lage.cN - z * 1000
+      if (seen.some(([aussen, ...inseln]) => inRing(aussen, e, n) && !inseln.some((i) => inRing(i, e, n)))) return true
+      for (const q of fluesse) for (let i = 1; i < q.length; i++) {
+        const [ae, an] = q[i - 1], [ce, cn] = q[i], dx = ce - ae, dy = cn - an, l2 = dx * dx + dy * dy
+        const t = l2 ? Math.max(0, Math.min(1, ((e - ae) * dx + (n - an) * dy) / l2)) : 0
+        if (Math.hypot(e - ae - t * dx, n - an - t * dy) < ICH_FLUSS_M) return true
+      }
+      return false
+    }
+  }, [stufe, b, zusatz])
 
   // die Wanderwege: auf das Gelände des Bestands gelegt, zwischen den Punkten so dicht wie sein Raster, damit sie nicht
   // im Hang verschwinden; in einer Gruppe, deren Höhe mit dem Faktor wächst
