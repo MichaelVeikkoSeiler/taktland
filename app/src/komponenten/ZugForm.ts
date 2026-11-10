@@ -28,7 +28,7 @@ const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 /** wie weit das Fensterband in den Kopf reicht, in Teilen seiner Länge (bis das Dach sinkt); gewählt */
 const FENSTER_IM_KOPF = 0.55
 /** Türen: an oder aus (für die Vorschau), Breite in Teilen der Höhe, Abstand der Mitte vom Wagenende in Teilen der Länge, Farbe des Felds; gewählt */
-export const zugTueren = { an: false }
+export const zugTueren = { an: true }
 const TUER_BREIT = 0.34, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#808080', TUER_LINIE = 0.014
 /** Höhe des Fensterbands und wie weit seine Mitte unter dem Beginn der Dachrundung liegt, in Teilen der Höhe (Michael, 2026-11-10: «Seitenstreifen etwas
  *  höher und etwas weiter unten», dann «noch etwas weiter unten und noch etwas höher»; vorher 0,22 und 0,08, dann 0,28 und 0,14) */
@@ -86,10 +86,11 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   // Türen, nur gemalt (Michael, 2026-11-10: «Braucht es bei den Wagen noch Türen, also nicht richtige, aber damit es den Anschein macht?»): je Seite zwei nahe
   // den Enden, an Lok und Steuerwagen eine hinter dem Kopf; Zahl, Lage und Masse gewählt
   if (zugTueren.an) {
-    const unterkante = unten + H * 0.03, oberkante = h - r - H * FENSTER_TIEFER + H * FENSTER_HOCH / 2 + H * 0.03
+    const unterkante = unten + H * 0.03, oberkante = h - r - H * FENSTER_TIEFER + H * FENSTER_HOCH / 2 + H * 0.09
     const b = H * TUER_BREIT
-    // an Lok und Steuerwagen gleich hinter dem Kopf, dort, wo das Fensterband im Kopf endet
-    const amKopf = L / 2 - kopf * (1 - FENSTER_IM_KOPF) - b * 0.6
+    // an Lok und Steuerwagen hinter dem Kopf, eine Türbreite hinter dem Ende des Fensterbands im Kopf (Michael, 2026-11-10: «Etwas eine Türbreite weiter
+    // hinten. Obere Kante noch etwas weiter oben»)
+    const amKopf = L / 2 - kopf * (1 - FENSTER_IM_KOPF) - b * 1.6
     const stellen = i === 0 ? [amKopf] : hinten ? [-amKopf] : [L / 2 - L * TUER_VOM_ENDE, -(L / 2 - L * TUER_VOM_ENDE)]
     // nur ein dünner grauer Rahmen links, oben und rechts mit leicht gerundeten Ecken (Michael, 2026-11-10: «wesentlich einfacher darstellen, nur dünner grauer
     // Rahmen links oben und rechts. Leicht abgerundete Ecken»): eine flache Form in z und y, zur Seite gedreht
