@@ -439,6 +439,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             anderen im selben Raum. Dort liegen nur
             diese Angaben, ohne IP-Adresse und ohne Konto; nach sechs Stunden wird der Raum gelöscht.
             Wie jeder Webserver führt auch dieser ein Zugriffsprotokoll, das cyon verwaltet.
+            Ebenso «Zu zweit» in der Virtuellen Schweiz: Jedes Gerät schickt jede Sekunde, wo es im Modell hinschaut und hinzeigt, wer führt dazu
+            Feld, Schalter und Zeit; dort liegt je Gerät nur die letzte Angabe, ohne Namen, IP-Adresse und Konto, nach einer Minute ohne Neues fällt sie weg.
           </li>
           <li>
             «Taktland teilen» in der Fusszeile gibt nur die Adresse taktland.ch und einen Satz an das Teilen-Menü deines

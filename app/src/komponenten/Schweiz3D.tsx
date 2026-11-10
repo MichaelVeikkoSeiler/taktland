@@ -41,6 +41,8 @@ import { perronNetz, perronsIn } from './Perrons'
 import { deckeAufBild, deckenIn, unterDecke, type Decke } from './Decken'
 import { Abschnitt } from './Anleitung'
 import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
+import { type Andere, type Lage, type Punkt, type Stand, useZuZweit } from '../zuzweit'
+import { raumEroeffnen } from '../spielraum'
 import { himmelNacht, sternSicht } from '../sterne'
 
 /**
@@ -615,7 +617,7 @@ const datumKurz = (d: string) => { const [j, m, t] = d.split('-').map(Number); r
 function ansichtAusAdresse(eigeneSeite: boolean): 'wahl' | 'anleitung' | 'karte' {
   if (eigeneSeite) return 'karte'
   const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
-  return q.has('lat') || q.has('karte') ? 'karte' : q.has('anleitung') ? 'anleitung' : 'wahl'
+  return q.has('lat') || q.has('karte') || q.has('raum') ? 'karte' : q.has('anleitung') ? 'anleitung' : 'wahl'
 }
 const EINTAUCHEN_KNOPF = 'inline-block shrink-0 rounded-lg bg-sbb-red px-3 py-1.5 text-base font-bold text-white hover:bg-sbb-red125'
 const ANLEITUNG_KNOPF = 'inline-block shrink-0 rounded-lg border border-sbb-cloud bg-white px-3 py-1.5 text-base font-bold hover:border-sbb-black '
@@ -920,6 +922,71 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     })().catch((x) => { if (!weg) setFehler((x as Error).message) }).finally(() => { if (!weg) setLaedt(false) })
     return () => { weg = true }
   }, [])
+  // zu zweit (Michael, 2026-11-10, Vorschlag 13: «Erklär mir noch 13 … Dann bauen wenn ich schlafe?»): wer den Raum eröffnet, führt; die anderen folgen
+  // bei jeder Änderung des Führenden seinen Feldern je Stufe, der Stufe, der Wahl, den Schaltern und der Zeit; dazwischen kann jeder selbst schauen.
+  // Angesetzte Stücke (+ und −) folgen nicht, nur das erste Feld jeder Stufe. Lage und Zeigen: src/zuzweit.ts, die Figuren in der Ansicht
+  const [raum, setRaum] = useState<string | null>(() => {
+    const r = new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('raum')?.toUpperCase() ?? null
+    return r && /^[A-Z]{4}$/.test(r) ? r : null
+  })
+  const [fuehreSeit, setFuehreSeit] = useState<number | null>(null)
+  const [zuZweitOffen, setZuZweitOffen] = useState(false)
+  const [raumCode, setRaumCode] = useState('')
+  const [raumFehler, setRaumFehler] = useState<string | null>(null)
+  const lageRef = useRef<(() => Lage | null) | null>(null)
+  const standJetzt: Stand = {
+    stufe,
+    felder: Object.fromEntries((['gross', 'mittel', 'region', 'ort', 'nah'] as const)
+      .filter((s) => gelaende[s] && STUFEN.indexOf(s) <= STUFEN.indexOf(stufe)).map((s) => [s, gelaende[s]!.anker])),
+    wahl,
+    schalter: { orte: orteAn, gebaeude: gebaeudeAn, baeume: baeumeAn, zuege: zuegeAn, schiffe: schiffeAn, wandern, hoehen: scheiben, gipfel: gipfelAn,
+      wolken: wolkenAn, wind: windAn, sonne: sonnenAn },
+    zeit: jetztAn ? null : versatzMs,
+  }
+  const zuZweitRef = useRef({ stand: standJetzt, seit: fuehreSeit })
+  zuZweitRef.current = { stand: standJetzt, seit: fuehreSeit }
+  const { andere, fehler: raumWeg, verbunden: raumVerbunden } = useZuZweit(raum, () => {
+    const l = lageRef.current?.()
+    if (!l) return null
+    const { stand: st, seit } = zuZweitRef.current
+    return seit !== null ? { ...l, fuehrt: true, seit, stand: st } : l
+  })
+  // führen zwei, gilt das spätere
+  useEffect(() => {
+    if (fuehreSeit !== null && andere.some((a) => a.fuehrt && (a.seit ?? 0) > fuehreSeit)) setFuehreSeit(null)
+  }, [andere, fuehreSeit])
+  const fuehrer = fuehreSeit === null ? andere.filter((a) => a.fuehrt && a.stand).sort((a, c) => (c.seit ?? 0) - (a.seit ?? 0))[0] : undefined
+  const fuehrerStand = fuehrer?.stand ? JSON.stringify(fuehrer.stand) : ''
+  const folgtLaedt = useRef(false), folgtNochmals = useRef<Stand | null>(null)
+  const folgen = (st: Stand) => {
+    const setzen: Record<string, [boolean, (v: boolean) => void]> = { orte: [orteAn, setOrteAn], gebaeude: [gebaeudeAn, setGebaeudeAn],
+      baeume: [baeumeAn, setBaeumeAn], zuege: [zuegeAn, setZuegeAn], schiffe: [schiffeAn, setSchiffeAn], wandern: [wandern, setWandern],
+      hoehen: [scheiben, setScheiben], gipfel: [gipfelAn, setGipfelAn], wolken: [wolkenAn, setWolkenAn], wind: [windAn, setWindAn], sonne: [sonnenAn, setSonnenAn] }
+    for (const [k, v] of Object.entries(st.schalter)) if (setzen[k] && setzen[k][0] !== v) setzen[k][1](v)
+    if (st.zeit === null) { if (!jetztAn) zeitSchieben('jetzt', 0) }
+    else if (jetztAn || Math.abs(versatzMs - st.zeit) > 60_000) { setJetztAn(false); setVersatzMs(st.zeit) }
+    const kette = (['gross', 'mittel', 'region', 'ort', 'nah'] as const).filter((s) => st.felder[s])
+    const gleich = (a: Feld | null | undefined, c: Feld) => !!a && a.e === c.e && a.n === c.n && a.seite === c.seite
+    const ab = kette.findIndex((s) => !gleich(gelaende[s]?.anker, st.felder[s]))
+    if (ab === -1) { setStufe(st.stufe as Stufe); setWahl(st.wahl); return }
+    if (folgtLaedt.current) { folgtNochmals.current = st; return }
+    folgtLaedt.current = true; setLaedt(true); setFehler(null)
+    void (async () => {
+      const neu: Partial<Record<Stufe, Bestand>> = {}
+      for (const s of kette.slice(ab)) {
+        const unter = s === 'ort' || s === 'nah' ? (neu[DARUEBER[s]] ?? gelaende[DARUEBER[s]]) : null
+        neu[s] = einzeln(st.felder[s], await stufeLaden(s, st.felder[s], unter ?? null))
+      }
+      setGelaende((a) => ({ ...a, ...danach(kette[ab]), ...neu }))
+      setStufe(st.stufe as Stufe); setWahl(st.wahl)
+    })().catch((x) => setFehler((x as Error).message)).finally(() => {
+      folgtLaedt.current = false; setLaedt(false)
+      const n = folgtNochmals.current; folgtNochmals.current = null
+      if (n) folgen(n)
+    })
+  }
+  useEffect(() => { if (fuehrer?.stand) folgen(fuehrer.stand) }, [fuehrerStand]) // eslint-disable-line react-hooks/exhaustive-deps
+  const raumLink = raum ? `${window.location.origin}${window.location.pathname}#${AUF_3DLAND ? '' : '/3dland'}?raum=${raum}` : ''
   const eintauchenAktuell = useRef<() => void>(() => {})
   eintauchenAktuell.current = () => { if (wahl && stufe !== 'nah' && !laedt) void eintauchen() }
   async function eintauchen() {
@@ -1054,7 +1121,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
                      sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn, stehen: setStehen })[art]((x: boolean) => !x)} stehen={stehen && (stufe === 'ort' || stufe === 'nah')} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windBei(p, windZeit), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
-                   zeitSchieben={zeitSchieben} vollbild={voll} strich={strich} />
+                   zeitSchieben={zeitSchieben} vollbild={voll} strich={strich} andere={andere} lageRef={lageRef} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
@@ -1206,6 +1273,40 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       </div>
       {standText && <p className="mt-1 text-sm">{standText} ({tagText}, {uhrzeit(minuten)} Uhr, Schweizer Zeit).</p>}
       {hinweis && <p className="mt-2 text-sm font-bold">{hinweis}</p>}
+      {/* zu zweit (Michael, 2026-11-10, Vorschlag 13): Raum eröffnen oder mit dem Code beitreten, wer eröffnet, führt */}
+      <div className="mt-2 text-sm">
+        {raum ? (
+          <div className="flex flex-wrap items-center gap-2">
+            <span>Zu zweit: Raum <b className="tabular-nums tracking-wider">{raum}</b>, {andere.length + 1} im Raum, {fuehreSeit !== null ? 'du führst' : fuehrer ? 'du folgst' : 'niemand führt'}.</span>
+            {fuehreSeit === null && (
+              <button type="button" onClick={() => setFuehreSeit(Date.now())} className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Führen</button>
+            )}
+            <button type="button" onClick={() => { void navigator.clipboard?.writeText(raumLink).catch(() => {}) }}
+                    className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Link kopieren</button>
+            <button type="button" onClick={() => { setRaum(null); setFuehreSeit(null) }}
+                    className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Verlassen</button>
+            {raumWeg && <span className="font-bold text-sbb-red">{raumWeg}</span>}
+            {!raumWeg && !raumVerbunden && <span className="text-sbb-metal">Keine Verbindung zur Vermittlung, es wird weiter versucht.</span>}
+          </div>
+        ) : zuZweitOffen ? (
+          <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => {
+            e.preventDefault()
+            const c = raumCode.trim().toUpperCase()
+            if (/^[A-Z]{4}$/.test(c)) { setRaum(c); setFuehreSeit(null); setRaumFehler(null) } else setRaumFehler('Der Code hat vier Buchstaben.')
+          }}>
+            <button type="button" onClick={() => { setRaumFehler(null); void raumEroeffnen().then((r) => { setRaum(r); setFuehreSeit(Date.now()) }).catch((x) => setRaumFehler((x as Error).message)) }}
+                    className={EINTAUCHEN_KNOPF + ' !text-sm'}>Raum eröffnen</button>
+            <span>oder</span>
+            <input value={raumCode} onChange={(e) => setRaumCode(e.target.value)} maxLength={4} placeholder="Code" aria-label="Code des Raums"
+                   className="w-20 rounded-lg border border-sbb-cloud bg-white px-2 py-1 uppercase tracking-wider dark:border-sbb-iron dark:bg-sbb-midnight" />
+            <button type="submit" className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Beitreten</button>
+            <button type="button" onClick={() => setZuZweitOffen(false)} className="underline underline-offset-2">Abbrechen</button>
+            {raumFehler && <span className="w-full font-bold text-sbb-red">{raumFehler}</span>}
+          </form>
+        ) : (
+          <button type="button" onClick={() => setZuZweitOffen(true)} className="underline underline-offset-2">Zu zweit im selben Modell …</button>
+        )}
+      </div>
       {scheiben && (
         <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Höhenlinien">
           {HOEHEN_STUFEN.map(([z, farbe, name]) => (
@@ -1407,6 +1508,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Der Knopf «XR» oben rechts im Bild startet die Brille. Mit einer Brille wie der Meta Quest steht das Modell auf dem Tisch. Ein kurzer Abzug wählt ein Feld, nochmals taucht ein;
             ein gehaltener Abzug trägt das Modell, beide zusammen drehen und skalieren es. Die Greiftaste geht eine Stufe zurück, der
             Thumbstick dreht und hebt, drücken stellt es zurück. Die Knöpfe an den Wänden gehen mit Strahl und Abzug. Auf dem Handy, wo der Browser es kann, beendet der Knopf «Schliessen» oben rechts die Ansicht.</p>
+        </Abschnitt>
+        <Abschnitt titel="Zu zweit">
+          <p>Unter dem Modell «Zu zweit im selben Modell …»: «Raum eröffnen» gibt einen Code aus vier Buchstaben, die andere Person gibt ihn
+            auf ihrem Gerät ein oder öffnet den kopierten Link. Wer eröffnet, führt: Die anderen sehen dasselbe Feld in derselben Stufe, dieselben
+            Schalter und dieselbe Zeit, ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung.
+            Jede Person sieht die anderen als blaue Figur dort, wo sie ins Modell schaut, mit einer Linie zur Stelle, auf die sie zeigt (Maus,
+            in der Brille der Strahl). Drehen und Zoomen bleiben bei jedem für sich. Ein Gespräch gibt es nicht, dafür braucht es ein Telefon
+            daneben. Ein Raum verfällt nach sechs Stunden.</p>
         </Abschnitt>
         <Abschnitt titel="Woher die Daten stammen">
           <ul className="list-disc space-y-1 pl-5">
@@ -1612,6 +1721,8 @@ const KAMERA_UEBER_GELAENDE_KM = 0.003
  *  Tempo beim Gehen (Pfeiltasten, Thumbstick; mit Umschalt zehnmal so schnell) und Drehen in der Brille (alles gewählt) */
 /** Ich-Blick in der Brille: Tempo des Bogens in m/s (so weit springt man, etwa 15 m), ab so viel Grad nach oben gilt der Himmel, Höhe des Männchens
  *  auf dem Tisch, Punkte des Bogens (gewählt) */
+/** zu zweit: Farbe der anderen und ihr Kopf auf dem Bildschirm so gross wie dieser Teil des Abstands (gewählt) */
+const ANDERE_FARBE = '#1f6fd1', ANDERE_BILD = 0.012
 const ICH_FLUSS_M = 15, ICH_TASTEN_KM = 0.002
 const ICH_BOGEN_MS = 12, ICH_HIMMEL_GRAD = 45, ICH_MANN_TISCH_M = 0.06, ICH_BOGEN_PUNKTE = 40
 const STEHEN_AUGE_M = 1.7, STEHEN_DREH_KM = 0.00001, STEHEN_NAH_KM = 0.0001, STEHEN_GEHEN_MS = 4, STEHEN_DREHEN_RS = 1.6
@@ -1830,7 +1941,10 @@ function knopfBild(plus: boolean, an: boolean) {
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef }: {
+  /** zu zweit: die anderen im Raum und wohin die eigene Lage geht */
+  andere?: Andere[]
+  lageRef?: { current: (() => Lage | null) | null }
   /** auf Augenhöhe: die Kamera auf dem Gelände, in der Brille das Modell in Originalgrösse */
   stehen?: boolean
   /** im Vollbild steht oben rechts das Kreuz, die Zeilen dort rücken darunter */
@@ -1890,6 +2004,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     sterne: Sternenhimmel
     jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null }
     stehenSetzen: (p: THREE.Vector3 | null) => void
+    /** zu zweit: wo man ist (Kopf oder Kamera), wohin man schaut und zeigt, als Punkte im Modell */
+    lageJetzt: () => { kopf: THREE.Vector3; blick: THREE.Vector3; zeigt: THREE.Vector3 | null; brille: boolean }
     tafel: THREE.Sprite; tafelSetzen: (zeilen: string[] | null, ueber?: THREE.Vector3) => void
     sonne: THREE.DirectionalLight; himmelLicht: THREE.HemisphereLight
     anfangSetzen: () => void
@@ -2349,6 +2465,26 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     const zielBilder = [0, 1].map(() => ({ mann: maennchenBauen(), bogen: bogenBauen() }))
     const wasser = (p: THREE.Vector3) => !!(wurzel.userData.wasserBei as ((x: number, z: number) => boolean) | undefined)?.(p.x, p.z)
+    /** wo ein Strahl (Welt) das Gelände im Modell trifft, als Punkt im Modell; dem Strahl entlang die Höhe des Geländes alle 2 m abgetastet
+     *  (schneller als jedes Dreieck des Geländes zu prüfen) */
+    const bodenTreffer = (o: THREE.Vector3, d: THREE.Vector3): THREE.Vector3 | null => {
+      const oL = wurzel.worldToLocal(o.clone()), dL = d.clone().transformDirection(new THREE.Matrix4().copy(wurzel.matrixWorld).invert())
+      const drin = wurzel.userData.drinBei as ((x: number, z: number) => boolean) | undefined
+      const weite = ((wurzel.userData.weiteKm as number) || 1) * 3, schritt = Math.max(ICH_TASTEN_KM, ((wurzel.userData.weiteKm as number) || 1) / 500)
+      const p = new THREE.Vector3()
+      for (let t = 0; t < weite; t += schritt) {
+        p.copy(oL).addScaledVector(dL, t)
+        if (drin && !drin(p.x, p.z)) continue
+        if (p.y <= bodenY(p.x, p.z)) {
+          // zwischen dem letzten Schritt und diesem genauer
+          let a = t - schritt, b2 = t
+          for (let i = 0; i < 8; i++) { const m = (a + b2) / 2; p.copy(oL).addScaledVector(dL, m); if (p.y <= bodenY(p.x, p.z)) b2 = m; else a = m }
+          p.copy(oL).addScaledVector(dL, b2); p.y = bodenY(p.x, p.z)
+          return p
+        }
+      }
+      return null
+    }
     const zielen = (c: THREE.Object3D): Ziel | null => {
       if (anleitung.visible || haelt.size) return null
       const o = new THREE.Vector3().setFromMatrixPosition(c.matrixWorld)
@@ -2377,23 +2513,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const g of ['zuege', 'schiffe'].map((n) => wurzel.getObjectByName(n)).filter((x): x is THREE.Object3D => !!x?.visible)) {
         if ((g.userData.nahe as ((r: THREE.Ray, w: number) => boolean) | undefined)?.(strahl.ray, ZUG_TIPP_WINKEL_BRILLE)) return null
       }
-      // dem Strahl entlang die Höhe des Geländes abtasten, alle 2 m (schneller als jedes Dreieck des Geländes zu prüfen)
-      const oL = wurzel.worldToLocal(o.clone()), dL = d.clone().transformDirection(new THREE.Matrix4().copy(wurzel.matrixWorld).invert())
-      const drin = wurzel.userData.drinBei as ((x: number, z: number) => boolean) | undefined
-      const weite = ((wurzel.userData.weiteKm as number) || 1) * 3
-      const p = new THREE.Vector3()
-      for (let t = 0; t < weite; t += ICH_TASTEN_KM) {
-        p.copy(oL).addScaledVector(dL, t)
-        if (drin && !drin(p.x, p.z)) continue
-        if (p.y <= bodenY(p.x, p.z)) {
-          // zwischen dem letzten Schritt und diesem genauer
-          let a = t - ICH_TASTEN_KM, b2 = t
-          for (let i = 0; i < 8; i++) { const m = (a + b2) / 2; p.copy(oL).addScaledVector(dL, m); if (p.y <= bodenY(p.x, p.z)) b2 = m; else a = m }
-          p.copy(oL).addScaledVector(dL, b2); p.y = bodenY(p.x, p.z)
-          return wasser(p) ? null : { art: 'boden', p: p.clone() }
-        }
-      }
-      return null
+      const p = bodenTreffer(o, d)
+      return !p || wasser(p) ? null : { art: 'boden', p }
     }
     const zielZeigen = () => {
       controller.forEach((c, i) => {
@@ -2417,6 +2538,34 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           pos.needsUpdate = true
         }
       })
+    }
+    // zu zweit (Michael, 2026-11-10, Vorschlag 13): die eigene Lage für die anderen; auf dem Bildschirm zeigt die Maus aufs Gelände (alle 0,15 s
+    // gesucht), ohne Maus die Mitte des Blicks; in der Brille der Strahl eines Controllers
+    let maus: THREE.Vector3 | null = null, mausZeit = 0
+    const mausZeigt = (ev: PointerEvent) => {
+      if (ev.pointerType !== 'mouse' || performance.now() - mausZeit < 150) return
+      mausZeit = performance.now()
+      const r = renderer.domElement.getBoundingClientRect()
+      const ndc = new THREE.Vector2(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1)
+      const ray = new THREE.Raycaster(); ray.setFromCamera(ndc, kamera)
+      maus = bodenTreffer(ray.ray.origin, ray.ray.direction)
+    }
+    renderer.domElement.addEventListener('pointermove', mausZeigt)
+    renderer.domElement.addEventListener('pointerleave', () => { maus = null })
+    const lageJetzt = () => {
+      if (renderer.xr.isPresenting) {
+        const cam = renderer.xr.getCamera(), kopfW = cam.getWorldPosition(new THREE.Vector3())
+        const vor = kopfW.clone().add(new THREE.Vector3(0, 0, -1).applyQuaternion(cam.getWorldQuaternion(new THREE.Quaternion())))
+        let zeigt: THREE.Vector3 | null = null
+        for (const c of controller) {
+          const o = new THREE.Vector3().setFromMatrixPosition(c.matrixWorld)
+          if (o.lengthSq() === 0) continue
+          zeigt = bodenTreffer(o, new THREE.Vector3(0, 0, -1).applyMatrix4(new THREE.Matrix4().extractRotation(c.matrixWorld)).normalize())
+          if (zeigt) break
+        }
+        return { kopf: wurzel.worldToLocal(kopfW.clone()), blick: wurzel.worldToLocal(vor), zeigt, brille: true }
+      }
+      return { kopf: kamera.position.clone(), blick: steuerung.target.clone(), zeigt: maus?.clone() ?? null, brille: false }
     }
     // nur in einer Testfassung: zielen wie ein Controller an der Stelle der Kamera mit ihrem Blick
     if (import.meta.env.VITE_S3D_TEST) {
@@ -2483,7 +2632,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     jeBild.push(verlaufSetzen)
     // die Sterne um das Auge, gedreht wie das Modell (die Himmelsrichtungen gehören zu ihm, wie die Sonne)
     jeBild.push(() => sterne.schritt(renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera, wurzel, !!szene.background))
-    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, himmelOben, himmelObenTag, himmelMalen, sterne, jeBild, wenn, stehenSetzen, tafel, tafelSetzen,
+    kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, himmelOben, himmelObenTag, himmelMalen, sterne, jeBild, wenn, stehenSetzen, lageJetzt, tafel, tafelSetzen,
                      sonne, himmelLicht, anfangSetzen, verlauf }
 
     const groesse = () => {
@@ -2512,6 +2661,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         });
       ;(window as unknown as { s3dBaeume: unknown }).s3dBaeume = () => ({ wind: BAUM_WIND.uWind.value, richtung: BAUM_WIND.uRichtung.value.toArray(),
         netze: (wurzel.getObjectByName('baeume')?.children ?? []).map((o) => (o as THREE.InstancedMesh).count), kamera: kamera.position.toArray(), ziel: steuerung.target.toArray() })
+      ;(window as unknown as { s3dAndere: unknown }).s3dAndere = () => (wurzel.getObjectByName('andere')?.children ?? []).map((g) => {
+        const kopf = g.getObjectByName('kopf')!, v = kopf.getWorldPosition(new THREE.Vector3()).project(kamera)
+        return { x: Math.round(v.x * 100) / 100, y: Math.round(v.y * 100) / 100, r: kopf.scale.x }
+      })
       ;(window as unknown as { s3dZumMond: unknown }).s3dZumMond = () => {
         const m = sterne.punkte.children[0], dir = m.getWorldPosition(new THREE.Vector3()).sub(kamera.position).normalize()
         kamera.position.copy(steuerung.target).addScaledVector(dir, -STEHEN_DREH_KM); steuerung.update()
@@ -2573,6 +2726,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       void renderer.xr.getSession()?.end().catch(() => {})
       ro.disconnect()
       removeEventListener('keydown', tasteRunter); removeEventListener('keyup', tasteHoch)
+      renderer.domElement.removeEventListener('pointermove', mausZeigt)
       steuerung.dispose()
       renderer.domElement.removeEventListener('pointerdown', runter)
       renderer.domElement.removeEventListener('pointerup', hoch)
@@ -3437,6 +3591,79 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     k.wenn.stehen = (q) => k.stehenSetzen(q)
     return () => { k.wenn.stehen = null; k.stehenSetzen(null); stehenAn = false }
   }, [stehen, b])
+  // zu zweit (Michael, 2026-11-10, Vorschlag 13): die eigene Lage in LV95 und Meter über Meer; die anderen als Figur mit Kopf und Blickrichtung, dazu
+  // ein Strahl dorthin, wohin sie zeigen, mit einem Ring; sanft nachgeführt, weil jede Sekunde nur eine Lage kommt (Gestalt, Grösse, Farbe gewählt)
+  useEffect(() => {
+    if (!lageRef) return
+    lageRef.current = () => {
+      const k = kern.current, lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+      if (!k || !lage) return null
+      const l = k.lageJetzt(), zu = (v: THREE.Vector3): Punkt => [lage.cE + v.x * 1000, lage.cN - v.z * 1000, v.y * 1000]
+      return { kopf: zu(l.kopf), blick: zu(l.blick), zeigt: l.zeigt ? zu(l.zeigt) : null, brille: l.brille, fuehrt: false }
+    }
+    return () => { lageRef.current = null }
+  }, [lageRef])
+  const andereRef = useRef(andere)
+  andereRef.current = andere
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage) return
+    const gruppe = new THREE.Group()
+    gruppe.name = 'andere'
+    k.wurzel.add(gruppe)
+    const stoff = new THREE.MeshBasicMaterial({ color: ANDERE_FARBE, depthTest: false, transparent: true, opacity: 0.9 })
+    const kopfGeo = new THREE.SphereGeometry(1, 16, 12), naseGeo = new THREE.ConeGeometry(0.45, 1.1, 12).rotateX(-Math.PI / 2).translate(0, 0, -1.2)
+    const ringGeo = new THREE.RingGeometry(0.7, 1, 28).rotateX(-Math.PI / 2)
+    const figuren = new Map<string, { g: THREE.Group; kopf: THREE.Vector3; blick: THREE.Vector3; zeigt: THREE.Vector3 | null; strahl: THREE.Line; ring: THREE.Mesh }>()
+    const lokal = (p: Punkt) => new THREE.Vector3((p[0] - lage.cE) / 1000, p[2] / 1000, -(p[1] - lage.cN) / 1000)
+    let zeit = performance.now()
+    const schritt = () => {
+      const jetzt = performance.now(), f = 1 - Math.exp(-((jetzt - zeit) / 1000) * 4)
+      zeit = jetzt
+      const da = new Set<string>()
+      for (const a of andereRef.current) {
+        da.add(a.id)
+        let fig = figuren.get(a.id)
+        if (!fig) {
+          const g = new THREE.Group()
+          const kopf = new THREE.Mesh(kopfGeo, stoff), nase = new THREE.Mesh(naseGeo, stoff)
+          kopf.renderOrder = nase.renderOrder = 21
+          const kopfGruppe = new THREE.Group(); kopfGruppe.name = 'kopf'; kopfGruppe.add(kopf, nase); g.add(kopfGruppe)
+          const strahl = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3()]),
+            new THREE.LineBasicMaterial({ color: ANDERE_FARBE, depthTest: false, transparent: true, opacity: 0.8 }))
+          strahl.frustumCulled = false; strahl.renderOrder = 21
+          const ring = new THREE.Mesh(ringGeo, stoff); ring.renderOrder = 21
+          g.add(strahl, ring); gruppe.add(g)
+          fig = { g, kopf: lokal(a.kopf), blick: lokal(a.blick), zeigt: a.zeigt ? lokal(a.zeigt) : null, strahl, ring }
+          figuren.set(a.id, fig)
+        }
+        fig.kopf.lerp(lokal(a.kopf), f); fig.blick.lerp(lokal(a.blick), f)
+        if (a.zeigt) fig.zeigt = fig.zeigt ? fig.zeigt.lerp(lokal(a.zeigt), f) : lokal(a.zeigt); else fig.zeigt = null
+        // Grösse: auf dem Bildschirm gleich gross im Bild, in der Brille 1,5 cm auf dem Tisch, auf Augenhöhe 12 cm
+        const brille = k.renderer.xr.isPresenting, s = k.wurzel.scale.x
+        const auge = (brille ? k.renderer.xr.getCamera() : k.kamera).getWorldPosition(new THREE.Vector3())
+        const r = brille ? (stehenAn ? 0.12 : 0.015) / s : Math.max(0.0005, k.wurzel.localToWorld(fig.kopf.clone()).distanceTo(auge) * ANDERE_BILD)
+        const kg = fig.g.getObjectByName('kopf')!
+        kg.position.copy(fig.kopf); kg.scale.setScalar(r); kg.lookAt(k.wurzel.localToWorld(fig.blick.clone()))
+        kg.rotateY(Math.PI)
+        fig.strahl.visible = fig.ring.visible = !!fig.zeigt
+        if (fig.zeigt) {
+          const pos = fig.strahl.geometry.attributes.position as THREE.BufferAttribute
+          pos.setXYZ(0, fig.kopf.x, fig.kopf.y, fig.kopf.z); pos.setXYZ(1, fig.zeigt.x, fig.zeigt.y, fig.zeigt.z); pos.needsUpdate = true
+          fig.ring.position.copy(fig.zeigt); fig.ring.scale.setScalar(r * 1.5)
+        }
+      }
+      for (const [id, fig] of figuren) if (!da.has(id)) { gruppe.remove(fig.g); fig.strahl.geometry.dispose(); (fig.strahl.material as THREE.Material).dispose(); figuren.delete(id) }
+    }
+    k.jeBild.push(schritt)
+    return () => {
+      const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
+      k.wurzel.remove(gruppe)
+      for (const fig of figuren.values()) { fig.strahl.geometry.dispose(); (fig.strahl.material as THREE.Material).dispose() }
+      stoff.dispose(); kopfGeo.dispose(); naseGeo.dispose(); ringGeo.dispose()
+    }
+  }, [b, stufe])
   // für den Ich-Blick in der Brille: die Stufe und wo Wasser ist (Seen aus data/seen.json ohne Inseln, Flüsse aus data/kartengrund.json bis ICH_FLUSS_M
   // daneben, deren Breite in keiner unserer Quellen steht)
   useEffect(() => {
