@@ -20,7 +20,7 @@ const PANTO_HOCH = 0.42, PANTO_BREIT = 0.8, PANTO_ZURUECK = 2.6
 /** Dicke der Arme in Teilen der Höhe (seit 2026-11-10 dünner, vorher 0,035) */
 const PANTO_DICK = 0.02
 /** Frontscheibe: halbe Breite in Teilen der Zugbreite, oben und unten auf der Rundung des Kopfs (0 vorne unten, 0,62 am Dach); gewählt */
-const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1, SCHEIBE_RAHMEN = '#555555'
+const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 /** Kasten des oberen Lichts auf dem Dach, Lage in Teilen der Höhe vom vorderen Ende, Breite in Teilen der Zugbreite; gewählt */
 /** Puffer: Abstand von der Mitte in Teilen der Breite, Höhe der Mitte, Radius der Stange und des Tellers und Länge in Teilen der Höhe; gewählt */
 /** wie weit das Fensterband in den Kopf reicht, in Teilen seiner Länge (bis das Dach sinkt); gewählt */
@@ -147,13 +147,6 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     const scheibe = new THREE.MeshLambertMaterial({ color: ZUG_DUNKEL, side: THREE.DoubleSide })
     materialien.push(scheibe)
     kopfteil(loft(tReihe(SCHEIBE_OBEN_T, SCHEIBE_UNTEN_T, 8).map(zBei), scheibeSchnitt, false, 1.015), scheibe)
-    // am Steuerwagen fasst ein schmaler dunkelgrauer Rahmen die Scheibe, wie vorne das Rot (seit 2026-11-10; Farbe gewählt)
-    if (hinten) {
-      const rahmenSchnitt = schnitt.filter((q) => q.y >= unten + 0.44 * (h - unten) && Math.abs(q.x) <= W * (SCHEIBE_BREIT + 0.06))
-      const rahmen = new THREE.MeshLambertMaterial({ color: SCHEIBE_RAHMEN, side: THREE.DoubleSide })
-      materialien.push(rahmen)
-      kopfteil(loft(tReihe(Math.min(0.99, SCHEIBE_OBEN_T + 0.07), SCHEIBE_UNTEN_T + 0.01, 8).map(zBei), rahmenSchnitt, false, 1.007), rahmen)
-    }
     // auf dem Dach vor dem Stromabnehmer ein kleiner, vorne abgerundeter weisser Kasten für das obere Licht (Michael, 2026-11-10: «Das obere Licht darfst du gerne
     // in einen kleinen aerodynamisch anmutenden kleinen weissen Kasten auf dem Dach einfügen»; Gestalt gewählt): Seitenriss in z und y, quer ausgezogen
     const kz0 = L / 2 - LICHTKASTEN_HINTEN * H, kz1 = L / 2 - LICHTKASTEN_VORN * H, ky0 = LICHTKASTEN_UNTEN * H, ky1 = LICHTKASTEN_OBEN * H
