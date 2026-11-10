@@ -22,7 +22,9 @@ const FENSTER_HELL = 0.9
 const FERN_AB_M = 0.5, FERN_MIN = 0.12
 /** Anteil der brennenden Fenster je Stunde (Schweizer Zeit) an der Stunde 0, 1, …; gewählt, ungefähr: abends die meisten,
  *  nach Mitternacht wenige, am Morgen wieder mehr; tagsüber zählt es nicht, dann ist es hell */
-const LICHT_ANTEIL = [0.12, 0.07, 0.05, 0.04, 0.04, 0.06, 0.14, 0.22, 0.18, 0.12, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.12, 0.2, 0.3, 0.36,
+// von 0 bis 5 Uhr halb so viele wie vorher (Michael, 2026-11-10: «In der Nacht 0 bis 5 Uhr sollen etwa nur noch halb so viele brennen wie aktuell»;
+// vorher 0,12, 0,07, 0,05, 0,04, 0,04)
+const LICHT_ANTEIL = [0.06, 0.035, 0.025, 0.02, 0.02, 0.06, 0.14, 0.22, 0.18, 0.12, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.12, 0.2, 0.3, 0.36,
   0.38, 0.34, 0.26, 0.18]
 /** so viel der Anteile oben brennt wirklich (Michael, 2026-10-27: «um die Hälfte reduzieren. Sonst ist es unrealistisch») */
 const LICHT_MASS = 0.5
@@ -31,11 +33,19 @@ export function lichtAnteil(stunde: number) {
   const h = ((stunde % 24) + 24) % 24, i = Math.floor(h), t = h - i
   return (LICHT_ANTEIL[i] * (1 - t) + LICHT_ANTEIL[(i + 1) % 24] * t) * LICHT_MASS
 }
-const fenster = { nacht: { value: 0 }, anteil: { value: 0 } }
+/** einzelne Fenster gehen mit der Zeit an und aus (Michael, 2026-11-10: «wenn sanft einzelne Lichter auslöschen und anderen anstellen»): je
+ *  Fenster ein Kreislauf von FENSTER_KREIS_H Stunden (je Fenster anders), es brennt, solange seine Stelle im Kreislauf unter dem Anteil liegt, so
+ *  bleibt der Anteil gleich; über FENSTER_UEBERGANG des Kreislaufs blendet es ein und aus, bei 2,5 h etwa 8 s (alles gewählt) */
+const FENSTER_KREIS_H = [1.5, 4], FENSTER_UEBERGANG = 0.0005
+/** die Zeit der Szene in Stunden (modulo 240, für die Genauigkeit im Shader), läuft mit der Uhr weiter: zuletzt gesetzt und seither vergangen */
+let uhrBasisMs = Date.now(), uhrGesetzt = performance.now()
+const fenster = { nacht: { value: 0 }, anteil: { value: 0 },
+  zeit: { get value() { return ((uhrBasisMs + performance.now() - uhrGesetzt) / 3.6e6) % 240 } } }
 /** wie dunkel es ist (0 hell bis 1 Nacht), dieselbe Grösse für die Innenbeleuchtung und die Stirnlichter der Züge */
 export const fensterNacht = fenster.nacht
 /** wie dunkel es ist (0 hell bis 1 Nacht) und welcher Anteil der Fenster brennt; gilt für alle Gebäude */
-export function fensterLicht(nacht: number, anteil: number) {
+export function fensterLicht(nacht: number, anteil: number, zeitMs?: number) {
+  uhrBasisMs = zeitMs ?? Date.now(); uhrGesetzt = performance.now()
   fenster.nacht.value = Math.max(0, Math.min(1, nacht))
   fenster.anteil.value = Math.max(0, Math.min(1, anteil))
 }
@@ -140,11 +150,12 @@ export function gebaeudeMaterial() {
   m.onBeforeCompile = (s) => {
     s.uniforms.uNacht = fenster.nacht
     s.uniforms.uAnteil = fenster.anteil
+    s.uniforms.uZeitH = fenster.zeit
     s.vertexShader = s.vertexShader
       .replace('#include <common>', '#include <common>\nattribute vec3 aGebaeude;\nvarying vec3 vGebaeude;\nvarying vec2 vWand;')
       .replace('#include <begin_vertex>', `#include <begin_vertex>\nvGebaeude = aGebaeude;\nvWand = uv * ${GEBAEUDE_BILD_M.toFixed(1)};`)
     s.fragmentShader = s.fragmentShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vGebaeude;\nvarying vec2 vWand;\nuniform float uNacht;\nuniform float uAnteil;\n' + FENSTER_GLSL)
+      .replace('#include <common>', '#include <common>\nvarying vec3 vGebaeude;\nvarying vec2 vWand;\nuniform float uNacht;\nuniform float uAnteil;\nuniform float uZeitH;\n' + FENSTER_GLSL)
       .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
       if (uNacht > 0.0 && vGebaeude.x >= 0.0) {
         // Höhe über dem Boden (die Wand reicht in den Daten unter ihn) und Lage entlang der Wand, in Metern
@@ -156,7 +167,9 @@ export function gebaeudeMaterial() {
         // Fuss der Wand, auf den halben Meter abgerundet; lag er auf einer Grenze, sprang er von Bildpunkt zu Bildpunkt, und ein Fenster flimmerte
         // halb hell, halb dunkel (Michael: «Siehst du das Flimmern teilweise bei den Fenstern?»)
         float zufall = fract(sin(dot(vec3(f.z, f.w, fs.seed * 997.0), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
-        float brennt = step(zufall, uAnteil);
+        float kreis = mix(${FENSTER_KREIS_H[0].toFixed(2)}, ${FENSTER_KREIS_H[1].toFixed(2)}, fract(zufall * 3.71));
+        float stelle = fract(zufall * 7.13 + uZeitH / kreis);
+        float brennt = 1.0 - smoothstep(uAnteil - ${FENSTER_UEBERGANG}, uAnteil + ${FENSTER_UEBERGANG}, stelle);
         // deckt ein Bildpunkt mehr als ein halbes Fenster samt Wand, gilt statt des einzelnen Fensters der Anteil: sonst springt die
         // Mitte des Bildpunkts beim Bewegen von einem brennenden zu einem dunklen Fenster, und die Lichter flackern
         float gemittelt = smoothstep(0.3, 0.8, max(wx / fs.achse, wy / fs.stock));
