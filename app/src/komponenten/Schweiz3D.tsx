@@ -780,7 +780,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }, [sonnenAn, aktuell, tag, minuten])
   // Licht in den Fenstern der Gebäude, wenn die Sonne unter dem Horizont steht (Annahmen in gebaeudeBild.ts): ganz dunkel ab 6° darunter
   useEffect(() => {
-    fensterLicht(stand ? (2 - stand.hoehe) / 8 : 0, lichtAnteil(minuten / 60))
+    fensterLicht(stand ? (2 - stand.hoehe) / 8 : 0, lichtAnteil(minuten / 60), stand?.zeit.getTime())
     return () => fensterLicht(0, 0)
   }, [stand, minuten])
   // die Zeit der Windhosen: die Stunde aus der Tafel, sonst mit «Sonne» die gewählte Zeit, sonst jetzt (Michael, 2026-11-01: «wenn man die
