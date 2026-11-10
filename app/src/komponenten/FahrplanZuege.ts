@@ -27,12 +27,16 @@ const ZELLE = 50
 const EIGEN_QUER_M = 12, EIGEN_LAENGS_M = 400
 /** so weit knickt ein Wagen gegen den davor und steht er schräg zum Weg (gewählt, wie ZUG_KNICK und ZUG_SCHRAEG in Schweiz3D.tsx) */
 const KNICK = (15 * Math.PI) / 180, SCHRAEG = (25 * Math.PI) / 180
+/** ein Zug in Gegenrichtung nimmt keine Gleisachse, die näher als GEGEN_FREI_M an der eigenen gezeichneten Linie liegt, er sucht das Gleis daneben
+ *  (Michael, 2026-11-10, Münchenbuchsee: «Der Zug aus Biel Bienne nach Bern fährt mir auf dem gleichen Gleis wie ich bin entgegen»; gewählt, kleiner
+ *  als der Abstand zweier Gleise) */
+const GEGEN_FREI_M = 2.2
 
 type Achse = [number, number, number, number, number, number, boolean]
 
 export interface FahrplanZuege {
-  /** die Fahrten und Gleise im Rechteck (LV95) laden */
-  setzen: (e0: number, n0: number, e1: number, n1: number) => void
+  /** die Fahrten und Gleise im Rechteck (LV95) laden; linie: die eigene gezeichnete Linie im Rechteck, je Punkt e, n, de, dn (Richtung wachsender Meter) */
+  setzen: (e0: number, n0: number, e1: number, n1: number, linie?: number[]) => void
   /** die Züge an ihre Stelle von jetzt setzen; sichtbar: nur im Führerstand; eigen: wo man selbst ist und wohin es geht (LV95) */
   schritt: (sichtbar: boolean, eigen?: { e: number; n: number; de: number; dn: number } | null) => void
   weg: () => void
@@ -50,11 +54,19 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
     return m
   })
   let ix: ZugIndex | null = null, netz: ZugNetz | null = null, fahrten: ZugFahrt[] = [], zellen = new Map<string, Achse[]>()
+  /** die eigene Linie je Zelle: e, n, de, dn; vor: 1, wenn man in Richtung wachsender Meter fährt, -1 sonst, 0 unbekannt */
+  let eigeneLinie = new Map<string, number[]>(), vor = 0
   let rahmen: [number, number, number, number] | null = null, auftrag = 0, zuletzt = 0, aus = false
 
-  const setzen = (e0: number, n0: number, e1: number, n1: number) => {
+  const setzen = (e0: number, n0: number, e1: number, n1: number, linie?: number[]) => {
     const a = ++auftrag
     rahmen = [e0, n0, e1, n1]
+    const el = new Map<string, number[]>()
+    for (let i = 0; linie && i + 3 < linie.length; i += 4) {
+      const k = `${Math.floor(linie[i] / ZELLE)}_${Math.floor(linie[i + 1] / ZELLE)}`, l = el.get(k)
+      if (l) l.push(linie[i], linie[i + 1], linie[i + 2], linie[i + 3]); else el.set(k, [linie[i], linie[i + 1], linie[i + 2], linie[i + 3]])
+    }
+    eigeneLinie = el
     void (async () => {
       ix ??= await zugIndexLaden()
       if (!ix || aus || a !== auftrag) return
@@ -79,7 +91,22 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
     })()
   }
 
-  /** die nächste Gleisachse zur Stelle e, n quer zur Richtung de, dn: Lage und Höhe, null ohne; im Tunnel tunnel = true */
+  /** die eigene Linie bei e, n: ihre Richtung in Fahrtrichtung, wenn sie näher als bis liegt, sonst null */
+  const eigeneBei = (e: number, n: number, bis: number): [number, number] | null => {
+    let best = bis * bis, raus: [number, number] | null = null
+    const ce = Math.floor(e / ZELLE), cn = Math.floor(n / ZELLE)
+    for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) {
+      const l = eigeneLinie.get(`${ce + i}_${cn + j}`)
+      for (let k = 0; l && k < l.length; k += 4) {
+        const d = (l[k] - e) ** 2 + (l[k + 1] - n) ** 2
+        if (d < best) { best = d; raus = [l[k + 2], l[k + 3]] }
+      }
+    }
+    return raus
+  }
+
+  /** die nächste Gleisachse zur Stelle e, n quer zur Richtung de, dn: Lage und Höhe, null ohne; im Tunnel tunnel = true; fährt der Zug dem
+   *  eigenen entgegen, nicht die Achse unter der eigenen Linie */
   const gleis = (e: number, n: number, de: number, dn: number): { e: number; n: number; z: number; tunnel: boolean } | null => {
     let best = GLEIS_SUCHE_M * GLEIS_SUCHE_M, raus: { e: number; n: number; z: number; tunnel: boolean } | null = null
     const ce = Math.floor(e / ZELLE), cn = Math.floor(n / ZELLE)
@@ -90,7 +117,9 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
       const t = ((e - a[0]) * qn - (n - a[1]) * qe) / nenner
       if (t < 0 || t > 1) continue
       const pe = a[0] + t * se, pn = a[1] + t * sn, d = (pe - e) ** 2 + (pn - n) ** 2
-      if (d < best) { best = d; raus = { e: pe, n: pn, z: a[2] + t * (a[5] - a[2]), tunnel: a[6] } }
+      if (d >= best) continue
+      if (vor) { const r = eigeneBei(pe, pn, GEGEN_FREI_M); if (r && (r[0] * de + r[1] * dn) * vor < 0) continue }
+      best = d; raus = { e: pe, n: pn, z: a[2] + t * (a[5] - a[2]), tunnel: a[6] }
     }
     return raus
   }
@@ -104,6 +133,8 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
     const jetzt = performance.now()
     if (jetzt - zuletzt < 1000 / JE_SEKUNDE) return
     zuletzt = jetzt
+    vor = 0
+    if (eigen) { const r = eigeneBei(eigen.e, eigen.n, 30); if (r) vor = r[0] * eigen.de + r[1] * eigen.dn >= 0 ? 1 : -1 }
     const { tag, minuten } = jetztImFahrplan(ix)
     const [e0, n0, e1, n1] = rahmen
     const zahl = [0, 0, 0]

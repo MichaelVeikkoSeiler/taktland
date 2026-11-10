@@ -3134,7 +3134,16 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       void perronSetzen(e0, n0, e1, n1)
       lampenGruppe.visible = true
       void lampenSetzen(e0, n0, e1, n1)
-      fahrplanZuege?.setzen(e0, n0, e1, n1)
+      if (fahrplanZuege) {
+        // die eigene Linie alle 5 m mit ihrer Richtung: Züge in Gegenrichtung fahren nicht auf ihr (GEGEN_FREI_M in FahrplanZuege.ts)
+        const linie: number[] = []
+        for (let meter = pk[0].m; meter <= pk[pk.length - 1].m; meter += 5) {
+          const [e, n] = glattBei(meter), [e2, n2] = glattBei(Math.min(meter + 5, pk[pk.length - 1].m))
+          const l = Math.hypot(e2 - e, n2 - n)
+          if (l > 0 && e > e0 - 50 && e < e1 + 50 && n > n0 - 50 && n < n1 + 50) linie.push(e, n, (e2 - e) / l, (n2 - n) / l)
+        }
+        fahrplanZuege.setzen(e0, n0, e1, n1, linie)
+      }
       feinMalen?.()
       if (scharf) {
         const P = SCHARF_PUNKTE, schritt = SCHARF_KACHEL_M / (P - 1)
