@@ -37,7 +37,6 @@ import { bewoelkung, bewoelkung3d, niederschlagBei, wolken3dStunde, wolkenLaden,
 import { BALLEN_HOECHSTENS, BALLEN_HOECHSTENS_HANDY, WOLKEN_HOEHE_M, wolkenBallen } from './WolkenBild'
 import { type Niederschlag, niederschlagBauen, type Saeule } from './Niederschlag'
 import { type VierWindhosen, vierWindhosenBauen } from './Windhose'
-import { WindTafel } from './WindTafel'
 import { perronNetz, perronsIn } from './Perrons'
 import { deckeAufBild, deckenIn, unterDecke, type Decke } from './Decken'
 import { Abschnitt } from './Anleitung'
@@ -664,10 +663,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [sonnenAn, setSonnenAn] = useState(false)
   // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
   const [windAn, setWindAn] = useState(false)
-  const [windStation, setWindStation] = useState<Station | null>(null)
+  const [, setWindStation] = useState<Station | null>(null)
   const [windMessung, setWindMessung] = useState<Wetter | null>(null)
-  // die in der Tafel gewählte Stunde der Prognose, null die Messung
-  const [windZeigt, setWindZeigt] = useState<WindStunde | null>(null)
+  // eine gewählte Stunde der Prognose, null die Messung; die Tafel, die sie wählte, ist seit 2026-11-10 weg
+  const [windZeigt] = useState<WindStunde | null>(null)
   // die vier Windhosen (Michael, 2026-10-24: «immer vier davon verteilen»), je Viertel des Modells (src/windhosen.ts)
   const [windPl, setWindPl] = useState<WindPlatz[]>([])
   const [, setWindNeu] = useState(0)
@@ -1256,9 +1255,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {stufe === 'nah' && gelaende.nah && <>›<span className="px-2 py-1 font-bold">1 km {titel(gelaende.nah.anker) === 'Feld' ? '' : titel(gelaende.nah.anker)}</span></>}
         {groesse && <span className="px-1 text-sbb-metal dark:text-sbb-storm">({groesse})</span>}
       </nav>
-      {windAn && (
-        <WindTafel className="mt-2" station={windStation} messung={windMessung} waehlen={setWindZeigt} plaetze={windPl} />
-      )}
+      {/* die Tafel mit Messung, Prognose und Verlauf des Winds ist weg (Michael, 2026-11-10: «Diesen Bereich würde ich der Übersicht halber
+          weglassen. Evtl was im Infotext erwähnen»); was sie erklärte, steht unter «Wetter: Wind und Niederschlag» */}
       <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
         {sonnenAn && (
           <>
@@ -1347,7 +1345,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Bergwanderweg oder Alpinwanderweg eingetragen sind, ohne die Stücke in Tunneln, auf das Gelände des Modells gelegt; die Farben
             folgen den Wegweisern. Wind: die letzte Messung der nächsten Station von MeteoSchweiz mit Windmessung (SwissMetNet) und ihre
             lokale Prognose (stündlich, bis 8 Tage); immer vier Windhosen in der Mitte der Viertel des Bilds, nach jeder Bewegung neu
-            verteilt, jede mit dem Wind der Station, die ihr am nächsten liegt (nicht an der Station; die Tafel nennt sie), darüber Mittelwind und Böen in km/h, am Mast die Temperatur; mit «Sonne» zur gewählten Zeit: früher gemessen (heute alle 10 Minuten, frühere Tage seit dem 1. Januar je Stunde), später die Prognose; gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
+            verteilt, jede mit dem Wind der Station, die ihr am nächsten liegt (nicht an der Station), darüber Mittelwind und Böen in km/h, am Mast die Temperatur; mit «Sonne» zur gewählten Zeit: früher gemessen (heute alle 10 Minuten, frühere Tage seit dem 1. Januar je Stunde), später die Prognose; gezeichnet und viel grösser als in Wirklichkeit, ganz gestreckt ab 28 km/h. Sonne und Schatten: der Stand der Sonne über der Mitte des Modells, gerechnet nach den Näherungen
             des Astronomical Almanac auf etwa ein Zehntelgrad, ohne die Brechung der Luft am Horizont; Schatten wirft nur das Gelände im
             Modell, Berge ausserhalb nicht, Wolken und Dunst fehlen. Sterne: alle bis zur Helligkeit 6 aus dem Hipparcos-Katalog der ESA,
             aufbereitet von d3-celestial (Olaf Frohn, BSD-Lizenz), ihr Ort am Himmel gerechnet, ohne die Bewegung der Erdachse seit 2000
@@ -1455,12 +1453,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             laut Fahrplan. Ein Schiff ist gezeichnet, kein bestimmtes Schiff, aus der Ferne grösser, damit man es sieht.</p>
         </Abschnitt>
         <Abschnitt titel="Wetter: Wind und Niederschlag">
-          <p>«Wetter» zeigt immer vier Windhosen im Bild, nach jedem Drehen und Zoomen wieder verteilt, je eine in der Mitte jedes Viertels
-            des Bilds. Die Zahlen über dem Mast sind der Wind in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
+          <p>«Wetter» zeigt immer vier Windhosen, je eine in der Mitte jedes Viertels des Modells. Die Zahlen über dem Mast sind der Wind in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
             nicht an der Station): links das Mittel über 10 Minuten, rechts die stärkste Böe; am Mast steht die Temperatur in °C. Ist
             «Sonne» an, zeigen die Windhosen die gewählte Zeit: in der Vergangenheit die Messung (heute alle 10 Minuten, frühere Tage seit
-            dem 1. Januar je Stunde), in der Zukunft die Prognose; wo es für diese Zeit keine Angabe gibt, steht «–» und der Sack hängt grau. Unter dem Modell die Tafel mit der Messung und der Prognose von MeteoSchweiz für 8 Tage: Der Regler
-            wählt eine Stunde, Windhosen, Regen und Schnee zeigen dann diese Stunde. Regen und Wind sind auch zu hören, gerechnete Geräusche,
+            dem 1. Januar je Stunde), in der Zukunft die Prognose; wo es für diese Zeit keine Angabe gibt, steht «–» und der Sack hängt grau. Messung und Prognose stammen von den Stationen von
+            MeteoSchweiz (SwissMetNet und lokale Prognose für die Station, bis 8 Tage voraus); eine Prognose ist keine Messung. Regen und Wind sind auch zu hören, gerechnete Geräusche,
             lauter mit der Stärke; Schnee bleibt still.</p>
           <p>In jeder Stufe zeigt der weisse Knopf «Wolken» die Wolken laut dem Wettermodell ICON-CH1 von MeteoSchweiz,
             zur Zeit der Sonne oder, wenn die Sonne aus ist, jetzt. Das Modell nennt je Stelle von etwa 1 km, wie viel des Himmels in drei
@@ -1476,7 +1473,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Regen und Schnee kommen aus demselben Wettermodell: je Stelle von 2 km, wie stark es zu dieser Stunde fällt, und die
             Schneefallgrenze. Sie fallen von der untersten gezeichneten Wolke darüber bis auf den Boden, über der Schneefallgrenze als
             Schnee, darunter als Regen; in jeder Stufe dasselbe Wetter. Unter einer dichten Wolke sieht man den Regen von oben nicht. Fehlen die
-            Daten des Modells, fällt wie früher der Niederschlag der Station gleichmässig über das ganze Modell.</p>
+            Daten des Modells, fällt wie früher der Niederschlag der nächsten Station gleichmässig über das ganze Modell: Regen oder Schnee ab 0,1 mm,
+            als Schnee bis 1 °C.</p>
         </Abschnitt>
         <Abschnitt titel="Sonne und Schatten">
           <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
