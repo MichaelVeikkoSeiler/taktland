@@ -403,6 +403,27 @@ Lastwagen in «3D Schweiz» (Michael, 2026-11-10: «Bitte auch LKWs einfügen»)
              die rechte Spur seither 85 km/h für alle (vorher 95, sonst führen Autos durch die Lastwagen), Abstände mindestens 22,5 m; Sattelzug 16,5 × 2,55 × 4 m
              mit Führerhaus, Scheibe, Auflieger und Fahrgestell, Farben gewählt (lkwForm, LKW_* in komponenten/Autos.ts), Lichter und Lichtkegel wie die Autos;
              dasselbe Geräusch wie die Autos
+Verkehr auf den übrigen Strassen in «3D Schweiz» (Michael, 2026-11-10: «Jetzt mehr Verkehr auf anderen Strassen»): unter demselben Knopf «Autos» auch auf
+             swissTLM3D 10m, 8m, 6m, 4m und 3m Strasse, Ein- und Ausfahrt (STRASSEN in build_autos.py); die Menge laut Verkehrsmodell des ARE (Belastung Personen- und
+             Güterverkehr Strasse, NPVM 2023 und AMG des UVEK, data.geo.admin.ch, gpkg 100 MB, data/raw/are_belastung_strasse.gpkg; ein Modell, keine Zählung):
+             alle 20 m der nächste Abschnitt bis 12 m daneben und höchstens 25° schräg, je Stück der Median, wenn die Hälfte trifft; Ketten je Klasse an
+             Knoten mit genau zwei, je Kette der Median nach Länge, ohne Autos unter 500 Fahrzeugen am Tag (STRASSE_AB_DTV, gewählt); Tag und Nacht nach dem
+             Anteil am Tag an den Zählstellen des ASTRA (Median von 16 Nt / DTV), der Anteil Lastwagen (LW und LZ) gleich für Tag und Nacht; in den Kacheln
+             art 2 (beide Richtungen, je eine Spur ein Viertel der Breite rechts, 1,1 bis 2,6 m, STRASSE_QUER_M) und 3 (eine Richtung, auf der Achse), je
+             Stück dazu Verkehr je Stunde am Tag und in der Nacht, Anteil Schwerverkehr, Breite und Tempo; Tempo gewählt nach Klasse in und ausserhalb von
+             Siedlungen (swissTLMRegio, wie das Strassenlicht): 10 bis 6 m 35/80, 4 m 30/60, 3 m 25/50, Ein- und Ausfahrt 60 km/h (innerorts ein Mittel samt Halten;
+             zuerst 50/40/30, in Bern fuhren zu wenige); Achsen auf 0,5 m
+             vereinfacht; Retusche nur ab 6 m Breite, halbe Breite und 1,5 m (STRASSE_RETUSCHE_*); keine Ampeln, kein Vortritt, kein Abbiegen; höchstens
+             12'000 Autos im Modell, auf dem Handy 5'000; in Anleitung («Autos», Quellen, «Was erfunden ist»), Fusszeile beider Seiten und LICENSE genannt
+             dabei gefunden: die Maske der Siedlungen (siedlung in build_strassenlicht.py) zeichnete Stadtzentren vor den Siedlungen, deren Löcher sie
+             wieder löschten (Bern, Zürich innen ohne Siedlung, ohne Strassenlicht); seither nach objval geordnet, data/strassenlicht neu gebaut
+Autos auf Brücken in «3D Schweiz» (Michael, 2026-11-10: «Autos fahren nicht sauber auf den Brücken. Teilweise darunter in der Luft»): auf einem Brückenstück
+             nimmt ein Auto die Höhe der gezeichneten Fahrbahn an seiner Stelle (deckSuche in Bruecken.ts, deckRef in Schweiz3D.tsx: nächste Achse bis zur halben
+             Breite und 1 m, höchstens 8 m von der Höhe laut swissTLM3D, DECK_HOEHE_M), statt einer eigenen Rechnung über die Stücke der Autos
+Propellerflugzeug zu sehen (Michael, 2026-11-10: «kannst du ein Flugzeug einblenden (Propellermodell) wenn eines erklingt?»): erklingt die Aufnahme, fliegt ein
+             gezeichneter Hochdecker (komponenten/Flugzeug.ts, 8 m, 11 m Spannweite, weiss mit karminroten Spitzen, Propeller dreht) 150 m über dem Gelände der
+             Hörstelle mit 50 m/s in zufälliger Richtung, ihr am nächsten nach 13 s (die lauteste Stelle der Aufnahme, gemessen), nur über dem Modell, aus der
+             Ferne grösser (2 % des Abstands der Kamera durch 8 m), in der Brille 3-fach (FLUGZEUG_* gewählt, propellerZeigen in src/audio.ts)
 Strassenbrücken in «3D Schweiz» (Michael, 2026-11-10, Bern Forsthaus, mit «Autos»: «Bei den Brücken: kannst du diese gleich wie die Strasse einfärben, generell überall?
              Und diese nahtlos machen sonst springen die Autos»): der Belag in der Farbe der Strasse an beiden Enden im Luftbild (je Ende 6 bis 30 m über die Brücke hinaus,
              quer bis ein Drittel der halben Breite, Median je Farbe, vor der Retusche; als Faktor auf das gemalte Belagsbild über die Farben der Ecken, belagFaktor und
@@ -417,6 +438,14 @@ Möwen in «3D Schweiz» (Michael, 2026-11-10: «ES Seagulls from Window 01» vo
              16,7 s (2 s überblendet, auf −22 dB, 0,5 s Rand); nur Seen aus data/seen.json, deren Fläche aus dem Umriss ohne Inseln mindestens 15 km² ist (21, mit den
              Seen im Ausland; Sempachersee 14 km² nicht), im See voll, am Ufer voll bis 150 m, still ab 600 m, am Tag von 6 bis 21 Uhr (UMGEBUNG_SEE_* in Schweiz3D.tsx,
              MOEWEN_AUFNAHME, UMGEBUNG_MOEWEN in src/audio.ts, Abstände und Tageszeit gewählt); geprüft: Neuchâtel am Ufer 0,87, Bern 0
+Hupen an Autobahnen in «3D Schweiz» (Michael, 2026-11-10, schickte «Beeping car horn from inside car, engine off» von misperpodcast, freesound.org/s/733553,
+             «car horn 1» von 3863, freesound.org/s/235363, «Car Horn Honk 01 - Single, Distant» von Brett+Butter, freesound.org/s/553150, alle CC0, dazu «Nur bei
+             Autobahnen»): klang/hupe1 bis 3.mp3 (normalisiert), nur mit «Autos», bei einer Vorbeifahrt eines Autos auf getrennter Fahrbahn in 12 % der Fälle
+             (AUTO_HUPE_ANTEIL), höchstens alle 15 bis 35 s (HUPE_PAUSE_S in src/audio.ts), eine der drei zufällig, gewählt
+Helikopter in «3D Schweiz» (Michael, 2026-11-10: «Helicopter Swirling» von Tiagorlp, freesound.org/s/693511, CC0, «Etwas seltener auch mal ein Helikopter. Rotes
+             Modell das durchfliegt»): klang/helikopter.mp3 (45,4 s, am lautesten nach 26 s, gemessen), in den Feldern von 4 km und 1 km von 7 bis 21 Uhr, gut ein
+             Drittel so oft wie das Flugzeug (UMGEBUNG_JE_S.helikopter), nie zugleich; zu sehen wie das Flugzeug: ein roter Helikopter (helikopterForm in
+             Flugzeug.ts, Rotor 10 m, dreht) 120 m über dem Gelände mit 35 m/s (HELIKOPTER_*, gewählt), kein bestimmtes Modell
 Hupe und Krähen in «3D Schweiz» seit 2026-11-10 weg (Michael: «Bitte Hupe wieder entfernen und den Vogel auch»); Bus, Kühe, Traktor und Flugzeug bleiben
 Stadtverkehr in «3D Schweiz» weiter zu hören (Michael, 2026-11-09: «Stadtrauschen hört man teilweise kilometerweit», auf die Frage, ob auch im Feld von 16 km: «Ja gern»): auch im Feld von 16 km, voll bis 5 km Abstand der Kamera, still ab 25 km, in der Brille still ab 1,5 m über dem Gelände; dazu die Siedlung in 5 × 5 Punkten im Abstand von 600 m, aus der Ferne höchstens 60 % so laut wie mitten in der Stadt (UMGEBUNG_STADT_* in Schweiz3D.tsx, UMGEBUNG_STADT_FERN in src/audio.ts, gewählt); die anderen Geräusche bleiben in den Feldern von 4 km und 1 km
 Mehr Immersion in «3D Schweiz» (Michael, 2026-11-10, aus einer Liste von Vorschlägen: «Baue bitte ein: 6, 5 (Pfiff), 2, 4, 8, 12 (Icon mit Männchen) alle Devices»; Nummer 13, zu zweit im selben Modell, nur erklärt, bräuchte ein neues raum.php, das die letzte Lage je Teilnehmer überschreibt):

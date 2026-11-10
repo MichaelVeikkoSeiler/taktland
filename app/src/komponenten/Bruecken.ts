@@ -338,3 +338,39 @@ export function retuschieren(ctx: CanvasRenderingContext2D, w: number, h: number
   }
   return raus
 }
+
+/** die Höhe der gezeichneten Fahrbahn auf Strassenbrücken an einer Stelle (Michael, 2026-11-10: «Autos fahren nicht sauber auf den Brücken.
+ *  Teilweise darunter in der Luft»): die Autos nehmen statt einer eigenen Rechnung die Achse der gezeichneten Brücke, nach brueckeAnschliessen;
+ *  gesucht wird die nächste Achse bis zur halben Breite und 1 m mehr, deren Höhe höchstens DECK_HOEHE_M von der Höhe laut swissTLM3D abweicht
+ *  (sonst eine Brücke darüber oder darunter) */
+export const DECK_HOEHE_M = 8
+export function deckSuche(stuecke: Array<{ e: number[]; n: number[]; h: number[]; halb: number }>): (e: number, n: number, h: number) => number | null {
+  const ZELLE = 25, gitter = new Map<string, Array<[number, number]>>()
+  stuecke.forEach((s, k) => {
+    for (let i = 0; i + 1 < s.e.length; i++) {
+      const r = s.halb + 1
+      for (let gx = Math.floor((Math.min(s.e[i], s.e[i + 1]) - r) / ZELLE); gx <= Math.floor((Math.max(s.e[i], s.e[i + 1]) + r) / ZELLE); gx++) {
+        for (let gy = Math.floor((Math.min(s.n[i], s.n[i + 1]) - r) / ZELLE); gy <= Math.floor((Math.max(s.n[i], s.n[i + 1]) + r) / ZELLE); gy++) {
+          const schl = `${gx}_${gy}`, l = gitter.get(schl)
+          if (l) l.push([k, i]); else gitter.set(schl, [[k, i]])
+        }
+      }
+    }
+  })
+  return (e, n, h) => {
+    const l = gitter.get(`${Math.floor(e / ZELLE)}_${Math.floor(n / ZELLE)}`)
+    if (!l) return null
+    let best = Infinity, raus: number | null = null
+    for (const [k, i] of l) {
+      const s = stuecke[k], ae = s.e[i], an = s.n[i], de = s.e[i + 1] - ae, dn = s.n[i + 1] - an, l2 = de * de + dn * dn
+      const t = l2 ? Math.max(0, Math.min(1, ((e - ae) * de + (n - an) * dn) / l2)) : 0
+      const d = Math.hypot(e - ae - t * de, n - an - t * dn)
+      if (d > s.halb + 1) continue
+      const z = s.h[i] + t * (s.h[i + 1] - s.h[i])
+      if (Math.abs(z - h) > DECK_HOEHE_M) continue
+      const wert = d + Math.abs(z - h) * 0.5
+      if (wert < best) { best = wert; raus = z }
+    }
+    return raus
+  }
+}

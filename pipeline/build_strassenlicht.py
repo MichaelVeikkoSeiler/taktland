@@ -92,7 +92,7 @@ def siedlung():
     g = ImageDraw.Draw(bild)
     zu = lambda ring: [((e - x0) / MASKE_M, (y1 - n) / MASKE_M) for e, n in ring]
     for (geom,) in sqlite3.connect(REGIO).execute(
-            "select geom from tlmregio_landcover_landcover where objval in ('Siedl', 'Stadtzentr')"):
+            "select geom from tlmregio_landcover_landcover where objval in ('Siedl', 'Stadtzentr') order by objval"):
         for poly in polygone(geom):
             g.polygon(zu(poly[0]), fill=1)
             for loch in poly[1:]:
