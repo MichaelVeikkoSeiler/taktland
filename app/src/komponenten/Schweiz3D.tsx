@@ -957,6 +957,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }, [andere, fuehreSeit])
   const fuehrer = fuehreSeit === null ? andere.filter((a) => a.fuehrt && a.stand).sort((a, c) => (c.seit ?? 0) - (a.seit ?? 0))[0] : undefined
   const fuehrerStand = fuehrer?.stand ? JSON.stringify(fuehrer.stand) : ''
+  // mit dem Blick des Führenden (Michael, 2026-11-10: «dass die folgende Person auch gleich die Perspektive der führenden Person sehen würde»):
+  // am Anfang an, eigenes Drehen oder Zoomen beendet es, der Knopf «Blick folgen» holt es zurück
+  const [blickFolgen, setBlickFolgen] = useState(true)
   const folgtLaedt = useRef(false), folgtNochmals = useRef<Stand | null>(null)
   const folgen = (st: Stand) => {
     const setzen: Record<string, [boolean, (v: boolean) => void]> = { orte: [orteAn, setOrteAn], gebaeude: [gebaeudeAn, setGebaeudeAn],
@@ -1121,7 +1124,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    sonnenAn={sonnenAn} orte={orteAn} gipfel={gipfelAn} schalten={(art) => ({ hoehen: setScheiben, orte: setOrteAn, gipfel: setGipfelAn, wandern: setWandern, gebaeude: setGebaeudeAn, baeume: setBaeumeAn,
                      sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, wolken: setWolkenAn, stehen: setStehen })[art]((x: boolean) => !x)} stehen={stehen && (stufe === 'ort' || stufe === 'nah')} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windBei(p, windZeit), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
-                   zeitSchieben={zeitSchieben} vollbild={voll} strich={strich} andere={andere} lageRef={lageRef} />
+                   zeitSchieben={zeitSchieben} vollbild={voll} strich={strich} andere={andere} lageRef={lageRef}
+                   folgeId={blickFolgen && fuehrer ? fuehrer.id : null} blickLos={() => setBlickFolgen(false)} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
@@ -1278,6 +1282,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {raum ? (
           <div className="flex flex-wrap items-center gap-2">
             <span>Zu zweit: Raum <b className="tabular-nums tracking-wider">{raum}</b>, {andere.length + 1} im Raum, {fuehreSeit !== null ? 'du führst' : fuehrer ? 'du folgst' : 'niemand führt'}.</span>
+            {fuehrer && (
+              <button type="button" onClick={() => setBlickFolgen((x) => !x)} aria-pressed={blickFolgen}
+                      className={'rounded-lg border px-2.5 py-1 font-bold ' + (blickFolgen ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>Blick folgen</button>
+            )}
             {fuehreSeit === null && (
               <button type="button" onClick={() => setFuehreSeit(Date.now())} className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Führen</button>
             )}
@@ -1727,6 +1735,8 @@ const KAMERA_UEBER_GELAENDE_KM = 0.003
  *  auf dem Tisch, Punkte des Bogens (gewählt) */
 /** zu zweit: Farbe der anderen und ihr Kopf auf dem Bildschirm so gross wie dieser Teil des Abstands (gewählt) */
 const ANDERE_FARBE = '#1f6fd1', ANDERE_BILD = 0.012
+/** wie schnell die Kamera dem Blick des Führenden nachgleitet (je Sekunde, gewählt) */
+const FOLGEN_JE_S = 2.5
 const ICH_FLUSS_M = 15, ICH_TASTEN_KM = 0.002
 const ICH_BOGEN_MS = 12, ICH_HIMMEL_GRAD = 45, ICH_MANN_TISCH_M = 0.06, ICH_BOGEN_PUNKTE = 40
 const STEHEN_AUGE_M = 1.7, STEHEN_DREH_KM = 0.00001, STEHEN_NAH_KM = 0.0001, STEHEN_GEHEN_MS = 4, STEHEN_DREHEN_RS = 1.6
@@ -1945,9 +1955,12 @@ function knopfBild(plus: boolean, an: boolean) {
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos }: {
   /** zu zweit: die anderen im Raum und wohin die eigene Lage geht */
   andere?: Andere[]
+  /** zu zweit: wessen Blick die Kamera folgt (auf dem Bildschirm), und was eigenes Drehen meldet */
+  folgeId?: string | null
+  blickLos?: () => void
   lageRef?: { current: (() => Lage | null) | null }
   /** auf Augenhöhe: die Kamera auf dem Gelände, in der Brille das Modell in Originalgrösse */
   stehen?: boolean
@@ -3725,6 +3738,40 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   }, [lageRef])
   const andereRef = useRef(andere)
   andereRef.current = andere
+  const folgeRef = useRef(folgeId)
+  folgeRef.current = folgeId
+  const blickLosRef = useRef(blickLos)
+  blickLosRef.current = blickLos
+  // mit dem Blick des Führenden: Kamera und Ziel gleiten zu seinem Kopf und Blick (jede Sekunde kommt eine Lage); dreht oder zoomt man selbst
+  // (die Kamera bewegt sich zwischen start und end der Steuerung um mehr als 1 % ihres Abstands), endet es; nicht in der Brille und nicht auf Augenhöhe
+  useEffect(() => {
+    const k = kern.current
+    const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!k || !lage) return
+    const lokal = (p: Punkt) => new THREE.Vector3((p[0] - lage.cE) / 1000, p[2] / 1000, -(p[1] - lage.cN) / 1000)
+    let selbst: THREE.Vector3 | null = null, zeit = performance.now()
+    const start = () => { selbst = k.kamera.position.clone() }
+    const ende = () => {
+      if (selbst && folgeRef.current && selbst.distanceTo(k.kamera.position) > k.kamera.position.distanceTo(k.steuerung.target) * 0.01) blickLosRef.current?.()
+      selbst = null
+    }
+    k.steuerung.addEventListener('start', start)
+    k.steuerung.addEventListener('end', ende)
+    const schritt = () => {
+      const jetzt = performance.now(), f = 1 - Math.exp(-((jetzt - zeit) / 1000) * FOLGEN_JE_S)
+      zeit = jetzt
+      const a = folgeRef.current ? andereRef.current.find((x) => x.id === folgeRef.current) : undefined
+      if (!a || selbst || k.renderer.xr.isPresenting || stehenAn) return
+      k.kamera.position.lerp(lokal(a.kopf), f)
+      k.steuerung.target.lerp(lokal(a.blick), f)
+    }
+    k.jeBild.push(schritt)
+    return () => {
+      const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
+      k.steuerung.removeEventListener('start', start)
+      k.steuerung.removeEventListener('end', ende)
+    }
+  }, [b, stufe])
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
@@ -3767,6 +3814,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const kg = fig.g.getObjectByName('kopf')!
         kg.position.copy(fig.kopf); kg.scale.setScalar(r); kg.lookAt(k.wurzel.localToWorld(fig.blick.clone()))
         kg.rotateY(Math.PI)
+        // wessen Blick man folgt, dessen Kopf sitzt in der Kamera
+        kg.visible = !(a.id === folgeRef.current && !brille && !stehenAn)
         fig.strahl.visible = fig.ring.visible = !!fig.zeigt
         if (fig.zeigt) {
           const pos = fig.strahl.geometry.attributes.position as THREE.BufferAttribute
