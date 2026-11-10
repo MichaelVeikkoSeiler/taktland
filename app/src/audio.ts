@@ -701,6 +701,8 @@ export interface Umgebung {
   stunde: number; monat: number
   /** Höhe des Geländes an der Stelle, m ü. M. */
   hoehe: number
+  /** wie nah ein See ab 15 km² ist, 0 bis 1 (für die Möwen) */
+  see: number
   /** wie nah die nächste Kirche ist, 0 bis 1, und die Zeit der Szene in ms (für die Glocken) */
   kirche: number; zeitMs: number
 }
@@ -723,6 +725,9 @@ const STADT_RAND_S = 0.5, STADT_AUFNAHME = 2.5
  *  Schleife (schon so aufgenommen), auf −20 dB; Lautstärke gegen das Erzeugte gewählt */
 const FLUSS_AUFNAHME = 3
 const GLOCKEN_AUFNAHME = 2.5, GLOCKEN_BIS_M = 2000, UMGEBUNG_GLOCKEN = 0.12
+/** Möwen an grossen Seen (Michael, 2026-11-10: «ES Seagulls from Window 01» von se2001, freesound.org/s/510204, CC0, «Nur bei Seen ab 15km2»):
+ *  Schleife von 16,7 s (2 s überblendet, auf −22 dB), Rand wie bei der Stadt; nach der Nähe des Sees, am Tag von 6 bis 21 Uhr (gewählt) */
+const MOEWEN_AUFNAHME = 2.5, UMGEBUNG_MOEWEN = 0.14
 const aufnahmen = new Map<string, Promise<AudioBuffer | null>>()
 function aufnahme(c: AudioContext, pfad: string) {
   let p = aufnahmen.get(pfad)
@@ -746,7 +751,7 @@ function schleifeAus(c: AudioContext, pfad: string, ziel: AudioNode, laut: numbe
   }).catch(() => {})
 }
 let umgebungTon: {
-  stadt: GainNode; fluss: GainNode; glocken: GainNode; glockenDa: boolean; flussWelle: OscillatorNode; quellen: AudioScheduledSourceNode[]; uhr: number; jetzt: Umgebung | null
+  stadt: GainNode; fluss: GainNode; glocken: GainNode; moewen: GainNode; glockenDa: boolean; flussWelle: OscillatorNode; quellen: AudioScheduledSourceNode[]; uhr: number; jetzt: Umgebung | null
   /** bis wann ein Geräusch dieser Art noch klingt (nicht zwei Traktoren übereinander) */
   bis: Record<string, number>
 } | null = null
@@ -797,7 +802,11 @@ export function umgebungHoeren(u: Umgebung | null) {
       fw.connect(f1).connect(f2).connect(erzeugtF).connect(fluss).connect(ziel)
       schleifeAus(c, 'klang/fluss.mp3', fluss, FLUSS_AUFNAHME, () => umgebungTon?.fluss === fluss, () => erzeugtF.gain.setTargetAtTime(0, c.currentTime, 0.5))
       for (const q of [sb, sw, fw, welle, schwell]) q.start()
-      umgebungTon = { stadt, fluss, glocken, glockenDa: false, flussWelle: welle, quellen: [sb, sw, fw, welle, schwell], uhr: window.setInterval(() => umgebungEinzeln(), 1000), jetzt: null, bis: {} }
+      // Möwen an grossen Seen, die Aufnahme als Schleife
+      const moewen = c.createGain(); moewen.gain.value = 0
+      moewen.connect(ziel)
+      schleifeAus(c, 'klang/moewen.mp3', moewen, MOEWEN_AUFNAHME, () => umgebungTon?.moewen === moewen)
+      umgebungTon = { stadt, fluss, glocken, moewen, glockenDa: false, flussWelle: welle, quellen: [sb, sw, fw, welle, schwell], uhr: window.setInterval(() => umgebungEinzeln(), 1000), jetzt: null, bis: {} }
       ;(umgebungTon as unknown as { welleG: GainNode }).welleG = welleG
     }
     const t = umgebungTon, jetzt = c.currentTime
@@ -810,6 +819,7 @@ export function umgebungHoeren(u: Umgebung | null) {
     t.fluss.gain.setTargetAtTime(f, jetzt, 0.8)
     ;(t as unknown as { welleG: GainNode }).welleG.gain.setTargetAtTime(f * 0.25, jetzt, 0.8)
     t.glocken.gain.setTargetAtTime(weideJetzt(u) ? UMGEBUNG_GLOCKEN * (1 - u.stadt) * u.nah : 0, jetzt, 1.5)
+    t.moewen.gain.setTargetAtTime(u.stunde >= 6 && u.stunde < 21 ? UMGEBUNG_MOEWEN * u.see * u.nah : 0, jetzt, 1.5)
   } catch { /* ohne Ton */ }
 }
 
@@ -821,7 +831,7 @@ export function umgebungHoerenAus() {
   window.clearInterval(t.uhr)
   const c = audioKontext()
   try {
-    if (c) for (const g of [t.stadt, t.fluss, t.glocken]) g.gain.setTargetAtTime(0, c.currentTime, 0.3)
+    if (c) for (const g of [t.stadt, t.fluss, t.glocken, t.moewen]) g.gain.setTargetAtTime(0, c.currentTime, 0.3)
     window.setTimeout(() => { for (const q of t.quellen) { try { q.stop() } catch { /* schon aus */ } } }, 1500)
   } catch { /* ohne Ton */ }
 }
