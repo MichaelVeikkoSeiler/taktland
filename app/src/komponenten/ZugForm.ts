@@ -29,7 +29,7 @@ const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 const FENSTER_IM_KOPF = 0.55
 /** Türen: an oder aus (für die Vorschau), Breite in Teilen der Höhe, Abstand der Mitte vom Wagenende in Teilen der Länge, Farbe des Felds; gewählt */
 export const zugTueren = { an: true }
-const TUER_BREIT = 0.34, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#808080', TUER_LINIE = 0.014
+const TUER_BREIT = 0.34, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#9a9a9a', TUER_LINIE = 0.014
 /** Höhe des Fensterbands und wie weit seine Mitte unter dem Beginn der Dachrundung liegt, in Teilen der Höhe (Michael, 2026-11-10: «Seitenstreifen etwas
  *  höher und etwas weiter unten», dann «noch etwas weiter unten und noch etwas höher»; vorher 0,22 und 0,08, dann 0,28 und 0,14) */
 const FENSTER_HOCH = 0.34, FENSTER_TIEFER = 0.21
@@ -86,7 +86,7 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   // Türen, nur gemalt (Michael, 2026-11-10: «Braucht es bei den Wagen noch Türen, also nicht richtige, aber damit es den Anschein macht?»): je Seite zwei nahe
   // den Enden, an Lok und Steuerwagen eine hinter dem Kopf; Zahl, Lage und Masse gewählt
   if (zugTueren.an) {
-    const unterkante = unten + H * 0.03, oberkante = h - r - H * FENSTER_TIEFER + H * FENSTER_HOCH / 2 + H * 0.09
+    const unterkante = unten + H * 0.002, oberkante = h - r - H * FENSTER_TIEFER + H * FENSTER_HOCH / 2 + H * 0.09
     const b = H * TUER_BREIT
     // an Lok und Steuerwagen hinter dem Kopf, eine Türbreite hinter dem Ende des Fensterbands im Kopf (Michael, 2026-11-10: «Etwas eine Türbreite weiter
     // hinten. Obere Kante noch etwas weiter oben»)
