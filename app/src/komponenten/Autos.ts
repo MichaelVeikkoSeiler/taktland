@@ -102,8 +102,11 @@ export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M): THREE.Buf
 /** nachts vor jedem Auto ein Lichtkegel auf der Fahrbahn wie bei den Zügen: so lang und vorne so breit, Stärke, gewählt */
 export const AUTO_KEGEL_LANG_M = 28, AUTO_KEGEL_BREIT_M = 7, AUTO_KEGEL_HELL = 0.55
 
+/** 30 % der roten Autos grau (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»), Grau gewählt */
+const ROT = new Set(['#8a1a1a', '#a8102e']), ROT_GRAU_ANTEIL = 0.3, ROT_GRAU = '#8c8c8c'
 export function lackFarbe(i: number): THREE.Color {
-  return new THREE.Color(LACK[Math.floor(zufall(i * 7.31 + 1.7) * LACK.length)])
+  const f = LACK[Math.floor(zufall(i * 7.31 + 1.7) * LACK.length)]
+  return new THREE.Color(ROT.has(f) && zufall(i * 3.77 + 9.1) < ROT_GRAU_ANTEIL ? ROT_GRAU : f)
 }
 
 /** ein fester Zufall 0 bis 1 */
