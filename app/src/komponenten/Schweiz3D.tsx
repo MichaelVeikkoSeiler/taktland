@@ -5379,7 +5379,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (pfiffAbstand < PFIFF_BIS_M) abfahrtsPfiff((1 - pfiffAbstand / PFIFF_BIS_M) ** 2)
         pfiffAbstand = Infinity
         zuegeHoeren(liste, brille)
-        if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHoeren: unknown }).s3dHoeren = { liste: liste.slice().sort((x, y) => x.abstandM - y.abstandM).slice(0, 3), ohr, blickM, zahl }
+        if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHoeren: unknown }).s3dHoeren = { liste: liste.slice().sort((x, y) => x.abstandM - y.abstandM).slice(0, 3), ohr, blickM, zahl, zuege: mitten.slice(0, zahl).map((m) => { const l = k.wurzel.userData.lage as { cE: number; cN: number }; return [l.cE + m[0].x * 1000, l.cN - m[0].z * 1000, m[0].y * 1000] }) }
       }
     }
     let hoerUm = 0, hoerLetzt = performance.now(), hoerAlt = new Map<number, { p: THREE.Vector3; d: number }>()
