@@ -675,7 +675,7 @@ export async function brueckenLaden(e0: number, n0: number, e1: number, n1: numb
  *  des ersten Punkts vom Anfang der Kette, ob auf einer Brücke, die Achse mit Höhe laut swissTLM3D; verkehr je Kette [Nt, Nn] laut Zählstelle
  *  des ASTRA (mittlerer Verkehr je Stunde am Tag und in der Nacht, beide Richtungen) oder null */
 export interface AutoStueck { kette: number; art: number; L: number; s0: number; bruecke: boolean; e: Float64Array; n: Float64Array; h: Float32Array; s: Float64Array }
-export interface AutoIndex { kachel_m: number; kacheln: string[]; jahr_zaehlung: number; zaehlstellen: Array<[string, string, string, number, number, number]>; ketten: Array<number | null> }
+export interface AutoIndex { kachel_m: number; kacheln: string[]; jahr_zaehlung: number; zaehlstellen: Array<[string, string, string, number, number, number, (number | null)?, (number | null)?]>; ketten: Array<number | null> }
 let autoVerz: Promise<AutoIndex | null> | null = null
 const autoVorrat = new Map<string, Promise<AutoStueck[] | null>>()
 export async function autosLaden(e0: number, n0: number, e1: number, n1: number): Promise<{ index: AutoIndex; stuecke: AutoStueck[] } | null> {

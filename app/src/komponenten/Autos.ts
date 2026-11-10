@@ -16,8 +16,13 @@ export const AUTO_LANG_M = 4.4, AUTO_BREIT_M = 1.8
 /** Fahrbahn einer Richtung: zwei Spuren je 3,75 m (gewählt, die Zahl der Spuren steht nur an den Zählstellen); beide Richtungen auf einer
  *  Achse: je eine Spur, 1,9 m rechts der Achse */
 export const AUTO_SPUR_M = 3.75, AUTO_SPUREN = 2, AUTO_GEGEN_M = 1.9
-/** Tempo je Spur in km/h, gewählt: rechts 95, links 115, auf Autostrassen ohne Trennung 80 */
-export const AUTO_KMH = [95, 115], AUTO_KMH_GEGEN = 80
+/** Tempo je Spur in km/h, gewählt: rechts 85 (dort fahren auch die Lastwagen; bis 2026-11-10 95), links 115, auf Autostrassen ohne Trennung 80 */
+export const AUTO_KMH = [85, 115], AUTO_KMH_GEGEN = 80
+/** ein Lastwagen (Michael, 2026-11-10: «Bitte auch LKWs einfügen»): Sattelzug, Masse gewählt, 16,5 m lang, 2,55 m breit, 4 m hoch; wie viele, laut dem
+ *  Anteil Schwerverkehr an der Zählstelle des ASTRA am Tag und in der Nacht, ohne Zählstelle AUTO_LKW_OHNE_ZAEHLUNG (gewählt); nur auf der rechten Spur */
+export const LKW_LANG_M = 16.5, LKW_BREIT_M = 2.55, AUTO_LKW_OHNE_ZAEHLUNG = 6
+/** Farben der Planen und Kasten, gewählt */
+const LKW_FARBEN = ['#f4f4f4', '#e6e6e6', '#d0d0d0', '#9aa0a6', '#f4f4f4', '#1f3f7a', '#8a1a1a', '#2b5d34', '#c9a227', '#f4f4f4']
 /** ohne Zählstelle bis 40 km über das Netz: mittlerer Verkehr je Stunde am Tag und in der Nacht, beide Richtungen, gewählt */
 export const AUTO_OHNE_ZAEHLUNG: [number, number] = [1200, 200]
 /** Retusche: so breit wie die Fahrbahn und etwas mehr, je Seite der Achse in m, gewählt */
@@ -29,6 +34,31 @@ const LACK = ['#f2f2f2', '#e9e9e9', '#c8c8c8', '#9a9a9a', '#6e6e6e', '#3c3c3c', 
   '#8a1a1a', '#1f3f7a', '#2f5a8a', '#24442a', '#c9b48a', '#a8102e']
 
 /** Form in km, die Spitze bei +z, der Boden bei y = 0; Karosserie weiss (die Farbe je Auto kommt dazu), Fenster dunkel */
+export function lkwForm(): THREE.BufferGeometry {
+  const teile: THREE.BufferGeometry[] = []
+  const kasten = (l: number, b: number, h: number, y: number, z: number, farbe: string) => {
+    const g = new THREE.BoxGeometry(b / 1000, h / 1000, l / 1000).toNonIndexed()
+    g.deleteAttribute('uv')
+    g.translate(0, (y + h / 2) / 1000, z / 1000)
+    const c = new THREE.Color(farbe), f = new Float32Array(g.attributes.position.count * 3)
+    for (let i = 0; i < f.length; i += 3) { f[i] = c.r; f[i + 1] = c.g; f[i + 2] = c.b }
+    g.setAttribute('color', new THREE.BufferAttribute(f, 3))
+    teile.push(g)
+  }
+  const L = LKW_LANG_M, vorn = L / 2
+  // Fahrgestell und Räder dunkel, Führerhaus vorne (seine Farbe kommt mit dem Lastwagen), Scheibe dunkel, Auflieger mit Plane dahinter
+  kasten(L - 0.3, LKW_BREIT_M * 0.9, 0.7, 0.3, -0.15, '#1e1e1e')
+  kasten(2.3, LKW_BREIT_M, 2.6, 0.9, vorn - 1.15, '#ffffff')
+  kasten(0.06, LKW_BREIT_M * 0.85, 0.9, 2.3, vorn + 0.01, '#1c2228')
+  kasten(13.6, LKW_BREIT_M, 2.95, 1.05, vorn - 2.6 - 6.8, '#ffffff')
+  const ganz = mergeGeometries(teile)!
+  teile.forEach((x) => x.dispose())
+  return ganz
+}
+export function lkwFarbe(i: number): THREE.Color {
+  return new THREE.Color(LKW_FARBEN[Math.floor(zufall(i * 3.17 + 0.4) * LKW_FARBEN.length)])
+}
+
 export function autoForm(): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
   const kasten = (l: number, b: number, h: number, y: number, z: number, farbe: string) => {
@@ -50,7 +80,7 @@ export function autoForm(): THREE.BufferGeometry {
 }
 
 /** Scheinwerfer vorne weiss, Rücklichter hinten rot, nachts (fensterNacht) als eigenes Netz ohne Licht der Szene gezeichnet; Lage gewählt */
-export function autoLichter(): THREE.BufferGeometry {
+export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
   const lampe = (x: number, z: number, farbe: string) => {
     const g = new THREE.BoxGeometry(0.45 / 1000, 0.2 / 1000, 0.08 / 1000).toNonIndexed()
@@ -61,7 +91,8 @@ export function autoLichter(): THREE.BufferGeometry {
     g.setAttribute('color', new THREE.BufferAttribute(f, 3))
     teile.push(g)
   }
-  for (const x of [-0.6, 0.6]) { lampe(x, AUTO_LANG_M / 2 + 0.03, '#ffffff'); lampe(x, -AUTO_LANG_M / 2 - 0.03, '#ff3020') }
+  const x0 = breit / 3
+  for (const x of [-x0, x0]) { lampe(x, lang / 2 + 0.03, '#ffffff'); lampe(x, -lang / 2 - 0.03, '#ff3020') }
   const ganz = mergeGeometries(teile)!
   teile.forEach((t) => t.dispose())
   return ganz
@@ -81,20 +112,27 @@ export function zufall(x: number): number {
 }
 
 /** je Kette ihre Stücke nach dem Abstand vom Anfang und die Autos darauf */
-export interface AutoKette { L: number; art: number; tag: number; nacht: number; stuecke: AutoStueck[]; autos: AutoPlatz[] }
+export interface AutoKette { L: number; art: number; tag: number; nacht: number; stuecke: AutoStueck[]; autos: AutoPlatz[]
+  /** Anteil Lastwagen auf der rechten Spur (0 bis 1) am Tag und in der Nacht */
+  lkwTag: number; lkwNacht: number }
 /** ein Auto: Richtung (1 mit den Punkten, -1 dagegen), Spur, Tempo in m/s, Platz in der Kette zur Zeit 0, ab welchem Anteil der grössten
  *  Dichte es fährt */
-export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: number; ab: number; farbe: number }
+export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: number; ab: number; farbe: number
+  /** ein fester Zufall 0 bis 1: ein Lastwagen, solange er unter dem Anteil Lastwagen der Stunde liegt */
+  lkw: number }
 
 /** je Kette eine feste Menge Autos, so viele, wie bei der grössten Dichte (am Tag oder in der Nacht) auf ihr fahren; welche fahren, entscheidet
  *  der Anteil der Stunde (ab) */
-export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [number, number] | null): Map<number, AutoKette> {
+export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [number, number, number | null, number | null] | null): Map<number, AutoKette> {
   const ketten = new Map<number, AutoKette>()
   for (const st of stuecke) {
     let k = ketten.get(st.kette)
     if (!k) {
-      const v = verkehr(st.kette) ?? AUTO_OHNE_ZAEHLUNG
-      k = { L: st.L, art: st.art, tag: v[0], nacht: v[1], stuecke: [], autos: [] }
+      const v = verkehr(st.kette) ?? [...AUTO_OHNE_ZAEHLUNG, null, null]
+      // auf getrennten Fahrbahnen alle Lastwagen rechts: dort doppelt so viele wie im Mittel (die Spuren tragen gleich viel), höchstens alle
+      const rechts = st.art === 0 ? AUTO_SPUREN : 1
+      const anteil = (p: number | null) => Math.min(1, ((p ?? AUTO_LKW_OHNE_ZAEHLUNG) / 100) * rechts)
+      k = { L: st.L, art: st.art, tag: v[0], nacht: v[1], stuecke: [], autos: [], lkwTag: anteil(v[2]), lkwNacht: anteil(v[3]) }
       ketten.set(st.kette, k)
     }
     k.stuecke.push(st)
@@ -111,13 +149,16 @@ export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [
       const jeKm = groesst / sp.kmh
       if (jeKm <= 0) continue
       const mittel = 1000 / jeKm
-      // Abstände zufällig um das Mittel, mindestens zwei Autolängen
+      // Abstände zufällig um das Mittel, mindestens eine Lastwagenlänge und etwas
       let s = zufall(id * 3.1 + sp.spur * 1.3 + sp.richtung) * mittel
       while (s < k.L) {
         const z = zufall(id * 17.7 + nr * 0.731)
-        k.autos.push({ richtung: sp.richtung, spur: sp.spur, ms: (sp.kmh / 3.6) * (0.96 + 0.08 * zufall(nr * 3.7 + id)), s0: s, ab: z, farbe: Math.floor(zufall(id + nr * 1.91) * 997) })
+        // auf der rechten Spur alle gleich schnell, sonst führen Wagen durch die Lastwagen
+        const ms = (sp.kmh / 3.6) * (sp.spur === 0 ? 1 : 0.96 + 0.08 * zufall(nr * 3.7 + id))
+        k.autos.push({ richtung: sp.richtung, spur: sp.spur, ms, s0: s, ab: z, farbe: Math.floor(zufall(id + nr * 1.91) * 997),
+          lkw: sp.spur === 0 ? zufall(id * 2.9 + nr * 0.377 + 5) : 2 })
         nr++
-        s += Math.max(2 * AUTO_LANG_M, mittel * (0.35 + 1.3 * zufall(id * 5.3 + nr * 1.17)))
+        s += Math.max(LKW_LANG_M + 6, mittel * (0.35 + 1.3 * zufall(id * 5.3 + nr * 1.17)))
       }
     }
   }
