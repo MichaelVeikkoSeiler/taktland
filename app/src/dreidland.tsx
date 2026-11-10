@@ -70,7 +70,9 @@ function DreiDLand() {
             dabei in die USA gelangen, GitHub speichert laut eigenen Angaben die IP-Adressen aus Sicherheitsgründen. «3dland teilen» gibt nur die Adresse 3dland.ch und einen Satz an das Teilen-Menü des Geräts, an E-Mail oder WhatsApp weiter. Die Seite lädt Gelände, Luftbilder und Wege von taktland.ch (GitHub Pages) und daten.taktland.ch (cyon, Schweiz); dabei sieht
             der Server wie bei jeder Webseite die Adresse des Geräts. «Mein Standort» fragt den Standort erst nach deiner Freigabe
             ab; er bleibt auf dem Gerät und wird weder gesendet noch gespeichert. Ist «Wetter» an, holt die Seite Messung und Prognose der
-            nächsten Wetterstation bei data.geo.admin.ch (Bund); der Dienst erfährt so, in welcher Gegend das Modell liegt. Die Suche schickt ab drei Zeichen das Eingetippte an die Suche von swisstopo (api3.geo.admin.ch, Bund), damit sie auch Adressen findet.
+            nächsten Wetterstation bei data.geo.admin.ch (Bund); der Dienst erfährt so, in welcher Gegend das Modell liegt. Die Suche schickt ab drei Zeichen das Eingetippte an die Suche von swisstopo (api3.geo.admin.ch, Bund), damit sie auch Adressen findet. «Zu zweit» schickt jede Sekunde über
+            spiel.taktland.ch (cyon, Schweiz), wo du im Modell hinschaust und hinzeigst, wer führt dazu Feld, Schalter und Zeit; dort liegt je Gerät
+            nur die letzte Angabe, ohne Namen, IP-Adresse und Konto, nach einer Minute ohne Neues fällt sie weg, der Raum nach sechs Stunden.
           </p>
         </footer>
       </div>

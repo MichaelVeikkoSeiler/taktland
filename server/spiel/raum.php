@@ -9,17 +9,25 @@
  *   POST raum.php?a=neu                       -> {"raum":"KXRT"}
  *   POST raum.php?a=senden&raum=KXRT          Körper: {"von":"…","typ":"…","d":{…}} -> {"n":5}
  *   GET  raum.php?a=holen&raum=KXRT&ab=3      -> {"ereignisse":[…],"n":5}
+ *   POST raum.php?a=lage&raum=KXRT            Körper: {"von":"…","d":{…}} -> {"ok":true}
+ *   GET  raum.php?a=lagen&raum=KXRT           -> {"lagen":[{"von":"…","d":{…},"alter":2}]}
+ *
+ * «lage» (Michael, 2026-11-10, für «zu zweit» in der Virtuellen Schweiz): je Teilnehmer nur die letzte Lage, sie wird überschrieben statt
+ * angehängt (wo man im Modell ist und wohin man zeigt, beim Führenden dazu Feld, Schalter und Zeit); nach LAGE_ALT_S Sekunden ohne neue
+ * fällt sie weg. Ebenso ohne IP-Adresse und ohne Konto.
  *
  * Liegt auf spiel.taktland.ch (Webhosting bei cyon), nicht bei GitHub.
  */
 
-const HERKUNFT = ['https://taktland.ch', 'https://www.taktland.ch'];
+const HERKUNFT = ['https://taktland.ch', 'https://www.taktland.ch', 'https://3dland.ch', 'https://www.3dland.ch'];
 const ORDNER = __DIR__ . '/daten';
 const ZEICHEN = 'ABCDEFGHJKLMNPQRSTUVWXYZ';   // ohne I und O, damit niemand sie mit 1 und 0 verwechselt
 const VERFALL_S = 6 * 3600;
 const HOECHSTENS_RAEUME = 300;
 const HOECHSTENS_EREIGNISSE = 600;
 const HOECHSTENS_BYTE = 16000;
+const LAGE_ALT_S = 60;
+const HOECHSTENS_LAGEN = 8;
 
 header('Cache-Control: no-store');
 header('Content-Type: application/json; charset=utf-8');
@@ -40,6 +48,10 @@ function pfad($raum) {
     return ORDNER . '/r-' . $raum . '.json';
 }
 
+function lagePfad($raum) {
+    return ORDNER . '/l-' . $raum . '.json';
+}
+
 $a = $_GET['a'] ?? '';
 if ($a === 'test') antwort(['ok' => true]);
 if (!in_array($herkunft, $erlaubt, true)) antwort(['fehler' => 'herkunft'], 403);
@@ -49,7 +61,10 @@ if ($a === 'neu') {
     // verfallene Räume löschen
     $raeume = glob(ORDNER . '/r-*.json') ?: [];
     foreach ($raeume as $f) {
-        if (filemtime($f) < time() - VERFALL_S) @unlink($f);
+        if (filemtime($f) < time() - VERFALL_S) {
+            @unlink($f);
+            @unlink(ORDNER . '/l-' . substr(basename($f), 2));
+        }
     }
     if (count(glob(ORDNER . '/r-*.json') ?: []) >= HOECHSTENS_RAEUME) antwort(['fehler' => 'voll'], 503);
     for ($versuch = 0; $versuch < 20; $versuch++) {
@@ -95,6 +110,41 @@ if ($a === 'senden') {
     flock($f, LOCK_UN);
     fclose($f);
     antwort(['n' => count($liste)]);
+}
+
+if ($a === 'lage') {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') antwort(['fehler' => 'methode'], 405);
+    $roh = file_get_contents('php://input', false, null, 0, HOECHSTENS_BYTE + 1);
+    if ($roh === false || strlen($roh) > HOECHSTENS_BYTE) antwort(['fehler' => 'zu gross'], 413);
+    $e = json_decode($roh, true);
+    if (!is_array($e) || !is_string($e['von'] ?? null) || strlen($e['von']) > 40) antwort(['fehler' => 'form'], 400);
+    $f = fopen(lagePfad($raum), 'c+');
+    if ($f === false) antwort(['fehler' => 'speicher'], 500);
+    flock($f, LOCK_EX);
+    $lagen = json_decode(stream_get_contents($f), true) ?: [];
+    $jetzt = time();
+    $lagen = array_filter($lagen, fn($l) => ($l['t'] ?? 0) >= $jetzt - LAGE_ALT_S);
+    if (!isset($lagen[$e['von']]) && count($lagen) >= HOECHSTENS_LAGEN) { flock($f, LOCK_UN); fclose($f); antwort(['fehler' => 'voll'], 409); }
+    $lagen[$e['von']] = ['d' => $e['d'] ?? null, 't' => $jetzt];
+    ftruncate($f, 0);
+    rewind($f);
+    fwrite($f, json_encode($lagen, JSON_UNESCAPED_UNICODE));
+    fflush($f);
+    flock($f, LOCK_UN);
+    fclose($f);
+    // der Raum lebt, solange jemand darin ist
+    @touch(pfad($raum));
+    antwort(['ok' => true]);
+}
+
+if ($a === 'lagen') {
+    $lagen = json_decode((string)@file_get_contents(lagePfad($raum)), true) ?: [];
+    $jetzt = time();
+    $liste = [];
+    foreach ($lagen as $von => $l) {
+        if (($l['t'] ?? 0) >= $jetzt - LAGE_ALT_S) $liste[] = ['von' => (string)$von, 'd' => $l['d'], 'alter' => $jetzt - $l['t']];
+    }
+    antwort(['lagen' => $liste]);
 }
 
 antwort(['fehler' => 'aktion'], 400);
