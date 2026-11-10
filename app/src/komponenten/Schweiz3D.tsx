@@ -10,7 +10,7 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { AUTO_GEGEN_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, autoLichter, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
+import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, AUTO_GEGEN_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, autoLichter, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1461,8 +1461,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             liegen (swissTLM3D) und wie viel Verkehr dort fährt: Das Bundesamt für Strassen ASTRA zählt an seinen Zählstellen, wie viele Fahrzeuge
             im Mittel je Stunde am Tag (6 bis 22 Uhr) und in der Nacht fahren. Jede Strecke nimmt die Zählstelle, die über das Netz am nächsten
             liegt; so viele Autos fahren dort zur Uhrzeit der Szene, nachts weniger. Wo im Umkreis von 40 km keine Zählstelle liegt, ist die
-            Menge gewählt. Die Autos selbst sind erfunden: Gestalt, Farbe, Spur und Tempo (95 und 115 km/h, auf Autostrassen ohne Trennung 80 km/h),
-            ebenso, wo genau eines fährt; Lastwagen gibt es nicht. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Nachts leuchten Scheinwerfer, Rücklichter und ein Lichtkegel vor jedem Auto. Im Tunnel sind
+            Menge gewählt. Wie viele davon Lastwagen sind, nennt die Zählstelle ebenfalls, je für Tag und Nacht (Anteil Schwerverkehr; ohne Zählstelle gewählt 6 %).
+            Die Autos und Lastwagen selbst sind erfunden: Gestalt, Farbe, Spur und Tempo (rechts 85 km/h, dort fahren alle Lastwagen, links 115 km/h, auf Autostrassen ohne Trennung 80 km/h),
+            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Nachts leuchten Scheinwerfer, Rücklichter und ein Lichtkegel vor jedem Auto. Im Tunnel sind
             sie nicht zu sehen. Solange der Knopf an ist, sind die stehenden Autos auf dem Luftbild weggemalt: Jeder Bildpunkt auf der Fahrbahn
             nimmt die mittlere Farbe der Fahrbahn davor und danach. Unterbrochene Linien werden dabei blasser, im Stau bleiben Autos stehen.</p>
         </Abschnitt>
@@ -1614,7 +1615,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Strassen- und Bahnhofslicht mit den Gebäuden: die Lampen und ihre Masten sind erfunden, keine Quelle kennt sie. Belegt ist nur, wo Strassen, Gleise,
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
-            <li>Autos: die Autos, ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn.
+            <li>Autos und Lastwagen: ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn, alle Lastwagen rechts.
               Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA. Unter den
               fahrenden Autos ist das Luftbild übermalt.</li>
             <li>Geräusche der Umgebung: Bus, Kühe, Traktor und das Flugzeug hoch oben sind im Programm erzeugt, Verkehr, Kuhglocken, Fluss, Möwen, das
@@ -5854,7 +5855,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const kegelGeo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2).translate(0, 0, 0.5)
     let kegel: THREE.InstancedMesh | null = null
     randSchnitt(kegelStoff, b, lage)
-    let netz: THREE.InstancedMesh | null = null, lichter: THREE.InstancedMesh | null = null
+    let netz: THREE.InstancedMesh | null = null, lichter: THREE.InstancedMesh | null = null, lkwNetz: THREE.InstancedMesh | null = null, lkwLichter: THREE.InstancedMesh | null = null
     let schritt: (() => void) | null = null
     void autosLaden(e0, n0, e1, n1).catch(() => null).then((d) => {
       if (weg || !d || !d.stuecke.length) return
@@ -5887,7 +5888,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       })
       const ketten = kettenBauen(stuecke, (kette) => {
         const z = d.index.ketten[kette]
-        return z === null || z === undefined ? null : [d.index.zaehlstellen[z][3], d.index.zaehlstellen[z][4]]
+        const zs = z === null || z === undefined ? null : d.index.zaehlstellen[z]
+        return zs ? [zs[3], zs[4], zs[6] ?? null, zs[7] ?? null] : null
       })
       const zahlAlle = [...ketten.values()].reduce((a, x) => a + x.autos.length, 0)
       const hoechstens = Math.min(zahlAlle, 6000)
@@ -5895,9 +5897,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       netz = new THREE.InstancedMesh(autoForm(), stoff, hoechstens)
       netz.count = 0; netz.castShadow = true; netz.receiveShadow = false; netz.frustumCulled = false
       // die Farbe je Auto fest, einmal gerechnet
-      const farben: THREE.Color[] = []
-      for (const kk of ketten.values()) for (const a of kk.autos) { farben.push(lackFarbe(a.farbe)); a.farbe = farben.length - 1 }
+      const farben: THREE.Color[] = [], lkwFarben: THREE.Color[] = []
+      for (const kk of ketten.values()) for (const a of kk.autos) { farben.push(lackFarbe(a.farbe)); lkwFarben.push(lkwFarbe(a.farbe)); a.farbe = farben.length - 1 }
       gruppe.add(netz)
+      // Lastwagen (Michael, 2026-11-10: «Bitte auch LKWs einfügen»): nur auf der rechten Spur, so viele wie der Anteil Schwerverkehr laut ASTRA
+      lkwNetz = new THREE.InstancedMesh(lkwForm(), stoff, hoechstens)
+      lkwNetz.count = 0; lkwNetz.castShadow = true; lkwNetz.frustumCulled = false
+      gruppe.add(lkwNetz)
+      lkwLichter = new THREE.InstancedMesh(autoLichter(LKW_LANG_M, LKW_BREIT_M), lichtStoff, hoechstens)
+      lkwLichter.count = 0; lkwLichter.frustumCulled = false
+      gruppe.add(lkwLichter)
       // nachts, wenn in den Gebäuden Licht brennt, Scheinwerfer und Rücklichter
       lichter = new THREE.InstancedMesh(autoLichter(), lichtStoff, hoechstens)
       lichter.count = 0; lichter.frustumCulled = false
@@ -5942,7 +5951,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const ms = Date.now() + szenenZeit.versatzMs, sek = ms / 1000
         // Anteil der grössten Dichte dieser Stunde: Tag 6 bis 22 Uhr, sonst Nacht (Schweizer Zeit der Szene)
         const stunde = jetztImFahrplan({ von: '2000-01-01' }, new Date(ms)).minuten / 60, tag = stunde >= 6 && stunde < 22
-        let zahl = 0
+        let zahl = 0, lkwZahl = 0, kegelZahl = 0
         const nacht = fensterNacht.value > 0
         // zu hören: alle 0,1 s, ob ein Auto in AUTO_SPITZE_S am nächsten an der Stelle ist, wo man hinhört (wie bei den Zügen)
         const hoeren = performance.now() >= hoerUm
@@ -5955,9 +5964,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           ohr = ZUG_HOEREN_BLICK_M / Math.max(ZUG_HOEREN_BLICK_M, blickM)
         }
         for (const kk of ketten.values()) {
-          const anteil = (tag ? kk.tag : kk.nacht) / Math.max(1, kk.tag, kk.nacht)
+          const anteil = (tag ? kk.tag : kk.nacht) / Math.max(1, kk.tag, kk.nacht), lkwAnteil = tag ? kk.lkwTag : kk.lkwNacht
           for (const a of kk.autos) {
-            if (a.ab >= anteil || zahl >= hoechstens) continue
+            if (a.ab >= anteil || zahl >= hoechstens || lkwZahl >= hoechstens) continue
+            const lkw = a.lkw < lkwAnteil, lang = lkw ? LKW_LANG_M : AUTO_LANG_M
             const lauf = (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L, s = a.richtung === 1 ? lauf : kk.L - lauf
             const p = autoBei(kk, s)
             if (!p) continue
@@ -5971,24 +5981,29 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             v.set((e - lage.cE) / 1000, z / 1000, -(n - lage.cN) / 1000)
             q.setFromAxisAngle(oben, Math.atan2(de, -dn))
             m.compose(v, q, eins)
-            netz.setMatrixAt(zahl, m)
+            if (lkw) lkwNetz!.setMatrixAt(lkwZahl, m); else netz.setMatrixAt(zahl, m)
             if (hoeren) hoerenPruefen(kk, a, lauf, e, n, z)
             if (nacht) {
-              lichter!.setMatrixAt(zahl, m)
-              kegelV.set((e + de * AUTO_LANG_M / 2 - lage.cE) / 1000, (z + 0.1) / 1000, -(n + dn * AUTO_LANG_M / 2 - lage.cN) / 1000)
+              if (lkw) lkwLichter!.setMatrixAt(lkwZahl, m); else lichter!.setMatrixAt(zahl, m)
+              kegelV.set((e + de * lang / 2 - lage.cE) / 1000, (z + 0.1) / 1000, -(n + dn * lang / 2 - lage.cN) / 1000)
               m.compose(kegelV, q, kegelS)
-              kegel!.setMatrixAt(zahl, m)
+              if (kegelZahl < hoechstens) kegel!.setMatrixAt(kegelZahl++, m)
             }
-            netz.setColorAt(zahl, farben[a.farbe])
-            zahl++
+            if (lkw) lkwNetz!.setColorAt(lkwZahl++, lkwFarben[a.farbe])
+            else netz.setColorAt(zahl++, farben[a.farbe])
           }
         }
         netz.count = zahl
         netz.instanceMatrix.needsUpdate = true
         if (netz.instanceColor) netz.instanceColor.needsUpdate = true
+        lkwNetz!.count = lkwZahl
+        lkwNetz!.instanceMatrix.needsUpdate = true
+        if (lkwNetz!.instanceColor) lkwNetz!.instanceColor.needsUpdate = true
+        lkwLichter!.visible = nacht; lkwLichter!.count = nacht ? lkwZahl : 0
+        if (nacht) lkwLichter!.instanceMatrix.needsUpdate = true
         lichter!.visible = nacht; lichter!.count = nacht ? zahl : 0
         if (nacht) lichter!.instanceMatrix.needsUpdate = true
-        kegel!.visible = nacht; kegel!.count = nacht ? zahl : 0
+        kegel!.visible = nacht; kegel!.count = nacht ? kegelZahl : 0
         if (nacht) kegel!.instanceMatrix.needsUpdate = true
         kegelStoff.opacity = AUTO_KEGEL_HELL * fensterNacht.value
       }
@@ -6000,6 +6015,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       k.wurzel.remove(gruppe); stoff.dispose(); lichtStoff.dispose()
       if (netz) { netz.geometry.dispose(); netz.dispose() }
       if (lichter) { lichter.geometry.dispose(); lichter.dispose() }
+      for (const x of [lkwNetz, lkwLichter]) if (x) { x.geometry.dispose(); x.dispose() }
       kegelStoff.map?.dispose(); kegelStoff.dispose(); kegelGeo.dispose(); kegel?.dispose()
       for (const r of retuschiert) { retuscheZurueck(r.ctx, r.liste); bildNeu(r.bild) }
     }

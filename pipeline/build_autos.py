@@ -5,7 +5,8 @@ eigener Knopf «Autos»).
 
 Belegt sind die Lage der Fahrbahnen (swissTLM3D, TLM_STRASSE, OBJEKTART Autobahn und Autostrasse, mit Höhe) und der Verkehr an den
 Zählstellen des ASTRA (Strassenverkehrszählung übergeordnetes Netz, data.geo.admin.ch, Jahr 2025): Nt ist der mittlere Verkehr je Stunde am
-Tag (6 bis 22 Uhr), Nn in der Nacht (22 bis 6 Uhr), beide Richtungen zusammen (16 Nt + 8 Nn ergibt den DTV). Erfunden sind die Autos selbst,
+Tag (6 bis 22 Uhr), Nn in der Nacht (22 bis 6 Uhr), beide Richtungen zusammen (16 Nt + 8 Nn ergibt den DTV), dazu der Anteil Schwerverkehr
+in % am Tag und in der Nacht (PrctHeavyTrafficDay, PrctHeavyTrafficNight). Erfunden sind die Autos selbst,
 ihre Lage, ihr Tempo und ihre Spur.
 
 Je Fahrbahn: Autobahnen haben getrennte Fahrbahnen (RICHTUNGSG Wahr), in Fahrtrichtung gezeichnet (Rechtsverkehr: die Gegenfahrbahn liegt
@@ -70,7 +71,9 @@ def zaehlstellen():
         g = lambda k: (re.search(rf"<{k}>([^<]*)</{k}>", body) or [None, None])[1]
         o = orte.get(re.search(r'rMeasurementLocation REF="([^"]+)"', body)[1])
         if o and g("Nt") and g("Nn"):
-            raus.append({**o, "jahr": int(g("Year")), "dtv": int(g("DTV")), "nt": int(g("Nt")), "nn": int(g("Nn"))})
+            raus.append({**o, "jahr": int(g("Year")), "dtv": int(g("DTV")), "nt": int(g("Nt")), "nn": int(g("Nn")),
+                         # Anteil Schwerverkehr in % am Tag und in der Nacht (Michael, 2026-11-10: «Bitte auch LKWs einfügen»)
+                         "lkw_tag": float(g("PrctHeavyTrafficDay") or "nan"), "lkw_nacht": float(g("PrctHeavyTrafficNight") or "nan")})
     return raus
 
 
@@ -250,7 +253,8 @@ def main():
         "jahr_zaehlung": jahr, "geladen": date.today().isoformat(), "kachel_m": KACHEL_M,
         "hinweis": "Nt und Nn: mittlerer Verkehr je Stunde, Tag 6 bis 22 Uhr und Nacht 22 bis 6 Uhr, beide Richtungen; je Kette die Zählstelle, "
                    f"die über das Netz am nächsten liegt, bis {ZAEHL_BIS_M // 1000} km. Autos, Lage, Tempo und Spur erfunden.",
-        "zaehlstellen": [[s["nr"], s["name"], s["strasse"], s["nt"], s["nn"], s["dtv"]] for s in stellen],
+        "zaehlstellen": [[s["nr"], s["name"], s["strasse"], s["nt"], s["nn"], s["dtv"],
+                          None if s["lkw_tag"] != s["lkw_tag"] else s["lkw_tag"], None if s["lkw_nacht"] != s["lkw_nacht"] else s["lkw_nacht"]] for s in stellen],
         "ketten": [None if x is None else x[0] for x in beste],
         "kacheln": sorted(f"{ex}_{ny}" for ex, ny in kacheln),
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
