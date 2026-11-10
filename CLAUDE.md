@@ -98,7 +98,7 @@ server/daten/  daten.taktland.ch (cyon, Ordner public_html/daten, von Hand hochg
              zusammen und löscht sich (Dateien im Chat höchstens 30 MB, Releases darf die Sitzung nicht anlegen); zusammen.php fügt nur die
              Verzeichnisse zusammen, ohne zu laden, wenn holen.php vor dem letzten Schritt endete (Michael, 2026-10-17: gebaeude/index.json fehlte)
 server/spiel/  Vermittlung für «Geo» und «Bahnhofsuche» auf mehreren Geräten auf spiel.taktland.ch (cyon,
-             von Hand hochladen): raum.php reicht je Raum nur Ereignisse weiter (Beitritt, Start, Tipp,
+             von Hand hochladen nach public_html/spiel.taktland.ch, nicht public_html/daten; dort der Ordner daten/ mit den Räumen): raum.php reicht je Raum nur Ereignisse weiter (Beitritt, Start, Tipp,
              Weiter), ohne IP; Räume verfallen nach sechs Stunden. Gerechnet wird auf den Geräten
              (src/spielraum.ts, komponenten/Raum.tsx, Schweiz11Online.tsx, ErratenOnline.tsx), zum
              Ausprobieren mit VITE_SPIEL_URL gegen php -S
