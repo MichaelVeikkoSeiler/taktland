@@ -72,7 +72,21 @@ let ausgangKnoten: GainNode | null = null
 const HOECHST = 1.2
 
 /** Das Ohr hört Lautstärke nicht linear; im Quadrat wirkt der Regler gleichmässiger */
-const verstaerkung = () => HOECHST * (stand.lautstaerke / 100) ** 2
+const verstaerkung = () => stummJetzt ? 0 : HOECHST * (stand.lautstaerke / 100) ** 2
+
+/** Ton schnell aus und wieder an (Michael, 2026-11-11: «In allen Formaten soll man den Ton abstellen können. Das ist praktisch, wenn er stört
+ *  und man ihn schnell mal abstellen und auch wieder anstellen möchte»): schaltet den gemeinsamen Ausgang stumm, nur solange die Seite offen ist,
+ *  nicht gespeichert; die Virtuelle Schweiz stellt ihn beim Verlassen wieder an */
+let stummJetzt = false
+const stummHoerer = new Set<() => void>()
+export function stummSetzen(s: boolean) {
+  stummJetzt = s
+  if (ausgangKnoten && ctx) ausgangKnoten.gain.setTargetAtTime(verstaerkung(), ctx.currentTime, 0.03)
+  stummHoerer.forEach((h) => h())
+}
+export function useStumm(): boolean {
+  return useSyncExternalStore((h) => { stummHoerer.add(h); return () => stummHoerer.delete(h) }, () => stummJetzt)
+}
 
 /** Alle Töne laufen über einen gemeinsamen Regler zum Lautsprecher; ein Begrenzer dahinter
  *  verhindert ein Kratzen, wenn sich laute Töne überlagern */

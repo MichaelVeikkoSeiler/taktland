@@ -58,6 +58,11 @@ const BALLEN_DICKE_M = [800, 1400, 900]
 const BALLEN_ABSTAND_MIN_M = 350
 /** Durchmesser eines Ballens im Verhältnis zum Abstand, innen in der Wolke bis zum Doppelten (gewählt) */
 const BALLEN_GROESSE = 1.5
+/** weniger wie ein Gitter (Michael, 2026-11-11: «ist es möglich, dass diese Wolkenballen nicht so Gittermässig angeordnet sind? Das wirkt so etwas
+ *  unnatürlich»): jeder Ballen bis BALLEN_STREU eines Felds aus der Mitte (über die Grenze der Felder hinaus), die Grösse 0,65- bis 1,35-fach, und
+ *  bei BALLEN_NEBEN_ANTEIL der Ballen ein kleinerer daneben (0,5- bis 0,8-mal so gross, 0,3 bis 0,6 Durchmesser weg, etwas höher oder tiefer);
+ *  alles gewählt, ein fester Zufall je Feld */
+const BALLEN_STREU = 0.65, BALLEN_NEBEN_ANTEIL = 0.55
 /** so viele Ballen höchstens: Bildschirm, Handy, Brille (eine Annahme zur Grafik, nicht gemessen) */
 export const BALLEN_HOECHSTENS = 9000, BALLEN_HOECHSTENS_HANDY = 3500, BALLEN_HOECHSTENS_BRILLE = 2500
 /** Unterseite der Ballen dunkler als die Oberseite, und Ballen am Fuss einer Wolke nochmals (gewählt) */
@@ -173,7 +178,7 @@ export function wolkenBallen(w: Wolken, st: number, e0: number, n0: number, e1: 
       const e = e0 + ((a + 0.5) / 40) * (e1 - e0), n = n0 + ((c + 0.5) / 40) * (n1 - n0)
       for (const l of lagen) summe += l.anteil(e, n)
     }
-    const geschaetzt = (summe / 1600) * (flaeche / (abstand * abstand))
+    const geschaetzt = (summe / 1600) * (flaeche / (abstand * abstand)) * (1 + BALLEN_NEBEN_ANTEIL)
     if (geschaetzt <= hoechstens) break
     abstand *= Math.max(1.1, Math.sqrt(geschaetzt / hoechstens))
     lagen = lagenBei(abstand)
@@ -197,7 +202,7 @@ export function wolkenBallen(w: Wolken, st: number, e0: number, n0: number, e1: 
   const i0 = Math.floor(e0 / abstand), i1 = Math.ceil(e1 / abstand), k0 = Math.floor(n0 / abstand), k1 = Math.ceil(n1 / abstand)
   const s = Math.round(abstand)
   for (let i = i0; i <= i1; i++) for (let k = k0; k <= k1; k++) {
-    const e = (i + 0.1 + 0.8 * wolkenZufall(i, k, s + 1)) * abstand, n = (k + 0.1 + 0.8 * wolkenZufall(i, k, s + 2)) * abstand
+    const e = (i + 0.5 + 2 * BALLEN_STREU * (wolkenZufall(i, k, s + 1) - 0.5)) * abstand, n = (k + 0.5 + 2 * BALLEN_STREU * (wolkenZufall(i, k, s + 2) - 0.5)) * abstand
     if (e < e0 || e > e1 || n < n0 || n > n1) continue
     const rand = Math.min(e - e0, e1 - e, n - n0, n1 - n)
     // das Muster hängt über die Höhe zusammen (Säulen), mit etwas Wechsel je Lage
@@ -213,13 +218,23 @@ export function wolkenBallen(w: Wolken, st: number, e0: number, n0: number, e1: 
       if (ueber <= 0) { darunter = false; return }
       const h = l.unten + (0.2 + 0.6 * wolkenZufall(i * 31 + li, k, s + 3)) * (l.oben - l.unten)
       // am Rand des Rechtecks kleiner, damit kein Ballen über die Kante (in «3D Schweiz» vor die Wände) ragt
-      const durch = Math.min(abstand * BALLEN_GROESSE * (0.75 + Math.min(1, ueber / 0.25) * 0.75) * (0.85 + 0.3 * wolkenZufall(i, k * 7 + li, s + 4)), 2 * rand)
+      const durch = Math.min(abstand * BALLEN_GROESSE * (0.75 + Math.min(1, ueber / 0.25) * 0.75) * (0.65 + 0.7 * wolkenZufall(i, k * 7 + li, s + 4)), 2 * rand)
       if (durch < abstand * 0.3) return
-      const [x, y, z] = zu(e, n, h)
-      lage.push(x, y, z)
-      groesse.push(durch * jeM)
-      unten.push(zu(e, n, hoechstesUnter(e, n, durch / 2))[1])
-      hell.push((darunter ? 1 : BALLEN_FUSS_HELL) * (0.94 + 0.06 * wolkenZufall(i, k, s + 5 + li)))
+      const setzen = (pe: number, pn: number, ph: number, d: number) => {
+        const [x, y, z] = zu(pe, pn, ph)
+        lage.push(x, y, z)
+        groesse.push(d * jeM)
+        unten.push(zu(pe, pn, hoechstesUnter(pe, pn, d / 2))[1])
+        hell.push((darunter ? 1 : BALLEN_FUSS_HELL) * (0.94 + 0.06 * wolkenZufall(i, k, s + 5 + li)))
+      }
+      setzen(e, n, h, durch)
+      // ein kleinerer Ballen daneben, so wird aus dem Raster eine lockere Gruppe
+      if (wolkenZufall(i * 13 + li, k * 5, s + 6) < BALLEN_NEBEN_ANTEIL) {
+        const w = wolkenZufall(i, k * 3 + li, s + 7) * Math.PI * 2, weit = durch * (0.3 + 0.3 * wolkenZufall(i * 5, k + li, s + 8))
+        const pe = e + Math.cos(w) * weit, pn = n + Math.sin(w) * weit
+        const d2 = Math.min(durch * (0.5 + 0.3 * wolkenZufall(i + li, k * 11, s + 9)), 2 * Math.min(pe - e0, e1 - pe, pn - n0, n1 - pn))
+        if (d2 > abstand * 0.2) setzen(pe, pn, h + (wolkenZufall(i * 7, k * 7 + li, s + 10) - 0.5) * durch * 0.3, d2)
+      }
       darunter = true
     })
   }

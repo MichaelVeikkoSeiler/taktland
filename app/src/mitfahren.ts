@@ -75,6 +75,11 @@ export function planStelle(plan: PlanHalt[], t: number): { s: number; v: number 
 
 /** von 3dland.ch hierher gekommen (von3d=1 in der Adresse): gemerkt, bevor die Seite «Strecke» die Adresse ersetzt */
 export let von3dland = false
+/** in Taktland aus der Virtuellen Schweiz hierher gekommen (zurueck= in der Adresse, Michael, 2026-11-11): wohin «Zurück» führt */
+export let zurueckNach: string | null = null
 export function von3dlandMerken(hash: string) {
-  if (new URLSearchParams(hash.split('?')[1] ?? '').get('von3d') === '1') von3dland = true
+  const q = new URLSearchParams(hash.split('?')[1] ?? '')
+  if (q.get('von3d') === '1') von3dland = true
+  const z = q.get('zurueck')
+  zurueckNach = z && z.startsWith('#/3dland?') ? z : null
 }

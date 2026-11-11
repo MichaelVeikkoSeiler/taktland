@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { type PlanHalt, planStelle, von3dland } from '../mitfahren'
+import { type PlanHalt, planStelle, von3dland, zurueckNach } from '../mitfahren'
 import type { MeldeArt, PultAussen } from './Fuehrerpult'
 import { neuLadenSperren } from '../serviceWorker'
 import { useAudio } from '../audio'
@@ -910,6 +910,10 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
     window.close()
     window.setTimeout(() => { window.location.href = 'https://3dland.ch/' }, 300)
   }
+  // in Taktland aus der Virtuellen Schweiz gekommen (Michael, 2026-11-11: «wenn man einen Zug in der Landschaft sieht und in den Führerstand
+  // wechselt, man nicht mehr zurück kann»): zurück ins Feld von 1 km um die Stelle, mit den Zügen an
+  const [zurueckVirtuell] = useState(() => (von3d ? null : zurueckNach))
+  const zurueckZuVirtuell = () => { if (zurueckVirtuell) window.location.hash = zurueckVirtuell }
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
                     dark:bg-sbb-midnight dark:text-sbb-white" role="dialog" aria-label="Fahren">
@@ -933,6 +937,15 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
               </p>
             )}
           </div>
+          {zurueckVirtuell && (
+            <button
+              type="button" onClick={zurueckZuVirtuell}
+              className="shrink-0 rounded-lg border border-sbb-cloud px-4 py-2 font-medium hover:border-sbb-black
+                         dark:border-sbb-iron dark:hover:border-sbb-white"
+            >
+              Zurück zur Virtuellen Schweiz
+            </button>
+          )}
           {von3d && (
             <button
               type="button" onClick={zurueckZu3dland}
@@ -959,7 +972,7 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
         {/* xl:z-10: «sticky» bildet eine eigene Ebene; ohne Höhe lag das Vollbild darin unter der rechten Spalte, deren Ring der Ankündigung schien
             durch die Frontscheibe (Michael, 2026-11-11: «die Anzeige auf der Windschutzscheibe … runden Kreise mit der Zahl»; nur am Desktop ab 1280 px) */}
         <div className="min-w-0 xl:sticky xl:top-4 xl:z-10">
-        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen} zurueckKnopf={von3d ? { text: '3D-Land', aktion: zurueckZu3dland } : undefined} dreiDMelden={setDreiD}
+        <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen} zurueckKnopf={von3d ? { text: '3D-Land', aktion: zurueckZu3dland } : zurueckVirtuell ? { text: 'Virtuell', aktion: zurueckZuVirtuell } : undefined} dreiDMelden={setDreiD}
                     imFuehrerstand={ankunftKarte}
                     tempo={planJetzt ? planJetzt.v : stand ? stand.v * (probefahrt ? raffer : 1) : null} probefahrt={probefahrt} nachPlan={nachPlan}
                     start={titel.split(' → ')[0]} ziel={ohneZiel ? undefined : titel.split(' → ')[1]} />
