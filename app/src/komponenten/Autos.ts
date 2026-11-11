@@ -61,32 +61,55 @@ export function lkwFarbe(i: number): THREE.Color {
   return new THREE.Color(LKW_FARBEN[Math.floor(zufall(i * 3.17 + 0.4) * LKW_FARBEN.length)])
 }
 
-export function autoForm(): THREE.BufferGeometry {
+/** SUV und Pick-up (Michael, 2026-11-11: «Kannst du aus jedem 5. Auto einen SUV machen und aus jedem 15. einen Pick-Up»): je Auto ein fester Zufall,
+ *  ein Fünftel SUV, ein Fünfzehntel Pick-up, der Rest wie bisher; Masse und Gestalt gewählt, kein bestimmtes Modell */
+export const SUV_ANTEIL = 1 / 5, PICKUP_ANTEIL = 1 / 15
+/** Länge und Breite je Art (0 Auto, 1 SUV, 2 Pick-up) in m, gewählt */
+export const AUTO_ART_LANG_M = [AUTO_LANG_M, 4.7, 5.3], AUTO_ART_BREIT_M = [AUTO_BREIT_M, 1.9, 1.9]
+export function autoArt(id: number): 0 | 1 | 2 {
+  const r = zufall(id * 5.13 + 2.9)
+  return r < PICKUP_ANTEIL ? 2 : r < PICKUP_ANTEIL + SUV_ANTEIL ? 1 : 0
+}
+
+export function autoForm(art: 0 | 1 | 2 = 0): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
-  const kasten = (l: number, b: number, h: number, y: number, z: number, farbe: string) => {
-    const g = new THREE.BoxGeometry(b / 1000, h / 1000, l / 1000).toNonIndexed()
+  const faerben = (g: THREE.BufferGeometry, x: number, y: number, h: number, z: number, farbe: string) => {
     g.deleteAttribute('uv')
-    g.translate(0, (y + h / 2) / 1000, z / 1000)
+    g.translate(x / 1000, (y + h / 2) / 1000, z / 1000)
     const c = new THREE.Color(farbe), f = new Float32Array(g.attributes.position.count * 3)
     for (let i = 0; i < f.length; i += 3) { f[i] = c.r; f[i + 1] = c.g; f[i + 2] = c.b }
     g.setAttribute('color', new THREE.BufferAttribute(f, 3))
     teile.push(g)
   }
+  const kasten = (l: number, b: number, h: number, y: number, z: number, farbe: string, x = 0) =>
+    faerben(new THREE.BoxGeometry(b / 1000, h / 1000, l / 1000).toNonIndexed(), x, y, h, z, farbe)
   // leicht gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»): Karosserie und Kabine mit abgerundeten Kanten, Radius gewählt,
   // je eine Stufe, damit es bei vielen Autos leicht bleibt
-  const rund = (l: number, b: number, h: number, r: number, y: number, z: number, farbe: string) => {
-    const g = new RoundedBoxGeometry(b / 1000, h / 1000, l / 1000, 1, r / 1000).toNonIndexed()
-    g.deleteAttribute('uv')
-    g.translate(0, (y + h / 2) / 1000, z / 1000)
-    const c = new THREE.Color(farbe), f = new Float32Array(g.attributes.position.count * 3)
-    for (let i = 0; i < f.length; i += 3) { f[i] = c.r; f[i + 1] = c.g; f[i + 2] = c.b }
-    g.setAttribute('color', new THREE.BufferAttribute(f, 3))
-    teile.push(g)
+  const rund = (l: number, b: number, h: number, r: number, y: number, z: number, farbe: string, x = 0) =>
+    faerben(new RoundedBoxGeometry(b / 1000, h / 1000, l / 1000, 1, r / 1000).toNonIndexed(), x, y, h, z, farbe)
+  const L = AUTO_ART_LANG_M[art], B = AUTO_ART_BREIT_M[art]
+  if (art === 0) {
+    kasten(L * 0.94, B * 0.96, 0.25, 0.15, 0, '#202020')
+    rund(L, B, 0.6, 0.2, 0.37, 0, '#ffffff')
+    rund(2.3, B * 0.88, 0.5, 0.16, 0.9, -0.3, '#1c2228')
+    rund(2.0, B * 0.84, 0.1, 0.05, 1.33, -0.3, '#ffffff')
+  } else if (art === 1) {
+    // SUV: höher, die Kabine länger und bis weit nach hinten, etwa 1,8 m hoch
+    kasten(L * 0.94, B * 0.96, 0.3, 0.18, 0, '#202020')
+    rund(L, B, 0.75, 0.22, 0.42, 0, '#ffffff')
+    rund(3.0, B * 0.9, 0.52, 0.16, 1.12, -0.35, '#1c2228')
+    rund(2.85, B * 0.86, 0.12, 0.05, 1.62, -0.35, '#ffffff')
+  } else {
+    // Pick-up: Kabine vorne, dahinter eine offene Ladefläche mit Bordwänden
+    kasten(L * 0.94, B * 0.96, 0.3, 0.18, 0, '#202020')
+    rund(L, B, 0.7, 0.2, 0.42, 0, '#ffffff')
+    rund(1.9, B * 0.9, 0.55, 0.16, 1.1, 0.35, '#1c2228')
+    rund(1.8, B * 0.86, 0.1, 0.05, 1.63, 0.35, '#ffffff')
+    const ladeL = 2.05, ladeZ = -L / 2 + ladeL / 2 + 0.05
+    kasten(ladeL, B * 0.9, 0.02, 1.12, ladeZ, '#2a2a2a')
+    for (const x of [-(B / 2 - 0.05), B / 2 - 0.05]) rund(ladeL, 0.1, 0.38, 0.03, 1.1, ladeZ, '#ffffff', x)
+    rund(0.1, B, 0.38, 0.03, 1.1, -L / 2 + 0.1, '#ffffff')
   }
-  kasten(AUTO_LANG_M * 0.94, AUTO_BREIT_M * 0.96, 0.25, 0.15, 0, '#202020')
-  rund(AUTO_LANG_M, AUTO_BREIT_M, 0.6, 0.2, 0.37, 0, '#ffffff')
-  rund(2.3, AUTO_BREIT_M * 0.88, 0.5, 0.16, 0.9, -0.3, '#1c2228')
-  rund(2.0, AUTO_BREIT_M * 0.84, 0.1, 0.05, 1.33, -0.3, '#ffffff')
   const ganz = mergeGeometries(teile)!
   teile.forEach((t) => t.dispose())
   return ganz

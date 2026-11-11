@@ -446,6 +446,9 @@ Bäume im Wind stärker (Michael, 2026-11-11: «Übrigens bewegen sich die Bäum
              Wind 5 % der Höhe Neigung, ±7 % Wiegen, ±2 % Flattern und bis 4 % Böen (vorher etwa ein Viertel; bei 25 km/h schwankte ein Baum von 15 m um 15 cm)
 Autos gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»): Karosserie, Kabine und Dach als RoundedBoxGeometry mit einer Stufe
              (Radius 20, 16 und 5 cm, gewählt), 108 Dreiecke je Kasten
+SUV und Pick-up in «3D Schweiz» (Michael, 2026-11-11: «Kannst du aus jedem 5. Auto einen SUV machen und aus jedem 15. einen Pick-Up»): je Auto ein fester
+             Zufall (autoArt in Autos.ts), ein Fünftel SUV (4,7 × 1,9 m, etwa 1,8 m hoch, lange Kabine), ein Fünfzehntel Pick-up (5,3 × 1,9 m, Kabine vorne,
+             offene Ladefläche mit Bordwänden), je ein eigenes Netz mit Lichtern; Masse und Gestalt gewählt (AUTO_ART_*), in der Anleitung genannt
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
