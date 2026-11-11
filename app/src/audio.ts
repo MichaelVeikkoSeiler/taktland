@@ -1044,24 +1044,20 @@ export function kirchenSchlag(viertel: number, stunde: number | null, laut: numb
   } catch { /* ohne Ton */ }
 }
 
-/** Pfiff zur Abfahrt eines Zugs (Michael, 2026-11-10: «5 (Pfiff)»): ein trillernder Pfiff wie aus einer Trillerpfeife, gerechnet, gewählt */
+/** Pfiff vor der Abfahrt eines Zugs als Aufnahme (Michael, 2026-11-11: «Pfeife 5 sek vor Zugabfahrt. Relativ leise und nicht ganz so lang wie die
+ *  Audiospur»): «Referee whistle blow gymnasium» von SpliceSound, freesound.org/s/218318, gekürzt auf etwa 1 s (ohne den Nachhall), auf −20 LUFS,
+ *  klang/pfiff.mp3; Lautstärke gewählt; lädt sie noch, bleibt es diesmal still */
+const PFIFF_LAUT = 0.35
 export function abfahrtsPfiff(laut: number) {
   const c = audioKontext()
   if (!c || !stand.an || laut <= 0.01) return
-  try {
-    const t = c.currentTime + 0.05, dauer = 0.9 + Math.random() * 0.4
-    const o = c.createOscillator(); o.type = 'sine'; o.frequency.value = 2900 + Math.random() * 300
-    const triller = c.createOscillator(); triller.type = 'square'; triller.frequency.value = 28
-    const tg = c.createGain(); tg.gain.value = 180
-    triller.connect(tg).connect(o.frequency)
-    const hauch = rauschenSchleife(c, false), hb = c.createBiquadFilter(); hb.type = 'bandpass'; hb.frequency.value = 3000; hb.Q.value = 3
-    const hg = c.createGain(); hg.gain.value = 0.12
-    const g = c.createGain(); g.gain.value = 0
-    o.connect(g); hauch.connect(hb).connect(hg).connect(g); g.connect(ausgang(c))
-    const l = 0.16 * Math.min(1, laut)
-    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(l, t + 0.03); g.gain.setValueAtTime(l, t + dauer - 0.08); g.gain.linearRampToValueAtTime(0, t + dauer)
-    for (const q of [o, triller, hauch]) { q.start(t); q.stop(t + dauer + 0.05) }
-  } catch { /* ohne Ton */ }
+  void aufnahme(c, 'klang/pfiff.mp3').then((puffer) => {
+    if (!puffer) return
+    const q = c.createBufferSource(); q.buffer = puffer
+    const g = c.createGain(); g.gain.value = PFIFF_LAUT * Math.min(1, laut)
+    q.connect(g).connect(ausgang(c))
+    q.start()
+  }).catch(() => {})
 }
 
 /** Horn eines Schiffs beim Ablegen (Michael, 2026-11-10: Vorschlag «Schiffshorn, wenn ein Schiff laut Fahrplan ablegt», gewählt): ein langer, tiefer

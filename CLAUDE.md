@@ -462,6 +462,10 @@ Schild der Züge, Fenster und Pfiff (Michael, 2026-11-11: «Kannst du bei den Z�
              data/zuege3d (nur Halte im Netz, ein Zug aus dem Ausland kommt dann von der Grenze; so in der Anleitung); das Fensterband 0,27 statt 0,34 der Höhe,
              die Mitte bleibt, die Türen behalten ihre Höhe (TUER_BAND in ZugForm.ts), überall, wo die Form gilt; der Pfiff zur Abfahrt ist still, bis Michael
              eine Aufnahme schickt (die Abfahrt wird weiter erkannt, pfiffAbstand), aus Anleitung und «Was erfunden ist» genommen
+             Pfiff seit 2026-11-11 als Aufnahme (Michael: «Pfeife 5 sek vor Zugabfahrt. Relativ leise und nicht ganz so lang wie die Audiospur», schickte
+             «Referee whistle blow gymnasium» von SpliceSound, freesound.org/s/218318; Lizenz von hier aus nicht prüfbar, freesound.org gesperrt): klang/pfiff.mp3,
+             0,08 bis 1,05 s der Aufnahme ohne Nachhall, ausgeblendet, −20 LUFS, Stärke 0,35 (PFIFF_LAUT in src/audio.ts, gewählt); wenn an einem Halt laut
+             Fahrplan die Zeit bis zur Abfahrt unter 5 s fällt (PFIFF_VOR_S, nicht am Endbahnhof), bis 600 m wie bisher
 Desktop in «3D Schweiz» (Michael, 2026-11-11: «Eintauchen beim Desktop unten rechts oberhalb der Icons. Alle Icons ca 130% vergrössern auf dem Desktop»):
              mit Maus (hover und pointer fine, istDesktop) die Reihe unten rechts (Suche, Lupe, Mein Standort, Augenhöhe, XR, Vollbild) mit zoom 1,3
              (DESKTOP_KNOPF_MASS), «Eintauchen» rechts darüber; Handy und Tablet wie bisher
