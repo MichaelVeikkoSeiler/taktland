@@ -24,7 +24,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
-import { abfahrtsPfiff, AUTO_SPITZE_S, autoKlangLaden, autoVorbei, HELIKOPTER_DAUER_S, HELIKOPTER_SPITZE_S, helikopterZeigen, hupe, knopfTon, propellerZeigen, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
+import { AUTO_SPITZE_S, autoKlangLaden, autoVorbei, HELIKOPTER_DAUER_S, HELIKOPTER_SPITZE_S, helikopterZeigen, hupe, knopfTon, propellerZeigen, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -1427,7 +1427,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
             Verkehr, ab und zu einen Bus, auf dem Land von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
             einen Traktor, nahe an einem Fluss sein Rauschen, an Seen ab 15 km² am Tag Möwen, überall ab und zu ein Flugzeug (ein Propellerflugzeug nur von 6 bis 20 Uhr), mit «Autos» jedes Auto, das nahe vorbeifährt, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
-            Viertelstunde (zur vollen Stunde mit den Stundenschlägen), mit «Züge» ein Pfiff, wenn in der Nähe ein Zug laut Fahrplan abfährt, mit
+            Viertelstunde (zur vollen Stunde mit den Stundenschlägen), mit
             «Schiffe» das Horn, wenn ein Schiff ablegt. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
             einer Stadt hört man weiter, auch im Feld von 16 km und noch gut einen Kilometer neben der Siedlung, leiser.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen, Flüsse und Kirchen liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit
@@ -1448,7 +1448,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
             fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
-            Zugnummer und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
+            Zugnummer, woher er kommt (sein erster Halt im Netz von Taktland laut Fahrplan; ein Zug aus dem Ausland kommt dann von der Grenze) und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
             Buchstaben sind die Sektoren, wie sie der Fahrplan nennt). Ein Tipp daneben blendet es aus. Oben im Bild führt «In den Führerstand nach …» in den Führerstand von Taktland: Der Zug fährt
             dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
@@ -1662,7 +1662,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; die Fussgänger, für die Autos halten, und wann dabei gehupt wird, sind erfunden; das Flugzeug und der Helikopter, die man dazu fliegen sieht, sind erfunden: Gestalt, Farben, Höhe (150 und 120 m über dem Gelände), Richtung und Tempo; wann gehupt wird, ist gewählt; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
-            <li>Kirchenglocken, Pfiff zur Abfahrt und Schiffshorn: im Programm erzeugt; belegt sind nur die Lage der Kirchen und die Abfahrten laut Fahrplan.</li>
+            <li>Kirchenglocken und Schiffshorn: im Programm erzeugt; belegt sind nur die Lage der Kirchen und die Abfahrten laut Fahrplan.</li>
             <li>Der Mond: grösser als am Himmel, seine Flecken gezeichnet; Ort und Phase gerechnet.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station, wo das Wettermodell fehlt; Dichte, Tempo und Grösse
               der Tropfen und Flocken; dass sie an der untersten gezeichneten Wolke beginnen; Regen- und Windgeräusch gerechnet.</li>
@@ -5021,7 +5021,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         ? (st.i === h.length - 1 ? `in ${name(halt.abk)}${gleis}, an ${uhr(halt.an)}` : st.i === 0 ? `in ${name(halt.abk)}${gleis}, ab ${uhr(halt.ab)}`
           : `in ${name(halt.abk)}${gleis}, an ${uhr(halt.an)}, ab ${uhr(halt.ab)}`)
         : `nächster Halt ${name(halt.abk)}${gleis}, an ${uhr(halt.an ?? halt.ab)}`
-      return [`${titel} nach ${f.ziel}`, zweite, 'laut Fahrplan']
+      // woher er kommt (Michael, 2026-11-11: «Kannst du bei den Zügen auch angeben von wo sie kommen?»): der erste Halt laut Fahrplan
+      const von = name(h[0].abk)
+      return [`${titel} von ${von} nach ${f.ziel}`, zweite, 'laut Fahrplan']
     }
     gruppe.userData.wahl = (o: THREE.Object3D, i: number) => {
       const zug = o === netze.wagen ? Math.floor(i / (ZUG_WAGEN - 1)) : o === netze.lok || o === netze.steuer ? i : -1
@@ -5583,7 +5585,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         hoerAlt = neu
         haltVorher = haltNeu; haltNeu = new Map()
         pfiffMinute = jetzt.minuten
-        if (pfiffAbstand < PFIFF_BIS_M) abfahrtsPfiff((1 - pfiffAbstand / PFIFF_BIS_M) ** 2)
+        // der Pfiff zur Abfahrt ist vorerst still (Michael, 2026-11-11: «Pfeife beim Abfahren entfernen ich liefere was nach»); die Abfahrt wird weiter erkannt,
+        // pfiffAbstand ist dann der Abstand des nächsten abfahrenden Zugs
         pfiffAbstand = Infinity
         zuegeHoeren(liste, brille)
         if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHoeren: unknown }).s3dHoeren = { liste: liste.slice().sort((x, y) => x.abstandM - y.abstandM).slice(0, 3), ohr, blickM, zahl, zuege: mitten.slice(0, zahl).map((m) => { const l = k.wurzel.userData.lage as { cE: number; cN: number }; return [l.cE + m[0].x * 1000, l.cN - m[0].z * 1000, m[0].y * 1000] }) }
