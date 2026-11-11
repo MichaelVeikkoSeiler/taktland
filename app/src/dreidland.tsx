@@ -38,7 +38,7 @@ function DreiDLand() {
             <Teilen name="3dland" adresse="https://3dland.ch" text="3dland: die Schweiz als 3D-Modell zum Eintauchen, auch mit XR-Brille." />
           </div>
           <p>
-            Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz, Fahrplan opentransportdata.swiss, SBB Open Data, Bundesamt für Verkehr BAV. 3dland ist ein privates Projekt
+            Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz, Fahrplan und Echtzeit opentransportdata.swiss, SBB Open Data, Bundesamt für Verkehr BAV. 3dland ist ein privates Projekt
             von <a href="https://taktland.ch" className={LINK}>Taktland</a> und kein Angebot einer Behörde.
           </p>
           <details className="klapp mt-2">
@@ -61,7 +61,7 @@ function DreiDLand() {
             Verantwortlich: Michael Veikko Seiler, <a href="mailto:hallo@taktland.ch" className={LINK}>hallo@taktland.ch</a>, auch für Fragen zu deinen Daten.
           </p>
           <p className="mt-1">
-            Ein privates Projekt zum Anschauen, nicht für die Reiseplanung: Züge und Schiffe zeigen den Fahrplan, nicht die Wirklichkeit; Wetter,
+            Ein privates Projekt zum Anschauen, nicht für die Reiseplanung: Züge und Schiffe zeigen den Fahrplan, die Züge mit gemeldeten Verspätungen, nicht die Wirklichkeit; Wetter,
             Wolken, Regen und Schnee sind Messungen und Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen. Alle Angaben ohne
             Gewähr; die Seite kann ohne Ankündigung geändert oder eingestellt werden.
           </p>
@@ -73,6 +73,8 @@ function DreiDLand() {
             nächsten Wetterstation bei data.geo.admin.ch (Bund); der Dienst erfährt so, in welcher Gegend das Modell liegt. Die Suche schickt ab drei Zeichen das Eingetippte an die Suche von swisstopo (api3.geo.admin.ch, Bund), damit sie auch Adressen findet. «Zu zweit» schickt jede Sekunde über
             spiel.taktland.ch (cyon, Schweiz), wo du im Modell hinschaust und hinzeigst, wer führt dazu Feld, Schalter und Zeit; dort liegt je Gerät
             nur die letzte Angabe, ohne Namen, IP-Adresse und Konto, nach einer Minute ohne Neues fällt sie weg, der Raum nach sechs Stunden.
+            Sind «Züge» an, fragt die Seite alle 30 Sekunden bei spiel.taktland.ch nach den Verspätungen der Züge, die gerade fahren; geschickt werden
+            nur deren Fahrtnummern, gespeichert wird nichts davon.
           </p>
         </footer>
       </div>

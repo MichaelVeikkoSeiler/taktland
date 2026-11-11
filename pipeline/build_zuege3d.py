@@ -215,28 +215,36 @@ def main():
 
     # gleiche Fahrt an verschiedenen Tagen (andere service_id): eine Fahrt, Tage vereint
     zusammen = {}
+    # je Fahrt die trip_id des Fahrplans und je Halt seine stop_sequence, für die Echtzeit (GTFS-RT nennt beide; Michael, 2026-11-11:
+    # «Langsam könnten wir uns an die realen Zugfahrzeiten heranwagen»)
+    reisen = defaultdict(list)
     for tid, h in halte.items():
         h.sort()
         # derselbe Bahnhof zweimal hintereinander (zwei Haltekanten): zusammenlegen
-        folge = []
-        for _, abk, a, b, gl in h:
+        folge, folgen = [], []
+        for seq, abk, a, b, gl in h:
             if folge and folge[-1][0] == abk:
                 # zwei Haltekanten: beide Gleise, wie sie im Fahrplan stehen
                 alt = folge[-1][3]
                 folge[-1] = (abk, folge[-1][1], b, alt if not gl or gl == alt else gl if not alt else f"{alt} / {gl}")
+                # die Abfahrt gehört zur zweiten Haltekante
+                folgen[-1] = seq
             else:
                 folge.append((abk, a, b, gl))
+                folgen.append(seq)
         if len(folge) < 2:
             continue
         rid, sid, nr, ziel = fahrten[tid]
         gattung, linie = linien[rid]
         schluessel = (gattung, linie, nr, ziel, tuple(folge))
         zusammen[schluessel] = zusammen.get(schluessel, 0) | tage[sid]
+        reisen[schluessel].append([tid, folgen])
     print(f"Fahrten mit mindestens zwei Halten im Netz: {len(zusammen)}")
 
     tage_liste, tage_index = [], {}
     je_kachel = defaultdict(list)
     ohne_weg = 0
+    trips = []
     for n, ((gattung, linie, nr, ziel, folge), bits) in enumerate(sorted(zusammen.items(), key=lambda x: repr(x[0]))):
         if bits not in tage_index:
             tage_index[bits] = len(tage_liste)
@@ -248,6 +256,7 @@ def main():
                 ohne_weg += 1
                 continue
             ks |= kacheln_des_wegs(w)
+        trips.append(sorted(reisen[(gattung, linie, nr, ziel, folge)]))
         halte_flach = [x for h in folge for x in h]
         eintrag = [n, nr, gattung, linie, ziel, tage_index[bits], halte_flach]
         for k in ks:
@@ -260,6 +269,8 @@ def main():
     for (ex, ny), liste in je_kachel.items():
         (ZIEL / f"{ex}_{ny}.json").write_text(json.dumps(liste, ensure_ascii=False, separators=(",", ":")),
                                                encoding="utf-8")
+    # je Fahrt (Nummer wie in den Kacheln) ihre trip_id und die stop_sequence je Halt, erst mit der Echtzeit geladen
+    (ZIEL / "fahrten.json").write_text(json.dumps(trips, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     (ZIEL / "index.json").write_text(json.dumps({
         "quelle": "Fahrplan als GTFS, opentransportdata.swiss",
         "datei": g.name,
@@ -268,6 +279,7 @@ def main():
         "bis": bis.isoformat(),
         "kachel_m": KACHEL_M,
         "je_halt": 4,
+        "fahrten": "fahrten.json: je Fahrt (Nummer wie in den Kacheln) die trip_id des Fahrplans und je Halt die stop_sequence, für die Echtzeit (GTFS-RT)",
         "hinweis": "Nur Züge und nur Halte an Bahnhöfen im Netz der Seite «Strecke», mit den Zeiten laut Fahrplan "
                    "(Minuten ab Mitternacht des Verkehrstags, über 1440 nach Mitternacht), je Halt Betriebspunkt, Ankunft, Abfahrt "
                    "und Gleis laut Fahrplan (null ohne Angabe). Der Weg zwischen zwei "

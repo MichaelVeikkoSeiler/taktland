@@ -366,7 +366,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Reiseplanung. Es ist ein privates Projekt und kein Angebot einer Bahnunternehmung.
           </li>
           <li>
-            Züge und Schiffe in «Virtuelle Schweiz» zeigen den Fahrplan, nicht die Wirklichkeit; Wetter, Wolken, Regen und Schnee sind Messungen und
+            Züge und Schiffe in «Virtuelle Schweiz» zeigen den Fahrplan, die Züge mit den gemeldeten Verspätungen, nicht die Wirklichkeit; Wetter, Wolken, Regen und Schnee sind Messungen und
             Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen. Für Reisen gelten der offizielle Fahrplan und die Angaben der
             Bahnen, für das Wetter MeteoSchweiz.
           </li>
@@ -441,6 +441,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Wie jeder Webserver führt auch dieser ein Zugriffsprotokoll, das cyon verwaltet.
             Ebenso «Zu zweit» in der Virtuellen Schweiz: Jedes Gerät schickt jede Sekunde, wo es im Modell hinschaut und hinzeigt, wer führt dazu
             Feld, Schalter und Zeit; dort liegt je Gerät nur die letzte Angabe, ohne Namen, IP-Adresse und Konto, nach einer Minute ohne Neues fällt sie weg.
+            Sind «Züge» in der Virtuellen Schweiz an, fragt Taktland alle 30 Sekunden bei spiel.taktland.ch nach den Verspätungen der Züge, die gerade
+            fahren (Echtzeit von opentransportdata.swiss); geschickt werden nur deren Fahrtnummern, gespeichert wird nichts davon.
           </li>
           <li>
             «Taktland teilen» in der Fusszeile gibt nur die Adresse taktland.ch und einen Satz an das Teilen-Menü deines

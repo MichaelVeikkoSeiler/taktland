@@ -29,7 +29,8 @@ import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
-import { haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
+import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
+import { ECHTZEIT_ALLE_MS, echtzeitHolen, echtzeitStand } from '../echtzeit'
 import { planText } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, tuerStellen, zugFormen } from './ZugForm'
@@ -1463,12 +1464,17 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>«Züge» zeigt ab der Stufe 16 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
             (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
             Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, eine Annahme: wie lange er dort wirklich steht,
-            steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, nicht
-            die wirkliche Lage: Verspätungen, Ausfälle, Extrazüge und Baustellen nach dem Stand der Datei fehlen. Zwischen zwei Halten
+            steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, dazu die Echtzeit (GTFS-Realtime, ebenfalls von
+            opentransportdata.swiss), wo eine Bahn sie meldet: die Verspätung an den Halten auf eine Zehntelminute genau und Züge, die
+            ausfallen (sie verschwinden). Die Echtzeit kommt alle 30 Sekunden neu, etwas später als in Wirklichkeit; sie gilt nur, solange sie
+            zur Fassung unseres Fahrplans passt (die Fahrtnummern wechseln montags und donnerstags), sonst und ohne Verbindung fahren die Züge
+            nach Fahrplan. Wo der Zug zwischen zwei Halten ist, meldet niemand, das rechnen wir weiter selbst, darum kann er auf der Strecke
+            eine halbe bis ganze Minute neben dem wirklichen liegen. Extrazüge, die nicht im Fahrplan stehen, fehlen, ebenso Baustellen nach
+            dem Stand der Datei. Zwischen zwei Halten
             fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
             Zugnummer, woher er kommt (sein erster Halt im Netz von Taktland laut Fahrplan; ein Zug aus dem Ausland kommt dann von der Grenze) und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
-            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt). Ein Tipp daneben blendet es aus. Oben im Bild führt «In den Führerstand nach …» in den Führerstand von Taktland: Der Zug fährt
+            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Oben im Bild führt «In den Führerstand nach …» in den Führerstand von Taktland: Der Zug fährt
             dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
         </Abschnitt>
@@ -1607,7 +1613,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Adressen der Suche: Suche von swisstopo (api3.geo.admin.ch), beim Tippen abgefragt.</li>
             <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind.</li>
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
-            <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Weg zwischen den Halten aus dem
+            <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen, Verspätungen und Ausfälle als
+              GTFS-Realtime von opentransportdata.swiss über spiel.taktland.ch; Weg zwischen den Halten aus dem
               Netz von Taktland (Linien und Kilometrierung der SBB, SBB Open Data, data.sbb.ch; Schienennetz des BAV).</li>
             <li>Masten der Fahrleitung: nur wo das Schienennetz des BAV die Strecke elektrifiziert nennt, auf den Gleisachsen aus swissTLM3D (swisstopo).</li>
             <li>Perrons in den Feldern von 4 km und 1 km: Lage der Kanten und ihre Höhe über dem Gleis (etwa 35 oder 55 cm) laut SBB Open Data
@@ -5048,7 +5055,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         : `nächster Halt ${name(halt.abk)}${gleis}, an ${uhr(halt.an ?? halt.ab)}`
       // woher er kommt (Michael, 2026-11-11: «Kannst du bei den Zügen auch angeben von wo sie kommen?»): der erste Halt laut Fahrplan
       const von = name(h[0].abk)
-      return [`${titel} von ${von} nach ${f.ziel}`, zweite, 'laut Fahrplan']
+      // Echtzeit (echtzeit.ts): die Verspätung am Halt, an dem er steht (Abfahrt), sonst am nächsten (Ankunft); die Zeiten oben laut Fahrplan
+      const i = st.art === 'halt' ? st.i : st.i + 1, v = haltVerspaetung(f, i, st.tag, st.art === 'halt')
+      const e = f.echt?.get(st.tag)
+      const dritte = e?.halt[i] ? `laut Echtzeit kein Halt in ${name(halt.abk)}`
+        : v === null ? 'laut Fahrplan, keine Echtzeit gemeldet'
+        : Math.round(v) === 0 ? 'Echtzeit: pünktlich'
+        : Math.round(v) > 0 ? `Echtzeit: ${Math.round(v)} Min. später` : `Echtzeit: ${-Math.round(v)} Min. früher`
+      return [`${titel} von ${von} nach ${f.ziel}`, zweite, dritte]
     }
     gruppe.userData.wahl = (o: THREE.Object3D, i: number) => {
       const zug = o === netze.wagen ? Math.floor(i / (ZUG_WAGEN - 1)) : o === netze.lok || o === netze.steuer ? i : -1
@@ -5060,6 +5074,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     gruppe.userData.abwahl = () => { gewaehlt = null }
     if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dZugWaehlen: unknown }).s3dZugWaehlen = (i = 0) => { gewaehlt = gezeichnet[i]?.id ?? null; return gezeichnet.length }
+    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dZugSchild: unknown }).s3dZugSchild = (id?: number) => {
+      if (id !== undefined) gewaehlt = id
+      return { schild: schildText, zuege: gezeichnet.map((f) => [f.id, f.gattung, f.nummer]), alle: fahrten.filter((f) => f.echt).map((f) => [f.id, f.nummer, [...f.echt!.entries()]]) }
+    }
     // die Mitten der Wagen jedes gezeichneten Zugs im Raum des Modells, für den Tipp knapp daneben
     const mitten: THREE.Vector3[][] = []
     /** welcher gezeichnete Zug dem Strahl am nächsten liegt, bis grenze (Winkel vom Ursprung des Strahls), sonst -1 */
@@ -5201,7 +5219,20 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // Einblenden "Züge fahren nach Fahrplan und nicht live"»)
       void st
       if (!zn) { setZugZeile('Züge: das Netz konnte nicht geladen werden.'); return }
-      setZugZeile('Züge fahren nach Fahrplan und nicht live')
+      // Echtzeit (Michael, 2026-11-11: «ok gehen wirs an»): alle ECHTZEIT_ALLE_MS die Fahrten, die jetzt unterwegs sind (nach der Uhr, nicht nach
+      // der Zeit der Szene), solange die Seite sichtbar ist
+      const echtzeit = async () => {
+        if (weg || !ix) return
+        if (document.visibilityState === 'visible') {
+          const jetzt = jetztImFahrplan(ix, new Date())
+          await echtzeitHolen(ix, fahrten.filter((f) => zugStelle(f, jetzt.tag, jetzt.minuten) || zugStelle(f, jetzt.tag, jetzt.minuten + 60)))
+          neuUm = 0
+        }
+        if (!weg) window.setTimeout(() => void echtzeit(), ECHTZEIT_ALLE_MS)
+      }
+      await echtzeit()
+      if (weg) return
+      setZugZeile(echtzeitStand.ok ? 'Züge nach Fahrplan, Verspätungen in Echtzeit, wo gemeldet' : 'Züge fahren nach Fahrplan und nicht live')
       setTimeout(() => { if (!weg) setZugZeile(null) }, HINWEIS_KURZ_MS)
     })()
     /** je stehendem Zug, der hinter anderen auf demselben Gleis steht, wie viele Züge vor ihm stehen */

@@ -446,6 +446,20 @@ Bäume im Wind stärker (Michael, 2026-11-11: «Übrigens bewegen sich die Bäum
              Wind 5 % der Höhe Neigung, ±7 % Wiegen, ±2 % Flattern und bis 4 % Böen (vorher etwa ein Viertel; bei 25 km/h schwankte ein Baum von 15 m um 15 cm)
 Autos gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»): Karosserie, Kabine und Dach als RoundedBoxGeometry mit einer Stufe
              (Radius 20, 16 und 5 cm, gewählt), 108 Dreiecke je Kasten
+Echtzeit der Züge in «3D Schweiz» (Michael, 2026-11-11: «Langsam könnten wir uns an die realen Zugfahrzeiten heranwagen», «ok gehen wirs an»): GTFS-Realtime
+             (Trip Updates) von opentransportdata.swiss, Protobuf, laut Cookbook auf 0,1 Minuten genau, alle 30 s neu, höchstens 2 Abfragen je Minute und Schlüssel;
+             server/spiel/echtzeit.php auf spiel.taktland.ch holt sie mit dem Schlüssel aus daten/echtzeit-schluessel.txt (von Hand, nie ins Repository) höchstens alle
+             35 s, liest das Protobuf selbst (ohne Bibliothek, oberste Ebene Stück für Stück, je Fahrt gleich als Text, bei 30 MB Probe 1,6 s und 58 MB Speicher) und
+             legt es in 32 Teilen nach crc32 der trip_id ab; die Geräte schicken nur die trip_ids (POST a=fahrten); build_zuege3d.py schreibt dafür zuege3d/fahrten.json
+             (je Fahrt ihre trip_ids und je Halt die stop_sequence, 1,5 MB, gepackt 110 KB, erst mit der Echtzeit geladen); src/echtzeit.ts alle 30 s für die Fahrten,
+             die nach der Uhr unterwegs sind oder es in einer Stunde sind, solange die Seite sichtbar ist; nur wenn die Fassung (FeedVersion) gleich index.stand ist und
+             höchstens 10 Minuten alt; je Halt die Meldung an der stop_sequence, sonst die letzte davor (wie GTFS-RT verlangt), vor der ersten keine; haltZeiten und
+             zugStelle mit dem Tag (ZugStelle.tag) verschieben Ankunft und Abfahrt, Ausfälle (Fahrt CANCELED oder DELETED) fahren nicht; Schild dritte Zeile «Echtzeit:
+             … Min. später», «pünktlich», «laut Fahrplan, keine Echtzeit gemeldet» oder «kein Halt»; Hinweis 3 s «Züge nach Fahrplan, Verspätungen in Echtzeit, wo
+             gemeldet»; Extrazüge fehlen, zwischen den Halten weiter gerechnet; die Workflows (pages.yml, dreidland/veroeffentlichen.yml) bauen montags und
+             donnerstags ab 13 Uhr UTC den Fahrplan neu (Tag mit «-b»), weil die Echtzeit dann um 15 Uhr auf die neue Fassung mit anderen trip_ids wechselt;
+             in Anleitung («Züge», Quellen), Datenschutz (Anleitung.tsx, Fusszeile von 3dland), Fusszeile und LIESMICH von server/spiel; mit einem nachgebauten Feed
+             und php -S geprüft (EC 66 +4 Min. in Bern, IC 734 fällt aus), nicht mit der Plattform; nicht im Führerstand (FahrplanZuege.ts)
 SUV und Pick-up in «3D Schweiz» (Michael, 2026-11-11: «Kannst du aus jedem 5. Auto einen SUV machen und aus jedem 15. einen Pick-Up»): je Auto ein fester
              Zufall (autoArt in Autos.ts), ein Fünftel SUV (4,7 × 1,9 m, etwa 1,8 m hoch, lange Kabine), ein Fünfzehntel Pick-up (5,3 × 1,9 m, Kabine vorne,
              offene Ladefläche mit Bordwänden), je ein eigenes Netz mit Lichtern; Masse und Gestalt gewählt (AUTO_ART_*), in der Anleitung genannt
