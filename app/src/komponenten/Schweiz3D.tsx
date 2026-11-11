@@ -24,7 +24,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
-import { abfahrtsPfiff, AUTO_SPITZE_S, autoKlangLaden, autoVorbei, HELIKOPTER_DAUER_S, HELIKOPTER_SPITZE_S, helikopterZeigen, hupe, knopfTon, propellerZeigen, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
+import { abfahrtsPfiff, AUTO_SPITZE_S, autoKlangLaden, autoVorbei, HELIKOPTER_DAUER_S, HELIKOPTER_SPITZE_S, helikopterZeigen, hupe, knopfTon, propellerZeigen, schiffshorn, stummSetzen, umgebungHoeren, useStumm, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -709,6 +709,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [jetztAn, setJetztAn] = useState(true)
   const [tablet] = useState(istTablet)
   const [desktop] = useState(istDesktop)
+  // Ton schnell aus und an (Michael, 2026-11-11), beim Verlassen wieder an
+  const stumm = useStumm()
+  useEffect(() => () => stummSetzen(false), [])
   // am Desktop «XR» nur, wo der Browser eine Brille meldet (Michael, 2026-11-11: «Desktop: XR funktioniert nicht daher Button entfernen. Auf der Brille
   // muss es aber sein»); in der Brille (Quest) meldet er immersive-vr, Handy und Tablet wie bisher
   const [xrDa, setXrDa] = useState(!desktop)
@@ -916,6 +919,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     // die Adresse ohne den Ort, damit «Zurück» und Neuladen nicht wieder eintauchen
     history.replaceState(history.state, '', window.location.pathname + window.location.search + window.location.hash.split('?')[0])
     let [e, n] = lv95(lat, lon)
+    // zurück aus dem Führerstand mit den Zügen an (zuege=1)
+    if (q.get('zuege') === '1') setZuegeAn(true)
     // ein Tunnel mit seinem Verlauf (weg=Breite,Länge_…): die Mitte seines Verlaufs und die kleinste Stufe, in die er ganz passt, auch wenn das
     // Feld auf das Raster der Stufe darüber rückt (Michael, 2026-11-07: «Beim Anzeigen von Tunnel mit grosser Länge muss ein entsprechend anderer
     // Ausschnitt angezeigt werden»); ohne Verlauf wie beim Bahnhof das Feld von 1 km
@@ -1190,6 +1195,16 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               </svg>
             </button>
           )}
+          {/* Ton aus und an (Michael, 2026-11-11: «In allen Formaten soll man den Ton abstellen können»): Lautsprecher wie beim Zuggeräusch,
+              mit Schallwellen an, mit Kreuz aus */}
+          <button type="button" onClick={() => stummSetzen(!stumm)} aria-pressed={stumm}
+                  aria-label={stumm ? 'Ton ist aus, einschalten' : 'Ton ausschalten'} title={stumm ? 'Ton einschalten' : 'Ton ausschalten'}
+                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${stumm ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'}`}>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" />
+              {stumm ? <path d="M15.5 9.5l5 5m0-5l-5 5" /> : <><path d="M15.5 9a4 4 0 0 1 0 6" /><path d="M18 6.5a7.5 7.5 0 0 1 0 11" /></>}
+            </svg>
+          </button>
           {xrDa && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
                   // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
                   className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
@@ -1397,7 +1412,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Ein Tipp neben das Modell nimmt die Wahl zurück. Die Zeile unter dem Modell (Schweiz › Region …) führt eine Stufe zurück.</p>
         </Abschnitt>
         <Abschnitt titel="Drehen und zoomen">
-          <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen; am Computer fliegt im Feld von 1 km ein Doppelklick näher an die Stelle. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
+          <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen; am Computer fliegt im Feld von 1 km ein Doppelklick näher an die Stelle, ein Doppelklick in den Himmel wieder zurück. Der Lautsprecher unten rechts schaltet den Ton aus und wieder ein. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
             Modell im Vollbild.</p>
         </Abschnitt>
         {/* Michael, 2026-11-10: Vorschlag «Auf Augenhöhe stehen … und sich umschauen», gewählt mit «Icon mit Männchen», «alle Devices» */}
@@ -1475,7 +1490,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
             Zugnummer, woher er kommt (sein erster Halt im Netz von Taktland laut Fahrplan; ein Zug aus dem Ausland kommt dann von der Grenze) und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
             Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Oben im Bild führt «In den Führerstand nach …» in den Führerstand von Taktland: Der Zug fährt
-            dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
+            dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher, in Taktland «Zurück zur Virtuellen Schweiz» ins Feld von 1 km dort, wo man war, mit den Zügen. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
         </Abschnitt>
         <Abschnitt titel="Schiffe">
@@ -1648,7 +1663,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Das Modell ist ein Modell, kein Abbild der Wirklichkeit. Was nicht aus einer Quelle stammt, sondern erfunden ist (gezeichnet, gewählt oder angenommen):</p>
           <ul className="mt-1 list-disc space-y-1 pl-5">
             <li>Sockel, Knöpfe, Masten, Schilder, Windhosen und ihre Grössen; die Windhosen stehen nicht an den Stationen.</li>
-            <li>Wolken: ihre Form als Ballen, deren Grösse, Abstand und Helligkeit (unten grauer); ausserhalb der nächsten 24 Stunden auch ihre Dicke
+            <li>Wolken: ihre Form als Ballen, deren Grösse, Abstand, Lage im Feld (zufällig verschoben, teils mit kleineren Ballen daneben) und Helligkeit (unten grauer); ausserhalb der nächsten 24 Stunden auch ihre Dicke
               und die Höhe jeder Schicht (gewählt nach der Mitte ihres Druckbereichs).</li>
             <li>Züge und Schiffe: Länge, Gestalt und Farbe, das gleichmässige Tempo zwischen zwei Halten und der Weg dazwischen, 5 Minuten Stehen am Start- und Endbahnhof, an Halten, für die der Fahrplan Ankunft und Abfahrt in derselben Minute nennt, Ankunft 10 Sekunden davor und Abfahrt 20 Sekunden danach, und dass jeder Zug links neben dem Weg fährt,
               damit Züge in Gegenrichtung aneinander vorbeifahren. Im Bahnhof gilt das Gleis laut Fahrplan; welche Gleisachse zu welcher Gleisnummer gehört,
@@ -2134,7 +2149,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color; himmelOben: THREE.Color; himmelObenTag: THREE.Color
     himmelMalen: () => void
     sterne: Sternenhimmel
-    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null }
+    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null }
     stehenSetzen: (p: THREE.Vector3 | null) => void
     /** zu zweit: wo man ist (Kopf oder Kamera), wohin man schaut und zeigt, als Punkte im Modell */
     lageJetzt: () => { kopf: THREE.Vector3; blick: THREE.Vector3; zeigt: THREE.Vector3 | null; brille: boolean }
@@ -2357,14 +2372,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (t && wenn.stehen) { wenn.stehen(wurzel.worldToLocal(t.point.clone())); return }
       if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
       // neben das Gelände (Himmel, Sockel): die Wahl verschwindet
-      else cb.current.abwaehlen()
+      else { wenn.daneben?.(); cb.current.abwaehlen() }
     }
     // Brille (Michael, 2026-10-21: «mit der Brille muss das Land irgendwie gepackt und gedreht werden können. Gleich oder ähnlich
     // wie in Taktland»): wie in der Modellbahn trägt ein gehaltener Abzug das Modell, beide ziehen es grösser oder kleiner und
     // drehen es; ein kurzer Abzug wählt mit dem Strahl wie bisher; die Greiftaste geht eine Stufe zurück, der Thumbstick dreht
     // und hebt, Thumbstick drücken stellt das Modell zurück an den Anfang
-    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null } =
-      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen'), stehenStart: null }
+    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null } =
+      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen'), stehenStart: null, daneben: null }
     let drehung = 0, zoom = 1
     /** Lage des Modells, sobald es getragen oder gehoben wurde; null: auf dem Tisch wie am Anfang */
     let lage: THREE.Vector3 | null = null
@@ -3566,20 +3581,36 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // Doppelklick am Desktop im Feld von 1 km (Michael, 2026-11-11: «möchte ich durch Doppelklick auf einen Bereich mit der Kamera dort näher
     // rankommen»): die Kamera fliegt in NAEHER_S zur Stelle, das Ziel dorthin, der Abstand auf NAEHER_FAKTOR, nie näher als minDistance; die
     // Richtung des Blicks bleibt
-    let letzterTipp = { t: 0, p: new THREE.Vector3() }, flug: (() => void) | null = null
-    const naeherFliegen = (ziel: THREE.Vector3) => {
+    // ein Doppelklick in den Himmel fliegt eine Stufe zurück, dorthin, wo die Kamera vor dem letzten Doppelklick ins Gelände war (Michael,
+    // 2026-11-11: «Wenn man Doppelklickt soll man wieder eine Stufe zurückzoomen können, indem man in den Himmel klickt»); ohne frühere Stufe
+    // nichts; ein neues Feld beginnt leer
+    let letzterTipp = { t: 0, p: new THREE.Vector3() }, letzterDaneben = 0, flug: (() => void) | null = null
+    const stapel: Array<{ ziel: THREE.Vector3; auge: THREE.Vector3 }> = []
+    const fliegen = (zielT: THREE.Vector3, zielAuge: THREE.Vector3) => {
       if (flug) { const i = k.jeBild.indexOf(flug); if (i >= 0) k.jeBild.splice(i, 1) }
-      const st = k.steuerung, kam = k.kamera, t0 = st.target.clone(), versatz = kam.position.clone().sub(t0)
-      const d0 = versatz.length(), d1 = Math.max(st.minDistance * 1.5, d0 * NAEHER_FAKTOR), start = performance.now()
+      const st = k.steuerung, kam = k.kamera, t0 = st.target.clone(), a0 = kam.position.clone(), start = performance.now()
       const schritt = () => {
         const a = Math.min(1, (performance.now() - start) / (NAEHER_S * 1000)), e = a * a * (3 - 2 * a)
-        st.target.lerpVectors(t0, ziel, e)
-        kam.position.copy(st.target).addScaledVector(versatz, (d0 + (d1 - d0) * e) / d0)
+        st.target.lerpVectors(t0, zielT, e)
+        kam.position.lerpVectors(a0, zielAuge, e)
         st.update()
         if (a >= 1) { const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1); flug = null }
       }
       flug = schritt
       k.jeBild.push(schritt)
+    }
+    const naeherFliegen = (ziel: THREE.Vector3) => {
+      const st = k.steuerung, kam = k.kamera, versatz = kam.position.clone().sub(st.target)
+      const d0 = versatz.length(), d1 = Math.max(st.minDistance * 1.5, d0 * NAEHER_FAKTOR)
+      stapel.push({ ziel: st.target.clone(), auge: kam.position.clone() })
+      fliegen(ziel, ziel.clone().addScaledVector(versatz, d1 / d0))
+    }
+    k.wenn.daneben = () => {
+      if (stufe !== 'nah' || !istDesktop() || k.inBrille()) return
+      const jetzt = performance.now(), doppel = jetzt - letzterDaneben < NAEHER_DOPPEL_MS
+      letzterDaneben = doppel ? 0 : jetzt
+      const vorher = doppel ? stapel.pop() : undefined
+      if (vorher) fliegen(vorher.ziel, vorher.auge)
     }
     // ein Tipp oder Abzug: ins gewählte Feld nochmals in der Brille taucht ein, sonst ein neues Feld
     k.wenn.tipp = (p) => {
@@ -3601,7 +3632,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     return () => {
       landWeg = true
       wurzel.userData.ausserLand = null
-      k.wenn.tipp = null
+      k.wenn.tipp = null; k.wenn.daneben = null
       const i = k.jeBild.indexOf(ortSchritt); if (i >= 0) k.jeBild.splice(i, 1)
       const weg: Array<THREE.Material | undefined> = []
       for (const o of [...wurzel.children]) {
@@ -5036,6 +5067,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     let uicVon: Map<string, number> | null = null, mitSeite: Set<number> | null = null, linkAbk: string | null = null
     void indexLaden().then((ix) => { mitSeite = new Set(ix.bahnhoefe.filter((b) => b.sprachen.length && !b.ohne_bahnhofseite).map((b) => b.uic)) }).catch(() => undefined)
     let mitfahrenSchl = ''
+    // in Taktland zurück in die Virtuelle Schweiz (Michael, 2026-11-11: «wenn man einen Zug in der Landschaft sieht und in den Führerstand wechselt,
+    // man nicht mehr zurück kann»): die Mitte des Felds, in dem man war, als Ort wie von einer Bahnhofseite (1 km), benannt nach dem Halt des Zugs
+    const zurueckTeil = (abk: string) => {
+      const [la, lo] = wgs(lage.cE, lage.cN)
+      const ort = `#/3dland?lat=${la.toFixed(5)}&lon=${lo.toFixed(5)}&name=${encodeURIComponent(zn?.netz.punkte[abk] ?? abk)}&zuege=1`
+      return `&zurueck=${encodeURIComponent(ort)}`
+    }
     const mitfahrenSetzen = (f: ZugFahrt | null, st: ZugStelle | null) => {
       const ab = f && st ? f.halte[st.i].abk : null, bis = f ? f.halte[f.halte.length - 1].abk : null
       const schl = f && ab ? `${f.id}/${ab}` : ''
@@ -5059,7 +5097,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       void titel
       // ohne Zugnummer (Michael, 2026-11-08: «"In den Führerstand nach..." ohne Zugnummer etc»)
       setMitfahren({ name: `In den Führerstand nach ${f.ziel}`,
-                     url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1${planTeil}${AUF_3DLAND ? '&von3d=1' : ''}` })
+                     url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1${planTeil}${AUF_3DLAND ? '&von3d=1' : zurueckTeil(ab)}` })
     }
     const linkSetzen = (abk: string | null) => {
       if (abk === linkAbk) return
