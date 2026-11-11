@@ -31,7 +31,7 @@ import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
 import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { ECHTZEIT_ALLE_MS, echtzeitHolen, echtzeitStand } from '../echtzeit'
-import { planText } from '../mitfahren'
+import { planText, rueckkehr, rueckkehrMerken, type Rueckkehr } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, tuerStellen, zugFormen } from './ZugForm'
 import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
@@ -919,14 +919,23 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     // die Adresse ohne den Ort, damit «Zurück» und Neuladen nicht wieder eintauchen
     history.replaceState(history.state, '', window.location.pathname + window.location.search + window.location.hash.split('?')[0])
     let [e, n] = lv95(lat, lon)
-    // zurück aus dem Führerstand mit den Zügen an (zuege=1)
+    // zurück aus dem Führerstand mit den Zügen an (zuege=1); im selben Tab dazu alle Schalter, der Ton und die Stufe wie beim Wechsel (Michael,
+    // 2026-11-11: «alle Knöpfe identisch bleiben»), die Kamera sucht dann den Zug (rueckkehr in der Ansicht der Züge)
+    const rk = q.get('zuege') === '1' ? rueckkehr : null
     if (q.get('zuege') === '1') setZuegeAn(true)
+    if (rk) {
+      const setzen: Record<string, (v: boolean) => void> = { orte: setOrteAn, gebaeude: setGebaeudeAn, baeume: setBaeumeAn, zuege: setZuegeAn, schiffe: setSchiffeAn,
+        autos: setAutosAn, menschen: setMenschenAn, wandern: setWandern, hoehen: setScheiben, gipfel: setGipfelAn, wolken: setWolkenAn, wind: setWindAn, sonne: setSonnenAn }
+      for (const [k, v] of Object.entries(rk.schalter)) setzen[k]?.(v)
+      stummSetzen(rk.stumm)
+      rk.bis = performance.now() + RUECKKEHR_SUCHEN_MS
+    } else rueckkehrMerken(null)
     // ein Tunnel mit seinem Verlauf (weg=Breite,Länge_…): die Mitte seines Verlaufs und die kleinste Stufe, in die er ganz passt, auch wenn das
     // Feld auf das Raster der Stufe darüber rückt (Michael, 2026-11-07: «Beim Anzeigen von Tunnel mit grosser Länge muss ein entsprechend anderer
     // Ausschnitt angezeigt werden»); ohne Verlauf wie beim Bahnhof das Feld von 1 km
     const punkte = (q.get('weg') ?? '').split('_').map((t) => t.split(',').map(Number))
       .filter((t) => t.length === 2 && t.every(Number.isFinite)).map(([la, lo]) => lv95(la, lo) as [number, number])
-    let ziel: Stufe = 'nah'
+    let ziel: Stufe = rk ? rk.stufe : 'nah'
     if (punkte.length > 1) {
       const es = punkte.map((p) => p[0]), ns = punkte.map((p) => p[1])
       e = (Math.min(...es) + Math.max(...es)) / 2; n = (Math.min(...ns) + Math.max(...ns)) / 2
@@ -948,7 +957,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       const nah = bOrt && tief('nah') ? await stufeLaden('nah', um('ort'), bOrt) : null
       if (weg) return
       setGelaende((a) => ({ ...a, gross: einzeln(um('schweiz'), gross), mittel: mittel && einzeln(um('gross'), mittel), region: bRegion, ort: bOrt, nah: nah && einzeln(um('ort'), nah) }))
-      setStufe(ziel); setWahl(null); if (!inDerBrille) setOrteAn(true)
+      setStufe(ziel); setWahl(null); if (!inDerBrille && !rk) setOrteAn(true)
     })().catch((x) => { if (!weg) setFehler((x as Error).message) }).finally(() => { if (!weg) setLaedt(false) })
     return () => { weg = true }
   }, [])
@@ -1094,7 +1103,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), autos: () => setAutosAn((x) => !x), menschen: () => setMenschenAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), baeume: () => setBaeumeAn((x) => !x), wetter: () => setWindAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { schalter: () => zuZweitRef.current.stand.schalter, waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), autos: () => setAutosAn((x) => !x), menschen: () => setMenschenAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), baeume: () => setBaeumeAn((x) => !x), wetter: () => setWindAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -1137,6 +1146,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         : `relative -mx-4 ${eigeneSeite ? '' : 'mt-2'} aspect-[25/28] w-[calc(100%+2rem)] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a] sm:mx-auto sm:w-full sm:max-w-[calc(85vh*25/28)]`}>
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
+                   vorFuehrerstand={(z) => rueckkehrMerken({ ...z, schalter: { ...zuZweitRef.current.stand.schalter }, stumm,
+                                                             stufe: stufe === 'region' || stufe === 'ort' ? stufe : 'nah' })}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
                      // am Desktop (Maus) taucht ein zweiter Klick in den roten Kasten ein (Michael, 2026-11-11: «Auf dem Desktop soll man beim
                      // Auswählen eines Ausschnittes (roter Kasten) diesen nochmals anklicken können, damit man dort eintaucht»; vorher ein Doppelklick)
@@ -1490,7 +1501,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
             Zugnummer, woher er kommt (sein erster Halt im Netz von Taktland laut Fahrplan; ein Zug aus dem Ausland kommt dann von der Grenze) und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
             Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Oben im Bild führt «In den Führerstand nach …» in den Führerstand von Taktland: Der Zug fährt
-            dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher, in Taktland «Zurück zur Virtuellen Schweiz» ins Feld von 1 km dort, wo man war, mit den Zügen. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
+            dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher, in Taktland «Zurück zur Virtuellen Schweiz» dorthin, wo der Zug laut Fahrplan jetzt ist, in derselben Stufe und mit denselben Schaltern und demselben Ton wie beim Wechsel; die Kamera steht wieder im selben Winkel und Abstand zum Zug, bleibt dann stehen und schaut ihm nach, bis er aus dem Ausschnitt fährt oder man selbst dreht oder zoomt. Mit Verspätung laut Echtzeit kann der Zug dort fehlen, der Führerstand fährt nach Fahrplan. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
         </Abschnitt>
         <Abschnitt titel="Schiffe">
@@ -1842,6 +1853,10 @@ const ZUG_NAH_MASS = 0.6
 const KAMERA_UEBER_GELAENDE_KM = 0.003
 /** Doppelklick am Desktop im Feld von 1 km: zwei Klicks bis so viele ms und km auseinander, Flug in so vielen s auf diesen Anteil des Abstands, gewählt */
 const NAEHER_DOPPEL_MS = 450, NAEHER_DOPPEL_KM = 0.04, NAEHER_S = 0.7, NAEHER_FAKTOR = 0.4
+/** zurück aus dem Führerstand (Michael, 2026-11-11: «muss oberhalb des Zuges aus dem selben Winkel und Entfernung Sicht auf den Zug geschaltet werden.
+ *  Die Kamera muss vom gleichbleibenden Kamerastandort den Zug verfolgen bis er aus dem Ausschnitt fährt oder man die Perspektive selber wechselt»):
+ *  so lange wird der Zug gesucht, und so viele Bilder ohne ihn gilt er als hinausgefahren; gewählt */
+const RUECKKEHR_SUCHEN_MS = 60_000, RUECKKEHR_WEG_BILDER = 30
 /** auf Augenhöhe (Michael, 2026-11-10): das Auge so hoch über dem Gelände, die Kamera so weit hinter dem Drehpunkt, die vordere Schnittebene,
  *  Tempo beim Gehen (Pfeiltasten, Thumbstick; mit Umschalt zehnmal so schnell) und Drehen in der Brille (alles gewählt) */
 /** Ich-Blick in der Brille: Tempo des Bogens in m/s (so weit springt man, etwa 15 m), ab so viel Grad nach oben gilt der Himmel, Höhe des Männchens
@@ -2078,7 +2093,9 @@ function knopfBild(plus: boolean, an: boolean) {
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos, vorFuehrerstand }: {
+  /** beim Wechsel in den Führerstand: welcher Zug und wo die Kamera zu ihm steht, damit «Zurück» dorthin führt */
+  vorFuehrerstand?: (z: Pick<Rueckkehr, 'fahrt' | 'versatz'>) => void
   /** zu zweit: die anderen im Raum und wohin die eigene Lage geht */
   andere?: Andere[]
   /** zu zweit: wessen Blick die Kamera folgt (auf dem Bildschirm), und was eigenes Drehen meldet */
@@ -4923,6 +4940,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // im Führerstand von Taktland mitfahren, vom jetzigen oder letzten Halt bis zum Ziel des Zugs (Michael, 2026-10-30: «Man sollte auf Mitfahren
   // klicken/tippen können sodass man gleich im Führerstand mitfährt. So landet man bei Taktland»); eine Probefahrt auf dem Weg im Netz, kein Fahrplan
   const [mitfahren, setMitfahren] = useState<{ name: string; url: string } | null>(null)
+  // der gewählte Zug und wo die Kamera zu ihm steht (im Raum des Modells), für die Rückkehr aus dem Führerstand
+  const zugBlickRef = useRef<(() => Pick<Rueckkehr, 'fahrt' | 'versatz'> | null) | null>(null)
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
@@ -5143,6 +5162,28 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     // die Mitten der Wagen jedes gezeichneten Zugs im Raum des Modells, für den Tipp knapp daneben
     const mitten: THREE.Vector3[][] = []
+    /** die Mitte eines gezeichneten Zugs im Raum des Modells (Mittel seiner Wagen) */
+    const zugMitte = (z: number) => {
+      const ms = z >= 0 ? mitten[z] : undefined
+      if (!ms?.length) return null
+      const c = new THREE.Vector3(); let n = 0
+      for (const p of ms) if (p) { c.add(p); n++ }
+      return n ? c.divideScalar(n) : null
+    }
+    // beim Wechsel in den Führerstand: der gewählte Zug und wo die Kamera zu ihm steht
+    zugBlickRef.current = () => {
+      const c = gewaehlt === null ? null : zugMitte(gezeichnet.findIndex((f) => f.id === gewaehlt))
+      if (!c || gewaehlt === null || k.renderer.xr.isPresenting) return null
+      const a = k.wurzel.worldToLocal(k.kamera.position.clone()).sub(c)
+      return { fahrt: gewaehlt, versatz: [a.x, a.y, a.z] }
+    }
+    // zurück aus dem Führerstand (Michael, 2026-11-11: «muss oberhalb des Zuges aus dem selben Winkel und Entfernung Sicht auf den Zug geschaltet
+    // werden. Die Kamera muss vom gleichbleibenden Kamerastandort den Zug verfolgen bis er aus dem Ausschnitt fährt oder man die Perspektive selber
+    // wechselt»): sobald der Zug gezeichnet ist, steht die Kamera wie beim Wechsel zu ihm, danach bleibt sie stehen und schaut ihm nach; eigenes
+    // Drehen oder Zoomen (start der Steuerung) beendet es, ebenso wenn er RUECKKEHR_WEG_BILDER Bilder lang fehlt; nicht in der Brille
+    let folgt = rueckkehr && rueckkehr.stufe === stufe && (rueckkehr.bis ?? 0) > performance.now() ? { r: rueckkehr, gesetzt: false, weg: 0 } : null
+    const folgenLos = () => { folgt = null }
+    k.steuerung.addEventListener('start', folgenLos)
     /** welcher gezeichnete Zug dem Strahl am nächsten liegt, bis grenze (Winkel vom Ursprung des Strahls), sonst -1 */
     const finden = (r: THREE.Ray, grenze: number) => {
       let best = -1, bestWinkel = grenze
@@ -5651,6 +5692,17 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         zahl++
       }
       gezeichnet.length = zahl
+      if (folgt && !k.renderer.xr.isPresenting) {
+        const c = zugMitte(gezeichnet.findIndex((f) => f.id === folgt!.r.fahrt))
+        if (c) {
+          if (!folgt.gesetzt) {
+            folgt.gesetzt = true; rueckkehrMerken(null); gewaehlt = folgt.r.fahrt
+            k.kamera.position.copy(k.wurzel.localToWorld(c.clone().add(new THREE.Vector3(...folgt.r.versatz))))
+          }
+          // OrbitControls rechnet den Abstand aus der Lage der Kamera neu: sie bleibt stehen und dreht sich zum Zug
+          k.steuerung.target.copy(k.wurzel.localToWorld(c)); k.steuerung.update(); folgt.weg = 0
+        } else if (folgt.gesetzt ? ++folgt.weg > RUECKKEHR_WEG_BILDER : performance.now() > (folgt.r.bis ?? 0)) folgt = null
+      }
       offeneTueren.current = neueTueren
       for (const x of [loecher, blaetter]) { x.count = tuerZahl; x.instanceMatrix.needsUpdate = true }
       schild.visible = zeigt
@@ -5723,6 +5775,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     return () => {
       weg = true
       zuegeHoerenAus()
+      k.steuerung.removeEventListener('start', folgenLos); zugBlickRef.current = null
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
       k.wurzel.remove(gruppe); stoff.dispose(); schild.material.map?.dispose(); schild.material.dispose()
       stirnStoff.map?.dispose(); stirnStoff.dispose(); stirnGeo.dispose(); stirn.dispose(); lampenGeo.dispose(); lampenStoff.dispose(); lampen.dispose()
@@ -6819,6 +6872,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           {/* der Link zum Bahnhof ist weg (Michael, 2026-11-08: «Infos zum Bahnhof entfernen») */}
           {mitfahren && (
             <a href={mitfahren.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
+              onClick={() => { const z = AUF_3DLAND ? null : zugBlickRef.current?.(); if (z) vorFuehrerstand?.(z) }}
               className="pointer-events-auto rounded bg-sbb-red px-2 py-1 text-xs font-bold leading-tight text-white">
               {mitfahren.name}{AUF_3DLAND ? ' ↗' : ''}
             </a>

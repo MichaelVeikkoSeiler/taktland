@@ -913,7 +913,17 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
   // in Taktland aus der Virtuellen Schweiz gekommen (Michael, 2026-11-11: «wenn man einen Zug in der Landschaft sieht und in den Führerstand
   // wechselt, man nicht mehr zurück kann»): zurück ins Feld von 1 km um die Stelle, mit den Zügen an
   const [zurueckVirtuell] = useState(() => (von3d ? null : zurueckNach))
-  const zurueckZuVirtuell = () => { if (zurueckVirtuell) window.location.hash = zurueckVirtuell }
+  // zurück dorthin, wo der Zug jetzt ist (Michael, 2026-11-11: «muss oberhalb des Zuges … Sicht auf den Zug geschaltet werden»): die Stelle laut
+  // Fahrplan statt der Mitte des Felds beim Wechsel
+  const zurueckZuVirtuell = () => {
+    if (!zurueckVirtuell) return
+    let h = zurueckVirtuell
+    if (sJetzt !== null) {
+      const l = lageBei(fahrweg, sJetzt)
+      h = h.replace(/([?&])lat=[^&]*/, `$1lat=${l.lat.toFixed(5)}`).replace(/([?&])lon=[^&]*/, `$1lon=${l.lon.toFixed(5)}`)
+    }
+    window.location.hash = h
+  }
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-sbb-white text-sbb-black
                     dark:bg-sbb-midnight dark:text-sbb-white" role="dialog" aria-label="Fahren">

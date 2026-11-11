@@ -588,6 +588,15 @@ Zurück aus dem Führerstand (Michael, 2026-11-11: «Was etwas schade ist, ist w
              mehr zurück kann»): «In den Führerstand nach …» trägt in Taktland &zurueck= mit #/3dland?lat=…&lon=… der Mitte des Felds und zuege=1, beim Fahren der Knopf
              «Zurück zur Virtuellen Schweiz», im Vollbild oben links «‹ Virtuell» (zurueckNach in src/mitfahren.ts); zurück im Feld von 1 km mit «Züge» an, die anderen
              Schalter wie am Anfang; im Browser hier geprüft
+             seit 2026-11-11 mit allem wie vorher (Michael: «Es wäre super, wenn der Wechsel von Virtuelle Schweiz zu Fhrerstand und auch wieder zurück, alle Knöpfe
+             identisch bleiben. Wenn zurück zur Virtuellen Schweiz gewechselt wird, muss oberhalb des Zuges aus dem selben Winkel und Entfernung Sicht auf den Zug
+             geschaltet werden. Die Kamera muss vom gleichbleibenden Kamerastandort den Zug verfolgen bis er aus dem Ausschnitt fährt oder man die Perspektive selber
+             wechselt»): beim Tipp auf den Link merkt sich der Tab (rueckkehr in src/mitfahren.ts, nicht in der Adresse, nach Neuladen nur die Adresse) den Zug,
+             wo die Kamera zu seiner Mitte steht, alle Schalter, den Ton und die Stufe (16 km, 4 km oder 1 km); «Zurück» setzt lat und lon auf die Stelle des
+             Führerstands (lageBei); die Virtuelle Schweiz stellt Schalter und Ton wieder her, sucht den Zug bis 60 s, setzt die Kamera mit demselben Versatz,
+             wählt ihn (Schild) und schaut ihm von dort nach (target je Bild, die Kamera bleibt), bis die Steuerung «start» meldet oder er 30 Bilder fehlt
+             (RUECKKEHR_* in Schweiz3D.tsx, gewählt); mit Verspätung laut Echtzeit kann er ausserhalb liegen (der Führerstand fährt nach Fahrplan); im Führerstand
+             selbst gelten dessen eigene Knöpfe; nicht in der Brille
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
              Modellbahn ein dünner dunkelgrauer Mast (2 Bildpunkte) mit dunkelgrauem Schild mit leicht abgerundeten Ecken (Michael, 2026-10-25: «Alle Schilder leicht abgerundete Ecken») mittig darauf, Name in Weiss, je Stufe ab einem Rang und höchstens
