@@ -427,6 +427,15 @@ Menschen in «3D Schweiz» (Michael, 2026-11-11: «Heisst dass du kannst Taktlan
              Wanderwegen 0,6 je km (WANDERER_JE_KM), 8 bis 18 Uhr; 1,3 m/s ±20 %, Wanderer 1,1 m/s; Figur 1,75 m aus Kästen, Oberteil in 12 gewählten Farben;
              höchstens 9'000, auf dem Handy 3'000; alles ausser den Quellen gewählt, in Anleitung («Menschen», Quellen, «Was erfunden ist») und Fusszeile;
              in Bern 408 Wartende und 139 Fussgänger im Feld von 1 km
+Eintauchen am Desktop mit einem zweiten Klick (Michael, 2026-11-11: «Auf dem Desktop soll man beim Auswählen eines Ausschnittes (roter Kasten) diesen nochmals
+             anklicken können, damit man dort eintaucht»): mit der Maus taucht ein Klick in den schon gewählten Kasten ein (waehlen in Schweiz3D.tsx); der Doppelklick
+             von 2026-11-06 ist weg
+Wagen auf demselben Gleis in «3D Schweiz» (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»): das hintere Ende eines Wagens nimmt die Gleisachse
+             bis 2,5 m neben der Stelle eine Wagenlänge hinter dem vorderen Ende in Richtung des Wegs (ZUG_GLEIS_FOLGEN_M, gewählt), sonst wie bisher das eigene
+             eingerastete Ende; nur gebaut, hier ohne die feinen Daten nicht nachgestellt
+Ring der Ankündigung im Vollbild des Führerstands (Michael, 2026-11-11, MacBook: «die Anzeige auf der Windschutzscheibe … runden Kreise mit der Zahl. Was ist das?»):
+             der Ring «etwa … s / m» der Karte «Als Nächstes» aus der rechten Spalte schien am Desktop (ab 1280 px) durch das Vollbild, weil die linke Spalte
+             sticky ist und damit eine eigene Ebene ohne Höhe bildet; seither xl:z-10 auf ihr (Fahrtmodus.tsx); im Browser hier nachgestellt und behoben
 Gruppen und Kolonnen (Michael, 2026-11-11: «Etwas weniger Menschen mit roten Oberteilen, mehr graue Kleider. Dann mehr Gruppierungen von Menschen, nicht
              so perfekt verteilt. Auch bei den Autos … ein paar Autos hintereinander. Bei den Enden der Perrons weniger Leute … Aber bitte nicht zu extrem»):
              Oberteile in 20 Farben, davon ein Rot und sieben Grautöne (KLEID in Menschen.ts); auf den Perrons Gruppen von 1 bis 5 bis 1,3 m um eine Stelle,

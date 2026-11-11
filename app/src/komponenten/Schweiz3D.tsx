@@ -888,8 +888,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     const r = RASTER_M[s]
     return { e: Math.round(gesucht.e / r) * r, n: Math.round(gesucht.n / r) * r, seite: FELD_M[s] }
   }
-  // für den Doppelklick: die Wahl des zweiten Klicks ist erst nach dem nächsten Zeichnen da
-  const zuletztGewaehlt = useRef(0)
   // von einer Bahnhofseite: gleich im Feld von 1 km um den Ort (Michael, 2026-11-07: «Klickt man auf einen Bahnhof soll man optional die 3D Ansicht
   // sehen können (nähster Ausschnitt aus 3DLand)»); #/3dland?lat=…&lon=…&name=…; alle Stufen darüber werden mitgeladen wie beim Eintauchen, damit
   // man mit der Lupe hinaus kann, und überall gilt das Feld um den Ort wie nach einer Suche
@@ -1107,12 +1105,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       )}
       {ansicht === 'karte' && fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
       {ansicht === 'karte' && (<>
-      {/* am Desktop taucht ein Doppelklick ins Feld ein, statt jedes Mal «Eintauchen» (Michael, 2026-11-06: «auf der Desktop-Version soll man, wenn man einen
-          Ausschnitt gewählt hat, diesen doppelklicken können»); nur wenn beide Klicks das Gelände trafen, nicht einen Knopf an der Wand */}
-      <div onDoubleClick={() => {
-        if (!window.matchMedia('(pointer: fine)').matches || performance.now() - zuletztGewaehlt.current > 700) return
-        window.setTimeout(() => eintauchenAktuell.current(), 30)
-      }}
+      {/* am Desktop taucht ein zweiter Klick in den gewählten Kasten ein (waehlen unten; bis 2026-11-11 ein Doppelklick) */}
+      <div
         className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
         // 25 breit, 28 hoch (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch», dann «20% weniger hoch»), auf breiten
         // Bildschirmen so schmal, dass es in 85 % der Höhe passt; bis an den Rand der Seite, ohne Rand und runde Ecken (Michael, 2026-10-25: «Weissen Rahmen um
@@ -1121,7 +1115,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
-                     zuletztGewaehlt.current = performance.now()
+                     // am Desktop (Maus) taucht ein zweiter Klick in den roten Kasten ein (Michael, 2026-11-11: «Auf dem Desktop soll man beim
+                     // Auswählen eines Ausschnittes (roter Kasten) diesen nochmals anklicken können, damit man dort eintaucht»; vorher ein Doppelklick)
+                     if (wahl && window.matchMedia('(pointer: fine)').matches && Math.abs(e - wahl.e) <= wahl.seite / 2 && Math.abs(n - wahl.n) <= wahl.seite / 2) {
+                       window.setTimeout(() => eintauchenAktuell.current(), 30)
+                       return
+                     }
                      const r = RASTER_M[stufe], s = FELD_M[stufe]
                      const w = { e: Math.round(e / r) * r, n: Math.round(n / r) * r, seite: s }
                      // nur in einer Testfassung (VITE_S3D_TEST): das gewählte Feld in die Konsole
@@ -1809,6 +1808,8 @@ const KAMERA_NAH_KM = 0.01, KAMERA_NAH_MIN_KM = 0.0005
 /** so weit knickt ein Wagen gegen den davor (etwa ein Wagen von 33 m in einem Bogen von 150 m) und so weit steht er schräg zum Weg
  *  (gewählt; Michael, 2026-11-06: «Völlig verbogen. Sieht sonst nach Unfall aus»; schräg bis 2026-11-07 25°, Michael: «nicht gerade auf einem Gleis») */
 const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (8 * Math.PI) / 180
+/** so weit sucht das hintere Ende eines Wagens die Achse des Gleises, auf dem sein vorderes Ende liegt (gewählt; ein Nachbargleis liegt 4 bis 5 m daneben) */
+const ZUG_GLEIS_FOLGEN_M = 2.5
 /** im Feld von 1 km noch kleiner, etwa 3 m breit und 4 m hoch, damit Züge im Bahnhof nebeneinander und unter den Perrondächern Platz haben
  *  (Michael, 2026-10-30, Bern: «Bei dieser Ansicht sind die Züge etwas zu gross … unter der Decke sind und nicht an der Decke ankommen»; vorher
  *  wie im Feld von 4 km gut 5 m breit und fast 7 m hoch), gewählt */
@@ -5002,6 +5003,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return true
     }
     gruppe.userData.abwahl = () => { gewaehlt = null }
+    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dZugWaehlen: unknown }).s3dZugWaehlen = (i = 0) => { gewaehlt = gezeichnet[i]?.id ?? null; return gezeichnet.length }
     // die Mitten der Wagen jedes gezeichneten Zugs im Raum des Modells, für den Tipp knapp daneben
     const mitten: THREE.Vector3[][] = []
     /** welcher gezeichnete Zug dem Strahl am nächsten liegt, bis grenze (Winkel vom Ursprung des Strahls), sonst -1 */
@@ -5371,7 +5373,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               const vorHi = enden[2 * w - 1], luecke = Math.hypot(vorHi.e - vo.e, vorHi.n - vo.n)
               fe = kE - Math.cos(kR) * luecke; fn = kN - Math.sin(kR) * luecke
             }
-            let r = Math.atan2(fn - hiN, fe - hiE)
+            // das hintere Ende auf demselben Gleis wie das vordere (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»: an der
+            // Verzweigung rastete es für sich auf das Nachbargleis ein): die Achse bis ZUG_GLEIS_FOLGEN_M neben der Stelle eine Wagenlänge hinter dem
+            // vorderen Ende in Richtung des Wegs, nur ohne sie wie bisher
+            let zielE = hiE, zielN = hiN
+            const gh = gleisBei(fe - Math.cos(wegR) * laenge, fn - Math.sin(wegR) * laenge, ln, -le, ZUG_GLEIS_FOLGEN_M)
+            if (gh && !gh[3]) { zielE = gh[0]; zielN = gh[1] }
+            let r = Math.atan2(fn - zielN, fe - zielE)
             if (!Number.isFinite(r)) r = wegR
             r = nah(r, wegR, ZUG_SCHRAEG)
             if (w > 0) r = nah(r, kR, ZUG_KNICK)
