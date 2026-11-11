@@ -457,6 +457,11 @@ Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug 
              die Tür zu ihr (je 60 %, nur wenn sie die Tür vor dem Schliessen erreichen) und sind eingestiegen, an ihrer Stelle wartet nach 2 bis 10 Minuten wieder
              jemand (AUSSTEIGEN_*, EINSTEIGEN_*; offeneTueren in Schweiz3D.tsx, von den Zügen je Bild gesetzt); alles gewählt, in Anleitung («Menschen», «Was
              erfunden ist»); im Browser hier in Bern geprüft
+Schild der Züge, Fenster und Pfiff (Michael, 2026-11-11: «Kannst du bei den Zügen auch angeben von wo sie kommen? Seitenfenster etwas weniger hoch bitte.
+             Pfeife beim Abfahren entfernen ich liefere was nach»): das Schild eines Zugs in «3D Schweiz» «… von … nach …», von ist der erste Halt der Fahrt in
+             data/zuege3d (nur Halte im Netz, ein Zug aus dem Ausland kommt dann von der Grenze; so in der Anleitung); das Fensterband 0,27 statt 0,34 der Höhe,
+             die Mitte bleibt, die Türen behalten ihre Höhe (TUER_BAND in ZugForm.ts), überall, wo die Form gilt; der Pfiff zur Abfahrt ist still, bis Michael
+             eine Aufnahme schickt (die Abfahrt wird weiter erkannt, pfiffAbstand), aus Anleitung und «Was erfunden ist» genommen
 Halten für Fussgänger in «3D Schweiz» (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): innerorts
              (Ketten der übrigen Strassen mit Tempo bis 35 km/h) beginnt je Sekunde mit 7 % ein Halt (nachts 30 % davon), wenn Autos bis 450 m um die Hörstelle fahren,
              höchstens 2 zugleich (HALT_* in Autos.ts): das Auto hält 15 m weiter vor einer Linie, ein gezeichneter Fussgänger (1,75 m, fussgaenger) quert 2,5 m davor

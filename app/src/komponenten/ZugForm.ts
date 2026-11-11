@@ -31,8 +31,11 @@ const FENSTER_IM_KOPF = 0.55
 export const zugTueren = { an: true }
 const TUER_BREIT = 0.34, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#9a9a9a', TUER_LINIE = 0.014
 /** Höhe des Fensterbands und wie weit seine Mitte unter dem Beginn der Dachrundung liegt, in Teilen der Höhe (Michael, 2026-11-10: «Seitenstreifen etwas
- *  höher und etwas weiter unten», dann «noch etwas weiter unten und noch etwas höher»; vorher 0,22 und 0,08, dann 0,28 und 0,14) */
-const FENSTER_HOCH = 0.34, FENSTER_TIEFER = 0.21
+ *  höher und etwas weiter unten», dann «noch etwas weiter unten und noch etwas höher»; vorher 0,22 und 0,08, dann 0,28 und 0,14); seit 2026-11-11 0,27 statt 0,34 hoch, die Mitte
+ *  bleibt (Michael: «Seitenfenster etwas weniger hoch bitte») */
+const FENSTER_HOCH = 0.27, FENSTER_TIEFER = 0.21
+/** die Türen behalten ihre Höhe vom Fensterband bis 2026-11-11 */
+const TUER_BAND = 0.34
 // feiner seit 2026-11-10 (Michael: «Ja, setz alle vier um», darunter: Puffer zu gross; vorher 0,045, 0,085, 0,2)
 const PUFFER_SEITE = 0.3, PUFFER_HOEHE = -0.3, PUFFER_R = 0.032, PUFFER_TELLER = 0.058, PUFFER_LANG = 0.12
 export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNTEN = 0.4, LICHTKASTEN_OBEN = 0.56, LICHTKASTEN_BREIT = 0.32
@@ -46,7 +49,7 @@ export function tuerStellen(i: number, laenge: number): { stellen: number[]; b: 
   const unten = -h + H * 0.14, r = W * 0.32
   const hinten = i === ZUG_WAGEN
   const kopf = i === 0 || hinten ? H * 1.6 : 0
-  const unterkante = unten + H * 0.002, oberkante = h - r - H * FENSTER_TIEFER + H * FENSTER_HOCH / 2 + H * 0.09
+  const unterkante = unten + H * 0.002, oberkante = h - r - H * FENSTER_TIEFER + H * TUER_BAND / 2 + H * 0.09
   const b = H * TUER_BREIT
   // an Lok und Steuerwagen hinter dem Kopf, eine Türbreite hinter dem Ende des Fensterbands im Kopf (Michael, 2026-11-10: «Etwas eine Türbreite weiter
   // hinten. Obere Kante noch etwas weiter oben»)
