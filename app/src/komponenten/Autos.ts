@@ -132,7 +132,10 @@ export interface AutoKette { L: number; art: number; tag: number; nacht: number;
   /** Anteil Lastwagen auf der rechten Spur (0 bis 1) am Tag und in der Nacht */
   lkwTag: number; lkwNacht: number
   /** übrige Strassen: so weit rechts der Achse fährt man (m) */
-  quer: number }
+  quer: number
+  /** übrige Strassen mit Gegenverkehr: die Fahrbahn im Luftbild gemessen (fahrbahnMessen), je Stelle s die Mitte rechts der Zeichnung und die halbe
+   *  Breite in m; fehlt, wo nichts Brauchbares gemessen ist */
+  mess?: { s: Float64Array; mitte: Float32Array; halb: Float32Array } }
 /** ein Auto: Richtung (1 mit den Punkten, -1 dagegen), Spur, Tempo in m/s, Platz in der Kette zur Zeit 0, ab welchem Anteil der grössten
  *  Dichte es fährt */
 export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: number; ab: number; farbe: number
@@ -372,4 +375,91 @@ export function fussgaenger(nr: number): THREE.Group {
 export function fussWeg(g: THREE.Object3D) {
   g.removeFromParent()
   g.traverse((o) => { const m = o as THREE.Mesh; if (m.isMesh) { m.geometry.dispose(); (m.material as THREE.Material).dispose() } })
+}
+
+
+/** Spuren nach dem Luftbild (Michael, 2026-11-11: «Kannst du auf der Karte sehen wo sie Strasse genau ist und die Links und Rechts Spuren? Die Autos
+ *  sollten auf ihrer Spur fahren. Rechtsverkehr»): auf Strassen mit Gegenverkehr alle MESS_SCHRITT_M quer zur Achse die Farben des Luftbilds vor der
+ *  Retusche; als Fahrbahn gilt, was höchstens MESS_FARBE vom Belag an der Achse (Median über die ganze Kette) abweicht, Lücken bis MESS_LUECKE_M (Linien,
+ *  Autos) überbrückt; die Fahrbahn ist das zusammenhängende Stück nächst der Achse, so breit wie 0,7- bis 1,5-mal die Klasse, die Mitte höchstens
+ *  MESS_MITTE_M neben der Achse; je Stelle der Median über MESS_GLATT Stellen davor und danach; gilt für die Kette, wenn mindestens MESS_ANTEIL der
+ *  Stellen etwas ergeben. Die Autos fahren dann um die gemessene Mitte, je Richtung in der Mitte ihrer Hälfte. Alles gewählt, nicht aus einer Quelle */
+export const MESS_SCHRITT_M = 6, MESS_FARBE = 38, MESS_LUECKE_M = 0.9, MESS_MITTE_M = 4, MESS_GLATT = 3, MESS_ANTEIL = 0.4
+const MESS_BREIT: [number, number] = [0.7, 1.5]
+export function fahrbahnMessen(k: AutoKette, farbe: (e: number, n: number) => number, pxM: number) {
+  if (k.art !== 2 || !k.stuecke.length) return
+  const klasse = k.stuecke[0].strasse?.breite ?? 6
+  const weit = klasse * MESS_BREIT[1] / 2 + 2, schritt = Math.max(0.25, pxM * 0.75), z = Math.ceil(weit / schritt)
+  const a0 = k.stuecke[0].s0, a1 = k.stuecke[k.stuecke.length - 1].s[k.stuecke[k.stuecke.length - 1].s.length - 1]
+  const stellen: Array<{ s: number; t: Int32Array }> = []
+  const nah: number[][] = [[], [], []]
+  for (let s = a0 + MESS_SCHRITT_M / 2; s < a1; s += MESS_SCHRITT_M) {
+    const p = autoBei(k, s)
+    if (!p || p.bruecke) continue
+    const t = new Int32Array(2 * z + 1)
+    for (let i = -z; i <= z; i++) {
+      const c = farbe(p.e + p.dn * i * schritt, p.n - p.de * i * schritt)
+      t[i + z] = c
+      if (c >= 0 && Math.abs(i * schritt) <= 1.5) { nah[0].push(c >> 16); nah[1].push((c >> 8) & 255); nah[2].push(c & 255) }
+    }
+    stellen.push({ s, t })
+  }
+  if (stellen.length < 3 || nah[0].length < 10) return
+  const med = (a: number[]) => a.sort((x, y) => x - y)[a.length >> 1]
+  const ref = nah.map(med)
+  const luecke = Math.round(MESS_LUECKE_M / schritt)
+  const mitte = new Float32Array(stellen.length).fill(NaN), halb = new Float32Array(stellen.length).fill(NaN)
+  stellen.forEach(({ t }, j) => {
+    const ist = (i: number) => { const c = t[i]; return c >= 0 && Math.hypot((c >> 16) - ref[0], ((c >> 8) & 255) - ref[1], (c & 255) - ref[2]) <= MESS_FARBE }
+    // zusammenhängende Stücke mit überbrückten Lücken, das nächst der Achse
+    let best: [number, number] | null = null, bestAbst = Infinity
+    let i = 0
+    while (i < t.length) {
+      if (!ist(i)) { i++; continue }
+      let ende = i, fehl = 0
+      for (let x = i + 1; x < t.length; x++) {
+        if (ist(x)) { ende = x; fehl = 0 } else if (++fehl > luecke) break
+      }
+      const lo = (i - z) * schritt, hi = (ende - z) * schritt, abst = lo <= 0 && hi >= 0 ? 0 : Math.min(Math.abs(lo), Math.abs(hi))
+      if (abst < bestAbst) { bestAbst = abst; best = [lo, hi] }
+      i = ende + 1
+    }
+    if (!best) return
+    const breite = best[1] - best[0] + schritt, m = (best[0] + best[1]) / 2
+    // am Rand des Fensters abgeschnitten heisst: zu breit
+    if (best[0] <= -z * schritt || best[1] >= z * schritt) return
+    if (breite < klasse * MESS_BREIT[0] || breite > klasse * MESS_BREIT[1] || Math.abs(m) > MESS_MITTE_M) return
+    mitte[j] = m; halb[j] = breite / 2
+  })
+  const gut = mitte.filter((x) => !Number.isNaN(x)).length
+  if (gut < stellen.length * MESS_ANTEIL) return
+  const glatt = (a: Float32Array) => Float32Array.from(a, (_, j) => {
+    const w: number[] = []
+    for (let x = Math.max(0, j - MESS_GLATT); x <= Math.min(a.length - 1, j + MESS_GLATT); x++) if (!Number.isNaN(a[x])) w.push(a[x])
+    return w.length ? med(w) : NaN
+  })
+  const gm = glatt(mitte), gh = glatt(halb)
+  // Stellen ohne Wert vom nächsten mit Wert
+  for (const a of [gm, gh]) {
+    let letzt = NaN
+    for (let j = 0; j < a.length; j++) { if (Number.isNaN(a[j])) a[j] = letzt; else letzt = a[j] }
+    letzt = NaN
+    for (let j = a.length - 1; j >= 0; j--) { if (Number.isNaN(a[j])) a[j] = letzt; else letzt = a[j] }
+  }
+  if (gm.some((x) => Number.isNaN(x))) return
+  k.mess = { s: Float64Array.from(stellen, (x) => x.s), mitte: gm, halb: gh }
+}
+
+/** gemessene Mitte (rechts der Zeichnung) und Abstand der Spur von ihr an der Stelle s, null ohne Messung */
+export function spurBei(k: AutoKette, s: number): [number, number] | null {
+  const m = k.mess
+  if (!m) return null
+  const a = m.s
+  let lo = 0, hi = a.length - 1
+  if (s <= a[0]) return [m.mitte[0], Math.min(STRASSE_QUER_M[1], Math.max(STRASSE_QUER_M[0], m.halb[0] / 2))]
+  if (s >= a[hi]) return [m.mitte[hi], Math.min(STRASSE_QUER_M[1], Math.max(STRASSE_QUER_M[0], m.halb[hi] / 2))]
+  while (hi - lo > 1) { const x = (lo + hi) >> 1; if (a[x] <= s) lo = x; else hi = x }
+  const t = (s - a[lo]) / (a[hi] - a[lo] || 1)
+  const mi = m.mitte[lo] + t * (m.mitte[hi] - m.mitte[lo]), h = m.halb[lo] + t * (m.halb[hi] - m.halb[lo])
+  return [mi, Math.min(STRASSE_QUER_M[1], Math.max(STRASSE_QUER_M[0], h / 2))]
 }

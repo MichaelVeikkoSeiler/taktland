@@ -467,6 +467,14 @@ Desktop in «3D Schweiz» (Michael, 2026-11-11: «Eintauchen beim Desktop unten 
              (DESKTOP_KNOPF_MASS), «Eintauchen» rechts darüber; Handy und Tablet wie bisher
              «XR» am Desktop nur, wo der Browser immersive-vr oder immersive-ar meldet (xrDa; Michael, 2026-11-11: «Desktop: XR funktioniert nicht daher
              Button entfernen. Auf der Brille muss es aber sein»); in der Brille und auf Handy und Tablet wie bisher
+Spuren nach dem Luftbild in «3D Schweiz» (Michael, 2026-11-11, Naters: «Autos fahren teilweise nicht schön auf ihrer Spur», dann «Kannst du auf der
+             Karte sehen wo sie Strasse genau ist und die Links und Rechts Spuren? Die Autos sollten auf ihrer Spur fahren. Rechtsverkehr»): auf übrigen Strassen
+             mit Gegenverkehr (art 2) im Feld von 1 km (Bild ab 1 Bildpunkt je m, MESS_PX_JE_M) alle 6 m quer zur Achse die Farben des Luftbilds vor der Retusche,
+             Fahrbahn ist, was höchstens 38 vom Belag an der Achse abweicht (Median über die Kette), Lücken bis 0,9 m überbrückt, das Stück nächst der Achse, 0,7-
+             bis 1,5-mal die Breite laut Klasse, Mitte höchstens 4 m daneben, je Stelle der Median über 7 Stellen, nur wenn 40 % der Stellen etwas ergeben
+             (fahrbahnMessen, spurBei, MESS_* in Autos.ts); die Autos um die gemessene Mitte, je Richtung in der Mitte ihrer Hälfte (1,1 bis 2,6 m), sonst wie
+             bisher; mit SWISSIMAGE 10 cm bei Naters (Strasse zwischen Rhone und Rangierbahnhof) geprüft: bei 0,5 m je Bildpunkt die Spuren in beiden Hälften,
+             bei 2,5 m kaum Treffer, darum nicht im Feld von 4 km; die Achse liegt dort auf der Mittellinie; alles gewählt, in der Anleitung («Autos»)
 Halten für Fussgänger in «3D Schweiz» (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): innerorts
              (Ketten der übrigen Strassen mit Tempo bis 35 km/h) beginnt je Sekunde mit 7 % ein Halt (nachts 30 % davon), wenn Autos bis 450 m um die Hörstelle fahren,
              höchstens 2 zugleich (HALT_* in Autos.ts): das Auto hält 15 m weiter vor einer Linie, ein gezeichneter Fussgänger (1,75 m, fussgaenger) quert 2,5 m davor
