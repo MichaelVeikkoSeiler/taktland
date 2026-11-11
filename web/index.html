@@ -61,8 +61,9 @@
     }
     .knopf.klein { padding: 6px 12px; }
 
-    .auftakt { margin-top: 24px; }
-    .auftakt picture img { width: 100%; aspect-ratio: 1344 / 664; max-height: 440px; object-fit: cover; }
+    /* das Auftaktbild oben und seitlich randlos, Logo und Name darunter (Michael, 2026-11-12: «Bild oben und auf den Seiten bündig machen.
+       Dafür Logo und Name darunter») */
+    .auftaktbild img { width: 100%; aspect-ratio: 1344 / 664; max-height: 520px; object-fit: cover; }
     .auftakt h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.08; letter-spacing: -0.03em; margin: 28px 0 0; max-width: 20ch; }
     .auftakt p.lead { font-size: clamp(18px, 2.2vw, 22px); margin: 16px 0 0; max-width: 40em; }
     .knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
@@ -135,6 +136,13 @@
   </style>
 </head>
 <body>
+  <div class="auftaktbild">
+    <picture>
+      <source srcset="./bilder/auftakt-start-dunkel.webp" media="(prefers-color-scheme: dark)" />
+      <img src="./bilder/auftakt-start-hell.webp" width="1344" height="664"
+           alt="Illustration: Jemand mit Rucksack auf einem Perron, vor ihm ein Tunnelportal und ein Bahnübergang, dahinter ein Zug auf einer Brücke über einen See." />
+    </picture>
+  </div>
   <header class="kopf">
     <div class="breite">
       <a class="marke" href="./"><img src="./logo.svg" alt="" />Taktland</a>
@@ -144,11 +152,6 @@
 
   <main class="breite">
     <div class="auftakt">
-      <picture>
-        <source srcset="./bilder/auftakt-start-dunkel.webp" media="(prefers-color-scheme: dark)" />
-        <img src="./bilder/auftakt-start-hell.webp" width="1344" height="664"
-             alt="Illustration: Blick aus dem Zugfenster auf eine Landschaft mit See und Viadukt, auf dem Tisch ein Handy mit Taktland." />
-      </picture>
       <h1>Die Schweizer Bahn kennenlernen.</h1>
       <p class="lead">
         Bahnhöfe, Tunnel und Brücken entdecken, die ganze Schweiz in 3D erkunden, im Zug mitfahren und
