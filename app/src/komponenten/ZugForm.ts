@@ -39,6 +39,22 @@ export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNT
 /** Wagen hell, Fensterband, Fahrwerk und Übergänge dunkel, der Kopf karminrot */
 export const ZUG_HELL = '#dcdcdc', ZUG_DUNKEL = '#2e2e2e', ZUG_ROT = '#a8102e'
 
+/** die Türen eines Wagens in seinen Massen (wie wagenBauen): Mitten entlang z, Breite, Unter- und Oberkante, Abstand der Seite von der Mitte;
+ *  für die Schiebetüren am Halt in «3D Schweiz» */
+export function tuerStellen(i: number, laenge: number): { stellen: number[]; b: number; unterkante: number; oberkante: number; seite: number } {
+  const W = ZUG_BREITE, H = ZUG_HOEHE, L = laenge / 1000, h = H / 2
+  const unten = -h + H * 0.14, r = W * 0.32
+  const hinten = i === ZUG_WAGEN
+  const kopf = i === 0 || hinten ? H * 1.6 : 0
+  const unterkante = unten + H * 0.002, oberkante = h - r - H * FENSTER_TIEFER + H * FENSTER_HOCH / 2 + H * 0.09
+  const b = H * TUER_BREIT
+  // an Lok und Steuerwagen hinter dem Kopf, eine Türbreite hinter dem Ende des Fensterbands im Kopf (Michael, 2026-11-10: «Etwas eine Türbreite weiter
+  // hinten. Obere Kante noch etwas weiter oben»)
+  const amKopf = L / 2 - kopf * (1 - FENSTER_IM_KOPF) - b * 1.6
+  const stellen = i === 0 ? [amKopf] : hinten ? [-amKopf] : [L / 2 - L * TUER_VOM_ENDE, -(L / 2 - L * TUER_VOM_ENDE)]
+  return { stellen, b, unterkante, oberkante, seite: W * 0.522 }
+}
+
 /** ein Wagen (0 die Lok, ZUG_WAGEN der Steuerwagen), entlang z, die Spitze der Lok bei +z */
 export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materialien: THREE.Material[] } {
   const g = new THREE.Group()
@@ -86,14 +102,7 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
   // Türen, nur gemalt (Michael, 2026-11-10: «Braucht es bei den Wagen noch Türen, also nicht richtige, aber damit es den Anschein macht?»): je Seite zwei nahe
   // den Enden, an Lok und Steuerwagen eine hinter dem Kopf; Zahl, Lage und Masse gewählt
   if (zugTueren.an) {
-    const unterkante = unten + H * 0.002, oberkante = h - r - H * FENSTER_TIEFER + H * FENSTER_HOCH / 2 + H * 0.09
-    const b = H * TUER_BREIT
-    // an Lok und Steuerwagen hinter dem Kopf, eine Türbreite hinter dem Ende des Fensterbands im Kopf (Michael, 2026-11-10: «Etwas eine Türbreite weiter
-    // hinten. Obere Kante noch etwas weiter oben»)
-    const amKopf = L / 2 - kopf * (1 - FENSTER_IM_KOPF) - b * 1.6
-    const stellen = i === 0 ? [amKopf] : hinten ? [-amKopf] : [L / 2 - L * TUER_VOM_ENDE, -(L / 2 - L * TUER_VOM_ENDE)]
-    // nur ein dünner grauer Rahmen links, oben und rechts mit leicht gerundeten Ecken (Michael, 2026-11-10: «wesentlich einfacher darstellen, nur dünner grauer
-    // Rahmen links oben und rechts. Leicht abgerundete Ecken»): eine flache Form in z und y, zur Seite gedreht
+    const { stellen, b, unterkante, oberkante } = tuerStellen(i, laenge)
     const d = H * TUER_LINIE, rr = b * 0.22
     const umriss = new THREE.Shape()
     umriss.moveTo(-b / 2, unterkante); umriss.lineTo(-b / 2, oberkante - rr); umriss.quadraticCurveTo(-b / 2, oberkante, -b / 2 + rr, oberkante)

@@ -169,3 +169,29 @@ export function wartende(hier: Perron[], alle: Perron[], dwv: (uic: number) => n
   })
   return raus
 }
+
+/** der Perron an dieser Stelle und die Höhe seines Belags (Gleis und Kante des nächsten Punkts des Umrisses), null: kein Perron */
+export function perronBei(liste: Perron[], e: number, n: number): number | null {
+  for (const p of liste) {
+    if (e < p.e0 || e > p.e1 || n < p.n0 || n > p.n1 || p.e.length < 3 || !innen(p, e, n)) continue
+    let best = 0, bd = Infinity
+    for (let j = 0; j < p.e.length; j++) { const dd = Math.hypot(p.e[j] - e, p.n[j] - n); if (dd < bd) { bd = dd; best = j } }
+    return p.z[best] + p.h[best]
+  }
+  return null
+}
+
+/** Schiebetüren am Halt und Ein- und Aussteigen (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge
+ *  aussteigen und danach wartende Menschen einsteigen lassen? Bei den Türen die sich öffnen? Türe sollen Schiebetüren sein»): eine Tür öffnet
+ *  TUER_AUF_NACH_S nach der Ankunft laut Fahrplan in TUER_BEWEGT_S und schliesst TUER_ZU_VOR_S vor der Abfahrt; nur an Halten ab TUER_HALT_AB_S;
+ *  je Tür steigen 0 bis AUSSTEIGEN_HOECHSTENS - 1 aus, alle AUSSTEIGEN_TAKT_S eine Person, sie gehen AUSSTEIGEN_RAUS_M vom Zug weg, dann
+ *  entlang dem Perron und sind nach AUSSTEIGEN_DAUER_S weg; danach steigen Wartende bis EINSTEIGEN_M um eine Tür ein, jede mit dem Anteil
+ *  EINSTEIGEN_ANTEIL, wenn sie die Tür vor dem Schliessen erreicht; an ihrer Stelle wartet nach EINSTEIGEN_WIEDER_S jemand Neues. Alles gewählt,
+ *  wer wo ein- und aussteigt, steht in keiner Quelle */
+export const TUER_AUF_NACH_S = 3, TUER_BEWEGT_S = 2, TUER_ZU_VOR_S = 5, TUER_HALT_AB_S = 15
+export const AUSSTEIGEN_HOECHSTENS = 4, AUSSTEIGEN_TAKT_S = 1.4, AUSSTEIGEN_RAUS_M = 2.5, AUSSTEIGEN_DAUER_S = 25
+export const EINSTEIGEN_M = 15, EINSTEIGEN_ANTEIL = 0.6, EINSTEIGEN_WIEDER_S: readonly [number, number] = [120, 600]
+
+/** eine offene Tür am Perron, in LV95: die Stelle vor der Tür auf dem Perron, nach aussen (ae, an), Höhe des Belags, wie weit offen,
+ *  Sekunden seit der Ankunft und bis zur Abfahrt laut Fahrplan */
+export interface OffeneTuer { schluessel: string; e: number; n: number; ae: number; an: number; z: number; offen: number; seit: number; bis: number }

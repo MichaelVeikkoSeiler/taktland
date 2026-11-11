@@ -106,7 +106,7 @@ export function zugPlan(f: ZugFahrt, tag: number, minuten: number, i0: number): 
 }
 
 /** Ankunft und Abfahrt am Halt i in Minuten ab Mitternacht des Verkehrstags, wie die Züge sie fahren */
-function haltZeiten(f: ZugFahrt, i: number): [number, number] {
+export function haltZeiten(f: ZugFahrt, i: number): [number, number] {
   const h = f.halte, z = h.length - 1
   const erst = h[0].ab ?? h[0].an!, letzt = h[z].an ?? h[z].ab!
   let an = h[i].an ?? h[i].ab!, ab = h[i].ab ?? h[i].an!

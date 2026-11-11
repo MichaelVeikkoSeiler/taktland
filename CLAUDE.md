@@ -448,6 +448,15 @@ Autos gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»)
              (Radius 20, 16 und 5 cm, gewählt), 108 Dreiecke je Kasten
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
+Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
+             wartende Menschen einsteigen lassen? Bei den Türen die sich öffnen? Türe sollen Schiebetüren sein»): mit «Züge» an, in den Feldern von 4 km und 1 km,
+             an Halten laut Fahrplan ab 15 s: je Tür (tuerStellen in ZugForm.ts) ein dunkles Loch und ein Türblatt, das aussen am Wagen zur Mitte gleitet, nur auf
+             der Seite, wo 1,2 m vor der Tür ein Perron aus data/perrons3d liegt (perronBei in Menschen.ts), 3 s nach der Ankunft in 2 s auf, 5 s vor der Abfahrt zu
+             (TUER_* in Menschen.ts, TUER_LOCH_FARBE, TUER_BLATT_FARBE in Schweiz3D.tsx); mit «Menschen» an steigen je Tür 0 bis 3 aus (fester Zufall je Tür und
+             Halt, alle 1,4 s eine), gehen 2,5 m vom Zug weg und dann entlang dem Perron, nach 25 s oder am Ende des Perrons weg; danach gehen Wartende bis 15 m um
+             die Tür zu ihr (je 60 %, nur wenn sie die Tür vor dem Schliessen erreichen) und sind eingestiegen, an ihrer Stelle wartet nach 2 bis 10 Minuten wieder
+             jemand (AUSSTEIGEN_*, EINSTEIGEN_*; offeneTueren in Schweiz3D.tsx, von den Zügen je Bild gesetzt); alles gewählt, in Anleitung («Menschen», «Was
+             erfunden ist»); im Browser hier in Bern geprüft
 Halten für Fussgänger in «3D Schweiz» (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): innerorts
              (Ketten der übrigen Strassen mit Tempo bis 35 km/h) beginnt je Sekunde mit 7 % ein Halt (nachts 30 % davon), wenn Autos bis 450 m um die Hörstelle fahren,
              höchstens 2 zugleich (HALT_* in Autos.ts): das Auto hält 15 m weiter vor einer Linie, ein gezeichneter Fussgänger (1,75 m, fussgaenger) quert 2,5 m davor
