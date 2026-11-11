@@ -427,6 +427,12 @@ Menschen in «3D Schweiz» (Michael, 2026-11-11: «Heisst dass du kannst Taktlan
              Wanderwegen 0,6 je km (WANDERER_JE_KM), 8 bis 18 Uhr; 1,3 m/s ±20 %, Wanderer 1,1 m/s; Figur 1,75 m aus Kästen, Oberteil in 12 gewählten Farben;
              höchstens 9'000, auf dem Handy 3'000; alles ausser den Quellen gewählt, in Anleitung («Menschen», Quellen, «Was erfunden ist») und Fusszeile;
              in Bern 408 Wartende und 139 Fussgänger im Feld von 1 km
+Gruppen und Kolonnen (Michael, 2026-11-11: «Etwas weniger Menschen mit roten Oberteilen, mehr graue Kleider. Dann mehr Gruppierungen von Menschen, nicht
+             so perfekt verteilt. Auch bei den Autos … ein paar Autos hintereinander. Bei den Enden der Perrons weniger Leute … Aber bitte nicht zu extrem»):
+             Oberteile in 20 Farben, davon ein Rot und sieben Grautöne (KLEID in Menschen.ts); auf den Perrons Gruppen von 1 bis 5 bis 1,3 m um eine Stelle,
+             zur Mitte gedreht (GRUPPE_PERRON, GRUPPE_RADIUS_M), entlang der Längsachse (weiteste Strecke im Umriss) an den Enden 55 % so dicht wie in der Mitte,
+             dazwischen nach einem Sinus (PERRON_ENDE_ANTEIL); auf Trottoirs und Wanderwegen Gruppen von 1 bis 3 (GRUPPE_GROESSE); Autos in Kolonnen von 1 bis 4
+             mit 1,4 s Abstand, die Lücke dazwischen so, dass die Dichte im Mittel bleibt, bei dichtem Verkehr wie bisher (KOLONNE_* in Autos.ts); alles gewählt
 Bäume im Wind stärker (Michael, 2026-11-11: «Übrigens bewegen sich die Bäume nicht... schau mal», Bildschirmfoto mit 25 | 35 km/h): an der Spitze bei vollem
              Wind 5 % der Höhe Neigung, ±7 % Wiegen, ±2 % Flattern und bis 4 % Böen (vorher etwa ein Viertel; bei 25 km/h schwankte ein Baum von 15 m um 15 cm)
 Autos gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»): Karosserie, Kabine und Dach als RoundedBoxGeometry mit einer Stufe

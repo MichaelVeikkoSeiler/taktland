@@ -14,6 +14,11 @@ import type { Perron } from './Perrons'
 /** Wartende auf den Perrons eines Bahnhofs = Ein- und Aussteigende am Werktag (SBB) durch WARTENDE_TEILER: die Hälfte steigt ein, verteilt auf
  *  18 Betriebsstunden, jede Person wartet im Mittel 5 Minuten (alles gewählt): DWV / 2 / (18 × 60) × 5 = DWV / 432 */
 export const WARTENDE_TEILER = 432
+/** Gruppen: Anteil bis 1, 2, 3 Personen (summiert), gewählt; auf den Perrons Gruppen von 1 bis 5 im Umkreis von GRUPPE_RADIUS_M */
+const GRUPPE_GROESSE = [0.55, 0.85, 1], GRUPPE_PERRON = [0.35, 0.6, 0.78, 0.9, 1], GRUPPE_RADIUS_M = 1.3
+/** an den Enden eines Perrons so viel wie in der Mitte, dazwischen nach einem Sinus (Michael, 2026-11-11: «Bei den Enden der Perrons weniger
+ *  Leute, da die Züge meistens in der Mitte der Perrons fahren. Aber bitte nicht zu extrem»), gewählt */
+export const PERRON_ENDE_ANTEIL = 0.55
 /** Wanderer je km Wanderweg am Tag (gewählt) */
 export const WANDERER_JE_KM = 0.6
 /** Tempo zu Fuss in m/s und die Streuung je Person (gewählt) */
@@ -27,7 +32,10 @@ export function anteilStunde(art: 'perron' | 'strasse' | 'wandern', stunde: numb
   return stunde >= 7 && stunde < 20 ? 1 : stunde >= 20 && stunde < 23 ? 0.4 : 0.06
 }
 
-const KLEID = ['#2b5d34', '#1f3f7a', '#a8102e', '#c9a227', '#f2f2f2', '#3c3c3c', '#8a1a1a', '#5a6b7c', '#d97a2b', '#6b4f8a', '#2a2a2a', '#e0d6c2']
+/** Farben der Oberteile, gewählt; seit 2026-11-11 weniger Rot und mehr Grau (Michael: «Etwas weniger Menschen mit roten Oberteilen, mehr graue
+ *  Kleider»): ein Rot von 20, sieben Grautöne */
+const KLEID = ['#2b5d34', '#1f3f7a', '#8a1a1a', '#c9a227', '#f2f2f2', '#3c3c3c', '#5a6b7c', '#d97a2b', '#6b4f8a', '#2a2a2a', '#e0d6c2',
+  '#6e6e6e', '#8c8c8c', '#a6a6a6', '#4a4a4a', '#bdbdbd', '#575a5e', '#7d7f82', '#1c2a44', '#4b5a3a']
 export function kleidFarbe(i: number): THREE.Color { return new THREE.Color(KLEID[Math.floor(zufall(i * 5.13 + 0.7) * KLEID.length)]) }
 
 /** ein fester Zufall 0 bis 1 */
@@ -78,11 +86,17 @@ export interface Geher { weg: Gehweg; quer: number; richtung: 1 | -1; ms: number
 export function geherAuf(weg: Gehweg, jeKm: number, nr: number, art: Geher['art'], quer: (i: number) => number): Geher[] {
   const raus: Geher[] = []
   const soll = (weg.L / 1000) * jeKm, zahl = Math.floor(soll) + (zufall(nr * 1.37) < soll - Math.floor(soll) ? 1 : 0)
-  for (let i = 0; i < zahl; i++) {
-    const z = zufall(nr * 3.1 + i * 7.7)
-    const grund = art === 'wandern' ? WANDERN_MS : GEHEN_MS
-    raus.push({ weg, quer: quer(i), richtung: zufall(nr + i * 2.3) < 0.5 ? 1 : -1, ms: grund * (1 - GEHEN_STREUUNG + 2 * GEHEN_STREUUNG * z),
-      s0: zufall(nr * 0.71 + i * 1.93) * weg.L, ab: zufall(nr * 5.9 + i * 0.37), farbe: Math.floor(zufall(nr * 0.13 + i * 3.3) * 997), art })
+  // in Gruppen (Michael, 2026-11-11: «mehr Gruppierungen von Menschen, nicht so perfekt verteilt»): 1 bis 3 gehen zusammen, gleich schnell, in
+  // dieselbe Richtung, je 0,8 m hintereinander und 0,6 m versetzt (GRUPPE_*, gewählt)
+  for (let i = 0; i < zahl;) {
+    const z = zufall(nr * 3.1 + i * 7.7), w = zufall(nr * 8.3 + i * 0.91)
+    const n = Math.min(zahl - i, GRUPPE_GROESSE.findIndex((g) => w < g) + 1 || 1)
+    const grund = art === 'wandern' ? WANDERN_MS : GEHEN_MS, ms = grund * (1 - GEHEN_STREUUNG + 2 * GEHEN_STREUUNG * z)
+    const richtung = zufall(nr + i * 2.3) < 0.5 ? 1 : -1, s0 = zufall(nr * 0.71 + i * 1.93) * weg.L, q = quer(i), ab = zufall(nr * 5.9 + i * 0.37)
+    for (let j = 0; j < n; j++, i++) {
+      raus.push({ weg, quer: q + (j % 2 ? 0.6 : 0) * Math.sign(q || 1), richtung, ms, s0: (s0 + j * 0.8) % weg.L, ab: ab + j * 0.02,
+        farbe: Math.floor(zufall(nr * 0.13 + i * 3.3) * 997), art })
+    }
   }
   return raus
 }
@@ -119,17 +133,38 @@ export function wartende(hier: Perron[], alle: Perron[], dwv: (uic: number) => n
     if (!d || !ganz || p.e.length < 3) return
     const soll = (d / WARTENDE_TEILER) * (flaeche(p) / ganz)
     const zahl = Math.floor(soll) + (zufall(p.u * 0.001 + k * 1.7) < soll - Math.floor(soll) ? 1 : 0)
+    // die Längsachse des Perrons: die weiteste Strecke zwischen zwei Punkten des Umrisses; Lage darauf 0 bis 1
+    let ae = p.e[0], an = p.n[0], be = p.e[0], bn = p.n[0], weit = 0
+    for (let a = 0; a < p.e.length; a++) for (let c = a + 1; c < p.e.length; c++) {
+      const d = Math.hypot(p.e[c] - p.e[a], p.n[c] - p.n[a])
+      if (d > weit) { weit = d; ae = p.e[a]; an = p.n[a]; be = p.e[c]; bn = p.n[c] }
+    }
+    const laengs = (e: number, n: number) => (weit ? Math.max(0, Math.min(1, ((e - ae) * (be - ae) + (n - an) * (bn - an)) / (weit * weit))) : 0.5)
     let versuche = 0
+    const setzen = (e: number, n: number, drehung: number, ab: number) => {
+      // die Höhe des Belags: Gleis und Kante des nächsten Punkts des Umrisses
+      let best = 0, bd = Infinity
+      for (let j = 0; j < p.e.length; j++) { const dd = Math.hypot(p.e[j] - e, p.n[j] - n); if (dd < bd) { bd = dd; best = j } }
+      raus.push({ e, n, z: p.z[best] + p.h[best] + ueber, drehung, ab, farbe: Math.floor(zufall(e + n * 1.3) * 997) })
+    }
     for (let i = 0; i < zahl && versuche < zahl * 30; versuche++) {
       const e = p.e0 + zufall(p.u * 0.0013 + k * 3.1 + versuche * 0.917) * (p.e1 - p.e0)
       const n = p.n0 + zufall(p.u * 0.0017 + k * 5.3 + versuche * 1.311) * (p.n1 - p.n0)
       if (!innen(p, e, n) || randAbstand(p, e, n) < 0.8) continue
-      // die Höhe des Belags: Gleis und Kante des nächsten Punkts des Umrisses
-      let best = 0, bd = Infinity
-      for (let j = 0; j < p.e.length; j++) { const dd = Math.hypot(p.e[j] - e, p.n[j] - n); if (dd < bd) { bd = dd; best = j } }
-      raus.push({ e, n, z: p.z[best] + p.h[best] + ueber, drehung: zufall(e * 0.37 + n * 0.11) * Math.PI * 2, ab: zufall(e * 0.7 + n * 0.3 + 2),
-        farbe: Math.floor(zufall(e + n * 1.3) * 997) })
-      i++
+      // gegen die Enden weniger: angenommen mit PERRON_ENDE_ANTEIL bis 1
+      const t = laengs(e, n)
+      if (zufall(e * 1.7 + n * 0.3 + 5) > PERRON_ENDE_ANTEIL + (1 - PERRON_ENDE_ANTEIL) * Math.sin(Math.PI * t)) continue
+      // eine Gruppe um diese Stelle, die Leute schauen grob zueinander
+      const w = zufall(e * 0.9 + n * 2.1), gross = Math.min(zahl - i, GRUPPE_PERRON.findIndex((g) => w < g) + 1 || 1)
+      const ab = zufall(e * 0.7 + n * 0.3 + 2)
+      for (let j = 0; j < gross; j++, i++) {
+        const r = j ? GRUPPE_RADIUS_M * (0.5 + 0.5 * zufall(e + j * 3.7)) : 0, a = zufall(n + j * 1.9) * Math.PI * 2
+        let ge = e + Math.cos(a) * r, gn = n + Math.sin(a) * r
+        if (!innen(p, ge, gn) || randAbstand(p, ge, gn) < 0.6) { ge = e + (j ? Math.cos(a) * 0.6 : 0); gn = n + (j ? Math.sin(a) * 0.6 : 0) }
+        // zur Mitte der Gruppe gedreht, etwas gestreut; die Figur schaut nach +z, in der Szene ist +z Süden
+        const zuMitte = j ? Math.atan2(e - ge, -(n - gn)) : zufall(e * 0.37 + n * 0.11) * Math.PI * 2
+        setzen(ge, gn, zuMitte + (zufall(ge * 0.3 + gn) - 0.5) * 0.8, ab + j * 0.03)
+      }
     }
   })
   return raus

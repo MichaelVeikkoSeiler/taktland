@@ -146,6 +146,10 @@ export const STRASSE_QUER_M: [number, number] = [1.1, 2.6]
  *  Breite und so viel dazu, gewählt */
 export const STRASSE_RETUSCHE_AB_M = 6, STRASSE_RETUSCHE_PLUS_M = 1.5
 
+/** Kolonnen: Anteil bis 1, 2, 3, 4 Autos (summiert; 35 % einzeln, 30 % zu zweit, 20 % zu dritt, 15 % zu viert) und der Abstand darin in Sekunden
+ *  Fahrt, gewählt */
+const KOLONNE_GROESSE = [0.35, 0.65, 0.85, 1], KOLONNE_ZEITLUECKE_S = 1.4
+
 /** je Kette eine feste Menge Autos, so viele, wie bei der grössten Dichte (am Tag oder in der Nacht) auf ihr fahren; welche fahren, entscheidet
  *  der Anteil der Stunde (ab) */
 export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [number, number, number | null, number | null] | null): Map<number, AutoKette> {
@@ -181,8 +185,11 @@ export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [
       const jeKm = groesst / sp.kmh
       if (jeKm <= 0) continue
       const mittel = 1000 / jeKm
-      // Abstände zufällig um das Mittel, mindestens eine Lastwagenlänge und etwas
-      let s = zufall(id * 3.1 + sp.spur * 1.3 + sp.richtung) * mittel
+      // in Kolonnen (Michael, 2026-11-11: «nicht so perfekt verteilt, sondern mehr auch eine Anordnung von ein paar Autos hintereinander»): je
+      // Kolonne 1 bis 4 Autos (KOLONNE_GROESSE) mit KOLONNE_ZEITLUECKE_S Abstand, mindestens eine Lastwagenlänge und etwas; die Lücke zur nächsten
+      // so, dass im Mittel dieselbe Dichte bleibt, um ±40 % gestreut; ist der Verkehr so dicht, dass keine Lücke bleibt, wie bisher zufällig um das Mittel
+      const eng = Math.max(LKW_LANG_M + 6, (sp.kmh / 3.6) * KOLONNE_ZEITLUECKE_S)
+      let s = zufall(id * 3.1 + sp.spur * 1.3 + sp.richtung) * mittel, rest = 0, groesse = 1
       while (s < k.L) {
         const z = zufall(id * 17.7 + nr * 0.731)
         // auf der rechten Spur alle gleich schnell, sonst führen Wagen durch die Lastwagen
@@ -190,7 +197,15 @@ export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [
         k.autos.push({ richtung: sp.richtung, spur: sp.spur, ms, s0: s, ab: z, farbe: Math.floor(zufall(id + nr * 1.91) * 997),
           lkw: sp.spur === 0 ? zufall(id * 2.9 + nr * 0.377 + 5) : 2 })
         nr++
-        s += Math.max(LKW_LANG_M + 6, mittel * (0.35 + 1.3 * zufall(id * 5.3 + nr * 1.17)))
+        if (rest <= 0) {
+          const w = zufall(id * 9.1 + nr * 0.53)
+          groesse = KOLONNE_GROESSE.findIndex((g) => w < g) + 1 || 1
+          rest = groesse
+        }
+        rest--
+        const luecke = groesse * mittel - (groesse - 1) * eng
+        s += luecke < 2 * eng ? Math.max(LKW_LANG_M + 6, mittel * (0.35 + 1.3 * zufall(id * 5.3 + nr * 1.17)))
+          : rest > 0 ? eng * (1 + 0.3 * zufall(id * 2.3 + nr * 0.71)) : luecke * (0.6 + 0.8 * zufall(id * 5.3 + nr * 1.17))
       }
     }
   }
