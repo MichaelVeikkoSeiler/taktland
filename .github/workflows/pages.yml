@@ -78,8 +78,13 @@ jobs:
       # Bahnhöfe im Netz verdichten. Klappt es nicht, erscheint die App ohne
       # Fahrplan; der Fahrtmodus sagt dann, dass er fehlt.
       # Fahrplan, Züge und Schiffe einmal am Tag; die Läufe alle 3 Stunden für die Wolken nehmen sie aus dem Zwischenspeicher vom selben Tag
+      # montags und donnerstags ab 13 Uhr UTC neu: die Echtzeit (GTFS-RT) wechselt dann um 15 Uhr auf die neue Fassung des Fahrplans, deren
+      # Fahrtnummern (trip_id) andere sind; mit dem Fahrplan vom Morgen passte sie bis zum nächsten Tag nicht (echtzeit.ts)
       - id: tag
-        run: echo "tag=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+        run: |
+          t=$(date -u +%F)
+          if [ "$(date -u +%u)" = 1 ] || [ "$(date -u +%u)" = 4 ]; then [ "$(date -u +%H)" -ge 13 ] && t="$t-b"; fi
+          echo "tag=$t" >> "$GITHUB_OUTPUT"
       - id: fahrplan
         uses: actions/cache@v4
         with:

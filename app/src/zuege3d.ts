@@ -7,6 +7,7 @@
  */
 import { geometrieLaden, holen, streckenLaden } from './daten'
 import { type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, type Punkt, wegEnde } from './fahrt'
+import type { Echtzeit } from './echtzeit'
 import type { StreckenNetz } from './typen'
 import { type Nachbarn, wegSuchen } from './wegsuche'
 
@@ -23,6 +24,8 @@ export interface ZugFahrt {
   tage: number
   /** die Halte: Betriebspunkt, Ankunft und Abfahrt in Minuten ab Mitternacht des Verkehrstags (null am Anfang und Ende) */
   halte: Array<{ abk: string; an: number | null; ab: number | null; gleis: string | null }>
+  /** Echtzeit je Verkehrstag (Tag ab index.von), wo gemeldet (echtzeit.ts) */
+  echt?: Map<number, Echtzeit>
 }
 
 /** die Daten liegen auf 3dland.ch neben der Seite, nicht bei taktland.ch */
@@ -86,8 +89,8 @@ export const ZUG_STEHT_MIN = 5
 export const ZUG_KURZHALT_VOR_MIN = 10 / 60, ZUG_KURZHALT_NACH_MIN = 20 / 60
 
 export type ZugStelle =
-  | { art: 'halt'; i: number }
-  | { art: 'fahrt'; i: number; anteil: number }
+  | { art: 'halt'; i: number; tag: number }
+  | { art: 'fahrt'; i: number; anteil: number; tag: number }
 
 /** die Halte einer Fahrt ab dem Halt i mit Ankunft und Abfahrt in Minuten ab jetzt, so wie zugStelle sie rechnet (mit den Minuten
  *  vor der ersten Abfahrt und nach der letzten Ankunft und den kurzen Halten); null: heute nicht unterwegs */
@@ -95,25 +98,36 @@ export function zugPlan(f: ZugFahrt, tag: number, minuten: number, i0: number): 
   for (const [d, m] of [[tag, minuten], [tag - 1, minuten + 1440]] as const) {
     if (d < 0 || !((f.tage >> d) & 1)) continue
     const h = f.halte, z = h.length - 1
-    const erst = h[0].ab ?? h[0].an, letzt = h[z].an ?? h[z].ab
-    if (erst === null || letzt === null || m < erst - ZUG_STEHT_MIN || m > letzt + ZUG_STEHT_MIN) continue
+    if (f.echt?.get(d)?.ausfall) continue
+    if ((h[0].ab ?? h[0].an) === null || (h[z].an ?? h[z].ab) === null) continue
+    if (m < haltZeiten(f, 0, d)[0] || m > haltZeiten(f, z, d)[1]) continue
     return h.slice(i0).map((x, j) => {
-      const [an, ab] = haltZeiten(f, i0 + j)
+      const [an, ab] = haltZeiten(f, i0 + j, d)
       return { abk: x.abk, an: an - m, ab: ab - m }
     })
   }
   return null
 }
 
-/** Ankunft und Abfahrt am Halt i in Minuten ab Mitternacht des Verkehrstags, wie die Züge sie fahren */
-export function haltZeiten(f: ZugFahrt, i: number): [number, number] {
+/** Ankunft und Abfahrt am Halt i in Minuten ab Mitternacht des Verkehrstags, wie die Züge sie fahren; mit dem Tag auch mit der Echtzeit, wo
+ *  gemeldet (echtzeit.ts: die Verspätung je Halt, die Abfahrt nie vor der Ankunft) */
+export function haltZeiten(f: ZugFahrt, i: number, tag?: number): [number, number] {
   const h = f.halte, z = h.length - 1
   const erst = h[0].ab ?? h[0].an!, letzt = h[z].an ?? h[z].ab!
   let an = h[i].an ?? h[i].ab!, ab = h[i].ab ?? h[i].an!
   if (i === 0) an = Math.min(an, erst - ZUG_STEHT_MIN)
   if (i === z) ab = Math.max(ab, letzt + ZUG_STEHT_MIN)
   if (i > 0 && i < z && an === ab) { an -= ZUG_KURZHALT_VOR_MIN; ab += ZUG_KURZHALT_NACH_MIN }
+  const e = tag === undefined ? undefined : f.echt?.get(tag)
+  if (e) { an += e.an[i] ?? 0; ab = Math.max(an, ab + (e.ab[i] ?? 0)) }
   return [an, ab]
+}
+
+/** die Verspätung am Halt i in Minuten laut Echtzeit, null ohne Meldung */
+export function haltVerspaetung(f: ZugFahrt, i: number, tag: number, ab = false): number | null {
+  const e = f.echt?.get(tag)
+  if (!e || !e.gemeldet[i]) return null
+  return ab ? e.ab[i] : e.an[i]
 }
 
 /** wo eine Fahrt am Tag und zur Minute laut Fahrplan ist, null: heute nicht unterwegs; auch Fahrten des Vortags nach Mitternacht */
@@ -121,16 +135,18 @@ export function zugStelle(f: ZugFahrt, tag: number, minuten: number): ZugStelle 
   for (const [d, m] of [[tag, minuten], [tag - 1, minuten + 1440]] as const) {
     if (d < 0 || !((f.tage >> d) & 1)) continue
     const h = f.halte, z = h.length - 1
-    const erst = h[0].ab ?? h[0].an, letzt = h[z].an ?? h[z].ab
-    if (erst === null || letzt === null || m < erst - ZUG_STEHT_MIN || m > letzt + ZUG_STEHT_MIN) continue
-    const zeiten = (i: number) => haltZeiten(f, i)
+    // fällt die Fahrt laut Echtzeit aus, fährt sie nicht
+    if (f.echt?.get(d)?.ausfall) continue
+    if ((h[0].ab ?? h[0].an) === null || (h[z].an ?? h[z].ab) === null) continue
+    const zeiten = (i: number) => haltZeiten(f, i, d)
+    if (m < zeiten(0)[0] || m > zeiten(z)[1]) continue
     for (let i = 0; i <= z; i++) {
       const [an, ab] = zeiten(i)
-      if (m >= an && m <= ab) return { art: 'halt', i }
+      if (m >= an && m <= ab) return { art: 'halt', i, tag: d }
       const weiter = h[i + 1]
       if (!weiter) break
       const dort = zeiten(i + 1)[0]
-      if (m > ab && m < dort) return { art: 'fahrt', i, anteil: (m - ab) / Math.max(0.01, dort - ab) }
+      if (m > ab && m < dort) return { art: 'fahrt', i, anteil: (m - ab) / Math.max(0.01, dort - ab), tag: d }
     }
   }
   return null
