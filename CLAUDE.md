@@ -1156,7 +1156,9 @@ dort ergänzen.
 Datenschutz und Haftung (Michael, 2026-10-29: «was jetzt livegeschaltet ist … nicht bedenklich»): in Taktland unter Info
 (komponenten/Anleitung.tsx) auch «Wetter» in «3D Schweiz» (3dland.ch) und daten.taktland.ch, unter «Fehler und Verfügbarkeit» Fahrplan
 und Wetter keine Wirklichkeit und keine Warnungen; auf 3dland.ch in der Fusszeile (src/dreidland.tsx) der Verantwortliche, GitHub Pages
-(USA), cyon, localStorage und derselbe Haftungssatz. Neue Dienste, die die App abruft, dort nennen. Vor LinkedIn nachgeführt (Michael, 2026-11-01: «Sind die Texte punkto Datenquellen und alles, was sein muss, bereit und aktualisiert?»): in 3dland SBB Open Data (Linien, Kilometrierung, Sektortafeln) und BAV genannt, in «3D Schweiz» Wind mit Temperatur und Verlauf, Gleise laut Sektortafeln, Fahrdraht als Annahme, Mitfahren nach Fahrplan.
+(USA), cyon, localStorage und derselbe Haftungssatz. Neue Dienste, die die App abruft, dort nennen. Wanderwege (Michael, 2026-11-12: «Aber Planung für Wandern ist gefährlich ich will ja nicht verantwortlich gemacht werden», dann «Ja, ergänze den Satz zu den Wanderwegen»):
+unter «Fehler und Verfügbarkeit» (Anleitung.tsx), in der Fusszeile von 3dland.ch (dreidland.tsx) und bei den Quellen der Virtuellen Schweiz: nur die Lage laut swissTLM3D,
+ohne Sperrungen, Umleitungen, Zustand und Gefahren, nicht für die Planung einer Wanderung; dafür die Wegweiser vor Ort und die offiziellen Wanderkarten. Vor LinkedIn nachgeführt (Michael, 2026-11-01: «Sind die Texte punkto Datenquellen und alles, was sein muss, bereit und aktualisiert?»): in 3dland SBB Open Data (Linien, Kilometrierung, Sektortafeln) und BAV genannt, in «3D Schweiz» Wind mit Temperatur und Verlauf, Gleise laut Sektortafeln, Fahrdraht als Annahme, Mitfahren nach Fahrplan.
 KI-Bilder (Michael, 2026-10-29: «Führerstand und andere Bilder habe ich mit meinem Chat GPT Plus Account und meinen Promts dort generieren
 lassen»): Auftaktbilder, Bildmarke von 3D-Land und Führerstand mit ChatGPT; so genannt in der Fusszeile (App.tsx, dreidland.tsx), unter
 «Über Taktland» und «Über 3D-Land»; der Führerstand ohne Vorlage Dritter (Michael, 2026-10-29).

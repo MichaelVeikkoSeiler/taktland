@@ -1637,7 +1637,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Felsoberfläche unter dem Lockergestein: swissBEDROCK (swisstopo), siehe «Untergrund in den Wänden».</li>
             <li>Ortschaften, Gipfel und Seen der Suche: swissTLMRegio (swisstopo); Orte und Gipfel der Landeskarte 1:1 Million; Kantone: Bundesamt für Statistik BFS.</li>
             <li>Adressen der Suche: Suche von swisstopo (api3.geo.admin.ch), beim Tippen abgefragt.</li>
-            <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind.</li>
+            <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind. Gezeigt ist nur ihre
+              Lage, ohne Sperrungen, Umleitungen, Zustand und Gefahren; zum Anschauen, nicht für die Planung einer Wanderung. Dafür gelten die Wegweiser vor
+              Ort und die offiziellen Wanderkarten.</li>
             <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
             <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen, Verspätungen und Ausfälle als
               GTFS-Realtime von opentransportdata.swiss über spiel.taktland.ch; Weg zwischen den Halten aus dem
