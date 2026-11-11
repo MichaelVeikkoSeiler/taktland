@@ -956,7 +956,9 @@ export function Fahrtmodus({ fahrweg, text, probefahrt, piepen, titel, beenden, 
             2026-09-26: «Karte noch weiter oben. Oberhalb der Geschwindigkeit»); auf dem Desktop links und
             stehend, alles andere rechts daneben (Michael, 2026-10-12) */}
         <div className="xl:grid xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] xl:items-start xl:gap-8">
-        <div className="min-w-0 xl:sticky xl:top-4">
+        {/* xl:z-10: «sticky» bildet eine eigene Ebene; ohne Höhe lag das Vollbild darin unter der rechten Spalte, deren Ring der Ankündigung schien
+            durch die Frontscheibe (Michael, 2026-11-11: «die Anzeige auf der Windschutzscheibe … runden Kreise mit der Zahl»; nur am Desktop ab 1280 px) */}
+        <div className="min-w-0 xl:sticky xl:top-4 xl:z-10">
         <FahrtKarte fahrweg={fahrweg} objekte={gewaehlt} sJetzt={sJetzt} vollbild={vollbildLeiste} aussen={pultAussen} zurueckKnopf={von3d ? { text: '3D-Land', aktion: zurueckZu3dland } : undefined} dreiDMelden={setDreiD}
                     imFuehrerstand={ankunftKarte}
                     tempo={planJetzt ? planJetzt.v : stand ? stand.v * (probefahrt ? raffer : 1) : null} probefahrt={probefahrt} nachPlan={nachPlan}
