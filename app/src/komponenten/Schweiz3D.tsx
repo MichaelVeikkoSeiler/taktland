@@ -12,7 +12,7 @@ import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
+import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck, spurBei } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1501,6 +1501,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Luftbild nur auf Strassen ab 6 m Breite. Innerorts hält hie und da ein Auto, weil ein Fussgänger die Strasse quert; die Autos dahinter
             warten, fahren danach an und holen auf, manchmal hupt einer. Auch das ist erfunden: Fussgängerstreifen und Fussgänger stehen in keiner
             unserer Quellen.</p>
+          <p>Im Feld von 1 km liegen die Spuren auf Strassen mit Gegenverkehr dort, wo das Luftbild die Fahrbahn zeigt: Quer zur Achse aus
+            swissTLM3D wird alle 6 m gemessen, wie weit der Belag reicht, und jede Richtung fährt in der Mitte ihrer Hälfte (Rechtsverkehr). Das ist eine
+            Schätzung aus den Farben des Bilds, keine Angabe einer Quelle; wo sie nichts Brauchbares ergibt (Trottoirs im selben Grau, Schatten, Bäume),
+            gilt ein Viertel der Breite laut Klasse neben der Achse. Wo die Spuren wirklich liegen, steht in keiner unserer Quellen.</p>
         </Abschnitt>
         <Abschnitt titel="Menschen">
           <p>«Menschen» zeigt in den Feldern von 4 km und 1 km Wartende auf den Perrons, Fussgänger auf den Trottoirs und Wanderer auf den
@@ -1832,6 +1836,8 @@ const KAMERA_NAH_KM = 0.01, KAMERA_NAH_MIN_KM = 0.0005
 const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (8 * Math.PI) / 180
 /** so weit sucht das hintere Ende eines Wagens die Achse des Gleises, auf dem sein vorderes Ende liegt (gewählt; ein Nachbargleis liegt 4 bis 5 m daneben) */
 const ZUG_GLEIS_FOLGEN_M = 2.5
+/** Fahrbahnen im Luftbild messen nur, wo es mindestens so viele Bildpunkte je m hat (im Feld von 1 km; im Feld von 4 km mit 2,5 m je Punkt ergab die Probe bei Naters fast nichts), gewählt */
+const MESS_PX_JE_M = 1
 /** Schiebetüren: Farbe der Öffnung und des Türblatts, höchstens so viele offene Türen zugleich (gewählt) */
 const TUER_LOCH_FARBE = '#1b1b1b', TUER_BLATT_FARBE = '#c4c4c4', TUEREN_HOECHSTENS = 1500
 /** im Feld von 1 km noch kleiner, etwa 3 m breit und 4 m hoch, damit Züge im Bahnhof nebeneinander und unter den Perrondächern Platz haben
@@ -6066,6 +6072,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const p = Array.from(st.e, (e, i) => [e, st.n[i]] as [number, number])
         streifen.push({ p, lo: p.map(() => -r), hi: p.map(() => r) })
       }
+      // die Farben des Luftbilds vor der Retusche, um die Fahrbahnen der übrigen Strassen zu messen (fahrbahnMessen), nur wo das Bild fein genug ist
+      const vorher: Array<{ r: typeof teile[number]['rahmen']; d: Uint8ClampedArray; w: number; h: number; px: number }> = []
+      for (const t of teile) {
+        const c = t.bild, px = c.width / t.rahmen.b
+        if (px < MESS_PX_JE_M) continue
+        const ctx = c.getContext('2d', { willReadFrequently: true })
+        if (ctx) vorher.push({ r: t.rahmen, d: ctx.getImageData(0, 0, c.width, c.height).data, w: c.width, h: c.height, px })
+      }
       for (const t of teile) {
         const r = t.rahmen, c = t.bild
         const hier = streifen.filter((st) => st.p.some(([e, n]) => e > r.e0 - 50 && e < r.e0 + r.b + 50 && n < r.n1 + 50 && n > r.n1 - r.h - 50))
@@ -6090,6 +6104,21 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const zs = z === null || z === undefined ? null : d.index.zaehlstellen[z]
         return zs ? [zs[3], zs[4], zs[6] ?? null, zs[7] ?? null] : null
       })
+      if (vorher.length) {
+        const farbe = (e: number, n: number) => {
+          for (const v of vorher) {
+            const x = Math.floor((e - v.r.e0) * v.px), y = Math.floor((v.r.n1 - n) * v.px)
+            if (x < 0 || y < 0 || x >= v.w || y >= v.h) continue
+            const o = (y * v.w + x) * 4
+            return (v.d[o] << 16) | (v.d[o + 1] << 8) | v.d[o + 2]
+          }
+          return -1
+        }
+        const pxM = 1 / Math.max(...vorher.map((v) => v.px))
+        for (const kk of ketten.values()) fahrbahnMessen(kk, farbe, pxM)
+        vorher.length = 0
+        if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dSpuren: unknown }).s3dSpuren = () => [...ketten.values()].filter((x) => x.art === 2).map((x) => [x.stuecke[0].kette, x.mess ? Math.round(x.mess.mitte.reduce((a, y) => a + y, 0) / x.mess.mitte.length * 10) / 10 : null, x.mess ? Math.round(x.mess.halb.reduce((a, y) => a + y, 0) / x.mess.halb.length * 10) / 10 : null])
+      }
       const zahlAlle = [...ketten.values()].reduce((a, x) => a + x.autos.length, 0)
       // mit den übrigen Strassen mehr (Annahme zur Grafik, nicht gemessen)
       const handy = hoechstensFelder() === 4
@@ -6245,8 +6274,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             if (!p) continue
             const de = p.de * a.richtung, dn = p.dn * a.richtung
             // rechts der Fahrtrichtung: (dn, -de); Fahrbahn einer Richtung: die Spuren um die Achse, die langsame rechts
-            const quer = kk.art === 0 ? ((AUTO_SPUREN - 1) / 2 - a.spur) * AUTO_SPUR_M : kk.quer
-            const e = p.e + dn * quer, n = p.n - de * quer
+            // gemessen: um die Mitte der Fahrbahn im Luftbild, je Richtung in der Mitte ihrer Hälfte (spurBei)
+            const sp = kk.art === 2 ? spurBei(kk, s) : null
+            const quer = kk.art === 0 ? ((AUTO_SPUREN - 1) / 2 - a.spur) * AUTO_SPUR_M : sp ? sp[1] : kk.quer
+            const e = p.e + dn * quer + (sp ? p.dn * sp[0] : 0), n = p.n - de * quer - (sp ? p.de * sp[0] : 0)
             if (!drin(e, n)) continue
             // auf Brücken die gezeichnete Fahrbahn an der Stelle des Autos (deckRef), sonst die eigene Rechnung wie die Brücke
             const deck = p.bruecke ? deckRef.current?.(e, n, p.h) : null
