@@ -446,6 +446,10 @@ Bäume im Wind stärker (Michael, 2026-11-11: «Übrigens bewegen sich die Bäum
              Wind 5 % der Höhe Neigung, ±7 % Wiegen, ±2 % Flattern und bis 4 % Böen (vorher etwa ein Viertel; bei 25 km/h schwankte ein Baum von 15 m um 15 cm)
 Autos gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»): Karosserie, Kabine und Dach als RoundedBoxGeometry mit einer Stufe
              (Radius 20, 16 und 5 cm, gewählt), 108 Dreiecke je Kasten
+Doppelklick im Feld von 1 km in «3D Schweiz» (Michael, 2026-11-11: «Wenn ich auf dem Desktop auf dem 1km Ausschnitt bin, möchte ich durch Doppelklick auf
+             einen Bereich mit der Kamera dort näher rankommen»): nur mit Maus (istDesktop), zwei Klicks ins Gelände bis 450 ms und 40 m auseinander; die Kamera fliegt in
+             0,7 s, das Ziel zur Stelle, der Abstand auf 40 %, nie näher als 1,5-mal minDistance, die Blickrichtung bleibt (NAEHER_* in Schweiz3D.tsx, gewählt); im Browser
+             hier in Bern geprüft (1'352 m, 541 m, 216 m); in der Anleitung genannt
 Echtzeit der Züge in «3D Schweiz» (Michael, 2026-11-11: «Langsam könnten wir uns an die realen Zugfahrzeiten heranwagen», «ok gehen wirs an»): GTFS-Realtime
              (Trip Updates) von opentransportdata.swiss, Protobuf, laut Cookbook auf 0,1 Minuten genau, alle 30 s neu, höchstens 2 Abfragen je Minute und Schlüssel;
              server/spiel/echtzeit.php auf spiel.taktland.ch holt sie mit dem Schlüssel aus daten/echtzeit-schluessel.txt (von Hand, nie ins Repository) höchstens alle
