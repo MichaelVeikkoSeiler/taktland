@@ -1045,7 +1045,7 @@ export function kirchenSchlag(viertel: number, stunde: number | null, laut: numb
 }
 
 /** Pfiff vor der Abfahrt eines Zugs als Aufnahme (Michael, 2026-11-11: «Pfeife 5 sek vor Zugabfahrt. Relativ leise und nicht ganz so lang wie die
- *  Audiospur»): «Referee whistle blow gymnasium» von SpliceSound, freesound.org/s/218318, gekürzt auf etwa 1 s (ohne den Nachhall), auf −20 LUFS,
+ *  Audiospur»): «Referee whistle blow, gymnasium» von SpliceSound, freesound.org/s/218318, CC0, gekürzt auf etwa 1 s (ohne den Nachhall), auf −20 LUFS,
  *  klang/pfiff.mp3; Lautstärke gewählt; lädt sie noch, bleibt es diesmal still */
 const PFIFF_LAUT = 0.35
 export function abfahrtsPfiff(laut: number) {

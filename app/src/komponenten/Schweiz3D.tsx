@@ -1454,8 +1454,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife;
             ebenso die Möwen («ES Seagulls from Window 01» von se2001), das vorbeifahrende Auto («car9» von lndip), das Propellerflugzeug («Propeller plane» von Breviceps), der Helikopter («Helicopter Swirling» von Tiagorlp)
             und die Hupen an Autobahnen, wenn «Autos» an ist («Beeping car horn from inside car» von misperpodcast, «car horn 1» von 3863, «Car Horn Honk 01» von
-            Brett+Butter; alle freesound.org, CC0). Der Pfiff vor der Abfahrt ist eine Aufnahme («Referee whistle blow gymnasium» von SpliceSound,
-            freesound.org), gekürzt; wann gepfiffen wird, ist gewählt, nicht wie am Bahnhof wirklich. Das Flugzeug und der rote Helikopter, die man dazu fliegen sieht, sind gezeichnet und erfunden.</p>
+            Brett+Butter; alle freesound.org, CC0). Der Pfiff vor der Abfahrt ist eine Aufnahme («Referee whistle blow, gymnasium» von SpliceSound,
+            freesound.org, CC0), gekürzt; wann gepfiffen wird, ist gewählt, nicht wie am Bahnhof wirklich. Das Flugzeug und der rote Helikopter, die man dazu fliegen sieht, sind gezeichnet und erfunden.</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird, ob und wann eine Kirche läutet und wie ein Zug oder Schiff abfährt.</p>
         </Abschnitt>
@@ -1617,7 +1617,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               die Brücke dort mit Lage gibt.</li>
             <li>Verkehr in der Stadt: Aufnahme «Background traffic noise» von Froey_, freesound.org (CC0); Kuhglocken: Aufnahme «cowbells2»
               von deleted_user_229898, freesound.org (CC0); Fluss: Aufnahme «Rapidly Flowing Water (loopable)» von Osiruswaltz, freesound.org (CC0); vorbeifahrendes
-              Auto: Aufnahme «car9» von lndip, freesound.org (CC0); Propellerflugzeug: Aufnahme «Propeller plane» von Breviceps, freesound.org (CC0); Helikopter: Aufnahme «Helicopter Swirling» von Tiagorlp, freesound.org (CC0); Hupen: Aufnahmen «Beeping car horn from inside car, engine off» von misperpodcast, «car horn 1» von 3863 und «Car Horn Honk 01 - Single, Distant» von Brett+Butter, freesound.org (CC0); Möwen: Aufnahme «ES Seagulls from Window 01» von se2001, freesound.org (CC0); Fläche der Seen aus ihrem Umriss laut swissTLMRegio (swisstopo).</li>
+              Auto: Aufnahme «car9» von lndip, freesound.org (CC0); Propellerflugzeug: Aufnahme «Propeller plane» von Breviceps, freesound.org (CC0); Helikopter: Aufnahme «Helicopter Swirling» von Tiagorlp, freesound.org (CC0); Pfiff: Aufnahme «Referee whistle blow, gymnasium» von SpliceSound, freesound.org (CC0); Hupen: Aufnahmen «Beeping car horn from inside car, engine off» von misperpodcast, «car horn 1» von 3863 und «Car Horn Honk 01 - Single, Distant» von Brett+Butter, freesound.org (CC0); Möwen: Aufnahme «ES Seagulls from Window 01» von se2001, freesound.org (CC0); Fläche der Seen aus ihrem Umriss laut swissTLMRegio (swisstopo).</li>
             <li>Gebäude ohne Fenster: Gebäudeklasse Industriegebäude oder Behälter, Silos und Lagergebäude laut Gebäude- und Wohnungsregister (GWR),
               Bundesamt für Statistik BFS.</li>
             <li>Schiffe: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen; Kurslinien zwischen den
