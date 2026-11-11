@@ -1491,7 +1491,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             und wie viele in einer Hektare wohnen (STATPOP, Bundesamt für Statistik). Wie viele daraus unterwegs sind, zählt keine Quelle, das ist
             gewählt: Auf den Perrons warten so viele, wie wenn die Hälfte der Ein- und Aussteigenden einsteigt, verteilt auf 18 Betriebsstunden, und
             jede Person 5 Minuten wartet; nachts von 1 bis 5 Uhr niemand. Auf den Trottoirs von Strassen in Siedlungen geht je km ein Viertel der
-            Einwohner einer Hektare rundum, am Abend und in der Nacht weniger. Auf den Wanderwegen ist es am Tag etwa ein Wanderer alle 1,7 km. Die
+            Einwohner einer Hektare rundum, am Abend und in der Nacht weniger. Auf den Wanderwegen ist es am Tag etwa ein Wanderer alle 1,7 km. Auf den
+            Perrons stehen sie in kleinen Gruppen, an den Enden etwas weniger, auf den Trottoirs gehen manche zu zweit oder zu dritt. Die
             Menschen selbst sind erfunden: Gestalt, Kleider, wo genau sie stehen, wohin sie gehen und wie schnell. Sie gehen an Kreuzungen weiter
             und können am Ende eines Wegs verschwinden.</p>
         </Abschnitt>
