@@ -367,8 +367,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Züge und Schiffe in «Virtuelle Schweiz» zeigen den Fahrplan, die Züge mit den gemeldeten Verspätungen, nicht die Wirklichkeit; Wetter, Wolken, Regen und Schnee sind Messungen und
-            Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen. Für Reisen gelten der offizielle Fahrplan und die Angaben der
-            Bahnen, für das Wetter MeteoSchweiz.
+            Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen; die Wanderwege zeigen nur ihre Lage laut swissTLM3D (swisstopo), ohne Sperrungen, Umleitungen, Zustand und Gefahren, und sind nicht für die Planung einer Wanderung gedacht. Für Reisen gelten der offizielle Fahrplan und die Angaben der
+            Bahnen, für das Wetter MeteoSchweiz, für Wanderungen die Wegweiser vor Ort und die offiziellen Wanderkarten.
           </li>
           <li>
             Taktland ist ein freiwilliges, kostenloses Angebot. Es besteht kein Anspruch darauf, dass

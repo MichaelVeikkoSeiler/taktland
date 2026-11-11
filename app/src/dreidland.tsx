@@ -62,7 +62,7 @@ function DreiDLand() {
           </p>
           <p className="mt-1">
             Ein privates Projekt zum Anschauen, nicht für die Reiseplanung: Züge und Schiffe zeigen den Fahrplan, die Züge mit gemeldeten Verspätungen, nicht die Wirklichkeit; Wetter,
-            Wolken, Regen und Schnee sind Messungen und Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen. Alle Angaben ohne
+            Wolken, Regen und Schnee sind Messungen und Prognosen von MeteoSchweiz, gezeichnet mit Annahmen, keine Warnungen; die Wanderwege zeigen nur ihre Lage laut swissTLM3D (swisstopo), ohne Sperrungen, Umleitungen, Zustand und Gefahren, und sind nicht für die Planung einer Wanderung gedacht. Alle Angaben ohne
             Gewähr; die Seite kann ohne Ankündigung geändert oder eingestellt werden.
           </p>
           <p className="mt-1">
