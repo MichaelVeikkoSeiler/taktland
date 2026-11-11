@@ -24,7 +24,7 @@ import { Ladefehler } from './Ladefehler'
 import { Zurueck } from './Zurueck'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
-import { AUTO_SPITZE_S, autoKlangLaden, autoVorbei, HELIKOPTER_DAUER_S, HELIKOPTER_SPITZE_S, helikopterZeigen, hupe, knopfTon, propellerZeigen, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
+import { abfahrtsPfiff, AUTO_SPITZE_S, autoKlangLaden, autoVorbei, HELIKOPTER_DAUER_S, HELIKOPTER_SPITZE_S, helikopterZeigen, hupe, knopfTon, propellerZeigen, schiffshorn, umgebungHoeren, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
@@ -1445,8 +1445,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
             Verkehr, ab und zu einen Bus, auf dem Land von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
             einen Traktor, nahe an einem Fluss sein Rauschen, an Seen ab 15 km² am Tag Möwen, überall ab und zu ein Flugzeug (ein Propellerflugzeug nur von 6 bis 20 Uhr), mit «Autos» jedes Auto, das nahe vorbeifährt, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
-            Viertelstunde (zur vollen Stunde mit den Stundenschlägen), mit
-            «Schiffe» das Horn, wenn ein Schiff ablegt. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
+            Viertelstunde (zur vollen Stunde mit den Stundenschlägen), mit «Züge» 5 Sekunden vor der Abfahrt laut Fahrplan ein Pfiff, wenn der Zug in
+            der Nähe hält, mit «Schiffe» das Horn, wenn ein Schiff ablegt. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
             einer Stadt hört man weiter, auch im Feld von 16 km und noch gut einen Kilometer neben der Siedlung, leiser.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo Siedlungen, Flüsse und Kirchen liegen (swissTLMRegio von swisstopo), dazu die Jahres- und Tageszeit
             der Szene und wann Züge und Schiffe laut Fahrplan abfahren.</p>
@@ -1454,7 +1454,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife;
             ebenso die Möwen («ES Seagulls from Window 01» von se2001), das vorbeifahrende Auto («car9» von lndip), das Propellerflugzeug («Propeller plane» von Breviceps), der Helikopter («Helicopter Swirling» von Tiagorlp)
             und die Hupen an Autobahnen, wenn «Autos» an ist («Beeping car horn from inside car» von misperpodcast, «car horn 1» von 3863, «Car Horn Honk 01» von
-            Brett+Butter; alle freesound.org, CC0). Das Flugzeug und der rote Helikopter, die man dazu fliegen sieht, sind gezeichnet und erfunden.</p>
+            Brett+Butter; alle freesound.org, CC0). Der Pfiff vor der Abfahrt ist eine Aufnahme («Referee whistle blow gymnasium» von SpliceSound,
+            freesound.org), gekürzt; wann gepfiffen wird, ist gewählt, nicht wie am Bahnhof wirklich. Das Flugzeug und der rote Helikopter, die man dazu fliegen sieht, sind gezeichnet und erfunden.</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird, ob und wann eine Kirche läutet und wie ein Zug oder Schiff abfährt.</p>
         </Abschnitt>
@@ -1792,7 +1793,7 @@ const ZUG_FERN = 0.018
 /** fürs Zuggeräusch: ein Zug dort, wo die Kamera hinschaut, klingt wie aus so vielen Metern, nähere und fernere im selben Verhältnis (gewählt) */
 const ZUG_HOEREN_BLICK_M = 150
 /** Pfiff zur Abfahrt (Michael, 2026-11-10: «5 (Pfiff)»): nur bei einem Zug bis so viele Meter (wie fürs Zuggeräusch gerechnet), nach aussen leiser (gewählt) */
-const PFIFF_BIS_M = 600
+const PFIFF_BIS_M = 600, PFIFF_VOR_S = 5
 /** Horn eines Schiffs beim Ablegen (Michael, 2026-11-10, gewählt): bis so viele Meter wie fürs Zuggeräusch gerechnet, ein Horn trägt weiter (gewählt) */
 const HORN_BIS_M = 2500
 /** in der Brille: so viele Meter fürs Ohr je Meter zwischen Kopf und Zug im Raum (gewählt): 3 cm klingen wie 30 m, laut; 15 cm wie 150 m,
@@ -5600,17 +5601,22 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const tempo = alt && dtH > 0 && dtH < 1 ? (alt.p.distanceTo(p) * 1000) / dtH : 0
           const abstandM = brille ? k.wurzel.localToWorld(welt.copy(p)).distanceTo(auge) * (stehenAn ? 1 : ZUG_HOEREN_BRILLE) : d * ohr
           liste.push({ abstandM, tempoMs: tempo })
-          // Pfiff zur Abfahrt: der Zug stand am Halt i und fährt jetzt von dort weg (nur wenn die Zeit von selbst läuft, nicht bei einer Zeitreise)
-          const stJ = zugStelle(gezeichnet[z], jetzt.tag, jetzt.minuten)
-          const vorher = haltVorher.get(gezeichnet[z].id)
-          if (stJ?.art === 'fahrt' && vorher === stJ.i && Math.abs(jetzt.minuten - pfiffMinute) < 0.2 && abstandM < PFIFF_BIS_M) pfiffAbstand = Math.min(pfiffAbstand, abstandM)
-          haltNeu.set(gezeichnet[z].id, stJ?.art === 'halt' ? stJ.i : -1)
+          // Pfiff 5 s vor der Abfahrt laut Fahrplan (Michael, 2026-11-11: «Pfeife 5 sek vor Zugabfahrt»): die Zeit bis zur Abfahrt am Halt fällt unter
+          // PFIFF_VOR_S (nur wenn die Zeit von selbst läuft, nicht bei einer Zeitreise)
+          const fz = gezeichnet[z], stJ = zugStelle(fz, jetzt.tag, jetzt.minuten)
+          let bisAb = Infinity
+          if (stJ?.art === 'halt' && stJ.i < fz.halte.length - 1) {
+            const [an, ab] = haltZeiten(fz, stJ.i), mm = jetzt.minuten >= an - 1e-6 && jetzt.minuten <= ab + 1e-6 ? jetzt.minuten : jetzt.minuten + 1440
+            bisAb = (ab - mm) * 60
+          }
+          const vorher = haltVorher.get(fz.id) ?? Infinity
+          if (vorher > PFIFF_VOR_S && bisAb <= PFIFF_VOR_S && bisAb > 0 && Math.abs(jetzt.minuten - pfiffMinute) < 0.2 && abstandM < PFIFF_BIS_M) pfiffAbstand = Math.min(pfiffAbstand, abstandM)
+          haltNeu.set(fz.id, bisAb)
         }
         hoerAlt = neu
         haltVorher = haltNeu; haltNeu = new Map()
         pfiffMinute = jetzt.minuten
-        // der Pfiff zur Abfahrt ist vorerst still (Michael, 2026-11-11: «Pfeife beim Abfahren entfernen ich liefere was nach»); die Abfahrt wird weiter erkannt,
-        // pfiffAbstand ist dann der Abstand des nächsten abfahrenden Zugs
+        if (pfiffAbstand < PFIFF_BIS_M) abfahrtsPfiff((1 - pfiffAbstand / PFIFF_BIS_M) ** 2)
         pfiffAbstand = Infinity
         zuegeHoeren(liste, brille)
         if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHoeren: unknown }).s3dHoeren = { liste: liste.slice().sort((x, y) => x.abstandM - y.abstandM).slice(0, 3), ohr, blickM, zahl, zuege: mitten.slice(0, zahl).map((m) => { const l = k.wurzel.userData.lage as { cE: number; cN: number }; return [l.cE + m[0].x * 1000, l.cN - m[0].z * 1000, m[0].y * 1000] }) }
