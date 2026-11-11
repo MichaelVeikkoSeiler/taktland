@@ -462,6 +462,9 @@ Schild der Züge, Fenster und Pfiff (Michael, 2026-11-11: «Kannst du bei den Z�
              data/zuege3d (nur Halte im Netz, ein Zug aus dem Ausland kommt dann von der Grenze; so in der Anleitung); das Fensterband 0,27 statt 0,34 der Höhe,
              die Mitte bleibt, die Türen behalten ihre Höhe (TUER_BAND in ZugForm.ts), überall, wo die Form gilt; der Pfiff zur Abfahrt ist still, bis Michael
              eine Aufnahme schickt (die Abfahrt wird weiter erkannt, pfiffAbstand), aus Anleitung und «Was erfunden ist» genommen
+Desktop in «3D Schweiz» (Michael, 2026-11-11: «Eintauchen beim Desktop unten rechts oberhalb der Icons. Alle Icons ca 130% vergrössern auf dem Desktop»):
+             mit Maus (hover und pointer fine, istDesktop) die Reihe unten rechts (Suche, Lupe, Mein Standort, Augenhöhe, XR, Vollbild) mit zoom 1,3
+             (DESKTOP_KNOPF_MASS), «Eintauchen» rechts darüber; Handy und Tablet wie bisher
 Halten für Fussgänger in «3D Schweiz» (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): innerorts
              (Ketten der übrigen Strassen mit Tempo bis 35 km/h) beginnt je Sekunde mit 7 % ein Halt (nachts 30 % davon), wenn Autos bis 450 m um die Hörstelle fahren,
              höchstens 2 zugleich (HALT_* in Autos.ts): das Auto hält 15 m weiter vor einer Linie, ein gezeichneter Fussgänger (1,75 m, fussgaenger) quert 2,5 m davor
