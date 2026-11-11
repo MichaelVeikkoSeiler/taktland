@@ -1397,7 +1397,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Ein Tipp neben das Modell nimmt die Wahl zurück. Die Zeile unter dem Modell (Schweiz › Region …) führt eine Stufe zurück.</p>
         </Abschnitt>
         <Abschnitt titel="Drehen und zoomen">
-          <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
+          <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen; am Computer fliegt im Feld von 1 km ein Doppelklick näher an die Stelle. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
             Modell im Vollbild.</p>
         </Abschnitt>
         {/* Michael, 2026-11-10: Vorschlag «Auf Augenhöhe stehen … und sich umschauen», gewählt mit «Icon mit Männchen», «alle Devices» */}
@@ -1825,6 +1825,8 @@ const ZUG_NAH_MASS = 0.6
 /** so hoch bleibt die Kamera mindestens über dem Gelände, in km (Michael, 2026-11-06: «bis circa 3 Meter über den Boden die Perspektive richten
  *  können»; vorher 0,4 % der Breite des Modells, im Feld von 1 km 4 m, in dem von 4 km 16 m); gewählt */
 const KAMERA_UEBER_GELAENDE_KM = 0.003
+/** Doppelklick am Desktop im Feld von 1 km: zwei Klicks bis so viele ms und km auseinander, Flug in so vielen s auf diesen Anteil des Abstands, gewählt */
+const NAEHER_DOPPEL_MS = 450, NAEHER_DOPPEL_KM = 0.04, NAEHER_S = 0.7, NAEHER_FAKTOR = 0.4
 /** auf Augenhöhe (Michael, 2026-11-10): das Auge so hoch über dem Gelände, die Kamera so weit hinter dem Drehpunkt, die vordere Schnittebene,
  *  Tempo beim Gehen (Pfeiltasten, Thumbstick; mit Umschalt zehnmal so schnell) und Drehen in der Brille (alles gewählt) */
 /** Ich-Blick in der Brille: Tempo des Bogens in m/s (so weit springt man, etwa 15 m), ab so viel Grad nach oben gilt der Himmel, Höhe des Männchens
@@ -3561,8 +3563,31 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const kanten = new THREE.LineSegments(new THREE.EdgesGeometry(box), kantenMaterial)
       for (const o of [mesh, kanten]) { o.position.set(X(fd.e), (y0 + y1) / 2, Z(fd.n)); kasten.add(o) }
     }
+    // Doppelklick am Desktop im Feld von 1 km (Michael, 2026-11-11: «möchte ich durch Doppelklick auf einen Bereich mit der Kamera dort näher
+    // rankommen»): die Kamera fliegt in NAEHER_S zur Stelle, das Ziel dorthin, der Abstand auf NAEHER_FAKTOR, nie näher als minDistance; die
+    // Richtung des Blicks bleibt
+    let letzterTipp = { t: 0, p: new THREE.Vector3() }, flug: (() => void) | null = null
+    const naeherFliegen = (ziel: THREE.Vector3) => {
+      if (flug) { const i = k.jeBild.indexOf(flug); if (i >= 0) k.jeBild.splice(i, 1) }
+      const st = k.steuerung, kam = k.kamera, t0 = st.target.clone(), versatz = kam.position.clone().sub(t0)
+      const d0 = versatz.length(), d1 = Math.max(st.minDistance * 1.5, d0 * NAEHER_FAKTOR), start = performance.now()
+      const schritt = () => {
+        const a = Math.min(1, (performance.now() - start) / (NAEHER_S * 1000)), e = a * a * (3 - 2 * a)
+        st.target.lerpVectors(t0, ziel, e)
+        kam.position.copy(st.target).addScaledVector(versatz, (d0 + (d1 - d0) * e) / d0)
+        st.update()
+        if (a >= 1) { const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1); flug = null }
+      }
+      flug = schritt
+      k.jeBild.push(schritt)
+    }
     // ein Tipp oder Abzug: ins gewählte Feld nochmals in der Brille taucht ein, sonst ein neues Feld
     k.wenn.tipp = (p) => {
+      if (stufe === 'nah' && istDesktop() && !k.inBrille()) {
+        const jetzt = performance.now(), doppel = jetzt - letzterTipp.t < NAEHER_DOPPEL_MS && p.distanceTo(letzterTipp.p) < NAEHER_DOPPEL_KM
+        letzterTipp = { t: doppel ? 0 : jetzt, p: p.clone() }
+        if (doppel) { naeherFliegen(k.wurzel.localToWorld(p.clone())); return }
+      }
       const e = cE + p.x * 1000, n = cN - p.z * 1000
       const fd = feldJetzt
       if (k.inBrille() && fd && Math.abs(e - fd.e) <= fd.seite / 2 && Math.abs(n - fd.n) <= fd.seite / 2) { cb.current.eintauchen(); return }
