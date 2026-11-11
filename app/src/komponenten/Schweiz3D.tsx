@@ -708,6 +708,18 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [jetztAn, setJetztAn] = useState(true)
   const [tablet] = useState(istTablet)
   const [desktop] = useState(istDesktop)
+  // am Desktop «XR» nur, wo der Browser eine Brille meldet (Michael, 2026-11-11: «Desktop: XR funktioniert nicht daher Button entfernen. Auf der Brille
+  // muss es aber sein»); in der Brille (Quest) meldet er immersive-vr, Handy und Tablet wie bisher
+  const [xrDa, setXrDa] = useState(!desktop)
+  useEffect(() => {
+    if (!desktop) return
+    const x = navigator.xr
+    if (!x) return
+    let weg = false
+    void Promise.all([x.isSessionSupported('immersive-vr').catch(() => false), x.isSessionSupported('immersive-ar').catch(() => false)])
+      .then(([vr, ar]) => { if (!weg) setXrDa(vr || ar) })
+    return () => { weg = true }
+  }, [desktop])
   const [umweltHier, setUmweltHier] = useState(false)
   const [umweltGanzDa, setUmweltGanzDa] = useState(false)
   const [meldung, setMeldung] = useState<string | null>(null)
@@ -1177,11 +1189,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               </svg>
             </button>
           )}
-          <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
+          {xrDa && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
                   // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
                   className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
             XR
-          </button>
+          </button>}
           {!voll && <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />}
         </div>
         {/* oben rechts immer die Uhr der Szene, ein Tipp öffnet die Eingabe auf die Minute (Michael, 2026-11-07: «Oben soll man immer die Uhrzeit der

@@ -465,6 +465,8 @@ Schild der Züge, Fenster und Pfiff (Michael, 2026-11-11: «Kannst du bei den Z�
 Desktop in «3D Schweiz» (Michael, 2026-11-11: «Eintauchen beim Desktop unten rechts oberhalb der Icons. Alle Icons ca 130% vergrössern auf dem Desktop»):
              mit Maus (hover und pointer fine, istDesktop) die Reihe unten rechts (Suche, Lupe, Mein Standort, Augenhöhe, XR, Vollbild) mit zoom 1,3
              (DESKTOP_KNOPF_MASS), «Eintauchen» rechts darüber; Handy und Tablet wie bisher
+             «XR» am Desktop nur, wo der Browser immersive-vr oder immersive-ar meldet (xrDa; Michael, 2026-11-11: «Desktop: XR funktioniert nicht daher
+             Button entfernen. Auf der Brille muss es aber sein»); in der Brille und auf Handy und Tablet wie bisher
 Halten für Fussgänger in «3D Schweiz» (Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»): innerorts
              (Ketten der übrigen Strassen mit Tempo bis 35 km/h) beginnt je Sekunde mit 7 % ein Halt (nachts 30 % davon), wenn Autos bis 450 m um die Hörstelle fahren,
              höchstens 2 zugleich (HALT_* in Autos.ts): das Auto hält 15 m weiter vor einer Linie, ein gezeichneter Fussgänger (1,75 m, fussgaenger) quert 2,5 m davor
