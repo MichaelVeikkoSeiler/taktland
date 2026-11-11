@@ -5181,6 +5181,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // werden. Die Kamera muss vom gleichbleibenden Kamerastandort den Zug verfolgen bis er aus dem Ausschnitt fährt oder man die Perspektive selber
     // wechselt»): sobald der Zug gezeichnet ist, steht die Kamera wie beim Wechsel zu ihm, danach bleibt sie stehen und schaut ihm nach; eigenes
     // Drehen oder Zoomen (start der Steuerung) beendet es, ebenso wenn er RUECKKEHR_WEG_BILDER Bilder lang fehlt; nicht in der Brille
+    // nur in der Testfassung: die Kamera fährt neben einem Zug mit (für Videos der Seite taktland.ch), seitlich, voraus und darüber in Metern
+    let nebenher: { fahrt: number; seite: number; vor: number; hoch: number; d: THREE.Vector3 | null } | null = null
+    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dNebenher: unknown }).s3dNebenher = (fahrt: number | null, seiteM = 40, vorM = 20, hochM = 8) => {
+      nebenher = fahrt === null ? null : { fahrt, seite: seiteM / 1000, vor: vorM / 1000, hoch: hochM / 1000, d: null }
+    }
     let folgt = rueckkehr && rueckkehr.stufe === stufe && (rueckkehr.bis ?? 0) > performance.now() ? { r: rueckkehr, gesetzt: false, weg: 0 } : null
     const folgenLos = () => { folgt = null }
     k.steuerung.addEventListener('start', folgenLos)
@@ -5702,6 +5707,17 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           // OrbitControls rechnet den Abstand aus der Lage der Kamera neu: sie bleibt stehen und dreht sich zum Zug
           k.steuerung.target.copy(k.wurzel.localToWorld(c)); k.steuerung.update(); folgt.weg = 0
         } else if (folgt.gesetzt ? ++folgt.weg > RUECKKEHR_WEG_BILDER : performance.now() > (folgt.r.bis ?? 0)) folgt = null
+      }
+      if (import.meta.env.VITE_S3D_TEST && nebenher) {
+        const z = gezeichnet.findIndex((f) => f.id === nebenher!.fahrt), ms = z >= 0 ? mitten[z] : undefined, c = zugMitte(z)
+        if (c && ms?.[0] && ms[ms.length - 1]) {
+          const d = ms[0].clone().sub(ms[ms.length - 1]); d.y = 0; d.normalize()
+          nebenher.d = nebenher.d ? nebenher.d.lerp(d, 0.05).normalize() : d
+          const r = nebenher.d, quer = new THREE.Vector3(-r.z, 0, r.x)
+          const augeN = c.clone().addScaledVector(r, nebenher.vor).addScaledVector(quer, nebenher.seite); augeN.y += nebenher.hoch
+          k.kamera.position.copy(k.wurzel.localToWorld(augeN)); k.steuerung.target.copy(k.wurzel.localToWorld(c.clone()))
+          k.kamera.near = 0.002; k.kamera.updateProjectionMatrix(); k.kamera.lookAt(k.steuerung.target)
+        }
       }
       offeneTueren.current = neueTueren
       for (const x of [loecher, blaetter]) { x.count = tuerZahl; x.instanceMatrix.needsUpdate = true }
