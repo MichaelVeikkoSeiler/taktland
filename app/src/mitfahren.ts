@@ -83,3 +83,17 @@ export function von3dlandMerken(hash: string) {
   const z = q.get('zurueck')
   zurueckNach = z && z.startsWith('#/3dland?') ? z : null
 }
+
+/** wie die Virtuelle Schweiz war, als man in den Führerstand wechselte (Michael, 2026-11-11: «alle Knöpfe identisch bleiben», «aus dem selben Winkel
+ *  und Entfernung Sicht auf den Zug»): der Zug, wo die Kamera zu ihm stand (im Raum des Modells, km), die Schalter, der Ton und die Stufe; nur im selben
+ *  Tab, nach einem Neuladen gilt wieder die Adresse allein; bis: bis wann die Virtuelle Schweiz nach der Rückkehr den Zug sucht (performance.now) */
+export interface Rueckkehr {
+  fahrt: number
+  versatz: [number, number, number]
+  schalter: Record<string, boolean>
+  stumm: boolean
+  stufe: 'region' | 'ort' | 'nah'
+  bis?: number
+}
+export let rueckkehr: Rueckkehr | null = null
+export function rueckkehrMerken(r: Rueckkehr | null) { rueckkehr = r }
