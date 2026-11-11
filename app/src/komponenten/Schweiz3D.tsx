@@ -135,6 +135,10 @@ const spaeterWeg = (materialien: Array<THREE.Material | undefined>) => {
   setTimeout(() => { for (const m of materialien) m?.dispose() }, MATERIAL_WEG_MS)
 }
 /** ein Tablet: Touch und die kürzere Seite des Bildschirms ab 700 Bildpunkten (wie bei hoechstens und den Schatten) */
+/** am Desktop (Maus): die Knöpfe unten rechts 1,3-mal so gross, «Eintauchen» darüber (Michael, 2026-11-11: «Eintauchen beim Desktop unten rechts
+ *  oberhalb der Icons. Alle Icons ca 130% vergrössern auf dem Desktop») */
+const istDesktop = () => matchMedia('(hover: hover) and (pointer: fine)').matches
+const DESKTOP_KNOPF_MASS = 1.3
 const istTablet = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) >= 700
 const hoechstens = () => (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 4 : 9)
 const hoechstensFelder = hoechstens
@@ -703,6 +707,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // Knopf aktiv gedrückt. Erst eine manuelle Zeitverschiebung deaktiviert ihn»); gedrückt folgt die Zeit der Uhr, je 15 Minuten
   const [jetztAn, setJetztAn] = useState(true)
   const [tablet] = useState(istTablet)
+  const [desktop] = useState(istDesktop)
   const [umweltHier, setUmweltHier] = useState(false)
   const [umweltGanzDa, setUmweltGanzDa] = useState(false)
   const [meldung, setMeldung] = useState<string | null>(null)
@@ -1141,7 +1146,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {/* unten rechts die Suche, die Lupe, Mein Standort, XR und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll
             neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
             den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
-        <div className="absolute bottom-2 right-2 flex max-w-[calc(100%-1rem)] items-center gap-2">
+        <div className="absolute bottom-2 right-2 flex max-w-[calc(100%-1rem)] items-center gap-2" style={desktop ? { zoom: DESKTOP_KNOPF_MASS, maxWidth: `calc((100% - 1rem) / ${DESKTOP_KNOPF_MASS})` } : undefined}>
           {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
           {/* eine Stufe hinaus, hinein geht es mit «Eintauchen» (Michael, 2026-10-30: «Die Fokusstufen müssen auch im Vollformat-Modus
               umgeschaltet werden können … wobei man nur hinauszoomen muss»; seit 2026-11-03 auch ausserhalb des Vollbilds, Michael: «Die Lupe zum
@@ -1236,8 +1241,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           // links und 1,5-mal so gross (Michael, 2026-10-29: «auf dem Tablet … unten links sein. Und noch 150% größer»)
           <button type="button" onClick={() => void eintauchen()} disabled={laedt}
                   // so gross wie «Fahren» im Kopf (Michael, 2026-10-25: «gleiche Grösse wie der Button Fahren»)
-                  className={'absolute left-2 rounded-lg bg-sbb-red font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 ' + (tablet
-                    ? 'bottom-2 px-[18px] py-[9px] text-2xl' : 'top-2 px-3 py-1.5 text-base max-[359px]:text-[14px]')}>
+                  className={'absolute rounded-lg bg-sbb-red font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 ' + (tablet
+                    ? 'left-2 bottom-2 px-[18px] py-[9px] text-2xl' : desktop ? 'right-2 bottom-[60px] px-3 py-1.5 text-base'
+                      : 'left-2 top-2 px-3 py-1.5 text-base max-[359px]:text-[14px]')}>
             {laedt ? 'Wird geladen …' : 'Eintauchen'}
           </button>
         )}
