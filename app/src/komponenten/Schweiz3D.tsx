@@ -9,7 +9,7 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, type Strassenlampen } from './Strassenlicht'
-import { anteilStunde, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, TROTTOIR_M, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
+import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck } from './Autos'
@@ -29,10 +29,10 @@ import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
-import { jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
+import { haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
 import { planText } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
-import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
+import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_LUECKE_M, ZUG_MASS_BREITE, ZUG_WAGEN, ZUG_WAGEN_M, tuerStellen, zugFormen } from './ZugForm'
 import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
 import { SCHIFF_M, schiffForm } from './SchiffForm'
 import { type Schiffe, schiffBei, schiffeLaden } from '../schiffe3d'
@@ -1494,6 +1494,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Perrons stehen sie in kleinen Gruppen, an den Enden etwas weniger, auf den Trottoirs gehen manche zu zweit oder zu dritt. Die
             Menschen selbst sind erfunden: Gestalt, Kleider, wo genau sie stehen, wohin sie gehen und wie schnell. Sie gehen an Kreuzungen weiter
             und können am Ende eines Wegs verschwinden.</p>
+          <p>Sind auch «Züge» an, öffnen sich an einem Halt die Schiebetüren auf der Seite des Perrons: einige Sekunden nach der Ankunft laut
+            Fahrplan, und sie schliessen einige Sekunden vor der Abfahrt. Zuerst steigen an jeder Tür bis zu drei Personen aus und gehen über den
+            Perron davon, dann gehen Wartende aus der Nähe zur Tür und steigen ein; an ihrer Stelle wartet nach einigen Minuten jemand Neues. Wer
+            wann und an welcher Tür ein- oder aussteigt, steht in keiner Quelle, das ist erfunden, ebenso die Türen selbst.</p>
         </Abschnitt>
         <Abschnitt titel="Wetter: Wind und Niederschlag">
           <p>«Wetter» zeigt immer vier Windhosen, je eine in der Mitte jedes Viertels des Modells. Die Zahlen über dem Mast sind der Wind in km/h der Station, die dem Platz am nächsten liegt (die Windhose steht
@@ -1648,7 +1652,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               Siedlungen und Bahnhöfe liegen (swissTLM3D, swissTLMRegio); Abstand, Farbe, Helligkeit, Höhe und Stellung der Masten sind gewählt. Ebenso die
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
             <li>Menschen: alle, ihre Gestalt, Kleider, Lage, Richtung und Tempo, und die Anteile, mit denen aus den Ein- und Aussteigenden und den
-              Einwohnern eine Menge wird.</li>
+              Einwohnern eine Menge wird; wer an einem Halt aus- und einsteigt, die Schiebetüren der Züge und wann sie sich öffnen und schliessen.</li>
             <li>Autos und Lastwagen: ihre Gestalt, Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn, alle Lastwagen rechts;
               auf den übrigen Strassen eine Spur je Richtung, das Tempo nach der Breite, Kreuzungen ohne Ampeln und Vortritt.
               Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA; auf den übrigen
@@ -1810,6 +1814,8 @@ const KAMERA_NAH_KM = 0.01, KAMERA_NAH_MIN_KM = 0.0005
 const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (8 * Math.PI) / 180
 /** so weit sucht das hintere Ende eines Wagens die Achse des Gleises, auf dem sein vorderes Ende liegt (gewählt; ein Nachbargleis liegt 4 bis 5 m daneben) */
 const ZUG_GLEIS_FOLGEN_M = 2.5
+/** Schiebetüren: Farbe der Öffnung und des Türblatts, höchstens so viele offene Türen zugleich (gewählt) */
+const TUER_LOCH_FARBE = '#1b1b1b', TUER_BLATT_FARBE = '#c4c4c4', TUEREN_HOECHSTENS = 1500
 /** im Feld von 1 km noch kleiner, etwa 3 m breit und 4 m hoch, damit Züge im Bahnhof nebeneinander und unter den Perrondächern Platz haben
  *  (Michael, 2026-10-30, Bern: «Bei dieser Ansicht sind die Züge etwas zu gross … unter der Decke sind und nicht an der Decke ankommen»; vorher
  *  wie im Feld von 4 km gut 5 m breit und fast 7 m hoch), gewählt */
@@ -2086,6 +2092,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   const [retuschen, setRetuschen] = useState(0)
   // Höhe der gezeichneten Strassenbrücken für die Autos (deckSuche in Bruecken.ts)
   const deckRef = useRef<((e: number, n: number, h: number) => number | null) | null>(null)
+  /** die offenen Türen haltender Züge am Perron, je Bild von den Zügen gesetzt, für das Ein- und Aussteigen der Menschen */
+  const offeneTueren = useRef<OffeneTuer[]>([])
   const welt = useRef<Welt | null>(null)
   const kern = useRef<{
     renderer: THREE.WebGLRenderer; szene: THREE.Scene; kamera: THREE.PerspectiveCamera; steuerung: OrbitControls
@@ -4880,6 +4888,27 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       lampeM.copy(m).multiply(lampeT).multiply(lampeS.makeScale(r0, r0, r0 * 0.5))
       lampen.setMatrixAt(nr, lampeM)
     }
+    // Schiebetüren am Halt (Michael, 2026-11-11: «Bei den Türen die sich öffnen? Türe sollen Schiebetüren sein»): je offene Tür ein dunkles Loch
+    // und ein Türblatt, das aussen am Wagen zur Mitte des Wagens hin gleitet; nur auf der Seite, auf der laut data/perrons3d ein Perron liegt, nur in
+    // den Feldern von 4 km und 1 km (Zeiten in Menschen.ts, Gestalt und Farben gewählt)
+    const tuerForm = Array.from({ length: ZUG_WAGEN + 1 }, (_, i) => tuerStellen(i, i === 0 ? ZUG_LOK_M : ZUG_WAGEN_M)), tf0 = tuerForm[1]
+    const tuerHoch = tf0.oberkante - tf0.unterkante, tuerMitteY = (tf0.oberkante + tf0.unterkante) / 2, blattDick = ZUG_BREITE * 0.012
+    const lochGeo = new THREE.PlaneGeometry(tf0.b, tuerHoch).rotateY(Math.PI / 2)
+    const blattGeo = new RoundedBoxGeometry(blattDick, tuerHoch * 0.985, tf0.b * 0.98, 2, blattDick * 0.4)
+    const lochStoff = new THREE.MeshLambertMaterial({ color: TUER_LOCH_FARBE, side: THREE.DoubleSide })
+    const blattStoff = new THREE.MeshLambertMaterial({ color: TUER_BLATT_FARBE })
+    randSchnitt(lochStoff, b, lage); randSchnitt(blattStoff, b, lage)
+    const loecher = new THREE.InstancedMesh(lochGeo, lochStoff, TUEREN_HOECHSTENS), blaetter = new THREE.InstancedMesh(blattGeo, blattStoff, TUEREN_HOECHSTENS)
+    for (const x of [loecher, blaetter]) { x.count = 0; x.frustumCulled = false; gruppe.add(x) }
+    const tuerP = new THREE.Vector3(), tuerA = new THREE.Vector3(), tuerM = new THREE.Matrix4(), tuerT = new THREE.Matrix4()
+    // je Tür und Halt, ob vor ihr ein Perron liegt (die Höhe seines Belags) oder nicht
+    const tuerPerron = new Map<string, number | null>()
+    let perronListe: Awaited<ReturnType<typeof perronsIn>> = []
+    if (stufe === 'ort' || stufe === 'nah') {
+      const rand = [...b.teile.values()].map((t) => t.rahmen)
+      void perronsIn(Math.min(...rand.map((x) => x.e0)), Math.min(...rand.map((x) => x.n1 - x.h)), Math.max(...rand.map((x) => x.e0 + x.b)), Math.max(...rand.map((x) => x.n1)))
+        .then((l) => { if (!weg) perronListe = l }).catch(() => {})
+    }
     const netzVon = (geo: THREE.BufferGeometry, je: number) => {
       const n = new THREE.InstancedMesh(geo, stoff, ZUEGE_HOECHSTENS * je)
       n.count = 0; n.castShadow = true; n.frustumCulled = false
@@ -5184,7 +5213,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const d = a.ziel - a.jetzt, gehen = ZUG_AUSWEICHEN_JE_S * dt
         a.jetzt = Math.abs(d) <= gehen ? a.ziel : a.jetzt + Math.sign(d) * gehen
       }
-      let zahl = 0, neueWege = 0, zeigt = false
+      let zahl = 0, neueWege = 0, zeigt = false, tuerZahl = 0
+      const neueTueren: OffeneTuer[] = []
       // aus der Ferne grösser, damit man die Züge in der ganzen Region sieht: mindestens ZUG_FERN des Abstands der Kamera lang
       k.wurzel.getWorldPosition(mitte)
       const cam = k.renderer.xr.isPresenting ? k.renderer.xr.getCamera() : k.kamera
@@ -5319,6 +5349,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         }
         const anfang = spurA === null ? null : lageBei(fw, 0), schluss = spurB === null ? null : lageBei(fw, ende)
         let lokE = 0, lokN = 0, steuerE = 0, steuerN = 0
+        // wie weit die Türen offen sind: am Halt laut Fahrplan, nach der Ankunft auf, vor der Abfahrt zu
+        let tuerAuf = 0, tuerSeit = 0, tuerBis = 0
+        if (st.art === 'halt' && perronListe.length) {
+          const [an, ab] = haltZeiten(u.f, st.i)
+          const mm = jetzt.minuten >= an - 1e-6 && jetzt.minuten <= ab + 1e-6 ? jetzt.minuten : jetzt.minuten + 1440
+          tuerSeit = (mm - an) * 60; tuerBis = (ab - mm) * 60
+          if (tuerSeit + tuerBis >= TUER_HALT_AB_S) tuerAuf = Math.max(0, Math.min(1, Math.min(tuerSeit - TUER_AUF_NACH_S, tuerBis - TUER_ZU_VOR_S) / TUER_BEWEGT_S))
+        }
         const aus = ausweich.get(u.f.id)?.jetzt ?? 0
         // im Gleisfeld bleiben (Michael, 2026-10-31, Lausanne: «Bei der östlichen Ausfahrt … fährt der Zug irgendwo in der Luft»): der Versatz zur
         // Spur des Gleises gilt quer zum Weg; wo die Gleise in der Weichenzone zusammenlaufen, lag der Zug so neben dem Gleisfeld, über der Strasse,
@@ -5452,6 +5490,32 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (w === 0) netze.lok.setMatrixAt(zahl, m)
           else if (w === ZUG_WAGEN) netze.steuer.setMatrixAt(zahl, m)
           else netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)
+          if (tuerAuf > 0 && !verdeckt) {
+            const tf = tuerForm[w]
+            tf.stellen.forEach((tz, di) => {
+              for (const sx of [-1, 1]) {
+                if (tuerZahl >= TUEREN_HOECHSTENS) return
+                tuerP.set(sx * tf.seite, tf.unterkante, tz).applyMatrix4(m)
+                tuerA.set(sx * tf.seite * 2, tf.unterkante, tz).applyMatrix4(m).sub(tuerP)
+                tuerA.y = 0
+                if (tuerA.lengthSq() < 1e-18) continue
+                tuerA.normalize()
+                const te = tuerP.x * 1000 + lage.cE, tn = -tuerP.z * 1000 + lage.cN, ae = tuerA.x, an = -tuerA.z
+                const sk = `${u.f.id}:${st.i}:${w}:${di}:${sx}`
+                let pz = tuerPerron.get(sk)
+                if (pz === undefined) { pz = perronBei(perronListe, te + ae * 1.2, tn + an * 1.2); tuerPerron.set(sk, pz) }
+                if (pz === null) continue
+                tuerM.copy(m).multiply(tuerT.makeTranslation(sx * (tf.seite + blattDick * 0.2), tuerMitteY, tz))
+                loecher.setMatrixAt(tuerZahl, tuerM)
+                // das Blatt gleitet aussen am Wagen zu seiner Mitte hin
+                tuerM.copy(m).multiply(tuerT.makeTranslation(sx * (tf.seite + blattDick * 0.9), tuerMitteY, tz - Math.sign(tz || 1) * tf.b * tuerAuf))
+                blaetter.setMatrixAt(tuerZahl, tuerM)
+                tuerZahl++
+                neueTueren.push({ schluessel: `${u.f.id}:${st.i}:${w}:${di}`, e: te + ae * 0.4, n: tn + an * 0.4, ae, an, z: pz + PERRON_HOEHER_M,
+                  offen: tuerAuf, seit: tuerSeit, bis: tuerBis })
+              }
+            })
+          }
         }
         gezeichnet[zahl] = u.f
         zugLage.set(u.f.id, { ve: lokE, vn: lokN, he: steuerE, hn: steuerN })
@@ -5466,6 +5530,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         zahl++
       }
       gezeichnet.length = zahl
+      offeneTueren.current = neueTueren
+      for (const x of [loecher, blaetter]) { x.count = tuerZahl; x.instanceMatrix.needsUpdate = true }
       schild.visible = zeigt
       if (!zeigt) { linkSetzen(null); mitfahrenSetzen(null, null) }
       netze.lok.count = zahl; netze.steuer.count = zahl; netze.wagen.count = zahl * (ZUG_WAGEN - 1)
@@ -5535,6 +5601,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       stirnStoff.map?.dispose(); stirnStoff.dispose(); stirnGeo.dispose(); stirn.dispose(); lampenGeo.dispose(); lampenStoff.dispose(); lampen.dispose()
       k.renderer.domElement.removeEventListener('pointermove', mausZiel); k.renderer.domElement.removeEventListener('pointerleave', mausWeg)
       for (const n of Object.values(netze)) { n.geometry.dispose(); n.dispose() }
+      lochGeo.dispose(); blattGeo.dispose(); lochStoff.dispose(); blattStoff.dispose(); loecher.dispose(); blaetter.dispose()
+      offeneTueren.current = []
     }
   }, [zuege, b, stufe, knoepfe])
   // Geräusche der Umgebung in den Feldern von 4 km und 1 km (Michael, 2026-11-09: «Wenn ich in der Stadt bin, möchte ich ein Stadtgeräusch hören …
@@ -6254,12 +6322,20 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (e[0] < e0 - 500 || e[0] > e1 + 500 || n[0] < n0 - 500 || n[0] > n1 + 500) return
         geher.push(...geherAuf(gehweg(e, n), WANDERER_JE_KM, 100_000 + i + Math.round(e[0]) % 9973, 'wandern', (j) => (menschZufall(i + j * 1.7) - 0.5)))
       })
-      const hoechstens = Math.min(stehen.length + geher.length, hoechstensFelder() === 4 ? 3000 : 9000)
+      const hoechstens = Math.min(stehen.length + geher.length + 400, hoechstensFelder() === 4 ? 3000 : 9000)
       if (!hoechstens) return
       const oberteil = new THREE.InstancedMesh(form.oberteil, stoff, hoechstens), rest = new THREE.InstancedMesh(form.rest, stoff, hoechstens)
       for (const x of [oberteil, rest]) { x.count = 0; x.castShadow = true; x.frustumCulled = false; gruppe.add(x); netze.push(x) }
       const farben = Array.from({ length: 997 }, (_, i) => kleidFarbe(i))
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), eins = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
+      // Ein- und Aussteigen an den offenen Türen der Züge (offeneTueren, Zeiten und Mengen in Menschen.ts): Aussteigende als eigene Figuren, die
+      // eine Weile über den Perron gehen; Wartende, die einsteigen, gehen zur Tür und warten erst nach EINSTEIGEN_WIEDER_S wieder (jemand Neues)
+      const streu = (t: string) => { let x = 0; for (let i = 0; i < t.length; i++) x = (x * 31 + t.charCodeAt(i)) % 1_000_003; return x }
+      const aussteiger = new Map<string, { e: number; n: number; ae: number; an: number; start: number; seite: number; farbe: number }>()
+      const einsteiger = new Map<number, { e: number; n: number; start: number; dauer: number }>()
+      const versteckt = new Map<number, number>()
+      let zuordnenUm = 0
+      const ausZahl = (t: OffeneTuer) => Math.floor(menschZufall(streu(t.schluessel) * 0.013 + 0.31) * AUSSTEIGEN_HOECHSTENS)
       schritt = () => {
         const ms = Date.now() + szenenZeit.versatzMs, sek = ms / 1000
         const stunde = jetztImFahrplan({ von: '2000-01-01' }, new Date(ms)).minuten / 60
@@ -6273,11 +6349,71 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           oberteil.setColorAt(zahl, farben[farbe])
           zahl++
         }
-        for (const w of stehen) {
-          if (zahl >= hoechstens) break
-          if (w.ab >= aP) continue
-          setzen(w.e, w.n, w.z, w.drehung, w.farbe)
+        const tueren = offeneTueren.current
+        for (const t of tueren) {
+          const zs = ausZahl(t)
+          for (let j = 0; j < zs; j++) {
+            const schl = `${t.schluessel}#${j}`
+            if (aussteiger.has(schl)) continue
+            const ab = TUER_AUF_NACH_S + TUER_BEWEGT_S + j * AUSSTEIGEN_TAKT_S
+            if (t.seit < ab || t.seit - ab > AUSSTEIGEN_DAUER_S) continue
+            const r = streu(schl)
+            aussteiger.set(schl, { e: t.e, n: t.n, ae: t.ae, an: t.an, start: sek - (t.seit - ab), seite: menschZufall(r * 0.007) < 0.5 ? 1 : -1, farbe: r % 997 })
+          }
         }
+        for (const [schl, a] of aussteiger) {
+          const tau = sek - a.start
+          if (tau > AUSSTEIGEN_DAUER_S || tau < -5) { aussteiger.delete(schl); continue }
+          if (tau < 0 || zahl >= hoechstens) continue
+          // zuerst vom Zug weg, dann entlang dem Perron in eine Richtung; wer den Perron verlässt, ist weg
+          const d = tau * GEHEN_MS, raus = Math.min(d, AUSSTEIGEN_RAUS_M), laengs = Math.max(0, d - AUSSTEIGEN_RAUS_M) * a.seite
+          const pe = a.e + a.ae * raus - a.an * laengs, pn = a.n + a.an * raus + a.ae * laengs
+          const pz = perronBei(hier, pe, pn)
+          if (pz === null || !drin(pe, pn)) continue
+          const de = d < AUSSTEIGEN_RAUS_M ? a.ae : -a.an * a.seite, dn = d < AUSSTEIGEN_RAUS_M ? a.an : a.ae * a.seite
+          setzen(pe, pn, pz + PERRON_HOEHER_M + 0.03 * Math.abs(Math.sin(sek * 6 + a.farbe)), Math.atan2(de, -dn), a.farbe)
+        }
+        // wer einsteigt: Wartende bis EINSTEIGEN_M um eine Tür, wenn die Aussteigenden draussen sind und die Tür noch lange genug offen ist
+        if (sek >= zuordnenUm || sek < zuordnenUm - 5) {
+          zuordnenUm = sek + 0.5
+          for (const t of tueren) {
+            if (t.seit < TUER_AUF_NACH_S + TUER_BEWEGT_S + ausZahl(t) * AUSSTEIGEN_TAKT_S + 2) continue
+            const st = streu(t.schluessel)
+            stehen.forEach((w, i) => {
+              if (w.ab >= aP || einsteiger.has(i) || (versteckt.get(i) ?? -Infinity) > sek) return
+              if (Math.abs(w.e - t.e) > EINSTEIGEN_M || Math.abs(w.n - t.n) > EINSTEIGEN_M || Math.abs(w.z - t.z) > 2) return
+              const d = Math.hypot(w.e - t.e, w.n - t.n)
+              if (d > EINSTEIGEN_M || menschZufall(i * 0.77 + st * 0.0011) >= EINSTEIGEN_ANTEIL) return
+              const dauer = d / GEHEN_MS
+              if (dauer > t.bis - TUER_ZU_VOR_S - 0.5) return
+              einsteiger.set(i, { e: t.e, n: t.n, start: sek, dauer })
+            })
+          }
+        }
+        stehen.forEach((w, i) => {
+          if (zahl >= hoechstens || w.ab >= aP) return
+          const ein = einsteiger.get(i)
+          if (ein) {
+            const tau = sek - ein.start
+            if (tau >= ein.dauer) {
+              einsteiger.delete(i)
+              versteckt.set(i, sek + EINSTEIGEN_WIEDER_S[0] + menschZufall(i * 1.37 + sek * 0.001) * (EINSTEIGEN_WIEDER_S[1] - EINSTEIGEN_WIEDER_S[0]))
+              return
+            }
+            if (tau >= 0) {
+              const f = tau / Math.max(0.01, ein.dauer)
+              setzen(w.e + (ein.e - w.e) * f, w.n + (ein.n - w.n) * f, w.z + 0.03 * Math.abs(Math.sin(sek * 6 + i)), Math.atan2(ein.e - w.e, -(ein.n - w.n)), w.farbe)
+              return
+            }
+            einsteiger.delete(i)
+          }
+          const bis = versteckt.get(i)
+          if (bis !== undefined) {
+            if (bis > sek && bis - sek < EINSTEIGEN_WIEDER_S[1] + 10) return
+            versteckt.delete(i)
+          }
+          setzen(w.e, w.n, w.z, w.drehung, w.farbe)
+        })
         for (const g of geher) {
           if (zahl >= hoechstens) break
           if (g.ab >= (g.art === 'wandern' ? aW : aS)) continue
@@ -6296,7 +6432,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (oberteil.instanceColor) oberteil.instanceColor.needsUpdate = true
       }
       k.jeBild.push(schritt)
-      if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dMenschen: unknown }).s3dMenschen = () => ({ stehen: stehen.length, geher: geher.length, gezeigt: oberteil.count })
+      if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dMenschen: unknown }).s3dMenschen = () => ({ stehen: stehen.length, geher: geher.length, gezeigt: oberteil.count, tueren: offeneTueren.current.length, t0: offeneTueren.current.find((t) => t.seit > 2 && t.seit < 6 && t.bis > 40), aus: aussteiger.size, ein: einsteiger.size, weg: versteckt.size })
     })
     return () => {
       weg = true
