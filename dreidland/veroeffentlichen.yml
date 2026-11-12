@@ -12,6 +12,8 @@ on:
     - cron: '41 4 * * *'
     # die Wolken (pipeline/build_wolken.py): MeteoSchweiz rechnet ICON-CH1 alle 3 Stunden neu (Michael, 2026-10-28)
     - cron: '50 1-22/3 * * *'
+    # montags und donnerstags kurz nach 15 Uhr Schweizer Zeit (im Sommer 16 Uhr) der neue Fahrplan zur neuen Echtzeit
+    - cron: '7 14 * * 1,4'
 
 permissions:
   contents: read
@@ -62,7 +64,9 @@ jobs:
       - id: tag
         run: |
           t=$(date -u +%F)
-          if [ "$(date -u +%u)" = 1 ] || [ "$(date -u +%u)" = 4 ]; then [ "$(date -u +%H)" -ge 13 ] && t="$t-b"; fi
+          # die Echtzeit wechselt um 15 Uhr Schweizer Zeit (im Winter 14 Uhr UTC, im Sommer 13 Uhr UTC); vorher gebaut passte der neue
+          # Fahrplan bis 15 Uhr nicht zur Echtzeit (Michael, 2026-11-12, Luzern 14:46: «Alle Züge … keine Echtzeit gemeldet»)
+          if [ "$(TZ=Europe/Zurich date +%u)" = 1 ] || [ "$(TZ=Europe/Zurich date +%u)" = 4 ]; then [ "$(TZ=Europe/Zurich date +%H)" -ge 15 ] && t="$t-b"; fi
           echo "tag=$t" >> "$GITHUB_OUTPUT"
       - id: zuege
         uses: actions/cache@v4

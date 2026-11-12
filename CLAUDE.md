@@ -468,7 +468,8 @@ Echtzeit der Züge in «3D Schweiz» (Michael, 2026-11-11: «Langsam könnten wi
              zugStelle mit dem Tag (ZugStelle.tag) verschieben Ankunft und Abfahrt, Ausfälle (Fahrt CANCELED oder DELETED) fahren nicht; Schild dritte Zeile «Echtzeit:
              … Min. später», «pünktlich», «laut Fahrplan, keine Echtzeit gemeldet» oder «kein Halt»; Hinweis 3 s «Züge nach Fahrplan, Verspätungen in Echtzeit, wo
              gemeldet»; Extrazüge fehlen, zwischen den Halten weiter gerechnet; die Workflows (pages.yml, dreidland/veroeffentlichen.yml) bauen montags und
-             donnerstags ab 13 Uhr UTC den Fahrplan neu (Tag mit «-b»), weil die Echtzeit dann um 15 Uhr auf die neue Fassung mit anderen trip_ids wechselt;
+             donnerstags ab 15 Uhr Schweizer Zeit den Fahrplan neu (Tag mit «-b», dazu ein Lauf um 14:07 UTC), weil die Echtzeit dann auf die neue Fassung mit anderen trip_ids wechselt
+             (bis 2026-11-12 ab 13 Uhr UTC: im Winter lag der neue Fahrplan eine Stunde vor der neuen Echtzeit online, Michael, Luzern 14:46: «Alle Züge … keine Echtzeit gemeldet»);
              in Anleitung («Züge», Quellen), Datenschutz (Anleitung.tsx, Fusszeile von 3dland), Fusszeile und LIESMICH von server/spiel; mit einem nachgebauten Feed
              und php -S geprüft (EC 66 +4 Min. in Bern, IC 734 fällt aus), nicht mit der Plattform; nicht im Führerstand (FahrplanZuege.ts)
 SUV und Pick-up in «3D Schweiz» (Michael, 2026-11-11: «Kannst du aus jedem 5. Auto einen SUV machen und aus jedem 15. einen Pick-Up»): je Auto ein fester
