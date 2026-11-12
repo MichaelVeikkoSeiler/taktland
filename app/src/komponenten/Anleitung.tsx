@@ -463,27 +463,30 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         {/* persönlich statt Aufzählung (Michael, 2026-10-01: «etwas auflockern», Variante B); Text von Michael, 2026-10-05; seit 2026-10-29 in
             der Ich-Form mit der Entstehung, unterschrieben (Michael: «wie die Produktion und Entwicklung und die Idee gewesen ist», «Erwähne aber
             auch, dass Diverses eben doch erfunden ist»), derselbe Text für LinkedIn; 2026-11-05 nach Michaels Wortlaut überarbeitet (Claude Code, Layer für Layer, ohne «Zu main» und ohne
-            «gezeichnet und gewählt», Schluss mit den Anforderungen an die KI) */}
+            «gezeichnet und gewählt», Schluss mit den Anforderungen an die KI); 2026-11-12 nach Michaels Wortlaut, alle Absätze in derselben Schriftgrösse
+            (Michael: «diesen Text übernehmen und alles in gleicher üblicher Schriftgrösse») */}
         <div className="mt-2 space-y-3 border-l-2 border-sbb-red pl-4 leading-relaxed">
-          <p className="text-lg">Ich bin gerne mit dem Zug unterwegs und wollte mehr über das wissen, woran ich vorbeifahre. Wie heisst der
-            Bahnhof, an dem ich gerade vorbeifahre? Wie heisst die Brücke oder der Tunnel, den wir soeben passieren? Wann folgt der nächste
-            Tunnel? Aus solchen Fragen ist Taktland entstanden.</p>
-          <p>Dazu muss man wissen: Ich kann keine einzige Zeile Code schreiben. Taktland ist trotzdem eine App mit über tausend Bahnhöfen, mit
-            Linien, Spielen, Mitfahren per GPS und einem Führerstand in 3D. Möglich wurde das mit Claude Code, einer KI von Anthropic. Ich
-            habe beschrieben, was ich sehen will. Claude hat die offenen Daten von SBB, BAV, swisstopo und MeteoSchweiz und auch anderen Quellen
-            herausgesucht und aufbereitet. So entstanden Layer für Layer, die dann zusammengesetzt wurden. Angefangen hat es im September 2026.</p>
-          <p>Meine Arbeit war, auszuprobieren, Fehler zu finden und der KI mitzuteilen, was nicht stimmt: im Zug, auf dem Handy und mit der VR-Brille. Und am Anfang
-            stimmte vieles nicht. Einmal fuhr der Zug mitten durch einen Berg und sah Häuser und Bäume von unten. In Solothurn fuhr er durchs
-            Wohnquartier, und auf der Albulalinie ging es zu wie auf einer Achterbahn. Dann folgten ein Bildschirmfoto, ein Satz dazu und die
-            nächste Runde.</p>
+          <p>Ich bin gerne mit dem Zug unterwegs und wollte mehr über das wissen, woran ich vorbeifahre. Wie heisst der Bahnhof, an dem ich
+            gerade vorbeifahre? Wie heisst die Brücke oder der Tunnel, den wir soeben passieren und wie lange ist er noch? Wieviele Tunnel
+            durchfahre ich im Val de Travers? Aus solchen und ähnlichen Fragen ist Taktland entstanden.</p>
+          <p>Keine einzige schlaue Zeile kann ich codieren. Taktland ist trotzdem eine App mit über tausend Bahnhöfen, mit Linien, Spielen,
+            Mitfahren per GPS und einem Führerstand in 3D. Möglich wurde das mit Claude Code, einer KI von Anthropic. Dieser habe ich erklärt,
+            was ich haben will. Claude hat die offenen Daten von SBB, BAV, swisstopo und MeteoSchweiz und auch anderen Quellen herausgesucht und
+            aufbereitet. Und so entstanden Layer für Layer, die dann zusammengesetzt wurden.</p>
+          <p>Meine Rolle war, neue Ideen auszuprobieren, Fehler zu finden und der KI zurückzuspielen, was nicht stimmt oder mir optisch nicht
+            gefällt: im Zug, auf dem Handy und mit der VR-Brille. Und am Anfang stimmte vieles nicht. Einige Züge fuhren mitten durch einen Berg
+            und ich sah Häuser und Bäume von unten. In Solothurn fuhr er mitten durchs Wohnquartier, und auf der Albulalinie ging es zu wie auf
+            einer Achterbahn. Dann folgten ein Bildschirmfoto, ein Satz dazu und die nächste Runde. Und auch heute sind noch ganz viele Fehler
+            vorhanden und ich habe auch nicht mehr vor alles zu korrigieren.</p>
           <p>Eine Regel war mir von Anfang an wichtig: Die Angaben werden nicht erfunden. Jede Zahl zu einem Bahnhof, einer Linie oder einem
             Tunnel stammt aus einer genannten Quelle, und was fehlt, steht als Lücke da. Ehrlicherweise ist aber manches doch erfunden, nämlich
-            wie es aussieht. Der Zug hat kein echtes Vorbild. Der Führerstand ist ein Bild, das ich mit ChatGPT gestaltet habe. Die
-            Tunnelwände, der gemalte Himmel, die Ortstafeln am Gleis, die Helligkeit im Tunnel und das Licht in den Fenstern hat niemand
-            gemessen.</p>
-          <p>Vor ein paar Jahren wäre ein Projekt wie Taktland sicher ein wesentlich grösseres Unterfangen gewesen. Für mich allein,
-            ohne Programmierkenntnisse, wäre es gar nicht möglich gewesen. Die KI hat mir die Programmierung abgenommen. Die Idee, die Entscheidungen und das Ausprobieren
-            des Ganzen, mit mehreren Hundert, wenn nicht sogar gegen tausend Anforderungen an die KI, blieben bei mir.</p>
+            wie es aussieht. Der Zug hat kein echtes Vorbild. Der Führerstand ist ein Bild, das ich mit ChatGPT und Handarbeit gestaltet habe.
+            Die Tunnelwände, der gemalte Himmel, die Ortstafeln am Gleis, die Helligkeit im Tunnel und das Licht in den Fenstern hat niemand
+            gemessen. Mich fasziniert die Mischung zwischen Realität und Fantasie.</p>
+          <p>Vor ein paar Jahren wäre ein Projekt wie Taktland sicher ein wesentlich grösseres Unterfangen gewesen. Für mich allein, ohne
+            jegliche Programmierkenntnisse, wäre es gar nicht möglich gewesen. Die KI hat mir die Programmierung abgenommen. Die Idee, die
+            Entscheidungen und das Ausprobieren des Ganzen, mit mehreren Hundert, wenn nicht sogar gegen tausend Anforderungen an die KI,
+            blieben bei mir.</p>
         </div>
         <p className="mt-3 font-medium">Michael Veikko Seiler</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
