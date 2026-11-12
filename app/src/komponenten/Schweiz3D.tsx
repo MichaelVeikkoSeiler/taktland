@@ -1231,7 +1231,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     <div className="px-4 pb-4">
       {!eigeneSeite && (ansicht === 'wahl'
         ? <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-        : <Zurueck onClick={() => { window.location.hash = '#/schweiz3d' }} text="Virtuell" />)}
+        : <Zurueck onClick={() => { window.location.hash = '#/schweiz3d' }} text="Virtuelle Schweiz" />)}
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : 'Virtuelle Schweiz'}</h1>
       {ansicht !== 'karte' && (

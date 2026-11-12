@@ -41,7 +41,8 @@ export const SPIELE: Spiel[] = [
   {
     // seit 2026-11-06 «3D-Land» wie 3dland.ch, mit dessen Bildern (Michael: «alles auf Taktland laufen … 3D Schweiz heisst dann 3D Land und hat
     // die genau identischen Funktionen wie bei 3DLand.ch»)
-    id: 'schweiz3d', titel: 'Virtuell', status: 'spielbereit', adresse: '#/schweiz3d',
+    // seit 2026-11-12 wieder «Virtuelle Schweiz» statt «Virtuell» (Michael: «Spiel «Virtuell» soll wieder «Virtuelle Schweiz» heissen»)
+    id: 'schweiz3d', titel: 'Virtuelle Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
     kurz: 'Die ganze Schweiz als Modell: einen Ort, eine Adresse, einen Gipfel oder See suchen und eintauchen, auch in der VR-Brille.',
     bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand mit XR-Brille blickt auf ein Modell einer Landschaft mit zwei Seen auf einem dunklen Sockel.' },
     beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See, und tauche ein, bis auf ein Stück '
