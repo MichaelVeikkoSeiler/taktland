@@ -1163,6 +1163,7 @@ SBB-Produkt suggeriert.
 Gestaltung, Illustrationen, Auftaktbilder und Bildmarken; ausgenommen die Daten Dritter und die mitgelieferten Bibliotheken
 (app/public/lizenzen/drittsoftware.txt); Erlaubnis über hallo@taktland.ch; dieselbe LICENSE im Repository 3DLand. Neue Datenquellen
 dort ergänzen.
+Info (komponenten/Anleitung.tsx): seit 2026-11-12 «Spiele» als erster Abschnitt, danach «Bahnhöfe» (vorher «Bahnhöfe lernen»; Michael: «Spiele zuerst und dann Bahnhöfe (nicht mehr Bahnhöfe lernen)»).
 Datenschutz und Haftung (Michael, 2026-10-29: «was jetzt livegeschaltet ist … nicht bedenklich»): in Taktland unter Info
 (komponenten/Anleitung.tsx) auch «Wetter» in «3D Schweiz» (3dland.ch) und daten.taktland.ch, unter «Fehler und Verfügbarkeit» Fahrplan
 und Wetter keine Wirklichkeit und keine Warnungen; auf 3dland.ch in der Fusszeile (src/dreidland.tsx) der Verantwortliche, GitHub Pages

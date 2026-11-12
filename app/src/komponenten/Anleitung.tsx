@@ -29,42 +29,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
 
       {/* aufklappbar und gestrafft (Michael, 2026-10-01: «sehr, sehr viel Text») */}
       <div className="mt-6 grid gap-2">
-      <Abschnitt titel="Bahnhöfe lernen">
-        <Punkte>
-          <li>
-            Aufgenommen sind alle Bahnhöfe mit Infrastruktur der SBB oder der BLS, dazu
-            Bahnhöfe anderer Bahnen wie RhB, SOB oder Matterhorn Gotthard Bahn, sofern die
-            offenen Daten für mindestens drei Kapitel reichen. Bahnhöfe anderer Bahnen tragen
-            das Kürzel ihrer Bahn und haben weniger Kapitel. Dazu kommen Haltestellen der BTI,
-            für die keine Fahrgastzahlen erfasst sind: Von ihnen zeigt Taktland nur die
-            Stammdaten.
-          </li>
-          <li>
-            Jede Bahnhofsseite hat Kapitel, etwa Steckbrief, Perrons oder Züge: zuerst ein
-            kurzer Text, dann die Zahlen mit ihrem Datensatz, dann die Fragen.
-          </li>
-          <li>
-            Nach jeder Antwort stehen «Richtig» oder «Nicht ganz», eine Erklärung und der
-            Beleg aus den Daten. Jede Frage lässt sich nochmals beantworten, es zählt die
-            letzte Antwort. «zurücksetzen» löscht den Stand des Bahnhofs.
-          </li>
-          <li>
-            Fragearten: Auswahl, Lückentext, Richtig oder falsch, Mehrfachauswahl,
-            Schieberegler (knapp daneben zählt auch), Sortieren, Zuordnen und Gleis antippen.
-          </li>
-          <li>
-            Gross heisst: Für den Bahnhof ist ein Bahnhofplan veröffentlicht. Mittel: kein
-            Plan, aber mindestens 5'000 Ein- und Aussteigende an einem Werktag. Klein: alle
-            übrigen. Das ist eine Sortierhilfe von Taktland, keine Einstufung der SBB.
-          </li>
-          <li>
-            Kästen «Zum Verständnis» erklären Fachbegriffe allgemein, ohne Bezug auf den
-            Bahnhof. Unter «Was diese Daten nicht sagen» steht, was fehlt. Eine 0 heisst
-            «nichts erfasst», nicht «nichts vorhanden».
-          </li>
-        </Punkte>
-      </Abschnitt>
-
+      {/* Spiele vor Bahnhöfe, «Bahnhöfe» statt «Bahnhöfe lernen» (Michael, 2026-11-12: «Spiele zuerst und dann Bahnhöfe … lernen streichen») */}
       <Abschnitt titel="Spiele">
         <Spiel titel="Virtuelle Schweiz">
           <li>
@@ -130,6 +95,42 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             scannen ihn. Alle spielen dieselben Aufgaben gleichzeitig. Braucht Empfang.
           </li>
         </Spiel>
+      </Abschnitt>
+
+      <Abschnitt titel="Bahnhöfe">
+        <Punkte>
+          <li>
+            Aufgenommen sind alle Bahnhöfe mit Infrastruktur der SBB oder der BLS, dazu
+            Bahnhöfe anderer Bahnen wie RhB, SOB oder Matterhorn Gotthard Bahn, sofern die
+            offenen Daten für mindestens drei Kapitel reichen. Bahnhöfe anderer Bahnen tragen
+            das Kürzel ihrer Bahn und haben weniger Kapitel. Dazu kommen Haltestellen der BTI,
+            für die keine Fahrgastzahlen erfasst sind: Von ihnen zeigt Taktland nur die
+            Stammdaten.
+          </li>
+          <li>
+            Jede Bahnhofsseite hat Kapitel, etwa Steckbrief, Perrons oder Züge: zuerst ein
+            kurzer Text, dann die Zahlen mit ihrem Datensatz, dann die Fragen.
+          </li>
+          <li>
+            Nach jeder Antwort stehen «Richtig» oder «Nicht ganz», eine Erklärung und der
+            Beleg aus den Daten. Jede Frage lässt sich nochmals beantworten, es zählt die
+            letzte Antwort. «zurücksetzen» löscht den Stand des Bahnhofs.
+          </li>
+          <li>
+            Fragearten: Auswahl, Lückentext, Richtig oder falsch, Mehrfachauswahl,
+            Schieberegler (knapp daneben zählt auch), Sortieren, Zuordnen und Gleis antippen.
+          </li>
+          <li>
+            Gross heisst: Für den Bahnhof ist ein Bahnhofplan veröffentlicht. Mittel: kein
+            Plan, aber mindestens 5'000 Ein- und Aussteigende an einem Werktag. Klein: alle
+            übrigen. Das ist eine Sortierhilfe von Taktland, keine Einstufung der SBB.
+          </li>
+          <li>
+            Kästen «Zum Verständnis» erklären Fachbegriffe allgemein, ohne Bezug auf den
+            Bahnhof. Unter «Was diese Daten nicht sagen» steht, was fehlt. Eine 0 heisst
+            «nichts erfasst», nicht «nichts vorhanden».
+          </li>
+        </Punkte>
       </Abschnitt>
 
       <Abschnitt titel="Strecken, Brücken und Tunnel">
