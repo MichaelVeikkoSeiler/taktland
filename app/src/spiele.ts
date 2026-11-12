@@ -13,8 +13,9 @@ import fahrtDunkel from './assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from './assets/auftakt-fahrt-hell.webp'
 import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
-import schweiz3dDunkel from './assets/auftakt-3dland-dunkel.webp'
-import schweiz3dHell from './assets/auftakt-3dland-hell.webp'
+// seit 2026-11-12 ein eigenes Bild in Taktland, 3dland.ch behält seine (Michael: «Dieses Bild für Virtuelle Schweiz anwenden»)
+import schweiz3dBild from './assets/auftakt-virtuell.webp'
+const schweiz3dHell = schweiz3dBild, schweiz3dDunkel = schweiz3dBild
 import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
 
@@ -44,7 +45,7 @@ export const SPIELE: Spiel[] = [
     // seit 2026-11-12 wieder «Virtuelle Schweiz» statt «Virtuell» (Michael: «Spiel «Virtuell» soll wieder «Virtuelle Schweiz» heissen»)
     id: 'schweiz3d', titel: 'Virtuelle Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
     kurz: 'Die ganze Schweiz als Modell: einen Ort, eine Adresse, einen Gipfel oder See suchen und eintauchen, auch in der VR-Brille.',
-    bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand mit XR-Brille blickt auf ein Modell einer Landschaft mit zwei Seen auf einem dunklen Sockel.' },
+    bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand mit VR-Brille zielt am Tisch mit dem Strahl eines Controllers auf einen rot-weissen Zug, der im Modell einer Landschaft mit Wald, Tunneln und Bergen über einen Viadukt fährt; über dem Zug ein Schild «IC 0X, A → B», daneben ein Handy mit demselben Modell, draussen ein See und Berge.' },
     beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See, und tauche ein, bis auf ein Stück '
       + 'von 1 km. Mit einer Brille steht das Modell vor dir auf dem Tisch.',
   },
