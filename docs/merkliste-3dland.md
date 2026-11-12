@@ -23,3 +23,11 @@ Gelände legen, um zu sehen, wie Orte gewachsen und Flüsse begradigt worden sin
 
 Das gewählte Feld als Datei für den 3D-Drucker (etwa STL), mit Sockel, auf Wunsch mit Seegrund und Fels. Massstab und
 Überhöhung wählbar, die Masse sagt die Datei.
+
+## Ansichten merken
+
+Vorgemerkt von Michael am 2026-11-12: «User sollen individuelle Perspektiven und deren Einstellung der Knöpfe als Favoriten abspeichern
+können». Machbar: je Ansicht die Stufe, das Feld (LV95), die Kamera und ihr Ziel im Raum des Modells, alle Schalter, die Zeit («Jetzt»
+oder fest) und der Ton, mit einem Namen in einer Liste unter dem Modell, nur auf dem Gerät (localStorage, wie die Favoriten in Taktland,
+nach links wischen löscht). Öffnen lädt die Stufen wie die Rückkehr aus dem Führerstand (rueckkehr in src/mitfahren.ts) und setzt die
+Kamera. Dazu denkbar: eine Ansicht als Link teilen (alles in der Adresse, ohne Server). In der Brille ohne Kamera, nur Feld und Schalter.
