@@ -604,6 +604,15 @@ Zurück aus dem Führerstand (Michael, 2026-11-11: «Was etwas schade ist, ist w
              wählt ihn (Schild) und schaut ihm von dort nach (target je Bild, die Kamera bleibt), bis die Steuerung «start» meldet oder er 30 Bilder fehlt
              (RUECKKEHR_* in Schweiz3D.tsx, gewählt); mit Verspätung laut Echtzeit kann er ausserhalb liegen (der Führerstand fährt nach Fahrplan); im Führerstand
              selbst gelten dessen eigene Knöpfe; nicht in der Brille
+Ansichten merken und teilen in «3D Schweiz» (Michael, 2026-11-12: «User sollen individuelle Perspektiven und deren Einstellung der Knöpfe als Favoriten
+             abspeichern können», «Ja bitte bauen, mit Link teilen»): unter dem Modell nach «Zu zweit» «Ansicht merken …» mit Namen (vorgeschlagen der gesuchte Ort
+             oder der Titel des Felds); gemerkt werden Stufe, Mitte des Felds der Stufe (Anker, LV95), Kamera und Ziel in LV95 und m ü. M. (aus der Lage von «Zu zweit»,
+             lageRef; in der Brille ohne), alle Schalter, die Zeit (null für jetzt, sonst ms) und der Ton (GemerkteAnsicht in Schweiz3D.tsx); Liste darunter, die neueste
+             oben, höchstens 30 (ANSICHTEN_HOECHSTENS), localStorage taktland-ansichten, Tipp öffnet, Wischen oder × löscht; «Link teilen»: #/3dland?ansicht=… (auf
+             3dland.ch #?ansicht=…), die Ansicht als JSON-Liste in base64url (ansichtCode, ansichtAusCode), auf Handy und Tablet das Teilen-Menü, sonst in die Zwischenablage
+             («Link kopiert»); Öffnen setzt Schalter, Ton und Zeit, lädt die Felder wie ein Link einer Bahnhofseite (ketteLaden, ohne «Gesucht»), und setzt die Kamera,
+             sobald das Feld steht (ansichtKamera, ansichtTick); im selben Feld nur die Kamera; angesetzte Stücke (+) nicht; in der Anleitung «Ansichten merken und teilen»,
+             unter Datenschutz (localStorage) genannt
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
              Modellbahn ein dünner dunkelgrauer Mast (2 Bildpunkte) mit dunkelgrauem Schild mit leicht abgerundeten Ecken (Michael, 2026-10-25: «Alle Schilder leicht abgerundete Ecken») mittig darauf, Name in Weiss, je Stufe ab einem Rang und höchstens

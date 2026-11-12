@@ -46,6 +46,7 @@ import { deckeAufBild, deckenIn, unterDecke, type Decke } from './Decken'
 import { Abschnitt } from './Anleitung'
 import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
 import { type Andere, type Lage, type Punkt, type Stand, useZuZweit } from '../zuzweit'
+import Wischen from './Wischen'
 import { raumEroeffnen } from '../spielraum'
 import { himmelNacht, sternSicht } from '../sterne'
 
@@ -625,10 +626,47 @@ export interface Knoepfe { plus: Record<Seite, boolean>; wachsen: Record<Seite, 
 const datumKurz = (d: string) => { const [j, m, t] = d.split('-').map(Number); return `${t}.${m}.${j}` }
 
 /** welcher Schritt der Virtuellen Schweiz laut Adresse */
+/** eine gemerkte Ansicht (Michael, 2026-11-12: «User sollen individuelle Perspektiven und deren Einstellung der Knöpfe als Favoriten abspeichern
+ *  können», «Ja bitte bauen, mit Link teilen»): Stufe, das Feld der Stufe (Mitte in LV95), Kamera und Ziel (LV95 und m ü. M., ohne in der Brille),
+ *  die Schalter, die Zeit (null: jetzt, sonst ms seit 1970) und der Ton; nur auf dem Gerät (localStorage) oder als Link */
+interface GemerkteAnsicht {
+  name: string; stufe: Stufe; feld: [number, number] | null; kopf: Punkt | null; blick: Punkt | null
+  schalter: Record<string, boolean>; zeit: number | null; stumm: boolean
+}
+const ANSICHT_SCHALTER = ['orte', 'gebaeude', 'baeume', 'zuege', 'schiffe', 'autos', 'menschen', 'wandern', 'hoehen', 'gipfel', 'wolken', 'wind', 'sonne'] as const
+const ANSICHTEN_SCHLUESSEL = 'taktland-ansichten'
+const STUFE_NAME: Record<Stufe, string> = { schweiz: 'Schweiz', gross: '128 km', mittel: '64 km', region: '16 km', ort: '4 km', nah: '1 km' }
+/** so viele Ansichten bleiben gemerkt, gewählt */
+const ANSICHTEN_HOECHSTENS = 30
+/** die Ansicht kurz für die Adresse: JSON einer Liste, als base64url */
+function ansichtCode(a: GemerkteAnsicht): string {
+  const bits = ANSICHT_SCHALTER.reduce((x, k, i) => x | (a.schalter[k] ? 1 << i : 0), 0)
+  const r = (q: Punkt | null) => q ? q.map((v) => Math.round(v)) : 0
+  const liste = [1, a.name, STUFEN.indexOf(a.stufe), a.feld ? a.feld.map((v) => Math.round(v)) : 0, r(a.kopf), r(a.blick), bits,
+    a.zeit === null ? 0 : Math.round(a.zeit / 60_000), a.stumm ? 1 : 0]
+  let t = ''
+  for (const z of new TextEncoder().encode(JSON.stringify(liste))) t += String.fromCharCode(z)
+  return btoa(t).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+}
+function ansichtAusCode(c: string): GemerkteAnsicht | null {
+  try {
+    const t = atob(c.replace(/-/g, '+').replace(/_/g, '/'))
+    const l = JSON.parse(new TextDecoder().decode(Uint8Array.from(t, (z) => z.charCodeAt(0))))
+    const punkt = (q: unknown): Punkt | null => Array.isArray(q) && q.length === 3 && q.every(Number.isFinite) ? q as Punkt : null
+    if (!Array.isArray(l) || l[0] !== 1 || !STUFEN[l[2]]) return null
+    const feld = Array.isArray(l[3]) && l[3].length === 2 && l[3].every(Number.isFinite) ? l[3] as [number, number] : null
+    return { name: String(l[1]).slice(0, 80), stufe: STUFEN[l[2]], feld, kopf: punkt(l[4]), blick: punkt(l[5]),
+      schalter: Object.fromEntries(ANSICHT_SCHALTER.map((k, i) => [k, !!(Number(l[6]) & (1 << i))])),
+      zeit: Number(l[7]) ? Number(l[7]) * 60_000 : null, stumm: l[8] === 1 }
+  } catch { return null }
+}
+/** die Kamera einer geöffneten Ansicht, bis ihr Feld steht (die Ansicht setzt sie dann) */
+let ansichtKamera: { stufe: Stufe; feld: [number, number] | null; kopf: Punkt; blick: Punkt } | null = null
+
 function ansichtAusAdresse(eigeneSeite: boolean): 'wahl' | 'anleitung' | 'karte' {
   if (eigeneSeite) return 'karte'
   const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
-  return q.has('lat') || q.has('karte') || q.has('raum') ? 'karte' : q.has('anleitung') ? 'anleitung' : 'wahl'
+  return q.has('lat') || q.has('ansicht') || q.has('karte') || q.has('raum') ? 'karte' : q.has('anleitung') ? 'anleitung' : 'wahl'
 }
 const EINTAUCHEN_KNOPF = 'inline-block shrink-0 rounded-lg bg-sbb-red px-3 py-1.5 text-base font-bold text-white hover:bg-sbb-red125'
 const ANLEITUNG_KNOPF = 'inline-block shrink-0 rounded-lg border border-sbb-cloud bg-white px-3 py-1.5 text-base font-bold hover:border-sbb-black '
@@ -912,8 +950,44 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // von einer Bahnhofseite: gleich im Feld von 1 km um den Ort (Michael, 2026-11-07: «Klickt man auf einen Bahnhof soll man optional die 3D Ansicht
   // sehen können (nähster Ausschnitt aus 3DLand)»); #/3dland?lat=…&lon=…&name=…; alle Stufen darüber werden mitgeladen wie beim Eintauchen, damit
   // man mit der Lupe hinaus kann, und überall gilt das Feld um den Ort wie nach einer Suche
+  // die Felder aller Stufen bis ziel um (e, n) laden, wie beim Eintauchen; mitGesucht: das Feld gilt danach in jeder Stufe wie nach einer Suche
+  const ketteWeg = useRef<(() => void) | null>(null)
+  const ketteLaden = (e: number, n: number, name: string, ziel: Stufe, orteEin: boolean, mitGesucht = true) => {
+    ketteWeg.current?.()
+    if (ziel === 'schweiz') { setStufe('schweiz'); setWahl(null); return }
+    const tief = (s: Stufe) => STUFEN.indexOf(s) <= STUFEN.indexOf(ziel)
+    const um = (s: Exclude<Stufe, 'nah'>): Feld => ({ e: Math.round(e / RASTER_M[s]) * RASTER_M[s], n: Math.round(n / RASTER_M[s]) * RASTER_M[s], seite: FELD_M[s] })
+    let weg = false
+    ketteWeg.current = () => { weg = true }
+    setGesucht(mitGesucht ? { e, n, name } : null); setWahl(um('schweiz')); setLaedt(true); setFehler(null)
+    void (async () => {
+      const [gross, mittel, region] = await Promise.all([stufeLaden('gross', um('schweiz'), null),
+        tief('mittel') ? stufeLaden('mittel', um('gross'), null) : null, tief('region') ? stufeLaden('region', um('mittel'), null) : null])
+      const bRegion = region && einzeln(um('mittel'), region)
+      const ort = bRegion && tief('ort') ? await stufeLaden('ort', um('region'), bRegion) : null
+      const bOrt = ort && einzeln(um('region'), ort)
+      const nah = bOrt && tief('nah') ? await stufeLaden('nah', um('ort'), bOrt) : null
+      if (weg) return
+      setGelaende((a) => ({ ...a, gross: einzeln(um('schweiz'), gross), mittel: mittel && einzeln(um('gross'), mittel), region: bRegion, ort: bOrt, nah: nah && einzeln(um('ort'), nah) }))
+      setStufe(ziel); setWahl(null); if (!inDerBrille && orteEin) setOrteAn(true)
+    })().catch((x) => { if (!weg) setFehler((x as Error).message) }).finally(() => { if (!weg) setLaedt(false) })
+  }
+  // eine gemerkte oder geteilte Ansicht öffnen: Schalter, Ton und Zeit gleich, dann die Felder, zuletzt die Kamera (ansichtKamera)
+  const schalterSetzen = (sch: Record<string, boolean>) => {
+    const setzen: Record<string, (v: boolean) => void> = { orte: setOrteAn, gebaeude: setGebaeudeAn, baeume: setBaeumeAn, zuege: setZuegeAn, schiffe: setSchiffeAn,
+      autos: setAutosAn, menschen: setMenschenAn, wandern: setWandern, hoehen: setScheiben, gipfel: setGipfelAn, wolken: setWolkenAn, wind: setWindAn, sonne: setSonnenAn }
+    for (const [k, v] of Object.entries(sch)) setzen[k]?.(v)
+  }
+  const ansichtOeffnenRef = useRef<(a: GemerkteAnsicht) => void>(() => {})
   useEffect(() => {
     const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
+    const code = q.get('ansicht')
+    if (code) {
+      history.replaceState(history.state, '', window.location.pathname + window.location.search + window.location.hash.split('?')[0])
+      const a = ansichtAusCode(code)
+      if (a) ansichtOeffnenRef.current(a)
+      return () => ketteWeg.current?.()
+    }
     const lat = Number(q.get('lat')), lon = Number(q.get('lon')), name = q.get('name') ?? 'Bahnhof'
     if (!q.get('lat') || !Number.isFinite(lat) || !Number.isFinite(lon)) return
     // die Adresse ohne den Ort, damit «Zurück» und Neuladen nicht wieder eintauchen
@@ -924,9 +998,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     const rk = q.get('zuege') === '1' ? rueckkehr : null
     if (q.get('zuege') === '1') setZuegeAn(true)
     if (rk) {
-      const setzen: Record<string, (v: boolean) => void> = { orte: setOrteAn, gebaeude: setGebaeudeAn, baeume: setBaeumeAn, zuege: setZuegeAn, schiffe: setSchiffeAn,
-        autos: setAutosAn, menschen: setMenschenAn, wandern: setWandern, hoehen: setScheiben, gipfel: setGipfelAn, wolken: setWolkenAn, wind: setWindAn, sonne: setSonnenAn }
-      for (const [k, v] of Object.entries(rk.schalter)) setzen[k]?.(v)
+      schalterSetzen(rk.schalter)
       stummSetzen(rk.stumm)
       rk.bis = performance.now() + RUECKKEHR_SUCHEN_MS
     } else rueckkehrMerken(null)
@@ -944,22 +1016,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       ziel = (kette.find(([, ueber]) => FELD_M[ueber] >= weite * TUNNEL_RAND + RASTER_M[ueber]) ?? kette[kette.length - 1])[0]
       setStrich(punkte)
     } else setStrich(null)
-    const tief = (s: Stufe) => STUFEN.indexOf(s) <= STUFEN.indexOf(ziel)
-    const um = (s: Exclude<Stufe, 'nah'>): Feld => ({ e: Math.round(e / RASTER_M[s]) * RASTER_M[s], n: Math.round(n / RASTER_M[s]) * RASTER_M[s], seite: FELD_M[s] })
-    let weg = false
-    setGesucht({ e, n, name }); setWahl(um('schweiz')); setLaedt(true); setFehler(null)
-    void (async () => {
-      const [gross, mittel, region] = await Promise.all([stufeLaden('gross', um('schweiz'), null),
-        tief('mittel') ? stufeLaden('mittel', um('gross'), null) : null, tief('region') ? stufeLaden('region', um('mittel'), null) : null])
-      const bRegion = region && einzeln(um('mittel'), region)
-      const ort = bRegion && tief('ort') ? await stufeLaden('ort', um('region'), bRegion) : null
-      const bOrt = ort && einzeln(um('region'), ort)
-      const nah = bOrt && tief('nah') ? await stufeLaden('nah', um('ort'), bOrt) : null
-      if (weg) return
-      setGelaende((a) => ({ ...a, gross: einzeln(um('schweiz'), gross), mittel: mittel && einzeln(um('gross'), mittel), region: bRegion, ort: bOrt, nah: nah && einzeln(um('ort'), nah) }))
-      setStufe(ziel); setWahl(null); if (!inDerBrille && !rk) setOrteAn(true)
-    })().catch((x) => { if (!weg) setFehler((x as Error).message) }).finally(() => { if (!weg) setLaedt(false) })
-    return () => { weg = true }
+    ketteLaden(e, n, name, ziel, !rk)
+    return () => ketteWeg.current?.()
   }, [])
   // zu zweit (Michael, 2026-11-10, Vorschlag 13: «Erklär mir noch 13 … Dann bauen wenn ich schlafe?»): wer den Raum eröffnet, führt; die anderen folgen
   // bei jeder Änderung des Führenden seinen Feldern je Stufe, der Stufe, der Wahl, den Schaltern und der Zeit; dazwischen kann jeder selbst schauen.
@@ -1113,6 +1171,57 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     const i = f ? feldInhalt(f, zusatz) : null
     return i?.orte[0] ? `um ${i.orte[0]}` : i?.gipfel ? `am ${i.gipfel.name}` : 'Feld'
   }
+  // gemerkte Ansichten (Michael, 2026-11-12: «User sollen individuelle Perspektiven und deren Einstellung der Knöpfe als Favoriten abspeichern
+  // können», «Ja bitte bauen, mit Link teilen»): nur auf diesem Gerät, die neueste zuoberst, höchstens ANSICHTEN_HOECHSTENS
+  const [ansichten, setAnsichten] = useState<GemerkteAnsicht[]>(() => {
+    try {
+      const l = JSON.parse(localStorage.getItem(ANSICHTEN_SCHLUESSEL) ?? '[]')
+      return Array.isArray(l) ? l.filter((a) => a && typeof a.name === 'string' && STUFEN.includes(a.stufe)) : []
+    } catch { return [] }
+  })
+  useEffect(() => { try { localStorage.setItem(ANSICHTEN_SCHLUESSEL, JSON.stringify(ansichten)) } catch { /* ohne Speicher bleibt es in dieser Sitzung */ } }, [ansichten])
+  const [merkenOffen, setMerkenOffen] = useState(false)
+  const [merkenName, setMerkenName] = useState('')
+  const [geteilt, setGeteilt] = useState<number | null>(null)
+  const [ansichtTick, setAnsichtTick] = useState(0)
+  const ansichtJetzt = (name: string): GemerkteAnsicht => {
+    const l = lageRef.current?.(), feld = stufe === 'schweiz' ? null : gelaende[stufe]?.anker
+    return { name, stufe, feld: feld ? [feld.e, feld.n] : null, kopf: l && !l.brille ? l.kopf : null, blick: l && !l.brille ? l.blick : null,
+      schalter: { ...standJetzt.schalter }, zeit: jetztAn ? null : Date.now() + versatzMs, stumm }
+  }
+  ansichtOeffnenRef.current = (a: GemerkteAnsicht) => {
+    schalterSetzen(a.schalter)
+    stummSetzen(a.stumm)
+    if (a.zeit === null) { if (!jetztAn) zeitSchieben('jetzt', 0) } else { setJetztAn(false); setVersatzMs(a.zeit - Date.now()) }
+    ansichtKamera = a.kopf && a.blick ? { stufe: a.stufe, feld: a.feld, kopf: a.kopf, blick: a.blick } : null
+    setAnsichtTick((x) => x + 1)
+    // schon im selben Feld: nur die Kamera, sonst setzte das neu geladene Feld den Blick wieder zurück
+    const anker = stufe === 'schweiz' ? null : gelaende[stufe]?.anker
+    if (a.stufe === stufe && (stufe === 'schweiz' || (a.feld && anker && Math.abs(anker.e - a.feld[0]) <= 1 && Math.abs(anker.n - a.feld[1]) <= 1))) { setWahl(null); return }
+    if (a.stufe === 'schweiz' || !a.feld) ketteLaden(0, 0, a.name, 'schweiz', false)
+    else ketteLaden(a.feld[0], a.feld[1], a.name, a.stufe, false, false)
+  }
+  const ansichtLink = (a: GemerkteAnsicht) =>
+    `${window.location.origin}${window.location.pathname}${AUF_3DLAND ? '#' : '#/3dland'}?ansicht=${ansichtCode(a)}`
+  const ansichtTeilen = async (a: GemerkteAnsicht, i: number) => {
+    const url = ansichtLink(a)
+    if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+      try { await navigator.share({ title: a.name, url }); return } catch (x) { if ((x as DOMException).name === 'AbortError') return }
+    }
+    try { await navigator.clipboard.writeText(url); setGeteilt(i); window.setTimeout(() => setGeteilt((g) => g === i ? null : g), 2500) } catch { window.prompt('Link zur Ansicht', url) }
+  }
+  // ein geteilter Link, während die Seite schon offen ist
+  useEffect(() => {
+    const hoeren = () => {
+      const code = new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('ansicht')
+      if (!code) return
+      history.replaceState(history.state, '', window.location.pathname + window.location.search + window.location.hash.split('?')[0])
+      const a = ansichtAusCode(code)
+      if (a) ansichtOeffnenRef.current(a)
+    }
+    window.addEventListener('hashchange', hoeren)
+    return () => window.removeEventListener('hashchange', hoeren)
+  }, [])
   const hinweis = aktuell ? [...aktuell.teile.values()].find((t) => t.hinweis)?.hinweis : undefined
   const groesse = aktuell && stufe !== 'schweiz' && (aktuell.teile.size > 1)
     ? `${((aktuell.di[1] - aktuell.di[0] + 1) * aktuell.anker.seite / 1000).toLocaleString('de-CH')} × ${((aktuell.dj[1] - aktuell.dj[0] + 1) * aktuell.anker.seite / 1000).toLocaleString('de-CH')} km`
@@ -1146,6 +1255,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         : `relative -mx-4 ${eigeneSeite ? '' : 'mt-2'} aspect-[25/28] w-[calc(100%+2rem)] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a] sm:mx-auto sm:w-full sm:max-w-[calc(85vh*25/28)]`}>
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
+                   ansichtTick={ansichtTick}
                    vorFuehrerstand={(z) => rueckkehrMerken({ ...z, schalter: { ...zuZweitRef.current.stand.schalter }, stumm,
                                                              stufe: stufe === 'region' || stufe === 'ort' ? stufe : 'nah' })}
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
@@ -1365,6 +1475,47 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </form>
         ) : (
           <button type="button" onClick={() => setZuZweitOffen(true)} className="underline underline-offset-2">Zu zweit im selben Modell …</button>
+        )}
+      </div>
+      {/* gemerkte Ansichten (Michael, 2026-11-12): merken mit Namen, öffnen, als Link teilen, nach links wischen oder × löscht */}
+      <div className="mt-2 text-sm">
+        {merkenOffen ? (
+          <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => {
+            e.preventDefault()
+            const name = merkenName.trim() || 'Ansicht'
+            setAnsichten((l) => [ansichtJetzt(name), ...l].slice(0, ANSICHTEN_HOECHSTENS))
+            setMerkenOffen(false)
+          }}>
+            <input value={merkenName} onChange={(e) => setMerkenName(e.target.value)} maxLength={80} aria-label="Name der Ansicht" autoFocus
+                   className="min-w-40 flex-1 rounded-lg border border-sbb-cloud bg-white px-2 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
+            <button type="submit" className={EINTAUCHEN_KNOPF + ' !text-sm'}>Merken</button>
+            <button type="button" onClick={() => setMerkenOffen(false)} className="underline underline-offset-2">Abbrechen</button>
+          </form>
+        ) : (
+          <button type="button" onClick={() => {
+            setMerkenName(stufe === 'schweiz' ? 'Schweiz' : `${gesucht?.name ?? titel(gelaende[stufe]?.anker ?? null).replace(/^(um|am) /, '')}`)
+            setMerkenOffen(true)
+          }} className="underline underline-offset-2">Ansicht merken …</button>
+        )}
+        {ansichten.length > 0 && (
+          <ul className="mt-2 space-y-1" aria-label="Gemerkte Ansichten">
+            {ansichten.map((a, i) => (
+              <li key={`${i}-${a.name}`}>
+                <Wischen frage={`Ansicht ${a.name} löschen?`} loeschen={() => setAnsichten((l) => l.filter((_, j) => j !== i))}>
+                  <div className="flex items-center gap-2 rounded-lg bg-[#ebebeb] px-2 py-1.5 dark:bg-sbb-charcoal">
+                    <button type="button" onClick={() => ansichtOeffnenRef.current(a)} className="min-w-0 flex-1 truncate text-left font-bold">
+                      {a.name}<span className="ml-2 font-normal text-sbb-metal dark:text-sbb-storm">{STUFE_NAME[a.stufe]}{a.zeit !== null ? ', Zeitreise' : ''}</span>
+                    </button>
+                    <button type="button" onClick={() => void ansichtTeilen(a, i)}
+                            className="shrink-0 rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">
+                      {geteilt === i ? 'Link kopiert' : 'Link teilen'}</button>
+                    <button type="button" onClick={() => setAnsichten((l) => l.filter((_, j) => j !== i))} aria-label={`Ansicht ${a.name} löschen`}
+                            className="shrink-0 px-1 text-lg leading-none text-sbb-metal">×</button>
+                  </div>
+                </Wischen>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
       {scheiben && (
@@ -1625,6 +1776,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Jede Person sieht die anderen als blaue Figur dort, wo sie ins Modell schaut, mit einer Linie zur Stelle, auf die sie zeigt (Maus,
             in der Brille der Strahl). Wer folgt, sieht am Anfang auch mit dem Blick der führenden Person, die Kamera gleitet ihr nach; wer selbst dreht oder zoomt, schaut wieder selbst, «Blick folgen» holt den Blick zurück (nicht in der Brille). Ein Gespräch gibt es nicht, dafür braucht es ein Telefon
             daneben. Ein Raum verfällt nach sechs Stunden.</p>
+        </Abschnitt>
+        <Abschnitt titel="Ansichten merken und teilen">
+          <p>Unter dem Modell «Ansicht merken …» hält fest, was du gerade siehst: die Stufe und das Feld, den Blick der Kamera, alle Knöpfe an der
+            Wand, die Zeit (jetzt oder eine Zeitreise) und ob der Ton aus ist. Ein Tipp auf den Namen öffnet die Ansicht wieder, nach links wischen
+            oder × löscht sie. Die Ansichten bleiben nur auf diesem Gerät und gehen verloren, wenn die Daten des Browsers gelöscht werden.
+            «Link teilen» gibt einen Link, der dieselbe Ansicht auf einem anderen Gerät öffnet; alles steht im Link selbst, nichts geht an einen Server
+            von Taktland. Angesetzte Stücke (+) gehören nicht dazu, in der Brille gilt nur das Feld mit den Knöpfen, ohne Blick.</p>
         </Abschnitt>
         <Abschnitt titel="Woher die Daten stammen">
           <ul className="list-disc space-y-1 pl-5">
@@ -2095,7 +2253,9 @@ function knopfBild(plus: boolean, an: boolean) {
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos, vorFuehrerstand }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos, vorFuehrerstand, ansichtTick = 0 }: {
+  /** zählt hoch, wenn eine gemerkte Ansicht geöffnet wird (ihre Kamera wartet in ansichtKamera) */
+  ansichtTick?: number
   /** beim Wechsel in den Führerstand: welcher Zug und wo die Kamera zu ihm steht, damit «Zurück» dorthin führt */
   vorFuehrerstand?: (z: Pick<Rueckkehr, 'fahrt' | 'versatz'>) => void
   /** zu zweit: die anderen im Raum und wohin die eigene Lage geht */
@@ -3933,6 +4093,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     return () => { lageRef.current = null }
   }, [lageRef])
+  // die Kamera einer gemerkten Ansicht, sobald ihr Feld steht (nach dem Blick, den die Stufe von sich aus setzt); nicht in der Brille
+  useEffect(() => {
+    const a = ansichtKamera, k = kern.current, lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
+    if (!a || !k || !lage || a.stufe !== stufe || k.renderer.xr.isPresenting) return
+    if (a.feld && (Math.abs(b.anker.e - a.feld[0]) > 1 || Math.abs(b.anker.n - a.feld[1]) > 1)) return
+    const zu = (q: Punkt) => k.wurzel.localToWorld(new THREE.Vector3((q[0] - lage.cE) / 1000, q[2] / 1000, -(q[1] - lage.cN) / 1000))
+    k.kamera.position.copy(zu(a.kopf)); k.steuerung.target.copy(zu(a.blick)); k.steuerung.update()
+    ansichtKamera = null
+  }, [b, stufe, ansichtTick])
   const andereRef = useRef(andere)
   andereRef.current = andere
   const folgeRef = useRef(folgeId)
