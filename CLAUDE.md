@@ -88,7 +88,10 @@ web/         Seite für taktland.ch (reines HTML); pipeline/export_web.py stellt
              und Menschen (ASTRA, ARE, STATPOP), Flugzeug, Helikopter, Möwen, Ton aus, Doppelklick und die Rückkehr aus dem Führerstand, in den Quellen ASTRA, ARE und
              GTFS-Realtime, im Datenschutz die Echtzeit über spiel.taktland.ch (Michael: «Kannst du taktland.ch altualisieren. Neue Fratures erklären und auch sonst
              alle hintergründigen Infos aktualisieren bitte?»); das Auftaktbild oben und seitlich randlos (höchstens 520 px hoch), Logo und Name als Leiste
-             darunter, die beim Scrollen oben stehen bleibt (Michael, 2026-11-12: «Bild oben uf auf den Seiten bündig machen. Dafür Logo und Name darunter»)
+             darunter, die beim Scrollen oben stehen bleibt (Michael, 2026-11-12: «Bild oben uf auf den Seiten bündig machen. Dafür Logo und Name darunter»); unter der Illustration der
+             Virtuellen Schweiz vier Bildschirmbilder (bilder/virtuell-biel, -bern-abend, -bern, -neuchatel.webp; Michael, 2026-11-12: «mach die Standbilder für taktland.ch»),
+             gerechnet in der Testfassung (VITE_S3D_TEST, Uhr der Seite mit Playwright gestellt, s3dBlick) mit den Daten dieser Sitzung, ohne die feinsten Kacheln
+             von daten.taktland.ch
 server/zaehler/  Zähler auf zaehler.taktland.ch (Webhosting bei cyon, von Hand hochladen): je Tag nur
              die Zahl der Aufrufe (web), der Geräte (app) und der neuen Geräte (neu), ohne IP und Kennung;
              die App meldet höchstens einmal am Tag (src/zaehlen.ts), liste/ ist mit Passwort geschützt
