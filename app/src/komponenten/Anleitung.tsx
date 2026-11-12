@@ -392,7 +392,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Cookies setzt Taktland keine. Damit die App funktioniert, speichert sie im Browser dieses Geräts
             (localStorage): Lernfortschritt und Bestwerte, Einstellungen, Favoriten, gemerkte Fahrten und
-            Probefahrten, Logbuch und Sammelheft, die laufende Fahrt und den Tag, an dem zuletzt gezählt wurde (siehe
+            Probefahrten, gemerkte Ansichten der Virtuellen Schweiz, Logbuch und Sammelheft, die laufende Fahrt und den Tag, an dem zuletzt gezählt wurde (siehe
             unten). Für eine laufende Partie in Geo und der Bahnhofsuche liegt ein Stand bis zum Schliessen des Fensters
             im Browser (sessionStorage). Damit Taktland auch ohne Netz läuft, hält der Browser die App und die geladenen
             Daten in einem eigenen Zwischenspeicher. Nichts davon wird an Taktland gesendet. «Fortschritt auf diesem
