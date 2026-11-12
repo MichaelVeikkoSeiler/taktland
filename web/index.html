@@ -89,6 +89,12 @@
     .quer figure { margin: 0; }
     .quer img { width: 100%; height: auto; border-radius: 12px; border: 6px solid #212121; box-shadow: 0 10px 30px rgba(0,0,0,.15); }
     .quer figcaption { color: var(--leise); font-size: 14px; margin-top: 6px; }
+    /* Bildschirmbilder vom Handy, hochkant (Michael, 2026-11-12) */
+    .hoch { display: grid; gap: 12px; margin-top: 24px; grid-template-columns: 1fr 1fr; }
+    @media (min-width: 820px) { .hoch { grid-template-columns: repeat(3, 1fr); } }
+    .hoch figure { margin: 0; }
+    .hoch img { width: 100%; height: auto; border-radius: 14px; border: 5px solid #212121; box-shadow: 0 10px 30px rgba(0,0,0,.15); }
+    .hoch figcaption { color: var(--leise); font-size: 14px; margin-top: 6px; }
     .breitbild { margin: 24px 0 0; }
     .breitbild img { width: 100%; height: auto; max-height: 520px; object-fit: cover; border-radius: 12px; }
     .breitbild figcaption { color: var(--leise); font-size: 14px; margin-top: 6px; }
@@ -260,6 +266,28 @@
         </picture>
         <figcaption>Illustration (ChatGPT), kein Bildschirmbild.</figcaption>
       </figure>
+      <!-- Bildschirmbilder vom Handy (Michael, 2026-11-12: «Das wären noch Bilder für die Marketingseite. Willst du davon 4 oder 6 auswählen?») -->
+      <div class="hoch">
+        <figure><img src="./bilder/handy-bern-aare.webp" width="540" height="1170" loading="lazy"
+             alt="Virtuelle Schweiz am Nachmittag: die Aare in Bern, Bäume am Ufer, dahinter das Bundeshaus." />
+          <figcaption>Bern: die Aare, dahinter das Bundeshaus.</figcaption></figure>
+        <figure><img src="./bilder/handy-bruecke.webp" width="540" height="1170" loading="lazy"
+             alt="Virtuelle Schweiz: zwei rot-weisse Züge auf einer Bogenbrücke über die Aare, darunter Häuser und Bäume." />
+          <figcaption>Züge laut Fahrplan auf einer Brücke über die Aare.</figcaption></figure>
+        <figure><img src="./bilder/handy-lugano-nacht.webp" width="540" height="1170" loading="lazy"
+             alt="Virtuelle Schweiz in der Nacht: ein beleuchteter Zug am Perron, Lampen und Häuser mit hellen Fenstern, dahinter der Lago di Lugano unter Sternen." />
+          <figcaption>Am Lago di Lugano um 22:22: Zug, Perrons, Licht in den Fenstern.</figcaption></figure>
+        <figure><img src="./bilder/handy-alpen-nacht.webp" width="540" height="1170" loading="lazy"
+             alt="Virtuelle Schweiz in der Nacht: ein spitzer Berggipfel mit Schnee, davor Wolkenballen." />
+          <figcaption>Nachts in den Alpen: Wolken aus dem Wettermodell von MeteoSchweiz.</figcaption></figure>
+        <figure><img src="./bilder/handy-yvonand-regen.webp" width="540" height="1170" loading="lazy"
+             alt="Virtuelle Schweiz: Yvonand am See, Regen, Wolken und eine Windhose mit Temperatur und Wind." />
+          <figcaption>Yvonand: Regen, Wind und Temperatur laut MeteoSchweiz.</figcaption></figure>
+        <figure><img src="./bilder/handy-gruyere.webp" width="540" height="1170" loading="lazy"
+             alt="Virtuelle Schweiz: der Lac de la Gruyère mit Wald, Feldern und Villarvolard, darüber Windhosen mit Wind und Böen." />
+          <figcaption>Lac de la Gruyère: Windhosen mit Wind und Böen.</figcaption></figure>
+      </div>
+      <p class="klein-leise">Bildschirmbilder aus der Virtuellen Schweiz auf dem Handy.</p>
       <p class="klein-leise">Was echt ist und was gezeichnet: Lage, Grundriss und Höhe der Gebäude, Gelände, Gleise und Fahrplan stammen aus den
         Daten. Wie viele Autos und Menschen unterwegs sind, beruht auf Zählungen und Modellen des Bundes; wo genau sie gehen und
         fahren, wer ein- und aussteigt, Fenster, Lampen, die Form der Wolken und der Bäume, die Geräusche und das Aussehen der Züge,
