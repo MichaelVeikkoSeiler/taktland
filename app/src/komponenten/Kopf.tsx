@@ -21,8 +21,8 @@ import spieleHell from '../assets/auftakt-spiele-hell.webp'
 import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
 import standortHell from '../assets/auftakt-standort-hell.webp'
 // seit 2026-11-12 ein eigenes Bild in Taktland, 3dland.ch behält seine (Michael: «Dieses Bild für Virtuelle Schweiz anwenden»)
-import schweiz3dBild from '../assets/auftakt-virtuell.webp'
-const schweiz3dHell = schweiz3dBild, schweiz3dDunkel = schweiz3dBild
+import schweiz3dHell from '../assets/auftakt-virtuell-hell.webp'
+import schweiz3dDunkel from '../assets/auftakt-virtuell-dunkel.webp'
 import startDunkel from '../assets/auftakt-start-dunkel.webp'
 import startHell from '../assets/auftakt-start-hell.webp'
 import tunnelDunkel from '../assets/auftakt-tunnel-dunkel.webp'
@@ -142,7 +142,7 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
   // Michael, 2026-10-21: eigenes Bildpaar für «3D Schweiz»; seit 2026-11-06 «3D-Land» mit den Bildern von 3dland.ch
   schweiz3d: {
     hell: schweiz3dHell, dunkel: schweiz3dDunkel, breite: 1344, hoehe: 663,
-    alt: 'Illustration: Jemand mit VR-Brille zielt am Tisch mit dem Strahl eines Controllers auf einen rot-weissen Zug, der im Modell einer Landschaft mit Wald, Tunneln und Bergen über einen Viadukt fährt; über dem Zug ein Schild «IC 0X, A → B», daneben ein Handy mit demselben Modell, draussen ein See und Berge.',
+    alt: 'Illustration: Jemand mit VR-Brille zielt am Tisch mit dem Strahl eines Controllers auf einen rot-weissen Zug, der im Modell einer Landschaft mit Wald, Tunneln und Bergen über einen Viadukt fährt; über dem Zug ein Schild «IC 0X» mit Pfeil, daneben ein Handy mit demselben Modell, draussen ein See und Berge.',
   },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
