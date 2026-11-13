@@ -581,6 +581,9 @@ Züge und Kamera in «3D Schweiz» (Michael, 2026-11-10: «manchmal wünsche ich
 Züge nie unter dem Gelände in «3D Schweiz» (Michael, 2026-11-10, Wankdorf Ost: «Störend ist dass der Zug im Untergrund versinkt»): jedes Wagenende mindestens
              ZUG_UEBER_BODEN_M (0,2 m, gewählt) über dem gezeichneten Gelände (bestandHoehe), auch wo die Gleisachse aus swissTLM3D tiefer liegt (Einschnitte, die das
              Gelände des Modells gemittelt zeigt); in Tunneln bleibt der Zug verdeckt; nur gebaut, hier ohne die feinen Daten nicht nachgestellt
+Autos in Kurven in «3D Schweiz» (Michael, 2026-11-13: «Die Autos auf den Straßen fahren nicht schöne Bogen … ziemlich eckig um eine Kurve»): autoBei in Autos.ts mittelt
+             die Lage über 7 m davor und danach (Autobahnen 15 m, KURVE_GLATT_M, gewählt), gewichtet wie ein Dreieck, die Richtung aus der Lage davor und danach; an einer
+             rechtwinkligen Ecke dreht ein Auto so über etwa 14 m und fährt gut 1 m innen; mit einer gezeichneten Ecke nachgerechnet, nicht im Browser angeschaut
 Zeile zum Wetter in der Modellbahn und beim Fahren seit 2026-11-13 nie mehr im Bild, nur in der Tafel des Windsacks (Michael, Führerstand: «Wetter Infobox
              entfernen»; vorher ab 640 Bildpunkten Breite, WETTER_ZEILE_AB_PX bestimmt nur noch die Lage der Knöpfe); am Pult beim Fahren «Beim Fahren bestimmt das
              Lokpersonal das Tempo» statt «… der Standort …» (Michael: «Nicht "der Standort" sondern " das Lokpersonal"», Fuehrerpult.ts)

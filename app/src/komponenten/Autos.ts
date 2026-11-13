@@ -241,6 +241,26 @@ export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [
 /** wo in der Kette an der Stelle s (m vom Anfang): Ost, Nord, Höhe laut swissTLM3D, Richtung, auf einer Brücke; null, wo kein Stück gezeichnet ist
  *  (Tunnel, ausserhalb der Kacheln) */
 export function autoBei(k: AutoKette, s: number): { e: number; n: number; h: number; de: number; dn: number; bruecke: boolean } | null {
+  const p = rohBei(k, s)
+  if (!p) return p
+  // durch Kurven fliessend statt von Ecke zu Ecke (Michael, 2026-11-13: «Die Autos auf den Straßen fahren nicht schöne Bogen … ziemlich eckig um eine
+  // Kurve»): die Lage gemittelt über KURVE_GLATT_M davor und danach, gewichtet wie ein Dreieck, die Richtung aus der Lage davor und danach; wo dort
+  // nichts gezeichnet ist (Tunnel, Rand), gilt die Stelle selbst. Die Kurve rückt dabei etwas nach innen, gewählt
+  const W = k.art === 0 ? KURVE_GLATT_M[0] : KURVE_GLATT_M[1]
+  let se = 0, sn = 0, sw = 0, ve = 0, vn = 0
+  for (let i = -3; i <= 3; i++) {
+    const q = i === 0 ? p : rohBei(k, s + (i * W) / 3) ?? p, w = 4 - Math.abs(i)
+    se += q.e * w; sn += q.n * w; sw += w
+    if (i !== 0) { ve += Math.sign(i) * q.e; vn += Math.sign(i) * q.n }
+  }
+  const l = Math.hypot(ve, vn)
+  return { ...p, e: se / sw, n: sn / sw, de: l > 1e-6 ? ve / l : p.de, dn: l > 1e-6 ? vn / l : p.dn }
+}
+
+/** so weit davor und danach mittelt autoBei die Lage, auf Autobahnen und übrigen Strassen (m, gewählt) */
+const KURVE_GLATT_M: [number, number] = [15, 7]
+
+function rohBei(k: AutoKette, s: number): { e: number; n: number; h: number; de: number; dn: number; bruecke: boolean } | null {
   const st = k.stuecke
   let lo = 0, hi = st.length - 1, i = -1
   while (lo <= hi) {
