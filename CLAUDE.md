@@ -584,6 +584,9 @@ Züge nie unter dem Gelände in «3D Schweiz» (Michael, 2026-11-10, Wankdorf Os
 Zeile zum Wetter in der Modellbahn und beim Fahren seit 2026-11-13 nie mehr im Bild, nur in der Tafel des Windsacks (Michael, Führerstand: «Wetter Infobox
              entfernen»; vorher ab 640 Bildpunkten Breite, WETTER_ZEILE_AB_PX bestimmt nur noch die Lage der Knöpfe); am Pult beim Fahren «Beim Fahren bestimmt das
              Lokpersonal das Tempo» statt «… der Standort …» (Michael: «Nicht "der Standort" sondern " das Lokpersonal"», Fuehrerpult.ts)
+Züge laut Fahrplan im Führerstand (Michael, 2026-11-13, Kerzers: «In Kerzes überlagere ich einen anderen Zug», man sah auf sein Dach): liegt das Auge in einem
+             Wagen (quer bis 3 m, längs bis 5 m über seine Enden hinaus), bleibt der Zug weg, in welcher Richtung er auch fährt (IN_ZUG_* in FahrplanZuege.ts, gewählt);
+             nicht nachgestellt
 Gebäude und Bäume in «3D Schweiz» seit 2026-11-13 immer an, ohne Knöpfe (Michael: «Gebäude und Bäume immer einblenden. Knöpfe weg»): in den Feldern von 4 km und 1 km, wo es
              Daten gibt; gebaeudeAn und baeumeAn fest wahr, gemerkte Ansichten, Links und «Zu zweit» schalten sie nicht aus; damit auch Strassen- und Bahnhofslicht und Decken immer;
              Anleitung («Knöpfe an den Wänden», «Gebäude», «Licht in der Nacht») nachgeführt

@@ -31,6 +31,10 @@ const KNICK = (15 * Math.PI) / 180, SCHRAEG = (25 * Math.PI) / 180
  *  (Michael, 2026-11-10, Münchenbuchsee: «Der Zug aus Biel Bienne nach Bern fährt mir auf dem gleichen Gleis wie ich bin entgegen»; gewählt, kleiner
  *  als der Abstand zweier Gleise) */
 const GEGEN_FREI_M = 2.2
+/** liegt das eigene Auge in einem Wagen eines Zugs laut Fahrplan (quer höchstens IN_ZUG_QUER_M, längs bis IN_ZUG_LAENGS_M über seine Enden hinaus), bleibt
+ *  dieser Zug weg, in welcher Richtung er auch fährt (Michael, 2026-11-13, Kerzers: «In Kerzes überlagere ich einen anderen Zug»: man sah aus dem Führerstand auf
+ *  sein Dach; gewählt) */
+const IN_ZUG_QUER_M = 3, IN_ZUG_LAENGS_M = 5
 
 type Achse = [number, number, number, number, number, number, boolean]
 
@@ -191,6 +195,12 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
         if (((a.e - b.e) * eigen.de + (a.n - b.n) * eigen.dn) / l < 0.5) return false
         const me = (a.e + b.e) / 2 - eigen.e, mn = (a.n + b.n) / 2 - eigen.n
         return Math.abs(me * eigen.de + mn * eigen.dn) <= EIGEN_LAENGS_M && Math.abs(-me * eigen.dn + mn * eigen.de) <= EIGEN_QUER_M
+      })) continue
+      // das Auge steckt in einem Wagen: der Zug bleibt weg
+      if (eigen && wagen.some(({ a, b }) => {
+        const l = Math.hypot(a.e - b.e, a.n - b.n) || 1, ue = (a.e - b.e) / l, un = (a.n - b.n) / l
+        const pe = eigen.e - b.e, pn = eigen.n - b.n, laengs = pe * ue + pn * un
+        return laengs >= -IN_ZUG_LAENGS_M && laengs <= l + IN_ZUG_LAENGS_M && Math.abs(-pe * un + pn * ue) <= IN_ZUG_QUER_M
       })) continue
       zuege++
       if (import.meta.env.VITE_S3D_TEST) { if (zuege === 1) testOrte.length = 0; testOrte.push([f.nummer, Math.round(wagen[0].a.e), Math.round(wagen[0].a.n), Math.round(wagen[0].a.z)]) }
