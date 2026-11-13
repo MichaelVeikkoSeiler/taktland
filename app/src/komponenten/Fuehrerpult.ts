@@ -674,7 +674,7 @@ export class Fuehrerpult {
     }
     const sim = this.quelle === 'simulation'
     const gesperrt = this.quelle === 'probe' ? 'In der Probefahrt bestimmt der Zeitraffer das Tempo'
-      : this.quelle === 'fahrplan' ? 'Der Fahrplan bestimmt das Tempo' : 'Beim Fahren bestimmt der Standort das Tempo'
+      : this.quelle === 'fahrplan' ? 'Der Fahrplan bestimmt das Tempo' : 'Beim Fahren bestimmt das Lokpersonal das Tempo'
     switch (aktion) {
       case 'sollPlus': if (!sim) return gesperrt
         this.soll = Math.min(PULT_HOECHST_KMH, this.soll + SCHRITT_KMH); if (this.bremse === 2) this.bremse = 0; return `${this.soll} km/h gewählt`

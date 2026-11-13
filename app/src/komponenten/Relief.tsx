@@ -1810,7 +1810,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const lage = `${oben}${schmal}`
       if (lage === leisteLage) return
       leisteLage = lage
-      wetterAnzeige.hidden = schmal
+      // die Zeile zum Wetter nie mehr im Bild, nur noch in der Tafel des Windsacks (Michael, 2026-11-13: «Wetter Infobox entfernen»)
+      wetterAnzeige.hidden = true
       Object.assign(wetterLeiste.style, oben && schmal ? { top: '84px', bottom: '', left: '', right: '8px', transform: '' }
         : oben ? { top: '8px', bottom: '', left: '50%', right: '', transform: 'translateX(-50%)' }
         : { top: '', bottom: '8px', left: '8px', right: '', transform: '' })
