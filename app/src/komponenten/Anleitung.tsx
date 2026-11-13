@@ -477,8 +477,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <p>Meine Rolle war, neue Ideen auszuprobieren, Fehler zu finden und der KI zurückzuspielen, was nicht stimmt oder mir optisch nicht
             gefällt: im Zug, auf dem Handy und mit der VR-Brille. Und am Anfang stimmte vieles nicht. Einige Züge fuhren mitten durch einen Berg
             und ich sah Häuser und Bäume von unten. In Solothurn fuhr er mitten durchs Wohnquartier, und auf der Albulalinie ging es zu wie auf
-            einer Achterbahn. Dann folgten ein Bildschirmfoto, ein Satz dazu und die nächste Runde. Und auch heute sind noch ganz viele Fehler
-            vorhanden und ich habe auch nicht mehr vor alles zu korrigieren.</p>
+            einer Achterbahn. Dann folgten ein Bildschirmfoto, ein Satz dazu und die nächste Runde. Eines wurde mir während der Entwicklung
+            bewusst: Fehler wird es immer geben, und das ist auch in Ordnung so.</p>
           <p>Eine Regel war mir von Anfang an wichtig: Die Angaben werden nicht erfunden. Jede Zahl zu einem Bahnhof, einer Linie oder einem
             Tunnel stammt aus einer genannten Quelle, und was fehlt, steht als Lücke da. Ehrlicherweise ist aber manches doch erfunden, nämlich
             wie es aussieht. Der Zug hat kein echtes Vorbild. Der Führerstand ist ein Bild, das ich mit ChatGPT und Handarbeit gestaltet habe.
