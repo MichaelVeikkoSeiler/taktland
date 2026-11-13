@@ -2143,6 +2143,8 @@ const ZUG_GANZ_M = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M)
  *  heller Punkt und nachts ein eigener Lichtkegel; Lage und Grösse als Anteil von Breite und Höhe des Zugs, gewählt */
 /** so weit liegt der Zug mindestens über dem gezeichneten Gelände (gewählt) */
 const ZUG_UEBER_BODEN_M = 0.2
+/** nur so weit unter dem Gelände gilt die Achse als gemittelter Einschnitt; tiefer liegt sie unter einer Decke (gewählt) */
+const ZUG_UEBER_BODEN_BIS_M = 4
 const ZUG_LAMPE_SEITE = 0.28, ZUG_LAMPE_HOEHE = -0.21, ZUG_LAMPE_R = 0.07, ZUG_LAMPE_FARBE = '#fffaf0'
 /** dazu wie bei Schweizer Zügen (Michael, 2026-10-29: «inkl dem Vorschlag mit den drei Lampen und roten Lampen»): vorne eine dritte
  *  weisse Lampe oben in der Mitte, das Dreieck des Zugspitzensignals, und am Steuerwagen hinten zwei rote Schlusslampen an der Stelle
@@ -5625,7 +5627,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             const g = gleisBei(e, n, (e - e2) / dl, (n - n2) / dl)
             // eine Achse im Tunnel verschiebt den Zug nicht (unter der Halle von Zürich HB zerriss es sonst die Züge), sie verdeckt ihn nur
             enden.push(g && !g[3] ? { s: sm, e: g[0], n: g[1], h: g[2], tunnel: false, er: e, nr: n }
-              : { s: sm, e, n, h: bestandHoehe(b, e, n), tunnel: !!g && (g[0] - e) ** 2 + (g[1] - n) ** 2 < ZUG_TUNNEL_NAH_M ** 2, er: e, nr: n })
+              : (() => {
+                // unter einer Überdeckung (Achse laut swissTLM3D im Tunnel) die Höhe der Achse, nicht die des Geländes darüber (Michael, 2026-11-13,
+                // Bern: «Einige Züge stehen in Bern zu weit oben (auf der Terrasse)»: sonst lag der Wagen auf der Grossen Schanze)
+                const tn = !!g && (g[0] - e) ** 2 + (g[1] - n) ** 2 < ZUG_TUNNEL_NAH_M ** 2
+                return { s: sm, e, n, h: tn ? g![2] : bestandHoehe(b, e, n), tunnel: tn, er: e, nr: n }
+              })())
           }
           ab += lM + ZUG_LUECKE_M * mJeM
         }
@@ -5769,8 +5776,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           // nie unter das gezeichnete Gelände (Michael, 2026-11-10, Wankdorf Ost: «Störend ist dass der Zug im Untergrund versinkt»): die Gleisachse aus
           // swissTLM3D liegt in Einschnitten tiefer als das Gelände des Modells, das dort gemittelt ist; in Tunneln ist der Zug ohnehin verdeckt
           const bodenV = bestandHoehe(b, voE, voN), bodenH = bestandHoehe(b, hiE, hiN)
-          const hV = Math.max(hvG ?? hv, Number.isFinite(bodenV) ? bodenV + ZUG_UEBER_BODEN_M : -Infinity)
-          const hH = Math.max(hhG ?? hh, Number.isFinite(bodenH) ? bodenH + ZUG_UEBER_BODEN_M : -Infinity)
+          // liegt das Gelände mehr als ZUG_UEBER_BODEN_BIS_M über der Achse, ist es eine Decke über den Gleisen, kein gemittelter Einschnitt: dann bleibt
+          // der Zug auf der Achse (Michael, 2026-11-13, Bern: die Züge standen auf der Terrasse der Grossen Schanze)
+          const heben = (g: number, boden: number) => Number.isFinite(boden) && boden - g <= ZUG_UEBER_BODEN_BIS_M ? Math.max(g, boden + ZUG_UEBER_BODEN_M) : g
+          const hV = heben(hvG ?? hv, bodenV), hH = heben(hhG ?? hh, bodenH)
           v.set((e - lage.cE) / 1000, (hV + hH) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
           q.setFromAxisAngle(oben, Math.atan2(voE - hiE, -(voN - hiN)))
           const quer = Math.hypot(vo.e - hi.e, vo.n - hi.n)
