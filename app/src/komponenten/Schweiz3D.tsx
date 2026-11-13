@@ -692,13 +692,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [zusatz, setZusatz] = useState<Zusatz | null>(null)
   // alle Schalter am Anfang aus (Michael, 2026-10-22: «Alles defaultmässig ausgeschaltet»)
   const [scheiben, setScheiben] = useState(false)
-  // Gebäude und Bäume je für sich (Michael, 2026-10-22: «Gebäude und Bäume … separate Schalter»)
-  const [gebaeudeAn, setGebaeudeAn] = useState(false)
+  // Gebäude und Bäume immer an, ohne Knöpfe (Michael, 2026-11-13: «Gebäude und Bäume immer einblenden. Knöpfe weg»; vorher je ein Schalter, am Anfang aus);
+  // gemerkte Ansichten, Links und «Zu zweit» mit «aus» schalten sie nicht mehr aus
+  const gebaeudeAn = true, baeumeAn = true
+  const setGebaeudeAn = (_v: boolean | ((x: boolean) => boolean)) => {}, setBaeumeAn = (_v: boolean | ((x: boolean) => boolean)) => {}
   // die Ortschaften ein und aus (Michael, 2026-10-22: «auch ein- und ausklickbar, defaultmässig ausgeschaltet»)
   const [orteAn, setOrteAn] = useState(false)
   // die Gipfel ebenso (Michael, 2026-10-22: «Gipfel defaultmässig auch nicht einblenden»)
   const [gipfelAn, setGipfelAn] = useState(false)
-  const [baeumeAn, setBaeumeAn] = useState(false)
   // Wanderwege am Anfang aus (Michael, 2026-10-21: «defaultmässig ausgeblendet»)
   const [wandern, setWandern] = useState(false)
   // Züge laut Fahrplan, zuerst nur auf 3dland.ch (Michael, 2026-10-26), seit 2026-10-28 auch in Taktland (Michael, 2026-10-28: «Bitte diese Sachen auch für Taktland»)
@@ -1587,8 +1588,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             sind gewählt; aus der Nähe ist das Gelände so grob wie seine Daten (im Feld von 1 km auf 5 m, das Luftbild auf 50 cm).</p>
         </Abschnitt>
         <Abschnitt titel="Knöpfe an den Wänden">
-          <p>Die Knöpfe an den Wänden des Sockels schalten Orte, Gebäude, Bäume, Züge, Schiffe, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
-            Wetter und Sonne ein und aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
+          <p>Die Knöpfe an den Wänden des Sockels schalten Orte, Züge, Schiffe, Autos, Menschen, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
+            Wetter und Sonne ein und aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Gebäude und Bäume sind in den Feldern von 4 km und 1 km immer da, ohne Knopf. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
             einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
             4'000 m, ihre Zahl steht klein an der Wand.</p>
@@ -1596,7 +1597,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {/* was an den Gebäuden echt und was gezeichnet ist (Michael, 2026-11-07: «Erkläre doch hier unter neuen bereich Gebäude was echt und was
             gezeichnet ist») */}
         <Abschnitt titel="Gebäude">
-          <p>«Gebäude» zeigt in den Feldern von 4 km und 1 km die Gebäude der ganzen Schweiz.</p>
+          <p>In den Feldern von 4 km und 1 km stehen immer die Gebäude der ganzen Schweiz.</p>
           <p className="mt-2"><b>Echt</b>, aus swissBUILDINGS3D 3.0 von swisstopo (je Kartenblatt die neueste Ausgabe): wo jedes Gebäude steht, sein
             Grundriss, seine Höhe und die Form des Dachs, so wie die Quelle sie als Dach- und Wandflächen beschreibt. Auf den Dächern liegt das
             Luftbild SWISSIMAGE von swisstopo, also das, was man von oben wirklich sieht. Weil es von oben aufgenommen ist, liegt das Dach im Bild bei
@@ -1604,11 +1605,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p className="mt-2"><b>Gezeichnet</b>, weil es in keiner Quelle steht: die Farbe der Wände (je Gebäude einer von acht Putztönen, gewählt),
             die Fenster und Stockwerke (je Gebäude eine eigene Art: Raster, Grösse und Tönung der Fenster, bei manchen Schaufenster im Erdgeschoss; am Tag dunkle Scheiben, nachts zum Teil beleuchtet, wie viele, ist eine Annahme; runde Gebäude wie Tanks und Silos ohne Fenster, an der Form erkannt, darum auch ein runder Wohnturm; ebenso ohne Fenster, was das Gebäude- und Wohnungsregister des BFS als Industriegebäude, Silo oder Lager führt), die Körnung und die
             dunkleren Stellen am Boden und unter dem Dach. Die Wände reichen unten 2 m tiefer als in den Daten. Wo die Quelle Wände und Grundfläche, aber kein Dach darüber nennt, liegt dort ein flaches Dach auf der mittleren Höhe der Wände, damit das Haus nicht offen ist. Türen, Balkone, Vordächer und Fassaden, wie sie wirklich aussehen, zeigt das Modell nicht. Ebenso erfunden sind die Strassen- und
-            Bahnhofslampen, die mit «Gebäude» nachts leuchten; belegt ist nur, wo Strassen und Gleise liegen.</p>
+            Bahnhofslampen, die nachts leuchten; belegt ist nur, wo Strassen und Gleise liegen.</p>
         </Abschnitt>
         {/* eigener Abschnitt fürs Licht in der Nacht (Michael, 2026-11-08: «Hier noch die Erfundene Strasse und Bahnhofs Beleuchtung auflisten? Macht Sinn oder?») */}
         <Abschnitt titel="Licht in der Nacht">
-          <p>Ist «Sonne» an und steht die Sonne unter dem Horizont, wird es im Modell Nacht. Mit «Gebäude» leuchten dann in den Feldern von 4 km und 1 km
+          <p>Ist «Sonne» an und steht die Sonne unter dem Horizont, wird es im Modell Nacht. Dann leuchten in den Feldern von 4 km und 1 km
             Fenster, Strassen und Bahnhöfe, und die Züge fahren mit Licht.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo das Licht steht: Strassen (swissTLM3D von swisstopo) in Siedlungen und Stadtzentren (swissTLMRegio), Gleise rund um
             die Bahnhöfe und die Gebäude selbst.</p>
@@ -3897,14 +3898,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const umschalten = (art: Schalter) => () => cb.current.schalten(art)
     // jeder Knopf hat seinen festen Platz (Michael, 2026-10-22: «Die Knöpfe haben eine fixe Position»): was in dieser Stufe nicht
     // geht (Wanderwege in der ganzen Schweiz, Gebäude und Bäume ohne Daten, die Zeit ohne Sonne), bleibt da, aber gesperrt und dunkel
-    const umweltDa = (stufe === 'ort' || stufe === 'nah') && umweltHier
     // die Reihenfolge in drei Gruppen mit etwas Abstand dazwischen (Michael, 2026-10-30: «Orte, Gebäude, Bäume -> etwas Abstand Züge,
     // Schiffe -> etwas Abstand Wandern, Gipfel, Wolken, Wetter, Sonne»; Höhen zwischen Wandern und Gipfel, «Nimm ihn in die Mitte der anderen gelben»)
     const abstand: Teil = { zeilen: [], breite: KNOPF_ABSTAND * W, leer: true }
     const eins: Teil[] = [
       { zeilen: ['Orte'], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
-      { zeilen: ['Gebäude'], breite: KNOPF_B * W, an: umweltDa && gebaeude, farbe: LICHT.gebaeude, gesperrt: !umweltDa, aktion: umschalten('gebaeude') },
-      { zeilen: ['Bäume'], breite: KNOPF_B * W, an: umweltDa && baeume, farbe: LICHT.umwelt, gesperrt: !umweltDa, aktion: umschalten('baeume') },
       // wie die Wanderwege erst ab der Stufe 16 km
       ...(zuegeDa ? [abstand, { zeilen: ['Züge'], breite: KNOPF_B * W, an: !grob(stufe) && zuege, farbe: LICHT.zuege, gesperrt: grob(stufe),
         aktion: umschalten('zuege') },
