@@ -554,7 +554,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
              onKeyDown={(e) => { if (e.key === 'Enter' && alle[0]) { nehmen(alle[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
              className="w-full rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight/90" />
       {offen && suchform(text).length >= 2 && (
-        <ul className="absolute bottom-full right-0 z-10 mb-1 w-max min-w-full max-w-[80vw] max-h-72 overflow-auto rounded-lg bg-white/95 text-sm shadow-lg dark:bg-sbb-charcoal/95">
+        <ul className="absolute left-0 top-full z-10 mt-1 w-max min-w-full max-w-[80vw] max-h-72 overflow-auto rounded-lg bg-white/95 text-sm shadow-lg dark:bg-sbb-charcoal/95">
           {alle.length ? alle.map((t) => (
             <li key={`${t.name}_${t.e}_${t.n}`}>
               <button type="button" onClick={() => nehmen(t)} className="w-full px-2.5 py-1.5 text-left hover:bg-sbb-milk dark:hover:bg-sbb-iron">
@@ -887,9 +887,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     setVersatzMs(schweizerZeit(datum, min).getTime() - Date.now())
   }
   const zeitSetzenRef = useRef(zeitSetzen); zeitSetzenRef.current = zeitSetzen
-  const [uhrOffen, setUhrOffen] = useState(false)
-  const szenenText = useMemo(() => schweizerZeit(tag, minuten).toLocaleString('de-CH', { timeZone: 'Europe/Zurich', weekday: 'short', day: 'numeric',
-    month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }), [tag, minuten])
   // welche Tage der Fahrplan der Züge kennt, für den Hinweis bei einer Zeitreise ausserhalb
   const [fahrplanTage, setFahrplanTage] = useState<{ von: string; bis: string } | null>(null)
   useEffect(() => { void zugIndexLaden().then((ix) => { if (ix) setFahrplanTage({ von: ix.von, bis: ix.bis }) }) }, [])
@@ -1287,7 +1284,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
             den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
         <div className="absolute bottom-2 right-2 flex max-w-[calc(100%-1rem)] items-center gap-2" style={desktop ? { zoom: DESKTOP_KNOPF_MASS, maxWidth: `calc((100% - 1rem) / ${DESKTOP_KNOPF_MASS})` } : undefined}>
-          {zusatz && zusatz.ortschaften.length > 0 && <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />}
           {/* eine Stufe hinaus, hinein geht es mit «Eintauchen» (Michael, 2026-10-30: «Die Fokusstufen müssen auch im Vollformat-Modus
               umgeschaltet werden können … wobei man nur hinauszoomen muss»; seit 2026-11-03 auch ausserhalb des Vollbilds, Michael: «Die Lupe zum
               Wegzoomen integrieren. Xr als zweitletztes») */}
@@ -1334,37 +1330,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>}
           {!voll && <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />}
         </div>
-        {/* oben rechts immer die Uhr der Szene, ein Tipp öffnet die Eingabe auf die Minute (Michael, 2026-11-07: «Oben soll man immer die Uhrzeit der
-            aktuell angezeigten Szenerie sehen. Dient der Orientierung … Man soll auch eine spezifische Zeit auf Minuten genau eingeben können») */}
-        <div className={`absolute right-2 z-10 flex flex-col items-end gap-1 ${voll ? 'top-14' : 'top-2'}`}>
-          <button type="button" onClick={() => setUhrOffen((x) => !x)} aria-expanded={uhrOffen} title="Zeit der Szene wählen"
-                  className={`flex items-center gap-1.5 rounded-lg border px-2 py-1 text-xs font-bold tabular-nums shadow-sm ${jetztAn
-                    ? 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'
-                    : 'border-sbb-red bg-white/95 text-sbb-red dark:bg-sbb-midnight/95'}`}>
-            <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-              <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
-            </svg>
-            {szenenText}{jetztAn ? '' : ' · Zeitreise'}
-          </button>
-          {uhrOffen && (
-            <div className="w-64 rounded-lg bg-white/95 p-2 text-xs shadow-lg dark:bg-sbb-midnight/95">
-              <label className="block font-bold" htmlFor="szenenzeit">Zeit der Szene (Schweizer Zeit)</label>
-              <input id="szenenzeit" type="datetime-local" step={60} value={`${tag}T${uhrzeit(minuten)}`}
-                     onChange={(e) => { const [d, z] = e.target.value.split('T'); if (d && z) { const [h, mi] = z.split(':').map(Number); zeitSetzen(d, h * 60 + mi) } }}
-                     className="mt-1 w-full rounded-lg border border-sbb-cloud bg-white px-2 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight" />
-              <div className="mt-2 flex gap-2">
-                <button type="button" onClick={() => zeitSchieben('jetzt', 0)} aria-pressed={jetztAn}
-                        className={'rounded-lg border px-2.5 py-1 font-bold ' + (jetztAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>Jetzt</button>
-                <button type="button" onClick={() => setUhrOffen(false)} className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Schliessen</button>
-              </div>
-              <p className="mt-2 text-sbb-metal dark:text-sbb-storm">
-                Die Zeit läuft von dort an weiter. Sie gilt für die Züge und Schiffe und, mit «Sonne», für Licht, Schatten, Sterne, Wetter und Wolken.
-                {fahrplanTage && (tag < fahrplanTage.von || tag > fahrplanTage.bis)
-                  && ` Für diesen Tag gibt es keinen Fahrplan: geladen ist der ${datumKurz(fahrplanTage.von)} bis ${datumKurz(fahrplanTage.bis)}.`}
-              </p>
-            </div>
-          )}
-        </div>
+        {/* die Uhr oben rechts ist weg (Michael, 2026-11-13, Bildschirmfoto mit durchgestrichener Uhr, «Überall weg»; vorher seit 2026-11-07); Datum,
+            Uhrzeit und «Jetzt» stehen unter dem Modell. Das Suchfeld oben links statt unten in der Reihe (Michael, 2026-11-13: Pfeil vom Suchfeld nach oben
+            links, «Suchfeld nach oben links») */}
+        {zusatz && zusatz.ortschaften.length > 0 && (
+          <div className="absolute left-2 top-2 z-10 flex max-w-[calc(100%-4rem)]" style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
+            <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />
+          </div>
+        )}
         {/* im Vollbild ein Kreuz oben rechts in der Ecke statt «Schliessen» unten (Michael, 2026-11-07: «Lieber ein passendes Schliessen-Icon an
             der Ecke»; unten legt Chrome auf Android seinen Hinweis zum Beenden darüber) */}
         {voll && (
@@ -1393,7 +1366,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                   // so gross wie «Fahren» im Kopf (Michael, 2026-10-25: «gleiche Grösse wie der Button Fahren»)
                   className={'absolute rounded-lg bg-sbb-red font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 ' + (tablet
                     ? 'left-2 bottom-2 px-[18px] py-[9px] text-2xl' : desktop ? 'right-2 bottom-[60px] px-3 py-1.5 text-base'
-                      : 'left-2 top-2 px-3 py-1.5 text-base max-[359px]:text-[14px]')}>
+                      : 'left-2 top-12 px-3 py-1.5 text-base max-[359px]:text-[14px]')}>
             {laedt ? 'Wird geladen …' : 'Eintauchen'}
           </button>
         )}
@@ -1421,8 +1394,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       </nav>
       {/* die Tafel mit Messung, Prognose und Verlauf des Winds ist weg (Michael, 2026-11-10: «Diesen Bereich würde ich der Übersicht halber
           weglassen. Evtl was im Infotext erwähnen»); was sie erklärte, steht unter «Wetter: Wind und Niederschlag» */}
+      {/* Datum, Uhrzeit und «Jetzt» immer, seit die Uhr oben weg ist (sonst liesse sich die Zeit der Züge ohne «Sonne» nicht mehr wählen) */}
       <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-        {sonnenAn && (
+        {(
           <>
             <input type="date" value={tag} onChange={(e) => { if (e.target.value) zeitSetzen(e.target.value, minuten) }} aria-label="Datum"
                    className="rounded-lg border border-sbb-cloud bg-white px-2 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
@@ -1438,7 +1412,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </>
         )}
       </div>
-      {standText && <p className="mt-1 text-sm">{standText} ({tagText}, {uhrzeit(minuten)} Uhr, Schweizer Zeit).</p>}
+      {/* der Satz zum Stand der Sonne ist weg (Michael, 2026-11-13, durchgestrichen); nur ausserhalb der Tage des Fahrplans ein Hinweis, wie vorher bei der Uhr */}
+      {fahrplanTage && (tag < fahrplanTage.von || tag > fahrplanTage.bis) && (
+        <p className="mt-1 text-sm">Für diesen Tag gibt es keinen Fahrplan: geladen ist der {datumKurz(fahrplanTage.von)} bis {datumKurz(fahrplanTage.bis)}.</p>
+      )}
       {hinweis && <p className="mt-2 text-sm font-bold">{hinweis}</p>}
       {/* zu zweit (Michael, 2026-11-10, Vorschlag 13): Raum eröffnen oder mit dem Code beitreten, wer eröffnet, führt */}
       <div className="mt-2 text-sm">
@@ -1733,8 +1710,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Sonne und Schatten">
           <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
             −1 h und +1 h die Zeit, −1 Tag und +1 Tag sowie −1 Monat und +1 Monat das Datum, «Jetzt» setzt beides auf jetzt. Am Anfang gilt die
-            jetzige Zeit, «Jetzt» leuchtet dann. Oben rechts im Bild steht immer die Zeit der Szene; ein Tipp darauf öffnet ein Feld, in dem sich Datum
-            und Uhrzeit auf die Minute eingeben lassen, unter dem Modell auch mit einem Regler. Von der gewählten Zeit an läuft die Uhr weiter. Die Zeit
+            jetzige Zeit, «Jetzt» leuchtet dann. Unter dem Modell lassen sich Datum und Uhrzeit wählen, die Uhrzeit mit einem Regler auf die Minute,
+            auch ohne «Sonne». Von der gewählten Zeit an läuft die Uhr weiter. Die Zeit
             gilt auch für die Züge und Schiffe laut Fahrplan, so weit der geladene Fahrplan reicht (etwa zwei Wochen ab gestern). Steht die Sonne unter
             dem Horizont, brennt Licht in den Fenstern der Gebäude, abends in vielen, nach Mitternacht in wenigen. Fenster und Stockwerke stehen in
             keiner Quelle: Sie sind gezeichnet, am Tag als dunkle Scheiben, und wie viele nachts brennen, ist eine Annahme. Nachts wird der Himmel dunkel, und es stehen die Sterne bis zur Helligkeit 6 dort, wo sie zu dieser Zeit über
@@ -7059,7 +7036,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {/* Züge und Schiffe sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind; oben rechts, eng untereinander, damit
           sie nicht ins Bild ragen und «Eintauchen» oben links frei bleibt (Michael, 2026-10-28: «Die Hinweise oben links sollen weiter oben stehen») */}
       {(zugZeile || schiffZeile || mitfahren) && (
-        <div className={`pointer-events-none absolute right-2 ${vollbild ? 'top-[6.5rem]' : 'top-12'} flex max-w-[60%] flex-col items-end gap-0.5 text-right`}>
+        <div className={`pointer-events-none absolute right-2 ${vollbild ? 'top-14' : 'top-2'} flex max-w-[60%] flex-col items-end gap-0.5 text-right`}>
           {zugZeile && (
             <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{zugZeile}</p>
           )}

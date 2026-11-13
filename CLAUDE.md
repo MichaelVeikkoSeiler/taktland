@@ -581,6 +581,12 @@ Züge und Kamera in «3D Schweiz» (Michael, 2026-11-10: «manchmal wünsche ich
 Züge nie unter dem Gelände in «3D Schweiz» (Michael, 2026-11-10, Wankdorf Ost: «Störend ist dass der Zug im Untergrund versinkt»): jedes Wagenende mindestens
              ZUG_UEBER_BODEN_M (0,2 m, gewählt) über dem gezeichneten Gelände (bestandHoehe), auch wo die Gleisachse aus swissTLM3D tiefer liegt (Einschnitte, die das
              Gelände des Modells gemittelt zeigt); in Tunneln bleibt der Zug verdeckt; nur gebaut, hier ohne die feinen Daten nicht nachgestellt
+Uhr, Sonnensatz und Suche in «3D Schweiz» (Michael, 2026-11-13, Bildschirmfoto mit durchgestrichener Uhr oben rechts und durchgestrichenem Satz «Die Sonne steht unter
+             dem Horizont …», ein Pfeil vom Suchfeld nach oben links; auf Nachfrage «Überall weg» und «Suchfeld nach oben links»): die Uhr oben rechts samt Eingabe auf die Minute
+             ist weg (vorher seit 2026-11-07), der Satz zum Stand der Sonne unter dem Modell ebenso; Datum, Regler und «Jetzt» unter dem Modell stehen seither immer, nicht nur
+             mit «Sonne» (sonst liesse sich die Zeit der Züge nicht mehr wählen), darunter nur ausserhalb der Tage des Fahrplans der Hinweis dazu; das Suchfeld oben links
+             im Bild, die Treffer klappen nach unten auf, «Eintauchen» auf dem Handy darunter (top-12), die Zeilen der Züge und Schiffe oben rechts rücken hinauf;
+             Anleitung («Sonne und Schatten») nachgeführt; im Browser hier mit 390 × 800 angeschaut
 Autos in Kurven in «3D Schweiz» (Michael, 2026-11-13: «Die Autos auf den Straßen fahren nicht schöne Bogen … ziemlich eckig um eine Kurve»): autoBei in Autos.ts mittelt
              die Lage über 7 m davor und danach (Autobahnen 15 m, KURVE_GLATT_M, gewählt), gewichtet wie ein Dreieck, die Richtung aus der Lage davor und danach; an einer
              rechtwinkligen Ecke dreht ein Auto so über etwa 14 m und fährt gut 1 m innen; mit einer gezeichneten Ecke nachgerechnet, nicht im Browser angeschaut
