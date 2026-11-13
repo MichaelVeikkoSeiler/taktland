@@ -483,7 +483,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Tunnel stammt aus einer genannten Quelle, und was fehlt, steht als Lücke da. Ehrlicherweise ist aber manches doch erfunden, nämlich
             wie es aussieht. Der Zug hat kein echtes Vorbild. Der Führerstand ist ein Bild, das ich mit ChatGPT und Handarbeit gestaltet habe.
             Die Tunnelwände, der gemalte Himmel, die Ortstafeln am Gleis, die Helligkeit im Tunnel und das Licht in den Fenstern hat niemand
-            gemessen. Mich fasziniert die Mischung zwischen Realität und Fantasie.</p>
+            gemessen. Beim Projekt Taktland fasziniert mich die Mischung aus Realität und eigener Interpretation.</p>
           <p>Vor ein paar Jahren wäre ein Projekt wie Taktland sicher ein wesentlich grösseres Unterfangen gewesen. Für mich allein, ohne
             jegliche Programmierkenntnisse, wäre es gar nicht möglich gewesen. Die KI hat mir die Programmierung abgenommen. Die Idee, die
             Entscheidungen und das Ausprobieren des Ganzen, mit mehreren Hundert, wenn nicht sogar gegen tausend Anforderungen an die KI,
