@@ -581,6 +581,9 @@ Züge und Kamera in «3D Schweiz» (Michael, 2026-11-10: «manchmal wünsche ich
 Züge nie unter dem Gelände in «3D Schweiz» (Michael, 2026-11-10, Wankdorf Ost: «Störend ist dass der Zug im Untergrund versinkt»): jedes Wagenende mindestens
              ZUG_UEBER_BODEN_M (0,2 m, gewählt) über dem gezeichneten Gelände (bestandHoehe), auch wo die Gleisachse aus swissTLM3D tiefer liegt (Einschnitte, die das
              Gelände des Modells gemittelt zeigt); in Tunneln bleibt der Zug verdeckt; nur gebaut, hier ohne die feinen Daten nicht nachgestellt
+Zeile zum Wetter in der Modellbahn und beim Fahren seit 2026-11-13 nie mehr im Bild, nur in der Tafel des Windsacks (Michael, Führerstand: «Wetter Infobox
+             entfernen»; vorher ab 640 Bildpunkten Breite, WETTER_ZEILE_AB_PX bestimmt nur noch die Lage der Knöpfe); am Pult beim Fahren «Beim Fahren bestimmt das
+             Lokpersonal das Tempo» statt «… der Standort …» (Michael: «Nicht "der Standort" sondern " das Lokpersonal"», Fuehrerpult.ts)
 Gebäude und Bäume in «3D Schweiz» seit 2026-11-13 immer an, ohne Knöpfe (Michael: «Gebäude und Bäume immer einblenden. Knöpfe weg»): in den Feldern von 4 km und 1 km, wo es
              Daten gibt; gebaeudeAn und baeumeAn fest wahr, gemerkte Ansichten, Links und «Zu zweit» schalten sie nicht aus; damit auch Strassen- und Bahnhofslicht und Decken immer;
              Anleitung («Knöpfe an den Wänden», «Gebäude», «Licht in der Nacht») nachgeführt
