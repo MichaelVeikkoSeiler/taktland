@@ -64,12 +64,12 @@ export async function echtzeitHolen(ix: ZugIndex, fahrten: ZugFahrt[]): Promise<
   let a: { v: string; zeit: number; alter: number; f: Record<string, Array<[string, number, Meldung[]]>> }
   try {
     const r = await fetch(`${ECHTZEIT_URL}?a=fahrten`, { method: 'POST', body: JSON.stringify({ t: [...je.keys()] }), signal: AbortSignal.timeout(20_000) })
-    if (!r.ok) throw new Error(String(r.status))
+    if (!r.ok) { echtzeitStand.ok = false; echtzeitStand.grund = `nicht erreichbar (Server ${r.status})`; return }
     a = await r.json()
   } catch { echtzeitStand.ok = false; echtzeitStand.grund = 'nicht erreichbar'; return }
   // die Fahrtnummern wechseln mit jeder Fassung des Fahrplans: nur dieselbe
-  if (a.v !== ix.stand) { echtzeitStand.ok = false; echtzeitStand.grund = 'andere Fassung des Fahrplans'; return }
-  if (a.alter > ECHTZEIT_ALT_S) { echtzeitStand.ok = false; echtzeitStand.grund = 'veraltet'; return }
+  if (a.v !== ix.stand) { echtzeitStand.ok = false; echtzeitStand.grund = `für eine andere Fassung des Fahrplans (Echtzeit ${a.v}, Fahrplan ${ix.stand})`; return }
+  if (a.alter > ECHTZEIT_ALT_S) { echtzeitStand.ok = false; echtzeitStand.grund = `veraltet (${Math.round(a.alter / 60)} Min.)`; return }
   echtzeitStand.ok = true; echtzeitStand.grund = null; echtzeitStand.zeit = a.zeit
   const neu = new Map<ZugFahrt, Map<number, Echtzeit>>()
   for (const [tid, liste] of Object.entries(a.f)) {

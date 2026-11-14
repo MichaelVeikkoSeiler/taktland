@@ -5436,7 +5436,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const i = st.art === 'halt' ? st.i : st.i + 1, v = haltVerspaetung(f, i, st.tag, st.art === 'halt')
       const e = f.echt?.get(st.tag)
       const dritte = e?.halt[i] ? `laut Echtzeit kein Halt in ${name(halt.abk)}`
-        : v === null ? 'laut Fahrplan, keine Echtzeit gemeldet'
+        // ohne Antwort der Echtzeit der Grund (Michael, 2026-11-14: «Es zeigt keine Echtzeiten mehr an kann das sein?»), sonst war für ihn nichts gemeldet
+        : v === null ? (echtzeitStand.ok || !echtzeitStand.grund ? 'laut Fahrplan, keine Echtzeit gemeldet' : `laut Fahrplan, Echtzeit ${echtzeitStand.grund}`)
         : Math.round(v) === 0 ? 'Echtzeit: pünktlich'
         : Math.round(v) > 0 ? `Echtzeit: ${Math.round(v)} Min. später` : `Echtzeit: ${-Math.round(v)} Min. früher`
       return [`${titel} von ${von} nach ${f.ziel}`, zweite, dritte]
