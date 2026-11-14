@@ -54,7 +54,7 @@ export function WoBinIch({ index }: { index: BahnhofIndex | null }) {
   return (
     <div className="px-4 pb-4">
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">Wo bin ich?</h1>
+      <h1 className="mt-4 text-2xl font-bold tracking-tight">Wo fahre ich?</h1>
       <p className="mt-2 leading-relaxed">
         Du sitzt im Führerstand, irgendwo auf einer Strecke in der Schweiz, ohne Ortstafeln und ohne Namen. Fahr ein Stück
         mit, schau dich um und tippe dann auf der Karte, wo du warst: je näher, desto mehr Punkte.
@@ -121,10 +121,10 @@ function Partie({ netz, linien, pool, brueckeKm, index, hilfenStart, schliessen 
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-sbb-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white"
-         role="dialog" aria-label="Wo bin ich?">
+         role="dialog" aria-label="Wo fahre ich?">
       <div className="flex items-center justify-between gap-3 border-b border-sbb-cloud px-4 py-2 dark:border-sbb-iron">
         <p className="min-w-0 truncate font-bold">
-          Wo bin ich?{phase !== 'ende' && <span className="font-normal"> · Runde {nr + 1} von {RUNDEN}</span>}
+          Wo fahre ich?{phase !== 'ende' && <span className="font-normal"> · Runde {nr + 1} von {RUNDEN}</span>}
           <span className="font-normal text-sbb-metal dark:text-sbb-storm"> · {summe} Punkte</span>
         </p>
         <button type="button" onClick={() => { if (phase === 'ende' || window.confirm('Partie beenden? Der Spielstand geht verloren.')) schliessen() }}
