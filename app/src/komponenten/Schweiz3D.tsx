@@ -1286,9 +1286,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             «Die Knöpfe machen Sinn aber nur in der Brille und XR. Ansonsten aus den Wänden entfernen und auf dem Fenster mit Icons nachbauen. So sind
             sie fix und müssen nicht gesucht werden»); dieselbe Reihenfolge und dieselben Farben wie an den Wänden, was in der Stufe nicht geht, bleibt
             blass an seinem Platz */}
-        <div className={`absolute right-2 ${voll ? 'top-14' : 'top-2'} z-[5] ${zweiSpalten ? 'grid grid-flow-col grid-rows-6 gap-1 [direction:rtl]' : 'flex flex-col gap-1'}`} style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
+        <div className={`absolute right-2 ${voll ? 'top-14' : 'top-2'} z-[5] ${zweiSpalten ? 'grid grid-flow-col grid-rows-6 gap-2 [direction:rtl]' : 'flex flex-col gap-2'}`} style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
           {/* auf Handy und Tablet ausserhalb des Vollbilds in zwei Spalten, sonst reicht die Höhe nicht bis über die Knöpfe unten */}
-          {SCHALTER_SYMBOLE.map(({ art, name, farbe, nurFeld, nichtGrob, abstand, symbol }) => {
+          {SCHALTER_SYMBOLE.map(({ art, name, nurFeld, nichtGrob, symbol }) => {
             const an = ({ orte: orteAn, zuege: zuegeAn, schiffe: schiffeAn, autos: autosAn, menschen: menschenAn, wandern, hoehen: scheiben,
                           gipfel: gipfelAn, wolken: wolkenAn, wind: windAn, sonne: sonnenAn } as Record<string, boolean>)[art]
             const gesperrt = (nurFeld && stufe !== 'ort' && stufe !== 'nah') || (nichtGrob && grob(stufe))
@@ -1299,10 +1299,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               <button key={art} type="button" disabled={gesperrt} aria-pressed={leuchtet}
                       onClick={() => { knopfTon(!an); setzen((x) => !x) }}
                       aria-label={gesperrt ? `${name} (in dieser Stufe nicht)` : name} title={gesperrt ? `${name}: in dieser Stufe nicht` : name}
-                      style={leuchtet ? { backgroundColor: farbe, borderColor: farbe } : undefined}
-                      className={`${abstand && !zweiSpalten ? 'mt-1.5' : ''} flex size-7 flex-none items-center justify-center rounded-lg border ${leuchtet ? 'text-sbb-black'
+                      className={`flex size-8 flex-none items-center justify-center rounded-lg border ${leuchtet ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
                         : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gesperrt ? 'opacity-40' : ''}`}>
-                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{symbol}</svg>
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{symbol}</svg>
               </button>
             )
           })}
@@ -1398,26 +1397,31 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
         )}
       </div>
-      <nav aria-label="Stufe" className="mt-2 flex flex-wrap items-center gap-1 text-sm">
-        <button type="button" onClick={() => zurueck('schweiz')} className={`rounded-lg px-2 py-1 ${stufe === 'schweiz' ? 'font-bold' : 'underline'}`}>Schweiz</button>
-        {gelaende.gross && (
-          <>›<button type="button" onClick={() => zurueck('gross')} className={`rounded-lg px-2 py-1 ${stufe === 'gross' ? 'font-bold' : 'underline'}`}>
-            128 km {titel(gelaende.gross.anker) === 'Feld' ? '' : titel(gelaende.gross.anker)}</button></>
-        )}
-        {gelaende.mittel && (
-          <>›<button type="button" onClick={() => zurueck('mittel')} className={`rounded-lg px-2 py-1 ${stufe === 'mittel' ? 'font-bold' : 'underline'}`}>
-            64 km {titel(gelaende.mittel.anker) === 'Feld' ? '' : titel(gelaende.mittel.anker)}</button></>
-        )}
-        {gelaende.region && (
-          <>›<button type="button" onClick={() => zurueck('region')} className={`rounded-lg px-2 py-1 ${stufe === 'region' ? 'font-bold' : 'underline'}`}>
-            Region {titel(gelaende.region.anker)}</button></>
-        )}
-        {(stufe === 'ort' || stufe === 'nah') && gelaende.ort && (
-          <>›<button type="button" onClick={() => zurueck('ort')} className={`rounded-lg px-2 py-1 ${stufe === 'ort' ? 'font-bold' : 'underline'}`}>
-            {titel(gelaende.ort.anker)}</button></>
-        )}
-        {stufe === 'nah' && gelaende.nah && <>›<span className="px-2 py-1 font-bold">1 km {titel(gelaende.nah.anker) === 'Feld' ? '' : titel(gelaende.nah.anker)}</span></>}
-        {groesse && <span className="px-1 text-sbb-metal dark:text-sbb-storm">({groesse})</span>}
+      {/* die Stufen als gleich grosse Knöpfe mit der Seitenlänge in km, die jetzige dunkel, darunter ihr Name (Michael, 2026-11-14: «Die Stufung unten
+          auch mit Icons machen und mit Zahlen beschriften. Zb 1, 4 16 usw»; vorher eine Zeile «Schweiz › 128 km um … ›») */}
+      <nav aria-label="Stufe" className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+        {([['schweiz', 'CH', 'Schweiz', true], ['gross', '128', '128 km', !!gelaende.gross], ['mittel', '64', '64 km', !!gelaende.mittel],
+           ['region', '16', '16 km', !!gelaende.region], ['ort', '4', '4 km', (stufe === 'ort' || stufe === 'nah') && !!gelaende.ort],
+           ['nah', '1', '1 km', stufe === 'nah' && !!gelaende.nah]] as Array<[Stufe, string, string, boolean]>).map(([s, zahl, name, da]) => {
+          const jetzt = stufe === s
+          return (
+            <button key={s} type="button" disabled={!da || jetzt} onClick={() => zurueck(s)} aria-current={jetzt ? 'step' : undefined}
+                    aria-label={jetzt ? `${name}, jetzt` : da ? `Zurück zu ${name}` : `${name}, noch nicht gewählt`} title={name}
+                    className={`flex size-8 flex-none items-center justify-center rounded-lg border text-xs font-bold ${jetzt
+                      ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
+                      : 'border-sbb-cloud bg-white text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white'} ${!da ? 'opacity-40' : ''}`}>
+              {zahl}
+            </button>
+          )
+        })}
+        <span className="basis-full font-bold">
+          {({ schweiz: 'Schweiz', gross: gelaende.gross && `128 km ${titel(gelaende.gross.anker) === 'Feld' ? '' : titel(gelaende.gross.anker)}`,
+             mittel: gelaende.mittel && `64 km ${titel(gelaende.mittel.anker) === 'Feld' ? '' : titel(gelaende.mittel.anker)}`,
+             region: gelaende.region && `16 km, Region ${titel(gelaende.region.anker)}`,
+             ort: gelaende.ort && `4 km ${titel(gelaende.ort.anker)}`,
+             nah: gelaende.nah && `1 km ${titel(gelaende.nah.anker) === 'Feld' ? '' : titel(gelaende.nah.anker)}` } as Record<Stufe, string | null | undefined>)[stufe]}
+          {groesse && <span className="pl-1 font-normal text-sbb-metal dark:text-sbb-storm">({groesse})</span>}
+        </span>
       </nav>
       {/* die Tafel mit Messung, Prognose und Verlauf des Winds ist weg (Michael, 2026-11-10: «Diesen Bereich würde ich der Übersicht halber
           weglassen. Evtl was im Infotext erwähnen»); was sie erklärte, steht unter «Wetter: Wind und Niederschlag» */}
@@ -1576,7 +1580,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <div className="mt-2 space-y-2 text-sm leading-relaxed">
         <Abschnitt titel="Wählen und eintauchen">
           <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See. Mit «Eintauchen» geht es in ein Gebiet von 128 km, dann von 64 km, dort in eine Region von 16 km, dann in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
-            Ein Tipp neben das Modell nimmt die Wahl zurück. Die Zeile unter dem Modell (Schweiz › Region …) führt eine Stufe zurück.</p>
+            Ein Tipp neben das Modell nimmt die Wahl zurück. Die Knöpfe unter dem Modell (CH, 128, 64, 16, 4, 1 für die Seitenlänge in km) führen zurück in eine Stufe, die man schon gewählt hat.</p>
         </Abschnitt>
         <Abschnitt titel="Drehen und zoomen">
           <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen; am Computer fliegt im Feld von 1 km ein Doppelklick näher an die Stelle, ein Doppelklick in den Himmel wieder zurück. Der Lautsprecher unten rechts schaltet den Ton aus und wieder ein. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
@@ -1593,7 +1597,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         <Abschnitt titel="Knöpfe">
           <p>Die Knöpfe am rechten Rand des Bilds schalten von oben nach unten Orte, Züge, Schiffe, Autos, Menschen, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
-            Wetter und Sonne ein und aus; leuchtet ein Knopf in seiner Farbe, ist es an. Mit der Maus nennt ein Knopf seinen Namen. Am Anfang ist alles aus. Gebäude und Bäume sind in den Feldern von 4 km und 1 km immer da, ohne Knopf. Was in einer Stufe nicht geht, bleibt blass an seinem Platz.
+            Wetter und Sonne ein und aus; ist ein Knopf dunkel mit weissem Zeichen, ist es an. Mit der Maus nennt ein Knopf seinen Namen. Am Anfang ist alles aus. Gebäude und Bäume sind in den Feldern von 4 km und 1 km immer da, ohne Knopf. Was in einer Stufe nicht geht, bleibt blass an seinem Platz.
             In der Brille und in XR sitzen dieselben Knöpfe an den Wänden des Sockels. + und − in der Mitte
             einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
@@ -3099,6 +3103,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         ((ausland as THREE.Mesh).material as THREE.MeshBasicMaterial).color.copy(kuppelStoff!.uniforms.horizont.value)
       }
       if (kuppel.visible !== kuppelJetzt) { kuppel.visible = kuppelJetzt; setzeHimmel() }
+      const platte = wurzel.getObjectByName('platte')
+      if (platte) platte.visible = renderer.xr.isPresenting
       if (kuppelJetzt) kuppel.position.copy(renderer.xr.isPresenting ? renderer.xr.getCamera().position : kamera.position)
       for (const f of jeBild) f()
       knoepfeZeigen()
@@ -3394,6 +3400,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const bx = X(E1) - X(E0) + 2 * ueber, bz = Z(N0) - Z(N1) + 2 * ueber
       const gp = new THREE.BoxGeometry(bx, platte, bz)
       const pl = new THREE.Mesh(gp, platteMaterial)
+      // die Platte nur in der Brille, auf dem Bildschirm endet der Sockel mit der Wand (Michael, 2026-11-14: «Sockel unten vereinfachen. Es soll nicht so
+      // aussehen als wäre unten noch eine weitere Platte»; je Bild)
+      pl.name = 'platte'
       pl.position.set(0, unten - platte / 2, 0)
       sockel.add(pl)
       if (land) {
