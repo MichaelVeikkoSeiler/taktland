@@ -667,6 +667,9 @@ Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn 
              (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d
              oder #/3dland ohne Ort, kommt statt der Wahl gleich diese Ansicht (wie ein Link mit ?ansicht=); wer mit «Zurück» zur Wahl geht, verwirft sie;
              nach Neuladen beginnt es wie immer; die Stufe Schweiz im Browser hier geprüft, tiefere Stufen laden hier ohne daten.taktland.ch nicht fertig
+Wetterknöpfe im Führerstand (Fahren, Probefahrt, Modellbahn) seit 2026-11-14 weg (Michael: «Wenn man im Führerstand fährt, soll man die Icons nicht mehr
+             sehen, die Sonne nicht und auch den Windsack nicht»): Sonnenschalter, Windsack und Regenknopf unsichtbar, solange man im Führerstand ist (leisteLegen
+             in Relief.tsx), die Tafel des Windsacks schliesst; das Wetter gilt weiter wie davor gewählt; hinter den Zug wieder da
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der

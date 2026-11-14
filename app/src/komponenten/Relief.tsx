@@ -1810,6 +1810,10 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const lage = `${oben}${schmal}`
       if (lage === leisteLage) return
       leisteLage = lage
+      // im Führerstand ohne Sonne, Windsack und Regen (Michael, 2026-11-14: «Wenn man im Führerstand fährt, soll man die Icons nicht mehr
+      // sehen, die Sonne nicht und auch den Windsack nicht»); das Wetter gilt weiter, wie es davor gewählt war
+      wetterLeiste.style.visibility = oben ? 'hidden' : ''
+      if (oben) windTafelZu()
       // die Zeile zum Wetter nie mehr im Bild, nur noch in der Tafel des Windsacks (Michael, 2026-11-13: «Wetter Infobox entfernen»)
       wetterAnzeige.hidden = true
       Object.assign(wetterLeiste.style, oben && schmal ? { top: '84px', bottom: '', left: '', right: '8px', transform: '' }
