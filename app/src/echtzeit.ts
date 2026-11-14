@@ -60,7 +60,7 @@ export async function echtzeitHolen(ix: ZugIndex, fahrten: ZugFahrt[]): Promise<
   if (!reisen) { echtzeitStand.ok = false; echtzeitStand.grund = 'ohne Fahrtnummern'; return }
   const je = new Map<string, { f: ZugFahrt; seqs: number[] }>()
   for (const f of fahrten) for (const [tid, seqs] of reisen[f.id] ?? []) if (seqs.length === f.halte.length) je.set(tid, { f, seqs })
-  if (!je.size) return
+  if (!je.size) { if (fahrten.length) { echtzeitStand.ok = false; echtzeitStand.grund = 'ohne passende Fahrtnummern' } return }
   let a: { v: string; zeit: number; alter: number; f: Record<string, Array<[string, number, Meldung[]]>> }
   try {
     const r = await fetch(`${ECHTZEIT_URL}?a=fahrten`, { method: 'POST', body: JSON.stringify({ t: [...je.keys()] }), signal: AbortSignal.timeout(20_000) })
