@@ -141,6 +141,8 @@ const spaeterWeg = (materialien: Array<THREE.Material | undefined>) => {
  *  oberhalb der Icons. Alle Icons ca 130% vergrössern auf dem Desktop») */
 const istDesktop = () => matchMedia('(hover: hover) and (pointer: fine)').matches
 const DESKTOP_KNOPF_MASS = 1.3
+/** zwei Tipps so kurz nacheinander gelten auf Touch als Doppeltipp zum Eintauchen (gewählt) */
+const DOPPELTIPP_MS = 450
 const istTablet = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) >= 700
 const hoechstens = () => (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 4 : 9)
 const hoechstensFelder = hoechstens
@@ -928,6 +930,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   useEchtesVollbild(voll, setVoll)
   // die Symbole der Schalter auf Handy und Tablet ausserhalb des Vollbilds in zwei Spalten (Michael, 2026-11-14)
   const zweiSpalten = !desktop && !voll
+  const letzterTipp = useRef(0)
   const inBrille = () => {
     if (!xr) { setBrilleHinweis('Auf diesem Gerät ist keine VR-Brille zu finden. Öffne Taktland im Browser einer VR-Brille wie der Meta Quest 3.'); return }
     setBrilleHinweis(null)
@@ -1261,7 +1264,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    waehlen={stufe === 'nah' ? undefined : (e, n) => {
                      // am Desktop (Maus) taucht ein zweiter Klick in den roten Kasten ein (Michael, 2026-11-11: «Auf dem Desktop soll man beim
                      // Auswählen eines Ausschnittes (roter Kasten) diesen nochmals anklicken können, damit man dort eintaucht»; vorher ein Doppelklick)
-                     if (wahl && window.matchMedia('(pointer: fine)').matches && Math.abs(e - wahl.e) <= wahl.seite / 2 && Math.abs(n - wahl.n) <= wahl.seite / 2) {
+                     // auf Touch ein Doppeltipp (Michael, 2026-11-14: «Auf Touchmonitoren soll man doppeltippen können zum eintauchen»): der erste Tipp wählt,
+                     // ein zweiter bis DOPPELTIPP_MS danach im gewählten Kasten taucht ein
+                     const imKasten = !!wahl && Math.abs(e - wahl.e) <= wahl.seite / 2 && Math.abs(n - wahl.n) <= wahl.seite / 2
+                     const jetztMs = performance.now(), doppelt = jetztMs - letzterTipp.current < DOPPELTIPP_MS
+                     letzterTipp.current = jetztMs
+                     if (imKasten && (window.matchMedia('(pointer: fine)').matches || doppelt)) {
+                       letzterTipp.current = 0
                        window.setTimeout(() => eintauchenAktuell.current(), 30)
                        return
                      }
@@ -1580,7 +1589,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <div className="mt-2 space-y-2 text-sm leading-relaxed">
         <Abschnitt titel="Wählen und eintauchen">
           <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See. Mit «Eintauchen» geht es in ein Gebiet von 128 km, dann von 64 km, dort in eine Region von 16 km, dann in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
-            Ein Tipp neben das Modell nimmt die Wahl zurück. Die Knöpfe unter dem Modell (CH, 128, 64, 16, 4, 1 für die Seitenlänge in km) führen zurück in eine Stufe, die man schon gewählt hat.</p>
+            Ein Doppeltipp auf ein Feld taucht gleich dort ein, mit der Maus ein zweiter Klick in den gewählten Kasten. Ein Tipp neben das Modell nimmt die Wahl zurück. Die Knöpfe unter dem Modell (CH, 128, 64, 16, 4, 1 für die Seitenlänge in km) führen zurück in eine Stufe, die man schon gewählt hat.</p>
         </Abschnitt>
         <Abschnitt titel="Drehen und zoomen">
           <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen; am Computer fliegt im Feld von 1 km ein Doppelklick näher an die Stelle, ein Doppelklick in den Himmel wieder zurück. Der Lautsprecher unten rechts schaltet den Ton aus und wieder ein. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
