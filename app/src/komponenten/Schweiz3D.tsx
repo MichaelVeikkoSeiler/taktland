@@ -142,6 +142,11 @@ const spaeterWeg = (materialien: Array<THREE.Material | undefined>) => {
 const istDesktop = () => matchMedia('(hover: hover) and (pointer: fine)').matches
 const DESKTOP_KNOPF_MASS = 1.3
 /** zwei Tipps so kurz nacheinander gelten auf Touch als Doppeltipp zum Eintauchen (gewählt) */
+/** Knöpfe im Bild: an eingedrückt mit Schatten nach innen, aus erhaben mit Schatten nach aussen; an ist das Zeichen 30° gegen den Uhrzeigersinn
+ *  gedreht (Michael, 2026-11-14: «Icon müssen klarer aktiv resp nicht aktiv sein …», für die Reihe unten «Ja gerne») */
+const KNOPF_AN = 'border-sbb-anthracite bg-sbb-anthracite text-white shadow-[inset_0_2px_5px_rgba(0,0,0,0.7)] transition-shadow'
+const KNOPF_AUS = 'border-sbb-cloud bg-white/90 text-sbb-black shadow-[0_1px_3px_rgba(0,0,0,0.45)] transition-shadow dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'
+const gedreht = (an: boolean) => (an ? { transform: 'rotate(-30deg)' } : undefined)
 const DOPPELTIPP_MS = 450
 const istTablet = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) >= 700
 const hoechstens = () => (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 4 : 9)
@@ -1346,11 +1351,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                       // an: eingedrückt (Schatten nach innen) und das Zeichen 30° gegen den Uhrzeigersinn gedreht, aus: erhaben mit Schatten nach aussen
                       // (Michael, 2026-11-14: «Icon müssen klarer aktiv resp nicht aktiv sein. Evtl durch Schatten nach innen? Zudem im aktiven Zustand das
                       // Zeichen im Icon um 30 Grad gegen Uhrzeigersinn drehen»)
-                      className={`flex size-8 flex-none items-center justify-center rounded-lg border transition-shadow ${leuchtet
-                        ? 'border-sbb-anthracite bg-sbb-anthracite text-white shadow-[inset_0_2px_5px_rgba(0,0,0,0.7)]'
-                        : 'border-sbb-cloud bg-white/90 text-sbb-black shadow-[0_1px_3px_rgba(0,0,0,0.45)] dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gesperrt ? 'opacity-40 shadow-none' : ''}`}>
+                      className={`flex size-8 flex-none items-center justify-center rounded-lg border transition-shadow ${leuchtet ? KNOPF_AN : KNOPF_AUS} ${gesperrt ? 'opacity-40 shadow-none' : ''}`}>
                 <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                     className="transition-transform duration-200" style={{ transform: leuchtet ? 'rotate(-30deg)' : undefined }}>{symbol}</svg>
+                     className="transition-transform duration-200" style={gedreht(leuchtet)}>{symbol}</svg>
               </button>
             )
           })}
@@ -1364,7 +1367,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               Wegzoomen integrieren. Xr als zweitletztes») */}
           {stufe !== 'schweiz' && (
             <button type="button" onClick={eineZurueck} aria-label="Eine Stufe hinaus" title="Eine Stufe hinaus"
-                    className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
+                    className={`flex size-8 flex-none items-center justify-center rounded-lg border ${KNOPF_AUS}`}>
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.2 15.2L21 21M7.5 10.5h6" />
               </svg>
@@ -1373,8 +1376,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
                   aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
                   title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
-                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${gpsAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gpsAn && !standort ? 'animate-pulse' : ''}`}>
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${gpsAn ? KNOPF_AN : KNOPF_AUS} ${gpsAn && !standort ? 'animate-pulse' : ''}`}>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(gpsAn)} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
               <path d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22" />
             </svg>
@@ -1382,8 +1385,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           {(stufe === 'ort' || stufe === 'nah') && (
             <button type="button" onClick={() => setStehen((x) => !x)} aria-pressed={stehen}
                     aria-label={stehen ? 'Augenhöhe beenden' : 'Auf Augenhöhe stellen'} title={stehen ? 'Augenhöhe beenden' : 'Auf Augenhöhe: hinstellen und umschauen'}
-                    className={`flex size-8 flex-none items-center justify-center rounded-lg border ${stehen ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'}`}>
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    className={`flex size-8 flex-none items-center justify-center rounded-lg border ${stehen ? KNOPF_AN : KNOPF_AUS}`}>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(stehen)} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="4.2" r="2.2" fill="currentColor" stroke="none" /><path d="M12 8v7M12 15l-3 6.5M12 15l3 6.5M7 11.5l5-2.5 5 2.5" />
               </svg>
             </button>
@@ -1392,15 +1395,15 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               mit Schallwellen an, mit Kreuz aus */}
           <button type="button" onClick={() => stummSetzen(!stumm)} aria-pressed={stumm}
                   aria-label={stumm ? 'Ton ist aus, einschalten' : 'Ton ausschalten'} title={stumm ? 'Ton einschalten' : 'Ton ausschalten'}
-                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${stumm ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'}`}>
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${stumm ? KNOPF_AN : KNOPF_AUS}`}>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(stumm)} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" />
               {stumm ? <path d="M15.5 9.5l5 5m0-5l-5 5" /> : <><path d="M15.5 9a4 4 0 0 1 0 6" /><path d="M18 6.5a7.5 7.5 0 0 1 0 11" /></>}
             </svg>
           </button>
           {xrDa && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
                   // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
-                  className="flex size-8 flex-none items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-xs font-bold text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
+                  className={`flex size-8 flex-none items-center justify-center rounded-lg border text-xs font-bold ${KNOPF_AUS}`}>
             XR
           </button>}
           {!voll && <VollbildKnopf voll={voll} umschalten={() => setVoll(!voll)} />}
