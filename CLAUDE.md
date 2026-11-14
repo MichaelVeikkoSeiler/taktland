@@ -674,6 +674,11 @@ Grund fehlender Echtzeit im Schild eines Zugs in «3D Schweiz» (Michael, 2026-1
 Zeilen der Züge und Schiffe und «In den Führerstand nach …» in «3D Schweiz» seit 2026-11-14 links unter Suche und «Eintauchen» (top-24) statt oben rechts
              (Michael, Bildschirmfotos aus Bern: auf dem Handy lag der Link unter dem Suchfeld und den zwei Spalten der Symbole); dazu der Grund «ohne passende
              Fahrtnummern», wenn keine Fahrt im Bild eine trip_id hat
+Knopf «In den Führerstand» im Schild des Zugs in «3D Schweiz» (Michael, 2026-11-14: «In den Führerstand bei der Zuginfo einblenden. Evtl als rotes Icon?»):
+             statt des roten Links oben im Bild rechts im gemalten Schild ein karminroter Knopf mit dem Zeichen der Züge (SCHILD_KNOPF_PX, gewählt), ein Tipp darauf
+             (Strahl auf das Sprite, uv ab knopfU) öffnet den Führerstand wie vorher der Link; nicht in der Brille; im Browser hier nicht angeschaut
+Anfahren und Bremsen der Züge in «3D Schweiz» und im Führerstand (Michael, 2026-11-14: «Züge fahren hart an statt zu beschleunigen»): zwischen zwei Halten nicht
+             mehr gleichmässig, sondern wie beim Mitfahren nach fahrtProfil (0,5 m/s², stärker, wenn die Zeit laut Fahrplan nicht reicht; wegStelle in src/zuege3d.ts)
 Wetterknöpfe im Führerstand (Fahren, Probefahrt, Modellbahn) seit 2026-11-14 weg (Michael: «Wenn man im Führerstand fährt, soll man die Icons nicht mehr
              sehen, die Sonne nicht und auch den Windsack nicht»): Sonnenschalter, Windsack und Regenknopf unsichtbar, solange man im Führerstand ist (leisteLegen
              in Relief.tsx), die Tafel des Windsacks schliesst; das Wetter gilt weiter wie davor gewählt; hinter den Zug wieder da
