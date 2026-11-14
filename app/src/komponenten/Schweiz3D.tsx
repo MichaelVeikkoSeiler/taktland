@@ -1979,10 +1979,10 @@ const SOCKEL_ZEIT = 0.75, KNOPF_ABSTAND = 0.03
 // Stufe Schweiz nur das Land (Michael, 2026-11-10: «A) Nur die Schweiz zeigen», nach «dieses Bild mit dem Kasten und den verpixelten Rändern …
 // könnten ästhetisch schöner sein»): das Gelände ausserhalb der Landesgrenze (BFS g1, data/kartengrund.json) ausgeblendet, eine Wand entlang
 // der Grenze bis zum tiefsten Punkt, darunter der Sockel mit den Knöpfen wie bisher, oben mit einem dunklen Deckel; Farben und Masse gewählt
-/** Stufe Schweiz (Michael, 2026-11-14): das Ausland dunkelgrau bis so viele Weiten um die Mitte, ab DURCHSICHTIG_AB gegen aussen durchsichtig, so
- *  geht es im Bild gegen oben in den Himmel über; der Himmel am Horizont hellblau, gegen oben (Sinus der Höhe über dem Horizont von bis) etwas
- *  kräftiger; Farben und Masse gewählt */
-const AUSLAND_BIS = 2.4, AUSLAND_DURCHSICHTIG_AB = 0.6, AUSLAND_HORIZONT = '#cfe3f5', AUSLAND_OBEN = '#8fbde8', AUSLAND_VERLAUF: [number, number] = [0, 0.6]
+/** Stufe Schweiz (Michael, 2026-11-14): das Ausland dunkelgrau bis so viele Weiten um die Mitte, ab DURCHSICHTIG_AB gegen aussen durchsichtig in
+ *  die Kuppel, die im selben Dunkelgrau bleibt, ohne Verlauf (Michael: «Kein Verlauf. Nur dunkel bleiben»; kurz vorher gegen oben hellblau);
+ *  das Grau so, wie der beleuchtete Deckel im Bild erscheint, gewählt */
+const AUSLAND_BIS = 2.4, AUSLAND_DURCHSICHTIG_AB = 0.6, AUSLAND_HORIZONT = '#2a2a2a', AUSLAND_OBEN = '#2a2a2a', AUSLAND_VERLAUF: [number, number] = [0, 0.6]
 const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', LAND_DECKEL_FARBE = '#262626', LAND_DECKEL_TIEFER = 0.0005
 /** die Schalter auf dem Bildschirm (Michael, 2026-11-14), Reihenfolge und Farben wie an den Wänden; Symbole gezeichnet, gewählt */
 const SCHALTER_SYMBOLE: Array<{ art: Schalter; name: string; farbe: string; nurFeld?: boolean; nichtGrob?: boolean; abstand?: boolean; symbol: ReactNode }> = [
