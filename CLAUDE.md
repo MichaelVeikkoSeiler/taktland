@@ -662,6 +662,12 @@ Ansichten merken und teilen in «3D Schweiz» (Michael, 2026-11-12: «User solle
              («Link kopiert»); Öffnen setzt Schalter, Ton und Zeit, lädt die Felder wie ein Link einer Bahnhofseite (ketteLaden, ohne «Gesucht»), und setzt die Kamera,
              sobald das Feld steht (ansichtKamera, ansichtTick); im selben Feld nur die Kamera; angesetzte Stücke (+) nicht; in der Anleitung «Ansichten merken und teilen»,
              unter Datenschutz (localStorage) genannt
+Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder denselben Standort
+             und Ausschnitt und Perspektive sehen wie vorher»): solange das Modell offen ist, merkt sich die Seite jede Sekunde die Ansicht wie «Ansicht merken»
+             (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d
+             oder #/3dland ohne Ort, kommt statt der Wahl gleich diese Ansicht (wie ein Link mit ?ansicht=); wer mit «Zurück» zur Wahl geht, verwirft sie;
+             nach Neuladen beginnt es wie immer; die Stufe Schweiz im Browser hier geprüft, tiefere Stufen laden hier ohne daten.taktland.ch nicht fertig
+Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
              Modellbahn ein dünner dunkelgrauer Mast (2 Bildpunkte) mit dunkelgrauem Schild mit leicht abgerundeten Ecken (Michael, 2026-10-25: «Alle Schilder leicht abgerundete Ecken») mittig darauf, Name in Weiss, je Stufe ab einem Rang und höchstens

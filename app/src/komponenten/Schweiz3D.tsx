@@ -665,6 +665,11 @@ function ansichtAusCode(c: string): GemerkteAnsicht | null {
 /** die Kamera einer geöffneten Ansicht, bis ihr Feld steht (die Ansicht setzt sie dann) */
 let ansichtKamera: { stufe: Stufe; feld: [number, number] | null; kopf: Punkt; blick: Punkt } | null = null
 
+/** die Ansicht beim Verlassen, solange die Seite offen ist (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder
+ *  denselben Standort und Ausschnitt und Perspektive sehen wie vorher»): jede Sekunde neu, solange das Modell offen ist, weg mit der Wahl oder der
+ *  Anleitung; nicht gespeichert, nach Neuladen beginnt es wie immer */
+let zuletzt: GemerkteAnsicht | null = null
+
 function ansichtAusAdresse(eigeneSeite: boolean): 'wahl' | 'anleitung' | 'karte' {
   if (eigeneSeite) return 'karte'
   const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
@@ -679,7 +684,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // in Taktland zuerst eine Wahl zwischen Anleitung und Eintauchen, erst dann das Modell (Michael, 2026-11-08: «Beim Spiel Virtuell nicht direkt
   // zur 3D Karte, es braucht folgenden Zwischenschritt mit dieser Auswahl: Anleitung, Eintauchen (gleicher Button-Stil wie "Fahren")»);
   // in der Adresse (#/schweiz3d?anleitung, ?karte), damit «Zurück» des Geräts zur Wahl führt; mit einem Ort (lat=…) und auf 3dland.ch gleich das Modell
-  const [ansicht, setAnsicht] = useState<'wahl' | 'anleitung' | 'karte'>(() => ansichtAusAdresse(eigeneSeite))
+  const [ansicht, setAnsicht] = useState<'wahl' | 'anleitung' | 'karte'>(() => {
+    // zurück aus einem anderen Reiter ohne Ort in der Adresse: die Ansicht von vorher, wie ein Link mit ?ansicht=
+    const h = window.location.hash
+    if (!eigeneSeite && zuletzt && (h === '#/schweiz3d' || h === '#/3dland'))
+      history.replaceState(history.state, '', `${window.location.pathname}${window.location.search}${h}?ansicht=${ansichtCode(zuletzt)}`)
+    return ansichtAusAdresse(eigeneSeite)
+  })
   useEffect(() => {
     const f = () => setAnsicht(ansichtAusAdresse(eigeneSeite))
     window.addEventListener('hashchange', f)
@@ -1207,6 +1218,27 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     if (a.stufe === 'schweiz' || !a.feld) ketteLaden(0, 0, a.name, 'schweiz', false)
     else ketteLaden(a.feld[0], a.feld[1], a.name, a.stufe, false, false)
   }
+  const laedtRef = useRef(laedt)
+  const stufeRef = useRef(stufe)
+  stufeRef.current = stufe
+  laedtRef.current = laedt
+  const ansichtJetztRef = useRef(ansichtJetzt)
+  ansichtJetztRef.current = ansichtJetzt
+  const zuletztName = stufe === 'schweiz' ? 'Schweiz' : (gesucht?.name ?? titel(gelaende[stufe]?.anker ?? null).replace(/^(um|am) /, ''))
+  const zuletztNameRef = useRef(zuletztName)
+  zuletztNameRef.current = zuletztName
+  useEffect(() => {
+    if (eigeneSeite) return
+    if (ansicht !== 'karte') { zuletzt = null; return }
+    // während ein Feld lädt oder die Kamera noch nicht steht, bleibt die Ansicht von vorher
+    const merken = () => {
+      if (laedtRef.current || ansichtKamera?.stufe === stufeRef.current) return
+      const a = ansichtJetztRef.current(zuletztNameRef.current)
+      if (a.kopf) zuletzt = a
+    }
+    const t = window.setInterval(merken, 1000)
+    return () => window.clearInterval(t)
+  }, [ansicht, eigeneSeite])
   const ansichtLink = (a: GemerkteAnsicht) =>
     `${window.location.origin}${window.location.pathname}${AUF_3DLAND ? '#' : '#/3dland'}?ansicht=${ansichtCode(a)}`
   const ansichtTeilen = async (a: GemerkteAnsicht, i: number) => {
@@ -2006,7 +2038,7 @@ const SCHALTER_SYMBOLE: Array<{ art: Schalter; name: string; farbe: string; nurF
   { art: 'autos', name: 'Autos', farbe: '#ff9de2', nurFeld: true, symbol: <><path d="M4 16.5v-3.2l2-4.8h12l2 4.8v3.2z" /><path d="M4 13.3h16" /><circle cx="7.5" cy="17.5" r="1.6" /><circle cx="16.5" cy="17.5" r="1.6" /></> },
   { art: 'menschen', name: 'Menschen', farbe: '#e8b48f', nurFeld: true, symbol: <><circle cx="9" cy="6.5" r="2.3" /><path d="M5 20.5v-5.5a4 4 0 0 1 8 0v5.5" /><circle cx="16.5" cy="8.5" r="1.9" /><path d="M15.5 13a3.3 3.3 0 0 1 4.5 3v4.5" /></> },
   { art: 'wandern', name: 'Wandern', farbe: '#ffd23c', nichtGrob: true, abstand: true, symbol: <><path d="M12 21.5V3" /><path d="M12 5h6.5l1.8 2-1.8 2H12M12 11.5H5.5l-1.8 2 1.8 2H12" /></> },
-  { art: 'hoehen', name: 'Höhen 1\'000 m', farbe: '#ffd23c', symbol: <><path d="M2.5 18.5c3-1.8 5.5-2 9.5-.2s6.5 1.5 9.5-.3" /><path d="M5 13.5c2.5-1.6 4.5-1.6 7.2-.2s4.6 1.3 6.8-.2" /><path d="M8.5 8.5c1.6-1 2.6-1 3.8-.2s2.6.8 3.6 0" /></> },
+  { art: 'hoehen', name: 'Höhen 1\'000 m', farbe: '#ffd23c', symbol: <><path d="M3 18h18" /><path d="M6 13h12" /><path d="M9 8h6" /></> },
   { art: 'gipfel', name: 'Gipfel', farbe: '#ffd23c', symbol: <><path d="M2.5 20l7-12.5 3.5 6 2.5-3.5 6 10z" /><path d="M7.4 11.3l2.1 1.3 1.6-1.4" /></> },
   { art: 'wolken', name: 'Wolken', farbe: '#ffffff', symbol: <path d="M7 18.5h10.5a4 4 0 0 0 .3-8A6 6 0 0 0 6.3 9.3 4.6 4.6 0 0 0 7 18.5z" /> },
   { art: 'wind', name: 'Wetter: Wind und Niederschlag', farbe: '#5ab4ff', symbol: <><path d="M4.5 21.5V3" /><path d="M4.5 4.5l15 2.2v5.6l-15 2.2z" /><path d="M9.5 5.2v8.6M14.5 6v7" /></> },
