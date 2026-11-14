@@ -472,6 +472,11 @@ Echtzeit der Züge in «3D Schweiz» (Michael, 2026-11-11: «Langsam könnten wi
 SUV und Pick-up in «3D Schweiz» (Michael, 2026-11-11: «Kannst du aus jedem 5. Auto einen SUV machen und aus jedem 15. einen Pick-Up»): je Auto ein fester
              Zufall (autoArt in Autos.ts), ein Fünftel SUV (4,7 × 1,9 m, etwa 1,8 m hoch, lange Kabine), ein Fünfzehntel Pick-up (5,3 × 1,9 m, Kabine vorne,
              offene Ladefläche mit Bordwänden), je ein eigenes Netz mit Lichtern; Masse und Gestalt gewählt (AUTO_ART_*), in der Anleitung genannt
+Weitere Autos in «3D Schweiz» (Michael, 2026-11-14: «Autos: noch Kleinwagen und Minibusse ergänzen. Kombis ebenso. Und jedes 20. Auto ein Sportwagen. Von Mai bis Sept
+             auch Cabriolets»): je Auto ein fester Zufall (autoArt in Autos.ts): ein Sechstel Kleinwagen (3,7 × 1,7 m, Kabine bis ans Heck), ein Fünfundzwanzigstel Minibus
+             (5,2 × 2,0 m, etwa 2,1 m hoch, Fensterband rundum), ein Sechstel Kombi (4,8 × 1,85 m, lange Kabine), ein Zwanzigstel Sportwagen (4,4 × 1,9 m, etwa 1,1 m hoch),
+             neben SUV und Pick-up; von Mai bis September (Monat der Szene) ist ein Sechstel der übrigen Autos ein Cabriolet (offen, Frontscheibe und zwei Sitze, autoCabrio);
+             Anteile ausser dem Sportwagen, Masse und Gestalt gewählt (KLEINWAGEN_ANTEIL …), in der Anleitung («Autos», «Was erfunden ist»); nicht im Browser angeschaut
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach

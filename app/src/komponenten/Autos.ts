@@ -64,14 +64,29 @@ export function lkwFarbe(i: number): THREE.Color {
 /** SUV und Pick-up (Michael, 2026-11-11: «Kannst du aus jedem 5. Auto einen SUV machen und aus jedem 15. einen Pick-Up»): je Auto ein fester Zufall,
  *  ein Fünftel SUV, ein Fünfzehntel Pick-up, der Rest wie bisher; Masse und Gestalt gewählt, kein bestimmtes Modell */
 export const SUV_ANTEIL = 1 / 5, PICKUP_ANTEIL = 1 / 15
-/** Länge und Breite je Art (0 Auto, 1 SUV, 2 Pick-up) in m, gewählt */
-export const AUTO_ART_LANG_M = [AUTO_LANG_M, 4.7, 5.3], AUTO_ART_BREIT_M = [AUTO_BREIT_M, 1.9, 1.9]
-export function autoArt(id: number): 0 | 1 | 2 {
-  const r = zufall(id * 5.13 + 2.9)
-  return r < PICKUP_ANTEIL ? 2 : r < PICKUP_ANTEIL + SUV_ANTEIL ? 1 : 0
+/** dazu (Michael, 2026-11-14: «Autos: noch Kleinwagen und Minibusse ergänzen. Kombis ebenso. Und jedes 20. Auto ein Sportwagen. Von Mai bis Sept auch
+ *  Cabriolets»): Kleinwagen, Minibus, Kombi und Sportwagen je ein fester Anteil, von Mai bis September ein Teil der übrigen Autos offen; Anteile gewählt
+ *  ausser dem Sportwagen, Masse und Gestalt gewählt, kein bestimmtes Modell */
+export const KLEINWAGEN_ANTEIL = 1 / 6, MINIBUS_ANTEIL = 1 / 25, KOMBI_ANTEIL = 1 / 6, SPORTWAGEN_ANTEIL = 1 / 20, CABRIO_ANTEIL = 1 / 6
+/** die Arten: 0 Auto, 1 SUV, 2 Pick-up, 3 Kleinwagen, 4 Minibus, 5 Kombi, 6 Sportwagen, 7 Cabriolet */
+export type AutoArt = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+export const AUTO_ARTEN: AutoArt[] = [1, 2, 3, 4, 5, 6, 7], AUTO_CABRIO: AutoArt = 7
+/** Länge und Breite je Art in m, gewählt */
+export const AUTO_ART_LANG_M = [AUTO_LANG_M, 4.7, 5.3, 3.7, 5.2, 4.8, 4.4, 4.4], AUTO_ART_BREIT_M = [AUTO_BREIT_M, 1.9, 1.9, 1.7, 2.0, 1.85, 1.9, AUTO_BREIT_M]
+export function autoArt(id: number): AutoArt {
+  let r = zufall(id * 5.13 + 2.9)
+  for (const [art, anteil] of [[2, PICKUP_ANTEIL], [1, SUV_ANTEIL], [3, KLEINWAGEN_ANTEIL], [4, MINIBUS_ANTEIL], [5, KOMBI_ANTEIL], [6, SPORTWAGEN_ANTEIL]] as Array<[AutoArt, number]>) {
+    if (r < anteil) return art
+    r -= anteil
+  }
+  return 0
+}
+/** von Mai bis September ist dieses Auto (Art 0) offen */
+export function autoCabrio(id: number): boolean {
+  return zufall(id * 2.71 + 6.3) < CABRIO_ANTEIL
 }
 
-export function autoForm(art: 0 | 1 | 2 = 0): THREE.BufferGeometry {
+export function autoForm(art: AutoArt = 0): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
   const faerben = (g: THREE.BufferGeometry, x: number, y: number, h: number, z: number, farbe: string) => {
     g.deleteAttribute('uv')
@@ -99,6 +114,36 @@ export function autoForm(art: 0 | 1 | 2 = 0): THREE.BufferGeometry {
     rund(L, B, 0.75, 0.22, 0.42, 0, '#ffffff')
     rund(3.0, B * 0.9, 0.52, 0.16, 1.12, -0.35, '#1c2228')
     rund(2.85, B * 0.86, 0.12, 0.05, 1.62, -0.35, '#ffffff')
+  } else if (art === 3) {
+    // Kleinwagen: kurz, die Kabine bis ans Heck
+    kasten(L * 0.94, B * 0.96, 0.25, 0.15, 0, '#202020')
+    rund(L, B, 0.6, 0.2, 0.37, 0, '#ffffff')
+    rund(2.2, B * 0.88, 0.52, 0.16, 0.9, -0.55, '#1c2228')
+    rund(1.9, B * 0.84, 0.1, 0.05, 1.35, -0.55, '#ffffff')
+  } else if (art === 4) {
+    // Minibus: hoher Kasten, rundum ein Fensterband, etwa 2,1 m hoch
+    kasten(L * 0.94, B * 0.96, 0.3, 0.15, 0, '#202020')
+    rund(L, B, 0.95, 0.2, 0.4, 0, '#ffffff')
+    rund(L * 0.88, B * 0.94, 0.6, 0.12, 1.3, -0.1, '#1c2228')
+    rund(L * 0.92, B, 0.2, 0.08, 1.88, -0.1, '#ffffff')
+  } else if (art === 5) {
+    // Kombi: lang, die Kabine bis ganz nach hinten
+    kasten(L * 0.94, B * 0.96, 0.25, 0.15, 0, '#202020')
+    rund(L, B, 0.6, 0.2, 0.37, 0, '#ffffff')
+    rund(3.1, B * 0.88, 0.5, 0.16, 0.9, -0.7, '#1c2228')
+    rund(2.85, B * 0.84, 0.1, 0.05, 1.33, -0.7, '#ffffff')
+  } else if (art === 6) {
+    // Sportwagen: flach, kurze Kabine weit hinten, etwa 1,2 m hoch
+    kasten(L * 0.92, B * 0.94, 0.15, 0.12, 0, '#202020')
+    rund(L, B, 0.48, 0.22, 0.27, 0, '#ffffff')
+    rund(1.7, B * 0.82, 0.36, 0.16, 0.7, -0.45, '#1c2228')
+    rund(1.4, B * 0.76, 0.08, 0.05, 1.03, -0.5, '#ffffff')
+  } else if (art === 7) {
+    // Cabriolet: offen, nur Frontscheibe und zwei Sitze
+    kasten(L * 0.94, B * 0.96, 0.25, 0.15, 0, '#202020')
+    rund(L, B, 0.6, 0.2, 0.37, 0, '#ffffff')
+    rund(0.12, B * 0.84, 0.32, 0.04, 0.95, 0.45, '#1c2228')
+    for (const x of [-0.4, 0.4]) kasten(0.15, 0.5, 0.42, 0.95, -0.35, '#1c2228', x)
   } else {
     // Pick-up: Kabine vorne, dahinter eine offene Ladefläche mit Bordwänden
     kasten(L * 0.94, B * 0.96, 0.3, 0.18, 0, '#202020')
