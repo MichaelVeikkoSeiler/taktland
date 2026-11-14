@@ -682,6 +682,9 @@ Anfahren und Bremsen der Züge in «3D Schweiz» und im Führerstand (Michael, 2
 Wetterknöpfe im Führerstand (Fahren, Probefahrt, Modellbahn) seit 2026-11-14 weg (Michael: «Wenn man im Führerstand fährt, soll man die Icons nicht mehr
              sehen, die Sonne nicht und auch den Windsack nicht»): Sonnenschalter, Windsack und Regenknopf unsichtbar, solange man im Führerstand ist (leisteLegen
              in Relief.tsx), die Tafel des Windsacks schliesst; das Wetter gilt weiter wie davor gewählt; hinter den Zug wieder da
+Symbole oben rechts in «3D Schweiz» seit 2026-11-14 klarer (Michael: «Icon müssen klarer aktiv resp nicht aktiv sein. Evtl durch Schatten nach innen? Zudem im
+             aktiven Zustand das Zeichen im Icon um 30 Grad gegen Uhrzeigersinn drehen»): an Anthrazit mit Schatten nach innen und das Zeichen um 30° gegen den
+             Uhrzeigersinn gedreht, aus weiss mit leichtem Schatten nach aussen, gesperrt blass ohne Schatten; im Browser hier angeschaut
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der

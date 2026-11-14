@@ -1343,9 +1343,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               <button key={art} type="button" disabled={gesperrt} aria-pressed={leuchtet}
                       onClick={() => { knopfTon(!an); setzen((x) => !x) }}
                       aria-label={gesperrt ? `${name} (in dieser Stufe nicht)` : name} title={gesperrt ? `${name}: in dieser Stufe nicht` : name}
-                      className={`flex size-8 flex-none items-center justify-center rounded-lg border ${leuchtet ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
-                        : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gesperrt ? 'opacity-40' : ''}`}>
-                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">{symbol}</svg>
+                      // an: eingedrückt (Schatten nach innen) und das Zeichen 30° gegen den Uhrzeigersinn gedreht, aus: erhaben mit Schatten nach aussen
+                      // (Michael, 2026-11-14: «Icon müssen klarer aktiv resp nicht aktiv sein. Evtl durch Schatten nach innen? Zudem im aktiven Zustand das
+                      // Zeichen im Icon um 30 Grad gegen Uhrzeigersinn drehen»)
+                      className={`flex size-8 flex-none items-center justify-center rounded-lg border transition-shadow ${leuchtet
+                        ? 'border-sbb-anthracite bg-sbb-anthracite text-white shadow-[inset_0_2px_5px_rgba(0,0,0,0.7)]'
+                        : 'border-sbb-cloud bg-white/90 text-sbb-black shadow-[0_1px_3px_rgba(0,0,0,0.45)] dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gesperrt ? 'opacity-40 shadow-none' : ''}`}>
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                     className="transition-transform duration-200" style={{ transform: leuchtet ? 'rotate(-30deg)' : undefined }}>{symbol}</svg>
               </button>
             )
           })}
