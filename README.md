@@ -1,4 +1,4 @@
-# Taktland – die Schweizer Bahn kennenlernen
+# Taktland – die Schweizer Bahn kennenlernen mit Spass an der Sache!
 
 Eine kostenlose Web-App (PWA) unter [taktland.ch](https://taktland.ch): Bahnhöfe, Strecken, Tunnel,
 Brücken und Bahnübergänge der Schweiz kennenlernen, im Zug mitfahren und alles festhalten.
