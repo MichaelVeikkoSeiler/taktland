@@ -22,7 +22,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <img src="./logo.svg" alt="" className="mt-6 size-16" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
-        Die Reiter oben führen zu Spiele (Virtuelle Schweiz, Modellbahn, Geo, Wo fahre ich?, Duell, Bahnhofsuche), Bahnland (Bahnhöfe,
+        Die Reiter oben führen zu Spiele (Virtuelle Schweiz, Modellbahn, Geo, Wo fahre ich?, Fahrplan-Puzzle, Wie lange dauert's?, Duell, Bahnhofsuche), Bahnland (Bahnhöfe,
         Strecken, Brücken, Tunnel, Bahnübergänge), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
@@ -69,6 +69,22 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Fünf Runden: Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Namen und Ortstafeln. Nach
             der Fahrt setzt du den Pin, wo du warst: Je näher, desto mehr Punkte.
+          </li>
+        </Spiel>
+        <Spiel titel="Fahrplan-Puzzle">
+          <li>
+            Fünf Runden: Ein Zug fährt laut Fahrplan von A nach B. Vier seiner Halte dazwischen sind gemischt. Tippe sie in der Reihenfolge,
+            in der er sie anfährt; je richtigem Platz 25 Punkte. Danach stehen alle Halte der Fahrt mit den Zeiten da.
+          </li>
+        </Spiel>
+        <Spiel titel="Wie lange dauert's?">
+          <li>
+            Fünf Runden: Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? Der
+            Regler geht bis 180 Minuten. Volle Punkte gibt es bis 8 % daneben (mindestens 2, höchstens 11 Minuten), halbe bis zum Doppelten.
+          </li>
+          <li>
+            Beide Spiele nehmen je Linie, Ziel und Folge der Halte die erste Fahrt des Tages aus dem Fahrplan von opentransportdata.swiss,
+            nur Fernverkehr und RegioExpress und nur Halte an Bahnhöfen von Taktland, ohne Verspätungen.
           </li>
         </Spiel>
         <Spiel titel="Duell">
