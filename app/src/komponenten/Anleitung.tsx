@@ -22,7 +22,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <img src="./logo.svg" alt="" className="mt-6 size-16" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
-        Die Reiter oben führen zu Spiele (Virtuelle Schweiz, Modellbahn, Geo, Wo bin ich?, Duell, Bahnhofsuche), Bahnland (Bahnhöfe,
+        Die Reiter oben führen zu Spiele (Virtuelle Schweiz, Modellbahn, Geo, Wo fahre ich?, Duell, Bahnhofsuche), Bahnland (Bahnhöfe,
         Strecken, Brücken, Tunnel, Bahnübergänge), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
@@ -65,7 +65,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             desto mehr Punkte. Jede Hilfe auf der Karte kostet 15 % der möglichen Punkte.
           </li>
         </Spiel>
-        <Spiel titel="Wo bin ich?">
+        <Spiel titel="Wo fahre ich?">
           <li>
             Fünf Runden: Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Namen und Ortstafeln. Nach
             der Fahrt setzt du den Pin, wo du warst: Je näher, desto mehr Punkte.

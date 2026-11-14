@@ -1187,7 +1187,8 @@ Spiele, Modellbahn (#/fahrt/probe führt dorthin); das Fahrtblatt ist der vierte
 Probefahrt (GelaendeFahrt mit verdeckt und vorneAnfang: keine Schilder, keine Ortstafeln, am Pult «?» statt Start und Ziel und nur die Art
 des Nächsten; ohne «Hinter den Zug», «Führerstand» und XR, auch nicht am Pult, Michael, 2026-11-05: «darf man nicht die Auswahl haben, hinter dem Zug zu fahren … Man muss im Führerstand bleiben»; das Luftbild immer, Gipfel, Kultur, Seilbahnen, Gebiete und Km-Netz nie, was auf dem Gerät für die Karten gemerkt ist, gilt dort nicht: ein gemerktes «Luftbild aus» liess nur eine Fläche, «Es hat nur eine Fläche, aber keine Karte»), 45 s Fahrt, Tempo 40 bis 120 km/h am Pult (Fahrzeit und Tempo fürs Spiel gewählt, in keiner Quelle), dann ein Pin auf der
 Karte von «Geo» mit den Hilfen vom Start, gewertet wie dort (punkte, nullGrenzeM für die ganze Schweiz); in der Auflösung die Bahnhöfe
-davor und danach und die Linie. Das Bild der Kachel ist vorerst das des Fahrtmodus.
+davor und danach und die Linie. Das Bild der Kachel ist vorerst das des Fahrtmodus. Seit 2026-11-14 heisst es «Wo fahre ich?» (Adresse und Code weiter wobinich) und zeigt die Höhe immer wie echt, ohne «Höhe wie echt / 2-fach» im Bild und am Pult
+(Michael: «Bei Wo bin isch Spiel braucht es die 2x Höhe nicht. Entsprechend auch Höhe wie echt nicht. Name korrigieren: neu Wo fahre ich?»).
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

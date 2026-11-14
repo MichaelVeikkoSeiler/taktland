@@ -1262,7 +1262,8 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   // was am Pult bedient wird: dazu Höhe und «Hinter den Zug» von hier
   const pultAussen = useRef<PultAussen | null>(null)
   pultAussen.current = {
-    ...(aussen?.current ?? {}), hoehe: () => faktor, hoeheSetzen: setFaktor,
+    // bei «Wo fahre ich?» immer wie echt, ohne Wahl (Michael, 2026-11-14: «braucht es die 2x Höhe nicht»)
+    ...(aussen?.current ?? {}), hoehe: () => (verdeckt ? 1 : faktor), hoeheSetzen: verdeckt ? undefined : setFaktor,
     // «Wo bin ich?»: nur der Führerstand, sonst sähe man von hinter dem Zug die ganze Gegend (Michael, 2026-11-05)
     hinterZug: verdeckt ? undefined : () => { fuehrerstand.current = false; seitenblick.current = 0; setVorne(false); hinterZug.current = true },
     seite: (r) => seitenblickDrehen(seitenblick, r), schliessen: voll ? schliessen : undefined,
@@ -1342,7 +1343,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
   return (
     <>
       <div className={`${className} relative`}>
-        <Szene r={daten.r} h={daten.h} faktor={faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
+        <Szene r={daten.r} h={daten.h} faktor={verdeckt ? 1 : faktor} weg={weg} wegFarbe={FARBEN.weg} zug={zug} blick={blick} hinterZug={hinterZug}
                fuehrerstand={fuehrerstand} tempoAussen={tempoRef} tempoQuelle={tempoQuelle} aussen={pultAussen}
                seitenblick={seitenblick} brille={ganz ? brille : undefined}
                endNamen={verdeckt ? ['?', '?'] : start ? [start, ziel ?? 'ohne Ziel'] : undefined} verdeckt={verdeckt}
@@ -1354,7 +1355,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
           null
         ) : (
           <>
-            <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>
+            {!verdeckt && <div className="absolute left-2 top-2"><FaktorWahl faktor={faktor} setFaktor={setFaktor} klein /></div>}
             <div className="absolute right-2 top-2 flex gap-2">
               {/* «XR» wie in «3D-Land» und der Modellbahn (Michael, 2026-10-26) */}
               {ganz && !verdeckt && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille" className={`${XR_KNOPF} !size-9`}>XR</button>}
@@ -1385,7 +1386,7 @@ export function GelaendeFahrt({ fahrweg, objekte, sJetzt, className, tempo = nul
           es ein Modell ist und ob die Höhe überhöht ist */}
       <details className={`klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm ${cockpit ? 'hidden' : ''}`}>
         <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">
-          Modell, nicht massstäblich{faktor === 2 && ', Höhe 2-fach überhöht'}: Quellen und Grenzen
+          Modell, nicht massstäblich{faktor === 2 && !verdeckt && ', Höhe 2-fach überhöht'}: Quellen und Grenzen
         </summary>
         <p className="mt-1">
           Gelände aus swissALTIRegio (swisstopo), auf 50 m gemittelt, {ganz ? `bis ${(BAND_M / 1000).toLocaleString('de-CH')} km links und rechts der ganzen Strecke wie in der Modellbahn` : '30 km um den Zug'}; wo vorhanden mit Luftbild

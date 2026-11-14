@@ -68,7 +68,7 @@ export const SPIELE: Spiel[] = [
   },
   // Michael, 2026-10-18: «Wo bin ich passt gut»; das Bild ist vorerst das des Fahrtmodus
   {
-    id: 'wobinich', titel: 'Wo bin ich?', status: 'spielbereit', adresse: '#/wobinich',
+    id: 'wobinich', titel: 'Wo fahre ich?', status: 'spielbereit', adresse: '#/wobinich',
     kurz: 'Im Führerstand irgendwo in der Schweiz, ohne Namen: Wo warst du?',
     bild: { hell: fahrtHell, dunkel: fahrtDunkel, alt: 'Illustration: Blick aus dem Zugfenster auf ein Tunnelportal, einen See mit Dorf und Berge.' },
     beschreibung: 'Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Ortstafeln und Namen. Fahr ein '
