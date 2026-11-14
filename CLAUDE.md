@@ -671,6 +671,9 @@ Grund fehlender Echtzeit im Schild eines Zugs in «3D Schweiz» (Michael, 2026-1
              kommt keine gültige Antwort, steht statt «keine Echtzeit gemeldet» «laut Fahrplan, Echtzeit …» mit dem Grund aus echtzeitStand (nicht erreichbar mit dem
              Status des Servers, andere Fassung des Fahrplans mit beiden Ständen, veraltet mit Minuten, ohne Fahrtnummern); hier nicht nachgestellt, spiel.taktland.ch ist
              aus dieser Sitzung nicht erreichbar
+Zeilen der Züge und Schiffe und «In den Führerstand nach …» in «3D Schweiz» seit 2026-11-14 links unter Suche und «Eintauchen» (top-24) statt oben rechts
+             (Michael, Bildschirmfotos aus Bern: auf dem Handy lag der Link unter dem Suchfeld und den zwei Spalten der Symbole); dazu der Grund «ohne passende
+             Fahrtnummern», wenn keine Fahrt im Bild eine trip_id hat
 Wetterknöpfe im Führerstand (Fahren, Probefahrt, Modellbahn) seit 2026-11-14 weg (Michael: «Wenn man im Führerstand fährt, soll man die Icons nicht mehr
              sehen, die Sonne nicht und auch den Windsack nicht»): Sonnenschalter, Windsack und Regenknopf unsichtbar, solange man im Führerstand ist (leisteLegen
              in Relief.tsx), die Tafel des Windsacks schliesst; das Wetter gilt weiter wie davor gewählt; hinter den Zug wieder da
