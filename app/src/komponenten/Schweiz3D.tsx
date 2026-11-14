@@ -2324,7 +2324,7 @@ function knopfBild(plus: boolean, an: boolean) {
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos, vorFuehrerstand, ansichtTick = 0 }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild: _vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos, vorFuehrerstand, ansichtTick = 0 }: {
   /** zählt hoch, wenn eine gemerkte Ansicht geöffnet wird (ihre Kamera wartet in ansichtKamera) */
   ansichtTick?: number
   /** beim Wechsel in den Führerstand: welcher Zug und wo die Kamera zu ihm steht, damit «Zurück» dorthin führt */
@@ -7172,7 +7172,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {/* Züge und Schiffe sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind; oben rechts, eng untereinander, damit
           sie nicht ins Bild ragen und «Eintauchen» oben links frei bleibt (Michael, 2026-10-28: «Die Hinweise oben links sollen weiter oben stehen») */}
       {(zugZeile || schiffZeile || mitfahren) && (
-        <div className={`pointer-events-none absolute right-12 ${vollbild ? 'top-14' : 'top-2'} flex max-w-[60%] flex-col items-end gap-0.5 text-right`}>
+        // links unter der Suche, nicht mehr oben rechts: auf dem Handy lag «In den Führerstand nach …» dort unter dem Suchfeld und den zwei Spalten der
+        // Symbole (Michael, 2026-11-14, Bildschirmfotos aus Bern); unter «Eintauchen», das auf dem Handy unter der Suche steht
+        <div className="pointer-events-none absolute left-2 top-24 flex max-w-[60%] flex-col items-start gap-0.5 text-left">
           {zugZeile && (
             <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{zugZeile}</p>
           )}
