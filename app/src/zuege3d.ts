@@ -8,6 +8,7 @@
 import { geometrieLaden, holen, streckenLaden } from './daten'
 import { type Fahrweg, fahrwegBauen, geometrieLesen, lageBei, type Punkt, wegEnde } from './fahrt'
 import type { Echtzeit } from './echtzeit'
+import { fahrtProfil } from './mitfahren'
 import type { StreckenNetz } from './typen'
 import { type Nachbarn, wegSuchen } from './wegsuche'
 
@@ -90,7 +91,7 @@ export const ZUG_KURZHALT_VOR_MIN = 10 / 60, ZUG_KURZHALT_NACH_MIN = 20 / 60
 
 export type ZugStelle =
   | { art: 'halt'; i: number; tag: number }
-  | { art: 'fahrt'; i: number; anteil: number; tag: number }
+  | { art: 'fahrt'; i: number; anteil: number; tag: number; dauerS: number }
 
 /** die Halte einer Fahrt ab dem Halt i mit Ankunft und Abfahrt in Minuten ab jetzt, so wie zugStelle sie rechnet (mit den Minuten
  *  vor der ersten Abfahrt und nach der letzten Ankunft und den kurzen Halten); null: heute nicht unterwegs */
@@ -146,10 +147,16 @@ export function zugStelle(f: ZugFahrt, tag: number, minuten: number): ZugStelle 
       const weiter = h[i + 1]
       if (!weiter) break
       const dort = zeiten(i + 1)[0]
-      if (m > ab && m < dort) return { art: 'fahrt', i, anteil: (m - ab) / Math.max(0.01, dort - ab), tag: d }
+      if (m > ab && m < dort) return { art: 'fahrt', i, anteil: (m - ab) / Math.max(0.01, dort - ab), tag: d, dauerS: (dort - ab) * 60 }
     }
   }
   return null
+}
+
+/** wie weit der Zug auf einem Weg von ende Metern ist: er fährt am Halt an und bremst zum nächsten wie beim Mitfahren (fahrtProfil, 0,5 m/s²,
+ *  gewählt), statt gleichmässig (Michael, 2026-11-14: «Züge fahren hart an statt zu beschleunigen») */
+export function wegStelle(st: Extract<ZugStelle, { art: 'fahrt' }>, ende: number): number {
+  return fahrtProfil(ende, st.dauerS, st.anteil * st.dauerS).s
 }
 
 /** Netz, Linien und Wege zwischen zwei Halten, einmal geladen und gerechnet */

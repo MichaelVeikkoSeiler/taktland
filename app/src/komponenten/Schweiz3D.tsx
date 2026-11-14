@@ -29,7 +29,7 @@ import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
-import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden } from '../zuege3d'
+import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden, wegStelle } from '../zuege3d'
 import { ECHTZEIT_ALLE_MS, echtzeitHolen, echtzeitStand } from '../echtzeit'
 import { planText, rueckkehr, rueckkehrMerken, type Rueckkehr } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
@@ -1705,7 +1705,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
             Zugnummer, woher er kommt (sein erster Halt im Netz von Taktland laut Fahrplan; ein Zug aus dem Ausland kommt dann von der Grenze) und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
-            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Oben im Bild führt «In den Führerstand nach …» in den Führerstand von Taktland: Der Zug fährt
+            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Der rote Knopf rechts im Schild führt in den Führerstand von Taktland: Der Zug fährt
             dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher, in Taktland «Zurück zur Virtuellen Schweiz» dorthin, wo der Zug laut Fahrplan jetzt ist, in derselben Stufe und mit denselben Schaltern und demselben Ton wie beim Wechsel; die Kamera steht wieder im selben Winkel und Abstand zum Zug, bleibt dann stehen und schaut ihm nach, bis er aus dem Ausschnitt fährt oder man selbst dreht oder zoomt. Mit Verspätung laut Echtzeit kann der Zug dort fehlen, der Führerstand fährt nach Fahrplan. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
         </Abschnitt>
@@ -2187,6 +2187,8 @@ const AUF_3DLAND = /3dland/.test(window.location.hostname) || /3dland\.html$/.te
 /** so weit neben einem Wagen (Winkel vom Auge) trifft ein Tipp den Zug noch, 1,25°, gewählt */
 // halb so weit wie vorher (2,5°; Michael, 2026-11-06: «wenn man einen Ausschnitt wählen will man einen Zugdetail angezeigt bekommt wenn man auf einen
 // Bahnhof klickt. Bitte … die Toleranz etwas enger machen»)
+/** der rote Knopf «In den Führerstand» im Schild eines Zugs, Bildpunkte auf dem Schild (gewählt) */
+const SCHILD_KNOPF_PX = 46
 const ZUG_TIPP_WINKEL = (1.25 * Math.PI) / 180
 /** in der Brille, wo der Strahl mit der Hand zittert, 4°, gewählt */
 const ZUG_TIPP_WINKEL_BRILLE = (4 * Math.PI) / 180
@@ -2619,6 +2621,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // Schiffe wie Züge (Michael, 2026-10-28); der nähere Treffer gilt, die andere Art verliert ihr Schild
       const fahrzeuge = ['zuege', 'schiffe'].map((n) => wurzel.getObjectByName(n)).filter((g): g is THREE.Object3D => !!g?.visible)
       if (fahrzeuge.length) {
+        // der rote Knopf im Schild eines Zugs: in den Führerstand (schildTipp)
+        for (const g of fahrzeuge) if ((g.userData.schildTipp as ((r: THREE.Raycaster) => boolean) | undefined)?.(strahl)) return
         const abwahl = (ausser?: THREE.Object3D) => { for (const g of fahrzeuge) if (g !== ausser) (g.userData.abwahl as (() => void) | undefined)?.() }
         let best: { g: THREE.Object3D; z: THREE.Intersection } | null = null
         for (const g of fahrzeuge) {
@@ -5235,6 +5239,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // im Führerstand von Taktland mitfahren, vom jetzigen oder letzten Halt bis zum Ziel des Zugs (Michael, 2026-10-30: «Man sollte auf Mitfahren
   // klicken/tippen können sodass man gleich im Führerstand mitfährt. So landet man bei Taktland»); eine Probefahrt auf dem Weg im Netz, kein Fahrplan
   const [mitfahren, setMitfahren] = useState<{ name: string; url: string } | null>(null)
+  // der Knopf im Schild öffnet den Führerstand wie früher der Link oben im Bild (merkt vorher den Zug für die Rückkehr)
+  const fuehrerstandRef = useRef<() => void>(() => {})
+  fuehrerstandRef.current = () => {
+    if (!mitfahren) return
+    const z = AUF_3DLAND ? null : zugBlickRef.current?.()
+    if (z) vorFuehrerstand?.(z)
+    if (AUF_3DLAND) window.open(mitfahren.url, '_blank', 'noopener'); else window.location.assign(mitfahren.url)
+  }
   // der gewählte Zug und wo die Kamera zu ihm steht (im Raum des Modells), für die Rückkehr aus dem Führerstand
   const zugBlickRef = useRef<(() => Pick<Rueckkehr, 'fahrt' | 'versatz'> | null) | null>(null)
   useEffect(() => {
@@ -5357,19 +5369,32 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const schild = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false }))
     schild.center.set(0.5, 0); schild.renderOrder = 6; schild.visible = false
     gruppe.add(schild)
-    const schildMalen = (zeilen: string[]) => {
+    const schildMalen = (zeilen: string[], knopf = false) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       const px = 26, klein = 21, fett = `bold ${px}px Helvetica, Arial, sans-serif`, normal = `normal ${klein}px Helvetica, Arial, sans-serif`
       x.font = fett; let breit = x.measureText(zeilen[0]).width
       x.font = normal; for (const z of zeilen.slice(1)) breit = Math.max(breit, x.measureText(z).width)
-      c.width = Math.ceil(breit) + 20; c.height = px + 16 + (zeilen.length - 1) * (klein + 6)
+      const hoch = px + 16 + (zeilen.length - 1) * (klein + 6), kn = knopf ? Math.min(hoch - 16, SCHILD_KNOPF_PX) : 0
+      c.width = Math.ceil(breit) + 20 + (knopf ? kn + 10 : 0); c.height = hoch
       x.fillStyle = ORT_GRAU; x.beginPath(); x.roundRect(0, 0, c.width, c.height, SCHILD_RUND_PX); x.fill()
       x.fillStyle = '#ffffff'; x.font = fett; x.fillText(zeilen[0], 10, px + 4)
       x.font = normal; zeilen.slice(1).forEach((z, i) => x.fillText(z, 10, px + 8 + (i + 1) * (klein + 6)))
+      // rechts der rote Knopf «In den Führerstand» mit dem Zeichen der Züge (Michael, 2026-11-14: «In den Führerstand bei der Zuginfo einblenden.
+      // Evtl als rotes Icon?»); ein Tipp darauf gilt ab knopfU (Anteil der Breite)
+      if (knopf) {
+        const kx = c.width - kn - 8, ky = (hoch - kn) / 2
+        x.fillStyle = '#a8102e'; x.beginPath(); x.roundRect(kx, ky, kn, kn, 8); x.fill()
+        x.save(); x.translate(kx + kn * 0.14, ky + kn * 0.14); x.scale((kn * 0.72) / 24, (kn * 0.72) / 24)
+        x.strokeStyle = '#ffffff'; x.lineWidth = 2; x.lineCap = 'round'; x.lineJoin = 'round'
+        x.beginPath(); x.roundRect(6, 3, 12, 14, 3); x.stroke()
+        x.stroke(new Path2D('M6 10.5h12M9.5 14h.01M14.5 14h.01M8.5 21l2-4M15.5 21l-2-4'))
+        x.restore()
+      }
+      const knopfU = knopf ? (c.width - kn - 14) / c.width : 2
       schild.material.map?.dispose()
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       schild.material.map = t; schild.material.needsUpdate = true
-      schild.userData = { b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height, brilleM: 0.03 }
+      schild.userData = { b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height, brilleM: 0.03, knopfU }
       if (!k.renderer.xr.isPresenting) schild.scale.set(schild.userData.b, schild.userData.h, 1)
     }
     const uhr = (min: number | null) => {
@@ -5380,7 +5405,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // Betriebspunkt → Bahnhofsnummer, und welche Bahnhöfe eine Seite in Taktland haben
     let uicVon: Map<string, number> | null = null, mitSeite: Set<number> | null = null, linkAbk: string | null = null
     void indexLaden().then((ix) => { mitSeite = new Set(ix.bahnhoefe.filter((b) => b.sprachen.length && !b.ohne_bahnhofseite).map((b) => b.uic)) }).catch(() => undefined)
-    let mitfahrenSchl = ''
+    let mitfahrenSchl = '', mitfahrenDa = false
     // in Taktland zurück in die Virtuelle Schweiz (Michael, 2026-11-11: «wenn man einen Zug in der Landschaft sieht und in den Führerstand wechselt,
     // man nicht mehr zurück kann»): die Mitte des Felds, in dem man war, als Ort wie von einer Bahnhofseite (1 km), benannt nach dem Halt des Zugs
     const zurueckTeil = (abk: string) => {
@@ -5393,6 +5418,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const schl = f && ab ? `${f.id}/${ab}` : ''
       if (schl === mitfahrenSchl) return
       mitfahrenSchl = schl
+      mitfahrenDa = false
       if (!f || !ab || !bis || ab === bis || !zn) { setMitfahren(null); return }
       // der Weg über alle Halte des Zugs von hier bis zum Ziel, als Betriebspunkte der Seite «Strecke»
       const halte = f.halte.slice(st!.i).map((x) => x.abk), weg: string[] = []
@@ -5410,6 +5436,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const planTeil = plan ? `&plan=${planText({ t0: Date.now() / 1000, halte: plan.map((x) => ({ abk: x.abk, an: x.an * 60, ab: x.ab * 60 })) })}` : ''
       void titel
       // ohne Zugnummer (Michael, 2026-11-08: «"In den Führerstand nach..." ohne Zugnummer etc»)
+      mitfahrenDa = true
       setMitfahren({ name: `In den Führerstand nach ${f.ziel}`,
                      url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1${planTeil}${AUF_3DLAND ? '&von3d=1' : zurueckTeil(ab)}` })
     }
@@ -5496,6 +5523,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         }
       })
       return best
+    }
+    gruppe.userData.schildTipp = (r: THREE.Raycaster) => {
+      if (!schild.visible || !mitfahrenDa || k.renderer.xr.isPresenting || !(schild.userData.knopfU < 1)) return false
+      const t = r.intersectObject(schild, false)[0]
+      if (!t?.uv || t.uv.x < schild.userData.knopfU) return false
+      fuehrerstandRef.current()
+      return true
     }
     gruppe.userData.nahe = (r: THREE.Ray, grenze: number) => {
       const f = gezeichnet[finden(r, grenze)]
@@ -5697,7 +5731,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const fw = wegVon(j)
         if (!fw) continue
         const ende = wegEnde(fw)
-        let sM = anteil * ende
+        let sM = st.art === 'fahrt' ? wegStelle(st, ende) : anteil * ende
         // die Wagen hinter der Spitze: vor dem Anfang des Wegs auf dem Weg davor, ohne ihn gerade nach hinten
         const vorher = j > 0 ? wegVon(j - 1) : null
         const geradeZurueck = (w: Fahrweg, sm: number): [number, number] => {
@@ -5987,10 +6021,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (u.f.id === gewaehlt) {
           zeigt = true
           schild.position.set((lokE - lage.cE) / 1000, (glatt[0] + glatt[1]) / 2000 + hoehe * gross.y * 1.6, -(lokN - lage.cN) / 1000)
-          const zeilen = zeilenVon(u.f, st), text = zeilen.join('|')
-          if (text !== schildText) { schildText = text; schildMalen(zeilen) }
           linkSetzen((st.art === 'halt' ? u.f.halte[st.i] : u.f.halte[st.i + 1]).abk)
           mitfahrenSetzen(u.f, st)
+          // nicht in der Brille: dort führt der Knopf aus der Sitzung, die Brille kennt den Führerstand von Taktland nicht
+          const knopf = mitfahrenDa && !k.renderer.xr.isPresenting
+          const zeilen = zeilenVon(u.f, st), text = zeilen.join('|') + (knopf ? '|K' : '')
+          if (text !== schildText) { schildText = text; schildMalen(zeilen, knopf) }
         }
         zahl++
       }
@@ -7171,7 +7207,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       )}
       {/* Züge und Schiffe sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind; oben rechts, eng untereinander, damit
           sie nicht ins Bild ragen und «Eintauchen» oben links frei bleibt (Michael, 2026-10-28: «Die Hinweise oben links sollen weiter oben stehen») */}
-      {(zugZeile || schiffZeile || mitfahren) && (
+      {(zugZeile || schiffZeile) && (
         // links unter der Suche, nicht mehr oben rechts: auf dem Handy lag «In den Führerstand nach …» dort unter dem Suchfeld und den zwei Spalten der
         // Symbole (Michael, 2026-11-14, Bildschirmfotos aus Bern); unter «Eintauchen», das auf dem Handy unter der Suche steht
         <div className="pointer-events-none absolute left-2 top-24 flex max-w-[60%] flex-col items-start gap-0.5 text-left">
@@ -7179,13 +7215,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{zugZeile}</p>
           )}
           {/* der Link zum Bahnhof ist weg (Michael, 2026-11-08: «Infos zum Bahnhof entfernen») */}
-          {mitfahren && (
-            <a href={mitfahren.url} {...(AUF_3DLAND ? { target: '_blank', rel: 'noopener' } : {})}
-              onClick={() => { const z = AUF_3DLAND ? null : zugBlickRef.current?.(); if (z) vorFuehrerstand?.(z) }}
-              className="pointer-events-auto rounded bg-sbb-red px-2 py-1 text-xs font-bold leading-tight text-white">
-              {mitfahren.name}{AUF_3DLAND ? ' ↗' : ''}
-            </a>
-          )}
+          {/* «In den Führerstand nach …» ist seit 2026-11-14 der rote Knopf im Schild des Zugs */}
           {schiffZeile && (
             <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{schiffZeile}</p>
           )}

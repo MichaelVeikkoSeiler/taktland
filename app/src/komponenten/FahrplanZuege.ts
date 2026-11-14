@@ -10,7 +10,7 @@ import * as THREE from 'three'
 import { gleisLaden } from '../gelaende'
 import { lageBei, wegEnde } from '../fahrt'
 import { lv95 } from '../relief'
-import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, type ZugIndex, type ZugNetz, zugNetzLaden, type ZugWeg, zugStelle } from '../zuege3d'
+import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, type ZugIndex, type ZugNetz, zugNetzLaden, type ZugWeg, zugStelle, wegStelle } from '../zuege3d'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 
 /** Masse in echter Grösse, gewählt (kein bestimmter Zug): Breite, Höhe, Länge eines Wagens und die Lücke dazwischen in m */
@@ -152,7 +152,7 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
       const h = f.halte
       // der Weg, auf dem die Spitze steht, und die Stelle darauf; am Halt das Ende des Wegs dorthin (am ersten Halt der Anfang des Wegs danach)
       let w: ZugWeg | null = null, s = 0
-      if (st.art === 'fahrt') { w = netz.weg(h[st.i].abk, h[st.i + 1].abk); if (w) s = st.anteil * wegEnde(w) }
+      if (st.art === 'fahrt') { w = netz.weg(h[st.i].abk, h[st.i + 1].abk); if (w) s = wegStelle(st, wegEnde(w)) }
       else if (st.i > 0) { w = netz.weg(h[st.i - 1].abk, h[st.i].abk); if (w) s = wegEnde(w) }
       else if (h.length > 1) { w = netz.weg(h[0].abk, h[1].abk); if (w) s = Math.min(wegEnde(w), ganz) }
       if (!w) continue
