@@ -12,7 +12,7 @@ import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck, spurBei, autoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
+import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck, spurBei, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1681,7 +1681,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             im Mittel je Stunde am Tag (6 bis 22 Uhr) und in der Nacht fahren. Jede Strecke nimmt die Zählstelle, die über das Netz am nächsten
             liegt; so viele Autos fahren dort zur Uhrzeit der Szene, nachts weniger. Wo im Umkreis von 40 km keine Zählstelle liegt, ist die
             Menge gewählt. Wie viele davon Lastwagen sind, nennt die Zählstelle ebenfalls, je für Tag und Nacht (Anteil Schwerverkehr; ohne Zählstelle gewählt 6 %).
-            Die Autos und Lastwagen selbst sind erfunden: Gestalt (etwa jedes fünfte Auto ein SUV, jedes fünfzehnte ein Pick-up, nach Zufall verteilt), Farbe, Spur und Tempo (rechts 85 km/h, dort fahren alle Lastwagen, links 115 km/h, auf Autostrassen ohne Trennung 80 km/h),
+            Die Autos und Lastwagen selbst sind erfunden: Gestalt (etwa jedes fünfte Auto ein SUV, jedes sechste ein Kleinwagen, jedes sechste ein Kombi, jedes fünfzehnte ein Pick-up, jedes zwanzigste ein Sportwagen, jedes fünfundzwanzigste ein Minibus, von Mai bis September jedes sechste der übrigen ein Cabriolet, nach Zufall verteilt), Farbe, Spur und Tempo (rechts 85 km/h, dort fahren alle Lastwagen, links 115 km/h, auf Autostrassen ohne Trennung 80 km/h),
             ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Nachts leuchten Scheinwerfer, Rücklichter und ein Lichtkegel vor jedem Auto. Im Tunnel sind
             sie nicht zu sehen. Solange der Knopf an ist, sind die stehenden Autos auf dem Luftbild weggemalt: Jeder Bildpunkt auf der Fahrbahn
             nimmt die mittlere Farbe der Fahrbahn davor und danach. Unterbrochene Linien werden dabei blasser, im Stau bleiben Autos stehen.</p>
@@ -1879,7 +1879,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               Innenbeleuchtung der Züge, ihre drei weissen Stirnlampen, die zwei roten Schlusslampen und die Lichtkegel.</li>
             <li>Menschen: alle, ihre Gestalt, Kleider, Lage, Richtung und Tempo, und die Anteile, mit denen aus den Ein- und Aussteigenden und den
               Einwohnern eine Menge wird; wer an einem Halt aus- und einsteigt, die Schiebetüren der Züge und wann sie sich öffnen und schliessen.</li>
-            <li>Autos und Lastwagen: ihre Gestalt (auch welche SUV oder Pick-up sind), Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn, alle Lastwagen rechts;
+            <li>Autos und Lastwagen: ihre Gestalt (auch welche SUV, Pick-up, Kleinwagen, Kombi, Minibus, Sportwagen oder Cabriolet sind), Farbe, Lichter und Lichtkegel, Spur, ihr Tempo und wo genau eines fährt; zwei Spuren je Fahrbahn, alle Lastwagen rechts;
               auf den übrigen Strassen eine Spur je Richtung, das Tempo nach der Breite, Kreuzungen ohne Ampeln und Vortritt.
               Belegt sind die Fahrbahnen mit ihrer Fahrtrichtung (swissTLM3D) und die Menge je Stunde an den Zählstellen des ASTRA; auf den übrigen
               Strassen ist die Menge aus dem Verkehrsmodell des ARE gerechnet, nicht gezählt. Unter den fahrenden Autos ist das Luftbild übermalt. Die Halte für
@@ -6560,11 +6560,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       netz = new THREE.InstancedMesh(autoForm(), stoff, hoechstens)
       netz.count = 0; netz.castShadow = true; netz.receiveShadow = false; netz.frustumCulled = false
       // die Farbe je Auto fest, einmal gerechnet
-      const farben: THREE.Color[] = [], lkwFarben: THREE.Color[] = [], arten: Array<0 | 1 | 2> = []
-      for (const kk of ketten.values()) for (const a of kk.autos) { farben.push(lackFarbe(a.farbe)); lkwFarben.push(lkwFarbe(a.farbe)); arten.push(autoArt(a.farbe)); a.farbe = farben.length - 1 }
+      const farben: THREE.Color[] = [], lkwFarben: THREE.Color[] = [], arten: AutoArt[] = [], cabrios: boolean[] = []
+      for (const kk of ketten.values()) for (const a of kk.autos) { farben.push(lackFarbe(a.farbe)); lkwFarben.push(lkwFarbe(a.farbe)); arten.push(autoArt(a.farbe)); cabrios.push(autoCabrio(a.farbe)); a.farbe = farben.length - 1 }
       gruppe.add(netz)
       // SUV und Pick-up (Michael, 2026-11-11: «aus jedem 5. Auto einen SUV … aus jedem 15. einen Pick-Up»)
-      for (const art of [1, 2] as const) {
+      // dazu Kleinwagen, Minibus, Kombi, Sportwagen und Cabriolet (Michael, 2026-11-14)
+      for (const art of AUTO_ARTEN) {
         const n = new THREE.InstancedMesh(autoForm(art), stoff, hoechstens)
         n.count = 0; n.castShadow = true; n.receiveShadow = false; n.frustumCulled = false
         gruppe.add(n); artNetz[art] = n
@@ -6679,7 +6680,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // Anteil der grössten Dichte dieser Stunde: Tag 6 bis 22 Uhr, sonst Nacht (Schweizer Zeit der Szene)
         const stunde = jetztImFahrplan({ von: '2000-01-01' }, new Date(ms)).minuten / 60, tag = stunde >= 6 && stunde < 22
         let zahl = 0, lkwZahl = 0, kegelZahl = 0
-        const artZahl = [0, 0, 0]
+        const artZahl = [0, 0, 0, 0, 0, 0, 0, 0]
+        // von Mai bis September (Monat der Szene, Schweizer Zeit genähert mit UTC + 1 h) fährt ein Teil der Autos offen
+        const monat = new Date(ms + 3600_000).getUTCMonth(), sommer = monat >= 4 && monat <= 8
+        const artVon = (i: number): AutoArt => (sommer && arten[i] === 0 && cabrios[i] ? AUTO_CABRIO : arten[i])
         const nacht = fensterNacht.value > 0
         // zu hören: alle 0,1 s, ob ein Auto in AUTO_SPITZE_S am nächsten an der Stelle ist, wo man hinhört (wie bei den Zügen)
         const hoeren = performance.now() >= hoerUm
@@ -6703,7 +6707,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             const liste: Array<{ a: AutoPlatz; lauf: number; lang: number }> = []
             for (const a of kk.autos) {
               if (a.ab >= anteil) continue
-              liste.push({ a, lauf: (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L, lang: a.lkw < lkwAnteil ? LKW_LANG_M : AUTO_ART_LANG_M[arten[a.farbe]] })
+              liste.push({ a, lauf: (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L, lang: a.lkw < lkwAnteil ? LKW_LANG_M : AUTO_ART_LANG_M[artVon(a.farbe)] })
             }
             if (!stauRechnen(liste, halte.filter((h) => h.kk === kk), verzug, jetztS, dt)) gestaut.delete(kk)
           }
@@ -6711,7 +6715,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const innerorts = kk.art >= 2 && (kk.stuecke[0].strasse?.kmh ?? 99) <= 35
           for (const a of kk.autos) {
             if (a.ab >= anteil || zahl >= hoechstens || lkwZahl >= hoechstens) continue
-            const lkw = a.lkw < lkwAnteil, art = arten[a.farbe], lang = lkw ? LKW_LANG_M : AUTO_ART_LANG_M[art]
+            const lkw = a.lkw < lkwAnteil, art = artVon(a.farbe), lang = lkw ? LKW_LANG_M : AUTO_ART_LANG_M[art]
             if (!lkw && art && artZahl[art] >= hoechstens) continue
             const lauf = (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L - (verzug.get(a)?.v ?? 0), s = a.richtung === 1 ? lauf : kk.L - lauf
             const p = autoBei(kk, s)
@@ -6759,7 +6763,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (nacht) lkwLichter!.instanceMatrix.needsUpdate = true
         lichter!.visible = nacht; lichter!.count = nacht ? zahl : 0
         if (nacht) lichter!.instanceMatrix.needsUpdate = true
-        for (const art of [1, 2]) {
+        for (const art of AUTO_ARTEN) {
           const n = artNetz[art], l = artLichter[art]
           n.count = artZahl[art]; n.instanceMatrix.needsUpdate = true
           if (n.instanceColor) n.instanceColor.needsUpdate = true
