@@ -1190,6 +1190,16 @@ Karte von «Geo» mit den Hilfen vom Start, gewertet wie dort (punkte, nullGrenz
 davor und danach und die Linie. Das Bild der Kachel ist vorerst das des Fahrtmodus. Seit 2026-11-14 heisst es «Wo fahre ich?» (Adresse und Code weiter wobinich) und zeigt die Höhe immer wie echt, ohne «Höhe wie echt / 2-fach» im Bild und am Pult
 (Michael: «Bei Wo bin isch Spiel braucht es die 2x Höhe nicht. Entsprechend auch Höhe wie echt nicht. Name korrigieren: neu Wo fahre ich?»).
 
+**Fahrplan-Puzzle** (#/puzzle) und **Wie lange dauert's?** (#/fahrzeit) (Spiele, Michael, 2026-11-14: «6 und 7 gerne umsetzen»): Vorrat
+data/fahrplan/spiel.json aus pipeline/build_fahrplan.py (spiel_schreiben, beim Veröffentlichen mit dem Fahrplan gebaut): je Muster (Gattung, Linie, Ziel,
+Folge der Halte) die erste Fahrt, nur IC, ICN, IR, RE, EC, ICE, TGV, RJX, NJ, EN, PE (SPIEL_GATTUNGEN, gewählt), Halte nur an Bahnhöfen im Netz, dazu
+je Fahrt bis drei Paare von Halten mit der Fahrzeit in Minuten (Abfahrt bis Ankunft laut Fahrplan, 10 bis 180, in der Pipeline gerechnet), lokal 761
+Fahrten, 2'258 Paare, 195 KB; Logik in src/fahrplanspiele.ts, Darstellung komponenten/Fahrplanspiele.tsx; je fünf Runden, keine Linie zweimal; Puzzle:
+von erstem nach letztem Halt, vier Halte dazwischen gemischt, in der Reihenfolge tippen, je richtigem Platz 25 Punkte; Fahrzeit: Regler 0 bis 180 Minuten,
+volle Punkte bis 8 % daneben (2 bis 11 Minuten, toleranz), halbe bis zum Doppelten, so höchstens 44 Minuten als richtig gewertet (Regel 9); danach alle
+Halte der Fahrt mit Zeiten; Bestwert auf dem Gerät; Bilder der Kacheln vorerst die von Duell und Bahnhofsuche; in Anleitung, Spiele und auf taktland.ch genannt;
+im Browser hier mit 390 × 900 gespielt.
+
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
 Auftaktbild als flaches Band (400 px, vorher 288; Michael, 2026-10-13: «ca. 140 %», Auftakt.tsx); Modelle links (2/3) mit Knöpfen rechts (ZWEI_SPALTEN in Relief.tsx), beim

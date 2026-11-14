@@ -192,9 +192,62 @@ def main():
                    "Fahrten nur als Takt.",
         "tage": tage_liste,
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    spiel_schreiben(liste, im_netz, info["feed_version"], von)
     groesse = sum(p.stat().st_size for p in ZIEL.rglob("*.json"))
     print(f"data/fahrplan: {len(liste)} Fahrten, {len(je_halt)} Bahnhöfe, {len(tage_liste)} Verkehrstage-Muster, "
           f"{groesse / 1e6:.1f} MB")
+
+
+#: Gattungen für die Spiele «Fahrplan-Puzzle» und «Wie lange dauert's?» (Michael, 2026-11-14: «6 und 7 gerne umsetzen»): Fernverkehr und
+#: RegioExpress, keine S-Bahn und keine Regionalzüge mit vielen kleinen Halten (gewählt)
+SPIEL_GATTUNGEN = {"IC", "ICN", "IR", "RE", "EC", "ICE", "TGV", "RJX", "NJ", "EN", "PE"}
+#: Fahrzeit für «Wie lange dauert's?»: von, bis (Minuten); der Regler geht bis SPIEL_BIS_MIN (gewählt)
+SPIEL_MIN_MIN, SPIEL_BIS_MIN = 10, 180
+
+
+def spiel_schreiben(liste, im_netz, stand, von):
+    """data/fahrplan/spiel.json: je Muster (Gattung, Linie, Ziel, Folge der Halte) eine Fahrt, die erste des Tags, mit mindestens sechs Halten
+    für das Puzzle; dazu je Fahrt bis drei Paare von Halten mit der Fahrzeit laut Fahrplan (Abfahrt am ersten bis Ankunft am zweiten, hier
+    gerechnet, nicht in der App)"""
+    gesehen, fahrten = set(), []
+    for (gattung, linie, nr, ziel, folge), bits in liste:
+        if gattung not in SPIEL_GATTUNGEN or len(folge) < 4:
+            continue
+        uics = [u for u, _, _ in folge]
+        if len(set(uics)) != len(uics):
+            continue
+        muster = (gattung, linie, ziel, tuple(uics))
+        if muster in gesehen:
+            continue
+        gesehen.add(muster)
+        # Paare: Abfahrt bis Ankunft, beide laut Fahrplan genannt, SPIEL_MIN_MIN bis SPIEL_BIS_MIN, je Anfangshalt höchstens eines
+        paare = []
+        for i in range(len(folge) - 1):
+            ab = folge[i][2]
+            if ab is None:
+                continue
+            for j in range(len(folge) - 1, i, -1):
+                an = folge[j][1]
+                if an is None:
+                    continue
+                d = an - ab
+                if SPIEL_MIN_MIN <= d <= SPIEL_BIS_MIN:
+                    paare.append([i, j, d])
+                    break
+        # über die Fahrt verteilt: höchstens drei
+        if len(paare) > 3:
+            paare = [paare[0], paare[len(paare) // 2], paare[-1]]
+        fahrten.append({"n": nr, "g": gattung, "l": linie, "z": ziel, "h": [list(x) for x in folge], "p": paare})
+    (ZIEL / "spiel.json").write_text(json.dumps({
+        "quelle": "Fahrplan als GTFS, opentransportdata.swiss",
+        "stand": stand,
+        "tag": von.isoformat(),
+        "hinweis": "Je Muster (Gattung, Linie, Ziel, Folge der Halte) die erste Fahrt; h: [UIC, Ankunft, Abfahrt] in Minuten ab Mitternacht "
+                   "des Verkehrstags; p: [Halt, Halt, Fahrzeit in Minuten von der Abfahrt am ersten bis zur Ankunft am zweiten laut Fahrplan]. "
+                   "Nur Halte an Bahnhöfen im Netz der Seite «Strecke».",
+        "fahrten": fahrten,
+    }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"spiel.json: {len(fahrten)} Fahrten, {sum(len(f['p']) for f in fahrten)} Paare")
 
 
 if __name__ == "__main__":
