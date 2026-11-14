@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
@@ -926,6 +926,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // Vollbild auch ohne Brille (Michael, 2026-10-22: «Vollbildmodus muss man auch einschalten können»)
   const [voll, setVoll] = useState(false)
   useEchtesVollbild(voll, setVoll)
+  // die Symbole der Schalter auf Handy und Tablet ausserhalb des Vollbilds in zwei Spalten (Michael, 2026-11-14)
+  const zweiSpalten = !desktop && !voll
   const inBrille = () => {
     if (!xr) { setBrilleHinweis('Auf diesem Gerät ist keine VR-Brille zu finden. Öffne Taktland im Browser einer VR-Brille wie der Meta Quest 3.'); return }
     setBrilleHinweis(null)
@@ -1280,6 +1282,31 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
         )}
         <Ladebalken inKarte />
+        {/* die Schalter auf dem Bildschirm als feste Symbole am rechten Rand des Bilds, an den Wänden nur noch in der Brille (Michael, 2026-11-14:
+            «Die Knöpfe machen Sinn aber nur in der Brille und XR. Ansonsten aus den Wänden entfernen und auf dem Fenster mit Icons nachbauen. So sind
+            sie fix und müssen nicht gesucht werden»); dieselbe Reihenfolge und dieselben Farben wie an den Wänden, was in der Stufe nicht geht, bleibt
+            blass an seinem Platz */}
+        <div className={`absolute right-2 ${voll ? 'top-14' : 'top-2'} z-[5] ${zweiSpalten ? 'grid grid-flow-col grid-rows-6 gap-1 [direction:rtl]' : 'flex flex-col gap-1'}`} style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
+          {/* auf Handy und Tablet ausserhalb des Vollbilds in zwei Spalten, sonst reicht die Höhe nicht bis über die Knöpfe unten */}
+          {SCHALTER_SYMBOLE.map(({ art, name, farbe, nurFeld, nichtGrob, abstand, symbol }) => {
+            const an = ({ orte: orteAn, zuege: zuegeAn, schiffe: schiffeAn, autos: autosAn, menschen: menschenAn, wandern, hoehen: scheiben,
+                          gipfel: gipfelAn, wolken: wolkenAn, wind: windAn, sonne: sonnenAn } as Record<string, boolean>)[art]
+            const gesperrt = (nurFeld && stufe !== 'ort' && stufe !== 'nah') || (nichtGrob && grob(stufe))
+            const setzen = ({ orte: setOrteAn, zuege: setZuegeAn, schiffe: setSchiffeAn, autos: setAutosAn, menschen: setMenschenAn, wandern: setWandern,
+                              hoehen: setScheiben, gipfel: setGipfelAn, wolken: setWolkenAn, wind: setWindAn, sonne: setSonnenAn } as Record<string, (f: (x: boolean) => boolean) => void>)[art]
+            const leuchtet = an && !gesperrt
+            return (
+              <button key={art} type="button" disabled={gesperrt} aria-pressed={leuchtet}
+                      onClick={() => { knopfTon(!an); setzen((x) => !x) }}
+                      aria-label={gesperrt ? `${name} (in dieser Stufe nicht)` : name} title={gesperrt ? `${name}: in dieser Stufe nicht` : name}
+                      style={leuchtet ? { backgroundColor: farbe, borderColor: farbe } : undefined}
+                      className={`${abstand && !zweiSpalten ? 'mt-1.5' : ''} flex size-7 flex-none items-center justify-center rounded-lg border ${leuchtet ? 'text-sbb-black'
+                        : 'border-sbb-cloud bg-white/90 text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white'} ${gesperrt ? 'opacity-40' : ''}`}>
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">{symbol}</svg>
+              </button>
+            )
+          })}
+        </div>
         {/* unten rechts die Suche, die Lupe, Mein Standort, XR und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll
             neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
             den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
@@ -1564,9 +1591,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Abzug springt; der Thumbstick geht und dreht; zum Himmel gezielt bringt ein Abzug zurück auf den Tisch. Die Höhe des Auges und das Tempo
             sind gewählt; aus der Nähe ist das Gelände so grob wie seine Daten (im Feld von 1 km auf 5 m, das Luftbild auf 50 cm).</p>
         </Abschnitt>
-        <Abschnitt titel="Knöpfe an den Wänden">
-          <p>Die Knöpfe an den Wänden des Sockels schalten Orte, Züge, Schiffe, Autos, Menschen, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
-            Wetter und Sonne ein und aus; leuchtet ein Knopf, ist es an. Am Anfang ist alles aus. Gebäude und Bäume sind in den Feldern von 4 km und 1 km immer da, ohne Knopf. Was in einer Stufe nicht geht, bleibt dunkel. + und − in der Mitte
+        <Abschnitt titel="Knöpfe">
+          <p>Die Knöpfe am rechten Rand des Bilds schalten von oben nach unten Orte, Züge, Schiffe, Autos, Menschen, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
+            Wetter und Sonne ein und aus; leuchtet ein Knopf in seiner Farbe, ist es an. Mit der Maus nennt ein Knopf seinen Namen. Am Anfang ist alles aus. Gebäude und Bäume sind in den Feldern von 4 km und 1 km immer da, ohne Knopf. Was in einer Stufe nicht geht, bleibt blass an seinem Platz.
+            In der Brille und in XR sitzen dieselben Knöpfe an den Wänden des Sockels. + und − in der Mitte
             einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
             4'000 m, ihre Zahl steht klein an der Wand.</p>
@@ -1743,7 +1771,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             auf dem Gerät.</p>
         </Abschnitt>
         <Abschnitt titel="Mit VR-Brille">
-          <p>Der Knopf «XR» oben rechts im Bild startet die Brille. Mit einer Brille wie der Meta Quest steht das Modell auf dem Tisch. Ein kurzer Abzug wählt ein Feld, nochmals taucht ein;
+          <p>Der Knopf «XR» unten rechts im Bild startet die Brille. Mit einer Brille wie der Meta Quest steht das Modell auf dem Tisch. Ein kurzer Abzug wählt ein Feld, nochmals taucht ein;
             ein gehaltener Abzug trägt das Modell, beide zusammen drehen und skalieren es. Die Greiftaste geht eine Stufe zurück, der
             Thumbstick dreht und hebt, drücken stellt es zurück. Die Knöpfe an den Wänden gehen mit Strahl und Abzug. Auf dem Handy, wo der Browser es kann, beendet der Knopf «Schliessen» oben rechts die Ansicht.</p>
         </Abschnitt>
@@ -1951,7 +1979,25 @@ const SOCKEL_ZEIT = 0.75, KNOPF_ABSTAND = 0.03
 // Stufe Schweiz nur das Land (Michael, 2026-11-10: «A) Nur die Schweiz zeigen», nach «dieses Bild mit dem Kasten und den verpixelten Rändern …
 // könnten ästhetisch schöner sein»): das Gelände ausserhalb der Landesgrenze (BFS g1, data/kartengrund.json) ausgeblendet, eine Wand entlang
 // der Grenze bis zum tiefsten Punkt, darunter der Sockel mit den Knöpfen wie bisher, oben mit einem dunklen Deckel; Farben und Masse gewählt
+/** Stufe Schweiz (Michael, 2026-11-14): das Ausland dunkelgrau bis so viele Weiten um die Mitte, ab DURCHSICHTIG_AB gegen aussen durchsichtig, so
+ *  geht es im Bild gegen oben in den Himmel über; der Himmel am Horizont hellblau, gegen oben (Sinus der Höhe über dem Horizont von bis) etwas
+ *  kräftiger; Farben und Masse gewählt */
+const AUSLAND_BIS = 2.4, AUSLAND_DURCHSICHTIG_AB = 0.6, AUSLAND_HORIZONT = '#cfe3f5', AUSLAND_OBEN = '#8fbde8', AUSLAND_VERLAUF: [number, number] = [0, 0.6]
 const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', LAND_DECKEL_FARBE = '#262626', LAND_DECKEL_TIEFER = 0.0005
+/** die Schalter auf dem Bildschirm (Michael, 2026-11-14), Reihenfolge und Farben wie an den Wänden; Symbole gezeichnet, gewählt */
+const SCHALTER_SYMBOLE: Array<{ art: Schalter; name: string; farbe: string; nurFeld?: boolean; nichtGrob?: boolean; abstand?: boolean; symbol: ReactNode }> = [
+  { art: 'orte', name: 'Orte', farbe: '#ffd23c', symbol: <><path d="M12 21.5s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z" /><circle cx="12" cy="10.3" r="2.3" /></> },
+  { art: 'zuege', name: 'Züge', farbe: '#ff4d6d', nichtGrob: true, abstand: true, symbol: <><rect x="6" y="3" width="12" height="14" rx="3" /><path d="M6 10.5h12M9.5 14h.01M14.5 14h.01M8.5 21l2-4M15.5 21l-2-4" /></> },
+  { art: 'schiffe', name: 'Schiffe', farbe: '#2ee6d6', nichtGrob: true, symbol: <><path d="M3.5 14.5h17l-2.2 4.5H5.7z" /><path d="M7 14.5V10h10v4.5M10 10V7h4v3M3 21.5c1.5 0 1.5-.8 3-.8s1.5.8 3 .8 1.5-.8 3-.8 1.5.8 3 .8 1.5-.8 3-.8 1.5.8 3 .8" /></> },
+  { art: 'autos', name: 'Autos', farbe: '#ff9de2', nurFeld: true, symbol: <><path d="M4 16.5v-3.2l2-4.8h12l2 4.8v3.2z" /><path d="M4 13.3h16" /><circle cx="7.5" cy="17.5" r="1.6" /><circle cx="16.5" cy="17.5" r="1.6" /></> },
+  { art: 'menschen', name: 'Menschen', farbe: '#e8b48f', nurFeld: true, symbol: <><circle cx="9" cy="6.5" r="2.3" /><path d="M5 20.5v-5.5a4 4 0 0 1 8 0v5.5" /><circle cx="16.5" cy="8.5" r="1.9" /><path d="M15.5 13a3.3 3.3 0 0 1 4.5 3v4.5" /></> },
+  { art: 'wandern', name: 'Wandern', farbe: '#ffd23c', nichtGrob: true, abstand: true, symbol: <><path d="M12 21.5V3" /><path d="M12 5h6.5l1.8 2-1.8 2H12M12 11.5H5.5l-1.8 2 1.8 2H12" /></> },
+  { art: 'hoehen', name: 'Höhen 1\'000 m', farbe: '#ffd23c', symbol: <><path d="M2.5 18.5c3-1.8 5.5-2 9.5-.2s6.5 1.5 9.5-.3" /><path d="M5 13.5c2.5-1.6 4.5-1.6 7.2-.2s4.6 1.3 6.8-.2" /><path d="M8.5 8.5c1.6-1 2.6-1 3.8-.2s2.6.8 3.6 0" /></> },
+  { art: 'gipfel', name: 'Gipfel', farbe: '#ffd23c', symbol: <><path d="M2.5 20l7-12.5 3.5 6 2.5-3.5 6 10z" /><path d="M7.4 11.3l2.1 1.3 1.6-1.4" /></> },
+  { art: 'wolken', name: 'Wolken', farbe: '#ffffff', symbol: <path d="M7 18.5h10.5a4 4 0 0 0 .3-8A6 6 0 0 0 6.3 9.3 4.6 4.6 0 0 0 7 18.5z" /> },
+  { art: 'wind', name: 'Wetter: Wind und Niederschlag', farbe: '#5ab4ff', symbol: <><path d="M4.5 21.5V3" /><path d="M4.5 4.5l15 2.2v5.6l-15 2.2z" /><path d="M9.5 5.2v8.6M14.5 6v7" /></> },
+  { art: 'sonne', name: 'Sonne und Schatten', farbe: '#ff9a1f', symbol: <><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" /></> },
+]
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', autos: '#ff9de2', menschen: '#e8b48f', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
@@ -2292,8 +2338,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   standort: { e: number; n: number } | null
 }) {
   // für den Bau des Sockels, ohne dass er bei jedem Schalten neu gebaut wird
+  // die Schalter an den Wänden nur in der Brille und in XR (Michael, 2026-11-14), auf dem Bildschirm als Symbole über dem Bild
+  const [brilleAn, setBrilleAn] = useState(false)
   const sonneFuerSockel = useRef(false)
-  sonneFuerSockel.current = sonnenAn
+  sonneFuerSockel.current = sonnenAn && brilleAn
   const huelle = useRef<HTMLDivElement>(null)
   const [grafikWeg, setGrafikWeg] = useState(false)
   // zählt die Retuschen unter Brücken: die Gebäude werden danach neu gesetzt, damit Dächer über Brücken ihr eigenes Bild bekommen
@@ -2345,13 +2393,38 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       v.addColorStop(1, `#${himmel.getHexString(THREE.SRGBColorSpace)}`)
       x.fillStyle = v; x.fillRect(0, 0, himmelBild.width, himmelBild.height)
       himmelTextur.needsUpdate = true
+      // die Kuppel der Stufe Schweiz: nachts so viel dunkler wie der Himmel, oben wie der Himmel oben, wenn er dunkler ist als das Hellblau
+      if (kuppelStoff) {
+        const hell = (c: THREE.Color) => c.r * 0.2126 + c.g * 0.7152 + c.b * 0.0722
+        const f = Math.min(1, hell(himmel) / Math.max(1e-6, hell(himmelTag)))
+        kuppelStoff.uniforms.horizont.value.set(AUSLAND_HORIZONT).multiplyScalar(f)
+        const o = new THREE.Color(AUSLAND_OBEN)
+        kuppelStoff.uniforms.oben.value.copy(hell(himmelOben) < hell(o) ? himmelOben : o)
+      }
     }
+    let kuppelStoff: THREE.ShaderMaterial | null = null
     himmelMalen()
     let durchsicht = false
     const sterne = sternenhimmelBauen()
     szene.add(sterne.punkte)
+    // in der Stufe Schweiz ein Himmel nach dem Horizont statt nach dem Bild: hellblau, in das das dunkelgraue Ausland gegen aussen übergeht (Michael, 2026-11-14: «Ausland dunkelgrau weiterziehen und Verlauf gegen oben zu hellblau»)
+    kuppelStoff = new THREE.ShaderMaterial({
+      uniforms: { horizont: { value: new THREE.Color(AUSLAND_HORIZONT) }, oben: { value: new THREE.Color(AUSLAND_OBEN) } },
+      vertexShader: 'varying vec3 vRichtung; void main() { vRichtung = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+      fragmentShader: `uniform vec3 horizont; uniform vec3 oben; varying vec3 vRichtung;
+        void main() { gl_FragColor = vec4(mix(horizont, oben, smoothstep(${AUSLAND_VERLAUF[0].toFixed(3)}, ${AUSLAND_VERLAUF[1].toFixed(3)}, normalize(vRichtung).y)), 1.0);
+        #include <colorspace_fragment>
+        }`,
+      side: THREE.BackSide, depthTest: false, depthWrite: false, toneMapped: false,
+    })
+    const kuppel = new THREE.Mesh(new THREE.SphereGeometry(1000, 48, 24), kuppelStoff)
+    himmelMalen()
+    kuppel.renderOrder = -100
+    kuppel.frustumCulled = false
+    kuppel.visible = false
+    szene.add(kuppel)
     const setzeHimmel = () => {
-      szene.background = renderer.xr.isPresenting && durchsicht ? null : himmelTextur
+      szene.background = renderer.xr.isPresenting && durchsicht ? null : kuppel.visible ? null : himmelTextur
     }
     setzeHimmel()
     const kamera = new THREE.PerspectiveCamera(45, el.clientWidth / el.clientHeight, 0.01, 2000)
@@ -2620,7 +2693,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       tafel.visible = false
     }
-    renderer.xr.addEventListener('sessionend', () => { if (stehenBrille) { stehenBrille = false; wenn.stehenAus() } inDerBrille = false; schattenGroesse(schattenPx); bildschirmSetzen(); setzeHimmel(); anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
+    renderer.xr.addEventListener('sessionend', () => { if (stehenBrille) { stehenBrille = false; wenn.stehenAus() } inDerBrille = false; setBrilleAn(false); schattenGroesse(schattenPx); bildschirmSetzen(); setzeHimmel(); anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
     brilleRef.current = async () => {
       const xr = navigator.xr
       if (!xr) throw new Error('Kein WebXR')
@@ -2650,6 +2723,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       kamera.near = 0.01; kamera.updateProjectionMatrix()
       await renderer.xr.setSession(sitzung)
       inDerBrille = true
+      setBrilleAn(true)
       schattenGroesse(BRILLE_SCHATTEN_PX)
       anfangSetzen()
       brilleSetzen(); setzeHimmel()
@@ -3007,8 +3081,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera
       wurzel.worldToLocal(auge.setFromMatrixPosition(cam.matrixWorld))
       for (const o of wurzel.getObjectByName('knoepfe')?.children ?? []) o.visible = auge.clone().sub(o.position).dot(o.userData.nach as THREE.Vector3) > 0
-      // die Schalter an den Wänden auch auf dem Bildschirm (Michael, 2026-10-22: «nicht nur auf der Brille … auch in der Standardversion»)
-      // ebenso die Zahlen an den Höhenlinien
+      // die Zahlen an den Höhenlinien; die Schalter an den Wänden gibt es seit 2026-11-14 nur noch in der Brille (auf dem Bildschirm 2026-10-22 bis 2026-11-13)
       for (const o of wurzel.getObjectByName('hoehen')?.children ?? []) {
         if (o instanceof THREE.Sprite) o.visible = auge.clone().sub(o.position).dot(o.userData.nach as THREE.Vector3) > 0
       }
@@ -3018,6 +3091,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     const aufloesung = new THREE.Vector2()
     renderer.setAnimationLoop(() => {
+      // die Kuppel und das Ausland nur in der Stufe Schweiz und nicht in der Brille
+      const ausland = wurzel.getObjectByName('ausland')
+      const kuppelJetzt = !!ausland && !renderer.xr.isPresenting
+      if (ausland) ausland.visible = kuppelJetzt
+      if (kuppel.visible !== kuppelJetzt) { kuppel.visible = kuppelJetzt; setzeHimmel() }
+      if (kuppelJetzt) kuppel.position.copy(renderer.xr.isPresenting ? renderer.xr.getCamera().position : kamera.position)
       for (const f of jeBild) f()
       knoepfeZeigen()
       renderer.getSize(aufloesung)
@@ -3212,6 +3291,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     wurzel.userData.ausserLand = (x: number, z: number) => !imLand(x, z)
     const landWandMaterial = new THREE.MeshStandardMaterial({ color: LAND_WAND_FARBE, roughness: 0.6, metalness: 0, side: THREE.DoubleSide })
     const deckelMaterial = new THREE.MeshStandardMaterial({ color: LAND_DECKEL_FARBE, roughness: 0.7, metalness: 0 })
+    const auslandMaterial = new THREE.MeshStandardMaterial({ color: LAND_DECKEL_FARBE, roughness: 0.7, metalness: 0, vertexColors: true, transparent: true })
     // die oberen Kanten der Wand entlang der Grenze, je Stück mit der Richtung nach aussen (nur für die Linien der Höhen, ohne Zahlen)
     let landKanten: number[][] = []
     const sockelBauen = () => {
@@ -3327,6 +3407,22 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         de.position.y = yd
         de.receiveShadow = true
         sockel.add(de)
+        // das Ausland läuft dunkelgrau weiter, knapp unter dem Deckel, gegen aussen durchsichtig in die Kuppel (Michael, 2026-11-14:
+        // «Ausland dunkelgrau weiterziehen»); nur auf dem Bildschirm (je Bild)
+        const ga = new THREE.RingGeometry(0.001, AUSLAND_BIS * weiteKm, 96, 40)
+        ga.rotateX(-Math.PI / 2)
+        const pa = ga.getAttribute('position'), fa = new Float32Array(pa.count * 4)
+        for (let i = 0; i < pa.count; i++) {
+          const rr = Math.hypot(pa.getX(i), pa.getZ(i)) / weiteKm
+          const t = Math.min(1, Math.max(0, (rr - AUSLAND_DURCHSICHTIG_AB) / (AUSLAND_BIS - AUSLAND_DURCHSICHTIG_AB)))
+          fa.set([1, 1, 1, 1 - t * t * (3 - 2 * t)], i * 4)
+        }
+        ga.setAttribute('color', new THREE.Float32BufferAttribute(fa, 4))
+        const au = new THREE.Mesh(ga, auslandMaterial)
+        au.name = 'ausland'
+        au.position.y = yd - weiteKm * LAND_DECKEL_TIEFER
+        au.renderOrder = -1
+        sockel.add(au)
         const raus = weiteKm * 0.0015
         for (const ring of land) {
           const n = ring.length / 2, p = new Float32Array(n * 6), ix: number[] = [], oben: number[] = []
@@ -3804,13 +3900,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, landWandMaterial, deckelMaterial, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, mastMaterial, gipfelMast])
+      spaeterWeg([...weg, ...wandMaterialien, landWandMaterial, deckelMaterial, auslandMaterial, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, mastMaterial, gipfelMast])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [b, stufe, zusatz, knoepfe])
   // mit «Sonne» an der Sockel höher (Michael, 2026-10-30: «Sobald Sonne eingeschaltet wird der Sockel etwas höher und darunter die Knöpfe für Zeitreisen»)
-  useEffect(() => { (kern.current?.wurzel.userData.sockelTiefer as ((an: boolean) => void) | undefined)?.(sonnenAn) }, [b, stufe, zusatz, knoepfe, sonnenAn])
+  useEffect(() => { (kern.current?.wurzel.userData.sockelTiefer as ((an: boolean) => void) | undefined)?.(sonnenAn && brilleAn) }, [b, stufe, zusatz, knoepfe, sonnenAn, brilleAn])
 
   // Gebäude und Bäume, je in einer eigenen Gruppe und mit eigenem Schalter (Michael, 2026-10-22: «separate Schalter»)
   const umweltSetzen = (art: 'gebaeude' | 'baeume') => {
@@ -3860,7 +3956,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => (baeume ? umweltSetzen('baeume') : undefined), [b, stufe, baeume])
 
-  // Schalter an den Wänden, nur in der Brille (Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle zu platzieren,
+  // Schalter an den Wänden, nur in der Brille und in XR (seit 2026-11-14 wieder; Michael, 2026-10-22: «die Steuerelemente an den Wänden der Modelle zu platzieren,
   // so wie Schalter, die man bedienen kann … auf allen vier Seiten»): flach auf jeder Wand im Band unter dem tiefsten Punkt, links
   // der Knöpfe + und − Höhen, Wanderwege, Gebäude und Bäume, rechts die Sonne und, wenn sie an ist, Datum, Uhrzeit und die Knöpfe
   // für die Zeit; sie drehen und wachsen mit dem Modell; als Knöpfe einer Steuerung (Michael, 2026-10-22: «wie richtige … physische
@@ -3870,6 +3966,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const k = kern.current
     const w = k?.wurzel.userData.waende as { x0: number; x1: number; z0: number; z1: number; y: number; wand: number; zeit: number; W: number } | undefined
     if (!k || !w) return
+    if (!brilleAn) return
     const { W } = w, luecke = W * 0.008
     interface Teil { zeilen: string[]; breite: number; an?: boolean; farbe?: string; knopf?: boolean; gesperrt?: boolean; leer?: boolean; aktion?: () => void }
     const umschalten = (art: Schalter) => () => cb.current.schalten(art)
@@ -4041,7 +4138,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       seite.dispose(); fassung.dispose()
     }
-  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, autos, menschen, wolken])
+  }, [b, stufe, zusatz, knoepfe, scheiben, orte, gipfel, wandern, gebaeude, baeume, umweltHier, sonnenAn, sonnenZeilen, jetztAn, windAn, zuege, zuegeDa, schiffe, autos, menschen, wolken, brilleAn])
   // auf Augenhöhe: auf dem Bildschirm an der Stelle, die die Kamera anschaut, in der Brille unter dem Kopf (ausserhalb des Modells in seiner Mitte);
   // danach stellt ein Tipp ins Gelände an diese Stelle
   useEffect(() => {
@@ -7036,7 +7133,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {/* Züge und Schiffe sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind; oben rechts, eng untereinander, damit
           sie nicht ins Bild ragen und «Eintauchen» oben links frei bleibt (Michael, 2026-10-28: «Die Hinweise oben links sollen weiter oben stehen») */}
       {(zugZeile || schiffZeile || mitfahren) && (
-        <div className={`pointer-events-none absolute right-2 ${vollbild ? 'top-14' : 'top-2'} flex max-w-[60%] flex-col items-end gap-0.5 text-right`}>
+        <div className={`pointer-events-none absolute right-12 ${vollbild ? 'top-14' : 'top-2'} flex max-w-[60%] flex-col items-end gap-0.5 text-right`}>
           {zugZeile && (
             <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{zugZeile}</p>
           )}
