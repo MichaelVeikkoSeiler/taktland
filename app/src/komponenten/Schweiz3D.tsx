@@ -715,7 +715,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // auf Augenhöhe (Michael, 2026-11-10: «12 (Icon mit Männchen) alle Devices»), nur in den Feldern von 4 km und 1 km; ein neues Feld beendet es
   const [stehen, setStehen] = useState(false)
   // Sonne und Schatten (Michael, 2026-10-21): Datum und Uhrzeit in der Schweiz, am Anfang jetzt (Michael, 2026-10-29: «Beim ersten Laden soll immer Jetzt sein»)
-  const [sonnenAn, setSonnenAn] = useState(false)
+  // seit 2026-11-14 immer an, ohne Knopf (Michael: «Das Sonne Icon braucht es nicht. Es soll immer die aktuelle Zeit abgebildet werden. Unten kann man ja noch
+  // Zeitreisen»); gemerkte Ansichten, Links und «Zu zweit» schalten sie nicht mehr aus
+  const sonnenAn = true
+  const setSonnenAn = (_v: boolean | ((x: boolean) => boolean)) => {}
   // die Windhose (Michael, 2026-10-24: «wie die Windverhältnisse sind. Auch mit Prognose für die nächste Woche»), am Anfang aus wie alles
   const [windAn, setWindAn] = useState(false)
   const [, setWindStation] = useState<Station | null>(null)
@@ -1605,8 +1608,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             sind gewählt; aus der Nähe ist das Gelände so grob wie seine Daten (im Feld von 1 km auf 5 m, das Luftbild auf 50 cm).</p>
         </Abschnitt>
         <Abschnitt titel="Knöpfe">
-          <p>Die Knöpfe am rechten Rand des Bilds schalten von oben nach unten Orte, Züge, Schiffe, Autos, Menschen, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken,
-            Wetter und Sonne ein und aus; ist ein Knopf dunkel mit weissem Zeichen, ist es an. Mit der Maus nennt ein Knopf seinen Namen. Am Anfang ist alles aus. Gebäude und Bäume sind in den Feldern von 4 km und 1 km immer da, ohne Knopf. Was in einer Stufe nicht geht, bleibt blass an seinem Platz.
+          <p>Die Knöpfe am rechten Rand des Bilds schalten von oben nach unten Orte, Züge, Schiffe, Autos, Menschen, Wandern (Wanderwege), Höhenlinien, Gipfel, Wolken
+            und Wetter ein und aus; ist ein Knopf dunkel mit weissem Zeichen, ist es an. Mit der Maus nennt ein Knopf seinen Namen. Am Anfang ist alles aus. Sonne und Schatten gelten immer, zur jetzigen oder unten gewählten Zeit. Gebäude und Bäume sind in den Feldern von 4 km und 1 km immer da, ohne Knopf. Was in einer Stufe nicht geht, bleibt blass an seinem Platz.
             In der Brille und in XR sitzen dieselben Knöpfe an den Wänden des Sockels. + und − in der Mitte
             einer Wand, unter dem Sockel, setzen dort ein Stück an oder nehmen eines weg (ab der Region). Plus geht immer: Ist das Modell so
             gross, wie das Gerät es halten kann, fällt gegenüber eine Reihe weg, und das Modell rückt weiter. Die Höhenlinien liegen auf 1'000, 2'000, 3'000 und
@@ -1627,7 +1630,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         {/* eigener Abschnitt fürs Licht in der Nacht (Michael, 2026-11-08: «Hier noch die Erfundene Strasse und Bahnhofs Beleuchtung auflisten? Macht Sinn oder?») */}
         <Abschnitt titel="Licht in der Nacht">
-          <p>Ist «Sonne» an und steht die Sonne unter dem Horizont, wird es im Modell Nacht. Dann leuchten in den Feldern von 4 km und 1 km
+          <p>Steht die Sonne unter dem Horizont, wird es im Modell Nacht. Dann leuchten in den Feldern von 4 km und 1 km
             Fenster, Strassen und Bahnhöfe, und die Züge fahren mit Licht.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo das Licht steht: Strassen (swissTLM3D von swisstopo) in Siedlungen und Stadtzentren (swissTLMRegio), Gleise rund um
             die Bahnhöfe und die Gebäude selbst.</p>
@@ -1749,10 +1752,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             als Schnee bis 1 °C.</p>
         </Abschnitt>
         <Abschnitt titel="Sonne und Schatten">
-          <p>«Sonne» rechnet den Stand der Sonne über der Mitte des Modells zu Datum und Uhrzeit, mit Schatten. An der Wand verschieben
+          <p>Das Modell zeigt immer den Stand der Sonne über seiner Mitte zu Datum und Uhrzeit, mit Schatten, am Anfang jetzt, ohne Knopf. In der Brille verschieben an der Wand
             −1 h und +1 h die Zeit, −1 Tag und +1 Tag sowie −1 Monat und +1 Monat das Datum, «Jetzt» setzt beides auf jetzt. Am Anfang gilt die
-            jetzige Zeit, «Jetzt» leuchtet dann. Unter dem Modell lassen sich Datum und Uhrzeit wählen, die Uhrzeit mit einem Regler auf die Minute,
-            auch ohne «Sonne». Von der gewählten Zeit an läuft die Uhr weiter. Die Zeit
+            jetzige Zeit, «Jetzt» leuchtet dann. Unter dem Modell lassen sich Datum und Uhrzeit wählen (Zeitreise), die Uhrzeit mit einem Regler auf die Minute. Von der gewählten Zeit an läuft die Uhr weiter. Die Zeit
             gilt auch für die Züge und Schiffe laut Fahrplan, so weit der geladene Fahrplan reicht (etwa zwei Wochen ab gestern). Steht die Sonne unter
             dem Horizont, brennt Licht in den Fenstern der Gebäude, abends in vielen, nach Mitternacht in wenigen. Fenster und Stockwerke stehen in
             keiner Quelle: Sie sind gezeichnet, am Tag als dunkle Scheiben, und wie viele nachts brennen, ist eine Annahme. Nachts wird der Himmel dunkel, und es stehen die Sterne bis zur Helligkeit 6 dort, wo sie zu dieser Zeit über
@@ -2008,7 +2010,6 @@ const SCHALTER_SYMBOLE: Array<{ art: Schalter; name: string; farbe: string; nurF
   { art: 'gipfel', name: 'Gipfel', farbe: '#ffd23c', symbol: <><path d="M2.5 20l7-12.5 3.5 6 2.5-3.5 6 10z" /><path d="M7.4 11.3l2.1 1.3 1.6-1.4" /></> },
   { art: 'wolken', name: 'Wolken', farbe: '#ffffff', symbol: <path d="M7 18.5h10.5a4 4 0 0 0 .3-8A6 6 0 0 0 6.3 9.3 4.6 4.6 0 0 0 7 18.5z" /> },
   { art: 'wind', name: 'Wetter: Wind und Niederschlag', farbe: '#5ab4ff', symbol: <><path d="M4.5 21.5V3" /><path d="M4.5 4.5l15 2.2v5.6l-15 2.2z" /><path d="M9.5 5.2v8.6M14.5 6v7" /></> },
-  { art: 'sonne', name: 'Sonne und Schatten', farbe: '#ff9a1f', symbol: <><circle cx="12" cy="12" r="4" /><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" /></> },
 ]
 const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', sonne: '#ff9a1f', wind: '#5ab4ff', zuege: '#ff4d6d', schiffe: '#2ee6d6', autos: '#ff9de2', menschen: '#e8b48f', wolken: '#ffffff' }
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
@@ -4015,7 +4016,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // in jeder Stufe (Michael, 2026-10-29: «Wolken auch in den Feldern 4 km und 1 km zeigen»)
       { zeilen: ['Wolken'], breite: KNOPF_B * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
       { zeilen: ['Wetter'], breite: KNOPF_B * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
-      { zeilen: ['Sonne'], breite: KNOPF_B * W, an: sonnenAn, farbe: LICHT.sonne, aktion: umschalten('sonne') },
     ]
     const zeitDa = sonnenAn && !!sonnenZeilen
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
