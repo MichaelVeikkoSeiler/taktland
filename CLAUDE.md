@@ -434,6 +434,8 @@ Menschen in «3D Schweiz» (Michael, 2026-11-11: «Heisst dass du kannst Taktlan
 Eintauchen am Desktop mit einem zweiten Klick (Michael, 2026-11-11: «Auf dem Desktop soll man beim Auswählen eines Ausschnittes (roter Kasten) diesen nochmals
              anklicken können, damit man dort eintaucht»): mit der Maus taucht ein Klick in den schon gewählten Kasten ein (waehlen in Schweiz3D.tsx); der Doppelklick
              von 2026-11-06 ist weg
+             auf Touch (Michael, 2026-11-14: «Auf Touchmonitoren soll man doppeltippen können zum eintauchen»): zwei Tipps bis 450 ms nacheinander (DOPPELTIPP_MS,
+             gewählt), der erste wählt das Feld, der zweite im gewählten Kasten taucht ein; in der Anleitung («Wählen und eintauchen»); nicht auf einem Gerät geprüft
 Wagen auf demselben Gleis in «3D Schweiz» (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»): das hintere Ende eines Wagens nimmt die Gleisachse
              bis 2,5 m neben der Stelle eine Wagenlänge hinter dem vorderen Ende in Richtung des Wegs (ZUG_GLEIS_FOLGEN_M, gewählt), sonst wie bisher das eigene
              eingerastete Ende; nur gebaut, hier ohne die feinen Daten nicht nachgestellt
