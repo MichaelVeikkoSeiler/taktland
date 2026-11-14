@@ -548,7 +548,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
   const alle = [...treffer, ...adressen]
   const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n, t.name); setText(t.name); setOffen(false) }
   return (
-    <div className="relative w-52 min-w-0 max-w-[calc(48vw-2.5rem)] shrink">
+    <div className="relative w-56 min-w-0 max-w-[calc(100vw-8.5rem)] shrink">
       <input type="search" value={text} placeholder="Ort, Adresse, Gipfel" aria-label="Ort, Adresse, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
              onChange={(e) => { setText(e.target.value); setOffen(true); gipfelHolen() }} onFocus={() => { setOffen(true); gipfelHolen() }}
              onKeyDown={(e) => { if (e.key === 'Enter' && alle[0]) { nehmen(alle[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
@@ -1361,7 +1361,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Uhrzeit und «Jetzt» stehen unter dem Modell. Das Suchfeld oben links statt unten in der Reihe (Michael, 2026-11-13: Pfeil vom Suchfeld nach oben
             links, «Suchfeld nach oben links») */}
         {zusatz && zusatz.ortschaften.length > 0 && (
-          <div className="absolute left-2 top-2 z-10 flex max-w-[calc(100%-4rem)]" style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
+          <div className="absolute left-2 top-2 z-10 flex max-w-[calc(100%-5.5rem)]" style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
             <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />
           </div>
         )}
@@ -1979,11 +1979,10 @@ const SOCKEL_ZEIT = 0.75, KNOPF_ABSTAND = 0.03
 // Stufe Schweiz nur das Land (Michael, 2026-11-10: «A) Nur die Schweiz zeigen», nach «dieses Bild mit dem Kasten und den verpixelten Rändern …
 // könnten ästhetisch schöner sein»): das Gelände ausserhalb der Landesgrenze (BFS g1, data/kartengrund.json) ausgeblendet, eine Wand entlang
 // der Grenze bis zum tiefsten Punkt, darunter der Sockel mit den Knöpfen wie bisher, oben mit einem dunklen Deckel; Farben und Masse gewählt
-/** Stufe Schweiz (Michael, 2026-11-14): das Ausland dunkelgrau bis so viele Weiten um die Mitte, ab DURCHSICHTIG_AB gegen aussen durchsichtig in
- *  die Kuppel, die im selben Dunkelgrau bleibt, ohne Verlauf (Michael: «Kein Verlauf. Nur dunkel bleiben»; kurz vorher gegen oben hellblau);
+/** Stufe Schweiz (Michael, 2026-11-14): das Ausland dunkelgrau bis so viele Weiten um die Mitte, dahinter die Kuppel im selben Dunkelgrau, ohne Verlauf (Michael: «Kein Verlauf. Nur dunkel bleiben»; kurz vorher gegen oben hellblau);
  *  das Grau so, wie der beleuchtete Deckel im Bild erscheint, gewählt */
-const AUSLAND_BIS = 2.4, AUSLAND_DURCHSICHTIG_AB = 0.6, AUSLAND_HORIZONT = '#2a2a2a', AUSLAND_OBEN = '#2a2a2a', AUSLAND_VERLAUF: [number, number] = [0, 0.6]
-const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', LAND_DECKEL_FARBE = '#262626', LAND_DECKEL_TIEFER = 0.0005
+const AUSLAND_BIS = 2.4, AUSLAND_HORIZONT = '#2a2a2a', AUSLAND_OBEN = '#2a2a2a', AUSLAND_VERLAUF: [number, number] = [0, 0.6]
+const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', LAND_DECKEL_TIEFER = 0.0005
 /** die Schalter auf dem Bildschirm (Michael, 2026-11-14), Reihenfolge und Farben wie an den Wänden; Symbole gezeichnet, gewählt */
 const SCHALTER_SYMBOLE: Array<{ art: Schalter; name: string; farbe: string; nurFeld?: boolean; nichtGrob?: boolean; abstand?: boolean; symbol: ReactNode }> = [
   { art: 'orte', name: 'Orte', farbe: '#ffd23c', symbol: <><path d="M12 21.5s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z" /><circle cx="12" cy="10.3" r="2.3" /></> },
@@ -3094,7 +3093,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // die Kuppel und das Ausland nur in der Stufe Schweiz und nicht in der Brille
       const ausland = wurzel.getObjectByName('ausland')
       const kuppelJetzt = !!ausland && !renderer.xr.isPresenting
-      if (ausland) ausland.visible = kuppelJetzt
+      if (ausland) {
+        ausland.visible = kuppelJetzt;
+        // nachts so dunkel wie die Kuppel
+        ((ausland as THREE.Mesh).material as THREE.MeshBasicMaterial).color.copy(kuppelStoff!.uniforms.horizont.value)
+      }
       if (kuppel.visible !== kuppelJetzt) { kuppel.visible = kuppelJetzt; setzeHimmel() }
       if (kuppelJetzt) kuppel.position.copy(renderer.xr.isPresenting ? renderer.xr.getCamera().position : kamera.position)
       for (const f of jeBild) f()
@@ -3290,8 +3293,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     wurzel.userData.ausserLand = (x: number, z: number) => !imLand(x, z)
     const landWandMaterial = new THREE.MeshStandardMaterial({ color: LAND_WAND_FARBE, roughness: 0.6, metalness: 0, side: THREE.DoubleSide })
-    const deckelMaterial = new THREE.MeshStandardMaterial({ color: LAND_DECKEL_FARBE, roughness: 0.7, metalness: 0 })
-    const auslandMaterial = new THREE.MeshStandardMaterial({ color: LAND_DECKEL_FARBE, roughness: 0.7, metalness: 0, vertexColors: true, transparent: true })
+    // Deckel und Ausland ohne Licht im Grau der Kuppel, so sind ihre Ränder nicht zu sehen (2026-11-14; vorher der Deckel beleuchtet in #262626)
+    const auslandMaterial = new THREE.MeshBasicMaterial({ color: AUSLAND_HORIZONT })
+    const deckelMaterial = auslandMaterial
     // die oberen Kanten der Wand entlang der Grenze, je Stück mit der Richtung nach aussen (nur für die Linien der Höhen, ohne Zahlen)
     let landKanten: number[][] = []
     const sockelBauen = () => {
@@ -3409,19 +3413,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         sockel.add(de)
         // das Ausland läuft dunkelgrau weiter, knapp unter dem Deckel, gegen aussen durchsichtig in die Kuppel (Michael, 2026-11-14:
         // «Ausland dunkelgrau weiterziehen»); nur auf dem Bildschirm (je Bild)
-        const ga = new THREE.RingGeometry(0.001, AUSLAND_BIS * weiteKm, 96, 40)
+        // mit dem Rechteck des Deckels als Loch: unter dem Land flimmerte die Fläche sonst aus der Ferne durch das Gelände (Michael, 2026-11-14:
+        // «Auf der Schweiz flimmert es noch mit dem schwarzen Untergrund»; die Tiefe reicht auf 400 km nicht für einige hundert Meter)
+        const kreis = new THREE.Shape().absarc(0, 0, AUSLAND_BIS * weiteKm, 0, Math.PI * 2, false)
+        kreis.holes.push(new THREE.Path([new THREE.Vector2(X(E0), -Z(N0)), new THREE.Vector2(X(E1), -Z(N0)), new THREE.Vector2(X(E1), -Z(N1)), new THREE.Vector2(X(E0), -Z(N1))]))
+        const ga = new THREE.ShapeGeometry(kreis, 96)
         ga.rotateX(-Math.PI / 2)
-        const pa = ga.getAttribute('position'), fa = new Float32Array(pa.count * 4)
-        for (let i = 0; i < pa.count; i++) {
-          const rr = Math.hypot(pa.getX(i), pa.getZ(i)) / weiteKm
-          const t = Math.min(1, Math.max(0, (rr - AUSLAND_DURCHSICHTIG_AB) / (AUSLAND_BIS - AUSLAND_DURCHSICHTIG_AB)))
-          fa.set([1, 1, 1, 1 - t * t * (3 - 2 * t)], i * 4)
-        }
-        ga.setAttribute('color', new THREE.Float32BufferAttribute(fa, 4))
         const au = new THREE.Mesh(ga, auslandMaterial)
         au.name = 'ausland'
-        au.position.y = yd - weiteKm * LAND_DECKEL_TIEFER
-        au.renderOrder = -1
+        au.position.y = yd
         sockel.add(au)
         const raus = weiteKm * 0.0015
         for (const ring of land) {
@@ -3900,7 +3900,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         wurzel.remove(o)
       }
-      spaeterWeg([...weg, ...wandMaterialien, landWandMaterial, deckelMaterial, auslandMaterial, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, mastMaterial, gipfelMast])
+      spaeterWeg([...weg, ...wandMaterialien, landWandMaterial, auslandMaterial, platteMaterial, wandWasserMaterial, lockerMaterial, ...linienMaterial, ...kurvenMaterial, mastMaterial, gipfelMast])
       welt.current = null
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
