@@ -479,6 +479,9 @@ Weitere Autos in «3D Schweiz» (Michael, 2026-11-14: «Autos: noch Kleinwagen u
              (5,2 × 2,0 m, etwa 2,1 m hoch, Fensterband rundum), ein Sechstel Kombi (4,8 × 1,85 m, lange Kabine), ein Zwanzigstel Sportwagen (4,4 × 1,9 m, etwa 1,1 m hoch),
              neben SUV und Pick-up; von Mai bis September (Monat der Szene) ist ein Sechstel der übrigen Autos ein Cabriolet (offen, Frontscheibe und zwei Sitze, autoCabrio);
              Anteile ausser dem Sportwagen, Masse und Gestalt gewählt (KLEINWAGEN_ANTEIL …), in der Anleitung («Autos», «Was erfunden ist»); nicht im Browser angeschaut
+Sonntagsfahrverbot in «3D Schweiz» (Michael, 2026-11-15: «Keine LKWs am Sonntag. Die dürfen dann nicht fahren»): ist die Zeit der Szene nach Schweizer Zeit
+             (Intl, Europe/Zurich, SONNTAG_FMT) ein Sonntag, fährt kein Lastwagen, sein Platz bleibt leer (nicht durch ein Auto ersetzt); Feiertage und
+             Ausnahmebewilligungen nicht berücksichtigt, Nachtfahrverbot nicht nachgebildet (die Zählstellen messen Schwerverkehr auch nachts); in der Anleitung («Autos»)
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
