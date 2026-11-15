@@ -1453,9 +1453,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                   }}
                   aria-label={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'} title={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'}
                   className={`flex size-8 flex-none items-center justify-center rounded-lg border ${raum || zuZweitOffen ? KNOPF_AN : KNOPF_AUS}`}>
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(!!raum || zuZweitOffen)} fill="currentColor">
-              <circle cx="8" cy="7" r="3" /><path d="M2.5 20c0-3.6 2.4-6.2 5.5-6.2s5.5 2.6 5.5 6.2z" />
-              <circle cx="16.5" cy="8" r="2.6" /><path d="M14.6 13.9c.6-.2 1.2-.3 1.9-.3 2.8 0 5 2.4 5 5.9h-6.4c0-2.2-.2-3.9-.5-5.6z" />
+            {/* zwei Handys mit Pfeilen hin und her (Michael, 2026-11-15: zwei Figuren waren neben «Menschen» und der Augenhöhe schwer zu erkennen) */}
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(!!raum || zuZweitOffen)} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="1.8" y="4" width="6.4" height="16" rx="1.4" /><rect x="15.8" y="4" width="6.4" height="16" rx="1.4" />
+              <path d="M4.2 17h1.6M18.2 17h1.6" />
+              <path d="M10.2 9.5h3.6M12.4 8l1.4 1.5-1.4 1.5M13.8 14.5h-3.6M11.6 13l-1.4 1.5 1.4 1.5" />
             </svg>
           </button>
           {/* Ton aus und an (Michael, 2026-11-11: «In allen Formaten soll man den Ton abstellen können»): Lautsprecher wie beim Zuggeräusch,
@@ -1960,7 +1962,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Thumbstick dreht und hebt, drücken stellt es zurück. Die Knöpfe an den Wänden gehen mit Strahl und Abzug. Auf dem Handy, wo der Browser es kann, beendet der Knopf «Schliessen» oben rechts die Ansicht.</p>
         </Abschnitt>
         <Abschnitt titel="Zu zweit">
-          <p>Das Zeichen mit den zwei Figuren unten im Bild öffnet unter dem Modell die Wahl: «Raum eröffnen» gibt einen Code aus vier Buchstaben, die andere Person gibt ihn
+          <p>Das Zeichen mit den zwei Handys unten im Bild öffnet unter dem Modell die Wahl: «Raum eröffnen» gibt einen Code aus vier Buchstaben, die andere Person gibt ihn
             auf ihrem Gerät ein, scannt den QR-Code unter dem Modell mit der Kamera oder öffnet den kopierten Link. Wer eröffnet, führt: Die anderen sehen dasselbe Feld in derselben Stufe, dieselben
             Schalter und dieselbe Zeit, ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung.
             Jede Person sieht die anderen als blaue Figur dort, wo sie ins Modell schaut, mit einer Linie zur Stelle, auf die sie zeigt (Maus,
