@@ -694,10 +694,10 @@ let ansichtKamera: { stufe: Stufe; feld: [number, number] | null; kopf: Punkt; b
  *  Anleitung; nicht gespeichert, nach Neuladen beginnt es wie immer */
 let zuletzt: GemerkteAnsicht | null = null
 
-function ansichtAusAdresse(eigeneSeite: boolean): 'wahl' | 'anleitung' | 'karte' {
-  if (eigeneSeite) return 'karte'
-  const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
-  return q.has('lat') || q.has('ansicht') || q.has('karte') || q.has('raum') ? 'karte' : q.has('anleitung') ? 'anleitung' : 'wahl'
+/** seit 2026-11-15 immer gleich das Modell, der Einstiegstext darunter (Michael: «Den Einstiegstext unter das 3D Modell. Somit kann alles eine Ebene
+ *  weiter nach vorne»); die Wahl zwischen Anleitung und Eintauchen vom 2026-11-08 ist weg, alte Adressen mit ?anleitung oder ?karte zeigen ebenso das Modell */
+function ansichtAusAdresse(_eigeneSeite: boolean): 'wahl' | 'anleitung' | 'karte' {
+  return 'karte'
 }
 const EINTAUCHEN_KNOPF = 'inline-block shrink-0 rounded-lg bg-sbb-red px-3 py-1.5 text-base font-bold text-white hover:bg-sbb-red125'
 const ANLEITUNG_KNOPF = 'inline-block shrink-0 rounded-lg border border-sbb-cloud bg-white px-3 py-1.5 text-base font-bold hover:border-sbb-black '
@@ -1291,9 +1291,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
 
   return (
     <div className="px-4 pb-4">
-      {!eigeneSeite && (ansicht === 'wahl'
-        ? <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-        : <Zurueck onClick={() => { window.location.hash = '#/schweiz3d' }} text="Virtuelle Schweiz" />)}
+      {!eigeneSeite && <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />}
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
       <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : 'Virtuelle Schweiz'}</h1>
       {ansicht !== 'karte' && (
@@ -1644,6 +1642,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </details>
       )}
       </>)}
+      {/* der Einstiegstext unter dem Modell (Michael, 2026-11-15) */}
+      {!eigeneSeite && <p className="mt-5 leading-relaxed">Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See, und tauche ein, bis auf ein Stück
+        von 1 km. Mit einer Brille steht das Modell vor dir auf dem Tisch.</p>}
       {/* die Anleitung unter dem Modell, je Thema auf- und zuklappbar wie bei Taktland (Michael, 2026-10-24: «Einleitungstext streichen
           und Karte nach oben direkt zum Auftaktbild schieben. Einleitungstext als Anleitung unter der Karte und jeweils kategorisieren») */}
       {ansicht !== 'wahl' && (<>
