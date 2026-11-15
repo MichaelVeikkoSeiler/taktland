@@ -2418,6 +2418,8 @@ function knopfBild(plus: boolean, an: boolean) {
 /** Anfangsblick in einem Ausschnitt (nicht in der ganzen Schweiz): so viel der Breite des Ausschnitts an der Mitte im Bild, so hoch über dem
  *  Horizont (Grad), so weit westlich von Süden (Grad); gewählt nach Michaels Bildschirmfoto vom 2026-11-02 */
 const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNITT_WEST = 20
+/** Anfangsblick in der ganzen Schweiz (Michael, 2026-11-15): Ziel in LV95, so viele km an ihm im Bild, Grad über dem Horizont und westlich von Süden */
+const BLICK_SCHWEIZ_ZIEL: [number, number] = [2618000, 1155000], BLICK_SCHWEIZ_BREITE_KM = 125, BLICK_SCHWEIZ_HOEHE = 40, BLICK_SCHWEIZ_WEST = 15
 
 function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild: _vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos, vorFuehrerstand, ansichtTick = 0 }: {
   /** zählt hoch, wenn eine gemerkte Ansicht geöffnet wird (ihre Kamera wartet in ansichtKamera) */
@@ -3348,8 +3350,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // schräg von Südwesten, der Blick nach Nordosten (Michael, 2026-10-19): so sieht man zwei Seiten des Sockels (die Diagonale
       // ist 1,41-mal so breit); x zeigt nach Osten, z nach Süden
       if (stufe === 'schweiz') {
-        const abstand = (weite / 1000) * 0.8 / Math.tan(halbeSicht)
-        kamera.position.set(-abstand * 0.55, Y(mittel) + abstand * 0.62, abstand * 0.55)
+        // näher, auf das westliche Mittelland und die Berner und Walliser Alpen (Michael, 2026-11-15, Bildschirmfoto: «So soll der Startausschnitt
+        // sein»): Ziel, Breite im Bild, Höhe über dem Horizont und Richtung gewählt nach dem Bild (BLICK_SCHWEIZ_*)
+        const abstand = BLICK_SCHWEIZ_BREITE_KM / 2 / Math.tan(halbeSicht)
+        const h = BLICK_SCHWEIZ_HOEHE * Math.PI / 180, r = BLICK_SCHWEIZ_WEST * Math.PI / 180
+        const zx = X(BLICK_SCHWEIZ_ZIEL[0]), zz = Z(BLICK_SCHWEIZ_ZIEL[1])
+        kamera.position.set(zx - Math.sin(r) * Math.cos(h) * abstand, Y(mittel) + Math.sin(h) * abstand, zz + Math.cos(r) * Math.cos(h) * abstand)
+        steuerung.target.set(zx, Y(mittel), zz)
       } else {
         // in einem Ausschnitt näher und flacher, von Süden leicht von Westen, Norden oben (Michael, 2026-11-02, Bildschirmfoto «80 km um
         // Bern»: «Standardmässig soll diese Perspektive auf einen Ausschnitt sein»): an der Mitte etwa die Breite des Ausschnitts im Bild,
@@ -3357,8 +3364,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const abstand = (weite / 1000) * BLICK_AUSSCHNITT_BREITE / 2 / Math.tan(halbeSicht)
         const h = BLICK_AUSSCHNITT_HOEHE * Math.PI / 180, r = BLICK_AUSSCHNITT_WEST * Math.PI / 180
         kamera.position.set(-Math.sin(r) * Math.cos(h) * abstand, Y(mittel) + Math.sin(h) * abstand, Math.cos(r) * Math.cos(h) * abstand)
+        steuerung.target.set(0, Y(mittel), 0)
       }
-      steuerung.target.set(0, Y(mittel), 0)
       // in den Feldern von 4 km und 1 km näher heran (vorher überall 2 % der Breite, im Feld von 1 km 20 m)
       steuerung.minDistance = weite / 1000 * (stufe === 'ort' || stufe === 'nah' ? 0.004 : 0.02)
       steuerung.maxDistance = weite / 1000 * 2
