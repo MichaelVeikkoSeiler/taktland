@@ -87,13 +87,6 @@ export const SPIELE: Spiel[] = [
       + 'Mit dem Fahrplan von opentransportdata.swiss.',
   },
   {
-    id: 'fahrzeit', titel: 'Reisedauer', status: 'spielbereit', adresse: '#/fahrzeit',
-    kurz: 'Wie viele Minuten braucht der Zug laut Fahrplan von A nach B?',
-    bild: { hell: reisedauerHell, dunkel: reisedauerDunkel, alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr, dahinter ein Zug auf einem Viadukt.' },
-    beschreibung: 'Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? '
-      + 'Stell den Regler ein: je näher, desto mehr Punkte.',
-  },
-  {
     id: 'duell', titel: 'Duell', status: 'spielbereit', adresse: '#/duell',
     kurz: 'Zwei Bahnhöfe, Strecken oder Tunnel: Wer liegt bei einer Zahl vorne?',
     bild: { hell: duellHell, dunkel: duellDunkel, alt: 'Illustration: ein grosser und ein kleiner Bahnhof nebeneinander.' },
@@ -106,6 +99,14 @@ export const SPIELE: Spiel[] = [
     bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhofsuche» auf dem Tablet.' },
     beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
+  },
+  // am Schluss der Liste (Michael, 2026-11-15: «Spiel, Reisedauer, am Schluss.»)
+  {
+    id: 'fahrzeit', titel: 'Reisedauer', status: 'spielbereit', adresse: '#/fahrzeit',
+    kurz: 'Wie viele Minuten braucht der Zug laut Fahrplan von A nach B?',
+    bild: { hell: reisedauerHell, dunkel: reisedauerDunkel, alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr, dahinter ein Zug auf einem Viadukt.' },
+    beschreibung: 'Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? '
+      + 'Stell den Regler ein: je näher, desto mehr Punkte.',
   },
 ]
 

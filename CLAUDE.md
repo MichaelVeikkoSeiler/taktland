@@ -1244,7 +1244,7 @@ Seit 2026-11-15 das Puzzle auch für mehrere (Michael: «Fahrplan Puzzle auch f�
 reihum (bis 8 Namen, gemerkt), alle ordnen dieselbe Fahrt, danach Lösung mit Punkten je Spieler, am Schluss Rangliste (gleiche Punkte, gleicher Platz);
 «Auf mehreren Geräten» über raum.php (#/puzzle/mit/CODE, FahrplanPuzzleOnline, PUZZLE_RAUM): der Gastgeber zieht die Runden (Nummer der Fahrt im Vorrat und
 Reihenfolgen, dazu stand), ein Gerät mit anderem Stand des Vorrats sagt, man solle neu laden; Tipp ist die Reihenfolge, der Gastgeber löst auf und geht weiter;
-kein neues raum.php nötig. «Wie lange dauert's?» heisst seit 2026-11-15 «Reisedauer» (Michael: «Soll heissen "Reisedauer"»), Adresse weiter #/fahrzeit.
+kein neues raum.php nötig. «Wie lange dauert's?» heisst seit 2026-11-15 «Reisedauer» (Michael: «Soll heissen "Reisedauer"»), Adresse weiter #/fahrzeit; seit 2026-11-15 als letztes Spiel in der Liste (SPIELE in spiele.ts; Michael: «Spiel, Reisedauer, am Schluss.»).
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
