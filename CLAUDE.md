@@ -681,6 +681,8 @@ Liste der gemerkten Ansichten seit 2026-11-15 wie die Probefahrten (Michael: «F
              «Gemerkte Ansichten» (Michael: «Perspektive merken indem der Stern als Icon im Bild ist»); auch im Vollbild; Anleitung nachgeführt
              seit 2026-11-15 heisst eine neue Ansicht immer «Neue Ansicht» statt nach Ort oder Feld (Michael: «Neue Ansicht soll heissen "Neue Ansicht" und nicht Schweiz»)
              seit 2026-11-15 ohne ×, löschen nur mit Wischen (auch mit der Maus), Michael: «Entfernen Icon weg, da man es wischen kann»
+             seit 2026-11-15 einzeilig wie «Gemerkte Fahrten» bei Mitfahren (Name, daneben klein die Stufe), der rote Stern rechts in eigenem Feld mit Trennlinie, ein Tipp darauf
+             nimmt die Ansicht aus der Liste mit «Rückgängig» (Michael: «Kannst du den Stern auch rechts platzieren analog Mitfahren? Graue Felder gleich hoch wie bei Mitfahren?»)
 Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder denselben Standort
              und Ausschnitt und Perspektive sehen wie vorher»): solange das Modell offen ist, merkt sich die Seite jede Sekunde die Ansicht wie «Ansicht merken»
              (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d
