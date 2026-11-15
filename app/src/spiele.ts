@@ -74,7 +74,7 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Ortstafeln und Namen. Fahr ein '
       + 'Stück mit und tippe auf der Karte, wo du warst: je näher, desto mehr Punkte.',
   },
-  // Michael, 2026-11-14: «6 und 7 gerne umsetzen» (Fahrplan-Puzzle, Wie lange dauert's?); die Bilder vorerst die von Duell und Bahnhofsuche
+  // Michael, 2026-11-14: «6 und 7 gerne umsetzen» (Fahrplan-Puzzle, Reisedauer); die Bilder vorerst die von Duell und Bahnhofsuche
   {
     id: 'puzzle', titel: 'Fahrplan-Puzzle', status: 'spielbereit', adresse: '#/puzzle',
     kurz: 'Vier Halte eines Zugs, gemischt: In welcher Reihenfolge fährt er sie an?',
@@ -83,7 +83,7 @@ export const SPIELE: Spiel[] = [
       + 'Mit dem Fahrplan von opentransportdata.swiss.',
   },
   {
-    id: 'fahrzeit', titel: 'Wie lange dauert\'s?', status: 'spielbereit', adresse: '#/fahrzeit',
+    id: 'fahrzeit', titel: 'Reisedauer', status: 'spielbereit', adresse: '#/fahrzeit',
     kurz: 'Wie viele Minuten braucht der Zug laut Fahrplan von A nach B?',
     bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt auf dem Tablet.' },
     beschreibung: 'Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? '

@@ -1,5 +1,5 @@
 /**
- * «Fahrplan-Puzzle» und «Wie lange dauert's?» (Michael, 2026-11-14: «6 und 7 gerne umsetzen»): zwei Spiele mit dem Fahrplan.
+ * «Fahrplan-Puzzle» und «Reisedauer» (Michael, 2026-11-14: «6 und 7 gerne umsetzen»): zwei Spiele mit dem Fahrplan.
  * Der Vorrat ist data/fahrplan/spiel.json aus pipeline/build_fahrplan.py (spiel_schreiben): je Muster eine Fahrt mit ihren Halten
  * laut Fahrplan, dazu Paare von Halten mit der Fahrzeit, in der Pipeline gerechnet. Hier nur Ziehen und Werten, ohne Darstellung.
  */
@@ -18,7 +18,7 @@ export const RUNDEN = 5
 /** so viele Halte ordnet man im Puzzle (gewählt) */
 export const PUZZLE_HALTE = 4
 export const PUZZLE_PUNKTE_JE_HALT = 25
-/** der Regler von «Wie lange dauert's?» geht von 0 bis hier, wie SPIEL_BIS_MIN in der Pipeline */
+/** der Regler von «Reisedauer» geht von 0 bis hier, wie SPIEL_BIS_MIN in der Pipeline */
 export const REGLER_BIS_MIN = 180
 /** volle Punkte bis zu dieser Abweichung, halbe bis zur doppelten: 8 % der Fahrzeit, mindestens 2, höchstens 11 Minuten, so wertet
  *  der Regler höchstens 44 Minuten, weniger als ein Viertel seiner Spanne (CLAUDE.md, Regel 9; gewählt) */
