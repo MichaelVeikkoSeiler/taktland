@@ -569,6 +569,9 @@ Zu zweit in «3D Schweiz» (Michael, 2026-11-10, Vorschlag 13: «Erklär mir noc
              Kette wird geladen wie beim Eintauchen); seit 2026-11-10 auch der Blick (Michael: «dass die folgende Person auch gleich die Perspektive der führenden Person sehen würde»): Knopf «Blick folgen», am Anfang an, Kamera und Ziel gleiten zu Kopf und Blick des Führenden (FOLGEN_JE_S), dessen Kopf ist dann unsichtbar, Ziehen über FOLGEN_LOS_PX oder das Mausrad beendet es, ein Tipp nicht, nicht in der Brille und nicht auf Augenhöhe; sonst bleiben Drehen und Zoomen je Gerät; die anderen als blaue Figur (Kopf, Nase in Blickrichtung, Linie zur
              gezeigten Stelle, ANDERE_* gewählt); kein Ton; in Anleitung («Zu zweit») und Datenschutz genannt; das neue raum.php muss Michael von Hand
              auf spiel.taktland.ch laden; mit zwei Browsern und php -S geprüft, nicht auf einer Quest
+             seit 2026-11-15 statt des Links «Zu zweit im selben Modell …» unter dem Modell ein Zeichen mit zwei Figuren unten im Bild nach dem Stern, ein Tipp öffnet
+             die Wahl unter dem Modell (Raum eröffnen, Code, Beitreten) und rollt dorthin, im Vollbild verlässt es dieses, an (eingedrückt, gedreht), solange die Wahl offen
+             oder man in einem Raum ist (Michael: «Statt unten einen Link … ein weiteres Icon im Bild unten rechts … Das Icon soll zwei Figuren abbilden»); Anleitung nachgeführt
 Stufe Schweiz nur das Land (Michael, 2026-11-10: «dieses Bild mit dem Kasten und den verpixelten Rändern und de hellblaue Himmen wirken wenig harmonisch»,
              gewählt: «A) Nur die Schweiz zeigen»): das Gelände ausserhalb der Landesgrenze (BFS g1, land in data/kartengrund.json) über eine Maske (alphaMap,
              LAND_MASKE_PX) ausgeblendet, eine Wand entlang der Grenze (alle LAND_SCHRITT_M) vom Gelände bis knapp unter den tiefsten Punkt, der Sockel mit den
