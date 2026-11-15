@@ -688,6 +688,11 @@ Liste der gemerkten Ansichten seit 2026-11-15 wie die Probefahrten (Michael: «F
              nimmt die Ansicht aus der Liste mit «Rückgängig» (Michael: «Kannst du den Stern auch rechts platzieren analog Mitfahren? Graue Felder gleich hoch wie bei Mitfahren?»)
              seit 2026-11-15 der Titel «Gemerkte Ansichten» gross wie «Gemerkte Fahrten» (text-lg) und die Liste gleich darunter, «Reihenfolge ändern» unter der Liste (Michael, Bildschirmfotos beider Listen)
              seit 2026-11-15 heissen beide Listen «Favoriten», die gemerkten Ansichten hier und die gemerkten Fahrten bei Mitfahren (Fahrt.tsx) (Michael: «Statt gemerkte Fahrten und gemerkte Ansichten einfach bei beiden Orten Favoriten schreiben»)
+Stufen, Zeit und Knöpfe in «3D Schweiz» seit 2026-11-15 (Michael: «Statt CH einen ganz groben Umriss der Schweiz in dieses Icon setzen, dann bei allen Zahlen KM dahinter
+             setzen. Somit braucht es … 16 Kilometer Region um Thun nicht mehr … Das Icon jetzt soll neben das Datum kommen … Die beiden Icons mit einer Figur und mit zwei Figuren
+             unten rechts … nebeneinander»): die Stufe Schweiz als grober Umriss (von Hand gezeichnet, nicht aus den Daten), die anderen «128 km» bis «1 km», die Zeile mit dem Namen
+             der Stufe darunter weg (der Name, mit angesetzten Stücken die Grösse, nur noch als title); «Jetzt» gleich neben dem Datum, Datum schmaler, Regler und Uhrzeit in derselben
+             Zeile; unten rechts Augenhöhe und «Zu zweit» nebeneinander (Lupe, Stern, Mein Standort, Augenhöhe, Zu zweit, Ton, XR, Vollbild); im Browser hier mit 360 Bildpunkten geprüft
 Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder denselben Standort
              und Ausschnitt und Perspektive sehen wie vorher»): solange das Modell offen ist, merkt sich die Seite jede Sekunde die Ansicht wie «Ansicht merken»
              (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d

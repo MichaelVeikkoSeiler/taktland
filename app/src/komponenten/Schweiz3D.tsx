@@ -1291,6 +1291,15 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     return () => window.removeEventListener('hashchange', hoeren)
   }, [])
   const hinweis = aktuell ? [...aktuell.teile.values()].find((t) => t.hinweis)?.hinweis : undefined
+  // der volle Name einer Stufe, nur noch als title der Knöpfe (die Zeile darunter ist weg, Michael, 2026-11-15)
+  const stufenName = (s: Stufe): string | null => {
+    const f = s === 'schweiz' ? null : gelaende[s]
+    if (s === 'schweiz') return 'Schweiz'
+    if (!f) return null
+    const t = titel(f.anker)
+    const km = { gross: '128 km', mittel: '64 km', region: '16 km', ort: '4 km', nah: '1 km' }[s]
+    return t === 'Feld' ? km : s === 'region' ? `${km}, Region ${t}` : `${km} ${t}`
+  }
   const groesse = aktuell && stufe !== 'schweiz' && (aktuell.teile.size > 1)
     ? `${((aktuell.di[1] - aktuell.di[0] + 1) * aktuell.anker.seite / 1000).toLocaleString('de-CH')} × ${((aktuell.dj[1] - aktuell.dj[0] + 1) * aktuell.anker.seite / 1000).toLocaleString('de-CH')} km`
     : null
@@ -1415,21 +1424,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               <path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
             </svg>}
           </button>
-          {/* zu zweit als Zeichen im Bild statt des Links darunter (Michael, 2026-11-15: «Statt unten einen Link … ein weiteres Icon im Bild unten
-              rechts … Das Icon soll zwei Figuren abbilden»): öffnet die Wahl unter dem Modell, im Vollbild verlässt es dieses dafür */}
-          <button type="button" aria-pressed={!!raum || zuZweitOffen}
-                  onClick={() => {
-                    if (!raum) setZuZweitOffen((x) => !x)
-                    if (voll) setVoll(false)
-                    window.setTimeout(() => zweitTafelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120)
-                  }}
-                  aria-label={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'} title={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'}
-                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${raum || zuZweitOffen ? KNOPF_AN : KNOPF_AUS}`}>
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(!!raum || zuZweitOffen)} fill="currentColor">
-              <circle cx="8" cy="7" r="3" /><path d="M2.5 20c0-3.6 2.4-6.2 5.5-6.2s5.5 2.6 5.5 6.2z" />
-              <circle cx="16.5" cy="8" r="2.6" /><path d="M14.6 13.9c.6-.2 1.2-.3 1.9-.3 2.8 0 5 2.4 5 5.9h-6.4c0-2.2-.2-3.9-.5-5.6z" />
-            </svg>
-          </button>
           <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
                   aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
                   title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
@@ -1448,6 +1442,21 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               </svg>
             </button>
           )}
+          {/* zu zweit als Zeichen im Bild statt des Links darunter (Michael, 2026-11-15: «Statt unten einen Link … ein weiteres Icon im Bild unten
+              rechts … Das Icon soll zwei Figuren abbilden»): öffnet die Wahl unter dem Modell, im Vollbild verlässt es dieses dafür */}
+          <button type="button" aria-pressed={!!raum || zuZweitOffen}
+                  onClick={() => {
+                    if (!raum) setZuZweitOffen((x) => !x)
+                    if (voll) setVoll(false)
+                    window.setTimeout(() => zweitTafelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120)
+                  }}
+                  aria-label={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'} title={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'}
+                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${raum || zuZweitOffen ? KNOPF_AN : KNOPF_AUS}`}>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(!!raum || zuZweitOffen)} fill="currentColor">
+              <circle cx="8" cy="7" r="3" /><path d="M2.5 20c0-3.6 2.4-6.2 5.5-6.2s5.5 2.6 5.5 6.2z" />
+              <circle cx="16.5" cy="8" r="2.6" /><path d="M14.6 13.9c.6-.2 1.2-.3 1.9-.3 2.8 0 5 2.4 5 5.9h-6.4c0-2.2-.2-3.9-.5-5.6z" />
+            </svg>
+          </button>
           {/* Ton aus und an (Michael, 2026-11-11: «In allen Formaten soll man den Ton abstellen können»): Lautsprecher wie beim Zuggeräusch,
               mit Schallwellen an, mit Kreuz aus */}
           <button type="button" onClick={() => stummSetzen(!stumm)} aria-pressed={stumm}
@@ -1506,51 +1515,49 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
         )}
       </div>
-      {/* die Stufen als gleich grosse Knöpfe mit der Seitenlänge in km, die jetzige dunkel, darunter ihr Name (Michael, 2026-11-14: «Die Stufung unten
-          auch mit Icons machen und mit Zahlen beschriften. Zb 1, 4 16 usw»; vorher eine Zeile «Schweiz › 128 km um … ›») */}
-      <nav aria-label="Stufe" className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-        {([['schweiz', 'CH', 'Schweiz', true], ['gross', '128', '128 km', !!gelaende.gross], ['mittel', '64', '64 km', !!gelaende.mittel],
-           ['region', '16', '16 km', !!gelaende.region], ['ort', '4', '4 km', (stufe === 'ort' || stufe === 'nah') && !!gelaende.ort],
-           ['nah', '1', '1 km', stufe === 'nah' && !!gelaende.nah]] as Array<[Stufe, string, string, boolean]>).map(([s, zahl, name, da]) => {
+      {/* die Stufen als Knöpfe mit der Seitenlänge in km, die Schweiz als grober Umriss, die jetzige dunkel, ohne Namen darunter (Michael, 2026-11-14:
+          «Die Stufung unten auch mit Icons machen und mit Zahlen beschriften»; 2026-11-15: «Statt CH einen ganz groben Umriss der Schweiz … bei allen
+          Zahlen KM dahinter … braucht es … 16 Kilometer Region um Thun nicht mehr»); der Name steht im title */}
+      <nav aria-label="Stufe" className="mt-2 flex flex-wrap items-center gap-1 text-sm">
+        {([['schweiz', '', 'Schweiz', true], ['gross', '128 km', '128 km', !!gelaende.gross], ['mittel', '64 km', '64 km', !!gelaende.mittel],
+           ['region', '16 km', '16 km', !!gelaende.region], ['ort', '4 km', '4 km', (stufe === 'ort' || stufe === 'nah') && !!gelaende.ort],
+           ['nah', '1 km', '1 km', stufe === 'nah' && !!gelaende.nah]] as Array<[Stufe, string, string, boolean]>).map(([s, zahl, kurz, da]) => {
           const jetzt = stufe === s
+          // mit angesetzten Stücken (+) die ganze Grösse dazu, wie vorher in Klammern hinter dem Namen
+          const name = (stufenName(s) ?? kurz) + (jetzt && groesse ? ` (${groesse})` : '')
           return (
             <button key={s} type="button" disabled={!da || jetzt} onClick={() => zurueck(s)} aria-current={jetzt ? 'step' : undefined}
-                    aria-label={jetzt ? `${name}, jetzt` : da ? `Zurück zu ${name}` : `${name}, noch nicht gewählt`} title={name}
-                    className={`flex size-8 flex-none items-center justify-center rounded-lg border text-xs font-bold ${jetzt
+                    aria-label={jetzt ? `${name}, jetzt` : da ? `Zurück zu ${name}` : `${kurz}, noch nicht gewählt`} title={name}
+                    className={`flex h-8 flex-none items-center justify-center whitespace-nowrap rounded-lg border text-xs font-bold ${s === 'schweiz' ? 'w-9' : 'px-1.5'} ${jetzt
                       ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
                       : 'border-sbb-cloud bg-white text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white'} ${!da ? 'opacity-40' : ''}`}>
-              {zahl}
+              {s === 'schweiz' ? (
+                // ein grober Umriss der Schweiz, von Hand gezeichnet, nicht aus den Daten
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="currentColor">
+                  <path d="M1.5 14.6l2.2-3.4 2.6-2.3 2.4-1.6L10 5.8l2.2.3.9-1.4 1.6.7 2 .1 2.4.9 1.4.4.6 1.5 1.4.9-.3 1.6.6 1.3-1.2.9-1.5-.2-.6 1.4-1.3.2-.6 1.6-1.5 1.2-.4 2.4-1.2.8-1.3-1.9-1.2-.7-1.6 1.6-2.3.3-2-.5-1.4-1.6-1.8.2-1.6.6-.7-1.3z" />
+                </svg>
+              ) : zahl}
             </button>
           )
         })}
-        <span className="basis-full font-bold">
-          {({ schweiz: 'Schweiz', gross: gelaende.gross && `128 km ${titel(gelaende.gross.anker) === 'Feld' ? '' : titel(gelaende.gross.anker)}`,
-             mittel: gelaende.mittel && `64 km ${titel(gelaende.mittel.anker) === 'Feld' ? '' : titel(gelaende.mittel.anker)}`,
-             region: gelaende.region && `16 km, Region ${titel(gelaende.region.anker)}`,
-             ort: gelaende.ort && `4 km ${titel(gelaende.ort.anker)}`,
-             nah: gelaende.nah && `1 km ${titel(gelaende.nah.anker) === 'Feld' ? '' : titel(gelaende.nah.anker)}` } as Record<Stufe, string | null | undefined>)[stufe]}
-          {groesse && <span className="pl-1 font-normal text-sbb-metal dark:text-sbb-storm">({groesse})</span>}
-        </span>
       </nav>
       {/* die Tafel mit Messung, Prognose und Verlauf des Winds ist weg (Michael, 2026-11-10: «Diesen Bereich würde ich der Übersicht halber
           weglassen. Evtl was im Infotext erwähnen»); was sie erklärte, steht unter «Wetter: Wind und Niederschlag» */}
       {/* Datum, Uhrzeit und «Jetzt» immer, seit die Uhr oben weg ist (sonst liesse sich die Zeit der Züge ohne «Sonne» nicht mehr wählen) */}
-      <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
-        {(
-          <>
-            <input type="date" value={tag} onChange={(e) => { if (e.target.value) zeitSetzen(e.target.value, minuten) }} aria-label="Datum"
-                   className="rounded-lg border border-sbb-cloud bg-white px-2 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
-            <label className="flex min-w-48 flex-1 items-center gap-2">
-              <span className="sr-only">Uhrzeit</span>
-              <input type="range" min={0} max={1439} step={1} value={minuten} onChange={(e) => zeitSetzen(tag, Number(e.target.value))}
-                     className="flex-1 accent-sbb-red" />
-              <span className="w-12 font-bold tabular-nums">{uhrzeit(minuten)}</span>
-            </label>
-            <button type="button" onClick={() => zeitSchieben('jetzt', 0)} aria-pressed={jetztAn}
-                    className={'rounded-lg border px-2.5 py-1.5 text-xs font-bold ' + (jetztAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
-                      : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>Jetzt</button>
-          </>
-        )}
+      {/* Datum, «Jetzt» gleich daneben und der Regler in einer Zeile, das Datum schmaler (Michael, 2026-11-15: «Das Icon jetzt soll neben das Datum
+          kommen. Das Datum kann also weniger breit sein oder auch der Regler») */}
+      <div className="mt-2 flex items-center gap-2 text-sm">
+        <input type="date" value={tag} onChange={(e) => { if (e.target.value) zeitSetzen(e.target.value, minuten) }} aria-label="Datum"
+               className="w-[8.25rem] flex-none rounded-lg border border-sbb-cloud bg-white px-1.5 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
+        <button type="button" onClick={() => zeitSchieben('jetzt', 0)} aria-pressed={jetztAn}
+                className={'flex-none rounded-lg border px-2.5 py-1.5 text-xs font-bold ' + (jetztAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
+                  : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>Jetzt</button>
+        <label className="flex min-w-0 flex-1 items-center gap-2">
+          <span className="sr-only">Uhrzeit</span>
+          <input type="range" min={0} max={1439} step={1} value={minuten} onChange={(e) => zeitSetzen(tag, Number(e.target.value))}
+                 className="min-w-0 flex-1 accent-sbb-red" />
+          <span className="w-10 flex-none font-bold tabular-nums">{uhrzeit(minuten)}</span>
+        </label>
       </div>
       {/* der Satz zum Stand der Sonne ist weg (Michael, 2026-11-13, durchgestrichen); nur ausserhalb der Tage des Fahrplans ein Hinweis, wie vorher bei der Uhr */}
       {fahrplanTage && (tag < fahrplanTage.von || tag > fahrplanTage.bis) && (
@@ -1748,7 +1755,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       <div className="mt-2 space-y-2 text-sm leading-relaxed">
         <Abschnitt titel="Wählen und eintauchen">
           <p>Die ganze Schweiz als Modell. Tippe auf ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See. Mit «Eintauchen» geht es in ein Gebiet von 128 km, dann von 64 km, dort in eine Region von 16 km, dann in ein Feld von 4 km und zuletzt in ein Stück von 1 km.
-            Ein Doppeltipp auf ein Feld taucht gleich dort ein, mit der Maus ein zweiter Klick in den gewählten Kasten. Ein Tipp neben das Modell nimmt die Wahl zurück. Die Knöpfe unter dem Modell (CH, 128, 64, 16, 4, 1 für die Seitenlänge in km) führen zurück in eine Stufe, die man schon gewählt hat.</p>
+            Ein Doppeltipp auf ein Feld taucht gleich dort ein, mit der Maus ein zweiter Klick in den gewählten Kasten. Ein Tipp neben das Modell nimmt die Wahl zurück. Die Knöpfe unter dem Modell (der Umriss für die ganze Schweiz, dann 128 km bis 1 km Seitenlänge) führen zurück in eine Stufe, die man schon gewählt hat.</p>
         </Abschnitt>
         <Abschnitt titel="Drehen und zoomen">
           <p>Ziehen dreht, zwei Finger oder das Mausrad zoomen; am Computer fliegt im Feld von 1 km ein Doppelklick näher an die Stelle, ein Doppelklick in den Himmel wieder zurück. Der Lautsprecher unten rechts schaltet den Ton aus und wieder ein. Die Höhen sind echt, ohne Überhöhung. Der Knopf oben rechts zeigt das
