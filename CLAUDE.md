@@ -666,6 +666,10 @@ Ansichten merken und teilen in «3D Schweiz» (Michael, 2026-11-12: «User solle
              («Link kopiert»); Öffnen setzt Schalter, Ton und Zeit, lädt die Felder wie ein Link einer Bahnhofseite (ketteLaden, ohne «Gesucht»), und setzt die Kamera,
              sobald das Feld steht (ansichtKamera, ansichtTick); im selben Feld nur die Kamera; angesetzte Stücke (+) nicht; in der Anleitung «Ansichten merken und teilen»,
              unter Datenschutz (localStorage) genannt
+Liste der gemerkten Ansichten seit 2026-11-15 wie die Probefahrten (Michael: «Favoriten Perspektiven soll man gleich wie andere Elemente auf Taktland löschen können
+             (schieben). Mit Icons soll man sie bearbeiten und Teilen können. Reihenfolge auch editierbar machen»): kachelliste mit Wischen, rechts Stift (umbenennen, Feld mit
+             «Speichern»), Teilen-Zeichen (nach dem Kopieren ein Haken), × löscht; nach dem Löschen «Rückgängig» an der alten Stelle; «Reihenfolge ändern» mit ↑ und ↓, «Fertig»;
+             in der Anleitung («Ansichten merken und teilen»); im Browser hier mit Klicks per Skript geprüft
 Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder denselben Standort
              und Ausschnitt und Perspektive sehen wie vorher»): solange das Modell offen ist, merkt sich die Seite jede Sekunde die Ansicht wie «Ansicht merken»
              (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d
