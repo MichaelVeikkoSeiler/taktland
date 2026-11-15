@@ -45,6 +45,7 @@ import { perronNetz, perronsIn, perronsLaden } from './Perrons'
 import { deckeAufBild, deckenIn, unterDecke, type Decke } from './Decken'
 import { Abschnitt } from './Anleitung'
 import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
+import { QrCode } from './Raum'
 import { Stern } from './Stern'
 import { type Andere, type Lage, type Punkt, type Stand, useZuZweit } from '../zuzweit'
 import Wischen from './Wischen'
@@ -1582,6 +1583,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                     className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Verlassen</button>
             {raumWeg && <span className="font-bold text-sbb-red">{raumWeg}</span>}
             {!raumWeg && !raumVerbunden && <span className="text-sbb-metal">Keine Verbindung zur Vermittlung, es wird weiter versucht.</span>}
+            {/* der Link als QR-Code zum Scannen mit dem anderen Gerät (Michael, 2026-11-15: «dass man hier einen QR-Code scannen kann»), auf dem Gerät gerechnet */}
+            <div className="basis-full">
+              <QrCode text={raumLink} className="max-w-44" />
+              <p className="mt-1 text-center text-sbb-metal dark:text-sbb-storm">Mit der Kamera des anderen Geräts scannen, oder dort unter «Zu zweit» den Code {raum} eingeben.</p>
+            </div>
           </div>
         ) : zuZweitOffen ? (
           <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => {
@@ -1955,7 +1961,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         <Abschnitt titel="Zu zweit">
           <p>Das Zeichen mit den zwei Figuren unten im Bild öffnet unter dem Modell die Wahl: «Raum eröffnen» gibt einen Code aus vier Buchstaben, die andere Person gibt ihn
-            auf ihrem Gerät ein oder öffnet den kopierten Link. Wer eröffnet, führt: Die anderen sehen dasselbe Feld in derselben Stufe, dieselben
+            auf ihrem Gerät ein, scannt den QR-Code unter dem Modell mit der Kamera oder öffnet den kopierten Link. Wer eröffnet, führt: Die anderen sehen dasselbe Feld in derselben Stufe, dieselben
             Schalter und dieselbe Zeit, ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung.
             Jede Person sieht die anderen als blaue Figur dort, wo sie ins Modell schaut, mit einer Linie zur Stelle, auf die sie zeigt (Maus,
             in der Brille der Strahl). Wer folgt, sieht am Anfang auch mit dem Blick der führenden Person, die Kamera gleitet ihr nach; wer selbst dreht oder zoomt, schaut wieder selbst, «Blick folgen» holt den Blick zurück (nicht in der Brille). Ein Gespräch gibt es nicht, dafür braucht es ein Telefon
