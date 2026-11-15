@@ -84,7 +84,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         <Spiel titel="Reisedauer">
           <li>
             Fünf Runden: Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? Der
-            Regler geht bis 180 Minuten. Volle Punkte gibt es bis 12 % daneben (mindestens 3, höchstens 11 Minuten), halbe bis zum Doppelten.
+            Regler geht bis 180 Minuten. Genau getroffen gibt 100 Punkte, jede Minute daneben gleichmässig weniger, keine mehr ab gut 24 % der Fahrzeit daneben (mindestens 7, höchstens 23 Minuten).
           </li>
           <li>
             Beide Spiele nehmen je Linie, Ziel und Folge der Halte die erste Fahrt des Tages aus dem Fahrplan von opentransportdata.swiss,

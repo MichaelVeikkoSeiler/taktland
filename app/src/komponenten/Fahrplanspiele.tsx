@@ -403,7 +403,7 @@ function PuzzleOnlineSpiel({ r, runden, namen, vorrat }: {
 
 /**
  * «Reisedauer» (Michael, 2026-11-14): wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt in A bis zur
- * Ankunft in B? Der Regler geht von 0 bis 180 Minuten; volle Punkte bis toleranz(), halbe bis zum Doppelten.
+ * Ankunft in B? Der Regler geht von 0 bis 180 Minuten; 100 Punkte genau getroffen, je Minute daneben weniger, keine ab 2 · toleranz() + 1 Minuten.
  */
 export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
   const { vorrat, fehler, namen } = useVorrat(index)
@@ -446,7 +446,7 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
           {!gewertet && (
             <button type="button" className={`mt-4 w-full md:w-auto ${ROT}`} onClick={() => {
               const p = dauerPunkte(runde.min, tipp)
-              antwortTon(p === 100 ? 'richtig' : 'falsch')
+              antwortTon(p >= 50 ? 'richtig' : 'falsch')
               setPunkte([...punkte, p])
             }}>Prüfen</button>
           )}
@@ -456,7 +456,7 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
                 {punkte[nr]} Punkte · laut Fahrplan {runde.min} Minuten: ab {name(runde.f.h[runde.von][0])} {uhr(runde.f.h[runde.von][2])},
                 an {name(runde.f.h[runde.bis][0])} {uhr(runde.f.h[runde.bis][1])}
               </p>
-              <p className={LEISE}>Volle Punkte bis {toleranz(runde.min)} Minuten daneben, halbe bis {2 * toleranz(runde.min)}.</p>
+              <p className={LEISE}>100 Punkte genau getroffen, je Minute daneben weniger, keine mehr ab {2 * toleranz(runde.min) + 1} Minuten daneben.</p>
               <p className={`mt-2 ${LEISE}`}>Alle Halte dieser Fahrt laut Fahrplan:</p>
               <HalteListe f={runde.f} namen={namen} hervor={new Set([runde.von, runde.bis])} />
               <button type="button" className={`mt-4 w-full md:w-auto ${ROT}`} onClick={() => {
