@@ -679,6 +679,7 @@ Liste der gemerkten Ansichten seit 2026-11-15 wie die Probefahrten (Michael: «F
              seit 2026-11-15 merkt ein Stern unten im Bild (vor «Mein Standort», 32 px wie die anderen) die Ansicht sofort mit dem vorgeschlagenen Namen, 2,5 s ein roter
              Stern und «Ansicht «…» gemerkt, unten in der Liste» im Bild, umbenennen mit dem Stift; «Ansicht merken …» unter dem Modell ist weg, über der Liste
              «Gemerkte Ansichten» (Michael: «Perspektive merken indem der Stern als Icon im Bild ist»); auch im Vollbild; Anleitung nachgeführt
+             seit 2026-11-15 heisst eine neue Ansicht immer «Neue Ansicht» statt nach Ort oder Feld (Michael: «Neue Ansicht soll heissen "Neue Ansicht" und nicht Schweiz»)
 Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder denselben Standort
              und Ausschnitt und Perspektive sehen wie vorher»): solange das Modell offen ist, merkt sich die Seite jede Sekunde die Ansicht wie «Ansicht merken»
              (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d

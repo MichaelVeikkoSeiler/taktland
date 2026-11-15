@@ -1385,7 +1385,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
         {gemerkt && (
           <div role="status" className="pointer-events-none absolute bottom-12 right-2 z-10 max-w-[calc(100%-1rem)] truncate rounded-lg bg-sbb-anthracite px-3 py-1.5 text-sm text-white shadow">
-            Ansicht «{gemerkt}» gemerkt, unten in der Liste
+            «{gemerkt}» gemerkt, unten in der Liste
           </div>
         )}
         <div className="absolute bottom-2 right-2 flex max-w-[calc(100%-1rem)] items-center gap-2" style={desktop ? { zoom: DESKTOP_KNOPF_MASS, maxWidth: `calc((100% - 1rem) / ${DESKTOP_KNOPF_MASS})` } : undefined}>
@@ -1401,7 +1401,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             </button>
           )}
           <button type="button" onClick={() => {
-            const name = stufe === 'schweiz' ? 'Schweiz' : `${gesucht?.name ?? titel(gelaende[stufe]?.anker ?? null).replace(/^(um|am) /, '')}`
+            // immer «Neue Ansicht», umbenennen mit dem Stift (Michael, 2026-11-15: «Neue Ansicht soll heissen "Neue Ansicht" und nicht Schweiz»)
+            const name = 'Neue Ansicht'
             setAnsichten((l) => [ansichtJetzt(name), ...l].slice(0, ANSICHTEN_HOECHSTENS))
             setAnsichtWeg(null)
             setGemerkt(name)
@@ -1935,7 +1936,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             daneben. Ein Raum verfällt nach sechs Stunden.</p>
         </Abschnitt>
         <Abschnitt titel="Ansichten merken und teilen">
-          <p>Der Stern unten im Bild merkt sofort, was du gerade siehst, mit dem Namen des Orts oder Felds; die Ansicht steht danach unter dem Modell in der Liste. Gemerkt werden die Stufe und das Feld, der Blick der Kamera, die
+          <p>Der Stern unten im Bild merkt sofort, was du gerade siehst, als «Neue Ansicht», der Stift benennt sie um; die Ansicht steht danach unter dem Modell in der Liste. Gemerkt werden die Stufe und das Feld, der Blick der Kamera, die
             Knöpfe, die Zeit (jetzt oder eine Zeitreise) und ob der Ton aus ist. Ein Tipp auf den Namen öffnet die Ansicht wieder, nach links wischen
             oder × löscht sie. Die Ansichten bleiben nur auf diesem Gerät und gehen verloren, wenn die Daten des Browsers gelöscht werden.
             Das Teilen-Zeichen gibt einen Link, der dieselbe Ansicht auf einem anderen Gerät öffnet; alles steht im Link selbst, nichts geht an einen Server
