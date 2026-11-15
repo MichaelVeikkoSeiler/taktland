@@ -1070,6 +1070,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   })
   const [fuehreSeit, setFuehreSeit] = useState<number | null>(null)
   const [zuZweitOffen, setZuZweitOffen] = useState(false)
+  const zuZweitRef = useRef<HTMLDivElement>(null)
   const [raumCode, setRaumCode] = useState('')
   const [raumFehler, setRaumFehler] = useState<string | null>(null)
   const lageRef = useRef<(() => Lage | null) | null>(null)
@@ -1432,6 +1433,22 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               </svg>
             </button>
           )}
+          {/* zu zweit als Symbol mit zwei Figuren rechts neben der Augenhöhe statt des Links unter dem Modell (Michael, 2026-11-15: «Statt unten den
+              Link zu zweit … neben dem First-Person-Perspektive ein Icon machen mit zwei Figuren»): an, solange man in einem Raum ist; ein Tipp öffnet
+              oder schliesst die Felder dazu unter dem Modell, im Vollbild schliesst er dieses, damit man sie sieht */}
+          <button type="button" onClick={() => {
+            const auf = raum ? true : !zuZweitOffen
+            if (!raum) setZuZweitOffen(auf)
+            if (voll) setVoll(false)
+            if (auf) window.setTimeout(() => zuZweitRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), voll ? 300 : 50)
+          }} aria-pressed={!!raum}
+                  aria-label={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'} title={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'}
+                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${raum ? KNOPF_AN : KNOPF_AUS}`}>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(!!raum)} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="8" cy="6.5" r="2.6" /><circle cx="16.5" cy="8" r="2.2" />
+              <path d="M3.5 20.5v-3.2a4.5 4.5 0 0 1 9 0v3.2M14 20.5v-2.6a3.5 3.5 0 0 1 6.5-1.8" />
+            </svg>
+          </button>
           {/* Ton aus und an (Michael, 2026-11-11: «In allen Formaten soll man den Ton abstellen können»): Lautsprecher wie beim Zuggeräusch,
               mit Schallwellen an, mit Kreuz aus */}
           <button type="button" onClick={() => stummSetzen(!stumm)} aria-pressed={stumm}
@@ -1542,7 +1559,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       )}
       {hinweis && <p className="mt-2 text-sm font-bold">{hinweis}</p>}
       {/* zu zweit (Michael, 2026-11-10, Vorschlag 13): Raum eröffnen oder mit dem Code beitreten, wer eröffnet, führt */}
-      <div className="mt-2 text-sm">
+      <div ref={zuZweitRef} className="mt-2 text-sm">
         {raum ? (
           <div className="flex flex-wrap items-center gap-2">
             <span>Zu zweit: Raum <b className="tabular-nums tracking-wider">{raum}</b>, {andere.length + 1} im Raum, {fuehreSeit !== null ? 'du führst' : fuehrer ? 'du folgst' : 'niemand führt'}.</span>
@@ -1575,9 +1592,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <button type="button" onClick={() => setZuZweitOffen(false)} className="underline underline-offset-2">Abbrechen</button>
             {raumFehler && <span className="w-full font-bold text-sbb-red">{raumFehler}</span>}
           </form>
-        ) : (
-          <button type="button" onClick={() => setZuZweitOffen(true)} className="underline underline-offset-2">Zu zweit im selben Modell …</button>
-        )}
+        ) : null /* der Link ist seit 2026-11-15 ein Symbol im Bild */}
       </div>
       {/* gemerkte Ansichten (Michael, 2026-11-12): merken mit Namen, öffnen, als Link teilen, umbenennen, ordnen, nach links wischen oder × löscht */}
       <div className="mt-2 text-sm">
@@ -1931,7 +1946,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Thumbstick dreht und hebt, drücken stellt es zurück. Die Knöpfe an den Wänden gehen mit Strahl und Abzug. Auf dem Handy, wo der Browser es kann, beendet der Knopf «Schliessen» oben rechts die Ansicht.</p>
         </Abschnitt>
         <Abschnitt titel="Zu zweit">
-          <p>Unter dem Modell «Zu zweit im selben Modell …»: «Raum eröffnen» gibt einen Code aus vier Buchstaben, die andere Person gibt ihn
+          <p>Das Symbol mit zwei Figuren unten rechts im Bild, neben der Augenhöhe, öffnet unter dem Modell die Felder dazu: «Raum eröffnen» gibt einen Code aus vier Buchstaben, die andere Person gibt ihn
             auf ihrem Gerät ein oder öffnet den kopierten Link. Wer eröffnet, führt: Die anderen sehen dasselbe Feld in derselben Stufe, dieselben
             Schalter und dieselbe Zeit, ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung.
             Jede Person sieht die anderen als blaue Figur dort, wo sie ins Modell schaut, mit einer Linie zur Stelle, auf die sie zeigt (Maus,
