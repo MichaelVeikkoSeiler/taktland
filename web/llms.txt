@@ -1,0 +1,23 @@
+# Taktland
+
+> Taktland ist eine kostenlose Web-App für Bahnfans: Bahnhöfe, Tunnel und Brücken der Schweiz kennenlernen, im Zug mitfahren und alles festhalten. Mit Angaben aus offenen Daten. Ohne Konto, auf Deutsch.
+
+Taktland gibt nur belegte Angaben. Jede Aussage über einen Bahnhof stammt aus offenen Daten (SBB, BAV, swisstopo, MeteoSchweiz und weitere); wo etwas fehlt, steht ein Hinweis. Taktland ist kein Angebot einer Bahnunternehmung.
+
+## Seiten
+
+- [Startseite](https://taktland.ch/): was Taktland ist und kann, Quellen, Datenschutz
+- [App](https://taktland.ch/app/): die Web-App selbst (läuft im Browser, Inhalte entstehen per JavaScript)
+
+## Was die App bietet
+
+- Mitfahren: im Zug sehen, was als Nächstes kommt
+- Vorne im Zug sitzen: Führerstand in 3D
+- Virtuelle Schweiz: die ganze Schweiz als Modell, mit Zügen laut Fahrplan
+- Jeder Bahnhof mit eigener Seite und Fragen
+- Spiele mit Bahnhöfen, Strecken und Karten
+- Logbuch der eigenen Fahrten und ein Fahrtblatt zum Ausdrucken
+
+## Kontakt
+
+- hallo@taktland.ch
