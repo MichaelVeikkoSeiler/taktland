@@ -722,6 +722,9 @@ Symbole oben rechts in «3D Schweiz» seit 2026-11-14 klarer (Michael: «Icon m�
              Uhrzeigersinn gedreht, aus weiss mit leichtem Schatten nach aussen, gesperrt blass ohne Schatten; im Browser hier angeschaut
              danach auch die Reihe unten rechts (Michael: «Ja gerne»): Mein Standort, Augenhöhe und Ton wie die Symbole (an eingedrückt und gedreht), Lupe und XR
              erhaben wie aus (KNOPF_AN, KNOPF_AUS, gedreht in Schweiz3D.tsx); der Knopf fürs Vollbild bleibt, er gilt auch anderswo
+Symbole im Vollbild von «3D Schweiz» seit 2026-11-15 in so vielen Spalten, wie die Höhe verlangt (vollZeilen: oben 56 px, unten 48 px, je Symbol 40 px; vorher lag die Spalte
+             quer auf dem Handy über XR und Vollbild, im Browser hier mit 740 × 360 nachgestellt und behoben; Michael vor der Bekanntmachung: «Ja gerne»); im Datenschutz
+             «Favoriten (Bahnhöfe, Fahrten und Ansichten der Virtuellen Schweiz)» statt «gemerkte Fahrten» und «gemerkte Ansichten»
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
