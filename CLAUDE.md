@@ -673,6 +673,9 @@ Liste der gemerkten Ansichten seit 2026-11-15 wie die Probefahrten (Michael: «F
              (schieben). Mit Icons soll man sie bearbeiten und Teilen können. Reihenfolge auch editierbar machen»): kachelliste mit Wischen, rechts Stift (umbenennen, Feld mit
              «Speichern»), Teilen-Zeichen (nach dem Kopieren ein Haken), × löscht; nach dem Löschen «Rückgängig» an der alten Stelle; «Reihenfolge ändern» mit ↑ und ↓, «Fertig»;
              in der Anleitung («Ansichten merken und teilen»); im Browser hier mit Klicks per Skript geprüft
+             seit 2026-11-15 jede Ansicht als eigene Kachel wie die Bahnhofsliste: roter Stern, Name, darunter die Stufe (und «Zeitreise»), Stift, Teilen und × als
+             Knöpfe von 32 px wie die Symbole in der Karte (KNOPF_AUS), ebenso ↑ und ↓ (Michael: «Schau dir das erste Referenzbild an mit den Favoriten, mit dem roten
+             Stern … Die Icons … sollten aber die gleiche Größe haben wie die Icons in der Ausschnittkarte»)
 Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder denselben Standort
              und Ausschnitt und Perspektive sehen wie vorher»): solange das Modell offen ist, merkt sich die Seite jede Sekunde die Ansicht wie «Ansicht merken»
              (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d
