@@ -1719,9 +1719,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </details>
       )}
       </>)}
-      {/* der Einstiegstext unter dem Modell (Michael, 2026-11-15) */}
-      {!eigeneSeite && <p className="mt-5 leading-relaxed">Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See, und tauche ein, bis auf ein Stück
-        von 1 km. Mit einer Brille steht das Modell vor dir auf dem Tisch.</p>}
+      {/* kein Einstiegstext mehr, die Anleitung sagt es (Michael, 2026-11-15: «Diesen Text braucht es wohl nicht wenn es eine Anleitung gibt oder?») */}
       {/* die Anleitung unter dem Modell, je Thema auf- und zuklappbar wie bei Taktland (Michael, 2026-10-24: «Einleitungstext streichen
           und Karte nach oben direkt zum Auftaktbild schieben. Einleitungstext als Anleitung unter der Karte und jeweils kategorisieren») */}
       {ansicht !== 'wahl' && (<>
