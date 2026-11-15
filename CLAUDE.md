@@ -666,6 +666,9 @@ Ansichten merken und teilen in «3D Schweiz» (Michael, 2026-11-12: «User solle
              («Link kopiert»); Öffnen setzt Schalter, Ton und Zeit, lädt die Felder wie ein Link einer Bahnhofseite (ketteLaden, ohne «Gesucht»), und setzt die Kamera,
              sobald das Feld steht (ansichtKamera, ansichtTick); im selben Feld nur die Kamera; angesetzte Stücke (+) nicht; in der Anleitung «Ansichten merken und teilen»,
              unter Datenschutz (localStorage) genannt
+Startblick in der Stufe Schweiz seit 2026-11-15 näher (Michael, Bildschirmfoto: «So soll der Startausschnitt sein»): Ziel LV95 2'618'000 / 1'155'000, 125 km an ihm im Bild,
+             40° über dem Horizont, 15° westlich von Süden (BLICK_SCHWEIZ_* in Schweiz3D.tsx, nach dem Bild gewählt; vorher das ganze Land schräg von Südwesten); im Browser hier mit
+             360 Bildpunkten Breite mit dem Bildschirmfoto verglichen
 Liste der gemerkten Ansichten seit 2026-11-15 wie die Probefahrten (Michael: «Favoriten Perspektiven soll man gleich wie andere Elemente auf Taktland löschen können
              (schieben). Mit Icons soll man sie bearbeiten und Teilen können. Reihenfolge auch editierbar machen»): kachelliste mit Wischen, rechts Stift (umbenennen, Feld mit
              «Speichern»), Teilen-Zeichen (nach dem Kopieren ein Haken), × löscht; nach dem Löschen «Rückgängig» an der alten Stelle; «Reihenfolge ändern» mit ↑ und ↓, «Fertig»;
