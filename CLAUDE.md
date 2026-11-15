@@ -572,6 +572,8 @@ Zu zweit in «3D Schweiz» (Michael, 2026-11-10, Vorschlag 13: «Erklär mir noc
              seit 2026-11-15 statt des Links «Zu zweit im selben Modell …» unter dem Modell ein Zeichen mit zwei Figuren unten im Bild nach dem Stern, ein Tipp öffnet
              die Wahl unter dem Modell (Raum eröffnen, Code, Beitreten) und rollt dorthin, im Vollbild verlässt es dieses, an (eingedrückt, gedreht), solange die Wahl offen
              oder man in einem Raum ist (Michael: «Statt unten einen Link … ein weiteres Icon im Bild unten rechts … Das Icon soll zwei Figuren abbilden»); Anleitung nachgeführt
+             seit 2026-11-15 im Raum unter den Knöpfen der Link als QR-Code (QrCode aus Raum.tsx, auf dem Gerät gerechnet mit qrcode-generator) mit dem Satz zum Scannen
+             oder zum Code (Michael: «Kannst du es so machen, dass man hier einen QR-Code scannen kann?»)
 Stufe Schweiz nur das Land (Michael, 2026-11-10: «dieses Bild mit dem Kasten und den verpixelten Rändern und de hellblaue Himmen wirken wenig harmonisch»,
              gewählt: «A) Nur die Schweiz zeigen»): das Gelände ausserhalb der Landesgrenze (BFS g1, land in data/kartengrund.json) über eine Maske (alphaMap,
              LAND_MASKE_PX) ausgeblendet, eine Wand entlang der Grenze (alle LAND_SCHRITT_M) vom Gelände bis knapp unter den tiefsten Punkt, der Sockel mit den

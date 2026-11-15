@@ -174,14 +174,14 @@ export function useRaumSeite<S, A>({ raum, spiel, titel, zurueck, spielName, adr
 }
 
 /** QR-Code als Bild, ohne fremden Dienst gerechnet */
-function QrCode({ text }: { text: string }) {
+export function QrCode({ text, className = "max-w-64" }: { text: string; className?: string }) {
   const svg = useMemo(() => {
     const q = qrcode(0, 'M')
     q.addData(text)
     q.make()
     return q.createSvgTag({ cellSize: 6, margin: 4, scalable: true })
   }, [text])
-  return <div className="mx-auto w-full max-w-64 bg-white p-2 [&_svg]:h-auto [&_svg]:w-full" role="img"
+  return <div className={`mx-auto w-full ${className} bg-white p-2 [&_svg]:h-auto [&_svg]:w-full`} role="img"
               aria-label={`QR-Code für ${text}`} dangerouslySetInnerHTML={{ __html: svg }} />
 }
 
