@@ -482,7 +482,7 @@ Weitere Autos in «3D Schweiz» (Michael, 2026-11-14: «Autos: noch Kleinwagen u
 Sonntagsfahrverbot in «3D Schweiz» (Michael, 2026-11-15: «Keine LKWs am Sonntag. Die dürfen dann nicht fahren»): ist die Zeit der Szene nach Schweizer Zeit
              (Intl, Europe/Zurich, SONNTAG_FMT) ein Sonntag, fährt kein Lastwagen, sein Platz bleibt leer (nicht durch ein Auto ersetzt); seit 2026-11-15 auch an den
              Feiertagen (Michael: «Da Feiertage gelten in der Schweiz auch als Sonntage»; fahrverbotTag: Neujahr, Karfreitag, Ostermontag, Auffahrt, Pfingstmontag, 1. August, Weihnachten,
-             Stephanstag, Ostern gerechnet; Liste aus dem Gedächtnis nach VRV Art. 91, fedlex aus der Sitzung nicht erreichbar); Ausnahmebewilligungen nicht berücksichtigt, Nachtfahrverbot nicht nachgebildet (die Zählstellen messen Schwerverkehr auch nachts); in der Anleitung («Autos»)
+             Stephanstag, Ostern gerechnet; Liste nach VRV Art. 91, von Michael bestätigt: «Liste stimmt so»); Ausnahmebewilligungen nicht berücksichtigt, Nachtfahrverbot nicht nachgebildet (die Zählstellen messen Schwerverkehr auch nachts); in der Anleitung («Autos»)
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
