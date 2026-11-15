@@ -20,10 +20,11 @@ export const PUZZLE_HALTE = 4
 export const PUZZLE_PUNKTE_JE_HALT = 25
 /** der Regler von «Reisedauer» geht von 0 bis hier, wie SPIEL_BIS_MIN in der Pipeline */
 export const REGLER_BIS_MIN = 180
-/** volle Punkte bis zu dieser Abweichung, halbe bis zur doppelten: 8 % der Fahrzeit, mindestens 2, höchstens 11 Minuten, so wertet
+/** volle Punkte bis zu dieser Abweichung, halbe bis zur doppelten: 12 % der Fahrzeit, mindestens 3, höchstens 11 Minuten (seit 2026-11-15, vorher 8 % und mindestens 2;
+ *  Michael: «Etwas mehr Toleranz beim Spiel Reisedauer»), so wertet
  *  der Regler höchstens 44 Minuten, weniger als ein Viertel seiner Spanne (CLAUDE.md, Regel 9; gewählt) */
 export function toleranz(min: number): number {
-  return Math.min(11, Math.max(2, Math.round(min * 0.08)))
+  return Math.min(11, Math.max(3, Math.round(min * 0.12)))
 }
 
 export async function vorratLaden(): Promise<SpielVorrat> {
