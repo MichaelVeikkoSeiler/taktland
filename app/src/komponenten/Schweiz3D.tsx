@@ -970,6 +970,17 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   useEchtesVollbild(voll, setVoll)
   // die Symbole der Schalter auf Handy und Tablet ausserhalb des Vollbilds in zwei Spalten (Michael, 2026-11-14)
   const zweiSpalten = !desktop && !voll
+  // im Vollbild so viele Symbole je Spalte, wie über der Reihe unten Platz haben, sonst lagen sie quer auf dem Handy über XR und Vollbild
+  // (2026-11-15, vor der Bekanntmachung im Browser mit 740 × 360 nachgestellt): oben 56 px für das Kreuz, unten 48 px für die Reihe, je Symbol 40 px
+  const [fensterHoch, setFensterHoch] = useState(() => (typeof window === 'undefined' ? 800 : window.innerHeight))
+  useEffect(() => {
+    if (!voll) return
+    const neu = () => setFensterHoch(window.innerHeight)
+    neu(); window.addEventListener('resize', neu)
+    return () => window.removeEventListener('resize', neu)
+  }, [voll])
+  const vollZeilen = Math.max(3, Math.floor((fensterHoch / (desktop ? DESKTOP_KNOPF_MASS : 1) - 56 - 48 + 8) / 40))
+  const vollSpalten = voll && vollZeilen < SCHALTER_SYMBOLE.length
   const letzterTipp = useRef(0)
   const inBrille = () => {
     if (!xr) { setBrilleHinweis('Auf diesem Gerät ist keine VR-Brille zu finden. Öffne Taktland im Browser einer VR-Brille wie der Meta Quest 3.'); return }
@@ -1368,7 +1379,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             «Die Knöpfe machen Sinn aber nur in der Brille und XR. Ansonsten aus den Wänden entfernen und auf dem Fenster mit Icons nachbauen. So sind
             sie fix und müssen nicht gesucht werden»); dieselbe Reihenfolge und dieselben Farben wie an den Wänden, was in der Stufe nicht geht, bleibt
             blass an seinem Platz */}
-        <div className={`absolute right-2 ${voll ? 'top-14' : 'top-2'} z-[5] ${zweiSpalten ? 'grid grid-flow-col grid-rows-6 gap-2 [direction:rtl]' : 'flex flex-col gap-2'}`} style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
+        <div className={`absolute right-2 ${voll ? 'top-14' : 'top-2'} z-[5] ${zweiSpalten ? 'grid grid-flow-col grid-rows-6 gap-2 [direction:rtl]' : vollSpalten ? 'grid grid-flow-col gap-2 [direction:rtl]' : 'flex flex-col gap-2'}`}
+             style={{ ...(desktop ? { zoom: DESKTOP_KNOPF_MASS } : {}), ...(vollSpalten ? { gridTemplateRows: `repeat(${vollZeilen}, auto)` } : {}) }}>
           {/* auf Handy und Tablet ausserhalb des Vollbilds in zwei Spalten, sonst reicht die Höhe nicht bis über die Knöpfe unten */}
           {SCHALTER_SYMBOLE.map(({ art, name, nurFeld, nichtGrob, symbol }) => {
             const an = ({ orte: orteAn, zuege: zuegeAn, schiffe: schiffeAn, autos: autosAn, menschen: menschenAn, wandern, hoehen: scheiben,
