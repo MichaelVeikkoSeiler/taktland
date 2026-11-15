@@ -1224,6 +1224,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [merkenOffen, setMerkenOffen] = useState(false)
   const [merkenName, setMerkenName] = useState('')
   const [geteilt, setGeteilt] = useState<number | null>(null)
+  const [ansichtWeg, setAnsichtWeg] = useState<{ a: GemerkteAnsicht; i: number } | null>(null)
+  const [ansichtOrdnen, setAnsichtOrdnen] = useState(false)
+  const [ansichtUmbenennen, setAnsichtUmbenennen] = useState<{ i: number; name: string } | null>(null)
   const [ansichtTick, setAnsichtTick] = useState(0)
   const ansichtJetzt = (name: string): GemerkteAnsicht => {
     const l = lageRef.current?.(), feld = stufe === 'schweiz' ? null : gelaende[stufe]?.anker
@@ -1555,7 +1558,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <button type="button" onClick={() => setZuZweitOffen(true)} className="underline underline-offset-2">Zu zweit im selben Modell …</button>
         )}
       </div>
-      {/* gemerkte Ansichten (Michael, 2026-11-12): merken mit Namen, öffnen, als Link teilen, nach links wischen oder × löscht */}
+      {/* gemerkte Ansichten (Michael, 2026-11-12): merken mit Namen, öffnen, als Link teilen, umbenennen, ordnen, nach links wischen oder × löscht */}
       <div className="mt-2 text-sm">
         {merkenOffen ? (
           <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => {
@@ -1575,24 +1578,86 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             setMerkenOffen(true)
           }} className="underline underline-offset-2">Ansicht merken …</button>
         )}
+        {/* wie die Probefahrten (Michael, 2026-11-15: «Favoriten Perspektiven soll man gleich wie andere Elemente auf Taktland löschen können (schieben).
+            Mit Icons soll man sie bearbeiten und Teilen können. Reihenfolge auch editierbar machen»): wischen oder × löscht mit «Rückgängig», Stift benennt um,
+            Teilen-Zeichen teilt den Link, «Reihenfolge ändern» mit ↑ und ↓ */}
+        {ansichtWeg && (
+          <div role="status" className="kachel mt-2 flex items-center justify-between gap-3 py-1 pl-4 pr-1">
+            <span className="min-w-0">{ansichtWeg.a.name} entfernt.</span>
+            <button type="button" onClick={() => { const w = ansichtWeg; setAnsichten((l) => [...l.slice(0, w.i), w.a, ...l.slice(w.i)]); setAnsichtWeg(null) }}
+                    className="min-h-11 shrink-0 rounded-lg px-3 font-bold text-sbb-red hover:bg-sbb-silver dark:hover:bg-sbb-iron">Rückgängig</button>
+          </div>
+        )}
+        {ansichten.length > 1 && (
+          <div className="flex justify-end">
+            <button type="button" onClick={() => { setAnsichtOrdnen((o) => !o); setAnsichtUmbenennen(null) }}
+                    className="min-h-11 rounded-lg px-3 text-sm font-medium hover:bg-sbb-silver dark:hover:bg-sbb-iron">
+              {ansichtOrdnen ? 'Fertig' : 'Reihenfolge ändern'}</button>
+          </div>
+        )}
         {ansichten.length > 0 && (
-          <ul className="mt-2 space-y-1" aria-label="Gemerkte Ansichten">
-            {ansichten.map((a, i) => (
-              <li key={`${i}-${a.name}`}>
-                <Wischen frage={`Ansicht ${a.name} löschen?`} loeschen={() => setAnsichten((l) => l.filter((_, j) => j !== i))}>
-                  <div className="flex items-center gap-2 rounded-lg bg-[#ebebeb] px-2 py-1.5 dark:bg-sbb-charcoal">
-                    <button type="button" onClick={() => ansichtOeffnenRef.current(a)} className="min-w-0 flex-1 truncate text-left font-bold">
-                      {a.name}<span className="ml-2 font-normal text-sbb-metal dark:text-sbb-storm">{STUFE_NAME[a.stufe]}{a.zeit !== null ? ', Zeitreise' : ''}</span>
-                    </button>
-                    <button type="button" onClick={() => void ansichtTeilen(a, i)}
-                            className="shrink-0 rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">
-                      {geteilt === i ? 'Link kopiert' : 'Link teilen'}</button>
-                    <button type="button" onClick={() => setAnsichten((l) => l.filter((_, j) => j !== i))} aria-label={`Ansicht ${a.name} löschen`}
-                            className="shrink-0 px-1 text-lg leading-none text-sbb-metal">×</button>
-                  </div>
-                </Wischen>
-              </li>
-            ))}
+          <ul className="mt-1 kachelliste" aria-label="Gemerkte Ansichten">
+            {ansichten.map((a, i) => {
+              const unter = <span className="ml-2 font-normal text-sbb-metal dark:text-sbb-storm">{STUFE_NAME[a.stufe]}{a.zeit !== null ? ', Zeitreise' : ''}</span>
+              const SEITE = 'flex min-h-11 w-12 shrink-0 items-center justify-center self-stretch border-l border-sbb-cloud text-sbb-metal hover:bg-sbb-milk '
+                + 'hover:text-sbb-black disabled:opacity-30 dark:border-sbb-iron dark:text-sbb-storm dark:hover:bg-sbb-charcoal dark:hover:text-sbb-white'
+              if (ansichtOrdnen) return (
+                <li key={`${i}-${a.name}`} className="flex items-center">
+                  <span className="min-w-0 flex-1 truncate px-3 py-3 font-bold">{a.name}{unter}</span>
+                  {([[-1, '↑', 'nach oben'], [1, '↓', 'nach unten']] as const).map(([r, z, w]) => (
+                    <button key={r} type="button" aria-label={`Ansicht ${a.name} ${w}`} title={`Nach ${r < 0 ? 'oben' : 'unten'}`}
+                            disabled={i + r < 0 || i + r >= ansichten.length}
+                            onClick={() => setAnsichten((l) => { const n = [...l]; [n[i], n[i + r]] = [n[i + r], n[i]]; return n })}
+                            className={SEITE + ' text-xl'}>{z}</button>
+                  ))}
+                </li>
+              )
+              if (ansichtUmbenennen?.i === i) return (
+                <li key={`${i}-${a.name}`}>
+                  <form className="flex items-center gap-2 px-2 py-1.5" onSubmit={(e) => {
+                    e.preventDefault()
+                    const name = ansichtUmbenennen.name.trim() || a.name
+                    setAnsichten((l) => l.map((x, j) => j === i ? { ...x, name } : x))
+                    setAnsichtUmbenennen(null)
+                  }}>
+                    <input value={ansichtUmbenennen.name} onChange={(e) => setAnsichtUmbenennen({ i, name: e.target.value })} maxLength={80} autoFocus
+                           aria-label="Neuer Name der Ansicht"
+                           className="min-w-0 flex-1 rounded-lg border border-sbb-cloud bg-white px-2 py-1.5 dark:border-sbb-iron dark:bg-sbb-midnight" />
+                    <button type="submit" className={EINTAUCHEN_KNOPF + ' !text-sm'}>Speichern</button>
+                    <button type="button" onClick={() => setAnsichtUmbenennen(null)} className="underline underline-offset-2">Abbrechen</button>
+                  </form>
+                </li>
+              )
+              const weg = () => { setAnsichtWeg({ a, i }); setAnsichten((l) => l.filter((_, j) => j !== i)) }
+              return (
+                <li key={`${i}-${a.name}`}>
+                  <Wischen frage={`Ansicht ${a.name} löschen?`} loeschen={weg}>
+                    <div className="flex items-stretch">
+                      <button type="button" onClick={() => ansichtOeffnenRef.current(a)}
+                              className="min-h-11 min-w-0 flex-1 truncate px-3 py-3 text-left font-bold hover:bg-sbb-milk dark:hover:bg-sbb-charcoal">
+                        {a.name}{unter}
+                      </button>
+                      <button type="button" onClick={() => setAnsichtUmbenennen({ i, name: a.name })} aria-label={`Ansicht ${a.name} umbenennen`}
+                              title="Umbenennen" className={SEITE}>
+                        <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
+                          <path d="M4 20h4L19 9l-4-4L4 16z" /><path d="M13.5 6.5l4 4" />
+                        </svg>
+                      </button>
+                      <button type="button" onClick={() => void ansichtTeilen(a, i)} aria-label={`Link zur Ansicht ${a.name} teilen`}
+                              title={geteilt === i ? 'Link kopiert' : 'Link teilen'} className={SEITE + (geteilt === i ? ' !text-sbb-red' : '')}>
+                        {geteilt === i
+                          ? <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M5 12l5 5 9-10" /></svg>
+                          : <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                              <circle cx="18" cy="5" r="2.5" /><circle cx="6" cy="12" r="2.5" /><circle cx="18" cy="19" r="2.5" />
+                              <path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4" />
+                            </svg>}
+                      </button>
+                      <button type="button" onClick={weg} aria-label={`Ansicht ${a.name} löschen`} title="Löschen" className={SEITE + ' text-xl'}>×</button>
+                    </div>
+                  </Wischen>
+                </li>
+              )
+            })}
           </ul>
         )}
       </div>
@@ -1862,8 +1927,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Unter dem Modell «Ansicht merken …» hält fest, was du gerade siehst: die Stufe und das Feld, den Blick der Kamera, alle Knöpfe an der
             Wand, die Zeit (jetzt oder eine Zeitreise) und ob der Ton aus ist. Ein Tipp auf den Namen öffnet die Ansicht wieder, nach links wischen
             oder × löscht sie. Die Ansichten bleiben nur auf diesem Gerät und gehen verloren, wenn die Daten des Browsers gelöscht werden.
-            «Link teilen» gibt einen Link, der dieselbe Ansicht auf einem anderen Gerät öffnet; alles steht im Link selbst, nichts geht an einen Server
-            von Taktland. Angesetzte Stücke (+) gehören nicht dazu, in der Brille gilt nur das Feld mit den Knöpfen, ohne Blick.</p>
+            Das Teilen-Zeichen gibt einen Link, der dieselbe Ansicht auf einem anderen Gerät öffnet; alles steht im Link selbst, nichts geht an einen Server
+            von Taktland. Angesetzte Stücke (+) gehören nicht dazu, in der Brille gilt nur das Feld mit den Knöpfen, ohne Blick. Der Stift benennt eine Ansicht um, nach links wischen oder × löscht sie («Rückgängig» holt sie zurück), «Reihenfolge ändern» verschiebt sie mit ↑ und ↓.</p>
         </Abschnitt>
         <Abschnitt titel="Woher die Daten stammen">
           <ul className="list-disc space-y-1 pl-5">
