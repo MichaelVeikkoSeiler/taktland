@@ -1595,7 +1595,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       </div>
       {/* gemerkte Ansichten (Michael, 2026-11-12): merken mit Namen, öffnen, als Link teilen, umbenennen, ordnen, nach links wischen oder × löscht */}
       <div className="mt-2 text-sm">
-        {ansichten.length > 0 && <h3 className="mt-2 font-bold">Gemerkte Ansichten</h3>}
+        {/* Titel wie «Gemerkte Fahrten» bei Mitfahren (Michael, 2026-11-15, Bildschirmfotos beider Listen) */}
+        {ansichten.length > 0 && <h2 className="mt-6 text-lg font-bold">Gemerkte Ansichten</h2>}
         {/* wie die Probefahrten (Michael, 2026-11-15: «Favoriten Perspektiven soll man gleich wie andere Elemente auf Taktland löschen können (schieben).
             Mit Icons soll man sie bearbeiten und Teilen können. Reihenfolge auch editierbar machen»): wischen oder × löscht mit «Rückgängig», Stift benennt um,
             Teilen-Zeichen teilt den Link, «Reihenfolge ändern» mit ↑ und ↓ */}
@@ -1606,15 +1607,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                     className="min-h-11 shrink-0 rounded-lg px-3 font-bold text-sbb-red hover:bg-sbb-silver dark:hover:bg-sbb-iron">Rückgängig</button>
           </div>
         )}
-        {ansichten.length > 1 && (
-          <div className="flex justify-end">
-            <button type="button" onClick={() => { setAnsichtOrdnen((o) => !o); setAnsichtUmbenennen(null) }}
-                    className="min-h-11 rounded-lg px-3 text-sm font-medium hover:bg-sbb-silver dark:hover:bg-sbb-iron">
-              {ansichtOrdnen ? 'Fertig' : 'Reihenfolge ändern'}</button>
-          </div>
-        )}
         {ansichten.length > 0 && (
-          <ul className="mt-1 space-y-2" aria-label="Gemerkte Ansichten">
+          <ul className="mt-2 space-y-2" aria-label="Gemerkte Ansichten">
             {ansichten.map((a, i) => {
               // wie die Bahnhofsliste mit dem roten Stern (Michael, 2026-11-15), die Knöpfe so gross wie die Symbole in der Karte
               // eine Zeile wie «Gemerkte Fahrten» bei Mitfahren, der Stern rechts (Michael, 2026-11-15: «Kannst du den Stern auch rechts platzieren analog
@@ -1690,6 +1684,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               )
             })}
           </ul>
+        )}
+        {/* «Reihenfolge ändern» unter der Liste, der Titel steht allein wie «Gemerkte Fahrten» bei Mitfahren (Michael, 2026-11-15, Bildschirmfotos beider Listen) */}
+        {ansichten.length > 1 && (
+          <div className="flex justify-end">
+            <button type="button" onClick={() => { setAnsichtOrdnen((o) => !o); setAnsichtUmbenennen(null) }}
+                    className="min-h-11 rounded-lg px-3 text-sm font-medium hover:bg-sbb-silver dark:hover:bg-sbb-iron">
+              {ansichtOrdnen ? 'Fertig' : 'Reihenfolge ändern'}</button>
+          </div>
         )}
       </div>
       {scheiben && (
