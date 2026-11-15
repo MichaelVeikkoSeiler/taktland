@@ -1204,6 +1204,11 @@ von erstem nach letztem Halt, vier Halte dazwischen gemischt, in der Reihenfolge
 volle Punkte bis 8 % daneben (2 bis 11 Minuten, toleranz), halbe bis zum Doppelten, so höchstens 44 Minuten als richtig gewertet (Regel 9); danach alle
 Halte der Fahrt mit Zeiten; Bestwert auf dem Gerät; Bilder der Kacheln vorerst die von Duell und Bahnhofsuche; in Anleitung, Spiele und auf taktland.ch genannt;
 im Browser hier mit 390 × 900 gespielt.
+Seit 2026-11-15 das Puzzle auch für mehrere (Michael: «Fahrplan Puzzle auch für Mehrspieler bauen.»): «Wer spielt» wie bei Geo; «Mehrere auf diesem Gerät»
+reihum (bis 8 Namen, gemerkt), alle ordnen dieselbe Fahrt, danach Lösung mit Punkten je Spieler, am Schluss Rangliste (gleiche Punkte, gleicher Platz);
+«Auf mehreren Geräten» über raum.php (#/puzzle/mit/CODE, FahrplanPuzzleOnline, PUZZLE_RAUM): der Gastgeber zieht die Runden (Nummer der Fahrt im Vorrat und
+Reihenfolgen, dazu stand), ein Gerät mit anderem Stand des Vorrats sagt, man solle neu laden; Tipp ist die Reihenfolge, der Gastgeber löst auf und geht weiter;
+kein neues raum.php nötig. «Wie lange dauert's?» heisst seit 2026-11-15 «Reisedauer» (Michael: «Soll heissen "Reisedauer"»), Adresse weiter #/fahrzeit.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

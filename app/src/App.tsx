@@ -8,7 +8,7 @@ import { Schweiz11 } from './komponenten/Schweiz11'
 import { Schweiz11Online } from './komponenten/Schweiz11Online'
 import { Erraten } from './komponenten/Erraten'
 import { WoBinIch } from './komponenten/WoBinIch'
-import { FahrplanPuzzle, Fahrzeit } from './komponenten/Fahrplanspiele'
+import { FahrplanPuzzle, FahrplanPuzzleOnline, Fahrzeit } from './komponenten/Fahrplanspiele'
 import { ErratenOnline } from './komponenten/ErratenOnline'
 // three.js nur für das 3D-Relief, erst dort geladen
 const ReliefSeite = lazy(() => ladenVerfolgen(import('./komponenten/Relief')))
@@ -46,7 +46,7 @@ import Teilen, { SYMBOL } from './komponenten/Teilen'
 /** Die Seite steht in der Adresse (#/bahnhof/8503000, #/linie/600), damit
  *  Seiten teilbar und mit «Zurück» erreichbar sind. */
 type Seite =
-  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'wobinich' } | { art: 'puzzle' } | { art: 'fahrzeit' } | { art: 'schweiz3d' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string; vonLinie: boolean } | { art: 'modellbahn' } | { art: 'anleitung' } | { art: 'linien' }
+  | { art: 'start' } | { art: 'liste' } | { art: 'duell' } | { art: 'spiele' } | { art: 'schweiz11' } | { art: 'schweiz11mit'; raum: string } | { art: 'erraten' } | { art: 'wobinich' } | { art: 'puzzle' } | { art: 'puzzlemit'; raum: string } | { art: 'fahrzeit' } | { art: 'schweiz3d' } | { art: 'erratenmit'; raum: string } | { art: 'relief'; name: string; vonLinie: boolean } | { art: 'modellbahn' } | { art: 'anleitung' } | { art: 'linien' }
   | { art: 'standort' } | { art: 'fahrt'; teil: FahrtTeil } | { art: 'sammelheft' } | { art: 'logbuch' } | { art: 'favoriten' } | { art: 'einstellungen' } | { art: 'ohneziel' }
   | { art: 'fahrtblatt'; wahl: StreckenWahl } | { art: 'fahrtblattwahl' }
   | { art: 'uebersicht'; liste: UebersichtArt }
@@ -71,6 +71,8 @@ function seiteAusAdresse(): Seite {
   if (h === '#/schweiz11') return { art: 'schweiz11' }
   const geoRaum = /^#\/schweiz11\/mit\/([A-Za-z]{4})$/.exec(h)
   if (geoRaum) return { art: 'schweiz11mit', raum: geoRaum[1].toUpperCase() }
+  const puzzleRaum = h.match(/^#\/puzzle\/mit\/([A-Za-z]{4})$/)
+  if (puzzleRaum) return { art: 'puzzlemit', raum: puzzleRaum[1].toUpperCase() }
   if (h === '#/erraten') return { art: 'erraten' }
   if (h === '#/wobinich') return { art: 'wobinich' }
   if (h === '#/puzzle') return { art: 'puzzle' }
@@ -140,7 +142,7 @@ function bereichVon(seite: Seite, herkunft: Herkunft): Bereich | null {
     case 'schweiz11': case 'schweiz11mit': return 'schweiz11'
     case 'erraten': case 'erratenmit': return 'erraten'
     case 'wobinich': return 'wobinich'
-    case 'puzzle': return 'puzzle'
+    case 'puzzle': case 'puzzlemit': return 'puzzle'
     case 'fahrzeit': return 'fahrzeit'
     case 'schweiz3d': return 'schweiz3d'
     case 'standort': return 'standort'
@@ -216,6 +218,7 @@ export default function App() {
         {seite.art === 'erraten' && <Erraten index={index} />}
         {seite.art === 'wobinich' && <WoBinIch index={index} />}
         {seite.art === 'puzzle' && <FahrplanPuzzle index={index} />}
+        {seite.art === 'puzzlemit' && <FahrplanPuzzleOnline key={seite.raum} raum={seite.raum} index={index} />}
         {seite.art === 'fahrzeit' && <Fahrzeit index={index} />}
         {seite.art === 'schweiz3d' && <Suspense fallback={<p className="px-4 py-8 text-sbb-metal">Wird geladen …</p>}><Schweiz3D /></Suspense>}
         {seite.art === 'erratenmit' && <ErratenOnline key={seite.raum} raum={seite.raum} index={index} />}
