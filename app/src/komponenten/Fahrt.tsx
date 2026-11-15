@@ -97,7 +97,7 @@ export function Fahrt({ index }: { index: BahnhofIndex | null }) {
           (Michael, 2026-09-25: «Es ist ja bereits alles in der Reisetasche») */}
       {gemerkt.favoriten.length > 0 && index && (
         <div className="mt-6">
-          <FahrtListe titel="Gemerkte Fahrten" fahrten={gemerkt.favoriten} text={fahrtText}
+          <FahrtListe titel="Favoriten" fahrten={gemerkt.favoriten} text={fahrtText}
                       favorit={() => true} starten={(f) => starten(f)}
                       umschalten={(f) => setGemerkt(favoritUmschalten(f))} />
         </div>
