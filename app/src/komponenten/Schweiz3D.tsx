@@ -64,6 +64,8 @@ type Stufe = 'schweiz' | 'gross' | 'mittel' | 'region' | 'ort' | 'nah'
 /** die Stufen von aussen nach innen; «gross» ist das Gebiet von 80 km zwischen der Schweiz und der Region (Michael, 2026-10-29:
  *  «noch eine Zoom-Stufe mit Seitenlänge 80 km») */
 const STUFEN: Stufe[] = ['schweiz', 'gross', 'mittel', 'region', 'ort', 'nah']
+/** Wochentag nach Schweizer Zeit für das Sonntagsfahrverbot der Lastwagen */
+const SONNTAG_FMT = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Zurich', weekday: 'short' })
 /* seit 2026-11-02 128 km, 64 km, 16 km, 4 km und 1 km (Michael: «Bitte Ausschnitte so machen: 1km, 4km, 16km, 64, 128km»; vorher 80, 20, 4, 1):
    «gross» 128 km, «mittel» 64 km, «region» 16 km */
 /** in der Schweiz und in den Gebieten von 128 und 64 km gibt es keine Wanderwege, Züge und Schiffe (erst ab 16 km) und keine
@@ -1740,7 +1742,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Auf den übrigen Strassen (Haupt- und Nebenstrassen, Ein- und Ausfahrten) gibt es keine Zählung für jedes Stück. Dort gilt das
             Verkehrsmodell des Bundesamts für Raumentwicklung ARE (Nationales Personenverkehrsmodell 2023 und Güterverkehr des UVEK): Es rechnet für
             jeden Abschnitt, wie viele Fahrzeuge im Mittel am Tag fahren und wie viele davon Lastwagen sind. Das ist ein Modell, keine Messung.
-            Auf Tag und Nacht aufgeteilt ist es so wie im Mittel an den Zählstellen des ASTRA, die Lastwagen gleich je Tag und Nacht. Strassen, auf
+            Auf Tag und Nacht aufgeteilt ist es so wie im Mittel an den Zählstellen des ASTRA, die Lastwagen gleich je Tag und Nacht. Am Sonntag (nach der Zeit der Szene) fahren keine Lastwagen, wie es das Sonntagsfahrverbot vorschreibt; Ausnahmebewilligungen und Feiertage sind nicht berücksichtigt. Strassen, auf
             denen laut Modell weniger als 200 Fahrzeuge am Tag fahren, bleiben leer. Erfunden sind hier dazu das Tempo (innerorts 25 bis 35 km/h als Mittel
             samt Halten, ausserorts 50 bis 80 km/h, nach der Breite der Strasse), eine Spur je Richtung, und dass an Kreuzungen alle durchfahren: Ampeln,
             Vortritt und Abbiegen gibt es nicht, ein Auto kann an einer Kreuzung verschwinden und ein anderes erscheinen. Weggemalt sind die Autos im
@@ -6771,6 +6773,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const monat = new Date(ms + 3600_000).getUTCMonth(), sommer = monat >= 4 && monat <= 8
         const artVon = (i: number): AutoArt => (sommer && arten[i] === 0 && cabrios[i] ? AUTO_CABRIO : arten[i])
         const nacht = fensterNacht.value > 0
+        // Sonntagsfahrverbot (Michael, 2026-11-15: «Keine LKWs am Sonntag. Die dürfen dann nicht fahren»): am Sonntag nach Schweizer Zeit fahren
+        // keine Lastwagen, ihre Plätze bleiben leer (Ausnahmebewilligungen und Feiertage nicht berücksichtigt)
+        const sonntag = SONNTAG_FMT.format(new Date(ms)) === 'Sun'
         // zu hören: alle 0,1 s, ob ein Auto in AUTO_SPITZE_S am nächsten an der Stelle ist, wo man hinhört (wie bei den Zügen)
         const hoeren = performance.now() >= hoerUm
         if (hoeren) {
@@ -6792,7 +6797,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (gestaut.has(kk)) {
             const liste: Array<{ a: AutoPlatz; lauf: number; lang: number }> = []
             for (const a of kk.autos) {
-              if (a.ab >= anteil) continue
+              if (a.ab >= anteil || (sonntag && a.lkw < lkwAnteil)) continue
               liste.push({ a, lauf: (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L, lang: a.lkw < lkwAnteil ? LKW_LANG_M : AUTO_ART_LANG_M[artVon(a.farbe)] })
             }
             if (!stauRechnen(liste, halte.filter((h) => h.kk === kk), verzug, jetztS, dt)) gestaut.delete(kk)
@@ -6802,6 +6807,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           for (const a of kk.autos) {
             if (a.ab >= anteil || zahl >= hoechstens || lkwZahl >= hoechstens) continue
             const lkw = a.lkw < lkwAnteil, art = artVon(a.farbe), lang = lkw ? LKW_LANG_M : AUTO_ART_LANG_M[art]
+            if (lkw && sonntag) continue
             if (!lkw && art && artZahl[art] >= hoechstens) continue
             const lauf = (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L - (verzug.get(a)?.v ?? 0), s = a.richtung === 1 ? lauf : kk.L - lauf
             const p = autoBei(kk, s)
