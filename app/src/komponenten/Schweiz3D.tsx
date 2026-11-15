@@ -1664,7 +1664,6 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                               <path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4" />
                             </svg>}
                       </button>
-                      <button type="button" onClick={weg} aria-label={`Ansicht ${a.name} löschen`} title="Löschen" className={SEITE + ' text-xl leading-none'}>×</button>
                     </div>
                   </Wischen>
                 </li>
@@ -1935,10 +1934,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         </Abschnitt>
         <Abschnitt titel="Ansichten merken und teilen">
           <p>Der Stern unten im Bild merkt sofort, was du gerade siehst, als «Neue Ansicht», der Stift benennt sie um; die Ansicht steht danach unter dem Modell in der Liste. Gemerkt werden die Stufe und das Feld, der Blick der Kamera, die
-            Knöpfe, die Zeit (jetzt oder eine Zeitreise) und ob der Ton aus ist. Ein Tipp auf den Namen öffnet die Ansicht wieder, nach links wischen
-            oder × löscht sie. Die Ansichten bleiben nur auf diesem Gerät und gehen verloren, wenn die Daten des Browsers gelöscht werden.
+            Knöpfe, die Zeit (jetzt oder eine Zeitreise) und ob der Ton aus ist. Ein Tipp auf den Namen öffnet die Ansicht wieder. Die Ansichten bleiben nur auf diesem Gerät und gehen verloren, wenn die Daten des Browsers gelöscht werden.
             Das Teilen-Zeichen gibt einen Link, der dieselbe Ansicht auf einem anderen Gerät öffnet; alles steht im Link selbst, nichts geht an einen Server
-            von Taktland. Angesetzte Stücke (+) gehören nicht dazu, in der Brille gilt nur das Feld mit den Knöpfen, ohne Blick. Der Stift benennt eine Ansicht um, nach links wischen oder × löscht sie («Rückgängig» holt sie zurück), «Reihenfolge ändern» verschiebt sie mit ↑ und ↓.</p>
+            von Taktland. Angesetzte Stücke (+) gehören nicht dazu, in der Brille gilt nur das Feld mit den Knöpfen, ohne Blick. Der Stift benennt eine Ansicht um, nach links wischen löscht sie («Rückgängig» holt sie zurück), «Reihenfolge ändern» verschiebt sie mit ↑ und ↓.</p>
         </Abschnitt>
         <Abschnitt titel="Woher die Daten stammen">
           <ul className="list-disc space-y-1 pl-5">
