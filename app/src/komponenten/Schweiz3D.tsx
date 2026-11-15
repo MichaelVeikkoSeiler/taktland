@@ -1603,18 +1603,17 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <ul className="mt-1 space-y-2" aria-label="Gemerkte Ansichten">
             {ansichten.map((a, i) => {
               // wie die Bahnhofsliste mit dem roten Stern (Michael, 2026-11-15), die Knöpfe so gross wie die Symbole in der Karte
+              // eine Zeile wie «Gemerkte Fahrten» bei Mitfahren, der Stern rechts (Michael, 2026-11-15: «Kannst du den Stern auch rechts platzieren analog
+              // Mitfahren? Graue Felder gleich hoch wie bei Mitfahren?»)
               const kopf = (
-                <span className="flex min-w-0 flex-1 items-center gap-3">
-                  <Stern voll />
-                  <span className="min-w-0">
-                    <span className="block truncate font-medium text-sbb-black dark:text-sbb-white">{a.name}</span>
-                    <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{STUFE_NAME[a.stufe]}{a.zeit !== null ? ', Zeitreise' : ''}</span>
-                  </span>
+                <span className="flex min-w-0 flex-1 items-baseline gap-2">
+                  <span className="max-w-[75%] shrink-0 truncate font-medium text-sbb-black dark:text-sbb-white">{a.name}</span>
+                  <span className="min-w-0 truncate text-sm text-sbb-metal dark:text-sbb-storm">{STUFE_NAME[a.stufe]}{a.zeit !== null ? ', Zeitreise' : ''}</span>
                 </span>
               )
               const SEITE = `flex size-8 flex-none items-center justify-center rounded-lg border disabled:opacity-40 disabled:shadow-none ${KNOPF_AUS}`
               if (ansichtOrdnen) return (
-                <li key={`${i}-${a.name}`} className="kachel flex items-center gap-2 py-2 pl-4 pr-2 text-base">
+                <li key={`${i}-${a.name}`} className="kachel flex min-h-12 items-center gap-2 py-1 pl-3 pr-2 text-base">
                   {kopf}
                   {([[-1, '↑', 'nach oben'], [1, '↓', 'nach unten']] as const).map(([r, z, w]) => (
                     <button key={r} type="button" aria-label={`Ansicht ${a.name} ${w}`} title={`Nach ${r < 0 ? 'oben' : 'unten'}`}
@@ -1644,9 +1643,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               return (
                 <li key={`${i}-${a.name}`} className="kachel overflow-hidden text-base">
                   <Wischen frage={`Ansicht ${a.name} löschen?`} loeschen={weg}>
-                    <div className="flex items-center gap-2 pr-2">
+                    <div className="flex items-stretch">
+                      <div className="flex min-w-0 flex-1 items-center gap-2 pr-2">
                       <button type="button" onClick={() => ansichtOeffnenRef.current(a)}
-                              className="kachel-link flex min-h-11 min-w-0 flex-1 items-center py-3 pl-4 pr-1 text-left">
+                              className="kachel-link flex min-w-0 flex-1 items-center py-3 pl-3 pr-1 text-left">
                         {kopf}
                       </button>
                       <button type="button" onClick={() => setAnsichtUmbenennen({ i, name: a.name })} aria-label={`Ansicht ${a.name} umbenennen`}
@@ -1663,6 +1663,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                               <circle cx="18" cy="5" r="2.5" /><circle cx="6" cy="12" r="2.5" /><circle cx="18" cy="19" r="2.5" />
                               <path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4" />
                             </svg>}
+                      </button>
+                      </div>
+                      {/* der Stern rechts wie bei Mitfahren: ein Tipp nimmt die Ansicht aus der Liste, «Rückgängig» holt sie zurück */}
+                      <button type="button" onClick={weg} aria-pressed aria-label={`Ansicht ${a.name} nicht mehr merken`} title="Nicht mehr merken"
+                              className="flex shrink-0 items-center border-l border-sbb-cloud px-3 hover:bg-sbb-milk dark:border-sbb-iron dark:hover:bg-sbb-charcoal">
+                        <Stern voll />
                       </button>
                     </div>
                   </Wischen>
@@ -1936,7 +1942,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p>Der Stern unten im Bild merkt sofort, was du gerade siehst, als «Neue Ansicht», der Stift benennt sie um; die Ansicht steht danach unter dem Modell in der Liste. Gemerkt werden die Stufe und das Feld, der Blick der Kamera, die
             Knöpfe, die Zeit (jetzt oder eine Zeitreise) und ob der Ton aus ist. Ein Tipp auf den Namen öffnet die Ansicht wieder. Die Ansichten bleiben nur auf diesem Gerät und gehen verloren, wenn die Daten des Browsers gelöscht werden.
             Das Teilen-Zeichen gibt einen Link, der dieselbe Ansicht auf einem anderen Gerät öffnet; alles steht im Link selbst, nichts geht an einen Server
-            von Taktland. Angesetzte Stücke (+) gehören nicht dazu, in der Brille gilt nur das Feld mit den Knöpfen, ohne Blick. Der Stift benennt eine Ansicht um, nach links wischen löscht sie («Rückgängig» holt sie zurück), «Reihenfolge ändern» verschiebt sie mit ↑ und ↓.</p>
+            von Taktland. Angesetzte Stücke (+) gehören nicht dazu, in der Brille gilt nur das Feld mit den Knöpfen, ohne Blick. Der Stift benennt eine Ansicht um, nach links wischen oder ein Tipp auf den roten Stern löscht sie («Rückgängig» holt sie zurück), «Reihenfolge ändern» verschiebt sie mit ↑ und ↓.</p>
         </Abschnitt>
         <Abschnitt titel="Woher die Daten stammen">
           <ul className="list-disc space-y-1 pl-5">
