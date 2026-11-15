@@ -1,0 +1,20 @@
+# taktland.ch: alle dürfen lesen, auch Suchmaschinen und KI-Dienste (Michael, 2026-11-15)
+# Content-Signal: Inhalte dürfen für Suche und KI-Antworten verwendet werden (contentsignals.org);
+# zum Training ist bewusst nichts gesagt.
+User-agent: *
+Content-Signal: search=yes, ai-input=yes
+Allow: /
+
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: https://taktland.ch/sitemap.xml
