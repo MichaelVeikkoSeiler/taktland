@@ -676,6 +676,9 @@ Liste der gemerkten Ansichten seit 2026-11-15 wie die Probefahrten (Michael: «F
              seit 2026-11-15 jede Ansicht als eigene Kachel wie die Bahnhofsliste: roter Stern, Name, darunter die Stufe (und «Zeitreise»), Stift, Teilen und × als
              Knöpfe von 32 px wie die Symbole in der Karte (KNOPF_AUS), ebenso ↑ und ↓ (Michael: «Schau dir das erste Referenzbild an mit den Favoriten, mit dem roten
              Stern … Die Icons … sollten aber die gleiche Größe haben wie die Icons in der Ausschnittkarte»)
+             seit 2026-11-15 merkt ein Stern unten im Bild (vor «Mein Standort», 32 px wie die anderen) die Ansicht sofort mit dem vorgeschlagenen Namen, 2,5 s ein roter
+             Stern und «Ansicht «…» gemerkt, unten in der Liste» im Bild, umbenennen mit dem Stift; «Ansicht merken …» unter dem Modell ist weg, über der Liste
+             «Gemerkte Ansichten» (Michael: «Perspektive merken indem der Stern als Icon im Bild ist»); auch im Vollbild; Anleitung nachgeführt
 Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder denselben Standort
              und Ausschnitt und Perspektive sehen wie vorher»): solange das Modell offen ist, merkt sich die Seite jede Sekunde die Ansicht wie «Ansicht merken»
              (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d

@@ -1222,8 +1222,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     } catch { return [] }
   })
   useEffect(() => { try { localStorage.setItem(ANSICHTEN_SCHLUESSEL, JSON.stringify(ansichten)) } catch { /* ohne Speicher bleibt es in dieser Sitzung */ } }, [ansichten])
-  const [merkenOffen, setMerkenOffen] = useState(false)
-  const [merkenName, setMerkenName] = useState('')
+  // der Stern im Bild merkt die Ansicht sofort, kurz eine Bestätigung im Bild (Michael, 2026-11-15: «Perspektive merken indem der Stern als Icon im Bild ist»)
+  const [gemerkt, setGemerkt] = useState<string | null>(null)
+  const gemerktUhr = useRef(0)
   const [geteilt, setGeteilt] = useState<number | null>(null)
   const [ansichtWeg, setAnsichtWeg] = useState<{ a: GemerkteAnsicht; i: number } | null>(null)
   const [ansichtOrdnen, setAnsichtOrdnen] = useState(false)
@@ -1382,6 +1383,11 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {/* unten rechts die Suche, die Lupe, Mein Standort, XR und Vollbild, gleich gross nebeneinander (Michael, 2026-10-25: «Mein GPS-Standort soll
             neben dem … Vollbild-Icon sein. Gleiche Grösse nebeneinander»; «Button Mit VR-Brille neu benennen: XR … gleiche Größe und neben
             den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
+        {gemerkt && (
+          <div role="status" className="pointer-events-none absolute bottom-12 right-2 z-10 max-w-[calc(100%-1rem)] truncate rounded-lg bg-sbb-anthracite px-3 py-1.5 text-sm text-white shadow">
+            Ansicht «{gemerkt}» gemerkt, unten in der Liste
+          </div>
+        )}
         <div className="absolute bottom-2 right-2 flex max-w-[calc(100%-1rem)] items-center gap-2" style={desktop ? { zoom: DESKTOP_KNOPF_MASS, maxWidth: `calc((100% - 1rem) / ${DESKTOP_KNOPF_MASS})` } : undefined}>
           {/* eine Stufe hinaus, hinein geht es mit «Eintauchen» (Michael, 2026-10-30: «Die Fokusstufen müssen auch im Vollformat-Modus
               umgeschaltet werden können … wobei man nur hinauszoomen muss»; seit 2026-11-03 auch ausserhalb des Vollbilds, Michael: «Die Lupe zum
@@ -1394,6 +1400,19 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               </svg>
             </button>
           )}
+          <button type="button" onClick={() => {
+            const name = stufe === 'schweiz' ? 'Schweiz' : `${gesucht?.name ?? titel(gelaende[stufe]?.anker ?? null).replace(/^(um|am) /, '')}`
+            setAnsichten((l) => [ansichtJetzt(name), ...l].slice(0, ANSICHTEN_HOECHSTENS))
+            setAnsichtWeg(null)
+            setGemerkt(name)
+            window.clearTimeout(gemerktUhr.current)
+            gemerktUhr.current = window.setTimeout(() => setGemerkt(null), 2500)
+          }} aria-label="Ansicht merken" title={gemerkt ? 'Ansicht gemerkt' : 'Ansicht merken'}
+                  className={`flex size-8 flex-none items-center justify-center rounded-lg border ${KNOPF_AUS}`}>
+            {gemerkt ? <Stern voll /> : <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+            </svg>}
+          </button>
           <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
                   aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
                   title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
@@ -1561,24 +1580,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       </div>
       {/* gemerkte Ansichten (Michael, 2026-11-12): merken mit Namen, öffnen, als Link teilen, umbenennen, ordnen, nach links wischen oder × löscht */}
       <div className="mt-2 text-sm">
-        {merkenOffen ? (
-          <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => {
-            e.preventDefault()
-            const name = merkenName.trim() || 'Ansicht'
-            setAnsichten((l) => [ansichtJetzt(name), ...l].slice(0, ANSICHTEN_HOECHSTENS))
-            setMerkenOffen(false)
-          }}>
-            <input value={merkenName} onChange={(e) => setMerkenName(e.target.value)} maxLength={80} aria-label="Name der Ansicht" autoFocus
-                   className="min-w-40 flex-1 rounded-lg border border-sbb-cloud bg-white px-2 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
-            <button type="submit" className={EINTAUCHEN_KNOPF + ' !text-sm'}>Merken</button>
-            <button type="button" onClick={() => setMerkenOffen(false)} className="underline underline-offset-2">Abbrechen</button>
-          </form>
-        ) : (
-          <button type="button" onClick={() => {
-            setMerkenName(stufe === 'schweiz' ? 'Schweiz' : `${gesucht?.name ?? titel(gelaende[stufe]?.anker ?? null).replace(/^(um|am) /, '')}`)
-            setMerkenOffen(true)
-          }} className="underline underline-offset-2">Ansicht merken …</button>
-        )}
+        {ansichten.length > 0 && <h3 className="mt-2 font-bold">Gemerkte Ansichten</h3>}
         {/* wie die Probefahrten (Michael, 2026-11-15: «Favoriten Perspektiven soll man gleich wie andere Elemente auf Taktland löschen können (schieben).
             Mit Icons soll man sie bearbeiten und Teilen können. Reihenfolge auch editierbar machen»): wischen oder × löscht mit «Rückgängig», Stift benennt um,
             Teilen-Zeichen teilt den Link, «Reihenfolge ändern» mit ↑ und ↓ */}
@@ -1933,8 +1935,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             daneben. Ein Raum verfällt nach sechs Stunden.</p>
         </Abschnitt>
         <Abschnitt titel="Ansichten merken und teilen">
-          <p>Unter dem Modell «Ansicht merken …» hält fest, was du gerade siehst: die Stufe und das Feld, den Blick der Kamera, alle Knöpfe an der
-            Wand, die Zeit (jetzt oder eine Zeitreise) und ob der Ton aus ist. Ein Tipp auf den Namen öffnet die Ansicht wieder, nach links wischen
+          <p>Der Stern unten im Bild merkt sofort, was du gerade siehst, mit dem Namen des Orts oder Felds; die Ansicht steht danach unter dem Modell in der Liste. Gemerkt werden die Stufe und das Feld, der Blick der Kamera, die
+            Knöpfe, die Zeit (jetzt oder eine Zeitreise) und ob der Ton aus ist. Ein Tipp auf den Namen öffnet die Ansicht wieder, nach links wischen
             oder × löscht sie. Die Ansichten bleiben nur auf diesem Gerät und gehen verloren, wenn die Daten des Browsers gelöscht werden.
             Das Teilen-Zeichen gibt einen Link, der dieselbe Ansicht auf einem anderen Gerät öffnet; alles steht im Link selbst, nichts geht an einen Server
             von Taktland. Angesetzte Stücke (+) gehören nicht dazu, in der Brille gilt nur das Feld mit den Knöpfen, ohne Blick. Der Stift benennt eine Ansicht um, nach links wischen oder × löscht sie («Rückgängig» holt sie zurück), «Reihenfolge ändern» verschiebt sie mit ↑ und ↓.</p>
