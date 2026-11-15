@@ -77,9 +77,12 @@ export function dauerZiehen(v: SpielVorrat, hatName: (uic: number) => boolean, s
   return { f, von, bis, min }
 }
 
+/** Punkte in Schritten von 1: 100 genau getroffen, gleichmässig weniger mit jeder Minute daneben, 0 ab 2 · toleranz() + 1 Minuten
+ *  (seit 2026-11-15, vorher 100 bis toleranz(), 50 bis zum Doppelten; Michael: «Viel feinere Punktesbstimmung. Nicht 100 und 50 sondern im 1er schritt»);
+ *  Punkte gibt es so höchstens 22 Minuten daneben, 44 Minuten des Reglers (Regel 9) */
 export function dauerPunkte(min: number, tipp: number): number {
-  const d = Math.abs(tipp - min), t = toleranz(min)
-  return d <= t ? 100 : d <= 2 * t ? 50 : 0
+  const d = Math.abs(tipp - min), null_ab = 2 * toleranz(min) + 1
+  return Math.max(0, Math.round(100 * (1 - d / null_ab)))
 }
 
 const BEST = { puzzle: 'taktland.fahrplanpuzzle.best', dauer: 'taktland.fahrzeit.best' } as const
