@@ -1237,7 +1237,8 @@ je Fahrt bis drei Paare von Halten mit der Fahrzeit in Minuten (Abfahrt bis Anku
 Fahrten, 2'258 Paare, 195 KB; Logik in src/fahrplanspiele.ts, Darstellung komponenten/Fahrplanspiele.tsx; je fünf Runden, keine Linie zweimal; Puzzle:
 von erstem nach letztem Halt, vier Halte dazwischen gemischt, in der Reihenfolge tippen, je richtigem Platz 25 Punkte; Fahrzeit: Regler 0 bis 180 Minuten,
 volle Punkte bis 8 % daneben (2 bis 11 Minuten, toleranz), halbe bis zum Doppelten, so höchstens 44 Minuten als richtig gewertet (Regel 9); danach alle
-Halte der Fahrt mit Zeiten; Bestwert auf dem Gerät; Bilder der Kacheln vorerst die von Duell und Bahnhofsuche; in Anleitung, Spiele und auf taktland.ch genannt;
+Halte der Fahrt mit Zeiten; Bestwert auf dem Gerät; Bilder der Kacheln seit 2026-11-15 Michaels Illustrationen, hell und dunkel (src/assets/auftakt-puzzle-*.webp,
+auftakt-reisedauer-*.webp, 1344 breit; Michael: «Hier die Bilder für die Spiele Fahrplan Puzzle und Reisedauer»), vorher die von Duell und Bahnhofsuche; in Anleitung, Spiele und auf taktland.ch genannt;
 im Browser hier mit 390 × 900 gespielt.
 Seit 2026-11-15 das Puzzle auch für mehrere (Michael: «Fahrplan Puzzle auch für Mehrspieler bauen.»): «Wer spielt» wie bei Geo; «Mehrere auf diesem Gerät»
 reihum (bis 8 Namen, gemerkt), alle ordnen dieselbe Fahrt, danach Lösung mit Punkten je Spieler, am Schluss Rangliste (gleiche Punkte, gleicher Platz);

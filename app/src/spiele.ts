@@ -11,6 +11,10 @@ import erratenDunkel from './assets/auftakt-erraten-dunkel.webp'
 import erratenHell from './assets/auftakt-erraten-hell.webp'
 import fahrtDunkel from './assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from './assets/auftakt-fahrt-hell.webp'
+import puzzleDunkel from './assets/auftakt-puzzle-dunkel.webp'
+import puzzleHell from './assets/auftakt-puzzle-hell.webp'
+import reisedauerDunkel from './assets/auftakt-reisedauer-dunkel.webp'
+import reisedauerHell from './assets/auftakt-reisedauer-hell.webp'
 import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
 // seit 2026-11-12 ein eigenes Bild in Taktland, 3dland.ch behält seine (Michael: «Dieses Bild für Virtuelle Schweiz anwenden»)
@@ -74,18 +78,18 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Ortstafeln und Namen. Fahr ein '
       + 'Stück mit und tippe auf der Karte, wo du warst: je näher, desto mehr Punkte.',
   },
-  // Michael, 2026-11-14: «6 und 7 gerne umsetzen» (Fahrplan-Puzzle, Reisedauer); die Bilder vorerst die von Duell und Bahnhofsuche
+  // Michael, 2026-11-14: «6 und 7 gerne umsetzen» (Fahrplan-Puzzle, Reisedauer); seit 2026-11-15 Michaels Bilder (Michael: «Hier die Bilder für die Spiele Fahrplan Puzzle und Reisedauer»)
   {
     id: 'puzzle', titel: 'Fahrplan-Puzzle', status: 'spielbereit', adresse: '#/puzzle',
     kurz: 'Vier Halte eines Zugs, gemischt: In welcher Reihenfolge fährt er sie an?',
-    bild: { hell: duellHell, dunkel: duellDunkel, alt: 'Illustration: ein grosser und ein kleiner Bahnhof nebeneinander.' },
+    bild: { hell: puzzleHell, dunkel: puzzleDunkel, alt: 'Illustration: ein Zug am Perron, daneben ein Fahrplan mit vier Halten voller Fragezeichen.' },
     beschreibung: 'Ein Zug fährt von A nach B. Vier seiner Halte dazwischen sind gemischt: Bring sie in die richtige Reihenfolge. '
       + 'Mit dem Fahrplan von opentransportdata.swiss.',
   },
   {
     id: 'fahrzeit', titel: 'Reisedauer', status: 'spielbereit', adresse: '#/fahrzeit',
     kurz: 'Wie viele Minuten braucht der Zug laut Fahrplan von A nach B?',
-    bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt auf dem Tablet.' },
+    bild: { hell: reisedauerHell, dunkel: reisedauerDunkel, alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr, dahinter ein Zug auf einem Viadukt.' },
     beschreibung: 'Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? '
       + 'Stell den Regler ein: je näher, desto mehr Punkte.',
   },
