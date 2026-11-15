@@ -4,6 +4,10 @@ import bahnhoefeDunkel from '../assets/auftakt-bahnhoefe-dunkel.webp'
 import bahnhoefeHell from '../assets/auftakt-bahnhoefe-hell.webp'
 import brueckenDunkel from '../assets/auftakt-bruecken-dunkel.webp'
 import brueckenHell from '../assets/auftakt-bruecken-hell.webp'
+import puzzleDunkel from '../assets/auftakt-puzzle-dunkel.webp'
+import puzzleHell from '../assets/auftakt-puzzle-hell.webp'
+import reisedauerDunkel from '../assets/auftakt-reisedauer-dunkel.webp'
+import reisedauerHell from '../assets/auftakt-reisedauer-hell.webp'
 import duellDunkel from '../assets/auftakt-duell-dunkel.webp'
 import duellHell from '../assets/auftakt-duell-hell.webp'
 import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
@@ -143,6 +147,15 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
   schweiz3d: {
     hell: schweiz3dHell, dunkel: schweiz3dDunkel, breite: 1344, hoehe: 663,
     alt: 'Illustration: Jemand mit VR-Brille zielt am Tisch mit dem Strahl eines Controllers auf einen rot-weissen Zug, der im Modell einer Landschaft mit Wald, Tunneln und Bergen über einen Viadukt fährt; über dem Zug ein Schild «IC 0X» mit Pfeil, daneben ein Handy mit demselben Modell, draussen ein See und Berge.',
+  },
+  // Michael, 2026-11-15: «Bilder auch oben auf den Spielseiten zeigen», dieselben wie auf den Kacheln
+  puzzle: {
+    hell: puzzleHell, dunkel: puzzleDunkel, breite: 1344, hoehe: 757,
+    alt: 'Illustration: ein Zug am Perron unter einer Tafel «A → B», daneben ein Fahrplan mit vier Halten voller Fragezeichen, dahinter ein See und Berge.',
+  },
+  fahrzeit: {
+    hell: reisedauerHell, dunkel: reisedauerDunkel, breite: 1344, hoehe: 756,
+    alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr mit «? min», dahinter ein Zug auf einem Viadukt, ein See und Berge.',
   },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
