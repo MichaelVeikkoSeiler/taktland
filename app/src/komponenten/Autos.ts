@@ -237,6 +237,8 @@ export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: num
   msZiel?: number; wartet?: number
   /** wo es im letzten Bild gezeichnet war (Kollision), wie lange es schon vor einem anderen steht, ob es deshalb hindurch darf (dann versteckt, wo es überlappt) */
   bild?: AutoBild; steckt?: number; durch?: boolean
+  /** das Auto, vor dem es zuletzt bremsen musste (Stau oder gegenseitige Blockade) */
+  vor?: AutoPlatz
   heim?: { kk: AutoKette; richtung: 1 | -1; spur: number; ms: number } }
 
 /** übrige Strassen ohne Trennung: je Richtung eine Spur, so weit rechts der Achse wie ein Viertel der Breite laut Klasse, mindestens und
@@ -706,12 +708,15 @@ export function bogen(a: SpurLage, b: SpurLage, t: number, H: number): SpurLage 
  * Nie ineinander (Michael, 2026-11-16: «Ist es möglich es so zu konfigurieren dass Autos nie kollidieren?»): jedes Auto schaut nach den Lagen des
  * letzten Bilds bis KORRIDOR_VORAUS_M voraus in einem Streifen so breit wie es selbst und das andere (ohne Gegenverkehr und ohne die andere Spur derselben Autobahn) und bremst so, dass
  * KORRIDOR_LUECKE_M bleiben, auf allen Strassen, auch über Kreuzungen, Einmündungen und Kreisel hinweg. Sehen sich zwei gegenseitig (etwa quer in
- * einer Kreuzung), wartet, wer das andere rechts hat (Rechtsvortritt), sonst nach einem festen Zufall. Steht eines länger als KORRIDOR_STECKT_S
- * (vier Autos, die aufeinander warten), fährt es weiter, wird aber nicht gezeichnet, solange es ein anderes überlappt; ebenso nach einem Sprung der
- * Zeit. Was sich überlappt, prüft das Bild zuletzt noch einmal (Rechtecke, quer auf KORRIDOR_BREITE_ANTEIL, damit sich Gegenverkehr auf schmalen
+ * einer Kreuzung), wartet, wer das andere rechts hat (Rechtsvortritt), sonst nach einem festen Zufall. Stau darf sein (Michael, 2026-11-16: «Es darf
+ * auch mal einen Stau geben. Ist realistisch. Wenn der Verkehr zum Erliegen kommt kannst du eines nach dem anderen ja löschen damits wieder vorwärts
+ * geht»): wer hinter einem anderen steht, wartet, so lange es dauert. Nur wenn Autos im Kreis aufeinander warten (jedes steht länger als
+ * KORRIDOR_STECKT_S vor dem nächsten, das letzte vor dem ersten), verschwindet eines davon, das am längsten steht, eines nach dem anderen; es fährt
+ * unsichtbar weiter und erscheint erst wieder, wenn es keines mehr überlappt. Steht eines länger als KORRIDOR_HOECHSTENS_S, gilt es ebenso als
+ * blockiert. Ebenso nach einem Sprung der Zeit. Was sich überlappt, prüft das Bild zuletzt noch einmal (Rechtecke, quer auf KORRIDOR_BREITE_ANTEIL, damit sich Gegenverkehr auf schmalen
  * Strassen kreuzen kann). Alles gewählt.
  */
-export const KORRIDOR_VORAUS_M = 45, KORRIDOR_LUECKE_M = 2, KORRIDOR_RAND_M = 0.3, KORRIDOR_STECKT_S = 10, KORRIDOR_BREITE_ANTEIL = 0.8
+export const KORRIDOR_VORAUS_M = 45, KORRIDOR_LUECKE_M = 2, KORRIDOR_RAND_M = 0.3, KORRIDOR_STECKT_S = 8, KORRIDOR_HOECHSTENS_S = 120, KORRIDOR_BREITE_ANTEIL = 0.8
 export interface AutoBild { a: AutoPlatz; e: number; n: number; de: number; dn: number; lang: number; breit: number }
 const ZELLE_M = KORRIDOR_VORAUS_M
 const zelle = (e: number, n: number) => Math.floor(e / ZELLE_M) * 100_003 + Math.floor(n / ZELLE_M)
@@ -751,12 +756,13 @@ function vortritt(x: AutoBild, y: AutoBild) {
 /** Platz bis zum nächsten Auto im Weg (nach dem Raster des letzten Bilds) minus die Lücke */
 export function korridorPlatz(x: AutoBild, raster: AutoRaster): number {
   let platz = Infinity
+  x.a.vor = undefined
   for (const y of raster.nahe(x.e, x.n)) {
     if (y.a === x.a) continue
     const p = imWeg(x, y)
     if (p >= platz) continue
     if (imWeg(y, x) < Infinity && vortritt(x, y)) continue
-    platz = p
+    platz = p; x.a.vor = y.a
   }
   return platz - KORRIDOR_LUECKE_M
 }
@@ -778,4 +784,22 @@ export function ueberlappt(x: AutoBild, raster: AutoRaster): boolean {
     if (!getrennt) return true
   }
   return false
+}
+
+/** Autos, die im Kreis aufeinander warten: je Kreis das eine, das am längsten steht (eines nach dem anderen, je Bild höchstens eines je Kreis) */
+export function blockadeLoesen(autos: Iterable<AutoPlatz>) {
+  const fertig = new Set<AutoPlatz>()
+  for (const a of autos) {
+    if (fertig.has(a) || a.durch || (a.steckt ?? 0) <= KORRIDOR_STECKT_S) continue
+    if ((a.steckt ?? 0) > KORRIDOR_HOECHSTENS_S) { a.durch = true; continue }
+    const weg: AutoPlatz[] = []
+    let b: AutoPlatz | undefined = a
+    while (b && !fertig.has(b) && !weg.includes(b) && weg.length < 60 && !b.durch && (b.steckt ?? 0) > KORRIDOR_STECKT_S) { weg.push(b); b = b.vor }
+    for (const c of weg) fertig.add(c)
+    const i = b ? weg.indexOf(b) : -1
+    if (i < 0) continue
+    let wer = weg[i]
+    for (const c of weg.slice(i)) if ((c.steckt ?? 0) > (wer.steckt ?? 0)) wer = c
+    wer.durch = true
+  }
 }
