@@ -13,6 +13,9 @@ export const LICHT_STRASSE_M = 14, LICHT_BAHNHOF_M = 20, LICHT_STRASSE_FARBE = '
  *  2026-10-29, Thun: «Die Lichtkegel bei den Bahnhöfen 15% weniger hell», vorher 0,6) */
 export const LICHT_BAHNHOF_STAERKE = 0.51
 export const LICHT_HOECHSTENS = 60_000
+/** im Feld von 16 km leicht sichtbar (Michael, 2026-11-16: «Die Städte sollen nicht erst ab Stufe 4 erleuchten sondern bereits bei Stufe 16 leicht
+ *  sichtbar sein»): dort wäre ein Fleck von 14 m kleiner als ein Bildpunkt, darum 4-mal so gross und ein Drittel so hell, ohne Masten (gewählt) */
+export const LICHT_FERN = { gross: 4, hell: 0.5 }
 /** je Lampe ein schlichter Mast am Ort der Lampe (Michael, 2026-10-29: «Kann man bei den Lichtkegel doch noch einen Masten am Strassenrand
  *  einfügen? Nur was ganz simples?»): ein dunkelgrauer Pfosten mit einem Kopf, der nachts leuchtet; Höhe und Dicke gewählt, in keiner
  *  Quelle; die Lage ist die erfundene Lampe auf der Achse der Strasse oder des Gleises, um den halben Abstand zum Rand versetzt
@@ -41,7 +44,9 @@ export interface Strassenlampen {
 export function lampenBauen(l: Lampen, hoehe: (e: number, n: number) => number, X: (e: number) => number, Y: (h: number) => number,
                             Z: (n: number) => number,
                             /** wohin der Mast rückt, wenn er an seiner Stelle (LV95) im Weg steht, null: kein Mast (im Führerstand die gezeichnete Linie) */
-                            frei?: (e: number, n: number) => [number, number] | null): Strassenlampen {
+                            frei?: (e: number, n: number) => [number, number] | null,
+                            /** aus der Ferne (Feld von 16 km): Flecken so viel grösser und so viel schwächer, ohne Masten (LICHT_FERN) */
+                            fern?: { gross: number; hell: number }): Strassenlampen {
   const stoff = new THREE.MeshBasicMaterial({ map: lichtBild(), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
     polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4, toneMapped: false })
   const geo = new THREE.PlaneGeometry(1, 1).rotateX(-Math.PI / 2)
@@ -60,10 +65,11 @@ export function lampenBauen(l: Lampen, hoehe: (e: number, n: number) => number, 
   const schritt = l.e.length / anzahl
   const mn = new THREE.InstancedMesh(mastGeo, mastStoff, anzahl), kn = new THREE.InstancedMesh(kopfGeo, kopfStoff, anzahl)
   mn.castShadow = true; mn.frustumCulled = kn.frustumCulled = false
+  if (fern) mn.visible = kn.visible = false
   const d = LICHT_MAST_DICKE_M / 1000, oben = new THREE.Vector3(), seite = new THREE.Vector3(), achse = new THREE.Vector3(0, 1, 0)
   for (let i = 0; i < anzahl; i++) {
     const j = Math.floor(i * schritt), bahnhof = l.art[j] === 2
-    const h = hoehe(l.e[j], l.n[j]), r = (bahnhof ? LICHT_BAHNHOF_M : LICHT_STRASSE_M) / 1000
+    const h = hoehe(l.e[j], l.n[j]), r = (bahnhof ? LICHT_BAHNHOF_M : LICHT_STRASSE_M) / 1000 * (fern?.gross ?? 1)
     v.set(X(l.e[j]), Y(Number.isFinite(h) ? h : 0) + 0.0005, Z(l.n[j]))
     sk.set(2 * r, 1, 2 * r)
     m.compose(v, q, sk)
@@ -96,7 +102,7 @@ export function lampenBauen(l: Lampen, hoehe: (e: number, n: number) => number, 
     licht: n, masten: mn, koepfe: kn,
     nacht: (f) => {
       n.visible = f > 0
-      stoff.opacity = LICHT_HELL * f
+      stoff.opacity = LICHT_HELL * f * (fern?.hell ?? 1)
       kopfStoff.color.copy(kopfDunkel).lerp(kopfHell, f)
     },
     weg: () => {

@@ -777,6 +777,14 @@ Nadelbäume auch im Flachland (Michael, 2026-11-16: «es gibt auch im Flachland,
 Regen aus der Nähe in «3D Schweiz» seit 2026-11-16 kürzer (Michael, Bildschirmfoto im Feld von 1 km nahe am Boden, die Striche wie weisse Pfosten): liegt die Kamera näher als
              0,8 Breiten an dem Punkt, den sie anschaut, wird jeder Strich im selben Verhältnis kürzer, bis auf 12 % (NAH_AB, NAH_MIN in Niederschlag.ts), Deckkraft 0,45 statt 0,6
              (STRICH_DECKT), alles gewählt; nicht in der Brille; hier nicht im Browser angeschaut (es regnete nur laut Wetter)
+Suche, Uhr, Stadtlicht und Züge in «3D Schweiz» seit 2026-11-16 (Michael: «Oben links im Modell die Suchmaske weniger breit machen … Auf dem Desktop recht davon
+             und auf dem Mobile darunter das aktuelle Datum und die Uhrzeit (direkt freigestellt auf dem Bild. Je nach Helligkeit muss die Schrift hell oder umgekehrt dunkel sein.
+             Die Städte sollen nicht erst ab Stufe 4 erläuchten sondern bereits bei Stufe 16 leicht sichbar sein … Dafür müssen die Züge nicht bereits bei 16km-Stufe sichtbar
+             werden»): Suchfeld 176 px (w-44); SzenenUhr «Mo. 16.11.2026 · 21:30» der Szene (Schweizer Zeit, mit Zeitreise), fett 13 px ohne Hintergrund, nachts (fensterNacht über 0,5)
+             weiss mit dunklem Schein, sonst dunkel mit hellem, am Desktop rechts der Suche, sonst darunter («Eintauchen» auf dem Handy top-[4.25rem], die Zeilen der Züge
+             top-[7.25rem]); im Feld von 16 km die Lampen aus data/strassenlicht ohne Gebäude, 4-mal so grosse Flecken, halb so hell, ohne Masten (LICHT_FERN in Strassenlicht.ts,
+             gewählt; vorher hingen sie an «Gebäude», die es dort nicht gibt); Züge (Knopf, Zeichnen) nur noch in den Feldern von 4 km und 1 km (zugFern), Schiffe weiter ab 16 km;
+             im Browser hier in Bern um 21:30 mit 1300 und 390 Bildpunkten angeschaut
 Zuggeräusch in «3D Schweiz» seit 2026-11-16 nur in den Feldern von 4 km und 1 km, ebenso der Pfiff (ZUG_HOEREN_STUFEN; Michael: «schon in einer mittleren Zoom-Stufe einen Zug höre, als wäre er gleich vor mir. Die Züge sollte man erst bei der vorletzten und letzten Stufe hören»); in der Anleitung («Geräusche»)
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
