@@ -17,6 +17,8 @@ export type Punkt = [number, number, number]
 export interface Stand {
   stufe: string
   felder: Record<string, { e: number; n: number; seite: number }>
+  /** angesetzte Stücke (+ und −) je Stufe: von bis in Stücken um das erste Feld, Ost–West und Süd–Nord (Michael, 2026-11-16) */
+  ausdehnung?: Record<string, [number, number, number, number]>
   wahl: { e: number; n: number; seite: number } | null
   schalter: Record<string, boolean>
   /** null: jetzt; sonst die Zeit der Szene in ms */
