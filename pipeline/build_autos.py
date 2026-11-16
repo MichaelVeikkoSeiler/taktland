@@ -114,9 +114,29 @@ def winkel(de, dn):
     return math.atan2(dn, de)
 
 
-def ketten_bilden(stuecke):
-    """Ketten aus Stücken {p, einweg}: gerichtete verbunden, wo genau eines weiterführt, ungerichtete an Knoten mit genau zwei; je Kette die
-    Liste (Stück, umgekehrt)"""
+def kreuzungen_finden(r):
+    """Knoten, an denen drei oder mehr Stücke aller Strassen mit Autos zusammenkommen (Autobahnen, Autostrassen und STRASSEN): dort endet jede
+    Kette, damit die App die Autos auf jede anschliessende Strasse weiterfahren lassen kann (Michael, 2026-11-16: «bei den Kreiseln und Kreuzungen,
+    dass sie einfach verschwinden»); vorher lief eine Kette durch eine Kreuzung mit einer Strasse anderer Klasse hindurch, und im Kreisel war der
+    ganze Ring eine Kette"""
+    knoten = lambda q: (round(q[0] / KNOTEN_M), round(q[1] / KNOTEN_M))
+    grad = defaultdict(int)
+    for i, rec in enumerate(r.iterRecords(fields=["OBJEKTART"])):
+        if rec[0] not in STRASSEN and rec[0] not in ("Autobahn", "Autostrasse"):
+            continue
+        sh = r.shape(i)
+        teile = list(sh.parts) + [len(sh.points)]
+        for a_, b_ in zip(teile, teile[1:]):
+            if b_ - a_ >= 2:
+                grad[knoten(sh.points[a_])] += 1; grad[knoten(sh.points[b_ - 1])] += 1
+    raus = {k for k, g in grad.items() if g >= 3}
+    print(f"Kreuzungen: {len(raus)}")
+    return raus
+
+
+def ketten_bilden(stuecke, kreuzungen=frozenset()):
+    """Ketten aus Stücken {p, einweg}: gerichtete verbunden, wo genau eines weiterführt, ungerichtete an Knoten mit genau zwei, nie über eine
+    Kreuzung; je Kette die Liste (Stück, umgekehrt)"""
     knoten = lambda q: (round(q[0] / KNOTEN_M), round(q[1] / KNOTEN_M))
     aus, ein, an = defaultdict(list), defaultdict(list), defaultdict(list)
     for k, st in enumerate(stuecke):
@@ -129,7 +149,7 @@ def ketten_bilden(stuecke):
     for k, st in enumerate(stuecke):
         if st["einweg"]:
             b = knoten(st["p"][-1])
-            if len(aus[b]) == 1 and len(ein[b]) == 1:
+            if len(aus[b]) == 1 and len(ein[b]) == 1 and b not in kreuzungen:
                 nach[k] = aus[b][0]
     vor = {v: k for k, v in nach.items()}
     ketten, gesehen = [], set()
@@ -152,7 +172,7 @@ def ketten_bilden(stuecke):
         if st["einweg"] or k in gesehen:
             continue
         x, kn, besucht = k, knoten(st["p"][0]), {k}
-        while len(an[kn]) == 2:
+        while len(an[kn]) == 2 and kn not in kreuzungen:
             y = an[kn][0] if an[kn][1] == x else an[kn][1]
             if y in besucht or y in gesehen or y == x:
                 break
@@ -165,7 +185,7 @@ def ketten_bilden(stuecke):
             kette.append((x, umg))
             kn = anderes_ende(x, kn)
             weiter = [y for y in an[kn] if y != x and y not in gesehen]
-            x = weiter[0] if len(an[kn]) == 2 and weiter else None
+            x = weiter[0] if len(an[kn]) == 2 and kn not in kreuzungen and weiter else None
         ketten.append(kette)
     return ketten
 
@@ -287,6 +307,7 @@ def main():
 
     r = shapefile.Reader(str(ROH / "swissTLM3D_TLM_STRASSE"), encoding="utf-8")
     felder = [f[0] for f in r.fields[1:]]
+    kreuzungen = kreuzungen_finden(r)
     stuecke = []  # {p: [(e,n,z)], einweg, kb}
     for i, rec in enumerate(r.iterRecords(fields=["OBJEKTART", "KUNSTBAUTE", "RICHTUNGSG"])):
         art, kb, rg = rec
@@ -348,7 +369,7 @@ def main():
     for k, st in enumerate(stuecke):
         if st["einweg"]:
             b = knoten(st["p"][-1])
-            if len(aus[b]) == 1 and len(ein[b]) == 1:
+            if len(aus[b]) == 1 and len(ein[b]) == 1 and b not in kreuzungen:
                 nach[k] = aus[b][0]
     vor = {v: k for k, v in nach.items()}
     ketten = []  # Liste von (stück, umgekehrt)
@@ -373,7 +394,7 @@ def main():
             continue
         # zuerst rückwärts zum Anfang der Kette
         x, kn, besucht = k, knoten(st["p"][0]), {k}
-        while len(an[kn]) == 2:
+        while len(an[kn]) == 2 and kn not in kreuzungen:
             y = an[kn][0] if an[kn][1] == x else an[kn][1]
             if y in besucht or y in gesehen or y == x:
                 break
@@ -387,7 +408,7 @@ def main():
             kette.append((x, umg))
             kn = anderes_ende(x, kn)
             weiter = [y for y in an[kn] if y != x and y not in gesehen]
-            x = weiter[0] if len(an[kn]) == 2 and weiter else None
+            x = weiter[0] if len(an[kn]) == 2 and kn not in kreuzungen and weiter else None
         ketten.append(kette)
     print(f"Ketten: {len(ketten)}")
 
@@ -490,11 +511,13 @@ def main():
         for einweg in (False, True):
             ids = [k for k, st in enumerate(strassen) if st["klasse"] == klasse and st["einweg"] == einweg]
             teil = [strassen[k] for k in ids]
-            for kette in ketten_bilden(teil):
+            for kette in ketten_bilden(teil, kreuzungen):
                 laengen = [sum(math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(teil[x]["p"], teil[x]["p"][1:])) for x, _ in kette]
                 L = sum(laengen)
                 mit = [(werte[ids[x]], l) for (x, _), l in zip(kette, laengen) if werte[ids[x]] is not None]
-                bleibt = klasse in OHNE_WERT_BLEIBEN
+                # seit 2026-11-16 bleiben alle Strassen als Verbindung (ohne eigene Autos, wenn der Wert fehlt oder unter STRASSE_AB_DTV liegt), damit
+                # die Autos an jeder Kreuzung weiterfahren können (Michael: «bei den Kreiseln und Kreuzungen, dass sie einfach verschwinden»)
+                bleibt = True
                 if L < 1 or (sum(l for _, l in mit) < L / 2 and not bleibt):
                     continue
                 # Median nach Länge
