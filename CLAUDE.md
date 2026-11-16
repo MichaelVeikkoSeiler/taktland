@@ -737,6 +737,17 @@ data/waldmischung/  Waldmischungsgrad LFI des BAFU (Michael, 2026-11-16: «Stimm
              (.mgz, UInt8 0 bis 100, 255 ohne Angabe, 492 Kacheln, 7,8 MB, in Git, export_app kopiert sie); in der App waldmischungLaden in src/gelaende.ts, istNadel in src/baumart.ts
              mit laub: Nadelbaum, wenn der feste Zufall der Stelle über dem Anteil liegt; nur ohne Angabe die Annahme nach der Höhe (unten); in «3D Schweiz» und im Führerstand;
              in Anleitung, Quellen und Fusszeile beider Seiten; bei Köniz laut Quelle im Mittel 57 % Laub
+Autos weiter über Kreuzungen und Kreisel, runder (Michael, 2026-11-16: «Haben wir hier alles Beste herausgenommen aus den Daten … bei den Kreiseln und Kreuzungen, dass sie
+             einfach verschwinden … Die Autos sind auch ein bisschen eckig»): build_autos.py bricht jede Kette an jeder Kreuzung (Knoten mit drei oder mehr Stücken aller Strassen mit
+             Autos, kreuzungen_finden; vorher lief eine Kette durch Kreuzungen mit Strassen anderer Klasse, und im Kreisel war der Ring eine Kette), nimmt die Verbindungen in
+             Kreuzungen (OBJEKTART Verbindung) und alle übrigen Strassen ohne Wert oder unter 200 Fahrzeugen am Tag als Ketten ohne eigene Autos dazu, Kreisel laut swissTLM3D
+             (KREISEL) als Einbahn im Gegenuhrzeigersinn um die Mitte ihrer Stücke (kreisel_drehen; alle 3'515 Kreisel waren schon so gezeichnet) mit 25 km/h, und schreibt
+             je Stück Anfang und Ende der Kette (Autobahnen als Wert 10 bis 13, übrige 16 bis 19); 629'560 Ketten, 87'221 km, 46 MB (vorher 15 MB); in der App
+             (netzBauen, weiterNach, kmhAuf in Autos.ts) fährt jedes Auto am Ende seiner Kette auf eine anschliessende (Ende bis 3 m daneben, Einbahn nur vorwärts, keine Wende
+             über 150°), gewählt nach dem Verkehr (Strassen ohne eigene Autos selten), sonst wieder vom Anfang seiner eigenen; nach einem Sprung der Zeit alle wieder an
+             ihrem Platz; ob es fährt und ob es ein Lastwagen ist, nach seiner eigenen Kette; im Browser bei Köniz in 90 s 641-mal abgebogen, 109-mal zurück, davon 6 im
+             Feld (vorher jedes Mal an jeder Kreuzung); die Formen je Art aus einem Umriss von der Seite mit schrägen Scheiben, gerundet, mit vier Rädern (AUTO_PROFILE,
+             gewählt); in der Anleitung («Autos»)
 Regen und Schnee schräg im Wind (Michael, 2026-11-16: «je stärker der Wind ist, desto schräger fallen die Regen- oder auch Schneeflocken herab»): in «3D Schweiz» der Wind
              der Bäume (Mittel der vier Windhosen, voll ab 45 km/h), je Meter Fall bei vollem Wind 0,9 m (Regen) und 1,6 m (Schnee) waagrecht in Windrichtung, am Boden an der Stelle,
              darüber gegen den Wind versetzt, ausserhalb der Säule nicht gezeichnet (REGEN_SCHRAEG, SCHNEE_SCHRAEG, windSetzen in Niederschlag.ts); in der Modellbahn und beim Fahren

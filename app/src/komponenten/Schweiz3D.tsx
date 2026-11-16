@@ -6981,11 +6981,17 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             a.lauf = (a.lauf ?? 0) + a.ms * dt
             for (let i = 0; i < 4 && a.lauf >= a.kk.L; i++) {
               const rest: number = a.lauf - a.kk.L, w = weiterNach(autoNetz, a, a.kk, a.richtung)
+              if (import.meta.env.VITE_S3D_TEST && !w) {
+                const en = a.kk.enden, z = window as unknown as { s3dOffen?: Array<[number, number, number, number]> }
+                if (en) { const e = a.richtung === 1 ? en[2] : en[0], n = a.richtung === 1 ? en[3] : en[1]; if (drin(e, n)) (z.s3dOffen ??= []).push([Math.round(e), Math.round(n), a.kk.art, a.richtung]) }
+                else (z.s3dOffen ??= []).push([0, 0, a.kk.art, a.richtung])
+              }
               if (w) {
                 a.kk = w.kk; a.richtung = w.richtung
                 if (w.kk.art !== 0) a.spur = 0
                 a.ms = h.ms * kmhAuf(w.kk, a.spur) / kmhAuf(h.kk, h.spur)
               } else { a.kk = h.kk; a.richtung = h.richtung; a.spur = h.spur; a.ms = h.ms }
+              if (import.meta.env.VITE_S3D_TEST) { const z = window as unknown as { s3dWeiter?: number[] }; z.s3dWeiter ??= [0, 0]; z.s3dWeiter[w ? 0 : 1]++ }
               a.abgebogen = (a.abgebogen ?? 0) + 1
               // ein Rückstand im Stau bleibt erhalten
               a.lauf = rest - (verzug.get(a)?.v ?? 0)

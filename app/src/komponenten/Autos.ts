@@ -581,6 +581,8 @@ export function spurBei(k: AutoKette, s: number): [number, number] | null {
  * fährt es wie bisher wieder vom Anfang seiner eigenen Kette. Erfunden: welche Autos wohin abbiegen; Abbiegespuren, Vortritt und Ampeln gibt es nicht.
  */
 export const ANSCHLUSS_M = 3, WENDE_GRAD = 150, GEWICHT_DAZU = 150
+/** Strassen ohne eigene Autos (zu wenig Verkehr laut Modell oder ohne Wert, etwa Quartierstrassen) zählen so viel, damit selten jemand hineinfährt (gewählt) */
+const GEWICHT_OHNE = 12
 const NETZ_ZELLE_M = 4
 export type AutoNetz = Map<string, Array<{ kk: AutoKette; ende: 0 | 1 }>>
 const netzSchl = (e: number, n: number) => `${Math.round(e / NETZ_ZELLE_M)}_${Math.round(n / NETZ_ZELLE_M)}`
@@ -638,7 +640,8 @@ export function weiterNach(netz: AutoNetz, a: AutoPlatz, kk: AutoKette, richtung
       const oe = r === 1 ? c.kk.richtungen[0] : -c.kk.richtungen[2], on = r === 1 ? c.kk.richtungen[1] : -c.kk.richtungen[3]
       if ((ie || in_) && (oe || on) && ie * oe + in_ * on < cosWende) continue
       if (kand.some((x) => x.kk === c.kk)) continue
-      kand.push({ kk: c.kk, richtung: r, w: Math.max(c.kk.tag, c.kk.nacht) / (c.kk.art === 3 || c.kk.art === 0 ? 1 : 2) + GEWICHT_DAZU })
+      const verkehr = Math.max(c.kk.tag, c.kk.nacht) / (c.kk.art === 3 || c.kk.art === 0 ? 1 : 2)
+      kand.push({ kk: c.kk, richtung: r, w: verkehr + (verkehr > 0 ? GEWICHT_DAZU : GEWICHT_OHNE) })
     }
   }
   if (!kand.length) return null
