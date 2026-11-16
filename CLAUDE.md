@@ -725,6 +725,12 @@ Symbole oben rechts in «3D Schweiz» seit 2026-11-14 klarer (Michael: «Icon m�
 Symbole im Vollbild von «3D Schweiz» seit 2026-11-15 in so vielen Spalten, wie die Höhe verlangt (vollZeilen: oben 56 px, unten 48 px, je Symbol 40 px; vorher lag die Spalte
              quer auf dem Handy über XR und Vollbild, im Browser hier mit 740 × 360 nachgestellt und behoben; Michael vor der Bekanntmachung: «Ja gerne»); im Datenschutz
              «Favoriten (Bahnhöfe, Fahrten und Ansichten der Virtuellen Schweiz)» statt «gemerkte Fahrten» und «gemerkte Ansichten»
+Laubbäume durchs Jahr in «3D Schweiz» und im Führerstand (Michael, 2026-11-16: «Ist es möglich, die Laubbäume saisonal einzufärben? Im Winter sollten sie nur noch
+             Äste haben. Es bräuchte allerdings eine Übergangszeit»): komponenten/Laub.ts im Shader der Laubbäume (istNadel falsch), nach dem Tag im Jahr der Szene (szenenZeit):
+             Austrieb Tag 100 bis 128, danach 25 Tage heller, Färben 278 bis 300 (gelb bis rotbraun, so hell wie das Luftbild), Laubfall 292 bis 322, sonst Äste als dunkles
+             Netz in der Krone (Rauschen, Lücken durchsichtig, auch im Schatten in «3D Schweiz»); je Baum ±8 Tage, je 100 m über 450 m im Frühling 3 Tage später, im Herbst
+             2 früher (AUSTRIEB, FAERBEN, FALL, STREU_TAGE … gewählt, in keiner Quelle); in der Anleitung («Was erfunden ist»); im Browser bei Köniz im Juli, Oktober und Januar
+             angeschaut, im Führerstand nicht
 Zuggeräusch in «3D Schweiz» seit 2026-11-16 nur in den Feldern von 4 km und 1 km, ebenso der Pfiff (ZUG_HOEREN_STUFEN; Michael: «schon in einer mittleren Zoom-Stufe einen Zug höre, als wäre er gleich vor mir. Die Züge sollte man erst bei der vorletzten und letzten Stufe hören»); in der Anleitung («Geräusche»)
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
