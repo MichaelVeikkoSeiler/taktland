@@ -731,6 +731,13 @@ Laubbäume durchs Jahr in «3D Schweiz» und im Führerstand (Michael, 2026-11-1
              Netz in der Krone (Rauschen, Lücken durchsichtig, auch im Schatten in «3D Schweiz»); je Baum ±8 Tage, je 100 m über 450 m im Frühling 3 Tage später, im Herbst
              2 früher (AUSTRIEB, FAERBEN, FALL, STREU_TAGE … gewählt, in keiner Quelle); in der Anleitung («Was erfunden ist»); im Browser bei Köniz im Juli, Oktober und Januar
              angeschaut, im Führerstand nicht
+Regen und Schnee schräg im Wind (Michael, 2026-11-16: «je stärker der Wind ist, desto schräger fallen die Regen- oder auch Schneeflocken herab»): in «3D Schweiz» der Wind
+             der Bäume (Mittel der vier Windhosen, voll ab 45 km/h), je Meter Fall bei vollem Wind 0,9 m (Regen) und 1,6 m (Schnee) waagrecht in Windrichtung, am Boden an der Stelle,
+             darüber gegen den Wind versetzt, ausserhalb der Säule nicht gezeichnet (REGEN_SCHRAEG, SCHNEE_SCHRAEG, windSetzen in Niederschlag.ts); in der Modellbahn und beim Fahren
+             der Wind der Station oder der gewählten Stunde (NIEDER_WIND_VOLL_KMH in Relief.tsx, statt eines festen leichten Versatzes), alles gewählt; in «Was erfunden ist»; nicht im Browser
+             angeschaut
+Nadelbäume auch im Flachland (Michael, 2026-11-16: «es gibt auch im Flachland, bei 600 Meter zum Beispiel über Meer, auch viele Tannenbäume … ein Mischverhältnis»): bis 800 m
+             im Wald 40 %, bei Einzelbäumen 10 %, bis 1'500 m steigend auf 100 % (NADEL_TIEF_WALD, NADEL_TIEF_EINZELN in src/baumart.ts, gewählt, in keiner Quelle); in der Anleitung
 Regen aus der Nähe in «3D Schweiz» seit 2026-11-16 kürzer (Michael, Bildschirmfoto im Feld von 1 km nahe am Boden, die Striche wie weisse Pfosten): liegt die Kamera näher als
              0,8 Breiten an dem Punkt, den sie anschaut, wird jeder Strich im selben Verhältnis kürzer, bis auf 12 % (NAH_AB, NAH_MIN in Niederschlag.ts), Deckkraft 0,45 statt 0,6
              (STRICH_DECKT), alles gewählt; nicht in der Brille; hier nicht im Browser angeschaut (es regnete nur laut Wetter)

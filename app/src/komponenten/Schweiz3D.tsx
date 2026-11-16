@@ -1765,8 +1765,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle); Fenster und ihr Licht in der Nacht gezeichnet, Stockwerke von 3 m, Fenster
             alle 3,2 m und der Anteil, der zu jeder Stunde brennt (abends gut ein Drittel, nachts um 3 Uhr wenige), sind Annahmen. Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
-            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; bis 800 m über Meer Laubbäume, ab 1'500 m Nadelbäume,
-            dazwischen gemischt, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
+            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; bis 800 m über Meer im Wald 40 % Nadelbäume, ab 1'500 m nur Nadelbäume,
+            dazwischen steigend, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
         </details>
       )}
       </>)}
@@ -2084,6 +2084,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; die Fussgänger, für die Autos halten, und wann dabei gehupt wird, sind erfunden; das Flugzeug und der Helikopter, die man dazu fliegen sieht, sind erfunden: Gestalt, Farben, Höhe (150 und 120 m über dem Gelände), Richtung und Tempo; wann gehupt wird, ist gewählt; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
+            <li>Laub- oder Nadelbaum: bis 800 m über Meer im Wald 40 % Nadelbäume, bei einzelnen Bäumen 10 %, darüber mehr, ab 1'500 m nur Nadelbäume (gewählt).</li>
+            <li>Regen und Schnee fallen schräg, je stärker der Wind der Windhosen, desto schräger, ganz schräg ab 45 km/h; Schnee schräger als Regen (gewählt).</li>
             <li>Laubbäume durchs Jahr, nach dem Datum der Szene: Austrieb etwa Mitte April bis Anfang Mai, zuerst heller, Herbstfarben ab
               Anfang Oktober, Laubfall von Ende Oktober bis Mitte November, im Winter nur Äste; jeder Baum ein paar Tage früher oder später, weiter oben
               im Frühling später und im Herbst früher. Tage und Farben sind gewählt, nicht gemessen; die Farbe im Sommer ist die des Luftbilds.</li>
@@ -7320,6 +7322,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       auge.setFromMatrixPosition(cam.matrixWorld)
       // in der Brille die Stelle des Auges im Modell: dort werden die Striche mit dem Abstand kürzer (Niederschlag.ts, BRILLE_*)
       const lokal = k.renderer.xr.isPresenting ? ns.gruppe.worldToLocal(auge.clone()) : null
+      // schräg im Wind: derselbe Wind wie bei den Bäumen (Mittel der vier Windhosen, voll ab BAUM_WIND_VOLL_KMH)
+      ns.windSetzen(BAUM_WIND.uRichtung.value.x, BAUM_WIND.uRichtung.value.y, BAUM_WIND.uWind.value)
       ns.schritt(Math.min(0.1, (t - alt) / 1000), mitte.distanceTo(auge) / (W * k.wurzel.scale.x),
         lokal ? { x: lokal.x, y: lokal.y, z: lokal.z, breite: W } : undefined,
         lokal ? undefined : k.kamera.position.distanceTo(k.steuerung.target) / (W * k.wurzel.scale.x))
@@ -7620,7 +7624,7 @@ function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0:
   const laubStoff = new THREE.MeshLambertMaterial()
   baumWiegen(laubStoff); laubSaison(laubStoff, 1, 1000, 0.5)
   const hoehen = liste.map(([e, n]) => bestandHoehe(b, e, n))
-  const nadel = liste.map(([e, n], i) => istNadel(e, n, hoehen[i]))
+  const nadel = liste.map(([e, n, art], i) => istNadel(e, n, hoehen[i], art > 0))
   const anzahlNadel = nadel.filter(Boolean).length
   const netze = [new THREE.InstancedMesh(krone, laubStoff, liste.length - anzahlNadel), new THREE.InstancedMesh(kegel, stoff, anzahlNadel)]
   netze[0].customDepthMaterial = laubSchatten(1, 1000, 0.5)
