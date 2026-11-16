@@ -731,6 +731,9 @@ Laubbäume durchs Jahr in «3D Schweiz» und im Führerstand (Michael, 2026-11-1
              Netz in der Krone (Rauschen, Lücken durchsichtig, auch im Schatten in «3D Schweiz»); je Baum ±8 Tage, je 100 m über 450 m im Frühling 3 Tage später, im Herbst
              2 früher (AUSTRIEB, FAERBEN, FALL, STREU_TAGE … gewählt, in keiner Quelle); in der Anleitung («Was erfunden ist»); im Browser bei Köniz im Juli, Oktober und Januar
              angeschaut, im Führerstand nicht
+Regen aus der Nähe in «3D Schweiz» seit 2026-11-16 kürzer (Michael, Bildschirmfoto im Feld von 1 km nahe am Boden, die Striche wie weisse Pfosten): liegt die Kamera näher als
+             0,8 Breiten an dem Punkt, den sie anschaut, wird jeder Strich im selben Verhältnis kürzer, bis auf 12 % (NAH_AB, NAH_MIN in Niederschlag.ts), Deckkraft 0,45 statt 0,6
+             (STRICH_DECKT), alles gewählt; nicht in der Brille; hier nicht im Browser angeschaut (es regnete nur laut Wetter)
 Zuggeräusch in «3D Schweiz» seit 2026-11-16 nur in den Feldern von 4 km und 1 km, ebenso der Pfiff (ZUG_HOEREN_STUFEN; Michael: «schon in einer mittleren Zoom-Stufe einen Zug höre, als wäre er gleich vor mir. Die Züge sollte man erst bei der vorletzten und letzten Stufe hören»); in der Anleitung («Geräusche»)
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften

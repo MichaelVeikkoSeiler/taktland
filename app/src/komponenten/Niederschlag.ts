@@ -12,6 +12,11 @@ const ANZAHL = 6000
 const FERN_AB = 1.2, FERN_MIN = 0.15
 /** und kürzere Striche, kleinere Flocken (Michael, 2026-10-25: «Regentropfen kleiner machen, wenn man wegzoomt»), bis auf KLEIN_MIN (gewählt) */
 const KLEIN_MIN = 0.3
+/** und aus der Nähe ebenso kürzer (Michael, 2026-11-16, Bildschirmfoto im Feld von 1 km nahe am Boden: die Striche standen wie weisse Pfosten im Gelände):
+ *  liegt die Kamera näher als NAH_AB Breiten an dem Punkt, den sie anschaut (blick), wird der Strich im selben Verhältnis kürzer, höchstens bis NAH_MIN (gewählt) */
+const NAH_AB = 0.8, NAH_MIN = 0.12
+/** wie deckend ein Strich ist (vorher 0,6, gewählt) */
+const STRICH_DECKT = 0.45
 /** in der Brille (Michael, 2026-11-09: «Regentropfen, die weiter weg sind, kleiner … Die in meiner Nähe sind dafür sehr groß. Kannst du alles ein
  *  bisschen kleiner machen und je weiter weg noch kleiner?»): jeder Strich BRILLE_KLEINER so lang wie auf dem Bildschirm, und mit dem Abstand zum
  *  Auge kürzer, bei BRILLE_HALB_ANTEIL der Breite des Modells halb so lang (gewählt) */
@@ -36,7 +41,7 @@ export interface Niederschlag {
   setzen: (saeulen: Saeule[], boden: (x: number, z: number) => number, flaeche: number, strich: number) => void
   /** ferne: Abstand der Kamera zur Mitte geteilt durch die Breite des Modells; auge: in der Brille die Stelle des Auges in der Gruppe, breite
    *  des Modells in denselben Einheiten */
-  schritt: (dt: number, ferne?: number, auge?: { x: number; y: number; z: number; breite: number }) => void
+  schritt: (dt: number, ferne?: number, auge?: { x: number; y: number; z: number; breite: number }, blick?: number) => void
   entsorgen: () => void
 }
 
@@ -46,7 +51,7 @@ export function niederschlagBauen(): Niederschlag {
   const regenGeo = new THREE.BufferGeometry(), schneeGeo = new THREE.BufferGeometry()
   regenGeo.setAttribute('position', new THREE.BufferAttribute(regenLage, 3))
   schneeGeo.setAttribute('position', new THREE.BufferAttribute(schneeLage, 3))
-  const strichStoff = new THREE.LineBasicMaterial({ color: '#dfe6ee', transparent: true, opacity: 0.6, depthWrite: false })
+  const strichStoff = new THREE.LineBasicMaterial({ color: '#dfe6ee', transparent: true, opacity: STRICH_DECKT, depthWrite: false })
   const flockenStoff = new THREE.PointsMaterial({ color: '#ffffff', size: 3, sizeAttenuation: false, transparent: true, opacity: 0.9, depthWrite: false })
   const striche = new THREE.LineSegments(regenGeo, strichStoff), flocken = new THREE.Points(schneeGeo, flockenStoff)
   for (const o of [striche, flocken]) { o.frustumCulled = false; gruppe.add(o) }
@@ -77,14 +82,14 @@ export function niederschlagBauen(): Niederschlag {
       for (let i = 0; i < voll; i++) { neu(i); weg[i] = Math.random() }
       striche.visible = flocken.visible = voll > 0
     },
-    schritt: (dt, ferne, auge) => {
+    schritt: (dt, ferne, auge, blick) => {
       if (!voll) return
       let klein = 1
       if (ferne !== undefined) {
         const f = Math.max(FERN_MIN, Math.min(1, FERN_AB / Math.max(1e-6, ferne)))
         anzahl = Math.round(voll * f)
-        strichStoff.opacity = 0.6 * (0.5 + 0.5 * f); flockenStoff.opacity = 0.9 * (0.5 + 0.5 * f)
-        klein = Math.max(KLEIN_MIN, Math.min(1, FERN_AB / Math.max(1e-6, ferne)))
+        strichStoff.opacity = STRICH_DECKT * (0.5 + 0.5 * f); flockenStoff.opacity = 0.9 * (0.5 + 0.5 * f)
+        klein = Math.max(KLEIN_MIN, Math.min(1, FERN_AB / Math.max(1e-6, ferne))) * Math.max(NAH_MIN, Math.min(1, (blick ?? ferne) / NAH_AB))
         flockenStoff.size = Math.max(1, 3 * klein)
       }
       laenge = strich * klein

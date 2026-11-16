@@ -7321,7 +7321,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // in der Brille die Stelle des Auges im Modell: dort werden die Striche mit dem Abstand kürzer (Niederschlag.ts, BRILLE_*)
       const lokal = k.renderer.xr.isPresenting ? ns.gruppe.worldToLocal(auge.clone()) : null
       ns.schritt(Math.min(0.1, (t - alt) / 1000), mitte.distanceTo(auge) / (W * k.wurzel.scale.x),
-        lokal ? { x: lokal.x, y: lokal.y, z: lokal.z, breite: W } : undefined)
+        lokal ? { x: lokal.x, y: lokal.y, z: lokal.z, breite: W } : undefined,
+        lokal ? undefined : k.kamera.position.distanceTo(k.steuerung.target) / (W * k.wurzel.scale.x))
       alt = t
     }
     k.jeBild.push(schritt)
