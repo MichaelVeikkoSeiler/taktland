@@ -13,7 +13,7 @@ import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAU
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, kmhAuf, netzBauen, weiterNach, spurLage, bogen, type SpurLage, KURVE_HALB_M,
-  AUTO_ANFAHREN, AUTO_BREMSEN, VORTRITT_M, HALT_VOR_KREUZUNG_M, VORTRITT_HOECHSTENS_S, FOLGE_ABSTAND_M, AutoRaster, type AutoBild, korridorPlatz, ueberlappt, KORRIDOR_LUECKE_M, KORRIDOR_STECKT_S, lackFarbe, retuscheZurueck, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
+  AUTO_ANFAHREN, AUTO_BREMSEN, VORTRITT_M, HALT_VOR_KREUZUNG_M, VORTRITT_HOECHSTENS_S, FOLGE_ABSTAND_M, AutoRaster, type AutoBild, korridorPlatz, ueberlappt, KORRIDOR_LUECKE_M, blockadeLoesen, lackFarbe, retuscheZurueck, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden, waldmischungLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1892,8 +1892,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             samt Halten, ausserorts 50 bis 80 km/h, nach der Breite der Strasse), eine Spur je Richtung. An Kreuzungen und Kreiseln fährt jedes Auto auf eine der Strassen weiter, die dort
             anschliessen, öfter auf eine mit viel Verkehr; welches wohin abbiegt, ist erfunden. Es biegt in einem Bogen ab und passt sein Tempo an. Es gilt der
             Rechtsvortritt: Kommt zugleich ein Auto von rechts, wartet es vor der Kreuzung; wer im Kreisel fährt, hat Vortritt. Wartet es länger als 4 Sekunden, fährt es
-            trotzdem, sobald frei ist. Kein Auto fährt in ein anderes: Jedes bremst, wenn vor ihm eines fährt, quert oder einbiegt, und hält etwa 2 m Abstand. Blockieren sich
-            mehrere gegenseitig länger als 10 Sekunden, fährt eines weiter und ist ausgeblendet, bis es frei ist. Ampeln, Signale, Stoppstrassen und Abbiegespuren stehen in keiner unserer Quellen und fehlen. Kreisel sind laut
+            trotzdem, sobald frei ist. Kein Auto fährt in ein anderes: Jedes bremst, wenn vor ihm eines fährt, quert oder einbiegt, und hält etwa 2 m Abstand. Stau kann es geben:
+            Wer hinter einem stehenden Auto steht, wartet. Nur wenn Autos im Kreis aufeinander warten und so der Verkehr ganz stillsteht, verschwindet eines nach dem anderen,
+            bis es wieder vorwärts geht; es erscheint wieder, sobald es frei ist. Ampeln, Signale, Stoppstrassen und Abbiegespuren stehen in keiner unserer Quellen und fehlen. Kreisel sind laut
             swissTLM3D als Kreisel bezeichnet und werden im Gegenuhrzeigersinn befahren; nur wo eine Strasse endet oder die geladene Gegend aufhört, verschwindet ein Auto
             und beginnt wieder am Anfang seiner Strasse. Weggemalt sind die Autos im
             Luftbild nur auf Strassen ab 6 m Breite. Innerorts hält hie und da ein Auto, weil ein Fussgänger die Strasse quert; die Autos dahinter
@@ -7023,13 +7024,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             if (warten.has(a)) { platz = Math.min(platz, a.kk!.L - HALT_VOR_KREUZUNG_M - a.lauf!); a.wartet = (a.wartet ?? 0) + dt }
             else if ((a.wartet ?? 0) <= VORTRITT_HOECHSTENS_S) a.wartet = 0
             // nie ineinander: das nächste Auto im Weg nach dem letzten Bild, auch auf anderen Ketten; wer zu lange steht, fährt versteckt hindurch
-            if (a.bild) {
+            if (!a.bild) { a.steckt = 0; a.vor = undefined }
+            else {
               const frei = korridorPlatz(a.bild, raster)
               if (a.durch) { if (frei > 2 * KORRIDOR_LUECKE_M) { a.durch = false; a.steckt = 0 } }
               else {
                 platz = Math.min(platz, frei)
                 a.steckt = frei < 0.5 ? (a.steckt ?? 0) + dt : 0
-                if (a.steckt > KORRIDOR_STECKT_S) a.durch = true
               }
             }
             const ziel = Math.min(a.msZiel ?? a.ms, Math.sqrt(2 * AUTO_BREMSEN * Math.max(0, platz)))
@@ -7068,6 +7069,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (!l) drauf.set(a.kk!, (l = []))
           l.push(a)
         }
+        // Stau darf sein, nur wer im Kreis aufeinander wartet, verschwindet eines nach dem anderen (blockadeLoesen in Autos.ts)
+        if (!sprung) blockadeLoesen(alleAutos)
         rasterNeu.leeren()
         for (const a of alleAutos) a.bild = undefined
         // zuerst die Autos, die nicht hindurch dürfen, dann die anderen: die werden versteckt, wo sie eines überlappen

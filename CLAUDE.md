@@ -762,6 +762,10 @@ Autos nie ineinander in «3D Schweiz» (Michael, 2026-11-16: «Ist es möglich e
              wenn es keines mehr überlappt; zuletzt zeichnet das Bild kein Auto, das ein schon gezeichnetes überlappt (Rechtecke, quer auf 80 %, damit sich Gegenverkehr auf
              schmalen Strassen kreuzt; ueberlappt), auch nach einem Sprung der Zeit (KORRIDOR_* gewählt); im Browser bei Köniz 90 s geprüft (Verkehr fliesst, selten eines
              ausgeblendet), Autobahnen nicht angeschaut; in der Anleitung («Autos»)
+             seit 2026-11-16 darf es Stau geben (Michael: «Es darf auch mal einen Stau geben. Ist realistisch. Wenn der Verkehr zum Erliegen kommt kannst du eines nach
+             dem anderen ja löschen damits wieder vorwärts geht»): wer hinter einem anderen steht, wartet beliebig lange; nur wo Autos im Kreis aufeinander warten (je Auto das,
+             vor dem es bremst, vor; jedes steht über 8 s), verschwindet das, das am längsten steht, eines nach dem anderen, und erscheint wieder, wenn es keines überlappt
+             (blockadeLoesen in Autos.ts); über 120 s Stehen gilt ebenso als blockiert (KORRIDOR_HOECHSTENS_S, gewählt); bei Köniz 120 s geprüft, keines verschwand
 Regen und Schnee schräg im Wind (Michael, 2026-11-16: «je stärker der Wind ist, desto schräger fallen die Regen- oder auch Schneeflocken herab»): in «3D Schweiz» der Wind
              der Bäume (Mittel der vier Windhosen, voll ab 45 km/h), je Meter Fall bei vollem Wind 0,9 m (Regen) und 1,6 m (Schnee) waagrecht in Windrichtung, am Boden an der Stelle,
              darüber gegen den Wind versetzt, ausserhalb der Säule nicht gezeichnet (REGEN_SCHRAEG, SCHNEE_SCHRAEG, windSetzen in Niederschlag.ts); in der Modellbahn und beim Fahren
