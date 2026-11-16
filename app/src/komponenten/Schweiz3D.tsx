@@ -8,7 +8,7 @@ import { Line2 } from 'three/examples/jsm/lines/Line2.js'
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
-import { lampenBauen, type Strassenlampen } from './Strassenlicht'
+import { lampenBauen, LICHT_FERN, type Strassenlampen } from './Strassenlicht'
 import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
@@ -114,6 +114,8 @@ const STRICH_PX = 3
 const STRICH_ANTEIL = 0.012
 const STRICH_LUECKE = 0.008
 const grob = (s: Stufe) => s === 'schweiz' || s === 'gross' || s === 'mittel'
+/** Züge erst in den Feldern von 4 km und 1 km (Michael, 2026-11-16: «Dafür müssen die Züge nicht bereits bei 16km-Stufe sichtbar werden»), Schiffe weiter ab 16 km */
+const zugFern = (s: Stufe) => grob(s) || s === 'region'
 /** Grösse des Felds, das man in einer Stufe wählt, und das Raster, auf das es rückt; in der Stufe «nah» wählt man nichts mehr
  *  (Michael, 2026-10-19: «noch eine Ausschnittsgrösse mehr im Detail») */
 const FELD_M: Record<Exclude<Stufe, 'nah'>, number> = { schweiz: 128_000, gross: 64_000, mittel: 16_000, region: 4_000, ort: 1_000 }
@@ -514,6 +516,26 @@ const SUCHE_RANG = { see: 3, gipfelAb: 1.5, gipfelJe: 0.5 }
 interface Eintrag { name: string; e: number; n: number; rang: number; art: 'ort' | 'gipfel' | 'see'; hoehe?: number | null }
 /** Suche von swisstopo für Adressen: ab so vielen Zeichen, so lange nach dem letzten Tippen, höchstens so viele (gewählt) */
 const ADRESSE_URL = 'https://api3.geo.admin.ch/rest/services/api/SearchServer', ADRESSE_AB = 3, ADRESSE_WARTE_MS = 400, ADRESSE_HOECHSTENS = 5
+/**
+ * Datum und Uhrzeit der Szene frei auf dem Bild, am Desktop rechts der Suche, auf Handy und Tablet darunter (Michael, 2026-11-16: «das aktuelle Datum und
+ * die Uhrzeit (direkt freigestellt auf dem Bild. Je nach Helligkeit muss die Schrift hell oder umgekehrt dunkel sein»): nachts (wenn in den Fenstern Licht
+ * brennt, fensterNacht) weiss mit dunklem Schein, sonst dunkel mit hellem Schein; jede Sekunde neu, die Zeit nach Schweizer Zeit
+ */
+const UHR_FMT = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+function SzenenUhr({ versatzMs }: { versatzMs: number }) {
+  const [, neu] = useState(0)
+  useEffect(() => { const t = setInterval(() => neu((x) => x + 1), 1000); return () => clearInterval(t) }, [])
+  const nacht = fensterNacht.value > 0.5
+  const teile = UHR_FMT.formatToParts(Date.now() + versatzMs)
+  const t = (art: string) => teile.find((x) => x.type === art)?.value ?? ''
+  return (
+    <p aria-live="off" className={'pointer-events-none whitespace-nowrap text-[13px] font-bold leading-tight tabular-nums ' + (nacht ? 'text-white' : 'text-sbb-black')}
+       style={{ textShadow: nacht ? '0 0 3px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.6)' : '0 0 3px rgba(255,255,255,0.95), 0 0 6px rgba(255,255,255,0.7)' }}>
+      {t('weekday')} {t('day')}.{t('month')}.{t('year')} · {t('hour')}:{t('minute')}
+    </p>
+  )
+}
+
 function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n: number, name: string) => void }) {
   const [text, setText] = useState('')
   const [offen, setOffen] = useState(false)
@@ -580,7 +602,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
   const alle = [...treffer, ...adressen]
   const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n, t.name); setText(t.name); setOffen(false) }
   return (
-    <div className="relative w-56 min-w-0 max-w-[calc(100vw-8.5rem)] shrink">
+    <div className="relative w-44 min-w-0 max-w-[calc(100vw-8.5rem)] shrink">
       <input type="search" value={text} placeholder="Ort, Adresse, Gipfel" aria-label="Ort, Adresse, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
              onChange={(e) => { setText(e.target.value); setOffen(true); gipfelHolen() }} onFocus={() => { setOffen(true); gipfelHolen() }}
              onKeyDown={(e) => { if (e.key === 'Enter' && alle[0]) { nehmen(alle[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
@@ -1497,8 +1519,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Uhrzeit und «Jetzt» stehen unter dem Modell. Das Suchfeld oben links statt unten in der Reihe (Michael, 2026-11-13: Pfeil vom Suchfeld nach oben
             links, «Suchfeld nach oben links») */}
         {zusatz && zusatz.ortschaften.length > 0 && (
-          <div className="absolute left-2 top-2 z-10 flex max-w-[calc(100%-5.5rem)]" style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
+          <div className={'absolute left-2 top-2 z-10 flex max-w-[calc(100%-5.5rem)] ' + (desktop ? 'items-center gap-3' : 'flex-col items-start gap-0.5')}
+               style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
             <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />
+            <SzenenUhr versatzMs={versatzMs} />
           </div>
         )}
         {/* im Vollbild ein Kreuz oben rechts in der Ecke statt «Schliessen» unten (Michael, 2026-11-07: «Lieber ein passendes Schliessen-Icon an
@@ -1529,7 +1553,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                   // so gross wie «Fahren» im Kopf (Michael, 2026-10-25: «gleiche Grösse wie der Button Fahren»)
                   className={'absolute rounded-lg bg-sbb-red font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 ' + (tablet
                     ? 'left-2 bottom-2 px-[18px] py-[9px] text-2xl' : desktop ? 'right-2 bottom-[60px] px-3 py-1.5 text-base'
-                      : 'left-2 top-12 px-3 py-1.5 text-base max-[359px]:text-[14px]')}>
+                      : 'left-2 top-[4.25rem] px-3 py-1.5 text-base max-[359px]:text-[14px]')}>
             {laedt ? 'Wird geladen …' : 'Eintauchen'}
           </button>
         )}
@@ -1818,7 +1842,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {/* eigener Abschnitt fürs Licht in der Nacht (Michael, 2026-11-08: «Hier noch die Erfundene Strasse und Bahnhofs Beleuchtung auflisten? Macht Sinn oder?») */}
         <Abschnitt titel="Licht in der Nacht">
           <p>Steht die Sonne unter dem Horizont, wird es im Modell Nacht. Dann leuchten in den Feldern von 4 km und 1 km
-            Fenster, Strassen und Bahnhöfe, und die Züge fahren mit Licht.</p>
+            Fenster, Strassen und Bahnhöfe, und die Züge fahren mit Licht. Im Feld von 16 km leuchten Strassen und Bahnhöfe schwach als grössere
+            Flecken, ohne Masten. Oben links neben oder unter der Suche stehen Datum und Uhrzeit der Szene, nachts hell, am Tag dunkel geschrieben.</p>
           <p className="mt-2"><b>Echt</b> ist nur, wo das Licht steht: Strassen (swissTLM3D von swisstopo) in Siedlungen und Stadtzentren (swissTLMRegio), Gleise rund um
             die Bahnhöfe und die Gebäude selbst.</p>
           <p className="mt-2"><b>Erfunden</b>, weil keine Quelle Lampen kennt: die Strassenlampen alle 35 m, die Lampen an den Bahnhöfen alle 30 m bis 250 m um
@@ -1847,7 +1872,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird, ob und wann eine Kirche läutet und wie ein Zug oder Schiff abfährt.</p>
         </Abschnitt>
         <Abschnitt titel="Züge">
-          <p>«Züge» zeigt ab der Stufe 16 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
+          <p>«Züge» zeigt in den Feldern von 4 km und 1 km jeden Zug dort, wo er jetzt laut Fahrplan ist: wie der Zug der Modellbahn von Taktland
             (Lok, vier Wagen, Steuerwagen, die Spitze karminrot) auf dem Gelände, in Fahrtrichtung. Am Halt steht er zwischen Ankunft und Abfahrt still, am
             Start- und Endbahnhof je 5 Minuten vor der Abfahrt und nach der Ankunft, eine Annahme: wie lange er dort wirklich steht,
             steht nicht im Fahrplan. Es ist der Fahrplan von opentransportdata.swiss, dazu die Echtzeit (GTFS-Realtime, ebenfalls von
@@ -2202,7 +2227,7 @@ const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', L
 /** die Schalter auf dem Bildschirm (Michael, 2026-11-14), Reihenfolge und Farben wie an den Wänden; Symbole gezeichnet, gewählt */
 const SCHALTER_SYMBOLE: Array<{ art: Schalter; name: string; farbe: string; nurFeld?: boolean; nichtGrob?: boolean; abstand?: boolean; symbol: ReactNode }> = [
   { art: 'orte', name: 'Orte', farbe: '#ffd23c', symbol: <><path d="M12 21.5s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z" /><circle cx="12" cy="10.3" r="2.3" /></> },
-  { art: 'zuege', name: 'Züge', farbe: '#ff4d6d', nichtGrob: true, abstand: true, symbol: <><rect x="6" y="3" width="12" height="14" rx="3" /><path d="M6 10.5h12M9.5 14h.01M14.5 14h.01M8.5 21l2-4M15.5 21l-2-4" /></> },
+  { art: 'zuege', name: 'Züge', farbe: '#ff4d6d', nurFeld: true, abstand: true, symbol: <><rect x="6" y="3" width="12" height="14" rx="3" /><path d="M6 10.5h12M9.5 14h.01M14.5 14h.01M8.5 21l2-4M15.5 21l-2-4" /></> },
   { art: 'schiffe', name: 'Schiffe', farbe: '#2ee6d6', nichtGrob: true, symbol: <><path d="M3.5 14.5h17l-2.2 4.5H5.7z" /><path d="M7 14.5V10h10v4.5M10 10V7h4v3M3 21.5c1.5 0 1.5-.8 3-.8s1.5.8 3 .8 1.5-.8 3-.8 1.5.8 3 .8 1.5-.8 3-.8 1.5.8 3 .8" /></> },
   { art: 'autos', name: 'Autos', farbe: '#ff9de2', nurFeld: true, symbol: <><path d="M4 16.5v-3.2l2-4.8h12l2 4.8v3.2z" /><path d="M4 13.3h16" /><circle cx="7.5" cy="17.5" r="1.6" /><circle cx="16.5" cy="17.5" r="1.6" /></> },
   { art: 'menschen', name: 'Menschen', farbe: '#e8b48f', nurFeld: true, symbol: <><circle cx="9" cy="6.5" r="2.3" /><path d="M5 20.5v-5.5a4 4 0 0 1 8 0v5.5" /><circle cx="16.5" cy="8.5" r="1.9" /><path d="M15.5 13a3.3 3.3 0 0 1 4.5 3v4.5" /></> },
@@ -4212,7 +4237,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const eins: Teil[] = [
       { zeilen: ['Orte'], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
       // wie die Wanderwege erst ab der Stufe 16 km
-      ...(zuegeDa ? [abstand, { zeilen: ['Züge'], breite: KNOPF_B * W, an: !grob(stufe) && zuege, farbe: LICHT.zuege, gesperrt: grob(stufe),
+      ...(zuegeDa ? [abstand, { zeilen: ['Züge'], breite: KNOPF_B * W, an: !zugFern(stufe) && zuege, farbe: LICHT.zuege, gesperrt: zugFern(stufe),
         aktion: umschalten('zuege') },
         // Schiffe laut Fahrplan auf den Kurslinien von swissTLMRegio (Michael, 2026-10-28)
         { zeilen: ['Schiffe'], breite: KNOPF_B * W, an: !grob(stufe) && schiffe, farbe: LICHT.schiffe, gesperrt: grob(stufe),
@@ -5352,7 +5377,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
-    if (!k || !lage || !gebaeude || grob(stufe)) return
+    // im Feld von 16 km ohne Gebäude, nur die Lichtflecken (LICHT_FERN)
+    if (!k || !lage || (!gebaeude && stufe !== 'region') || grob(stufe)) return
     let weg = false
     let lampen: Strassenlampen | null = null
     const teile = [...b.teile.values()]
@@ -5368,8 +5394,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         l = { e: Float64Array.from(bleibt, (i) => roh!.e[i]), n: Float64Array.from(bleibt, (i) => roh!.n[i]), art: Uint8Array.from(bleibt, (i) => roh!.art[i]) }
       }
       if (weg || !l || !l.e.length) return
-      lampen = lampenBauen(l, (e, n) => bestandHoehe(b, e, n), (e) => (e - lage.cE) / 1000, (h) => h / 1000, (n) => -(n - lage.cN) / 1000)
+      lampen = lampenBauen(l, (e, n) => bestandHoehe(b, e, n), (e) => (e - lage.cE) / 1000, (h) => h / 1000, (n) => -(n - lage.cN) / 1000, undefined,
+        stufe === 'region' ? LICHT_FERN : undefined)
       lampen.licht.name = 'strassenlicht'
+      if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dLampen: unknown }).s3dLampen = { stufe, roh: roh?.e.length, n: lampen.licht.count }
       k.wurzel.add(lampen.licht, lampen.masten, lampen.koepfe)
     })
     const schritt = () => { lampen?.nacht(fensterNacht.value) }
@@ -5434,7 +5462,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     const W = k?.wurzel.userData.weiteKm as number | undefined
-    if (!k || !lage || !W || !zuege || grob(stufe)) { setZugZeile(null); setZugLink(null); return }
+    if (!k || !lage || !W || !zuege || zugFern(stufe)) { setZugZeile(null); setZugLink(null); return }
     let weg = false
     const gruppe = new THREE.Group()
     gruppe.name = 'zuege'
@@ -7529,7 +7557,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {(zugZeile || schiffZeile) && (
         // links unter der Suche, nicht mehr oben rechts: auf dem Handy lag «In den Führerstand nach …» dort unter dem Suchfeld und den zwei Spalten der
         // Symbole (Michael, 2026-11-14, Bildschirmfotos aus Bern); unter «Eintauchen», das auf dem Handy unter der Suche steht
-        <div className="pointer-events-none absolute left-2 top-24 flex max-w-[60%] flex-col items-start gap-0.5 text-left">
+        <div className={'pointer-events-none absolute left-2 flex max-w-[60%] flex-col items-start gap-0.5 text-left ' + (istDesktop() ? 'top-24' : 'top-[7.25rem]')}>
           {zugZeile && (
             <p className="rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">{zugZeile}</p>
           )}
