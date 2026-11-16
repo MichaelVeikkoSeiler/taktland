@@ -1101,7 +1101,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }, [])
   // zu zweit (Michael, 2026-11-10, Vorschlag 13: «Erklär mir noch 13 … Dann bauen wenn ich schlafe?»): wer den Raum eröffnet, führt; die anderen folgen
   // bei jeder Änderung des Führenden seinen Feldern je Stufe, der Stufe, der Wahl, den Schaltern und der Zeit; dazwischen kann jeder selbst schauen.
-  // Angesetzte Stücke (+ und −) folgen nicht, nur das erste Feld jeder Stufe. Lage und Zeigen: src/zuzweit.ts, die Figuren in der Ansicht
+  // Angesetzte Stücke (+ und −) folgen seit 2026-11-16 ebenso (Michael: «wenn man den Ausschnitt-Block erweitert (mit dem +) dass sich dies nur auf die eigene
+  // Rolle auswirkt … sodass auch die andere Person den erweiterten Ausschnitt sieht»), wo das Gerät so viele Stücke halten kann (hoechstens()).
+  // Lage und Zeigen: src/zuzweit.ts, die Figuren in der Ansicht
   const [raum, setRaum] = useState<string | null>(() => {
     const r = new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('raum')?.toUpperCase() ?? null
     return r && /^[A-Z]{4}$/.test(r) ? r : null
@@ -1116,6 +1118,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     stufe,
     felder: Object.fromEntries((['gross', 'mittel', 'region', 'ort', 'nah'] as const)
       .filter((s) => gelaende[s] && STUFEN.indexOf(s) <= STUFEN.indexOf(stufe)).map((s) => [s, gelaende[s]!.anker])),
+    ausdehnung: Object.fromEntries((['gross', 'mittel', 'region', 'ort', 'nah'] as const)
+      .filter((s) => gelaende[s] && STUFEN.indexOf(s) <= STUFEN.indexOf(stufe)).map((s) => [s, [...gelaende[s]!.di, ...gelaende[s]!.dj]])),
     wahl,
     schalter: { orte: orteAn, gebaeude: gebaeudeAn, baeume: baeumeAn, zuege: zuegeAn, schiffe: schiffeAn, autos: autosAn, menschen: menschenAn, wandern, hoehen: scheiben, gipfel: gipfelAn,
       wolken: wolkenAn, wind: windAn, sonne: sonnenAn },
@@ -1148,7 +1152,13 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     else if (jetztAn || Math.abs(versatzMs - st.zeit) > 60_000) { setJetztAn(false); setVersatzMs(st.zeit) }
     const kette = (['gross', 'mittel', 'region', 'ort', 'nah'] as const).filter((s) => st.felder[s])
     const gleich = (a: Feld | null | undefined, c: Feld) => !!a && a.e === c.e && a.n === c.n && a.seite === c.seite
-    const ab = kette.findIndex((s) => !gleich(gelaende[s]?.anker, st.felder[s]))
+    // die Ausdehnung des Führenden, wenn dieses Gerät so viele Stücke halten kann, sonst nur das erste Feld
+    const ziel = (s: Stufe): [number, number, number, number] => {
+      const a = st.ausdehnung?.[s]
+      return a && (a[1] - a[0] + 1) * (a[3] - a[2] + 1) <= hoechstens() ? a : [0, 0, 0, 0]
+    }
+    const gleichAus = (b: Bestand | null | undefined, a: [number, number, number, number]) => !!b && b.di[0] === a[0] && b.di[1] === a[1] && b.dj[0] === a[2] && b.dj[1] === a[3]
+    const ab = kette.findIndex((s) => !gleich(gelaende[s]?.anker, st.felder[s]) || !gleichAus(gelaende[s], ziel(s)))
     if (ab === -1) { setStufe(st.stufe as Stufe); setWahl(st.wahl); return }
     if (folgtLaedt.current) { folgtNochmals.current = st; return }
     folgtLaedt.current = true; setLaedt(true); setFehler(null)
@@ -1156,7 +1166,18 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       const neu: Partial<Record<Stufe, Bestand>> = {}
       for (const s of kette.slice(ab)) {
         const unter = s === 'ort' || s === 'nah' ? (neu[DARUEBER[s]] ?? gelaende[DARUEBER[s]]) : null
-        neu[s] = einzeln(st.felder[s], await stufeLaden(s, st.felder[s], unter ?? null))
+        const alt = gelaende[s]
+        // dasselbe erste Feld: die vorhandenen Stücke weiter brauchen, nur die fehlenden laden
+        const da = alt && gleich(alt.anker, st.felder[s]) ? alt : einzeln(st.felder[s], await stufeLaden(s, st.felder[s], unter ?? null))
+        const a = ziel(s), teile = new Map<string, Gelaende>()
+        const fehlt: Array<[number, number]> = []
+        for (let i = a[0]; i <= a[1]; i++) for (let j = a[2]; j <= a[3]; j++) {
+          const t = da.teile.get(`${i}_${j}`)
+          if (t) teile.set(`${i}_${j}`, t); else fehlt.push([i, j])
+        }
+        const geladen = await Promise.all(fehlt.map(([i, j]) => stufeLaden(s, teilFeld(da, i, j), s === 'region' ? null : unter ?? null)))
+        fehlt.forEach(([i, j], x) => teile.set(`${i}_${j}`, geladen[x]))
+        neu[s] = { anker: da.anker, teile, di: [a[0], a[1]], dj: [a[2], a[3]] }
       }
       setGelaende((a) => ({ ...a, ...danach(kette[ab]), ...neu }))
       setStufe(st.stufe as Stufe); setWahl(st.wahl)
@@ -1242,7 +1263,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   erweiternTest.current = erweitern
   useEffect(() => {
     if (!import.meta.env.VITE_S3D_TEST) return
-    ;(window as unknown as { s3d: unknown }).s3d = { schalter: () => zuZweitRef.current.stand.schalter, waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), autos: () => setAutosAn((x) => !x), menschen: () => setMenschenAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), baeume: () => setBaeumeAn((x) => !x), wetter: () => setWindAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
+    ;(window as unknown as { s3d: unknown }).s3d = { stand: () => zuZweitRef.current.stand, schalter: () => zuZweitRef.current.stand.schalter, waehle: (e: number, n: number, seite: number) => setWahl({ e, n, seite }), wind: () => setWindAn((x) => !x), orte: () => setOrteAn((x) => !x), zuege: () => setZuegeAn((x) => !x), schiffe: () => setSchiffeAn((x) => !x), autos: () => setAutosAn((x) => !x), menschen: () => setMenschenAn((x) => !x), wolken: () => setWolkenAn((x) => !x), zugZeit: (min: number) => { zugTest.versatzMin = min }, gipfel: () => setGipfelAn((x) => !x), hoehen: () => setScheiben((x) => !x), gebaeude: () => setGebaeudeAn((x) => !x), baeume: () => setBaeumeAn((x) => !x), wetter: () => setWindAn((x) => !x), sonne: () => setSonnenAn((x) => !x), zeit: (m: number) => zeitSetzenRef.current(tagRef.current, m), plus: (seite: Seite) => void erweiternTest.current(seite, true) }
   }, [])
   const zurueck = (s: Stufe) => { setWahl(feldUmGesucht(s)); setStufe(s) }
   const eineZurueck = () => {
@@ -2011,7 +2032,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Zu zweit">
           <p>Das Zeichen mit den zwei Handys unten im Bild öffnet unter dem Modell die Wahl: «Raum eröffnen» gibt einen Code aus vier Buchstaben, die andere Person gibt ihn
             auf ihrem Gerät ein, scannt den QR-Code unter dem Modell mit der Kamera oder öffnet den kopierten Link. Wer eröffnet, führt: Die anderen sehen dasselbe Feld in derselben Stufe, dieselben
-            Schalter und dieselbe Zeit, ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung.
+            Schalter und dieselbe Zeit, auch mit den Stücken, die mit + angesetzt sind (wo das Gerät so viele halten kann, sonst nur das erste Feld); ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung.
             Jede Person sieht die anderen als blaue Figur dort, wo sie ins Modell schaut, mit einer Linie zur Stelle, auf die sie zeigt (Maus,
             in der Brille der Strahl). Wer folgt, sieht am Anfang auch mit dem Blick der führenden Person, die Kamera gleitet ihr nach; wer selbst dreht oder zoomt, schaut wieder selbst, «Blick folgen» holt den Blick zurück (nicht in der Brille). Ein Gespräch gibt es nicht, dafür braucht es ein Telefon
             daneben. Ein Raum verfällt nach sechs Stunden.</p>
