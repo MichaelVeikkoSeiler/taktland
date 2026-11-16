@@ -34,6 +34,7 @@ import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
 import { laubSaison, laubTagSetzen } from './Laub'
+import { REGEN_SCHRAEG, SCHNEE_SCHRAEG } from './Niederschlag'
 import { Ladebalken } from './Ladebalken'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, kategorieUmschalten, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -133,6 +134,8 @@ const WOLKEN_SONNE = 0.8, WOLKEN_HIMMEL = 0.15, WETTER_NEU_MS = 10 * 60e3
 const DUNST_JE_KM = 0.06
 /** in der Brille auf dem Tisch: so gross ist der Würfel mit Regen und Schnee über dem Modell (m), gewählt */
 const NIEDER_TISCH_M = 1.6
+/** Regen und Schnee ganz schräg ab so viel Wind (gewählt, wie die Bäume in «3D Schweiz») */
+const NIEDER_WIND_VOLL_KMH = 45
 /** Tunnel als Röhre, durch die der Zug fährt und durch die man blicken kann (Michael, 2026-10-12: «in eine Röhre
  *  fahren … durch den Berg bewegen … durch die Röhre blicken»). Querschnitt, Farbe und Licht stehen in keiner Quelle.
  *  Seit 2026-10-13 nach Michaels Vorbild einer Modellbahn: ein Hufeisen, senkrechte Wände ROEHRE_HALB_M neben der Linie
@@ -2696,7 +2699,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           const h = (scharfStand && scharfHoehe(scharfStand, e, nn)) ?? feinHoehe(fs.fein, e, nn)
           if (h === null) continue
           const [hoeheArt, breiteArt] = BAUM_FORM[k.art[i]] ?? BAUM_FORM[0]
-          const istN = istNadel(e, nn, h), netz = istN ? nadel : laub, breite = breiteArt * (istN ? NADEL_BREITE : 1), hoehe = hoeheArt * (istN ? NADEL_HOEHE : 1)
+          const istN = istNadel(e, nn, h, k.art[i] > 0), netz = istN ? nadel : laub, breite = breiteArt * (istN ? NADEL_BREITE : 1), hoehe = hoeheArt * (istN ? NADEL_HOEHE : 1)
           const z = zahl.get(netz)!
           // gleichmässig gestreut, aber je Baum immer gleich
           const r = Math.sin(e * 12.9898 + nn * 78.233) * 43758.5453, f = 0.75 + 0.5 * (r - Math.floor(r))
@@ -4653,17 +4656,25 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         niederGeo.setDrawRange(0, 2 * anzahl)
         // Tempo und Strich in Metern wie im Würfel von 60 m vorher
         const mass = imStand ? 0.06 / hoch : 1
-        const fall = (schnee ? 0.12 : 1.1) * dt * mass, wind = (schnee ? 0.03 : 0.08) * dt * (imStand ? 0.06 / seite : 1), strich = REGEN_STRICH * mass
+        const fall = (schnee ? 0.12 : 1.1) * dt * mass, strich = REGEN_STRICH * mass
+        // schräg im Wind (Michael, 2026-11-16: «je stärker der Wind ist, desto schräger»): der Wind der Station oder der gewählten Stunde, voll ab
+        // NIEDER_WIND_VOLL_KMH, so viel waagrecht je Meter Fall wie in «3D Schweiz» (REGEN_SCHRAEG, SCHNEE_SCHRAEG in Niederschlag.ts); ohne Richtung senkrecht
+        const w = windGewaehlt ?? wetter?.wind
+        const wStark = w?.kmh != null && w.richtung != null ? Math.min(1, w.kmh / NIEDER_WIND_VOLL_KMH) : 0
+        const wWinkel = (((w?.richtung ?? 0) + 180) * Math.PI) / 180, wx = Math.sin(wWinkel), wz = -Math.cos(wWinkel)
+        const schraeg = wStark * (schnee ? SCHNEE_SCHRAEG : REGEN_SCHRAEG) * (hoch / seite)
         for (let i = 0, j = 0; i < anzahl * 3; i += 3, j += 6) {
-          niederMitte[i + 1] -= fall * (0.7 + 0.6 * ((i * 7919) % 100) / 100)
-          niederMitte[i] += wind
+          const f = fall * (0.7 + 0.6 * ((i * 7919) % 100) / 100)
+          niederMitte[i + 1] -= f
+          niederMitte[i] += wx * f * schraeg
+          niederMitte[i + 2] += wz * f * schraeg
           if (niederMitte[i + 1] < -0.5) niederMitte[i + 1] += 1
-          if (niederMitte[i] > 0.5) niederMitte[i] -= 1
+          for (const a of [i, i + 2]) { if (niederMitte[a] > 0.5) niederMitte[a] -= 1; else if (niederMitte[a] < -0.5) niederMitte[a] += 1 }
           niederLage[j] = niederMitte[i]; niederLage[j + 1] = niederMitte[i + 1]; niederLage[j + 2] = niederMitte[i + 2]
-          // der Strich schräg im Wind nach hinten
-          niederLage[j + 3] = niederMitte[i] - (schnee ? 0 : strich * 0.1 * hoch / seite)
+          // der Strich nach oben gegen den Wind
+          niederLage[j + 3] = niederMitte[i] - (schnee ? 0 : strich * schraeg * wx)
           niederLage[j + 4] = niederMitte[i + 1] + (schnee ? 0 : strich)
-          niederLage[j + 5] = niederMitte[i + 2]
+          niederLage[j + 5] = niederMitte[i + 2] - (schnee ? 0 : strich * schraeg * wz)
         }
         niederGeo.attributes.position.needsUpdate = true
       }
