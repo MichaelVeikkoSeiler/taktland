@@ -187,6 +187,12 @@ def main():
             shutil.rmtree(ZIEL / "luftbild")
         shutil.copytree(luftbild, ZIEL / "luftbild")
         print(f"luftbild/: {sum(p.stat().st_size for p in (ZIEL / 'luftbild').iterdir())/1e6:.1f} MB")
+    # gröbere Fassungen davon für die grossen Ausschnitte der Virtuellen Schweiz (pipeline/build_luftbild_grob.py)
+    grob = ROOT / "data" / "luftbild_grob"
+    if grob.exists():
+        if (ZIEL / "luftbild_grob").exists():
+            shutil.rmtree(ZIEL / "luftbild_grob")
+        shutil.copytree(grob, ZIEL / "luftbild_grob")
     # Nahbild: dasselbe Luftbild auf 2,5 m entlang der Bahnlinien (pipeline/build_luftbild_nah.py)
     nah = ROOT / "data" / "luftbild_nah"
     if nah.exists():

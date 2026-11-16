@@ -761,6 +761,11 @@ data/luftbild/  Luftbild für das Gelände in 3D: SWISSIMAGE (swisstopo, 2-m-Fas
              105 MB; Kacheln ohne Bild von swisstopo, im Ausland, fehlen; die 2-m-Rohbilder werden je Kachel
              gelöscht); in der App ein Knopf «Luftbild», Gebiete darauf nur als Umriss; fehlt ein Bild oder lädt es nicht,
              zeigt das Gelände dort seine Farben, ebenso wo die Kachel reinweiss ist (keine Aufnahme jenseits der Grenze, ohneLeeres); höchstens 25 Bilder bleiben geladen (src/gelaende.ts); was beim ersten Laden nicht kam, wird noch zweimal einzeln nachgefragt (Michael, 2026-11-06, Stufe 128 km: «einen Flecken, der keine Landkartentextur hat»: gegen 170 Bilder auf einmal, eines blieb aus und dort der Grundton)
+data/luftbild_grob/  dasselbe Luftbild verkleinert auf 330 und 165 Bildpunkte je 10-km-Kachel (etwa 30 und 60 m; pipeline/build_luftbild_grob.py, 15 und 4 MB, in Git,
+             export_app kopiert sie): luftbildKachel in src/gelaende.ts lädt die kleinste Fassung mit mindestens so vielen Bildpunkten, wie die Leinwand zeigt
+             (luftbildLaden mit leinwand, grossLaden in Schweiz3D.tsx gibt 2048 oder 4096), sonst die volle; vorher lud das Handy beim Eintauchen auf 128 km gegen
+             48 MB und verkleinerte erst dann (2026-11-15 vor der Bekanntmachung gemessen; Michael: «Ja, bitte so umsetzen»); danach 11 MB, auf 64 km 2 statt 14 MB,
+             im Browser hier mit 390 × 844 neben der vollen Fassung angeschaut, ohne sichtbaren Unterschied
 data/luftbild_nah/  Nahbild: dasselbe Luftbild auf 2,5 m, nur bis 500 m neben den Bahnlinien aus swissTLMRegio
              (data/kartenlinien.json), je km ein JPEG von 400 × 400, weiter weg weiss (pipeline/build_luftbild_nah.py, etwa
              10'000 km, Rohbilder gleich gelöscht; Michael, 2026-10-10: «die Landschaft ist sehr verschwommen»); in der App ein
@@ -1160,6 +1165,7 @@ python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-
 .venv/bin/python pipeline/build_wanderwege.py            # Wanderwege der Schweiz für «3D Schweiz» (nach fetch_tlm3d.py --strassen), vor export_app
 .venv/bin/python pipeline/build_schweiz3d_probe.py         # Gebäude und Bäume um Köniz und den Gantrisch für «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_schweiz3d_umwelt.py --art baeume --teil 3/9   # Gebäude oder Bäume der ganzen Schweiz (daten.taktland.ch)
+.venv/bin/python pipeline/build_luftbild_grob.py     # Luftbild verkleinert für die grossen Ausschnitte der Virtuellen Schweiz, nach build_luftbild, vor export_app
 .venv/bin/python pipeline/build_luftbild_nah.py      # Nahbild (2,5 m) entlang der Bahnlinien, etwa eine Stunde, vor export_app
 .venv/bin/python pipeline/build_gelaende_nah.py      # feines Gelände (10 m) entlang der Bahnlinien für den Führerstand, vor export_app
 .venv/bin/python pipeline/build_scharf.py --extern --relief gotthard   # scharfe Kacheln für daten.taktland.ch

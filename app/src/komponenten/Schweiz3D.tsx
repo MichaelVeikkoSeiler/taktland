@@ -251,9 +251,11 @@ async function grossLaden(f: Feld, schritt = 2): Promise<Gelaende> {
   const h = new Float32Array(breite * breite)
   for (let j = 0; j < breite; j++) for (let i = 0; i < breite; i++) h[j * breite + i] = a.h[j * schritt * a.raster.breite + i * schritt]
   const raster = { ost: a.raster.ost, nord: a.raster.nord, m, breite, hoehe: breite }
-  const lb = await luftbildLaden(raster)
+  const leinwand = hoechstens() === 4 ? 2048 : 4096
+  // nur so viele Bildpunkte je Kachel, wie die Leinwand zeigt (die gröberen Fassungen aus luftbild_grob)
+  const lb = await luftbildLaden(raster, undefined, leinwand)
   const c = document.createElement('canvas')
-  c.width = c.height = hoechstens() === 4 ? 2048 : 4096
+  c.width = c.height = leinwand
   const g = c.getContext('2d')!
   g.fillStyle = '#d8d5c2'; g.fillRect(0, 0, c.width, c.height)
   const sx = c.width / (breite * m), sy = c.height / (breite * m)
