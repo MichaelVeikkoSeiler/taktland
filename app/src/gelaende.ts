@@ -968,6 +968,44 @@ export async function seegrundLaden(e0: number, n0: number, e1: number, n1: numb
 }
 
 /**
+ * Waldmischungsgrad LFI des BAFU (Michael, 2026-11-16: «Stimmt eigentlich das Waldverhältnis Tannen und Laubwald? Wenn du dort eine Quelle hast»):
+ * Anteil Laubbäume an den sichtbaren Kronen, aus Satellitenbildern modelliert, auf 50 m gemittelt in den 10-km-Kacheln des Geländes
+ * (pipeline/build_waldmischung.py). Gibt je Stelle den Anteil 0 bis 1 oder null, wo die Quelle nichts angibt.
+ */
+interface WaldmischungIndex { quelle: string; kachel_m: number; raster_m: number; ohne: number; kacheln: string[] }
+const waldmischungIndex = () => holen<WaldmischungIndex>('data/waldmischung/index.json')
+const waldVorrat = new Map<string, Promise<Uint8Array | null>>()
+function waldKachel(name: string) {
+  let p = waldVorrat.get(name)
+  if (!p) {
+    p = (async () => {
+      const gepackt = await holenBinaer(`data/waldmischung/${name}.mgz`)
+      return new Uint8Array(await new Response(new Blob([gepackt]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer())
+    })().catch(() => { waldVorrat.delete(name); return null })
+    waldVorrat.set(name, p)
+  }
+  return p
+}
+export async function waldmischungLaden(e0: number, n0: number, e1: number, n1: number): Promise<(e: number, n: number) => number | null> {
+  const ix = await waldmischungIndex().catch(() => null)
+  if (!ix) return () => null
+  const { kachel_m: k, raster_m: m, ohne } = ix, zellen = k / m
+  const da = new Set(ix.kacheln), geladen = new Map<string, Uint8Array>()
+  const namen: string[] = []
+  for (let ex = Math.floor(e0 / k); ex <= Math.floor(e1 / k); ex++) {
+    for (let ny = Math.floor(n0 / k); ny <= Math.floor(n1 / k); ny++) if (da.has(`${ex}_${ny}`)) namen.push(`${ex}_${ny}`)
+  }
+  await Promise.all(namen.map(async (n) => { const t = await waldKachel(n); if (t) geladen.set(n, t) }))
+  return (e, n) => {
+    const ex = Math.floor(e / k), ny = Math.floor(n / k), t = geladen.get(`${ex}_${ny}`)
+    if (!t) return null
+    const I = Math.floor((e - ex * k) / m), J = Math.floor((n - ny * k) / m)
+    const v = t[(zellen - 1 - J) * zellen + I]
+    return v === ohne || v === undefined ? null : v / 100
+  }
+}
+
+/**
  * Felsoberfläche (Michael, 2026-10-25: «geologischer Untergrund … damit auch die Wände entsprechend realistisch sind»): swissBEDROCK
  * (swisstopo), die Höhe des Felses unter dem Lockergestein, auf 50 m gemittelt in den 10-km-Kacheln des Geländes
  * (pipeline/build_fels.py). Wo die Quelle nichts angibt, null.

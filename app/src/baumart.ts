@@ -9,13 +9,18 @@ export const LAUB_BIS_M = 800, NADEL_AB_M = 1500
  *  keiner Quelle); darüber steigt der Anteil bis NADEL_AB_M gleichmässig auf 100 % */
 export const NADEL_TIEF_WALD = 0.4, NADEL_TIEF_EINZELN = 0.1
 
-/** ein Nadelbaum? Je Stelle immer gleich (gestreut, nicht zufällig bei jedem Bau); wald: im Wald, nicht ein Einzelbaum */
-export function istNadel(e: number, n: number, hoeheM: number, wald = true): boolean {
+/**
+ * ein Nadelbaum? Je Stelle immer gleich (gestreut, nicht zufällig bei jedem Bau); wald: im Wald, nicht ein Einzelbaum; laub: der Anteil Laubbäume
+ * an dieser Stelle laut Waldmischungsgrad LFI des BAFU (seit 2026-11-16, waldmischungLaden in src/gelaende.ts), 0 bis 1; nur wo er fehlt, gilt die
+ * Annahme nach der Höhe über Meer
+ */
+export function istNadel(e: number, n: number, hoeheM: number, wald = true, laub: number | null = null): boolean {
+  const r0 = Math.sin(e * 39.3468 + n * 11.135) * 24634.6345, r = r0 - Math.floor(r0)
+  if (laub !== null) return r >= laub
   if (hoeheM >= NADEL_AB_M) return true
   const tief = wald ? NADEL_TIEF_WALD : NADEL_TIEF_EINZELN
   const anteil = hoeheM <= LAUB_BIS_M ? tief : tief + (1 - tief) * (hoeheM - LAUB_BIS_M) / (NADEL_AB_M - LAUB_BIS_M)
-  const r = Math.sin(e * 39.3468 + n * 11.135) * 24634.6345
-  return r - Math.floor(r) < anteil
+  return r < anteil
 }
 
 /** ein Nadelbaum ist schmaler als ein Laubbaum gleicher Art: so viel seiner Breite (gewählt, in keiner Quelle) */

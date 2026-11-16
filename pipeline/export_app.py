@@ -193,6 +193,12 @@ def main():
         if (ZIEL / "luftbild_grob").exists():
             shutil.rmtree(ZIEL / "luftbild_grob")
         shutil.copytree(grob, ZIEL / "luftbild_grob")
+    # Waldmischungsgrad LFI (BAFU) für Laub- und Nadelbäume (pipeline/build_waldmischung.py)
+    wm = ROOT / "data" / "waldmischung"
+    if wm.exists():
+        if (ZIEL / "waldmischung").exists():
+            shutil.rmtree(ZIEL / "waldmischung")
+        shutil.copytree(wm, ZIEL / "waldmischung")
     # Nahbild: dasselbe Luftbild auf 2,5 m entlang der Bahnlinien (pipeline/build_luftbild_nah.py)
     nah = ROOT / "data" / "luftbild_nah"
     if nah.exists():
