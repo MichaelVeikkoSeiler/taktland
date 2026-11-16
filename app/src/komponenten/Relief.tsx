@@ -22,6 +22,7 @@ import { himmelNacht, sternSicht } from '../sterne'
 import { sternenhimmelBauen } from './Sternenhimmel'
 import { audioKontext, audioLesen, audioSetzen, useAudio, wetterGeraeusch, wetterGeraeuschAus, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import { fuehrerstandVerlauf, gleisBei, gleisHoehenLaden, type GleisHoehen, mitGleisTunneln, type Weg } from '../gleisweg'
+import { waldmischungLaden } from '../gelaende'
 import { type Bruecke3d, brueckenLaden, gleisLaden, strassenlichtLaden, mastenLaden, ausschnittLaden, fensterLaden, fensterVorladen, KEINE_HOEHE, type Luftbild, luftbildLaden, type Nahbild, nahbildLaden, type Fein, feinLaden, feinHoehe, feinFeld, type Scharf, scharfLaden, scharfHoehe, scharfBild, SCHARF_KACHEL_M, SCHARF_PUNKTE, gebaeudeNamen, gebaeudeKachel, baumNamen, baumKachel } from '../gelaende'
 import { drahtStoff as drahtStoffBauen, FAHRLEITUNG_FARBE, fahrleitungsDraehte, fahrleitungsMast } from './Fahrleitung'
 import { fahrplanZuegeBauen } from './FahrplanZuege'
@@ -2687,6 +2688,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       for (const name of namen) {
         if (baumNetze.has(name)) continue
         const k = await baumKachel(name)
+        // Laub- oder Nadelbaum laut Waldmischungsgrad LFI des BAFU (waldmischungLaden in src/gelaende.ts)
+        const laubAnteil = k ? await waldmischungLaden(k.e0, k.n0, k.e0 + 500, k.n0 + 500).catch(() => () => null) : () => null
         if (!laeuft || auftrag !== baumAuftrag) return
         const fs = feinStand
         if (!k || !fs || baumNetze.has(name)) continue
@@ -2699,7 +2702,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
           const h = (scharfStand && scharfHoehe(scharfStand, e, nn)) ?? feinHoehe(fs.fein, e, nn)
           if (h === null) continue
           const [hoeheArt, breiteArt] = BAUM_FORM[k.art[i]] ?? BAUM_FORM[0]
-          const istN = istNadel(e, nn, h, k.art[i] > 0), netz = istN ? nadel : laub, breite = breiteArt * (istN ? NADEL_BREITE : 1), hoehe = hoeheArt * (istN ? NADEL_HOEHE : 1)
+          const istN = istNadel(e, nn, h, k.art[i] > 0, laubAnteil(e, nn)), netz = istN ? nadel : laub, breite = breiteArt * (istN ? NADEL_BREITE : 1), hoehe = hoeheArt * (istN ? NADEL_HOEHE : 1)
           const z = zahl.get(netz)!
           // gleichmässig gestreut, aber je Baum immer gleich
           const r = Math.sin(e * 12.9898 + nn * 78.233) * 43758.5453, f = 0.75 + 0.5 * (r - Math.floor(r))

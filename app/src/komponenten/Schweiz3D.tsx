@@ -14,7 +14,7 @@ import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flu
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck, spurBei, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
-import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden } from '../gelaende'
+import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden, waldmischungLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
 import { himmelsrichtung, jetztInDerSchweiz, schweizerZeit, type Sonnenstand, sonnenstand, uhrzeit } from '../sonne'
 import { imGebiet, type Pool, schweiz11Laden } from '../schweiz11'
@@ -1765,8 +1765,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Gelände so hoch reicht; ihre Farben sind gewählt.{umweltHier && <> Gebäude: swissBUILDINGS3D 3.0 (swisstopo), Dächer in der
             Farbe des Luftbilds, Wände grau (in keiner Quelle); Fenster und ihr Licht in der Nacht gezeichnet, Stockwerke von 3 m, Fenster
             alle 3,2 m und der Anteil, der zu jeder Stunde brennt (abends gut ein Drittel, nachts um 3 Uhr wenige), sind Annahmen. Bäume: swissTLM3D (swisstopo), Einzelbäume wie in der Quelle, Wald mit
-            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; bis 800 m über Meer im Wald 40 % Nadelbäume, ab 1'500 m nur Nadelbäume,
-            dazwischen steigend, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
+            gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; Laub- oder Nadelbaum nach dem Waldmischungsgrad LFI (BAFU), wo er fehlt bis 800 m über Meer
+            im Wald 40 % Nadelbäume, ab 1'500 m nur Nadelbäume, dazwischen steigend, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
         </details>
       )}
       </>)}
@@ -2004,7 +2004,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Wanderwege: swissTLM3D (swisstopo), alle Wege, die dort als Wanderweg, Bergwanderweg oder Alpinwanderweg eingetragen sind. Gezeigt ist nur ihre
               Lage, ohne Sperrungen, Umleitungen, Zustand und Gefahren; zum Anschauen, nicht für die Planung einer Wanderung. Dafür gelten die Wegweiser vor
               Ort und die offiziellen Wanderkarten.</li>
-            <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo).</li>
+            <li>Gebäude: swissBUILDINGS3D 3.0 (swisstopo). Bäume und Wald: swissTLM3D (swisstopo). Ob Laub- oder Nadelbaum: Waldmischungsgrad LFI
+              (Bundesamt für Umwelt BAFU, Stand 2023), der Anteil Laubbäume an den sichtbaren Kronen, aus Satellitenbildern modelliert, hier auf 50 m gemittelt;
+              welcher einzelne Baum Laub- oder Nadelbaum ist, ist danach verteilt, nicht gemessen.</li>
             <li>Züge: Fahrplan als GTFS von opentransportdata.swiss, {eigeneSeite ? 'täglich' : 'montags und donnerstags'} neu geladen, Verspätungen und Ausfälle als
               GTFS-Realtime von opentransportdata.swiss über spiel.taktland.ch; Weg zwischen den Halten aus dem
               Netz von Taktland (Linien und Kilometrierung der SBB, SBB Open Data, data.sbb.ch; Schienennetz des BAV).</li>
@@ -2084,7 +2086,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; die Fussgänger, für die Autos halten, und wann dabei gehupt wird, sind erfunden; das Flugzeug und der Helikopter, die man dazu fliegen sieht, sind erfunden: Gestalt, Farben, Höhe (150 und 120 m über dem Gelände), Richtung und Tempo; wann gehupt wird, ist gewählt; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
-            <li>Laub- oder Nadelbaum: bis 800 m über Meer im Wald 40 % Nadelbäume, bei einzelnen Bäumen 10 %, darüber mehr, ab 1'500 m nur Nadelbäume (gewählt).</li>
+            <li>Laub- oder Nadelbaum: welcher einzelne Baum es ist, nach dem Anteil laut BAFU verteilt; nur wo dieser fehlt, nach der Höhe über Meer: bis 800 m im Wald
+              40 % Nadelbäume, bei einzelnen Bäumen 10 %, darüber mehr, ab 1'500 m nur Nadelbäume (gewählt).</li>
             <li>Regen und Schnee fallen schräg, je stärker der Wind der Windhosen, desto schräger; gezählt wird das Mittel aus mittlerem Wind und Böe (die beiden
               Zahlen über der Windhose), ganz schräg ab 45 km/h; Schnee schräger als Regen (gewählt).</li>
             <li>Laubbäume durchs Jahr, nach dem Datum der Szene: Austrieb etwa Mitte April bis Anfang Mai, zuerst heller, Herbstfarben ab
@@ -4154,8 +4157,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     void probeLaden(e0, n0, e1, n1).then(async ({ gebaeude: g, baeume: bm }) => {
       const decken = art === 'gebaeude' ? await deckenIn(e0, n0, e1, n1).catch(() => []) : []
+      const laub = art === 'baeume' ? await waldmischungLaden(e0, n0, e1, n1).catch(() => () => null) : () => null
       if (weg) return
-      gruppe.add(...(art === 'gebaeude' ? gebaeudeNetz(g, cE, cN, e0, n0, e1, n1, bodenBilder(), decken) : baumNetz(bm, b, cE, cN, e0, n0, e1, n1, k.inBrille())))
+      gruppe.add(...(art === 'gebaeude' ? gebaeudeNetz(g, cE, cN, e0, n0, e1, n1, bodenBilder(), decken) : baumNetz(bm, b, cE, cN, e0, n0, e1, n1, k.inBrille(), laub)))
       if (!gruppe.children.length) return
       // die Programme der Grafik übersetzen, ohne die Seite anzuhalten (wo der Browser es kann), erst dann zeigen
       await k.renderer.compileAsync(gruppe, k.kamera, k.szene).catch(() => {})
@@ -7618,7 +7622,8 @@ function baumWiegen(stoff: THREE.Material) {
 }
 const BAUM_HOECHSTENS = 1_200_000, BAUM_HOECHSTENS_HANDY = 300_000, BAUM_HOECHSTENS_BRILLE = 50_000
 const baumHoechstens = (brille: boolean) => (brille ? BAUM_HOECHSTENS_BRILLE : hoechstens() === 4 ? BAUM_HOECHSTENS_HANDY : BAUM_HOECHSTENS)
-function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0: number, n0: number, e1: number, n1: number, brille = false) {
+function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0: number, n0: number, e1: number, n1: number, brille = false,
+  laub: (e: number, n: number) => number | null = () => null) {
   const liste: Array<[number, number, number, number, number, number]> = []
   // zu viele Bäume für die Grafik: der gezeichnete Wald wird lichter, Einzelbäume bleiben alle (BAUM_HOECHSTENS)
   let wald = 0
@@ -7646,7 +7651,7 @@ function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0:
   const laubStoff = new THREE.MeshLambertMaterial()
   baumWiegen(laubStoff); laubSaison(laubStoff, 1, 1000, 0.5)
   const hoehen = liste.map(([e, n]) => bestandHoehe(b, e, n))
-  const nadel = liste.map(([e, n, art], i) => istNadel(e, n, hoehen[i], art > 0))
+  const nadel = liste.map(([e, n, art], i) => istNadel(e, n, hoehen[i], art > 0, laub(e, n)))
   const anzahlNadel = nadel.filter(Boolean).length
   const netze = [new THREE.InstancedMesh(krone, laubStoff, liste.length - anzahlNadel), new THREE.InstancedMesh(kegel, stoff, anzahlNadel)]
   netze[0].customDepthMaterial = laubSchatten(1, 1000, 0.5)

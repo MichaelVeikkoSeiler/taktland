@@ -731,6 +731,12 @@ Laubbäume durchs Jahr in «3D Schweiz» und im Führerstand (Michael, 2026-11-1
              Netz in der Krone (Rauschen, Lücken durchsichtig, auch im Schatten in «3D Schweiz»); je Baum ±8 Tage, je 100 m über 450 m im Frühling 3 Tage später, im Herbst
              2 früher (AUSTRIEB, FAERBEN, FALL, STREU_TAGE … gewählt, in keiner Quelle); in der Anleitung («Was erfunden ist»); im Browser bei Köniz im Juli, Oktober und Januar
              angeschaut, im Führerstand nicht
+data/waldmischung/  Waldmischungsgrad LFI des BAFU (Michael, 2026-11-16: «Stimmt eigentlich das Waldverhältnis Tannen und Laubwald? Wenn du dort eine Quelle hast, kannst du diese
+             gerne berücksichtigen»): ch.bafu.landesforstinventar-waldmischungsgrad (data.geo.admin.ch, Stand 2023-10-31, aus Sentinel-1 und -2 modelliert, je 10 m der Anteil
+             Laubbäume an den sichtbaren Kronen), pipeline/build_waldmischung.py lädt die Datei (171 MB nach data/raw) und mittelt auf 50 m in die 10-km-Kacheln des Geländes
+             (.mgz, UInt8 0 bis 100, 255 ohne Angabe, 492 Kacheln, 7,8 MB, in Git, export_app kopiert sie); in der App waldmischungLaden in src/gelaende.ts, istNadel in src/baumart.ts
+             mit laub: Nadelbaum, wenn der feste Zufall der Stelle über dem Anteil liegt; nur ohne Angabe die Annahme nach der Höhe (unten); in «3D Schweiz» und im Führerstand;
+             in Anleitung, Quellen und Fusszeile beider Seiten; bei Köniz laut Quelle im Mittel 57 % Laub
 Regen und Schnee schräg im Wind (Michael, 2026-11-16: «je stärker der Wind ist, desto schräger fallen die Regen- oder auch Schneeflocken herab»): in «3D Schweiz» der Wind
              der Bäume (Mittel der vier Windhosen, voll ab 45 km/h), je Meter Fall bei vollem Wind 0,9 m (Regen) und 1,6 m (Schnee) waagrecht in Windrichtung, am Boden an der Stelle,
              darüber gegen den Wind versetzt, ausserhalb der Säule nicht gezeichnet (REGEN_SCHRAEG, SCHNEE_SCHRAEG, windSetzen in Niederschlag.ts); in der Modellbahn und beim Fahren
@@ -1171,6 +1177,7 @@ python3 pipeline/fetch_tlm3d.py                  # Ebene Eisenbahn aus swissTLM3
 .venv/bin/python pipeline/build_kartenlinien.py   # Kantonsgrenzen und Bahnlinien für die Karte von «Geo»
 python3 pipeline/build_wetterstationen.py          # Wetterstationen von MeteoSchweiz für das echte Wetter in der Modellbahn
 .venv/bin/python pipeline/build_seegrund.py          # Seegrund von 22 Seen (swissBATHY3D) für «3D Schweiz», etwa 3 GB laden, vor export_app
+.venv/bin/python pipeline/build_waldmischung.py       # Waldmischungsgrad LFI (BAFU) für Laub- und Nadelbäume, lädt 171 MB, vor export_app
 .venv/bin/python pipeline/build_fels.py              # Felsoberfläche (swissBEDROCK) für die Wände von «3D Schweiz», vor export_app
 python3 pipeline/build_sterne.py                   # Sterne (Hipparcos über d3-celestial) für den Nachthimmel in «3D Schweiz», vor export_app
 .venv/bin/python pipeline/build_relief.py       # Bergstrecken in 3D (Ausschnitt, Linie, Bauwerke; Gelände aus den Kacheln)
