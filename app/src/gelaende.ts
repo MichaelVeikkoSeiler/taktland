@@ -118,6 +118,11 @@ export const luftbildIndex = () => holen<LuftbildIndex>('data/luftbild/index.jso
  *  Speicher des Telefons, und neue Bilder liessen sich nicht mehr entpacken */
 const BILDER_HOECHSTENS = 25
 const bildVorrat = new Map<string, Promise<ImageBitmap | null>>()
+/** Gröbere Fassungen derselben Kacheln (pipeline/build_luftbild_grob.py, 165 und 330 Bildpunkte je 10 km): wo die Leinwand nicht mehr
+ *  zeigt, lädt die App die kleinste, die mindestens so viele Bildpunkte hat, statt der vollen 1000 (2026-11-15: in der Stufe 128 km lud das
+ *  Handy sonst gegen 48 MB; Michael: «Ja, bitte so umsetzen»); fehlt ihr Verzeichnis, wie bisher die vollen */
+let grobIndex: Promise<number[]> | null = null
+const grobStufen = () => (grobIndex ??= holen<{ pixel: number[] }>('data/luftbild_grob/index.json').then((i) => [...i.pixel].sort((a, b) => a - b)).catch(() => []))
 function luftbildKachel(name: string, px: number, voll: number) {
   const schluessel = `${name}@${px}`
   let p = bildVorrat.get(schluessel)
@@ -126,9 +131,13 @@ function luftbildKachel(name: string, px: number, voll: number) {
     bildVorrat.delete(schluessel); bildVorrat.set(schluessel, p)
   } else {
     while (bildVorrat.size >= BILDER_HOECHSTENS) bildVorrat.delete(bildVorrat.keys().next().value!)
-    p = holenBinaer(`data/luftbild/${name}.jpg`)
-      .then((b) => createImageBitmap(new Blob([b], { type: 'image/jpeg' }),
-        px < voll ? { resizeWidth: px, resizeHeight: px, resizeQuality: 'medium' } : undefined))
+    p = grobStufen()
+      .then((stufen) => {
+        const grob = stufen.find((s) => s >= px && s < voll)
+        return holenBinaer(grob ? `data/luftbild_grob/${grob}/${name}.jpg` : `data/luftbild/${name}.jpg`).then((b) => ({ b, hat: grob ?? voll }))
+      })
+      .then(({ b, hat }) => createImageBitmap(new Blob([b], { type: 'image/jpeg' }),
+        px < hat ? { resizeWidth: px, resizeHeight: px, resizeQuality: 'medium' } : undefined))
       .then(ohneLeeres)
       .catch(() => { bildVorrat.delete(schluessel); return null })
     bildVorrat.set(schluessel, p)
@@ -180,11 +189,11 @@ export interface Luftbild {
 /** Die Luftbilder, die einen Ausschnitt berühren, oder null, wenn es dort keine gibt. So fein, wie die Leinwand
  *  der Szene sie zeigt (4096 Bildpunkte über die längere Seite): für eine ganze Strecke in der Brille kleiner, sonst
  *  füllen Hunderte Bilder den Speicher */
-export async function luftbildLaden(raster: Raster, nurKacheln?: Set<string>): Promise<Luftbild | null> {
+export async function luftbildLaden(raster: Raster, nurKacheln?: Set<string>, leinwand = 4096): Promise<Luftbild | null> {
   const ix = await luftbildIndex().catch(() => null)
   if (!ix) return null
   const k = ix.kachel_m
-  const px = Math.max(64, Math.min(ix.pixel, Math.round((4096 * k) / (Math.max(raster.breite, raster.hoehe) * raster.m))))
+  const px = Math.max(64, Math.min(ix.pixel, Math.round((leinwand * k) / (Math.max(raster.breite, raster.hoehe) * raster.m))))
   const namen: Array<[number, number]> = []
   for (let ex = Math.floor(raster.ost / k); ex <= Math.floor((raster.ost + raster.breite * raster.m - 1) / k); ex++) {
     for (let ny = Math.floor((raster.nord - raster.hoehe * raster.m) / k); ny <= Math.floor((raster.nord - 1) / k); ny++) {
