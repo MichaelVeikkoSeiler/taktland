@@ -755,6 +755,13 @@ Abbiegen im Bogen und Rechtsvortritt in «3D Schweiz» (Michael, 2026-11-16: «B
              6 m beisammen) wartet das vorderste Auto einer übrigen Strasse bis 14 m davor, wenn eines von rechts kommt (mehr als 60° rechts der eigenen Richtung) oder
              eines im Kreisel (Kette mit KREISEL, seit 2026-11-16 als 20. Wert der übrigen Strassen in data/autos); wer im Kreisel fährt, wartet nie; nach 4 s fährt es
              trotzdem (VORTRITT_*, alles gewählt); Signale, Ampeln, Stoppstrassen in keiner unserer Quellen; in der Anleitung («Autos»)
+Autos nie ineinander in «3D Schweiz» (Michael, 2026-11-16: «Ist es möglich es so zu konfigurieren dass Autos nie kollodieren?»): jedes Auto schaut nach den Lagen des
+             letzten Bilds bis 45 m voraus in einem Streifen so breit wie es und das andere (Gegenverkehr und die andere Spur derselben Autobahn ausgenommen) und bremst so,
+             dass 2 m bleiben, auf allen Strassen und über Kreuzungen, Einmündungen und Kreisel hinweg (korridorPlatz, AutoRaster in Autos.ts, Raster von 45 m); sehen sich zwei
+             gegenseitig, wartet, wer das andere rechts hat, sonst nach dem festen Zufall; steht eines länger als 10 s, fährt es weiter (durch) und wird erst gezeichnet,
+             wenn es keines mehr überlappt; zuletzt zeichnet das Bild kein Auto, das ein schon gezeichnetes überlappt (Rechtecke, quer auf 80 %, damit sich Gegenverkehr auf
+             schmalen Strassen kreuzt; ueberlappt), auch nach einem Sprung der Zeit (KORRIDOR_* gewählt); im Browser bei Köniz 90 s geprüft (Verkehr fliesst, selten eines
+             ausgeblendet), Autobahnen nicht angeschaut; in der Anleitung («Autos»)
 Regen und Schnee schräg im Wind (Michael, 2026-11-16: «je stärker der Wind ist, desto schräger fallen die Regen- oder auch Schneeflocken herab»): in «3D Schweiz» der Wind
              der Bäume (Mittel der vier Windhosen, voll ab 45 km/h), je Meter Fall bei vollem Wind 0,9 m (Regen) und 1,6 m (Schnee) waagrecht in Windrichtung, am Boden an der Stelle,
              darüber gegen den Wind versetzt, ausserhalb der Säule nicht gezeichnet (REGEN_SCHRAEG, SCHNEE_SCHRAEG, windSetzen in Niederschlag.ts); in der Modellbahn und beim Fahren

@@ -13,7 +13,7 @@ import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAU
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, kmhAuf, netzBauen, weiterNach, spurLage, bogen, type SpurLage, KURVE_HALB_M,
-  AUTO_ANFAHREN, AUTO_BREMSEN, VORTRITT_M, HALT_VOR_KREUZUNG_M, VORTRITT_HOECHSTENS_S, FOLGE_ABSTAND_M, lackFarbe, retuscheZurueck, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
+  AUTO_ANFAHREN, AUTO_BREMSEN, VORTRITT_M, HALT_VOR_KREUZUNG_M, VORTRITT_HOECHSTENS_S, FOLGE_ABSTAND_M, AutoRaster, type AutoBild, korridorPlatz, ueberlappt, KORRIDOR_LUECKE_M, KORRIDOR_STECKT_S, lackFarbe, retuscheZurueck, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden, waldmischungLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1892,7 +1892,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             samt Halten, ausserorts 50 bis 80 km/h, nach der Breite der Strasse), eine Spur je Richtung. An Kreuzungen und Kreiseln fährt jedes Auto auf eine der Strassen weiter, die dort
             anschliessen, öfter auf eine mit viel Verkehr; welches wohin abbiegt, ist erfunden. Es biegt in einem Bogen ab und passt sein Tempo an. Es gilt der
             Rechtsvortritt: Kommt zugleich ein Auto von rechts, wartet es vor der Kreuzung; wer im Kreisel fährt, hat Vortritt. Wartet es länger als 4 Sekunden, fährt es
-            trotzdem. Ampeln, Signale, Stoppstrassen und Abbiegespuren stehen in keiner unserer Quellen und fehlen. Kreisel sind laut
+            trotzdem, sobald frei ist. Kein Auto fährt in ein anderes: Jedes bremst, wenn vor ihm eines fährt, quert oder einbiegt, und hält etwa 2 m Abstand. Blockieren sich
+            mehrere gegenseitig länger als 10 Sekunden, fährt eines weiter und ist ausgeblendet, bis es frei ist. Ampeln, Signale, Stoppstrassen und Abbiegespuren stehen in keiner unserer Quellen und fehlen. Kreisel sind laut
             swissTLM3D als Kreisel bezeichnet und werden im Gegenuhrzeigersinn befahren; nur wo eine Strasse endet oder die geladene Gegend aufhört, verschwindet ein Auto
             und beginnt wieder am Anfang seiner Strasse. Weggemalt sind die Autos im
             Luftbild nur auf Strassen ab 6 m Breite. Innerorts hält hie und da ein Auto, weil ein Fussgänger die Strasse quert; die Autos dahinter
@@ -6812,6 +6813,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       for (const kk of ketten.values()) for (const a of kk.autos) { a.heim = { kk, richtung: a.richtung, spur: a.spur, ms: a.ms }; alleAutos.push(a) }
       let letzteSek: number | null = null
       const drauf = new Map<AutoKette, AutoPlatz[]>()
+      // wo die Autos im letzten Bild standen, und das Raster dieses Bilds (nie ineinander, KORRIDOR_* in Autos.ts)
+      let raster = new AutoRaster(), rasterNeu = new AutoRaster()
       gruppe.add(netz)
       // SUV und Pick-up (Michael, 2026-11-11: «aus jedem 5. Auto einen SUV … aus jedem 15. einen Pick-Up»)
       // dazu Kleinwagen, Minibus, Kombi, Sportwagen und Cabriolet (Michael, 2026-11-14)
@@ -6996,12 +6999,23 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             a.kk = h.kk; a.richtung = h.richtung; a.spur = h.spur; a.ms = h.ms; a.msZiel = h.ms; a.abgebogen = 0
             a.lauf = (((a.s0 + h.ms * sek) % h.kk.L) + h.kk.L) % h.kk.L
             a.nach = undefined; a.von = undefined; a.kurveH = 0; a.wartet = 0
+            a.bild = undefined; a.steckt = 0; a.durch = false
             verzug.delete(a)
           } else {
             // Tempo: zum Tempo der Kette, höchstens so schnell, dass es vor der Haltelinie oder dem Vordermann noch anhalten kann
             let platz = folge.get(a) ?? Infinity
             if (warten.has(a)) { platz = Math.min(platz, a.kk!.L - HALT_VOR_KREUZUNG_M - a.lauf!); a.wartet = (a.wartet ?? 0) + dt }
             else if ((a.wartet ?? 0) <= VORTRITT_HOECHSTENS_S) a.wartet = 0
+            // nie ineinander: das nächste Auto im Weg nach dem letzten Bild, auch auf anderen Ketten; wer zu lange steht, fährt versteckt hindurch
+            if (a.bild) {
+              const frei = korridorPlatz(a.bild, raster)
+              if (a.durch) { if (frei > 2 * KORRIDOR_LUECKE_M) { a.durch = false; a.steckt = 0 } }
+              else {
+                platz = Math.min(platz, frei)
+                a.steckt = frei < 0.5 ? (a.steckt ?? 0) + dt : 0
+                if (a.steckt > KORRIDOR_STECKT_S) a.durch = true
+              }
+            }
             const ziel = Math.min(a.msZiel ?? a.ms, Math.sqrt(2 * AUTO_BREMSEN * Math.max(0, platz)))
             a.ms = a.ms < ziel ? Math.min(ziel, a.ms + AUTO_ANFAHREN * dt) : ziel
             a.lauf = (a.lauf ?? 0) + a.ms * dt
@@ -7038,9 +7052,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (!l) drauf.set(a.kk!, (l = []))
           l.push(a)
         }
-        for (const [kk, hier] of drauf) {
+        rasterNeu.leeren()
+        for (const a of alleAutos) a.bild = undefined
+        // zuerst die Autos, die nicht hindurch dürfen, dann die anderen: die werden versteckt, wo sie eines überlappen
+        for (const zweite of [false, true]) for (const [kk, hier] of drauf) {
           // gestaut: zuerst alle sichtbaren Autos der Kette, dann je Auto der Verzug
-          if (gestaut.has(kk)) {
+          if (!zweite && gestaut.has(kk)) {
             const liste: Array<{ a: AutoPlatz; lauf: number; lang: number }> = []
             for (const a of hier) {
               const lkwAnteil = lkwVon(a)
@@ -7052,6 +7069,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           // innerorts (Tempo höchstens 35 km/h) kann ein Halt beginnen
           const innerorts = kk.art >= 2 && (kk.stuecke[0].strasse?.kmh ?? 99) <= 35
           for (const a of hier) {
+            if (!!a.durch !== zweite) continue
             const lkwAnteil = lkwVon(a)
             if (a.ab >= anteilVon(a) || zahl >= hoechstens || lkwZahl >= hoechstens) continue
             const lkw = a.lkw < lkwAnteil, art = artVon(a.farbe), lang = lkw ? LKW_LANG_M : AUTO_ART_LANG_M[art]
@@ -7072,10 +7090,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             if (!p) continue
             const { e, n, de, dn } = p
             if (!drin(e, n)) continue
+            const bild: AutoBild = { a, e, n, de, dn, lang, breit: lkw ? LKW_BREIT_M : AUTO_ART_BREIT_M[art] }
+            if (ueberlappt(bild, rasterNeu)) {
+              if (import.meta.env.VITE_S3D_TEST) { const w = window as unknown as { s3dVersteckt?: number }; w.s3dVersteckt = (w.s3dVersteckt ?? 0) + 1 }
+              continue
+            }
             // auf Brücken die gezeichnete Fahrbahn an der Stelle des Autos (deckRef), sonst die eigene Rechnung wie die Brücke
             const deck = p.bruecke ? deckRef.current?.(e, n, p.h) : null
             const z = p.bruecke ? (deck ?? p.h) - 0.1 : bestandHoehe(b, e, n)
             if (!Number.isFinite(z)) continue
+            a.bild = bild; rasterNeu.dazu(bild)
             v.set((e - lage.cE) / 1000, z / 1000, -(n - lage.cN) / 1000)
             q.setFromAxisAngle(oben, Math.atan2(de, -dn))
             m.compose(v, q, eins)
@@ -7094,6 +7118,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             else if (art) artNetz[art].setColorAt(artZahl[art]++, farben[a.farbe])
             else netz.setColorAt(zahl++, farben[a.farbe])
           }
+        }
+        ;[raster, rasterNeu] = [rasterNeu, raster]
+        if (import.meta.env.VITE_S3D_TEST) {
+          let g = 0, d = 0, st = 0
+          for (const x of alleAutos) { if (x.bild) { g++; if (x.ms < 0.1) st++ } if (x.durch) d++ }
+          ;(window as unknown as { s3dKorridor: unknown }).s3dKorridor = { gezeichnet: g, durch: d, stehen: st }
         }
         if (hoeren) haltBeginnen(jetztS, !tag, !!(import.meta.env.VITE_S3D_TEST && (window as unknown as { s3dHalt?: boolean }).s3dHalt))
         if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHalte: unknown }).s3dHalte = { orte: halte.map((h) => [Math.round(h.e), Math.round(h.n), Math.round(bestandHoehe(b, h.e, h.n))]), halte: halte.length, gestaut: gestaut.size, verzug: [...verzug.values()].map((x) => Math.round(x.v)), kandidaten: kandidaten.length }
