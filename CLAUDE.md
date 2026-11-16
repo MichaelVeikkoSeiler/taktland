@@ -578,6 +578,13 @@ Zu zweit in «3D Schweiz» (Michael, 2026-11-10, Vorschlag 13: «Erklär mir noc
              sodass auch die andere Person den erweiterten Ausschnitt sieht»): Stand.ausdehnung je Stufe [di0, di1, dj0, dj1], wer folgt, behält vorhandene Stücke und lädt die
              fehlenden (folgen in Schweiz3D.tsx), nur wo das Gerät so viele halten kann (hoechstens(), sonst das erste Feld); kein neues raum.php nötig; mit zwei Browsern und
              php -S geprüft (Bern, 16 km, + nach Osten: beide [0, 1, 0, 0])
+             seit 2026-11-16 Zeichnen für die führende Person (Michael: «Sobald man zu zweit auf dem Modell ist, soll die führende Rolle in die Karte mit neu eingeblendeten
+             Werkzeugen etwas anzeigen können … punktuell oder auch beispielsweise ein Feld einzeichnen», auf drei Vorschläge «Ja gerne, alle drei Werkzeuge bauen»): links im
+             Bild Stecknadel (Wort bis 20 Zeichen, sonst Nummer), Linie (Punkte tippen, «Fertig», «↶»), Fläche (ein Tipp bis 3 % der Weite am ersten Punkt schliesst) und
+             Papierkorb; Stand.zeichnungen in LV95 auf den Meter, der Entwurf mit entwurf: true (gestrichelt), höchstens 40 Zeichnungen zu 60 Punkten (ZEICHNEN_* gewählt);
+             in der Ansicht wie der Tunnel auf das Gelände gelegt, depthTest aus, Karmin, Flächen in Dreiecke zerlegt und fein geteilt (25 % deckend), Nadel als Linie mit
+             karminrotem Schild; ein Tipp ins Gelände geht ans Werkzeug (wenn.zeichnen) statt ein Feld zu wählen; nicht in der Brille; kein neues raum.php nötig; mit zwei
+             Browsern und php -S in Bern (16 km) geprüft
              seit 2026-11-15 als Zeichen zwei Handys mit Pfeilen hin und her statt zwei Figuren (Michael: «Der Button fürs Zu Zweit fehlt oder?», dann «Ja gerne ändern und auf
              allen Zoomstufen»; neben «Menschen» und der Augenhöhe war es nicht zu erkennen), in jeder Stufe
 Stufe Schweiz nur das Land (Michael, 2026-11-10: «dieses Bild mit dem Kasten und den verpixelten Rändern und de hellblaue Himmen wirken wenig harmonisch»,
@@ -789,6 +796,9 @@ Suche, Uhr, Stadtlicht und Züge in «3D Schweiz» seit 2026-11-16 (Michael: «O
              top-[7.25rem]); im Feld von 16 km die Lampen aus data/strassenlicht ohne Gebäude, 4-mal so grosse Flecken, halb so hell, ohne Masten (LICHT_FERN in Strassenlicht.ts,
              gewählt; vorher hingen sie an «Gebäude», die es dort nicht gibt); Züge (Knopf, Zeichnen) nur noch in den Feldern von 4 km und 1 km (zugFern), Schiffe weiter ab 16 km;
              im Browser hier in Bern um 21:30 mit 1300 und 390 Bildpunkten angeschaut
+Namen nah am Boden in «3D Schweiz» seit 2026-11-16 ausgeblendet (Michael, Bildschirmfoto auf einem Perron in Luzern mit «Luzern» und «Reuss»: «Aus solchen
+             Perpektiven bitte Gewässer und Orts sowie Gipfelnamen ausblenden»): steht die Kamera weniger als 150 m über dem Gelände unter ihr (NAMEN_NAH_M, gewählt,
+             namenZuNah), sind Orte, Gipfel und Gewässernamen samt Masten unsichtbar, je Bild geprüft; nicht in der Brille
 Zuggeräusch in «3D Schweiz» seit 2026-11-16 nur in den Feldern von 4 km und 1 km, ebenso der Pfiff (ZUG_HOEREN_STUFEN; Michael: «schon in einer mittleren Zoom-Stufe einen Zug höre, als wäre er gleich vor mir. Die Züge sollte man erst bei der vorletzten und letzten Stufe hören»); in der Anleitung («Geräusche»)
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften

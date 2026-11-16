@@ -23,7 +23,11 @@ export interface Stand {
   schalter: Record<string, boolean>
   /** null: jetzt; sonst die Zeit der Szene in ms */
   zeit: number | null
+  /** was die führende Person eingezeichnet hat (Michael, 2026-11-16) */
+  zeichnungen?: Zeichnung[]
 }
+/** eine Zeichnung zu zweit in LV95 (auf den Meter gerundet): Stecknadel (ein Punkt, ein Wort oder eine Nummer), Linie, Fläche; entwurf: noch am Zeichnen */
+export interface Zeichnung { art: 'punkt' | 'linie' | 'flaeche'; p: Array<[number, number]>; text?: string; entwurf?: boolean }
 export interface Lage { kopf: Punkt; blick: Punkt; zeigt: Punkt | null; brille: boolean; fuehrt: boolean; stand?: Stand
   /** seit wann dieses Gerät führt (ms); führen zwei, gilt das spätere */
   seit?: number }

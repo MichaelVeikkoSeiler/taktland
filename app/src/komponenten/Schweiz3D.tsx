@@ -49,7 +49,7 @@ import { Abschnitt } from './Anleitung'
 import { type Sternenhimmel, sternenhimmelBauen } from './Sternenhimmel'
 import { QrCode } from './Raum'
 import { Stern } from './Stern'
-import { type Andere, type Lage, type Punkt, type Stand, useZuZweit } from '../zuzweit'
+import { type Andere, type Lage, type Punkt, type Stand, type Zeichnung, useZuZweit } from '../zuzweit'
 import Wischen from './Wischen'
 import { raumEroeffnen } from '../spielraum'
 import { himmelNacht, sternSicht } from '../sterne'
@@ -182,6 +182,21 @@ const AUTO_HUPE_ANTEIL = 0.12
 const einzeln = (anker: Feld, g: Gelaende): Bestand => ({ anker, teile: new Map([['0_0', g]]), di: [0, 0], dj: [0, 0] })
 const teilFeld = (b: Bestand, di: number, dj: number): Feld => ({ e: b.anker.e + di * b.anker.seite, n: b.anker.n + dj * b.anker.seite, seite: b.anker.seite })
 const imRaster = (r: Raster, e: number, n: number) => e >= r.ost && e <= r.ost + r.breite * r.m && n <= r.nord && n >= r.nord - r.hoehe * r.m
+/** nah am Boden keine Namen von Orten, Gipfeln und Gewässern (Michael, 2026-11-16, Bildschirmfoto auf einem Perron in Luzern mit «Luzern» und «Reuss»:
+ *  «Aus solchen Perspektiven bitte Gewässer und Orts sowie Gipfelnamen ausblenden»): die Kamera höchstens so hoch über dem Gelände unter ihr (gewählt); nicht in der Brille */
+const NAMEN_NAH_M = 150
+/** Zeichnen zu zweit: höchstens so viele Zeichnungen und Punkte je Zeichnung, Länge des Worts einer Stecknadel; ein Tipp so nahe am ersten Punkt (Anteil der Weite
+ *  des Modells) schliesst eine Fläche; Grösse der Nadel, Breite der Linie und Deckkraft der Fläche (alles gewählt) */
+const ZEICHNEN_HOECHSTENS = 40, ZEICHNEN_PUNKTE = 60, ZEICHNEN_TEXT_LAENGE = 20, ZEICHNEN_SCHLIESSEN = 0.03
+const ZEICHNEN_NADEL = 0.035, ZEICHNEN_PX = 3, ZEICHNEN_FLAECHE_DECKT = 0.25
+function namenZuNah(b: Bestand, wurzel: THREE.Object3D, kamera: THREE.Camera, brille: boolean) {
+  if (brille) return false
+  const l = wurzel.userData.lage as { cE: number; cN: number } | undefined
+  if (!l) return false
+  const p = wurzel.worldToLocal(kamera.getWorldPosition(new THREE.Vector3()))
+  const h = bestandHoehe(b, l.cE + p.x * 1000, l.cN - p.z * 1000)
+  return Number.isFinite(h) && p.y * 1000 - h < NAMEN_NAH_M
+}
 /** Höhe an einer Stelle aus dem Stück, in dem sie liegt, sonst am Rand des ersten */
 function bestandHoehe(b: Bestand, e: number, n: number) {
   for (const t of b.teile.values()) if (imRaster(t.raster, e, n)) return hoeheIm(t, e, n)
@@ -1114,6 +1129,32 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const [raumCode, setRaumCode] = useState('')
   const [raumFehler, setRaumFehler] = useState<string | null>(null)
   const lageRef = useRef<(() => Lage | null) | null>(null)
+  // Zeichnen zu zweit (Michael, 2026-11-16: «Sobald man zu zweit auf dem Modell ist, soll die führende Rolle in die Karte mit neu eingeblendeten Werkzeugen
+  // etwas anzeigen können … punktuell oder auch beispielsweise ein Feld einzeichnen», «Ja gerne, alle drei Werkzeuge bauen»): wer führt, setzt Stecknadeln,
+  // zeichnet Linien und Flächen; die anderen sehen sie mit dem Stand (ZEICHNEN_* gewählt)
+  const [zeichnungen, setZeichnungen] = useState<Zeichnung[]>([])
+  const [werkzeug, setWerkzeug] = useState<Zeichnung['art'] | null>(null)
+  const [entwurf, setEntwurf] = useState<Array<[number, number]>>([])
+  const [nadelText, setNadelText] = useState('')
+  const zeichnenFertig = () => {
+    if (werkzeug && entwurf.length >= (werkzeug === 'flaeche' ? 3 : 2)) setZeichnungen((z) => [...z, { art: werkzeug, p: entwurf }].slice(-ZEICHNEN_HOECHSTENS))
+    setEntwurf([])
+  }
+  const zeichnenKlick = (e: number, n: number, weiteM: number) => {
+    const q: [number, number] = [Math.round(e), Math.round(n)]
+    if (werkzeug === 'punkt') {
+      const nr = zeichnungen.filter((z) => z.art === 'punkt').length + 1
+      setZeichnungen((z) => [...z, { art: 'punkt' as const, p: [q], text: nadelText.trim().slice(0, ZEICHNEN_TEXT_LAENGE) || String(nr) }].slice(-ZEICHNEN_HOECHSTENS))
+      setNadelText('')
+    } else if (werkzeug === 'flaeche' && entwurf.length >= 3 && Math.hypot(q[0] - entwurf[0][0], q[1] - entwurf[0][1]) < weiteM * ZEICHNEN_SCHLIESSEN) {
+      // ein Tipp nahe beim ersten Punkt schliesst die Fläche
+      setZeichnungen((z) => [...z, { art: 'flaeche' as const, p: entwurf }].slice(-ZEICHNEN_HOECHSTENS)); setEntwurf([])
+    } else if (werkzeug && entwurf.length < ZEICHNEN_PUNKTE) setEntwurf((x) => [...x, q])
+  }
+  const fuehrend = !!raum && fuehreSeit !== null
+  // wer nicht mehr führt, zeichnet nicht weiter
+  useEffect(() => { if (!fuehrend) { setWerkzeug(null); setEntwurf([]) } }, [fuehrend])
+  const meineZeichnungen: Zeichnung[] = werkzeug && werkzeug !== 'punkt' && entwurf.length ? [...zeichnungen, { art: werkzeug, p: entwurf, entwurf: true }] : zeichnungen
   const standJetzt: Stand = {
     stufe,
     felder: Object.fromEntries((['gross', 'mittel', 'region', 'ort', 'nah'] as const)
@@ -1124,6 +1165,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     schalter: { orte: orteAn, gebaeude: gebaeudeAn, baeume: baeumeAn, zuege: zuegeAn, schiffe: schiffeAn, autos: autosAn, menschen: menschenAn, wandern, hoehen: scheiben, gipfel: gipfelAn,
       wolken: wolkenAn, wind: windAn, sonne: sonnenAn },
     zeit: jetztAn ? null : versatzMs,
+    zeichnungen: meineZeichnungen,
   }
   const zuZweitRef = useRef({ stand: standJetzt, seit: fuehreSeit })
   zuZweitRef.current = { stand: standJetzt, seit: fuehreSeit }
@@ -1417,6 +1459,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                      sonne: setSonnenAn, wind: setWindAn, zuege: setZuegeAn, schiffe: setSchiffeAn, autos: setAutosAn, menschen: setMenschenAn, wolken: setWolkenAn, stehen: setStehen })[art]((x: boolean) => !x)} stehen={stehen && (stufe === 'ort' || stufe === 'nah')} zuegeDa zuege={zuegeAn} schiffe={schiffeAn} autos={autosAn} menschen={menschenAn} wolken={wolkenAn} sonne={stand} sonnenZeilen={sonnenZeilen} jetztAn={jetztAn} standort={standort}
                    windAn={windAn} windWerte={windPl.map((p) => ({ wind: windBei(p, windZeit), name: p.station?.name ?? null }))} windOrte={windOrte} nieder={niederJetzt} niederModell={setNiederBild}
                    zeitSchieben={zeitSchieben} vollbild={voll} strich={strich} andere={andere} lageRef={lageRef}
+                   zeichnungen={fuehrend ? meineZeichnungen : raum ? (fuehrer?.stand?.zeichnungen ?? []) : []}
+                   zeichnenKlick={fuehrend && werkzeug ? zeichnenKlick : null}
                    folgeId={blickFolgen && fuehrer ? fuehrer.id : null} blickLos={() => setBlickFolgen(false)} />
         ) : (
           <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
@@ -1544,6 +1588,47 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
             <OrtSuche zusatz={zusatz} waehlen={ortWaehlen} />
             <SzenenUhr versatzMs={versatzMs} />
+          </div>
+        )}
+        {/* Zeichnen zu zweit: nur wer führt, links im Bild (Michael, 2026-11-16) */}
+        {fuehrend && !inDerBrille && (
+          <div className="absolute left-2 top-1/2 z-10 flex -translate-y-1/2 flex-col items-start gap-2" style={desktop ? { zoom: DESKTOP_KNOPF_MASS } : undefined}>
+            {([['punkt', 'Stecknadel setzen', <><path d="M12 21s-6-6.2-6-11a6 6 0 0 1 12 0c0 4.8-6 11-6 11z" /><circle cx="12" cy="10" r="2.2" /></>],
+               ['linie', 'Linie zeichnen', <><path d="M4 18l5-7 5 4 6-9" /><circle cx="4" cy="18" r="1.4" fill="currentColor" /><circle cx="20" cy="6" r="1.4" fill="currentColor" /></>],
+               ['flaeche', 'Fläche zeichnen', <path d="M5 7l8-3 7 6-3 9-11-2z" fill="currentColor" fillOpacity="0.25" />]] as Array<[Zeichnung['art'], string, ReactNode]>).map(([art, name, zeichen]) => {
+              const an = werkzeug === art
+              return (
+                <button key={art} type="button" aria-pressed={an} aria-label={name} title={name}
+                        onClick={() => { knopfTon(!an); zeichnenFertig(); setWerkzeug(an ? null : art) }}
+                        className={`flex size-8 items-center justify-center rounded-lg border ${an ? KNOPF_AN : KNOPF_AUS}`}>
+                  <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" style={gedreht(an)}>{zeichen}</svg>
+                </button>
+              )
+            })}
+            <button type="button" aria-label="Alle Zeichnungen löschen" title="Alle Zeichnungen löschen" disabled={!zeichnungen.length && !entwurf.length}
+                    onClick={() => { knopfTon(true); setZeichnungen([]); setEntwurf([]) }}
+                    className={`flex size-8 items-center justify-center rounded-lg border disabled:opacity-40 ${KNOPF_AUS}`}>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <path d="M5 7h14M10 7V5h4v2M7 7l1 13h8l1-13M10.5 11v6M13.5 11v6" />
+              </svg>
+            </button>
+            {werkzeug === 'punkt' && (
+              <input value={nadelText} onChange={(e) => setNadelText(e.target.value)} maxLength={ZEICHNEN_TEXT_LAENGE} placeholder="Wort (sonst Nummer)"
+                     aria-label="Wort für die nächste Stecknadel" className="w-36 rounded-lg border border-sbb-cloud bg-white/90 px-2 py-1 text-xs dark:border-sbb-iron dark:bg-sbb-midnight/90" />
+            )}
+            {(werkzeug === 'linie' || werkzeug === 'flaeche') && (
+              <p className="max-w-36 rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
+                {werkzeug === 'linie' ? 'Ins Gelände tippen, Punkt für Punkt' : 'Ecke für Ecke tippen, ein Tipp auf den ersten Punkt schliesst'}
+              </p>
+            )}
+            {entwurf.length > 0 && (
+              <div className="flex gap-2">
+                <button type="button" onClick={() => setEntwurf((x) => x.slice(0, -1))} aria-label="Letzten Punkt zurück" title="Letzten Punkt zurück"
+                        className={`flex size-8 items-center justify-center rounded-lg border ${KNOPF_AUS}`}>↶</button>
+                <button type="button" onClick={zeichnenFertig} disabled={entwurf.length < (werkzeug === 'flaeche' ? 3 : 2)}
+                        className={`rounded-lg border px-2 text-xs font-bold disabled:opacity-40 ${KNOPF_AUS}`}>Fertig</button>
+              </div>
+            )}
           </div>
         )}
         {/* im Vollbild ein Kreuz oben rechts in der Ecke statt «Schliessen» unten (Michael, 2026-11-07: «Lieber ein passendes Schliessen-Icon an
@@ -2032,7 +2117,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Zu zweit">
           <p>Das Zeichen mit den zwei Handys unten im Bild öffnet unter dem Modell die Wahl: «Raum eröffnen» gibt einen Code aus vier Buchstaben, die andere Person gibt ihn
             auf ihrem Gerät ein, scannt den QR-Code unter dem Modell mit der Kamera oder öffnet den kopierten Link. Wer eröffnet, führt: Die anderen sehen dasselbe Feld in derselben Stufe, dieselben
-            Schalter und dieselbe Zeit, auch mit den Stücken, die mit + angesetzt sind (wo das Gerät so viele halten kann, sonst nur das erste Feld); ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung.
+            Schalter und dieselbe Zeit, auch mit den Stücken, die mit + angesetzt sind (wo das Gerät so viele halten kann, sonst nur das erste Feld); ein neues Feld oder ein Wechsel kommt bei ihnen nach etwa einer Sekunde an. «Führen» übernimmt die Führung. Wer führt, sieht links im Bild vier Werkzeuge: Stecknadel (ein Tipp ins Gelände setzt sie, mit einem Wort oder einer Nummer), Linie
+            (Punkt für Punkt tippen, dann «Fertig»), Fläche (Ecke für Ecke, ein Tipp auf den ersten Punkt schliesst sie) und Papierkorb (alles löschen). Die
+            anderen sehen die Zeichnungen in Karmin auf dem Gelände, auch durch Berge hindurch, beim Eintauchen am selben Ort.
             Jede Person sieht die anderen als blaue Figur dort, wo sie ins Modell schaut, mit einer Linie zur Stelle, auf die sie zeigt (Maus,
             in der Brille der Strahl). Wer folgt, sieht am Anfang auch mit dem Blick der führenden Person, die Kamera gleitet ihr nach; wer selbst dreht oder zoomt, schaut wieder selbst, «Blick folgen» holt den Blick zurück (nicht in der Brille). Ein Gespräch gibt es nicht, dafür braucht es ein Telefon
             daneben. Ein Raum verfällt nach sechs Stunden.</p>
@@ -2545,7 +2632,7 @@ const BLICK_AUSSCHNITT_BREITE = 1.0, BLICK_AUSSCHNITT_HOEHE = 26, BLICK_AUSSCHNI
 /** Anfangsblick in der ganzen Schweiz (Michael, 2026-11-15): Ziel in LV95, so viele km an ihm im Bild, Grad über dem Horizont und westlich von Süden */
 const BLICK_SCHWEIZ_ZIEL: [number, number] = [2618000, 1155000], BLICK_SCHWEIZ_BREITE_KM = 125, BLICK_SCHWEIZ_HOEHE = 40, BLICK_SCHWEIZ_WEST = 15
 
-function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild: _vollbild = false, strich = null, stehen = false, andere = [], lageRef, folgeId = null, blickLos, vorFuehrerstand, ansichtTick = 0 }: {
+function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info, brilleRef, zusatz, knoepfe, erweitern, scheiben, orte, gipfel, gebaeude, baeume, umweltHier, meldung, wandern, zuege, zuegeDa, schiffe, autos, menschen, wolken, sonnenAn, schalten, sonne: stand, sonnenZeilen, jetztAn, zeitSchieben, standort, windAn, windWerte, windOrte, nieder, niederModell, vollbild: _vollbild = false, strich = null, stehen = false, andere = [], lageRef, zeichnungen = [], zeichnenKlick = null, folgeId = null, blickLos, vorFuehrerstand, ansichtTick = 0 }: {
   /** zählt hoch, wenn eine gemerkte Ansicht geöffnet wird (ihre Kamera wartet in ansichtKamera) */
   ansichtTick?: number
   /** beim Wechsel in den Führerstand: welcher Zug und wo die Kamera zu ihm steht, damit «Zurück» dorthin führt */
@@ -2562,6 +2649,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   vollbild?: boolean
   /** Verlauf eines Tunnels in LV95, gestrichelt auf dem Gelände */
   strich?: Array<[number, number]> | null
+  /** zu zweit eingezeichnet (die eigenen oder die der führenden Person) und, wenn man zeichnet, wohin ein Tipp ins Gelände geht (LV95, Weite in m) */
+  zeichnungen?: Zeichnung[]; zeichnenKlick?: ((e: number, n: number, weiteM: number) => void) | null
   b: Bestand; stufe: Stufe; wahl: Feld | null; waehlen?: (e: number, n: number) => void
   /** ein Tipp neben das Modell nimmt die Wahl zurück (Michael, 2026-10-24: «neben das Modell tippen … die Auswahl verschwindet») */
   abwaehlen: () => void
@@ -2622,7 +2711,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color; himmelOben: THREE.Color; himmelObenTag: THREE.Color
     himmelMalen: () => void
     sterne: Sternenhimmel
-    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null }
+    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null; zeichnen: ((p: THREE.Vector3) => void) | null }
     stehenSetzen: (p: THREE.Vector3 | null) => void
     /** zu zweit: wo man ist (Kopf oder Kamera), wohin man schaut und zeigt, als Punkte im Modell */
     lageJetzt: () => { kopf: THREE.Vector3; blick: THREE.Vector3; zeigt: THREE.Vector3 | null; brille: boolean }
@@ -2869,6 +2958,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const aussen = wurzel.userData.ausserLand as ((x: number, z: number) => boolean) | null | undefined
       const t = boeden ? strahl.intersectObjects(boeden.children, false).find((h) => { const q = wurzel.worldToLocal(h.point.clone()); return !aussen?.(q.x, q.z) }) : undefined
       // auf Augenhöhe stellt ein Tipp ins Gelände an diese Stelle, statt ein Feld zu wählen
+      if (t && wenn.zeichnen) { wenn.zeichnen(wurzel.worldToLocal(t.point.clone())); return }
       if (t && wenn.stehen) { wenn.stehen(wurzel.worldToLocal(t.point.clone())); return }
       if (t) wenn.tipp?.(wurzel.worldToLocal(t.point.clone()))
       // neben das Gelände (Himmel, Sockel): die Wahl verschwindet
@@ -2878,8 +2968,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // wie in Taktland»): wie in der Modellbahn trägt ein gehaltener Abzug das Modell, beide ziehen es grösser oder kleiner und
     // drehen es; ein kurzer Abzug wählt mit dem Strahl wie bisher; die Greiftaste geht eine Stufe zurück, der Thumbstick dreht
     // und hebt, Thumbstick drücken stellt das Modell zurück an den Anfang
-    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null } =
-      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen'), stehenStart: null, daneben: null }
+    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null; zeichnen: ((p: THREE.Vector3) => void) | null } =
+      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen'), stehenStart: null, daneben: null, zeichnen: null }
     let drehung = 0, zoom = 1
     /** Lage des Modells, sobald es getragen oder gehoben wurde; null: auf dem Tisch wie am Anfang */
     let lage: THREE.Vector3 | null = null
@@ -4022,6 +4112,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     let ortZeit = 0, ortRuhe = 0
     const ortLage = new THREE.Vector3(Infinity, 0, 0), ortDreh = new THREE.Quaternion()
     const ortSchritt = () => {
+      const nah = namenZuNah(b, wurzel, k.kamera, renderer.xr.isPresenting)
+      schilder.visible = gipfelGruppe.visible = ortGruppe.visible = !nah
       if (!ortSchilder.length) return
       const jetzt = performance.now()
       if (renderer.xr.isPresenting) { if (jetzt - ortZeit > 500) { ortZeit = jetzt; ortAuswahl() } return }
@@ -4712,6 +4804,123 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
   }, [b, stufe, strich])
 
+  // Zeichnen zu zweit (Michael, 2026-11-16): ein Tipp ins Gelände geht an das Werkzeug statt ein Feld zu wählen
+  const zeichnenRef = useRef(zeichnenKlick)
+  zeichnenRef.current = zeichnenKlick
+  const zeichnenAn = !!zeichnenKlick
+  useEffect(() => {
+    const k = kern.current
+    if (!k || !zeichnenAn) return
+    const { cE, cN } = k.wurzel.userData.lage as { cE: number; cN: number }
+    k.wenn.zeichnen = (p) => zeichnenRef.current?.(cE + p.x * 1000, cN - p.z * 1000, ((k.wurzel.userData.weiteKm as number) || 1) * 1000)
+    return () => { k.wenn.zeichnen = null }
+  }, [b, stufe, zeichnenAn])
+  // die Zeichnungen: wie der Tunnel auf das Gelände gelegt und durch Berge sichtbar, Karmin; Stecknadeln als Mast mit Kopf und Schild, Flächen halb durchsichtig
+  const zeichnungenText = JSON.stringify(zeichnungen)
+  useEffect(() => {
+    const k = kern.current
+    const liste = JSON.parse(zeichnungenText) as Zeichnung[]
+    if (!k || !liste.length) return
+    const { wurzel } = k
+    const { cE, cN } = wurzel.userData.lage as { cE: number; cN: number }
+    const teile = [...b.teile.values()]
+    const r = teile.map((t) => t.rahmen)
+    const e0 = Math.min(...r.map((x) => x.e0)), e1 = Math.max(...r.map((x) => x.e0 + x.b))
+    const n0 = Math.min(...r.map((x) => x.n1 - x.h)), n1 = Math.max(...r.map((x) => x.n1))
+    const schritt = Math.min(...teile.map((t) => t.raster.m))
+    const weiteKm = (wurzel.userData.weiteKm as number) || 1
+    const heben = weiteKm * 0.0012
+    const drin = (e: number, n: number) => e >= e0 && e <= e1 && n >= n0 && n <= n1
+    const pkt = (e: number, n: number, dazu = heben) => new THREE.Vector3((e - cE) / 1000, bestandHoehe(b, e, n) / 1000 + dazu, -(n - cN) / 1000)
+    const gruppe = new THREE.Group()
+    gruppe.name = 'zeichnungen'
+    const linie = (punkte: Array<[number, number]>, zu: boolean, entwurf: boolean) => {
+      const q = zu ? [...punkte, punkte[0]] : punkte
+      let l: number[] = []
+      const fertig = () => {
+        if (l.length >= 6) {
+          const geo = new LineGeometry(); geo.setPositions(l)
+          const mat = new LineMaterial({ color: STRICH_FARBE, linewidth: ZEICHNEN_PX, depthTest: false, dashed: entwurf,
+            dashSize: weiteKm * STRICH_ANTEIL, gapSize: weiteKm * STRICH_LUECKE })
+          const ln = new Line2(geo, mat); ln.computeLineDistances(); ln.renderOrder = 7
+          gruppe.add(ln)
+        }
+        l = []
+      }
+      for (let i = 1; i < q.length; i++) {
+        const [ae, an] = q[i - 1], [be, bn] = q[i]
+        const st = Math.max(1, Math.min(400, Math.ceil(Math.hypot(be - ae, bn - an) / schritt)))
+        for (let s2 = i === 1 ? 0 : 1; s2 <= st; s2++) {
+          const t = s2 / st, qe = ae + t * (be - ae), qn = an + t * (bn - an)
+          if (!drin(qe, qn)) { fertig(); continue }
+          const v = pkt(qe, qn); l.push(v.x, v.y, v.z)
+        }
+      }
+      fertig()
+      // die Punkte des Entwurfs als kleine Kugeln
+      if (entwurf) for (const [e, n] of punkte) if (drin(e, n)) {
+        const m = new THREE.Mesh(new THREE.SphereGeometry(weiteKm * 0.004, 12, 8), new THREE.MeshBasicMaterial({ color: STRICH_FARBE, depthTest: false }))
+        m.position.copy(pkt(e, n)); m.renderOrder = 8; gruppe.add(m)
+      }
+    }
+    const flaeche = (punkte: Array<[number, number]>) => {
+      // in Dreiecke zerlegt, jedes so fein geteilt, dass die Fläche dem Gelände folgt
+      const ecken = punkte.map(([e, n]) => new THREE.Vector2(e, n))
+      if (THREE.ShapeUtils.isClockWise(ecken)) ecken.reverse()
+      const dreiecke = THREE.ShapeUtils.triangulateShape(ecken, [])
+      const pos: number[] = [], fein = weiteKm * 1000 / 60
+      for (const [a, c, d] of dreiecke) {
+        const A = ecken[a], B = ecken[c], C = ecken[d]
+        const nn = Math.max(1, Math.min(30, Math.ceil(Math.max(A.distanceTo(B), B.distanceTo(C), C.distanceTo(A)) / fein)))
+        const at = (i: number, j: number) => { const u = i / nn, w = j / nn; const e = A.x + u * (B.x - A.x) + w * (C.x - A.x), n = A.y + u * (B.y - A.y) + w * (C.y - A.y); return pkt(e, n) }
+        for (let i = 0; i < nn; i++) for (let j = 0; j < nn - i; j++) {
+          for (const v of [at(i, j), at(i + 1, j), at(i, j + 1)]) pos.push(v.x, v.y, v.z)
+          if (i + j < nn - 1) for (const v of [at(i + 1, j), at(i + 1, j + 1), at(i, j + 1)]) pos.push(v.x, v.y, v.z)
+        }
+      }
+      const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+      const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: STRICH_FARBE, transparent: true, opacity: ZEICHNEN_FLAECHE_DECKT, depthTest: false, depthWrite: false, side: THREE.DoubleSide }))
+      m.renderOrder = 6; gruppe.add(m)
+    }
+    const nadel = (e: number, n: number, text: string) => {
+      if (!drin(e, n)) return
+      const fuss = pkt(e, n, 0), hoch = weiteKm * ZEICHNEN_NADEL
+      const geo = new LineGeometry(); geo.setPositions([fuss.x, fuss.y, fuss.z, fuss.x, fuss.y + hoch, fuss.z])
+      const mast = new Line2(geo, new LineMaterial({ color: STRICH_FARBE, linewidth: ZEICHNEN_PX, depthTest: false })); mast.renderOrder = 7
+      gruppe.add(mast)
+      const c = document.createElement('canvas'), x = c.getContext('2d')!
+      const px = 26, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
+      x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 22; c.height = px + 14
+      x.font = schrift; x.fillStyle = STRICH_FARBE; x.beginPath(); x.roundRect(0, 0, c.width, c.height, SCHILD_RUND_PX); x.fill()
+      x.fillStyle = '#ffffff'; x.fillText(text, 11, px + 1)
+      const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace
+      const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: tx, depthTest: false, sizeAttenuation: false }))
+      sp.scale.set(c.width * 0.00085, c.height * 0.00085, 1); sp.center.set(0.5, 0)
+      sp.position.set(fuss.x, fuss.y + hoch, fuss.z); sp.renderOrder = 8
+      gruppe.add(sp)
+    }
+    for (const z of liste) {
+      if (z.art === 'punkt' && z.p[0]) nadel(z.p[0][0], z.p[0][1], z.text ?? '')
+      else if (z.art === 'linie' && z.p.length >= 2) linie(z.p, false, !!z.entwurf)
+      else if (z.art === 'flaeche') {
+        if (z.p.length >= 3 && !z.entwurf) flaeche(z.p)
+        if (z.p.length >= 2) linie(z.p, !z.entwurf && z.p.length >= 3, !!z.entwurf)
+        else if (z.p.length === 1) linie([z.p[0], z.p[0]], false, true)
+      }
+      if (z.art === 'linie' && z.p.length === 1) linie([z.p[0], z.p[0]], false, true)
+    }
+    if (gruppe.children.length) wurzel.add(gruppe)
+    return () => {
+      gruppe.removeFromParent()
+      gruppe.traverse((x) => {
+        const q = x as THREE.Mesh
+        q.geometry?.dispose()
+        const m = q.material as (THREE.Material & { map?: THREE.Texture | null }) | undefined
+        m?.map?.dispose(); m?.dispose()
+      })
+    }
+  }, [b, stufe, zeichnungenText])
+
   // Namen der Gewässer (Michael, 2026-11-08: «Wäre es nicht ein absoluter Mehrwert wenn Gewässer … eingeblendet würden?», «Ohne Knopf und immer
   // einblenden. Nicht zwingend dunkelblau sondern dunkler in der jeweiligen Seefarbe», dann «schwebend wie Gipfel und Orte aber ohne Schild und Masten.
   // Kursiv passt. Etwas dunkler als das jeweilige Gewässer. Erst einblenden wen Platz auf dem Gewässer da ist. Drehung der Karte mitberücksichtigen. Bei
@@ -5004,6 +5213,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const lageVor = new THREE.Vector3(Infinity, 0, 0), drehVor = new THREE.Quaternion()
     const schritt = () => {
       const jetzt = performance.now()
+      gruppe.visible = !namenZuNah(b, wurzel, k.kamera, k.renderer.xr.isPresenting)
       if (k.renderer.xr.isPresenting) { if (jetzt - zeit > 500) { zeit = jetzt; pruefen() } return }
       const kam = k.kamera
       if (kam.position.distanceTo(lageVor) > ((wurzel.userData.weiteKm as number) || 1) * 1e-5 || kam.quaternion.angleTo(drehVor) > 1e-5) { lageVor.copy(kam.position); drehVor.copy(kam.quaternion); ruhe = jetzt; return }
