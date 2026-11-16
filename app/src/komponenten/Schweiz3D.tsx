@@ -1829,7 +1829,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <Abschnitt titel="Geräusche">
           <p>In den Feldern von 4 km und 1 km hört man, wo man hinschaut (in der Brille: wo der Kopf über dem Modell ist), die Umgebung: in Siedlungen den
             Verkehr, ab und zu einen Bus, auf dem Land von Mai bis Oktober von 6 bis 20 Uhr bis auf 2'000 m Kühe und Kuhglocken, von März bis Oktober
-            einen Traktor, nahe an einem Fluss sein Rauschen, an Seen ab 15 km² am Tag Möwen, überall ab und zu ein Flugzeug (ein Propellerflugzeug nur von 6 bis 20 Uhr), mit «Autos» jedes Auto, das nahe vorbeifährt, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
+            einen Traktor, nahe an einem Fluss sein Rauschen, mit «Züge» die Züge in der Nähe, an Seen ab 15 km² am Tag Möwen, überall ab und zu ein Flugzeug (ein Propellerflugzeug nur von 6 bis 20 Uhr), mit «Autos» jedes Auto, das nahe vorbeifährt, nahe an einer Kirche von 6 bis 22 Uhr die Glocken zur
             Viertelstunde (zur vollen Stunde mit den Stundenschlägen), mit «Züge» 5 Sekunden vor der Abfahrt laut Fahrplan ein Pfiff, wenn der Zug in
             der Nähe hält, mit «Schiffe» das Horn, wenn ein Schiff ablegt. Je näher man ist, desto lauter; aus der Ferne ist es still. Den Verkehr
             einer Stadt hört man weiter, auch im Feld von 16 km und noch gut einen Kilometer neben der Siedlung, leiser.</p>
@@ -2206,6 +2206,8 @@ const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 const ZUG_FERN = 0.018
 /** fürs Zuggeräusch: ein Zug dort, wo die Kamera hinschaut, klingt wie aus so vielen Metern, nähere und fernere im selben Verhältnis (gewählt) */
 const ZUG_HOEREN_BLICK_M = 150
+/** Züge zu hören nur in diesen Stufen (Michael, 2026-11-16) */
+const ZUG_HOEREN_STUFEN: Stufe[] = ['ort', 'nah']
 /** Pfiff zur Abfahrt (Michael, 2026-11-10: «5 (Pfiff)»): nur bei einem Zug bis so viele Meter (wie fürs Zuggeräusch gerechnet), nach aussen leiser (gewählt) */
 const PFIFF_BIS_M = 600, PFIFF_VOR_S = 5
 /** Horn eines Schiffs beim Ablegen (Michael, 2026-11-10, gewählt): bis so viele Meter wie fürs Zuggeräusch gerechnet, ein Horn trägt weiter (gewählt) */
@@ -6260,9 +6262,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         hoerAlt = neu
         haltVorher = haltNeu; haltNeu = new Map()
         pfiffMinute = jetzt.minuten
-        if (pfiffAbstand < PFIFF_BIS_M) abfahrtsPfiff((1 - pfiffAbstand / PFIFF_BIS_M) ** 2)
+        // zu hören nur in den Feldern von 4 km und 1 km (Michael, 2026-11-16: «schon in einer mittleren Zoom-Stufe einen Zug höre, als wäre er
+        // gleich vor mir. Die Züge sollte man erst bei der vorletzten und letzten Stufe hören»)
+        if (ZUG_HOEREN_STUFEN.includes(stufe)) {
+          if (pfiffAbstand < PFIFF_BIS_M) abfahrtsPfiff((1 - pfiffAbstand / PFIFF_BIS_M) ** 2)
+          zuegeHoeren(liste, brille)
+        } else zuegeHoerenAus()
         pfiffAbstand = Infinity
-        zuegeHoeren(liste, brille)
         if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHoeren: unknown }).s3dHoeren = { liste: liste.slice().sort((x, y) => x.abstandM - y.abstandM).slice(0, 3), ohr, blickM, zahl, zuege: mitten.slice(0, zahl).map((m) => { const l = k.wurzel.userData.lage as { cE: number; cN: number }; return [l.cE + m[0].x * 1000, l.cN - m[0].z * 1000, m[0].y * 1000] }) }
       }
     }

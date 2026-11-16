@@ -725,6 +725,7 @@ Symbole oben rechts in «3D Schweiz» seit 2026-11-14 klarer (Michael: «Icon m�
 Symbole im Vollbild von «3D Schweiz» seit 2026-11-15 in so vielen Spalten, wie die Höhe verlangt (vollZeilen: oben 56 px, unten 48 px, je Symbol 40 px; vorher lag die Spalte
              quer auf dem Handy über XR und Vollbild, im Browser hier mit 740 × 360 nachgestellt und behoben; Michael vor der Bekanntmachung: «Ja gerne»); im Datenschutz
              «Favoriten (Bahnhöfe, Fahrten und Ansichten der Virtuellen Schweiz)» statt «gemerkte Fahrten» und «gemerkte Ansichten»
+Zuggeräusch in «3D Schweiz» seit 2026-11-16 nur in den Feldern von 4 km und 1 km, ebenso der Pfiff (ZUG_HOEREN_STUFEN; Michael: «schon in einer mittleren Zoom-Stufe einen Zug höre, als wäre er gleich vor mir. Die Züge sollte man erst bei der vorletzten und letzten Stufe hören»); in der Anleitung («Geräusche»)
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
