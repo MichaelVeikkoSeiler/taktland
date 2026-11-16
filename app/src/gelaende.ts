@@ -691,7 +691,9 @@ export interface AutoStueck { kette: number; art: number; L: number; s0: number;
     /** Fussgänger je km innerorts (STATPOP mal einem gewählten Anteil), 0 ausserorts, fehlt in älteren Kacheln */
     fuss: number }
   /** Anfang und Ende der ganzen Kette (Ost, Nord), wo andere Ketten anschliessen; fehlt in älteren Kacheln */
-  enden?: [number, number, number, number] }
+  enden?: [number, number, number, number]
+  /** ein Kreisel laut swissTLM3D (seit 2026-11-16) */
+  kreisel?: boolean }
 export interface AutoIndex { kachel_m: number; kacheln: string[]; jahr_zaehlung: number; zaehlstellen: Array<[string, string, string, number, number, number, (number | null)?, (number | null)?]>; ketten: Array<number | null> }
 let autoVerz: Promise<AutoIndex | null> | null = null
 const autoVorrat = new Map<string, Promise<AutoStueck[] | null>>()
@@ -715,6 +717,7 @@ export async function autosLaden(e0: number, n0: number, e1: number, n1: number)
           // Anfang und Ende der Kette (seit 2026-11-16, in älteren Kacheln fehlend): Autobahnen nach den Punkten, übrige Strassen nach ihren Werten
           const ende = (art >= 2 ? x.slice(15, 19) : x.slice(9, 13)) as number[]
           if (ende.length === 4) a.enden = [ende[0], ende[1], ende[2], ende[3]]
+          if (art >= 2 && x[19] === 1) a.kreisel = true
           for (let i = 0; i < z; i++) {
             a.e[i] = e + d[3 * i]; a.n[i] = n + d[3 * i + 1]; a.h[i] = (h + d[3 * i + 2]) / 10
             a.s[i] = i ? a.s[i - 1] + Math.hypot(a.e[i] - a.e[i - 1], a.n[i] - a.n[i - 1]) : s0
