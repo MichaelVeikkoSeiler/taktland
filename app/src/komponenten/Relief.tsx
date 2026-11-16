@@ -33,6 +33,7 @@ import { bahnQuerschnitt, BRUECKE_RAND_M, retuschieren, RETUSCHE_RAND_M, type St
 import { Zurueck } from './Zurueck'
 import { Ladefehler } from './Ladefehler'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
+import { laubSaison, laubTagSetzen } from './Laub'
 import { Ladebalken } from './Ladebalken'
 import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { type Kategorie, kategorieUmschalten, SehenswertLegende, useVersteckt } from './Sehenswert'
@@ -2453,7 +2454,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const stamm = new THREE.CylinderGeometry(0.06, 0.09, 0.4, 4, 1, true)
       stamm.translate(0, 0.2, 0)
       const teile = [krone.toNonIndexed(), stamm.toNonIndexed()]
-      const pos: number[] = [], farbe: number[] = [], nrm: number[] = []
+      const pos: number[] = [], farbe: number[] = [], nrm: number[] = [], kroneAttr: number[] = []
       teile.forEach((t, i) => {
         const a = t.getAttribute('position').array
         for (let k = 0; k < a.length; k++) pos.push(a[k])
@@ -2462,7 +2463,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         // der Kegel schräg nach aussen und etwas nach oben beleuchtet
         else if (i === 0) for (let k = 0; k < a.length; k += 3) { const v = new THREE.Vector3(a[k], 0.6, a[k + 2]).normalize(); nrm.push(v.x, v.y, v.z) }
         else { t.computeVertexNormals(); const n = t.getAttribute('normal').array; for (let k = 0; k < n.length; k++) nrm.push(n[k]) }
-        for (let k = 0; k < a.length / 3; k++) farbe.push(...(i === 0 ? [1, 1, 1] : [0.35, 0.22, 0.25]))
+        for (let k = 0; k < a.length / 3; k++) { farbe.push(...(i === 0 ? [1, 1, 1] : [0.35, 0.22, 0.25])); kroneAttr.push(i === 0 ? 1 : 0) }
         t.dispose()
       })
       krone.dispose(); stamm.dispose()
@@ -2470,10 +2471,13 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
       g.setAttribute('color', new THREE.Float32BufferAttribute(farbe, 3))
       g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3))
+      g.setAttribute('aKrone', new THREE.Float32BufferAttribute(kroneAttr, 1))
       return g
     }
     const baumForm = baumFormBauen(false), nadelForm = baumFormBauen(true)
     const baumMaterial = new THREE.MeshLambertMaterial({ vertexColors: true })
+    // die Laubbäume durchs Jahr wie in «3D Schweiz» (komponenten/Laub.ts; Michael, 2026-11-16)
+    const laubMaterial = laubSaison(new THREE.MeshLambertMaterial({ vertexColors: true }), 0.5, 1000 / faktor, 0)
     const baumNetze = new Map<string, THREE.InstancedMesh[]>()
     let baumAuftrag = 0
     /** die gezeichnete Strecke im Rechteck als Stücke von 5 m (wie im Führerstand gezeichnet, glattBei) */
@@ -2684,7 +2688,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         const fs = feinStand
         if (!k || !fs || baumNetze.has(name)) continue
         const n = k.art.length
-        const laub = new THREE.InstancedMesh(baumForm, baumMaterial, n), nadel = new THREE.InstancedMesh(nadelForm, baumMaterial, n)
+        const laub = new THREE.InstancedMesh(baumForm, laubMaterial, n), nadel = new THREE.InstancedMesh(nadelForm, baumMaterial, n)
         const gleis = gleisIn(k.e0, k.n0, k.e0 + 500, k.n0 + 500)
         const zahl = new Map<THREE.InstancedMesh, number>([[laub, 0], [nadel, 0]])
         for (let i = 0; i < n; i++) {
@@ -4307,6 +4311,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       // nur, solange «Echtes Wetter» an ist (so steht es auch beim Datenschutz)
       if (mitWetter && !ausJetzt.current.has('wetter') && performance.now() > wetterBis) wetterHolen()
       if (!laeuft) return
+      laubTagSetzen()
       const dt = Math.min(0.1, uhr.getDelta())
       if (renderer.xr.isPresenting) brilleSchritt?.(dt)
       fahrplanZuege?.schritt(imStand && feinStand !== null, imStand ? eigenLage : null)

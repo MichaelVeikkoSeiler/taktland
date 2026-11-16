@@ -26,6 +26,7 @@ import { useEchtesVollbild, VollbildKnopf } from './Netzkarte'
 import { fensterLicht, fensterNacht, gebaeudeFarben, gebaeudeFlaechen, gebaeudeMaterial, istWandFarbe, lichtAnteil } from '../gebaeudeBild'
 import { abfahrtsPfiff, AUTO_SPITZE_S, autoKlangLaden, autoVorbei, HELIKOPTER_DAUER_S, HELIKOPTER_SPITZE_S, helikopterZeigen, hupe, knopfTon, propellerZeigen, schiffshorn, stummSetzen, umgebungHoeren, useStumm, umgebungHoerenAus, type VorbeiZug, wetterGeraeusch, wetterGeraeuschAus, zuegeHoeren, zuegeHoerenAus } from '../audio'
 import { istNadel, NADEL_BREITE, NADEL_HOEHE } from '../baumart'
+import { laubSaison, laubSchatten, laubTagSetzen, nurKrone } from './Laub'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
@@ -2083,6 +2084,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               vorbeifahrende Auto und das Propellerflugzeug sind Aufnahmen von einem anderen Ort; die Fussgänger, für die Autos halten, und wann dabei gehupt wird, sind erfunden; das Flugzeug und der Helikopter, die man dazu fliegen sieht, sind erfunden: Gestalt, Farben, Höhe (150 und 120 m über dem Gelände), Richtung und Tempo; wann gehupt wird, ist gewählt; dass Möwen nur an Seen ab 15 km² und am Tag rufen, ist gewählt; dass Kühe bis 2'000 m weiden, ist gewählt; wie oft sie kommen und wie laut, ist gewählt; belegt ist nur, wo Siedlungen und Flüsse liegen.</li>
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
+            <li>Laubbäume durchs Jahr, nach dem Datum der Szene: Austrieb etwa Mitte April bis Anfang Mai, zuerst heller, Herbstfarben ab
+              Anfang Oktober, Laubfall von Ende Oktober bis Mitte November, im Winter nur Äste; jeder Baum ein paar Tage früher oder später, weiter oben
+              im Frühling später und im Herbst früher. Tage und Farben sind gewählt, nicht gemessen; die Farbe im Sommer ist die des Luftbilds.</li>
             <li>Kirchenglocken und Schiffshorn: im Programm erzeugt; belegt sind nur die Lage der Kirchen und die Abfahrten laut Fahrplan.</li>
             <li>Der Mond: grösser als am Himmel, seine Flecken gezeichnet; Ort und Phase gerechnet.</li>
             <li>Bewölkung, Regen und Schnee aus Sonnenschein, Niederschlag und Temperatur der Station, wo das Wettermodell fehlt; Dichte, Tempo und Grösse
@@ -4160,7 +4164,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       gruppe.traverse((x) => {
         const q = x as THREE.Mesh
         q.geometry?.dispose()
-        mats.push(q.material as THREE.Material | undefined)
+        mats.push(q.material as THREE.Material | undefined, q.customDepthMaterial)
         if (q.userData.eigeneTextur) ((q.material as THREE.MeshLambertMaterial).map)?.dispose()
       })
       spaeterWeg(mats)
@@ -5075,7 +5079,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   useEffect(() => {
     const k = kern.current
     if (!k) return
-    const takt = () => { BAUM_WIND.uZeit.value = (performance.now() / 1000) % 10_000 }
+    const takt = () => { BAUM_WIND.uZeit.value = (performance.now() / 1000) % 10_000; laubTagSetzen() }
     k.jeBild.push(takt)
     return () => { const i = k.jeBild.indexOf(takt); if (i >= 0) k.jeBild.splice(i, 1) }
   }, [])
@@ -7606,14 +7610,19 @@ function baumNetz(kacheln: BaumKachel[], b: Bestand, cE: number, cN: number, e0:
   // Laubbaum mit runder Krone, Nadelbaum als schlanker Kegel, nach der Höhe über Meer (istNadel in src/baumart.ts, eine Annahme)
   const krone = new THREE.IcosahedronGeometry(0.5, 0)
   krone.scale(1, 0.85, 1); krone.translate(0, 0.5, 0)
+  nurKrone(krone)
   const kegel = new THREE.ConeGeometry(0.5, 1, 7, 1)
   kegel.translate(0, 0.5, 0)
   const stoff = new THREE.MeshLambertMaterial()
   baumWiegen(stoff)
+  // die Laubbäume durchs Jahr (komponenten/Laub.ts; Michael, 2026-11-16), mit dem Schatten ihrer Äste; die Höhe über Meer ist y · 1000 + 0,5
+  const laubStoff = new THREE.MeshLambertMaterial()
+  baumWiegen(laubStoff); laubSaison(laubStoff, 1, 1000, 0.5)
   const hoehen = liste.map(([e, n]) => bestandHoehe(b, e, n))
   const nadel = liste.map(([e, n], i) => istNadel(e, n, hoehen[i]))
   const anzahlNadel = nadel.filter(Boolean).length
-  const netze = [new THREE.InstancedMesh(krone, stoff, liste.length - anzahlNadel), new THREE.InstancedMesh(kegel, stoff, anzahlNadel)]
+  const netze = [new THREE.InstancedMesh(krone, laubStoff, liste.length - anzahlNadel), new THREE.InstancedMesh(kegel, stoff, anzahlNadel)]
+  netze[0].customDepthMaterial = laubSchatten(1, 1000, 0.5)
   const zahl = [0, 0]
   const m = new THREE.Matrix4(), v = new THREE.Vector3(), s = new THREE.Vector3(), q = new THREE.Quaternion(), c = new THREE.Color()
   const oben = new THREE.Vector3(0, 1, 0)
