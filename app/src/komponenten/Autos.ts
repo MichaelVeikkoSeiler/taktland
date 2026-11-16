@@ -213,6 +213,8 @@ export function zufall(x: number): number {
 
 /** je Kette ihre Stücke nach dem Abstand vom Anfang und die Autos darauf */
 export interface AutoKette { L: number; art: number; tag: number; nacht: number; stuecke: AutoStueck[]; autos: AutoPlatz[]
+  /** ein Kreisel laut swissTLM3D (wer darin fährt, hat Vortritt) */
+  kreisel?: boolean
   /** Anfang und Ende der ganzen Kette (Ost, Nord) und die Richtung dort (wohin die Kette läuft), für das Weiterfahren */
   enden?: [number, number, number, number]; richtungen?: [number, number, number, number]
   /** Anteil Lastwagen auf der rechten Spur (0 bis 1) am Tag und in der Nacht */
@@ -229,6 +231,10 @@ export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: num
   lkw: number
   /** wo das Auto gerade fährt (weiterfahren): Kette, Meter in Fahrtrichtung, wie oft es schon abgebogen ist; dazu sein Platz am Anfang */
   kk?: AutoKette; lauf?: number; abgebogen?: number
+  /** wohin es an der nächsten Kreuzung fährt (schon KURVE_HALB_M davor gewählt; null: nirgends), woher es kommt (bis KURVE_HALB_M danach) und die halbe
+   *  Länge seines Bogens; das Tempo, auf das es zufährt; wie lange es schon vor einer Kreuzung wartet */
+  nach?: { kk: AutoKette; richtung: 1 | -1 } | null; von?: { kk: AutoKette; richtung: 1 | -1; spur: number }; kurveH?: number
+  msZiel?: number; wartet?: number
   heim?: { kk: AutoKette; richtung: 1 | -1; spur: number; ms: number } }
 
 /** übrige Strassen ohne Trennung: je Richtung eine Spur, so weit rechts der Achse wie ein Viertel der Breite laut Klasse, mindestens und
@@ -257,7 +263,7 @@ export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [
       const anteil = (p: number | null) => Math.min(1, ((p ?? AUTO_LKW_OHNE_ZAEHLUNG) / 100) * rechts)
       const quer = st.art === 2 ? Math.min(STRASSE_QUER_M[1], Math.max(STRASSE_QUER_M[0], (st.strasse?.breite ?? 6) / 4))
         : st.art === 3 ? 0 : AUTO_GEGEN_M
-      k = { L: st.L, art: st.art, tag: v[0], nacht: v[1], stuecke: [], autos: [], lkwTag: anteil(v[2]), lkwNacht: anteil(v[3]), quer }
+      k = { L: st.L, art: st.art, tag: v[0], nacht: v[1], stuecke: [], autos: [], lkwTag: anteil(v[2]), lkwNacht: anteil(v[3]), quer, kreisel: st.kreisel }
       ketten.set(st.kette, k)
     }
     k.stuecke.push(st)
@@ -649,4 +655,47 @@ export function weiterNach(netz: AutoNetz, a: AutoPlatz, kk: AutoKette, richtung
   let z = zufall(a.farbe * 7.31 + (a.abgebogen ?? 0) * 1.937 + e * 0.013) * summe
   for (const c of kand) { z -= c.w; if (z <= 0) return { kk: c.kk, richtung: c.richtung } }
   return kand[kand.length - 1]
+}
+
+/**
+ * Abbiegen im Bogen (Michael, 2026-11-16: «Beim Abbiegen spicken die Autos herum in die nächste Strasse. Geht das auch mit einer schönen runden Kurve»):
+ * KURVE_HALB_M vor dem Ende seiner Kette wählt ein Auto, wohin es weiterfährt, und fährt dann auf einem Bogen (quadratische Bézierkurve) von seiner Spur
+ * vor der Kreuzung auf die Spur der neuen Kette KURVE_HALB_M danach, die Spitze des Bogens dort, wo sich die Richtungen beider Spuren kreuzen; Tempo
+ * gleitet mit AUTO_ANFAHREN zum Tempo der neuen Kette und bremst mit AUTO_BREMSEN. Alles gewählt.
+ *
+ * Rechtsvortritt (Michael, 2026-11-16: «In der Schweiz gilt übrigens Rechtsvortritt»): auf übrigen Strassen wartet ein Auto, das weniger als VORTRITT_M
+ * vor einer Kreuzung ist, wenn dort zugleich eines von rechts kommt (bis VORTRITT_M davor), mit HALT_VOR_KREUZUNG_M Abstand; wer im Kreisel fährt, hat
+ * Vortritt, wer hineinfährt, wartet; Autos dahinter halten Abstand. Nach VORTRITT_HOECHSTENS_S Warten fährt es trotzdem (sonst blockieren sich vier
+ * Autos an einer Kreuzung gegenseitig). Signale, Ampeln, Stoppstrassen und Vortritt durch Markierung stehen in keiner unserer Quellen und fehlen.
+ */
+export const KURVE_HALB_M = 8, AUTO_ANFAHREN = 2, AUTO_BREMSEN = 3.5
+export const VORTRITT_M = 14, HALT_VOR_KREUZUNG_M = 3, VORTRITT_HOECHSTENS_S = 4, FOLGE_ABSTAND_M = 7
+
+/** Lage auf einer Kette in Fahrtrichtung mit dem Versatz der Spur; null, wo nichts gezeichnet ist */
+export type SpurLage = { e: number; n: number; h: number; de: number; dn: number; bruecke: boolean }
+export function spurLage(kk: AutoKette, richtung: 1 | -1, spur: number, lauf: number): SpurLage | null {
+  const s = richtung === 1 ? lauf : kk.L - lauf
+  const p = autoBei(kk, s)
+  if (!p) return null
+  const de = p.de * richtung, dn = p.dn * richtung
+  const sp = kk.art === 2 ? spurBei(kk, s) : null
+  const quer = kk.art === 0 ? ((AUTO_SPUREN - 1) / 2 - spur) * AUTO_SPUR_M : sp ? sp[1] : kk.quer
+  return { e: p.e + dn * quer + (sp ? p.dn * sp[0] : 0), n: p.n - de * quer - (sp ? p.de * sp[0] : 0), h: p.h, de, dn, bruecke: p.bruecke }
+}
+
+/** die Stelle auf dem Bogen zwischen zwei Spurlagen (t 0 bis 1) */
+export function bogen(a: SpurLage, b: SpurLage, t: number, H: number): SpurLage {
+  // Spitze: wo sich die Geraden durch a in Richtung a und durch b gegen Richtung b kreuzen; parallel oder zu weit: die Mitte
+  const det = a.de * -b.dn - a.dn * -b.de
+  let ce = (a.e + b.e) / 2, cn = (a.n + b.n) / 2
+  if (Math.abs(det) > 0.05) {
+    const u = ((b.e - a.e) * -b.dn - (b.n - a.n) * -b.de) / det
+    if (u > 0 && u < 3 * H) { ce = a.e + a.de * u; cn = a.n + a.dn * u }
+  }
+  const s = 1 - t
+  const e = s * s * a.e + 2 * s * t * ce + t * t * b.e, n = s * s * a.n + 2 * s * t * cn + t * t * b.n
+  let de = 2 * s * (ce - a.e) + 2 * t * (b.e - ce), dn = 2 * s * (cn - a.n) + 2 * t * (b.n - cn)
+  const l = Math.hypot(de, dn)
+  if (l > 1e-6) { de /= l; dn /= l } else { de = a.de; dn = a.dn }
+  return { e, n, h: a.h + (b.h - a.h) * t, de, dn, bruecke: a.bruecke && b.bruecke }
 }

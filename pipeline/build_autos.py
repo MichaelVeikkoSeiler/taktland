@@ -558,7 +558,9 @@ def main():
                         d = []
                         for pp in q:
                             d += [round(pp[0] - e0, 1), round(pp[1] - n0, 1), round(pp[2] * 10) - h0 if auf else 0]
-                        eintrag = [c, 3 if einweg else 2, round(L, 1), round(s0, 1), 1 if st["kb"] in BRUECKE else 0, e0, n0, h0, d, *v, *ende]
+                        # dazu, ob die Kette ein Kreisel ist (Rechtsvortritt in der App: wer im Kreisel fährt, hat Vortritt)
+                        eintrag = [c, 3 if einweg else 2, round(L, 1), round(s0, 1), 1 if st["kb"] in BRUECKE else 0, e0, n0, h0, d, *v, *ende,
+                                   1 if klasse == "Kreisel" else 0]
                         for kk in {(int(pp[0] // KACHEL_M), int(pp[1] // KACHEL_M)) for pp in q}:
                             kacheln[kk].append(eintrag)
                     s0 += l

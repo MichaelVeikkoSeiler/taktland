@@ -748,6 +748,13 @@ Autos weiter über Kreuzungen und Kreisel, runder (Michael, 2026-11-16: «Haben 
              ihrem Platz; ob es fährt und ob es ein Lastwagen ist, nach seiner eigenen Kette; im Browser bei Köniz in 90 s 641-mal abgebogen, 109-mal zurück, davon 6 im
              Feld (vorher jedes Mal an jeder Kreuzung); die Formen je Art aus einem Umriss von der Seite mit schrägen Scheiben, gerundet, mit vier Rädern (AUTO_PROFILE,
              gewählt); in der Anleitung («Autos»)
+Abbiegen im Bogen und Rechtsvortritt in «3D Schweiz» (Michael, 2026-11-16: «Beim Abbiegen spicken die Autos herum in die nächste Strasse. Geht das auch mit einer
+             schönen runden Kurve. In der Schweiz gilt übrigens Rechtsvortritt»): KURVE_HALB_M (8 m, höchstens die halbe Kette) vor dem Ende wählt das Auto die nächste Kette und
+             fährt auf einer quadratischen Bézierkurve von seiner Spur dort auf die neue Spur 8 m danach (spurLage, bogen in Autos.ts); Tempo gleitet mit 2 m/s² zum Tempo der
+             Kette und bremst mit 3,5 m/s² vor dem Vordermann (7 m Abstand, nur übrige Strassen) und vor der Haltelinie (3 m vor der Kreuzung); an einer Kreuzung (Enden bis
+             6 m beisammen) wartet das vorderste Auto einer übrigen Strasse bis 14 m davor, wenn eines von rechts kommt (mehr als 60° rechts der eigenen Richtung) oder
+             eines im Kreisel (Kette mit KREISEL, seit 2026-11-16 als 20. Wert der übrigen Strassen in data/autos); wer im Kreisel fährt, wartet nie; nach 4 s fährt es
+             trotzdem (VORTRITT_*, alles gewählt); Signale, Ampeln, Stoppstrassen in keiner unserer Quellen; in der Anleitung («Autos»)
 Regen und Schnee schräg im Wind (Michael, 2026-11-16: «je stärker der Wind ist, desto schräger fallen die Regen- oder auch Schneeflocken herab»): in «3D Schweiz» der Wind
              der Bäume (Mittel der vier Windhosen, voll ab 45 km/h), je Meter Fall bei vollem Wind 0,9 m (Regen) und 1,6 m (Schnee) waagrecht in Windrichtung, am Boden an der Stelle,
              darüber gegen den Wind versetzt, ausserhalb der Säule nicht gezeichnet (REGEN_SCHRAEG, SCHNEE_SCHRAEG, windSetzen in Niederschlag.ts); in der Modellbahn und beim Fahren
