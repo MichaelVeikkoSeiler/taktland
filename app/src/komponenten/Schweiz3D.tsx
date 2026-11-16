@@ -2085,7 +2085,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             <li>Höhe und Form der Bäume, ihr Abstand im Wald, und ob Laub- oder Nadelbaum: nach der Höhe über Meer, nicht gemessen. Sie wiegen im Wind
               nach dem gemessenen Mittel der vier Windhosen (MeteoSchweiz); wie stark und wie schnell, ist gezeichnet.</li>
             <li>Laub- oder Nadelbaum: bis 800 m über Meer im Wald 40 % Nadelbäume, bei einzelnen Bäumen 10 %, darüber mehr, ab 1'500 m nur Nadelbäume (gewählt).</li>
-            <li>Regen und Schnee fallen schräg, je stärker der Wind der Windhosen, desto schräger, ganz schräg ab 45 km/h; Schnee schräger als Regen (gewählt).</li>
+            <li>Regen und Schnee fallen schräg, je stärker der Wind der Windhosen, desto schräger; gezählt wird das Mittel aus mittlerem Wind und Böe (die beiden
+              Zahlen über der Windhose), ganz schräg ab 45 km/h; Schnee schräger als Regen (gewählt).</li>
             <li>Laubbäume durchs Jahr, nach dem Datum der Szene: Austrieb etwa Mitte April bis Anfang Mai, zuerst heller, Herbstfarben ab
               Anfang Oktober, Laubfall von Ende Oktober bis Mitte November, im Winter nur Äste; jeder Baum ein paar Tage früher oder später, weiter oben
               im Frühling später und im Herbst früher. Tage und Farben sind gewählt, nicht gemessen; die Farbe im Sommer ist die des Luftbilds.</li>
@@ -5060,13 +5061,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // Bäume im Wind: das Mittel der vier Windhosen als Stärke und Richtung, wohin er weht (dkl010 nennt, woher er kommt); mit «Bäume» auch ohne «Wetter»
   // die Windhosen holen, an den Mitten der vier Viertel des Modells wie diese
   useEffect(() => {
-    let x = 0, z = 0, kmh = 0, zahl = 0
+    let x = 0, z = 0, kmh = 0, zahl = 0, mitBoe = 0
     for (const { wind } of windWerte) {
       if (!wind || typeof wind.kmh !== 'number') continue
       kmh += wind.kmh; zahl++
+      mitBoe += typeof wind.boe === 'number' ? (wind.kmh + wind.boe) / 2 : wind.kmh
       if (typeof wind.richtung === 'number') { const a = ((wind.richtung + 180) * Math.PI) / 180; x += Math.sin(a) * wind.kmh; z += -Math.cos(a) * wind.kmh }
     }
     BAUM_WIND.uWind.value = zahl ? Math.min(1, kmh / zahl / BAUM_WIND_VOLL_KMH) : 0
+    NIEDER_WIND.staerke = zahl ? Math.min(1, mitBoe / zahl / BAUM_WIND_VOLL_KMH) : 0
     if (Math.hypot(x, z) > 1e-6) BAUM_WIND.uRichtung.value.set(x, z).normalize()
   }, [windWerte.map((w) => `${w.wind?.kmh}/${w.wind?.richtung}`).join()]) // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -7323,7 +7326,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // in der Brille die Stelle des Auges im Modell: dort werden die Striche mit dem Abstand kürzer (Niederschlag.ts, BRILLE_*)
       const lokal = k.renderer.xr.isPresenting ? ns.gruppe.worldToLocal(auge.clone()) : null
       // schräg im Wind: derselbe Wind wie bei den Bäumen (Mittel der vier Windhosen, voll ab BAUM_WIND_VOLL_KMH)
-      ns.windSetzen(BAUM_WIND.uRichtung.value.x, BAUM_WIND.uRichtung.value.y, BAUM_WIND.uWind.value)
+      ns.windSetzen(BAUM_WIND.uRichtung.value.x, BAUM_WIND.uRichtung.value.y, NIEDER_WIND.staerke)
       ns.schritt(Math.min(0.1, (t - alt) / 1000), mitte.distanceTo(auge) / (W * k.wurzel.scale.x),
         lokal ? { x: lokal.x, y: lokal.y, z: lokal.z, breite: W } : undefined,
         lokal ? undefined : k.kamera.position.distanceTo(k.steuerung.target) / (W * k.wurzel.scale.x))
@@ -7572,6 +7575,9 @@ function kastenUm(b: Bestand, lage: { cE: number; cN: number }) {
  * Der Schatten bewegt sich nicht mit.
  */
 const BAUM_WIND_VOLL_KMH = 45
+/** Regen und Schnee schräg mit den Böen (Michael, 2026-11-16: «Bitte die Böen mitzählen»): das Mittel aus mittlerem Wind und Böenspitze, voll ab
+ *  BAUM_WIND_VOLL_KMH (gewählt); die Bäume bleiben beim mittleren Wind */
+const NIEDER_WIND = { staerke: 0 }
 const BAUM_WIND = { uZeit: { value: 0 }, uWind: { value: 0 }, uRichtung: { value: new THREE.Vector2(1, 0) } }
 function baumWiegen(stoff: THREE.Material) {
   stoff.onBeforeCompile = (sh) => {
