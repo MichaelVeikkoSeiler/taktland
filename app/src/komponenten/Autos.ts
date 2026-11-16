@@ -86,74 +86,90 @@ export function autoCabrio(id: number): boolean {
   return zufall(id * 2.71 + 6.3) < CABRIO_ANTEIL
 }
 
+/**
+ * die Form eines Autos (Michael, 2026-11-16: «Die Autos sind auch ein bisschen eckig … wenn du hier noch ein bisschen mehr Realität hineinbringen
+ * könntest»): statt gestapelter Kästen je Art ein Umriss von der Seite (Unterbau mit Motorhaube und Heck, darüber die Kabine mit schrägen Front- und
+ * Heckscheiben), seitlich ausgezogen und an den Kanten gerundet (ExtrudeGeometry mit Fase), dazu vier Räder. Masse und Gestalt gewählt, kein bestimmtes
+ * Modell; die weissen Teile tragen die Farbe des Lacks, dunkle bleiben dunkel
+ */
+interface AutoProfil {
+  /** Höhe der Fensterunterkante, des Dachs, des Hecks und der Front (m) */
+  gurt: number; dach: number; heck: number; front: number
+  /** Unterkante der Frontscheibe, Dach vorne und hinten, Unterkante der Heckscheibe, je als Abstand vom Heck (m) */
+  scheibeVorn: number; dachVorn: number; dachHinten: number; scheibeHinten: number
+  /** Radius der Räder (m) */
+  rad: number
+}
+const AUTO_PROFILE: Record<number, AutoProfil> = {
+  0: { gurt: 0.9, dach: 1.45, heck: 0.82, front: 0.74, scheibeVorn: 3.15, dachVorn: 2.45, dachHinten: 1.35, scheibeHinten: 0.55, rad: 0.31 },
+  1: { gurt: 1.05, dach: 1.75, heck: 1.0, front: 0.95, scheibeVorn: 3.55, dachVorn: 2.95, dachHinten: 0.4, scheibeHinten: 0.18, rad: 0.36 },
+  2: { gurt: 1.05, dach: 1.8, heck: 1.0, front: 0.95, scheibeVorn: 4.25, dachVorn: 3.7, dachHinten: 2.85, scheibeHinten: 2.75, rad: 0.36 },
+  3: { gurt: 0.92, dach: 1.5, heck: 0.88, front: 0.76, scheibeVorn: 2.85, dachVorn: 2.2, dachHinten: 0.35, scheibeHinten: 0.12, rad: 0.29 },
+  4: { gurt: 1.0, dach: 2.05, heck: 0.95, front: 0.95, scheibeVorn: 4.8, dachVorn: 4.4, dachHinten: 0.12, scheibeHinten: 0.05, rad: 0.33 },
+  5: { gurt: 0.9, dach: 1.48, heck: 0.85, front: 0.74, scheibeVorn: 3.6, dachVorn: 2.9, dachHinten: 0.3, scheibeHinten: 0.15, rad: 0.32 },
+  6: { gurt: 0.72, dach: 1.15, heck: 0.7, front: 0.55, scheibeVorn: 2.95, dachVorn: 2.15, dachHinten: 1.4, scheibeHinten: 0.45, rad: 0.33 },
+  7: { gurt: 0.9, dach: 1.45, heck: 0.82, front: 0.74, scheibeVorn: 3.15, dachVorn: 2.45, dachHinten: 1.35, scheibeHinten: 0.55, rad: 0.31 },
+}
+const AUTO_BODEN_M = 0.22, AUTO_FASE_M = 0.07
+
 export function autoForm(art: AutoArt = 0): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
-  const faerben = (g: THREE.BufferGeometry, x: number, y: number, h: number, z: number, farbe: string) => {
-    g.deleteAttribute('uv')
-    g.translate(x / 1000, (y + h / 2) / 1000, z / 1000)
+  const faerben = (g: THREE.BufferGeometry, farbe: string) => {
+    if (g.index) { const n = g.toNonIndexed(); g.dispose(); g = n }
+    for (const name of Object.keys(g.attributes)) if (name !== 'position' && name !== 'normal') g.deleteAttribute(name)
     const c = new THREE.Color(farbe), f = new Float32Array(g.attributes.position.count * 3)
     for (let i = 0; i < f.length; i += 3) { f[i] = c.r; f[i + 1] = c.g; f[i + 2] = c.b }
     g.setAttribute('color', new THREE.BufferAttribute(f, 3))
+    g.scale(1 / 1000, 1 / 1000, 1 / 1000)
     teile.push(g)
   }
-  const kasten = (l: number, b: number, h: number, y: number, z: number, farbe: string, x = 0) =>
-    faerben(new THREE.BoxGeometry(b / 1000, h / 1000, l / 1000).toNonIndexed(), x, y, h, z, farbe)
-  // leicht gerundet (Michael, 2026-11-11: «Bitte Autos leicht anrunden wenns geht»): Karosserie und Kabine mit abgerundeten Kanten, Radius gewählt,
-  // je eine Stufe, damit es bei vielen Autos leicht bleibt
-  const rund = (l: number, b: number, h: number, r: number, y: number, z: number, farbe: string, x = 0) =>
-    faerben(new RoundedBoxGeometry(b / 1000, h / 1000, l / 1000, 1, r / 1000).toNonIndexed(), x, y, h, z, farbe)
-  const L = AUTO_ART_LANG_M[art], B = AUTO_ART_BREIT_M[art]
-  if (art === 0) {
-    kasten(L * 0.94, B * 0.96, 0.25, 0.15, 0, '#202020')
-    rund(L, B, 0.6, 0.2, 0.37, 0, '#ffffff')
-    rund(2.3, B * 0.88, 0.5, 0.16, 0.9, -0.3, '#1c2228')
-    rund(2.0, B * 0.84, 0.1, 0.05, 1.33, -0.3, '#ffffff')
-  } else if (art === 1) {
-    // SUV: höher, die Kabine länger und bis weit nach hinten, etwa 1,8 m hoch
-    kasten(L * 0.94, B * 0.96, 0.3, 0.18, 0, '#202020')
-    rund(L, B, 0.75, 0.22, 0.42, 0, '#ffffff')
-    rund(3.0, B * 0.9, 0.52, 0.16, 1.12, -0.35, '#1c2228')
-    rund(2.85, B * 0.86, 0.12, 0.05, 1.62, -0.35, '#ffffff')
-  } else if (art === 3) {
-    // Kleinwagen: kurz, die Kabine bis ans Heck
-    kasten(L * 0.94, B * 0.96, 0.25, 0.15, 0, '#202020')
-    rund(L, B, 0.6, 0.2, 0.37, 0, '#ffffff')
-    rund(2.2, B * 0.88, 0.52, 0.16, 0.9, -0.55, '#1c2228')
-    rund(1.9, B * 0.84, 0.1, 0.05, 1.35, -0.55, '#ffffff')
-  } else if (art === 4) {
-    // Minibus: hoher Kasten, rundum ein Fensterband, etwa 2,1 m hoch
-    kasten(L * 0.94, B * 0.96, 0.3, 0.15, 0, '#202020')
-    rund(L, B, 0.95, 0.2, 0.4, 0, '#ffffff')
-    rund(L * 0.88, B * 0.94, 0.6, 0.12, 1.3, -0.1, '#1c2228')
-    rund(L * 0.92, B, 0.2, 0.08, 1.88, -0.1, '#ffffff')
-  } else if (art === 5) {
-    // Kombi: lang, die Kabine bis ganz nach hinten
-    kasten(L * 0.94, B * 0.96, 0.25, 0.15, 0, '#202020')
-    rund(L, B, 0.6, 0.2, 0.37, 0, '#ffffff')
-    rund(3.1, B * 0.88, 0.5, 0.16, 0.9, -0.7, '#1c2228')
-    rund(2.85, B * 0.84, 0.1, 0.05, 1.33, -0.7, '#ffffff')
-  } else if (art === 6) {
-    // Sportwagen: flach, kurze Kabine weit hinten, etwa 1,2 m hoch
-    kasten(L * 0.92, B * 0.94, 0.15, 0.12, 0, '#202020')
-    rund(L, B, 0.48, 0.22, 0.27, 0, '#ffffff')
-    rund(1.7, B * 0.82, 0.36, 0.16, 0.7, -0.45, '#1c2228')
-    rund(1.4, B * 0.76, 0.08, 0.05, 1.03, -0.5, '#ffffff')
-  } else if (art === 7) {
-    // Cabriolet: offen, nur Frontscheibe und zwei Sitze
-    kasten(L * 0.94, B * 0.96, 0.25, 0.15, 0, '#202020')
-    rund(L, B, 0.6, 0.2, 0.37, 0, '#ffffff')
-    rund(0.12, B * 0.84, 0.32, 0.04, 0.95, 0.45, '#1c2228')
-    for (const x of [-0.4, 0.4]) kasten(0.15, 0.5, 0.42, 0.95, -0.35, '#1c2228', x)
+  const L = AUTO_ART_LANG_M[art], B = AUTO_ART_BREIT_M[art], P = AUTO_PROFILE[art] ?? AUTO_PROFILE[0]
+  // ein Umriss (z vom Heck nach vorne, y nach oben, in m, z = 0 ist das Heck) so breit ausgezogen und gerundet; vorne ist +z wie bisher
+  const umriss = (pkt: Array<[number, number]>, breite: number, fase: number, farbe: string) => {
+    const form = new THREE.Shape(pkt.map(([z, y]) => new THREE.Vector2(z - L / 2, y)))
+    const g = new THREE.ExtrudeGeometry(form, { depth: Math.max(0.01, breite - 2 * fase), bevelEnabled: fase > 0, bevelThickness: fase,
+      bevelSize: fase, bevelSegments: 2, curveSegments: 1 })
+    g.rotateY(-Math.PI / 2)
+    g.translate((breite - 2 * fase) / 2, 0, 0)
+    g.computeVertexNormals()
+    faerben(g, farbe)
+  }
+  const f = AUTO_FASE_M, unten = AUTO_BODEN_M
+  // Unterbau: Heck, Kofferraum bis zur Heckscheibe, Gurtlinie, Motorhaube zur Front
+  umriss([[0.05, unten], [L - 0.08, unten], [L - 0.02, P.front * 0.55], [L - 0.04, P.front], [P.scheibeVorn, P.gurt],
+    [Math.max(P.scheibeHinten, 0.12), P.gurt], [0.02, P.heck]], B - 0.02, f, '#ffffff')
+  // Räder: dunkle Zylinder vorne und hinten, etwas aussen
+  for (const z of [0.85, L - 0.85]) {
+    for (const x of [-(B / 2 - 0.09), B / 2 - 0.09]) {
+      const r = new THREE.CylinderGeometry(P.rad, P.rad, 0.24, 10, 1)
+      r.rotateZ(Math.PI / 2); r.translate(x, P.rad, z - L / 2)
+      faerben(r, '#151515')
+    }
+  }
+  if (art === AUTO_CABRIO) {
+    // offen: nur die Frontscheibe und zwei Sitze
+    umriss([[P.scheibeVorn, P.gurt - 0.05], [P.scheibeVorn + 0.06, P.gurt - 0.05], [P.dachVorn + 0.35, P.gurt + 0.42], [P.dachVorn + 0.29, P.gurt + 0.42]],
+      B * 0.84, 0.01, '#1c2228')
+    for (const x of [-0.4, 0.4]) {
+      const sitz = new THREE.BoxGeometry(0.5, 0.42, 0.15); sitz.translate(x, P.gurt + 0.21, P.dachHinten + 0.3 - L / 2)
+      faerben(sitz, '#1c2228')
+    }
   } else {
-    // Pick-up: Kabine vorne, dahinter eine offene Ladefläche mit Bordwänden
-    kasten(L * 0.94, B * 0.96, 0.3, 0.18, 0, '#202020')
-    rund(L, B, 0.7, 0.2, 0.42, 0, '#ffffff')
-    rund(1.9, B * 0.9, 0.55, 0.16, 1.1, 0.35, '#1c2228')
-    rund(1.8, B * 0.86, 0.1, 0.05, 1.63, 0.35, '#ffffff')
-    const ladeL = 2.05, ladeZ = -L / 2 + ladeL / 2 + 0.05
-    kasten(ladeL, B * 0.9, 0.02, 1.12, ladeZ, '#2a2a2a')
-    for (const x of [-(B / 2 - 0.05), B / 2 - 0.05]) rund(ladeL, 0.1, 0.38, 0.03, 1.1, ladeZ, '#ffffff', x)
-    rund(0.1, B, 0.38, 0.03, 1.1, -L / 2 + 0.1, '#ffffff')
+    // Kabine in der Farbe des Lacks, schmaler als der Unterbau, mit schrägen Scheiben; darüber die Scheiben dunkel, etwas breiter, bis knapp unters Dach
+    const kabine: Array<[number, number]> = [[P.scheibeHinten, P.gurt - 0.05], [P.scheibeVorn, P.gurt - 0.05], [P.dachVorn, P.dach], [P.dachHinten, P.dach]]
+    umriss(kabine, B * 0.84, 0.06, '#ffffff')
+    const bei = (a: [number, number], b: [number, number], y: number): number => a[0] + (b[0] - a[0]) * (y - a[1]) / (b[1] - a[1] || 1)
+    const oben = P.dach - 0.09, aus = 0.035
+    umriss([[P.scheibeHinten - aus, P.gurt - 0.02], [P.scheibeVorn + aus, P.gurt - 0.02], [bei(kabine[1], kabine[2], oben) + aus, oben],
+      [bei(kabine[0], kabine[3], oben) - aus, oben]], B * 0.86, 0.04, '#1c2228')
+  }
+  if (art === 2) {
+    // Pick-up: hinter der Kabine eine offene Ladefläche mit Bordwänden
+    const ladeL = P.scheibeHinten - 0.2, ladeZ = 0.1 + ladeL / 2 - L / 2
+    const boden = new THREE.BoxGeometry(B * 0.88, 0.02, ladeL); boden.translate(0, P.gurt - 0.04, ladeZ); faerben(boden, '#2a2a2a')
+    for (const x of [-(B / 2 - 0.06), B / 2 - 0.06]) {
+      const w = new RoundedBoxGeometry(0.1, 0.3, ladeL, 1, 0.03); w.translate(x, P.gurt + 0.12, ladeZ); faerben(w, '#ffffff')
+    }
   }
   const ganz = mergeGeometries(teile)!
   teile.forEach((t) => t.dispose())
@@ -197,6 +213,8 @@ export function zufall(x: number): number {
 
 /** je Kette ihre Stücke nach dem Abstand vom Anfang und die Autos darauf */
 export interface AutoKette { L: number; art: number; tag: number; nacht: number; stuecke: AutoStueck[]; autos: AutoPlatz[]
+  /** Anfang und Ende der ganzen Kette (Ost, Nord) und die Richtung dort (wohin die Kette läuft), für das Weiterfahren */
+  enden?: [number, number, number, number]; richtungen?: [number, number, number, number]
   /** Anteil Lastwagen auf der rechten Spur (0 bis 1) am Tag und in der Nacht */
   lkwTag: number; lkwNacht: number
   /** übrige Strassen: so weit rechts der Achse fährt man (m) */
@@ -208,7 +226,10 @@ export interface AutoKette { L: number; art: number; tag: number; nacht: number;
  *  Dichte es fährt */
 export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: number; ab: number; farbe: number
   /** ein fester Zufall 0 bis 1: ein Lastwagen, solange er unter dem Anteil Lastwagen der Stunde liegt */
-  lkw: number }
+  lkw: number
+  /** wo das Auto gerade fährt (weiterfahren): Kette, Meter in Fahrtrichtung, wie oft es schon abgebogen ist; dazu sein Platz am Anfang */
+  kk?: AutoKette; lauf?: number; abgebogen?: number
+  heim?: { kk: AutoKette; richtung: 1 | -1; spur: number; ms: number } }
 
 /** übrige Strassen ohne Trennung: je Richtung eine Spur, so weit rechts der Achse wie ein Viertel der Breite laut Klasse, mindestens und
  *  höchstens (gewählt) */
@@ -550,4 +571,79 @@ export function spurBei(k: AutoKette, s: number): [number, number] | null {
   const t = (s - a[lo]) / (a[hi] - a[lo] || 1)
   const mi = m.mitte[lo] + t * (m.mitte[hi] - m.mitte[lo]), h = m.halb[lo] + t * (m.halb[hi] - m.halb[lo])
   return [mi, Math.min(STRASSE_QUER_M[1], Math.max(STRASSE_QUER_M[0], h / 2))]
+}
+
+/**
+ * Weiterfahren über Kreuzungen und Kreisel (Michael, 2026-11-16: «bei den Kreiseln und Kreuzungen, dass sie einfach verschwinden»): am Ende seiner Kette
+ * fährt ein Auto auf eine Kette weiter, die dort anschliesst (Anfang oder Ende bis ANSCHLUSS_M daneben, laut pipeline/build_autos.py), in einer Richtung, die
+ * sie erlaubt (Einbahn und Kreisel nur vorwärts), nicht zurück (Wende über WENDE_GRAD) und nicht auf dieselbe; welche, entscheidet ein fester Zufall des
+ * Autos, gewichtet nach dem Verkehr der Kette laut ASTRA oder ARE und GEWICHT_DAZU. Schliesst nichts an (Sackgasse, ausserhalb der geladenen Kacheln),
+ * fährt es wie bisher wieder vom Anfang seiner eigenen Kette. Erfunden: welche Autos wohin abbiegen; Abbiegespuren, Vortritt und Ampeln gibt es nicht.
+ */
+export const ANSCHLUSS_M = 3, WENDE_GRAD = 150, GEWICHT_DAZU = 150
+const NETZ_ZELLE_M = 4
+export type AutoNetz = Map<string, Array<{ kk: AutoKette; ende: 0 | 1 }>>
+const netzSchl = (e: number, n: number) => `${Math.round(e / NETZ_ZELLE_M)}_${Math.round(n / NETZ_ZELLE_M)}`
+
+/** die Richtung der Kette am Anfang (aus den ersten Metern) und am Ende, wo gezeichnet; sonst 0 */
+function endRichtung(k: AutoKette, s: number, r: number): [number, number] {
+  const a = rohBei(k, s), b = rohBei(k, s + r)
+  if (!a || !b) return [0, 0]
+  const l = Math.hypot(b.e - a.e, b.n - a.n)
+  return l > 1e-6 ? [(b.e - a.e) / l * Math.sign(r), (b.n - a.n) / l * Math.sign(r)] : [0, 0]
+}
+
+export function netzBauen(ketten: Iterable<AutoKette>): AutoNetz {
+  const netz: AutoNetz = new Map()
+  const dazu = (e: number, n: number, kk: AutoKette, ende: 0 | 1) => {
+    const schl = netzSchl(e, n)
+    let l = netz.get(schl)
+    if (!l) netz.set(schl, (l = []))
+    l.push({ kk, ende })
+  }
+  for (const kk of ketten) {
+    const en = kk.stuecke.find((x) => x.enden)?.enden
+    if (!en) continue
+    kk.enden = en
+    const a = endRichtung(kk, 0.5, 6), b = endRichtung(kk, kk.L - 6.5, 6)
+    kk.richtungen = [a[0], a[1], b[0], b[1]]
+    dazu(en[0], en[1], kk, 0); dazu(en[2], en[3], kk, 1)
+  }
+  return netz
+}
+
+/** das Tempo auf einer Kette und Spur in km/h, wie in kettenBauen */
+export function kmhAuf(kk: AutoKette, spur: number): number {
+  return kk.art === 0 ? AUTO_KMH[Math.min(spur, AUTO_KMH.length - 1)] : kk.stuecke[0].strasse?.kmh ?? AUTO_KMH_GEGEN
+}
+
+/** wohin ein Auto am Ende seiner Kette weiterfährt, oder null */
+export function weiterNach(netz: AutoNetz, a: AutoPlatz, kk: AutoKette, richtung: 1 | -1): { kk: AutoKette; richtung: 1 | -1 } | null {
+  const en = kk.enden, ri = kk.richtungen
+  if (!en || !ri) return null
+  const e = richtung === 1 ? en[2] : en[0], n = richtung === 1 ? en[3] : en[1]
+  // Richtung beim Ankommen: am Ende vorwärts die Richtung der Kette, am Anfang rückwärts ihr Gegenteil
+  const ie = richtung === 1 ? ri[2] : -ri[0], in_ = richtung === 1 ? ri[3] : -ri[1]
+  const kand: Array<{ kk: AutoKette; richtung: 1 | -1; w: number }> = []
+  const cx = Math.round(e / NETZ_ZELLE_M), cy = Math.round(n / NETZ_ZELLE_M)
+  const cosWende = Math.cos((WENDE_GRAD * Math.PI) / 180)
+  for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+    for (const c of netz.get(`${cx + dx}_${cy + dy}`) ?? []) {
+      if (c.kk === kk || !c.kk.enden || !c.kk.richtungen) continue
+      const ce = c.ende === 0 ? c.kk.enden[0] : c.kk.enden[2], cn = c.ende === 0 ? c.kk.enden[1] : c.kk.enden[3]
+      if (Math.hypot(ce - e, cn - n) > ANSCHLUSS_M) continue
+      // vom Anfang vorwärts, immer; vom Ende rückwärts nur auf Strassen mit beiden Richtungen
+      const r: 1 | -1 = c.ende === 0 ? 1 : -1
+      if (r === -1 && c.kk.art !== 1 && c.kk.art !== 2) continue
+      const oe = r === 1 ? c.kk.richtungen[0] : -c.kk.richtungen[2], on = r === 1 ? c.kk.richtungen[1] : -c.kk.richtungen[3]
+      if ((ie || in_) && (oe || on) && ie * oe + in_ * on < cosWende) continue
+      if (kand.some((x) => x.kk === c.kk)) continue
+      kand.push({ kk: c.kk, richtung: r, w: Math.max(c.kk.tag, c.kk.nacht) / (c.kk.art === 3 || c.kk.art === 0 ? 1 : 2) + GEWICHT_DAZU })
+    }
+  }
+  if (!kand.length) return null
+  const summe = kand.reduce((x, c) => x + c.w, 0)
+  let z = zufall(a.farbe * 7.31 + (a.abgebogen ?? 0) * 1.937 + e * 0.013) * summe
+  for (const c of kand) { z -= c.w; if (z <= 0) return { kk: c.kk, richtung: c.richtung } }
+  return kand[kand.length - 1]
 }

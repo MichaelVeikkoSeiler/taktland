@@ -12,7 +12,7 @@ import { lampenBauen, type Strassenlampen } from './Strassenlicht'
 import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, lackFarbe, retuscheZurueck, spurBei, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
+import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, AUTO_SPUR_M, AUTO_SPUREN, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, kmhAuf, netzBauen, weiterNach, lackFarbe, retuscheZurueck, spurBei, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden, waldmischungLaden } from '../gelaende'
 import { lv95, useBrilleMoeglich, wgs } from '../relief'
@@ -1888,8 +1888,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             jeden Abschnitt, wie viele Fahrzeuge im Mittel am Tag fahren und wie viele davon Lastwagen sind. Das ist ein Modell, keine Messung.
             Auf Tag und Nacht aufgeteilt ist es so wie im Mittel an den Zählstellen des ASTRA, die Lastwagen gleich je Tag und Nacht. An Sonntagen und den Feiertagen des Sonntagsfahrverbots (Neujahr, Karfreitag, Ostermontag, Auffahrt, Pfingstmontag, 1. August, Weihnachten, Stephanstag; nach der Zeit der Szene) fahren keine Lastwagen; Ausnahmebewilligungen sind nicht berücksichtigt. Strassen, auf
             denen laut Modell weniger als 200 Fahrzeuge am Tag fahren, bleiben leer. Erfunden sind hier dazu das Tempo (innerorts 25 bis 35 km/h als Mittel
-            samt Halten, ausserorts 50 bis 80 km/h, nach der Breite der Strasse), eine Spur je Richtung, und dass an Kreuzungen alle durchfahren: Ampeln,
-            Vortritt und Abbiegen gibt es nicht, ein Auto kann an einer Kreuzung verschwinden und ein anderes erscheinen. Weggemalt sind die Autos im
+            samt Halten, ausserorts 50 bis 80 km/h, nach der Breite der Strasse), eine Spur je Richtung. An Kreuzungen und Kreiseln fährt jedes Auto auf eine der Strassen weiter, die dort
+            anschliessen, öfter auf eine mit viel Verkehr; welches wohin abbiegt, ist erfunden. Ampeln, Vortritt und Abbiegespuren gibt es nicht. Kreisel sind laut
+            swissTLM3D als Kreisel bezeichnet und werden im Gegenuhrzeigersinn befahren; nur wo eine Strasse endet oder die geladene Gegend aufhört, verschwindet ein Auto
+            und beginnt wieder am Anfang seiner Strasse. Weggemalt sind die Autos im
             Luftbild nur auf Strassen ab 6 m Breite. Innerorts hält hie und da ein Auto, weil ein Fussgänger die Strasse quert; die Autos dahinter
             warten, fahren danach an und holen auf, manchmal hupt einer. Auch das ist erfunden: Fussgängerstreifen und Fussgänger stehen in keiner
             unserer Quellen.</p>
@@ -6802,6 +6804,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // die Farbe je Auto fest, einmal gerechnet
       const farben: THREE.Color[] = [], lkwFarben: THREE.Color[] = [], arten: AutoArt[] = [], cabrios: boolean[] = []
       for (const kk of ketten.values()) for (const a of kk.autos) { farben.push(lackFarbe(a.farbe)); lkwFarben.push(lkwFarbe(a.farbe)); arten.push(autoArt(a.farbe)); cabrios.push(autoCabrio(a.farbe)); a.farbe = farben.length - 1 }
+      // weiterfahren über Kreuzungen und Kreisel (weiterNach in Autos.ts; Michael, 2026-11-16): je Auto sein Platz am Anfang, das Netz der Enden
+      const autoNetz = netzBauen(ketten.values()), alleAutos: AutoPlatz[] = []
+      for (const kk of ketten.values()) for (const a of kk.autos) { a.heim = { kk, richtung: a.richtung, spur: a.spur, ms: a.ms }; alleAutos.push(a) }
+      let letzteSek: number | null = null
+      const drauf = new Map<AutoKette, AutoPlatz[]>()
       gruppe.add(netz)
       // SUV und Pick-up (Michael, 2026-11-11: «aus jedem 5. Auto einen SUV … aus jedem 15. einen Pick-Up»)
       // dazu Kleinwagen, Minibus, Kombi, Sportwagen und Cabriolet (Michael, 2026-11-14)
@@ -6943,25 +6950,59 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (brille) zielLokal.copy(augeLokal); else { zielLokal.copy(k.steuerung.target); k.wurzel.worldToLocal(zielLokal) }
         }
         const zielE = lage.cE + zielLokal.x * 1000, zielN = lage.cN - zielLokal.z * 1000
-        for (const kk of ketten.values()) {
-          const anteil = (tag ? kk.tag : kk.nacht) / Math.max(1, kk.tag, kk.nacht), lkwAnteil = tag ? kk.lkwTag : kk.lkwNacht
+        // jedes Auto fährt weiter; am Ende seiner Kette auf eine anschliessende (weiterNach), sonst wieder vom Anfang der eigenen. Nach einem Sprung
+        // der Zeit (Zeitreise, Seite im Hintergrund) stehen alle wieder an ihrem Platz laut der eigenen Kette
+        const sprung = letzteSek === null || Math.abs(sek - letzteSek - dt) > 3
+        letzteSek = sek
+        drauf.clear()
+        for (const a of alleAutos) {
+          const h = a.heim!
+          if (sprung || !a.kk) {
+            a.kk = h.kk; a.richtung = h.richtung; a.spur = h.spur; a.ms = h.ms; a.abgebogen = 0
+            a.lauf = (((a.s0 + h.ms * sek) % h.kk.L) + h.kk.L) % h.kk.L
+            verzug.delete(a)
+          } else {
+            a.lauf = (a.lauf ?? 0) + a.ms * dt
+            for (let i = 0; i < 4 && a.lauf >= a.kk.L; i++) {
+              const rest: number = a.lauf - a.kk.L, w = weiterNach(autoNetz, a, a.kk, a.richtung)
+              if (w) {
+                a.kk = w.kk; a.richtung = w.richtung
+                if (w.kk.art !== 0) a.spur = 0
+                a.ms = h.ms * kmhAuf(w.kk, a.spur) / kmhAuf(h.kk, h.spur)
+              } else { a.kk = h.kk; a.richtung = h.richtung; a.spur = h.spur; a.ms = h.ms }
+              a.abgebogen = (a.abgebogen ?? 0) + 1
+              // ein Rückstand im Stau bleibt erhalten
+              a.lauf = rest - (verzug.get(a)?.v ?? 0)
+              verzug.delete(a)
+            }
+          }
+          let l = drauf.get(a.kk)
+          if (!l) drauf.set(a.kk, (l = []))
+          l.push(a)
+        }
+        for (const [kk, hier] of drauf) {
+          // ob ein Auto fährt und ob es ein Lastwagen ist, nach seiner eigenen Kette (sonst wechselte es beim Abbiegen)
+          const anteilVon = (a: AutoPlatz) => { const h = a.heim!.kk; return (tag ? h.tag : h.nacht) / Math.max(1, h.tag, h.nacht) }
+          const lkwVon = (a: AutoPlatz) => { const h = a.heim!.kk; return tag ? h.lkwTag : h.lkwNacht }
           // gestaut: zuerst alle sichtbaren Autos der Kette, dann je Auto der Verzug
           if (gestaut.has(kk)) {
             const liste: Array<{ a: AutoPlatz; lauf: number; lang: number }> = []
-            for (const a of kk.autos) {
-              if (a.ab >= anteil || (sonntag && a.lkw < lkwAnteil)) continue
-              liste.push({ a, lauf: (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L, lang: a.lkw < lkwAnteil ? LKW_LANG_M : AUTO_ART_LANG_M[artVon(a.farbe)] })
+            for (const a of hier) {
+              const lkwAnteil = lkwVon(a)
+              if (a.ab >= anteilVon(a) || (sonntag && a.lkw < lkwAnteil)) continue
+              liste.push({ a, lauf: a.lauf!, lang: a.lkw < lkwAnteil ? LKW_LANG_M : AUTO_ART_LANG_M[artVon(a.farbe)] })
             }
             if (!stauRechnen(liste, halte.filter((h) => h.kk === kk), verzug, jetztS, dt)) gestaut.delete(kk)
           }
           // innerorts (Tempo höchstens 35 km/h) kann ein Halt beginnen
           const innerorts = kk.art >= 2 && (kk.stuecke[0].strasse?.kmh ?? 99) <= 35
-          for (const a of kk.autos) {
-            if (a.ab >= anteil || zahl >= hoechstens || lkwZahl >= hoechstens) continue
+          for (const a of hier) {
+            const lkwAnteil = lkwVon(a)
+            if (a.ab >= anteilVon(a) || zahl >= hoechstens || lkwZahl >= hoechstens) continue
             const lkw = a.lkw < lkwAnteil, art = artVon(a.farbe), lang = lkw ? LKW_LANG_M : AUTO_ART_LANG_M[art]
             if (lkw && sonntag) continue
             if (!lkw && art && artZahl[art] >= hoechstens) continue
-            const lauf = (((a.s0 + a.ms * sek) % kk.L) + kk.L) % kk.L - (verzug.get(a)?.v ?? 0), s = a.richtung === 1 ? lauf : kk.L - lauf
+            const lauf = a.lauf! - (verzug.get(a)?.v ?? 0), s = a.richtung === 1 ? lauf : kk.L - lauf
             const p = autoBei(kk, s)
             if (!p) continue
             const de = p.de * a.richtung, dn = p.dn * a.richtung
