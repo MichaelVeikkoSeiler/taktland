@@ -4660,7 +4660,9 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         // schräg im Wind (Michael, 2026-11-16: «je stärker der Wind ist, desto schräger»): der Wind der Station oder der gewählten Stunde, voll ab
         // NIEDER_WIND_VOLL_KMH, so viel waagrecht je Meter Fall wie in «3D Schweiz» (REGEN_SCHRAEG, SCHNEE_SCHRAEG in Niederschlag.ts); ohne Richtung senkrecht
         const w = windGewaehlt ?? wetter?.wind
-        const wStark = w?.kmh != null && w.richtung != null ? Math.min(1, w.kmh / NIEDER_WIND_VOLL_KMH) : 0
+        // mit den Böen (Michael, 2026-11-16: «Bitte die Böen mitzählen»): das Mittel aus mittlerem Wind und Böenspitze
+        const wKmh = w?.kmh != null ? (w.boe != null ? (w.kmh + w.boe) / 2 : w.kmh) : null
+        const wStark = wKmh != null && w?.richtung != null ? Math.min(1, wKmh / NIEDER_WIND_VOLL_KMH) : 0
         const wWinkel = (((w?.richtung ?? 0) + 180) * Math.PI) / 180, wx = Math.sin(wWinkel), wz = -Math.cos(wWinkel)
         const schraeg = wStark * (schnee ? SCHNEE_SCHRAEG : REGEN_SCHRAEG) * (hoch / seite)
         for (let i = 0, j = 0; i < anzahl * 3; i += 3, j += 6) {
