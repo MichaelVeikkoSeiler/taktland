@@ -235,6 +235,8 @@ export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: num
    *  Länge seines Bogens; das Tempo, auf das es zufährt; wie lange es schon vor einer Kreuzung wartet */
   nach?: { kk: AutoKette; richtung: 1 | -1 } | null; von?: { kk: AutoKette; richtung: 1 | -1; spur: number }; kurveH?: number
   msZiel?: number; wartet?: number
+  /** wo es im letzten Bild gezeichnet war (Kollision), wie lange es schon vor einem anderen steht, ob es deshalb hindurch darf (dann versteckt, wo es überlappt) */
+  bild?: AutoBild; steckt?: number; durch?: boolean
   heim?: { kk: AutoKette; richtung: 1 | -1; spur: number; ms: number } }
 
 /** übrige Strassen ohne Trennung: je Richtung eine Spur, so weit rechts der Achse wie ein Viertel der Breite laut Klasse, mindestens und
@@ -698,4 +700,82 @@ export function bogen(a: SpurLage, b: SpurLage, t: number, H: number): SpurLage 
   const l = Math.hypot(de, dn)
   if (l > 1e-6) { de /= l; dn /= l } else { de = a.de; dn = a.dn }
   return { e, n, h: a.h + (b.h - a.h) * t, de, dn, bruecke: a.bruecke && b.bruecke }
+}
+
+/**
+ * Nie ineinander (Michael, 2026-11-16: «Ist es möglich es so zu konfigurieren dass Autos nie kollidieren?»): jedes Auto schaut nach den Lagen des
+ * letzten Bilds bis KORRIDOR_VORAUS_M voraus in einem Streifen so breit wie es selbst und das andere (ohne Gegenverkehr und ohne die andere Spur derselben Autobahn) und bremst so, dass
+ * KORRIDOR_LUECKE_M bleiben, auf allen Strassen, auch über Kreuzungen, Einmündungen und Kreisel hinweg. Sehen sich zwei gegenseitig (etwa quer in
+ * einer Kreuzung), wartet, wer das andere rechts hat (Rechtsvortritt), sonst nach einem festen Zufall. Steht eines länger als KORRIDOR_STECKT_S
+ * (vier Autos, die aufeinander warten), fährt es weiter, wird aber nicht gezeichnet, solange es ein anderes überlappt; ebenso nach einem Sprung der
+ * Zeit. Was sich überlappt, prüft das Bild zuletzt noch einmal (Rechtecke, quer auf KORRIDOR_BREITE_ANTEIL, damit sich Gegenverkehr auf schmalen
+ * Strassen kreuzen kann). Alles gewählt.
+ */
+export const KORRIDOR_VORAUS_M = 45, KORRIDOR_LUECKE_M = 2, KORRIDOR_RAND_M = 0.3, KORRIDOR_STECKT_S = 10, KORRIDOR_BREITE_ANTEIL = 0.8
+export interface AutoBild { a: AutoPlatz; e: number; n: number; de: number; dn: number; lang: number; breit: number }
+const ZELLE_M = KORRIDOR_VORAUS_M
+const zelle = (e: number, n: number) => Math.floor(e / ZELLE_M) * 100_003 + Math.floor(n / ZELLE_M)
+export class AutoRaster {
+  zellen = new Map<number, AutoBild[]>()
+  leeren() { this.zellen.clear() }
+  dazu(x: AutoBild) { const z = zelle(x.e, x.n); let l = this.zellen.get(z); if (!l) this.zellen.set(z, (l = [])); l.push(x) }
+  *nahe(e: number, n: number) {
+    const ze = Math.floor(e / ZELLE_M), zn = Math.floor(n / ZELLE_M)
+    for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) { const l = this.zellen.get((ze + i) * 100_003 + zn + j); if (l) yield* l }
+  }
+}
+
+/** wie viel Platz x vor sich hat bis y (Infinity: y nicht im Weg) */
+function imWeg(x: AutoBild, y: AutoBild): number {
+  const gleich = x.de * y.de + x.dn * y.dn
+  if (gleich < -0.7) return Infinity
+  // Autobahn: andere Spur derselben Fahrbahn ist nie im Weg (in langen Kurven läge sie sonst voraus im Streifen)
+  if (x.a.kk && x.a.kk === y.a.kk && x.a.kk.art === 0 && x.a.spur !== y.a.spur) return Infinity
+  const halbQuer = (x.breit + y.breit) / 2 * KORRIDOR_BREITE_ANTEIL + KORRIDOR_RAND_M, quer = y.breit / 2 * (1 - Math.abs(gleich))
+  let platz = Infinity
+  for (const t of [-0.5, 0, 0.5]) {
+    const pe = y.e + y.de * y.lang * t - x.e, pn = y.n + y.dn * y.lang * t - x.n
+    const laengs = pe * x.de + pn * x.dn, seit = Math.abs(pe * x.dn - pn * x.de)
+    if (laengs <= 0 || laengs > KORRIDOR_VORAUS_M || seit > halbQuer) continue
+    platz = Math.min(platz, laengs - x.lang / 2 - quer - (t === 0 ? y.lang / 2 * Math.abs(gleich) : 0))
+  }
+  return platz
+}
+
+/** ob x gegenüber y Vortritt hat, wenn sie sich gegenseitig im Weg sind: y kommt nicht von rechts; geradeaus gegenüber nach dem festen Zufall */
+function vortritt(x: AutoBild, y: AutoBild) {
+  const rechts = (y.e - x.e) * x.dn - (y.n - x.n) * x.de
+  return Math.abs(rechts) > 0.5 ? rechts < 0 : x.a.s0 > y.a.s0
+}
+
+/** Platz bis zum nächsten Auto im Weg (nach dem Raster des letzten Bilds) minus die Lücke */
+export function korridorPlatz(x: AutoBild, raster: AutoRaster): number {
+  let platz = Infinity
+  for (const y of raster.nahe(x.e, x.n)) {
+    if (y.a === x.a) continue
+    const p = imWeg(x, y)
+    if (p >= platz) continue
+    if (imWeg(y, x) < Infinity && vortritt(x, y)) continue
+    platz = p
+  }
+  return platz - KORRIDOR_LUECKE_M
+}
+
+/** ob x ein schon gezeichnetes Auto überlappt (Rechtecke, quer verkleinert) */
+export function ueberlappt(x: AutoBild, raster: AutoRaster): boolean {
+  const ecken = (a: AutoBild, ux: number, uy: number) => {
+    const l = a.lang / 2, b = a.breit / 2 * KORRIDOR_BREITE_ANTEIL, m = a.e * ux + a.n * uy
+    const r = Math.abs(l * (a.de * ux + a.dn * uy)) + Math.abs(b * (a.dn * ux - a.de * uy))
+    return [m - r, m + r]
+  }
+  for (const y of raster.nahe(x.e, x.n)) {
+    if (y.a === x.a || Math.abs(y.e - x.e) > 20 || Math.abs(y.n - x.n) > 20) continue
+    let getrennt = false
+    for (const [ux, uy] of [[x.de, x.dn], [x.dn, -x.de], [y.de, y.dn], [y.dn, -y.de]]) {
+      const [a0, a1] = ecken(x, ux, uy), [b0, b1] = ecken(y, ux, uy)
+      if (a1 < b0 || b1 < a0) { getrennt = true; break }
+    }
+    if (!getrennt) return true
+  }
+  return false
 }
