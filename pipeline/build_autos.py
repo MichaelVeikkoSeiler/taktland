@@ -65,7 +65,12 @@ ARE_URL = ("https://data.geo.admin.ch/ch.are.belastung-personenverkehr-strasse/b
 #: Klasse: Breite laut Name (Ein- und Ausfahrt gewählt) und Tempo in km/h in und ausserhalb von Siedlungen (gewählt; innerorts ein Mittel samt
 #: Halten an Kreuzungen und Ampeln, die nicht gezeichnet sind, darum unter 50; die Dichte ist Verkehr durch Tempo)
 STRASSEN = {"10m Strasse": (10, 35, 80), "8m Strasse": (8, 35, 80), "6m Strasse": (6, 35, 80), "4m Strasse": (4, 30, 60),
-            "3m Strasse": (3, 25, 50), "Einfahrt": (5, 60, 60), "Ausfahrt": (5, 60, 60)}
+            "3m Strasse": (3, 25, 50), "Einfahrt": (5, 60, 60), "Ausfahrt": (5, 60, 60),
+            # Verbindungen mitten in Kreuzungen und Kreisel (Michael, 2026-11-16: «bei den Kreiseln und Kreuzungen, dass sie einfach verschwinden»):
+            # Breite und Tempo gewählt; ohne Wert im Verkehrsmodell bleiben sie als Verbindung ohne eigene Autos (OHNE_WERT_BLEIBEN)
+            "Verbindung": (5, 25, 40), "Kreisel": (6, 25, 25)}
+#: diese Klassen bleiben auch ohne Wert und unter STRASSE_AB_DTV, damit die Autos über sie weiterfahren (ohne eigene Autos)
+OHNE_WERT_BLEIBEN = {"Verbindung", "Kreisel"}
 #: Probe alle so viele Meter, Abschnitt des Modells bis so weit daneben und höchstens so schräg (gewählt)
 ARE_PROBE_M, ARE_BIS_M, ARE_WINKEL = 20, 12, 25
 #: ohne Autos unter so vielen Fahrzeugen am Tag (DTV laut Modell, beide Richtungen; gewählt)
@@ -163,6 +168,43 @@ def ketten_bilden(stuecke):
             x = weiter[0] if len(an[kn]) == 2 and weiter else None
         ketten.append(kette)
     return ketten
+
+
+def kreisel_drehen(strassen):
+    """Kreisel im Gegenuhrzeigersinn (Rechtsverkehr): swissTLM3D nennt je Stück, ob es zu einem Kreisel gehört (KREISEL), aber nur einen Teil davon
+    als Einbahn; die Stücke eines Kreisels (über gemeinsame Enden verbunden) bekommen die Mitte aller ihrer Punkte, jedes Stück wird so gedreht, dass
+    es um sie im Gegenuhrzeigersinn läuft. Stücke, die swissTLM3D schon als Einbahn nennt, bleiben, wie gezeichnet"""
+    knoten = lambda q: (round(q[0] / KNOTEN_M), round(q[1] / KNOTEN_M))
+    ks = [k for k, st in enumerate(strassen) if st["klasse"] == "Kreisel"]
+    eltern = {k: k for k in ks}
+
+    def wurzel(x):
+        while eltern[x] != x:
+            eltern[x] = eltern[eltern[x]]; x = eltern[x]
+        return x
+    an = defaultdict(list)
+    for k in ks:
+        for q in (strassen[k]["p"][0], strassen[k]["p"][-1]):
+            an[knoten(q)].append(k)
+    for liste in an.values():
+        for k in liste[1:]:
+            eltern[wurzel(k)] = wurzel(liste[0])
+    gruppen = defaultdict(list)
+    for k in ks:
+        gruppen[wurzel(k)].append(k)
+    gedreht = 0
+    for gr in gruppen.values():
+        pts = [q for k in gr for q in strassen[k]["p"]]
+        ce, cn = sum(q[0] for q in pts) / len(pts), sum(q[1] for q in pts) / len(pts)
+        for k in gr:
+            st = strassen[k]
+            if st["kreisel_einweg"]:
+                continue
+            p = st["p"]
+            dreh = sum((a[0] - ce) * (b[1] - a[1]) - (a[1] - cn) * (b[0] - a[0]) for a, b in zip(p, p[1:]))
+            if dreh < 0:
+                st["p"] = p[::-1]; gedreht += 1
+    print(f"Kreisel: {len(gruppen)} mit {len(ks)} Stücken, {gedreht} gedreht")
 
 
 def einfach(p, tol=EINFACH_M):
@@ -379,10 +421,19 @@ def main():
     print(f"Ketten mit Zählstelle: {mit} von {len(ketten)}, "
           f"{sum(l for l, x in zip(laenge, beste) if x) / 1000:.0f} von {sum(laenge) / 1000:.0f} km")
 
+    def enden(kette, teile):
+        """Anfang und Ende der Kette (Ost, Nord, auf 0,1 m): dort schliessen andere Ketten an, die App fährt die Autos darüber weiter"""
+        x, umg = kette[0]
+        a = teile[x]["p"][-1] if umg else teile[x]["p"][0]
+        x, umg = kette[-1]
+        b = teile[x]["p"][0] if umg else teile[x]["p"][-1]
+        return [round(a[0], 1), round(a[1], 1), round(b[0], 1), round(b[1], 1)]
+
     kacheln = defaultdict(list)
     for c, kette in enumerate(ketten):
         s0 = 0.0
         L = round(laenge[c], 1)
+        ende = enden(kette, stuecke)
         for x, umg in kette:
             st = stuecke[x]
             p = st["p"][::-1] if umg else st["p"]
@@ -392,7 +443,7 @@ def main():
                 d = []
                 for q in p:
                     d += [round(q[0] - e0, 1), round(q[1] - n0, 1), round(q[2] * 10) - h0]
-                eintrag = [c, 0 if st["einweg"] else 1, L, round(s0, 1), 1 if st["kb"] in BRUECKE else 0, e0, n0, h0, d]
+                eintrag = [c, 0 if st["einweg"] else 1, L, round(s0, 1), 1 if st["kb"] in BRUECKE else 0, e0, n0, h0, d, *ende]
                 for kk in {(int(q[0] // KACHEL_M), int(q[1] // KACHEL_M)) for q in p}:
                     kacheln[kk].append(eintrag)
             s0 += l
@@ -407,8 +458,8 @@ def main():
     x0, y0, x1, y1 = RAHMEN
     in_siedlung = lambda e, n: (x0 <= e < x1 and y0 <= n < y1 and bool(maske[int((y1 - n) // MASKE_M), int((e - x0) // MASKE_M)]))
     strassen = []
-    for i, rec in enumerate(r.iterRecords(fields=["OBJEKTART", "KUNSTBAUTE", "RICHTUNGSG"])):
-        art, kb, rg = rec
+    for i, rec in enumerate(r.iterRecords(fields=["OBJEKTART", "KUNSTBAUTE", "RICHTUNGSG", "KREISEL"])):
+        art, kb, rg, kreisel = rec
         if art not in STRASSEN:
             continue
         sh = r.shape(i)
@@ -416,8 +467,11 @@ def main():
         for a_, b_ in zip(teile, teile[1:]):
             p = [(q[0], q[1], sh.z[j]) for j, q in zip(range(a_, b_), sh.points[a_:b_])]
             if len(p) >= 2:
-                strassen.append({"p": p, "einweg": rg == "Wahr", "kb": kb, "klasse": art})
+                kr = kreisel == "Wahr" and art != "Verbindung"
+                strassen.append({"p": p, "einweg": rg == "Wahr" or kr, "kb": kb, "klasse": "Kreisel" if kr else art,
+                                 "kreisel_einweg": rg == "Wahr"})
     print(f"übrige Strassen: {len(strassen)} Stücke")
+    kreisel_drehen(strassen)
     werte = are_werte(strassen)
     roh_sp = ROOT / "data" / "raw" / "statpop_2025_ha.csv"
     if not roh_sp.exists():
@@ -440,18 +494,23 @@ def main():
                 laengen = [sum(math.hypot(b[0] - a[0], b[1] - a[1]) for a, b in zip(teil[x]["p"], teil[x]["p"][1:])) for x, _ in kette]
                 L = sum(laengen)
                 mit = [(werte[ids[x]], l) for (x, _), l in zip(kette, laengen) if werte[ids[x]] is not None]
-                if L < 1 or sum(l for _, l in mit) < L / 2:
+                bleibt = klasse in OHNE_WERT_BLEIBEN
+                if L < 1 or (sum(l for _, l in mit) < L / 2 and not bleibt):
                     continue
                 # Median nach Länge
                 mit.sort(key=lambda t: t[0][0])
                 halb, summe, dtv_, schwer_ = sum(l for _, l in mit) / 2, 0.0, 0.0, 0.0
+                if sum(l for _, l in mit) < L / 2:
+                    mit = []
                 for (d, sw), l in mit:
                     summe += l
                     if summe >= halb:
                         dtv_, schwer_ = d, sw
                         break
                 if dtv_ < STRASSE_AB_DTV:
-                    continue
+                    if not bleibt:
+                        continue
+                    dtv_ = 0.0
                 c = nr0 + zahl_s
                 zahl_s += 1; km_s += L / 1000
                 drin = sum(l for (x, _), l in zip(kette, laengen) if in_siedlung(*teil[x]["p"][len(teil[x]["p"]) // 2][:2]))
@@ -461,6 +520,7 @@ def main():
                 if innerorts:
                     proben = [pp for x, _ in kette for pp in teil[x]["p"][::4]]
                     fuss = round(sum(einwohner_bei(pp[0], pp[1]) for pp in proben) / len(proben) * FUSS_JE_EINWOHNER, 1)
+                ende = enden(kette, teil)
                 v = [round(dtv_ * tag_anteil / 16, 1), round(dtv_ * (1 - tag_anteil) / 8, 1), round(schwer_, 1), breite,
                      kmh_in if innerorts else kmh_aus, fuss]
                 s0 = 0.0
@@ -475,7 +535,7 @@ def main():
                         d = []
                         for pp in q:
                             d += [round(pp[0] - e0, 1), round(pp[1] - n0, 1), round(pp[2] * 10) - h0 if auf else 0]
-                        eintrag = [c, 3 if einweg else 2, round(L, 1), round(s0, 1), 1 if st["kb"] in BRUECKE else 0, e0, n0, h0, d, *v]
+                        eintrag = [c, 3 if einweg else 2, round(L, 1), round(s0, 1), 1 if st["kb"] in BRUECKE else 0, e0, n0, h0, d, *v, *ende]
                         for kk in {(int(pp[0] // KACHEL_M), int(pp[1] // KACHEL_M)) for pp in q}:
                             kacheln[kk].append(eintrag)
                     s0 += l
