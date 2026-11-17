@@ -177,11 +177,11 @@ export function autoForm(art: AutoArt = 0): THREE.BufferGeometry {
 }
 
 /** Scheinwerfer vorne weiss, Rücklichter hinten rot, nachts (fensterNacht) als eigenes Netz ohne Licht der Szene gezeichnet; Lage gewählt */
-export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M, rund = false): THREE.BufferGeometry {
+export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M, rund = false, doppel = false): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
-  const lampe = (x: number, z: number, farbe: string, kreis = false) => {
+  const lampe = (x: number, z: number, farbe: string, kreis = false, r = RUND_SCHEINWERFER_R_M) => {
     const g = (kreis
-      ? new THREE.CylinderGeometry(RUND_SCHEINWERFER_R_M / 1000, RUND_SCHEINWERFER_R_M / 1000, 0.08 / 1000, 16).rotateX(Math.PI / 2)
+      ? new THREE.CylinderGeometry(r / 1000, r / 1000, 0.08 / 1000, 16).rotateX(Math.PI / 2)
       : new THREE.BoxGeometry(0.45 / 1000, 0.2 / 1000, 0.08 / 1000)).toNonIndexed()
     g.deleteAttribute('uv')
     g.translate(x / 1000, 0.75 / 1000, z / 1000)
@@ -191,7 +191,11 @@ export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M, rund = fal
     teile.push(g)
   }
   const x0 = breit / 3
-  for (const x of [-x0, x0]) { lampe(x, lang / 2 + 0.03, '#ffffff', rund); lampe(x, -lang / 2 - 0.03, '#ff3020') }
+  for (const x of [-x0, x0]) {
+    if (doppel) for (const d of [-1, 1]) lampe(x + Math.sign(x) * d * DOPPEL_ABSTAND_M / 2, lang / 2 + 0.03, '#ffffff', true, DOPPEL_R_M)
+    else lampe(x, lang / 2 + 0.03, '#ffffff', rund)
+    lampe(x, -lang / 2 - 0.03, '#ff3020')
+  }
   const ganz = mergeGeometries(teile)!
   teile.forEach((t) => t.dispose())
   return ganz
@@ -202,6 +206,13 @@ export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M, rund = fal
 export const RUND_SCHEINWERFER_ANTEIL = 0.25, RUND_SCHEINWERFER_R_M = 0.11
 export function autoRundeLichter(id: number): boolean {
   return zufall(id * 4.37 + 3.3) < RUND_SCHEINWERFER_ANTEIL
+}
+/** Kleinwagen mit je zwei runden Scheinwerfern links und rechts (Michael, 2026-11-17: «Bei den Kleinwagen darf es auch bei den Frontlichtern mal auf
+ *  beiden Seiten je 2 Lichter haben, und zwar wenn, dann runde. Das betrifft aber nur jedes 15. bis 20. Auto»): etwa jedes 17. Auto, also gut ein Drittel der
+ *  Kleinwagen, je Auto ein fester Zufall; Durchmesser 17 cm, Mitten 26 cm auseinander, gewählt */
+export const DOPPEL_ANTEIL = 1 / 17, DOPPEL_R_M = 0.085, DOPPEL_ABSTAND_M = 0.26
+export function autoDoppelLichter(id: number): boolean {
+  return autoArt(id) === 3 && zufall(id * 6.07 + 1.3) < DOPPEL_ANTEIL / KLEINWAGEN_ANTEIL
 }
 
 /** nachts vor jedem Scheinwerfer ein Lichtkegel auf der Fahrbahn wie bei den Zügen: so lang und vorne so breit, Stärke, die Lampe so weit
