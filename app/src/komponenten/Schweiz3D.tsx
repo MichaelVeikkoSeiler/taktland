@@ -1996,7 +1996,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Zugnummer, woher er kommt (sein erster Halt im Netz von Taktland laut Fahrplan; ein Zug aus dem Ausland kommt dann von der Grenze) und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
             Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Der rote Knopf rechts im Schild führt in den Führerstand von Taktland: Der Zug fährt
             dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher, in Taktland «Zurück zur Virtuellen Schweiz» dorthin, wo der Zug laut Fahrplan jetzt ist, in derselben Stufe und mit denselben Schaltern und demselben Ton wie beim Wechsel; die Kamera steht wieder im selben Winkel und Abstand zum Zug, bleibt dann stehen und schaut ihm nach, bis er aus dem Ausschnitt fährt oder man selbst dreht oder zoomt. Mit Verspätung laut Echtzeit kann der Zug dort fehlen, der Führerstand fährt nach Fahrplan. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
-            gezeichnet, kein bestimmter Zugtyp, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.</p>
+            gezeichnet, kein bestimmter Zugtyp, mit einzelnen Fenstern, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.
+            Die Wagen hängen aneinander und folgen einer Linie, die nie steiler als 6° ist; steigt das Gelände oder die Gleisachse steiler, liegt der Zug dort etwas darüber oder darunter.</p>
         </Abschnitt>
         <Abschnitt titel="Schiffe">
           <p>«Schiffe» zeigt ab der Stufe 16 km jedes Kursschiff und jede Fähre dort, wo sie jetzt laut Fahrplan sind, auf dem Wasser in
@@ -5711,7 +5712,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const ganzM = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M), mass = laenge / (ganzM / 1000), hoehe = ZUG_HOEHE * mass
     const formen = zugFormen()
     const stoff = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })
-    // die Innenbeleuchtung: das Fensterband (Attribut leuchte) leuchtet mit der Nacht der Gebäude
+    // die Innenbeleuchtung: die Fenster (Attribut leuchte) leuchtet mit der Nacht der Gebäude
     stoff.onBeforeCompile = (sh) => {
       sh.uniforms.zugNacht = fensterNacht
       sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float leuchte;\nvarying float vLeuchte;')
@@ -6394,10 +6395,37 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           for (let i = -kGlatt; i <= kGlatt; i++) { const gw = kGlatt + 1 - Math.abs(i), p0 = punkt.get(k + i)!; se += gw * p0[0]; sn += gw * p0[1]; sw += gw }
           glattPunkt.set(k, [se / sw, sn / sw])
         }
+        // die Höhe als eine Linie wie die Lage (Michael, 2026-11-17: «Nun gibt es nur noch diese Stufen. Ein Zug wäre nie so. Bitte solche Stufen nie
+        // möglich machen»): bisher lag die Mitte jedes Wagens auf der Höhe der Gleisachse (oder über dem Gelände gehoben), seine Neigung kam aber aus
+        // einer anderen, gemittelten Höhe; so passten die Enden zweier Wagen bis 10 m nicht aufeinander. Jetzt je Stelle der Linie eine Höhe (Achse,
+        // sonst Gelände, nie darunter, unter Decken nicht gehoben), noch einmal über ±ZUG_QUER_HOEHE_M gemittelt, und beide Enden jedes Wagens darauf
+        const heben = (g: number, boden: number) => Number.isFinite(boden) && boden - g <= ZUG_UEBER_BODEN_BIS_M ? Math.max(g, boden + ZUG_UEBER_BODEN_M) : g
+        const hRoh = new Map<number, number>()
+        for (let k = kLo; k <= kHi; k++) {
+          const p0 = glattPunkt.get(k)!, g = linie.get(k)![1], boden = bestandHoehe(b, p0[0], p0[1])
+          hRoh.set(k, Number.isFinite(g) ? heben(g, boden) : Number.isFinite(boden) ? boden + ZUG_UEBER_BODEN_M : NaN)
+        }
+        const hLinie = new Map<number, number>()
+        for (let k = kLo; k <= kHi; k++) {
+          let sh = 0, sw = 0
+          for (let i = -kHoch; i <= kHoch; i++) { const x = hRoh.get(Math.max(kLo, Math.min(kHi, k + i)))!; if (Number.isFinite(x)) { const gw = kHoch + 1 - Math.abs(i); sh += gw * x; sw += gw } }
+          hLinie.set(k, sw ? sh / sw : NaN)
+        }
+        // nie steiler als ZUG_NEIGUNG: die Mitte zwischen der oberen und der unteren Hülle mit dieser Steigung (beide sind höchstens so steil, ihre
+        // Mitte auch). Vorher wurde jeder Wagen für sich auf ZUG_NEIGUNG begrenzt, wo die Linie steiler war (Decke über den Gleisen, gehobenes Gelände),
+        // und seine Enden passten bis 4 m nicht mehr auf die der Nachbarn
+        const steil = Math.tan(ZUG_NEIGUNG) * 0.95, hk = [...hLinie.entries()].filter(([, x]) => Number.isFinite(x))
+        const lageK = (k: number) => k * ZUG_QUER_RASTER_M
+        for (let k = kLo; k <= kHi; k++) {
+          if (!hk.length) break
+          let oben = Infinity, unten = -Infinity
+          for (const [j, x] of hk) { const d = Math.abs(lageK(k) - lageK(j)) * steil; oben = Math.min(oben, x + d); unten = Math.max(unten, x - d) }
+          hLinie.set(k, (oben + unten) / 2)
+        }
         const aufLinie = (sm: number): [number, number, number] => {
           const kf = sm / ZUG_QUER_RASTER_M, k0 = Math.max(kLo, Math.min(kHi - 1, Math.floor(kf))), t = Math.max(0, Math.min(1, kf - k0))
-          const a0 = linie.get(k0)!, a1 = linie.get(k0 + 1)!, p0 = glattPunkt.get(k0)!, p1 = glattPunkt.get(k0 + 1)!
-          const h0 = Number.isFinite(a0[1]) && Number.isFinite(a1[1]) ? a0[1] + (a1[1] - a0[1]) * t : Number.isFinite(a0[1]) ? a0[1] : a1[1]
+          const a0 = hLinie.get(k0)!, a1 = hLinie.get(k0 + 1)!, p0 = glattPunkt.get(k0)!, p1 = glattPunkt.get(k0 + 1)!
+          const h0 = Number.isFinite(a0) && Number.isFinite(a1) ? a0 + (a1 - a0) * t : Number.isFinite(a0) ? a0 : a1
           const e = p0[0] + (p1[0] - p0[0]) * t, n = p0[1] + (p1[1] - p0[1]) * t
           return [e, n, Number.isFinite(h0) ? h0 : bestandHoehe(b, e, n)]
         }
@@ -6423,18 +6451,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (w === 0) { lokE = e; lokN = n }
           if (import.meta.env.VITE_S3D_TEST) { const z = window as unknown as { s3dMitten?: number[][] }; (z.s3dMitten ??= []).push([u.f.id, w, e, n, voE, voN, hiE, hiN]); if (z.s3dMitten.length > 3000) z.s3dMitten.shift() }
           if (w === ZUG_WAGEN) { steuerE = e; steuerN = n }
-          // nie unter das gezeichnete Gelände (Michael, 2026-11-10, Wankdorf Ost: «Störend ist dass der Zug im Untergrund versinkt»): die Gleisachse aus
-          // swissTLM3D liegt in Einschnitten tiefer als das Gelände des Modells, das dort gemittelt ist; in Tunneln ist der Zug ohnehin verdeckt
-          const bodenV = bestandHoehe(b, voE, voN), bodenH = bestandHoehe(b, hiE, hiN)
-          // liegt das Gelände mehr als ZUG_UEBER_BODEN_BIS_M über der Achse, ist es eine Decke über den Gleisen, kein gemittelter Einschnitt: dann bleibt
-          // der Zug auf der Achse (Michael, 2026-11-13, Bern: die Züge standen auf der Terrasse der Grossen Schanze)
-          const heben = (g: number, boden: number) => Number.isFinite(boden) && boden - g <= ZUG_UEBER_BODEN_BIS_M ? Math.max(g, boden + ZUG_UEBER_BODEN_M) : g
-          const hV = heben(hvG ?? hv, bodenV), hH = heben(hhG ?? hh, bodenH)
+          // nie unter das gezeichnete Gelände (Michael, 2026-11-10, Wankdorf Ost) und unter Decken auf der Achse (2026-11-13, Bern): siehe hLinie
+          const hV = hvG ?? hv, hH = hhG ?? hh
           v.set((e - lage.cE) / 1000, (hV + hH) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
           q.setFromAxisAngle(oben, Math.atan2(voE - hiE, -(voN - hiN)))
-          const quer = Math.hypot(vo.e - hi.e, vo.n - hi.n)
-          neigung.setFromAxisAngle(querAchse, quer > 1 ? -Math.max(-ZUG_NEIGUNG, Math.min(ZUG_NEIGUNG, Math.atan2(hv - hh, quer))) : 0)
+          const quer = Math.hypot(voE - hiE, voN - hiN)
+          neigung.setFromAxisAngle(querAchse, quer > 1 ? -Math.atan2(hV - hH, quer) : 0)
           q.multiply(neigung)
+          if (import.meta.env.VITE_S3D_TEST) { const z = window as unknown as { s3dHoehe?: number[][] }; (z.s3dHoehe ??= []).push([u.f.id, w, (hV + hH) / 2, quer > 1 ? Math.atan2(hV - hH, quer) : 0, Math.hypot(voE - hiE, voN - hiN), hV, hH]); if (z.s3dHoehe.length > 3000) z.s3dHoehe.shift() }
           m.compose(v, q, skala)
           // im Tunnel nicht zu sehen, mit seinen Lampen
           // auch wo die Gleisachse laut swissTLM3D im Tunnel liegt, etwa unter einer Überdeckung: swissALTI3D ist dort das Gelände ohne Bauten,

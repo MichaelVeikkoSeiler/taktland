@@ -36,6 +36,9 @@ const TUER_BREIT = 0.34, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#9a9a9a', TUER_LINI
 const FENSTER_HOCH = 0.27, FENSTER_TIEFER = 0.21
 /** die Türen behalten ihre Höhe vom Fensterband bis 2026-11-11 */
 const TUER_BAND = 0.34
+/** einzelne Fenster statt des Bands (Michael, 2026-11-17: «Bitte einzelne Fenster bei den Zugwagen machen»): Breite und Steg dazwischen in Teilen der Höhe,
+ *  die Breite gleicht sich der Strecke zwischen den Türen an; gewählt */
+const FENSTER_BREIT = 0.3, FENSTER_STEG = 0.1
 // feiner seit 2026-11-10 (Michael: «Ja, setz alle vier um», darunter: Puffer zu gross; vorher 0,045, 0,085, 0,2)
 const PUFFER_SEITE = 0.3, PUFFER_HOEHE = -0.3, PUFFER_R = 0.032, PUFFER_TELLER = 0.058, PUFFER_LANG = 0.12
 export const LICHTKASTEN_HINTEN = 1.05, LICHTKASTEN_VORN = 0.42, LICHTKASTEN_UNTEN = 0.4, LICHTKASTEN_OBEN = 0.56, LICHTKASTEN_BREIT = 0.32
@@ -96,12 +99,35 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     if (vz < 0) fw.rotateY(Math.PI)
     mesh(fw, schwarz)
   } else mesh(new THREE.BoxGeometry(W * 0.86, unten + h, L * 0.96), schwarz).position.y = (-h + unten) / 2
-  // Fensterband auf beiden Seiten, knapp vor der Wand
-  const band = new THREE.BoxGeometry(W * 1.03, H * FENSTER_HOCH, (L - kopf) * 0.92)
-  const fenster = mesh(band, schwarz)
-  fenster.position.set(0, h - r - H * FENSTER_TIEFER, hinten ? kopf / 2 : -kopf / 2)
-  // das Fensterband leuchtet nachts von innen (zugFormen: Attribut leuchte)
-  fenster.userData.fenster = true
+  // einzelne Fenster auf beiden Seiten, knapp vor der Wand, statt eines durchgehenden Bands (Michael, 2026-11-17: «Bitte einzelne Fenster bei den
+  // Zugwagen machen»): in gleichen Abständen über die Länge des früheren Bands (an Lok und Steuerwagen bis in den Kopf), nicht über den Türen;
+  // gerechnet wie an der Lok (Kopf vorne), am Steuerwagen gespiegelt; sie leuchten nachts von innen (zugFormen: Attribut leuchte)
+  {
+    const tuerenLok = i === 0 || hinten ? tuerStellen(0, laenge) : tuerStellen(i, laenge)
+    const von = kopf ? -kopf / 2 - (L - kopf) * 0.46 : -(L * 0.46), bis = kopf ? L / 2 - kopf * (1 - FENSTER_IM_KOPF) : L * 0.46
+    // die Strecken zwischen den Türen
+    const frei: [number, number][] = []
+    let a = von
+    for (const z of [...tuerenLok.stellen].sort((x, y) => x - y)) {
+      const t0 = z - tuerenLok.b / 2 - H * FENSTER_STEG, t1 = z + tuerenLok.b / 2 + H * FENSTER_STEG
+      if (t0 > a) frei.push([a, Math.min(t0, bis)])
+      a = Math.max(a, t1)
+    }
+    if (bis > a) frei.push([a, bis])
+    const fb = H * FENSTER_BREIT, steg = H * FENSTER_STEG
+    for (const [z0, z1] of frei) {
+      const n = Math.floor((z1 - z0 + steg) / (fb + steg))
+      if (n < 1) continue
+      // die Fenster so breit, dass sie die Strecke mit gleichen Stegen füllen
+      const b = (z1 - z0 - (n - 1) * steg) / n
+      for (let k = 0; k < n; k++) {
+        const zm = z0 + b / 2 + k * (b + steg)
+        const geo = new THREE.BoxGeometry(W * 1.03, H * FENSTER_HOCH, b).translate(0, h - r - H * FENSTER_TIEFER, zm)
+        if (hinten) geo.rotateY(Math.PI)
+        mesh(geo, schwarz).userData.fenster = true
+      }
+    }
+  }
   // Türen, nur gemalt (Michael, 2026-11-10: «Braucht es bei den Wagen noch Türen, also nicht richtige, aber damit es den Anschein macht?»): je Seite zwei nahe
   // den Enden, an Lok und Steuerwagen eine hinter dem Kopf; Zahl, Lage und Masse gewählt
   if (zugTueren.an) {
@@ -216,11 +242,7 @@ export function wagenBauen(i: number, laenge: number): { g: THREE.Group; materia
     const kasten2 = new THREE.ExtrudeGeometry(riss, { depth: kb, bevelEnabled: false, curveSegments: 6 })
     kasten2.rotateY(-Math.PI / 2); kasten2.translate(kb / 2, 0, 0)
     kopfteil(kasten2, hell)
-    // das Fensterband weiter nach vorne in den Kopf, bis dort, wo sein Dach sinkt (Michael, 2026-11-10: «die Seitenfenster können weiter nach vorne kommen»)
-    // es schliesst ans Band des Kastens an, das 4 % vor dessen Ende aufhört
-    const bandVon = L / 2 - kopf - (L - kopf) * 0.04, bandLang = L / 2 - kopf * (1 - FENSTER_IM_KOPF) - bandVon
-    const bandKopf = kopfteil(new THREE.BoxGeometry(W * 1.03, H * FENSTER_HOCH, bandLang).translate(0, h - r - H * FENSTER_TIEFER, bandVon + bandLang / 2), schwarz)
-    bandKopf.userData.fenster = true
+    // die Fenster reichen in den Kopf, bis dort, wo sein Dach sinkt (Michael, 2026-11-10: «die Seitenfenster können weiter nach vorne kommen»); siehe oben
     // vorne zwei Puffer (Michael, 2026-11-10: «Und vorne noch die Puffer?»): Stange und Teller, dunkel; Lage und Masse gewählt
     for (const seite of [-1, 1]) {
       const x = seite * W * PUFFER_SEITE, y = PUFFER_HOEHE * H
