@@ -487,6 +487,11 @@ Licht der Autos in «3D Schweiz» seit 2026-11-17 auch am Tag (Michael: «Autos 
              aller Autos und Lastwagen immer, der Lichtkegel weiter nur nachts
 Runde Scheinwerfer in «3D Schweiz» seit 2026-11-17 (Michael: «Kannst du bei jedem 4. Auto runde Scheinwerfer machen?»): je Auto ein fester Zufall, ein Viertel
              (autoRundeLichter, RUND_SCHEINWERFER_* in Autos.ts, 22 cm gewählt), Rücklichter eckig, Lastwagen nicht
+Spuren der Autobahnen in «3D Schweiz» seit 2026-11-17 rechts des Mittelstreifens (Michael, Wankdorf: «Auf der Autobahn beim Wankdorf fahren die Meisten Autos auf der falschen
+             Spur»): swissTLM3D zeichnet getrennte Fahrbahnen nahe am Mittelstreifen, die Gegenfahrbahn liegt auf rund 2'700 von 3'000 km bis 5 m daneben (über alle data/autos
+             nachgemessen, am Luftbild von data/scharf bestätigt); die zwei Spuren lagen je zur Hälfte links und rechts der Achse, die linke also im Mittelstreifen; seither liegt die
+             linke 0,6 m rechts der Achse, wo die Gegenfahrbahn bis 8 m links liegt, ab 14 m wie vorher, dazwischen gleitend (spurenRechts, MITTEL_* in Autos.ts, in der App beim
+             Laden gerechnet, gewählt); die Zahl der Spuren steht in keiner Quelle, auf breiten Autobahnen bleibt die rechte leer; in der Anleitung («Autos»)
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
