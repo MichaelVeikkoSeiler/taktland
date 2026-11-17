@@ -451,6 +451,15 @@ Züge ohne Zickzack in «3D Schweiz» seit 2026-11-17 (Michael: «Die Züge mit 
              eine Schlange»): jeder Wagen wurde für sich bis 2,5 m auf eine Achse geschoben, der nächste um anders viel; jetzt liegen beide Enden jedes Wagens auf der
              einen Linie des Zugs, ZUG_EINRASTEN_M ist weg; gemessen in Bern: seitlicher Versatz zwischen Ende eines Wagens und Anfang des nächsten höchstens 7 cm
              (vorher bis 87 cm), Knicke über 3° 41 von 340, Züge mit Zickzack 4 von 68, Abstand zur Gleisachse im Mittel 1,4 m
+Keine Stufen zwischen den Wagen in «3D Schweiz» seit 2026-11-17 (Michael, Bildschirmfoto bei Nacht: «Nun gibt es nur noch diese Stufen. Ein Zug wäre nie so.
+             Bitte solche Stufen nie möglich machen»): die Stufen lagen in der Höhe, seitlich höchstens 17 cm; die Mitte jedes Wagens lag auf der Achse oder über dem
+             Gelände gehoben, die Neigung kam aus einer anderen, gemittelten Höhe und war auf 6° begrenzt, so passten die Enden zweier Wagen bis 10 m nicht aufeinander;
+             seither je 10 m der Linie des Zugs eine Höhe (Achse, sonst Gelände, gehoben wie bisher), über ±30 m mit Dreiecksgewicht gemittelt, dann nie steiler als
+             ZUG_NEIGUNG (Mitte der oberen und unteren Hülle mit dieser Steigung, hLinie in Schweiz3D.tsx), beide Enden jedes Wagens darauf, die Neigung ohne eigene
+             Grenze; in Bern gemessen höchstens 12 cm Unterschied zwischen zwei Wagen (vorher bis 10 m), im Feld von 1 km und 4 km
+Einzelne Fenster an den Zügen seit 2026-11-17 (Michael: «Bitte einzelne Fenster bei den Zugwagen machen»): statt des Fensterbands Fenster 0,3 der Höhe breit mit Stegen
+             von 0,1 (FENSTER_BREIT, FENSTER_STEG in ZugForm.ts, gewählt), in gleichen Abständen zwischen den Türen, an Lok und Steuerwagen bis in den Kopf, leuchten
+             nachts wie das Band; überall, wo die Form gilt (Virtuelle Schweiz, Modellbahn, Führerstand); als Vorschau im Browser hier angeschaut
 Wagen auf demselben Gleis in «3D Schweiz» (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»): das hintere Ende eines Wagens nimmt die Gleisachse
              bis 2,5 m neben der Stelle eine Wagenlänge hinter dem vorderen Ende in Richtung des Wegs (ZUG_GLEIS_FOLGEN_M, gewählt), sonst wie bisher das eigene
              eingerastete Ende; nur gebaut, hier ohne die feinen Daten nicht nachgestellt
