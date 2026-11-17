@@ -502,6 +502,19 @@ Spuren der Autobahnen in «3D Schweiz» seit 2026-11-17 rechts des Mittelstreife
              nachgemessen, am Luftbild von data/scharf bestätigt); die zwei Spuren lagen je zur Hälfte links und rechts der Achse, die linke also im Mittelstreifen; seither liegt die
              linke 0,6 m rechts der Achse, wo die Gegenfahrbahn bis 8 m links liegt, ab 14 m wie vorher, dazwischen gleitend (spurenRechts, MITTEL_* in Autos.ts, in der App beim
              Laden gerechnet, gewählt); die Zahl der Spuren steht in keiner Quelle, auf breiten Autobahnen bleibt die rechte leer; in der Anleitung («Autos»)
+Einfädeln an Autobahnen in «3D Schweiz» seit 2026-11-17 (Michael: «bei den Autobahnen die Autoeinfahrt zu nutzen … Aktuell wollen die Autos, wenn sie auf der
+             Einfahrtspur sind, direkt in einer scharfen Kurve auf die Autobahn einlenken. Das führt zu Stau … vielleicht etwas abbremsen oder beschleunigen, damit sie
+             einfädeln können»): in swissTLM3D endet eine Einfahrt 5 bis 15 m neben der Achse der Autobahn, ein Verbindungsstück von 4 bis 14 m ohne eigenen Verkehr
+             führt schräg zur Achse (am Wankdorf nachgemessen); dort bog ein Auto auf 2 m mit 40 km/h ab; seither zwischen Autobahn, Ein- und Ausfahrt (Breite 5 m,
+             60 km/h) und solchen Verbindungen kein Bogen: das Verbindungsstück wird ausgelassen, das Auto beginnt so weit vor dem Anfang der neuen Kette, wie es lang
+             ist (spurLageVor), quer und schräg wie zuletzt, und gleitet auf einer kubischen Kurve auf die Spur, 60 m und 25 m je Meter quer, höchstens 220 m, auf
+             einer Ausfahrt höchstens 90 m (FAEDELN_* , faedelnZwischen, faedelnStart, faedelnLage in Autos.ts, gewählt); Tempo dann das der Autobahn (beschleunigt mit
+             2 m/s²), vor einem Auto in der Spur bremst es wie überall; am Wankdorf im Browser hier gemessen: Einfahrten beginnen 2 bis 4 m rechts der Spur, über 115
+             bis 165 m; ohne die feinen Daten nicht angeschaut; in der Anleitung («Autos»)
+Rücklichter in «3D Schweiz» seit 2026-11-17 verschieden (Michael: «Die Rücklichter sind jetzt alle viereckig. Bitte schaue auch hier, dass bei den Autos etwas
+             Variation herrscht»): je Auto ein fester Zufall, 45 % eckig wie bisher, 15 % rund (20 cm), 20 % hoch und schmal am Rand (16 × 38 cm), 20 % ein Band über die
+             Breite mit breiteren Enden (autoHeck, autoHeckArt, HECK_* in Autos.ts, je Art des Autos und der Lichter ein eigenes Netz), gewählt, Lastwagen wie bisher;
+             im Browser nicht angeschaut
 Autos von Hand entfernen in «3D Schweiz» seit 2026-11-17 (Michael: «wenn man bei Staus oder einfach auch sonst Autos und LKWs welche in der Quere stehen manuell
              entfernen könnte. Z.B. drauftippen und dann löschen»): ein Tipp trifft das gezeichnete Auto, dessen Mitte bis 1,3 halbe Längen oder ZUG_TIPP_WINKEL neben dem Strahl
              liegt (das vorderste), färbt es gelb #ffd23f (AUTO_TIPP_LAENGE, WAHL_FARBE, gewählt), unten im Bild «Auto entfernen» oder «Lastwagen entfernen» und «Abbrechen»;
