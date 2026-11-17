@@ -204,8 +204,10 @@ export function autoRundeLichter(id: number): boolean {
   return zufall(id * 4.37 + 3.3) < RUND_SCHEINWERFER_ANTEIL
 }
 
-/** nachts vor jedem Auto ein Lichtkegel auf der Fahrbahn wie bei den Zügen: so lang und vorne so breit, Stärke, gewählt */
-export const AUTO_KEGEL_LANG_M = 28, AUTO_KEGEL_BREIT_M = 7, AUTO_KEGEL_HELL = 0.55
+/** nachts vor jedem Scheinwerfer ein Lichtkegel auf der Fahrbahn wie bei den Zügen: so lang und vorne so breit, Stärke, die Lampe so weit
+ *  innen vom Rand des Wagens; seit 2026-11-17 zwei je Auto, links und rechts, schwächer (Michael: «die Lichtkegel nicht ganz so hell und …
+ *  beide Kegel einblenden, das heißt von beiden Scheinwerfern links und rechts»; vorher einer, 7 m breit, 0,55); alles gewählt */
+export const AUTO_KEGEL_LANG_M = 26, AUTO_KEGEL_BREIT_M = 4.5, AUTO_KEGEL_HELL = 0.3, AUTO_KEGEL_INNEN_M = 0.35
 
 /** 30 % der roten Autos grau (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»), Grau gewählt */
 const ROT = new Set(['#8a1a1a', '#a8102e']), ROT_GRAU_ANTEIL = 0.3, ROT_GRAU = '#8c8c8c'

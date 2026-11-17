@@ -995,22 +995,34 @@ function helikopter(c: AudioContext, ziel: GainNode, t0: number) {
   return t0 + HELIKOPTER_DAUER_S + 120
 }
 
-/** Hupen an Autobahnen (Michael, 2026-11-10, schickte drei Aufnahmen, «Nur bei Autobahnen»): «Beeping car horn from inside car, engine off» von
- *  misperpodcast (freesound.org/s/733553), «car horn 1» von 3863 (freesound.org/s/235363), «Car Horn Honk 01 - Single, Distant» von Brett+Butter
- *  (freesound.org/s/553150), alle CC0; eine zufällig, höchstens alle HUPE_PAUSE_S Sekunden (gewählt) */
-const HUPEN = ['klang/hupe1.mp3', 'klang/hupe2.mp3', 'klang/hupe3.mp3'], HUPE_LAUT = 0.5, HUPE_PAUSE_S = 25
-let hupeBis = 0
-export function hupe(laut: number) {
+/** Hupen (Michael, 2026-11-10, schickte drei Aufnahmen, alle CC0: «Beeping car horn from inside car, engine off» von misperpodcast
+ *  (freesound.org/s/733553), «car horn 1» von 3863 (freesound.org/s/235363), «Car Horn Honk 01 - Single, Distant» von Brett+Butter
+ *  (freesound.org/s/553150)); seit 2026-11-17 kurz und lang (Michael: «Langes Hupen der Autos und LKWs, nur bei Autobahnen, bei Stau. Und kurzes
+ *  Hupen, auch auf der Autobahn oder auch bei anderen Straßen, aber dort nicht so oft»): kurz ein Stück einer Aufnahme (ein oder zwei Töne aus der
+ *  ersten, der Ton aus der dritten), lang der Dauerton der zweiten, 1,6 bis 2,7 s lang, dann ausgeblendet; Stücke in Sekunden der Aufnahme
+ *  (am Pegel gemessen), Pausen und Längen gewählt; kurz und lang je mit eigener Pause */
+const HUPE_KURZ: Array<[string, number, number]> = [['klang/hupe1.mp3', 0.5, 0.95], ['klang/hupe1.mp3', 2.3, 2.95], ['klang/hupe1.mp3', 0.5, 2.95], ['klang/hupe3.mp3', 2.1, 2.75]]
+const HUPE_LANG: [string, number, number] = ['klang/hupe2.mp3', 0.4, 3.3], HUPE_LANG_S: [number, number] = [1.6, 2.7]
+const HUPE_LAUT = 0.5, HUPE_PAUSE_S = { kurz: 25, lang: 18 }
+const hupeBis = { kurz: 0, lang: 0 }
+export function hupe(laut: number, art: 'kurz' | 'lang' = 'kurz') {
   const c = audioKontext()
-  if (!c || !stand.an || laut <= 0.01 || c.currentTime < hupeBis) return
-  hupeBis = c.currentTime + HUPE_PAUSE_S * (0.6 + 0.8 * Math.random())
-  void aufnahme(c, HUPEN[Math.floor(Math.random() * HUPEN.length)]).then((puffer) => {
+  if (!c || !stand.an || laut <= 0.01 || c.currentTime < hupeBis[art]) return
+  hupeBis[art] = c.currentTime + HUPE_PAUSE_S[art] * (0.6 + 0.8 * Math.random())
+  const [datei, von, bis] = art === 'lang' ? HUPE_LANG : HUPE_KURZ[Math.floor(Math.random() * HUPE_KURZ.length)]
+  void aufnahme(c, datei).then((puffer) => {
     if (!puffer) return
     try {
       const q = c.createBufferSource(); q.buffer = puffer
-      const g = c.createGain(); g.gain.value = HUPE_LAUT * Math.min(1, laut)
+      q.playbackRate.value = 0.96 + Math.random() * 0.08
+      const dauer = art === 'lang' ? HUPE_LANG_S[0] + Math.random() * (HUPE_LANG_S[1] - HUPE_LANG_S[0]) : bis - von
+      const t = c.currentTime, voll = HUPE_LAUT * Math.min(1, laut), aus = Math.min(0.25, dauer / 4)
+      const g = c.createGain()
+      g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(voll, t + 0.03)
+      g.gain.setValueAtTime(voll, t + dauer - aus); g.gain.linearRampToValueAtTime(0, t + dauer)
       q.connect(g).connect(ausgang(c))
-      q.start(c.currentTime)
+      q.start(t, von)
+      q.stop(t + dauer + 0.05)
     } catch { /* ohne Ton */ }
   }).catch(() => {})
 }

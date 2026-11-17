@@ -483,6 +483,9 @@ Sonntagsfahrverbot in «3D Schweiz» (Michael, 2026-11-15: «Keine LKWs am Sonnt
              (Intl, Europe/Zurich, SONNTAG_FMT) ein Sonntag, fährt kein Lastwagen, sein Platz bleibt leer (nicht durch ein Auto ersetzt); seit 2026-11-15 auch an den
              Feiertagen (Michael: «Da Feiertage gelten in der Schweiz auch als Sonntage»; fahrverbotTag: Neujahr, Karfreitag, Ostermontag, Auffahrt, Pfingstmontag, 1. August, Weihnachten,
              Stephanstag, Ostern gerechnet; Liste nach VRV Art. 91, von Michael bestätigt: «Liste stimmt so»); Ausnahmebewilligungen nicht berücksichtigt, Nachtfahrverbot nicht nachgebildet (die Zählstellen messen Schwerverkehr auch nachts); in der Anleitung («Autos»)
+Lichtkegel der Autos in «3D Schweiz» seit 2026-11-17 zwei je Auto, links und rechts vor jedem Scheinwerfer, schwächer (Michael: «bitte die Lichtkegel nicht
+             ganz so hell und, wenn es möglich ist, beide Kegel einblenden, das heißt von beiden Scheinwerfern links und rechts»): je Kegel 26 m lang, vorne 4,5 m breit,
+             Stärke 0,3, die Lampe 0,35 m innen vom Rand des Wagens (AUTO_KEGEL_* in Autos.ts, vorher einer, 28 × 7 m, 0,55), gewählt
 Licht der Autos in «3D Schweiz» seit 2026-11-17 auch am Tag (Michael: «Autos und LKWs haben auch tagsüber Licht aber dafür ohne Kegel»): Scheinwerfer und Rücklichter
              aller Autos und Lastwagen immer, der Lichtkegel weiter nur nachts
 Runde Scheinwerfer in «3D Schweiz» seit 2026-11-17 (Michael: «Kannst du bei jedem 4. Auto runde Scheinwerfer machen?»): je Auto ein fester Zufall, ein Viertel
@@ -562,6 +565,11 @@ Hupen an Autobahnen in «3D Schweiz» (Michael, 2026-11-10, schickte «Beeping c
              «car horn 1» von 3863, freesound.org/s/235363, «Car Horn Honk 01 - Single, Distant» von Brett+Butter, freesound.org/s/553150, alle CC0, dazu «Nur bei
              Autobahnen»): klang/hupe1 bis 3.mp3 (normalisiert), nur mit «Autos», bei einer Vorbeifahrt eines Autos auf getrennter Fahrbahn in 12 % der Fälle
              (AUTO_HUPE_ANTEIL), höchstens alle 15 bis 35 s (HUPE_PAUSE_S in src/audio.ts), eine der drei zufällig, gewählt
+             seit 2026-11-17 kurz und lang (Michael: «Langes Hupen der Autos und LKWs, nur bei Autobahnen, bei Stau. Und kurzes Hupen, auch auf der Autobahn oder
+             auch bei anderen Straßen, aber dort nicht so oft»): kurz ein Stück einer Aufnahme (ein oder zwei Töne aus hupe1, der Ton aus hupe3) bei einer Vorbeifahrt,
+             an Autobahnen 8 %, auf anderen Strassen 2,5 % (AUTO_HUPE_ANTEIL, STRASSE_HUPE_ANTEIL), auch beim Halten für Fussgänger; lang der Dauerton aus hupe2,
+             1,6 bis 2,7 s, nur wenn auf der Autobahn ein Auto oder Lastwagen in Hörweite über 5 s steht, je Sekunde mit 8 % (STAU_HUPE_* in Schweiz3D.tsx,
+             HUPE_KURZ, HUPE_LANG in src/audio.ts), je mit eigener Pause; alles gewählt; in der Anleitung («Geräusche»)
 Helikopter in «3D Schweiz» (Michael, 2026-11-10: «Helicopter Swirling» von Tiagorlp, freesound.org/s/693511, CC0, «Etwas seltener auch mal ein Helikopter. Rotes
              Modell das durchfliegt»): klang/helikopter.mp3 (45,4 s, am lautesten nach 26 s, gemessen), in den Feldern von 4 km und 1 km von 7 bis 21 Uhr, gut ein
              Drittel so oft wie das Flugzeug (UMGEBUNG_JE_S.helikopter), nie zugleich; zu sehen wie das Flugzeug: ein roter Helikopter (helikopterForm in
