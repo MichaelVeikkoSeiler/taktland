@@ -177,7 +177,7 @@ export function autoForm(art: AutoArt = 0): THREE.BufferGeometry {
 }
 
 /** Scheinwerfer vorne weiss, Rücklichter hinten rot, nachts (fensterNacht) als eigenes Netz ohne Licht der Szene gezeichnet; Lage gewählt */
-export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M, rund = false, doppel = false): THREE.BufferGeometry {
+export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M, rund = false, doppel = false, heck = true): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
   const lampe = (x: number, z: number, farbe: string, kreis = false, r = RUND_SCHEINWERFER_R_M) => {
     const g = (kreis
@@ -194,8 +194,41 @@ export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M, rund = fal
   for (const x of [-x0, x0]) {
     if (doppel) for (const d of [-1, 1]) lampe(x + Math.sign(x) * d * DOPPEL_ABSTAND_M / 2, lang / 2 + 0.03, '#ffffff', true, DOPPEL_R_M)
     else lampe(x, lang / 2 + 0.03, '#ffffff', rund)
-    lampe(x, -lang / 2 - 0.03, '#ff3020')
+    if (heck) lampe(x, -lang / 2 - 0.03, '#ff3020')
   }
+  const ganz = mergeGeometries(teile)!
+  teile.forEach((t) => t.dispose())
+  return ganz
+}
+
+/** Rücklichter verschieden (Michael, 2026-11-17: «Die Rücklichter sind jetzt alle viereckig. Bitte schaue auch hier, dass bei den Autos etwas Variation
+ *  herrscht»): je Auto ein fester Zufall, 0 eckig wie bisher (45 × 20 cm), 1 rund (20 cm), 2 hoch und schmal am Rand (16 × 38 cm), 3 ein Band über die
+ *  ganze Breite mit breiteren Enden; Anteile und Masse gewählt, Lastwagen wie bisher */
+export const HECK_ARTEN = 4, HECK_ANTEILE = [0.45, 0.15, 0.2, 0.2]
+export function autoHeckArt(id: number): number {
+  let r = zufall(id * 8.83 + 5.1)
+  for (let i = 0; i < HECK_ARTEN; i++) { if (r < HECK_ANTEILE[i]) return i; r -= HECK_ANTEILE[i] }
+  return 0
+}
+export function autoHeck(lang: number, breit: number, art: number): THREE.BufferGeometry {
+  const teile: THREE.BufferGeometry[] = [], z = -lang / 2 - 0.03, rot = new THREE.Color('#ff3020')
+  const dazu = (g0: THREE.BufferGeometry, x: number, y: number) => {
+    const g = g0.toNonIndexed()
+    g0.dispose(); g.deleteAttribute('uv')
+    g.translate(x / 1000, y / 1000, z / 1000)
+    const f = new Float32Array(g.attributes.position.count * 3)
+    for (let i = 0; i < f.length; i += 3) { f[i] = rot.r; f[i + 1] = rot.g; f[i + 2] = rot.b }
+    g.setAttribute('color', new THREE.BufferAttribute(f, 3))
+    teile.push(g)
+  }
+  const kasten = (b: number, h: number) => new THREE.BoxGeometry(b / 1000, h / 1000, 0.08 / 1000)
+  for (const sx of [-1, 1]) {
+    if (art === 1) dazu(new THREE.CylinderGeometry(0.1 / 1000, 0.1 / 1000, 0.08 / 1000, 16).rotateX(Math.PI / 2), sx * breit / 3, 0.75)
+    else if (art === 2) dazu(kasten(0.16, 0.38), sx * (breit / 2 - 0.14), 0.8)
+    else if (art === 3) dazu(kasten(0.3, 0.16), sx * (breit / 2 - 0.2), 0.78)
+    else dazu(kasten(0.45, 0.2), sx * breit / 3, 0.75)
+  }
+  if (art === 3) dazu(kasten(breit - 0.7, 0.06), 0, 0.78)
   const ganz = mergeGeometries(teile)!
   teile.forEach((t) => t.dispose())
   return ganz
@@ -271,6 +304,8 @@ export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: num
   msZiel?: number; wartet?: number
   /** wo es im letzten Bild gezeichnet war (Kollision), wie lange es schon vor einem anderen steht, ob es deshalb hindurch darf (dann versteckt, wo es überlappt) */
   bild?: AutoBild; steckt?: number; durch?: boolean
+  /** einfädeln (faedelnStart): auf der neuen Kette so weit quer neben der Spur (m, rechts positiv) und so schräg, gleitet über E m auf die Spur */
+  faedeln?: { q0: number; m0: number; E: number; ab: number }
   /** von Hand entfernt (antippen, «Entfernen»; Michael, 2026-11-17), bis das Feld neu geladen wird */
   entfernt?: boolean
   /** das Auto, vor dem es zuletzt bremsen musste (Stau oder gegenseitige Blockade) */
@@ -783,6 +818,61 @@ export function spurLage(kk: AutoKette, richtung: 1 | -1, spur: number, lauf: nu
   const sp = kk.art === 2 ? spurBei(kk, s) : null
   const quer = kk.art === 0 ? ((AUTO_SPUREN - 1) / 2 - spur) * AUTO_SPUR_M + p.rechts : sp ? sp[1] : kk.quer
   return { e: p.e + dn * quer + (sp ? p.dn * sp[0] : 0), n: p.n - de * quer - (sp ? p.de * sp[0] : 0), h: p.h, de, dn, bruecke: p.bruecke }
+}
+
+/**
+ * Einfädeln (Michael, 2026-11-17: «bei den Autobahnen die Autoeinfahrt zu nutzen … Aktuell wollen die Autos, wenn sie auf der Einfahrtspur sind, direkt in
+ * einer scharfen Kurve auf die Autobahn einlenken. Das führt zu Stau … vielleicht etwas abbremsen oder beschleunigen, damit sie einfädeln können»):
+ * in swissTLM3D endet eine Einfahrt nicht auf der Autobahn, ein Verbindungsstück von 4 bis 14 m führt hin (ohne eigenen Verkehr); dort bog ein Auto auf
+ * 2 m in die rechte Spur, mit 40 km/h. Seither gilt beim Wechsel zwischen Autobahn, Ein- und Ausfahrt und solchen Verbindungen kein Bogen: das Auto
+ * fährt auf der neuen Kette weiter, wo es war (ein Verbindungsstück dazwischen lässt es aus und beginnt so viel vor dem Anfang der Kette, wie
+ * es lang ist, spurLageVor), quer neben seiner Spur und so schräg wie zuletzt, und gleitet auf einer kubischen Kurve über FAEDELN_M
+ * (je Meter quer FAEDELN_JE_M mehr, höchstens FAEDELN_HOECHSTENS_M, höchstens bis vor das Ende der Kette) auf die Spur; auf einem Verbindungsstück
+ * behält es sein Tempo und beschleunigt danach auf das der Autobahn. Vor einem langsameren Auto in der Spur bremst es wie überall (korridorPlatz).
+ * Längen gewählt; wie lang die Beschleunigungsspur wirklich ist, steht in keiner unserer Quellen.
+ */
+export const FAEDELN_M = 60, FAEDELN_JE_M = 25, FAEDELN_HOECHSTENS_M = 220, FAEDELN_SCHRAEG = 0.6
+/** auf einer Ausfahrt höchstens so lang (sie biegt oft bald ab), gewählt */
+export const FAEDELN_AUS_M = 90
+/** Ein- oder Ausfahrt (eine Richtung, Breite 5 m, 60 km/h laut build_autos.py) */
+export function istRampe(kk: AutoKette): boolean {
+  const st = kk.stuecke[0].strasse
+  return kk.art === 3 && !!st && st.breite === 5 && st.kmh === 60
+}
+/** kurzes Verbindungsstück ohne eigenen Verkehr (Breite 5 m), etwa zwischen Einfahrt und Autobahn */
+export function istVerbindung(kk: AutoKette): boolean {
+  const st = kk.stuecke[0].strasse
+  return kk.art >= 2 && !!st && st.breite === 5 && kk.L < 20 && kk.tag === 0
+}
+/** gilt beim Wechsel von alt nach neu das Einfädeln statt eines Bogens? */
+export function faedelnZwischen(alt: AutoKette, neu: AutoKette): boolean {
+  if (alt.art === 0 && neu.art === 0) return false
+  const teil = (k: AutoKette) => k.art === 0 || istRampe(k) || istVerbindung(k)
+  return teil(alt) && teil(neu) && (alt.art === 0 || neu.art === 0 || istRampe(alt) || istRampe(neu))
+}
+/** Anfang des Einfädelns: das Auto war zuletzt bei (e, n) mit Richtung (de, dn); die Spur der neuen Kette bei lauf ist p */
+export function faedelnStart(p: SpurLage, e: number, n: number, de: number, dn: number, Lrest: number, ab: number): { q0: number; m0: number; E: number; ab: number } {
+  const q0 = (e - p.e) * p.dn - (n - p.n) * p.de
+  const laengs = de * p.de + dn * p.dn, quer = de * p.dn - dn * p.de
+  const m0 = laengs > 0.1 ? Math.max(-FAEDELN_SCHRAEG, Math.min(FAEDELN_SCHRAEG, quer / laengs)) : 0
+  const E = Math.max(1, Math.min(FAEDELN_HOECHSTENS_M, FAEDELN_M + FAEDELN_JE_M * Math.abs(q0), Lrest))
+  return { q0, m0, E, ab }
+}
+/** die Spur auch vor dem Anfang der Kette (lauf unter 0): gerade zurück in ihrer Richtung am Anfang */
+export function spurLageVor(kk: AutoKette, richtung: 1 | -1, spur: number, lauf: number): SpurLage | null {
+  if (lauf >= 0) return spurLage(kk, richtung, spur, lauf)
+  const p = spurLage(kk, richtung, spur, 0)
+  return p && { ...p, e: p.e + p.de * lauf, n: p.n + p.dn * lauf }
+}
+/** die Lage beim Einfädeln: p auf der Spur, s Meter seit dem Anfang */
+export function faedelnLage(p: SpurLage, f: { q0: number; m0: number; E: number }, s: number): SpurLage {
+  if (s >= f.E) return p
+  const t = Math.max(0, s) / f.E, t2 = t * t, t3 = t2 * t
+  const q = (2 * t3 - 3 * t2 + 1) * f.q0 + (t3 - 2 * t2 + t) * f.E * f.m0
+  const dq = ((6 * t2 - 6 * t) * f.q0 + (3 * t2 - 4 * t + 1) * f.E * f.m0) / f.E
+  let de = p.de + p.dn * dq, dn = p.dn - p.de * dq
+  const l = Math.hypot(de, dn); de /= l; dn /= l
+  return { e: p.e + p.dn * q, n: p.n - p.de * q, h: p.h, de, dn, bruecke: p.bruecke }
 }
 
 /** die Stelle auf dem Bogen zwischen zwei Spurlagen (t 0 bis 1) */

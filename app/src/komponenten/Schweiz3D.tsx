@@ -12,7 +12,7 @@ import { lampenBauen, LICHT_FERN, type Strassenlampen } from './Strassenlicht'
 import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_INNEN_M, AUTO_KEGEL_LANG_M, kegelArt, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, autoRundeLichter, autoDoppelLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, kmhAuf, netzBauen, weiterNach, spurLage, bogen, type SpurLage, KURVE_HALB_M,
+import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_INNEN_M, AUTO_KEGEL_LANG_M, kegelArt, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, autoRundeLichter, autoDoppelLichter, autoHeck, autoHeckArt, HECK_ARTEN, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, kmhAuf, netzBauen, weiterNach, spurLage, bogen, type SpurLage, KURVE_HALB_M, faedelnZwischen, faedelnStart, faedelnLage, FAEDELN_AUS_M, istVerbindung, spurLageVor,
   AUTO_ANFAHREN, AUTO_BREMSEN, VORTRITT_M, HALT_VOR_KREUZUNG_M, VORTRITT_HOECHSTENS_S, FOLGE_ABSTAND_M, AutoRaster, type AutoBild, korridorPlatz, ueberlappt, KORRIDOR_LUECKE_M, blockadeLoesen, lackFarbe, retuscheZurueck, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden, waldmischungLaden } from '../gelaende'
@@ -2015,7 +2015,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             liegt; so viele Autos fahren dort zur Uhrzeit der Szene, nachts weniger. Wo im Umkreis von 40 km keine Zählstelle liegt, ist die
             Menge gewählt. Wie viele davon Lastwagen sind, nennt die Zählstelle ebenfalls, je für Tag und Nacht (Anteil Schwerverkehr; ohne Zählstelle gewählt 6 %).
             Die Autos und Lastwagen selbst sind erfunden: Gestalt (etwa jedes fünfte Auto ein SUV, jedes sechste ein Kleinwagen, jedes sechste ein Kombi, jedes fünfzehnte ein Pick-up, jedes zwanzigste ein Sportwagen, jedes fünfundzwanzigste ein Minibus, von Mai bis September jedes sechste der übrigen ein Cabriolet, nach Zufall verteilt), Farbe, Spur und Tempo (rechts 85 km/h, dort fahren alle Lastwagen, links 115 km/h, auf Autostrassen ohne Trennung 80 km/h),
-            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Deren Achse liegt dort meist nahe am Mittelstreifen; liegt die Gegenfahrbahn bis 8 m daneben, fahren beide Spuren rechts davon. Wie viele Spuren eine Autobahn hat, steht in keiner unserer Quellen, auf breiten Autobahnen bleibt die rechte Spur darum leer. Ein Tipp auf ein Auto oder einen Lastwagen färbt es gelb, «Entfernen» darunter nimmt es weg, etwa aus einem Stau; bis das Feld neu geladen wird. Scheinwerfer und Rücklichter leuchten auch am Tag, bei jedem vierten Auto mit runden Scheinwerfern, bei gut einem Drittel der Kleinwagen (etwa jedem 17. Auto) mit je zwei runden auf jeder Seite, nachts dazu vor jedem Scheinwerfer ein Lichtkegel, je Auto etwas länger oder kürzer, heller oder dunkler, wärmer oder kühler (gewählt). Im Tunnel sind
+            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Deren Achse liegt dort meist nahe am Mittelstreifen; liegt die Gegenfahrbahn bis 8 m daneben, fahren beide Spuren rechts davon. Wie viele Spuren eine Autobahn hat, steht in keiner unserer Quellen, auf breiten Autobahnen bleibt die rechte Spur darum leer. Von einer Einfahrt fädelt ein Auto von rechts über gut 100 m in die rechte Spur ein und beschleunigt dabei; wie lang die Beschleunigungsspur wirklich ist, steht in keiner unserer Quellen, die Länge ist gewählt. Ein Tipp auf ein Auto oder einen Lastwagen färbt es gelb, «Entfernen» darunter nimmt es weg, etwa aus einem Stau; bis das Feld neu geladen wird. Scheinwerfer und Rücklichter leuchten auch am Tag, bei jedem vierten Auto mit runden Scheinwerfern, bei gut einem Drittel der Kleinwagen (etwa jedem 17. Auto) mit je zwei runden auf jeder Seite, Rücklichter eckig, rund, hoch und schmal oder als Band über die ganze Breite, nachts dazu vor jedem Scheinwerfer ein Lichtkegel, je Auto etwas länger oder kürzer, heller oder dunkler, wärmer oder kühler (gewählt). Im Tunnel sind
             sie nicht zu sehen. Solange der Knopf an ist, sind die stehenden Autos auf dem Luftbild weggemalt: Jeder Bildpunkt auf der Fahrbahn
             nimmt die mittlere Farbe der Fahrbahn davor und danach. Unterbrochene Linien werden dabei blasser, im Stau bleiben Autos stehen.</p>
           <p>Auf den übrigen Strassen (Haupt- und Nebenstrassen, Ein- und Ausfahrten) gibt es keine Zählung für jedes Stück. Dort gilt das
@@ -7009,6 +7009,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // SUV und Pick-up je ein eigenes Netz (Index 1 und 2; 0 ist netz und lichter oben)
     const artNetz: THREE.InstancedMesh[] = [], artLichter: THREE.InstancedMesh[] = [], artRund: THREE.InstancedMesh[] = []
     let kleinDoppel: THREE.InstancedMesh | null = null
+    const heckNetz: THREE.InstancedMesh[] = []
     let lkwNetz: THREE.InstancedMesh | null = null, lkwLichter: THREE.InstancedMesh | null = null
     let schritt: (() => void) | null = null, fussAufraeumen: (() => void) | null = null
     void autosLaden(e0, n0, e1, n1).catch(() => null).then((d) => {
@@ -7078,8 +7079,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       netz = new THREE.InstancedMesh(autoForm(), stoff, hoechstens)
       netz.count = 0; netz.castShadow = true; netz.receiveShadow = false; netz.frustumCulled = false
       // die Farbe je Auto fest, einmal gerechnet
-      const farben: THREE.Color[] = [], lkwFarben: THREE.Color[] = [], arten: AutoArt[] = [], cabrios: boolean[] = [], runde: boolean[] = [], doppel: boolean[] = []
-      for (const kk of ketten.values()) for (const a of kk.autos) { farben.push(lackFarbe(a.farbe)); lkwFarben.push(lkwFarbe(a.farbe)); arten.push(autoArt(a.farbe)); cabrios.push(autoCabrio(a.farbe)); runde.push(autoRundeLichter(a.farbe)); doppel.push(autoDoppelLichter(a.farbe)); a.farbe = farben.length - 1 }
+      const farben: THREE.Color[] = [], lkwFarben: THREE.Color[] = [], arten: AutoArt[] = [], cabrios: boolean[] = [], runde: boolean[] = [], doppel: boolean[] = [], heckArten: number[] = []
+      for (const kk of ketten.values()) for (const a of kk.autos) { farben.push(lackFarbe(a.farbe)); lkwFarben.push(lkwFarbe(a.farbe)); arten.push(autoArt(a.farbe)); cabrios.push(autoCabrio(a.farbe)); runde.push(autoRundeLichter(a.farbe)); doppel.push(autoDoppelLichter(a.farbe)); heckArten.push(autoHeckArt(a.farbe)); a.farbe = farben.length - 1 }
       // weiterfahren über Kreuzungen und Kreisel (weiterNach in Autos.ts; Michael, 2026-11-16): je Auto sein Platz am Anfang, das Netz der Enden
       const autoNetz = netzBauen(ketten.values()), alleAutos: AutoPlatz[] = []
       for (const kk of ketten.values()) for (const a of kk.autos) { a.heim = { kk, richtung: a.richtung, spur: a.spur, ms: a.ms }; alleAutos.push(a) }
@@ -7130,15 +7131,15 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const n = new THREE.InstancedMesh(autoForm(art), stoff, hoechstens)
         n.count = 0; n.castShadow = true; n.receiveShadow = false; n.frustumCulled = false
         gruppe.add(n); artNetz[art] = n
-        const l = new THREE.InstancedMesh(autoLichter(AUTO_ART_LANG_M[art], AUTO_ART_BREIT_M[art]), lichtStoff, hoechstens)
+        const l = new THREE.InstancedMesh(autoLichter(AUTO_ART_LANG_M[art], AUTO_ART_BREIT_M[art], false, false, false), lichtStoff, hoechstens)
         l.count = 0; l.frustumCulled = false
         gruppe.add(l); artLichter[art] = l
-        const r = new THREE.InstancedMesh(autoLichter(AUTO_ART_LANG_M[art], AUTO_ART_BREIT_M[art], true), lichtStoff, hoechstens)
+        const r = new THREE.InstancedMesh(autoLichter(AUTO_ART_LANG_M[art], AUTO_ART_BREIT_M[art], true, false, false), lichtStoff, hoechstens)
         r.count = 0; r.frustumCulled = false
         gruppe.add(r); artRund[art] = r
       }
       // Kleinwagen mit je zwei runden Scheinwerfern (autoDoppelLichter in Autos.ts; Michael, 2026-11-17)
-      kleinDoppel = new THREE.InstancedMesh(autoLichter(AUTO_ART_LANG_M[3], AUTO_ART_BREIT_M[3], true, true), lichtStoff, hoechstens)
+      kleinDoppel = new THREE.InstancedMesh(autoLichter(AUTO_ART_LANG_M[3], AUTO_ART_BREIT_M[3], true, true, false), lichtStoff, hoechstens)
       kleinDoppel.count = 0; kleinDoppel.frustumCulled = false
       gruppe.add(kleinDoppel)
       // Lastwagen (Michael, 2026-11-10: «Bitte auch LKWs einfügen»): nur auf der rechten Spur, so viele wie der Anteil Schwerverkehr laut ASTRA
@@ -7149,13 +7150,19 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       lkwLichter.count = 0; lkwLichter.frustumCulled = false
       gruppe.add(lkwLichter)
       // Scheinwerfer und Rücklichter, auch am Tag
-      lichter = new THREE.InstancedMesh(autoLichter(), lichtStoff, hoechstens)
+      lichter = new THREE.InstancedMesh(autoLichter(undefined, undefined, false, false, false), lichtStoff, hoechstens)
       lichter.count = 0; lichter.frustumCulled = false
       gruppe.add(lichter)
       // runde Scheinwerfer bei jedem 4. Auto (autoRundeLichter in Autos.ts)
-      lichterRund = new THREE.InstancedMesh(autoLichter(undefined, undefined, true), lichtStoff, hoechstens)
+      lichterRund = new THREE.InstancedMesh(autoLichter(undefined, undefined, true, false, false), lichtStoff, hoechstens)
       lichterRund.count = 0; lichterRund.frustumCulled = false
       gruppe.add(lichterRund)
+      // Rücklichter je Art des Autos und Art der Lichter (autoHeck in Autos.ts; Michael, 2026-11-17)
+      for (let art = 0; art < AUTO_ART_LANG_M.length; art++) for (let t = 0; t < HECK_ARTEN; t++) {
+        const hm = new THREE.InstancedMesh(autoHeck(AUTO_ART_LANG_M[art], AUTO_ART_BREIT_M[art], t), lichtStoff, hoechstens)
+        hm.count = 0; hm.frustumCulled = false
+        gruppe.add(hm); heckNetz[art * HECK_ARTEN + t] = hm
+      }
       kegel = new THREE.InstancedMesh(kegelGeo, kegelStoff, 2 * hoechstens)
       kegel.count = 0; kegel.frustumCulled = false; kegel.renderOrder = 2
       gruppe.add(kegel)
@@ -7257,6 +7264,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         sichtbar.length = 0
         const artZahl = [0, 0, 0, 0, 0, 0, 0, 0], artRundZahl = [0, 0, 0, 0, 0, 0, 0, 0]
         let doppelZahl = 0
+        const heckZahl = heckNetz.map(() => 0)
         let rundZahl = 0
         // von Mai bis September (Monat der Szene, Schweizer Zeit genähert mit UTC + 1 h) fährt ein Teil der Autos offen
         const monat = new Date(ms + 3600_000).getUTCMonth(), sommer = monat >= 4 && monat <= 8
@@ -7323,7 +7331,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if (sprung || !a.kk) {
             a.kk = h.kk; a.richtung = h.richtung; a.spur = h.spur; a.ms = h.ms; a.msZiel = h.ms; a.abgebogen = 0
             a.lauf = (((a.s0 + h.ms * sek) % h.kk.L) + h.kk.L) % h.kk.L
-            a.nach = undefined; a.von = undefined; a.kurveH = 0; a.wartet = 0
+            a.nach = undefined; a.von = undefined; a.kurveH = 0; a.wartet = 0; a.faedeln = undefined
             a.bild = undefined; a.steckt = 0; a.durch = false
             verzug.delete(a)
           } else {
@@ -7347,28 +7355,45 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             // kurz vor dem Ende wählen, wohin es weiterfährt, damit es im Bogen abbiegen kann
             if (a.nach === undefined && a.lauf >= a.kk!.L - Math.min(KURVE_HALB_M, a.kk!.L / 2)) {
               a.nach = weiterNach(autoNetz, a, a.kk!, a.richtung)
-              a.kurveH = a.nach ? Math.min(KURVE_HALB_M, a.kk!.L / 2, a.nach.kk.L / 2) : 0
+              a.kurveH = a.nach && !faedelnZwischen(a.kk!, a.nach.kk) ? Math.min(KURVE_HALB_M, a.kk!.L / 2, a.nach.kk.L / 2) : 0
             }
             for (let i = 0; i < 4 && a.lauf >= a.kk!.L; i++) {
-              const rest: number = a.lauf - a.kk!.L, w: { kk: AutoKette; richtung: 1 | -1 } | null = a.nach !== undefined ? a.nach : weiterNach(autoNetz, a, a.kk!, a.richtung)
+              const rest: number = a.lauf - a.kk!.L
+              let w: { kk: AutoKette; richtung: 1 | -1 } | null = a.nach !== undefined ? a.nach : weiterNach(autoNetz, a, a.kk!, a.richtung)
               if (import.meta.env.VITE_S3D_TEST && !w) {
                 const en = a.kk!.enden, z = window as unknown as { s3dOffen?: Array<[number, number, number, number]> }
                 if (en) { const e = a.richtung === 1 ? en[2] : en[0], n = a.richtung === 1 ? en[3] : en[1]; if (drin(e, n)) (z.s3dOffen ??= []).push([Math.round(e), Math.round(n), a.kk!.art, a.richtung]) }
                 else (z.s3dOffen ??= []).push([0, 0, a.kk!.art, a.richtung])
               }
+              let vor = 0
+              // Einfädeln: ein kurzes Verbindungsstück zwischen Einfahrt und Autobahn (oder Autobahn und Ausfahrt) auslassen
+              if (w && istVerbindung(w.kk) && faedelnZwischen(a.kk!, w.kk)) {
+                const w2 = weiterNach(autoNetz, a, w.kk, w.richtung)
+                if (w2 && !istVerbindung(w2.kk) && faedelnZwischen(w.kk, w2.kk)) { vor = w.kk.L; w = w2 }
+              }
               if (w) {
-                a.von = { kk: a.kk!, richtung: a.richtung, spur: a.spur }
+                const alt = a.kk!, faedeln = faedelnZwischen(alt, w.kk)
+                a.von = faedeln ? undefined : { kk: a.kk!, richtung: a.richtung, spur: a.spur }
+                if (faedeln) a.kurveH = 0
                 a.kk = w.kk; a.richtung = w.richtung
                 if (w.kk.art !== 0) a.spur = 0
-                a.msZiel = h.ms * kmhAuf(w.kk, a.spur) / kmhAuf(h.kk, h.spur)
+                // auf einem kurzen Verbindungsstück das Tempo behalten, sonst das der neuen Kette (Einfädeln, Autos.ts)
+                if (!(faedeln && istVerbindung(w.kk))) a.msZiel = h.ms * kmhAuf(w.kk, a.spur) / kmhAuf(h.kk, h.spur)
+                a.faedeln = undefined
+                if (faedeln && a.bild) {
+                  const ab = Math.max(0, rest) - vor, p = spurLageVor(w.kk, w.richtung, a.spur, ab)
+                  if (p) a.faedeln = faedelnStart(p, a.bild.e, a.bild.n, a.bild.de, a.bild.dn, Math.min(w.kk.L - ab - 1, w.kk.art === 0 ? Infinity : FAEDELN_AUS_M), ab)
+                  if (import.meta.env.VITE_S3D_TEST && a.faedeln) { const z = window as unknown as { s3dFaedeln?: number[][] }; (z.s3dFaedeln ??= []).push([Math.round(a.faedeln.q0 * 10) / 10, Math.round(a.faedeln.m0 * 100) / 100, Math.round(a.faedeln.E), w.kk.art]) }
+                }
               } else {
+                a.faedeln = undefined
                 a.kk = h.kk; a.richtung = h.richtung; a.spur = h.spur; a.ms = h.ms; a.msZiel = h.ms; a.von = undefined; a.kurveH = 0
               }
               if (import.meta.env.VITE_S3D_TEST) { const z = window as unknown as { s3dWeiter?: number[] }; z.s3dWeiter ??= [0, 0]; z.s3dWeiter[w ? 0 : 1]++ }
               a.abgebogen = (a.abgebogen ?? 0) + 1
               a.nach = undefined; a.wartet = 0
               // ein Rückstand im Stau bleibt erhalten
-              a.lauf = rest - (verzug.get(a)?.v ?? 0)
+              a.lauf = rest - vor - (verzug.get(a)?.v ?? 0)
               verzug.delete(a)
             }
             if (a.von && a.lauf > (a.kurveH ?? 0)) a.von = undefined
@@ -7414,8 +7439,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               const p0 = spurLage(a.von.kk, a.von.richtung, a.von.spur, a.von.kk.L - H), p2 = spurLage(kk, a.richtung, a.spur, H)
               p = p0 && p2 ? bogen(p0, p2, 0.5 + Math.max(0, lauf) / (2 * H), H) : null
             }
-            p ??= spurLage(kk, a.richtung, a.spur, lauf)
+            p ??= a.faedeln ? spurLageVor(kk, a.richtung, a.spur, lauf) : spurLage(kk, a.richtung, a.spur, lauf)
             if (!p) continue
+            if (a.faedeln) { if (lauf >= a.faedeln.ab + a.faedeln.E) a.faedeln = undefined; else p = faedelnLage(p, a.faedeln, lauf - a.faedeln.ab) }
             const { e, n, de, dn } = p
             if (!drin(e, n)) continue
             const bild: AutoBild = { a, e, n, de, dn, lang, breit: lkw ? LKW_BREIT_M : AUTO_ART_BREIT_M[art] }
@@ -7439,6 +7465,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               if (innerorts && !verzug.has(a) && Math.hypot(e - zielE, n - zielN) < HALT_NAH_M) kandidaten.push({ kk, a, lauf, lang })
             }
             // Scheinwerfer und Rücklichter auch am Tag, der Lichtkegel nur nachts (Michael, 2026-11-17)
+            // Rücklichter je Art (autoHeck); Lastwagen haben ihre im eigenen Netz
+            if (!lkw) { const hi = art * HECK_ARTEN + heckArten[a.farbe]; if (heckZahl[hi] < hoechstens) heckNetz[hi].setMatrixAt(heckZahl[hi]++, m) }
             if (lkw) lkwLichter!.setMatrixAt(lkwZahl, m)
             else if (art === 3 && doppel[a.farbe]) kleinDoppel!.setMatrixAt(doppelZahl++, m)
             else if (runde[a.farbe]) { if (art) artRund[art].setMatrixAt(artRundZahl[art]++, m); else lichterRund!.setMatrixAt(rundZahl++, m) }
@@ -7482,6 +7510,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         lichter!.count = zahl - rundZahl; lichter!.instanceMatrix.needsUpdate = true
         lichterRund!.count = rundZahl; lichterRund!.instanceMatrix.needsUpdate = true
         kleinDoppel!.count = doppelZahl; kleinDoppel!.instanceMatrix.needsUpdate = true
+        heckNetz.forEach((hm, i) => { hm.count = heckZahl[i]; hm.instanceMatrix.needsUpdate = true })
         for (const art of AUTO_ARTEN) {
           const n = artNetz[art], l = artLichter[art]
           n.count = artZahl[art]; n.instanceMatrix.needsUpdate = true
@@ -7505,7 +7534,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (netz) { netz.geometry.dispose(); netz.dispose() }
       if (lichter) { lichter.geometry.dispose(); lichter.dispose() }
       if (lichterRund) { lichterRund.geometry.dispose(); lichterRund.dispose() }
-      for (const x of [lkwNetz, lkwLichter, kleinDoppel, ...artNetz, ...artLichter, ...artRund]) if (x) { x.geometry.dispose(); x.dispose() }
+      for (const x of [lkwNetz, lkwLichter, kleinDoppel, ...heckNetz, ...artNetz, ...artLichter, ...artRund]) if (x) { x.geometry.dispose(); x.dispose() }
       kegelStoff.map?.dispose(); kegelStoff.dispose(); kegelGeo.dispose(); kegel?.dispose()
       fussAufraeumen?.()
       for (const r of retuschiert) { retuscheZurueck(r.ctx, r.liste); bildNeu(r.bild) }
