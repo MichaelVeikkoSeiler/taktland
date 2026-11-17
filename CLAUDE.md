@@ -492,6 +492,11 @@ Spuren der Autobahnen in «3D Schweiz» seit 2026-11-17 rechts des Mittelstreife
              nachgemessen, am Luftbild von data/scharf bestätigt); die zwei Spuren lagen je zur Hälfte links und rechts der Achse, die linke also im Mittelstreifen; seither liegt die
              linke 0,6 m rechts der Achse, wo die Gegenfahrbahn bis 8 m links liegt, ab 14 m wie vorher, dazwischen gleitend (spurenRechts, MITTEL_* in Autos.ts, in der App beim
              Laden gerechnet, gewählt); die Zahl der Spuren steht in keiner Quelle, auf breiten Autobahnen bleibt die rechte leer; in der Anleitung («Autos»)
+Autos von Hand entfernen in «3D Schweiz» seit 2026-11-17 (Michael: «wenn man bei Staus oder einfach auch sonst Autos und LKWs welche in der Quere stehen manuell
+             entfernen könnte. Z.B. drauftippen und dann löschen»): ein Tipp trifft das gezeichnete Auto, dessen Mitte bis 1,3 halbe Längen oder ZUG_TIPP_WINKEL neben dem Strahl
+             liegt (das vorderste), färbt es gelb #ffd23f (AUTO_TIPP_LAENGE, WAHL_FARBE, gewählt), unten im Bild «Auto entfernen» oder «Lastwagen entfernen» und «Abbrechen»;
+             entfernt (AutoPlatz.entfernt) fährt es nicht mehr und zählt nicht für Stau und Vortritt, bis das Feld neu geladen wird; ein Tipp daneben oder 30 Bilder ohne es nehmen
+             die Wahl zurück (wenn.auto in treffen); nicht in der Brille, nicht für «Zu zweit»; im Browser hier bei Köniz geprüft; in der Anleitung («Autos»)
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach

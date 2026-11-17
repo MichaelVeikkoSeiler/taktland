@@ -246,6 +246,8 @@ export interface AutoPlatz { richtung: 1 | -1; spur: number; ms: number; s0: num
   msZiel?: number; wartet?: number
   /** wo es im letzten Bild gezeichnet war (Kollision), wie lange es schon vor einem anderen steht, ob es deshalb hindurch darf (dann versteckt, wo es überlappt) */
   bild?: AutoBild; steckt?: number; durch?: boolean
+  /** von Hand entfernt (antippen, «Entfernen»; Michael, 2026-11-17), bis das Feld neu geladen wird */
+  entfernt?: boolean
   /** das Auto, vor dem es zuletzt bremsen musste (Stau oder gegenseitige Blockade) */
   vor?: AutoPlatz
   heim?: { kk: AutoKette; richtung: 1 | -1; spur: number; ms: number } }
