@@ -2205,7 +2205,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               einem Gleis laut swissTLM3D; bisher nur entlang der Strecken von Müntschemier über Bern und Biel/Bienne nach Neuchâtel.</li>
             <li>Masten der Fahrleitung in den Feldern von 4 km und 1 km: Lage, Abstand (alle 50 m, 3 m neben dem Gleis), Höhe und Gestalt sind erfunden,
               belegt ist nur, dass die Strecke elektrifiziert ist. Ebenso Fahrdraht und Tragseil darüber: Höhe, Durchhang und Hänger sind gewählt, und
-              ob ein einzelnes Gleis elektrifiziert ist, steht in keiner unserer Quellen. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren.</li>
+              ob ein einzelnes Gleis elektrifiziert ist, steht in keiner unserer Quellen. Die Züge rücken dort auf die nächste Gleisachse, das ist nicht immer das Gleis, auf dem sie wirklich fahren. Sie bleiben auf einem Gleis, bis ihre Spur mehr als 3 m davon abweicht, und wechseln dann in einer S-Kurve über gut 120 m; Weichen stehen in keiner unserer Quellen, wo und wie ein Zug das Gleis wechselt, ist gewählt.</li>
             <li>Brücken in den Feldern von 4 km und 1 km: belegt sind Lage und Höhe und bei Bahnbrücken, wie viele Gleise nebeneinander liegen. Breite (bei
               Strassen ohne Angabe in der Klasse), Querschnitt mit Schotter, Belag und Brüstungen und das gemalte Aussehen sind gewählt, gleich wie im
               Führerstand von Taktland; Pfeiler fehlen, Stücke unter 12 m fehlen. Der Belag der Strassenbrücken hat die Farbe der Strasse an ihren
@@ -2407,11 +2407,6 @@ const STEHEN_AUGE_M = 1.7, STEHEN_DREH_KM = 0.00001, STEHEN_NAH_KM = 0.0001, STE
 /** die vordere Schnittebene der Kamera: höchstens 10 m, nah am Boden die Hälfte der Höhe darüber, mindestens 0,5 m (sonst fehlt der Boden vor
  *  dem Auge); gewählt */
 const KAMERA_NAH_KM = 0.01, KAMERA_NAH_MIN_KM = 0.0005
-/** so weit knickt ein Wagen gegen den davor (etwa ein Wagen von 33 m in einem Bogen von 150 m) und so weit steht er schräg zum Weg
- *  (gewählt; Michael, 2026-11-06: «Völlig verbogen. Sieht sonst nach Unfall aus»; schräg bis 2026-11-07 25°, Michael: «nicht gerade auf einem Gleis») */
-const ZUG_KNICK = (15 * Math.PI) / 180, ZUG_SCHRAEG = (8 * Math.PI) / 180
-/** so weit sucht das hintere Ende eines Wagens die Achse des Gleises, auf dem sein vorderes Ende liegt (gewählt; ein Nachbargleis liegt 4 bis 5 m daneben) */
-const ZUG_GLEIS_FOLGEN_M = 2.5
 /** Fahrbahnen im Luftbild messen nur, wo es mindestens so viele Bildpunkte je m hat (im Feld von 1 km; im Feld von 4 km mit 2,5 m je Punkt ergab die Probe bei Naters fast nichts), gewählt */
 const MESS_PX_JE_M = 1
 /** Schiebetüren: Farbe der Öffnung und des Türblatts, höchstens so viele offene Türen zugleich (gewählt) */
@@ -2436,7 +2431,10 @@ const ZUG_SPUR = 1.1, ZUG_SPUR_ANLAUF_M = 600, ZUG_SPUR_GERADE_M = 200
 const BRUECKE_DICKE_M = 1.6, BRUECKE_GLEIS_UNTER_M = 0.5
 /** so weit neben einer Gleisachse darf ein Zug mit seinem Versatz zur Spur liegen, sonst rückt er zum Weg zurück (m, gewählt; Gleise liegen etwa
  *  4,5 m auseinander) */
-const ZUG_IM_FELD_M = 5
+const ZUG_IM_FELD_M = 8
+/** Lage der Züge quer zum Weg (zugQuer): Raster, Median, Breite des Gleiswechsels und der Höhe je Seite, in m Weg (Michael, 2026-11-17: «frühzeitig,
+ *  vielleicht 100 oder 200 Meter früher»), gewählt */
+const ZUG_GLEIS_BLEIBT_M = 3, ZUG_GLEIS_SPUR_M = 2.5, ZUG_QUER_ALT_MS = 3000, ZUG_EINRASTEN_M = [0.5, 2.5], ZUG_ANSCHLUSS_M = 300, ZUG_QUER_RASTER_M = 10, ZUG_QUER_MEDIAN_M = 40, ZUG_QUER_WECHSEL_M = 60, ZUG_QUER_HOEHE_M = 30
 /** ein Mast der Fahrleitung so nah an einer Gleisachse auf einer Brücke steht auf ihr (m, gewählt) */
 const MAST_AUF_BRUECKE_M = 6
 /** freie Spuren zum Ausweichen der Reihe nach (in ZUG_SPUR) und wie schnell ein Zug hingleitet, gewählt */
@@ -6065,6 +6063,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         gleisNetz = netz
       }).catch(() => {})
     }
+    /** je Zug, Abschnitt und Stelle im Raster die Lage quer zum Weg und die Höhe, roh (zugQuer), damit sie nicht jedes Bild neu gesucht werden */
+    const querCache = new Map<string, [number, number, number, number, number]>()
     /** der nächste Punkt einer Gleisachse bis ZUG_GLEIS_SUCHE_M, mit Höhe und ob sie im Tunnel liegt; die Stücke sind höchstens 20 m lang, darum genügt der Umkreis */
     const gleisBei = (e: number, n: number, de: number, dn: number, weit = ZUG_GLEIS_SUCHE_M): [number, number, number, boolean] | null => {
       if (!gleisNetz) return null
@@ -6194,27 +6194,36 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // kehrt der Zug am Halt um (Kopfbahnhof, Michael, 2026-10-29: «die roten Lichter vorne in Fahrtrichtung»), lägen die Wagen hinter der
         // Lok auf dem Weg davor, also vor ihr auf demselben Gleis, und der Steuerwagen führte; dann steht der ganze Zug auf dem Weg danach, die
         // Lok eine Zuglänge weiter (eine Annahme: wie der Zug wirklich wendet, steht in keiner Quelle)
+        let wendet = false
         if (vorher && sM < ZUG_GANZ_M * mass * gross.x) {
           const r = (a: { lat: number; lon: number }, z: { lat: number; lon: number }) => { const [e0, n0] = lv95(a.lat, a.lon), [e1, n1] = lv95(z.lat, z.lon); return [e1 - e0, n1 - n0] }
           const [ae, an] = r(lageBei(fw, 0), lageBei(fw, Math.min(ende, 60)))
           const ve = wegEnde(vorher), [be, bn] = r(lageBei(vorher, Math.max(0, ve - 60)), lageBei(vorher, ve))
-          if ((ae * be + an * bn) < -0.5 * Math.hypot(ae, an) * Math.hypot(be, bn)) sM = Math.min(ende, ZUG_GANZ_M * mass * gross.x)
+          if ((ae * be + an * bn) < -0.5 * Math.hypot(ae, an) * Math.hypot(be, bn)) { sM = Math.min(ende, ZUG_GANZ_M * mass * gross.x); wendet = true }
         }
         // hinter den Zügen davor auf demselben Gleis, je eine Zuglänge und eine Lücke
         sM -= (hintereinander.get(u.f.id) ?? 0) * (ZUG_GANZ_M + ZUG_LUECKE_M) * mass * gross.x
         const imTunnel = (sm: number) => {
           if (sm >= 0) return fw.tunnel.some(([a, z]) => sm >= a && sm <= z)
-          if (!vorher) return false
+          if (!vorher || wendet) return false
           const sv = wegEnde(vorher) + sm
           return vorher.tunnel.some(([a, z]) => sv >= a && sv <= z)
         }
+        // der Weg davor endet nicht immer dort, wo dieser beginnt (am Halt verschiedene Punkte des Bahnhofs, in Bern bis 70 m auseinander): die Wagen
+        // hinter der Lok lagen dann weit weg, dazwischen ein Sprung (Michael, 2026-11-17: «im Zickzack»); darum wird der Weg davor um den Unterschied
+        // verschoben, an seinem Ende ganz, ZUG_ANSCHLUSS_M davor nicht mehr (gewählt)
+        let anschlussE = 0, anschlussN = 0
+        if (vorher) {
+          const a0 = lageBei(fw, 0), z0 = lageBei(vorher, wegEnde(vorher)), [ae0, an0] = lv95(a0.lat, a0.lon), [ze0, zn0] = lv95(z0.lat, z0.lon)
+          anschlussE = ae0 - ze0; anschlussN = an0 - zn0
+        }
         const stelle = (sm: number): [number, number] => {
           if (sm >= 0) { const p = lageBei(fw, Math.min(sm, ende)); return lv95(p.lat, p.lon) }
-          if (!vorher) return geradeZurueck(fw, sm)
-          const sv = wegEnde(vorher) + sm
-          if (sv < 0) return geradeZurueck(vorher, sv)
-          const p = lageBei(vorher, sv)
-          return lv95(p.lat, p.lon)
+          // wendet der Zug, zeigt der Weg davor in die Gegenrichtung; die Linie quer zum Weg (zugQuer) mischte sonst beide Richtungen
+          if (!vorher || wendet) return geradeZurueck(fw, sm)
+          const sv = wegEnde(vorher) + sm, f = Math.max(0, 1 + sm / ZUG_ANSCHLUSS_M)
+          const [pe, pn] = sv < 0 ? geradeZurueck(vorher, sv) : (() => { const p = lageBei(vorher, sv); return lv95(p.lat, p.lon) })()
+          return [pe + anschlussE * f, pn + anschlussN * f]
         }
         const [es, ns] = stelle(sM)
         const mJeM = mass * gross.x
@@ -6239,21 +6248,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               })())
           }
           ab += lM + ZUG_LUECKE_M * mJeM
-        }
-        // ein Versatz für den ganzen Zug: der Median der Versätze quer zum Weg, mit denen die Enden auf ihre Achse rückten; sonst rastet im
-        // Gleisfeld jeder Wagen auf ein anderes Gleis (Michael, 2026-10-30, vor Zürich HB: «noch viele Kurven, Zickzackfahrten»)
-        {
-          const quer: number[] = []
-          const normale = enden.map((x) => {
-            const [e2, n2] = stelle(x.s - 10), dl = Math.hypot(x.er - e2, x.nr - n2) || 1
-            return [-(x.nr - n2) / dl, (x.er - e2) / dl]
-          })
-          enden.forEach((x, i) => { if (x.e !== x.er || x.n !== x.nr) quer.push((x.e - x.er) * normale[i][0] + (x.n - x.nr) * normale[i][1]) })
-          if (quer.length) {
-            quer.sort((a, z) => a - z)
-            const med = quer[quer.length >> 1]
-            enden.forEach((x, i) => { x.e = x.er + normale[i][0] * med; x.n = x.nr + normale[i][1] * med })
-          }
         }
         const fenster = ZUG_GLATT_M * mJeM
         // die Spur im Bahnhof: am Halt ganz, davor und danach gleitend (ZUG_SPUR_ANLAUF_M), dazwischen ZUG_LINKS
@@ -6321,61 +6315,128 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           }
           return [be + oe, bn + on, null]
         }
+        // der Versatz quer zum Weg an der Stelle s (links positiv): im Bahnhof die Spur des Gleises, sonst ZUG_LINKS, dazu das Ausweichen
+        const versatzBei = (s: number, le: number, ln: number) => {
+          const [gA, gB] = anteile(s)
+          const spur = (gA ? gA * seiteBei(h[j].abk, le, ln) * spurM(h[j].abk, h[j].gleis, spurA!, anfang!) : 0)
+            + (gB ? gB * seiteBei(h[j + 1].abk, le, ln) * spurM(h[j + 1].abk, h[j + 1].gleis, spurB!, schluss!) : 0)
+          return mass * gross.x * 1000 * (ZUG_MASS_BREITE * ZUG_LINKS * (1 - gA - gB) + ZUG_BREITE * ZUG_SPUR * aus) + spur
+        }
+        // Lage quer zum Weg als eine Linie für den ganzen Zug (Michael, 2026-11-17: «Die Züge mit den einzelnen Wagen sind manchmal etwas im Zickzack
+        // unterwegs … ziemlich geradlinig fahren und wenn sie eine Gleisänderung machen müssen, diese nicht mit scharfen Kurven machen, sondern
+        // frühzeitig, vielleicht 100 oder 200 Meter früher»): bisher suchte jedes Wagenende für sich die nächste Gleisachse, zwischen zwei Gleisen sprang
+        // es hin und her. Jetzt je ZUG_QUER_RASTER_M Weg die Stelle wie bisher (Achse, Spur im Bahnhof, Gleisfeld), daraus der Abstand quer zum Weg,
+        // davon der Median über ±ZUG_QUER_MEDIAN_M (ein einzelner Sprung auf ein Nachbargleis fällt weg) und das Mittel mit Dreiecksgewicht über
+        // ±ZUG_QUER_WECHSEL_M (ein Gleiswechsel verteilt sich so über etwa 2 · ZUG_QUER_WECHSEL_M, als S-Kurve); jedes Wagenende liegt auf dieser Linie
+        // an seiner Stelle, so folgen die Wagen der Lok wie über eine Weiche; die Höhe der Achse ebenso gemittelt über ±ZUG_QUER_HOEHE_M
+        const rohQuer = (k: number): [number, number, number, number] => {
+          const schl = `${u.f.id}|${j}|${k}|${Math.round(aus * 20)}|${Math.round(mJeM * 200)}|${vorher ? 1 : 0}${wendet ? 1 : 0}`
+          // nach ZUG_QUER_ALT_MS neu: die Gleise eines Bahnhofs (spurM) laden erst nach und nach
+          const alt = querCache.get(schl), jetztMs = performance.now()
+          if (alt && jetztMs - alt[2] < ZUG_QUER_ALT_MS) return [alt[0], alt[1], alt[3], alt[4]]
+          const s0 = k * ZUG_QUER_RASTER_M
+          const [pe, pn] = stelle(s0), [pe2, pn2] = stelle(s0 - 10), dl = Math.hypot(pe - pe2, pn - pn2) || 1
+          const de = (pe - pe2) / dl, dn = (pn - pn2) / dl, le = -dn, ln = de
+          const g = gleisBei(pe, pn, de, dn)
+          let be = pe, bn = pn, hg = NaN
+          if (g && !g[3]) { be = g[0]; bn = g[1]; hg = g[2] }
+          const [gA, gB] = anteile(s0), wv = gA + gB
+          be += (pe - be) * wv; bn += (pn - bn) * wv
+          const vs = versatzBei(s0, le, ln)
+          let [re, rn, rh] = imGleisfeld(be, bn, le * vs, ln * vs, de, dn)
+          if (wv > 0.999) { const g2 = gleisBei(re, rn, de, dn, ZUG_GLEIS_EIN_M); if (g2 && !g2[3]) { re = g2[0]; rn = g2[1]; rh = g2[2] } }
+          if (rh === null) { const g3 = gleisBei(re, rn, de, dn, ZUG_GLEIS_EIN_M); rh = g3 && !g3[3] ? g3[2] : hg }
+          // dazu die Stelle laut Spur vor dem Einrasten und wie weit der Bahnhof gilt
+          const r: [number, number, number, number] = [(re - pe) * le + (rn - pn) * ln, rh, (be - pe) * le + (bn - pn) * ln + vs, wv]
+          if (querCache.size > 40000) querCache.clear()
+          querCache.set(schl, [r[0], r[1], jetztMs, r[2], r[3]])
+          return r
+        }
+        const kMed = Math.round(ZUG_QUER_MEDIAN_M / ZUG_QUER_RASTER_M), kWech = Math.round(ZUG_QUER_WECHSEL_M / ZUG_QUER_RASTER_M), kHoch = Math.round(ZUG_QUER_HOEHE_M / ZUG_QUER_RASTER_M)
+        const kLo = Math.floor((sM - ganzM * mJeM) / ZUG_QUER_RASTER_M) - 1, kHi = Math.ceil(sM / ZUG_QUER_RASTER_M) + 1
+        const roh = new Map<number, [number, number, number, number]>()
+        const rohBei = (k: number) => roh.get(k) ?? (roh.set(k, rohQuer(k)), roh.get(k)!)
+        const median = new Map<number, number>()
+        const medBei = (k: number) => {
+          let x = median.get(k)
+          if (x === undefined) {
+            const l: number[] = []
+            for (let i = k - kMed; i <= k + kMed; i++) l.push(rohBei(i)[0])
+            l.sort((a, z) => a - z); x = l[l.length >> 1]; median.set(k, x)
+          }
+          return x
+        }
+        const kGlatt = kWech
+        // auf dem Gleis bleiben: von der Spitze nach hinten läuft die Linie der Achse entlang, auf der sie ist, je ZUG_QUER_RASTER_M in deren eigener
+        // Richtung (bis ZUG_GLEIS_SPUR_M daneben gesucht), wie ein Zug dem Gleis folgt; sie wechselt erst, wenn diese mehr als ZUG_GLEIS_BLEIBT_M von
+        // der Stelle laut Spur abweicht (im Bahnhof nie). So springt sie nicht zwischen zwei Gleisen hin und her (im Bahnhof Bern liegen die Spuren bis
+        // 60 m neben dem Weg, ein fester Abstand quer zu ihm schwenkte bei jeder Ecke des Wegs meterweit aus); danach über ±ZUG_QUER_WECHSEL_M mit
+        // Dreiecksgewicht gemittelt: ein Wechsel aufs Nachbargleis wird so eine S-Kurve, auf einem Gleis bleibt die Linie (in Bögen wenig nach innen)
+        const linie = new Map<number, [number, number]>()
+        const punkt = new Map<number, [number, number]>()
+        let c1: [number, number] | null = null, c2: [number, number] | null = null, p1: [number, number] | null = null
+        for (let k = kHi + kGlatt; k >= kLo - kGlatt; k--) {
+          let sh = 0, wh = 0
+          for (let i = -kHoch; i <= kHoch; i++) { const hh = rohBei(k + i)[1]; if (Number.isFinite(hh)) { sh += hh; wh++ } }
+          linie.set(k, [0, wh ? sh / wh : NaN])
+          const sm0 = k * ZUG_QUER_RASTER_M, [pe, pn] = stelle(sm0), [pe2, pn2] = stelle(sm0 - 10), dl = Math.hypot(pe - pe2, pn - pn2) || 1
+          const de = (pe - pe2) / dl, dn = (pn - pn2) / dl, le = -dn, ln = de
+          const [, , qW, wv] = rohBei(k), qM = medBei(k)
+          let c: [number, number] = [pe + le * qM, pn + ln * qM]
+          if (c1 && gleisNetz) {
+            // ein Schritt zurück: in der Richtung der Linie (aus den zwei Punkten davor), sonst des Wegs
+            let se = p1 ? pe - p1[0] : -de * ZUG_QUER_RASTER_M, sn = p1 ? pn - p1[1] : -dn * ZUG_QUER_RASTER_M
+            if (c2) { const l = Math.hypot(c1[0] - c2[0], c1[1] - c2[1]) || 1; se = ((c1[0] - c2[0]) / l) * ZUG_QUER_RASTER_M; sn = ((c1[1] - c2[1]) / l) * ZUG_QUER_RASTER_M }
+            const l2 = Math.hypot(se, sn) || 1
+            const g = gleisBei(c1[0] + se, c1[1] + sn, -se / l2, -sn / l2, ZUG_GLEIS_SPUR_M)
+            if (g && !g[3] && (wv > 0.999 || Math.hypot(g[0] - (pe + le * qW), g[1] - (pn + ln * qW)) <= ZUG_GLEIS_BLEIBT_M)) c = [g[0], g[1]]
+          }
+          punkt.set(k, c); c2 = c1; c1 = c; p1 = [pe, pn]
+        }
+        const glattPunkt = new Map<number, [number, number]>()
+        for (let k = kLo; k <= kHi; k++) {
+          let se = 0, sn = 0, sw = 0
+          for (let i = -kGlatt; i <= kGlatt; i++) { const gw = kGlatt + 1 - Math.abs(i), p0 = punkt.get(k + i)!; se += gw * p0[0]; sn += gw * p0[1]; sw += gw }
+          glattPunkt.set(k, [se / sw, sn / sw])
+        }
+        const aufLinie = (sm: number): [number, number, number] => {
+          const kf = sm / ZUG_QUER_RASTER_M, k0 = Math.max(kLo, Math.min(kHi - 1, Math.floor(kf))), t = Math.max(0, Math.min(1, kf - k0))
+          const a0 = linie.get(k0)!, a1 = linie.get(k0 + 1)!, p0 = glattPunkt.get(k0)!, p1 = glattPunkt.get(k0 + 1)!
+          const h0 = Number.isFinite(a0[1]) && Number.isFinite(a1[1]) ? a0[1] + (a1[1] - a0[1]) * t : Number.isFinite(a0[1]) ? a0[1] : a1[1]
+          const e = p0[0] + (p1[0] - p0[0]) * t, n = p0[1] + (p1[1] - p0[1]) * t
+          return [e, n, Number.isFinite(h0) ? h0 : bestandHoehe(b, e, n)]
+        }
+        // ein Wagen als Ganzes nahe an eine Gleisachse geschoben (beide Enden gleich, so bleibt seine Richtung): ganz bis ZUG_EINRASTEN_M[0], gar nicht
+        // ab ZUG_EINRASTEN_M[1], mitten in einem Gleiswechsel bleibt er frei (je Ende für sich gab es wieder Zickzack)
+        const einrasten = (ae: number, an: number, ze: number, zn: number): [number, number] => {
+          const me = (ae + ze) / 2, mn = (an + zn) / 2, dl = Math.hypot(ae - ze, an - zn)
+          if (dl < 1e-6) return [0, 0]
+          const g = gleisBei(me, mn, (ae - ze) / dl, (an - zn) / dl, ZUG_EINRASTEN_M[1])
+          if (!g || g[3]) return [0, 0]
+          const d = Math.hypot(g[0] - me, g[1] - mn), x = Math.max(0, Math.min(1, (ZUG_EINRASTEN_M[1] - d) / (ZUG_EINRASTEN_M[1] - ZUG_EINRASTEN_M[0])))
+          const f = x * x * (3 - 2 * x)
+          return [(g[0] - me) * f, (g[1] - mn) * f]
+        }
+        if (import.meta.env.VITE_S3D_TEST) { const z = window as unknown as { s3dZugLinie?: unknown[] }; (z.s3dZugLinie ??= []).push({ id: u.f.id, art: st.art, sM: Math.round(sM), ende: Math.round(ende), vorher: !!vorher, kLo, kHi, enden: enden.map((x) => [Math.round(x.s), Math.round(x.er), Math.round(x.nr)]), linie: [...glattPunkt.entries()].map(([k, p0]) => [k, Math.round(p0[0]), Math.round(p0[1]), Math.round(linie.get(k)![0] * 10) / 10]) }); if (z.s3dZugLinie.length > 300) z.s3dZugLinie.shift() }
         const glatt = enden.map((x) => {
           let summe = 0, zahlH = 0
           for (const y of enden) if (Math.abs(y.s - x.s) <= fenster && Number.isFinite(y.h)) { summe += y.h; zahlH++ }
           return zahlH ? summe / zahlH : x.h
         })
-        // der Wagen davor: sein hinteres Ende und seine Richtung, damit der Zug zusammenhängt (kette)
-        let kE = 0, kN = 0, kR = 0
+        // die Richtung des Wagens davor (nur für die Prüfung in der Testfassung)
+        let kR = 0
         for (let w = 0; w <= ZUG_WAGEN; w++) {
           const vo = enden[2 * w], hi = enden[2 * w + 1], hv = glatt[2 * w], hh = glatt[2 * w + 1]
-          // nach links versetzt, damit Züge in Gegenrichtung aneinander vorbeifahren statt durcheinander
-          const lang = Math.hypot(vo.e - hi.e, vo.n - hi.n) || 1
-          // links des Wagens (wie unten: −(vo.n − hi.n), vo.e − hi.e), für die Seite der Spur im Bahnhof
-          const le = -(vo.n - hi.n) / lang, ln = (vo.e - hi.e) / lang
-          const versatzBei = (s: number) => {
-            const [gA, gB] = anteile(s)
-            const spur = (gA ? gA * seiteBei(h[j].abk, le, ln) * spurM(h[j].abk, h[j].gleis, spurA!, anfang!) : 0)
-              + (gB ? gB * seiteBei(h[j + 1].abk, le, ln) * spurM(h[j + 1].abk, h[j + 1].gleis, spurB!, schluss!) : 0)
-            return mass * gross.x * 1000 * (ZUG_MASS_BREITE * ZUG_LINKS * (1 - gA - gB) + ZUG_BREITE * ZUG_SPUR * aus) + spur
-          }
-          // vorne und hinten je mit dem eigenen Versatz, der Wagen liegt schräg dazwischen wie auf einer Weiche
-          const versatz = versatzBei(vo.s), versatzH = versatzBei(hi.s)
-          // am Halt gilt der Versatz zum Gleis vom Weg im Netz aus, nicht von der Achse, auf die der Weg gerückt ist; danach rastet der Wagen auf
-          // die Achse des Gleises ein, wenn eine bis ZUG_GLEIS_EIN_M daneben liegt
-          const anVor = anteile(vo.s), anHin = anteile(hi.s), wv = anVor[0] + anVor[1], wh = anHin[0] + anHin[1]
-          let [voE, voN, hvG] = imGleisfeld(vo.e + (vo.er - vo.e) * wv, vo.n + (vo.nr - vo.n) * wv, le * versatz, ln * versatz, ln, -le)
-          let [hiE, hiN, hhG] = imGleisfeld(hi.e + (hi.er - hi.e) * wh, hi.n + (hi.nr - hi.n) * wh, le * versatzH, ln * versatzH, ln, -le)
-          if (wv > 0.999) { const g = gleisBei(voE, voN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { voE = g[0]; voN = g[1]; hvG = g[2] } }
-          if (wh > 0.999) { const g = gleisBei(hiE, hiN, ln, -le, ZUG_GLEIS_EIN_M); if (g && !g[3]) { hiE = g[0]; hiN = g[1]; hhG = g[2] } }
-          // der Zug hängt zusammen (Michael, 2026-11-06, Kerzers: «Züge dürfen nie so dargestellt werden. Völlig verbogen. Sieht sonst nach Unfall
-          // aus»): jedes Ende rastete für sich auf die nächste Gleisachse ein, lagen vorne und hinten verschiedene Gleise, stand der Wagen quer.
-          // Jetzt behält jeder Wagen seine Länge, hängt am Wagen davor und knickt gegen ihn höchstens ZUG_KNICK, gegen den Weg höchstens ZUG_SCHRAEG
-          ;[voE, voN, hiE, hiN] = (() => {
-            const wegR = Math.atan2(vo.n - hi.n, vo.e - hi.e), laenge = Math.hypot(vo.e - hi.e, vo.n - hi.n)
-            const nah = (r: number, um: number, max: number) => { const d = Math.atan2(Math.sin(r - um), Math.cos(r - um)); return um + Math.max(-max, Math.min(max, d)) }
-            let fe = voE, fn = voN
-            if (w > 0) {
-              const vorHi = enden[2 * w - 1], luecke = Math.hypot(vorHi.e - vo.e, vorHi.n - vo.n)
-              fe = kE - Math.cos(kR) * luecke; fn = kN - Math.sin(kR) * luecke
-            }
-            // das hintere Ende auf demselben Gleis wie das vordere (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»: an der
-            // Verzweigung rastete es für sich auf das Nachbargleis ein): die Achse bis ZUG_GLEIS_FOLGEN_M neben der Stelle eine Wagenlänge hinter dem
-            // vorderen Ende in Richtung des Wegs, nur ohne sie wie bisher
-            let zielE = hiE, zielN = hiN
-            const gh = gleisBei(fe - Math.cos(wegR) * laenge, fn - Math.sin(wegR) * laenge, ln, -le, ZUG_GLEIS_FOLGEN_M)
-            if (gh && !gh[3]) { zielE = gh[0]; zielN = gh[1] }
-            let r = Math.atan2(fn - zielN, fe - zielE)
-            if (!Number.isFinite(r)) r = wegR
-            r = nah(r, wegR, ZUG_SCHRAEG)
-            if (w > 0) r = nah(r, kR, ZUG_KNICK)
-            kE = fe - Math.cos(r) * laenge; kN = fn - Math.sin(r) * laenge; kR = r
-            return [fe, fn, kE, kN]
-          })()
+          let [voE, voN, hvG] = aufLinie(vo.s) as [number, number, number | null]
+          let [hiE, hiN, hhG] = aufLinie(hi.s) as [number, number, number | null]
+          { const [se, sn] = einrasten(voE, voN, hiE, hiN); voE += se; voN += sn; hiE += se; hiN += sn }
+          // beide Enden auf der geglätteten Linie: so hängt der Zug zusammen und knickt nur so viel wie sie (vorher hing jeder Wagen am vorderen,
+          // mit Grenzen für Knick und Schräge gegen den rohen Weg, das gab an dessen Ecken Knicke)
+          if (import.meta.env.VITE_S3D_TEST && w > 0) { const z = window as unknown as { s3dKnick?: number[][] }; const r = Math.atan2(voN - hiN, voE - hiE), d = Math.atan2(Math.sin(r - kR), Math.cos(r - kR)); const mE = (voE + hiE) / 2, mN = (voN + hiN) / 2, ga = gleisBei(mE, mN, Math.cos(r), Math.sin(r), 30); const dr = Math.atan2(vo.nr - hi.nr, vo.er - hi.er), gp = gleisBei(vo.er, vo.nr, Math.cos(dr), Math.sin(dr), 30); (z.s3dKnick ??= []).push([Math.abs(d) * 180 / Math.PI, gp ? Math.hypot(gp[0] - vo.er, gp[1] - vo.nr) : 99, Math.round(mE), ga ? Math.hypot(ga[0] - mE, ga[1] - mN) : 99, st.art === 'halt' ? 1 : 0]) }
+          kR = Math.atan2(voN - hiN, voE - hiE)
           const e = (voE + hiE) / 2, n = (voN + hiN) / 2
           if (w === 0) { lokE = e; lokN = n }
-          if (import.meta.env.VITE_S3D_TEST && w === 0) { const g = gleisBei(e, n, ln, -le, 30); (window as unknown as { s3dZugTest: unknown[] }).s3dZugTest?.push([u.f.nummer, h[j].abk, h[j + 1].abk, Math.round(e), Math.round(n), Math.round(versatz), wv.toFixed(2), g ? Math.round(Math.hypot(g[0] - e, g[1] - n) * 10) / 10 : null, g?.[3], Math.round(vo.e - vo.er), Math.round(vo.n - vo.nr), (() => { const ae = vo.e + (vo.er - vo.e) * wv + le * versatz, an = vo.n + (vo.nr - vo.n) * wv + ln * versatz, g2 = gleisBei(ae, an, ln, -le, 40); return g2 ? Math.round(Math.hypot(g2[0] - ae, g2[1] - an)) : 'keins' })()]) }
+          if (import.meta.env.VITE_S3D_TEST) { const z = window as unknown as { s3dMitten?: number[][] }; (z.s3dMitten ??= []).push([u.f.id, w, e, n, voE, voN, hiE, hiN]); if (z.s3dMitten.length > 3000) z.s3dMitten.shift() }
           if (w === ZUG_WAGEN) { steuerE = e; steuerN = n }
           // nie unter das gezeichnete Gelände (Michael, 2026-11-10, Wankdorf Ost: «Störend ist dass der Zug im Untergrund versinkt»): die Gleisachse aus
           // swissTLM3D liegt in Einschnitten tiefer als das Gelände des Modells, das dort gemittelt ist; in Tunneln ist der Zug ohnehin verdeckt
@@ -6419,7 +6480,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             const lM = ZUG_LOK_M * mJeM, lang0 = (halt ? ZUG_STIRN_HALT_LAENGE : ZUG_STIRN_LAENGE) * lM
             stirnFarbe.setScalar(halt ? ZUG_STIRN_HALT_HELL : 1)
             const [ev, nv] = stelle(sM + lang0)
-            const ex = -((vo.n - hi.n) / lang) * versatz, nx = ((vo.e - hi.e) / lang) * versatz
+            const ex = voE - vo.e, nx = voN - vo.n
             const hA = bestandHoehe(b, vo.e, vo.n), hB = bestandHoehe(b, ev, nv)
             const hA2 = Number.isFinite(hA) ? hA : hv, hB2 = Number.isFinite(hB) ? hB : hA2
             const dE = ev - vo.e, dN = nv - vo.n, flach = Math.hypot(dE, dN) || lang0
