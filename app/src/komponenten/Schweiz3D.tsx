@@ -2012,7 +2012,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             liegt; so viele Autos fahren dort zur Uhrzeit der Szene, nachts weniger. Wo im Umkreis von 40 km keine Zählstelle liegt, ist die
             Menge gewählt. Wie viele davon Lastwagen sind, nennt die Zählstelle ebenfalls, je für Tag und Nacht (Anteil Schwerverkehr; ohne Zählstelle gewählt 6 %).
             Die Autos und Lastwagen selbst sind erfunden: Gestalt (etwa jedes fünfte Auto ein SUV, jedes sechste ein Kleinwagen, jedes sechste ein Kombi, jedes fünfzehnte ein Pick-up, jedes zwanzigste ein Sportwagen, jedes fünfundzwanzigste ein Minibus, von Mai bis September jedes sechste der übrigen ein Cabriolet, nach Zufall verteilt), Farbe, Spur und Tempo (rechts 85 km/h, dort fahren alle Lastwagen, links 115 km/h, auf Autostrassen ohne Trennung 80 km/h),
-            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Nachts leuchten Scheinwerfer, Rücklichter und ein Lichtkegel vor jedem Auto. Im Tunnel sind
+            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Scheinwerfer und Rücklichter leuchten auch am Tag, nachts dazu ein Lichtkegel vor jedem Auto. Im Tunnel sind
             sie nicht zu sehen. Solange der Knopf an ist, sind die stehenden Autos auf dem Luftbild weggemalt: Jeder Bildpunkt auf der Fahrbahn
             nimmt die mittlere Farbe der Fahrbahn davor und danach. Unterbrochene Linien werden dabei blasser, im Stau bleiben Autos stehen.</p>
           <p>Auf den übrigen Strassen (Haupt- und Nebenstrassen, Ein- und Ausfahrten) gibt es keine Zählung für jedes Stück. Dort gilt das
@@ -7109,7 +7109,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       lkwLichter = new THREE.InstancedMesh(autoLichter(LKW_LANG_M, LKW_BREIT_M), lichtStoff, hoechstens)
       lkwLichter.count = 0; lkwLichter.frustumCulled = false
       gruppe.add(lkwLichter)
-      // nachts, wenn in den Gebäuden Licht brennt, Scheinwerfer und Rücklichter
+      // Scheinwerfer und Rücklichter, auch am Tag
       lichter = new THREE.InstancedMesh(autoLichter(), lichtStoff, hoechstens)
       lichter.count = 0; lichter.frustumCulled = false
       gruppe.add(lichter)
@@ -7386,8 +7386,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               hoerenPruefen(kk, a, lauf, e, n, z)
               if (innerorts && !verzug.has(a) && Math.hypot(e - zielE, n - zielN) < HALT_NAH_M) kandidaten.push({ kk, a, lauf, lang })
             }
+            // Scheinwerfer und Rücklichter auch am Tag, der Lichtkegel nur nachts (Michael, 2026-11-17)
+            if (lkw) lkwLichter!.setMatrixAt(lkwZahl, m); else if (art) artLichter[art].setMatrixAt(artZahl[art], m); else lichter!.setMatrixAt(zahl, m)
             if (nacht) {
-              if (lkw) lkwLichter!.setMatrixAt(lkwZahl, m); else if (art) artLichter[art].setMatrixAt(artZahl[art], m); else lichter!.setMatrixAt(zahl, m)
               kegelV.set((e + de * lang / 2 - lage.cE) / 1000, (z + 0.1) / 1000, -(n + dn * lang / 2 - lage.cN) / 1000)
               m.compose(kegelV, q, kegelS)
               if (kegelZahl < hoechstens) kegel!.setMatrixAt(kegelZahl++, m)
@@ -7412,16 +7413,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         lkwNetz!.count = lkwZahl
         lkwNetz!.instanceMatrix.needsUpdate = true
         if (lkwNetz!.instanceColor) lkwNetz!.instanceColor.needsUpdate = true
-        lkwLichter!.visible = nacht; lkwLichter!.count = nacht ? lkwZahl : 0
-        if (nacht) lkwLichter!.instanceMatrix.needsUpdate = true
-        lichter!.visible = nacht; lichter!.count = nacht ? zahl : 0
-        if (nacht) lichter!.instanceMatrix.needsUpdate = true
+        lkwLichter!.count = lkwZahl; lkwLichter!.instanceMatrix.needsUpdate = true
+        lichter!.count = zahl; lichter!.instanceMatrix.needsUpdate = true
         for (const art of AUTO_ARTEN) {
           const n = artNetz[art], l = artLichter[art]
           n.count = artZahl[art]; n.instanceMatrix.needsUpdate = true
           if (n.instanceColor) n.instanceColor.needsUpdate = true
-          l.visible = nacht; l.count = nacht ? artZahl[art] : 0
-          if (nacht) l.instanceMatrix.needsUpdate = true
+          l.count = artZahl[art]; l.instanceMatrix.needsUpdate = true
         }
         kegel!.visible = nacht; kegel!.count = nacht ? kegelZahl : 0
         if (nacht) kegel!.instanceMatrix.needsUpdate = true
