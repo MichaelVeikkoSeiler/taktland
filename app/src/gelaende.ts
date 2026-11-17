@@ -684,6 +684,8 @@ export async function brueckenLaden(e0: number, n0: number, e1: number, n1: numb
  *  des ersten Punkts vom Anfang der Kette, ob auf einer Brücke, die Achse mit Höhe laut swissTLM3D; verkehr je Kette [Nt, Nn] laut Zählstelle
  *  des ASTRA (mittlerer Verkehr je Stunde am Tag und in der Nacht, beide Richtungen) oder null */
 export interface AutoStueck { kette: number; art: number; L: number; s0: number; bruecke: boolean; e: Float64Array; n: Float64Array; h: Float32Array; s: Float64Array
+  /** getrennte Fahrbahnen: so weit rücken die Spuren je Punkt nach rechts, weil die Achse am Mittelstreifen liegt (gerechnet in kettenBauen, spurenRechts) */
+  rechts?: Float32Array
   /** übrige Strassen (art 2 beide Richtungen, 3 eine Richtung; Michael, 2026-11-10: «Jetzt mehr Verkehr auf anderen Strassen»): Verkehr je Stunde
    *  am Tag und in der Nacht laut Verkehrsmodell des ARE (beide Richtungen, bei art 3 die eine), Anteil Schwerverkehr in %, Breite laut Klasse in m,
    *  Tempo in km/h (gewählt) */

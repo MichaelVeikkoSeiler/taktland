@@ -320,12 +320,73 @@ export function kettenBauen(stuecke: AutoStueck[], verkehr: (kette: number) => [
       }
     }
   }
+  spurenRechts(ketten)
   return ketten
+}
+
+/**
+ * Spuren rechts des Mittelstreifens (Michael, 2026-11-17, Wankdorf: «Auf der Autobahn beim Wankdorf fahren die Meisten Autos auf der falschen Spur»):
+ * swissTLM3D zeichnet die getrennten Fahrbahnen fast überall nahe am Mittelstreifen, die Gegenfahrbahn liegt meist nur 1 bis 5 m daneben (über das
+ * ganze Netz nachgemessen: auf rund 2'700 von 3'000 km mit Gegenfahrbahn bis 30 m). Liegen die Spuren je zur Hälfte links und rechts der Achse, fährt
+ * die linke im Mittelstreifen und die rechte auf der Überholspur. Darum liegen beide Spuren rechts der Achse, die linke MITTEL_RAND_M (gewählt) neben
+ * ihr, wo die gegenläufige Fahrbahn bis MITTEL_NAH_M links liegt; ab MITTEL_WEIT_M wie bisher um die Achse, dazwischen gleitend. Wie viele Spuren eine
+ * Fahrbahn hat und wo ihr rechter Rand ist, steht in keiner unserer Quellen: auf breiten Autobahnen bleibt die rechte Spur der Wirklichkeit leer.
+ */
+export const MITTEL_RAND_M = 0.6, MITTEL_NAH_M = 8, MITTEL_WEIT_M = 14
+const MITTEL_SUCHE_M = 20, MITTEL_ZELLE_M = 40
+function spurenRechts(ketten: Map<number, AutoKette>) {
+  type Seg = { kk: AutoKette; e0: number; n0: number; e1: number; n1: number }
+  const gitter = new Map<number, Seg[]>()
+  for (const kk of ketten.values()) {
+    if (kk.art !== 0) continue
+    for (const st of kk.stuecke) for (let i = 0; i + 1 < st.e.length; i++) {
+      const g: Seg = { kk, e0: st.e[i], n0: st.n[i], e1: st.e[i + 1], n1: st.n[i + 1] }
+      const ex0 = Math.floor(Math.min(g.e0, g.e1) / MITTEL_ZELLE_M), ex1 = Math.floor(Math.max(g.e0, g.e1) / MITTEL_ZELLE_M)
+      const ny0 = Math.floor(Math.min(g.n0, g.n1) / MITTEL_ZELLE_M), ny1 = Math.floor(Math.max(g.n0, g.n1) / MITTEL_ZELLE_M)
+      for (let x = ex0; x <= ex1; x++) for (let y = ny0; y <= ny1; y++) {
+        const z = x * 100_003 + y
+        let l = gitter.get(z)
+        if (!l) gitter.set(z, (l = []))
+        l.push(g)
+      }
+    }
+  }
+  const voll = AUTO_SPUR_M * (AUTO_SPUREN / 2) + MITTEL_RAND_M
+  for (const kk of ketten.values()) {
+    if (kk.art !== 0) continue
+    for (const st of kk.stuecke) {
+      const z = st.e.length, r = new Float32Array(z)
+      for (let i = 0; i < z; i++) {
+        const a = Math.max(0, i - 1), b = Math.min(z - 1, i + 1)
+        let de = st.e[b] - st.e[a], dn = st.n[b] - st.n[a]
+        const l = Math.hypot(de, dn)
+        if (l < 1e-6) continue
+        de /= l; dn /= l
+        const e = st.e[i], n = st.n[i]
+        let links = Infinity
+        const cx = Math.floor(e / MITTEL_ZELLE_M), cy = Math.floor(n / MITTEL_ZELLE_M)
+        for (let x = cx - 1; x <= cx + 1; x++) for (let y = cy - 1; y <= cy + 1; y++) {
+          for (const g of gitter.get(x * 100_003 + y) ?? []) {
+            if (g.kk === kk) continue
+            const fe = g.e1 - g.e0, fn = g.n1 - g.n0, l2 = fe * fe + fn * fn
+            if (l2 < 1e-6 || (fe * de + fn * dn) / Math.sqrt(l2) > -0.9) continue
+            const t = Math.max(0, Math.min(1, ((e - g.e0) * fe + (n - g.n0) * fn) / l2))
+            const qe = g.e0 + t * fe - e, qn = g.n0 + t * fn - n
+            const d = Math.hypot(qe, qn)
+            // links der Fahrtrichtung (de, dn) ist (-dn, de)
+            if (d <= MITTEL_SUCHE_M && qe * -dn + qn * de > 0 && d < links) links = d
+          }
+        }
+        r[i] = links <= MITTEL_NAH_M ? voll : links >= MITTEL_WEIT_M ? 0 : voll * (MITTEL_WEIT_M - links) / (MITTEL_WEIT_M - MITTEL_NAH_M)
+      }
+      st.rechts = r
+    }
+  }
 }
 
 /** wo in der Kette an der Stelle s (m vom Anfang): Ost, Nord, Höhe laut swissTLM3D, Richtung, auf einer Brücke; null, wo kein Stück gezeichnet ist
  *  (Tunnel, ausserhalb der Kacheln) */
-export function autoBei(k: AutoKette, s: number): { e: number; n: number; h: number; de: number; dn: number; bruecke: boolean } | null {
+export function autoBei(k: AutoKette, s: number): { e: number; n: number; h: number; de: number; dn: number; bruecke: boolean; rechts: number } | null {
   const p = rohBei(k, s)
   if (!p) return p
   // durch Kurven fliessend statt von Ecke zu Ecke (Michael, 2026-11-13: «Die Autos auf den Straßen fahren nicht schöne Bogen … ziemlich eckig um eine
@@ -345,7 +406,7 @@ export function autoBei(k: AutoKette, s: number): { e: number; n: number; h: num
 /** so weit davor und danach mittelt autoBei die Lage, auf Autobahnen und übrigen Strassen (m, gewählt) */
 const KURVE_GLATT_M: [number, number] = [15, 7]
 
-function rohBei(k: AutoKette, s: number): { e: number; n: number; h: number; de: number; dn: number; bruecke: boolean } | null {
+function rohBei(k: AutoKette, s: number): { e: number; n: number; h: number; de: number; dn: number; bruecke: boolean; rechts: number } | null {
   const st = k.stuecke
   let lo = 0, hi = st.length - 1, i = -1
   while (lo <= hi) {
@@ -362,7 +423,8 @@ function rohBei(k: AutoKette, s: number): { e: number; n: number; h: number; de:
   }
   const l = a.s[j + 1] - a.s[j] || 1, t = (s - a.s[j]) / l
   const de = (a.e[j + 1] - a.e[j]) / l, dn = (a.n[j + 1] - a.n[j]) / l
-  return { e: a.e[j] + t * (a.e[j + 1] - a.e[j]), n: a.n[j] + t * (a.n[j + 1] - a.n[j]), h: a.h[j] + t * (a.h[j + 1] - a.h[j]), de, dn, bruecke: a.bruecke }
+  const r = a.rechts ? a.rechts[j] + t * (a.rechts[j + 1] - a.rechts[j]) : 0
+  return { e: a.e[j] + t * (a.e[j + 1] - a.e[j]), n: a.n[j] + t * (a.n[j + 1] - a.n[j]), h: a.h[j] + t * (a.h[j + 1] - a.h[j]), de, dn, bruecke: a.bruecke, rechts: r }
 }
 
 /** die stehenden Autos im Luftbild weg: je Bildpunkt auf der Fahrbahn der Median der Farben entlang der Fahrbahn, AUTO_RETUSCHE_LAENGS_M davor
@@ -692,7 +754,7 @@ export function spurLage(kk: AutoKette, richtung: 1 | -1, spur: number, lauf: nu
   if (!p) return null
   const de = p.de * richtung, dn = p.dn * richtung
   const sp = kk.art === 2 ? spurBei(kk, s) : null
-  const quer = kk.art === 0 ? ((AUTO_SPUREN - 1) / 2 - spur) * AUTO_SPUR_M : sp ? sp[1] : kk.quer
+  const quer = kk.art === 0 ? ((AUTO_SPUREN - 1) / 2 - spur) * AUTO_SPUR_M + p.rechts : sp ? sp[1] : kk.quer
   return { e: p.e + dn * quer + (sp ? p.dn * sp[0] : 0), n: p.n - de * quer - (sp ? p.de * sp[0] : 0), h: p.h, de, dn, bruecke: p.bruecke }
 }
 
