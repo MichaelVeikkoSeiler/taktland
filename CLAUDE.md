@@ -486,6 +486,9 @@ Sonntagsfahrverbot in «3D Schweiz» (Michael, 2026-11-15: «Keine LKWs am Sonnt
 Lichtkegel der Autos in «3D Schweiz» seit 2026-11-17 zwei je Auto, links und rechts vor jedem Scheinwerfer, schwächer (Michael: «bitte die Lichtkegel nicht
              ganz so hell und, wenn es möglich ist, beide Kegel einblenden, das heißt von beiden Scheinwerfern links und rechts»): je Kegel 26 m lang, vorne 4,5 m breit,
              Stärke 0,3, die Lampe 0,35 m innen vom Rand des Wagens (AUTO_KEGEL_* in Autos.ts, vorher einer, 28 × 7 m, 0,55), gewählt
+             seit 2026-11-17 je Auto verschieden (Michael: «Mal sind die Lichtkegel etwas länger, mal etwas dunkler … Auch das Licht … darf auch mal etwas
+             wärmeres Licht ausstrahlen und etwas kühleres»): je Auto ein fester Zufall, Länge 0,8- bis 1,2-fach, Helligkeit 0,7- bis 1,15-fach, Farbe von warm #ffd49a
+             über #fff1d6 bis kühl #e4ecff (kegelArt, KEGEL_* in Autos.ts, als Farbe je Instanz), gewählt
 Licht der Autos in «3D Schweiz» seit 2026-11-17 auch am Tag (Michael: «Autos und LKWs haben auch tagsüber Licht aber dafür ohne Kegel»): Scheinwerfer und Rücklichter
              aller Autos und Lastwagen immer, der Lichtkegel weiter nur nachts
 Runde Scheinwerfer in «3D Schweiz» seit 2026-11-17 (Michael: «Kannst du bei jedem 4. Auto runde Scheinwerfer machen?»): je Auto ein fester Zufall, ein Viertel
