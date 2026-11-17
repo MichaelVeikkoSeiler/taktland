@@ -493,6 +493,10 @@ Licht der Autos in «3D Schweiz» seit 2026-11-17 auch am Tag (Michael: «Autos 
              aller Autos und Lastwagen immer, der Lichtkegel weiter nur nachts
 Runde Scheinwerfer in «3D Schweiz» seit 2026-11-17 (Michael: «Kannst du bei jedem 4. Auto runde Scheinwerfer machen?»): je Auto ein fester Zufall, ein Viertel
              (autoRundeLichter, RUND_SCHEINWERFER_* in Autos.ts, 22 cm gewählt), Rücklichter eckig, Lastwagen nicht
+             seit 2026-11-17 dazu Kleinwagen mit je zwei runden Scheinwerfern links und rechts (Michael: «Bei den Kleinwagen darf es auch bei den Frontlichtern mal
+             auf beiden Seiten je 2 Lichter haben, und zwar wenn, dann runde. Das betrifft aber nur jedes 15. bis 20. Auto»): etwa jedes 17. Auto, gut ein Drittel der
+             Kleinwagen, je Auto ein fester Zufall, 17 cm, Mitten 26 cm auseinander (autoDoppelLichter, DOPPEL_* in Autos.ts, eigenes Netz kleinDoppel), gewählt;
+             im Browser nicht angeschaut
 Spuren der Autobahnen in «3D Schweiz» seit 2026-11-17 rechts des Mittelstreifens (Michael, Wankdorf: «Auf der Autobahn beim Wankdorf fahren die Meisten Autos auf der falschen
              Spur»): swissTLM3D zeichnet getrennte Fahrbahnen nahe am Mittelstreifen, die Gegenfahrbahn liegt auf rund 2'700 von 3'000 km bis 5 m daneben (über alle data/autos
              nachgemessen, am Luftbild von data/scharf bestätigt); die zwei Spuren lagen je zur Hälfte links und rechts der Achse, die linke also im Mittelstreifen; seither liegt die
