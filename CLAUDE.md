@@ -436,6 +436,17 @@ Eintauchen am Desktop mit einem zweiten Klick (Michael, 2026-11-11: «Auf dem De
              von 2026-11-06 ist weg
              auf Touch (Michael, 2026-11-14: «Auf Touchmonitoren soll man doppeltippen können zum eintauchen»): zwei Tipps bis 450 ms nacheinander (DOPPELTIPP_MS,
              gewählt), der erste wählt das Feld, der zweite im gewählten Kasten taucht ein; in der Anleitung («Wählen und eintauchen»); nicht auf einem Gerät geprüft
+Züge ohne Zickzack in «3D Schweiz» seit 2026-11-17 (Michael: «Die Züge mit den einzelnen Wagen sind manchmal etwas im Zickzack unterwegs … ziemlich
+             geradlinig fahren und wenn sie eine Gleisänderung machen müssen, diese nicht mit scharfen Kurven machen, sondern frühzeitig, vielleicht 100 oder 200 Meter
+             früher … möglichst in einem realistischen Bewegungsablauf»): statt jedes Wagenende für sich einzurasten (und am Wagen davor zu hängen, mit Grenzen gegen den
+             rohen, eckigen Weg) je Zug eine Linie: je 10 m Weg die Stelle wie bisher (Achse, Spur im Bahnhof, Gleisfeld bis 8 m statt 5, ZUG_IM_FELD_M), der Median über
+             ±40 m, von der Spitze nach hinten der Achse entlang (in ihrer eigenen Richtung, bis 2,5 m daneben gesucht), solange sie höchstens 3 m von der Stelle laut Spur
+             abweicht, im Bahnhof immer, dann die Lage über ±60 m mit Dreiecksgewicht gemittelt, jeder Wagen als Ganzes bis 2,5 m auf eine Achse geschoben (ZUG_QUER_*,
+             ZUG_GLEIS_BLEIBT_M, ZUG_GLEIS_SPUR_M, ZUG_EINRASTEN_M in Schweiz3D.tsx, gewählt); dabei gefunden: am Halt endet der Weg davor nicht immer dort, wo der neue
+             beginnt (in Bern bis 70 m), er wird seither um den Unterschied verschoben, ganz am Ende, 300 m davor nicht mehr (ZUG_ANSCHLUSS_M), und wendet ein Zug, gilt der
+             Weg davor nicht; ZUG_KNICK, ZUG_SCHRAEG und ZUG_GLEIS_FOLGEN_M sind weg; im Browser hier in Bern mit laufender Uhr gemessen, alter gegen neuen Stand: Knicke über
+             3° zwischen zwei Wagen 84 gegen 43 von 340, 90 % unter 10,3° gegen 4,0°, Züge mit Zickzack 17 gegen 5 von 68, Abstand zur Gleisachse im Mittel 1,2 gegen 1,5 m;
+             mit ±100 m kein Zickzack mehr, aber ein Viertel mehr als 6 m neben dem Gleis, darum ±60 m; ohne die feinen Daten nicht angeschaut; in der Anleitung
 Wagen auf demselben Gleis in «3D Schweiz» (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»): das hintere Ende eines Wagens nimmt die Gleisachse
              bis 2,5 m neben der Stelle eine Wagenlänge hinter dem vorderen Ende in Richtung des Wegs (ZUG_GLEIS_FOLGEN_M, gewählt), sonst wie bisher das eigene
              eingerastete Ende; nur gebaut, hier ohne die feinen Daten nicht nachgestellt
