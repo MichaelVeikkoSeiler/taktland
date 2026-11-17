@@ -208,6 +208,18 @@ export function autoRundeLichter(id: number): boolean {
  *  innen vom Rand des Wagens; seit 2026-11-17 zwei je Auto, links und rechts, schwächer (Michael: «die Lichtkegel nicht ganz so hell und …
  *  beide Kegel einblenden, das heißt von beiden Scheinwerfern links und rechts»; vorher einer, 7 m breit, 0,55); alles gewählt */
 export const AUTO_KEGEL_LANG_M = 26, AUTO_KEGEL_BREIT_M = 4.5, AUTO_KEGEL_HELL = 0.3, AUTO_KEGEL_INNEN_M = 0.35
+/** je Auto ein anderer Kegel (Michael, 2026-11-17: «Mal sind die Lichtkegel etwas länger, mal etwas dunkler … Auch das Licht … darf auch mal etwas
+ *  wärmeres Licht ausstrahlen und etwas kühleres»): je Auto ein fester Zufall für die Länge (0,8- bis 1,2-fach), die Helligkeit (0,7- bis 1,15-fach) und
+ *  den Farbton von warm über neutral bis kühl; Spannen und Farben gewählt */
+export const KEGEL_LANG_SPANNE: [number, number] = [0.8, 1.2], KEGEL_HELL_SPANNE: [number, number] = [0.7, 1.15]
+const KEGEL_WARM = new THREE.Color('#ffd49a'), KEGEL_NEUTRAL = new THREE.Color('#fff1d6'), KEGEL_KUEHL = new THREE.Color('#e4ecff')
+export function kegelArt(id: number): { lang: number; farbe: THREE.Color } {
+  const lang = KEGEL_LANG_SPANNE[0] + zufall(id * 3.17 + 0.7) * (KEGEL_LANG_SPANNE[1] - KEGEL_LANG_SPANNE[0])
+  const hell = KEGEL_HELL_SPANNE[0] + zufall(id * 5.93 + 2.1) * (KEGEL_HELL_SPANNE[1] - KEGEL_HELL_SPANNE[0])
+  const t = zufall(id * 7.41 + 4.4)
+  const farbe = t < 0.5 ? KEGEL_WARM.clone().lerp(KEGEL_NEUTRAL, t * 2) : KEGEL_NEUTRAL.clone().lerp(KEGEL_KUEHL, (t - 0.5) * 2)
+  return { lang, farbe: farbe.multiplyScalar(hell) }
+}
 
 /** 30 % der roten Autos grau (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»), Grau gewählt */
 const ROT = new Set(['#8a1a1a', '#a8102e']), ROT_GRAU_ANTEIL = 0.3, ROT_GRAU = '#8c8c8c'
