@@ -2012,7 +2012,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             liegt; so viele Autos fahren dort zur Uhrzeit der Szene, nachts weniger. Wo im Umkreis von 40 km keine Zählstelle liegt, ist die
             Menge gewählt. Wie viele davon Lastwagen sind, nennt die Zählstelle ebenfalls, je für Tag und Nacht (Anteil Schwerverkehr; ohne Zählstelle gewählt 6 %).
             Die Autos und Lastwagen selbst sind erfunden: Gestalt (etwa jedes fünfte Auto ein SUV, jedes sechste ein Kleinwagen, jedes sechste ein Kombi, jedes fünfzehnte ein Pick-up, jedes zwanzigste ein Sportwagen, jedes fünfundzwanzigste ein Minibus, von Mai bis September jedes sechste der übrigen ein Cabriolet, nach Zufall verteilt), Farbe, Spur und Tempo (rechts 85 km/h, dort fahren alle Lastwagen, links 115 km/h, auf Autostrassen ohne Trennung 80 km/h),
-            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Deren Achse liegt dort meist nahe am Mittelstreifen; liegt die Gegenfahrbahn bis 8 m daneben, fahren beide Spuren rechts davon. Wie viele Spuren eine Autobahn hat, steht in keiner unserer Quellen, auf breiten Autobahnen bleibt die rechte Spur darum leer. Scheinwerfer und Rücklichter leuchten auch am Tag, bei jedem vierten Auto mit runden Scheinwerfern, nachts dazu ein Lichtkegel vor jedem Auto. Im Tunnel sind
+            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Deren Achse liegt dort meist nahe am Mittelstreifen; liegt die Gegenfahrbahn bis 8 m daneben, fahren beide Spuren rechts davon. Wie viele Spuren eine Autobahn hat, steht in keiner unserer Quellen, auf breiten Autobahnen bleibt die rechte Spur darum leer. Ein Tipp auf ein Auto oder einen Lastwagen färbt es gelb, «Entfernen» darunter nimmt es weg, etwa aus einem Stau; bis das Feld neu geladen wird. Scheinwerfer und Rücklichter leuchten auch am Tag, bei jedem vierten Auto mit runden Scheinwerfern, nachts dazu ein Lichtkegel vor jedem Auto. Im Tunnel sind
             sie nicht zu sehen. Solange der Knopf an ist, sind die stehenden Autos auf dem Luftbild weggemalt: Jeder Bildpunkt auf der Fahrbahn
             nimmt die mittlere Farbe der Fahrbahn davor und danach. Unterbrochene Linien werden dabei blasser, im Stau bleiben Autos stehen.</p>
           <p>Auf den übrigen Strassen (Haupt- und Nebenstrassen, Ein- und Ausfahrten) gibt es keine Zählung für jedes Stück. Dort gilt das
@@ -2494,6 +2494,8 @@ const AUF_3DLAND = /3dland/.test(window.location.hostname) || /3dland\.html$/.te
 /** der rote Knopf «In den Führerstand» im Schild eines Zugs, Bildpunkte auf dem Schild (gewählt) */
 const SCHILD_KNOPF_PX = 46
 const ZUG_TIPP_WINKEL = (1.25 * Math.PI) / 180
+/** ein Auto antippen: getroffen bis so viele halbe Längen neben seiner Mitte oder bis ZUG_TIPP_WINKEL vom Auge; gewählt gelb (gewählt) */
+const AUTO_TIPP_LAENGE = 1.3, WAHL_FARBE = new THREE.Color('#ffd23f')
 /** in der Brille, wo der Strahl mit der Hand zittert, 4°, gewählt */
 const ZUG_TIPP_WINKEL_BRILLE = (4 * Math.PI) / 180
 /** so leuchtet ein Zug unter dem Strahl, gelblich wie die eingeschalteten Knöpfe (Faktor je Farbe, über 1 hellt auf), gewählt */
@@ -2711,7 +2713,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     wurzel: THREE.Group; inBrille: () => boolean; setzeHimmel: () => void; himmel: THREE.Color; himmelTag: THREE.Color; himmelOben: THREE.Color; himmelObenTag: THREE.Color
     himmelMalen: () => void
     sterne: Sternenhimmel
-    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null; zeichnen: ((p: THREE.Vector3) => void) | null }
+    jeBild: Array<() => void>; wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null; zeichnen: ((p: THREE.Vector3) => void) | null; auto: ((r: THREE.Ray) => boolean) | null }
     stehenSetzen: (p: THREE.Vector3 | null) => void
     /** zu zweit: wo man ist (Kopf oder Kamera), wohin man schaut und zeigt, als Punkte im Modell */
     lageJetzt: () => { kopf: THREE.Vector3; blick: THREE.Vector3; zeigt: THREE.Vector3 | null; brille: boolean }
@@ -2953,6 +2955,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         }
       }
       if (knopf) { (knopf.object.userData.aktion as () => void)(); return }
+      // ein Auto oder ein Lastwagen: gewählt, darunter «Entfernen» (wenn.auto im Effekt der Autos; nicht in der Brille)
+      if (!renderer.xr.isPresenting && wenn.auto?.(strahl.ray)) return
       const boeden = wurzel.getObjectByName('boeden')
       // in der Stufe Schweiz zählt das ausgeblendete Gelände ausserhalb der Grenze nicht (LAND_*)
       const aussen = wurzel.userData.ausserLand as ((x: number, z: number) => boolean) | null | undefined
@@ -2968,8 +2972,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // wie in Taktland»): wie in der Modellbahn trägt ein gehaltener Abzug das Modell, beide ziehen es grösser oder kleiner und
     // drehen es; ein kurzer Abzug wählt mit dem Strahl wie bisher; die Greiftaste geht eine Stufe zurück, der Thumbstick dreht
     // und hebt, Thumbstick drücken stellt das Modell zurück an den Anfang
-    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null; zeichnen: ((p: THREE.Vector3) => void) | null } =
-      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen'), stehenStart: null, daneben: null, zeichnen: null }
+    const wenn: { tipp: ((p: THREE.Vector3) => void) | null; zurueck: () => void; stehen: ((p: THREE.Vector3) => void) | null; stehenAus: () => void; stehenStart: THREE.Vector3 | null; daneben: (() => void) | null; zeichnen: ((p: THREE.Vector3) => void) | null; auto: ((r: THREE.Ray) => boolean) | null } =
+      { tipp: null, zurueck: () => cb.current.zurueck(), stehen: null, stehenAus: () => cb.current.schalten('stehen'), stehenStart: null, daneben: null, zeichnen: null, auto: null }
     let drehung = 0, zoom = 1
     /** Lage des Modells, sobald es getragen oder gehoben wurde; null: auf dem Tisch wie am Anfang */
     let lage: THREE.Vector3 | null = null
@@ -6966,6 +6970,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       k.renderer.domElement.removeEventListener('pointermove', mausZiel); k.renderer.domElement.removeEventListener('pointerleave', mausWeg)
     }
   }, [schiffe, b, stufe, knoepfe])
+  // ein Auto oder ein Lastwagen von Hand entfernen (Michael, 2026-11-17: «wenn man bei Staus oder einfach auch sonst Autos und LKWs welche in der Quere
+  // stehen manuell entfernen könnte. Z.B. drauftippen und dann löschen»): ein Tipp wählt es (gelb), darunter «Entfernen»; weg bis zum nächsten Laden des Felds
+  const [autoWahl, setAutoWahl] = useState<string | null>(null)
+  const autoEntfernen = useRef<(() => void) | null>(null), autoAbwahl = useRef<(() => void) | null>(null)
   // Autos auf Autobahnen und Autostrassen (komponenten/Autos.ts, pipeline/build_autos.py; Michael, 2026-11-10: «Möglich Autos aus den Autobahnen
   // wegzuretuschieren und durch fahrende Modelle zu ersetzen?»): nur in den Feldern von 4 km und 1 km, mit dem Knopf «Autos»; die stehenden Autos
   // im Luftbild retuschiert, solange der Knopf an ist; so viele, wie laut der nächsten Zählstelle des ASTRA zu dieser Stunde fahren
@@ -7072,6 +7080,42 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const autoNetz = netzBauen(ketten.values()), alleAutos: AutoPlatz[] = []
       for (const kk of ketten.values()) for (const a of kk.autos) { a.heim = { kk, richtung: a.richtung, spur: a.spur, ms: a.ms }; alleAutos.push(a) }
       let letzteSek: number | null = null
+      // von Hand gewählt (autoWahl): was im letzten Bild gezeichnet war, Mitte im Raum des Modells (km) und halbe Länge; das gewählte gelb
+      let gewaehlt: AutoPlatz | null = null, gewaehltFehlt = 0
+      const sichtbar: Array<{ a: AutoPlatz; x: number; y: number; z: number; halb: number; lkw: boolean }> = []
+      const abwahl = () => { gewaehlt = null; setAutoWahl(null) }
+      autoAbwahl.current = abwahl
+      autoEntfernen.current = () => { if (gewaehlt) gewaehlt.entfernt = true; abwahl() }
+      const umkehr = new THREE.Matrix4(), pr = new THREE.Vector3()
+      k.wenn.auto = (welt) => {
+        umkehr.copy(k.wurzel.matrixWorld).invert()
+        const r = welt.clone().applyMatrix4(umkehr)
+        let best: { a: AutoPlatz; lkw: boolean; t: number } | null = null
+        for (const x of sichtbar) {
+          pr.set(x.x, x.y, x.z)
+          const t = pr.clone().sub(r.origin).dot(r.direction)
+          if (t <= 0) continue
+          const grenze = Math.max(x.halb * AUTO_TIPP_LAENGE, t * Math.tan(ZUG_TIPP_WINKEL))
+          if (r.distanceSqToPoint(pr) <= grenze * grenze && (!best || t < best.t)) best = { a: x.a, lkw: x.lkw, t }
+        }
+        if (!best) { if (gewaehlt) abwahl(); return false }
+        gewaehlt = best.a; gewaehltFehlt = 0
+        setAutoWahl(best.lkw ? 'Lastwagen' : 'Auto')
+        return true
+      }
+      // nur in einer Testfassung (VITE_S3D_TEST): wo das nächste gezeichnete Auto auf dem Bild ist, und wie viele entfernt sind
+      if (import.meta.env.VITE_S3D_TEST) {
+        const w = window as unknown as { s3dAutoPunkt: () => number[] | null; s3dAutosEntfernt: () => number }
+        w.s3dAutoPunkt = () => {
+          const rr = k.renderer.domElement.getBoundingClientRect()
+          const ziel = k.steuerung.target.clone(); k.wurzel.worldToLocal(ziel)
+          const x = [...sichtbar].sort((p, q) => Math.hypot(p.x - ziel.x, p.z - ziel.z) - Math.hypot(q.x - ziel.x, q.z - ziel.z))[0]
+          if (!x) return null
+          const v = k.wurzel.localToWorld(new THREE.Vector3(x.x, x.y, x.z)).project(k.kamera)
+          return [rr.left + ((v.x + 1) / 2) * rr.width, rr.top + ((1 - v.y) / 2) * rr.height]
+        }
+        w.s3dAutosEntfernt = () => [...drauf.values()].flat().filter((a) => a.entfernt).length
+      }
       const drauf = new Map<AutoKette, AutoPlatz[]>()
       // wo die Autos im letzten Bild standen, und das Raster dieses Bilds (nie ineinander, KORRIDOR_* in Autos.ts)
       let raster = new AutoRaster(), rasterNeu = new AutoRaster()
@@ -7200,6 +7244,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // Anteil der grössten Dichte dieser Stunde: Tag 6 bis 22 Uhr, sonst Nacht (Schweizer Zeit der Szene)
         const stunde = jetztImFahrplan({ von: '2000-01-01' }, new Date(ms)).minuten / 60, tag = stunde >= 6 && stunde < 22
         let zahl = 0, lkwZahl = 0, kegelZahl = 0
+        sichtbar.length = 0
         const artZahl = [0, 0, 0, 0, 0, 0, 0, 0], artRundZahl = [0, 0, 0, 0, 0, 0, 0, 0]
         let rundZahl = 0
         // von Mai bis September (Monat der Szene, Schweizer Zeit genähert mit UTC + 1 h) fährt ein Teil der Autos offen
@@ -7231,7 +7276,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // ob ein Auto fährt (Anteil der Stunde) und ein Lastwagen ist, nach seiner eigenen Kette (sonst wechselte es beim Abbiegen)
         const anteilVon = (a: AutoPlatz) => { const h = a.heim!.kk; return (tag ? h.tag : h.nacht) / Math.max(1, h.tag, h.nacht) }
         const lkwVon = (a: AutoPlatz) => { const h = a.heim!.kk; return tag ? h.lkwTag : h.lkwNacht }
-        const aktiv = (a: AutoPlatz) => a.ab < anteilVon(a) && !(sonntag && a.lkw < lkwVon(a))
+        const aktiv = (a: AutoPlatz) => !a.entfernt && a.ab < anteilVon(a) && !(sonntag && a.lkw < lkwVon(a))
         // Abstand zum Vordermann auf übrigen Strassen (nach den Lagen des letzten Bilds) und Rechtsvortritt an Kreuzungen (VORTRITT_* in Autos.ts)
         const folge = new Map<AutoPlatz, number>(), ankommen = new Map<string, Array<{ a: AutoPlatz; de: number; dn: number }>>()
         if (!sprung) {
@@ -7331,7 +7376,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             const liste: Array<{ a: AutoPlatz; lauf: number; lang: number }> = []
             for (const a of hier) {
               const lkwAnteil = lkwVon(a)
-              if (a.ab >= anteilVon(a) || (sonntag && a.lkw < lkwAnteil)) continue
+              if (a.entfernt || a.ab >= anteilVon(a) || (sonntag && a.lkw < lkwAnteil)) continue
               liste.push({ a, lauf: a.lauf!, lang: a.lkw < lkwAnteil ? LKW_LANG_M : AUTO_ART_LANG_M[artVon(a.farbe)] })
             }
             if (!stauRechnen(liste, halte.filter((h) => h.kk === kk), verzug, jetztS, dt)) gestaut.delete(kk)
@@ -7340,6 +7385,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const innerorts = kk.art >= 2 && (kk.stuecke[0].strasse?.kmh ?? 99) <= 35
           for (const a of hier) {
             if (!!a.durch !== zweite) continue
+            if (a.entfernt) { a.bild = undefined; continue }
             const lkwAnteil = lkwVon(a)
             if (a.ab >= anteilVon(a) || zahl >= hoechstens || lkwZahl >= hoechstens) continue
             const lkw = a.lkw < lkwAnteil, art = artVon(a.farbe), lang = lkw ? LKW_LANG_M : AUTO_ART_LANG_M[art]
@@ -7373,6 +7419,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             v.set((e - lage.cE) / 1000, z / 1000, -(n - lage.cN) / 1000)
             q.setFromAxisAngle(oben, Math.atan2(de, -dn))
             m.compose(v, q, eins)
+            sichtbar.push({ a, x: v.x, y: v.y + (lkw ? 2 : 0.8) / 1000, z: v.z, halb: lang / 2000, lkw })
             if (lkw) lkwNetz!.setMatrixAt(lkwZahl, m); else if (art) artNetz[art].setMatrixAt(artZahl[art], m); else netz.setMatrixAt(zahl, m)
             if (hoeren) {
               hoerenPruefen(kk, a, lauf, e, n, z)
@@ -7387,9 +7434,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               m.compose(kegelV, q, kegelS)
               if (kegelZahl < hoechstens) kegel!.setMatrixAt(kegelZahl++, m)
             }
-            if (lkw) lkwNetz!.setColorAt(lkwZahl++, lkwFarben[a.farbe])
-            else if (art) artNetz[art].setColorAt(artZahl[art]++, farben[a.farbe])
-            else netz.setColorAt(zahl++, farben[a.farbe])
+            const gew = a === gewaehlt
+            if (lkw) lkwNetz!.setColorAt(lkwZahl++, gew ? WAHL_FARBE : lkwFarben[a.farbe])
+            else if (art) artNetz[art].setColorAt(artZahl[art]++, gew ? WAHL_FARBE : farben[a.farbe])
+            else netz.setColorAt(zahl++, gew ? WAHL_FARBE : farben[a.farbe])
           }
         }
         ;[raster, rasterNeu] = [rasterNeu, raster]
@@ -7420,6 +7468,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         kegel!.visible = nacht; kegel!.count = nacht ? kegelZahl : 0
         if (nacht) kegel!.instanceMatrix.needsUpdate = true
         kegelStoff.opacity = AUTO_KEGEL_HELL * fensterNacht.value
+        // das gewählte Auto fährt aus dem Feld (oder in einen Tunnel): nach 30 Bildern ohne es ist die Wahl weg
+        if (gewaehlt) { if (sichtbar.some((x) => x.a === gewaehlt)) gewaehltFehlt = 0; else if (++gewaehltFehlt > 30) abwahl() }
       }
       k.jeBild.push(schritt)
     })
@@ -7427,6 +7477,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       weg = true
       if (schritt) { const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1) }
       k.wurzel.remove(gruppe); stoff.dispose(); lichtStoff.dispose()
+      k.wenn.auto = null; autoEntfernen.current = null; autoAbwahl.current = null; setAutoWahl(null)
       if (netz) { netz.geometry.dispose(); netz.dispose() }
       if (lichter) { lichter.geometry.dispose(); lichter.dispose() }
       if (lichterRund) { lichterRund.geometry.dispose(); lichterRund.dispose() }
@@ -7811,6 +7862,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         </div>
       )}
       {/* keine Zeilen zum Wetter im Bild (Michael, 2026-11-08: «Wetterinfos alle weg»); was fehlt, steht in der Anleitung */}
+      {autoWahl && (
+        <div className="absolute inset-x-0 bottom-16 z-10 flex justify-center gap-2 px-2">
+          <button type="button" onClick={() => autoEntfernen.current?.()}
+            className="rounded-lg bg-sbb-red px-3 py-1.5 text-sm font-bold text-white shadow">{autoWahl} entfernen</button>
+          <button type="button" onClick={() => autoAbwahl.current?.()}
+            className="rounded-lg border border-sbb-metal bg-white px-3 py-1.5 text-sm text-sbb-black shadow dark:bg-sbb-midnight dark:text-sbb-white">Abbrechen</button>
+        </div>
+      )}
     </div>
   )
 }
