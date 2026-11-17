@@ -447,6 +447,10 @@ Züge ohne Zickzack in «3D Schweiz» seit 2026-11-17 (Michael: «Die Züge mit 
              Weg davor nicht; ZUG_KNICK, ZUG_SCHRAEG und ZUG_GLEIS_FOLGEN_M sind weg; im Browser hier in Bern mit laufender Uhr gemessen, alter gegen neuen Stand: Knicke über
              3° zwischen zwei Wagen 84 gegen 43 von 340, 90 % unter 10,3° gegen 4,0°, Züge mit Zickzack 17 gegen 5 von 68, Abstand zur Gleisachse im Mittel 1,2 gegen 1,5 m;
              mit ±100 m kein Zickzack mehr, aber ein Viertel mehr als 6 m neben dem Gleis, darum ±60 m; ohne die feinen Daten nicht angeschaut; in der Anleitung
+             seit 2026-11-17 ohne das Einrasten je Wagen (Michael, Bildschirmfoto: «Die Wagen sind je nach Bewegung quer miteinander verschoben … Ich denke heit an
+             eine Schlange»): jeder Wagen wurde für sich bis 2,5 m auf eine Achse geschoben, der nächste um anders viel; jetzt liegen beide Enden jedes Wagens auf der
+             einen Linie des Zugs, ZUG_EINRASTEN_M ist weg; gemessen in Bern: seitlicher Versatz zwischen Ende eines Wagens und Anfang des nächsten höchstens 7 cm
+             (vorher bis 87 cm), Knicke über 3° 41 von 340, Züge mit Zickzack 4 von 68, Abstand zur Gleisachse im Mittel 1,4 m
 Wagen auf demselben Gleis in «3D Schweiz» (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»): das hintere Ende eines Wagens nimmt die Gleisachse
              bis 2,5 m neben der Stelle eine Wagenlänge hinter dem vorderen Ende in Richtung des Wegs (ZUG_GLEIS_FOLGEN_M, gewählt), sonst wie bisher das eigene
              eingerastete Ende; nur gebaut, hier ohne die feinen Daten nicht nachgestellt

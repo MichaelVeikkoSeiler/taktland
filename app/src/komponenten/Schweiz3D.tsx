@@ -2434,7 +2434,7 @@ const BRUECKE_DICKE_M = 1.6, BRUECKE_GLEIS_UNTER_M = 0.5
 const ZUG_IM_FELD_M = 8
 /** Lage der Züge quer zum Weg (zugQuer): Raster, Median, Breite des Gleiswechsels und der Höhe je Seite, in m Weg (Michael, 2026-11-17: «frühzeitig,
  *  vielleicht 100 oder 200 Meter früher»), gewählt */
-const ZUG_GLEIS_BLEIBT_M = 3, ZUG_GLEIS_SPUR_M = 2.5, ZUG_QUER_ALT_MS = 3000, ZUG_EINRASTEN_M = [0.5, 2.5], ZUG_ANSCHLUSS_M = 300, ZUG_QUER_RASTER_M = 10, ZUG_QUER_MEDIAN_M = 40, ZUG_QUER_WECHSEL_M = 60, ZUG_QUER_HOEHE_M = 30
+const ZUG_GLEIS_BLEIBT_M = 3, ZUG_GLEIS_SPUR_M = 2.5, ZUG_QUER_ALT_MS = 3000, ZUG_ANSCHLUSS_M = 300, ZUG_QUER_RASTER_M = 10, ZUG_QUER_MEDIAN_M = 40, ZUG_QUER_WECHSEL_M = 60, ZUG_QUER_HOEHE_M = 30
 /** ein Mast der Fahrleitung so nah an einer Gleisachse auf einer Brücke steht auf ihr (m, gewählt) */
 const MAST_AUF_BRUECKE_M = 6
 /** freie Spuren zum Ausweichen der Reihe nach (in ZUG_SPUR) und wie schnell ein Zug hingleitet, gewählt */
@@ -6401,17 +6401,6 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const e = p0[0] + (p1[0] - p0[0]) * t, n = p0[1] + (p1[1] - p0[1]) * t
           return [e, n, Number.isFinite(h0) ? h0 : bestandHoehe(b, e, n)]
         }
-        // ein Wagen als Ganzes nahe an eine Gleisachse geschoben (beide Enden gleich, so bleibt seine Richtung): ganz bis ZUG_EINRASTEN_M[0], gar nicht
-        // ab ZUG_EINRASTEN_M[1], mitten in einem Gleiswechsel bleibt er frei (je Ende für sich gab es wieder Zickzack)
-        const einrasten = (ae: number, an: number, ze: number, zn: number): [number, number] => {
-          const me = (ae + ze) / 2, mn = (an + zn) / 2, dl = Math.hypot(ae - ze, an - zn)
-          if (dl < 1e-6) return [0, 0]
-          const g = gleisBei(me, mn, (ae - ze) / dl, (an - zn) / dl, ZUG_EINRASTEN_M[1])
-          if (!g || g[3]) return [0, 0]
-          const d = Math.hypot(g[0] - me, g[1] - mn), x = Math.max(0, Math.min(1, (ZUG_EINRASTEN_M[1] - d) / (ZUG_EINRASTEN_M[1] - ZUG_EINRASTEN_M[0])))
-          const f = x * x * (3 - 2 * x)
-          return [(g[0] - me) * f, (g[1] - mn) * f]
-        }
         if (import.meta.env.VITE_S3D_TEST) { const z = window as unknown as { s3dZugLinie?: unknown[] }; (z.s3dZugLinie ??= []).push({ id: u.f.id, art: st.art, sM: Math.round(sM), ende: Math.round(ende), vorher: !!vorher, kLo, kHi, enden: enden.map((x) => [Math.round(x.s), Math.round(x.er), Math.round(x.nr)]), linie: [...glattPunkt.entries()].map(([k, p0]) => [k, Math.round(p0[0]), Math.round(p0[1]), Math.round(linie.get(k)![0] * 10) / 10]) }); if (z.s3dZugLinie.length > 300) z.s3dZugLinie.shift() }
         const glatt = enden.map((x) => {
           let summe = 0, zahlH = 0
@@ -6422,9 +6411,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         let kR = 0
         for (let w = 0; w <= ZUG_WAGEN; w++) {
           const vo = enden[2 * w], hi = enden[2 * w + 1], hv = glatt[2 * w], hh = glatt[2 * w + 1]
-          let [voE, voN, hvG] = aufLinie(vo.s) as [number, number, number | null]
-          let [hiE, hiN, hhG] = aufLinie(hi.s) as [number, number, number | null]
-          { const [se, sn] = einrasten(voE, voN, hiE, hiN); voE += se; voN += sn; hiE += se; hiN += sn }
+          // beide Enden auf derselben Linie, ohne eigenes Einrasten je Wagen: so hängen die Wagen aneinander wie eine Schlange (Michael, 2026-11-17:
+          // «Die Wagen sind je nach Bewegung quer miteinander verschoben … Ich denke heit an eine Schlange»; geschoben wurde jeder Wagen für sich bis 2,5 m)
+          const [voE, voN, hvG] = aufLinie(vo.s) as [number, number, number | null]
+          const [hiE, hiN, hhG] = aufLinie(hi.s) as [number, number, number | null]
           // beide Enden auf der geglätteten Linie: so hängt der Zug zusammen und knickt nur so viel wie sie (vorher hing jeder Wagen am vorderen,
           // mit Grenzen für Knick und Schräge gegen den rohen Weg, das gab an dessen Ecken Knicke)
           if (import.meta.env.VITE_S3D_TEST && w > 0) { const z = window as unknown as { s3dKnick?: number[][] }; const r = Math.atan2(voN - hiN, voE - hiE), d = Math.atan2(Math.sin(r - kR), Math.cos(r - kR)); const mE = (voE + hiE) / 2, mN = (voN + hiN) / 2, ga = gleisBei(mE, mN, Math.cos(r), Math.sin(r), 30); const dr = Math.atan2(vo.nr - hi.nr, vo.er - hi.er), gp = gleisBei(vo.er, vo.nr, Math.cos(dr), Math.sin(dr), 30); (z.s3dKnick ??= []).push([Math.abs(d) * 180 / Math.PI, gp ? Math.hypot(gp[0] - vo.er, gp[1] - vo.nr) : 99, Math.round(mE), ga ? Math.hypot(ga[0] - mE, ga[1] - mN) : 99, st.art === 'halt' ? 1 : 0]) }
