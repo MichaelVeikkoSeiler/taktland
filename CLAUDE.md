@@ -1400,7 +1400,9 @@ gibt der Abruf auf, ANTWORT_MS, Michael, 2026-10-21: cyon hatte PHP abgeschaltet
 250 ms und füllt sich mit dem Anteil der fertigen Dateien; die Abfragen von «Geo» online, der Zähler und status.json zählen nicht mit.
 Beim Laden einer 3D-Szene (szeneLaden) steht er ganz oben in deren Karte, nicht oben in der App (`<Ladebalken inKarte />`, Michael, 2026-10-10), läuft sofort und mindestens 3 Sekunden sichtbar von 0 bis 100 %, in zufälligen,
 ungleichen Schritten mit kurzen Halten, ein Spiel, keine Messung (Michael, 2026-10-10); steht der Browser beim Bauen still, zählt
-die Zeit nicht; lädt danach noch etwas, kriecht er bis 98 %. 6 Pixel hoch.
+die Zeit nicht; lädt danach noch etwas, kriecht er bis 98 %. 6 Pixel hoch. Seit 2026-11-17 statt des Balkens ein drehender Ring in der Mitte, karminrot auf hellem Ring mit leichtem Schatten, in einer Karte 48 px in deren Mitte,
+sonst 36 px in der Mitte des Bildschirms; wann er erscheint und verschwindet, bleibt wie beim Balken (Michael: «Eine Progressbar suggeriert dass es fertig
+gerechnet hat wenn es rechts ankommt. Ein kreisendes Objekt in der Mitte lässt das Ende offen»)
 
 In der Fusszeile rechts neben der Bildmarke zwei Symbole, «Taktland teilen» und «Einstellungen» (`komponenten/Teilen.tsx`, Michael, 2026-10-10): Teilen öffnet auf dem Handy das Teilen-Menü des
 Geräts, sonst E-Mail, WhatsApp und «Link kopieren»; geteilt wird nur https://taktland.ch mit einem Satz, nichts vom Fortschritt.
