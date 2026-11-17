@@ -12,7 +12,7 @@ import { lampenBauen, LICHT_FERN, type Strassenlampen } from './Strassenlicht'
 import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
-import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, autoRundeLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, kmhAuf, netzBauen, weiterNach, spurLage, bogen, type SpurLage, KURVE_HALB_M,
+import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_INNEN_M, AUTO_KEGEL_LANG_M, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, autoRundeLichter, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, kmhAuf, netzBauen, weiterNach, spurLage, bogen, type SpurLage, KURVE_HALB_M,
   AUTO_ANFAHREN, AUTO_BREMSEN, VORTRITT_M, HALT_VOR_KREUZUNG_M, VORTRITT_HOECHSTENS_S, FOLGE_ABSTAND_M, AutoRaster, type AutoBild, korridorPlatz, ueberlappt, KORRIDOR_LUECKE_M, blockadeLoesen, lackFarbe, retuscheZurueck, autoArt, autoCabrio, AUTO_ARTEN, AUTO_CABRIO, type AutoArt, AUTO_ART_LANG_M, AUTO_ART_BREIT_M } from './Autos'
 import { bahnQuerschnitt, belagFaktor, brueckeAnschliessen, brueckenMaterialien, deckSuche, type BrueckenStueck, gleisPlatten, type QuerStelle, querschnittNetzeBauen, type Retusche, retuschieren, type Streifen, strassenHalbe, strassenQuerschnitt } from './Bruecken'
 import { type AutoStueck, autosLaden, brueckenLaden, gleisLaden, type GleisStueck, mastenLaden, strassenlichtLaden, ausschnittLaden, type BaumKachel, feinHoehe, feinLaden, type GebaeudeKachel, gelaendeIndex, KEINE_HOEHE, luftbildLaden, nahbildLaden, type Raster, ohneLeeres, probeDa, probeLaden, SCHARF_KACHEL_M, umweltGanz, wanderwegeLaden, scharfBild, scharfHoehe, scharfLaden, schweiz3dLaden, seegrundLaden, felsLaden, waldmischungLaden } from '../gelaende'
@@ -176,8 +176,10 @@ const DOPPELTIPP_MS = 450
 const istTablet = () => matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) >= 700
 const hoechstens = () => (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700 ? 4 : 9)
 const hoechstensFelder = hoechstens
-/** so oft hupt es bei einer Vorbeifahrt auf der Autobahn (dazu höchstens alle 15 bis 35 s, src/audio.ts), gewählt */
-const AUTO_HUPE_ANTEIL = 0.12
+/** kurzes Hupen bei einer Vorbeifahrt: an Autobahnen und auf anderen Strassen seltener; langes Hupen nur an Autobahnen im Stau, wenn ein Auto dort
+ *  länger als STAU_HUPE_AB_S steht, je Sekunde mit STAU_HUPE_JE_S (Michael, 2026-11-17: «Langes Hupen … nur bei Autobahnen, bei Stau. Und kurzes
+ *  Hupen, auch auf der Autobahn oder auch bei anderen Straßen, aber dort nicht so oft»); alles gewählt */
+const AUTO_HUPE_ANTEIL = 0.08, STRASSE_HUPE_ANTEIL = 0.025, STAU_HUPE_AB_S = 5, STAU_HUPE_JE_S = 0.08
 
 const einzeln = (anker: Feld, g: Gelaende): Bestand => ({ anker, teile: new Map([['0_0', g]]), di: [0, 0], dj: [0, 0] })
 const teilFeld = (b: Bestand, di: number, dj: number): Feld => ({ e: b.anker.e + di * b.anker.seite, n: b.anker.n + dj * b.anker.seite, seite: b.anker.seite })
@@ -1971,8 +1973,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p className="mt-2">Der Verkehr in der Stadt, die Kuhglocken und der Fluss sind <b>Aufnahmen</b> («Background traffic noise» von Froey_, «cowbells2» von
             einem gelöschten Konto und «Rapidly Flowing Water» von Osiruswaltz, alle freesound.org, CC0), nicht vom Ort, an dem man ist, und laufen als Schleife;
             ebenso die Möwen («ES Seagulls from Window 01» von se2001), das vorbeifahrende Auto («car9» von lndip), das Propellerflugzeug («Propeller plane» von Breviceps), der Helikopter («Helicopter Swirling» von Tiagorlp)
-            und die Hupen an Autobahnen, wenn «Autos» an ist («Beeping car horn from inside car» von misperpodcast, «car horn 1» von 3863, «Car Horn Honk 01» von
-            Brett+Butter; alle freesound.org, CC0). Der Pfiff vor der Abfahrt ist eine Aufnahme («Referee whistle blow, gymnasium» von SpliceSound,
+            und das Hupen, wenn «Autos» an ist («Beeping car horn from inside car» von misperpodcast, «car horn 1» von 3863, «Car Horn Honk 01» von
+            Brett+Butter; alle freesound.org, CC0): ab und zu kurz, an Autobahnen öfter als auf anderen Strassen, und lang nur im Stau auf der Autobahn;
+            wie oft und wie lang, ist gewählt. Der Pfiff vor der Abfahrt ist eine Aufnahme («Referee whistle blow, gymnasium» von SpliceSound,
             freesound.org, CC0), gekürzt; wann gepfiffen wird, ist gewählt, nicht wie am Bahnhof wirklich. Das Flugzeug und der rote Helikopter, die man dazu fliegen sieht, sind gezeichnet und erfunden.</p>
           <p className="mt-2"><b>Erfunden</b> sind alle anderen Geräusche: Sie sind im Programm erzeugt, keine Aufnahmen, und wie oft sie kommen, ist gewählt.
             Keine Quelle sagt, wo Kühe weiden, ein Traktor fährt oder gehupt wird, ob und wann eine Kirche läutet und wie ein Zug oder Schiff abfährt.</p>
@@ -2012,7 +2015,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             liegt; so viele Autos fahren dort zur Uhrzeit der Szene, nachts weniger. Wo im Umkreis von 40 km keine Zählstelle liegt, ist die
             Menge gewählt. Wie viele davon Lastwagen sind, nennt die Zählstelle ebenfalls, je für Tag und Nacht (Anteil Schwerverkehr; ohne Zählstelle gewählt 6 %).
             Die Autos und Lastwagen selbst sind erfunden: Gestalt (etwa jedes fünfte Auto ein SUV, jedes sechste ein Kleinwagen, jedes sechste ein Kombi, jedes fünfzehnte ein Pick-up, jedes zwanzigste ein Sportwagen, jedes fünfundzwanzigste ein Minibus, von Mai bis September jedes sechste der übrigen ein Cabriolet, nach Zufall verteilt), Farbe, Spur und Tempo (rechts 85 km/h, dort fahren alle Lastwagen, links 115 km/h, auf Autostrassen ohne Trennung 80 km/h),
-            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Deren Achse liegt dort meist nahe am Mittelstreifen; liegt die Gegenfahrbahn bis 8 m daneben, fahren beide Spuren rechts davon. Wie viele Spuren eine Autobahn hat, steht in keiner unserer Quellen, auf breiten Autobahnen bleibt die rechte Spur darum leer. Ein Tipp auf ein Auto oder einen Lastwagen färbt es gelb, «Entfernen» darunter nimmt es weg, etwa aus einem Stau; bis das Feld neu geladen wird. Scheinwerfer und Rücklichter leuchten auch am Tag, bei jedem vierten Auto mit runden Scheinwerfern, nachts dazu ein Lichtkegel vor jedem Auto. Im Tunnel sind
+            ebenso, wo genau eines fährt. Die Fahrtrichtung getrennter Fahrbahnen steht in swissTLM3D. Deren Achse liegt dort meist nahe am Mittelstreifen; liegt die Gegenfahrbahn bis 8 m daneben, fahren beide Spuren rechts davon. Wie viele Spuren eine Autobahn hat, steht in keiner unserer Quellen, auf breiten Autobahnen bleibt die rechte Spur darum leer. Ein Tipp auf ein Auto oder einen Lastwagen färbt es gelb, «Entfernen» darunter nimmt es weg, etwa aus einem Stau; bis das Feld neu geladen wird. Scheinwerfer und Rücklichter leuchten auch am Tag, bei jedem vierten Auto mit runden Scheinwerfern, nachts dazu vor jedem Scheinwerfer ein Lichtkegel. Im Tunnel sind
             sie nicht zu sehen. Solange der Knopf an ist, sind die stehenden Autos auf dem Luftbild weggemalt: Jeder Bildpunkt auf der Fahrbahn
             nimmt die mittlere Farbe der Fahrbahn davor und danach. Unterbrochene Linien werden dabei blasser, im Stau bleiben Autos stehen.</p>
           <p>Auf den übrigen Strassen (Haupt- und Nebenstrassen, Ein- und Ausfahrten) gibt es keine Zählung für jedes Stück. Dort gilt das
@@ -7164,7 +7167,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       lichterRund = new THREE.InstancedMesh(autoLichter(undefined, undefined, true), lichtStoff, hoechstens)
       lichterRund.count = 0; lichterRund.frustumCulled = false
       gruppe.add(lichterRund)
-      kegel = new THREE.InstancedMesh(kegelGeo, kegelStoff, hoechstens)
+      kegel = new THREE.InstancedMesh(kegelGeo, kegelStoff, 2 * hoechstens)
       kegel.count = 0; kegel.frustumCulled = false; kegel.renderOrder = 2
       gruppe.add(kegel)
       const kegelS = new THREE.Vector3(AUTO_KEGEL_BREIT_M / 1000, 1, AUTO_KEGEL_LANG_M / 1000), kegelV = new THREE.Vector3()
@@ -7198,8 +7201,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (import.meta.env.VITE_S3D_TEST) { const w = window as unknown as { s3dAutoTon?: number }; w.s3dAutoTon = (w.s3dAutoTon ?? 0) + 1 }
         const laut = Math.min(1, ((AUTO_HOEREN_BIS_M - d1) / (AUTO_HOEREN_BIS_M - AUTO_HOEREN_VOLL_M))) ** 2
         autoVorbei(laut)
-        // ab und zu eine Hupe, nur an Autobahnen (getrennte Fahrbahnen; Michael, 2026-11-10: «Nur bei Autobahnen»); Anteil gewählt
-        if (kk.art === 0 && Math.random() < AUTO_HUPE_ANTEIL) hupe(laut)
+        // ab und zu kurz gehupt, an Autobahnen öfter als auf anderen Strassen (Michael, 2026-11-17)
+        if (Math.random() < (kk.art === 0 ? AUTO_HUPE_ANTEIL : STRASSE_HUPE_ANTEIL)) hupe(laut, 'kurz')
       }
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), eins = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
       // Halten für Fussgänger (Autos.ts; Michael, 2026-11-10: «Genau ein Auto darf auch mal halten (bei Fussgänger hie und da) und auch mal hupen»)
@@ -7280,6 +7283,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const blickM = 1000 * k.kamera.position.distanceTo(k.steuerung.target) / Math.max(1e-9, k.wurzel.scale.x)
           ohr = ZUG_HOEREN_BLICK_M / Math.max(ZUG_HOEREN_BLICK_M, blickM)
         }
+        let stauD = Infinity
         if (hoeren) {
           kandidaten.length = 0
           if (brille) zielLokal.copy(augeLokal); else { zielLokal.copy(k.steuerung.target); k.wurzel.worldToLocal(zielLokal) }
@@ -7439,6 +7443,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             if (lkw) lkwNetz!.setMatrixAt(lkwZahl, m); else if (art) artNetz[art].setMatrixAt(artZahl[art], m); else netz.setMatrixAt(zahl, m)
             if (hoeren) {
               hoerenPruefen(kk, a, lauf, e, n, z)
+              if (kk.art === 0 && (a.steckt ?? 0) > STAU_HUPE_AB_S) stauD = Math.min(stauD, ohrAbstand(e, n, z))
               if (innerorts && !verzug.has(a) && Math.hypot(e - zielE, n - zielN) < HALT_NAH_M) kandidaten.push({ kk, a, lauf, lang })
             }
             // Scheinwerfer und Rücklichter auch am Tag, der Lichtkegel nur nachts (Michael, 2026-11-17)
@@ -7446,9 +7451,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             else if (runde[a.farbe]) { if (art) artRund[art].setMatrixAt(artRundZahl[art]++, m); else lichterRund!.setMatrixAt(rundZahl++, m) }
             else if (art) artLichter[art].setMatrixAt(artZahl[art] - artRundZahl[art], m); else lichter!.setMatrixAt(zahl - rundZahl, m)
             if (nacht) {
-              kegelV.set((e + de * lang / 2 - lage.cE) / 1000, (z + 0.1) / 1000, -(n + dn * lang / 2 - lage.cN) / 1000)
-              m.compose(kegelV, q, kegelS)
-              if (kegelZahl < hoechstens) kegel!.setMatrixAt(kegelZahl++, m)
+              // je Scheinwerfer ein Kegel, links und rechts (Michael, 2026-11-17)
+              const aussen = bild.breit / 2 - AUTO_KEGEL_INNEN_M
+              for (const s of [-1, 1]) {
+                kegelV.set((e + de * lang / 2 + dn * s * aussen - lage.cE) / 1000, (z + 0.1) / 1000, -(n + dn * lang / 2 - de * s * aussen - lage.cN) / 1000)
+                m.compose(kegelV, q, kegelS)
+                if (kegelZahl < 2 * hoechstens) kegel!.setMatrixAt(kegelZahl++, m)
+              }
             }
             const gew = a === gewaehlt
             if (lkw) lkwNetz!.setColorAt(lkwZahl++, gew ? WAHL_FARBE : lkwFarben[a.farbe])
@@ -7462,6 +7471,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           for (const x of alleAutos) { if (x.bild) { g++; if (x.ms < 0.1) st++ } if (x.durch) d++ }
           ;(window as unknown as { s3dKorridor: unknown }).s3dKorridor = { gezeichnet: g, durch: d, stehen: st }
         }
+        // langes Hupen im Stau auf der Autobahn (Michael, 2026-11-17)
+        if (hoeren && stauD < AUTO_HOEREN_BIS_M && Math.random() < 0.1 * STAU_HUPE_JE_S)
+          hupe(Math.min(1, (AUTO_HOEREN_BIS_M - stauD) / (AUTO_HOEREN_BIS_M - AUTO_HOEREN_VOLL_M)) ** 2, 'lang')
         if (hoeren) haltBeginnen(jetztS, !tag, !!(import.meta.env.VITE_S3D_TEST && (window as unknown as { s3dHalt?: boolean }).s3dHalt))
         if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dHalte: unknown }).s3dHalte = { orte: halte.map((h) => [Math.round(h.e), Math.round(h.n), Math.round(bestandHoehe(b, h.e, h.n))]), halte: halte.length, gestaut: gestaut.size, verzug: [...verzug.values()].map((x) => Math.round(x.v)), kandidaten: kandidaten.length }
         fussSetzen(jetztS)
