@@ -177,10 +177,12 @@ export function autoForm(art: AutoArt = 0): THREE.BufferGeometry {
 }
 
 /** Scheinwerfer vorne weiss, Rücklichter hinten rot, nachts (fensterNacht) als eigenes Netz ohne Licht der Szene gezeichnet; Lage gewählt */
-export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M): THREE.BufferGeometry {
+export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M, rund = false): THREE.BufferGeometry {
   const teile: THREE.BufferGeometry[] = []
-  const lampe = (x: number, z: number, farbe: string) => {
-    const g = new THREE.BoxGeometry(0.45 / 1000, 0.2 / 1000, 0.08 / 1000).toNonIndexed()
+  const lampe = (x: number, z: number, farbe: string, kreis = false) => {
+    const g = (kreis
+      ? new THREE.CylinderGeometry(RUND_SCHEINWERFER_R_M / 1000, RUND_SCHEINWERFER_R_M / 1000, 0.08 / 1000, 16).rotateX(Math.PI / 2)
+      : new THREE.BoxGeometry(0.45 / 1000, 0.2 / 1000, 0.08 / 1000)).toNonIndexed()
     g.deleteAttribute('uv')
     g.translate(x / 1000, 0.75 / 1000, z / 1000)
     const c = new THREE.Color(farbe), f = new Float32Array(g.attributes.position.count * 3)
@@ -189,10 +191,17 @@ export function autoLichter(lang = AUTO_LANG_M, breit = AUTO_BREIT_M): THREE.Buf
     teile.push(g)
   }
   const x0 = breit / 3
-  for (const x of [-x0, x0]) { lampe(x, lang / 2 + 0.03, '#ffffff'); lampe(x, -lang / 2 - 0.03, '#ff3020') }
+  for (const x of [-x0, x0]) { lampe(x, lang / 2 + 0.03, '#ffffff', rund); lampe(x, -lang / 2 - 0.03, '#ff3020') }
   const ganz = mergeGeometries(teile)!
   teile.forEach((t) => t.dispose())
   return ganz
+}
+
+/** runde Scheinwerfer bei jedem 4. Auto (Michael, 2026-11-17: «Kannst du bei jedem 4. Auto runde Scheinwerfer machen?»): je Auto ein fester Zufall,
+ *  ein Viertel; Durchmesser 22 cm gewählt; die Rücklichter bleiben eckig, Lastwagen nicht */
+export const RUND_SCHEINWERFER_ANTEIL = 0.25, RUND_SCHEINWERFER_R_M = 0.11
+export function autoRundeLichter(id: number): boolean {
+  return zufall(id * 4.37 + 3.3) < RUND_SCHEINWERFER_ANTEIL
 }
 
 /** nachts vor jedem Auto ein Lichtkegel auf der Fahrbahn wie bei den Zügen: so lang und vorne so breit, Stärke, gewählt */

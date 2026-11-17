@@ -485,6 +485,8 @@ Sonntagsfahrverbot in «3D Schweiz» (Michael, 2026-11-15: «Keine LKWs am Sonnt
              Stephanstag, Ostern gerechnet; Liste nach VRV Art. 91, von Michael bestätigt: «Liste stimmt so»); Ausnahmebewilligungen nicht berücksichtigt, Nachtfahrverbot nicht nachgebildet (die Zählstellen messen Schwerverkehr auch nachts); in der Anleitung («Autos»)
 Licht der Autos in «3D Schweiz» seit 2026-11-17 auch am Tag (Michael: «Autos und LKWs haben auch tagsüber Licht aber dafür ohne Kegel»): Scheinwerfer und Rücklichter
              aller Autos und Lastwagen immer, der Lichtkegel weiter nur nachts
+Runde Scheinwerfer in «3D Schweiz» seit 2026-11-17 (Michael: «Kannst du bei jedem 4. Auto runde Scheinwerfer machen?»): je Auto ein fester Zufall, ein Viertel
+             (autoRundeLichter, RUND_SCHEINWERFER_* in Autos.ts, 22 cm gewählt), Rücklichter eckig, Lastwagen nicht
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
