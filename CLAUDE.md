@@ -1413,6 +1413,10 @@ reihum (bis 8 Namen, gemerkt), alle ordnen dieselbe Fahrt, danach Lösung mit Pu
 «Auf mehreren Geräten» über raum.php (#/puzzle/mit/CODE, FahrplanPuzzleOnline, PUZZLE_RAUM): der Gastgeber zieht die Runden (Nummer der Fahrt im Vorrat und
 Reihenfolgen, dazu stand), ein Gerät mit anderem Stand des Vorrats sagt, man solle neu laden; Tipp ist die Reihenfolge, der Gastgeber löst auf und geht weiter;
 kein neues raum.php nötig. «Wie lange dauert's?» heisst seit 2026-11-15 «Reisedauer» (Michael: «Soll heissen "Reisedauer"»), Adresse weiter #/fahrzeit; seit 2026-11-15 als letztes Spiel in der Liste (SPIELE in spiele.ts; Michael: «Spiel, Reisedauer, am Schluss.»).
+Seit 2026-11-18 unter dem Namen des Zugs in beiden Spielen die Klappe «Was heisst «RE12 4759»?» (Michael: «Bei diesem Spiel eine kurze Erklärung zur Bezeichnung:
+was heisst RE mit zwei Zahlen etc. Vielleicht gibt das eine Hilfestellung und lernt einem zugleich»; Bezeichnung in Fahrplanspiele.tsx): die Teile laut Fahrplan,
+Linie (route_short_name, nur wenn anders als die Gattung), Zuggattung (route_desc) mit ihrem Namen (GATTUNG_NAME, allgemeines Wissen) und Zugnummer (trip_short_name),
+darunter als «Erläuterung» allgemein, was Gattung, Linie und Zugnummer sind; im Browser hier mit 390 Bildpunkten angeschaut.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
