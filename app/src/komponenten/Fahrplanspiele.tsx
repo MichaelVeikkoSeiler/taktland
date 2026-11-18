@@ -43,7 +43,7 @@ function Kopf({ titel, text, best }: { titel: string; text: string; best: number
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{titel}</h1>
       <p className="mt-2 leading-relaxed">{text}</p>
-      {best !== null && <p className={`mt-1 mb-2 ${LEISE}`}>Dein Bestwert: {best} Punkte</p>}
+      {best !== null && <p className={`mt-1 ${LEISE}`}>Dein Bestwert: {best} Punkte</p>}
     </>
   )
 }
@@ -402,7 +402,7 @@ function PuzzleOnlineSpiel({ r, runden, namen, vorrat }: {
       {(phase === 'warten' || (phase === 'frage' && gesendet === frage)) && (
         <div className="mt-4">
           <p className="text-xl font-bold">Deine Reihenfolge ist abgegeben</p>
-          <p className={`mt-1 mb-2 ${LEISE}`}>Warte auf {spieler.filter((m) => !tipps[m.id]).map((m) => m.name).join(', ') || 'die Vermittlung'} …</p>
+          <p className={`mt-1 ${LEISE}`}>Warte auf {spieler.filter((m) => !tipps[m.id]).map((m) => m.name).join(', ') || 'die Vermittlung'} …</p>
           {gastgeber && (
             <button type="button" onClick={() => void schicken('aufloesen', { frage })}
                     className="mt-4 rounded-lg border border-sbb-cloud px-4 py-2 font-medium dark:border-sbb-iron">Nicht länger warten und auflösen</button>
