@@ -872,6 +872,11 @@ Suche, Uhr, Stadtlicht und Züge in «3D Schweiz» seit 2026-11-16 (Michael: «O
              top-[7.25rem]); im Feld von 16 km die Lampen aus data/strassenlicht ohne Gebäude, 4-mal so grosse Flecken, halb so hell, ohne Masten (LICHT_FERN in Strassenlicht.ts,
              gewählt; vorher hingen sie an «Gebäude», die es dort nicht gibt); Züge (Knopf, Zeichnen) nur noch in den Feldern von 4 km und 1 km (zugFern), Schiffe weiter ab 16 km;
              im Browser hier in Bern um 21:30 mit 1300 und 390 Bildpunkten angeschaut
+Zeitreise oben im Bild in «3D Schweiz» seit 2026-11-18 (Michael, Bildschirmfoto: «Kannst du oben das Datum und Uhrzeit in der gleichen Schriftart und Grösse und Einzug
+             wie der Text im Suchfeld machen? Zudem soll man daraf klicken tippen können und dort dann die Zeitreise machen können. Dafür unterhalb der Karte nicht mehr?»):
+             SzenenUhr in text-sm, nicht fett, 11 px eingerückt wie der Text im Suchfeld, als Knopf mit ▾; ein Tipp öffnet darunter eine Tafel (w-64) mit Datum, «Jetzt»,
+             Regler und Uhrzeit und dem Hinweis ausserhalb der Tage des Fahrplans, ein Tipp daneben schliesst sie (zeitOffen, zeitTafelRef); die Zeile unter dem Modell ist
+             weg, der Hinweis zum Fahrplan bleibt dort; Anleitung («Sonne und Schatten») nachgeführt; im Browser hier mit 360 Bildpunkten angeschaut
 Namen nah am Boden in «3D Schweiz» seit 2026-11-16 ausgeblendet (Michael, Bildschirmfoto auf einem Perron in Luzern mit «Luzern» und «Reuss»: «Aus solchen
              Perpektiven bitte Gewässer und Orts sowie Gipfelnamen ausblenden»): steht die Kamera weniger als 150 m über dem Gelände unter ihr (NAMEN_NAH_M, gewählt,
              namenZuNah), sind Orte, Gipfel und Gewässernamen samt Masten unsichtbar, je Bild geprüft; nicht in der Brille
