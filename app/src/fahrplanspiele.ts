@@ -80,6 +80,9 @@ export function dauerZiehen(v: SpielVorrat, hatName: (uic: number) => boolean, s
 /** Punkte in Schritten von 1: 100 genau getroffen, gleichmässig weniger mit jeder Minute daneben, 0 ab 2 · toleranz() + 1 Minuten
  *  (seit 2026-11-15, vorher 100 bis toleranz(), 50 bis zum Doppelten; Michael: «Viel feinere Punktesbstimmung. Nicht 100 und 50 sondern im 1er schritt»);
  *  Punkte gibt es so höchstens 22 Minuten daneben, 44 Minuten des Reglers (Regel 9) */
+/** jeder Hinweis in «Reisedauer» (Karte, Zwischenhalte) nimmt 15 % der Punkte (Michael, 2026-11-18: «Hinweis 1: -15% Hinweis 2 -15%») */
+export const DAUER_HINWEIS_ABZUG = 0.15
+
 export function dauerPunkte(min: number, tipp: number): number {
   const d = Math.abs(tipp - min), null_ab = 2 * toleranz(min) + 1
   return Math.max(0, Math.round(100 * (1 - d / null_ab)))

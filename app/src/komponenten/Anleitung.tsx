@@ -87,6 +87,10 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             Regler geht bis 180 Minuten. Genau getroffen gibt 100 Punkte, jede Minute daneben gleichmässig weniger, keine mehr ab gut 24 % der Fahrzeit daneben (mindestens 7, höchstens 23 Minuten).
           </li>
           <li>
+            Zwei Hinweise helfen, jeder kostet 15 % der Punkte der Runde: zuerst eine Karte mit den beiden Bahnhöfen, dann dazu die Halte
+            dazwischen laut Fahrplan.
+          </li>
+          <li>
             Beide Spiele nehmen je Linie, Ziel und Folge der Halte die erste Fahrt des Tages aus dem Fahrplan von opentransportdata.swiss,
             nur Fernverkehr und RegioExpress und nur Halte an Bahnhöfen von Taktland, ohne Verspätungen.
           </li>

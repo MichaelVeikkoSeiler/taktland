@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { antwortTon } from '../audio'
 import {
-  bestwert, bestwertFesthalten, dauerPunkte, type DauerRunde, dauerZiehen, PUZZLE_HALTE, PUZZLE_PUNKTE_JE_HALT, puzzlePunkte,
+  bestwert, bestwertFesthalten, DAUER_HINWEIS_ABZUG, dauerPunkte, type DauerRunde, dauerZiehen, PUZZLE_HALTE, PUZZLE_PUNKTE_JE_HALT, puzzlePunkte,
   type PuzzleRunde, puzzleZiehen, REGLER_BIS_MIN, RUNDEN, type SpielFahrt, type SpielVorrat, toleranz, uhr, vorratLaden, zugTitel,
 } from '../fahrplanspiele'
 import type { BahnhofIndex } from '../typen'
 import { Ladefehler } from './Ladefehler'
+import { type Box, KartenPlatz, lage, Netzkarte, useKarte } from './Netzkarte'
 import { type Mitspieler, type RaumSpiel, useRaumSeite } from './Raum'
 import { raumEroeffnen, teilnahmeMerken } from '../spielraum'
 import { Zurueck } from './Zurueck'
@@ -432,6 +433,40 @@ function PuzzleOnlineSpiel({ r, runden, namen, vorrat }: {
 }
 
 /**
+ * Hinweise in «Reisedauer» (Michael, 2026-11-18: «Ein Hinweis ist eine einfache Karte und zweiter Hinweis sind alle Zwischenhalte in der Karte»):
+ * 1 die Karte mit dem Netz und den beiden Bahnhöfen, 2 dazu die Halte dazwischen laut Fahrplan; Lage der Bahnhöfe aus dem Index der App
+ */
+function DauerKarte({ runde, hinweise, lageVon, name }: {
+  runde: DauerRunde; hinweise: number; lageVon: (u: number) => [number, number] | null; name: (u: number) => string
+}) {
+  const { daten, linien, fehler } = useKarte()
+  const inhalt = useMemo(() => {
+    const idx = hinweise >= 2 ? Array.from({ length: runde.bis - runde.von + 1 }, (_, i) => runde.von + i) : [runde.von, runde.bis]
+    const pkt = idx.flatMap((i) => {
+      const u = runde.f.h[i][0], xy = lageVon(u)
+      return xy ? [{ x: xy[0], y: xy[1], name: name(u), uic: u, ende: i === runde.von || i === runde.bis }] : []
+    })
+    if (!pkt.length) return null
+    const xs = pkt.map((p) => p.x), ys = pkt.map((p) => p.y)
+    const [x0, x1, y0, y1] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]
+    const box: Box = { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w: Math.max((x1 - x0) * 1.4, (y1 - y0) * 1.4 * 1.6, 0.15) }
+    return { pkt, box }
+  }, [runde, hinweise, lageVon, name])
+  if (fehler) return <p className={`mt-3 ${LEISE}`}>Die Karte konnte nicht geladen werden.</p>
+  if (!daten || !linien || !inhalt) return <KartenPlatz />
+  return (
+    <div className="mt-3">
+      <Netzkarte daten={daten} linien={linien} start={inhalt.box} punkte={inhalt.pkt} titel="Karte zum Hinweis"
+        zeichnen={(px) => inhalt.pkt.filter((p) => p.ende).map((p) => (
+          <circle key={p.uic} cx={p.x} cy={p.y} r={8.5 * px} className="fill-sbb-red" />
+        ))}
+        beschriftung={<>Rot umrandet: die beiden Bahnhöfe der Frage{hinweise >= 2 ? ', Ringe: die Halte dazwischen laut Fahrplan (nur Bahnhöfe, die Taktland kennt)' : ''}, jeweils dort,
+          wo der Index der App ihre Lage angibt. Grau das Streckennetz.</>} />
+    </div>
+  )
+}
+
+/**
  * «Reisedauer» (Michael, 2026-11-14): wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt in A bis zur
  * Ankunft in B? Der Regler geht von 0 bis 180 Minuten; 100 Punkte genau getroffen, je Minute daneben weniger, keine ab 2 · toleranz() + 1 Minuten.
  */
@@ -443,11 +478,15 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
   const [punkte, setPunkte] = useState<number[]>([])
   const [linien, setLinien] = useState<Set<string>>(new Set())
   const [neu, setNeu] = useState(false)
-  const name = (u: number) => namen.get(u) ?? String(u)
+  const [hinweise, setHinweise] = useState(0)
+  const name = useCallback((u: number) => namen.get(u) ?? String(u), [namen])
+  const lagen = useMemo(() => new Map((index?.bahnhoefe ?? []).filter((b) => b.lat !== null && b.lon !== null)
+    .map((b) => [b.uic, lage(b.lat!, b.lon!)] as const)), [index])
+  const lageVon = useCallback((u: number) => lagen.get(u) ?? null, [lagen])
   const ziehen = (schon: Set<string>) => {
     if (!vorrat) return
     const r = dauerZiehen(vorrat, (u) => namen.has(u), schon)
-    setRunde(r); setTipp(REGLER_BIS_MIN / 2)
+    setRunde(r); setTipp(REGLER_BIS_MIN / 2); setHinweise(0)
     if (r) setLinien(new Set([...schon, `${r.f.g}|${r.f.l}`]))
   }
   const gewertet = punkte.length > nr && nr >= 0
@@ -469,13 +508,31 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
           <p className={LEISE}>Runde {nr + 1} von {RUNDEN} · {summe} Punkte</p>
           <Bezeichnung f={runde.f} titel={`${zugTitel(runde.f)} von ${name(runde.f.h[runde.von][0])} nach ${name(runde.f.h[runde.bis][0])}`}
                        ziel={runde.f.z !== name(runde.f.h[runde.bis][0]) ? runde.f.z : undefined} />
+          <p className={`mt-3 ${LEISE}`}>Hinweise · jeder kostet {Math.round(DAUER_HINWEIS_ABZUG * 100)} % der Punkte dieser Runde</p>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {[
+              { n: 1, text: 'Karte', geht: hinweise === 0 },
+              { n: 2, text: runde.bis - runde.von > 1 ? 'Zwischenhalte' : 'Keine Zwischenhalte', geht: hinweise === 1 && runde.bis - runde.von > 1 },
+            ].map((h) => {
+              const an = hinweise >= h.n
+              return (
+                <button key={h.n} type="button" aria-pressed={an} disabled={an || !h.geht || gewertet} onClick={() => setHinweise(h.n)}
+                        className={`rounded-lg px-2.5 py-1.5 text-sm font-medium disabled:cursor-default ${an
+                          ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
+                          : `kachel kachel-link ${h.geht && !gewertet ? '' : 'opacity-40'}`}`}>
+                  {h.text} {an ? '✓' : h.geht || hinweise < h.n - 1 ? <span className="text-sbb-red">−{Math.round(DAUER_HINWEIS_ABZUG * 100)} %</span> : null}
+                </button>
+              )
+            })}
+          </div>
+          {hinweise > 0 && <DauerKarte runde={runde} hinweise={hinweise} lageVon={lageVon} name={name} />}
           <p className="mt-4 text-center text-4xl font-bold tabular-nums">{tipp} Min.</p>
           <input type="range" min={0} max={REGLER_BIS_MIN} step={1} value={tipp} disabled={gewertet} aria-label="Minuten"
                  onChange={(e) => setTipp(Number(e.target.value))} className="mt-2 w-full accent-sbb-red" />
           <div className={`flex justify-between ${LEISE}`}><span>0</span><span>{REGLER_BIS_MIN} Min.</span></div>
           {!gewertet && (
             <button type="button" className={`mt-4 w-full md:w-auto ${ROT}`} onClick={() => {
-              const p = dauerPunkte(runde.min, tipp)
+              const p = Math.round(dauerPunkte(runde.min, tipp) * (1 - DAUER_HINWEIS_ABZUG * hinweise))
               antwortTon(p >= 50 ? 'richtig' : 'falsch')
               setPunkte([...punkte, p])
             }}>Prüfen</button>
@@ -486,7 +543,8 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
                 {punkte[nr]} Punkte · laut Fahrplan {runde.min} Minuten: ab {name(runde.f.h[runde.von][0])} {uhr(runde.f.h[runde.von][2])},
                 an {name(runde.f.h[runde.bis][0])} {uhr(runde.f.h[runde.bis][1])}
               </p>
-              <p className={LEISE}>100 Punkte genau getroffen, je Minute daneben weniger, keine mehr ab {2 * toleranz(runde.min) + 1} Minuten daneben.</p>
+              <p className={LEISE}>100 Punkte genau getroffen, je Minute daneben weniger, keine mehr ab {2 * toleranz(runde.min) + 1} Minuten daneben{hinweise
+                ? `; ${hinweise} ${hinweise === 1 ? 'Hinweis' : 'Hinweise'}, −${Math.round(DAUER_HINWEIS_ABZUG * 100 * hinweise)} %` : ''}.</p>
               <p className={`mt-2 ${LEISE}`}>Alle Halte dieser Fahrt laut Fahrplan:</p>
               <HalteListe f={runde.f} namen={namen} hervor={new Set([runde.von, runde.bis])} />
               <button type="button" className={`mt-4 w-full md:w-auto ${ROT}`} onClick={() => {
