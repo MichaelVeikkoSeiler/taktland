@@ -5,7 +5,6 @@ import {
   type PuzzleRunde, puzzleZiehen, REGLER_BIS_MIN, RUNDEN, type SpielFahrt, type SpielVorrat, toleranz, uhr, vorratLaden, zugTitel,
 } from '../fahrplanspiele'
 import type { BahnhofIndex } from '../typen'
-import { Klappe } from './Klappe'
 import { Ladefehler } from './Ladefehler'
 import { type Mitspieler, type RaumSpiel, useRaumSeite } from './Raum'
 import { raumEroeffnen, teilnahmeMerken } from '../spielraum'
@@ -78,10 +77,12 @@ const GATTUNG_NAME: Record<string, string> = {
  * was die Bezeichnung des Zugs heisst (Michael, 2026-11-18: «eine kurze Erklärung zur Bezeichnung: was heisst RE mit zwei Zahlen
  * etc. Vielleicht gibt das eine Hilfestellung und lernt einem zugleich»): die Teile laut Fahrplan, darunter die Erläuterung
  */
-function Bezeichnung({ f }: { f: SpielFahrt }) {
+function Bezeichnung({ f, titel }: { f: SpielFahrt; titel: string }) {
   const linie = f.l && f.l !== f.g ? f.l : null
   return (
-    <Klappe titel={`Was heisst «${zugTitel(f)}»?`} className={`mt-1 mb-2 ${LEISE}`}>
+    <details className="klapp mt-1">
+      <summary className="cursor-pointer text-xl font-bold leading-snug" title={`Was heisst «${zugTitel(f)}»?`}>{titel}</summary>
+      <div className={`mt-1 mb-2 space-y-2 ${LEISE}`}>
       <ul className="space-y-0.5">
         {linie && <li><b>{linie}</b>: die Linie</li>}
         <li><b>{f.g}</b>: die Zuggattung{GATTUNG_NAME[f.g] ? `, ${GATTUNG_NAME[f.g]}` : ''}</li>
@@ -90,7 +91,8 @@ function Bezeichnung({ f }: { f: SpielFahrt }) {
       <p>Diese Angaben stehen so im Fahrplan.</p>
       <p><i>Erläuterung:</i> Die Zuggattung sagt, welche Art Zug es ist. Eine Linie fasst Fahrten zusammen, die regelmässig
         dieselbe Strecke fahren. Die Zugnummer bezeichnet die einzelne Fahrt.</p>
-    </Klappe>
+      </div>
+    </details>
   )
 }
 
@@ -100,8 +102,7 @@ function PuzzleWahl({ runde, name, gewaehlt, setGewaehlt, gewertet }: {
 }) {
   return (
     <>
-      <p className="mt-1 text-xl font-bold leading-snug">{zugTitel(runde.f)} von {name(runde.f.h[0][0])} nach {name(runde.f.h[runde.f.h.length - 1][0])}</p>
-      <Bezeichnung f={runde.f} />
+      <Bezeichnung f={runde.f} titel={`${zugTitel(runde.f)} von ${name(runde.f.h[0][0])} nach ${name(runde.f.h[runde.f.h.length - 1][0])}`} />
       <p className={LEISE}>In welcher Reihenfolge hält er hier?</p>
       <div className="mt-3 grid gap-2">
         {runde.gemischt.map((i) => {
@@ -465,8 +466,7 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
       {vorrat && nr >= 0 && nr < RUNDEN && runde && (
         <div className="mt-5">
           <p className={LEISE}>Runde {nr + 1} von {RUNDEN} · {summe} Punkte</p>
-          <p className="mt-1 text-xl font-bold leading-snug">{zugTitel(runde.f)} nach {runde.f.z}</p>
-          <Bezeichnung f={runde.f} />
+          <Bezeichnung f={runde.f} titel={`${zugTitel(runde.f)} nach ${runde.f.z}`} />
           <p className="mt-1 text-lg">von <b>{name(runde.f.h[runde.von][0])}</b> bis <b>{name(runde.f.h[runde.bis][0])}</b></p>
           <p className="mt-4 text-center text-4xl font-bold tabular-nums">{tipp} Min.</p>
           <input type="range" min={0} max={REGLER_BIS_MIN} step={1} value={tipp} disabled={gewertet} aria-label="Minuten"

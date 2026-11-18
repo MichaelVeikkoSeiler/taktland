@@ -1416,7 +1416,8 @@ kein neues raum.php nötig. «Wie lange dauert's?» heisst seit 2026-11-15 «Rei
 Seit 2026-11-18 unter dem Namen des Zugs in beiden Spielen die Klappe «Was heisst «RE12 4759»?» (Michael: «Bei diesem Spiel eine kurze Erklärung zur Bezeichnung:
 was heisst RE mit zwei Zahlen etc. Vielleicht gibt das eine Hilfestellung und lernt einem zugleich»; Bezeichnung in Fahrplanspiele.tsx): die Teile laut Fahrplan,
 Linie (route_short_name, nur wenn anders als die Gattung), Zuggattung (route_desc) mit ihrem Namen (GATTUNG_NAME, allgemeines Wissen) und Zugnummer (trip_short_name),
-darunter als «Erläuterung» allgemein, was Gattung, Linie und Zugnummer sind; im Browser hier mit 390 Bildpunkten angeschaut.
+darunter als «Erläuterung» allgemein, was Gattung, Linie und Zugnummer sind; im Browser hier mit 390 Bildpunkten angeschaut; seit 2026-11-18 ist der Name des Zugs selbst
+die Klappe, mit dem roten Pfeil dahinter, statt einer eigenen Zeile «Was heisst …?» darunter (Michael: «Kann man die beiden Zeilen zusammenführen?»).
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
