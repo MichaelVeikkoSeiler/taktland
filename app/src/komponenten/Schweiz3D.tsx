@@ -1718,9 +1718,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                       ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
                       : 'border-sbb-cloud bg-white text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white'} ${!da ? 'opacity-40' : ''}`}>
               {s === 'schweiz' ? (
-                // ein grober Umriss der Schweiz, von Hand gezeichnet, nicht aus den Daten
-                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="currentColor">
-                  <path d="M1.5 14.6l2.2-3.4 2.6-2.3 2.4-1.6L10 5.8l2.2.3.9-1.4 1.6.7 2 .1 2.4.9 1.4.4.6 1.5 1.4.9-.3 1.6.6 1.3-1.2.9-1.5-.2-.6 1.4-1.3.2-.6 1.6-1.5 1.2-.4 2.4-1.2.8-1.3-1.9-1.2-.7-1.6 1.6-2.3.3-2-.5-1.4-1.6-1.8.2-1.6.6-.7-1.3z" />
+                // grober Umriss der Schweiz als Linie, nach Michaels Vorlage (2026-11-18: «Bitte das für den Button ganze Schweiz verwenden»), nicht aus den Daten
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="miter">
+                  <path d="M14.5 5.4L13.1 5.9L12.8 6.6L12.4 7.1L9.7 7.1L8.4 8.0L8.0 7.7L6.6 7.6L5.8 8.8L6.1 9.2L5.1 10.4L4.0 11.3L3.9 12.3L2.7 13.4L2.0 14.9L2.1 15.3L1.5 15.9L1.5 16.7L2.7 16.7L3.2 15.9L3.6 15.5L4.3 15.1L5.0 15.2L5.4 15.6L5.5 16.9L6.4 17.8L6.6 18.3L8.4 17.8L10.3 17.9L11.2 17.0L11.2 16.1L12.1 15.1L12.4 15.0L12.8 15.5L12.9 16.2L14.1 17.3L14.2 18.0L14.9 18.6L15.5 18.3L15.5 17.3L16.5 15.5L16.9 15.1L17.2 15.1L17.9 15.9L19.4 15.6L20.1 15.6L20.4 14.7L20.8 14.3L22.3 14.3L22.5 14.1L22.2 13.4L22.5 11.6L21.8 11.2L20.4 12.2L20.0 12.0L19.3 11.1L18.2 10.9L17.8 10.5L17.8 9.8L18.6 9.1L19.1 8.1L17.9 6.7L15.8 6.5L15.2 5.7Z" />
                 </svg>
               ) : zahl}
             </button>

@@ -786,6 +786,9 @@ Stufen, Zeit und Knöpfe in «3D Schweiz» seit 2026-11-15 (Michael: «Statt CH 
              unten rechts … nebeneinander»): die Stufe Schweiz als grober Umriss (von Hand gezeichnet, nicht aus den Daten), die anderen «128 km» bis «1 km», die Zeile mit dem Namen
              der Stufe darunter weg (der Name, mit angesetzten Stücken die Grösse, nur noch als title); «Jetzt» gleich neben dem Datum, Datum schmaler, Regler und Uhrzeit in derselben
              Zeile; unten rechts Augenhöhe und «Zu zweit» nebeneinander (Lupe, Stern, Mein Standort, Augenhöhe, Zu zweit, Ton, XR, Vollbild); im Browser hier mit 360 Bildpunkten geprüft
+             seit 2026-11-18 der Knopf der Stufe Schweiz mit Michaels Umriss als Linie statt der gefüllten Form (Michael schickte ein Bild: «Bitte das für den Button ganze
+             Schweiz verwenden beim Spiel Virtuelle Schweiz»): die Mitte seines Strichs nachgezeichnet (gefüllt, um die halbe Strichbreite verkleinert, auf 5 Bildpunkte
+             vereinfacht, 64 Punkte), Strich 1,4 von 24 (gewählt); im Browser hier angeschaut
 Ansicht beim Wechsel des Reiters in «3D Schweiz» (Michael, 2026-11-14: «wenn man dann zurück ins Spiel Virtuelle Schweiz geht, wieder denselben Standort
              und Ausschnitt und Perspektive sehen wie vorher»): solange das Modell offen ist, merkt sich die Seite jede Sekunde die Ansicht wie «Ansicht merken»
              (Stufe, Feld, Kamera, Schalter, Zeit, Ton; zuletzt in Schweiz3D.tsx, nur im Speicher, nicht während ein Feld lädt); öffnet man danach #/schweiz3d
