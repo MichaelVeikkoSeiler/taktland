@@ -554,6 +554,8 @@ Autos von Hand entfernen in «3D Schweiz» seit 2026-11-17 (Michael: «wenn man 
              liegt (das vorderste), färbt es gelb #ffd23f (AUTO_TIPP_LAENGE, WAHL_FARBE, gewählt), unten im Bild «Auto entfernen» oder «Lastwagen entfernen» und «Abbrechen»;
              entfernt (AutoPlatz.entfernt) fährt es nicht mehr und zählt nicht für Stau und Vortritt, bis das Feld neu geladen wird; ein Tipp daneben oder 30 Bilder ohne es nehmen
              die Wahl zurück (wenn.auto in treffen); nicht in der Brille, nicht für «Zu zweit»; im Browser hier bei Köniz geprüft; in der Anleitung («Autos»)
+             seit 2026-11-18 stehen «… entfernen» und «Abbrechen» nicht mehr unten im Bild, sondern 22 Bildpunkte über der Mitte des gewählten Fahrzeugs und fahren mit ihm mit
+             (autoKnopfRef, AUTO_KNOPF_UEBER_PX in Schweiz3D.tsx, gewählt; Michael: «Button Auto resp Lastwagen entfernen soll etwas oberhalb des Fahrzeuges stehen»); bei Köniz geprüft
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
