@@ -460,6 +460,16 @@ Keine Stufen zwischen den Wagen in «3D Schweiz» seit 2026-11-17 (Michael, Bild
 Einzelne Fenster an den Zügen seit 2026-11-17 (Michael: «Bitte einzelne Fenster bei den Zugwagen machen»): statt des Fensterbands Fenster 0,3 der Höhe breit mit Stegen
              von 0,1 (FENSTER_BREIT, FENSTER_STEG in ZugForm.ts, gewählt), in gleichen Abständen zwischen den Türen, an Lok und Steuerwagen bis in den Kopf, leuchten
              nachts wie das Band; überall, wo die Form gilt (Virtuelle Schweiz, Modellbahn, Führerstand); als Vorschau im Browser hier angeschaut
+Gekoppelte Züge nur einmal seit 2026-11-18 (Michael: «Kann es sein dass ich den Fahrplan Zug und den Live verspäteten Zug beide sehe?»): im Fahrplan kommt kein Zug
+             zweimal vor (geprüft: keine zwei Fahrten mit gleicher Gattung und Nummer, gleichem Tag und gleicher Abfahrt), aber manche unter zwei Nummern mit denselben Zeiten
+             (RJX 168 und 31168, S1 und S31 auf einem gemeinsamen Stück; lokal 25 Paare); meldete die Echtzeit nur eine, fuhren sie auseinander; seither je Paar die Halte mit
+             gleicher Ankunft und Abfahrt an gemeinsamen Tagen, ab zwei nacheinander (kopplungFinden in src/zuege3d.ts), und sind beide im gemeinsamen Stück, bleibt einer weg,
+             der mit Echtzeit an diesem Tag geht vor, sonst die kleinere Fahrt (gekoppeltWeg); in «3D Schweiz» und im Führerstand (FahrplanZuege.ts); in der Anleitung («Züge»)
+Kamera folgt dem Zug in «3D Schweiz» seit 2026-11-18 (Michael: «Kann man einstellen dass man beim Anklicken des Zuges die Kamera diese wenn gewünscht verfolgt?»): im Schild
+             des Zugs links vom roten Knopf ein Knopf mit einer Kamera, an Anthrazit mit gedrehtem Zeichen, aus weiss (schildMalen, folgenU); an rücken Kamera und Ziel je Bild
+             um die Strecke, die der Zug gefahren ist (verfolgt in Schweiz3D.tsx), Drehen und Zoomen um ihn bleiben; aus mit dem Knopf, einem anderen oder keinem gewählten Zug
+             oder wenn er RUECKKEHR_WEG_BILDER Bilder fehlt; nicht in der Brille; auch auf 3dland.ch; im Browser hier in Bern geprüft (Kamera und Ziel rückten gleich weit
+             wie der Zug); in der Anleitung («Züge»)
 Wagen auf demselben Gleis in «3D Schweiz» (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»): das hintere Ende eines Wagens nimmt die Gleisachse
              bis 2,5 m neben der Stelle eine Wagenlänge hinter dem vorderen Ende in Richtung des Wegs (ZUG_GLEIS_FOLGEN_M, gewählt), sonst wie bisher das eigene
              eingerastete Ende; nur gebaut, hier ohne die feinen Daten nicht nachgestellt

@@ -221,3 +221,57 @@ export function zugNetzLaden(): Promise<ZugNetz> {
   })()
   return netzVorrat
 }
+
+/** gekoppelte Züge (Michael, 2026-11-18: «Kann es sein dass ich den Fahrplan Zug und den Live verspäteten Zug beide sehe?»): der Fahrplan führt manche
+ *  Züge unter zwei Nummern mit denselben Zeiten (RJX 168 und 31168, S1 und S31 auf einem gemeinsamen Stück); meldet die Echtzeit die Verspätung nur
+ *  für eine, fuhren sie auseinander. Je Fahrt und Partner die Halte, an denen beide mit derselben Ankunft und Abfahrt stehen (an Tagen, an denen beide
+ *  fahren), als Paare von Indizes */
+export type Kopplung = Map<number, Array<{ mit: number; halte: Map<number, number> }>>
+export function kopplungFinden(fahrten: ZugFahrt[]): Kopplung {
+  const je = new Map<string, Array<[ZugFahrt, number]>>()
+  for (const f of fahrten) f.halte.forEach((h, i) => { if (h.ab !== null) { const s = `${h.abk}|${h.an}|${h.ab}`; (je.get(s) ?? je.set(s, []).get(s)!).push([f, i]) } })
+  const paare = new Map<string, Map<number, number>>()
+  for (const liste of je.values()) {
+    if (liste.length < 2 || liste.length > 8) continue
+    for (const [a, i] of liste) for (const [b, j] of liste) {
+      if (a.id === b.id || !(a.tage & b.tage)) continue
+      const s = `${a.id}|${b.id}`
+      ;(paare.get(s) ?? paare.set(s, new Map()).get(s)!).set(i, j)
+    }
+  }
+  const k: Kopplung = new Map()
+  for (const [s, halte] of paare) {
+    // erst ab zwei gemeinsamen Halten nacheinander: eine gleiche Abfahrt allein ist Zufall
+    if (![...halte].some(([i, j]) => halte.get(i + 1) === j + 1)) continue
+    const [a, b] = s.split('|').map(Number)
+    ;(k.get(a) ?? k.set(a, []).get(a)!).push({ mit: b, halte })
+  }
+  return k
+}
+
+/** liegt die Stelle im Stück, das mit dem Partner gekoppelt ist: am gemeinsamen Halt oder zwischen zwei gemeinsamen Halten nacheinander */
+export function gekoppeltBei(halte: Map<number, number>, st: ZugStelle): boolean {
+  if (st.art === 'halt') return halte.has(st.i)
+  const j = halte.get(st.i)
+  return j !== undefined && halte.get(st.i + 1) === j + 1
+}
+
+/** welche der unterwegs gekoppelten Fahrten wegbleiben: von zwei, die beide im gemeinsamen Stück sind, bleibt die mit Echtzeit an diesem Tag,
+ *  sonst die mit der kleineren Nummer der Fahrt */
+export function gekoppeltWeg(kopplung: Kopplung, unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }>): Set<number> {
+  const weg = new Set<number>()
+  if (!kopplung.size) return weg
+  const da = new Map(unterwegs.map((u) => [u.f.id, u]))
+  const echt = (u: { f: ZugFahrt; st: ZugStelle }) => (u.f.echt?.get(u.st.tag)?.gemeldet.some(Boolean) ? 1 : 0)
+  for (const u of unterwegs) {
+    for (const p of kopplung.get(u.f.id) ?? []) {
+      const v = da.get(p.mit)
+      if (!v || weg.has(v.f.id) || !gekoppeltBei(p.halte, u.st)) continue
+      const zurueck = kopplung.get(v.f.id)?.find((x) => x.mit === u.f.id)
+      if (!zurueck || !gekoppeltBei(zurueck.halte, v.st)) continue
+      // u bleibt weg, wenn v vorgeht
+      if (echt(v) > echt(u) || (echt(v) === echt(u) && v.f.id < u.f.id)) { weg.add(u.f.id); break }
+    }
+  }
+  return weg
+}
