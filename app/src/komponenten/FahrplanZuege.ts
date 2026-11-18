@@ -10,7 +10,7 @@ import * as THREE from 'three'
 import { gleisLaden } from '../gelaende'
 import { lageBei, wegEnde } from '../fahrt'
 import { lv95 } from '../relief'
-import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, type ZugIndex, type ZugNetz, zugNetzLaden, type ZugWeg, zugStelle, wegStelle } from '../zuege3d'
+import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, type ZugIndex, type ZugNetz, zugNetzLaden, type ZugWeg, zugStelle, wegStelle, type ZugStelle, kopplungFinden, gekoppeltWeg, type Kopplung } from '../zuege3d'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 
 /** Masse in echter Grösse, gewählt (kein bestimmter Zug): Breite, Höhe, Länge eines Wagens und die Lücke dazwischen in m */
@@ -58,6 +58,7 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
     return m
   })
   let ix: ZugIndex | null = null, netz: ZugNetz | null = null, fahrten: ZugFahrt[] = [], zellen = new Map<string, Achse[]>()
+  let kopplung: Kopplung = new Map()
   /** die eigene Linie je Zelle: e, n, de, dn; vor: 1, wenn man in Richtung wachsender Meter fährt, -1 sonst, 0 unbekannt */
   let eigeneLinie = new Map<string, number[]>(), vor = 0
   let rahmen: [number, number, number, number] | null = null, auftrag = 0, zuletzt = 0, aus = false
@@ -91,7 +92,7 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
             }
         }
       }
-      fahrten = liste; netz = zn; zellen = z
+      fahrten = liste; netz = zn; zellen = z; kopplung = kopplungFinden(liste)
     })()
   }
 
@@ -145,10 +146,13 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
     const laengen = Array.from({ length: ZUG_WAGEN + 1 }, () => WAGEN_M)
     const ganz = laengen.reduce((a, b) => a + b, 0) + ZUG_WAGEN * LUECKE_M
     let zuege = 0
-    for (const f of fahrten) {
+    // gekoppelte Züge (zwei Nummern, dieselben Zeiten) nur einmal (kopplungFinden in src/zuege3d.ts)
+    const unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = []
+    for (const f of fahrten) { const st = zugStelle(f, tag, minuten); if (st) unterwegs.push({ f, st }) }
+    const doppelt = gekoppeltWeg(kopplung, unterwegs)
+    for (const { f, st } of unterwegs) {
       if (zuege >= ZUEGE_HOECHSTENS) break
-      const st = zugStelle(f, tag, minuten)
-      if (!st) continue
+      if (doppelt.has(f.id)) continue
       const h = f.halte
       // der Weg, auf dem die Spitze steht, und die Stelle darauf; am Halt das Ende des Wegs dorthin (am ersten Halt der Anfang des Wegs danach)
       let w: ZugWeg | null = null, s = 0

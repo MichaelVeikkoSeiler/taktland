@@ -31,7 +31,7 @@ import { laubSaison, laubSchatten, laubTagSetzen, nurKrone } from './Laub'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
-import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden, wegStelle } from '../zuege3d'
+import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden, wegStelle, kopplungFinden, gekoppeltWeg, type Kopplung } from '../zuege3d'
 import { ECHTZEIT_ALLE_MS, echtzeitHolen, echtzeitStand } from '../echtzeit'
 import { planText, rueckkehr, rueckkehrMerken, type Rueckkehr } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
@@ -1994,7 +1994,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
             Zugnummer, woher er kommt (sein erster Halt im Netz von Taktland laut Fahrplan; ein Zug aus dem Ausland kommt dann von der Grenze) und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
-            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Der rote Knopf rechts im Schild führt in den Führerstand von Taktland: Der Zug fährt
+            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Der Knopf mit der Kamera im Schild lässt die Kamera mit dem Zug mitfahren: Sie rückt jeden Augenblick so weit, wie er fährt, Drehen und Zoomen um ihn gehen weiter; ein zweiter Tipp darauf, ein anderer Zug oder ein Tipp daneben beendet es, ebenso wenn er den Ausschnitt verlässt. Manche Züge führt der Fahrplan unter zwei Nummern mit denselben Zeiten (gekoppelte Züge); wo beide gemeinsam fahren, zeigen wir nur einen, den mit Echtzeit, wenn sie nur für einen gemeldet ist. Der rote Knopf rechts im Schild führt in den Führerstand von Taktland: Der Zug fährt
             dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher, in Taktland «Zurück zur Virtuellen Schweiz» dorthin, wo der Zug laut Fahrplan jetzt ist, in derselben Stufe und mit denselben Schaltern und demselben Ton wie beim Wechsel; die Kamera steht wieder im selben Winkel und Abstand zum Zug, bleibt dann stehen und schaut ihm nach, bis er aus dem Ausschnitt fährt oder man selbst dreht oder zoomt. Mit Verspätung laut Echtzeit kann der Zug dort fehlen, der Führerstand fährt nach Fahrplan. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, mit einzelnen Fenstern, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.
             Die Wagen hängen aneinander und folgen einer Linie, die nie steiler als 6° ist; steigt das Gelände oder die Gleisachse steiler, liegt der Zug dort etwas darüber oder darunter.</p>
@@ -5815,20 +5815,22 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const schild = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false }))
     schild.center.set(0.5, 0); schild.renderOrder = 6; schild.visible = false
     gruppe.add(schild)
-    const schildMalen = (zeilen: string[], knopf = false) => {
+    const schildMalen = (zeilen: string[], knopf = false, folgen: boolean | null = null) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       const px = 26, klein = 21, fett = `bold ${px}px Helvetica, Arial, sans-serif`, normal = `normal ${klein}px Helvetica, Arial, sans-serif`
       x.font = fett; let breit = x.measureText(zeilen[0]).width
       x.font = normal; for (const z of zeilen.slice(1)) breit = Math.max(breit, x.measureText(z).width)
-      const hoch = px + 16 + (zeilen.length - 1) * (klein + 6), kn = knopf ? Math.min(hoch - 16, SCHILD_KNOPF_PX) : 0
-      c.width = Math.ceil(breit) + 20 + (knopf ? kn + 10 : 0); c.height = hoch
+      const hoch = px + 16 + (zeilen.length - 1) * (klein + 6), kn = Math.min(hoch - 16, SCHILD_KNOPF_PX)
+      const knoepfe = (knopf ? 1 : 0) + (folgen !== null ? 1 : 0)
+      c.width = Math.ceil(breit) + 20 + knoepfe * (kn + 10); c.height = hoch
       x.fillStyle = ORT_GRAU; x.beginPath(); x.roundRect(0, 0, c.width, c.height, SCHILD_RUND_PX); x.fill()
       x.fillStyle = '#ffffff'; x.font = fett; x.fillText(zeilen[0], 10, px + 4)
       x.font = normal; zeilen.slice(1).forEach((z, i) => x.fillText(z, 10, px + 8 + (i + 1) * (klein + 6)))
+      const ky = (hoch - kn) / 2
       // rechts der rote Knopf «In den Führerstand» mit dem Zeichen der Züge (Michael, 2026-11-14: «In den Führerstand bei der Zuginfo einblenden.
       // Evtl als rotes Icon?»); ein Tipp darauf gilt ab knopfU (Anteil der Breite)
       if (knopf) {
-        const kx = c.width - kn - 8, ky = (hoch - kn) / 2
+        const kx = c.width - kn - 8
         x.fillStyle = '#a8102e'; x.beginPath(); x.roundRect(kx, ky, kn, kn, 8); x.fill()
         x.save(); x.translate(kx + kn * 0.14, ky + kn * 0.14); x.scale((kn * 0.72) / 24, (kn * 0.72) / 24)
         x.strokeStyle = '#ffffff'; x.lineWidth = 2; x.lineCap = 'round'; x.lineJoin = 'round'
@@ -5836,11 +5838,26 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         x.stroke(new Path2D('M6 10.5h12M9.5 14h.01M14.5 14h.01M8.5 21l2-4M15.5 21l-2-4'))
         x.restore()
       }
+      // links davon «Kamera folgt» (Michael, 2026-11-18: «Kann man einstellen dass man beim Anklicken des Zuges die Kamera diese wenn gewünscht
+      // verfolgt?»): eine Kamera als Zeichen, an wie die Symbole im Bild (Anthrazit, weisses Zeichen um 30° gedreht), aus weiss
+      let folgenU: [number, number] = [2, 2]
+      if (folgen !== null) {
+        const kx = c.width - kn - 8 - (knopf ? kn + 10 : 0)
+        x.fillStyle = folgen ? '#5a5a5a' : '#ffffff'; x.beginPath(); x.roundRect(kx, ky, kn, kn, 8); x.fill()
+        if (folgen) { x.strokeStyle = 'rgba(0,0,0,0.45)'; x.lineWidth = 3; x.beginPath(); x.roundRect(kx + 1.5, ky + 1.5, kn - 3, kn - 3, 7); x.stroke() }
+        x.save(); x.translate(kx + kn / 2, ky + kn / 2); if (folgen) x.rotate(-Math.PI / 6)
+        x.scale((kn * 0.62) / 24, (kn * 0.62) / 24); x.translate(-12, -12)
+        x.strokeStyle = folgen ? '#ffffff' : '#212121'; x.lineWidth = 2; x.lineCap = 'round'; x.lineJoin = 'round'
+        x.beginPath(); x.roundRect(2, 7, 14, 10, 2); x.stroke()
+        x.stroke(new Path2D('M16 11l6-3.5v9L16 13'))
+        x.restore()
+        folgenU = [(kx - 4) / c.width, (kx + kn + 4) / c.width]
+      }
       const knopfU = knopf ? (c.width - kn - 14) / c.width : 2
       schild.material.map?.dispose()
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       schild.material.map = t; schild.material.needsUpdate = true
-      schild.userData = { b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height, brilleM: 0.03, knopfU }
+      schild.userData = { b: c.width * 0.00085, h: c.height * 0.00085, verhaeltnis: c.width / c.height, brilleM: 0.03, knopfU, folgenU }
       if (!k.renderer.xr.isPresenting) schild.scale.set(schild.userData.b, schild.userData.h, 1)
     }
     const uhr = (min: number | null) => {
@@ -5925,6 +5942,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     gruppe.userData.abwahl = () => { gewaehlt = null }
     if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dZugWaehlen: unknown }).s3dZugWaehlen = (i = 0) => { gewaehlt = gezeichnet[i]?.id ?? null; return gezeichnet.length }
+    if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dFolgen: unknown }).s3dFolgen = (an?: boolean) => {
+      if (an !== undefined) verfolgt = !an || gewaehlt === null ? null : { fahrt: gewaehlt, letzt: null, weg: 0 }
+      const z = gezeichnet.findIndex((f) => f.id === gewaehlt), c = zugMitte(z)
+      return { an: !!verfolgt, kamera: k.kamera.position.toArray(), ziel: k.steuerung.target.toArray(), zug: c ? k.wurzel.localToWorld(c).toArray() : null }
+    }
     if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dZugSchild: unknown }).s3dZugSchild = (id?: number) => {
       if (id !== undefined) gewaehlt = id
       return { schild: schildText, zuege: gezeichnet.map((f) => [f.id, f.gattung, f.nummer]), alle: fahrten.filter((f) => f.echt).map((f) => [f.id, f.nummer, [...f.echt!.entries()]]) }
@@ -5957,6 +5979,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     let folgt = rueckkehr && rueckkehr.stufe === stufe && (rueckkehr.bis ?? 0) > performance.now() ? { r: rueckkehr, gesetzt: false, weg: 0 } : null
     const folgenLos = () => { folgt = null }
+    // «Kamera folgt» im Schild: Kamera und Ziel rücken je Bild um so viel, wie der Zug gefahren ist; Drehen und Zoomen um ihn bleiben, es endet mit
+    // dem Knopf, wenn ein anderer oder kein Zug gewählt ist oder er RUECKKEHR_WEG_BILDER Bilder lang fehlt; nicht in der Brille
+    let verfolgt: { fahrt: number; letzt: THREE.Vector3 | null; weg: number } | null = null
     k.steuerung.addEventListener('start', folgenLos)
     /** welcher gezeichnete Zug dem Strahl am nächsten liegt, bis grenze (Winkel vom Ursprung des Strahls), sonst -1 */
     const finden = (r: THREE.Ray, grenze: number) => {
@@ -5976,9 +6001,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       return best
     }
     gruppe.userData.schildTipp = (r: THREE.Raycaster) => {
-      if (!schild.visible || !mitfahrenDa || k.renderer.xr.isPresenting || !(schild.userData.knopfU < 1)) return false
+      if (!schild.visible || k.renderer.xr.isPresenting) return false
       const t = r.intersectObject(schild, false)[0]
-      if (!t?.uv || t.uv.x < schild.userData.knopfU) return false
+      if (!t?.uv) return false
+      const fu = schild.userData.folgenU as [number, number] | undefined
+      if (fu && t.uv.x >= fu[0] && t.uv.x <= fu[1] && gewaehlt !== null) {
+        verfolgt = verfolgt?.fahrt === gewaehlt ? null : { fahrt: gewaehlt, letzt: null, weg: 0 }
+        knopfTon(verfolgt !== null)
+        return true
+      }
+      if (!mitfahrenDa || !(schild.userData.knopfU < 1) || t.uv.x < schild.userData.knopfU) return false
       fuehrerstandRef.current()
       return true
     }
@@ -5995,6 +6027,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
     let fahrten: ZugFahrt[] = [], ix: ZugIndex | null = null, zn: ZugNetz | null = null
+    let kopplung: Kopplung = new Map()
     const spuren = new Map<string, number[]>()
     // je Bahnhof die Richtung «links» des ersten Zugs dort: so liegt eine Spur für Züge beider Richtungen auf derselben Seite
     const spurSeite = new Map<string, [number, number]>()
@@ -6093,7 +6126,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (!ix) { setZugZeile('Züge: der Fahrplan ist hier nicht geladen.'); return }
       const [liste, netzDa] = await Promise.all([zuegeLaden(ix, e0, n0, e1, n1).catch(() => []), zugNetzLaden().catch(() => null)])
       if (weg) return
-      fahrten = liste; zn = netzDa
+      fahrten = liste; zn = netzDa; kopplung = kopplungFinden(liste)
       // je Bahnhof die Gleise der Reihe nach (nur die Zahl am Anfang: «2A-D» ist Gleis 2, «7 / 8» Gleis 7)
       const je = new Map<string, Set<number>>()
       for (const f of liste) for (const x of f.halte) {
@@ -6133,6 +6166,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         unterwegs = []
         for (const f of fahrten) { const st = zugStelle(f, jetzt.tag, jetzt.minuten); if (st) unterwegs.push({ f, st: st }) }
         for (const u of unterwegs) { const st = zugStelle(u.f, jetzt.tag, jetzt.minuten); if (st) u.st = st }
+        // gekoppelte Züge nur einmal, der mit Echtzeit vor dem nach Fahrplan (kopplungFinden in src/zuege3d.ts)
+        const doppelt = gekoppeltWeg(kopplung, unterwegs)
+        if (doppelt.size) unterwegs = unterwegs.filter((u) => !doppelt.has(u.f.id))
         // stehen mehrere Züge zugleich am selben Bahnhof auf demselben Gleis, steht der später angekommene hinter dem ersten (Michael, 2026-11-07,
         // Lausanne um 03:16: «zwei Züge ineinander … zudem verkeilt»: der N1 und der N9 halten laut Fahrplan beide auf Gleis 5, sie standen an
         // derselben Stelle, das Ausweichen schob den einen schräg aufs Nachbargleis); die Reihenfolge nach der Ankunft, eine Annahme
@@ -6552,8 +6588,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           mitfahrenSetzen(u.f, st)
           // nicht in der Brille: dort führt der Knopf aus der Sitzung, die Brille kennt den Führerstand von Taktland nicht
           const knopf = mitfahrenDa && !k.renderer.xr.isPresenting
-          const zeilen = zeilenVon(u.f, st), text = zeilen.join('|') + (knopf ? '|K' : '')
-          if (text !== schildText) { schildText = text; schildMalen(zeilen, knopf) }
+          const folgen = k.renderer.xr.isPresenting ? null : verfolgt?.fahrt === u.f.id
+          const zeilen = zeilenVon(u.f, st), text = zeilen.join('|') + (knopf ? '|K' : '') + `|F${folgen}`
+          if (text !== schildText) { schildText = text; schildMalen(zeilen, knopf, folgen) }
         }
         zahl++
       }
@@ -6568,6 +6605,18 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           // OrbitControls rechnet den Abstand aus der Lage der Kamera neu: sie bleibt stehen und dreht sich zum Zug
           k.steuerung.target.copy(k.wurzel.localToWorld(c)); k.steuerung.update(); folgt.weg = 0
         } else if (folgt.gesetzt ? ++folgt.weg > RUECKKEHR_WEG_BILDER : performance.now() > (folgt.r.bis ?? 0)) folgt = null
+      }
+      if (verfolgt && (verfolgt.fahrt !== gewaehlt || k.renderer.xr.isPresenting)) verfolgt = null
+      if (verfolgt) {
+        const c = zugMitte(gezeichnet.findIndex((f) => f.id === verfolgt!.fahrt))
+        if (c) {
+          const w = k.wurzel.localToWorld(c)
+          if (verfolgt.letzt) {
+            const d = w.clone().sub(verfolgt.letzt)
+            k.kamera.position.add(d); k.steuerung.target.add(d); k.steuerung.update()
+          } else { k.steuerung.target.copy(w); k.steuerung.update() }
+          verfolgt.letzt = w; verfolgt.weg = 0
+        } else if (++verfolgt.weg > RUECKKEHR_WEG_BILDER) verfolgt = null
       }
       if (import.meta.env.VITE_S3D_TEST && nebenher) {
         const z = gezeichnet.findIndex((f) => f.id === nebenher!.fahrt), ms = z >= 0 ? mitten[z] : undefined, c = zugMitte(z)
