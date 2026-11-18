@@ -2516,6 +2516,8 @@ const AUF_3DLAND = /3dland/.test(window.location.hostname) || /3dland\.html$/.te
 // Bahnhof klickt. Bitte … die Toleranz etwas enger machen»)
 /** der rote Knopf «In den Führerstand» im Schild eines Zugs, Bildpunkte auf dem Schild (gewählt) */
 const SCHILD_KNOPF_PX = 46
+/** so weit stehen die Knöpfe «Auto entfernen» über der Mitte des gewählten Fahrzeugs im Bild (Bildpunkte); gewählt */
+const AUTO_KNOPF_UEBER_PX = 22
 const ZUG_TIPP_WINKEL = (1.25 * Math.PI) / 180
 /** ein Auto antippen: getroffen bis so viele halbe Längen neben seiner Mitte oder bis ZUG_TIPP_WINKEL vom Auge; gewählt gelb (gewählt) */
 const AUTO_TIPP_LAENGE = 1.3, WAHL_FARBE = new THREE.Color('#ffd23f')
@@ -7122,6 +7124,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // stehen manuell entfernen könnte. Z.B. drauftippen und dann löschen»): ein Tipp wählt es (gelb), darunter «Entfernen»; weg bis zum nächsten Laden des Felds
   const [autoWahl, setAutoWahl] = useState<string | null>(null)
   const autoEntfernen = useRef<(() => void) | null>(null), autoAbwahl = useRef<(() => void) | null>(null)
+  // die Knöpfe zum Entfernen etwas über dem gewählten Fahrzeug (Michael, 2026-11-18: «Button Auto resp Lastwagen entfernen soll etwas oberhalb des Fahrzeuges stehen»)
+  const autoKnopfRef = useRef<HTMLDivElement>(null)
   // Autos auf Autobahnen und Autostrassen (komponenten/Autos.ts, pipeline/build_autos.py; Michael, 2026-11-10: «Möglich Autos aus den Autobahnen
   // wegzuretuschieren und durch fahrende Modelle zu ersetzen?»): nur in den Feldern von 4 km und 1 km, mit dem Knopf «Autos»; die stehenden Autos
   // im Luftbild retuschiert, solange der Knopf an ist; so viele, wie laut der nächsten Zählstelle des ASTRA zu dieser Stunde fahren
@@ -7667,7 +7671,21 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         if (nacht) { kegel!.instanceMatrix.needsUpdate = true; if (kegel!.instanceColor) kegel!.instanceColor.needsUpdate = true }
         kegelStoff.opacity = AUTO_KEGEL_HELL * fensterNacht.value
         // das gewählte Auto fährt aus dem Feld (oder in einen Tunnel): nach 30 Bildern ohne es ist die Wahl weg
-        if (gewaehlt) { if (sichtbar.some((x) => x.a === gewaehlt)) gewaehltFehlt = 0; else if (++gewaehltFehlt > 30) abwahl() }
+        if (gewaehlt) {
+          const x = sichtbar.find((y) => y.a === gewaehlt)
+          if (x) {
+            gewaehltFehlt = 0
+            // je Bild an die Stelle über dem Fahrzeug im Bild, ohne React; AUTO_KNOPF_UEBER_PX über seiner Mitte, gewählt
+            const el = autoKnopfRef.current, eltern = el?.offsetParent as HTMLElement | null
+            if (el && eltern) {
+              const v = k.wurzel.localToWorld(new THREE.Vector3(x.x, x.y, x.z)).project(k.kamera)
+              const rr = k.renderer.domElement.getBoundingClientRect(), er = eltern.getBoundingClientRect()
+              const px = rr.left - er.left + ((v.x + 1) / 2) * rr.width, py = rr.top - er.top + ((1 - v.y) / 2) * rr.height - AUTO_KNOPF_UEBER_PX
+              el.style.left = `${Math.max(8, Math.min(er.width - 8, px))}px`; el.style.top = `${Math.max(8, py)}px`
+              el.style.visibility = v.z < 1 ? 'visible' : 'hidden'
+            }
+          } else if (++gewaehltFehlt > 30) abwahl()
+        }
       }
       k.jeBild.push(schritt)
     })
@@ -8061,7 +8079,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       )}
       {/* keine Zeilen zum Wetter im Bild (Michael, 2026-11-08: «Wetterinfos alle weg»); was fehlt, steht in der Anleitung */}
       {autoWahl && (
-        <div className="absolute inset-x-0 bottom-16 z-10 flex justify-center gap-2 px-2">
+        <div ref={autoKnopfRef} className="absolute z-10 flex -translate-x-1/2 -translate-y-full gap-2 whitespace-nowrap" style={{ left: '50%', top: '50%', visibility: 'hidden' }}>
           <button type="button" onClick={() => autoEntfernen.current?.()}
             className="rounded-lg bg-sbb-red px-3 py-1.5 text-sm font-bold text-white shadow">{autoWahl} entfernen</button>
           <button type="button" onClick={() => autoAbwahl.current?.()}
