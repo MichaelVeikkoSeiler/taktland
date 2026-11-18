@@ -1423,6 +1423,11 @@ darunter als «Erläuterung» allgemein, was Gattung, Linie und Zugnummer sind; 
 die Klappe, mit dem roten Pfeil dahinter, statt einer eigenen Zeile «Was heisst …?» darunter (Michael: «Kann man die beiden Zeilen zusammenführen?»); seit 2026-11-18 heisst der Zug
 Gattung und Nummer («RE 4128», zugTitel), in «Reisedauer» mit dem gefragten Stück in einer Zeile «RE 4128 von … nach …» statt «… nach Ziel» und «von … bis …» darunter,
 die Linie und das Ziel des Zugs (wenn anders) in der Klappe (Michael: «An diesem Beispiel könnte man doch übersichtlicher schreiben: RE 4128 von... nach...»).
+Seit 2026-11-18 in «Reisedauer» zwei Hinweise wie bei «Geo» (Michael: «Gleich wie bei anderen Spielen soll auch hier Hinweise Helfen. Ein Hinweis ist eine einfache Karte
+und zweiter Hinweis sind alle Zwischenhalte in der Karte. Abzüge: Hinweis 1: -15% Hinweis 2 -15%»): Knöpfe «Karte» und «Zwischenhalte» (der zweite erst nach dem ersten,
+«Keine Zwischenhalte», wo es keine gibt), je −15 % der Punkte der Runde (DAUER_HINWEIS_ABZUG); die Karte ist die Netzkarte der App mit den beiden Bahnhöfen rot umrandet,
+dann mit den Halten dazwischen laut Fahrplan (nur Bahnhöfe von Taktland), Lage aus dem Index der App (DauerKarte in Fahrplanspiele.tsx); in der Anleitung; im Browser hier mit
+390 Bildpunkten gespielt.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
