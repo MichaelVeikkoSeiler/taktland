@@ -77,16 +77,17 @@ const GATTUNG_NAME: Record<string, string> = {
  * was die Bezeichnung des Zugs heisst (Michael, 2026-11-18: «eine kurze Erklärung zur Bezeichnung: was heisst RE mit zwei Zahlen
  * etc. Vielleicht gibt das eine Hilfestellung und lernt einem zugleich»): die Teile laut Fahrplan, darunter die Erläuterung
  */
-function Bezeichnung({ f, titel }: { f: SpielFahrt; titel: string }) {
+function Bezeichnung({ f, titel, ziel }: { f: SpielFahrt; titel: string; ziel?: string }) {
   const linie = f.l && f.l !== f.g ? f.l : null
   return (
     <details className="klapp mt-1">
       <summary className="cursor-pointer text-xl font-bold leading-snug" title={`Was heisst «${zugTitel(f)}»?`}>{titel}</summary>
       <div className={`mt-1 mb-2 space-y-2 ${LEISE}`}>
       <ul className="space-y-0.5">
-        {linie && <li><b>{linie}</b>: die Linie</li>}
         <li><b>{f.g}</b>: die Zuggattung{GATTUNG_NAME[f.g] ? `, ${GATTUNG_NAME[f.g]}` : ''}</li>
         {f.n && <li><b>{f.n}</b>: die Zugnummer dieser Fahrt</li>}
+        {linie && <li><b>{linie}</b>: die Linie</li>}
+        {ziel && <li><b>{ziel}</b>: das Ziel des Zugs</li>}
       </ul>
       <p>Diese Angaben stehen so im Fahrplan.</p>
       <p><i>Erläuterung:</i> Die Zuggattung sagt, welche Art Zug es ist. Eine Linie fasst Fahrten zusammen, die regelmässig
@@ -466,8 +467,8 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
       {vorrat && nr >= 0 && nr < RUNDEN && runde && (
         <div className="mt-5">
           <p className={LEISE}>Runde {nr + 1} von {RUNDEN} · {summe} Punkte</p>
-          <Bezeichnung f={runde.f} titel={`${zugTitel(runde.f)} nach ${runde.f.z}`} />
-          <p className="mt-1 text-lg">von <b>{name(runde.f.h[runde.von][0])}</b> bis <b>{name(runde.f.h[runde.bis][0])}</b></p>
+          <Bezeichnung f={runde.f} titel={`${zugTitel(runde.f)} von ${name(runde.f.h[runde.von][0])} nach ${name(runde.f.h[runde.bis][0])}`}
+                       ziel={runde.f.z !== name(runde.f.h[runde.bis][0]) ? runde.f.z : undefined} />
           <p className="mt-4 text-center text-4xl font-bold tabular-nums">{tipp} Min.</p>
           <input type="range" min={0} max={REGLER_BIS_MIN} step={1} value={tipp} disabled={gewertet} aria-label="Minuten"
                  onChange={(e) => setTipp(Number(e.target.value))} className="mt-2 w-full accent-sbb-red" />

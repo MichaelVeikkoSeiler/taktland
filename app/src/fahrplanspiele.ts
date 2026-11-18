@@ -32,7 +32,7 @@ export async function vorratLaden(): Promise<SpielVorrat> {
 }
 
 export function zugTitel(f: SpielFahrt): string {
-  return `${f.l && f.l !== f.g ? f.l : f.g} ${f.n}`.trim()
+  return `${f.g} ${f.n}`.trim()
 }
 
 export function uhr(min: number | null): string {

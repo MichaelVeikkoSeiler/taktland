@@ -1417,7 +1417,9 @@ Seit 2026-11-18 unter dem Namen des Zugs in beiden Spielen die Klappe «Was heis
 was heisst RE mit zwei Zahlen etc. Vielleicht gibt das eine Hilfestellung und lernt einem zugleich»; Bezeichnung in Fahrplanspiele.tsx): die Teile laut Fahrplan,
 Linie (route_short_name, nur wenn anders als die Gattung), Zuggattung (route_desc) mit ihrem Namen (GATTUNG_NAME, allgemeines Wissen) und Zugnummer (trip_short_name),
 darunter als «Erläuterung» allgemein, was Gattung, Linie und Zugnummer sind; im Browser hier mit 390 Bildpunkten angeschaut; seit 2026-11-18 ist der Name des Zugs selbst
-die Klappe, mit dem roten Pfeil dahinter, statt einer eigenen Zeile «Was heisst …?» darunter (Michael: «Kann man die beiden Zeilen zusammenführen?»).
+die Klappe, mit dem roten Pfeil dahinter, statt einer eigenen Zeile «Was heisst …?» darunter (Michael: «Kann man die beiden Zeilen zusammenführen?»); seit 2026-11-18 heisst der Zug
+Gattung und Nummer («RE 4128», zugTitel), in «Reisedauer» mit dem gefragten Stück in einer Zeile «RE 4128 von … nach …» statt «… nach Ziel» und «von … bis …» darunter,
+die Linie und das Ziel des Zugs (wenn anders) in der Klappe (Michael: «An diesem Beispiel könnte man doch übersichtlicher schreiben: RE 4128 von... nach...»).
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
