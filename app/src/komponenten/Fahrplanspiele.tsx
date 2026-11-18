@@ -5,6 +5,7 @@ import {
   type PuzzleRunde, puzzleZiehen, REGLER_BIS_MIN, RUNDEN, type SpielFahrt, type SpielVorrat, toleranz, uhr, vorratLaden, zugTitel,
 } from '../fahrplanspiele'
 import type { BahnhofIndex } from '../typen'
+import { Klappe } from './Klappe'
 import { Ladefehler } from './Ladefehler'
 import { type Mitspieler, type RaumSpiel, useRaumSeite } from './Raum'
 import { raumEroeffnen, teilnahmeMerken } from '../spielraum'
@@ -42,7 +43,7 @@ function Kopf({ titel, text, best }: { titel: string; text: string; best: number
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{titel}</h1>
       <p className="mt-2 leading-relaxed">{text}</p>
-      {best !== null && <p className={`mt-1 ${LEISE}`}>Dein Bestwert: {best} Punkte</p>}
+      {best !== null && <p className={`mt-1 mb-2 ${LEISE}`}>Dein Bestwert: {best} Punkte</p>}
     </>
   )
 }
@@ -67,6 +68,32 @@ function Ende({ summe, hoechst, neu, nochmals }: { summe: number; hoechst: numbe
   )
 }
 
+/** Namen der Zuggattungen im Vorrat (SPIEL_GATTUNGEN in pipeline/build_fahrplan.py); allgemeines Wissen, nicht aus dem Fahrplan */
+const GATTUNG_NAME: Record<string, string> = {
+  IC: 'InterCity', ICN: 'InterCity-Neigezug', IR: 'InterRegio', RE: 'RegioExpress', EC: 'EuroCity', ICE: 'Intercity-Express',
+  TGV: 'Train à Grande Vitesse', RJX: 'railjet xpress', NJ: 'Nightjet', EN: 'EuroNight', PE: 'Panorama Express',
+}
+
+/**
+ * was die Bezeichnung des Zugs heisst (Michael, 2026-11-18: «eine kurze Erklärung zur Bezeichnung: was heisst RE mit zwei Zahlen
+ * etc. Vielleicht gibt das eine Hilfestellung und lernt einem zugleich»): die Teile laut Fahrplan, darunter die Erläuterung
+ */
+function Bezeichnung({ f }: { f: SpielFahrt }) {
+  const linie = f.l && f.l !== f.g ? f.l : null
+  return (
+    <Klappe titel={`Was heisst «${zugTitel(f)}»?`} className={`mt-1 mb-2 ${LEISE}`}>
+      <ul className="space-y-0.5">
+        {linie && <li><b>{linie}</b>: die Linie</li>}
+        <li><b>{f.g}</b>: die Zuggattung{GATTUNG_NAME[f.g] ? `, ${GATTUNG_NAME[f.g]}` : ''}</li>
+        {f.n && <li><b>{f.n}</b>: die Zugnummer dieser Fahrt</li>}
+      </ul>
+      <p>Diese Angaben stehen so im Fahrplan.</p>
+      <p><i>Erläuterung:</i> Die Zuggattung sagt, welche Art Zug es ist. Eine Linie fasst Fahrten zusammen, die regelmässig
+        dieselbe Strecke fahren. Die Zugnummer bezeichnet die einzelne Fahrt.</p>
+    </Klappe>
+  )
+}
+
 /** die Halte zum Ordnen: antippen in der Reihenfolge, nochmals antippen nimmt den Halt und alle danach zurück; nach dem Prüfen grün und rot */
 function PuzzleWahl({ runde, name, gewaehlt, setGewaehlt, gewertet }: {
   runde: PuzzleRunde; name: (u: number) => string; gewaehlt: number[]; setGewaehlt: (g: number[]) => void; gewertet: boolean
@@ -74,6 +101,7 @@ function PuzzleWahl({ runde, name, gewaehlt, setGewaehlt, gewertet }: {
   return (
     <>
       <p className="mt-1 text-xl font-bold leading-snug">{zugTitel(runde.f)} von {name(runde.f.h[0][0])} nach {name(runde.f.h[runde.f.h.length - 1][0])}</p>
+      <Bezeichnung f={runde.f} />
       <p className={LEISE}>In welcher Reihenfolge hält er hier?</p>
       <div className="mt-3 grid gap-2">
         {runde.gemischt.map((i) => {
@@ -374,7 +402,7 @@ function PuzzleOnlineSpiel({ r, runden, namen, vorrat }: {
       {(phase === 'warten' || (phase === 'frage' && gesendet === frage)) && (
         <div className="mt-4">
           <p className="text-xl font-bold">Deine Reihenfolge ist abgegeben</p>
-          <p className={`mt-1 ${LEISE}`}>Warte auf {spieler.filter((m) => !tipps[m.id]).map((m) => m.name).join(', ') || 'die Vermittlung'} …</p>
+          <p className={`mt-1 mb-2 ${LEISE}`}>Warte auf {spieler.filter((m) => !tipps[m.id]).map((m) => m.name).join(', ') || 'die Vermittlung'} …</p>
           {gastgeber && (
             <button type="button" onClick={() => void schicken('aufloesen', { frage })}
                     className="mt-4 rounded-lg border border-sbb-cloud px-4 py-2 font-medium dark:border-sbb-iron">Nicht länger warten und auflösen</button>
@@ -438,6 +466,7 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
         <div className="mt-5">
           <p className={LEISE}>Runde {nr + 1} von {RUNDEN} · {summe} Punkte</p>
           <p className="mt-1 text-xl font-bold leading-snug">{zugTitel(runde.f)} nach {runde.f.z}</p>
+          <Bezeichnung f={runde.f} />
           <p className="mt-1 text-lg">von <b>{name(runde.f.h[runde.von][0])}</b> bis <b>{name(runde.f.h[runde.bis][0])}</b></p>
           <p className="mt-4 text-center text-4xl font-bold tabular-nums">{tipp} Min.</p>
           <input type="range" min={0} max={REGLER_BIS_MIN} step={1} value={tipp} disabled={gewertet} aria-label="Minuten"
