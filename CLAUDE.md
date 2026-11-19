@@ -560,7 +560,7 @@ Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch g
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
 Regenschirme in «3D Schweiz» seit 2026-11-19 (Michael: «Wenn es regnet, soll jede dritte Person einen Regenschirm haben»): fällt im Modell Regen (mit «Wetter»,
              laut Wettermodell im Mittel über dem Modell oder laut Station, regnet in Schweiz3D.tsx), trägt jede dritte Person einen Schirm, je Person ein fester
-             Zufall (SCHIRM_ANTEIL, schirmForm, schirmFarbe in Menschen.ts): Dach 1 m breit über dem Kopf, Stock zur rechten Hand, acht Farben, Form und Farben gewählt;
+             Zufall (SCHIRM_ANTEIL, schirmForm, schirmFarbe in Menschen.ts): Dach 1 m breit über dem Kopf, Stock vor dem Körper, acht Farben, Form und Farben gewählt;
              bei Schnee nicht; in der Anleitung («Menschen»)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
              wartende Menschen einsteigen lassen? Bei den Türen die sich öffnen? Türe sollen Schiebetüren sein»): mit «Züge» an, in den Feldern von 4 km und 1 km,
