@@ -9,7 +9,7 @@ import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeom
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { bodenbedeckungLaden, holen, holenBinaer, indexLaden, kartengrundLaden, seenLaden, sehenswertLaden, szeneLaden } from '../daten'
 import { lampenBauen, LICHT_FERN, type Strassenlampen } from './Strassenlicht'
-import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
+import { anteilStunde, AUSSTEIGEN_DAUER_S, AUSSTEIGEN_HOECHSTENS, AUSSTEIGEN_RAUS_M, AUSSTEIGEN_TAKT_S, EINSTEIGEN_ANTEIL, EINSTEIGEN_M, EINSTEIGEN_WIEDER_S, GEHEN_MS, type Geher, gehweg, geherAuf, kleidFarbe, menschForm, SCHIRM_ANTEIL, schirmFarbe, schirmForm, type OffeneTuer, perronBei, TROTTOIR_M, TUER_AUF_NACH_S, TUER_BEWEGT_S, TUER_HALT_AB_S, TUER_ZU_VOR_S, WANDERER_JE_KM, wartende, wegBei, zufall as menschZufall } from './Menschen'
 import { FLUGZEUG_DAUER_S, FLUGZEUG_HOEHE_M, FLUGZEUG_MS, FLUGZEUG_SPITZE_S, flugzeugForm, HELIKOPTER_HOEHE_M, HELIKOPTER_MS, helikopterForm } from './Flugzeug'
 import { bauartNetze, type BrueckenArtEintrag, type Kandidat, zuordnen } from './Bauart'
 import { LKW_LANG_M, LKW_BREIT_M, lkwFarbe, lkwForm, STRASSE_RETUSCHE_AB_M, STRASSE_RETUSCHE_PLUS_M, AUTO_KEGEL_BREIT_M, AUTO_KEGEL_HELL, AUTO_KEGEL_INNEN_M, AUTO_KEGEL_LANG_M, kegelArt, AUTO_RETUSCHE_BEIDE_M, AUTO_RETUSCHE_EINWEG_M, autoBei, autoForm, type AutoKette, type AutoPlatz, autoLichter, autoRundeLichter, autoDoppelLichter, autoHeck, autoHeckArt, HECK_ARTEN, FUSS_MS, FUSS_VOR_M, fussgaenger, fussWeg, type Halt, HALT_HOECHSTENS, HALT_HUPE, HALT_JE_S, HALT_NAH_M, stauRechnen, type Verzug, fahrbahnMessen, fahrbahnRetusche, kettenBauen, kmhAuf, netzBauen, weiterNach, spurLage, bogen, type SpurLage, KURVE_HALB_M, faedelnZwischen, faedelnStart, faedelnLage, FAEDELN_AUS_M, istVerbindung, spurLageVor,
@@ -2070,7 +2070,8 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             Einwohner einer Hektare rundum, am Abend und in der Nacht weniger. Auf den Wanderwegen ist es am Tag etwa ein Wanderer alle 1,7 km. Auf den
             Perrons stehen sie in kleinen Gruppen, an den Enden etwas weniger, auf den Trottoirs gehen manche zu zweit oder zu dritt. Die
             Menschen selbst sind erfunden: Gestalt, Kleider, wo genau sie stehen, wohin sie gehen und wie schnell. Sie gehen an Kreuzungen weiter
-            und können am Ende eines Wegs verschwinden.</p>
+            und können am Ende eines Wegs verschwinden. Regnet es im Modell (mit «Wetter»), trägt jede dritte Person einen Regenschirm; Form und
+            Farben sind erfunden.</p>
           <p>Sind auch «Züge» an, öffnen sich an einem Halt die Schiebetüren auf der Seite des Perrons: einige Sekunden nach der Ankunft laut
             Fahrplan, und sie schliessen einige Sekunden vor der Abfahrt. Zuerst steigen an jeder Tür bis zu drei Personen aus und gehen über den
             Perron davon, dann gehen Wartende aus der Nähe zur Tür und steigen ein; an ihrer Stelle wartet nach einigen Minuten jemand Neues. Wer
@@ -2732,6 +2733,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   const deckRef = useRef<((e: number, n: number, h: number) => number | null) | null>(null)
   /** die offenen Türen haltender Züge am Perron, je Bild von den Zügen gesetzt, für das Ein- und Aussteigen der Menschen */
   const offeneTueren = useRef<OffeneTuer[]>([])
+  // ob im Modell gerade Regen gezeichnet wird (Wettermodell oder Station, nur mit «Wetter»): dann trägt ein Teil der Menschen einen Schirm
+  const regnet = useRef(false)
+  if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dRegen: (x: boolean) => void }).s3dRegen = (x) => { regnet.current = x }
   const welt = useRef<Welt | null>(null)
   const kern = useRef<{
     renderer: THREE.WebGLRenderer; szene: THREE.Scene; kamera: THREE.PerspectiveCamera; steuerung: OrbitControls
@@ -7735,7 +7739,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const e0 = Math.min(...rand.map((x) => x.e0)), e1 = Math.max(...rand.map((x) => x.e0 + x.b))
     const n0 = Math.min(...rand.map((x) => x.n1 - x.h)), n1 = Math.max(...rand.map((x) => x.n1))
     const drin = (e: number, n: number) => teile.some((t) => imRaster(t.raster, e, n))
-    const form = menschForm(), stoff = new THREE.MeshLambertMaterial({ vertexColors: true })
+    const form = menschForm(), stoff = new THREE.MeshLambertMaterial({ vertexColors: true }), schirmGeo = schirmForm()
     const netze: THREE.InstancedMesh[] = []
     void Promise.all([
       perronsIn(e0, n0, e1, n1).catch(() => []), perronsLaden().catch(() => []), indexLaden().catch(() => null),
@@ -7764,8 +7768,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const hoechstens = Math.min(stehen.length + geher.length + 400, hoechstensFelder() === 4 ? 3000 : 9000)
       if (!hoechstens) return
       const oberteil = new THREE.InstancedMesh(form.oberteil, stoff, hoechstens), rest = new THREE.InstancedMesh(form.rest, stoff, hoechstens)
-      for (const x of [oberteil, rest]) { x.count = 0; x.castShadow = true; x.frustumCulled = false; gruppe.add(x); netze.push(x) }
+      // Regenschirme (Michael, 2026-11-19: «Wenn es regnet, soll jede dritte Person einen Regenschirm haben»)
+      const schirm = new THREE.InstancedMesh(schirmGeo, stoff, hoechstens)
+      for (const x of [oberteil, rest, schirm]) { x.count = 0; x.castShadow = true; x.frustumCulled = false; gruppe.add(x); netze.push(x) }
       const farben = Array.from({ length: 997 }, (_, i) => kleidFarbe(i))
+      const schirmFarben = Array.from({ length: 997 }, (_, i) => schirmFarbe(i))
       const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), eins = new THREE.Vector3(1, 1, 1), oben = new THREE.Vector3(0, 1, 0)
       // Ein- und Aussteigen an den offenen Türen der Züge (offeneTueren, Zeiten und Mengen in Menschen.ts): Aussteigende als eigene Figuren, die
       // eine Weile über den Perron gehen; Wartende, die einsteigen, gehen zur Tür und warten erst nach EINSTEIGEN_WIEDER_S wieder (jemand Neues)
@@ -7779,13 +7786,18 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const ms = Date.now() + szenenZeit.versatzMs, sek = ms / 1000
         const stunde = jetztImFahrplan({ von: '2000-01-01' }, new Date(ms)).minuten / 60
         const aP = anteilStunde('perron', stunde), aS = anteilStunde('strasse', stunde), aW = anteilStunde('wandern', stunde)
-        let zahl = 0
-        const setzen = (e: number, n: number, z: number, drehung: number, farbe: number) => {
+        let zahl = 0, schirme = 0
+        const nass = regnet.current
+        // id: ein fester Wert je Person, damit dieselbe Person den Schirm behält
+        const setzen = (e: number, n: number, z: number, drehung: number, farbe: number, id: number) => {
           v.set((e - lage.cE) / 1000, z / 1000, -(n - lage.cN) / 1000)
           q.setFromAxisAngle(oben, drehung)
           m.compose(v, q, eins)
           oberteil.setMatrixAt(zahl, m); rest.setMatrixAt(zahl, m)
           oberteil.setColorAt(zahl, farben[farbe])
+          if (nass && menschZufall(id * 0.371 + 5.9) < SCHIRM_ANTEIL) {
+            schirm.setMatrixAt(schirme, m); schirm.setColorAt(schirme, schirmFarben[Math.abs(Math.round(id)) % 997]); schirme++
+          }
           zahl++
         }
         const tueren = offeneTueren.current
@@ -7810,7 +7822,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const pz = perronBei(hier, pe, pn)
           if (pz === null || !drin(pe, pn)) continue
           const de = d < AUSSTEIGEN_RAUS_M ? a.ae : -a.an * a.seite, dn = d < AUSSTEIGEN_RAUS_M ? a.an : a.ae * a.seite
-          setzen(pe, pn, pz + PERRON_HOEHER_M + 0.03 * Math.abs(Math.sin(sek * 6 + a.farbe)), Math.atan2(de, -dn), a.farbe)
+          setzen(pe, pn, pz + PERRON_HOEHER_M + 0.03 * Math.abs(Math.sin(sek * 6 + a.farbe)), Math.atan2(de, -dn), a.farbe, streu(schl))
         }
         // wer einsteigt: Wartende bis EINSTEIGEN_M um eine Tür, wenn die Aussteigenden draussen sind und die Tür noch lange genug offen ist
         if (sek >= zuordnenUm || sek < zuordnenUm - 5) {
@@ -7841,7 +7853,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             }
             if (tau >= 0) {
               const f = tau / Math.max(0.01, ein.dauer)
-              setzen(w.e + (ein.e - w.e) * f, w.n + (ein.n - w.n) * f, w.z + 0.03 * Math.abs(Math.sin(sek * 6 + i)), Math.atan2(ein.e - w.e, -(ein.n - w.n)), w.farbe)
+              setzen(w.e + (ein.e - w.e) * f, w.n + (ein.n - w.n) * f, w.z + 0.03 * Math.abs(Math.sin(sek * 6 + i)), Math.atan2(ein.e - w.e, -(ein.n - w.n)), w.farbe, i)
               return
             }
             einsteiger.delete(i)
@@ -7851,9 +7863,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             if (bis > sek && bis - sek < EINSTEIGEN_WIEDER_S[1] + 10) return
             versteckt.delete(i)
           }
-          setzen(w.e, w.n, w.z, w.drehung, w.farbe)
+          setzen(w.e, w.n, w.z, w.drehung, w.farbe, i)
         })
-        for (const g of geher) {
+        for (const [gi, g] of geher.entries()) {
           if (zahl >= hoechstens) break
           if (g.ab >= (g.art === 'wandern' ? aW : aS)) continue
           const lauf = (((g.s0 + g.ms * sek) % g.weg.L) + g.weg.L) % g.weg.L, s = g.richtung === 1 ? lauf : g.weg.L - lauf
@@ -7865,10 +7877,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const z = bestandHoehe(b, e, n)
           if (!Number.isFinite(z)) continue
           // beim Gehen leicht auf und ab (gewählt)
-          setzen(e, n, z + 0.03 * Math.abs(Math.sin(sek * 6 + g.s0)), Math.atan2(de, -dn), g.farbe)
+          setzen(e, n, z + 0.03 * Math.abs(Math.sin(sek * 6 + g.s0)), Math.atan2(de, -dn), g.farbe, 50_000 + gi)
         }
         for (const x of [oberteil, rest]) { x.count = zahl; x.instanceMatrix.needsUpdate = true }
+        schirm.count = schirme; schirm.instanceMatrix.needsUpdate = true
         if (oberteil.instanceColor) oberteil.instanceColor.needsUpdate = true
+        if (schirm.instanceColor) schirm.instanceColor.needsUpdate = true
       }
       k.jeBild.push(schritt)
       if (import.meta.env.VITE_S3D_TEST) (window as unknown as { s3dMenschen: unknown }).s3dMenschen = () => ({ stehen: stehen.length, geher: geher.length, gezeigt: oberteil.count, tueren: offeneTueren.current.length, t0: offeneTueren.current.find((t) => t.seit > 2 && t.seit < 6 && t.bis > 40), aus: aussteiger.size, ein: einsteiger.size, weg: versteckt.size })
@@ -7878,7 +7892,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (schritt) { const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1) }
       k.wurzel.remove(gruppe)
       for (const x of netze) x.dispose()
-      form.oberteil.dispose(); form.rest.dispose(); stoff.dispose()
+      form.oberteil.dispose(); form.rest.dispose(); schirmGeo.dispose(); stoff.dispose()
     }
   }, [menschen, b, stufe, knoepfe]) // eslint-disable-line react-hooks/exhaustive-deps
   // Wolken aus dem Wettermodell ICON-CH1-EPS von MeteoSchweiz (src/wolken.ts; Michael, 2026-10-28: «Jetzt die Wolken angehen»), mit dem Knopf
@@ -7936,7 +7950,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
     const W = k?.wurzel.userData.weiteKm as number | undefined
-    if (!k || !lage || !W || !windAn) { niederModell(undefined); setNiederZeile(null); return }
+    if (!k || !lage || !W || !windAn) { regnet.current = false; niederModell(undefined); setNiederZeile(null); return }
     let tief = Infinity, hoch = -Infinity
     for (const t of b.teile.values()) t.h.forEach((h, q) => { if (h === KEINE_HOEHE) return; const w = t.wasser?.[q], z = w !== undefined && !Number.isNaN(w) ? Math.max(h, w) : h; if (z < tief) tief = z; if (z > hoch) hoch = z })
     if (tief === Infinity) return
@@ -7961,6 +7975,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const oben = Math.min(deckel, Math.max(WOLKEN_HOEHE_M[0], hoch + 300) / 1000)
       ns.setzen(nieder ? [{ x0: zuX(e0), x1: zuX(e1), z0: zuZ(n1), z1: zuZ(n0), oben, staerke: nieder.staerke,
         schneeAb: nieder.art === 'schnee' ? -Infinity : Infinity }] : [], boden, flaeche, strich)
+      regnet.current = nieder?.art === 'regen'
       niederModell(undefined); setNiederZeile(null)
     }
     void wolkenLaden().then((w) => {
@@ -8002,6 +8017,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         }
       }
       ns.setzen(saeulen, boden, flaeche, strich)
+      regnet.current = regenSumme > 0.002
       // fürs Geräusch der Mittel über das Modell, Regen vor Schnee
       niederModell(regenSumme > 0.002 ? { art: 'regen', staerke: Math.min(1, regenSumme) } : schneeSumme > 0.002 ? { art: 'schnee', staerke: Math.min(1, schneeSumme) } : null)
       // ebenso ohne Zeile (Michael, 2026-11-06)
@@ -8026,7 +8042,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     k.jeBild.push(schritt)
     return () => {
       weg = true
-      k.wurzel.remove(ns.gruppe); ns.entsorgen(); regen.current = null
+      k.wurzel.remove(ns.gruppe); ns.entsorgen(); regen.current = null; regnet.current = false
       const i = k.jeBild.indexOf(schritt); if (i >= 0) k.jeBild.splice(i, 1)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
