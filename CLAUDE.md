@@ -558,6 +558,10 @@ Autos von Hand entfernen in «3D Schweiz» seit 2026-11-17 (Michael: «wenn man 
              (autoKnopfRef, AUTO_KNOPF_UEBER_PX in Schweiz3D.tsx, gewählt; Michael: «Button Auto resp Lastwagen entfernen soll etwas oberhalb des Fahrzeuges stehen»); bei Köniz geprüft
 Rote Autos in «3D Schweiz» (Michael, 2026-11-11: «30% der roten autos durch graue ersetzen»): von den Autos mit roter Lackierung (#8a1a1a, #a8102e) je ein
              fester Zufall, 30 % davon grau #8c8c8c (lackFarbe, ROT_GRAU_* in Autos.ts, Grau gewählt)
+Regenschirme in «3D Schweiz» seit 2026-11-19 (Michael: «Wenn es regnet, soll jede dritte Person einen Regenschirm haben»): fällt im Modell Regen (mit «Wetter»,
+             laut Wettermodell im Mittel über dem Modell oder laut Station, regnet in Schweiz3D.tsx), trägt jede dritte Person einen Schirm, je Person ein fester
+             Zufall (SCHIRM_ANTEIL, schirmForm, schirmFarbe in Menschen.ts): Dach 1 m breit über dem Kopf, Stock zur rechten Hand, acht Farben, Form und Farben gewählt;
+             bei Schnee nicht; in der Anleitung («Menschen»)
 Ein- und Aussteigen in «3D Schweiz» (Michael, 2026-11-11: «Kannst du bei Zug Halten Menschen auf dem Perron in die haltenden Züge aussteigen und danach
              wartende Menschen einsteigen lassen? Bei den Türen die sich öffnen? Türe sollen Schiebetüren sein»): mit «Züge» an, in den Feldern von 4 km und 1 km,
              an Halten laut Fahrplan ab 15 s: je Tür (tuerStellen in ZugForm.ts) ein dunkles Loch und ein Türblatt, das aussen am Wagen zur Mitte gleitet, nur auf

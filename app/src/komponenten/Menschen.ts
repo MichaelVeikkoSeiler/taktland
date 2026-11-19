@@ -62,6 +62,28 @@ export function menschForm(): { oberteil: THREE.BufferGeometry; rest: THREE.Buff
   return { oberteil: a, rest: b }
 }
 
+/** Regenschirme (Michael, 2026-11-19: «Wenn es regnet, soll jede dritte Person einen Regenschirm haben»): Anteil laut Michael, Form, Grösse und Farben gewählt */
+export const SCHIRM_ANTEIL = 1 / 3
+const SCHIRM = ['#1c1c1c', '#1c2a44', '#a8102e', '#2b5d34', '#5a5a5a', '#c9a227', '#3c3c3c', '#1f3f7a']
+export function schirmFarbe(i: number): THREE.Color { return new THREE.Color(SCHIRM[Math.floor(zufall(i * 3.71 + 1.3) * SCHIRM.length)]) }
+/** ein Schirm in km zur Figur von menschForm: Dach 1 m breit über dem Kopf, leicht nach vorn, Stock vor dem Körper, nicht durch Kopf und Oberteil; das Dach weiss (Farbe je Schirm), der Stock dunkel */
+export function schirmForm(): THREE.BufferGeometry {
+  const farbe = (g: THREE.BufferGeometry, f: string) => {
+    g.deleteAttribute('uv')
+    const c = new THREE.Color(f), a = new Float32Array(g.attributes.position.count * 3)
+    for (let i = 0; i < a.length; i += 3) { a[i] = c.r; a[i + 1] = c.g; a[i + 2] = c.b }
+    g.setAttribute('color', new THREE.BufferAttribute(a, 3))
+    return g
+  }
+  const dach = new THREE.ConeGeometry(0.52 / 1000, 0.17 / 1000, 12).toNonIndexed()
+  dach.translate(0.1 / 1000, (1.92 + 0.085) / 1000, 0.2 / 1000)
+  const stock = new THREE.BoxGeometry(0.025 / 1000, 0.9 / 1000, 0.025 / 1000).toNonIndexed()
+  stock.translate(0.1 / 1000, (1.15 + 0.45) / 1000, 0.2 / 1000)
+  const g = mergeGeometries([farbe(dach, '#ffffff'), farbe(stock, '#2a2a2a')])!
+  dach.dispose(); stock.dispose()
+  return g
+}
+
 /** ein Weg zum Gehen: Punkte und der Abstand vom Anfang */
 export interface Gehweg { e: Float64Array; n: Float64Array; s: Float64Array; L: number }
 export function gehweg(e: ArrayLike<number>, n: ArrayLike<number>): Gehweg {
