@@ -480,6 +480,9 @@ Kamera folgt dem Zug in «3D Schweiz» seit 2026-11-18 (Michael: «Kann man eins
              um die Strecke, die der Zug gefahren ist (verfolgt in Schweiz3D.tsx), Drehen und Zoomen um ihn bleiben; aus mit dem Knopf, einem anderen gewählten Zug
              oder wenn er RUECKKEHR_WEG_BILDER Bilder fehlt; seit 2026-11-20 schliesst ein Tipp daneben nur das Schild, die Kamera folgt weiter, ein Tipp auf den Zug zeigt es wieder (Michael: «Wenn der Zug verfolgt wird muss man neben das schild tippen können und die Verfolgung soll dadurch nicht stoppen»); nicht in der Brille; auch auf 3dland.ch; im Browser hier in Bern geprüft (Kamera und Ziel rückten gleich weit
              wie der Zug); in der Anleitung («Züge»)
+Schild der Züge und Schiffe in «3D Schweiz» seit 2026-11-20 höchstens 92 % so breit wie das Bild (Michael, Bildschirmfoto vom Handy: «Das feld ist auf dem Mobile zu
+             gross»): ist es breiter, wird es als Ganzes kleiner, Schrift und Knöpfe mit (schildEinpassen, SCHILD_HOECHSTENS_BREIT in Schweiz3D.tsx, gewählt); nicht in der Brille;
+             im Browser nicht angeschaut
 Wagen auf demselben Gleis in «3D Schweiz» (Michael, 2026-11-11: «Züge in Kerzers liegen schräg auf dem Gleis»): das hintere Ende eines Wagens nimmt die Gleisachse
              bis 2,5 m neben der Stelle eine Wagenlänge hinter dem vorderen Ende in Richtung des Wegs (ZUG_GLEIS_FOLGEN_M, gewählt), sonst wie bisher das eigene
              eingerastete Ende; nur gebaut, hier ohne die feinen Daten nicht nachgestellt
