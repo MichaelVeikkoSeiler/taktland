@@ -2015,7 +2015,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             fährt der Zug gleichmässig auf dem kürzesten Weg im Netz; wie schnell er anfährt und bremst und welchen Weg er bei mehreren
             wirklich nimmt, steht in keiner Quelle. Ein Tipp auf einen Zug (in der Brille Strahl und Abzug) zeigt über ihm ein Schild: Linie oder Gattung,
             Zugnummer, woher er kommt (sein erster Halt im Netz von Taktland laut Fahrplan; ein Zug aus dem Ausland kommt dann von der Grenze) und Ziel, dazu der Halt, an dem er steht, oder der nächste, mit den Zeiten und dem Gleis laut Fahrplan (die
-            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Der Knopf mit der Kamera im Schild lässt die Kamera mit dem Zug mitfahren: Sie rückt jeden Augenblick so weit, wie er fährt, Drehen und Zoomen um ihn gehen weiter; ein zweiter Tipp darauf, ein anderer Zug oder ein Tipp daneben beendet es, ebenso wenn er den Ausschnitt verlässt. Manche Züge führt der Fahrplan unter zwei Nummern mit denselben Zeiten (gekoppelte Züge); wo beide gemeinsam fahren, zeigen wir nur einen, den mit Echtzeit, wenn sie nur für einen gemeldet ist. Der rote Knopf rechts im Schild führt in den Führerstand von Taktland: Der Zug fährt
+            Buchstaben sind die Sektoren, wie sie der Fahrplan nennt) und darunter die Verspätung laut Echtzeit, «pünktlich» oder «keine Echtzeit gemeldet». Ein Tipp daneben blendet es aus. Der Knopf mit der Kamera im Schild lässt die Kamera mit dem Zug mitfahren: Sie rückt jeden Augenblick so weit, wie er fährt, Drehen und Zoomen um ihn gehen weiter; ein zweiter Tipp darauf oder ein anderer Zug beendet es, ebenso wenn er den Ausschnitt verlässt. Ein Tipp daneben schliesst nur das Schild, die Kamera fährt weiter mit; ein Tipp auf den Zug zeigt das Schild wieder. Manche Züge führt der Fahrplan unter zwei Nummern mit denselben Zeiten (gekoppelte Züge); wo beide gemeinsam fahren, zeigen wir nur einen, den mit Echtzeit, wenn sie nur für einen gemeldet ist. Der rote Knopf rechts im Schild führt in den Führerstand von Taktland: Der Zug fährt
             dort nach seinem Fahrplan ab jetzt, mit der echten Uhr, darum lässt sich das Tempo nicht ändern; auch das ist der Fahrplan, nicht live. Von 3dland.ch aus führt dort «Zurück zu 3D-Land» wieder hierher, in Taktland «Zurück zur Virtuellen Schweiz» dorthin, wo der Zug laut Fahrplan jetzt ist, in derselben Stufe und mit denselben Schaltern und demselben Ton wie beim Wechsel; die Kamera steht wieder im selben Winkel und Abstand zum Zug, bleibt dann stehen und schaut ihm nach, bis er aus dem Ausschnitt fährt oder man selbst dreht oder zoomt. Mit Verspätung laut Echtzeit kann der Zug dort fehlen, der Führerstand fährt nach Fahrplan. Gezeigt sind nur Halte an Bahnhöfen im Netz von Taktland. Ein Zug ist 200 m lang
             gezeichnet, kein bestimmter Zugtyp, mit einzelnen Fenstern, aus der Ferne grösser, damit man ihn sieht; Länge und Gestalt stehen nicht im Fahrplan.
             Die Wagen hängen aneinander und folgen einer Linie, die nie steiler als 6° ist; steigt das Gelände oder die Gleisachse steiler, liegt der Zug dort etwas darüber oder darunter.</p>
@@ -6007,7 +6007,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     let folgt = rueckkehr && rueckkehr.stufe === stufe && (rueckkehr.bis ?? 0) > performance.now() ? { r: rueckkehr, gesetzt: false, weg: 0 } : null
     const folgenLos = () => { folgt = null }
     // «Kamera folgt» im Schild: Kamera und Ziel rücken je Bild um so viel, wie der Zug gefahren ist; Drehen und Zoomen um ihn bleiben, es endet mit
-    // dem Knopf, wenn ein anderer oder kein Zug gewählt ist oder er RUECKKEHR_WEG_BILDER Bilder lang fehlt; nicht in der Brille
+    // dem Knopf, wenn ein anderer Zug gewählt ist oder er RUECKKEHR_WEG_BILDER Bilder lang fehlt; ein Tipp daneben schliesst nur das Schild; nicht in der Brille
     let verfolgt: { fahrt: number; letzt: THREE.Vector3 | null; weg: number } | null = null
     k.steuerung.addEventListener('start', folgenLos)
     /** welcher gezeichnete Zug dem Strahl am nächsten liegt, bis grenze (Winkel vom Ursprung des Strahls), sonst -1 */
@@ -6633,7 +6633,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           k.steuerung.target.copy(k.wurzel.localToWorld(c)); k.steuerung.update(); folgt.weg = 0
         } else if (folgt.gesetzt ? ++folgt.weg > RUECKKEHR_WEG_BILDER : performance.now() > (folgt.r.bis ?? 0)) folgt = null
       }
-      if (verfolgt && (verfolgt.fahrt !== gewaehlt || k.renderer.xr.isPresenting)) verfolgt = null
+      // ein Tipp daneben schliesst nur das Schild (gewaehlt null), die Kamera folgt weiter (Michael, 2026-11-20)
+      if (verfolgt && ((gewaehlt !== null && verfolgt.fahrt !== gewaehlt) || k.renderer.xr.isPresenting)) verfolgt = null
       if (verfolgt) {
         const c = zugMitte(gezeichnet.findIndex((f) => f.id === verfolgt!.fahrt))
         if (c) {
