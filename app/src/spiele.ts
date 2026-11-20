@@ -20,6 +20,7 @@ import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
 import wobinichBild from './assets/auftakt-wobinich.webp'
 import wobinichDunkel from './assets/auftakt-wobinich-dunkel.webp'
 import probefahrenBild from './assets/auftakt-probefahren.webp'
+import probefahrenDunkel from './assets/auftakt-probefahren-dunkel.webp'
 // seit 2026-11-12 ein eigenes Bild in Taktland, 3dland.ch behält seine (Michael: «Dieses Bild für Virtuelle Schweiz anwenden»)
 import schweiz3dHell from './assets/auftakt-virtuell-hell.webp'
 import schweiz3dDunkel from './assets/auftakt-virtuell-dunkel.webp'
@@ -62,7 +63,7 @@ export const SPIELE: Spiel[] = [
     id: 'modellbahn', titel: 'Probefahren', status: 'spielbereit', adresse: '#/modellbahn',
     kurz: 'Eine Strecke als Modell im Gelände, im Führerstand selbst fahren, auch in der VR-Brille.',
     // Bild seit 2026-11-20 (Michael: «Hier die neuen Bilder für die Spiele Wo fahre ich (Bild 1) und Probefahren (Bild 2)»)
-    bild: { hell: probefahrenBild, dunkel: probefahrenBild, alt: 'Illustration: Blick aus dem Führerstand auf eine Strecke im Regen, im Vordergrund das Pult.' },
+    bild: { hell: probefahrenBild, dunkel: probefahrenDunkel, alt: 'Illustration: Eine Lokführerin im Führerstand, vor ihr das Pult und die Strecke mit Fahrleitung.' },
     beschreibung: 'Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen, mit einer '
       + 'Brille auch auf dem Tisch vor dir. Im Führerstand fährst du selbst, mit dem echten Wetter der nächsten Station. Ein Modell, '
       + 'kein Abbild der Wirklichkeit. Dazu die Probefahrten, die einen Weg wie unterwegs abspielen.',

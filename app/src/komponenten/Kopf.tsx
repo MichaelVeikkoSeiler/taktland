@@ -21,6 +21,7 @@ import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
 import wobinichBild from '../assets/auftakt-wobinich.webp'
 import wobinichDunkel from '../assets/auftakt-wobinich-dunkel.webp'
 import probefahrenBild from '../assets/auftakt-probefahren.webp'
+import probefahrenDunkel from '../assets/auftakt-probefahren-dunkel.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
 import spieleDunkel from '../assets/auftakt-spiele-dunkel.webp'
@@ -166,8 +167,9 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt' | 'probef
     alt: 'Illustration: Ein Tablet mit einer Strecke, einer roten Ortsmarke und einem Fragezeichen steht im Zug auf dem Tisch am Fenster, draussen zieht die Landschaft vorbei.',
   },
   probefahren: {
-    hell: probefahrenBild, dunkel: probefahrenBild, breite: 1344, hoehe: 756,
-    alt: 'Illustration: Blick über die Schulter einer Person im Führerstand auf das Pult und durch die Frontscheibe auf eine Strecke im Regen mit Fahrleitung, links Wiesen, rechts ein See.',
+    // die finalen Bilder (Michael, 2026-11-20: «Hier die zwei finalen Bilder für «Probefahren»»), am Tag sonnig, nachts im Regen unter dem Mond
+    hell: probefahrenBild, dunkel: probefahrenDunkel, breite: 1344, hoehe: 756,
+    alt: 'Illustration: Blick über die Schulter einer Lokführerin auf das Pult und durch die Frontscheibe auf eine Strecke mit Fahrleitung, links Häuser und Berge, rechts ein See und Wald.',
   },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
