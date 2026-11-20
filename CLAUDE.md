@@ -462,6 +462,10 @@ Keine Stufen zwischen den Wagen in «3D Schweiz» seit 2026-11-17 (Michael, Bild
 Einzelne Fenster an den Zügen seit 2026-11-17 (Michael: «Bitte einzelne Fenster bei den Zugwagen machen»): statt des Fensterbands Fenster 0,3 der Höhe breit mit Stegen
              von 0,1 (FENSTER_BREIT, FENSTER_STEG in ZugForm.ts, gewählt), in gleichen Abständen zwischen den Türen, an Lok und Steuerwagen bis in den Kopf, leuchten
              nachts wie das Band; überall, wo die Form gilt (Virtuelle Schweiz, Modellbahn, Führerstand); als Vorschau im Browser hier angeschaut
+Längere Wagen seit 2026-11-20 (Michael, Bildschirmfoto Bern: «Alle Wagen ca 20% länger dafür mehr Fenster. Türen etwas schmaler»): ZUG_LOK_M und ZUG_WAGEN_M 168 statt 140,
+             die Fenster füllen die längere Strecke von selbst, Türen 0,27 statt 0,34 der Höhe breit (TUER_BREIT in ZugForm.ts); in «3D Schweiz» der Zug um so viel länger
+             (ZUG_LAENGER), damit Breite und Höhe bleiben, im Führerstand Wagen 31 statt 26 m (WAGEN_M in FahrplanZuege.ts), in der Modellbahn der ganze Zug länger; gewählt;
+             im Browser nicht angeschaut
 Gekoppelte Züge nur einmal seit 2026-11-18 (Michael: «Kann es sein dass ich den Fahrplan Zug und den Live verspäteten Zug beide sehe?»): im Fahrplan kommt kein Zug
              zweimal vor (geprüft: keine zwei Fahrten mit gleicher Gattung und Nummer, gleichem Tag und gleicher Abfahrt), aber manche unter zwei Nummern mit denselben Zeiten
              (RJX 168 und 31168, S1 und S31 auf einem gemeinsamen Stück; lokal 25 Paare); meldete die Echtzeit nur eine, fuhren sie auseinander; seither je Paar die Halte mit
