@@ -18,7 +18,7 @@ An dieser Stelle vielen Dank an alle, die diese Daten offen bereitstellen. Ohne 
 
 Bis vor Kurzem wäre ein solches Projekt für mich schlicht unmöglich gewesen. Jetzt ist es eine Frage von Neugier und Ausdauer.
 
-Vielleicht begegnen wir uns einmal im www.taktland.ch, viel Spass beim Entdecken! Gefundene Fehler können gerne an hallo@taktland.ch gemeldet werden.
+Vielleicht begegnen wir uns einmal im Taktland, viel Spass beim Entdecken! Gefundene Fehler können gerne an hallo@taktland.ch gemeldet werden.
 
 👉 taktland.ch
 
