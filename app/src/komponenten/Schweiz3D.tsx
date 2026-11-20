@@ -2375,7 +2375,9 @@ const LICHT = { gelaende: '#ffd23c', umwelt: '#4cd964', gebaeude: '#c4c8cc', son
 /** Schattenkarte in der Brille: 2048 statt 4096 Bildpunkte, ein Viertel des Speichers (eine Annahme zur Grafik der Brille, nicht gemessen) */
 const BRILLE_SCHATTEN_PX = 2048
 /** ein Zug so lang, eine Annahme fürs Bild (die Länge eines Zugs steht nicht im Fahrplan); höchstens so viele zugleich */
-const ZUG_LAENGE_KM = 0.2, ZUEGE_HOECHSTENS = 600
+// die Wagen seit 2026-11-20 20 % länger (ZugForm.ts): der Zug wird um so viel länger, damit Breite und Höhe bleiben (vorher 880 Einheiten der Form)
+const ZUG_LAENGER = (ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M)) / 880
+const ZUG_LAENGE_KM = 0.2 * ZUG_LAENGER, ZUEGE_HOECHSTENS = 600
 /** so viele Schiffe höchstens im Modell, und aus der Ferne mindestens so lang wie dieser Anteil des Abstands der Kamera (gewählt) */
 const SCHIFFE_HOECHSTENS = 200, SCHIFF_FERN = 0.02
 /** aus der Ferne ist ein Zug mindestens so lang wie dieser Anteil des Abstands der Kamera (vorher 1,2 %, Michael, 2026-10-26: «Züge aus der Ferne etwas grösser»), gewählt */
@@ -5735,7 +5737,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // ein Zug ZUG_LAENGE_KM lang, in der Region etwas länger, damit man ihn sieht; die Form wie in der Modellbahn von Taktland
     // (ZugForm.ts; Michael, 2026-10-26: «das Design der Züge von Taktland übernehmen»): Lok, vier Wagen, Steuerwagen, in ihren
     // Verhältnissen verkleinert (Masse in keiner Quelle)
-    const laenge = Math.max(ZUG_LAENGE_KM, W * 0.015)
+    const laenge = Math.max(ZUG_LAENGE_KM, W * 0.015 * ZUG_LAENGER)
     const ganzM = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M), mass = laenge / (ganzM / 1000), hoehe = ZUG_HOEHE * mass
     const formen = zugFormen()
     const stoff = new THREE.MeshLambertMaterial({ vertexColors: true, side: THREE.DoubleSide })

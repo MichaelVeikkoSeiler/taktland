@@ -14,7 +14,8 @@ import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, typ
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 
 /** Masse in echter Grösse, gewählt (kein bestimmter Zug): Breite, Höhe, Länge eines Wagens und die Lücke dazwischen in m */
-const BREITE_M = 3, HOEHE_M = 4, WAGEN_M = 26, LUECKE_M = 1
+// Wagen seit 2026-11-20 31 statt 26 m (Michael: «Alle Wagen ca 20% länger dafür mehr Fenster»)
+const BREITE_M = 3, HOEHE_M = 4, WAGEN_M = 31, LUECKE_M = 1
 /** so weit links des Wegs wird das Gleis gesucht, so weit darf es daneben liegen, so schräg zum Weg (gewählt) */
 const LINKS_M = 2.25, GLEIS_SUCHE_M = 10, GLEIS_WINKEL = Math.cos((25 * Math.PI) / 180)
 /** höchstens so viele Züge, neu gerechnet so oft je Sekunde (gewählt) */

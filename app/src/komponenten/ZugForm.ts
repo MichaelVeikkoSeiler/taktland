@@ -7,7 +7,8 @@ import * as THREE from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 
 /** Lok, vier Wagen und am Schluss ein Steuerwagen mit derselben schrägen Form, ohne Rot (Michael, 2026-10-08) */
-export const ZUG_LOK_M = 140, ZUG_WAGEN_M = 140, ZUG_WAGEN = 5, ZUG_LUECKE_M = 8
+// seit 2026-11-20 je 168 statt 140, 20 % länger, so mehr Fenster (Michael: «Alle Wagen ca 20% länger dafür mehr Fenster. Türen etwas schmaler»)
+export const ZUG_LOK_M = 168, ZUG_WAGEN_M = 168, ZUG_WAGEN = 5, ZUG_LUECKE_M = 8
 /** nach dieser Breite (der der Form bis 2026-10-30) rechnen Abstände der Spuren und der Massstab in der Brille, damit sie bleiben */
 export const ZUG_MASS_BREITE = 0.045
 /** die Form 15 % schmaler (Michael, 2026-10-30: «Die Züge sind etwas zu breit. Bitte um 15% schmaler machen»), dann noch 10 % («Züge noch 10%
@@ -29,7 +30,8 @@ const SCHEIBE_BREIT = 0.4, SCHEIBE_OBEN_T = 0.5, SCHEIBE_UNTEN_T = 0.1
 const FENSTER_IM_KOPF = 0.55
 /** Türen: an oder aus (für die Vorschau), Breite in Teilen der Höhe, Abstand der Mitte vom Wagenende in Teilen der Länge, Farbe des Felds; gewählt */
 export const zugTueren = { an: true }
-const TUER_BREIT = 0.34, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#9a9a9a', TUER_LINIE = 0.014
+// Breite seit 2026-11-20 0,27 statt 0,34 (Michael: «Türen etwas schmaler»)
+const TUER_BREIT = 0.27, TUER_VOM_ENDE = 0.13, TUER_FARBE = '#9a9a9a', TUER_LINIE = 0.014
 /** Höhe des Fensterbands und wie weit seine Mitte unter dem Beginn der Dachrundung liegt, in Teilen der Höhe (Michael, 2026-11-10: «Seitenstreifen etwas
  *  höher und etwas weiter unten», dann «noch etwas weiter unten und noch etwas höher»; vorher 0,22 und 0,08, dann 0,28 und 0,14); seit 2026-11-11 0,27 statt 0,34 hoch, die Mitte
  *  bleibt (Michael: «Seitenfenster etwas weniger hoch bitte») */
