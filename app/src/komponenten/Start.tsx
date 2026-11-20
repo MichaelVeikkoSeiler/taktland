@@ -24,7 +24,8 @@ export function Start({ index }: { index: BahnhofIndex }) {
           2026-10-02 «fahren Züge im Taktfahrplan», nicht «die Züge»: ob alle so fahren, ist nicht belegt;
           2026-10-02 ganzer Text neu von Michael, mit «Kein Fahrplan»;
           2026-10-05 «Reisebegleiter», die Spiele unter «Lernen», Bahnübergänge im Sammelheft;
-          2026-11-20 «Kein Reiseplaner» statt «Kein Fahrplan» (Michael: «Genau kein Reiseplaner! Das ist mir wichtig. Aber er kennt dennoch mehr als hier steht») */}
+          2026-11-20 «Kein Reiseplaner» statt «Kein Fahrplan» (Michael: «Genau kein Reiseplaner! Das ist mir wichtig. Aber er kennt dennoch mehr als hier steht»);
+          2026-11-20 alle Spiele unter «Lernen», «Probefahren» und die Virtuelle Schweiz unter «Mitfahren» (Michael: «Ja gern») */}
       <h2 className="text-2xl font-bold tracking-tight">Willkommen im Taktland</h2>
       <p className="mt-3 text-[15px] leading-relaxed">
         In der Schweiz fahren Züge im Taktfahrplan. Davon hat Taktland seinen Namen.
@@ -43,17 +44,20 @@ export function Start({ index }: { index: BahnhofIndex }) {
       </p>
       <p className={absatz}>
         <span className={fett}>Lernen.</span> Zu jedem Bahnhof gibt es Fragen, mit denen du prüfen
-        kannst, was hängen geblieben ist. Dazu kommen drei Spiele: Im «Duell» treten zwei Bahnhöfe,
-        Strecken oder Tunnel gegeneinander an, bei «Geo» setzt du den Pin auf die Karte, und bei der
-        «Bahnhofsuche» errätst du einen Bahnhof aus Hinweiskarten. Allein, zu mehreren auf einem Gerät
-        oder auf mehreren Geräten. Und unter Standort siehst du, was in deiner Nähe liegt.
+        kannst, was hängen geblieben ist. Dazu kommen die Spiele: Im «Duell» treten zwei Bahnhöfe,
+        Strecken oder Tunnel gegeneinander an, bei «Geo» setzt du den Pin auf die Karte, bei der
+        «Bahnhofsuche» errätst du einen Bahnhof aus Hinweiskarten, bei «Wo fahre ich?» erkennst du eine
+        Strecke aus dem Führerstand, beim «Fahrplan-Puzzle» ordnest du die Halte eines Zugs, und bei der
+        «Reisedauer» schätzt du seine Fahrzeit. Manche allein, zu mehreren auf einem Gerät oder auf
+        mehreren Geräten. Und unter Standort siehst du, was in deiner Nähe liegt.
       </p>
       <p className={absatz}>
         <span className={fett}>Mitfahren.</span> Im Zug verfolgt «Fahren» per GPS, wo du bist, und
         meldet einige Sekunden im Voraus, was als Nächstes kommt. Jede Art hat ihren eigenen Ton.
         Dazu kommt Sehenswertes links und rechts der Strecke, etwa Gipfel, Kulturgüter und
-        Seilbahnen. Ohne selber im Zug zu sitzen, kannst du deine Wunschstrecken als Probefahrt
-        abfahren, unter Spiele bei der Modellbahn.
+        Seilbahnen. Ohne selber im Zug zu sitzen, kannst du deine Wunschstrecken unter Spiele bei
+        «Probefahren» abfahren, in 3D und im Führerstand. Und in der «Virtuellen Schweiz» erkundest du das
+        ganze Land in 3D, mit Zügen laut Fahrplan, auf Wunsch auch mit einer VR-Brille.
       </p>
       <p className={absatz}>
         <span className={fett}>Kein Reiseplaner.</span> Taktland sucht keine Verbindungen, plant keine Reise
