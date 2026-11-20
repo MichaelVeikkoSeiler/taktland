@@ -2519,6 +2519,17 @@ const AUF_3DLAND = /3dland/.test(window.location.hostname) || /3dland\.html$/.te
 // Bahnhof klickt. Bitte … die Toleranz etwas enger machen»)
 /** der rote Knopf «In den Führerstand» im Schild eines Zugs, Bildpunkte auf dem Schild (gewählt) */
 const SCHILD_KNOPF_PX = 46
+// Schild eines Zugs oder Schiffs höchstens so breit wie dieser Anteil des Bilds, auf schmalen Handys sonst über den Rand (Michael, 2026-11-20:
+// «Das feld ist auf dem Mobile zu gross»; gewählt)
+const SCHILD_HOECHSTENS_BREIT = 0.92
+const schildGroesse = new THREE.Vector2()
+function schildEinpassen(sp: THREE.Sprite, renderer: THREE.WebGLRenderer, kamera: THREE.PerspectiveCamera) {
+  if (renderer.xr.isPresenting || !sp.userData.b) return
+  renderer.getSize(schildGroesse)
+  const f = schildGroesse.y / (2 * Math.tan((kamera.fov * Math.PI) / 360))
+  const m = Math.min(1, (SCHILD_HOECHSTENS_BREIT * schildGroesse.x) / Math.max(1e-9, sp.userData.b * f))
+  sp.scale.set(sp.userData.b * m, sp.userData.h * m, 1)
+}
 /** so weit stehen die Knöpfe «Auto entfernen» über der Mitte des gewählten Fahrzeugs im Bild (Bildpunkte); gewählt */
 const AUTO_KNOPF_UEBER_PX = 22
 const ZUG_TIPP_WINKEL = (1.25 * Math.PI) / 180
@@ -6620,6 +6631,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const folgen = k.renderer.xr.isPresenting ? null : verfolgt?.fahrt === u.f.id
           const zeilen = zeilenVon(u.f, st), text = zeilen.join('|') + (knopf ? '|K' : '') + `|F${folgen}`
           if (text !== schildText) { schildText = text; schildMalen(zeilen, knopf, folgen) }
+          schildEinpassen(schild, k.renderer, k.kamera)
         }
         zahl++
       }
@@ -7106,6 +7118,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           schild.position.set(v.x, v.y + 0.012 * mass * gross, v.z)
           const zeilen = zeilenVon(u.f, st), text = zeilen.join('|')
           if (text !== schildText) { schildText = text; schildMalen(zeilen) }
+          schildEinpassen(schild, k.renderer, k.kamera)
         }
         zahl++
       }
