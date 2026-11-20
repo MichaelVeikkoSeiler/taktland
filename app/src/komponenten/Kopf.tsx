@@ -18,6 +18,8 @@ import erratenDunkel from '../assets/auftakt-erraten-dunkel.webp'
 import erratenHell from '../assets/auftakt-erraten-hell.webp'
 import fahrtDunkel from '../assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
+import wobinichBild from '../assets/auftakt-wobinich.webp'
+import probefahrenBild from '../assets/auftakt-probefahren.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
 import spieleDunkel from '../assets/auftakt-spiele-dunkel.webp'
@@ -88,7 +90,7 @@ let letzteObjekte = OBJEKTE[0]
 
 /** Auftaktbilder je Bereich, dazu eines für die Anleitung. Ein Bereich ohne
  *  Eintrag erscheint ohne Bild. */
-const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktBild>> = {
+const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt' | 'probefahren', AuftaktBild>> = {
   start: {
     hell: startHell, dunkel: startDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration: Ein Mann wartet am Perron, davor ein Bahnübergang und ein Tunnel, dahinter ein Zug auf einem Viadukt über einem See.',
@@ -157,6 +159,15 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt', AuftaktB
     hell: reisedauerHell, dunkel: reisedauerDunkel, breite: 1344, hoehe: 756,
     alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr mit «? min», dahinter ein Zug auf einem Viadukt, ein See und Berge.',
   },
+  // Michael, 2026-11-20: «Hier die neuen Bilder für die Spiele Wo fahre ich (Bild 1) und Probefahren (Bild 2)», je nur eines, hell und dunkel gleich
+  wobinich: {
+    hell: wobinichBild, dunkel: wobinichBild, breite: 1344, hoehe: 756,
+    alt: 'Illustration: Ein Tablet mit einer Strecke, einer roten Ortsmarke und einem Fragezeichen steht im Zug auf dem Tisch am Fenster, draussen zieht die Landschaft vorbei.',
+  },
+  probefahren: {
+    hell: probefahrenBild, dunkel: probefahrenBild, breite: 1344, hoehe: 756,
+    alt: 'Illustration: Blick über die Schulter einer Person im Führerstand auf das Pult und durch die Frontscheibe auf eine Strecke im Regen mit Fahrleitung, links Wiesen, rechts ein See.',
+  },
   duell: {
     hell: duellHell, dunkel: duellDunkel, breite: 1344, hoehe: 664,
     alt: 'Illustration in zwei Hälften: links ein moderner Bahnhof mit Passerelle, Glaslift und Zug, rechts ein kleiner Bahnhof mit Holzdach vor einem Tunnel.',
@@ -187,7 +198,9 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : aktiv === 'bahnuebergaenge' ? BILDER.start
     // die Übersicht der Spiele und die Modellbahn mit dem Bild der Modellbahn (Michael, 2026-10-10), Geo mit dem
     // bisherigen Bild der Spiele, das Duell mit seinem
-    : aktiv === 'modellbahn' || aktiv === 'spiele' ? BILDER.modellbahn
+    // seit 2026-11-20 Probefahren mit eigenem Bild, die Übersicht behält das der Modellbahn
+    : aktiv === 'modellbahn' ? BILDER.probefahren
+    : aktiv === 'spiele' ? BILDER.modellbahn
     : aktiv === 'schweiz11' ? BILDER.spiele
     : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
