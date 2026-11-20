@@ -23,7 +23,8 @@ export function Start({ index }: { index: BahnhofIndex }) {
           Text: Michael, 2026-09-30 («Lernspiel», «Nachschlagewerk», Namensherkunft); 2026-10-01 «Reisebegleiter»;
           2026-10-02 «fahren Züge im Taktfahrplan», nicht «die Züge»: ob alle so fahren, ist nicht belegt;
           2026-10-02 ganzer Text neu von Michael, mit «Kein Fahrplan»;
-          2026-10-05 «Reisebegleiter», die Spiele unter «Lernen», Bahnübergänge im Sammelheft */}
+          2026-10-05 «Reisebegleiter», die Spiele unter «Lernen», Bahnübergänge im Sammelheft;
+          2026-11-20 «Kein Reiseplaner» statt «Kein Fahrplan» (Michael: «Genau kein Reiseplaner! Das ist mir wichtig. Aber er kennt dennoch mehr als hier steht») */}
       <h2 className="text-2xl font-bold tracking-tight">Willkommen im Taktland</h2>
       <p className="mt-3 text-[15px] leading-relaxed">
         In der Schweiz fahren Züge im Taktfahrplan. Davon hat Taktland seinen Namen.
@@ -55,10 +56,12 @@ export function Start({ index }: { index: BahnhofIndex }) {
         abfahren, unter Spiele bei der Modellbahn.
       </p>
       <p className={absatz}>
-        <span className={fett}>Kein Fahrplan.</span> Taktland ist kein Reiseplaner und nicht mit
-        einem aktuellen Fahrplan verbunden. Es kennt deshalb keine Abfahrtszeiten, Verspätungen oder
-        aktuellen Verbindungen. Taktland zeigt dir nicht, wann genau dein Zug fährt – sondern was es
-        entlang deiner Reise zu entdecken gibt.
+        <span className={fett}>Kein Reiseplaner.</span> Taktland sucht keine Verbindungen, plant keine Reise
+        und ersetzt den offiziellen Fahrplan nicht. Den Fahrplan kennt es trotzdem: In der Virtuellen Schweiz
+        fahren Züge und Schiffe laut Fahrplan, bei den Zügen mit Verspätungen und Ausfällen in Echtzeit, wo sie
+        gemeldet sind. Beim Start von «Fahren» fragt Taktland «In welchem Zug sitzt du?» und zeigt die Züge,
+        die laut Fahrplan gerade vom Start zum Ziel fahren. Und in zwei Spielen geht es um Halte und Fahrzeiten. Für deine Reise gilt der offizielle
+        Fahrplan – Taktland zeigt dir, was es unterwegs zu entdecken gibt.
       </p>
       <p className={absatz}>
         <span className={fett}>Ausdrucken.</span> Das Fahrtblatt ist ein Druckbogen für unterwegs:
