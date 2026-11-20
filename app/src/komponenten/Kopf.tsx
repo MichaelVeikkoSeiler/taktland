@@ -19,6 +19,7 @@ import erratenHell from '../assets/auftakt-erraten-hell.webp'
 import fahrtDunkel from '../assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
 import wobinichBild from '../assets/auftakt-wobinich.webp'
+import wobinichDunkel from '../assets/auftakt-wobinich-dunkel.webp'
 import probefahrenBild from '../assets/auftakt-probefahren.webp'
 import linienDunkel from '../assets/auftakt-linien-dunkel.webp'
 import linienHell from '../assets/auftakt-linien-hell.webp'
@@ -159,9 +160,9 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt' | 'probef
     hell: reisedauerHell, dunkel: reisedauerDunkel, breite: 1344, hoehe: 756,
     alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr mit «? min», dahinter ein Zug auf einem Viadukt, ein See und Berge.',
   },
-  // Michael, 2026-11-20: «Hier die neuen Bilder für die Spiele Wo fahre ich (Bild 1) und Probefahren (Bild 2)», je nur eines, hell und dunkel gleich
+  // Michael, 2026-11-20: «Hier die neuen Bilder für die Spiele Wo fahre ich (Bild 1) und Probefahren (Bild 2)», dazu die Nacht für «Wo fahre ich?» («hier das Nachtmodus Bild für Wo fahre ich»)
   wobinich: {
-    hell: wobinichBild, dunkel: wobinichBild, breite: 1344, hoehe: 756,
+    hell: wobinichBild, dunkel: wobinichDunkel, breite: 1344, hoehe: 756,
     alt: 'Illustration: Ein Tablet mit einer Strecke, einer roten Ortsmarke und einem Fragezeichen steht im Zug auf dem Tisch am Fenster, draussen zieht die Landschaft vorbei.',
   },
   probefahren: {

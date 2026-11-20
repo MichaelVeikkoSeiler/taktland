@@ -18,6 +18,7 @@ import reisedauerHell from './assets/auftakt-reisedauer-hell.webp'
 import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
 import wobinichBild from './assets/auftakt-wobinich.webp'
+import wobinichDunkel from './assets/auftakt-wobinich-dunkel.webp'
 import probefahrenBild from './assets/auftakt-probefahren.webp'
 // seit 2026-11-12 ein eigenes Bild in Taktland, 3dland.ch behält seine (Michael: «Dieses Bild für Virtuelle Schweiz anwenden»)
 import schweiz3dHell from './assets/auftakt-virtuell-hell.webp'
@@ -77,7 +78,7 @@ export const SPIELE: Spiel[] = [
   {
     id: 'wobinich', titel: 'Wo fahre ich?', status: 'spielbereit', adresse: '#/wobinich',
     kurz: 'Im Führerstand irgendwo in der Schweiz, ohne Namen: Wo warst du?',
-    bild: { hell: wobinichBild, dunkel: wobinichBild, alt: 'Illustration: Ein Tablet mit Strecke, roter Ortsmarke und Fragezeichen auf dem Tisch am Zugfenster.' },
+    bild: { hell: wobinichBild, dunkel: wobinichDunkel, alt: 'Illustration: Ein Tablet mit Strecke, roter Ortsmarke und Fragezeichen auf dem Tisch am Zugfenster.' },
     beschreibung: 'Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Ortstafeln und Namen. Fahr ein '
       + 'Stück mit und tippe auf der Karte, wo du warst: je näher, desto mehr Punkte.',
   },
