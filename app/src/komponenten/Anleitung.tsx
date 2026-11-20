@@ -512,6 +512,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             jegliche Programmierkenntnisse, wäre es gar nicht möglich gewesen. Die KI hat mir die Programmierung abgenommen. Die Idee, die
             Entscheidungen und das Ausprobieren des Ganzen, mit mehreren Hundert, wenn nicht sogar gegen tausend Anforderungen an die KI,
             blieben bei mir.</p>
+          {/* Michael, 2026-11-20: «Hommage an den öffentlichen Verkehr», dann «Bahn und Schiff» */}
+          <p>Taktland ist meine kleine Hommage an die Bahn und die Schiffe der Schweiz.</p>
         </div>
         <p className="mt-3 font-medium">Michael Veikko Seiler</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
