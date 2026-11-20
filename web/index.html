@@ -495,7 +495,18 @@
   </footer>
   <script>
     // zählt den Aufruf, nur ein Wort, ohne Kennung (server/zaehler, wie app/src/zaehlen.ts)
-    if (location.hostname === 'taktland.ch') {
+    // eigene Geräte ausnehmen: einmal taktland.ch/?nichtzaehlen öffnen, zurück mit ?wiederzaehlen (Merker wie in der App)
+    var nichtZaehlen = false
+    try {
+      var M = 'taktland.nichtzaehlen'
+      if (/[?&]nichtzaehlen\b/.test(location.search) && localStorage.getItem(M) !== '1') {
+        localStorage.setItem(M, '1'); alert('Dieses Gerät wird ab jetzt nicht mehr gezählt (gilt für diesen Browser).')
+      } else if (/[?&]wiederzaehlen\b/.test(location.search) && localStorage.getItem(M) === '1') {
+        localStorage.removeItem(M); alert('Dieses Gerät wird wieder gezählt.')
+      }
+      nichtZaehlen = localStorage.getItem(M) === '1'
+    } catch (e) { /* ohne Speicher wird gezählt */ }
+    if (location.hostname === 'taktland.ch' && !nichtZaehlen) {
       try { navigator.sendBeacon('https://zaehler.taktland.ch/zaehlen.php?w=web') } catch (e) { /* nie stören */ }
     }
   </script>
