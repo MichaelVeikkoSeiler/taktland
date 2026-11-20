@@ -1410,6 +1410,8 @@ des Nächsten; ohne «Hinter den Zug», «Führerstand» und XR, auch nicht am P
 Karte von «Geo» mit den Hilfen vom Start, gewertet wie dort (punkte, nullGrenzeM für die ganze Schweiz); in der Auflösung die Bahnhöfe
 davor und danach und die Linie. Das Bild der Kachel ist vorerst das des Fahrtmodus. Seit 2026-11-14 heisst es «Wo fahre ich?» (Adresse und Code weiter wobinich) und zeigt die Höhe immer wie echt, ohne «Höhe wie echt / 2-fach» im Bild und am Pult
 (Michael: «Bei Wo bin isch Spiel braucht es die 2x Höhe nicht. Entsprechend auch Höhe wie echt nicht. Name korrigieren: neu Wo fahre ich?»).
+Seit 2026-11-20 haben «Wo fahre ich?» und «Probefahren» eigene Bilder von Michael, auf der Kachel und oben auf der Seite (Michael: «Hier die neuen Bilder für die Spiele Wo fahre ich
+(Bild 1) und Probefahren (Bild 2)»; src/assets/auftakt-wobinich.webp und auftakt-probefahren.webp, 1344 × 756, je eines für hell und dunkel); die Übersicht der Spiele behält das Bild der Modellbahn.
 
 **Fahrplan-Puzzle** (#/puzzle) und **Wie lange dauert's?** (#/fahrzeit) (Spiele, Michael, 2026-11-14: «6 und 7 gerne umsetzen»): Vorrat
 data/fahrplan/spiel.json aus pipeline/build_fahrplan.py (spiel_schreiben, beim Veröffentlichen mit dem Fahrplan gebaut): je Muster (Gattung, Linie, Ziel,

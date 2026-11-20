@@ -17,6 +17,8 @@ import reisedauerDunkel from './assets/auftakt-reisedauer-dunkel.webp'
 import reisedauerHell from './assets/auftakt-reisedauer-hell.webp'
 import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
 import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
+import wobinichBild from './assets/auftakt-wobinich.webp'
+import probefahrenBild from './assets/auftakt-probefahren.webp'
 // seit 2026-11-12 ein eigenes Bild in Taktland, 3dland.ch behält seine (Michael: «Dieses Bild für Virtuelle Schweiz anwenden»)
 import schweiz3dHell from './assets/auftakt-virtuell-hell.webp'
 import schweiz3dDunkel from './assets/auftakt-virtuell-dunkel.webp'
@@ -58,7 +60,8 @@ export const SPIELE: Spiel[] = [
     // Michael, 2026-11-07: «Spiele sollen heissen: Virtuell und Probefahren»
     id: 'modellbahn', titel: 'Probefahren', status: 'spielbereit', adresse: '#/modellbahn',
     kurz: 'Eine Strecke als Modell im Gelände, im Führerstand selbst fahren, auch in der VR-Brille.',
-    bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: Jemand mit VR-Brille dreht am Tisch das Modell einer Bergstrecke mit Zug auf einem Viadukt.' },
+    // Bild seit 2026-11-20 (Michael: «Hier die neuen Bilder für die Spiele Wo fahre ich (Bild 1) und Probefahren (Bild 2)»)
+    bild: { hell: probefahrenBild, dunkel: probefahrenBild, alt: 'Illustration: Blick aus dem Führerstand auf eine Strecke im Regen, im Vordergrund das Pult.' },
     beschreibung: 'Eine Strecke als Modell im Gelände: drehen, zoomen und einen Zug darüber fahren lassen, mit einer '
       + 'Brille auch auf dem Tisch vor dir. Im Führerstand fährst du selbst, mit dem echten Wetter der nächsten Station. Ein Modell, '
       + 'kein Abbild der Wirklichkeit. Dazu die Probefahrten, die einen Weg wie unterwegs abspielen.',
@@ -70,11 +73,11 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
       + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
   },
-  // Michael, 2026-10-18: «Wo bin ich passt gut»; das Bild ist vorerst das des Fahrtmodus
+  // Michael, 2026-10-18: «Wo bin ich passt gut»; seit 2026-11-20 mit eigenem Bild (Michael: «Hier die neuen Bilder …»)
   {
     id: 'wobinich', titel: 'Wo fahre ich?', status: 'spielbereit', adresse: '#/wobinich',
     kurz: 'Im Führerstand irgendwo in der Schweiz, ohne Namen: Wo warst du?',
-    bild: { hell: fahrtHell, dunkel: fahrtDunkel, alt: 'Illustration: Blick aus dem Zugfenster auf ein Tunnelportal, einen See mit Dorf und Berge.' },
+    bild: { hell: wobinichBild, dunkel: wobinichBild, alt: 'Illustration: Ein Tablet mit Strecke, roter Ortsmarke und Fragezeichen auf dem Tisch am Zugfenster.' },
     beschreibung: 'Taktland setzt dich in den Führerstand, irgendwo auf einer Strecke, ohne Ortstafeln und Namen. Fahr ein '
       + 'Stück mit und tippe auf der Karte, wo du warst: je näher, desto mehr Punkte.',
   },
