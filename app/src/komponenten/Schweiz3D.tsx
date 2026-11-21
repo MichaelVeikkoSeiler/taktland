@@ -2808,6 +2808,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     let durchsicht = false
     const sterne = sternenhimmelBauen()
     szene.add(sterne.punkte)
+    szene.add(sterne.sonne)
     // in der Stufe Schweiz ein Himmel nach dem Horizont statt nach dem Bild: hellblau, in das das dunkelgraue Ausland gegen aussen übergeht (Michael, 2026-11-14: «Ausland dunkelgrau weiterziehen und Verlauf gegen oben zu hellblau»)
     kuppelStoff = new THREE.ShaderMaterial({
       uniforms: { horizont: { value: new THREE.Color(AUSLAND_HORIZONT) }, oben: { value: new THREE.Color(AUSLAND_OBEN) } },
@@ -3421,7 +3422,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }]
     jeBild.push(verlaufSetzen)
     // die Sterne um das Auge, gedreht wie das Modell (die Himmelsrichtungen gehören zu ihm, wie die Sonne)
-    jeBild.push(() => sterne.schritt(renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera, wurzel, !!szene.background))
+    // die Sonne auch über der dunklen Kuppel der Stufe Schweiz, nicht im Durchblick der Brille
+    jeBild.push(() => sterne.schritt(renderer.xr.isPresenting ? renderer.xr.getCamera() : kamera, wurzel, !!szene.background, !!szene.background || kuppel.visible))
     kern.current = { renderer, szene, kamera, steuerung, wurzel, inBrille: () => renderer.xr.isPresenting, setzeHimmel, himmel, himmelTag, himmelOben, himmelObenTag, himmelMalen, sterne, jeBild, wenn, stehenSetzen, lageJetzt, tafel, tafelSetzen,
                      sonne, himmelLicht, anfangSetzen, verlauf }
 
@@ -3459,6 +3461,13 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const m = sterne.punkte.children[0], dir = m.getWorldPosition(new THREE.Vector3()).sub(kamera.position).normalize()
         kamera.position.copy(steuerung.target).addScaledVector(dir, -STEHEN_DREH_KM); steuerung.update()
         return [m.visible, sterne.punkte.visible, dir.y]
+      }
+      ;(window as unknown as { s3dZurSonne: unknown }).s3dZurSonne = () => {
+        const m = sterne.sonne
+        sterne.schritt(kamera, wurzel, !!szene.background, true)
+        const dir = m.position.clone().sub(kamera.position).normalize(), ab = kamera.position.distanceTo(steuerung.target)
+        kamera.position.copy(steuerung.target).addScaledVector(dir, -ab); steuerung.update()
+        return [m.visible, dir.y]
       }
       ;(window as unknown as { s3dProgramme: unknown }).s3dProgramme = () => (renderer.info.programs ?? []).map((q) => `${q.name}#${q.usedTimes}`);
       // die Kamera auf eine Stelle (LV95, m ü. M.) richten, aus abstandM, von Richtung (Grad ab Osten) und Höhe (Grad über dem Horizont)
@@ -5315,6 +5324,8 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         : 0.35 + 0.95 * Math.min(1, Math.max(0, (stand.hoehe + 6) / 12))
       himmelLicht.color.set(stand.hoehe > 0 ? '#ffffff' : '#9fb3d9')
     }
+    // die Sonne am Himmel, wo das Licht herkommt (Michael, 2026-11-21: «Wäre es möglich die Sonne zu sehen?»)
+    sterne.sonneSetzen(stand ? d : null, stand ? stand.hoehe : -90)
     sonne.position.copy(d.multiplyScalar(weiteKm * 4)).add(new THREE.Vector3(0, mitteY, 0))
     // nur in einer Testfassung: Schatten aus- und einschalten, zum Vergleich
     if (import.meta.env.VITE_S3D_TEST) {

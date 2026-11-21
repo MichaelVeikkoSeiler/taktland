@@ -11,6 +11,30 @@ import { mondstand, sterneLaden, sternenhimmel } from '../sterne'
 const STERN_PX = 4.6
 /** der Mond so gross wie MOND_GRAD am Himmel (wirklich etwa 0,5°, grösser, damit man die Phase sieht; gewählt) */
 const MOND_GRAD = 1.6
+/** die Sonne mit ihrem Schein so gross am Himmel (gewählt); die Scheibe darin etwa SONNE_SCHEIBE davon (wirklich etwa 0,53°, gezeichnet gut 0,9°) */
+const SONNE_GRAD = 9
+const SONNE_SCHEIBE = 0.07
+
+/** die Sonne: eine helle Scheibe mit weichem Schein, gezeichnet (keine Aufnahme); additiv auf den Himmel */
+function sonnenBild() {
+  const n = 256, c = document.createElement('canvas')
+  c.width = c.height = n
+  const g = c.getContext('2d')!, bild = g.createImageData(n, n)
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+    const r = Math.hypot((i + 0.5) / (n / 2) - 1, (j + 0.5) / (n / 2) - 1)
+    if (r > 1) continue
+    // die Scheibe mit weichem Rand, darum der Schein, der gegen aussen ausläuft
+    const scheibe = Math.max(0, Math.min(1, (SONNE_SCHEIBE - r) * n / 3 + 0.5))
+    const schein = 0.7 * Math.exp(-r / 0.1) + 0.3 * Math.exp(-r / 0.3) * (1 - r)
+    const v = Math.min(1, scheibe + schein)
+    const k = (i + j * n) * 4
+    bild.data[k] = 255 * v; bild.data[k + 1] = 250 * v; bild.data[k + 2] = 235 * v; bild.data[k + 3] = 255
+  }
+  g.putImageData(bild, 0, 0)
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
+}
 
 /** dunklere, weiche Flecken auf der Scheibe (Lage, Grösse, Tiefe), gezeichnet, nicht nach einer Karte des Monds */
 const MOND_FLECKEN: Array<[number, number, number, number]> = [[-0.25, -0.3, 0.32, 0.22], [0.2, -0.35, 0.28, 0.18], [0.35, 0.05, 0.22, 0.15],
@@ -44,8 +68,12 @@ export interface Sternenhimmel {
   sicht: (v: number) => void
   /** die Sterne zu dieser Zeit über diesem Ort (lädt den Katalog beim ersten Mal) */
   setzen: (zeit: Date, la: number, lo: number) => void
+  /** die Sonne am Himmel, auch am Tag (Michael, 2026-11-21: «Wäre es möglich die Sonne zu sehen?»); der Szene selbst hinzufügen */
+  sonne: THREE.Sprite
+  /** Richtung zur Sonne im Raum des Modells (x Osten, y hinauf, z Süden) und ihre Höhe in Grad; null: keine */
+  sonneSetzen: (richtung: THREE.Vector3 | null, hoehe: number) => void
   /** je Bild: um das Auge, gedreht wie das Modell; ohne Himmel (Durchblick der Brille) keine */
-  schritt: (kamera: THREE.Camera, modell: THREE.Object3D, mitHimmel: boolean) => void
+  schritt: (kamera: THREE.Camera, modell: THREE.Object3D, mitHimmel: boolean, sonneMitHimmel?: boolean) => void
   entsorgen: () => void
 }
 
@@ -77,6 +105,11 @@ export function sternenhimmelBauen(): Sternenhimmel {
   punkte.add(mond)
   let mondElong = -1
   const mondSonne = new THREE.Vector3(), mondBild1 = new THREE.Vector3(), mondBild2 = new THREE.Vector3()
+  // die Sonne: wie der Mond hinter allem anderen, aber nicht an die Sterne gebunden (die sind am Tag aus)
+  const sonne = new THREE.Sprite(new THREE.SpriteMaterial({ map: null, transparent: false, blending: THREE.AdditiveBlending, depthTest: false, depthWrite: false, toneMapped: false }))
+  sonne.renderOrder = -8; sonne.frustumCulled = false; sonne.visible = false
+  const sonneRichtung = new THREE.Vector3(), sonneQ = new THREE.Quaternion()
+  let sonneDa = false
   let auftrag = 0, zuletzt = ''
   const auge = new THREE.Vector3()
   return {
@@ -107,7 +140,27 @@ export function sternenhimmelBauen(): Sternenhimmel {
         punkte.geometry.dispose(); punkte.geometry = g
       }).catch(() => { zuletzt = '' })
     },
-    schritt: (kamera, modell, mitHimmel) => {
+    sonne,
+    sonneSetzen: (richtung, hoehe) => {
+      // knapp unter dem Horizont noch, sonst wäre sie beim Untergehen auf einmal weg (das Gelände verdeckt sie ohnehin)
+      sonneDa = !!richtung && hoehe > -1
+      if (!richtung) return
+      sonneRichtung.copy(richtung).normalize()
+      if (!sonne.material.map) { sonne.material.map = sonnenBild(); sonne.material.needsUpdate = true }
+      // tief am Himmel wärmer und schwächer; eine Stimmung, kein gemessenes Licht (gewählt)
+      const tief = Math.max(0, Math.min(1, (hoehe + 1) / 12))
+      sonne.material.color.set(hoehe < 10 ? '#ffb070' : '#ffffff').lerp(new THREE.Color('#ffffff'), Math.max(0, (hoehe - 4) / 10))
+      sonne.material.opacity = 1
+      sonne.material.color.multiplyScalar(0.55 + 0.45 * tief)
+    },
+    schritt: (kamera, modell, mitHimmel, sonneMitHimmel = mitHimmel) => {
+      sonne.visible = sonneDa && sonneMitHimmel
+      if (sonne.visible) {
+        const cam = kamera as THREE.PerspectiveCamera, d = Math.max(1e-3, (cam.near ?? 0.01) * 50)
+        modell.getWorldQuaternion(sonneQ)
+        sonne.position.copy(sonneRichtung).applyQuaternion(sonneQ).multiplyScalar(d).add(auge.setFromMatrixPosition(cam.matrixWorld))
+        sonne.scale.setScalar(2 * d * Math.tan((SONNE_GRAD / 2) * Math.PI / 180))
+      }
       punkte.visible = punkte.material.uniforms.uSicht.value > 0 && mitHimmel
       if (!punkte.visible) return
       const cam = kamera as THREE.PerspectiveCamera
@@ -124,6 +177,6 @@ export function sternenhimmelBauen(): Sternenhimmel {
         mond.material.opacity = punkte.material.uniforms.uSicht.value
       }
     },
-    entsorgen: () => { auftrag++; punkte.geometry.dispose(); punkte.material.dispose(); mond.material.map?.dispose(); mond.material.dispose() },
+    entsorgen: () => { auftrag++; punkte.geometry.dispose(); punkte.material.dispose(); mond.material.map?.dispose(); mond.material.dispose(); sonne.material.map?.dispose(); sonne.material.dispose() },
   }
 }
