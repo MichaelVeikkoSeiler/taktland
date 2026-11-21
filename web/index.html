@@ -89,6 +89,12 @@
     .knoepfe { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
     /* auf dem Handy führt erst das Ende der Seite zur App (2026-09-30) */
     @media (max-width: 719px) { .nur-gross { display: none; } }
+    /* auf dem Handy ist «So geht's» der einzige Knopf oben, darum rot; er führt zu den drei Schritten und gleich darunter
+       zu «Taktland öffnen» (Michael, 2026-11-21: «So geht's auffälliger … Rot zum Beispiel. Damit man ziemlich direkt zur App gelangen kann») */
+    @media (max-width: 719px) {
+      .knopf.hell.rot-handy { background: var(--karmin); border-color: transparent; color: #fff; }
+      .knopf.hell.rot-handy:hover { background: var(--karmin-dunkel); }
+    }
     .klein-leise { color: var(--leise); font-size: 14px; margin-top: 12px; }
 
     .zahlen { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 48px; }
@@ -185,7 +191,7 @@
       </p>
       <div class="knoepfe">
         <a class="knopf rot nur-gross" href="./app/">Taktland öffnen →</a>
-        <a class="knopf hell" href="#so">So geht’s</a>
+        <a class="knopf hell rot-handy" href="#so">So geht’s</a>
       </div>
       <p class="klein-leise">Kostenlos, ohne Konto, ohne Werbung. Läuft im Browser auf Handy, Tablet und Computer.</p>
     </div>
