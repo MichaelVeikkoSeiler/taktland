@@ -2298,7 +2298,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <p className="mt-2">Ohne künstliche Intelligenz gäbe es 3D-Land nicht, jedenfalls nicht von mir. Die Bildmarke und das Auftaktbild habe
             ich mit ChatGPT gestaltet.</p>
           {/* nur auf 3dland.ch (Michael, 2026-11-20: «Auch auf 3dland.ch unter Über 3D-Land einfügen», wie in «Über Taktland») */}
-          {eigeneSeite && <p className="mt-2">3D-Land ist meine kleine Hommage an die Bahn und die Schiffe der Schweiz.</p>}
+          {eigeneSeite && <p className="mt-2">3D-Land ist meine kleine Hommage an den öffentlichen Verkehr der Schweiz.</p>}
           <p className="mt-2">Und nun viel Spass beim Entdecken der Schweiz. In einer etwas anderen Perspektive.</p>
           {/* in Taktland ohne Namen darunter (Michael, 2026-11-08: «Hier braucht es meinen Namen nicht»), auf 3dland.ch weiter mit */}
           {eigeneSeite && <p className="mt-3 font-medium">Michael Veikko Seiler</p>}
