@@ -902,6 +902,10 @@ Namen nah am Boden in «3D Schweiz» seit 2026-11-16 ausgeblendet (Michael, Bild
              Perpektiven bitte Gewässer und Orts sowie Gipfelnamen ausblenden»): steht die Kamera weniger als 150 m über dem Gelände unter ihr (NAMEN_NAH_M, gewählt,
              namenZuNah), sind Orte, Gipfel und Gewässernamen samt Masten unsichtbar, je Bild geprüft; nicht in der Brille
 Zuggeräusch in «3D Schweiz» seit 2026-11-16 nur in den Feldern von 4 km und 1 km, ebenso der Pfiff (ZUG_HOEREN_STUFEN; Michael: «schon in einer mittleren Zoom-Stufe einen Zug höre, als wäre er gleich vor mir. Die Züge sollte man erst bei der vorletzten und letzten Stufe hören»); in der Anleitung («Geräusche»)
+Sonne am Himmel in «3D Schweiz» seit 2026-11-21 (Michael: «Wäre es möglich die Sonne zu sehen?»): eine helle Scheibe mit weichem Schein dort, woher das Licht der Szene
+             kommt (Sonnenstand aus src/sonne.ts zur Zeit der Szene), in jeder Stufe, auch über der dunklen Kuppel der Stufe Schweiz, bis 1° unter dem Horizont, tief am Himmel
+             orange und schwächer; die Scheibe etwa 1,3° statt 0,53°, der Schein 9° (SONNE_GRAD, SONNE_SCHEIBE, sonnenBild in komponenten/Sternenhimmel.ts, gezeichnet, gewählt);
+             nicht im Durchblick der Brille; im Browser hier in der Stufe Schweiz um 14:30 angeschaut
 Symbol «Höhen» in «3D Schweiz» seit 2026-11-14 drei gerade Linien, oben kürzer (Michael: «Ich denke, einfach diese drei Linien gerade machen»; vorher gewellt)
 data/schweiz3d/orte.json  Ortschaften für «3D Schweiz» (Michael, 2026-10-21: «wie wir das bei Taktland schon haben»): alle Ortschaften
              und Weiler aus swissTLMRegio mit Rang nach der Objektart (build_schweiz3d.py, 18'096 Orte); in der App wie die Bahnhöfe der
