@@ -405,6 +405,7 @@ Autos in «3D Schweiz» (Michael, 2026-11-10: «Möglich Autos aus den Autobahne
              eines vorbeifahrenden Autos (klang/auto.mp3, 6,8 s, am lautesten nach 4,0 s, AUTO_SPITZE_S in src/audio.ts), je Auto alle 0,1 s geprüft, ob es in 4,0 s
              am nächsten an der Stelle ist, wo man hinhört (Abstand fürs Ohr wie bei den Zügen), dann gestartet, voll bis 20 m, im Quadrat leiser, still ab 300 m, je Auto
              höchstens alle 6 s, höchstens 6 zugleich, Tempo der Aufnahme je Wagen ±6 % (AUTO_HOEREN_* in Schweiz3D.tsx, autoVorbei, gewählt)
+Autos in «3D Schweiz» seit 2026-11-21 nur noch im Feld von 1 km (Michael: «Autos nicht in der 4km Ansicht. Der Untergrund wirkt zu unscharf und die autos gestochen Scharf»): Symbol und Knopf an der Wand im Feld von 4 km gesperrt (nurNah), dort keine Autos und keine Retusche
 Lastwagen in «3D Schweiz» (Michael, 2026-11-10: «Bitte auch LKWs einfügen»): Anteil Schwerverkehr laut ASTRA je Zählstelle am Tag und in der Nacht (PrctHeavyTrafficDay,
              PrctHeavyTrafficNight, Median etwa 4,4 %, in data/autos/index.json je Zählstelle als 7. und 8. Wert; ohne Zählstelle gewählt 6 %, AUTO_LKW_OHNE_ZAEHLUNG), alle auf der
              rechten Spur (dort doppelt so viele wie im Mittel, auf Autostrassen ohne Trennung je Richtung einfach), je Platz ein fester Zufall gegen den Anteil der Stunde;

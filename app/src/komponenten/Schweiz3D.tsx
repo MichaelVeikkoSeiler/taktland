@@ -1488,10 +1488,10 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         <div className={`absolute right-2 ${voll ? 'top-14' : 'top-2'} z-[5] ${zweiSpalten ? 'grid grid-flow-col grid-rows-6 gap-2 [direction:rtl]' : vollSpalten ? 'grid grid-flow-col gap-2 [direction:rtl]' : 'flex flex-col gap-2'}`}
              style={{ ...(desktop ? { zoom: DESKTOP_KNOPF_MASS } : {}), ...(vollSpalten ? { gridTemplateRows: `repeat(${vollZeilen}, auto)` } : {}) }}>
           {/* auf Handy und Tablet ausserhalb des Vollbilds in zwei Spalten, sonst reicht die Höhe nicht bis über die Knöpfe unten */}
-          {SCHALTER_SYMBOLE.map(({ art, name, nurFeld, nichtGrob, symbol }) => {
+          {SCHALTER_SYMBOLE.map(({ art, name, nurFeld, nurNah, nichtGrob, symbol }) => {
             const an = ({ orte: orteAn, zuege: zuegeAn, schiffe: schiffeAn, autos: autosAn, menschen: menschenAn, wandern, hoehen: scheiben,
                           gipfel: gipfelAn, wolken: wolkenAn, wind: windAn, sonne: sonnenAn } as Record<string, boolean>)[art]
-            const gesperrt = (nurFeld && stufe !== 'ort' && stufe !== 'nah') || (nichtGrob && grob(stufe))
+            const gesperrt = (nurFeld && stufe !== 'ort' && stufe !== 'nah') || (nurNah && stufe !== 'nah') || (nichtGrob && grob(stufe))
             const setzen = ({ orte: setOrteAn, zuege: setZuegeAn, schiffe: setSchiffeAn, autos: setAutosAn, menschen: setMenschenAn, wandern: setWandern,
                               hoehen: setScheiben, gipfel: setGipfelAn, wolken: setWolkenAn, wind: setWindAn, sonne: setSonnenAn } as Record<string, (f: (x: boolean) => boolean) => void>)[art]
             const leuchtet = an && !gesperrt
@@ -2031,7 +2031,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             laut Fahrplan. Ein Schiff ist gezeichnet, kein bestimmtes Schiff, aus der Ferne grösser, damit man es sieht.</p>
         </Abschnitt>
         <Abschnitt titel="Autos">
-          <p>«Autos» zeigt in den Feldern von 4 km und 1 km fahrende Autos auf den Autobahnen und Autostrassen und auf den übrigen Strassen. Auf Autobahnen und Autostrassen belegt ist, wo die Fahrbahnen
+          <p>«Autos» zeigt im Feld von 1 km fahrende Autos auf den Autobahnen und Autostrassen und auf den übrigen Strassen. Auf Autobahnen und Autostrassen belegt ist, wo die Fahrbahnen
             liegen (swissTLM3D) und wie viel Verkehr dort fährt: Das Bundesamt für Strassen ASTRA zählt an seinen Zählstellen, wie viele Fahrzeuge
             im Mittel je Stunde am Tag (6 bis 22 Uhr) und in der Nacht fahren. Jede Strecke nimmt die Zählstelle, die über das Netz am nächsten
             liegt; so viele Autos fahren dort zur Uhrzeit der Szene, nachts weniger. Wo im Umkreis von 40 km keine Zählstelle liegt, ist die
@@ -2361,11 +2361,11 @@ const SOCKEL_ZEIT = 0.75, KNOPF_ABSTAND = 0.03
 const AUSLAND_BIS = 2.4, AUSLAND_HORIZONT = '#2a2a2a', AUSLAND_OBEN = '#2a2a2a', AUSLAND_VERLAUF: [number, number] = [0, 0.6]
 const LAND_MASKE_PX = 4096, LAND_SCHRITT_M = 250, LAND_WAND_FARBE = '#3c3c3c', LAND_DECKEL_TIEFER = 0.0005
 /** die Schalter auf dem Bildschirm (Michael, 2026-11-14), Reihenfolge und Farben wie an den Wänden; Symbole gezeichnet, gewählt */
-const SCHALTER_SYMBOLE: Array<{ art: Schalter; name: string; farbe: string; nurFeld?: boolean; nichtGrob?: boolean; abstand?: boolean; symbol: ReactNode }> = [
+const SCHALTER_SYMBOLE: Array<{ art: Schalter; name: string; farbe: string; nurFeld?: boolean; nurNah?: boolean; nichtGrob?: boolean; abstand?: boolean; symbol: ReactNode }> = [
   { art: 'orte', name: 'Orte', farbe: '#ffd23c', symbol: <><path d="M12 21.5s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z" /><circle cx="12" cy="10.3" r="2.3" /></> },
   { art: 'zuege', name: 'Züge', farbe: '#ff4d6d', nurFeld: true, abstand: true, symbol: <><rect x="6" y="3" width="12" height="14" rx="3" /><path d="M6 10.5h12M9.5 14h.01M14.5 14h.01M8.5 21l2-4M15.5 21l-2-4" /></> },
   { art: 'schiffe', name: 'Schiffe', farbe: '#2ee6d6', nichtGrob: true, symbol: <><path d="M3.5 14.5h17l-2.2 4.5H5.7z" /><path d="M7 14.5V10h10v4.5M10 10V7h4v3M3 21.5c1.5 0 1.5-.8 3-.8s1.5.8 3 .8 1.5-.8 3-.8 1.5.8 3 .8 1.5-.8 3-.8 1.5.8 3 .8" /></> },
-  { art: 'autos', name: 'Autos', farbe: '#ff9de2', nurFeld: true, symbol: <><path d="M4 16.5v-3.2l2-4.8h12l2 4.8v3.2z" /><path d="M4 13.3h16" /><circle cx="7.5" cy="17.5" r="1.6" /><circle cx="16.5" cy="17.5" r="1.6" /></> },
+  { art: 'autos', name: 'Autos', farbe: '#ff9de2', nurFeld: true, nurNah: true, symbol: <><path d="M4 16.5v-3.2l2-4.8h12l2 4.8v3.2z" /><path d="M4 13.3h16" /><circle cx="7.5" cy="17.5" r="1.6" /><circle cx="16.5" cy="17.5" r="1.6" /></> },
   { art: 'menschen', name: 'Menschen', farbe: '#e8b48f', nurFeld: true, symbol: <><circle cx="9" cy="6.5" r="2.3" /><path d="M5 20.5v-5.5a4 4 0 0 1 8 0v5.5" /><circle cx="16.5" cy="8.5" r="1.9" /><path d="M15.5 13a3.3 3.3 0 0 1 4.5 3v4.5" /></> },
   { art: 'wandern', name: 'Wandern', farbe: '#ffd23c', nichtGrob: true, abstand: true, symbol: <><path d="M12 21.5V3" /><path d="M12 5h6.5l1.8 2-1.8 2H12M12 11.5H5.5l-1.8 2 1.8 2H12" /></> },
   { art: 'hoehen', name: 'Höhen 1\'000 m', farbe: '#ffd23c', symbol: <><path d="M3 18h18" /><path d="M6 13h12" /><path d="M9 8h6" /></> },
@@ -2717,7 +2717,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   zuege: boolean; zuegeDa: boolean
   /** Schiffe laut Fahrplan zeigen (ab der Stufe 16 km) */
   schiffe: boolean
-  /** Autos auf Autobahnen und Autostrassen (in den Feldern von 4 km und 1 km) */
+  /** Autos auf den Strassen (nur im Feld von 1 km) */
   autos: boolean
   menschen: boolean
   /** die Wolken laut Wettermodell, ein eigener Knopf */
@@ -4403,9 +4403,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // Schiffe laut Fahrplan auf den Kurslinien von swissTLMRegio (Michael, 2026-10-28)
         { zeilen: ['Schiffe'], breite: KNOPF_B * W, an: !grob(stufe) && schiffe, farbe: LICHT.schiffe, gesperrt: grob(stufe),
           aktion: umschalten('schiffe') },
-        // Autos auf Autobahnen und Autostrassen nur in den Feldern von 4 km und 1 km (Michael, 2026-11-10)
-        { zeilen: ['Autos'], breite: KNOPF_B * W, an: (stufe === 'ort' || stufe === 'nah') && autos, farbe: LICHT.autos,
-          gesperrt: stufe !== 'ort' && stufe !== 'nah', aktion: umschalten('autos') },
+        // Autos nur im Feld von 1 km (seit 2026-11-21; Michael: «Autos nicht in der 4km Ansicht. Der Untergrund wirkt zu unscharf und die autos gestochen Scharf»)
+        { zeilen: ['Autos'], breite: KNOPF_B * W, an: stufe === 'nah' && autos, farbe: LICHT.autos,
+          gesperrt: stufe !== 'nah', aktion: umschalten('autos') },
         // Menschen auf Perrons, in Siedlungen und auf Wanderwegen (Michael, 2026-11-11: «Gerne gemäss deinen Vorschlägen umsetzen»)
         { zeilen: ['Menschen'], breite: KNOPF_B * W, an: (stufe === 'ort' || stufe === 'nah') && menschen, farbe: LICHT.menschen,
           gesperrt: stufe !== 'ort' && stufe !== 'nah', aktion: umschalten('menschen') }] : []),
@@ -7149,12 +7149,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
   // die Knöpfe zum Entfernen etwas über dem gewählten Fahrzeug (Michael, 2026-11-18: «Button Auto resp Lastwagen entfernen soll etwas oberhalb des Fahrzeuges stehen»)
   const autoKnopfRef = useRef<HTMLDivElement>(null)
   // Autos auf Autobahnen und Autostrassen (komponenten/Autos.ts, pipeline/build_autos.py; Michael, 2026-11-10: «Möglich Autos aus den Autobahnen
-  // wegzuretuschieren und durch fahrende Modelle zu ersetzen?»): nur in den Feldern von 4 km und 1 km, mit dem Knopf «Autos»; die stehenden Autos
+  // wegzuretuschieren und durch fahrende Modelle zu ersetzen?»): seit 2026-11-21 nur im Feld von 1 km (vorher auch 4 km), mit dem Knopf «Autos»; die stehenden Autos
   // im Luftbild retuschiert, solange der Knopf an ist; so viele, wie laut der nächsten Zählstelle des ASTRA zu dieser Stunde fahren
   useEffect(() => {
     const k = kern.current
     const lage = k?.wurzel.userData.lage as { cE: number; cN: number } | undefined
-    if (!k || !lage || !autos || (stufe !== 'ort' && stufe !== 'nah')) return
+    if (!k || !lage || !autos || stufe !== 'nah') return
     let weg = false
     const gruppe = new THREE.Group()
     gruppe.name = 'autos'
