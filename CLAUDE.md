@@ -1451,6 +1451,16 @@ und zweiter Hinweis sind alle Zwischenhalte in der Karte. Abzüge: Hinweis 1: -1
 dann mit den Halten dazwischen laut Fahrplan (nur Bahnhöfe von Taktland), Lage aus dem Index der App (DauerKarte in Fahrplanspiele.tsx); in der Anleitung; im Browser hier mit
 390 Bildpunkten gespielt.
 
+**Bilderpuzzle** (Spiele, #/bilderpuzzle; #/puzzle bleibt das Fahrplan-Puzzle; Michael, 2026-11-21: «Kannst du dieses Puzzlespiel auf Taktland-App übernehmen und dort alle Bilder,
+welche wir auf Taktland integriert haben, als Puzzle bereitstellen?», übernommen aus dem Bilder-Puzzle für Kinder im Repository apoko): 4 bis 48 Teile (TEILE), Puzzleteile mit Nasen
+oder Quadrate, das Bild blass im Rahmen an oder aus (gemerkt unter taktland.bilderpuzzle.v1); die Bilder sind alle Auftaktbilder aus src/assets, hell und dunkel («…, Nacht»),
+per import.meta.glob, ein neues Auftaktbild kommt von selbst dazu, Namen nach dem Bereich (NAMEN in src/bilderpuzzle.ts); ohne den Führerstand (Überlagerung mit durchsichtigem
+Fenster); dazu eigene Fotos, verkleinert auf 2'000 Bildpunkte als data:-Adresse in IndexedDB (taktland-bilderpuzzle), nie gesendet, im Datenschutz genannt; Löschen mit × und
+«Löschen». Gespielt im ganzen Fenster (Spiel in komponenten/Bilderpuzzle.tsx, Spielfeld in src/bilderpuzzle.ts): Rahmen in der Mitte, Teile rundherum, so klein, dass alle neben
+dem Rahmen Platz haben; Teile höchstens 0,8 bis 1,25 so breit wie hoch (TEIL_FORMAT), nur so viel vom Bild abgeschnitten; Einrasten bis ein Drittel der kürzeren Seite daneben
+(EINRASTEN), Töne über antwortTon (richtig, am Schluss bestwert), Konfetti, «Geschafft!» mit «Nochmal» und «Anderes Bild». Kein Punktestand, kein Bestwert. Das Bild der
+Kachel und oben vorerst das der Startseite, bis Michael ein eigenes liefert. Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
+
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
 Auftaktbild als flaches Band (400 px, vorher 288; Michael, 2026-10-13: «ca. 140 %», Auftakt.tsx); Modelle links (2/3) mit Knöpfen rechts (ZWEI_SPALTEN in Relief.tsx), beim

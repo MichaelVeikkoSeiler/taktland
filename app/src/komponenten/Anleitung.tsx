@@ -22,7 +22,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <img src="./logo.svg" alt="" className="mt-6 size-16" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
-        Die Reiter oben führen zu Spiele (Virtuelle Schweiz, Modellbahn, Geo, Wo fahre ich?, Fahrplan-Puzzle, Reisedauer, Duell, Bahnhofsuche), Bahnland (Bahnhöfe,
+        Die Reiter oben führen zu Spiele (Virtuelle Schweiz, Modellbahn, Geo, Wo fahre ich?, Fahrplan-Puzzle, Bilderpuzzle, Reisedauer, Duell, Bahnhofsuche), Bahnland (Bahnhöfe,
         Strecken, Brücken, Tunnel, Bahnübergänge), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
@@ -79,6 +79,16 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           <li>
             Zu mehreren: «Mehrere auf diesem Gerät» reihum, alle ordnen dieselbe Fahrt, die Lösung kommt, wenn alle fertig sind. «Auf mehreren
             Geräten» über einen Raum mit QR-Code wie bei Geo; der Gastgeber geht zur nächsten Runde. Am Schluss die Rangliste.
+          </li>
+        </Spiel>
+        <Spiel titel="Bilderpuzzle">
+          <li>
+            Wähle 4 bis 48 Teile, Puzzleteile oder Quadrate, und ein Bild: jede Illustration von Taktland, am Tag und in der Nacht, oder
+            ein eigenes Foto. Die Teile liegen rund um den Rahmen; zieh jedes an seinen Platz, stimmt er, rastet es ein. Das Auge oben
+            rechts zeigt das Bild blass im Rahmen oder blendet es aus.
+          </li>
+          <li>
+            Eigene Fotos bleiben im Browser dieses Geräts und werden nicht gesendet; × und «Löschen» entfernt sie wieder.
           </li>
         </Spiel>
         <Spiel titel="Reisedauer">
@@ -419,7 +429,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             (localStorage): Lernfortschritt und Bestwerte, Einstellungen, Favoriten (Bahnhöfe, Fahrten und Ansichten der
             Virtuellen Schweiz), Probefahrten, Logbuch und Sammelheft, die laufende Fahrt und den Tag, an dem zuletzt gezählt wurde (siehe
             unten). Für eine laufende Partie in Geo und der Bahnhofsuche liegt ein Stand bis zum Schliessen des Fensters
-            im Browser (sessionStorage). Damit Taktland auch ohne Netz läuft, hält der Browser die App und die geladenen
+            im Browser (sessionStorage). Eigene Fotos im Bilderpuzzle liegen, verkleinert, in der Datenbank des Browsers
+            (IndexedDB), bis du sie dort löschst. Damit Taktland auch ohne Netz läuft, hält der Browser die App und die geladenen
             Daten in einem eigenen Zwischenspeicher. Nichts davon wird an Taktland gesendet. «Fortschritt auf diesem
             Gerät löschen» in der Fusszeile entfernt Lernfortschritt, Bestwerte im Duell und das Sammelheft; alles
             andere entfernst du in den Einstellungen des Browsers mit den Websitedaten für taktland.ch.
