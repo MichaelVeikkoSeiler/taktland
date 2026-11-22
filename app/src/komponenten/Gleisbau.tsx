@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { knopfTon } from '../audio'
 import {
   type Brett, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
-  spalten, type Stueck, stueckLaenge, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  istBahnhof, spalten, type Stueck, stueckLaenge, tunnelWeiter, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 
@@ -53,12 +53,18 @@ const linie = (p: Array<{ x: number; y: number }>) => p.map((q, k) => `${k ? 'L'
 const versetzt = (p: Array<{ x: number; y: number; w: number }>, d: number) =>
   p.map((q) => ({ x: q.x - Math.sin(q.w) * d, y: q.y + Math.cos(q.w) * d }))
 
-/** ob ein Punkt im Inneren eines Tunnels liegt, mehr als 0,22 vom Rand seines Felds */
+/** wie weit das Portal vom Rand des Felds liegt */
+const PORTAL = 0.22
+
+/** ob ein Punkt im Tunnel liegt: in einem Feld im Berg mit Gleis, mehr als PORTAL von jeder Kante mit Portal (an Kanten, wo der Tunnel im
+ *  Nachbarfeld weitergeht, gibt es keines) */
 function imTunnel(b: Brett, x: number, y: number) {
   const i = Math.floor(x), j = Math.floor(y)
   const f = b[j]?.[i]
   if (!f || f.grund !== 'berg' || !f.gleis) return false
-  return Math.min(x - i, i + 1 - x, y - j, j + 1 - y) > 0.22
+  const abstand = [y - j, i + 1 - x, j + 1 - y, x - i]
+  const kanten = new Set(wege(f.gleis).flat())
+  return [0, 1, 2, 3].every((k) => !kanten.has(k) || tunnelWeiter(b, i, j, k) || abstand[k] > PORTAL)
 }
 
 function GrundBild({ f, i, j }: { f: Feld; i: number; j: number }) {
@@ -94,7 +100,7 @@ function GrundBild({ f, i, j }: { f: Feld; i: number; j: number }) {
   )
 }
 
-function GleisBild({ f, i, j, name }: { f: Feld; i: number; j: number; name?: string }) {
+function GleisBild({ f, i, j, name, weiter = [false, false, false, false] }: { f: Feld; i: number; j: number; name?: string; weiter?: boolean[] }) {
   const g = f.gleis
   if (!g) return null
   const cx = i + 0.5, cy = j + 0.5
@@ -115,6 +121,22 @@ function GleisBild({ f, i, j, name }: { f: Feld; i: number; j: number; name?: st
           <path d={linie(versetzt(p, -0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
         </g>
       ))}
+      {g.art === 'kurvenbahnhof' && (() => {
+        // der Perron aussen am Bogen, die Kante 0,17 neben dem Gleis wie beim geraden Bahnhof
+        const s0 = stuecke[0].s, mitte = wegPunkte(s0, 14)
+        const aussen = mitte.map((q) => ({ x: q.x, y: q.y, w: q.w }))
+        // aussen ist die Seite weg von der Ecke, um die der Bogen läuft
+        const ecke = { x: cx + ([0, 0.5, 0, -0.5][s0.ein] + [0, 0.5, 0, -0.5][s0.aus]), y: cy + ([-0.5, 0, 0.5, 0][s0.ein] + [-0.5, 0, 0.5, 0][s0.aus]) }
+        const q0 = aussen[7], links = { x: -Math.sin(q0.w), y: Math.cos(q0.w) }
+        const vz = (q0.x - ecke.x) * links.x + (q0.y - ecke.y) * links.y > 0 ? 1 : -1
+        return (
+          <g>
+            <path d={linie(versetzt(aussen, vz * 0.26))} fill="none" stroke={F.perron} strokeWidth={0.2} />
+            <path d={linie(versetzt(aussen, vz * 0.165))} fill="none" stroke="#ffffff" strokeWidth={0.02} />
+            <path d={linie(versetzt(aussen.slice(4, 11), vz * 0.27))} fill="none" stroke={F.dach} strokeWidth={0.12} strokeLinecap="round" />
+          </g>
+        )
+      })()}
       {g.art === 'bahnhof' && (
         <g transform={`rotate(${g.dreh * 90} ${cx} ${cy})`}>
           <rect x={cx + 0.16} y={cy - 0.44} width={0.2} height={0.88} rx={0.02} fill={F.perron} />
@@ -141,12 +163,18 @@ function GleisBild({ f, i, j, name }: { f: Feld; i: number; j: number; name?: st
       })()}
       {f.grund === 'berg' && (
         <>
-          <rect x={cx - 0.29} y={cy - 0.29} width={0.58} height={0.58} rx={0.18} fill={F.fels} />
-          <path d={`M${cx - 0.2},${cy + 0.16} L${cx - 0.02},${cy - 0.2} L${cx + 0.08},${cy} L${cx + 0.14},${cy - 0.08} L${cx + 0.24},${cy + 0.16} Z`} fill={F.berg} />
+          {/* der Berg über dem Gleis: vom Portal bis zum anderen Portal oder bis an die Kante, wo der Tunnel im Nachbarfeld weitergeht */}
+          {punkte.map(({ s }, k) => {
+            const l = stueckLaenge(s), fein = wegPunkte(s, 40)
+            const von = s.ein >= 0 && !weiter[s.ein] ? PORTAL / l : 0, bis = s.aus >= 0 && !weiter[s.aus] ? 1 - PORTAL / l : 1
+            const teil = fein.filter((_, n) => n / 40 >= von - 1e-6 && n / 40 <= bis + 1e-6)
+            return teil.length > 1 ? <path key={`d${k}`} d={linie(teil)} fill="none" stroke={F.fels} strokeWidth={0.52} /> : null
+          })}
+          <path d={`M${cx - 0.17},${cy + 0.12} L${cx - 0.02},${cy - 0.17} L${cx + 0.07},${cy} L${cx + 0.12},${cy - 0.07} L${cx + 0.21},${cy + 0.12} Z`} fill={F.berg} />
           {punkte.map(({ p, s }, k) => [0, 1].map((e) => {
             const kant = e === 0 ? s.ein : s.aus
-            if (kant < 0) return null
-            const l = stueckLaenge(s), t = e === 0 ? 0.22 / l : 1 - 0.22 / l
+            if (kant < 0 || weiter[kant]) return null
+            const l = stueckLaenge(s), t = e === 0 ? PORTAL / l : 1 - PORTAL / l
             const q = p[Math.round(t * (p.length - 1))] ?? p[0]
             return <g key={`${k}${e}`} transform={`translate(${q.x} ${q.y}) rotate(${(q.w * 180) / Math.PI})`}>
               <rect x={-0.03} y={-0.2} width={0.06} height={0.4} rx={0.03} fill={F.portal} />
@@ -263,7 +291,13 @@ export function Gleisbau() {
     setMeldung(null)
     const w = werkzeug
     let n: Feld = f
-    if (w.art === 'gleis') {
+    if (w.art === 'gleis' && w.gleis === 'bahnhof' && (f.gleis?.art === 'kurve' || f.gleis?.art === 'gerade')) {
+      // auf eine Kurve gelegt wird der Bahnhof zum Bahnhof in der Kurve, auf eine Gerade zum geraden, die Lage bleibt
+      n = { ...f, gleis: { art: f.gleis.art === 'kurve' ? 'kurvenbahnhof' : 'bahnhof', dreh: f.gleis.dreh } }
+    } else if (w.art === 'gleis' && w.gleis === 'bahnhof' && istBahnhof(f.gleis)) {
+      const d = ((f.gleis!.dreh + 1) % 4) as Dreh
+      setDreh(d); n = { ...f, gleis: { ...f.gleis!, dreh: d } }
+    } else if (w.art === 'gleis') {
       if (f.gleis?.art === w.gleis) {
         const d = ((f.gleis.dreh + 1) % 4) as Dreh
         setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
@@ -316,6 +350,7 @@ export function Gleisbau() {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">Gleisbau</h1>
       <p className="mt-2 max-w-3xl leading-relaxed">
         Wähle unten ein Stück und tippe ein Feld an. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
+        Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve.
         Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
       </p>
       <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
@@ -323,7 +358,8 @@ export function Gleisbau() {
              onClick={feldAn} className="w-full cursor-pointer select-none">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} />))}
-          {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)} />))}
+          {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)}
+                                                         weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined} />))}
           {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
         </svg>
       </div>

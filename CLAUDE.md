@@ -1495,7 +1495,11 @@ neue Beispiele erscheinen und auch Anzahl Kacheln sollen wählbar sein»): ein R
 hinaus, ohne den Ring sonst zu berühren), mit 70 % ein Abstellgleis mit Weiche, ein bis zwei Feldern und Prellbock, mit 80 % ein Fluss quer übers Brett mit Biegungen, der das
 Gleis nur quer über eine Gerade kreuzt (Brücken), ein Berg an einer Geraden (Tunnel), zwei bis drei Bahnhöfe mindestens drei Felder auseinander, Dörfer neben den Bahnhöfen,
 Wald auf etwa 12 % der Felder; alles gewählt. Grösse wählbar 6 × 4, 8 × 6, 10 × 7, 12 × 8 (GROESSEN), was oben links Platz hat, bleibt (groesseAendern); dabei gefunden: ein
-Tipp traf das Feld neben dem gemeinten, der Rand des Tabletts fehlte in der Rechnung. Im Browser hier je drei Beispiele in allen vier Grössen erzeugt und fahren lassen. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
+Tipp traf das Feld neben dem gemeinten, der Rand des Tabletts fehlte in der Rechnung. Im Browser hier je drei Beispiele in allen vier Grössen erzeugt und fahren lassen.
+Seit 2026-11-22 (Michael: «Mehrere Tunnelelemente nacheinander werden zu einem Tunnel. Bahnhof darf auch in einer Kurve sein»): führt das Gleis eines Bergfelds an eine Kante, hinter
+der das Gleis im Nachbarfeld ebenfalls im Berg liegt, hat es dort kein Portal, der Berg deckt das Gleis bis an die Kante (tunnelWeiter in src/gleisbau.ts), so sind Felder nacheinander
+ein Tunnel, auch für das Blasswerden des Zugs; neu die Art «kurvenbahnhof» (istBahnhof), Perron aussen am Bogen, der Bahnhof auf eine Kurve gelegt wird zu ihr, auf eine Gerade zum
+geraden; in den Beispielen etwa jede vierte Kurve als Kandidat für einen Bahnhof; im Browser hier angeschaut. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
 Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
 mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone

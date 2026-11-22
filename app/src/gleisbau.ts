@@ -13,7 +13,10 @@ export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
 export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf'
-export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof'
+export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof'
+
+/** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
+export const istBahnhof = (g?: Gleis) => g?.art === 'bahnhof' || g?.art === 'kurvenbahnhof'
 export type Dreh = 0 | 1 | 2 | 3
 
 export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 abzweigend */ stellung?: 0 | 1 }
@@ -25,7 +28,7 @@ const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0]
 
 /** die Wege durch ein Stück ohne Drehung; bei der Weiche zuerst der gerade, dann der abzweigende, beide ab dem Stamm im Süden */
 const WEGE: Record<GleisArt, Array<[number, number]>> = {
-  gerade: [[0, 2]], bahnhof: [[0, 2]], kurve: [[2, 1]], weiche: [[2, 0], [2, 1]], kreuzung: [[0, 2], [1, 3]], prellbock: [[2, -1]],
+  gerade: [[0, 2]], bahnhof: [[0, 2]], kurve: [[2, 1]], kurvenbahnhof: [[2, 1]], weiche: [[2, 0], [2, 1]], kreuzung: [[0, 2], [1, 3]], prellbock: [[2, -1]],
 }
 
 const drehen = (k: number, d: number) => (k < 0 ? -1 : (k + d) % 4)
@@ -127,6 +130,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
     b[j][i].gleis = stueckFuer(richtungZu(i, j, pi, pj), richtungZu(i, j, qi, qj))
   })
   const gerade = () => ring.filter(([i, j]) => b[j][i].gleis?.art === 'gerade')
+  const kurven = () => ring.filter(([i, j]) => b[j][i].gleis?.art === 'kurve')
   // Abstellgleis: an einer Geraden eine Weiche, daneben ein bis zwei Felder frei, am Ende ein Prellbock
   if (Math.random() < 0.7) {
     for (const [i, j] of gerade().sort(() => Math.random() - 0.5)) {
@@ -177,12 +181,13 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
     }
   }
   // Bahnhöfe: zwei oder drei Geraden auf Wiese, möglichst weit auseinander
-  const frei = gerade().filter(([i, j]) => b[j][i].grund === 'wiese').sort(() => Math.random() - 0.5)
+  // auch in Kurven, etwa jeder vierte Kandidat (gewählt)
+  const frei = [...gerade(), ...kurven().filter(() => Math.random() < 0.25)].filter(([i, j]) => b[j][i].grund === 'wiese').sort(() => Math.random() - 0.5)
   const bahnhoefe: Array<[number, number]> = []
   for (const [i, j] of frei) {
     if (bahnhoefe.length >= 2 + z(2)) break
     if (bahnhoefe.every(([p, q]) => Math.abs(p - i) + Math.abs(q - j) >= 3)) {
-      bahnhoefe.push([i, j]); b[j][i].gleis = { ...b[j][i].gleis!, art: 'bahnhof' }
+      bahnhoefe.push([i, j]); b[j][i].gleis = { ...b[j][i].gleis!, art: b[j][i].gleis!.art === 'kurve' ? 'kurvenbahnhof' : 'bahnhof' }
     }
   }
   // Dörfer neben den Bahnhöfen, Wald verstreut
@@ -201,7 +206,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 
 const SPEICHER = 'taktland.gleisbau.v1'
 const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf']
-const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof']
+const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof']
 
 /** das gemerkte Brett, nur wenn es heil ist */
 export function brettLesen(): Brett | null {
@@ -220,11 +225,23 @@ export function brettMerken(b: Brett) {
   try { localStorage.setItem(SPEICHER, JSON.stringify(b)) } catch { /* nur für jetzt */ }
 }
 
+/**
+ * Ob die Kante k von Feld (i, j) in einen Tunnel weiterführt: der Nachbar liegt auch im Berg und sein Gleis reicht an dieselbe Kante.
+ * Dort hat der Tunnel kein Portal, mehrere Tunnelfelder nacheinander sind ein Tunnel (Michael, 2026-11-22: «Mehrere Tunnelelemente nacheinander
+ * werden zu einem Tunnel»)
+ */
+export function tunnelWeiter(b: Brett, i: number, j: number, k: number) {
+  const u = i + DX[k], v = j + DY[k], n = b[v]?.[u]
+  if (!n || n.grund !== 'berg' || !n.gleis) return false
+  const gegen = (k + 2) % 4
+  return wege(n.gleis).some(([a, c]) => a === gegen || c === gegen)
+}
+
 /** die Bahnhöfe der Reihe nach (Zeile, dann Spalte) mit Buchstaben A, B, C … */
 export function bahnhofNamen(b: Brett): Map<string, string> {
   const n = new Map<string, string>()
   for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
-    if (b[j][i].gleis?.art === 'bahnhof') n.set(`${i},${j}`, String.fromCharCode(65 + (n.size % 26)))
+    if (istBahnhof(b[j][i].gleis)) n.set(`${i},${j}`, String.fromCharCode(65 + (n.size % 26)))
   }
   return n
 }
@@ -305,7 +322,7 @@ export class Zug {
   static setzen(b: Brett): Zug | null {
     let start: Stueck | null = null
     for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) {
-      if (b[j][i].gleis?.art === 'bahnhof') { const [a, c] = wege(b[j][i].gleis!)[0]; start = { i, j, ein: a, aus: c } }
+      if (istBahnhof(b[j][i].gleis)) { const [a, c] = wege(b[j][i].gleis!)[0]; start = { i, j, ein: a, aus: c } }
     }
     for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) {
       const g = b[j][i].gleis
@@ -323,7 +340,7 @@ export class Zug {
       erstes = umgekehrt(davor)
       z.stuecke.unshift(erstes)
     }
-    if (b[start.j][start.i].gleis?.art === 'bahnhof') z.halt = HALT_S
+    if (istBahnhof(b[start.j][start.i].gleis)) z.halt = HALT_S
     return z
   }
 
@@ -357,7 +374,7 @@ export class Zug {
       const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
       const mitte = l / 2, vorher = this.kopf
       // am Bahnhof in der Mitte des Felds halten
-      if (b[s.j][s.i].gleis?.art === 'bahnhof' && vorher < mitte && vorher + rest >= mitte) {
+      if (istBahnhof(b[s.j][s.i].gleis) && vorher < mitte && vorher + rest >= mitte) {
         this.kopf = mitte; this.halt = HALT_S; this.tempo = 0; return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
