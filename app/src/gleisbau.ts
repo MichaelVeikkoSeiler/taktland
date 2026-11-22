@@ -251,10 +251,21 @@ export function brettMerken(b: Brett) {
  */
 export function tunnelWeiter(b: Brett, i: number, j: number, k: number) {
   const u = i + DX[k], v = j + DY[k], n = b[v]?.[u]
-  if (!n || n.grund !== 'berg' || !n.gleis) return false
+  if (!n || n.grund !== 'berg') return false
   const gegen = (k + 2) % 4
+  // eine grosse Kurve im Berg, die an dieser Kante endet, führt den Tunnel ebenso weiter
+  if (n.teil || grosseKurve(n.gleis)) {
+    const [hi, hj] = n.teil ?? [u, v], g = b[hj]?.[hi]?.gleis
+    if (!grosseKurve(g)) return false
+    const G = grossGeometrie(hi, hj, g!)
+    return [G.anfang, G.ende].some((e) => e.i === u && e.j === v && e.kante === gegen)
+  }
+  if (!n.gleis) return false
   return wege(n.gleis).some(([a, c]) => a === gegen || c === gegen)
 }
+
+/** ob von Feld (i, j) über die Kante k ein Tunnel weiterführt; für die Enden grosser Kurven */
+export const tunnelWeiterAnKante = (b: Brett, e: { i: number; j: number; kante: number }) => tunnelWeiter(b, e.i, e.j, e.kante)
 
 /** das Feld des Anfangs einer grossen Kurve mit n Feldern und Drehung d, deren Block oben links bei (ox, oy) liegt */
 export function grossAnfang(ox: number, oy: number, n: number, d: number): [number, number] {

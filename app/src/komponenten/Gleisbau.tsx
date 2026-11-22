@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, tunnelWeiter, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 
@@ -70,10 +70,50 @@ const PORTAL = 0.22
 function imTunnel(b: Brett, x: number, y: number) {
   const i = Math.floor(x), j = Math.floor(y)
   const f = b[j]?.[i]
-  if (!f || f.grund !== 'berg' || !f.gleis || grosseKurve(f.gleis)) return false
+  if (!f || f.grund !== 'berg') return false
+  if (f.teil || grosseKurve(f.gleis)) {
+    const [hi, hj] = f.teil ?? [i, j], g = b[hj]?.[hi]?.gleis
+    if (!grosseKurve(g)) return false
+    const G = grossGeometrie(hi, hj, g!)
+    let t = Math.atan2(y - G.cy, x - G.cx) - G.a0
+    t = ((t % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)
+    const k = (t / G.da) * 40
+    return bogenTunnel(b, G).some((a) => k >= a.k0 && k <= a.k1)
+  }
+  if (!f.gleis) return false
   const abstand = [y - j, i + 1 - x, j + 1 - y, x - i]
   const kanten = new Set(wege(f.gleis).flat())
   return [0, 1, 2, 3].every((k) => !kanten.has(k) || tunnelWeiter(b, i, j, k) || abstand[k] > PORTAL)
+}
+
+/** die Punkte einer grossen Kurve, 41 gleichmässig verteilt */
+function bogenPunkte(G: ReturnType<typeof grossGeometrie>) {
+  return Array.from({ length: 41 }, (_, k) => {
+    const a = G.a0 + (G.da * k) / 40
+    return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a), w: a + Math.PI / 2 }
+  })
+}
+
+/**
+ * Wo eine grosse Kurve im Tunnel liegt (Michael, 2026-11-22: «Ja, Tunnel bei grossen Kurven auch einbauen»): die Abschnitte über Bergfeldern,
+ * in Teilstücken von 0 bis 40; ein Portal PORTAL nach dem Übergang vom Land in den Berg, an einem Ende der Kurve nur, wenn dort kein Tunnel im
+ * Nachbarfeld weiterführt
+ */
+function bogenTunnel(b: Brett, G: ReturnType<typeof grossGeometrie>) {
+  const p = bogenPunkte(G)
+  const berg = Array.from({ length: 40 }, (_, k) => b[Math.floor((p[k].y + p[k + 1].y) / 2)]?.[Math.floor((p[k].x + p[k + 1].x) / 2)]?.grund === 'berg')
+  const schritt = (G.r * G.da) / 40, ab = PORTAL / schritt
+  const raus: Array<{ k0: number; k1: number; portal0: boolean; portal1: boolean }> = []
+  for (let k = 0; k < 40;) {
+    if (!berg[k]) { k++; continue }
+    let e = k
+    while (e < 40 && berg[e]) e++
+    const portal0 = !(k === 0 && tunnelWeiterAnKante(b, G.anfang)), portal1 = !(e === 40 && tunnelWeiterAnKante(b, G.ende))
+    const k0 = k + (portal0 ? ab : 0), k1 = e - (portal1 ? ab : 0)
+    if (k1 > k0) raus.push({ k0, k1, portal0, portal1 })
+    k = e
+  }
+  return raus
 }
 
 /** ein Feld: die Fläche und, ohne «nurFlaeche», seine Landschaft für sich allein (auf den Knöpfen) */
@@ -180,12 +220,12 @@ function Landschaft({ brett }: { brett: Brett }) {
   )
 }
 
-function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasser }: {
-  f: Feld; i: number; j: number; name?: string; weiter?: boolean[]; wasser?: (u: number, v: number) => boolean
+function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasser, brett }: {
+  f: Feld; i: number; j: number; name?: string; weiter?: boolean[]; wasser?: (u: number, v: number) => boolean; brett?: Brett
 }) {
   const g = f.gleis
   if (!g) return null
-  if (grosseKurve(g)) return <BogenBild i={i} j={j} g={g} wasser={wasser} />
+  if (grosseKurve(g)) return <BogenBild i={i} j={j} g={g} wasser={wasser} brett={brett} />
   const cx = i + 0.5, cy = j + 0.5
   const w = wege(g)
   const stuecke: Array<{ s: Stueck; aktiv: boolean }> = w.map(([a, b], k) => ({
@@ -276,12 +316,14 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
 }
 
 /** eine grosse Kurve über 2 × 2 oder 3 × 3 Felder, als ganzes Stück gezeichnet, ohne Brücke und Tunnel */
-function BogenBild({ i, j, g, wasser }: { i: number; j: number; g: Gleis; wasser?: (u: number, v: number) => boolean }) {
+function BogenBild({ i, j, g, wasser, brett }: { i: number; j: number; g: Gleis; wasser?: (u: number, v: number) => boolean; brett?: Brett }) {
   const G = grossGeometrie(i, j, g)
-  const p = Array.from({ length: 41 }, (_, k) => {
+  const p = bogenPunkte(G)
+  const tunnel = brett ? bogenTunnel(brett, G) : []
+  const bei = (k: number) => {
     const a = G.a0 + (G.da * k) / 40
     return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a), w: a + Math.PI / 2 }
-  })
+  }
   // über Wasser eine Brücke wie bei den kleinen Stücken (Michael, 2026-11-22: «Bei den großen Kurven macht es keine Brücke automatisch, wenn sie auf
   // Wasser gesetzt wird»): der Bogen in Stücke über Wasser und über Land geteilt, je Stück ein Punkt Überlappung
   const nass = p.map((_, k) => {
@@ -308,6 +350,20 @@ function BogenBild({ i, j, g, wasser }: { i: number; j: number; g: Gleis; wasser
       <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
       <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
       <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
+      {/* im Berg deckt der Fels das Gleis, Portale an den Übergängen */}
+      {tunnel.map((t, n) => {
+        const pts = [bei(t.k0), ...p.filter((_, k) => k > t.k0 && k < t.k1), bei(t.k1)]
+        return (
+          <g key={`t${n}`}>
+            <path d={linie(pts)} fill="none" stroke={F.fels} strokeWidth={0.52} />
+            {[t.portal0 && bei(t.k0), t.portal1 && bei(t.k1)].map((q, m) => q ? (
+              <g key={m} transform={`translate(${q.x} ${q.y}) rotate(${(q.w * 180) / Math.PI})`}>
+                <rect x={-0.03} y={-0.2} width={0.06} height={0.4} rx={0.03} fill={F.portal} />
+              </g>
+            ) : null)}
+          </g>
+        )
+      })}
       {/* der Griff: ein Pfeil im Kreis, hier dreht man die Kurve */}
       <g transform={`translate(${G.griff[0] + 0.5} ${G.griff[1] + 0.5})`} opacity={0.75}>
         <circle r={0.2} fill="#ffffff" stroke={F.karmin} strokeWidth={0.03} />
@@ -623,7 +679,7 @@ export function Gleisbau() {
           <Landschaft brett={brett} />
           {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)}
                                                          weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined}
-                                                         wasser={(u, v) => brett[v]?.[u]?.grund === 'wasser'} />))}
+                                                         wasser={(u, v) => brett[v]?.[u]?.grund === 'wasser'} brett={brett} />))}
           {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
           {ziehen && (() => {
             const [vi, vj] = ziehen.von, [ni, nj] = ziehen.nach, f = brett[vj][vi]
