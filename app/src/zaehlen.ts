@@ -42,3 +42,23 @@ export function oeffnenZaehlen() {
     if (!navigator.sendBeacon?.(url)) void fetch(url, { method: 'POST', mode: 'no-cors', keepalive: true }).catch(() => {})
   } catch { /* nie stören */ }
 }
+
+/**
+ * Versteckter Schalter für die eigenen Geräte, auch in der App vom Startbildschirm ohne Adresszeile (auf iPhone und iPad hat sie eigene Daten,
+ * getrennt vom Browser): siebenmal rasch auf «Taktland» unten in der Fusszeile tippen (Michael, 2026-11-22: «Ich öffne die App immer über den
+ * Startbildschirm quasi als App. Auf allen Devices»). Wirkt wie taktland.ch/?nichtzaehlen und ?wiederzaehlen
+ */
+let tipps = 0, ersterTipp = 0
+export function eigenesGeraetTipp() {
+  const jetzt = Date.now()
+  if (jetzt - ersterTipp > 4000) { tipps = 0; ersterTipp = jetzt }
+  if (++tipps < 7) return
+  tipps = 0
+  try {
+    if (localStorage.getItem(NICHT_ZAEHLEN) === '1') {
+      if (confirm('Dieses Gerät ist als eigenes markiert. Wieder normal zählen?')) { localStorage.removeItem(NICHT_ZAEHLEN); alert('Dieses Gerät wird wieder gezählt.'); location.reload() }
+    } else if (confirm('Dieses Gerät als eigenes markieren? Es wird dann nicht mehr gezählt.')) {
+      localStorage.setItem(NICHT_ZAEHLEN, '1'); alert('Dieses Gerät wird ab jetzt nicht mehr gezählt (gilt für diese App).'); location.reload()
+    }
+  } catch { /* ohne Speicher nichts zu merken */ }
+}

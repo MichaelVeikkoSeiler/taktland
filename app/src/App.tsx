@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
+import { eigenesGeraetTipp } from './zaehlen'
 import { allesZuruecksetzen, bearbeiteBahnhoefe, bearbeiteteLinien } from './fortschritt'
 import { Anleitung } from './komponenten/Anleitung'
 import { Bahnhof } from './komponenten/Bahnhof'
@@ -280,7 +281,8 @@ export default function App() {
           {/* die Bildmarke klein über den Angaben (Michael, 2026-09-27); rechts daneben Teilen und Einstellungen als
               Symbole (Michael, 2026-10-10: «als Icon rechtsbündig auf Höhe des Logos») */}
           <div className="mb-3 flex items-center justify-between gap-2">
-            <p className="flex items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
+            {/* siebenmal rasch tippen markiert das Gerät als eigenes (eigenesGeraetTipp in src/zaehlen.ts) */}
+            <p onClick={eigenesGeraetTipp} className="flex select-none items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
               <img src="./logo.svg" alt="" className="size-6" />Taktland
             </p>
             <div className="flex items-center gap-2">

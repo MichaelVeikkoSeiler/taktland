@@ -1491,6 +1491,9 @@ Seit 2026-11-22 «Im Bau» (status im-bau in spiele.ts): unter Spiele als schmal
 Spiele-Text und auf taktland.ch; #/gleisbau geht weiter zum Weiterentwickeln (Michael: «Ist es möglich, das Spiel noch zu sperren, damit man sieht, es ist in Entwicklung, die
 Spannung kann steigen, aber wir entwickeln das Spiel zuerst für uns noch weiter und fertig»); zum Freigeben status 'spielbereit' und die Nennungen wieder einsetzen. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
+Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
+mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone
+und iPad hat die App vom Startbildschirm eigene Daten, getrennt von Safari).
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
