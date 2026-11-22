@@ -342,6 +342,49 @@ export class Bilderpuzzle {
     this.ganzesBild.getContext('2d')!.drawImage(this.zuschnitt, 0, 0, c.width, c.height)
   }
 
+  /**
+   * Das Spiel so gross, wie es der Platz zulässt: Rahmen und lose Teile zusammen füllen die Fläche, in der Mitte, der Rahmen höchstens bis an
+   * ihren Rand. Liegen die losen Teile näher am Rahmen, wird alles grösser (Michael, 2026-11-22: «Schiebt man die umliegenden Teile
+   * näher zum Puzzle so soll sich das Spiel entsprechend vergrössern»); nicht, solange ein Teil gezogen wird
+   */
+  private heranzoomen() {
+    if (this.ziehen.size || this.fertig) return
+    const B = this.breite, H = this.hoehe
+    const m = Math.max(10, Math.min(B, H) * 0.02)
+    const r = this.nasen ? 0.25 * Math.min(1, 1 / this.format) : 0
+    // Ausdehnung in Teilen: der Rahmen und alle losen Teile samt ihren Nasen
+    let x0 = 0, y0 = 0, x1 = this.spalten, y1 = this.zeilen
+    for (const t of this.teile) {
+      if (t.gelegt) continue
+      x0 = Math.min(x0, t.x - r * this.format); x1 = Math.max(x1, t.x + 1 + r * this.format)
+      y0 = Math.min(y0, t.y - r); y1 = Math.max(y1, t.y + 1 + r)
+    }
+    // höchstens bis an den Rand der Fläche (gewählt)
+    const hoechst = Math.min((B - 2 * m) / (this.spalten * this.format), (H - OBEN - 2 * m) / this.zeilen)
+    let th = Math.min(hoechst, (B - 2 * m) / ((x1 - x0) * this.format), (H - OBEN - 2 * m) / (y1 - y0))
+    // die Grösse erst ab 3 % Unterschied, die Lage erst ab 4 % der Fläche, damit nichts bei jedem Loslassen ein wenig zuckt (gewählt)
+    if (Math.abs(th - this.th) < this.th * 0.03) th = this.th
+    const tb = th * this.format
+    const rx = (B - (x1 - x0) * tb) / 2 - x0 * tb, ry = OBEN + (H - OBEN - m - (y1 - y0) * th) / 2 - y0 * th
+    if (th === this.th && Math.abs(rx - this.rx) < B * 0.04 && Math.abs(ry - this.ry) < H * 0.04) return
+    this.th = th; this.tb = tb; this.rx = rx; this.ry = ry
+    this.rand = this.nasen ? 0.25 * Math.min(this.tb, this.th) : 0
+    const sanft = !matchMedia('(prefers-reduced-motion: reduce)').matches
+    for (const t of this.teile) {
+      if (sanft) t.el.style.transition = 'transform .35s ease-out, width .35s ease-out, height .35s ease-out'
+      this.setzen(t)
+    }
+    if (sanft) this.rahmen.style.transition = 'left .35s ease-out, top .35s ease-out, width .35s ease-out, height .35s ease-out'
+    Object.assign(this.rahmen.style, {
+      left: `${this.rx}px`, top: `${this.ry}px`, width: `${this.spalten * this.tb}px`, height: `${this.zeilen * this.th}px`,
+    })
+    window.setTimeout(() => {
+      for (const t of this.teile) if (!this.ziehen.has(t.el)) t.el.style.transition = ''
+      this.rahmen.style.transition = ''
+      this.rahmenZeichnen()
+    }, 400)
+  }
+
   private neuGroesse() {
     if (!this.flaeche.isConnected) return
     const quer = this.breite > this.hoehe
@@ -412,6 +455,7 @@ export class Bilderpuzzle {
       this.ziehen.delete(ziel)
       ziel.style.filter = 'drop-shadow(0 2px 3px rgb(0 0 0 / .35))'; ziel.style.cursor = 'grab'
       if (Math.hypot((t.x - t.s) * this.tb, (t.y - t.z) * this.th) < EINRASTEN * Math.min(this.tb, this.th)) this.einrasten(t)
+      this.heranzoomen()
     }
     ziel.addEventListener('pointermove', bewegen)
     ziel.addEventListener('pointerup', loslassen)

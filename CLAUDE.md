@@ -1468,7 +1468,11 @@ dem Rahmen Platz haben; Teile höchstens 0,8 bis 1,25 so breit wie hoch (TEIL_FO
 seit 2026-11-22 bis zur Hälfte (EINRASTEN; Michael: «Etwas grösser machen, die Hälfte»), Töne über antwortTon (richtig, am Schluss bestwert), Konfetti, «Geschafft!» mit «Nochmal» und «Anderes Bild». Kein Punktestand, kein Bestwert. Das Bild der
 Kachel und oben seit 2026-11-22 Michaels eigenes, hell und dunkel (src/assets/auftakt-bilderpuzzle-hell.webp und -dunkel.webp, 1344 × 757; Michael: «Hier die Bilder fürs Bilderpuzzle, hell und dunkel»), auch als Puzzle wählbar; vorher das der Startseite.
 Seit 2026-11-22 verteilt das Drehen von hoch auf quer und zurück die losen Teile neu um den Rahmen, was gerade gezogen wird, bleibt (neuGroesse in src/bilderpuzzle.ts;
-Michael: «Im Querformat also beim drehen des Devices sollen die herumliegenden Puzzleteile neu und sinnvoll verteilt werden»); im Browser hier mit 390 × 800 und 800 × 390 geprüft. Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
+Michael: «Im Querformat also beim drehen des Devices sollen die herumliegenden Puzzleteile neu und sinnvoll verteilt werden»); im Browser hier mit 390 × 800 und 800 × 390 geprüft.
+Seit 2026-11-22 wächst das Spiel, wenn die losen Teile näher am Rahmen liegen (heranzoomen in src/bilderpuzzle.ts; Michael: «Schiebt man die umliegenden Teile näher zum Puzzle
+so soll sich das Spiel entsprechend vergrössern»): nach jedem Loslassen füllen Rahmen und lose Teile zusammen die Fläche, in der Mitte, der Rahmen höchstens bis an ihren Rand, in
+0,35 s gleitend; die Grösse ändert sich erst ab 3 %, die Lage erst ab 4 % der Fläche (gewählt), nie während ein Teil gezogen wird; im Browser hier mit 20 Teilen geprüft, quer
+800 × 390 wuchs der Rahmen von 255 auf 340 Bildpunkte, hoch 390 × 800 von 288 auf 316 (dort begrenzt die Breite). Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
