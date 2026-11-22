@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { knopfTon } from '../audio'
 import {
-  type Brett, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
-  istBahnhof, spalten, type Stueck, stueckLaenge, tunnelWeiter, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
+  grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, tunnelWeiter, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 
@@ -25,7 +25,10 @@ type Werkzeug =
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'gerade' }, text: 'Gerade' },
   { w: { art: 'gleis', gleis: 'kurve' }, text: 'Kurve' },
+  { w: { art: 'gleis', gleis: 'bogen2' }, text: 'Kurve 2 × 2' },
+  { w: { art: 'gleis', gleis: 'bogen3' }, text: 'Kurve 3 × 3' },
   { w: { art: 'gleis', gleis: 'weiche' }, text: 'Weiche' },
+  { w: { art: 'gleis', gleis: 'dreiweg' }, text: 'Dreiweg' },
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
   { w: { art: 'gleis', gleis: 'bahnhof' }, text: 'Bahnhof' },
@@ -61,7 +64,7 @@ const PORTAL = 0.22
 function imTunnel(b: Brett, x: number, y: number) {
   const i = Math.floor(x), j = Math.floor(y)
   const f = b[j]?.[i]
-  if (!f || f.grund !== 'berg' || !f.gleis) return false
+  if (!f || f.grund !== 'berg' || !f.gleis || grosseKurve(f.gleis)) return false
   const abstand = [y - j, i + 1 - x, j + 1 - y, x - i]
   const kanten = new Set(wege(f.gleis).flat())
   return [0, 1, 2, 3].every((k) => !kanten.has(k) || tunnelWeiter(b, i, j, k) || abstand[k] > PORTAL)
@@ -103,10 +106,11 @@ function GrundBild({ f, i, j }: { f: Feld; i: number; j: number }) {
 function GleisBild({ f, i, j, name, weiter = [false, false, false, false] }: { f: Feld; i: number; j: number; name?: string; weiter?: boolean[] }) {
   const g = f.gleis
   if (!g) return null
+  if (grosseKurve(g)) return <BogenBild i={i} j={j} g={g} />
   const cx = i + 0.5, cy = j + 0.5
   const w = wege(g)
   const stuecke: Array<{ s: Stueck; aktiv: boolean }> = w.map(([a, b], k) => ({
-    s: { i, j, ein: a, aus: b }, aktiv: g.art !== 'weiche' || k === (g.stellung ?? 0),
+    s: { i, j, ein: a, aus: b }, aktiv: !istWeiche(g) || k === (g.stellung ?? 0),
   }))
   const punkte = stuecke.map(({ s, aktiv }) => ({ p: wegPunkte(s, s.ein >= 0 && s.aus >= 0 && (s.ein + 2) % 4 !== s.aus ? 14 : 2), aktiv, s }))
   // die inaktive Seite der Weiche zuerst und blasser
@@ -192,6 +196,23 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false] }: { f
   )
 }
 
+/** eine grosse Kurve über 2 × 2 oder 3 × 3 Felder, als ganzes Stück gezeichnet, ohne Brücke und Tunnel */
+function BogenBild({ i, j, g }: { i: number; j: number; g: Gleis }) {
+  const G = grossGeometrie(i, j, g)
+  const p = Array.from({ length: 41 }, (_, k) => {
+    const a = G.a0 + (G.da * k) / 40
+    return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a), w: a + Math.PI / 2 }
+  })
+  return (
+    <g>
+      <path d={linie(p)} fill="none" stroke={F.schotter} strokeWidth={0.3} />
+      <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
+      <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
+      <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
+    </g>
+  )
+}
+
 /** ein Wagen von oben, die Spitze bei +x; Lok mit karminroter Spitze, Steuerwagen mit weisser, vorne Stirnlicht, hinten rot */
 function WagenBild({ w, tunnel }: { w: WagenLage; tunnel: boolean }) {
   const kopf = w.art === 0 || w.art === 3
@@ -220,6 +241,16 @@ function WagenBild({ w, tunnel }: { w: WagenLage; tunnel: boolean }) {
 
 /** ein Werkzeug als kleines Bild auf dem Knopf */
 function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
+  const n = w.art === 'gleis' ? grosseKurve({ art: w.gleis, dreh }) : 0
+  if (n) {
+    const [ai, aj] = grossAnfang(0, 0, n, dreh)
+    return (
+      <svg viewBox={`0 0 ${n} ${n}`} className="size-11" aria-hidden="true">
+        {Array.from({ length: n * n }, (_, k) => <GrundBild key={k} f={{ grund: 'wiese' }} i={k % n} j={Math.floor(k / n)} />)}
+        <BogenBild i={ai} j={aj} g={{ art: (w as { gleis: GleisArt }).gleis, dreh }} />
+      </svg>
+    )
+  }
   const f: Feld = w.art === 'grund' ? { grund: w.grund }
     : w.art === 'tunnel' ? { grund: 'berg', gleis: { art: 'gerade', dreh } }
     : w.art === 'bruecke' ? { grund: 'wasser', gleis: { art: 'gerade', dreh } }
@@ -283,13 +314,45 @@ export function Gleisbau() {
     const f = brett[j][i]
     // während der Fahrt stellen Tipps nur die Weichen
     if (faehrt) {
-      if (f.gleis?.art !== 'weiche') { setMeldung('Während der Fahrt lassen sich nur Weichen stellen. Zum Bauen «Anhalten».'); return }
-      neu(i, j, { ...f, gleis: { ...f.gleis, stellung: f.gleis.stellung ? 0 : 1 } })
+      if (!istWeiche(f.gleis)) { setMeldung('Während der Fahrt lassen sich nur Weichen stellen. Zum Bauen «Anhalten».'); return }
+      const wege = f.gleis!.art === 'dreiweg' ? 3 : 2
+      neu(i, j, { ...f, gleis: { ...f.gleis!, stellung: (((f.gleis!.stellung ?? 0) + 1) % wege) as 0 | 1 | 2 } })
       knopfTon(true)
       return
     }
     setMeldung(null)
     const w = werkzeug
+    const unterGross = !!f.teil || grosseKurve(f.gleis) > 0
+    // grosse Kurve: der Block beginnt oben links im angetippten Feld; tippt man in eine gleiche, dreht sie sich im selben Block
+    const nGross = w.art === 'gleis' ? grosseKurve({ art: w.gleis, dreh }) : 0
+    if (nGross && w.art === 'gleis') {
+      const [hi, hj] = f.teil ?? [i, j], alt = brett[hj][hi].gleis
+      let b1 = brett, ox = i, oy = j, d = dreh
+      if (unterGross && alt?.art === w.gleis) {
+        const G = grossGeometrie(hi, hj, alt)
+        ox = Math.min(...G.zellen.map(([u]) => u)); oy = Math.min(...G.zellen.map(([, v]) => v))
+        d = ((alt.dreh + 1) % 4) as Dreh
+      }
+      if (unterGross) b1 = grosseEntfernen(brett, i, j)
+      const [ai, aj] = grossAnfang(ox, oy, nGross, d)
+      const b2 = grosseLegen(b1, ai, aj, { art: w.gleis, dreh: d })
+      if (!b2) { setMeldung(`Die Kurve braucht ${nGross} × ${nGross} Felder ab hier nach rechts und unten, ohne andere Gleise darin. Drehen ↻ ändert die Richtung.`); return }
+      setDreh(d); setBrett(b2); knopfTon(true)
+      return
+    }
+    // ein anderes Gleis oder «Entfernen» auf einer grossen Kurve nimmt sie weg; Landschaft, Tunnel und Brücke ändern nur den Grund
+    if (unterGross && (w.art === 'gleis' || w.art === 'weg')) {
+      const b1 = grosseEntfernen(brett, i, j)
+      if (w.art === 'weg') { setBrett(b1); knopfTon(true); return }
+      setBrett(b1.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? { grund: x.grund, gleis: { art: w.gleis, dreh } } : x)) : z)))
+      knopfTon(true)
+      return
+    }
+    if (unterGross) {
+      const grund: Grund = w.art === 'grund' ? w.grund : w.art === 'tunnel' ? 'berg' : 'wasser'
+      neu(i, j, { ...f, grund }); knopfTon(true)
+      return
+    }
     let n: Feld = f
     if (w.art === 'gleis' && w.gleis === 'bahnhof' && (f.gleis?.art === 'kurve' || f.gleis?.art === 'gerade')) {
       // auf eine Kurve gelegt wird der Bahnhof zum Bahnhof in der Kurve, auf eine Gerade zum geraden, die Lage bleibt

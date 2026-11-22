@@ -1499,7 +1499,13 @@ Tipp traf das Feld neben dem gemeinten, der Rand des Tabletts fehlte in der Rech
 Seit 2026-11-22 (Michael: «Mehrere Tunnelelemente nacheinander werden zu einem Tunnel. Bahnhof darf auch in einer Kurve sein»): führt das Gleis eines Bergfelds an eine Kante, hinter
 der das Gleis im Nachbarfeld ebenfalls im Berg liegt, hat es dort kein Portal, der Berg deckt das Gleis bis an die Kante (tunnelWeiter in src/gleisbau.ts), so sind Felder nacheinander
 ein Tunnel, auch für das Blasswerden des Zugs; neu die Art «kurvenbahnhof» (istBahnhof), Perron aussen am Bogen, der Bahnhof auf eine Kurve gelegt wird zu ihr, auf eine Gerade zum
-geraden; in den Beispielen etwa jede vierte Kurve als Kandidat für einen Bahnhof; im Browser hier angeschaut. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
+geraden; in den Beispielen etwa jede vierte Kurve als Kandidat für einen Bahnhof; im Browser hier angeschaut.
+Seit 2026-11-22 (Michael: «Kurvenelemente auch in 2x2 und 3x3 Kacheln», «Dreier-Weiche auch möglich machen»): Kurven über 2 × 2 und 3 × 3 Felder (bogen2, bogen3): ein Viertelkreis mit
+Radius 1,5 und 2,5 von der Mitte einer Kante zur Mitte einer Kante, das Feld an der Innenecke bleibt frei; der Block beginnt oben links im angetippten Feld, nochmals tippen dreht
+die Kurve im selben Block; gespeichert im Feld des einen Endes, die Felder darunter mit teil (grossGeometrie, grosseLegen, grosseEntfernen in src/gleisbau.ts); der Zug fährt sie als
+ein Stück (Stueck.gross); ohne Brücke und Tunnel gezeichnet; ein anderes Gleis oder «Entfernen» auf einem ihrer Felder nimmt sie weg, Landschaft ändert nur den Grund; beim Verkleinern
+des Bretts fällt weg, was nicht mehr ganz passt; Dreiwegweiche (dreiweg): Stamm, gerade, rechts und links, ein Tipp während der Fahrt schaltet der Reihe nach; im Browser hier ein Kreis
+aus vier 3 × 3-Kurven gefahren, die Dreiwegweiche geschaltet, Legen, Drehen und Ersetzen geprüft. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
 Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
 mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone

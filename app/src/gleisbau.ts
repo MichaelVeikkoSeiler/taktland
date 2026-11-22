@@ -13,14 +13,20 @@ export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
 export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf'
-export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof'
+export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
 export const istBahnhof = (g?: Gleis) => g?.art === 'bahnhof' || g?.art === 'kurvenbahnhof'
 export type Dreh = 0 | 1 | 2 | 3
 
-export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 abzweigend */ stellung?: 0 | 1 }
-export interface Feld { grund: Grund; gleis?: Gleis }
+/** Weiche mit zwei oder, als Dreiwegweiche, drei Wegen (seit 2026-11-22; Michael: «Dreier-Weiche auch möglich machen») */
+export const istWeiche = (g?: Gleis) => g?.art === 'weiche' || g?.art === 'dreiweg'
+/** Kurve über 2 × 2 oder 3 × 3 Felder (seit 2026-11-22; Michael: «Kurvenelemente auch in 2x2 und 3x3 Kacheln»); n, sonst 0 */
+export const grosseKurve = (g?: Gleis) => (g?.art === 'bogen2' ? 2 : g?.art === 'bogen3' ? 3 : 0)
+
+export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 und 2 abzweigend */ stellung?: 0 | 1 | 2 }
+/** teil: das Feld liegt unter einer grossen Kurve, die im Feld [i, j] (ihrem Anfang) steht */
+export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number] }
 export type Brett = Feld[][] // [Zeile][Spalte]
 
 /** Kanten eines Felds: 0 Nord, 1 Ost, 2 Süd, 3 West; -1 die Mitte (Ende am Prellbock) */
@@ -29,6 +35,8 @@ const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0]
 /** die Wege durch ein Stück ohne Drehung; bei der Weiche zuerst der gerade, dann der abzweigende, beide ab dem Stamm im Süden */
 const WEGE: Record<GleisArt, Array<[number, number]>> = {
   gerade: [[0, 2]], bahnhof: [[0, 2]], kurve: [[2, 1]], kurvenbahnhof: [[2, 1]], weiche: [[2, 0], [2, 1]], kreuzung: [[0, 2], [1, 3]], prellbock: [[2, -1]],
+  // die Dreiwegweiche: gerade, rechts, links; die grossen Kurven haben keine Wege in einem Feld (grossGeometrie)
+  dreiweg: [[2, 0], [2, 1], [2, 3]], bogen2: [], bogen3: [],
 }
 
 const drehen = (k: number, d: number) => (k < 0 ? -1 : (k + d) % 4)
@@ -42,9 +50,9 @@ export function wege(g: Gleis): Array<[number, number]> {
 export function ausgang(g: Gleis | undefined, ein: number): number | null {
   if (!g) return null
   const w = wege(g)
-  if (g.art === 'weiche') {
+  if (istWeiche(g)) {
     const stamm = w[0][0]
-    if (ein === stamm) return w[g.stellung ?? 0][1]
+    if (ein === stamm) return w[Math.min(g.stellung ?? 0, w.length - 1)][1]
     return w.some(([, b]) => b === ein) ? stamm : null
   }
   for (const [a, b] of w) { if (a === ein) return b; if (b === ein) return a }
@@ -57,7 +65,18 @@ export function leer(sp = SPALTEN, ze = ZEILEN): Brett {
 
 /** dasselbe Brett in einer anderen Grösse: oben links bleibt, was Platz hat, der Rest wird Wiese oder fällt weg */
 export function groesseAendern(b: Brett, sp: number, ze: number): Brett {
-  return Array.from({ length: ze }, (_, j) => Array.from({ length: sp }, (_, i): Feld => b[j]?.[i] ?? { grund: 'wiese' }))
+  const neu = Array.from({ length: ze }, (_, j) => Array.from({ length: sp }, (_, i): Feld => ({ ...(b[j]?.[i] ?? { grund: 'wiese' }) })))
+  // grosse Kurven, die nicht mehr ganz aufs Brett passen, fallen weg
+  for (let j = 0; j < ze; j++) for (let i = 0; i < sp; i++) {
+    const f = neu[j][i]
+    if (f.teil && !grosseKurve(neu[f.teil[1]]?.[f.teil[0]]?.gleis)) delete f.teil
+    if (!grosseKurve(f.gleis)) continue
+    const G = grossGeometrie(i, j, f.gleis!)
+    if ([...G.zellen, [G.ende.i, G.ende.j]].every(([u, v]) => u < sp && v < ze)) continue
+    delete f.gleis
+    for (const [u, v] of G.zellen) if (neu[v]?.[u]) delete neu[v][u].teil
+  }
+  return neu
 }
 
 /** Ein Beispiel zum Anfang: ein Ring mit zwei Bahnhöfen, Brücke über den Fluss, Tunnel durch den Berg und ein Abstellgleis */
@@ -206,7 +225,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 
 const SPEICHER = 'taktland.gleisbau.v1'
 const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf']
-const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof']
+const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3']
 
 /** das gemerkte Brett, nur wenn es heil ist */
 export function brettLesen(): Brett | null {
@@ -237,6 +256,37 @@ export function tunnelWeiter(b: Brett, i: number, j: number, k: number) {
   return wege(n.gleis).some(([a, c]) => a === gegen || c === gegen)
 }
 
+/** das Feld des Anfangs einer grossen Kurve mit n Feldern und Drehung d, deren Block oben links bei (ox, oy) liegt */
+export function grossAnfang(ox: number, oy: number, n: number, d: number): [number, number] {
+  let x = 0, y = n - 1
+  for (let k = 0; k < d; k++) [x, y] = [n - 1 - y, x]
+  return [ox + x, oy + y]
+}
+
+/** das Brett ohne die grosse Kurve, die im Feld (i, j) steht oder darüber läuft */
+export function grosseEntfernen(b: Brett, i: number, j: number): Brett {
+  const [hi, hj] = b[j][i].teil ?? [i, j]
+  const g = b[hj]?.[hi]?.gleis
+  if (!grosseKurve(g)) return b
+  const G = grossGeometrie(hi, hj, g!)
+  const neu = b.map((z) => z.map((f) => ({ ...f })))
+  delete neu[hj][hi].gleis
+  for (const [u, v] of G.zellen) if (neu[v]?.[u]) delete neu[v][u].teil
+  return neu
+}
+
+/** eine grosse Kurve mit Anfang im Feld (i, j) legen; null, wenn sie nicht aufs Brett passt oder ein Feld schon belegt ist */
+export function grosseLegen(b: Brett, i: number, j: number, g: Gleis): Brett | null {
+  const G = grossGeometrie(i, j, g)
+  const imBrett = ([u, v]: [number, number]) => u >= 0 && v >= 0 && u < spalten(b) && v < zeilen(b)
+  if (!G.zellen.every(imBrett) || !imBrett([G.ende.i, G.ende.j])) return null
+  if (G.zellen.some(([u, v]) => b[v][u].gleis || b[v][u].teil)) return null
+  const neu = b.map((z) => z.map((f) => ({ ...f })))
+  neu[j][i] = { ...neu[j][i], gleis: g }
+  for (const [u, v] of G.zellen) if (u !== i || v !== j) neu[v][u] = { ...neu[v][u], teil: [i, j] }
+  return neu
+}
+
 /** die Bahnhöfe der Reihe nach (Zeile, dann Spalte) mit Buchstaben A, B, C … */
 export function bahnhofNamen(b: Brett): Map<string, string> {
   const n = new Map<string, string>()
@@ -250,18 +300,73 @@ export function bahnhofNamen(b: Brett): Map<string, string> {
 
 const kante = (k: number): [number, number] => (k < 0 ? [0, 0] : [DX[k] * 0.5, DY[k] * 0.5])
 
-/** ein befahrenes Stück: in Feld (i, j) von Kante «ein» zu Kante «aus» (-1 die Mitte) */
-export interface Stueck { i: number; j: number; ein: number; aus: number }
+/**
+ * Ein befahrenes Stück: in Feld (i, j) von Kante «ein» zu Kante «aus» (-1 die Mitte). Bei einer grossen Kurve ist (i, j) das Feld, in dem sie
+ * endet, «aus» die Kante dort, und gross nennt das Feld, in dem sie beginnt, und den Kreisbogen
+ */
+export interface Stueck {
+  i: number; j: number; ein: number; aus: number
+  gross?: { i: number; j: number; kante: number; cx: number; cy: number; r: number; a0: number; da: number }
+}
+
+/** Ende einer grossen Kurve: Feld und Kante */
+export interface KurvenEnde { i: number; j: number; kante: number }
+
+/**
+ * Die grosse Kurve, die im Feld (i, j) beginnt: ein Viertelkreis mit Radius n − 0,5 von der Mitte der Südkante des Felds unten links im Block
+ * von n × n Feldern zur Mitte der Ostkante des Felds oben rechts, um die Ecke unten rechts; gedreht im Uhrzeigersinn um die Mitte des Blocks.
+ * zellen: die Felder, durch die sie läuft (das Feld unten rechts bleibt frei)
+ */
+export function grossGeometrie(i: number, j: number, g: Gleis) {
+  const n = grosseKurve(g), d = g.dreh
+  const dreh = (x: number, y: number): [number, number] => { for (let k = 0; k < d; k++) [x, y] = [n - y, x]; return [x, y] }
+  const zelle = (x: number, y: number): [number, number] => { for (let k = 0; k < d; k++) [x, y] = [n - 1 - y, x]; return [x, y] }
+  // der Block: so verschoben, dass das Feld des Anfangs (unten links ohne Drehung) bei (i, j) liegt
+  const [ax, ay] = zelle(0, n - 1), ox = i - ax, oy = j - ay
+  const [cx, cy] = dreh(n, n)
+  const a0 = Math.PI + (d * Math.PI) / 2, da = Math.PI / 2
+  const [bx, by] = zelle(n - 1, 0)
+  const anfang: KurvenEnde = { i, j, kante: (2 + d) % 4 }
+  const ende: KurvenEnde = { i: ox + bx, j: oy + by, kante: (1 + d) % 4 }
+  const zellen: Array<[number, number]> = []
+  for (let k = 1; k < 60; k++) {
+    const a = a0 + (da * k) / 60, x = ox + cx + (n - 0.5) * Math.cos(a), y = oy + cy + (n - 0.5) * Math.sin(a)
+    const z: [number, number] = [Math.floor(x), Math.floor(y)]
+    if (!zellen.some(([u, v]) => u === z[0] && v === z[1])) zellen.push(z)
+  }
+  return { n, anfang, ende, cx: ox + cx, cy: oy + cy, r: n - 0.5, a0, da, zellen }
+}
+
+/** das Stück einer grossen Kurve vom Ende «von» aus, das an der Kante in sie hineinführt, oder null */
+function grossStueck(b: Brett, f: Feld, i: number, j: number, ein: number): Stueck | null {
+  const [hi, hj] = f.teil ?? [i, j]
+  const halter = b[hj]?.[hi]?.gleis
+  if (!grosseKurve(halter)) return null
+  const G = grossGeometrie(hi, hj, halter!)
+  const passt = (e: KurvenEnde) => e.i === i && e.j === j && e.kante === ein
+  if (passt(G.anfang)) {
+    return { i: G.ende.i, j: G.ende.j, ein: -2, aus: G.ende.kante, gross: { i, j, kante: ein, cx: G.cx, cy: G.cy, r: G.r, a0: G.a0, da: G.da } }
+  }
+  if (passt(G.ende)) {
+    return { i: G.anfang.i, j: G.anfang.j, ein: -2, aus: G.anfang.kante, gross: { i, j, kante: ein, cx: G.cx, cy: G.cy, r: G.r, a0: G.a0 + G.da, da: -G.da } }
+  }
+  return null
+}
 
 const bogen = (s: Stueck) => s.ein >= 0 && s.aus >= 0 && (s.ein + 2) % 4 !== s.aus
 
 export function stueckLaenge(s: Stueck) {
+  if (s.gross) return s.gross.r * Math.abs(s.gross.da)
   if (s.ein < 0 || s.aus < 0) return 0.5
   return bogen(s) ? Math.PI / 4 : 1
 }
 
 /** Punkt und Richtung (Bogenmass) nach d Einheiten auf dem Stück */
 export function stueckPunkt(s: Stueck, d: number): { x: number; y: number; w: number } {
+  if (s.gross) {
+    const G = s.gross, a = G.a0 + G.da * Math.max(0, Math.min(1, d / stueckLaenge(s)))
+    return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a), w: a + Math.sign(G.da) * Math.PI / 2 }
+  }
   const cx = s.i + 0.5, cy = s.j + 0.5
   const [ax, ay] = kante(s.ein), [bx, by] = kante(s.aus)
   if (!bogen(s)) {
@@ -284,7 +389,10 @@ export function wegPunkte(s: Stueck, n = 10): Array<{ x: number; y: number; w: n
   return Array.from({ length: n + 1 }, (_, k) => stueckPunkt(s, (l * k) / n))
 }
 
-const umgekehrt = (s: Stueck): Stueck => ({ i: s.i, j: s.j, ein: s.aus, aus: s.ein })
+const umgekehrt = (s: Stueck): Stueck => (s.gross
+  ? { i: s.gross.i, j: s.gross.j, ein: -2, aus: s.gross.kante,
+      gross: { i: s.i, j: s.j, kante: s.aus, cx: s.gross.cx, cy: s.gross.cy, r: s.gross.r, a0: s.gross.a0 + s.gross.da, da: -s.gross.da } }
+  : { i: s.i, j: s.j, ein: s.aus, aus: s.ein })
 
 /** das Stück, das an das Ende von s anschliesst, oder null */
 function naechstes(b: Brett, s: Stueck): Stueck | null {
@@ -292,8 +400,19 @@ function naechstes(b: Brett, s: Stueck): Stueck | null {
   const i = s.i + DX[s.aus], j = s.j + DY[s.aus]
   if (i < 0 || j < 0 || i >= spalten(b) || j >= zeilen(b)) return null
   const ein = (s.aus + 2) % 4
-  const aus = ausgang(b[j][i].gleis, ein)
+  const f = b[j][i]
+  if (f.teil || grosseKurve(f.gleis)) return grossStueck(b, f, i, j, ein)
+  const aus = ausgang(f.gleis, ein)
   return aus === null ? null : { i, j, ein, aus }
+}
+
+/** ein Stück zum Anfangen in einem Feld mit Gleis */
+function erstesStueck(b: Brett, i: number, j: number): Stueck | null {
+  const g = b[j][i].gleis
+  if (!g) return null
+  if (grosseKurve(g)) { const G = grossGeometrie(i, j, g); return grossStueck(b, b[j][i], i, j, G.anfang.kante) }
+  const [a, c] = wege(g)[0]
+  return { i, j, ein: a, aus: c }
 }
 
 // ——— der Zug: Lok, zwei Wagen, Steuerwagen wie in der Virtuellen Schweiz ———
@@ -322,12 +441,9 @@ export class Zug {
   static setzen(b: Brett): Zug | null {
     let start: Stueck | null = null
     for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) {
-      if (istBahnhof(b[j][i].gleis)) { const [a, c] = wege(b[j][i].gleis!)[0]; start = { i, j, ein: a, aus: c } }
+      if (istBahnhof(b[j][i].gleis)) start = erstesStueck(b, i, j)
     }
-    for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) {
-      const g = b[j][i].gleis
-      if (g) { const [a, c] = wege(g)[0]; start = { i, j, ein: a, aus: c } }
-    }
+    for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) start = erstesStueck(b, i, j)
     if (!start) return null
     const z = new Zug()
     z.stuecke = [start]
@@ -374,7 +490,7 @@ export class Zug {
       const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
       const mitte = l / 2, vorher = this.kopf
       // am Bahnhof in der Mitte des Felds halten
-      if (istBahnhof(b[s.j][s.i].gleis) && vorher < mitte && vorher + rest >= mitte) {
+      if (!s.gross && istBahnhof(b[s.j][s.i].gleis) && vorher < mitte && vorher + rest >= mitte) {
         this.kopf = mitte; this.halt = HALT_S; this.tempo = 0; return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
