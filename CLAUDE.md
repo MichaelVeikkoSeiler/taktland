@@ -1509,7 +1509,8 @@ aus vier 3 × 3-Kurven gefahren, die Dreiwegweiche geschaltet, Legen, Drehen und
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
 Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
 mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone
-und iPad hat die App vom Startbildschirm eigene Daten, getrennt von Safari).
+und iPad hat die App vom Startbildschirm eigene Daten, getrennt von Safari). Seit 2026-11-22 mit cursor-pointer und touch-manipulation (Michael, iPad: «Zeile nicht antippbar»: Safari meldet Tipps auf ein
+gewöhnliches Element ohne cursor-pointer nicht als Klick, und rasches Tippen zoomt).
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

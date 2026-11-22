@@ -281,8 +281,9 @@ export default function App() {
           {/* die Bildmarke klein über den Angaben (Michael, 2026-09-27); rechts daneben Teilen und Einstellungen als
               Symbole (Michael, 2026-10-10: «als Icon rechtsbündig auf Höhe des Logos») */}
           <div className="mb-3 flex items-center justify-between gap-2">
-            {/* siebenmal rasch tippen markiert das Gerät als eigenes (eigenesGeraetTipp in src/zaehlen.ts) */}
-            <p onClick={eigenesGeraetTipp} className="flex select-none items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
+            {/* siebenmal rasch tippen markiert das Gerät als eigenes (eigenesGeraetTipp in src/zaehlen.ts); cursor-pointer, sonst meldet Safari auf iPhone
+                und iPad Tipps auf ein gewöhnliches Element nicht als Klick, touch-manipulation gegen das Zoomen beim raschen Tippen */}
+            <p onClick={eigenesGeraetTipp} className="flex cursor-pointer touch-manipulation select-none items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
               <img src="./logo.svg" alt="" className="size-6" />Taktland
             </p>
             <div className="flex items-center gap-2">
