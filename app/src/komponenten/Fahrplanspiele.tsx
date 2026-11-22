@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { antwortTon } from '../audio'
 import {
-  bestwert, bestwertFesthalten, DAUER_HINWEIS_ABZUG, dauerPunkte, type DauerRunde, dauerZiehen, PUZZLE_HALTE, PUZZLE_PUNKTE_JE_HALT, puzzlePunkte,
+  bestwert, bestwertFesthalten, DAUER_HINWEIS_ABZUG, dauerPunkte, type DauerRunde, dauerZiehen, mitZwischenhalt, PUZZLE_HALTE, PUZZLE_PUNKTE_JE_HALT, puzzlePunkte,
   type PuzzleRunde, puzzleZiehen, REGLER_BIS_MIN, RUNDEN, type SpielFahrt, type SpielVorrat, toleranz, uhr, vorratLaden, zugTitel,
 } from '../fahrplanspiele'
 import { nachbarnBauen } from '../bahnen'
@@ -587,7 +587,8 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
           <div className="mt-2 flex flex-wrap gap-1.5">
             {[
               { n: H_KARTE, text: 'Karte', geht: true },
-              { n: H_HALTE, text: 'Zwischenhalte', geht: !!(hinweise & H_KARTE) },
+              { n: H_HALTE, ...(mitZwischenhalt(runde.f, runde.von, runde.bis, (u) => namen.has(u))
+                ? { text: 'Zwischenhalte', geht: !!(hinweise & H_KARTE) } : { text: 'Keine Zwischenhalte', geht: false, keine: true }) },
               { n: H_STRECKE, text: 'Massstab und Strecke', geht: !!(hinweise & H_KARTE) },
             ].map((h) => {
               const an = !!(hinweise & h.n)
@@ -596,7 +597,7 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
                         className={`rounded-lg px-2.5 py-1.5 text-sm font-medium disabled:cursor-default ${an
                           ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                           : `kachel kachel-link ${h.geht && !gewertet ? '' : 'opacity-40'}`}`}>
-                  {h.text} {an ? '✓' : <span className="text-sbb-red">−{Math.round(DAUER_HINWEIS_ABZUG * 100)} %</span>}
+                  {h.text} {an ? '✓' : 'keine' in h ? null : <span className="text-sbb-red">−{Math.round(DAUER_HINWEIS_ABZUG * 100)} %</span>}
                 </button>
               )
             })}

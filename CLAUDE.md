@@ -1451,7 +1451,7 @@ und zweiter Hinweis sind alle Zwischenhalte in der Karte. Abzüge: Hinweis 1: -1
 dann mit den Halten dazwischen laut Fahrplan (nur Bahnhöfe von Taktland), Lage aus dem Index der App (DauerKarte in Fahrplanspiele.tsx); in der Anleitung; im Browser hier mit
 390 Bildpunkten gespielt.
 Seit 2026-11-22 in «Reisedauer» nur Fragen mit mindestens einem Halt dazwischen, den Taktland kennt (dauerZiehen; Michael: «Beim Test beim Spiel Reisedauer kamen stehts Fragen
-die keine Zwischenhalte hatten. Kannst du das bitte ändern?»), und ein dritter Hinweis «Massstab und Strecke», je −15 % wie die anderen (Michael: «bei der Karte einen Zusatzhinweis optional
+die keine Zwischenhalte hatten. Kannst du das bitte ändern?»), seit 2026-11-22 jede vierte Frage im Mittel ohne (DAUER_OHNE_HALTE_ANTEIL 0,25, gewählt; Michael: «Es dürfen Fragen ohne Zwischenhalte vorkommen aber nur ca jede 3. Bis 5.»), dann «Keine Zwischenhalte» ohne Abzug und nicht wählbar, und ein dritter Hinweis «Massstab und Strecke», je −15 % wie die anderen (Michael: «bei der Karte einen Zusatzhinweis optional
 einblenden lassen: masstab wie viel ist ein Kilometer lang? Und Strecke einblenden lassen als schwarze Linie»): «Zwischenhalte» und «Massstab und Strecke» nach der Karte in beliebiger
 Folge (Bits H_KARTE, H_HALTE, H_STRECKE); unten links ein Massstab mit der längsten runden Länge bis ein Viertel der Breite (0,5 bis 100 km, MASSSTAB_KM, gewählt), die Strecke
 schwarz: je Paar aufeinanderfolgender Halte laut Fahrplan der kürzeste Weg im Netz der Seite «Strecke» (wegSuchen, data/strecken.json; der Fahrplan nennt den Weg nicht, so in der

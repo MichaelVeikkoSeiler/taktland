@@ -68,12 +68,26 @@ export function puzzlePunkte(r: PuzzleRunde, gewaehlt: number[]): number {
 
 export interface DauerRunde { f: SpielFahrt; von: number; bis: number; min: number }
 
-/** nur Paare mit mindestens einem Halt dazwischen, den Taktland kennt, damit der Hinweis «Zwischenhalte» etwas zeigt
- *  (Michael, 2026-11-22: «Beim Test beim Spiel Reisedauer kamen stehts Fragen die keine Zwischenhalte hatten. Kannst du das bitte ändern?») */
+/** so oft eine Frage ohne Halt dazwischen (gewählt; Michael, 2026-11-22: «Es dürfen Fragen ohne Zwischenhalte vorkommen aber nur ca jede 3. Bis 5.») */
+export const DAUER_OHNE_HALTE_ANTEIL = 0.25
+
+/** ob zwischen zwei Halten einer liegt, den Taktland kennt */
+export function mitZwischenhalt(f: SpielFahrt, von: number, bis: number, hatName: (uic: number) => boolean) {
+  return f.h.slice(von + 1, bis).some(([u]) => hatName(u))
+}
+
+/** meist Paare mit mindestens einem Halt dazwischen, den Taktland kennt, damit der Hinweis «Zwischenhalte» etwas zeigt
+ *  (Michael, 2026-11-22: «Beim Test beim Spiel Reisedauer kamen stehts Fragen die keine Zwischenhalte hatten. Kannst du das bitte ändern?»),
+ *  mit DAUER_OHNE_HALTE_ANTEIL eines ohne; gibt es die gewünschte Art nicht, die andere */
 export function dauerZiehen(v: SpielVorrat, hatName: (uic: number) => boolean, schon: Set<string>): DauerRunde | null {
-  const passt = (f: SpielFahrt, [a, b]: [number, number, number]) => hatName(f.h[a][0]) && hatName(f.h[b][0])
-    && f.h.slice(a + 1, b).some(([u]) => hatName(u))
-  const passend = v.fahrten.filter((f) => !schon.has(`${f.g}|${f.l}`) && f.p.some((x) => passt(f, x)))
+  const ohne = Math.random() < DAUER_OHNE_HALTE_ANTEIL
+  const suchen = (ohneHalte: boolean) => {
+    const passt = (f: SpielFahrt, [a, b]: [number, number, number]) => hatName(f.h[a][0]) && hatName(f.h[b][0])
+      && mitZwischenhalt(f, a, b, hatName) !== ohneHalte
+    return { passt, passend: v.fahrten.filter((f) => !schon.has(`${f.g}|${f.l}`) && f.p.some((x) => passt(f, x))) }
+  }
+  let { passt, passend } = suchen(ohne)
+  if (!passend.length) ({ passt, passend } = suchen(!ohne))
   if (!passend.length) return null
   const f = zufall(passend)
   const [von, bis, min] = zufall(f.p.filter((x) => passt(f, x)))
