@@ -12,12 +12,20 @@ const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
  * Farben des Bretts (gewählt): ein dunkles Tablett mit hellen Feldern wie in Michaels Vorlage «VIA», die Häuser des Dorfs in deren
  * Farben, Gleise in Anthrazit, Akzente in Karmin wie in Taktland
  */
+// seit 2026-11-22 frischer, nach Michaels Bild eines Bretts mit Bergen, Wald, Dorf und See (Michael: «Wäre das nicht schöner?», dann «Ja, 2D-Brett
+// so überarbeiten wie vorgeschlagen»): kräftigeres Grün, tiefblaues Wasser, Berge mit heller und dunkler Flanke und Schnee, Nadel- und Laubbäume,
+// rote Dächer, Kacheln mit dunklerer Unterkante; weiterhin flache Flächen ohne Verläufe wie überall in Taktland
 const F = {
-  tablett: '#3a3a3c', wiese: '#e3e9d6', wald: '#cfdcbe', baum: ['#8fb07a', '#7aa067', '#a2bf8c'], wasser: '#bcd5ea', welle: '#dbe9f5',
-  berg: '#ddd3c4', fels: '#c3b49f', schnee: '#f7f5f0', schotter: '#c2bbb0', schwelle: '#8b8074', schiene: '#4a4a4a',
+  tablett: '#3a3a3c', wiese: '#c4e19f', wald: '#aed38c', wasser: '#4d93d6', welle: '#a4cef2',
+  berg: '#cfd6c4', deckel: '#aeb6a2', fels: '#8f9398', felsDunkel: '#6f7378', schnee: '#ffffff', schneeDunkel: '#dde3ea',
+  laub: ['#6cb54f', '#7cc35a', '#5aa443'], laubSchatten: '#4b8f37', nadel: '#2f7d3c', nadelSchatten: '#24652f', stamm: '#7a5a3c',
+  schotter: '#c2bbb0', schwelle: '#8b8074', schiene: '#4a4a4a',
   perron: '#d2d2d2', strasse: '#d8d1c4', dach: '#6a6a6a', bruecke: '#d6d6d6', gelaender: '#7a7a7a', portal: '#2e2e30', karmin: '#a8102e',
-  haeuser: ['#c8433b', '#e7b53c', '#c9bba0', '#3f78c4', '#e8712d', '#8fb3a0'],
+  wand: '#f4f1ea', ziegel: ['#d4583e', '#c94a32', '#b8452f'], ziegelSchatten: '#9e3a27',
 }
+/** die Unterkante jeder Kachel, damit sie leicht erhaben wirkt (gewählt) */
+const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9b19d', dorf: '#9fc47a' }
+const KACHEL_H = 0.915
 
 type Werkzeug =
   | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'weg' }
@@ -121,7 +129,8 @@ function GrundBild({ f, i, j, nurFlaeche = false }: { f: Feld; i: number; j: num
   const grundFarbe = f.grund === 'wald' ? F.wald : f.grund === 'wasser' ? F.wasser : f.grund === 'berg' ? F.berg : F.wiese
   return (
     <g>
-      <rect x={i + 0.025} y={j + 0.025} width={0.95} height={0.95} rx={0.05} fill={grundFarbe} />
+      <rect x={i + 0.025} y={j + 0.025} width={0.95} height={0.95} rx={0.05} fill={KANTE[f.grund]} />
+      <rect x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={grundFarbe} />
       {!nurFlaeche && <Merkmale f={f} i={i} j={j} gleich={() => false} />}
     </g>
   )
@@ -134,13 +143,49 @@ function welle(x0: number, x1: number, y: number) {
   return p.join('')
 }
 
-/** ein Berg mit Schnee: Fuss von x0 bis x1 auf der Höhe y, Gipfel bei (gx, gy) */
+/** ein Berg mit Schnee: Fuss von x0 bis x1 auf der Höhe y, Gipfel bei (gx, gy); links die helle, rechts die dunkle Flanke */
 function gipfel(key: string, x0: number, x1: number, y: number, gx: number, gy: number) {
-  const s = 0.25 // Anteil des Schnees an der Höhe
+  const s = 0.3 // Anteil des Schnees an der Höhe
+  const mx = gx + (x1 - gx) * 0.18 // wo der Grat unten aufkommt
+  const sl = [gx - (gx - x0) * s, gy + (y - gy) * s], sr = [gx + (x1 - gx) * s, gy + (y - gy) * s], sm = [gx + (mx - gx) * s * 1.1, gy + (y - gy) * s * 1.1]
   return (
     <g key={key}>
-      <path d={`M${x0},${y} L${gx},${gy} L${x1},${y} Z`} fill={F.fels} />
-      <path d={`M${gx - (gx - x0) * s},${gy + (y - gy) * s} L${gx},${gy} L${gx + (x1 - gx) * s},${gy + (y - gy) * s} Z`} fill={F.schnee} />
+      <path d={`M${x0},${y} L${gx},${gy} L${mx},${y} Z`} fill={F.fels} />
+      <path d={`M${mx},${y} L${gx},${gy} L${x1},${y} Z`} fill={F.felsDunkel} />
+      <path d={`M${sl[0]},${sl[1]} L${gx},${gy} L${sm[0]},${sm[1]} L${(sl[0] + sm[0]) / 2},${sl[1] + 0.02} Z`} fill={F.schnee} />
+      <path d={`M${sm[0]},${sm[1]} L${gx},${gy} L${sr[0]},${sr[1]} Z`} fill={F.schneeDunkel} />
+    </g>
+  )
+}
+
+/** ein Baum von oben schräg: Nadelbaum als Dreieck mit dunkler Hälfte, Laubbaum als Krone mit Schatten (gewählt) */
+function baum(key: string, x: number, y: number, r: number, nadel: boolean, farbe: number) {
+  if (nadel) {
+    return (
+      <g key={key}>
+        <rect x={x - r * 0.12} y={y + r * 0.5} width={r * 0.24} height={r * 0.4} fill={F.stamm} />
+        <path d={`M${x},${y - r * 1.3} L${x + r * 0.8},${y + r * 0.6} L${x - r * 0.8},${y + r * 0.6} Z`} fill={F.nadel} />
+        <path d={`M${x},${y - r * 1.3} L${x + r * 0.8},${y + r * 0.6} L${x + r * 0.1},${y + r * 0.6} Z`} fill={F.nadelSchatten} />
+      </g>
+    )
+  }
+  return (
+    <g key={key}>
+      <rect x={x - r * 0.12} y={y + r * 0.4} width={r * 0.24} height={r * 0.5} fill={F.stamm} />
+      <circle cx={x + r * 0.12} cy={y + r * 0.1} r={r} fill={F.laubSchatten} />
+      <circle cx={x} cy={y} r={r * 0.88} fill={F.laub[farbe % 3]} />
+    </g>
+  )
+}
+
+/** ein Haus von oben: helle Mauer unten, Ziegeldach mit First, eine Seite im Schatten */
+function haus(key: string, x: number, y: number, w: number, h: number, farbe: number) {
+  return (
+    <g key={key}>
+      <rect x={x + 0.02} y={y + 0.035} width={w} height={h} rx={0.015} fill="rgba(0,0,0,.18)" />
+      <rect x={x} y={y + h * 0.55} width={w} height={h * 0.45} fill={F.wand} />
+      <rect x={x} y={y} width={w} height={h * 0.6} rx={0.015} fill={F.ziegel[farbe % 3]} />
+      <rect x={x + w / 2} y={y} width={w / 2} height={h * 0.6} rx={0.015} fill={F.ziegelSchatten} opacity={0.55} />
     </g>
   )
 }
@@ -165,6 +210,7 @@ function Merkmale({ f, i, j, gleich }: { f: Feld; i: number; j: number; gleich: 
         {gleich(2) && gipfel('s', x + 0.15, x + 0.85, y + 1.28, x + 0.5 + (zufall(i, j, 33) - 0.5) * 0.12, y + 0.78 + zufall(i, j, 34) * 0.08)}
         {gipfel('m', x + 0.1, x + 0.74, y + 0.85, x + 0.42, y + 0.2)}
         {gipfel('n', x + 0.5, x + 0.92, y + 0.85, x + 0.72, y + 0.4)}
+        {[0, 1].map((k) => baum(`t${k}`, x + 0.2 + k * 0.55 + zufall(i, j, 60 + k) * 0.08, y + 0.8, 0.065, true, 0))}
       </>
     )
   }
@@ -173,7 +219,8 @@ function Merkmale({ f, i, j, gleich }: { f: Feld; i: number; j: number; gleich: 
     // auf der Grenze zum Wald im Osten und Süden je drei Bäume, ihre Kronen reichen über den Steg
     if (gleich(1)) for (let k = 0; k < 3; k++) baeume.push([x + 1 + (zufall(i, j, 40 + k) - 0.5) * 0.12, y + 0.2 + k * 0.3 + (zufall(i, j, 43 + k) - 0.5) * 0.1, 0.1 + zufall(i, j, 46 + k) * 0.05])
     if (gleich(2)) for (let k = 0; k < 3; k++) baeume.push([x + 0.2 + k * 0.3 + (zufall(i, j, 50 + k) - 0.5) * 0.1, y + 1 + (zufall(i, j, 53 + k) - 0.5) * 0.12, 0.1 + zufall(i, j, 56 + k) * 0.05])
-    return <>{baeume.map(([bx, by, r], k) => <circle key={k} cx={bx} cy={by} r={r} fill={F.baum[k % 3]} />)}</>
+    // von oben nach unten gezeichnet, so verdecken die vorderen Bäume die hinteren; etwa ein Drittel Nadelbäume (gewählt)
+    return <>{baeume.slice().sort((a, b) => a[1] - b[1]).map(([bx, by, r], k) => baum(String(k), bx, by, r, zufall(Math.round(bx * 7), Math.round(by * 7), 3) < 0.35, k))}</>
   }
   if (f.grund === 'dorf') {
     // Strassen zu den Nachbardörfern, von der Mitte über den Steg
@@ -185,14 +232,9 @@ function Merkmale({ f, i, j, gleich }: { f: Feld; i: number; j: number; gleich: 
         ))}
         {[0, 1, 2].map((k) => {
           const hx = x + 0.12 + k * 0.27 + zufall(i, j, k) * 0.05, hy = y + 0.14 + zufall(i, j, k + 5) * 0.5
-          return (
-            <g key={k}>
-              <rect x={hx + 0.02} y={hy + 0.03} width={0.2} height={0.2} rx={0.02} fill="rgba(0,0,0,.15)" />
-              <rect x={hx} y={hy} width={0.2} height={0.2} rx={0.02} fill={F.haeuser[Math.floor(zufall(i, j, k + 11) * 6)]} />
-              <line x1={hx} y1={hy + 0.1} x2={hx + 0.2} y2={hy + 0.1} stroke="rgba(0,0,0,.25)" strokeWidth={0.015} />
-            </g>
-          )
+          return haus(String(k), hx, hy, 0.2, 0.2, Math.floor(zufall(i, j, k + 11) * 3))
         })}
+        {baum('b', x + 0.8, y + 0.82, 0.06, zufall(i, j, 70) < 0.5, 1)}
       </>
     )
   }
@@ -207,7 +249,7 @@ function Landschaft({ brett }: { brett: Brett }) {
     <>
       <defs>
         <clipPath id="gleisbau-kacheln">
-          {brett.flatMap((z, j) => z.map((_, i) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={0.95} rx={0.05} />))}
+          {brett.flatMap((z, j) => z.map((_, i) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />))}
         </clipPath>
       </defs>
       <g clipPath="url(#gleisbau-kacheln)">
@@ -291,9 +333,9 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
             const l = stueckLaenge(s), fein = wegPunkte(s, 40)
             const von = s.ein >= 0 && !weiter[s.ein] ? PORTAL / l : 0, bis = s.aus >= 0 && !weiter[s.aus] ? 1 - PORTAL / l : 1
             const teil = fein.filter((_, n) => n / 40 >= von - 1e-6 && n / 40 <= bis + 1e-6)
-            return teil.length > 1 ? <path key={`d${k}`} d={linie(teil)} fill="none" stroke={F.fels} strokeWidth={0.52} /> : null
+            return teil.length > 1 ? <path key={`d${k}`} d={linie(teil)} fill="none" stroke={F.deckel} strokeWidth={0.52} /> : null
           })}
-          <path d={`M${cx - 0.17},${cy + 0.12} L${cx - 0.02},${cy - 0.17} L${cx + 0.07},${cy} L${cx + 0.12},${cy - 0.07} L${cx + 0.21},${cy + 0.12} Z`} fill={F.berg} />
+          <path d={`M${cx - 0.17},${cy + 0.12} L${cx - 0.02},${cy - 0.17} L${cx + 0.07},${cy} L${cx + 0.12},${cy - 0.07} L${cx + 0.21},${cy + 0.12} Z`} fill={F.fels} />
           {punkte.map(({ p, s }, k) => [0, 1].map((e) => {
             const kant = e === 0 ? s.ein : s.aus
             if (kant < 0 || weiter[kant]) return null
@@ -355,7 +397,7 @@ function BogenBild({ i, j, g, wasser, brett }: { i: number; j: number; g: Gleis;
         const pts = [bei(t.k0), ...p.filter((_, k) => k > t.k0 && k < t.k1), bei(t.k1)]
         return (
           <g key={`t${n}`}>
-            <path d={linie(pts)} fill="none" stroke={F.fels} strokeWidth={0.52} />
+            <path d={linie(pts)} fill="none" stroke={F.deckel} strokeWidth={0.52} />
             {[t.portal0 && bei(t.k0), t.portal1 && bei(t.k1)].map((q, m) => q ? (
               <g key={m} transform={`translate(${q.x} ${q.y}) rotate(${(q.w * 180) / Math.PI})`}>
                 <rect x={-0.03} y={-0.2} width={0.06} height={0.4} rx={0.03} fill={F.portal} />
