@@ -334,7 +334,19 @@ export function grossGeometrie(i: number, j: number, g: Gleis) {
     const z: [number, number] = [Math.floor(x), Math.floor(y)]
     if (!zellen.some(([u, v]) => u === z[0] && v === z[1])) zellen.push(z)
   }
-  return { n, anfang, ende, cx: ox + cx, cy: oy + cy, r: n - 0.5, a0, da, zellen }
+  // der Griff: das Eckfeld aussen, gegenüber der Mitte des Kreises; dort wird die Kurve gelegt, gedreht und mit einer Wiese gelöscht (Michael,
+  // 2026-11-22: «der Drehpunkt immer im leeren Feld außerhalb der Kurve … außerhalb des Außenradiuses. Dort dreht man auch immer die Kurve …
+  // dort kann man auch … eine Wiese setzen, und so ist die Kurve dann gelöscht»); er gehört zur Kurve, auch wo der Bogen ihn nicht berührt
+  const [gx, gy] = zelle(0, 0), griff: [number, number] = [ox + gx, oy + gy]
+  if (!zellen.some(([u, v]) => u === griff[0] && v === griff[1])) zellen.push(griff)
+  return { n, anfang, ende, cx: ox + cx, cy: oy + cy, r: n - 0.5, a0, da, zellen, griff }
+}
+
+/** das Feld des Anfangs einer grossen Kurve mit n Feldern und Drehung d, deren Griff im Feld (i, j) liegt */
+export function anfangZumGriff(i: number, j: number, n: number, d: number): [number, number] {
+  let gx = 0, gy = 0
+  for (let k = 0; k < d; k++) [gx, gy] = [n - 1 - gy, gx]
+  return grossAnfang(i - gx, j - gy, n, d)
 }
 
 /** das Stück einer grossen Kurve vom Ende «von» aus, das an der Kante in sie hineinführt, oder null */

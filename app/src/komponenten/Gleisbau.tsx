@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { knopfTon } from '../audio'
 import {
   type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
-  grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, tunnelWeiter, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, tunnelWeiter, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 
@@ -209,6 +209,12 @@ function BogenBild({ i, j, g }: { i: number; j: number; g: Gleis }) {
       <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
       <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
       <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
+      {/* der Griff: ein Pfeil im Kreis, hier dreht man die Kurve */}
+      <g transform={`translate(${G.griff[0] + 0.5} ${G.griff[1] + 0.5})`} opacity={0.75}>
+        <circle r={0.2} fill="#ffffff" stroke={F.karmin} strokeWidth={0.03} />
+        <path d="M-0.1,0.02 A0.1,0.1 0 1 1 0.02,0.1" fill="none" stroke={F.karmin} strokeWidth={0.035} strokeLinecap="round" />
+        <path d="M0.06,0.13 L0.0,0.1 L0.05,0.04" fill="none" stroke={F.karmin} strokeWidth={0.03} strokeLinecap="round" strokeLinejoin="round" />
+      </g>
     </g>
   )
 }
@@ -323,20 +329,24 @@ export function Gleisbau() {
     setMeldung(null)
     const w = werkzeug
     const unterGross = !!f.teil || grosseKurve(f.gleis) > 0
-    // grosse Kurve: der Block beginnt oben links im angetippten Feld; tippt man in eine gleiche, dreht sie sich im selben Block
+    // grosse Kurve: das angetippte Feld ist ihr Griff, das Eckfeld aussen; tippt man den Griff einer gleichen an, dreht sie sich im selben Block,
+    // der Griff wandert in die nächste Ecke
     const nGross = w.art === 'gleis' ? grosseKurve({ art: w.gleis, dreh }) : 0
     if (nGross && w.art === 'gleis') {
       const [hi, hj] = f.teil ?? [i, j], alt = brett[hj][hi].gleis
-      let b1 = brett, ox = i, oy = j, d = dreh
-      if (unterGross && alt?.art === w.gleis) {
-        const G = grossGeometrie(hi, hj, alt)
-        ox = Math.min(...G.zellen.map(([u]) => u)); oy = Math.min(...G.zellen.map(([, v]) => v))
+      let b1 = brett, ai: number, aj: number, d = dreh
+      if (unterGross) {
+        const G = grossGeometrie(hi, hj, alt!)
+        if (alt?.art !== w.gleis || G.griff[0] !== i || G.griff[1] !== j) {
+          setMeldung('Gedreht wird eine Kurve an ihrer Ecke mit dem Pfeil ↻. Eine Wiese dort löscht sie.'); return
+        }
+        const ox = Math.min(...G.zellen.map(([u]) => u)), oy = Math.min(...G.zellen.map(([, v]) => v))
         d = ((alt.dreh + 1) % 4) as Dreh
-      }
-      if (unterGross) b1 = grosseEntfernen(brett, i, j)
-      const [ai, aj] = grossAnfang(ox, oy, nGross, d)
+        b1 = grosseEntfernen(brett, i, j);
+        [ai, aj] = grossAnfang(ox, oy, nGross, d)
+      } else [ai, aj] = anfangZumGriff(i, j, nGross, d)
       const b2 = grosseLegen(b1, ai, aj, { art: w.gleis, dreh: d })
-      if (!b2) { setMeldung(`Die Kurve braucht ${nGross} × ${nGross} Felder ab hier nach rechts und unten, ohne andere Gleise darin. Drehen ↻ ändert die Richtung.`); return }
+      if (!b2) { setMeldung(`Die Kurve braucht ${nGross} × ${nGross} Felder, vom angetippten Feld aus in die Richtung des Bilds auf dem Knopf, ohne andere Gleise darin. Drehen ↻ ändert die Richtung.`); return }
       setDreh(d); setBrett(b2); knopfTon(true)
       return
     }
@@ -347,6 +357,15 @@ export function Gleisbau() {
       setBrett(b1.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? { grund: x.grund, gleis: { art: w.gleis, dreh } } : x)) : z)))
       knopfTon(true)
       return
+    }
+    // eine Wiese auf dem Griff löscht die Kurve
+    if (unterGross && w.art === 'grund' && w.grund === 'wiese') {
+      const [hi, hj] = f.teil ?? [i, j], G = grossGeometrie(hi, hj, brett[hj][hi].gleis!)
+      if (G.griff[0] === i && G.griff[1] === j) {
+        const b1 = grosseEntfernen(brett, i, j)
+        setBrett(b1.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? { grund: 'wiese' as Grund } : x)) : z))); knopfTon(true)
+        return
+      }
     }
     if (unterGross) {
       const grund: Grund = w.art === 'grund' ? w.grund : w.art === 'tunnel' ? 'berg' : 'wasser'

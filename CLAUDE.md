@@ -1505,7 +1505,11 @@ Radius 1,5 und 2,5 von der Mitte einer Kante zur Mitte einer Kante, das Feld an 
 die Kurve im selben Block; gespeichert im Feld des einen Endes, die Felder darunter mit teil (grossGeometrie, grosseLegen, grosseEntfernen in src/gleisbau.ts); der Zug fährt sie als
 ein Stück (Stueck.gross); ohne Brücke und Tunnel gezeichnet; ein anderes Gleis oder «Entfernen» auf einem ihrer Felder nimmt sie weg, Landschaft ändert nur den Grund; beim Verkleinern
 des Bretts fällt weg, was nicht mehr ganz passt; Dreiwegweiche (dreiweg): Stamm, gerade, rechts und links, ein Tipp während der Fahrt schaltet der Reihe nach; im Browser hier ein Kreis
-aus vier 3 × 3-Kurven gefahren, die Dreiwegweiche geschaltet, Legen, Drehen und Ersetzen geprüft. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
+aus vier 3 × 3-Kurven gefahren, die Dreiwegweiche geschaltet, Legen, Drehen und Ersetzen geprüft.
+Seit 2026-11-22 hat jede grosse Kurve einen Griff, das Eckfeld aussen gegenüber der Mitte des Kreises, mit einem Pfeil im Kreis (Michael: «der Drehpunkt immer im leeren Feld
+außerhalb der Kurve … außerhalb des Außenradiuses. Dort dreht man auch immer die Kurve … dort kann man auch … eine Wiese setzen, und so ist die Kurve dann gelöscht»): das angetippte
+Feld wird zum Griff, der Bogen liegt von ihm weg in der Richtung des Werkzeugs (anfangZumGriff); nur ein Tipp auf den Griff dreht sie, im selben Block, der Griff wandert in die nächste
+Ecke; Wiese auf dem Griff löscht sie; der Griff gehört zur Kurve (grossGeometrie.griff, in zellen), auch wo der Bogen ihn nicht berührt (3 × 3); im Browser hier geprüft. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
 Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
 mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone
