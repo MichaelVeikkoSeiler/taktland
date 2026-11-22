@@ -1487,6 +1487,9 @@ Spitze, vorne Stirnlicht, hinten rot) an den ersten Bahnhof, sonst auf das erste
 des Dorfs in den Farben von Michaels Vorlage; Kachel und Bild oben vorerst das der Modellbahn; in Anleitung, Spiele und auf taktland.ch genannt; im Browser hier mit 390 Bildpunkten
 angeschaut (Beispiel, Fahrt von A über die Brücke nach B). Geplant: Schritt 2 dasselbe Brett als 3D-Modell mit dem Zug der Virtuellen Schweiz (ZugForm.ts), Führerstand und Ton;
 Schritt 3 Aufgaben, Weichen mit zwei Zügen, Layouts teilen, VR-Brille, grösseres Brett.
+Seit 2026-11-22 «Im Bau» (status im-bau in spiele.ts): unter Spiele als schmale Zeile mit Prellbock und «Im Bau», nicht anklickbar, nicht in Anleitung,
+Spiele-Text und auf taktland.ch; #/gleisbau geht weiter zum Weiterentwickeln (Michael: «Ist es möglich, das Spiel noch zu sperren, damit man sieht, es ist in Entwicklung, die
+Spannung kann steigen, aber wir entwickeln das Spiel zuerst für uns noch weiter und fertig»); zum Freigeben status 'spielbereit' und die Nennungen wieder einsetzen.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

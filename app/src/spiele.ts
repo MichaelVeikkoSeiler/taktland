@@ -108,7 +108,9 @@ export const SPIELE: Spiel[] = [
   // Michael, 2026-11-22: «Man soll Gleise auf ein Layout legen können. Tunnel und Brücken und Bahnhöfe stehen auch zur Verfügung», «Nimm mal
   // Gleisbau»; das Bild der Kachel vorerst das der Modellbahn
   {
-    id: 'gleisbau', titel: 'Gleisbau', status: 'spielbereit', adresse: '#/gleisbau',
+    // seit 2026-11-22 «Im Bau», nicht anklickbar; #/gleisbau geht weiter, zum Weiterentwickeln (Michael: «Ist es möglich, das Spiel noch zu sperren, damit
+    // man sieht, es ist in Entwicklung, die Spannung kann steigen, aber wir entwickeln das Spiel zuerst für uns noch weiter und fertig»)
+    id: 'gleisbau', titel: 'Gleisbau', status: 'im-bau', adresse: '#/gleisbau',
     kurz: 'Gleise, Bahnhöfe, Tunnel und Brücken auf ein Brett legen und den Zug fahren lassen.',
     bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: eine Modellbahn mit Zug, Gleisen und Landschaft.' },
     beschreibung: 'Ein Brett mit 8 × 6 Feldern: Leg Gleise, Weichen, Bahnhöfe, Tunnel und Brücken, gestalte die Landschaft und lass den Zug '

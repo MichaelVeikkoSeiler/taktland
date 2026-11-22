@@ -22,7 +22,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <img src="./logo.svg" alt="" className="mt-6 size-16" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
-        Die Reiter oben führen zu Spiele (Virtuelle Schweiz, Modellbahn, Geo, Wo fahre ich?, Fahrplan-Puzzle, Bilderpuzzle, Gleisbau, Reisedauer, Duell, Bahnhofsuche), Bahnland (Bahnhöfe,
+        Die Reiter oben führen zu Spiele (Virtuelle Schweiz, Modellbahn, Geo, Wo fahre ich?, Fahrplan-Puzzle, Bilderpuzzle, Reisedauer, Duell, Bahnhofsuche), Bahnland (Bahnhöfe,
         Strecken, Brücken, Tunnel, Bahnübergänge), Standort, Reisetasche und Info. Der rote Knopf «Fahren» ist für unterwegs im Zug.
         Ein Tipp auf ein Thema klappt es auf.
       </p>
@@ -89,18 +89,6 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </li>
           <li>
             Eigene Fotos bleiben im Browser dieses Geräts und werden nicht gesendet; × und «Löschen» entfernt sie wieder.
-          </li>
-        </Spiel>
-        <Spiel titel="Gleisbau">
-          <li>
-            Ein Brett mit 8 × 6 Feldern. Wähle unten ein Stück, Gerade, Kurve, Weiche, Kreuzung, Prellbock, Bahnhof, Tunnel oder Brücke, und
-            tippe ein Feld an; nochmals tippen dreht es. Die Landschaft (Wiese, Wald, Wasser, Berg, Dorf) legst du genauso. Ein Gleis auf
-            Wasser wird zur Brücke, auf einem Berg zum Tunnel.
-          </li>
-          <li>
-            «Fahren» setzt den Zug auf das Gleis, zuerst an einen Bahnhof. Er hält an jedem Bahnhof und kehrt am Ende eines Gleises um;
-            während der Fahrt stellt ein Tipp auf eine Weiche sie um. Ein Baukasten, keine Wirklichkeit: Kacheln, Zug und Tempo sind
-            gezeichnet und gewählt. Das Brett bleibt im Browser dieses Geräts.
           </li>
         </Spiel>
         <Spiel titel="Reisedauer">
