@@ -286,7 +286,8 @@ export function Netzkarte({
   presets?: Array<{ text: string; box: Box }>
   hervor?: Set<number>
   punkte?: Beschriftung[]
-  zeichnen?: (px: number, box: Box) => ReactNode
+  /** h: Höhe des Ausschnitts in Einheiten der Karte */
+  zeichnen?: (px: number, box: Box, h: number) => ReactNode
   linieOeffnen?: (nr: number) => void
   /** nur diese Linien lassen sich antippen; ohne Angabe alle */
   seiten?: Set<number>
@@ -586,7 +587,7 @@ export function Netzkarte({
         <SeenNamen seen={seen} box={box} px={px} belegt={belegt} verh={verh} />
         <FlussNamen grund={kartengrund} box={box} px={px} belegt={belegt} verh={verh} />
         <SehenswertEbene daten={sehenswert.s} box={box} px={px} verh={verh} belegt={belegt} waehlen={setAuswahl} />
-        {zeichnen?.(px, box)}
+        {zeichnen?.(px, box, h)}
         {/* Bahnhöfe so gross wie der rote Standortpunkt (Michael, 2026-09-26) */}
         {punkte.filter((p) => drin(p.x, p.y)).map((p) => (
           <circle key={`b${p.name}${p.x}`} cx={p.x} cy={p.y} r={5 * px} strokeWidth={1.5}

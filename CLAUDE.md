@@ -1450,6 +1450,13 @@ und zweiter Hinweis sind alle Zwischenhalte in der Karte. Abzüge: Hinweis 1: -1
 «Keine Zwischenhalte», wo es keine gibt), je −15 % der Punkte der Runde (DAUER_HINWEIS_ABZUG); die Karte ist die Netzkarte der App mit den beiden Bahnhöfen rot umrandet,
 dann mit den Halten dazwischen laut Fahrplan (nur Bahnhöfe von Taktland), Lage aus dem Index der App (DauerKarte in Fahrplanspiele.tsx); in der Anleitung; im Browser hier mit
 390 Bildpunkten gespielt.
+Seit 2026-11-22 in «Reisedauer» nur Fragen mit mindestens einem Halt dazwischen, den Taktland kennt (dauerZiehen; Michael: «Beim Test beim Spiel Reisedauer kamen stehts Fragen
+die keine Zwischenhalte hatten. Kannst du das bitte ändern?»), und ein dritter Hinweis «Massstab und Strecke», je −15 % wie die anderen (Michael: «bei der Karte einen Zusatzhinweis optional
+einblenden lassen: masstab wie viel ist ein Kilometer lang? Und Strecke einblenden lassen als schwarze Linie»): «Zwischenhalte» und «Massstab und Strecke» nach der Karte in beliebiger
+Folge (Bits H_KARTE, H_HALTE, H_STRECKE); unten links ein Massstab mit der längsten runden Länge bis ein Viertel der Breite (0,5 bis 100 km, MASSSTAB_KM, gewählt), die Strecke
+schwarz: je Paar aufeinanderfolgender Halte laut Fahrplan der kürzeste Weg im Netz der Seite «Strecke» (wegSuchen, data/strecken.json; der Fahrplan nennt den Weg nicht, so in der
+Beschriftung), auf den Linien von data/karte.json, ohne Verlauf gerade zwischen den Betriebspunkten; Netzkarte gibt zeichnen dafür die Höhe des Ausschnitts mit; im Browser hier mit
+390 Bildpunkten angeschaut (Sion–Genève).
 
 **Bilderpuzzle** (Spiele, #/bilderpuzzle; #/puzzle bleibt das Fahrplan-Puzzle; Michael, 2026-11-21: «Kannst du dieses Puzzlespiel auf Taktland-App übernehmen und dort alle Bilder,
 welche wir auf Taktland integriert haben, als Puzzle bereitstellen?», übernommen aus dem Bilder-Puzzle für Kinder im Repository apoko): 4 bis 48 Teile (TEILE), Puzzleteile mit Nasen

@@ -68,19 +68,22 @@ export function puzzlePunkte(r: PuzzleRunde, gewaehlt: number[]): number {
 
 export interface DauerRunde { f: SpielFahrt; von: number; bis: number; min: number }
 
+/** nur Paare mit mindestens einem Halt dazwischen, den Taktland kennt, damit der Hinweis «Zwischenhalte» etwas zeigt
+ *  (Michael, 2026-11-22: «Beim Test beim Spiel Reisedauer kamen stehts Fragen die keine Zwischenhalte hatten. Kannst du das bitte ändern?») */
 export function dauerZiehen(v: SpielVorrat, hatName: (uic: number) => boolean, schon: Set<string>): DauerRunde | null {
-  const passend = v.fahrten.filter((f) => f.p.length && !schon.has(`${f.g}|${f.l}`)
-    && f.p.some(([a, b]) => hatName(f.h[a][0]) && hatName(f.h[b][0])))
+  const passt = (f: SpielFahrt, [a, b]: [number, number, number]) => hatName(f.h[a][0]) && hatName(f.h[b][0])
+    && f.h.slice(a + 1, b).some(([u]) => hatName(u))
+  const passend = v.fahrten.filter((f) => !schon.has(`${f.g}|${f.l}`) && f.p.some((x) => passt(f, x)))
   if (!passend.length) return null
   const f = zufall(passend)
-  const [von, bis, min] = zufall(f.p.filter(([a, b]) => hatName(f.h[a][0]) && hatName(f.h[b][0])))
+  const [von, bis, min] = zufall(f.p.filter((x) => passt(f, x)))
   return { f, von, bis, min }
 }
 
 /** Punkte in Schritten von 1: 100 genau getroffen, gleichmässig weniger mit jeder Minute daneben, 0 ab 2 · toleranz() + 1 Minuten
  *  (seit 2026-11-15, vorher 100 bis toleranz(), 50 bis zum Doppelten; Michael: «Viel feinere Punktesbstimmung. Nicht 100 und 50 sondern im 1er schritt»);
  *  Punkte gibt es so höchstens 22 Minuten daneben, 44 Minuten des Reglers (Regel 9) */
-/** jeder Hinweis in «Reisedauer» (Karte, Zwischenhalte) nimmt 15 % der Punkte (Michael, 2026-11-18: «Hinweis 1: -15% Hinweis 2 -15%») */
+/** jeder Hinweis in «Reisedauer» (Karte, Zwischenhalte, seit 2026-11-22 Massstab und Strecke) nimmt 15 % der Punkte (Michael, 2026-11-18: «Hinweis 1: -15% Hinweis 2 -15%») */
 export const DAUER_HINWEIS_ABZUG = 0.15
 
 export function dauerPunkte(min: number, tipp: number): number {

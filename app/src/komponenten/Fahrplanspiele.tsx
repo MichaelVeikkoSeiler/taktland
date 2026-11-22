@@ -4,9 +4,12 @@ import {
   bestwert, bestwertFesthalten, DAUER_HINWEIS_ABZUG, dauerPunkte, type DauerRunde, dauerZiehen, PUZZLE_HALTE, PUZZLE_PUNKTE_JE_HALT, puzzlePunkte,
   type PuzzleRunde, puzzleZiehen, REGLER_BIS_MIN, RUNDEN, type SpielFahrt, type SpielVorrat, toleranz, uhr, vorratLaden, zugTitel,
 } from '../fahrplanspiele'
-import type { BahnhofIndex } from '../typen'
+import { nachbarnBauen } from '../bahnen'
+import { streckenLaden } from '../daten'
+import type { BahnhofIndex, StreckenAbschnitt, StreckenNetz } from '../typen'
+import { wegSuchen } from '../wegsuche'
 import { Ladefehler } from './Ladefehler'
-import { type Box, KartenPlatz, lage, Netzkarte, useKarte } from './Netzkarte'
+import { type Box, KartenPlatz, lage, Netzkarte, pfad, type Stueck, useKarte } from './Netzkarte'
 import { type Mitspieler, type RaumSpiel, useRaumSeite } from './Raum'
 import { raumEroeffnen, teilnahmeMerken } from '../spielraum'
 import { Zurueck } from './Zurueck'
@@ -432,16 +435,66 @@ function PuzzleOnlineSpiel({ r, runden, namen, vorrat }: {
   )
 }
 
+/** die Hinweise in «Reisedauer» als Bits: Karte, Zwischenhalte, Massstab und Strecke; die beiden letzten erst nach der Karte, in beliebiger Folge */
+const H_KARTE = 1, H_HALTE = 2, H_STRECKE = 4
+const hinweisZahl = (h: number) => [H_KARTE, H_HALTE, H_STRECKE].filter((b) => h & b).length
+
+/** 1 km in Einheiten der Karte: y ist die Breite in Grad, x die Länge mal LAENGE_ZU_BREITE, beide etwa 111,2 km je Einheit */
+const KM = 1 / 111.2
+/** runde Längen für den Massstab, gewählt; die längste, die höchstens ein Viertel der Breite des Ausschnitts misst */
+const MASSSTAB_KM = [0.5, 1, 2, 5, 10, 20, 50, 100]
+
+/** Punkte einer Linie zwischen zwei Kilometern, in Richtung von → bis */
+function linieZwischen(stuecke: Stueck[], von: number, bis: number): Array<[number, number]> {
+  const [a, b] = von < bis ? [von, bis] : [bis, von]
+  const pkt: Array<[number, number, number]> = []
+  for (const s of stuecke) s.km.forEach((k, i) => { if (k >= a && k <= b) pkt.push([k, s.x[i], s.y[i]]) })
+  pkt.sort((p, q) => p[0] - q[0])
+  if (von > bis) pkt.reverse()
+  return pkt.map(([, x, y]) => [x, y])
+}
+
+/** der Verlauf eines Abschnitts von «von» nach «nach» (oder umgekehrt): auf den Linien der Karte, wo er sie kennt, sonst gerade */
+function abschnittVerlauf(e: StreckenAbschnitt, vorwaerts: boolean, linien: Map<number, Stueck[]>, netz: StreckenNetz): Array<[number, number]> {
+  const ende = (k: string): Array<[number, number]> => { const l = netz.lagen[k]; return l ? [lage(l[0], l[1])] : [] }
+  const teile = e.teile ?? []
+  const pkt: Array<[number, number]> = []
+  for (const t of vorwaerts ? teile : [...teile].reverse()) {
+    const st = linien.get(t.linie)
+    if (!st) continue
+    pkt.push(...(vorwaerts ? linieZwischen(st, t.km_von, t.km_bis) : linieZwischen(st, t.km_bis, t.km_von)))
+  }
+  return pkt.length >= 2 ? pkt : [...ende(vorwaerts ? e.von : e.nach), ...ende(vorwaerts ? e.nach : e.von)]
+}
+
 /**
  * Hinweise in «Reisedauer» (Michael, 2026-11-18: «Ein Hinweis ist eine einfache Karte und zweiter Hinweis sind alle Zwischenhalte in der Karte»):
- * 1 die Karte mit dem Netz und den beiden Bahnhöfen, 2 dazu die Halte dazwischen laut Fahrplan; Lage der Bahnhöfe aus dem Index der App
+ * die Karte mit dem Netz und den beiden Bahnhöfen, dazu die Halte dazwischen laut Fahrplan; Lage der Bahnhöfe aus dem Index der App.
+ * Seit 2026-11-22 dazu Massstab und Strecke (Michael: «bei der Karte einen Zusatzhinweis optional einblenden lassen: masstab wie viel ist ein
+ * Kilometer lang? Und Strecke einblenden lassen als schwarze Linie»): je Paar aufeinanderfolgender Halte der kürzeste Weg im Netz der Seite
+ * «Strecke» wie bei den Zügen der Virtuellen Schweiz (der Fahrplan nennt den Weg nicht), auf den Linien der Karte, ohne Verlauf gerade
  */
 function DauerKarte({ runde, hinweise, lageVon, name }: {
   runde: DauerRunde; hinweise: number; lageVon: (u: number) => [number, number] | null; name: (u: number) => string
 }) {
   const { daten, linien, fehler } = useKarte()
+  const mitStrecke = !!(hinweise & H_STRECKE)
+  const [netz, setNetz] = useState<StreckenNetz | null>(null)
+  useEffect(() => { if (mitStrecke && !netz) streckenLaden().then(setNetz).catch(() => {}) }, [mitStrecke, netz])
+  const nachbarn = useMemo(() => (netz ? nachbarnBauen(netz, new Set()) : null), [netz])
+  const strecke = useMemo(() => {
+    if (!mitStrecke || !netz || !nachbarn || !linien) return null
+    const kuerzel = runde.f.h.slice(runde.von, runde.bis + 1).map(([u]) => netz.bahnhoefe[String(u)]).filter((k): k is string => !!k)
+    const pkt: Array<[number, number]> = []
+    for (let i = 1; i < kuerzel.length; i++) {
+      const w = wegSuchen(nachbarn, kuerzel[i - 1], kuerzel[i])
+      if (!w) continue
+      w.abschnitte.forEach((e, k) => pkt.push(...abschnittVerlauf(e, e.von === w.punkte[k], linien, netz)))
+    }
+    return pkt.length >= 2 ? pkt : null
+  }, [mitStrecke, netz, nachbarn, linien, runde])
   const inhalt = useMemo(() => {
-    const idx = hinweise >= 2 ? Array.from({ length: runde.bis - runde.von + 1 }, (_, i) => runde.von + i) : [runde.von, runde.bis]
+    const idx = hinweise & H_HALTE ? Array.from({ length: runde.bis - runde.von + 1 }, (_, i) => runde.von + i) : [runde.von, runde.bis]
     const pkt = idx.flatMap((i) => {
       const u = runde.f.h[i][0], xy = lageVon(u)
       return xy ? [{ x: xy[0], y: xy[1], name: name(u), uic: u, ende: i === runde.von || i === runde.bis }] : []
@@ -457,11 +510,33 @@ function DauerKarte({ runde, hinweise, lageVon, name }: {
   return (
     <div className="mt-3">
       <Netzkarte daten={daten} linien={linien} start={inhalt.box} punkte={inhalt.pkt} titel="Karte zum Hinweis"
-        zeichnen={(px) => inhalt.pkt.filter((p) => p.ende).map((p) => (
-          <circle key={p.uic} cx={p.x} cy={p.y} r={8.5 * px} className="fill-sbb-red" />
-        ))}
-        beschriftung={<>Rot umrandet: die beiden Bahnhöfe der Frage{hinweise >= 2 ? ', Ringe: die Halte dazwischen laut Fahrplan (nur Bahnhöfe, die Taktland kennt)' : ''}, jeweils dort,
-          wo der Index der App ihre Lage angibt. Grau das Streckennetz.</>} />
+        zeichnen={(px, box, h) => {
+          const km = [...MASSSTAB_KM].reverse().find((k) => k * KM <= box.w / 4) ?? MASSSTAB_KM[0]
+          const x0 = box.cx - box.w / 2 + 12 * px, y0 = box.cy + h / 2 - 12 * px, x1 = x0 + km * KM
+          return (
+            <>
+              {strecke && <path d={pfad(strecke)} fill="none" strokeWidth={3} vectorEffect="non-scaling-stroke" strokeLinejoin="round"
+                                strokeLinecap="round" className="stroke-sbb-black dark:stroke-sbb-white" />}
+              {inhalt.pkt.filter((p) => p.ende).map((p) => (
+                <circle key={p.uic} cx={p.x} cy={p.y} r={8.5 * px} className="fill-sbb-red" />
+              ))}
+              {mitStrecke && (
+                <g className="fill-sbb-black stroke-sbb-black dark:fill-sbb-white dark:stroke-sbb-white">
+                  <rect x={x0 - 4 * px} y={y0 - 20 * px} width={x1 - x0 + 8 * px} height={26 * px} rx={4 * px}
+                        className="fill-white/85 stroke-none dark:fill-sbb-midnight/85" />
+                  <path d={`M${x0},${y0 - 5 * px}V${y0}H${x1}V${y0 - 5 * px}`} fill="none" strokeWidth={2} vectorEffect="non-scaling-stroke" />
+                  <text x={(x0 + x1) / 2} y={y0 - 7 * px} fontSize={11 * px} textAnchor="middle" className="stroke-none font-bold">
+                    {km.toLocaleString('de-CH')} km
+                  </text>
+                </g>
+              )}
+            </>
+          )
+        }}
+        beschriftung={<>Rot umrandet: die beiden Bahnhöfe der Frage{hinweise & H_HALTE ? ', Ringe: die Halte dazwischen laut Fahrplan (nur Bahnhöfe, die Taktland kennt)' : ''}, jeweils dort,
+          wo der Index der App ihre Lage angibt. Grau das Streckennetz.{mitStrecke ? <> Schwarz die Strecke: von Halt zu Halt der kürzeste Weg im
+          Netz der App, der Fahrplan nennt den Weg nicht; wo die Karte den Verlauf nicht kennt, gerade. Unten links der Massstab.</> : null}</>} />
+      {mitStrecke && !strecke && <p className={`mt-1 ${LEISE}`}>{netz ? 'Die Strecke liess sich im Netz nicht finden.' : 'Strecke wird geladen …'}</p>}
     </div>
   )
 }
@@ -511,16 +586,17 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
           <p className={`mt-3 ${LEISE}`}>Hinweise · jeder kostet {Math.round(DAUER_HINWEIS_ABZUG * 100)} % der Punkte dieser Runde</p>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {[
-              { n: 1, text: 'Karte', geht: hinweise === 0 },
-              { n: 2, text: runde.bis - runde.von > 1 ? 'Zwischenhalte' : 'Keine Zwischenhalte', geht: hinweise === 1 && runde.bis - runde.von > 1 },
+              { n: H_KARTE, text: 'Karte', geht: true },
+              { n: H_HALTE, text: 'Zwischenhalte', geht: !!(hinweise & H_KARTE) },
+              { n: H_STRECKE, text: 'Massstab und Strecke', geht: !!(hinweise & H_KARTE) },
             ].map((h) => {
-              const an = hinweise >= h.n
+              const an = !!(hinweise & h.n)
               return (
-                <button key={h.n} type="button" aria-pressed={an} disabled={an || !h.geht || gewertet} onClick={() => setHinweise(h.n)}
+                <button key={h.n} type="button" aria-pressed={an} disabled={an || !h.geht || gewertet} onClick={() => setHinweise(hinweise | h.n)}
                         className={`rounded-lg px-2.5 py-1.5 text-sm font-medium disabled:cursor-default ${an
                           ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
                           : `kachel kachel-link ${h.geht && !gewertet ? '' : 'opacity-40'}`}`}>
-                  {h.text} {an ? '✓' : h.geht || hinweise < h.n - 1 ? <span className="text-sbb-red">−{Math.round(DAUER_HINWEIS_ABZUG * 100)} %</span> : null}
+                  {h.text} {an ? '✓' : <span className="text-sbb-red">−{Math.round(DAUER_HINWEIS_ABZUG * 100)} %</span>}
                 </button>
               )
             })}
@@ -532,7 +608,7 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
           <div className={`flex justify-between ${LEISE}`}><span>0</span><span>{REGLER_BIS_MIN} Min.</span></div>
           {!gewertet && (
             <button type="button" className={`mt-4 w-full md:w-auto ${ROT}`} onClick={() => {
-              const p = Math.round(dauerPunkte(runde.min, tipp) * (1 - DAUER_HINWEIS_ABZUG * hinweise))
+              const p = Math.round(dauerPunkte(runde.min, tipp) * (1 - DAUER_HINWEIS_ABZUG * hinweisZahl(hinweise)))
               antwortTon(p >= 50 ? 'richtig' : 'falsch')
               setPunkte([...punkte, p])
             }}>Prüfen</button>
@@ -544,7 +620,7 @@ export function Fahrzeit({ index }: { index: BahnhofIndex | null }) {
                 an {name(runde.f.h[runde.bis][0])} {uhr(runde.f.h[runde.bis][1])}
               </p>
               <p className={LEISE}>100 Punkte genau getroffen, je Minute daneben weniger, keine mehr ab {2 * toleranz(runde.min) + 1} Minuten daneben{hinweise
-                ? `; ${hinweise} ${hinweise === 1 ? 'Hinweis' : 'Hinweise'}, −${Math.round(DAUER_HINWEIS_ABZUG * 100 * hinweise)} %` : ''}.</p>
+                ? `; ${hinweisZahl(hinweise)} ${hinweisZahl(hinweise) === 1 ? 'Hinweis' : 'Hinweise'}, −${Math.round(DAUER_HINWEIS_ABZUG * 100 * hinweisZahl(hinweise))} %` : ''}.</p>
               <p className={`mt-2 ${LEISE}`}>Alle Halte dieser Fahrt laut Fahrplan:</p>
               <HalteListe f={runde.f} namen={namen} hervor={new Set([runde.von, runde.bis])} />
               <button type="button" className={`mt-4 w-full md:w-auto ${ROT}`} onClick={() => {
