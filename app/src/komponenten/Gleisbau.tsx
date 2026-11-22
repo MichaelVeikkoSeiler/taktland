@@ -46,6 +46,9 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
 
 const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringify(b)
 
+/** so viele Schritte lassen sich rückgängig machen */
+const RUECKGAENGIG = 10
+
 /** so schnell klingt der Zug bei vollem Tempo auf dem Brett, in m/s (etwa 80 km/h; gewählt, das Brett hat keinen Massstab) */
 const ZUG_KLANG_MS = 22
 
@@ -279,7 +282,19 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
  * Schritt 1, freies Bauen in 2D, der Zug fährt von oben gesehen; 3D und Aufgaben folgen
  */
 export function Gleisbau() {
-  const [brett, setBrett] = useState<Brett>(() => brettLesen() ?? beispiel())
+  const [brett, setBrettRoh] = useState<Brett>(() => brettLesen() ?? beispiel())
+  // bis zu RUECKGAENGIG Schritte zurück (Michael, 2026-11-22: «Man muss 10 Schritte rückwärts machen können»); jedes Bauen, Verschieben, Beispiel,
+  // Leeren und jede neue Grösse ist ein Schritt, das Stellen der Weichen während der Fahrt nicht
+  const [verlauf, setVerlauf] = useState<Brett[]>([])
+  const setBrett = (b: Brett, merken = true) => {
+    if (merken && b !== brett) setVerlauf((v) => [...v.slice(-(RUECKGAENGIG - 1)), brett])
+    setBrettRoh(b)
+  }
+  const zurueck = () => {
+    const alt = verlauf[verlauf.length - 1]
+    if (!alt) return
+    setVerlauf((v) => v.slice(0, -1)); setBrettRoh(alt); setMeldung(null); knopfTon(false)
+  }
   const [werkzeug, setWerkzeug] = useState<Werkzeug>({ art: 'gleis', gleis: 'gerade' })
   const [dreh, setDreh] = useState<Dreh>(0)
   const [faehrt, setFaehrt] = useState(false)
@@ -392,7 +407,7 @@ export function Gleisbau() {
     if (faehrt) {
       if (!istWeiche(f.gleis)) { setMeldung('Während der Fahrt lassen sich nur Weichen stellen. Zum Bauen «Anhalten».'); return }
       const wege = f.gleis!.art === 'dreiweg' ? 3 : 2
-      neu(i, j, { ...f, gleis: { ...f.gleis!, stellung: (((f.gleis!.stellung ?? 0) + 1) % wege) as 0 | 1 | 2 } })
+      neu(i, j, { ...f, gleis: { ...f.gleis!, stellung: (((f.gleis!.stellung ?? 0) + 1) % wege) as 0 | 1 | 2 } }, false)
       knopfTon(true)
       return
     }
@@ -466,8 +481,8 @@ export function Gleisbau() {
     knopfTon(true)
   }
 
-  function neu(i: number, j: number, f: Feld) {
-    setBrett((b) => b.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? f : x)) : z)))
+  function neu(i: number, j: number, f: Feld, merken = true) {
+    setBrett(brett.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? f : x)) : z)), merken)
   }
 
   function fahren() {
@@ -534,6 +549,10 @@ export function Gleisbau() {
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <button type="button" onClick={fahren}
                 className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">{faehrt ? 'Anhalten' : 'Fahren'}</button>
+        <button type="button" disabled={faehrt || !verlauf.length} onClick={zurueck} aria-label={`Rückgängig, noch ${verlauf.length} Schritte`}
+                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
+          ↶ Zurück{verlauf.length ? <span className="ml-1 text-sm font-medium tabular-nums text-sbb-metal dark:text-sbb-storm">{verlauf.length}</span> : null}
+        </button>
         <button type="button" disabled={faehrt} onClick={() => setDreh(((dreh + 1) % 4) as Dreh)}
                 className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
           Drehen ↻
