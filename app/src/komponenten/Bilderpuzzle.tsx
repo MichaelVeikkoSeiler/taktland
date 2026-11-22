@@ -122,20 +122,12 @@ export function Bilderpuzzle() {
       <input ref={datei} type="file" accept="image/*" multiple hidden aria-label="Eigenes Bild hinzufügen"
              onChange={(e) => { const l = [...(e.target.files ?? [])]; e.target.value = ''; void hinzufuegen(l) }} />
       <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
-        <li className="flex">
-          <button type="button" onClick={() => datei.current?.click()}
-                  className="flex aspect-[2/1] min-h-full w-full flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed
-                             border-sbb-cement px-2 text-center font-bold hover:border-sbb-black dark:border-sbb-granite dark:hover:border-sbb-white">
-            <span className="text-3xl leading-none text-sbb-red dark:text-[#d63a55]" aria-hidden="true">+</span>
-            Eigenes Bild oder Foto
-          </button>
-        </li>
-        {[...eigene, ...BILDER].map((b) => (
+        {/* ohne Namen, die eigenen Bilder und «Eigenes Bild oder Foto» am Schluss (Michael, 2026-11-22: «Bildernamen entfernen. Eigenes Bild am Schluss») */}
+        {[...BILDER, ...eigene].map((b) => (
           <li key={b.id} className="relative flex">
             <button type="button" onClick={() => setSpiel(b)} aria-label={`${b.titel} puzzeln`}
                     className="kachel kachel-link flex w-full flex-col overflow-hidden text-left">
               <img src={b.url} alt="" loading="lazy" className="aspect-[2/1] w-full object-cover" />
-              <span className="px-3 py-2 font-bold leading-tight">{b.titel}</span>
             </button>
             {b.eigenes && (
               <button type="button" onClick={() => loeschen(b)} aria-label="Bild löschen"
@@ -146,6 +138,14 @@ export function Bilderpuzzle() {
             )}
           </li>
         ))}
+        <li className="flex">
+          <button type="button" onClick={() => datei.current?.click()}
+                  className="flex aspect-[2/1] min-h-full w-full flex-col items-center justify-center gap-1 rounded-lg border-2 border-dashed
+                             border-sbb-cement px-2 text-center text-sm font-bold leading-tight hover:border-sbb-black dark:border-sbb-granite dark:hover:border-sbb-white">
+            <span className="text-2xl leading-none text-sbb-red dark:text-[#d63a55]" aria-hidden="true">+</span>
+            Eigenes Bild oder Foto
+          </button>
+        </li>
       </ul>
       <p className={`mt-4 ${LEISE}`}>
         Eigene Bilder bleiben im Browser dieses Geräts und werden nicht gesendet. Löschen: × und dann «Löschen» antippen.

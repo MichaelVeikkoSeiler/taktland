@@ -1472,7 +1472,8 @@ Michael: «Im Querformat also beim drehen des Devices sollen die herumliegenden 
 Seit 2026-11-22 wächst das Spiel, wenn die losen Teile näher am Rahmen liegen (heranzoomen in src/bilderpuzzle.ts; Michael: «Schiebt man die umliegenden Teile näher zum Puzzle
 so soll sich das Spiel entsprechend vergrössern»): nach jedem Loslassen füllen Rahmen und lose Teile zusammen die Fläche, in der Mitte, der Rahmen höchstens bis an ihren Rand, in
 0,35 s gleitend; die Grösse ändert sich erst ab 3 %, die Lage erst ab 4 % der Fläche (gewählt), nie während ein Teil gezogen wird; im Browser hier mit 20 Teilen geprüft, quer
-800 × 390 wuchs der Rahmen von 255 auf 340 Bildpunkte, hoch 390 × 800 von 288 auf 316 (dort begrenzt die Breite). Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
+800 × 390 wuchs der Rahmen von 255 auf 340 Bildpunkte, hoch 390 × 800 von 288 auf 316 (dort begrenzt die Breite).
+Seit 2026-11-22 die Bilder zur Wahl ohne Namen (der Name nur noch für Vorleser, aria-label), die eigenen Bilder und «Eigenes Bild oder Foto» am Schluss (Michael: «Bildernamen entfernen. Eigenes Bild am Schluss»). Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
