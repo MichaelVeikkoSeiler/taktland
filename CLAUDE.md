@@ -1489,7 +1489,13 @@ angeschaut (Beispiel, Fahrt von A über die Brücke nach B). Geplant: Schritt 2 
 Schritt 3 Aufgaben, Weichen mit zwei Zügen, Layouts teilen, VR-Brille, grösseres Brett.
 Seit 2026-11-22 «Im Bau» (status im-bau in spiele.ts): unter Spiele als schmale Zeile mit Prellbock und «Im Bau», nicht anklickbar, nicht in Anleitung,
 Spiele-Text und auf taktland.ch; #/gleisbau geht weiter zum Weiterentwickeln (Michael: «Ist es möglich, das Spiel noch zu sperren, damit man sieht, es ist in Entwicklung, die
-Spannung kann steigen, aber wir entwickeln das Spiel zuerst für uns noch weiter und fertig»); zum Freigeben status 'spielbereit' und die Nennungen wieder einsetzen. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
+Spannung kann steigen, aber wir entwickeln das Spiel zuerst für uns noch weiter und fertig»); zum Freigeben status 'spielbereit' und die Nennungen wieder einsetzen.
+Seit 2026-11-22 erzeugt «Beispiel» bei jedem Tippen ein neues, zufälliges Layout (zufallsBeispiel in src/gleisbau.ts; Michael: «Bei Beispiel sollen durch weiteres Tippen immer
+neue Beispiele erscheinen und auch Anzahl Kacheln sollen wählbar sein»): ein Rechteck als Ring mit 2 bis 6 Ausbuchtungen nach aussen (ein Stück des Rings rückt um ein Feld
+hinaus, ohne den Ring sonst zu berühren), mit 70 % ein Abstellgleis mit Weiche, ein bis zwei Feldern und Prellbock, mit 80 % ein Fluss quer übers Brett mit Biegungen, der das
+Gleis nur quer über eine Gerade kreuzt (Brücken), ein Berg an einer Geraden (Tunnel), zwei bis drei Bahnhöfe mindestens drei Felder auseinander, Dörfer neben den Bahnhöfen,
+Wald auf etwa 12 % der Felder; alles gewählt. Grösse wählbar 6 × 4, 8 × 6, 10 × 7, 12 × 8 (GROESSEN), was oben links Platz hat, bleibt (groesseAendern); dabei gefunden: ein
+Tipp traf das Feld neben dem gemeinten, der Rand des Tabletts fehlte in der Rechnung. Im Browser hier je drei Beispiele in allen vier Grössen erzeugt und fahren lassen. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
 Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
 mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone

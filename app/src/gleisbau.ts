@@ -7,6 +7,10 @@
 
 export const SPALTEN = 8
 export const ZEILEN = 6
+/** wählbare Grössen des Bretts, Spalten × Zeilen (gewählt; Michael, 2026-11-22: «auch Anzahl Kacheln sollen wählbar sein») */
+export const GROESSEN: Array<[number, number]> = [[6, 4], [8, 6], [10, 7], [12, 8]]
+export const spalten = (b: Brett) => b[0]?.length ?? 0
+export const zeilen = (b: Brett) => b.length
 
 export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf'
 export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof'
@@ -44,8 +48,13 @@ export function ausgang(g: Gleis | undefined, ein: number): number | null {
   return null
 }
 
-export function leer(): Brett {
-  return Array.from({ length: ZEILEN }, () => Array.from({ length: SPALTEN }, (): Feld => ({ grund: 'wiese' })))
+export function leer(sp = SPALTEN, ze = ZEILEN): Brett {
+  return Array.from({ length: ze }, () => Array.from({ length: sp }, (): Feld => ({ grund: 'wiese' })))
+}
+
+/** dasselbe Brett in einer anderen Grösse: oben links bleibt, was Platz hat, der Rest wird Wiese oder fällt weg */
+export function groesseAendern(b: Brett, sp: number, ze: number): Brett {
+  return Array.from({ length: ze }, (_, j) => Array.from({ length: sp }, (_, i): Feld => b[j]?.[i] ?? { grund: 'wiese' }))
 }
 
 /** Ein Beispiel zum Anfang: ein Ring mit zwei Bahnhöfen, Brücke über den Fluss, Tunnel durch den Berg und ein Abstellgleis */
@@ -65,6 +74,131 @@ export function beispiel(): Brett {
   return b
 }
 
+/** Kanten zwischen zwei Richtungen als Gleisstück: gegenüber eine Gerade, sonst eine Kurve */
+function stueckFuer(a: number, b: number): Gleis {
+  if ((a + 2) % 4 === b) return { art: 'gerade', dreh: (a % 2) as Dreh }
+  // Kurve ohne Drehung verbindet Süd (2) und Ost (1)
+  for (let r = 0; r < 4; r++) {
+    const x = (2 + r) % 4, y = (1 + r) % 4
+    if ((x === a && y === b) || (x === b && y === a)) return { art: 'kurve', dreh: r as Dreh }
+  }
+  return { art: 'gerade', dreh: 0 }
+}
+
+const richtungZu = (i: number, j: number, k: number, l: number) => (l < j ? 0 : k > i ? 1 : l > j ? 2 : 3)
+
+/**
+ * Ein neues, zufälliges Beispiel für jede Grösse (Michael, 2026-11-22: «Bei Beispiel sollen durch weiteres Tippen immer neue Beispiele
+ * erscheinen»): ein Rechteck als Ring, mit zufälligen Ausbuchtungen nach aussen (ein Stück des Rings rückt um ein Feld hinaus, so bleibt er
+ * ein einfacher Ring), oft ein Abstellgleis mit Weiche und Prellbock, ein Fluss quer übers Brett (Brücken), ein Berg (Tunnel), Wald, Dörfer
+ * neben den Bahnhöfen; alles gewählt
+ */
+export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
+  const z = (n: number) => Math.floor(Math.random() * n)
+  const b = leer(sp, ze)
+  // Ring als Folge von Feldern: zuerst ein Rechteck mit mindestens einem Feld Rand
+  const x0 = 1 + z(Math.max(1, Math.floor(sp / 4))), y0 = 1 + z(Math.max(1, Math.floor(ze / 4)))
+  const x1 = sp - 2 - z(Math.max(1, Math.floor(sp / 4))), y1 = ze - 2 - z(Math.max(1, Math.floor(ze / 4)))
+  let ring: Array<[number, number]> = []
+  for (let i = x0; i < x1; i++) ring.push([i, y0])
+  for (let j = y0; j < y1; j++) ring.push([x1, j])
+  for (let i = x1; i > x0; i--) ring.push([i, y1])
+  for (let j = y1; j > y0; j--) ring.push([x0, j])
+  const belegt = (i: number, j: number) => ring.some(([a, c]) => a === i && c === j)
+  const imBrett = (i: number, j: number) => i >= 0 && j >= 0 && i < sp && j < ze
+  // Ausbuchtungen: zwei Nachbarn im Ring, beide um dieselbe Richtung nach aussen verschoben
+  for (let versuch = 0, n = 2 + z(5); versuch < 60 && n > 0; versuch++) {
+    const k = z(ring.length), [ai, aj] = ring[k], [bi, bj] = ring[(k + 1) % ring.length]
+    const ri = bj - aj, rj = ai - bi // nach links der Laufrichtung, beim Rechteck oben herum ist das aussen
+    const ni = ai + ri, nj = aj + rj, mi = bi + ri, mj = bj + rj
+    if (!imBrett(ni, nj) || !imBrett(mi, mj) || belegt(ni, nj) || belegt(mi, mj)) continue
+    // die neuen Felder dürfen den Ring sonst nirgends berühren, sonst entstünden Abkürzungen
+    const nachbar = (i: number, j: number) => [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([di, dj]) => {
+      const p = i + di, q = j + dj
+      return belegt(p, q) && !(p === ai && q === aj) && !(p === bi && q === bj) && !(p === ni && q === nj) && !(p === mi && q === mj)
+    })
+    if (nachbar(ni, nj) || nachbar(mi, mj)) continue
+    ring = [...ring.slice(0, k + 1), [ni, nj], [mi, mj], ...ring.slice(k + 1)]
+    n--
+  }
+  const L = ring.length
+  ring.forEach(([i, j], k) => {
+    const [pi, pj] = ring[(k + L - 1) % L], [qi, qj] = ring[(k + 1) % L]
+    b[j][i].gleis = stueckFuer(richtungZu(i, j, pi, pj), richtungZu(i, j, qi, qj))
+  })
+  const gerade = () => ring.filter(([i, j]) => b[j][i].gleis?.art === 'gerade')
+  // Abstellgleis: an einer Geraden eine Weiche, daneben ein bis zwei Felder frei, am Ende ein Prellbock
+  if (Math.random() < 0.7) {
+    for (const [i, j] of gerade().sort(() => Math.random() - 0.5)) {
+      const g = b[j][i].gleis!, quer = [(g.dreh + 1) % 4, (g.dreh + 3) % 4]
+      const c = quer[z(2)], lang = 1 + z(2)
+      const felder = Array.from({ length: lang + 1 }, (_, k) => [i + [0, 1, 0, -1][c] * (k + 1), j + [-1, 0, 1, 0][c] * (k + 1)] as [number, number])
+      if (!felder.every(([p, q]) => imBrett(p, q) && !b[q][p].gleis)) continue
+      // die Felder des Abstellgleises dürfen den Ring nicht berühren
+      if (felder.some(([p, q]) => [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([di, dj]) => {
+        const u = p + di, v = q + dj
+        return imBrett(u, v) && !!b[v][u].gleis && !(u === i && v === j) && !felder.some(([f, h]) => f === u && h === v)
+      }))) continue
+      b[j][i].gleis = { art: 'weiche', dreh: ((c + 3) % 4) as Dreh }
+      felder.forEach(([p, q], k) => {
+        b[q][p].gleis = k === lang ? { art: 'prellbock', dreh: c as Dreh } : { art: 'gerade', dreh: (c % 2) as Dreh }
+      })
+      break
+    }
+  }
+  // Fluss quer übers Brett, Berg an einer Stelle des Rings, Seen und Wald dort, wo kein Gleis liegt
+  // der Fluss kreuzt das Gleis nur quer über eine Gerade (sonst wäre die Strecke der Länge nach eine Brücke); bis 20 Versuche, sonst keiner
+  if (Math.random() < 0.8) {
+    for (let versuch = 0; versuch < 20; versuch++) {
+      const senkrecht = Math.random() < 0.5
+      let p = senkrecht ? z(sp) : z(ze)
+      const fluss: Array<[number, number]> = []
+      for (let k = 0; k < (senkrecht ? ze : sp); k++) {
+        fluss.push(senkrecht ? [p, k] : [k, p])
+        // ab und zu eine Biegung zum Nachbarfeld
+        if (Math.random() < 0.25) {
+          const neu = p + (Math.random() < 0.5 ? -1 : 1)
+          if (neu >= 0 && neu < (senkrecht ? sp : ze)) { p = neu; fluss.push(senkrecht ? [p, k] : [k, p]) }
+        }
+      }
+      const quer = (dreh: number) => (senkrecht ? dreh === 1 : dreh === 0)
+      if (!fluss.every(([i, j]) => !b[j][i].gleis || (b[j][i].gleis!.art === 'gerade' && quer(b[j][i].gleis!.dreh)))) continue
+      if (!fluss.some(([i, j]) => b[j][i].gleis)) continue
+      for (const [i, j] of fluss) b[j][i].grund = 'wasser'
+      break
+    }
+  }
+  const geradeTrocken = gerade().filter(([i, j]) => b[j][i].grund === 'wiese')
+  if (geradeTrocken.length) {
+    const [bi, bj] = geradeTrocken[z(geradeTrocken.length)]
+    for (const [di, dj] of [[0, 0], [1, 0], [0, 1], [1, 1], [-1, 0]]) {
+      const i = bi + di, j = bj + dj
+      if (imBrett(i, j) && b[j][i].grund === 'wiese' && (Math.random() < 0.7 || (di === 0 && dj === 0))) b[j][i].grund = 'berg'
+    }
+  }
+  // Bahnhöfe: zwei oder drei Geraden auf Wiese, möglichst weit auseinander
+  const frei = gerade().filter(([i, j]) => b[j][i].grund === 'wiese').sort(() => Math.random() - 0.5)
+  const bahnhoefe: Array<[number, number]> = []
+  for (const [i, j] of frei) {
+    if (bahnhoefe.length >= 2 + z(2)) break
+    if (bahnhoefe.every(([p, q]) => Math.abs(p - i) + Math.abs(q - j) >= 3)) {
+      bahnhoefe.push([i, j]); b[j][i].gleis = { ...b[j][i].gleis!, art: 'bahnhof' }
+    }
+  }
+  // Dörfer neben den Bahnhöfen, Wald verstreut
+  for (const [i, j] of bahnhoefe) {
+    for (const [di, dj] of [[0, -1], [0, 1], [1, 0], [-1, 0]].sort(() => Math.random() - 0.5).slice(0, 2)) {
+      const u = i + di, v = j + dj
+      if (imBrett(u, v) && !b[v][u].gleis && b[v][u].grund === 'wiese') b[v][u].grund = 'dorf'
+    }
+  }
+  for (let k = 0, n = Math.round(sp * ze * 0.12); k < n; k++) {
+    const i = z(sp), j = z(ze)
+    if (!b[j][i].gleis && b[j][i].grund === 'wiese') b[j][i].grund = 'wald'
+  }
+  return b
+}
+
 const SPEICHER = 'taktland.gleisbau.v1'
 const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf']
 const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof']
@@ -73,7 +207,7 @@ const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock',
 export function brettLesen(): Brett | null {
   try {
     const x = JSON.parse(localStorage.getItem(SPEICHER) ?? 'null') as Brett | null
-    if (!Array.isArray(x) || x.length !== ZEILEN || x.some((z) => !Array.isArray(z) || z.length !== SPALTEN)) return null
+    if (!Array.isArray(x) || !GROESSEN.some(([sp, ze]) => x.length === ze && x.every((z) => Array.isArray(z) && z.length === sp))) return null
     for (const z of x) for (const f of z) {
       if (!GRUENDE.includes(f.grund)) return null
       if (f.gleis && (!ARTEN.includes(f.gleis.art) || ![0, 1, 2, 3].includes(f.gleis.dreh))) return null
@@ -89,7 +223,7 @@ export function brettMerken(b: Brett) {
 /** die Bahnhöfe der Reihe nach (Zeile, dann Spalte) mit Buchstaben A, B, C … */
 export function bahnhofNamen(b: Brett): Map<string, string> {
   const n = new Map<string, string>()
-  for (let j = 0; j < ZEILEN; j++) for (let i = 0; i < SPALTEN; i++) {
+  for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
     if (b[j][i].gleis?.art === 'bahnhof') n.set(`${i},${j}`, String.fromCharCode(65 + (n.size % 26)))
   }
   return n
@@ -139,7 +273,7 @@ const umgekehrt = (s: Stueck): Stueck => ({ i: s.i, j: s.j, ein: s.aus, aus: s.e
 function naechstes(b: Brett, s: Stueck): Stueck | null {
   if (s.aus < 0) return null
   const i = s.i + DX[s.aus], j = s.j + DY[s.aus]
-  if (i < 0 || j < 0 || i >= SPALTEN || j >= ZEILEN) return null
+  if (i < 0 || j < 0 || i >= spalten(b) || j >= zeilen(b)) return null
   const ein = (s.aus + 2) % 4
   const aus = ausgang(b[j][i].gleis, ein)
   return aus === null ? null : { i, j, ein, aus }
@@ -170,10 +304,10 @@ export class Zug {
   /** null, wenn auf dem Brett kein Gleis liegt */
   static setzen(b: Brett): Zug | null {
     let start: Stueck | null = null
-    for (let j = 0; j < ZEILEN && !start; j++) for (let i = 0; i < SPALTEN && !start; i++) {
+    for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) {
       if (b[j][i].gleis?.art === 'bahnhof') { const [a, c] = wege(b[j][i].gleis!)[0]; start = { i, j, ein: a, aus: c } }
     }
-    for (let j = 0; j < ZEILEN && !start; j++) for (let i = 0; i < SPALTEN && !start; i++) {
+    for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) {
       const g = b[j][i].gleis
       if (g) { const [a, c] = wege(g)[0]; start = { i, j, ein: a, aus: c } }
     }

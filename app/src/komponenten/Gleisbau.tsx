@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { knopfTon } from '../audio'
 import {
-  type Brett, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, type Grund, leer, SPALTEN, type Stueck,
-  stueckLaenge, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, ZEILEN, Zug,
+  type Brett, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
+  spalten, type Stueck, stueckLaenge, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 
@@ -223,6 +223,7 @@ export function Gleisbau() {
   brettRef.current = brett
   const svg = useRef<SVGSVGElement>(null)
   const namen = useMemo(() => bahnhofNamen(brett), [brett])
+  const SP = spalten(brett), ZE = zeilen(brett)
 
   useEffect(() => { brettMerken(brett) }, [brett])
   useEffect(() => {
@@ -248,8 +249,9 @@ export function Gleisbau() {
 
   function feldAn(e: React.MouseEvent<SVGSVGElement>) {
     const r = svg.current!.getBoundingClientRect()
-    const i = Math.floor(((e.clientX - r.left) / r.width) * SPALTEN), j = Math.floor(((e.clientY - r.top) / r.height) * ZEILEN)
-    if (i < 0 || j < 0 || i >= SPALTEN || j >= ZEILEN) return
+    // das Bild reicht je 0,15 Felder über das Brett hinaus (der Rand des Tabletts)
+    const i = Math.floor(((e.clientX - r.left) / r.width) * (SP + 0.3) - 0.15), j = Math.floor(((e.clientY - r.top) / r.height) * (ZE + 0.3) - 0.15)
+    if (i < 0 || j < 0 || i >= SP || j >= ZE) return
     const f = brett[j][i]
     // während der Fahrt stellen Tipps nur die Weichen
     if (faehrt) {
@@ -316,10 +318,10 @@ export function Gleisbau() {
         Wähle unten ein Stück und tippe ein Feld an. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
         Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
       </p>
-      <div className="mt-4 max-w-3xl">
-        <svg ref={svg} viewBox={`-0.15 -0.15 ${SPALTEN + 0.3} ${ZEILEN + 0.3}`} role="img" aria-label="Spielbrett mit 8 × 6 Feldern"
+      <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
+        <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} className="w-full cursor-pointer select-none">
-          <rect x={-0.15} y={-0.15} width={SPALTEN + 0.3} height={ZEILEN + 0.3} rx={0.14} fill={F.tablett} />
+          <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} />))}
           {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)} />))}
           {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
@@ -332,17 +334,34 @@ export function Gleisbau() {
                 className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
           Drehen ↻
         </button>
-        <button type="button" disabled={faehrt} onClick={() => { setBrett(beispiel()); setMeldung(null) }}
+        {/* jedes Tippen ein neues Beispiel in der gewählten Grösse (Michael, 2026-11-22: «Bei Beispiel sollen durch weiteres Tippen immer neue Beispiele erscheinen») */}
+        <button type="button" disabled={faehrt} onClick={() => { setBrett(zufallsBeispiel(SP, ZE)); setMeldung(null) }}
                 className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
           Beispiel
         </button>
         <button type="button" disabled={faehrt} onClick={() => {
           if (!leerenScharf) { setLeerenScharf(true); return }
-          setLeerenScharf(false); setBrett(leer())
+          setLeerenScharf(false); setBrett(leer(SP, ZE))
         }} className={`min-h-12 rounded-lg border px-4 font-bold disabled:opacity-40 ${leerenScharf
           ? 'border-sbb-red bg-sbb-red text-white' : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
           {leerenScharf ? 'Wirklich leeren?' : 'Leeren'}
         </button>
+      </div>
+      {/* Grösse des Bretts (Michael, 2026-11-22: «auch Anzahl Kacheln sollen wählbar sein»): was oben links Platz hat, bleibt */}
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <span className="text-sm font-bold">Brett</span>
+        {GROESSEN.map(([sp, ze]) => {
+          const an = sp === SP && ze === ZE
+          return (
+            <button key={`${sp}x${ze}`} type="button" aria-pressed={an} disabled={faehrt}
+                    onClick={() => { if (!an) { setBrett(groesseAendern(brett, sp, ze)); setMeldung(null) } }}
+                    className={`rounded-lg border px-3 py-2 text-sm font-bold tabular-nums disabled:opacity-40 ${an
+                      ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
+                      : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`}>
+              {sp} × {ze}
+            </button>
+          )
+        })}
       </div>
       {meldung && <p role="status" className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm font-medium dark:bg-sbb-charcoal">{meldung}</p>}
       {leiste('Gleise und Bauwerke', GLEISE)}
