@@ -18,6 +18,8 @@ import erratenDunkel from '../assets/auftakt-erraten-dunkel.webp'
 import erratenHell from '../assets/auftakt-erraten-hell.webp'
 import fahrtDunkel from '../assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
+import bilderpuzzleHell from '../assets/auftakt-bilderpuzzle-hell.webp'
+import bilderpuzzleDunkel from '../assets/auftakt-bilderpuzzle-dunkel.webp'
 import wobinichBild from '../assets/auftakt-wobinich.webp'
 import wobinichDunkel from '../assets/auftakt-wobinich-dunkel.webp'
 import probefahrenBild from '../assets/auftakt-probefahren.webp'
@@ -161,6 +163,11 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt' | 'probef
     hell: reisedauerHell, dunkel: reisedauerDunkel, breite: 1344, hoehe: 756,
     alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr mit «? min», dahinter ein Zug auf einem Viadukt, ein See und Berge.',
   },
+  // Michael, 2026-11-22: «Hier die Bilder fürs Bilderpuzzle, hell und dunkel»
+  bilderpuzzle: {
+    hell: bilderpuzzleHell, dunkel: bilderpuzzleDunkel, breite: 1344, hoehe: 757,
+    alt: 'Illustration: Eine Frau legt im Bahnhof ein Puzzle mit einem Zug auf einem Viadukt, daneben ein Kaffeebecher, draussen ein Zug am Perron und eine Uhr.',
+  },
   // Michael, 2026-11-20: «Hier die neuen Bilder für die Spiele Wo fahre ich (Bild 1) und Probefahren (Bild 2)», dazu die Nacht für «Wo fahre ich?» («hier das Nachtmodus Bild für Wo fahre ich»)
   wobinich: {
     hell: wobinichBild, dunkel: wobinichDunkel, breite: 1344, hoehe: 756,
@@ -206,7 +213,7 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : aktiv === 'spiele' ? BILDER.modellbahn
     : aktiv === 'schweiz11' ? BILDER.spiele
     // das Bilderpuzzle vorerst mit dem Bild der Startseite, bis es ein eigenes gibt (2026-11-21)
-    : aktiv === 'bilderpuzzle' ? BILDER.start
+    : aktiv === 'bilderpuzzle' ? BILDER.bilderpuzzle
     : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)

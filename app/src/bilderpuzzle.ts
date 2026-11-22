@@ -20,7 +20,7 @@ const NAMEN: Record<string, string> = {
   start: 'Startseite', anleitung: 'Info', bahnhoefe: 'Bahnhöfe', linien: 'Strecken', bruecken: 'Brücken', tunnel: 'Tunnel',
   standort: 'Standort', fahrt: 'Fahren', logbuch: 'Logbuch', spiele: 'Geo', erraten: 'Bahnhofsuche', duell: 'Duell',
   modellbahn: 'Modellbahn', probefahren: 'Probefahren', wobinich: 'Wo fahre ich?', puzzle: 'Fahrplan-Puzzle',
-  reisedauer: 'Reisedauer', virtuell: 'Virtuelle Schweiz', schweiz3d: '3D Schweiz', '3dland': '3D-Land',
+  reisedauer: 'Reisedauer', bilderpuzzle: 'Bilderpuzzle', virtuell: 'Virtuelle Schweiz', schweiz3d: '3D Schweiz', '3dland': '3D-Land',
 }
 const REIHE = Object.keys(NAMEN)
 

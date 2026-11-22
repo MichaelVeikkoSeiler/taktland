@@ -22,8 +22,8 @@ import schweiz3dHell from './assets/auftakt-virtuell-hell.webp'
 import schweiz3dDunkel from './assets/auftakt-virtuell-dunkel.webp'
 import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
-import startDunkel from './assets/auftakt-start-dunkel.webp'
-import startHell from './assets/auftakt-start-hell.webp'
+import bilderpuzzleDunkel from './assets/auftakt-bilderpuzzle-dunkel.webp'
+import bilderpuzzleHell from './assets/auftakt-bilderpuzzle-hell.webp'
 
 export type SpielStatus = 'spielbereit' | 'im-bau'
 
@@ -104,11 +104,11 @@ export const SPIELE: Spiel[] = [
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
   },
   // Michael, 2026-11-21: «Kannst du dieses Puzzlespiel auf Taktland-App übernehmen und dort alle Bilder, welche wir auf Taktland integriert
-  // haben, als Puzzle bereitstellen?»; das Bild der Kachel vorerst das der Startseite
+  // haben, als Puzzle bereitstellen?»; das Bild der Kachel seit 2026-11-22 Michaels eigenes («Hier die Bilder fürs Bilderpuzzle, hell und dunkel»)
   {
     id: 'bilderpuzzle', titel: 'Bilderpuzzle', status: 'spielbereit', adresse: '#/bilderpuzzle',
     kurz: 'Die Bilder von Taktland oder ein eigenes Foto, in 4 bis 48 Teilen.',
-    bild: { hell: startHell, dunkel: startDunkel, alt: 'Illustration: Ein Mann wartet am Perron, davor ein Bahnübergang und ein Tunnel, dahinter ein Zug auf einem Viadukt.' },
+    bild: { hell: bilderpuzzleHell, dunkel: bilderpuzzleDunkel, alt: 'Illustration: Eine Frau legt im Bahnhof ein Puzzle mit einem Zug auf einem Viadukt, daneben ein Kaffeebecher, draussen ein Zug am Perron.' },
     beschreibung: 'Wähle, wie viele Teile es sein sollen, und ein Bild von Taktland oder ein eigenes Foto. Zieh die Teile an ihren Platz: '
       + 'Stimmt er, rastet das Teil ein.',
   },

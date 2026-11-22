@@ -1459,7 +1459,7 @@ Fenster); dazu eigene Fotos, verkleinert auf 2'000 Bildpunkte als data:-Adresse 
 «Löschen». Gespielt im ganzen Fenster (Spiel in komponenten/Bilderpuzzle.tsx, Spielfeld in src/bilderpuzzle.ts): Rahmen in der Mitte, Teile rundherum, so klein, dass alle neben
 dem Rahmen Platz haben; Teile höchstens 0,8 bis 1,25 so breit wie hoch (TEIL_FORMAT), nur so viel vom Bild abgeschnitten; Einrasten bis ein Drittel der kürzeren Seite daneben
 (EINRASTEN), Töne über antwortTon (richtig, am Schluss bestwert), Konfetti, «Geschafft!» mit «Nochmal» und «Anderes Bild». Kein Punktestand, kein Bestwert. Das Bild der
-Kachel und oben vorerst das der Startseite, bis Michael ein eigenes liefert. Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
+Kachel und oben seit 2026-11-22 Michaels eigenes, hell und dunkel (src/assets/auftakt-bilderpuzzle-hell.webp und -dunkel.webp, 1344 × 757; Michael: «Hier die Bilder fürs Bilderpuzzle, hell und dunkel»), auch als Puzzle wählbar; vorher das der Startseite. Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
