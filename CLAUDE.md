@@ -1520,7 +1520,12 @@ Fahren, ohne dessen Schalter, das volle Tempo des Bretts klingt wie 22 m/s (ZUG_
 Tunnel dumpfer, auf einer Brücke hohler; «Anhalten» und Verlassen der Seite schalten es aus; der Lautsprecher der Seite (Ton aus) gilt; im Browser hier ohne Fehler gefahren, nicht angehört.
 Seit 2026-11-22 «↶ Zurück» neben «Fahren» mit der Zahl der möglichen Schritte (Michael: «Man muss 10 Schritte rückwärts machen können»): bis zu 10 (RUECKGAENGIG), jedes Legen,
 Drehen, Entfernen, Verschieben, Beispiel, Leeren und jede neue Grösse ist ein Schritt, das Stellen der Weichen während der Fahrt nicht; nur solange die Seite offen ist, nicht
-gespeichert; während der Fahrt gesperrt; im Browser hier mit 12 Schritten geprüft. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
+gespeichert; während der Fahrt gesperrt; im Browser hier mit 12 Schritten geprüft.
+Seit 2026-11-22 verbindet sich die Landschaft benachbarter Felder gleichen Grunds (Michael: «Elemente wie Berg, Wasser, Wald, Dorf sollen sich miteinander verbinden, wenn man sie
+auf benachbarte Kacheln setzt. Die schwarzen Stege sollen zwar bleiben, aber die Berge sollen wie über die Grenze hinauslaufen und Wasserwellen auch»): eine eigene Ebene über allen
+Flächen (Landschaft, Merkmale in Gleisbau.tsx), auf die Kacheln zugeschnitten (clipPath), so bleiben die Stege: Wellen bis an den Rand, ihre Phase nach der Lage auf dem Brett,
+über der Grenze zum Berg im Osten und Süden ein weiterer Gipfel, auf der Grenze zum Wald je drei Bäume, zwischen Dörfern eine Strasse von Mitte zu Mitte; Formen und Farben gewählt;
+auf den Knöpfen jedes Feld für sich; im Browser hier angeschaut. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
 Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
 mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone

@@ -15,7 +15,7 @@ const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
 const F = {
   tablett: '#3a3a3c', wiese: '#e3e9d6', wald: '#cfdcbe', baum: ['#8fb07a', '#7aa067', '#a2bf8c'], wasser: '#bcd5ea', welle: '#dbe9f5',
   berg: '#ddd3c4', fels: '#c3b49f', schnee: '#f7f5f0', schotter: '#c2bbb0', schwelle: '#8b8074', schiene: '#4a4a4a',
-  perron: '#d2d2d2', dach: '#6a6a6a', bruecke: '#d6d6d6', gelaender: '#7a7a7a', portal: '#2e2e30', karmin: '#a8102e',
+  perron: '#d2d2d2', strasse: '#d8d1c4', dach: '#6a6a6a', bruecke: '#d6d6d6', gelaender: '#7a7a7a', portal: '#2e2e30', karmin: '#a8102e',
   haeuser: ['#c8433b', '#e7b53c', '#c9bba0', '#3f78c4', '#e8712d', '#8fb3a0'],
 }
 
@@ -76,36 +76,107 @@ function imTunnel(b: Brett, x: number, y: number) {
   return [0, 1, 2, 3].every((k) => !kanten.has(k) || tunnelWeiter(b, i, j, k) || abstand[k] > PORTAL)
 }
 
-function GrundBild({ f, i, j }: { f: Feld; i: number; j: number }) {
-  const x = i, y = j
+/** ein Feld: die Fläche und, ohne «nurFlaeche», seine Landschaft für sich allein (auf den Knöpfen) */
+function GrundBild({ f, i, j, nurFlaeche = false }: { f: Feld; i: number; j: number; nurFlaeche?: boolean }) {
   const grundFarbe = f.grund === 'wald' ? F.wald : f.grund === 'wasser' ? F.wasser : f.grund === 'berg' ? F.berg : F.wiese
   return (
     <g>
-      <rect x={x + 0.025} y={y + 0.025} width={0.95} height={0.95} rx={0.05} fill={grundFarbe} />
-      {f.grund === 'wald' && Array.from({ length: 6 }, (_, k) => (
-        <circle key={k} cx={x + 0.17 + zufall(i, j, k) * 0.66} cy={y + 0.17 + zufall(i, j, k + 9) * 0.66} r={0.09 + zufall(i, j, k + 20) * 0.06}
-                fill={F.baum[k % 3]} />
-      ))}
-      {f.grund === 'wasser' && [0.3, 0.55, 0.8].map((h, k) => (
-        <path key={k} d={`M${x + 0.12},${y + h} q0.1,-0.06 0.2,0 t0.2,0 t0.2,0 t0.2,0`} fill="none" stroke={F.welle} strokeWidth={0.03} strokeLinecap="round" />
-      ))}
-      {f.grund === 'berg' && (
-        <>
-          <path d={`M${x + 0.1},${y + 0.85} L${x + 0.42},${y + 0.2} L${x + 0.62},${y + 0.55} L${x + 0.72},${y + 0.4} L${x + 0.92},${y + 0.85} Z`} fill={F.fels} />
-          <path d={`M${x + 0.34},${y + 0.36} L${x + 0.42},${y + 0.2} L${x + 0.5},${y + 0.36} Z`} fill={F.schnee} />
-        </>
-      )}
-      {f.grund === 'dorf' && [0, 1, 2].map((k) => {
-        const hx = x + 0.12 + k * 0.27 + zufall(i, j, k) * 0.05, hy = y + 0.14 + zufall(i, j, k + 5) * 0.5
-        return (
-          <g key={k}>
-            <rect x={hx + 0.02} y={hy + 0.03} width={0.2} height={0.2} rx={0.02} fill="rgba(0,0,0,.15)" />
-            <rect x={hx} y={hy} width={0.2} height={0.2} rx={0.02} fill={F.haeuser[Math.floor(zufall(i, j, k + 11) * 6)]} />
-            <line x1={hx} y1={hy + 0.1} x2={hx + 0.2} y2={hy + 0.1} stroke="rgba(0,0,0,.25)" strokeWidth={0.015} />
-          </g>
-        )
-      })}
+      <rect x={i + 0.025} y={j + 0.025} width={0.95} height={0.95} rx={0.05} fill={grundFarbe} />
+      {!nurFlaeche && <Merkmale f={f} i={i} j={j} gleich={() => false} />}
     </g>
+  )
+}
+
+/** eine Welle von x0 bis x1 auf der Höhe y, ihre Phase nach der Lage auf dem Brett, damit sie im Nachbarfeld nahtlos weiterläuft */
+function welle(x0: number, x1: number, y: number) {
+  const p: string[] = []
+  for (let x = x0; x <= x1 + 1e-6; x += 0.025) p.push(`${p.length ? 'L' : 'M'}${x.toFixed(3)},${(y + 0.028 * Math.sin((x * 2 * Math.PI) / 0.4)).toFixed(3)}`)
+  return p.join('')
+}
+
+/** ein Berg mit Schnee: Fuss von x0 bis x1 auf der Höhe y, Gipfel bei (gx, gy) */
+function gipfel(key: string, x0: number, x1: number, y: number, gx: number, gy: number) {
+  const s = 0.25 // Anteil des Schnees an der Höhe
+  return (
+    <g key={key}>
+      <path d={`M${x0},${y} L${gx},${gy} L${x1},${y} Z`} fill={F.fels} />
+      <path d={`M${gx - (gx - x0) * s},${gy + (y - gy) * s} L${gx},${gy} L${gx + (x1 - gx) * s},${gy + (y - gy) * s} Z`} fill={F.schnee} />
+    </g>
+  )
+}
+
+/**
+ * Die Landschaft eines Felds; wo das Nachbarfeld (Kante k: 0 Nord, 1 Ost, 2 Süd, 3 West) denselben Grund hat, läuft sie hinüber: Wellen bis
+ * an den Rand, über der Grenze nach Osten und Süden ein Berg, Bäume und eine Dorfstrasse (Michael, 2026-11-22: «Elemente wie Berg, Wasser, Wald,
+ * Dorf sollen sich miteinander verbinden, wenn man sie auf benachbarte Kacheln setzt. Die schwarzen Stege sollen zwar bleiben, aber die Berge
+ * sollen wie über die Grenze hinauslaufen und Wasserwellen auch»). Auf dem Brett auf die Kacheln zugeschnitten, so bleiben die Stege
+ */
+function Merkmale({ f, i, j, gleich }: { f: Feld; i: number; j: number; gleich: (k: number) => boolean }) {
+  const x = i, y = j
+  if (f.grund === 'wasser') {
+    return <>{[0.3, 0.55, 0.8].map((h, k) => (
+      <path key={k} d={welle(gleich(3) ? x - 0.05 : x + 0.12, gleich(1) ? x + 1.05 : x + 0.88, y + h)} fill="none" stroke={F.welle} strokeWidth={0.03} strokeLinecap="round" />
+    ))}</>
+  }
+  if (f.grund === 'berg') {
+    return (
+      <>
+        {gleich(1) && gipfel('o', x + 0.6, x + 1.4, y + 0.88, x + 1 + (zufall(i, j, 31) - 0.5) * 0.1, y + 0.32 + zufall(i, j, 32) * 0.12)}
+        {gleich(2) && gipfel('s', x + 0.15, x + 0.85, y + 1.28, x + 0.5 + (zufall(i, j, 33) - 0.5) * 0.12, y + 0.78 + zufall(i, j, 34) * 0.08)}
+        {gipfel('m', x + 0.1, x + 0.74, y + 0.85, x + 0.42, y + 0.2)}
+        {gipfel('n', x + 0.5, x + 0.92, y + 0.85, x + 0.72, y + 0.4)}
+      </>
+    )
+  }
+  if (f.grund === 'wald') {
+    const baeume: Array<[number, number, number]> = Array.from({ length: 6 }, (_, k) => [x + 0.17 + zufall(i, j, k) * 0.66, y + 0.17 + zufall(i, j, k + 9) * 0.66, 0.09 + zufall(i, j, k + 20) * 0.06])
+    // auf der Grenze zum Wald im Osten und Süden je drei Bäume, ihre Kronen reichen über den Steg
+    if (gleich(1)) for (let k = 0; k < 3; k++) baeume.push([x + 1 + (zufall(i, j, 40 + k) - 0.5) * 0.12, y + 0.2 + k * 0.3 + (zufall(i, j, 43 + k) - 0.5) * 0.1, 0.1 + zufall(i, j, 46 + k) * 0.05])
+    if (gleich(2)) for (let k = 0; k < 3; k++) baeume.push([x + 0.2 + k * 0.3 + (zufall(i, j, 50 + k) - 0.5) * 0.1, y + 1 + (zufall(i, j, 53 + k) - 0.5) * 0.12, 0.1 + zufall(i, j, 56 + k) * 0.05])
+    return <>{baeume.map(([bx, by, r], k) => <circle key={k} cx={bx} cy={by} r={r} fill={F.baum[k % 3]} />)}</>
+  }
+  if (f.grund === 'dorf') {
+    // Strassen zu den Nachbardörfern, von der Mitte über den Steg
+    const cx = x + 0.5, cy = y + 0.5
+    return (
+      <>
+        {[0, 1, 2, 3].filter(gleich).map((k) => (
+          <line key={`s${k}`} x1={cx} y1={cy} x2={cx + [0, 0.55, 0, -0.55][k]} y2={cy + [-0.55, 0, 0.55, 0][k]} stroke={F.strasse} strokeWidth={0.08} strokeLinecap="round" />
+        ))}
+        {[0, 1, 2].map((k) => {
+          const hx = x + 0.12 + k * 0.27 + zufall(i, j, k) * 0.05, hy = y + 0.14 + zufall(i, j, k + 5) * 0.5
+          return (
+            <g key={k}>
+              <rect x={hx + 0.02} y={hy + 0.03} width={0.2} height={0.2} rx={0.02} fill="rgba(0,0,0,.15)" />
+              <rect x={hx} y={hy} width={0.2} height={0.2} rx={0.02} fill={F.haeuser[Math.floor(zufall(i, j, k + 11) * 6)]} />
+              <line x1={hx} y1={hy + 0.1} x2={hx + 0.2} y2={hy + 0.1} stroke="rgba(0,0,0,.25)" strokeWidth={0.015} />
+            </g>
+          )
+        })}
+      </>
+    )
+  }
+  return null
+}
+
+/** die Landschaft des ganzen Bretts, über die Felder hinweg verbunden, auf die Kacheln zugeschnitten */
+function Landschaft({ brett }: { brett: Brett }) {
+  const sp = spalten(brett), ze = zeilen(brett)
+  const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0]
+  return (
+    <>
+      <defs>
+        <clipPath id="gleisbau-kacheln">
+          {brett.flatMap((z, j) => z.map((_, i) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={0.95} rx={0.05} />))}
+        </clipPath>
+      </defs>
+      <g clipPath="url(#gleisbau-kacheln)">
+        {brett.map((z, j) => z.map((f, i) => (
+          <Merkmale key={`${i},${j}`} f={f} i={i} j={j}
+                    gleich={(k) => { const u = i + DX[k], v = j + DY[k]; return u >= 0 && v >= 0 && u < sp && v < ze && brett[v][u].grund === f.grund }} />
+        )))}
+      </g>
+    </>
   )
 }
 
@@ -526,7 +597,8 @@ export function Gleisbau() {
              onPointerCancel={() => { druck.current = null; setZiehen(null) }} onContextMenu={(e) => e.preventDefault()}
              className="w-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
-          {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} />))}
+          {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} nurFlaeche />))}
+          <Landschaft brett={brett} />
           {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)}
                                                          weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined} />))}
           {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
