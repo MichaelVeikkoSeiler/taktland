@@ -550,6 +550,12 @@ export class Zug {
   }
 
   /** die Wagen, von der Spitze an: Mitte und Richtung (zur Spitze hin) */
+  /** wie schnell, 0 bis 1 vom Höchsttempo; 0 im Halt */
+  anteil() { return this.halt > 0 ? 0 : this.tempo / TEMPO }
+
+  /** Feld unter der Spitze */
+  spitze(): [number, number] { const p = this.punkt(0); return [Math.floor(p.x), Math.floor(p.y)] }
+
   wagen(): WagenLage[] {
     return Array.from({ length: WAGEN }, (_, k) => {
       const vorn = k * (WAGEN_LAENGE + WAGEN_LUECKE), a = this.punkt(vorn), c = this.punkt(vorn + WAGEN_LAENGE)

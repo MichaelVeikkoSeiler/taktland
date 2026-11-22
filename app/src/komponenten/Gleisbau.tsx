@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { knopfTon } from '../audio'
+import { knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, tunnelWeiter, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
@@ -45,6 +45,9 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
 ]
 
 const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringify(b)
+
+/** so schnell klingt der Zug bei vollem Tempo auf dem Brett, in m/s (etwa 80 km/h; gewählt, das Brett hat keinen Massstab) */
+const ZUG_KLANG_MS = 22
 
 /** fester Zufall je Feld, damit Bäume und Häuser beim Neuzeichnen bleiben */
 function zufall(i: number, j: number, k: number) {
@@ -309,11 +312,19 @@ export function Gleisbau() {
       const dt = Math.min(0.05, (jetzt - letzt) / 1000)
       letzt = jetzt
       zug.current?.schritt(brettRef.current, dt)
+      // das Zuggeräusch von Taktland wie beim Fahren (Michael, 2026-11-22: «Kannst du während der Zugfahrt das Zuggeräusch von Taktland nehmen?»):
+      // das volle Tempo des Bretts klingt wie ZUG_KLANG_MS (gewählt), im Tunnel dumpfer, auf einer Brücke hohler
+      const z = zug.current
+      if (z) {
+        const [si, sj] = z.spitze(), f = brettRef.current[sj]?.[si]
+        const ort = f?.gleis && !grosseKurve(f.gleis) ? (f.grund === 'berg' ? 'tunnel' : f.grund === 'wasser' ? 'bruecke' : null) : null
+        zuggeraeuschTempo(z.anteil() * ZUG_KLANG_MS, Infinity, ort, 1, true)
+      }
       setWagen(zug.current?.wagen() ?? [])
       los = requestAnimationFrame(bild)
     }
     los = requestAnimationFrame(bild)
-    return () => cancelAnimationFrame(los)
+    return () => { cancelAnimationFrame(los); zuggeraeuschAus() }
   }, [faehrt])
 
   /** das Feld unter einem Punkt des Bildschirms; das Bild reicht je 0,15 Felder über das Brett hinaus (der Rand des Tabletts) */
