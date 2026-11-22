@@ -1,4 +1,5 @@
 import { SPIELE, type Spiel } from '../spiele'
+import { nichtGezaehlt } from '../zaehlen'
 
 /**
  * Übersicht unter «Spiele» (Michael, 2026-10-02): jedes Spiel als Bild-Knopf mit Titel, zwei Spalten
@@ -50,7 +51,19 @@ function Karte({ spiel, klasse = '' }: { spiel: Spiel; klasse?: string }) {
       </li>
     )
   }
-  // im Bau: nicht anklickbar, gedämpft, eine schmale Zeile mit einem Gleis, das am Prellbock endet
+  // im Bau: nicht anklickbar, gedämpft, eine schmale Zeile mit einem Gleis, das am Prellbock endet; auf den eigenen Geräten (taktland.ch/?nichtzaehlen)
+  // führt sie doch zum Spiel, zum Weiterentwickeln (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»)
+  if (spiel.adresse && nichtGezaehlt()) {
+    return (
+      <li className="flex">
+        <a href={spiel.adresse} className="kachel kachel-link flex w-full items-center gap-3 px-4 py-3 text-sbb-metal dark:text-sbb-storm">
+          <Prellbock />
+          <span className="min-w-0 flex-1 truncate font-medium">{spiel.titel}</span>
+          <span className="shrink-0 rounded-lg border border-current px-2 py-0.5 text-xs font-medium">Im Bau · öffnen</span>
+        </a>
+      </li>
+    )
+  }
   return (
     <li className="kachel flex items-center gap-3 px-4 py-3 text-sbb-metal dark:text-sbb-storm"
         aria-label={`${spiel.titel}, im Bau`}>
