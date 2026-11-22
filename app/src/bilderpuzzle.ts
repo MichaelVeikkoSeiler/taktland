@@ -120,7 +120,8 @@ async function verkleinern(datei: File): Promise<string> {
 /** Seitenverhältnis eines Teils höchstens so weit von quadratisch; mehr wird vom Bild abgeschnitten */
 const TEIL_FORMAT = [0.8, 1.25] as const
 /** Teile so nahe am richtigen Platz rasten ein (Anteil der kürzeren Seite) */
-const EINRASTEN = 0.33
+// seit 2026-11-22 die halbe kürzere Seite statt ein Drittel (Michael: «Etwas grösser machen, die Hälfte»)
+const EINRASTEN = 0.5
 /** Platz oben für die Knöpfe */
 const OBEN = 68
 

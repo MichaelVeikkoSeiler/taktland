@@ -1457,8 +1457,8 @@ oder Quadrate, das Bild blass im Rahmen an oder aus (gemerkt unter taktland.bild
 per import.meta.glob, ein neues Auftaktbild kommt von selbst dazu, Namen nach dem Bereich (NAMEN in src/bilderpuzzle.ts); ohne den Führerstand (Überlagerung mit durchsichtigem
 Fenster); dazu eigene Fotos, verkleinert auf 2'000 Bildpunkte als data:-Adresse in IndexedDB (taktland-bilderpuzzle), nie gesendet, im Datenschutz genannt; Löschen mit × und
 «Löschen». Gespielt im ganzen Fenster (Spiel in komponenten/Bilderpuzzle.tsx, Spielfeld in src/bilderpuzzle.ts): Rahmen in der Mitte, Teile rundherum, so klein, dass alle neben
-dem Rahmen Platz haben; Teile höchstens 0,8 bis 1,25 so breit wie hoch (TEIL_FORMAT), nur so viel vom Bild abgeschnitten; Einrasten bis ein Drittel der kürzeren Seite daneben
-(EINRASTEN), Töne über antwortTon (richtig, am Schluss bestwert), Konfetti, «Geschafft!» mit «Nochmal» und «Anderes Bild». Kein Punktestand, kein Bestwert. Das Bild der
+dem Rahmen Platz haben; Teile höchstens 0,8 bis 1,25 so breit wie hoch (TEIL_FORMAT), nur so viel vom Bild abgeschnitten; Einrasten bis ein Drittel der kürzeren Seite daneben,
+seit 2026-11-22 bis zur Hälfte (EINRASTEN; Michael: «Etwas grösser machen, die Hälfte»), Töne über antwortTon (richtig, am Schluss bestwert), Konfetti, «Geschafft!» mit «Nochmal» und «Anderes Bild». Kein Punktestand, kein Bestwert. Das Bild der
 Kachel und oben seit 2026-11-22 Michaels eigenes, hell und dunkel (src/assets/auftakt-bilderpuzzle-hell.webp und -dunkel.webp, 1344 × 757; Michael: «Hier die Bilder fürs Bilderpuzzle, hell und dunkel»), auch als Puzzle wählbar; vorher das der Startseite.
 Seit 2026-11-22 verteilt das Drehen von hoch auf quer und zurück die losen Teile neu um den Rahmen, was gerade gezogen wird, bleibt (neuGroesse in src/bilderpuzzle.ts;
 Michael: «Im Querformat also beim drehen des Devices sollen die herumliegenden Puzzleteile neu und sinnvoll verteilt werden»); im Browser hier mit 390 × 800 und 800 × 390 geprüft. Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
