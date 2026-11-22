@@ -1475,6 +1475,19 @@ so soll sich das Spiel entsprechend vergrössern»): nach jedem Loslassen fülle
 800 × 390 wuchs der Rahmen von 255 auf 340 Bildpunkte, hoch 390 × 800 von 288 auf 316 (dort begrenzt die Breite).
 Seit 2026-11-22 die Bilder zur Wahl ohne Namen (der Name nur noch für Vorleser, aria-label), die eigenen Bilder und «Eigenes Bild oder Foto» am Schluss (Michael: «Bildernamen entfernen. Eigenes Bild am Schluss»). Im Browser hier mit 1280 × 800 und 390 × 844 (dunkel) gespielt, eigenes Foto hochgeladen.
 
+**Gleisbau** (Spiele, #/gleisbau; Michael, 2026-11-22: «Könnten wir ein weiteres interaktives Spiel kreieren? Man soll Gleise auf ein Layout legen können. Tunnel und Brücken
+und Bahnhöfe stehen auch zur Verfügung … ZugDesign gemäss unserem Zug in der virtuellen Schweiz», nach seiner eigenen Gestaltung «VIA», Felder auf einem dunklen Tablett; dann «2D bauen,
+3D anschauen, passt soweit gut», «Nimm mal Gleisbau», «Zuerst freies Bauen und dann Aufgaben», «8x6 Felder … Später größer oder weiterbar auch»): Schritt 1 freies Bauen in 2D, Logik in
+src/gleisbau.ts, Darstellung komponenten/Gleisbau.tsx: je Feld ein Grund (Wiese, Wald, Wasser, Berg, Dorf) und höchstens ein Gleisstück (Gerade, Kurve, Weiche, Kreuzung, Prellbock,
+Bahnhof) mit Drehung; Gleis auf Wasser ist eine Brücke, auf einem Berg ein Tunnel (die Werkzeuge «Tunnel» und «Brücke» legen beides); Tipp legt, nochmals tippen dreht, «Drehen ↻»
+dreht das Werkzeug, «Entfernen» nimmt erst das Gleis, dann den Grund; «Fahren» setzt den Zug (Lok, zwei Wagen, Steuerwagen von oben, Lok mit karminroter, Steuerwagen mit weisser
+Spitze, vorne Stirnlicht, hinten rot) an den ersten Bahnhof, sonst auf das erste Gleis, 1,5 Felder je Sekunde, hält 2,5 s in der Mitte jedes Bahnhofs, kehrt am Ende eines Gleises um
+(dann fährt der Steuerwagen voraus), im Tunnel blass; während der Fahrt stellt ein Tipp die Weichen, sonst ist Bauen gesperrt; Bahnhöfe der Reihe nach A, B, C; ein Beispiel zum Anfang
+(Ring, zwei Bahnhöfe, Brücke, Tunnel, Abstellgleis), «Leeren» mit zweitem Tipp; das Brett in localStorage taktland.gleisbau.v1 (im Datenschutz genannt); Farben gewählt, die Häuser
+des Dorfs in den Farben von Michaels Vorlage; Kachel und Bild oben vorerst das der Modellbahn; in Anleitung, Spiele und auf taktland.ch genannt; im Browser hier mit 390 Bildpunkten
+angeschaut (Beispiel, Fahrt von A über die Brücke nach B). Geplant: Schritt 2 dasselbe Brett als 3D-Modell mit dem Zug der Virtuellen Schweiz (ZugForm.ts), Führerstand und Ton;
+Schritt 3 Aufgaben, Weichen mit zwei Zügen, Layouts teilen, VR-Brille, grösseres Brett.
+
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
 Auftaktbild als flaches Band (400 px, vorher 288; Michael, 2026-10-13: «ca. 140 %», Auftakt.tsx); Modelle links (2/3) mit Knöpfen rechts (ZWEI_SPALTEN in Relief.tsx), beim

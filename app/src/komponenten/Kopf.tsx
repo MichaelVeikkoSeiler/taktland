@@ -43,7 +43,7 @@ import { reiterTon, wischTon } from '../audio'
 import { SPIEL_BEREICHE } from '../spiele'
 import { useEinstellungen } from '../einstellungen'
 
-export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'wobinich' | 'puzzle' | 'fahrzeit' | 'bilderpuzzle' | 'schweiz3d' | 'modellbahn' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'fahrtblatt' | 'einstellungen'
+export type Bereich = 'bahnhoefe' | 'linien' | 'tunnel' | 'bruecken' | 'bahnuebergaenge' | 'spiele' | 'duell' | 'schweiz11' | 'erraten' | 'wobinich' | 'puzzle' | 'fahrzeit' | 'bilderpuzzle' | 'gleisbau' | 'schweiz3d' | 'modellbahn' | 'standort' | 'logbuch' | 'sammelheft' | 'favoriten' | 'fahrtblatt' | 'einstellungen'
 
 /** Die Unterreiter von «Bahnland», in dieser Reihenfolge */
 const OBJEKTE: Array<{ bereich: Bereich; text: string; adresse: string }> = [
@@ -214,6 +214,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : aktiv === 'schweiz11' ? BILDER.spiele
     // das Bilderpuzzle vorerst mit dem Bild der Startseite, bis es ein eigenes gibt (2026-11-21)
     : aktiv === 'bilderpuzzle' ? BILDER.bilderpuzzle
+    // Gleisbau vorerst mit dem Bild der Modellbahn, bis es ein eigenes gibt (2026-11-22)
+    : aktiv === 'gleisbau' ? BILDER.modellbahn
     : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)

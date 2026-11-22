@@ -1,0 +1,356 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { knopfTon } from '../audio'
+import {
+  type Brett, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, type Grund, leer, SPALTEN, type Stueck,
+  stueckLaenge, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, ZEILEN, Zug,
+} from '../gleisbau'
+import { Zurueck } from './Zurueck'
+
+const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
+
+/**
+ * Farben des Bretts (gewählt): ein dunkles Tablett mit hellen Feldern wie in Michaels Vorlage «VIA», die Häuser des Dorfs in deren
+ * Farben, Gleise in Anthrazit, Akzente in Karmin wie in Taktland
+ */
+const F = {
+  tablett: '#3a3a3c', wiese: '#e3e9d6', wald: '#cfdcbe', baum: ['#8fb07a', '#7aa067', '#a2bf8c'], wasser: '#bcd5ea', welle: '#dbe9f5',
+  berg: '#ddd3c4', fels: '#c3b49f', schnee: '#f7f5f0', schotter: '#c2bbb0', schwelle: '#8b8074', schiene: '#4a4a4a',
+  perron: '#d2d2d2', dach: '#6a6a6a', bruecke: '#d6d6d6', gelaender: '#7a7a7a', portal: '#2e2e30', karmin: '#a8102e',
+  haeuser: ['#c8433b', '#e7b53c', '#c9bba0', '#3f78c4', '#e8712d', '#8fb3a0'],
+}
+
+type Werkzeug =
+  | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'weg' }
+
+const GLEISE: Array<{ w: Werkzeug; text: string }> = [
+  { w: { art: 'gleis', gleis: 'gerade' }, text: 'Gerade' },
+  { w: { art: 'gleis', gleis: 'kurve' }, text: 'Kurve' },
+  { w: { art: 'gleis', gleis: 'weiche' }, text: 'Weiche' },
+  { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
+  { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
+  { w: { art: 'gleis', gleis: 'bahnhof' }, text: 'Bahnhof' },
+  { w: { art: 'tunnel' }, text: 'Tunnel' },
+  { w: { art: 'bruecke' }, text: 'Brücke' },
+]
+const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
+  { w: { art: 'grund', grund: 'wiese' }, text: 'Wiese' },
+  { w: { art: 'grund', grund: 'wald' }, text: 'Wald' },
+  { w: { art: 'grund', grund: 'wasser' }, text: 'Wasser' },
+  { w: { art: 'grund', grund: 'berg' }, text: 'Berg' },
+  { w: { art: 'grund', grund: 'dorf' }, text: 'Dorf' },
+  { w: { art: 'weg' }, text: 'Entfernen' },
+]
+
+const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringify(b)
+
+/** fester Zufall je Feld, damit Bäume und Häuser beim Neuzeichnen bleiben */
+function zufall(i: number, j: number, k: number) {
+  const x = Math.sin(i * 127.1 + j * 311.7 + k * 74.7) * 43758.5453
+  return x - Math.floor(x)
+}
+
+const linie = (p: Array<{ x: number; y: number }>) => p.map((q, k) => `${k ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)}`).join('')
+const versetzt = (p: Array<{ x: number; y: number; w: number }>, d: number) =>
+  p.map((q) => ({ x: q.x - Math.sin(q.w) * d, y: q.y + Math.cos(q.w) * d }))
+
+/** ob ein Punkt im Inneren eines Tunnels liegt, mehr als 0,22 vom Rand seines Felds */
+function imTunnel(b: Brett, x: number, y: number) {
+  const i = Math.floor(x), j = Math.floor(y)
+  const f = b[j]?.[i]
+  if (!f || f.grund !== 'berg' || !f.gleis) return false
+  return Math.min(x - i, i + 1 - x, y - j, j + 1 - y) > 0.22
+}
+
+function GrundBild({ f, i, j }: { f: Feld; i: number; j: number }) {
+  const x = i, y = j
+  const grundFarbe = f.grund === 'wald' ? F.wald : f.grund === 'wasser' ? F.wasser : f.grund === 'berg' ? F.berg : F.wiese
+  return (
+    <g>
+      <rect x={x + 0.025} y={y + 0.025} width={0.95} height={0.95} rx={0.05} fill={grundFarbe} />
+      {f.grund === 'wald' && Array.from({ length: 6 }, (_, k) => (
+        <circle key={k} cx={x + 0.17 + zufall(i, j, k) * 0.66} cy={y + 0.17 + zufall(i, j, k + 9) * 0.66} r={0.09 + zufall(i, j, k + 20) * 0.06}
+                fill={F.baum[k % 3]} />
+      ))}
+      {f.grund === 'wasser' && [0.3, 0.55, 0.8].map((h, k) => (
+        <path key={k} d={`M${x + 0.12},${y + h} q0.1,-0.06 0.2,0 t0.2,0 t0.2,0 t0.2,0`} fill="none" stroke={F.welle} strokeWidth={0.03} strokeLinecap="round" />
+      ))}
+      {f.grund === 'berg' && (
+        <>
+          <path d={`M${x + 0.1},${y + 0.85} L${x + 0.42},${y + 0.2} L${x + 0.62},${y + 0.55} L${x + 0.72},${y + 0.4} L${x + 0.92},${y + 0.85} Z`} fill={F.fels} />
+          <path d={`M${x + 0.34},${y + 0.36} L${x + 0.42},${y + 0.2} L${x + 0.5},${y + 0.36} Z`} fill={F.schnee} />
+        </>
+      )}
+      {f.grund === 'dorf' && [0, 1, 2].map((k) => {
+        const hx = x + 0.12 + k * 0.27 + zufall(i, j, k) * 0.05, hy = y + 0.14 + zufall(i, j, k + 5) * 0.5
+        return (
+          <g key={k}>
+            <rect x={hx + 0.02} y={hy + 0.03} width={0.2} height={0.2} rx={0.02} fill="rgba(0,0,0,.15)" />
+            <rect x={hx} y={hy} width={0.2} height={0.2} rx={0.02} fill={F.haeuser[Math.floor(zufall(i, j, k + 11) * 6)]} />
+            <line x1={hx} y1={hy + 0.1} x2={hx + 0.2} y2={hy + 0.1} stroke="rgba(0,0,0,.25)" strokeWidth={0.015} />
+          </g>
+        )
+      })}
+    </g>
+  )
+}
+
+function GleisBild({ f, i, j, name }: { f: Feld; i: number; j: number; name?: string }) {
+  const g = f.gleis
+  if (!g) return null
+  const cx = i + 0.5, cy = j + 0.5
+  const w = wege(g)
+  const stuecke: Array<{ s: Stueck; aktiv: boolean }> = w.map(([a, b], k) => ({
+    s: { i, j, ein: a, aus: b }, aktiv: g.art !== 'weiche' || k === (g.stellung ?? 0),
+  }))
+  const punkte = stuecke.map(({ s, aktiv }) => ({ p: wegPunkte(s, s.ein >= 0 && s.aus >= 0 && (s.ein + 2) % 4 !== s.aus ? 14 : 2), aktiv, s }))
+  // die inaktive Seite der Weiche zuerst und blasser
+  punkte.sort((a, b) => Number(a.aktiv) - Number(b.aktiv))
+  return (
+    <g>
+      {f.grund === 'wasser' && punkte.map(({ p }, k) => (
+        <g key={`b${k}`}>
+          <path d={linie(p)} transform="translate(0.03 0.05)" fill="none" stroke="rgba(0,0,0,.15)" strokeWidth={0.42} />
+          <path d={linie(p)} fill="none" stroke={F.bruecke} strokeWidth={0.42} />
+          <path d={linie(versetzt(p, 0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
+          <path d={linie(versetzt(p, -0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
+        </g>
+      ))}
+      {g.art === 'bahnhof' && (
+        <g transform={`rotate(${g.dreh * 90} ${cx} ${cy})`}>
+          <rect x={cx + 0.16} y={cy - 0.44} width={0.2} height={0.88} rx={0.02} fill={F.perron} />
+          <line x1={cx + 0.165} y1={cy - 0.44} x2={cx + 0.165} y2={cy + 0.44} stroke="#ffffff" strokeWidth={0.02} />
+          <rect x={cx + 0.21} y={cy - 0.2} width={0.12} height={0.4} rx={0.02} fill={F.dach} />
+        </g>
+      )}
+      {punkte.map(({ p, aktiv }, k) => (
+        <g key={k} opacity={aktiv ? 1 : 0.45}>
+          <path d={linie(p)} fill="none" stroke={f.grund === 'wasser' ? 'none' : F.schotter} strokeWidth={0.3} />
+          <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
+          <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
+          <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
+        </g>
+      ))}
+      {g.art === 'prellbock' && (() => {
+        const ende = punkte[0].p[punkte[0].p.length - 1], q = { x: ende.x, y: ende.y }, wq = ende.w
+        return (
+          <g transform={`translate(${q.x} ${q.y}) rotate(${(wq * 180) / Math.PI})`}>
+            <rect x={-0.02} y={-0.17} width={0.08} height={0.34} fill={F.karmin} />
+            <rect x={-0.02} y={-0.06} width={0.08} height={0.12} fill="#ffffff" />
+          </g>
+        )
+      })()}
+      {f.grund === 'berg' && (
+        <>
+          <rect x={cx - 0.29} y={cy - 0.29} width={0.58} height={0.58} rx={0.18} fill={F.fels} />
+          <path d={`M${cx - 0.2},${cy + 0.16} L${cx - 0.02},${cy - 0.2} L${cx + 0.08},${cy} L${cx + 0.14},${cy - 0.08} L${cx + 0.24},${cy + 0.16} Z`} fill={F.berg} />
+          {punkte.map(({ p, s }, k) => [0, 1].map((e) => {
+            const kant = e === 0 ? s.ein : s.aus
+            if (kant < 0) return null
+            const l = stueckLaenge(s), t = e === 0 ? 0.22 / l : 1 - 0.22 / l
+            const q = p[Math.round(t * (p.length - 1))] ?? p[0]
+            return <g key={`${k}${e}`} transform={`translate(${q.x} ${q.y}) rotate(${(q.w * 180) / Math.PI})`}>
+              <rect x={-0.03} y={-0.2} width={0.06} height={0.4} rx={0.03} fill={F.portal} />
+            </g>
+          }))}
+        </>
+      )}
+      {name && (
+        <g>
+          <rect x={i + 0.06} y={j + 0.06} width={0.2} height={0.2} rx={0.03} fill="#3d3d3d" />
+          <text x={i + 0.16} y={j + 0.215} fontSize={0.15} fontWeight={700} textAnchor="middle" fill="#ffffff">{name}</text>
+        </g>
+      )}
+    </g>
+  )
+}
+
+/** ein Wagen von oben, die Spitze bei +x; Lok mit karminroter Spitze, Steuerwagen mit weisser, vorne Stirnlicht, hinten rot */
+function WagenBild({ w, tunnel }: { w: WagenLage; tunnel: boolean }) {
+  const kopf = w.art === 0 || w.art === 3
+  const halb = WAGEN_LAENGE / 2
+  return (
+    <g transform={`translate(${w.x} ${w.y}) rotate(${(w.w * 180) / Math.PI})`} opacity={tunnel ? 0.28 : 1}>
+      <rect x={-halb + 0.02} y={-0.08} width={WAGEN_LAENGE} height={0.18} rx={0.05} fill="rgba(0,0,0,.18)" />
+      <g transform={kopf && !w.vorne ? 'scale(-1 1)' : undefined}>
+        <rect x={-halb} y={-0.09} width={WAGEN_LAENGE} height={0.18} rx={kopf ? 0.06 : 0.03} fill="#f4f4f4" stroke="#2f2f2f" strokeWidth={0.012} />
+        <rect x={-halb + 0.04} y={-0.045} width={WAGEN_LAENGE - 0.08} height={0.09} rx={0.02} fill="#d9d9d9" />
+        {kopf && (
+          <>
+            <path d={`M${halb - 0.1},-0.09 L${halb - 0.05},-0.09 Q${halb},-0.09 ${halb},-0.04 L${halb},0.04 Q${halb},0.09 ${halb - 0.05},0.09 L${halb - 0.1},0.09 Z`}
+                  fill={w.art === 0 ? F.karmin : '#ffffff'} stroke="#2f2f2f" strokeWidth={0.012} />
+            <rect x={halb - 0.13} y={-0.075} width={0.025} height={0.15} rx={0.01} fill="#1f2a36" />
+            <path d={`M-0.12,-0.05 L-0.04,0.05 M-0.12,0.05 L-0.04,-0.05`} stroke="#444" strokeWidth={0.014} />
+            {[-0.055, 0.055].map((yy) => (
+              <circle key={yy} cx={halb - 0.012} cy={yy} r={0.018} fill={w.vorne ? '#fff3c4' : '#d61f2c'} />
+            ))}
+          </>
+        )}
+      </g>
+    </g>
+  )
+}
+
+/** ein Werkzeug als kleines Bild auf dem Knopf */
+function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
+  const f: Feld = w.art === 'grund' ? { grund: w.grund }
+    : w.art === 'tunnel' ? { grund: 'berg', gleis: { art: 'gerade', dreh } }
+    : w.art === 'bruecke' ? { grund: 'wasser', gleis: { art: 'gerade', dreh } }
+    : w.art === 'gleis' ? { grund: 'wiese', gleis: { art: w.gleis, dreh } } : { grund: 'wiese' }
+  return (
+    <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+      <GrundBild f={f} i={0} j={0} />
+      <GleisBild f={f} i={0} j={0} />
+      {w.art === 'weg' && <path d="M0.3,0.3 L0.7,0.7 M0.7,0.3 L0.3,0.7" stroke={F.karmin} strokeWidth={0.08} strokeLinecap="round" />}
+    </svg>
+  )
+}
+
+/**
+ * «Gleisbau» (Spiele, #/gleisbau; Michael, 2026-11-22: «Man soll Gleise auf ein Layout legen können. Tunnel und Brücken und Bahnhöfe stehen
+ * auch zur Verfügung», «2D bauen, 3D anschauen», «Nimm mal Gleisbau», «Zuerst freies Bauen und dann Aufgaben», «8x6 Felder»):
+ * Schritt 1, freies Bauen in 2D, der Zug fährt von oben gesehen; 3D und Aufgaben folgen
+ */
+export function Gleisbau() {
+  const [brett, setBrett] = useState<Brett>(() => brettLesen() ?? beispiel())
+  const [werkzeug, setWerkzeug] = useState<Werkzeug>({ art: 'gleis', gleis: 'gerade' })
+  const [dreh, setDreh] = useState<Dreh>(0)
+  const [faehrt, setFaehrt] = useState(false)
+  const [wagen, setWagen] = useState<WagenLage[]>([])
+  const [meldung, setMeldung] = useState<string | null>(null)
+  const [leerenScharf, setLeerenScharf] = useState(false)
+  const zug = useRef<Zug | null>(null)
+  const brettRef = useRef(brett)
+  brettRef.current = brett
+  const svg = useRef<SVGSVGElement>(null)
+  const namen = useMemo(() => bahnhofNamen(brett), [brett])
+
+  useEffect(() => { brettMerken(brett) }, [brett])
+  useEffect(() => {
+    if (!leerenScharf) return
+    const t = setTimeout(() => setLeerenScharf(false), 3000)
+    return () => clearTimeout(t)
+  }, [leerenScharf])
+
+  // der Zug je Bild
+  useEffect(() => {
+    if (!faehrt) return
+    let los = 0, letzt = performance.now()
+    const bild = (jetzt: number) => {
+      const dt = Math.min(0.05, (jetzt - letzt) / 1000)
+      letzt = jetzt
+      zug.current?.schritt(brettRef.current, dt)
+      setWagen(zug.current?.wagen() ?? [])
+      los = requestAnimationFrame(bild)
+    }
+    los = requestAnimationFrame(bild)
+    return () => cancelAnimationFrame(los)
+  }, [faehrt])
+
+  function feldAn(e: React.MouseEvent<SVGSVGElement>) {
+    const r = svg.current!.getBoundingClientRect()
+    const i = Math.floor(((e.clientX - r.left) / r.width) * SPALTEN), j = Math.floor(((e.clientY - r.top) / r.height) * ZEILEN)
+    if (i < 0 || j < 0 || i >= SPALTEN || j >= ZEILEN) return
+    const f = brett[j][i]
+    // während der Fahrt stellen Tipps nur die Weichen
+    if (faehrt) {
+      if (f.gleis?.art !== 'weiche') { setMeldung('Während der Fahrt lassen sich nur Weichen stellen. Zum Bauen «Anhalten».'); return }
+      neu(i, j, { ...f, gleis: { ...f.gleis, stellung: f.gleis.stellung ? 0 : 1 } })
+      knopfTon(true)
+      return
+    }
+    setMeldung(null)
+    const w = werkzeug
+    let n: Feld = f
+    if (w.art === 'gleis') {
+      if (f.gleis?.art === w.gleis) {
+        const d = ((f.gleis.dreh + 1) % 4) as Dreh
+        setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
+      } else n = { ...f, gleis: { art: w.gleis, dreh } }
+    } else if (w.art === 'tunnel' || w.art === 'bruecke') {
+      const grund: Grund = w.art === 'tunnel' ? 'berg' : 'wasser'
+      if (f.grund === grund && f.gleis) {
+        const d = ((f.gleis.dreh + 1) % 4) as Dreh
+        setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
+      } else n = { grund, gleis: f.gleis ?? { art: 'gerade', dreh } }
+    } else if (w.art === 'grund') n = { ...f, grund: w.grund }
+    else n = f.gleis ? { grund: f.grund } : { grund: 'wiese' }
+    neu(i, j, n)
+    knopfTon(true)
+  }
+
+  function neu(i: number, j: number, f: Feld) {
+    setBrett((b) => b.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? f : x)) : z)))
+  }
+
+  function fahren() {
+    if (faehrt) { setFaehrt(false); setWagen([]); zug.current = null; return }
+    const z = Zug.setzen(brett)
+    if (!z) { setMeldung('Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
+    zug.current = z; setWagen(z.wagen()); setMeldung(null); setFaehrt(true)
+  }
+
+  const knopf = (an: boolean) => `flex w-[4.6rem] flex-col items-center gap-0.5 rounded-lg border px-1 py-1.5 text-xs font-medium ${an
+    ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
+    : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`
+
+  const leiste = (titel: string, l: Array<{ w: Werkzeug; text: string }>) => (
+    <div className="mt-4">
+      <h2 className="text-sm font-bold">{titel}</h2>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {l.map(({ w, text }) => (
+          <button key={text} type="button" aria-pressed={gleich(w, werkzeug)} disabled={faehrt}
+                  onClick={() => setWerkzeug(w)} className={`${knopf(gleich(w, werkzeug))} disabled:opacity-40`}>
+            <WerkzeugBild w={w} dreh={dreh} />
+            {text}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+
+  return (
+    <div className="px-4 pb-6">
+      <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
+      <h1 className="mt-4 text-2xl font-bold tracking-tight">Gleisbau</h1>
+      <p className="mt-2 max-w-3xl leading-relaxed">
+        Wähle unten ein Stück und tippe ein Feld an. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
+        Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
+      </p>
+      <div className="mt-4 max-w-3xl">
+        <svg ref={svg} viewBox={`-0.15 -0.15 ${SPALTEN + 0.3} ${ZEILEN + 0.3}`} role="img" aria-label="Spielbrett mit 8 × 6 Feldern"
+             onClick={feldAn} className="w-full cursor-pointer select-none">
+          <rect x={-0.15} y={-0.15} width={SPALTEN + 0.3} height={ZEILEN + 0.3} rx={0.14} fill={F.tablett} />
+          {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} />))}
+          {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)} />))}
+          {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
+        </svg>
+      </div>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <button type="button" onClick={fahren}
+                className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">{faehrt ? 'Anhalten' : 'Fahren'}</button>
+        <button type="button" disabled={faehrt} onClick={() => setDreh(((dreh + 1) % 4) as Dreh)}
+                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
+          Drehen ↻
+        </button>
+        <button type="button" disabled={faehrt} onClick={() => { setBrett(beispiel()); setMeldung(null) }}
+                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
+          Beispiel
+        </button>
+        <button type="button" disabled={faehrt} onClick={() => {
+          if (!leerenScharf) { setLeerenScharf(true); return }
+          setLeerenScharf(false); setBrett(leer())
+        }} className={`min-h-12 rounded-lg border px-4 font-bold disabled:opacity-40 ${leerenScharf
+          ? 'border-sbb-red bg-sbb-red text-white' : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
+          {leerenScharf ? 'Wirklich leeren?' : 'Leeren'}
+        </button>
+      </div>
+      {meldung && <p role="status" className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm font-medium dark:bg-sbb-charcoal">{meldung}</p>}
+      {leiste('Gleise und Bauwerke', GLEISE)}
+      {leiste('Landschaft', LANDSCHAFT)}
+      <p className={`mt-5 max-w-3xl ${LEISE}`}>
+        Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Dein Brett bleibt im Browser dieses
+        Geräts und wird nicht gesendet. Bald: dasselbe Brett als Modell in 3D und Aufgaben.
+      </p>
+    </div>
+  )
+}

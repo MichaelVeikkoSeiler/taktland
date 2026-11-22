@@ -24,6 +24,8 @@ import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
 import bilderpuzzleDunkel from './assets/auftakt-bilderpuzzle-dunkel.webp'
 import bilderpuzzleHell from './assets/auftakt-bilderpuzzle-hell.webp'
+import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
+import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
 
 export type SpielStatus = 'spielbereit' | 'im-bau'
 
@@ -102,6 +104,15 @@ export const SPIELE: Spiel[] = [
     bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhofsuche» auf dem Tablet.' },
     beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
+  },
+  // Michael, 2026-11-22: «Man soll Gleise auf ein Layout legen können. Tunnel und Brücken und Bahnhöfe stehen auch zur Verfügung», «Nimm mal
+  // Gleisbau»; das Bild der Kachel vorerst das der Modellbahn
+  {
+    id: 'gleisbau', titel: 'Gleisbau', status: 'spielbereit', adresse: '#/gleisbau',
+    kurz: 'Gleise, Bahnhöfe, Tunnel und Brücken auf ein Brett legen und den Zug fahren lassen.',
+    bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: eine Modellbahn mit Zug, Gleisen und Landschaft.' },
+    beschreibung: 'Ein Brett mit 8 × 6 Feldern: Leg Gleise, Weichen, Bahnhöfe, Tunnel und Brücken, gestalte die Landschaft und lass den Zug '
+      + 'fahren. Er hält an jedem Bahnhof und kehrt am Ende des Gleises um.',
   },
   // Michael, 2026-11-21: «Kannst du dieses Puzzlespiel auf Taktland-App übernehmen und dort alle Bilder, welche wir auf Taktland integriert
   // haben, als Puzzle bereitstellen?»; das Bild der Kachel seit 2026-11-22 Michaels eigenes («Hier die Bilder fürs Bilderpuzzle, hell und dunkel»)
