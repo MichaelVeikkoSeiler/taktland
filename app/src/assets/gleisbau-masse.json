@@ -1,0 +1,167 @@
+{
+"gb_bau_perron_gerade_01": {
+"h": 512,
+"w": 512
+},
+"gb_bau_perron_kurve_01": {
+"h": 512,
+"w": 512
+},
+"gb_bau_prellbock_01": {
+"balken": 233,
+"h": 263,
+"w": 320
+},
+"gb_bau_tunnelportal_o": {
+"h": 456,
+"oeffnung": [
+312,
+178,
+500,
+354
+],
+"w": 512
+},
+"gb_bau_tunnelportal_s": {
+"h": 321,
+"oeffnung": [
+155,
+142,
+350,
+316
+],
+"w": 512
+},
+"gb_bau_tunnelportal_s_b": {
+"h": 338,
+"oeffnung": [
+169,
+172,
+338,
+318
+],
+"w": 512
+},
+"gb_bau_tunnelportal_w": {
+"h": 467,
+"oeffnung": [
+9,
+185,
+201,
+363
+],
+"w": 512
+},
+"gb_grund_wiese_01": {
+"h": 512,
+"w": 512
+},
+"gb_obj_busch_01": {
+"h": 254,
+"w": 320
+},
+"gb_obj_busch_02": {
+"h": 274,
+"w": 320
+},
+"gb_obj_fels_01": {
+"h": 270,
+"w": 320
+},
+"gb_obj_fels_02": {
+"h": 151,
+"w": 320
+},
+"gb_obj_gipfel_gross_01": {
+"h": 394,
+"w": 512
+},
+"gb_obj_gipfel_gross_02": {
+"h": 272,
+"w": 512
+},
+"gb_obj_gipfel_gross_03": {
+"h": 284,
+"w": 512
+},
+"gb_obj_gipfel_klein_01": {
+"h": 274,
+"w": 512
+},
+"gb_obj_gipfel_klein_02": {
+"h": 246,
+"w": 512
+},
+"gb_obj_gipfel_klein_03": {
+"h": 228,
+"w": 512
+},
+"gb_obj_haus_01": {
+"h": 308,
+"w": 320
+},
+"gb_obj_haus_02": {
+"h": 265,
+"w": 320
+},
+"gb_obj_haus_03": {
+"h": 289,
+"w": 320
+},
+"gb_obj_haus_04": {
+"h": 303,
+"w": 320
+},
+"gb_obj_haus_05": {
+"h": 286,
+"w": 320
+},
+"gb_obj_haus_06": {
+"h": 320,
+"w": 255
+},
+"gb_obj_laubbaum_01": {
+"h": 320,
+"w": 280
+},
+"gb_obj_laubbaum_02": {
+"h": 320,
+"w": 271
+},
+"gb_obj_laubbaum_03": {
+"h": 320,
+"w": 139
+},
+"gb_obj_laubbaum_04": {
+"h": 245,
+"w": 320
+},
+"gb_obj_nadelbaum_01": {
+"h": 320,
+"w": 220
+},
+"gb_obj_nadelbaum_02": {
+"h": 320,
+"w": 189
+},
+"gb_obj_nadelbaum_03": {
+"h": 320,
+"w": 172
+},
+"gb_obj_nadelbaum_04": {
+"h": 320,
+"w": 223
+},
+"gb_textur_fels_01": {
+"h": 512,
+"w": 512
+},
+"gb_textur_waldboden_01": {
+"h": 512,
+"w": 512
+},
+"gb_textur_wasser_01": {
+"h": 512,
+"w": 512
+}
+}

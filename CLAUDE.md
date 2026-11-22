@@ -1549,6 +1549,18 @@ Rahmen, Wald mit Laub- und Nadelbäumen (nicht am Gleis), Häuser mit Satteldach
 Bahnhof mit Perron und Dach, Prellbock, Schild der Bahnhöfe; der Zug aus ZugForm.ts (Lok, zwei Wagen, Steuerwagen), quer und in der Höhe 1,8-mal dicker als massstäblich wie ein
 Spielzeug (ZUG_DICK), im Tunnel unsichtbar; die Kamera schräg von Süden, so weit weg, dass das Brett in die Breite passt, auf dem Handy fast quadratisch; alle Formen, Masse und
 Farben gewählt; im Browser hier mit 800 und 390 Bildpunkten angeschaut, nicht auf einem Gerät. Führerstand und VR-Brille folgen.
+Seit 2026-11-23 das 2D-Brett mit Bildern, die Michael mit ChatGPT erstellt hat (zuerst mit ChatGPT abgestimmt, Michael: «Diese 3D-Umsetzungen möchte ich bei diesem
+Thema zuerst mit ChatGPT und dir abgleichen», dann Bild für Bild geprüft und freigegeben, «Ich würde gerne mal testen», gewählt: «In Taktland, nur eigene Geräte»): 35 Bilder in
+app/src/assets/gleisbau (aus seinen PNG mit entwuerfe/gleisbau/bilder_vorbereiten.py zugeschnitten, Reste vom Freistellen entfernt, Objekte auf 320 oder 512 Bildpunkte, Texturen 512 und an den Rändern
+überblendet, als WebP, zusammen 371 KB; Masse, Öffnung der Portale und Balken des Prellbocks in app/src/assets/gleisbau-masse.json); komponenten/GleisbauBilder.tsx: Wiese je Feld
+nur gespiegelt, nicht gedreht (ihre Flächen sind waagrecht gestreckt); Wald, Fels und See als Gebiete aus Vierteln (je Viertel die zwei Nachbarn an den Kanten und der über Eck,
+eingerückt wo kein gleicher Grund anschliesst, aussen gerundet, innen mit Kehle; gebietPfad), mit den Texturen als Muster über das Brett, Ufer ein sandfarbenes Band, Fugen auch
+im See (Michael: «Mit Fugen»); Bäume, Büsche, Felsen, Gipfel und Häuser als Objekte nach festem Zufall je Feld, kein Objekt über einem offenen Gleis oder Perron, nach Fusspunkt
+geordnet über dem Zug, mit Schatten vom Programm, nicht über den Rand des Bretts; im Wald dicht, am Rand lockerer, auf der Fuge zwischen Waldfeldern; über Tunneln ein kleiner
+Gipfel, der Tunnel mit der Felstextur gedeckt; je Dorf höchstens eine Kapelle, die Scheune eher am Rand; Perrons gerade und in der Kurve, Prellbock und Tunnelportale Süd, West
+und Ost als Bilder (Portal höchstens 0,8 bzw. 0,6 Felder breit, Öffnung 0,34), Nord vorerst ein schlichtes Portal (das Bild hatte das Schachbrett mitgemalt, ChatGPT liefert neu);
+Gleise, Brücken, Zug und Schilder weiter im Programm; Knöpfe der Landschaft mit denselben Bildern; alle Masse, Anteile und Regeln gewählt; Gleisbau weiter «Im Bau»; im Browser
+hier mit 900 und 390 Bildpunkten angeschaut. Die 3D-Ansicht ist unverändert.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
