@@ -1525,7 +1525,10 @@ Seit 2026-11-22 verbindet sich die Landschaft benachbarter Felder gleichen Grund
 auf benachbarte Kacheln setzt. Die schwarzen Stege sollen zwar bleiben, aber die Berge sollen wie über die Grenze hinauslaufen und Wasserwellen auch»): eine eigene Ebene über allen
 Flächen (Landschaft, Merkmale in Gleisbau.tsx), auf die Kacheln zugeschnitten (clipPath), so bleiben die Stege: Wellen bis an den Rand, ihre Phase nach der Lage auf dem Brett,
 über der Grenze zum Berg im Osten und Süden ein weiterer Gipfel, auf der Grenze zum Wald je drei Bäume, zwischen Dörfern eine Strasse von Mitte zu Mitte; Formen und Farben gewählt;
-auf den Knöpfen jedes Feld für sich; im Browser hier angeschaut. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
+auf den Knöpfen jedes Feld für sich; im Browser hier angeschaut.
+Seit 2026-11-22 werden auch die grossen Kurven über Wasser zur Brücke (Michael: «Bei den großen Kurven macht es keine Brücke automatisch, wenn sie auf Wasser gesetzt wird»): der
+Bogen in Stücke über Wasser und über Land geteilt (je Teilstück das Feld unter seiner Mitte), über Wasser Fahrbahn mit Geländer und Schatten wie bei den kleinen Stücken; ein Tunnel
+im Berg bei grossen Kurven noch nicht; im Browser hier mit einem Kreis halb über Wasser angeschaut. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
 Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
 mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone

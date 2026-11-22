@@ -180,10 +180,12 @@ function Landschaft({ brett }: { brett: Brett }) {
   )
 }
 
-function GleisBild({ f, i, j, name, weiter = [false, false, false, false] }: { f: Feld; i: number; j: number; name?: string; weiter?: boolean[] }) {
+function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasser }: {
+  f: Feld; i: number; j: number; name?: string; weiter?: boolean[]; wasser?: (u: number, v: number) => boolean
+}) {
   const g = f.gleis
   if (!g) return null
-  if (grosseKurve(g)) return <BogenBild i={i} j={j} g={g} />
+  if (grosseKurve(g)) return <BogenBild i={i} j={j} g={g} wasser={wasser} />
   const cx = i + 0.5, cy = j + 0.5
   const w = wege(g)
   const stuecke: Array<{ s: Stueck; aktiv: boolean }> = w.map(([a, b], k) => ({
@@ -274,15 +276,35 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false] }: { f
 }
 
 /** eine grosse Kurve über 2 × 2 oder 3 × 3 Felder, als ganzes Stück gezeichnet, ohne Brücke und Tunnel */
-function BogenBild({ i, j, g }: { i: number; j: number; g: Gleis }) {
+function BogenBild({ i, j, g, wasser }: { i: number; j: number; g: Gleis; wasser?: (u: number, v: number) => boolean }) {
   const G = grossGeometrie(i, j, g)
   const p = Array.from({ length: 41 }, (_, k) => {
     const a = G.a0 + (G.da * k) / 40
     return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a), w: a + Math.PI / 2 }
   })
+  // über Wasser eine Brücke wie bei den kleinen Stücken (Michael, 2026-11-22: «Bei den großen Kurven macht es keine Brücke automatisch, wenn sie auf
+  // Wasser gesetzt wird»): der Bogen in Stücke über Wasser und über Land geteilt, je Stück ein Punkt Überlappung
+  const nass = p.map((_, k) => {
+    const m = p[Math.min(k, p.length - 2)], n = p[Math.min(k + 1, p.length - 1)]
+    return !!wasser?.(Math.floor((m.x + n.x) / 2), Math.floor((m.y + n.y) / 2))
+  })
+  const stuecke: Array<{ nass: boolean; p: typeof p }> = []
+  for (let k = 0; k < p.length - 1; k++) {
+    const letztes = stuecke[stuecke.length - 1]
+    if (letztes && letztes.nass === nass[k]) letztes.p.push(p[k + 1])
+    else stuecke.push({ nass: nass[k], p: [p[k], p[k + 1]] })
+  }
   return (
     <g>
-      <path d={linie(p)} fill="none" stroke={F.schotter} strokeWidth={0.3} />
+      {stuecke.filter((t) => t.nass).map((t, k) => (
+        <g key={`b${k}`}>
+          <path d={linie(t.p)} transform="translate(0.03 0.05)" fill="none" stroke="rgba(0,0,0,.15)" strokeWidth={0.42} />
+          <path d={linie(t.p)} fill="none" stroke={F.bruecke} strokeWidth={0.42} />
+          <path d={linie(versetzt(t.p, 0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
+          <path d={linie(versetzt(t.p, -0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
+        </g>
+      ))}
+      {stuecke.filter((t) => !t.nass).map((t, k) => <path key={`s${k}`} d={linie(t.p)} fill="none" stroke={F.schotter} strokeWidth={0.3} />)}
       <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
       <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
       <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
@@ -600,7 +622,8 @@ export function Gleisbau() {
           {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} nurFlaeche />))}
           <Landschaft brett={brett} />
           {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)}
-                                                         weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined} />))}
+                                                         weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined}
+                                                         wasser={(u, v) => brett[v]?.[u]?.grund === 'wasser'} />))}
           {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
           {ziehen && (() => {
             const [vi, vj] = ziehen.von, [ni, nj] = ziehen.nach, f = brett[vj][vi]
