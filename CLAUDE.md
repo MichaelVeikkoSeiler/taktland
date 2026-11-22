@@ -1541,6 +1541,14 @@ wie vorgeschlagen»), weiterhin flach ohne Verläufe: kräftigeres Grün, tiefbl
 Tannen am Fuss, im Wald Laub- und Nadelbäume gemischt (etwa ein Drittel Nadelbäume, fester Zufall je Stelle), Häuser mit heller Mauer und rotem Ziegeldach mit Schattenseite, jede
 Kachel mit einer dunkleren Unterkante, damit sie leicht erhaben wirkt (KANTE, KACHEL_H), die Tunneldecke graugrün statt grau (F.deckel); Farben und Formen gewählt (F, gipfel, baum,
 haus in Gleisbau.tsx); die 3D-Ansicht im Stil seines Bilds bleibt der nächste Schritt; im Browser hier mit mehreren Beispielen angeschaut.
+Seit 2026-11-22 dasselbe Brett in 3D (Michael: «Macht es Sinn die Kacheln nun zu machen mit den bestehenden und später zu ergänzen?», dann «Ja gerne, so anfangen»):
+über dem Brett «Bauen in 2D» und «Ansehen in 3D», gebaut wird nur in 2D (ein Stück wählen schaltet zurück); komponenten/Gleisbau3D.tsx, erst beim Umschalten geladen (lazy),
+three.js mit OrbitControls (ein Finger dreht, zwei zoomen und verschieben), Schatten der Sonne: jede Kachel ein gerundeter Block auf dem dunklen Tablett, Wasser tiefer, Berge
+als Kegel aus Flächen mit Schneekappe, über einem Gleis ein Felsblock bis zum Portal (PORTAL wie in 2D) oder über die Fuge, wo der Tunnel weitergeht, mit dunklem Portal im
+Rahmen, Wald mit Laub- und Nadelbäumen (nicht am Gleis), Häuser mit Satteldach, Gleise mit Schotter, Schwellen und Schienen, über Wasser Brücke mit Brüstungen und Pfeiler,
+Bahnhof mit Perron und Dach, Prellbock, Schild der Bahnhöfe; der Zug aus ZugForm.ts (Lok, zwei Wagen, Steuerwagen), quer und in der Höhe 1,8-mal dicker als massstäblich wie ein
+Spielzeug (ZUG_DICK), im Tunnel unsichtbar; die Kamera schräg von Süden, so weit weg, dass das Brett in die Breite passt, auf dem Handy fast quadratisch; alle Formen, Masse und
+Farben gewählt; im Browser hier mit 800 und 390 Bildpunkten angeschaut, nicht auf einem Gerät. Führerstand und VR-Brille folgen.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
