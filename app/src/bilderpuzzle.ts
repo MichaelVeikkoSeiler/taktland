@@ -303,11 +303,12 @@ export class Bilderpuzzle {
     return frei
   }
 
-  private verteilen() {
+  /** die Teile zufällig auf die freien Plätze neben dem Rahmen; ohne Angabe alle */
+  private verteilen(welche: Teil[] = this.teile) {
     const plaetze = [...this.plaetze]
     for (let i = plaetze.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [plaetze[i], plaetze[j]] = [plaetze[j], plaetze[i]] }
     const zittern = Math.min(this.tb, this.th) * 0.06
-    ;[...this.teile].sort(() => Math.random() - 0.5).forEach((t, i) => {
+    ;[...welche].sort(() => Math.random() - 0.5).forEach((t, i) => {
       const p = plaetze[i] ?? { x: this.tb + Math.random() * (this.breite - 2 * this.tb), y: OBEN + this.th / 2 + Math.random() * (this.hoehe - OBEN - 1.5 * this.th) }
       t.x = (p.x + (Math.random() * 2 - 1) * zittern - this.tb / 2 - this.rx) / this.tb
       t.y = (p.y + (Math.random() * 2 - 1) * zittern - this.th / 2 - this.ry) / this.th
@@ -342,7 +343,20 @@ export class Bilderpuzzle {
 
   private neuGroesse() {
     if (!this.flaeche.isConnected) return
+    const quer = this.breite > this.hoehe
     this.anordnen()
+    // nach dem Drehen von hoch auf quer und zurück die losen Teile neu um den Rahmen verteilen, sonst liegen sie, wo vorher Platz war
+    // (Michael, 2026-11-22: «Im Querformat also beim drehen des Devices sollen die herumliegenden Puzzleteile neu und sinnvoll verteilt werden»);
+    // was gerade gezogen wird, bleibt in der Hand
+    if (quer !== this.breite > this.hoehe) {
+      const gezogen = new Set([...this.ziehen.keys()])
+      const lose = this.teile.filter((t) => !t.gelegt && !gezogen.has(t.el))
+      if (lose.length) {
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) for (const t of lose) t.el.style.transition = 'transform .35s ease-out'
+        this.verteilen(lose)
+        window.setTimeout(() => { for (const t of lose) if (!t.gelegt) t.el.style.transition = '' }, 400)
+      }
+    }
     for (const t of this.teile) {
       if (!t.gelegt) {
         const x = Math.max(0, Math.min(this.breite - this.tb, this.rx + t.x * this.tb))
