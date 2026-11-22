@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { knopfTon } from '../audio'
 import {
   type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, tunnelWeiter, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, tunnelWeiter, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 
@@ -283,6 +283,10 @@ export function Gleisbau() {
   const [wagen, setWagen] = useState<WagenLage[]>([])
   const [meldung, setMeldung] = useState<string | null>(null)
   const [leerenScharf, setLeerenScharf] = useState(false)
+  // langes Drücken auf ein belegtes Feld hebt es an, Ziehen verschiebt es (Michael, 2026-11-22)
+  const [ziehen, setZiehen] = useState<{ von: [number, number]; nach: [number, number] } | null>(null)
+  const druck = useRef<{ x: number; y: number; zeit: number; feld: [number, number] } | null>(null)
+  const nachZiehen = useRef(false)
   const zug = useRef<Zug | null>(null)
   const brettRef = useRef(brett)
   brettRef.current = brett
@@ -312,11 +316,66 @@ export function Gleisbau() {
     return () => cancelAnimationFrame(los)
   }, [faehrt])
 
-  function feldAn(e: React.MouseEvent<SVGSVGElement>) {
+  /** das Feld unter einem Punkt des Bildschirms; das Bild reicht je 0,15 Felder über das Brett hinaus (der Rand des Tabletts) */
+  function feldBei(x: number, y: number): [number, number] | null {
     const r = svg.current!.getBoundingClientRect()
-    // das Bild reicht je 0,15 Felder über das Brett hinaus (der Rand des Tabletts)
-    const i = Math.floor(((e.clientX - r.left) / r.width) * (SP + 0.3) - 0.15), j = Math.floor(((e.clientY - r.top) / r.height) * (ZE + 0.3) - 0.15)
-    if (i < 0 || j < 0 || i >= SP || j >= ZE) return
+    const i = Math.floor(((x - r.left) / r.width) * (SP + 0.3) - 0.15), j = Math.floor(((y - r.top) / r.height) * (ZE + 0.3) - 0.15)
+    return i < 0 || j < 0 || i >= SP || j >= ZE ? null : [i, j]
+  }
+
+  // langes Drücken: nach 450 ms ohne Bewegung (mehr als 8 Bildpunkte bricht ab, dann darf die Seite rollen), gewählt
+  useEffect(() => {
+    const el = svg.current
+    if (!el) return
+    // während des Ziehens darf die Seite nicht rollen
+    const halt = (e: TouchEvent) => { if (druck.current?.zeit === -1) e.preventDefault() }
+    el.addEventListener('touchmove', halt, { passive: false })
+    return () => el.removeEventListener('touchmove', halt)
+  }, [])
+
+  function drucken(e: React.PointerEvent<SVGSVGElement>) {
+    if (faehrt || !e.isPrimary) return
+    const feld = feldBei(e.clientX, e.clientY)
+    if (!feld) return
+    const f = brett[feld[1]][feld[0]]
+    if (!f.gleis && !f.teil && f.grund === 'wiese') return
+    const d = { x: e.clientX, y: e.clientY, zeit: 0, feld }
+    druck.current = d
+    const id = e.pointerId, el = e.currentTarget
+    window.setTimeout(() => {
+      if (druck.current !== d) return
+      d.zeit = -1
+      try { el.setPointerCapture(id) } catch { /* ohne Fangen geht es trotzdem */ }
+      navigator.vibrate?.(15)
+      setZiehen({ von: feld, nach: feld })
+    }, 450)
+  }
+  function bewegen(e: React.PointerEvent<SVGSVGElement>) {
+    const d = druck.current
+    if (!d) return
+    if (d.zeit !== -1) { if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > 8) druck.current = null; return }
+    const feld = feldBei(e.clientX, e.clientY)
+    if (feld) setZiehen((z) => (z && (z.nach[0] !== feld[0] || z.nach[1] !== feld[1]) ? { ...z, nach: feld } : z))
+  }
+  function loslassen() {
+    const d = druck.current
+    druck.current = null
+    if (!d || d.zeit !== -1 || !ziehen) return
+    nachZiehen.current = true
+    // falls kein Klick folgt, gilt der nächste Tipp wieder
+    window.setTimeout(() => { nachZiehen.current = false }, 250)
+    const r = verschieben(brett, ziehen.von, ziehen.nach)
+    setZiehen(null)
+    if (typeof r === 'string') { setMeldung(r); return }
+    if (r !== brett) { setBrett(r); knopfTon(true) }
+  }
+
+  function feldAn(e: React.MouseEvent<SVGSVGElement>) {
+    // der Klick nach dem Loslassen eines gezogenen Felds legt nichts
+    if (nachZiehen.current) { nachZiehen.current = false; return }
+    const feld = feldBei(e.clientX, e.clientY)
+    if (!feld) return
+    const [i, j] = feld
     const f = brett[j][i]
     // während der Fahrt stellen Tipps nur die Weichen
     if (faehrt) {
@@ -432,17 +491,33 @@ export function Gleisbau() {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">Gleisbau</h1>
       <p className="mt-2 max-w-3xl leading-relaxed">
         Wähle unten ein Stück und tippe ein Feld an. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
-        Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve.
+        Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve. Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden.
         Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
       </p>
       <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
-             onClick={feldAn} className="w-full cursor-pointer select-none">
+             onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
+             onPointerCancel={() => { druck.current = null; setZiehen(null) }} onContextMenu={(e) => e.preventDefault()}
+             className="w-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} />))}
           {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)}
                                                          weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined} />))}
           {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
+          {ziehen && (() => {
+            const [vi, vj] = ziehen.von, [ni, nj] = ziehen.nach, f = brett[vj][vi]
+            const [hi, hj] = f.teil ?? [vi, vj], h = brett[hj][hi]
+            const gross = grosseKurve(h.gleis)
+            return (
+              <g pointerEvents="none">
+                <rect x={vi + 0.04} y={vj + 0.04} width={0.92} height={0.92} rx={0.05} fill="none" stroke={F.karmin} strokeWidth={0.04} strokeDasharray="0.08 0.06" />
+                <g transform={`translate(${ni - vi} ${nj - vj})`} opacity={0.7}>
+                  {gross ? <BogenBild i={hi} j={hj} g={h.gleis!} /> : <><GrundBild f={f} i={vi} j={vj} /><GleisBild f={f} i={vi} j={vj} /></>}
+                </g>
+                <rect x={ni + 0.02} y={nj + 0.02} width={0.96} height={0.96} rx={0.06} fill="none" stroke={F.karmin} strokeWidth={0.06} />
+              </g>
+            )
+          })()}
         </svg>
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-2">

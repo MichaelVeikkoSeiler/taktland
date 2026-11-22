@@ -1509,7 +1509,12 @@ aus vier 3 × 3-Kurven gefahren, die Dreiwegweiche geschaltet, Legen, Drehen und
 Seit 2026-11-22 hat jede grosse Kurve einen Griff, das Eckfeld aussen gegenüber der Mitte des Kreises, mit einem Pfeil im Kreis (Michael: «der Drehpunkt immer im leeren Feld
 außerhalb der Kurve … außerhalb des Außenradiuses. Dort dreht man auch immer die Kurve … dort kann man auch … eine Wiese setzen, und so ist die Kurve dann gelöscht»): das angetippte
 Feld wird zum Griff, der Bogen liegt von ihm weg in der Richtung des Werkzeugs (anfangZumGriff); nur ein Tipp auf den Griff dreht sie, im selben Block, der Griff wandert in die nächste
-Ecke; Wiese auf dem Griff löscht sie; der Griff gehört zur Kurve (grossGeometrie.griff, in zellen), auch wo der Bogen ihn nicht berührt (3 × 3); im Browser hier geprüft. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
+Ecke; Wiese auf dem Griff löscht sie; der Griff gehört zur Kurve (grossGeometrie.griff, in zellen), auch wo der Bogen ihn nicht berührt (3 × 3); im Browser hier geprüft.
+Seit 2026-11-22 lässt sich ein belegtes Feld verschieben (Michael: «wenn man länger auf eine belegte Kachel drückt, dieses Feld verschieben kann»): 450 ms ohne Bewegung drücken
+(mehr als 8 Bildpunkte vorher bricht ab, dann rollt die Seite; gewählt), das Feld wird gestrichelt markiert, das Handy vibriert kurz, wo es kann, eine halb durchsichtige Kopie folgt dem
+Finger, das Ziel karminrot umrandet; beim Loslassen wandern Grund und Gleis dorthin, was dort lag, kommt zurück (tauschen; verschieben in src/gleisbau.ts); eine grosse Kurve wandert
+als Ganzes, ihr Grund bleibt, ohne Platz ein Hinweis; auf eine grosse Kurve lässt sich nichts tauschen; während der Fahrt nicht; im Browser hier mit der Maus geprüft, nicht auf einem
+Handy. Auf den eigenen Geräten (taktland.ch/?nichtzaehlen, nichtGezaehlt in src/zaehlen.ts) führt die Zeile doch zum Spiel, «Im Bau · öffnen»
 (Michael, 2026-11-22: «Ich komme aber mit dem Link nicht zum Spiel»).
 Seit 2026-11-22 dazu ein versteckter Schalter in der App: siebenmal innert 4 s auf «Taktland» unten in der Fusszeile tippen markiert das Gerät als eigenes (oder hebt es auf),
 mit Rückfrage, dann lädt die App neu (eigenesGeraetTipp in src/zaehlen.ts; Michael: «Ich öffne die App immer über den Startbildschirm quasi als App. Auf allen Devices»: auf iPhone

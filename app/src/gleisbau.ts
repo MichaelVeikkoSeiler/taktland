@@ -287,6 +287,28 @@ export function grosseLegen(b: Brett, i: number, j: number, g: Gleis): Brett | n
   return neu
 }
 
+/**
+ * Ein Feld verschieben (Michael, 2026-11-22: «wenn man länger auf eine belegte Kachel drückt, dieses Feld verschieben kann»): Grund und Gleis
+ * wandern vom Feld «von» nach «nach», was dort lag, kommt nach «von» (tauschen). Eine grosse Kurve wandert als Ganzes um denselben Abstand, der
+ * Grund darunter bleibt. Gibt das neue Brett oder einen Grund, warum es nicht geht
+ */
+export function verschieben(b: Brett, von: [number, number], nach: [number, number]): Brett | string {
+  const [vi, vj] = von, [ni, nj] = nach
+  if (vi === ni && vj === nj) return b
+  const quelle = b[vj][vi], ziel = b[nj]?.[ni]
+  if (!ziel) return 'Ausserhalb des Bretts.'
+  if (quelle.teil || grosseKurve(quelle.gleis)) {
+    const [hi, hj] = quelle.teil ?? [vi, vj], g = b[hj][hi].gleis!
+    const neu = grosseLegen(grosseEntfernen(b, vi, vj), hi + ni - vi, hj + nj - vj, g)
+    return neu ?? 'Dort hat die Kurve keinen Platz: Sie bräuchte Felder, die schon belegt sind oder ausserhalb liegen.'
+  }
+  if (ziel.teil || grosseKurve(ziel.gleis)) return 'Dort liegt eine grosse Kurve. Verschiebe zuerst sie.'
+  const neu = b.map((z) => z.slice())
+  neu[nj][ni] = quelle
+  neu[vj][vi] = ziel
+  return neu
+}
+
 /** die Bahnhöfe der Reihe nach (Zeile, dann Spalte) mit Buchstaben A, B, C … */
 export function bahnhofNamen(b: Brett): Map<string, string> {
   const n = new Map<string, string>()
