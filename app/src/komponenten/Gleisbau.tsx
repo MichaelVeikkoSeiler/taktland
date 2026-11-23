@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
-  type Brett, brettAusCode, type Gleis, bahnhofGruppen, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
+  type Brett, brettAusCode, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
+import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter from './GleisbauBretter'
 import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild } from './GleisbauBilder'
@@ -31,7 +32,7 @@ const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9
 const KACHEL_H = 0.915
 
 type Werkzeug =
-  | { art: 'linie' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
+  | { art: 'linie' } | { art: 'name' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'linie' }, text: 'Linie ziehen' },
@@ -44,6 +45,7 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
   { w: { art: 'gleis', gleis: 'bahnhof' }, text: 'Bahnhof' },
+  { w: { art: 'name' }, text: 'Name' },
   { w: { art: 'tunnel' }, text: 'Tunnel' },
   { w: { art: 'bruecke' }, text: 'Brücke' },
 ]
@@ -83,6 +85,28 @@ function SignalBild({ brett, belegt }: { brett: Brett; belegt: Array<Set<string>
   return <>{raus}</>
 }
 
+// ohne Akzente, und ae, oe, ue wie a, o, u (so findet «zueri» Zürich)
+const ohneAkzente = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/([aou])e/g, '$1')
+
+/** die Schilder der Bahnhöfe über allem: der Buchstabe, mit einem gewählten Namen daneben (gekürzt, wenn er zu lang ist) */
+function SchildBild({ namen, titel }: { namen: Map<string, string>; titel: Map<string, string> }) {
+  const raus = []
+  for (const [k, n] of namen) {
+    const [i, j] = k.split(',').map(Number)
+    const t = titel.get(n)
+    const kurz = t && t.length > 20 ? `${t.slice(0, 19)}…` : t
+    const breit = kurz ? 0.24 + kurz.length * 0.072 : 0.2
+    raus.push(
+      <g key={k} pointerEvents="none">
+        <rect x={i + 0.06} y={j + 0.06} width={breit} height={0.2} rx={0.03} fill="#3d3d3d" />
+        <text x={i + 0.16} y={j + 0.215} fontSize={0.15} fontWeight={700} textAnchor="middle" fill="#ffffff">{n}</text>
+        {kurz && <text x={i + 0.27} y={j + 0.205} fontSize={0.13} fontWeight={500} fill="#ffffff">{kurz}</text>}
+      </g>,
+    )
+  }
+  return <>{raus}</>
+}
+
 /** Farbe je Ziel (Buchstabe des Bahnhofs), gewählt */
 const ZIEL_FARBE = ['#a8102e', '#1f5fa8', '#2e7d32', '#c77700', '#6a3d9a', '#00838f']
 const zielFarbe = (z: string) => ZIEL_FARBE[(z.charCodeAt(0) - 65) % ZIEL_FARBE.length]
@@ -99,7 +123,7 @@ function WartendeBild({ namen, warten }: { namen: Map<string, string>; warten: R
     const [i, j] = k.split(',').map(Number)
     const l = warten[n] ?? []
     for (let m = 0; m < l.length; m++) {
-      const x = i + 0.36 + m * 0.15, y = j + 0.16
+      const x = i + 0.14 + m * 0.15, y = j + 0.37
       raus.push(
         <g key={`${k}-${m}`} pointerEvents="none">
           <circle cx={x} cy={y} r={0.065} fill={zielFarbe(l[m])} stroke="#ffffff" strokeWidth={0.015} />
@@ -384,6 +408,16 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
       </svg>
     )
   }
+  if (w.art === 'name') {
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={{ grund: 'wiese' }} i={0} j={0} />
+        <GleisBild f={{ grund: 'wiese', gleis: { art: 'bahnhof', dreh: 1 } }} i={0} j={0} />
+        <rect x={0.08} y={0.1} width={0.84} height={0.3} rx={0.05} fill="#3d3d3d" />
+        <text x={0.5} y={0.32} fontSize={0.2} fontWeight={700} textAnchor="middle" fill="#ffffff">Bern</text>
+      </svg>
+    )
+  }
   if (w.art === 'strasse') {
     const b: Brett = [[{ grund: 'wiese', strasse: true }]]
     return (
@@ -452,6 +486,32 @@ export function Gleisbau() {
   brettRef.current = brett
   const svg = useRef<SVGSVGElement>(null)
   const namen = useMemo(() => bahnhofNamen(brett), [brett])
+  const titel = useMemo(() => bahnhofTitel(brett), [brett])
+  // Name eines Bahnhofs wählen (Michael, 2026-11-23, Vorschlag «Bahnhofsnamen»): das angetippte Feld, die Suche und die Bahnhöfe aus dem Index der App
+  const [nameFeld, setNameFeld] = useState<[number, number] | null>(null)
+  const [nameSuche, setNameSuche] = useState('')
+  const [alleNamen, setAlleNamen] = useState<string[] | null>(null)
+  useEffect(() => {
+    if (!nameFeld || alleNamen) return
+    indexLaden().then((ix) => setAlleNamen([...new Set(ix.bahnhoefe.map((e) => e.name))].sort((a, c) => a.localeCompare(c, 'de')))).catch(() => setAlleNamen([]))
+  }, [nameFeld, alleNamen])
+  const treffer = useMemo(() => {
+    if (!alleNamen || !nameSuche.trim()) return []
+    const q = ohneAkzente(nameSuche.trim())
+    const anfang = alleNamen.filter((n) => ohneAkzente(n).startsWith(q)), mitte = alleNamen.filter((n) => !ohneAkzente(n).startsWith(q) && ohneAkzente(n).includes(q))
+    return [...anfang, ...mitte].slice(0, 8)
+  }, [alleNamen, nameSuche])
+  const nameSetzen = (n: string | null) => {
+    if (!nameFeld) return
+    const gruppen = bahnhofGruppen(brett), g = gruppen.get(`${nameFeld[0]},${nameFeld[1]}`)
+    // der Name gilt für den ganzen Bahnhof: auf dem angetippten Feld, auf den anderen Feldern desselben Bahnhofs weg
+    setBrett(brett.map((z, j) => z.map((f, i) => {
+      if (i === nameFeld[0] && j === nameFeld[1]) { const { name: _, ...ohne } = f; return n ? { ...ohne, name: n } : ohne }
+      if (g && gruppen.get(`${i},${j}`) === g && f.name) { const { name: _, ...ohne } = f; return ohne }
+      return f
+    })))
+    setNameFeld(null); setNameSuche(''); knopfTon(true)
+  }
   const SP = spalten(brett), ZE = zeilen(brett)
   // was sich nur mit dem Brett ändert, einmal gebaut; je Bild der Fahrt kommen nur die Wagen neu dazu. Unter dem Zug Grund, Gebiete und Gleise,
   // darüber die Objekte (Bäume, Gipfel, Häuser), nach ihrem Fusspunkt geordnet
@@ -460,7 +520,7 @@ export function Gleisbau() {
       {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} nurFlaeche />))}
       <Landschaft brett={brett} />
       <StrassenBild brett={brett} />
-      {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j} name={namen.get(`${i},${j}`)}
+      {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j}
                                                      weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined}
                                                      wasser={(u, v) => brett[v]?.[u]?.grund === 'wasser'} brett={brett} />))}
     </>
@@ -650,6 +710,11 @@ export function Gleisbau() {
     }
     if (werkzeug.art === 'linie') return
     setMeldung(null)
+    if (werkzeug.art === 'name') {
+      if (!istBahnhof(f.gleis)) { setMeldung('Tippe einen Bahnhof an, um ihm einen Namen zu geben.'); setNameFeld(null); return }
+      setNameFeld([i, j]); setNameSuche('')
+      return
+    }
     const w = werkzeug
     const unterGross = !!f.teil || grosseKurve(f.gleis) > 0
     // grosse Kurve: das angetippte Feld ist ihr Griff, das Eckfeld aussen; tippt man den Griff einer gleichen an, dreht sie sich im selben Block,
@@ -777,7 +842,7 @@ export function Gleisbau() {
       <h1 className="mt-4 text-2xl font-bold tracking-tight">Gleisbau</h1>
       <p className="mt-2 max-w-3xl leading-relaxed">
         Wähle unten ein Stück und tippe ein Feld an, oder «Linie ziehen» und fahre mit dem Finger über die Felder. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
-        Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve. Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden.
+        Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve; mit «Name» gibst du ihm den Namen eines echten Bahnhofs. Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden.
         Bahnhöfe nebeneinander sind ein Bahnhof. Rote Punkte zeigen, wo ein Gleis offen endet. Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Dann «Fahren» (mit «2 Züge» fahren zwei; Signale an den Weichen zeigen, wo ein Zug ist, und keiner fährt in ein besetztes Feld): Mit «Fahrgäste» warten an den Bahnhöfen Figuren mit dem Buchstaben ihres Ziels; der Zug nimmt sie mit und bringt sie hin. Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
       </p>
       <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
@@ -790,6 +855,7 @@ export function Gleisbau() {
           {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y)} farbe={z ? ZWEITER_ZUG : F.karmin} />))}
           {oben}
           <SchrankenBild brett={brett} wagen={wagen.flat()} />
+          <SchildBild namen={namen} titel={titel} />
           {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
           {!faehrt && enden.map((e, k) => (
@@ -817,6 +883,25 @@ export function Gleisbau() {
           })()}
         </svg>
       </div>
+      {nameFeld && (
+        <div className="mt-3 max-w-xl rounded-lg bg-sbb-milk p-3 dark:bg-sbb-charcoal">
+          <label className="text-sm font-bold" htmlFor="gleisbau-name">Name für Bahnhof {bahnhofGruppen(brett).get(`${nameFeld[0]},${nameFeld[1]}`)}</label>
+          <input id="gleisbau-name" value={nameSuche} onChange={(e) => setNameSuche(e.target.value)} autoFocus placeholder="Bahnhof aus Taktland suchen"
+                 className="mt-2 w-full rounded-lg border border-sbb-cloud bg-white px-3 py-2 dark:border-sbb-iron dark:bg-sbb-midnight" />
+          {!alleNamen && <p className="mt-2 text-sm">Bahnhöfe werden geladen …</p>}
+          {treffer.length > 0 && (
+            <ul className="mt-2 space-y-1">
+              {treffer.map((n) => (
+                <li key={n}><button type="button" onClick={() => nameSetzen(n)} className="kachel-link kachel w-full px-3 py-2 text-left">{n}</button></li>
+              ))}
+            </ul>
+          )}
+          <div className="mt-2 flex gap-3">
+            <button type="button" onClick={() => nameSetzen(null)} className="underline underline-offset-2">Ohne Namen</button>
+            <button type="button" onClick={() => { setNameFeld(null); setNameSuche('') }} className="underline underline-offset-2">Abbrechen</button>
+          </div>
+        </div>
+      )}
       {fahrgaeste && (
         <p role="status" className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
           <span className="font-bold">Gebracht: <span className="tabular-nums">{fahrgaeste.gebracht}</span></span>

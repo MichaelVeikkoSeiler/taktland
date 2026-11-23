@@ -1590,6 +1590,10 @@ Knopf «Fahrgäste» neben «Fahren», am Anfang an (src/gleisbauFahrgaeste.ts):
 Farbe), alle 4 s ein neuer an einem zufälligen Bahnhof, höchstens 4 je Bahnhof; bei jedem Halt steigen die mit diesem Ziel aus (je einer «Gebracht» und ein kurzer Ton), dann so
 viele ein, wie von 6 Plätzen frei sind (Zug.halte, haltFeld; bahnhofGruppen); unter dem Brett «Gebracht» und je Zug die Ziele darin; alle Zahlen gewählt; im Browser hier 25 s
 gefahren.
+Werkzeug «Name» nach «Bahnhof»: ein Bahnhof angetippt, darunter eine Suche über die Bahnhöfe aus dem Index der App (indexLaden, erst dann geladen; ohne Akzente, ae, oe, ue wie
+a, o, u, Wortanfang vor Mitte, 8 Treffer), der Name gilt für den ganzen Bahnhof (Feld.name auf einem seiner Felder, bahnhofTitel), «Ohne Namen» nimmt ihn weg; auf dem Schild über
+allem neben dem Buchstaben, ab 21 Zeichen gekürzt (SchildBild); die Buchstaben bleiben für die Fahrgäste; im Link als weiterer Teil «n» (Spalte.Zeile.Name); keine Angabe über den
+echten Bahnhof, nur sein Name.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

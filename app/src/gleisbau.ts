@@ -26,7 +26,8 @@ export const grosseKurve = (g?: Gleis) => (g?.art === 'bogen2' ? 2 : g?.art === 
 
 export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 und 2 abzweigend */ stellung?: 0 | 1 | 2 }
 /** teil: das Feld liegt unter einer grossen Kurve, die im Feld [i, j] (ihrem Anfang) steht */
-export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /** eine Strasse im Feld; kreuzt sie eine Gerade, ist es ein Bahnübergang */ strasse?: true }
+export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /** eine Strasse im Feld; kreuzt sie eine Gerade, ist es ein Bahnübergang */ strasse?: true
+  /** Name eines echten Bahnhofs aus Taktland für den Bahnhof, zu dem dieses Feld gehört */ name?: string }
 export type Brett = Feld[][] // [Zeile][Spalte]
 
 /** Kanten eines Felds: 0 Nord, 1 Ost, 2 Süd, 3 West; -1 die Mitte (Ende am Prellbock) */
@@ -274,11 +275,15 @@ export function brettLesen(): Brett | null {
  * weiteren «~» dazu
  */
 const GRUND_Z = 'wfsbd', STRASSE_Z = 'WFSBD', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN'
+const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
-  return '1~' + b.map((z) => z.map((f) => (f.strasse ? STRASSE_Z : GRUND_Z)[GRUENDE.indexOf(f.grund)] + (f.gleis ? GLEIS_Z[ARTEN.indexOf(f.gleis.art) * 4 + f.gleis.dreh] : '.')).join('')).join('-')
+  // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
+  const namen: string[] = []
+  b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
+  return '1~' + b.map((z) => z.map((f) => (f.strasse ? STRASSE_Z : GRUND_Z)[GRUENDE.indexOf(f.grund)] + (f.gleis ? GLEIS_Z[ARTEN.indexOf(f.gleis.art) * 4 + f.gleis.dreh] : '.')).join('')).join('-') + (namen.length ? `~n${namen.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
-  const [v, felder] = c.split('~')
+  const [v, felder, ...weitere] = c.split('~')
   if (v !== '1' || !felder) return null
   const zeilenText = felder.split('-')
   const b: Brett = zeilenText.map((z) => Array.from({ length: z.length / 2 }, (_, k) => {
@@ -289,6 +294,13 @@ export function brettAusCode(c: string): Brett | null {
     return f
   }))
   if (!GROESSEN.some(([sp, ze]) => b.length === ze && b.every((z) => z.length === sp))) return null
+  for (const teil of weitere) {
+    if (!teil.startsWith('n')) continue
+    for (const e of teil.slice(1).split('_')) {
+      const [i, j, n] = e.split('.')
+      try { if (b[+j]?.[+i] && n) b[+j][+i].name = decodeURIComponent(n).slice(0, 60) } catch { /* ungültig, ohne Namen */ }
+    }
+  }
   // die Felder unter grossen Kurven; passt eine nicht, fällt sie weg
   for (let j = 0; j < b.length; j++) for (let i = 0; i < b[0].length; i++) {
     const g = b[j][i].gleis
@@ -391,6 +403,17 @@ export function verschieben(b: Brett, von: [number, number], nach: [number, numb
   neu[nj][ni] = quelle
   neu[vj][vi] = ziel
   return neu
+}
+
+/** je Bahnhof (Buchstabe) der gewählte Name aus Taktland, der erste in der Reihenfolge der Felder */
+export function bahnhofTitel(b: Brett): Map<string, string> {
+  const raus = new Map<string, string>()
+  const gruppen = bahnhofGruppen(b)
+  for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
+    const n = b[j][i].name, g = gruppen.get(`${i},${j}`)
+    if (n && g && !raus.has(g)) raus.set(g, n)
+  }
+  return raus
 }
 
 /** je Bahnhofsfeld der Buchstabe seines Bahnhofs (alle Felder, nicht nur das erste) */
