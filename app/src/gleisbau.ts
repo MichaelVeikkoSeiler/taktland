@@ -393,6 +393,23 @@ export function verschieben(b: Brett, von: [number, number], nach: [number, numb
   return neu
 }
 
+/** je Bahnhofsfeld der Buchstabe seines Bahnhofs (alle Felder, nicht nur das erste) */
+export function bahnhofGruppen(b: Brett): Map<string, string> {
+  const namen = bahnhofNamen(b), raus = new Map<string, string>()
+  for (const [k, n] of namen) {
+    const offen = [k.split(',').map(Number) as [number, number]]
+    raus.set(k, n)
+    while (offen.length) {
+      const [u, v] = offen.pop()!
+      for (let r = 0; r < 4; r++) {
+        const p = u + DX[r], q = v + DY[r], key = `${p},${q}`
+        if (!raus.has(key) && istBahnhof(b[q]?.[p]?.gleis)) { raus.set(key, n); offen.push([p, q]) }
+      }
+    }
+  }
+  return raus
+}
+
 /** die Bahnhöfe der Reihe nach (Zeile, dann Spalte) mit Buchstaben A, B, C … */
 export function bahnhofNamen(b: Brett): Map<string, string> {
   // Bahnhofsfelder, die einander an einer Kante berühren, sind ein Bahnhof mit einem Namen, das Schild auf dem ersten Feld (Michael, 2026-11-23:
@@ -625,6 +642,9 @@ export class Zug {
   private amBahnhof = false
   /** zählt hoch, wenn der Zug PFIFF_VOR_S vor der Abfahrt an einem Bahnhof steht; die Darstellung pfeift dann */
   pfiffe = 0
+  /** zählt hoch bei jedem Halt an einem Bahnhof, haltFeld ist dessen Feld (für die Fahrgäste) */
+  halte = 0
+  haltFeld = ''
 
   /**
    * null, wenn auf dem Brett kein Gleis liegt. meiden: Felder eines anderen Zugs (Michael, 2026-11-23, Vorschlag «Zweiter Zug»); der neue beginnt
@@ -667,7 +687,7 @@ export class Zug {
       erstes = umgekehrt(davor)
       z.stuecke.unshift(erstes)
     }
-    if (istBahnhof(b[start.j][start.i].gleis)) { z.halt = HALT_S; z.amBahnhof = true }
+    if (istBahnhof(b[start.j][start.i].gleis)) { z.halt = HALT_S; z.amBahnhof = true; z.halte++; z.haltFeld = `${start.i},${start.j}` }
     return z
   }
 
@@ -726,7 +746,7 @@ export class Zug {
       // in einem Bahnhof aus mehreren Feldern nur einmal, im letzten Feld in Fahrtrichtung
       const weiterImBahnhof = () => { const n = naechstes(b, s); return !!n && !n.gross && istBahnhof(b[n.j][n.i].gleis) }
       if (!s.gross && istBahnhof(b[s.j][s.i].gleis) && vorher < mitte && vorher + rest >= mitte && !weiterImBahnhof()) {
-        this.kopf = mitte; this.halt = HALT_S; this.amBahnhof = true; this.tempo = 0; return
+        this.kopf = mitte; this.halt = HALT_S; this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`; return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
       rest -= l - vorher

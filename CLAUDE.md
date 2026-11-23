@@ -1586,6 +1586,10 @@ ein, die der andere nicht belegt (Zug.belegt: Felder der Wagen und des Stücks u
 kehrt nach 2,5 s der um, der länger wartet (UMKEHREN_NACH_S); Signale an Weichen und Kreuzungen nur mit zwei Zügen, rot solange ein Zug das Feld belegt (SignalBild); beim Umkehren
 am Gleisende zählt ein Feld erst als belegt, wenn die Spitze darin ist (sonst stiessen Züge zusammen); geprüft mit 197 zufälligen Brettern je drei Minuten Fahrt ohne Zusammenstoss
 und ohne Stillstand (Abstand der Wagenmitten nie unter 0,3 Feldern); alles gewählt.
+Knopf «Fahrgäste» neben «Fahren», am Anfang an (src/gleisbauFahrgaeste.ts): ab zwei Bahnhöfen warten Figuren mit dem Buchstaben ihres Ziels neben dem Schild (je Ziel eine
+Farbe), alle 4 s ein neuer an einem zufälligen Bahnhof, höchstens 4 je Bahnhof; bei jedem Halt steigen die mit diesem Ziel aus (je einer «Gebracht» und ein kurzer Ton), dann so
+viele ein, wie von 6 Plätzen frei sind (Zug.halte, haltFeld; bahnhofGruppen); unter dem Brett «Gebracht» und je Zug die Ziele darin; alle Zahlen gewählt; im Browser hier 25 s
+gefahren.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

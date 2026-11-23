@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { abfahrtsPfiff, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
+import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
-  type Brett, brettAusCode, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
+  type Brett, brettAusCode, type Gleis, bahnhofGruppen, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
+import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter from './GleisbauBretter'
 import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild } from './GleisbauBilder'
 
@@ -78,6 +79,34 @@ function SignalBild({ brett, belegt }: { brett: Brett; belegt: Array<Set<string>
         <circle cx={i + 0.15} cy={j + 0.2} r={0.03} fill={rot ? '#3a3a3c' : '#34c759'} />
       </g>,
     )
+  }
+  return <>{raus}</>
+}
+
+/** Farbe je Ziel (Buchstabe des Bahnhofs), gewählt */
+const ZIEL_FARBE = ['#a8102e', '#1f5fa8', '#2e7d32', '#c77700', '#6a3d9a', '#00838f']
+const zielFarbe = (z: string) => ZIEL_FARBE[(z.charCodeAt(0) - 65) % ZIEL_FARBE.length]
+
+/** ein Fahrgast mit Ziel als runde Marke mit Buchstaben */
+function Ziel({ z }: { z: string }) {
+  return <span className="inline-flex size-5 items-center justify-center rounded-full text-[11px] font-bold text-white" style={{ background: zielFarbe(z) }}>{z}</span>
+}
+
+/** die Wartenden an jedem Bahnhof: Figuren mit dem Buchstaben ihres Ziels neben dem Schild */
+function WartendeBild({ namen, warten }: { namen: Map<string, string>; warten: Record<string, string[]> }) {
+  const raus = []
+  for (const [k, n] of namen) {
+    const [i, j] = k.split(',').map(Number)
+    const l = warten[n] ?? []
+    for (let m = 0; m < l.length; m++) {
+      const x = i + 0.36 + m * 0.15, y = j + 0.16
+      raus.push(
+        <g key={`${k}-${m}`} pointerEvents="none">
+          <circle cx={x} cy={y} r={0.065} fill={zielFarbe(l[m])} stroke="#ffffff" strokeWidth={0.015} />
+          <text x={x} y={y + 0.035} fontSize={0.09} fontWeight={700} textAnchor="middle" fill="#ffffff">{l[m]}</text>
+        </g>,
+      )
+    }
   }
   return <>{raus}</>
 }
@@ -403,6 +432,11 @@ export function Gleisbau() {
   const [wagen, setWagen] = useState<WagenLage[][]>([])
   // ein oder zwei Züge (Michael, 2026-11-23, Vorschlag «Zweiter Zug auf demselben Netz»)
   const [zweiZuege, setZweiZuege] = useState(false)
+  // Fahrgäste mit Ziel an den Bahnhöfen (Michael, 2026-11-23, Vorschlag «Fahrgäste»), am Anfang an
+  const [mitFahrgaesten, setMitFahrgaesten] = useState(true)
+  const [fahrgaeste, setFahrgaeste] = useState<Fahrgaeste | null>(null)
+  const fgRef = useRef<Fahrgaeste | null>(null)
+  const halteRef = useRef<number[]>([])
   const [meldung, setMeldung] = useState<string | null>(null)
   const [leerenScharf, setLeerenScharf] = useState(false)
   // langes Drücken auf ein belegtes Feld hebt es an, Ziehen verschiebt es (Michael, 2026-11-22)
@@ -486,6 +520,22 @@ export function Gleisbau() {
         const [si, sj] = z.spitze(), f = brettRef.current[sj]?.[si]
         const ort = f?.gleis && !grosseKurve(f.gleis) ? (f.grund === 'berg' ? 'tunnel' : f.grund === 'wasser' ? 'bruecke' : null) : null
         zuggeraeuschTempo(z.anteil() * ZUG_KLANG_MS, Infinity, ort, 1, true)
+      }
+      // Fahrgäste: neue an den Bahnhöfen, Aus- und Einsteigen bei jedem Halt
+      const fg = fgRef.current
+      if (fg) {
+        const gruppen = bahnhofGruppen(brettRef.current), bahnhoefe = [...new Set(gruppen.values())]
+        let neu = fahrgaesteZeit(fg, dt, bahnhoefe)
+        zz.forEach((z, k) => {
+          if (z.halte === (halteRef.current[k] ?? 0)) return
+          halteRef.current[k] = z.halte
+          const wo = gruppen.get(z.haltFeld)
+          if (!wo) return
+          const { aus, ein } = fahrgaesteHalt(fg, k, wo)
+          if (aus) antwortTon('richtig')
+          if (aus || ein) neu = true
+        })
+        if (neu) setFahrgaeste({ ...fg, warten: { ...fg.warten }, imZug: fg.imZug.map((l) => [...l]) })
       }
       setWagen(zz.map((z) => z.wagen()))
       los = requestAnimationFrame(bild)
@@ -684,7 +734,7 @@ export function Gleisbau() {
   }
 
   function fahren() {
-    if (faehrt) { setFaehrt(false); setWagen([]); zuege.current = []; return }
+    if (faehrt) { setFaehrt(false); setWagen([]); zuege.current = []; fgRef.current = null; setFahrgaeste(null); return }
     const z = Zug.setzen(brett)
     if (!z) { setMeldung('Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
     const l = [z]
@@ -694,6 +744,10 @@ export function Gleisbau() {
       else setMeldung('Für einen zweiten Zug ist das Netz zu klein: Er braucht Platz weit weg vom ersten.')
     }
     if (l.length === 2 || !zweiZuege) setMeldung(null)
+    const bahnhoefe = [...new Set(bahnhofNamen(brett).values())]
+    const fg = mitFahrgaesten ? fahrgaesteStart(bahnhoefe, l.length) : null
+    if (mitFahrgaesten && !fg) setMeldung('Für Fahrgäste braucht es mindestens zwei Bahnhöfe.')
+    fgRef.current = fg; setFahrgaeste(fg ? { ...fg } : null); halteRef.current = []
     zuege.current = l; pfiffe.current = []; dorf.current = false; setWagen(l.map((x) => x.wagen())); setFaehrt(true)
   }
 
@@ -724,7 +778,7 @@ export function Gleisbau() {
       <p className="mt-2 max-w-3xl leading-relaxed">
         Wähle unten ein Stück und tippe ein Feld an, oder «Linie ziehen» und fahre mit dem Finger über die Felder. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
         Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve. Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden.
-        Bahnhöfe nebeneinander sind ein Bahnhof. Rote Punkte zeigen, wo ein Gleis offen endet. Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Dann «Fahren» (mit «2 Züge» fahren zwei; Signale an den Weichen zeigen, wo ein Zug ist, und keiner fährt in ein besetztes Feld): Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
+        Bahnhöfe nebeneinander sind ein Bahnhof. Rote Punkte zeigen, wo ein Gleis offen endet. Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Dann «Fahren» (mit «2 Züge» fahren zwei; Signale an den Weichen zeigen, wo ein Zug ist, und keiner fährt in ein besetztes Feld): Mit «Fahrgäste» warten an den Bahnhöfen Figuren mit dem Buchstaben ihres Ziels; der Zug nimmt sie mit und bringt sie hin. Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
       </p>
       <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
@@ -736,6 +790,7 @@ export function Gleisbau() {
           {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y)} farbe={z ? ZWEITER_ZUG : F.karmin} />))}
           {oben}
           <SchrankenBild brett={brett} wagen={wagen.flat()} />
+          {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
           {!faehrt && enden.map((e, k) => (
             <g key={`e${k}`} pointerEvents="none">
@@ -762,9 +817,25 @@ export function Gleisbau() {
           })()}
         </svg>
       </div>
+      {fahrgaeste && (
+        <p role="status" className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+          <span className="font-bold">Gebracht: <span className="tabular-nums">{fahrgaeste.gebracht}</span></span>
+          {fahrgaeste.imZug.map((l, k) => (
+            <span key={k} className="flex items-center gap-1">
+              {fahrgaeste.imZug.length > 1 ? `Zug ${k + 1}` : 'Im Zug'}: {l.length ? l.map((z, m) => <Ziel key={m} z={z} />) : <span className="text-sbb-metal dark:text-sbb-storm">leer</span>}
+            </span>
+          ))}
+        </p>
+      )}
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <button type="button" onClick={fahren}
                 className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">{faehrt ? 'Anhalten' : 'Fahren'}</button>
+        <button type="button" disabled={faehrt} aria-pressed={mitFahrgaesten} onClick={() => setMitFahrgaesten((x) => !x)}
+                className={`min-h-12 rounded-lg border px-4 font-bold disabled:opacity-40 ${mitFahrgaesten
+                  ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
+                  : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
+          Fahrgäste
+        </button>
         <button type="button" disabled={faehrt} aria-pressed={zweiZuege} onClick={() => setZweiZuege((x) => !x)}
                 className={`min-h-12 rounded-lg border px-4 font-bold disabled:opacity-40 ${zweiZuege
                   ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
