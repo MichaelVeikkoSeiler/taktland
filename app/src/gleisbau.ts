@@ -520,6 +520,16 @@ export function wegPunkte(s: Stueck, n = 10): Array<{ x: number; y: number; w: n
   return Array.from({ length: n + 1 }, (_, k) => stueckPunkt(s, (l * k) / n))
 }
 
+/** die Felder, durch die ein Stück führt: bei einem kleinen sein Feld, bei einer grossen Kurve alle, über die der Bogen läuft */
+function stueckFelder(s: Stueck): Set<string> {
+  const raus = new Set<string>([`${s.i},${s.j}`])
+  if (!s.gross) return raus
+  raus.add(`${s.gross.i},${s.gross.j}`)
+  const l = stueckLaenge(s)
+  for (let k = 1; k < 24; k++) { const p = stueckPunkt(s, (l * k) / 24); raus.add(`${Math.floor(p.x)},${Math.floor(p.y)}`) }
+  return raus
+}
+
 const umgekehrt = (s: Stueck): Stueck => (s.gross
   ? { i: s.gross.i, j: s.gross.j, ein: -2, aus: s.gross.kante,
       gross: { i: s.i, j: s.j, kante: s.aus, cx: s.gross.cx, cy: s.gross.cy, r: s.gross.r, a0: s.gross.a0 + s.gross.da, da: -s.gross.da } }
@@ -616,13 +626,35 @@ export class Zug {
   /** zählt hoch, wenn der Zug PFIFF_VOR_S vor der Abfahrt an einem Bahnhof steht; die Darstellung pfeift dann */
   pfiffe = 0
 
-  /** null, wenn auf dem Brett kein Gleis liegt */
-  static setzen(b: Brett): Zug | null {
-    let start: Stueck | null = null
-    for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) {
-      if (istBahnhof(b[j][i].gleis)) start = erstesStueck(b, i, j)
+  /**
+   * null, wenn auf dem Brett kein Gleis liegt. meiden: Felder eines anderen Zugs (Michael, 2026-11-23, Vorschlag «Zweiter Zug»); der neue beginnt
+   * dann an einem anderen Bahnhof oder möglichst weit weg und belegt keines dieser Felder und keines daneben
+   */
+  static setzen(b: Brett, meiden?: Set<string>): Zug | null {
+    const felder: Array<[number, number]> = []
+    for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) if (b[j][i].gleis) felder.push([i, j])
+    const abstand = ([i, j]: [number, number]) => {
+      if (!meiden?.size) return 0
+      let d = Infinity
+      for (const k of meiden) { const [u, v] = k.split(',').map(Number); d = Math.min(d, Math.abs(u - i) + Math.abs(v - j)) }
+      return d
     }
-    for (let j = 0; j < zeilen(b) && !start; j++) for (let i = 0; i < spalten(b) && !start; i++) start = erstesStueck(b, i, j)
+    // zuerst Bahnhöfe, dann die übrigen; mit einem anderen Zug die fernsten zuerst
+    felder.sort((a, c) => Number(istBahnhof(b[c[1]][c[0]].gleis)) - Number(istBahnhof(b[a[1]][a[0]].gleis)) || abstand(c) - abstand(a))
+    for (const [i, j] of felder) {
+      const z = Zug.ab(b, i, j)
+      if (!z) continue
+      if (meiden?.size) {
+        const nah = [...z.belegt()].some((k) => { const [u, v] = k.split(',').map(Number); return [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]].some(([du, dv]) => meiden.has(`${u + du},${v + dv}`)) })
+        if (nah) continue
+      }
+      return z
+    }
+    return null
+  }
+
+  private static ab(b: Brett, i: number, j: number): Zug | null {
+    const start = erstesStueck(b, i, j)
     if (!start) return null
     const z = new Zug()
     z.stuecke = [start]
@@ -655,6 +687,8 @@ export class Zug {
     const ende = Math.max(0, this.hinten() - ZUG_LAENGE)
     this.stuecke = this.stuecke.map(umgekehrt).reverse()
     this.kopf = Math.max(0, stueckLaenge(this.stuecke[this.stuecke.length - 1]) - ende)
+    // steht die neue Spitze genau am Anfang eines Stücks, ist sie noch nicht darin: sonst gälte ein Feld als belegt, in das der Zug nie fuhr
+    while (this.kopf <= 1e-6 && this.stuecke.length > 1) { this.stuecke.pop(); this.kopf = stueckLaenge(this.stuecke[this.stuecke.length - 1]) }
     this.rueckwaerts = !this.rueckwaerts
     this.tempo = 0
     this.halt = 0.8
@@ -662,7 +696,22 @@ export class Zug {
     this.kuerzen()
   }
 
-  schritt(b: Brett, dt: number) {
+  /** wie lange der Zug schon vor einem belegten Feld wartet, in s */
+  wartet = 0
+
+  /** die Felder, die der Zug mit seinen Wagen und dem Stück unter der Spitze belegt */
+  belegt(): Set<string> {
+    const raus = new Set<string>()
+    for (let d = -0.1; d <= ZUG_LAENGE + 0.05; d += 0.2) { const p = this.punkt(Math.max(0, d)); raus.add(`${Math.floor(p.x)},${Math.floor(p.y)}`) }
+    for (const k of stueckFelder(this.stuecke[this.stuecke.length - 1])) raus.add(k)
+    return raus
+  }
+
+  /**
+   * frei: ob der Zug in diese Felder einfahren darf (sonst wartet er am Ende des Stücks, wie vor einem roten Signal); umkehren: ob er nach langem
+   * Warten umkehren soll (wenn zwei Züge auf einem Gleis gegeneinander warten)
+   */
+  schritt(b: Brett, dt: number, frei?: (felder: Set<string>) => boolean, umkehren?: () => boolean) {
     if (this.halt > 0) {
       if (this.amBahnhof && this.halt > PFIFF_VOR_S && this.halt - dt <= PFIFF_VOR_S) this.pfiffe++
       this.halt -= dt
@@ -683,6 +732,12 @@ export class Zug {
       rest -= l - vorher
       const n = naechstes(b, s)
       if (!n) { this.kopf = l; this.umkehren(); return }
+      if (frei && !frei(stueckFelder(n))) {
+        this.kopf = l; this.tempo = 0; this.wartet += dt
+        if (umkehren?.()) { this.wartet = 0; this.umkehren() }
+        return
+      }
+      this.wartet = 0
       this.stuecke.push(n); this.kopf = 0
       this.kuerzen()
     }

@@ -1581,6 +1581,11 @@ Bahnübergang mit der Strasse quer zum Gleis; sonst führt die Strasse zu Nachba
 mit hellem Rand und gestrichelter Mitte; Schranken je Seite rot-weiss, zu ab 1,3 Feldern Abstand des nächsten Wagens, ganz offen ab 1,9, dazwischen gleitend, mit rotem Licht
 (SchrankenBild); Bäume und Büsche nicht auf der Strasse; nochmals tippen oder «Entfernen» (zuerst das Gleis, dann die Strasse) nimmt sie weg; alles gewählt; im Browser hier mit
 fahrendem Zug angeschaut.
+Knopf «2 Züge» neben «Fahren»: der zweite Zug (Spitze blau #1f5fa8) beginnt an einem anderen Bahnhof oder möglichst weit weg (Zug.setzen mit meiden); ein Zug fährt nur in Felder
+ein, die der andere nicht belegt (Zug.belegt: Felder der Wagen und des Stücks unter der Spitze; schritt mit frei), sonst wartet er am Ende seines Stücks; warten beide aufeinander,
+kehrt nach 2,5 s der um, der länger wartet (UMKEHREN_NACH_S); Signale an Weichen und Kreuzungen nur mit zwei Zügen, rot solange ein Zug das Feld belegt (SignalBild); beim Umkehren
+am Gleisende zählt ein Feld erst als belegt, wenn die Spitze darin ist (sonst stiessen Züge zusammen); geprüft mit 197 zufälligen Brettern je drei Minuten Fahrt ohne Zusammenstoss
+und ohne Stillstand (Abstand der Wagenmitten nie unter 0,3 Feldern); alles gewählt.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
