@@ -1560,7 +1560,12 @@ geordnet über dem Zug, mit Schatten vom Programm, nicht über den Rand des Bret
 Gipfel, der Tunnel mit der Felstextur gedeckt; je Dorf höchstens eine Kapelle, die Scheune eher am Rand; Perrons gerade und in der Kurve, Prellbock und Tunnelportale Süd, West
 und Ost als Bilder (Portal höchstens 0,8 bzw. 0,6 Felder breit, Öffnung 0,34), Nord vorerst ein schlichtes Portal (das Bild hatte das Schachbrett mitgemalt, ChatGPT liefert neu);
 Gleise, Brücken, Zug und Schilder weiter im Programm; Knöpfe der Landschaft mit denselben Bildern; alle Masse, Anteile und Regeln gewählt; Gleisbau weiter «Im Bau»; im Browser
-hier mit 900 und 390 Bildpunkten angeschaut. Die 3D-Ansicht ist unverändert.
+hier mit 900 und 390 Bildpunkten angeschaut.
+Seit 2026-11-23 ohne 3D-Ansicht (Michael: «3D Ansicht entfernen. Noch kein Mehrwert»): «Bauen in 2D» und «Ansehen in 3D» und komponenten/Gleisbau3D.tsx sind weg, die
+Beschreibung der 3D-Ansicht oben gilt nicht mehr. Seit 2026-11-23 beliebig viele Schritte zurück statt 10 (Michael: «Unendliche Schritte zurück möglich machen»), nur im
+Speicher, bis die Seite neu lädt. Seit 2026-11-23 sind Bahnhofsfelder, die einander an einer Kante berühren, ein Bahnhof (Michael: «Wenn mehrere Bahnhöfe einander angrenzen
+soll es einer sein»): ein Name und ein Schild auf dem ersten Feld (bahnhofNamen in src/gleisbau.ts), der Zug hält darin nur einmal, im letzten Feld in Fahrtrichtung; im
+Browser hier mit einem Bahnhof aus vier Feldern geprüft.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

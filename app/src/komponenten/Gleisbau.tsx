@@ -1,5 +1,4 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
-import { ladenVerfolgen } from '../daten'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
@@ -7,9 +6,6 @@ import {
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild } from './GleisbauBilder'
-
-/** die 3D-Ansicht erst beim Umschalten laden (three.js ist gross) */
-const Gleisbau3D = lazy(() => ladenVerfolgen(import('./Gleisbau3D')))
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
 
@@ -58,9 +54,6 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
 ]
 
 const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringify(b)
-
-/** so viele Schritte lassen sich rückgängig machen */
-const RUECKGAENGIG = 10
 
 /** so schnell klingt der Zug bei vollem Tempo auf dem Brett, in m/s (etwa 80 km/h; gewählt, das Brett hat keinen Massstab) */
 const ZUG_KLANG_MS = 22
@@ -344,11 +337,12 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
  */
 export function Gleisbau() {
   const [brett, setBrettRoh] = useState<Brett>(() => brettLesen() ?? beispiel())
-  // bis zu RUECKGAENGIG Schritte zurück (Michael, 2026-11-22: «Man muss 10 Schritte rückwärts machen können»); jedes Bauen, Verschieben, Beispiel,
+  // beliebig viele Schritte zurück (Michael, 2026-11-22: «Man muss 10 Schritte rückwärts machen können», seit 2026-11-23 «Unendliche Schritte zurück
+  // möglich machen»; nur im Speicher, bis die Seite neu lädt); jedes Bauen, Verschieben, Beispiel,
   // Leeren und jede neue Grösse ist ein Schritt, das Stellen der Weichen während der Fahrt nicht
   const [verlauf, setVerlauf] = useState<Brett[]>([])
   const setBrett = (b: Brett, merken = true) => {
-    if (merken && b !== brett) setVerlauf((v) => [...v.slice(-(RUECKGAENGIG - 1)), brett])
+    if (merken && b !== brett) setVerlauf((v) => [...v, brett])
     setBrettRoh(b)
   }
   const zurueck = () => {
@@ -362,8 +356,6 @@ export function Gleisbau() {
   const [wagen, setWagen] = useState<WagenLage[]>([])
   const [meldung, setMeldung] = useState<string | null>(null)
   const [leerenScharf, setLeerenScharf] = useState(false)
-  // 2D bauen, 3D anschauen (Michael, 2026-11-22)
-  const [ansicht, setAnsicht] = useState<'2d' | '3d'>('2d')
   // langes Drücken auf ein belegtes Feld hebt es an, Ziehen verschiebt es (Michael, 2026-11-22)
   const [ziehen, setZiehen] = useState<{ von: [number, number]; nach: [number, number] } | null>(null)
   const druck = useRef<{ x: number; y: number; zeit: number; feld: [number, number] } | null>(null)
@@ -577,7 +569,7 @@ export function Gleisbau() {
       <div className="mt-2 flex flex-wrap gap-2">
         {l.map(({ w, text }) => (
           <button key={text} type="button" aria-pressed={gleich(w, werkzeug)} disabled={faehrt}
-                  onClick={() => { setWerkzeug(w); setAnsicht('2d') }} className={`${knopf(gleich(w, werkzeug))} disabled:opacity-40`}>
+                  onClick={() => setWerkzeug(w)} className={`${knopf(gleich(w, werkzeug))} disabled:opacity-40`}>
             <WerkzeugBild w={w} dreh={dreh} />
             {text}
           </button>
@@ -594,27 +586,9 @@ export function Gleisbau() {
       <p className="mt-2 max-w-3xl leading-relaxed">
         Wähle unten ein Stück und tippe ein Feld an. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
         Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve. Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden.
-        Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
+        Bahnhöfe nebeneinander sind ein Bahnhof. Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
       </p>
-      <div className="mt-4 flex gap-2" role="group" aria-label="Ansicht">
-        {(['2d', '3d'] as const).map((a) => (
-          <button key={a} type="button" aria-pressed={ansicht === a} onClick={() => { setAnsicht(a); setMeldung(null) }}
-                  className={`rounded-lg border px-4 py-2 text-sm font-bold ${ansicht === a
-                    ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
-                    : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`}>
-            {a === '2d' ? 'Bauen in 2D' : 'Ansehen in 3D'}
-          </button>
-        ))}
-      </div>
-      {ansicht === '3d' && (
-        <div className={`mt-3 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
-          <Suspense fallback={<div className="aspect-[4/3] w-full rounded-lg bg-sbb-milk dark:bg-sbb-charcoal" />}>
-            <Gleisbau3D brett={brett} namen={namen} zug={zug} imTunnel={imTunnel} />
-          </Suspense>
-          <p className={`mt-2 ${LEISE}`}>Mit einem Finger drehen, mit zwei zoomen und verschieben. Gebaut wird in 2D.</p>
-        </div>
-      )}
-      <div className={`mt-3 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'} ${ansicht === '3d' ? 'hidden' : ''}`}>
+      <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
              onPointerCancel={() => { druck.current = null; setZiehen(null) }} onContextMenu={(e) => e.preventDefault()}
@@ -684,7 +658,7 @@ export function Gleisbau() {
       {leiste('Landschaft', LANDSCHAFT)}
       <p className={`mt-5 max-w-3xl ${LEISE}`}>
         Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Dein Brett bleibt im Browser dieses
-        Geräts und wird nicht gesendet. Bald: Führerstand im Modell und Aufgaben.
+        Geräts und wird nicht gesendet. Bald: Aufgaben.
       </p>
     </div>
   )

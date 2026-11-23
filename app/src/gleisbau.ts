@@ -322,9 +322,22 @@ export function verschieben(b: Brett, von: [number, number], nach: [number, numb
 
 /** die Bahnhöfe der Reihe nach (Zeile, dann Spalte) mit Buchstaben A, B, C … */
 export function bahnhofNamen(b: Brett): Map<string, string> {
-  const n = new Map<string, string>()
+  // Bahnhofsfelder, die einander an einer Kante berühren, sind ein Bahnhof mit einem Namen, das Schild auf dem ersten Feld (Michael, 2026-11-23:
+  // «Wenn mehrere Bahnhöfe einander angrenzen soll es einer sein»)
+  const n = new Map<string, string>(), gesehen = new Set<string>()
+  let nr = 0
   for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
-    if (istBahnhof(b[j][i].gleis)) n.set(`${i},${j}`, String.fromCharCode(65 + (n.size % 26)))
+    if (!istBahnhof(b[j][i].gleis) || gesehen.has(`${i},${j}`)) continue
+    n.set(`${i},${j}`, String.fromCharCode(65 + (nr++ % 26)))
+    const offen: Array<[number, number]> = [[i, j]]
+    gesehen.add(`${i},${j}`)
+    while (offen.length) {
+      const [u, v] = offen.pop()!
+      for (let k = 0; k < 4; k++) {
+        const p = u + DX[k], q = v + DY[k], key = `${p},${q}`
+        if (!gesehen.has(key) && istBahnhof(b[q]?.[p]?.gleis)) { gesehen.add(key); offen.push([p, q]) }
+      }
+    }
   }
   return n
 }
@@ -535,7 +548,9 @@ export class Zug {
       const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
       const mitte = l / 2, vorher = this.kopf
       // am Bahnhof in der Mitte des Felds halten
-      if (!s.gross && istBahnhof(b[s.j][s.i].gleis) && vorher < mitte && vorher + rest >= mitte) {
+      // in einem Bahnhof aus mehreren Feldern nur einmal, im letzten Feld in Fahrtrichtung
+      const weiterImBahnhof = () => { const n = naechstes(b, s); return !!n && !n.gross && istBahnhof(b[n.j][n.i].gleis) }
+      if (!s.gross && istBahnhof(b[s.j][s.i].gleis) && vorher < mitte && vorher + rest >= mitte && !weiterImBahnhof()) {
         this.kopf = mitte; this.halt = HALT_S; this.tempo = 0; return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
