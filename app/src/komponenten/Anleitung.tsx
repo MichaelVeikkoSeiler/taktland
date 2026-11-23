@@ -83,7 +83,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         </Spiel>
         <Spiel titel="Bilderpuzzle">
           <li>
-            Wähle 4 bis 48 Teile, Puzzleteile oder Quadrate, und ein Bild: jede Illustration von Taktland, am Tag und in der Nacht, oder
+            Wähle 4 bis 48 Teile, Puzzleteile oder Rechtecke, und ein Bild: jede Illustration von Taktland, am Tag und in der Nacht, oder
             ein eigenes Foto. Die Teile liegen rund um den Rahmen; zieh jedes an seinen Platz, stimmt er, rastet es ein. Das Auge oben
             rechts zeigt das Bild blass im Rahmen oder blendet es aus.
           </li>

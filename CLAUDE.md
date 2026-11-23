@@ -1460,7 +1460,7 @@ Beschriftung), auf den Linien von data/karte.json, ohne Verlauf gerade zwischen 
 
 **Bilderpuzzle** (Spiele, #/bilderpuzzle; #/puzzle bleibt das Fahrplan-Puzzle; Michael, 2026-11-21: «Kannst du dieses Puzzlespiel auf Taktland-App übernehmen und dort alle Bilder,
 welche wir auf Taktland integriert haben, als Puzzle bereitstellen?», übernommen aus dem Bilder-Puzzle für Kinder im Repository apoko): 4 bis 48 Teile (TEILE), Puzzleteile mit Nasen
-oder Quadrate, das Bild blass im Rahmen an oder aus (gemerkt unter taktland.bilderpuzzle.v1); die Bilder sind alle Auftaktbilder aus src/assets, hell und dunkel («…, Nacht»),
+oder Quadrate (seit 2026-11-23 «Rechtecke» mit je einem Zeichen, Puzzleteil und Raster; Michael: «lieber Rechtecke statt Quadrate schreiben. Bitte noch ein passendes Icon dazu»), das Bild blass im Rahmen an oder aus (gemerkt unter taktland.bilderpuzzle.v1); die Bilder sind alle Auftaktbilder aus src/assets, hell und dunkel («…, Nacht»),
 per import.meta.glob, ein neues Auftaktbild kommt von selbst dazu, Namen nach dem Bereich (NAMEN in src/bilderpuzzle.ts); ohne den Führerstand (Überlagerung mit durchsichtigem
 Fenster); dazu eigene Fotos, verkleinert auf 2'000 Bildpunkte als data:-Adresse in IndexedDB (taktland-bilderpuzzle), nie gesendet, im Datenschutz genannt; Löschen mit × und
 «Löschen». Gespielt im ganzen Fenster (Spiel in komponenten/Bilderpuzzle.tsx, Spielfeld in src/bilderpuzzle.ts): Rahmen in der Mitte, Teile rundherum, so klein, dass alle neben

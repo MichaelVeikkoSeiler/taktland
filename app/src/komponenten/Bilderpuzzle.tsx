@@ -96,9 +96,18 @@ export function Bilderpuzzle() {
           <fieldset className="min-w-64">
             <legend className={LEISE}>Form der Teile</legend>
             <div className="segmente mt-1.5 grid grid-cols-2">
-              {([['puzzle', 'Puzzleteile'], ['quadrat', 'Quadrate']] as const).map(([w, t]) => (
+              {/* «Rechtecke» statt «Quadrate», die Teile sind meist nicht quadratisch, je mit einem Zeichen (Michael, 2026-11-23: «lieber Rechtecke statt
+                  Quadrate schreiben. Bitte noch ein passendes Icon dazu») */}
+              {([['puzzle', 'Puzzleteile'], ['quadrat', 'Rechtecke']] as const).map(([w, t]) => (
                 <button key={w} type="button" aria-pressed={wahl.form === w} onClick={() => setWahl({ ...wahl, form: w })}
-                        className="segment px-3 py-2">{t}</button>
+                        className="segment flex items-center justify-center gap-2 px-3 py-2">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true">
+                    {w === 'puzzle'
+                      ? <path d="M4 7h4.2a2.3 2.3 0 1 1 4.6 0H17v4.2a2.3 2.3 0 1 1 0 4.6V20h-4.2a2.3 2.3 0 1 0-4.6 0H4v-4.2a2.3 2.3 0 1 0 0-4.6z" />
+                      : <><rect x="3" y="5" width="18" height="14" rx="1.5" /><path d="M9 5v14M15 5v14M3 12h18" /></>}
+                  </svg>
+                  {t}
+                </button>
               ))}
             </div>
           </fieldset>
