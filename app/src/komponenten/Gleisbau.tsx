@@ -9,7 +9,7 @@ import { Klappe } from './Klappe'
 import { type Aufgabe, AUFGABEN, bewerten, type Ergebnis, fortschrittLesen, fortschrittMerken } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
-import GleisbauBretter, { GroesseWahl } from './GleisbauBretter'
+import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
 import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild } from './GleisbauBilder'
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
@@ -60,6 +60,14 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'grund', grund: 'dorf' }, text: 'Dorf' },
   { w: { art: 'strasse' }, text: 'Strasse' },
   { w: { art: 'weg' }, text: 'Entfernen' },
+]
+
+/** die Werkzeuge unten in drei Reitern */
+const GRUPPEN = [
+  { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
+  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke'].includes(x.w.art)),
+    ...LANDSCHAFT.filter((x) => x.w.art === 'strasse')] },
+  { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
 ]
 
 const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringify(b)
@@ -531,6 +539,16 @@ export function Gleisbau() {
   const fgRef = useRef<Fahrgaeste | null>(null)
   const halteRef = useRef<number[]>([])
   const [meldung, setMeldung] = useState<string | null>(null)
+  // die neue Oberfläche (Michael, 2026-11-23): Menü, Reiter der Werkzeuge, Ziel der Aufgabe auf- und zugeklappt, Karte «Geschafft», Zoom
+  const [menu, setMenu] = useState(false)
+  const [reiter, setReiter] = useState('Gleise')
+  const [zielOffen, setZielOffen] = useState(false)
+  const [geloest, setGeloest] = useState(false)
+  const [geteilt, setGeteilt] = useState(false)
+  const [zoom, setZoom] = useState({ s: 1, x: 0, y: 0 })
+  const buehne = useRef<HTMLDivElement>(null)
+  const finger = useRef(new Map<number, { x: number; y: number }>())
+  const zwei = useRef<{ d: number; mx: number; my: number; z: { s: number; x: number; y: number } } | null>(null)
   const [leerenScharf, setLeerenScharf] = useState(false)
   // langes Drücken auf ein belegtes Feld hebt es an, Ziehen verschiebt es (Michael, 2026-11-22)
   const [ziehen, setZiehen] = useState<{ von: [number, number]; nach: [number, number] } | null>(null)
@@ -594,7 +612,7 @@ export function Gleisbau() {
   const [fortschritt, setFortschritt] = useState<Record<string, number>>(() => fortschrittLesen())
   const aufgabeWaehlen = (a: Aufgabe | null) => {
     setFaehrt(false); zuege.current = []; setWagen([]); fgRef.current = null; setFahrgaeste(null)
-    setAufgabe(a); setErgebnis(null); setVerlauf([]); setMeldung(null); setNameFeld(null)
+    setAufgabe(a); setErgebnis(null); setGeloest(false); setVerlauf([]); setMeldung(null); setNameFeld(null); setMenu(false); setZoom({ s: 1, x: 0, y: 0 })
     if (a) setBrettRoh(a.brett())
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -603,7 +621,7 @@ export function Gleisbau() {
     if (!aufgabe) return
     const e = bewerten(aufgabe, brett)
     if (e.ok) {
-      setErgebnis(e)
+      setErgebnis((alt) => { if (!alt?.ok) setGeloest(true); return e })
       setFortschritt((f) => {
         if ((f[aufgabe.id] ?? 0) >= e.sterne) return f
         const n = { ...f, [aufgabe.id]: e.sterne }; fortschrittMerken(n); return n
@@ -639,13 +657,70 @@ export function Gleisbau() {
       const b = e ? brettAusCode(e.code) : null
       if (e && b) { setOffen(e.id); setBrettRoh(b); setVerlauf([]); setAufgabe(null); setAnsicht('brett'); return }
       setOffen(null)
-      if (q.has('aufgaben')) { setAnsicht('aufgaben'); return }
+      const aid = q.get('aufgabe'), a = aid ? AUFGABEN.find((x) => x.id === aid) : null
+      if (a) { setAnsicht('aufgaben'); aufgabeWaehlen(a); return }
+      if (q.has('aufgaben')) { setAufgabe(null); setAnsicht('aufgaben'); return }
       setAufgabe(null); setAnsicht('liste')
     }
     lesen()
     window.addEventListener('hashchange', lesen)
     return () => window.removeEventListener('hashchange', lesen)
   }, [])
+  // eine Meldung verschwindet nach 4 s, das Menü und die Karte schliessen sich mit der Fahrt nicht
+  useEffect(() => {
+    if (!meldung) return
+    const t = window.setTimeout(() => setMeldung(null), 4000)
+    return () => window.clearTimeout(t)
+  }, [meldung])
+  // im Vollbild steht die Seite darunter still
+  const imVollbild = ansicht === 'brett' || (ansicht === 'aufgaben' && !!aufgabe)
+  useEffect(() => {
+    if (!imVollbild) return
+    const vorher = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = vorher }
+  }, [imVollbild])
+  useEffect(() => { setZoom({ s: 1, x: 0, y: 0 }) }, [offen])
+  const brettTeilen = async () => {
+    const url = brettLink(brettCode(brett)), name = bretter.find((x) => x.id === offen)?.name ?? 'Brett'
+    if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
+      try { await navigator.share({ title: `Gleisbau: ${name}`, url }); return } catch (x) { if ((x as DOMException).name === 'AbortError') return }
+    }
+    try { await navigator.clipboard.writeText(url); setGeteilt(true); window.setTimeout(() => setGeteilt(false), 2500) } catch { window.prompt('Link zum Brett', url) }
+  }
+  // zwei Finger zoomen (1- bis 4-fach) und verschieben das Brett; dabei gilt kein Tipp und keine Linie
+  const zoomSetzen = (s: number, x: number, y: number) => {
+    const el = buehne.current
+    if (!el || s <= 1.001) { setZoom({ s: 1, x: 0, y: 0 }); return }
+    const w = el.clientWidth, h = el.clientHeight
+    setZoom({ s, x: Math.min(0, Math.max(w - w * s, x)), y: Math.min(0, Math.max(h - h * s, y)) })
+  }
+  const buehneDrucken = (e: React.PointerEvent<HTMLDivElement>) => {
+    finger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    if (finger.current.size !== 2) return
+    druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); nachZiehen.current = true
+    const [a, b] = [...finger.current.values()], r = buehne.current!.getBoundingClientRect()
+    zwei.current = { d: Math.hypot(a.x - b.x, a.y - b.y), mx: (a.x + b.x) / 2 - r.left, my: (a.y + b.y) / 2 - r.top, z: zoom }
+  }
+  const buehneBewegen = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!finger.current.has(e.pointerId)) return
+    finger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    const z = zwei.current
+    if (!z || finger.current.size !== 2) return
+    const [a, b] = [...finger.current.values()], r = buehne.current!.getBoundingClientRect()
+    const s = Math.max(1, Math.min(4, (z.z.s * Math.hypot(a.x - b.x, a.y - b.y)) / Math.max(1, z.d)))
+    const mx = (a.x + b.x) / 2 - r.left, my = (a.y + b.y) / 2 - r.top
+    zoomSetzen(s, mx - ((z.mx - z.z.x) * s) / z.z.s, my - ((z.my - z.z.y) * s) / z.z.s)
+  }
+  const buehneLos = (e: React.PointerEvent<HTMLDivElement>) => {
+    finger.current.delete(e.pointerId)
+    if (finger.current.size < 2 && zwei.current) { zwei.current = null; window.setTimeout(() => { nachZiehen.current = false }, 300) }
+  }
+  const buehneRad = (e: React.WheelEvent<HTMLDivElement>) => {
+    const r = buehne.current!.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top
+    const s = Math.max(1, Math.min(4, zoom.s * Math.exp(-e.deltaY * 0.002)))
+    zoomSetzen(s, mx - ((mx - zoom.x) * s) / zoom.s, my - ((my - zoom.y) * s) / zoom.s)
+  }
   const neuesBrett = (sp: number, ze: number) => {
     const id = neueId()
     setBretter((l) => [{ id, name: `Brett ${l.length + 1}`, code: brettCode(leer(sp, ze)), geaendert: Date.now() }, ...l])
@@ -712,8 +787,10 @@ export function Gleisbau() {
 
   /** das Feld unter einem Punkt des Bildschirms; das Bild reicht je 0,15 Felder über das Brett hinaus (der Rand des Tabletts) */
   function feldBei(x: number, y: number): [number, number] | null {
-    const r = svg.current!.getBoundingClientRect()
-    const i = Math.floor(((x - r.left) / r.width) * (SP + 0.3) - 0.15), j = Math.floor(((y - r.top) / r.height) * (ZE + 0.3) - 0.15)
+    // das Bild füllt das Element nur in einer Richtung (preserveAspectRatio meet), in der anderen bleibt ein Rand
+    const r = svg.current!.getBoundingClientRect(), vw = SP + 0.3, vh = ZE + 0.3, k = Math.min(r.width / vw, r.height / vh)
+    const ox = r.left + (r.width - vw * k) / 2, oy = r.top + (r.height - vh * k) / 2
+    const i = Math.floor((x - ox) / k - 0.15), j = Math.floor((y - oy) / k - 0.15)
     return i < 0 || j < 0 || i >= SP || j >= ZE ? null : [i, j]
   }
 
@@ -923,89 +1000,99 @@ export function Gleisbau() {
     zuege.current = l; pfiffe.current = []; dorf.current = false; setWagen(l.map((x) => x.wagen())); setFaehrt(true)
   }
 
-  const knopf = (an: boolean) => `flex w-[4.6rem] flex-col items-center gap-0.5 rounded-lg border px-1 py-1.5 text-xs font-medium ${an
+  const knopf = (an: boolean) => `flex w-[4.25rem] flex-none flex-col items-center gap-0.5 rounded-lg border px-1 py-1 text-[11px] font-medium leading-tight ${an
     ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
     : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`
-
-  const leiste = (titel: string, l: Array<{ w: Werkzeug; text: string }>) => (
-    <div className="mt-4">
-      <h2 className="text-sm font-bold">{titel}</h2>
-      <div className="mt-2 flex flex-wrap gap-2">
-        {l.map(({ w, text }) => (
-          <button key={text} type="button" aria-pressed={gleich(w, werkzeug)} disabled={faehrt}
-                  onClick={() => setWerkzeug(w)} className={`${knopf(gleich(w, werkzeug))} disabled:opacity-40`}>
-            <WerkzeugBild w={w} dreh={dreh} />
-            {text}
-          </button>
-        ))}
-      </div>
-    </div>
+  const rund = 'flex size-11 flex-none items-center justify-center rounded-full border border-sbb-cloud bg-white text-lg font-bold shadow-sm hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'
+  const imBrett = ansicht === 'brett' || (ansicht === 'aufgaben' && !!aufgabe)
+  const naechste = aufgabe ? AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1] : undefined
+  const leerenKnopf = (
+    <button type="button" disabled={faehrt} onClick={() => {
+      if (!leerenScharf) { setLeerenScharf(true); return }
+      setLeerenScharf(false); setBrett(leer(SP, ZE)); setMenu(false)
+    }} className={`min-h-11 rounded-lg border px-4 font-bold disabled:opacity-40 ${leerenScharf
+      ? 'border-sbb-red bg-sbb-red text-white' : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
+      {leerenScharf ? 'Wirklich leeren?' : 'Leeren'}
+    </button>
+  )
+  const schalter = (an: boolean, um: () => void, text: string) => (
+    <button type="button" role="switch" aria-checked={an} disabled={faehrt} onClick={um}
+            className="flex min-h-11 w-full items-center justify-between gap-3 rounded-lg px-1 text-left font-medium disabled:opacity-40">
+      {text}
+      <span className={`relative h-7 w-12 flex-none rounded-full transition-colors ${an ? 'bg-sbb-anthracite dark:bg-sbb-white' : 'bg-sbb-cloud dark:bg-sbb-iron'}`}>
+        <span className={`absolute top-1 size-5 rounded-full bg-white shadow transition-all dark:bg-sbb-midnight ${an ? 'left-6' : 'left-1'}`} />
+      </span>
+    </button>
   )
 
   return (
     <div className="px-4 pb-6">
       <MusterDefs />
-      {ansicht === 'liste'
-        ? <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-        : <Zurueck onClick={() => { window.location.hash = '#/gleisbau' }} text="Gleisbau" />}
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">
-        {ansicht === 'brett' ? bretter.find((x) => x.id === offen)?.name ?? 'Brett' : ansicht === 'aufgaben' ? 'Gleisbau: Aufgaben' : 'Gleisbau'}
-      </h1>
-      {ansicht === 'liste' && (
-        <p className="mt-2 max-w-3xl leading-relaxed">
-          Lege Gleise auf ein Brett und lass den Zug fahren: auf eigenen Brettern oder mit Aufgaben, bis zu echten Strecken der Schweiz.
-        </p>
-      )}
-      <Klappe titel="So geht's" className="mt-2 max-w-3xl">
-        <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
-          <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
-            Geraden, Kurven und Weichen entstehen von selbst.</li>
-          <li>Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel. Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken.</li>
-          <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
-            eines echten Bahnhofs.</li>
-          <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.</li>
-          <li>«Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um, ein Tipp stellt die Weichen. Mit «Fahrgäste» warten an
-            den Bahnhöfen Figuren mit dem Buchstaben ihres Ziels, der Zug bringt sie hin. Mit «2 Züge» fahren zwei; Signale an den Weichen zeigen, wo
-            ein Zug ist, und keiner fährt in ein besetztes Feld.</li>
-        </ul>
-      </Klappe>
-      {ansicht === 'liste' && (
-        <GleisbauBretter bretter={bretter} setBretter={setBretter} neu={neuesBrett} oeffnen={(id) => { window.location.hash = `#/gleisbau?id=${id}` }}
-                         aufgaben={() => { window.location.hash = '#/gleisbau?aufgaben' }}
-                         sterne={Object.values(fortschritt).reduce((a, c) => a + c, 0)} sterneMax={AUFGABEN.length * 3} />
-      )}
-      {ansicht === 'aufgaben' && !aufgabe && <AufgabenListe fortschritt={fortschritt} waehlen={aufgabeWaehlen} />}
-      {ansicht === 'aufgaben' && aufgabe && (
-        <div className="mt-4 max-w-3xl rounded-lg bg-sbb-milk p-4 dark:bg-sbb-charcoal">
-          <div className="flex items-baseline justify-between gap-3">
-            <h2 className="text-lg font-bold">{aufgabe.titel}</h2>
-            <Sterne n={fortschritt[aufgabe.id] ?? 0} />
-          </div>
-          <p className="mt-1 leading-relaxed">{aufgabe.ziel}</p>
-          {aufgabe.daten && <Klappe titel="Was die Daten sagen" className="mt-1"><p className="text-sm leading-relaxed">{aufgabe.daten}</p></Klappe>}
-          {ergebnis && (
-            <p role="status" className={`mt-3 rounded-lg px-3 py-2 text-sm font-medium ${ergebnis.ok ? 'bg-white dark:bg-sbb-midnight' : 'bg-white/60 dark:bg-sbb-midnight/60'}`}>
-              {ergebnis.ok && <><Sterne n={ergebnis.sterne} /> </>}{ergebnis.text}
+      {!imBrett && (
+        <>
+          {ansicht === 'liste'
+            ? <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
+            : <Zurueck onClick={() => { window.location.hash = '#/gleisbau' }} text="Gleisbau" />}
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">{ansicht === 'aufgaben' ? 'Gleisbau: Aufgaben' : 'Gleisbau'}</h1>
+          {ansicht === 'liste' && (
+            <p className="mt-2 max-w-3xl leading-relaxed">
+              Lege Gleise auf ein Brett und lass den Zug fahren: auf eigenen Brettern oder mit Aufgaben, bis zu echten Strecken der Schweiz.
             </p>
           )}
-          <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" onClick={() => setErgebnis(bewerten(aufgabe, brett))}
-                    className="min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125">Prüfen</button>
-            <button type="button" disabled={faehrt} onClick={() => aufgabeWaehlen(aufgabe)}
-                    className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Neu beginnen</button>
-            {(() => { const n = AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1]; return ergebnis?.ok && n ? (
-              <button type="button" onClick={() => aufgabeWaehlen(n)}
-                      className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Nächste Aufgabe</button>
-            ) : null })()}
-            <button type="button" disabled={faehrt} onClick={() => aufgabeWaehlen(null)} className="min-h-11 px-2 underline underline-offset-2 disabled:opacity-40">Alle Aufgaben</button>
-          </div>
-        </div>
+          {ansicht === 'liste' && <Klappe titel="So geht's" className="mt-2 max-w-3xl"><SoGehts /></Klappe>}
+          {ansicht === 'liste' && (
+            <GleisbauBretter bretter={bretter} setBretter={setBretter} neu={neuesBrett} oeffnen={(id) => { window.location.hash = `#/gleisbau?id=${id}` }}
+                             aufgaben={() => { window.location.hash = '#/gleisbau?aufgaben' }}
+                             sterne={Object.values(fortschritt).reduce((a, c) => a + c, 0)} sterneMax={AUFGABEN.length * 3} />
+          )}
+          {ansicht === 'aufgaben' && <AufgabenListe fortschritt={fortschritt} waehlen={(a) => { window.location.hash = `#/gleisbau?aufgabe=${encodeURIComponent(a.id)}` }} />}
+          <p className={`mt-5 max-w-3xl ${LEISE}`}>
+            Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Deine Bretter bleiben im Browser dieses
+            Geräts und werden nicht gesendet, ausser du teilst einen Link.
+          </p>
+        </>
       )}
-      <div className={`mt-4 ${ZE > SP ? (ZE > 12 ? 'max-w-xl' : 'max-w-lg') : SP > 8 ? 'max-w-5xl' : 'max-w-3xl'} ${ansicht === 'liste' || (ansicht === 'aufgaben' && !aufgabe) ? 'hidden' : ''}`}>
+      {/* das Brett im ganzen Fenster wie ein Spiel (Michael, 2026-11-23: «Findest du dieses Design state of the art?», dann «Ja gerne, so umbauen»):
+          oben eine schmale Leiste mit Zurück, Rückgängig, Drehen, Menü und Fahren, in der Mitte das Brett (zwei Finger zoomen und verschieben),
+          unten die Werkzeuge in drei Reitern; Seltenes im Menü «⋯» */}
+      {imBrett && (
+        <div className="fixed inset-0 z-[60] flex select-none flex-col overflow-hidden overscroll-none bg-sbb-milk text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white"
+             role="dialog" aria-label={aufgabe ? `Gleisbau, Aufgabe ${aufgabe.titel}` : `Gleisbau, ${bretter.find((x) => x.id === offen)?.name ?? 'Brett'}`}>
+          <div className="flex flex-none items-center gap-2 px-2.5 pb-2"
+               style={{ paddingTop: 'calc(env(safe-area-inset-top) + 8px)', paddingLeft: 'calc(env(safe-area-inset-left) + 10px)', paddingRight: 'calc(env(safe-area-inset-right) + 10px)' }}>
+            <button type="button" onClick={() => { window.location.hash = aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau' }} aria-label={aufgabe ? 'Zurück zu den Aufgaben' : 'Zurück zur Liste der Bretter'}
+                    className={rund}><span className="pfeil pfeil-links" aria-hidden="true">←</span></button>
+            <p className="min-w-0 flex-1 truncate font-bold">{aufgabe ? aufgabe.titel : bretter.find((x) => x.id === offen)?.name ?? 'Brett'}</p>
+            <button type="button" disabled={faehrt || !verlauf.length} onClick={zurueck} aria-label={`Rückgängig, noch ${verlauf.length} Schritte`} title="Rückgängig"
+                    className={`${rund} relative`}>
+              ↶{verlauf.length > 0 && <span className="absolute -right-1 -top-1 min-w-5 rounded-full bg-sbb-anthracite px-1 text-[11px] font-bold leading-5 text-white tabular-nums dark:bg-sbb-white dark:text-sbb-black">{verlauf.length > 99 ? '99+' : verlauf.length}</span>}
+            </button>
+            <button type="button" disabled={faehrt} onClick={() => setDreh(((dreh + 1) % 4) as Dreh)} aria-label="Stück drehen" title="Drehen" className={rund}>↻</button>
+            <button type="button" onClick={() => setMenu(true)} aria-label="Menü" title="Menü" className={rund}>⋯</button>
+            <button type="button" onClick={fahren} aria-label={faehrt ? 'Anhalten' : 'Fahren'} title={faehrt ? 'Anhalten' : 'Fahren'}
+                    className="flex h-11 flex-none items-center gap-1.5 rounded-full bg-sbb-red px-4 font-bold text-white shadow-sm hover:bg-sbb-red125">
+              <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{faehrt ? <rect x="6" y="6" width="12" height="12" rx="1.5" /> : <path d="M8 5.5v13l11-6.5z" />}</svg>
+              <span className="hidden sm:inline">{faehrt ? 'Anhalten' : 'Fahren'}</span>
+            </button>
+          </div>
+          {aufgabe && (
+            <div className="mx-2.5 mb-2 flex flex-none items-start gap-3 rounded-lg bg-white px-3 py-2 shadow-sm dark:bg-sbb-charcoal">
+              <button type="button" onClick={() => setZielOffen((x) => !x)} aria-expanded={zielOffen}
+                      className={`min-w-0 flex-1 text-left text-sm leading-snug ${zielOffen ? '' : 'line-clamp-2'}`}>{aufgabe.ziel}</button>
+              <div className="flex flex-none flex-col items-end gap-1">
+                <Sterne n={fortschritt[aufgabe.id] ?? 0} />
+                <button type="button" onClick={() => { const e = bewerten(aufgabe, brett); setErgebnis(e); setMeldung(e.ok ? null : e.text) }}
+                        className="rounded-lg bg-sbb-red px-3 py-1 text-sm font-bold text-white hover:bg-sbb-red125">Prüfen</button>
+              </div>
+            </div>
+          )}
+          <div ref={buehne} className="relative min-h-0 flex-1 touch-none overflow-hidden"
+               onPointerDown={buehneDrucken} onPointerMove={buehneBewegen} onPointerUp={buehneLos} onPointerCancel={buehneLos} onWheel={buehneRad}>
+            <div className="absolute inset-0 px-2.5" style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`, transformOrigin: '0 0' }}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null) }} onContextMenu={(e) => e.preventDefault()}
-             className={`w-full cursor-pointer select-none [-webkit-touch-callout:none] ${werkzeug.art === 'linie' && !faehrt ? 'touch-none' : ''}`}>
+             className="size-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {unten}
           {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y)} farbe={z ? ZWEITER_ZUG : F.karmin} />))}
@@ -1038,84 +1125,143 @@ export function Gleisbau() {
             )
           })()}
         </svg>
-      </div>
-      {nameFeld && (
-        <div className="mt-3 max-w-xl rounded-lg bg-sbb-milk p-3 dark:bg-sbb-charcoal">
-          <label className="text-sm font-bold" htmlFor="gleisbau-name">Name für Bahnhof {bahnhofGruppen(brett).get(`${nameFeld[0]},${nameFeld[1]}`)}</label>
-          <input id="gleisbau-name" value={nameSuche} onChange={(e) => setNameSuche(e.target.value)} autoFocus placeholder="Bahnhof aus Taktland suchen"
-                 className="mt-2 w-full rounded-lg border border-sbb-cloud bg-white px-3 py-2 dark:border-sbb-iron dark:bg-sbb-midnight" />
-          {!alleNamen && <p className="mt-2 text-sm">Bahnhöfe werden geladen …</p>}
-          {treffer.length > 0 && (
-            <ul className="mt-2 space-y-1">
-              {treffer.map((n) => (
-                <li key={n}><button type="button" onClick={() => nameSetzen(n)} className="kachel-link kachel w-full px-3 py-2 text-left">{n}</button></li>
-              ))}
-            </ul>
-          )}
-          <div className="mt-2 flex gap-3">
-            <button type="button" onClick={() => nameSetzen(null)} className="underline underline-offset-2">Ohne Namen</button>
-            <button type="button" onClick={() => { setNameFeld(null); setNameSuche('') }} className="underline underline-offset-2">Abbrechen</button>
+            </div>
+            {zoom.s > 1.01 && (
+              <button type="button" onClick={() => setZoom({ s: 1, x: 0, y: 0 })} aria-label="Ganzes Brett zeigen" title="Ganzes Brett zeigen"
+                      className={`${rund} absolute right-2.5 top-2`}>
+                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></svg>
+              </button>
+            )}
+            {meldung && (
+              <p role="status" className="pointer-events-none absolute inset-x-3 bottom-2 mx-auto max-w-md rounded-lg bg-sbb-charcoal/90 px-3 py-2 text-center text-sm font-medium text-white shadow-lg">{meldung}</p>
+            )}
           </div>
+          <div className="flex-none border-t border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-charcoal"
+               style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 6px)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
+            {faehrt ? (
+              <div className="flex min-h-[7.25rem] flex-col justify-center gap-1 px-3 py-2 text-sm">
+                {fahrgaeste ? (
+                  <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
+                    <span className="font-bold">Gebracht: <span className="tabular-nums">{fahrgaeste.gebracht}</span></span>
+                    {fahrgaeste.imZug.map((l, k) => (
+                      <span key={k} className="flex items-center gap-1">
+                        {fahrgaeste.imZug.length > 1 ? `Zug ${k + 1}` : 'Im Zug'}: {l.length ? l.map((z, m) => <Ziel key={m} z={z} />) : <span className="text-sbb-metal dark:text-sbb-storm">leer</span>}
+                      </span>
+                    ))}
+                  </p>
+                ) : <p className="font-bold">Der Zug fährt.</p>}
+                <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche stellt sie. Zum Bauen anhalten.</p>
+              </div>
+            ) : (
+              <>
+                <div className="flex gap-1 px-2 pt-1.5" role="tablist" aria-label="Werkzeuge">
+                  {GRUPPEN.map((g) => (
+                    <button key={g.titel} type="button" role="tab" aria-selected={reiter === g.titel} onClick={() => setReiter(g.titel)}
+                            className={`rounded-lg px-3 py-1 text-sm font-bold ${reiter === g.titel ? 'bg-sbb-milk dark:bg-sbb-midnight' : 'text-sbb-metal dark:text-sbb-storm'}`}>{g.titel}</button>
+                  ))}
+                </div>
+                <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-1.5 [scrollbar-width:none]">
+                  {GRUPPEN.find((g) => g.titel === reiter)!.l.map(({ w, text }) => (
+                    <button key={text} type="button" aria-pressed={gleich(w, werkzeug)} onClick={() => setWerkzeug(w)} className={knopf(gleich(w, werkzeug))}>
+                      <WerkzeugBild w={w} dreh={dreh} />
+                      {text}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          {/* Name eines Bahnhofs als Blatt von unten */}
+          {nameFeld && (
+            <div className="absolute inset-0 z-10 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) { setNameFeld(null); setNameSuche('') } }}>
+              <div className="w-full rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
+                <label className="font-bold" htmlFor="gleisbau-name">Name für Bahnhof {bahnhofGruppen(brett).get(`${nameFeld[0]},${nameFeld[1]}`)}</label>
+                <input id="gleisbau-name" value={nameSuche} onChange={(e) => setNameSuche(e.target.value)} autoFocus placeholder="Bahnhof aus Taktland suchen"
+                       className="mt-2 w-full rounded-lg border border-sbb-cloud bg-white px-3 py-2 dark:border-sbb-iron dark:bg-sbb-midnight" />
+                {!alleNamen && <p className="mt-2 text-sm">Bahnhöfe werden geladen …</p>}
+                {treffer.length > 0 && (
+                  <ul className="mt-2 max-h-56 space-y-1 overflow-y-auto">
+                    {treffer.map((n) => (
+                      <li key={n}><button type="button" onClick={() => nameSetzen(n)} className="kachel-link kachel w-full px-3 py-2 text-left">{n}</button></li>
+                    ))}
+                  </ul>
+                )}
+                <div className="mt-3 flex gap-4">
+                  <button type="button" onClick={() => nameSetzen(null)} className="underline underline-offset-2">Ohne Namen</button>
+                  <button type="button" onClick={() => { setNameFeld(null); setNameSuche('') }} className="underline underline-offset-2">Abbrechen</button>
+                </div>
+              </div>
+            </div>
+          )}
+          {/* das Menü: Einstellungen und Seltenes */}
+          {menu && (
+            <div className="absolute inset-0 z-10 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) setMenu(false) }}>
+              <div className="max-h-[85%] w-full overflow-y-auto rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
+                <div className="flex items-center justify-between">
+                  <p className="text-lg font-bold">Menü</p>
+                  <button type="button" onClick={() => setMenu(false)} aria-label="Menü schliessen" className={rund}>✕</button>
+                </div>
+                <div className="mt-2 divide-y divide-sbb-cloud dark:divide-sbb-iron">
+                  {schalter(mitFahrgaesten, () => setMitFahrgaesten((x) => !x), 'Fahrgäste mit Ziel an den Bahnhöfen')}
+                  {schalter(zweiZuege, () => setZweiZuege((x) => !x), 'Zwei Züge')}
+                </div>
+                {!aufgabe && <><p className="mt-4 text-sm font-bold">Grösse des Bretts</p>
+                  <GroesseWahl key={`${SP}x${ZE}`} sp={SP} ze={ZE} gesperrt={faehrt} text="Grösse ändern"
+                               waehlen={(sp, ze) => { setBrett(groesseAendern(brett, sp, ze)); setMeldung(null); setMenu(false); setZoom({ s: 1, x: 0, y: 0 }) }} /></>}
+                {aufgabe?.daten && <Klappe titel="Was die Daten sagen" className="mt-4"><p className="text-sm leading-relaxed">{aufgabe.daten}</p></Klappe>}
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {aufgabe
+                    ? <button type="button" disabled={faehrt} onClick={() => { aufgabeWaehlen(aufgabe); setMenu(false) }}
+                              className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Neu beginnen</button>
+                    : <button type="button" disabled={faehrt} onClick={() => { setBrett(zufallsBeispiel(SP, ZE)); setMeldung(null); setMenu(false) }}
+                              className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Beispiel</button>}
+                  {leerenKnopf}
+                  {!aufgabe && (
+                    <button type="button" onClick={() => void brettTeilen()}
+                            className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">
+                      {geteilt ? 'Link kopiert' : 'Link teilen'}
+                    </button>
+                  )}
+                </div>
+                <Klappe titel="So geht's" className="mt-4"><SoGehts /></Klappe>
+              </div>
+            </div>
+          )}
+          {/* gelöst: einmal eine Karte mit den Sternen und «Nächste Aufgabe» */}
+          {aufgabe && geloest && ergebnis?.ok && (
+            <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/30 p-4">
+              <div className="grid w-full max-w-sm gap-3 rounded-2xl bg-white p-5 text-center shadow-xl dark:bg-sbb-charcoal">
+                <p className="text-2xl font-bold tracking-tight">Geschafft!</p>
+                <p className="text-3xl"><Sterne n={ergebnis.sterne} /></p>
+                <p className="text-sm leading-relaxed">{ergebnis.text}</p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {naechste && <button type="button" autoFocus onClick={() => { window.location.hash = `#/gleisbau?aufgabe=${encodeURIComponent(naechste.id)}` }}
+                                       className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Nächste Aufgabe</button>}
+                  <button type="button" onClick={() => setGeloest(false)}
+                          className="rounded-lg border border-sbb-cloud bg-white px-5 py-3 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Weiterbauen</button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
-      {fahrgaeste && (
-        <p role="status" className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-          <span className="font-bold">Gebracht: <span className="tabular-nums">{fahrgaeste.gebracht}</span></span>
-          {fahrgaeste.imZug.map((l, k) => (
-            <span key={k} className="flex items-center gap-1">
-              {fahrgaeste.imZug.length > 1 ? `Zug ${k + 1}` : 'Im Zug'}: {l.length ? l.map((z, m) => <Ziel key={m} z={z} />) : <span className="text-sbb-metal dark:text-sbb-storm">leer</span>}
-            </span>
-          ))}
-        </p>
-      )}
-      <div className={ansicht === 'liste' || (ansicht === 'aufgaben' && !aufgabe) ? 'hidden' : ''}>
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <button type="button" onClick={fahren}
-                className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">{faehrt ? 'Anhalten' : 'Fahren'}</button>
-        <button type="button" disabled={faehrt} aria-pressed={mitFahrgaesten} onClick={() => setMitFahrgaesten((x) => !x)}
-                className={`min-h-12 rounded-lg border px-4 font-bold disabled:opacity-40 ${mitFahrgaesten
-                  ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
-                  : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
-          Fahrgäste
-        </button>
-        <button type="button" disabled={faehrt} aria-pressed={zweiZuege} onClick={() => setZweiZuege((x) => !x)}
-                className={`min-h-12 rounded-lg border px-4 font-bold disabled:opacity-40 ${zweiZuege
-                  ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
-                  : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
-          2 Züge
-        </button>
-        <button type="button" disabled={faehrt || !verlauf.length} onClick={zurueck} aria-label={`Rückgängig, noch ${verlauf.length} Schritte`}
-                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
-          ↶ Zurück{verlauf.length ? <span className="ml-1 text-sm font-medium tabular-nums text-sbb-metal dark:text-sbb-storm">{verlauf.length}</span> : null}
-        </button>
-        <button type="button" disabled={faehrt} onClick={() => setDreh(((dreh + 1) % 4) as Dreh)}
-                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
-          Drehen ↻
-        </button>
-        {/* jedes Tippen ein neues Beispiel in der gewählten Grösse (Michael, 2026-11-22: «Bei Beispiel sollen durch weiteres Tippen immer neue Beispiele erscheinen») */}
-        {!aufgabe && <button type="button" disabled={faehrt} onClick={() => { setBrett(zufallsBeispiel(SP, ZE)); setMeldung(null) }}
-                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
-          Beispiel
-        </button>}
-        <button type="button" disabled={faehrt} onClick={() => {
-          if (!leerenScharf) { setLeerenScharf(true); return }
-          setLeerenScharf(false); setBrett(leer(SP, ZE))
-        }} className={`min-h-12 rounded-lg border px-4 font-bold disabled:opacity-40 ${leerenScharf
-          ? 'border-sbb-red bg-sbb-red text-white' : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>
-          {leerenScharf ? 'Wirklich leeren?' : 'Leeren'}
-        </button>
-      </div>
-      {/* Grösse des Bretts von Hand (Michael, 2026-11-23: «Keine Vorgegebenen Grössen mehr»): was oben links Platz hat, bleibt */}
-      {!aufgabe && <GroesseWahl key={`${SP}x${ZE}`} sp={SP} ze={ZE} gesperrt={faehrt} text="Grösse ändern"
-                                waehlen={(sp, ze) => { setBrett(groesseAendern(brett, sp, ze)); setMeldung(null) }} />}
-      {meldung && <p role="status" className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm font-medium dark:bg-sbb-charcoal">{meldung}</p>}
-      {leiste('Gleise und Bauwerke', GLEISE)}
-      {leiste('Landschaft', LANDSCHAFT)}
-      </div>
-      <p className={`mt-5 max-w-3xl ${LEISE}`}>
-        Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Deine Bretter bleiben im Browser dieses
-        Geräts und werden nicht gesendet, ausser du teilst einen Link..
-      </p>
     </div>
+  )
+}
+
+/** die Anleitung, auf der Startseite und im Menü */
+function SoGehts() {
+  return (
+    <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
+      <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
+        Geraden, Kurven und Weichen entstehen von selbst.</li>
+      <li>Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel. Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken.</li>
+      <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
+        eines echten Bahnhofs.</li>
+      <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.
+        Mit zwei Fingern zoomst und verschiebst du das Brett, am Computer mit dem Mausrad.</li>
+      <li>▶ Fahren: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um, ein Tipp stellt die Weichen. Im Menü «⋯»: Fahrgäste mit
+        Ziel, zwei Züge (Signale an den Weichen zeigen, wo ein Zug ist, keiner fährt in ein besetztes Feld), Grösse, Beispiel, Leeren und Teilen.</li>
+    </ul>
   )
 }

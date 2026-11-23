@@ -1621,6 +1621,13 @@ können»): «Weiche rechts» (weiche) und «Weiche links» (weiche_l, Abzweig n
 Seit 2026-11-23 keine vorgegebenen Grössen mehr (Michael: «Bei der Grösse vom Spiel Gleisbau soll man bei einem neuen Brett die Felderzahl manuell eingeben können», «Keine
 Vorgegebenen Grössen mehr»): «Neues Brett» fragt nach Breite und Höhe in Feldern (vorgeschlagen 8 × 6, «Erstellen»), im Brett ändert «Grösse ändern» mit denselben zwei Feldern die
 Grösse; je Seite 3 bis 30 Felder (MIN_SEITE, MAX_SEITE in src/gleisbau.ts, gewählt); GROESSEN und die Knöpfe «Quer» und «Hoch» sind weg (GroesseWahl in GleisbauBretter.tsx).
+Seit 2026-11-23 ein geöffnetes Brett im ganzen Fenster wie ein Spiel (Michael: «Findest du dieses Design state of the art?», dann «Ja gerne, so umbauen», «Ja gern»): oben eine
+schmale Leiste (← zur Liste oder zu den Aufgaben, Name, ↶ mit der Zahl der Schritte, ↻, ⋯, roter Knopf ▶ / ■), in der Mitte das Brett so gross wie möglich (preserveAspectRatio meet,
+feldBei rechnet den Rand ein), zwei Finger zoomen 1- bis 4-fach und verschieben, am Computer das Mausrad, «Ganzes Brett zeigen» oben rechts; unten die Werkzeuge in drei Reitern
+«Gleise», «Bauwerke», «Landschaft» (GRUPPEN), je eine Reihe zum Wischen, während der Fahrt statt dessen «Gebracht» und die Fahrgäste; das Menü ⋯ als Blatt von unten mit
+Fahrgäste und Zwei Züge als Schalter, Grösse, Beispiel (bei Aufgaben «Neu beginnen» und «Was die Daten sagen»), Leeren, Link teilen und «So geht's»; Meldungen 4 s unten über dem Brett;
+bei einer Aufgabe darunter das Ziel (Tipp klappt auf) mit Sternen und «Prüfen», gelöst eine Karte «Geschafft!» mit «Nächste Aufgabe» rot und «Weiterbauen» weiss; eine Aufgabe unter
+#/gleisbau?aufgabe=…; die Suche nach dem Namen eines Bahnhofs als Blatt von unten; die Startseite bleibt eine gewöhnliche Seite; im Browser hier als Pixel 7 angeschaut.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
