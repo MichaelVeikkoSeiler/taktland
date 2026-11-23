@@ -4,7 +4,8 @@
  * gesäubert und verkleinert), ihre Masse in src/assets/gleisbau-masse.json. Lage, Auswahl und Grösse der Objekte nach festem Zufall je Feld.
  * Ein Baukasten, keine Wirklichkeit: alle Masse und Regeln gewählt.
  */
-import { type Brett, type Feld, grosseKurve, grossGeometrie, istBahnhof, spalten, type Stueck, wege, wegPunkte, zeilen } from '../gleisbau'
+import { type Brett, type Feld, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, wege, wegPunkte, zeilen } from '../gleisbau'
+import type { ReactElement } from 'react'
 import MASSE from '../assets/gleisbau-masse.json'
 
 const URLS = import.meta.glob('../assets/gleisbau/*.webp', { eager: true, import: 'default' }) as Record<string, string>
@@ -141,6 +142,12 @@ function gleisPunkte(b: Brett, imTunnel: (b: Brett, x: number, y: number) => boo
     for (const q of pts) if (!imTunnel(b, q.x, q.y)) p.push([q.x, q.y])
     if (istBahnhof(g)) for (let k = 0; k <= 8; k++) for (let m = 0; m <= 8; m++) p.push([i + k / 8, j + m / 8])
   }
+  // auch auf Strassen steht nichts
+  for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
+    for (const k of strassenKanten(b, i, j)) for (let t = 0; t <= 5; t++) for (const q of [-0.13, 0, 0.13]) {
+      p.push([i + 0.5 + [0, 1, 0, -1][k] * t * 0.1 + [1, 0, 1, 0][k] * q, j + 0.5 + [-1, 0, 1, 0][k] * t * 0.1 + [0, 1, 0, 1][k] * q])
+    }
+  }
   return p
 }
 
@@ -259,4 +266,67 @@ export function PortalBild({ x, y, fx, fy }: { x: number; y: number; fx: number;
   const px = art === 's' ? x - ((ox0 + ox1) / 2) * s : art === 'w' ? x - ox0 * s : x - ox1 * s
   const py = art === 's' ? y - oy1 * s : y - ((oy0 + oy1) / 2) * s
   return <image href={bild(name)} x={px} y={py} width={w} height={h} preserveAspectRatio="none" />
+}
+
+/** Farben und Breite der Strassen (gewählt) */
+const STRASSE_B = 0.24, BELAG = '#8f9096', RAND = '#e9e6dc'
+
+/** die Strassen aller Felder: von der Mitte zu jeder Kante, an der sie weiterführt, mit hellem Rand und gestrichelter Mitte */
+export function StrassenBild({ brett }: { brett: Brett }) {
+  const teile: string[] = []
+  for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
+    const k = strassenKanten(brett, i, j)
+    if (!k.length) continue
+    const cx = i + 0.5, cy = j + 0.5
+    // in ein Dorf hinein reicht die Strasse ein Stück über die Kante
+    for (const r of k) {
+      const l = brett[j + [-1, 0, 1, 0][r]]?.[i + [0, 1, 0, -1][r]]?.grund === 'dorf' && !brett[j + [-1, 0, 1, 0][r]][i + [0, 1, 0, -1][r]].strasse ? 0.72 : 0.5
+      teile.push(`M${cx},${cy} L${cx + [0, l, 0, -l][r]},${cy + [-l, 0, l, 0][r]}`)
+    }
+  }
+  const d = teile.join(' ')
+  if (!d) return null
+  return (
+    <g pointerEvents="none">
+      <path d={d} stroke={RAND} strokeWidth={STRASSE_B + 0.04} strokeLinecap="round" fill="none" />
+      <path d={d} stroke={BELAG} strokeWidth={STRASSE_B} strokeLinecap="round" fill="none" />
+      <path d={d} stroke="#ffffff" strokeWidth={0.018} strokeDasharray="0.06 0.06" fill="none" opacity={0.8} />
+    </g>
+  )
+}
+
+/**
+ * Schranken an den Bahnübergängen: je Seite des Gleises ein Mast am Rand der Strasse und ein rot-weisser Baum, der sich schliesst, wenn ein Wagen
+ * näher als SCHRANKE_ZU Felder ist, und erst wieder öffnet, wenn alle weiter weg sind; dazwischen gleitend. Von oben gesehen wird ein offener Baum
+ * kurz (er steht senkrecht). Alles gewählt
+ */
+const SCHRANKE_ZU = 1.3, SCHRANKE_AUF = 1.9
+export function SchrankenBild({ brett, wagen }: { brett: Brett; wagen: Array<{ x: number; y: number }> }) {
+  const raus: ReactElement[] = []
+  for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
+    const f = brett[j][i]
+    if (!f.strasse || f.gleis?.art !== 'gerade') continue
+    const cx = i + 0.5, cy = j + 0.5
+    const d = Math.min(9, ...wagen.map((w) => Math.hypot(w.x - cx, w.y - cy)))
+    const zu = Math.max(0, Math.min(1, (SCHRANKE_AUF - d) / (SCHRANKE_AUF - SCHRANKE_ZU)))
+    // die Strasse quer zum Gleis; die Bäume liegen parallel zum Gleis, auf der Strasse
+    const gleisSenkrecht = f.gleis.dreh % 2 === 0
+    for (const seite of [-1, 1]) {
+      // Mast am Rand der Strasse, Baum über die halbe Strasse
+      const along = seite * 0.3 // Abstand vom Gleis entlang der Strasse
+      const mast = gleisSenkrecht ? { x: cx + along, y: cy - seite * (STRASSE_B / 2 + 0.03) } : { x: cx - seite * (STRASSE_B / 2 + 0.03), y: cy + along }
+      const lang = 0.03 + zu * (STRASSE_B + 0.01)
+      const richtung = gleisSenkrecht ? { x: 0, y: seite } : { x: seite, y: 0 }
+      const ende = { x: mast.x + richtung.x * lang, y: mast.y + richtung.y * lang }
+      raus.push(
+        <g key={`${i},${j},${seite}`}>
+          <line x1={mast.x} y1={mast.y} x2={ende.x} y2={ende.y} stroke="#ffffff" strokeWidth={0.045} strokeLinecap="round" />
+          <line x1={mast.x} y1={mast.y} x2={ende.x} y2={ende.y} stroke="#c8102e" strokeWidth={0.045} strokeDasharray="0.04 0.04" />
+          <circle cx={mast.x} cy={mast.y} r={0.035} fill="#3a3a3c" />
+          {zu > 0.05 && <circle cx={mast.x} cy={mast.y} r={0.02} fill="#ff3b30" />}
+        </g>,
+      )
+    }
+  }
+  return <g pointerEvents="none">{raus}</g>
 }

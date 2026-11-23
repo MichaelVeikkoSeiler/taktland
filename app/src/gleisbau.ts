@@ -26,7 +26,7 @@ export const grosseKurve = (g?: Gleis) => (g?.art === 'bogen2' ? 2 : g?.art === 
 
 export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 und 2 abzweigend */ stellung?: 0 | 1 | 2 }
 /** teil: das Feld liegt unter einer grossen Kurve, die im Feld [i, j] (ihrem Anfang) steht */
-export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number] }
+export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /** eine Strasse im Feld; kreuzt sie eine Gerade, ist es ein Bahnübergang */ strasse?: true }
 export type Brett = Feld[][] // [Zeile][Spalte]
 
 /** Kanten eines Felds: 0 Nord, 1 Ost, 2 Süd, 3 West; -1 die Mitte (Ende am Prellbock) */
@@ -273,17 +273,18 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbd', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN'
+const GRUND_Z = 'wfsbd', STRASSE_Z = 'WFSBD', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN'
 export function brettCode(b: Brett): string {
-  return '1~' + b.map((z) => z.map((f) => GRUND_Z[GRUENDE.indexOf(f.grund)] + (f.gleis ? GLEIS_Z[ARTEN.indexOf(f.gleis.art) * 4 + f.gleis.dreh] : '.')).join('')).join('-')
+  return '1~' + b.map((z) => z.map((f) => (f.strasse ? STRASSE_Z : GRUND_Z)[GRUENDE.indexOf(f.grund)] + (f.gleis ? GLEIS_Z[ARTEN.indexOf(f.gleis.art) * 4 + f.gleis.dreh] : '.')).join('')).join('-')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder] = c.split('~')
   if (v !== '1' || !felder) return null
   const zeilenText = felder.split('-')
   const b: Brett = zeilenText.map((z) => Array.from({ length: z.length / 2 }, (_, k) => {
-    const g = GRUND_Z.indexOf(z[2 * k]), a = GLEIS_Z.indexOf(z[2 * k + 1])
-    const f: Feld = { grund: GRUENDE[Math.max(0, g)] }
+    const g = GRUND_Z.indexOf(z[2 * k]), gs = STRASSE_Z.indexOf(z[2 * k]), a = GLEIS_Z.indexOf(z[2 * k + 1])
+    const f: Feld = { grund: GRUENDE[Math.max(0, g, gs)] }
+    if (gs >= 0) f.strasse = true
     if (a >= 0) f.gleis = { art: ARTEN[Math.floor(a / 4)], dreh: (a % 4) as Dreh }
     return f
   }))
@@ -566,6 +567,25 @@ export function offeneEnden(b: Brett): Array<{ x: number; y: number; k: number }
     for (const k of new Set(wege(g).flat())) if (k >= 0) dazu(i, j, k)
   }
   return raus
+}
+
+/**
+ * Strassen (Michael, 2026-11-23, Vorschlag «Bahnübergang mit Strasse»): je Feld mit Strasse die Kanten, an denen sie weiterführt, zu einer Strasse oder
+ * einem Dorf im Nachbarfeld; ohne Nachbarn quer zum Gleis oder waagrecht. Ein Bahnübergang ist eine Strasse über eine Gerade, die Strasse dann quer dazu
+ */
+export function strassenKanten(b: Brett, i: number, j: number): number[] {
+  const f = b[j]?.[i]
+  if (!f?.strasse || f.teil || (f.gleis && f.gleis.art !== 'gerade')) return []
+  if (f.gleis?.art === 'gerade') return f.gleis.dreh % 2 === 0 ? [1, 3] : [0, 2]
+  const k = [0, 1, 2, 3].filter((k) => { const n = b[j + DY[k]]?.[i + DX[k]]; return !!n && (n.strasse || n.grund === 'dorf') })
+  if (k.length === 1) k.push((k[0] + 2) % 4)
+  return k.length ? k : [1, 3]
+}
+/** ob auf dem Feld eine Strasse liegen darf: nicht auf Wasser und Berg, mit Gleis nur über eine Gerade */
+export function strasseMoeglich(f: Feld): string | null {
+  if (f.grund === 'wasser' || f.grund === 'berg') return 'Eine Strasse geht nur über Land, nicht über Wasser oder Berg.'
+  if (f.teil || (f.gleis && f.gleis.art !== 'gerade')) return 'Ein Bahnübergang geht nur über eine Gerade.'
+  return null
 }
 
 // ——— der Zug: Lok, zwei Wagen, Steuerwagen wie in der Virtuellen Schweiz ———

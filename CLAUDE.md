@@ -1576,6 +1576,11 @@ das Werkzeug gewählt ist, rollt die Seite auf dem Brett nicht (touch-none); ein
 als Kacheln wie die Favoriten, Tipp öffnet (ein Schritt zum Zurücknehmen), Stift benennt um, Teilen-Zeichen gibt den Link (Teilen-Menü auf Handy und Tablet, sonst Zwischenablage),
 nach links wischen löscht mit «Rückgängig»; der Link #/gleisbau?brett=… enthält das ganze Brett als kurzen Text (brettCode, brettAusCode in src/gleisbau.ts: «1~», Zeilen mit «-»,
 je Feld Grund und Gleis als Zeichen; Weichenstellung nicht), kein Server; im Datenschutz genannt; im Browser hier gespeichert, geteilt und in einer zweiten Seite geöffnet.
+Werkzeug «Strasse» unter «Landschaft» (Feld.strasse, im Code des Bretts der Grund gross geschrieben): nicht auf Wasser und Berg, mit Gleis nur über eine Gerade, dort ein
+Bahnübergang mit der Strasse quer zum Gleis; sonst führt die Strasse zu Nachbarfeldern mit Strasse oder Dorf, ins Dorf ein Stück hinein (strassenKanten, StrassenBild); grauer Belag
+mit hellem Rand und gestrichelter Mitte; Schranken je Seite rot-weiss, zu ab 1,3 Feldern Abstand des nächsten Wagens, ganz offen ab 1,9, dazwischen gleitend, mit rotem Licht
+(SchrankenBild); Bäume und Büsche nicht auf der Strasse; nochmals tippen oder «Entfernen» (zuerst das Gleis, dann die Strasse) nimmt sie weg; alles gewählt; im Browser hier mit
+fahrendem Zug angeschaut.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
