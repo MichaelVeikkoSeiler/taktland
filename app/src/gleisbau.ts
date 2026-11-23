@@ -333,13 +333,22 @@ export function brettAusCode(c: string): Brett | null {
   return b
 }
 
-/** die gespeicherten Bretter mit Namen, die neuesten oben */
-export interface GespeichertesBrett { name: string; code: string }
+/**
+ * die eigenen Bretter mit Namen, die zuletzt geänderten oben (Michael, 2026-11-23: «Man muss neue Bretter eröffnen können, abspeichern können,
+ * bearbeiten können»); jedes Brett speichert sich beim Bauen selbst. Gab es noch keine Liste, wird das früher gemerkte eine Brett zum ersten
+ */
+export interface GespeichertesBrett { id: string; name: string; code: string; geaendert: number }
 const BRETTER = 'taktland.gleisbau.bretter'
+export const neueId = () => `${Date.now().toString(36)}${Math.floor(Math.random() * 1296).toString(36)}`
 export function bretterLesen(): GespeichertesBrett[] {
   try {
-    const x = JSON.parse(localStorage.getItem(BRETTER) ?? '[]')
-    return Array.isArray(x) ? x.filter((e) => typeof e?.name === 'string' && typeof e?.code === 'string') : []
+    const x = JSON.parse(localStorage.getItem(BRETTER) ?? 'null')
+    if (Array.isArray(x)) {
+      return x.filter((e) => typeof e?.name === 'string' && typeof e?.code === 'string')
+        .map((e, k) => ({ id: typeof e.id === 'string' ? e.id : `${neueId()}${k}`, name: e.name, code: e.code, geaendert: typeof e.geaendert === 'number' ? e.geaendert : 0 }))
+    }
+    const alt = brettLesen()
+    return alt ? [{ id: neueId(), name: 'Mein Brett', code: brettCode(alt), geaendert: Date.now() }] : []
   } catch { return [] }
 }
 export function bretterMerken(l: GespeichertesBrett[]) {

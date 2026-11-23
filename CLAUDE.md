@@ -1607,6 +1607,12 @@ anschliessen; die Beschreibung oben kürzer, die Einzelheiten unter «So geht's�
 Seit 2026-11-23 auch Bretter im Hochformat (Michael: «Weitere Brettgrössen zb 12x24 für hochformat»): GROESSEN mit 6 × 8, 8 × 12 und 12 × 24, die Knöpfe in zwei Reihen «Quer» und
 «Hoch», am Desktop hohe Bretter schmaler (höchstens max-w-lg, 12 × 24 max-w-xl); das Zufallsbeispiel wächst mit der Fläche (mehr Ausbuchtungen, je 48 Felder ein Berg, je 80 Felder ein
 Bahnhof mehr, gewählt); im Browser hier mit 390 Bildpunkten und 12 × 24 bei 60 Bildern je Sekunde gefahren.
+Seit 2026-11-23 eine Startliste (Michael: «Man muss neue Bretter eröffnen können, abspeichern können, bearbeiten können. Wenn man auf Gleisbau kommt, kommt eine Liste, neues
+Brett, Brett bearbeiten … damit man auf verschiedenen arbeiten kann»): #/gleisbau zeigt «Neues Brett», «Aufgaben» mit den gesammelten Sternen und «Meine Bretter» (komponenten/
+GleisbauBretter.tsx: Kacheln mit Name, Grösse und letzter Änderung, Tipp öffnet, Stift benennt um, Teilen gibt den Link, nach links wischen löscht mit «Rückgängig»); ein Brett unter
+#/gleisbau?id=…, die Aufgaben unter #/gleisbau?aufgaben, so führt die Zurück-Taste zur Liste und ein Brett bleibt nach Neuladen offen; jedes Brett speichert sich bei jeder Änderung
+selbst und rückt in der Liste nach oben (GespeichertesBrett mit id und geaendert in src/gleisbau.ts); ein geteilter Link wird ein neues eigenes Brett «Geteiltes Brett»; das früher
+gemerkte einzelne Brett (taktland.gleisbau.v1) wird beim ersten Mal «Mein Brett»; «Frei bauen» und «Dieses Brett speichern» sind weg; im Browser hier durchgespielt.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
-  type Brett, brettAusCode, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
+  type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
@@ -486,7 +486,15 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
  * Schritt 1, freies Bauen in 2D, der Zug fährt von oben gesehen; 3D und Aufgaben folgen
  */
 export function Gleisbau() {
-  const [brett, setBrettRoh] = useState<Brett>(() => brettLesen() ?? beispiel())
+  const [brett, setBrettRoh] = useState<Brett>(() => leer())
+  // Startliste, ein Brett zum Bearbeiten oder die Aufgaben (Michael, 2026-11-23: «Wenn man auf Gleisbau kommt, kommt eine Liste, neues Brett, Brett
+  // bearbeiten»); die Adresse sagt, was offen ist: #/gleisbau, #/gleisbau?id=…, #/gleisbau?aufgaben, so führt die Zurück-Taste zur Liste
+  const [ansicht, setAnsicht] = useState<'liste' | 'brett' | 'aufgaben'>('liste')
+  const [offen, setOffen] = useState<string | null>(null)
+  const [bretter, setBretterRoh] = useState<GespeichertesBrett[]>(() => bretterLesen())
+  const bretterRef = useRef(bretter)
+  bretterRef.current = bretter
+  const setBretter = (f: (l: GespeichertesBrett[]) => GespeichertesBrett[]) => setBretterRoh((l) => { const n = f(l); bretterMerken(n); return n })
   // beliebig viele Schritte zurück (Michael, 2026-11-22: «Man muss 10 Schritte rückwärts machen können», seit 2026-11-23 «Unendliche Schritte zurück
   // möglich machen»; nur im Speicher, bis die Seite neu lädt); jedes Bauen, Verschieben, Beispiel,
   // Leeren und jede neue Grösse ist ein Schritt, das Stellen der Weichen während der Fahrt nicht
@@ -570,14 +578,13 @@ export function Gleisbau() {
   const enden = useMemo(() => offeneEnden(brett), [brett])
 
   // Aufgaben (Michael, 2026-11-23, Vorschlag «Aufgaben»): eine gewählte Aufgabe hat ihr eigenes Brett, das freie bleibt gemerkt und kommt danach zurück
-  const [modus, setModus] = useState<'frei' | 'aufgaben'>('frei')
   const [aufgabe, setAufgabe] = useState<Aufgabe | null>(null)
   const [ergebnis, setErgebnis] = useState<Ergebnis | null>(null)
   const [fortschritt, setFortschritt] = useState<Record<string, number>>(() => fortschrittLesen())
   const aufgabeWaehlen = (a: Aufgabe | null) => {
     setFaehrt(false); zuege.current = []; setWagen([]); fgRef.current = null; setFahrgaeste(null)
     setAufgabe(a); setErgebnis(null); setVerlauf([]); setMeldung(null); setNameFeld(null)
-    setBrettRoh(a ? a.brett() : brettLesen() ?? beispiel())
+    if (a) setBrettRoh(a.brett())
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   // gelöst ist eine Aufgabe, sobald die Prüfung stimmt; die Sterne bleiben auf dem Gerät, die besten zählen
@@ -592,22 +599,47 @@ export function Gleisbau() {
       })
     } else setErgebnis((alt) => (alt?.ok ? null : alt))
   }, [aufgabe, brett])
-  useEffect(() => { if (!aufgabe) brettMerken(brett) }, [brett, aufgabe])
-  // ein geteilter Link #/gleisbau?brett=…: das Brett öffnen (ein Schritt zum Zurücknehmen), danach die Adresse ohne Brett
+  // ein offenes Brett speichert sich bei jeder Änderung selbst und rückt in der Liste nach oben
+  useEffect(() => {
+    if (ansicht !== 'brett' || !offen) return
+    const code = brettCode(brett)
+    setBretter((l) => {
+      const e = l.find((x) => x.id === offen)
+      if (!e || e.code === code) return l
+      return [{ ...e, code, geaendert: Date.now() }, ...l.filter((x) => x.id !== offen)]
+    })
+  }, [brett, ansicht, offen])
+  // die Adresse lesen; ein geteilter Link #/gleisbau?brett=… wird ein neues eigenes Brett
   useEffect(() => {
     const lesen = () => {
-      const code = new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('brett')
-      if (!code) return
-      const b = brettAusCode(code)
-      history.replaceState(history.state, '', `${window.location.pathname}${window.location.search}#/gleisbau`)
-      if (!b) { setMeldung('Der Link enthält kein gültiges Brett.'); return }
-      setFaehrt(false); zuege.current = []; setWagen([])
-      setVerlauf((v) => [...v, brettRef.current]); setBrettRoh(b); setMeldung('Geteiltes Brett geöffnet. «Zurück» holt dein vorheriges.')
+      const q = new URLSearchParams(window.location.hash.split('?')[1] ?? '')
+      setFaehrt(false); zuege.current = []; setWagen([]); fgRef.current = null; setFahrgaeste(null); setMeldung(null); setNameFeld(null)
+      const code = q.get('brett')
+      if (code) {
+        const b = brettAusCode(code)
+        if (!b) { history.replaceState(history.state, '', '#/gleisbau'); setAnsicht('liste'); setMeldung('Der Link enthält kein gültiges Brett.'); return }
+        const id = neueId()
+        setBretter((l) => [{ id, name: 'Geteiltes Brett', code: brettCode(b), geaendert: Date.now() }, ...l])
+        history.replaceState(history.state, '', `#/gleisbau?id=${id}`)
+        setOffen(id); setBrettRoh(b); setVerlauf([]); setAufgabe(null); setAnsicht('brett'); setMeldung('Geteiltes Brett als eigenes Brett gespeichert.')
+        return
+      }
+      const id = q.get('id'), e = id ? bretterRef.current.find((x) => x.id === id) : null
+      const b = e ? brettAusCode(e.code) : null
+      if (e && b) { setOffen(e.id); setBrettRoh(b); setVerlauf([]); setAufgabe(null); setAnsicht('brett'); return }
+      setOffen(null)
+      if (q.has('aufgaben')) { setAnsicht('aufgaben'); return }
+      setAufgabe(null); setAnsicht('liste')
     }
     lesen()
     window.addEventListener('hashchange', lesen)
     return () => window.removeEventListener('hashchange', lesen)
   }, [])
+  const neuesBrett = () => {
+    const id = neueId()
+    setBretter((l) => [{ id, name: `Brett ${l.length + 1}`, code: brettCode(leer()), geaendert: Date.now() }, ...l])
+    window.location.hash = `#/gleisbau?id=${id}`
+  }
   useEffect(() => {
     if (!leerenScharf) return
     const t = setTimeout(() => setLeerenScharf(false), 3000)
@@ -902,11 +934,17 @@ export function Gleisbau() {
   return (
     <div className="px-4 pb-6">
       <MusterDefs />
-      <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
-      <h1 className="mt-4 text-2xl font-bold tracking-tight">Gleisbau</h1>
-      <p className="mt-2 max-w-3xl leading-relaxed">
-        Lege Gleise auf das Brett und lass den Zug fahren: frei oder mit Aufgaben, bis zu echten Strecken der Schweiz.
-      </p>
+      {ansicht === 'liste'
+        ? <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
+        : <Zurueck onClick={() => { window.location.hash = '#/gleisbau' }} text="Gleisbau" />}
+      <h1 className="mt-4 text-2xl font-bold tracking-tight">
+        {ansicht === 'brett' ? bretter.find((x) => x.id === offen)?.name ?? 'Brett' : ansicht === 'aufgaben' ? 'Gleisbau: Aufgaben' : 'Gleisbau'}
+      </h1>
+      {ansicht === 'liste' && (
+        <p className="mt-2 max-w-3xl leading-relaxed">
+          Lege Gleise auf ein Brett und lass den Zug fahren: auf eigenen Brettern oder mit Aufgaben, bis zu echten Strecken der Schweiz.
+        </p>
+      )}
       <Klappe titel="So geht's" className="mt-2 max-w-3xl">
         <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
           <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
@@ -920,19 +958,13 @@ export function Gleisbau() {
             ein Zug ist, und keiner fährt in ein besetztes Feld.</li>
         </ul>
       </Klappe>
-      <div className="mt-4 flex gap-2" role="group" aria-label="Art des Spiels">
-        {(['frei', 'aufgaben'] as const).map((m) => (
-          <button key={m} type="button" aria-pressed={modus === m} disabled={faehrt}
-                  onClick={() => { if (m === modus) return; setModus(m); if (aufgabe) aufgabeWaehlen(null) }}
-                  className={`rounded-lg border px-4 py-2 text-sm font-bold disabled:opacity-40 ${modus === m
-                    ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
-                    : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`}>
-            {m === 'frei' ? 'Frei bauen' : 'Aufgaben'}
-          </button>
-        ))}
-      </div>
-      {modus === 'aufgaben' && !aufgabe && <AufgabenListe fortschritt={fortschritt} waehlen={aufgabeWaehlen} />}
-      {aufgabe && (
+      {ansicht === 'liste' && (
+        <GleisbauBretter bretter={bretter} setBretter={setBretter} neu={neuesBrett} oeffnen={(id) => { window.location.hash = `#/gleisbau?id=${id}` }}
+                         aufgaben={() => { window.location.hash = '#/gleisbau?aufgaben' }}
+                         sterne={Object.values(fortschritt).reduce((a, c) => a + c, 0)} sterneMax={AUFGABEN.length * 3} />
+      )}
+      {ansicht === 'aufgaben' && !aufgabe && <AufgabenListe fortschritt={fortschritt} waehlen={aufgabeWaehlen} />}
+      {ansicht === 'aufgaben' && aufgabe && (
         <div className="mt-4 max-w-3xl rounded-lg bg-sbb-milk p-4 dark:bg-sbb-charcoal">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="text-lg font-bold">{aufgabe.titel}</h2>
@@ -958,7 +990,7 @@ export function Gleisbau() {
           </div>
         </div>
       )}
-      <div className={`mt-4 ${ZE > SP ? (ZE > 12 ? 'max-w-xl' : 'max-w-lg') : SP > 8 ? 'max-w-5xl' : 'max-w-3xl'} ${modus === 'aufgaben' && !aufgabe ? 'hidden' : ''}`}>
+      <div className={`mt-4 ${ZE > SP ? (ZE > 12 ? 'max-w-xl' : 'max-w-lg') : SP > 8 ? 'max-w-5xl' : 'max-w-3xl'} ${ansicht === 'liste' || (ansicht === 'aufgaben' && !aufgabe) ? 'hidden' : ''}`}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null) }} onContextMenu={(e) => e.preventDefault()}
@@ -1025,7 +1057,7 @@ export function Gleisbau() {
           ))}
         </p>
       )}
-      <div className={modus === 'aufgaben' && !aufgabe ? 'hidden' : ''}>
+      <div className={ansicht === 'liste' || (ansicht === 'aufgaben' && !aufgabe) ? 'hidden' : ''}>
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <button type="button" onClick={fahren}
                 className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">{faehrt ? 'Anhalten' : 'Fahren'}</button>
@@ -1084,7 +1116,6 @@ export function Gleisbau() {
       {leiste('Gleise und Bauwerke', GLEISE)}
       {leiste('Landschaft', LANDSCHAFT)}
       </div>
-      {modus === 'frei' && <GleisbauBretter brett={brett} gesperrt={faehrt} oeffnen={(b, name) => { setBrett(b); setMeldung(`«${name}» geöffnet.`); window.scrollTo({ top: 0, behavior: 'smooth' }) }} />}
       <p className={`mt-5 max-w-3xl ${LEISE}`}>
         Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Deine Bretter bleiben im Browser dieses
         Geräts und werden nicht gesendet, ausser du teilst einen Link..
