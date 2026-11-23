@@ -453,7 +453,7 @@ const umgekehrt = (s: Stueck): Stueck => (s.gross
   : { i: s.i, j: s.j, ein: s.aus, aus: s.ein })
 
 /** das Stück, das an das Ende von s anschliesst, oder null */
-function naechstes(b: Brett, s: Stueck): Stueck | null {
+export function naechstes(b: Brett, s: Stueck): Stueck | null {
   if (s.aus < 0) return null
   const i = s.i + DX[s.aus], j = s.j + DY[s.aus]
   if (i < 0 || j < 0 || i >= spalten(b) || j >= zeilen(b)) return null
@@ -473,6 +473,29 @@ function erstesStueck(b: Brett, i: number, j: number): Stueck | null {
   return { i, j, ein: a, aus: c }
 }
 
+/**
+ * Wo ein Gleis offen endet (Michael, 2026-11-23, Vorschlag «Anzeige, wo das Gleis offen endet»): jede Kante eines Gleisstücks, an der im Nachbarfeld
+ * kein Gleis anschliesst; Punkt auf der Kante und die Richtung hinaus. Prellböcke sind kein offenes Ende
+ */
+export function offeneEnden(b: Brett): Array<{ x: number; y: number; k: number }> {
+  const raus: Array<{ x: number; y: number; k: number }> = []
+  const verbunden = (i: number, j: number, k: number) => {
+    const u = i + DX[k], v = j + DY[k]
+    if (u < 0 || v < 0 || u >= spalten(b) || v >= zeilen(b)) return false
+    const ein = (k + 2) % 4, n = b[v][u]
+    if (n.teil || grosseKurve(n.gleis)) return grossStueck(b, n, u, v, ein) !== null
+    return ausgang(n.gleis, ein) !== null
+  }
+  const dazu = (i: number, j: number, k: number) => { if (!verbunden(i, j, k)) raus.push({ x: i + 0.5 + DX[k] * 0.5, y: j + 0.5 + DY[k] * 0.5, k }) }
+  for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
+    const g = b[j][i].gleis
+    if (!g) continue
+    if (grosseKurve(g)) { const G = grossGeometrie(i, j, g); dazu(G.anfang.i, G.anfang.j, G.anfang.kante); dazu(G.ende.i, G.ende.j, G.ende.kante); continue }
+    for (const k of new Set(wege(g).flat())) if (k >= 0) dazu(i, j, k)
+  }
+  return raus
+}
+
 // ——— der Zug: Lok, zwei Wagen, Steuerwagen wie in der Virtuellen Schweiz ———
 
 export const WAGEN_LAENGE = 0.5
@@ -483,6 +506,8 @@ export const ZUG_LAENGE = WAGEN * WAGEN_LAENGE + (WAGEN - 1) * WAGEN_LUECKE
 export const TEMPO = 1.5
 const ANFAHREN = 1.2
 const HALT_S = 2.5
+/** der Pfiff so lange vor der Abfahrt (gewählt) */
+const PFIFF_VOR_S = 0.9
 
 export interface WagenLage { x: number; y: number; w: number; /** 0 Lok, 1 und 2 Wagen, 3 Steuerwagen */ art: number; vorne: boolean }
 
@@ -494,6 +519,10 @@ export class Zug {
   private halt = 0
   /** true, wenn der Steuerwagen vorne fährt */
   private rueckwaerts = false
+  /** ob der Halt an einem Bahnhof ist (nicht das Umkehren) */
+  private amBahnhof = false
+  /** zählt hoch, wenn der Zug PFIFF_VOR_S vor der Abfahrt an einem Bahnhof steht; die Darstellung pfeift dann */
+  pfiffe = 0
 
   /** null, wenn auf dem Brett kein Gleis liegt */
   static setzen(b: Brett): Zug | null {
@@ -514,7 +543,7 @@ export class Zug {
       erstes = umgekehrt(davor)
       z.stuecke.unshift(erstes)
     }
-    if (istBahnhof(b[start.j][start.i].gleis)) z.halt = HALT_S
+    if (istBahnhof(b[start.j][start.i].gleis)) { z.halt = HALT_S; z.amBahnhof = true }
     return z
   }
 
@@ -537,11 +566,16 @@ export class Zug {
     this.rueckwaerts = !this.rueckwaerts
     this.tempo = 0
     this.halt = 0.8
+    this.amBahnhof = false
     this.kuerzen()
   }
 
   schritt(b: Brett, dt: number) {
-    if (this.halt > 0) { this.halt -= dt; return }
+    if (this.halt > 0) {
+      if (this.amBahnhof && this.halt > PFIFF_VOR_S && this.halt - dt <= PFIFF_VOR_S) this.pfiffe++
+      this.halt -= dt
+      return
+    }
     this.tempo = Math.min(TEMPO, this.tempo + (TEMPO / ANFAHREN) * dt)
     let rest = this.tempo * dt
     for (let k = 0; k < 8 && rest > 0; k++) {
@@ -551,7 +585,7 @@ export class Zug {
       // in einem Bahnhof aus mehreren Feldern nur einmal, im letzten Feld in Fahrtrichtung
       const weiterImBahnhof = () => { const n = naechstes(b, s); return !!n && !n.gross && istBahnhof(b[n.j][n.i].gleis) }
       if (!s.gross && istBahnhof(b[s.j][s.i].gleis) && vorher < mitte && vorher + rest >= mitte && !weiterImBahnhof()) {
-        this.kopf = mitte; this.halt = HALT_S; this.tempo = 0; return
+        this.kopf = mitte; this.halt = HALT_S; this.amBahnhof = true; this.tempo = 0; return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
       rest -= l - vorher

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
+import { abfahrtsPfiff, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, offeneEnden, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild } from './GleisbauBilder'
@@ -361,6 +361,7 @@ export function Gleisbau() {
   const druck = useRef<{ x: number; y: number; zeit: number; feld: [number, number] } | null>(null)
   const nachZiehen = useRef(false)
   const zug = useRef<Zug | null>(null)
+  const pfiffe = useRef(0), dorf = useRef(false)
   const brettRef = useRef(brett)
   brettRef.current = brett
   const svg = useRef<SVGSVGElement>(null)
@@ -378,6 +379,8 @@ export function Gleisbau() {
     </>
   ), [brett, namen])
   const oben = useMemo(() => objekteBauen(brett, imTunnel).map((o, k) => <ObjektBild key={k} o={o} />), [brett])
+  // offene Gleisenden als roter Punkt, beim Bauen (Michael, 2026-11-23, Vorschlag «Anzeige, wo das Gleis offen endet»)
+  const enden = useMemo(() => offeneEnden(brett), [brett])
 
   useEffect(() => { brettMerken(brett) }, [brett])
   useEffect(() => {
@@ -398,6 +401,12 @@ export function Gleisbau() {
       // das volle Tempo des Bretts klingt wie ZUG_KLANG_MS (gewählt), im Tunnel dumpfer, auf einer Brücke hohler
       const z = zug.current
       if (z) {
+        // Pfiff kurz vor der Abfahrt am Bahnhof, eine Glocke, wenn die Spitze an ein Dorf kommt (Michael, 2026-11-23, Vorschlag «Kleine Geräusche»)
+        if (z.pfiffe !== pfiffe.current) { pfiffe.current = z.pfiffe; abfahrtsPfiff(0.8) }
+        const [di, dj] = z.spitze(), b0 = brettRef.current
+        const amDorf = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]].some(([u, v]) => b0[dj + v]?.[di + u]?.grund === 'dorf')
+        if (amDorf && !dorf.current) kirchenSchlag(1, null, 0.7)
+        dorf.current = amDorf
         const [si, sj] = z.spitze(), f = brettRef.current[sj]?.[si]
         const ort = f?.gleis && !grosseKurve(f.gleis) ? (f.grund === 'berg' ? 'tunnel' : f.grund === 'wasser' ? 'bruecke' : null) : null
         zuggeraeuschTempo(z.anteil() * ZUG_KLANG_MS, Infinity, ort, 1, true)
@@ -556,7 +565,7 @@ export function Gleisbau() {
     if (faehrt) { setFaehrt(false); setWagen([]); zug.current = null; return }
     const z = Zug.setzen(brett)
     if (!z) { setMeldung('Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
-    zug.current = z; setWagen(z.wagen()); setMeldung(null); setFaehrt(true)
+    zug.current = z; pfiffe.current = 0; dorf.current = false; setWagen(z.wagen()); setMeldung(null); setFaehrt(true)
   }
 
   const knopf = (an: boolean) => `flex w-[4.6rem] flex-col items-center gap-0.5 rounded-lg border px-1 py-1.5 text-xs font-medium ${an
@@ -586,7 +595,7 @@ export function Gleisbau() {
       <p className="mt-2 max-w-3xl leading-relaxed">
         Wähle unten ein Stück und tippe ein Feld an. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
         Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve. Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden.
-        Bahnhöfe nebeneinander sind ein Bahnhof. Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
+        Bahnhöfe nebeneinander sind ein Bahnhof. Rote Punkte zeigen, wo ein Gleis offen endet. Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
       </p>
       <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
@@ -597,6 +606,11 @@ export function Gleisbau() {
           {unten}
           {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
           {oben}
+          {!faehrt && enden.map((e, k) => (
+            <g key={`e${k}`} pointerEvents="none">
+              <circle cx={e.x - [0, 1, 0, -1][e.k] * 0.06} cy={e.y - [-1, 0, 1, 0][e.k] * 0.06} r={0.065} fill={F.karmin} stroke="#ffffff" strokeWidth={0.02} />
+            </g>
+          ))}
           {ziehen && (() => {
             const [vi, vj] = ziehen.von, [ni, nj] = ziehen.nach, f = brett[vj][vi]
             const [hi, hj] = f.teil ?? [vi, vj], h = brett[hj][hi]

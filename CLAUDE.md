@@ -1566,6 +1566,9 @@ Beschreibung der 3D-Ansicht oben gilt nicht mehr. Seit 2026-11-23 beliebig viele
 Speicher, bis die Seite neu lädt. Seit 2026-11-23 sind Bahnhofsfelder, die einander an einer Kante berühren, ein Bahnhof (Michael: «Wenn mehrere Bahnhöfe einander angrenzen
 soll es einer sein»): ein Name und ein Schild auf dem ersten Feld (bahnhofNamen in src/gleisbau.ts), der Zug hält darin nur einmal, im letzten Feld in Fahrtrichtung; im
 Browser hier mit einem Bahnhof aus vier Feldern geprüft.
+Seit 2026-11-23 weitere Ausbauten nach einer Liste von Vorschlägen (Michael: «Alles sehr gute Ideen, bitte umsetzen. Punkt 5 noch auslassen», Punkt 5 war Tag und Nacht):
+offene Gleisenden als karminroter Punkt an der Kante, nur beim Bauen (offeneEnden in src/gleisbau.ts: jede Kante eines Gleisstücks ohne Anschluss im Nachbarfeld, Prellböcke nicht);
+Pfiff 0,9 s vor der Abfahrt an einem Bahnhof (Zug.pfiffe, abfahrtsPfiff) und ein heller Glockenschlag, wenn die Spitze an ein Dorf kommt (kirchenSchlag); gewählt.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
