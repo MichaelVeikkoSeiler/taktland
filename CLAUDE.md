@@ -1613,6 +1613,11 @@ GleisbauBretter.tsx: Kacheln mit Name, Grösse und letzter Änderung, Tipp öffn
 #/gleisbau?id=…, die Aufgaben unter #/gleisbau?aufgaben, so führt die Zurück-Taste zur Liste und ein Brett bleibt nach Neuladen offen; jedes Brett speichert sich bei jeder Änderung
 selbst und rückt in der Liste nach oben (GespeichertesBrett mit id und geaendert in src/gleisbau.ts); ein geteilter Link wird ein neues eigenes Brett «Geteiltes Brett»; das früher
 gemerkte einzelne Brett (taktland.gleisbau.v1) wird beim ersten Mal «Mein Brett»; «Frei bauen» und «Dieses Brett speichern» sind weg; im Browser hier durchgespielt.
+Seit 2026-11-23 in jeder Richtung dasselbe Tunnelportal, das von vorne (Michael: «Eigentlich reicht es, wenn wir nur immer das gleiche Tunnelportal verwenden»): die Unterkante der
+Öffnung am Portal, höchstens 0,62 Felder breit; liegen beide Enden eines Tunnels im selben Feld, nur ein Portal in der Mitte (vorher überdeckten sich zwei, Michael, Bildschirmfoto:
+«beim Tunnel irgendeinen Konflikt»); über der Felsdecke gestrichelt, wo das Gleis im Berg verläuft, damit man die Richtung sieht (TUNNEL_STRICH); der kleine Gipfel über einem Tunnel
+nur in Feldern ohne Portal; die Bilder der Portale West und Ost bleiben ungenutzt im Repository. Seit 2026-11-23 die Weiche auch gespiegelt (Michael: «Weichen muss man spiegeln
+können»): «Weiche rechts» (weiche) und «Weiche links» (weiche_l, Abzweig nach links; im Code des Bretts die Zeichen O bis R); im Browser hier angeschaut.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

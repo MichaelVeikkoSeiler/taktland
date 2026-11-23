@@ -4,7 +4,7 @@
  * gesäubert und verkleinert), ihre Masse in src/assets/gleisbau-masse.json. Lage, Auswahl und Grösse der Objekte nach festem Zufall je Feld.
  * Ein Baukasten, keine Wirklichkeit: alle Masse und Regeln gewählt.
  */
-import { type Brett, type Feld, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, wege, wegPunkte, zeilen } from '../gleisbau'
+import { type Brett, type Feld, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, tunnelWeiter, wege, wegPunkte, zeilen } from '../gleisbau'
 import type { ReactElement } from 'react'
 import MASSE from '../assets/gleisbau-masse.json'
 
@@ -205,8 +205,9 @@ export function objekteBauen(b: Brett, imTunnel: (b: Brett, x: number, y: number
       if (grund(i, j + 1) === 'wald') for (let k = 0; k < 2; k++) setze(waehle([...LAUB, ...NADEL], z(150 + k)), i + 0.3 + k * 0.4, j + 1 + (z(152 + k) - 0.5) * 0.1, 0.9 + z(154 + k) * 0.2, z(156 + k))
     } else if (f.grund === 'berg') {
       if (f.gleis || f.teil) {
-        // über dem Tunnel ein kleiner Gipfel; der Fels deckt das Gleis
-        setze(waehle(KLEIN, z(1)), i + 0.5 + (z(2) - 0.5) * 0.1, j + 0.52, 0.85, z(3))
+        // über dem Tunnel ein kleiner Gipfel, nur wo im Feld kein Portal steht (sonst verdeckt er es); der Fels deckt das Gleis
+        const kanten = f.gleis && !grosseKurve(f.gleis) ? [...new Set(wege(f.gleis).flat())].filter((k) => k >= 0) : []
+        if (!f.teil && !grosseKurve(f.gleis) && kanten.every((k) => tunnelWeiter(b, i, j, k))) setze(waehle(KLEIN, z(1)), i + 0.5 + (z(2) - 0.5) * 0.1, j + 0.52, 0.85, z(3))
       } else {
         setze(z(1) < 0.65 ? waehle(GROSS, z(2)) : waehle(KLEIN, z(2)), i + 0.5 + (z(3) - 0.5) * 0.16, j + 0.8, 0.9 + z(4) * 0.15, z(5))
         if (grund(i + 1, j) === 'berg' && !b[j][i + 1].gleis && z(6) < 0.6) setze(waehle(KLEIN, z(7)), i + 1, j + 0.45, 0.8, z(8))
@@ -243,29 +244,17 @@ export function ObjektBild({ o }: { o: Objekt }) {
 }
 
 /**
- * Ein Tunnelportal am Punkt (x, y), die Öffnung zeigt in Richtung (fx, fy) hinaus. Süd, West und Ost als Bild, so gross, dass die Öffnung 0,36
+ * Ein Tunnelportal am Punkt (x, y). Süd, West und Ost als Bild, so gross, dass die Öffnung 0,36
  * Felder misst; Nord fehlt noch (das Bild hatte das Schachbrett mitgemalt), dort vorerst ein schlichtes Portal
  */
-export function PortalBild({ x, y, fx, fy }: { x: number; y: number; fx: number; fy: number }) {
-  const art = Math.abs(fy) >= Math.abs(fx) ? (fy > 0 ? 's' : 'n') : fx > 0 ? 'o' : 'w'
-  if (art === 'n') {
-    return (
-      <g transform={`translate(${x} ${y})`}>
-        <rect x={-0.22} y={-0.05} width={0.44} height={0.1} rx={0.03} fill="#c9c9cb" />
-        <rect x={-0.17} y={-0.035} width={0.34} height={0.07} rx={0.02} fill="#2b2b33" />
-      </g>
-    )
-  }
-  const name = `gb_bau_tunnelportal_${art}`, m = masse(name)
+export function PortalBild({ x, y }: { x: number; y: number }) {
+  // in jeder Richtung dasselbe Portal von vorne (Michael, 2026-11-23: «Eigentlich reicht es, wenn wir nur immer das gleiche Tunnelportal verwenden»):
+  // die Unterkante der Öffnung am Punkt, die Öffnung 0,3 Felder weit, das Portal höchstens 0,62 breit (gewählt)
+  const name = 'gb_bau_tunnelportal_s', m = masse(name)
   if (!m?.oeffnung) return null
-  const [ox0, oy0, ox1, oy1] = m.oeffnung
-  // die Öffnung 0,34 Felder weit, das ganze Portal aber höchstens 0,8 (Süd) und 0,6 Felder breit (West, Ost), sonst überdecken sich zwei Portale
-  // eines kurzen Tunnels (gewählt)
-  const s = Math.min(0.34 / (art === 's' ? ox1 - ox0 : oy1 - oy0), (art === 's' ? 0.8 : 0.6) / m.w)
-  const w = m.w * s, h = m.h * s
-  const px = art === 's' ? x - ((ox0 + ox1) / 2) * s : art === 'w' ? x - ox0 * s : x - ox1 * s
-  const py = art === 's' ? y - oy1 * s : y - ((oy0 + oy1) / 2) * s
-  return <image href={bild(name)} x={px} y={py} width={w} height={h} preserveAspectRatio="none" />
+  const [ox0, , ox1, oy1] = m.oeffnung
+  const s = Math.min(0.3 / (ox1 - ox0), 0.62 / m.w)
+  return <image href={bild(name)} x={x - ((ox0 + ox1) / 2) * s} y={y - oy1 * s + 0.06} width={m.w * s} height={m.h * s} preserveAspectRatio="none" />
 }
 
 /** Farben und Breite der Strassen (gewählt) */

@@ -42,7 +42,8 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'kurve' }, text: 'Kurve' },
   { w: { art: 'gleis', gleis: 'bogen2' }, text: 'Kurve 2 × 2' },
   { w: { art: 'gleis', gleis: 'bogen3' }, text: 'Kurve 3 × 3' },
-  { w: { art: 'gleis', gleis: 'weiche' }, text: 'Weiche' },
+  { w: { art: 'gleis', gleis: 'weiche' }, text: 'Weiche rechts' },
+  { w: { art: 'gleis', gleis: 'weiche_l' }, text: 'Weiche links' },
   { w: { art: 'gleis', gleis: 'dreiweg' }, text: 'Dreiweg' },
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
@@ -184,6 +185,8 @@ const versetzt = (p: Array<{ x: number; y: number; w: number }>, d: number) =>
 
 /** wie weit das Portal vom Rand des Felds liegt */
 const PORTAL = 0.22
+/** Strich, wo das Gleis im Tunnel verläuft (gewählt) */
+const TUNNEL_STRICH = '#55585e'
 
 /** ob ein Punkt im Tunnel liegt: in einem Feld im Berg mit Gleis, mehr als PORTAL von jeder Kante mit Portal (an Kanten, wo der Tunnel im
  *  Nachbarfeld weitergeht, gibt es keines) */
@@ -321,15 +324,24 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
             const l = stueckLaenge(s), fein = wegPunkte(s, 40)
             const von = s.ein >= 0 && !weiter[s.ein] ? PORTAL / l : 0, bis = s.aus >= 0 && !weiter[s.aus] ? 1 - PORTAL / l : 1
             const teil = fein.filter((_, n) => n / 40 >= von - 1e-6 && n / 40 <= bis + 1e-6)
-            return teil.length > 1 ? <path key={`d${k}`} d={linie(teil)} fill="none" stroke="url(#gb-fels)" strokeWidth={0.52} /> : null
+            // darauf gestrichelt, wo das Gleis im Berg verläuft (sonst sah man nicht, in welche Richtung ein Tunnel liegt; Michael, 2026-11-23)
+            return teil.length > 1 ? <g key={`d${k}`}>
+              <path d={linie(teil)} fill="none" stroke="url(#gb-fels)" strokeWidth={0.52} />
+              <path d={linie(teil)} fill="none" stroke={TUNNEL_STRICH} strokeWidth={0.035} strokeDasharray="0.08 0.06" opacity={0.75} />
+            </g> : null
           })}
-          {/* das Portal zeigt zur Kante hinaus, an der das Gleis den Berg verlässt */}
-          {punkte.map(({ s }, k) => [0, 1].map((e) => {
-            const kant = e === 0 ? s.ein : s.aus
-            if (kant < 0 || weiter[kant]) return null
-            const l = stueckLaenge(s), q = stueckPunkt(s, e === 0 ? PORTAL : l - PORTAL)
-            return <PortalBild key={`${k}${e}`} x={q.x} y={q.y} fx={[0, 1, 0, -1][kant]} fy={[-1, 0, 1, 0][kant]} />
-          }))}
+          {/* je Ende ein Portal; liegen beide Enden eines Stücks in diesem Feld (ein Tunnel aus einem Feld), nur eines in der Mitte */}
+          {punkte.map(({ s }, k) => {
+            const enden = [s.ein, s.aus].filter((kant) => kant >= 0 && !weiter[kant])
+            const l = stueckLaenge(s)
+            if (enden.length === 2) { const q = stueckPunkt(s, l / 2); return <PortalBild key={k} x={q.x} y={q.y + 0.12} /> }
+            return [0, 1].map((e) => {
+              const kant = e === 0 ? s.ein : s.aus
+              if (kant < 0 || weiter[kant]) return null
+              const q = stueckPunkt(s, e === 0 ? PORTAL : l - PORTAL)
+              return <PortalBild key={`${k}${e}`} x={q.x} y={q.y} />
+            })
+          })}
         </>
       )}
       {name && (
@@ -383,9 +395,8 @@ function BogenBild({ i, j, g, wasser, brett }: { i: number; j: number; g: Gleis;
         return (
           <g key={`t${n}`}>
             <path d={linie(pts)} fill="none" stroke="url(#gb-fels)" strokeWidth={0.52} />
-            {[t.portal0 && bei(t.k0), t.portal1 && bei(t.k1)].map((q, m) => q ? (
-              <PortalBild key={m} x={q.x} y={q.y} fx={(m ? 1 : -1) * Math.cos(q.w)} fy={(m ? 1 : -1) * Math.sin(q.w)} />
-            ) : null)}
+            <path d={linie(pts)} fill="none" stroke={TUNNEL_STRICH} strokeWidth={0.035} strokeDasharray="0.08 0.06" opacity={0.75} />
+            {[t.portal0 && bei(t.k0), t.portal1 && bei(t.k1)].map((q, m) => q ? <PortalBild key={m} x={q.x} y={q.y} /> : null)}
           </g>
         )
       })}
