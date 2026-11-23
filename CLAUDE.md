@@ -1618,6 +1618,9 @@ Seit 2026-11-23 in jeder Richtung dasselbe Tunnelportal, das von vorne (Michael:
 «beim Tunnel irgendeinen Konflikt»); über der Felsdecke gestrichelt, wo das Gleis im Berg verläuft, damit man die Richtung sieht (TUNNEL_STRICH); der kleine Gipfel über einem Tunnel
 nur in Feldern ohne Portal; die Bilder der Portale West und Ost bleiben ungenutzt im Repository. Seit 2026-11-23 die Weiche auch gespiegelt (Michael: «Weichen muss man spiegeln
 können»): «Weiche rechts» (weiche) und «Weiche links» (weiche_l, Abzweig nach links; im Code des Bretts die Zeichen O bis R); im Browser hier angeschaut.
+Seit 2026-11-23 keine vorgegebenen Grössen mehr (Michael: «Bei der Grösse vom Spiel Gleisbau soll man bei einem neuen Brett die Felderzahl manuell eingeben können», «Keine
+Vorgegebenen Grössen mehr»): «Neues Brett» fragt nach Breite und Höhe in Feldern (vorgeschlagen 8 × 6, «Erstellen»), im Brett ändert «Grösse ändern» mit denselben zwei Feldern die
+Grösse; je Seite 3 bis 30 Felder (MIN_SEITE, MAX_SEITE in src/gleisbau.ts, gewählt); GROESSEN und die Knöpfe «Quer» und «Hoch» sind weg (GroesseWahl in GleisbauBretter.tsx).
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

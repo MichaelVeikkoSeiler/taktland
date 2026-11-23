@@ -8,8 +8,10 @@
 export const SPALTEN = 8
 export const ZEILEN = 6
 /** wählbare Grössen des Bretts, Spalten × Zeilen (gewählt; Michael, 2026-11-22: «auch Anzahl Kacheln sollen wählbar sein») */
-// seit 2026-11-23 auch hoch (Michael: «Weitere Brettgrössen zb 12x24 für hochformat»)
-export const GROESSEN: Array<[number, number]> = [[6, 4], [8, 6], [10, 7], [12, 8], [6, 8], [8, 12], [12, 24]]
+// seit 2026-11-23 frei wählbar statt vorgegebener Grössen (Michael: «bei einem neuen Brett die Felderzahl manuell eingeben können», «Keine Vorgegebenen
+// Grössen mehr»): je Seite MIN_SEITE bis MAX_SEITE Felder (gewählt, grösser wird es auf dem Handy zu klein und langsam)
+export const MIN_SEITE = 3, MAX_SEITE = 30
+export const groesseOk = (sp: number, ze: number) => Number.isInteger(sp) && Number.isInteger(ze) && sp >= MIN_SEITE && ze >= MIN_SEITE && sp <= MAX_SEITE && ze <= MAX_SEITE
 export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
@@ -282,7 +284,7 @@ const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock',
 export function brettLesen(): Brett | null {
   try {
     const x = JSON.parse(localStorage.getItem(SPEICHER) ?? 'null') as Brett | null
-    if (!Array.isArray(x) || !GROESSEN.some(([sp, ze]) => x.length === ze && x.every((z) => Array.isArray(z) && z.length === sp))) return null
+    if (!Array.isArray(x) || !Array.isArray(x[0]) || !groesseOk(x[0].length, x.length) || !x.every((z) => Array.isArray(z) && z.length === x[0].length)) return null
     for (const z of x) for (const f of z) {
       if (!GRUENDE.includes(f.grund)) return null
       if (f.gleis && (!ARTEN.includes(f.gleis.art) || ![0, 1, 2, 3].includes(f.gleis.dreh))) return null
@@ -315,7 +317,7 @@ export function brettAusCode(c: string): Brett | null {
     if (a >= 0) f.gleis = { art: ARTEN[Math.floor(a / 4)], dreh: (a % 4) as Dreh }
     return f
   }))
-  if (!GROESSEN.some(([sp, ze]) => b.length === ze && b.every((z) => z.length === sp))) return null
+  if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
     if (!teil.startsWith('n')) continue
     for (const e of teil.slice(1).split('_')) {

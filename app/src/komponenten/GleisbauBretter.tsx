@@ -5,8 +5,30 @@
  * Alles nur im Browser dieses Geräts; ein geteilter Link enthält das Brett selbst, kein Server.
  */
 import { useEffect, useState } from 'react'
-import { brettAusCode, type GespeichertesBrett, spalten, zeilen } from '../gleisbau'
+import { brettAusCode, type GespeichertesBrett, groesseOk, MAX_SEITE, MIN_SEITE, spalten, zeilen } from '../gleisbau'
 import Wischen from './Wischen'
+
+/** Spalten und Zeilen von Hand, MIN_SEITE bis MAX_SEITE */
+export function GroesseWahl({ sp, ze, waehlen, text, gesperrt = false }: { sp: number; ze: number; waehlen: (sp: number, ze: number) => void; text: string; gesperrt?: boolean }) {
+  const [s, setS] = useState(String(sp)), [z, setZ] = useState(String(ze))
+  const n = Number(s), m = Number(z), ok = groesseOk(n, m), gleich = n === sp && m === ze
+  const feld = 'w-16 rounded-lg border border-sbb-cloud bg-white px-2 py-2 text-center tabular-nums dark:border-sbb-iron dark:bg-sbb-midnight'
+  return (
+    <form className="mt-3 flex flex-wrap items-center gap-2" onSubmit={(e) => { e.preventDefault(); if (ok) waehlen(n, m) }}>
+      <label className="flex items-center gap-1.5 text-sm font-bold">Breite
+        <input type="number" inputMode="numeric" min={MIN_SEITE} max={MAX_SEITE} value={s} onChange={(e) => setS(e.target.value)} disabled={gesperrt} className={feld} />
+      </label>
+      <span aria-hidden="true">×</span>
+      <label className="flex items-center gap-1.5 text-sm font-bold">Höhe
+        <input type="number" inputMode="numeric" min={MIN_SEITE} max={MAX_SEITE} value={z} onChange={(e) => setZ(e.target.value)} disabled={gesperrt} className={feld} />
+      </label>
+      <button type="submit" disabled={gesperrt || !ok || (gleich && text !== 'Erstellen')}
+              className={`min-h-11 rounded-lg px-4 font-bold disabled:opacity-40 ${text === 'Erstellen' ? 'bg-sbb-red text-white hover:bg-sbb-red125'
+                : 'border border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>{text}</button>
+      {!ok && <span className="w-full text-sm text-sbb-red">Je {MIN_SEITE} bis {MAX_SEITE} Felder.</span>}
+    </form>
+  )
+}
 
 export const brettLink = (code: string) => `${window.location.origin}${window.location.pathname}#/gleisbau?brett=${code}`
 
@@ -23,7 +45,7 @@ export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu, auf
   bretter: GespeichertesBrett[]
   setBretter: (f: (l: GespeichertesBrett[]) => GespeichertesBrett[]) => void
   oeffnen: (id: string) => void
-  neu: () => void
+  neu: (sp: number, ze: number) => void
   aufgaben: () => void
   sterne: number
   sterneMax: number
@@ -31,6 +53,8 @@ export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu, auf
   const [weg, setWeg] = useState<{ e: GespeichertesBrett; i: number } | null>(null)
   const [geteilt, setGeteilt] = useState<string | null>(null)
   const [umbenennen, setUmbenennen] = useState<{ id: string; name: string } | null>(null)
+  // «Neues Brett» fragt nach Breite und Höhe in Feldern (Michael, 2026-11-23: «bei einem neuen Brett die Felderzahl manuell eingeben»)
+  const [neuOffen, setNeuOffen] = useState(false)
   useEffect(() => {
     if (!weg) return
     const t = window.setTimeout(() => setWeg(null), 6000)
@@ -48,12 +72,19 @@ export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu, auf
   return (
     <div className="mt-4 max-w-3xl">
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={neu} className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">Neues Brett</button>
+        <button type="button" onClick={() => setNeuOffen((x) => !x)} aria-expanded={neuOffen}
+                className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">Neues Brett</button>
         <button type="button" onClick={aufgaben}
                 className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">
           Aufgaben <span className="ml-1 text-sm font-medium tabular-nums text-sbb-metal dark:text-sbb-storm">{sterne} / {sterneMax} ★</span>
         </button>
       </div>
+      {neuOffen && (
+        <div className="mt-3 rounded-lg bg-sbb-milk p-3 dark:bg-sbb-charcoal">
+          <p className="text-sm">Wie viele Felder breit und hoch?</p>
+          <GroesseWahl sp={8} ze={6} text="Erstellen" waehlen={(sp, ze) => { setNeuOffen(false); neu(sp, ze) }} />
+        </div>
+      )}
       <h2 className="mt-6 text-lg font-bold">Meine Bretter</h2>
       {weg && (
         <div className="mt-2 flex items-center justify-between gap-2 rounded-lg bg-sbb-milk px-3 py-2 text-sm dark:bg-sbb-charcoal">

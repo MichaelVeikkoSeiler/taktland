@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
-  type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
+  type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
@@ -9,7 +9,7 @@ import { Klappe } from './Klappe'
 import { type Aufgabe, AUFGABEN, bewerten, type Ergebnis, fortschrittLesen, fortschrittMerken } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
-import GleisbauBretter from './GleisbauBretter'
+import GleisbauBretter, { GroesseWahl } from './GleisbauBretter'
 import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild } from './GleisbauBilder'
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
@@ -646,9 +646,9 @@ export function Gleisbau() {
     window.addEventListener('hashchange', lesen)
     return () => window.removeEventListener('hashchange', lesen)
   }, [])
-  const neuesBrett = () => {
+  const neuesBrett = (sp: number, ze: number) => {
     const id = neueId()
-    setBretter((l) => [{ id, name: `Brett ${l.length + 1}`, code: brettCode(leer()), geaendert: Date.now() }, ...l])
+    setBretter((l) => [{ id, name: `Brett ${l.length + 1}`, code: brettCode(leer(sp, ze)), geaendert: Date.now() }, ...l])
     window.location.hash = `#/gleisbau?id=${id}`
   }
   useEffect(() => {
@@ -1105,24 +1105,9 @@ export function Gleisbau() {
           {leerenScharf ? 'Wirklich leeren?' : 'Leeren'}
         </button>
       </div>
-      {/* Grösse des Bretts (Michael, 2026-11-22: «auch Anzahl Kacheln sollen wählbar sein»): was oben links Platz hat, bleibt */}
-      {[['Quer', GROESSEN.filter(([sp, ze]) => sp > ze)], ['Hoch', GROESSEN.filter(([sp, ze]) => ze > sp)]].map(([titel, l]) => (
-      <div key={titel as string} className={`mt-3 flex flex-wrap items-center gap-2 ${aufgabe ? 'hidden' : ''}`}>
-        <span className="w-12 text-sm font-bold">{titel as string}</span>
-        {(l as Array<[number, number]>).map(([sp, ze]) => {
-          const an = sp === SP && ze === ZE
-          return (
-            <button key={`${sp}x${ze}`} type="button" aria-pressed={an} disabled={faehrt}
-                    onClick={() => { if (!an) { setBrett(groesseAendern(brett, sp, ze)); setMeldung(null) } }}
-                    className={`rounded-lg border px-3 py-2 text-sm font-bold tabular-nums disabled:opacity-40 ${an
-                      ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
-                      : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`}>
-              {sp} × {ze}
-            </button>
-          )
-        })}
-      </div>
-      ))}
+      {/* Grösse des Bretts von Hand (Michael, 2026-11-23: «Keine Vorgegebenen Grössen mehr»): was oben links Platz hat, bleibt */}
+      {!aufgabe && <GroesseWahl key={`${SP}x${ZE}`} sp={SP} ze={ZE} gesperrt={faehrt} text="Grösse ändern"
+                                waehlen={(sp, ze) => { setBrett(groesseAendern(brett, sp, ze)); setMeldung(null) }} />}
       {meldung && <p role="status" className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm font-medium dark:bg-sbb-charcoal">{meldung}</p>}
       {leiste('Gleise und Bauwerke', GLEISE)}
       {leiste('Landschaft', LANDSCHAFT)}
