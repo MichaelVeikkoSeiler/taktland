@@ -1,0 +1,214 @@
+{
+ "quelle": "data/strecken.json",
+ "datenstand": "2026-10-26",
+ "strecken": [
+  {
+   "titel": "Gotthard-Bergstrecke",
+   "bahnhoefe": [
+    "Erstfeld",
+    "Göschenen",
+    "Airolo",
+    "Biasca"
+   ],
+   "teile": [
+    {
+     "tunnel": 20,
+     "bruecken": 79,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 1,
+     "bruecken": 4,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 13,
+     "bruecken": 120,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Lötschberg-Bergstrecke",
+   "bahnhoefe": [
+    "Frutigen",
+    "Kandersteg",
+    "Goppenstein",
+    "Brig"
+   ],
+   "teile": [
+    {
+     "tunnel": 13,
+     "bruecken": 21,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 1,
+     "bruecken": 2,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 20,
+     "bruecken": 23,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Albulalinie",
+   "bahnhoefe": [
+    "Thusis",
+    "Filisur",
+    "Preda",
+    "Samedan"
+   ],
+   "teile": [
+    {
+     "tunnel": 16,
+     "bruecken": 50,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 23,
+     "bruecken": 33,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 1,
+     "bruecken": 7,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Brig–Zermatt",
+   "bahnhoefe": [
+    "Brig",
+    "Visp",
+    "Stalden-Saas",
+    "Zermatt"
+   ],
+   "teile": [
+    {
+     "tunnel": 0,
+     "bruecken": 10,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 2,
+     "ohne_daten": 2
+    },
+    {
+     "tunnel": 16,
+     "bruecken": 23,
+     "ohne_daten": 2
+    }
+   ]
+  },
+  {
+   "titel": "Berninalinie",
+   "bahnhoefe": [
+    "Pontresina",
+    "Alp Grüm",
+    "Poschiavo",
+    "Campocologno"
+   ],
+   "teile": [
+    {
+     "tunnel": 6,
+     "bruecken": 16,
+     "ohne_daten": 1
+    },
+    {
+     "tunnel": 13,
+     "bruecken": 14,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 9,
+     "ohne_daten": 2
+    }
+   ]
+  },
+  {
+   "titel": "Brünig",
+   "bahnhoefe": [
+    "Luzern",
+    "Giswil",
+    "Brünig-Hasliberg",
+    "Meiringen"
+   ],
+   "teile": [
+    {
+     "tunnel": 3,
+     "bruecken": 39,
+     "ohne_daten": 4
+    },
+    {
+     "tunnel": 2,
+     "bruecken": 12,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 3,
+     "ohne_daten": 2
+    }
+   ]
+  },
+  {
+   "titel": "Bern–Interlaken",
+   "bahnhoefe": [
+    "Bern",
+    "Thun",
+    "Spiez",
+    "Interlaken Ost"
+   ],
+   "teile": [
+    {
+     "tunnel": 1,
+     "bruecken": 52,
+     "ohne_daten": 1
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 9,
+     "ohne_daten": 2
+    },
+    {
+     "tunnel": 4,
+     "bruecken": 11,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Genfersee",
+   "bahnhoefe": [
+    "Lausanne",
+    "Montreux",
+    "Sion",
+    "Brig"
+   ],
+   "teile": [
+    {
+     "tunnel": 3,
+     "bruecken": 62,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 1,
+     "bruecken": 92,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 4,
+     "bruecken": 47,
+     "ohne_daten": 0
+    }
+   ]
+  }
+ ]
+}

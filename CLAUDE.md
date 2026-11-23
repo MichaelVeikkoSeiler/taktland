@@ -1594,6 +1594,16 @@ Werkzeug «Name» nach «Bahnhof»: ein Bahnhof angetippt, darunter eine Suche �
 a, o, u, Wortanfang vor Mitte, 8 Treffer), der Name gilt für den ganzen Bahnhof (Feld.name auf einem seiner Felder, bahnhofTitel), «Ohne Namen» nimmt ihn weg; auf dem Schild über
 allem neben dem Buchstaben, ab 21 Zeichen gekürzt (SchildBild); die Buchstaben bleiben für die Fahrgäste; im Link als weiterer Teil «n» (Spalte.Zeile.Name); keine Angabe über den
 echten Bahnhof, nur sein Name.
+Aufgaben (src/gleisbauAufgaben.ts): über dem Brett «Frei bauen» und «Aufgaben»; die Liste als Kacheln mit Sternen, eine Aufgabe hat ihr eigenes Brett, das freie bleibt gemerkt
+und kommt danach zurück; sechs eigene (Erste Verbindung, Über den Fluss, Durch den Berg, Drei Bahnhöfe, Rundkurs, Sparsam bauen) mit vorbereitetem Brett, Ziel und Vorgabe an
+Gleisstücken (drei Sterne bis zur Vorgabe, zwei bis ein Drittel darüber, sonst einer; jede mit einer eigenen Lösung geprüft), dazu acht echte Strecken (Gotthard-Bergstrecke,
+Lötschberg-Bergstrecke, Albulalinie, Brig–Zermatt, Berninalinie, Brünig, Bern–Interlaken, Genfersee; Auswahl gewählt) auf einem leeren Brett von 12 × 8: die Bahnhöfe mit «Name»
+der Reihe nach verbunden, und wo laut Daten zwischen zwei Bahnhöfen Tunnel oder Brücken liegen, mindestens ein Tunnel oder eine Brücke auf dem Weg; die Zahlen aus data/strecken.json
+auf dem Weg, den die App im Netz sucht (pipeline/build_gleisbau_strecken.py mit generator/strecken.py, SBB-Tunnel und -Brücken, bei anderen Bahnen swissTLM3D; Abschnitte ohne
+Bauwerke als «Daten lückenhaft») nach app/src/assets/gleisbau-strecken.json, unter «Was die Daten sagen»; gelöst ist eine Aufgabe, sobald die Prüfung stimmt (Weg im Netz der Gleise,
+Weichen in jede Richtung; Rundkurs: der Zug fährt drei Minuten ohne Umkehren durch Tunnel und über Brücke); die besten Sterne auf dem Gerät (localStorage taktland.gleisbau.aufgaben).
+Dazu «Linie ziehen» verbessert: zweigt die Linie von einer Geraden ab, wird diese zur Weiche, schliesst sich ein Ring, wird das Feld zur Kurve, an den Enden grosser Kurven lässt sie sich
+anschliessen; die Beschreibung oben kürzer, die Einzelheiten unter «So geht's».
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

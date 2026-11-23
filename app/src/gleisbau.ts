@@ -83,27 +83,44 @@ export function groesseAendern(b: Brett, sp: number, ze: number): Brett {
 /**
  * Gleis entlang einer Folge benachbarter Felder legen (Michael, 2026-11-23, Vorschlag «Gleis ziehen statt einzeln setzen»): je Feld eine Gerade oder
  * Kurve von der Kante zum vorherigen zur Kante zum nächsten Feld, am Anfang und Ende gerade weiter. Wo schon ein Gleis liegt: hat es die Kante
- * bereits, bleibt es; eine Gerade quer zur neuen wird zur Kreuzung; ein Bahnhof oder eine Weiche in Richtung der Linie bleibt; sonst ersetzt die Linie
- * das Stück. Über grosse Kurven führt keine Linie. Gibt das neue Brett oder einen Grund
+ * bereits, bleibt es; eine Gerade quer zur neuen wird zur Kreuzung, zweigt die Linie von einer Geraden ab, wird diese zur Weiche; ein Bahnhof oder eine Weiche in Richtung der Linie bleibt; sonst ersetzt die Linie
+ * das Stück, ausser einen Bahnhof. Kommt die Linie an ein Feld zurück (ein Ring schliesst sich), zählen alle Kanten dort. Über grosse Kurven führt
+ * keine Linie. Gibt das neue Brett oder einen Grund
  */
 export function linieLegen(b: Brett, felder: Array<[number, number]>): Brett | string {
   if (felder.length < 2) return b
-  const neu = b.map((z) => z.map((f) => ({ ...f })))
+  // je Feld alle Kanten, die die Linie dort braucht (ein Feld kann mehrmals vorkommen, etwa wenn sich ein Ring schliesst)
+  const noetig = new Map<string, Set<number>>()
   for (let k = 0; k < felder.length; k++) {
-    const [i, j] = felder[k], f = neu[j][i]
-    if (f.teil || grosseKurve(f.gleis)) return 'Über eine grosse Kurve lässt sich keine Linie ziehen.'
-    const vor = k > 0 ? richtungZu(i, j, felder[k - 1][0], felder[k - 1][1]) : -1
-    const nach = k < felder.length - 1 ? richtungZu(i, j, felder[k + 1][0], felder[k + 1][1]) : -1
-    const a = vor >= 0 ? vor : (nach + 2) % 4, c = nach >= 0 ? nach : (vor + 2) % 4
-    const alt = f.gleis
-    if (alt) {
-      const kanten = new Set(wege(alt).flat())
-      // am Anfang und Ende genügt die Kante zur Linie, dazwischen braucht es beide
-      const noetig = [vor, nach].filter((x) => x >= 0)
-      if (noetig.every((x) => kanten.has(x))) continue
-      if (alt.art === 'gerade' && (a + 2) % 4 === c && alt.dreh % 2 !== a % 2) { f.gleis = { art: 'kreuzung', dreh: 0 }; continue }
+    const [i, j] = felder[k], key = `${i},${j}`
+    if (!noetig.has(key)) noetig.set(key, new Set())
+    if (k > 0) noetig.get(key)!.add(richtungZu(i, j, felder[k - 1][0], felder[k - 1][1]))
+    if (k < felder.length - 1) noetig.get(key)!.add(richtungZu(i, j, felder[k + 1][0], felder[k + 1][1]))
+  }
+  const neu = b.map((z) => z.map((f) => ({ ...f })))
+  for (const [key, kanten] of noetig) {
+    const [i, j] = key.split(',').map(Number), f = neu[j][i]
+    if (f.teil || grosseKurve(f.gleis)) {
+      // an einem Ende einer grossen Kurve darf die Linie anschliessen, darüber hinweg nicht
+      const [hi, hj] = f.teil ?? [i, j], G = grossGeometrie(hi, hj, neu[hj][hi].gleis!)
+      const ende = [G.anfang, G.ende].find((e) => e.i === i && e.j === j)
+      if (ende && [...kanten].every((x) => x === ende.kante)) continue
+      return 'Über eine grosse Kurve lässt sich keine Linie ziehen, nur an ihren Enden anschliessen.'
     }
-    f.gleis = stueckFuer(a, c)
+    const alt = f.gleis
+    const k = [...kanten]
+    if (alt) {
+      const hat = new Set(wege(alt).flat()), fehlt = k.filter((x) => !hat.has(x))
+      if (!fehlt.length) continue
+      if (alt.art === 'gerade' && fehlt.length === 2 && (fehlt[0] + 2) % 4 === fehlt[1]) { f.gleis = { art: 'kreuzung', dreh: 0 }; continue }
+      if (alt.art === 'gerade' && fehlt.length === 1 && fehlt[0] % 2 !== alt.dreh % 2) { f.gleis = { art: 'weiche', dreh: ((fehlt[0] + 3) % 4) as Dreh }; continue }
+      // einen Bahnhof ersetzt die Linie nicht
+      if (istBahnhof(alt)) continue
+    }
+    if (k.length === 1) f.gleis = stueckFuer(k[0], (k[0] + 2) % 4)
+    else if (k.length === 2) f.gleis = stueckFuer(k[0], k[1])
+    else if (k.length === 3) { const m = k.find((x) => !kanten.has((x + 2) % 4))!; f.gleis = { art: 'weiche', dreh: ((m + 3) % 4) as Dreh } }
+    else f.gleis = { art: 'kreuzung', dreh: 0 }
   }
   return neu
 }
@@ -457,6 +474,8 @@ export function bahnhofNamen(b: Brett): Map<string, string> {
 
 // ——— Geometrie: ein Feld ist eine Einheit gross, die Mitte von Feld (i, j) liegt bei (i + 0,5, j + 0,5) ———
 
+export const DXY = [DX, DY] as const
+
 const kante = (k: number): [number, number] => (k < 0 ? [0, 0] : [DX[k] * 0.5, DY[k] * 0.5])
 
 /**
@@ -668,6 +687,8 @@ export class Zug {
   /** zählt hoch bei jedem Halt an einem Bahnhof, haltFeld ist dessen Feld (für die Fahrgäste) */
   halte = 0
   haltFeld = ''
+  /** wie oft der Zug am Ende eines Gleises umgekehrt hat (für die Aufgabe «Rundkurs») */
+  umkehrungen = 0
 
   /**
    * null, wenn auf dem Brett kein Gleis liegt. meiden: Felder eines anderen Zugs (Michael, 2026-11-23, Vorschlag «Zweiter Zug»); der neue beginnt
@@ -733,6 +754,7 @@ export class Zug {
     // steht die neue Spitze genau am Anfang eines Stücks, ist sie noch nicht darin: sonst gälte ein Feld als belegt, in das der Zug nie fuhr
     while (this.kopf <= 1e-6 && this.stuecke.length > 1) { this.stuecke.pop(); this.kopf = stueckLaenge(this.stuecke[this.stuecke.length - 1]) }
     this.rueckwaerts = !this.rueckwaerts
+    this.umkehrungen++
     this.tempo = 0
     this.halt = 0.8
     this.amBahnhof = false

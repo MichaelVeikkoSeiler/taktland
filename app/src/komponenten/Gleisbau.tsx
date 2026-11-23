@@ -5,6 +5,8 @@ import {
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
+import { Klappe } from './Klappe'
+import { type Aufgabe, AUFGABEN, bewerten, type Ergebnis, fortschrittLesen, fortschrittMerken } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter from './GleisbauBretter'
@@ -105,6 +107,44 @@ function SchildBild({ namen, titel }: { namen: Map<string, string>; titel: Map<s
     )
   }
   return <>{raus}</>
+}
+
+/** drei Sterne, die erreichten in Karmin */
+function Sterne({ n }: { n: number }) {
+  return (
+    <span className="whitespace-nowrap text-lg leading-none" aria-label={`${n} von 3 Sternen`}>
+      {[0, 1, 2].map((k) => <span key={k} className={k < n ? 'text-sbb-red' : 'text-[#b4b4b4] dark:text-sbb-iron'}>★</span>)}
+    </span>
+  )
+}
+
+/** die Aufgaben als Kacheln mit den erreichten Sternen, die eigenen zuerst, dann die echten Strecken */
+function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, number>; waehlen: (a: Aufgabe) => void }) {
+  const gruppe = (titel: string, l: Aufgabe[]) => (
+    <section className="mt-4">
+      <h2 className="text-lg font-bold">{titel}</h2>
+      <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+        {l.map((a) => (
+          <li key={a.id}>
+            <button type="button" onClick={() => waehlen(a)} className="kachel kachel-link flex w-full items-center justify-between gap-3 px-3 py-3 text-left">
+              <span className="font-medium">{a.titel}</span>
+              <Sterne n={fortschritt[a.id] ?? 0} />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+  return (
+    <div className="max-w-3xl">
+      {gruppe('Aufgaben', AUFGABEN.filter((a) => !a.id.startsWith('strecke-')))}
+      {gruppe('Echte Strecken nachbauen', AUFGABEN.filter((a) => a.id.startsWith('strecke-')))}
+      <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
+        Bei den echten Strecken stammen die Bahnhöfe und die Zahl der Tunnel und Brücken zwischen ihnen aus den Daten der Strecken in Taktland; das
+        Brett hat keinen Massstab, ein Tunnel oder eine Brücke genügt. Dein freies Brett bleibt, während du Aufgaben löst.
+      </p>
+    </div>
+  )
 }
 
 /** Farbe je Ziel (Buchstabe des Bahnhofs), gewählt */
@@ -529,7 +569,30 @@ export function Gleisbau() {
   // offene Gleisenden als roter Punkt, beim Bauen (Michael, 2026-11-23, Vorschlag «Anzeige, wo das Gleis offen endet»)
   const enden = useMemo(() => offeneEnden(brett), [brett])
 
-  useEffect(() => { brettMerken(brett) }, [brett])
+  // Aufgaben (Michael, 2026-11-23, Vorschlag «Aufgaben»): eine gewählte Aufgabe hat ihr eigenes Brett, das freie bleibt gemerkt und kommt danach zurück
+  const [modus, setModus] = useState<'frei' | 'aufgaben'>('frei')
+  const [aufgabe, setAufgabe] = useState<Aufgabe | null>(null)
+  const [ergebnis, setErgebnis] = useState<Ergebnis | null>(null)
+  const [fortschritt, setFortschritt] = useState<Record<string, number>>(() => fortschrittLesen())
+  const aufgabeWaehlen = (a: Aufgabe | null) => {
+    setFaehrt(false); zuege.current = []; setWagen([]); fgRef.current = null; setFahrgaeste(null)
+    setAufgabe(a); setErgebnis(null); setVerlauf([]); setMeldung(null); setNameFeld(null)
+    setBrettRoh(a ? a.brett() : brettLesen() ?? beispiel())
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+  // gelöst ist eine Aufgabe, sobald die Prüfung stimmt; die Sterne bleiben auf dem Gerät, die besten zählen
+  useEffect(() => {
+    if (!aufgabe) return
+    const e = bewerten(aufgabe, brett)
+    if (e.ok) {
+      setErgebnis(e)
+      setFortschritt((f) => {
+        if ((f[aufgabe.id] ?? 0) >= e.sterne) return f
+        const n = { ...f, [aufgabe.id]: e.sterne }; fortschrittMerken(n); return n
+      })
+    } else setErgebnis((alt) => (alt?.ok ? null : alt))
+  }, [aufgabe, brett])
+  useEffect(() => { if (!aufgabe) brettMerken(brett) }, [brett, aufgabe])
   // ein geteilter Link #/gleisbau?brett=…: das Brett öffnen (ein Schritt zum Zurücknehmen), danach die Adresse ohne Brett
   useEffect(() => {
     const lesen = () => {
@@ -657,7 +720,8 @@ export function Gleisbau() {
         const schritt: [number, number] = Math.abs(dx) >= Math.abs(dy) ? [li + Math.sign(dx), lj] : [li, lj + Math.sign(dy)]
         const v = neu[neu.length - 2]
         if (v && v[0] === schritt[0] && v[1] === schritt[1]) neu = neu.slice(0, -1)
-        else if (!neu.some(([a, c]) => a === schritt[0] && c === schritt[1])) neu = [...neu, schritt]
+        // ein Feld darf wieder vorkommen (ein Ring schliesst sich, eine Linie kreuzt sich), höchstens 200 Schritte
+        else if (neu.length < 200) neu = [...neu, schritt]
         else break
       }
       if (neu !== l) { linieRef.current = neu; setLinie(neu) }
@@ -841,11 +905,60 @@ export function Gleisbau() {
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">Gleisbau</h1>
       <p className="mt-2 max-w-3xl leading-relaxed">
-        Wähle unten ein Stück und tippe ein Feld an, oder «Linie ziehen» und fahre mit dem Finger über die Felder. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
-        Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve; mit «Name» gibst du ihm den Namen eines echten Bahnhofs. Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden.
-        Bahnhöfe nebeneinander sind ein Bahnhof. Rote Punkte zeigen, wo ein Gleis offen endet. Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Dann «Fahren» (mit «2 Züge» fahren zwei; Signale an den Weichen zeigen, wo ein Zug ist, und keiner fährt in ein besetztes Feld): Mit «Fahrgäste» warten an den Bahnhöfen Figuren mit dem Buchstaben ihres Ziels; der Zug nimmt sie mit und bringt sie hin. Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
+        Lege Gleise auf das Brett und lass den Zug fahren: frei oder mit Aufgaben, bis zu echten Strecken der Schweiz.
       </p>
-      <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
+      <Klappe titel="So geht's" className="mt-2 max-w-3xl">
+        <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
+          <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
+            Geraden, Kurven und Weichen entstehen von selbst.</li>
+          <li>Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel. Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken.</li>
+          <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
+            eines echten Bahnhofs.</li>
+          <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.</li>
+          <li>«Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um, ein Tipp stellt die Weichen. Mit «Fahrgäste» warten an
+            den Bahnhöfen Figuren mit dem Buchstaben ihres Ziels, der Zug bringt sie hin. Mit «2 Züge» fahren zwei; Signale an den Weichen zeigen, wo
+            ein Zug ist, und keiner fährt in ein besetztes Feld.</li>
+        </ul>
+      </Klappe>
+      <div className="mt-4 flex gap-2" role="group" aria-label="Art des Spiels">
+        {(['frei', 'aufgaben'] as const).map((m) => (
+          <button key={m} type="button" aria-pressed={modus === m} disabled={faehrt}
+                  onClick={() => { if (m === modus) return; setModus(m); if (aufgabe) aufgabeWaehlen(null) }}
+                  className={`rounded-lg border px-4 py-2 text-sm font-bold disabled:opacity-40 ${modus === m
+                    ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
+                    : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`}>
+            {m === 'frei' ? 'Frei bauen' : 'Aufgaben'}
+          </button>
+        ))}
+      </div>
+      {modus === 'aufgaben' && !aufgabe && <AufgabenListe fortschritt={fortschritt} waehlen={aufgabeWaehlen} />}
+      {aufgabe && (
+        <div className="mt-4 max-w-3xl rounded-lg bg-sbb-milk p-4 dark:bg-sbb-charcoal">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="text-lg font-bold">{aufgabe.titel}</h2>
+            <Sterne n={fortschritt[aufgabe.id] ?? 0} />
+          </div>
+          <p className="mt-1 leading-relaxed">{aufgabe.ziel}</p>
+          {aufgabe.daten && <Klappe titel="Was die Daten sagen" className="mt-1"><p className="text-sm leading-relaxed">{aufgabe.daten}</p></Klappe>}
+          {ergebnis && (
+            <p role="status" className={`mt-3 rounded-lg px-3 py-2 text-sm font-medium ${ergebnis.ok ? 'bg-white dark:bg-sbb-midnight' : 'bg-white/60 dark:bg-sbb-midnight/60'}`}>
+              {ergebnis.ok && <><Sterne n={ergebnis.sterne} /> </>}{ergebnis.text}
+            </p>
+          )}
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button type="button" onClick={() => setErgebnis(bewerten(aufgabe, brett))}
+                    className="min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125">Prüfen</button>
+            <button type="button" disabled={faehrt} onClick={() => aufgabeWaehlen(aufgabe)}
+                    className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Neu beginnen</button>
+            {(() => { const n = AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1]; return ergebnis?.ok && n ? (
+              <button type="button" onClick={() => aufgabeWaehlen(n)}
+                      className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Nächste Aufgabe</button>
+            ) : null })()}
+            <button type="button" disabled={faehrt} onClick={() => aufgabeWaehlen(null)} className="min-h-11 px-2 underline underline-offset-2 disabled:opacity-40">Alle Aufgaben</button>
+          </div>
+        </div>
+      )}
+      <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'} ${modus === 'aufgaben' && !aufgabe ? 'hidden' : ''}`}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null) }} onContextMenu={(e) => e.preventDefault()}
@@ -912,6 +1025,7 @@ export function Gleisbau() {
           ))}
         </p>
       )}
+      <div className={modus === 'aufgaben' && !aufgabe ? 'hidden' : ''}>
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <button type="button" onClick={fahren}
                 className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">{faehrt ? 'Anhalten' : 'Fahren'}</button>
@@ -936,10 +1050,10 @@ export function Gleisbau() {
           Drehen ↻
         </button>
         {/* jedes Tippen ein neues Beispiel in der gewählten Grösse (Michael, 2026-11-22: «Bei Beispiel sollen durch weiteres Tippen immer neue Beispiele erscheinen») */}
-        <button type="button" disabled={faehrt} onClick={() => { setBrett(zufallsBeispiel(SP, ZE)); setMeldung(null) }}
+        {!aufgabe && <button type="button" disabled={faehrt} onClick={() => { setBrett(zufallsBeispiel(SP, ZE)); setMeldung(null) }}
                 className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
           Beispiel
-        </button>
+        </button>}
         <button type="button" disabled={faehrt} onClick={() => {
           if (!leerenScharf) { setLeerenScharf(true); return }
           setLeerenScharf(false); setBrett(leer(SP, ZE))
@@ -949,7 +1063,7 @@ export function Gleisbau() {
         </button>
       </div>
       {/* Grösse des Bretts (Michael, 2026-11-22: «auch Anzahl Kacheln sollen wählbar sein»): was oben links Platz hat, bleibt */}
-      <div className="mt-4 flex flex-wrap items-center gap-2">
+      <div className={`mt-4 flex flex-wrap items-center gap-2 ${aufgabe ? 'hidden' : ''}`}>
         <span className="text-sm font-bold">Brett</span>
         {GROESSEN.map(([sp, ze]) => {
           const an = sp === SP && ze === ZE
@@ -967,10 +1081,11 @@ export function Gleisbau() {
       {meldung && <p role="status" className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm font-medium dark:bg-sbb-charcoal">{meldung}</p>}
       {leiste('Gleise und Bauwerke', GLEISE)}
       {leiste('Landschaft', LANDSCHAFT)}
-      <GleisbauBretter brett={brett} gesperrt={faehrt} oeffnen={(b, name) => { setBrett(b); setMeldung(`«${name}» geöffnet.`); window.scrollTo({ top: 0, behavior: 'smooth' }) }} />
+      </div>
+      {modus === 'frei' && <GleisbauBretter brett={brett} gesperrt={faehrt} oeffnen={(b, name) => { setBrett(b); setMeldung(`«${name}» geöffnet.`); window.scrollTo({ top: 0, behavior: 'smooth' }) }} />}
       <p className={`mt-5 max-w-3xl ${LEISE}`}>
         Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Deine Bretter bleiben im Browser dieses
-        Geräts und werden nicht gesendet, ausser du teilst einen Link. Bald: Aufgaben.
+        Geräts und werden nicht gesendet, ausser du teilst einen Link..
       </p>
     </div>
   )
