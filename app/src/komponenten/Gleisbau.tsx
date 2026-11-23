@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
-  type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
+  type Brett, brettAusCode, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, linieLegen, offeneEnden, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
+import GleisbauBretter from './GleisbauBretter'
 import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild } from './GleisbauBilder'
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
@@ -398,6 +399,21 @@ export function Gleisbau() {
   const enden = useMemo(() => offeneEnden(brett), [brett])
 
   useEffect(() => { brettMerken(brett) }, [brett])
+  // ein geteilter Link #/gleisbau?brett=…: das Brett öffnen (ein Schritt zum Zurücknehmen), danach die Adresse ohne Brett
+  useEffect(() => {
+    const lesen = () => {
+      const code = new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('brett')
+      if (!code) return
+      const b = brettAusCode(code)
+      history.replaceState(history.state, '', `${window.location.pathname}${window.location.search}#/gleisbau`)
+      if (!b) { setMeldung('Der Link enthält kein gültiges Brett.'); return }
+      setFaehrt(false); zug.current = null; setWagen([])
+      setVerlauf((v) => [...v, brettRef.current]); setBrettRoh(b); setMeldung('Geteiltes Brett geöffnet. «Zurück» holt dein vorheriges.')
+    }
+    lesen()
+    window.addEventListener('hashchange', lesen)
+    return () => window.removeEventListener('hashchange', lesen)
+  }, [])
   useEffect(() => {
     if (!leerenScharf) return
     const t = setTimeout(() => setLeerenScharf(false), 3000)
@@ -725,9 +741,10 @@ export function Gleisbau() {
       {meldung && <p role="status" className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm font-medium dark:bg-sbb-charcoal">{meldung}</p>}
       {leiste('Gleise und Bauwerke', GLEISE)}
       {leiste('Landschaft', LANDSCHAFT)}
+      <GleisbauBretter brett={brett} gesperrt={faehrt} oeffnen={(b, name) => { setBrett(b); setMeldung(`«${name}» geöffnet.`); window.scrollTo({ top: 0, behavior: 'smooth' }) }} />
       <p className={`mt-5 max-w-3xl ${LEISE}`}>
-        Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Dein Brett bleibt im Browser dieses
-        Geräts und wird nicht gesendet. Bald: Aufgaben.
+        Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Deine Bretter bleiben im Browser dieses
+        Geräts und werden nicht gesendet, ausser du teilst einen Link. Bald: Aufgaben.
       </p>
     </div>
   )

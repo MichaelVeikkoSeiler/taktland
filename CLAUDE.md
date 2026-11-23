@@ -1572,6 +1572,10 @@ Pfiff 0,9 s vor der Abfahrt an einem Bahnhof (Zug.pfiffe, abfahrtsPfiff) und ein
 Werkzeug «Linie ziehen» (erstes unter «Gleise und Bauwerke»): den Finger über Felder ziehen, je Feld eine Gerade oder Kurve (linieLegen in src/gleisbau.ts), übersprungene Felder
 ergänzt, zurück zum vorletzten Feld nimmt das letzte weg; was schon die Kante zur Linie hat, bleibt, eine Gerade quer wird zur Kreuzung, über grosse Kurven keine Linie; solange
 das Werkzeug gewählt ist, rollt die Seite auf dem Brett nicht (touch-none); ein Schritt zum Zurücknehmen; gewählt.
+«Meine Bretter» unter den Werkzeugen (komponenten/GleisbauBretter.tsx): das jetzige Brett mit Namen speichern (localStorage taktland.gleisbau.bretter, die neuesten oben), Liste
+als Kacheln wie die Favoriten, Tipp öffnet (ein Schritt zum Zurücknehmen), Stift benennt um, Teilen-Zeichen gibt den Link (Teilen-Menü auf Handy und Tablet, sonst Zwischenablage),
+nach links wischen löscht mit «Rückgängig»; der Link #/gleisbau?brett=… enthält das ganze Brett als kurzen Text (brettCode, brettAusCode in src/gleisbau.ts: «1~», Zeilen mit «-»,
+je Feld Grund und Gleis als Zeichen; Weichenstellung nicht), kein Server; im Datenschutz genannt; im Browser hier gespeichert, geteilt und in einer zweiten Seite geöffnet.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

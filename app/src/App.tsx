@@ -81,7 +81,7 @@ function seiteAusAdresse(): Seite {
   if (h === '#/puzzle') return { art: 'puzzle' }
   if (h === '#/fahrzeit') return { art: 'fahrzeit' }
   if (h === '#/bilderpuzzle') return { art: 'bilderpuzzle' }
-  if (h === '#/gleisbau') return { art: 'gleisbau' }
+  if (h === '#/gleisbau' || h.startsWith('#/gleisbau?')) return { art: 'gleisbau' }
   // #/3dland für Links von aussen (Michael, 2026-11-06: «bei LinkedIn nur auf Taktland.ch hinweisen»)
   if (h === '#/schweiz3d' || h === '#/3dland' || h.startsWith('#/3dland?') || h.startsWith('#/schweiz3d?')) return { art: 'schweiz3d' }
   // die Modellbahn (Michael, 2026-10-08): eigene Strecke, Bergstrecken; die alten Adressen der Reliefs führen dorthin

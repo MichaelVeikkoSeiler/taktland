@@ -268,6 +268,50 @@ export function brettLesen(): Brett | null {
   } catch { return null }
 }
 
+/**
+ * Ein Brett als kurzer Text für Links und die Liste der Bretter (Michael, 2026-11-23, Vorschlag «Bretter speichern und teilen»): «1~», dann Zeile für
+ * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
+ * weiteren «~» dazu
+ */
+const GRUND_Z = 'wfsbd', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMN'
+export function brettCode(b: Brett): string {
+  return '1~' + b.map((z) => z.map((f) => GRUND_Z[GRUENDE.indexOf(f.grund)] + (f.gleis ? GLEIS_Z[ARTEN.indexOf(f.gleis.art) * 4 + f.gleis.dreh] : '.')).join('')).join('-')
+}
+export function brettAusCode(c: string): Brett | null {
+  const [v, felder] = c.split('~')
+  if (v !== '1' || !felder) return null
+  const zeilenText = felder.split('-')
+  const b: Brett = zeilenText.map((z) => Array.from({ length: z.length / 2 }, (_, k) => {
+    const g = GRUND_Z.indexOf(z[2 * k]), a = GLEIS_Z.indexOf(z[2 * k + 1])
+    const f: Feld = { grund: GRUENDE[Math.max(0, g)] }
+    if (a >= 0) f.gleis = { art: ARTEN[Math.floor(a / 4)], dreh: (a % 4) as Dreh }
+    return f
+  }))
+  if (!GROESSEN.some(([sp, ze]) => b.length === ze && b.every((z) => z.length === sp))) return null
+  // die Felder unter grossen Kurven; passt eine nicht, fällt sie weg
+  for (let j = 0; j < b.length; j++) for (let i = 0; i < b[0].length; i++) {
+    const g = b[j][i].gleis
+    if (!grosseKurve(g)) continue
+    const G = grossGeometrie(i, j, g!)
+    if (!G.zellen.every(([u, v]) => b[v]?.[u] && !(u === i && v === j ? false : b[v][u].gleis || b[v][u].teil))) { delete b[j][i].gleis; continue }
+    for (const [u, v] of G.zellen) if (u !== i || v !== j) b[v][u].teil = [i, j]
+  }
+  return b
+}
+
+/** die gespeicherten Bretter mit Namen, die neuesten oben */
+export interface GespeichertesBrett { name: string; code: string }
+const BRETTER = 'taktland.gleisbau.bretter'
+export function bretterLesen(): GespeichertesBrett[] {
+  try {
+    const x = JSON.parse(localStorage.getItem(BRETTER) ?? '[]')
+    return Array.isArray(x) ? x.filter((e) => typeof e?.name === 'string' && typeof e?.code === 'string') : []
+  } catch { return [] }
+}
+export function bretterMerken(l: GespeichertesBrett[]) {
+  try { localStorage.setItem(BRETTER, JSON.stringify(l)) } catch { /* nur für jetzt */ }
+}
+
 export function brettMerken(b: Brett) {
   try { localStorage.setItem(SPEICHER, JSON.stringify(b)) } catch { /* nur für jetzt */ }
 }
