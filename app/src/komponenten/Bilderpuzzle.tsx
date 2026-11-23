@@ -238,19 +238,23 @@ function Spiel({ bild, wahl, vorlageAendern, schliessen }: {
       </div>
       {fehler && <p className="absolute inset-x-4 top-24 kachel p-4">Das Bild liess sich nicht laden.</p>}
       <canvas ref={konfetti} className="pointer-events-none absolute inset-0 z-[150000] size-full" />
+      {/* gelöst: das ganze Bild so gross wie möglich über dem Spiel, darunter «Neues Bild» rot und «Nochmal» weiss (Michael, 2026-11-23: «wenn das letzte
+          Teil gelegt wird und es korrekt ist, wäre es schön, wenn das Bild dann so groß wie möglich dargestellt wird. Rot sollte die Taste sein, wenn man ein
+          neues Bild auswählen möchte, weiß die Taste, wenn man es nochmal wiederholen möchte») */}
       {fertig && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[200001] flex justify-center p-4"
-             style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
-          <div className="pointer-events-auto grid gap-3 rounded-lg bg-white p-5 text-center shadow-lg dark:bg-sbb-charcoal">
-            <p className="text-3xl font-bold tracking-tight">Geschafft!</p>
-            <div className="flex flex-wrap justify-center gap-2">
-              <button type="button" autoFocus onClick={() => { setFertig(false); setRunde((r) => r + 1) }}
-                      className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Nochmal</button>
-              <button type="button" onClick={schliessen}
-                      className="rounded-lg border border-sbb-cloud px-5 py-3 font-bold hover:border-sbb-black dark:border-sbb-iron dark:hover:border-sbb-white">
-                Anderes Bild
-              </button>
-            </div>
+        <div className="absolute inset-0 z-[200001] flex flex-col items-center justify-center gap-4 bg-sbb-milk p-3 dark:bg-sbb-midnight"
+             style={{ paddingTop: 'calc(env(safe-area-inset-top) + 64px)', paddingBottom: 'calc(env(safe-area-inset-bottom) + 12px)',
+                      animation: 'puzzle-fertig 0.6s ease-out' }}>
+          <style>{'@keyframes puzzle-fertig { from { opacity: 0; transform: scale(0.96) } to { opacity: 1; transform: none } }'}</style>
+          <img src={bild.url} alt={bild.titel} className="min-h-0 max-h-full w-full flex-initial rounded-lg object-contain shadow-lg" />
+          <p className="text-2xl font-bold tracking-tight">Geschafft!</p>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <button type="button" autoFocus onClick={schliessen}
+                    className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Neues Bild</button>
+            <button type="button" onClick={() => { setFertig(false); setRunde((r) => r + 1) }}
+                    className="rounded-lg border border-sbb-cloud bg-white px-5 py-3 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-charcoal dark:hover:border-sbb-white">
+              Nochmal
+            </button>
           </div>
         </div>
       )}
