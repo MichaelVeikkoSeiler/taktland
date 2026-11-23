@@ -79,6 +79,34 @@ export function groesseAendern(b: Brett, sp: number, ze: number): Brett {
   return neu
 }
 
+/**
+ * Gleis entlang einer Folge benachbarter Felder legen (Michael, 2026-11-23, Vorschlag «Gleis ziehen statt einzeln setzen»): je Feld eine Gerade oder
+ * Kurve von der Kante zum vorherigen zur Kante zum nächsten Feld, am Anfang und Ende gerade weiter. Wo schon ein Gleis liegt: hat es die Kante
+ * bereits, bleibt es; eine Gerade quer zur neuen wird zur Kreuzung; ein Bahnhof oder eine Weiche in Richtung der Linie bleibt; sonst ersetzt die Linie
+ * das Stück. Über grosse Kurven führt keine Linie. Gibt das neue Brett oder einen Grund
+ */
+export function linieLegen(b: Brett, felder: Array<[number, number]>): Brett | string {
+  if (felder.length < 2) return b
+  const neu = b.map((z) => z.map((f) => ({ ...f })))
+  for (let k = 0; k < felder.length; k++) {
+    const [i, j] = felder[k], f = neu[j][i]
+    if (f.teil || grosseKurve(f.gleis)) return 'Über eine grosse Kurve lässt sich keine Linie ziehen.'
+    const vor = k > 0 ? richtungZu(i, j, felder[k - 1][0], felder[k - 1][1]) : -1
+    const nach = k < felder.length - 1 ? richtungZu(i, j, felder[k + 1][0], felder[k + 1][1]) : -1
+    const a = vor >= 0 ? vor : (nach + 2) % 4, c = nach >= 0 ? nach : (vor + 2) % 4
+    const alt = f.gleis
+    if (alt) {
+      const kanten = new Set(wege(alt).flat())
+      // am Anfang und Ende genügt die Kante zur Linie, dazwischen braucht es beide
+      const noetig = [vor, nach].filter((x) => x >= 0)
+      if (noetig.every((x) => kanten.has(x))) continue
+      if (alt.art === 'gerade' && (a + 2) % 4 === c && alt.dreh % 2 !== a % 2) { f.gleis = { art: 'kreuzung', dreh: 0 }; continue }
+    }
+    f.gleis = stueckFuer(a, c)
+  }
+  return neu
+}
+
 /** Ein Beispiel zum Anfang: ein Ring mit zwei Bahnhöfen, Brücke über den Fluss, Tunnel durch den Berg und ein Abstellgleis */
 export function beispiel(): Brett {
   const b = leer()

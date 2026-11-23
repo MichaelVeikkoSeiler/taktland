@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, type Gleis, bahnhofNamen, beispiel, brettLesen, brettMerken, type Dreh, type Feld, type GleisArt, GROESSEN, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, offeneEnden, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, linieLegen, offeneEnden, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild } from './GleisbauBilder'
@@ -29,9 +29,10 @@ const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9
 const KACHEL_H = 0.915
 
 type Werkzeug =
-  | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'weg' }
+  | { art: 'linie' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'weg' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
+  { w: { art: 'linie' }, text: 'Linie ziehen' },
   { w: { art: 'gleis', gleis: 'gerade' }, text: 'Gerade' },
   { w: { art: 'gleis', gleis: 'kurve' }, text: 'Kurve' },
   { w: { art: 'gleis', gleis: 'bogen2' }, text: 'Kurve 2 × 2' },
@@ -317,6 +318,17 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
       </svg>
     )
   }
+  if (w.art === 'linie') {
+    return (
+      <svg viewBox="0 0 2 2" className="size-11" aria-hidden="true">
+        {[0, 1, 2, 3].map((k) => <GrundBild key={k} f={{ grund: 'wiese' }} i={k % 2} j={Math.floor(k / 2)} />)}
+        <GleisBild f={{ grund: 'wiese', gleis: { art: 'gerade', dreh: 0 } }} i={0} j={1} />
+        <GleisBild f={{ grund: 'wiese', gleis: { art: 'kurve', dreh: 1 } }} i={0} j={0} />
+        <GleisBild f={{ grund: 'wiese', gleis: { art: 'gerade', dreh: 1 } }} i={1} j={0} />
+        <path d="M0.5,1.75 L0.5,0.5 L1.75,0.5" fill="none" stroke={F.karmin} strokeWidth={0.12} strokeLinecap="round" strokeLinejoin="round" opacity={0.85} />
+      </svg>
+    )
+  }
   const f: Feld = w.art === 'grund' ? { grund: w.grund }
     : w.art === 'tunnel' ? { grund: 'berg', gleis: { art: 'gerade', dreh } }
     : w.art === 'bruecke' ? { grund: 'wasser', gleis: { art: 'gerade', dreh } }
@@ -360,6 +372,9 @@ export function Gleisbau() {
   const [ziehen, setZiehen] = useState<{ von: [number, number]; nach: [number, number] } | null>(null)
   const druck = useRef<{ x: number; y: number; zeit: number; feld: [number, number] } | null>(null)
   const nachZiehen = useRef(false)
+  // Linie ziehen: die Felder, über die der Finger gefahren ist
+  const [linie, setLinie] = useState<Array<[number, number]> | null>(null)
+  const linieRef = useRef<Array<[number, number]> | null>(null)
   const zug = useRef<Zug | null>(null)
   const pfiffe = useRef(0), dorf = useRef(false)
   const brettRef = useRef(brett)
@@ -430,7 +445,7 @@ export function Gleisbau() {
     const el = svg.current
     if (!el) return
     // während des Ziehens darf die Seite nicht rollen
-    const halt = (e: TouchEvent) => { if (druck.current?.zeit === -1) e.preventDefault() }
+    const halt = (e: TouchEvent) => { if (druck.current?.zeit === -1 || linieRef.current) e.preventDefault() }
     el.addEventListener('touchmove', halt, { passive: false })
     return () => el.removeEventListener('touchmove', halt)
   }, [])
@@ -439,6 +454,11 @@ export function Gleisbau() {
     if (faehrt || !e.isPrimary) return
     const feld = feldBei(e.clientX, e.clientY)
     if (!feld) return
+    if (werkzeug.art === 'linie') {
+      try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* ohne Fangen geht es trotzdem */ }
+      linieRef.current = [feld]; setLinie([feld])
+      return
+    }
     const f = brett[feld[1]][feld[0]]
     if (!f.gleis && !f.teil && f.grund === 'wiese') return
     const d = { x: e.clientX, y: e.clientY, zeit: 0, feld }
@@ -453,6 +473,25 @@ export function Gleisbau() {
     }, 450)
   }
   function bewegen(e: React.PointerEvent<SVGSVGElement>) {
+    const l = linieRef.current
+    if (l) {
+      const feld = feldBei(e.clientX, e.clientY)
+      if (!feld) return
+      let neu = l
+      // Feld für Feld zum Finger, auch wenn er ein Feld übersprungen hat; zurück zum vorletzten nimmt das letzte weg
+      for (let k = 0; k < 30; k++) {
+        const [li, lj] = neu[neu.length - 1]
+        if (li === feld[0] && lj === feld[1]) break
+        const dx = feld[0] - li, dy = feld[1] - lj
+        const schritt: [number, number] = Math.abs(dx) >= Math.abs(dy) ? [li + Math.sign(dx), lj] : [li, lj + Math.sign(dy)]
+        const v = neu[neu.length - 2]
+        if (v && v[0] === schritt[0] && v[1] === schritt[1]) neu = neu.slice(0, -1)
+        else if (!neu.some(([a, c]) => a === schritt[0] && c === schritt[1])) neu = [...neu, schritt]
+        else break
+      }
+      if (neu !== l) { linieRef.current = neu; setLinie(neu) }
+      return
+    }
     const d = druck.current
     if (!d) return
     if (d.zeit !== -1) { if (Math.hypot(e.clientX - d.x, e.clientY - d.y) > 8) druck.current = null; return }
@@ -460,6 +499,17 @@ export function Gleisbau() {
     if (feld) setZiehen((z) => (z && (z.nach[0] !== feld[0] || z.nach[1] !== feld[1]) ? { ...z, nach: feld } : z))
   }
   function loslassen() {
+    const l = linieRef.current
+    if (l) {
+      linieRef.current = null; setLinie(null)
+      nachZiehen.current = true
+      window.setTimeout(() => { nachZiehen.current = false }, 250)
+      if (l.length < 2) { setMeldung('Mit «Linie ziehen» den Finger über mehrere Felder ziehen: Geraden und Kurven entstehen von selbst.'); return }
+      const r = linieLegen(brett, l)
+      if (typeof r === 'string') { setMeldung(r); return }
+      setBrett(r); knopfTon(true); setMeldung(null)
+      return
+    }
     const d = druck.current
     druck.current = null
     if (!d || d.zeit !== -1 || !ziehen) return
@@ -487,6 +537,7 @@ export function Gleisbau() {
       knopfTon(true)
       return
     }
+    if (werkzeug.art === 'linie') return
     setMeldung(null)
     const w = werkzeug
     const unterGross = !!f.teil || grosseKurve(f.gleis) > 0
@@ -593,15 +644,15 @@ export function Gleisbau() {
       <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">Gleisbau</h1>
       <p className="mt-2 max-w-3xl leading-relaxed">
-        Wähle unten ein Stück und tippe ein Feld an. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
+        Wähle unten ein Stück und tippe ein Feld an, oder «Linie ziehen» und fahre mit dem Finger über die Felder. Nochmals tippen dreht es. Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel.
         Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve. Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden.
         Bahnhöfe nebeneinander sind ein Bahnhof. Rote Punkte zeigen, wo ein Gleis offen endet. Dann «Fahren»: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um. Während der Fahrt stellt ein Tipp die Weichen.
       </p>
       <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'}`}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
-             onPointerCancel={() => { druck.current = null; setZiehen(null) }} onContextMenu={(e) => e.preventDefault()}
-             className="w-full cursor-pointer select-none [-webkit-touch-callout:none]">
+             onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null) }} onContextMenu={(e) => e.preventDefault()}
+             className={`w-full cursor-pointer select-none [-webkit-touch-callout:none] ${werkzeug.art === 'linie' && !faehrt ? 'touch-none' : ''}`}>
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {unten}
           {wagen.slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={imTunnel(brett, w.x, w.y)} />)}
@@ -611,6 +662,10 @@ export function Gleisbau() {
               <circle cx={e.x - [0, 1, 0, -1][e.k] * 0.06} cy={e.y - [-1, 0, 1, 0][e.k] * 0.06} r={0.065} fill={F.karmin} stroke="#ffffff" strokeWidth={0.02} />
             </g>
           ))}
+          {linie && (
+            <path pointerEvents="none" d={linie.map(([i, j], k) => `${k ? 'L' : 'M'}${i + 0.5},${j + 0.5}`).join('')} fill="none" stroke={F.karmin}
+                  strokeWidth={0.14} strokeLinecap="round" strokeLinejoin="round" opacity={0.75} />
+          )}
           {ziehen && (() => {
             const [vi, vj] = ziehen.von, [ni, nj] = ziehen.nach, f = brett[vj][vi]
             const [hi, hj] = f.teil ?? [vi, vj], h = brett[hj][hi]
