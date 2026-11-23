@@ -958,7 +958,7 @@ export function Gleisbau() {
           </div>
         </div>
       )}
-      <div className={`mt-4 ${SP > 8 ? 'max-w-5xl' : 'max-w-3xl'} ${modus === 'aufgaben' && !aufgabe ? 'hidden' : ''}`}>
+      <div className={`mt-4 ${ZE > SP ? (ZE > 12 ? 'max-w-xl' : 'max-w-lg') : SP > 8 ? 'max-w-5xl' : 'max-w-3xl'} ${modus === 'aufgaben' && !aufgabe ? 'hidden' : ''}`}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null) }} onContextMenu={(e) => e.preventDefault()}
@@ -1063,9 +1063,10 @@ export function Gleisbau() {
         </button>
       </div>
       {/* Grösse des Bretts (Michael, 2026-11-22: «auch Anzahl Kacheln sollen wählbar sein»): was oben links Platz hat, bleibt */}
-      <div className={`mt-4 flex flex-wrap items-center gap-2 ${aufgabe ? 'hidden' : ''}`}>
-        <span className="text-sm font-bold">Brett</span>
-        {GROESSEN.map(([sp, ze]) => {
+      {[['Quer', GROESSEN.filter(([sp, ze]) => sp > ze)], ['Hoch', GROESSEN.filter(([sp, ze]) => ze > sp)]].map(([titel, l]) => (
+      <div key={titel as string} className={`mt-3 flex flex-wrap items-center gap-2 ${aufgabe ? 'hidden' : ''}`}>
+        <span className="w-12 text-sm font-bold">{titel as string}</span>
+        {(l as Array<[number, number]>).map(([sp, ze]) => {
           const an = sp === SP && ze === ZE
           return (
             <button key={`${sp}x${ze}`} type="button" aria-pressed={an} disabled={faehrt}
@@ -1078,6 +1079,7 @@ export function Gleisbau() {
           )
         })}
       </div>
+      ))}
       {meldung && <p role="status" className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm font-medium dark:bg-sbb-charcoal">{meldung}</p>}
       {leiste('Gleise und Bauwerke', GLEISE)}
       {leiste('Landschaft', LANDSCHAFT)}

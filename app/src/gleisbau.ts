@@ -8,7 +8,8 @@
 export const SPALTEN = 8
 export const ZEILEN = 6
 /** wählbare Grössen des Bretts, Spalten × Zeilen (gewählt; Michael, 2026-11-22: «auch Anzahl Kacheln sollen wählbar sein») */
-export const GROESSEN: Array<[number, number]> = [[6, 4], [8, 6], [10, 7], [12, 8]]
+// seit 2026-11-23 auch hoch (Michael: «Weitere Brettgrössen zb 12x24 für hochformat»)
+export const GROESSEN: Array<[number, number]> = [[6, 4], [8, 6], [10, 7], [12, 8], [6, 8], [8, 12], [12, 24]]
 export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
@@ -175,7 +176,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
   const belegt = (i: number, j: number) => ring.some(([a, c]) => a === i && c === j)
   const imBrett = (i: number, j: number) => i >= 0 && j >= 0 && i < sp && j < ze
   // Ausbuchtungen: zwei Nachbarn im Ring, beide um dieselbe Richtung nach aussen verschoben
-  for (let versuch = 0, n = 2 + z(5); versuch < 60 && n > 0; versuch++) {
+  for (let versuch = 0, n = 2 + z(5) + Math.floor((sp * ze) / 24); versuch < 60 + sp * ze && n > 0; versuch++) {
     const k = z(ring.length), [ai, aj] = ring[k], [bi, bj] = ring[(k + 1) % ring.length]
     const ri = bj - aj, rj = ai - bi // nach links der Laufrichtung, beim Rechteck oben herum ist das aussen
     const ni = ai + ri, nj = aj + rj, mi = bi + ri, mj = bj + rj
@@ -237,6 +238,8 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
       break
     }
   }
+  // auf grossen Brettern mehrere Berge, etwa einer je 48 Felder
+  for (let berge = Math.max(1, Math.round((sp * ze) / 48)); berge > 0; berge--) {
   const geradeTrocken = gerade().filter(([i, j]) => b[j][i].grund === 'wiese')
   if (geradeTrocken.length) {
     const [bi, bj] = geradeTrocken[z(geradeTrocken.length)]
@@ -245,12 +248,13 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
       if (imBrett(i, j) && b[j][i].grund === 'wiese' && (Math.random() < 0.7 || (di === 0 && dj === 0))) b[j][i].grund = 'berg'
     }
   }
+  }
   // Bahnhöfe: zwei oder drei Geraden auf Wiese, möglichst weit auseinander
   // auch in Kurven, etwa jeder vierte Kandidat (gewählt)
   const frei = [...gerade(), ...kurven().filter(() => Math.random() < 0.25)].filter(([i, j]) => b[j][i].grund === 'wiese').sort(() => Math.random() - 0.5)
   const bahnhoefe: Array<[number, number]> = []
   for (const [i, j] of frei) {
-    if (bahnhoefe.length >= 2 + z(2)) break
+    if (bahnhoefe.length >= 2 + z(2) + Math.floor((sp * ze) / 80)) break
     if (bahnhoefe.every(([p, q]) => Math.abs(p - i) + Math.abs(q - j) >= 3)) {
       bahnhoefe.push([i, j]); b[j][i].gleis = { ...b[j][i].gleis!, art: b[j][i].gleis!.art === 'kurve' ? 'kurvenbahnhof' : 'bahnhof' }
     }

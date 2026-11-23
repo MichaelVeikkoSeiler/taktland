@@ -1604,6 +1604,9 @@ Bauwerke als «Daten lückenhaft») nach app/src/assets/gleisbau-strecken.json, 
 Weichen in jede Richtung; Rundkurs: der Zug fährt drei Minuten ohne Umkehren durch Tunnel und über Brücke); die besten Sterne auf dem Gerät (localStorage taktland.gleisbau.aufgaben).
 Dazu «Linie ziehen» verbessert: zweigt die Linie von einer Geraden ab, wird diese zur Weiche, schliesst sich ein Ring, wird das Feld zur Kurve, an den Enden grosser Kurven lässt sie sich
 anschliessen; die Beschreibung oben kürzer, die Einzelheiten unter «So geht's».
+Seit 2026-11-23 auch Bretter im Hochformat (Michael: «Weitere Brettgrössen zb 12x24 für hochformat»): GROESSEN mit 6 × 8, 8 × 12 und 12 × 24, die Knöpfe in zwei Reihen «Quer» und
+«Hoch», am Desktop hohe Bretter schmaler (höchstens max-w-lg, 12 × 24 max-w-xl); das Zufallsbeispiel wächst mit der Fläche (mehr Ausbuchtungen, je 48 Felder ein Berg, je 80 Felder ein
+Bahnhof mehr, gewählt); im Browser hier mit 390 Bildpunkten und 12 × 24 bei 60 Bildern je Sekunde gefahren.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
