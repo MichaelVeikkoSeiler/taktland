@@ -3,7 +3,7 @@ import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zu
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
-  WAGEN, WAGEN_MIN, WAGEN_MAX,
+  WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
@@ -31,11 +31,12 @@ const F = {
   wand: '#f4f1ea', ziegel: ['#d4583e', '#c94a32', '#b8452f'], ziegelSchatten: '#9e3a27',
 }
 /** die Unterkante jeder Kachel, damit sie leicht erhaben wirkt (gewählt) */
-const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9b19d', dorf: '#9fc47a' }
+const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9b19d', dorf: '#9fc47a', rebberg: '#86ad4c', schnee: '#b7c7e2' }
 const KACHEL_H = 0.915
 
 type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
+  | { art: 'bau'; bau: 'depot' | 'gueter' | 'galerie' } | { art: 'objekt'; objekt: 'kirche' | 'bauernhof' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'linie' }, text: 'Linie' },
@@ -53,6 +54,9 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'name' }, text: 'Name' },
   { w: { art: 'tunnel' }, text: 'Tunnel' },
   { w: { art: 'ampel' }, text: 'Ampel' },
+  { w: { art: 'bau', bau: 'depot' }, text: 'Depot' },
+  { w: { art: 'bau', bau: 'gueter' }, text: 'Güter' },
+  { w: { art: 'bau', bau: 'galerie' }, text: 'Galerie' },
   { w: { art: 'bruecke' }, text: 'Brücke' },
 ]
 const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
@@ -61,6 +65,10 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'grund', grund: 'wasser' }, text: 'Wasser' },
   { w: { art: 'grund', grund: 'berg' }, text: 'Berg' },
   { w: { art: 'grund', grund: 'dorf' }, text: 'Dorf' },
+  { w: { art: 'grund', grund: 'rebberg' }, text: 'Rebberg' },
+  { w: { art: 'grund', grund: 'schnee' }, text: 'Schnee' },
+  { w: { art: 'objekt', objekt: 'kirche' }, text: 'Kirche' },
+  { w: { art: 'objekt', objekt: 'bauernhof' }, text: 'Bauernhof' },
   { w: { art: 'strasse' }, text: 'Strasse' },
   { w: { art: 'weg' }, text: 'Entfernen' },
 ]
@@ -68,7 +76,7 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
 /** die Werkzeuge unten in drei Reitern */
 const GRUPPEN = [
   { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
-  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel'].includes(x.w.art)),
+  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau'].includes(x.w.art)),
     ...LANDSCHAFT.filter((x) => x.w.art === 'strasse')] },
   { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
 ]
@@ -279,7 +287,8 @@ function KnopfLandschaft({ f, i, j }: { f: Feld; i: number; j: number }) {
   const o = (name: string, x: number, y: number, b: number): Objekt => ({ name, x: i + x, y: j + y, b, spiegeln: false })
   const objekte: Objekt[] = f.grund === 'wald' ? [o('gb_obj_nadelbaum_02', 0.3, 0.6, 0.3), o('gb_obj_laubbaum_02', 0.65, 0.85, 0.42)]
     : f.grund === 'berg' && !f.gleis ? [o('gb_obj_gipfel_klein_01', 0.5, 0.82, 0.85)]
-    : f.grund === 'dorf' ? [o('gb_obj_haus_02', 0.3, 0.5, 0.38), o('gb_obj_haus_05', 0.66, 0.85, 0.4)] : []
+    : f.grund === 'dorf' ? [o('gb_obj_haus_02', 0.3, 0.5, 0.38), o('gb_obj_haus_05', 0.66, 0.85, 0.4)]
+    : f.grund === 'schnee' ? [o('gb_obj_nadelbaum_schnee_01', 0.5, 0.88, 0.45)] : []
   const gebiet = (fill: string, e: number) => <rect x={i + e} y={j + e} width={1 - 2 * e} height={KACHEL_H - 2 * e} rx={0.18} fill={fill} />
   return (
     <g>
@@ -289,6 +298,8 @@ function KnopfLandschaft({ f, i, j }: { f: Feld; i: number; j: number }) {
         {f.grund === 'wald' && gebiet('url(#gb-wald)', 0.07)}
         {f.grund === 'berg' && gebiet('url(#gb-fels)', 0.07)}
         {f.grund === 'wasser' && <>{gebiet('#d8cf9a', 0.06)}{gebiet('url(#gb-wasser)', 0.12)}</>}
+        {f.grund === 'rebberg' && gebiet('url(#gb-reben)', 0.07)}
+        {f.grund === 'schnee' && gebiet('url(#gb-schnee)', 0.05)}
       </g>
       {objekte.map((x, k) => <ObjektBild key={k} o={x} />)}
     </g>
@@ -297,7 +308,7 @@ function KnopfLandschaft({ f, i, j }: { f: Feld; i: number; j: number }) {
 
 /** ein Feld: die Fläche und, ohne «nurFlaeche», seine Landschaft für sich allein (auf den Knöpfen) */
 function GrundBild({ f, i, j, nurFlaeche = false }: { f: Feld; i: number; j: number; nurFlaeche?: boolean }) {
-  const grundFarbe = f.grund === 'wald' ? F.wald : f.grund === 'wasser' ? F.wasser : f.grund === 'berg' ? F.berg : F.wiese
+  const grundFarbe = f.grund === 'wald' ? F.wald : f.grund === 'wasser' ? F.wasser : f.grund === 'berg' ? F.berg : f.grund === 'schnee' ? '#e8eff9' : F.wiese
   return (
     <g>
       <rect x={i + 0.025} y={j + 0.025} width={0.95} height={0.95} rx={0.05} fill={KANTE[f.grund]} />
@@ -379,6 +390,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
           })}
         </>
       )}
+      {bauGilt(f) && <BauBild f={f} i={i} j={j} />}
       {name && (
         <g>
           <rect x={i + 0.06} y={j + 0.06} width={0.2} height={0.2} rx={0.03} fill="#3d3d3d" />
@@ -387,6 +399,16 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
       )}
     </g>
   )
+}
+
+/**
+ * Depot, Güterschuppen und Galerie über dem Gleis, als Bild von Michael (2026-11-24) mit dem Gleis gedreht; das Bild zeigt das Gleis senkrecht, beim Depot
+ * die Einfahrt unten wie der Prellbock; der Güterschuppen steht neben dem Gleis, darum um 0,17 Felder nach links verschoben (gewählt)
+ */
+function BauBild({ f, i, j }: { f: Feld; i: number; j: number }) {
+  const name = f.bau === 'depot' ? 'gb_bau_depot_01' : f.bau === 'gueter' ? 'gb_bau_gueterschuppen_01' : 'gb_bau_galerie_01'
+  return <image href={bild(name)} x={i} y={j} width={1} height={1} preserveAspectRatio="none" pointerEvents="none"
+                transform={`rotate(${f.gleis!.dreh * 90} ${i + 0.5} ${j + 0.5})${f.bau === 'gueter' ? ' translate(-0.17 0)' : ''}`} />
 }
 
 /** eine grosse Kurve über 2 × 2 oder 3 × 3 Felder, als ganzes Stück gezeichnet, ohne Brücke und Tunnel */
@@ -516,6 +538,25 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
         <GrundBild f={b[0][0]} i={0} j={0} />
         <GleisBild f={b[0][0]} i={0} j={0} />
         <g transform="translate(-0.3 -0.12)"><AmpelBild brett={b} /></g>
+      </svg>
+    )
+  }
+  if (w.art === 'objekt') {
+    const name = w.objekt === 'kirche' ? 'gb_obj_kirche_01' : 'gb_obj_bauernhof_01'
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={{ grund: 'wiese' }} i={0} j={0} nurFlaeche />
+        <image href={bild('gb_grund_wiese_01')} x={0.025} y={0.025} width={0.95} height={0.89} preserveAspectRatio="none" />
+        <ObjektBild o={{ name, x: 0.5, y: 0.86, b: w.objekt === 'kirche' ? 0.62 : 0.85, spiegeln: false }} />
+      </svg>
+    )
+  }
+  if (w.art === 'bau') {
+    const f: Feld = { grund: 'wiese', bau: w.bau, gleis: { art: w.bau === 'depot' ? 'prellbock' : 'gerade', dreh: 0 } }
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={f} i={0} j={0} />
+        <GleisBild f={f} i={0} j={0} />
       </svg>
     )
   }
@@ -1000,7 +1041,7 @@ export function Gleisbau() {
     }
     if (unterGross) {
       if (w.art === 'bruecke') { neu(i, j, { ...f, bruecke: true }); knopfTon(true); return }
-      if (w.art === 'ampel' || w.art === 'strasse') { setMeldung('Auf einer grossen Kurve geht das nicht.'); return }
+      if (w.art === 'ampel' || w.art === 'strasse' || w.art === 'bau' || w.art === 'objekt') { setMeldung('Auf einer grossen Kurve geht das nicht.'); return }
       const grund: Grund = w.art === 'grund' ? w.grund : 'berg'
       neu(i, j, { ...f, grund }); knopfTon(true)
       return
@@ -1010,6 +1051,25 @@ export function Gleisbau() {
       if (!f.gleis || !['gerade', 'kurve', 'bahnhof', 'kurvenbahnhof'].includes(f.gleis.art)) { setMeldung('Eine Ampel steht an einer Geraden, einer Kurve oder einem Bahnhof.'); return }
       if (f.grund === 'berg') { setMeldung('Im Tunnel sieht man keine Ampel. Stell sie davor.'); return }
       neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }); knopfTon(true)
+      return
+    }
+    if (w.art === 'objekt') {
+      // Kirche oder Bauernhof allein im Feld; nochmals tippen nimmt es weg
+      if (f.gleis) { setMeldung('Auf einem Feld mit Gleis hat das keinen Platz.'); return }
+      if (f.objekt === w.objekt) { const { objekt: _, ...ohne } = f; neu(i, j, ohne); knopfTon(false); return }
+      neu(i, j, { ...f, objekt: w.objekt }); knopfTon(true)
+      return
+    }
+    if (w.art === 'bau') {
+      // Depot auf einem Prellbock, Güterschuppen und Galerie an einer Geraden; nochmals tippen dreht
+      const art = w.bau === 'depot' ? 'prellbock' : 'gerade'
+      if (f.bau === w.bau && f.gleis?.art === art) {
+        const d = ((f.gleis.dreh + 1) % 4) as Dreh
+        setDreh(d); neu(i, j, { ...f, gleis: { ...f.gleis, dreh: d } }); knopfTon(true)
+        return
+      }
+      const { strasse: _s, ampel: _a, objekt: _o, ...ohne } = f
+      neu(i, j, { ...ohne, bau: w.bau, gleis: f.gleis?.art === art ? f.gleis : { art, dreh } }); knopfTon(true)
       return
     }
     if (w.art === 'strasse') {
@@ -1047,6 +1107,8 @@ export function Gleisbau() {
     // Entfernen: zuerst das Gleis (die Strasse bleibt), dann die Strasse, dann der Grund
     // Entfernen: zuerst die Ampel, dann das Gleis (samt Brücke; die Strasse bleibt), dann die Strasse, dann der Grund
     else if (f.ampel) { const { ampel: _, ...ohne } = f; n = ohne }
+    else if (f.objekt) { const { objekt: _, ...ohne } = f; n = ohne }
+    else if (f.bau) { const { bau: _, ...ohne } = f; n = ohne }
     else n = f.gleis ? (f.strasse ? { grund: f.grund, strasse: true } : { grund: f.grund }) : f.strasse ? { grund: f.grund } : { grund: 'wiese' }
     // eine Strasse bleibt nur, wo sie noch möglich ist (nicht auf Wasser, Berg oder unter einer Kurve)
     if (n.strasse && strasseMoeglich(n)) { const { strasse: _, ...ohne } = n; n = ohne }
@@ -1174,7 +1236,7 @@ export function Gleisbau() {
              className="size-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {unten}
-          {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y)} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />))}
+          {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y) || (() => { const f = brett[Math.floor(w.y)]?.[Math.floor(w.x)]; return bauGilt(f) && f!.bau !== 'gueter' })()} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />))}
           {oben}
           <SchrankenBild brett={brett} wagen={wagen.flat()} />
           <AmpelBild brett={brett} />
@@ -1392,6 +1454,7 @@ function SoGehts() {
         Geraden, Kurven und Weichen entstehen von selbst.</li>
       <li>Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel; «Brücke» baut eine Brücke auch ohne Wasser, den See setzt du selbst darunter.
         Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Bei einer roten Ampel wartet der Zug, ein Tipp stellt sie auf Grün.</li>
+      <li>Im Depot fährt der Zug ab, am Güterschuppen hält er zum Laden, unter der Galerie fährt er gedeckt. Kirche und Bauernhof stehen allein in einem Feld ohne Gleis.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
       <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.

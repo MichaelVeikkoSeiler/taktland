@@ -15,12 +15,14 @@ export const groesseOk = (sp: number, ze: number) => Number.isInteger(sp) && Num
 export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
-export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf'
+export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee'
 export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
 /** wo eine Ampel stehen kann: an einer Geraden, Kurve oder einem Bahnhof */
 export const ampelGilt = (f?: Feld) => !!f?.ampel && !!f.gleis && ['gerade', 'kurve', 'bahnhof', 'kurvenbahnhof'].includes(f.gleis.art)
+/** ob das Bauwerk zum Gleis passt: das Depot auf einem Prellbock, die anderen an einer Geraden */
+export const bauGilt = (f?: Feld) => !!f?.bau && !!f.gleis && (f.bau === 'depot' ? f.gleis.art === 'prellbock' : f.gleis.art === 'gerade')
 export const istBahnhof = (g?: Gleis) => g?.art === 'bahnhof' || g?.art === 'kurvenbahnhof'
 export type Dreh = 0 | 1 | 2 | 3
 
@@ -34,6 +36,10 @@ export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 
 /** teil: das Feld liegt unter einer grossen Kurve, die im Feld [i, j] (ihrem Anfang) steht */
 export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /** eine Strasse im Feld; kreuzt sie eine Gerade, ist es ein Bahnübergang */ strasse?: true
   /** eine Brücke, auch ohne Wasser darunter (seit 2026-11-24; Michael: «Beim Brückenbau kein See mehr automatisch darunter») */ bruecke?: true
+  /** ein einzelnes Objekt im Feld (seit 2026-11-24, Bilder von Michael): Kirche oder Bauernhof */
+  objekt?: 'kirche' | 'bauernhof'
+  /** ein Bauwerk über dem Gleis (seit 2026-11-24, Bilder von Michael): Depot auf einem Prellbock, Güterschuppen und Galerie an einer Geraden */
+  bau?: 'depot' | 'gueter' | 'galerie'
   /** eine Ampel am Gleis (seit 2026-11-24; Michael: «Weiteres Element: Ampel»): bei Rot hält der Zug vor dem Feld */ ampel?: 'rot' | 'gruen'
   /** Name eines echten Bahnhofs aus Taktland für den Bahnhof, zu dem dieses Feld gehört */ name?: string }
 export type Brett = Feld[][] // [Zeile][Spalte]
@@ -285,7 +291,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 }
 
 const SPEICHER = 'taktland.gleisbau.v1'
-const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf']
+const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee']
 const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve']
 
 /** das gemerkte Brett, nur wenn es heil ist */
@@ -306,20 +312,23 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbd', STRASSE_Z = 'WFSBD', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV'
+const GRUND_Z = 'wfsbdrn', STRASSE_Z = 'WFSBDRN', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV'
 const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
+    if (f.objekt) objekte.push(`${i}.${j}.${f.objekt === 'kirche' ? 'k' : 'h'}`)
+    if (bauGilt(f)) bauten.push(`${i}.${j}.${f.bau === 'depot' ? 'd' : f.bau === 'gueter' ? 'g' : 'l'}`)
     if (f.bruecke && f.gleis) bruecken.push(`${i}.${j}`)
     if (f.ampel && f.gleis) ampeln.push(`${i}.${j}.${f.ampel === 'rot' ? 'r' : 'g'}`)
   }))
   return '1~' + b.map((z) => z.map((f) => (f.strasse ? STRASSE_Z : GRUND_Z)[GRUENDE.indexOf(f.grund)] + (f.gleis ? GLEIS_Z[ARTEN.indexOf(f.gleis.art) * 4 + f.gleis.dreh] : '.')).join('')).join('-') + (namen.length ? `~n${namen.join('_')}` : '')
     + (bruecken.length ? `~b${bruecken.join('_')}` : '') + (ampeln.length ? `~a${ampeln.join('_')}` : '')
+    + (objekte.length ? `~o${objekte.join('_')}` : '') + (bauten.length ? `~u${bauten.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -334,6 +343,8 @@ export function brettAusCode(c: string): Brett | null {
   }))
   if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
+    if (teil.startsWith('o')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].objekt = c === 'k' ? 'kirche' : 'bauernhof' }
+    if (teil.startsWith('u')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].bau = c === 'd' ? 'depot' : c === 'g' ? 'gueter' : 'galerie' }
     if (teil.startsWith('b')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].bruecke = true }
     if (teil.startsWith('a')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].ampel = c === 'r' ? 'rot' : 'gruen' }
     if (!teil.startsWith('n')) continue
@@ -741,7 +752,9 @@ export class Zug {
       return d
     }
     // zuerst Bahnhöfe, dann die übrigen; mit einem anderen Zug die fernsten zuerst
-    felder.sort((a, c) => Number(istBahnhof(b[c[1]][c[0]].gleis)) - Number(istBahnhof(b[a[1]][a[0]].gleis)) || abstand(c) - abstand(a))
+    // zuerst Depots (der Zug fährt dort ab), dann Bahnhöfe
+    const rang = (i: number, j: number) => (b[j][i].bau === 'depot' && bauGilt(b[j][i]) ? 2 : istBahnhof(b[j][i].gleis) ? 1 : 0)
+    felder.sort((a, c) => rang(c[0], c[1]) - rang(a[0], a[1]) || abstand(c) - abstand(a))
     for (const [i, j] of felder) {
       const z = Zug.ab(b, i, j, anzahl)
       if (!z) continue
@@ -770,6 +783,8 @@ export class Zug {
       z.stuecke.unshift(erstes)
     }
     if (istBahnhof(b[start.j][start.i].gleis)) { z.halt = HALT_S; z.amBahnhof = true; z.halte++; z.haltFeld = `${start.i},${start.j}` }
+    // im Depot wartet er vor der Abfahrt wie am Bahnhof
+    else if (bauGilt(b[start.j][start.i]) && b[start.j][start.i].bau === 'depot') { z.halt = HALT_S; z.amBahnhof = true }
     return z
   }
 
@@ -848,7 +863,8 @@ export class Zug {
       // am Bahnhof in der Mitte des Felds halten
       // in einem Bahnhof aus mehreren Feldern nur einmal, im letzten Feld in Fahrtrichtung
       const weiterImBahnhof = () => { const n = naechstes(b, s); return !!n && !n.gross && istBahnhof(b[n.j][n.i].gleis) }
-      if (!s.gross && istBahnhof(b[s.j][s.i].gleis) && vorher < mitte && vorher + rest >= mitte && !weiterImBahnhof()) {
+      // auch am Güterschuppen hält der Zug (laden), ohne Fahrgäste
+      if (!s.gross && (istBahnhof(b[s.j][s.i].gleis) || (b[s.j][s.i].bau === 'gueter' && bauGilt(b[s.j][s.i]))) && vorher < mitte && vorher + rest >= mitte && !weiterImBahnhof()) {
         this.kopf = mitte; this.halt = HALT_S; this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`; return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }

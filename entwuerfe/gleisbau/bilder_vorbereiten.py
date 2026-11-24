@@ -5,9 +5,9 @@ import numpy as np
 from scipy import ndimage
 Q, Z = sys.argv[1], sys.argv[2]
 meta = {}
-def sauber(a):
+def sauber(a, schwelle=60):
     al = a[..., 3].astype(int)
-    al = np.where(al >= 240, 255, np.where(al <= 60, 0, al))
+    al = np.where(al >= 240, 255, np.where(al <= schwelle, 0, al))
     lab, n = ndimage.label(al > 0)
     if n > 1:
         gr = ndimage.sum(np.ones_like(al), lab, range(1, n + 1))
@@ -32,11 +32,13 @@ for f in sorted(os.listdir(Q)):
         Image.fromarray(a.astype('uint8')).save(f'{Z}/{name}.webp', quality=82)
         meta[name] = {'w': 512, 'h': 512}
         continue
-    a = sauber(np.array(im))
+    # die Kirche hatte einen farbigen Saum halb durchsichtiger Bildpunkte (2026-11-24)
+    a = sauber(np.array(im), 150 if name == 'gb_obj_kirche_01' else 60)
     if name in ('gb_obj_nadelbaum_01', 'gb_obj_nadelbaum_04'):
         a[..., :3] = (a[..., :3] * 0.85).astype('uint8')  # etwas dunkler, damit sie sich im Mischwald abheben (gewählt)
     im = Image.fromarray(a)
-    if name.startswith('gb_bau_perron'):
+    # Bauwerke über dem Gleis: ganzes Feld, nicht zugeschnitten, das Gleis läuft senkrecht durch die Mitte
+    if name.startswith('gb_bau_perron') or name in ('gb_bau_depot_01', 'gb_bau_gueterschuppen_01', 'gb_bau_galerie_01'):
         im = im.resize((512, 512), Image.LANCZOS)
         im.save(f'{Z}/{name}.webp', quality=90)
         meta[name] = {'w': 512, 'h': 512}
@@ -59,5 +61,7 @@ for f in sorted(os.listdir(Q)):
         eintrag['balken'] = int(np.median(xs))
     im.save(f'{Z}/{name}.webp', quality=86)
     meta[name] = eintrag
-json.dump(meta, open(f'{Z}/../gleisbau-masse.json', 'w'), indent=0, sort_keys=True)
+# zu den bisherigen Massen dazu, damit auch nur einzelne neue Bilder vorbereitet werden können
+alt = json.load(open(f'{Z}/../gleisbau-masse.json')) if os.path.exists(f'{Z}/../gleisbau-masse.json') else {}
+json.dump({**alt, **meta}, open(f'{Z}/../gleisbau-masse.json', 'w'), indent=0, sort_keys=True)
 print(len(meta), 'Bilder', sum(os.path.getsize(f'{Z}/{k}.webp') for k in meta) // 1024, 'KB')

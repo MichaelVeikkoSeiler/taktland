@@ -1,4 +1,16 @@
 {
+"gb_bau_depot_01": {
+"h": 512,
+"w": 512
+},
+"gb_bau_galerie_01": {
+"h": 512,
+"w": 512
+},
+"gb_bau_gueterschuppen_01": {
+"h": 512,
+"w": 512
+},
 "gb_bau_perron_gerade_01": {
 "h": 512,
 "w": 512
@@ -55,6 +67,10 @@
 "gb_grund_wiese_01": {
 "h": 512,
 "w": 512
+},
+"gb_obj_bauernhof_01": {
+"h": 193,
+"w": 320
 },
 "gb_obj_busch_01": {
 "h": 254,
@@ -120,6 +136,10 @@
 "h": 320,
 "w": 255
 },
+"gb_obj_kirche_01": {
+"h": 320,
+"w": 283
+},
 "gb_obj_laubbaum_01": {
 "h": 320,
 "w": 280
@@ -152,7 +172,19 @@
 "h": 320,
 "w": 223
 },
+"gb_obj_nadelbaum_schnee_01": {
+"h": 320,
+"w": 198
+},
 "gb_textur_fels_01": {
+"h": 512,
+"w": 512
+},
+"gb_textur_rebberg_01": {
+"h": 512,
+"w": 512
+},
+"gb_textur_schnee_01": {
 "h": 512,
 "w": 512
 },

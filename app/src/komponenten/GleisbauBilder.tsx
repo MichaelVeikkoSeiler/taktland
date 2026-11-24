@@ -36,15 +36,17 @@ export function MusterDefs() {
         {muster('gb-wald', 'gb_textur_waldboden_01')}
         {muster('gb-fels', 'gb_textur_fels_01')}
         {muster('gb-wasser', 'gb_textur_wasser_01')}
+        {muster('gb-reben', 'gb_textur_rebberg_01')}
+        {muster('gb-schnee', 'gb_textur_schnee_01')}
       </defs>
     </svg>
   )
 }
 
 /** Einzug der Gebiete vom Rand der Felder, an denen kein gleicher Grund anschliesst, und Rundung der Ecken (gewählt) */
-const EINZUG: Record<string, number> = { wald: 0.07, berg: 0.07, ufer: 0.06, wasser: 0.13 }
+const EINZUG: Record<string, number> = { wald: 0.07, berg: 0.07, ufer: 0.06, wasser: 0.13, rebberg: 0.07, schnee: 0.05 }
 const RUND = 0.2
-const FUELLUNG: Record<string, string> = { wald: 'url(#gb-wald)', berg: 'url(#gb-fels)', ufer: '#d8cf9a', wasser: 'url(#gb-wasser)' }
+const FUELLUNG: Record<string, string> = { wald: 'url(#gb-wald)', berg: 'url(#gb-fels)', ufer: '#d8cf9a', wasser: 'url(#gb-wasser)', rebberg: 'url(#gb-reben)', schnee: 'url(#gb-schnee)' }
 
 /**
  * Ein Gebiet (Wald, Fels, Ufer, Wasser) als Fläche aus Vierteln: je Viertel eines Felds schaut das Programm auf die beiden Nachbarn an seinen Kanten
@@ -96,6 +98,8 @@ export function Landschaft({ brett }: { brett: Brett }) {
                         transform={`translate(${fx ? i + 1 : i} ${fy ? j + 1 : j}) scale(${fx ? -1 : 1} ${fy ? -1 : 1})`} />
         }))}
         <path d={gebietPfad(brett, 'wald', EINZUG.wald)} fill={FUELLUNG.wald} />
+        <path d={gebietPfad(brett, 'rebberg', EINZUG.rebberg)} fill={FUELLUNG.rebberg} />
+        <path d={gebietPfad(brett, 'schnee', EINZUG.schnee)} fill={FUELLUNG.schnee} />
         <path d={gebietPfad(brett, 'berg', EINZUG.berg)} fill={FUELLUNG.berg} />
         <path d={gebietPfad(brett, 'wasser', EINZUG.ufer)} fill={FUELLUNG.ufer} />
         <path d={gebietPfad(brett, 'wasser', EINZUG.wasser)} fill={FUELLUNG.wasser} />
@@ -114,6 +118,7 @@ const BREITE: Record<string, number> = {
   gb_obj_busch_01: 0.13, gb_obj_busch_02: 0.12, gb_obj_fels_01: 0.14, gb_obj_fels_02: 0.16,
   gb_obj_haus_01: 0.24, gb_obj_haus_02: 0.24, gb_obj_haus_03: 0.26, gb_obj_haus_04: 0.26, gb_obj_haus_05: 0.25, gb_obj_haus_06: 0.22,
   gb_obj_gipfel_gross_01: 0.95, gb_obj_gipfel_gross_02: 1.1, gb_obj_gipfel_gross_03: 1.2,
+  gb_obj_kirche_01: 0.55, gb_obj_bauernhof_01: 0.72, gb_obj_nadelbaum_schnee_01: 0.2,
   gb_obj_gipfel_klein_01: 0.75, gb_obj_gipfel_klein_02: 0.75, gb_obj_gipfel_klein_03: 0.7,
 }
 const LAUB = ['gb_obj_laubbaum_01', 'gb_obj_laubbaum_02', 'gb_obj_laubbaum_03', 'gb_obj_laubbaum_04']
@@ -191,6 +196,13 @@ export function objekteBauen(b: Brett, imTunnel: (b: Brett, x: number, y: number
   for (let j = 0; j < ze; j++) for (let i = 0; i < sp; i++) {
     const f = b[j][i], z = (k: number) => zufall(i, j, k)
     const rand = [grund(i, j - 1), grund(i + 1, j), grund(i, j + 1), grund(i - 1, j)].filter((g) => g !== f.grund).length
+    // Kirche und Bauernhof, von Hand gesetzt, allein im Feld
+    if (f.objekt && !f.gleis) { setze(f.objekt === 'kirche' ? 'gb_obj_kirche_01' : 'gb_obj_bauernhof_01', i + 0.5, j + 0.86, 1, z(1), false); continue }
+    if (f.grund === 'schnee') {
+      // im Schnee ein paar verschneite Tannen (gewählt)
+      for (let k = 0; k < 3; k++) if (z(k) < 0.4) setze('gb_obj_nadelbaum_schnee_01', i + 0.18 + k * 0.32 + (z(k + 5) - 0.5) * 0.1, j + 0.35 + z(k + 10) * 0.55, 0.85 + z(k + 15) * 0.3, z(k + 20))
+      continue
+    }
     if (f.grund === 'wald') {
       for (let k = 0; k < 9; k++) {
         const x = i + 0.12 + z(k) * 0.76, y = j + 0.22 + z(k + 20) * 0.74
