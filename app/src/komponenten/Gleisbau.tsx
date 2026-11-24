@@ -280,6 +280,34 @@ const TUNNEL_STRICH = '#55585e'
 
 /** ob ein Punkt im Tunnel liegt: in einem Feld im Berg mit Gleis, mehr als PORTAL von jeder Kante mit Portal (an Kanten, wo der Tunnel im
  *  Nachbarfeld weitergeht, gibt es keines) */
+/**
+ * Bahnhofsfelder nebeneinander als ein Bahnhof auch im Bild (Michael, 2026-11-24: «Mehrere Bahnhöfe nebeneinander sollen ein zusammenhängenden Bahnhof
+ * geben»): der Perron läuft über die Fuge zum nächsten geraden Bahnhofsfeld gleicher Lage, und zwei Perrons, die sich über die Fuge gegenüberstehen,
+ * werden ein Mittelperron. Lage des Perrons im Bild (Gleis senkrecht): 0,66 bis 0,86 quer, 0,06 bis 0,94 längs (gemessen)
+ */
+function PerronVerbindungen({ brett }: { brett: Brett }) {
+  const raus = []
+  const gerade = (i: number, j: number, d: number) => { const g = brett[j]?.[i]?.gleis; return g?.art === 'bahnhof' && g.dreh === d }
+  for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
+    const g = brett[j][i].gleis
+    if (g?.art !== 'bahnhof') continue
+    const d = g.dreh, rot = `rotate(${d * 90} ${i + 0.5} ${j + 0.5})`
+    // «unten» im Bild und «rechts» (zum Perron) nach der Drehung
+    const unten = [[0, 1], [-1, 0], [0, -1], [1, 0]][d], rechts = [[1, 0], [0, 1], [-1, 0], [0, -1]][d]
+    if (gerade(i + unten[0], j + unten[1], d)) {
+      raus.push(<rect key={`l${i},${j}`} x={i + 0.66} y={j + 0.9} width={0.2} height={0.2} fill={F.perron} transform={rot} />)
+      raus.push(<rect key={`k${i},${j}`} x={i + 0.66} y={j + 0.9} width={0.012} height={0.2} fill="#ffffff" transform={rot} />)
+    }
+    if (gerade(i + rechts[0], j + rechts[1], (d + 2) % 4)) {
+      raus.push(<rect key={`m${i},${j}`} x={i + 0.84} y={j + 0.06} width={0.32} height={0.88} fill={F.perron} transform={rot} />)
+      // läuft der Mittelperron weiter, auch die Ecke über die Fuge
+      if (gerade(i + unten[0], j + unten[1], d) && gerade(i + rechts[0] + unten[0], j + rechts[1] + unten[1], (d + 2) % 4))
+        raus.push(<rect key={`e${i},${j}`} x={i + 0.84} y={j + 0.9} width={0.32} height={0.2} fill={F.perron} transform={rot} />)
+    }
+  }
+  return <g pointerEvents="none">{raus}</g>
+}
+
 /** ein Wagen auf dem unteren Gleis einer Überführung, nahe der Mitte: blass wie im Tunnel */
 function unterBruecke(f: Feld | undefined, i: number, j: number, w: WagenLage) {
   if (f?.gleis?.art !== 'ueberfuehrung') return false
@@ -815,6 +843,7 @@ export function Gleisbau() {
       {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j}
                                                      weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined}
                                                      wasser={(u, v) => ueberWasser(brett[v]?.[u])} brett={brett} />))}
+      <PerronVerbindungen brett={brett} />
     </>
   ), [brett, namen])
   const oben = useMemo(() => objekteBauen(brett, imTunnel).map((o, k) => <ObjektBild key={k} o={o} />), [brett])
