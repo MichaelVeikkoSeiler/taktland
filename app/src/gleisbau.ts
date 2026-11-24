@@ -15,7 +15,7 @@ export const groesseOk = (sp: number, ze: number) => Number.isInteger(sp) && Num
 export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
-export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee'
+export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee' | 'acker'
 export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
@@ -23,6 +23,10 @@ export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' 
 export const ampelGilt = (f?: Feld) => !!f?.ampel && !!f.gleis && ['gerade', 'kurve', 'bahnhof', 'kurvenbahnhof'].includes(f.gleis.art)
 /** ob das Bauwerk zum Gleis passt: das Depot auf einem Prellbock, die anderen an einer Geraden */
 export const bauGilt = (f?: Feld) => !!f?.bau && !!f.gleis && (f.bau === 'depot' ? f.gleis.art === 'prellbock' : f.gleis.art === 'gerade')
+/** ob ein Gleis hier über Wasser führt (See, Fluss oder Brücke): dann eine Brücke */
+export const ueberWasser = (f?: Feld) => !!f && (f.grund === 'wasser' || !!f.bruecke || !!f.fluss)
+/** wo ein Wagen abgestellt werden kann: auf einer Geraden, einem Bahnhof oder vor einem Prellbock */
+export const wagenGilt = (f?: Feld) => !!f?.gleis && !f.teil && ['gerade', 'bahnhof', 'prellbock'].includes(f.gleis.art)
 export const istBahnhof = (g?: Gleis) => g?.art === 'bahnhof' || g?.art === 'kurvenbahnhof'
 export type Dreh = 0 | 1 | 2 | 3
 
@@ -36,6 +40,10 @@ export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 
 /** teil: das Feld liegt unter einer grossen Kurve, die im Feld [i, j] (ihrem Anfang) steht */
 export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /** eine Strasse im Feld; kreuzt sie eine Gerade, ist es ein Bahnübergang */ strasse?: true
   /** eine Brücke, auch ohne Wasser darunter (seit 2026-11-24; Michael: «Beim Brückenbau kein See mehr automatisch darunter») */ bruecke?: true
+  /** ein Fluss durch das Feld (seit 2026-11-24): fliesst zu Nachbarn mit Fluss oder Wasser; ein Gleis darüber ist eine Brücke */
+  fluss?: true
+  /** ein abgestellter Wagen auf dem Gleis (seit 2026-11-24): ein Zug, der hineinfährt, kuppelt ihn an */
+  wagen?: true
   /** ein einzelnes Objekt im Feld (seit 2026-11-24, Bilder von Michael): Kirche oder Bauernhof */
   objekt?: 'kirche' | 'bauernhof'
   /** ein Bauwerk über dem Gleis (seit 2026-11-24, Bilder von Michael): Depot auf einem Prellbock, Güterschuppen und Galerie an einer Geraden */
@@ -291,7 +299,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 }
 
 const SPEICHER = 'taktland.gleisbau.v1'
-const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee']
+const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee', 'acker']
 const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve']
 
 /** das gemerkte Brett, nur wenn es heil ist */
@@ -312,15 +320,17 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbdrn', STRASSE_Z = 'WFSBDRN', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV'
+const GRUND_Z = 'wfsbdrna', STRASSE_Z = 'WFSBDRNA', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV'
 const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
+    if (f.fluss) fluesse.push(`${i}.${j}`)
+    if (f.wagen && wagenGilt(f)) abgestellt.push(`${i}.${j}`)
     if (f.objekt) objekte.push(`${i}.${j}.${f.objekt === 'kirche' ? 'k' : 'h'}`)
     if (bauGilt(f)) bauten.push(`${i}.${j}.${f.bau === 'depot' ? 'd' : f.bau === 'gueter' ? 'g' : 'l'}`)
     if (f.bruecke && f.gleis) bruecken.push(`${i}.${j}`)
@@ -329,6 +339,7 @@ export function brettCode(b: Brett): string {
   return '1~' + b.map((z) => z.map((f) => (f.strasse ? STRASSE_Z : GRUND_Z)[GRUENDE.indexOf(f.grund)] + (f.gleis ? GLEIS_Z[ARTEN.indexOf(f.gleis.art) * 4 + f.gleis.dreh] : '.')).join('')).join('-') + (namen.length ? `~n${namen.join('_')}` : '')
     + (bruecken.length ? `~b${bruecken.join('_')}` : '') + (ampeln.length ? `~a${ampeln.join('_')}` : '')
     + (objekte.length ? `~o${objekte.join('_')}` : '') + (bauten.length ? `~u${bauten.join('_')}` : '')
+    + (fluesse.length ? `~f${fluesse.join('_')}` : '') + (abgestellt.length ? `~w${abgestellt.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -343,6 +354,8 @@ export function brettAusCode(c: string): Brett | null {
   }))
   if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
+    if (teil.startsWith('f')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].fluss = true }
+    if (teil.startsWith('w')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].wagen = true }
     if (teil.startsWith('o')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].objekt = c === 'k' ? 'kirche' : 'bauernhof' }
     if (teil.startsWith('u')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].bau = c === 'd' ? 'depot' : c === 'g' ? 'gueter' : 'galerie' }
     if (teil.startsWith('b')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].bruecke = true }
@@ -694,9 +707,17 @@ export function strassenKanten(b: Brett, i: number, j: number): number[] {
   if (k.length === 1) k.push((k[0] + 2) % 4)
   return k.length ? k : [1, 3]
 }
+/** die Kanten, an denen ein Fluss das Feld verlässt: zu Nachbarn mit Fluss oder Wasser; allein oder an einem Ende quer durch */
+export function flussKanten(b: Brett, i: number, j: number): number[] {
+  const f = b[j]?.[i]
+  if (!f?.fluss) return []
+  const k = [0, 1, 2, 3].filter((k) => { const n = b[j + DY[k]]?.[i + DX[k]]; return !!n && (n.fluss || n.grund === 'wasser') })
+  if (k.length === 1) k.push((k[0] + 2) % 4)
+  return k.length ? k : [1, 3]
+}
 /** ob auf dem Feld eine Strasse liegen darf: nicht auf Wasser und Berg, mit Gleis nur über eine Gerade */
 export function strasseMoeglich(f: Feld): string | null {
-  if (f.grund === 'wasser' || f.grund === 'berg' || f.bruecke) return 'Eine Strasse geht nur über Land, nicht über Wasser, Berg oder eine Brücke.'
+  if (f.grund === 'wasser' || f.grund === 'berg' || f.bruecke || f.fluss) return 'Eine Strasse geht nur über Land, nicht über Wasser, Berg oder eine Brücke.'
   if (f.teil || (f.gleis && f.gleis.art !== 'gerade')) return 'Ein Bahnübergang geht nur über eine Gerade.'
   return null
 }
@@ -714,6 +735,8 @@ const ANFAHREN = 1.2
 const HALT_S = 2.5
 /** der Pfiff so lange vor der Abfahrt (gewählt) */
 const PFIFF_VOR_S = 0.9
+/** so lange steht der Zug beim Ankuppeln, in s (gewählt) */
+const KUPPELN_S = 1.2
 
 export interface WagenLage { x: number; y: number; w: number; /** 0 Lok, 1 und 2 Wagen, 3 Steuerwagen */ art: number; vorne: boolean }
 
@@ -816,6 +839,10 @@ export class Zug {
 
   /** Fahrzeuge samt Lok und Steuerwagen */
   fahrzeuge() { return this.anzahl }
+  /** wie oft der Zug einen Wagen angekuppelt hat */
+  angekuppelt = 0
+  /** das Feld unter dem hintersten Wagen (dort wird ein Wagen abgestellt) */
+  ende(): [number, number] { const p = this.punkt(this.laenge - WAGEN_LAENGE / 2); return [Math.floor(p.x), Math.floor(p.y)] }
 
   /**
    * Antippen eines Zugs (Michael, 2026-11-24: «wenn man auf einen Zug tippt, man die Anzahl Wagen korrigieren kann oder den Zug entfernen kann oder
@@ -849,7 +876,7 @@ export class Zug {
    * frei: ob der Zug in diese Felder einfahren darf (sonst wartet er am Ende des Stücks, wie vor einem roten Signal); umkehren: ob er nach langem
    * Warten umkehren soll (wenn zwei Züge auf einem Gleis gegeneinander warten)
    */
-  schritt(b: Brett, dt: number, frei?: (felder: Set<string>) => boolean, umkehren?: () => boolean) {
+  schritt(b: Brett, dt: number, frei?: (felder: Set<string>) => boolean, umkehren?: () => boolean, ankuppeln?: (i: number, j: number) => void) {
     if (this.halt > 0) {
       if (this.amBahnhof && this.halt > PFIFF_VOR_S && this.halt - dt <= PFIFF_VOR_S) this.pfiffe++
       this.halt -= dt
@@ -873,6 +900,13 @@ export class Zug {
       if (!n) { this.kopf = l; this.umkehren(); return }
       // vor einer roten Ampel warten, ohne als wartend zu gelten (sonst kehrte ein anderer Zug oder dieser um)
       if (!n.gross && ampelGilt(b[n.j]?.[n.i]) && b[n.j][n.i].ampel === 'rot') { this.kopf = l; this.tempo = 0; this.wartet = 0; return }
+      // ein abgestellter Wagen: der Zug kuppelt ihn an (er hängt sich hinten an, gewählt) und steht kurz; ist der Zug schon so lang wie erlaubt, kehrt er um
+      if (!n.gross && b[n.j]?.[n.i]?.wagen && wagenGilt(b[n.j][n.i])) {
+        this.kopf = l; this.tempo = 0
+        if (this.anzahl < WAGEN_MAX && ankuppeln) { ankuppeln(n.i, n.j); this.fahrzeugeSetzen(b, this.anzahl + 1); this.halt = KUPPELN_S; this.amBahnhof = false; this.angekuppelt++ }
+        else this.umkehren()
+        return
+      }
       if (frei && !frei(stueckFelder(n))) {
         this.kopf = l; this.tempo = 0; this.wartet += dt
         if (umkehren?.()) { this.wartet = 0; this.umkehren() }

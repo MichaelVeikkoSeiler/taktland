@@ -8,7 +8,7 @@
 import STRECKEN from './assets/gleisbau-strecken.json'
 import {
   type Brett, bahnhofGruppen, bahnhofTitel, type Dreh, DXY, type GleisArt, grosseKurve, grossGeometrie, type Grund, istBahnhof, leer, spalten,
-  wege, zeilen, Zug,
+  ueberWasser, wege, zeilen, Zug,
 } from './gleisbau'
 
 export interface Ergebnis { ok: boolean; text: string; sterne: number }
@@ -78,9 +78,9 @@ function bauwerk(b: Brett, i: number, j: number): { tunnel: boolean; bruecke: bo
   if (grosseKurve(halter.gleis)) {
     const [hi, hj] = f.teil ?? [i, j]
     const gr = grossGeometrie(hi, hj, halter.gleis!).zellen.map(([u, v]) => b[v]?.[u]?.grund)
-    return { tunnel: gr.includes('berg'), bruecke: gr.includes('wasser') || grossGeometrie(hi, hj, halter.gleis!).zellen.some(([u, v]) => !!b[v]?.[u]?.bruecke) }
+    return { tunnel: gr.includes('berg'), bruecke: grossGeometrie(hi, hj, halter.gleis!).zellen.some(([u, v]) => ueberWasser(b[v]?.[u])) }
   }
-  return { tunnel: f.grund === 'berg', bruecke: f.grund === 'wasser' || !!f.bruecke }
+  return { tunnel: f.grund === 'berg', bruecke: ueberWasser(f) }
 }
 
 /** ob es einen Weg von einem Feld der Menge «von» zu einem der Menge «nach» gibt, auf Wunsch durch einen Tunnel und über eine Brücke */

@@ -4,7 +4,7 @@
  * gesäubert und verkleinert), ihre Masse in src/assets/gleisbau-masse.json. Lage, Auswahl und Grösse der Objekte nach festem Zufall je Feld.
  * Ein Baukasten, keine Wirklichkeit: alle Masse und Regeln gewählt.
  */
-import { type Brett, type Feld, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, tunnelWeiter, wege, wegPunkte, zeilen } from '../gleisbau'
+import { type Brett, type Feld, flussKanten, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, tunnelWeiter, wege, wegPunkte, zeilen } from '../gleisbau'
 import type { ReactElement } from 'react'
 import MASSE from '../assets/gleisbau-masse.json'
 
@@ -38,15 +38,16 @@ export function MusterDefs() {
         {muster('gb-wasser', 'gb_textur_wasser_01')}
         {muster('gb-reben', 'gb_textur_rebberg_01')}
         {muster('gb-schnee', 'gb_textur_schnee_01')}
+        {muster('gb-acker', 'gb_textur_acker_01')}
       </defs>
     </svg>
   )
 }
 
 /** Einzug der Gebiete vom Rand der Felder, an denen kein gleicher Grund anschliesst, und Rundung der Ecken (gewählt) */
-const EINZUG: Record<string, number> = { wald: 0.07, berg: 0.07, ufer: 0.06, wasser: 0.13, rebberg: 0.07, schnee: 0.05 }
+const EINZUG: Record<string, number> = { wald: 0.07, berg: 0.07, ufer: 0.06, wasser: 0.13, rebberg: 0.07, schnee: 0.05, acker: 0.07 }
 const RUND = 0.2
-const FUELLUNG: Record<string, string> = { wald: 'url(#gb-wald)', berg: 'url(#gb-fels)', ufer: '#d8cf9a', wasser: 'url(#gb-wasser)', rebberg: 'url(#gb-reben)', schnee: 'url(#gb-schnee)' }
+const FUELLUNG: Record<string, string> = { wald: 'url(#gb-wald)', berg: 'url(#gb-fels)', ufer: '#d8cf9a', wasser: 'url(#gb-wasser)', rebberg: 'url(#gb-reben)', schnee: 'url(#gb-schnee)', acker: 'url(#gb-acker)' }
 
 /**
  * Ein Gebiet (Wald, Fels, Ufer, Wasser) als Fläche aus Vierteln: je Viertel eines Felds schaut das Programm auf die beiden Nachbarn an seinen Kanten
@@ -100,9 +101,26 @@ export function Landschaft({ brett }: { brett: Brett }) {
         <path d={gebietPfad(brett, 'wald', EINZUG.wald)} fill={FUELLUNG.wald} />
         <path d={gebietPfad(brett, 'rebberg', EINZUG.rebberg)} fill={FUELLUNG.rebberg} />
         <path d={gebietPfad(brett, 'schnee', EINZUG.schnee)} fill={FUELLUNG.schnee} />
+        <path d={gebietPfad(brett, 'acker', EINZUG.acker)} fill={FUELLUNG.acker} />
         <path d={gebietPfad(brett, 'berg', EINZUG.berg)} fill={FUELLUNG.berg} />
         <path d={gebietPfad(brett, 'wasser', EINZUG.ufer)} fill={FUELLUNG.ufer} />
         <path d={gebietPfad(brett, 'wasser', EINZUG.wasser)} fill={FUELLUNG.wasser} />
+        {/* Flüsse: von der Mitte zu jeder Kante, an der Fluss oder Wasser anschliesst, mit Ufer (Breiten gewählt) */}
+        {(() => {
+          const d: string[] = [], m: string[] = []
+          // je Stück von der Mitte zur Kante, gerade Enden am Rand des Felds, in der Mitte ein Kreis für die Biegung
+          for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
+            const k = flussKanten(brett, i, j)
+            for (const e of k) d.push(`M${i + 0.5},${j + 0.5} L${i + 0.5 + [0, 0.5, 0, -0.5][e]},${j + 0.5 + [-0.5, 0, 0.5, 0][e]}`)
+            if (k.length) m.push(`M${i + 0.5},${j + 0.5} l0,0`)
+          }
+          return d.length ? <>
+            <path d={d.join(' ')} fill="none" stroke={FUELLUNG.ufer} strokeWidth={0.46} />
+            <path d={m.join(' ')} fill="none" stroke={FUELLUNG.ufer} strokeWidth={0.46} strokeLinecap="round" />
+            <path d={d.join(' ')} fill="none" stroke={FUELLUNG.wasser} strokeWidth={0.34} />
+            <path d={m.join(' ')} fill="none" stroke={FUELLUNG.wasser} strokeWidth={0.34} strokeLinecap="round" />
+          </> : null
+        })()}
       </g>
     </>
   )
@@ -146,6 +164,12 @@ function gleisPunkte(b: Brett, imTunnel: (b: Brett, x: number, y: number) => boo
     }
     for (const q of pts) if (!imTunnel(b, q.x, q.y)) p.push([q.x, q.y])
     if (istBahnhof(g)) for (let k = 0; k <= 8; k++) for (let m = 0; m <= 8; m++) p.push([i + k / 8, j + m / 8])
+  }
+  // auch auf Flüssen steht nichts
+  for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
+    for (const k of flussKanten(b, i, j)) for (let t = 0; t <= 5; t++) for (const q of [-0.2, 0, 0.2]) {
+      p.push([i + 0.5 + [0, 1, 0, -1][k] * t * 0.1 + [1, 0, 1, 0][k] * q, j + 0.5 + [-1, 0, 1, 0][k] * t * 0.1 + [0, 1, 0, 1][k] * q])
+    }
   }
   // auch auf Strassen steht nichts
   for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
