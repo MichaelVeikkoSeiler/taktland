@@ -586,7 +586,11 @@ function WagenBild({ w, tunnel, farbe = F.karmin }: { w: WagenLage; tunnel: bool
             <path d={`M${halb - 0.1},-0.09 L${halb - 0.05},-0.09 Q${halb},-0.09 ${halb},-0.04 L${halb},0.04 Q${halb},0.09 ${halb - 0.05},0.09 L${halb - 0.1},0.09 Z`}
                   fill={w.art === 0 ? farbe : '#ffffff'} stroke="#2f2f2f" strokeWidth={0.012} />
             <rect x={halb - 0.13} y={-0.075} width={0.025} height={0.15} rx={0.01} fill="#1f2a36" />
-            <path d={`M-0.12,-0.05 L-0.04,0.05 M-0.12,0.05 L-0.04,-0.05`} stroke="#444" strokeWidth={0.014} />
+            {/* Einholm-Stromabnehmer von oben wie in der Virtuellen Schweiz (Michael, 2026-11-24: vorher ein Kreuz, «Was bedeuten die Kreuze?», dann «1»):
+                Sockel, ein Arm schräg nach hinten, quer die Wippe; Masse gewählt */}
+            <rect x={-0.175} y={-0.03} width={0.045} height={0.06} rx={0.008} fill="#7a7a7a" />
+            <path d="M-0.155,0.012 L-0.06,-0.008" stroke="#3a3a3a" strokeWidth={0.013} strokeLinecap="round" />
+            <path d="M-0.055,-0.072 L-0.055,0.072" stroke="#3a3a3a" strokeWidth={0.02} strokeLinecap="round" />
             {[-0.055, 0.055].map((yy) => (
               <circle key={yy} cx={halb - 0.012} cy={yy} r={0.018} fill={w.vorne ? '#fff3c4' : '#d61f2c'} />
             ))}
