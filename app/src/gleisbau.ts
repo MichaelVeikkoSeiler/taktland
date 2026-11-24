@@ -42,6 +42,8 @@ export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /*
   /** eine Brücke, auch ohne Wasser darunter (seit 2026-11-24; Michael: «Beim Brückenbau kein See mehr automatisch darunter») */ bruecke?: true
   /** ein Fluss durch das Feld (seit 2026-11-24): fliesst zu Nachbarn mit Fluss oder Wasser; ein Gleis darüber ist eine Brücke */
   fluss?: true
+  /** der Bahnhof ist ein Knoten im Taktfahrplan (seit 2026-11-24): dort fahren die Züge zur Taktzeit ab */
+  knoten?: true
   /** ein abgestellter Wagen auf dem Gleis (seit 2026-11-24): ein Zug, der hineinfährt, kuppelt ihn an */
   wagen?: true
   /** ein einzelnes Objekt im Feld (seit 2026-11-24, Bilder von Michael): Kirche oder Bauernhof */
@@ -327,9 +329,10 @@ export function brettCode(b: Brett): string {
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
     if (f.fluss) fluesse.push(`${i}.${j}`)
+    if (f.knoten && istBahnhof(f.gleis)) knoten.push(`${i}.${j}`)
     if (f.wagen && wagenGilt(f)) abgestellt.push(`${i}.${j}`)
     if (f.objekt) objekte.push(`${i}.${j}.${f.objekt === 'kirche' ? 'k' : 'h'}`)
     if (bauGilt(f)) bauten.push(`${i}.${j}.${f.bau === 'depot' ? 'd' : f.bau === 'gueter' ? 'g' : 'l'}`)
@@ -340,6 +343,7 @@ export function brettCode(b: Brett): string {
     + (bruecken.length ? `~b${bruecken.join('_')}` : '') + (ampeln.length ? `~a${ampeln.join('_')}` : '')
     + (objekte.length ? `~o${objekte.join('_')}` : '') + (bauten.length ? `~u${bauten.join('_')}` : '')
     + (fluesse.length ? `~f${fluesse.join('_')}` : '') + (abgestellt.length ? `~w${abgestellt.join('_')}` : '')
+    + (knoten.length ? `~k${knoten.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -354,6 +358,7 @@ export function brettAusCode(c: string): Brett | null {
   }))
   if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
+    if (teil.startsWith('k')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].knoten = true }
     if (teil.startsWith('f')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].fluss = true }
     if (teil.startsWith('w')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].wagen = true }
     if (teil.startsWith('o')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].objekt = c === 'k' ? 'kirche' : 'bauernhof' }
@@ -486,6 +491,16 @@ export function bahnhofTitel(b: Brett): Map<string, string> {
   for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
     const n = b[j][i].name, g = gruppen.get(`${i},${j}`)
     if (n && g && !raus.has(g)) raus.set(g, n)
+  }
+  return raus
+}
+
+/** die Buchstaben der Bahnhöfe, die Knoten im Taktfahrplan sind (ein Feld des Bahnhofs genügt) */
+export function knotenGruppen(b: Brett): Set<string> {
+  const g = bahnhofGruppen(b), raus = new Set<string>()
+  for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
+    const x = g.get(`${i},${j}`)
+    if (x && b[j][i].knoten) raus.add(x)
   }
   return raus
 }
@@ -732,7 +747,7 @@ export const zugLaenge = (n: number) => n * WAGEN_LAENGE + (n - 1) * WAGEN_LUECK
 /** Tempo in Feldern je Sekunde, Anfahren und Halt am Bahnhof (gewählt) */
 export const TEMPO = 1.5
 const ANFAHREN = 1.2
-const HALT_S = 2.5
+export const HALT_S = 2.5
 /** der Pfiff so lange vor der Abfahrt (gewählt) */
 const PFIFF_VOR_S = 0.9
 /** so lange steht der Zug beim Ankuppeln, in s (gewählt) */
@@ -841,6 +856,8 @@ export class Zug {
   fahrzeuge() { return this.anzahl }
   /** wie oft der Zug einen Wagen angekuppelt hat */
   angekuppelt = 0
+  /** im Taktfahrplan: wie lange der Zug an diesem Bahnhof steht (Feld «i,j»), mindestens HALT_S */
+  taktWarten?: (feld: string) => number
   /** das Feld unter dem hintersten Wagen (dort wird ein Wagen abgestellt) */
   ende(): [number, number] { const p = this.punkt(this.laenge - WAGEN_LAENGE / 2); return [Math.floor(p.x), Math.floor(p.y)] }
 
@@ -892,7 +909,7 @@ export class Zug {
       const weiterImBahnhof = () => { const n = naechstes(b, s); return !!n && !n.gross && istBahnhof(b[n.j][n.i].gleis) }
       // auch am Güterschuppen hält der Zug (laden), ohne Fahrgäste
       if (!s.gross && (istBahnhof(b[s.j][s.i].gleis) || (b[s.j][s.i].bau === 'gueter' && bauGilt(b[s.j][s.i]))) && vorher < mitte && vorher + rest >= mitte && !weiterImBahnhof()) {
-        this.kopf = mitte; this.halt = HALT_S; this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`; return
+        this.kopf = mitte; this.halt = Math.max(HALT_S, this.taktWarten?.(`${s.i},${s.j}`) ?? 0); this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`; return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
       rest -= l - vorher

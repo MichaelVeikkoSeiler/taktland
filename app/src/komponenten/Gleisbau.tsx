@@ -3,7 +3,7 @@ import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zu
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
-  WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, ueberWasser, wagenGilt,
+  WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, ueberWasser, wagenGilt, knotenGruppen, HALT_S,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
@@ -36,7 +36,7 @@ const KACHEL_H = 0.915
 
 type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
-  | { art: 'fluss' } | { art: 'wagen' }
+  | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' }
   | { art: 'bau'; bau: 'depot' | 'gueter' | 'galerie' } | { art: 'objekt'; objekt: 'kirche' | 'bauernhof' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
@@ -56,6 +56,7 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'name' }, text: 'Name' },
   { w: { art: 'tunnel' }, text: 'Tunnel' },
   { w: { art: 'ampel' }, text: 'Ampel' },
+  { w: { art: 'knoten' }, text: 'Knoten' },
   { w: { art: 'bau', bau: 'depot' }, text: 'Depot' },
   { w: { art: 'bau', bau: 'gueter' }, text: 'Güter' },
   { w: { art: 'bau', bau: 'galerie' }, text: 'Galerie' },
@@ -80,10 +81,19 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
 /** die Werkzeuge unten in drei Reitern */
 const GRUPPEN = [
   { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'wagen' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
-  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau'].includes(x.w.art)),
+  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau', 'knoten'].includes(x.w.art)),
     ...LANDSCHAFT.filter((x) => x.w.art === 'strasse')] },
   { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
 ]
+
+/**
+ * Taktfahrplan (Michael, 2026-11-24: «Ich denke an ein Taktsystem nach Vorbild vom Schweizerischen ÖV», «Im gleichen Spiel ergänzen und evtl wenn man den Takt
+ * aktiviert erscheinen dazu passende Features»): eine Spielminute dauert eine Sekunde, die Uhr beginnt um 7 Uhr (beides gewählt); an Knoten fahren die Züge zur
+ * nächsten Taktzeit ab, frühestens nach dem üblichen Halt
+ */
+const TAKT_WAHL = [0, 15, 30, 60] as const, UHR_START_MIN = 7 * 60
+const uhrText = (sek: number) => { const m = UHR_START_MIN + Math.floor(sek); return `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}` }
+const taktZeiten = (takt: number) => Array.from({ length: 60 / takt }, (_, k) => `:${String(k * takt).padStart(2, '0')}`).join(' ')
 
 const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringify(b)
 
@@ -119,7 +129,7 @@ function SignalBild({ brett, belegt }: { brett: Brett; belegt: Array<Set<string>
 const ohneAkzente = (t: string) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/([aou])e/g, '$1')
 
 /** die Schilder der Bahnhöfe über allem: der Buchstabe, mit einem gewählten Namen daneben (gekürzt, wenn er zu lang ist) */
-function SchildBild({ namen, titel }: { namen: Map<string, string>; titel: Map<string, string> }) {
+function SchildBild({ namen, titel, knoten, takt }: { namen: Map<string, string>; titel: Map<string, string>; knoten: Set<string>; takt: number }) {
   const raus = []
   for (const [k, n] of namen) {
     const [i, j] = k.split(',').map(Number)
@@ -131,6 +141,12 @@ function SchildBild({ namen, titel }: { namen: Map<string, string>; titel: Map<s
         <rect x={i + 0.06} y={j + 0.06} width={breit} height={0.2} rx={0.03} fill="#3d3d3d" />
         <text x={i + 0.16} y={j + 0.215} fontSize={0.15} fontWeight={700} textAnchor="middle" fill="#ffffff">{n}</text>
         {kurz && <text x={i + 0.27} y={j + 0.205} fontSize={0.13} fontWeight={500} fill="#ffffff">{kurz}</text>}
+        {/* am Knoten die Abfahrten im Takt darunter */}
+        {takt > 0 && knoten.has(n) && <>
+          {/* rechts neben dem Schild, darunter warten die Fahrgäste */}
+          <rect x={i + 0.1 + breit} y={j + 0.075} width={0.1 + (taktZeiten(takt).length + 3) * 0.068} height={0.17} rx={0.03} fill={F.karmin} />
+          <text x={i + 0.14 + breit} y={j + 0.2} fontSize={0.12} fontWeight={700} fill="#ffffff">ab {taktZeiten(takt)}</text>
+        </>}
       </g>,
     )
   }
@@ -565,6 +581,17 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
       </svg>
     )
   }
+  if (w.art === 'knoten') {
+    const f: Feld = { grund: 'wiese', gleis: { art: 'bahnhof', dreh: 1 } }
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={f} i={0} j={0} />
+        <GleisBild f={f} i={0} j={0} />
+        <circle cx={0.5} cy={0.3} r={0.2} fill="#ffffff" stroke={F.karmin} strokeWidth={0.05} />
+        <path d="M0.5,0.18 L0.5,0.3 L0.59,0.36" fill="none" stroke={F.karmin} strokeWidth={0.045} strokeLinecap="round" />
+      </svg>
+    )
+  }
   if (w.art === 'fluss') {
     return (
       <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
@@ -642,6 +669,10 @@ export function Gleisbau() {
   const [zugWahl, setZugWahl] = useState<Zug | null>(null)
   // ein oder zwei Züge (Michael, 2026-11-23, Vorschlag «Zweiter Zug auf demselben Netz»)
   // Anzahl Züge (Michael, 2026-11-24: «Anzahl Züge wählbar»), auf dem Gerät gemerkt
+  // Taktfahrplan in Minuten (0 aus), auf dem Gerät gemerkt
+  const [takt, setTakt] = useState<number>(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.takt')); return (TAKT_WAHL as readonly number[]).includes(n) ? n : 0 } catch { return 0 } })
+  const taktSetzen = (n: number) => { setTakt(n); try { localStorage.setItem('taktland.gleisbau.takt', String(n)) } catch { /* ohne Speicher */ } }
+  const spielSek = useRef(0)
   const [zugZahl, setZugZahl] = useState(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.zuege')); return n >= 1 && n <= ZUEGE_MAX ? n : 1 } catch { return 1 } })
   const zugZahlSetzen = (n: number) => { const m = Math.max(1, Math.min(ZUEGE_MAX, n)); setZugZahl(m); try { localStorage.setItem('taktland.gleisbau.zuege', String(m)) } catch { /* ohne Speicher */ } }
   // Fahrzeuge am Zug samt Lok und Steuerwagen, auf dem Gerät gemerkt
@@ -690,6 +721,7 @@ export function Gleisbau() {
   brettRef.current = brett
   const svg = useRef<SVGSVGElement>(null)
   const namen = useMemo(() => bahnhofNamen(brett), [brett])
+  const knotenSet = useMemo(() => knotenGruppen(brett), [brett])
   const titel = useMemo(() => bahnhofTitel(brett), [brett])
   // Name eines Bahnhofs wählen (Michael, 2026-11-23, Vorschlag «Bahnhofsnamen»): das angetippte Feld, die Suche und die Bahnhöfe aus dem Index der App
   const [nameFeld, setNameFeld] = useState<[number, number] | null>(null)
@@ -868,6 +900,7 @@ export function Gleisbau() {
     let los = 0, letzt = performance.now()
     const bild = (jetzt: number) => {
       const dt = Math.min(0.05, (jetzt - letzt) / 1000)
+      spielSek.current += dt
       letzt = jetzt
       // je Zug ein Schritt; ein Zug fährt nur in Felder ein, die der andere nicht belegt (wie vor einem roten Signal); warten beide aufeinander,
       // kehrt der um, der länger wartet
@@ -1095,6 +1128,17 @@ export function Gleisbau() {
       neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }); knopfTon(true)
       return
     }
+    if (w.art === 'knoten') {
+      // ein Bahnhof als Knoten im Taktfahrplan; nochmals tippen macht ihn wieder zum gewöhnlichen Bahnhof
+      if (!istBahnhof(f.gleis)) { setMeldung('Knoten kann nur ein Bahnhof sein.'); return }
+      const g = bahnhofGruppen(brett), mein = g.get(`${i},${j}`)
+      if (mein && knotenSet.has(mein)) {
+        setBrett(brett.map((z, jj) => z.map((x, ii) => { if (g.get(`${ii},${jj}`) !== mein || !x.knoten) return x; const { knoten: _, ...o } = x; return o })))
+        knopfTon(false); return
+      }
+      neu(i, j, { ...f, knoten: true }); knopfTon(true)
+      return
+    }
     if (w.art === 'fluss') {
       // ein Fluss durch das Feld, nochmals tippen nimmt ihn weg; ein Gleis darüber wird zur Brücke
       if (f.fluss) { const { fluss: _, ...ohne } = f; neu(i, j, ohne); knopfTon(false); return }
@@ -1198,6 +1242,21 @@ export function Gleisbau() {
     if (mitFahrgaesten && !fg) setMeldung('Für Fahrgäste braucht es mindestens zwei Bahnhöfe.')
     fgRef.current = fg; setFahrgaeste(fg ? { ...fg } : null); halteRef.current = []
     fahrtStart.current = brett
+    // im Taktfahrplan: an Knoten bis zur nächsten Taktzeit warten; treffen sich Züge zur selben Abfahrt, ist das ein Anschluss
+    spielSek.current = 0
+    const abfahrten = new Map<string, number[]>()
+    for (const z of l) z.taktWarten = (feld) => {
+      if (!takt) return 0
+      const b = brettRef.current, g = bahnhofGruppen(b).get(feld)
+      if (!g || !knotenGruppen(b).has(g)) return 0
+      const jetzt = spielSek.current, ab = Math.ceil((jetzt + HALT_S) / takt) * takt
+      const nr = zuege.current.indexOf(z) + 1, name = bahnhofTitel(b).get(g) ?? g, wer = zuege.current.length > 1 ? `Zug ${nr}` : 'Der Zug'
+      const schon = abfahrten.get(`${g}@${ab}`) ?? []
+      abfahrten.set(`${g}@${ab}`, [...schon, nr])
+      if (schon.length) { setMeldung(`Anschluss in ${name} um ${uhrText(ab)}: ${[...schon, nr].map((x) => `Zug ${x}`).join(' und ')}`); antwortTon('richtig') }
+      else setMeldung(`${wer} in ${name} an ${uhrText(jetzt)}, ab ${uhrText(ab)}`)
+      return ab - jetzt
+    }
     zuege.current = l; pfiffe.current = []; dorf.current = false; setWagen(l.map((x) => x.wagen())); setFaehrt(true)
   }
 
@@ -1265,6 +1324,8 @@ export function Gleisbau() {
             <button type="button" onClick={() => { window.location.hash = aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau' }} aria-label={aufgabe ? 'Zurück zu den Aufgaben' : 'Zurück zur Liste der Bretter'}
                     className={rund}><span className="pfeil pfeil-links" aria-hidden="true">←</span></button>
             <p className="min-w-0 flex-1 truncate font-bold">{aufgabe ? aufgabe.titel : bretter.find((x) => x.id === offen)?.name ?? 'Brett'}</p>
+            {/* die Uhr des Taktfahrplans */}
+            {takt > 0 && faehrt && <span className="flex-none rounded-lg bg-sbb-anthracite px-2 py-1 font-bold tabular-nums text-white dark:bg-sbb-white dark:text-sbb-black" aria-label={`Uhrzeit im Spiel ${uhrText(spielSek.current)}`}>{uhrText(spielSek.current)}</span>}
             <button type="button" disabled={faehrt || !verlauf.length} onClick={zurueck} aria-label={`Rückgängig, noch ${verlauf.length} Schritte`} title="Rückgängig"
                     className={`${rund} relative`}>
               ↶{verlauf.length > 0 && <span className="absolute -right-1 -top-1 min-w-5 rounded-full bg-sbb-anthracite px-1 text-[11px] font-bold leading-5 text-white tabular-nums dark:bg-sbb-white dark:text-sbb-black">{verlauf.length > 99 ? '99+' : verlauf.length}</span>}
@@ -1304,7 +1365,7 @@ export function Gleisbau() {
           {brett.flatMap((z, j) => z.map((f, i) => f.wagen && wagenGilt(f)
             ? <WagenBild key={`a${i},${j}`} w={{ x: i + 0.5, y: j + 0.5, w: f.gleis!.dreh % 2 ? 0 : Math.PI / 2, art: 1, vorne: false }} tunnel={false} /> : null))}
           <AmpelBild brett={brett} />
-          <SchildBild namen={namen} titel={titel} />
+          <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} />
           {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
           {!faehrt && enden.map((e, k) => (
@@ -1356,7 +1417,7 @@ export function Gleisbau() {
                     ))}
                   </p>
                 ) : <p className="font-bold">Der Zug fährt.</p>}
-                <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche oder Ampel stellt sie, ein Tipp auf einen Zug zeigt Wagen und Richtung. Zum Bauen anhalten.</p>
+                <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche oder Ampel stellt sie, ein Tipp auf einen Zug zeigt Wagen und Richtung. Zum Bauen anhalten.{takt > 0 && !knotenSet.size ? ' Für den Takt fehlt ein Knoten: unter Bauwerke «Knoten» auf einen Bahnhof.' : ''}</p>
               </div>
             ) : (
               <>
@@ -1367,7 +1428,7 @@ export function Gleisbau() {
                   ))}
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-1.5 [scrollbar-width:none]">
-                  {GRUPPEN.find((g) => g.titel === reiter)!.l.map(({ w, text }) => (
+                  {GRUPPEN.find((g) => g.titel === reiter)!.l.filter(({ w }) => takt > 0 || w.art !== 'knoten').map(({ w, text }) => (
                     <button key={text} type="button" aria-pressed={gleich(w, werkzeug)} onClick={() => setWerkzeug(w)} className={knopf(gleich(w, werkzeug))}>
                       <WerkzeugBild w={w} dreh={dreh} />
                       {text}
@@ -1465,6 +1526,15 @@ export function Gleisbau() {
                       <button type="button" aria-label="Ein Zug mehr" disabled={zugZahl >= ZUEGE_MAX} onClick={() => zugZahlSetzen(zugZahl + 1)} className={rund}>+</button>
                     </span>
                   </div>
+                  <div className="py-2">
+                    <span>Taktfahrplan<span className="block text-xs text-sbb-metal">An Knoten fahren die Züge zur Taktzeit ab; eine Minute im Spiel dauert eine Sekunde</span></span>
+                    <div className="segmente mt-1.5 grid grid-cols-4">
+                      {TAKT_WAHL.map((t) => (
+                        <button key={t} type="button" aria-pressed={takt === t} disabled={faehrt} onClick={() => { taktSetzen(t); if (t && !takt) setReiter('Bauwerke') }}
+                                className="segment px-2 py-2 disabled:opacity-40">{t ? `${t} Min.` : 'Aus'}</button>
+                      ))}
+                    </div>
+                  </div>
                   <div className="flex min-h-12 items-center justify-between gap-3 py-2">
                     <span>Länge des Zugs<span className="block text-xs text-sbb-metal">Lok, {wagenZahl - 2 === 1 ? '1 Wagen' : `${wagenZahl - 2} Wagen`} und Steuerwagen{faehrt ? ', gilt ab der nächsten Fahrt' : ''}</span></span>
                     <span className="flex items-center gap-2">
@@ -1528,6 +1598,7 @@ function SoGehts() {
         Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Bei einer roten Ampel wartet der Zug, ein Tipp stellt sie auf Grün.</li>
       <li>Im Depot fährt der Zug ab, am Güterschuppen hält er zum Laden, unter der Galerie fährt er gedeckt. Kirche und Bauernhof stehen allein in einem Feld ohne Gleis.</li>
       <li>Ein Fluss fliesst zu Nachbarn mit Fluss oder Wasser, ein Gleis darüber wird zur Brücke. Ein abgestellter Wagen wird angekuppelt, wenn ein Zug hineinfährt; abstellen geht mit einem Tipp auf den Zug. Nach der Fahrt stehen die Wagen wieder am alten Platz.</li>
+      <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben läuft eine Uhr, eine Minute im Spiel dauert eine Sekunde. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
       <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.
