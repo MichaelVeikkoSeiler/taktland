@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
@@ -36,7 +36,7 @@ const KACHEL_H = 0.915
 
 type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
-  | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' } | { art: 'hang' }
+  | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' } | { art: 'hang' } | { art: 'strom' }
   | { art: 'bau'; bau: 'depot' | 'gueter' | 'galerie' } | { art: 'objekt'; objekt: 'kirche' | 'bauernhof' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
@@ -53,6 +53,7 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'doppelkurve' }, text: 'Doppelkurve' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
   { w: { art: 'wagen' }, text: 'Wagen' },
+  { w: { art: 'strom' }, text: 'Ohne Strom' },
   { w: { art: 'gleis', gleis: 'bahnhof' }, text: 'Bahnhof' },
   { w: { art: 'name' }, text: 'Name' },
   { w: { art: 'tunnel' }, text: 'Tunnel' },
@@ -82,7 +83,7 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
 
 /** die Werkzeuge unten in drei Reitern */
 const GRUPPEN = [
-  { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'wagen' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
+  { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'wagen' || x.w.art === 'strom' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
   { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau', 'knoten'].includes(x.w.art)),
     ...LANDSCHAFT.filter((x) => x.w.art === 'strasse')] },
   { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
@@ -98,7 +99,7 @@ const uhrText = (sek: number) => { const m = UHR_START_MIN + Math.floor(sek); re
 const taktZeiten = (takt: number) => Array.from({ length: 60 / takt }, (_, k) => `:${String(k * takt).padStart(2, '0')}`).join(' ')
 
 /** Werkzeuge, die man über mehrere Felder ziehen kann */
-const MAL_WERKZEUGE: Array<Werkzeug['art']> = ['grund', 'fluss', 'strasse']
+const MAL_WERKZEUGE: Array<Werkzeug['art']> = ['grund', 'fluss', 'strasse', 'strom']
 
 /** ein Werkzeug auf viele Felder auf einmal: Boden setzen, Fluss oder Strasse legen, wo es geht (ohne Wechsel hin und zurück wie beim Tippen) */
 function malenAnwenden(b: Brett, felder: Array<[number, number]>, w: Werkzeug): Brett {
@@ -118,6 +119,9 @@ function malenAnwenden(b: Brett, felder: Array<[number, number]>, w: Werkzeug): 
     } else if (w.art === 'strasse') {
       if (f.strasse || strasseMoeglich(f)) continue
       f.strasse = true; geaendert = true
+    } else if (w.art === 'strom') {
+      if (f.ohneStrom || !(f.gleis || f.teil)) continue
+      f.ohneStrom = true; geaendert = true
     }
   }
   return geaendert ? neu : b
@@ -318,6 +322,23 @@ function PerronVerbindungen({ brett }: { brett: Brett }) {
     }
   }
   return <g pointerEvents="none">{raus}</g>
+}
+
+/** Gleise ohne Fahrleitung: in der Ecke unten links ein kleines Schild mit durchgestrichenem Blitz (Gestalt gewählt) */
+function OhneStromBild({ brett }: { brett: Brett }) {
+  const raus: ReactElement[] = []
+  brett.forEach((z, j) => z.forEach((f, i) => {
+    if (!f.ohneStrom || !(f.gleis || f.teil)) return
+    const x = i + 0.07, y = j + 0.66
+    raus.push(
+      <g key={`${i},${j}`} pointerEvents="none">
+        <rect x={x} y={y} width={0.2} height={0.2} rx={0.04} fill="#ffffff" stroke="#3a3a3c" strokeWidth={0.012} />
+        <path d={`M${x + 0.115},${y + 0.025} L${x + 0.06},${y + 0.11} L${x + 0.1},${y + 0.11} L${x + 0.085},${y + 0.175} L${x + 0.145},${y + 0.085} L${x + 0.105},${y + 0.085} Z`} fill="#f2b705" stroke="#3a3a3c" strokeWidth={0.008} />
+        <path d={`M${x + 0.03},${y + 0.17} L${x + 0.17},${y + 0.03}`} stroke={F.karmin} strokeWidth={0.025} strokeLinecap="round" />
+      </g>,
+    )
+  }))
+  return <>{raus}</>
 }
 
 /** ein Wagen auf dem unteren Gleis einer Überführung, nahe der Mitte: blass wie im Tunnel */
@@ -599,9 +620,14 @@ function WagenBild({ w, tunnel, farbe = F.karmin }: { w: WagenLage; tunnel: bool
             <rect x={halb - 0.13} y={-0.075} width={0.025} height={0.15} rx={0.01} fill="#1f2a36" />
             {/* Einholm-Stromabnehmer von oben wie in der Virtuellen Schweiz (Michael, 2026-11-24: vorher ein Kreuz, «Was bedeuten die Kreuze?», dann «1»):
                 Sockel, ein Arm schräg nach hinten, quer die Wippe; Masse gewählt */}
-            <rect x={-0.175} y={-0.03} width={0.045} height={0.06} rx={0.008} fill="#7a7a7a" />
-            <path d="M-0.155,0.012 L-0.06,-0.008" stroke="#3a3a3a" strokeWidth={0.013} strokeLinecap="round" />
-            <path d="M-0.055,-0.072 L-0.055,0.072" stroke="#3a3a3a" strokeWidth={0.02} strokeLinecap="round" />
+            {w.diesel
+              // Diesel: kein Stromabnehmer, auf der Lok zwei Lüfter (gewählt)
+              ? w.art === 0 && [-0.16, -0.07].map((xx) => <circle key={xx} cx={xx} cy={0} r={0.032} fill="#4a4a4a" stroke="#2f2f2f" strokeWidth={0.008} />)
+              : <>
+                <rect x={-0.175} y={-0.03} width={0.045} height={0.06} rx={0.008} fill="#7a7a7a" />
+                <path d="M-0.155,0.012 L-0.06,-0.008" stroke="#3a3a3a" strokeWidth={0.013} strokeLinecap="round" />
+                <path d="M-0.055,-0.072 L-0.055,0.072" stroke="#3a3a3a" strokeWidth={0.02} strokeLinecap="round" />
+              </>}
             {[-0.055, 0.055].map((yy) => (
               <circle key={yy} cx={halb - 0.012} cy={yy} r={0.018} fill={w.vorne ? '#fff3c4' : '#d61f2c'} />
             ))}
@@ -671,6 +697,16 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
       <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
         <GrundBild f={f} i={0} j={0} />
         <GleisBild f={f} i={0} j={0} />
+      </svg>
+    )
+  }
+  if (w.art === 'strom') {
+    const f: Feld = { grund: 'wiese', gleis: { art: 'gerade', dreh: 0 }, ohneStrom: true }
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={f} i={0} j={0} />
+        <GleisBild f={f} i={0} j={0} />
+        <g transform="translate(0.62 0.14) scale(1.6) translate(-0.07 -0.66)"><OhneStromBild brett={[[f]]} /></g>
       </svg>
     )
   }
@@ -1064,8 +1100,11 @@ export function Gleisbau() {
       // je Zug ein Schritt; ein Zug fährt nur in Felder ein, die der andere nicht belegt (wie vor einem roten Signal); warten beide aufeinander,
       // kehrt der um, der länger wartet
       const zz = zuege.current
+      const weg = new Set<Zug>()
       zz.forEach((z, k) => {
-        const andere = zz.filter((_, m) => m !== k)
+        if (weg.has(z)) return
+        const andere = zz.filter((_, m) => m !== k && !weg.has(zz[m]))
+        const vorher = z.stromlos
         z.schritt(brettRef.current, dt,
           andere.length ? (felder) => andere.every((o) => { const b = o.belegt(); return [...felder].every((f) => !b.has(f)) }) : undefined,
           () => z.wartet > UMKEHREN_NACH_S && andere.some((o) => o.wartet > 0.5) && andere.every((o) => o.wartet <= z.wartet),
@@ -1073,8 +1112,29 @@ export function Gleisbau() {
           (i, j) => {
             const b = brettRef.current.map((zz, jj) => (jj === j ? zz.map((x, ii) => { if (ii !== i) return x; const { wagen: _, ...o } = x; return o }) : zz))
             brettRef.current = b; setBrettRoh(b); knopfTon(true)
+          },
+          // abschleppen: ein Zug mit Diesellok holt einen stehenden Stromzug, der im Weg steht
+          (n) => {
+            if (!z.diesel()) return false
+            const o = andere.find((x) => x.stromlos && [...x.belegt()].some((f) => f === `${n.i},${n.j}` || f.startsWith(`${n.i},${n.j}:`)))
+            if (!o || !z.schleppen(o, n)) return false
+            weg.add(o)
+            const fg = fgRef.current, oi = zz.indexOf(o)
+            if (fg && fg.imZug[oi]) fg.imZug[k].push(...fg.imZug[oi])
+            setMeldung(`${zz.length > 1 ? `Zug ${k + 1}` : 'Der Zug'} schleppt Zug ${oi + 1} ab.`); knopfTon(true)
+            return true
           })
+        if (!vorher && z.stromlos) setMeldung(`${zz.length > 1 ? `Zug ${k + 1}` : 'Der Zug'} hat keinen Strom und bleibt stehen. Eine Diesellok kann ihn abschleppen.`)
       })
+      // abgeschleppte Züge sind jetzt Teil eines anderen
+      if (weg.size) {
+        const fg = fgRef.current
+        for (let m = zz.length - 1; m >= 0; m--) if (weg.has(zz[m])) {
+          zz.splice(m, 1); halteRef.current.splice(m, 1); pfiffe.current.splice(m, 1)
+          if (fg) fg.imZug.splice(m, 1)
+        }
+        if (fg) setFahrgaeste({ ...fg, warten: { ...fg.warten }, imZug: fg.imZug.map((l) => [...l]) })
+      }
       // das Zuggeräusch von Taktland wie beim Fahren (Michael, 2026-11-22: «Kannst du während der Zugfahrt das Zuggeräusch von Taktland nehmen?»):
       // das volle Tempo des Bretts klingt wie ZUG_KLANG_MS (gewählt), im Tunnel dumpfer, auf einer Brücke hohler
       zz.forEach((z, k) => { if (z.pfiffe !== (pfiffe.current[k] ?? 0)) { pfiffe.current[k] = z.pfiffe; abfahrtsPfiff(k ? 0.5 : 0.8) } })
@@ -1308,7 +1368,9 @@ export function Gleisbau() {
     }
     if (unterGross) {
       if (w.art === 'bruecke') { neu(i, j, { ...f, bruecke: true }); knopfTon(true); return }
-      if (w.art === 'ampel' || w.art === 'strasse' || w.art === 'bau' || w.art === 'objekt' || w.art === 'fluss' || w.art === 'wagen') { setMeldung('Auf einer grossen Kurve geht das nicht.'); return }
+      if (w.art === 'strom') { if (f.ohneStrom) { const { ohneStrom: _, ...o } = f; neu(i, j, o) } else neu(i, j, { ...f, ohneStrom: true }); knopfTon(true); return }
+      // auf einer grossen Kurve setzt nur Boden und Tunnel etwas, alles andere geht dort nicht (vorher wurde daraus Berg)
+      if (w.art !== 'grund' && w.art !== 'tunnel') { setMeldung('Auf einer grossen Kurve geht das nicht.'); return }
       const grund: Grund = w.art === 'grund' ? w.grund : 'berg'
       neu(i, j, { ...f, grund }); knopfTon(true)
       return
@@ -1318,6 +1380,13 @@ export function Gleisbau() {
       if (!f.gleis || !['gerade', 'kurve', 'bahnhof', 'kurvenbahnhof'].includes(f.gleis.art)) { setMeldung('Eine Ampel steht an einer Geraden, einer Kurve oder einem Bahnhof.'); return }
       if (f.grund === 'berg') { setMeldung('Im Tunnel sieht man keine Ampel. Stell sie davor.'); return }
       neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }); knopfTon(true)
+      return
+    }
+    if (w.art === 'strom') {
+      // ein Gleis ohne Fahrleitung; nochmals tippen elektrifiziert es wieder
+      if (!f.gleis && !f.teil) { setMeldung('«Ohne Strom» gilt für ein Gleis.'); return }
+      if (f.ohneStrom) { const { ohneStrom: _, ...ohne } = f; neu(i, j, ohne); knopfTon(false); return }
+      neu(i, j, { ...f, ohneStrom: true }); knopfTon(true)
       return
     }
     if (w.art === 'hang') {
@@ -1567,6 +1636,7 @@ export function Gleisbau() {
           {brett.flatMap((z, j) => z.map((f, i) => f.wagen && wagenGilt(f)
             ? <WagenBild key={`a${i},${j}`} w={{ x: i + 0.5, y: j + 0.5, w: f.gleis!.dreh % 2 ? 0 : Math.PI / 2, art: 1, vorne: false }} tunnel={false} /> : null))}
           <AmpelBild brett={brett} />
+          <OhneStromBild brett={brett} />
           <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} />
           {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
@@ -1718,17 +1788,42 @@ export function Gleisbau() {
                     </p>
                     <button type="button" onClick={zu} aria-label="Schliessen" className={rund}>✕</button>
                   </div>
-                  <div className="mt-2 flex min-h-12 items-center justify-between gap-3">
+                  {zugWahl.stromlos && <p className="mt-2 text-sm font-bold text-sbb-red">Ohne Strom: Der Zug steht still. Ein Zug mit Diesellok kann ihn abschleppen.</p>}
+                  {zugWahl.teile() === 1 && (
+                    <div className="mt-2 flex min-h-12 items-center justify-between gap-3">
+                      <span>Antrieb<span className="block text-xs text-sbb-metal">Strom braucht eine Fahrleitung, Diesel fährt überall</span></span>
+                      <div className="segmente grid grid-cols-2">
+                        {([[false, 'Strom'], [true, 'Diesel']] as const).map(([d, t]) => (
+                          <button key={t} type="button" aria-pressed={zugWahl.diesel() === d}
+                                  onClick={() => { zugWahl.antriebSetzen(brettRef.current, d); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true) }}
+                                  className="segment px-3 py-2">{t}</button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {zugWahl.teile() === 1 && <div className="mt-2 flex min-h-12 items-center justify-between gap-3">
                     <span>Wagen<span className="block text-xs text-sbb-metal">zwischen Lok und Steuerwagen</span></span>
                     <span className="flex items-center gap-2">
                       <button type="button" aria-label="Ein Wagen weniger" disabled={n <= WAGEN_MIN} onClick={() => { zugWahl.fahrzeugeSetzen(brettRef.current, n - 1); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true) }} className={rund}>−</button>
                       <span className="w-6 text-center text-lg font-bold tabular-nums">{n - 2}</span>
                       <button type="button" aria-label="Ein Wagen mehr" disabled={n >= WAGEN_MAX} onClick={() => { zugWahl.fahrzeugeSetzen(brettRef.current, n + 1); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true) }} className={rund}>+</button>
                     </span>
-                  </div>
+                  </div>}
                   <div className="mt-3 flex flex-wrap gap-2">
-                    <button type="button" onClick={() => { zugWahl.wenden(); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true); zu() }}
-                            className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Fahrtrichtung ändern</button>
+                    {zugWahl.teile() > 1 && (
+                      <button type="button" onClick={() => {
+                        // den abgeschleppten Zug hinten abkuppeln; er wird wieder ein eigener Zug
+                        const t = zugWahl.abkuppeln(brettRef.current)
+                        if (!t) return
+                        zuege.current.push(t); halteRef.current.push(t.halte); pfiffe.current.push(t.pfiffe)
+                        const fg = fgRef.current
+                        if (fg) { fg.imZug.push([]); setFahrgaeste({ ...fg, warten: { ...fg.warten }, imZug: fg.imZug.map((l) => [...l]) }) }
+                        setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true); zu()
+                        setMeldung(t.stromlos ? 'Abgekuppelt. Ohne Fahrleitung bleibt der Stromzug stehen.' : 'Abgekuppelt.')
+                      }} className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Abkuppeln</button>
+                    )}
+                    <button type="button" disabled={zugWahl.stromlos} onClick={() => { zugWahl.wenden(); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true); zu() }}
+                            className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Fahrtrichtung ändern</button>
                     <button type="button" disabled={n <= WAGEN_MIN} onClick={() => {
                       // den hintersten Wagen dort stehen lassen, wo er ist
                       const [ei, ej] = zugWahl.ende(), f = brettRef.current[ej]?.[ei]
@@ -1856,6 +1951,7 @@ function SoGehts() {
         Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Bei einer roten Ampel wartet der Zug, ein Tipp stellt sie auf Grün.</li>
       <li>Im Depot fährt der Zug ab, am Güterschuppen hält er zum Laden, unter der Galerie fährt er gedeckt. Kirche und Bauernhof stehen allein in einem Feld ohne Gleis.</li>
       <li>Ein Fluss fliesst zu Nachbarn mit Fluss oder Wasser, ein Gleis darüber wird zur Brücke. Ein abgestellter Wagen wird angekuppelt, wenn ein Zug hineinfährt; abstellen geht mit einem Tipp auf den Zug. Nach der Fahrt stehen die Wagen wieder am alten Platz.</li>
+      <li>Alle Gleise haben Fahrleitung, «Ohne Strom» nimmt sie weg (auch durch Ziehen). Ein Stromzug rollt dort aus und bleibt stehen. Tippe auf einen Zug und wähle «Diesel»: Fährt er auf den stehenden Zug, kuppelt er ihn an und zieht ihn heraus. «Abkuppeln» trennt die beiden wieder.</li>
       <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben läuft eine Uhr, eine Minute im Spiel dauert eine Sekunde. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>

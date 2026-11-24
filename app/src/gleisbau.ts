@@ -47,6 +47,8 @@ export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /*
   knoten?: true
   /** Gelände (seit 2026-11-24): 0 bis 7 ein Hang, der in diese Richtung ansteigt (0 Nord, 1 Nordost … 7 Nordwest), 8 Hügel, 9 Mulde */
   hang?: number
+  /** Gleis ohne Fahrleitung (seit 2026-11-24); sonst ist jedes Gleis elektrifiziert */
+  ohneStrom?: true
   /** ein abgestellter Wagen auf dem Gleis (seit 2026-11-24): ein Zug, der hineinfährt, kuppelt ihn an */
   wagen?: true
   /** ein einzelnes Objekt im Feld (seit 2026-11-24, Bilder von Michael): Kirche oder Bauernhof */
@@ -334,11 +336,12 @@ export function brettCode(b: Brett): string {
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
     if (f.fluss) fluesse.push(`${i}.${j}`)
     if (f.knoten && istBahnhof(f.gleis)) knoten.push(`${i}.${j}`)
     if (f.hang !== undefined) haenge.push(`${i}.${j}.${f.hang}`)
+    if (f.ohneStrom && f.gleis) stromlos.push(`${i}.${j}`)
     if (f.wagen && wagenGilt(f)) abgestellt.push(`${i}.${j}`)
     if (f.objekt) objekte.push(`${i}.${j}.${f.objekt === 'kirche' ? 'k' : 'h'}`)
     if (bauGilt(f)) bauten.push(`${i}.${j}.${f.bau === 'depot' ? 'd' : f.bau === 'gueter' ? 'g' : 'l'}`)
@@ -349,7 +352,7 @@ export function brettCode(b: Brett): string {
     + (bruecken.length ? `~b${bruecken.join('_')}` : '') + (ampeln.length ? `~a${ampeln.join('_')}` : '')
     + (objekte.length ? `~o${objekte.join('_')}` : '') + (bauten.length ? `~u${bauten.join('_')}` : '')
     + (fluesse.length ? `~f${fluesse.join('_')}` : '') + (abgestellt.length ? `~w${abgestellt.join('_')}` : '')
-    + (knoten.length ? `~k${knoten.join('_')}` : '') + (haenge.length ? `~h${haenge.join('_')}` : '')
+    + (knoten.length ? `~k${knoten.join('_')}` : '') + (haenge.length ? `~h${haenge.join('_')}` : '') + (stromlos.length ? `~s${stromlos.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -364,6 +367,7 @@ export function brettAusCode(c: string): Brett | null {
   }))
   if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
+    if (teil.startsWith('s')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].ohneStrom = true }
     if (teil.startsWith('h')) for (const e of teil.slice(1).split('_')) { const [i, j, d] = e.split('.').map(Number); if (b[j]?.[i] && d >= 0 && d <= 9) b[j][i].hang = d }
     if (teil.startsWith('k')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].knoten = true }
     if (teil.startsWith('f')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].fluss = true }
@@ -804,7 +808,16 @@ const PFIFF_VOR_S = 0.9
 /** so lange steht der Zug beim Ankuppeln, in s (gewählt) */
 const KUPPELN_S = 1.2
 
-export interface WagenLage { x: number; y: number; w: number; /** 0 Lok, 1 und 2 Wagen, 3 Steuerwagen */ art: number; vorne: boolean }
+export interface WagenLage { x: number; y: number; w: number; /** 0 Lok, 1 und 2 Wagen, 3 Steuerwagen */ art: number; vorne: boolean; /** Diesel statt Strom */ diesel?: boolean }
+
+/** ein Fahrzeug im Zug, von der Spitze an; blick 1: der Kopf schaut zur Spitze des Zugs */
+interface Fahrzeug { t: 'lok' | 'wagen' | 'steuer'; diesel: boolean; blick: 1 | -1 }
+const standardZug = (n: number, diesel = false): Fahrzeug[] =>
+  Array.from({ length: n }, (_, k): Fahrzeug => ({ t: k === 0 ? 'lok' : k === n - 1 ? 'steuer' : 'wagen', diesel, blick: k === n - 1 ? -1 : 1 }))
+/** ob das Gleis dieses Stücks ohne Fahrleitung ist */
+const ohneStromBei = (b: Brett, s: Stueck) => !!b[s.j]?.[s.i]?.ohneStrom
+/** so stark bremst ein Stromzug ohne Fahrleitung, Felder je s² (gewählt) */
+const STROMLOS_BREMSEN = 1.6
 
 export class Zug {
   /** die befahrenen Stücke, das letzte trägt die Spitze */
@@ -812,8 +825,17 @@ export class Zug {
   private kopf = 0
   private tempo = 0
   private halt = 0
-  /** true, wenn der Steuerwagen vorne fährt */
-  private rueckwaerts = false
+  /**
+   * die Fahrzeuge von der Spitze an (seit 2026-11-24, Michael: «Wäre noch spannend wenn standard elektrifizierte Trassen sind und teilweise Abstellgleise ohne.
+   * Fährt ein Stromzug da hinein bremst er ab und beibt stehen. Eine Diesellok muss abschleppen»): ein abgeschleppter Zug hängt mit seinen Fahrzeugen dran
+   */
+  private fz: Fahrzeug[] = standardZug(WAGEN)
+  /** ein Stromzug ohne Fahrleitung: er rollt aus und bleibt stehen, bis eine Diesellok ihn holt */
+  stromlos = false
+  /** ob eine Diesellok im Zug ist (dann fährt er auch ohne Fahrleitung) */
+  diesel() { return this.fz.some((v) => v.t === 'lok' && v.diesel) }
+  /** wie viele Züge (Loks) zusammenhängen */
+  teile() { return this.fz.filter((v) => v.t === 'lok').length }
   /** ob der Halt an einem Bahnhof ist (nicht das Umkehren) */
   private amBahnhof = false
   /** zählt hoch, wenn der Zug PFIFF_VOR_S vor der Abfahrt an einem Bahnhof steht; die Darstellung pfeift dann */
@@ -824,7 +846,7 @@ export class Zug {
   /** wie oft der Zug am Ende eines Gleises umgekehrt hat (für die Aufgabe «Rundkurs») */
   umkehrungen = 0
   /** Fahrzeuge samt Lok und Steuerwagen */
-  private anzahl = WAGEN
+  private get anzahl() { return this.fz.length }
   private get laenge() { return zugLaenge(this.anzahl) }
 
   /**
@@ -860,7 +882,7 @@ export class Zug {
     const start = erstesStueck(b, i, j)
     if (!start) return null
     const z = new Zug()
-    z.anzahl = Math.max(WAGEN_MIN, Math.min(WAGEN_MAX, Math.round(anzahl)))
+    z.fz = standardZug(Math.max(WAGEN_MIN, Math.min(WAGEN_MAX, Math.round(anzahl))))
     z.stuecke = [start]
     z.brett = b
     z.kopf = stueckLaenge(start) / 2
@@ -875,6 +897,7 @@ export class Zug {
     if (istBahnhof(b[start.j][start.i].gleis)) { z.halt = HALT_S; z.amBahnhof = true; z.halte++; z.haltFeld = `${start.i},${start.j}` }
     // im Depot wartet er vor der Abfahrt wie am Bahnhof
     else if (bauGilt(b[start.j][start.i]) && b[start.j][start.i].bau === 'depot') { z.halt = HALT_S; z.amBahnhof = true }
+    if (ohneStromBei(b, start)) z.stromlos = true
     return z
   }
 
@@ -896,7 +919,7 @@ export class Zug {
     this.kopf = Math.max(0, stueckLaenge(this.stuecke[this.stuecke.length - 1]) - ende)
     // steht die neue Spitze genau am Anfang eines Stücks, ist sie noch nicht darin: sonst gälte ein Feld als belegt, in das der Zug nie fuhr
     while (this.kopf <= 1e-6 && this.stuecke.length > 1) { this.stuecke.pop(); this.kopf = stueckLaenge(this.stuecke[this.stuecke.length - 1]) }
-    this.rueckwaerts = !this.rueckwaerts
+    this.fz = this.fz.slice().reverse().map((v) => ({ ...v, blick: (v.blick * -1) as 1 | -1 }))
     this.umkehrungen++
     this.tempo = 0
     this.halt = 0.8
@@ -918,13 +941,81 @@ export class Zug {
    * die Fahrtrichtung ändern kann»): die Länge ändern; länger wächst der Zug nach hinten, so weit das Gleis reicht
    */
   fahrzeugeSetzen(b: Brett, n: number) {
-    this.anzahl = Math.max(WAGEN_MIN, Math.min(WAGEN_MAX, Math.round(n)))
+    // hinten Wagen dazu (vor dem Steuerwagen) oder weg, Loks und Steuerwagen bleiben
+    n = Math.max(WAGEN_MIN, Math.min(WAGEN_MAX * Math.max(1, this.teile()), Math.round(n)))
+    while (this.fz.length < n) {
+      const letzt = this.fz[this.fz.length - 1], d = letzt?.diesel ?? false
+      if (letzt && letzt.t !== 'wagen') this.fz.splice(this.fz.length - 1, 0, { t: 'wagen', diesel: d, blick: 1 })
+      else this.fz.push({ t: 'wagen', diesel: d, blick: 1 })
+    }
+    while (this.fz.length > n) {
+      const k = this.fz.map((v) => v.t).lastIndexOf('wagen')
+      if (k < 0) break
+      this.fz.splice(k, 1)
+    }
     for (let k = 0; k < 20 && this.hinten() < this.laenge; k++) {
       const davor = naechstes(b, umgekehrt(this.stuecke[0]))
       if (!davor) break
       this.stuecke.unshift(umgekehrt(davor))
     }
     this.kuerzen()
+  }
+
+  /** Strom oder Diesel (nur ein einzelner Zug); ein Stromzug ohne Fahrleitung steht dann still */
+  antriebSetzen(b: Brett, diesel: boolean) {
+    if (this.teile() !== 1) return
+    this.fz = this.fz.map((v) => ({ ...v, diesel }))
+    const kopfStueck = this.stuecke[this.stuecke.length - 1]
+    this.stromlos = !diesel && ohneStromBei(b, kopfStueck)
+    if (this.stromlos) this.tempo = 0
+  }
+
+  private kopie(): Zug {
+    const z = new Zug()
+    z.stuecke = this.stuecke.slice(); z.kopf = this.kopf; z.fz = this.fz.map((v) => ({ ...v })); z.brett = this.brett
+    return z
+  }
+
+  /**
+   * eine Diesellok holt einen stehenden Zug: n ist das Stück, in das dieser Zug fahren wollte, dort steht das Ende (oder die Spitze) des anderen. Die beiden
+   * werden ein Zug, der andere vorne, und fahren gleich zurück. false, wenn es nicht passt
+   */
+  schleppen(o: Zug, n: Stueck): boolean {
+    const gleich = (a: Stueck) => a.i === n.i && a.j === n.j && a.aus === n.aus && (a.ein === n.ein || !!a.gross || !!n.gross)
+    let andere = o.kopie(), k = andere.stuecke.findIndex(gleich)
+    if (k < 0) { andere = o.kopie(); andere.umkehren(); k = andere.stuecke.findIndex(gleich) }
+    if (k < 0) return false
+    this.stuecke = [...this.stuecke, ...andere.stuecke.slice(k)]
+    this.kopf = andere.kopf
+    this.fz = [...andere.fz, ...this.fz]
+    this.stromlos = false
+    this.kuerzen()
+    // gleich zurück, der abgeschleppte Zug hinten dran
+    this.umkehren()
+    this.halt = KUPPELN_S
+    return true
+  }
+
+  /** den hintersten angehängten Zug abkuppeln; er bleibt stehen, wo er ist (ein Stromzug ohne Fahrleitung bleibt liegen) */
+  abkuppeln(b: Brett): Zug | null {
+    if (this.teile() < 2) return null
+    // der hinterste Zug beginnt beim zweitletzten Kopf (Lok oder Steuerwagen) von hinten
+    let koepfe = 0, s = -1
+    for (let k = this.fz.length - 1; k >= 0; k--) if (this.fz[k].t !== 'wagen' && ++koepfe === 2) { s = k; break }
+    if (s <= 0) return null
+    const t = this.kopie()
+    t.fz = this.fz.slice(s)
+    // seine Spitze liegt s Fahrzeuge hinter unserer
+    let d = s * (WAGEN_LAENGE + WAGEN_LUECKE)
+    while (d > t.kopf && t.stuecke.length > 1) { d -= t.kopf; t.stuecke.pop(); t.kopf = stueckLaenge(t.stuecke[t.stuecke.length - 1]) }
+    t.kopf = Math.max(0, t.kopf - d)
+    t.kuerzen()
+    t.halt = KUPPELN_S
+    t.stromlos = !t.diesel() && ohneStromBei(b, t.stuecke[t.stuecke.length - 1])
+    this.fz = this.fz.slice(0, s)
+    this.kuerzen()
+    this.halt = KUPPELN_S
+    return t
   }
 
   /** die Fahrtrichtung wechseln: die Spitze ist dort, wo das Ende war; zählt nicht als Umkehren am Gleisende */
@@ -947,14 +1038,19 @@ export class Zug {
    * frei: ob der Zug in diese Felder einfahren darf (sonst wartet er am Ende des Stücks, wie vor einem roten Signal); umkehren: ob er nach langem
    * Warten umkehren soll (wenn zwei Züge auf einem Gleis gegeneinander warten)
    */
-  schritt(b: Brett, dt: number, frei?: (felder: Set<string>) => boolean, umkehren?: () => boolean, ankuppeln?: (i: number, j: number) => void) {
+  schritt(b: Brett, dt: number, frei?: (felder: Set<string>) => boolean, umkehren?: () => boolean, ankuppeln?: (i: number, j: number) => void,
+    abschleppen?: (n: Stueck) => boolean) {
     this.brett = b
     if (this.halt > 0) {
       if (this.amBahnhof && this.halt > PFIFF_VOR_S && this.halt - dt <= PFIFF_VOR_S) this.pfiffe++
       this.halt -= dt
       return
     }
-    this.tempo = Math.min(TEMPO, this.tempo + (TEMPO / ANFAHREN) * dt)
+    // ohne Fahrleitung rollt ein Stromzug aus und bleibt stehen
+    if (this.stromlos) {
+      this.tempo = Math.max(0, this.tempo - STROMLOS_BREMSEN * dt)
+      if (this.tempo <= 0) return
+    } else this.tempo = Math.min(TEMPO, this.tempo + (TEMPO / ANFAHREN) * dt)
     let rest = this.tempo * dt
     for (let k = 0; k < 8 && rest > 0; k++) {
       const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
@@ -980,13 +1076,17 @@ export class Zug {
         return
       }
       if (frei && !frei(ebenenFelder(b, stueckFelder(n), [n]))) {
-        this.kopf = l; this.tempo = 0; this.wartet += dt
+        this.kopf = l; this.tempo = 0
+        // eine Diesellok holt einen stehenden Stromzug
+        if (abschleppen?.(n)) return
+        this.wartet += dt
         if (umkehren?.()) { this.wartet = 0; this.umkehren() }
         return
       }
       this.wartet = 0
       this.stuecke.push(n); this.kopf = 0
       this.kuerzen()
+      if (!this.diesel() && ohneStromBei(b, n)) this.stromlos = true
     }
   }
 
@@ -1011,11 +1111,10 @@ export class Zug {
   spitze(): [number, number] { const p = this.punkt(0); return [Math.floor(p.x), Math.floor(p.y)] }
 
   wagen(): WagenLage[] {
-    const n = this.anzahl
-    return Array.from({ length: n }, (_, k) => {
+    return this.fz.map((v, k) => {
       const vorn = k * (WAGEN_LAENGE + WAGEN_LUECKE), a = this.punkt(vorn), c = this.punkt(vorn + WAGEN_LAENGE)
-      const nr = this.rueckwaerts ? n - 1 - k : k, art = nr === 0 ? 0 : nr === n - 1 ? 3 : 1 + (nr % 2)
-      return { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2, w: Math.atan2(a.y - c.y, a.x - c.x), art, vorne: k === 0 }
+      const art = v.t === 'lok' ? 0 : v.t === 'steuer' ? 3 : 1 + (k % 2)
+      return { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2, w: Math.atan2(a.y - c.y, a.x - c.x), art, vorne: v.t === 'wagen' ? k === 0 : v.blick === 1, diesel: v.diesel }
     })
   }
 }
