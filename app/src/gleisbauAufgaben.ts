@@ -201,20 +201,21 @@ const S = STRECKEN as { datenstand: string; strecken: StreckeDaten[] }
 /** «1 Tunnel», «20 Tunnel», «1 Brücke», «79 Brücken» */
 const anzahl = (n: number, eins: string, viele: string) => `${n.toLocaleString('de-CH').replace(/’/g, '\'')} ${n === 1 ? eins : viele}`
 
-for (const s of S.strecken) {
-  const liste = s.bahnhoefe.join(', ')
-  const daten = s.teile.map((t, k) => `${s.bahnhoefe[k]} – ${s.bahnhoefe[k + 1]}: ${anzahl(t.tunnel, 'Tunnel', 'Tunnel')}, ${anzahl(t.bruecken, 'Brücke', 'Brücken')}${t.ohne_daten ? ' (Daten lückenhaft)' : ''}`)
-  AUFGABEN.push({
-    id: `strecke-${s.titel}`, titel: s.titel,
+/** eine echte Strecke als Aufgabe: die Bahnhöfe der Reihe nach, je Paar Tunnel und Brücken laut Daten */
+export function streckeAufgabe(id: string, titel: string, bahnhoefe: string[], teile: StreckeDaten['teile'], datenstand: string, gross = 12): Aufgabe {
+  const liste = bahnhoefe.join(', ')
+  const daten = teile.map((t, k) => `${bahnhoefe[k]} – ${bahnhoefe[k + 1]}: ${anzahl(t.tunnel, 'Tunnel', 'Tunnel')}, ${anzahl(t.bruecken, 'Brücke', 'Brücken')}${t.ohne_daten ? ' (Daten lückenhaft)' : ''}`)
+  return {
+    id, titel,
     ziel: `Baue die Strecke nach: die Bahnhöfe ${liste} in dieser Reihenfolge, jeder mit «Name» benannt. Wo laut Daten zwischen zwei Bahnhöfen Tunnel oder Brücken liegen, braucht es mindestens einen Tunnel oder eine Brücke; das Brett hat keinen Massstab.`,
-    daten: `Laut Daten der Strecken in Taktland (Stand ${S.datenstand}) auf dem Weg im Netz: ${daten.join('; ')}.`,
-    brett: () => leer(12, 8),
+    daten: `Laut Daten der Strecken in Taktland (Stand ${datenstand}) auf dem Weg im Netz: ${daten.join('; ')}.`,
+    brett: () => leer(gross, 8),
     pruefen: (b) => {
       const titel = bahnhofTitel(b), felder = bahnhofFelder(b)
       const buchstabe = (name: string) => [...titel].find(([, n]) => n === name)?.[0]
-      for (const n of s.bahnhoefe) if (!buchstabe(n)) return { ok: false, text: `Es fehlt ein Bahnhof mit dem Namen «${n}» (Werkzeug «Name»).` }
-      for (let k = 0; k + 1 < s.bahnhoefe.length; k++) {
-        const a = s.bahnhoefe[k], c = s.bahnhoefe[k + 1], t = s.teile[k]
+      for (const n of bahnhoefe) if (!buchstabe(n)) return { ok: false, text: `Es fehlt ein Bahnhof mit dem Namen «${n}» (Werkzeug «Name»).` }
+      for (let k = 0; k + 1 < bahnhoefe.length; k++) {
+        const a = bahnhoefe[k], c = bahnhoefe[k + 1], t = teile[k]
         const fa = felder.get(buchstabe(a)!)!, fc = felder.get(buchstabe(c)!)!
         if (!wegGibt(b, fa, fc)) return { ok: false, text: `Noch führt kein Gleis von ${a} nach ${c}.` }
         if (!wegGibt(b, fa, fc, t.tunnel > 0, t.bruecken > 0)) {
@@ -223,9 +224,33 @@ for (const s of S.strecken) {
           return { ok: false, text: fehlt ? `Zwischen ${a} und ${c} braucht es noch ${fehlt}.` : `Zwischen ${a} und ${c} müssen Tunnel und Brücke auf demselben Weg liegen.` }
         }
       }
-      return { ok: true, text: `Geschafft: ${s.titel} von ${s.bahnhoefe[0]} bis ${s.bahnhoefe[s.bahnhoefe.length - 1]}.` }
+      return { ok: true, text: `Geschafft: ${titel} von ${bahnhoefe[0]} bis ${bahnhoefe[bahnhoefe.length - 1]}.` }
     },
-  })
+  }
+}
+
+for (const s of S.strecken) AUFGABEN.push(streckeAufgabe(`strecke-${s.titel}`, s.titel, s.bahnhoefe, s.teile, S.datenstand))
+
+/**
+ * Varianten aus einem Bahnhof (Michael, 2026-11-24: «Man kann auch Bahnhöfe eingeben dann gibt es echte Varianten in unterschiedliche Richtungen»):
+ * aus pipeline/build_gleisbau_strecken.py, je Bahnhof in jede Richtung die nächsten Bahnhöfe, erst geladen, wenn man sucht
+ */
+export interface Varianten { datenstand: string; varianten: Record<string, Array<[string[], number[]]>> }
+let variantenCache: Promise<Varianten> | null = null
+export function variantenLaden(): Promise<Varianten> {
+  variantenCache ??= import('./assets/gleisbau-varianten.json').then((m) => (m.default ?? m) as unknown as Varianten)
+  return variantenCache
+}
+export function varianteAufgabe(v: Varianten, folge: string[], zahlen: number[]): Aufgabe {
+  const teile = folge.slice(1).map((_, k) => ({ tunnel: zahlen[3 * k], bruecken: zahlen[3 * k + 1], ohne_daten: zahlen[3 * k + 2] }))
+  return streckeAufgabe(`v:${folge.join('|')}`, `${folge[0]} – ${folge[folge.length - 1]}`, folge, teile, v.datenstand, Math.max(10, 4 * folge.length))
+}
+/** eine Variante nach ihrer Kennung «v:A|B|C» */
+export async function varianteAusId(id: string): Promise<Aufgabe | null> {
+  if (!id.startsWith('v:')) return null
+  const folge = id.slice(2).split('|'), v = await variantenLaden()
+  const treffer = v.varianten[folge[0]]?.find(([f]) => f.join('|') === folge.join('|'))
+  return treffer ? varianteAufgabe(v, treffer[0], treffer[1]) : null
 }
 
 // ——— Fortschritt ———

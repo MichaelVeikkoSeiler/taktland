@@ -209,6 +209,378 @@
      "ohne_daten": 0
     }
    ]
+  },
+  {
+   "titel": "Zürich–St. Gallen",
+   "bahnhoefe": [
+    "Zürich HB",
+    "Winterthur",
+    "Wil SG",
+    "St. Gallen"
+   ],
+   "teile": [
+    {
+     "tunnel": 3,
+     "bruecken": 25,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 32,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 39,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Hauenstein",
+   "bahnhoefe": [
+    "Basel SBB",
+    "Liestal",
+    "Sissach",
+    "Olten"
+   ],
+   "teile": [
+    {
+     "tunnel": 1,
+     "bruecken": 16,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 11,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 1,
+     "bruecken": 25,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Genève–Lausanne",
+   "bahnhoefe": [
+    "Genève",
+    "Nyon",
+    "Morges",
+    "Lausanne"
+   ],
+   "teile": [
+    {
+     "tunnel": 0,
+     "bruecken": 44,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 41,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 26,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Jurasüdfuss",
+   "bahnhoefe": [
+    "Neuchâtel",
+    "Biel/Bienne",
+    "Grenchen Süd",
+    "Solothurn"
+   ],
+   "teile": [
+    {
+     "tunnel": 2,
+     "bruecken": 54,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 17,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 26,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Prättigau",
+   "bahnhoefe": [
+    "Landquart",
+    "Klosters Platz",
+    "Davos Platz"
+   ],
+   "teile": [
+    {
+     "tunnel": 4,
+     "bruecken": 34,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 3,
+     "bruecken": 18,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Montreux–Zweisimmen",
+   "bahnhoefe": [
+    "Montreux",
+    "Les Avants",
+    "Montbovon",
+    "Zweisimmen"
+   ],
+   "teile": [
+    {
+     "tunnel": 2,
+     "bruecken": 13,
+     "ohne_daten": 4
+    },
+    {
+     "tunnel": 13,
+     "bruecken": 6,
+     "ohne_daten": 1
+    },
+    {
+     "tunnel": 6,
+     "bruecken": 29,
+     "ohne_daten": 5
+    }
+   ]
+  },
+  {
+   "titel": "Luzern–Engelberg",
+   "bahnhoefe": [
+    "Luzern",
+    "Stans",
+    "Wolfenschiessen",
+    "Engelberg"
+   ],
+   "teile": [
+    {
+     "tunnel": 3,
+     "bruecken": 10,
+     "ohne_daten": 3
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 1,
+     "ohne_daten": 2
+    },
+    {
+     "tunnel": 1,
+     "bruecken": 1,
+     "ohne_daten": 3
+    }
+   ]
+  },
+  {
+   "titel": "Furka–Oberalp",
+   "bahnhoefe": [
+    "Disentis/Mustér",
+    "Andermatt",
+    "Oberwald"
+   ],
+   "teile": [
+    {
+     "tunnel": 11,
+     "bruecken": 23,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 4,
+     "bruecken": 14,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Monte Ceneri",
+   "bahnhoefe": [
+    "Bellinzona",
+    "Lugano",
+    "Mendrisio",
+    "Chiasso"
+   ],
+   "teile": [
+    {
+     "tunnel": 4,
+     "bruecken": 19,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 3,
+     "bruecken": 41,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 1,
+     "bruecken": 21,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Linkes Zürichseeufer",
+   "bahnhoefe": [
+    "Zürich HB",
+    "Thalwil",
+    "Wädenswil",
+    "Ziegelbrücke"
+   ],
+   "teile": [
+    {
+     "tunnel": 2,
+     "bruecken": 20,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 21,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 63,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Thurtal",
+   "bahnhoefe": [
+    "Winterthur",
+    "Frauenfeld",
+    "Weinfelden",
+    "Romanshorn"
+   ],
+   "teile": [
+    {
+     "tunnel": 0,
+     "bruecken": 23,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 27,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 22,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Fribourg–Lausanne",
+   "bahnhoefe": [
+    "Fribourg/Freiburg",
+    "Romont FR",
+    "Palézieux",
+    "Lausanne"
+   ],
+   "teile": [
+    {
+     "tunnel": 0,
+     "bruecken": 27,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 1,
+     "bruecken": 11,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 2,
+     "bruecken": 40,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Unterengadin",
+   "bahnhoefe": [
+    "Samedan",
+    "Zernez",
+    "Scuol-Tarasp"
+   ],
+   "teile": [
+    {
+     "tunnel": 4,
+     "bruecken": 34,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 13,
+     "bruecken": 39,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Jura",
+   "bahnhoefe": [
+    "Biel/Bienne",
+    "Moutier",
+    "Delémont",
+    "Porrentruy"
+   ],
+   "teile": [
+    {
+     "tunnel": 1,
+     "bruecken": 21,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 14,
+     "bruecken": 10,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 5,
+     "bruecken": 16,
+     "ohne_daten": 0
+    }
+   ]
+  },
+  {
+   "titel": "Rhonetal",
+   "bahnhoefe": [
+    "St-Maurice",
+    "Martigny",
+    "Sierre/Siders",
+    "Visp"
+   ],
+   "teile": [
+    {
+     "tunnel": 0,
+     "bruecken": 26,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 0,
+     "bruecken": 39,
+     "ohne_daten": 0
+    },
+    {
+     "tunnel": 4,
+     "bruecken": 27,
+     "ohne_daten": 0
+    }
+   ]
   }
  ]
 }

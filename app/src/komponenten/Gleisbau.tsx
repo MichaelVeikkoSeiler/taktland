@@ -7,7 +7,7 @@ import {
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
-import { type Aufgabe, AUFGABEN, bewerten, type Ergebnis, fortschrittLesen, fortschrittMerken } from '../gleisbauAufgaben'
+import { type Aufgabe, AUFGABEN, bewerten, type Ergebnis, fortschrittLesen, fortschrittMerken, type Varianten, varianteAufgabe, varianteAusId, variantenLaden } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
@@ -215,11 +215,58 @@ function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, n
     <div className="max-w-3xl">
       {gruppe('Aufgaben', AUFGABEN.filter((a) => !a.id.startsWith('strecke-')))}
       {gruppe('Echte Strecken nachbauen', AUFGABEN.filter((a) => a.id.startsWith('strecke-')))}
+      <VariantenSuche fortschritt={fortschritt} waehlen={waehlen} />
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
         Bei den echten Strecken stammen die Bahnhöfe und die Zahl der Tunnel und Brücken zwischen ihnen aus den Daten der Strecken in Taktland; das
         Brett hat keinen Massstab, ein Tunnel oder eine Brücke genügt. Dein freies Brett bleibt, während du Aufgaben löst.
       </p>
     </div>
+  )
+}
+
+/**
+ * Strecke ab einem Bahnhof (Michael, 2026-11-24: «Man kann auch Bahnhöfe eingeben dann gibt es echte Varianten in unterschiedliche Richtungen»):
+ * einen Bahnhof suchen, darunter je Richtung die nächsten Bahnhöfe laut Netz als Aufgabe
+ */
+function VariantenSuche({ fortschritt, waehlen }: { fortschritt: Record<string, number>; waehlen: (a: Aufgabe) => void }) {
+  const [v, setV] = useState<Varianten | null>(null)
+  const [suche, setSuche] = useState('')
+  const [bahnhof, setBahnhof] = useState<string | null>(null)
+  const laden = () => { if (!v) void variantenLaden().then(setV) }
+  const namen = useMemo(() => (v ? Object.keys(v.varianten).sort((a, c) => a.localeCompare(c, 'de')) : []), [v])
+  const q = ohneAkzente(suche.trim())
+  const treffer = q.length < 2 ? [] : [...namen.filter((n) => ohneAkzente(n).startsWith(q)), ...namen.filter((n) => !ohneAkzente(n).startsWith(q) && ohneAkzente(n).includes(q))].slice(0, 8)
+  return (
+    <section className="mt-6">
+      <h2 className="text-lg font-bold">Strecke ab einem Bahnhof</h2>
+      <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">Gib einen Bahnhof ein: Je Richtung im Netz gibt es eine echte Strecke mit den nächsten Bahnhöfen.</p>
+      <input value={suche} onFocus={laden} onChange={(e) => { setSuche(e.target.value); setBahnhof(null); laden() }} placeholder="Bahnhof suchen" aria-label="Bahnhof suchen"
+             className="mt-2 w-full max-w-md rounded-lg border border-sbb-cloud bg-white px-3 py-2 dark:border-sbb-iron dark:bg-sbb-midnight" />
+      {!bahnhof && q.length >= 2 && (
+        <ul className="mt-2 grid max-w-md gap-1">
+          {!v && <li className="text-sm">Bahnhöfe werden geladen …</li>}
+          {v && !treffer.length && <li className="text-sm">Kein Bahnhof gefunden.</li>}
+          {treffer.map((n) => (
+            <li key={n}><button type="button" onClick={() => { setBahnhof(n); setSuche(n) }} className="kachel kachel-link w-full px-3 py-2 text-left">{n}</button></li>
+          ))}
+        </ul>
+      )}
+      {bahnhof && v && (
+        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+          {(v.varianten[bahnhof] ?? []).map(([folge, zahlen]) => {
+            const a = varianteAufgabe(v, folge, zahlen)
+            return (
+              <li key={a.id}>
+                <button type="button" onClick={() => waehlen(a)} className="kachel kachel-link flex w-full items-center justify-between gap-3 px-3 py-3 text-left">
+                  <span><span className="font-medium">{folge.join(' – ')}</span></span>
+                  <Sterne n={fortschritt[a.id] ?? 0} />
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </section>
   )
 }
 
@@ -993,6 +1040,13 @@ export function Gleisbau() {
       setOffen(null)
       const aid = q.get('aufgabe'), a = aid ? AUFGABEN.find((x) => x.id === aid) : null
       if (a) { setAnsicht('aufgaben'); aufgabeWaehlen(a); return }
+      // eine Strecke ab einem Bahnhof: erst nach dem Laden der Varianten
+      if (aid?.startsWith('v:')) {
+        const hash = window.location.hash
+        setAufgabe(null); setAnsicht('aufgaben')
+        void varianteAusId(aid).then((x) => { if (x && window.location.hash === hash) aufgabeWaehlen(x) })
+        return
+      }
       if (q.has('aufgaben')) { setAufgabe(null); setAnsicht('aufgaben'); return }
       setAufgabe(null); setAnsicht('liste')
     }
