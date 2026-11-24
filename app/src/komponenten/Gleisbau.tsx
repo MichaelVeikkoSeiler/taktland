@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
@@ -34,7 +34,7 @@ const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9
 const KACHEL_H = 0.915
 
 type Werkzeug =
-  | { art: 'linie' } | { art: 'name' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
+  | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'linie' }, text: 'Linie ziehen' },
@@ -50,6 +50,7 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'bahnhof' }, text: 'Bahnhof' },
   { w: { art: 'name' }, text: 'Name' },
   { w: { art: 'tunnel' }, text: 'Tunnel' },
+  { w: { art: 'ampel' }, text: 'Ampel' },
   { w: { art: 'bruecke' }, text: 'Brücke' },
 ]
 const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
@@ -65,7 +66,7 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
 /** die Werkzeuge unten in drei Reitern */
 const GRUPPEN = [
   { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
-  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke'].includes(x.w.art)),
+  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel'].includes(x.w.art)),
     ...LANDSCHAFT.filter((x) => x.w.art === 'strasse')] },
   { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
 ]
@@ -154,6 +155,26 @@ function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, n
       </p>
     </div>
   )
+}
+
+/** Ampeln am Gleis: ein Mast mit rotem und grünem Licht in der Ecke unten rechts des Felds (Gestalt gewählt) */
+function AmpelBild({ brett }: { brett: Brett }) {
+  const raus = []
+  for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
+    const f = brett[j][i]
+    if (!ampelGilt(f)) continue
+    const rot = f.ampel === 'rot', x = i + 0.8, y = j + 0.62
+    raus.push(
+      <g key={`${i},${j}`} pointerEvents="none">
+        <ellipse cx={x + 0.01} cy={y + 0.3} rx={0.06} ry={0.02} fill="rgba(0,0,0,.22)" />
+        <rect x={x - 0.012} y={y + 0.12} width={0.024} height={0.18} fill="#4a4a4a" />
+        <rect x={x - 0.055} y={y - 0.06} width={0.11} height={0.2} rx={0.03} fill="#2b2b2e" stroke="#ffffff" strokeWidth={0.012} />
+        <circle cx={x} cy={y - 0.01} r={0.032} fill={rot ? '#ff3b30' : '#4a1d1d'} />
+        <circle cx={x} cy={y + 0.085} r={0.032} fill={rot ? '#1d3a24' : '#34c759'} />
+      </g>,
+    )
+  }
+  return <>{raus}</>
 }
 
 /** Farbe je Ziel (Buchstabe des Bahnhofs), gewählt */
@@ -296,7 +317,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
   punkte.sort((a, b) => Number(a.aktiv) - Number(b.aktiv))
   return (
     <g>
-      {f.grund === 'wasser' && punkte.map(({ p }, k) => (
+      {(f.grund === 'wasser' || f.bruecke) && punkte.map(({ p }, k) => (
         <g key={`b${k}`}>
           <path d={linie(p)} transform="translate(0.03 0.05)" fill="none" stroke="rgba(0,0,0,.15)" strokeWidth={0.42} />
           <path d={linie(p)} fill="none" stroke={F.bruecke} strokeWidth={0.42} />
@@ -309,7 +330,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
       {g.art === 'bahnhof' && <image href={bild('gb_bau_perron_gerade_01')} x={i} y={j} width={1} height={1} preserveAspectRatio="none" transform={`rotate(${g.dreh * 90} ${cx} ${cy})`} />}
       {punkte.map(({ p, aktiv }, k) => (
         <g key={k} opacity={aktiv ? 1 : 0.45}>
-          <path d={linie(p)} fill="none" stroke={f.grund === 'wasser' ? 'none' : F.schotter} strokeWidth={0.3} />
+          <path d={linie(p)} fill="none" stroke={f.grund === 'wasser' || f.bruecke ? 'none' : F.schotter} strokeWidth={0.3} />
           <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
           <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
           <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
@@ -477,6 +498,16 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
       </svg>
     )
   }
+  if (w.art === 'ampel') {
+    const b: Brett = [[{ grund: 'wiese', ampel: 'rot', gleis: { art: 'gerade', dreh: 1 } }]]
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={b[0][0]} i={0} j={0} />
+        <GleisBild f={b[0][0]} i={0} j={0} />
+        <g transform="translate(-0.3 -0.12)"><AmpelBild brett={b} /></g>
+      </svg>
+    )
+  }
   if (w.art === 'strasse') {
     const b: Brett = [[{ grund: 'wiese', strasse: true }]]
     return (
@@ -488,7 +519,7 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
   }
   const f: Feld = w.art === 'grund' ? { grund: w.grund }
     : w.art === 'tunnel' ? { grund: 'berg', gleis: { art: 'gerade', dreh } }
-    : w.art === 'bruecke' ? { grund: 'wasser', gleis: { art: 'gerade', dreh } }
+    : w.art === 'bruecke' ? { grund: 'wiese', bruecke: true, gleis: { art: 'gerade', dreh } }
     : w.art === 'gleis' ? { grund: 'wiese', gleis: { art: w.gleis, dreh } } : { grund: 'wiese' }
   return (
     <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
@@ -599,7 +630,7 @@ export function Gleisbau() {
       <StrassenBild brett={brett} />
       {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j}
                                                      weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined}
-                                                     wasser={(u, v) => brett[v]?.[u]?.grund === 'wasser'} brett={brett} />))}
+                                                     wasser={(u, v) => brett[v]?.[u]?.grund === 'wasser' || !!brett[v]?.[u]?.bruecke} brett={brett} />))}
     </>
   ), [brett, namen])
   const oben = useMemo(() => objekteBauen(brett, imTunnel).map((o, k) => <ObjektBild key={k} o={o} />), [brett])
@@ -759,7 +790,7 @@ export function Gleisbau() {
         if (amDorf && !dorf.current) kirchenSchlag(1, null, 0.7)
         dorf.current = amDorf
         const [si, sj] = z.spitze(), f = brettRef.current[sj]?.[si]
-        const ort = f?.gleis && !grosseKurve(f.gleis) ? (f.grund === 'berg' ? 'tunnel' : f.grund === 'wasser' ? 'bruecke' : null) : null
+        const ort = f?.gleis && !grosseKurve(f.gleis) ? (f.grund === 'berg' ? 'tunnel' : f.grund === 'wasser' || f.bruecke ? 'bruecke' : null) : null
         zuggeraeuschTempo(z.anteil() * ZUG_KLANG_MS, Infinity, ort, 1, true)
       }
       // Fahrgäste: neue an den Bahnhöfen, Aus- und Einsteigen bei jedem Halt
@@ -886,7 +917,8 @@ export function Gleisbau() {
     const f = brett[j][i]
     // während der Fahrt stellen Tipps nur die Weichen
     if (faehrt) {
-      if (!istWeiche(f.gleis)) { setMeldung('Während der Fahrt lassen sich nur Weichen stellen. Zum Bauen «Anhalten».'); return }
+      if (ampelGilt(f)) { neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }, false); knopfTon(true); return }
+      if (!istWeiche(f.gleis)) { setMeldung('Während der Fahrt lassen sich nur Weichen und Ampeln stellen. Zum Bauen anhalten.'); return }
       const wege = f.gleis!.art === 'dreiweg' ? 3 : 2
       neu(i, j, { ...f, gleis: { ...f.gleis!, stellung: (((f.gleis!.stellung ?? 0) + 1) % wege) as 0 | 1 | 2 } }, false)
       knopfTon(true)
@@ -940,8 +972,17 @@ export function Gleisbau() {
       }
     }
     if (unterGross) {
-      const grund: Grund = w.art === 'grund' ? w.grund : w.art === 'tunnel' ? 'berg' : 'wasser'
+      if (w.art === 'bruecke') { neu(i, j, { ...f, bruecke: true }); knopfTon(true); return }
+      if (w.art === 'ampel' || w.art === 'strasse') { setMeldung('Auf einer grossen Kurve geht das nicht.'); return }
+      const grund: Grund = w.art === 'grund' ? w.grund : 'berg'
       neu(i, j, { ...f, grund }); knopfTon(true)
+      return
+    }
+    if (w.art === 'ampel') {
+      // eine Ampel an einer Geraden, Kurve oder einem Bahnhof; nochmals tippen wechselt Rot und Grün, «Entfernen» nimmt sie weg
+      if (!f.gleis || !['gerade', 'kurve', 'bahnhof', 'kurvenbahnhof'].includes(f.gleis.art)) { setMeldung('Eine Ampel steht an einer Geraden, einer Kurve oder einem Bahnhof.'); return }
+      if (f.grund === 'berg') { setMeldung('Im Tunnel sieht man keine Ampel. Stell sie davor.'); return }
+      neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }); knopfTon(true)
       return
     }
     if (w.art === 'strasse') {
@@ -963,14 +1004,21 @@ export function Gleisbau() {
         const d = ((f.gleis.dreh + 1) % 4) as Dreh
         setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
       } else n = { ...f, gleis: { art: w.gleis, dreh } }
-    } else if (w.art === 'tunnel' || w.art === 'bruecke') {
-      const grund: Grund = w.art === 'tunnel' ? 'berg' : 'wasser'
-      if (f.grund === grund && f.gleis) {
+    } else if (w.art === 'bruecke') {
+      // eine Brücke ohne Wasser darunter; den See setzt man selbst dazu
+      if (f.bruecke && f.gleis) {
         const d = ((f.gleis.dreh + 1) % 4) as Dreh
         setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
-      } else n = { grund, gleis: f.gleis ?? { art: 'gerade', dreh } }
+      } else { const { strasse: _, ...ohne } = f; n = { ...ohne, bruecke: true, gleis: f.gleis ?? { art: 'gerade', dreh } } }
+    } else if (w.art === 'tunnel') {
+      if (f.grund === 'berg' && f.gleis) {
+        const d = ((f.gleis.dreh + 1) % 4) as Dreh
+        setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
+      } else n = { grund: 'berg', gleis: f.gleis ?? { art: 'gerade', dreh } }
     } else if (w.art === 'grund') n = { ...f, grund: w.grund }
     // Entfernen: zuerst das Gleis (die Strasse bleibt), dann die Strasse, dann der Grund
+    // Entfernen: zuerst die Ampel, dann das Gleis (samt Brücke; die Strasse bleibt), dann die Strasse, dann der Grund
+    else if (f.ampel) { const { ampel: _, ...ohne } = f; n = ohne }
     else n = f.gleis ? (f.strasse ? { grund: f.grund, strasse: true } : { grund: f.grund }) : f.strasse ? { grund: f.grund } : { grund: 'wiese' }
     // eine Strasse bleibt nur, wo sie noch möglich ist (nicht auf Wasser, Berg oder unter einer Kurve)
     if (n.strasse && strasseMoeglich(n)) { const { strasse: _, ...ohne } = n; n = ohne }
@@ -1098,6 +1146,7 @@ export function Gleisbau() {
           {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y)} farbe={z ? ZWEITER_ZUG : F.karmin} />))}
           {oben}
           <SchrankenBild brett={brett} wagen={wagen.flat()} />
+          <AmpelBild brett={brett} />
           <SchildBild namen={namen} titel={titel} />
           {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
@@ -1150,7 +1199,7 @@ export function Gleisbau() {
                     ))}
                   </p>
                 ) : <p className="font-bold">Der Zug fährt.</p>}
-                <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche stellt sie. Zum Bauen anhalten.</p>
+                <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche oder Ampel stellt sie. Zum Bauen anhalten.</p>
               </div>
             ) : (
               <>
@@ -1255,7 +1304,8 @@ function SoGehts() {
     <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
       <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
         Geraden, Kurven und Weichen entstehen von selbst.</li>
-      <li>Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel. Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken.</li>
+      <li>Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel; «Brücke» baut eine Brücke auch ohne Wasser, den See setzt du selbst darunter.
+        Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Bei einer roten Ampel wartet der Zug, ein Tipp stellt sie auf Grün.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
       <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.

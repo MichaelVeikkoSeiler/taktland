@@ -78,9 +78,9 @@ function bauwerk(b: Brett, i: number, j: number): { tunnel: boolean; bruecke: bo
   if (grosseKurve(halter.gleis)) {
     const [hi, hj] = f.teil ?? [i, j]
     const gr = grossGeometrie(hi, hj, halter.gleis!).zellen.map(([u, v]) => b[v]?.[u]?.grund)
-    return { tunnel: gr.includes('berg'), bruecke: gr.includes('wasser') }
+    return { tunnel: gr.includes('berg'), bruecke: gr.includes('wasser') || grossGeometrie(hi, hj, halter.gleis!).zellen.some(([u, v]) => !!b[v]?.[u]?.bruecke) }
   }
-  return { tunnel: f.grund === 'berg', bruecke: f.grund === 'wasser' }
+  return { tunnel: f.grund === 'berg', bruecke: f.grund === 'wasser' || !!f.bruecke }
 }
 
 /** ob es einen Weg von einem Feld der Menge «von» zu einem der Menge «nach» gibt, auf Wunsch durch einen Tunnel und über eine Brücke */

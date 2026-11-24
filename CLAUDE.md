@@ -1628,6 +1628,7 @@ feldBei rechnet den Rand ein), zwei Finger zoomen 1- bis 4-fach und verschieben,
 Fahrgäste und Zwei Züge als Schalter, Grösse, Beispiel (bei Aufgaben «Neu beginnen» und «Was die Daten sagen»), Leeren, Link teilen und «So geht's»; Meldungen 4 s unten über dem Brett;
 bei einer Aufgabe darunter das Ziel (Tipp klappt auf) mit Sternen und «Prüfen», gelöst eine Karte «Geschafft!» mit «Nächste Aufgabe» rot und «Weiterbauen» weiss; eine Aufgabe unter
 #/gleisbau?aufgabe=…; die Suche nach dem Namen eines Bahnhofs als Blatt von unten; die Startseite bleibt eine gewöhnliche Seite; im Browser hier als Pixel 7 angeschaut.
+Seit 2026-11-24 baut «Brücke» keinen See mehr darunter, das Feld behält seinen Grund, den See setzt man selbst (Feld.bruecke, im Code des Bretts als Teil «~b»; Michael: «Beim Brückenbau kein See mehr automatisch darunter. Dieser kann man anschliessend selber mit dem Seeelement ergänzen»); dazu unter Bauwerke eine «Ampel» (Michael: «Weiteres Element: Ampel»): an einer Geraden, Kurve oder einem Bahnhof, nicht im Tunnel, nochmals tippen wechselt Rot und Grün, auch während der Fahrt; bei Rot hält der Zug vor dem Feld und wartet, ohne umzukehren (Feld.ampel, Teil «~a», AmpelBild; Gestalt gewählt); im Browser hier als Pixel 7 geprüft.
 
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das

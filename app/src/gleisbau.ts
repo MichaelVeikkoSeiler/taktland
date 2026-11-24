@@ -19,6 +19,8 @@ export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf'
 export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
+/** wo eine Ampel stehen kann: an einer Geraden, Kurve oder einem Bahnhof */
+export const ampelGilt = (f?: Feld) => !!f?.ampel && !!f.gleis && ['gerade', 'kurve', 'bahnhof', 'kurvenbahnhof'].includes(f.gleis.art)
 export const istBahnhof = (g?: Gleis) => g?.art === 'bahnhof' || g?.art === 'kurvenbahnhof'
 export type Dreh = 0 | 1 | 2 | 3
 
@@ -31,6 +33,8 @@ export const grosseKurve = (g?: Gleis) => (g?.art === 'bogen2' ? 2 : g?.art === 
 export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 und 2 abzweigend */ stellung?: 0 | 1 | 2 }
 /** teil: das Feld liegt unter einer grossen Kurve, die im Feld [i, j] (ihrem Anfang) steht */
 export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /** eine Strasse im Feld; kreuzt sie eine Gerade, ist es ein Bahnübergang */ strasse?: true
+  /** eine Brücke, auch ohne Wasser darunter (seit 2026-11-24; Michael: «Beim Brückenbau kein See mehr automatisch darunter») */ bruecke?: true
+  /** eine Ampel am Gleis (seit 2026-11-24; Michael: «Weiteres Element: Ampel»): bei Rot hält der Zug vor dem Feld */ ampel?: 'rot' | 'gruen'
   /** Name eines echten Bahnhofs aus Taktland für den Bahnhof, zu dem dieses Feld gehört */ name?: string }
 export type Brett = Feld[][] // [Zeile][Spalte]
 
@@ -304,7 +308,14 @@ export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
+  // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
+  const bruecken: string[] = [], ampeln: string[] = []
+  b.forEach((z, j) => z.forEach((f, i) => {
+    if (f.bruecke && f.gleis) bruecken.push(`${i}.${j}`)
+    if (f.ampel && f.gleis) ampeln.push(`${i}.${j}.${f.ampel === 'rot' ? 'r' : 'g'}`)
+  }))
   return '1~' + b.map((z) => z.map((f) => (f.strasse ? STRASSE_Z : GRUND_Z)[GRUENDE.indexOf(f.grund)] + (f.gleis ? GLEIS_Z[ARTEN.indexOf(f.gleis.art) * 4 + f.gleis.dreh] : '.')).join('')).join('-') + (namen.length ? `~n${namen.join('_')}` : '')
+    + (bruecken.length ? `~b${bruecken.join('_')}` : '') + (ampeln.length ? `~a${ampeln.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -319,6 +330,8 @@ export function brettAusCode(c: string): Brett | null {
   }))
   if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
+    if (teil.startsWith('b')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].bruecke = true }
+    if (teil.startsWith('a')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].ampel = c === 'r' ? 'rot' : 'gruen' }
     if (!teil.startsWith('n')) continue
     for (const e of teil.slice(1).split('_')) {
       const [i, j, n] = e.split('.')
@@ -668,7 +681,7 @@ export function strassenKanten(b: Brett, i: number, j: number): number[] {
 }
 /** ob auf dem Feld eine Strasse liegen darf: nicht auf Wasser und Berg, mit Gleis nur über eine Gerade */
 export function strasseMoeglich(f: Feld): string | null {
-  if (f.grund === 'wasser' || f.grund === 'berg') return 'Eine Strasse geht nur über Land, nicht über Wasser oder Berg.'
+  if (f.grund === 'wasser' || f.grund === 'berg' || f.bruecke) return 'Eine Strasse geht nur über Land, nicht über Wasser, Berg oder eine Brücke.'
   if (f.teil || (f.gleis && f.gleis.art !== 'gerade')) return 'Ein Bahnübergang geht nur über eine Gerade.'
   return null
 }
@@ -813,6 +826,8 @@ export class Zug {
       rest -= l - vorher
       const n = naechstes(b, s)
       if (!n) { this.kopf = l; this.umkehren(); return }
+      // vor einer roten Ampel warten, ohne als wartend zu gelten (sonst kehrte ein anderer Zug oder dieser um)
+      if (!n.gross && ampelGilt(b[n.j]?.[n.i]) && b[n.j][n.i].ampel === 'rot') { this.kopf = l; this.tempo = 0; this.wartet = 0; return }
       if (frei && !frei(stueckFelder(n))) {
         this.kopf = l; this.tempo = 0; this.wartet += dt
         if (umkehren?.()) { this.wartet = 0; this.umkehren() }
