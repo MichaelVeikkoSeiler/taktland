@@ -980,8 +980,20 @@ export function Gleisbau() {
     const w = el.clientWidth, h = el.clientHeight
     setZoom({ s, x: Math.min(0, Math.max(w - w * s, x)), y: Math.min(0, Math.max(h - h * s, y)) })
   }
+  // Verschieben mit einem Finger und die Lupen (um die Mitte der Bühne)
+  const [schiebeModus, setSchiebeModus] = useState(false)
+  const schieben = useRef<{ x: number; y: number; z: { s: number; x: number; y: number }; weit: boolean } | null>(null)
+  const lupe = (f: number) => {
+    const el = buehne.current
+    if (!el) return
+    const mx = el.clientWidth / 2, my = el.clientHeight / 2, s = Math.max(1, Math.min(zoomMax, zoom.s * f))
+    zoomSetzen(s, mx - ((mx - zoom.x) * s) / zoom.s, my - ((my - zoom.y) * s) / zoom.s)
+  }
   const buehneDrucken = (e: React.PointerEvent<HTMLDivElement>) => {
     finger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    // mit «Verschieben» schiebt ein Finger den Ausschnitt
+    if (schiebeModus && finger.current.size === 1) { schieben.current = { x: e.clientX, y: e.clientY, z: zoom, weit: false }; return }
+    schieben.current = null
     if (finger.current.size !== 2) return
     druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); malRef.current = null; malStart.current = null; setMalen(null); nachZiehen.current = true
     const [a, b] = [...finger.current.values()], r = buehne.current!.getBoundingClientRect()
@@ -990,6 +1002,13 @@ export function Gleisbau() {
   const buehneBewegen = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!finger.current.has(e.pointerId)) return
     finger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    const sc = schieben.current
+    if (sc) {
+      const dx = e.clientX - sc.x, dy = e.clientY - sc.y
+      if (!sc.weit && Math.hypot(dx, dy) > 6) sc.weit = true
+      if (sc.weit) zoomSetzen(sc.z.s, sc.z.x + dx, sc.z.y + dy)
+      return
+    }
     const z = zwei.current
     if (!z || finger.current.size !== 2) return
     const [a, b] = [...finger.current.values()], r = buehne.current!.getBoundingClientRect()
@@ -999,6 +1018,8 @@ export function Gleisbau() {
   }
   const buehneLos = (e: React.PointerEvent<HTMLDivElement>) => {
     finger.current.delete(e.pointerId)
+    if (schieben.current?.weit) { nachZiehen.current = true; window.setTimeout(() => { nachZiehen.current = false }, 300) }
+    schieben.current = null
     if (finger.current.size < 2 && zwei.current) { zwei.current = null; window.setTimeout(() => { nachZiehen.current = false }, 300) }
   }
   const buehneRad = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -1096,7 +1117,7 @@ export function Gleisbau() {
   }, [])
 
   function drucken(e: React.PointerEvent<SVGSVGElement>) {
-    if (faehrt || !e.isPrimary) return
+    if (faehrt || !e.isPrimary || schiebeModus) return
     const feld = feldBei(e.clientX, e.clientY)
     if (!feld) return
     if (werkzeug.art === 'linie') {
@@ -1599,6 +1620,22 @@ export function Gleisbau() {
         </svg>
             </div>
 
+            {/* grosse Bretter: Lupen und Verschieben unten rechts (Michael, 2026-11-24: «Sind so viele Kacheln dass man einzoomen muss braucht es ein
+                Verschiebe Icon und Lupen zum ein und auszoomen»); gezeigt, sobald ein Feld kleiner als 28 Bildpunkte ist oder hineingezoomt ist (gewählt) */}
+            {(zoom.s > 1.01 || (buehneGr.w > 0 && Math.min(buehneGr.w / (SP + 0.3), buehneGr.h / (ZE + 0.3)) < 28)) && (
+              <div className="absolute bottom-3 right-2.5 flex flex-col gap-2">
+                <button type="button" onClick={() => lupe(1.6)} disabled={zoom.s >= zoomMax - 0.01} aria-label="Hineinzoomen" title="Hineinzoomen" className={rund}>
+                  <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21M7.5 10.5h6M10.5 7.5v6" /></svg>
+                </button>
+                <button type="button" onClick={() => lupe(1 / 1.6)} disabled={zoom.s <= 1.01} aria-label="Hinauszoomen" title="Hinauszoomen" className={rund}>
+                  <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21M7.5 10.5h6" /></svg>
+                </button>
+                <button type="button" onClick={() => setSchiebeModus((v) => !v)} aria-pressed={schiebeModus} aria-label="Verschieben" title="Verschieben"
+                        className={schiebeModus ? 'flex size-11 flex-none items-center justify-center rounded-full bg-sbb-anthracite text-white shadow-sm dark:bg-sbb-white dark:text-sbb-black' : rund}>
+                  <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 3v18M3 12h18M12 3l-3 3M12 3l3 3M12 21l-3-3M12 21l3-3M3 12l3-3M3 12l3 3M21 12l-3-3M21 12l-3 3" /></svg>
+                </button>
+              </div>
+            )}
             {zoom.s > 1.01 && (
               <button type="button" onClick={() => setZoom({ s: 1, x: 0, y: 0 })} aria-label="Ganzes Brett zeigen" title="Ganzes Brett zeigen"
                       className={`${rund} absolute right-2.5 top-2`}>
