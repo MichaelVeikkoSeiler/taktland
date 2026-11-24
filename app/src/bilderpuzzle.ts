@@ -160,6 +160,12 @@ function umriss(ctx: CanvasRenderingContext2D, b: number, h: number, k: Kanten) 
   ctx.closePath()
 }
 
+/**
+ * Stand eines Puzzles zum Weitermachen (Michael, 2026-11-24: «dass das Bilderputzle immer auf dem letzten Stand ist, pro Gerät»): die Nasen
+ * der Kanten und je Teil die Lage in Teilen vom Rahmen aus und ob es liegt
+ */
+export interface PuzzleStand { waagrecht: number[][]; senkrecht: number[][]; lagen: Array<[number, number, 0 | 1]> }
+
 export interface PuzzleStart {
   bild: HTMLImageElement
   teile: number
@@ -169,6 +175,10 @@ export interface PuzzleStart {
   beiStand: (gelegt: number, alle: number) => void
   beiEinrasten: () => void
   beiFertig: () => void
+  /** ein gemerkter Stand, wenn er zu Bild, Teilen und Form passt */
+  stand?: PuzzleStand | null
+  /** nach jeder Änderung der neue Stand */
+  beiAenderung?: (s: PuzzleStand) => void
 }
 
 /**
@@ -177,6 +187,7 @@ export interface PuzzleStart {
  */
 export class Bilderpuzzle {
   private teile: Teil[] = []
+  private waagrecht: number[][] = []; private senkrecht: number[][] = []
   private spalten: number; private zeilen: number
   private format: number // Breite durch Höhe eines Teils
   private zuschnitt: HTMLCanvasElement
@@ -220,8 +231,11 @@ export class Bilderpuzzle {
     flaeche.append(this.rahmen)
 
     const zufall = () => (Math.random() < 0.5 ? 1 : -1)
-    const waagrecht = Array.from({ length: this.zeilen - 1 }, () => Array.from({ length: this.spalten }, zufall))
-    const senkrecht = Array.from({ length: this.zeilen }, () => Array.from({ length: this.spalten - 1 }, zufall))
+    const st = o.stand && o.stand.lagen.length === this.spalten * this.zeilen && o.stand.waagrecht.length === this.zeilen - 1
+      && o.stand.senkrecht.length === this.zeilen ? o.stand : null
+    const waagrecht = st?.waagrecht ?? Array.from({ length: this.zeilen - 1 }, () => Array.from({ length: this.spalten }, zufall))
+    const senkrecht = st?.senkrecht ?? Array.from({ length: this.zeilen }, () => Array.from({ length: this.spalten - 1 }, zufall))
+    this.waagrecht = waagrecht; this.senkrecht = senkrecht
     this.anordnen()
     // fein genug für den Bildschirm, nicht feiner als das Bild
     const dpr = Math.min(window.devicePixelRatio || 1, 2.5)
@@ -238,15 +252,32 @@ export class Bilderpuzzle {
       this.teile.push(t)
       flaeche.append(el)
     }
-    this.verteilen()
+    if (st) {
+      // weiter, wo man war: lose Teile an ihre Lage, gelegte in den Rahmen
+      this.teile.forEach((t, i) => {
+        const [x, y, g] = st.lagen[i]
+        t.x = x; t.y = y
+        if (g) { t.gelegt = true; t.x = t.s; t.y = t.z; t.el.style.filter = 'none'; t.el.style.pointerEvents = 'none'; t.el.style.zIndex = '2'; this.gelegt++ }
+        else t.el.style.zIndex = String(++this.oben)
+        this.setzen(t)
+      })
+    } else this.verteilen()
     this.rahmenZeichnen()
-    o.beiStand(0, this.teile.length)
+    o.beiStand(this.gelegt, this.teile.length)
+    this.melden()
+    if (st) window.setTimeout(() => this.heranzoomen(), 50)
     let warte = 0
     this.beobachter = new ResizeObserver(() => { clearTimeout(warte); warte = window.setTimeout(() => this.neuGroesse(), 100) })
     this.beobachter.observe(flaeche)
   }
 
   beenden() { this.beobachter.disconnect(); this.flaeche.replaceChildren() }
+
+  /** den Stand melden, Lagen auf drei Stellen */
+  private melden() {
+    const r = (v: number) => Math.round(v * 1000) / 1000
+    this.o.beiAenderung?.({ waagrecht: this.waagrecht, senkrecht: this.senkrecht, lagen: this.teile.map((t) => [r(t.x), r(t.y), t.gelegt ? 1 : 0]) })
+  }
 
   vorlageZeigen(an: boolean) { this.vorlage = an; this.rahmenZeichnen() }
 
@@ -397,7 +428,7 @@ export class Bilderpuzzle {
       const lose = this.teile.filter((t) => !t.gelegt && !gezogen.has(t.el))
       if (lose.length) {
         if (!matchMedia('(prefers-reduced-motion: reduce)').matches) for (const t of lose) t.el.style.transition = 'transform .35s ease-out'
-        this.verteilen(lose)
+        this.verteilen(lose); this.melden()
         window.setTimeout(() => { for (const t of lose) if (!t.gelegt) t.el.style.transition = '' }, 400)
       }
     }
@@ -456,6 +487,7 @@ export class Bilderpuzzle {
       ziel.style.filter = 'drop-shadow(0 2px 3px rgb(0 0 0 / .35))'; ziel.style.cursor = 'grab'
       if (Math.hypot((t.x - t.s) * this.tb, (t.y - t.z) * this.th) < EINRASTEN * Math.min(this.tb, this.th)) this.einrasten(t)
       this.heranzoomen()
+      this.melden()
     }
     ziel.addEventListener('pointermove', bewegen)
     ziel.addEventListener('pointerup', loslassen)

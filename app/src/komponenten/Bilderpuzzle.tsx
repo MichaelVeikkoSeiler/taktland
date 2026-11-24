@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { antwortTon } from '../audio'
 import {
-  BILDER, Bilderpuzzle as Spielfeld, bildLaden, eigeneLaden, eigenesHinzufuegen, eigenesLoeschen, type Form, type PuzzleBild, TEILE,
+  BILDER, Bilderpuzzle as Spielfeld, bildLaden, eigeneLaden, eigenesHinzufuegen, eigenesLoeschen, type Form, type PuzzleBild, type PuzzleStand, TEILE,
 } from '../bilderpuzzle'
 import { Zurueck } from './Zurueck'
 
@@ -9,6 +9,22 @@ const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
 const SPEICHER = 'taktland.bilderpuzzle.v1'
 
 interface Wahl { teile: number; form: Form; vorlage: boolean }
+
+/**
+ * Das laufende Puzzle je Gerät (Michael, 2026-11-24: «dass das Bilderputzle immer auf dem letzten Stand ist, pro Gerät, so kann man immer
+ * weiterfahren, wenn man mal abbrechen muss»): Bild, Teile, Form und der Stand der Teile; gelöst wird es gelöscht
+ */
+const LAUFEND = 'taktland.bilderpuzzle.laufend'
+interface Laufend { bild: string; teile: number; form: Form; stand: PuzzleStand }
+function laufendLesen(): Laufend | null {
+  try {
+    const l = JSON.parse(localStorage.getItem(LAUFEND) ?? 'null') as Laufend | null
+    return l && typeof l.bild === 'string' && Array.isArray(l.stand?.lagen) ? l : null
+  } catch { return null }
+}
+function laufendMerken(l: Laufend | null) {
+  try { if (l) localStorage.setItem(LAUFEND, JSON.stringify(l)); else localStorage.removeItem(LAUFEND) } catch { /* ohne Speicher */ }
+}
 
 function wahlLesen(): Wahl {
   const grund: Wahl = { teile: 12, form: 'puzzle', vorlage: true }
@@ -34,6 +50,14 @@ export function Bilderpuzzle() {
   const [spiel, setSpiel] = useState<PuzzleBild | null>(null)
   const [scharf, setScharf] = useState<string | null>(null)
   const datei = useRef<HTMLInputElement>(null)
+  // ein angefangenes Puzzle: beim Öffnen der Seite gleich weiter, sobald das Bild bekannt ist (eigene Bilder kommen erst aus dem Speicher)
+  const [laufend, setLaufend] = useState<Laufend | null>(laufendLesen)
+  const weiterGeprueft = useRef(false)
+  const laufendesBild = laufend ? [...BILDER, ...eigene].find((b) => b.id === laufend.bild) ?? null : null
+  useEffect(() => {
+    if (weiterGeprueft.current || !laufend) return
+    if (laufendesBild) { weiterGeprueft.current = true; setSpiel(laufendesBild) }
+  }, [laufend, laufendesBild])
 
   useEffect(() => { try { localStorage.setItem(SPEICHER, JSON.stringify(wahl)) } catch { /* nur für jetzt */ } }, [wahl])
   useEffect(() => {
@@ -134,9 +158,10 @@ export function Bilderpuzzle() {
         {/* ohne Namen, die eigenen Bilder und «Eigenes Bild oder Foto» am Schluss (Michael, 2026-11-22: «Bildernamen entfernen. Eigenes Bild am Schluss») */}
         {[...BILDER, ...eigene].map((b) => (
           <li key={b.id} className="relative flex">
-            <button type="button" onClick={() => setSpiel(b)} aria-label={`${b.titel} puzzeln`}
+            <button type="button" onClick={() => { if (laufend && (laufend.bild !== b.id || laufend.teile !== wahl.teile || laufend.form !== wahl.form)) { laufendMerken(null); setLaufend(null) } setSpiel(b) }} aria-label={`${b.titel} puzzeln`}
                     className="kachel kachel-link flex w-full flex-col overflow-hidden text-left">
               <img src={b.url} alt="" loading="lazy" className="aspect-[2/1] w-full object-cover" />
+              {laufend?.bild === b.id && <span className="absolute left-1.5 top-1.5 rounded-lg bg-sbb-red px-2.5 py-1 text-sm font-bold text-white">Weiterpuzzeln</span>}
             </button>
             {b.eigenes && (
               <button type="button" onClick={() => loeschen(b)} aria-label="Bild löschen"
@@ -161,7 +186,10 @@ export function Bilderpuzzle() {
         {ohneSpeicher && ' Dieser Browser kann sie nicht speichern: Nach dem Schliessen sind sie wieder weg.'}
       </p>
 
-      {spiel && <Spiel key={`${spiel.id}`} bild={spiel} wahl={wahl}
+      {spiel && <Spiel key={`${spiel.id}`} bild={spiel}
+                       wahl={laufend?.bild === spiel.id ? { ...wahl, teile: laufend.teile, form: laufend.form } : wahl}
+                       gemerkt={laufend?.bild === spiel.id ? laufend.stand : null}
+                       merken={(l) => { laufendMerken(l); setLaufend(l) }}
                        vorlageAendern={(v) => setWahl((w) => ({ ...w, vorlage: v }))}
                        schliessen={() => setSpiel(null)} />}
     </div>
@@ -169,9 +197,11 @@ export function Bilderpuzzle() {
 }
 
 /** Das Spiel im ganzen Fenster, über allem */
-function Spiel({ bild, wahl, vorlageAendern, schliessen }: {
-  bild: PuzzleBild; wahl: Wahl; vorlageAendern: (v: boolean) => void; schliessen: () => void
+function Spiel({ bild, wahl, gemerkt, merken, vorlageAendern, schliessen }: {
+  bild: PuzzleBild; wahl: Wahl; gemerkt: PuzzleStand | null; merken: (l: Laufend | null) => void; vorlageAendern: (v: boolean) => void; schliessen: () => void
 }) {
+  // der gemerkte Stand gilt nur beim ersten Aufbau, «Nochmal» beginnt neu
+  const standJetzt = useRef(gemerkt)
   const flaeche = useRef<HTMLDivElement>(null)
   const feld = useRef<Spielfeld | null>(null)
   const konfetti = useRef<HTMLCanvasElement>(null)
@@ -198,7 +228,10 @@ function Spiel({ bild, wahl, vorlageAendern, schliessen }: {
         bild: img, teile: wahl.teile, form: wahl.form, vorlage: vorlageJetzt.current,
         beiStand: (g, a) => setStand([g, a]),
         beiEinrasten: () => antwortTon('richtig'),
+        stand: standJetzt.current,
+        beiAenderung: (s) => { merken({ bild: bild.id, teile: wahl.teile, form: wahl.form, stand: s }) },
         beiFertig: () => {
+          merken(null)
           window.setTimeout(() => { antwortTon('bestwert'); if (konfetti.current) konfettiWerfen(konfetti.current) }, 250)
           window.setTimeout(() => setFertig(true), 1100)
         },
@@ -251,7 +284,7 @@ function Spiel({ bild, wahl, vorlageAendern, schliessen }: {
           <div className="flex flex-wrap items-center justify-center gap-2">
             <button type="button" autoFocus onClick={schliessen}
                     className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Neues Bild</button>
-            <button type="button" onClick={() => { setFertig(false); setRunde((r) => r + 1) }}
+            <button type="button" onClick={() => { standJetzt.current = null; setFertig(false); setRunde((r) => r + 1) }}
                     className="rounded-lg border border-sbb-cloud bg-white px-5 py-3 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-charcoal dark:hover:border-sbb-white">
               Nochmal
             </button>
