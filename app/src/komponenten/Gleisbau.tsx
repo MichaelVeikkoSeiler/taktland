@@ -3,6 +3,7 @@ import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zu
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  WAGEN, WAGEN_MIN, WAGEN_MAX,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
@@ -37,13 +38,13 @@ type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
-  { w: { art: 'linie' }, text: 'Linie ziehen' },
+  { w: { art: 'linie' }, text: 'Linie' },
   { w: { art: 'gleis', gleis: 'gerade' }, text: 'Gerade' },
   { w: { art: 'gleis', gleis: 'kurve' }, text: 'Kurve' },
   { w: { art: 'gleis', gleis: 'bogen2' }, text: 'Kurve 2 × 2' },
   { w: { art: 'gleis', gleis: 'bogen3' }, text: 'Kurve 3 × 3' },
-  { w: { art: 'gleis', gleis: 'weiche' }, text: 'Weiche rechts' },
-  { w: { art: 'gleis', gleis: 'weiche_l' }, text: 'Weiche links' },
+  { w: { art: 'gleis', gleis: 'weiche' }, text: 'Weiche R' },
+  { w: { art: 'gleis', gleis: 'weiche_l' }, text: 'Weiche L' },
   { w: { art: 'gleis', gleis: 'dreiweg' }, text: 'Dreiweg' },
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
@@ -494,7 +495,7 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
         <GrundBild f={{ grund: 'wiese' }} i={0} j={0} />
         <GleisBild f={{ grund: 'wiese', gleis: { art: 'bahnhof', dreh: 1 } }} i={0} j={0} />
         <rect x={0.08} y={0.1} width={0.84} height={0.3} rx={0.05} fill="#3d3d3d" />
-        <text x={0.5} y={0.32} fontSize={0.2} fontWeight={700} textAnchor="middle" fill="#ffffff">Bern</text>
+        <text x={0.5} y={0.32} fontSize={0.2} fontWeight={700} textAnchor="middle" fill="#ffffff">Ort</text>
       </svg>
     )
   }
@@ -564,6 +565,9 @@ export function Gleisbau() {
   const [wagen, setWagen] = useState<WagenLage[][]>([])
   // ein oder zwei Züge (Michael, 2026-11-23, Vorschlag «Zweiter Zug auf demselben Netz»)
   const [zweiZuege, setZweiZuege] = useState(false)
+  // Fahrzeuge am Zug samt Lok und Steuerwagen, auf dem Gerät gemerkt
+  const [wagenZahl, setWagenZahl] = useState(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.wagen')); return n >= WAGEN_MIN && n <= WAGEN_MAX ? n : WAGEN } catch { return WAGEN } })
+  const wagenSetzen = (n: number) => { const m = Math.max(WAGEN_MIN, Math.min(WAGEN_MAX, n)); setWagenZahl(m); try { localStorage.setItem('taktland.gleisbau.wagen', String(m)) } catch { /* ohne Speicher */ } }
   // Fahrgäste mit Ziel an den Bahnhöfen (Michael, 2026-11-23, Vorschlag «Fahrgäste»), am Anfang an
   const [mitFahrgaesten, setMitFahrgaesten] = useState(true)
   const [fahrgaeste, setFahrgaeste] = useState<Fahrgaeste | null>(null)
@@ -1032,11 +1036,11 @@ export function Gleisbau() {
 
   function fahren() {
     if (faehrt) { setFaehrt(false); setWagen([]); zuege.current = []; fgRef.current = null; setFahrgaeste(null); return }
-    const z = Zug.setzen(brett)
+    const z = Zug.setzen(brett, undefined, wagenZahl)
     if (!z) { setMeldung('Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
     const l = [z]
     if (zweiZuege) {
-      const z2 = Zug.setzen(brett, z.belegt())
+      const z2 = Zug.setzen(brett, z.belegt(), wagenZahl)
       if (z2) l.push(z2)
       else setMeldung('Für einen zweiten Zug ist das Netz zu klein: Er braucht Platz weit weg vom ersten.')
     }
@@ -1048,9 +1052,10 @@ export function Gleisbau() {
     zuege.current = l; pfiffe.current = []; dorf.current = false; setWagen(l.map((x) => x.wagen())); setFaehrt(true)
   }
 
-  const knopf = (an: boolean) => `flex w-[4.25rem] flex-none flex-col items-center gap-0.5 rounded-lg border px-1 py-1 text-[11px] font-medium leading-tight ${an
-    ? 'border-sbb-anthracite bg-sbb-anthracite text-white dark:border-sbb-white dark:bg-sbb-white dark:text-sbb-black'
-    : 'border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'}`
+  // ohne Rand (Michael, 2026-11-24: «Die dünne, graue Umrandung bei den einzelnen Elementen braucht es nicht»), eine Zeile Text
+  const knopf = (an: boolean) => `flex w-[4.25rem] flex-none flex-col items-center gap-0.5 whitespace-nowrap rounded-lg px-1 py-1 text-[11px] font-medium leading-tight ${an
+    ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black'
+    : 'bg-white hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-iron'}`
   const rund = 'flex size-11 flex-none items-center justify-center rounded-full border border-sbb-cloud bg-white text-lg font-bold shadow-sm hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'
   const imBrett = ansicht === 'brett' || (ansicht === 'aufgaben' && !!aufgabe)
   const naechste = aufgabe ? AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1] : undefined
@@ -1253,6 +1258,14 @@ export function Gleisbau() {
                 <div className="mt-2 divide-y divide-sbb-cloud dark:divide-sbb-iron">
                   {schalter(mitFahrgaesten, () => setMitFahrgaesten((x) => !x), 'Fahrgäste mit Ziel an den Bahnhöfen')}
                   {schalter(zweiZuege, () => setZweiZuege((x) => !x), 'Zwei Züge')}
+                  <div className="flex min-h-12 items-center justify-between gap-3 py-2">
+                    <span>Länge des Zugs<span className="block text-xs text-sbb-metal">Lok, {wagenZahl - 2 === 1 ? '1 Wagen' : `${wagenZahl - 2} Wagen`} und Steuerwagen{faehrt ? ', gilt ab der nächsten Fahrt' : ''}</span></span>
+                    <span className="flex items-center gap-2">
+                      <button type="button" aria-label="Ein Wagen weniger" disabled={wagenZahl <= WAGEN_MIN} onClick={() => wagenSetzen(wagenZahl - 1)} className={rund}>−</button>
+                      <span className="w-6 text-center text-lg font-bold tabular-nums">{wagenZahl - 2}</span>
+                      <button type="button" aria-label="Ein Wagen mehr" disabled={wagenZahl >= WAGEN_MAX} onClick={() => wagenSetzen(wagenZahl + 1)} className={rund}>+</button>
+                    </span>
+                  </div>
                 </div>
                 {!aufgabe && <><p className="mt-4 text-sm font-bold">Grösse des Bretts</p>
                   <GroesseWahl key={`${SP}x${ZE}`} sp={SP} ze={ZE} gesperrt={faehrt} text="Grösse ändern"

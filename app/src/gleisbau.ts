@@ -690,8 +690,9 @@ export function strasseMoeglich(f: Feld): string | null {
 
 export const WAGEN_LAENGE = 0.5
 export const WAGEN_LUECKE = 0.06
-export const WAGEN = 4
-export const ZUG_LAENGE = WAGEN * WAGEN_LAENGE + (WAGEN - 1) * WAGEN_LUECKE
+/** Fahrzeuge am Zug samt Lok und Steuerwagen, wählbar im Menü (Michael, 2026-11-24: «Den Zug soll man in der Länge wählen können, wie viele Wagen dranhängen») */
+export const WAGEN = 4, WAGEN_MIN = 2, WAGEN_MAX = 8
+export const zugLaenge = (n: number) => n * WAGEN_LAENGE + (n - 1) * WAGEN_LUECKE
 /** Tempo in Feldern je Sekunde, Anfahren und Halt am Bahnhof (gewählt) */
 export const TEMPO = 1.5
 const ANFAHREN = 1.2
@@ -718,12 +719,15 @@ export class Zug {
   haltFeld = ''
   /** wie oft der Zug am Ende eines Gleises umgekehrt hat (für die Aufgabe «Rundkurs») */
   umkehrungen = 0
+  /** Fahrzeuge samt Lok und Steuerwagen */
+  private anzahl = WAGEN
+  private get laenge() { return zugLaenge(this.anzahl) }
 
   /**
    * null, wenn auf dem Brett kein Gleis liegt. meiden: Felder eines anderen Zugs (Michael, 2026-11-23, Vorschlag «Zweiter Zug»); der neue beginnt
    * dann an einem anderen Bahnhof oder möglichst weit weg und belegt keines dieser Felder und keines daneben
    */
-  static setzen(b: Brett, meiden?: Set<string>): Zug | null {
+  static setzen(b: Brett, meiden?: Set<string>, anzahl = WAGEN): Zug | null {
     const felder: Array<[number, number]> = []
     for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) if (b[j][i].gleis) felder.push([i, j])
     const abstand = ([i, j]: [number, number]) => {
@@ -735,7 +739,7 @@ export class Zug {
     // zuerst Bahnhöfe, dann die übrigen; mit einem anderen Zug die fernsten zuerst
     felder.sort((a, c) => Number(istBahnhof(b[c[1]][c[0]].gleis)) - Number(istBahnhof(b[a[1]][a[0]].gleis)) || abstand(c) - abstand(a))
     for (const [i, j] of felder) {
-      const z = Zug.ab(b, i, j)
+      const z = Zug.ab(b, i, j, anzahl)
       if (!z) continue
       if (meiden?.size) {
         const nah = [...z.belegt()].some((k) => { const [u, v] = k.split(',').map(Number); return [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]].some(([du, dv]) => meiden.has(`${u + du},${v + dv}`)) })
@@ -746,15 +750,16 @@ export class Zug {
     return null
   }
 
-  private static ab(b: Brett, i: number, j: number): Zug | null {
+  private static ab(b: Brett, i: number, j: number, anzahl: number): Zug | null {
     const start = erstesStueck(b, i, j)
     if (!start) return null
     const z = new Zug()
+    z.anzahl = Math.max(WAGEN_MIN, Math.min(WAGEN_MAX, Math.round(anzahl)))
     z.stuecke = [start]
     z.kopf = stueckLaenge(start) / 2
     // nach hinten auffüllen, so weit das Gleis reicht
     let erstes = start
-    for (let k = 0; k < 20 && z.hinten() < ZUG_LAENGE; k++) {
+    for (let k = 0; k < 20 && z.hinten() < z.laenge; k++) {
       const davor = naechstes(b, umgekehrt(erstes))
       if (!davor) break
       erstes = umgekehrt(davor)
@@ -772,12 +777,12 @@ export class Zug {
   }
 
   private kuerzen() {
-    while (this.stuecke.length > 1 && this.hinten() - stueckLaenge(this.stuecke[0]) >= ZUG_LAENGE + 0.01) this.stuecke.shift()
+    while (this.stuecke.length > 1 && this.hinten() - stueckLaenge(this.stuecke[0]) >= this.laenge + 0.01) this.stuecke.shift()
   }
 
   /** am Ende des Gleises: der Zug fährt zurück, die Spitze ist dort, wo das Ende des Zugs war */
   private umkehren() {
-    const ende = Math.max(0, this.hinten() - ZUG_LAENGE)
+    const ende = Math.max(0, this.hinten() - this.laenge)
     this.stuecke = this.stuecke.map(umgekehrt).reverse()
     this.kopf = Math.max(0, stueckLaenge(this.stuecke[this.stuecke.length - 1]) - ende)
     // steht die neue Spitze genau am Anfang eines Stücks, ist sie noch nicht darin: sonst gälte ein Feld als belegt, in das der Zug nie fuhr
@@ -796,7 +801,7 @@ export class Zug {
   /** die Felder, die der Zug mit seinen Wagen und dem Stück unter der Spitze belegt */
   belegt(): Set<string> {
     const raus = new Set<string>()
-    for (let d = -0.1; d <= ZUG_LAENGE + 0.05; d += 0.2) { const p = this.punkt(Math.max(0, d)); raus.add(`${Math.floor(p.x)},${Math.floor(p.y)}`) }
+    for (let d = -0.1; d <= this.laenge + 0.05; d += 0.2) { const p = this.punkt(Math.max(0, d)); raus.add(`${Math.floor(p.x)},${Math.floor(p.y)}`) }
     for (const k of stueckFelder(this.stuecke[this.stuecke.length - 1])) raus.add(k)
     return raus
   }
@@ -860,9 +865,10 @@ export class Zug {
   spitze(): [number, number] { const p = this.punkt(0); return [Math.floor(p.x), Math.floor(p.y)] }
 
   wagen(): WagenLage[] {
-    return Array.from({ length: WAGEN }, (_, k) => {
+    const n = this.anzahl
+    return Array.from({ length: n }, (_, k) => {
       const vorn = k * (WAGEN_LAENGE + WAGEN_LUECKE), a = this.punkt(vorn), c = this.punkt(vorn + WAGEN_LAENGE)
-      const art = this.rueckwaerts ? WAGEN - 1 - k : k
+      const nr = this.rueckwaerts ? n - 1 - k : k, art = nr === 0 ? 0 : nr === n - 1 ? 3 : 1 + (nr % 2)
       return { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2, w: Math.atan2(a.y - c.y, a.x - c.x), art, vorne: k === 0 }
     })
   }
