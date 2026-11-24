@@ -16,7 +16,7 @@ export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
 export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee' | 'acker'
-export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve'
+export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve' | 'ueberfuehrung'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
 /** wo eine Ampel stehen kann: an einer Geraden, Kurve oder einem Bahnhof */
@@ -62,6 +62,8 @@ const WEGE: Record<GleisArt, Array<[number, number]>> = {
   gerade: [[0, 2]], bahnhof: [[0, 2]], kurve: [[2, 1]], kurvenbahnhof: [[2, 1]], weiche: [[2, 0], [2, 1]], weiche_l: [[2, 0], [2, 3]], kreuzung: [[0, 2], [1, 3]], prellbock: [[2, -1]],
   // zwei gegenüberliegende Kurven in einem Feld, Süd–Ost und Nord–West, ohne Verbindung zueinander (Michael, 2026-11-24: «auf einer Kachel sollen auch 2 gegenüberliegende Kurven möglich sein»)
   doppelkurve: [[2, 1], [0, 3]],
+  // Brücke über Gleis (seit 2026-11-24; Michael: «Es sollte auch ein Element geben Brücke über Gleis»): wie die Kreuzung, das zweite Gleis führt oben darüber
+  ueberfuehrung: [[0, 2], [1, 3]],
   // die Dreiwegweiche: gerade, rechts, links; die grossen Kurven haben keine Wege in einem Feld (grossGeometrie)
   dreiweg: [[2, 0], [2, 1], [2, 3]], bogen2: [], bogen3: [],
 }
@@ -302,7 +304,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 
 const SPEICHER = 'taktland.gleisbau.v1'
 const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee', 'acker']
-const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve']
+const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung']
 
 /** das gemerkte Brett, nur wenn es heil ist */
 export function brettLesen(): Brett | null {
@@ -322,7 +324,7 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbdrna', STRASSE_Z = 'WFSBDRNA', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUV'
+const GRUND_Z = 'wfsbdrna', STRASSE_Z = 'WFSBDRNA', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
@@ -652,6 +654,19 @@ export function wegPunkte(s: Stueck, n = 10): Array<{ x: number; y: number; w: n
 }
 
 /** die Felder, durch die ein Stück führt: bei einem kleinen sein Feld, bei einer grossen Kurve alle, über die der Bogen läuft */
+/**
+ * Auf einer Überführung belegt ein Zug nur seine Ebene: das Feld zählt dort als «i,j:0» (Nord–Süd) oder «i,j:1» (Ost–West), so kreuzen sich zwei
+ * Züge, ohne aufeinander zu warten
+ */
+const ebene = (b: Brett | null, s: Stueck) => (!s.gross && b?.[s.j]?.[s.i]?.gleis?.art === 'ueberfuehrung' ? `${s.i},${s.j}:${(s.ein >= 0 ? s.ein : s.aus) % 2}` : null)
+function ebenenFelder(b: Brett | null, keys: Set<string>, stuecke: Stueck[]): Set<string> {
+  if (!b) return keys
+  const raus = new Set(keys)
+  for (const k of keys) { const [i, j] = k.split(',').map(Number); if (b[j]?.[i]?.gleis?.art === 'ueberfuehrung') raus.delete(k) }
+  for (const s of stuecke) { const e = ebene(b, s); if (e && keys.has(`${s.i},${s.j}`)) raus.add(e) }
+  return raus
+}
+
 function stueckFelder(s: Stueck): Set<string> {
   const raus = new Set<string>([`${s.i},${s.j}`])
   if (!s.gross) return raus
@@ -811,6 +826,7 @@ export class Zug {
     const z = new Zug()
     z.anzahl = Math.max(WAGEN_MIN, Math.min(WAGEN_MAX, Math.round(anzahl)))
     z.stuecke = [start]
+    z.brett = b
     z.kopf = stueckLaenge(start) / 2
     // nach hinten auffüllen, so weit das Gleis reicht
     let erstes = start
@@ -886,14 +902,17 @@ export class Zug {
     const raus = new Set<string>()
     for (let d = -0.1; d <= this.laenge + 0.05; d += 0.2) { const p = this.punkt(Math.max(0, d)); raus.add(`${Math.floor(p.x)},${Math.floor(p.y)}`) }
     for (const k of stueckFelder(this.stuecke[this.stuecke.length - 1])) raus.add(k)
-    return raus
+    return ebenenFelder(this.brett, raus, this.stuecke)
   }
+  /** das Brett der letzten Fahrt, für die Ebenen der Überführungen */
+  private brett: Brett | null = null
 
   /**
    * frei: ob der Zug in diese Felder einfahren darf (sonst wartet er am Ende des Stücks, wie vor einem roten Signal); umkehren: ob er nach langem
    * Warten umkehren soll (wenn zwei Züge auf einem Gleis gegeneinander warten)
    */
   schritt(b: Brett, dt: number, frei?: (felder: Set<string>) => boolean, umkehren?: () => boolean, ankuppeln?: (i: number, j: number) => void) {
+    this.brett = b
     if (this.halt > 0) {
       if (this.amBahnhof && this.halt > PFIFF_VOR_S && this.halt - dt <= PFIFF_VOR_S) this.pfiffe++
       this.halt -= dt
@@ -924,7 +943,7 @@ export class Zug {
         else this.umkehren()
         return
       }
-      if (frei && !frei(stueckFelder(n))) {
+      if (frei && !frei(ebenenFelder(b, stueckFelder(n), [n]))) {
         this.kopf = l; this.tempo = 0; this.wartet += dt
         if (umkehren?.()) { this.wartet = 0; this.umkehren() }
         return

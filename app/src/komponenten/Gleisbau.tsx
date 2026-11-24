@@ -49,6 +49,7 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'weiche_l' }, text: 'Weiche L' },
   { w: { art: 'gleis', gleis: 'dreiweg' }, text: 'Dreiweg' },
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
+  { w: { art: 'gleis', gleis: 'ueberfuehrung' }, text: 'Überführung' },
   { w: { art: 'gleis', gleis: 'doppelkurve' }, text: 'Doppelkurve' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
   { w: { art: 'wagen' }, text: 'Wagen' },
@@ -253,6 +254,13 @@ const TUNNEL_STRICH = '#55585e'
 
 /** ob ein Punkt im Tunnel liegt: in einem Feld im Berg mit Gleis, mehr als PORTAL von jeder Kante mit Portal (an Kanten, wo der Tunnel im
  *  Nachbarfeld weitergeht, gibt es keines) */
+/** ein Wagen auf dem unteren Gleis einer Überführung, nahe der Mitte: blass wie im Tunnel */
+function unterBruecke(f: Feld | undefined, i: number, j: number, w: WagenLage) {
+  if (f?.gleis?.art !== 'ueberfuehrung') return false
+  const untenSenkrecht = f.gleis.dreh % 2 === 0, senkrecht = Math.abs(Math.sin(w.w)) > 0.7
+  return untenSenkrecht === senkrecht && Math.hypot(w.x - i - 0.5, w.y - j - 0.5) < 0.35
+}
+
 function imTunnel(b: Brett, x: number, y: number) {
   const i = Math.floor(x), j = Math.floor(y)
   const f = b[j]?.[i]
@@ -374,6 +382,21 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
           <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
         </g>
       ))}
+      {/* Überführung: das zweite Gleis auf einer Brücke mit Schatten über dem ersten */}
+      {g.art === 'ueberfuehrung' && (() => {
+        const p = wegPunkte({ i, j, ein: w[1][0], aus: w[1][1] }, 2)
+        return (
+          <g>
+            <path d={linie(p)} transform="translate(0.04 0.06)" fill="none" stroke="rgba(0,0,0,.25)" strokeWidth={0.46} />
+            <path d={linie(p)} fill="none" stroke={F.bruecke} strokeWidth={0.42} />
+            <path d={linie(versetzt(p, 0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
+            <path d={linie(versetzt(p, -0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
+            <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
+            <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
+            <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
+          </g>
+        )
+      })()}
       {g.art === 'prellbock' && (() => {
         const ende = punkte[0].p[punkte[0].p.length - 1], q = { x: ende.x, y: ende.y }, wq = ende.w
         return (
@@ -1190,7 +1213,7 @@ export function Gleisbau() {
     } else if (w.art === 'gleis') {
       if (f.gleis?.art === w.gleis) {
         // die Doppelkurve hat nur zwei Lagen
-        const d = ((f.gleis.dreh + 1) % (w.gleis === 'doppelkurve' ? 2 : 4)) as Dreh
+        const d = ((f.gleis.dreh + 1) % (w.gleis === 'doppelkurve' || w.gleis === 'ueberfuehrung' ? 2 : 4)) as Dreh
         setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
       } else n = { ...f, gleis: { art: w.gleis, dreh } }
     } else if (w.art === 'bruecke') {
@@ -1358,7 +1381,7 @@ export function Gleisbau() {
              className="size-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {unten}
-          {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y) || (() => { const f = brett[Math.floor(w.y)]?.[Math.floor(w.x)]; return bauGilt(f) && f!.bau !== 'gueter' })()} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />))}
+          {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y) || (() => { const fi = Math.floor(w.x), fj = Math.floor(w.y), f = brett[fj]?.[fi]; return (bauGilt(f) && f!.bau !== 'gueter') || unterBruecke(f, fi, fj, w) })()} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />))}
           {oben}
           <SchrankenBild brett={brett} wagen={wagen.flat()} />
           {/* abgestellte Wagen, längs zum Gleis */}
