@@ -107,17 +107,22 @@ export function Landschaft({ brett }: { brett: Brett }) {
         <path d={gebietPfad(brett, 'wasser', EINZUG.wasser)} fill={FUELLUNG.wasser} />
         {/* Flüsse: von der Mitte zu jeder Kante, an der Fluss oder Wasser anschliesst, mit Ufer (Breiten gewählt) */}
         {(() => {
-          const d: string[] = [], m: string[] = []
+          const d: string[] = [], dw: string[] = [], m: string[] = []
           // je Stück von der Mitte zur Kante, gerade Enden am Rand des Felds, in der Mitte ein Kreis für die Biegung
           for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
             const k = flussKanten(brett, i, j)
-            for (const e of k) d.push(`M${i + 0.5},${j + 0.5} L${i + 0.5 + [0, 0.5, 0, -0.5][e]},${j + 0.5 + [-0.5, 0, 0.5, 0][e]}`)
+            for (const e of k) {
+              // in einen See läuft der Fluss über das Ufer hinein (Michael, 2026-11-24: «Wäre schön wenn sich Fluss mit See verbinden liesse»), gewählt
+              const see = brett[j + [-1, 0, 1, 0][e]]?.[i + [0, 1, 0, -1][e]]?.grund === 'wasser'
+              const zu = (l: number) => `M${i + 0.5},${j + 0.5} L${i + 0.5 + [0, l, 0, -l][e]},${j + 0.5 + [-l, 0, l, 0][e]}`
+              d.push(zu(see ? 0.62 : 0.5)); dw.push(zu(see ? 0.7 : 0.5))
+            }
             if (k.length) m.push(`M${i + 0.5},${j + 0.5} l0,0`)
           }
           return d.length ? <>
             <path d={d.join(' ')} fill="none" stroke={FUELLUNG.ufer} strokeWidth={0.46} />
             <path d={m.join(' ')} fill="none" stroke={FUELLUNG.ufer} strokeWidth={0.46} strokeLinecap="round" />
-            <path d={d.join(' ')} fill="none" stroke={FUELLUNG.wasser} strokeWidth={0.34} />
+            <path d={dw.join(' ')} fill="none" stroke={FUELLUNG.wasser} strokeWidth={0.34} />
             <path d={m.join(' ')} fill="none" stroke={FUELLUNG.wasser} strokeWidth={0.34} strokeLinecap="round" />
           </> : null
         })()}

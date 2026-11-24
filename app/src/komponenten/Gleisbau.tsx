@@ -96,6 +96,32 @@ const TAKT_WAHL = [0, 15, 30, 60] as const, UHR_START_MIN = 7 * 60
 const uhrText = (sek: number) => { const m = UHR_START_MIN + Math.floor(sek); return `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}` }
 const taktZeiten = (takt: number) => Array.from({ length: 60 / takt }, (_, k) => `:${String(k * takt).padStart(2, '0')}`).join(' ')
 
+/** Werkzeuge, die man über mehrere Felder ziehen kann */
+const MAL_WERKZEUGE: Array<Werkzeug['art']> = ['grund', 'fluss', 'strasse']
+
+/** ein Werkzeug auf viele Felder auf einmal: Boden setzen, Fluss oder Strasse legen, wo es geht (ohne Wechsel hin und zurück wie beim Tippen) */
+function malenAnwenden(b: Brett, felder: Array<[number, number]>, w: Werkzeug): Brett {
+  const neu = b.map((z) => z.map((f) => ({ ...f })))
+  let geaendert = false
+  for (const [i, j] of felder) {
+    const f = neu[j]?.[i]
+    if (!f) continue
+    if (w.art === 'grund') {
+      if (f.teil || grosseKurve(f.gleis) || f.grund === w.grund) continue
+      f.grund = w.grund
+      if (w.grund === 'wasser' || w.grund === 'berg') { delete f.fluss; delete f.strasse }
+      geaendert = true
+    } else if (w.art === 'fluss') {
+      if (f.fluss || f.grund === 'wasser' || f.grund === 'berg' || f.strasse) continue
+      f.fluss = true; geaendert = true
+    } else if (w.art === 'strasse') {
+      if (f.strasse || strasseMoeglich(f)) continue
+      f.strasse = true; geaendert = true
+    }
+  }
+  return geaendert ? neu : b
+}
+
 const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringify(b)
 
 /** nach so vielen Sekunden gegenseitigen Wartens kehrt ein Zug um; Spitze des zweiten Zugs in Blau statt Karmin (beides gewählt) */
@@ -725,6 +751,13 @@ export function Gleisbau() {
   // Linie ziehen: die Felder, über die der Finger gefahren ist
   const [linie, setLinie] = useState<Array<[number, number]> | null>(null)
   const linieRef = useRef<Array<[number, number]> | null>(null)
+  /**
+   * Malen (Michael, 2026-11-24: «Generell soll man bei ausgewählten Elementen ziehen können und es füllt auf der Fläche auf»): mit Boden, Fluss oder
+   * Strasse gewählt, füllt Ziehen über die Felder alle; ein einziger Schritt zum Zurücknehmen. Wer still hält, verschiebt wie bisher
+   */
+  const malRef = useRef<Array<[number, number]> | null>(null)
+  const malStart = useRef<{ x: number; y: number; feld: [number, number] } | null>(null)
+  const [malen, setMalen] = useState<Array<[number, number]> | null>(null)
   const zuege = useRef<Zug[]>([])
   const pfiffe = useRef<number[]>([]), dorf = useRef(false)
   const brettRef = useRef(brett)
@@ -883,7 +916,7 @@ export function Gleisbau() {
   const buehneDrucken = (e: React.PointerEvent<HTMLDivElement>) => {
     finger.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
     if (finger.current.size !== 2) return
-    druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); nachZiehen.current = true
+    druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); malRef.current = null; malStart.current = null; setMalen(null); nachZiehen.current = true
     const [a, b] = [...finger.current.values()], r = buehne.current!.getBoundingClientRect()
     zwei.current = { d: Math.hypot(a.x - b.x, a.y - b.y), mx: (a.x + b.x) / 2 - r.left, my: (a.y + b.y) / 2 - r.top, z: zoom }
   }
@@ -990,7 +1023,7 @@ export function Gleisbau() {
     const el = svg.current
     if (!el) return
     // während des Ziehens darf die Seite nicht rollen
-    const halt = (e: TouchEvent) => { if (druck.current?.zeit === -1 || linieRef.current) e.preventDefault() }
+    const halt = (e: TouchEvent) => { if (druck.current?.zeit === -1 || linieRef.current || malRef.current) e.preventDefault() }
     el.addEventListener('touchmove', halt, { passive: false })
     return () => el.removeEventListener('touchmove', halt)
   }, [])
@@ -1004,6 +1037,7 @@ export function Gleisbau() {
       linieRef.current = [feld]; setLinie([feld])
       return
     }
+    malStart.current = MAL_WERKZEUGE.includes(werkzeug.art) ? { x: e.clientX, y: e.clientY, feld } : null
     const f = brett[feld[1]][feld[0]]
     if (!f.gleis && !f.teil && f.grund === 'wiese') return
     const d = { x: e.clientX, y: e.clientY, zeit: 0, feld }
@@ -1018,11 +1052,33 @@ export function Gleisbau() {
     }, 450)
   }
   function bewegen(e: React.PointerEvent<SVGSVGElement>) {
-    const l = linieRef.current
+    // Malen beginnt, sobald der Finger vor dem langen Drücken ein anderes Feld erreicht
+    const ms = malStart.current
+    if (ms && !malRef.current && druck.current?.zeit !== -1) {
+      const feld = feldBei(e.clientX, e.clientY)
+      if (feld && (feld[0] !== ms.feld[0] || feld[1] !== ms.feld[1])) {
+        druck.current = null
+        try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* ohne Fangen geht es trotzdem */ }
+        malRef.current = [ms.feld]
+      }
+    }
+    const l = malRef.current ?? linieRef.current
     if (l) {
       const feld = feldBei(e.clientX, e.clientY)
       if (!feld) return
       let neu = l
+      if (malRef.current) {
+        // beim Malen jedes Feld auf dem Weg einmal
+        for (let k = 0; k < 30; k++) {
+          const [li, lj] = neu[neu.length - 1]
+          if (li === feld[0] && lj === feld[1]) break
+          const dx = feld[0] - li, dy = feld[1] - lj
+          const schritt: [number, number] = Math.abs(dx) >= Math.abs(dy) ? [li + Math.sign(dx), lj] : [li, lj + Math.sign(dy)]
+          neu = [...neu, schritt]
+        }
+        if (neu !== l) { malRef.current = neu; setMalen(neu) }
+        return
+      }
       // Feld für Feld zum Finger, auch wenn er ein Feld übersprungen hat; zurück zum vorletzten nimmt das letzte weg
       for (let k = 0; k < 30; k++) {
         const [li, lj] = neu[neu.length - 1]
@@ -1045,6 +1101,16 @@ export function Gleisbau() {
     if (feld) setZiehen((z) => (z && (z.nach[0] !== feld[0] || z.nach[1] !== feld[1]) ? { ...z, nach: feld } : z))
   }
   function loslassen() {
+    malStart.current = null
+    const m = malRef.current
+    if (m) {
+      malRef.current = null; setMalen(null)
+      nachZiehen.current = true
+      window.setTimeout(() => { nachZiehen.current = false }, 250)
+      const r = malenAnwenden(brett, m, werkzeug)
+      if (r !== brett) { setBrett(r); knopfTon(true); setMeldung(null) }
+      return
+    }
     const l = linieRef.current
     if (l) {
       linieRef.current = null; setLinie(null)
@@ -1377,7 +1443,7 @@ export function Gleisbau() {
             <div className="absolute inset-0 px-2.5" style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`, transformOrigin: '0 0' }}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
-             onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null) }} onContextMenu={(e) => e.preventDefault()}
+             onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); malRef.current = null; malStart.current = null; setMalen(null) }} onContextMenu={(e) => e.preventDefault()}
              className="size-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {unten}
@@ -1400,6 +1466,11 @@ export function Gleisbau() {
             <path pointerEvents="none" d={linie.map(([i, j], k) => `${k ? 'L' : 'M'}${i + 0.5},${j + 0.5}`).join('')} fill="none" stroke={F.karmin}
                   strokeWidth={0.14} strokeLinecap="round" strokeLinejoin="round" opacity={0.75} />
           )}
+          {/* beim Malen die Felder, die gefüllt werden */}
+          {malen && [...new Set(malen.map(([i, j]) => `${i},${j}`))].map((k) => {
+            const [i, j] = k.split(',').map(Number)
+            return <rect key={`m${k}`} x={i + 0.04} y={j + 0.04} width={0.92} height={0.9} rx={0.06} fill="rgba(168,16,46,.18)" stroke={F.karmin} strokeWidth={0.04} pointerEvents="none" />
+          })}
           {ziehen && (() => {
             const [vi, vj] = ziehen.von, [ni, nj] = ziehen.nach, f = brett[vj][vi]
             const [hi, hj] = f.teil ?? [vi, vj], h = brett[hj][hi]
@@ -1624,6 +1695,7 @@ function SoGehts() {
       <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben läuft eine Uhr, eine Minute im Spiel dauert eine Sekunde. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
+      <li>Mit Boden, Fluss oder Strasse gewählt, über die Felder ziehen: Alle werden gefüllt.</li>
       <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.
         Mit zwei Fingern zoomst und verschiebst du das Brett, am Computer mit dem Mausrad.</li>
       <li>▶ Fahren: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um, ein Tipp stellt die Weichen. Im Menü «⋯»: Fahrgäste mit
