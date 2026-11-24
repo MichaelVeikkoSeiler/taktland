@@ -45,6 +45,8 @@ export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /*
   fluss?: true
   /** der Bahnhof ist ein Knoten im Taktfahrplan (seit 2026-11-24): dort fahren die Züge zur Taktzeit ab */
   knoten?: true
+  /** Gelände (seit 2026-11-24): 0 bis 7 ein Hang, der in diese Richtung ansteigt (0 Nord, 1 Nordost … 7 Nordwest), 8 Hügel, 9 Mulde */
+  hang?: number
   /** ein abgestellter Wagen auf dem Gleis (seit 2026-11-24): ein Zug, der hineinfährt, kuppelt ihn an */
   wagen?: true
   /** ein einzelnes Objekt im Feld (seit 2026-11-24, Bilder von Michael): Kirche oder Bauernhof */
@@ -332,10 +334,11 @@ export function brettCode(b: Brett): string {
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
     if (f.fluss) fluesse.push(`${i}.${j}`)
     if (f.knoten && istBahnhof(f.gleis)) knoten.push(`${i}.${j}`)
+    if (f.hang !== undefined) haenge.push(`${i}.${j}.${f.hang}`)
     if (f.wagen && wagenGilt(f)) abgestellt.push(`${i}.${j}`)
     if (f.objekt) objekte.push(`${i}.${j}.${f.objekt === 'kirche' ? 'k' : 'h'}`)
     if (bauGilt(f)) bauten.push(`${i}.${j}.${f.bau === 'depot' ? 'd' : f.bau === 'gueter' ? 'g' : 'l'}`)
@@ -346,7 +349,7 @@ export function brettCode(b: Brett): string {
     + (bruecken.length ? `~b${bruecken.join('_')}` : '') + (ampeln.length ? `~a${ampeln.join('_')}` : '')
     + (objekte.length ? `~o${objekte.join('_')}` : '') + (bauten.length ? `~u${bauten.join('_')}` : '')
     + (fluesse.length ? `~f${fluesse.join('_')}` : '') + (abgestellt.length ? `~w${abgestellt.join('_')}` : '')
-    + (knoten.length ? `~k${knoten.join('_')}` : '')
+    + (knoten.length ? `~k${knoten.join('_')}` : '') + (haenge.length ? `~h${haenge.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -361,6 +364,7 @@ export function brettAusCode(c: string): Brett | null {
   }))
   if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
+    if (teil.startsWith('h')) for (const e of teil.slice(1).split('_')) { const [i, j, d] = e.split('.').map(Number); if (b[j]?.[i] && d >= 0 && d <= 9) b[j][i].hang = d }
     if (teil.startsWith('k')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].knoten = true }
     if (teil.startsWith('f')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].fluss = true }
     if (teil.startsWith('w')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].wagen = true }
@@ -442,6 +446,37 @@ export function grossAnfang(ox: number, oy: number, n: number, d: number): [numb
 }
 
 /** das Brett ohne die grosse Kurve, die im Feld (i, j) steht oder darüber läuft */
+/**
+ * Am Rand eine Reihe oder Spalte dazu (+1) oder weg (-1) (seit 2026-11-24, Michael: «Am dunklen Rand ein Dreieck nach aussen und innen anbringen damit
+ * man das Brett erweitern oder reduzieren kann»); seite 0 oben, 1 rechts, 2 unten, 3 links. Grosse Kurven, die über die entfernte Reihe gehen, fallen
+ * ganz weg; null, wenn die Grösse nicht erlaubt ist
+ */
+export function brettRand(b: Brett, seite: number, d: 1 | -1): Brett | null {
+  const sp = spalten(b), ze = zeilen(b), quer = seite % 2 === 1
+  const nsp = sp + (quer ? d : 0), nze = ze + (quer ? 0 : d)
+  if (!groesseOk(nsp, nze)) return null
+  let x = b
+  if (d < 0) {
+    // die Felder der Reihe, die wegfällt
+    const reihe: Array<[number, number]> = quer ? Array.from({ length: ze }, (_, j) => [seite === 1 ? sp - 1 : 0, j]) : Array.from({ length: sp }, (_, i) => [i, seite === 2 ? ze - 1 : 0])
+    for (const [i, j] of reihe) if (x[j][i].teil || grosseKurve(x[j][i].gleis)) x = grosseEntfernen(x, i, j)
+  }
+  const vorn = seite === 0 || seite === 3
+  const ziehe = (f: Feld): Feld => {
+    if (!vorn || !f.teil) return { ...f }
+    return { ...f, teil: [f.teil[0] + (quer ? d : 0), f.teil[1] + (quer ? 0 : d)] }
+  }
+  let neu = x.map((z) => z.map(ziehe))
+  const leerFeld = (): Feld => ({ grund: 'wiese' })
+  if (quer) {
+    neu = neu.map((z) => (d > 0 ? (vorn ? [leerFeld(), ...z] : [...z, leerFeld()]) : (vorn ? z.slice(1) : z.slice(0, -1))))
+  } else {
+    const zeile = () => Array.from({ length: sp }, leerFeld)
+    neu = d > 0 ? (vorn ? [zeile(), ...neu] : [...neu, zeile()]) : (vorn ? neu.slice(1) : neu.slice(0, -1))
+  }
+  return neu
+}
+
 export function grosseEntfernen(b: Brett, i: number, j: number): Brett {
   const [hi, hj] = b[j][i].teil ?? [i, j]
   const g = b[hj]?.[hi]?.gleis

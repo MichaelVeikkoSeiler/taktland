@@ -44,6 +44,42 @@ export function MusterDefs() {
   )
 }
 
+/**
+ * Gelände (Michael, 2026-11-24: «Elemente für die Landschaft …, die eine gewisse Topologie darstellen? Irgendwie mit einem Verlauf pro Element; teilweise
+ * auch diagonal»): je Feld ein Verlauf von dunkel (unten) nach hell (oben) über den Grund, ein Hang in acht Richtungen, ein Hügel (Mitte hell) oder eine
+ * Mulde (Mitte dunkel); Stärke gewählt
+ */
+export const GELAENDE_NAMEN = ['Hang nach Norden', 'Hang nach Nordosten', 'Hang nach Osten', 'Hang nach Südosten', 'Hang nach Süden', 'Hang nach Südwesten',
+  'Hang nach Westen', 'Hang nach Nordwesten', 'Hügel', 'Mulde']
+const TIEF = 'rgba(30,45,20,.30)', HOCH = 'rgba(255,255,240,.26)'
+export function GelaendeVerlaeufe() {
+  return (
+    <svg width={0} height={0} aria-hidden="true" style={{ position: 'absolute' }}>
+      <defs>
+        {Array.from({ length: 8 }, (_, d) => {
+          const a = (d * Math.PI) / 4, sx = Math.round(Math.sin(a)), sy = Math.round(Math.cos(a))
+          // hoch dort, wohin der Hang ansteigt; über Eck von Ecke zu Ecke
+          return (
+            <linearGradient key={d} id={`gb-hang-${d}`} x1={0.5 - 0.5 * sx} y1={0.5 + 0.5 * sy} x2={0.5 + 0.5 * sx} y2={0.5 - 0.5 * sy}>
+              <stop offset="0" stopColor={TIEF} /><stop offset="1" stopColor={HOCH} />
+            </linearGradient>
+          )
+        })}
+        <radialGradient id="gb-hang-8" cx={0.5} cy={0.5} r={0.6}><stop offset="0" stopColor={HOCH} /><stop offset="1" stopColor={TIEF} /></radialGradient>
+        <radialGradient id="gb-hang-9" cx={0.5} cy={0.5} r={0.6}><stop offset="0" stopColor={TIEF} /><stop offset="1" stopColor={HOCH} /></radialGradient>
+      </defs>
+    </svg>
+  )
+}
+export function GelaendeBild({ brett }: { brett: Brett }) {
+  const raus: ReactElement[] = []
+  brett.forEach((z, j) => z.forEach((f, i) => {
+    if (f.hang === undefined) return
+    raus.push(<rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={`url(#gb-hang-${f.hang})`} pointerEvents="none" />)
+  }))
+  return <>{raus}</>
+}
+
 /** Einzug der Gebiete vom Rand der Felder, an denen kein gleicher Grund anschliesst, und Rundung der Ecken (gewählt) */
 const EINZUG: Record<string, number> = { wald: 0.07, berg: 0.07, ufer: 0.06, wasser: 0.13, rebberg: 0.07, schnee: 0.05, acker: 0.07 }
 const RUND = 0.2

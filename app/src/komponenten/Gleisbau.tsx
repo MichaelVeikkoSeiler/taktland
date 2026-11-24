@@ -3,7 +3,7 @@ import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zu
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
-  WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, ueberWasser, wagenGilt, knotenGruppen, HALT_S,
+  WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, ueberWasser, wagenGilt, knotenGruppen, HALT_S, brettRand, MIN_SEITE, MAX_BREITE, MAX_HOEHE,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
@@ -11,7 +11,7 @@ import { type Aufgabe, AUFGABEN, bewerten, type Ergebnis, fortschrittLesen, fort
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
-import { bild, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild } from './GleisbauBilder'
+import { bild, GelaendeBild, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild } from './GleisbauBilder'
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
 
@@ -36,7 +36,7 @@ const KACHEL_H = 0.915
 
 type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
-  | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' }
+  | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' } | { art: 'hang' }
   | { art: 'bau'; bau: 'depot' | 'gueter' | 'galerie' } | { art: 'objekt'; objekt: 'kirche' | 'bauernhof' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
@@ -68,6 +68,7 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'grund', grund: 'wald' }, text: 'Wald' },
   { w: { art: 'grund', grund: 'wasser' }, text: 'Wasser' },
   { w: { art: 'fluss' }, text: 'Fluss' },
+  { w: { art: 'hang' }, text: 'Gelände' },
   { w: { art: 'grund', grund: 'berg' }, text: 'Berg' },
   { w: { art: 'grund', grund: 'dorf' }, text: 'Dorf' },
   { w: { art: 'grund', grund: 'rebberg' }, text: 'Rebberg' },
@@ -658,6 +659,14 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
       </svg>
     )
   }
+  if (w.art === 'hang') {
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={{ grund: 'wiese' }} i={0} j={0} />
+        <rect x={0.025} y={0.025} width={0.95} height={0.89} rx={0.05} fill="url(#gb-hang-1)" />
+      </svg>
+    )
+  }
   if (w.art === 'knoten') {
     const f: Feld = { grund: 'wiese', gleis: { art: 'bahnhof', dreh: 1 } }
     return (
@@ -840,6 +849,7 @@ export function Gleisbau() {
       <WiesenMuster sp={SP} ze={ZE} kante={KANTE.wiese} flaeche={F.wiese} />
       {brett.map((z, j) => z.map((f, i) => (f.grund === 'wiese' ? null : <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} nurFlaeche />)))}
       <Landschaft brett={brett} />
+      <GelaendeBild brett={brett} />
       <StrassenBild brett={brett} />
       {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j}
                                                      weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined}
@@ -1274,6 +1284,14 @@ export function Gleisbau() {
       neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }); knopfTon(true)
       return
     }
+    if (w.art === 'hang') {
+      // Gelände: jeder Tipp eine Stufe weiter, Hang in acht Richtungen, Hügel, Mulde, dann wieder flach (gewählt)
+      const neuH = f.hang === undefined ? 0 : f.hang >= 9 ? undefined : f.hang + 1
+      const { hang: _, ...ohne } = f
+      neu(i, j, neuH === undefined ? ohne : { ...ohne, hang: neuH }); knopfTon(neuH !== undefined)
+      setMeldung(neuH === undefined ? 'Wieder flach.' : `${GELAENDE_NAMEN[neuH]}. Nochmals tippen für die nächste Form.`)
+      return
+    }
     if (w.art === 'knoten') {
       // ein Bahnhof als Knoten im Taktfahrplan; nochmals tippen macht ihn wieder zum gewöhnlichen Bahnhof
       if (!istBahnhof(f.gleis)) { setMeldung('Knoten kann nur ein Bahnhof sein.'); return }
@@ -1355,6 +1373,7 @@ export function Gleisbau() {
     // Entfernen: zuerst die Ampel, dann das Gleis (samt Brücke; die Strasse bleibt), dann die Strasse, dann der Grund
     else if (f.ampel) { const { ampel: _, ...ohne } = f; n = ohne }
     else if (f.objekt) { const { objekt: _, ...ohne } = f; n = ohne }
+    else if (f.hang !== undefined) { const { hang: _, ...ohne } = f; n = ohne }
     else if (f.bau) { const { bau: _, ...ohne } = f; n = ohne }
     else if (f.wagen) { const { wagen: _, ...ohne } = f; n = ohne }
     // das Gleis weg, Strasse und Fluss bleiben; dann die Strasse, dann der Fluss, dann der Grund
@@ -1435,6 +1454,7 @@ export function Gleisbau() {
   return (
     <div className="px-4 pb-6">
       <MusterDefs />
+      <GelaendeVerlaeufe />
       {!imBrett && (
         <>
           {ansicht === 'liste'
@@ -1542,8 +1562,37 @@ export function Gleisbau() {
               </g>
             )
           })()}
+          {/* am dunklen Rand je Seite zwei Dreiecke: nach aussen eine Reihe dazu, nach innen eine weg (Michael, 2026-11-24) */}
+          {!faehrt && !aufgabe && (() => {
+            const k = buehneGr.w ? Math.min(buehneGr.w / (SP + 0.3), buehneGr.h / (ZE + 0.3)) : 40, u = 13 / (k * zoom.s)
+            return [0, 1, 2, 3].map((seite) => {
+              // so weit nach innen, dass der Knopf ganz auf dem Bildschirm bleibt
+              const ein = Math.max(0, u - 0.12)
+              const cx = seite === 1 ? SP + 0.075 - ein : seite === 3 ? -0.075 + ein : SP / 2, cy = seite === 0 ? -0.075 + ein : seite === 2 ? ZE + 0.075 - ein : ZE / 2
+              const aussen = [-Math.PI / 2, 0, Math.PI / 2, Math.PI][seite], quer = seite % 2 ? [0, 1] : [1, 0]
+              return [1, -1].map((d) => {
+                const x = cx + quer[0] * d * -1.3 * u, y = cy + quer[1] * d * -1.3 * u, a = d > 0 ? aussen : aussen + Math.PI
+                const p = (w: number, r: number) => `${x + Math.cos(a + w) * r},${y + Math.sin(a + w) * r}`
+                const tun = () => {
+                  const r = brettRand(brett, seite, d as 1 | -1)
+                  if (!r) { setMeldung(`Breite ${MIN_SEITE} bis ${MAX_BREITE}, Höhe ${MIN_SEITE} bis ${MAX_HOEHE} Felder.`); return }
+                  setBrett(r); knopfTon(d > 0); setMeldung(`${spalten(r)} × ${zeilen(r)} Felder`)
+                }
+                return (
+                  <g key={`${seite}${d}`} role="button" aria-label={`${d > 0 ? 'Eine Reihe dazu' : 'Eine Reihe weg'} ${['oben', 'rechts', 'unten', 'links'][seite]}`}
+                     className="cursor-pointer" onPointerDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); tun() }}>
+                    <circle cx={x} cy={y} r={u} fill="#ffffff" opacity={0.92} />
+                    <path d={`M${p(0, u * 0.62)} L${p(2.3, u * 0.62)} L${p(-2.3, u * 0.62)} Z`} fill={d > 0 ? F.karmin : '#3a3a3c'} />
+                  </g>
+                )
+              })
+            })
+          })()}
         </svg>
             </div>
+            {/* eine feine Vignette am linken und rechten Rand (Michael, 2026-11-24: «An den beiden äussersten Rändern soll eine feine abdunkelnde Vignette sein»), gewählt */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-8" style={{ background: 'linear-gradient(to right, rgba(0,0,0,.16), rgba(0,0,0,0))' }} />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-8" style={{ background: 'linear-gradient(to left, rgba(0,0,0,.16), rgba(0,0,0,0))' }} />
             {zoom.s > 1.01 && (
               <button type="button" onClick={() => setZoom({ s: 1, x: 0, y: 0 })} aria-label="Ganzes Brett zeigen" title="Ganzes Brett zeigen"
                       className={`${rund} absolute right-2.5 top-2`}>
