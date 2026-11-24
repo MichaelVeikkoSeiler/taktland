@@ -271,6 +271,17 @@ function WartendeBild({ namen, warten }: { namen: Map<string, string>; warten: R
 const ZUG_KLANG_MS = 22
 
 const linie = (p: Array<{ x: number; y: number }>) => p.map((q, k) => `${k ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)}`).join('')
+/**
+ * Schwellen in regelmässigen Abständen (Michael, 2026-11-24: «ist es möglich dass die Schwellen aufgeben in regelmässigen Abständen? Bei Kurven siehts nicht
+ * so schön aus wenn sie auf Gerade treffen»): je Stück so viele Schwellen, dass der Abstand von etwa 0,1 Feldern die Länge genau teilt, an beiden Enden eine
+ * halbe; so stossen zwei Stücke mit einer ganzen Schwelle aneinander
+ */
+const schwellen = (p: Array<{ x: number; y: number }>) => {
+  let l = 0
+  for (let k = 1; k < p.length; k++) l += Math.hypot(p[k].x - p[k - 1].x, p[k].y - p[k - 1].y)
+  const n = Math.max(1, Math.round(l / 0.1)), t = l / n, d = t * 0.35
+  return { strokeDasharray: `${d.toFixed(4)} ${(t - d).toFixed(4)}`, strokeDashoffset: (d / 2).toFixed(4) }
+}
 const versetzt = (p: Array<{ x: number; y: number; w: number }>, d: number) =>
   p.map((q) => ({ x: q.x - Math.sin(q.w) * d, y: q.y + Math.cos(q.w) * d }))
 
@@ -432,7 +443,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
       {punkte.map(({ p, aktiv }, k) => (
         <g key={k} opacity={aktiv ? 1 : 0.45}>
           <path d={linie(p)} fill="none" stroke={ueberWasser(f) ? 'none' : F.schotter} strokeWidth={0.3} />
-          <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
+          <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} {...schwellen(p)} />
           <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
           <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
         </g>
@@ -446,7 +457,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
             <path d={linie(p)} fill="none" stroke={F.bruecke} strokeWidth={0.42} />
             <path d={linie(versetzt(p, 0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
             <path d={linie(versetzt(p, -0.2))} fill="none" stroke={F.gelaender} strokeWidth={0.025} />
-            <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
+            <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} {...schwellen(p)} />
             <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
             <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
           </g>
@@ -542,7 +553,7 @@ function BogenBild({ i, j, g, wasser, brett }: { i: number; j: number; g: Gleis;
         </g>
       ))}
       {stuecke.filter((t) => !t.nass).map((t, k) => <path key={`s${k}`} d={linie(t.p)} fill="none" stroke={F.schotter} strokeWidth={0.3} />)}
-      <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} strokeDasharray="0.035 0.065" />
+      <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} {...schwellen(p)} />
       <path d={linie(versetzt(p, 0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
       <path d={linie(versetzt(p, -0.065))} fill="none" stroke={F.schiene} strokeWidth={0.028} />
       {/* im Berg deckt der Fels das Gleis, Portale an den Übergängen */}
