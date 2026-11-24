@@ -1562,12 +1562,19 @@ export function Gleisbau() {
               </g>
             )
           })()}
+          {/* eine feine Vignette innen am linken und rechten Rand des Bretts, 0,8 Felder breit (Michael, 2026-11-24: «An den beiden äussersten Rändern soll
+              eine feine abdunkelnde Vignette sein», «Vignette muss innerhalb des Brettes sein»; Breite und Stärke gewählt) */}
+          <defs>
+            <linearGradient id="gb-vignette-l" x1={0} y1={0} x2={1} y2={0}><stop offset="0" stopColor="#000" stopOpacity={0.22} /><stop offset="1" stopColor="#000" stopOpacity={0} /></linearGradient>
+            <linearGradient id="gb-vignette-r" x1={1} y1={0} x2={0} y2={0}><stop offset="0" stopColor="#000" stopOpacity={0.22} /><stop offset="1" stopColor="#000" stopOpacity={0} /></linearGradient>
+          </defs>
+          <rect x={0} y={0} width={Math.min(0.8, SP / 4)} height={ZE} fill="url(#gb-vignette-l)" pointerEvents="none" />
+          <rect x={SP - Math.min(0.8, SP / 4)} y={0} width={Math.min(0.8, SP / 4)} height={ZE} fill="url(#gb-vignette-r)" pointerEvents="none" />
           {/* am dunklen Rand je Seite zwei Dreiecke: nach aussen eine Reihe dazu, nach innen eine weg (Michael, 2026-11-24) */}
           {!faehrt && !aufgabe && (() => {
             const k = buehneGr.w ? Math.min(buehneGr.w / (SP + 0.3), buehneGr.h / (ZE + 0.3)) : 40, u = 13 / (k * zoom.s)
             return [0, 1, 2, 3].map((seite) => {
-              // so weit nach innen, dass der Knopf ganz auf dem Bildschirm bleibt
-              const ein = Math.max(0, u - 0.12)
+              const ein = 0
               const cx = seite === 1 ? SP + 0.075 - ein : seite === 3 ? -0.075 + ein : SP / 2, cy = seite === 0 ? -0.075 + ein : seite === 2 ? ZE + 0.075 - ein : ZE / 2
               const aussen = [-Math.PI / 2, 0, Math.PI / 2, Math.PI][seite], quer = seite % 2 ? [0, 1] : [1, 0]
               return [1, -1].map((d) => {
@@ -1581,8 +1588,9 @@ export function Gleisbau() {
                 return (
                   <g key={`${seite}${d}`} role="button" aria-label={`${d > 0 ? 'Eine Reihe dazu' : 'Eine Reihe weg'} ${['oben', 'rechts', 'unten', 'links'][seite]}`}
                      className="cursor-pointer" onPointerDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); tun() }}>
-                    <circle cx={x} cy={y} r={u} fill="#ffffff" opacity={0.92} />
-                    <path d={`M${p(0, u * 0.62)} L${p(2.3, u * 0.62)} L${p(-2.3, u * 0.62)} Z`} fill={d > 0 ? F.karmin : '#3a3a3c'} />
+                    {/* nur ein helles Dreieck, beide gleich (Michael, 2026-11-24: «Nur helle gleichfarbige Dreiecke»); die Fläche darunter fängt den Tipp */}
+                    <circle cx={x} cy={y} r={u} fill="transparent" />
+                    <path d={`M${p(0, u * 0.75)} L${p(2.3, u * 0.75)} L${p(-2.3, u * 0.75)} Z`} fill="#e9e9e9" />
                   </g>
                 )
               })
@@ -1590,9 +1598,7 @@ export function Gleisbau() {
           })()}
         </svg>
             </div>
-            {/* eine feine Vignette am linken und rechten Rand (Michael, 2026-11-24: «An den beiden äussersten Rändern soll eine feine abdunkelnde Vignette sein»), gewählt */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-8" style={{ background: 'linear-gradient(to right, rgba(0,0,0,.16), rgba(0,0,0,0))' }} />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-8" style={{ background: 'linear-gradient(to left, rgba(0,0,0,.16), rgba(0,0,0,0))' }} />
+
             {zoom.s > 1.01 && (
               <button type="button" onClick={() => setZoom({ s: 1, x: 0, y: 0 })} aria-label="Ganzes Brett zeigen" title="Ganzes Brett zeigen"
                       className={`${rund} absolute right-2.5 top-2`}>
