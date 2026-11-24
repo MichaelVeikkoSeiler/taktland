@@ -247,14 +247,16 @@ export function ObjektBild({ o }: { o: Objekt }) {
  * Ein Tunnelportal am Punkt (x, y). Süd, West und Ost als Bild, so gross, dass die Öffnung 0,36
  * Felder misst; Nord fehlt noch (das Bild hatte das Schachbrett mitgemalt), dort vorerst ein schlichtes Portal
  */
-export function PortalBild({ x, y }: { x: number; y: number }) {
+export function PortalBild({ x, y, oben }: { x: number; y: number; oben?: boolean }) {
   // in jeder Richtung dasselbe Portal von vorne (Michael, 2026-11-23: «Eigentlich reicht es, wenn wir nur immer das gleiche Tunnelportal verwenden»):
   // die Unterkante der Öffnung am Punkt, die Öffnung 0,3 Felder weit, das Portal höchstens 0,62 breit (gewählt)
   const name = 'gb_bau_tunnelportal_s', m = masse(name)
   if (!m?.oeffnung) return null
   const [ox0, , ox1, oy1] = m.oeffnung
   const s = Math.min(0.3 / (ox1 - ox0), 0.62 / m.w)
-  return <image href={bild(name)} x={x - ((ox0 + ox1) / 2) * s} y={y - oy1 * s + 0.06} width={m.w * s} height={m.h * s} preserveAspectRatio="none" />
+  // führt das Gleis nach Norden aus dem Berg, steht das Portal auf dem Kopf, offen nach oben (Michael, 2026-11-24: «Das Portal muss gegen oben offen sein»)
+  return <image href={bild(name)} x={x - ((ox0 + ox1) / 2) * s} y={y - oy1 * s + 0.06} width={m.w * s} height={m.h * s} preserveAspectRatio="none"
+                transform={oben ? `rotate(180 ${x} ${y})` : undefined} />
 }
 
 /** Farben und Breite der Strassen (gewählt) */

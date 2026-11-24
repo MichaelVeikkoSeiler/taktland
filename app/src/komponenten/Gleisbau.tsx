@@ -47,6 +47,7 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'weiche_l' }, text: 'Weiche L' },
   { w: { art: 'gleis', gleis: 'dreiweg' }, text: 'Dreiweg' },
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
+  { w: { art: 'gleis', gleis: 'doppelkurve' }, text: 'Doppelkurve' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
   { w: { art: 'gleis', gleis: 'bahnhof' }, text: 'Bahnhof' },
   { w: { art: 'name' }, text: 'Name' },
@@ -75,17 +76,19 @@ const GRUPPEN = [
 const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringify(b)
 
 /** nach so vielen Sekunden gegenseitigen Wartens kehrt ein Zug um; Spitze des zweiten Zugs in Blau statt Karmin (beides gewählt) */
-const UMKEHREN_NACH_S = 2.5, ZWEITER_ZUG = '#1f5fa8'
+const UMKEHREN_NACH_S = 2.5
+/** Farbe der Spitze je Zug ab dem zweiten (gewählt) */
+const ZUG_FARBEN = ['#1f5fa8', '#2e7d32', '#e07b00'], ZUEGE_MAX = 4
 
 /**
- * Signale an Weichen und Kreuzungen, nur mit zwei Zügen: rot, solange ein Zug das Feld belegt, sonst grün; ein kleiner Mast in der Ecke oben links
+ * Signale an Weichen und Kreuzungen, nur mit mehreren Zügen: rot, solange ein Zug das Feld belegt, sonst grün; ein kleiner Mast in der Ecke oben links
  * (gewählt). Ein Zug fährt nie in ein belegtes Feld ein
  */
 function SignalBild({ brett, belegt }: { brett: Brett; belegt: Array<Set<string>> }) {
   const raus = []
   for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
     const g = brett[j][i].gleis
-    if (!g || !(istWeiche(g) || g.art === 'kreuzung')) continue
+    if (!g || !(istWeiche(g) || g.art === 'kreuzung' || g.art === 'doppelkurve')) continue
     const rot = belegt.some((b) => b.has(`${i},${j}`))
     raus.push(
       <g key={`${i},${j}`} pointerEvents="none">
@@ -369,7 +372,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
               const kant = e === 0 ? s.ein : s.aus
               if (kant < 0 || weiter[kant]) return null
               const q = stueckPunkt(s, e === 0 ? PORTAL : l - PORTAL)
-              return <PortalBild key={`${k}${e}`} x={q.x} y={q.y} />
+              return <PortalBild key={`${k}${e}`} x={q.x} y={q.y} oben={kant === 0} />
             })
           })}
         </>
@@ -426,7 +429,12 @@ function BogenBild({ i, j, g, wasser, brett }: { i: number; j: number; g: Gleis;
           <g key={`t${n}`}>
             <path d={linie(pts)} fill="none" stroke="url(#gb-fels)" strokeWidth={0.52} />
             <path d={linie(pts)} fill="none" stroke={TUNNEL_STRICH} strokeWidth={0.035} strokeDasharray="0.08 0.06" opacity={0.75} />
-            {[t.portal0 && bei(t.k0), t.portal1 && bei(t.k1)].map((q, m) => q ? <PortalBild key={m} x={q.x} y={q.y} /> : null)}
+            {[t.portal0 && bei(t.k0), t.portal1 && bei(t.k1)].map((q, m) => {
+              if (!q) return null
+              // offen nach oben, wenn das Gleis vom Portal aus nach Norden aus dem Berg führt
+              const aussen = m === 0 ? p[Math.max(0, t.k0 - 1)] : p[Math.min(p.length - 1, t.k1 + 1)], dx = aussen.x - q.x, dy = aussen.y - q.y
+              return <PortalBild key={m} x={q.x} y={q.y} oben={dy < 0 && -dy > Math.abs(dx)} />
+            })}
           </g>
         )
       })}
@@ -564,7 +572,9 @@ export function Gleisbau() {
   const [faehrt, setFaehrt] = useState(false)
   const [wagen, setWagen] = useState<WagenLage[][]>([])
   // ein oder zwei Züge (Michael, 2026-11-23, Vorschlag «Zweiter Zug auf demselben Netz»)
-  const [zweiZuege, setZweiZuege] = useState(false)
+  // Anzahl Züge (Michael, 2026-11-24: «Anzahl Züge wählbar»), auf dem Gerät gemerkt
+  const [zugZahl, setZugZahl] = useState(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.zuege')); return n >= 1 && n <= ZUEGE_MAX ? n : 1 } catch { return 1 } })
+  const zugZahlSetzen = (n: number) => { const m = Math.max(1, Math.min(ZUEGE_MAX, n)); setZugZahl(m); try { localStorage.setItem('taktland.gleisbau.zuege', String(m)) } catch { /* ohne Speicher */ } }
   // Fahrzeuge am Zug samt Lok und Steuerwagen, auf dem Gerät gemerkt
   const [wagenZahl, setWagenZahl] = useState(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.wagen')); return n >= WAGEN_MIN && n <= WAGEN_MAX ? n : WAGEN } catch { return WAGEN } })
   const wagenSetzen = (n: number) => { const m = Math.max(WAGEN_MIN, Math.min(WAGEN_MAX, n)); setWagenZahl(m); try { localStorage.setItem('taktland.gleisbau.wagen', String(m)) } catch { /* ohne Speicher */ } }
@@ -683,7 +693,10 @@ export function Gleisbau() {
         const b = brettAusCode(code)
         if (!b) { history.replaceState(history.state, '', '#/gleisbau'); setAnsicht('liste'); setMeldung('Der Link enthält kein gültiges Brett.'); return }
         const id = neueId()
-        setBretter((l) => [{ id, name: 'Geteiltes Brett', code: brettCode(b), geaendert: Date.now() }, ...l])
+        const e = { id, name: 'Geteiltes Brett', code: brettCode(b), geaendert: Date.now() }
+        // gleich auch in der Ref, damit ein zweites Lesen der Adresse (jetzt ?id=…) das Brett schon findet
+        bretterRef.current = [e, ...bretterRef.current]
+        setBretter((l) => [e, ...l])
         history.replaceState(history.state, '', `#/gleisbau?id=${id}`)
         setOffen(id); setBrettRoh(b); setVerlauf([]); setAufgabe(null); setAnsicht('brett'); setMeldung('Geteiltes Brett als eigenes Brett gespeichert.')
         return
@@ -1005,7 +1018,8 @@ export function Gleisbau() {
       setDreh(d); n = { ...f, gleis: { ...f.gleis!, dreh: d } }
     } else if (w.art === 'gleis') {
       if (f.gleis?.art === w.gleis) {
-        const d = ((f.gleis.dreh + 1) % 4) as Dreh
+        // die Doppelkurve hat nur zwei Lagen
+        const d = ((f.gleis.dreh + 1) % (w.gleis === 'doppelkurve' ? 2 : 4)) as Dreh
         setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
       } else n = { ...f, gleis: { art: w.gleis, dreh } }
     } else if (w.art === 'bruecke') {
@@ -1039,12 +1053,14 @@ export function Gleisbau() {
     const z = Zug.setzen(brett, undefined, wagenZahl)
     if (!z) { setMeldung('Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
     const l = [z]
-    if (zweiZuege) {
-      const z2 = Zug.setzen(brett, z.belegt(), wagenZahl)
-      if (z2) l.push(z2)
-      else setMeldung('Für einen zweiten Zug ist das Netz zu klein: Er braucht Platz weit weg vom ersten.')
+    while (l.length < zugZahl) {
+      const belegt = new Set(l.flatMap((x) => [...x.belegt()]))
+      const z2 = Zug.setzen(brett, belegt, wagenZahl)
+      if (!z2) break
+      l.push(z2)
     }
-    if (l.length === 2 || !zweiZuege) setMeldung(null)
+    if (l.length < zugZahl) setMeldung(`Für ${zugZahl} Züge ist das Netz zu klein, es fahren ${l.length === 1 ? 'einer' : l.length}. Jeder braucht Platz weit weg von den anderen.`)
+    else setMeldung(null)
     const bahnhoefe = [...new Set(bahnhofNamen(brett).values())]
     const fg = mitFahrgaesten ? fahrgaesteStart(bahnhoefe, l.length) : null
     if (mitFahrgaesten && !fg) setMeldung('Für Fahrgäste braucht es mindestens zwei Bahnhöfe.')
@@ -1148,7 +1164,7 @@ export function Gleisbau() {
              className="size-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {unten}
-          {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y)} farbe={z ? ZWEITER_ZUG : F.karmin} />))}
+          {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y)} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />))}
           {oben}
           <SchrankenBild brett={brett} wagen={wagen.flat()} />
           <AmpelBild brett={brett} />
@@ -1257,7 +1273,14 @@ export function Gleisbau() {
                 </div>
                 <div className="mt-2 divide-y divide-sbb-cloud dark:divide-sbb-iron">
                   {schalter(mitFahrgaesten, () => setMitFahrgaesten((x) => !x), 'Fahrgäste mit Ziel an den Bahnhöfen')}
-                  {schalter(zweiZuege, () => setZweiZuege((x) => !x), 'Zwei Züge')}
+                  <div className="flex min-h-12 items-center justify-between gap-3 py-2">
+                    <span>Anzahl Züge{faehrt && <span className="block text-xs text-sbb-metal">gilt ab der nächsten Fahrt</span>}</span>
+                    <span className="flex items-center gap-2">
+                      <button type="button" aria-label="Ein Zug weniger" disabled={zugZahl <= 1} onClick={() => zugZahlSetzen(zugZahl - 1)} className={rund}>−</button>
+                      <span className="w-6 text-center text-lg font-bold tabular-nums">{zugZahl}</span>
+                      <button type="button" aria-label="Ein Zug mehr" disabled={zugZahl >= ZUEGE_MAX} onClick={() => zugZahlSetzen(zugZahl + 1)} className={rund}>+</button>
+                    </span>
+                  </div>
                   <div className="flex min-h-12 items-center justify-between gap-3 py-2">
                     <span>Länge des Zugs<span className="block text-xs text-sbb-metal">Lok, {wagenZahl - 2 === 1 ? '1 Wagen' : `${wagenZahl - 2} Wagen`} und Steuerwagen{faehrt ? ', gilt ab der nächsten Fahrt' : ''}</span></span>
                     <span className="flex items-center gap-2">
@@ -1324,7 +1347,7 @@ function SoGehts() {
       <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.
         Mit zwei Fingern zoomst und verschiebst du das Brett, am Computer mit dem Mausrad.</li>
       <li>▶ Fahren: Der Zug hält an jedem Bahnhof und kehrt am Ende eines Gleises um, ein Tipp stellt die Weichen. Im Menü «⋯»: Fahrgäste mit
-        Ziel, zwei Züge (Signale an den Weichen zeigen, wo ein Zug ist, keiner fährt in ein besetztes Feld), Grösse, Beispiel, Leeren und Teilen.</li>
+        Ziel, bis vier Züge (Signale an den Weichen zeigen, wo ein Zug ist, keiner fährt in ein besetztes Feld), Grösse, Beispiel, Leeren und Teilen.</li>
     </ul>
   )
 }
