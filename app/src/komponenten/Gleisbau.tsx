@@ -77,6 +77,8 @@ const gleich = (a: Werkzeug, b: Werkzeug) => JSON.stringify(a) === JSON.stringif
 
 /** nach so vielen Sekunden gegenseitigen Wartens kehrt ein Zug um; Spitze des zweiten Zugs in Blau statt Karmin (beides gewählt) */
 const UMKEHREN_NACH_S = 2.5
+/** wie nah an der Mitte eines Wagens ein Tipp den Zug trifft, in Feldern (gewählt) */
+const ZUG_TIPP = 0.35
 /** Farbe der Spitze je Zug ab dem zweiten (gewählt) */
 const ZUG_FARBEN = ['#1f5fa8', '#2e7d32', '#e07b00'], ZUEGE_MAX = 4
 
@@ -571,6 +573,8 @@ export function Gleisbau() {
   const [dreh, setDreh] = useState<Dreh>(0)
   const [faehrt, setFaehrt] = useState(false)
   const [wagen, setWagen] = useState<WagenLage[][]>([])
+  // der angetippte Zug während der Fahrt
+  const [zugWahl, setZugWahl] = useState<Zug | null>(null)
   // ein oder zwei Züge (Michael, 2026-11-23, Vorschlag «Zweiter Zug auf demselben Netz»)
   // Anzahl Züge (Michael, 2026-11-24: «Anzahl Züge wählbar»), auf dem Gerät gemerkt
   const [zugZahl, setZugZahl] = useState(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.zuege')); return n >= 1 && n <= ZUEGE_MAX ? n : 1 } catch { return 1 } })
@@ -934,8 +938,14 @@ export function Gleisbau() {
     const f = brett[j][i]
     // während der Fahrt stellen Tipps nur die Weichen
     if (faehrt) {
+      // ein Tipp auf einen Zug öffnet dessen Blatt (Wagen, Richtung, Entfernen)
+      const r = svg.current!.getBoundingClientRect(), vw = SP + 0.3, vh = ZE + 0.3, kk = Math.min(r.width / vw, r.height / vh)
+      const px = (e.clientX - r.left - (r.width - vw * kk) / 2) / kk - 0.15, py = (e.clientY - r.top - (r.height - vh * kk) / 2) / kk - 0.15
+      let naechster: Zug | null = null, d = ZUG_TIPP
+      zuege.current.forEach((z) => z.wagen().forEach((w) => { const dd = Math.hypot(w.x - px, w.y - py); if (dd < d) { d = dd; naechster = z } }))
+      if (naechster) { setZugWahl(naechster); knopfTon(true); return }
       if (ampelGilt(f)) { neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }, false); knopfTon(true); return }
-      if (!istWeiche(f.gleis)) { setMeldung('Während der Fahrt lassen sich nur Weichen und Ampeln stellen. Zum Bauen anhalten.'); return }
+      if (!istWeiche(f.gleis)) { setMeldung('Während der Fahrt lassen sich nur Weichen, Ampeln und Züge antippen. Zum Bauen anhalten.'); return }
       const wege = f.gleis!.art === 'dreiweg' ? 3 : 2
       neu(i, j, { ...f, gleis: { ...f.gleis!, stellung: (((f.gleis!.stellung ?? 0) + 1) % wege) as 0 | 1 | 2 } }, false)
       knopfTon(true)
@@ -1220,7 +1230,7 @@ export function Gleisbau() {
                     ))}
                   </p>
                 ) : <p className="font-bold">Der Zug fährt.</p>}
-                <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche oder Ampel stellt sie. Zum Bauen anhalten.</p>
+                <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche oder Ampel stellt sie, ein Tipp auf einen Zug zeigt Wagen und Richtung. Zum Bauen anhalten.</p>
               </div>
             ) : (
               <>
@@ -1241,6 +1251,46 @@ export function Gleisbau() {
               </>
             )}
           </div>
+          {/* ein angetippter Zug als Blatt von unten: Wagen, Richtung, Entfernen */}
+          {zugWahl && faehrt && zuege.current.includes(zugWahl) && (() => {
+            const k = zuege.current.indexOf(zugWahl), n = zugWahl.fahrzeuge()
+            const zu = () => setZugWahl(null)
+            const entfernen = () => {
+              zuege.current.splice(k, 1); halteRef.current.splice(k, 1); pfiffe.current.splice(k, 1)
+              const fg = fgRef.current
+              if (fg) { fg.imZug.splice(k, 1); setFahrgaeste({ ...fg, warten: { ...fg.warten }, imZug: fg.imZug.map((l) => [...l]) }) }
+              zu()
+              if (!zuege.current.length) { setFaehrt(false); setWagen([]); fgRef.current = null; setFahrgaeste(null); return }
+              setWagen(zuege.current.map((x) => x.wagen()))
+            }
+            return (
+              <div className="absolute inset-0 z-10 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) zu() }}>
+                <div className="w-full rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
+                  <div className="flex items-center justify-between">
+                    <p className="flex items-center gap-2 text-lg font-bold">
+                      <span className="inline-block size-4 rounded-full" style={{ background: k ? ZUG_FARBEN[(k - 1) % ZUG_FARBEN.length] : F.karmin }} aria-hidden="true" />
+                      {zuege.current.length > 1 ? `Zug ${k + 1}` : 'Zug'}
+                    </p>
+                    <button type="button" onClick={zu} aria-label="Schliessen" className={rund}>✕</button>
+                  </div>
+                  <div className="mt-2 flex min-h-12 items-center justify-between gap-3">
+                    <span>Wagen<span className="block text-xs text-sbb-metal">zwischen Lok und Steuerwagen</span></span>
+                    <span className="flex items-center gap-2">
+                      <button type="button" aria-label="Ein Wagen weniger" disabled={n <= WAGEN_MIN} onClick={() => { zugWahl.fahrzeugeSetzen(brettRef.current, n - 1); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true) }} className={rund}>−</button>
+                      <span className="w-6 text-center text-lg font-bold tabular-nums">{n - 2}</span>
+                      <button type="button" aria-label="Ein Wagen mehr" disabled={n >= WAGEN_MAX} onClick={() => { zugWahl.fahrzeugeSetzen(brettRef.current, n + 1); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true) }} className={rund}>+</button>
+                    </span>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button type="button" onClick={() => { zugWahl.wenden(); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true); zu() }}
+                            className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Fahrtrichtung ändern</button>
+                    <button type="button" onClick={entfernen}
+                            className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold text-sbb-red hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Zug entfernen</button>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
           {/* Name eines Bahnhofs als Blatt von unten */}
           {nameFeld && (
             <div className="absolute inset-0 z-10 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) { setNameFeld(null); setNameSuche('') } }}>

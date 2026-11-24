@@ -799,6 +799,26 @@ export class Zug {
     this.kuerzen()
   }
 
+  /** Fahrzeuge samt Lok und Steuerwagen */
+  fahrzeuge() { return this.anzahl }
+
+  /**
+   * Antippen eines Zugs (Michael, 2026-11-24: «wenn man auf einen Zug tippt, man die Anzahl Wagen korrigieren kann oder den Zug entfernen kann oder
+   * die Fahrtrichtung ändern kann»): die Länge ändern; länger wächst der Zug nach hinten, so weit das Gleis reicht
+   */
+  fahrzeugeSetzen(b: Brett, n: number) {
+    this.anzahl = Math.max(WAGEN_MIN, Math.min(WAGEN_MAX, Math.round(n)))
+    for (let k = 0; k < 20 && this.hinten() < this.laenge; k++) {
+      const davor = naechstes(b, umgekehrt(this.stuecke[0]))
+      if (!davor) break
+      this.stuecke.unshift(umgekehrt(davor))
+    }
+    this.kuerzen()
+  }
+
+  /** die Fahrtrichtung wechseln: die Spitze ist dort, wo das Ende war; zählt nicht als Umkehren am Gleisende */
+  wenden() { const u = this.umkehrungen; this.umkehren(); this.umkehrungen = u; this.wartet = 0 }
+
   /** wie lange der Zug schon vor einem belegten Feld wartet, in s */
   wartet = 0
 
