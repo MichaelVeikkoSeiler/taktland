@@ -82,22 +82,60 @@ function gebietPfad(b: Brett, grund: Feld['grund'], e: number) {
 }
 
 /** Grund und Gebiete des ganzen Bretts, auf die Kacheln zugeschnitten (clipPath gleisbau-kacheln) */
+/**
+ * Die Wiese aller Felder als ein Muster von 6 × 3 Feldern (Kante, Fläche, Bild je Feld gespiegelt wie früher einzeln), über das ganze Brett: bis 192 × 108
+ * Felder wären sonst zehntausende Bilder (seit 2026-11-24, Michael: «Brettgrösse auf 192x108 erhöhen»)
+ */
+export function WiesenMuster({ sp, ze, kante, flaeche }: { sp: number; ze: number; kante: string; flaeche: string }) {
+  const wiese = bild('gb_grund_wiese_01')
+  const zellen: ReactElement[] = []
+  for (let v = 0; v < 3; v++) for (let u = 0; u < 6; u++) {
+    const fx = u % 2 === 1, fy = (2 * u + v) % 3 === 0
+    zellen.push(
+      <g key={`${u},${v}`}>
+        <rect x={u + 0.025} y={v + 0.025} width={0.95} height={0.95} rx={0.05} fill={kante} />
+        <rect x={u + 0.025} y={v + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={flaeche} />
+        <g clipPath={`url(#gb-zelle-${u}-${v})`}>
+          <image href={wiese} x={0} y={0} width={1} height={1} preserveAspectRatio="none"
+                 transform={`translate(${fx ? u + 1 : u} ${fy ? v + 1 : v}) scale(${fx ? -1 : 1} ${fy ? -1 : 1})`} />
+        </g>
+      </g>,
+    )
+  }
+  return (
+    <>
+      <defs>
+        {Array.from({ length: 18 }, (_, k) => (
+          <clipPath key={k} id={`gb-zelle-${k % 6}-${Math.floor(k / 6)}`}>
+            <rect x={(k % 6) + 0.025} y={Math.floor(k / 6) + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />
+          </clipPath>
+        ))}
+        <pattern id="gb-wiesen" patternUnits="userSpaceOnUse" width={6} height={3}>{zellen}</pattern>
+      </defs>
+      <rect x={0} y={0} width={sp} height={ze} fill="url(#gb-wiesen)" />
+    </>
+  )
+}
+
 export function Landschaft({ brett }: { brett: Brett }) {
   const wiese = bild('gb_grund_wiese_01')
+  // nur die Felder mit anderem Grund oder einem Fluss; die Wiese kommt aus WiesenMuster
+  const besondere: Array<[number, number]> = []
+  brett.forEach((z, j) => z.forEach((f, i) => { if (f.grund !== 'wiese' || f.fluss) besondere.push([i, j]) }))
   return (
     <>
       <defs>
         <clipPath id="gleisbau-kacheln">
-          {brett.flatMap((z, j) => z.map((_, i) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />))}
+          {besondere.map(([i, j]) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />)}
         </clipPath>
       </defs>
       <g clipPath="url(#gleisbau-kacheln)">
         {/* die Wiese je Feld nur gespiegelt, nicht gedreht: ihre Flächen sind waagrecht gestreckt */}
-        {brett.flatMap((z, j) => z.map((_, i) => {
+        {besondere.map(([i, j]) => {
           const fx = (i + 2 * j) % 2 === 1, fy = (2 * i + j) % 3 === 0
           return <image key={`w${i},${j}`} href={wiese} x={0} y={0} width={1} height={1} preserveAspectRatio="none"
                         transform={`translate(${fx ? i + 1 : i} ${fy ? j + 1 : j}) scale(${fx ? -1 : 1} ${fy ? -1 : 1})`} />
-        }))}
+        })}
         <path d={gebietPfad(brett, 'wald', EINZUG.wald)} fill={FUELLUNG.wald} />
         <path d={gebietPfad(brett, 'rebberg', EINZUG.rebberg)} fill={FUELLUNG.rebberg} />
         <path d={gebietPfad(brett, 'schnee', EINZUG.schnee)} fill={FUELLUNG.schnee} />
@@ -196,8 +234,17 @@ export function objekteBauen(b: Brett, imTunnel: (b: Brett, x: number, y: number
   const gp = gleisPunkte(b, imTunnel)
   const grund = (i: number, j: number) => (i >= 0 && j >= 0 && i < sp && j < ze ? b[j][i].grund : null)
   const raus: Objekt[] = []
-  const frei = (x: number, y: number, bb: number, h: number) =>
-    !gp.some(([px, py]) => px > x - bb / 2 - 0.05 && px < x + bb / 2 + 0.05 && py > y - h - 0.03 && py < y + 0.1)
+  const wieseDicht = Math.min(1, 900 / (sp * ze))
+  // die Gleispunkte je Feld, damit grosse Bretter (bis 192 × 108) schnell bleiben
+  const raster = new Map<string, Array<[number, number]>>()
+  for (const q of gp) { const k = `${Math.floor(q[0])},${Math.floor(q[1])}`; const l = raster.get(k); if (l) l.push(q); else raster.set(k, [q]) }
+  const frei = (x: number, y: number, bb: number, h: number) => {
+    const x0 = x - bb / 2 - 0.05, x1 = x + bb / 2 + 0.05, y0 = y - h - 0.03, y1 = y + 0.1
+    for (let u = Math.floor(x0); u <= Math.floor(x1); u++) for (let v = Math.floor(y0); v <= Math.floor(y1); v++) {
+      for (const [px, py] of raster.get(`${u},${v}`) ?? []) if (px > x0 && px < x1 && py > y0 && py < y1) return false
+    }
+    return true
+  }
   const setze = (name: string, x: number, y: number, s: number, z: number, pruefen = true) => {
     const bb = (BREITE[name] ?? 0.2) * s
     x = Math.max(bb / 2 + 0.03, Math.min(sp - bb / 2 - 0.03, x)) // nicht über den Rand des Bretts
@@ -264,6 +311,8 @@ export function objekteBauen(b: Brett, imTunnel: (b: Brett, x: number, y: number
       }
       if (z(60) < 0.5) setze(waehle(LAUB, z(61)), i + 0.12 + z(62) * 0.76, j + 0.93, 0.85, z(63))
     } else if (f.grund === 'wiese') {
+      // auf grossen Brettern weniger Schmuck auf der Wiese, sonst wird das Bild zu langsam (bis 900 Felder wie bisher, gewählt)
+      if (z(18) > wieseDicht) continue
       if (z(1) < 0.25) setze(waehle(BUSCH, z(2)), i + 0.15 + z(3) * 0.7, j + 0.25 + z(4) * 0.65, 0.9 + z(5) * 0.3, z(6))
       if (z(7) < 0.12) setze(waehle(LAUB, z(8)), i + 0.15 + z(9) * 0.7, j + 0.35 + z(10) * 0.55, 0.9 + z(11) * 0.2, z(12))
       if (z(13) < 0.06) setze(waehle(FELS, z(14)), i + 0.15 + z(15) * 0.7, j + 0.3 + z(16) * 0.6, 0.9, z(17))

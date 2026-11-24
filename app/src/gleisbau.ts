@@ -10,8 +10,9 @@ export const ZEILEN = 6
 /** wählbare Grössen des Bretts, Spalten × Zeilen (gewählt; Michael, 2026-11-22: «auch Anzahl Kacheln sollen wählbar sein») */
 // seit 2026-11-23 frei wählbar statt vorgegebener Grössen (Michael: «bei einem neuen Brett die Felderzahl manuell eingeben können», «Keine Vorgegebenen
 // Grössen mehr»): je Seite MIN_SEITE bis MAX_SEITE Felder (gewählt, grösser wird es auf dem Handy zu klein und langsam)
-export const MIN_SEITE = 3, MAX_SEITE = 30
-export const groesseOk = (sp: number, ze: number) => Number.isInteger(sp) && Number.isInteger(ze) && sp >= MIN_SEITE && ze >= MIN_SEITE && sp <= MAX_SEITE && ze <= MAX_SEITE
+// seit 2026-11-24 bis 192 breit und 108 hoch (Michael: «Brettgrösse auf 192x108 erhöhen»; vorher je 30)
+export const MIN_SEITE = 3, MAX_BREITE = 192, MAX_HOEHE = 108
+export const groesseOk = (sp: number, ze: number) => Number.isInteger(sp) && Number.isInteger(ze) && sp >= MIN_SEITE && ze >= MIN_SEITE && sp <= MAX_BREITE && ze <= MAX_HOEHE
 export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 

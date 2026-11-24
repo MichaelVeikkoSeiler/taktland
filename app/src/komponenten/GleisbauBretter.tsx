@@ -5,10 +5,10 @@
  * Alles nur im Browser dieses Geräts; ein geteilter Link enthält das Brett selbst, kein Server.
  */
 import { useEffect, useState } from 'react'
-import { brettAusCode, type GespeichertesBrett, groesseOk, MAX_SEITE, MIN_SEITE, spalten, zeilen } from '../gleisbau'
+import { brettAusCode, type GespeichertesBrett, groesseOk, MAX_BREITE, MAX_HOEHE, MIN_SEITE, spalten, zeilen } from '../gleisbau'
 import Wischen from './Wischen'
 
-/** Spalten und Zeilen von Hand, MIN_SEITE bis MAX_SEITE */
+/** Spalten und Zeilen von Hand, MIN_SEITE bis MAX_BREITE und MAX_HOEHE */
 export function GroesseWahl({ sp, ze, waehlen, text, gesperrt = false }: { sp: number; ze: number; waehlen: (sp: number, ze: number) => void; text: string; gesperrt?: boolean }) {
   const [s, setS] = useState(String(sp)), [z, setZ] = useState(String(ze))
   const n = Number(s), m = Number(z), ok = groesseOk(n, m), gleich = n === sp && m === ze
@@ -16,16 +16,16 @@ export function GroesseWahl({ sp, ze, waehlen, text, gesperrt = false }: { sp: n
   return (
     <form className="mt-3 flex flex-wrap items-center gap-2" onSubmit={(e) => { e.preventDefault(); if (ok) waehlen(n, m) }}>
       <label className="flex items-center gap-1.5 text-sm font-bold">Breite
-        <input type="number" inputMode="numeric" min={MIN_SEITE} max={MAX_SEITE} value={s} onChange={(e) => setS(e.target.value)} disabled={gesperrt} className={feld} />
+        <input type="number" inputMode="numeric" min={MIN_SEITE} max={MAX_BREITE} value={s} onChange={(e) => setS(e.target.value)} disabled={gesperrt} className={feld} />
       </label>
       <span aria-hidden="true">×</span>
       <label className="flex items-center gap-1.5 text-sm font-bold">Höhe
-        <input type="number" inputMode="numeric" min={MIN_SEITE} max={MAX_SEITE} value={z} onChange={(e) => setZ(e.target.value)} disabled={gesperrt} className={feld} />
+        <input type="number" inputMode="numeric" min={MIN_SEITE} max={MAX_HOEHE} value={z} onChange={(e) => setZ(e.target.value)} disabled={gesperrt} className={feld} />
       </label>
       <button type="submit" disabled={gesperrt || !ok || (gleich && text !== 'Erstellen')}
               className={`min-h-11 rounded-lg px-4 font-bold disabled:opacity-40 ${text === 'Erstellen' ? 'bg-sbb-red text-white hover:bg-sbb-red125'
                 : 'border border-sbb-cloud bg-white hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight'}`}>{text}</button>
-      {!ok && <span className="w-full text-sm text-sbb-red">Je {MIN_SEITE} bis {MAX_SEITE} Felder.</span>}
+      {!ok && <span className="w-full text-sm text-sbb-red">Breite {MIN_SEITE} bis {MAX_BREITE}, Höhe {MIN_SEITE} bis {MAX_HOEHE} Felder.</span>}
     </form>
   )
 }

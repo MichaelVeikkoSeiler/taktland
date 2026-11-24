@@ -11,7 +11,7 @@ import { type Aufgabe, AUFGABEN, bewerten, type Ergebnis, fortschrittLesen, fort
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
-import { bild, Landschaft, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild } from './GleisbauBilder'
+import { bild, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild } from './GleisbauBilder'
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
 
@@ -837,7 +837,8 @@ export function Gleisbau() {
   // darüber die Objekte (Bäume, Gipfel, Häuser), nach ihrem Fusspunkt geordnet
   const unten = useMemo(() => (
     <>
-      {brett.map((z, j) => z.map((f, i) => <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} nurFlaeche />))}
+      <WiesenMuster sp={SP} ze={ZE} kante={KANTE.wiese} flaeche={F.wiese} />
+      {brett.map((z, j) => z.map((f, i) => (f.grund === 'wiese' ? null : <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} nurFlaeche />)))}
       <Landschaft brett={brett} />
       <StrassenBild brett={brett} />
       {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j}
@@ -846,7 +847,32 @@ export function Gleisbau() {
       <PerronVerbindungen brett={brett} />
     </>
   ), [brett, namen])
-  const oben = useMemo(() => objekteBauen(brett, imTunnel).map((o, k) => <ObjektBild key={k} o={o} />), [brett])
+  const objekte = useMemo(() => objekteBauen(brett, imTunnel), [brett])
+  // Bäume, Häuser und Büsche nur, wo man sie erkennt: ab 10 Bildpunkten je Feld und nur im sichtbaren Ausschnitt (grosse Bretter bis 192 × 108)
+  const [buehneGr, setBuehneGr] = useState({ w: 0, h: 0 })
+  useEffect(() => {
+    const el = buehne.current
+    if (!el) return
+    const ro = new ResizeObserver(() => setBuehneGr({ w: el.clientWidth, h: el.clientHeight }))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [ansicht, offen])
+  const sicht = (() => {
+    const { w, h } = buehneGr
+    if (!w || !h) return null
+    const k = Math.min(w / (SP + 0.3), h / (ZE + 0.3)), ox = (w - (SP + 0.3) * k) / 2, oy = (h - (ZE + 0.3) * k) / 2
+    if (k * zoom.s < 10) return { klein: true, i0: 0, i1: 0, j0: 0, j1: 0 }
+    const zu = (sx: number, sy: number) => [((sx - zoom.x) / zoom.s - ox) / k - 0.15, ((sy - zoom.y) / zoom.s - oy) / k - 0.15]
+    const [a0, b0] = zu(0, 0), [a1, b1] = zu(w, h)
+    return { klein: false, i0: Math.floor(a0) - 1, i1: Math.ceil(a1) + 1, j0: Math.floor(b0) - 1, j1: Math.ceil(b1) + 2 }
+  })()
+  const sichtSchluessel = sicht ? (sicht.klein ? 'klein' : `${sicht.i0},${sicht.i1},${sicht.j0},${sicht.j1}`) : 'alle'
+  const oben = useMemo(() => {
+    if (sicht?.klein) return null
+    const l = sicht ? objekte.filter((o) => o.x >= sicht.i0 && o.x <= sicht.i1 && o.y >= sicht.j0 && o.y <= sicht.j1) : objekte
+    return l.map((o, k) => <ObjektBild key={k} o={o} />)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [objekte, sichtSchluessel])
   // offene Gleisenden als roter Punkt, beim Bauen (Michael, 2026-11-23, Vorschlag «Anzeige, wo das Gleis offen endet»)
   const enden = useMemo(() => offeneEnden(brett), [brett])
 
@@ -936,6 +962,8 @@ export function Gleisbau() {
     try { await navigator.clipboard.writeText(url); setGeteilt(true); window.setTimeout(() => setGeteilt(false), 2500) } catch { window.prompt('Link zum Brett', url) }
   }
   // zwei Finger zoomen (1- bis 4-fach) und verschieben das Brett; dabei gilt kein Tipp und keine Linie
+  // so weit hinein, dass ein Feld etwa 60 Bildpunkte breit wird, mindestens 4-fach (gewählt; grosse Bretter brauchen mehr)
+  const zoomMax = Math.max(4, Math.min(40, (60 * Math.max(SP, ZE)) / Math.max(1, Math.min(buehne.current?.clientWidth ?? 400, buehne.current?.clientHeight ?? 400))))
   const zoomSetzen = (s: number, x: number, y: number) => {
     const el = buehne.current
     if (!el || s <= 1.001) { setZoom({ s: 1, x: 0, y: 0 }); return }
@@ -955,7 +983,7 @@ export function Gleisbau() {
     const z = zwei.current
     if (!z || finger.current.size !== 2) return
     const [a, b] = [...finger.current.values()], r = buehne.current!.getBoundingClientRect()
-    const s = Math.max(1, Math.min(4, (z.z.s * Math.hypot(a.x - b.x, a.y - b.y)) / Math.max(1, z.d)))
+    const s = Math.max(1, Math.min(zoomMax, (z.z.s * Math.hypot(a.x - b.x, a.y - b.y)) / Math.max(1, z.d)))
     const mx = (a.x + b.x) / 2 - r.left, my = (a.y + b.y) / 2 - r.top
     zoomSetzen(s, mx - ((z.mx - z.z.x) * s) / z.z.s, my - ((z.my - z.z.y) * s) / z.z.s)
   }
@@ -965,7 +993,7 @@ export function Gleisbau() {
   }
   const buehneRad = (e: React.WheelEvent<HTMLDivElement>) => {
     const r = buehne.current!.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top
-    const s = Math.max(1, Math.min(4, zoom.s * Math.exp(-e.deltaY * 0.002)))
+    const s = Math.max(1, Math.min(zoomMax, zoom.s * Math.exp(-e.deltaY * 0.002)))
     zoomSetzen(s, mx - ((mx - zoom.x) * s) / zoom.s, my - ((my - zoom.y) * s) / zoom.s)
   }
   const neuesBrett = (sp: number, ze: number) => {
