@@ -27,6 +27,8 @@ export interface ZugFahrt {
   halte: Array<{ abk: string; an: number | null; ab: number | null; gleis: string | null }>
   /** Echtzeit je Verkehrstag (Tag ab index.von), wo gemeldet (echtzeit.ts) */
   echt?: Map<number, Echtzeit>
+  /** wie lange der Zug vor der ersten Abfahrt und nach der letzten Ankunft steht, wenn nicht ZUG_STEHT_MIN (fluegelFinden) */
+  vorMin?: number; nachMin?: number
 }
 
 /** die Daten liegen auf 3dland.ch neben der Seite, nicht bei taktland.ch */
@@ -116,8 +118,8 @@ export function haltZeiten(f: ZugFahrt, i: number, tag?: number): [number, numbe
   const h = f.halte, z = h.length - 1
   const erst = h[0].ab ?? h[0].an!, letzt = h[z].an ?? h[z].ab!
   let an = h[i].an ?? h[i].ab!, ab = h[i].ab ?? h[i].an!
-  if (i === 0) an = Math.min(an, erst - ZUG_STEHT_MIN)
-  if (i === z) ab = Math.max(ab, letzt + ZUG_STEHT_MIN)
+  if (i === 0) an = Math.min(an, erst - (f.vorMin ?? ZUG_STEHT_MIN))
+  if (i === z) ab = Math.max(ab, letzt + (f.nachMin ?? ZUG_STEHT_MIN))
   if (i > 0 && i < z && an === ab) { an -= ZUG_KURZHALT_VOR_MIN; ab += ZUG_KURZHALT_NACH_MIN }
   const e = tag === undefined ? undefined : f.echt?.get(tag)
   if (e) { an += e.an[i] ?? 0; ab = Math.max(an, ab + (e.ab[i] ?? 0)) }
@@ -247,6 +249,52 @@ export function kopplungFinden(fahrten: ZugFahrt[]): Kopplung {
     ;(k.get(a) ?? k.set(a, []).get(a)!).push({ mit: b, halte })
   }
   return k
+}
+
+/**
+ * geteilte und zusammengehängte Züge (Michael, 2026-11-25, Kerzers: «Ich bemerke, dass in Kerzers doppelte Züge stehen … Dabei geht es um diegleichen
+ * Züge»): der Fahrplan führt einen Zug, der in einem Bahnhof geteilt oder zusammengehängt wird, als Fahrten, die dort enden, und Fahrten, die dort
+ * beginnen (S5 15564 aus Bern endet in Kerzers um 17:30, 15764 nach Neuchâtel fährt um 17:31 ab Gleis 6B, 15864 nach Avenches um 17:35 ab 6A); mit
+ * je ZUG_STEHT_MIN Minuten Stehen standen dort drei Züge für einen. Eine Fahrt, die an einem Bahnhof endet, und eine, die dort auf demselben Gleis
+ * (die Nummer ohne Sektor) mit derselben Linie an einem gemeinsamen Tag 0 bis FLUEGEL_MIN Minuten danach beginnt, gehören zusammen: beginnt dort
+ * nur aus einer Fahrt etwas (Teilen oder einfach weiter), verschwindet die ankommende bei der Ankunft und die weiterfahrenden stehen ab dann;
+ * fahren mehrere zusammen weiter (Zusammenhängen), stehen die ankommenden bis zur Abfahrt und die weiterfahrende erscheint erst dann. Gewählt
+ */
+const FLUEGEL_MIN = 10
+const gleisNr = (g: string | null) => g?.match(/\d+/)?.[0] ?? null
+export function fluegelFinden(fahrten: ZugFahrt[]) {
+  const enden = new Map<string, ZugFahrt[]>()
+  for (const f of fahrten) {
+    const h = f.halte[f.halte.length - 1], g = gleisNr(h.gleis)
+    if (h.an === null || g === null || !f.linie) continue
+    const k = `${h.abk}|${g}|${f.linie}`
+    ;(enden.get(k) ?? enden.set(k, []).get(k)!).push(f)
+  }
+  const vorher = new Map<ZugFahrt, ZugFahrt[]>(), nachher = new Map<ZugFahrt, ZugFahrt[]>()
+  for (const c of fahrten) {
+    const h = c.halte[0], g = gleisNr(h.gleis)
+    if (h.ab === null || g === null || !c.linie) continue
+    for (const e of enden.get(`${h.abk}|${g}|${c.linie}`) ?? []) {
+      if (e === c || !(e.tage & c.tage)) continue
+      const d = h.ab - e.halte[e.halte.length - 1].an!
+      if (d < 0 || d > FLUEGEL_MIN) continue
+      ;(vorher.get(c) ?? vorher.set(c, []).get(c)!).push(e)
+      ;(nachher.get(e) ?? nachher.set(e, []).get(e)!).push(c)
+    }
+  }
+  for (const [c, ee] of vorher) {
+    const ab = c.halte[0].ab!
+    if (ee.length === 1) {
+      // teilen oder weiter: die weiterfahrende steht ab der Ankunft, die ankommende verschwindet
+      const e = ee[0]
+      c.vorMin = ab - e.halte[e.halte.length - 1].an!
+      e.nachMin = 0
+    } else {
+      // zusammenhängen: die ankommenden stehen bis zur Abfahrt, die weiterfahrende erscheint erst dann
+      c.vorMin = 0
+      for (const e of ee) if ((nachher.get(e)?.length ?? 0) === 1) e.nachMin = ab - e.halte[e.halte.length - 1].an!
+    }
+  }
 }
 
 /** liegt die Stelle im Stück, das mit dem Partner gekoppelt ist: am gemeinsamen Halt oder zwischen zwei gemeinsamen Halten nacheinander */

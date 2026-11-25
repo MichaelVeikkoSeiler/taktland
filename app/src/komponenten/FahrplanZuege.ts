@@ -10,7 +10,7 @@ import * as THREE from 'three'
 import { gleisLaden } from '../gelaende'
 import { lageBei, wegEnde } from '../fahrt'
 import { lv95 } from '../relief'
-import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, type ZugIndex, type ZugNetz, zugNetzLaden, type ZugWeg, zugStelle, wegStelle, type ZugStelle, kopplungFinden, gekoppeltWeg, type Kopplung } from '../zuege3d'
+import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, type ZugIndex, type ZugNetz, zugNetzLaden, type ZugWeg, zugStelle, wegStelle, type ZugStelle, kopplungFinden, fluegelFinden, gekoppeltWeg, type Kopplung } from '../zuege3d'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 
 /** Masse in echter Grösse, gewählt (kein bestimmter Zug): Breite, Höhe, Länge eines Wagens und die Lücke dazwischen in m */
@@ -93,7 +93,7 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
             }
         }
       }
-      fahrten = liste; netz = zn; zellen = z; kopplung = kopplungFinden(liste)
+      fahrten = liste; netz = zn; zellen = z; kopplung = kopplungFinden(liste); fluegelFinden(liste)
     })()
   }
 

@@ -31,7 +31,7 @@ import { laubSaison, laubSchatten, laubTagSetzen, nurKrone } from './Laub'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
-import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden, wegStelle, kopplungFinden, gekoppeltWeg, type Kopplung } from '../zuege3d'
+import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden, wegStelle, kopplungFinden, fluegelFinden, gekoppeltWeg, type Kopplung } from '../zuege3d'
 import { ECHTZEIT_ALLE_MS, echtzeitHolen, echtzeitStand } from '../echtzeit'
 import { planText, rueckkehr, rueckkehrMerken, type Rueckkehr } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
@@ -6174,7 +6174,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (!ix) { setZugZeile('Züge: der Fahrplan ist hier nicht geladen.'); return }
       const [liste, netzDa] = await Promise.all([zuegeLaden(ix, e0, n0, e1, n1).catch(() => []), zugNetzLaden().catch(() => null)])
       if (weg) return
-      fahrten = liste; zn = netzDa; kopplung = kopplungFinden(liste)
+      fahrten = liste; zn = netzDa; kopplung = kopplungFinden(liste); fluegelFinden(liste)
       // je Bahnhof die Gleise der Reihe nach (nur die Zahl am Anfang: «2A-D» ist Gleis 2, «7 / 8» Gleis 7)
       const je = new Map<string, Set<number>>()
       for (const f of liste) for (const x of f.halte) {
