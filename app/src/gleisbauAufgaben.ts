@@ -29,9 +29,12 @@ export interface Aufgabe {
    * sind. Welche Halte etc sonst sehr schwierig»): bei echten Strecken die Bahnhöfe und je Abschnitt, ob Tunnel oder Brücke nötig sind
    */
   schritte?: (b: Brett, stand?: Transport) => Array<{ art: 'bahnhof' | 'abschnitt'; text: string; ok: boolean }>
+  /** im Bahnbetrieb: Sterne nach den Baukosten statt nach den Gleisstücken, und die Baukosten selbst */
+  sterne?: (b: Brett) => number
+  kosten?: (b: Brett) => number
 }
-/** was während der Fahrt ans Ziel kam */
-export interface Transport { fahrgaeste: number; gueter: number }
+/** was während der Fahrt ans Ziel kam; jeGut im Bahnbetrieb */
+export interface Transport { fahrgaeste: number; gueter: number; jeGut?: Partial<Record<string, number>> }
 
 const [DX, DY] = DXY
 
@@ -41,6 +44,7 @@ export const stuecke = (b: Brett) => b.flat().filter((f) => f.gleis).length
 export function bewerten(a: Aufgabe, b: Brett, stand?: Transport): Ergebnis {
   const r = a.pruefen(b, stand)
   if (!r.ok) return { ...r, sterne: 0 }
+  if (a.sterne) return { ok: true, text: r.text, sterne: a.sterne(b) }
   const n = stuecke(b)
   const sterne = !a.vorgabe || n <= a.vorgabe ? 3 : n <= Math.ceil(a.vorgabe * 4 / 3) ? 2 : 1
   return { ok: true, text: a.vorgabe ? `${r.text} Mit ${n} Gleisstücken (Vorgabe für drei Sterne: ${a.vorgabe}).` : r.text, sterne }

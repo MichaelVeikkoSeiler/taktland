@@ -41,7 +41,9 @@ const wann = (ms: number) => {
   return gleicherTag ? `heute ${d.toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })}` : d.toLocaleDateString('de-CH', { day: 'numeric', month: 'numeric', year: 'numeric' })
 }
 
-export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu, aufgaben, sterne, sterneMax }: {
+export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu, aufgaben, sterne, sterneMax, betrieb, geld }: {
+  betrieb: () => void
+  geld: number
   bretter: GespeichertesBrett[]
   setBretter: (f: (l: GespeichertesBrett[]) => GespeichertesBrett[]) => void
   oeffnen: (id: string) => void
@@ -77,6 +79,11 @@ export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu, auf
         <button type="button" onClick={aufgaben}
                 className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">
           Aufgaben <span className="ml-1 text-sm font-medium tabular-nums text-sbb-metal dark:text-sbb-storm">{sterne} / {sterneMax} ★</span>
+        </button>
+        {/* das Spiel mit Aufträgen, Geld und Depot (Michael, 2026-11-25) */}
+        <button type="button" onClick={betrieb}
+                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">
+          Bahnbetrieb <span className="ml-1 text-sm font-medium tabular-nums text-sbb-metal dark:text-sbb-storm">CHF {geld.toLocaleString('de-CH')}</span>
         </button>
       </div>
       {neuOffen && (

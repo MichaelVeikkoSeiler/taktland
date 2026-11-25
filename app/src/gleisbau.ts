@@ -77,7 +77,9 @@ export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /*
    * hier steht vor der Fahrt ein Zug, p ein Personenzug, g ein Güterzug (seit 2026-11-25; Michael: «Erstelle Aufgaben für Personentransporte und
    * Gütertransporte. Unter den Tools sollten Züge aus beiden Kat gewählt werden können»); gibt es solche Felder, fahren genau diese Züge
    */
-  zugStart?: 'p' | 'g' }
+  zugStart?: 'p' | 'g'
+  /** der Name der Anlage an einem Güterschuppen, im Bahnbetrieb (Sägerei, Kieswerk …; fiktiv) */
+  anlage?: string }
 /** ein Feld, auf dem ein Zug starten kann: ein einfaches Gleis, keine grosse Kurve */
 export const zugStartGilt = (f?: Feld) => !!f?.gleis && !f.teil && !grosseKurve(f.gleis)
 export type Brett = Feld[][] // [Zeile][Spalte]
@@ -359,11 +361,12 @@ export function brettCode(b: Brett): string {
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], zugStarts: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], zugStarts: string[] = [], anlagen: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
     if (f.fluss) fluesse.push(`${i}.${j}`)
     if (f.strasse && f.haltestelle) halte.push(`${i}.${j}`)
     if (f.zugStart && zugStartGilt(f)) zugStarts.push(`${i}.${j}.${f.zugStart}`)
+    if (f.anlage && gueterGilt(f)) anlagen.push(`${i}.${j}.${namenEsc(f.anlage)}`)
     if (f.strasse && f.wende) wenden.push(`${i}.${j}`)
     if (f.strasse && f.strBruecke) strBruecken.push(`${i}.${j}`)
     if (f.knoten && istBahnhof(f.gleis)) knoten.push(`${i}.${j}`)
@@ -381,7 +384,7 @@ export function brettCode(b: Brett): string {
     + (fluesse.length ? `~f${fluesse.join('_')}` : '') + (abgestellt.length ? `~w${abgestellt.join('_')}` : '')
     + (knoten.length ? `~k${knoten.join('_')}` : '') + (haenge.length ? `~h${haenge.join('_')}` : '') + (stromlos.length ? `~s${stromlos.join('_')}` : '')
     + (halte.length ? `~y${halte.join('_')}` : '') + (wenden.length ? `~e${wenden.join('_')}` : '') + (strBruecken.length ? `~r${strBruecken.join('_')}` : '')
-    + (zugStarts.length ? `~t${zugStarts.join('_')}` : '')
+    + (zugStarts.length ? `~t${zugStarts.join('_')}` : '') + (anlagen.length ? `~m${anlagen.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -396,6 +399,7 @@ export function brettAusCode(c: string): Brett | null {
   }))
   if (!b.length || !groesseLesbar(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
+    if (teil.startsWith('m')) for (const e of teil.slice(1).split('_')) { const [i, j, n] = e.split('.'); try { if (b[+j]?.[+i] && n) b[+j][+i].anlage = decodeURIComponent(n).slice(0, 40) } catch { /* ungültig */ } }
     if (teil.startsWith('t')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i] && (c === 'p' || c === 'g')) b[+j][+i].zugStart = c }
     if (teil.startsWith('y')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].haltestelle = true }
     if (teil.startsWith('e')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].wende = true }
@@ -862,10 +866,11 @@ const PFIFF_VOR_S = 0.9
 const KUPPELN_S = 1.2
 
 export interface WagenLage { x: number; y: number; w: number; /** 0 Lok, 1 und 2 Wagen, 3 Steuerwagen */ art: number; vorne: boolean; /** Diesel statt Strom */ diesel?: boolean
-  /** ein Güterwagen */ gueter?: boolean }
+  /** ein Güterwagen */ gueter?: boolean
+  /** im Bahnbetrieb: welche Lok oder welcher Wagen, und ob er beladen ist (setzt die Darstellung) */ typ?: string; beladen?: boolean }
 
-/** ein Fahrzeug im Zug, von der Spitze an; blick 1: der Kopf schaut zur Spitze des Zugs */
-interface Fahrzeug { t: 'lok' | 'wagen' | 'steuer'; diesel: boolean; blick: 1 | -1 }
+/** ein Fahrzeug im Zug, von der Spitze an; blick 1: der Kopf schaut zur Spitze des Zugs; typ im Bahnbetrieb die Lok oder der Wagen (gleisbauFahrzeuge.ts) */
+interface Fahrzeug { t: 'lok' | 'wagen' | 'steuer'; diesel: boolean; blick: 1 | -1; typ?: string }
 const standardZug = (n: number, diesel = false): Fahrzeug[] =>
   Array.from({ length: n }, (_, k): Fahrzeug => ({ t: k === 0 ? 'lok' : k === n - 1 ? 'steuer' : 'wagen', diesel, blick: k === n - 1 ? -1 : 1 }))
 /** ein Güterzug: Lok und Güterwagen, ohne Steuerwagen (gewählt) */
@@ -897,10 +902,16 @@ export class Zug {
   diesel() { return this.fz.some((v) => v.t === 'lok' && v.diesel) }
   /** wie viele Züge (Loks) zusammenhängen */
   teile() { return this.fz.filter((v) => v.t === 'lok').length }
-  /** Personenzug oder Güterzug: der Personenzug hält an Bahnhöfen, der Güterzug am Güterschuppen und fährt an Bahnhöfen durch */
-  art: 'person' | 'gueter' = 'person'
+  /** Personenzug oder Güterzug: der Personenzug hält an Bahnhöfen, der Güterzug am Güterschuppen und fährt an Bahnhöfen durch; ein gemischter Zug hält an beiden */
+  art: 'person' | 'gueter' | 'mix' = 'person'
+  /** Höchsttempo, im Bahnbetrieb das der Lok */
+  vmax = TEMPO
   /** Plätze für Ladungen: die Güterwagen */
-  ladeplaetze() { return this.fz.filter((v) => v.t === 'wagen').length }
+  ladeplaetze() { return this.fz.filter((v) => v.t === 'wagen' && v.typ !== 'person').length }
+  /** die Güterwagen mit ihrer Stelle im Zug (für das Beladen nach Gut) */
+  gueterwagen(): Array<{ k: number; typ: string }> { return this.fz.flatMap((v, k) => (v.t === 'wagen' && v.typ !== 'person' ? [{ k, typ: v.typ ?? 'gedeckt' }] : [])) }
+  /** Plätze für Fahrgäste: im Bahnbetrieb je Personenwagen proPersonenwagen, sonst fest */
+  plaetze(fest: number, proPersonenwagen: number) { const n = this.fz.filter((v) => v.typ === 'person').length; return n ? n * proPersonenwagen : fest }
   /** ob der Halt an einem Bahnhof ist (nicht das Umkehren) */
   private amBahnhof = false
   /** zählt hoch, wenn der Zug PFIFF_VOR_S vor der Abfahrt an einem Bahnhof steht; die Darstellung pfeift dann */
@@ -941,6 +952,28 @@ export class Zug {
       return z
     }
     return null
+  }
+
+  /**
+   * ein Zug aus dem Bahnbetrieb: Lok und Wagen nach Wahl (Michael, 2026-11-25: «Diverse fiktive Loks und Wagen stehen bereit»); hat er Personen- und
+   * Güterwagen, hält er an Bahnhöfen und Güterschuppen
+   */
+  static zusammengestellt(b: Brett, i: number, j: number, lok: { typ: string; diesel: boolean; tempo: number }, wagen: string[]): Zug | null {
+    const mitP = wagen.includes('person'), mitG = wagen.some((w) => w !== 'person')
+    const art = mitP && mitG ? 'mix' : mitG ? 'gueter' : 'person'
+    const z = Zug.ab(b, i, j, wagen.length + 1, art === 'mix' ? 'person' : art)
+    if (!z) return null
+    z.art = art
+    z.vmax = lok.tempo
+    z.fz = [{ t: 'lok', diesel: lok.diesel, blick: 1, typ: lok.typ }, ...wagen.map((w): Fahrzeug => ({ t: 'wagen', diesel: lok.diesel, blick: 1, typ: w }))]
+    for (let k = 0; k < 20 && z.hinten() < z.laenge; k++) {
+      const davor = naechstes(b, umgekehrt(z.stuecke[0]))
+      if (!davor) break
+      z.stuecke.unshift(umgekehrt(davor))
+    }
+    z.kuerzen()
+    z.stromlos = !lok.diesel && ohneStromBei(b, z.stuecke[z.stuecke.length - 1])
+    return z
   }
 
   /** ein Zug genau auf diesem Feld, als Personen- oder Güterzug (vom Werkzeug «Personenzug» oder «Güterzug» gesetzt) */
@@ -1076,7 +1109,7 @@ export class Zug {
     for (let k = this.fz.length - 1; k >= 0; k--) if (this.fz[k].t !== 'wagen' && ++koepfe === 2) { s = k; break }
     if (s <= 0) return null
     const t = this.kopie()
-    t.art = this.art
+    t.art = this.art; t.vmax = this.vmax
     t.fz = this.fz.slice(s)
     // seine Spitze liegt s Fahrzeuge hinter unserer
     let d = s * (WAGEN_LAENGE + WAGEN_LUECKE)
@@ -1123,7 +1156,7 @@ export class Zug {
     if (this.stromlos) {
       this.tempo = Math.max(0, this.tempo - STROMLOS_BREMSEN * dt)
       if (this.tempo <= 0) return
-    } else this.tempo = Math.min(TEMPO, this.tempo + (TEMPO / ANFAHREN) * dt)
+    } else this.tempo = Math.min(this.vmax, this.tempo + (this.vmax / ANFAHREN) * dt)
     let rest = this.tempo * dt
     for (let k = 0; k < 8 && rest > 0; k++) {
       const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
@@ -1133,8 +1166,9 @@ export class Zug {
       const weiterImBahnhof = () => { const n = naechstes(b, s); return !!n && !n.gross && istBahnhof(b[n.j][n.i].gleis) }
       // auch am Güterschuppen hält der Zug (laden), ohne Fahrgäste
       // seit 2026-11-25 hält der Personenzug nur an Bahnhöfen, der Güterzug nur am Güterschuppen
-      const haltHier = this.art === 'gueter' ? gueterGilt(b[s.j][s.i]) : istBahnhof(b[s.j][s.i].gleis)
-      if (!s.gross && haltHier && vorher < mitte && vorher + rest >= mitte && (this.art === 'gueter' || !weiterImBahnhof())) {
+      const amBf = istBahnhof(b[s.j][s.i].gleis)
+      const haltHier = this.art === 'gueter' ? gueterGilt(b[s.j][s.i]) : this.art === 'mix' ? amBf || gueterGilt(b[s.j][s.i]) : amBf
+      if (!s.gross && haltHier && vorher < mitte && vorher + rest >= mitte && (!amBf || !weiterImBahnhof())) {
         this.kopf = mitte; this.halt = Math.max(HALT_S, this.taktWarten?.(`${s.i},${s.j}`) ?? 0); this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`; return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
@@ -1190,7 +1224,7 @@ export class Zug {
       const vorn = k * (WAGEN_LAENGE + WAGEN_LUECKE), a = this.punkt(vorn), c = this.punkt(vorn + WAGEN_LAENGE)
       const art = v.t === 'lok' ? 0 : v.t === 'steuer' ? 3 : 1 + (k % 2)
       return { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2, w: Math.atan2(a.y - c.y, a.x - c.x), art, vorne: v.t === 'wagen' ? k === 0 : v.blick === 1, diesel: v.diesel,
-        gueter: this.art === 'gueter' }
+        gueter: this.art === 'gueter' || (v.typ !== undefined && v.typ !== 'person' && v.t === 'wagen'), typ: v.typ }
     })
   }
 }

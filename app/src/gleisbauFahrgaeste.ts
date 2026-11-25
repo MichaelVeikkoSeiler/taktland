@@ -42,11 +42,11 @@ export function fahrgaesteZeit(f: Fahrgaeste, dt: number, bahnhoefe: string[]): 
 }
 
 /** ein Zug hält am Bahnhof: aus- und einsteigen; gibt zurück, wie viele aus- und eingestiegen sind */
-export function fahrgaesteHalt(f: Fahrgaeste, zug: number, bahnhof: string): { aus: number; ein: number } {
+export function fahrgaesteHalt(f: Fahrgaeste, zug: number, bahnhof: string, plaetze = PLAETZE): { aus: number; ein: number } {
   const drin = f.imZug[zug] ?? []
   const bleiben = drin.filter((z) => z !== bahnhof), aus = drin.length - bleiben.length
   const wartend = f.warten[bahnhof] ?? []
-  const ein = Math.min(PLAETZE - bleiben.length, wartend.length)
+  const ein = Math.max(0, Math.min(plaetze - bleiben.length, wartend.length))
   f.imZug[zug] = [...bleiben, ...wartend.slice(0, ein)]
   f.warten[bahnhof] = wartend.slice(ein)
   f.gebracht += aus
