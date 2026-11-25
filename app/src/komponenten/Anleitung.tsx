@@ -3,6 +3,7 @@ import type { BahnhofIndex } from '../typen'
 import { zuklappTon } from '../audio'
 import { tippSchliesst } from '../zuklappen'
 import { useBrilleMoeglich } from '../relief'
+import portraet from '../assets/michael.webp'
 
 /**
  * So funktioniert Taktland, und woher die Daten stammen.
@@ -526,8 +527,14 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           {/* Michael, 2026-11-20: «Hommage an den öffentlichen Verkehr», dann «Bahn und Schiff», 2026-11-21 wieder «Öffentlichen Verkehr nicht nur Bahn und Schiff» */}
           <p>Taktland ist meine kleine Hommage an den öffentlichen Verkehr der Schweiz.</p>
         </div>
-        <p className="mt-3 font-medium">Michael Veikko Seiler</p>
-        <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
+        {/* das Porträt links vom Namen (Michael, 2026-11-25: «Kannst du dieses Bild mal ganz unten links bei Über Taktland links von meinem Namen platzieren?») */}
+        <div className="mt-3 flex items-center gap-3">
+          <img src={portraet} alt="Michael Veikko Seiler" width={56} height={56} className="size-14 flex-none rounded-full object-cover" />
+          <div>
+            <p className="font-medium">Michael Veikko Seiler</p>
+            <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
+          </div>
+        </div>
         <p className="mt-4 text-sm leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Name spielt auf den Taktfahrplan der Schweiz an. Die Texte zu Bahnhöfen und Linien setzt ein Programm aus den offenen Daten zusammen.
         </p>
