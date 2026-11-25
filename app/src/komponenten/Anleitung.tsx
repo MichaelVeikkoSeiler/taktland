@@ -4,6 +4,7 @@ import { zuklappTon } from '../audio'
 import { tippSchliesst } from '../zuklappen'
 import { useBrilleMoeglich } from '../relief'
 import portraet from '../assets/michael.webp'
+import portraetBreit from '../assets/michael-breit.webp'
 
 /**
  * So funktioniert Taktland, und woher die Daten stammen.
@@ -529,7 +530,10 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
         </div>
         {/* das Porträt links vom Namen (Michael, 2026-11-25: «Kannst du dieses Bild mal ganz unten links bei Über Taktland links von meinem Namen platzieren?») */}
         <div className="mt-3 flex items-center gap-3">
-          <img src={portraet} alt="Michael Veikko Seiler" width={56} height={56} className="size-14 flex-none rounded-full object-cover" />
+          {/* auf dem Handy und Tablet das Gesicht, eckig, 73 px (Michael, 2026-11-25: «Auf dem Mobile auch eckig und 130% vergrössern»); am Desktop das ganze Bild,
+              112 px hoch (Michael: «Auf dem Desktop Bild doppelt so gross und Originalausschnitt rechteckig») */}
+          <img src={portraet} alt="Michael Veikko Seiler" width={73} height={73} className="size-[73px] flex-none object-cover xl:hidden" />
+          <img src={portraetBreit} alt="Michael Veikko Seiler" width={213} height={112} className="hidden h-28 w-auto flex-none xl:block" />
           <div>
             <p className="font-medium">Michael Veikko Seiler</p>
             <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
