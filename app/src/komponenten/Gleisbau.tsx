@@ -229,9 +229,10 @@ function UhrBild({ minuten }: { minuten: number }) {
       <rect x={0.03} y={0.03} width={UHR_FELDER - 0.06} height={UHR_FELDER - 0.06} rx={0.1} fill={F.tablett} />
       <circle cx={c + 0.03} cy={c + 0.05} r={r} fill="#000000" opacity={0.25} />
       <circle cx={c} cy={c} r={r} fill="#ffffff" stroke="#9a9a9a" strokeWidth={0.04} />
-      {Array.from({ length: 60 }, (_, k) => {
-        const a = (k * 6 * Math.PI) / 180, lang = k % 5 ? 0.06 : 0.16, b = k % 5 ? 0.012 : 0.035
-        return <line key={k} x1={c + Math.sin(a) * (r - 0.06)} y1={c - Math.cos(a) * (r - 0.06)} x2={c + Math.sin(a) * (r - 0.06 - lang)} y2={c - Math.cos(a) * (r - 0.06 - lang)} stroke="#2a2a2a" strokeWidth={b} />
+      {/* nur die zwölf Stunden, ohne Minutenstriche (Michael, 2026-11-25: «Uhr ohne Minuten») */}
+      {Array.from({ length: 12 }, (_, k) => {
+        const a = (k * 30 * Math.PI) / 180, lang = 0.16
+        return <line key={k} x1={c + Math.sin(a) * (r - 0.06)} y1={c - Math.cos(a) * (r - 0.06)} x2={c + Math.sin(a) * (r - 0.06 - lang)} y2={c - Math.cos(a) * (r - 0.06 - lang)} stroke="#2a2a2a" strokeWidth={0.035} />
       })}
       {zeiger(std, 0.5, 0.075)}
       {zeiger(min, 0.78, 0.05)}
@@ -1532,8 +1533,13 @@ export function Gleisbau() {
       let b1 = brett, ai: number, aj: number, d = dreh
       if (unterGross) {
         const G = grossGeometrie(hi, hj, alt!)
-        if (alt?.art !== w.gleis || G.griff[0] !== i || G.griff[1] !== j) {
-          setMeldung('Gedreht wird eine Kurve an ihrer Ecke, oder mit einem zweiten Tipp auf das Werkzeug unten. Eine Wiese dort löscht sie.'); return
+        // seit 2026-11-25 auf jeder ihrer Kacheln im Uhrzeigersinn, ausser dort liegt etwas darüber (Michael: «Diese grossen Kurven soll man auf allen seiner
+        // Kacheln im Uhrzeigersinn drehen können. Ausser auf einer Kachel steht etwas darüber»): Tunnel, Brücke oder ein Feld ohne Strom
+        if (alt?.art !== w.gleis) {
+          setMeldung('Das ist eine andere Kurve. Wähle unten dieselbe Kurve, um sie zu drehen, oder «Entfernen».'); return
+        }
+        if (f.grund === 'berg' || f.bruecke || f.ohneStrom) {
+          setMeldung('Auf dieser Kachel liegt etwas darüber. Tippe eine andere Kachel der Kurve an, um sie zu drehen.'); return
         }
         const ox = Math.min(...G.zellen.map(([u]) => u)), oy = Math.min(...G.zellen.map(([, v]) => v))
         d = ((alt.dreh + 1) % 4) as Dreh
