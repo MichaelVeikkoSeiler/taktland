@@ -527,13 +527,21 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             blieben bei mir.</p>
           {/* Michael, 2026-11-20: «Hommage an den öffentlichen Verkehr», dann «Bahn und Schiff», 2026-11-21 wieder «Öffentlichen Verkehr nicht nur Bahn und Schiff» */}
           <p>Taktland ist meine kleine Hommage an den öffentlichen Verkehr der Schweiz.</p>
+          {/* am Desktop das ganze Bild, 112 px hoch, innerhalb der roten Linie bündig mit dem Text, Name oben bündig mit dem Bild (Michael, 2026-11-25: «Auf dem
+              Desktop Bild doppelt so gross und Originalausschnitt rechteckig», dann «Bild mehr nach rechts, damit es linksbündig mit dem obenstehenden Text ist.
+              rote Linie links bis an die untere Kante des Bildes ziehen. Michael Veikko Seiler und Idee, Konzept und Gestaltung oben bündig mit dem Bild») */}
+          <div className="hidden items-start gap-3 xl:flex">
+            <img src={portraetBreit} alt="Michael Veikko Seiler" width={213} height={112} className="h-28 w-auto flex-none" />
+            <div className="-mt-1">
+              <p className="font-medium">Michael Veikko Seiler</p>
+              <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
+            </div>
+          </div>
         </div>
         {/* das Porträt links vom Namen (Michael, 2026-11-25: «Kannst du dieses Bild mal ganz unten links bei Über Taktland links von meinem Namen platzieren?») */}
-        <div className="mt-3 flex items-center gap-3">
-          {/* auf dem Handy und Tablet das Gesicht, eckig, 73 px (Michael, 2026-11-25: «Auf dem Mobile auch eckig und 130% vergrössern»); am Desktop das ganze Bild,
-              112 px hoch (Michael: «Auf dem Desktop Bild doppelt so gross und Originalausschnitt rechteckig») */}
-          <img src={portraet} alt="Michael Veikko Seiler" width={73} height={73} className="size-[73px] flex-none object-cover xl:hidden" />
-          <img src={portraetBreit} alt="Michael Veikko Seiler" width={213} height={112} className="hidden h-28 w-auto flex-none xl:block" />
+        {/* auf dem Handy und Tablet das Gesicht, eckig, 73 px, unter der roten Linie (Michael, 2026-11-25: «Auf dem Mobile auch eckig und 130% vergrössern») */}
+        <div className="mt-3 flex items-center gap-3 xl:hidden">
+          <img src={portraet} alt="Michael Veikko Seiler" width={73} height={73} className="size-[73px] flex-none object-cover" />
           <div>
             <p className="font-medium">Michael Veikko Seiler</p>
             <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
