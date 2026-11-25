@@ -396,10 +396,17 @@ export function StrassenBild({ brett }: { brett: Brett }) {
     if (!k.length) continue
     const cx = i + 0.5, cy = j + 0.5
     // in ein Dorf hinein reicht die Strasse ein Stück über die Kante
-    for (const r of k) {
-      const l = brett[j + [-1, 0, 1, 0][r]]?.[i + [0, 1, 0, -1][r]]?.grund === 'dorf' && !brett[j + [-1, 0, 1, 0][r]][i + [0, 1, 0, -1][r]].strasse ? 0.72 : 0.5
-      teile.push(`M${cx},${cy} L${cx + [0, l, 0, -l][r]},${cy + [-l, 0, l, 0][r]}`)
+    const lang = (r: number) => brett[j + [-1, 0, 1, 0][r]]?.[i + [0, 1, 0, -1][r]]?.grund === 'dorf' && !brett[j + [-1, 0, 1, 0][r]][i + [0, 1, 0, -1][r]].strasse ? 0.72 : 0.5
+    const kante = (r: number, l: number) => ({ x: cx + [0, l, 0, -l][r], y: cy + [-l, 0, l, 0][r] })
+    if (k.length === 2 && (k[0] + k[1]) % 2 === 1) {
+      // eine Kurve als Viertelkreis um die Ecke des Felds wie die Gleise (Michael, 2026-11-25: «wenn die Kurven so schön viertelrund sind wie die Gleise»)
+      const a = kante(k[0], 0.5), e = kante(k[1], 0.5), m = { x: a.x + e.x - cx, y: a.y + e.y - cy }
+      const sweep = (a.x - m.x) * (e.y - m.y) - (a.y - m.y) * (e.x - m.x) > 0 ? 1 : 0
+      const a2 = kante(k[0], lang(k[0])), e2 = kante(k[1], lang(k[1]))
+      teile.push(`M${a2.x},${a2.y} L${a.x},${a.y} A0.5,0.5 0 0 ${sweep} ${e.x},${e.y} L${e2.x},${e2.y}`)
+      continue
     }
+    for (const r of k) { const p = kante(r, lang(r)); teile.push(`M${cx},${cy} L${p.x},${p.y}`) }
   }
   const d = teile.join(' ')
   if (!d) return null
