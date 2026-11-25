@@ -403,6 +403,63 @@ function OhneStromBild({ brett }: { brett: Brett }) {
   return <>{raus}</>
 }
 
+/**
+ * die Fahrleitung (Michael, 2026-11-25: «Elektrifizierte Gleise mit einer Oberleitung und die anderen ohne Oberleitung»): über jedem Gleis mit Strom ein
+ * dünner Fahrdraht über der Mitte, je Feld ein Mast neben dem Gleis mit Ausleger, an Kurven aussen, neben einem Nachbargleis auf der anderen Seite;
+ * an Bahnhöfen nur der Draht (die Masten stünden auf dem Perron), im Tunnel und ohne Strom nichts. Über den Zügen gezeichnet. Masse und Farben gewählt
+ */
+const DRAHT = '#2f2f2f', MAST = '#5a5a5a', MAST_AB = 0.3
+function OberleitungBild({ brett }: { brett: Brett }) {
+  const draht: string[] = [], mast: string[] = [], arm: string[] = []
+  const mitStrom = (x: number, y: number) => { const f = brett[Math.floor(y)]?.[Math.floor(x)]; return !!f && !f.ohneStrom && !imTunnel(brett, x, y) }
+  const linie = (pts: Array<{ x: number; y: number }>) => {
+    let d = ''
+    pts.forEach((q, k) => { const an = mitStrom(q.x, q.y); d += an ? `${d && k && mitStrom(pts[k - 1].x, pts[k - 1].y) ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)} ` : '' })
+    if (d) draht.push(d)
+  }
+  const mastSetzen = (q: { x: number; y: number }, nx: number, ny: number) => {
+    const mx = q.x + nx * MAST_AB, my = q.y + ny * MAST_AB
+    if (!mitStrom(q.x, q.y) || brett[Math.floor(my)]?.[Math.floor(mx)]?.grund === 'wasser' && !brett[Math.floor(my)][Math.floor(mx)].gleis) return
+    mast.push(`M${(mx - 0.03).toFixed(3)},${(my - 0.03).toFixed(3)} h0.06 v0.06 h-0.06 Z`)
+    arm.push(`M${mx.toFixed(3)},${my.toFixed(3)} L${q.x.toFixed(3)},${q.y.toFixed(3)}`)
+  }
+  for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
+    const f = brett[j][i], g = f.gleis
+    if (!g || f.teil) continue
+    if (grosseKurve(g)) {
+      const G = grossGeometrie(i, j, g), n = grosseKurve(g)
+      const pts = Array.from({ length: 12 * n + 1 }, (_, k) => { const a = G.a0 + (G.da * k) / (12 * n); return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) } })
+      linie(pts)
+      // je Feld des Bogens ein Mast aussen
+      for (let k = 0; k < n; k++) { const a = G.a0 + (G.da * (k + 0.5)) / n; mastSetzen({ x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) }, Math.cos(a), Math.sin(a)) }
+      continue
+    }
+    const ww = wege(g)
+    ww.forEach(([a, c], k) => {
+      const pts = wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10)
+      linie(pts)
+      if (k || istBahnhof(g) || g.art === 'ueberfuehrung') return
+      // ein Mast in der Mitte des ersten Wegs: an Kurven aussen (zur Mitte des Felds), sonst auf der Seite ohne Nachbargleis
+      const q = pts[5], v = pts[6], u = pts[4], l = Math.hypot(v.x - u.x, v.y - u.y) || 1
+      let nx = -(v.y - u.y) / l, ny = (v.x - u.x) / l
+      if (c >= 0 && (a + c) % 2 === 1) { if ((q.x + nx * 0.3 - i - 0.5) ** 2 + (q.y + ny * 0.3 - j - 0.5) ** 2 > (q.x - nx * 0.3 - i - 0.5) ** 2 + (q.y - ny * 0.3 - j - 0.5) ** 2) { nx = -nx; ny = -ny } }
+      else {
+        const nb = (sx: number) => brett[j + Math.round(ny * sx)]?.[i + Math.round(nx * sx)]?.gleis
+        if (nb(1) && !nb(-1)) { nx = -nx; ny = -ny } else if (nb(1) && nb(-1)) return
+      }
+      mastSetzen(q, nx, ny)
+    })
+  }
+  if (!draht.length) return null
+  return (
+    <g pointerEvents="none">
+      <path d={arm.join(' ')} stroke={MAST} strokeWidth={0.014} fill="none" />
+      <path d={mast.join(' ')} fill={MAST} />
+      <path d={draht.join(' ')} stroke={DRAHT} strokeWidth={0.012} fill="none" opacity={0.75} />
+    </g>
+  )
+}
+
 /** ein Wagen auf dem unteren Gleis einer Überführung, nahe der Mitte: blass wie im Tunnel */
 function unterBruecke(f: Feld | undefined, i: number, j: number, w: WagenLage) {
   if (f?.gleis?.art !== 'ueberfuehrung') return false
@@ -992,6 +1049,7 @@ export function Gleisbau() {
   ), [brett, namen])
   const objekte = useMemo(() => objekteBauen(brett, imTunnel), [brett])
   const strassenOben = useMemo(() => <StrassenUeberBild brett={brett} />, [brett])
+  const oberleitung = useMemo(() => <OberleitungBild brett={brett} />, [brett])
   // Bäume, Häuser und Büsche nur, wo man sie erkennt: ab 10 Bildpunkten je Feld und nur im sichtbaren Ausschnitt (grosse Bretter bis 192 × 108)
   const [buehneGr, setBuehneGr] = useState({ w: 0, h: 0 })
   useEffect(() => {
@@ -1796,6 +1854,7 @@ export function Gleisbau() {
             return <WagenBild key={`${z}-${k}`} w={w} tunnel={bauGilt(f) && f!.bau !== 'gueter'} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />
           }))}
           {oben}
+          {oberleitung}
           {strassenOben}
           {/* die Busse, im Strassentunnel unsichtbar */}
           {faehrt && busLagen.map((l, k) => (l.tunnel ? null : <BusBild key={`bus${k}`} x={l.x} y={l.y} w={l.w} farbe={BUS_FARBEN[k % BUS_FARBEN.length]} />))}
