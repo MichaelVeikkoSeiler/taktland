@@ -483,6 +483,9 @@ Geteilte und zusammengehängte Züge seit 2026-11-25 nur einmal (Michael, Kerzer
              ankommende, die hintereinander stehen (Abstand nach ihrer Länge), bis der ganze Zug abfährt; eine Hälfte steht erst da, wenn der ankommende Zug laut Echtzeit
              angekommen ist, und ohne eigene Echtzeit übernimmt sie seine Verspätung; der ankommende steht, bis die letzte weiterfahrende laut Echtzeit abfährt; mit dem
              GTFS hier für Kerzers 17:22 bis 17:38 minütlich nachgerechnet, pünktlich und mit 3 Minuten Verspätung der S5 15564; das Bild in 3D nicht angeschaut
+             seit 2026-11-25 bis 15 statt 10 Minuten (FLUEGEL_MIN; Michael: «das Thema betrifft alle Züge auch tagsüber … Es muss auch umgekehrt funktionieren»): über den
+             ganzen 25.11.2026 in Kerzers nachgezählt, mit 10 Minuten 76-mal Teilen oder Weiterfahren und 25-mal Zusammenhängen der S5 und S52, ohne Partner blieben die S35
+             aus Lyss (wendet in 11 Minuten) und einige Züge nachts und früh (11 bis 14 Minuten); danach nur noch 4 ohne Partner (die letzten S35 und S52 um 23:55, 0:28 und 0:54 und die erste S52 um 5:05, die dort beginnen oder enden)
 Gekoppelte Züge nur einmal seit 2026-11-18 (Michael: «Kann es sein dass ich den Fahrplan Zug und den Live verspäteten Zug beide sehe?»): im Fahrplan kommt kein Zug
              zweimal vor (geprüft: keine zwei Fahrten mit gleicher Gattung und Nummer, gleichem Tag und gleicher Abfahrt), aber manche unter zwei Nummern mit denselben Zeiten
              (RJX 168 und 31168, S1 und S31 auf einem gemeinsamen Stück; lokal 25 Paare); meldete die Echtzeit nur eine, fuhren sie auseinander; seither je Paar die Halte mit

@@ -282,7 +282,8 @@ export function kopplungFinden(fahrten: ZugFahrt[]): Kopplung {
  * fahren die Hälften (Lok, ein Wagen, Steuerwagen) je zu ihrer Zeit; zwei ankommende Hälften stehen hintereinander, bis der ganze Zug abfährt;
  * ohne eigene Echtzeit übernimmt die weiterfahrende die Verspätung der ankommenden. Gewählt
  */
-const FLUEGEL_MIN = 10
+// seit 2026-11-25 15 statt 10 Minuten: die S35 aus Lyss wendet in Kerzers in 11 Minuten (:55 an, :06 ab), nachts liegen Teilen und Zusammenhängen bis 14 Minuten auseinander
+const FLUEGEL_MIN = 15
 const gleisNr = (g: string | null) => g?.match(/\d+/)?.[0] ?? null
 export function fluegelFinden(fahrten: ZugFahrt[]) {
   const enden = new Map<string, ZugFahrt[]>()
