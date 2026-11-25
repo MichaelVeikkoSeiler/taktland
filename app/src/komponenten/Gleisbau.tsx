@@ -950,13 +950,9 @@ export function Gleisbau() {
   // Anzahl Züge (Michael, 2026-11-24: «Anzahl Züge wählbar»), auf dem Gerät gemerkt
   // Taktfahrplan in Minuten (0 aus), auf dem Gerät gemerkt
   const [takt, setTakt] = useState<number>(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.takt')); return (TAKT_WAHL as readonly number[]).includes(n) ? n : 0 } catch { return 0 } })
-  // mit Taktfahrplan ist unter der Uhr oben links nichts; was dort liegt, wird gelöscht
-  useEffect(() => {
-    if (!takt || faehrt) return
-    const b = uhrPlatz(brett)
-    if (b !== brett) { setBrett(b, false); setMeldung('Die Uhr des Taktfahrplans braucht die vier Felder oben links. Was dort lag, ist gelöscht.') }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [takt, brett, faehrt])
+  // mit Taktfahrplan ist unter der Uhr oben links nichts; liegt dort etwas, fragt ein Blatt, ob es gelöscht werden soll (Michael, 2026-11-25, vor dem
+  // Aufschalten: bei fremden Brettern nicht ohne Rückfrage löschen); bis dahin keine Uhr und keine Fahrt
+  const uhrBelegt = useMemo(() => takt > 0 && uhrPlatz(brett) !== brett, [takt, brett])
   const taktSetzen = (n: number) => { setTakt(n); try { localStorage.setItem('taktland.gleisbau.takt', String(n)) } catch { /* ohne Speicher */ } }
   const spielSek = useRef(0)
   // der angetippte Bus während der Fahrt
@@ -1733,6 +1729,7 @@ export function Gleisbau() {
 
   function fahren() {
     if (faehrt) { setFaehrt(false); setWagen([]); zuege.current = []; busse.current = []; setBusLagen([]); fgRef.current = null; setFahrgaeste(null); wagenZurueck(); return }
+    if (uhrBelegt) { setMeldung('Zuerst entscheiden: oben links Platz für die Uhr machen oder den Takt ausschalten.'); return }
     const z = Zug.setzen(brett, undefined, wagenZahl)
     // Busse fahren auch ohne Zug, wenn es Strassen gibt
     const neueBusse = Bus.setzen(brett)
@@ -1888,7 +1885,7 @@ export function Gleisbau() {
           <AmpelBild brett={brett} />
           <OhneStromBild brett={brett} />
           <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} />
-          {takt > 0 && <UhrBild minuten={UHR_START_MIN + (faehrt ? spielSek.current : 0)} />}
+          {takt > 0 && !uhrBelegt && <UhrBild minuten={UHR_START_MIN + (faehrt ? spielSek.current : 0)} />}
           {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
           {!faehrt && enden.map((e, k) => (
@@ -2116,6 +2113,21 @@ export function Gleisbau() {
               </div>
             )
           })()}
+          {/* Rückfrage, bevor unter der Uhr etwas gelöscht wird */}
+          {uhrBelegt && !faehrt && (
+            <div className="absolute inset-0 z-10 flex items-end bg-black/30">
+              <div className="w-full rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
+                <p className="text-lg font-bold">Platz für die Uhr</p>
+                <p className="mt-1 text-sm leading-relaxed">Der Taktfahrplan ist eingeschaltet. Seine Uhr braucht die vier Felder oben links, dort liegt aber etwas. Soll es gelöscht werden?</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button type="button" onClick={() => { setBrett(uhrPlatz(brett)); knopfTon(true); setMeldung(null) }}
+                          className="min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125">Löschen und Uhr zeigen</button>
+                  <button type="button" onClick={() => { taktSetzen(0); knopfTon(false) }}
+                          className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Takt ausschalten</button>
+                </div>
+              </div>
+            </div>
+          )}
           {/* Name eines Bahnhofs als Blatt von unten */}
           {nameFeld && (
             <div className="absolute inset-0 z-10 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) { setNameFeld(null); setNameSuche('') } }}>
@@ -2222,6 +2234,7 @@ export function Gleisbau() {
 function SoGehts() {
   return (
     <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
+      <li>Der Gleisbau wird weiterentwickelt. Deine Bretter bleiben erhalten, wie sie fahren und aussehen, kann sich mit neuen Funktionen ändern.</li>
       <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
         Geraden, Kurven und Weichen entstehen von selbst.</li>
       <li>Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel; «Brücke» baut eine Brücke auch ohne Wasser, den See setzt du selbst darunter.
@@ -2229,7 +2242,7 @@ function SoGehts() {
       <li>Im Depot fährt der Zug ab, am Güterschuppen hält er zum Laden, unter der Galerie fährt er gedeckt. Kirche und Bauernhof stehen allein in einem Feld ohne Gleis.</li>
       <li>Ein Fluss fliesst zu Nachbarn mit Fluss oder Wasser, ein Gleis darüber wird zur Brücke. Ein abgestellter Wagen wird angekuppelt, wenn ein Zug hineinfährt; abstellen geht mit einem Tipp auf den Zug. Nach der Fahrt stehen die Wagen wieder am alten Platz.</li>
       <li>Alle Gleise haben Fahrleitung, «Ohne Strom» nimmt sie weg (auch durch Ziehen). Ein Stromzug rollt dort aus und bleibt stehen. Tippe auf einen Zug und wähle «Diesel»: Fährt er auf den stehenden Zug, kuppelt er ihn an und zieht ihn heraus. «Abkuppeln» trennt die beiden wieder.</li>
-      <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben läuft eine Uhr, eine Minute im Spiel dauert eine Sekunde. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
+      <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben links im Brett steht eine Uhr auf vier Feldern, eine Minute im Spiel dauert eine Sekunde. Liegt dort schon etwas, fragt das Spiel, ob es gelöscht werden soll. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,

@@ -11,8 +11,16 @@ export const ZEILEN = 6
 // seit 2026-11-23 frei wählbar statt vorgegebener Grössen (Michael: «bei einem neuen Brett die Felderzahl manuell eingeben können», «Keine Vorgegebenen
 // Grössen mehr»): je Seite MIN_SEITE bis MAX_SEITE Felder (gewählt, grösser wird es auf dem Handy zu klein und langsam)
 // seit 2026-11-24 bis 192 breit und 108 hoch (Michael: «Brettgrösse auf 192x108 erhöhen»; vorher je 30)
-export const MIN_SEITE = 3, MAX_BREITE = 192, MAX_HOEHE = 108
+/**
+ * höchstens 100 × 70 Felder für neue und vergrösserte Bretter (Michael, 2026-11-25: «Maximale Brettgrösse nur noch 100x70»; vorher 192 × 108); ältere,
+ * grössere Bretter lassen sich weiter öffnen und verkleinern (LESBAR_*), damit kein gespeichertes Brett verloren geht
+ */
+export const MIN_SEITE = 3, MAX_BREITE = 100, MAX_HOEHE = 70
+const LESBAR_BREITE = 192, LESBAR_HOEHE = 108
 export const groesseOk = (sp: number, ze: number) => Number.isInteger(sp) && Number.isInteger(ze) && sp >= MIN_SEITE && ze >= MIN_SEITE && sp <= MAX_BREITE && ze <= MAX_HOEHE
+const groesseLesbar = (sp: number, ze: number) => Number.isInteger(sp) && Number.isInteger(ze) && sp >= MIN_SEITE && ze >= MIN_SEITE && sp <= LESBAR_BREITE && ze <= LESBAR_HOEHE
+/** neue Grösse eines bestehenden Bretts: erlaubt oder jedenfalls nicht grösser als vorher */
+const groesseNeuOk = (sp: number, ze: number, nsp: number, nze: number) => groesseOk(nsp, nze) || (groesseLesbar(nsp, nze) && nsp <= sp && nze <= ze)
 export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
@@ -323,7 +331,7 @@ const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock',
 export function brettLesen(): Brett | null {
   try {
     const x = JSON.parse(localStorage.getItem(SPEICHER) ?? 'null') as Brett | null
-    if (!Array.isArray(x) || !Array.isArray(x[0]) || !groesseOk(x[0].length, x.length) || !x.every((z) => Array.isArray(z) && z.length === x[0].length)) return null
+    if (!Array.isArray(x) || !Array.isArray(x[0]) || !groesseLesbar(x[0].length, x.length) || !x.every((z) => Array.isArray(z) && z.length === x[0].length)) return null
     for (const z of x) for (const f of z) {
       if (!GRUENDE.includes(f.grund)) return null
       if (f.gleis && (!ARTEN.includes(f.gleis.art) || ![0, 1, 2, 3].includes(f.gleis.dreh))) return null
@@ -377,7 +385,7 @@ export function brettAusCode(c: string): Brett | null {
     if (a >= 0) f.gleis = { art: ARTEN[Math.floor(a / 4)], dreh: (a % 4) as Dreh }
     return f
   }))
-  if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
+  if (!b.length || !groesseLesbar(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
     if (teil.startsWith('y')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].haltestelle = true }
     if (teil.startsWith('e')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].wende = true }
@@ -473,7 +481,7 @@ export function grossAnfang(ox: number, oy: number, n: number, d: number): [numb
 export function brettRand(b: Brett, seite: number, d: 1 | -1): Brett | null {
   const sp = spalten(b), ze = zeilen(b), quer = seite % 2 === 1
   const nsp = sp + (quer ? d : 0), nze = ze + (quer ? 0 : d)
-  if (!groesseOk(nsp, nze)) return null
+  if (!groesseNeuOk(sp, ze, nsp, nze)) return null
   let x = b
   if (d < 0) {
     // die Felder der Reihe, die wegfällt
