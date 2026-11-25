@@ -207,6 +207,15 @@ function SchildBild({ namen, titel, knoten, takt }: { namen: Map<string, string>
  */
 const UHR_FELDER = 2
 const uhrFeld = (i: number, j: number) => i < UHR_FELDER && j < UHR_FELDER
+/** unter der Uhr ist nichts (Michael, 2026-11-25: «Unter der Uhr soll nichts sein. Ist was dort wird es gelöscht»): die vier Felder werden Wiese,
+ *  eine grosse Kurve, die hineinreicht, fällt ganz weg; das Brett bleibt dasselbe, wenn dort schon nichts ist */
+function uhrPlatz(b: Brett): Brett {
+  let n = b
+  for (let j = 0; j < UHR_FELDER; j++) for (let i = 0; i < UHR_FELDER; i++) if (n[j]?.[i] && (n[j][i].teil || grosseKurve(n[j][i].gleis))) n = grosseEntfernen(n, i, j)
+  const leer = (f: Feld) => Object.keys(f).length === 1 && f.grund === 'wiese'
+  if (n === b && b.slice(0, UHR_FELDER).every((z) => z.slice(0, UHR_FELDER).every(leer))) return b
+  return n.map((z, j) => (j < UHR_FELDER ? z.map((f, i) => (i < UHR_FELDER ? { grund: 'wiese' as Grund } : f)) : z))
+}
 function UhrBild({ minuten }: { minuten: number }) {
   const c = UHR_FELDER / 2, r = c * 0.86
   const std = ((minuten / 60) % 12) * 30, min = (minuten % 60) * 6
@@ -941,6 +950,13 @@ export function Gleisbau() {
   // Anzahl Züge (Michael, 2026-11-24: «Anzahl Züge wählbar»), auf dem Gerät gemerkt
   // Taktfahrplan in Minuten (0 aus), auf dem Gerät gemerkt
   const [takt, setTakt] = useState<number>(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.takt')); return (TAKT_WAHL as readonly number[]).includes(n) ? n : 0 } catch { return 0 } })
+  // mit Taktfahrplan ist unter der Uhr oben links nichts; was dort liegt, wird gelöscht
+  useEffect(() => {
+    if (!takt || faehrt) return
+    const b = uhrPlatz(brett)
+    if (b !== brett) { setBrett(b, false); setMeldung('Die Uhr des Taktfahrplans braucht die vier Felder oben links. Was dort lag, ist gelöscht.') }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [takt, brett, faehrt])
   const taktSetzen = (n: number) => { setTakt(n); try { localStorage.setItem('taktland.gleisbau.takt', String(n)) } catch { /* ohne Speicher */ } }
   const spielSek = useRef(0)
   // der angetippte Bus während der Fahrt
@@ -1820,7 +1836,7 @@ export function Gleisbau() {
                     className={rund}><span className="pfeil pfeil-links" aria-hidden="true">←</span></button>
             <p className="min-w-0 flex-1 truncate font-bold">{aufgabe ? aufgabe.titel : bretter.find((x) => x.id === offen)?.name ?? 'Brett'}</p>
             {/* die Uhr des Taktfahrplans */}
-            {takt > 0 && faehrt && <span className="flex-none rounded-lg bg-sbb-anthracite px-2 py-1 font-bold tabular-nums text-white dark:bg-sbb-white dark:text-sbb-black" aria-label={`Uhrzeit im Spiel ${uhrText(spielSek.current)}`}>{uhrText(spielSek.current)}</span>}
+            {/* die Uhr steht seit 2026-11-25 nur noch analog oben links im Brett (Michael: «Die alte Uhr weg») */}
             <button type="button" disabled={faehrt || !verlauf.length} onClick={zurueck} aria-label={`Rückgängig, noch ${verlauf.length} Schritte`} title="Rückgängig"
                     className={`${rund} relative`}>
               ↶{verlauf.length > 0 && <span className="absolute -right-1 -top-1 min-w-5 rounded-full bg-sbb-anthracite px-1 text-[11px] font-bold leading-5 text-white tabular-nums dark:bg-sbb-white dark:text-sbb-black">{verlauf.length > 99 ? '99+' : verlauf.length}</span>}
