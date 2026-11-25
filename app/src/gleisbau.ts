@@ -851,8 +851,11 @@ const standardZug = (n: number, diesel = false): Fahrzeug[] =>
   Array.from({ length: n }, (_, k): Fahrzeug => ({ t: k === 0 ? 'lok' : k === n - 1 ? 'steuer' : 'wagen', diesel, blick: k === n - 1 ? -1 : 1 }))
 /** ob das Gleis dieses Stücks ohne Fahrleitung ist */
 const ohneStromBei = (b: Brett, s: Stueck) => !!b[s.j]?.[s.i]?.ohneStrom
-/** so stark bremst ein Stromzug ohne Fahrleitung, Felder je s² (gewählt) */
-const STROMLOS_BREMSEN = 1.6
+/**
+ * so stark bremst ein Stromzug ohne Fahrleitung, Felder je s²: ein Drittel von 1,6 (gewählt), damit der Bremsweg dreimal so lang ist, bei vollem Tempo
+ * gut 2 Felder statt 0,7 (Michael, 2026-11-25: «Fährt ein Elektrozug in ein stromloses Trasse muss er einen 3x so langen Bremsweg haben»)
+ */
+const STROMLOS_BREMSEN = 1.6 / 3
 
 export class Zug {
   /** die befahrenen Stücke, das letzte trägt die Spitze */
