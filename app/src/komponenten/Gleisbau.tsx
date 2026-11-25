@@ -745,12 +745,7 @@ function BogenBild({ i, j, g, wasser, brett }: { i: number; j: number; g: Gleis;
           </g>
         )
       })}
-      {/* der Griff: ein Pfeil im Kreis, hier dreht man die Kurve */}
-      <g transform={`translate(${G.griff[0] + 0.5} ${G.griff[1] + 0.5})`} opacity={0.75}>
-        <circle r={0.2} fill="#ffffff" stroke={F.karmin} strokeWidth={0.03} />
-        <path d="M-0.1,0.02 A0.1,0.1 0 1 1 0.02,0.1" fill="none" stroke={F.karmin} strokeWidth={0.035} strokeLinecap="round" />
-        <path d="M0.06,0.13 L0.0,0.1 L0.05,0.04" fill="none" stroke={F.karmin} strokeWidth={0.03} strokeLinecap="round" strokeLinejoin="round" />
-      </g>
+      {/* der Griff mit dem Pfeil im Kreis ist seit 2026-11-25 weg (Michael: «Das kleine Pfeilsymbol kann weg»): gedreht wird auf jeder Kachel */}
     </g>
   )
 }
