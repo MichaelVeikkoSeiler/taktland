@@ -27,6 +27,10 @@ export function Start({ index }: { index: BahnhofIndex }) {
           2026-11-20 «Kein Reiseplaner» statt «Kein Fahrplan» (Michael: «Genau kein Reiseplaner! Das ist mir wichtig. Aber er kennt dennoch mehr als hier steht»);
           2026-11-20 alle Spiele unter «Lernen», «Probefahren» und die Virtuelle Schweiz unter «Mitfahren» (Michael: «Ja gern») */}
       <h2 className="text-2xl font-bold tracking-tight">Willkommen im Taktland</h2>
+      {/* ab 1024 Bildpunkten zwei Spalten, die zweite beginnt mit «Kein Reiseplaner» (Michael, 2026-11-25: «Bitte diese Texte ab einer gewissen Fensterbreite
+          zweispaltig machen. Anfang der zweiten Spalte bildet: «Kein Reiseplaner»») */}
+      <div className="lg:grid lg:grid-cols-2 lg:gap-x-12">
+      <div>
       <p className="mt-3 text-[15px] leading-relaxed">
         In der Schweiz fahren Züge im Taktfahrplan. Davon hat Taktland seinen Namen.
       </p>
@@ -59,7 +63,9 @@ export function Start({ index }: { index: BahnhofIndex }) {
         «Probefahren» abfahren, in 3D und im Führerstand. Und in der «Virtuellen Schweiz» erkundest du das
         ganze Land in 3D, mit Zügen laut Fahrplan, auf Wunsch auch mit einer VR-Brille.
       </p>
-      <p className={absatz}>
+      </div>
+      <div>
+      <p className={`${absatz} lg:mt-3`}>
         <span className={fett}>Kein Reiseplaner.</span> Taktland sucht keine Verbindungen, plant keine Reise
         und ersetzt den offiziellen Fahrplan nicht. Den Fahrplan kennt es trotzdem: In der Virtuellen Schweiz
         fahren Züge und Schiffe laut Fahrplan, bei den Zügen mit Verspätungen und Ausfällen in Echtzeit, wo sie
@@ -81,6 +87,8 @@ export function Start({ index }: { index: BahnhofIndex }) {
         raten. Taktland ist kostenlos, braucht kein Konto, und dein Fortschritt bleibt auf deinem
         Gerät.
       </p>
+      </div>
+      </div>
     </main>
   )
 }

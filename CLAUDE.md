@@ -1676,6 +1676,8 @@ Seit 2026-11-25 höchstens 100 × 70 Felder (Michael: «Maximale Brettgrösse nu
 Seit 2026-11-25 ohne Masten, nur der Fahrdraht über der Mitte (Michael: «Die elektrifizierten Trassen brauchen keine Strommasten. Die Mittellinie reicht, damit man erkennt, dass dort Strom fließt»).
 Seit 2026-11-25 fährt im Gleisbau je eigenständigen Strassenabschnitt ein Bus, die Anzahl im Menü ist weg (Michael: «Pro eigenständigen Strassenabschnitt ein Bus. Busse können wie auch die Züge per Tippen entfernt werden»): Bus.setzen in gleisbauBus.ts füllt die Abschnitte über verbundene Kanten, je Abschnitt ein Bus an einer Haltestelle, sonst nach festem Zufall, ein einzelnes Strassenfeld ohne Verbindung bekommt keinen; ein Tipp auf einen Bus (näher als jeder Wagen, ZUG_TIPP) öffnet ein Blatt mit «Bus entfernen»; die Fahrt endet erst, wenn weder Zug noch Bus mehr fährt; die Farbe bleibt je Bus (Bus.nr); im Browser hier mit drei Abschnitten geprüft.
 
+Startseite «Willkommen im Taktland» (Start.tsx) seit 2026-11-25 ab 1024 px (Tailwind `lg`) zweispaltig, die zweite Spalte beginnt mit «Kein Reiseplaner» (Michael: «Bitte diese Texte ab einer gewissen Fensterbreite zweispaltig machen. Anfang der zweiten Spalte bildet: «Kein Reiseplaner»»); im Browser hier mit 1400 px angeschaut.
+
 **Desktop** (ab 1280 px, Tailwind `xl`, Michael, 2026-10-12): die Spalte bis 1152 px breit (App.tsx), Fliesstext höchstens
 48rem (index.css), ungeordnete Kachellisten in Spalten von mindestens 26rem, Listen mit `md:grid-cols-2` dreispaltig, das
 Auftaktbild als flaches Band (400 px, vorher 288; Michael, 2026-10-13: «ca. 140 %», Auftakt.tsx); Modelle links (2/3) mit Knöpfen rechts (ZWEI_SPALTEN in Relief.tsx), beim
