@@ -530,8 +530,11 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           {/* am Desktop das ganze Bild, 112 px hoch, innerhalb der roten Linie bündig mit dem Text, Name oben bündig mit dem Bild (Michael, 2026-11-25: «Auf dem
               Desktop Bild doppelt so gross und Originalausschnitt rechteckig», dann «Bild mehr nach rechts, damit es linksbündig mit dem obenstehenden Text ist.
               rote Linie links bis an die untere Kante des Bildes ziehen. Michael Veikko Seiler und Idee, Konzept und Gestaltung oben bündig mit dem Bild») */}
-          <div className="hidden items-start gap-3 xl:flex">
-            <img src={portraetBreit} alt="Michael Veikko Seiler" width={213} height={112} className="h-28 w-auto flex-none" />
+          {/* seit 2026-11-25 auch auf Handy und Tablet so, dort mit dem Gesicht, 73 px (Michael: «Bild linksbündig mit oberem Text. Name oben bündig mit dem Bild.
+              Links rote Linie bis an die Unterkante des Bildes») */}
+          <div className="flex items-start gap-3">
+            <img src={portraet} alt="Michael Veikko Seiler" width={73} height={73} className="size-[73px] flex-none object-cover xl:hidden" />
+            <img src={portraetBreit} alt="Michael Veikko Seiler" width={213} height={112} className="hidden h-28 w-auto flex-none xl:block" />
             <div className="-mt-1">
               <p className="font-medium">Michael Veikko Seiler</p>
               <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
@@ -539,14 +542,6 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
           </div>
         </div>
         {/* das Porträt links vom Namen (Michael, 2026-11-25: «Kannst du dieses Bild mal ganz unten links bei Über Taktland links von meinem Namen platzieren?») */}
-        {/* auf dem Handy und Tablet das Gesicht, eckig, 73 px, unter der roten Linie (Michael, 2026-11-25: «Auf dem Mobile auch eckig und 130% vergrössern») */}
-        <div className="mt-3 flex items-center gap-3 xl:hidden">
-          <img src={portraet} alt="Michael Veikko Seiler" width={73} height={73} className="size-[73px] flex-none object-cover" />
-          <div>
-            <p className="font-medium">Michael Veikko Seiler</p>
-            <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
-          </div>
-        </div>
         <p className="mt-4 text-sm leading-relaxed text-sbb-metal dark:text-sbb-storm">
           Der Name spielt auf den Taktfahrplan der Schweiz an. Die Texte zu Bahnhöfen und Linien setzt ein Programm aus den offenen Daten zusammen.
         </p>
