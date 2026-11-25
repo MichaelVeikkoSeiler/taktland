@@ -8,7 +8,7 @@
 import STRECKEN from './assets/gleisbau-strecken.json'
 import {
   type Brett, bahnhofGruppen, bahnhofTitel, type Dreh, DXY, type GleisArt, grosseKurve, grossGeometrie, type Grund, istBahnhof, leer, spalten,
-  ueberWasser, wege, zeilen, Zug,
+  ueberWasser, wege, zeilen, Zug, gueterGilt,
 } from './gleisbau'
 
 export interface Ergebnis { ok: boolean; text: string; sterne: number }
@@ -21,21 +21,25 @@ export interface Aufgabe {
   brett: () => Brett
   /** Vorgabe an Gleisstücken für drei Sterne; ohne Vorgabe gibt das Lösen drei Sterne */
   vorgabe?: number
-  pruefen: (b: Brett) => { ok: boolean; text: string }
+  pruefen: (b: Brett, stand?: Transport) => { ok: boolean; text: string }
+  /** Transportaufgaben: so viele Fahrgäste und Ladungen müssen während der Fahrt ans Ziel kommen */
+  transport?: Partial<Transport>
   /**
    * was die Aufgabe verlangt, Schritt für Schritt und ob es schon erfüllt ist (Michael, 2026-11-25: «Für die Aufgaben hat man zu wenig Infos die ersichtlich
    * sind. Welche Halte etc sonst sehr schwierig»): bei echten Strecken die Bahnhöfe und je Abschnitt, ob Tunnel oder Brücke nötig sind
    */
-  schritte?: (b: Brett) => Array<{ art: 'bahnhof' | 'abschnitt'; text: string; ok: boolean }>
+  schritte?: (b: Brett, stand?: Transport) => Array<{ art: 'bahnhof' | 'abschnitt'; text: string; ok: boolean }>
 }
+/** was während der Fahrt ans Ziel kam */
+export interface Transport { fahrgaeste: number; gueter: number }
 
 const [DX, DY] = DXY
 
 /** wie viele Gleisstücke liegen (eine grosse Kurve zählt einmal) */
 export const stuecke = (b: Brett) => b.flat().filter((f) => f.gleis).length
 
-export function bewerten(a: Aufgabe, b: Brett): Ergebnis {
-  const r = a.pruefen(b)
+export function bewerten(a: Aufgabe, b: Brett, stand?: Transport): Ergebnis {
+  const r = a.pruefen(b, stand)
   if (!r.ok) return { ...r, sterne: 0 }
   const n = stuecke(b)
   const sterne = !a.vorgabe || n <= a.vorgabe ? 3 : n <= Math.ceil(a.vorgabe * 4 / 3) ? 2 : 1
@@ -197,6 +201,67 @@ export const AUFGABEN: Aufgabe[] = [
     pruefen: verbinden('A', 'B'),
   },
 ]
+
+// ——— Transporte (Michael, 2026-11-25: «Erstelle Aufgaben für Personentransporte und Gütertransporte»; Bretter und Zahlen gewählt) ———
+
+/** ein Güterschuppen an einer Geraden */
+function mitSchuppen(b: Brett, l: Array<[number, number, Dreh]>): Brett {
+  for (const [i, j, dreh] of l) b[j][i] = { ...b[j][i], gleis: { art: 'gerade', dreh }, bau: 'gueter' }
+  return b
+}
+const schuppenFelder = (b: Brett) => b.flatMap((z, j) => z.flatMap((f, i) => (gueterGilt(f) ? [`${i},${j}`] : [])))
+
+/**
+ * eine Transportaufgabe: die Bahnhöfe und Güterschuppen verbunden, die nötigen Züge gesetzt (für Ladungen ein Güterzug; ohne gesetzte Züge fahren
+ * Personenzüge), dann während der Fahrt so viele Fahrgäste und Ladungen ans Ziel
+ */
+function transport(ziel: Partial<Transport>) {
+  const pruefen = (b: Brett, stand?: Transport) => {
+    const bf = [...bahnhofFelder(b)]
+    for (let k = 1; k < bf.length; k++) if (!wegGibt(b, bf[0][1], bf[k][1])) return { ok: false, text: `Noch führt kein Gleis von Bahnhof ${bf[0][0]} nach ${bf[k][0]}.` }
+    const sf = schuppenFelder(b)
+    for (let k = 1; k < sf.length; k++) if (!wegGibt(b, new Set([sf[0]]), new Set([sf[k]]))) return { ok: false, text: 'Noch führt kein Gleis von Güterschuppen zu Güterschuppen.' }
+    const starts = b.flat().map((f) => f.zugStart).filter(Boolean)
+    if (ziel.gueter && !starts.includes('g')) return { ok: false, text: 'Setze unter «Gleise» einen Güterzug aufs Gleis: Nur er hält am Güterschuppen.' }
+    if (ziel.fahrgaeste && starts.length && !starts.includes('p')) return { ok: false, text: 'Setze unter «Gleise» auch einen Personenzug aufs Gleis: Nur er hält an den Bahnhöfen.' }
+    const f = stand?.fahrgaeste ?? 0, g = stand?.gueter ?? 0
+    const fehlt = [ziel.fahrgaeste && f < ziel.fahrgaeste && `${f} von ${ziel.fahrgaeste} Fahrgästen`, ziel.gueter && g < ziel.gueter && `${g} von ${ziel.gueter} Ladungen`].filter(Boolean)
+    if (fehlt.length) return { ok: false, text: `Alles bereit. Lass fahren (▶): Bisher sind ${fehlt.join(' und ')} am Ziel.` }
+    return { ok: true, text: `Geschafft: ${[ziel.fahrgaeste && `${ziel.fahrgaeste} Fahrgäste`, ziel.gueter && `${ziel.gueter} Ladungen`].filter(Boolean).join(' und ')} sind am Ziel.` }
+  }
+  const schritte = (_b: Brett, stand?: Transport) => [
+    ...(ziel.fahrgaeste ? [{ art: 'bahnhof' as const, text: `Fahrgäste ${Math.min(stand?.fahrgaeste ?? 0, ziel.fahrgaeste)} / ${ziel.fahrgaeste}`, ok: (stand?.fahrgaeste ?? 0) >= ziel.fahrgaeste }] : []),
+    ...(ziel.gueter ? [{ art: 'bahnhof' as const, text: `Ladungen ${Math.min(stand?.gueter ?? 0, ziel.gueter)} / ${ziel.gueter}`, ok: (stand?.gueter ?? 0) >= ziel.gueter }] : []),
+  ]
+  return { pruefen, schritte, transport: ziel }
+}
+
+AUFGABEN.push(
+  {
+    id: 'personen-pendler', titel: 'Pendlerzug',
+    ziel: 'Verbinde A und B, setze unter «Gleise» einen Personenzug aufs Gleis und lass fahren, bis 8 Fahrgäste am Ziel sind.',
+    brett: () => brett(9, 5, { dorf: [[0, 0], [1, 0], [8, 4], [7, 4]], wald: [[4, 0], [4, 4], [5, 4]] }, [[1, 1, 'bahnhof', 1], [7, 3, 'bahnhof', 1]]),
+    ...transport({ fahrgaeste: 8 }),
+  },
+  {
+    id: 'personen-drei', titel: 'Drei Dörfer',
+    ziel: 'Verbinde A, B und C und bring 15 Fahrgäste ans Ziel. Jeder will in ein anderes Dorf, darum muss der Zug alle drei erreichen.',
+    brett: () => brett(10, 7, { dorf: [[0, 0], [9, 0], [4, 6]], wasser: [[4, 2], [5, 2], [5, 3]], wald: [[8, 6], [9, 6], [0, 6]] }, [[1, 1, 'bahnhof', 1], [8, 1, 'bahnhof', 1], [4, 5, 'bahnhof', 1]]),
+    ...transport({ fahrgaeste: 15 }),
+  },
+  {
+    id: 'gueter-holz', titel: 'Holz aus dem Wald',
+    ziel: 'Verbinde die beiden Güterschuppen, setze unter «Gleise» einen Güterzug aufs Gleis und liefere 6 Ladungen. Der Güterzug hält nur am Güterschuppen.',
+    brett: () => mitSchuppen(brett(9, 5, { wald: [[0, 0], [1, 0], [2, 0], [0, 1], [0, 2], [1, 2]], dorf: [[8, 3], [8, 4], [7, 4]] }), [[1, 1, 1], [7, 3, 1]]),
+    ...transport({ gueter: 6 }),
+  },
+  {
+    id: 'gueter-gemischt', titel: 'Güter und Pendler',
+    ziel: 'Verbinde die Bahnhöfe und die Güterschuppen. Setze einen Personenzug und einen Güterzug und bring 8 Fahrgäste und 4 Ladungen ans Ziel.',
+    brett: () => mitSchuppen(brett(10, 7, { dorf: [[0, 0], [9, 6]], wald: [[9, 0], [8, 0], [0, 6]], berg: [[4, 3], [5, 3]] }, [[1, 1, 'bahnhof', 1], [8, 5, 'bahnhof', 1]]), [[8, 1, 1], [1, 5, 1]]),
+    ...transport({ fahrgaeste: 8, gueter: 4 }),
+  },
+)
 
 // ——— echte Strecken ———
 

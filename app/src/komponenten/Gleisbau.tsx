@@ -3,16 +3,17 @@ import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zu
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
   anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
-  WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, ohneStrasse, strasseGerade, ueberWasser, wagenGilt, knotenGruppen, HALT_S, brettRand, MIN_SEITE, MAX_BREITE, MAX_HOEHE,
+  WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, gueterGilt, zugStartGilt, ohneStrasse, strasseGerade, ueberWasser, wagenGilt, knotenGruppen, HALT_S, brettRand, MIN_SEITE, MAX_BREITE, MAX_HOEHE,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
-import { type Aufgabe, AUFGABEN, bewerten, type Ergebnis, fortschrittLesen, fortschrittMerken, type Varianten, varianteAufgabe, varianteAusId, variantenLaden } from '../gleisbauAufgaben'
+import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, type Varianten, varianteAufgabe, varianteAusId, variantenLaden } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
 import { bild, GelaendeBild, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
+import { type Gueter, gueterHalt, gueterStart, gueterZeit } from '../gleisbauGueter'
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
 
@@ -23,6 +24,7 @@ const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
 // seit 2026-11-22 frischer, nach Michaels Bild eines Bretts mit Bergen, Wald, Dorf und See (Michael: «Wäre das nicht schöner?», dann «Ja, 2D-Brett
 // so überarbeiten wie vorgeschlagen»): kräftigeres Grün, tiefblaues Wasser, Berge mit heller und dunkler Flanke und Schnee, Nadel- und Laubbäume,
 // rote Dächer, Kacheln mit dunklerer Unterkante; weiterhin flache Flächen ohne Verläufe wie überall in Taktland
+const KARMIN = '#a8102e'
 const F = {
   tablett: '#3a3a3c', wiese: '#c4e19f', wald: '#aed38c', wasser: '#4d93d6', welle: '#a4cef2',
   berg: '#cfd6c4', deckel: '#aeb6a2', fels: '#8f9398', felsDunkel: '#6f7378', schnee: '#ffffff', schneeDunkel: '#dde3ea',
@@ -38,7 +40,7 @@ const KACHEL_H = 0.915
 type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
   | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' } | { art: 'hang' } | { art: 'strom' }
-  | { art: 'haltestelle' } | { art: 'wende' } | { art: 'strbruecke' } | { art: 'strtunnel' }
+  | { art: 'haltestelle' } | { art: 'wende' } | { art: 'strbruecke' } | { art: 'strtunnel' } | { art: 'zug'; zug: 'p' | 'g' }
   | { art: 'bau'; bau: 'depot' | 'gueter' | 'galerie' } | { art: 'objekt'; objekt: 'kirche' | 'bauernhof' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
@@ -55,6 +57,8 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'ueberfuehrung' }, text: 'Überführung' },
   { w: { art: 'gleis', gleis: 'doppelkurve' }, text: 'Doppelkurve' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
+  { w: { art: 'zug', zug: 'p' }, text: 'Personenzug' },
+  { w: { art: 'zug', zug: 'g' }, text: 'Güterzug' },
   { w: { art: 'wagen' }, text: 'Wagen' },
   { w: { art: 'strom' }, text: 'Ohne Strom' },
   { w: { art: 'gleis', gleis: 'bahnhof' }, text: 'Bahnhof' },
@@ -95,7 +99,7 @@ const STRASSEN: Array<{ w: Werkzeug; text: string }> = [
 
 /** die Werkzeuge unten in drei Reitern */
 const GRUPPEN = [
-  { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'wagen' || x.w.art === 'strom' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
+  { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'wagen' || x.w.art === 'zug' || x.w.art === 'strom' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
   { titel: 'Bauwerke', l: GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau', 'knoten'].includes(x.w.art)) },
   { titel: 'Strasse', l: STRASSEN },
   { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
@@ -148,6 +152,8 @@ const UMKEHREN_NACH_S = 2.5
 const ZUG_TIPP = 0.35
 /** Farbe der Spitze je Zug ab dem zweiten (gewählt) */
 const ZUG_FARBEN = ['#1f5fa8', '#2e7d32', '#e07b00'], ZUEGE_MAX = 4
+/** Güterzug: Lok in Stahlblau, Wagen rotbraun mit Rippen (gewählt) */
+const GUETER_LOK = '#3f6382', GUETER_WAGEN = '#8a4b32'
 /** Busse (seit 2026-11-25): bis vier, je eine Farbe (gewählt) */
 const BUS_FARBEN = ['#f0b323', '#2a9d8f', '#8e5bb5', '#e76f51']
 
@@ -269,7 +275,8 @@ function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, n
   )
   return (
     <div className="max-w-3xl">
-      {gruppe('Aufgaben', AUFGABEN.filter((a) => !a.id.startsWith('strecke-')))}
+      {gruppe('Aufgaben', AUFGABEN.filter((a) => !a.id.startsWith('strecke-') && !a.transport))}
+      {gruppe('Personen und Güter transportieren', AUFGABEN.filter((a) => a.transport))}
       {gruppe('Echte Strecken nachbauen', AUFGABEN.filter((a) => a.id.startsWith('strecke-')))}
       <VariantenSuche fortschritt={fortschritt} waehlen={waehlen} />
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -369,6 +376,20 @@ function WartendeBild({ namen, warten }: { namen: Map<string, string>; warten: R
           <text x={x} y={y + 0.035} fontSize={0.09} fontWeight={700} textAnchor="middle" fill="#ffffff">{l[m]}</text>
         </g>,
       )
+    }
+  }
+  return <>{raus}</>
+}
+
+/** die wartenden Ladungen am Güterschuppen als Kisten, je Ziel ein Ton (gewählt) */
+function LadungenBild({ warten }: { warten: Record<string, string[]> }) {
+  const raus = []
+  const ziele = [...new Set(Object.values(warten).flat())].sort()
+  for (const [k, l] of Object.entries(warten)) {
+    const [i, j] = k.split(',').map(Number)
+    for (let m = 0; m < l.length; m++) {
+      const x = i + 0.08 + m * 0.15, y = j + 0.08, ton = ['#b8783f', '#7d8f3a', '#4f7fa3', '#a35a8c'][Math.max(0, ziele.indexOf(l[m])) % 4]
+      raus.push(<rect key={`${k}-${m}`} x={x} y={y} width={0.12} height={0.12} rx={0.015} fill={ton} stroke="#3a2a1a" strokeWidth={0.012} pointerEvents="none" />)
     }
   }
   return <>{raus}</>
@@ -742,8 +763,14 @@ function WagenBild({ w, tunnel, farbe = F.karmin }: { w: WagenLage; tunnel: bool
     <g transform={`translate(${w.x} ${w.y}) rotate(${(w.w * 180) / Math.PI})`} opacity={tunnel ? 0.28 : 1}>
       <rect x={-halb + 0.02} y={-0.08} width={WAGEN_LAENGE} height={0.18} rx={0.05} fill="rgba(0,0,0,.18)" />
       <g transform={kopf && !w.vorne ? 'scale(-1 1)' : undefined}>
-        <rect x={-halb} y={-0.09} width={WAGEN_LAENGE} height={0.18} rx={kopf ? 0.06 : 0.03} fill="#f4f4f4" stroke="#2f2f2f" strokeWidth={0.012} />
-        <rect x={-halb + 0.04} y={-0.045} width={WAGEN_LAENGE - 0.08} height={0.09} rx={0.02} fill="#d9d9d9" />
+        {w.gueter && !kopf ? <>
+          {/* ein Güterwagen von oben: rotbraun mit Rippen */}
+          <rect x={-halb} y={-0.09} width={WAGEN_LAENGE} height={0.18} rx={0.02} fill={GUETER_WAGEN} stroke="#2f2f2f" strokeWidth={0.012} />
+          {[-0.15, -0.05, 0.05, 0.15].map((xx) => <line key={xx} x1={xx} y1={-0.08} x2={xx} y2={0.08} stroke="#5e3020" strokeWidth={0.014} />)}
+        </> : <>
+          <rect x={-halb} y={-0.09} width={WAGEN_LAENGE} height={0.18} rx={kopf ? 0.06 : 0.03} fill={w.gueter ? '#dfe5ea' : '#f4f4f4'} stroke="#2f2f2f" strokeWidth={0.012} />
+          <rect x={-halb + 0.04} y={-0.045} width={WAGEN_LAENGE - 0.08} height={0.09} rx={0.02} fill="#d9d9d9" />
+        </>}
         {kopf && (
           <>
             <path d={`M${halb - 0.1},-0.09 L${halb - 0.05},-0.09 Q${halb},-0.09 ${halb},-0.04 L${halb},0.04 Q${halb},0.09 ${halb - 0.05},0.09 L${halb - 0.1},0.09 Z`}
@@ -869,6 +896,16 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
       </svg>
     )
   }
+  if (w.art === 'zug') {
+    const f: Feld = { grund: 'wiese', gleis: { art: 'gerade', dreh: 1 } }
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={f} i={0} j={0} />
+        <GleisBild f={f} i={0} j={0} />
+        <WagenBild w={{ x: 0.5, y: 0.5, w: 0, art: 0, vorne: true, gueter: w.zug === 'g' }} tunnel={false} farbe={w.zug === 'g' ? GUETER_LOK : KARMIN} />
+      </svg>
+    )
+  }
   if (w.art === 'wagen') {
     const f: Feld = { grund: 'wiese', gleis: { art: 'gerade', dreh: 1 } }
     return (
@@ -972,6 +1009,10 @@ export function Gleisbau() {
   // Fahrgäste mit Ziel an den Bahnhöfen (Michael, 2026-11-23, Vorschlag «Fahrgäste»), am Anfang an
   const [mitFahrgaesten, setMitFahrgaesten] = useState(true)
   const [fahrgaeste, setFahrgaeste] = useState<Fahrgaeste | null>(null)
+  // Ladungen der Güterzüge und was in dieser Fahrt ans Ziel kam (für die Transportaufgaben; bleibt nach dem Anhalten stehen)
+  const gutRef = useRef<Gueter | null>(null), gutHalte = useRef(new Map<Zug, number>())
+  const [ladungen, setLadungen] = useState<Record<string, string[]> | null>(null)
+  const [stand, setStand] = useState<Transport>({ fahrgaeste: 0, gueter: 0 })
   const fgRef = useRef<Fahrgaeste | null>(null)
   const halteRef = useRef<number[]>([])
   const [meldung, setMeldung] = useState<string | null>(null)
@@ -1099,14 +1140,14 @@ export function Gleisbau() {
   const [fortschritt, setFortschritt] = useState<Record<string, number>>(() => fortschrittLesen())
   const aufgabeWaehlen = (a: Aufgabe | null) => {
     setFaehrt(false); zuege.current = []; setWagen([]); fgRef.current = null; setFahrgaeste(null)
-    setAufgabe(a); setErgebnis(null); setGeloest(false); setVerlauf([]); setMeldung(null); setNameFeld(null); setMenu(false); setZoom({ s: 1, x: 0, y: 0 })
+    setAufgabe(a); setErgebnis(null); setGeloest(false); setStand({ fahrgaeste: 0, gueter: 0 }); setVerlauf([]); setMeldung(null); setNameFeld(null); setMenu(false); setZoom({ s: 1, x: 0, y: 0 })
     if (a) setBrettRoh(a.brett())
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   // gelöst ist eine Aufgabe, sobald die Prüfung stimmt; die Sterne bleiben auf dem Gerät, die besten zählen
   useEffect(() => {
     if (!aufgabe) return
-    const e = bewerten(aufgabe, brett)
+    const e = bewerten(aufgabe, brett, stand)
     if (e.ok) {
       setErgebnis((alt) => { if (!alt?.ok) setGeloest(true); return e })
       setFortschritt((f) => {
@@ -1114,7 +1155,7 @@ export function Gleisbau() {
         const n = { ...f, [aufgabe.id]: e.sterne }; fortschrittMerken(n); return n
       })
     } else setErgebnis((alt) => (alt?.ok ? null : alt))
-  }, [aufgabe, brett])
+  }, [aufgabe, brett, stand])
   // ein offenes Brett speichert sich bei jeder Änderung selbst und rückt in der Liste nach oben
   useEffect(() => {
     if (ansicht !== 'brett' || !offen) return
@@ -1312,6 +1353,22 @@ export function Gleisbau() {
         const ort = f?.gleis && !grosseKurve(f.gleis) ? (f.grund === 'berg' ? 'tunnel' : ueberWasser(f) ? 'bruecke' : null) : null
         zuggeraeuschTempo(z.anteil() * ZUG_KLANG_MS, Infinity, ort, 1, true)
       }
+      // Ladungen: neue an den Güterschuppen, Ab- und Aufladen bei jedem Halt eines Güterzugs
+      const gut = gutRef.current
+      if (gut) {
+        const b0 = brettRef.current, sch = Object.keys(gut.warten)
+        let neuG = gueterZeit(gut, dt, sch)
+        for (const z of zz) {
+          if (z.art !== 'gueter' || z.halte === (gutHalte.current.get(z) ?? 0)) continue
+          gutHalte.current.set(z, z.halte)
+          const [hi, hj] = z.haltFeld.split(',').map(Number)
+          if (!gueterGilt(b0[hj]?.[hi])) continue
+          const { ab, auf } = gueterHalt(gut, z, z.haltFeld)
+          if (ab) antwortTon('richtig')
+          if (ab || auf) neuG = true
+        }
+        if (neuG) { setLadungen({ ...gut.warten }); setStand((s) => (s.gueter === gut.geliefert ? s : { ...s, gueter: gut.geliefert })) }
+      }
       // Fahrgäste: neue an den Bahnhöfen, Aus- und Einsteigen bei jedem Halt
       const fg = fgRef.current
       if (fg) {
@@ -1326,7 +1383,7 @@ export function Gleisbau() {
           if (aus) antwortTon('richtig')
           if (aus || ein) neu = true
         })
-        if (neu) setFahrgaeste({ ...fg, warten: { ...fg.warten }, imZug: fg.imZug.map((l) => [...l]) })
+        if (neu) { setFahrgaeste({ ...fg, warten: { ...fg.warten }, imZug: fg.imZug.map((l) => [...l]) }); setStand((s) => (s.fahrgaeste === fg.gebracht ? s : { ...s, fahrgaeste: fg.gebracht })) }
       }
       // die Busse: nach den Zügen, damit sie die Wagen am Bahnübergang sehen
       const bb = busse.current
@@ -1618,6 +1675,14 @@ export function Gleisbau() {
       neu(i, j, { ...f, fluss: true }); knopfTon(true)
       return
     }
+    if (w.art === 'zug') {
+      // ein Personen- oder Güterzug, der hier vor der Fahrt steht; nochmals tippen nimmt ihn weg, der andere ersetzt ihn
+      if (f.zugStart === w.zug) { const { zugStart: _, ...ohne } = f; neu(i, j, ohne); knopfTon(false); return }
+      if (!zugStartGilt(f)) { setMeldung('Ein Zug steht auf einem einfachen Gleisstück, nicht auf einer grossen Kurve oder leerem Feld.'); return }
+      neu(i, j, { ...f, zugStart: w.zug }); knopfTon(true)
+      setMeldung(w.zug === 'g' ? 'Der Güterzug hält nur am Güterschuppen (unter Bauwerke «Güter») und fährt an Bahnhöfen durch.' : 'Der Personenzug hält an den Bahnhöfen.')
+      return
+    }
     if (w.art === 'wagen') {
       // ein abgestellter Wagen; nochmals tippen nimmt ihn weg
       if (f.wagen) { const { wagen: _, ...ohne } = f; neu(i, j, ohne); knopfTon(false); return }
@@ -1683,6 +1748,7 @@ export function Gleisbau() {
     else if (f.objekt) { const { objekt: _, ...ohne } = f; n = ohne }
     else if (f.hang !== undefined) { const { hang: _, ...ohne } = f; n = ohne }
     else if (f.bau) { const { bau: _, ...ohne } = f; n = ohne }
+    else if (f.zugStart) { const { zugStart: _, ...ohne } = f; n = ohne }
     else if (f.wagen) { const { wagen: _, ...ohne } = f; n = ohne }
     else if (f.strasse && (f.haltestelle || f.wende || f.strBruecke)) { const { haltestelle: _h, wende: _w, strBruecke: _b, ...ohne } = f; n = ohne }
     // das Gleis weg, Strasse und Fluss bleiben; dann die Strasse, dann der Fluss, dann der Grund
@@ -1737,23 +1803,34 @@ export function Gleisbau() {
   function fahren() {
     if (faehrt) { setFaehrt(false); setWagen([]); zuege.current = []; busse.current = []; setBusLagen([]); fgRef.current = null; setFahrgaeste(null); wagenZurueck(); return }
     if (uhrBelegt) { setMeldung('Zuerst entscheiden: oben links Platz für die Uhr machen oder den Takt ausschalten.'); return }
-    const z = Zug.setzen(brett, undefined, wagenZahl)
+    // gesetzte Züge (Werkzeuge «Personenzug» und «Güterzug») fahren genau so; sonst wie bisher Personenzüge nach «Anzahl Züge»
+    const starts = brett.flatMap((zz, j) => zz.flatMap((f, i) => (f.zugStart && zugStartGilt(f) ? [[i, j, f.zugStart] as const] : [])))
+    const gesetzt = starts.map(([i, j, a]) => Zug.setzenBei(brett, i, j, a === 'g' ? 'gueter' : 'person', wagenZahl)).filter((x): x is Zug => !!x)
+    const z = starts.length ? gesetzt[0] ?? null : Zug.setzen(brett, undefined, wagenZahl)
     // Busse fahren auch ohne Zug, wenn es Strassen gibt
     const neueBusse = Bus.setzen(brett)
     if (!z && !neueBusse.length) { setMeldung(brett.some((zz) => zz.some((f) => f.strasse)) ? 'Für den Bus braucht es eine Strasse über mindestens zwei Felder.' : 'Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
-    const l = z ? [z] : []
-    while (z && l.length < zugZahl) {
+    const l = starts.length ? gesetzt : z ? [z] : []
+    while (!starts.length && z && l.length < zugZahl) {
       const belegt = new Set(l.flatMap((x) => [...x.belegt()]))
       const z2 = Zug.setzen(brett, belegt, wagenZahl)
       if (!z2) break
       l.push(z2)
     }
-    if (z && l.length < zugZahl) setMeldung(`Für ${zugZahl} Züge ist das Netz zu klein, es fahren ${l.length === 1 ? 'einer' : l.length}. Jeder braucht Platz weit weg von den anderen.`)
+    if (!starts.length && z && l.length < zugZahl) setMeldung(`Für ${zugZahl} Züge ist das Netz zu klein, es fahren ${l.length === 1 ? 'einer' : l.length}. Jeder braucht Platz weit weg von den anderen.`)
     else setMeldung(null)
     const bahnhoefe = [...new Set(bahnhofNamen(brett).values())]
-    const fg = mitFahrgaesten && l.length ? fahrgaesteStart(bahnhoefe, l.length) : null
-    if (mitFahrgaesten && l.length && !fg) setMeldung('Für Fahrgäste braucht es mindestens zwei Bahnhöfe.')
+    // in einer Aufgabe mit Fahrgästen immer mit Fahrgästen
+    const mitFg = mitFahrgaesten || !!aufgabe?.transport?.fahrgaeste
+    const fg = mitFg && l.some((x) => x.art === 'person') ? fahrgaesteStart(bahnhoefe, l.length) : null
+    if (mitFg && l.some((x) => x.art === 'person') && !fg) setMeldung('Für Fahrgäste braucht es mindestens zwei Bahnhöfe.')
     fgRef.current = fg; setFahrgaeste(fg ? { ...fg } : null); halteRef.current = []
+    // Ladungen für die Güterzüge
+    const schuppen = brett.flatMap((zz, j) => zz.flatMap((f, i) => (gueterGilt(f) ? [`${i},${j}`] : [])))
+    const gut = l.some((x) => x.art === 'gueter') ? gueterStart(schuppen) : null
+    if (l.some((x) => x.art === 'gueter') && !gut) setMeldung('Für Ladungen braucht der Güterzug mindestens zwei Güterschuppen (unter Bauwerke «Güter»).')
+    gutRef.current = gut; gutHalte.current = new Map(); setLadungen(gut ? { ...gut.warten } : null)
+    setStand({ fahrgaeste: 0, gueter: 0 })
     fahrtStart.current = brett
     // im Taktfahrplan: an Knoten bis zur nächsten Taktzeit warten; treffen sich Züge zur selben Abfahrt, ist das ein Anschluss
     spielSek.current = 0
@@ -1860,7 +1937,7 @@ export function Gleisbau() {
                       className={`min-w-0 flex-1 text-left text-sm leading-snug ${zielOffen ? '' : 'line-clamp-2'}`}>{aufgabe.ziel}</button>
               <div className="flex flex-none flex-col items-end gap-1">
                 <Sterne n={fortschritt[aufgabe.id] ?? 0} />
-                <button type="button" onClick={() => { const e = bewerten(aufgabe, brett); setErgebnis(e); setMeldung(e.ok ? null : e.text) }}
+                <button type="button" onClick={() => { const e = bewerten(aufgabe, brett, stand); setErgebnis(e); setMeldung(e.ok ? null : e.text) }}
                         className="rounded-lg bg-sbb-red px-3 py-1 text-sm font-bold text-white hover:bg-sbb-red125">Prüfen</button>
               </div>
             </div>
@@ -1868,7 +1945,7 @@ export function Gleisbau() {
           {/* die Schritte der Aufgabe sichtbar: Bahnhöfe der Reihe nach, dazwischen, was der Abschnitt braucht; erfüllt mit Haken */}
           {aufgabe?.schritte && (
             <div className="mx-2.5 mb-2 flex flex-none flex-wrap items-center gap-x-1 gap-y-1 text-[13px]" aria-label="Was die Aufgabe verlangt">
-              {aufgabe.schritte(brett).map((x, k) => x.art === 'bahnhof' ? (
+              {aufgabe.schritte(brett, stand).map((x, k) => x.art === 'bahnhof' ? (
                 <span key={k} className={`rounded-lg px-2 py-0.5 font-bold ${x.ok ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white text-sbb-black dark:bg-sbb-charcoal dark:text-sbb-white'}`}>
                   {x.ok ? '✓ ' : ''}{x.text}
                 </span>
@@ -1891,7 +1968,7 @@ export function Gleisbau() {
           {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => {
             const fi = Math.floor(w.x), fj = Math.floor(w.y), f = brett[fj]?.[fi]
             if (imTunnel(brett, w.x, w.y) || unterBruecke(f, fi, fj, w)) return null
-            return <WagenBild key={`${z}-${k}`} w={w} tunnel={bauGilt(f) && f!.bau !== 'gueter'} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />
+            return <WagenBild key={`${z}-${k}`} w={w} tunnel={bauGilt(f) && f!.bau !== 'gueter'} farbe={zuege.current[z]?.art === 'gueter' ? GUETER_LOK : z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />
           }))}
           {oben}
           {oberleitung}
@@ -1907,6 +1984,13 @@ export function Gleisbau() {
           <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} />
           {takt > 0 && !uhrBelegt && <UhrBild minuten={UHR_START_MIN + (faehrt ? spielSek.current : 0)} />}
           {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
+          {faehrt && ladungen && <LadungenBild warten={ladungen} />}
+          {/* vor der Fahrt die gesetzten Züge als Lok auf ihrem Feld */}
+          {!faehrt && brett.flatMap((zz, j) => zz.map((f, i) => {
+            if (!f.zugStart || !zugStartGilt(f)) return null
+            const [a, c] = wege(f.gleis!)[0], p = wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10)[5], q = wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10)[6]
+            return <WagenBild key={`zs${i},${j}`} w={{ x: p.x, y: p.y, w: Math.atan2(q.y - p.y, q.x - p.x), art: 0, vorne: true, gueter: f.zugStart === 'g' }} tunnel={false} farbe={f.zugStart === 'g' ? GUETER_LOK : F.karmin} />
+          }))}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
           {!faehrt && enden.map((e, k) => (
             <g key={`e${k}`} pointerEvents="none">
@@ -2003,14 +2087,20 @@ export function Gleisbau() {
                style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 6px)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
             {faehrt ? (
               <div className="flex min-h-[7.25rem] flex-col justify-center gap-1 px-3 py-2 text-sm">
-                {fahrgaeste ? (
+                {fahrgaeste || ladungen ? (
                   <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
-                    <span className="font-bold">Gebracht: <span className="tabular-nums">{fahrgaeste.gebracht}</span></span>
-                    {fahrgaeste.imZug.map((l, k) => (
-                      <span key={k} className="flex items-center gap-1">
-                        {fahrgaeste.imZug.length > 1 ? `Zug ${k + 1}` : 'Im Zug'}: {l.length ? l.map((z, m) => <Ziel key={m} z={z} />) : <span className="text-sbb-metal dark:text-sbb-storm">leer</span>}
-                      </span>
-                    ))}
+                    {fahrgaeste && <span className="font-bold">Fahrgäste am Ziel: <span className="tabular-nums">{fahrgaeste.gebracht}</span></span>}
+                    {ladungen && <span className="font-bold">Ladungen geliefert: <span className="tabular-nums">{stand.gueter}</span></span>}
+                    {zuege.current.map((z, k) => {
+                      const name = zuege.current.length > 1 ? `Zug ${k + 1}` : 'Im Zug'
+                      // ein Güterzug zeigt seine Ladungen als Kisten, ein Personenzug die Ziele seiner Fahrgäste
+                      if (z.art === 'gueter') {
+                        const n = gutRef.current?.imZug.get(z)?.length ?? 0
+                        return <span key={k} className="flex items-center gap-1">{name}: {n ? Array.from({ length: n }, (_, m) => <span key={m} className="inline-block size-3 rounded-sm border border-[#3a2a1a] bg-[#b8783f]" />) : <span className="text-sbb-metal dark:text-sbb-storm">leer</span>}</span>
+                      }
+                      const l = fahrgaeste?.imZug[k] ?? []
+                      return <span key={k} className="flex items-center gap-1">{name}: {l.length ? l.map((zz, m) => <Ziel key={m} z={zz} />) : <span className="text-sbb-metal dark:text-sbb-storm">leer</span>}</span>
+                    })}
                   </p>
                 ) : <p className="font-bold">Der Zug fährt.</p>}
                 <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche oder Ampel stellt sie, ein Tipp auf einen Zug zeigt Wagen und Richtung. Zum Bauen anhalten.{takt > 0 && !knotenSet.size ? ' Für den Takt fehlt ein Knoten: unter Bauwerke «Knoten» auf einen Bahnhof.' : ''}</p>
@@ -2266,6 +2356,7 @@ function SoGehts() {
       <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben links im Brett steht eine Uhr auf vier Feldern, eine Minute im Spiel dauert eine Sekunde. Liegt dort schon etwas, fragt das Spiel, ob es gelöscht werden soll. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
+      <li>Personen- und Güterzüge: Unter «Gleise» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen. Unter Aufgaben gibt es dazu «Personen und Güter transportieren».</li>
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,
         im Berg zum Tunnel; «Brücke» über ein Gleis führt die Strasse darüber statt über einen Bahnübergang. Die Busse fahren rechts, biegen nach Zufall ab,
         wenden am Ende der Strasse, halten an Haltestellen und warten vor geschlossenen Schranken. Liegt eine Haltestelle neben einem Bahnhof, wartet der Bus
