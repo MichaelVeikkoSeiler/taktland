@@ -56,7 +56,15 @@ export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /*
   /** ein Bauwerk über dem Gleis (seit 2026-11-24, Bilder von Michael): Depot auf einem Prellbock, Güterschuppen und Galerie an einer Geraden */
   bau?: 'depot' | 'gueter' | 'galerie'
   /** eine Ampel am Gleis (seit 2026-11-24; Michael: «Weiteres Element: Ampel»): bei Rot hält der Zug vor dem Feld */ ampel?: 'rot' | 'gruen'
-  /** Name eines echten Bahnhofs aus Taktland für den Bahnhof, zu dem dieses Feld gehört */ name?: string }
+  /** Name eines echten Bahnhofs aus Taktland für den Bahnhof, zu dem dieses Feld gehört */ name?: string
+  /**
+   * Strassen für Busse (seit 2026-11-25; Michael: «Gerne alle» auf die Vorschläge Bus, Haltestelle, Anschluss, Strassenbrücke, Strasse über Wasser und
+   * durch den Berg, Wendeplatz, Anzahl Busse): eine Bushaltestelle an einer geraden Strasse, ein Wendeplatz am Ende einer Strasse, eine Strasse als Brücke
+   * (über ein Gleis führt sie dann darüber statt als Bahnübergang); gelten nur mit Strasse
+   */
+  haltestelle?: true
+  wende?: true
+  strBruecke?: true }
 export type Brett = Feld[][] // [Zeile][Spalte]
 
 /** Kanten eines Felds: 0 Nord, 1 Ost, 2 Süd, 3 West; -1 die Mitte (Ende am Prellbock) */
@@ -336,9 +344,12 @@ export function brettCode(b: Brett): string {
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
     if (f.fluss) fluesse.push(`${i}.${j}`)
+    if (f.strasse && f.haltestelle) halte.push(`${i}.${j}`)
+    if (f.strasse && f.wende) wenden.push(`${i}.${j}`)
+    if (f.strasse && f.strBruecke) strBruecken.push(`${i}.${j}`)
     if (f.knoten && istBahnhof(f.gleis)) knoten.push(`${i}.${j}`)
     if (f.hang !== undefined) haenge.push(`${i}.${j}.${f.hang}`)
     if (f.ohneStrom && f.gleis) stromlos.push(`${i}.${j}`)
@@ -353,6 +364,7 @@ export function brettCode(b: Brett): string {
     + (objekte.length ? `~o${objekte.join('_')}` : '') + (bauten.length ? `~u${bauten.join('_')}` : '')
     + (fluesse.length ? `~f${fluesse.join('_')}` : '') + (abgestellt.length ? `~w${abgestellt.join('_')}` : '')
     + (knoten.length ? `~k${knoten.join('_')}` : '') + (haenge.length ? `~h${haenge.join('_')}` : '') + (stromlos.length ? `~s${stromlos.join('_')}` : '')
+    + (halte.length ? `~y${halte.join('_')}` : '') + (wenden.length ? `~e${wenden.join('_')}` : '') + (strBruecken.length ? `~r${strBruecken.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -367,6 +379,9 @@ export function brettAusCode(c: string): Brett | null {
   }))
   if (!b.length || !groesseOk(b[0].length, b.length) || !b.every((z) => z.length === b[0].length)) return null
   for (const teil of weitere) {
+    if (teil.startsWith('y')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].haltestelle = true }
+    if (teil.startsWith('e')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].wende = true }
+    if (teil.startsWith('r')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].strBruecke = true }
     if (teil.startsWith('s')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].ohneStrom = true }
     if (teil.startsWith('h')) for (const e of teil.slice(1).split('_')) { const [i, j, d] = e.split('.').map(Number); if (b[j]?.[i] && d >= 0 && d <= 9) b[j][i].hang = d }
     if (teil.startsWith('k')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].knoten = true }
@@ -774,6 +789,8 @@ export function strassenKanten(b: Brett, i: number, j: number): number[] {
   if (!f?.strasse || f.teil || (f.gleis && f.gleis.art !== 'gerade')) return []
   if (f.gleis?.art === 'gerade') return f.gleis.dreh % 2 === 0 ? [1, 3] : [0, 2]
   const k = [0, 1, 2, 3].filter((k) => { const n = b[j + DY[k]]?.[i + DX[k]]; return !!n && (n.strasse || n.grund === 'dorf') })
+  // ein Wendeplatz endet hier: nur zu den Nachbarn
+  if (f.wende) return k.length ? k : [2]
   if (k.length === 1) k.push((k[0] + 2) % 4)
   return k.length ? k : [1, 3]
 }
@@ -785,12 +802,30 @@ export function flussKanten(b: Brett, i: number, j: number): number[] {
   if (k.length === 1) k.push((k[0] + 2) % 4)
   return k.length ? k : [1, 3]
 }
-/** ob auf dem Feld eine Strasse liegen darf: nicht auf Wasser und Berg, mit Gleis nur über eine Gerade */
+/**
+ * ob auf dem Feld eine Strasse liegen darf: mit Gleis nur über eine Gerade an Land; über Wasser und Fluss ist sie eine Brücke, im Berg ein Tunnel
+ * (seit 2026-11-25, vorher nur über Land)
+ */
 export function strasseMoeglich(f: Feld): string | null {
-  if (f.grund === 'wasser' || f.grund === 'berg' || f.bruecke || f.fluss) return 'Eine Strasse geht nur über Land, nicht über Wasser, Berg oder eine Brücke.'
+  if (f.bruecke) return 'Auf einer Bahnbrücke hat die Strasse keinen Platz.'
   if (f.teil || (f.gleis && f.gleis.art !== 'gerade')) return 'Ein Bahnübergang geht nur über eine Gerade.'
+  if (f.gleis && (f.grund === 'wasser' || f.grund === 'berg' || f.fluss)) return 'Über einem Gleis im Tunnel oder auf einer Brücke hat die Strasse keinen Platz.'
   return null
 }
+/** das Feld ohne Strasse samt Haltestelle, Wendeplatz und Strassenbrücke */
+export function ohneStrasse(f: Feld): Feld {
+  const { strasse: _s, haltestelle: _h, wende: _w, strBruecke: _b, ...o } = f
+  return o
+}
+/** ob die Strasse des Felds gerade durchgeht (für eine Haltestelle) */
+export function strasseGerade(b: Brett, i: number, j: number) {
+  const k = strassenKanten(b, i, j)
+  return k.length === 2 && Math.abs(k[0] - k[1]) === 2
+}
+/** eine Strasse über ein Gleis als Brücke: sie führt darüber, ohne Bahnübergang */
+export const strasseUeberGleis = (f?: Feld) => !!f?.strasse && !!f.strBruecke && f.gleis?.art === 'gerade'
+/** eine Strasse als Brücke: über Wasser, einen Fluss oder als Strassenbrücke gesetzt */
+export const strasseAlsBruecke = (f?: Feld) => !!f?.strasse && (f.grund === 'wasser' || !!f.fluss || !!f.strBruecke)
 
 // ——— der Zug: Lok, zwei Wagen, Steuerwagen wie in der Virtuellen Schweiz ———
 

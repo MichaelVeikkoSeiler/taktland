@@ -4,7 +4,7 @@
  * gesäubert und verkleinert), ihre Masse in src/assets/gleisbau-masse.json. Lage, Auswahl und Grösse der Objekte nach festem Zufall je Feld.
  * Ein Baukasten, keine Wirklichkeit: alle Masse und Regeln gewählt.
  */
-import { type Brett, type Feld, flussKanten, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, tunnelWeiter, wege, wegPunkte, zeilen } from '../gleisbau'
+import { type Brett, type Feld, flussKanten, strasseAlsBruecke, strasseGerade, strasseUeberGleis, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, tunnelWeiter, wege, wegPunkte, zeilen } from '../gleisbau'
 import type { ReactElement } from 'react'
 import MASSE from '../assets/gleisbau-masse.json'
 
@@ -252,6 +252,8 @@ function gleisPunkte(b: Brett, imTunnel: (b: Brett, x: number, y: number) => boo
   }
   // auch auf Strassen steht nichts
   for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
+    // durch den Berg ein Tunnel, darüber dürfen Gipfel stehen
+    if (b[j][i].grund === 'berg') continue
     for (const k of strassenKanten(b, i, j)) for (let t = 0; t <= 5; t++) for (const q of [-0.13, 0, 0.13]) {
       p.push([i + 0.5 + [0, 1, 0, -1][k] * t * 0.1 + [1, 0, 1, 0][k] * q, j + 0.5 + [-1, 0, 1, 0][k] * t * 0.1 + [0, 1, 0, 1][k] * q])
     }
@@ -388,33 +390,113 @@ export function PortalBild({ x, y, oben }: { x: number; y: number; oben?: boolea
 /** Farben und Breite der Strassen (gewählt) */
 const STRASSE_B = 0.24, BELAG = '#8f9096', RAND = '#e9e6dc'
 
-/** die Strassen aller Felder: von der Mitte zu jeder Kante, an der sie weiterführt, mit hellem Rand und gestrichelter Mitte */
+/** der Weg der Strasse in einem Feld: von der Mitte zu jeder Kante, eine Kurve über Eck als Viertelkreis wie die Gleise */
+function strassenWeg(brett: Brett, i: number, j: number, k: number[]): string {
+  const cx = i + 0.5, cy = j + 0.5
+  // in ein Dorf hinein reicht die Strasse ein Stück über die Kante
+  const lang = (r: number) => brett[j + [-1, 0, 1, 0][r]]?.[i + [0, 1, 0, -1][r]]?.grund === 'dorf' && !brett[j + [-1, 0, 1, 0][r]][i + [0, 1, 0, -1][r]].strasse ? 0.72 : 0.5
+  const kante = (r: number, l: number) => ({ x: cx + [0, l, 0, -l][r], y: cy + [-l, 0, l, 0][r] })
+  if (k.length === 2 && (k[0] + k[1]) % 2 === 1 && !brett[j][i].wende) {
+    // eine Kurve als Viertelkreis um die Ecke des Felds wie die Gleise (Michael, 2026-11-25: «wenn die Kurven so schön viertelrund sind wie die Gleise»)
+    const a = kante(k[0], 0.5), e = kante(k[1], 0.5), m = { x: a.x + e.x - cx, y: a.y + e.y - cy }
+    const sweep = (a.x - m.x) * (e.y - m.y) - (a.y - m.y) * (e.x - m.x) > 0 ? 1 : 0
+    const a2 = kante(k[0], lang(k[0])), e2 = kante(k[1], lang(k[1]))
+    return `M${a2.x},${a2.y} L${a.x},${a.y} A0.5,0.5 0 0 ${sweep} ${e.x},${e.y} L${e2.x},${e2.y}`
+  }
+  return k.map((r) => { const p = kante(r, lang(r)); return `M${cx},${cy} L${p.x},${p.y}` }).join(' ')
+}
+const STRASSE_DECK = '#d6d6d6', STRASSE_GELAENDER = '#7a7a7a', TUNNEL_DUNKEL = '#2e2e30', HALT_GELB = '#f2c230'
+
+/**
+ * die Strassen aller Felder mit hellem Rand und gestrichelter Mitte; seit 2026-11-25 (Michael: «Gerne alle»): über Wasser, Fluss oder als Strassenbrücke
+ * auf einer Brücke mit Geländer, im Berg ein Tunnel (nur angedeutet, mit Portalen), ein Wendeplatz als runder Platz, eine Haltestelle mit Wartehäuschen
+ * und gelber Markierung; über ein Gleis führt die Strassenbrücke darüber (StrassenUeberBild). Alles gewählt
+ */
 export function StrassenBild({ brett }: { brett: Brett }) {
-  const teile: string[] = []
+  const teile: string[] = [], deck: string[] = [], tunnel: string[] = []
+  const extra: ReactElement[] = []
   for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
     const k = strassenKanten(brett, i, j)
     if (!k.length) continue
-    const cx = i + 0.5, cy = j + 0.5
-    // in ein Dorf hinein reicht die Strasse ein Stück über die Kante
-    const lang = (r: number) => brett[j + [-1, 0, 1, 0][r]]?.[i + [0, 1, 0, -1][r]]?.grund === 'dorf' && !brett[j + [-1, 0, 1, 0][r]][i + [0, 1, 0, -1][r]].strasse ? 0.72 : 0.5
-    const kante = (r: number, l: number) => ({ x: cx + [0, l, 0, -l][r], y: cy + [-l, 0, l, 0][r] })
-    if (k.length === 2 && (k[0] + k[1]) % 2 === 1) {
-      // eine Kurve als Viertelkreis um die Ecke des Felds wie die Gleise (Michael, 2026-11-25: «wenn die Kurven so schön viertelrund sind wie die Gleise»)
-      const a = kante(k[0], 0.5), e = kante(k[1], 0.5), m = { x: a.x + e.x - cx, y: a.y + e.y - cy }
-      const sweep = (a.x - m.x) * (e.y - m.y) - (a.y - m.y) * (e.x - m.x) > 0 ? 1 : 0
-      const a2 = kante(k[0], lang(k[0])), e2 = kante(k[1], lang(k[1]))
-      teile.push(`M${a2.x},${a2.y} L${a.x},${a.y} A0.5,0.5 0 0 ${sweep} ${e.x},${e.y} L${e2.x},${e2.y}`)
+    const f = brett[j][i], d = strassenWeg(brett, i, j, k)
+    if (strasseUeberGleis(f)) continue
+    if (f.grund === 'berg') {
+      tunnel.push(d)
+      // ein Portal, wo die Strasse aus dem Berg kommt
+      for (const r of k) {
+        const n = brett[j + [-1, 0, 1, 0][r]]?.[i + [0, 1, 0, -1][r]]
+        if (!n || n.grund === 'berg') continue
+        const x = i + 0.5 + [0, 0.44, 0, -0.44][r], y = j + 0.5 + [-0.44, 0, 0.44, 0][r], quer = r % 2 === 0
+        const bw = STRASSE_B + 0.12, bt = 0.1
+        extra.push(<rect key={`p${i},${j},${r}`} x={x - (quer ? bw : bt) / 2} y={y - (quer ? bt : bw) / 2} width={quer ? bw : bt} height={quer ? bt : bw} rx={0.03}
+                         fill={TUNNEL_DUNKEL} stroke="#8f9398" strokeWidth={0.025} />)
+      }
       continue
     }
-    for (const r of k) { const p = kante(r, lang(r)); teile.push(`M${cx},${cy} L${p.x},${p.y}`) }
+    teile.push(d)
+    if (strasseAlsBruecke(f)) deck.push(d)
+    if (f.wende) extra.push(<circle key={`w${i},${j}`} cx={i + 0.5} cy={j + 0.5} r={0.27} fill={BELAG} stroke={RAND} strokeWidth={0.04} />)
+    if (f.haltestelle && strasseGerade(brett, i, j)) {
+      // Wartehäuschen auf der rechten Seite, gelbe Markierung auf der Spur davor (Seite gewählt)
+      const waag = k.includes(1)
+      const hx = waag ? i + 0.5 : i + 0.5 + STRASSE_B / 2 + 0.1, hy = waag ? j + 0.5 + STRASSE_B / 2 + 0.1 : j + 0.5
+      extra.push(
+        <g key={`h${i},${j}`}>
+          <rect x={waag ? i + 0.32 : i + 0.5 + 0.005} y={waag ? j + 0.5 + 0.005 : j + 0.32} width={waag ? 0.36 : STRASSE_B / 2 - 0.02} height={waag ? STRASSE_B / 2 - 0.02 : 0.36}
+                fill="none" stroke={HALT_GELB} strokeWidth={0.025} />
+          <rect x={hx - (waag ? 0.14 : 0.05)} y={hy - (waag ? 0.05 : 0.14)} width={waag ? 0.28 : 0.1} height={waag ? 0.1 : 0.28} rx={0.02} fill="#6a6a6a" />
+          <rect x={hx - (waag ? 0.12 : 0.03)} y={hy - (waag ? 0.03 : 0.12)} width={waag ? 0.24 : 0.06} height={waag ? 0.06 : 0.24} rx={0.015} fill="#9aa3a8" />
+          <circle cx={waag ? i + 0.2 : hx} cy={waag ? hy : j + 0.2} r={0.045} fill={HALT_GELB} stroke="#5a5a5a" strokeWidth={0.015} />
+        </g>,
+      )
+    }
   }
-  const d = teile.join(' ')
-  if (!d) return null
+  if (!teile.length && !tunnel.length) return null
+  const d = teile.join(' '), dd = deck.join(' ')
   return (
     <g pointerEvents="none">
-      <path d={d} stroke={RAND} strokeWidth={STRASSE_B + 0.04} strokeLinecap="round" fill="none" />
-      <path d={d} stroke={BELAG} strokeWidth={STRASSE_B} strokeLinecap="round" fill="none" />
+      {dd && <path d={dd} stroke={STRASSE_GELAENDER} strokeWidth={STRASSE_B + 0.14} fill="none" />}
+      {dd && <path d={dd} stroke={STRASSE_DECK} strokeWidth={STRASSE_B + 0.1} fill="none" />}
+      {tunnel.length > 0 && <path d={tunnel.join(' ')} stroke={TUNNEL_DUNKEL} strokeWidth={STRASSE_B * 0.55} strokeDasharray="0.08 0.06" fill="none" opacity={0.35} />}
+      {d && <path d={d} stroke={RAND} strokeWidth={STRASSE_B + 0.04} strokeLinecap="round" fill="none" />}
+      {d && <path d={d} stroke={BELAG} strokeWidth={STRASSE_B} strokeLinecap="round" fill="none" />}
+      {extra}
+      {d && <path d={d} stroke="#ffffff" strokeWidth={0.018} strokeDasharray="0.06 0.06" fill="none" opacity={0.8} />}
+    </g>
+  )
+}
+
+/** die Strassenbrücken über einem Gleis, über den Zügen gezeichnet: Schatten, Brücke mit Geländer, darauf die Strasse */
+export function StrassenUeberBild({ brett }: { brett: Brett }) {
+  const l: string[] = []
+  for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
+    const f = brett[j][i]
+    if (!strasseUeberGleis(f)) continue
+    l.push(f.gleis!.dreh % 2 === 0 ? `M${i},${j + 0.5} L${i + 1},${j + 0.5}` : `M${i + 0.5},${j} L${i + 0.5},${j + 1}`)
+  }
+  if (!l.length) return null
+  const d = l.join(' ')
+  return (
+    <g pointerEvents="none">
+      <path d={d} stroke="#000000" strokeOpacity={0.22} strokeWidth={STRASSE_B + 0.14} fill="none" transform="translate(0.04 0.05)" />
+      <path d={d} stroke={STRASSE_GELAENDER} strokeWidth={STRASSE_B + 0.14} fill="none" />
+      <path d={d} stroke={STRASSE_DECK} strokeWidth={STRASSE_B + 0.1} fill="none" />
+      <path d={d} stroke={BELAG} strokeWidth={STRASSE_B} fill="none" />
       <path d={d} stroke="#ffffff" strokeWidth={0.018} strokeDasharray="0.06 0.06" fill="none" opacity={0.8} />
+    </g>
+  )
+}
+
+/** ein Bus von oben: Kasten in seiner Farbe, helles Dach, Fensterband und Frontscheibe (gewählt) */
+export function BusBild({ x, y, w, farbe }: { x: number; y: number; w: number; farbe: string }) {
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${(w * 180) / Math.PI})`} pointerEvents="none">
+      <rect x={-0.165} y={-0.062} width={0.33} height={0.124} rx={0.03} fill="#000000" opacity={0.2} transform="translate(0.015 0.02)" />
+      <rect x={-0.165} y={-0.062} width={0.33} height={0.124} rx={0.03} fill={farbe} stroke="#3a3a3a" strokeWidth={0.012} />
+      <rect x={-0.14} y={-0.064} width={0.24} height={0.022} rx={0.008} fill="#2e3a44" />
+      <rect x={-0.14} y={0.042} width={0.24} height={0.022} rx={0.008} fill="#2e3a44" />
+      <rect x={-0.12} y={-0.035} width={0.21} height={0.07} rx={0.015} fill="#ffffff" opacity={0.35} />
+      <rect x={0.118} y={-0.05} width={0.034} height={0.1} rx={0.012} fill="#2e3a44" />
     </g>
   )
 }
@@ -429,7 +511,7 @@ export function SchrankenBild({ brett, wagen }: { brett: Brett; wagen: Array<{ x
   const raus: ReactElement[] = []
   for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
     const f = brett[j][i]
-    if (!f.strasse || f.gleis?.art !== 'gerade') continue
+    if (!f.strasse || f.gleis?.art !== 'gerade' || f.strBruecke) continue
     const cx = i + 0.5, cy = j + 0.5
     const d = Math.min(9, ...wagen.map((w) => Math.hypot(w.x - cx, w.y - cy)))
     const zu = Math.max(0, Math.min(1, (SCHRANKE_AUF - d) / (SCHRANKE_AUF - SCHRANKE_ZU)))
