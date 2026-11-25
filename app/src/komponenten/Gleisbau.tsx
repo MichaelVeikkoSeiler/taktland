@@ -405,59 +405,30 @@ function OhneStromBild({ brett }: { brett: Brett }) {
 
 /**
  * die Fahrleitung (Michael, 2026-11-25: «Elektrifizierte Gleise mit einer Oberleitung und die anderen ohne Oberleitung»): über jedem Gleis mit Strom ein
- * dünner Fahrdraht über der Mitte, je Feld ein Mast neben dem Gleis mit Ausleger, an Kurven aussen, neben einem Nachbargleis auf der anderen Seite;
- * an Bahnhöfen nur der Draht (die Masten stünden auf dem Perron), im Tunnel und ohne Strom nichts. Über den Zügen gezeichnet. Masse und Farben gewählt
+ * dünner Fahrdraht über der Mitte, im Tunnel und ohne Strom nichts; über den Zügen gezeichnet. Seit 2026-11-25 ohne Masten (Michael: «Die elektrifizierten
+ * Trassen brauchen keine Strommasten. Die Mittellinie reicht, damit man erkennt, dass dort Strom fließt»). Masse und Farbe gewählt
  */
-const DRAHT = '#2f2f2f', MAST = '#5a5a5a', MAST_AB = 0.3
+const DRAHT = '#2f2f2f'
 function OberleitungBild({ brett }: { brett: Brett }) {
-  const draht: string[] = [], mast: string[] = [], arm: string[] = []
+  const draht: string[] = []
   const mitStrom = (x: number, y: number) => { const f = brett[Math.floor(y)]?.[Math.floor(x)]; return !!f && !f.ohneStrom && !imTunnel(brett, x, y) }
   const linie = (pts: Array<{ x: number; y: number }>) => {
     let d = ''
     pts.forEach((q, k) => { const an = mitStrom(q.x, q.y); d += an ? `${d && k && mitStrom(pts[k - 1].x, pts[k - 1].y) ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)} ` : '' })
     if (d) draht.push(d)
   }
-  const mastSetzen = (q: { x: number; y: number }, nx: number, ny: number) => {
-    const mx = q.x + nx * MAST_AB, my = q.y + ny * MAST_AB
-    if (!mitStrom(q.x, q.y) || brett[Math.floor(my)]?.[Math.floor(mx)]?.grund === 'wasser' && !brett[Math.floor(my)][Math.floor(mx)].gleis) return
-    mast.push(`M${(mx - 0.03).toFixed(3)},${(my - 0.03).toFixed(3)} h0.06 v0.06 h-0.06 Z`)
-    arm.push(`M${mx.toFixed(3)},${my.toFixed(3)} L${q.x.toFixed(3)},${q.y.toFixed(3)}`)
-  }
   for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
     const f = brett[j][i], g = f.gleis
     if (!g || f.teil) continue
     if (grosseKurve(g)) {
       const G = grossGeometrie(i, j, g), n = grosseKurve(g)
-      const pts = Array.from({ length: 12 * n + 1 }, (_, k) => { const a = G.a0 + (G.da * k) / (12 * n); return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) } })
-      linie(pts)
-      // je Feld des Bogens ein Mast aussen
-      for (let k = 0; k < n; k++) { const a = G.a0 + (G.da * (k + 0.5)) / n; mastSetzen({ x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) }, Math.cos(a), Math.sin(a)) }
+      linie(Array.from({ length: 12 * n + 1 }, (_, k) => { const a = G.a0 + (G.da * k) / (12 * n); return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) } }))
       continue
     }
-    const ww = wege(g)
-    ww.forEach(([a, c], k) => {
-      const pts = wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10)
-      linie(pts)
-      if (k || istBahnhof(g) || g.art === 'ueberfuehrung') return
-      // ein Mast in der Mitte des ersten Wegs: an Kurven aussen (zur Mitte des Felds), sonst auf der Seite ohne Nachbargleis
-      const q = pts[5], v = pts[6], u = pts[4], l = Math.hypot(v.x - u.x, v.y - u.y) || 1
-      let nx = -(v.y - u.y) / l, ny = (v.x - u.x) / l
-      if (c >= 0 && (a + c) % 2 === 1) { if ((q.x + nx * 0.3 - i - 0.5) ** 2 + (q.y + ny * 0.3 - j - 0.5) ** 2 > (q.x - nx * 0.3 - i - 0.5) ** 2 + (q.y - ny * 0.3 - j - 0.5) ** 2) { nx = -nx; ny = -ny } }
-      else {
-        const nb = (sx: number) => brett[j + Math.round(ny * sx)]?.[i + Math.round(nx * sx)]?.gleis
-        if (nb(1) && !nb(-1)) { nx = -nx; ny = -ny } else if (nb(1) && nb(-1)) return
-      }
-      mastSetzen(q, nx, ny)
-    })
+    for (const [a, c] of wege(g)) linie(wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10))
   }
   if (!draht.length) return null
-  return (
-    <g pointerEvents="none">
-      <path d={arm.join(' ')} stroke={MAST} strokeWidth={0.014} fill="none" />
-      <path d={mast.join(' ')} fill={MAST} />
-      <path d={draht.join(' ')} stroke={DRAHT} strokeWidth={0.012} fill="none" opacity={0.75} />
-    </g>
-  )
+  return <path d={draht.join(' ')} stroke={DRAHT} strokeWidth={0.012} fill="none" opacity={0.75} pointerEvents="none" />
 }
 
 /** ein Wagen auf dem unteren Gleis einer Überführung, nahe der Mitte: blass wie im Tunnel */
