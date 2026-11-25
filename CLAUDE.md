@@ -476,6 +476,13 @@ Geteilte und zusammengehängte Züge seit 2026-11-25 nur einmal (Michael, Kerzer
              gemeinsamen Tag 0 bis 10 Minuten danach (FLUEGEL_MIN, gewählt), gehören sie zusammen: kommt nur eine an, verschwindet sie bei der Ankunft und die weiterfahrenden stehen
              ab dann (ZugFahrt.vorMin, nachMin in haltZeiten), kommen mehrere an, stehen sie bis zur Abfahrt und die weiterfahrende erscheint erst dann; in «3D Schweiz» und im
              Führerstand; mit dem GTFS hier für Kerzers 17 bis 18 Uhr nachgerechnet (die kreuzenden S52 16262 auf Gleis 6 und 16263 auf Gleis 4 bleiben getrennt), nicht im Browser angeschaut
+             seit 2026-11-25 als ein Zug, der sich teilt (Michael: «Wäre es möglich, dass das ein Zug ist, live, in Echtzeit, und dieser in Kerzes stehen bleibt und dann zur
+             Abfahrtszeit in beide Richtungen jeweils die Hälfte dann weiterfahrt?»): der ankommende Zug steht, bis die erste Hälfte losfährt, bis dahin sind die
+             weiterfahrenden nicht gezeichnet, danach er nicht mehr (fluegelWeg in src/zuege3d.ts, ZugFahrt.fluegelVon, fluegelNach); fahren mehrere weiter, ist jede eine
+             Hälfte (ZugFahrt.halb: Lok, ein Wagen, Steuerwagen, ZUG_HALB_LETZT in Schweiz3D.tsx, ebenso in FahrplanZuege.ts; die fehlenden Wagen unsichtbar), ebenso zwei
+             ankommende, die hintereinander stehen (Abstand nach ihrer Länge), bis der ganze Zug abfährt; eine Hälfte steht erst da, wenn der ankommende Zug laut Echtzeit
+             angekommen ist, und ohne eigene Echtzeit übernimmt sie seine Verspätung; der ankommende steht, bis die letzte weiterfahrende laut Echtzeit abfährt; mit dem
+             GTFS hier für Kerzers 17:22 bis 17:38 minütlich nachgerechnet, pünktlich und mit 3 Minuten Verspätung der S5 15564; das Bild in 3D nicht angeschaut
 Gekoppelte Züge nur einmal seit 2026-11-18 (Michael: «Kann es sein dass ich den Fahrplan Zug und den Live verspäteten Zug beide sehe?»): im Fahrplan kommt kein Zug
              zweimal vor (geprüft: keine zwei Fahrten mit gleicher Gattung und Nummer, gleichem Tag und gleicher Abfahrt), aber manche unter zwei Nummern mit denselben Zeiten
              (RJX 168 und 31168, S1 und S31 auf einem gemeinsamen Stück; lokal 25 Paare); meldete die Echtzeit nur eine, fuhren sie auseinander; seither je Paar die Halte mit

@@ -29,6 +29,8 @@ export interface ZugFahrt {
   echt?: Map<number, Echtzeit>
   /** wie lange der Zug vor der ersten Abfahrt und nach der letzten Ankunft steht, wenn nicht ZUG_STEHT_MIN (fluegelFinden) */
   vorMin?: number; nachMin?: number
+  /** geteilt oder zusammengehängt (fluegelFinden): die Fahrten, die hier ankommen und weiterfahren; halb: nur Lok, ein Wagen, Steuerwagen */
+  fluegelVon?: ZugFahrt[]; fluegelNach?: ZugFahrt[]; halb?: boolean
 }
 
 /** die Daten liegen auf 3dland.ch neben der Seite, nicht bei taktland.ch */
@@ -123,7 +125,25 @@ export function haltZeiten(f: ZugFahrt, i: number, tag?: number): [number, numbe
   if (i > 0 && i < z && an === ab) { an -= ZUG_KURZHALT_VOR_MIN; ab += ZUG_KURZHALT_NACH_MIN }
   const e = tag === undefined ? undefined : f.echt?.get(tag)
   if (e) { an += e.an[i] ?? 0; ab = Math.max(an, ab + (e.ab[i] ?? 0)) }
+  else if (tag !== undefined && f.fluegelVon) {
+    // ohne eigene Echtzeit wartet die weiterfahrende auf die ankommende: deren Verspätung geht auf sie über
+    const spaet = Math.max(0, ...f.fluegelVon.filter((v) => (v.tage >> tag) & 1).map((v) => ankunftEcht(v, tag) - erst))
+    an += spaet; ab += spaet
+  }
+  // eine weiterfahrende Hälfte steht erst da, wenn die ankommende angekommen ist (auch verspätet)
+  if (i === 0 && tag !== undefined && f.fluegelVon?.length === 1 && (f.fluegelVon[0].tage >> tag) & 1) {
+    an = Math.max(an, ankunftEcht(f.fluegelVon[0], tag)); ab = Math.max(ab, an)
+  }
+  // die ankommende steht, bis die letzte weiterfahrende abfährt (auch wenn diese laut Echtzeit später fährt)
+  if (i === z && tag !== undefined && f.fluegelNach) {
+    for (const c of f.fluegelNach) if ((c.tage >> tag) & 1) ab = Math.max(ab, haltZeiten(c, 0, tag)[1])
+  }
   return [an, ab]
+}
+/** die Ankunft am letzten Halt mit der Echtzeit, ohne das Stehen danach */
+function ankunftEcht(f: ZugFahrt, tag: number) {
+  const z = f.halte.length - 1, an = f.halte[z].an ?? f.halte[z].ab!
+  return an + (f.echt?.get(tag)?.an[z] ?? 0)
 }
 
 /** die Verspätung am Halt i in Minuten laut Echtzeit, null ohne Meldung */
@@ -256,9 +276,11 @@ export function kopplungFinden(fahrten: ZugFahrt[]): Kopplung {
  * Züge»): der Fahrplan führt einen Zug, der in einem Bahnhof geteilt oder zusammengehängt wird, als Fahrten, die dort enden, und Fahrten, die dort
  * beginnen (S5 15564 aus Bern endet in Kerzers um 17:30, 15764 nach Neuchâtel fährt um 17:31 ab Gleis 6B, 15864 nach Avenches um 17:35 ab 6A); mit
  * je ZUG_STEHT_MIN Minuten Stehen standen dort drei Züge für einen. Eine Fahrt, die an einem Bahnhof endet, und eine, die dort auf demselben Gleis
- * (die Nummer ohne Sektor) mit derselben Linie an einem gemeinsamen Tag 0 bis FLUEGEL_MIN Minuten danach beginnt, gehören zusammen: beginnt dort
- * nur aus einer Fahrt etwas (Teilen oder einfach weiter), verschwindet die ankommende bei der Ankunft und die weiterfahrenden stehen ab dann;
- * fahren mehrere zusammen weiter (Zusammenhängen), stehen die ankommenden bis zur Abfahrt und die weiterfahrende erscheint erst dann. Gewählt
+ * (die Nummer ohne Sektor) mit derselben Linie an einem gemeinsamen Tag 0 bis FLUEGEL_MIN Minuten danach beginnt, gehören zusammen. Seit
+ * 2026-11-25 als ein Zug (Michael: «Wäre es möglich, dass das ein Zug ist, live, in Echtzeit, und dieser in Kerzers stehen bleibt und dann zur
+ * Abfahrtszeit in beide Richtungen jeweils die Hälfte dann weiterfährt?»): die ankommende steht, bis die erste weiterfahrende losfährt, dann
+ * fahren die Hälften (Lok, ein Wagen, Steuerwagen) je zu ihrer Zeit; zwei ankommende Hälften stehen hintereinander, bis der ganze Zug abfährt;
+ * ohne eigene Echtzeit übernimmt die weiterfahrende die Verspätung der ankommenden. Gewählt
  */
 const FLUEGEL_MIN = 10
 const gleisNr = (g: string | null) => g?.match(/\d+/)?.[0] ?? null
@@ -284,17 +306,39 @@ export function fluegelFinden(fahrten: ZugFahrt[]) {
   }
   for (const [c, ee] of vorher) {
     const ab = c.halte[0].ab!
+    c.fluegelVon = ee
+    for (const e of ee) e.fluegelNach = nachher.get(e)
+    const an = (e: ZugFahrt) => e.halte[e.halte.length - 1].an!
     if (ee.length === 1) {
-      // teilen oder weiter: die weiterfahrende steht ab der Ankunft, die ankommende verschwindet
+      // teilen oder weiter: die weiterfahrende steht ab der Ankunft; solange die ankommende dort steht, zeigt nur sie den Zug (fluegelWeg);
+      // fahren mehrere weiter, ist jede eine Hälfte
       const e = ee[0]
-      c.vorMin = ab - e.halte[e.halte.length - 1].an!
-      e.nachMin = 0
+      c.vorMin = ab - an(e)
+      e.nachMin = Math.max(0, ...nachher.get(e)!.map((x) => x.halte[0].ab! - an(e)))
+      if (nachher.get(e)!.length > 1) c.halb = true
     } else {
-      // zusammenhängen: die ankommenden stehen bis zur Abfahrt, die weiterfahrende erscheint erst dann
+      // zusammenhängen: die ankommenden Hälften stehen bis zur Abfahrt, die weiterfahrende erscheint erst dann
       c.vorMin = 0
-      for (const e of ee) if ((nachher.get(e)?.length ?? 0) === 1) e.nachMin = ab - e.halte[e.halte.length - 1].an!
+      for (const e of ee) if ((nachher.get(e)?.length ?? 0) === 1) { e.nachMin = ab - an(e); e.halb = true }
     }
   }
+}
+
+/**
+ * welche geteilten oder zusammengehängten Fahrten gerade nicht gezeichnet werden: die ankommende, sobald eine weiterfahrende losfährt; eine
+ * weiterfahrende, solange sie am ersten Halt steht und eine ankommende dort noch steht (die zeigt den Zug, bis er sich teilt)
+ */
+export function fluegelWeg(unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }>): Set<number> {
+  const weg = new Set<number>()
+  const da = new Map(unterwegs.map((u) => [u.f, u]))
+  for (const u of unterwegs) {
+    if (u.f.fluegelNach?.some((c) => { const v = da.get(c); return v && (v.st.art === 'fahrt' || v.st.i > 0) })) weg.add(u.f.id)
+  }
+  for (const u of unterwegs) {
+    if (!u.f.fluegelVon || u.st.art !== 'halt' || u.st.i !== 0) continue
+    if (u.f.fluegelVon.some((e) => { const v = da.get(e); return v && !weg.has(e.id) && v.st.art === 'halt' && v.st.i === e.halte.length - 1 })) weg.add(u.f.id)
+  }
+  return weg
 }
 
 /** liegt die Stelle im Stück, das mit dem Partner gekoppelt ist: am gemeinsamen Halt oder zwischen zwei gemeinsamen Halten nacheinander */

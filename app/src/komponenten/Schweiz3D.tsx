@@ -31,7 +31,7 @@ import { laubSaison, laubSchatten, laubTagSetzen, nurKrone } from './Laub'
 import { messungVon, NASS_AB_MM, type Station, staerkeAus, stationenBei, type Wetter, type Wind } from '../wetter'
 import { niederAusStunde, type WindStunde } from '../wind'
 import { type WindPlatz, windBei, windFrueher, windPlaetze } from '../windhosen'
-import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden, wegStelle, kopplungFinden, fluegelFinden, gekoppeltWeg, type Kopplung } from '../zuege3d'
+import { haltVerspaetung, haltZeiten, jetztImFahrplan, szenenZeit, zugPlan, zugTest, type ZugFahrt, type ZugIndex, zugIndexLaden, type ZugNetz, zugNetzLaden, type ZugStelle, zugStelle, zuegeLaden, wegStelle, kopplungFinden, fluegelFinden, fluegelWeg, gekoppeltWeg, type Kopplung } from '../zuege3d'
 import { ECHTZEIT_ALLE_MS, echtzeitHolen, echtzeitStand } from '../echtzeit'
 import { planText, rueckkehr, rueckkehrMerken, type Rueckkehr } from '../mitfahren'
 import { type Fahrweg, lageBei, wegEnde } from '../fahrt'
@@ -2556,6 +2556,8 @@ const ZUG_STIRN_FARBE = '#fff1d6', ZUG_STIRN_HELL = 0.48, ZUG_STIRN_LAENGE = 3, 
 const ZUG_STIRN_HALT_LAENGE = 1.5, ZUG_STIRN_HALT_HELL = 0.5
 /** die ganze Länge des Zugs in den Einheiten der Form (Lok, Wagen und Lücken) */
 const ZUG_GANZ_M = ZUG_LOK_M + ZUG_WAGEN * (ZUG_WAGEN_M + ZUG_LUECKE_M)
+/** eine Hälfte eines geteilten Zugs: Lok, ein Wagen, Steuerwagen (der Steuerwagen ist Wagen 2; gewählt) */
+const ZUG_HALB_LETZT = 2
 /** zwei Stirnlampen vorne unten an der Lok, links und rechts, immer an wie bei echten Zügen und dem Vorbild (Michael, 2026-10-29:
  *  «Bitte zwei Lichter machen ähnlich wie bei diesem Modell», sein Bild eines Zugs mit zwei Lampen unten an der Front): je Lampe ein
  *  heller Punkt und nachts ein eigener Lichtkegel; Lage und Grösse als Anteil von Breite und Höhe des Zugs, gewählt */
@@ -6222,8 +6224,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         // derselben Stelle, das Ausweichen schob den einen schräg aufs Nachbargleis); die Reihenfolge nach der Ankunft, eine Annahme
         hintereinander.clear()
         const gruppen = new Map<string, Array<{ id: number; an: number }>>()
+        // was beim Teilen und Zusammenhängen nicht gezeichnet wird, steht auch niemandem im Weg
+        const ohneFluegel = fluegelWeg(unterwegs)
         for (const u of unterwegs) {
-          if (u.st.art !== 'halt') continue
+          if (u.st.art !== 'halt' || ohneFluegel.has(u.f.id)) continue
           const hh = u.f.halte[u.st.i], g = gleisNummer(hh.gleis)
           if (g === null) continue
           const schluessel = `${hh.abk}|${g}`
@@ -6252,10 +6256,16 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // jetzigen Größe»)
       gross.setScalar(Math.max(1, (abstand * ZUG_FERN) / laenge) * (stufe === 'nah' ? ZUG_NAH_1KM_MASS : stufe === 'ort' ? ZUG_NAH_MASS : 1))
       skala.copy(gross).multiplyScalar(mass)
+      // geteilte und zusammengehängte Züge: solange der ankommende steht, zeigt er den Zug, danach die Hälften (fluegelWeg in src/zuege3d.ts)
+      const stellen = new Map(unterwegs.map((u) => [u.f, zugStelle(u.f, jetzt.tag, jetzt.minuten)]))
+      const fluegel = fluegelWeg(unterwegs.flatMap((u) => { const st = stellen.get(u.f); return st ? [{ f: u.f, st }] : [] }))
       for (const u of unterwegs) {
         if (zahl >= ZUEGE_HOECHSTENS) break
-        const st = zugStelle(u.f, jetzt.tag, jetzt.minuten)
-        if (!st) continue
+        const st = stellen.get(u.f)
+        if (!st || fluegel.has(u.f.id)) continue
+        // eine Hälfte: Lok, ein Wagen, Steuerwagen; letzt ist der Steuerwagen
+        const letzt = u.f.halb ? ZUG_HALB_LETZT : ZUG_WAGEN
+        const zugGanzM = ZUG_LOK_M + letzt * (ZUG_WAGEN_M + ZUG_LUECKE_M)
         const h = u.f.halte
         // am Halt: am Anfang des Wegs zum nächsten Halt, am Ende am Schluss des Wegs vom letzten; j ist der Halt am Anfang des Wegs
         const [j, anteil] = st.art === 'fahrt' ? [st.i, st.anteil] : st.i + 1 < h.length ? [st.i, 0] : [st.i - 1, 1]
@@ -6287,7 +6297,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           if ((ae * be + an * bn) < -0.5 * Math.hypot(ae, an) * Math.hypot(be, bn)) { sM = Math.min(ende, ZUG_GANZ_M * mass * gross.x); wendet = true }
         }
         // hinter den Zügen davor auf demselben Gleis, je eine Zuglänge und eine Lücke
-        sM -= (hintereinander.get(u.f.id) ?? 0) * (ZUG_GANZ_M + ZUG_LUECKE_M) * mass * gross.x
+        sM -= (hintereinander.get(u.f.id) ?? 0) * ((u.f.halb ? zugGanzM : ZUG_GANZ_M) + ZUG_LUECKE_M) * mass * gross.x
         const imTunnel = (sm: number) => {
           if (sm >= 0) return fw.tunnel.some(([a, z]) => sm >= a && sm <= z)
           if (!vorher || wendet) return false
@@ -6313,12 +6323,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         const [es, ns] = stelle(sM)
         const mJeM = mass * gross.x
         // gezeichnet, solange die Spitze oder das Ende im Modell ist; was über den Rand ragt, schneidet randSchnitt ab
-        if (!drin(es, ns)) { const [ee, ne] = stelle(sM - ganzM * mJeM); if (!drin(ee, ne)) continue }
+        if (!drin(es, ns)) { const [ee, ne] = stelle(sM - zugGanzM * mJeM); if (!drin(ee, ne)) continue }
         // Anfang und Ende jedes Wagens; die Höhe dort geglättet über ZUG_GLATT_M entlang des Zugs, jeder Wagen von seinem
         // Ende zum Anfang geneigt: so liegen die Wagen aneinander statt in Stufen (Michael, 2026-10-26: «nicht so holpern»)
         const enden: Array<{ s: number; e: number; n: number; h: number; tunnel: boolean; er: number; nr: number }> = []
         let ab = 0
-        for (let w = 0; w <= ZUG_WAGEN; w++) {
+        for (let w = 0; w <= letzt; w++) {
           const lM = (w === 0 ? ZUG_LOK_M : ZUG_WAGEN_M) * mJeM
           for (const sm of [sM - ab, sM - ab - lM]) {
             const [e, n] = stelle(sm), [e2, n2] = stelle(sm - 10), dl = Math.hypot(e - e2, n - n2) || 1
@@ -6438,7 +6448,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           return r
         }
         const kMed = Math.round(ZUG_QUER_MEDIAN_M / ZUG_QUER_RASTER_M), kWech = Math.round(ZUG_QUER_WECHSEL_M / ZUG_QUER_RASTER_M), kHoch = Math.round(ZUG_QUER_HOEHE_M / ZUG_QUER_RASTER_M)
-        const kLo = Math.floor((sM - ganzM * mJeM) / ZUG_QUER_RASTER_M) - 1, kHi = Math.ceil(sM / ZUG_QUER_RASTER_M) + 1
+        const kLo = Math.floor((sM - zugGanzM * mJeM) / ZUG_QUER_RASTER_M) - 1, kHi = Math.ceil(sM / ZUG_QUER_RASTER_M) + 1
         const roh = new Map<number, [number, number, number, number]>()
         const rohBei = (k: number) => roh.get(k) ?? (roh.set(k, rohQuer(k)), roh.get(k)!)
         const median = new Map<number, number>()
@@ -6526,7 +6536,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
         })
         // die Richtung des Wagens davor (nur für die Prüfung in der Testfassung)
         let kR = 0
-        for (let w = 0; w <= ZUG_WAGEN; w++) {
+        for (let w = 0; w <= letzt; w++) {
           const vo = enden[2 * w], hi = enden[2 * w + 1], hv = glatt[2 * w], hh = glatt[2 * w + 1]
           // beide Enden auf derselben Linie, ohne eigenes Einrasten je Wagen: so hängen die Wagen aneinander wie eine Schlange (Michael, 2026-11-17:
           // «Die Wagen sind je nach Bewegung quer miteinander verschoben … Ich denke heit an eine Schlange»; geschoben wurde jeder Wagen für sich bis 2,5 m)
@@ -6539,7 +6549,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
           const e = (voE + hiE) / 2, n = (voN + hiN) / 2
           if (w === 0) { lokE = e; lokN = n }
           if (import.meta.env.VITE_S3D_TEST) { const z = window as unknown as { s3dMitten?: number[][] }; (z.s3dMitten ??= []).push([u.f.id, w, e, n, voE, voN, hiE, hiN]); if (z.s3dMitten.length > 3000) z.s3dMitten.shift() }
-          if (w === ZUG_WAGEN) { steuerE = e; steuerN = n }
+          if (w === letzt) { steuerE = e; steuerN = n }
           // nie unter das gezeichnete Gelände (Michael, 2026-11-10, Wankdorf Ost) und unter Decken auf der Achse (2026-11-13, Bern): siehe hLinie
           const hV = hvG ?? hv, hH = hhG ?? hh
           v.set((e - lage.cE) / 1000, (hV + hH) / 2000 + (hoehe / 2) * gross.y, -(n - lage.cN) / 1000)
@@ -6560,7 +6570,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               lampeSetzen(ZUG_LAMPEN * zahl + (seite + 1) / 2, seite * ZUG_LAMPE_SEITE * ZUG_BREITE, ZUG_LAMPE_HOEHE * ZUG_HOEHE, ZUG_LOK_M / 2000)
             }
             lampeSetzen(ZUG_LAMPEN * zahl + 2, 0, ZUG_LAMPE_OBEN_HOEHE * ZUG_HOEHE, ZUG_LOK_M / 2000 - ZUG_LAMPE_OBEN_ZURUECK * ZUG_HOEHE)
-          } else if (w === ZUG_WAGEN) {
+          } else if (w === letzt) {
             for (const seite of [-1, 1]) {
               lampeSetzen(ZUG_LAMPEN * zahl + 3 + (seite + 1) / 2, seite * ZUG_LAMPE_SEITE * ZUG_BREITE, ZUG_LAMPE_HOEHE * ZUG_HOEHE, -ZUG_WAGEN_M / 2000)
             }
@@ -6598,10 +6608,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
             m.compose(v, q, skala)
           }
           if (w === 0) netze.lok.setMatrixAt(zahl, m)
-          else if (w === ZUG_WAGEN) netze.steuer.setMatrixAt(zahl, m)
+          else if (w === letzt) netze.steuer.setMatrixAt(zahl, m)
           else netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)
           if (tuerAuf > 0 && !verdeckt) {
-            const tf = tuerForm[w]
+            const tf = tuerForm[w === letzt ? ZUG_WAGEN : w]
             tf.stellen.forEach((tz, di) => {
               for (const sx of [-1, 1]) {
                 if (tuerZahl >= TUEREN_HOECHSTENS) return
@@ -6626,6 +6636,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
               }
             })
           }
+        }
+        // die Wagen, die einer Hälfte fehlen, unsichtbar
+        if (letzt < ZUG_WAGEN) {
+          m.makeScale(0, 0, 0)
+          for (let w = letzt; w < ZUG_WAGEN; w++) netze.wagen.setMatrixAt(zahl * (ZUG_WAGEN - 1) + w - 1, m)
+          mitten[zahl].length = letzt + 1
         }
         gezeichnet[zahl] = u.f
         zugLage.set(u.f.id, { ve: lokE, vn: lokN, he: steuerE, hn: steuerN })

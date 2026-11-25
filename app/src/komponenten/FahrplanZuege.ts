@@ -10,7 +10,7 @@ import * as THREE from 'three'
 import { gleisLaden } from '../gelaende'
 import { lageBei, wegEnde } from '../fahrt'
 import { lv95 } from '../relief'
-import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, type ZugIndex, type ZugNetz, zugNetzLaden, type ZugWeg, zugStelle, wegStelle, type ZugStelle, kopplungFinden, fluegelFinden, gekoppeltWeg, type Kopplung } from '../zuege3d'
+import { jetztImFahrplan, zuegeLaden, zugTest, zugIndexLaden, type ZugFahrt, type ZugIndex, type ZugNetz, zugNetzLaden, type ZugWeg, zugStelle, wegStelle, type ZugStelle, kopplungFinden, fluegelFinden, fluegelWeg, gekoppeltWeg, type Kopplung } from '../zuege3d'
 import { ZUG_BREITE, ZUG_HOEHE, ZUG_LOK_M, ZUG_WAGEN, ZUG_WAGEN_M, zugFormen } from './ZugForm'
 
 /** Masse in echter Grösse, gewählt (kein bestimmter Zug): Breite, Höhe, Länge eines Wagens und die Lücke dazwischen in m */
@@ -151,6 +151,8 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
     const unterwegs: Array<{ f: ZugFahrt; st: ZugStelle }> = []
     for (const f of fahrten) { const st = zugStelle(f, tag, minuten); if (st) unterwegs.push({ f, st }) }
     const doppelt = gekoppeltWeg(kopplung, unterwegs)
+    // geteilte und zusammengehängte Züge: solange der ankommende steht, zeigt er den Zug, danach die Hälften (fluegelWeg in src/zuege3d.ts)
+    for (const id of fluegelWeg(unterwegs)) doppelt.add(id)
     for (const { f, st } of unterwegs) {
       if (zuege >= ZUEGE_HOECHSTENS) break
       if (doppelt.has(f.id)) continue
@@ -167,7 +169,9 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
       const punkt = (ss: number) => { const l = lageBei(w!, Math.max(0, ss)); return lv95(l.lat, l.lon) }
       let ab = 0, ok = true
       const wagen: Array<{ art: number; a: { e: number; n: number; z: number }; b: { e: number; n: number; z: number }; r: number }> = []
-      for (let k = 0; k <= ZUG_WAGEN && ok; k++) {
+      // eine Hälfte: Lok, ein Wagen, Steuerwagen
+      const letzt = f.halb ? 2 : ZUG_WAGEN
+      for (let k = 0; k <= letzt && ok; k++) {
         const vorne = s - ab, hinten = vorne - laengen[k]
         ab += laengen[k] + LUECKE_M
         const [ve, vn] = punkt(vorne), [he, hn] = punkt(hinten)
@@ -175,7 +179,7 @@ export function fahrplanZuegeBauen(szene: THREE.Scene, X: (e: number) => number,
         const links = (pe: number, pn: number) => gleis(pe - dn * LINKS_M, pn + de * LINKS_M, de, dn)
         const a = links(ve, vn), b = links(he, hn)
         if (!a || !b || a.tunnel || b.tunnel) { ok = false; break }
-        wagen.push({ art: k === 0 ? 0 : k === ZUG_WAGEN ? 2 : 1, a, b, r: Math.atan2(dn, de) })
+        wagen.push({ art: k === 0 ? 0 : k === letzt ? 2 : 1, a, b, r: Math.atan2(dn, de) })
       }
       if (!ok) continue
       // der Zug hängt zusammen (Michael, 2026-11-06: «Züge dürfen nie so dargestellt werden. Völlig verbogen»; dasselbe in «3D Schweiz»): jedes
