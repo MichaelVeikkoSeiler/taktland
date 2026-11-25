@@ -45,8 +45,9 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'linie' }, text: 'Linie' },
   { w: { art: 'gleis', gleis: 'gerade' }, text: 'Gerade' },
   { w: { art: 'gleis', gleis: 'kurve' }, text: 'Kurve' },
-  { w: { art: 'gleis', gleis: 'bogen2' }, text: 'Kurve 2 × 2' },
-  { w: { art: 'gleis', gleis: 'bogen3' }, text: 'Kurve 3 × 3' },
+  // ohne «2 × 2» und «3 × 3», das Bild zeigt die Kacheln (Michael, 2026-11-25: «2x2 und 3x3 muss nicht stehen man sieht ja die Kacheln»)
+  { w: { art: 'gleis', gleis: 'bogen2' }, text: 'Kurve' },
+  { w: { art: 'gleis', gleis: 'bogen3' }, text: 'Kurve' },
   { w: { art: 'gleis', gleis: 'weiche' }, text: 'Weiche R' },
   { w: { art: 'gleis', gleis: 'weiche_l' }, text: 'Weiche L' },
   { w: { art: 'gleis', gleis: 'dreiweg' }, text: 'Dreiweg' },
@@ -1532,7 +1533,7 @@ export function Gleisbau() {
       if (unterGross) {
         const G = grossGeometrie(hi, hj, alt!)
         if (alt?.art !== w.gleis || G.griff[0] !== i || G.griff[1] !== j) {
-          setMeldung('Gedreht wird eine Kurve an ihrer Ecke mit dem Pfeil ↻. Eine Wiese dort löscht sie.'); return
+          setMeldung('Gedreht wird eine Kurve an ihrer Ecke, oder mit einem zweiten Tipp auf das Werkzeug unten. Eine Wiese dort löscht sie.'); return
         }
         const ox = Math.min(...G.zellen.map(([u]) => u)), oy = Math.min(...G.zellen.map(([, v]) => v))
         d = ((alt.dreh + 1) % 4) as Dreh
@@ -1540,7 +1541,7 @@ export function Gleisbau() {
         [ai, aj] = grossAnfang(ox, oy, nGross, d)
       } else [ai, aj] = anfangZumGriff(i, j, nGross, d)
       const b2 = grosseLegen(b1, ai, aj, { art: w.gleis, dreh: d })
-      if (!b2) { setMeldung(`Die Kurve braucht ${nGross} × ${nGross} Felder, vom angetippten Feld aus in die Richtung des Bilds auf dem Knopf, ohne andere Gleise darin. Drehen ↻ ändert die Richtung.`); return }
+      if (!b2) { setMeldung(`Die Kurve braucht ${nGross} × ${nGross} Felder, vom angetippten Feld aus in die Richtung des Bilds auf dem Knopf, ohne andere Gleise darin. Ein zweiter Tipp auf das Werkzeug unten dreht sie.`); return }
       setDreh(d); setBrett(b2); knopfTon(true)
       return
     }
@@ -1838,7 +1839,8 @@ export function Gleisbau() {
                     className={`${rund} relative`}>
               ↶{verlauf.length > 0 && <span className="absolute -right-1 -top-1 min-w-5 rounded-full bg-sbb-anthracite px-1 text-[11px] font-bold leading-5 text-white tabular-nums dark:bg-sbb-white dark:text-sbb-black">{verlauf.length > 99 ? '99+' : verlauf.length}</span>}
             </button>
-            <button type="button" disabled={faehrt} onClick={() => setDreh(((dreh + 1) % 4) as Dreh)} aria-label="Stück drehen" title="Drehen" className={rund}>↻</button>
+            {/* gedreht wird mit einem zweiten Tipp auf das gewählte Werkzeug (Michael, 2026-11-25: «Elemente müssen per tippen in der Elementebox gedreht werden
+                können. Dafür braucht es oben den Drehpfeil nicht mehr») */}
             <button type="button" onClick={() => setMenu(true)} aria-label="Menü" title="Menü" className={rund}>⋯</button>
             <button type="button" onClick={fahren} aria-label={faehrt ? 'Anhalten' : 'Fahren'} title={faehrt ? 'Anhalten' : 'Fahren'}
                     className="flex h-11 flex-none items-center gap-1.5 rounded-full bg-sbb-red px-4 font-bold text-white shadow-sm hover:bg-sbb-red125">
@@ -1855,6 +1857,18 @@ export function Gleisbau() {
                 <button type="button" onClick={() => { const e = bewerten(aufgabe, brett); setErgebnis(e); setMeldung(e.ok ? null : e.text) }}
                         className="rounded-lg bg-sbb-red px-3 py-1 text-sm font-bold text-white hover:bg-sbb-red125">Prüfen</button>
               </div>
+            </div>
+          )}
+          {/* die Schritte der Aufgabe sichtbar: Bahnhöfe der Reihe nach, dazwischen, was der Abschnitt braucht; erfüllt mit Haken */}
+          {aufgabe?.schritte && (
+            <div className="mx-2.5 mb-2 flex flex-none flex-wrap items-center gap-x-1 gap-y-1 text-[13px]" aria-label="Was die Aufgabe verlangt">
+              {aufgabe.schritte(brett).map((x, k) => x.art === 'bahnhof' ? (
+                <span key={k} className={`rounded-lg px-2 py-0.5 font-bold ${x.ok ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white text-sbb-black dark:bg-sbb-charcoal dark:text-sbb-white'}`}>
+                  {x.ok ? '✓ ' : ''}{x.text}
+                </span>
+              ) : (
+                <span key={k} className={x.ok ? 'font-bold' : 'text-sbb-metal dark:text-sbb-storm'}>— {x.text}{x.ok ? ' ✓' : ''} —</span>
+              ))}
             </div>
           )}
           <div ref={buehne} className="relative min-h-0 flex-1 touch-none overflow-hidden"
@@ -2005,7 +2019,8 @@ export function Gleisbau() {
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-1.5 [scrollbar-width:none]">
                   {GRUPPEN.find((g) => g.titel === reiter)!.l.filter(({ w }) => takt > 0 || w.art !== 'knoten').map(({ w, text }) => (
-                    <button key={text} type="button" aria-pressed={gleich(w, werkzeug)} onClick={() => setWerkzeug(w)} className={knopf(gleich(w, werkzeug))}>
+                    <button key={`${text}${JSON.stringify(w)}`} type="button" aria-pressed={gleich(w, werkzeug)} title={gleich(w, werkzeug) ? 'Nochmals tippen dreht' : undefined}
+                            onClick={() => { if (gleich(w, werkzeug)) { setDreh(((dreh + 1) % 4) as Dreh); knopfTon(true) } else setWerkzeug(w) }} className={knopf(gleich(w, werkzeug))}>
                       <WerkzeugBild w={w} dreh={dreh} />
                       {text}
                     </button>
@@ -2235,7 +2250,7 @@ function SoGehts() {
   return (
     <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
       <li>Der Gleisbau wird weiterentwickelt. Deine Bretter bleiben erhalten, wie sie fahren und aussehen, kann sich mit neuen Funktionen ändern.</li>
-      <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
+      <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Ein zweiter Tipp auf das Stück unten dreht es schon vor dem Legen. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
         Geraden, Kurven und Weichen entstehen von selbst.</li>
       <li>Gleis auf Wasser wird zur Brücke, auf einem Berg zum Tunnel; «Brücke» baut eine Brücke auch ohne Wasser, den See setzt du selbst darunter.
         Eine Strasse über eine Gerade wird zum Bahnübergang mit Schranken. Bei einer roten Ampel wartet der Zug, ein Tipp stellt sie auf Grün.</li>

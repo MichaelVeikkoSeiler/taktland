@@ -22,6 +22,11 @@ export interface Aufgabe {
   /** Vorgabe an Gleisstücken für drei Sterne; ohne Vorgabe gibt das Lösen drei Sterne */
   vorgabe?: number
   pruefen: (b: Brett) => { ok: boolean; text: string }
+  /**
+   * was die Aufgabe verlangt, Schritt für Schritt und ob es schon erfüllt ist (Michael, 2026-11-25: «Für die Aufgaben hat man zu wenig Infos die ersichtlich
+   * sind. Welche Halte etc sonst sehr schwierig»): bei echten Strecken die Bahnhöfe und je Abschnitt, ob Tunnel oder Brücke nötig sind
+   */
+  schritte?: (b: Brett) => Array<{ art: 'bahnhof' | 'abschnitt'; text: string; ok: boolean }>
 }
 
 const [DX, DY] = DXY
@@ -225,6 +230,20 @@ export function streckeAufgabe(id: string, titel: string, bahnhoefe: string[], t
         }
       }
       return { ok: true, text: `Geschafft: ${titel} von ${bahnhoefe[0]} bis ${bahnhoefe[bahnhoefe.length - 1]}.` }
+    },
+    schritte: (b) => {
+      const titel = bahnhofTitel(b), felder = bahnhofFelder(b)
+      const buchstabe = (name: string) => [...titel].find(([, n]) => n === name)?.[0]
+      const l: Array<{ art: 'bahnhof' | 'abschnitt'; text: string; ok: boolean }> = []
+      bahnhoefe.forEach((n, k) => {
+        l.push({ art: 'bahnhof', text: n, ok: !!buchstabe(n) })
+        const t = teile[k]
+        if (!t) return
+        const fa = buchstabe(n) ? felder.get(buchstabe(n)!) : undefined, fc = buchstabe(bahnhoefe[k + 1]) ? felder.get(buchstabe(bahnhoefe[k + 1])!) : undefined
+        const braucht = [t.tunnel > 0 && 'Tunnel', t.bruecken > 0 && 'Brücke'].filter(Boolean).join(' + ')
+        l.push({ art: 'abschnitt', text: braucht || 'Gleis', ok: !!fa && !!fc && wegGibt(b, fa, fc, t.tunnel > 0, t.bruecken > 0) })
+      })
+      return l
     },
   }
 }
