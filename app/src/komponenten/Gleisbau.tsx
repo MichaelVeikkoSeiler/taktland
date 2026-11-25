@@ -107,7 +107,6 @@ const GRUPPEN = [
  */
 const TAKT_WAHL = [0, 15, 30, 60] as const, UHR_START_MIN = 7 * 60
 const uhrText = (sek: number) => { const m = UHR_START_MIN + Math.floor(sek); return `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}` }
-const taktZeiten = (takt: number) => Array.from({ length: 60 / takt }, (_, k) => `:${String(k * takt).padStart(2, '0')}`).join(' ')
 
 /** Werkzeuge, die man über mehrere Felder ziehen kann */
 const MAL_WERKZEUGE: Array<Werkzeug['art']> = ['grund', 'fluss', 'strasse', 'strom']
@@ -188,16 +187,47 @@ function SchildBild({ namen, titel, knoten, takt }: { namen: Map<string, string>
         <rect x={i + 0.06} y={j + 0.06} width={breit} height={0.2} rx={0.03} fill="#3d3d3d" />
         <text x={i + 0.16} y={j + 0.215} fontSize={0.15} fontWeight={700} textAnchor="middle" fill="#ffffff">{n}</text>
         {kurz && <text x={i + 0.27} y={j + 0.205} fontSize={0.13} fontWeight={500} fill="#ffffff">{kurz}</text>}
-        {/* am Knoten die Abfahrten im Takt darunter */}
-        {takt > 0 && knoten.has(n) && <>
-          {/* rechts neben dem Schild, darunter warten die Fahrgäste */}
-          <rect x={i + 0.1 + breit} y={j + 0.075} width={0.1 + (taktZeiten(takt).length + 3) * 0.068} height={0.17} rx={0.03} fill={F.karmin} />
-          <text x={i + 0.14 + breit} y={j + 0.2} fontSize={0.12} fontWeight={700} fill="#ffffff">ab {taktZeiten(takt)}</text>
-        </>}
+        {/* am Knoten nur ein Uhrsymbol rechts neben dem Schild (Michael, 2026-11-25: «Bei den Taktbahnhöfen soll nur eine Uhr stehen»; vorher die Abfahrtszeiten) */}
+        {takt > 0 && knoten.has(n) && (
+          <g transform={`translate(${i + 0.2 + breit} ${j + 0.16})`}>
+            <circle r={0.085} fill="#ffffff" stroke={F.karmin} strokeWidth={0.028} />
+            <path d="M0,0 L0,-0.055 M0,0 L0.04,0.015" stroke="#3d3d3d" strokeWidth={0.018} strokeLinecap="round" />
+          </g>
+        )}
       </g>,
     )
   }
   return <>{raus}</>
+}
+
+/**
+ * die Uhr des Taktfahrplans auf den vier Feldern oben links (Michael, 2026-11-25: «Die 4 oben links Kacheln sollen für eine einfache analoge Uhr Platz
+ * machen, sofern das Brett nach Taktfahrplan funktionieren soll»): helles Zifferblatt mit Strichen, Stunden- und Minutenzeiger, ohne Sekundenzeiger;
+ * zeigt die Zeit im Spiel, vor der Fahrt den Anfang. Gestalt gewählt, keiner bestimmten Uhr nachgebildet; darunter wird nicht gebaut
+ */
+const UHR_FELDER = 2
+const uhrFeld = (i: number, j: number) => i < UHR_FELDER && j < UHR_FELDER
+function UhrBild({ minuten }: { minuten: number }) {
+  const c = UHR_FELDER / 2, r = c * 0.86
+  const std = ((minuten / 60) % 12) * 30, min = (minuten % 60) * 6
+  const zeiger = (grad: number, lang: number, breit: number) => {
+    const a = ((grad - 90) * Math.PI) / 180
+    return <line x1={c - Math.cos(a) * r * 0.12} y1={c - Math.sin(a) * r * 0.12} x2={c + Math.cos(a) * r * lang} y2={c + Math.sin(a) * r * lang} stroke="#2a2a2a" strokeWidth={breit} strokeLinecap="round" />
+  }
+  return (
+    <g pointerEvents="none">
+      <rect x={0.03} y={0.03} width={UHR_FELDER - 0.06} height={UHR_FELDER - 0.06} rx={0.1} fill={F.tablett} />
+      <circle cx={c + 0.03} cy={c + 0.05} r={r} fill="#000000" opacity={0.25} />
+      <circle cx={c} cy={c} r={r} fill="#ffffff" stroke="#9a9a9a" strokeWidth={0.04} />
+      {Array.from({ length: 60 }, (_, k) => {
+        const a = (k * 6 * Math.PI) / 180, lang = k % 5 ? 0.06 : 0.16, b = k % 5 ? 0.012 : 0.035
+        return <line key={k} x1={c + Math.sin(a) * (r - 0.06)} y1={c - Math.cos(a) * (r - 0.06)} x2={c + Math.sin(a) * (r - 0.06 - lang)} y2={c - Math.cos(a) * (r - 0.06 - lang)} stroke="#2a2a2a" strokeWidth={b} />
+      })}
+      {zeiger(std, 0.5, 0.075)}
+      {zeiger(min, 0.78, 0.05)}
+      <circle cx={c} cy={c} r={0.04} fill="#2a2a2a" />
+    </g>
+  )
 }
 
 /** drei Sterne, die erreichten in Karmin */
@@ -1417,7 +1447,7 @@ export function Gleisbau() {
       malRef.current = null; setMalen(null)
       nachZiehen.current = true
       window.setTimeout(() => { nachZiehen.current = false }, 250)
-      const r = malenAnwenden(brett, m, werkzeug)
+      const r = malenAnwenden(brett, takt > 0 ? m.filter(([i, j]) => !uhrFeld(i, j)) : m, werkzeug)
       if (r !== brett) { setBrett(r); knopfTon(true); setMeldung(null) }
       return
     }
@@ -1427,6 +1457,7 @@ export function Gleisbau() {
       nachZiehen.current = true
       window.setTimeout(() => { nachZiehen.current = false }, 250)
       if (l.length < 2) { setMeldung('Mit «Linie ziehen» den Finger über mehrere Felder ziehen: Geraden und Kurven entstehen von selbst.'); return }
+      if (takt > 0 && l.some(([i, j]) => uhrFeld(i, j))) { setMeldung('Oben links steht die Uhr des Taktfahrplans, dort geht keine Linie durch.'); return }
       const r = linieLegen(brett, l)
       if (typeof r === 'string') { setMeldung(r); return }
       setBrett(r); knopfTon(true); setMeldung(null)
@@ -1471,6 +1502,7 @@ export function Gleisbau() {
       return
     }
     if (werkzeug.art === 'linie') return
+    if (takt > 0 && uhrFeld(i, j)) { setMeldung('Hier steht die Uhr des Taktfahrplans. Ohne Takt (im Menü) kann man hier wieder bauen.'); return }
     setMeldung(null)
     if (werkzeug.art === 'name') {
       if (!istBahnhof(f.gleis)) { setMeldung('Tippe einen Bahnhof an, um ihm einen Namen zu geben.'); setNameFeld(null); return }
@@ -1840,6 +1872,7 @@ export function Gleisbau() {
           <AmpelBild brett={brett} />
           <OhneStromBild brett={brett} />
           <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} />
+          {takt > 0 && <UhrBild minuten={UHR_START_MIN + (faehrt ? spielSek.current : 0)} />}
           {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
           {!faehrt && enden.map((e, k) => (
@@ -2186,7 +2219,7 @@ function SoGehts() {
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,
         im Berg zum Tunnel; «Brücke» über ein Gleis führt die Strasse darüber statt über einen Bahnübergang. Die Busse fahren rechts, biegen nach Zufall ab,
         wenden am Ende der Strasse, halten an Haltestellen und warten vor geschlossenen Schranken. Liegt eine Haltestelle neben einem Bahnhof, wartet der Bus
-        dort auf den nächsten Zug. Auf jeder eigenständigen Strasse fährt ein Bus; ein Tipp auf einen Bus entfernt ihn.</li>
+        dort auf den nächsten Zug. Auf jeder eigenständigen Strasse fahren zwei Busse; ein Tipp auf einen Bus entfernt ihn.</li>
       <li>Mit Boden, Fluss oder Strasse gewählt, über die Felder ziehen: Alle werden gefüllt.</li>
       <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.
         Mit zwei Fingern zoomst und verschiebst du das Brett, am Computer mit dem Mausrad.</li>

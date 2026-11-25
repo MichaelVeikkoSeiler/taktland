@@ -96,7 +96,7 @@ export class Bus {
   constructor(i: number, j: number, weg: Weg, s: number) { this.i = i; this.j = j; this.weg = weg; this.s = s }
 
   /**
-   * je eigenständigen Strassenabschnitt (was über Strassen zusammenhängt) ein Bus (Michael, 2026-11-25: «Pro eigenständigen Strassenabschnitt ein Bus»),
+   * je eigenständigen Strassenabschnitt (was über Strassen zusammenhängt) zwei Busse (Michael, 2026-11-25: «Pro eigenständigen Strassenabschnitt ein Bus», dann «2 Busse»),
    * an einer Haltestelle, wenn es eine gibt, sonst an einer Stelle nach festem Zufall
    */
   static setzen(b: Brett): Bus[] {
@@ -126,16 +126,31 @@ export class Bus {
       }
       nr++
     }
-    const busse: Bus[] = [], belegt = new Set<number>()
-    for (const [i, j, r] of l) {
-      const a = abschnitt.get(`${i},${j}`)!
-      if (belegt.has(a)) continue
-      belegt.add(a)
+    // je Abschnitt zwei Busse (Michael, 2026-11-25: «Pro Autostrassensystem 2 Busse»): der erste wie bisher, der zweite im Feld am weitesten
+    // weg davon; ein Abschnitt aus weniger als drei Feldern hat nur einen
+    const busse: Bus[] = [], erster = new Map<number, [number, number]>(), groesse = new Map<number, number>()
+    for (const a of abschnitt.values()) groesse.set(a, (groesse.get(a) ?? 0) + 1)
+    const setzen = (i: number, j: number, r: number) => {
       const bus = new Bus(i, j, fahrweg(i, j, r, r), 0)
       bus.einfahren(netz, i, j, r)
       bus.s = bus.weg.halt
       bus.nr = busse.length
       busse.push(bus)
+    }
+    for (const [i, j, r] of l) {
+      const a = abschnitt.get(`${i},${j}`)!
+      if (erster.has(a)) continue
+      erster.set(a, [i, j]); setzen(i, j, r)
+    }
+    for (const [a, [fi, fj]] of erster) {
+      if ((groesse.get(a) ?? 0) < 3) continue
+      let best: [number, number, number] | null = null, weit = 0
+      for (const x of l) {
+        if (abschnitt.get(`${x[0]},${x[1]}`) !== a) continue
+        const d = Math.abs(x[0] - fi) + Math.abs(x[1] - fj)
+        if (d > weit) { weit = d; best = x }
+      }
+      if (best) setzen(...best)
     }
     return busse
   }
