@@ -1683,7 +1683,13 @@ export function Gleisbau() {
              className="size-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {unten}
-          {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => <WagenBild key={`${z}-${k}`} w={w} tunnel={imTunnel(brett, w.x, w.y) || (() => { const fi = Math.floor(w.x), fj = Math.floor(w.y), f = brett[fj]?.[fi]; return (bauGilt(f) && f!.bau !== 'gueter') || unterBruecke(f, fi, fj, w) })()} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />))}
+          {/* im Tunnel und unter einer Überführung ist ein Wagen unsichtbar (Michael, 2026-11-25: «Züge im Tunnel oder unter Brücken unsichtbar machen»),
+              unter dem Dach von Depot und Galerie blass wie bisher */}
+          {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => {
+            const fi = Math.floor(w.x), fj = Math.floor(w.y), f = brett[fj]?.[fi]
+            if (imTunnel(brett, w.x, w.y) || unterBruecke(f, fi, fj, w)) return null
+            return <WagenBild key={`${z}-${k}`} w={w} tunnel={bauGilt(f) && f!.bau !== 'gueter'} farbe={z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />
+          }))}
           {oben}
           <SchrankenBild brett={brett} wagen={wagen.flat()} />
           {/* abgestellte Wagen, längs zum Gleis */}
