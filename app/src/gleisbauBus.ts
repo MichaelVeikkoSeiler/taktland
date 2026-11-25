@@ -87,14 +87,19 @@ const uebergang = (f?: Feld) => !!f?.strasse && f.gleis?.art === 'gerade' && !f.
 
 export class Bus {
   i: number; j: number; weg: Weg; s: number; tempo = 0; halt = 0; wartet = 0
+  /** fürs Bild: die Farbe bleibt, auch wenn andere Busse entfernt werden */
+  nr = 0
   /** an dieser Haltestelle schon gehalten */
   private gehalten = false
   /** Anschluss: die Gruppe des Bahnhofs und wie viele Halte dort schon waren, als der Bus ankam */
   anschluss: { gruppe: string; halte: number; seit: number; zugDa: number } | null = null
   constructor(i: number, j: number, weg: Weg, s: number) { this.i = i; this.j = j; this.weg = weg; this.s = s }
 
-  /** die Busse verteilt auf die Strassen, zuerst an Haltestellen, mit Abstand zueinander */
-  static setzen(b: Brett, n: number): Bus[] {
+  /**
+   * je eigenständigen Strassenabschnitt (was über Strassen zusammenhängt) ein Bus (Michael, 2026-11-25: «Pro eigenständigen Strassenabschnitt ein Bus»),
+   * an einer Haltestelle, wenn es eine gibt, sonst an einer Stelle nach festem Zufall
+   */
+  static setzen(b: Brett): Bus[] {
     const netz = strassenNetz(b), l: Array<[number, number, number]> = []
     for (const [key, k] of netz.k) {
       const [i, j] = key.split(',').map(Number)
@@ -104,16 +109,33 @@ export class Bus {
     }
     const zuerst = (x: [number, number, number]) => (b[x[1]][x[0]].haltestelle ? 0 : 1)
     l.sort((a, c) => zuerst(a) - zuerst(c) || zufallsZahl(a) - zufallsZahl(c))
-    const busse: Bus[] = []
-    for (const abstand of [4, 2, 0]) {
-      for (const [i, j, r] of l) {
-        if (busse.length >= n) break
-        if (busse.some((x) => Math.abs(x.i - i) + Math.abs(x.j - j) < abstand || (x.i === i && x.j === j))) continue
-        const bus = new Bus(i, j, fahrweg(i, j, r, r), 0)
-        bus.einfahren(netz, i, j, r)
-        bus.s = bus.weg.halt
-        busse.push(bus)
+    // die Abschnitte: je Feld die Nummer seines Abschnitts, über verbundene Kanten gefüllt
+    const abschnitt = new Map<string, number>()
+    let nr = 0
+    for (const key of netz.k.keys()) {
+      if (abschnitt.has(key)) continue
+      const offen = [key]
+      abschnitt.set(key, nr)
+      while (offen.length) {
+        const [i, j] = offen.pop()!.split(',').map(Number)
+        for (const r of netz.k.get(`${i},${j}`) ?? []) {
+          if (!netz.verbunden(i, j, r)) continue
+          const n = `${i + DX[r]},${j + DY[r]}`
+          if (!abschnitt.has(n)) { abschnitt.set(n, nr); offen.push(n) }
+        }
       }
+      nr++
+    }
+    const busse: Bus[] = [], belegt = new Set<number>()
+    for (const [i, j, r] of l) {
+      const a = abschnitt.get(`${i},${j}`)!
+      if (belegt.has(a)) continue
+      belegt.add(a)
+      const bus = new Bus(i, j, fahrweg(i, j, r, r), 0)
+      bus.einfahren(netz, i, j, r)
+      bus.s = bus.weg.halt
+      bus.nr = busse.length
+      busse.push(bus)
     }
     return busse
   }

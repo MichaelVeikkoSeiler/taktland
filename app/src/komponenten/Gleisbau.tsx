@@ -149,7 +149,7 @@ const ZUG_TIPP = 0.35
 /** Farbe der Spitze je Zug ab dem zweiten (gewählt) */
 const ZUG_FARBEN = ['#1f5fa8', '#2e7d32', '#e07b00'], ZUEGE_MAX = 4
 /** Busse (seit 2026-11-25): bis vier, je eine Farbe (gewählt) */
-const BUS_FARBEN = ['#f0b323', '#2a9d8f', '#8e5bb5', '#e76f51'], BUSSE_MAX = 4
+const BUS_FARBEN = ['#f0b323', '#2a9d8f', '#8e5bb5', '#e76f51']
 
 /**
  * Signale an Weichen und Kreuzungen, nur mit mehreren Zügen: rot, solange ein Zug das Feld belegt, sonst grün; ein kleiner Mast in der Ecke oben links
@@ -942,8 +942,8 @@ export function Gleisbau() {
   const [takt, setTakt] = useState<number>(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.takt')); return (TAKT_WAHL as readonly number[]).includes(n) ? n : 0 } catch { return 0 } })
   const taktSetzen = (n: number) => { setTakt(n); try { localStorage.setItem('taktland.gleisbau.takt', String(n)) } catch { /* ohne Speicher */ } }
   const spielSek = useRef(0)
-  const [busZahl, setBusZahl] = useState(() => { try { const x = localStorage.getItem('taktland.gleisbau.busse'); const n = Number(x); return x !== null && n >= 0 && n <= BUSSE_MAX ? n : 1 } catch { return 1 } })
-  const busZahlSetzen = (n: number) => { const m = Math.max(0, Math.min(BUSSE_MAX, n)); setBusZahl(m); try { localStorage.setItem('taktland.gleisbau.busse', String(m)) } catch { /* ohne Speicher */ } }
+  // der angetippte Bus während der Fahrt
+  const [busWahl, setBusWahl] = useState<Bus | null>(null)
   const busse = useRef<Bus[]>([])
   const [busLagen, setBusLagen] = useState<BusLage[]>([])
   // fürs Netz der Strassen und den Anschluss: je Brett einmal gerechnet, die Halte der Züge je Bahnhof gezählt
@@ -1335,7 +1335,7 @@ export function Gleisbau() {
           const m = x.schritt(b0, netz, dt, spielSek.current, ww, lagen.filter((_, n) => n !== k), (g) => zugHalteJe.current.get(g) ?? 0, gruppeBei)
           if (m === 'anschluss') {
             const g = gruppeBei(x.i, x.j)
-            setMeldung(`Anschluss${g ? ` in ${bahnhofTitel(b0).get(g) ?? g}` : ''}: ${bb.length > 1 ? `Bus ${k + 1}` : 'Der Bus'} hat auf den Zug gewartet und fährt ab.`); antwortTon('richtig')
+            setMeldung(`Anschluss${g ? ` in ${bahnhofTitel(b0).get(g) ?? g}` : ''}: ${bb.length > 1 ? `Bus ${x.nr + 1}` : 'Der Bus'} hat auf den Zug gewartet und fährt ab.`); antwortTon('richtig')
           }
           lagen[k] = x.lage(b0)
         })
@@ -1487,6 +1487,10 @@ export function Gleisbau() {
       const px = (e.clientX - r.left - (r.width - vw * kk) / 2) / kk - 0.15, py = (e.clientY - r.top - (r.height - vh * kk) / 2) / kk - 0.15
       let naechster: Zug | null = null, d = ZUG_TIPP
       zuege.current.forEach((z) => z.wagen().forEach((w) => { const dd = Math.hypot(w.x - px, w.y - py); if (dd < d) { d = dd; naechster = z } }))
+      // ein Bus näher als jeder Wagen öffnet dessen Blatt
+      let bus: Bus | null = null
+      busse.current.forEach((x, k) => { const l = busLagen[k]; if (!l || l.tunnel) return; const dd = Math.hypot(l.x - px, l.y - py); if (dd < d) { d = dd; bus = x } })
+      if (bus) { setBusWahl(bus); knopfTon(true); return }
       if (naechster) { setZugWahl(naechster); knopfTon(true); return }
       if (ampelGilt(f)) { neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }, false); knopfTon(true); return }
       if (!istWeiche(f.gleis)) { setMeldung('Während der Fahrt lassen sich nur Weichen, Ampeln und Züge antippen. Zum Bauen anhalten.'); return }
@@ -1712,8 +1716,8 @@ export function Gleisbau() {
     if (faehrt) { setFaehrt(false); setWagen([]); zuege.current = []; busse.current = []; setBusLagen([]); fgRef.current = null; setFahrgaeste(null); wagenZurueck(); return }
     const z = Zug.setzen(brett, undefined, wagenZahl)
     // Busse fahren auch ohne Zug, wenn es Strassen gibt
-    const neueBusse = busZahl ? Bus.setzen(brett, busZahl) : []
-    if (!z && !neueBusse.length) { setMeldung(busZahl && brett.some((zz) => zz.some((f) => f.strasse)) ? 'Für den Bus braucht es eine Strasse über mindestens zwei Felder.' : 'Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
+    const neueBusse = Bus.setzen(brett)
+    if (!z && !neueBusse.length) { setMeldung(brett.some((zz) => zz.some((f) => f.strasse)) ? 'Für den Bus braucht es eine Strasse über mindestens zwei Felder.' : 'Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
     const l = z ? [z] : []
     while (z && l.length < zugZahl) {
       const belegt = new Set(l.flatMap((x) => [...x.belegt()]))
@@ -1857,7 +1861,7 @@ export function Gleisbau() {
           {oberleitung}
           {strassenOben}
           {/* die Busse, im Strassentunnel unsichtbar */}
-          {faehrt && busLagen.map((l, k) => (l.tunnel ? null : <BusBild key={`bus${k}`} x={l.x} y={l.y} w={l.w} farbe={BUS_FARBEN[k % BUS_FARBEN.length]} />))}
+          {faehrt && busLagen.map((l, k) => (l.tunnel ? null : <BusBild key={`bus${k}`} x={l.x} y={l.y} w={l.w} farbe={BUS_FARBEN[(busse.current[k]?.nr ?? k) % BUS_FARBEN.length]} />))}
           <SchrankenBild brett={brett} wagen={wagen.flat()} />
           {/* abgestellte Wagen, längs zum Gleis */}
           {brett.flatMap((z, j) => z.map((f, i) => f.wagen && wagenGilt(f)
@@ -2002,7 +2006,7 @@ export function Gleisbau() {
               const fg = fgRef.current
               if (fg) { fg.imZug.splice(k, 1); setFahrgaeste({ ...fg, warten: { ...fg.warten }, imZug: fg.imZug.map((l) => [...l]) }) }
               zu()
-              if (!zuege.current.length) { setFaehrt(false); setWagen([]); fgRef.current = null; setFahrgaeste(null); wagenZurueck(); return }
+              if (!zuege.current.length && !busse.current.length) { setFaehrt(false); setWagen([]); fgRef.current = null; setFahrgaeste(null); wagenZurueck(); return }
               setWagen(zuege.current.map((x) => x.wagen()))
             }
             return (
@@ -2066,6 +2070,32 @@ export function Gleisbau() {
               </div>
             )
           })()}
+          {/* ein angetippter Bus als Blatt von unten: entfernen (Michael, 2026-11-25: «Busse können wie auch die Züge per Tippen entfernt werden») */}
+          {busWahl && faehrt && busse.current.includes(busWahl) && (() => {
+            const zu = () => setBusWahl(null)
+            const entfernen = () => {
+              const k = busse.current.indexOf(busWahl)
+              busse.current.splice(k, 1); setBusLagen((l) => l.filter((_, m) => m !== k)); knopfTon(true); zu()
+              if (!zuege.current.length && !busse.current.length) { setFaehrt(false); setWagen([]); setBusLagen([]); fgRef.current = null; setFahrgaeste(null); wagenZurueck() }
+            }
+            return (
+              <div className="absolute inset-0 z-10 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) zu() }}>
+                <div className="w-full rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
+                  <div className="flex items-center justify-between">
+                    <p className="flex items-center gap-2 text-lg font-bold">
+                      <span className="inline-block size-4 rounded-full" style={{ background: BUS_FARBEN[busWahl.nr % BUS_FARBEN.length] }} aria-hidden="true" />
+                      {busse.current.length > 1 ? `Bus ${busWahl.nr + 1}` : 'Bus'}
+                    </p>
+                    <button type="button" onClick={zu} aria-label="Schliessen" className={rund}>✕</button>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <button type="button" onClick={entfernen}
+                            className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold text-sbb-red hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Bus entfernen</button>
+                  </div>
+                </div>
+              </div>
+            )
+          })()}
           {/* Name eines Bahnhofs als Blatt von unten */}
           {nameFeld && (
             <div className="absolute inset-0 z-10 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) { setNameFeld(null); setNameSuche('') } }}>
@@ -2104,14 +2134,6 @@ export function Gleisbau() {
                       <button type="button" aria-label="Ein Zug weniger" disabled={zugZahl <= 1} onClick={() => zugZahlSetzen(zugZahl - 1)} className={rund}>−</button>
                       <span className="w-6 text-center text-lg font-bold tabular-nums">{zugZahl}</span>
                       <button type="button" aria-label="Ein Zug mehr" disabled={zugZahl >= ZUEGE_MAX} onClick={() => zugZahlSetzen(zugZahl + 1)} className={rund}>+</button>
-                    </span>
-                  </div>
-                  <div className="flex min-h-12 items-center justify-between gap-3 py-2">
-                    <span>Anzahl Busse<span className="block text-xs text-sbb-metal">{faehrt ? 'gilt ab der nächsten Fahrt' : 'fahren auf den Strassen, halten an Haltestellen'}</span></span>
-                    <span className="flex items-center gap-2">
-                      <button type="button" aria-label="Ein Bus weniger" disabled={busZahl <= 0} onClick={() => busZahlSetzen(busZahl - 1)} className={rund}>−</button>
-                      <span className="w-6 text-center text-lg font-bold tabular-nums">{busZahl}</span>
-                      <button type="button" aria-label="Ein Bus mehr" disabled={busZahl >= BUSSE_MAX} onClick={() => busZahlSetzen(busZahl + 1)} className={rund}>+</button>
                     </span>
                   </div>
                   <div className="py-2">
@@ -2193,7 +2215,7 @@ function SoGehts() {
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,
         im Berg zum Tunnel; «Brücke» über ein Gleis führt die Strasse darüber statt über einen Bahnübergang. Die Busse fahren rechts, biegen nach Zufall ab,
         wenden am Ende der Strasse, halten an Haltestellen und warten vor geschlossenen Schranken. Liegt eine Haltestelle neben einem Bahnhof, wartet der Bus
-        dort auf den nächsten Zug. Wie viele Busse fahren, stellst du im Menü ein.</li>
+        dort auf den nächsten Zug. Auf jeder eigenständigen Strasse fährt ein Bus; ein Tipp auf einen Bus entfernt ihn.</li>
       <li>Mit Boden, Fluss oder Strasse gewählt, über die Felder ziehen: Alle werden gefüllt.</li>
       <li>Lange drücken und ziehen verschiebt ein Feld; liegt am Ziel etwas, tauschen die beiden. Rote Punkte zeigen, wo ein Gleis offen endet.
         Mit zwei Fingern zoomst und verschiebst du das Brett, am Computer mit dem Mausrad.</li>
