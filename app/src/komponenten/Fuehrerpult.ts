@@ -435,11 +435,11 @@ export class Fuehrerpult {
 
     // Hebel: links die Bremse (0, B, SB), rechts die Geschwindigkeitswahl (0 bis 220 km/h)
     this.hebel(-0.5, this.bremsHebel, 'bremsePlus', 'bremseMinus', (c) => {
-      c.fillStyle = FARBE.schrift; c.font = 'bold 40px Helvetica, Arial, sans-serif'; c.textAlign = 'center'
+      c.fillStyle = FARBE.schrift; c.font = 'bold 40px Helvetica, system-ui, sans-serif'; c.textAlign = 'center'
       BREMSE_TEXT.forEach((t, i) => c.fillText(t, 40, 60 + i * 95))
     })
     this.hebel(0.5, this.sollHebel, 'sollMinus', 'sollPlus', (c) => {
-      c.fillStyle = FARBE.schrift; c.font = 'bold 30px Helvetica, Arial, sans-serif'; c.textAlign = 'center'
+      c.fillStyle = FARBE.schrift; c.font = 'bold 30px Helvetica, system-ui, sans-serif'; c.textAlign = 'center'
       for (let i = 0; i <= 4; i++) c.fillText(String(Math.round(PULT_HOECHST_KMH * (1 - i / 4))), 40, 40 + i * 62)
     })
 
@@ -819,7 +819,7 @@ export class Fuehrerpult {
     const texte = stufen ? [...stufen].reverse().map((k) => (k >= 1000 ? `${k / 1000}k` : String(k)))
       : [0, 1, 2, 3, 4].map((i) => String(Math.round(PULT_HOECHST_KMH * (1 - i / 4))))
     const n = texte.length
-    c.font = `bold ${n > 5 ? 24 : 30}px Helvetica, Arial, sans-serif`
+    c.font = `bold ${n > 5 ? 24 : 30}px Helvetica, system-ui, sans-serif`
     texte.forEach((t, i) => c.fillText(t, 40, 30 + (i * 270) / (n - 1)))
     const tex = new THREE.CanvasTexture(lw)
     tex.colorSpace = THREE.SRGBColorSpace
@@ -835,37 +835,37 @@ export class Fuehrerpult {
     const rest = Math.max(0, l.richtung > 0 ? l.ende - l.s : l.s - l.anfang)
     if (this.gross) { this.streckeGross(c, l, gefahren, rest); return }
     kopf(c, 'Strecke')
-    c.font = 'bold 34px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.schrift
+    c.font = 'bold 34px Helvetica, system-ui, sans-serif'; c.fillStyle = FARBE.schrift
     c.fillText(kuerzen(c, l.richtung > 0 ? l.von : l.nach, 560), 32, 118)
-    c.fillStyle = FARBE.grau; c.font = '28px Helvetica, Arial, sans-serif'; c.fillText('nach', 32, 158)
-    c.font = 'bold 34px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.schrift
+    c.fillStyle = FARBE.grau; c.font = '28px Helvetica, system-ui, sans-serif'; c.fillText('nach', 32, 158)
+    c.font = 'bold 34px Helvetica, system-ui, sans-serif'; c.fillStyle = FARBE.schrift
     c.fillText(kuerzen(c, l.richtung > 0 ? l.nach : l.von, 560), 32, 198)
     // Fortschritt
     const anteil = gefahren / Math.max(1, gefahren + rest)
     c.fillStyle = '#26364d'; c.fillRect(32, 236, 576, 14)
     c.fillStyle = FARBE.blau; c.fillRect(32, 236, 576 * anteil, 14)
-    c.font = '28px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.schrift
+    c.font = '28px Helvetica, system-ui, sans-serif'; c.fillStyle = FARBE.schrift
     c.fillText(`gefahren ${km(gefahren)}`, 32, 296)
     c.textAlign = 'right'; c.fillText(`noch ${km(rest)}`, 608, 296); c.textAlign = 'left'
-    c.fillStyle = FARBE.grau; c.font = '24px Helvetica, Arial, sans-serif'
+    c.fillStyle = FARBE.grau; c.font = '24px Helvetica, system-ui, sans-serif'
     c.fillText(`${new Date().toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })} · gemessen entlang der gezeichneten Strecke`, 32, 340)
   }
 
   /** dieselben Angaben, ohne Kopf und grösser */
   private streckeGross(c: CanvasRenderingContext2D, l: PultLage, gefahren: number, rest: number) {
     c.textAlign = 'left'
-    c.font = 'bold 50px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.schrift
+    c.font = 'bold 50px Helvetica, system-ui, sans-serif'; c.fillStyle = FARBE.schrift
     c.fillText(kuerzen(c, l.richtung > 0 ? l.von : l.nach, 576), 32, 72)
-    c.fillStyle = FARBE.grau; c.font = '32px Helvetica, Arial, sans-serif'; c.fillText('nach', 32, 114)
-    c.font = 'bold 50px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.schrift
+    c.fillStyle = FARBE.grau; c.font = '32px Helvetica, system-ui, sans-serif'; c.fillText('nach', 32, 114)
+    c.font = 'bold 50px Helvetica, system-ui, sans-serif'; c.fillStyle = FARBE.schrift
     c.fillText(kuerzen(c, l.richtung > 0 ? l.nach : l.von, 576), 32, 168)
     const anteil = gefahren / Math.max(1, gefahren + rest)
     c.fillStyle = '#26364d'; c.fillRect(32, 194, 576, 18)
     c.fillStyle = FARBE.blau; c.fillRect(32, 194, 576 * anteil, 18)
-    c.font = 'bold 40px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.schrift
+    c.font = 'bold 40px Helvetica, system-ui, sans-serif'; c.fillStyle = FARBE.schrift
     c.fillText(km(gefahren), 32, 262)
     c.textAlign = 'right'; c.fillText(`noch ${km(rest)}`, 608, 262); c.textAlign = 'left'
-    c.fillStyle = FARBE.grau; c.font = '28px Helvetica, Arial, sans-serif'
+    c.fillStyle = FARBE.grau; c.font = '28px Helvetica, system-ui, sans-serif'
     c.fillText(kuerzen(c, `${new Date().toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })} · entlang der gezeichneten Strecke`, 576), 32, 330)
   }
 
@@ -877,7 +877,7 @@ export class Fuehrerpult {
     c.strokeStyle = FARBE.blau
     c.beginPath(); c.arc(mx, my, r, winkel(0), winkel(Math.max(0.01, this.zeigerWinkel))); c.stroke()
     // Teilung
-    c.fillStyle = FARBE.schrift; c.font = `bold ${this.gross ? 32 : 26}px Helvetica, Arial, sans-serif`; c.textAlign = 'center'
+    c.fillStyle = FARBE.schrift; c.font = `bold ${this.gross ? 32 : 26}px Helvetica, system-ui, sans-serif`; c.textAlign = 'center'
     for (let k = 0; k <= PULT_HOECHST_KMH; k += 20) {
       const w = winkel(k)
       c.strokeStyle = FARBE.schrift; c.lineWidth = k % 40 ? 2 : 4
@@ -896,14 +896,14 @@ export class Fuehrerpult {
     c.beginPath(); c.moveTo(mx, my); c.lineTo(mx + Math.cos(w) * (r - 30), my + Math.sin(w) * (r - 30)); c.stroke()
     c.fillStyle = '#ffffff'; c.beginPath(); c.arc(mx, my, 10, 0, Math.PI * 2); c.fill()
     const zahl = Math.round(l.v * 3.6)
-    c.font = `bold ${zahl >= 1000 ? 44 : 64}px Helvetica, Arial, sans-serif`; c.fillText(zahl.toLocaleString('de-CH'), mx, my + 100)
-    c.font = '24px Helvetica, Arial, sans-serif'; c.fillStyle = FARBE.grau; c.fillText('km/h', mx, my + 130)
+    c.font = `bold ${zahl >= 1000 ? 44 : 64}px Helvetica, system-ui, sans-serif`; c.fillText(zahl.toLocaleString('de-CH'), mx, my + 100)
+    c.font = '24px Helvetica, system-ui, sans-serif'; c.fillStyle = FARBE.grau; c.fillText('km/h', mx, my + 130)
     // rechts oben: Herkunft des Tempos, Wahl und Bremse, klein
     c.textAlign = 'left'
     const quelle = { simulation: 'SIMULATION', gps: 'GPS', probe: 'PROBEFAHRT', fahrplan: 'FAHRPLAN' }[l.quelle]
-    c.fillStyle = l.quelle === 'gps' ? '#7fd38a' : FARBE.gelb; c.font = `bold ${this.gross ? 32 : 24}px Helvetica, Arial, sans-serif`
+    c.fillStyle = l.quelle === 'gps' ? '#7fd38a' : FARBE.gelb; c.font = `bold ${this.gross ? 32 : 24}px Helvetica, system-ui, sans-serif`
     c.fillText(quelle, 404, this.gross ? 52 : 48)
-    c.fillStyle = FARBE.grau; c.font = `${this.gross ? 28 : 22}px Helvetica, Arial, sans-serif`
+    c.fillStyle = FARBE.grau; c.font = `${this.gross ? 28 : 22}px Helvetica, system-ui, sans-serif`
     // gross nur eine Zeile darunter: die Bremse oder ob der Hebel gesperrt ist
     if (this.gross) {
       const zeile = l.quelle === 'simulation' ? (this.bremse === 2 ? 'Schnellbremse' : `gewählt ${this.soll}`)
@@ -927,16 +927,16 @@ export class Fuehrerpult {
     // darunter die Vorschau (Michael, 2026-10-13, nach seinem Vorbild): Pfeil, Entfernung und Art des Nächsten voraus
     const naechstes = vorListe(l, (a) => this.meldet(a))[0]
     if (!naechstes) {
-      c.fillStyle = FARBE.grau; c.font = '24px Helvetica, Arial, sans-serif'
+      c.fillStyle = FARBE.grau; c.font = '24px Helvetica, system-ui, sans-serif'
       c.fillText('Nichts mehr', 404, 180); c.fillText('voraus', 404, 210)
       return
     }
     c.fillStyle = FARBE.blau
     c.beginPath(); c.moveTo(426, 148); c.lineTo(446, 172); c.lineTo(434, 172); c.lineTo(434, 196); c.lineTo(418, 196); c.lineTo(418, 172)
     c.lineTo(406, 172); c.closePath(); c.fill()
-    c.fillStyle = FARBE.schrift; c.font = `bold ${this.gross ? 50 : 40}px Helvetica, Arial, sans-serif`; c.fillText(kuerzen(c, km(naechstes.d), 172), 460, this.gross ? 194 : 190)
+    c.fillStyle = FARBE.schrift; c.font = `bold ${this.gross ? 50 : 40}px Helvetica, system-ui, sans-serif`; c.fillText(kuerzen(c, km(naechstes.d), 172), 460, this.gross ? 194 : 190)
     zeichen(c, naechstes.art, 426, 238)
-    c.fillStyle = FARBE.schrift; c.font = `${this.gross ? 30 : 24}px Helvetica, Arial, sans-serif`
+    c.fillStyle = FARBE.schrift; c.font = `${this.gross ? 30 : 24}px Helvetica, system-ui, sans-serif`
     const [z1, z2] = zweiZeilen(c, naechstes.name, this.gross ? 230 : 220)
     c.fillText(z1, 404, this.gross ? 300 : 296)
     if (z2) c.fillText(z2, 404, this.gross ? 338 : 326)
@@ -946,7 +946,7 @@ export class Fuehrerpult {
     kopf(c, 'Voraus')
     const vor = vorListe(l, (a) => this.meldet(a)).slice(0, 3)
     if (!vor.length) {
-      c.fillStyle = FARBE.grau; c.font = '28px Helvetica, Arial, sans-serif'; c.fillText('Nichts mehr bis zum Ende des Wegs', 32, 130)
+      c.fillStyle = FARBE.grau; c.font = '28px Helvetica, system-ui, sans-serif'; c.fillText('Nichts mehr bis zum Ende des Wegs', 32, 130)
       return
     }
     // eine Linie durch die Zeichen, wie die Strecke voraus (Michael, 2026-10-13, nach seinem Vorbild)
@@ -956,8 +956,8 @@ export class Fuehrerpult {
     vor.forEach((a, i) => {
       const y = 110 + i * 84
       zeichen(c, a.art, 56, y + 8)
-      c.fillStyle = FARBE.schrift; c.font = `bold ${this.gross ? 42 : 34}px Helvetica, Arial, sans-serif`; c.fillText(km(a.d), 110, y + (this.gross ? 2 : 4))
-      c.fillStyle = this.gross ? FARBE.schrift : FARBE.grau; c.font = `${this.gross ? 32 : 26}px Helvetica, Arial, sans-serif`; c.fillText(kuerzen(c, a.name, 490), 110, y + (this.gross ? 40 : 36))
+      c.fillStyle = FARBE.schrift; c.font = `bold ${this.gross ? 42 : 34}px Helvetica, system-ui, sans-serif`; c.fillText(km(a.d), 110, y + (this.gross ? 2 : 4))
+      c.fillStyle = this.gross ? FARBE.schrift : FARBE.grau; c.font = `${this.gross ? 32 : 26}px Helvetica, system-ui, sans-serif`; c.fillText(kuerzen(c, a.name, 490), 110, y + (this.gross ? 40 : 36))
       if (i < vor.length - 1) { c.fillStyle = '#26364d'; c.fillRect(110, y + 56, 498, 2) }
     })
   }
@@ -1001,7 +1001,7 @@ function zweiZeilen(c: CanvasRenderingContext2D, text: string, breite: number): 
 }
 
 function kopf(c: CanvasRenderingContext2D, text: string) {
-  c.fillStyle = FARBE.grau; c.font = 'bold 24px Helvetica, Arial, sans-serif'; c.textAlign = 'left'
+  c.fillStyle = FARBE.grau; c.font = 'bold 24px Helvetica, system-ui, sans-serif'; c.textAlign = 'left'
   c.fillText(text.toUpperCase(), 32, 50)
   c.fillStyle = '#26364d'; c.fillRect(32, 64, 576, 2)
 }
@@ -1086,7 +1086,7 @@ function berg(c: CanvasRenderingContext2D, farbe: string, f: 1 | 2) {
   c.fillStyle = farbe
   const spitze = f === 1 ? 66 : 26
   c.beginPath(); c.moveTo(14, 100); c.lineTo(58, spitze); c.lineTo(102, 100); c.closePath(); c.fill()
-  c.font = 'bold 30px Helvetica, Arial, sans-serif'; c.textAlign = 'right'
+  c.font = 'bold 30px Helvetica, system-ui, sans-serif'; c.textAlign = 'right'
   c.fillText(f === 1 ? '1×' : '2×', 122, 36)
 }
 /** was angekündigt wird: Tunnel, Brücke, Bahnhof, Bahnübergang */

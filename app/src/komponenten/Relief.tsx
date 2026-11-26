@@ -1542,7 +1542,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     if (pult) pult.aussen = aussen ?? null
     const pultMeldung = document.createElement('div')
     Object.assign(pultMeldung.style, { position: 'absolute', left: '50%', top: '56px', transform: 'translateX(-50%)', padding: '4px 10px',
-      borderRadius: '8px', background: 'rgba(33,33,33,0.85)', color: '#fff', font: 'bold 13px Helvetica, Arial, sans-serif',
+      borderRadius: '8px', background: 'rgba(33,33,33,0.85)', color: '#fff', font: 'bold 13px Helvetica, system-ui, sans-serif',
       pointerEvents: 'none', opacity: '0', transition: 'opacity 200ms', whiteSpace: 'nowrap' })
     pultMeldung.setAttribute('role', 'status')
     el.appendChild(pultMeldung)
@@ -1834,7 +1834,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
     sonnenKnopf.addEventListener('click', (e) => { e.stopPropagation(); kategorieUmschalten('wetter') })
     sonnenKnopf.addEventListener('pointerdown', (e) => e.stopPropagation())
     const wetterAnzeige = document.createElement('div')
-    wetterAnzeige.style.cssText = 'padding:2px 6px;border-radius:6px;font:11px Helvetica,Arial,sans-serif;background:rgba(255,255,255,0.8);color:#212121;pointer-events:none'
+    wetterAnzeige.style.cssText = 'padding:2px 6px;border-radius:6px;font:11px Helvetica,system-ui,sans-serif;background:rgba(255,255,255,0.8);color:#212121;pointer-events:none'
     // die Windhosen (Michael, 2026-10-24: «eine Windhose hinzufügen, wo man sehen kann, wie die Windverhältnisse sind. Auch mit
     // Prognose für die nächste Woche»; «immer vier davon verteilen»; «Egal welche Zoomstufe … immer 4 Orte»; «Zahl dazu»): immer vier
     // im sichtbaren Gelände, nach jeder Bewegung neu verteilt, mit Schild (Stärke, Station), jede mit dem Wind der nächsten Station zu
@@ -3325,7 +3325,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       const ctx = lw.getContext('2d')!
       const px = 28, rand = 10
       // Bahnhöfe: eckiges Schild in Dunkelgrau, weisse, dünnere Schrift (Michael, 2026-10-07)
-      const schrift = `${ortsschild ? 'normal' : 'bold'} ${px}px Helvetica, Arial, sans-serif`
+      const schrift = `${ortsschild ? 'normal' : 'bold'} ${px}px Helvetica, system-ui, sans-serif`
       ctx.font = schrift
       lw.width = Math.ceil(ctx.measureText(text).width) + 2 * rand; lw.height = px + 16
       ctx.font = schrift
@@ -3415,8 +3415,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       g.fillStyle = BAHNHOF_GRAU; g.fillRect(0, 0, lw.width, lw.height)
       g.strokeStyle = '#ffffff'; g.lineWidth = 6; g.strokeRect(10, 10, lw.width - 20, lw.height - 20)
       let px = 120
-      g.font = `bold ${px}px Helvetica, Arial, sans-serif`
-      while (px > 40 && g.measureText(name).width > lw.width - 80) { px -= 4; g.font = `bold ${px}px Helvetica, Arial, sans-serif` }
+      g.font = `bold ${px}px Helvetica, system-ui, sans-serif`
+      while (px > 40 && g.measureText(name).width > lw.width - 80) { px -= 4; g.font = `bold ${px}px Helvetica, system-ui, sans-serif` }
       g.fillStyle = '#ffffff'; g.textAlign = 'center'; g.textBaseline = 'middle'
       g.fillText(name, lw.width / 2, lw.height / 2 + px * 0.04)
       const t = new THREE.CanvasTexture(lw)
@@ -3973,7 +3973,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         const g = hinweisLeinwand.getContext('2d')!
         g.clearRect(0, 0, 512, 96)
         g.fillStyle = 'rgba(255,255,255,0.9)'; g.beginPath(); g.roundRect(0, 0, 512, 96, 16); g.fill()
-        g.fillStyle = '#212121'; g.font = 'bold 44px Helvetica, Arial, sans-serif'; g.textAlign = 'center'
+        g.fillStyle = '#212121'; g.font = 'bold 44px Helvetica, system-ui, sans-serif'; g.textAlign = 'center'
         g.fillText(text, 256, 63)
         hinweisTextur.needsUpdate = true
         hinweis.visible = true
@@ -3987,7 +3987,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
       {
         const g = tafelLeinwand.getContext('2d')!
         g.fillStyle = 'rgba(255,255,255,0.94)'; g.beginPath(); g.roundRect(0, 0, 1024, 780, 24); g.fill()
-        g.fillStyle = '#212121'; g.font = 'bold 48px Helvetica, Arial, sans-serif'
+        g.fillStyle = '#212121'; g.font = 'bold 48px Helvetica, system-ui, sans-serif'
         g.fillText('Tasten', 48, 84)
         const zeilen: Array<[string, string]> = [
           ['A', 'Probefahrt starten'], ['B', 'anhalten'], ['X / Y', 'langsamer / schneller'],
@@ -3997,14 +3997,14 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         ]
         zeilen.forEach(([taste, was], i) => {
           const y = 150 + i * 56
-          g.font = 'bold 38px Helvetica, Arial, sans-serif'; g.fillStyle = '#a8102e'; g.fillText(taste, 48, y)
-          g.font = '38px Helvetica, Arial, sans-serif'; g.fillStyle = '#212121'; g.fillText(was, 390, y)
+          g.font = 'bold 38px Helvetica, system-ui, sans-serif'; g.fillStyle = '#a8102e'; g.fillText(taste, 48, y)
+          g.font = '38px Helvetica, system-ui, sans-serif'; g.fillStyle = '#212121'; g.fillText(was, 390, y)
         })
-        g.font = '32px Helvetica, Arial, sans-serif'; g.fillStyle = '#767676'
+        g.font = '32px Helvetica, system-ui, sans-serif'; g.fillStyle = '#767676'
         g.fillText('A, B rechts; X, Y links. Im Führerstand: A, B Tempo; X, Y Bremse;', 48, 650)
         g.fillText('der Strahl bedient das Pult.', 48, 688)
         // wie auf der Seite davor: hier ist ein Modell, kein Abbild (Michael, 2026-10-08)
-        g.fillStyle = '#a8102e'; g.font = 'bold 32px Helvetica, Arial, sans-serif'
+        g.fillStyle = '#a8102e'; g.font = 'bold 32px Helvetica, system-ui, sans-serif'
         g.fillText('Ein Modell, kein Abbild: vieles ist nicht massstäblich.', 48, 732)
       }
       const tafelTextur = new THREE.CanvasTexture(tafelLeinwand)
@@ -4045,8 +4045,8 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         const g = lw.getContext('2d')!
         g.fillStyle = haupt ? '#a8102e' : '#ffffff'; g.beginPath(); g.roundRect(4, 4, 760, 152, 24); g.fill()
         if (!haupt) { g.strokeStyle = '#e5e5e5'; g.lineWidth = 4; g.stroke() }
-        g.fillStyle = haupt ? '#ffffff' : '#212121'; g.font = 'bold 60px Helvetica, Arial, sans-serif'; g.fillText(text, 44, 100)
-        g.font = '48px Helvetica, Arial, sans-serif'; g.fillStyle = haupt ? '#ffffff' : '#767676'; g.textAlign = 'right'; g.fillText(taste, 724, 98)
+        g.fillStyle = haupt ? '#ffffff' : '#212121'; g.font = 'bold 60px Helvetica, system-ui, sans-serif'; g.fillText(text, 44, 100)
+        g.font = '48px Helvetica, system-ui, sans-serif'; g.fillStyle = haupt ? '#ffffff' : '#767676'; g.textAlign = 'right'; g.fillText(taste, 724, 98)
         const tex = new THREE.CanvasTexture(lw)
         tex.colorSpace = THREE.SRGBColorSpace
         return new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.0625),
@@ -4057,7 +4057,7 @@ function Szene({ r, h, faktor, weg: wegRoh, wegFarbe, zug: zugVonAussen, blick, 
         lw.width = 768; lw.height = 110
         const g = lw.getContext('2d')!
         g.fillStyle = 'rgba(255,255,255,0.94)'; g.beginPath(); g.roundRect(4, 4, 760, 102, 24); g.fill()
-        g.fillStyle = '#212121'; g.font = 'bold 56px Helvetica, Arial, sans-serif'; g.fillText('Am Ziel', 44, 74)
+        g.fillStyle = '#212121'; g.font = 'bold 56px Helvetica, system-ui, sans-serif'; g.fillText('Am Ziel', 44, 74)
         const tex = new THREE.CanvasTexture(lw)
         tex.colorSpace = THREE.SRGBColorSpace
         return new THREE.Mesh(new THREE.PlaneGeometry(0.3, 0.043), new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false }))

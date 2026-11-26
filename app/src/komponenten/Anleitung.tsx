@@ -373,11 +373,6 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             mise à jour du juillet 2023.
           </li>
           <li>
-            Schrift Space Grotesk: Florian Karsten und The Space Grotesk Project Authors, unter der{' '}
-            <Verweis href="./lizenzen/space-grotesk-OFL.txt">SIL Open Font License</Verweis>, in
-            Taktland mitgeliefert.
-          </li>
-          <li>
             Programmteile anderer: three.js für die 3D-Ansicht, React und qrcode-generator, alle unter
             der MIT-Lizenz; die Lizenztexte stehen in{' '}
             <Verweis href="./lizenzen/drittsoftware.txt">drittsoftware.txt</Verweis>.

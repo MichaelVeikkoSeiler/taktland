@@ -125,7 +125,7 @@ function schildMalen(sp: THREE.Sprite, text: string | null) {
   sp.material.map?.dispose(); sp.material.map = null
   if (text === null) { sp.material.needsUpdate = true; return }
   const c = document.createElement('canvas'), x = c.getContext('2d')!
-  const px = 22, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
+  const px = 22, schrift = `bold ${px}px Helvetica, system-ui, sans-serif`
   x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 12; c.height = px + 8
   x.font = schrift; x.fillStyle = '#2a2a2a'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 5); x.fill()
   x.fillStyle = '#ffffff'; x.fillText(text, 6, px - 1)

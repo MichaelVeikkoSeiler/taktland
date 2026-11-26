@@ -2895,12 +2895,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       if (!zeilen?.length || !renderer.xr.isPresenting) { tafel.visible = false; return }
       const tafelLeinwand = document.createElement('canvas')
       const x = tafelLeinwand.getContext('2d')!, px = 34
-      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      x.font = `bold ${px}px Helvetica, system-ui, sans-serif`
       tafelLeinwand.width = Math.ceil(Math.max(...zeilen.map((z) => x.measureText(z).width))) + 32
       tafelLeinwand.height = zeilen.length * (px + 10) + 22
       x.fillStyle = 'rgba(255,255,255,0.94)'; x.beginPath(); x.roundRect(0, 0, tafelLeinwand.width, tafelLeinwand.height, 14); x.fill()
       zeilen.forEach((z, i) => {
-        x.font = `${i === 0 ? 'bold' : 'normal'} ${px}px Helvetica, Arial, sans-serif`
+        x.font = `${i === 0 ? 'bold' : 'normal'} ${px}px Helvetica, system-ui, sans-serif`
         x.fillStyle = i === 0 ? KARMIN : '#212121'; x.fillText(z, 16, 12 + px + i * (px + 10))
       })
       tafelTextur?.dispose()
@@ -2926,7 +2926,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       c.width = 1024; c.height = 820
       x.fillStyle = 'rgba(255,255,255,0.96)'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 24); x.fill()
-      x.fillStyle = '#212121'; x.font = 'bold 48px Helvetica, Arial, sans-serif'
+      x.fillStyle = '#212121'; x.font = 'bold 48px Helvetica, system-ui, sans-serif'
       x.fillText(`${AUF_3DLAND ? '3D-Land' : 'Virtuelle Schweiz'}: Tasten`, 48, 84)
       const zeilen: Array<[string, string]> = [
         ['Abzug kurz', 'Feld wählen, nochmals: eintauchen'], ['Abzug auf + oder −', 'an dieser Wand erweitern'],
@@ -2937,10 +2937,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       ]
       zeilen.forEach(([taste, was], i) => {
         const y = 160 + i * 58
-        x.font = 'bold 36px Helvetica, Arial, sans-serif'; x.fillStyle = KARMIN; x.fillText(taste, 48, y)
-        x.font = '36px Helvetica, Arial, sans-serif'; x.fillStyle = '#212121'; x.fillText(was, 440, y)
+        x.font = 'bold 36px Helvetica, system-ui, sans-serif'; x.fillStyle = KARMIN; x.fillText(taste, 48, y)
+        x.font = '36px Helvetica, system-ui, sans-serif'; x.fillStyle = '#212121'; x.fillText(was, 440, y)
       })
-      x.font = '30px Helvetica, Arial, sans-serif'; x.fillStyle = '#767676'
+      x.font = '30px Helvetica, system-ui, sans-serif'; x.fillStyle = '#767676'
       x.fillText('Ein Modell zum Anschauen, Höhe wie echt.', 48, 780)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false }))
@@ -2951,7 +2951,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const kc = document.createElement('canvas'), kx = kc.getContext('2d')!
       kc.width = 360; kc.height = 96
       kx.fillStyle = KARMIN; kx.beginPath(); kx.roundRect(0, 0, kc.width, kc.height, 16); kx.fill()
-      kx.fillStyle = '#ffffff'; kx.font = 'bold 48px Helvetica, Arial, sans-serif'; kx.textAlign = 'center'
+      kx.fillStyle = '#ffffff'; kx.font = 'bold 48px Helvetica, system-ui, sans-serif'; kx.textAlign = 'center'
       kx.fillText('Schliessen', kc.width / 2, 64)
       const kt = new THREE.CanvasTexture(kc); kt.colorSpace = THREE.SRGBColorSpace
       const knopf = new THREE.Sprite(new THREE.SpriteMaterial({ map: kt, depthTest: false }))
@@ -3114,7 +3114,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const zu = document.createElement('button')
       zu.type = 'button'; zu.textContent = '✕ Schliessen'
       zu.style.cssText = 'position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;pointer-events:auto;padding:10px 16px;' +
-        'border:0;border-radius:8px;background:#5a5a5a;color:#fff;font:700 16px Helvetica,Arial,sans-serif'
+        'border:0;border-radius:8px;background:#5a5a5a;color:#fff;font:700 16px Helvetica,system-ui,sans-serif'
       ueber.appendChild(zu)
       document.body.appendChild(ueber)
       let sitzung: XRSession
@@ -3908,9 +3908,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const zahlBild = (z: number, farbe: string) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
       const px = 22, text = `${z.toLocaleString('de-CH')} m`
-      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      x.font = `bold ${px}px Helvetica, system-ui, sans-serif`
       c.width = Math.ceil(x.measureText(text).width) + 8; c.height = px + 6
-      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      x.font = `bold ${px}px Helvetica, system-ui, sans-serif`
       x.lineWidth = 5; x.lineJoin = 'round'; x.strokeStyle = 'rgba(0,0,0,0.9)'; x.strokeText(text, 4, px)
       x.fillStyle = farbe; x.fillText(text, 4, px)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
@@ -4052,7 +4052,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // sollen gleiche Schilder haben wie Orte nur invertiert»)
     const schild = (text: string, e: number, n: number, z: number) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      const px = 26, schrift = `normal ${px}px Helvetica, Arial, sans-serif`
+      const px = 26, schrift = `normal ${px}px Helvetica, system-ui, sans-serif`
       x.font = schrift
       c.width = Math.ceil(x.measureText(text).width) + 18; c.height = px + 14
       x.font = schrift
@@ -4103,7 +4103,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     }
     for (const o of ortListe) {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      const px = 26, schrift = `normal ${px}px Helvetica, Arial, sans-serif`
+      const px = 26, schrift = `normal ${px}px Helvetica, system-ui, sans-serif`
       x.font = schrift
       c.width = Math.ceil(x.measureText(o.name).width) + 18; c.height = px + 14
       x.font = schrift
@@ -4473,9 +4473,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       x.textAlign = 'center'
       // so gross, wie die Zeile in den Knopf passt (er ist jetzt höher und schmaler im Verhältnis)
       let px = t.zeilen.length > 1 ? 34 : 44
-      x.font = `bold ${px}px Helvetica, Arial, sans-serif`
+      x.font = `bold ${px}px Helvetica, system-ui, sans-serif`
       const breitest = Math.max(...t.zeilen.map((z) => x.measureText(z).width))
-      if (breitest > c.width - 20) { px = Math.max(16, Math.floor(px * (c.width - 20) / breitest)); x.font = `bold ${px}px Helvetica, Arial, sans-serif` }
+      if (breitest > c.width - 20) { px = Math.max(16, Math.floor(px * (c.width - 20) / breitest)); x.font = `bold ${px}px Helvetica, system-ui, sans-serif` }
       t.zeilen.forEach((z, i) => x.fillText(z, c.width / 2, c.height / 2 - (t.zeilen.length - 1) * px * 0.55 + i * px * 1.1 + px * 0.35, c.width - 16))
       // ein feiner schwarzer Rand um jede Fläche (Michael, 2026-10-22: «eine minime schwarze Umrahmung»)
       x.strokeStyle = '#000000'; x.lineWidth = 5; x.strokeRect(2.5, 2.5, c.width - 5, c.height - 5)
@@ -4948,7 +4948,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const mast = new Line2(geo, new LineMaterial({ color: STRICH_FARBE, linewidth: ZEICHNEN_PX, depthTest: false })); mast.renderOrder = 7
       gruppe.add(mast)
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      const px = 26, schrift = `bold ${px}px Helvetica, Arial, sans-serif`
+      const px = 26, schrift = `bold ${px}px Helvetica, system-ui, sans-serif`
       x.font = schrift; c.width = Math.ceil(x.measureText(text).width) + 22; c.height = px + 14
       x.font = schrift; x.fillStyle = STRICH_FARBE; x.beginPath(); x.roundRect(0, 0, c.width, c.height, SCHILD_RUND_PX); x.fill()
       x.fillStyle = '#ffffff'; x.fillText(text, 11, px + 1)
@@ -5056,7 +5056,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const weg: Array<{ dispose: () => void }> = []
     const sprite = (text: string, { farbe, hell }: { farbe: string; hell: boolean }, rand = false) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      const px = 26, schrift = `italic normal ${px}px Helvetica, Arial, sans-serif`
+      const px = 26, schrift = `italic normal ${px}px Helvetica, system-ui, sans-serif`
       x.font = schrift
       c.width = Math.ceil(x.measureText(text).width) + 12; c.height = px + 14
       x.font = schrift
@@ -5872,7 +5872,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     gruppe.add(schild)
     const schildMalen = (zeilen: string[], knopf = false, folgen: boolean | null = null) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      const px = 26, klein = 21, fett = `bold ${px}px Helvetica, Arial, sans-serif`, normal = `normal ${klein}px Helvetica, Arial, sans-serif`
+      const px = 26, klein = 21, fett = `bold ${px}px Helvetica, system-ui, sans-serif`, normal = `normal ${klein}px Helvetica, system-ui, sans-serif`
       x.font = fett; let breit = x.measureText(zeilen[0]).width
       x.font = normal; for (const z of zeilen.slice(1)) breit = Math.max(breit, x.measureText(z).width)
       const hoch = px + 16 + (zeilen.length - 1) * (klein + 6), kn = Math.min(hoch - 16, SCHILD_KNOPF_PX)
@@ -6988,7 +6988,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     gruppe.add(schild)
     const schildMalen = (zeilen: string[]) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      const px = 26, klein = 21, fett = `bold ${px}px Helvetica, Arial, sans-serif`, duenn = `normal ${klein}px Helvetica, Arial, sans-serif`
+      const px = 26, klein = 21, fett = `bold ${px}px Helvetica, system-ui, sans-serif`, duenn = `normal ${klein}px Helvetica, system-ui, sans-serif`
       x.font = fett; let breit = x.measureText(zeilen[0]).width
       x.font = duenn; for (const z of zeilen.slice(1)) breit = Math.max(breit, x.measureText(z).width)
       c.width = Math.ceil(breit) + 20; c.height = px + 16 + (zeilen.length - 1) * (klein + 6)

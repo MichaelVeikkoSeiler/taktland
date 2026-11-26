@@ -5,7 +5,7 @@ import { useSyncExternalStore } from 'react'
  * Fahren, Schriftgrösse und Schriftart. Sie bleiben auf diesem Gerät.
  */
 export type Groesse = 'normal' | 'gross' | 'sehrgross'
-export type Schrift = 'helvetica' | 'grotesk' | 'system' | 'serif'
+export type Schrift = 'helvetica' | 'system'
 export interface Einstellungen { wach: boolean; groesse: Groesse; schrift: Schrift }
 
 const SCHLUESSEL = 'taktland.einstellungen.v1'
@@ -19,16 +19,13 @@ export const GROESSEN: Record<Groesse, { text: string; prozent: number }> = {
 }
 
 /**
- * Vier Schriften, keine von einem fremden Dienst geladen: Helvetica wie bisher, Space
- * Grotesk (Florian Karsten, SIL Open Font License, in der App mitgeliefert; Michael,
- * 2026-10-01), die Schrift des Handys (auf Android meist Roboto, auf dem iPhone San
- * Francisco) und eine Serifenschrift. Space Grotesk lädt erst, wenn man sie wählt.
+ * Zwei Schriften, keine geladen: Helvetica, wo das Gerät sie hat, sonst die Schrift des Handys, und die Schrift des Handys (auf Android meist
+ * Roboto, auf dem iPhone San Francisco). Seit 2026-11-26 ohne Space Grotesk und Serifenschrift, ohne Arial (Michael: «Schriftart nur noch auf
+ * Helvetica beschränken (Default) sonst Schrift des Handys»); wer eine der beiden gewählt hatte, liest wieder Helvetica
  */
 export const SCHRIFTEN: Record<Schrift, { text: string; familie: string }> = {
-  helvetica: { text: 'Helvetica', familie: '"Helvetica Neue", Helvetica, Arial, system-ui, sans-serif' },
-  grotesk: { text: 'Space Grotesk', familie: '"Space Grotesk Variable", "Helvetica Neue", Helvetica, Arial, sans-serif' },
+  helvetica: { text: 'Helvetica', familie: 'Helvetica, "Helvetica Neue", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' },
   system: { text: 'Schrift des Handys', familie: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' },
-  serif: { text: 'Serifenschrift', familie: 'Georgia, Charter, "Noto Serif", "Times New Roman", serif' },
 }
 
 let stand: Einstellungen = lesen()
