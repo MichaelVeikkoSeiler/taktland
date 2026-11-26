@@ -1074,7 +1074,9 @@ export function Gleisbau() {
   // der Bahnbetrieb (Michael, 2026-11-25): Geld, Depot, Aufträge und je Auftrag Brett und Züge, auf dem Gerät gemerkt
   const [betrieb, setBetriebRoh] = useState<Betrieb>(() => betriebLesen())
   const setBetrieb = (f: Betrieb | ((b: Betrieb) => Betrieb)) => setBetriebRoh((alt) => { const n = typeof f === 'function' ? f(alt) : f; betriebMerken(n); return n })
-  const [zugWahlFeld, setZugWahlFeld] = useState<[number, number] | null>(null)
+  const [zugWahlFeld, setZugWahlFeld] = useState<[number, number] | 'neu' | null>(null)
+  // im Bahnbetrieb ein zusammengestellter Zug, der auf seinen Platz wartet: der nächste Tipp aufs Gleis stellt ihn hin
+  const [zugWartet, setZugWartet] = useState<Zusammenstellung | null>(null)
   const lauf = useRef(0), bezahlt = useRef(new Set<string>())
   const [gutschrift, setGutschrift] = useState<number | null>(null)
   const [offen, setOffen] = useState<string | null>(null)
@@ -1992,11 +1994,19 @@ export function Gleisbau() {
       return
     }
     if (w.art === 'zug' && auftrag) {
-      // im Bahnbetrieb: ein Zug aus dem Depot, zusammengestellt auf einem Blatt
+      // im Bahnbetrieb: der eben zusammengestellte Zug kommt hierhin; sonst das Blatt für dieses Feld
       if (!zugStartGilt(f)) { setMeldung('Ein Zug steht auf einem einfachen Gleisstück, nicht auf einer grossen Kurve oder leerem Feld.'); return }
+      if (zugWartet && !f.zugStart) {
+        const z = zugWartet
+        setBetrieb((b) => ({ ...b, zuege: { ...b.zuege, [auftrag.id]: { ...(b.zuege[auftrag.id] ?? {}), [`${i},${j}`]: z } } }))
+        neu(i, j, { ...f, zugStart: z.wagen.every((x) => x === 'person') ? 'p' : 'g' }); setZugWartet(null); setMeldung(null); knopfTon(true)
+        return
+      }
       setZugWahlFeld([i, j]); knopfTon(true)
       return
     }
+    // ein gesetzter Zug im Bahnbetrieb: ein Tipp öffnet sein Blatt, mit jedem Werkzeug ausser «Entfernen»
+    if (auftrag && f.zugStart && w.art !== 'weg') { setZugWahlFeld([i, j]); knopfTon(true); return }
     if (w.art === 'zug') {
       // ein Personen- oder Güterzug, der hier vor der Fahrt steht; nochmals tippen nimmt ihn weg, der andere ersetzt ihn
       if (f.zugStart === w.zug) { const { zugStart: _, ...ohne } = f; neu(i, j, ohne); knopfTon(false); return }
@@ -2205,6 +2215,10 @@ export function Gleisbau() {
   const rund = 'flex size-11 flex-none items-center justify-center rounded-full border border-sbb-cloud bg-white text-lg font-bold shadow-sm hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'
   const imBrett = ansicht === 'brett' || ((ansicht === 'aufgaben' || ansicht === 'betrieb') && !!aufgabe)
   const naechste = aufgabe && !(aufgabe as { betrieb?: Auftrag }).betrieb ? AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1] : undefined
+  // im Bahnbetrieb nur Gleise und Züge, die Ampel bei den Zügen (Michael, 2026-11-26: «Bei den Aufgaben «Bahnbetrieb» braucht man zur Auswahl eigentlich nur
+  // Gleise, Züge und sonst nichts»); Bahnhöfe und Schuppen gibt der Auftrag vor, Tunnel und Brücken entstehen mit «Linie» von selbst
+  const gruppen = auftrag ? [{ titel: 'Gleise', l: [...GRUPPEN[0].l, ...GRUPPEN[2].l.filter((x) => x.w.art === 'ampel')] }] : GRUPPEN
+  useEffect(() => { if (!gruppen.some((g) => g.titel === reiter)) setReiter(gruppen[0].titel) }, [gruppen, reiter])
   // im Tutorial der jetzige Hinweis: der erste, der noch nicht erledigt ist; sein Werkzeug und seine Felder leuchten
   const werkzeugName = GRUPPEN.flatMap((g) => g.l).find((x) => gleich(x.w, werkzeug))?.text ?? ''
   const fuehrungNr = aufgabe?.fuehrung && !ergebnis?.ok
@@ -2519,13 +2533,19 @@ export function Gleisbau() {
             ) : (
               <>
                 <div className="flex gap-0.5 overflow-x-auto px-2 pt-1.5 [scrollbar-width:none]" role="tablist" aria-label="Werkzeuge">
-                  {GRUPPEN.map((g) => (
+                  {/* im Bahnbetrieb ist «Züge» ein Knopf: er öffnet gleich das Zusammenstellen (Michael, 2026-11-26: «Klickt man auf Züge soll nicht das Element «Zug
+                      einsetzen» sondern es soll direkt die Auswahl mit den Drag and Drop Ansicht kommen») */}
+                  {auftrag && (
+                    <button type="button" onClick={() => { setZugWahlFeld('neu'); knopfTon(true) }}
+                            className="order-last shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold text-sbb-metal sm:px-3 sm:text-sm dark:text-sbb-storm">Züge</button>
+                  )}
+                  {gruppen.map((g) => (
                     <button key={g.titel} type="button" role="tab" aria-selected={reiter === g.titel} onClick={() => setReiter(g.titel)}
                             className={`${hinweisReiter === g.titel && reiter !== g.titel ? LEUCHTEN : ''} shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold sm:px-3 sm:text-sm ${reiter === g.titel ? 'bg-sbb-milk dark:bg-sbb-midnight' : 'text-sbb-metal dark:text-sbb-storm'}`}>{g.titel}</button>
                   ))}
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-1.5 [scrollbar-width:none]">
-                  {GRUPPEN.find((g) => g.titel === reiter)!.l.filter(({ w }) => (takt > 0 || w.art !== 'knoten') && !(auftrag && ((w.art === 'zug' && w.zug === 'g') || w.art === 'wagen')))
+                  {(gruppen.find((g) => g.titel === reiter) ?? gruppen[0]).l.filter(({ w }) => (takt > 0 || w.art !== 'knoten') && !(auftrag && ((w.art === 'zug' && w.zug === 'g') || w.art === 'wagen')))
                     .map(({ w, text }) => ({ w, text: auftrag && w.art === 'zug' ? 'Zug einsetzen' : text })).map(({ w, text }) => (
                     <button key={`${text}${JSON.stringify(w)}`} type="button" aria-pressed={gleich(w, werkzeug)} title={gleich(w, werkzeug) ? 'Nochmals tippen dreht' : undefined}
                             onClick={() => { if (gleich(w, werkzeug)) { setDreh(((dreh + 1) % 4) as Dreh); knopfTon(true) } else setWerkzeug(w) }}
@@ -2651,7 +2671,16 @@ export function Gleisbau() {
             )
           })()}
           {/* einen Zug aus dem Depot zusammenstellen */}
-          {zugWahlFeld && auftrag && (() => {
+          {zugWahlFeld === 'neu' && auftrag && (() => {
+            const alle = betrieb.zuege[auftrag.id] ?? {}
+            const andere = Object.entries(alle).filter(([k]) => brett[+k.split(',')[1]]?.[+k.split(',')[0]]?.zugStart).map(([, z]) => z)
+            return (
+              <ZugWahl betrieb={betrieb} setBetrieb={setBetrieb} auftrag={auftrag} andere={andere} anfang={zugWartet} zu={() => setZugWahlFeld(null)}
+                       setzen={(z) => { setZugWartet(z); setWerkzeug({ art: 'zug', zug: 'p' }); setZugWahlFeld(null); setMeldung('Tippe jetzt aufs Gleis, wo dein Zug stehen soll.') }}
+                       entfernen={() => { setZugWartet(null); setZugWahlFeld(null) }} />
+            )
+          })()}
+          {Array.isArray(zugWahlFeld) && auftrag && (() => {
             const [zi, zj] = zugWahlFeld, key = `${zi},${zj}`, alle = betrieb.zuege[auftrag.id] ?? {}
             const andere = Object.entries(alle).filter(([k]) => k !== key && brett[+k.split(',')[1]]?.[+k.split(',')[0]]?.zugStart).map(([, z]) => z)
             const zu = () => setZugWahlFeld(null)
@@ -2803,7 +2832,7 @@ function SoGehts() {
       <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben links im Brett steht eine Uhr auf vier Feldern, eine Minute im Spiel dauert eine Sekunde. Liegt dort schon etwas, fragt das Spiel, ob es gelöscht werden soll. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
-      <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Mit «Zug einsetzen» (unter «Züge») tippst du auf ein Gleis und stellst aus deinen Loks und Wagen einen Zug zusammen, fehlende Wagen kaufst du gleich dort. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
+      <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Ein Tipp auf «Züge» öffnet das Zusammenstellen: Lok und Wagen in die leeren Felder ziehen oder antippen, Kosten und Platz stehen darunter; danach aufs Gleis tippen, wo der Zug stehen soll. Ein Tipp auf einen gesetzten Zug ändert ihn. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
       <li>Mit der Maus zwei rote Punkte verbinden: auf einem roten Punkt drücken und zu einem anderen ziehen, dazwischen entsteht das Gleis mit möglichst wenig Kurven, über Wasser als Brücke, durch Berge als Tunnel.</li>
       <li>Mit der Maus: Ein Klick wählt ein Feld (gestrichelter Rahmen). Entf oder die Rückschritt-Taste nimmt seinen obersten Inhalt weg, Schicht um Schicht bis zur Wiese; Esc hebt die Wahl auf. Rückgängig geht wie immer.</li>
       <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug (Lok, Personenwagen und Steuerwagen, je 4 Plätze) hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen; eine Ladung füllt einen Güterwagen. Das Tutorial zeigt es Schritt für Schritt.</li>

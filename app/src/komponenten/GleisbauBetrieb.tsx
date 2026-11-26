@@ -154,7 +154,7 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
       <div className="kachel p-3 text-sm leading-relaxed">
         <p><span className="font-bold">So entsteht ein Zug:</span> eine Lok zieht Wagen, jede Lok nur so viele, wie bei ihr steht.</p>
         <p className="mt-1"><span className="font-bold">Personenwagen:</span> 4 Plätze für Fahrgäste. <span className="font-bold">Güterwagen:</span> trägt 1 Ladung, und nur das Gut, für das er gebaut ist.</p>
-        <p className="mt-1">Gekauft steht alles hier im Depot. Im Auftrag tippst du mit «Zug einsetzen» auf ein Gleis und hängst Lok und Wagen an. Fehlt ein Wagen oder eine Lok, kaufst du sie auch dort mit einem Tipp auf den Preis.</p>
+        <p className="mt-1">Gekauft steht alles hier im Depot. Im Auftrag tippst du unten auf «Züge» und ziehst Lok und Wagen in den Zug; was fehlt, wird dabei gekauft. Danach tippst du aufs Gleis, wo der Zug stehen soll.</p>
       </div>
       <section>
         <h3 className="font-bold">Loks</h3>

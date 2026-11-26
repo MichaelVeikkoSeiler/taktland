@@ -951,6 +951,8 @@ export const strasseAlsBruecke = (f?: Feld) => !!f?.strasse && (f.grund === 'was
 
 export const WAGEN_LAENGE = 0.5
 export const WAGEN_LUECKE = 0.06
+/** wo die Drehgestelle sitzen, als Anteil der Wagenlänge von jedem Ende (gewählt, bei echten Wagen etwa ein Siebtel) */
+const DREHGESTELL = 0.17
 /** Fahrzeuge am Zug samt Lok und Steuerwagen, wählbar im Menü (Michael, 2026-11-24: «Den Zug soll man in der Länge wählen können, wie viele Wagen dranhängen») */
 export const WAGEN = 4, WAGEN_MIN = 2, WAGEN_MAX = 8
 export const zugLaenge = (n: number) => n * WAGEN_LAENGE + (n - 1) * WAGEN_LUECKE
@@ -1402,7 +1404,9 @@ export class Zug {
 
   wagen(): WagenLage[] {
     return this.fz.map((v, k) => {
-      const vorn = k * (WAGEN_LAENGE + WAGEN_LUECKE), a = this.punkt(vorn), c = this.punkt(vorn + WAGEN_LAENGE)
+      // die Lage nach zwei Drehgestellen DREHGESTELL der Länge innerhalb der Enden, nicht nach den Enden selbst: so schneidet der Wagen die Kurve weniger
+      // (Michael, 2026-11-26: «Die Zugwagen schneiden die Kurven zu stark. Die Drehgestelle liegen in der Realität auch nicht direkt am Anfang und Ende des Wagens»)
+      const vorn = k * (WAGEN_LAENGE + WAGEN_LUECKE), a = this.punkt(vorn + DREHGESTELL * WAGEN_LAENGE), c = this.punkt(vorn + (1 - DREHGESTELL) * WAGEN_LAENGE)
       const art = v.t === 'lok' ? 0 : v.t === 'steuer' ? 3 : 1 + (k % 2)
       return { x: (a.x + c.x) / 2, y: (a.y + c.y) / 2, w: Math.atan2(a.y - c.y, a.x - c.x), art, vorne: v.t === 'wagen' ? k === 0 : v.blick === 1, diesel: v.diesel,
         gueter: this.art === 'gueter' || (v.typ !== undefined && v.typ !== 'person' && v.t === 'wagen'), typ: v.typ }
