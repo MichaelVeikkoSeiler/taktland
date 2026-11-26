@@ -2282,62 +2282,9 @@ export function Gleisbau() {
       {imBrett && (
         <div className="fixed inset-0 z-[60] flex select-none flex-col overflow-hidden overscroll-none bg-sbb-milk text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white"
              role="dialog" aria-label={aufgabe ? `Gleisbau, Aufgabe ${aufgabe.titel}` : `Gleisbau, ${bretter.find((x) => x.id === offen)?.name ?? 'Brett'}`}>
-          <div className="flex flex-none items-center gap-2 px-2.5 pb-2"
-               style={{ paddingTop: 'calc(env(safe-area-inset-top) + 8px)', paddingLeft: 'calc(env(safe-area-inset-left) + 10px)', paddingRight: 'calc(env(safe-area-inset-right) + 10px)' }}>
-            <button type="button" onClick={() => { window.location.hash = auftrag ? '#/gleisbau?betrieb' : aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau?frei' }} aria-label={auftrag ? 'Zurück zum Bahnbetrieb' : aufgabe ? 'Zurück zum Tutorial' : 'Zurück zu meinen Brettern'}
-                    className={rund}><span className="pfeil pfeil-links" aria-hidden="true">←</span></button>
-            <p className="min-w-0 flex-1 truncate font-bold">{aufgabe ? aufgabe.titel : bretter.find((x) => x.id === offen)?.name ?? 'Brett'}</p>
-            {/* die Uhr des Taktfahrplans */}
-            {/* die Uhr steht seit 2026-11-25 nur noch analog oben links im Brett (Michael: «Die alte Uhr weg») */}
-            <button type="button" disabled={faehrt || !verlauf.length} onClick={zurueck} aria-label={`Rückgängig, noch ${verlauf.length} Schritte`} title="Rückgängig"
-                    className={`${rund} relative`}>
-              ↶{verlauf.length > 0 && <span className="absolute -right-1 -top-1 min-w-5 rounded-full bg-sbb-anthracite px-1 text-[11px] font-bold leading-5 text-white tabular-nums dark:bg-sbb-white dark:text-sbb-black">{verlauf.length > 99 ? '99+' : verlauf.length}</span>}
-            </button>
-            {/* gedreht wird mit einem zweiten Tipp auf das gewählte Werkzeug (Michael, 2026-11-25: «Elemente müssen per tippen in der Elementebox gedreht werden
-                können. Dafür braucht es oben den Drehpfeil nicht mehr») */}
-            <button type="button" onClick={() => setMenu(true)} aria-label="Menü" title="Menü" className={rund}>⋯</button>
-            {faehrt && (
-              <button type="button" onClick={() => { setPause((x) => !x); knopfTon(true) }} aria-pressed={pause} aria-label={pause ? 'Weiter' : 'Pause'} title={pause ? 'Weiter' : 'Pause'} className={rund}>
-                <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{pause ? <path d="M8 5.5v13l11-6.5z" /> : <><rect x="6.5" y="5.5" width="4" height="13" rx="1" /><rect x="13.5" y="5.5" width="4" height="13" rx="1" /></>}</svg>
-              </button>
-            )}
-            <button type="button" onClick={fahren} aria-label={faehrt ? 'Anhalten' : 'Fahren'} title={faehrt ? 'Anhalten' : 'Fahren'}
-                    className="flex h-11 flex-none items-center gap-1.5 rounded-full bg-sbb-red px-4 font-bold text-white shadow-sm hover:bg-sbb-red125">
-              <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{faehrt ? <rect x="6" y="6" width="12" height="12" rx="1.5" /> : <path d="M8 5.5v13l11-6.5z" />}</svg>
-              <span className="hidden sm:inline">{faehrt ? 'Anhalten' : 'Fahren'}</span>
-            </button>
-          </div>
-          {aufgabe && (
-            <div className="mx-2.5 mb-2 flex flex-none items-start gap-3 rounded-lg bg-white px-3 py-2 shadow-sm dark:bg-sbb-charcoal">
-              <button type="button" onClick={() => setZielOffen((x) => !x)} aria-expanded={zielOffen}
-                      className={`min-w-0 flex-1 text-left text-sm leading-snug ${zielOffen ? '' : 'line-clamp-2'}`}>{aufgabe.ziel}</button>
-              <div className="flex flex-none flex-col items-end gap-1">
-                <Sterne n={fortschritt[aufgabe.id] ?? 0} />
-                <button type="button" onClick={() => { const e = bewerten(aufgabe, brett, stand); setErgebnis(e); setMeldung(e.ok ? null : e.text) }}
-                        className="rounded-lg bg-sbb-red px-3 py-1 text-sm font-bold text-white hover:bg-sbb-red125">Prüfen</button>
-              </div>
-            </div>
-          )}
-          {/* der Hinweis des Tutorials */}
-          {hinweis && (
-            <div className="mx-2.5 mb-2 flex flex-none items-start gap-2 rounded-lg border-l-4 border-sbb-red bg-white px-3 py-2 text-sm leading-snug shadow-sm dark:bg-sbb-charcoal" role="status">
-              <span className="flex-none rounded-lg bg-sbb-red px-1.5 text-xs font-bold leading-5 text-white tabular-nums">{fuehrungNr + 1}/{aufgabe!.fuehrung!.length}</span>
-              <span>{hinweis.text}</span>
-            </div>
-          )}
-          {/* die Schritte der Aufgabe sichtbar: Bahnhöfe der Reihe nach, dazwischen, was der Abschnitt braucht; erfüllt mit Haken */}
-          {aufgabe?.schritte && (
-            <div className="mx-2.5 mb-2 flex flex-none flex-wrap items-center gap-x-1 gap-y-1 text-[13px]" aria-label="Was die Aufgabe verlangt">
-              {aufgabe.schritte(brett, stand).map((x, k) => x.art === 'bahnhof' ? (
-                <span key={k} className={`rounded-lg px-2 py-0.5 font-bold ${x.ok ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white text-sbb-black dark:bg-sbb-charcoal dark:text-sbb-white'}`}>
-                  {x.ok ? '✓ ' : ''}{x.text}
-                </span>
-              ) : (
-                <span key={k} className={x.ok ? 'font-bold' : 'text-sbb-metal dark:text-sbb-storm'}>— {x.text}{x.ok ? ' ✓' : ''} —</span>
-              ))}
-            </div>
-          )}
-          <div ref={buehne} className="relative min-h-0 flex-1 touch-none overflow-hidden"
+          {/* oben freier Raum, dann das Brett so hoch, wie es braucht, gleich darunter Aufgabe und Knöpfe */}
+          <div className="flex-1" style={{ minHeight: 'calc(env(safe-area-inset-top) + 8px)' }} />
+          <div ref={buehne} className="relative min-h-0 w-full shrink touch-none overflow-hidden" style={{ aspectRatio: `${SP + 0.3 + 0.4} / ${ZE + 0.3}` }}
                onPointerDown={buehneDrucken} onPointerMove={buehneBewegen} onPointerUp={buehneLos} onPointerCancel={buehneLos} onWheel={buehneRad}>
             <div className="absolute inset-0 px-2.5" style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`, transformOrigin: '0 0' }}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
@@ -2504,6 +2451,65 @@ export function Gleisbau() {
             {meldung && (
               <p role="status" className="pointer-events-none absolute inset-x-3 bottom-2 mx-auto max-w-md rounded-lg bg-sbb-charcoal/90 px-3 py-2 text-center text-sm font-medium text-white shadow-lg">{meldung}</p>
             )}
+          </div>
+          <div className="flex-none pt-2">
+          {aufgabe && (
+            <div className="mx-2.5 mb-2 flex flex-none items-start gap-3 rounded-lg bg-white px-3 py-2 shadow-sm dark:bg-sbb-charcoal">
+              <button type="button" onClick={() => setZielOffen((x) => !x)} aria-expanded={zielOffen}
+                      className={`min-w-0 flex-1 text-left text-sm leading-snug ${zielOffen ? '' : 'line-clamp-2'}`}>{aufgabe.ziel}</button>
+              <div className="flex flex-none flex-col items-end gap-1">
+                <Sterne n={fortschritt[aufgabe.id] ?? 0} />
+                <button type="button" onClick={() => { const e = bewerten(aufgabe, brett, stand); setErgebnis(e); setMeldung(e.ok ? null : e.text) }}
+                        className="rounded-lg bg-sbb-red px-3 py-1 text-sm font-bold text-white hover:bg-sbb-red125">Prüfen</button>
+              </div>
+            </div>
+          )}
+          {/* der Hinweis des Tutorials */}
+          {hinweis && (
+            <div className="mx-2.5 mb-2 flex flex-none items-start gap-2 rounded-lg border-l-4 border-sbb-red bg-white px-3 py-2 text-sm leading-snug shadow-sm dark:bg-sbb-charcoal" role="status">
+              <span className="flex-none rounded-lg bg-sbb-red px-1.5 text-xs font-bold leading-5 text-white tabular-nums">{fuehrungNr + 1}/{aufgabe!.fuehrung!.length}</span>
+              <span>{hinweis.text}</span>
+            </div>
+          )}
+          {/* die Schritte der Aufgabe sichtbar: Bahnhöfe der Reihe nach, dazwischen, was der Abschnitt braucht; erfüllt mit Haken */}
+          {aufgabe?.schritte && (
+            <div className="mx-2.5 mb-2 flex flex-none flex-wrap items-center gap-x-1 gap-y-1 text-[13px]" aria-label="Was die Aufgabe verlangt">
+              {aufgabe.schritte(brett, stand).map((x, k) => x.art === 'bahnhof' ? (
+                <span key={k} className={`rounded-lg px-2 py-0.5 font-bold ${x.ok ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white text-sbb-black dark:bg-sbb-charcoal dark:text-sbb-white'}`}>
+                  {x.ok ? '✓ ' : ''}{x.text}
+                </span>
+              ) : (
+                <span key={k} className={x.ok ? 'font-bold' : 'text-sbb-metal dark:text-sbb-storm'}>— {x.text}{x.ok ? ' ✓' : ''} —</span>
+              ))}
+            </div>
+          )}
+          </div>
+          {/* die Knöpfe unter dem Brett und der Aufgabe (Michael, 2026-11-26: «Bitte alle Steuerelemente unterhalb des Brettes anbringen. Die Erklärung der
+              Aufgabe oder Hinweistexte direkt unter dem Brett über die volle Breite») */}
+          <div className="flex flex-none items-center gap-2 px-2.5 pb-2 pt-1"
+               style={{ paddingLeft: 'calc(env(safe-area-inset-left) + 10px)', paddingRight: 'calc(env(safe-area-inset-right) + 10px)' }}>
+            <button type="button" onClick={() => { window.location.hash = auftrag ? '#/gleisbau?betrieb' : aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau?frei' }} aria-label={auftrag ? 'Zurück zum Bahnbetrieb' : aufgabe ? 'Zurück zum Tutorial' : 'Zurück zu meinen Brettern'}
+                    className={rund}><span className="pfeil pfeil-links" aria-hidden="true">←</span></button>
+            <p className="min-w-0 flex-1 truncate font-bold">{aufgabe ? aufgabe.titel : bretter.find((x) => x.id === offen)?.name ?? 'Brett'}</p>
+            {/* die Uhr des Taktfahrplans */}
+            {/* die Uhr steht seit 2026-11-25 nur noch analog oben links im Brett (Michael: «Die alte Uhr weg») */}
+            <button type="button" disabled={faehrt || !verlauf.length} onClick={zurueck} aria-label={`Rückgängig, noch ${verlauf.length} Schritte`} title="Rückgängig"
+                    className={`${rund} relative`}>
+              ↶{verlauf.length > 0 && <span className="absolute -right-1 -top-1 min-w-5 rounded-full bg-sbb-anthracite px-1 text-[11px] font-bold leading-5 text-white tabular-nums dark:bg-sbb-white dark:text-sbb-black">{verlauf.length > 99 ? '99+' : verlauf.length}</span>}
+            </button>
+            {/* gedreht wird mit einem zweiten Tipp auf das gewählte Werkzeug (Michael, 2026-11-25: «Elemente müssen per tippen in der Elementebox gedreht werden
+                können. Dafür braucht es oben den Drehpfeil nicht mehr») */}
+            <button type="button" onClick={() => setMenu(true)} aria-label="Menü" title="Menü" className={rund}>⋯</button>
+            {faehrt && (
+              <button type="button" onClick={() => { setPause((x) => !x); knopfTon(true) }} aria-pressed={pause} aria-label={pause ? 'Weiter' : 'Pause'} title={pause ? 'Weiter' : 'Pause'} className={rund}>
+                <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{pause ? <path d="M8 5.5v13l11-6.5z" /> : <><rect x="6.5" y="5.5" width="4" height="13" rx="1" /><rect x="13.5" y="5.5" width="4" height="13" rx="1" /></>}</svg>
+              </button>
+            )}
+            <button type="button" onClick={fahren} aria-label={faehrt ? 'Anhalten' : 'Fahren'} title={faehrt ? 'Anhalten' : 'Fahren'}
+                    className="flex h-11 flex-none items-center gap-1.5 rounded-full bg-sbb-red px-4 font-bold text-white shadow-sm hover:bg-sbb-red125">
+              <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{faehrt ? <rect x="6" y="6" width="12" height="12" rx="1.5" /> : <path d="M8 5.5v13l11-6.5z" />}</svg>
+              <span className="hidden sm:inline">{faehrt ? 'Anhalten' : 'Fahren'}</span>
+            </button>
           </div>
           <div className="flex-none border-t border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-charcoal"
                style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 6px)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
