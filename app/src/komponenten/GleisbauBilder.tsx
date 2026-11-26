@@ -89,10 +89,16 @@ export function GelaendeVerlaeufe() {
   )
 }
 /** Breite und Weichheit der Böschung und ihre Stärke (gewählt) */
-const BOESCHUNG_BREIT = 0.2, BOESCHUNG_WEICH = 0.09, BOESCHUNG_STAERKE = 0.6, EBENE_EINZUG = 0.2, EBENE_RUND = 0.3
+/**
+ * Breite, Weichheit und Stärke der Böschung (gewählt); seit 2026-11-26 Licht von oben links (Michael: «Ja, Licht von oben links einbauen … Die Kante ist noch
+ * etwas zu scharf»): die Böschung ist um BOESCHUNG_LICHT nach unten rechts verschoben dunkel und nach oben links verschoben hell, so liegt bei der Hochebene
+ * die helle Böschung oben links und die dunkle unten rechts, beim Tal umgekehrt; die Kante selbst um KANTE_WEICH weich
+ */
+const BOESCHUNG_BREIT = 0.16, BOESCHUNG_WEICH = 0.12, BOESCHUNG_LICHT = 0.12, BOESCHUNG_STAERKE = 0.75, LICHT_STAERKE = 0.22, KANTE_WEICH = 0.035
+const EBENE_EINZUG = 0.2, EBENE_RUND = 0.3
 export function GelaendeBild({ brett }: { brett: Brett }) {
   const raus: ReactElement[] = []
-  // Hochebene und Tal als Gebiet: die Hochebene wirft ausserhalb ihres Rands eine Böschung, im Tal liegt sie innerhalb, an der Kante am dunkelsten
+  // Hochebene und Tal als Gebiet: die Hochebene wirft ausserhalb ihres Rands eine Böschung, im Tal liegt sie innerhalb
   // seit 2026-11-26 die Kante im Feld eingerückt und stärker gerundet, nicht auf den Fugen (Michael: «bitte mehr abgerundet und nicht so strikt den Fugen entlang»)
   const hoch = gebietPfadWenn(brett, (f) => f.hang === 18, EBENE_EINZUG, EBENE_RUND), tal = gebietPfadWenn(brett, (f) => f.hang === 19, EBENE_EINZUG, EBENE_RUND)
   if (hoch || tal) {
@@ -101,20 +107,37 @@ export function GelaendeBild({ brett }: { brett: Brett }) {
       for (let v = j - 1; v <= j + 1; v++) for (let u = i - 1; u <= i + 1; u++) { const h = brett[v]?.[u]?.hang; if (h === 18 || h === 19) { nah.push([i, j]); return } }
     }))
     const flt = { filterUnits: 'userSpaceOnUse' as const, primitiveUnits: 'userSpaceOnUse' as const, x: -1, y: -1, width: sp + 2, height: ze + 2 }
+    const rahmen = { maskUnits: 'userSpaceOnUse' as const, x: -1, y: -1, width: sp + 2, height: ze + 2 }
+    const L = BOESCHUNG_LICHT
+    // je Richtung ein Filter: die Fläche gewachsen (aus) oder geschrumpft (ein), verschoben und weich
+    const filter = (id: string, op: 'dilate' | 'erode', dx: number) => (
+      <filter id={id} {...flt}><feMorphology operator={op} radius={BOESCHUNG_BREIT} /><feOffset dx={dx} dy={dx} /><feGaussianBlur stdDeviation={BOESCHUNG_WEICH} /></filter>
+    )
+    const maske = (id: string, d: string, aussen: boolean, f: string) => (
+      <mask id={id} {...rahmen}>
+        {aussen
+          ? <><path d={d} fill="#fff" filter={`url(#${f})`} /><path d={d} fill="#000" filter="url(#gb-ebene-kante)" /></>
+          : <><path d={d} fill="#fff" filter="url(#gb-ebene-kante)" /><path d={d} fill="#000" filter={`url(#${f})`} /></>}
+      </mask>
+    )
+    const flaeche = (m: string, farbe: string) => <rect x={-1} y={-1} width={sp + 2} height={ze + 2} fill={farbe} mask={`url(#${m})`} />
     raus.push(
       <g key="ebenen" pointerEvents="none">
         <defs>
           <clipPath id="gb-ebene-kacheln">{nah.map(([i, j]) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />)}</clipPath>
-          <filter id="gb-ebene-aus" {...flt}><feMorphology operator="dilate" radius={BOESCHUNG_BREIT} /><feGaussianBlur stdDeviation={BOESCHUNG_WEICH} /></filter>
-          <filter id="gb-ebene-ein" {...flt}><feMorphology operator="erode" radius={BOESCHUNG_BREIT} /><feGaussianBlur stdDeviation={BOESCHUNG_WEICH} /></filter>
-          {hoch && <mask id="gb-hoch-maske" maskUnits="userSpaceOnUse" x={-1} y={-1} width={sp + 2} height={ze + 2}>
-            <path d={hoch} fill="#fff" filter="url(#gb-ebene-aus)" /><path d={hoch} fill="#000" /></mask>}
-          {tal && <mask id="gb-tal-maske" maskUnits="userSpaceOnUse" x={-1} y={-1} width={sp + 2} height={ze + 2}>
-            <path d={tal} fill="#fff" /><path d={tal} fill="#000" filter="url(#gb-ebene-ein)" /></mask>}
+          <filter id="gb-ebene-kante" {...flt}><feGaussianBlur stdDeviation={KANTE_WEICH} /></filter>
+          {filter('gb-ebene-aus-dunkel', 'dilate', L)}{filter('gb-ebene-aus-hell', 'dilate', -L)}
+          {filter('gb-ebene-ein-dunkel', 'erode', L)}{filter('gb-ebene-ein-hell', 'erode', -L)}
+          {hoch && <>{maske('gb-hoch-dunkel', hoch, true, 'gb-ebene-aus-dunkel')}{maske('gb-hoch-hell', hoch, true, 'gb-ebene-aus-hell')}</>}
+          {tal && <>{maske('gb-tal-dunkel', tal, false, 'gb-ebene-ein-dunkel')}{maske('gb-tal-hell', tal, false, 'gb-ebene-ein-hell')}</>}
         </defs>
-        <g clipPath="url(#gb-ebene-kacheln)" opacity={BOESCHUNG_STAERKE} style={{ mixBlendMode: 'multiply' }}>
-          {hoch && <rect x={-1} y={-1} width={sp + 2} height={ze + 2} fill={SCHATTEN} mask="url(#gb-hoch-maske)" />}
-          {tal && <rect x={-1} y={-1} width={sp + 2} height={ze + 2} fill={SCHATTEN} mask="url(#gb-tal-maske)" />}
+        <g clipPath="url(#gb-ebene-kacheln)">
+          <g opacity={BOESCHUNG_STAERKE} style={{ mixBlendMode: 'multiply' }}>
+            {hoch && flaeche('gb-hoch-dunkel', SCHATTEN)}{tal && flaeche('gb-tal-dunkel', SCHATTEN)}
+          </g>
+          <g opacity={LICHT_STAERKE}>
+            {hoch && flaeche('gb-hoch-hell', '#eaf7a8')}{tal && flaeche('gb-tal-hell', '#eaf7a8')}
+          </g>
         </g>
       </g>,
     )
