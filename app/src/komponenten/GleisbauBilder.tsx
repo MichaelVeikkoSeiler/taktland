@@ -57,9 +57,13 @@ export function MusterDefs() {
 export const GELAENDE_NAMEN = ['Kante, oben im Norden', 'Kante, oben im Nordosten', 'Kante, oben im Osten', 'Kante, oben im Südosten', 'Kante, oben im Süden',
   'Kante, oben im Südwesten', 'Kante, oben im Westen', 'Kante, oben im Nordwesten', 'Hügel', 'Mulde',
   'Aussenecke, oben im Nordosten', 'Aussenecke, oben im Südosten', 'Aussenecke, oben im Südwesten', 'Aussenecke, oben im Nordwesten',
-  'Innenecke, unten im Nordosten', 'Innenecke, unten im Südosten', 'Innenecke, unten im Südwesten', 'Innenecke, unten im Nordwesten']
+  'Innenecke, unten im Nordosten', 'Innenecke, unten im Südosten', 'Innenecke, unten im Südwesten', 'Innenecke, unten im Nordwesten', 'Hochebene', 'Tal']
 /** in welcher Reihenfolge ein Tipp die Formen durchgeht: zuerst die geraden Kanten, dann die Ecken, die schrägen, Hügel und Mulde */
-export const GELAENDE_FOLGE = [0, 2, 4, 6, 10, 11, 12, 13, 14, 15, 16, 17, 1, 3, 5, 7, 8, 9]
+/**
+ * seit 2026-11-26 nur noch Hochebene (18) und Tal (19), die Böschung rechnet sich aus den Nachbarn wie bei Wald und Wasser (Michael: «irgendwie passt das noch
+ * nicht so gut mit dem Gelände … durch mehrfaches Klicken das Element zu wechseln, aber es ist noch nicht nahtlos umsetzbar»); 0 bis 17 bleiben für alte Bretter
+ */
+export const GELAENDE_FOLGE = [18, 19]
 const SCHATTEN = '#3c5a28'
 /** Stufen von tief (t 0) nach hoch (t 1): tiefe Seite leicht, Fuss der Böschung am dunkelsten, oben nichts */
 const STUFEN: Array<[number, number]> = [[0, 0.16], [0.34, 0.16], [0.38, 0.5], [0.66, 0.06], [0.7, 0], [1, 0]]
@@ -84,10 +88,38 @@ export function GelaendeVerlaeufe() {
     </svg>
   )
 }
+/** Breite und Weichheit der Böschung und ihre Stärke (gewählt) */
+const BOESCHUNG_BREIT = 0.2, BOESCHUNG_WEICH = 0.09, BOESCHUNG_STAERKE = 0.6
 export function GelaendeBild({ brett }: { brett: Brett }) {
   const raus: ReactElement[] = []
+  // Hochebene und Tal als Gebiet: die Hochebene wirft ausserhalb ihres Rands eine Böschung, im Tal liegt sie innerhalb, an der Kante am dunkelsten
+  const hoch = gebietPfadWenn(brett, (f) => f.hang === 18, 0.03), tal = gebietPfadWenn(brett, (f) => f.hang === 19, 0.03)
+  if (hoch || tal) {
+    const sp = spalten(brett), ze = zeilen(brett), nah: Array<[number, number]> = []
+    brett.forEach((z, j) => z.forEach((_, i) => {
+      for (let v = j - 1; v <= j + 1; v++) for (let u = i - 1; u <= i + 1; u++) { const h = brett[v]?.[u]?.hang; if (h === 18 || h === 19) { nah.push([i, j]); return } }
+    }))
+    const flt = { filterUnits: 'userSpaceOnUse' as const, primitiveUnits: 'userSpaceOnUse' as const, x: -1, y: -1, width: sp + 2, height: ze + 2 }
+    raus.push(
+      <g key="ebenen" pointerEvents="none">
+        <defs>
+          <clipPath id="gb-ebene-kacheln">{nah.map(([i, j]) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />)}</clipPath>
+          <filter id="gb-ebene-aus" {...flt}><feMorphology operator="dilate" radius={BOESCHUNG_BREIT} /><feGaussianBlur stdDeviation={BOESCHUNG_WEICH} /></filter>
+          <filter id="gb-ebene-ein" {...flt}><feMorphology operator="erode" radius={BOESCHUNG_BREIT} /><feGaussianBlur stdDeviation={BOESCHUNG_WEICH} /></filter>
+          {hoch && <mask id="gb-hoch-maske" maskUnits="userSpaceOnUse" x={-1} y={-1} width={sp + 2} height={ze + 2}>
+            <path d={hoch} fill="#fff" filter="url(#gb-ebene-aus)" /><path d={hoch} fill="#000" /></mask>}
+          {tal && <mask id="gb-tal-maske" maskUnits="userSpaceOnUse" x={-1} y={-1} width={sp + 2} height={ze + 2}>
+            <path d={tal} fill="#fff" /><path d={tal} fill="#000" filter="url(#gb-ebene-ein)" /></mask>}
+        </defs>
+        <g clipPath="url(#gb-ebene-kacheln)" opacity={BOESCHUNG_STAERKE} style={{ mixBlendMode: 'multiply' }}>
+          {hoch && <rect x={-1} y={-1} width={sp + 2} height={ze + 2} fill={SCHATTEN} mask="url(#gb-hoch-maske)" />}
+          {tal && <rect x={-1} y={-1} width={sp + 2} height={ze + 2} fill={SCHATTEN} mask="url(#gb-tal-maske)" />}
+        </g>
+      </g>,
+    )
+  }
   brett.forEach((z, j) => z.forEach((f, i) => {
-    if (f.hang === undefined) return
+    if (f.hang === undefined || f.hang >= 18) return
     raus.push(<rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={`url(#gb-hang-${f.hang})`} pointerEvents="none"
                     style={{ mixBlendMode: 'multiply' }} />)
   }))
@@ -105,11 +137,14 @@ const FUELLUNG: Record<string, string> = { wald: 'url(#gb-wald)', berg: 'url(#gb
  * gleiche Felder zu einem Gebiet, die Fugen bleiben (auf die Kacheln zugeschnitten)
  */
 function gebietPfad(b: Brett, grund: Feld['grund'], e: number) {
+  return gebietPfadWenn(b, (f) => f.grund === grund, e)
+}
+function gebietPfadWenn(b: Brett, gilt: (f: Feld) => boolean, e: number) {
   const sp = spalten(b), ze = zeilen(b)
-  const gleich = (i: number, j: number) => i >= 0 && j >= 0 && i < sp && j < ze && b[j][i].grund === grund
+  const gleich = (i: number, j: number) => i >= 0 && j >= 0 && i < sp && j < ze && gilt(b[j][i])
   const teile: string[] = []
   for (let j = 0; j < ze; j++) for (let i = 0; i < sp; i++) {
-    if (b[j][i].grund !== grund) continue
+    if (!gilt(b[j][i])) continue
     for (const [sx, sy] of [[1, 1], [-1, 1], [1, -1], [-1, -1]]) {
       const cx = i + (sx < 0 ? 1 : 0), cy = j + (sy < 0 ? 1 : 0)
       const ex = gleich(i - sx, j) ? 0 : e, ey = gleich(i, j - sy) ? 0 : e
