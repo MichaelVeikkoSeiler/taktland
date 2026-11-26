@@ -2167,11 +2167,26 @@ export function Gleisbau() {
             return <WagenBild key={`zs${i},${j}`} w={{ x: p.x, y: p.y, w: Math.atan2(q.y - p.y, q.x - p.x), art: 0, vorne: true, gueter: f.zugStart === 'g' }} tunnel={false} farbe={f.zugStart === 'g' ? GUETER_LOK : F.karmin} />
           }))}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
-          {!faehrt && enden.map((e, k) => (
-            <g key={`e${k}`} pointerEvents="none">
-              <circle cx={e.x - [0, 1, 0, -1][e.k] * 0.06} cy={e.y - [-1, 0, 1, 0][e.k] * 0.06} r={0.065} fill={F.karmin} stroke="#ffffff" strokeWidth={0.02} />
-            </g>
-          ))}
+          {/* an Stücken, die eine Aufgabe vorgibt, statt des roten Punkts ein Prellbock: ein sauberes Gleisende, bis man dort anschliesst
+              (Michael, 2026-11-26: «Die vorgegebenen Gleise sind auf der hinteren Seite unverbunden und rot markiert das wirkt unvollständig») */}
+          {!faehrt && enden.map((e, k) => {
+            const dx = [0, 1, 0, -1][e.k], dy = [-1, 0, 1, 0][e.k]
+            const feld = `${Math.floor(e.x - dx * 0.1)},${Math.floor(e.y - dy * 0.1)}`
+            if (fest?.has(feld)) {
+              const cx = e.x - dx * 0.09, cy = e.y - dy * 0.09, quer = e.k % 2 === 0
+              return (
+                <g key={`e${k}`} pointerEvents="none">
+                  <rect x={cx - (quer ? 0.16 : 0.035)} y={cy - (quer ? 0.035 : 0.16)} width={quer ? 0.32 : 0.07} height={quer ? 0.07 : 0.32} rx={0.015} fill="#c8202f" stroke="#3a3a3a" strokeWidth={0.012} />
+                  <rect x={cx - (quer ? 0.05 : 0.036)} y={cy - (quer ? 0.036 : 0.05)} width={quer ? 0.1 : 0.072} height={quer ? 0.072 : 0.1} fill="#ffffff" />
+                </g>
+              )
+            }
+            return (
+              <g key={`e${k}`} pointerEvents="none">
+                <circle cx={e.x - dx * 0.06} cy={e.y - dy * 0.06} r={0.065} fill={F.karmin} stroke="#ffffff" strokeWidth={0.02} />
+              </g>
+            )
+          })}
           {linie && (
             <path pointerEvents="none" d={linie.map(([i, j], k) => `${k ? 'L' : 'M'}${i + 0.5},${j + 0.5}`).join('')} fill="none" stroke={F.karmin}
                   strokeWidth={0.14} strokeLinecap="round" strokeLinejoin="round" opacity={0.75} />
