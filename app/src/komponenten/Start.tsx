@@ -33,8 +33,10 @@ export function Start({ index }: { index: BahnhofIndex }) {
       <div>
       {/* «In der Schweiz fahren Züge im Taktfahrplan. Davon hat Taktland seinen Namen.» seit 2026-11-26 weg (Michael: «Entfernen») */}
       <p className="mt-3 text-[15px] leading-relaxed">
-        Taktland ist Lernspiel, Nachschlagewerk und Reisebegleiter zugleich. Zusammengetragen aus öffentlichen
-        Datenbanken der Bahn, des Bundes und von swisstopo, stellt es{' '}
+        {/* seit 2026-11-26 (Michael: «Taktland ist Lernspiel und Reisebegleiter (Auchtung: nicht Reiseplaner) zugleich. Und auch ein bisschen ein
+            Nachschlagewerk. Und davon das meiste zusammengetragen aus öffen...») */}
+        Taktland ist Lernspiel und Reisebegleiter zugleich. Und auch ein bisschen ein Nachschlagewerk. Das meiste davon ist zusammengetragen
+        aus öffentlichen Datenbanken der Bahn, des Bundes und von swisstopo: Taktland stellt{' '}
         {zahl(index.bahnhoefe_gesamt)} Bahnhöfe vor
         {z ? `, dazu ${zahl(z.linien)} Strecken mit ${zahl(z.tunnel)} Tunneln und ${zahl(z.bruecken)} Brücken.` : '.'}
       </p>
