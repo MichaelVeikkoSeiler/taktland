@@ -867,7 +867,17 @@ export function strassenKanten(b: Brett, i: number, j: number): number[] {
   const f = b[j]?.[i]
   if (!f?.strasse || f.teil || (f.gleis && f.gleis.art !== 'gerade')) return []
   if (f.gleis?.art === 'gerade') return f.gleis.dreh % 2 === 0 ? [1, 3] : [0, 2]
-  const k = [0, 1, 2, 3].filter((k) => { const n = b[j + DY[k]]?.[i + DX[k]]; return !!n && (n.strasse || n.grund === 'dorf') })
+  // zwei parallele Strassen nebeneinander verbinden sich nicht quer: läuft dieses Feld und das Nachbarfeld quer zur Kante je gerade durch, gibt es dort
+  // keine Verbindung (Michael, 2026-11-26: «Wenn ich Straßen baue und zwei Straßen parallel zueinander laufen möchte … entsteht immer ein Gitter. Das ist
+  // nicht nötig»); Kreuzungen, Einmündungen und Kurven bleiben
+  const str = (u: number, v: number) => !!b[v]?.[u]?.strasse
+  const durch = (u: number, v: number, quer: number) => str(u + DX[quer], v + DY[quer]) && str(u - DX[quer], v - DY[quer])
+  const k = [0, 1, 2, 3].filter((k) => {
+    const n = b[j + DY[k]]?.[i + DX[k]]
+    if (!n || !(n.strasse || n.grund === 'dorf')) return false
+    const quer = (k + 1) % 4
+    return !(n.strasse && durch(i, j, quer) && durch(i + DX[k], j + DY[k], quer))
+  })
   // ein Wendeplatz endet hier: nur zu den Nachbarn
   if (f.wende) return k.length ? k : [2]
   if (k.length === 1) k.push((k[0] + 2) % 4)
