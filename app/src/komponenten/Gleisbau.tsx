@@ -1230,6 +1230,18 @@ export function Gleisbau() {
     return l
   }, [aufgabe])
   const FEST_TEXT = 'Dieses Stück gibt die Aufgabe vor, es bleibt, wo es ist.'
+  /**
+   * auch die Landschaft der Aufgabe bleibt: Dorf, Wald, Berg, Wasser, Fluss, Gelände und Objekte (Michael, 2026-11-26: «Auch Häuser und Berge sowie Bäume
+   * sollen fix sein»); Gleise darüber gehen (Tunnel, Brücke), der Boden selbst ändert sich nicht und wandert beim Verschieben nicht mit
+   */
+  const festGrund = useMemo(() => {
+    if (!aufgabe) return null
+    const l = new Map<string, Feld>()
+    aufgabe.brett().forEach((z, j) => z.forEach((f, i) => { if (f.grund !== 'wiese' || f.fluss || f.objekt || f.hang !== undefined) l.set(`${i},${j}`, f) }))
+    return l
+  }, [aufgabe])
+  const LANDSCHAFT_FEST = 'Die Landschaft gibt die Aufgabe vor: Häuser, Wald, Berge und Wasser bleiben. Gleise darüber gehen.'
+  const landschaftGleich = (a: Feld, b: Feld) => a.grund === b.grund && !!a.fluss === !!b.fluss && a.objekt === b.objekt && a.hang === b.hang
   // ein Auftrag des Bahnbetriebs ist eine Aufgabe mit dem Auftrag dazu
   const auftrag = (aufgabe as { betrieb?: Auftrag } | null)?.betrieb ?? null
   const [ergebnis, setErgebnis] = useState<Ergebnis | null>(null)
@@ -1648,7 +1660,7 @@ export function Gleisbau() {
       malRef.current = null; setMalen(null)
       nachZiehen.current = true
       window.setTimeout(() => { nachZiehen.current = false }, 250)
-      const r = malenAnwenden(brett, m.filter(([i, j]) => !(takt > 0 && uhrFeld(i, j)) && !fest?.has(`${i},${j}`)), werkzeug)
+      const r = malenAnwenden(brett, m.filter(([i, j]) => !(takt > 0 && uhrFeld(i, j)) && !fest?.has(`${i},${j}`) && !(festGrund?.has(`${i},${j}`) && werkzeug.art !== 'strasse' && werkzeug.art !== 'strom')), werkzeug)
       if (r !== brett) { setBrett(r); knopfTon(true); setMeldung(null) }
       return
     }
@@ -1675,9 +1687,16 @@ export function Gleisbau() {
     // falls kein Klick folgt, gilt der nächste Tipp wieder
     window.setTimeout(() => { nachZiehen.current = false }, 250)
     if (fest?.has(`${ziehen.nach[0]},${ziehen.nach[1]}`)) { setZiehen(null); setMeldung(FEST_TEXT); return }
-    const r = verschieben(brett, ziehen.von, ziehen.nach)
+    const r0 = verschieben(brett, ziehen.von, ziehen.nach)
     setZiehen(null)
-    if (typeof r === 'string') { setMeldung(r); return }
+    if (typeof r0 === 'string') { setMeldung(r0); return }
+    // in einer Aufgabe wandert nur, was gebaut ist; der Boden bleibt an beiden Stellen
+    const r = aufgabe ? r0.map((z, j) => z.map((f, i) => {
+      if (f === brett[j][i]) return f
+      const o = brett[j][i]
+      const { grund: _g, fluss: _f, objekt: _o, hang: _h, ...rest } = f
+      return { ...rest, grund: o.grund, ...(o.fluss ? { fluss: true as const } : {}), ...(o.objekt ? { objekt: o.objekt } : {}), ...(o.hang !== undefined ? { hang: o.hang } : {}) }
+    })) : r0
     if (r !== brett) { setBrett(r); knopfTon(true) }
   }
 
@@ -1939,6 +1958,8 @@ export function Gleisbau() {
   }
 
   function neu(i: number, j: number, f: Feld, merken = true) {
+    const vorgabe = festGrund?.get(`${i},${j}`)
+    if (vorgabe && !landschaftGleich(vorgabe, f)) { setMeldung(LANDSCHAFT_FEST); return }
     setBrett(brett.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? f : x)) : z)), merken)
   }
 
