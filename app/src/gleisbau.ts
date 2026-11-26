@@ -1335,6 +1335,9 @@ export class Zug {
       this.stuecke.push(n); this.kopf = 0
       this.kuerzen()
       if (!this.diesel() && ohneStromBei(b, n)) this.stromlos = true
+      // rollt er bis zu einem Gleis mit Fahrleitung, hat er wieder Strom und fährt an (Michael, 2026-11-26: «Folgt aber dann wieder ein elektrisches Gleis
+      // sollte es doch reichen dass er wieder anfährt»)
+      else if (this.stromlos) this.stromlos = false
     }
   }
 

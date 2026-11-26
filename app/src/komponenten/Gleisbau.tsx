@@ -1567,7 +1567,8 @@ export function Gleisbau() {
             setMeldung(`${zz.length > 1 ? `Zug ${k + 1}` : 'Der Zug'} schleppt Zug ${oi + 1} ab.`); knopfTon(true)
             return true
           })
-        if (!vorher && z.stromlos) setMeldung(`${zz.length > 1 ? `Zug ${k + 1}` : 'Der Zug'} hat keinen Strom und bleibt stehen. Eine Diesellok kann ihn abschleppen.`)
+        if (!vorher && z.stromlos) setMeldung(`${zz.length > 1 ? `Zug ${k + 1}` : 'Der Zug'} hat keinen Strom und rollt aus. Erreicht er wieder ein Gleis mit Fahrleitung, fährt er an, sonst bleibt er stehen. Eine Diesellok kann ihn abschleppen.`)
+        if (vorher && !z.stromlos) setMeldung(null)
       })
       // abgeschleppte Züge sind jetzt Teil eines anderen
       if (weg.size) {
