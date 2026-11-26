@@ -94,7 +94,7 @@ export function GelaendeVerlaeufe() {
  * etwas zu scharf»): die Böschung ist um BOESCHUNG_LICHT nach unten rechts verschoben dunkel und nach oben links verschoben hell, so liegt bei der Hochebene
  * die helle Böschung oben links und die dunkle unten rechts, beim Tal umgekehrt; die Kante selbst um KANTE_WEICH weich
  */
-const BOESCHUNG_BREIT = 0.16, BOESCHUNG_WEICH = 0.09, BOESCHUNG_LICHT = 0.12, BOESCHUNG_STAERKE = 0.75, LICHT_STAERKE = 0.22, KANTE_WEICH = 0.015
+const BOESCHUNG_BREIT = 0.16, BOESCHUNG_WEICH = 0.09, BOESCHUNG_LICHT = 0.12, BOESCHUNG_STAERKE = 0.75, LICHT_STAERKE = 0.22, KANTE_WEICH = 0
 const EBENE_EINZUG = 0.2, EBENE_RUND = 0.3, RAMPE_BREIT = 0.38
 export function GelaendeBild({ brett }: { brett: Brett }) {
   const raus: ReactElement[] = []
