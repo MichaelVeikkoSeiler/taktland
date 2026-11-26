@@ -9,6 +9,10 @@ import { GUETER, type LokTyp, LOKS, type WagenTyp, WAGEN_ARTEN, type Zusammenste
 const chf = (n: number) => `CHF ${Math.round(n).toLocaleString('de-CH')}`
 const KNOPF_ROT = 'min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40'
 const KNOPF_WEISS = 'min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight'
+/** der kleine Knopf mit dem Preis (Michael, 2026-11-26: «Die Buttons mit den Preisen können kleiner sein») */
+const KNOPF_PREIS = 'min-h-9 shrink-0 rounded-lg border border-sbb-cloud bg-white px-2 text-xs font-bold tabular-nums hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight'
+/** Art und Antrieb einer Lok, ohne den Antrieb zweimal zu nennen (Michael, 2026-11-26: «Doppelte Erwähnungen wie Dieselgüterlok und dann nochmal Diesel braucht es nicht») */
+const lokArt = (l: LokTyp) => { const a = LOKS[l].art, t = LOKS[l].diesel ? 'Diesel' : 'Strom'; return a.toLowerCase().includes(t.toLowerCase()) ? a : `${a}, ${t}` }
 const SEGMENT = (an: boolean) => `min-h-10 rounded-lg px-3 text-sm font-bold ${an ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white dark:bg-sbb-charcoal'}`
 
 function Sterne({ n }: { n: number }) {
@@ -104,7 +108,7 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">{text}</p>
         <p className="text-sm font-bold">{besitz ? `${besitz} im Depot` : 'keiner im Depot'}</p>
       </div>
-      <button type="button" disabled={betrieb.geld < preis} aria-label={`${titel} kaufen für ${chf(preis)}`} onClick={kauf} className={`${KNOPF_WEISS} ml-auto shrink-0 text-sm`}>{chf(preis)}</button>
+      <button type="button" disabled={betrieb.geld < preis} aria-label={`${titel} kaufen für ${chf(preis)}`} onClick={kauf} className={`${KNOPF_PREIS} ml-auto`}>{chf(preis)}</button>
     </li>
   )
   return (
@@ -119,7 +123,7 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
         <h3 className="font-bold">Loks</h3>
         <ul className="mt-2 grid gap-2 md:grid-cols-2">
           {(Object.keys(LOKS) as LokTyp[]).map((l) => zeile(l, <FahrzeugBild lok={l} />, `${LOKS[l].name}`,
-            `${LOKS[l].art}, ${LOKS[l].diesel ? 'Diesel' : 'Strom'}, zieht ${LOKS[l].zugkraft} Wagen, Tempo ${LOKS[l].tempo.toLocaleString('de-CH')}. ${LOKS[l].text}`,
+            `${lokArt(l)}, zieht ${LOKS[l].zugkraft} Wagen, Tempo ${LOKS[l].tempo.toLocaleString('de-CH')}. ${LOKS[l].text}`,
             betrieb.loks.filter((x) => x === l).length, LOKS[l].preis, () => kaufen(LOKS[l].preis, l)))}
         </ul>
       </section>
@@ -230,7 +234,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
         <ul className="mt-1.5 grid gap-1.5">
           {loks.map((l) => {
             const da = lokFrei(l) > 0, besitzt = betrieb.loks.includes(l)
-            const text = `${LOKS[l].art}, ${LOKS[l].diesel ? 'Diesel' : 'Strom'}, zieht ${LOKS[l].zugkraft} Wagen`
+            const text = `${lokArt(l)}, zieht ${LOKS[l].zugkraft} Wagen`
             return (
               <li key={l}>
                 {da ? (
@@ -245,7 +249,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
                     <span className="opacity-45"><FahrzeugBild lok={l} /></span>
                     <span className="min-w-0 flex-1 leading-tight text-sbb-metal dark:text-sbb-storm"><span className="font-bold">{LOKS[l].name}</span>
                       <span className="block">{text}{besitzt ? ' · fährt schon' : ''}</span></span>
-                    <button type="button" disabled={betrieb.geld < LOKS[l].preis} aria-label={`${LOKS[l].name} kaufen für ${chf(LOKS[l].preis)}`} onClick={() => lokKaufen(l)} className={`${KNOPF_WEISS} shrink-0 px-3 text-sm`}>{chf(LOKS[l].preis)}</button>
+                    <button type="button" disabled={betrieb.geld < LOKS[l].preis} aria-label={`${LOKS[l].name} kaufen für ${chf(LOKS[l].preis)}`} onClick={() => lokKaufen(l)} className={KNOPF_PREIS}>{chf(LOKS[l].preis)}</button>
                   </div>
                 )}
               </li>
@@ -264,7 +268,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
                   <span className="block text-sbb-metal dark:text-sbb-storm">{WAGEN_ARTEN[w].text} · {n(w) ? (frei > 0 ? `${n(w)} angehängt, ${frei} weitere im Depot` : `${n(w)} angehängt`) : frei > 0 ? `${frei} im Depot` : 'keiner im Depot'}</span>
                 </span>
                 {frei <= 0 && !n(w) ? (
-                  <button type="button" disabled={betrieb.geld < WAGEN_ARTEN[w].preis} aria-label={`${WAGEN_ARTEN[w].name} kaufen für ${chf(WAGEN_ARTEN[w].preis)}`} onClick={() => kaufen(w)} className={`${KNOPF_WEISS} shrink-0 px-3 text-sm`}>{chf(WAGEN_ARTEN[w].preis)}</button>
+                  <button type="button" disabled={betrieb.geld < WAGEN_ARTEN[w].preis} aria-label={`${WAGEN_ARTEN[w].name} kaufen für ${chf(WAGEN_ARTEN[w].preis)}`} onClick={() => kaufen(w)} className={KNOPF_PREIS}>{chf(WAGEN_ARTEN[w].preis)}</button>
                 ) : (
                   <>
                     <button type="button" aria-label={`${WAGEN_ARTEN[w].name} weniger`} disabled={!n(w)} onClick={() => { const k = wagen.lastIndexOf(w); setWagen((l) => l.filter((_, m) => m !== k)) }} className={`${KNOPF_WEISS} w-11 px-0`}>−</button>
