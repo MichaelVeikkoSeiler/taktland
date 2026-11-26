@@ -1719,6 +1719,34 @@ export function Gleisbau() {
     if (r !== brett) { setBrett(r); knopfTon(true) }
   }
 
+  /**
+   * mit der Maus ein Feld auswählen und mit Entf oder Rückschritt seinen obersten Inhalt wegnehmen, Schicht um Schicht bis zur Wiese, wie «Entfernen»
+   * (Michael, 2026-11-26: «wenn man mit der Maus auf die Kacheln klicken könnte, diese selektioniert würden und diese mit der Tastatur Backstage oder
+   * Delete-Taste gelöscht werden könnten. Also nicht die Kachel löschen, sondern der oberste Inhalt, bis nur noch die Wiese da ist»); Esc hebt die Wahl auf
+   */
+  const [auswahl, setAuswahl] = useState<[number, number] | null>(null)
+  const mausKlick = useRef(false)
+  const bauenRef = useRef<(i: number, j: number, w: Werkzeug) => void>(() => {})
+  bauenRef.current = (i, j, w) => bauen(i, j, w)
+  useEffect(() => {
+    if (!auswahl) return
+    const taste = (e: KeyboardEvent) => {
+      const ziel = e.target as HTMLElement | null
+      if (ziel && (ziel.tagName === 'INPUT' || ziel.tagName === 'TEXTAREA' || ziel.isContentEditable)) return
+      if (e.key === 'Escape') { setAuswahl(null); return }
+      if (e.key !== 'Delete' && e.key !== 'Backspace') return
+      e.preventDefault()
+      if (faehrt) { setMeldung('Zum Löschen zuerst anhalten.'); return }
+      bauenRef.current(auswahl[0], auswahl[1], { art: 'weg' })
+    }
+    window.addEventListener('keydown', taste)
+    return () => window.removeEventListener('keydown', taste)
+  }, [auswahl, faehrt])
+  // ein anderes Brett, eine Aufgabe oder das Fahren heben die Wahl auf
+  useEffect(() => { setAuswahl(null) }, [offen, aufgabe, faehrt])
+  // passt das Feld nach einer Grössenänderung nicht mehr, ist die Wahl weg
+  const auswahlDa = auswahl && auswahl[0] < SP && auswahl[1] < ZE ? auswahl : null
+
   function feldAn(e: React.MouseEvent<SVGSVGElement>) {
     // der Klick nach dem Loslassen eines gezogenen Felds legt nichts
     if (nachZiehen.current) { nachZiehen.current = false; return }
@@ -1745,15 +1773,22 @@ export function Gleisbau() {
       knopfTon(true)
       return
     }
-    if (werkzeug.art === 'linie') return
+    // mit der Maus ist das angeklickte Feld ausgewählt: Entf oder Rückschritt nimmt danach seinen obersten Inhalt weg (Michael, 2026-11-26)
+    if (mausKlick.current) setAuswahl([i, j])
+    bauen(i, j, werkzeug)
+  }
+
+  /** das Werkzeug w auf das Feld (i, j) anwenden, wie ein Tipp */
+  function bauen(i: number, j: number, w: Werkzeug) {
+    const f = brett[j][i]
+    if (w.art === 'linie') return
     if (takt > 0 && uhrFeld(i, j)) { setMeldung('Hier steht die Uhr des Taktfahrplans. Ohne Takt (im Menü) kann man hier wieder bauen.'); return }
     setMeldung(null)
-    if (werkzeug.art === 'name') {
+    if (w.art === 'name') {
       if (!istBahnhof(f.gleis)) { setMeldung('Tippe einen Bahnhof an, um ihm einen Namen zu geben.'); setNameFeld(null); return }
       setNameFeld([i, j]); setNameSuche('')
       return
     }
-    const w = werkzeug
     if (fest?.has(`${i},${j}`) && !['name', 'zug', 'knoten', 'ampel', 'wagen', 'strom'].includes(w.art)) { setMeldung(FEST_TEXT); return }
     const unterGross = !!f.teil || grosseKurve(f.gleis) > 0
     // grosse Kurve: das angetippte Feld ist ihr Griff, das Eckfeld aussen; tippt man den Griff einer gleichen an, dreht sie sich im selben Block,
@@ -2169,7 +2204,7 @@ export function Gleisbau() {
                onPointerDown={buehneDrucken} onPointerMove={buehneBewegen} onPointerUp={buehneLos} onPointerCancel={buehneLos} onWheel={buehneRad}>
             <div className="absolute inset-0 px-2.5" style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`, transformOrigin: '0 0' }}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
-             onClick={feldAn} onPointerDown={drucken} onPointerMove={bewegen} onPointerUp={loslassen}
+             onClick={feldAn} onPointerDown={(e) => { mausKlick.current = e.pointerType === 'mouse'; drucken(e) }} onPointerMove={bewegen} onPointerUp={loslassen}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); malRef.current = null; malStart.current = null; setMalen(null) }} onContextMenu={(e) => e.preventDefault()}
              className="size-full cursor-pointer select-none [-webkit-touch-callout:none]">
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
@@ -2192,6 +2227,11 @@ export function Gleisbau() {
             ? <WagenBild key={`a${i},${j}`} w={{ x: i + 0.5, y: j + 0.5, w: f.gleis!.dreh % 2 ? 0 : Math.PI / 2, art: 1, vorne: false }} tunnel={false} /> : null))}
           <AmpelBild brett={brett} />
           <OhneStromBild brett={brett} />
+          {/* das mit der Maus gewählte Feld */}
+          {auswahlDa && !faehrt && (
+            <rect x={auswahlDa[0] + 0.02} y={auswahlDa[1] + 0.02} width={0.96} height={0.96} rx={0.1} fill="none" stroke={F.karmin} strokeWidth={0.05}
+                  strokeDasharray="0.12 0.07" pointerEvents="none" />
+          )}
           {/* die Felder, auf die der Hinweis des Tutorials zeigt */}
           {hinweis?.felder?.map(([i, j]) => (
             <rect key={`h${i},${j}`} x={i + 0.03} y={j + 0.03} width={0.94} height={0.94} rx={0.12} fill="none" stroke={F.karmin} strokeWidth={0.07}
@@ -2628,6 +2668,7 @@ function SoGehts() {
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
       <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Mit «Zug einsetzen» (unter «Züge») tippst du auf ein Gleis und stellst aus deinen Loks und Wagen einen Zug zusammen, fehlende Wagen kaufst du gleich dort. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
+      <li>Mit der Maus: Ein Klick wählt ein Feld (gestrichelter Rahmen). Entf oder die Rückschritt-Taste nimmt seinen obersten Inhalt weg, Schicht um Schicht bis zur Wiese; Esc hebt die Wahl auf. Rückgängig geht wie immer.</li>
       <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug (Lok, Personenwagen und Steuerwagen, je 4 Plätze) hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen; eine Ladung füllt einen Güterwagen. Das Tutorial zeigt es Schritt für Schritt.</li>
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,
         im Berg zum Tunnel; «Brücke» über ein Gleis führt die Strasse darüber statt über einen Bahnübergang. Die Busse fahren rechts, biegen nach Zufall ab,
