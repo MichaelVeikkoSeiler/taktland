@@ -534,7 +534,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
             <img src={portraetBreit} alt="Michael Veikko Seiler" width={213} height={112} className="hidden h-28 w-auto flex-none xl:block" />
             <div className="-mt-1">
               <p className="font-medium">Michael Veikko Seiler</p>
-              <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee, Konzept und Gestaltung</p>
+              {/* seit 2026-11-26 «Idee und Umsetzung» (Michael: «Schreib unter meinem Namen Idee und Umsetzung. Das Wort Konzept ist zu hoch gestochen und muss weg») */}
+              <p className="text-sm text-sbb-metal dark:text-sbb-storm">Idee und Umsetzung</p>
             </div>
           </div>
         </div>
