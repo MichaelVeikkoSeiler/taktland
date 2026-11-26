@@ -1226,7 +1226,9 @@ export function Gleisbau() {
    * am weitesten von den anderen vorgegebenen Stücken weg zeigt (von der Mitte des Bretts, wenn es keine gibt); gewählt
    */
   const hinten = useMemo(() => {
-    if (!aufgabe || !fest?.size) return null
+    // im Tutorial kein Prellbock: das Brett wächst, jede Seite eines Bahnhofs kann die nächste Lektion brauchen (Michael, 2026-11-26, Flussau zeigte rechts einen
+    // Prellbock, wo die Linie nach Alpwil hinaus muss)
+    if (!aufgabe || !fest?.size || aufgabe.reihe !== undefined) return null
     const b0 = (aufgabe.vorgabeBrett ?? aufgabe.brett)(), l = new Set<string>(), alle = [...fest].map((k) => k.split(',').map(Number))
     const je = new Map<string, Array<{ x: number; y: number; k: number }>>()
     for (const e of offeneEnden(b0)) {

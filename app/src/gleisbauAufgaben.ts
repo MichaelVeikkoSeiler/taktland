@@ -5,7 +5,7 @@
  * vorerst mal komplett weggelassen werden. Sie haben keinen Maßstab und auch sonst etwas schwierig zu verstehen»). Aufgaben, Bretter und Vorgaben gewählt.
  */
 import {
-  type Brett, bahnhofGruppen, bahnhofTitel, type Dreh, DXY, grosseKurve, grossGeometrie, type Grund, istBahnhof, leer, spalten,
+  type Brett, bahnhofGruppen, bahnhofTitel, type Dreh, DXY, grosseKurve, grossGeometrie, type Grund, leer, spalten,
   ueberWasser, wege, zeilen, Zug, gueterGilt, brettCode, brettAusCode,
 } from './gleisbau'
 
@@ -137,19 +137,29 @@ function bahnhofFelder(b: Brett): Map<string, Set<string>> {
 
 /** ein Rundkurs: der Zug fährt drei Minuten lang, ohne je am Ende eines Gleises umzukehren, und kommt dabei durch einen Tunnel und über eine Brücke */
 function rundkurs(b: Brett) {
-  const z = Zug.setzen(b)
-  if (!z) return { ok: false, text: 'Es liegt noch kein Gleis.' }
-  let tunnel = false, bruecke = false
-  for (let t = 0; t < 3600; t++) {
-    z.schritt(b, 0.05)
-    const [i, j] = z.spitze(), w = bauwerk(b, i, j)
-    tunnel ||= w.tunnel && !!(b[j]?.[i]?.gleis || b[j]?.[i]?.teil)
-    bruecke ||= w.bruecke && !!(b[j]?.[i]?.gleis || b[j]?.[i]?.teil)
-    if (z.umkehrungen > 0) return { ok: false, text: 'Der Zug kommt an ein Gleisende und kehrt um. Ein Rundkurs braucht einen geschlossenen Ring (rote Punkte zeigen offene Enden).' }
+  // seit 2026-11-26 sucht die Prüfung den Ring selbst (Michael, Bildschirmfoto eines Rings im gewachsenen Netz: «Die Aufgabe wäre doch somit gelöst»): ein Zug
+  // auf jedem Tunnel, in beide Richtungen; bleibt er 2 Minuten im Kreis und fährt dabei über eine Brücke, ist es ein Rundkurs. Vorher fuhr er ab dem ersten
+  // Bahnhof los, kam über eine falsch gestellte Weiche an ein Gleisende und kehrte um; ein Bahnhof im Ring ist nicht mehr nötig
+  const tunnelFelder: Array<[number, number]> = []
+  b.forEach((z, j) => z.forEach((f, i) => { if (f.gleis && bauwerk(b, i, j).tunnel) tunnelFelder.push([i, j]) }))
+  if (!b.some((z) => z.some((f) => f.gleis))) return { ok: false, text: 'Es liegt noch kein Gleis.' }
+  if (!tunnelFelder.length) return { ok: false, text: 'Der Ring muss durch einen Tunnel: Ein Gleis auf dem Berg wird zum Tunnel.' }
+  let ohneBruecke = false
+  for (const [i, j] of tunnelFelder) for (const r of [0, 1] as const) {
+    const z = Zug.setzenBei(b, i, j, 'person', undefined, r)
+    if (!z) continue
+    let bruecke = false, umgekehrt = false
+    for (let t = 0; t < 2400 && !umgekehrt; t++) {
+      z.schritt(b, 0.05)
+      const [u, v] = z.spitze()
+      bruecke ||= bauwerk(b, u, v).bruecke && !!(b[v]?.[u]?.gleis || b[v]?.[u]?.teil)
+      umgekehrt = z.umkehrungen > 0
+    }
+    if (!umgekehrt && bruecke) return { ok: true, text: 'Geschafft: ein Rundkurs durch einen Tunnel und über eine Brücke.' }
+    if (!umgekehrt) ohneBruecke = true
   }
-  if (!tunnel || !bruecke) return { ok: false, text: `Der Ring ist geschlossen, aber der Zug fährt noch nicht ${[!tunnel && 'durch einen Tunnel', !bruecke && 'über eine Brücke'].filter(Boolean).join(' und ')}.` }
-  if (!b.flat().some((f) => istBahnhof(f.gleis))) return { ok: false, text: 'Der Ring braucht noch einen Bahnhof.' }
-  return { ok: true, text: 'Geschafft: ein Rundkurs mit Bahnhof, Tunnel und Brücke.' }
+  if (ohneBruecke) return { ok: false, text: 'Der Ring ist geschlossen, aber er führt noch nicht über eine Brücke: Ein Gleis auf dem Wasser wird zur Brücke.' }
+  return { ok: false, text: 'Noch fährt kein Zug im Kreis durch den Tunnel: Er kommt an ein Gleisende und kehrt um. Schliess den Ring (rote Punkte zeigen offene Enden) und tippe auf die Weichen im Ring, bis sie geradeaus im Ring weiterführen.' }
 }
 
 // ——— Transporte (Michael, 2026-11-25: «Erstelle Aufgaben für Personentransporte und Gütertransporte»; Bretter und Zahlen gewählt) ———
@@ -226,11 +236,13 @@ function nachNamen(b: Brett) {
   for (const [buchstabe, name] of t) { const x = f.get(buchstabe); if (x) m.set(name, x) }
   return m
 }
+/** warum oft keine Verbindung entsteht (Michael, 2026-11-26: Linie von unten an einen waagrechten Bahnhof) */
+const SEITE = 'Ein Bahnhof hat nur links und rechts ein Gleis: Die Linie muss von der Seite hinein. Rote Punkte zeigen Enden, an denen noch nichts anschliesst.'
 function verbindenN(a: string, c: string, mitTunnel = false, mitBruecke = false) {
   return (b: Brett) => {
     const f = nachNamen(b)
     if (!f.get(a) || !f.get(c)) return { ok: false, text: `Es braucht die Bahnhöfe ${a} und ${c}.` }
-    if (!wegGibt(b, f.get(a)!, f.get(c)!)) return { ok: false, text: `Noch führt kein Gleis von ${a} nach ${c}.` }
+    if (!wegGibt(b, f.get(a)!, f.get(c)!)) return { ok: false, text: `Noch führt kein Gleis von ${a} nach ${c}. ${SEITE}` }
     if (!wegGibt(b, f.get(a)!, f.get(c)!, mitTunnel, mitBruecke)) {
       return { ok: false, text: `${a} und ${c} sind verbunden, aber der Weg führt noch nicht ${[mitTunnel && 'durch einen Tunnel', mitBruecke && 'über eine Brücke'].filter(Boolean).join(' und ')}.` }
     }
@@ -239,7 +251,7 @@ function verbindenN(a: string, c: string, mitTunnel = false, mitBruecke = false)
 }
 function alleVerbunden(b: Brett) {
   const f = [...nachNamen(b)]
-  for (let k = 1; k < f.length; k++) if (!wegGibt(b, f[0][1], f[k][1])) return { ok: false, text: `Noch führt kein Gleis von ${f[0][0]} nach ${f[k][0]}.` }
+  for (let k = 1; k < f.length; k++) if (!wegGibt(b, f[0][1], f[k][1])) return { ok: false, text: `Noch führt kein Gleis von ${f[0][0]} nach ${f[k][0]}. ${SEITE}` }
   return { ok: true, text: 'Geschafft: Alle Bahnhöfe sind verbunden.' }
 }
 
@@ -252,15 +264,15 @@ const zugWaehlen = (art: 'p' | 'g'): Fuehrung => ({ text: `Tippe unten auf den R
 const FAHREN = (text: string): Fuehrung => ({ text: `Drück oben rechts ▶ «Fahren». ${text}`, fertig: (x) => x.faehrt || (x.stand?.fahrgaeste ?? 0) > 0 || (x.stand?.gueter ?? 0) > 0 })
 const FUEHRUNG: Fuehrung[][] = [
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Seewil', 'Bergau')(x) },
-    { text: 'Zieh mit dem Finger von Seewil nach Bergau, Feld für Feld. Gerade Stücke und Kurven legt die Linie von selbst.', felder: [[1, 1], [5, 1]], fertig: verbunden('Seewil', 'Bergau') }],
+    { text: 'Zieh mit dem Finger von Seewil nach Bergau, Feld für Feld. Gerade Stücke und Kurven legt die Linie von selbst. Ein Bahnhof hat nur links und rechts ein Gleis.', felder: [[1, 1], [5, 1]], fertig: verbunden('Seewil', 'Bergau') }],
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Bergau', 'Flussau', false, true)(x) },
     { text: 'Zieh die Linie von Bergau über den Fluss bis Flussau. Ein Gleis auf dem Wasser wird von selbst zur Brücke.', felder: [[5, 1], [9, 1]], fertig: verbunden('Bergau', 'Flussau', false, true) }],
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Flussau', 'Alpwil', true)(x) },
-    { text: 'Zwischen Flussau und Alpwil liegt der Berg. Zieh die Linie über den Berg: Ein Gleis auf dem Berg wird von selbst zum Tunnel.', felder: [[9, 1], [10, 6]], fertig: verbunden('Flussau', 'Alpwil', true) }],
-  [{ text: 'Zieh mit «Linie» ein Gleis von deiner Strecke nach Waldegg. Wo es auf ein Gleis trifft, entsteht eine Weiche.', werkzeug: 'Linie', felder: [[2, 5]], fertig: (x) => alleVerbunden(x.b).ok },
+    { text: 'Zieh die Linie rechts aus Flussau hinaus, dann nach unten über den Berg und von links oder rechts in Alpwil hinein. Ein Gleis auf dem Berg wird von selbst zum Tunnel. Rote Punkte zeigen Enden, an denen noch nichts anschliesst.', felder: [[9, 1], [10, 1], [10, 6]], fertig: verbunden('Flussau', 'Alpwil', true) }],
+  [{ text: 'Zieh mit «Linie» ein Gleis von deiner Strecke seitlich in Waldegg hinein. Wo es auf ein Gleis trifft, entsteht eine Weiche.', werkzeug: 'Linie', felder: [[2, 5]], fertig: (x) => alleVerbunden(x.b).ok },
     FAHREN('Ein Tipp auf eine Weiche stellt sie um, so fährt der Zug auch nach Waldegg.')],
-  [{ text: 'Baue einen geschlossenen Ring, der über den Fluss und durch den Berg führt und an einem Bahnhof vorbeikommt. Rote Punkte zeigen Gleise, die noch offen enden.' },
-    { text: 'Tippe auf die Weichen, bis der Zug im Ring bleibt, und drück dann oben «Prüfen».' }],
+  [{ text: 'Baue einen geschlossenen Ring, der über den Fluss und durch den Berg führt. Er darf an dein Netz anschliessen. Rote Punkte zeigen Gleise, die noch offen enden.' },
+    { text: 'Tippe auf die Weichen im Ring, bis sie im Ring weiterführen. Gelöst ist die Lektion von selbst, sobald ein Zug im Ring im Kreis fahren kann.' }],
   [{ ...zugWaehlen('p'), fertig: (x) => x.werkzeug === 'Personenzug' || hatZug('p')(x) },
     { text: 'Tippe auf ein Gleis, am besten in einem Bahnhof: Dort steht jetzt dein Zug.', fertig: hatZug('p') },
     FAHREN('An den Bahnhöfen warten Fahrgäste mit ihrem Ziel. Jeder Personenwagen hat 4 Plätze.'),
@@ -280,7 +292,7 @@ const STUFEN_REIHE: Array<Omit<Aufgabe, 'brett' | 'vorgabeBrett' | 'neu' | 'reih
   { id: 'reihe-2', titel: 'Über den Fluss', ziel: 'Hinter dem Fluss liegt Flussau. Verlängere die Linie von Bergau nach Flussau: Ein Gleis auf Wasser wird zur Brücke.', pruefen: verbindenN('Bergau', 'Flussau', false, true) },
   { id: 'reihe-3', titel: 'Durch den Berg', ziel: 'Alpwil liegt hinter dem Berg. Verbinde Flussau und Alpwil durch einen Tunnel: Ein Gleis auf einem Berg wird zum Tunnel.', pruefen: verbindenN('Flussau', 'Alpwil', true) },
   { id: 'reihe-4', titel: 'Ein Netz', ziel: 'Waldegg kommt dazu. Verbinde alle Bahnhöfe so, dass man von jedem zu jedem fahren kann. Weichen helfen.', pruefen: alleVerbunden },
-  { id: 'reihe-5', titel: 'Rundkurs', ziel: 'Baue im Netz einen geschlossenen Ring mit einem Bahnhof, durch einen Tunnel und über eine Brücke. Stell die Weichen so, dass der Zug nie umkehren muss.', pruefen: rundkurs },
+  { id: 'reihe-5', titel: 'Rundkurs', ziel: 'Baue im Netz einen geschlossenen Ring, durch einen Tunnel und über eine Brücke. Stell die Weichen so, dass ein Zug im Ring immer im Kreis fährt.', pruefen: rundkurs },
   { id: 'reihe-6', titel: 'Pendler', ziel: 'Jetzt fahren Fahrgäste. Bring 15 Fahrgäste an ihr Ziel. Alle Bahnhöfe müssen verbunden sein.', ...transport({ fahrgaeste: 15 }) },
   { id: 'reihe-7', titel: 'Holz aus dem Wald', ziel: 'Der Forst Tannegg und die Sägerei Seewil kommen dazu. Schliess sie ans Netz an, setz unter «Züge» einen Güterzug und liefere 6 Ladungen.', ...transport({ gueter: 6 }) },
   { id: 'reihe-8', titel: 'Güter und Pendler', ziel: 'Alles zugleich: Setz einen Personenzug und einen Güterzug und bring 10 Fahrgäste und 6 Ladungen ans Ziel.', ...transport({ fahrgaeste: 10, gueter: 6 }) },

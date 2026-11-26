@@ -771,7 +771,7 @@ export function naechstes(b: Brett, s: Stueck): Stueck | null {
 }
 
 /** ein Stück zum Anfangen in einem Feld mit Gleis */
-function erstesStueck(b: Brett, i: number, j: number): Stueck | null {
+function erstesStueck(b: Brett, i: number, j: number, richtung?: 0 | 1): Stueck | null {
   const g = b[j][i].gleis
   if (!g) return null
   let s: Stueck | null
@@ -780,6 +780,7 @@ function erstesStueck(b: Brett, i: number, j: number): Stueck | null {
   // der Zug fährt zuerst dorthin, wo mehr Gleis liegt, nicht in den Prellbock (Michael, 2026-11-26: «wenn ich den Zug auf das Gleis platziere, dann fährt er zuerst
   // Richtung Prellbock und dann erst hinaus»)
   const r = umgekehrt(s)
+  if (richtung !== undefined) return richtung ? r : s
   return voraus(b, r) > voraus(b, s) ? r : s
 }
 /** wie viele Stücke vor diesem noch kommen, bis das Gleis endet, höchstens VORAUS_HOECHSTENS (ein Ring zählt so viel) */
@@ -995,12 +996,12 @@ export class Zug {
   }
 
   /** ein Zug genau auf diesem Feld, als Personen- oder Güterzug (vom Werkzeug «Personenzug» oder «Güterzug» gesetzt) */
-  static setzenBei(b: Brett, i: number, j: number, art: 'person' | 'gueter', anzahl = WAGEN): Zug | null {
-    return Zug.ab(b, i, j, anzahl, art)
+  static setzenBei(b: Brett, i: number, j: number, art: 'person' | 'gueter', anzahl = WAGEN, richtung?: 0 | 1): Zug | null {
+    return Zug.ab(b, i, j, anzahl, art, richtung)
   }
 
-  private static ab(b: Brett, i: number, j: number, anzahl: number, art: 'person' | 'gueter' = 'person'): Zug | null {
-    const start = erstesStueck(b, i, j)
+  private static ab(b: Brett, i: number, j: number, anzahl: number, art: 'person' | 'gueter' = 'person', richtung?: 0 | 1): Zug | null {
+    const start = erstesStueck(b, i, j, richtung)
     if (!start) return null
     const z = new Zug()
     z.art = art
