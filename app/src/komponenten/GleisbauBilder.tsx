@@ -196,16 +196,31 @@ export function Landschaft({ brett }: { brett: Brett }) {
         {/* Flüsse: von der Mitte zu jeder Kante, an der Fluss oder Wasser anschliesst, mit Ufer (Breiten gewählt) */}
         {(() => {
           const d: string[] = [], dw: string[] = [], m: string[] = []
-          // je Stück von der Mitte zur Kante, gerade Enden am Rand des Felds, in der Mitte ein Kreis für die Biegung
+          // seit 2026-11-26 (Michael: «Bitte Flusskurven so schön rund wie die Gleise und Strassen»): zwei Kanten über Eck als Viertelkreis um die Ecke des Felds,
+          // zwei gegenüber gerade, sonst je Stück von der Mitte zur Kante mit einem Kreis in der Mitte
+          const DX = [0, 1, 0, -1], DY = [-1, 0, 1, 0], K = 0.5 * 0.5523
           for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
             const k = flussKanten(brett, i, j)
+            const cx = i + 0.5, cy = j + 0.5
+            const rand = (e: number) => [cx + 0.5 * DX[e], cy + 0.5 * DY[e]]
+            if (k.length === 2 && (k[0] + k[1]) % 2 === 1) {
+              const [a, c] = k, [ax, ay] = rand(a), [bx, by] = rand(c)
+              const bogen = `M${ax},${ay} C${ax - K * DX[a]},${ay - K * DY[a]} ${bx - K * DX[c]},${by - K * DY[c]} ${bx},${by}`
+              d.push(bogen); dw.push(bogen)
+            } else if (k.length === 2) {
+              const [ax, ay] = rand(k[0]), [bx, by] = rand(k[1])
+              d.push(`M${ax},${ay} L${bx},${by}`); dw.push(`M${ax},${ay} L${bx},${by}`)
+            } else {
+              for (const e of k) { const [ex, ey] = rand(e); d.push(`M${cx},${cy} L${ex},${ey}`); dw.push(`M${cx},${cy} L${ex},${ey}`) }
+              if (k.length) m.push(`M${cx},${cy} l0,0`)
+            }
             for (const e of k) {
               // in einen See läuft der Fluss über das Ufer hinein (Michael, 2026-11-24: «Wäre schön wenn sich Fluss mit See verbinden liesse»), gewählt
-              const see = brett[j + [-1, 0, 1, 0][e]]?.[i + [0, 1, 0, -1][e]]?.grund === 'wasser'
-              const zu = (l: number) => `M${i + 0.5},${j + 0.5} L${i + 0.5 + [0, l, 0, -l][e]},${j + 0.5 + [-l, 0, l, 0][e]}`
-              d.push(zu(see ? 0.62 : 0.5)); dw.push(zu(see ? 0.7 : 0.5))
+              const see = brett[j + DY[e]]?.[i + DX[e]]?.grund === 'wasser'
+              if (!see) continue
+              const [ex, ey] = rand(e), weg = (l: number) => `M${ex},${ey} L${ex + l * DX[e]},${ey + l * DY[e]}`
+              d.push(weg(0.12)); dw.push(weg(0.2))
             }
-            if (k.length) m.push(`M${i + 0.5},${j + 0.5} l0,0`)
           }
           return d.length ? <>
             <path d={d.join(' ')} fill="none" stroke={FUELLUNG.ufer} strokeWidth={0.46} />
