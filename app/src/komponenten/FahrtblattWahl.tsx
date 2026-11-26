@@ -23,13 +23,23 @@ export function FahrtblattWahl({ index }: { index: BahnhofIndex | null }) {
       </p>
       {index && (
         <div className="mt-4 space-y-3">
-          <BahnhofFeld bezeichnung="Von" wert={blatt.von} bahnhoefe={imNetz} name={name}
-                       aendern={(u) => setBlatt((w) => ({ ...w, von: u }))} />
-          <BahnhofFeld bezeichnung="Nach" wert={blatt.nach} bahnhoefe={imNetz} name={name}
-                       aendern={(u) => setBlatt((w) => ({ ...w, nach: u }))} />
-          <BahnhofFeld bezeichnung="Über (optional)" wert={blatt.ueber} bahnhoefe={imNetz} name={name}
-                       aendern={(u) => setBlatt((w) => ({ ...w, ueber: u }))} />
-          <BahnenWahl />
+          {/* am Desktop die drei Felder nebeneinander, «Über» in der Mitte (Michael, 2026-11-26: «Bitte die drei Felder Von, Nach und Über nebeneinander.
+              Das Über in der Mitte»); auf Handy und Tablet untereinander wie bisher */}
+          <div className="space-y-3 xl:grid xl:grid-cols-3 xl:gap-4 xl:space-y-0">
+            <div className="xl:order-1">
+              <BahnhofFeld bezeichnung="Von" wert={blatt.von} bahnhoefe={imNetz} name={name}
+                           aendern={(u) => setBlatt((w) => ({ ...w, von: u }))} />
+            </div>
+            <div className="xl:order-3">
+              <BahnhofFeld bezeichnung="Nach" wert={blatt.nach} bahnhoefe={imNetz} name={name}
+                           aendern={(u) => setBlatt((w) => ({ ...w, nach: u }))} />
+            </div>
+            <div className="xl:order-2">
+              <BahnhofFeld bezeichnung="Über (optional)" wert={blatt.ueber} bahnhoefe={imNetz} name={name}
+                           aendern={(u) => setBlatt((w) => ({ ...w, ueber: u }))} />
+            </div>
+          </div>
+          <BahnenWahl offen />
           <button type="button" disabled={!bereit}
                   onClick={() => {
                     window.location.hash = `#/fahrtblatt?von=${blatt.von}&nach=${blatt.nach}${blatt.ueber ? `&ueber=${blatt.ueber}` : ''}`

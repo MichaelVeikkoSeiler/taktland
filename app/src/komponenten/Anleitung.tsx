@@ -532,7 +532,8 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
               rote Linie links bis an die untere Kante des Bildes ziehen. Michael Veikko Seiler und Idee, Konzept und Gestaltung oben bündig mit dem Bild») */}
           {/* seit 2026-11-25 auch auf Handy und Tablet so, dort mit dem Gesicht, 73 px (Michael: «Bild linksbündig mit oberem Text. Name oben bündig mit dem Bild.
               Links rote Linie bis an die Unterkante des Bildes») */}
-          <div className="flex items-start gap-3">
+          {/* Abstand zum Namen seit 2026-11-26 30 px statt 12 (Michael: «Beim Foto von mir bitte rechts davon den Abstand zum Namen um 150% vergrössern») */}
+          <div className="flex items-start gap-[30px]">
             <img src={portraet} alt="Michael Veikko Seiler" width={73} height={73} className="size-[73px] flex-none object-cover xl:hidden" />
             <img src={portraetBreit} alt="Michael Veikko Seiler" width={213} height={112} className="hidden h-28 w-auto flex-none xl:block" />
             <div className="-mt-1">
