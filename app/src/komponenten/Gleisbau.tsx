@@ -2489,8 +2489,6 @@ export function Gleisbau() {
                       className={`min-w-0 flex-1 text-left text-sm leading-snug ${zielOffen ? '' : 'line-clamp-2'}`}>{aufgabe.ziel}</button>
               <div className="flex flex-none flex-col items-end gap-1">
                 <Sterne n={fortschritt[aufgabe.id] ?? 0} />
-                <button type="button" onClick={() => { const e = bewerten(aufgabe, brett, stand); setErgebnis(e); setMeldung(e.ok ? null : e.text) }}
-                        className="rounded-lg bg-sbb-red px-3 py-1 text-sm font-bold text-white hover:bg-sbb-red125">Prüfen</button>
               </div>
             </div>
           )}
