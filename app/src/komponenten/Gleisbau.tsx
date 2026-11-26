@@ -13,7 +13,7 @@ import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
 import { bild, GelaendeBild, GELAENDE_FOLGE, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
-import { type Gueter, gueterHalt, gueterStart, gueterZeit, type Ladung } from '../gleisbauGueter'
+import { type Gueter, gueterHalt, gueterStart, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
 import { GUETER, LOKS, type LokTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
 import { AUFTRAEGE, type Auftrag, auftragAlsAufgabe, type Betrieb, betriebLesen, betriebMerken, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
 import BetriebSeite, { ZugWahl } from './GleisbauBetrieb'
@@ -1353,6 +1353,9 @@ export function Gleisbau() {
       if (aufgabe.reihe !== undefined) reiheGeloestMerken(aufgabe.id, brett)
     } else setErgebnis((alt) => (alt?.ok ? null : alt))
   }, [aufgabe, brett, stand])
+  // gelöst: der Zug hält an, die Karte steht nicht vor einer weiterlaufenden Fahrt (Michael, 2026-11-26: «nachdem der Auftrag geschafft ist und das Abschluss
+  // Schild kommt fährt der Zug im Hintergrund immer weiter»)
+  useEffect(() => { if (geloest && faehrt) fahren() }, [geloest]) // eslint-disable-line react-hooks/exhaustive-deps
   // in der Reihe das angefangene Brett merken
   useEffect(() => {
     if (aufgabe?.reihe !== undefined) reiheArbeitMerken(aufgabe.id, brett)
@@ -1593,11 +1596,17 @@ export function Gleisbau() {
         const b0 = brettRef.current
         let neuG = gueterZeit(gut, dt)
         for (const z of zz) {
-          if (z.art === 'person' || z.halte === (gutHalte.current.get(z) ?? 0)) continue
+          if (z.art === 'person') continue
+          if (z.halte === (gutHalte.current.get(z) ?? 0)) {
+            // am Schuppen warten, bis die Wagen beladen sind
+            if (gut.laden.has(z) && gueterWarten(gut, z, z.haltFeld, dt, false)) neuG = true
+            continue
+          }
           gutHalte.current.set(z, z.halte)
           const [hi, hj] = z.haltFeld.split(',').map(Number)
           if (!gueterGilt(b0[hj]?.[hi])) continue
           const { ab, auf } = gueterHalt(gut, z, z.haltFeld)
+          gueterWarten(gut, z, z.haltFeld, 0, true)
           if (ab) antwortTon('richtig')
           if (ab || auf) neuG = true
         }
@@ -2832,8 +2841,9 @@ export function Gleisbau() {
                   {/* nach der letzten Lektion weiter zum Bahnbetrieb */}
                   {!naechste && aufgabe.reihe !== undefined && <button type="button" autoFocus onClick={() => { window.location.hash = '#/gleisbau?betrieb' }}
                                        className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Zum Bahnbetrieb</button>}
-                  <button type="button" onClick={() => setGeloest(false)}
-                          className="rounded-lg border border-sbb-cloud bg-white px-5 py-3 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Weiterbauen</button>
+                  {/* ohne «Weiterbauen» (Michael, 2026-11-26: «Weiterbauen macht gar keinen Sinn oder? Man will ja zur nächsten Aufgabe gehen»), sonst zur Übersicht */}
+                  {!naechste && aufgabe.reihe === undefined && !auftrag && <button type="button" autoFocus onClick={() => { window.location.hash = '#/gleisbau' }}
+                                       className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Zur Übersicht</button>}
                 </div>
               </div>
             </div>

@@ -1009,6 +1009,8 @@ export class Zug {
   private kopf = 0
   private tempo = 0
   private halt = 0
+  /** am Halt länger stehen bleiben (zum Beladen), nur solange er schon steht; gibt zurück, ob er steht */
+  haltVerlaengern(s: number): boolean { if (this.halt <= 0 || !this.amBahnhof) return false; this.halt = Math.max(this.halt, s); return true }
   /**
    * die Fahrzeuge von der Spitze an (seit 2026-11-24, Michael: «Wäre noch spannend wenn standard elektrifizierte Trassen sind und teilweise Abstellgleise ohne.
    * Fährt ein Stromzug da hinein bremst er ab und beibt stehen. Eine Diesellok muss abschleppen»): ein abgeschleppter Zug hängt mit seinen Fahrzeugen dran
