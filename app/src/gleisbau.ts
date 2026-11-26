@@ -971,6 +971,8 @@ const ANFAHREN = 2.2, BREMSEN = 1.1, KRIECHEN = 0.12, BREMS_SICHT = 3
  * etwa 1,4, die grösste nicht mehr gebremst (Höchsttempo 1,5); gewählt
  */
 const KURVE_QUER = 1.3, KURVE_FREI = 0.55
+/** vor einer Kurve bremst der Zug kräftiger und damit später als vor einem Halt (seit 2026-11-26, Michael: «Zug bremst etwas zu früh vor einer Kurve ab»; gewählt) */
+const KURVE_BREMSEN = 2.2
 const kurvenTempo = (s: Stueck) => {
   const r = s.gross ? s.gross.r : s.ein >= 0 && s.aus >= 0 && (s.ein + 2) % 4 !== s.aus ? 0.5 : Infinity
   return Math.sqrt(KURVE_QUER * r)
@@ -1376,7 +1378,7 @@ export class Zug {
     for (let k = 0; k < 6 && d < BREMS_SICHT; k++) {
       const n = naechstes(b, s)
       if (!n) break
-      v = Math.min(v, Math.sqrt(kurvenTempo(n) ** 2 + 2 * BREMSEN * d))
+      v = Math.min(v, Math.sqrt(kurvenTempo(n) ** 2 + 2 * KURVE_BREMSEN * d))
       d += stueckLaenge(n); s = n
     }
     return v
