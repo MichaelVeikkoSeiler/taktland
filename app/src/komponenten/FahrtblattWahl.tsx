@@ -39,7 +39,8 @@ export function FahrtblattWahl({ index }: { index: BahnhofIndex | null }) {
                            aendern={(u) => setBlatt((w) => ({ ...w, ueber: u }))} />
             </div>
           </div>
-          <BahnenWahl offen />
+          {/* mehr Abstand zu den Feldern darüber (Michael, 2026-11-26: «Abstand zwischen den Eingabefeldern für die Bahnhöfe und den Bahnen vergrössern») */}
+          <div className="pt-4"><BahnenWahl offen /></div>
           <button type="button" disabled={!bereit}
                   onClick={() => {
                     window.location.hash = `#/fahrtblatt?von=${blatt.von}&nach=${blatt.nach}${blatt.ueber ? `&ueber=${blatt.ueber}` : ''}`
