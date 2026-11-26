@@ -2,7 +2,7 @@
  * Bahnbetrieb im Gleisbau: beim ersten Öffnen zwei Fragen (Schwierigkeit und Sparte), dann die Aufträge nach Stufe und Sparte, Geld und Depot; dazu
  * das Blatt, auf dem man einen Zug aus Lok und Wagen zusammenstellt (gleisbauBetrieb.ts, gleisbauFahrzeuge.ts). Alles gewählt
  */
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AUFTRAEGE, type Auftrag, type Betrieb, brauchtWagen, frei, SPARTEN, type Sparte, STUFEN, type Stufe, stufeOffen, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
 import { GUETER, type LokTyp, LOKS, type WagenTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
 
@@ -57,11 +57,11 @@ function Sterne({ n }: { n: number }) {
 }
 
 /** eine Lok oder ein Wagen als kleines Bild von der Seite (gewählt) */
-export function FahrzeugBild({ lok, wagen }: { lok?: LokTyp; wagen?: WagenTyp }) {
+export function FahrzeugBild({ lok, wagen, klasse = 'h-6 w-14' }: { lok?: LokTyp; wagen?: WagenTyp; klasse?: string }) {
   if (lok) {
     const f = LOKS[lok].farbe
     return (
-      <svg viewBox="0 0 60 24" className="h-6 w-14 flex-none" aria-hidden="true">
+      <svg viewBox="0 0 60 24" className={`${klasse} flex-none`} aria-hidden="true">
         <rect x={4} y={6} width={50} height={13} rx={3} fill={f} stroke="#2f2f2f" strokeWidth={1} />
         <rect x={44} y={8} width={8} height={5} rx={1} fill="#1f2a36" />
         {!LOKS[lok].diesel && <path d="M22,6 L30,1 L38,1" stroke="#3a3a3a" strokeWidth={1.4} fill="none" />}
@@ -73,7 +73,7 @@ export function FahrzeugBild({ lok, wagen }: { lok?: LokTyp; wagen?: WagenTyp })
   const t = wagen ?? 'person'
   const farbe: Record<WagenTyp, string> = { person: '#f4f4f4', rungen: '#5f6266', schuett: '#7d7f82', kessel: '#262626', milch: '#f4f4f0', container: '#2f6fb0', auto: '#9a9a9a', gedeckt: '#8a4b32' }
   return (
-    <svg viewBox="0 0 60 24" className="h-6 w-14 flex-none" aria-hidden="true">
+    <svg viewBox="0 0 60 24" className={`${klasse} flex-none`} aria-hidden="true">
       {t === 'kessel' || t === 'milch'
         ? <rect x={4} y={6} width={52} height={12} rx={6} fill={farbe[t]} stroke="#2f2f2f" strokeWidth={1} />
         : <rect x={4} y={t === 'rungen' || t === 'auto' ? 13 : 6} width={52} height={t === 'rungen' || t === 'auto' ? 5 : 12} rx={2} fill={farbe[t]} stroke="#2f2f2f" strokeWidth={1} />}
@@ -227,111 +227,200 @@ export default function BetriebSeite({ betrieb, setBetrieb, oeffnen }: { betrieb
 }
 
 /**
- * das Blatt zum Zusammenstellen eines Zugs: eine freie Lok und Wagen, so viele sie zieht. Seit 2026-11-26 klarer (Michael: «Das Konzept mit dem Auswählen der
- * richtigen Züge mit Wagen muss klarer sein … Das Kaufen von Wagen muss verständlicher sein und auch das Einsetzen deren im Spielfeld»): in zwei Schritten,
- * was der Auftrag braucht, je Wagen, was er trägt, fehlende Wagen gleich hier kaufen, darunter, was der ganze Zug trägt
+ * das Blatt zum Zusammenstellen eines Zugs. Seit 2026-11-26 mit Ziehen und Ablegen (Michael: «Diese Auswahl muss interaktiv mit Drag & Drop aufgebaut werden. Ich
+ * stelle mir jedenfalls für den Desktop vor, dass man oben leere Felder hat und die verschiedenen Modelle darauf zieht und immer gleich den Preis und die Kapazitäten
+ * im Total sieht»): oben der Zug als Reihe von Plätzen (Lok, dann so viele Wagen, wie sie zieht), darunter alle Loks und Wagen; ziehen oder antippen legt ein
+ * Fahrzeug in den Zug, aus dem Zug hinausziehen oder antippen nimmt es weg; was nicht im Depot steht, wird beim Bestätigen gekauft; daneben immer die Summe:
+ * Kosten, Fahrgäste, Ladungen, Geld danach. Mit Zeiger-Ereignissen, so geht es mit Maus, Finger und Stift
  */
+type Ziehen = { art: 'lok' | 'wagen'; typ: string; x: number; y: number; vonPlatz?: number; bewegt: boolean; x0: number; y0: number }
 export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, entfernen, zu }: {
   betrieb: Betrieb; setBetrieb: (f: (b: Betrieb) => Betrieb) => void; auftrag: Auftrag; andere: Zusammenstellung[]; anfang: Zusammenstellung | null
   setzen: (z: Zusammenstellung) => void; entfernen: () => void; zu: () => void
 }) {
   const f = frei(betrieb, andere)
-  const [lok, setLok] = useState<LokTyp | null>(anfang?.lok ?? f.loks[0] ?? null)
+  const [lok, setLok] = useState<LokTyp | null>(anfang?.lok ?? null)
   const [wagen, setWagen] = useState<WagenTyp[]>(anfang?.wagen ?? [])
+  const [zieh, setZieh] = useState<Ziehen | null>(null)
+  const ziehRef = useRef<Ziehen | null>(null)
   const zugkraft = lok ? LOKS[lok].zugkraft : 0
   const n = (w: WagenTyp) => wagen.filter((x) => x === w).length
-  // alle Loks: freie zum Wählen, die übrigen blass mit «Kaufen» (Michael, 2026-11-26: «Ja, bitte setzt das so mal um», auf: alle fünf im Blatt, die nicht gekauften blass)
-  const loks = Object.keys(LOKS) as LokTyp[]
-  const lokFrei = (l: LokTyp) => f.loks.filter((x) => x === l).length
-  const lokKaufen = (l: LokTyp) => {
-    if (betrieb.geld < LOKS[l].preis) return
-    setBetrieb((b) => (b.geld < LOKS[l].preis ? b : { ...b, geld: b.geld - LOKS[l].preis, loks: [...b.loks, l] }))
-    setLok(l); setWagen((w) => w.slice(0, LOKS[l].zugkraft))
-  }
   const braucht = brauchtWagen(auftrag)
-  // was der Auftrag braucht zuerst, dann was im Depot steht
-  const arten = (Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt' && (braucht.includes(w) || (f.wagen[w] ?? 0) > 0 || n(w) > 0))
+  const loks = Object.keys(LOKS) as LokTyp[]
+  const wagenArten = (Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt')
     .sort((a, b) => Number(braucht.includes(b)) - Number(braucht.includes(a)))
-  const kaufen = (w: WagenTyp) => setBetrieb((b) => (b.geld < WAGEN_ARTEN[w].preis ? b
-    : { ...b, geld: b.geld - WAGEN_ARTEN[w].preis, wagen: { ...b.wagen, [w]: (b.wagen[w] ?? 0) + 1 } }))
+  // was gekauft werden muss: die Lok, wenn keine freie da ist, und Wagen über die freien hinaus
+  const lokKauf = lok && !f.loks.includes(lok) ? LOKS[lok].preis : 0
+  const wagenKauf = wagenArten.reduce((a, w) => a + Math.max(0, n(w) - (f.wagen[w] ?? 0)) * WAGEN_ARTEN[w].preis, 0)
+  const kosten = lokKauf + wagenKauf, danach = betrieb.geld - kosten
   const plaetze = n('person') * WAGEN_ARTEN.person.plaetze
-  const traegt = [plaetze ? `${plaetze} Fahrgäste` : '', ...arten.filter((w) => w !== 'person' && n(w)).map((w) => `${n(w)} ${n(w) === 1 ? 'Ladung' : 'Ladungen'} ${GUETER[WAGEN_ARTEN[w].gut!].name}`)].filter(Boolean)
+  const ladungen = wagenArten.filter((w) => w !== 'person' && n(w)).map((w) => `${n(w)} ${GUETER[WAGEN_ARTEN[w].gut!].name}`)
   const fehlt = braucht.filter((w) => !n(w))
+  const lokWahl = (l: LokTyp) => { setLok(l); setWagen((w) => w.slice(0, LOKS[l].zugkraft)) }
+  const wagenDazu = (w: WagenTyp, an?: number) => setWagen((l) => {
+    if (!lok || l.length >= zugkraft && an === undefined) return l
+    const neu = [...l]
+    if (an !== undefined && an < neu.length) neu[an] = w
+    else if (neu.length < zugkraft) neu.push(w)
+    return neu
+  })
+  const ablegen = (z: Ziehen, ziel: string | null) => {
+    // ein Fahrzeug aus dem Zug: daneben abgelegt nimmt es weg, auf einem anderen Wagenplatz tauscht es
+    if (z.vonPlatz !== undefined) {
+      if (ziel === null || ziel === 'lok') { setWagen((l) => l.filter((_, k) => k !== z.vonPlatz)); return }
+      const nach = Number(ziel)
+      setWagen((l) => { const neu = [...l]; const [x] = neu.splice(z.vonPlatz!, 1); neu.splice(Math.min(nach, neu.length), 0, x); return neu })
+      return
+    }
+    if (z.art === 'lok') { if (ziel !== null) lokWahl(z.typ as LokTyp); return }
+    if (ziel !== null && ziel !== 'lok') wagenDazu(z.typ as WagenTyp, Number(ziel))
+  }
+  // Ziehen über das ganze Fenster verfolgen
+  useEffect(() => {
+    if (!zieh) return
+    const bewegen = (e: PointerEvent) => {
+      const z = ziehRef.current
+      if (!z) return
+      const neu = { ...z, x: e.clientX, y: e.clientY, bewegt: z.bewegt || Math.hypot(e.clientX - z.x0, e.clientY - z.y0) > 6 }
+      ziehRef.current = neu; setZieh(neu)
+    }
+    const los = (e: PointerEvent) => {
+      const z = ziehRef.current
+      ziehRef.current = null; setZieh(null)
+      if (!z) return
+      if (!z.bewegt) {
+        // ein Tipp: aus der Auswahl in den Zug, aus dem Zug hinaus
+        if (z.vonPlatz !== undefined) setWagen((l) => l.filter((_, k) => k !== z.vonPlatz))
+        else if (z.art === 'lok') lokWahl(z.typ as LokTyp)
+        else wagenDazu(z.typ as WagenTyp)
+        return
+      }
+      const el = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-platz]') as HTMLElement | null
+      ablegen(z, el?.dataset.platz ?? null)
+    }
+    window.addEventListener('pointermove', bewegen)
+    window.addEventListener('pointerup', los)
+    window.addEventListener('pointercancel', los)
+    return () => { window.removeEventListener('pointermove', bewegen); window.removeEventListener('pointerup', los); window.removeEventListener('pointercancel', los) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [!!zieh, lok, zugkraft])
+  const greifen = (e: React.PointerEvent, art: 'lok' | 'wagen', typ: string, vonPlatz?: number) => {
+    e.preventDefault()
+    const z: Ziehen = { art, typ, x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, vonPlatz, bewegt: false }
+    ziehRef.current = z; setZieh(z)
+  }
+  const bestaetigen = () => {
+    if (!lok || !wagen.length || danach < 0) return
+    // was fehlt, jetzt kaufen
+    if (kosten > 0) setBetrieb((b) => {
+      const fb = frei(b, andere), w2 = { ...b.wagen }
+      for (const w of wagenArten) { const mehr = Math.max(0, n(w) - (fb.wagen[w] ?? 0)); if (mehr) w2[w] = (w2[w] ?? 0) + mehr }
+      return { ...b, geld: b.geld - kosten, loks: fb.loks.includes(lok) ? b.loks : [...b.loks, lok], wagen: w2 }
+    })
+    setzen({ lok, wagen })
+  }
+  const platzKlasse = (aktiv: boolean) => `flex h-16 w-24 flex-none flex-col items-center justify-center rounded-lg border-2 border-dashed text-xs ${aktiv
+    ? 'border-sbb-red bg-sbb-red/5' : 'border-sbb-cloud dark:border-sbb-iron'}`
+  const karte = 'flex touch-none select-none items-center gap-2 rounded-lg bg-sbb-milk px-2 py-1.5 text-left text-sm cursor-grab active:cursor-grabbing dark:bg-sbb-midnight'
   return (
     <div className="absolute inset-0 z-20 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) zu() }}>
-      <div className="max-h-[85%] w-full overflow-y-auto rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
+      <div className="max-h-[90%] w-full overflow-y-auto rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
         <div className="flex items-baseline justify-between gap-2">
           <p className="text-lg font-bold">Zug zusammenstellen</p>
           <span className="rounded-lg bg-sbb-milk px-2 py-0.5 text-sm font-bold tabular-nums dark:bg-sbb-midnight">{chf(betrieb.geld)}</span>
         </div>
         <p className="mt-1 text-sm leading-snug">
           Für diesen Auftrag brauchst du: {braucht.map((w) => <span key={w} className="font-bold">{WAGEN_ARTEN[w].name} ({w === 'person' ? `${WAGEN_ARTEN.person.plaetze} Plätze` : `1 Ladung ${GUETER[WAGEN_ARTEN[w].gut!].name}`})</span>)
-            .flatMap((x, k) => (k ? [', ', x] : [x]))}.
+            .flatMap((x, k) => (k ? [', ', x] : [x]))}. Zieh Lok und Wagen in die leeren Felder oder tippe sie an.
         </p>
-        <p className="mt-3 font-bold">1. Lok wählen</p>
-        <div className="mt-0.5"><LokLegende /></div>
-        <ul className="mt-1.5 grid gap-1.5">
-          {loks.map((l) => {
-            const da = lokFrei(l) > 0, besitzt = betrieb.loks.includes(l)
-            const text = <span className="flex flex-wrap items-center gap-x-2">{LOKS[l].art} <LokWerte l={l} /></span>
-            return (
-              <li key={l}>
-                {da ? (
-                  <button type="button" aria-pressed={lok === l} onClick={() => { setLok(l); setWagen((w) => w.slice(0, LOKS[l].zugkraft)) }}
-                          className={`flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm ${lok === l ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-sbb-milk dark:bg-sbb-midnight'}`}>
-                    <FahrzeugBild lok={l} />
-                    <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">{LOKS[l].name}</span><span className="block opacity-80">{text}</span></span>
-                    {lok === l && <span aria-hidden="true" className="font-bold">✓</span>}
+        {/* der Zug: eine Reihe von Plätzen auf einem Gleis */}
+        <div className="mt-3 flex gap-4 lg:items-start">
+          <div className="min-w-0 flex-1">
+            <div className="flex gap-1.5 overflow-x-auto pb-2">
+              <div data-platz="lok" className={platzKlasse(!!zieh?.bewegt && zieh.art === 'lok')}>
+                {lok ? (
+                  <button type="button" onPointerDown={(e) => greifen(e, 'lok', lok)} className="flex touch-none flex-col items-center" title="Andere Lok: eine andere hierher ziehen">
+                    <FahrzeugBild lok={lok} klasse="h-9 w-20" /><span className="font-bold">{LOKS[lok].name}</span>
                   </button>
-                ) : (
-                  <div className="flex items-center gap-2 px-2 py-1 text-sm">
-                    <span className="opacity-45"><FahrzeugBild lok={l} /></span>
-                    <span className="min-w-0 flex-1 leading-tight text-sbb-metal dark:text-sbb-storm"><span className="font-bold">{LOKS[l].name}</span>
-                      <span className="block">{text}{besitzt ? <span className="block">fährt schon</span> : null}</span></span>
-                    <button type="button" disabled={betrieb.geld < LOKS[l].preis} aria-label={`${LOKS[l].name} kaufen für ${chf(LOKS[l].preis)}`} onClick={() => lokKaufen(l)} className={KNOPF_PREIS}>{chf(LOKS[l].preis)}</button>
+                ) : <span className="text-sbb-metal dark:text-sbb-storm">Lok</span>}
+              </div>
+              {Array.from({ length: lok ? zugkraft : 3 }, (_, k) => {
+                const w = wagen[k]
+                return (
+                  <div key={k} data-platz={String(k)} className={`${platzKlasse(!!zieh?.bewegt && zieh.art === 'wagen' && !!lok)} ${lok ? '' : 'opacity-40'}`}>
+                    {w ? (
+                      <button type="button" onPointerDown={(e) => greifen(e, 'wagen', w, k)} className="flex touch-none flex-col items-center" title="Antippen oder hinausziehen nimmt ihn weg">
+                        <FahrzeugBild wagen={w} klasse="h-9 w-20" /><span className="max-w-[5.5rem] truncate">{WAGEN_ARTEN[w].name}</span>
+                      </button>
+                    ) : <span className="text-sbb-metal dark:text-sbb-storm">{lok ? `Wagen ${k + 1}` : '—'}</span>}
                   </div>
-                )}
-              </li>
-            )
-          })}
-        </ul>
-        <p className="mt-3 font-bold">2. Wagen anhängen <span className="font-medium text-sbb-metal dark:text-sbb-storm">({wagen.length} von {zugkraft})</span></p>
-        <ul className="mt-1.5 grid gap-2">
-          {arten.map((w) => {
-            const frei = (f.wagen[w] ?? 0) - n(w)
-            return (
-              <li key={w} className="flex items-center gap-2">
-                <FahrzeugBild wagen={w} />
-                <span className="min-w-0 flex-1 text-sm leading-tight">
-                  <span className="font-bold">{WAGEN_ARTEN[w].name}</span>
-                  <span className="block text-sbb-metal dark:text-sbb-storm">{WAGEN_ARTEN[w].text} · {n(w) ? (frei > 0 ? `${n(w)} angehängt, ${frei} weitere im Depot` : `${n(w)} angehängt`) : frei > 0 ? `${frei} im Depot` : 'keiner im Depot'}</span>
-                </span>
-                {frei <= 0 && !n(w) ? (
-                  <button type="button" disabled={betrieb.geld < WAGEN_ARTEN[w].preis} aria-label={`${WAGEN_ARTEN[w].name} kaufen für ${chf(WAGEN_ARTEN[w].preis)}`} onClick={() => kaufen(w)} className={KNOPF_PREIS}>{chf(WAGEN_ARTEN[w].preis)}</button>
-                ) : (
-                  <>
-                    <button type="button" aria-label={`${WAGEN_ARTEN[w].name} weniger`} disabled={!n(w)} onClick={() => { const k = wagen.lastIndexOf(w); setWagen((l) => l.filter((_, m) => m !== k)) }} className={`${KNOPF_WEISS} w-11 px-0`}>−</button>
-                    <span className="w-5 text-center font-bold tabular-nums">{n(w)}</span>
-                    <button type="button" aria-label={`${WAGEN_ARTEN[w].name} mehr`} disabled={wagen.length >= zugkraft || frei <= 0}
-                            onClick={() => setWagen((l) => [...l, w])} className={`${KNOPF_WEISS} w-11 px-0`}>+</button>
-                  </>
-                )}
-              </li>
-            )
-          })}
-        </ul>
-        {/* was der ganze Zug trägt */}
-        <p className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm leading-snug dark:bg-sbb-midnight">
-          {lok ? <><span className="font-bold">Dein Zug:</span> {LOKS[lok].name}{wagen.length ? ` und ${wagen.length} Wagen` : ', noch ohne Wagen'}.
-            {traegt.length ? ` Er trägt ${traegt.join(' und ')} auf einmal.` : ''}
-            {fehlt.length ? <span className="block font-bold text-sbb-red">Es fehlt noch: {fehlt.map((w) => WAGEN_ARTEN[w].name).join(', ')}.</span> : null}</> : 'Wähle zuerst eine Lok.'}
-        </p>
+                )
+              })}
+            </div>
+            {!lok && <p className="text-sm text-sbb-metal dark:text-sbb-storm">Zuerst eine Lok: Sie bestimmt, wie viele Wagen Platz haben.</p>}
+          </div>
+        </div>
+        {/* die Summe, immer sichtbar */}
+        <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 rounded-lg bg-sbb-milk px-3 py-2 text-sm sm:grid-cols-4 dark:bg-sbb-midnight">
+          <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Kosten</span><span className="font-bold tabular-nums">{kosten ? chf(kosten) : 'alles im Depot'}</span></span>
+          <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Fahrgäste</span><span className="font-bold tabular-nums">{plaetze}</span></span>
+          <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Ladungen</span><span className="font-bold">{ladungen.length ? ladungen.join(', ') : '0'}</span></span>
+          <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Geld danach</span><span className={`font-bold tabular-nums ${danach < 0 ? 'text-sbb-red' : ''}`}>{chf(danach)}</span></span>
+          {fehlt.length > 0 && <span className="col-span-full font-bold text-sbb-red">Es fehlt noch: {fehlt.map((w) => WAGEN_ARTEN[w].name).join(', ')}.</span>}
+          {danach < 0 && <span className="col-span-full font-bold text-sbb-red">Dafür reicht das Geld nicht.</span>}
+        </div>
+        {/* zum Ziehen: alle Loks und Wagen */}
+        <div className="mt-3 grid gap-3 lg:grid-cols-2">
+          <section>
+            <p className="font-bold">Loks</p>
+            <div className="mt-0.5"><LokLegende /></div>
+            <ul className="mt-1.5 grid gap-1.5 sm:grid-cols-2">
+              {loks.map((l) => {
+                const da = f.loks.filter((x) => x === l).length - (lok === l ? 1 : 0)
+                return (
+                  <li key={l}>
+                    <button type="button" onPointerDown={(e) => greifen(e, 'lok', l)} className={`${karte} w-full ${lok === l ? 'ring-2 ring-sbb-anthracite dark:ring-sbb-white' : ''}`}>
+                      <FahrzeugBild lok={l} />
+                      <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">{LOKS[l].name}</span>
+                        <span className="flex flex-wrap items-center gap-x-2 text-sbb-metal dark:text-sbb-storm">{LOKS[l].art} <LokWerte l={l} /></span></span>
+                      <span className="flex-none text-right text-xs tabular-nums">{lok === l ? (lokKauf ? `${chf(LOKS[l].preis)}, im Zug` : 'im Zug') : da > 0 ? `${da} im Depot` : chf(LOKS[l].preis)}</span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
+          <section>
+            <p className="font-bold">Wagen</p>
+            <ul className="mt-1.5 grid gap-1.5 sm:grid-cols-2">
+              {wagenArten.map((w) => {
+                const da = (f.wagen[w] ?? 0) - n(w)
+                return (
+                  <li key={w}>
+                    <button type="button" disabled={!lok} onPointerDown={(e) => lok && greifen(e, 'wagen', w)} className={`${karte} w-full disabled:cursor-not-allowed disabled:opacity-50 ${braucht.includes(w) ? 'ring-1 ring-sbb-red' : ''}`}>
+                      <FahrzeugBild wagen={w} />
+                      <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">{WAGEN_ARTEN[w].name}</span>
+                        <span className="block text-sbb-metal dark:text-sbb-storm">{WAGEN_ARTEN[w].text}</span></span>
+                      <span className="flex-none text-right text-xs tabular-nums">{da > 0 ? `${da} im Depot` : chf(WAGEN_ARTEN[w].preis)}</span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
+        </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <button type="button" disabled={!lok || !wagen.length} onClick={() => lok && setzen({ lok, wagen })} className={KNOPF_ROT}>Zug aufs Gleis stellen</button>
+          <button type="button" disabled={!lok || !wagen.length || danach < 0} onClick={bestaetigen} className={KNOPF_ROT}>{kosten ? `Kaufen und aufs Gleis stellen` : 'Zug aufs Gleis stellen'}</button>
           {anfang && <button type="button" onClick={entfernen} className={`${KNOPF_WEISS} text-sbb-red`}>Zug entfernen</button>}
           <button type="button" onClick={zu} className={KNOPF_WEISS}>Abbrechen</button>
         </div>
       </div>
+      {/* das gezogene Fahrzeug folgt dem Zeiger */}
+      {zieh?.bewegt && (
+        <div className="pointer-events-none fixed z-[80] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white/90 p-1 shadow-lg dark:bg-sbb-charcoal/90" style={{ left: zieh.x, top: zieh.y }}>
+          {zieh.art === 'lok' ? <FahrzeugBild lok={zieh.typ as LokTyp} klasse="h-9 w-20" /> : <FahrzeugBild wagen={zieh.typ as WagenTyp} klasse="h-9 w-20" />}
+        </div>
+      )}
     </div>
   )
 }
