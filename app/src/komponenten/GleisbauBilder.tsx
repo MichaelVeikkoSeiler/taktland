@@ -94,8 +94,8 @@ export function GelaendeVerlaeufe() {
  * etwas zu scharf»): die Böschung ist um BOESCHUNG_LICHT nach unten rechts verschoben dunkel und nach oben links verschoben hell, so liegt bei der Hochebene
  * die helle Böschung oben links und die dunkle unten rechts, beim Tal umgekehrt; die Kante selbst um KANTE_WEICH weich
  */
-const BOESCHUNG_BREIT = 0.16, BOESCHUNG_WEICH = 0.12, BOESCHUNG_LICHT = 0.12, BOESCHUNG_STAERKE = 0.75, LICHT_STAERKE = 0.22, KANTE_WEICH = 0.035
-const EBENE_EINZUG = 0.2, EBENE_RUND = 0.3
+const BOESCHUNG_BREIT = 0.16, BOESCHUNG_WEICH = 0.09, BOESCHUNG_LICHT = 0.12, BOESCHUNG_STAERKE = 0.75, LICHT_STAERKE = 0.22, KANTE_WEICH = 0.015
+const EBENE_EINZUG = 0.2, EBENE_RUND = 0.3, RAMPE_BREIT = 0.38
 export function GelaendeBild({ brett }: { brett: Brett }) {
   const raus: ReactElement[] = []
   // Hochebene und Tal als Gebiet: die Hochebene wirft ausserhalb ihres Rands eine Böschung, im Tal liegt sie innerhalb
@@ -109,6 +109,24 @@ export function GelaendeBild({ brett }: { brett: Brett }) {
     const flt = { filterUnits: 'userSpaceOnUse' as const, primitiveUnits: 'userSpaceOnUse' as const, x: -1, y: -1, width: sp + 2, height: ze + 2 }
     const rahmen = { maskUnits: 'userSpaceOnUse' as const, x: -1, y: -1, width: sp + 2, height: ze + 2 }
     const L = BOESCHUNG_LICHT
+    /**
+     * Rampen (Michael, 2026-11-26: «hast du einen Vorschlag für eine Rampe?», dann «Ja gern»): wo ein Gleis oder eine Strasse über die Böschung führt, ist sie
+     * unterbrochen, so liegen sie auf einem flachen Damm; nur fürs Auge, der Zug fährt gleich schnell (Breite gewählt)
+     */
+    const rampen: string[] = []
+    const linie = (pt: Array<{ x: number; y: number }>) => rampen.push(pt.map((q, k) => `${k ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)}`).join(' '))
+    const nahSet = new Set(nah.map(([i, j]) => `${i},${j}`))
+    brett.forEach((z, j) => z.forEach((f, i) => {
+      if (f.gleis && !f.teil) {
+        const n = grosseKurve(f.gleis)
+        if (n) {
+          const G = grossGeometrie(i, j, f.gleis)
+          if (G.zellen.some(([u, v]) => nahSet.has(`${u},${v}`))) linie(Array.from({ length: 31 }, (_, k) => { const a = G.a0 + (G.da * k) / 30; return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) } }))
+        } else if (nahSet.has(`${i},${j}`)) for (const [a, c] of wege(f.gleis)) linie(wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10))
+      }
+      if (f.strasse && nahSet.has(`${i},${j}`)) for (const k of strassenKanten(brett, i, j)) linie([{ x: i + 0.5, y: j + 0.5 }, { x: i + 0.5 + [0, 0.5, 0, -0.5][k], y: j + 0.5 + [-0.5, 0, 0.5, 0][k] }])
+    }))
+    const rampe = rampen.length ? <path d={rampen.join(' ')} fill="none" stroke="#000" strokeWidth={RAMPE_BREIT} strokeLinecap="round" filter="url(#gb-ebene-kante)" /> : null
     // je Richtung ein Filter: die Fläche gewachsen (aus) oder geschrumpft (ein), verschoben und weich
     const filter = (id: string, op: 'dilate' | 'erode', dx: number) => (
       <filter id={id} {...flt}><feMorphology operator={op} radius={BOESCHUNG_BREIT} /><feOffset dx={dx} dy={dx} /><feGaussianBlur stdDeviation={BOESCHUNG_WEICH} /></filter>
@@ -118,6 +136,7 @@ export function GelaendeBild({ brett }: { brett: Brett }) {
         {aussen
           ? <><path d={d} fill="#fff" filter={`url(#${f})`} /><path d={d} fill="#000" filter="url(#gb-ebene-kante)" /></>
           : <><path d={d} fill="#fff" filter="url(#gb-ebene-kante)" /><path d={d} fill="#000" filter={`url(#${f})`} /></>}
+        {rampe}
       </mask>
     )
     const flaeche = (m: string, farbe: string) => <rect x={-1} y={-1} width={sp + 2} height={ze + 2} fill={farbe} mask={`url(#${m})`} />
