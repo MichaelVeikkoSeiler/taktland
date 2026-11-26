@@ -25,6 +25,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
           2026-10-02 ganzer Text neu von Michael, mit «Kein Fahrplan»;
           2026-10-05 «Reisebegleiter», die Spiele unter «Lernen», Bahnübergänge im Sammelheft;
           2026-11-20 «Kein Reiseplaner» statt «Kein Fahrplan» (Michael: «Genau kein Reiseplaner! Das ist mir wichtig. Aber er kennt dennoch mehr als hier steht»);
+          2026-11-26 «Gleisbau» als bald öffentlich (Michael: «Erwähne auch das neue Unterhaltungsspiel «Gleisbau» welches bald öffentlich zugänglich wird»);
           2026-11-20 alle Spiele unter «Lernen», «Probefahren» und die Virtuelle Schweiz unter «Mitfahren» (Michael: «Ja gern») */}
       <h2 className="text-2xl font-bold tracking-tight">Willkommen im Taktland</h2>
       {/* ab 1024 Bildpunkten zwei Spalten, die zweite beginnt mit «Kein Reiseplaner» (Michael, 2026-11-25: «Bitte diese Texte ab einer gewissen Fensterbreite
@@ -53,7 +54,8 @@ export function Start({ index }: { index: BahnhofIndex }) {
         «Bahnhofsuche» errätst du einen Bahnhof aus Hinweiskarten, bei «Wo fahre ich?» erkennst du eine
         Strecke aus dem Führerstand, beim «Fahrplan-Puzzle» ordnest du die Halte eines Zugs, und bei der
         «Reisedauer» schätzt du seine Fahrzeit. Manche allein, zu mehreren auf einem Gerät oder auf
-        mehreren Geräten. Und unter Standort siehst du, was in deiner Nähe liegt.
+        mehreren Geräten. Bald kommt das Unterhaltungsspiel «Gleisbau» dazu: Gleise, Bahnhöfe, Tunnel und Brücken
+        auf ein Brett legen und Züge fahren lassen. Und unter Standort siehst du, was in deiner Nähe liegt.
       </p>
       <p className={absatz}>
         <span className={fett}>Mitfahren.</span> Im Zug verfolgt «Fahren» per GPS, wo du bist, und
