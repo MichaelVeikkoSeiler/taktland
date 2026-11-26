@@ -1104,10 +1104,9 @@ export function Gleisbau() {
   // ein oder zwei Züge (Michael, 2026-11-23, Vorschlag «Zweiter Zug auf demselben Netz»)
   // Anzahl Züge (Michael, 2026-11-24: «Anzahl Züge wählbar»), auf dem Gerät gemerkt
   // Taktfahrplan in Minuten (0 aus), auf dem Gerät gemerkt
-  const [takt, setTakt] = useState<number>(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.takt')); return (TAKT_WAHL as readonly number[]).includes(n) ? n : 0 } catch { return 0 } })
+  const [taktFrei, setTakt] = useState<number>(() => { try { const n = Number(localStorage.getItem('taktland.gleisbau.takt')); return (TAKT_WAHL as readonly number[]).includes(n) ? n : 0 } catch { return 0 } })
   // mit Taktfahrplan ist unter der Uhr oben links nichts; liegt dort etwas, fragt ein Blatt, ob es gelöscht werden soll (Michael, 2026-11-25, vor dem
   // Aufschalten: bei fremden Brettern nicht ohne Rückfrage löschen); bis dahin keine Uhr und keine Fahrt
-  const uhrBelegt = useMemo(() => takt > 0 && uhrPlatz(brett) !== brett, [takt, brett])
   const taktSetzen = (n: number) => { setTakt(n); try { localStorage.setItem('taktland.gleisbau.takt', String(n)) } catch { /* ohne Speicher */ } }
   const spielSek = useRef(0)
   // der angetippte Bus während der Fahrt
@@ -1256,6 +1255,10 @@ export function Gleisbau() {
 
   // Aufgaben (Michael, 2026-11-23, Vorschlag «Aufgaben»): eine gewählte Aufgabe hat ihr eigenes Brett, das freie bleibt gemerkt und kommt danach zurück
   const [aufgabe, setAufgabe] = useState<Aufgabe | null>(null)
+  // in Aufgaben und Aufträgen kein Taktfahrplan: seine Uhr bräuchte die Felder oben links, wo die Aufgabe etwas vorgeben kann (Michael, 2026-11-26: «Bei den
+  // Aufgaben im Gleisbau soll nicht nach einem Taktfahrplan gefragt werden. Dies gibt u.U. einen Konflikt mit der Aufgabe Elemente und der Uhr»)
+  const takt = aufgabe ? 0 : taktFrei
+  const uhrBelegt = useMemo(() => takt > 0 && uhrPlatz(brett) !== brett, [takt, brett])
   /**
    * was eine Aufgabe vorgibt (Bahnhöfe, Güterschuppen, Gleise), bleibt fest: nicht verschieben, ersetzen, drehen oder löschen (Michael, 2026-11-26:
    * «Ich kann die bereits eingebauten Gleise bewegen. Macht nicht Sinn oder?»); Name, Zug, Knoten, Ampel, Wagen und «Ohne Strom» gehen
@@ -2718,7 +2721,7 @@ export function Gleisbau() {
                       <button type="button" aria-label="Ein Zug mehr" disabled={zugZahl >= ZUEGE_MAX} onClick={() => zugZahlSetzen(zugZahl + 1)} className={rund}>+</button>
                     </span>
                   </div>
-                  <div className="py-2">
+                  {!aufgabe && <div className="py-2">
                     <span>Taktfahrplan<span className="block text-xs text-sbb-metal">An Knoten fahren die Züge zur Taktzeit ab; eine Minute im Spiel dauert eine Sekunde</span></span>
                     <div className="segmente mt-1.5 grid grid-cols-4">
                       {TAKT_WAHL.map((t) => (
@@ -2726,7 +2729,7 @@ export function Gleisbau() {
                                 className="segment px-2 py-2 disabled:opacity-40">{t ? `${t} Min.` : 'Aus'}</button>
                       ))}
                     </div>
-                  </div>
+                  </div>}
                   <div className="flex min-h-12 items-center justify-between gap-3 py-2">
                     <span>Länge des Zugs<span className="block text-xs text-sbb-metal">Lok, {wagenZahl - 2 === 1 ? '1 Wagen' : `${wagenZahl - 2} Wagen`} und Steuerwagen, {(wagenZahl - 1) * WAGEN_ARTEN.person.plaetze} Plätze{faehrt ? ', gilt ab der nächsten Fahrt' : ''}</span></span>
                     <span className="flex items-center gap-2">
