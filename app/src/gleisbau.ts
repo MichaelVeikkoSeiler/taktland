@@ -962,6 +962,17 @@ export const TEMPO = 1.5
  * Gleisende bremst der Zug mit BREMSEN Feldern je s², zuletzt mit KRIECHEN; gesucht wird BREMS_SICHT Felder voraus; alles gewählt
  */
 const ANFAHREN = 2.2, BREMSEN = 1.1, KRIECHEN = 0.12, BREMS_SICHT = 3
+/**
+ * Kurven (Michael, 2026-11-26: «dass die Züge bei den Kurven etwas vorher abbremsen und langsamer durch die Kurve gehen und … gegen Ende der Kurve wieder
+ * beschleunigen … Je größer die Kurve, desto weniger muss abgebremst werden»): in einer Kurve mit Radius r höchstens √(KURVE_QUER · r) Felder je s, vorher
+ * gebremst wie vor einem Halt, ab KURVE_FREI ihrer Länge darf der Zug wieder beschleunigen; die kleine Kurve (r 0,5) etwa 0,8, die grosse mit r 1,5
+ * etwa 1,4, die grösste nicht mehr gebremst (Höchsttempo 1,5); gewählt
+ */
+const KURVE_QUER = 1.3, KURVE_FREI = 0.55
+const kurvenTempo = (s: Stueck) => {
+  const r = s.gross ? s.gross.r : s.ein >= 0 && s.aus >= 0 && (s.ein + 2) % 4 !== s.aus ? 0.5 : Infinity
+  return Math.sqrt(KURVE_QUER * r)
+}
 export const HALT_S = 2.5
 /** der Pfiff so lange vor der Abfahrt (gewählt) */
 const PFIFF_VOR_S = 0.9
@@ -1269,7 +1280,7 @@ export class Zug {
     if (this.stromlos) {
       this.tempo = Math.max(0, this.tempo - STROMLOS_BREMSEN * dt)
       if (this.tempo <= 0) return
-    } else this.tempo = Math.min(this.vmax, this.tempo + (this.vmax / ANFAHREN) * dt, Math.max(KRIECHEN, Math.sqrt(2 * BREMSEN * this.bisHalt(b))))
+    } else this.tempo = Math.min(this.vmax, this.tempo + (this.vmax / ANFAHREN) * dt, Math.max(KRIECHEN, Math.sqrt(2 * BREMSEN * this.bisHalt(b))), this.kurvenGrenze(b))
     let rest = this.tempo * dt
     for (let k = 0; k < 8 && rest > 0; k++) {
       const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
@@ -1352,6 +1363,21 @@ export class Zug {
       d += ln; s = n
     }
     return Infinity
+  }
+
+  /** das höchste Tempo wegen Kurven: in der jetzigen bis KURVE_FREI ihrer Länge ihr Tempo, vor den nächsten so, dass der Zug bis dahin bremsen kann */
+  private kurvenGrenze(b: Brett): number {
+    let s = this.stuecke[this.stuecke.length - 1]
+    const l0 = stueckLaenge(s)
+    let v = this.kopf < KURVE_FREI * l0 ? kurvenTempo(s) : Infinity
+    let d = l0 - this.kopf
+    for (let k = 0; k < 6 && d < BREMS_SICHT; k++) {
+      const n = naechstes(b, s)
+      if (!n) break
+      v = Math.min(v, Math.sqrt(kurvenTempo(n) ** 2 + 2 * BREMSEN * d))
+      d += stueckLaenge(n); s = n
+    }
+    return v
   }
 
   /** Punkt d Einheiten hinter der Spitze */
