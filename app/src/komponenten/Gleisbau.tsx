@@ -100,9 +100,10 @@ const STRASSEN: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'weg' }, text: 'Entfernen' },
 ]
 
-/** die Werkzeuge unten in drei Reitern */
+/** die Werkzeuge unten in Reitern; die Züge seit 2026-11-26 in einem eigenen (Michael: «Bitte die Züge in einer separaten Kategorie auswählbar und nicht unter Gleise») */
 const GRUPPEN = [
-  { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'wagen' || x.w.art === 'zug' || x.w.art === 'strom' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
+  { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'strom' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
+  { titel: 'Züge', l: GLEISE.filter((x) => x.w.art === 'zug' || x.w.art === 'wagen') },
   { titel: 'Bauwerke', l: GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau', 'knoten'].includes(x.w.art)) },
   { titel: 'Strasse', l: STRASSEN },
   { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
@@ -2339,10 +2340,10 @@ export function Gleisbau() {
               </div>
             ) : (
               <>
-                <div className="flex gap-1 px-2 pt-1.5" role="tablist" aria-label="Werkzeuge">
+                <div className="flex gap-0.5 overflow-x-auto px-2 pt-1.5 [scrollbar-width:none]" role="tablist" aria-label="Werkzeuge">
                   {GRUPPEN.map((g) => (
                     <button key={g.titel} type="button" role="tab" aria-selected={reiter === g.titel} onClick={() => setReiter(g.titel)}
-                            className={`rounded-lg px-3 py-1 text-sm font-bold ${reiter === g.titel ? 'bg-sbb-milk dark:bg-sbb-midnight' : 'text-sbb-metal dark:text-sbb-storm'}`}>{g.titel}</button>
+                            className={`shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold sm:px-3 sm:text-sm ${reiter === g.titel ? 'bg-sbb-milk dark:bg-sbb-midnight' : 'text-sbb-metal dark:text-sbb-storm'}`}>{g.titel}</button>
                   ))}
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-1.5 [scrollbar-width:none]">
@@ -2608,7 +2609,7 @@ function SoGehts() {
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
       <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Mit «Zug» stellst du aus deinen Loks und Wagen einen Zug zusammen; jede Ladung braucht ihren Wagen. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
-      <li>Personen- und Güterzüge: Unter «Gleise» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen. Unter Aufgaben gibt es dazu «Personen und Güter transportieren».</li>
+      <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen. Unter Aufgaben gibt es dazu «Personen und Güter transportieren».</li>
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,
         im Berg zum Tunnel; «Brücke» über ein Gleis führt die Strasse darüber statt über einen Bahnübergang. Die Busse fahren rechts, biegen nach Zufall ab,
         wenden am Ende der Strasse, halten an Haltestellen und warten vor geschlossenen Schranken. Liegt eine Haltestelle neben einem Bahnhof, wartet der Bus

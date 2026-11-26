@@ -164,8 +164,8 @@ function transport(ziel: Partial<Transport>) {
     const sf = schuppenFelder(b)
     for (let k = 1; k < sf.length; k++) if (!wegGibt(b, new Set([sf[0]]), new Set([sf[k]]))) return { ok: false, text: 'Noch führt kein Gleis von Güterschuppen zu Güterschuppen.' }
     const starts = b.flat().map((f) => f.zugStart).filter(Boolean)
-    if (ziel.gueter && !starts.includes('g')) return { ok: false, text: 'Setze unter «Gleise» einen Güterzug aufs Gleis: Nur er hält am Güterschuppen.' }
-    if (ziel.fahrgaeste && starts.length && !starts.includes('p')) return { ok: false, text: 'Setze unter «Gleise» auch einen Personenzug aufs Gleis: Nur er hält an den Bahnhöfen.' }
+    if (ziel.gueter && !starts.includes('g')) return { ok: false, text: 'Setze unter «Züge» einen Güterzug aufs Gleis: Nur er hält am Güterschuppen.' }
+    if (ziel.fahrgaeste && starts.length && !starts.includes('p')) return { ok: false, text: 'Setze unter «Züge» auch einen Personenzug aufs Gleis: Nur er hält an den Bahnhöfen.' }
     const f = stand?.fahrgaeste ?? 0, g = stand?.gueter ?? 0
     const fehlt = [ziel.fahrgaeste && f < ziel.fahrgaeste && `${f} von ${ziel.fahrgaeste} Fahrgästen`, ziel.gueter && g < ziel.gueter && `${g} von ${ziel.gueter} Ladungen`].filter(Boolean)
     if (fehlt.length) return { ok: false, text: `Alles bereit. Lass fahren (▶): Bisher sind ${fehlt.join(' und ')} am Ziel.` }
@@ -247,7 +247,7 @@ const STUFEN_REIHE: Array<Omit<Aufgabe, 'brett' | 'vorgabeBrett' | 'neu' | 'reih
   { id: 'reihe-4', titel: 'Ein Netz', ziel: 'Waldegg kommt dazu. Verbinde alle Bahnhöfe so, dass man von jedem zu jedem fahren kann. Weichen helfen.', pruefen: alleVerbunden },
   { id: 'reihe-5', titel: 'Rundkurs', ziel: 'Baue im Netz einen geschlossenen Ring mit einem Bahnhof, durch einen Tunnel und über eine Brücke. Stell die Weichen so, dass der Zug nie umkehren muss.', pruefen: rundkurs },
   { id: 'reihe-6', titel: 'Pendler', ziel: 'Jetzt fahren Fahrgäste. Bring 15 Fahrgäste an ihr Ziel. Alle Bahnhöfe müssen verbunden sein.', ...transport({ fahrgaeste: 15 }) },
-  { id: 'reihe-7', titel: 'Holz aus dem Wald', ziel: 'Der Forst Tannegg und die Sägerei Seewil kommen dazu. Schliess sie ans Netz an, setz unter «Gleise» einen Güterzug und liefere 6 Ladungen.', ...transport({ gueter: 6 }) },
+  { id: 'reihe-7', titel: 'Holz aus dem Wald', ziel: 'Der Forst Tannegg und die Sägerei Seewil kommen dazu. Schliess sie ans Netz an, setz unter «Züge» einen Güterzug und liefere 6 Ladungen.', ...transport({ gueter: 6 }) },
   { id: 'reihe-8', titel: 'Güter und Pendler', ziel: 'Alles zugleich: Setz einen Personenzug und einen Güterzug und bring 10 Fahrgäste und 6 Ladungen ans Ziel.', ...transport({ fahrgaeste: 10, gueter: 6 }) },
 ]
 

@@ -212,7 +212,7 @@ export function auftragAlsAufgabe(a: Auftrag): Aufgabe & { betrieb: Auftrag } {
     brett: a.brett,
     transport: { fahrgaeste: a.fahrgaeste },
     pruefen: (b: Brett, stand?: Transport) => {
-      if (!b.some((z) => z.some((f) => f.zugStart))) return { ok: false, text: 'Setz unter «Gleise» mit «Zug» einen Zug aufs Gleis und stell ihn aus dem Depot zusammen.' }
+      if (!b.some((z) => z.some((f) => f.zugStart))) return { ok: false, text: 'Setz unter «Züge» mit «Zug» einen Zug aufs Gleis und stell ihn aus dem Depot zusammen.' }
       const fehlt: string[] = []
       if (a.fahrgaeste && (stand?.fahrgaeste ?? 0) < a.fahrgaeste) fehlt.push(`${stand?.fahrgaeste ?? 0} von ${a.fahrgaeste} Fahrgästen`)
       for (const [g, n] of Object.entries(ziel) as Array<[Gut, number]>) if ((stand?.jeGut?.[g] ?? 0) < n) fehlt.push(`${stand?.jeGut?.[g] ?? 0} von ${n} ${GUETER[g].mehrzahl}`)
