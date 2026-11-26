@@ -30,6 +30,8 @@ export const WAGEN_ARTEN: Record<WagenTyp, WagenArt> = {
 }
 /** ob ein Wagen dieses Gut trägt */
 export const passt = (w: WagenTyp, g: Gut) => w === 'gedeckt' || WAGEN_ARTEN[w].gut === g
+  // Stückgut gibt es nur beim freien Bauen, dort trägt es jeder Güterwagen (seit 2026-11-26, mit allen Wagen beim freien Bauen)
+  || (g === 'stueckgut' && w !== 'person')
 
 /** die Loks: Tempo in Feldern je Sekunde, Zugkraft in Wagen */
 export type LokTyp = 'murmeli' | 'libelle' | 'steinbock' | 'baer' | 'adler'

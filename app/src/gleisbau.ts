@@ -80,6 +80,8 @@ export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /*
    * Gütertransporte. Unter den Tools sollten Züge aus beiden Kat gewählt werden können»); gibt es solche Felder, fahren genau diese Züge
    */
   zugStart?: 'p' | 'g'
+  /** beim freien Bauen: Lok und Wagen des Zugs auf diesem Feld (seit 2026-11-26; Michael: «beim freien Bauen auf alle Züge ohne Grenzen Zugriff»), Teil «~c» */
+  zusammen?: { lok: string; wagen: string[] }
   /** der Name der Anlage an einem Güterschuppen, im Bahnbetrieb (Sägerei, Kieswerk …; fiktiv) */
   anlage?: string }
 /** ein Feld, auf dem ein Zug starten kann: ein einfaches Gleis, keine grosse Kurve */
@@ -408,11 +410,12 @@ export function brettCode(b: Brett): string {
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], zugStarts: string[] = [], anlagen: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = [], strVerb: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], zugStarts: string[] = [], anlagen: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = [], strVerb: string[] = [], zusammen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
     if (f.fluss) fluesse.push(`${i}.${j}`)
     if (f.strasse && f.haltestelle) halte.push(`${i}.${j}`)
     if (f.zugStart && zugStartGilt(f)) zugStarts.push(`${i}.${j}.${f.zugStart}`)
+    if (f.zugStart && zugStartGilt(f) && f.zusammen) zusammen.push(`${i}.${j}.${f.zusammen.lok}.${f.zusammen.wagen.join('-')}`)
     if (f.anlage && gueterGilt(f)) anlagen.push(`${i}.${j}.${namenEsc(f.anlage)}`)
     if (f.strasse && f.wende) wenden.push(`${i}.${j}`)
     if (f.strasse && f.strBruecke) strBruecken.push(`${i}.${j}`)
@@ -433,7 +436,7 @@ export function brettCode(b: Brett): string {
     + (knoten.length ? `~k${knoten.join('_')}` : '') + (haenge.length ? `~h${haenge.join('_')}` : '') + (stromlos.length ? `~s${stromlos.join('_')}` : '')
     + (halte.length ? `~y${halte.join('_')}` : '') + (wenden.length ? `~e${wenden.join('_')}` : '') + (strBruecken.length ? `~r${strBruecken.join('_')}` : '')
     + (zugStarts.length ? `~t${zugStarts.join('_')}` : '') + (anlagen.length ? `~m${anlagen.join('_')}` : '')
-    + (strVerb.length ? `~v${strVerb.join('_')}` : '')
+    + (strVerb.length ? `~v${strVerb.join('_')}` : '') + (zusammen.length ? `~c${zusammen.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -450,6 +453,10 @@ export function brettAusCode(c: string): Brett | null {
   for (const teil of weitere) {
     if (teil.startsWith('m')) for (const e of teil.slice(1).split('_')) { const [i, j, n] = e.split('.'); try { if (b[+j]?.[+i] && n) b[+j][+i].anlage = decodeURIComponent(n).slice(0, 40) } catch { /* ungültig */ } }
     if (teil.startsWith('t')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i] && (c === 'p' || c === 'g')) b[+j][+i].zugStart = c }
+    if (teil.startsWith('c')) for (const e of teil.slice(1).split('_')) {
+      const [i, j, lok, w] = e.split('.')
+      if (b[+j]?.[+i] && /^[a-z]+$/.test(lok ?? '') && /^[a-z]+(-[a-z]+)*$/.test(w ?? '')) b[+j][+i].zusammen = { lok, wagen: w.split('-') }
+    }
     if (teil.startsWith('v')) for (const e of teil.slice(1).split('_')) { const [i, j, m] = e.split('.').map(Number); if (b[j]?.[i]?.strasse && m >= 0 && m <= 15) b[j][i].strKanten = m }
     if (teil.startsWith('y')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].haltestelle = true }
     if (teil.startsWith('e')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].wende = true }

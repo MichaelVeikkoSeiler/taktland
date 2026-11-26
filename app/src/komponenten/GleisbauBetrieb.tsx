@@ -288,24 +288,26 @@ export default function BetriebSeite({ betrieb, setBetrieb, oeffnen, depot, setD
  */
 type Ziehen = { art: 'lok' | 'wagen'; typ: string; x: number; y: number; vonPlatz?: number; bewegt: boolean; x0: number; y0: number }
 export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, entfernen, zu }: {
-  betrieb: Betrieb; setBetrieb: (f: (b: Betrieb) => Betrieb) => void; auftrag: Auftrag; andere: Zusammenstellung[]; anfang: Zusammenstellung | null
+  /** ohne Auftrag (beim freien Bauen): alle Loks und Wagen, ohne Geld und Depot (seit 2026-11-26; Michael: «beim freien Bauen auf alle Züge ohne Grenzen Zugriff») */
+  betrieb?: Betrieb; setBetrieb?: (f: (b: Betrieb) => Betrieb) => void; auftrag?: Auftrag; andere: Zusammenstellung[]; anfang: Zusammenstellung | null
   setzen: (z: Zusammenstellung) => void; entfernen: () => void; zu: () => void
 }) {
-  const f = frei(betrieb, andere)
+  const offen = !auftrag || !betrieb
+  const f = offen ? { loks: [] as LokTyp[], wagen: {} as Partial<Record<WagenTyp, number>> } : frei(betrieb, andere)
   const [lok, setLok] = useState<LokTyp | null>(anfang?.lok ?? null)
   const [wagen, setWagen] = useState<WagenTyp[]>(anfang?.wagen ?? [])
   const [zieh, setZieh] = useState<Ziehen | null>(null)
   const ziehRef = useRef<Ziehen | null>(null)
   const zugkraft = lok ? LOKS[lok].zugkraft : 0
   const n = (w: WagenTyp) => wagen.filter((x) => x === w).length
-  const braucht = brauchtWagen(auftrag)
+  const braucht = auftrag ? brauchtWagen(auftrag) : []
   const loks = Object.keys(LOKS) as LokTyp[]
   const wagenArten = (Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt')
     .sort((a, b) => Number(braucht.includes(b)) - Number(braucht.includes(a)))
   // was gekauft werden muss: die Lok, wenn keine freie da ist, und Wagen über die freien hinaus
-  const lokKauf = lok && !f.loks.includes(lok) ? LOKS[lok].preis : 0
-  const wagenKauf = wagenArten.reduce((a, w) => a + Math.max(0, n(w) - (f.wagen[w] ?? 0)) * WAGEN_ARTEN[w].preis, 0)
-  const kosten = lokKauf + wagenKauf, danach = betrieb.geld - kosten
+  const lokKauf = !offen && lok && !f.loks.includes(lok) ? LOKS[lok].preis : 0
+  const wagenKauf = offen ? 0 : wagenArten.reduce((a, w) => a + Math.max(0, n(w) - (f.wagen[w] ?? 0)) * WAGEN_ARTEN[w].preis, 0)
+  const kosten = lokKauf + wagenKauf, danach = offen ? 0 : betrieb.geld - kosten
   const plaetze = n('person') * WAGEN_ARTEN.person.plaetze
   const ladungen = wagenArten.filter((w) => w !== 'person' && n(w)).map((w) => `${n(w)} ${GUETER[WAGEN_ARTEN[w].gut!].name}`)
   const fehlt = braucht.filter((w) => !n(w))
@@ -365,7 +367,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
   const bestaetigen = () => {
     if (!lok || !wagen.length || danach < 0) return
     // was fehlt, jetzt kaufen
-    if (kosten > 0) setBetrieb((b) => {
+    if (kosten > 0 && setBetrieb) setBetrieb((b) => {
       const fb = frei(b, andere), w2 = { ...b.wagen }
       for (const w of wagenArten) { const mehr = Math.max(0, n(w) - (fb.wagen[w] ?? 0)); if (mehr) w2[w] = (w2[w] ?? 0) + mehr }
       return { ...b, geld: b.geld - kosten, loks: fb.loks.includes(lok) ? b.loks : [...b.loks, lok], wagen: w2 }
@@ -380,12 +382,12 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
       <div className="max-h-[90%] w-full overflow-y-auto rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
         <div className="flex items-baseline justify-between gap-2">
           <p className="text-lg font-bold">Zug zusammenstellen</p>
-          <span className="rounded-lg bg-sbb-milk px-2 py-0.5 text-sm font-bold tabular-nums dark:bg-sbb-midnight">{chf(betrieb.geld)}</span>
+          {!offen && <span className="rounded-lg bg-sbb-milk px-2 py-0.5 text-sm font-bold tabular-nums dark:bg-sbb-midnight">{chf(betrieb.geld)}</span>}
         </div>
-        <p className="mt-1 text-sm leading-snug">
+        {offen ? <p className="mt-1 text-sm leading-snug">Alle Loks und Wagen, ohne Kosten. Zieh Lok und Wagen in die leeren Felder oder tippe sie an.</p> : <p className="mt-1 text-sm leading-snug">
           Für diesen Auftrag brauchst du: {braucht.map((w) => <span key={w} className="font-bold">{WAGEN_ARTEN[w].name} ({w === 'person' ? `${WAGEN_ARTEN.person.plaetze} Plätze` : `1 Ladung ${GUETER[WAGEN_ARTEN[w].gut!].name}`})</span>)
             .flatMap((x, k) => (k ? [', ', x] : [x]))}. Zieh Lok und Wagen in die leeren Felder oder tippe sie an.
-        </p>
+        </p>}
         {/* der Zug: eine Reihe von Plätzen auf einem Gleis */}
         <div className="mt-3 flex gap-4 lg:items-start">
           <div className="min-w-0 flex-1">
@@ -415,10 +417,10 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
         </div>
         {/* die Summe, immer sichtbar */}
         <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 rounded-lg bg-sbb-milk px-3 py-2 text-sm sm:grid-cols-4 dark:bg-sbb-midnight">
-          <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Kosten</span><span className="font-bold tabular-nums">{kosten ? chf(kosten) : 'alles im Depot'}</span></span>
+          {!offen && <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Kosten</span><span className="font-bold tabular-nums">{kosten ? chf(kosten) : 'alles im Depot'}</span></span>}
           <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Fahrgäste</span><span className="font-bold tabular-nums">{plaetze}</span></span>
           <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Ladungen</span><span className="font-bold">{ladungen.length ? ladungen.join(', ') : '0'}</span></span>
-          <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Geld danach</span><span className={`font-bold tabular-nums ${danach < 0 ? 'text-sbb-red' : ''}`}>{chf(danach)}</span></span>
+          {!offen && <span><span className="block text-xs text-sbb-metal dark:text-sbb-storm">Geld danach</span><span className={`font-bold tabular-nums ${danach < 0 ? 'text-sbb-red' : ''}`}>{chf(danach)}</span></span>}
           {fehlt.length > 0 && <span className="col-span-full font-bold text-sbb-red">Es fehlt noch: {fehlt.map((w) => WAGEN_ARTEN[w].name).join(', ')}.</span>}
           {danach < 0 && <span className="col-span-full font-bold text-sbb-red">Dafür reicht das Geld nicht.</span>}
         </div>
@@ -436,7 +438,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
                       <FahrzeugBild lok={l} />
                       <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">{LOKS[l].name}</span>
                         <span className="flex flex-wrap items-center gap-x-2 text-sbb-metal dark:text-sbb-storm">{LOKS[l].art} <LokWerte l={l} /></span></span>
-                      <span className="flex-none text-right text-xs tabular-nums">{lok === l ? (lokKauf ? `${chf(LOKS[l].preis)}, im Zug` : 'im Zug') : da > 0 ? `${da} im Depot` : chf(LOKS[l].preis)}</span>
+                      <span className="flex-none text-right text-xs tabular-nums">{lok === l ? (lokKauf ? `${chf(LOKS[l].preis)}, im Zug` : 'im Zug') : offen ? '' : da > 0 ? `${da} im Depot` : chf(LOKS[l].preis)}</span>
                     </button>
                   </li>
                 )
@@ -454,7 +456,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
                       <FahrzeugBild wagen={w} />
                       <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">{WAGEN_ARTEN[w].name}</span>
                         <span className="block text-sbb-metal dark:text-sbb-storm">{WAGEN_ARTEN[w].text}</span></span>
-                      <span className="flex-none text-right text-xs tabular-nums">{da > 0 ? `${da} im Depot` : chf(WAGEN_ARTEN[w].preis)}</span>
+                      <span className="flex-none text-right text-xs tabular-nums">{offen ? '' : da > 0 ? `${da} im Depot` : chf(WAGEN_ARTEN[w].preis)}</span>
                     </button>
                   </li>
                 )
