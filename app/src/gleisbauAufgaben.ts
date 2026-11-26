@@ -1,11 +1,9 @@
 /**
  * Aufgaben im Gleisbau (Michael, 2026-11-22: «Zuerst freies Bauen und dann Aufgaben»; 2026-11-23, Vorschläge «Aufgaben» und «Echte Strecken
  * nachbauen»): je Aufgabe ein vorbereitetes Brett, ein Ziel und eine Prüfung. Sterne nach der Zahl der Gleisstücke: drei bis zur Vorgabe, zwei bis
- * ein Drittel darüber, sonst einer. Die echten Strecken aus src/assets/gleisbau-strecken.json (pipeline/build_gleisbau_strecken.py): die Bahnhöfe der
- * Reihe nach, und wo laut Daten zwischen zwei Bahnhöfen Tunnel oder Brücken liegen, braucht es auf dem Brett mindestens einen Tunnel oder eine Brücke;
- * das Brett kennt keinen Massstab. Aufgaben, Bretter und Vorgaben gewählt.
+ * ein Drittel darüber, sonst einer. Die echten Strecken und die Strecken ab einem Bahnhof sind seit 2026-11-26 weg (Michael: «Die echten Strecken können
+ * vorerst mal komplett weggelassen werden. Sie haben keinen Maßstab und auch sonst etwas schwierig zu verstehen»). Aufgaben, Bretter und Vorgaben gewählt.
  */
-import STRECKEN from './assets/gleisbau-strecken.json'
 import {
   type Brett, bahnhofGruppen, bahnhofTitel, type Dreh, DXY, grosseKurve, grossGeometrie, type Grund, istBahnhof, leer, spalten,
   ueberWasser, wege, zeilen, Zug, gueterGilt, brettCode, brettAusCode,
@@ -37,7 +35,12 @@ export interface Aufgabe {
   neu?: () => Brett
   /** in der Reihe: die Stelle, ab 0; offen erst, wenn die davor gelöst ist */
   reihe?: number
+  /** im Tutorial: Hinweise der Reihe nach; der erste nicht erledigte steht über dem Brett, sein Werkzeug und seine Felder leuchten */
+  fuehrung?: Fuehrung[]
 }
+/** ein Hinweis im Tutorial: werkzeug ist der Name des Werkzeugs unten, felder leuchten auf dem Brett; ohne fertig gilt er bis zum Lösen */
+export interface Fuehrung { text: string; werkzeug?: string; felder?: Array<[number, number]>; fertig?: (x: FuehrungsLage) => boolean }
+export interface FuehrungsLage { b: Brett; stand?: Transport; werkzeug: string; faehrt: boolean }
 /** was während der Fahrt ans Ziel kam; jeGut im Bahnbetrieb */
 export interface Transport { fahrgaeste: number; gueter: number; jeGut?: Partial<Record<string, number>> }
 
@@ -240,6 +243,38 @@ function alleVerbunden(b: Brett) {
   return { ok: true, text: 'Geschafft: Alle Bahnhöfe sind verbunden.' }
 }
 
+// ——— die Hinweise des Tutorials (Michael, 2026-11-26: «ein Bereich Tutorial, der erklärt Schritt für Schritt, interaktiv, wie man was genau anstellen kann»; Texte gewählt) ———
+const verbunden = (a: string, c: string, t = false, br = false) => (x: FuehrungsLage) => verbindenN(a, c, t, br)(x.b).ok
+const hatZug = (art: 'p' | 'g') => (x: FuehrungsLage) => x.b.some((z) => z.some((f) => f.zugStart === art))
+const schuppenVerbunden = (x: FuehrungsLage) => { const sf = schuppenFelder(x.b); return sf.length >= 2 && sf.slice(1).every((k) => wegGibt(x.b, new Set([sf[0]]), new Set([k]))) }
+const LINIE: Fuehrung = { text: 'Wähle unten im Reiter «Gleise» das Werkzeug «Linie».', werkzeug: 'Linie' }
+const zugWaehlen = (art: 'p' | 'g'): Fuehrung => ({ text: `Tippe unten auf den Reiter «Züge» und wähle «${art === 'p' ? 'Personenzug' : 'Güterzug'}».`, werkzeug: art === 'p' ? 'Personenzug' : 'Güterzug' })
+const FAHREN = (text: string): Fuehrung => ({ text: `Drück oben rechts ▶ «Fahren». ${text}`, fertig: (x) => x.faehrt || (x.stand?.fahrgaeste ?? 0) > 0 || (x.stand?.gueter ?? 0) > 0 })
+const FUEHRUNG: Fuehrung[][] = [
+  [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Seewil', 'Bergau')(x) },
+    { text: 'Zieh mit dem Finger von Seewil nach Bergau, Feld für Feld. Gerade Stücke und Kurven legt die Linie von selbst.', felder: [[1, 1], [5, 1]], fertig: verbunden('Seewil', 'Bergau') }],
+  [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Bergau', 'Flussau', false, true)(x) },
+    { text: 'Zieh die Linie von Bergau über den Fluss bis Flussau. Ein Gleis auf dem Wasser wird von selbst zur Brücke.', felder: [[5, 1], [9, 1]], fertig: verbunden('Bergau', 'Flussau', false, true) }],
+  [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Flussau', 'Alpwil', true)(x) },
+    { text: 'Zwischen Flussau und Alpwil liegt der Berg. Zieh die Linie über den Berg: Ein Gleis auf dem Berg wird von selbst zum Tunnel.', felder: [[9, 1], [10, 6]], fertig: verbunden('Flussau', 'Alpwil', true) }],
+  [{ text: 'Zieh mit «Linie» ein Gleis von deiner Strecke nach Waldegg. Wo es auf ein Gleis trifft, entsteht eine Weiche.', werkzeug: 'Linie', felder: [[2, 5]], fertig: (x) => alleVerbunden(x.b).ok },
+    FAHREN('Ein Tipp auf eine Weiche stellt sie um, so fährt der Zug auch nach Waldegg.')],
+  [{ text: 'Baue einen geschlossenen Ring, der über den Fluss und durch den Berg führt und an einem Bahnhof vorbeikommt. Rote Punkte zeigen Gleise, die noch offen enden.' },
+    { text: 'Tippe auf die Weichen, bis der Zug im Ring bleibt, und drück dann oben «Prüfen».' }],
+  [{ ...zugWaehlen('p'), fertig: (x) => x.werkzeug === 'Personenzug' || hatZug('p')(x) },
+    { text: 'Tippe auf ein Gleis, am besten in einem Bahnhof: Dort steht jetzt dein Zug.', fertig: hatZug('p') },
+    FAHREN('An den Bahnhöfen warten Fahrgäste mit ihrem Ziel. Jeder Personenwagen hat 4 Plätze.'),
+    { text: 'Lass fahren, bis 15 Fahrgäste am Ziel sind. Die Zahl steht unten.' }],
+  [{ text: 'Verbinde den Forst Tannegg und die Sägerei Seewil mit deinem Netz. Ein Güterschuppen ist ein Gleis, an dem nur Güterzüge halten.', werkzeug: 'Linie', felder: [[10, 7], [4, 7]], fertig: schuppenVerbunden },
+    { ...zugWaehlen('g'), fertig: (x) => x.werkzeug === 'Güterzug' || hatZug('g')(x) },
+    { text: 'Tippe auf ein Gleis, um den Güterzug hinzustellen.', fertig: hatZug('g') },
+    FAHREN('Am Forst wartet Holz. Jeder Güterwagen trägt 1 Ladung zur Sägerei.'),
+    { text: 'Lass fahren, bis 6 Ladungen geliefert sind.' }],
+  [{ text: 'Stell unter «Züge» einen Personenzug und einen Güterzug auf die Gleise.', werkzeug: 'Personenzug', fertig: (x) => hatZug('p')(x) && hatZug('g')(x) },
+    FAHREN('Beide Züge fahren zugleich: der Personenzug von Bahnhof zu Bahnhof, der Güterzug von Schuppen zu Schuppen.'),
+    { text: 'Bring 10 Fahrgäste und 6 Ladungen ans Ziel. Danach weisst du alles für den Bahnbetrieb.' }],
+]
+
 const STUFEN_REIHE: Array<Omit<Aufgabe, 'brett' | 'vorgabeBrett' | 'neu' | 'reihe'>> = [
   { id: 'reihe-1', titel: 'Erste Verbindung', ziel: 'Verbinde Seewil mit Bergau.', pruefen: verbindenN('Seewil', 'Bergau') },
   { id: 'reihe-2', titel: 'Über den Fluss', ziel: 'Hinter dem Fluss liegt Flussau. Verlängere die Linie von Bergau nach Flussau: Ein Gleis auf Wasser wird zur Brücke.', pruefen: verbindenN('Bergau', 'Flussau', false, true) },
@@ -259,84 +294,10 @@ export const AUFGABEN: Aufgabe[] = STUFEN_REIHE.map((a, n): Aufgabe => {
     return b && spalten(b) === REIHE_SP && zeilen(b) === REIHE_ZE ? zusetzen(b, ZUSAETZE[n]) : vorgabeBis(n)
   }
   return {
-    ...a, reihe: n, neu, vorgabeBrett: () => vorgabeBis(n),
+    ...a, reihe: n, neu, vorgabeBrett: () => vorgabeBis(n), fuehrung: FUEHRUNG[n],
     brett: () => { const x = reiheLesen().arbeit[a.id]; return (x && brettAusCode(x)) || neu() },
   }
 })
-
-// ——— echte Strecken ———
-
-interface StreckeDaten { titel: string; bahnhoefe: string[]; teile: Array<{ tunnel: number; bruecken: number; ohne_daten: number }> }
-const S = STRECKEN as { datenstand: string; strecken: StreckeDaten[] }
-
-/** «1 Tunnel», «20 Tunnel», «1 Brücke», «79 Brücken» */
-const anzahl = (n: number, eins: string, viele: string) => `${n.toLocaleString('de-CH').replace(/’/g, '\'')} ${n === 1 ? eins : viele}`
-
-/** eine echte Strecke als Aufgabe: die Bahnhöfe der Reihe nach, je Paar Tunnel und Brücken laut Daten */
-export function streckeAufgabe(id: string, titel: string, bahnhoefe: string[], teile: StreckeDaten['teile'], datenstand: string, gross = 12): Aufgabe {
-  const liste = bahnhoefe.join(', ')
-  const daten = teile.map((t, k) => `${bahnhoefe[k]} – ${bahnhoefe[k + 1]}: ${anzahl(t.tunnel, 'Tunnel', 'Tunnel')}, ${anzahl(t.bruecken, 'Brücke', 'Brücken')}${t.ohne_daten ? ' (Daten lückenhaft)' : ''}`)
-  return {
-    id, titel,
-    ziel: `Baue die Strecke nach: die Bahnhöfe ${liste} in dieser Reihenfolge, jeder mit «Name» benannt. Wo laut Daten zwischen zwei Bahnhöfen Tunnel oder Brücken liegen, braucht es mindestens einen Tunnel oder eine Brücke; das Brett hat keinen Massstab.`,
-    daten: `Laut Daten der Strecken in Taktland (Stand ${datenstand}) auf dem Weg im Netz: ${daten.join('; ')}.`,
-    brett: () => leer(gross, 8),
-    pruefen: (b) => {
-      const titel = bahnhofTitel(b), felder = bahnhofFelder(b)
-      const buchstabe = (name: string) => [...titel].find(([, n]) => n === name)?.[0]
-      for (const n of bahnhoefe) if (!buchstabe(n)) return { ok: false, text: `Es fehlt ein Bahnhof mit dem Namen «${n}» (Werkzeug «Name»).` }
-      for (let k = 0; k + 1 < bahnhoefe.length; k++) {
-        const a = bahnhoefe[k], c = bahnhoefe[k + 1], t = teile[k]
-        const fa = felder.get(buchstabe(a)!)!, fc = felder.get(buchstabe(c)!)!
-        if (!wegGibt(b, fa, fc)) return { ok: false, text: `Noch führt kein Gleis von ${a} nach ${c}.` }
-        if (!wegGibt(b, fa, fc, t.tunnel > 0, t.bruecken > 0)) {
-          const ohneT = t.tunnel > 0 && !wegGibt(b, fa, fc, true, false), ohneB = t.bruecken > 0 && !wegGibt(b, fa, fc, false, true)
-          const fehlt = [ohneT && 'einen Tunnel', ohneB && 'eine Brücke'].filter(Boolean).join(' und ')
-          return { ok: false, text: fehlt ? `Zwischen ${a} und ${c} braucht es noch ${fehlt}.` : `Zwischen ${a} und ${c} müssen Tunnel und Brücke auf demselben Weg liegen.` }
-        }
-      }
-      return { ok: true, text: `Geschafft: ${titel} von ${bahnhoefe[0]} bis ${bahnhoefe[bahnhoefe.length - 1]}.` }
-    },
-    schritte: (b) => {
-      const titel = bahnhofTitel(b), felder = bahnhofFelder(b)
-      const buchstabe = (name: string) => [...titel].find(([, n]) => n === name)?.[0]
-      const l: Array<{ art: 'bahnhof' | 'abschnitt'; text: string; ok: boolean }> = []
-      bahnhoefe.forEach((n, k) => {
-        l.push({ art: 'bahnhof', text: n, ok: !!buchstabe(n) })
-        const t = teile[k]
-        if (!t) return
-        const fa = buchstabe(n) ? felder.get(buchstabe(n)!) : undefined, fc = buchstabe(bahnhoefe[k + 1]) ? felder.get(buchstabe(bahnhoefe[k + 1])!) : undefined
-        const braucht = [t.tunnel > 0 && 'Tunnel', t.bruecken > 0 && 'Brücke'].filter(Boolean).join(' + ')
-        l.push({ art: 'abschnitt', text: braucht || 'Gleis', ok: !!fa && !!fc && wegGibt(b, fa, fc, t.tunnel > 0, t.bruecken > 0) })
-      })
-      return l
-    },
-  }
-}
-
-for (const s of S.strecken) AUFGABEN.push(streckeAufgabe(`strecke-${s.titel}`, s.titel, s.bahnhoefe, s.teile, S.datenstand))
-
-/**
- * Varianten aus einem Bahnhof (Michael, 2026-11-24: «Man kann auch Bahnhöfe eingeben dann gibt es echte Varianten in unterschiedliche Richtungen»):
- * aus pipeline/build_gleisbau_strecken.py, je Bahnhof in jede Richtung die nächsten Bahnhöfe, erst geladen, wenn man sucht
- */
-export interface Varianten { datenstand: string; varianten: Record<string, Array<[string[], number[]]>> }
-let variantenCache: Promise<Varianten> | null = null
-export function variantenLaden(): Promise<Varianten> {
-  variantenCache ??= import('./assets/gleisbau-varianten.json').then((m) => (m.default ?? m) as unknown as Varianten)
-  return variantenCache
-}
-export function varianteAufgabe(v: Varianten, folge: string[], zahlen: number[]): Aufgabe {
-  const teile = folge.slice(1).map((_, k) => ({ tunnel: zahlen[3 * k], bruecken: zahlen[3 * k + 1], ohne_daten: zahlen[3 * k + 2] }))
-  return streckeAufgabe(`v:${folge.join('|')}`, `${folge[0]} – ${folge[folge.length - 1]}`, folge, teile, v.datenstand, Math.max(10, 4 * folge.length))
-}
-/** eine Variante nach ihrer Kennung «v:A|B|C» */
-export async function varianteAusId(id: string): Promise<Aufgabe | null> {
-  if (!id.startsWith('v:')) return null
-  const folge = id.slice(2).split('|'), v = await variantenLaden()
-  const treffer = v.varianten[folge[0]]?.find(([f]) => f.join('|') === folge.join('|'))
-  return treffer ? varianteAufgabe(v, treffer[0], treffer[1]) : null
-}
 
 // ——— Fortschritt ———
 

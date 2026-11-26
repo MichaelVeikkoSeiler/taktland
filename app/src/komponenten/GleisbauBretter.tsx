@@ -41,16 +41,11 @@ const wann = (ms: number) => {
   return gleicherTag ? `heute ${d.toLocaleTimeString('de-CH', { hour: '2-digit', minute: '2-digit' })}` : d.toLocaleDateString('de-CH', { day: 'numeric', month: 'numeric', year: 'numeric' })
 }
 
-export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu, aufgaben, sterne, sterneMax, betrieb, geld }: {
-  betrieb: () => void
-  geld: number
+export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu }: {
   bretter: GespeichertesBrett[]
   setBretter: (f: (l: GespeichertesBrett[]) => GespeichertesBrett[]) => void
   oeffnen: (id: string) => void
   neu: (sp: number, ze: number) => void
-  aufgaben: () => void
-  sterne: number
-  sterneMax: number
 }) {
   const [weg, setWeg] = useState<{ e: GespeichertesBrett; i: number } | null>(null)
   const [geteilt, setGeteilt] = useState<string | null>(null)
@@ -76,15 +71,6 @@ export default function GleisbauBretter({ bretter, setBretter, oeffnen, neu, auf
       <div className="flex flex-wrap gap-2">
         <button type="button" onClick={() => setNeuOffen((x) => !x)} aria-expanded={neuOffen}
                 className="min-h-12 rounded-lg bg-sbb-red px-6 font-bold text-white hover:bg-sbb-red125">Neues Brett</button>
-        <button type="button" onClick={aufgaben}
-                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">
-          Aufgaben <span className="ml-1 text-sm font-medium tabular-nums text-sbb-metal dark:text-sbb-storm">{sterne} / {sterneMax} ★</span>
-        </button>
-        {/* das Spiel mit Aufträgen, Geld und Depot (Michael, 2026-11-25) */}
-        <button type="button" onClick={betrieb}
-                className="min-h-12 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">
-          Bahnbetrieb <span className="ml-1 text-sm font-medium tabular-nums text-sbb-metal dark:text-sbb-storm">CHF {geld.toLocaleString('de-CH')}</span>
-        </button>
       </div>
       {neuOffen && (
         <div className="mt-3 rounded-lg bg-sbb-milk p-3 dark:bg-sbb-charcoal">

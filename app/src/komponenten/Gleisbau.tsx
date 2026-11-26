@@ -7,7 +7,7 @@ import {
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
-import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheGeloestMerken, type Varianten, varianteAufgabe, varianteAusId, variantenLaden } from '../gleisbauAufgaben'
+import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheGeloestMerken } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
@@ -281,6 +281,33 @@ function Sterne({ n }: { n: number }) {
   )
 }
 
+/** die Wahl beim Einstieg: Tutorial, Freies Feld, Bahnbetrieb als grosse Kacheln, je mit einem Satz */
+function SpielWahl({ sterne, sterneMax, geld, bretter, neuHier }: { sterne: number; sterneMax: number; geld: number; bretter: number; neuHier: boolean }) {
+  const kachel = (adresse: string, titel: string, text: string, zusatz: string, empfohlen = false) => (
+    <li>
+      <a href={adresse} className="kachel kachel-link flex h-full flex-col gap-1 p-4">
+        {empfohlen && <span className="self-start rounded-lg bg-sbb-red px-2 py-0.5 text-xs font-bold text-white">Empfohlen für den Anfang</span>}
+        <span className="text-lg font-bold">{titel}</span>
+        <span className="text-sm leading-snug">{text}</span>
+        <span className="mt-auto pt-1 text-sm font-bold tabular-nums text-sbb-metal dark:text-sbb-storm">{zusatz}</span>
+      </a>
+    </li>
+  )
+  return (
+    <>
+      <p className="mt-2 max-w-3xl leading-relaxed">Lege Gleise auf ein Brett und lass Züge fahren. Wie möchtest du spielen?</p>
+      <ul className="mt-4 grid max-w-3xl gap-3 sm:grid-cols-3">
+        {kachel('#/gleisbau?aufgaben', 'Tutorial', 'Schritt für Schritt lernen, wie man Gleise legt, Bahnhöfe verbindet und Züge mit Fahrgästen und Ladungen fahren lässt.',
+          `${sterne} / ${sterneMax} ★`, neuHier)}
+        {kachel('#/gleisbau?frei', 'Freies Feld', 'Ein leeres Brett mit allen Werkzeugen und Zügen. Bauen, was dir gefällt, speichern und teilen.',
+          bretter ? `${bretter} ${bretter === 1 ? 'Brett' : 'Bretter'}` : 'Noch keine Bretter')}
+        {kachel('#/gleisbau?betrieb', 'Bahnbetrieb', 'Aufträge mit fester Landschaft: Gleise bauen, Loks und Wagen kaufen, Fahrgäste und Güter transportieren.',
+          `CHF ${geld.toLocaleString('de-CH').replace(/’/g, "'")}`)}
+      </ul>
+    </>
+  )
+}
+
 /** die Aufgaben als Kacheln mit den erreichten Sternen, die eigenen zuerst, dann die echten Strecken */
 function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, number>; waehlen: (a: Aufgabe) => void }) {
   const gruppe = (titel: string, l: Aufgabe[], text?: string) => (
@@ -305,10 +332,8 @@ function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, n
   )
   return (
     <div className="max-w-3xl">
-      {gruppe('Aufgaben der Reihe nach', AUFGABEN.filter((a) => a.reihe !== undefined),
-              'Eine nach der anderen: Jede Aufgabe beginnt mit deinem Brett der vorherigen und bringt Neues dazu. Die nächste öffnet sich, wenn die vorherige gelöst ist.')}
-      {gruppe('Echte Strecken nachbauen', AUFGABEN.filter((a) => a.id.startsWith('strecke-')))}
-      <VariantenSuche fortschritt={fortschritt} waehlen={waehlen} />
+      {gruppe('Schritt für Schritt', AUFGABEN.filter((a) => a.reihe !== undefined),
+              'Acht Lektionen auf einem Brett, das wächst: Jede beginnt mit deinem Brett der vorherigen und bringt Neues dazu. Hinweise zeigen dir, was zu tun ist. Die nächste öffnet sich, wenn die vorherige gelöst ist.')}
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
         Bei den echten Strecken stammen die Bahnhöfe und die Zahl der Tunnel und Brücken zwischen ihnen aus den Daten der Strecken in Taktland; das
         Brett hat keinen Massstab, ein Tunnel oder eine Brücke genügt. Dein freies Brett bleibt, während du Aufgaben löst.
@@ -317,51 +342,6 @@ function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, n
   )
 }
 
-/**
- * Strecke ab einem Bahnhof (Michael, 2026-11-24: «Man kann auch Bahnhöfe eingeben dann gibt es echte Varianten in unterschiedliche Richtungen»):
- * einen Bahnhof suchen, darunter je Richtung die nächsten Bahnhöfe laut Netz als Aufgabe
- */
-function VariantenSuche({ fortschritt, waehlen }: { fortschritt: Record<string, number>; waehlen: (a: Aufgabe) => void }) {
-  const [v, setV] = useState<Varianten | null>(null)
-  const [suche, setSuche] = useState('')
-  const [bahnhof, setBahnhof] = useState<string | null>(null)
-  const laden = () => { if (!v) void variantenLaden().then(setV) }
-  const namen = useMemo(() => (v ? Object.keys(v.varianten).sort((a, c) => a.localeCompare(c, 'de')) : []), [v])
-  const q = ohneAkzente(suche.trim())
-  const treffer = q.length < 2 ? [] : [...namen.filter((n) => ohneAkzente(n).startsWith(q)), ...namen.filter((n) => !ohneAkzente(n).startsWith(q) && ohneAkzente(n).includes(q))].slice(0, 8)
-  return (
-    <section className="mt-6">
-      <h2 className="text-lg font-bold">Strecke ab einem Bahnhof</h2>
-      <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">Gib einen Bahnhof ein: Je Richtung im Netz gibt es eine echte Strecke mit den nächsten Bahnhöfen.</p>
-      <input value={suche} onFocus={laden} onChange={(e) => { setSuche(e.target.value); setBahnhof(null); laden() }} placeholder="Bahnhof suchen" aria-label="Bahnhof suchen"
-             className="mt-2 w-full max-w-md rounded-lg border border-sbb-cloud bg-white px-3 py-2 dark:border-sbb-iron dark:bg-sbb-midnight" />
-      {!bahnhof && q.length >= 2 && (
-        <ul className="mt-2 grid max-w-md gap-1">
-          {!v && <li className="text-sm">Bahnhöfe werden geladen …</li>}
-          {v && !treffer.length && <li className="text-sm">Kein Bahnhof gefunden.</li>}
-          {treffer.map((n) => (
-            <li key={n}><button type="button" onClick={() => { setBahnhof(n); setSuche(n) }} className="kachel kachel-link w-full px-3 py-2 text-left">{n}</button></li>
-          ))}
-        </ul>
-      )}
-      {bahnhof && v && (
-        <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-          {(v.varianten[bahnhof] ?? []).map(([folge, zahlen]) => {
-            const a = varianteAufgabe(v, folge, zahlen)
-            return (
-              <li key={a.id}>
-                <button type="button" onClick={() => waehlen(a)} className="kachel kachel-link flex w-full items-center justify-between gap-3 px-3 py-3 text-left">
-                  <span><span className="font-medium">{folge.join(' – ')}</span></span>
-                  <Sterne n={fortschritt[a.id] ?? 0} />
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-      )}
-    </section>
-  )
-}
 
 /** Ampeln am Gleis: ein Mast mit rotem und grünem Licht in der Ecke unten rechts des Felds (Gestalt gewählt) */
 function AmpelBild({ brett }: { brett: Brett }) {
@@ -1047,7 +1027,7 @@ export function Gleisbau() {
   const [brett, setBrettRoh] = useState<Brett>(() => leer())
   // Startliste, ein Brett zum Bearbeiten oder die Aufgaben (Michael, 2026-11-23: «Wenn man auf Gleisbau kommt, kommt eine Liste, neues Brett, Brett
   // bearbeiten»); die Adresse sagt, was offen ist: #/gleisbau, #/gleisbau?id=…, #/gleisbau?aufgaben, so führt die Zurück-Taste zur Liste
-  const [ansicht, setAnsicht] = useState<'liste' | 'brett' | 'aufgaben' | 'betrieb'>('liste')
+  const [ansicht, setAnsicht] = useState<'liste' | 'frei' | 'brett' | 'aufgaben' | 'betrieb'>('liste')
   // der Bahnbetrieb (Michael, 2026-11-25): Geld, Depot, Aufträge und je Auftrag Brett und Züge, auf dem Gerät gemerkt
   const [betrieb, setBetriebRoh] = useState<Betrieb>(() => betriebLesen())
   const setBetrieb = (f: Betrieb | ((b: Betrieb) => Betrieb)) => setBetriebRoh((alt) => { const n = typeof f === 'function' ? f(alt) : f; betriebMerken(n); return n })
@@ -1362,14 +1342,10 @@ export function Gleisbau() {
       const aid = q.get('aufgabe'), a = aid ? AUFGABEN.find((x) => x.id === aid) : null
       if (a && !reiheOffen(a, fortschrittLesen())) { setAufgabe(null); setAnsicht('aufgaben'); return }
       if (a) { setAnsicht('aufgaben'); aufgabeWaehlen(a); return }
-      // eine Strecke ab einem Bahnhof: erst nach dem Laden der Varianten
-      if (aid?.startsWith('v:')) {
-        const hash = window.location.hash
-        setAufgabe(null); setAnsicht('aufgaben')
-        void varianteAusId(aid).then((x) => { if (x && window.location.hash === hash) aufgabeWaehlen(x) })
-        return
-      }
+      // alte Links auf echte Strecken (seit 2026-11-26 weg) führen zum Tutorial
+      if (aid) { setAufgabe(null); setAnsicht('aufgaben'); return }
       if (q.has('aufgaben')) { setAufgabe(null); setAnsicht('aufgaben'); return }
+      if (q.has('frei')) { setAufgabe(null); setAnsicht('frei'); return }
       const auid = q.get('auftrag'), au = auid ? AUFTRAEGE.find((x) => x.id === auid) : null
       if (au) { setAnsicht('betrieb'); aufgabeWaehlen(auftragAlsAufgabe(au)); return }
       if (q.has('betrieb')) { setAufgabe(null); setAnsicht('betrieb'); return }
@@ -2074,6 +2050,13 @@ export function Gleisbau() {
   const rund = 'flex size-11 flex-none items-center justify-center rounded-full border border-sbb-cloud bg-white text-lg font-bold shadow-sm hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'
   const imBrett = ansicht === 'brett' || ((ansicht === 'aufgaben' || ansicht === 'betrieb') && !!aufgabe)
   const naechste = aufgabe && !(aufgabe as { betrieb?: Auftrag }).betrieb ? AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1] : undefined
+  // im Tutorial der jetzige Hinweis: der erste, der noch nicht erledigt ist; sein Werkzeug und seine Felder leuchten
+  const werkzeugName = GRUPPEN.flatMap((g) => g.l).find((x) => gleich(x.w, werkzeug))?.text ?? ''
+  const fuehrungNr = aufgabe?.fuehrung && !ergebnis?.ok
+    ? aufgabe.fuehrung.findIndex((f) => !(f.fertig?.({ b: brett, stand, werkzeug: werkzeugName, faehrt }) ?? false)) : -1
+  const hinweis = fuehrungNr >= 0 ? aufgabe!.fuehrung![fuehrungNr] : null
+  const hinweisReiter = hinweis?.werkzeug && werkzeugName !== hinweis.werkzeug ? GRUPPEN.find((g) => g.l.some((x) => x.text === hinweis.werkzeug))?.titel : undefined
+  const LEUCHTEN = 'ring-2 ring-sbb-red ring-offset-1 animate-pulse'
   const leerenKnopf = (
     <button type="button" disabled={faehrt} onClick={() => {
       if (!leerenScharf) { setLeerenScharf(true); return }
@@ -2102,17 +2085,19 @@ export function Gleisbau() {
           {ansicht === 'liste'
             ? <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
             : <Zurueck onClick={() => { window.location.hash = '#/gleisbau' }} text="Gleisbau" />}
-          <h1 className="mt-4 text-2xl font-bold tracking-tight">{ansicht === 'aufgaben' ? 'Gleisbau: Aufgaben' : ansicht === 'betrieb' ? 'Gleisbau: Bahnbetrieb' : 'Gleisbau'}</h1>
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">{ansicht === 'aufgaben' ? 'Gleisbau: Tutorial' : ansicht === 'betrieb' ? 'Gleisbau: Bahnbetrieb' : ansicht === 'frei' ? 'Gleisbau: Freies Feld' : 'Gleisbau'}</h1>
+          {/* zuerst die Wahl, wie man spielt (Michael, 2026-11-26: «Als Einstieg soll ausgewählt werden können, wie gespielt werden kann. Freies Feld mit allen
+              Werkzeugen und Zügen. Dann der Bahnbetrieb … und ein Bereich Tutorial, der erklärt Schritt für Schritt, interaktiv»; das Tutorial beim ersten Mal zuoberst empfohlen) */}
           {ansicht === 'liste' && (
-            <p className="mt-2 max-w-3xl leading-relaxed">
-              Lege Gleise auf ein Brett und lass den Zug fahren: auf eigenen Brettern oder mit Aufgaben, bis zu echten Strecken der Schweiz.
-            </p>
+            <SpielWahl sterne={Object.values(fortschritt).reduce((a, c) => a + c, 0)} sterneMax={AUFGABEN.length * 3} geld={betrieb.geld} bretter={bretter.length}
+                       neuHier={!Object.keys(fortschritt).length} />
           )}
-          {ansicht === 'liste' && <Klappe titel="So geht's" className="mt-2 max-w-3xl"><SoGehts /></Klappe>}
-          {ansicht === 'liste' && (
-            <GleisbauBretter bretter={bretter} setBretter={setBretter} neu={neuesBrett} oeffnen={(id) => { window.location.hash = `#/gleisbau?id=${id}` }}
-                             aufgaben={() => { window.location.hash = '#/gleisbau?aufgaben' }} betrieb={() => { window.location.hash = '#/gleisbau?betrieb' }} geld={betrieb.geld}
-                             sterne={Object.values(fortschritt).reduce((a, c) => a + c, 0)} sterneMax={AUFGABEN.length * 3} />
+          {ansicht === 'frei' && (
+            <p className="mt-2 max-w-3xl leading-relaxed">Ein leeres Brett mit allen Werkzeugen und Zügen: baue, was dir gefällt, und lass fahren.</p>
+          )}
+          {ansicht === 'frei' && <Klappe titel="So geht's" className="mt-2 max-w-3xl"><SoGehts /></Klappe>}
+          {ansicht === 'frei' && (
+            <GleisbauBretter bretter={bretter} setBretter={setBretter} neu={neuesBrett} oeffnen={(id) => { window.location.hash = `#/gleisbau?id=${id}` }} />
           )}
           {ansicht === 'betrieb' && <BetriebSeite betrieb={betrieb} setBetrieb={setBetrieb} oeffnen={(a) => { window.location.hash = `#/gleisbau?auftrag=${encodeURIComponent(a.id)}` }} />}
           {ansicht === 'aufgaben' && <AufgabenListe fortschritt={fortschritt} waehlen={(a) => { window.location.hash = `#/gleisbau?aufgabe=${encodeURIComponent(a.id)}` }} />}
@@ -2130,7 +2115,7 @@ export function Gleisbau() {
              role="dialog" aria-label={aufgabe ? `Gleisbau, Aufgabe ${aufgabe.titel}` : `Gleisbau, ${bretter.find((x) => x.id === offen)?.name ?? 'Brett'}`}>
           <div className="flex flex-none items-center gap-2 px-2.5 pb-2"
                style={{ paddingTop: 'calc(env(safe-area-inset-top) + 8px)', paddingLeft: 'calc(env(safe-area-inset-left) + 10px)', paddingRight: 'calc(env(safe-area-inset-right) + 10px)' }}>
-            <button type="button" onClick={() => { window.location.hash = auftrag ? '#/gleisbau?betrieb' : aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau' }} aria-label={auftrag ? 'Zurück zum Bahnbetrieb' : aufgabe ? 'Zurück zu den Aufgaben' : 'Zurück zur Liste der Bretter'}
+            <button type="button" onClick={() => { window.location.hash = auftrag ? '#/gleisbau?betrieb' : aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau?frei' }} aria-label={auftrag ? 'Zurück zum Bahnbetrieb' : aufgabe ? 'Zurück zum Tutorial' : 'Zurück zu meinen Brettern'}
                     className={rund}><span className="pfeil pfeil-links" aria-hidden="true">←</span></button>
             <p className="min-w-0 flex-1 truncate font-bold">{aufgabe ? aufgabe.titel : bretter.find((x) => x.id === offen)?.name ?? 'Brett'}</p>
             {/* die Uhr des Taktfahrplans */}
@@ -2157,6 +2142,13 @@ export function Gleisbau() {
                 <button type="button" onClick={() => { const e = bewerten(aufgabe, brett, stand); setErgebnis(e); setMeldung(e.ok ? null : e.text) }}
                         className="rounded-lg bg-sbb-red px-3 py-1 text-sm font-bold text-white hover:bg-sbb-red125">Prüfen</button>
               </div>
+            </div>
+          )}
+          {/* der Hinweis des Tutorials */}
+          {hinweis && (
+            <div className="mx-2.5 mb-2 flex flex-none items-start gap-2 rounded-lg border-l-4 border-sbb-red bg-white px-3 py-2 text-sm leading-snug shadow-sm dark:bg-sbb-charcoal" role="status">
+              <span className="flex-none rounded-lg bg-sbb-red px-1.5 text-xs font-bold leading-5 text-white tabular-nums">{fuehrungNr + 1}/{aufgabe!.fuehrung!.length}</span>
+              <span>{hinweis.text}</span>
             </div>
           )}
           {/* die Schritte der Aufgabe sichtbar: Bahnhöfe der Reihe nach, dazwischen, was der Abschnitt braucht; erfüllt mit Haken */}
@@ -2198,6 +2190,11 @@ export function Gleisbau() {
             ? <WagenBild key={`a${i},${j}`} w={{ x: i + 0.5, y: j + 0.5, w: f.gleis!.dreh % 2 ? 0 : Math.PI / 2, art: 1, vorne: false }} tunnel={false} /> : null))}
           <AmpelBild brett={brett} />
           <OhneStromBild brett={brett} />
+          {/* die Felder, auf die der Hinweis des Tutorials zeigt */}
+          {hinweis?.felder?.map(([i, j]) => (
+            <rect key={`h${i},${j}`} x={i + 0.03} y={j + 0.03} width={0.94} height={0.94} rx={0.12} fill="none" stroke={F.karmin} strokeWidth={0.07}
+                  className="animate-pulse" pointerEvents="none" />
+          ))}
           <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} />
           <AnlagenBild brett={brett} />
           {takt > 0 && !uhrBelegt && <UhrBild minuten={UHR_START_MIN + (faehrt ? spielSek.current : 0)} />}
@@ -2346,14 +2343,15 @@ export function Gleisbau() {
                 <div className="flex gap-0.5 overflow-x-auto px-2 pt-1.5 [scrollbar-width:none]" role="tablist" aria-label="Werkzeuge">
                   {GRUPPEN.map((g) => (
                     <button key={g.titel} type="button" role="tab" aria-selected={reiter === g.titel} onClick={() => setReiter(g.titel)}
-                            className={`shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold sm:px-3 sm:text-sm ${reiter === g.titel ? 'bg-sbb-milk dark:bg-sbb-midnight' : 'text-sbb-metal dark:text-sbb-storm'}`}>{g.titel}</button>
+                            className={`${hinweisReiter === g.titel && reiter !== g.titel ? LEUCHTEN : ''} shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold sm:px-3 sm:text-sm ${reiter === g.titel ? 'bg-sbb-milk dark:bg-sbb-midnight' : 'text-sbb-metal dark:text-sbb-storm'}`}>{g.titel}</button>
                   ))}
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-1.5 [scrollbar-width:none]">
                   {GRUPPEN.find((g) => g.titel === reiter)!.l.filter(({ w }) => (takt > 0 || w.art !== 'knoten') && !(auftrag && ((w.art === 'zug' && w.zug === 'g') || w.art === 'wagen')))
                     .map(({ w, text }) => ({ w, text: auftrag && w.art === 'zug' ? 'Zug einsetzen' : text })).map(({ w, text }) => (
                     <button key={`${text}${JSON.stringify(w)}`} type="button" aria-pressed={gleich(w, werkzeug)} title={gleich(w, werkzeug) ? 'Nochmals tippen dreht' : undefined}
-                            onClick={() => { if (gleich(w, werkzeug)) { setDreh(((dreh + 1) % 4) as Dreh); knopfTon(true) } else setWerkzeug(w) }} className={knopf(gleich(w, werkzeug))}>
+                            onClick={() => { if (gleich(w, werkzeug)) { setDreh(((dreh + 1) % 4) as Dreh); knopfTon(true) } else setWerkzeug(w) }}
+                            className={`${knopf(gleich(w, werkzeug))} ${hinweis?.werkzeug === text && !gleich(w, werkzeug) ? LEUCHTEN : ''}`}>
                       <WerkzeugBild w={w} dreh={dreh} />
                       {text.length > 11 ? <span className="whitespace-normal text-center">{text}</span> : text}
                     </button>
@@ -2596,7 +2594,10 @@ export function Gleisbau() {
                 {auftrag && <button type="button" onClick={() => { window.location.hash = '#/gleisbau?betrieb' }} className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Zu den Aufträgen</button>}
                 <div className="flex flex-wrap justify-center gap-2">
                   {naechste && <button type="button" autoFocus onClick={() => { window.location.hash = `#/gleisbau?aufgabe=${encodeURIComponent(naechste.id)}` }}
-                                       className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Nächste Aufgabe</button>}
+                                       className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Nächste Lektion</button>}
+                  {/* nach der letzten Lektion weiter zum Bahnbetrieb */}
+                  {!naechste && aufgabe.reihe !== undefined && <button type="button" autoFocus onClick={() => { window.location.hash = '#/gleisbau?betrieb' }}
+                                       className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Zum Bahnbetrieb</button>}
                   <button type="button" onClick={() => setGeloest(false)}
                           className="rounded-lg border border-sbb-cloud bg-white px-5 py-3 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Weiterbauen</button>
                 </div>
@@ -2625,7 +2626,7 @@ function SoGehts() {
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
       <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Mit «Zug einsetzen» (unter «Züge») tippst du auf ein Gleis und stellst aus deinen Loks und Wagen einen Zug zusammen, fehlende Wagen kaufst du gleich dort. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
-      <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug (Lok, Personenwagen und Steuerwagen, je 4 Plätze) hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen; eine Ladung füllt einen Güterwagen. Unter Aufgaben gibt es dazu «Personen und Güter transportieren».</li>
+      <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug (Lok, Personenwagen und Steuerwagen, je 4 Plätze) hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen; eine Ladung füllt einen Güterwagen. Das Tutorial zeigt es Schritt für Schritt.</li>
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,
         im Berg zum Tunnel; «Brücke» über ein Gleis führt die Strasse darüber statt über einen Bahnübergang. Die Busse fahren rechts, biegen nach Zufall ab,
         wenden am Ende der Strasse, halten an Haltestellen und warten vor geschlossenen Schranken. Liegt eine Haltestelle neben einem Bahnhof, wartet der Bus
