@@ -227,6 +227,8 @@ function reiheLesen(): ReiheStand {
   return { geloest: {}, arbeit: {} }
 }
 function reiheSchreiben(s: ReiheStand) { try { localStorage.setItem(REIHE_SPEICHER, JSON.stringify(s)) } catch { /* nur für jetzt */ } }
+/** das Tutorial von vorn: die Bretter der Lektionen weg (Michael, 2026-11-26: «Bitte setze meinen Stand beim Gleisbau-Spiel bei den Tutorials zurück») */
+export function reiheZuruecksetzen() { try { localStorage.removeItem(REIHE_SPEICHER) } catch { /* nichts gemerkt */ } }
 export function reiheArbeitMerken(id: string, b: Brett) { const s = reiheLesen(); s.arbeit[id] = brettCode(b); reiheSchreiben(s) }
 export function reiheGeloestMerken(id: string, b: Brett) { const s = reiheLesen(); s.geloest[id] = brettCode(b); reiheSchreiben(s) }
 

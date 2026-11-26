@@ -7,7 +7,7 @@ import {
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
-import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheGeloestMerken } from '../gleisbauAufgaben'
+import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheZuruecksetzen, reiheGeloestMerken } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
@@ -332,7 +332,8 @@ function SpielWahl({ sterne, sterneMax, geld, bretter, neuHier }: { sterne: numb
 }
 
 /** die Aufgaben als Kacheln mit den erreichten Sternen, die eigenen zuerst, dann die echten Strecken */
-function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, number>; waehlen: (a: Aufgabe) => void }) {
+function AufgabenListe({ fortschritt, waehlen, zuruecksetzen }: { fortschritt: Record<string, number>; waehlen: (a: Aufgabe) => void; zuruecksetzen: () => void }) {
+  const [sicher, setSicher] = useState(false)
   const gruppe = (titel: string, l: Aufgabe[], text?: string) => (
     <section className="mt-4">
       <h2 className="text-lg font-bold">{titel}</h2>
@@ -357,10 +358,21 @@ function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, n
     <div className="max-w-3xl">
       {gruppe('Schritt für Schritt', AUFGABEN.filter((a) => a.reihe !== undefined),
               'Acht Lektionen auf einem Brett, das wächst: Jede beginnt mit deinem Brett der vorherigen und bringt Neues dazu. Hinweise zeigen dir, was zu tun ist. Die nächste öffnet sich, wenn die vorherige gelöst ist.')}
-      <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
-        Bei den echten Strecken stammen die Bahnhöfe und die Zahl der Tunnel und Brücken zwischen ihnen aus den Daten der Strecken in Taktland; das
-        Brett hat keinen Massstab, ein Tunnel oder eine Brücke genügt. Dein freies Brett bleibt, während du Aufgaben löst.
-      </p>
+      <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">Deine Bretter im freien Feld bleiben, während du das Tutorial spielst.</p>
+      {/* das Tutorial von vorn, mit Rückfrage */}
+      {AUFGABEN.some((a) => a.reihe !== undefined && fortschritt[a.id]) && (
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+          {sicher ? (
+            <>
+              <span>Alle Lektionen und ihre Bretter löschen?</span>
+              <button type="button" onClick={() => { zuruecksetzen(); setSicher(false) }} className="min-h-10 rounded-lg bg-sbb-red px-3 font-bold text-white hover:bg-sbb-red125">Ja, zurücksetzen</button>
+              <button type="button" onClick={() => setSicher(false)} className="min-h-10 rounded-lg border border-sbb-cloud bg-white px-3 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Abbrechen</button>
+            </>
+          ) : (
+            <button type="button" onClick={() => setSicher(true)} className="underline underline-offset-2 text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white">Tutorial zurücksetzen</button>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -2272,7 +2284,11 @@ export function Gleisbau() {
           )}
           {ansicht === 'betrieb' && <BetriebSeite betrieb={betrieb} setBetrieb={setBetrieb} oeffnen={(a) => { window.location.hash = `#/gleisbau?auftrag=${encodeURIComponent(a.id)}` }}
                                                    depot={depotOffen} setDepot={(d) => { window.location.hash = d ? '#/gleisbau?depot' : '#/gleisbau?betrieb' }} />}
-          {ansicht === 'aufgaben' && <AufgabenListe fortschritt={fortschritt} waehlen={(a) => { window.location.hash = `#/gleisbau?aufgabe=${encodeURIComponent(a.id)}` }} />}
+          {ansicht === 'aufgaben' && <AufgabenListe fortschritt={fortschritt} waehlen={(a) => { window.location.hash = `#/gleisbau?aufgabe=${encodeURIComponent(a.id)}` }}
+                                                    zuruecksetzen={() => {
+                                                      reiheZuruecksetzen()
+                                                      setFortschritt((f) => { const n = Object.fromEntries(Object.entries(f).filter(([id]) => !AUFGABEN.some((a) => a.id === id && a.reihe !== undefined))); fortschrittMerken(n); return n })
+                                                    }} />}
           <p className={`mt-5 max-w-3xl ${LEISE}`}>
             Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Deine Bretter bleiben im Browser dieses
             Geräts und werden nicht gesendet, ausser du teilst einen Link.
