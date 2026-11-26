@@ -11,8 +11,45 @@ const KNOPF_ROT = 'min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white hove
 const KNOPF_WEISS = 'min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight'
 /** der kleine Knopf mit dem Preis (Michael, 2026-11-26: «Die Buttons mit den Preisen können kleiner sein») */
 const KNOPF_PREIS = 'min-h-9 shrink-0 rounded-lg border border-sbb-cloud bg-white px-2 text-xs font-bold tabular-nums hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight'
-/** Art und Antrieb einer Lok, immer gleich gebaut: «Güterlok, Diesel» (Michael, 2026-11-26: «Bitte nicht Diesel, Güterlok, sondern nur Güterlok und dann Diesel») */
-const lokArt = (l: LokTyp) => `${LOKS[l].art}, ${LOKS[l].diesel ? 'Diesel' : 'Strom'}`
+/**
+ * die Werte einer Lok als Zeichen (Michael, 2026-11-26: «ob wir die Antriebsart … als Icon hinterlegen, sowie auch die Kraftgeschwindigkeit», «Ja, baue das doch bitte
+ * mal so»): Blitz für Strom, Tropfen für Diesel, ein Wagen mit der Zahl, die sie zieht, und fünf Balken fürs Tempo (1,0 ein Balken, je 0,3 mehr einer dazu, gewählt)
+ */
+export const tempoBalken = (l: LokTyp) => Math.max(1, Math.min(5, 1 + Math.round((LOKS[l].tempo - 1) / 0.3)))
+const ZEICHEN = 'size-4 shrink-0'
+function Blitz() { return <svg viewBox="0 0 16 16" className={ZEICHEN} aria-hidden="true"><path d="M9.5 1 3.5 9h4l-1 6 6-8h-4z" fill="currentColor" /></svg> }
+function Tropfen() { return <svg viewBox="0 0 16 16" className={ZEICHEN} aria-hidden="true"><path d="M8 1.5C6 5 3.8 7.4 3.8 10a4.2 4.2 0 0 0 8.4 0C12.2 7.4 10 5 8 1.5z" fill="currentColor" /></svg> }
+function WagenZeichen() {
+  return <svg viewBox="0 0 16 16" className={ZEICHEN} aria-hidden="true"><rect x="1.5" y="4" width="13" height="7" rx="1.2" fill="none" stroke="currentColor" strokeWidth="1.5" /><circle cx="5" cy="12.8" r="1.3" fill="currentColor" /><circle cx="11" cy="12.8" r="1.3" fill="currentColor" /></svg>
+}
+function Balken({ n }: { n: number }) {
+  return (
+    <svg viewBox="0 0 22 16" className="h-4 w-[1.375rem] shrink-0" aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((k) => <rect key={k} x={k * 4.4 + 0.5} y={12 - k * 2.4} width="3.2" height={3 + k * 2.4} rx="0.6" fill="currentColor" opacity={k < n ? 1 : 0.22} />)}
+    </svg>
+  )
+}
+export function LokWerte({ l }: { l: LokTyp }) {
+  const d = LOKS[l].diesel, n = tempoBalken(l)
+  return (
+    <span className="inline-flex items-center gap-2.5 align-middle" aria-label={`${d ? 'Diesel' : 'Strom'}, zieht ${LOKS[l].zugkraft} Wagen, Tempo ${n} von 5`}>
+      <span title={d ? 'Diesel: fährt auch ohne Fahrleitung' : 'Strom: braucht Fahrleitung'}>{d ? <Tropfen /> : <Blitz />}</span>
+      <span className="inline-flex items-center gap-0.5 font-bold tabular-nums" title={`zieht höchstens ${LOKS[l].zugkraft} Wagen`}><WagenZeichen />{LOKS[l].zugkraft}</span>
+      <span title={`Tempo ${n} von 5`}><Balken n={n} /></span>
+    </span>
+  )
+}
+/** einmal erklärt, was die Zeichen heissen */
+export function LokLegende() {
+  return (
+    <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-sbb-metal dark:text-sbb-storm">
+      <span className="inline-flex items-center gap-1"><Blitz />Strom</span>
+      <span className="inline-flex items-center gap-1"><Tropfen />Diesel, auch ohne Fahrleitung</span>
+      <span className="inline-flex items-center gap-1"><WagenZeichen />zieht so viele Wagen</span>
+      <span className="inline-flex items-center gap-1"><Balken n={3} />Tempo</span>
+    </span>
+  )
+}
 const SEGMENT = (an: boolean) => `min-h-10 rounded-lg px-3 text-sm font-bold ${an ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white dark:bg-sbb-charcoal'}`
 
 function Sterne({ n }: { n: number }) {
@@ -100,7 +137,7 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
     setBetrieb({ ...betrieb, geld: betrieb.geld - preis, loks: lok ? [...betrieb.loks, lok] : betrieb.loks, wagen: wagen ? { ...betrieb.wagen, [wagen]: (betrieb.wagen[wagen] ?? 0) + 1 } : betrieb.wagen })
   }
   // je Fahrzeug: Bild, Name und Anzahl im Depot, was es kann, darunter rechts der Knopf zum Kaufen (auf dem Handy sonst zu eng)
-  const zeile = (key: string, bild: React.ReactNode, titel: string, text: string, besitz: number, preis: number, kauf: () => void) => (
+  const zeile = (key: string, bild: React.ReactNode, titel: string, text: React.ReactNode, besitz: number, preis: number, kauf: () => void) => (
     <li key={key} className="kachel flex flex-wrap items-center gap-x-3 gap-y-2 p-3">
       {bild}
       <div className="min-w-[10rem] flex-1">
@@ -121,9 +158,10 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
       </div>
       <section>
         <h3 className="font-bold">Loks</h3>
+        <div className="mt-1"><LokLegende /></div>
         <ul className="mt-2 grid gap-2 md:grid-cols-2">
           {(Object.keys(LOKS) as LokTyp[]).map((l) => zeile(l, <FahrzeugBild lok={l} />, `${LOKS[l].name}`,
-            `${lokArt(l)}, zieht ${LOKS[l].zugkraft} Wagen, Tempo ${LOKS[l].tempo.toLocaleString('de-CH')}. ${LOKS[l].text}`,
+            <><span className="flex flex-wrap items-center gap-x-2">{LOKS[l].art} <LokWerte l={l} /></span>{LOKS[l].text}</>,
             betrieb.loks.filter((x) => x === l).length, LOKS[l].preis, () => kaufen(LOKS[l].preis, l)))}
         </ul>
       </section>
@@ -231,10 +269,11 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
             .flatMap((x, k) => (k ? [', ', x] : [x]))}.
         </p>
         <p className="mt-3 font-bold">1. Lok wählen</p>
+        <div className="mt-0.5"><LokLegende /></div>
         <ul className="mt-1.5 grid gap-1.5">
           {loks.map((l) => {
             const da = lokFrei(l) > 0, besitzt = betrieb.loks.includes(l)
-            const text = `${lokArt(l)}, zieht ${LOKS[l].zugkraft} Wagen`
+            const text = <span className="flex flex-wrap items-center gap-x-2">{LOKS[l].art} <LokWerte l={l} /></span>
             return (
               <li key={l}>
                 {da ? (
@@ -248,7 +287,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
                   <div className="flex items-center gap-2 px-2 py-1 text-sm">
                     <span className="opacity-45"><FahrzeugBild lok={l} /></span>
                     <span className="min-w-0 flex-1 leading-tight text-sbb-metal dark:text-sbb-storm"><span className="font-bold">{LOKS[l].name}</span>
-                      <span className="block">{text}{besitzt ? ' · fährt schon' : ''}</span></span>
+                      <span className="block">{text}{besitzt ? <span className="block">fährt schon</span> : null}</span></span>
                     <button type="button" disabled={betrieb.geld < LOKS[l].preis} aria-label={`${LOKS[l].name} kaufen für ${chf(LOKS[l].preis)}`} onClick={() => lokKaufen(l)} className={KNOPF_PREIS}>{chf(LOKS[l].preis)}</button>
                   </div>
                 )}
