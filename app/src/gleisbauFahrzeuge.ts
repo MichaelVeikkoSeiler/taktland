@@ -38,7 +38,7 @@ export const LOKS: Record<LokTyp, LokArt> = {
   murmeli: { name: 'Murmeli', art: 'Rangierlok', diesel: true, tempo: 1.0, zugkraft: 3, preis: 800, farbe: '#e0a21c', text: 'Klein und zäh, fährt auch ohne Fahrleitung' },
   libelle: { name: 'Libelle', art: 'Regionallok', diesel: false, tempo: 1.6, zugkraft: 4, preis: 1200, farbe: '#a8102e', text: 'Flink im Regionalverkehr' },
   steinbock: { name: 'Steinbock', art: 'Güterlok', diesel: false, tempo: 1.3, zugkraft: 8, preis: 2500, farbe: '#2f6b5e', text: 'Stark, für lange Güterzüge' },
-  baer: { name: 'Bär', art: 'Diesel-Güterlok', diesel: true, tempo: 1.1, zugkraft: 7, preis: 2200, farbe: '#8a3b26', text: 'Zieht schwere Züge auch ohne Fahrleitung' },
+  baer: { name: 'Bär', art: 'Güterlok', diesel: true, tempo: 1.1, zugkraft: 7, preis: 2200, farbe: '#8a3b26', text: 'Zieht schwere Züge auch ohne Fahrleitung' },
   adler: { name: 'Adler', art: 'Schnellzuglok', diesel: false, tempo: 2.2, zugkraft: 6, preis: 3500, farbe: '#5a6470', text: 'Die schnellste Lok im Depot' },
 }
 

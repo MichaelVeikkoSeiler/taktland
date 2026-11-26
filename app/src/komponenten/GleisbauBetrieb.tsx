@@ -11,8 +11,8 @@ const KNOPF_ROT = 'min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white hove
 const KNOPF_WEISS = 'min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight'
 /** der kleine Knopf mit dem Preis (Michael, 2026-11-26: «Die Buttons mit den Preisen können kleiner sein») */
 const KNOPF_PREIS = 'min-h-9 shrink-0 rounded-lg border border-sbb-cloud bg-white px-2 text-xs font-bold tabular-nums hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight'
-/** Art und Antrieb einer Lok, ohne den Antrieb zweimal zu nennen (Michael, 2026-11-26: «Doppelte Erwähnungen wie Dieselgüterlok und dann nochmal Diesel braucht es nicht») */
-const lokArt = (l: LokTyp) => { const a = LOKS[l].art, t = LOKS[l].diesel ? 'Diesel' : 'Strom'; return a.toLowerCase().includes(t.toLowerCase()) ? a : `${a}, ${t}` }
+/** Art und Antrieb einer Lok, immer gleich gebaut: «Güterlok, Diesel» (Michael, 2026-11-26: «Bitte nicht Diesel, Güterlok, sondern nur Güterlok und dann Diesel») */
+const lokArt = (l: LokTyp) => `${LOKS[l].art}, ${LOKS[l].diesel ? 'Diesel' : 'Strom'}`
 const SEGMENT = (an: boolean) => `min-h-10 rounded-lg px-3 text-sm font-bold ${an ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white dark:bg-sbb-charcoal'}`
 
 function Sterne({ n }: { n: number }) {
