@@ -19,6 +19,8 @@ import erratenHell from '../assets/auftakt-erraten-hell.webp'
 import fahrtDunkel from '../assets/auftakt-fahrt-dunkel.webp'
 import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
 import bilderpuzzleHell from '../assets/auftakt-bilderpuzzle-hell.webp'
+import gleisbauHell from '../assets/auftakt-gleisbau-hell.webp'
+import gleisbauDunkel from '../assets/auftakt-gleisbau-dunkel.webp'
 import bilderpuzzleDunkel from '../assets/auftakt-bilderpuzzle-dunkel.webp'
 import wobinichBild from '../assets/auftakt-wobinich.webp'
 import wobinichDunkel from '../assets/auftakt-wobinich-dunkel.webp'
@@ -163,6 +165,11 @@ const BILDER: Partial<Record<Bereich | 'anleitung' | 'start' | 'fahrt' | 'probef
     hell: reisedauerHell, dunkel: reisedauerDunkel, breite: 1344, hoehe: 756,
     alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr mit «? min», dahinter ein Zug auf einem Viadukt, ein See und Berge.',
   },
+  // Michael, 2026-11-26: «Kannst du diese Bilder bereits einsetzen für das Spiel Gleisbau?»
+  gleisbau: {
+    hell: gleisbauHell, dunkel: gleisbauDunkel, breite: 1344, hoehe: 756,
+    alt: 'Illustration: ein Brett mit Gleisen, Tunnel, Bergen und einem Bahnhof, quer darüber ein Absperrband «Im Bau».',
+  },
   // Michael, 2026-11-22: «Hier die Bilder fürs Bilderpuzzle, hell und dunkel»
   bilderpuzzle: {
     hell: bilderpuzzleHell, dunkel: bilderpuzzleDunkel, breite: 1344, hoehe: 757,
@@ -214,8 +221,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     : aktiv === 'schweiz11' ? BILDER.spiele
     // das Bilderpuzzle vorerst mit dem Bild der Startseite, bis es ein eigenes gibt (2026-11-21)
     : aktiv === 'bilderpuzzle' ? BILDER.bilderpuzzle
-    // Gleisbau vorerst mit dem Bild der Modellbahn, bis es ein eigenes gibt (2026-11-22)
-    : aktiv === 'gleisbau' ? BILDER.modellbahn
+    // Gleisbau seit 2026-11-26 mit eigenem Bild
+    : aktiv === 'gleisbau' ? BILDER.gleisbau
     : BILDER[schluessel]
   const titel = 'text-3xl font-bold tracking-tight'
   const objekteAktiv = OBJEKTE.find((o) => o.bereich === aktiv)

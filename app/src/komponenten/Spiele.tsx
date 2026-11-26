@@ -16,13 +16,13 @@ export function Spiele() {
       </p>
       {/* zwei Spalten, zwei Zeilen: jedes Spiel ein Bild mit Titel, das Bild ist der Knopf (Michael, 2026-10-10) */}
       <ul className="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-4">
-        {SPIELE.filter((s) => s.status === 'spielbereit').map((s) => <Karte key={s.id} spiel={s} />)}
+        {SPIELE.filter((s) => s.status === 'spielbereit' || (s.status === 'im-bau' && s.bild)).map((s) => <Karte key={s.id} spiel={s} />)}
       </ul>
       {/* Platzhalter schmal, damit das Spielbare die Hauptsache bleibt (Michael, 2026-10-03) */}
-      {SPIELE.some((s) => s.status === 'im-bau') && (
+      {SPIELE.some((s) => s.status === 'im-bau' && !s.bild) && (
         <>
           <ul className="mt-3 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
-            {SPIELE.filter((s) => s.status === 'im-bau').map((s) => <Karte key={s.id} spiel={s} />)}
+            {SPIELE.filter((s) => s.status === 'im-bau' && !s.bild).map((s) => <Karte key={s.id} spiel={s} />)}
           </ul>
           <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">
             Weitere Spiele für Taktland sind in Vorbereitung.
@@ -34,7 +34,23 @@ export function Spiele() {
 }
 
 function Karte({ spiel, klasse = '' }: { spiel: Spiel; klasse?: string }) {
-  if (spiel.status === 'spielbereit' && spiel.adresse) {
+  // im Bau mit eigenem Bild (das Bild sagt «Im Bau»): eine Kachel wie die anderen, aber ohne Link und gedämpft; auf den eigenen Geräten
+  // (taktland.ch/?nichtzaehlen) führt sie zum Spiel (Michael, 2026-11-26: «wäre super, wenn diese inaktiv bleibt für andere und für mich so aktiviert
+  // wie der aktuelle Button im Bau öffnen»)
+  if (spiel.status === 'im-bau' && spiel.bild && !(spiel.adresse && nichtGezaehlt())) {
+    return (
+      <li className={`flex ${klasse}`} aria-label={`${spiel.titel}, im Bau`}>
+        <div className="kachel flex w-full cursor-default flex-col overflow-hidden">
+          <picture>
+            <source srcSet={spiel.bild.dunkel} media="(prefers-color-scheme: dark)" />
+            <img src={spiel.bild.hell} alt="" loading="lazy" className="aspect-[4/3] w-full object-cover opacity-80" />
+          </picture>
+          <h2 className="px-3 py-2.5 text-lg font-bold leading-tight tracking-tight text-sbb-metal dark:text-sbb-storm">{spiel.titel}</h2>
+        </div>
+      </li>
+    )
+  }
+  if ((spiel.status === 'spielbereit' || spiel.bild) && spiel.adresse) {
     // die ganze Kachel führt zum Spiel: oben das Bild, darunter nur der Titel; die Beschreibung steht beim Spiel
     return (
       <li className={`flex ${klasse}`}>

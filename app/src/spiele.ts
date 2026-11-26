@@ -24,8 +24,8 @@ import spieleDunkel from './assets/auftakt-spiele-dunkel.webp'
 import spieleHell from './assets/auftakt-spiele-hell.webp'
 import bilderpuzzleDunkel from './assets/auftakt-bilderpuzzle-dunkel.webp'
 import bilderpuzzleHell from './assets/auftakt-bilderpuzzle-hell.webp'
-import modellbahnDunkel from './assets/auftakt-modellbahn-dunkel.webp'
-import modellbahnHell from './assets/auftakt-modellbahn-hell.webp'
+import gleisbauHell from './assets/auftakt-gleisbau-hell.webp'
+import gleisbauDunkel from './assets/auftakt-gleisbau-dunkel.webp'
 
 export type SpielStatus = 'spielbereit' | 'im-bau'
 
@@ -112,7 +112,8 @@ export const SPIELE: Spiel[] = [
     // man sieht, es ist in Entwicklung, die Spannung kann steigen, aber wir entwickeln das Spiel zuerst für uns noch weiter und fertig»)
     id: 'gleisbau', titel: 'Gleisbau', status: 'im-bau', adresse: '#/gleisbau',
     kurz: 'Gleise, Bahnhöfe, Tunnel und Brücken auf ein Brett legen und den Zug fahren lassen.',
-    bild: { hell: modellbahnHell, dunkel: modellbahnDunkel, alt: 'Illustration: eine Modellbahn mit Zug, Gleisen und Landschaft.' },
+    // seit 2026-11-26 Michaels Bilder mit dem Band «Im Bau», hell und dunkel (Michael: «Kannst du diese Bilder bereits einsetzen für das Spiel Gleisbau?»)
+    bild: { hell: gleisbauHell, dunkel: gleisbauDunkel, alt: 'Illustration: ein Brett mit Gleisen, Tunnel, Bergen und einem Bahnhof, quer darüber ein Absperrband «Im Bau».' },
     beschreibung: 'Ein Brett mit 8 × 6 Feldern: Leg Gleise, Weichen, Bahnhöfe, Tunnel und Brücken, gestalte die Landschaft und lass den Zug '
       + 'fahren. Er hält an jedem Bahnhof und kehrt am Ende des Gleises um.',
   },
