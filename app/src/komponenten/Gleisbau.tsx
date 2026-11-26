@@ -2334,7 +2334,8 @@ export function Gleisbau() {
           {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => {
             const fi = Math.floor(w.x), fj = Math.floor(w.y), f = brett[fj]?.[fi]
             // auch unter einer Galerie unsichtbar (Michael, 2026-11-26: «Alles, was in einem Tunnel drin ist, muss unsichtbar sein»)
-            if (imTunnel(brett, w.x, w.y) || unterBruecke(f, fi, fj, w) || (bauGilt(f) && f!.bau === 'galerie')) return null
+            // seit 2026-11-26 auch im Depot (Michael: «Im Depot soll der Zug auch unsichtbar sein»)
+            if (imTunnel(brett, w.x, w.y) || unterBruecke(f, fi, fj, w) || (bauGilt(f) && (f!.bau === 'galerie' || f!.bau === 'depot'))) return null
             return <WagenBild key={`${z}-${k}`} nr={k + z * 7} w={w} tunnel={bauGilt(f) && f!.bau !== 'gueter'} farbe={zuege.current[z]?.art === 'gueter' ? GUETER_LOK : z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />
           }))}
           {oben}
