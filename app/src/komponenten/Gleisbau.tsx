@@ -9,7 +9,7 @@ import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
 import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheGeloestMerken, type Varianten, varianteAufgabe, varianteAusId, variantenLaden } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
-import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit, PLAETZE } from '../gleisbauFahrgaeste'
+import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
 import { bild, GelaendeBild, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
@@ -1561,7 +1561,7 @@ export function Gleisbau() {
           halteRef.current[k] = z.halte
           const wo = gruppen.get(z.haltFeld)
           if (!wo) return
-          const { aus, ein } = fahrgaesteHalt(fg, k, wo, z.plaetze(PLAETZE, WAGEN_ARTEN.person.plaetze))
+          const { aus, ein } = fahrgaesteHalt(fg, k, wo, z.plaetze(WAGEN_ARTEN.person.plaetze))
           if (aus) antwortTon('richtig')
           if (aus || ein) neu = true
         })
@@ -2329,10 +2329,13 @@ export function Gleisbau() {
                       // ein Güterzug zeigt seine Ladungen als Kisten, ein Personenzug die Ziele seiner Fahrgäste
                       if (z.art === 'gueter') {
                         const n = gutRef.current?.imZug.get(z)?.length ?? 0
-                        return <span key={k} className="flex items-center gap-1">{name}: {n ? Array.from({ length: n }, (_, m) => <span key={m} className="inline-block size-3 rounded-sm border border-[#3a2a1a] bg-[#b8783f]" />) : <span className="text-sbb-metal dark:text-sbb-storm">leer</span>}</span>
+                        // dazu, wie viele Wagen beladen sind: eine Ladung füllt einen Güterwagen (Michael, 2026-11-26: «Was heisst eine Ladung im Güterverkehr?»)
+                        return <span key={k} className="flex items-center gap-1">{name}: {n ? Array.from({ length: n }, (_, m) => <span key={m} className="inline-block size-3 rounded-sm border border-[#3a2a1a] bg-[#b8783f]" />) : null}
+                          <span className="text-sbb-metal dark:text-sbb-storm">{n} von {z.ladeplaetze()} Güterwagen beladen</span></span>
                       }
                       const l = fahrgaeste?.imZug[k] ?? []
-                      return <span key={k} className="flex items-center gap-1">{name}: {l.length ? l.map((zz, m) => <Ziel key={m} z={zz} />) : <span className="text-sbb-metal dark:text-sbb-storm">leer</span>}</span>
+                      return <span key={k} className="flex items-center gap-1">{name}: {l.map((zz, m) => <Ziel key={m} z={zz} />)}
+                        <span className="text-sbb-metal dark:text-sbb-storm">{l.length} von {z.plaetze(WAGEN_ARTEN.person.plaetze)} Plätzen</span></span>
                     })}
                   </p>
                 ) : <p className="font-bold">Der Zug fährt.</p>}
@@ -2347,15 +2350,28 @@ export function Gleisbau() {
                   ))}
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-1.5 [scrollbar-width:none]">
-                  {GRUPPEN.find((g) => g.titel === reiter)!.l.filter(({ w }) => (takt > 0 || w.art !== 'knoten') && !(auftrag && w.art === 'zug' && w.zug === 'g'))
-                    .map(({ w, text }) => ({ w, text: auftrag && w.art === 'zug' ? 'Zug' : text })).map(({ w, text }) => (
+                  {GRUPPEN.find((g) => g.titel === reiter)!.l.filter(({ w }) => (takt > 0 || w.art !== 'knoten') && !(auftrag && ((w.art === 'zug' && w.zug === 'g') || w.art === 'wagen')))
+                    .map(({ w, text }) => ({ w, text: auftrag && w.art === 'zug' ? 'Zug einsetzen' : text })).map(({ w, text }) => (
                     <button key={`${text}${JSON.stringify(w)}`} type="button" aria-pressed={gleich(w, werkzeug)} title={gleich(w, werkzeug) ? 'Nochmals tippen dreht' : undefined}
                             onClick={() => { if (gleich(w, werkzeug)) { setDreh(((dreh + 1) % 4) as Dreh); knopfTon(true) } else setWerkzeug(w) }} className={knopf(gleich(w, werkzeug))}>
                       <WerkzeugBild w={w} dreh={dreh} />
-                      {text}
+                      {text.length > 11 ? <span className="whitespace-normal text-center">{text}</span> : text}
                     </button>
                   ))}
                 </div>
+                {/* unter «Züge» in einem Satz, was ein Zug trägt und wie man ihn setzt (Michael, 2026-11-26: «Das Konzept mit dem Auswählen der richtigen Züge
+                    mit Wagen muss klarer sein. Wieviele Personen passen in einen Personenwagen? Was heisst eine Ladung im Güterverkehr?») */}
+                {reiter === 'Züge' && (
+                  <p className="px-3 pb-1 text-xs leading-snug text-sbb-metal dark:text-sbb-storm">
+                    {auftrag
+                      ? `Tippe mit «Zug einsetzen» auf ein Gleis und wähle Lok und Wagen aus deinem Depot. Ein Personenwagen hat ${WAGEN_ARTEN.person.plaetze} Plätze, ein Güterwagen trägt 1 Ladung.`
+                      : werkzeug.art === 'zug' && werkzeug.zug === 'g'
+                        ? `Güterzug: Lok und ${wagenZahl - 1} Güterwagen. Jeder Wagen trägt 1 Ladung, zusammen ${wagenZahl - 1}. Er hält nur am Güterschuppen. Tippe auf ein Gleis.`
+                        : werkzeug.art === 'wagen'
+                          ? 'Ein einzelner Wagen zum Abstellen. Fährt ein Zug hinein, kuppelt er ihn an.'
+                          : `Personenzug: Lok, ${wagenZahl - 1} Personenwagen (mit Steuerwagen) à ${WAGEN_ARTEN.person.plaetze} Plätze, zusammen ${(wagenZahl - 1) * WAGEN_ARTEN.person.plaetze} Fahrgäste. Er hält an Bahnhöfen. Tippe auf ein Gleis.`}
+                  </p>
+                )}
               </>
             )}
           </div>
@@ -2469,7 +2485,7 @@ export function Gleisbau() {
               return { ...b, zuege: { ...b.zuege, [auftrag.id]: m } }
             })
             return (
-              <ZugWahl betrieb={betrieb} andere={andere} anfang={brett[zj][zi].zugStart ? alle[key] ?? null : null} zu={zu}
+              <ZugWahl betrieb={betrieb} setBetrieb={setBetrieb} auftrag={auftrag} andere={andere} anfang={brett[zj][zi].zugStart ? alle[key] ?? null : null} zu={zu}
                        setzen={(z) => { speichern(z); neu(zi, zj, { ...brett[zj][zi], zugStart: z.wagen.every((x) => x === 'person') ? 'p' : 'g' }); zu() }}
                        entfernen={() => { speichern(null); const { zugStart: _, ...o } = brett[zj][zi]; neu(zi, zj, o); zu() }} />
             )
@@ -2539,7 +2555,7 @@ export function Gleisbau() {
                     </div>
                   </div>
                   <div className="flex min-h-12 items-center justify-between gap-3 py-2">
-                    <span>Länge des Zugs<span className="block text-xs text-sbb-metal">Lok, {wagenZahl - 2 === 1 ? '1 Wagen' : `${wagenZahl - 2} Wagen`} und Steuerwagen{faehrt ? ', gilt ab der nächsten Fahrt' : ''}</span></span>
+                    <span>Länge des Zugs<span className="block text-xs text-sbb-metal">Lok, {wagenZahl - 2 === 1 ? '1 Wagen' : `${wagenZahl - 2} Wagen`} und Steuerwagen, {(wagenZahl - 1) * WAGEN_ARTEN.person.plaetze} Plätze{faehrt ? ', gilt ab der nächsten Fahrt' : ''}</span></span>
                     <span className="flex items-center gap-2">
                       <button type="button" aria-label="Ein Wagen weniger" disabled={wagenZahl <= WAGEN_MIN} onClick={() => wagenSetzen(wagenZahl - 1)} className={rund}>−</button>
                       <span className="w-6 text-center text-lg font-bold tabular-nums">{wagenZahl - 2}</span>
@@ -2608,8 +2624,8 @@ function SoGehts() {
       <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben links im Brett steht eine Uhr auf vier Feldern, eine Minute im Spiel dauert eine Sekunde. Liegt dort schon etwas, fragt das Spiel, ob es gelöscht werden soll. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
-      <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Mit «Zug» stellst du aus deinen Loks und Wagen einen Zug zusammen; jede Ladung braucht ihren Wagen. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
-      <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen. Unter Aufgaben gibt es dazu «Personen und Güter transportieren».</li>
+      <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Mit «Zug einsetzen» (unter «Züge») tippst du auf ein Gleis und stellst aus deinen Loks und Wagen einen Zug zusammen, fehlende Wagen kaufst du gleich dort. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
+      <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug (Lok, Personenwagen und Steuerwagen, je 4 Plätze) hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen; eine Ladung füllt einen Güterwagen. Unter Aufgaben gibt es dazu «Personen und Güter transportieren».</li>
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,
         im Berg zum Tunnel; «Brücke» über ein Gleis führt die Strasse darüber statt über einen Bahnübergang. Die Busse fahren rechts, biegen nach Zufall ab,
         wenden am Ende der Strasse, halten an Haltestellen und warten vor geschlossenen Schranken. Liegt eine Haltestelle neben einem Bahnhof, wartet der Bus

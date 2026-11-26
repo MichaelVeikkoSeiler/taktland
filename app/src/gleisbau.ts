@@ -911,7 +911,12 @@ export class Zug {
   /** die Güterwagen mit ihrer Stelle im Zug (für das Beladen nach Gut) */
   gueterwagen(): Array<{ k: number; typ: string }> { return this.fz.flatMap((v, k) => (v.t === 'wagen' && v.typ !== 'person' ? [{ k, typ: v.typ ?? 'gedeckt' }] : [])) }
   /** Plätze für Fahrgäste: im Bahnbetrieb je Personenwagen proPersonenwagen, sonst fest */
-  plaetze(fest: number, proPersonenwagen: number) { const n = this.fz.filter((v) => v.typ === 'person').length; return n ? n * proPersonenwagen : fest }
+  plaetze(proPersonenwagen: number) { return this.personenwagen() * proPersonenwagen }
+  /**
+   * die Personenwagen (seit 2026-11-26 auch im freien Bauen, Michael: «Wieviele Personen passen in einen Personenwagen?»): im Bahnbetrieb die Wagen
+   * dieser Art, sonst in einem Personenzug alle Wagen und der Steuerwagen; je Personenwagen 4 Plätze (WAGEN_ARTEN.person)
+   */
+  personenwagen() { return this.fz.filter((v) => (v.typ ? v.typ === 'person' : this.art !== 'gueter' && v.t !== 'lok')).length }
   /** ob der Halt an einem Bahnhof ist (nicht das Umkehren) */
   private amBahnhof = false
   /** zählt hoch, wenn der Zug PFIFF_VOR_S vor der Abfahrt an einem Bahnhof steht; die Darstellung pfeift dann */

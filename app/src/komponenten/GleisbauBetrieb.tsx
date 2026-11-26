@@ -4,7 +4,7 @@
  */
 import { useState } from 'react'
 import { AUFTRAEGE, type Auftrag, type Betrieb, brauchtWagen, frei, SPARTEN, type Sparte, STUFEN, type Stufe, stufeOffen, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
-import { type LokTyp, LOKS, type WagenTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
+import { GUETER, type LokTyp, LOKS, type WagenTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
 
 const chf = (n: number) => `CHF ${Math.round(n).toLocaleString('de-CH')}`
 const KNOPF_ROT = 'min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40'
@@ -56,7 +56,7 @@ function Start({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
         <div className="kachel grid gap-3 p-5">
           <p className="text-xl font-bold">Willkommen im Bahnbetrieb</p>
           <p className="leading-relaxed">Du führst eine kleine Bahn. Jeder Auftrag bringt Lohn, deine Gleise kosten. Mit dem Gewinn kaufst du im Depot neue Loks und Wagen.
-            Personen fahren in Personenwagen, Holz auf Rungenwagen, Milch im Milchwagen: Jede Ladung braucht ihren Wagen.</p>
+            Ein Personenwagen hat 4 Plätze für Fahrgäste. Eine Ladung ist ein voller Güterwagen: Holz auf dem Rungenwagen, Milch im Milchwagen, jedes Gut braucht seinen Wagen.</p>
           <p className="text-sm text-sbb-metal dark:text-sbb-storm">Zum Start: {chf(betrieb.geld)}, die Rangierlok Murmeli, die Regionallok Libelle, drei Personenwagen, zwei Rungenwagen und zwei Schüttgutwagen.</p>
           <button type="button" onClick={() => setSchritt(1)} className={KNOPF_ROT}>Los geht's</button>
         </div>
@@ -95,18 +95,26 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
     if (betrieb.geld < preis) return
     setBetrieb({ ...betrieb, geld: betrieb.geld - preis, loks: lok ? [...betrieb.loks, lok] : betrieb.loks, wagen: wagen ? { ...betrieb.wagen, [wagen]: (betrieb.wagen[wagen] ?? 0) + 1 } : betrieb.wagen })
   }
+  // je Fahrzeug: Bild, Name und Anzahl im Depot, was es kann, darunter rechts der Knopf zum Kaufen (auf dem Handy sonst zu eng)
   const zeile = (key: string, bild: React.ReactNode, titel: string, text: string, besitz: number, preis: number, kauf: () => void) => (
-    <li key={key} className="kachel flex items-center gap-3 p-3">
+    <li key={key} className="kachel flex flex-wrap items-center gap-x-3 gap-y-2 p-3">
       {bild}
-      <div className="min-w-0 flex-1">
-        <p className="font-bold">{titel} <span className="text-sm font-medium text-sbb-metal dark:text-sbb-storm">× {besitz}</span></p>
+      <div className="min-w-[10rem] flex-1">
+        <p className="font-bold">{titel}</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">{text}</p>
+        <p className="text-sm font-bold">{besitz ? `${besitz} im Depot` : 'keiner im Depot'}</p>
       </div>
-      <button type="button" disabled={betrieb.geld < preis} onClick={kauf} className={KNOPF_WEISS}>{chf(preis)}</button>
+      <button type="button" disabled={betrieb.geld < preis} onClick={kauf} className={`${KNOPF_WEISS} ml-auto shrink-0 text-sm`}>Kaufen {chf(preis)}</button>
     </li>
   )
   return (
     <div className="mt-3 grid gap-4">
+      {/* was ein Zug ist, in drei Sätzen (Michael, 2026-11-26: «Das Kaufen von Wagen muss verständlicher sein») */}
+      <div className="kachel p-3 text-sm leading-relaxed">
+        <p><span className="font-bold">So entsteht ein Zug:</span> eine Lok zieht Wagen, jede Lok nur so viele, wie bei ihr steht.</p>
+        <p className="mt-1"><span className="font-bold">Personenwagen:</span> 4 Plätze für Fahrgäste. <span className="font-bold">Güterwagen:</span> trägt 1 Ladung, und nur das Gut, für das er gebaut ist.</p>
+        <p className="mt-1">Gekauft steht alles hier im Depot. Im Auftrag tippst du mit «Zug einsetzen» auf ein Gleis und hängst Lok und Wagen an. Fehlt ein Wagen, kannst du ihn auch dort kaufen.</p>
+      </div>
       <section>
         <h3 className="font-bold">Loks</h3>
         <ul className="mt-2 grid gap-2 md:grid-cols-2">
@@ -160,7 +168,7 @@ export default function BetriebSeite({ betrieb, setBetrieb, oeffnen }: { betrieb
                     <span className="flex items-start justify-between gap-2"><span className="font-bold">{a.titel}</span><Sterne n={erledigt} /></span>
                     <span className="text-sm leading-snug">{a.text}</span>
                     <span className="text-sm font-bold">{SPARTEN[a.sparte]} · Lohn {chf(erledigt ? a.lohn * WIEDERHOLT_ANTEIL : a.lohn)}{erledigt ? ' (wiederholt, ein Viertel)' : ''}</span>
-                    {fehlt.length > 0 && <span className="text-sm font-bold text-sbb-red">Braucht {fehlt.map((w) => WAGEN_ARTEN[w].name).join(', ')}: im Depot kaufen</span>}
+                    {fehlt.length > 0 && <span className="text-sm font-bold text-sbb-red">Braucht {fehlt.map((w) => WAGEN_ARTEN[w].name).join(', ')}: im Depot oder beim Einsetzen des Zugs kaufen</span>}
                   </button>
                 </li>
               )
@@ -176,9 +184,13 @@ export default function BetriebSeite({ betrieb, setBetrieb, oeffnen }: { betrieb
   )
 }
 
-/** das Blatt zum Zusammenstellen eines Zugs: eine freie Lok und Wagen, so viele sie zieht */
-export function ZugWahl({ betrieb, andere, anfang, setzen, entfernen, zu }: {
-  betrieb: Betrieb; andere: Zusammenstellung[]; anfang: Zusammenstellung | null
+/**
+ * das Blatt zum Zusammenstellen eines Zugs: eine freie Lok und Wagen, so viele sie zieht. Seit 2026-11-26 klarer (Michael: «Das Konzept mit dem Auswählen der
+ * richtigen Züge mit Wagen muss klarer sein … Das Kaufen von Wagen muss verständlicher sein und auch das Einsetzen deren im Spielfeld»): in zwei Schritten,
+ * was der Auftrag braucht, je Wagen, was er trägt, fehlende Wagen gleich hier kaufen, darunter, was der ganze Zug trägt
+ */
+export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, entfernen, zu }: {
+  betrieb: Betrieb; setBetrieb: (f: (b: Betrieb) => Betrieb) => void; auftrag: Auftrag; andere: Zusammenstellung[]; anfang: Zusammenstellung | null
   setzen: (z: Zusammenstellung) => void; entfernen: () => void; zu: () => void
 }) {
   const f = frei(betrieb, andere)
@@ -187,33 +199,69 @@ export function ZugWahl({ betrieb, andere, anfang, setzen, entfernen, zu }: {
   const zugkraft = lok ? LOKS[lok].zugkraft : 0
   const n = (w: WagenTyp) => wagen.filter((x) => x === w).length
   const loks = [...new Set(f.loks)]
+  const braucht = brauchtWagen(auftrag)
+  // was der Auftrag braucht zuerst, dann was im Depot steht
+  const arten = (Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt' && (braucht.includes(w) || (f.wagen[w] ?? 0) > 0 || n(w) > 0))
+    .sort((a, b) => Number(braucht.includes(b)) - Number(braucht.includes(a)))
+  const kaufen = (w: WagenTyp) => setBetrieb((b) => (b.geld < WAGEN_ARTEN[w].preis ? b
+    : { ...b, geld: b.geld - WAGEN_ARTEN[w].preis, wagen: { ...b.wagen, [w]: (b.wagen[w] ?? 0) + 1 } }))
+  const plaetze = n('person') * WAGEN_ARTEN.person.plaetze
+  const traegt = [plaetze ? `${plaetze} Fahrgäste` : '', ...arten.filter((w) => w !== 'person' && n(w)).map((w) => `${n(w)} ${n(w) === 1 ? 'Ladung' : 'Ladungen'} ${GUETER[WAGEN_ARTEN[w].gut!].name}`)].filter(Boolean)
+  const fehlt = braucht.filter((w) => !n(w))
   return (
     <div className="absolute inset-0 z-20 flex items-end bg-black/30" onClick={(e) => { if (e.target === e.currentTarget) zu() }}>
       <div className="max-h-[85%] w-full overflow-y-auto rounded-t-2xl bg-white p-4 shadow-xl dark:bg-sbb-charcoal" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
-        <p className="text-lg font-bold">Zug zusammenstellen</p>
-        {!loks.length && <p className="mt-2 text-sm">Alle Loks fahren schon. Kauf im Depot eine weitere.</p>}
-        <div className="mt-2 flex flex-wrap gap-1.5">
+        <div className="flex items-baseline justify-between gap-2">
+          <p className="text-lg font-bold">Zug zusammenstellen</p>
+          <span className="rounded-lg bg-sbb-milk px-2 py-0.5 text-sm font-bold tabular-nums dark:bg-sbb-midnight">{chf(betrieb.geld)}</span>
+        </div>
+        <p className="mt-1 text-sm leading-snug">
+          Für diesen Auftrag brauchst du: {braucht.map((w) => <span key={w} className="font-bold">{WAGEN_ARTEN[w].name} ({w === 'person' ? `${WAGEN_ARTEN.person.plaetze} Plätze` : `1 Ladung ${GUETER[WAGEN_ARTEN[w].gut!].name}`})</span>)
+            .flatMap((x, k) => (k ? [', ', x] : [x]))}.
+        </p>
+        <p className="mt-3 font-bold">1. Lok wählen</p>
+        {!loks.length && <p className="mt-1 text-sm">Alle Loks fahren schon. Kauf im Depot eine weitere.</p>}
+        <div className="mt-1.5 flex flex-wrap gap-1.5">
           {loks.map((l) => (
             <button key={l} type="button" onClick={() => { setLok(l); setWagen((w) => w.slice(0, LOKS[l].zugkraft)) }} className={`${SEGMENT(lok === l)} flex items-center gap-1.5`}>
               <FahrzeugBild lok={l} />{LOKS[l].name}
             </button>
           ))}
         </div>
-        {lok && <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">{LOKS[lok].art}, {LOKS[lok].diesel ? 'Diesel' : 'Strom'}, zieht {zugkraft} Wagen</p>}
-        <ul className="mt-3 grid gap-1.5">
-          {(Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt' && ((f.wagen[w] ?? 0) > 0 || n(w) > 0)).map((w) => (
-            <li key={w} className="flex items-center gap-2">
-              <FahrzeugBild wagen={w} />
-              <span className="min-w-0 flex-1 text-sm"><span className="font-bold">{WAGEN_ARTEN[w].name}</span> <span className="text-sbb-metal dark:text-sbb-storm">({(f.wagen[w] ?? 0) - n(w)} frei)</span></span>
-              <button type="button" aria-label={`${WAGEN_ARTEN[w].name} weniger`} disabled={!n(w)} onClick={() => { const k = wagen.lastIndexOf(w); setWagen((l) => l.filter((_, m) => m !== k)) }} className={`${KNOPF_WEISS} w-11 px-0`}>−</button>
-              <span className="w-5 text-center font-bold tabular-nums">{n(w)}</span>
-              <button type="button" aria-label={`${WAGEN_ARTEN[w].name} mehr`} disabled={wagen.length >= zugkraft || n(w) >= (f.wagen[w] ?? 0)}
-                      onClick={() => setWagen((l) => [...l, w])} className={`${KNOPF_WEISS} w-11 px-0`}>+</button>
-            </li>
-          ))}
+        {lok && <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">{LOKS[lok].art}, {LOKS[lok].diesel ? 'Diesel' : 'Strom'}, zieht höchstens {zugkraft} Wagen</p>}
+        <p className="mt-3 font-bold">2. Wagen anhängen <span className="font-medium text-sbb-metal dark:text-sbb-storm">({wagen.length} von {zugkraft})</span></p>
+        <ul className="mt-1.5 grid gap-2">
+          {arten.map((w) => {
+            const frei = (f.wagen[w] ?? 0) - n(w)
+            return (
+              <li key={w} className="flex items-center gap-2">
+                <FahrzeugBild wagen={w} />
+                <span className="min-w-0 flex-1 text-sm leading-tight">
+                  <span className="font-bold">{WAGEN_ARTEN[w].name}</span>
+                  <span className="block text-sbb-metal dark:text-sbb-storm">{WAGEN_ARTEN[w].text} · {n(w) ? (frei > 0 ? `${n(w)} angehängt, ${frei} weitere im Depot` : `${n(w)} angehängt`) : frei > 0 ? `${frei} im Depot` : 'keiner im Depot'}</span>
+                </span>
+                {frei <= 0 && !n(w) ? (
+                  <button type="button" disabled={betrieb.geld < WAGEN_ARTEN[w].preis} onClick={() => kaufen(w)} className={`${KNOPF_WEISS} text-sm`}>Kaufen {chf(WAGEN_ARTEN[w].preis)}</button>
+                ) : (
+                  <>
+                    <button type="button" aria-label={`${WAGEN_ARTEN[w].name} weniger`} disabled={!n(w)} onClick={() => { const k = wagen.lastIndexOf(w); setWagen((l) => l.filter((_, m) => m !== k)) }} className={`${KNOPF_WEISS} w-11 px-0`}>−</button>
+                    <span className="w-5 text-center font-bold tabular-nums">{n(w)}</span>
+                    <button type="button" aria-label={`${WAGEN_ARTEN[w].name} mehr`} disabled={wagen.length >= zugkraft || frei <= 0}
+                            onClick={() => setWagen((l) => [...l, w])} className={`${KNOPF_WEISS} w-11 px-0`}>+</button>
+                  </>
+                )}
+              </li>
+            )
+          })}
         </ul>
+        {/* was der ganze Zug trägt */}
+        <p className="mt-3 rounded-lg bg-sbb-milk px-3 py-2 text-sm leading-snug dark:bg-sbb-midnight">
+          {lok ? <><span className="font-bold">Dein Zug:</span> {LOKS[lok].name}{wagen.length ? ` und ${wagen.length} Wagen` : ', noch ohne Wagen'}.
+            {traegt.length ? ` Er trägt ${traegt.join(' und ')} auf einmal.` : ''}
+            {fehlt.length ? <span className="block font-bold text-sbb-red">Es fehlt noch: {fehlt.map((w) => WAGEN_ARTEN[w].name).join(', ')}.</span> : null}</> : 'Wähle zuerst eine Lok.'}
+        </p>
         <div className="mt-4 flex flex-wrap gap-2">
-          <button type="button" disabled={!lok || !wagen.length} onClick={() => lok && setzen({ lok, wagen })} className={KNOPF_ROT}>Zug setzen</button>
+          <button type="button" disabled={!lok || !wagen.length} onClick={() => lok && setzen({ lok, wagen })} className={KNOPF_ROT}>Zug aufs Gleis stellen</button>
           {anfang && <button type="button" onClick={entfernen} className={`${KNOPF_WEISS} text-sbb-red`}>Zug entfernen</button>}
           <button type="button" onClick={zu} className={KNOPF_WEISS}>Abbrechen</button>
         </div>
