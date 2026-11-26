@@ -221,7 +221,11 @@ function AnlagenBild({ brett }: { brett: Brett }) {
   return <>{raus}</>
 }
 
-function SchildBild({ namen, titel, knoten, takt }: { namen: Map<string, string>; titel: Map<string, string>; knoten: Set<string>; takt: number }) {
+/**
+ * das Schild eines Bahnhofs; mass vergrössert es um seine Ecke oben links, wenn die Felder auf dem Bildschirm klein sind (Michael, 2026-11-26, Handy: «Die Ortsnamen
+ * kann man so fast gar nicht lesen … einfach das Schild über mehrere Kacheln hinüberziehen»)
+ */
+function SchildBild({ namen, titel, knoten, takt, mass = 1 }: { namen: Map<string, string>; titel: Map<string, string>; knoten: Set<string>; takt: number; mass?: number }) {
   const raus = []
   for (const [k, n] of namen) {
     const [i, j] = k.split(',').map(Number)
@@ -229,7 +233,8 @@ function SchildBild({ namen, titel, knoten, takt }: { namen: Map<string, string>
     const kurz = t && t.length > 20 ? `${t.slice(0, 19)}…` : t
     const breit = kurz ? 0.24 + kurz.length * 0.072 : 0.2
     raus.push(
-      <g key={k} pointerEvents="none">
+      // vergrössert wächst es nach oben in das Feld darüber, nicht über das Gleis; in der obersten Reihe nach unten
+      <g key={k} pointerEvents="none" transform={mass !== 1 ? `translate(${i + 0.06} ${j + (j > 0 ? 0.26 : 0.06)}) scale(${mass}) translate(${-(i + 0.06)} ${-(j + (j > 0 ? 0.26 : 0.06))})` : undefined}>
         <rect x={i + 0.06} y={j + 0.06} width={breit} height={0.2} rx={0.03} fill="#3d3d3d" />
         <text x={i + 0.16} y={j + 0.215} fontSize={0.15} fontWeight={700} textAnchor="middle" fill="#ffffff">{n}</text>
         {kurz && <text x={i + 0.27} y={j + 0.205} fontSize={0.13} fontWeight={500} fill="#ffffff">{kurz}</text>}
@@ -1235,6 +1240,10 @@ export function Gleisbau() {
     const [a0, b0] = zu(0, 0), [a1, b1] = zu(w, h)
     return { klein: false, i0: Math.floor(a0) - 1, i1: Math.ceil(a1) + 1, j0: Math.floor(b0) - 1, j1: Math.ceil(b1) + 2 }
   })()
+  // Schilder so gross, dass die Schrift mindestens SCHILD_PX Bildpunkte hoch ist, höchstens SCHILD_HOECHSTENS-fach (gewählt)
+  const SCHILD_PX = 12, SCHILD_HOECHSTENS = 3.5
+  const feldPx = buehneGr.w && buehneGr.h ? Math.min(buehneGr.w / (SP + 0.3), buehneGr.h / (ZE + 0.3)) * zoom.s : 0
+  const schildMass = feldPx ? Math.max(1, Math.min(SCHILD_HOECHSTENS, SCHILD_PX / (0.13 * feldPx))) : 1
   const sichtSchluessel = sicht ? (sicht.klein ? 'klein' : `${sicht.i0},${sicht.i1},${sicht.j0},${sicht.j1}`) : 'alle'
   const oben = useMemo(() => {
     if (sicht?.klein) return null
@@ -2360,7 +2369,7 @@ export function Gleisbau() {
             <rect key={`h${i},${j}`} x={i + 0.03} y={j + 0.03} width={0.94} height={0.94} rx={0.12} fill="none" stroke={F.karmin} strokeWidth={0.07}
                   className="animate-pulse" pointerEvents="none" />
           ))}
-          <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} />
+          <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} mass={schildMass} />
           <AnlagenBild brett={brett} />
           {takt > 0 && !uhrBelegt && <UhrBild minuten={UHR_START_MIN + (faehrt ? spielSek.current : 0)} />}
           {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
