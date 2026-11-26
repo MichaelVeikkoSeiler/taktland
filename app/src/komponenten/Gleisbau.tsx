@@ -505,10 +505,11 @@ function PerronVerbindungen({ brett }: { brett: Brett }) {
     const rot = `rotate(${d * 90} ${i + 0.5} ${j + 0.5})`, y0 = j + 0.26, h = n - 1 + 0.48
     raus.push(
       <g key={`d${i},${j}`} transform={rot}>
-        <rect x={i + 0.69} y={y0 + 0.02} width={0.2} height={h} rx={0.03} fill="rgba(0,0,0,.18)" />
-        <rect x={i + 0.68} y={y0} width={0.2} height={h} rx={0.03} fill={F.bahnhofDach} stroke={F.bahnhofFirst} strokeWidth={0.012} />
-        <rect x={i + 0.68} y={y0} width={0.1} height={h} rx={0.03} fill="rgba(255,255,255,.12)" />
-        <line x1={i + 0.78} y1={y0 + 0.02} x2={i + 0.78} y2={y0 + h - 0.02} stroke={F.bahnhofFirst} strokeWidth={0.018} />
+        {/* auf der Seite weg vom Gleis bis an den Rand des Felds (Michael, 2026-11-26: «Rotes Dach bei den Bahnhöfen auf einer Seite bis zum Rand») */}
+        <rect x={i + 0.69} y={y0 + 0.02} width={0.3} height={h} rx={0.03} fill="rgba(0,0,0,.18)" />
+        <rect x={i + 0.68} y={y0} width={0.32} height={h} rx={0.03} fill={F.bahnhofDach} stroke={F.bahnhofFirst} strokeWidth={0.012} />
+        <rect x={i + 0.68} y={y0} width={0.16} height={h} rx={0.03} fill="rgba(255,255,255,.12)" />
+        <line x1={i + 0.84} y1={y0 + 0.02} x2={i + 0.84} y2={y0 + h - 0.02} stroke={F.bahnhofFirst} strokeWidth={0.018} />
       </g>,
     )
   }
