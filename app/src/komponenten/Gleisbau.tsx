@@ -7,7 +7,7 @@ import {
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
-import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, type Varianten, varianteAufgabe, varianteAusId, variantenLaden } from '../gleisbauAufgaben'
+import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheGeloestMerken, type Varianten, varianteAufgabe, varianteAusId, variantenLaden } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit, PLAETZE } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
@@ -267,6 +267,10 @@ function UhrBild({ minuten }: { minuten: number }) {
   )
 }
 
+/** in der Reihe offen, wenn die vorherige gelöst ist */
+const reiheOffen = (a: Aufgabe, fortschritt: Record<string, number>) =>
+  !a.reihe || (fortschritt[AUFGABEN.find((x) => x.reihe === a.reihe! - 1)?.id ?? ''] ?? 0) > 0
+
 /** drei Sterne, die erreichten in Karmin */
 function Sterne({ n }: { n: number }) {
   return (
@@ -278,25 +282,30 @@ function Sterne({ n }: { n: number }) {
 
 /** die Aufgaben als Kacheln mit den erreichten Sternen, die eigenen zuerst, dann die echten Strecken */
 function AufgabenListe({ fortschritt, waehlen }: { fortschritt: Record<string, number>; waehlen: (a: Aufgabe) => void }) {
-  const gruppe = (titel: string, l: Aufgabe[]) => (
+  const gruppe = (titel: string, l: Aufgabe[], text?: string) => (
     <section className="mt-4">
       <h2 className="text-lg font-bold">{titel}</h2>
+      {text && <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-cloud">{text}</p>}
       <ul className="mt-2 grid gap-2 sm:grid-cols-2">
-        {l.map((a) => (
-          <li key={a.id}>
-            <button type="button" onClick={() => waehlen(a)} className="kachel kachel-link flex w-full items-center justify-between gap-3 px-3 py-3 text-left">
-              <span className="font-medium">{a.titel}</span>
-              <Sterne n={fortschritt[a.id] ?? 0} />
-            </button>
-          </li>
-        ))}
+        {l.map((a) => {
+          const zu = !reiheOffen(a, fortschritt)
+          return (
+            <li key={a.id}>
+              <button type="button" disabled={zu} onClick={() => waehlen(a)}
+                      className="kachel kachel-link flex w-full items-center justify-between gap-3 px-3 py-3 text-left disabled:cursor-not-allowed disabled:opacity-50">
+                <span className="font-medium">{a.reihe !== undefined && <span className="mr-2 text-sbb-metal dark:text-sbb-cloud">{a.reihe + 1}.</span>}{a.titel}</span>
+                {zu ? <span className="text-sm text-sbb-metal dark:text-sbb-cloud" aria-label="gesperrt">🔒</span> : <Sterne n={fortschritt[a.id] ?? 0} />}
+              </button>
+            </li>
+          )
+        })}
       </ul>
     </section>
   )
   return (
     <div className="max-w-3xl">
-      {gruppe('Aufgaben', AUFGABEN.filter((a) => !a.id.startsWith('strecke-') && !a.transport))}
-      {gruppe('Personen und Güter transportieren', AUFGABEN.filter((a) => a.transport))}
+      {gruppe('Aufgaben der Reihe nach', AUFGABEN.filter((a) => a.reihe !== undefined),
+              'Eine nach der anderen: Jede Aufgabe beginnt mit deinem Brett der vorherigen und bringt Neues dazu. Die nächste öffnet sich, wenn die vorherige gelöst ist.')}
       {gruppe('Echte Strecken nachbauen', AUFGABEN.filter((a) => a.id.startsWith('strecke-')))}
       <VariantenSuche fortschritt={fortschritt} waehlen={waehlen} />
       <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
@@ -1226,7 +1235,7 @@ export function Gleisbau() {
   const fest = useMemo(() => {
     if (!aufgabe) return null
     const l = new Set<string>()
-    aufgabe.brett().forEach((z, j) => z.forEach((f, i) => { if (f.gleis || f.teil || f.bau) l.add(`${i},${j}`) }))
+    ;(aufgabe.vorgabeBrett ?? aufgabe.brett)().forEach((z, j) => z.forEach((f, i) => { if (f.gleis || f.teil || f.bau) l.add(`${i},${j}`) }))
     return l
   }, [aufgabe])
   const FEST_TEXT = 'Dieses Stück gibt die Aufgabe vor, es bleibt, wo es ist.'
@@ -1237,7 +1246,7 @@ export function Gleisbau() {
    */
   const hinten = useMemo(() => {
     if (!aufgabe || !fest?.size) return null
-    const b0 = aufgabe.brett(), l = new Set<string>(), alle = [...fest].map((k) => k.split(',').map(Number))
+    const b0 = (aufgabe.vorgabeBrett ?? aufgabe.brett)(), l = new Set<string>(), alle = [...fest].map((k) => k.split(',').map(Number))
     const je = new Map<string, Array<{ x: number; y: number; k: number }>>()
     for (const e of offeneEnden(b0)) {
       const f = `${Math.floor(e.x - [0, 1, 0, -1][e.k] * 0.1)},${Math.floor(e.y - [-1, 0, 1, 0][e.k] * 0.1)}`
@@ -1261,7 +1270,7 @@ export function Gleisbau() {
   const festGrund = useMemo(() => {
     if (!aufgabe) return null
     const l = new Map<string, Feld>()
-    aufgabe.brett().forEach((z, j) => z.forEach((f, i) => { if (f.grund !== 'wiese' || f.fluss || f.objekt || f.hang !== undefined) l.set(`${i},${j}`, f) }))
+    ;(aufgabe.vorgabeBrett ?? aufgabe.brett)().forEach((z, j) => z.forEach((f, i) => { if (f.grund !== 'wiese' || f.fluss || f.objekt || f.hang !== undefined) l.set(`${i},${j}`, f) }))
     return l
   }, [aufgabe])
   const LANDSCHAFT_FEST = 'Die Landschaft gibt die Aufgabe vor: Häuser, Wald, Berge und Wasser bleiben. Gleise darüber gehen.'
@@ -1270,13 +1279,13 @@ export function Gleisbau() {
   const auftrag = (aufgabe as { betrieb?: Auftrag } | null)?.betrieb ?? null
   const [ergebnis, setErgebnis] = useState<Ergebnis | null>(null)
   const [fortschritt, setFortschritt] = useState<Record<string, number>>(() => fortschrittLesen())
-  const aufgabeWaehlen = (a: Aufgabe | null) => {
+  const aufgabeWaehlen = (a: Aufgabe | null, vonVorn = false) => {
     setFaehrt(false); zuege.current = []; setWagen([]); fgRef.current = null; setFahrgaeste(null)
     setAufgabe(a); setErgebnis(null); setGeloest(false); setStand({ fahrgaeste: 0, gueter: 0 }); setVerlauf([]); setMeldung(null); setNameFeld(null); setMenu(false); setZoom({ s: 1, x: 0, y: 0 })
     // ein Auftrag des Bahnbetriebs mit dem gemerkten Brett
     const gemerkt = a && (a as { betrieb?: Auftrag }).betrieb ? betriebLesen().bretter[a.id] : undefined
     const b = gemerkt ? brettAusCode(gemerkt) : null
-    if (a) setBrettRoh(b ?? a.brett())
+    if (a) setBrettRoh(b ?? (vonVorn && a.neu ? a.neu() : a.brett()))
     setGutschrift(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -1290,8 +1299,14 @@ export function Gleisbau() {
         if ((f[aufgabe.id] ?? 0) >= e.sterne) return f
         const n = { ...f, [aufgabe.id]: e.sterne }; fortschrittMerken(n); return n
       })
+      // in der Reihe: das gelöste Brett ist der Anfang der nächsten Aufgabe
+      if (aufgabe.reihe !== undefined) reiheGeloestMerken(aufgabe.id, brett)
     } else setErgebnis((alt) => (alt?.ok ? null : alt))
   }, [aufgabe, brett, stand])
+  // in der Reihe das angefangene Brett merken
+  useEffect(() => {
+    if (aufgabe?.reihe !== undefined) reiheArbeitMerken(aufgabe.id, brett)
+  }, [aufgabe, brett])
   // das Brett eines Auftrags merken
   useEffect(() => {
     if (!auftrag) return
@@ -1344,6 +1359,7 @@ export function Gleisbau() {
       if (e && b) { setOffen(e.id); setBrettRoh(b); setVerlauf([]); setAufgabe(null); setAnsicht('brett'); return }
       setOffen(null)
       const aid = q.get('aufgabe'), a = aid ? AUFGABEN.find((x) => x.id === aid) : null
+      if (a && !reiheOffen(a, fortschrittLesen())) { setAufgabe(null); setAnsicht('aufgaben'); return }
       if (a) { setAnsicht('aufgaben'); aufgabeWaehlen(a); return }
       // eine Strecke ab einem Bahnhof: erst nach dem Laden der Varianten
       if (aid?.startsWith('v:')) {
@@ -2536,11 +2552,11 @@ export function Gleisbau() {
                 {aufgabe?.daten && <Klappe titel="Was die Daten sagen" className="mt-4"><p className="text-sm leading-relaxed">{aufgabe.daten}</p></Klappe>}
                 <div className="mt-4 flex flex-wrap gap-2">
                   {aufgabe
-                    ? <button type="button" disabled={faehrt} onClick={() => { aufgabeWaehlen(aufgabe); setMenu(false) }}
+                    ? <button type="button" disabled={faehrt} onClick={() => { aufgabeWaehlen(aufgabe, true); setMenu(false) }}
                               className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Neu beginnen</button>
                     : <button type="button" disabled={faehrt} onClick={() => { setBrett(zufallsBeispiel(SP, ZE)); setMeldung(null); setMenu(false) }}
                               className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Beispiel</button>}
-                  {leerenKnopf}
+                  {!aufgabe && leerenKnopf}
                   {!aufgabe && (
                     <button type="button" onClick={() => void brettTeilen()}
                             className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">

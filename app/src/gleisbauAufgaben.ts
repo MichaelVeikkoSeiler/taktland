@@ -7,8 +7,8 @@
  */
 import STRECKEN from './assets/gleisbau-strecken.json'
 import {
-  type Brett, bahnhofGruppen, bahnhofTitel, type Dreh, DXY, type GleisArt, grosseKurve, grossGeometrie, type Grund, istBahnhof, leer, spalten,
-  ueberWasser, wege, zeilen, Zug, gueterGilt,
+  type Brett, bahnhofGruppen, bahnhofTitel, type Dreh, DXY, grosseKurve, grossGeometrie, type Grund, istBahnhof, leer, spalten,
+  ueberWasser, wege, zeilen, Zug, gueterGilt, brettCode, brettAusCode,
 } from './gleisbau'
 
 export interface Ergebnis { ok: boolean; text: string; sterne: number }
@@ -32,6 +32,11 @@ export interface Aufgabe {
   /** im Bahnbetrieb: Sterne nach den Baukosten statt nach den Gleisstücken, und die Baukosten selbst */
   sterne?: (b: Brett) => number
   kosten?: (b: Brett) => number
+  /** in der Reihe: was die Aufgabe vorgibt (Bahnhöfe, Schuppen, Landschaft) ohne das Gebaute, für das, was fest bleibt; und ein frischer Anfang */
+  vorgabeBrett?: () => Brett
+  neu?: () => Brett
+  /** in der Reihe: die Stelle, ab 0; offen erst, wenn die davor gelöst ist */
+  reihe?: number
 }
 /** was während der Fahrt ans Ziel kam; jeGut im Bahnbetrieb */
 export interface Transport { fahrgaeste: number; gueter: number; jeGut?: Partial<Record<string, number>> }
@@ -127,29 +132,6 @@ function bahnhofFelder(b: Brett): Map<string, Set<string>> {
   return raus
 }
 
-// ——— vorbereitete Bretter ———
-
-function brett(sp: number, ze: number, gruende: Partial<Record<Grund, Array<[number, number]>>>, gleise: Array<[number, number, GleisArt, Dreh]> = []): Brett {
-  const b = leer(sp, ze)
-  for (const [g, l] of Object.entries(gruende) as Array<[Grund, Array<[number, number]>]>) for (const [i, j] of l) b[j][i].grund = g
-  for (const [i, j, art, dreh] of gleise) b[j][i] = { ...b[j][i], gleis: { art, dreh } }
-  return b
-}
-const spalte = (i: number, j0: number, j1: number): Array<[number, number]> => Array.from({ length: j1 - j0 + 1 }, (_, k) => [i, j0 + k])
-
-/** zwei Bahnhöfe verbinden, auf Wunsch durch einen Tunnel und über eine Brücke */
-function verbinden(a: string, c: string, mitTunnel = false, mitBruecke = false) {
-  return (b: Brett) => {
-    const f = bahnhofFelder(b)
-    if (!f.get(a) || !f.get(c)) return { ok: false, text: `Es braucht die Bahnhöfe ${a} und ${c}.` }
-    if (!wegGibt(b, f.get(a)!, f.get(c)!)) return { ok: false, text: `Noch führt kein Gleis von ${a} nach ${c}.` }
-    if (!wegGibt(b, f.get(a)!, f.get(c)!, mitTunnel, mitBruecke)) {
-      return { ok: false, text: `${a} und ${c} sind verbunden, aber der Weg führt noch nicht ${[mitTunnel && 'durch einen Tunnel', mitBruecke && 'über eine Brücke'].filter(Boolean).join(' und ')}.` }
-    }
-    return { ok: true, text: `Geschafft: ${a} und ${c} sind verbunden.` }
-  }
-}
-
 /** ein Rundkurs: der Zug fährt drei Minuten lang, ohne je am Ende eines Gleises umzukehren, und kommt dabei durch einen Tunnel und über eine Brücke */
 function rundkurs(b: Brett) {
   const z = Zug.setzen(b)
@@ -167,52 +149,8 @@ function rundkurs(b: Brett) {
   return { ok: true, text: 'Geschafft: ein Rundkurs mit Bahnhof, Tunnel und Brücke.' }
 }
 
-export const AUFGABEN: Aufgabe[] = [
-  {
-    id: 'erste', titel: 'Erste Verbindung', ziel: 'Verbinde Bahnhof A mit Bahnhof B.', vorgabe: 7,
-    brett: () => brett(6, 4, { wald: [[0, 3], [5, 0]], dorf: [[0, 0], [5, 3]] }, [[0, 1, 'bahnhof', 1], [5, 2, 'bahnhof', 1]]),
-    pruefen: verbinden('A', 'B'),
-  },
-  {
-    id: 'fluss', titel: 'Über den Fluss', ziel: 'Verbinde A und B. Dazwischen fliesst ein Fluss: Ein Gleis auf Wasser wird zur Brücke.', vorgabe: 9,
-    brett: () => brett(8, 6, { wasser: spalte(4, 0, 5), wald: [[1, 4], [6, 0], [7, 0]], dorf: [[0, 0], [7, 5]] }, [[1, 1, 'bahnhof', 1], [6, 4, 'bahnhof', 1]]),
-    pruefen: verbinden('A', 'B', false, true),
-  },
-  {
-    id: 'berg', titel: 'Durch den Berg', ziel: 'Verbinde A und B durch einen Tunnel: Ein Gleis auf einem Berg wird zum Tunnel.', vorgabe: 9,
-    brett: () => brett(8, 6, { berg: [...spalte(3, 0, 5), ...spalte(4, 0, 5), [5, 2], [2, 3]], wald: [[0, 5], [7, 0]] }, [[1, 2, 'bahnhof', 0], [6, 3, 'bahnhof', 0]]),
-    pruefen: verbinden('A', 'B', true),
-  },
-  {
-    id: 'drei', titel: 'Drei Bahnhöfe', ziel: 'Verbinde die Bahnhöfe A, B und C so, dass man von jedem zu jedem fahren kann. Weichen helfen.', vorgabe: 9,
-    brett: () => brett(8, 6, { wasser: [[3, 3], [4, 3], [4, 4]], dorf: [[0, 0], [7, 0], [3, 5]], wald: [[6, 5], [7, 5]] }, [[1, 1, 'bahnhof', 1], [6, 1, 'bahnhof', 1], [3, 4, 'bahnhof', 0]]),
-    pruefen: (b) => {
-      const ab = verbinden('A', 'B')(b)
-      if (!ab.ok) return ab
-      const ac = verbinden('A', 'C')(b)
-      if (!ac.ok) return ac
-      return { ok: true, text: 'Geschafft: alle drei Bahnhöfe sind verbunden.' }
-    },
-  },
-  {
-    id: 'ring', titel: 'Rundkurs', ziel: 'Baue einen geschlossenen Ring mit mindestens einem Bahnhof, der durch einen Tunnel und über eine Brücke führt. Der Zug darf nie umkehren müssen.', vorgabe: 14,
-    brett: () => brett(8, 6, { wasser: [[2, 0], [2, 1], [3, 1], [4, 1]], berg: [[5, 4], [6, 4], [6, 5], [7, 4]], wald: [[0, 5], [1, 5], [7, 0]], dorf: [[3, 3], [4, 3]] }),
-    pruefen: rundkurs,
-  },
-  {
-    id: 'sparsam', titel: 'Sparsam bauen', ziel: 'Verbinde A und B mit möglichst wenigen Gleisstücken. Die grossen Kurven zählen je als ein Stück.', vorgabe: 7,
-    brett: () => brett(8, 6, { wald: [[2, 2], [3, 2], [2, 3], [3, 3], [5, 0], [6, 0]], wasser: [[5, 4], [5, 5]] }, [[0, 1, 'bahnhof', 1], [7, 4, 'bahnhof', 1]]),
-    pruefen: verbinden('A', 'B'),
-  },
-]
-
 // ——— Transporte (Michael, 2026-11-25: «Erstelle Aufgaben für Personentransporte und Gütertransporte»; Bretter und Zahlen gewählt) ———
 
-/** ein Güterschuppen an einer Geraden */
-function mitSchuppen(b: Brett, l: Array<[number, number, Dreh]>): Brett {
-  for (const [i, j, dreh] of l) b[j][i] = { ...b[j][i], gleis: { art: 'gerade', dreh }, bau: 'gueter' }
-  return b
-}
 const schuppenFelder = (b: Brett) => b.flatMap((z, j) => z.flatMap((f, i) => (gueterGilt(f) ? [`${i},${j}`] : [])))
 
 /**
@@ -240,32 +178,91 @@ function transport(ziel: Partial<Transport>) {
   return { pruefen, schritte, transport: ziel }
 }
 
-AUFGABEN.push(
-  {
-    id: 'personen-pendler', titel: 'Pendlerzug',
-    ziel: 'Verbinde A und B, setze unter «Gleise» einen Personenzug aufs Gleis und lass fahren, bis 8 Fahrgäste am Ziel sind.',
-    brett: () => brett(9, 5, { dorf: [[0, 0], [1, 0], [8, 4], [7, 4]], wald: [[4, 0], [4, 4], [5, 4]] }, [[1, 1, 'bahnhof', 1], [7, 3, 'bahnhof', 1]]),
-    ...transport({ fahrgaeste: 8 }),
-  },
-  {
-    id: 'personen-drei', titel: 'Drei Dörfer',
-    ziel: 'Verbinde A, B und C und bring 15 Fahrgäste ans Ziel. Jeder will in ein anderes Dorf, darum muss der Zug alle drei erreichen.',
-    brett: () => brett(10, 7, { dorf: [[0, 0], [9, 0], [4, 6]], wasser: [[4, 2], [5, 2], [5, 3]], wald: [[8, 6], [9, 6], [0, 6]] }, [[1, 1, 'bahnhof', 1], [8, 1, 'bahnhof', 1], [4, 5, 'bahnhof', 1]]),
-    ...transport({ fahrgaeste: 15 }),
-  },
-  {
-    id: 'gueter-holz', titel: 'Holz aus dem Wald',
-    ziel: 'Verbinde die beiden Güterschuppen, setze unter «Gleise» einen Güterzug aufs Gleis und liefere 6 Ladungen. Der Güterzug hält nur am Güterschuppen.',
-    brett: () => mitSchuppen(brett(9, 5, { wald: [[0, 0], [1, 0], [2, 0], [0, 1], [0, 2], [1, 2]], dorf: [[8, 3], [8, 4], [7, 4]] }), [[1, 1, 1], [7, 3, 1]]),
-    ...transport({ gueter: 6 }),
-  },
-  {
-    id: 'gueter-gemischt', titel: 'Güter und Pendler',
-    ziel: 'Verbinde die Bahnhöfe und die Güterschuppen. Setze einen Personenzug und einen Güterzug und bring 8 Fahrgäste und 4 Ladungen ans Ziel.',
-    brett: () => mitSchuppen(brett(10, 7, { dorf: [[0, 0], [9, 6]], wald: [[9, 0], [8, 0], [0, 6]], berg: [[4, 3], [5, 3]] }, [[1, 1, 'bahnhof', 1], [8, 5, 'bahnhof', 1]]), [[8, 1, 1], [1, 5, 1]]),
-    ...transport({ fahrgaeste: 8, gueter: 4 }),
-  },
-)
+// ——— die Reihe (Michael, 2026-11-26: «Mach es jetzt bitte so, dass man eine Aufgabe nach dem anderen lösen kann. Die jeweils folgende Aufgabe baut auf
+// der vorderen Aufgabe auf»): ein Brett, das wächst. Jede Aufgabe beginnt mit dem gelösten Brett der vorherigen und bringt Neues dazu (Fluss, Berg,
+// Bahnhöfe, Güterschuppen); offen erst, wenn die vorherige gelöst ist. Geprüft nach den Namen der Bahnhöfe, die sich nicht verschieben, wenn ein neuer
+// dazukommt. Orte, Bretter und Zahlen gewählt ———
+
+type Platz = [number, number]
+/** was eine Stufe der Reihe dazubringt: Boden, Bahnhöfe mit Namen, Güterschuppen mit Anlage */
+interface Zusatz { gruende?: Partial<Record<Grund, Platz[]>>; bahnhoefe?: Array<[number, number, Dreh, string]>; schuppen?: Array<[number, number, Dreh, string]> }
+function zusetzen(b: Brett, z: Zusatz): Brett {
+  const n = b.map((zz) => zz.map((f) => ({ ...f })))
+  for (const [g, l] of Object.entries(z.gruende ?? {}) as Array<[Grund, Platz[]]>) for (const [i, j] of l) n[j][i] = { ...n[j][i], grund: g }
+  for (const [i, j, dreh, name] of z.bahnhoefe ?? []) n[j][i] = { grund: n[j][i].grund === 'berg' || n[j][i].grund === 'wasser' ? 'wiese' : n[j][i].grund, gleis: { art: 'bahnhof', dreh }, name }
+  for (const [i, j, dreh, name] of z.schuppen ?? []) n[j][i] = { grund: 'wiese', gleis: { art: 'gerade', dreh }, bau: 'gueter', anlage: name }
+  return n
+}
+const REIHE_SP = 12, REIHE_ZE = 8
+const ZUSAETZE: Zusatz[] = [
+  { gruende: { dorf: [[0, 0], [1, 0], [5, 0]], wald: [[0, 7], [1, 7], [2, 7]] }, bahnhoefe: [[1, 1, 1, 'Seewil'], [5, 1, 1, 'Bergau']] },
+  { gruende: { wasser: [[7, 0], [7, 1], [7, 2], [7, 3]], wald: [[11, 0]] }, bahnhoefe: [[9, 1, 1, 'Flussau']] },
+  { gruende: { berg: [[8, 4], [9, 4], [10, 4], [11, 4], [8, 5]] }, bahnhoefe: [[10, 6, 1, 'Alpwil']] },
+  { gruende: { wald: [[0, 4], [0, 5], [1, 4]] }, bahnhoefe: [[2, 5, 1, 'Waldegg']] },
+  {},
+  { gruende: { dorf: [[4, 3], [5, 3]] } },
+  { gruende: { wald: [[11, 6], [11, 7]] }, schuppen: [[10, 7, 1, 'Forst Tannegg'], [4, 7, 1, 'Sägerei Seewil']] },
+  {},
+]
+/** die Vorgabe bis zur Stufe n, ohne Gebautes */
+const vorgabeBis = (n: number) => ZUSAETZE.slice(0, n + 1).reduce((b, z) => zusetzen(b, z), leer(REIHE_SP, REIHE_ZE))
+/** Bretter der Reihe auf dem Gerät: gelöst je Stufe und das angefangene */
+const REIHE_SPEICHER = 'taktland.gleisbau.reihe'
+interface ReiheStand { geloest: Record<string, string>; arbeit: Record<string, string> }
+function reiheLesen(): ReiheStand {
+  try { const x = JSON.parse(localStorage.getItem(REIHE_SPEICHER) ?? 'null'); if (x && x.geloest && x.arbeit) return x } catch { /* neu */ }
+  return { geloest: {}, arbeit: {} }
+}
+function reiheSchreiben(s: ReiheStand) { try { localStorage.setItem(REIHE_SPEICHER, JSON.stringify(s)) } catch { /* nur für jetzt */ } }
+export function reiheArbeitMerken(id: string, b: Brett) { const s = reiheLesen(); s.arbeit[id] = brettCode(b); reiheSchreiben(s) }
+export function reiheGeloestMerken(id: string, b: Brett) { const s = reiheLesen(); s.geloest[id] = brettCode(b); reiheSchreiben(s) }
+
+/** Bahnhöfe nach Namen verbinden */
+function nachNamen(b: Brett) {
+  const t = bahnhofTitel(b), f = bahnhofFelder(b), m = new Map<string, Set<string>>()
+  for (const [buchstabe, name] of t) { const x = f.get(buchstabe); if (x) m.set(name, x) }
+  return m
+}
+function verbindenN(a: string, c: string, mitTunnel = false, mitBruecke = false) {
+  return (b: Brett) => {
+    const f = nachNamen(b)
+    if (!f.get(a) || !f.get(c)) return { ok: false, text: `Es braucht die Bahnhöfe ${a} und ${c}.` }
+    if (!wegGibt(b, f.get(a)!, f.get(c)!)) return { ok: false, text: `Noch führt kein Gleis von ${a} nach ${c}.` }
+    if (!wegGibt(b, f.get(a)!, f.get(c)!, mitTunnel, mitBruecke)) {
+      return { ok: false, text: `${a} und ${c} sind verbunden, aber der Weg führt noch nicht ${[mitTunnel && 'durch einen Tunnel', mitBruecke && 'über eine Brücke'].filter(Boolean).join(' und ')}.` }
+    }
+    return { ok: true, text: `Geschafft: ${a} und ${c} sind verbunden.` }
+  }
+}
+function alleVerbunden(b: Brett) {
+  const f = [...nachNamen(b)]
+  for (let k = 1; k < f.length; k++) if (!wegGibt(b, f[0][1], f[k][1])) return { ok: false, text: `Noch führt kein Gleis von ${f[0][0]} nach ${f[k][0]}.` }
+  return { ok: true, text: 'Geschafft: Alle Bahnhöfe sind verbunden.' }
+}
+
+const STUFEN_REIHE: Array<Omit<Aufgabe, 'brett' | 'vorgabeBrett' | 'neu' | 'reihe'>> = [
+  { id: 'reihe-1', titel: 'Erste Verbindung', ziel: 'Verbinde Seewil mit Bergau.', pruefen: verbindenN('Seewil', 'Bergau') },
+  { id: 'reihe-2', titel: 'Über den Fluss', ziel: 'Hinter dem Fluss liegt Flussau. Verlängere die Linie von Bergau nach Flussau: Ein Gleis auf Wasser wird zur Brücke.', pruefen: verbindenN('Bergau', 'Flussau', false, true) },
+  { id: 'reihe-3', titel: 'Durch den Berg', ziel: 'Alpwil liegt hinter dem Berg. Verbinde Flussau und Alpwil durch einen Tunnel: Ein Gleis auf einem Berg wird zum Tunnel.', pruefen: verbindenN('Flussau', 'Alpwil', true) },
+  { id: 'reihe-4', titel: 'Ein Netz', ziel: 'Waldegg kommt dazu. Verbinde alle Bahnhöfe so, dass man von jedem zu jedem fahren kann. Weichen helfen.', pruefen: alleVerbunden },
+  { id: 'reihe-5', titel: 'Rundkurs', ziel: 'Baue im Netz einen geschlossenen Ring mit einem Bahnhof, durch einen Tunnel und über eine Brücke. Stell die Weichen so, dass der Zug nie umkehren muss.', pruefen: rundkurs },
+  { id: 'reihe-6', titel: 'Pendler', ziel: 'Jetzt fahren Fahrgäste. Bring 15 Fahrgäste an ihr Ziel. Alle Bahnhöfe müssen verbunden sein.', ...transport({ fahrgaeste: 15 }) },
+  { id: 'reihe-7', titel: 'Holz aus dem Wald', ziel: 'Der Forst Tannegg und die Sägerei Seewil kommen dazu. Schliess sie ans Netz an, setz unter «Gleise» einen Güterzug und liefere 6 Ladungen.', ...transport({ gueter: 6 }) },
+  { id: 'reihe-8', titel: 'Güter und Pendler', ziel: 'Alles zugleich: Setz einen Personenzug und einen Güterzug und bring 10 Fahrgäste und 6 Ladungen ans Ziel.', ...transport({ fahrgaeste: 10, gueter: 6 }) },
+]
+
+export const AUFGABEN: Aufgabe[] = STUFEN_REIHE.map((a, n): Aufgabe => {
+  // der Anfang: das gelöste Brett der Stufe davor mit dem Neuen dieser Stufe; ohne es die Vorgabe allein
+  const neu = () => {
+    const vorher = n > 0 ? reiheLesen().geloest[STUFEN_REIHE[n - 1].id] : undefined
+    const b = vorher ? brettAusCode(vorher) : null
+    return b && spalten(b) === REIHE_SP && zeilen(b) === REIHE_ZE ? zusetzen(b, ZUSAETZE[n]) : vorgabeBis(n)
+  }
+  return {
+    ...a, reihe: n, neu, vorgabeBrett: () => vorgabeBis(n),
+    brett: () => { const x = reiheLesen().arbeit[a.id]; return (x && brettAusCode(x)) || neu() },
+  }
+})
 
 // ——— echte Strecken ———
 
