@@ -89,11 +89,12 @@ export function GelaendeVerlaeufe() {
   )
 }
 /** Breite und Weichheit der Böschung und ihre Stärke (gewählt) */
-const BOESCHUNG_BREIT = 0.2, BOESCHUNG_WEICH = 0.09, BOESCHUNG_STAERKE = 0.6
+const BOESCHUNG_BREIT = 0.2, BOESCHUNG_WEICH = 0.09, BOESCHUNG_STAERKE = 0.6, EBENE_EINZUG = 0.2, EBENE_RUND = 0.3
 export function GelaendeBild({ brett }: { brett: Brett }) {
   const raus: ReactElement[] = []
   // Hochebene und Tal als Gebiet: die Hochebene wirft ausserhalb ihres Rands eine Böschung, im Tal liegt sie innerhalb, an der Kante am dunkelsten
-  const hoch = gebietPfadWenn(brett, (f) => f.hang === 18, 0.03), tal = gebietPfadWenn(brett, (f) => f.hang === 19, 0.03)
+  // seit 2026-11-26 die Kante im Feld eingerückt und stärker gerundet, nicht auf den Fugen (Michael: «bitte mehr abgerundet und nicht so strikt den Fugen entlang»)
+  const hoch = gebietPfadWenn(brett, (f) => f.hang === 18, EBENE_EINZUG, EBENE_RUND), tal = gebietPfadWenn(brett, (f) => f.hang === 19, EBENE_EINZUG, EBENE_RUND)
   if (hoch || tal) {
     const sp = spalten(brett), ze = zeilen(brett), nah: Array<[number, number]> = []
     brett.forEach((z, j) => z.forEach((_, i) => {
@@ -139,7 +140,7 @@ const FUELLUNG: Record<string, string> = { wald: 'url(#gb-wald)', berg: 'url(#gb
 function gebietPfad(b: Brett, grund: Feld['grund'], e: number) {
   return gebietPfadWenn(b, (f) => f.grund === grund, e)
 }
-function gebietPfadWenn(b: Brett, gilt: (f: Feld) => boolean, e: number) {
+function gebietPfadWenn(b: Brett, gilt: (f: Feld) => boolean, e: number, rund = RUND) {
   const sp = spalten(b), ze = zeilen(b)
   const gleich = (i: number, j: number) => i >= 0 && j >= 0 && i < sp && j < ze && gilt(b[j][i])
   const teile: string[] = []
@@ -151,7 +152,7 @@ function gebietPfadWenn(b: Brett, gilt: (f: Feld) => boolean, e: number) {
       const P = (u: number, v: number) => `${(cx + sx * u).toFixed(3)},${(cy + sy * v).toFixed(3)}`
       let d: string
       if (ex > 0 && ey > 0) {
-        const r = Math.min(RUND, 0.5 - ex, 0.5 - ey)
+        const r = Math.min(rund, 0.5 - ex, 0.5 - ey)
         d = `M${P(ex + r, ey)} L${P(0.5, ey)} L${P(0.5, 0.5)} L${P(ex, 0.5)} L${P(ex, ey + r)} Q${P(ex, ey)} ${P(ex + r, ey)} Z`
       } else if (ex > 0 || ey > 0) {
         d = `M${P(ex, ey)} L${P(0.5, ey)} L${P(0.5, 0.5)} L${P(ex, 0.5)} Z`
