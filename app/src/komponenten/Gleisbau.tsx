@@ -11,7 +11,7 @@ import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortsc
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
-import { bild, GelaendeBild, GELAENDE_FOLGE, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
+import { bild, GelaendeBild, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
 import { type Gueter, gueterHalt, gueterStart, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
 import { GUETER, LOKS, type LokTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
@@ -42,7 +42,7 @@ const KACHEL_H = 0.915
 
 type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
-  | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' } | { art: 'hang' } | { art: 'strom' }
+  | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' } | { art: 'hang'; hang?: 18 | 19 } | { art: 'strom' }
   | { art: 'haltestelle' } | { art: 'wende' } | { art: 'strbruecke' } | { art: 'strtunnel' } | { art: 'zug'; zug: 'p' | 'g' }
   | { art: 'bau'; bau: 'depot' | 'gueter' | 'galerie' } | { art: 'objekt'; objekt: 'kirche' | 'bauernhof' }
 
@@ -79,7 +79,8 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'grund', grund: 'wald' }, text: 'Wald' },
   { w: { art: 'grund', grund: 'wasser' }, text: 'Wasser' },
   { w: { art: 'fluss' }, text: 'Fluss' },
-  { w: { art: 'hang' }, text: 'Gelände' },
+  { w: { art: 'hang', hang: 18 }, text: 'Hochebene' },
+  { w: { art: 'hang', hang: 19 }, text: 'Tal' },
   { w: { art: 'grund', grund: 'berg' }, text: 'Berg' },
   { w: { art: 'grund', grund: 'dorf' }, text: 'Dorf' },
   { w: { art: 'grund', grund: 'rebberg' }, text: 'Rebberg' },
@@ -118,7 +119,7 @@ const TAKT_WAHL = [0, 15, 30, 60] as const, UHR_START_MIN = 7 * 60
 const uhrText = (sek: number) => { const m = UHR_START_MIN + Math.floor(sek); return `${String(Math.floor(m / 60) % 24).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}` }
 
 /** Werkzeuge, die man über mehrere Felder ziehen kann */
-const MAL_WERKZEUGE: Array<Werkzeug['art']> = ['grund', 'fluss', 'strasse', 'strom']
+const MAL_WERKZEUGE: Array<Werkzeug['art']> = ['grund', 'fluss', 'strasse', 'strom', 'hang']
 
 /** ein Werkzeug auf viele Felder auf einmal: Boden setzen, Fluss oder Strasse legen, wo es geht (ohne Wechsel hin und zurück wie beim Tippen) */
 function malenAnwenden(b: Brett, felder: Array<[number, number]>, w: Werkzeug): Brett {
@@ -142,6 +143,11 @@ function malenAnwenden(b: Brett, felder: Array<[number, number]>, w: Werkzeug): 
       // die Strasse bleibt: über Wasser eine Brücke, im Berg ein Tunnel; mit Gleis geht das nicht
       if (f.strasse && strasseMoeglich(f)) neu[j][i] = ohneStrasse(f)
       geaendert = true
+    } else if (w.art === 'hang') {
+      // Hochebene und Tal wie Wasser über mehrere Felder ziehen (Michael, 2026-11-26: «Bitte Gelände gleich wie Gewässer erstellen lassen können»)
+      const h = w.hang ?? 18
+      if (f.hang === h) continue
+      f.hang = h; geaendert = true
     } else if (w.art === 'fluss') {
       if (f.fluss || f.grund === 'wasser' || f.grund === 'berg' || (f.strasse && f.gleis)) continue
       f.fluss = true; geaendert = true
@@ -995,7 +1001,11 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
     return (
       <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
         <GrundBild f={{ grund: 'wiese' }} i={0} j={0} />
-        <rect x={0.025} y={0.025} width={0.95} height={0.89} rx={0.05} fill="url(#gb-hang-12)" style={{ mixBlendMode: 'multiply' }} />
+        {/* eine Böschung als Ring, die helle Kante oben: bei der Hochebene innen, beim Tal aussen */}
+        <path d="M0.12,0.12 h0.76 v0.66 h-0.76 Z M0.27,0.27 v0.36 h0.46 v-0.36 Z" fillRule="evenodd" fill="#3c5a28" opacity={0.4} style={{ mixBlendMode: 'multiply' }} />
+        {w.hang === 19
+          ? <rect x={0.12} y={0.12} width={0.76} height={0.66} rx={0.1} fill="none" stroke="#fff" strokeOpacity={0.6} strokeWidth={0.03} />
+          : <rect x={0.27} y={0.27} width={0.46} height={0.36} rx={0.06} fill="none" stroke="#fff" strokeOpacity={0.6} strokeWidth={0.03} />}
       </svg>
     )
   }
@@ -2015,12 +2025,11 @@ export function Gleisbau() {
       return
     }
     if (w.art === 'hang') {
-      // Gelände: jeder Tipp die nächste Form nach GELAENDE_FOLGE, dann wieder flach (gewählt)
-      const k = f.hang === undefined ? -1 : GELAENDE_FOLGE.indexOf(f.hang)
-      const neuH = k + 1 < GELAENDE_FOLGE.length ? GELAENDE_FOLGE[k + 1] : undefined
-      const { hang: _, ...ohne } = f
+      // Hochebene oder Tal wie Wasser: ein Tipp setzt, nochmals tippen macht wieder flach; über mehrere Felder ziehen geht auch
+      const h = w.hang ?? 18, { hang: _, ...ohne } = f
+      const neuH = f.hang === h ? undefined : h
       neu(i, j, neuH === undefined ? ohne : { ...ohne, hang: neuH }); knopfTon(neuH !== undefined)
-      setMeldung(neuH === undefined ? 'Wieder flach.' : `${GELAENDE_NAMEN[neuH]}. Nochmals tippen für die nächste Form.`)
+      setMeldung(neuH === undefined ? 'Wieder flach.' : `${GELAENDE_NAMEN[neuH]}. Zum Malen über mehrere Felder ziehen.`)
       return
     }
     if (w.art === 'knoten') {
