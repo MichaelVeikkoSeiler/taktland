@@ -956,7 +956,12 @@ export const WAGEN = 4, WAGEN_MIN = 2, WAGEN_MAX = 8
 export const zugLaenge = (n: number) => n * WAGEN_LAENGE + (n - 1) * WAGEN_LUECKE
 /** Tempo in Feldern je Sekunde, Anfahren und Halt am Bahnhof (gewählt) */
 export const TEMPO = 1.5
-const ANFAHREN = 1.2
+/**
+ * Anfahren und Bremsen (seit 2026-11-26 sanfter, Michael: «Züge sollen bei den Bahnhöfen auch langsam abbremsen und beim Anfahren noch ein bisschen langsamer
+ * anfahren. Bei den Ampeln ebenso»): ANFAHREN Sekunden bis zum Höchsttempo (vorher 1,2), vor einem Halt, einer roten Ampel, einem abgestellten Wagen oder dem
+ * Gleisende bremst der Zug mit BREMSEN Feldern je s², zuletzt mit KRIECHEN; gesucht wird BREMS_SICHT Felder voraus; alles gewählt
+ */
+const ANFAHREN = 2.2, BREMSEN = 1.1, KRIECHEN = 0.12, BREMS_SICHT = 3
 export const HALT_S = 2.5
 /** der Pfiff so lange vor der Abfahrt (gewählt) */
 const PFIFF_VOR_S = 0.9
@@ -1264,7 +1269,7 @@ export class Zug {
     if (this.stromlos) {
       this.tempo = Math.max(0, this.tempo - STROMLOS_BREMSEN * dt)
       if (this.tempo <= 0) return
-    } else this.tempo = Math.min(this.vmax, this.tempo + (this.vmax / ANFAHREN) * dt)
+    } else this.tempo = Math.min(this.vmax, this.tempo + (this.vmax / ANFAHREN) * dt, Math.max(KRIECHEN, Math.sqrt(2 * BREMSEN * this.bisHalt(b))))
     let rest = this.tempo * dt
     for (let k = 0; k < 8 && rest > 0; k++) {
       const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
@@ -1322,6 +1327,31 @@ export class Zug {
       x = naechstes(b, x)
     }
     return false
+  }
+
+  /** ob der Zug an diesem Stück hält (wie in schritt): Personenzug am Bahnhof, Güterzug am Güterschuppen, im Bahnhof aus mehreren Feldern im letzten */
+  private haltAuf(b: Brett, s: Stueck): boolean {
+    if (s.gross) return false
+    const f = b[s.j][s.i], bf = istBahnhof(f.gleis)
+    if (!(this.art === 'gueter' ? gueterGilt(f) : this.art === 'mix' ? bf || gueterGilt(f) : bf)) return false
+    if (bf) { const n = naechstes(b, s); if (n && !n.gross && istBahnhof(b[n.j][n.i].gleis)) return false }
+    return true
+  }
+  /** wie weit bis zur nächsten Stelle, an der der Zug stehen bleibt; Infinity, wenn keine in Sicht */
+  private bisHalt(b: Brett): number {
+    let s = this.stuecke[this.stuecke.length - 1]
+    const l0 = stueckLaenge(s)
+    if (this.haltAuf(b, s) && this.kopf < l0 / 2) return l0 / 2 - this.kopf
+    let d = l0 - this.kopf
+    for (let k = 0; k < 6 && d < BREMS_SICHT; k++) {
+      const n = naechstes(b, s)
+      if (!n) return d
+      if (!n.gross) { const f = b[n.j][n.i]; if ((ampelGilt(f) && f.ampel === 'rot') || (f.wagen && wagenGilt(f))) return d }
+      const ln = stueckLaenge(n)
+      if (this.haltAuf(b, n)) return d + ln / 2
+      d += ln; s = n
+    }
+    return Infinity
   }
 
   /** Punkt d Einheiten hinter der Spitze */

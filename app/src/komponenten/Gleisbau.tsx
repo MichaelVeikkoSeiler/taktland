@@ -33,7 +33,7 @@ const F = {
   berg: '#cfd6c4', deckel: '#aeb6a2', fels: '#8f9398', felsDunkel: '#6f7378', schnee: '#ffffff', schneeDunkel: '#dde3ea',
   laub: ['#6cb54f', '#7cc35a', '#5aa443'], laubSchatten: '#4b8f37', nadel: '#2f7d3c', nadelSchatten: '#24652f', stamm: '#7a5a3c',
   schotter: '#c2bbb0', schwelle: '#8b8074', schiene: '#4a4a4a',
-  perron: '#d2d2d2', strasse: '#d8d1c4', dach: '#6a6a6a', bruecke: '#d6d6d6', gelaender: '#7a7a7a', portal: '#2e2e30', karmin: '#a8102e',
+  perron: '#d2d2d2', strasse: '#d8d1c4', dach: '#6a6a6a', bahnhofDach: '#c4452f', bahnhofFirst: '#8f2a1c', bruecke: '#d6d6d6', gelaender: '#7a7a7a', portal: '#2e2e30', karmin: '#a8102e',
   wand: '#f4f1ea', ziegel: ['#d4583e', '#c94a32', '#b8452f'], ziegelSchatten: '#9e3a27',
 }
 /** die Unterkante jeder Kachel, damit sie leicht erhaben wirkt (gewählt) */
@@ -474,6 +474,26 @@ function PerronVerbindungen({ brett }: { brett: Brett }) {
       if (gerade(i + unten[0], j + unten[1], d) && gerade(i + rechts[0] + unten[0], j + rechts[1] + unten[1], (d + 2) % 4))
         raus.push(<rect key={`e${i},${j}`} x={i + 0.84} y={j + 0.9} width={0.32} height={0.2} fill={F.perron} transform={rot} />)
     }
+  }
+  // ein Dach je Bahnhof: nebeneinander liegende gerade Bahnhofsfelder gleicher Lage bekommen ein durchgehendes rotes Dach statt je eines dunklen (Michael,
+  // 2026-11-26: «Werden Bahnhofselemente nebeneinander platziert, soll ein einheitlicher Bahnhof entstehen und nicht mit jeweils einem dunklen Dach. Der Bahnhof soll
+  // dann auch ein rotes Dach haben, wie die anderen Gebäude auch»); es deckt das dunkle Dach des Bilds (gemessen 0,72 bis 0,85 quer, 0,29 bis 0,71 längs), Farben gewählt
+  for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
+    const g = brett[j][i].gleis
+    if (g?.art !== 'bahnhof') continue
+    const d = g.dreh, unten = [[0, 1], [-1, 0], [0, -1], [1, 0]][d]
+    if (gerade(i - unten[0], j - unten[1], d)) continue
+    let n = 1
+    while (gerade(i + unten[0] * n, j + unten[1] * n, d)) n++
+    const rot = `rotate(${d * 90} ${i + 0.5} ${j + 0.5})`, y0 = j + 0.26, h = n - 1 + 0.48
+    raus.push(
+      <g key={`d${i},${j}`} transform={rot}>
+        <rect x={i + 0.69} y={y0 + 0.02} width={0.2} height={h} rx={0.03} fill="rgba(0,0,0,.18)" />
+        <rect x={i + 0.68} y={y0} width={0.2} height={h} rx={0.03} fill={F.bahnhofDach} stroke={F.bahnhofFirst} strokeWidth={0.012} />
+        <rect x={i + 0.68} y={y0} width={0.1} height={h} rx={0.03} fill="rgba(255,255,255,.12)" />
+        <line x1={i + 0.78} y1={y0 + 0.02} x2={i + 0.78} y2={y0 + h - 0.02} stroke={F.bahnhofFirst} strokeWidth={0.018} />
+      </g>,
+    )
   }
   return <g pointerEvents="none">{raus}</g>
 }
@@ -1472,10 +1492,17 @@ export function Gleisbau() {
     return l.map((w, k) => (voll.has(k) ? { ...w, beladen: true } : w))
   }
   // der Zug je Bild
+  // Pause während der Fahrt (Michael, 2026-11-26: «Während des Abspielens muss man Pause drücken können»): alles steht, Weichen und Ampeln lassen sich stellen
+  const [pause, setPause] = useState(false)
+  const pauseRef = useRef(false)
+  pauseRef.current = pause
+  useEffect(() => { if (!faehrt) setPause(false) }, [faehrt])
+  useEffect(() => { if (pause) zuggeraeuschAus() }, [pause])
   useEffect(() => {
     if (!faehrt) return
     let los = 0, letzt = performance.now()
     const bild = (jetzt: number) => {
+      if (pauseRef.current) { letzt = jetzt; los = requestAnimationFrame(bild); return }
       const dt = Math.min(0.05, (jetzt - letzt) / 1000)
       spielSek.current += dt
       letzt = jetzt
@@ -2243,6 +2270,11 @@ export function Gleisbau() {
             {/* gedreht wird mit einem zweiten Tipp auf das gewählte Werkzeug (Michael, 2026-11-25: «Elemente müssen per tippen in der Elementebox gedreht werden
                 können. Dafür braucht es oben den Drehpfeil nicht mehr») */}
             <button type="button" onClick={() => setMenu(true)} aria-label="Menü" title="Menü" className={rund}>⋯</button>
+            {faehrt && (
+              <button type="button" onClick={() => { setPause((x) => !x); knopfTon(true) }} aria-pressed={pause} aria-label={pause ? 'Weiter' : 'Pause'} title={pause ? 'Weiter' : 'Pause'} className={rund}>
+                <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{pause ? <path d="M8 5.5v13l11-6.5z" /> : <><rect x="6.5" y="5.5" width="4" height="13" rx="1" /><rect x="13.5" y="5.5" width="4" height="13" rx="1" /></>}</svg>
+              </button>
+            )}
             <button type="button" onClick={fahren} aria-label={faehrt ? 'Anhalten' : 'Fahren'} title={faehrt ? 'Anhalten' : 'Fahren'}
                     className="flex h-11 flex-none items-center gap-1.5 rounded-full bg-sbb-red px-4 font-bold text-white shadow-sm hover:bg-sbb-red125">
               <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{faehrt ? <rect x="6" y="6" width="12" height="12" rx="1.5" /> : <path d="M8 5.5v13l11-6.5z" />}</svg>
@@ -2468,8 +2500,8 @@ export function Gleisbau() {
                         <span className="text-sbb-metal dark:text-sbb-storm">{l.length} von {z.plaetze(WAGEN_ARTEN.person.plaetze)} Plätzen</span></span>
                     })}
                   </p>
-                ) : <p className="font-bold">Der Zug fährt.</p>}
-                <p className="text-sbb-metal dark:text-sbb-storm">Ein Tipp auf eine Weiche oder Ampel stellt sie, ein Tipp auf einen Zug zeigt Wagen und Richtung. Zum Bauen anhalten.{takt > 0 && !knotenSet.size ? ' Für den Takt fehlt ein Knoten: unter Bauwerke «Knoten» auf einen Bahnhof.' : ''}</p>
+                ) : <p className="font-bold">{pause ? 'Pause.' : 'Der Zug fährt.'}</p>}
+                <p className="text-sbb-metal dark:text-sbb-storm">{pause ? 'Pause: oben ▶ fährt weiter. ' : ''}Ein Tipp auf eine Weiche oder Ampel stellt sie, ein Tipp auf einen Zug zeigt Wagen und Richtung. Zum Bauen anhalten.{takt > 0 && !knotenSet.size ? ' Für den Takt fehlt ein Knoten: unter Bauwerke «Knoten» auf einen Bahnhof.' : ''}</p>
               </div>
             ) : (
               <>
