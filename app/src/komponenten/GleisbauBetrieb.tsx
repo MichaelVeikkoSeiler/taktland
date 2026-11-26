@@ -198,7 +198,14 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
   const [wagen, setWagen] = useState<WagenTyp[]>(anfang?.wagen ?? [])
   const zugkraft = lok ? LOKS[lok].zugkraft : 0
   const n = (w: WagenTyp) => wagen.filter((x) => x === w).length
-  const loks = [...new Set(f.loks)]
+  // alle Loks: freie zum Wählen, die übrigen blass mit «Kaufen» (Michael, 2026-11-26: «Ja, bitte setzt das so mal um», auf: alle fünf im Blatt, die nicht gekauften blass)
+  const loks = Object.keys(LOKS) as LokTyp[]
+  const lokFrei = (l: LokTyp) => f.loks.filter((x) => x === l).length
+  const lokKaufen = (l: LokTyp) => {
+    if (betrieb.geld < LOKS[l].preis) return
+    setBetrieb((b) => (b.geld < LOKS[l].preis ? b : { ...b, geld: b.geld - LOKS[l].preis, loks: [...b.loks, l] }))
+    setLok(l); setWagen((w) => w.slice(0, LOKS[l].zugkraft))
+  }
   const braucht = brauchtWagen(auftrag)
   // was der Auftrag braucht zuerst, dann was im Depot steht
   const arten = (Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt' && (braucht.includes(w) || (f.wagen[w] ?? 0) > 0 || n(w) > 0))
@@ -220,15 +227,31 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
             .flatMap((x, k) => (k ? [', ', x] : [x]))}.
         </p>
         <p className="mt-3 font-bold">1. Lok wählen</p>
-        {!loks.length && <p className="mt-1 text-sm">Alle Loks fahren schon. Kauf im Depot eine weitere.</p>}
-        <div className="mt-1.5 flex flex-wrap gap-1.5">
-          {loks.map((l) => (
-            <button key={l} type="button" onClick={() => { setLok(l); setWagen((w) => w.slice(0, LOKS[l].zugkraft)) }} className={`${SEGMENT(lok === l)} flex items-center gap-1.5`}>
-              <FahrzeugBild lok={l} />{LOKS[l].name}
-            </button>
-          ))}
-        </div>
-        {lok && <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">{LOKS[lok].art}, {LOKS[lok].diesel ? 'Diesel' : 'Strom'}, zieht höchstens {zugkraft} Wagen</p>}
+        <ul className="mt-1.5 grid gap-1.5">
+          {loks.map((l) => {
+            const da = lokFrei(l) > 0, besitzt = betrieb.loks.includes(l)
+            const text = `${LOKS[l].art}, ${LOKS[l].diesel ? 'Diesel' : 'Strom'}, zieht ${LOKS[l].zugkraft} Wagen`
+            return (
+              <li key={l}>
+                {da ? (
+                  <button type="button" aria-pressed={lok === l} onClick={() => { setLok(l); setWagen((w) => w.slice(0, LOKS[l].zugkraft)) }}
+                          className={`flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm ${lok === l ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-sbb-milk dark:bg-sbb-midnight'}`}>
+                    <FahrzeugBild lok={l} />
+                    <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">{LOKS[l].name}</span><span className="block opacity-80">{text}</span></span>
+                    {lok === l && <span aria-hidden="true" className="font-bold">✓</span>}
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2 px-2 py-1 text-sm">
+                    <span className="opacity-45"><FahrzeugBild lok={l} /></span>
+                    <span className="min-w-0 flex-1 leading-tight text-sbb-metal dark:text-sbb-storm"><span className="font-bold">{LOKS[l].name}</span>
+                      <span className="block">{text}{besitzt ? ' · fährt schon' : ''}</span></span>
+                    <button type="button" disabled={betrieb.geld < LOKS[l].preis} onClick={() => lokKaufen(l)} className={`${KNOPF_WEISS} shrink-0 px-3 text-sm`}>Kaufen {chf(LOKS[l].preis)}</button>
+                  </div>
+                )}
+              </li>
+            )
+          })}
+        </ul>
         <p className="mt-3 font-bold">2. Wagen anhängen <span className="font-medium text-sbb-metal dark:text-sbb-storm">({wagen.length} von {zugkraft})</span></p>
         <ul className="mt-1.5 grid gap-2">
           {arten.map((w) => {
