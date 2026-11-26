@@ -105,18 +105,6 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
       + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
   },
-  // Michael, 2026-11-22: «Man soll Gleise auf ein Layout legen können. Tunnel und Brücken und Bahnhöfe stehen auch zur Verfügung», «Nimm mal
-  // Gleisbau»; das Bild der Kachel vorerst das der Modellbahn
-  {
-    // seit 2026-11-22 «Im Bau», nicht anklickbar; #/gleisbau geht weiter, zum Weiterentwickeln (Michael: «Ist es möglich, das Spiel noch zu sperren, damit
-    // man sieht, es ist in Entwicklung, die Spannung kann steigen, aber wir entwickeln das Spiel zuerst für uns noch weiter und fertig»)
-    id: 'gleisbau', titel: 'Gleisbau', status: 'im-bau', adresse: '#/gleisbau',
-    kurz: 'Gleise, Bahnhöfe, Tunnel und Brücken auf ein Brett legen und den Zug fahren lassen.',
-    // seit 2026-11-26 Michaels Bilder mit dem Band «Im Bau», hell und dunkel (Michael: «Kannst du diese Bilder bereits einsetzen für das Spiel Gleisbau?»)
-    bild: { hell: gleisbauHell, dunkel: gleisbauDunkel, alt: 'Illustration: ein Brett mit Gleisen, Tunnel, Bergen und einem Bahnhof, quer darüber ein Absperrband «Im Bau».' },
-    beschreibung: 'Ein Brett mit 8 × 6 Feldern: Leg Gleise, Weichen, Bahnhöfe, Tunnel und Brücken, gestalte die Landschaft und lass den Zug '
-      + 'fahren. Er hält an jedem Bahnhof und kehrt am Ende des Gleises um.',
-  },
   // Michael, 2026-11-21: «Kannst du dieses Puzzlespiel auf Taktland-App übernehmen und dort alle Bilder, welche wir auf Taktland integriert
   // haben, als Puzzle bereitstellen?»; das Bild der Kachel seit 2026-11-22 Michaels eigenes («Hier die Bilder fürs Bilderpuzzle, hell und dunkel»)
   {
@@ -133,6 +121,18 @@ export const SPIELE: Spiel[] = [
     bild: { hell: reisedauerHell, dunkel: reisedauerDunkel, alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr, dahinter ein Zug auf einem Viadukt.' },
     beschreibung: 'Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? '
       + 'Stell den Regler ein: je näher, desto mehr Punkte.',
+  },
+  // Michael, 2026-11-22: «Man soll Gleise auf ein Layout legen können. Tunnel und Brücken und Bahnhöfe stehen auch zur Verfügung», «Nimm mal
+  // Gleisbau»; das Bild der Kachel vorerst das der Modellbahn; seit 2026-11-26 an letzter Stelle, nach Reisedauer (Michael: «Bitte setze das neue Spiel Gleisbau … einfach an letzter Stelle»)
+  {
+    // seit 2026-11-22 «Im Bau», nicht anklickbar; #/gleisbau geht weiter, zum Weiterentwickeln (Michael: «Ist es möglich, das Spiel noch zu sperren, damit
+    // man sieht, es ist in Entwicklung, die Spannung kann steigen, aber wir entwickeln das Spiel zuerst für uns noch weiter und fertig»)
+    id: 'gleisbau', titel: 'Gleisbau', status: 'im-bau', adresse: '#/gleisbau',
+    kurz: 'Gleise, Bahnhöfe, Tunnel und Brücken auf ein Brett legen und den Zug fahren lassen.',
+    // seit 2026-11-26 Michaels Bilder mit dem Band «Im Bau», hell und dunkel (Michael: «Kannst du diese Bilder bereits einsetzen für das Spiel Gleisbau?»)
+    bild: { hell: gleisbauHell, dunkel: gleisbauDunkel, alt: 'Illustration: ein Brett mit Gleisen, Tunnel, Bergen und einem Bahnhof, quer darüber ein Absperrband «Im Bau».' },
+    beschreibung: 'Ein Brett mit 8 × 6 Feldern: Leg Gleise, Weichen, Bahnhöfe, Tunnel und Brücken, gestalte die Landschaft und lass den Zug '
+      + 'fahren. Er hält an jedem Bahnhof und kehrt am Ende des Gleises um.',
   },
 ]
 
