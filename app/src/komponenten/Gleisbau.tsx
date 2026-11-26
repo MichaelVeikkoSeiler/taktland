@@ -2005,13 +2005,15 @@ export function Gleisbau() {
     const neueBusse = Bus.setzen(brett)
     if (!z && !neueBusse.length) { setMeldung(brett.some((zz) => zz.some((f) => f.strasse)) ? 'Für den Bus braucht es eine Strasse über mindestens zwei Felder.' : 'Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
     const l = starts.length ? gesetzt : z ? [z] : []
-    while (!starts.length && z && l.length < zugZahl) {
+    // in Aufgaben ohne gesetzte Züge immer nur einer (Michael, 2026-11-26: «Warum fahren hier zwei Züge?», dann «Ja gerne so machen»); «Anzahl Züge» gilt beim freien Bauen
+    const zahlZuege = aufgabe ? 1 : zugZahl
+    while (!starts.length && z && l.length < zahlZuege) {
       const belegt = new Set(l.flatMap((x) => [...x.belegt()]))
       const z2 = Zug.setzen(brett, belegt, wagenZahl)
       if (!z2) break
       l.push(z2)
     }
-    if (!starts.length && z && l.length < zugZahl) setMeldung(`Für ${zugZahl} Züge ist das Netz zu klein, es fahren ${l.length === 1 ? 'einer' : l.length}. Jeder braucht Platz weit weg von den anderen.`)
+    if (!starts.length && z && l.length < zahlZuege) setMeldung(`Für ${zugZahl} Züge ist das Netz zu klein, es fahren ${l.length === 1 ? 'einer' : l.length}. Jeder braucht Platz weit weg von den anderen.`)
     else setMeldung(null)
     const bahnhoefe = [...new Set(bahnhofNamen(brett).values())]
     // in einer Aufgabe mit Fahrgästen immer mit Fahrgästen
@@ -2503,7 +2505,7 @@ export function Gleisbau() {
                 <div className="mt-2 divide-y divide-sbb-cloud dark:divide-sbb-iron">
                   {schalter(mitFahrgaesten, () => setMitFahrgaesten((x) => !x), 'Fahrgäste mit Ziel an den Bahnhöfen')}
                   <div className="flex min-h-12 items-center justify-between gap-3 py-2">
-                    <span>Anzahl Züge{faehrt && <span className="block text-xs text-sbb-metal">gilt ab der nächsten Fahrt</span>}</span>
+                    <span>Anzahl Züge<span className="block text-xs text-sbb-metal">{aufgabe ? 'gilt beim freien Bauen; hier fährt einer, ausser du setzt selbst Züge' : faehrt ? 'gilt ab der nächsten Fahrt' : 'beim freien Bauen, ohne selbst gesetzte Züge'}</span></span>
                     <span className="flex items-center gap-2">
                       <button type="button" aria-label="Ein Zug weniger" disabled={zugZahl <= 1} onClick={() => zugZahlSetzen(zugZahl - 1)} className={rund}>−</button>
                       <span className="w-6 text-center text-lg font-bold tabular-nums">{zugZahl}</span>
