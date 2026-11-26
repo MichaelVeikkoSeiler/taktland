@@ -130,12 +130,37 @@ function Start({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
   )
 }
 
-/** das Depot: Loks und Wagen kaufen */
+/**
+ * was ein Fahrzeug beim Verkauf bringt: drei Viertel des Preises, auf 100 gerundet, mindestens 100 (Michael, 2026-11-26: «Gekaufte Artikel können auch wieder
+ * verkauft werden. Einnahmen zwischen ca. 70 und 80% der Ausgaben. Gerundet auf den nächsten 100er»)
+ */
+export const verkaufswert = (preis: number) => Math.max(100, Math.round((preis * 0.75) / 100) * 100)
+/** wie viele eines Fahrzeugs in einem gesetzten Zug stecken (der grösste Bedarf über alle Aufträge; die Züge der Aufträge teilen sich das Depot) */
+function imEinsatz(b: Betrieb, typ: string, lok: boolean): number {
+  let m = 0
+  for (const zz of Object.values(b.zuege)) {
+    let n = 0
+    for (const z of Object.values(zz)) n += lok ? (z.lok === typ ? 1 : 0) : z.wagen.filter((w) => w === typ).length
+    m = Math.max(m, n)
+  }
+  return m
+}
+
+/** das Depot: oben ein Kasten mit allem, was man hat, zum Verkaufen; darunter alles zum Kaufen */
 function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betrieb) => void }) {
   const kaufen = (preis: number, lok?: LokTyp, wagen?: WagenTyp) => {
     if (betrieb.geld < preis) return
     setBetrieb({ ...betrieb, geld: betrieb.geld - preis, loks: lok ? [...betrieb.loks, lok] : betrieb.loks, wagen: wagen ? { ...betrieb.wagen, [wagen]: (betrieb.wagen[wagen] ?? 0) + 1 } : betrieb.wagen })
   }
+  const verkaufen = (lok?: LokTyp, wagen?: WagenTyp) => {
+    if (lok) { const k = betrieb.loks.indexOf(lok); if (k < 0) return; setBetrieb({ ...betrieb, geld: betrieb.geld + verkaufswert(LOKS[lok].preis), loks: betrieb.loks.filter((_, m) => m !== k) }) }
+    if (wagen && (betrieb.wagen[wagen] ?? 0) > 0) setBetrieb({ ...betrieb, geld: betrieb.geld + verkaufswert(WAGEN_ARTEN[wagen].preis), wagen: { ...betrieb.wagen, [wagen]: (betrieb.wagen[wagen] ?? 0) - 1 } })
+  }
+  const lokTypen = Object.keys(LOKS) as LokTyp[], wagenTypen = (Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt')
+  const besitz = [
+    ...lokTypen.map((l) => ({ key: l, lok: l as LokTyp, wagen: undefined as WagenTyp | undefined, name: LOKS[l].name, n: betrieb.loks.filter((x) => x === l).length, preis: LOKS[l].preis, einsatz: imEinsatz(betrieb, l, true) })),
+    ...wagenTypen.map((w) => ({ key: w, lok: undefined as LokTyp | undefined, wagen: w as WagenTyp | undefined, name: WAGEN_ARTEN[w].name, n: betrieb.wagen[w] ?? 0, preis: WAGEN_ARTEN[w].preis, einsatz: imEinsatz(betrieb, w, false) })),
+  ].filter((x) => x.n > 0)
   // je Fahrzeug: Bild, Name und Anzahl im Depot, was es kann, darunter rechts der Knopf zum Kaufen (auf dem Handy sonst zu eng)
   const zeile = (key: string, bild: React.ReactNode, titel: string, text: React.ReactNode, besitz: number, preis: number, kauf: () => void) => (
     <li key={key} className="kachel flex flex-wrap items-center gap-x-3 gap-y-2 p-3">
@@ -143,32 +168,55 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
       <div className="min-w-[10rem] flex-1">
         <p className="font-bold">{titel}</p>
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">{text}</p>
-        <p className="text-sm font-bold">{besitz ? `${besitz} im Depot` : 'keiner im Depot'}</p>
+        {besitz > 0 && <p className="text-sm font-bold">{besitz} im Depot</p>}
       </div>
       <button type="button" disabled={betrieb.geld < preis} aria-label={`${titel} kaufen für ${chf(preis)}`} onClick={kauf} className={`${KNOPF_PREIS} ml-auto`}>{chf(preis)}</button>
     </li>
   )
   return (
     <div className="mt-3 grid gap-4">
+      {/* der Kasten mit allem Gekauften (Michael, 2026-11-26: «Was man gekauft hat muss ersichtlich sein indem man ein Kasten mit Depot sieht») */}
+      <section className="rounded-lg border-2 border-sbb-anthracite p-3 dark:border-sbb-white">
+        <h3 className="font-bold">Dein Depot</h3>
+        {!besitz.length && <p className="mt-1 text-sm text-sbb-metal dark:text-sbb-storm">Noch leer. Unten kaufst du Loks und Wagen.</p>}
+        <ul className="mt-2 grid gap-1.5 sm:grid-cols-2">
+          {besitz.map((x) => {
+            const frei = x.n - x.einsatz
+            return (
+              <li key={x.key} className="flex items-center gap-2 rounded-lg bg-sbb-milk px-2 py-1.5 text-sm dark:bg-sbb-midnight">
+                {x.lok ? <FahrzeugBild lok={x.lok} /> : <FahrzeugBild wagen={x.wagen} />}
+                <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">{x.n} × {x.name}</span>
+                  {x.einsatz > 0 && <span className="block text-xs text-sbb-metal dark:text-sbb-storm">{x.einsatz} in einem Zug eingesetzt</span>}</span>
+                <button type="button" disabled={frei <= 0} title={frei <= 0 ? 'Steckt in einem Zug: zuerst dort entfernen' : undefined}
+                        aria-label={`${x.name} verkaufen für ${chf(verkaufswert(x.preis))}`} onClick={() => verkaufen(x.lok, x.wagen)} className={KNOPF_PREIS}>
+                  Verkaufen {chf(verkaufswert(x.preis))}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+        <p className="mt-2 text-xs text-sbb-metal dark:text-sbb-storm">Beim Verkauf gibt es etwa drei Viertel des Preises zurück, auf 100 gerundet.</p>
+      </section>
       {/* was ein Zug ist, in drei Sätzen (Michael, 2026-11-26: «Das Kaufen von Wagen muss verständlicher sein») */}
       <div className="kachel p-3 text-sm leading-relaxed">
         <p><span className="font-bold">So entsteht ein Zug:</span> eine Lok zieht Wagen, jede Lok nur so viele, wie bei ihr steht.</p>
         <p className="mt-1"><span className="font-bold">Personenwagen:</span> 4 Plätze für Fahrgäste. <span className="font-bold">Güterwagen:</span> trägt 1 Ladung, und nur das Gut, für das er gebaut ist.</p>
-        <p className="mt-1">Gekauft steht alles hier im Depot. Im Auftrag tippst du unten auf «Züge» und ziehst Lok und Wagen in den Zug; was fehlt, wird dabei gekauft. Danach tippst du aufs Gleis, wo der Zug stehen soll.</p>
+        <p className="mt-1">Im Auftrag tippst du unten auf «Züge» und ziehst Lok und Wagen in den Zug; was fehlt, wird dabei gekauft. Danach tippst du aufs Gleis, wo der Zug stehen soll.</p>
       </div>
+      <h3 className="-mb-2 text-lg font-bold">Kaufen</h3>
       <section>
-        <h3 className="font-bold">Loks</h3>
+        <h4 className="font-bold">Loks</h4>
         <div className="mt-1"><LokLegende /></div>
         <ul className="mt-2 grid gap-2 md:grid-cols-2">
-          {(Object.keys(LOKS) as LokTyp[]).map((l) => zeile(l, <FahrzeugBild lok={l} />, `${LOKS[l].name}`,
+          {lokTypen.map((l) => zeile(l, <FahrzeugBild lok={l} />, `${LOKS[l].name}`,
             <><span className="flex flex-wrap items-center gap-x-2">{LOKS[l].art} <LokWerte l={l} /></span>{LOKS[l].text}</>,
             betrieb.loks.filter((x) => x === l).length, LOKS[l].preis, () => kaufen(LOKS[l].preis, l)))}
         </ul>
       </section>
       <section>
-        <h3 className="font-bold">Wagen</h3>
+        <h4 className="font-bold">Wagen</h4>
         <ul className="mt-2 grid gap-2 md:grid-cols-2">
-          {(Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt').map((w) => zeile(w, <FahrzeugBild wagen={w} />, WAGEN_ARTEN[w].name,
+          {wagenTypen.map((w) => zeile(w, <FahrzeugBild wagen={w} />, WAGEN_ARTEN[w].name,
             WAGEN_ARTEN[w].text, betrieb.wagen[w] ?? 0, WAGEN_ARTEN[w].preis, () => kaufen(WAGEN_ARTEN[w].preis, undefined, w)))}
         </ul>
       </section>
@@ -177,8 +225,9 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
 }
 
 /** die Seite des Bahnbetriebs: Fragen beim ersten Mal, sonst Aufträge und Depot */
-export default function BetriebSeite({ betrieb, setBetrieb, oeffnen }: { betrieb: Betrieb; setBetrieb: (b: Betrieb) => void; oeffnen: (a: Auftrag) => void }) {
-  const [depot, setDepot] = useState(false)
+export default function BetriebSeite({ betrieb, setBetrieb, oeffnen, depot, setDepot }: {
+  betrieb: Betrieb; setBetrieb: (b: Betrieb) => void; oeffnen: (a: Auftrag) => void; depot: boolean; setDepot: (d: boolean) => void
+}) {
   const [stufe, setStufe] = useState<Stufe>(betrieb.stufe ?? 'leicht')
   const [sparte, setSparte] = useState<Sparte | 'alle'>(betrieb.sparte ?? 'alle')
   if (!betrieb.stufe || !betrieb.sparte) return <Start betrieb={betrieb} setBetrieb={(b) => { setBetrieb(b); setStufe(b.stufe ?? 'leicht'); setSparte(b.sparte ?? 'alle') }} />
@@ -187,8 +236,12 @@ export default function BetriebSeite({ betrieb, setBetrieb, oeffnen }: { betrieb
   return (
     <div className="mt-4 max-w-3xl">
       <div className="flex flex-wrap items-center gap-2">
+        {/* Aufträge oder Depot, oben sichtbar, wo man ist (Michael, 2026-11-26: «Ist man im Depot oder in den Aufträgen muss dies oben auch so stehen») */}
+        <div className="segmente grid grid-cols-2" role="group" aria-label="Aufträge oder Depot">
+          <button type="button" aria-pressed={!depot} onClick={() => setDepot(false)} className="segment px-4 py-2">Aufträge</button>
+          <button type="button" aria-pressed={depot} onClick={() => setDepot(true)} className="segment px-4 py-2">Depot</button>
+        </div>
         <span className="rounded-lg bg-sbb-anthracite px-3 py-2 font-bold tabular-nums text-white dark:bg-sbb-white dark:text-sbb-black">{chf(betrieb.geld)}</span>
-        <button type="button" onClick={() => setDepot((x) => !x)} aria-expanded={depot} className={KNOPF_WEISS}>{depot ? 'Zu den Aufträgen' : 'Depot'}</button>
         <span className="text-sm text-sbb-metal dark:text-sbb-storm">{betrieb.loks.length} Loks, {Object.values(betrieb.wagen).reduce((a, c) => a + (c ?? 0), 0)} Wagen</span>
       </div>
       {depot ? <Depot betrieb={betrieb} setBetrieb={setBetrieb} /> : (

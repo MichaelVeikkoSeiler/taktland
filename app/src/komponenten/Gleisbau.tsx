@@ -1070,6 +1070,8 @@ export function Gleisbau() {
   const [brett, setBrettRoh] = useState<Brett>(() => leer())
   // Startliste, ein Brett zum Bearbeiten oder die Aufgaben (Michael, 2026-11-23: «Wenn man auf Gleisbau kommt, kommt eine Liste, neues Brett, Brett
   // bearbeiten»); die Adresse sagt, was offen ist: #/gleisbau, #/gleisbau?id=…, #/gleisbau?aufgaben, so führt die Zurück-Taste zur Liste
+  // im Bahnbetrieb Depot oder Aufträge, nach der Adresse (#/gleisbau?depot)
+  const [depotOffen, setDepotOffen] = useState(false)
   const [ansicht, setAnsicht] = useState<'liste' | 'frei' | 'brett' | 'aufgaben' | 'betrieb'>('liste')
   // der Bahnbetrieb (Michael, 2026-11-25): Geld, Depot, Aufträge und je Auftrag Brett und Züge, auf dem Gerät gemerkt
   const [betrieb, setBetriebRoh] = useState<Betrieb>(() => betriebLesen())
@@ -1402,7 +1404,7 @@ export function Gleisbau() {
       if (q.has('frei')) { setAufgabe(null); setAnsicht('frei'); return }
       const auid = q.get('auftrag'), au = auid ? AUFTRAEGE.find((x) => x.id === auid) : null
       if (au) { setAnsicht('betrieb'); aufgabeWaehlen(auftragAlsAufgabe(au)); return }
-      if (q.has('betrieb')) { setAufgabe(null); setAnsicht('betrieb'); return }
+      if (q.has('betrieb') || q.has('depot')) { setAufgabe(null); setAnsicht('betrieb'); setDepotOffen(q.has('depot')); return }
       setAufgabe(null); setAnsicht('liste')
     }
     lesen()
@@ -2254,7 +2256,7 @@ export function Gleisbau() {
           {ansicht === 'liste'
             ? <Zurueck onClick={() => { window.location.hash = '#/spiele' }} text="Alle Spiele" />
             : <Zurueck onClick={() => { window.location.hash = '#/gleisbau' }} text="Gleisbau" />}
-          <h1 className="mt-4 text-2xl font-bold tracking-tight">{ansicht === 'aufgaben' ? 'Gleisbau: Tutorial' : ansicht === 'betrieb' ? 'Gleisbau: Bahnbetrieb' : ansicht === 'frei' ? 'Gleisbau: Freies Feld' : 'Gleisbau'}</h1>
+          <h1 className="mt-4 text-2xl font-bold tracking-tight">{ansicht === 'aufgaben' ? 'Gleisbau: Tutorial' : ansicht === 'betrieb' ? (betrieb.stufe ? `Bahnbetrieb: ${depotOffen ? 'Depot' : 'Aufträge'}` : 'Gleisbau: Bahnbetrieb') : ansicht === 'frei' ? 'Gleisbau: Freies Feld' : 'Gleisbau'}</h1>
           {/* zuerst die Wahl, wie man spielt (Michael, 2026-11-26: «Als Einstieg soll ausgewählt werden können, wie gespielt werden kann. Freies Feld mit allen
               Werkzeugen und Zügen. Dann der Bahnbetrieb … und ein Bereich Tutorial, der erklärt Schritt für Schritt, interaktiv»; das Tutorial beim ersten Mal zuoberst empfohlen) */}
           {ansicht === 'liste' && (
@@ -2268,7 +2270,8 @@ export function Gleisbau() {
           {ansicht === 'frei' && (
             <GleisbauBretter bretter={bretter} setBretter={setBretter} neu={neuesBrett} oeffnen={(id) => { window.location.hash = `#/gleisbau?id=${id}` }} />
           )}
-          {ansicht === 'betrieb' && <BetriebSeite betrieb={betrieb} setBetrieb={setBetrieb} oeffnen={(a) => { window.location.hash = `#/gleisbau?auftrag=${encodeURIComponent(a.id)}` }} />}
+          {ansicht === 'betrieb' && <BetriebSeite betrieb={betrieb} setBetrieb={setBetrieb} oeffnen={(a) => { window.location.hash = `#/gleisbau?auftrag=${encodeURIComponent(a.id)}` }}
+                                                   depot={depotOffen} setDepot={(d) => { window.location.hash = d ? '#/gleisbau?depot' : '#/gleisbau?betrieb' }} />}
           {ansicht === 'aufgaben' && <AufgabenListe fortschritt={fortschritt} waehlen={(a) => { window.location.hash = `#/gleisbau?aufgabe=${encodeURIComponent(a.id)}` }} />}
           <p className={`mt-5 max-w-3xl ${LEISE}`}>
             Ein Baukasten, keine Wirklichkeit: Kacheln, Zug, Tempo und Halte sind gezeichnet und gewählt. Deine Bretter bleiben im Browser dieses
