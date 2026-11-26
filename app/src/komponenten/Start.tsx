@@ -31,10 +31,8 @@ export function Start({ index }: { index: BahnhofIndex }) {
           zweispaltig machen. Anfang der zweiten Spalte bildet: «Kein Reiseplaner»») */}
       <div className="lg:grid lg:grid-cols-2 lg:gap-x-12">
       <div>
+      {/* «In der Schweiz fahren Züge im Taktfahrplan. Davon hat Taktland seinen Namen.» seit 2026-11-26 weg (Michael: «Entfernen») */}
       <p className="mt-3 text-[15px] leading-relaxed">
-        In der Schweiz fahren Züge im Taktfahrplan. Davon hat Taktland seinen Namen.
-      </p>
-      <p className={absatz}>
         Taktland ist Lernspiel, Nachschlagewerk und Reisebegleiter zugleich. Zusammengetragen aus öffentlichen
         Datenbanken der Bahn, des Bundes und von swisstopo, stellt es{' '}
         {zahl(index.bahnhoefe_gesamt)} Bahnhöfe vor
