@@ -1231,6 +1231,30 @@ export function Gleisbau() {
   }, [aufgabe])
   const FEST_TEXT = 'Dieses Stück gibt die Aufgabe vor, es bleibt, wo es ist.'
   /**
+   * je vorgegebenem Stück die hintere Seite, an die ohnehin nichts angebaut wird: dort ein Prellbock, die andere bleibt rot und lädt zum Ansetzen ein
+   * (Michael, 2026-11-26: «Nur auf der Seite einen Prellbock wo eh nichts angebaut wird. Eine Seite darf rot sein»). Hinten ist das offene Ende, das
+   * am weitesten von den anderen vorgegebenen Stücken weg zeigt (von der Mitte des Bretts, wenn es keine gibt); gewählt
+   */
+  const hinten = useMemo(() => {
+    if (!aufgabe || !fest?.size) return null
+    const b0 = aufgabe.brett(), l = new Set<string>(), alle = [...fest].map((k) => k.split(',').map(Number))
+    const je = new Map<string, Array<{ x: number; y: number; k: number }>>()
+    for (const e of offeneEnden(b0)) {
+      const f = `${Math.floor(e.x - [0, 1, 0, -1][e.k] * 0.1)},${Math.floor(e.y - [-1, 0, 1, 0][e.k] * 0.1)}`
+      if (fest.has(f)) je.set(f, [...(je.get(f) ?? []), e])
+    }
+    for (const [f, ee] of je) {
+      const [i, j] = f.split(',').map(Number)
+      const andere = alle.filter(([u, v]) => u !== i || v !== j)
+      const [mx, my] = andere.length ? [andere.reduce((a, [u]) => a + u, 0) / andere.length, andere.reduce((a, [, v]) => a + v, 0) / andere.length] : [spalten(b0) / 2 - 0.5, zeilen(b0) / 2 - 0.5]
+      const weg = (e: { k: number }) => [0, 1, 0, -1][e.k] * (mx - i) + [-1, 0, 1, 0][e.k] * (my - j)
+      if (ee.length < 2) continue
+      const h = ee.reduce((a, c) => (weg(c) < weg(a) ? c : a))
+      l.add(`${f},${h.k}`)
+    }
+    return l
+  }, [aufgabe, fest])
+  /**
    * auch die Landschaft der Aufgabe bleibt: Dorf, Wald, Berg, Wasser, Fluss, Gelände und Objekte (Michael, 2026-11-26: «Auch Häuser und Berge sowie Bäume
    * sollen fix sein»); Gleise darüber gehen (Tunnel, Brücke), der Boden selbst ändert sich nicht und wandert beim Verschieben nicht mit
    */
@@ -2167,12 +2191,12 @@ export function Gleisbau() {
             return <WagenBild key={`zs${i},${j}`} w={{ x: p.x, y: p.y, w: Math.atan2(q.y - p.y, q.x - p.x), art: 0, vorne: true, gueter: f.zugStart === 'g' }} tunnel={false} farbe={f.zugStart === 'g' ? GUETER_LOK : F.karmin} />
           }))}
           {faehrt && wagen.length > 1 && <SignalBild brett={brett} belegt={zuege.current.map((z) => z.belegt())} />}
-          {/* an Stücken, die eine Aufgabe vorgibt, statt des roten Punkts ein Prellbock: ein sauberes Gleisende, bis man dort anschliesst
-              (Michael, 2026-11-26: «Die vorgegebenen Gleise sind auf der hinteren Seite unverbunden und rot markiert das wirkt unvollständig») */}
+          {/* an der hinteren Seite vorgegebener Stücke statt des roten Punkts ein Prellbock (Michael, 2026-11-26: «Die vorgegebenen Gleise sind auf der
+              hinteren Seite unverbunden und rot markiert das wirkt unvollständig», dann «Nur auf der Seite einen Prellbock wo eh nichts angebaut wird») */}
           {!faehrt && enden.map((e, k) => {
             const dx = [0, 1, 0, -1][e.k], dy = [-1, 0, 1, 0][e.k]
             const feld = `${Math.floor(e.x - dx * 0.1)},${Math.floor(e.y - dy * 0.1)}`
-            if (fest?.has(feld)) {
+            if (hinten?.has(`${feld},${e.k}`)) {
               const cx = e.x - dx * 0.09, cy = e.y - dy * 0.09, quer = e.k % 2 === 0
               return (
                 <g key={`e${k}`} pointerEvents="none">
