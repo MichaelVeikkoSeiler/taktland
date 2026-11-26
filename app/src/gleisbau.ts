@@ -455,7 +455,7 @@ export function brettAusCode(c: string): Brett | null {
     if (teil.startsWith('e')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].wende = true }
     if (teil.startsWith('r')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].strBruecke = true }
     if (teil.startsWith('s')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].ohneStrom = true }
-    if (teil.startsWith('h')) for (const e of teil.slice(1).split('_')) { const [i, j, d] = e.split('.').map(Number); if (b[j]?.[i] && d >= 0 && d <= 9) b[j][i].hang = d }
+    if (teil.startsWith('h')) for (const e of teil.slice(1).split('_')) { const [i, j, d] = e.split('.').map(Number); if (b[j]?.[i] && Number.isInteger(d) && d >= 0 && d <= 17) b[j][i].hang = d }
     if (teil.startsWith('k')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].knoten = true }
     if (teil.startsWith('f')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].fluss = true }
     if (teil.startsWith('w')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].wagen = true }

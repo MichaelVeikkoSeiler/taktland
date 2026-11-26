@@ -11,7 +11,7 @@ import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortsc
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
-import { bild, GelaendeBild, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
+import { bild, GelaendeBild, GELAENDE_FOLGE, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
 import { type Gueter, gueterHalt, gueterStart, gueterZeit, type Ladung } from '../gleisbauGueter'
 import { GUETER, LOKS, type LokTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
@@ -995,7 +995,7 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
     return (
       <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
         <GrundBild f={{ grund: 'wiese' }} i={0} j={0} />
-        <rect x={0.025} y={0.025} width={0.95} height={0.89} rx={0.05} fill="url(#gb-hang-1)" />
+        <rect x={0.025} y={0.025} width={0.95} height={0.89} rx={0.05} fill="url(#gb-hang-12)" style={{ mixBlendMode: 'multiply' }} />
       </svg>
     )
   }
@@ -1982,8 +1982,9 @@ export function Gleisbau() {
       return
     }
     if (w.art === 'hang') {
-      // Gelände: jeder Tipp eine Stufe weiter, Hang in acht Richtungen, Hügel, Mulde, dann wieder flach (gewählt)
-      const neuH = f.hang === undefined ? 0 : f.hang >= 9 ? undefined : f.hang + 1
+      // Gelände: jeder Tipp die nächste Form nach GELAENDE_FOLGE, dann wieder flach (gewählt)
+      const k = f.hang === undefined ? -1 : GELAENDE_FOLGE.indexOf(f.hang)
+      const neuH = k + 1 < GELAENDE_FOLGE.length ? GELAENDE_FOLGE[k + 1] : undefined
       const { hang: _, ...ohne } = f
       neu(i, j, neuH === undefined ? ohne : { ...ohne, hang: neuH }); knopfTon(neuH !== undefined)
       setMeldung(neuH === undefined ? 'Wieder flach.' : `${GELAENDE_NAMEN[neuH]}. Nochmals tippen für die nächste Form.`)

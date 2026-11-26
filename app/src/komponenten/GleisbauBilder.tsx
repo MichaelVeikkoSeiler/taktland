@@ -46,27 +46,40 @@ export function MusterDefs() {
 
 /**
  * Gelände (Michael, 2026-11-24: «Elemente für die Landschaft …, die eine gewisse Topologie darstellen? Irgendwie mit einem Verlauf pro Element; teilweise
- * auch diagonal»): je Feld ein Verlauf von dunkel (unten) nach hell (oben) über den Grund, ein Hang in acht Richtungen, ein Hügel (Mitte hell) oder eine
- * Mulde (Mitte dunkel); Stärke gewählt
+ * auch diagonal»). Seit 2026-11-26 multipliziert auf den Grund statt darübergelegt, mit einer steilen Böschung in der Mitte des Felds statt eines Verlaufs von
+ * Kante zu Kante, dazu Aussen- und Innenecken, damit man Hochebenen und Täler legen kann (Michael: «Der Verlauf über der Wiese soll nicht ein darüberliegender
+ * Lauf sein, sondern multipliziert auf der Wiese. Zudem soll der Verlauf nicht linear von der einen Kante zur anderen Kante sein, sondern ein schärferer Verlauf
+ * innerhalb der Kante. So soll es auch Kurven geben, damit man wie eine Plattform, die höher zu liegen scheint, produzieren kann. Eine Hochebene quasi oder ein
+ * Tal»). Die hohe Seite bleibt, wie sie ist, die Böschung ist dunkel, am Fuss am dunkelsten, die tiefe Seite leicht dunkler. Nummern: 0 bis 7 Kante, hoch
+ * in Richtung N, NO, O, SO, S, SW, W, NW; 8 Hügel, 9 Mulde (wie bisher); 10 bis 13 Aussenecke, hoch in der Ecke NO, SO, SW, NW (Ecke einer Hochebene);
+ * 14 bis 17 Innenecke, tief in der Ecke NO, SO, SW, NW (Ecke eines Tals). Stärken und Lage der Böschung gewählt
  */
-export const GELAENDE_NAMEN = ['Hang nach Norden', 'Hang nach Nordosten', 'Hang nach Osten', 'Hang nach Südosten', 'Hang nach Süden', 'Hang nach Südwesten',
-  'Hang nach Westen', 'Hang nach Nordwesten', 'Hügel', 'Mulde']
-const TIEF = 'rgba(30,45,20,.30)', HOCH = 'rgba(255,255,240,.26)'
+export const GELAENDE_NAMEN = ['Kante, oben im Norden', 'Kante, oben im Nordosten', 'Kante, oben im Osten', 'Kante, oben im Südosten', 'Kante, oben im Süden',
+  'Kante, oben im Südwesten', 'Kante, oben im Westen', 'Kante, oben im Nordwesten', 'Hügel', 'Mulde',
+  'Aussenecke, oben im Nordosten', 'Aussenecke, oben im Südosten', 'Aussenecke, oben im Südwesten', 'Aussenecke, oben im Nordwesten',
+  'Innenecke, unten im Nordosten', 'Innenecke, unten im Südosten', 'Innenecke, unten im Südwesten', 'Innenecke, unten im Nordwesten']
+/** in welcher Reihenfolge ein Tipp die Formen durchgeht: zuerst die geraden Kanten, dann die Ecken, die schrägen, Hügel und Mulde */
+export const GELAENDE_FOLGE = [0, 2, 4, 6, 10, 11, 12, 13, 14, 15, 16, 17, 1, 3, 5, 7, 8, 9]
+const SCHATTEN = '#3c5a28'
+/** Stufen von tief (t 0) nach hoch (t 1): tiefe Seite leicht, Fuss der Böschung am dunkelsten, oben nichts */
+const STUFEN: Array<[number, number]> = [[0, 0.16], [0.34, 0.16], [0.38, 0.5], [0.66, 0.06], [0.7, 0], [1, 0]]
+const stops = (umgekehrt: boolean) => (umgekehrt ? [...STUFEN].reverse().map(([t, a]) => [1 - t, a] as [number, number]) : STUFEN)
+  .map(([o, a], k) => <stop key={k} offset={o} stopColor={SCHATTEN} stopOpacity={a} />)
 export function GelaendeVerlaeufe() {
+  // Ecken: NO, SO, SW, NW
+  const ecke = [[1, 0], [1, 1], [0, 1], [0, 0]]
   return (
     <svg width={0} height={0} aria-hidden="true" style={{ position: 'absolute' }}>
       <defs>
         {Array.from({ length: 8 }, (_, d) => {
           const a = (d * Math.PI) / 4, sx = Math.round(Math.sin(a)), sy = Math.round(Math.cos(a))
-          // hoch dort, wohin der Hang ansteigt; über Eck von Ecke zu Ecke
-          return (
-            <linearGradient key={d} id={`gb-hang-${d}`} x1={0.5 - 0.5 * sx} y1={0.5 + 0.5 * sy} x2={0.5 + 0.5 * sx} y2={0.5 - 0.5 * sy}>
-              <stop offset="0" stopColor={TIEF} /><stop offset="1" stopColor={HOCH} />
-            </linearGradient>
-          )
+          // von der tiefen Seite (t 0) zur hohen (t 1), über Eck von Ecke zu Ecke
+          return <linearGradient key={d} id={`gb-hang-${d}`} x1={0.5 - 0.5 * sx} y1={0.5 + 0.5 * sy} x2={0.5 + 0.5 * sx} y2={0.5 - 0.5 * sy}>{stops(false)}</linearGradient>
         })}
-        <radialGradient id="gb-hang-8" cx={0.5} cy={0.5} r={0.6}><stop offset="0" stopColor={HOCH} /><stop offset="1" stopColor={TIEF} /></radialGradient>
-        <radialGradient id="gb-hang-9" cx={0.5} cy={0.5} r={0.6}><stop offset="0" stopColor={TIEF} /><stop offset="1" stopColor={HOCH} /></radialGradient>
+        <radialGradient id="gb-hang-8" cx={0.5} cy={0.5} r={0.62}>{stops(true)}</radialGradient>
+        <radialGradient id="gb-hang-9" cx={0.5} cy={0.5} r={0.62}>{stops(false)}</radialGradient>
+        {ecke.map(([x, y], q) => <radialGradient key={`a${q}`} id={`gb-hang-${10 + q}`} cx={x} cy={y} r={1}>{stops(true)}</radialGradient>)}
+        {ecke.map(([x, y], q) => <radialGradient key={`i${q}`} id={`gb-hang-${14 + q}`} cx={x} cy={y} r={1}>{stops(false)}</radialGradient>)}
       </defs>
     </svg>
   )
@@ -75,7 +88,8 @@ export function GelaendeBild({ brett }: { brett: Brett }) {
   const raus: ReactElement[] = []
   brett.forEach((z, j) => z.forEach((f, i) => {
     if (f.hang === undefined) return
-    raus.push(<rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={`url(#gb-hang-${f.hang})`} pointerEvents="none" />)
+    raus.push(<rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={`url(#gb-hang-${f.hang})`} pointerEvents="none"
+                    style={{ mixBlendMode: 'multiply' }} />)
   }))
   return <>{raus}</>
 }
