@@ -1219,6 +1219,17 @@ export function Gleisbau() {
 
   // Aufgaben (Michael, 2026-11-23, Vorschlag «Aufgaben»): eine gewählte Aufgabe hat ihr eigenes Brett, das freie bleibt gemerkt und kommt danach zurück
   const [aufgabe, setAufgabe] = useState<Aufgabe | null>(null)
+  /**
+   * was eine Aufgabe vorgibt (Bahnhöfe, Güterschuppen, Gleise), bleibt fest: nicht verschieben, ersetzen, drehen oder löschen (Michael, 2026-11-26:
+   * «Ich kann die bereits eingebauten Gleise bewegen. Macht nicht Sinn oder?»); Name, Zug, Knoten, Ampel, Wagen und «Ohne Strom» gehen
+   */
+  const fest = useMemo(() => {
+    if (!aufgabe) return null
+    const l = new Set<string>()
+    aufgabe.brett().forEach((z, j) => z.forEach((f, i) => { if (f.gleis || f.teil || f.bau) l.add(`${i},${j}`) }))
+    return l
+  }, [aufgabe])
+  const FEST_TEXT = 'Dieses Stück gibt die Aufgabe vor, es bleibt, wo es ist.'
   // ein Auftrag des Bahnbetriebs ist eine Aufgabe mit dem Auftrag dazu
   const auftrag = (aufgabe as { betrieb?: Auftrag } | null)?.betrieb ?? null
   const [ergebnis, setErgebnis] = useState<Ergebnis | null>(null)
@@ -1574,6 +1585,7 @@ export function Gleisbau() {
     const id = e.pointerId, el = e.currentTarget
     window.setTimeout(() => {
       if (druck.current !== d) return
+      if (fest?.has(`${feld[0]},${feld[1]}`)) { druck.current = null; setMeldung(FEST_TEXT); return }
       d.zeit = -1
       try { el.setPointerCapture(id) } catch { /* ohne Fangen geht es trotzdem */ }
       navigator.vibrate?.(15)
@@ -1636,7 +1648,7 @@ export function Gleisbau() {
       malRef.current = null; setMalen(null)
       nachZiehen.current = true
       window.setTimeout(() => { nachZiehen.current = false }, 250)
-      const r = malenAnwenden(brett, takt > 0 ? m.filter(([i, j]) => !uhrFeld(i, j)) : m, werkzeug)
+      const r = malenAnwenden(brett, m.filter(([i, j]) => !(takt > 0 && uhrFeld(i, j)) && !fest?.has(`${i},${j}`)), werkzeug)
       if (r !== brett) { setBrett(r); knopfTon(true); setMeldung(null) }
       return
     }
@@ -1649,6 +1661,10 @@ export function Gleisbau() {
       if (takt > 0 && l.some(([i, j]) => uhrFeld(i, j))) { setMeldung('Oben links steht die Uhr des Taktfahrplans, dort geht keine Linie durch.'); return }
       const r = linieLegen(brett, l)
       if (typeof r === 'string') { setMeldung(r); return }
+      // eine Linie darf an vorgegebene Stücke anschliessen, sie aber nicht ändern
+      if (fest && [...fest].some((k) => { const [i, j] = k.split(',').map(Number); return JSON.stringify([r[j][i].gleis, r[j][i].bau]) !== JSON.stringify([brett[j][i].gleis, brett[j][i].bau]) })) {
+        setMeldung('Die Linie würde ein Stück ändern, das die Aufgabe vorgibt. Zieh sie bis davor, das Stück schliesst an.'); return
+      }
       setBrett(r); knopfTon(true); setMeldung(null)
       return
     }
@@ -1658,6 +1674,7 @@ export function Gleisbau() {
     nachZiehen.current = true
     // falls kein Klick folgt, gilt der nächste Tipp wieder
     window.setTimeout(() => { nachZiehen.current = false }, 250)
+    if (fest?.has(`${ziehen.nach[0]},${ziehen.nach[1]}`)) { setZiehen(null); setMeldung(FEST_TEXT); return }
     const r = verschieben(brett, ziehen.von, ziehen.nach)
     setZiehen(null)
     if (typeof r === 'string') { setMeldung(r); return }
@@ -1699,6 +1716,7 @@ export function Gleisbau() {
       return
     }
     const w = werkzeug
+    if (fest?.has(`${i},${j}`) && !['name', 'zug', 'knoten', 'ampel', 'wagen', 'strom'].includes(w.art)) { setMeldung(FEST_TEXT); return }
     const unterGross = !!f.teil || grosseKurve(f.gleis) > 0
     // grosse Kurve: das angetippte Feld ist ihr Griff, das Eckfeld aussen; tippt man den Griff einer gleichen an, dreht sie sich im selben Block,
     // der Griff wandert in die nächste Ecke
