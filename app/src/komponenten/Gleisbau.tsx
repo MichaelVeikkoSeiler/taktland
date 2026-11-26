@@ -1692,6 +1692,25 @@ export function Gleisbau() {
   const verbindeRef = useRef<{ von: { x: number; y: number; k: number }; x: number; y: number } | null>(null)
   const [verbinde, setVerbinde] = useState<{ von: { x: number; y: number; k: number }; x: number; y: number } | null>(null)
   const [ueberEnde, setUeberEnde] = useState(false)
+  /**
+   * Vorschau mit der Maus (Michael, 2026-11-26: «Ist ein Element ausgewählt und fährt man über das Brett muss es einen Rollover Effekt geben, damit man sieht
+   * was wie zu liegen kommt (halbtransparent) das hilft vor allem bei den grösseren Kurven»): das Gleis des Werkzeugs halb durchsichtig auf dem Feld unter der
+   * Maus, eine grosse Kurve über alle ihre Felder; nur auf leeren Feldern, wo ein Tipp es legen würde
+   */
+  const [ueber, setUeber] = useState<[number, number] | null>(null)
+  const vorschau = useMemo(() => {
+    if (!ueber || faehrt || werkzeug.art !== 'gleis') return null
+    const [i, j] = ueber, f = brett[j]?.[i]
+    if (!f || f.gleis || f.teil || f.bau || fest?.has(`${i},${j}`)) return null
+    const g = { art: werkzeug.gleis, dreh }, n = grosseKurve(g)
+    let b2: Brett | null
+    if (n) { const [ai, aj] = anfangZumGriff(i, j, n, dreh); b2 = grosseLegen(brett, ai, aj, g) }
+    else b2 = brett.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? { ...x, gleis: g } : x)) : z))
+    if (!b2) return null
+    const l: [number, number][] = []
+    b2.forEach((z, jj) => z.forEach((x, ii) => { if (x !== brett[jj][ii]) l.push([ii, jj]) }))
+    return { b: b2, l }
+  }, [ueber, faehrt, werkzeug, dreh, brett, fest])
   const brettPunkt = (cx: number, cy: number) => {
     const r = svg.current!.getBoundingClientRect(), vw = SP + 0.3, vh = ZE + 0.3, kk = Math.min(r.width / vw, r.height / vh)
     return { x: (cx - r.left - (r.width - vw * kk) / 2) / kk - 0.15, y: (cy - r.top - (r.height - vh * kk) / 2) / kk - 0.15 }
@@ -1758,6 +1777,8 @@ export function Gleisbau() {
       if (verbindeRef.current) { verbindeRef.current = { ...verbindeRef.current, ...p }; setVerbinde(verbindeRef.current); return }
       const da = !!endeBei(p.x, p.y)
       if (da !== ueberEnde) setUeberEnde(da)
+      const fu = malRef.current || linieRef.current ? null : feldBei(e.clientX, e.clientY)
+      if (fu?.[0] !== ueber?.[0] || fu?.[1] !== ueber?.[1]) setUeber(fu ?? null)
     }
     // Malen beginnt, sobald der Finger vor dem langen Drücken ein anderes Feld erreicht
     const ms = malStart.current
@@ -2327,7 +2348,7 @@ export function Gleisbau() {
                onPointerDown={buehneDrucken} onPointerMove={buehneBewegen} onPointerUp={buehneLos} onPointerCancel={buehneLos} onWheel={buehneRad}>
             <div className="absolute inset-0 px-2.5" style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`, transformOrigin: '0 0' }}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
-             onClick={feldAn} onPointerDown={(e) => { mausKlick.current = e.pointerType === 'mouse'; drucken(e) }} onPointerMove={bewegen} onPointerUp={loslassen}
+             onClick={feldAn} onPointerDown={(e) => { mausKlick.current = e.pointerType === 'mouse'; drucken(e) }} onPointerMove={bewegen} onPointerUp={loslassen} onPointerLeave={() => setUeber(null)}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); malRef.current = null; malStart.current = null; setMalen(null) }} onContextMenu={(e) => e.preventDefault()}
              className={`size-full ${ueberEnde || verbinde ? 'cursor-crosshair' : 'cursor-pointer'} select-none [-webkit-touch-callout:none]`}>
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
@@ -2363,6 +2384,13 @@ export function Gleisbau() {
               </g>
             )
           })()}
+          {/* die Vorschau des Werkzeugs unter der Maus */}
+          {vorschau && !verbinde && (
+            <g opacity={0.5} pointerEvents="none">
+              {vorschau.l.map(([i, j]) => <rect key={`vr${i},${j}`} x={i + 0.03} y={j + 0.03} width={0.94} height={0.94} rx={0.1} fill="#ffffff" opacity={0.35} />)}
+              {vorschau.l.map(([i, j]) => <GleisBild key={`vg${i},${j}`} f={vorschau.b[j][i]} i={i} j={j} wasser={(u, v) => ueberWasser(vorschau.b[v]?.[u])} brett={vorschau.b} />)}
+            </g>
+          )}
           {/* das mit der Maus gewählte Feld */}
           {auswahlDa && !faehrt && (
             <rect x={auswahlDa[0] + 0.02} y={auswahlDa[1] + 0.02} width={0.96} height={0.96} rx={0.1} fill="none" stroke={F.karmin} strokeWidth={0.05}
