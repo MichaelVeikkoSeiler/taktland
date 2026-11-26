@@ -25,16 +25,16 @@ export function FahrtblattWahl({ index }: { index: BahnhofIndex | null }) {
         <div className="mt-4 space-y-3">
           {/* am Desktop die drei Felder nebeneinander, «Über» in der Mitte (Michael, 2026-11-26: «Bitte die drei Felder Von, Nach und Über nebeneinander.
               Das Über in der Mitte»); auf Handy und Tablet untereinander wie bisher */}
-          <div className="space-y-3 xl:grid xl:grid-cols-3 xl:gap-4 xl:space-y-0">
-            <div className="xl:order-1">
+          <div className="space-y-3 md:grid md:grid-cols-3 md:gap-4 md:space-y-0">
+            <div className="md:order-1">
               <BahnhofFeld bezeichnung="Von" wert={blatt.von} bahnhoefe={imNetz} name={name}
                            aendern={(u) => setBlatt((w) => ({ ...w, von: u }))} />
             </div>
-            <div className="xl:order-3">
+            <div className="md:order-3">
               <BahnhofFeld bezeichnung="Nach" wert={blatt.nach} bahnhoefe={imNetz} name={name}
                            aendern={(u) => setBlatt((w) => ({ ...w, nach: u }))} />
             </div>
-            <div className="xl:order-2">
+            <div className="md:order-2">
               <BahnhofFeld bezeichnung="Über (optional)" wert={blatt.ueber} bahnhoefe={imNetz} name={name}
                            aendern={(u) => setBlatt((w) => ({ ...w, ueber: u }))} />
             </div>
