@@ -2,7 +2,7 @@ import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, endenWeg, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
   WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, gueterGilt, zugStartGilt, ohneStrasse, strasseGerade, ueberWasser, wagenGilt, knotenGruppen, HALT_S, brettRand, MIN_SEITE, MAX_BREITE, MAX_HOEHE,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
@@ -1599,8 +1599,51 @@ export function Gleisbau() {
     return () => el.removeEventListener('touchmove', halt)
   }, [])
 
+  /**
+   * mit der Maus von einem roten Punkt zu einem anderen ziehen: dazwischen entsteht von selbst das passende Gleis (Michael, 2026-11-26: «wenn man 2 rote Punkte
+   * mit der Maus verbinden könnte und sich dann das nächstlogische Gleis dazwischen aufbauen würde»; endenWeg in gleisbau.ts); auf Touch zieht man wie bisher
+   */
+  const verbindeRef = useRef<{ von: { x: number; y: number; k: number }; x: number; y: number } | null>(null)
+  const [verbinde, setVerbinde] = useState<{ von: { x: number; y: number; k: number }; x: number; y: number } | null>(null)
+  const [ueberEnde, setUeberEnde] = useState(false)
+  const brettPunkt = (cx: number, cy: number) => {
+    const r = svg.current!.getBoundingClientRect(), vw = SP + 0.3, vh = ZE + 0.3, kk = Math.min(r.width / vw, r.height / vh)
+    return { x: (cx - r.left - (r.width - vw * kk) / 2) / kk - 0.15, y: (cy - r.top - (r.height - vh * kk) / 2) / kk - 0.15 }
+  }
+  const ENDE_NAH = 0.22
+  const endeBei = (x: number, y: number, ohne?: { x: number; y: number }) => {
+    let best: (typeof enden)[number] | null = null, d = ENDE_NAH
+    for (const e of enden) { if (ohne && e.x === ohne.x && e.y === ohne.y) continue; const dd = Math.hypot(e.x - x, e.y - y); if (dd < d) { d = dd; best = e } }
+    return best
+  }
+  function verbindenFertig() {
+    const v = verbindeRef.current
+    verbindeRef.current = null; setVerbinde(null)
+    if (!v) return
+    nachZiehen.current = true
+    window.setTimeout(() => { nachZiehen.current = false }, 250)
+    const ziel = endeBei(v.x, v.y, v.von)
+    if (!ziel) { if (Math.hypot(v.x - v.von.x, v.y - v.von.y) > ENDE_NAH) setMeldung('Zieh von einem roten Punkt bis zu einem anderen roten Punkt, dann entsteht das Gleis dazwischen.'); return }
+    const weg = endenWeg(brett, v.von, ziel, (i, j) => (takt > 0 && uhrFeld(i, j)) || !!fest?.has(`${i},${j}`))
+    if (typeof weg === 'string') { setMeldung(weg); return }
+    const r = linieLegen(brett, weg)
+    if (typeof r === 'string') { setMeldung(r); return }
+    if (fest && [...fest].some((k) => { const [i, j] = k.split(',').map(Number); return JSON.stringify([r[j][i].gleis, r[j][i].bau]) !== JSON.stringify([brett[j][i].gleis, brett[j][i].bau]) })) {
+      setMeldung('Die Verbindung würde ein Stück ändern, das die Aufgabe vorgibt.'); return
+    }
+    setBrett(r); knopfTon(true); setMeldung(null)
+  }
+
   function drucken(e: React.PointerEvent<SVGSVGElement>) {
     if (faehrt || !e.isPrimary || schiebeModus) return
+    if (e.pointerType === 'mouse') {
+      const p = brettPunkt(e.clientX, e.clientY), von = endeBei(p.x, p.y)
+      if (von) {
+        try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* ohne Fangen geht es trotzdem */ }
+        verbindeRef.current = { von, ...p }; setVerbinde(verbindeRef.current)
+        return
+      }
+    }
     const feld = feldBei(e.clientX, e.clientY)
     if (!feld) return
     if (werkzeug.art === 'linie') {
@@ -1624,6 +1667,12 @@ export function Gleisbau() {
     }, 450)
   }
   function bewegen(e: React.PointerEvent<SVGSVGElement>) {
+    if (e.pointerType === 'mouse' && !faehrt) {
+      const p = brettPunkt(e.clientX, e.clientY)
+      if (verbindeRef.current) { verbindeRef.current = { ...verbindeRef.current, ...p }; setVerbinde(verbindeRef.current); return }
+      const da = !!endeBei(p.x, p.y)
+      if (da !== ueberEnde) setUeberEnde(da)
+    }
     // Malen beginnt, sobald der Finger vor dem langen Drücken ein anderes Feld erreicht
     const ms = malStart.current
     if (ms && !malRef.current && druck.current?.zeit !== -1) {
@@ -1673,6 +1722,7 @@ export function Gleisbau() {
     if (feld) setZiehen((z) => (z && (z.nach[0] !== feld[0] || z.nach[1] !== feld[1]) ? { ...z, nach: feld } : z))
   }
   function loslassen() {
+    if (verbindeRef.current) { verbindenFertig(); return }
     malStart.current = null
     const m = malRef.current
     if (m) {
@@ -2206,7 +2256,7 @@ export function Gleisbau() {
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={(e) => { mausKlick.current = e.pointerType === 'mouse'; drucken(e) }} onPointerMove={bewegen} onPointerUp={loslassen}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); malRef.current = null; malStart.current = null; setMalen(null) }} onContextMenu={(e) => e.preventDefault()}
-             className="size-full cursor-pointer select-none [-webkit-touch-callout:none]">
+             className={`size-full ${ueberEnde || verbinde ? 'cursor-crosshair' : 'cursor-pointer'} select-none [-webkit-touch-callout:none]`}>
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
           {unten}
           {/* im Tunnel und unter einer Überführung ist ein Wagen unsichtbar (Michael, 2026-11-25: «Züge im Tunnel oder unter Brücken unsichtbar machen»),
@@ -2227,6 +2277,17 @@ export function Gleisbau() {
             ? <WagenBild key={`a${i},${j}`} w={{ x: i + 0.5, y: j + 0.5, w: f.gleis!.dreh % 2 ? 0 : Math.PI / 2, art: 1, vorne: false }} tunnel={false} /> : null))}
           <AmpelBild brett={brett} />
           <OhneStromBild brett={brett} />
+          {/* beim Verbinden zweier roter Punkte: eine gestrichelte Linie zur Maus, der Zielpunkt hervorgehoben */}
+          {verbinde && (() => {
+            const z = endeBei(verbinde.x, verbinde.y, verbinde.von)
+            return (
+              <g pointerEvents="none">
+                <line x1={verbinde.von.x} y1={verbinde.von.y} x2={z?.x ?? verbinde.x} y2={z?.y ?? verbinde.y} stroke={F.karmin} strokeWidth={0.06} strokeDasharray="0.15 0.1" strokeLinecap="round" />
+                <circle cx={verbinde.von.x} cy={verbinde.von.y} r={0.16} fill="none" stroke={F.karmin} strokeWidth={0.05} />
+                {z && <circle cx={z.x} cy={z.y} r={0.16} fill="none" stroke={F.karmin} strokeWidth={0.05} />}
+              </g>
+            )
+          })()}
           {/* das mit der Maus gewählte Feld */}
           {auswahlDa && !faehrt && (
             <rect x={auswahlDa[0] + 0.02} y={auswahlDa[1] + 0.02} width={0.96} height={0.96} rx={0.1} fill="none" stroke={F.karmin} strokeWidth={0.05}
@@ -2668,6 +2729,7 @@ function SoGehts() {
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
       <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Mit «Zug einsetzen» (unter «Züge») tippst du auf ein Gleis und stellst aus deinen Loks und Wagen einen Zug zusammen, fehlende Wagen kaufst du gleich dort. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
+      <li>Mit der Maus zwei rote Punkte verbinden: auf einem roten Punkt drücken und zu einem anderen ziehen, dazwischen entsteht das Gleis mit möglichst wenig Kurven, über Wasser als Brücke, durch Berge als Tunnel.</li>
       <li>Mit der Maus: Ein Klick wählt ein Feld (gestrichelter Rahmen). Entf oder die Rückschritt-Taste nimmt seinen obersten Inhalt weg, Schicht um Schicht bis zur Wiese; Esc hebt die Wahl auf. Rückgängig geht wie immer.</li>
       <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug (Lok, Personenwagen und Steuerwagen, je 4 Plätze) hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen; eine Ladung füllt einen Güterwagen. Das Tutorial zeigt es Schritt für Schritt.</li>
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,

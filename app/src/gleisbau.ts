@@ -185,6 +185,51 @@ export function linieLegen(b: Brett, felder: Array<[number, number]>): Brett | s
   return neu
 }
 
+/**
+ * zwei offene Enden verbinden (Michael, 2026-11-26: «wenn man 2 rote Punkte mit der Maus verbinden könnte und sich dann das nächstlogische Gleis dazwischen
+ * aufbauen würde»): der kürzeste Weg über freie Felder (ohne Gleis, Bau oder Haus; Berg und Wasser gehen, sie werden Tunnel und Brücke), je Kurve
+ * KURVE_KOSTEN mehr, damit es möglichst gerade wird; gibt die Felder für linieLegen, von Gleis zu Gleis, oder einen Grund
+ */
+const KURVE_KOSTEN = 0.6
+export function endenWeg(b: Brett, a: { x: number; y: number; k: number }, c: { x: number; y: number; k: number },
+  gesperrt?: (i: number, j: number) => boolean): Array<[number, number]> | string {
+  const feldVon = (e: { x: number; y: number; k: number }): [number, number] => [Math.floor(e.x - DX[e.k] * 0.1), Math.floor(e.y - DY[e.k] * 0.1)]
+  const A = feldVon(a), C = feldVon(c)
+  const NA: [number, number] = [A[0] + DX[a.k], A[1] + DY[a.k]], NC: [number, number] = [C[0] + DX[c.k], C[1] + DY[c.k]]
+  const frei = (i: number, j: number) => i >= 0 && j >= 0 && i < spalten(b) && j < zeilen(b) && !b[j][i].gleis && !b[j][i].teil && !b[j][i].bau && !b[j][i].objekt && !gesperrt?.(i, j)
+  if (!frei(...NA) || !frei(...NC)) return 'Vor diesem Ende ist kein Platz für ein Gleis.'
+  // ein Feld dazwischen: es braucht zwei verschiedene Kanten
+  if (NA[0] === NC[0] && NA[1] === NC[1]) return (a.k + 2) % 4 === (c.k + 2) % 4 ? 'Diese beiden Enden lassen sich nicht verbinden.' : [A, NA, C]
+  // Dijkstra über Feld und Richtung, in der man es verlässt
+  const W = spalten(b), key = (i: number, j: number, d: number) => (j * W + i) * 4 + d
+  const kosten = new Map<number, number>(), vor = new Map<number, number>()
+  const offen: Array<[number, number, number, number]> = [[0, NA[0], NA[1], a.k]]
+  kosten.set(key(NA[0], NA[1], a.k), 0)
+  let ziel = -1
+  while (offen.length) {
+    offen.sort((x, y) => x[0] - y[0])
+    const [g, i, j, d] = offen.shift()!
+    const kk = key(i, j, d)
+    if (g > (kosten.get(kk) ?? Infinity)) continue
+    if (i === NC[0] && j === NC[1]) {
+      // vom Zielfeld noch zum Gleis: Richtung zurück zum Ende
+      ziel = kk; break
+    }
+    for (let n = 0; n < 4; n++) {
+      if (n === (d + 2) % 4) continue
+      const u = i + DX[n], v = j + DY[n]
+      if (!frei(u, v)) continue
+      const gn = g + 1 + (n !== d ? KURVE_KOSTEN : 0), kn = key(u, v, n)
+      if (gn < (kosten.get(kn) ?? Infinity)) { kosten.set(kn, gn); vor.set(kn, kk); offen.push([gn, u, v, n]) }
+    }
+    if (kosten.size > 20000) break
+  }
+  if (ziel < 0) return 'Zwischen diesen Enden findet sich kein freier Weg.'
+  const weg: Array<[number, number]> = []
+  for (let k: number | undefined = ziel; k !== undefined; k = vor.get(k)) { const f = Math.floor(k / 4); weg.unshift([f % W, Math.floor(f / W)]) }
+  return [A, ...weg, C]
+}
+
 /** Ein Beispiel zum Anfang: ein Ring mit zwei Bahnhöfen, Brücke über den Fluss, Tunnel durch den Berg und ein Abstellgleis */
 export function beispiel(): Brett {
   const b = leer()
