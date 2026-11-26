@@ -511,7 +511,7 @@ export function SchrankenBild({ brett, wagen }: { brett: Brett; wagen: Array<{ x
   const raus: ReactElement[] = []
   for (let j = 0; j < zeilen(brett); j++) for (let i = 0; i < spalten(brett); i++) {
     const f = brett[j][i]
-    if (!f.strasse || f.gleis?.art !== 'gerade' || f.strBruecke) continue
+    if (!f.strasse || f.gleis?.art !== 'gerade' || f.strBruecke || f.bruecke) continue
     const cx = i + 0.5, cy = j + 0.5
     const d = Math.min(9, ...wagen.map((w) => Math.hypot(w.x - cx, w.y - cy)))
     const zu = Math.max(0, Math.min(1, (SCHRANKE_AUF - d) / (SCHRANKE_AUF - SCHRANKE_ZU)))

@@ -83,7 +83,7 @@ function wendeweg(i: number, j: number, ein: number): Weg {
 }
 
 /** ein Bahnübergang: Strasse über eine Gerade, ohne Strassenbrücke */
-const uebergang = (f?: Feld) => !!f?.strasse && f.gleis?.art === 'gerade' && !f.strBruecke
+const uebergang = (f?: Feld) => !!f?.strasse && f.gleis?.art === 'gerade' && !f.strBruecke && !f.bruecke
 
 export class Bus {
   i: number; j: number; weg: Weg; s: number; tempo = 0; halt = 0; wartet = 0

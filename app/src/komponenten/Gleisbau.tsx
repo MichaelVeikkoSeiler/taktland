@@ -124,9 +124,17 @@ const MAL_WERKZEUGE: Array<Werkzeug['art']> = ['grund', 'fluss', 'strasse', 'str
 function malenAnwenden(b: Brett, felder: Array<[number, number]>, w: Werkzeug): Brett {
   const neu = b.map((z) => z.map((f) => ({ ...f })))
   let geaendert = false
-  for (const [i, j] of felder) {
+  // eine Strasse kreuzt ein Gleis nur quer: liegt die Gerade längs zum Weg, bleibt das Feld ohne Strasse
+  const laengs = (k: number) => {
+    const [i, j] = felder[k], g = neu[j]?.[i]?.gleis
+    if (!g || g.art !== 'gerade') return false
+    const nachbarn = [felder[k - 1], felder[k + 1]].filter(Boolean)
+    return nachbarn.some(([u]) => (u === i) === (g.dreh % 2 === 0))
+  }
+  for (const [kk, [i, j]] of felder.entries()) {
     const f = neu[j]?.[i]
     if (!f) continue
+    if (w.art === 'strasse' && laengs(kk)) continue
     if (w.art === 'grund') {
       if (f.teil || grosseKurve(f.gleis) || f.grund === w.grund) continue
       f.grund = w.grund
@@ -2017,7 +2025,11 @@ export function Gleisbau() {
       if (f.bruecke && f.gleis) {
         const d = ((f.gleis.dreh + 1) % 4) as Dreh
         setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
-      } else { const { strasse: _, ...ohne } = f; n = { ...ohne, bruecke: true, gleis: f.gleis ?? { art: 'gerade', dreh } } }
+      } else {
+        // eine Strasse darunter bleibt als Unterführung, wenn das geht
+        const m: Feld = { ...f, bruecke: true, gleis: f.gleis ?? { art: 'gerade', dreh } }
+        n = m.strasse && strasseMoeglich(m) ? ohneStrasse(m) : m
+      }
     } else if (w.art === 'tunnel') {
       if (f.grund === 'berg' && f.gleis) {
         const d = ((f.gleis.dreh + 1) % 4) as Dreh
@@ -2280,7 +2292,8 @@ export function Gleisbau() {
               unter dem Dach von Depot und Galerie blass wie bisher */}
           {wagen.flatMap((l, z) => l.slice().reverse().map((w, k) => {
             const fi = Math.floor(w.x), fj = Math.floor(w.y), f = brett[fj]?.[fi]
-            if (imTunnel(brett, w.x, w.y) || unterBruecke(f, fi, fj, w)) return null
+            // auch unter einer Galerie unsichtbar (Michael, 2026-11-26: «Alles, was in einem Tunnel drin ist, muss unsichtbar sein»)
+            if (imTunnel(brett, w.x, w.y) || unterBruecke(f, fi, fj, w) || (bauGilt(f) && f!.bau === 'galerie')) return null
             return <WagenBild key={`${z}-${k}`} nr={k + z * 7} w={w} tunnel={bauGilt(f) && f!.bau !== 'gueter'} farbe={zuege.current[z]?.art === 'gueter' ? GUETER_LOK : z ? ZUG_FARBEN[(z - 1) % ZUG_FARBEN.length] : F.karmin} />
           }))}
           {oben}

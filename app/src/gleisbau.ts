@@ -923,7 +923,9 @@ export function flussKanten(b: Brett, i: number, j: number): number[] {
  * (seit 2026-11-25, vorher nur über Land)
  */
 export function strasseMoeglich(f: Feld): string | null {
-  if (f.bruecke) return 'Auf einer Bahnbrücke hat die Strasse keinen Platz.'
+  // unter einer Bahnbrücke an Land führt die Strasse durch, als Unterführung (Michael, 2026-11-26: «Warum geht das nicht?», auf einem Viadukt)
+  if (f.bruecke) return f.gleis?.art === 'gerade' && f.grund !== 'wasser' && f.grund !== 'berg' && !f.fluss ? null
+    : 'Unter einer Bahnbrücke führt eine Strasse nur an Land und unter einer Geraden durch.'
   if (f.teil || (f.gleis && f.gleis.art !== 'gerade')) return 'Ein Bahnübergang geht nur über eine Gerade.'
   if (f.gleis && (f.grund === 'wasser' || f.grund === 'berg' || f.fluss)) return 'Über einem Gleis im Tunnel oder auf einer Brücke hat die Strasse keinen Platz.'
   return null
@@ -938,6 +940,8 @@ export function strasseGerade(b: Brett, i: number, j: number) {
   const k = strassenKanten(b, i, j)
   return k.length === 2 && Math.abs(k[0] - k[1]) === 2
 }
+/** eine Strasse unter einer Bahnbrücke durch: Unterführung, ohne Bahnübergang */
+export const strasseUnterBruecke = (f?: Feld) => !!f?.strasse && !!f.bruecke && f.gleis?.art === 'gerade'
 /** eine Strasse über ein Gleis als Brücke: sie führt darüber, ohne Bahnübergang */
 export const strasseUeberGleis = (f?: Feld) => !!f?.strasse && !!f.strBruecke && f.gleis?.art === 'gerade'
 /** eine Strasse als Brücke: über Wasser, einen Fluss oder als Strassenbrücke gesetzt */
