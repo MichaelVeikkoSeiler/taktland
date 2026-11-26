@@ -774,9 +774,20 @@ export function naechstes(b: Brett, s: Stueck): Stueck | null {
 function erstesStueck(b: Brett, i: number, j: number): Stueck | null {
   const g = b[j][i].gleis
   if (!g) return null
-  if (grosseKurve(g)) { const G = grossGeometrie(i, j, g); return grossStueck(b, b[j][i], i, j, G.anfang.kante) }
-  const [a, c] = wege(g)[0]
-  return { i, j, ein: a, aus: c }
+  let s: Stueck | null
+  if (grosseKurve(g)) { const G = grossGeometrie(i, j, g); s = grossStueck(b, b[j][i], i, j, G.anfang.kante) } else { const [a, c] = wege(g)[0]; s = { i, j, ein: a, aus: c } }
+  if (!s) return null
+  // der Zug fährt zuerst dorthin, wo mehr Gleis liegt, nicht in den Prellbock (Michael, 2026-11-26: «wenn ich den Zug auf das Gleis platziere, dann fährt er zuerst
+  // Richtung Prellbock und dann erst hinaus»)
+  const r = umgekehrt(s)
+  return voraus(b, r) > voraus(b, s) ? r : s
+}
+/** wie viele Stücke vor diesem noch kommen, bis das Gleis endet, höchstens VORAUS_HOECHSTENS (ein Ring zählt so viel) */
+const VORAUS_HOECHSTENS = 60
+function voraus(b: Brett, s: Stueck): number {
+  let x = naechstes(b, s), n = 0
+  while (x && n < VORAUS_HOECHSTENS) { n++; x = naechstes(b, x) }
+  return n
 }
 
 /**
@@ -919,6 +930,8 @@ export class Zug {
   personenwagen() { return this.fz.filter((v) => (v.typ ? v.typ === 'person' : this.art !== 'gueter' && v.t !== 'lok')).length }
   /** ob der Halt an einem Bahnhof ist (nicht das Umkehren) */
   private amBahnhof = false
+  /** nach dem Halt gleich umkehren: dahinter endet das Gleis ohne weiteren Halt (Endbahnhof) */
+  private wendenNachHalt = false
   /** zählt hoch, wenn der Zug PFIFF_VOR_S vor der Abfahrt an einem Bahnhof steht; die Darstellung pfeift dann */
   pfiffe = 0
   /** zählt hoch bei jedem Halt an einem Bahnhof, haltFeld ist dessen Feld (für die Fahrgäste) */
@@ -1155,6 +1168,9 @@ export class Zug {
     if (this.halt > 0) {
       if (this.amBahnhof && this.halt > PFIFF_VOR_S && this.halt - dt <= PFIFF_VOR_S) this.pfiffe++
       this.halt -= dt
+      // am Endbahnhof kehrt der Zug nach dem Halt um, statt erst in den Prellbock zu fahren (Michael, 2026-11-26: «Auf dem Ziel, wenn er dort umkehrt, fährt er
+      // auch zuerst in den Prellbock und dann erst zurück»)
+      if (this.halt <= 0 && this.wendenNachHalt) { this.wendenNachHalt = false; this.umkehren(); this.halt = 0 }
       return
     }
     // ohne Fahrleitung rollt ein Stromzug aus und bleibt stehen
@@ -1174,7 +1190,9 @@ export class Zug {
       const amBf = istBahnhof(b[s.j][s.i].gleis)
       const haltHier = this.art === 'gueter' ? gueterGilt(b[s.j][s.i]) : this.art === 'mix' ? amBf || gueterGilt(b[s.j][s.i]) : amBf
       if (!s.gross && haltHier && vorher < mitte && vorher + rest >= mitte && (!amBf || !weiterImBahnhof())) {
-        this.kopf = mitte; this.halt = Math.max(HALT_S, this.taktWarten?.(`${s.i},${s.j}`) ?? 0); this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`; return
+        this.kopf = mitte; this.halt = Math.max(HALT_S, this.taktWarten?.(`${s.i},${s.j}`) ?? 0); this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`
+        this.wendenNachHalt = this.sackgasse(b, s)
+        return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
       rest -= l - vorher
@@ -1202,6 +1220,21 @@ export class Zug {
       this.kuerzen()
       if (!this.diesel() && ohneStromBei(b, n)) this.stromlos = true
     }
+  }
+
+  /** ob das Gleis hinter diesem Halt endet, ohne dass noch ein Halt für diesen Zug oder ein abgestellter Wagen kommt (so, wie die Weichen jetzt stehen) */
+  private sackgasse(b: Brett, s: Stueck): boolean {
+    let x = naechstes(b, s)
+    for (let n = 0; n < VORAUS_HOECHSTENS; n++) {
+      if (!x) return true
+      if (!x.gross) {
+        const f = b[x.j][x.i], bf = istBahnhof(f.gleis), gs = gueterGilt(f)
+        if (this.art === 'gueter' ? gs : this.art === 'mix' ? bf || gs : bf) return false
+        if (f.wagen && wagenGilt(f)) return false
+      }
+      x = naechstes(b, x)
+    }
+    return false
   }
 
   /** Punkt d Einheiten hinter der Spitze */
