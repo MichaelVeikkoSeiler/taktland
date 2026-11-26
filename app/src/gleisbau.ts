@@ -48,6 +48,8 @@ export const grosseKurve = (g?: Gleis) => (g?.art === 'bogen2' ? 2 : g?.art === 
 export interface Gleis { art: GleisArt; dreh: Dreh; /** nur Weiche: 0 gerade, 1 und 2 abzweigend */ stellung?: 0 | 1 | 2 }
 /** teil: das Feld liegt unter einer grossen Kurve, die im Feld [i, j] (ihrem Anfang) steht */
 export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /** eine Strasse im Feld; kreuzt sie eine Gerade, ist es ein Bahnübergang */ strasse?: true
+  /** seit 2026-11-26: wohin die Strasse führt, je Kante ein Bit (1 Nord, 2 Ost, 4 Süd, 8 West), so wie gezogen; fehlt es, verbindet sie sich von selbst */
+  strKanten?: number
   /** eine Brücke, auch ohne Wasser darunter (seit 2026-11-24; Michael: «Beim Brückenbau kein See mehr automatisch darunter») */ bruecke?: true
   /** ein Fluss durch das Feld (seit 2026-11-24): fliesst zu Nachbarn mit Fluss oder Wasser; ein Gleis darüber ist eine Brücke */
   fluss?: true
@@ -406,7 +408,7 @@ export function brettCode(b: Brett): string {
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], zugStarts: string[] = [], anlagen: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], zugStarts: string[] = [], anlagen: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = [], strVerb: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
     if (f.fluss) fluesse.push(`${i}.${j}`)
     if (f.strasse && f.haltestelle) halte.push(`${i}.${j}`)
@@ -414,6 +416,7 @@ export function brettCode(b: Brett): string {
     if (f.anlage && gueterGilt(f)) anlagen.push(`${i}.${j}.${namenEsc(f.anlage)}`)
     if (f.strasse && f.wende) wenden.push(`${i}.${j}`)
     if (f.strasse && f.strBruecke) strBruecken.push(`${i}.${j}`)
+    if (f.strasse && f.strKanten !== undefined) strVerb.push(`${i}.${j}.${f.strKanten}`)
     if (f.knoten && istBahnhof(f.gleis)) knoten.push(`${i}.${j}`)
     if (f.hang !== undefined) haenge.push(`${i}.${j}.${f.hang}`)
     if (f.ohneStrom && f.gleis) stromlos.push(`${i}.${j}`)
@@ -430,6 +433,7 @@ export function brettCode(b: Brett): string {
     + (knoten.length ? `~k${knoten.join('_')}` : '') + (haenge.length ? `~h${haenge.join('_')}` : '') + (stromlos.length ? `~s${stromlos.join('_')}` : '')
     + (halte.length ? `~y${halte.join('_')}` : '') + (wenden.length ? `~e${wenden.join('_')}` : '') + (strBruecken.length ? `~r${strBruecken.join('_')}` : '')
     + (zugStarts.length ? `~t${zugStarts.join('_')}` : '') + (anlagen.length ? `~m${anlagen.join('_')}` : '')
+    + (strVerb.length ? `~v${strVerb.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -446,6 +450,7 @@ export function brettAusCode(c: string): Brett | null {
   for (const teil of weitere) {
     if (teil.startsWith('m')) for (const e of teil.slice(1).split('_')) { const [i, j, n] = e.split('.'); try { if (b[+j]?.[+i] && n) b[+j][+i].anlage = decodeURIComponent(n).slice(0, 40) } catch { /* ungültig */ } }
     if (teil.startsWith('t')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i] && (c === 'p' || c === 'g')) b[+j][+i].zugStart = c }
+    if (teil.startsWith('v')) for (const e of teil.slice(1).split('_')) { const [i, j, m] = e.split('.').map(Number); if (b[j]?.[i]?.strasse && m >= 0 && m <= 15) b[j][i].strKanten = m }
     if (teil.startsWith('y')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].haltestelle = true }
     if (teil.startsWith('e')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].wende = true }
     if (teil.startsWith('r')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].strBruecke = true }
@@ -867,21 +872,43 @@ export function strassenKanten(b: Brett, i: number, j: number): number[] {
   const f = b[j]?.[i]
   if (!f?.strasse || f.teil || (f.gleis && f.gleis.art !== 'gerade')) return []
   if (f.gleis?.art === 'gerade') return f.gleis.dreh % 2 === 0 ? [1, 3] : [0, 2]
-  // zwei parallele Strassen nebeneinander verbinden sich nicht quer: läuft dieses Feld und das Nachbarfeld quer zur Kante je gerade durch, gibt es dort
-  // keine Verbindung (Michael, 2026-11-26: «Wenn ich Straßen baue und zwei Straßen parallel zueinander laufen möchte … entsteht immer ein Gitter. Das ist
-  // nicht nötig»); Kreuzungen, Einmündungen und Kurven bleiben
-  const str = (u: number, v: number) => !!b[v]?.[u]?.strasse
-  const durch = (u: number, v: number, quer: number) => str(u + DX[quer], v + DY[quer]) && str(u - DX[quer], v - DY[quer])
-  const k = [0, 1, 2, 3].filter((k) => {
-    const n = b[j + DY[k]]?.[i + DX[k]]
-    if (!n || !(n.strasse || n.grund === 'dorf')) return false
-    const quer = (k + 1) % 4
-    return !(n.strasse && durch(i, j, quer) && durch(i + DX[k], j + DY[k], quer))
-  })
+  const k = strassenNachbarn(b, i, j)
   // ein Wendeplatz endet hier: nur zu den Nachbarn
   if (f.wende) return k.length ? k : [2]
   if (k.length === 1) k.push((k[0] + 2) % 4)
   return k.length ? k : [1, 3]
+}
+/**
+ * die Kanten, an denen die Strasse wirklich an eine andere anschliesst. Seit 2026-11-26 so, wie gezogen (Michael: «Ja, Strassen genau so verbinden, wie ich
+ * sie ziehe»): hat ein Feld strKanten, gelten sie, und eine Verbindung braucht beide Seiten, wo beide sie haben; ohne (ältere Bretter, getippte Felder)
+ * verbindet sich die Strasse mit den Nachbarn, aber zwei parallele, gerade durchlaufende nicht quer
+ */
+export function strassenNachbarn(b: Brett, i: number, j: number): number[] {
+  const f = b[j]?.[i]
+  if (!f?.strasse) return []
+  const str = (u: number, v: number) => !!b[v]?.[u]?.strasse
+  const durch = (u: number, v: number, quer: number) => str(u + DX[quer], v + DY[quer]) && str(u - DX[quer], v - DY[quer])
+  return [0, 1, 2, 3].filter((k) => {
+    const u = i + DX[k], v = j + DY[k], n = b[v]?.[u]
+    if (!n) return false
+    const ich = f.strKanten !== undefined ? !!(f.strKanten & (1 << k)) : null
+    if (!n.strasse) return n.grund === 'dorf' && ich !== false
+    const zurueck = (k + 2) % 4
+    const er = n.gleis?.art === 'gerade' ? (n.gleis.dreh % 2 === 0) === (zurueck % 2 === 1)
+      : n.teil || n.gleis ? false : n.strKanten !== undefined ? !!(n.strKanten & (1 << zurueck)) : null
+    if (ich === false || er === false) return false
+    if (ich || er) return true
+    const quer = (k + 1) % 4
+    return !(durch(i, j, quer) && durch(u, v, quer))
+  })
+}
+/** eine Strasse von (i, j) in Richtung k mit dem Nachbarn verbinden, auf beiden Seiten; ein Feld ohne strKanten behält dabei seine Verbindungen */
+export function strasseVerbinden(b: Brett, i: number, j: number, k: number) {
+  const u = i + DX[k], v = j + DY[k], f = b[j]?.[i], n = b[v]?.[u]
+  if (!f?.strasse || !n?.strasse) return
+  const explizit = (x: Feld, xi: number, xj: number) => { if (x.strKanten === undefined) x.strKanten = strassenNachbarn(b, xi, xj).reduce((m, kk) => m | (1 << kk), 0) }
+  explizit(f, i, j); explizit(n, u, v)
+  f.strKanten! |= 1 << k; n.strKanten! |= 1 << ((k + 2) % 4)
 }
 /** die Kanten, an denen ein Fluss das Feld verlässt: zu Nachbarn mit Fluss oder Wasser; allein oder an einem Ende quer durch */
 export function flussKanten(b: Brett, i: number, j: number): number[] {
@@ -903,7 +930,7 @@ export function strasseMoeglich(f: Feld): string | null {
 }
 /** das Feld ohne Strasse samt Haltestelle, Wendeplatz und Strassenbrücke */
 export function ohneStrasse(f: Feld): Feld {
-  const { strasse: _s, haltestelle: _h, wende: _w, strBruecke: _b, ...o } = f
+  const { strasse: _s, haltestelle: _h, wende: _w, strBruecke: _b, strKanten: _k, ...o } = f
   return o
 }
 /** ob die Strasse des Felds gerade durchgeht (für eine Haltestelle) */

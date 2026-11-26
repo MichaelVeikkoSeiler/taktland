@@ -2,7 +2,7 @@ import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, endenWeg, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, endenWeg, strassenNachbarn, strasseVerbinden, DXY, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
   WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, gueterGilt, zugStartGilt, ohneStrasse, strasseGerade, ueberWasser, wagenGilt, knotenGruppen, HALT_S, brettRand, MIN_SEITE, MAX_BREITE, MAX_HOEHE,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
@@ -139,11 +139,21 @@ function malenAnwenden(b: Brett, felder: Array<[number, number]>, w: Werkzeug): 
       f.fluss = true; geaendert = true
     } else if (w.art === 'strasse') {
       if (f.strasse || strasseMoeglich(f)) continue
-      f.strasse = true; geaendert = true
+      // neu gezogene Strassen führen nur dorthin, wohin gezogen wird (unten verbunden)
+      f.strasse = true; f.strKanten = 0; geaendert = true
     } else if (w.art === 'strom') {
       if (f.ohneStrom || !(f.gleis || f.teil)) continue
       f.ohneStrom = true; geaendert = true
     }
+  }
+  // Strassen genau so verbinden, wie gezogen (Michael, 2026-11-26): je zwei Felder hintereinander auf dem Weg
+  if (w.art === 'strasse') for (let k = 1; k < felder.length; k++) {
+    const [ai, aj] = felder[k - 1], [ci, cj] = felder[k]
+    const r = [0, 1, 2, 3].find((d) => ai + DXY[0][d] === ci && aj + DXY[1][d] === cj)
+    if (r === undefined || !neu[aj]?.[ai]?.strasse || !neu[cj]?.[ci]?.strasse) continue
+    const vorher = JSON.stringify([neu[aj][ai].strKanten, neu[cj][ci].strKanten])
+    strasseVerbinden(neu, ai, aj, r)
+    if (JSON.stringify([neu[aj][ai].strKanten, neu[cj][ci].strKanten]) !== vorher) geaendert = true
   }
   return geaendert ? neu : b
 }
@@ -1979,7 +1989,14 @@ export function Gleisbau() {
       if (f.strasse) { neu(i, j, ohneStrasse(f)); knopfTon(false); return }
       const nein = strasseMoeglich(f)
       if (nein) { setMeldung(nein); return }
-      neu(i, j, { ...f, strasse: true }); knopfTon(true)
+      // ein getipptes Feld schliesst an Strassenenden daneben an, nicht an durchgehende Strassen (sonst entstünde wieder ein Gitter)
+      const b1 = brett.map((z) => z.map((x) => ({ ...x })))
+      b1[j][i] = { ...f, strasse: true, strKanten: 0 }
+      for (let d = 0; d < 4; d++) {
+        const u = i + DXY[0][d], v = j + DXY[1][d], n = b1[v]?.[u]
+        if (n?.strasse && !n.gleis && !n.teil && strassenNachbarn(brett, u, v).length <= 1) strasseVerbinden(b1, i, j, d)
+      }
+      setBrett(b1); knopfTon(true)
       return
     }
     let n: Feld = f
