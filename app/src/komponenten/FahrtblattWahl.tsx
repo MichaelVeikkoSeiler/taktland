@@ -45,7 +45,7 @@ export function FahrtblattWahl({ index }: { index: BahnhofIndex | null }) {
                   onClick={() => {
                     window.location.hash = `#/fahrtblatt?von=${blatt.von}&nach=${blatt.nach}${blatt.ueber ? `&ueber=${blatt.ueber}` : ''}`
                   }}
-                  className="w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40">
+                  className="w-full rounded-lg bg-sbb-red px-4 py-3 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40 md:w-[calc((100%-2rem)/3)]">
             Fahrtblatt erstellen
           </button>
           {blatt.von !== null && blatt.von === blatt.nach && (
