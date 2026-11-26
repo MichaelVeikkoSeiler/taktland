@@ -104,7 +104,7 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
         <p className="text-sm text-sbb-metal dark:text-sbb-storm">{text}</p>
         <p className="text-sm font-bold">{besitz ? `${besitz} im Depot` : 'keiner im Depot'}</p>
       </div>
-      <button type="button" disabled={betrieb.geld < preis} onClick={kauf} className={`${KNOPF_WEISS} ml-auto shrink-0 text-sm`}>Kaufen {chf(preis)}</button>
+      <button type="button" disabled={betrieb.geld < preis} aria-label={`${titel} kaufen für ${chf(preis)}`} onClick={kauf} className={`${KNOPF_WEISS} ml-auto shrink-0 text-sm`}>{chf(preis)}</button>
     </li>
   )
   return (
@@ -113,7 +113,7 @@ function Depot({ betrieb, setBetrieb }: { betrieb: Betrieb; setBetrieb: (b: Betr
       <div className="kachel p-3 text-sm leading-relaxed">
         <p><span className="font-bold">So entsteht ein Zug:</span> eine Lok zieht Wagen, jede Lok nur so viele, wie bei ihr steht.</p>
         <p className="mt-1"><span className="font-bold">Personenwagen:</span> 4 Plätze für Fahrgäste. <span className="font-bold">Güterwagen:</span> trägt 1 Ladung, und nur das Gut, für das er gebaut ist.</p>
-        <p className="mt-1">Gekauft steht alles hier im Depot. Im Auftrag tippst du mit «Zug einsetzen» auf ein Gleis und hängst Lok und Wagen an. Fehlt ein Wagen, kannst du ihn auch dort kaufen.</p>
+        <p className="mt-1">Gekauft steht alles hier im Depot. Im Auftrag tippst du mit «Zug einsetzen» auf ein Gleis und hängst Lok und Wagen an. Fehlt ein Wagen oder eine Lok, kaufst du sie auch dort mit einem Tipp auf den Preis.</p>
       </div>
       <section>
         <h3 className="font-bold">Loks</h3>
@@ -245,7 +245,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
                     <span className="opacity-45"><FahrzeugBild lok={l} /></span>
                     <span className="min-w-0 flex-1 leading-tight text-sbb-metal dark:text-sbb-storm"><span className="font-bold">{LOKS[l].name}</span>
                       <span className="block">{text}{besitzt ? ' · fährt schon' : ''}</span></span>
-                    <button type="button" disabled={betrieb.geld < LOKS[l].preis} onClick={() => lokKaufen(l)} className={`${KNOPF_WEISS} shrink-0 px-3 text-sm`}>Kaufen {chf(LOKS[l].preis)}</button>
+                    <button type="button" disabled={betrieb.geld < LOKS[l].preis} aria-label={`${LOKS[l].name} kaufen für ${chf(LOKS[l].preis)}`} onClick={() => lokKaufen(l)} className={`${KNOPF_WEISS} shrink-0 px-3 text-sm`}>{chf(LOKS[l].preis)}</button>
                   </div>
                 )}
               </li>
@@ -264,7 +264,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
                   <span className="block text-sbb-metal dark:text-sbb-storm">{WAGEN_ARTEN[w].text} · {n(w) ? (frei > 0 ? `${n(w)} angehängt, ${frei} weitere im Depot` : `${n(w)} angehängt`) : frei > 0 ? `${frei} im Depot` : 'keiner im Depot'}</span>
                 </span>
                 {frei <= 0 && !n(w) ? (
-                  <button type="button" disabled={betrieb.geld < WAGEN_ARTEN[w].preis} onClick={() => kaufen(w)} className={`${KNOPF_WEISS} text-sm`}>Kaufen {chf(WAGEN_ARTEN[w].preis)}</button>
+                  <button type="button" disabled={betrieb.geld < WAGEN_ARTEN[w].preis} aria-label={`${WAGEN_ARTEN[w].name} kaufen für ${chf(WAGEN_ARTEN[w].preis)}`} onClick={() => kaufen(w)} className={`${KNOPF_WEISS} shrink-0 px-3 text-sm`}>{chf(WAGEN_ARTEN[w].preis)}</button>
                 ) : (
                   <>
                     <button type="button" aria-label={`${WAGEN_ARTEN[w].name} weniger`} disabled={!n(w)} onClick={() => { const k = wagen.lastIndexOf(w); setWagen((l) => l.filter((_, m) => m !== k)) }} className={`${KNOPF_WEISS} w-11 px-0`}>−</button>
