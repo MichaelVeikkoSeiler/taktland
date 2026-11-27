@@ -89,7 +89,7 @@ function DreiDLand() {
             Karte weglassen») */}
         <div className="-mb-6 px-4 pt-8">
           <Auftakt bild={{ hell: auftaktHell, dunkel: auftaktDunkel, breite: 1536, hoehe: 1024, alt: t('Illustration: Jemand mit XR-Brille und zwei Controllern blickt auf ein quadratisches Modell einer Landschaft mit zwei Seen, Dörfern und Wald auf einem dunklen Sockel; darauf zwei rot-weisse Windhosen, im Hintergrund Regen über Seen und Hügeln.')}}
-                   oben={<img src="./logo.png" alt="3dland" className="absolute right-3 top-3 size-14 rounded-xl shadow-md sm:right-5 sm:top-5 sm:size-20" />} />
+                   randlos oben={<img src="./logo.png" alt="3dland" className="absolute right-3 top-3 size-14 rounded-xl shadow-md sm:right-5 sm:top-5 sm:size-20" />} />
         </div>
         <main>
           <Schweiz3D eigeneSeite />

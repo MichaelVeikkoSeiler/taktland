@@ -278,6 +278,10 @@ details.klapp[open] > summary::after { rotate: 180deg; }
   }
 }
 
+/* Auftaktbild und Modell der Virtuellen Schweiz reichen am Desktop mit 100vw über die Spalte hinaus; 100vw zählt die Bildlaufleiste mit,
+   das Stück darunter wird abgeschnitten statt waagrecht zu rollen */
+html { overflow-x: clip; }
+
 /* Auf dem Desktop ist die Spalte breiter (App.tsx); Fliesstext bleibt lesbar schmal */
 @media (min-width: 80rem) {
   p { max-width: 48rem; }

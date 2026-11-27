@@ -67,7 +67,11 @@ export interface AuftaktBild {
 /** Die Vorschau überlebt den Wechsel des Bereichs, weil sie ausserhalb der
  *  Komponente steht; sie endet mit dem Zeitablauf oder mit dem Knopf. */
 let vorschau = false
-export function Auftakt({ bild, oben }: { bild: AuftaktBild; oben?: ReactNode }) {
+/** randlos: am Desktop über die ganze Breite des Fensters statt der Spalte (Virtuelle Schweiz, 3dland.ch; Michael, 2026-11-27) */
+/** über die ganze Breite des Fensters: die Spalte steht in der Mitte, also rückt der Rand um die halbe Differenz hinaus */
+export const RANDLOS = 'xl:mx-[calc(50%-50vw)]'
+
+export function Auftakt({ bild, oben, randlos }: { bild: AuftaktBild; oben?: ReactNode; randlos?: boolean }) {
   // beide Hooks immer aufrufen, auch am Tag (Reihenfolge der Hooks)
   const tag = useTag()
   const geraetDunkel = useDunkel()
@@ -93,7 +97,7 @@ export function Auftakt({ bild, oben }: { bild: AuftaktBild; oben?: ReactNode })
   const beschriftung = dunkel ? tr('Kurz das Tagbild zeigen') : tr('Kurz das Nachtbild zeigen')
 
   return (
-    <div className="relative -mx-4 -mt-8 mb-6">
+    <div className={`relative -mx-4 -mt-8 mb-6 ${randlos ? RANDLOS : ''}`}>
       <img
         src={dunkel ? bild.dunkel : bild.hell} width={bild.breite} height={bild.hoehe} alt={bild.alt}
         className="block h-auto w-full xl:h-100 xl:object-cover"

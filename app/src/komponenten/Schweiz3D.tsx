@@ -1444,8 +1444,9 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         className={voll ? 'fixed inset-0 z-[80] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a]'
         // 25 breit, 28 hoch (Michael, 2026-10-25: «im Format 5 Einheiten breit, 7 Einheiten hoch», dann «20% weniger hoch»), auf breiten
         // Bildschirmen so schmal, dass es in 85 % der Höhe passt; bis an den Rand der Seite, ohne Rand und runde Ecken (Michael, 2026-10-25: «Weissen Rahmen um
-        // die Karte weglassen. Kartenbild bis an den Rand»), auf 3dland.ch gleich unter dem Auftaktbild
-        : `relative -mx-4 ${eigeneSeite ? '' : 'mt-2'} aspect-[25/28] w-[calc(100%+2rem)] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a] sm:mx-auto sm:w-full sm:max-w-[calc(85vh*25/28)]`}>
+        // die Karte weglassen. Kartenbild bis an den Rand»), auf 3dland.ch gleich unter dem Auftaktbild; am Desktop seit 2026-11-27 über die ganze Breite des Fensters
+        // und 85 % der Höhe hoch (Michael: «Bitte auf dem Desktoop das Auftaktbild und das 3D-Bild auf die ganze Breite skalieren»)
+        : `relative -mx-4 ${eigeneSeite ? '' : 'mt-2'} aspect-[25/28] w-[calc(100%+2rem)] overflow-hidden bg-[#cfe3f5] dark:bg-[#0d1b2a] sm:mx-auto sm:w-full sm:max-w-[calc(85vh*25/28)] xl:mx-[calc(50%-50vw)] xl:aspect-auto xl:h-[85vh] xl:w-auto xl:max-w-none`}>
         {aktuell ? (
           <Ansicht b={aktuell} stufe={stufe} wahl={wahl}
                    ansichtTick={ansichtTick}
