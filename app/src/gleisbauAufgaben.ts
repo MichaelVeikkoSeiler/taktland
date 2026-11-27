@@ -263,7 +263,7 @@ const hatZug = (art: 'p' | 'g') => (x: FuehrungsLage) => x.b.some((z) => z.some(
 const schuppenVerbunden = (x: FuehrungsLage) => { const sf = schuppenFelder(x.b); return sf.length >= 2 && sf.slice(1).every((k) => wegGibt(x.b, new Set([sf[0]]), new Set([k]))) }
 const LINIE: Fuehrung = { text: 'Wähle unten im Reiter «Gleise» das Werkzeug «Linie».', werkzeug: 'Linie' }
 const zugWaehlen = (art: 'p' | 'g'): Fuehrung => ({ text: `Tippe unten auf den Reiter «Züge» und wähle «${art === 'p' ? 'Personenzug' : 'Güterzug'}».`, werkzeug: art === 'p' ? 'Personenzug' : 'Güterzug' })
-const FAHREN = (text: string): Fuehrung => ({ text: `Drück oben rechts ▶ «Fahren». ${text}`, fertig: (x) => x.faehrt || (x.stand?.fahrgaeste ?? 0) > 0 || (x.stand?.gueter ?? 0) > 0 })
+const FAHREN = (text: string): Fuehrung => ({ text: `Tippe rechts unter dem Brett auf den roten Knopf ▶ «Fahren». ${text}`, fertig: (x) => x.faehrt || (x.stand?.fahrgaeste ?? 0) > 0 || (x.stand?.gueter ?? 0) > 0 })
 const FUEHRUNG: Fuehrung[][] = [
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Seewil', 'Bergau')(x) },
     { text: 'Zieh mit dem Finger von Seewil nach Bergau, Feld für Feld. Gerade Stücke und Kurven legt die Linie von selbst. Ein Bahnhof hat nur links und rechts ein Gleis. Rote Punkte zeigen Gleise, die noch offen enden.', felder: [[1, 1], [5, 1]], fertig: verbunden('Seewil', 'Bergau') }],

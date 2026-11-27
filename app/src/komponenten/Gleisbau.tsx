@@ -2623,7 +2623,7 @@ export function Gleisbau() {
                     })}
                   </p>
                 ) : <p className="font-bold">{pause ? 'Pause.' : 'Der Zug fährt.'}</p>}
-                <p className="text-sbb-metal dark:text-sbb-storm">{pause ? 'Pause: oben ▶ fährt weiter. ' : ''}Ein Tipp auf eine Weiche oder Ampel stellt sie, ein Tipp auf einen Zug zeigt Wagen und Richtung. Zum Bauen anhalten.{takt > 0 && !knotenSet.size ? ' Für den Takt fehlt ein Knoten: unter Bauwerke «Knoten» auf einen Bahnhof.' : ''}</p>
+                <p className="text-sbb-metal dark:text-sbb-storm">{pause ? 'Pause: rechts unter dem Brett ▶ fährt weiter. ' : ''}Ein Tipp auf eine Weiche oder Ampel stellt sie, ein Tipp auf einen Zug zeigt Wagen und Richtung. Zum Bauen anhalten.{takt > 0 && !knotenSet.size ? ' Für den Takt fehlt ein Knoten: unter Bauwerke «Knoten» auf einen Bahnhof.' : ''}</p>
               </div>
             ) : (
               <>
