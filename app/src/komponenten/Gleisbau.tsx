@@ -105,10 +105,12 @@ const STRASSEN: Array<{ w: Werkzeug; text: string }> = [
 ]
 
 /** die Werkzeuge unten in Reitern; die Züge seit 2026-11-26 in einem eigenen (Michael: «Bitte die Züge in einer separaten Kategorie auswählbar und nicht unter Gleise») */
+// am Schluss jeder Kategorie «Entfernen» (Michael, 2026-11-27: «es sollte unten bei jeder Element-Kategorie am Schluss ein «Entfernen» Element geben»)
+const ENTFERNEN = { w: { art: 'weg' } as Werkzeug, text: 'Entfernen' }
 const GRUPPEN = [
-  { titel: 'Gleise', l: GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'strom' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')) },
+  { titel: 'Gleise', l: [...GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'strom' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')), ENTFERNEN] },
   { titel: 'Züge', l: GLEISE.filter((x) => x.w.art === 'zug' || x.w.art === 'wagen') },
-  { titel: 'Bauwerke', l: GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau', 'knoten'].includes(x.w.art)) },
+  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau', 'knoten'].includes(x.w.art)), ENTFERNEN] },
   { titel: 'Strasse', l: STRASSEN },
   { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
 ]
