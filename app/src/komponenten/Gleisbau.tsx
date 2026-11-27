@@ -2258,6 +2258,9 @@ export function Gleisbau() {
     if (l.some((x) => x.art !== 'person') && !gut) setMeldung('Für Ladungen braucht der Güterzug mindestens zwei Güterschuppen (unter Bauwerke «Güter»).')
     gutRef.current = gut; gutHalte.current = new Map(); setLadungen(gut ? { ...gut.warten } : null)
     setStand({ fahrgaeste: 0, gueter: 0 })
+    // jede Fahrt beginnt die Prüfung neu, so kommt «Geschafft!» auch, wenn die Aufgabe schon einmal gelöst war (Michael, 2026-11-27: «Kann es sein dass
+    // der Auftrag nie aufhört?»)
+    setErgebnis(null); setGeloest(false)
     fahrtStart.current = brett
     // im Taktfahrplan: an Knoten bis zur nächsten Taktzeit warten; treffen sich Züge zur selben Abfahrt, ist das ein Anschluss
     spielSek.current = 0
