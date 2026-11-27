@@ -171,7 +171,7 @@ const schuppenFelder = (b: Brett) => b.flatMap((z, j) => z.flatMap((f, i) => (gu
  * eine Transportaufgabe: die Bahnhöfe und Güterschuppen verbunden, die nötigen Züge gesetzt (für Ladungen ein Güterzug; ohne gesetzte Züge fahren
  * Personenzüge), dann während der Fahrt so viele Fahrgäste und Ladungen ans Ziel
  */
-function transport(ziel: Partial<Transport>) {
+export function transport(ziel: Partial<Transport>) {
   const pruefen = (b: Brett, stand?: Transport) => {
     const bf = [...bahnhofFelder(b)]
     for (let k = 1; k < bf.length; k++) if (!wegGibt(b, bf[0][1], bf[k][1])) return { ok: false, text: `Noch führt kein Gleis von Bahnhof ${bf[0][0]} nach ${bf[k][0]}.` }

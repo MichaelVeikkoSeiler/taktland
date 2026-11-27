@@ -7,7 +7,9 @@ import {
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
-import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheZuruecksetzen, reiheGeloestMerken } from '../gleisbauAufgaben'
+import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheZuruecksetzen, reiheGeloestMerken, transport } from '../gleisbauAufgaben'
+import { eigenAlsAufgabe, eigenLesen } from '../gleisbauEigen'
+import { EigenerAuftragBlatt } from './GleisbauEigen'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
@@ -1264,6 +1266,8 @@ export function Gleisbau() {
   const [meldung, setMeldung] = useState<string | null>(null)
   // die neue Oberfläche (Michael, 2026-11-23): Menü, Reiter der Werkzeuge, Ziel der Aufgabe auf- und zugeklappt, Karte «Geschafft», Zoom
   const [menu, setMenu] = useState(false)
+  // das Blatt «Als Auftrag teilen» (seit 2026-11-27)
+  const [eigenBlatt, setEigenBlatt] = useState(false)
   const [reiter, setReiter] = useState('Gleise')
   const [zielOffen, setZielOffen] = useState(false)
   const [geloest, setGeloest] = useState(false)
@@ -1554,6 +1558,10 @@ export function Gleisbau() {
       const b = e ? brettAusCode(e.code) : null
       if (e && b) { setOffen(e.id); setBrettRoh(b); setVerlauf([]); setAufgabe(null); setAnsicht('brett'); return }
       setOffen(null)
+      // ein eigener Auftrag aus einem Link (seit 2026-11-27)
+      const eig = q.has('eigen') ? eigenLesen(q) : null
+      if (q.has('eigen') && !eig) { setAufgabe(null); setAnsicht('liste'); setMeldung('Der Link enthält keinen gültigen Auftrag.'); return }
+      if (eig) { setAnsicht('aufgaben'); aufgabeWaehlen(eigenAlsAufgabe(eig, transport)); return }
       const aid = q.get('aufgabe'), a = aid ? AUFGABEN.find((x) => x.id === aid) : null
       if (a && !reiheOffen(a, fortschrittLesen())) { setAufgabe(null); setAnsicht('aufgaben'); return }
       if (a) { setAnsicht('aufgaben'); aufgabeWaehlen(a); return }
@@ -2579,7 +2587,8 @@ export function Gleisbau() {
     : 'bg-white hover:bg-sbb-milk dark:bg-sbb-midnight dark:hover:bg-sbb-iron'}`
   const rund = 'flex size-11 flex-none items-center justify-center rounded-full border border-sbb-cloud bg-white text-lg font-bold shadow-sm hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white'
   const imBrett = ansicht === 'brett' || ((ansicht === 'aufgaben' || ansicht === 'betrieb') && !!aufgabe)
-  const naechste = aufgabe && !(aufgabe as { betrieb?: Auftrag }).betrieb ? AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1] : undefined
+  // nur in der Reihe des Tutorials eine nächste Lektion (ein eigener Auftrag steht nicht darin)
+  const naechste = aufgabe && !(aufgabe as { betrieb?: Auftrag }).betrieb && AUFGABEN.includes(aufgabe) ? AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1] : undefined
   // im Bahnbetrieb nur Gleise und Züge, die Ampel bei den Zügen (Michael, 2026-11-26: «Bei den Aufgaben «Bahnbetrieb» braucht man zur Auswahl eigentlich nur
   // Gleise, Züge und sonst nichts»); Bahnhöfe und Schuppen gibt der Auftrag vor, Tunnel und Brücken entstehen mit «Linie» von selbst
   // die Ampel im Bahnbetrieb vorne nach Linie, Gerade und Kurve, sonst lag sie hinter allen Weichen ausser Sicht (Michael, 2026-11-27: «Bei den Aufträgen muss man
@@ -2923,7 +2932,7 @@ export function Gleisbau() {
               Aufgabe oder Hinweistexte direkt unter dem Brett über die volle Breite») */}
           <div className="flex flex-none items-center gap-2 px-2.5 pb-2 pt-1"
                style={{ paddingLeft: 'calc(env(safe-area-inset-left) + 10px)', paddingRight: 'calc(env(safe-area-inset-right) + 10px)' }}>
-            <button type="button" onClick={() => { window.location.hash = auftrag ? '#/gleisbau?betrieb' : aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau?frei' }} aria-label={auftrag ? 'Zurück zum Bahnbetrieb' : aufgabe ? 'Zurück zum Tutorial' : 'Zurück zu meinen Brettern'}
+            <button type="button" onClick={() => { window.location.hash = auftrag ? '#/gleisbau?betrieb' : aufgabe?.id.startsWith('eigen-') ? '#/gleisbau' : aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau?frei' }} aria-label={auftrag ? 'Zurück zum Bahnbetrieb' : aufgabe?.id.startsWith('eigen-') ? 'Zurück zur Übersicht' : aufgabe ? 'Zurück zum Tutorial' : 'Zurück zu meinen Brettern'}
                     className={rund}><span className="pfeil pfeil-links" aria-hidden="true">←</span></button>
             <p className="min-w-0 flex-1 truncate font-bold">{aufgabe ? aufgabe.titel : bretter.find((x) => x.id === offen)?.name ?? 'Brett'}</p>
             {/* die Uhr des Taktfahrplans */}
@@ -3246,11 +3255,18 @@ export function Gleisbau() {
                       {geteilt ? 'Link kopiert' : 'Link teilen'}
                     </button>
                   )}
+                  {!aufgabe && (
+                    <button type="button" disabled={faehrt} onClick={() => { setEigenBlatt(true); setMenu(false) }}
+                            className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">
+                      Als Auftrag teilen …
+                    </button>
+                  )}
                 </div>
                 <Klappe titel="So geht's" className="mt-4"><SoGehts /></Klappe>
               </div>
             </div>
           )}
+          {eigenBlatt && !aufgabe && <EigenerAuftragBlatt brett={brett} name={bretter.find((x) => x.id === offen)?.name ?? 'Brett'} zu={() => setEigenBlatt(false)} />}
           {/* entgleist: Game over (Michael, 2026-11-27: «Prellböcke sind Pflicht sonst laufen die Züge ins Feld was Game Over ist») */}
           {entgleist && faehrt && (
             <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center p-3" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 12px)' }}>
@@ -3297,6 +3313,7 @@ export function Gleisbau() {
 function SoGehts() {
   return (
     <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
+      <li>Eigener Auftrag: Im Menü eines eigenen Bretts «Als Auftrag teilen …». Das Brett ist die Ausgangslage, alles darauf bleibt für den Spieler fest. Titel, Text, Ziel (Fahrgäste, Ladungen) und auf Wunsch ein Budget für die Baukosten eingeben, dann selbst ausprobieren oder den Link an Bekannte schicken.</li>
       <li>Der Gleisbau wird weiterentwickelt. Deine Bretter bleiben erhalten, wie sie fahren und aussehen, kann sich mit neuen Funktionen ändern.</li>
       <li>Wähle unten ein Stück und tippe ein Feld an, nochmals tippen dreht es. Ein zweiter Tipp auf das Stück unten dreht es schon vor dem Legen. Mit «Linie ziehen» fährst du mit dem Finger über die Felder,
         Geraden, Kurven und Weichen entstehen von selbst.</li>
