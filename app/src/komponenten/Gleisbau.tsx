@@ -2641,12 +2641,13 @@ export function Gleisbau() {
             return (
               <div className="mx-2.5 mb-2 flex-none">
                 <p className="mb-1 text-xs font-bold text-sbb-metal dark:text-sbb-storm">Deine Züge</p>
-                <ul className="flex gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none]">
+                {/* untereinander, jedes Kärtchen über die ganze Breite (Michael, 2026-11-27: «Die Züge über statt nebeneinander») */}
+                <ul className="grid gap-1.5">
                   {l.map(({ i, j, z }, k) => {
                     const p = z ? z.wagen.filter((w) => w === 'person').length * WAGEN_ARTEN.person.plaetze : 0, g = z ? z.wagen.filter((w) => w !== 'person').length : 0
                     return (
-                      <li key={`${i},${j}`} className="flex flex-none items-center gap-2 rounded-lg bg-white px-2 py-1.5 text-[13px] shadow-sm dark:bg-sbb-charcoal">
-                        <span className="leading-tight"><span className="font-bold">Zug {k + 1}{z ? `: ${LOKS[z.lok].name}` : ''}</span>
+                      <li key={`${i},${j}`} className="flex items-center gap-2 rounded-lg bg-white px-2 py-1.5 text-[13px] shadow-sm dark:bg-sbb-charcoal">
+                        <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">Zug {k + 1}{z ? `: ${LOKS[z.lok].name}` : ''}</span>
                           <span className="block text-sbb-metal dark:text-sbb-storm">{z ? [z.wagen.length === 1 ? '1 Wagen' : `${z.wagen.length} Wagen`, p ? `${p} Plätze` : '', g ? (g === 1 ? '1 Ladung' : `${g} Ladungen`) : ''].filter(Boolean).join(', ') : brett[j][i].zugStart === 'g' ? 'Güterzug' : 'Personenzug'}</span></span>
                         {zusammenBauen && <button type="button" onClick={() => { setZugWahlFeld([i, j]); knopfTon(true) }} className="rounded-lg border border-sbb-cloud px-2 py-1 font-bold hover:border-sbb-black dark:border-sbb-iron">Ändern</button>}
                         {z && <button type="button" onClick={() => { zugWeg(i, j); setZugWartet(z); setWerkzeug({ art: 'zug', zug: 'p' }); setMeldung('Tippe aufs Gleis, wo der Zug neu stehen soll.') }}
