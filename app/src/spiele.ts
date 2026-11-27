@@ -42,7 +42,8 @@ export interface Spiel {
   bild?: { hell: string; dunkel: string; alt: string }
 }
 
-// Reihenfolge: Virtuelle Schweiz (Michael, 2026-11-07), Modellbahn, Geo, dann die übrigen (Michael, 2026-10-08)
+// Reihenfolge seit 2026-11-27 (Michael: «Bitte bei den Spielen die Reihenfolge anpassen: 1. Virtuelle Schweiz 2. Probefahren 3. Bahnhofsuche 4. Wo fahre ich?
+// 5. Fahrplan-Puzzle 6. Reisedauer 7. Duell 8. Geo 9. Bilder-Puzzle 10. Gleisbau»)
 export const SPIELE: Spiel[] = [
   // seit 2026-11-07 an erster Stelle und «Virtuelle Schweiz» (Michael: «3D-Land als erstes Spiel in Spiele und neu heisst es Virtuelle Schweiz»);
   // auf 3dland.ch bleibt der Name 3D-Land
@@ -69,11 +70,11 @@ export const SPIELE: Spiel[] = [
       + 'kein Abbild der Wirklichkeit. Dazu die Probefahrten, die einen Weg wie unterwegs abspielen.',
   },
   {
-    id: 'schweiz11', titel: 'Geo', status: 'spielbereit', adresse: '#/schweiz11',
-    kurz: 'Wo liegt dieser Bahnhof, Tunnel oder diese Brücke? Setze deinen Pin.',
-    bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: Jemand setzt eine Ortsmarke auf eine Karte im Handy.' },
-    beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
-      + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
+    id: 'erraten', titel: 'Bahnhofsuche', status: 'spielbereit', adresse: '#/erraten',
+    kurz: 'Sechs verdeckte Hinweise, ein Bahnhof: Wie wenige brauchst du?',
+    bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhofsuche» auf dem Tablet.' },
+    beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
+      + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
   },
   // Michael, 2026-10-18: «Wo bin ich passt gut»; seit 2026-11-20 mit eigenem Bild (Michael: «Hier die neuen Bilder …»)
   {
@@ -91,6 +92,14 @@ export const SPIELE: Spiel[] = [
     beschreibung: 'Ein Zug fährt von A nach B. Vier seiner Halte dazwischen sind gemischt: Bring sie in die richtige Reihenfolge. '
       + 'Mit dem Fahrplan von opentransportdata.swiss.',
   },
+  // am Schluss der Liste (Michael, 2026-11-15: «Spiel, Reisedauer, am Schluss.»)
+  {
+    id: 'fahrzeit', titel: 'Reisedauer', status: 'spielbereit', adresse: '#/fahrzeit',
+    kurz: 'Wie viele Minuten braucht der Zug laut Fahrplan von A nach B?',
+    bild: { hell: reisedauerHell, dunkel: reisedauerDunkel, alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr, dahinter ein Zug auf einem Viadukt.' },
+    beschreibung: 'Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? '
+      + 'Stell den Regler ein: je näher, desto mehr Punkte.',
+  },
   {
     id: 'duell', titel: 'Duell', status: 'spielbereit', adresse: '#/duell',
     kurz: 'Zwei Bahnhöfe, Strecken oder Tunnel: Wer liegt bei einer Zahl vorne?',
@@ -99,28 +108,20 @@ export const SPIELE: Spiel[] = [
       + 'einer Zahl aus den Daten vorne liegt, und baust Runde um Runde deine Serie auf.',
   },
   {
-    id: 'erraten', titel: 'Bahnhofsuche', status: 'spielbereit', adresse: '#/erraten',
-    kurz: 'Sechs verdeckte Hinweise, ein Bahnhof: Wie wenige brauchst du?',
-    bild: { hell: erratenHell, dunkel: erratenDunkel, alt: 'Illustration: Jemand spielt «Bahnhofsuche» auf dem Tablet.' },
-    beschreibung: 'Taktland denkt an einen Bahnhof. Decke Hinweise wie Kanton, Höhe oder Ein- und Aussteigende auf und rate: '
-      + 'je weniger Hinweise, desto mehr Punkte. Allein oder mit mehreren auf diesem Gerät, miteinander oder gegeneinander.',
+    id: 'schweiz11', titel: 'Geo', status: 'spielbereit', adresse: '#/schweiz11',
+    kurz: 'Wo liegt dieser Bahnhof, Tunnel oder diese Brücke? Setze deinen Pin.',
+    bild: { hell: spieleHell, dunkel: spieleDunkel, alt: 'Illustration: Jemand setzt eine Ortsmarke auf eine Karte im Handy.' },
+    beschreibung: 'Wo liegt dieser Bahnhof, dieser Tunnel, diese Brücke? Setze deinen Pin auf die Karte: '
+      + 'je näher, desto mehr Punkte. Allein oder mehrere auf diesem Gerät.',
   },
   // Michael, 2026-11-21: «Kannst du dieses Puzzlespiel auf Taktland-App übernehmen und dort alle Bilder, welche wir auf Taktland integriert
   // haben, als Puzzle bereitstellen?»; das Bild der Kachel seit 2026-11-22 Michaels eigenes («Hier die Bilder fürs Bilderpuzzle, hell und dunkel»)
   {
     id: 'bilderpuzzle', titel: 'Bilderpuzzle', status: 'spielbereit', adresse: '#/bilderpuzzle',
-    kurz: 'Die Bilder von Taktland oder ein eigenes Foto, in 4 bis 48 Teilen.',
+    kurz: 'Die Bilder von Taktland oder ein eigenes Foto, in 4 bis 96 Teilen.',
     bild: { hell: bilderpuzzleHell, dunkel: bilderpuzzleDunkel, alt: 'Illustration: Eine Frau legt im Bahnhof ein Puzzle mit einem Zug auf einem Viadukt, daneben ein Kaffeebecher, draussen ein Zug am Perron.' },
     beschreibung: 'Wähle, wie viele Teile es sein sollen, und ein Bild von Taktland oder ein eigenes Foto. Zieh die Teile an ihren Platz: '
       + 'Stimmt er, rastet das Teil ein.',
-  },
-  // am Schluss der Liste (Michael, 2026-11-15: «Spiel, Reisedauer, am Schluss.»)
-  {
-    id: 'fahrzeit', titel: 'Reisedauer', status: 'spielbereit', adresse: '#/fahrzeit',
-    kurz: 'Wie viele Minuten braucht der Zug laut Fahrplan von A nach B?',
-    bild: { hell: reisedauerHell, dunkel: reisedauerDunkel, alt: 'Illustration: ein Tablet mit einer Strecke von A nach B und einer Stoppuhr, dahinter ein Zug auf einem Viadukt.' },
-    beschreibung: 'Wie viele Minuten braucht ein Zug laut Fahrplan von der Abfahrt im einen Bahnhof bis zur Ankunft im anderen? '
-      + 'Stell den Regler ein: je näher, desto mehr Punkte.',
   },
   // Michael, 2026-11-22: «Man soll Gleise auf ein Layout legen können. Tunnel und Brücken und Bahnhöfe stehen auch zur Verfügung», «Nimm mal
   // Gleisbau»; das Bild der Kachel vorerst das der Modellbahn; seit 2026-11-26 an letzter Stelle, nach Reisedauer (Michael: «Bitte setze das neue Spiel Gleisbau … einfach an letzter Stelle»)
