@@ -283,10 +283,10 @@ const FUEHRUNG: Fuehrung[][] = [
     { ...zugWaehlen('g'), fertig: (x) => x.werkzeug === 'Güterzug' || hatZug('g')(x) },
     { text: 'Tippe auf ein Gleis, um den Güterzug hinzustellen.', fertig: hatZug('g') },
     FAHREN('Am Forst wartet Holz. Jeder Güterwagen trägt 1 Ladung zur Sägerei.'),
-    { text: 'Lass fahren, bis 6 Ladungen geliefert sind.' }],
+    { text: 'Lass fahren, bis 5 Ladungen geliefert sind.' }],
   [{ text: 'Stell unter «Züge» einen Personenzug und einen Güterzug auf die Gleise.', werkzeug: 'Personenzug', fertig: (x) => hatZug('p')(x) && hatZug('g')(x) },
     FAHREN('Beide Züge fahren zugleich: der Personenzug von Bahnhof zu Bahnhof, der Güterzug von Schuppen zu Schuppen.'),
-    { text: 'Bring 10 Fahrgäste und 6 Ladungen ans Ziel. Danach weisst du alles für den Bahnbetrieb.' }],
+    { text: 'Bring 10 Fahrgäste und 5 Ladungen ans Ziel. Danach weisst du alles für den Bahnbetrieb.' }],
 ]
 
 const STUFEN_REIHE: Array<Omit<Aufgabe, 'brett' | 'vorgabeBrett' | 'neu' | 'reihe'>> = [
@@ -296,8 +296,8 @@ const STUFEN_REIHE: Array<Omit<Aufgabe, 'brett' | 'vorgabeBrett' | 'neu' | 'reih
   { id: 'reihe-4', titel: 'Ein Netz', ziel: 'Waldegg kommt dazu. Verbinde alle Bahnhöfe so, dass man von jedem zu jedem fahren kann. Weichen helfen.', pruefen: alleVerbunden },
   { id: 'reihe-5', titel: 'Rundkurs', ziel: 'Baue im Netz einen geschlossenen Ring, durch einen Tunnel und über eine Brücke. Stell die Weichen so, dass ein Zug im Ring immer im Kreis fährt.', pruefen: rundkurs },
   { id: 'reihe-6', titel: 'Pendler', ziel: 'Jetzt fahren Fahrgäste. Bring 15 Fahrgäste an ihr Ziel. Alle Bahnhöfe müssen verbunden sein.', ...transport({ fahrgaeste: 15 }) },
-  { id: 'reihe-7', titel: 'Holz aus dem Wald', ziel: 'Der Forst Tannegg und die Sägerei Seewil kommen dazu. Schliess sie ans Netz an, setz unter «Züge» einen Güterzug und liefere 6 Ladungen.', ...transport({ gueter: 6 }) },
-  { id: 'reihe-8', titel: 'Güter und Pendler', ziel: 'Alles zugleich: Setz einen Personenzug und einen Güterzug und bring 10 Fahrgäste und 6 Ladungen ans Ziel.', ...transport({ fahrgaeste: 10, gueter: 6 }) },
+  { id: 'reihe-7', titel: 'Holz aus dem Wald', ziel: 'Der Forst Tannegg und die Sägerei Seewil kommen dazu. Schliess sie ans Netz an, setz unter «Züge» einen Güterzug und liefere 5 Ladungen.', ...transport({ gueter: 5 }) },
+  { id: 'reihe-8', titel: 'Güter und Pendler', ziel: 'Alles zugleich: Setz einen Personenzug und einen Güterzug und bring 10 Fahrgäste und 5 Ladungen ans Ziel.', ...transport({ fahrgaeste: 10, gueter: 5 }) },
 ]
 
 export const AUFGABEN: Aufgabe[] = STUFEN_REIHE.map((a, n): Aufgabe => {

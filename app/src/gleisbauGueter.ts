@@ -14,7 +14,7 @@ export const NEU_ALLE_S = 5, WARTEN_HOECHSTENS = 3
  * seit 2026-11-26 (Michael: «Warum fährt der Zug mit einem leeren Wagen davon?»): ein Güterzug mit freien passenden Wagen bleibt am Schuppen, der dieses Gut
  * liefert, stehen, bis alle beladen sind, höchstens LADEN_HOECHSTENS_S; solange kommt dort alle LADEN_NEU_S eine Ladung dazu (gewählt)
  */
-export const LADEN_HOECHSTENS_S = 15, LADEN_NEU_S = 1.5
+export const LADEN_HOECHSTENS_S = 10, LADEN_NEU_S = 0.6
 
 export interface Ladung { nach: string; gut: Gut; /** auf welchem Fahrzeug des Zugs (Stelle von der Spitze an) */ wagen?: number }
 /** im Bahnbetrieb: von welchem Schuppen welches Gut zu welchem */
