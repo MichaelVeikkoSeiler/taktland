@@ -24,7 +24,7 @@ export function Anleitung({ index }: { index: BahnhofIndex | null }) {
       <img src="./logo.svg" alt="" className="mt-6 size-16" />
       <h1 className="mt-4 text-2xl font-bold tracking-tight">So funktioniert Taktland</h1>
       <p className="mt-2 leading-relaxed">
-        Auf der Startseite führen grosse Kacheln zur Virtuellen Schweiz, zu den Spielen und zu «Fahren». Die Reiter oben führen zu Spiele (Probefahren, Bahnhofsuche, Wo fahre ich?, Fahrplan-Puzzle, Reisedauer, Duell, Geo, Bilderpuzzle), Bahnland (Bahnhöfe,
+        Auf der Startseite führen grosse Kacheln zur Virtuellen Schweiz, zu «Mitfahren» und zu den Spielen. Die Reiter oben führen zu Spiele (Probefahren, Bahnhofsuche, Wo fahre ich?, Fahrplan-Puzzle, Reisedauer, Duell, Geo, Bilderpuzzle), Bahnland (Bahnhöfe,
         Strecken, Brücken, Tunnel, Bahnübergänge), Standort, Reisetasche und Info.
         Ein Tipp auf ein Thema klappt es auf.
       </p>

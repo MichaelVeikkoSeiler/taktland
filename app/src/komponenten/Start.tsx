@@ -19,7 +19,8 @@ const GROSS = [
   { titel: 'Virtuelle Schweiz', adresse: '#/schweiz3d', hell: virtuellHell, dunkel: virtuellDunkel,
     text: 'Das ganze Land in 3D, mit Zügen laut Fahrplan und Echtzeit, Wetter und Sonne, auch mit VR-Brille' },
   // seit 2026-11-27 «Fahren» an zweiter Stelle und ohne «Im Zug:», «Spielen» an dritter (Michael: «Bitte Spiele als dritte Kachel und das zweite soll nur Fahren heissen»)
-  { titel: 'Fahren', adresse: '#/fahrt', hell: fahrtHell, dunkel: fahrtDunkel,
+  // seit 2026-11-27 «Mitfahren» (Michael: «Ja, Mitfahren ist besser»)
+  { titel: 'Mitfahren', adresse: '#/fahrt', hell: fahrtHell, dunkel: fahrtDunkel,
     text: 'Im Zug per GPS sehen, was als Nächstes kommt: Tunnel, Brücken, Bahnhöfe' },
   { titel: 'Spielen', adresse: '#/spiele', hell: spieleHell, dunkel: spieleDunkel,
     text: `${SPIELE.filter((x) => x.status === 'spielbereit' && !x.nichtInUebersicht).length} Spiele: Bahnhöfe raten, Strecken erkennen, Probefahren, Gleise bauen` },
