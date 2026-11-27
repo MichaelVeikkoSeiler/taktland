@@ -14,7 +14,7 @@ export const NEU_ALLE_S = 5, WARTEN_HOECHSTENS = 3
  * seit 2026-11-26 (Michael: «Warum fährt der Zug mit einem leeren Wagen davon?»): ein Güterzug mit freien passenden Wagen bleibt am Schuppen, der dieses Gut
  * liefert, stehen, bis alle beladen sind, höchstens LADEN_HOECHSTENS_S; solange kommt dort alle LADEN_NEU_S eine Ladung dazu (gewählt)
  */
-export const LADEN_HOECHSTENS_S = 10, LADEN_NEU_S = 0.6
+export const LADEN_HOECHSTENS_S = 10, LADEN_NEU_S = 0.6, LADEN_JE_WAGEN_S = 3
 
 export interface Ladung { nach: string; gut: Gut; /** auf welchem Fahrzeug des Zugs (Stelle von der Spitze an) */ wagen?: number }
 /** im Bahnbetrieb: von welchem Schuppen welches Gut zu welchem */
@@ -32,7 +32,7 @@ export interface Gueter {
   schuppen: string[]
   routen: Route[] | null
   /** je Güterzug, der am Schuppen auf Ladungen wartet: wie lange schon und bis zur nächsten */
-  laden: Map<Zug, { s: number; bisNeu: number }>
+  laden: Map<Zug, { s: number; bisNeu: number; wagen?: number }>
 }
 
 const zufallAus = <T,>(l: T[]) => l[Math.floor(Math.random() * l.length)]
@@ -89,24 +89,42 @@ export function gueterHalt(g: Gueter, zug: Zug, schuppen: string): { ab: number;
 }
 
 /** ob am Schuppen ein Gut entsteht, das auf einen freien Wagen des Zugs passt */
-function ladetHier(g: Gueter, zug: Zug, schuppen: string): boolean {
+function ladetHier(g: Gueter, zug: Zug, schuppen: string, wagen?: number): boolean {
   const belegt = new Set((g.imZug.get(zug) ?? []).map((l) => l.wagen))
-  const frei = zug.gueterwagen().filter((w) => !belegt.has(w.k))
+  const frei = zug.gueterwagen().filter((w) => !belegt.has(w.k) && (wagen === undefined || w.k === wagen))
   const gueter: Gut[] = g.routen ? g.routen.filter((r) => r.von === schuppen).map((r) => r.gut) : ['stueckgut']
   return frei.some((w) => gueter.some((x) => passt(w.typ as WagenTyp, x)))
 }
 
 /** nach dem Ab- und Aufladen: ob der Zug weiter am Schuppen wartet; je Bild aufrufen, lädt, was dazukommt; gibt die Zahl neu geladener zurück */
-export function gueterWarten(g: Gueter, zug: Zug, schuppen: string, dt: number, neu: boolean): number {
-  if (neu) g.laden.set(zug, { s: 0, bisNeu: LADEN_NEU_S })
+export function gueterWarten(g: Gueter, zug: Zug, schuppen: string, dt: number, neu: boolean, wagen?: number): number {
+  if (neu) g.laden.set(zug, { s: 0, bisNeu: LADEN_NEU_S, wagen })
   const w = g.laden.get(zug)
   if (!w) return 0
   w.s += dt
-  if (w.s > LADEN_HOECHSTENS_S || !ladetHier(g, zug, schuppen)) { g.laden.delete(zug); return 0 }
+  if (w.s > (w.wagen === undefined ? LADEN_HOECHSTENS_S : LADEN_JE_WAGEN_S) || !ladetHier(g, zug, schuppen, w.wagen)) { g.laden.delete(zug); return 0 }
   if (!zug.haltVerlaengern(0.4)) { g.laden.delete(zug); return 0 }
   w.bisNeu -= dt
   if (w.bisNeu > 0) return 0
   w.bisNeu = LADEN_NEU_S
   neueLadung(g, schuppen)
-  return gueterHalt(g, zug, schuppen).auf
+  return (w.wagen === undefined ? gueterHalt(g, zug, schuppen) : gueterWagen(g, zug, schuppen, w.wagen)).auf
+}
+
+/** Wagen für Wagen (seit 2026-11-27): nur dieser Wagen lädt ab, was hierher soll, und lädt auf, was wartet und auf ihn passt */
+export function gueterWagen(g: Gueter, zug: Zug, schuppen: string, wagen: number): { ab: number; auf: number } {
+  const drin = g.imZug.get(zug) ?? []
+  const weg = drin.filter((l) => l.wagen === wagen && l.nach === schuppen)
+  const bleiben = drin.filter((l) => !weg.includes(l))
+  for (const l of weg) g.jeGut[l.gut] = (g.jeGut[l.gut] ?? 0) + 1
+  g.geliefert += weg.length
+  let auf = 0
+  const typ = zug.gueterwagen().find((w) => w.k === wagen)?.typ
+  if (typ && !bleiben.some((l) => l.wagen === wagen)) {
+    const wartend = g.warten[schuppen] ?? []
+    const x = wartend.findIndex((l) => passt(typ as WagenTyp, l.gut))
+    if (x >= 0) { bleiben.push({ ...wartend[x], wagen }); g.warten[schuppen] = wartend.filter((_, k) => k !== x); auf = 1 }
+  }
+  g.imZug.set(zug, bleiben)
+  return { ab: weg.length, auf }
 }

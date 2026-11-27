@@ -13,7 +13,7 @@ import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
 import { bild, GelaendeBild, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
-import { type Gueter, gueterHalt, gueterStart, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
+import { type Gueter, gueterHalt, gueterStart, gueterWagen, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
 import { GUETER, LOKS, type LokTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
 import { AUFTRAEGE, type Auftrag, auftragAlsAufgabe, type Betrieb, betriebLesen, betriebMerken, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
 import BetriebSeite, { ZugWahl } from './GleisbauBetrieb'
@@ -1154,6 +1154,7 @@ export function Gleisbau() {
   const [fahrgaeste, setFahrgaeste] = useState<Fahrgaeste | null>(null)
   // Ladungen der Güterzüge und was in dieser Fahrt ans Ziel kam (für die Transportaufgaben; bleibt nach dem Anhalten stehen)
   const gutRef = useRef<Gueter | null>(null), gutHalte = useRef(new Map<Zug, number>())
+  const gutSchritte = useRef(new Map<Zug, { n: number; fertig: Set<number> }>())
   const [ladungen, setLadungen] = useState<Record<string, Ladung[]> | null>(null)
   const [stand, setStand] = useState<Transport>({ fahrgaeste: 0, gueter: 0 })
   const fgRef = useRef<Fahrgaeste | null>(null)
@@ -1545,7 +1546,7 @@ export function Gleisbau() {
     const drin = gutRef.current?.imZug.get(z)
     if (!drin?.length) return l
     const voll = new Set(drin.map((x) => x.wagen))
-    return l.map((w, k) => (voll.has(k) ? { ...w, beladen: true } : w))
+    return l.map((w, k) => (voll.has(z.fzId(k)) ? { ...w, beladen: true } : w))
   }
   // der Zug je Bild
   // Pause während der Fahrt (Michael, 2026-11-26: «Während des Abspielens muss man Pause drücken können»): alles steht, Weichen und Ampeln lassen sich stellen
@@ -1624,13 +1625,31 @@ export function Gleisbau() {
         for (const z of zz) {
           if (z.art === 'person') continue
           if (z.halte === (gutHalte.current.get(z) ?? 0)) {
-            // am Schuppen warten, bis die Wagen beladen sind
+            // Wagen für Wagen (Michael, 2026-11-27: «Güterzüge Wagen für Wagen aufladen und abliefern»): nach jedem Schritt der Wagen, der dem Schuppen am
+            // nächsten ist und noch nicht dran war
+            const st = gutSchritte.current.get(z)
+            if (st && z.ladeSchritte !== st.n) {
+              st.n = z.ladeSchritte
+              const [hi, hj] = z.haltFeld.split(',').map(Number), ids = new Set(z.gueterwagen().map((w) => w.k))
+              let best = -1, d = Infinity
+              z.wagen().forEach((w, k) => { const id = z.fzId(k); if (!ids.has(id) || st.fertig.has(id)) return; const dd = Math.hypot(w.x - hi - 0.5, w.y - hj - 0.5); if (dd < d) { d = dd; best = id } })
+              if (best >= 0) {
+                st.fertig.add(best)
+                const { ab, auf } = gueterWagen(gut, z, z.haltFeld, best)
+                gueterWarten(gut, z, z.haltFeld, 0, true, best)
+                if (ab) antwortTon('richtig')
+                if (ab || auf) neuG = true
+              }
+              continue
+            }
+            // am Schuppen warten, bis der Wagen (ohne Schritte: alle Wagen) beladen ist
             if (gut.laden.has(z) && gueterWarten(gut, z, z.haltFeld, dt, false)) neuG = true
             continue
           }
           gutHalte.current.set(z, z.halte)
           const [hi, hj] = z.haltFeld.split(',').map(Number)
           if (!gueterGilt(b0[hj]?.[hi])) continue
+          // hält er Schritt für Schritt, lädt jeder Schritt einen Wagen; sonst (etwa am Anfang am Schuppen) alle auf einmal
           const { ab, auf } = gueterHalt(gut, z, z.haltFeld)
           gueterWarten(gut, z, z.haltFeld, 0, true)
           if (ab) antwortTon('richtig')
@@ -2304,7 +2323,7 @@ export function Gleisbau() {
     const routen = auftrag ? auftrag.routen.flatMap((r) => { const von = anlageFeld(r.von), nach = anlageFeld(r.nach); return von && nach ? [{ von, nach, gut: r.gut }] : [] }) : null
     const gut = l.some((x) => x.art !== 'person') ? gueterStart(schuppen, routen) : null
     if (l.some((x) => x.art !== 'person') && !gut) setMeldung('Für Ladungen braucht der Güterzug mindestens zwei Güterschuppen (unter Bauwerke «Güter»).')
-    gutRef.current = gut; gutHalte.current = new Map(); setLadungen(gut ? { ...gut.warten } : null)
+    gutRef.current = gut; gutHalte.current = new Map(); gutSchritte.current = new Map(); setLadungen(gut ? { ...gut.warten } : null)
     setStand({ fahrgaeste: 0, gueter: 0 })
     // jede Fahrt beginnt die Prüfung neu, so kommt «Geschafft!» auch, wenn die Aufgabe schon einmal gelöst war (Michael, 2026-11-27: «Kann es sein dass
     // der Auftrag nie aufhört?»)

@@ -987,6 +987,8 @@ const kurvenTempo = (s: Stueck) => {
   return Math.sqrt(KURVE_QUER * r)
 }
 export const HALT_S = 2.5
+/** am Güterschuppen: Schritttempo in Feldern je Sekunde und Halt je Wagen (gewählt) */
+export const KRIECH_TEMPO = 0.45, KRIECH_HALT_S = 0.9
 /** der Pfiff so lange vor der Abfahrt (gewählt) */
 const PFIFF_VOR_S = 0.9
 /** so lange steht der Zug beim Ankuppeln, in s (gewählt) */
@@ -997,7 +999,7 @@ export interface WagenLage { x: number; y: number; w: number; /** 0 Lok, 1 und 2
   /** im Bahnbetrieb: welche Lok oder welcher Wagen, und ob er beladen ist (setzt die Darstellung) */ typ?: string; beladen?: boolean }
 
 /** ein Fahrzeug im Zug, von der Spitze an; blick 1: der Kopf schaut zur Spitze des Zugs; typ im Bahnbetrieb die Lok oder der Wagen (gleisbauFahrzeuge.ts) */
-interface Fahrzeug { t: 'lok' | 'wagen' | 'steuer'; diesel: boolean; blick: 1 | -1; typ?: string }
+interface Fahrzeug { t: 'lok' | 'wagen' | 'steuer'; diesel: boolean; blick: 1 | -1; typ?: string; /** bleibt beim Umkehren gleich, für die Ladung */ id?: number }
 const standardZug = (n: number, diesel = false): Fahrzeug[] =>
   Array.from({ length: n }, (_, k): Fahrzeug => ({ t: k === 0 ? 'lok' : k === n - 1 ? 'steuer' : 'wagen', diesel, blick: k === n - 1 ? -1 : 1 }))
 /** ein Güterzug: Lok und Güterwagen, ohne Steuerwagen (gewählt) */
@@ -1038,7 +1040,21 @@ export class Zug {
   /** Plätze für Ladungen: die Güterwagen */
   ladeplaetze() { return this.fz.filter((v) => v.t === 'wagen' && v.typ !== 'person').length }
   /** die Güterwagen mit ihrer Stelle im Zug (für das Beladen nach Gut) */
-  gueterwagen(): Array<{ k: number; typ: string }> { return this.fz.flatMap((v, k) => (v.t === 'wagen' && v.typ !== 'person' ? [{ k, typ: v.typ ?? 'gedeckt' }] : [])) }
+  gueterwagen(): Array<{ k: number; typ: string }> { this.ids(); return this.fz.flatMap((v) => (v.t === 'wagen' && v.typ !== 'person' ? [{ k: v.id!, typ: v.typ ?? 'gedeckt' }] : [])) }
+  /**
+   * jedem Fahrzeug eine feste Nummer, die beim Umkehren bleibt; die Ladung merkt sich diese statt der Stelle von der Spitze (seit 2026-11-27, sonst lag sie
+   * nach dem Umkehren auf dem falschen Wagen)
+   */
+  private ids() { let m = Math.max(-1, ...this.fz.map((v) => v.id ?? -1)); for (const v of this.fz) if (v.id === undefined) v.id = ++m }
+  /** die feste Nummer des Fahrzeugs an Stelle k */
+  fzId(k: number): number { this.ids(); return this.fz[k]?.id ?? -1 }
+  /**
+   * am Güterschuppen Wagen für Wagen (Michael, 2026-11-27: «Güterzüge Wagen für Wagen aufladen und abliefern. Der Zug muss also pro Wagen kurz halten,
+   * weiterfahren, halten»): nach dem Halt fährt der Zug je Güterwagen eine Wagenlänge im Schritttempo und hält kurz; ladeSchritte zählt die Halte, die
+   * Darstellung lädt dann den Wagen, der dem Schuppen am nächsten ist. Endet das Gleis hinter dem Schuppen, kehrt er zuerst um. Tempo und Halte gewählt
+   */
+  kriechen: { rest: number; weg: number; wenden: boolean } | null = null
+  ladeSchritte = 0
   /** Plätze für Fahrgäste: im Bahnbetrieb je Personenwagen proPersonenwagen, sonst fest */
   plaetze(proPersonenwagen: number) { return this.personenwagen() * proPersonenwagen }
   /**
@@ -1289,6 +1305,19 @@ export class Zug {
       // am Endbahnhof kehrt der Zug nach dem Halt um, statt erst in den Prellbock zu fahren (Michael, 2026-11-26: «Auf dem Ziel, wenn er dort umkehrt, fährt er
       // auch zuerst in den Prellbock und dann erst zurück»)
       if (this.halt <= 0 && this.wendenNachHalt) { this.wendenNachHalt = false; this.umkehren(); this.halt = 0 }
+      if (this.halt <= 0 && this.kriechen) {
+        if (this.kriechen.wenden) { this.kriechen.wenden = false; this.umkehren(); this.halt = 0 }
+        this.kriechen.weg = WAGEN_LAENGE + WAGEN_LUECKE
+      }
+      return
+    }
+    // Schritt für Schritt am Güterschuppen: eine Wagenlänge im Schritttempo, dann kurz halten
+    if (this.kriechen && this.kriechen.weg > 0) {
+      const k = this.kriechen, d = Math.min(k.weg, KRIECH_TEMPO * dt)
+      this.tempo = KRIECH_TEMPO
+      if (!this.vorwaerts(b, d, frei)) { this.kriechen = null; return }
+      k.weg -= d
+      if (k.weg <= 1e-6) { k.weg = 0; k.rest--; this.ladeSchritte++; this.tempo = 0; this.halt = KRIECH_HALT_S; this.amBahnhof = true; if (k.rest <= 0) this.kriechen = null }
       return
     }
     // ohne Fahrleitung rollt ein Stromzug aus und bleibt stehen
@@ -1310,6 +1339,8 @@ export class Zug {
       if (!s.gross && haltHier && vorher < mitte && vorher + rest >= mitte && (!amBf || !weiterImBahnhof())) {
         this.kopf = mitte; this.halt = Math.max(HALT_S, this.taktWarten?.(`${s.i},${s.j}`) ?? 0); this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`
         this.wendenNachHalt = this.sackgasse(b, s)
+        const n = this.art !== 'person' && gueterGilt(b[s.j][s.i]) ? this.gueterwagen().length : 0
+        if (n) { this.kriechen = { rest: n, weg: 0, wenden: this.wendenNachHalt }; this.wendenNachHalt = false; this.halt = KRIECH_HALT_S }
         return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
@@ -1341,6 +1372,21 @@ export class Zug {
       // sollte es doch reichen dass er wieder anfährt»)
       else if (this.stromlos) this.stromlos = false
     }
+  }
+
+  /** ein Stück vorwärts ohne Halte (Schritt am Güterschuppen); false am Gleisende, vor Rot oder einem anderen Zug */
+  private vorwaerts(b: Brett, d: number, frei?: (felder: Set<string>) => boolean): boolean {
+    let rest = d
+    for (let k = 0; k < 8 && rest > 0; k++) {
+      const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
+      if (this.kopf + rest <= l) { this.kopf += rest; return true }
+      rest -= l - this.kopf
+      const n = naechstes(b, s)
+      if (!n || (!n.gross && ampelGilt(b[n.j]?.[n.i]) && b[n.j][n.i].ampel === 'rot') || (frei && !frei(ebenenFelder(b, stueckFelder(n), [n])))) { this.kopf = l; return false }
+      this.stuecke.push(n); this.kopf = 0
+      this.kuerzen()
+    }
+    return true
   }
 
   /** ob das Gleis hinter diesem Halt endet, ohne dass noch ein Halt für diesen Zug oder ein abgestellter Wagen kommt (so, wie die Weichen jetzt stehen) */
