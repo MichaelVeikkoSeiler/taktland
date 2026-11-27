@@ -67,7 +67,7 @@ export interface AuftaktBild {
 /** Die Vorschau überlebt den Wechsel des Bereichs, weil sie ausserhalb der
  *  Komponente steht; sie endet mit dem Zeitablauf oder mit dem Knopf. */
 let vorschau = false
-/** randlos: am Desktop über die ganze Breite des Fensters statt der Spalte (Virtuelle Schweiz, 3dland.ch; Michael, 2026-11-27) */
+/** randlos: am Desktop über die ganze Breite des Fensters statt der Spalte (nur 3dland.ch; Michael, 2026-11-27) */
 /** über die ganze Breite des Fensters: die Spalte steht in der Mitte, also rückt der Rand um die halbe Differenz hinaus */
 export const RANDLOS = 'xl:mx-[calc(50%-50vw)]'
 

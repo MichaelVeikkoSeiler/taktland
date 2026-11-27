@@ -1740,9 +1740,9 @@ die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot einer Bahn i
              diese Datei mit**; Namen aus den Daten und der Quellen unübersetzt; Taktland ruft spracheSetzen nie auf; im Browser hier die Stufe Schweiz auf Englisch
              angeschaut, tiefere Stufen, Schilder der Züge und die Tafel der Brille nicht
 
-Virtuelle Schweiz am Desktop randlos seit 2026-11-27 (Michael: «Bitte auf dem Desktoop das Auftaktbild und das 3D-Bild auf die ganze Breite skalieren»): ab 1280 px
-             (xl) Auftaktbild (Auftakt mit randlos, RANDLOS = xl:mx-[calc(50%-50vw)]) und Modell über die ganze Breite des Fensters statt der Spalte von 1152 px, das Modell
-             dort 85 % der Höhe hoch statt 25 zu 28; in Taktland (#/schweiz3d) und auf 3dland.ch; html mit overflow-x: clip (100vw zählt die Bildlaufleiste mit); andere
+3dland.ch am Desktop randlos seit 2026-11-27 (Michael: «Bitte auf dem Desktoop das Auftaktbild und das 3D-Bild auf die ganze Breite skalieren», dann «war für
+             3DLand und nicht für Taktland gemeint»): ab 1280 px (xl) Auftaktbild (Auftakt mit randlos, RANDLOS = xl:mx-[calc(50%-50vw)]) und Modell (nur mit eigeneSeite)
+             über die ganze Breite des Fensters statt der Spalte von 1152 px, das Modell dort 85 % der Höhe hoch statt 25 zu 28; in Taktland (#/schweiz3d) wie vorher; html mit overflow-x: clip (100vw zählt die Bildlaufleiste mit); andere
              Seiten und Handy, Tablet wie bisher; im Browser hier mit 1600 × 1000 und Pixel 7 angeschaut
 
 Texte auf 3dland.ch am Desktop seit 2026-11-27 über die ganze Breite der Spalte statt höchstens 48rem (Michael: «bitte die Texte auf 3DLand auf die ganze Breite
