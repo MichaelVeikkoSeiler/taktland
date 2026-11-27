@@ -1737,8 +1737,11 @@ die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot einer Bahn i
 
 Michael: «Alles merken aber schlag mir nochmals die dringendsten Sachen vor». Noch nicht gebaut, angeschaut im Browser hier (Handy Pixel 7, iPad hoch und quer,
 Desktop 1440 × 900), nicht auf echten Geräten:
-- Alle Geräte: Startseite statt Textwand oben drei grosse Kacheln (Virtuelle Schweiz, Spielen, Im Zug fahren), der lange Text in eine Klappe «Mehr über Taktland»;
-  der Text ist veraltet (Gleisbau noch «bald»); unter jeder Spielkachel ein Satz mit Dauer (etwa «Bahnhof aus 6 Hinweisen erraten · 3 Min»), dafür die Aufzählung
+- Erledigt seit 2026-11-27 (Michael: «Ja gerne so einbauen, mit dem VR-Bild»): Startseite (komponenten/Start.tsx) mit einem Satz, drei grossen Kacheln (Virtuelle
+  Schweiz mit dem Bild der VR-Brille, Spielen mit der Zahl der spielbereiten Spiele, Im Zug: Fahren), darunter «Ausserdem» (Bahnhöfe und Strecken, In deiner Nähe,
+  Reisetasche) und der bisherige Text in der Klappe «Mehr über Taktland», nachgeführt (Bilderpuzzle und Gleisbau statt «bald»); die Hauptreiter kräftiger und
+  dunkler (Anthracite), der gewählte mit karminrotem Strich; im Browser hier als Handy, iPad und Desktop angeschaut.
+- Alle Geräte, noch offen: unter jeder Spielkachel ein Satz mit Dauer (etwa «Bahnhof aus 6 Hinweisen erraten · 3 Min»), dafür die Aufzählung
   der Namen in der Einleitung der Spiele weg; Reiter grösser und kräftiger, der gewählte klar hervorgehoben; ein Grund zum Wiederkommen (Frage oder Fahrt des Tages,
   «Weiter, wo du warst», Fortschritt).
 - Handy: «Fahren» oben rot wird zuerst angetippt, zuhause folgt nur die GPS-Frage: kurz erklären, wofür es ist, mit Hinweis auf Probefahren.

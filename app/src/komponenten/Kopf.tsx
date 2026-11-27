@@ -267,9 +267,10 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
           return (
             <a key={h.schluessel} href={h.adresse ?? letzteObjekte.adresse} aria-current={hier ? 'page' : undefined}
                onClick={reiterTon}
-               className={`shrink-0 border-b-2 pb-2 pt-1 font-medium transition-colors ${hier
-                 ? 'border-sbb-black text-sbb-black dark:border-sbb-white dark:text-sbb-white'
-                 : 'border-transparent text-sbb-metal hover:text-sbb-black dark:text-sbb-storm dark:hover:text-sbb-white'}`}>
+               // seit 2026-11-27 kräftiger und etwas dunkler, damit man sieht, dass man sie antippen kann (Rückmeldung zur Oberfläche, Michael: «Ja gerne so einbauen»)
+               className={`shrink-0 border-b-2 pb-2 pt-1 font-semibold transition-colors ${hier
+                 ? 'border-sbb-red text-sbb-black dark:border-[#d63a55] dark:text-sbb-white'
+                 : 'border-transparent text-sbb-anthracite hover:text-sbb-black dark:text-sbb-cloud dark:hover:text-sbb-white'}`}>
               {h.text}
             </a>
           )

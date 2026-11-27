@@ -1,4 +1,35 @@
 import type { BahnhofIndex } from '../typen'
+import { Klappe } from './Klappe'
+import virtuellHell from '../assets/auftakt-virtuell-hell.webp'
+import virtuellDunkel from '../assets/auftakt-virtuell-dunkel.webp'
+import spieleHell from '../assets/auftakt-spiele-hell.webp'
+import spieleDunkel from '../assets/auftakt-spiele-dunkel.webp'
+import fahrtHell from '../assets/auftakt-fahrt-hell.webp'
+import fahrtDunkel from '../assets/auftakt-fahrt-dunkel.webp'
+import bahnhoefeHell from '../assets/auftakt-bahnhoefe-hell.webp'
+import bahnhoefeDunkel from '../assets/auftakt-bahnhoefe-dunkel.webp'
+import standortHell from '../assets/auftakt-standort-hell.webp'
+import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
+import logbuchHell from '../assets/auftakt-logbuch-hell.webp'
+import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
+import { SPIELE } from '../spiele'
+
+/** die drei grossen Kacheln oben (Virtuelle Schweiz mit dem Bild der VR-Brille, Michael, 2026-11-27) */
+const GROSS = [
+  { titel: 'Virtuelle Schweiz', adresse: '#/schweiz3d', hell: virtuellHell, dunkel: virtuellDunkel,
+    text: 'Das ganze Land in 3D, mit Zügen laut Fahrplan und Echtzeit, Wetter und Sonne, auch mit VR-Brille' },
+  { titel: 'Spielen', adresse: '#/spiele', hell: spieleHell, dunkel: spieleDunkel,
+    text: `${SPIELE.filter((x) => x.status === 'spielbereit').length} Spiele: Bahnhöfe raten, Strecken erkennen, Probefahren, Gleise bauen` },
+  { titel: 'Im Zug: Fahren', adresse: '#/fahrt', hell: fahrtHell, dunkel: fahrtDunkel,
+    text: 'Unterwegs per GPS sehen, was als Nächstes kommt: Tunnel, Brücken, Bahnhöfe' },
+]
+/** darunter, was hinter den anderen Reitern steckt */
+const KLEIN = [
+  { titel: 'Bahnhöfe und Strecken', adresse: '#/bahnhoefe', hell: bahnhoefeHell, dunkel: bahnhoefeDunkel,
+    text: (i: BahnhofIndex) => `${zahl(i.bahnhoefe_gesamt)} Bahnhöfe nachschlagen` },
+  { titel: 'In deiner Nähe', adresse: '#/standort', hell: standortHell, dunkel: standortDunkel, text: () => 'Was um dich herum liegt' },
+  { titel: 'Reisetasche', adresse: '#/logbuch', hell: logbuchHell, dunkel: logbuchDunkel, text: () => 'Logbuch, Sammelheft, Fahrblatt' },
+]
 
 /** Zahlen über 9999 mit Apostroph, darunter ohne: auf der Startseite bewusst ohne Apostroph ab 1000
  *  (Michael, 2026-10-05: «bei den Zahlen kein Apostroph») */
@@ -28,6 +59,46 @@ export function Start({ index }: { index: BahnhofIndex }) {
           2026-11-26 «Gleisbau» als bald öffentlich (Michael: «Erwähne auch das neue Unterhaltungsspiel «Gleisbau» welches bald öffentlich zugänglich wird»);
           2026-11-20 alle Spiele unter «Lernen», «Probefahren» und die Virtuelle Schweiz unter «Mitfahren» (Michael: «Ja gern») */}
       <h2 className="text-2xl font-bold tracking-tight">Willkommen im Taktland</h2>
+      {/*
+        seit 2026-11-27 oben drei grosse Kacheln statt des langen Texts, der Text in einer Klappe «Mehr über Taktland» (Michael, nach der Rückmeldung zur
+        Oberfläche: «Ja gerne so einbauen, mit dem VR-Bild»): Neue sehen sofort, wo sie tippen können
+      */}
+      <p className="mt-2 max-w-3xl text-[17px] leading-snug">
+        Die Bahn der Schweiz zum Erkunden, Spielen und Mitfahren. Aus offenen Daten von Bahn und Bund, kostenlos und ohne Konto.
+      </p>
+      <ul className="mt-4 grid gap-3 md:grid-cols-3">
+        {GROSS.map((k) => (
+          <li key={k.adresse} className="flex">
+            <a href={k.adresse} className="kachel kachel-link flex w-full flex-col overflow-hidden">
+              <picture>
+                <source srcSet={k.dunkel} media="(prefers-color-scheme: dark)" />
+                <img src={k.hell} alt="" className="aspect-[16/9] w-full object-cover" />
+              </picture>
+              <span className="block px-3.5 pb-3.5 pt-2.5">
+                <span className="block text-xl font-bold leading-tight tracking-tight">{k.titel} <span className="text-sbb-red" aria-hidden="true">›</span></span>
+                <span className="mt-1 block text-[15px] leading-snug text-sbb-metal dark:text-sbb-storm">{k.text}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <h3 className="mt-6 text-lg font-bold">Ausserdem</h3>
+      <ul className="mt-2 grid gap-2 md:grid-cols-3">
+        {KLEIN.map((k) => (
+          <li key={k.adresse} className="flex">
+            <a href={k.adresse} className="kachel kachel-link flex w-full items-center gap-3 p-2">
+              <picture className="flex-none">
+                <source srcSet={k.dunkel} media="(prefers-color-scheme: dark)" />
+                <img src={k.hell} alt="" loading="lazy" className="h-12 w-16 rounded-md object-cover" />
+              </picture>
+              <span className="min-w-0 leading-tight"><span className="block font-bold">{k.titel}</span>
+                <span className="block text-sm text-sbb-metal dark:text-sbb-storm">{k.text(index)}</span></span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <Klappe titel="Mehr über Taktland" className="mt-6 border-t border-sbb-cloud pt-3 font-bold dark:border-sbb-iron">
+      <div className="font-normal">
       {/* ab 1024 Bildpunkten zwei Spalten, die zweite beginnt mit «Kein Reiseplaner» (Michael, 2026-11-25: «Bitte diese Texte ab einer gewissen Fensterbreite
           zweispaltig machen. Anfang der zweiten Spalte bildet: «Kein Reiseplaner»») */}
       <div className="lg:grid lg:grid-cols-2 lg:gap-x-12">
@@ -54,8 +125,8 @@ export function Start({ index }: { index: BahnhofIndex }) {
         «Bahnhofsuche» errätst du einen Bahnhof aus Hinweiskarten, bei «Wo fahre ich?» erkennst du eine
         Strecke aus dem Führerstand, beim «Fahrplan-Puzzle» ordnest du die Halte eines Zugs, und bei der
         «Reisedauer» schätzt du seine Fahrzeit. Manche allein, zu mehreren auf einem Gerät oder auf
-        mehreren Geräten. Bald kommt das Unterhaltungsspiel «Gleisbau» dazu: Gleise, Bahnhöfe, Tunnel und Brücken
-        auf ein Brett legen und Züge fahren lassen. Und unter Standort siehst du, was in deiner Nähe liegt.
+        mehreren Geräten. Im «Bilderpuzzle» setzt du Bilder von Taktland zusammen, und im «Gleisbau» legst du Gleise, Bahnhöfe, Tunnel und Brücken
+        auf ein Brett und lässt Züge fahren. Und unter Standort siehst du, was in deiner Nähe liegt.
       </p>
       <p className={absatz}>
         <span className={fett}>Mitfahren.</span> Im Zug verfolgt «Fahren» per GPS, wo du bist, und
@@ -91,6 +162,8 @@ export function Start({ index }: { index: BahnhofIndex }) {
       </p>
       </div>
       </div>
+      </div>
+      </Klappe>
     </main>
   )
 }
