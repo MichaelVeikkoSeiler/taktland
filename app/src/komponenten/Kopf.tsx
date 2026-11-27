@@ -257,7 +257,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
           ? <h1 className={`${titel} flex items-center gap-3`}><Bildmarke />Taktland</h1>
           : <a href="#/" className={`${titel} flex items-center gap-3`}><Bildmarke />Taktland</a>}
         {/* ganz rechts; das «i» ist zum Reiter «Info» geworden (Michael, 2026-09-25) */}
-        <FahrtKnopf hier={fahrt !== null} />
+        {/* der rote Knopf «Fahren» seit 2026-11-27 weg, «Im Zug: Fahren» ist eine Kachel auf der Startseite (Michael: «Den Fahren Button oben rechts kann weg, da wir da
+            auch eine eigene Kachel haben»); die Adresse #/fahrt bleibt */}
       </div>
       {/* Fünf Hauptreiter; unter «Bahnland» eine zweite Zeile mit den Unterreitern */}
       <Schiebeleiste name="Bereiche" aussen="-mb-px mt-4" grund="bg-white dark:bg-sbb-midnight"
@@ -396,22 +397,6 @@ export function Schiebeleiste({ name, aussen, grund, className, leiste, was = 'R
       {pfeil('links')}
       {pfeil('rechts')}
     </div>
-  )
-}
-
-/**
- * Der Spezialknopf zum Fahrtmodus, auf jeder Seite neben dem Namen (Michael,
- * 2026-09-24: «Eigener Spezial-Button Fahrtmodus»). Rot, weil er der
- * wichtigste Weg der App ist; offen ist er dunkler. Schrift so gross wie die
- * Reiter, ohne Zug-Zeichen (Michael, 2026-09-25).
- */
-function FahrtKnopf({ hier }: { hier: boolean }) {
-  return (
-    <a href="#/fahrt" aria-current={hier ? 'page' : undefined}
-       className={`shrink-0 rounded-lg px-3 py-1.5 text-base font-bold text-white max-[359px]:text-[14px] ${hier
-         ? 'bg-sbb-red125' : 'bg-sbb-red hover:bg-sbb-red125'}`}>
-      Fahren
-    </a>
   )
 }
 
