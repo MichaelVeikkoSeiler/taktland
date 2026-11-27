@@ -4,7 +4,7 @@
  * gesäubert und verkleinert), ihre Masse in src/assets/gleisbau-masse.json. Lage, Auswahl und Grösse der Objekte nach festem Zufall je Feld.
  * Ein Baukasten, keine Wirklichkeit: alle Masse und Regeln gewählt.
  */
-import { type Brett, type Feld, flussKanten, strasseAlsBruecke, strasseGerade, strasseUeberGleis, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, tunnelWeiter, wege, wegPunkte, zeilen } from '../gleisbau'
+import { type Brett, type Feld, flussKanten, strasseAlsBruecke, strasseGerade, strasseUeberGleis, grosseKurve, grossGeometrie, istBahnhof, spalten, strassenKanten, type Stueck, tunnelWeiter, kanteVon, wege, wegPunkte, zeilen } from '../gleisbau'
 import type { ReactElement } from 'react'
 import MASSE from '../assets/gleisbau-masse.json'
 
@@ -465,7 +465,7 @@ export function objekteBauen(b: Brett, imTunnel: (b: Brett, x: number, y: number
     } else if (f.grund === 'berg') {
       if (f.gleis || f.teil) {
         // über dem Tunnel ein kleiner Gipfel, nur wo im Feld kein Portal steht (sonst verdeckt er es); der Fels deckt das Gleis
-        const kanten = f.gleis && !grosseKurve(f.gleis) ? [...new Set(wege(f.gleis).flat())].filter((k) => k >= 0) : []
+        const kanten = f.gleis && !grosseKurve(f.gleis) ? [...new Set(wege(f.gleis).flat().map(kanteVon))].filter((k) => k >= 0) : []
         if (!f.teil && !grosseKurve(f.gleis) && kanten.every((k) => tunnelWeiter(b, i, j, k))) setze(waehle(KLEIN, z(1)), i + 0.5 + (z(2) - 0.5) * 0.1, j + 0.52, 0.85, z(3))
       } else {
         setze(z(1) < 0.65 ? waehle(GROSS, z(2)) : waehle(KLEIN, z(2)), i + 0.5 + (z(3) - 0.5) * 0.16, j + 0.8, 0.9 + z(4) * 0.15, z(5))

@@ -20,13 +20,13 @@ export type WagenTyp = 'person' | 'rungen' | 'schuett' | 'kessel' | 'milch' | 'c
 export interface WagenArt { name: string; preis: number; gut: Gut | null; plaetze: number; text: string }
 export const WAGEN_ARTEN: Record<WagenTyp, WagenArt> = {
   person: { name: 'Personenwagen', preis: 300, gut: null, plaetze: 4, text: '4 Plätze für Fahrgäste' },
-  rungen: { name: 'Rungenwagen', preis: 250, gut: 'holz', plaetze: 1, text: 'trägt 1 Ladung Holz' },
-  schuett: { name: 'Schüttgutwagen', preis: 250, gut: 'kies', plaetze: 1, text: 'trägt 1 Ladung Kies' },
-  kessel: { name: 'Kesselwagen', preis: 400, gut: 'oel', plaetze: 1, text: 'trägt 1 Ladung Heizöl' },
-  milch: { name: 'Milchwagen', preis: 350, gut: 'milch', plaetze: 1, text: 'trägt 1 Ladung Milch' },
-  container: { name: 'Containerwagen', preis: 300, gut: 'container', plaetze: 1, text: 'trägt 1 Container' },
-  auto: { name: 'Autotransporter', preis: 450, gut: 'autos', plaetze: 1, text: 'trägt 1 Ladung Autos' },
-  gedeckt: { name: 'Güterwagen', preis: 0, gut: null, plaetze: 1, text: 'trägt 1 Ladung, jedes Gut' },
+  rungen: { name: 'Rungenwagen', preis: 250, gut: 'holz', plaetze: 1, text: 'für 1 Ladung Holz' },
+  schuett: { name: 'Schüttgutwagen', preis: 250, gut: 'kies', plaetze: 1, text: 'für 1 Ladung Kies' },
+  kessel: { name: 'Kesselwagen', preis: 400, gut: 'oel', plaetze: 1, text: 'für 1 Ladung Heizöl' },
+  milch: { name: 'Milchwagen', preis: 350, gut: 'milch', plaetze: 1, text: 'für 1 Ladung Milch' },
+  container: { name: 'Containerwagen', preis: 300, gut: 'container', plaetze: 1, text: 'für 1 Container' },
+  auto: { name: 'Autotransporter', preis: 450, gut: 'autos', plaetze: 1, text: 'für 1 Ladung Autos' },
+  gedeckt: { name: 'Güterwagen', preis: 0, gut: null, plaetze: 1, text: 'für 1 Ladung, jedes Gut' },
 }
 /** ob ein Wagen dieses Gut trägt */
 export const passt = (w: WagenTyp, g: Gut) => w === 'gedeckt' || WAGEN_ARTEN[w].gut === g

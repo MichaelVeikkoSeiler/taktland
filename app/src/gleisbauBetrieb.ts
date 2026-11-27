@@ -33,7 +33,7 @@ export interface Auftrag {
 // ——— Baukosten (gewählt) ———
 
 const PREIS: Record<string, number> = {
-  gerade: 10, kurve: 10, bahnhof: 40, kurvenbahnhof: 40, weiche: 25, weiche_l: 25, kreuzung: 25, doppelkurve: 25, dreiweg: 35, tweiche: 25, ueberfuehrung: 50,
+  gerade: 10, kurve: 10, bahnhof: 40, kurvenbahnhof: 40, weiche: 25, weiche_l: 25, kreuzung: 25, doppelkurve: 25, dreiweg: 35, tweiche: 25, ueberfuehrung: 50, doppel: 20, doppelbogen: 20, gleiswechsel: 45, xweiche: 60, yweiche: 25, ykurve: 25,
   prellbock: 5, bogen2: 30, bogen3: 45,
 }
 export const TUNNEL_PREIS = 50, BRUECKE_PREIS = 30

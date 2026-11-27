@@ -6,7 +6,7 @@
  */
 import {
   type Brett, bahnhofGruppen, bahnhofTitel, type Dreh, DXY, grosseKurve, grossGeometrie, type Grund, leer, spalten,
-  ueberWasser, wege, zeilen, Zug, gueterGilt, brettCode, brettAusCode,
+  ueberWasser, wege, zeilen, Zug, gueterGilt, brettCode, brettAusCode, kanteVon, gegenueber,
 } from './gleisbau'
 
 export interface Ergebnis { ok: boolean; text: string; sterne: number }
@@ -77,6 +77,7 @@ function netz(b: Brett): Map<string, string[]> {
       continue
     }
     for (const [a, c] of wege(g)) {
+      // Spuren (4 bis 11) sind eigene Anschlüsse an der Kante
       if (a >= 0) hat.add(key(i, j, a))
       if (c >= 0) hat.add(key(i, j, c))
       if (a >= 0 && c >= 0) dazu(key(i, j, a), key(i, j, c))
@@ -84,7 +85,7 @@ function netz(b: Brett): Map<string, string[]> {
   }
   for (const k of hat) {
     const [i, j, r] = k.split(',').map(Number)
-    const g = key(i + DX[r], j + DY[r], (r + 2) % 4)
+    const g = key(i + DX[kanteVon(r)], j + DY[kanteVon(r)], gegenueber(r))
     if (hat.has(g) && k < g) dazu(k, g)
   }
   for (const k of hat) if (!n.has(k)) n.set(k, [])

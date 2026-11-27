@@ -2,7 +2,7 @@ import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, linieLegen, endenWeg, strassenNachbarn, strasseVerbinden, DXY, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, kanteVon, stellungen, linieLegen, endenWeg, strassenNachbarn, strasseVerbinden, DXY, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
   WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, gueterGilt, zugStartGilt, ohneStrasse, strasseGerade, ueberWasser, wagenGilt, knotenGruppen, HALT_S, brettRand, MIN_SEITE, MAX_BREITE, MAX_HOEHE,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
@@ -63,6 +63,13 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
   { w: { art: 'gleis', gleis: 'ueberfuehrung' }, text: 'Überführung' },
   { w: { art: 'gleis', gleis: 'doppelkurve' }, text: 'Doppelkurve' },
+  // Doppelspur (Michael, 2026-11-27): zwei Spuren in einem Feld, Wechsel zwischen ihnen und von einem Gleis auf zwei
+  { w: { art: 'gleis', gleis: 'doppel' }, text: 'Doppelspur' },
+  { w: { art: 'gleis', gleis: 'doppelbogen' }, text: 'Doppelspur-Kurve' },
+  { w: { art: 'gleis', gleis: 'gleiswechsel' }, text: 'Gleiswechsel' },
+  { w: { art: 'gleis', gleis: 'xweiche' }, text: 'X-Weiche' },
+  { w: { art: 'gleis', gleis: 'yweiche' }, text: 'Y-Weiche' },
+  { w: { art: 'gleis', gleis: 'ykurve' }, text: 'Y-Kurve' },
   { w: { art: 'gleis', gleis: 'prellbock' }, text: 'Prellbock' },
   { w: { art: 'zug', zug: 'p' }, text: 'Personenzug' },
   { w: { art: 'zug', zug: 'g' }, text: 'Güterzug' },
@@ -192,6 +199,15 @@ const ZUG_FARBEN = ['#1f5fa8', '#2e7d32', '#e07b00'], ZUEGE_MAX = 4
 const GUETER_LOK = '#3f6382', GUETER_WAGEN = '#8a4b32'
 /** Busse (seit 2026-11-25): bis vier, je eine Farbe (gewählt) */
 const BUS_FARBEN = ['#f0b323', '#2a9d8f', '#8e5bb5', '#e76f51']
+
+/** ob ein Weg eines Stücks gerade befahrbar ist (die anderen Wege einer Weiche blasser) */
+function wegAktiv(g: Gleis, k: number) {
+  if (!istWeiche(g)) return true
+  const x = g.stellung === 1
+  if (g.art === 'gleiswechsel') return k === 1 || (k === 0 ? !x : x)
+  if (g.art === 'xweiche') return k < 2 ? !x : x
+  return k === (g.stellung ?? 0)
+}
 
 /**
  * Signale an Weichen und Kreuzungen, nur mit mehreren Zügen: rot, solange ein Zug das Feld belegt, sonst grün; ein kleiner Mast in der Ecke oben links
@@ -614,7 +630,7 @@ function imTunnel(b: Brett, x: number, y: number) {
   }
   if (!f.gleis) return false
   const abstand = [y - j, i + 1 - x, j + 1 - y, x - i]
-  const kanten = new Set(wege(f.gleis).flat())
+  const kanten = new Set(wege(f.gleis).flat().map(kanteVon))
   return [0, 1, 2, 3].every((k) => !kanten.has(k) || tunnelWeiter(b, i, j, k) || abstand[k] > PORTAL)
 }
 
@@ -695,7 +711,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
   const cx = i + 0.5, cy = j + 0.5
   const w = wege(g)
   const stuecke: Array<{ s: Stueck; aktiv: boolean }> = w.map(([a, b], k) => ({
-    s: { i, j, ein: a, aus: b }, aktiv: !istWeiche(g) || k === (g.stellung ?? 0),
+    s: { i, j, ein: a, aus: b }, aktiv: wegAktiv(g, k),
   }))
   const punkte = stuecke.map(({ s, aktiv }) => ({ p: wegPunkte(s, s.ein >= 0 && s.aus >= 0 && (s.ein + 2) % 4 !== s.aus ? 14 : 2), aktiv, s }))
   // die inaktive Seite der Weiche zuerst und blasser
@@ -751,7 +767,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
           {/* der Berg über dem Gleis: vom Portal bis zum anderen Portal oder bis an die Kante, wo der Tunnel im Nachbarfeld weitergeht */}
           {punkte.map(({ s }, k) => {
             const l = stueckLaenge(s), fein = wegPunkte(s, 40)
-            const von = s.ein >= 0 && !weiter[s.ein] ? PORTAL / l : 0, bis = s.aus >= 0 && !weiter[s.aus] ? 1 - PORTAL / l : 1
+            const von = s.ein >= 0 && !weiter[kanteVon(s.ein)] ? PORTAL / l : 0, bis = s.aus >= 0 && !weiter[kanteVon(s.aus)] ? 1 - PORTAL / l : 1
             const teil = fein.filter((_, n) => n / 40 >= von - 1e-6 && n / 40 <= bis + 1e-6)
             // darauf gestrichelt, wo das Gleis im Berg verläuft (sonst sah man nicht, in welche Richtung ein Tunnel liegt; Michael, 2026-11-23)
             return teil.length > 1 ? <g key={`d${k}`}>
@@ -761,14 +777,14 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
           })}
           {/* je Ende ein Portal; liegen beide Enden eines Stücks in diesem Feld (ein Tunnel aus einem Feld), nur eines in der Mitte */}
           {punkte.map(({ s }, k) => {
-            const enden = [s.ein, s.aus].filter((kant) => kant >= 0 && !weiter[kant])
+            const enden = [s.ein, s.aus].filter((kant) => kant >= 0 && !weiter[kanteVon(kant)])
             const l = stueckLaenge(s)
             if (enden.length === 2) { const q = stueckPunkt(s, l / 2); return <PortalBild key={k} x={q.x} y={q.y + 0.12} /> }
             return [0, 1].map((e) => {
               const kant = e === 0 ? s.ein : s.aus
-              if (kant < 0 || weiter[kant]) return null
+              if (kant < 0 || weiter[kanteVon(kant)]) return null
               const q = stueckPunkt(s, e === 0 ? PORTAL : l - PORTAL)
-              return <PortalBild key={`${k}${e}`} x={q.x} y={q.y} aus={{ dx: [0, 1, 0, -1][kant], dy: [-1, 0, 1, 0][kant] }} />
+              return <PortalBild key={`${k}${e}`} x={q.x} y={q.y} aus={{ dx: [0, 1, 0, -1][kanteVon(kant)], dy: [-1, 0, 1, 0][kanteVon(kant)] }} />
             })
           })}
         </>
@@ -2100,8 +2116,7 @@ export function Gleisbau() {
       if (naechster) { setZugWahl(naechster); knopfTon(true); return }
       if (ampelGilt(f)) { neu(i, j, { ...f, ampel: f.ampel === 'rot' ? 'gruen' : 'rot' }, false); knopfTon(true); return }
       if (!istWeiche(f.gleis)) { setMeldung('Während der Fahrt lassen sich nur Weichen, Ampeln und Züge antippen. Zum Bauen anhalten.'); return }
-      const wege = f.gleis!.art === 'dreiweg' ? 3 : 2
-      neu(i, j, { ...f, gleis: { ...f.gleis!, stellung: (((f.gleis!.stellung ?? 0) + 1) % wege) as 0 | 1 | 2 } }, false)
+      neu(i, j, { ...f, gleis: { ...f.gleis!, stellung: (((f.gleis!.stellung ?? 0) + 1) % stellungen(f.gleis)) as 0 | 1 | 2 } }, false)
       knopfTon(true)
       return
     }
@@ -3202,7 +3217,7 @@ function SoGehts() {
       <li>Taktfahrplan im Menü (15, 30 oder 60 Minuten): Oben links im Brett steht eine Uhr auf vier Feldern, eine Minute im Spiel dauert eine Sekunde. Liegt dort schon etwas, fragt das Spiel, ob es gelöscht werden soll. Unter Bauwerke macht «Knoten» einen Bahnhof zum Knoten; dort fährt jeder Zug zur nächsten Taktzeit ab. Kommen zwei Züge zur selben Abfahrt, haben sie Anschluss. Baue die Strecke so, dass die Züge kurz vor der Taktzeit ankommen, wie bei Bahn 2000.</li>
       <li>Ein Bahnhof auf einer Kurve wird zum Bahnhof in der Kurve, Bahnhöfe nebeneinander sind ein Bahnhof. Mit «Name» gibst du ihm den Namen
         eines echten Bahnhofs.</li>
-      <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Ein Tipp auf «Züge» öffnet das Zusammenstellen: Lok und Wagen in die leeren Felder ziehen oder antippen, Kosten und Platz stehen darunter; danach aufs Gleis tippen, wo der Zug stehen soll. Ein Tipp auf einen gesetzten Zug ändert ihn. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
+      <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Ein Tipp auf «Züge» öffnet das Zusammenstellen: Lok und Wagen in die leeren Felder ziehen oder antippen, Kosten und Platz stehen darunter; danach aufs Gleis tippen, wo der Zug stehen soll. Ein Tipp auf einen gesetzten Zug ändert ihn. Ein Personenwagen hat 4 Plätze, ein Güterwagen ist für 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
       <li>Mit der Maus zwei rote Punkte verbinden: auf einem roten Punkt drücken und zu einem anderen ziehen, dazwischen entsteht das Gleis mit möglichst wenig Kurven, über Wasser als Brücke, durch Berge als Tunnel.</li>
       <li>Mit der Maus: Ein Klick wählt ein Feld (gestrichelter Rahmen). Entf oder die Rückschritt-Taste nimmt seinen obersten Inhalt weg, Schicht um Schicht bis zur Wiese; Esc hebt die Wahl auf. Rückgängig geht wie immer.</li>
       <li>Tastatur: Tab dreht das Gleis, das unter der Maus schwebt, Umschalt und Tab dreht zurück. Befehl und Z (Mac) oder Ctrl und Z (Windows) macht rückgängig.</li>

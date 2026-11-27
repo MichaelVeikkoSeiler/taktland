@@ -26,6 +26,7 @@ export const zeilen = (b: Brett) => b.length
 
 export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee' | 'acker' | 'industrie'
 export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve' | 'ueberfuehrung' | 'tweiche'
+  | 'doppel' | 'doppelbogen' | 'gleiswechsel' | 'xweiche' | 'yweiche' | 'ykurve'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
 /** wo eine Ampel stehen kann: an einer Geraden, Kurve oder einem Bahnhof */
@@ -43,6 +44,11 @@ export type Dreh = 0 | 1 | 2 | 3
 // seit 2026-11-23 auch gespiegelt, der Abzweig nach links (Michael: «Weichen muss man spiegeln können»)
 // seit 2026-11-27 die T-Weiche: von unten nach links oder rechts, ohne Gerade (Michael: «Wir benötigen noch eine T Weiche»)
 export const istWeiche = (g?: Gleis) => g?.art === 'weiche' || g?.art === 'weiche_l' || g?.art === 'dreiweg' || g?.art === 'tweiche'
+  || g?.art === 'yweiche' || g?.art === 'ykurve' || g?.art === 'gleiswechsel' || g?.art === 'xweiche'
+/** wie viele Stellungen eine Weiche hat */
+export const stellungen = (g?: Gleis) => (g?.art === 'dreiweg' ? 3 : 2)
+/** Doppelspur: Stücke mit zwei Spuren in einem Feld (seit 2026-11-27) */
+export const istDoppelspur = (g?: Gleis) => !!g && ['doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve'].includes(g.art)
 /** Kurve über 2 × 2 oder 3 × 3 Felder (seit 2026-11-22; Michael: «Kurvenelemente auch in 2x2 und 3x3 Kacheln»); n, sonst 0 */
 export const grosseKurve = (g?: Gleis) => (g?.art === 'bogen2' ? 2 : g?.art === 'bogen3' ? 3 : 0)
 
@@ -102,9 +108,41 @@ const WEGE: Record<GleisArt, Array<[number, number]>> = {
   // die Dreiwegweiche: gerade, rechts, links; die grossen Kurven haben keine Wege in einem Feld (grossGeometrie)
   dreiweg: [[2, 0], [2, 1], [2, 3]], bogen2: [], bogen3: [],
   tweiche: [[2, 1], [2, 3]],
+  /*
+   * Doppelspur (Michael, 2026-11-27: «Gleiswechsel, Doppelspur als ein Teil, dafür braucht es aber noch Y- und X-Weichen, welche von der einspurigen innerhalb einer
+   * Kachel auf 2spurig wechseln können. Kurven von 1 zu 2 Gleisen auch nötig»): neben den Kanten 0 bis 3 (Mitte der Kante) die Spuren an einer Kante, 4 + Kante
+   * für die Spur links oder oben (Seite 0), 8 + Kante für die rechts oder unten (Seite 1), je SPUR_ABSTAND neben der Mitte. Eine Spur schliesst nur an dieselbe
+   * Spur im Nachbarfeld an, ein einfaches Gleis nicht an eine Spur. Ohne Drehung: Spuren senkrecht, S0 = 6, S1 = 10, N0 = 4, N1 = 8, O0 = 5, O1 = 9
+   */
+  doppel: [[6, 4], [10, 8]],
+  // Kurve beider Spuren von Süd nach Ost: die innere (S1–O1) und die äussere (S0–O0)
+  doppelbogen: [[10, 9], [6, 5]],
+  // Gleiswechsel: beide Spuren gerade, dazu von S0 hinüber nach N1 (Stellung 1)
+  gleiswechsel: [[6, 4], [10, 8], [6, 8]],
+  // X-Weiche (doppelter Gleiswechsel): dazu von S1 hinüber nach N0
+  xweiche: [[6, 4], [10, 8], [6, 8], [10, 4]],
+  // Y-Weiche: das einfache Gleis von Süd teilt sich in die zwei Spuren im Norden
+  yweiche: [[2, 4], [2, 8]],
+  // Y-Weiche in der Kurve: das einfache Gleis von Süd in die zwei Spuren im Osten
+  ykurve: [[2, 5], [2, 9]],
 }
 
-const drehen = (k: number, d: number) => (k < 0 ? -1 : (k + d) % 4)
+/** Abstand einer Spur von der Mitte der Kante (gewählt) */
+export const SPUR_ABSTAND = 0.22
+/** die Kante (0 bis 3) eines Anschlusses, auch einer Spur; -1 die Mitte */
+export const kanteVon = (p: number) => (p < 0 ? p : p < 4 ? p : (p - 4) % 4)
+/** die Seite einer Spur (0 links oder oben, 1 rechts oder unten), -1 bei der Mitte der Kante */
+export const seiteVon = (p: number) => (p < 4 ? -1 : p < 8 ? 0 : 1)
+/** derselbe Anschluss vom Nachbarfeld aus gesehen */
+export const gegenueber = (p: number) => (p < 4 ? (p + 2) % 4 : 4 + 4 * seiteVon(p) + (kanteVon(p) + 2) % 4)
+const drehen = (k: number, d: number) => {
+  if (k < 0) return -1
+  if (k < 4) return (k + d) % 4
+  // eine Spur: im Uhrzeigersinn wird Nord zu Ost (links zu oben), Ost zu Süd (oben zu rechts): an Ost und West wechselt die Seite
+  let e = kanteVon(k), sd = seiteVon(k)
+  for (let n = 0; n < d; n++) { if (e % 2) sd = 1 - sd; e = (e + 1) % 4 }
+  return 4 + 4 * sd + e
+}
 
 /** die Wege durch ein Gleisstück mit seiner Drehung */
 export function wege(g: Gleis): Array<[number, number]> {
@@ -117,6 +155,16 @@ export function ausgang(g: Gleis | undefined, ein: number): number | null {
   const w = wege(g)
   if (istWeiche(g)) {
     const stamm = w[0][0]
+    if (g.art === 'gleiswechsel' || g.art === 'xweiche') {
+      // je Spur gerade, in Stellung 1 die Wechsel; wer auf einem Wechsel nicht in Fahrtrichtung der Weiche kommt, fährt über sie hinweg (wie eine Weiche von hinten)
+      const [s0, n0] = w[0], [s1, n1] = w[1], x = g.stellung === 1
+      if (ein === s0) return x ? n1 : n0
+      if (ein === n1) return x ? s0 : s1
+      if (g.art === 'xweiche') { if (ein === s1) return x ? n0 : n1; if (ein === n0) return x ? s1 : s0 }
+      if (ein === s1) return n1
+      if (ein === n0) return s0
+      return null
+    }
     if (ein === stamm) return w[Math.min(g.stellung ?? 0, w.length - 1)][1]
     return w.some(([, b]) => b === ein) ? stamm : null
   }
@@ -174,7 +222,8 @@ export function linieLegen(b: Brett, felder: Array<[number, number]>): Brett | s
     const alt = f.gleis
     const k = [...kanten]
     if (alt) {
-      const hat = new Set(wege(alt).flat()), fehlt = k.filter((x) => !hat.has(x))
+      if (istDoppelspur(alt)) return 'Über eine Doppelspur lässt sich keine Linie ziehen, nur an ihren Enden anschliessen.'
+      const hat = new Set(wege(alt).flat().map(kanteVon)), fehlt = k.filter((x) => !hat.has(x))
       if (!fehlt.length) continue
       if (alt.art === 'gerade' && fehlt.length === 2 && (fehlt[0] + 2) % 4 === fehlt[1]) { f.gleis = { art: 'kreuzung', dreh: 0 }; continue }
       // eine Kurve und die Linie auf den beiden anderen Kanten: die Doppelkurve
@@ -385,7 +434,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 
 const SPEICHER = 'taktland.gleisbau.v1'
 const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee', 'acker', 'industrie']
-const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung', 'tweiche']
+const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung', 'tweiche', 'doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve']
 
 /** das gemerkte Brett, nur wenn es heil ist */
 export function brettLesen(): Brett | null {
@@ -405,7 +454,7 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbdrnai', STRASSE_Z = 'WFSBDRNAI', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123'
+const GRUND_Z = 'wfsbdrnai', STRASSE_Z = 'WFSBDRNAI', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!*()àáâãäåæçèéêëìíîï'
 const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
@@ -532,7 +581,7 @@ export function tunnelWeiter(b: Brett, i: number, j: number, k: number) {
     return [G.anfang, G.ende].some((e) => e.i === u && e.j === v && e.kante === gegen)
   }
   if (!n.gleis) return false
-  return wege(n.gleis).some(([a, c]) => a === gegen || c === gegen)
+  return wege(n.gleis).some(([a, c]) => kanteVon(a) === gegen || kanteVon(c) === gegen)
 }
 
 /** ob von Feld (i, j) über die Kante k ein Tunnel weiterführt; für die Enden grosser Kurven */
@@ -686,7 +735,48 @@ export function bahnhofNamen(b: Brett): Map<string, string> {
 
 export const DXY = [DX, DY] as const
 
-const kante = (k: number): [number, number] => (k < 0 ? [0, 0] : [DX[k] * 0.5, DY[k] * 0.5])
+const kante = (k: number): [number, number] => {
+  if (k < 0) return [0, 0]
+  const e = kanteVon(k), o = k < 4 ? 0 : seiteVon(k) ? SPUR_ABSTAND : -SPUR_ABSTAND
+  return e % 2 ? [DX[e] * 0.5, o] : [o, DY[e] * 0.5]
+}
+/** der Punkt eines Anschlusses relativ zur Mitte des Felds */
+export const anschlussPunkt = kante
+
+/**
+ * Wege mit Spuren, die keine Gerade durch die Mitte und kein Viertelkreis um die Ecke sind: eine kubische Kurve, an den Enden quer zur Kante; dazu eine Tabelle
+ * der Längen, damit der Zug gleichmässig fährt (je Paar von Anschlüssen einmal gerechnet)
+ */
+const SPUR_KURVEN = new Map<string, { l: number; t: number[]; d: number[]; p: number[][] }>()
+function spurKurve(ein: number, aus: number) {
+  const key = `${ein},${aus}`
+  let k = SPUR_KURVEN.get(key)
+  if (k) return k
+  const [ax, ay] = kante(ein), [bx, by] = kante(aus), ea = kanteVon(ein), eb = kanteVon(aus)
+  let ca = 0.42, cb = 0.42
+  if (ea >= 0 && eb >= 0 && (ea + 2) % 4 !== eb) {
+    // über Eck: so nah wie möglich am Kreisbogen um die Ecke
+    const ex = (DX[ea] + DX[eb]) * 0.5, ey = (DY[ea] + DY[eb]) * 0.5
+    const r = (Math.hypot(ax - ex, ay - ey) + Math.hypot(bx - ex, by - ey)) / 2
+    ca = cb = 0.5523 * r
+  }
+  const p1 = ea >= 0 ? [ax - DX[ea] * ca, ay - DY[ea] * ca] : [ax, ay], p2 = eb >= 0 ? [bx - DX[eb] * cb, by - DY[eb] * cb] : [bx, by]
+  const N = 40, p: number[][] = [], t: number[] = [], d: number[] = []
+  for (let n = 0; n <= N; n++) {
+    const u = n / N, v = 1 - u
+    p.push([v * v * v * ax + 3 * v * v * u * p1[0] + 3 * v * u * u * p2[0] + u * u * u * bx, v * v * v * ay + 3 * v * v * u * p1[1] + 3 * v * u * u * p2[1] + u * u * u * by])
+    t.push(u); d.push(n ? d[n - 1] + Math.hypot(p[n][0] - p[n - 1][0], p[n][1] - p[n - 1][1]) : 0)
+  }
+  k = { l: d[N], t, d, p }
+  SPUR_KURVEN.set(key, k)
+  return k
+}
+/** ob ein Stück mit Spuren als gerade Strecke gilt (gegenüberliegende Kanten, gleiche Lage quer) */
+const spurGerade = (s: Stueck) => {
+  const [ax, ay] = kante(s.ein), [bx, by] = kante(s.aus)
+  return Math.abs(ax - bx) < 1e-9 || Math.abs(ay - by) < 1e-9
+}
+const mitSpur = (s: Stueck) => !s.gross && (s.ein >= 4 || s.aus >= 4)
 
 /**
  * Ein befahrenes Stück: in Feld (i, j) von Kante «ein» zu Kante «aus» (-1 die Mitte). Bei einer grossen Kurve ist (i, j) das Feld, in dem sie
@@ -757,6 +847,7 @@ const bogen = (s: Stueck) => s.ein >= 0 && s.aus >= 0 && (s.ein + 2) % 4 !== s.a
 
 export function stueckLaenge(s: Stueck) {
   if (s.gross) return s.gross.r * Math.abs(s.gross.da)
+  if (mitSpur(s)) return spurGerade(s) ? 1 : spurKurve(s.ein, s.aus).l
   if (s.ein < 0 || s.aus < 0) return 0.5
   return bogen(s) ? Math.PI / 4 : 1
 }
@@ -769,7 +860,14 @@ export function stueckPunkt(s: Stueck, d: number): { x: number; y: number; w: nu
   }
   const cx = s.i + 0.5, cy = s.j + 0.5
   const [ax, ay] = kante(s.ein), [bx, by] = kante(s.aus)
-  if (!bogen(s)) {
+  if (mitSpur(s) && !spurGerade(s)) {
+    const K = spurKurve(s.ein, s.aus), dd = Math.max(0, Math.min(K.l, d))
+    let n = 1
+    while (n < K.d.length - 1 && K.d[n] < dd) n++
+    const f = (dd - K.d[n - 1]) / Math.max(1e-9, K.d[n] - K.d[n - 1]), a = K.p[n - 1], b2 = K.p[n]
+    return { x: cx + a[0] + (b2[0] - a[0]) * f, y: cy + a[1] + (b2[1] - a[1]) * f, w: Math.atan2(b2[1] - a[1], b2[0] - a[0]) }
+  }
+  if (!bogen(s) || mitSpur(s)) {
     const t = Math.max(0, Math.min(1, d / stueckLaenge(s)))
     return { x: cx + ax + (bx - ax) * t, y: cy + ay + (by - ay) * t, w: Math.atan2(by - ay, bx - ax) }
   }
@@ -794,11 +892,19 @@ export function wegPunkte(s: Stueck, n = 10): Array<{ x: number; y: number; w: n
  * Auf einer Überführung belegt ein Zug nur seine Ebene: das Feld zählt dort als «i,j:0» (Nord–Süd) oder «i,j:1» (Ost–West), so kreuzen sich zwei
  * Züge, ohne aufeinander zu warten
  */
-const ebene = (b: Brett | null, s: Stueck) => (!s.gross && b?.[s.j]?.[s.i]?.gleis?.art === 'ueberfuehrung' ? `${s.i},${s.j}:${(s.ein >= 0 ? s.ein : s.aus) % 2}` : null)
+// auf der Doppelspur (gerade oder Kurve) belegt ein Zug nur seine Spur: «i,j:s0» oder «i,j:s1»
+const spurEbene = (g?: Gleis) => g?.art === 'ueberfuehrung' || g?.art === 'doppel' || g?.art === 'doppelbogen'
+const ebene = (b: Brett | null, s: Stueck) => {
+  if (s.gross) return null
+  const a = b?.[s.j]?.[s.i]?.gleis?.art
+  if (a === 'ueberfuehrung') return `${s.i},${s.j}:${kanteVon(s.ein >= 0 ? s.ein : s.aus) % 2}`
+  if (a === 'doppel' || a === 'doppelbogen') return `${s.i},${s.j}:s${seiteVon(s.ein >= 4 ? s.ein : s.aus)}`
+  return null
+}
 function ebenenFelder(b: Brett | null, keys: Set<string>, stuecke: Stueck[]): Set<string> {
   if (!b) return keys
   const raus = new Set(keys)
-  for (const k of keys) { const [i, j] = k.split(',').map(Number); if (b[j]?.[i]?.gleis?.art === 'ueberfuehrung') raus.delete(k) }
+  for (const k of keys) { const [i, j] = k.split(',').map(Number); if (spurEbene(b[j]?.[i]?.gleis)) raus.delete(k) }
   for (const s of stuecke) { const e = ebene(b, s); if (e && keys.has(`${s.i},${s.j}`)) raus.add(e) }
   return raus
 }
@@ -820,11 +926,11 @@ const umgekehrt = (s: Stueck): Stueck => (s.gross
 /** das Stück, das an das Ende von s anschliesst, oder null */
 export function naechstes(b: Brett, s: Stueck): Stueck | null {
   if (s.aus < 0) return null
-  const i = s.i + DX[s.aus], j = s.j + DY[s.aus]
+  const e = kanteVon(s.aus), i = s.i + DX[e], j = s.j + DY[e]
   if (i < 0 || j < 0 || i >= spalten(b) || j >= zeilen(b)) return null
-  const ein = (s.aus + 2) % 4
+  const ein = gegenueber(s.aus)
   const f = b[j][i]
-  if (f.teil || grosseKurve(f.gleis)) return grossStueck(b, f, i, j, ein)
+  if (f.teil || grosseKurve(f.gleis)) return ein < 4 ? grossStueck(b, f, i, j, ein) : null
   const aus = ausgang(f.gleis, ein)
   return aus === null ? null : { i, j, ein, aus }
 }
@@ -856,14 +962,14 @@ function voraus(b: Brett, s: Stueck): number {
  */
 export function offeneEnden(b: Brett): Array<{ x: number; y: number; k: number }> {
   const raus: Array<{ x: number; y: number; k: number }> = []
-  const verbunden = (i: number, j: number, k: number) => {
-    const u = i + DX[k], v = j + DY[k]
+  const verbunden = (i: number, j: number, p: number) => {
+    const k = kanteVon(p), u = i + DX[k], v = j + DY[k]
     if (u < 0 || v < 0 || u >= spalten(b) || v >= zeilen(b)) return false
-    const ein = (k + 2) % 4, n = b[v][u]
-    if (n.teil || grosseKurve(n.gleis)) return grossStueck(b, n, u, v, ein) !== null
+    const ein = gegenueber(p), n = b[v][u]
+    if (n.teil || grosseKurve(n.gleis)) return ein < 4 && grossStueck(b, n, u, v, ein) !== null
     return ausgang(n.gleis, ein) !== null
   }
-  const dazu = (i: number, j: number, k: number) => { if (!verbunden(i, j, k)) raus.push({ x: i + 0.5 + DX[k] * 0.5, y: j + 0.5 + DY[k] * 0.5, k }) }
+  const dazu = (i: number, j: number, p: number) => { if (!verbunden(i, j, p)) { const [x, y] = kante(p); raus.push({ x: i + 0.5 + x, y: j + 0.5 + y, k: kanteVon(p) }) } }
   for (let j = 0; j < zeilen(b); j++) for (let i = 0; i < spalten(b); i++) {
     const g = b[j][i].gleis
     if (!g) continue
