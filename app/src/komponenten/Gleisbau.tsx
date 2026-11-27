@@ -2338,7 +2338,9 @@ export function Gleisbau() {
   const naechste = aufgabe && !(aufgabe as { betrieb?: Auftrag }).betrieb ? AUFGABEN[AUFGABEN.indexOf(aufgabe) + 1] : undefined
   // im Bahnbetrieb nur Gleise und Züge, die Ampel bei den Zügen (Michael, 2026-11-26: «Bei den Aufgaben «Bahnbetrieb» braucht man zur Auswahl eigentlich nur
   // Gleise, Züge und sonst nichts»); Bahnhöfe und Schuppen gibt der Auftrag vor, Tunnel und Brücken entstehen mit «Linie» von selbst
-  const gruppen = auftrag ? [{ titel: 'Gleise', l: [...GRUPPEN[0].l, ...GRUPPEN[2].l.filter((x) => x.w.art === 'ampel')] }] : GRUPPEN
+  // die Ampel im Bahnbetrieb vorne nach Linie, Gerade und Kurve, sonst lag sie hinter allen Weichen ausser Sicht (Michael, 2026-11-27: «Bei den Aufträgen muss man
+  // eine Ampel einbauen können»)
+  const gruppen = auftrag ? [{ titel: 'Gleise', l: [...GRUPPEN[0].l.slice(0, 3), ...GRUPPEN[2].l.filter((x) => x.w.art === 'ampel'), ...GRUPPEN[0].l.slice(3)] }] : GRUPPEN
   useEffect(() => { if (!gruppen.some((g) => g.titel === reiter)) setReiter(gruppen[0].titel) }, [gruppen, reiter])
   // im Tutorial der jetzige Hinweis: der erste, der noch nicht erledigt ist; sein Werkzeug und seine Felder leuchten
   const werkzeugName = GRUPPEN.flatMap((g) => g.l).find((x) => gleich(x.w, werkzeug))?.text ?? ''
