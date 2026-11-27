@@ -1745,6 +1745,9 @@ Virtuelle Schweiz am Desktop randlos seit 2026-11-27 (Michael: «Bitte auf dem D
              dort 85 % der Höhe hoch statt 25 zu 28; in Taktland (#/schweiz3d) und auf 3dland.ch; html mit overflow-x: clip (100vw zählt die Bildlaufleiste mit); andere
              Seiten und Handy, Tablet wie bisher; im Browser hier mit 1600 × 1000 und Pixel 7 angeschaut
 
+Texte auf 3dland.ch am Desktop seit 2026-11-27 über die ganze Breite der Spalte statt höchstens 48rem (Michael: «bitte die Texte auf 3DLand auf die ganze Breite
+             laufen lassen»; Klasse text-breit auf der Seite in dreidland.tsx, index.css); in Taktland bleibt der Fliesstext schmal
+
 ## Offen: Rückmeldung zur Oberfläche (2026-11-27)
 
 Michael: «Alles merken aber schlag mir nochmals die dringendsten Sachen vor». Noch nicht gebaut, angeschaut im Browser hier (Handy Pixel 7, iPad hoch und quer,

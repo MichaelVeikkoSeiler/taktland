@@ -82,7 +82,7 @@ function FusszeileEn() {
 function DreiDLand() {
   const en = sprache() === 'en'
   return (
-    <div className="min-h-screen bg-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
+    <div className="text-breit min-h-screen bg-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <div className="mx-auto max-w-2xl md:max-w-3xl xl:max-w-6xl">
         {/* Auftakt rückt mit -mx-4 -mt-8 an den Rand der Seite von Taktland; hier dieser Rand */}
         {/* -mb-6 hebt den Abstand unter dem Auftaktbild auf, das Modell schliesst gleich an (Michael, 2026-10-25: «Weissen Rahmen um die

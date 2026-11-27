@@ -285,6 +285,8 @@ html { overflow-x: clip; }
 /* Auf dem Desktop ist die Spalte breiter (App.tsx); Fliesstext bleibt lesbar schmal */
 @media (min-width: 80rem) {
   p { max-width: 48rem; }
+  /* auf 3dland.ch laufen die Texte über die ganze Breite der Spalte (Michael, 2026-11-27: «bitte die Texte auf 3DLand auf die ganze Breite laufen lassen») */
+  .text-breit p { max-width: none; }
 }
 
 /* Fahrtblatt: auf dem Bildschirm verkleinert, gedruckt auf A4 in voller Grösse */
