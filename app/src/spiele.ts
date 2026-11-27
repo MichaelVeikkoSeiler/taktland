@@ -118,7 +118,7 @@ export const SPIELE: Spiel[] = [
   // haben, als Puzzle bereitstellen?»; das Bild der Kachel seit 2026-11-22 Michaels eigenes («Hier die Bilder fürs Bilderpuzzle, hell und dunkel»)
   {
     id: 'bilderpuzzle', titel: 'Bilderpuzzle', status: 'spielbereit', adresse: '#/bilderpuzzle',
-    kurz: 'Die Bilder von Taktland oder ein eigenes Foto, in 4 bis 96 Teilen.',
+    kurz: 'Die Bilder von Taktland oder ein eigenes Foto, in 4 bis 78 Teilen.',
     bild: { hell: bilderpuzzleHell, dunkel: bilderpuzzleDunkel, alt: 'Illustration: Eine Frau legt im Bahnhof ein Puzzle mit einem Zug auf einem Viadukt, daneben ein Kaffeebecher, draussen ein Zug am Perron.' },
     beschreibung: 'Wähle, wie viele Teile es sein sollen, und ein Bild von Taktland oder ein eigenes Foto. Zieh die Teile an ihren Platz: '
       + 'Stimmt er, rastet das Teil ein.',
