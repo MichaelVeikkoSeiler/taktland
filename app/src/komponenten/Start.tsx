@@ -12,7 +12,14 @@ import standortHell from '../assets/auftakt-standort-hell.webp'
 import standortDunkel from '../assets/auftakt-standort-dunkel.webp'
 import logbuchHell from '../assets/auftakt-logbuch-hell.webp'
 import logbuchDunkel from '../assets/auftakt-logbuch-dunkel.webp'
+import probefahrenHell from '../assets/auftakt-probefahren.webp'
+import probefahrenDunkel from '../assets/auftakt-probefahren-dunkel.webp'
 import { SPIELE } from '../spiele'
+
+/* seit 2026-11-27 am Desktop (ab xl) «Probefahren» statt «Mitfahren» oben und «Mitfahren» statt «In deiner Nähe» unten (Michael: «Bitte auf der Desktop
+   Versoin von Taktland das Mitfahren dort platzieren wo jetzt «In deiner Nähe». «In deiner Nähe» braucht es auf der Desktop-Versoin eigentlich gar nicht
+   (oder?). Bei Mitfahren sollst du dann bitte «Probefahren» platzieren»); Handy und Tablet wie bisher */
+const NUR_KLEIN = 'flex xl:hidden', NUR_DESKTOP = 'hidden xl:flex'
 
 /** die drei grossen Kacheln oben (Virtuelle Schweiz mit dem Bild der VR-Brille, Michael, 2026-11-27) */
 const GROSS = [
@@ -20,8 +27,10 @@ const GROSS = [
     text: 'Das ganze Land in 3D, mit Zügen laut Fahrplan und Echtzeit, Wetter und Sonne, auch mit VR-Brille' },
   // seit 2026-11-27 «Fahren» an zweiter Stelle und ohne «Im Zug:», «Spielen» an dritter (Michael: «Bitte Spiele als dritte Kachel und das zweite soll nur Fahren heissen»)
   // seit 2026-11-27 «Mitfahren» (Michael: «Ja, Mitfahren ist besser»)
-  { titel: 'Mitfahren', adresse: '#/fahrt', hell: fahrtHell, dunkel: fahrtDunkel,
+  { titel: 'Mitfahren', adresse: '#/fahrt', hell: fahrtHell, dunkel: fahrtDunkel, klasse: NUR_KLEIN,
     text: 'Im Zug per GPS sehen, was als Nächstes kommt: Tunnel, Brücken, Bahnhöfe' },
+  { titel: 'Probefahren', adresse: '#/modellbahn', hell: probefahrenHell, dunkel: probefahrenDunkel, klasse: NUR_DESKTOP,
+    text: 'Eine Strecke als Modell im Gelände, im Führerstand selbst fahren, auch mit VR-Brille' },
   { titel: 'Spielen', adresse: '#/spiele', hell: spieleHell, dunkel: spieleDunkel,
     text: `${SPIELE.filter((x) => x.status === 'spielbereit' && !x.nichtInUebersicht).length} Spiele: Bahnhöfe raten, Strecken erkennen, Probefahren, Gleise bauen` },
 ]
@@ -29,7 +38,8 @@ const GROSS = [
 const KLEIN = [
   { titel: 'Bahnhöfe und Strecken', adresse: '#/bahnhoefe', hell: bahnhoefeHell, dunkel: bahnhoefeDunkel,
     text: (i: BahnhofIndex) => `${zahl(i.bahnhoefe_gesamt)} Bahnhöfe nachschlagen` },
-  { titel: 'In deiner Nähe', adresse: '#/standort', hell: standortHell, dunkel: standortDunkel, text: () => 'Was um dich herum liegt' },
+  { titel: 'In deiner Nähe', adresse: '#/standort', hell: standortHell, dunkel: standortDunkel, klasse: NUR_KLEIN, text: () => 'Was um dich herum liegt' },
+  { titel: 'Mitfahren', adresse: '#/fahrt', hell: fahrtHell, dunkel: fahrtDunkel, klasse: NUR_DESKTOP, text: () => 'Im Zug per GPS, was als Nächstes kommt' },
   { titel: 'Reisetasche', adresse: '#/logbuch', hell: logbuchHell, dunkel: logbuchDunkel, text: () => 'Logbuch, Sammelheft, Fahrblatt' },
 ]
 
@@ -65,12 +75,14 @@ export function Start({ index }: { index: BahnhofIndex }) {
         seit 2026-11-27 oben drei grosse Kacheln statt des langen Texts, der Text in einer Klappe «Mehr über Taktland» (Michael, nach der Rückmeldung zur
         Oberfläche: «Ja gerne so einbauen, mit dem VR-Bild»): Neue sehen sofort, wo sie tippen können
       */}
-      <p className="mt-2 max-w-3xl text-[17px] leading-snug">
+      {/* über die ganze Breite, nicht die 48rem des Fliesstexts (Michael, 2026-11-27: «Der Einleitungstext bricht nun nach «Bund,» um, der Text darf aber wenn er
+          Platz hat über die ganze Breite laufen») */}
+      <p className="mt-2 text-[17px] leading-snug" style={{ maxWidth: 'none' }}>
         Die Bahn der Schweiz zum Erkunden, Spielen und Mitfahren. Aus offenen Daten von Bahn und Bund, kostenlos und ohne Konto.
       </p>
       <ul className="mt-4 grid gap-3 md:grid-cols-3">
         {GROSS.map((k) => (
-          <li key={k.adresse} className="flex">
+          <li key={k.titel} className={'klasse' in k && k.klasse ? k.klasse : 'flex'}>
             <a href={k.adresse} className="kachel kachel-link flex w-full flex-col overflow-hidden">
               <picture>
                 <source srcSet={k.dunkel} media="(prefers-color-scheme: dark)" />
@@ -87,7 +99,7 @@ export function Start({ index }: { index: BahnhofIndex }) {
       <h3 className="mt-6 text-lg font-bold">Ausserdem</h3>
       <ul className="mt-2 grid gap-2 md:grid-cols-3">
         {KLEIN.map((k) => (
-          <li key={k.adresse} className="flex">
+          <li key={k.titel} className={'klasse' in k && k.klasse ? k.klasse : 'flex'}>
             <a href={k.adresse} className="kachel kachel-link flex w-full items-center gap-3 p-2">
               <picture className="flex-none">
                 <source srcSet={k.dunkel} media="(prefers-color-scheme: dark)" />
