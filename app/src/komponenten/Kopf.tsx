@@ -217,7 +217,8 @@ export function Kopf({ aktiv, startseite, anleitung = false, fahrt = null }: {
     // bisherigen Bild der Spiele, das Duell mit seinem
     // seit 2026-11-20 Probefahren mit eigenem Bild, die Übersicht behält das der Modellbahn
     : aktiv === 'modellbahn' ? BILDER.probefahren
-    : aktiv === 'spiele' ? BILDER.modellbahn
+    // die Übersicht seit 2026-11-27 mit dem Bild von Probefahren (Michael: «Ja das von Probefahren»; das der Modellbahn zeigt die VR-Brille wie die Virtuelle Schweiz)
+    : aktiv === 'spiele' ? BILDER.probefahren
     : aktiv === 'schweiz11' ? BILDER.spiele
     // das Bilderpuzzle vorerst mit dem Bild der Startseite, bis es ein eigenes gibt (2026-11-21)
     : aktiv === 'bilderpuzzle' ? BILDER.bilderpuzzle
