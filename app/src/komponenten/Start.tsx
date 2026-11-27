@@ -19,7 +19,7 @@ const GROSS = [
   { titel: 'Virtuelle Schweiz', adresse: '#/schweiz3d', hell: virtuellHell, dunkel: virtuellDunkel,
     text: 'Das ganze Land in 3D, mit Zügen laut Fahrplan und Echtzeit, Wetter und Sonne, auch mit VR-Brille' },
   { titel: 'Spielen', adresse: '#/spiele', hell: spieleHell, dunkel: spieleDunkel,
-    text: `${SPIELE.filter((x) => x.status === 'spielbereit').length} Spiele: Bahnhöfe raten, Strecken erkennen, Probefahren, Gleise bauen` },
+    text: `${SPIELE.filter((x) => x.status === 'spielbereit' && !x.nichtInUebersicht).length} Spiele: Bahnhöfe raten, Strecken erkennen, Probefahren, Gleise bauen` },
   { titel: 'Im Zug: Fahren', adresse: '#/fahrt', hell: fahrtHell, dunkel: fahrtDunkel,
     text: 'Unterwegs per GPS sehen, was als Nächstes kommt: Tunnel, Brücken, Bahnhöfe' },
 ]

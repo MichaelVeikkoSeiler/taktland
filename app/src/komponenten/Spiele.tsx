@@ -11,12 +11,12 @@ export function Spiele() {
     <div className="px-4 pb-4">
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Spiele</h1>
       <p className="mt-2 leading-relaxed">
-        Entdecke Taktland spielerisch. Hier findest du die «Virtuelle Schweiz», «Probefahren», Geo, «Wo fahre ich?», das «Fahrplan-Puzzle», das Bilderpuzzle, «Reisedauer», das Duell und die Bahnhofsuche; weitere Spiele
+        Entdecke Taktland spielerisch. Hier findest du «Probefahren», Geo, «Wo fahre ich?», das «Fahrplan-Puzzle», das Bilderpuzzle, «Reisedauer», das Duell und die Bahnhofsuche; weitere Spiele
         rund um die Bahn in der Schweiz folgen.
       </p>
       {/* zwei Spalten, zwei Zeilen: jedes Spiel ein Bild mit Titel, das Bild ist der Knopf (Michael, 2026-10-10) */}
       <ul className="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-4">
-        {SPIELE.filter((s) => s.status === 'spielbereit' || (s.status === 'im-bau' && s.bild)).map((s) => <Karte key={s.id} spiel={s} />)}
+        {SPIELE.filter((s) => !s.nichtInUebersicht && (s.status === 'spielbereit' || (s.status === 'im-bau' && s.bild))).map((s) => <Karte key={s.id} spiel={s} />)}
       </ul>
       {/* Platzhalter schmal, damit das Spielbare die Hauptsache bleibt (Michael, 2026-10-03) */}
       {SPIELE.some((s) => s.status === 'im-bau' && !s.bild) && (

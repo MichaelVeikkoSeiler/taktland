@@ -38,6 +38,8 @@ export interface Spiel {
   adresse?: string
   /** kurz für die Kachel in der Übersicht, die Beschreibung steht beim Spiel */
   kurz?: string
+  /** nicht in der Übersicht der Spiele, weil es eine eigene Kachel auf der Startseite hat (seit 2026-11-27, die Virtuelle Schweiz) */
+  nichtInUebersicht?: true
   /** kleines Bild auf der Kachel, hell und dunkel */
   bild?: { hell: string; dunkel: string; alt: string }
 }
@@ -52,7 +54,9 @@ export const SPIELE: Spiel[] = [
     // seit 2026-11-06 «3D-Land» wie 3dland.ch, mit dessen Bildern (Michael: «alles auf Taktland laufen … 3D Schweiz heisst dann 3D Land und hat
     // die genau identischen Funktionen wie bei 3DLand.ch»)
     // seit 2026-11-12 wieder «Virtuelle Schweiz» statt «Virtuell» (Michael: «Spiel «Virtuell» soll wieder «Virtuelle Schweiz» heissen»)
-    id: 'schweiz3d', titel: 'Virtuelle Schweiz', status: 'spielbereit', adresse: '#/schweiz3d',
+    // seit 2026-11-27 nicht mehr unter Spiele, sie hat eine eigene Kachel auf der Startseite (Michael: «Bei den Spielen können wir Virtuelle Schweiz entfernen da es
+    // ja auf der Startseite eine eigene Kachel hat»)
+    id: 'schweiz3d', titel: 'Virtuelle Schweiz', status: 'spielbereit', adresse: '#/schweiz3d', nichtInUebersicht: true,
     kurz: 'Die ganze Schweiz als Modell: einen Ort, eine Adresse, einen Gipfel oder See suchen und eintauchen, auch in der VR-Brille.',
     bild: { hell: schweiz3dHell, dunkel: schweiz3dDunkel, alt: 'Illustration: Jemand mit VR-Brille zielt am Tisch mit dem Strahl eines Controllers auf einen rot-weissen Zug, der im Modell einer Landschaft mit Wald, Tunneln und Bergen über einen Viadukt fährt; über dem Zug ein Schild «IC 0X» mit Pfeil, daneben ein Handy mit demselben Modell, draussen ein See und Berge.' },
     beschreibung: 'Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See, und tauche ein, bis auf ein Stück '
@@ -139,4 +143,4 @@ export const SPIELE: Spiel[] = [
 
 /** Alle Bereiche, die zum Hauptreiter «Spiele» gehören: die Übersicht und jedes spielbereite
  *  Spiel (seine id ist auch sein Bereich in Kopf.tsx und App.tsx) */
-export const SPIEL_BEREICHE: string[] = ['spiele', ...SPIELE.filter((s) => s.status === 'spielbereit').map((s) => s.id)]
+export const SPIEL_BEREICHE: string[] = ['spiele', ...SPIELE.filter((s) => s.status === 'spielbereit' && !s.nichtInUebersicht).map((s) => s.id)]
