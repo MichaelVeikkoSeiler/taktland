@@ -26,7 +26,7 @@ export const zeilen = (b: Brett) => b.length
 
 export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee' | 'acker' | 'industrie'
 export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve' | 'ueberfuehrung' | 'tweiche'
-  | 'doppel' | 'doppelbogen' | 'gleiswechsel' | 'xweiche' | 'yweiche' | 'ykurve' | 'drehscheibe'
+  | 'doppel' | 'doppelbogen' | 'gleiswechsel' | 'xweiche' | 'yweiche' | 'ykurve' | 'drehscheibe' | 'ykurve_l'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
 /** wo eine Ampel stehen kann: an einer Geraden, Kurve oder einem Bahnhof */
@@ -55,11 +55,11 @@ export const bauGleis = (b: Bauart): GleisArt => (b === 'depot' ? 'prellbock' : 
 // seit 2026-11-23 auch gespiegelt, der Abzweig nach links (Michael: «Weichen muss man spiegeln können»)
 // seit 2026-11-27 die T-Weiche: von unten nach links oder rechts, ohne Gerade (Michael: «Wir benötigen noch eine T Weiche»)
 export const istWeiche = (g?: Gleis) => g?.art === 'weiche' || g?.art === 'weiche_l' || g?.art === 'dreiweg' || g?.art === 'tweiche'
-  || g?.art === 'yweiche' || g?.art === 'ykurve' || g?.art === 'gleiswechsel' || g?.art === 'xweiche' || g?.art === 'drehscheibe'
+  || g?.art === 'yweiche' || g?.art === 'ykurve' || g?.art === 'gleiswechsel' || g?.art === 'xweiche' || g?.art === 'drehscheibe' || g?.art === 'ykurve_l'
 /** wie viele Stellungen eine Weiche hat */
 export const stellungen = (g?: Gleis) => (g?.art === 'dreiweg' || g?.art === 'drehscheibe' ? 3 : 2)
 /** Doppelspur: Stücke mit zwei Spuren in einem Feld (seit 2026-11-27) */
-export const istDoppelspur = (g?: Gleis) => !!g && ['doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve'].includes(g.art)
+export const istDoppelspur = (g?: Gleis) => !!g && ['doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve', 'ykurve_l'].includes(g.art)
 /** Kurve über 2 × 2 oder 3 × 3 Felder (seit 2026-11-22; Michael: «Kurvenelemente auch in 2x2 und 3x3 Kacheln»); n, sonst 0 */
 export const grosseKurve = (g?: Gleis) => (g?.art === 'bogen2' ? 2 : g?.art === 'bogen3' ? 3 : 0)
 
@@ -138,12 +138,15 @@ const WEGE: Record<GleisArt, Array<[number, number]>> = {
   yweiche: [[2, 4], [2, 8]],
   // Y-Weiche in der Kurve: das einfache Gleis von Süd in die zwei Spuren im Osten
   ykurve: [[2, 5], [2, 9]],
+  // gespiegelt: in die zwei Spuren im Westen (Michael, 2026-11-27: «Die gespiegelte Variante bräuchte ich auch noch»)
+  ykurve_l: [[2, 7], [2, 11]],
   // Drehscheibe (seit 2026-11-27): vom Gleis im Süden auf eines der drei anderen, die Bühne dreht dorthin; vereinfacht wie eine Dreiwegweiche
   drehscheibe: [[2, 0], [2, 1], [2, 3]],
 }
 
 /** Abstand einer Spur von der Mitte der Kante (gewählt) */
-export const SPUR_ABSTAND = 0.22
+// seit 2026-11-27 0,17 statt 0,22 (Michael: «die Gleise noch etwas näher zueinander nehmen»)
+export const SPUR_ABSTAND = 0.17
 /** die Kante (0 bis 3) eines Anschlusses, auch einer Spur; -1 die Mitte */
 export const kanteVon = (p: number) => (p < 0 ? p : p < 4 ? p : (p - 4) % 4)
 /** die Seite einer Spur (0 links oder oben, 1 rechts oder unten), -1 bei der Mitte der Kante */
@@ -449,7 +452,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 
 const SPEICHER = 'taktland.gleisbau.v1'
 const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee', 'acker', 'industrie']
-const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung', 'tweiche', 'doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve', 'drehscheibe']
+const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung', 'tweiche', 'doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve', 'drehscheibe', 'ykurve_l']
 
 /** das gemerkte Brett, nur wenn es heil ist */
 export function brettLesen(): Brett | null {
@@ -469,7 +472,7 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbdrnai', STRASSE_Z = 'WFSBDRNAI', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!*()àáâãäåæçèéêëìíîïðñòó'
+const GRUND_Z = 'wfsbdrnai', STRASSE_Z = 'WFSBDRNAI', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!*()àáâãäåæçèéêëìíîïðñòóôõöø'
 const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
