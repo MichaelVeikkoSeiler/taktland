@@ -184,7 +184,9 @@ function gebietPfad(b: Brett, grund: Feld['grund'], e: number) {
 }
 function gebietPfadWenn(b: Brett, gilt: (f: Feld) => boolean, e: number, rund = RUND) {
   const sp = spalten(b), ze = zeilen(b)
-  const gleich = (i: number, j: number) => i >= 0 && j >= 0 && i < sp && j < ze && gilt(b[j][i])
+  // ausserhalb des Bretts geht das Gebiet weiter: am Rand kein Einzug, See, Wald und Gelände laufen bis an die Kante (Michael, 2026-11-27: «Wenn See oder
+  // Geländeelemente an den Rand kommen, dann sollen sie dort auch bis zum Rand gezeichnet werden»)
+  const gleich = (i: number, j: number) => (i < 0 || j < 0 || i >= sp || j >= ze ? true : gilt(b[j][i]))
   const teile: string[] = []
   for (let j = 0; j < ze; j++) for (let i = 0; i < sp; i++) {
     if (!gilt(b[j][i])) continue
