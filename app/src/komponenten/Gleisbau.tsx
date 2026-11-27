@@ -2,7 +2,7 @@ import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
-  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, kanteVon, stellungen, linieLegen, endenWeg, strassenNachbarn, strasseVerbinden, DXY, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
+  anfangZumGriff, grossAnfang, grosseEntfernen, grosseKurve, grosseLegen, grossGeometrie, ampelGilt, istBahnhof, istWeiche, kanteVon, stellungen, linieLegen, bauGleis, type Bauart, type Objektart, feldOhneStrom, endenWeg, strassenNachbarn, strasseVerbinden, DXY, offeneEnden, strasseMoeglich, spalten, type Stueck, stueckLaenge, stueckPunkt, tunnelWeiter, tunnelWeiterAnKante, verschieben, type WagenLage, WAGEN_LAENGE, wege, wegPunkte, zeilen, Zug, zufallsBeispiel,
   WAGEN, WAGEN_MIN, WAGEN_MAX, bauGilt, gueterGilt, zugStartGilt, ohneStrasse, strasseGerade, ueberWasser, wagenGilt, knotenGruppen, HALT_S, brettRand, MIN_SEITE, MAX_BREITE, MAX_HOEHE,
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
@@ -11,6 +11,7 @@ import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortsc
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
+import { DrehscheibeBild, LaermBild, NeuesObjektBild, UnterfuehrungBild, ViaduktBild } from './GleisbauBauwerke'
 import { bild, GelaendeBild, IndustrieBild, IndustrieFeld, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
 import { type Gueter, gueterHalt, gueterStart, gueterWagen, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
@@ -47,7 +48,7 @@ type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
   | { art: 'fluss' } | { art: 'wagen' } | { art: 'knoten' } | { art: 'hang'; hang?: 18 | 19 } | { art: 'strom' }
   | { art: 'haltestelle' } | { art: 'wende' } | { art: 'strbruecke' } | { art: 'strtunnel' } | { art: 'zug'; zug: 'p' | 'g' }
-  | { art: 'bau'; bau: 'depot' | 'gueter' | 'galerie' } | { art: 'objekt'; objekt: 'kirche' | 'bauernhof' }
+  | { art: 'bau'; bau: Bauart } | { art: 'objekt'; objekt: Objektart } | { art: 'viadukt' }
 
 const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'linie' }, text: 'Linie' },
@@ -60,6 +61,7 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'weiche_l' }, text: 'Weiche L' },
   { w: { art: 'gleis', gleis: 'dreiweg' }, text: 'Dreiweg' },
   { w: { art: 'gleis', gleis: 'tweiche' }, text: 'T-Weiche' },
+  { w: { art: 'gleis', gleis: 'drehscheibe' }, text: 'Drehscheibe' },
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
   { w: { art: 'gleis', gleis: 'ueberfuehrung' }, text: 'Überführung' },
   { w: { art: 'gleis', gleis: 'doppelkurve' }, text: 'Doppelkurve' },
@@ -84,6 +86,15 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'bau', bau: 'gueter' }, text: 'Güter' },
   { w: { art: 'bau', bau: 'galerie' }, text: 'Galerie' },
   { w: { art: 'bruecke' }, text: 'Brücke' },
+  // seit 2026-11-27 (Michael: «bitte alles bauen»): gezeichnet, bis eigene Bilder kommen
+  { w: { art: 'viadukt' }, text: 'Viadukt' },
+  { w: { art: 'bau', bau: 'laerm' }, text: 'Lärmschutz' },
+  { w: { art: 'bau', bau: 'unterfuehrung' }, text: 'Unterführung' },
+  { w: { art: 'objekt', objekt: 'unterwerk' }, text: 'Unterwerk' },
+  { w: { art: 'objekt', objekt: 'stellwerk' }, text: 'Stellwerk' },
+  { w: { art: 'objekt', objekt: 'wasserturm' }, text: 'Wasserturm' },
+  { w: { art: 'objekt', objekt: 'tankstelle' }, text: 'Tankstelle' },
+  { w: { art: 'objekt', objekt: 'hafenkran' }, text: 'Hafenkran' },
 ]
 const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'grund', grund: 'wiese' }, text: 'Wiese' },
@@ -120,7 +131,7 @@ const ENTFERNEN = { w: { art: 'weg' } as Werkzeug, text: 'Entfernen' }
 const GRUPPEN = [
   { titel: 'Gleise', l: [...GLEISE.filter((x) => x.w.art === 'linie' || x.w.art === 'strom' || (x.w.art === 'gleis' && x.w.gleis !== 'bahnhof')), ENTFERNEN] },
   { titel: 'Züge', l: GLEISE.filter((x) => x.w.art === 'zug' || x.w.art === 'wagen') },
-  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'ampel', 'bau', 'knoten'].includes(x.w.art)), ENTFERNEN] },
+  { titel: 'Bauwerke', l: [...GLEISE.filter((x) => (x.w.art === 'gleis' && x.w.gleis === 'bahnhof') || ['name', 'tunnel', 'bruecke', 'viadukt', 'ampel', 'bau', 'knoten', 'objekt'].includes(x.w.art)), ENTFERNEN] },
   { titel: 'Strasse', l: STRASSEN },
   { titel: 'Landschaft', l: LANDSCHAFT.filter((x) => x.w.art !== 'strasse') },
 ]
@@ -588,7 +599,7 @@ function OhneStromBild({ brett }: { brett: Brett }) {
 const DRAHT = '#2f2f2f'
 function OberleitungBild({ brett }: { brett: Brett }) {
   const draht: string[] = []
-  const mitStrom = (x: number, y: number) => { const f = brett[Math.floor(y)]?.[Math.floor(x)]; return !!f && !f.ohneStrom && !imTunnel(brett, x, y) }
+  const mitStrom = (x: number, y: number) => !feldOhneStrom(brett, Math.floor(x), Math.floor(y)) && !imTunnel(brett, x, y)
   const linie = (pts: Array<{ x: number; y: number }>) => {
     let d = ''
     pts.forEach((q, k) => { const an = mitStrom(q.x, q.y); d += an ? `${d && k && mitStrom(pts[k - 1].x, pts[k - 1].y) ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)} ` : '' })
@@ -602,7 +613,8 @@ function OberleitungBild({ brett }: { brett: Brett }) {
       linie(Array.from({ length: 12 * n + 1 }, (_, k) => { const a = G.a0 + (G.da * k) / (12 * n); return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) } }))
       continue
     }
-    for (const [a, c] of wege(g)) linie(wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10))
+    // über der Drehscheibe kein Fahrdraht (die Bühne dreht)
+    if (g.art !== 'drehscheibe') for (const [a, c] of wege(g)) linie(wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10))
   }
   if (!draht.length) return null
   return <path d={draht.join(' ')} stroke={DRAHT} strokeWidth={0.012} fill="none" opacity={0.75} pointerEvents="none" />
@@ -718,7 +730,9 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
   punkte.sort((a, b) => Number(a.aktiv) - Number(b.aktiv))
   return (
     <g>
-      {ueberWasser(f) && punkte.map(({ p }, k) => (
+      {f.viadukt && punkte.map(({ p }, k) => <ViaduktBild key={`v${k}`} punkte={p} />)}
+      {g.art === 'drehscheibe' && <DrehscheibeBild f={f} i={i} j={j} />}
+      {ueberWasser(f) && !f.viadukt && punkte.map(({ p }, k) => (
         <g key={`b${k}`}>
           <path d={linie(p)} transform="translate(0.03 0.05)" fill="none" stroke="rgba(0,0,0,.15)" strokeWidth={0.42} />
           <path d={linie(p)} fill="none" stroke={F.bruecke} strokeWidth={0.42} />
@@ -729,7 +743,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
       {/* Perrons als Bild, genau von oben, mit dem Gleis gedreht: gerade mit dem Gleis senkrecht durch die Mitte, in der Kurve von Süd nach Ost */}
       {g.art === 'kurvenbahnhof' && <image href={bild('gb_bau_perron_kurve_01')} x={i} y={j} width={1} height={1} preserveAspectRatio="none" transform={`rotate(${g.dreh * 90} ${cx} ${cy})`} />}
       {g.art === 'bahnhof' && <image href={bild('gb_bau_perron_gerade_01')} x={i} y={j} width={1} height={1} preserveAspectRatio="none" transform={`rotate(${g.dreh * 90} ${cx} ${cy})`} />}
-      {punkte.map(({ p, aktiv }, k) => (
+      {g.art !== 'drehscheibe' && punkte.map(({ p, aktiv }, k) => (
         <g key={k} opacity={aktiv ? 1 : 0.45}>
           <path d={linie(p)} fill="none" stroke={ueberWasser(f) ? 'none' : F.schotter} strokeWidth={0.3} />
           <path d={linie(p)} fill="none" stroke={F.schwelle} strokeWidth={0.22} {...schwellen(p)} />
@@ -843,6 +857,8 @@ function BauBild({ f, i, j, brett }: { f: Feld; i: number; j: number; brett?: Br
       </g>
     )
   }
+  if (f.bau === 'laerm') return <LaermBild f={f} i={i} j={j} />
+  if (f.bau === 'unterfuehrung') return <UnterfuehrungBild f={f} i={i} j={j} />
   return <image href={href} x={i} y={j} width={1} height={1} preserveAspectRatio="none" pointerEvents="none" transform={dreh} />
 }
 
@@ -1046,6 +1062,14 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
       </svg>
     )
   }
+  if (w.art === 'objekt' && w.objekt !== 'kirche' && w.objekt !== 'bauernhof') {
+    return (
+      <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
+        <GrundBild f={{ grund: 'wiese' }} i={0} j={0} />
+        <NeuesObjektBild art={w.objekt} i={0} j={0} />
+      </svg>
+    )
+  }
   if (w.art === 'objekt') {
     const name = w.objekt === 'kirche' ? 'gb_obj_kirche_01' : 'gb_obj_bauernhof_01'
     return (
@@ -1057,7 +1081,7 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
     )
   }
   if (w.art === 'bau') {
-    const f: Feld = { grund: 'wiese', bau: w.bau, gleis: { art: w.bau === 'depot' ? 'prellbock' : 'gerade', dreh: 0 } }
+    const f: Feld = { grund: 'wiese', bau: w.bau, gleis: { art: bauGleis(w.bau), dreh: 0 } }
     return (
       <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
         <GrundBild f={f} i={0} j={0} />
@@ -1152,6 +1176,7 @@ function WerkzeugBild({ w, dreh }: { w: Werkzeug; dreh: Dreh }) {
   const f: Feld = w.art === 'grund' ? { grund: w.grund }
     : w.art === 'tunnel' ? { grund: 'berg', gleis: { art: 'gerade', dreh } }
     : w.art === 'bruecke' ? { grund: 'wiese', bruecke: true, gleis: { art: 'gerade', dreh } }
+    : w.art === 'viadukt' ? { grund: 'wiese', bruecke: true, viadukt: true, gleis: { art: 'gerade', dreh } }
     : w.art === 'gleis' ? { grund: 'wiese', gleis: { art: w.gleis, dreh } } : { grund: 'wiese' }
   return (
     <svg viewBox="0 0 1 1" className="size-11" aria-hidden="true">
@@ -1361,7 +1386,13 @@ export function Gleisbau() {
   const oben = useMemo(() => {
     if (sicht?.klein) return null
     const l = sicht ? objekte.filter((o) => o.x >= sicht.i0 && o.x <= sicht.i1 && o.y >= sicht.j0 && o.y <= sicht.j1) : objekte
-    return l.map((o, k) => <ObjektBild key={k} o={o} />)
+    const neue: ReactElement[] = []
+    brett.forEach((z, j) => z.forEach((f, i) => {
+      if (!f.objekt || f.objekt === 'kirche' || f.objekt === 'bauernhof' || f.gleis) return
+      if (sicht && (i < sicht.i0 - 1 || i > sicht.i1 || j < sicht.j0 - 1 || j > sicht.j1)) return
+      neue.push(<NeuesObjektBild key={`n${i},${j}`} art={f.objekt} i={i} j={j} />)
+    }))
+    return [...l.map((o, k) => <ObjektBild key={k} o={o} />), ...neue]
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [objekte, sichtSchluessel])
   // offene Gleisenden als roter Punkt, beim Bauen (Michael, 2026-11-23, Vorschlag «Anzeige, wo das Gleis offen endet»)
@@ -2320,7 +2351,8 @@ export function Gleisbau() {
     }
     if (w.art === 'bau') {
       // Depot auf einem Prellbock, Güterschuppen und Galerie an einer Geraden; nochmals tippen dreht
-      const art = w.bau === 'depot' ? 'prellbock' : 'gerade'
+      const art = bauGleis(w.bau)
+      if (w.bau === 'unterfuehrung' && !istBahnhof(f.gleis)) { setMeldung('Eine Unterführung gehört an einen geraden Bahnhof.'); return }
       if (f.bau === w.bau && f.gleis?.art === art) {
         const d = ((f.gleis.dreh + 1) % 4) as Dreh
         setDreh(d); neu(i, j, { ...f, gleis: { ...f.gleis, dreh: d } }); knopfTon(true)
@@ -2358,6 +2390,15 @@ export function Gleisbau() {
         const d = ((f.gleis.dreh + 1) % (w.gleis === 'doppelkurve' || w.gleis === 'ueberfuehrung' ? 2 : 4)) as Dreh
         setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
       } else n = { ...f, gleis: { art: w.gleis, dreh } }
+    } else if (w.art === 'viadukt') {
+      // ein Viadukt: eine Brücke aus Stein, nochmals tippen dreht das Gleis darauf
+      if (f.viadukt && f.gleis) {
+        const d = ((f.gleis.dreh + 1) % 4) as Dreh
+        setDreh(d); n = { ...f, gleis: { ...f.gleis, dreh: d } }
+      } else {
+        const m: Feld = { ...f, bruecke: true, viadukt: true, gleis: f.gleis ?? { art: 'gerade', dreh } }
+        n = m.strasse && strasseMoeglich(m) ? ohneStrasse(m) : m
+      }
     } else if (w.art === 'bruecke') {
       // eine Brücke ohne Wasser darunter; den See setzt man selbst dazu
       if (f.bruecke && f.gleis) {
@@ -2384,7 +2425,7 @@ export function Gleisbau() {
     else if (f.wagen) { const { wagen: _, ...ohne } = f; n = ohne }
     else if (f.strasse && (f.haltestelle || f.wende || f.strBruecke)) { const { haltestelle: _h, wende: _w, strBruecke: _b, ...ohne } = f; n = ohne }
     // das Gleis weg, Strasse und Fluss bleiben; dann die Strasse, dann der Fluss, dann der Grund
-    else n = f.gleis ? { grund: f.grund, ...(f.strasse ? { strasse: true as const } : {}), ...(f.fluss ? { fluss: true as const } : {}) }
+    else n = f.gleis ? { grund: f.grund, ...(f.strasse ? { strasse: true as const } : {}), ...(f.fluss ? { fluss: true as const } : {}), ...(f.hang !== undefined ? { hang: f.hang } : {}) }
       : f.strasse ? { grund: f.grund, ...(f.fluss ? { fluss: true as const } : {}) } : f.fluss ? { grund: f.grund } : { grund: 'wiese' }
     // eine Strasse bleibt nur, wo sie noch möglich ist (nicht auf Wasser, Berg oder unter einer Kurve)
     if (n.strasse && strasseMoeglich(n)) n = ohneStrasse(n)

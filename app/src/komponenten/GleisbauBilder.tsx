@@ -444,7 +444,7 @@ export function objekteBauen(b: Brett, imTunnel: (b: Brett, x: number, y: number
     const f = b[j][i], z = (k: number) => zufall(i, j, k)
     const rand = [grund(i, j - 1), grund(i + 1, j), grund(i, j + 1), grund(i - 1, j)].filter((g) => g !== f.grund).length
     // Kirche und Bauernhof, von Hand gesetzt, allein im Feld
-    if (f.objekt && !f.gleis) { setze(f.objekt === 'kirche' ? 'gb_obj_kirche_01' : 'gb_obj_bauernhof_01', i + 0.5, j + 0.86, 1, z(1), false); continue }
+    if (f.objekt && !f.gleis) { if (f.objekt === 'kirche' || f.objekt === 'bauernhof') setze(f.objekt === 'kirche' ? 'gb_obj_kirche_01' : 'gb_obj_bauernhof_01', i + 0.5, j + 0.86, 1, z(1), false); continue }
     if (f.grund === 'schnee') {
       // im Schnee ein paar verschneite Tannen (gewählt)
       for (let k = 0; k < 3; k++) if (z(k) < 0.4) setze('gb_obj_nadelbaum_schnee_01', i + 0.18 + k * 0.32 + (z(k + 5) - 0.5) * 0.1, j + 0.35 + z(k + 10) * 0.55, 0.85 + z(k + 15) * 0.3, z(k + 20))

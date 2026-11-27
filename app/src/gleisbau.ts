@@ -26,27 +26,38 @@ export const zeilen = (b: Brett) => b.length
 
 export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee' | 'acker' | 'industrie'
 export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve' | 'ueberfuehrung' | 'tweiche'
-  | 'doppel' | 'doppelbogen' | 'gleiswechsel' | 'xweiche' | 'yweiche' | 'ykurve'
+  | 'doppel' | 'doppelbogen' | 'gleiswechsel' | 'xweiche' | 'yweiche' | 'ykurve' | 'drehscheibe'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
 /** wo eine Ampel stehen kann: an einer Geraden, Kurve oder einem Bahnhof */
 export const ampelGilt = (f?: Feld) => !!f?.ampel && !!f.gleis && ['gerade', 'kurve', 'bahnhof', 'kurvenbahnhof'].includes(f.gleis.art)
 /** ob das Bauwerk zum Gleis passt: das Depot auf einem Prellbock, die anderen an einer Geraden */
-export const bauGilt = (f?: Feld) => !!f?.bau && !!f.gleis && (f.bau === 'depot' ? f.gleis.art === 'prellbock' : f.gleis.art === 'gerade')
+export const bauGilt = (f?: Feld) => !!f?.bau && !!f.gleis && f.gleis.art === bauGleis(f.bau)
 /** ob ein Gleis hier über Wasser führt (See, Fluss oder Brücke): dann eine Brücke */
 export const ueberWasser = (f?: Feld) => !!f && (f.grund === 'wasser' || !!f.bruecke || !!f.fluss)
 /** wo ein Wagen abgestellt werden kann: auf einer Geraden, einem Bahnhof oder vor einem Prellbock */
 export const wagenGilt = (f?: Feld) => !!f?.gleis && !f.teil && ['gerade', 'bahnhof', 'prellbock'].includes(f.gleis.art)
 export const istBahnhof = (g?: Gleis) => g?.art === 'bahnhof' || g?.art === 'kurvenbahnhof'
 export type Dreh = 0 | 1 | 2 | 3
+/**
+ * Bauwerke und Objekte (seit 2026-11-27; Michael: «Tönt ja alles super - bitte alles bauen»): neben Kirche und Bauernhof Wasserturm, Tankstelle, Stellwerk,
+ * Unterwerk und Hafenkran, je allein im Feld; über dem Gleis neben Depot, Güterschuppen und Galerie die Lärmschutzwand an einer Geraden und die Unterführung
+ * an einem geraden Bahnhof. Gezeichnet, nicht aus einer Vorlage
+ */
+export type Objektart = 'kirche' | 'bauernhof' | 'wasserturm' | 'tankstelle' | 'stellwerk' | 'unterwerk' | 'hafenkran'
+export type Bauart = 'depot' | 'gueter' | 'galerie' | 'laerm' | 'unterfuehrung'
+const OBJEKT_Z: Record<Objektart, string> = { kirche: 'k', bauernhof: 'h', wasserturm: 'w', tankstelle: 't', stellwerk: 's', unterwerk: 'u', hafenkran: 'c' }
+const BAU_Z: Record<Bauart, string> = { depot: 'd', gueter: 'g', galerie: 'l', laerm: 'w', unterfuehrung: 'f' }
+/** welches Gleis ein Bauwerk braucht */
+export const bauGleis = (b: Bauart): GleisArt => (b === 'depot' ? 'prellbock' : b === 'unterfuehrung' ? 'bahnhof' : 'gerade')
 
 /** Weiche mit zwei oder, als Dreiwegweiche, drei Wegen (seit 2026-11-22; Michael: «Dreier-Weiche auch möglich machen») */
 // seit 2026-11-23 auch gespiegelt, der Abzweig nach links (Michael: «Weichen muss man spiegeln können»)
 // seit 2026-11-27 die T-Weiche: von unten nach links oder rechts, ohne Gerade (Michael: «Wir benötigen noch eine T Weiche»)
 export const istWeiche = (g?: Gleis) => g?.art === 'weiche' || g?.art === 'weiche_l' || g?.art === 'dreiweg' || g?.art === 'tweiche'
-  || g?.art === 'yweiche' || g?.art === 'ykurve' || g?.art === 'gleiswechsel' || g?.art === 'xweiche'
+  || g?.art === 'yweiche' || g?.art === 'ykurve' || g?.art === 'gleiswechsel' || g?.art === 'xweiche' || g?.art === 'drehscheibe'
 /** wie viele Stellungen eine Weiche hat */
-export const stellungen = (g?: Gleis) => (g?.art === 'dreiweg' ? 3 : 2)
+export const stellungen = (g?: Gleis) => (g?.art === 'dreiweg' || g?.art === 'drehscheibe' ? 3 : 2)
 /** Doppelspur: Stücke mit zwei Spuren in einem Feld (seit 2026-11-27) */
 export const istDoppelspur = (g?: Gleis) => !!g && ['doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve'].includes(g.art)
 /** Kurve über 2 × 2 oder 3 × 3 Felder (seit 2026-11-22; Michael: «Kurvenelemente auch in 2x2 und 3x3 Kacheln»); n, sonst 0 */
@@ -69,9 +80,11 @@ export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /*
   /** ein abgestellter Wagen auf dem Gleis (seit 2026-11-24): ein Zug, der hineinfährt, kuppelt ihn an */
   wagen?: true
   /** ein einzelnes Objekt im Feld (seit 2026-11-24, Bilder von Michael): Kirche oder Bauernhof */
-  objekt?: 'kirche' | 'bauernhof'
+  objekt?: Objektart
   /** ein Bauwerk über dem Gleis (seit 2026-11-24, Bilder von Michael): Depot auf einem Prellbock, Güterschuppen und Galerie an einer Geraden */
-  bau?: 'depot' | 'gueter' | 'galerie'
+  bau?: Bauart
+  /** ein Viadukt aus Stein (seit 2026-11-27): eine Brücke, gezeichnet mit Bögen, etwa über einem Tal */
+  viadukt?: true
   /** eine Ampel am Gleis (seit 2026-11-24; Michael: «Weiteres Element: Ampel»): bei Rot hält der Zug vor dem Feld */ ampel?: 'rot' | 'gruen'
   /** Name eines echten Bahnhofs aus Taktland für den Bahnhof, zu dem dieses Feld gehört */ name?: string
   /**
@@ -125,6 +138,8 @@ const WEGE: Record<GleisArt, Array<[number, number]>> = {
   yweiche: [[2, 4], [2, 8]],
   // Y-Weiche in der Kurve: das einfache Gleis von Süd in die zwei Spuren im Osten
   ykurve: [[2, 5], [2, 9]],
+  // Drehscheibe (seit 2026-11-27): vom Gleis im Süden auf eines der drei anderen, die Bühne dreht dorthin; vereinfacht wie eine Dreiwegweiche
+  drehscheibe: [[2, 0], [2, 1], [2, 3]],
 }
 
 /** Abstand einer Spur von der Mitte der Kante (gewählt) */
@@ -434,7 +449,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 
 const SPEICHER = 'taktland.gleisbau.v1'
 const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee', 'acker', 'industrie']
-const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung', 'tweiche', 'doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve']
+const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung', 'tweiche', 'doppel', 'doppelbogen', 'gleiswechsel', 'xweiche', 'yweiche', 'ykurve', 'drehscheibe']
 
 /** das gemerkte Brett, nur wenn es heil ist */
 export function brettLesen(): Brett | null {
@@ -454,14 +469,14 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbdrnai', STRASSE_Z = 'WFSBDRNAI', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!*()àáâãäåæçèéêëìíîï'
+const GRUND_Z = 'wfsbdrnai', STRASSE_Z = 'WFSBDRNAI', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!*()àáâãäåæçèéêëìíîïðñòó'
 const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
   const namen: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => { if (f.name && istBahnhof(f.gleis)) namen.push(`${i}.${j}.${namenEsc(f.name)}`) }))
   // Brücken ohne Wasser und Ampeln als weitere Teile «b» (Spalte.Zeile) und «a» (Spalte.Zeile.r oder g)
-  const bruecken: string[] = [], ampeln: string[] = [], zugStarts: string[] = [], anlagen: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = [], strVerb: string[] = [], zusammen: string[] = []
+  const bruecken: string[] = [], ampeln: string[] = [], zugStarts: string[] = [], anlagen: string[] = [], halte: string[] = [], wenden: string[] = [], strBruecken: string[] = [], objekte: string[] = [], bauten: string[] = [], fluesse: string[] = [], abgestellt: string[] = [], knoten: string[] = [], haenge: string[] = [], stromlos: string[] = [], strVerb: string[] = [], zusammen: string[] = [], viadukte: string[] = []
   b.forEach((z, j) => z.forEach((f, i) => {
     if (f.fluss) fluesse.push(`${i}.${j}`)
     if (f.strasse && f.haltestelle) halte.push(`${i}.${j}`)
@@ -475,8 +490,9 @@ export function brettCode(b: Brett): string {
     if (f.hang !== undefined) haenge.push(`${i}.${j}.${f.hang}`)
     if (f.ohneStrom && f.gleis) stromlos.push(`${i}.${j}`)
     if (f.wagen && wagenGilt(f)) abgestellt.push(`${i}.${j}`)
-    if (f.objekt) objekte.push(`${i}.${j}.${f.objekt === 'kirche' ? 'k' : 'h'}`)
-    if (bauGilt(f)) bauten.push(`${i}.${j}.${f.bau === 'depot' ? 'd' : f.bau === 'gueter' ? 'g' : 'l'}`)
+    if (f.objekt) objekte.push(`${i}.${j}.${OBJEKT_Z[f.objekt]}`)
+    if (f.viadukt && f.gleis) viadukte.push(`${i}.${j}`)
+    if (bauGilt(f)) bauten.push(`${i}.${j}.${BAU_Z[f.bau!]}`)
     if (f.bruecke && f.gleis) bruecken.push(`${i}.${j}`)
     if (f.ampel && f.gleis) ampeln.push(`${i}.${j}.${f.ampel === 'rot' ? 'r' : 'g'}`)
   }))
@@ -487,7 +503,7 @@ export function brettCode(b: Brett): string {
     + (knoten.length ? `~k${knoten.join('_')}` : '') + (haenge.length ? `~h${haenge.join('_')}` : '') + (stromlos.length ? `~s${stromlos.join('_')}` : '')
     + (halte.length ? `~y${halte.join('_')}` : '') + (wenden.length ? `~e${wenden.join('_')}` : '') + (strBruecken.length ? `~r${strBruecken.join('_')}` : '')
     + (zugStarts.length ? `~t${zugStarts.join('_')}` : '') + (anlagen.length ? `~m${anlagen.join('_')}` : '')
-    + (strVerb.length ? `~v${strVerb.join('_')}` : '') + (zusammen.length ? `~c${zusammen.join('_')}` : '')
+    + (strVerb.length ? `~v${strVerb.join('_')}` : '') + (zusammen.length ? `~c${zusammen.join('_')}` : '') + (viadukte.length ? `~x${viadukte.join('_')}` : '')
 }
 export function brettAusCode(c: string): Brett | null {
   const [v, felder, ...weitere] = c.split('~')
@@ -518,8 +534,9 @@ export function brettAusCode(c: string): Brett | null {
     if (teil.startsWith('k')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].knoten = true }
     if (teil.startsWith('f')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].fluss = true }
     if (teil.startsWith('w')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].wagen = true }
-    if (teil.startsWith('o')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].objekt = c === 'k' ? 'kirche' : 'bauernhof' }
-    if (teil.startsWith('u')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].bau = c === 'd' ? 'depot' : c === 'g' ? 'gueter' : 'galerie' }
+    if (teil.startsWith('o')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); const o = (Object.keys(OBJEKT_Z) as Objektart[]).find((k) => OBJEKT_Z[k] === c); if (b[+j]?.[+i]) b[+j][+i].objekt = o ?? 'bauernhof' }
+    if (teil.startsWith('u')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); const o = (Object.keys(BAU_Z) as Bauart[]).find((k) => BAU_Z[k] === c); if (b[+j]?.[+i]) b[+j][+i].bau = o ?? 'galerie' }
+    if (teil.startsWith('x')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) { b[j][i].viadukt = true; b[j][i].bruecke = true } }
     if (teil.startsWith('b')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]) b[j][i].bruecke = true }
     if (teil.startsWith('a')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i]) b[+j][+i].ampel = c === 'r' ? 'rot' : 'gruen' }
     if (!teil.startsWith('n')) continue
@@ -1114,7 +1131,34 @@ const gueterZug = (n: number, diesel = false): Fahrzeug[] => Array.from({ length
 /** ein Güterschuppen an einer Geraden: dort hält der Güterzug */
 export const gueterGilt = (f?: Feld) => f?.bau === 'gueter' && bauGilt(f)
 /** ob das Gleis dieses Stücks ohne Fahrleitung ist */
-const ohneStromBei = (b: Brett, s: Stueck) => !!b[s.j]?.[s.i]?.ohneStrom
+/**
+ * Unterwerk (seit 2026-11-27): steht auf dem Brett mindestens ein Unterwerk, haben nur Gleise bis UNTERWERK_REICHWEITE Felder (Luftlinie, Mitte zu Mitte) um
+ * eines Strom; ohne Unterwerk wie bisher überall (so bleiben ältere Bretter, wie sie sind). Reichweite gewählt
+ */
+export const UNTERWERK_REICHWEITE = 6
+const stromCache = new WeakMap<Brett, Set<string> | null>()
+function stromFelder(b: Brett): Set<string> | null {
+  if (stromCache.has(b)) return stromCache.get(b)!
+  const uw: Array<[number, number]> = []
+  b.forEach((z, j) => z.forEach((f, i) => { if (f.objekt === 'unterwerk') uw.push([i, j]) }))
+  let r: Set<string> | null = null
+  if (uw.length) {
+    r = new Set()
+    const R = UNTERWERK_REICHWEITE
+    for (const [u, v] of uw) for (let j = v - R; j <= v + R; j++) for (let i = u - R; i <= u + R; i++) if ((i - u) ** 2 + (j - v) ** 2 <= R * R) r.add(`${i},${j}`)
+  }
+  stromCache.set(b, r)
+  return r
+}
+/** ob ein Feld ohne Strom ist: von Hand ohne Fahrleitung oder ausser Reichweite der Unterwerke */
+export function feldOhneStrom(b: Brett, i: number, j: number) {
+  const f = b[j]?.[i]
+  if (!f) return true
+  if (f.ohneStrom) return true
+  const r = stromFelder(b)
+  return !!r && !r.has(`${i},${j}`)
+}
+const ohneStromBei = (b: Brett, s: Stueck) => feldOhneStrom(b, s.i, s.j)
 /**
  * so stark bremst ein Stromzug ohne Fahrleitung, Felder je s²: ein Drittel von 1,6 (gewählt), damit der Bremsweg dreimal so lang ist, bei vollem Tempo
  * gut 2 Felder statt 0,7 (Michael, 2026-11-25: «Fährt ein Elektrozug in ein stromloses Trasse muss er einen 3x so langen Bremsweg haben»)
