@@ -2543,7 +2543,8 @@ export function Gleisbau() {
             )}
           </div>
           <div className="flex-none pt-2">
-          {aufgabe && (
+          {/* solange ein Hinweis des Tutorials gilt, nur er: zwei Texte sagten fast dasselbe (Michael, 2026-11-27: «Warum zwei Texte?») */}
+          {aufgabe && !hinweis && (
             <div className="mx-2.5 mb-2 flex flex-none items-start gap-3 rounded-lg bg-white px-3 py-2 shadow-sm dark:bg-sbb-charcoal">
               <button type="button" onClick={() => setZielOffen((x) => !x)} aria-expanded={zielOffen}
                       className={`min-w-0 flex-1 text-left text-sm leading-snug ${zielOffen ? '' : 'line-clamp-2'}`}>{aufgabe.ziel}</button>
