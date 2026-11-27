@@ -2215,6 +2215,13 @@ export function Gleisbau() {
     // gesetzte Züge (Werkzeuge «Personenzug» und «Güterzug») fahren genau so; sonst wie bisher Personenzüge nach «Anzahl Züge»
     const starts = brett.flatMap((zz, j) => zz.flatMap((f, i) => (f.zugStart && zugStartGilt(f) ? [[i, j, f.zugStart] as const] : [])))
     const zs = auftrag ? betrieb.zuege[auftrag.id] ?? {} : {}
+    // im Bahnbetrieb fährt nur ein gesetzter Zug; ohne ihn fuhr ein Zug wie beim freien Bauen und der Auftrag galt nie als erfüllt (Michael, 2026-11-27:
+    // «Kann es sein dass der Auftrag nie aufhört?»)
+    if (auftrag && !starts.some(([i, j]) => zs[`${i},${j}`])) {
+      setMeldung(zugWartet ? 'Tippe zuerst aufs Gleis, wo dein Zug stehen soll.' : 'Stell zuerst unter «Züge» einen Zug zusammen und tippe aufs Gleis, wo er stehen soll.')
+      if (!zugWartet) setZugWahlFeld('neu')
+      return
+    }
     const gesetzt = starts.map(([i, j, a]) => {
       // im Bahnbetrieb der zusammengestellte Zug aus dem Depot
       const z0 = zs[`${i},${j}`]
