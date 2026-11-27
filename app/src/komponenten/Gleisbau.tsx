@@ -7,7 +7,7 @@ import {
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
-import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheZuruecksetzen, reiheGeloestMerken } from '../gleisbauAufgaben'
+import { type Aufgabe, AUFGABEN, allesVerbunden, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheZuruecksetzen, reiheGeloestMerken } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
@@ -1303,6 +1303,10 @@ export function Gleisbau() {
     return l
   }, [aufgabe])
   const FEST_TEXT = 'Dieses Stück gibt die Aufgabe vor, es bleibt, wo es ist.'
+  /** ein Schloss auf einem festen Feld, kurz sichtbar (Michael, 2026-11-27: «Fixe Elemente können noch geändert werden», Vorschlag A1) */
+  const [schloss, setSchloss] = useState<[number, number] | null>(null)
+  useEffect(() => { if (!schloss) return; const t = setTimeout(() => setSchloss(null), 1500); return () => clearTimeout(t) }, [schloss])
+  const festMelden = (i: number, j: number) => { setMeldung(FEST_TEXT); setSchloss([i, j]); knopfTon(false) }
   /**
    * je vorgegebenem Stück die hintere Seite, an die ohnehin nichts angebaut wird: dort ein Prellbock, die andere bleibt rot und lädt zum Ansetzen ein
    * (Michael, 2026-11-26: «Nur auf der Seite einen Prellbock wo eh nichts angebaut wird. Eine Seite darf rot sein»). Hinten ist das offene Ende, das
@@ -1373,7 +1377,8 @@ export function Gleisbau() {
   }, [aufgabe, brett, stand])
   // gelöst: der Zug hält an, die Karte steht nicht vor einer weiterlaufenden Fahrt (Michael, 2026-11-26: «nachdem der Auftrag geschafft ist und das Abschluss
   // Schild kommt fährt der Zug im Hintergrund immer weiter»)
-  useEffect(() => { if (geloest && faehrt) fahren() }, [geloest]) // eslint-disable-line react-hooks/exhaustive-deps
+  // seit 2026-11-27 Pause statt Halt, «Weiterfahren lassen» fährt weiter (Michael: «Alle», Vorschlag D8)
+  useEffect(() => { if (geloest && faehrt) setPause(true) }, [geloest]) // eslint-disable-line react-hooks/exhaustive-deps
   // in der Reihe das angefangene Brett merken
   useEffect(() => {
     if (aufgabe?.reihe !== undefined) reiheArbeitMerken(aufgabe.id, brett)
@@ -1544,6 +1549,7 @@ export function Gleisbau() {
   // der Zug je Bild
   // Pause während der Fahrt (Michael, 2026-11-26: «Während des Abspielens muss man Pause drücken können»): alles steht, Weichen und Ampeln lassen sich stellen
   const [pause, setPause] = useState(false)
+  const [imZugOffen, setImZugOffen] = useState(false)
   const pauseRef = useRef(false)
   pauseRef.current = pause
   useEffect(() => { if (!faehrt) setPause(false) }, [faehrt])
@@ -1780,7 +1786,7 @@ export function Gleisbau() {
     const id = e.pointerId, el = e.currentTarget
     window.setTimeout(() => {
       if (druck.current !== d) return
-      if (fest?.has(`${feld[0]},${feld[1]}`)) { druck.current = null; setMeldung(FEST_TEXT); return }
+      if (fest?.has(`${feld[0]},${feld[1]}`)) { druck.current = null; festMelden(feld[0], feld[1]); return }
       d.zeit = -1
       try { el.setPointerCapture(id) } catch { /* ohne Fangen geht es trotzdem */ }
       navigator.vibrate?.(15)
@@ -1878,7 +1884,7 @@ export function Gleisbau() {
     nachZiehen.current = true
     // falls kein Klick folgt, gilt der nächste Tipp wieder
     window.setTimeout(() => { nachZiehen.current = false }, 250)
-    if (fest?.has(`${ziehen.nach[0]},${ziehen.nach[1]}`)) { setZiehen(null); setMeldung(FEST_TEXT); return }
+    if (fest?.has(`${ziehen.nach[0]},${ziehen.nach[1]}`)) { setZiehen(null); festMelden(ziehen.nach[0], ziehen.nach[1]); return }
     const r0 = verschieben(brett, ziehen.von, ziehen.nach)
     setZiehen(null)
     if (typeof r0 === 'string') { setMeldung(r0); return }
@@ -1959,10 +1965,12 @@ export function Gleisbau() {
     setMeldung(null)
     if (w.art === 'name') {
       if (!istBahnhof(f.gleis)) { setMeldung('Tippe einen Bahnhof an, um ihm einen Namen zu geben.'); setNameFeld(null); return }
+      // ein vorgegebener Bahnhof behält seinen Namen
+      if (fest?.has(`${i},${j}`)) { festMelden(i, j); return }
       setNameFeld([i, j]); setNameSuche('')
       return
     }
-    if (fest?.has(`${i},${j}`) && !['name', 'zug', 'knoten', 'ampel', 'wagen', 'strom'].includes(w.art)) { setMeldung(FEST_TEXT); return }
+    if (fest?.has(`${i},${j}`) && !['name', 'zug', 'knoten', 'ampel', 'wagen', 'strom'].includes(w.art)) { festMelden(i, j); return }
     const unterGross = !!f.teil || grosseKurve(f.gleis) > 0
     // grosse Kurve: das angetippte Feld ist ihr Griff, das Eckfeld aussen; tippt man den Griff einer gleichen an, dreht sie sich im selben Block,
     // der Griff wandert in die nächste Ecke
@@ -2205,8 +2213,40 @@ export function Gleisbau() {
 
   function neu(i: number, j: number, f: Feld, merken = true) {
     const vorgabe = festGrund?.get(`${i},${j}`)
-    if (vorgabe && !landschaftGleich(vorgabe, f)) { setMeldung(LANDSCHAFT_FEST); return }
+    if (vorgabe && !landschaftGleich(vorgabe, f)) { setMeldung(LANDSCHAFT_FEST); setSchloss([i, j]); return }
     setBrett(brett.map((z, jj) => (jj === j ? z.map((x, ii) => (ii === i ? f : x)) : z)), merken)
+  }
+
+  /** die gesetzten Züge mit ihrer Zusammenstellung (Bahnbetrieb aus dem Depot, freies Bauen im Feld) */
+  const gesetzteZuege = (): Array<{ i: number; j: number; z: Zusammenstellung | null }> => {
+    const zs = auftrag ? betrieb.zuege[auftrag.id] ?? {} : {}
+    return brett.flatMap((zz, j) => zz.flatMap((f, i) => (f.zugStart && zugStartGilt(f)
+      ? [{ i, j, z: auftrag ? zs[`${i},${j}`] ?? null : f.zusammen && f.zusammen.lok in LOKS ? f.zusammen as Zusammenstellung : null }] : [])))
+  }
+  /** einen zusammengestellten Zug auf ein Feld stellen */
+  function zugHinstellen(i: number, j: number, z: Zusammenstellung) {
+    const f = brett[j][i]
+    if (auftrag) setBetrieb((b) => ({ ...b, zuege: { ...b.zuege, [auftrag.id]: { ...(b.zuege[auftrag.id] ?? {}), [`${i},${j}`]: z } } }))
+    neu(i, j, { ...f, zugStart: z.wagen.every((x) => x === 'person') ? 'p' : 'g', ...(auftrag ? {} : { zusammen: z }) }); knopfTon(true)
+  }
+  /** einen gesetzten Zug wegnehmen */
+  function zugWeg(i: number, j: number) {
+    if (auftrag) setBetrieb((b) => { const m = { ...(b.zuege[auftrag.id] ?? {}) }; delete m[`${i},${j}`]; return { ...b, zuege: { ...b.zuege, [auftrag.id]: m } } })
+    const { zugStart: _, zusammen: _z, ...o } = brett[j][i]; neu(i, j, o)
+  }
+  /**
+   * ein Schritt statt zwei (Michael, 2026-11-27: «Alle», Vorschlag B4): der zusammengestellte Zug kommt von selbst in den ersten freien geraden Bahnhof, sonst
+   * auf das erste freie einfache Gleis; nur wenn keines frei ist, tippt man selbst
+   */
+  function zugAutomatisch(z: Zusammenstellung) {
+    const frei = (f: Feld) => zugStartGilt(f) && !f.zugStart
+    let ziel: [number, number] | null = null
+    brett.forEach((zz, j) => zz.forEach((f, i) => { if (!ziel && frei(f) && f.gleis?.art === 'bahnhof') ziel = [i, j] }))
+    brett.forEach((zz, j) => zz.forEach((f, i) => { if (!ziel && frei(f)) ziel = [i, j] }))
+    if (!ziel) { setZugWartet(z); setWerkzeug({ art: 'zug', zug: 'p' }); setMeldung('Leg zuerst ein Gleis, dann tippe darauf, wo dein Zug stehen soll.'); return }
+    const [i, j] = ziel as [number, number]
+    zugHinstellen(i, j, z)
+    setMeldung('Dein Zug steht bereit. Unter «Deine Züge» kannst du ihn ändern oder verschieben.')
   }
 
   function fahren() {
@@ -2375,6 +2415,23 @@ export function Gleisbau() {
               {aufgabe.reihe !== undefined && <p className="text-xs font-bold uppercase tracking-wide text-sbb-red dark:text-[#d63a55]">Lektion {aufgabe.reihe + 1} von {AUFGABEN.filter((x) => x.reihe !== undefined).length}</p>}
               {auftrag && <p className="text-xs font-bold uppercase tracking-wide text-sbb-red dark:text-[#d63a55]">Auftrag</p>}
               <h2 className="text-2xl font-bold leading-tight tracking-tight">{aufgabe.titel}</h2>
+              {/* im Bahnbetrieb die drei Schritte, der jetzige hervorgehoben (Michael, 2026-11-27: «Alle», Vorschlag C6) */}
+              {auftrag && (() => {
+                const ok = [allesVerbunden(brett), gesetzteZuege().some((x) => x.z), !!ergebnis?.ok]
+                const jetzt = faehrt ? 2 : ok.findIndex((x) => !x)
+                return (
+                  <ol className="mt-2 flex flex-wrap items-center gap-1.5 text-[13px] font-bold" aria-label="Schritte">
+                    {['Bauen', 'Züge', 'Fahren'].map((t, k) => (
+                      <li key={t} className="flex items-center gap-1.5">
+                        {k > 0 && <span className="text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>}
+                        <span aria-current={k === jetzt ? 'step' : undefined} className={`rounded-lg px-2 py-0.5 ${k === jetzt ? 'bg-sbb-red text-white' : ok[k] ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white text-sbb-metal dark:bg-sbb-charcoal dark:text-sbb-storm'}`}>
+                          {ok[k] && k !== jetzt ? '✓ ' : `${k + 1} `}{t}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                )
+              })()}
             </div>
           )}
           <div ref={buehne} className="relative min-h-0 w-full shrink touch-none overflow-hidden" style={{ aspectRatio: `${SP + 0.3 + 0.4} / ${ZE + 0.3}` }}
@@ -2422,6 +2479,13 @@ export function Gleisbau() {
             <g opacity={0.5} pointerEvents="none">
               {vorschau.l.map(([i, j]) => <rect key={`vr${i},${j}`} x={i + 0.03} y={j + 0.03} width={0.94} height={0.94} rx={0.1} fill="#ffffff" opacity={0.35} />)}
               {vorschau.l.map(([i, j]) => <GleisBild key={`vg${i},${j}`} f={vorschau.b[j][i]} i={i} j={j} wasser={(u, v) => ueberWasser(vorschau.b[v]?.[u])} brett={vorschau.b} />)}
+            </g>
+          )}
+          {schloss && (
+            <g pointerEvents="none" transform={`translate(${schloss[0] + 0.5} ${schloss[1] + 0.5})`}>
+              <circle r={0.26} fill="#212121" opacity={0.85} />
+              <rect x={-0.1} y={-0.02} width={0.2} height={0.15} rx={0.02} fill="#fff" />
+              <path d="M-0.065,-0.02 v-0.05 a0.065,0.065 0 0 1 0.13,0 v0.05" fill="none" stroke="#fff" strokeWidth={0.03} />
             </g>
           )}
           {/* das mit der Maus gewählte Feld */}
@@ -2570,6 +2634,32 @@ export function Gleisbau() {
               <span>{hinweis.text}</span>
             </div>
           )}
+          {/* die gesetzten Züge als Kärtchen, jeder für sich zu ändern, zu verschieben oder zu entfernen (Michael, 2026-11-27: «Zugauswahl auch bei 2 Zügen», Vorschlag B3) */}
+          {zusammenBauen && !faehrt && (() => {
+            const l = gesetzteZuege()
+            if (!l.length) return null
+            return (
+              <div className="mx-2.5 mb-2 flex-none">
+                <p className="mb-1 text-xs font-bold text-sbb-metal dark:text-sbb-storm">Deine Züge</p>
+                <ul className="flex gap-1.5 overflow-x-auto pb-1 [scrollbar-width:none]">
+                  {l.map(({ i, j, z }, k) => {
+                    const p = z ? z.wagen.filter((w) => w === 'person').length * WAGEN_ARTEN.person.plaetze : 0, g = z ? z.wagen.filter((w) => w !== 'person').length : 0
+                    return (
+                      <li key={`${i},${j}`} className="flex flex-none items-center gap-2 rounded-lg bg-white px-2 py-1.5 text-[13px] shadow-sm dark:bg-sbb-charcoal">
+                        <span className="leading-tight"><span className="font-bold">Zug {k + 1}{z ? `: ${LOKS[z.lok].name}` : ''}</span>
+                          <span className="block text-sbb-metal dark:text-sbb-storm">{z ? [z.wagen.length === 1 ? '1 Wagen' : `${z.wagen.length} Wagen`, p ? `${p} Plätze` : '', g ? (g === 1 ? '1 Ladung' : `${g} Ladungen`) : ''].filter(Boolean).join(', ') : brett[j][i].zugStart === 'g' ? 'Güterzug' : 'Personenzug'}</span></span>
+                        {zusammenBauen && <button type="button" onClick={() => { setZugWahlFeld([i, j]); knopfTon(true) }} className="rounded-lg border border-sbb-cloud px-2 py-1 font-bold hover:border-sbb-black dark:border-sbb-iron">Ändern</button>}
+                        {z && <button type="button" onClick={() => { zugWeg(i, j); setZugWartet(z); setWerkzeug({ art: 'zug', zug: 'p' }); setMeldung('Tippe aufs Gleis, wo der Zug neu stehen soll.') }}
+                                      className="rounded-lg border border-sbb-cloud px-2 py-1 font-bold hover:border-sbb-black dark:border-sbb-iron">Verschieben</button>}
+                        <button type="button" onClick={() => { zugWeg(i, j); knopfTon(false) }} aria-label={`Zug ${k + 1} entfernen`} title="Entfernen"
+                                className="rounded-lg border border-sbb-cloud px-2 py-1 font-bold text-sbb-red hover:border-sbb-black dark:border-sbb-iron">✕</button>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            )
+          })()}
           {/* die Schritte der Aufgabe sichtbar: Bahnhöfe der Reihe nach, dazwischen, was der Abschnitt braucht; erfüllt mit Haken */}
           {aufgabe?.schritte && (
             <div className="mx-2.5 mb-2 flex flex-none flex-wrap items-center gap-x-1 gap-y-1 text-[13px]" aria-label="Was die Aufgabe verlangt">
@@ -2607,7 +2697,10 @@ export function Gleisbau() {
             <button type="button" onClick={fahren} aria-label={faehrt ? 'Anhalten' : 'Fahren'} title={faehrt ? 'Anhalten' : 'Fahren'}
                     className="flex h-11 flex-none items-center gap-1.5 rounded-full bg-sbb-red px-4 font-bold text-white shadow-sm hover:bg-sbb-red125">
               <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{faehrt ? <rect x="6" y="6" width="12" height="12" rx="1.5" /> : <path d="M8 5.5v13l11-6.5z" />}</svg>
-              <span className="hidden sm:inline">{faehrt ? 'Anhalten' : 'Fahren'}</span>
+              {/* mit gesetzten Zügen ihre Zahl (Michael, 2026-11-27: «Alle», Vorschlag B5) */}
+              {!faehrt && gesetzteZuege().length > 0
+                ? <span>{gesetzteZuege().length === 1 ? '1 Zug' : `${gesetzteZuege().length} Züge`}</span>
+                : <span className="hidden sm:inline">{faehrt ? 'Anhalten' : 'Fahren'}</span>}
             </button>
           </div>
           <div className="flex-none border-t border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-charcoal"
@@ -2618,7 +2711,10 @@ export function Gleisbau() {
                   <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
                     {fahrgaeste && <span className="font-bold">Fahrgäste am Ziel: <span className="tabular-nums">{fahrgaeste.gebracht}</span></span>}
                     {ladungen && <span className="font-bold">Ladungen geliefert: <span className="tabular-nums">{stand.gueter}</span></span>}
-                    {zuege.current.map((z, k) => {
+                    {/* wer und was im Zug ist, erst auf Antippen (Michael, 2026-11-27: «Alle», Vorschlag C7) */}
+                    <button type="button" onClick={() => setImZugOffen((x) => !x)} aria-expanded={imZugOffen} className="text-sbb-metal underline underline-offset-2 dark:text-sbb-storm">
+                      {imZugOffen ? 'Weniger' : 'Was ist im Zug?'}</button>
+                    {imZugOffen && zuege.current.map((z, k) => {
                       const name = zuege.current.length > 1 ? `Zug ${k + 1}` : 'Im Zug'
                       // ein Güterzug zeigt seine Ladungen als Kisten, ein Personenzug die Ziele seiner Fahrgäste
                       if (z.art === 'gueter') {
@@ -2790,7 +2886,7 @@ export function Gleisbau() {
             const andere = Object.entries(alle).filter(([k]) => brett[+k.split(',')[1]]?.[+k.split(',')[0]]?.zugStart).map(([, z]) => z)
             return (
               <ZugWahl betrieb={auftrag ? betrieb : undefined} setBetrieb={setBetrieb} auftrag={auftrag ?? undefined} andere={andere} anfang={zugWartet} zu={() => setZugWahlFeld(null)}
-                       setzen={(z) => { setZugWartet(z); setWerkzeug({ art: 'zug', zug: 'p' }); setZugWahlFeld(null); setMeldung('Tippe jetzt aufs Gleis, wo dein Zug stehen soll.') }}
+                       setzen={(z) => { setZugWahlFeld(null); setZugWartet(null); zugAutomatisch(z) }}
                        entfernen={() => { setZugWartet(null); setZugWahlFeld(null) }} />
             )
           })()}
@@ -2930,6 +3026,8 @@ export function Gleisbau() {
                   {/* nach der letzten Lektion weiter zum Bahnbetrieb */}
                   {!naechste && aufgabe.reihe !== undefined && <button type="button" autoFocus onClick={() => { window.location.hash = '#/gleisbau?betrieb' }}
                                        className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Zum Bahnbetrieb</button>}
+                  {faehrt && <button type="button" onClick={() => { setGeloest(false); setPause(false) }}
+                                     className="rounded-lg border border-sbb-cloud bg-white px-5 py-3 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Weiterfahren lassen</button>}
                   {/* ohne «Weiterbauen» (Michael, 2026-11-26: «Weiterbauen macht gar keinen Sinn oder? Man will ja zur nächsten Aufgabe gehen»), sonst zur Übersicht */}
                   {!naechste && aufgabe.reihe === undefined && !auftrag && <button type="button" autoFocus onClick={() => { window.location.hash = '#/gleisbau' }}
                                        className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Zur Übersicht</button>}

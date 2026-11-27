@@ -323,3 +323,10 @@ export function fortschrittMerken(f: Record<string, number>) {
   try { localStorage.setItem(FORTSCHRITT, JSON.stringify(f)) } catch { /* nur für jetzt */ }
 }
 
+
+/** ob alle Bahnhöfe und Güterschuppen des Bretts in einem Netz verbunden sind (für die Schrittzeile im Bahnbetrieb, Michael, 2026-11-27, Vorschlag C6) */
+export function allesVerbunden(b: Brett): boolean {
+  const ziele = [...bahnhofFelder(b).values(), ...schuppenFelder(b).map((k) => new Set([k]))]
+  if (ziele.length < 2) return false
+  return ziele.slice(1).every((z) => wegGibt(b, ziele[0], z))
+}
