@@ -21,7 +21,7 @@ export function zufall(i: number, j: number, k: number) {
 }
 
 /** Höhe der Kachel ohne ihre dunklere Unterkante (wie in Gleisbau.tsx) */
-const KACHEL_H = 0.915
+const KACHEL_H = 0.935
 
 /** die Texturen als Muster über das ganze Brett, je Bild zwei Felder breit; ausserhalb von display:none, sonst zeichnet Chrome sie nicht */
 export function MusterDefs() {
@@ -95,7 +95,7 @@ export function GelaendeVerlaeufe() {
  * die helle Böschung oben links und die dunkle unten rechts, beim Tal umgekehrt; die Kante selbst um KANTE_WEICH weich
  */
 const BOESCHUNG_BREIT = 0.16, BOESCHUNG_WEICH = 0.09, BOESCHUNG_LICHT = 0.12, BOESCHUNG_STAERKE = 0.75, LICHT_STAERKE = 0.22, KANTE_WEICH = 0
-const EBENE_EINZUG = 0.2, EBENE_RUND = 0.3, RAMPE_BREIT = 0.38
+const EBENE_EINZUG = 0.2, EBENE_RUND = 0.3, RAMPE_BREIT = 0.38, DAMM_FARBE = '#5a5a5a'
 export function GelaendeBild({ brett }: { brett: Brett }) {
   const raus: ReactElement[] = []
   // Hochebene und Tal als Gebiet: die Hochebene wirft ausserhalb ihres Rands eine Böschung, im Tal liegt sie innerhalb
@@ -113,20 +113,21 @@ export function GelaendeBild({ brett }: { brett: Brett }) {
      * Rampen (Michael, 2026-11-26: «hast du einen Vorschlag für eine Rampe?», dann «Ja gern»): wo ein Gleis oder eine Strasse über die Böschung führt, ist sie
      * unterbrochen, so liegen sie auf einem flachen Damm; nur fürs Auge, der Zug fährt gleich schnell (Breite gewählt)
      */
-    const rampen: string[] = []
-    const linie = (pt: Array<{ x: number; y: number }>) => rampen.push(pt.map((q, k) => `${k ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)}`).join(' '))
+    const rampen: string[] = [], gleisRampen: string[] = []
+    const linie = (pt: Array<{ x: number; y: number }>, gleis = false) => (gleis ? gleisRampen : rampen).push(pt.map((q, k) => `${k ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)}`).join(' '))
     const nahSet = new Set(nah.map(([i, j]) => `${i},${j}`))
     brett.forEach((z, j) => z.forEach((f, i) => {
       if (f.gleis && !f.teil) {
         const n = grosseKurve(f.gleis)
         if (n) {
           const G = grossGeometrie(i, j, f.gleis)
-          if (G.zellen.some(([u, v]) => nahSet.has(`${u},${v}`))) linie(Array.from({ length: 31 }, (_, k) => { const a = G.a0 + (G.da * k) / 30; return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) } }))
-        } else if (nahSet.has(`${i},${j}`)) for (const [a, c] of wege(f.gleis)) linie(wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10))
+          if (G.zellen.some(([u, v]) => nahSet.has(`${u},${v}`))) linie(Array.from({ length: 31 }, (_, k) => { const a = G.a0 + (G.da * k) / 30; return { x: G.cx + G.r * Math.cos(a), y: G.cy + G.r * Math.sin(a) } }), true)
+        } else if (nahSet.has(`${i},${j}`)) for (const [a, c] of wege(f.gleis)) linie(wegPunkte({ i, j, ein: a, aus: c } as Stueck, 10), true)
       }
       if (f.strasse && nahSet.has(`${i},${j}`)) for (const k of strassenKanten(brett, i, j)) linie([{ x: i + 0.5, y: j + 0.5 }, { x: i + 0.5 + [0, 0.5, 0, -0.5][k], y: j + 0.5 + [-0.5, 0, 0.5, 0][k] }])
     }))
-    const rampe = rampen.length ? <path d={rampen.join(' ')} fill="none" stroke="#000" strokeWidth={RAMPE_BREIT} strokeLinecap="round" filter="url(#gb-ebene-kante)" /> : null
+    const alle = [...rampen, ...gleisRampen]
+    const rampe = alle.length ? <path d={alle.join(' ')} fill="none" stroke="#000" strokeWidth={RAMPE_BREIT} strokeLinecap="round" filter="url(#gb-ebene-kante)" /> : null
     // je Richtung ein Filter: die Fläche gewachsen (aus) oder geschrumpft (ein), verschoben und weich
     const filter = (id: string, op: 'dilate' | 'erode', dx: number) => (
       <filter id={id} {...flt}><feMorphology operator={op} radius={BOESCHUNG_BREIT} /><feOffset dx={dx} dy={dx} /><feGaussianBlur stdDeviation={BOESCHUNG_WEICH} /></filter>
@@ -140,14 +141,21 @@ export function GelaendeBild({ brett }: { brett: Brett }) {
       </mask>
     )
     const flaeche = (m: string, farbe: string) => <rect x={-1} y={-1} width={sp + 2} height={ze + 2} fill={farbe} mask={`url(#${m})`} />
+    // ein Gleis über ein Tal liegt auf einem dunkelgrauen Damm statt auf Gras (Michael, 2026-11-27: «Wenn ein Gleis über ein Tal führt, soll die Rampe dunkelgrau
+    // und nicht grün sein»); gezeichnet nur im Band der Böschung innerhalb des Tals, Farbe gewählt
+    const damm = tal && gleisRampen.length
+      ? <path d={gleisRampen.join(' ')} fill="none" stroke={DAMM_FARBE} strokeWidth={RAMPE_BREIT} strokeLinecap="butt" mask="url(#gb-tal-band)" />
+      : null
     raus.push(
       <g key="ebenen" pointerEvents="none">
         <defs>
-          <clipPath id="gb-ebene-kacheln">{nah.map(([i, j]) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />)}</clipPath>
+          <clipPath id="gb-ebene-kacheln">{nah.map(([i, j]) => <rect key={`${i},${j}`} x={i + 0.015} y={j + 0.015} width={0.97} height={KACHEL_H} rx={0.05} />)}</clipPath>
           <filter id="gb-ebene-kante" {...flt}><feGaussianBlur stdDeviation={KANTE_WEICH} /></filter>
           {filter('gb-ebene-aus-dunkel', 'dilate', L)}{filter('gb-ebene-aus-hell', 'dilate', -L)}
           {filter('gb-ebene-ein-dunkel', 'erode', L)}{filter('gb-ebene-ein-hell', 'erode', -L)}
           {hoch && <>{maske('gb-hoch-dunkel', hoch, true, 'gb-ebene-aus-dunkel')}{maske('gb-hoch-hell', hoch, true, 'gb-ebene-aus-hell')}</>}
+          {damm && <filter id="gb-ebene-ein" {...flt}><feMorphology operator="erode" radius={BOESCHUNG_BREIT + L} /></filter>}
+          {damm && <mask id="gb-tal-band" {...rahmen}><path d={tal!} fill="#fff" /><path d={tal!} fill="#000" filter="url(#gb-ebene-ein)" /></mask>}
           {tal && <>{maske('gb-tal-dunkel', tal, false, 'gb-ebene-ein-dunkel')}{maske('gb-tal-hell', tal, false, 'gb-ebene-ein-hell')}</>}
         </defs>
         <g clipPath="url(#gb-ebene-kacheln)">
@@ -157,13 +165,14 @@ export function GelaendeBild({ brett }: { brett: Brett }) {
           <g opacity={LICHT_STAERKE}>
             {hoch && flaeche('gb-hoch-hell', '#eaf7a8')}{tal && flaeche('gb-tal-hell', '#eaf7a8')}
           </g>
+          {damm}
         </g>
       </g>,
     )
   }
   brett.forEach((z, j) => z.forEach((f, i) => {
     if (f.hang === undefined || f.hang >= 18) return
-    raus.push(<rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={`url(#gb-hang-${f.hang})`} pointerEvents="none"
+    raus.push(<rect key={`${i},${j}`} x={i + 0.015} y={j + 0.015} width={0.97} height={KACHEL_H} rx={0.05} fill={`url(#gb-hang-${f.hang})`} pointerEvents="none"
                     style={{ mixBlendMode: 'multiply' }} />)
   }))
   return <>{raus}</>
@@ -172,6 +181,8 @@ export function GelaendeBild({ brett }: { brett: Brett }) {
 /** Einzug der Gebiete vom Rand der Felder, an denen kein gleicher Grund anschliesst, und Rundung der Ecken (gewählt) */
 const EINZUG: Record<string, number> = { wald: 0.07, berg: 0.07, ufer: 0.06, wasser: 0.13, rebberg: 0.07, schnee: 0.05, acker: 0.07 }
 const RUND = 0.2
+/** wie breit der Waldboden in die Wiese verläuft, in Feldern (gewählt) */
+const WALD_VERLAUF = 0.3
 const FUELLUNG: Record<string, string> = { wald: 'url(#gb-wald)', berg: 'url(#gb-fels)', ufer: '#d8cf9a', wasser: 'url(#gb-wasser)', rebberg: 'url(#gb-reben)', schnee: 'url(#gb-schnee)', acker: 'url(#gb-acker)' }
 
 /**
@@ -223,8 +234,8 @@ export function WiesenMuster({ sp, ze, kante, flaeche }: { sp: number; ze: numbe
     const fx = u % 2 === 1, fy = (2 * u + v) % 3 === 0
     zellen.push(
       <g key={`${u},${v}`}>
-        <rect x={u + 0.025} y={v + 0.025} width={0.95} height={0.95} rx={0.05} fill={kante} />
-        <rect x={u + 0.025} y={v + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={flaeche} />
+        <rect x={u + 0.015} y={v + 0.015} width={0.97} height={0.97} rx={0.05} fill={kante} />
+        <rect x={u + 0.015} y={v + 0.015} width={0.97} height={KACHEL_H} rx={0.05} fill={flaeche} />
         <g clipPath={`url(#gb-zelle-${u}-${v})`}>
           <image href={wiese} x={0} y={0} width={1} height={1} preserveAspectRatio="none"
                  transform={`translate(${fx ? u + 1 : u} ${fy ? v + 1 : v}) scale(${fx ? -1 : 1} ${fy ? -1 : 1})`} />
@@ -237,7 +248,7 @@ export function WiesenMuster({ sp, ze, kante, flaeche }: { sp: number; ze: numbe
       <defs>
         {Array.from({ length: 18 }, (_, k) => (
           <clipPath key={k} id={`gb-zelle-${k % 6}-${Math.floor(k / 6)}`}>
-            <rect x={(k % 6) + 0.025} y={Math.floor(k / 6) + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />
+            <rect x={(k % 6) + 0.015} y={Math.floor(k / 6) + 0.015} width={0.97} height={KACHEL_H} rx={0.05} />
           </clipPath>
         ))}
         <pattern id="gb-wiesen" patternUnits="userSpaceOnUse" width={6} height={3}>{zellen}</pattern>
@@ -252,11 +263,12 @@ export function Landschaft({ brett }: { brett: Brett }) {
   // nur die Felder mit anderem Grund oder einem Fluss; die Wiese kommt aus WiesenMuster
   const besondere: Array<[number, number]> = []
   brett.forEach((z, j) => z.forEach((f, i) => { if (f.grund !== 'wiese' || f.fluss) besondere.push([i, j]) }))
+  const waldD = gebietPfad(brett, 'wald', 0)
   return (
     <>
       <defs>
         <clipPath id="gleisbau-kacheln">
-          {besondere.map(([i, j]) => <rect key={`${i},${j}`} x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} />)}
+          {besondere.map(([i, j]) => <rect key={`${i},${j}`} x={i + 0.015} y={j + 0.015} width={0.97} height={KACHEL_H} rx={0.05} />)}
         </clipPath>
       </defs>
       <g clipPath="url(#gleisbau-kacheln)">
@@ -266,7 +278,19 @@ export function Landschaft({ brett }: { brett: Brett }) {
           return <image key={`w${i},${j}`} href={wiese} x={0} y={0} width={1} height={1} preserveAspectRatio="none"
                         transform={`translate(${fx ? i + 1 : i} ${fy ? j + 1 : j}) scale(${fx ? -1 : 1} ${fy ? -1 : 1})`} />
         })}
-        <path d={gebietPfad(brett, 'wald', EINZUG.wald)} fill={FUELLUNG.wald} />
+        {/* der Waldboden ohne Kante: innen voll, gegen aussen in die Wiese verlaufend (Michael, 2026-11-27: «Wald soll keinen dunkleren Boden haben oder wenn dann
+            mit einem Verlauf (innen dunkler gegen aussen heller wie die Wiese, damit es keine Kante gibt)»; Breite des Verlaufs gewählt) */}
+        {waldD && <>
+          <defs>
+            <filter id="gb-wald-weich" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" x={-1} y={-1} width={spalten(brett) + 2} height={zeilen(brett) + 2}>
+              <feMorphology operator="erode" radius={WALD_VERLAUF * 0.6} /><feGaussianBlur stdDeviation={WALD_VERLAUF * 0.5} />
+            </filter>
+            <mask id="gb-wald-maske" maskUnits="userSpaceOnUse" x={-1} y={-1} width={spalten(brett) + 2} height={zeilen(brett) + 2}>
+              <path d={waldD} fill="#fff" filter="url(#gb-wald-weich)" />
+            </mask>
+          </defs>
+          <rect x={-1} y={-1} width={spalten(brett) + 2} height={zeilen(brett) + 2} fill={FUELLUNG.wald} mask="url(#gb-wald-maske)" />
+        </>}
         <path d={gebietPfad(brett, 'rebberg', EINZUG.rebberg)} fill={FUELLUNG.rebberg} />
         <path d={gebietPfad(brett, 'schnee', EINZUG.schnee)} fill={FUELLUNG.schnee} />
         <path d={gebietPfad(brett, 'acker', EINZUG.acker)} fill={FUELLUNG.acker} />
@@ -484,16 +508,20 @@ export function ObjektBild({ o }: { o: Objekt }) {
  * Ein Tunnelportal am Punkt (x, y). Süd, West und Ost als Bild, so gross, dass die Öffnung 0,36
  * Felder misst; Nord fehlt noch (das Bild hatte das Schachbrett mitgemalt), dort vorerst ein schlichtes Portal
  */
-export function PortalBild({ x, y, oben }: { x: number; y: number; oben?: boolean }) {
+export function PortalBild({ x, y, aus }: { x: number; y: number; aus?: { dx: number; dy: number } }) {
+  // führt das Gleis nach Norden, Westen oder Osten aus dem Berg, nur ein dunkler Strich quer zum Gleis, so breit wie die Öffnung (Michael, 2026-11-27:
+  // «Tunnel-Nordportale sollen nur einen dunklen Strich haben, ebenso die West- und Ostportale»; Breite und Dicke gewählt)
+  if (aus && !(aus.dy > 0 && aus.dy >= Math.abs(aus.dx))) {
+    const n = Math.hypot(aus.dx, aus.dy) || 1, qx = -aus.dy / n * PORTAL_STRICH_L / 2, qy = aus.dx / n * PORTAL_STRICH_L / 2
+    return <line x1={x - qx} y1={y - qy} x2={x + qx} y2={y + qy} stroke={TUNNEL_DUNKEL} strokeWidth={PORTAL_STRICH_B} strokeLinecap="round" />
+  }
   // in jeder Richtung dasselbe Portal von vorne (Michael, 2026-11-23: «Eigentlich reicht es, wenn wir nur immer das gleiche Tunnelportal verwenden»):
   // die Unterkante der Öffnung am Punkt, die Öffnung 0,3 Felder weit, das Portal höchstens 0,62 breit (gewählt)
   const name = 'gb_bau_tunnelportal_s', m = masse(name)
   if (!m?.oeffnung) return null
   const [ox0, , ox1, oy1] = m.oeffnung
   const s = Math.min(0.3 / (ox1 - ox0), 0.62 / m.w)
-  // führt das Gleis nach Norden aus dem Berg, steht das Portal auf dem Kopf, offen nach oben (Michael, 2026-11-24: «Das Portal muss gegen oben offen sein»)
-  return <image href={bild(name)} x={x - ((ox0 + ox1) / 2) * s} y={y - oy1 * s + 0.06} width={m.w * s} height={m.h * s} preserveAspectRatio="none"
-                transform={oben ? `rotate(180 ${x} ${y})` : undefined} />
+  return <image href={bild(name)} x={x - ((ox0 + ox1) / 2) * s} y={y - oy1 * s + 0.06} width={m.w * s} height={m.h * s} preserveAspectRatio="none" />
 }
 
 /** Farben und Breite der Strassen (gewählt) */
@@ -514,6 +542,7 @@ function strassenWeg(brett: Brett, i: number, j: number, k: number[]): string {
   }
   return k.map((r) => { const p = kante(r, lang(r)); return `M${cx},${cy} L${p.x},${p.y}` }).join(' ')
 }
+const PORTAL_STRICH_L = 0.34, PORTAL_STRICH_B = 0.06
 const STRASSE_DECK = '#d6d6d6', STRASSE_GELAENDER = '#7a7a7a', TUNNEL_DUNKEL = '#2e2e30', HALT_GELB = '#f2c230'
 
 /**

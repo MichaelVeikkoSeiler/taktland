@@ -38,7 +38,10 @@ const F = {
 }
 /** die Unterkante jeder Kachel, damit sie leicht erhaben wirkt (gewählt) */
 const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9b19d', dorf: '#9fc47a', rebberg: '#86ad4c', schnee: '#b7c7e2', acker: '#8a5530', industrie: '#9fc47a' }
-const KACHEL_H = 0.915
+const KACHEL_H = 0.935
+/** Breite des dunkelgrauen Rands um das Brett in Feldern; seit 2026-11-27 0,24 statt 0,15 (Michael: «Der dunkelgraue Rand muss etwas breiter sein, damit die
+ * weissen Dreieck-Pfeile besser Platz haben»; gewählt) */
+const RAHMEN_B = 0.24
 
 type Werkzeug =
   | { art: 'linie' } | { art: 'name' } | { art: 'ampel' } | { art: 'gleis'; gleis: GleisArt } | { art: 'tunnel' } | { art: 'bruecke' } | { art: 'grund'; grund: Grund } | { art: 'strasse' } | { art: 'weg' }
@@ -431,7 +434,7 @@ function perronPunkt(brett: Brett, k: string, m: number): { x: number; y: number
   for (let r = 0; r < g.dreh; r++) [dx, dy] = [-dy, dx]
   return { x: i + 0.5 + dx, y: j + 0.5 + dy }
 }
-/** die Wartenden an jedem Bahnhof: schwarze Punkte mit dem Buchstaben ihres Ziels, auf dem Perron */
+/** die Wartenden an jedem Bahnhof: schwarze Punkte auf dem Perron */
 function WartendeBild({ namen, warten, brett }: { namen: Map<string, string>; warten: Record<string, string[]>; brett: Brett }) {
   const raus = []
   for (const [k, n] of namen) {
@@ -443,11 +446,11 @@ function WartendeBild({ namen, warten, brett }: { namen: Map<string, string>; wa
   }
   return <>{raus}</>
 }
-function Person({ x, y, ziel, deckt = 1 }: { x: number; y: number; ziel: string; deckt?: number }) {
+/** ein Fahrgast: seit 2026-11-27 nur ein schwarzer Punkt ohne Buchstaben (Michael: «Personen an den Bahnhöfen sollen keine Nummern oder Buchstaben haben, schwarze Punkte reichen») */
+function Person({ x, y, deckt = 1 }: { x: number; y: number; ziel?: string; deckt?: number }) {
   return (
     <g pointerEvents="none" opacity={deckt}>
       <circle cx={x} cy={y} r={0.042} fill="#1d1d1d" stroke="#ffffff" strokeWidth={0.008} />
-      <text x={x} y={y + 0.021} fontSize={0.055} fontWeight={700} textAnchor="middle" fill="#ffffff">{ziel}</text>
     </g>
   )
 }
@@ -655,7 +658,7 @@ function KnopfLandschaft({ f, i, j }: { f: Feld; i: number; j: number }) {
   const gebiet = (fill: string, e: number) => <rect x={i + e} y={j + e} width={1 - 2 * e} height={KACHEL_H - 2 * e} rx={0.18} fill={fill} />
   return (
     <g>
-      <clipPath id={`gb-knopf-${f.grund}`}><rect x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} /></clipPath>
+      <clipPath id={`gb-knopf-${f.grund}`}><rect x={i + 0.015} y={j + 0.015} width={0.97} height={KACHEL_H} rx={0.05} /></clipPath>
       <g clipPath={`url(#gb-knopf-${f.grund})`}>
         <image href={bild('gb_grund_wiese_01')} x={i} y={j} width={1} height={1} preserveAspectRatio="none" />
         {f.grund === 'wald' && gebiet('url(#gb-wald)', 0.07)}
@@ -676,8 +679,8 @@ function GrundBild({ f, i, j, nurFlaeche = false }: { f: Feld; i: number; j: num
   const grundFarbe = f.grund === 'wald' ? F.wald : f.grund === 'wasser' ? F.wasser : f.grund === 'berg' ? F.berg : f.grund === 'schnee' ? '#e8eff9' : f.grund === 'acker' ? '#b06a3e' : F.wiese
   return (
     <g>
-      <rect x={i + 0.025} y={j + 0.025} width={0.95} height={0.95} rx={0.05} fill={KANTE[f.grund]} />
-      <rect x={i + 0.025} y={j + 0.025} width={0.95} height={KACHEL_H} rx={0.05} fill={grundFarbe} />
+      <rect x={i + 0.015} y={j + 0.015} width={0.97} height={0.97} rx={0.05} fill={KANTE[f.grund]} />
+      <rect x={i + 0.015} y={j + 0.015} width={0.97} height={KACHEL_H} rx={0.05} fill={grundFarbe} />
       {!nurFlaeche && <KnopfLandschaft f={f} i={i} j={j} />}
     </g>
   )
@@ -765,7 +768,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
               const kant = e === 0 ? s.ein : s.aus
               if (kant < 0 || weiter[kant]) return null
               const q = stueckPunkt(s, e === 0 ? PORTAL : l - PORTAL)
-              return <PortalBild key={`${k}${e}`} x={q.x} y={q.y} oben={kant === 0} />
+              return <PortalBild key={`${k}${e}`} x={q.x} y={q.y} aus={{ dx: [0, 1, 0, -1][kant], dy: [-1, 0, 1, 0][kant] }} />
             })
           })}
         </>
@@ -835,9 +838,9 @@ function BogenBild({ i, j, g, wasser, brett }: { i: number; j: number; g: Gleis;
             <path d={linie(pts)} fill="none" stroke={TUNNEL_STRICH} strokeWidth={0.035} strokeDasharray="0.08 0.06" opacity={0.75} />
             {[t.portal0 && bei(t.k0), t.portal1 && bei(t.k1)].map((q, m) => {
               if (!q) return null
-              // offen nach oben, wenn das Gleis vom Portal aus nach Norden aus dem Berg führt
+              // die Richtung, in die das Gleis aus dem Berg führt
               const aussen = m === 0 ? p[Math.max(0, t.k0 - 1)] : p[Math.min(p.length - 1, t.k1 + 1)], dx = aussen.x - q.x, dy = aussen.y - q.y
-              return <PortalBild key={m} x={q.x} y={q.y} oben={dy < 0 && -dy > Math.abs(dx)} />
+              return <PortalBild key={m} x={q.x} y={q.y} aus={{ dx, dy }} />
             })}
           </g>
         )
@@ -1291,15 +1294,15 @@ export function Gleisbau() {
   const sicht = (() => {
     const { w, h } = buehneGr
     if (!w || !h) return null
-    const k = Math.min(w / (SP + 0.3), h / (ZE + 0.3)), ox = (w - (SP + 0.3) * k) / 2, oy = (h - (ZE + 0.3) * k) / 2
+    const k = Math.min(w / (SP + 2 * RAHMEN_B), h / (ZE + 2 * RAHMEN_B)), ox = (w - (SP + 2 * RAHMEN_B) * k) / 2, oy = (h - (ZE + 2 * RAHMEN_B) * k) / 2
     if (k * zoom.s < 10) return { klein: true, i0: 0, i1: 0, j0: 0, j1: 0 }
-    const zu = (sx: number, sy: number) => [((sx - zoom.x) / zoom.s - ox) / k - 0.15, ((sy - zoom.y) / zoom.s - oy) / k - 0.15]
+    const zu = (sx: number, sy: number) => [((sx - zoom.x) / zoom.s - ox) / k - RAHMEN_B, ((sy - zoom.y) / zoom.s - oy) / k - RAHMEN_B]
     const [a0, b0] = zu(0, 0), [a1, b1] = zu(w, h)
     return { klein: false, i0: Math.floor(a0) - 1, i1: Math.ceil(a1) + 1, j0: Math.floor(b0) - 1, j1: Math.ceil(b1) + 2 }
   })()
   // Schilder so gross, dass die Schrift mindestens SCHILD_PX Bildpunkte hoch ist, höchstens SCHILD_HOECHSTENS-fach (gewählt)
   const SCHILD_PX = 12, SCHILD_HOECHSTENS = 3.5
-  const feldPx = buehneGr.w && buehneGr.h ? Math.min(buehneGr.w / (SP + 0.3), buehneGr.h / (ZE + 0.3)) * zoom.s : 0
+  const feldPx = buehneGr.w && buehneGr.h ? Math.min(buehneGr.w / (SP + 2 * RAHMEN_B), buehneGr.h / (ZE + 2 * RAHMEN_B)) * zoom.s : 0
   const schildMass = feldPx ? Math.max(1, Math.min(SCHILD_HOECHSTENS, SCHILD_PX / (0.13 * feldPx))) : 1
   const sichtSchluessel = sicht ? (sicht.klein ? 'klein' : `${sicht.i0},${sicht.i1},${sicht.j0},${sicht.j1}`) : 'alle'
   const oben = useMemo(() => {
@@ -1775,9 +1778,9 @@ export function Gleisbau() {
   /** das Feld unter einem Punkt des Bildschirms; das Bild reicht je 0,15 Felder über das Brett hinaus (der Rand des Tabletts) */
   function feldBei(x: number, y: number): [number, number] | null {
     // das Bild füllt das Element nur in einer Richtung (preserveAspectRatio meet), in der anderen bleibt ein Rand
-    const r = svg.current!.getBoundingClientRect(), vw = SP + 0.3, vh = ZE + 0.3, k = Math.min(r.width / vw, r.height / vh)
+    const r = svg.current!.getBoundingClientRect(), vw = SP + 2 * RAHMEN_B, vh = ZE + 2 * RAHMEN_B, k = Math.min(r.width / vw, r.height / vh)
     const ox = r.left + (r.width - vw * k) / 2, oy = r.top + (r.height - vh * k) / 2
-    const i = Math.floor((x - ox) / k - 0.15), j = Math.floor((y - oy) / k - 0.15)
+    const i = Math.floor((x - ox) / k - RAHMEN_B), j = Math.floor((y - oy) / k - RAHMEN_B)
     return i < 0 || j < 0 || i >= SP || j >= ZE ? null : [i, j]
   }
 
@@ -1818,8 +1821,8 @@ export function Gleisbau() {
     return { b: b2, l }
   }, [ueber, faehrt, werkzeug, dreh, brett, fest])
   const brettPunkt = (cx: number, cy: number) => {
-    const r = svg.current!.getBoundingClientRect(), vw = SP + 0.3, vh = ZE + 0.3, kk = Math.min(r.width / vw, r.height / vh)
-    return { x: (cx - r.left - (r.width - vw * kk) / 2) / kk - 0.15, y: (cy - r.top - (r.height - vh * kk) / 2) / kk - 0.15 }
+    const r = svg.current!.getBoundingClientRect(), vw = SP + 2 * RAHMEN_B, vh = ZE + 2 * RAHMEN_B, kk = Math.min(r.width / vw, r.height / vh)
+    return { x: (cx - r.left - (r.width - vw * kk) / 2) / kk - RAHMEN_B, y: (cy - r.top - (r.height - vh * kk) / 2) / kk - RAHMEN_B }
   }
   const ENDE_NAH = 0.22
   const endeBei = (x: number, y: number, ohne?: { x: number; y: number }) => {
@@ -2062,8 +2065,8 @@ export function Gleisbau() {
     // während der Fahrt stellen Tipps nur die Weichen
     if (faehrt) {
       // ein Tipp auf einen Zug öffnet dessen Blatt (Wagen, Richtung, Entfernen)
-      const r = svg.current!.getBoundingClientRect(), vw = SP + 0.3, vh = ZE + 0.3, kk = Math.min(r.width / vw, r.height / vh)
-      const px = (e.clientX - r.left - (r.width - vw * kk) / 2) / kk - 0.15, py = (e.clientY - r.top - (r.height - vh * kk) / 2) / kk - 0.15
+      const r = svg.current!.getBoundingClientRect(), vw = SP + 2 * RAHMEN_B, vh = ZE + 2 * RAHMEN_B, kk = Math.min(r.width / vw, r.height / vh)
+      const px = (e.clientX - r.left - (r.width - vw * kk) / 2) / kk - RAHMEN_B, py = (e.clientY - r.top - (r.height - vh * kk) / 2) / kk - RAHMEN_B
       let naechster: Zug | null = null, d = ZUG_TIPP
       zuege.current.forEach((z) => z.wagen().forEach((w) => { const dd = Math.hypot(w.x - px, w.y - py); if (dd < d) { d = dd; naechster = z } }))
       // ein Bus näher als jeder Wagen öffnet dessen Blatt
@@ -2534,14 +2537,14 @@ export function Gleisbau() {
               {auftrag && <p className="mt-1 text-sm font-bold leading-snug sm:text-base">{aufgabe.ziel}</p>}
             </div>
           )}
-          <div ref={buehne} className="relative min-h-0 w-full shrink touch-none overflow-hidden" style={{ aspectRatio: `${SP + 0.3 + 0.4} / ${ZE + 0.3}` }}
+          <div ref={buehne} className="relative min-h-0 w-full shrink touch-none overflow-hidden" style={{ aspectRatio: `${SP + 2 * RAHMEN_B + 0.4} / ${ZE + 2 * RAHMEN_B}` }}
                onPointerDown={buehneDrucken} onPointerMove={buehneBewegen} onPointerUp={buehneLos} onPointerCancel={buehneLos} onWheel={buehneRad}>
             <div className="absolute inset-0 px-2.5" style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`, transformOrigin: '0 0' }}>
-        <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
+        <svg ref={svg} viewBox={`${-RAHMEN_B} ${-RAHMEN_B} ${SP + 2 * RAHMEN_B} ${ZE + 2 * RAHMEN_B}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
              onClick={feldAn} onPointerDown={(e) => { mausKlick.current = e.pointerType === 'mouse'; drucken(e) }} onPointerMove={bewegen} onPointerUp={loslassen} onPointerLeave={() => { setUeber(null); if (!zugGriff) setZugVorschau(null) }}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); malRef.current = null; malStart.current = null; setMalen(null) }} onContextMenu={(e) => e.preventDefault()}
              className={`size-full ${ueberEnde || verbinde ? 'cursor-crosshair' : 'cursor-pointer'} select-none [-webkit-touch-callout:none]`}>
-          <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
+          <rect x={-RAHMEN_B} y={-RAHMEN_B} width={SP + 2 * RAHMEN_B} height={ZE + 2 * RAHMEN_B} rx={0.14} fill={F.tablett} />
           {unten}
           {/* im Tunnel und unter einer Überführung ist ein Wagen unsichtbar (Michael, 2026-11-25: «Züge im Tunnel oder unter Brücken unsichtbar machen»),
               unter dem Dach von Depot und Galerie blass wie bisher */}
@@ -2675,10 +2678,10 @@ export function Gleisbau() {
           <rect x={SP - Math.min(0.8, SP / 4)} y={0} width={Math.min(0.8, SP / 4)} height={ZE} fill="url(#gb-vignette-r)" pointerEvents="none" />
           {/* am dunklen Rand je Seite zwei Dreiecke: nach aussen eine Reihe dazu, nach innen eine weg (Michael, 2026-11-24) */}
           {!faehrt && !aufgabe && (() => {
-            const k = buehneGr.w ? Math.min(buehneGr.w / (SP + 0.3), buehneGr.h / (ZE + 0.3)) : 40, u = 13 / (k * zoom.s)
+            const k = buehneGr.w ? Math.min(buehneGr.w / (SP + 2 * RAHMEN_B), buehneGr.h / (ZE + 2 * RAHMEN_B)) : 40, u = 13 / (k * zoom.s)
             return [0, 1, 2, 3].map((seite) => {
               const ein = 0
-              const cx = seite === 1 ? SP + 0.075 - ein : seite === 3 ? -0.075 + ein : SP / 2, cy = seite === 0 ? -0.075 + ein : seite === 2 ? ZE + 0.075 - ein : ZE / 2
+              const cx = seite === 1 ? SP + RAHMEN_B / 2 - ein : seite === 3 ? -RAHMEN_B / 2 + ein : SP / 2, cy = seite === 0 ? -RAHMEN_B / 2 + ein : seite === 2 ? ZE + RAHMEN_B / 2 - ein : ZE / 2
               const aussen = [-Math.PI / 2, 0, Math.PI / 2, Math.PI][seite], quer = seite % 2 ? [0, 1] : [1, 0]
               return [1, -1].map((d) => {
                 const x = cx + quer[0] * d * -1.3 * u, y = cy + quer[1] * d * -1.3 * u, a = d > 0 ? aussen : aussen + Math.PI
@@ -2704,7 +2707,7 @@ export function Gleisbau() {
 
             {/* grosse Bretter: Lupen und Verschieben unten rechts (Michael, 2026-11-24: «Sind so viele Kacheln dass man einzoomen muss braucht es ein
                 Verschiebe Icon und Lupen zum ein und auszoomen»); gezeigt, sobald ein Feld kleiner als 28 Bildpunkte ist oder hineingezoomt ist (gewählt) */}
-            {(zoom.s > 1.01 || (buehneGr.w > 0 && Math.min(buehneGr.w / (SP + 0.3), buehneGr.h / (ZE + 0.3)) < 28)) && (
+            {(zoom.s > 1.01 || (buehneGr.w > 0 && Math.min(buehneGr.w / (SP + 2 * RAHMEN_B), buehneGr.h / (ZE + 2 * RAHMEN_B)) < 28)) && (
               <div className="absolute bottom-3 right-2.5 flex flex-col gap-2">
                 <button type="button" onClick={() => lupe(1.6)} disabled={zoom.s >= zoomMax - 0.01} aria-label="Hineinzoomen" title="Hineinzoomen" className={rund}>
                   <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5 21 21M7.5 10.5h6M10.5 7.5v6" /></svg>

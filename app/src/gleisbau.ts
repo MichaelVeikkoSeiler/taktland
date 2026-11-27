@@ -1330,6 +1330,19 @@ export class Zug {
       if (this.tempo <= 0) return
     } else this.tempo = Math.min(this.vmax, this.tempo + (this.vmax / ANFAHREN) * dt, Math.max(KRIECHEN, Math.sqrt(2 * BREMSEN * this.bisHalt(b))), this.kurvenGrenze(b))
     let rest = this.tempo * dt
+    // nach der Mitte des Bahnhofs noch so weit, dass der Personenwagen am Perron steht, dann halten
+    const nl = this.nachlauf
+    if (nl) {
+      const d = Math.min(rest, nl.rest)
+      const ok = this.vorwaerts(b, d, frei)
+      nl.rest -= d
+      if (!ok || nl.rest <= 1e-4) {
+        this.nachlauf = null
+        this.halt = Math.max(HALT_S, this.taktWarten?.(nl.feld) ?? 0); this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = nl.feld
+        this.wendenNachHalt = this.sackgasse(b, this.stuecke[this.stuecke.length - 1])
+      }
+      return
+    }
     for (let k = 0; k < 8 && rest > 0; k++) {
       const s = this.stuecke[this.stuecke.length - 1], l = stueckLaenge(s)
       const mitte = l / 2, vorher = this.kopf
@@ -1341,6 +1354,10 @@ export class Zug {
       const amBf = istBahnhof(b[s.j][s.i].gleis)
       const haltHier = this.art === 'gueter' ? gueterGilt(b[s.j][s.i]) : this.art === 'mix' ? amBf || gueterGilt(b[s.j][s.i]) : amBf
       if (!s.gross && haltHier && vorher < mitte && vorher + rest >= mitte && (!amBf || !weiterImBahnhof())) {
+        // ein Personenwagen hinter der Lok: noch so weit fahren, dass er am Perron hält, soweit das Gleis reicht (Michael, 2026-11-27: «Wenn ein Personenwagen
+        // angehängt ist, sollen die Personen dort einsteigen, entsprechend muss der Zug etwas weiter fahren, damit dieser Personenwagen beim Perron hält»)
+        const v = amBf && this.art !== 'gueter' ? Math.min(this.personenVersatz(), this.laengeVoraus(b, s, l - mitte, 3) - 0.05) : 0
+        if (v > 0.02) { this.kopf = mitte; this.nachlauf = { rest: v, feld: `${s.i},${s.j}` }; return }
         this.kopf = mitte; this.halt = Math.max(HALT_S, this.taktWarten?.(`${s.i},${s.j}`) ?? 0); this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`
         this.wendenNachHalt = this.sackgasse(b, s)
         // Wagen für Wagen nur, wenn das Gleis hinter dem Schuppen lang genug ist, dass jeder Wagen direkt davor halten kann; sonst (etwa am Gleisende) alles
@@ -1386,6 +1403,19 @@ export class Zug {
     }
   }
 
+  /** im Nachlauf nach der Mitte eines Bahnhofs: wie weit noch und welcher Bahnhof */
+  nachlauf: { rest: number; feld: string } | null = null
+  /** wie weit die Mitte des ersten Fahrzeugs mit Fahrgästen hinter der Spitze liegt; 0, wenn die Lok selbst vorne Fahrgäste hat oder keines */
+  private personenVersatz(): number {
+    const k = this.fz.findIndex((v) => v.t !== 'lok' && !(v.typ && v.typ !== 'person'))
+    return k > 0 ? k * (WAGEN_LAENGE + WAGEN_LUECKE) + WAGEN_LAENGE / 2 : 0
+  }
+  /** wie viel Gleis hinter der Stelle folgt (im Stück s noch rest), höchstens bis max */
+  private laengeVoraus(b: Brett, s: Stueck, rest: number, max: number): number {
+    let x = s
+    for (let k = 0; k < 40 && rest < max; k++) { const n = naechstes(b, x); if (!n) break; rest += stueckLaenge(n); x = n }
+    return rest
+  }
   /** ob hinter der Stelle (im Stück s noch rest) mindestens d Gleis folgt */
   private vorausFrei(b: Brett, s: Stueck, rest: number, d: number): boolean {
     let x = s
@@ -1434,6 +1464,7 @@ export class Zug {
   }
   /** wie weit bis zur nächsten Stelle, an der der Zug stehen bleibt; Infinity, wenn keine in Sicht */
   private bisHalt(b: Brett): number {
+    if (this.nachlauf) return this.nachlauf.rest
     let s = this.stuecke[this.stuecke.length - 1]
     const l0 = stueckLaenge(s)
     if (this.haltAuf(b, s) && this.kopf < l0 / 2) return l0 / 2 - this.kopf

@@ -283,7 +283,7 @@ const FUEHRUNG: Fuehrung[][] = [
   [{ ...zugWaehlen('p'), fertig: (x) => x.werkzeug === 'Personenzug' || hatZug('p')(x) },
     { text: 'Zieh deinen Zug aufs Gleis, am besten in einen Bahnhof, oder tippe dort aufs Gleis: Die Lok rastet auf dem nächsten Feld ein.', fertig: hatZug('p') },
     FAHREN('An den Bahnhöfen warten Fahrgäste mit ihrem Ziel. Jeder Personenwagen hat 4 Plätze.'),
-    { text: 'Lass fahren, bis 15 Fahrgäste am Ziel sind. Jeder Fahrgast wartet an einem Bahnhof und will zu einem anderen: Der Buchstabe auf seinem Punkt ist sein Ziel, A ist Seewil, B Bergau und so weiter wie auf den Schildern. Steigt er dort aus, zählt er. Die Zahl steht unten.' }],
+    { text: 'Lass fahren, bis 15 Fahrgäste am Ziel sind. Die schwarzen Punkte am Perron sind Fahrgäste. Jeder wartet an einem Bahnhof und will zu einem anderen; dort steigt er aus, und dann zählt er. Die Zahl steht unten.' }],
   [{ text: 'Verbinde den Forst Tannegg und die Sägerei Seewil mit deinem Netz. Ein Güterschuppen ist ein Gleis, an dem nur Güterzüge halten.', werkzeug: 'Linie', felder: [[10, 7], [4, 7]], fertig: schuppenVerbunden },
     { ...zugWaehlen('g'), fertig: (x) => x.werkzeug === 'Personenzug' || hatZug('g')(x) },
     { text: 'Zieh den Güterzug aufs Gleis oder tippe dort aufs Gleis. Noch keiner? Unter «Züge» Lok und Rungenwagen zusammenstellen.', fertig: hatZug('g') },
