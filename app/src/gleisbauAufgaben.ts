@@ -198,18 +198,21 @@ function transport(ziel: Partial<Transport>) {
 
 type Platz = [number, number]
 /** was eine Stufe der Reihe dazubringt: Boden, Bahnhöfe mit Namen, Güterschuppen mit Anlage */
-interface Zusatz { gruende?: Partial<Record<Grund, Platz[]>>; bahnhoefe?: Array<[number, number, Dreh, string]>; schuppen?: Array<[number, number, Dreh, string]> }
+interface Zusatz { gruende?: Partial<Record<Grund, Platz[]>>; bahnhoefe?: Array<[number, number, Dreh, string]>; schuppen?: Array<[number, number, Dreh, string]>; prellboecke?: Array<[number, number, Dreh]> }
 function zusetzen(b: Brett, z: Zusatz): Brett {
   const n = b.map((zz) => zz.map((f) => ({ ...f })))
   for (const [g, l] of Object.entries(z.gruende ?? {}) as Array<[Grund, Platz[]]>) for (const [i, j] of l) n[j][i] = { ...n[j][i], grund: g }
   for (const [i, j, dreh, name] of z.bahnhoefe ?? []) n[j][i] = { grund: n[j][i].grund === 'berg' || n[j][i].grund === 'wasser' ? 'wiese' : n[j][i].grund, gleis: { art: 'bahnhof', dreh }, name }
   for (const [i, j, dreh, name] of z.schuppen ?? []) n[j][i] = { grund: 'wiese', gleis: { art: 'gerade', dreh }, bau: 'gueter', anlage: name }
+  for (const [i, j, dreh] of z.prellboecke ?? []) if (!n[j][i].gleis) n[j][i] = { ...n[j][i], gleis: { art: 'prellbock', dreh } }
   return n
 }
 const REIHE_SP = 12, REIHE_ZE = 8
 const ZUSAETZE: Zusatz[] = [
-  { gruende: { dorf: [[0, 0], [1, 0], [5, 0]], wald: [[0, 7], [1, 7], [2, 7]] }, bahnhoefe: [[1, 1, 1, 'Seewil'], [5, 1, 1, 'Bergau']] },
-  { gruende: { wasser: [[7, 0], [7, 1], [7, 2], [7, 3]], wald: [[11, 0]] }, bahnhoefe: [[9, 1, 1, 'Flussau']] },
+  // seit 2026-11-27 Bergau weiter weg und an den äusseren Seiten je ein Prellbock, Fluss und Flussau eine Spalte weiter rechts (Michael: «Beide Bahnhöfe weiter
+  // auseinander nehmen und auf den Aussenseiten je einen Prellbock stellen»)
+  { gruende: { dorf: [[0, 0], [1, 0], [6, 0]], wald: [[0, 7], [1, 7], [2, 7]] }, bahnhoefe: [[1, 1, 1, 'Seewil'], [6, 1, 1, 'Bergau']], prellboecke: [[0, 1, 3], [7, 1, 1]] },
+  { gruende: { wasser: [[8, 0], [8, 1], [8, 2], [8, 3]], wald: [[11, 0]] }, bahnhoefe: [[10, 1, 1, 'Flussau']] },
   { gruende: { berg: [[8, 4], [9, 4], [10, 4], [11, 4], [8, 5]] }, bahnhoefe: [[10, 6, 1, 'Alpwil']] },
   { gruende: { wald: [[0, 4], [0, 5], [1, 4]] }, bahnhoefe: [[2, 5, 1, 'Waldegg']] },
   {},
@@ -266,11 +269,11 @@ const zugWaehlen = (art: 'p' | 'g'): Fuehrung => ({ text: `Tippe unten auf den R
 const FAHREN = (text: string): Fuehrung => ({ text: `Tippe rechts unter dem Brett auf den roten Knopf ▶ «Fahren». ${text}`, fertig: (x) => x.faehrt || (x.stand?.fahrgaeste ?? 0) > 0 || (x.stand?.gueter ?? 0) > 0 })
 const FUEHRUNG: Fuehrung[][] = [
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Seewil', 'Bergau')(x) },
-    { text: 'Zieh mit dem Finger von Seewil nach Bergau, Feld für Feld. Gerade Stücke und Kurven legt die Linie von selbst. Ein Bahnhof hat nur links und rechts ein Gleis. Rote Punkte zeigen Gleise, die noch offen enden.', felder: [[1, 1], [5, 1]], fertig: verbunden('Seewil', 'Bergau') }],
+    { text: 'Zieh mit dem Finger von Seewil nach Bergau, Feld für Feld. Gerade Stücke und Kurven legt die Linie von selbst. Ein Bahnhof hat nur links und rechts ein Gleis. Rote Punkte zeigen Gleise, die noch offen enden, die Prellböcke an den Enden halten den Zug auf.', felder: [[1, 1], [6, 1]], fertig: verbunden('Seewil', 'Bergau') }],
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Bergau', 'Flussau', false, true)(x) },
-    { text: 'Zieh die Linie von Bergau über den Fluss bis Flussau. Ein Gleis auf dem Wasser wird von selbst zur Brücke.', felder: [[5, 1], [9, 1]], fertig: verbunden('Bergau', 'Flussau', false, true) }],
+    { text: 'Zieh die Linie von Bergau über den Prellbock und den Fluss bis Flussau: Der Prellbock wird zum Gleis, ein Gleis auf dem Wasser von selbst zur Brücke.', felder: [[6, 1], [10, 1]], fertig: verbunden('Bergau', 'Flussau', false, true) }],
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Flussau', 'Alpwil', true)(x) },
-    { text: 'Zieh die Linie rechts aus Flussau hinaus, dann nach unten über den Berg und von links oder rechts in Alpwil hinein. Ein Gleis auf dem Berg wird von selbst zum Tunnel.', felder: [[9, 1], [10, 1], [10, 6]], fertig: verbunden('Flussau', 'Alpwil', true) }],
+    { text: 'Zieh die Linie rechts aus Flussau hinaus, dann nach unten über den Berg und von links oder rechts in Alpwil hinein. Ein Gleis auf dem Berg wird von selbst zum Tunnel.', felder: [[10, 1], [11, 1], [10, 6]], fertig: verbunden('Flussau', 'Alpwil', true) }],
   [{ text: 'Zieh mit «Linie» ein Gleis von deiner Strecke seitlich in Waldegg hinein. Wo es auf ein Gleis trifft, entsteht eine Weiche.', werkzeug: 'Linie', felder: [[2, 5]], fertig: (x) => alleVerbunden(x.b).ok },
     FAHREN('Ein Tipp auf eine Weiche stellt sie um, so fährt der Zug auch nach Waldegg.')],
   [{ text: 'Baue einen geschlossenen Ring, der über den Fluss und durch den Berg führt. Er darf an dein Netz anschliessen.' },
@@ -278,7 +281,7 @@ const FUEHRUNG: Fuehrung[][] = [
   [{ ...zugWaehlen('p'), fertig: (x) => x.werkzeug === 'Personenzug' || hatZug('p')(x) },
     { text: 'Tippe auf ein Gleis, am besten in einem Bahnhof: Dort steht jetzt dein Zug.', fertig: hatZug('p') },
     FAHREN('An den Bahnhöfen warten Fahrgäste mit ihrem Ziel. Jeder Personenwagen hat 4 Plätze.'),
-    { text: 'Lass fahren, bis 15 Fahrgäste am Ziel sind. Die Zahl steht unten.' }],
+    { text: 'Lass fahren, bis 15 Fahrgäste am Ziel sind. Jeder Fahrgast wartet an einem Bahnhof und will zu einem anderen: Der Buchstabe auf seinem Punkt ist sein Ziel, A ist Seewil, B Bergau und so weiter wie auf den Schildern. Steigt er dort aus, zählt er. Die Zahl steht unten.' }],
   [{ text: 'Verbinde den Forst Tannegg und die Sägerei Seewil mit deinem Netz. Ein Güterschuppen ist ein Gleis, an dem nur Güterzüge halten.', werkzeug: 'Linie', felder: [[10, 7], [4, 7]], fertig: schuppenVerbunden },
     { ...zugWaehlen('g'), fertig: (x) => x.werkzeug === 'Güterzug' || hatZug('g')(x) },
     { text: 'Tippe auf ein Gleis, um den Güterzug hinzustellen.', fertig: hatZug('g') },

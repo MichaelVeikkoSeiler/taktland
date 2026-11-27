@@ -1297,6 +1297,8 @@ export function Gleisbau() {
   // in Aufgaben und Aufträgen kein Taktfahrplan: seine Uhr bräuchte die Felder oben links, wo die Aufgabe etwas vorgeben kann (Michael, 2026-11-26: «Bei den
   // Aufgaben im Gleisbau soll nicht nach einem Taktfahrplan gefragt werden. Dies gibt u.U. einen Konflikt mit der Aufgabe Elemente und der Uhr»)
   const takt = aufgabe ? 0 : taktFrei
+  const taktRef = useRef(0)
+  taktRef.current = takt
   const uhrBelegt = useMemo(() => takt > 0 && uhrPlatz(brett) !== brett, [takt, brett])
   /**
    * was eine Aufgabe vorgibt (Bahnhöfe, Güterschuppen, Gleise), bleibt fest: nicht verschieben, ersetzen, drehen oder löschen (Michael, 2026-11-26:
@@ -1305,7 +1307,8 @@ export function Gleisbau() {
   const fest = useMemo(() => {
     if (!aufgabe) return null
     const l = new Set<string>()
-    ;(aufgabe.vorgabeBrett ?? aufgabe.brett)().forEach((z, j) => z.forEach((f, i) => { if (f.gleis || f.teil || f.bau) l.add(`${i},${j}`) }))
+    ;(aufgabe.vorgabeBrett ?? aufgabe.brett)().forEach((z, j) => z.forEach((f, i) => { if ((f.gleis && f.gleis.art !== 'prellbock') || f.teil || f.bau) l.add(`${i},${j}`) }))
+    // ein vorgegebener Prellbock ist nicht fest: in Lektion 2 wird der hinter Bergau zum Gleis (seit 2026-11-27)
     return l
   }, [aufgabe])
   const FEST_TEXT = 'Dieses Stück gibt die Aufgabe vor, es bleibt, wo es ist.'
@@ -1617,7 +1620,8 @@ export function Gleisbau() {
         // Pfiff kurz vor der Abfahrt am Bahnhof, eine Glocke, wenn die Spitze an ein Dorf kommt (Michael, 2026-11-23, Vorschlag «Kleine Geräusche»)
         const [di, dj] = z.spitze(), b0 = brettRef.current
         const amDorf = [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]].some(([u, v]) => b0[dj + v]?.[di + u]?.grund === 'dorf')
-        if (amDorf && !dorf.current) kirchenSchlag(1, null, 0.7)
+        // die Glocke nur mit Taktfahrplan (Michael, 2026-11-27: «Allgemein braucht es das Glockengeräusch nicht, das gehört doch zum Taktfahrplan»)
+        if (amDorf && !dorf.current && taktRef.current > 0) kirchenSchlag(1, null, 0.7)
         dorf.current = amDorf
         const [si, sj] = z.spitze(), f = brettRef.current[sj]?.[si]
         const ort = f?.gleis && !grosseKurve(f.gleis) ? (f.grund === 'berg' ? 'tunnel' : ueberWasser(f) ? 'bruecke' : null) : null
