@@ -789,7 +789,7 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
           })}
         </>
       )}
-      {bauGilt(f) && <BauBild f={f} i={i} j={j} />}
+      {bauGilt(f) && <BauBild f={f} i={i} j={j} brett={brett} />}
       {name && (
         <g>
           <rect x={i + 0.06} y={j + 0.06} width={0.2} height={0.2} rx={0.03} fill="#3d3d3d" />
@@ -804,10 +804,46 @@ function GleisBild({ f, i, j, name, weiter = [false, false, false, false], wasse
  * Depot, Güterschuppen und Galerie über dem Gleis, als Bild von Michael (2026-11-24) mit dem Gleis gedreht; das Bild zeigt das Gleis senkrecht, beim Depot
  * die Einfahrt unten wie der Prellbock; der Güterschuppen steht neben dem Gleis, darum um 0,17 Felder nach links verschoben (gewählt)
  */
-function BauBild({ f, i, j }: { f: Feld; i: number; j: number }) {
+function BauBild({ f, i, j, brett }: { f: Feld; i: number; j: number; brett?: Brett }) {
   const name = f.bau === 'depot' ? 'gb_bau_depot_01' : f.bau === 'gueter' ? 'gb_bau_gueterschuppen_01' : 'gb_bau_galerie_01'
-  return <image href={bild(name)} x={i} y={j} width={1} height={1} preserveAspectRatio="none" pointerEvents="none"
-                transform={`rotate(${f.gleis!.dreh * 90} ${i + 0.5} ${j + 0.5})${f.bau === 'gueter' ? ' translate(-0.17 0)' : ''}`} />
+  const d = f.gleis!.dreh, dreh = `rotate(${d * 90} ${i + 0.5} ${j + 0.5})${f.bau === 'gueter' ? ' translate(-0.17 0)' : ''}`
+  /*
+   * nebeneinander nahtlos (Michael, 2026-11-27: «Werden mehrere Depot oder Güter aneinandergehängt, sollte daraus etwas Nahtloses resultieren»): ein Nachbar mit
+   * demselben Bau und derselben Drehung schliesst an; Depots stehen quer zum Gleis nebeneinander, die Lücke füllt ein schmaler Streifen des Dachs; Güterschuppen
+   * reihen sich entlang des Gleises, das Bild endet dann vor der Giebelseite und ein Stück aus der Mitte des Dachs füllt bis an die Kante (Stellen gewählt)
+   */
+  const nachbar = (bildKante: number) => {
+    const k = (bildKante + d) % 4, n = brett?.[j + [-1, 0, 1, 0][k]]?.[i + [0, 1, 0, -1][k]]
+    return !!n && bauGilt(n) && n.bau === f.bau && n.gleis?.dreh === d
+  }
+  const href = bild(name)
+  const streifen = (x: number, y: number, w: number, h: number, vb: string, key: string) => (
+    <svg key={key} x={x} y={y} width={w} height={h} viewBox={vb} preserveAspectRatio="none" overflow="hidden"><image href={href} width={512} height={512} preserveAspectRatio="none" /></svg>
+  )
+  if (f.bau === 'depot') {
+    const l = nachbar(3), r = nachbar(1)
+    return (
+      <g transform={dreh} pointerEvents="none">
+        {l && streifen(i - 0.001, j, 0.21, 1, '136 0 18 512', 'l')}
+        {r && streifen(i + 0.79, j, 0.211, 1, '136 0 18 512', 'r')}
+        <image href={href} x={i} y={j} width={1} height={1} preserveAspectRatio="none" />
+      </g>
+    )
+  }
+  if (f.bau === 'gueter') {
+    const o = nachbar(0), u = nachbar(2)
+    if (!o && !u) return <image href={href} x={i} y={j} width={1} height={1} preserveAspectRatio="none" pointerEvents="none" transform={dreh} />
+    const y0 = o ? 0.2 : 0, y1 = u ? 0.7 : 1, id = `gb-schuppen-${i}-${j}`
+    return (
+      <g transform={dreh} pointerEvents="none">
+        <clipPath id={id}><rect x={i - 0.5} y={j + y0} width={2} height={y1 - y0} /></clipPath>
+        <image href={href} x={i} y={j} width={1} height={1} preserveAspectRatio="none" clipPath={`url(#${id})`} />
+        {o && streifen(i, j - 0.001, 1, 0.202, '0 185 512 22', 'o')}
+        {u && streifen(i, j + 0.699, 1, 0.302, '0 185 512 22', 'u')}
+      </g>
+    )
+  }
+  return <image href={href} x={i} y={j} width={1} height={1} preserveAspectRatio="none" pointerEvents="none" transform={dreh} />
 }
 
 /** eine grosse Kurve über 2 × 2 oder 3 × 3 Felder, als ganzes Stück gezeichnet, ohne Brücke und Tunnel */
