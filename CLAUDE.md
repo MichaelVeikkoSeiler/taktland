@@ -1733,6 +1733,24 @@ Namen im Kopf und ist das App-Symbol; ihr Karminrot ist auch die Akzentfarbe der
 die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot einer Bahn ist, ohne Namen
 (Michael, 2026-09-29: «einer Bahnunternehmung»).
 
+## Offen: Rückmeldung zur Oberfläche (2026-11-27)
+
+Michael: «Alles merken aber schlag mir nochmals die dringendsten Sachen vor». Noch nicht gebaut, angeschaut im Browser hier (Handy Pixel 7, iPad hoch und quer,
+Desktop 1440 × 900), nicht auf echten Geräten:
+- Alle Geräte: Startseite statt Textwand oben drei grosse Kacheln (Virtuelle Schweiz, Spielen, Im Zug fahren), der lange Text in eine Klappe «Mehr über Taktland»;
+  der Text ist veraltet (Gleisbau noch «bald»); unter jeder Spielkachel ein Satz mit Dauer (etwa «Bahnhof aus 6 Hinweisen erraten · 3 Min»), dafür die Aufzählung
+  der Namen in der Einleitung der Spiele weg; Reiter grösser und kräftiger, der gewählte klar hervorgehoben; ein Grund zum Wiederkommen (Frage oder Fahrt des Tages,
+  «Weiter, wo du warst», Fortschritt).
+- Handy: «Fahren» oben rot wird zuerst angetippt, zuhause folgt nur die GPS-Frage: kurz erklären, wofür es ist, mit Hinweis auf Probefahren.
+- Tablet hoch: Spielkacheln drei statt zwei je Reihe; Textbreite der Startseite begrenzen.
+- Tablet quer: Auftaktbild flacher, beim Öffnen der Spiele sieht man sonst keine Kachel.
+- Desktop: über der Falz kein Angebot (die drei Kacheln nebeneinander); «Fahren» dort weiss oder statt dessen die Virtuelle Schweiz hervorheben; Reiter grösser;
+  Auftaktbild evtl. über die ganze Breite.
+- Ideen für Spiele, noch nicht entschieden: Frage oder Fahrt des Tages mit Auflösung und Rangliste um 21 Uhr über spiel.taktland.ch (10 s zum Tippen, Name freiwillig,
+  nach 7 Tagen gelöscht; Michael: «wir bleiben dran»), Bahnhof des Tages (6 Versuche), Pünktlich! (Lokführer nach Fahrplan), Luftbild-Rätsel; keine Tunnel und
+  Brücken als Tagesfrage (Michael: «das weiss kein Mensch»), keine Echtzeit-Fragen (Glück).
+- Marke: «Taktland» als Wortmarke beim IGE, Klassen 9, 41, 42, online CHF 350 (Stand Gebühren 1.7.2024); vorher Swissreg, TMview, Zefix selbst prüfen.
+
 ## Sprache
 
 Deutsch, Schweizer Rechtschreibung: **ss statt ß**. Zahlen ab 1000 mit Apostroph (5'000; Michael, 2026-10-04).
