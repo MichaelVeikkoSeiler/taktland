@@ -5,7 +5,7 @@
  * bleiben (IndexedDB). Darstellung: komponenten/Bilderpuzzle.tsx.
  */
 
-export const TEILE = [4, 6, 9, 12, 16, 20, 25, 30, 36, 48, 64, 78] as const
+export const TEILE = [4, 6, 9, 12, 16, 20, 25, 30, 36, 48, 64, 84] as const
 export type Form = 'quadrat' | 'puzzle'
 
 /** ein Bild zur Wahl */
