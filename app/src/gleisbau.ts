@@ -24,7 +24,7 @@ const groesseNeuOk = (sp: number, ze: number, nsp: number, nze: number) => groes
 export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
-export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee' | 'acker'
+export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee' | 'acker' | 'industrie'
 export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve' | 'ueberfuehrung' | 'tweiche'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
@@ -384,7 +384,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 }
 
 const SPEICHER = 'taktland.gleisbau.v1'
-const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee', 'acker']
+const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee', 'acker', 'industrie']
 const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung', 'tweiche']
 
 /** das gemerkte Brett, nur wenn es heil ist */
@@ -405,7 +405,7 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbdrna', STRASSE_Z = 'WFSBDRNA', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123'
+const GRUND_Z = 'wfsbdrnai', STRASSE_Z = 'WFSBDRNAI', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123'
 const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
@@ -1054,6 +1054,9 @@ export class Zug {
    * Darstellung lädt dann den Wagen, der dem Schuppen am nächsten ist. Endet das Gleis hinter dem Schuppen, kehrt er zuerst um. Tempo und Halte gewählt
    */
   kriechen: { rest: number; weg: number; wenden: boolean } | null = null
+  /** im Bahnbetrieb: an einem offenen Gleisende ohne Prellbock entgleist der Zug, statt umzukehren */
+  entgleisenAnEnde = false
+  entgleist = false
   ladeSchritte = 0
   /** Plätze für Fahrgäste: im Bahnbetrieb je Personenwagen proPersonenwagen, sonst fest */
   plaetze(proPersonenwagen: number) { return this.personenwagen() * proPersonenwagen }
@@ -1299,6 +1302,7 @@ export class Zug {
   schritt(b: Brett, dt: number, frei?: (felder: Set<string>) => boolean, umkehren?: () => boolean, ankuppeln?: (i: number, j: number) => void,
     abschleppen?: (n: Stueck) => boolean) {
     this.brett = b
+    if (this.entgleist) return
     if (this.halt > 0) {
       if (this.amBahnhof && this.halt > PFIFF_VOR_S && this.halt - dt <= PFIFF_VOR_S) this.pfiffe++
       this.halt -= dt
@@ -1346,6 +1350,9 @@ export class Zug {
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
       rest -= l - vorher
       const n = naechstes(b, s)
+      // im Bahnbetrieb ohne Prellbock: der Zug fährt ins Feld, das Spiel ist aus (Michael, 2026-11-27: «Prellböcke sind Pflicht sonst laufen die Züge ins Feld
+      // was Game Over ist»); am Prellbock (aus −1) und sonst kehrt er um wie bisher
+      if (!n && this.entgleisenAnEnde && s.aus >= 0) { this.kopf = l; this.entgleist = true; this.tempo = 0; return }
       if (!n) { this.kopf = l; this.umkehren(); return }
       // vor einer roten Ampel warten, ohne als wartend zu gelten (sonst kehrte ein anderer Zug oder dieser um)
       if (!n.gross && ampelGilt(b[n.j]?.[n.i]) && b[n.j][n.i].ampel === 'rot') { this.kopf = l; this.tempo = 0; this.wartet = 0; return }
@@ -1420,7 +1427,8 @@ export class Zug {
     let d = l0 - this.kopf
     for (let k = 0; k < 6 && d < BREMS_SICHT; k++) {
       const n = naechstes(b, s)
-      if (!n) return d
+      // an einem offenen Ende ohne Prellbock bremst er im Bahnbetrieb nicht, er fährt hinaus
+      if (!n) return this.entgleisenAnEnde && s.aus >= 0 ? Infinity : d
       if (!n.gross) { const f = b[n.j][n.i]; if ((ampelGilt(f) && f.ampel === 'rot') || (f.wagen && wagenGilt(f))) return d }
       const ln = stueckLaenge(n)
       if (this.haltAuf(b, n)) return d + ln / 2

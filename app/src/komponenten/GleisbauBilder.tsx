@@ -645,3 +645,51 @@ export function SchrankenBild({ brett, wagen }: { brett: Brett; wagen: Array<{ x
   }
   return <g pointerEvents="none">{raus}</g>
 }
+
+/**
+ * Industrie (seit 2026-11-27; Michael: «Industriegebäude anzeigen statt Wohnhäuser»): je Feld ohne Gleis eine Halle mit Sägezahndach oder ein Lager mit zwei
+ * Silos auf grauem Platz, von Hand gezeichnet, keine Bilder; Lage, Formen und Farben gewählt
+ */
+export function IndustrieFeld({ i, j, art }: { i: number; j: number; art: number }) {
+  const x = (u: number) => i + u, y = (v: number) => j + v
+  return (
+    <g pointerEvents="none">
+      <rect x={x(0.08)} y={y(0.1)} width={0.84} height={0.72} rx={0.06} fill="#c9c7bf" />
+      {art === 0 ? (
+        <g>
+          {/* Halle mit Sägezahndach: Wand vorne, darüber Zähne mit Glas */}
+          <rect x={x(0.14)} y={y(0.5)} width={0.62} height={0.18} fill="#9c968a" />
+          <rect x={x(0.14)} y={y(0.2)} width={0.62} height={0.3} fill="#e2e0d8" />
+          {[0, 1, 2, 3].map((k) => <path key={k} d={`M${x(0.14 + k * 0.155)},${y(0.5)} L${x(0.14 + k * 0.155)},${y(0.24)} L${x(0.295 + k * 0.155)},${y(0.5)} Z`} fill="#b9b5aa" />)}
+          {[0, 1, 2, 3].map((k) => <line key={`g${k}`} x1={x(0.142 + k * 0.155)} y1={y(0.25)} x2={x(0.142 + k * 0.155)} y2={y(0.5)} stroke="#7fa3c2" strokeWidth={0.025} />)}
+          <rect x={x(0.2)} y={y(0.56)} width={0.12} height={0.12} fill="#6d685e" />
+          {/* Kamin */}
+          <rect x={x(0.8)} y={y(0.14)} width={0.06} height={0.5} fill="#8d4a36" />
+          <rect x={x(0.795)} y={y(0.14)} width={0.07} height={0.03} fill="#5c3024" />
+        </g>
+      ) : (
+        <g>
+          {/* Lager mit flachem Dach und zwei Silos */}
+          <rect x={x(0.14)} y={y(0.36)} width={0.46} height={0.32} fill="#a39d90" />
+          <rect x={x(0.14)} y={y(0.28)} width={0.46} height={0.1} fill="#d6d3ca" />
+          <rect x={x(0.2)} y={y(0.5)} width={0.14} height={0.18} fill="#5f5a51" />
+          {[0.68, 0.82].map((u) => (
+            <g key={u}>
+              <rect x={x(u - 0.06)} y={y(0.26)} width={0.12} height={0.42} fill="#d8d8d8" />
+              <ellipse cx={x(u)} cy={y(0.26)} rx={0.06} ry={0.025} fill="#efefef" />
+              <rect x={x(u - 0.06)} y={y(0.4)} width={0.12} height={0.02} fill="#b5b5b5" />
+            </g>
+          ))}
+        </g>
+      )}
+    </g>
+  )
+}
+export function IndustrieBild({ brett }: { brett: Brett }) {
+  const raus: ReactElement[] = []
+  brett.forEach((z, j) => z.forEach((f, i) => {
+    if (f.grund !== 'industrie' || f.gleis || f.strasse) return
+    raus.push(<IndustrieFeld key={`${i},${j}`} i={i} j={j} art={(i * 7 + j * 13) % 3 === 0 ? 1 : 0} />)
+  }))
+  return <>{raus}</>
+}

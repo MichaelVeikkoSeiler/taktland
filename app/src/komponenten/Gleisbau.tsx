@@ -7,11 +7,11 @@ import {
 } from '../gleisbau'
 import { Zurueck } from './Zurueck'
 import { Klappe } from './Klappe'
-import { type Aufgabe, AUFGABEN, allesVerbunden, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheZuruecksetzen, reiheGeloestMerken } from '../gleisbauAufgaben'
+import { type Aufgabe, AUFGABEN, bewerten, type Transport, type Ergebnis, fortschrittLesen, fortschrittMerken, reiheArbeitMerken, reiheZuruecksetzen, reiheGeloestMerken } from '../gleisbauAufgaben'
 import { indexLaden } from '../daten'
 import { type Fahrgaeste, fahrgaesteHalt, fahrgaesteStart, fahrgaesteZeit } from '../gleisbauFahrgaeste'
 import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
-import { bild, GelaendeBild, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
+import { bild, GelaendeBild, IndustrieBild, IndustrieFeld, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
 import { type Gueter, gueterHalt, gueterStart, gueterWagen, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
 import { GUETER, LOKS, type LokTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
@@ -37,7 +37,7 @@ const F = {
   wand: '#f4f1ea', ziegel: ['#d4583e', '#c94a32', '#b8452f'], ziegelSchatten: '#9e3a27',
 }
 /** die Unterkante jeder Kachel, damit sie leicht erhaben wirkt (gewählt) */
-const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9b19d', dorf: '#9fc47a', rebberg: '#86ad4c', schnee: '#b7c7e2', acker: '#8a5530' }
+const KANTE = { wiese: '#9fc47a', wald: '#89b56a', wasser: '#336fb0', berg: '#a9b19d', dorf: '#9fc47a', rebberg: '#86ad4c', schnee: '#b7c7e2', acker: '#8a5530', industrie: '#9fc47a' }
 const KACHEL_H = 0.915
 
 type Werkzeug =
@@ -87,6 +87,8 @@ const LANDSCHAFT: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'grund', grund: 'rebberg' }, text: 'Rebberg' },
   { w: { art: 'grund', grund: 'schnee' }, text: 'Schnee' },
   { w: { art: 'grund', grund: 'acker' }, text: 'Acker' },
+  // seit 2026-11-27 (Michael: «Industriegebäude anzeigen statt Wohnhäuser»): Hallen und Silos, gezeichnet
+  { w: { art: 'grund', grund: 'industrie' }, text: 'Industrie' },
   { w: { art: 'objekt', objekt: 'kirche' }, text: 'Kirche' },
   { w: { art: 'objekt', objekt: 'bauernhof' }, text: 'Bauernhof' },
   { w: { art: 'strasse' }, text: 'Strasse' },
@@ -644,6 +646,7 @@ function KnopfLandschaft({ f, i, j }: { f: Feld; i: number; j: number }) {
         {f.grund === 'schnee' && gebiet('url(#gb-schnee)', 0.05)}
         {f.grund === 'acker' && gebiet('url(#gb-acker)', 0.07)}
       </g>
+      {f.grund === 'industrie' && <IndustrieFeld i={i} j={j} art={0} />}
       {objekte.map((x, k) => <ObjektBild key={k} o={x} />)}
     </g>
   )
@@ -1240,6 +1243,7 @@ export function Gleisbau() {
       {brett.map((z, j) => z.map((f, i) => (f.grund === 'wiese' ? null : <GrundBild key={`g${i},${j}`} f={f} i={i} j={j} nurFlaeche />)))}
       <Landschaft brett={brett} />
       <GelaendeBild brett={brett} />
+      <IndustrieBild brett={brett} />
       <StrassenBild brett={brett} />
       {brett.map((z, j) => z.map((f, i) => <GleisBild key={`l${i},${j}`} f={f} i={i} j={j}
                                                      weiter={f.grund === 'berg' ? [0, 1, 2, 3].map((k) => tunnelWeiter(brett, i, j, k)) : undefined}
@@ -1358,7 +1362,8 @@ export function Gleisbau() {
     setAufgabe(a); setErgebnis(null); setGeloest(false); setStand({ fahrgaeste: 0, gueter: 0 }); setVerlauf([]); setMeldung(null); setNameFeld(null); setMenu(false); setZoom({ s: 1, x: 0, y: 0 })
     // ein Auftrag des Bahnbetriebs mit dem gemerkten Brett
     const gemerkt = a && (a as { betrieb?: Auftrag }).betrieb ? betriebLesen().bretter[a.id] : undefined
-    const b = gemerkt ? brettAusCode(gemerkt) : null
+    // «Neu beginnen» holt das Brett des Auftrags, auch wenn eines gemerkt ist (seit 2026-11-27, sonst blieben alte Bretter ohne die neuen Hindernisse)
+    const b = gemerkt && !vonVorn ? brettAusCode(gemerkt) : null
     if (a) setBrettRoh(b ?? (vonVorn && a.neu ? a.neu() : a.brett()))
     setGutschrift(null)
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -1552,6 +1557,7 @@ export function Gleisbau() {
   // Pause während der Fahrt (Michael, 2026-11-26: «Während des Abspielens muss man Pause drücken können»): alles steht, Weichen und Ampeln lassen sich stellen
   const [pause, setPause] = useState(false)
   const [imZugOffen, setImZugOffen] = useState(false)
+  const [entgleist, setEntgleist] = useState<string | null>(null)
   const pauseRef = useRef(false)
   pauseRef.current = pause
   useEffect(() => { if (!faehrt) setPause(false) }, [faehrt])
@@ -1702,6 +1708,9 @@ export function Gleisbau() {
         setBusLagen(lagen)
       }
       setWagen(zz.map((z) => beladenZeigen(z, z.wagen())))
+      // ein Zug ist am Gleisende ins Feld gefahren: alles steht, das Spiel ist aus
+      const raus = zz.findIndex((z) => z.entgleist)
+      if (raus >= 0 && !pauseRef.current) { setEntgleist(zz.length > 1 ? `Zug ${raus + 1}` : 'Der Zug'); setPause(true); zuggeraeuschAus(); antwortTon('falsch') }
       los = requestAnimationFrame(bild)
     }
     los = requestAnimationFrame(bild)
@@ -2300,6 +2309,9 @@ export function Gleisbau() {
     const neueBusse = Bus.setzen(brett)
     if (!z && !neueBusse.length) { setMeldung(brett.some((zz) => zz.some((f) => f.strasse)) ? 'Für den Bus braucht es eine Strasse über mindestens zwei Felder.' : 'Leg zuerst ein Gleis, am besten mit einem Bahnhof.'); return }
     const l = starts.length ? gesetzt : z ? [z] : []
+    // im Bahnbetrieb sind Prellböcke Pflicht
+    if (auftrag) for (const x of l) x.entgleisenAnEnde = true
+    setEntgleist(null)
     // in Aufgaben ohne gesetzte Züge immer nur einer (Michael, 2026-11-26: «Warum fahren hier zwei Züge?», dann «Ja gerne so machen»); «Anzahl Züge» gilt beim freien Bauen
     const zahlZuege = aufgabe ? 1 : zugZahl
     while (!starts.length && z && l.length < zahlZuege) {
@@ -2437,23 +2449,9 @@ export function Gleisbau() {
               {aufgabe.reihe !== undefined && <p className="text-xs font-bold uppercase tracking-wide text-sbb-red dark:text-[#d63a55]">Lektion {aufgabe.reihe + 1} von {AUFGABEN.filter((x) => x.reihe !== undefined).length}</p>}
               {auftrag && <p className="text-xs font-bold uppercase tracking-wide text-sbb-red dark:text-[#d63a55]">Auftrag</p>}
               <h2 className="text-2xl font-bold leading-tight tracking-tight">{aufgabe.titel}</h2>
-              {/* im Bahnbetrieb die drei Schritte, der jetzige hervorgehoben (Michael, 2026-11-27: «Alle», Vorschlag C6) */}
-              {auftrag && (() => {
-                const ok = [allesVerbunden(brett), gesetzteZuege().some((x) => x.z), !!ergebnis?.ok]
-                const jetzt = faehrt ? 2 : ok.findIndex((x) => !x)
-                return (
-                  <ol className="mt-2 flex flex-wrap items-center gap-1.5 text-[13px] font-bold" aria-label="Schritte">
-                    {['Bauen', 'Züge', 'Fahren'].map((t, k) => (
-                      <li key={t} className="flex items-center gap-1.5">
-                        {k > 0 && <span className="text-sbb-metal dark:text-sbb-storm" aria-hidden="true">→</span>}
-                        <span aria-current={k === jetzt ? 'step' : undefined} className={`rounded-lg px-2 py-0.5 ${k === jetzt ? 'bg-sbb-red text-white' : ok[k] ? 'bg-sbb-anthracite text-white dark:bg-sbb-white dark:text-sbb-black' : 'bg-white text-sbb-metal dark:bg-sbb-charcoal dark:text-sbb-storm'}`}>
-                          {ok[k] && k !== jetzt ? '✓ ' : `${k + 1} `}{t}
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
-                )
-              })()}
+              {/* im Bahnbetrieb der Auftrag fett über dem Brett, statt der Schritte Bauen → Züge → Fahren (Michael, 2026-11-27: «Oben: Bauen -> Züge -> Fahren kann
+                  weg, da sehe ich keinen Sinn dafür. Beschrieb … oberhalb des Brettes und in Fett») */}
+              {auftrag && <p className="mt-1 max-w-4xl text-sm font-bold leading-snug sm:text-base">{aufgabe.ziel}</p>}
             </div>
           )}
           <div ref={buehne} className="relative min-h-0 w-full shrink touch-none overflow-hidden" style={{ aspectRatio: `${SP + 0.3 + 0.4} / ${ZE + 0.3}` }}
@@ -2639,8 +2637,8 @@ export function Gleisbau() {
             )}
           </div>
           <div className="flex-none pt-2">
-          {/* solange ein Hinweis des Tutorials gilt, nur er: zwei Texte sagten fast dasselbe (Michael, 2026-11-27: «Warum zwei Texte?») */}
-          {aufgabe && !hinweis && (
+          {/* solange ein Hinweis des Tutorials gilt, nur er: zwei Texte sagten fast dasselbe (Michael, 2026-11-27: «Warum zwei Texte?»); im Auftrag steht er über dem Brett */}
+          {aufgabe && !hinweis && !auftrag && (
             <div className="mx-2.5 mb-2 flex flex-none items-start gap-3 rounded-lg bg-white px-3 py-2 shadow-sm dark:bg-sbb-charcoal">
               <button type="button" onClick={() => setZielOffen((x) => !x)} aria-expanded={zielOffen}
                       className={`min-w-0 flex-1 text-left text-sm leading-snug ${zielOffen ? '' : 'line-clamp-2'}`}>{aufgabe.ziel}</button>
@@ -3029,6 +3027,16 @@ export function Gleisbau() {
                   )}
                 </div>
                 <Klappe titel="So geht's" className="mt-4"><SoGehts /></Klappe>
+              </div>
+            </div>
+          )}
+          {/* entgleist: Game over (Michael, 2026-11-27: «Prellböcke sind Pflicht sonst laufen die Züge ins Feld was Game Over ist») */}
+          {entgleist && faehrt && (
+            <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center p-3" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 12px)' }}>
+              <div className="grid w-full max-w-md gap-2 rounded-2xl bg-white p-4 text-center shadow-[0_-4px_24px_rgba(0,0,0,0.25)] dark:bg-sbb-charcoal">
+                <p className="text-2xl font-bold tracking-tight text-sbb-red dark:text-[#d63a55]">Entgleist!</p>
+                <p className="text-sm leading-relaxed">{entgleist} ist am Gleisende ins Feld gefahren. Im Bahnbetrieb braucht jedes Gleisende einen Prellbock (unter «Gleise»).</p>
+                <button type="button" autoFocus onClick={() => { setEntgleist(null); fahren() }} className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Anhalten und umbauen</button>
               </div>
             </div>
           )}

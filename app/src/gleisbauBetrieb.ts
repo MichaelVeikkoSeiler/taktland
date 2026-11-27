@@ -150,23 +150,23 @@ export const AUFTRAEGE: Auftrag[] = [
   {
     id: 'b-milch', titel: 'Milch aus den Alpen', stufe: 'mittel', sparte: 'gueter', routen: [{ von: 'Alp Sonnegg', nach: 'Molkerei Talgrund', gut: 'milch', anzahl: 4 }, { von: 'Alp Schattwil', nach: 'Molkerei Talgrund', gut: 'milch', anzahl: 4 }], lohn: 2600, vorgabe: 380,
     text: 'Zwei Alpen liefern Milch an die Molkerei im Tal. Dafür braucht es Milchwagen aus dem Depot.',
-    brett: () => karte(12, 7, { berg: [[0, 0], [1, 0], [10, 0], [11, 0], [5, 2], [6, 2]], wald: [[0, 3], [11, 3]], dorf: [[5, 6], [6, 6]] }, [], [[2, 1, 1, 'Alp Sonnegg'], [9, 1, 1, 'Alp Schattwil'], [5, 5, 1, 'Molkerei Talgrund']]),
+    brett: () => karte(12, 7, { berg: [[0, 0], [1, 0], [10, 0], [11, 0], [5, 2], [6, 2], [4, 2], [7, 2]], wald: [[0, 3], [11, 3], [0, 4], [11, 4]], dorf: [[5, 6], [6, 6]] }, [], [[2, 1, 1, 'Alp Sonnegg'], [9, 1, 1, 'Alp Schattwil'], [5, 5, 1, 'Molkerei Talgrund']], block(1, 3, 10, 3)),
   },
   {
     id: 'b-hafen', titel: 'Container vom Hafen', stufe: 'mittel', sparte: 'gueter', routen: [{ von: 'Hafen Seeburg', nach: 'Lager Industrie', gut: 'container', anzahl: 10 }], lohn: 2800, vorgabe: 320,
     text: 'Am Hafen von Seeburg kommen Container an. Das Lager im Industriegebiet wartet. Containerwagen gibt es im Depot.',
-    brett: () => karte(12, 7, { wasser: [...block(0, 5, 3, 6), [0, 4]], dorf: [[11, 0], [10, 0]] }, [], [[2, 3, 1, 'Hafen Seeburg'], [10, 2, 1, 'Lager Industrie']]),
+    brett: () => karte(12, 7, { wasser: block(0, 4, 4, 6), industrie: [[9, 0], [10, 0], [11, 0], [9, 1], [10, 1], [11, 1], [10, 3], [11, 3]], berg: block(6, 1, 7, 3), wald: [[4, 0], [5, 0], [5, 6], [6, 6]] }, [], [[2, 3, 1, 'Hafen Seeburg'], [10, 2, 1, 'Lager Industrie']]),
   },
   {
     id: 'b-kleinstadt', titel: 'Kleinstadt', stufe: 'mittel', sparte: 'mix', fahrgaeste: 15, routen: [{ von: 'Kieswerk Au', nach: 'Baustelle Zentrum', gut: 'kies', anzahl: 6 }], lohn: 3000, vorgabe: 480,
     text: 'Drei Quartiere wollen verbunden sein, und mitten in der Stadt wird gebaut.',
-    brett: () => karte(12, 7, { dorf: [[5, 3], [6, 3], [0, 0], [11, 6]], wasser: [[8, 0], [8, 1]] }, [[1, 1, 1, 'Nordquartier'], [10, 1, 1, 'Ostquartier'], [2, 5, 1, 'Südquartier']], [[10, 5, 1, 'Kieswerk Au'], [6, 2, 1, 'Baustelle Zentrum']]),
+    brett: () => karte(12, 7, { dorf: [[5, 3], [6, 3], [4, 3], [5, 4], [0, 0], [11, 6], [3, 1], [4, 1]], wasser: [[8, 0], [8, 1], [8, 2], [8, 3]], industrie: [[9, 6], [10, 6], [11, 4]] }, [[1, 1, 1, 'Nordquartier'], [10, 1, 1, 'Ostquartier'], [2, 5, 1, 'Südquartier']], [[10, 5, 1, 'Kieswerk Au'], [6, 2, 1, 'Baustelle Zentrum']]),
   },
   // ——— schwer ———
   {
     id: 'b-knoten', titel: 'Der grosse Knoten', stufe: 'schwer', sparte: 'personen', fahrgaeste: 30, routen: [], lohn: 4500, vorgabe: 700,
     text: 'Vier Orte rund um den See. Wer will, fährt im Taktfahrplan mit Knoten.',
-    brett: () => karte(14, 9, { wasser: block(5, 3, 8, 5), wald: [[0, 8], [13, 0]], dorf: [[0, 0], [13, 8]] }, [[6, 1, 1, 'Nordwil'], [6, 7, 1, 'Südhalden'], [1, 4, 0, 'Westmatt'], [12, 4, 0, 'Ostbach']], []),
+    brett: () => karte(14, 9, { wasser: block(5, 3, 8, 5), wald: [[0, 8], [13, 0], ...block(2, 6, 3, 7)], dorf: [[0, 0], [13, 8]], berg: [...block(10, 1, 11, 2), [3, 1], [3, 2]] }, [[6, 1, 1, 'Nordwil'], [6, 7, 1, 'Südhalden'], [1, 4, 0, 'Westmatt'], [12, 4, 0, 'Ostbach']], []),
   },
   {
     id: 'b-oel', titel: 'Heizöl über den Pass', stufe: 'schwer', sparte: 'gueter', routen: [{ von: 'Tanklager Rheinau', nach: 'Heizwerk Bergdorf', gut: 'oel', anzahl: 12 }], lohn: 5000, vorgabe: 650,
@@ -177,7 +177,7 @@ export const AUFTRAEGE: Auftrag[] = [
     id: 'b-tal', titel: 'Das ganze Tal', stufe: 'schwer', sparte: 'mix', fahrgaeste: 25,
     routen: [{ von: 'Forst Hochwald', nach: 'Sägerei Talwil', gut: 'holz', anzahl: 6 }, { von: 'Autowerk Grund', nach: 'Hafen Seewil', gut: 'autos', anzahl: 6 }], lohn: 7000, vorgabe: 900,
     text: 'Drei Orte, ein Forst, ein Autowerk und ein Hafen. Plane ein Netz, auf dem alles gleichzeitig fährt.',
-    brett: () => karte(14, 9, { wald: [...block(10, 0, 13, 2)], wasser: block(0, 6, 2, 8), berg: [[6, 4], [7, 4], [6, 5]] }, [[1, 1, 1, 'Talwil'], [12, 6, 1, 'Bergau'], [6, 8, 1, 'Seewil']], [[11, 3, 1, 'Forst Hochwald'], [4, 1, 1, 'Sägerei Talwil'], [9, 7, 1, 'Autowerk Grund'], [3, 5, 1, 'Hafen Seewil']]),
+    brett: () => karte(14, 9, { wald: [...block(10, 0, 13, 2)], wasser: block(0, 6, 4, 8), berg: block(6, 2, 7, 5), industrie: [[8, 8], [9, 8], [10, 8], [8, 6], [9, 6]] }, [[1, 1, 1, 'Talwil'], [12, 6, 1, 'Bergau'], [6, 8, 1, 'Seewil']], [[11, 3, 1, 'Forst Hochwald'], [4, 1, 1, 'Sägerei Talwil'], [9, 7, 1, 'Autowerk Grund'], [3, 5, 1, 'Hafen Seewil']]),
   },
 ]
 
