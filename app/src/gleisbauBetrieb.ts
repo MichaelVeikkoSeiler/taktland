@@ -26,6 +26,8 @@ export interface Auftrag {
   lohn: number
   /** Baukosten für drei Sterne */
   vorgabe: number
+  /** ein erzeugter Auftrag: ohne Sterne (Michael, 2026-11-27: «die Sternenbewertung kannst du eigentlich weglassen») */
+  erzeugt?: true
 }
 
 // ——— Baukosten (gewählt) ———
@@ -62,11 +64,13 @@ export interface Betrieb {
   /** je Auftrag das Brett (Code) und die gesetzten Züge */
   bretter: Record<string, string>
   zuege: Record<string, Record<string, Zusammenstellung>>
+  /** wie viele weitere Aufträge erzeugt sind (seit 2026-11-27) */
+  erzeugt?: number
 }
 export const START_GELD = 500
 const SPEICHER = 'taktland.gleisbau.betrieb'
 export const betriebNeu = (): Betrieb => ({
-  geld: START_GELD, loks: ['murmeli', 'libelle'], wagen: { person: 3, rungen: 2, schuett: 2 }, stufe: null, sparte: null, erledigt: {}, bretter: {}, zuege: {},
+  geld: START_GELD, loks: ['murmeli', 'libelle'], wagen: { person: 3, rungen: 2, schuett: 2 }, stufe: null, sparte: null, erledigt: {}, bretter: {}, zuege: {}, erzeugt: 0,
 })
 export function betriebLesen(): Betrieb {
   try {
@@ -223,9 +227,9 @@ export function auftragAlsAufgabe(a: Auftrag): Aufgabe & { betrieb: Auftrag } {
     schritte: (b: Brett, stand?: Transport) => [
       ...(a.fahrgaeste ? [{ art: 'bahnhof' as const, text: `Fahrgäste ${Math.min(stand?.fahrgaeste ?? 0, a.fahrgaeste)} / ${a.fahrgaeste}`, ok: (stand?.fahrgaeste ?? 0) >= a.fahrgaeste }] : []),
       ...(Object.entries(ziel) as Array<[Gut, number]>).map(([g, n]) => ({ art: 'bahnhof' as const, text: `${GUETER[g].name} ${Math.min(stand?.jeGut?.[g] ?? 0, n)} / ${n}`, ok: (stand?.jeGut?.[g] ?? 0) >= n })),
-      { art: 'bahnhof' as const, text: `Baukosten CHF ${kosten(b).toLocaleString('de-CH')} (★★★ bis ${a.vorgabe})`, ok: kosten(b) <= a.vorgabe },
+      ...(a.erzeugt ? [] : [{ art: 'bahnhof' as const, text: `Baukosten CHF ${kosten(b).toLocaleString('de-CH')} (★★★ bis ${a.vorgabe})`, ok: kosten(b) <= a.vorgabe }]),
     ],
-    sterne: (b: Brett) => { const k = kosten(b); return k <= a.vorgabe ? 3 : k <= a.vorgabe * 1.5 ? 2 : 1 },
+    sterne: (b: Brett) => { const k = kosten(b); return a.erzeugt || k <= a.vorgabe ? 3 : k <= a.vorgabe * 1.5 ? 2 : 1 },
     kosten,
   }
 }
@@ -233,3 +237,82 @@ export function auftragAlsAufgabe(a: Auftrag): Aufgabe & { betrieb: Auftrag } {
 /** ob auf dem Brett Bahnhöfe liegen (für Fahrgäste) */
 export const hatBahnhof = (b: Brett) => b.some((z) => z.some((f) => istBahnhof(f.gleis)))
 export { LOKS, WAGEN_ARTEN }
+
+// ——— weitere Aufträge, erzeugt (Michael, 2026-11-27: «Wenn alle Aufträge im Bahnbetrieb gelöst sind, soll man weitere generieren können», dann «Ja bitte, die
+// Sternenbewertung kannst du eigentlich weglassen») ———
+// Je Nummer immer derselbe Auftrag (Zufall aus der Nummer): Brett, Orte, Anlagen, Hindernisse, Ziel und Lohn wachsen mit der Nummer. Namen, Zahlen und Formen
+// gewählt, keine Wirklichkeit. Alle Hindernisse lassen sich überbauen (Berg als Tunnel, Wasser und Fluss als Brücke), so ist jeder lösbar.
+
+function zufallAus(n: number) {
+  let a = (n * 2654435761 + 12345) >>> 0
+  return () => { a = (a + 0x6d2b79f5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296 }
+}
+const VORNE = ['See', 'Berg', 'Wald', 'Tann', 'Rot', 'Grün', 'Ober', 'Unter', 'Neu', 'Alt', 'Sonn', 'Stein', 'Mühl', 'Lind', 'Kirch', 'Hasel', 'Eich', 'Feld', 'Moos', 'Brunn']
+const HINTEN = ['wil', 'au', 'egg', 'dorf', 'matt', 'berg', 'bach', 'hausen', 'tal', 'ried', 'halden', 'burg', 'felden', 'acker', 'rüti']
+const ANLAGE: Partial<Record<Gut, [string, string]>> = {
+  holz: ['Forst', 'Sägerei'], kies: ['Kieswerk', 'Baustelle'], oel: ['Tanklager', 'Heizwerk'], milch: ['Alp', 'Molkerei'], container: ['Terminal', 'Lager'], autos: ['Autowerk', 'Autohaus'],
+}
+export const ERZEUGT_AB = 13
+
+/** der erzeugte Auftrag mit der Nummer n (1, 2, …) */
+export function auftragErzeugt(n: number): Auftrag {
+  const z = zufallAus(n), ganz = (a: number, b: number) => a + Math.floor(z() * (b - a + 1)), waehle = <T,>(l: T[]) => l[Math.floor(z() * l.length)]
+  const d = Math.min(n, 10)
+  const sp = 10 + Math.min(4, Math.floor(d / 2)), ze = 6 + Math.min(3, Math.floor(d / 3))
+  const sparte: Sparte = (['personen', 'gueter', 'mix'] as Sparte[])[n % 3]
+  const namen = new Set<string>()
+  const name = () => { for (let k = 0; k < 50; k++) { const x = waehle(VORNE) + waehle(HINTEN); if (!namen.has(x)) { namen.add(x); return x } } return `Ort ${namen.size + 1}` }
+  // Plätze für Bahnhöfe und Anlagen: waagrecht, links und rechts frei, mindestens zwei Felder auseinander
+  const belegt: Platz[] = []
+  const platz = (): Platz | null => {
+    for (let k = 0; k < 200; k++) {
+      const p: Platz = [ganz(1, sp - 2), ganz(1, ze - 2)]
+      if (belegt.every(([i, j]) => Math.abs(i - p[0]) > 2 || Math.abs(j - p[1]) > 1)) { belegt.push(p); return p }
+    }
+    return null
+  }
+  const bahnhoefe: Array<[number, number, Dreh, string]> = [], anlagen: Array<[number, number, Dreh, string]> = []
+  const routen: Auftrag['routen'] = []
+  if (sparte !== 'gueter') for (let k = 0; k < Math.min(5, 2 + Math.floor(d / 3)); k++) { const p = platz(); if (p) bahnhoefe.push([p[0], p[1], 1, name()]) }
+  if (sparte !== 'personen') {
+    const gueter = (Object.keys(ANLAGE) as Gut[])
+    for (let k = 0; k < (d >= 5 ? 2 : 1); k++) {
+      const gut = waehle(gueter), [a, b] = ANLAGE[gut]!, von = platz(), nach = platz()
+      if (!von || !nach) break
+      const va = `${a} ${name()}`, na = `${b} ${name()}`
+      anlagen.push([von[0], von[1], 1, va], [nach[0], nach[1], 1, na])
+      routen.push({ von: va, nach: na, gut, anzahl: 4 + 2 * Math.floor(d / 3) })
+    }
+  }
+  // Hindernisse: so viele, wie die Nummer verlangt, nie auf einem Platz oder links und rechts davon
+  const frei = (i: number, j: number) => i >= 0 && j >= 0 && i < sp && j < ze && belegt.every(([u, v]) => !(v === j && Math.abs(u - i) <= 1))
+  const gruende: Partial<Record<Grund, Platz[]>> = {}, fluss: Platz[] = []
+  const dazu = (g: Grund, i: number, j: number) => { if (frei(i, j)) (gruende[g] ??= []).push([i, j]) }
+  // ein zusammenhängender Fleck: von einem Feld aus Schritt für Schritt zu einem Nachbarn
+  const fleck = (g: Grund, gross: number) => {
+    let i = ganz(0, sp - 1), j = ganz(0, ze - 1)
+    for (let k = 0; k < gross; k++) { dazu(g, i, j); const [di, dj] = waehle([[1, 0], [-1, 0], [0, 1], [0, -1]]); i = Math.max(0, Math.min(sp - 1, i + di)); j = Math.max(0, Math.min(ze - 1, j + dj)) }
+  }
+  for (let k = 0; k < 1 + Math.floor(d / 2); k++) {
+    const art = z()
+    if (art < 0.3) fleck('berg', ganz(2, 5))
+    else if (art < 0.5) fleck('wasser', ganz(2, 6))
+    else if (art < 0.65) { const i = ganz(2, sp - 3); for (let j = 0; j < ze; j++) if (frei(i, j)) fluss.push([i, j]) }
+    else fleck('wald', ganz(2, 5))
+  }
+  for (const [i, j] of bahnhoefe) dazu('dorf', i, j - 1)
+  for (const [i, j, , a] of anlagen) if (/^(Sägerei|Lager|Autowerk|Heizwerk|Terminal)/.test(a)) { dazu('industrie', i, j - 1); dazu('industrie', i + 1, j - 1) }
+  const fahrgaeste = sparte !== 'gueter' ? 10 + 2 * d : undefined
+  const lohn = Math.round((1000 + 400 * d + 300 * (bahnhoefe.length + routen.length)) / 100) * 100
+  const ziel = sparte === 'personen' ? `${bahnhoefe.length} Orte wollen verbunden sein` : sparte === 'gueter' ? 'Die Anlagen warten auf Güter' : 'Orte und Anlagen wollen verbunden sein'
+  return {
+    id: `g-${n}`, titel: `Auftrag ${ERZEUGT_AB + n - 1}: ${[...bahnhoefe.map((x) => x[3]), ...anlagen.map((x) => x[3])][0] ?? 'Neu'}`, stufe: d < 4 ? 'leicht' : d < 8 ? 'mittel' : 'schwer', sparte,
+    text: `${ziel}.`, fahrgaeste, routen, lohn, vorgabe: Infinity, erzeugt: true,
+    brett: () => karte(sp, ze, gruende, bahnhoefe, anlagen, fluss),
+  }
+}
+/** ein Auftrag nach seiner Kennung, vorbereitet oder erzeugt */
+export function auftragFinden(id: string): Auftrag | null {
+  const m = /^g-(\d+)$/.exec(id)
+  return m ? auftragErzeugt(Number(m[1])) : AUFTRAEGE.find((a) => a.id === id) ?? null
+}

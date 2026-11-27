@@ -15,7 +15,7 @@ import { bild, GelaendeBild, IndustrieBild, IndustrieFeld, GELAENDE_NAMEN, Gelae
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
 import { type Gueter, gueterHalt, gueterStart, gueterWagen, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
 import { GUETER, LOKS, type LokTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
-import { AUFTRAEGE, type Auftrag, auftragAlsAufgabe, type Betrieb, betriebLesen, betriebMerken, jeGut, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
+import { type Auftrag, auftragAlsAufgabe, auftragFinden, type Betrieb, betriebLesen, betriebMerken, jeGut, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
 import BetriebSeite, { ZugWahl } from './GleisbauBetrieb'
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
@@ -1472,7 +1472,7 @@ export function Gleisbau() {
       if (aid) { setAufgabe(null); setAnsicht('aufgaben'); return }
       if (q.has('aufgaben')) { setAufgabe(null); setAnsicht('aufgaben'); return }
       if (q.has('frei')) { setAufgabe(null); setAnsicht('frei'); return }
-      const auid = q.get('auftrag'), au = auid ? AUFTRAEGE.find((x) => x.id === auid) : null
+      const auid = q.get('auftrag'), au = auid ? auftragFinden(auid) : null
       if (au) { setAnsicht('betrieb'); aufgabeWaehlen(auftragAlsAufgabe(au)); return }
       if (q.has('betrieb') || q.has('depot')) { setAufgabe(null); setAnsicht('betrieb'); setDepotOffen(q.has('depot')); return }
       setAufgabe(null); setAnsicht('liste')
@@ -3133,7 +3133,7 @@ export function Gleisbau() {
             <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center p-3" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 12px)' }}>
               <div className="grid w-full max-w-md gap-2 rounded-2xl bg-white p-4 text-center shadow-[0_-4px_24px_rgba(0,0,0,0.25)] dark:bg-sbb-charcoal">
                 <p className="text-2xl font-bold tracking-tight">Geschafft!</p>
-                <p className="text-3xl"><Sterne n={ergebnis.sterne} /></p>
+                {!auftrag?.erzeugt && <p className="text-3xl"><Sterne n={ergebnis.sterne} /></p>}
                 <p className="text-sm leading-relaxed">{ergebnis.text}</p>
                 {gutschrift !== null && <p className="font-bold">Gutgeschrieben: CHF {gutschrift.toLocaleString('de-CH')} · Kasse: CHF {betrieb.geld.toLocaleString('de-CH')}</p>}
                 {auftrag && <button type="button" onClick={() => { window.location.hash = '#/gleisbau?betrieb' }} className="rounded-lg bg-sbb-red px-5 py-3 font-bold text-white hover:bg-sbb-red125">Zu den Aufträgen</button>}

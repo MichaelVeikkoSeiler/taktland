@@ -3,7 +3,7 @@
  * das Blatt, auf dem man einen Zug aus Lok und Wagen zusammenstellt (gleisbauBetrieb.ts, gleisbauFahrzeuge.ts). Alles gewählt
  */
 import { useEffect, useRef, useState } from 'react'
-import { AUFTRAEGE, type Auftrag, type Betrieb, brauchtWagen, frei, SPARTEN, type Sparte, STUFEN, type Stufe, stufeOffen, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
+import { AUFTRAEGE, type Auftrag, auftragErzeugt, type Betrieb, brauchtWagen, frei, SPARTEN, type Sparte, STUFEN, type Stufe, stufeOffen, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
 import { GUETER, type LokTyp, LOKS, type WagenTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
 
 const chf = (n: number) => `CHF ${Math.round(n).toLocaleString('de-CH')}`
@@ -269,6 +269,35 @@ export default function BetriebSeite({ betrieb, setBetrieb, oeffnen, depot, setD
               )
             })}
           </ul>
+          {/* weitere Aufträge, erzeugt, sobald alle vorbereiteten erfüllt sind (Michael, 2026-11-27: «Wenn alle Aufträge im Bahnbetrieb gelöst sind, soll man
+              weitere generieren können») */}
+          {(() => {
+            const n = betrieb.erzeugt ?? 0, erzeugte = Array.from({ length: n }, (_, k) => auftragErzeugt(k + 1))
+            const alleFertig = AUFTRAEGE.every((a) => betrieb.erledigt[a.id]) && erzeugte.every((a) => betrieb.erledigt[a.id])
+            if (!n && !alleFertig) return null
+            return (
+              <section className="mt-5">
+                <p className="font-bold">Weitere Aufträge</p>
+                <ul className="mt-2 grid gap-2 md:grid-cols-2">
+                  {erzeugte.slice().reverse().map((a) => {
+                    const erledigt = !!betrieb.erledigt[a.id]
+                    return (
+                      <li key={a.id}>
+                        <button type="button" onClick={() => oeffnen(a)} className="kachel grid w-full gap-1 p-3 text-left">
+                          <span className="flex items-start justify-between gap-2"><span className="font-bold">{a.titel}</span>{erledigt && <span className="font-bold">✓</span>}</span>
+                          <span className="text-sm leading-snug">{a.text}</span>
+                          <span className="text-sm font-bold">{STUFEN[a.stufe]} · {SPARTEN[a.sparte]} · Lohn {chf(erledigt ? a.lohn * WIEDERHOLT_ANTEIL : a.lohn)}</span>
+                        </button>
+                      </li>
+                    )
+                  })}
+                </ul>
+                {alleFertig
+                  ? <button type="button" onClick={() => setBetrieb({ ...betrieb, erzeugt: n + 1 })} className={`mt-3 ${KNOPF_ROT}`}>Neuer Auftrag</button>
+                  : <p className="mt-2 text-sm text-sbb-metal dark:text-sbb-storm">Erfülle zuerst den letzten, dann gibt es einen neuen.</p>}
+              </section>
+            )
+          })()}
           <p className="mt-3 text-sm text-sbb-metal dark:text-sbb-storm">
             Stufe und Sparte: <button type="button" className="underline" onClick={() => setBetrieb({ ...betrieb, stufe: null, sparte: null })}>neu wählen</button>.
             Orte, Anlagen, Loks und Preise sind erfunden.
