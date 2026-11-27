@@ -88,7 +88,7 @@ export interface Feld { grund: Grund; gleis?: Gleis; teil?: [number, number]; /*
    */
   zugStart?: 'p' | 'g'
   /** beim freien Bauen: Lok und Wagen des Zugs auf diesem Feld (seit 2026-11-26; Michael: «beim freien Bauen auf alle Züge ohne Grenzen Zugriff»), Teil «~c» */
-  zusammen?: { lok: string; wagen: string[] }
+  zusammen?: { lok: string; wagen: string[]; mehr?: string[] }
   /** der Name der Anlage an einem Güterschuppen, im Bahnbetrieb (Sägerei, Kieswerk …; fiktiv) */
   anlage?: string }
 /** ein Feld, auf dem ein Zug starten kann: ein einfaches Gleis, keine grosse Kurve */
@@ -466,7 +466,7 @@ export function brettCode(b: Brett): string {
     if (f.fluss) fluesse.push(`${i}.${j}`)
     if (f.strasse && f.haltestelle) halte.push(`${i}.${j}`)
     if (f.zugStart && zugStartGilt(f)) zugStarts.push(`${i}.${j}.${f.zugStart}`)
-    if (f.zugStart && zugStartGilt(f) && f.zusammen) zusammen.push(`${i}.${j}.${f.zusammen.lok}.${f.zusammen.wagen.join('-')}`)
+    if (f.zugStart && zugStartGilt(f) && f.zusammen) zusammen.push(`${i}.${j}.${[f.zusammen.lok, ...(f.zusammen.mehr ?? [])].join(',')}.${f.zusammen.wagen.join('-')}`)
     if (f.anlage && gueterGilt(f)) anlagen.push(`${i}.${j}.${namenEsc(f.anlage)}`)
     if (f.strasse && f.wende) wenden.push(`${i}.${j}`)
     if (f.strasse && f.strBruecke) strBruecken.push(`${i}.${j}`)
@@ -506,7 +506,8 @@ export function brettAusCode(c: string): Brett | null {
     if (teil.startsWith('t')) for (const e of teil.slice(1).split('_')) { const [i, j, c] = e.split('.'); if (b[+j]?.[+i] && (c === 'p' || c === 'g')) b[+j][+i].zugStart = c }
     if (teil.startsWith('c')) for (const e of teil.slice(1).split('_')) {
       const [i, j, lok, w] = e.split('.')
-      if (b[+j]?.[+i] && /^[a-z]+$/.test(lok ?? '') && /^[a-z]+(-[a-z]+)*$/.test(w ?? '')) b[+j][+i].zusammen = { lok, wagen: w.split('-') }
+      // mehrere Loks mit Komma (seit 2026-11-27)
+      if (b[+j]?.[+i] && /^[a-z]+(,[a-z]+)*$/.test(lok ?? '') && /^[a-z]+(-[a-z]+)*$/.test(w ?? '')) { const [l0, ...mehr] = lok.split(','); b[+j][+i].zusammen = { lok: l0, wagen: w.split('-'), ...(mehr.length ? { mehr } : {}) } }
     }
     if (teil.startsWith('v')) for (const e of teil.slice(1).split('_')) { const [i, j, m] = e.split('.').map(Number); if (b[j]?.[i]?.strasse && m >= 0 && m <= 15) b[j][i].strKanten = m }
     if (teil.startsWith('y')) for (const e of teil.slice(1).split('_')) { const [i, j] = e.split('.').map(Number); if (b[j]?.[i]?.strasse) b[j][i].haltestelle = true }
@@ -1219,14 +1220,14 @@ export class Zug {
    * ein Zug aus dem Bahnbetrieb: Lok und Wagen nach Wahl (Michael, 2026-11-25: «Diverse fiktive Loks und Wagen stehen bereit»); hat er Personen- und
    * Güterwagen, hält er an Bahnhöfen und Güterschuppen
    */
-  static zusammengestellt(b: Brett, i: number, j: number, lok: { typ: string; diesel: boolean; tempo: number }, wagen: string[]): Zug | null {
+  static zusammengestellt(b: Brett, i: number, j: number, lok: { typ: string; diesel: boolean; tempo: number; mehr?: Array<{ typ: string; diesel: boolean }> }, wagen: string[]): Zug | null {
     const mitP = wagen.includes('person'), mitG = wagen.some((w) => w !== 'person')
     const art = mitP && mitG ? 'mix' : mitG ? 'gueter' : 'person'
-    const z = Zug.ab(b, i, j, wagen.length + 1, art === 'mix' ? 'person' : art)
+    const z = Zug.ab(b, i, j, wagen.length + 1 + (lok.mehr?.length ?? 0), art === 'mix' ? 'person' : art)
     if (!z) return null
     z.art = art
     z.vmax = lok.tempo
-    z.fz = [{ t: 'lok', diesel: lok.diesel, blick: 1, typ: lok.typ }, ...wagen.map((w): Fahrzeug => ({ t: 'wagen', diesel: lok.diesel, blick: 1, typ: w }))]
+    z.fz = [{ t: 'lok', diesel: lok.diesel, blick: 1, typ: lok.typ }, ...(lok.mehr ?? []).map((m): Fahrzeug => ({ t: 'lok', diesel: m.diesel, blick: 1, typ: m.typ })), ...wagen.map((w): Fahrzeug => ({ t: 'wagen', diesel: lok.diesel, blick: 1, typ: w }))]
     for (let k = 0; k < 20 && z.hinten() < z.laenge; k++) {
       const davor = naechstes(b, umgekehrt(z.stuecke[0]))
       if (!davor) break

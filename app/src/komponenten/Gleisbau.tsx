@@ -14,7 +14,7 @@ import GleisbauBretter, { brettLink, GroesseWahl } from './GleisbauBretter'
 import { bild, GelaendeBild, IndustrieBild, IndustrieFeld, GELAENDE_NAMEN, GelaendeVerlaeufe, Landschaft, WiesenMuster, masse, MusterDefs, type Objekt, ObjektBild, objekteBauen, PortalBild, SchrankenBild, StrassenBild, StrassenUeberBild, BusBild } from './GleisbauBilder'
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
 import { type Gueter, gueterHalt, gueterStart, gueterWagen, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
-import { GUETER, LOKS, type LokTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
+import { GUETER, LOKS, type LokTyp, lokNamen, WAGEN_ARTEN, type Zusammenstellung, zugLok } from '../gleisbauFahrzeuge'
 import { type Auftrag, auftragAlsAufgabe, auftragFinden, type Betrieb, betriebLesen, betriebMerken, jeGut, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
 import BetriebSeite, { ZugWahl } from './GleisbauBetrieb'
 
@@ -2467,12 +2467,11 @@ export function Gleisbau() {
     const gesetzt = starts.map(([i, j, a]) => {
       // im Bahnbetrieb der zusammengestellte Zug aus dem Depot
       const z0 = zs[`${i},${j}`]
-      if (auftrag) return z0 ? Zug.zusammengestellt(brett, i, j, { typ: z0.lok, diesel: LOKS[z0.lok].diesel, tempo: LOKS[z0.lok].tempo }, z0.wagen) : null
+      if (auftrag) return z0 ? Zug.zusammengestellt(brett, i, j, zugLok(z0), z0.wagen) : null
       // beim freien Bauen der zusammengestellte Zug des Felds
       const zf = brett[j][i].zusammen
-      if (zf && zf.lok in LOKS && zf.wagen.length && zf.wagen.every((x) => x in WAGEN_ARTEN)) {
-        const l = LOKS[zf.lok as LokTyp]
-        return Zug.zusammengestellt(brett, i, j, { typ: zf.lok, diesel: l.diesel, tempo: l.tempo }, zf.wagen)
+      if (zf && zf.lok in LOKS && (zf.mehr ?? []).every((x) => x in LOKS) && zf.wagen.length && zf.wagen.every((x) => x in WAGEN_ARTEN)) {
+        return Zug.zusammengestellt(brett, i, j, zugLok(zf as Zusammenstellung), zf.wagen)
       }
       return Zug.setzenBei(brett, i, j, a === 'g' ? 'gueter' : 'person', wagenZahl)
     }).filter((x): x is Zug => !!x)
@@ -2676,7 +2675,7 @@ export function Gleisbau() {
           )}
           {/* der wartende Zug halb durchsichtig dort, wo er einrasten würde */}
           {zugWartet && zugVorschau && !faehrt && (() => {
-            const l = LOKS[zugWartet.lok], z = Zug.zusammengestellt(brett, zugVorschau[0], zugVorschau[1], { typ: zugWartet.lok, diesel: l.diesel, tempo: l.tempo }, zugWartet.wagen)
+            const z = Zug.zusammengestellt(brett, zugVorschau[0], zugVorschau[1], zugLok(zugWartet), zugWartet.wagen)
             return z ? <g opacity={0.55} pointerEvents="none">{z.wagen().slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={false} />)}</g> : null
           })()}
           {schloss && (
@@ -2852,7 +2851,7 @@ export function Gleisbau() {
                     const p = z ? z.wagen.filter((w) => w === 'person').length * WAGEN_ARTEN.person.plaetze : 0, g = z ? z.wagen.filter((w) => w !== 'person').length : 0
                     return (
                       <li key={`${i},${j}`} className="flex items-center gap-2 rounded-lg bg-white px-2 py-1.5 text-[13px] shadow-sm dark:bg-sbb-charcoal">
-                        <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">Zug {k + 1}{z ? `: ${LOKS[z.lok].name}` : ''}</span>
+                        <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">Zug {k + 1}{z ? `: ${lokNamen(z)}` : ''}</span>
                           <span className="block text-sbb-metal dark:text-sbb-storm">{z ? [z.wagen.length === 1 ? '1 Wagen' : `${z.wagen.length} Wagen`, p ? `${p} Plätze` : '', g ? (g === 1 ? '1 Ladung' : `${g} Ladungen`) : ''].filter(Boolean).join(', ') : brett[j][i].zugStart === 'g' ? 'Güterzug' : 'Personenzug'}</span></span>
                         {zusammenBauen && <button type="button" onClick={() => { setZugWahlFeld([i, j]); knopfTon(true) }} className="rounded-lg border border-sbb-cloud px-2 py-1 font-bold hover:border-sbb-black dark:border-sbb-iron">Ändern</button>}
                         {z && <button type="button" onClick={() => { zugWeg(i, j); setZugWartet(z); setWerkzeug({ art: 'zug', zug: 'p' }); setMeldung('Tippe aufs Gleis, wo der Zug neu stehen soll.') }}
@@ -2945,7 +2944,7 @@ export function Gleisbau() {
                     <button type="button" onPointerDown={(e) => { e.preventDefault(); setZugGriff({ x: e.clientX, y: e.clientY }) }}
                             className="flex min-w-0 flex-1 touch-none select-none items-center gap-2 rounded-lg bg-white px-2 py-1.5 text-left shadow-sm cursor-grab active:cursor-grabbing dark:bg-sbb-charcoal">
                       <span aria-hidden="true" className="text-lg leading-none">⠿</span>
-                      <span className="min-w-0 leading-tight"><span className="font-bold">Dein Zug: {LOKS[zugWartet.lok].name}, {zugWartet.wagen.length === 1 ? '1 Wagen' : `${zugWartet.wagen.length} Wagen`}</span>
+                      <span className="min-w-0 leading-tight"><span className="font-bold">Dein Zug: {lokNamen(zugWartet)}, {zugWartet.wagen.length === 1 ? '1 Wagen' : `${zugWartet.wagen.length} Wagen`}</span>
                         <span className="block text-sbb-metal dark:text-sbb-storm">aufs Gleis ziehen oder dort tippen</span></span>
                     </button>
                     <button type="button" onClick={() => { setZugWartet(null); setMeldung(null) }} aria-label="Zug nicht hinstellen" className="rounded-lg px-2 py-1 font-bold text-sbb-red">✕</button>

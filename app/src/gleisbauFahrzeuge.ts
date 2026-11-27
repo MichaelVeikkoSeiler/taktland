@@ -45,4 +45,16 @@ export const LOKS: Record<LokTyp, LokArt> = {
 }
 
 /** ein Zug: Lok und Wagen von vorne nach hinten */
-export interface Zusammenstellung { lok: LokTyp; wagen: WagenTyp[] }
+export interface Zusammenstellung { lok: LokTyp; wagen: WagenTyp[]; /** weitere Loks hinter der ersten (seit 2026-11-27) */ mehr?: LokTyp[] }
+/**
+ * mehrere Loks (Michael, 2026-11-27: «Es sollen mehrere Loks aneinandergehängt werden können»): höchstens MEHR_LOKS weitere; die Zugkraft zählt zusammen, das Tempo
+ * ist das der langsamsten, mit einer Diesellok fährt der Zug auch ohne Fahrleitung (gewählt)
+ */
+export const MEHR_LOKS = 2
+export const alleLoks = (z: Zusammenstellung): LokTyp[] => [z.lok, ...(z.mehr ?? [])]
+export const zugkraftVon = (l: LokTyp[]) => l.reduce((a, x) => a + LOKS[x].zugkraft, 0)
+export function zugLok(z: Zusammenstellung) {
+  const l = alleLoks(z).map((x) => LOKS[x])
+  return { typ: z.lok, diesel: l.some((x) => x.diesel), tempo: Math.min(...l.map((x) => x.tempo)), mehr: (z.mehr ?? []).map((t) => ({ typ: t, diesel: LOKS[t].diesel })) }
+}
+export const lokNamen = (z: Zusammenstellung) => alleLoks(z).map((x) => LOKS[x].name).join(' + ')

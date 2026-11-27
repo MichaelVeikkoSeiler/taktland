@@ -88,7 +88,7 @@ export const WIEDERHOLT_ANTEIL = 0.25
 /** was im Depot noch frei ist, wenn diese Züge schon gesetzt sind */
 export function frei(b: Betrieb, gesetzt: Zusammenstellung[]) {
   const loks = [...b.loks]
-  for (const z of gesetzt) { const k = loks.indexOf(z.lok); if (k >= 0) loks.splice(k, 1) }
+  for (const z of gesetzt) for (const l of [z.lok, ...(z.mehr ?? [])]) { const k = loks.indexOf(l); if (k >= 0) loks.splice(k, 1) }
   const wagen: Partial<Record<WagenTyp, number>> = { ...b.wagen }
   for (const z of gesetzt) for (const w of z.wagen) wagen[w] = (wagen[w] ?? 0) - 1
   return { loks, wagen }

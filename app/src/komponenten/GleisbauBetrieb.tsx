@@ -4,7 +4,7 @@
  */
 import { useEffect, useRef, useState } from 'react'
 import { AUFTRAEGE, type Auftrag, auftragErzeugt, type Betrieb, brauchtWagen, frei, SPARTEN, type Sparte, STUFEN, type Stufe, stufeOffen, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
-import { GUETER, type LokTyp, LOKS, type WagenTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
+import { GUETER, type LokTyp, LOKS, type WagenTyp, WAGEN_ARTEN, type Zusammenstellung, MEHR_LOKS, zugkraftVon } from '../gleisbauFahrzeuge'
 
 const chf = (n: number) => `CHF ${Math.round(n).toLocaleString('de-CH')}`
 const KNOPF_ROT = 'min-h-11 rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40'
@@ -140,7 +140,7 @@ function imEinsatz(b: Betrieb, typ: string, lok: boolean): number {
   let m = 0
   for (const zz of Object.values(b.zuege)) {
     let n = 0
-    for (const z of Object.values(zz)) n += lok ? (z.lok === typ ? 1 : 0) : z.wagen.filter((w) => w === typ).length
+    for (const z of Object.values(zz)) n += lok ? [z.lok, ...(z.mehr ?? [])].filter((x) => x === typ).length : z.wagen.filter((w) => w === typ).length
     m = Math.max(m, n)
   }
   return m
@@ -315,7 +315,7 @@ export default function BetriebSeite({ betrieb, setBetrieb, oeffnen, depot, setD
  * Fahrzeug in den Zug, aus dem Zug hinausziehen oder antippen nimmt es weg; was nicht im Depot steht, wird beim Bestätigen gekauft; daneben immer die Summe:
  * Kosten, Fahrgäste, Ladungen, Geld danach. Mit Zeiger-Ereignissen, so geht es mit Maus, Finger und Stift
  */
-type Ziehen = { art: 'lok' | 'wagen'; typ: string; x: number; y: number; vonPlatz?: number; bewegt: boolean; x0: number; y0: number }
+type Ziehen = { art: 'lok' | 'wagen'; typ: string; x: number; y: number; vonPlatz?: number; vonMehr?: number; bewegt: boolean; x0: number; y0: number }
 export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, entfernen, zu }: {
   /** ohne Auftrag (beim freien Bauen): alle Loks und Wagen, ohne Geld und Depot (seit 2026-11-26; Michael: «beim freien Bauen auf alle Züge ohne Grenzen Zugriff») */
   betrieb?: Betrieb; setBetrieb?: (f: (b: Betrieb) => Betrieb) => void; auftrag?: Auftrag; andere: Zusammenstellung[]; anfang: Zusammenstellung | null
@@ -325,22 +325,33 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
   const f = offen ? { loks: [] as LokTyp[], wagen: {} as Partial<Record<WagenTyp, number>> } : frei(betrieb, andere)
   const [lok, setLok] = useState<LokTyp | null>(anfang?.lok ?? null)
   const [wagen, setWagen] = useState<WagenTyp[]>(anfang?.wagen ?? [])
+  // weitere Loks hinter der ersten, abgelegt auf dem Feld «+» zwischen Lok und erstem Wagen (Michael, 2026-11-27: «Bei den Dropfeldern soll zwischen dem Feld
+  // «Lok» und dem ersten «Wagen»-Feld ein + sein, dort kann man eine weitere Lok platzieren»)
+  const [mehr, setMehr] = useState<LokTyp[]>(anfang?.mehr ?? [])
   const [zieh, setZieh] = useState<Ziehen | null>(null)
   const ziehRef = useRef<Ziehen | null>(null)
-  const zugkraft = lok ? LOKS[lok].zugkraft : 0
+  const zugkraft = lok ? zugkraftVon([lok, ...mehr]) : 0
   const n = (w: WagenTyp) => wagen.filter((x) => x === w).length
   const braucht = auftrag ? brauchtWagen(auftrag) : []
   const loks = Object.keys(LOKS) as LokTyp[]
   const wagenArten = (Object.keys(WAGEN_ARTEN) as WagenTyp[]).filter((w) => w !== 'gedeckt')
     .sort((a, b) => Number(braucht.includes(b)) - Number(braucht.includes(a)))
   // was gekauft werden muss: die Lok, wenn keine freie da ist, und Wagen über die freien hinaus
-  const lokKauf = !offen && lok && !f.loks.includes(lok) ? LOKS[lok].preis : 0
+  const lokKaufListe = (() => {
+    if (offen || !lok) return [] as LokTyp[]
+    const da = [...f.loks], raus: LokTyp[] = []
+    for (const l of [lok, ...mehr]) { const k = da.indexOf(l); if (k >= 0) da.splice(k, 1); else raus.push(l) }
+    return raus
+  })()
+  const lokKauf = lokKaufListe.reduce((a, l) => a + LOKS[l].preis, 0)
   const wagenKauf = offen ? 0 : wagenArten.reduce((a, w) => a + Math.max(0, n(w) - (f.wagen[w] ?? 0)) * WAGEN_ARTEN[w].preis, 0)
   const kosten = lokKauf + wagenKauf, danach = offen ? 0 : betrieb.geld - kosten
   const plaetze = n('person') * WAGEN_ARTEN.person.plaetze
   const ladungen = wagenArten.filter((w) => w !== 'person' && n(w)).map((w) => `${n(w)} ${GUETER[WAGEN_ARTEN[w].gut!].name}`)
   const fehlt = braucht.filter((w) => !n(w))
-  const lokWahl = (l: LokTyp) => { setLok(l); setWagen((w) => w.slice(0, LOKS[l].zugkraft)) }
+  const lokWahl = (l: LokTyp) => { setLok(l); setWagen((w) => w.slice(0, zugkraftVon([l, ...mehr]))) }
+  const mehrDazu = (l: LokTyp) => { if (!lok || mehr.length >= MEHR_LOKS) return; setMehr((m) => [...m, l]) }
+  const mehrWeg = (k: number) => { const neu = mehr.filter((_, n) => n !== k); setMehr(neu); if (lok) setWagen((w) => w.slice(0, zugkraftVon([lok, ...neu]))) }
   const wagenDazu = (w: WagenTyp, an?: number) => setWagen((l) => {
     if (!lok || l.length >= zugkraft && an === undefined) return l
     const neu = [...l]
@@ -350,14 +361,16 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
   })
   const ablegen = (z: Ziehen, ziel: string | null) => {
     // ein Fahrzeug aus dem Zug: daneben abgelegt nimmt es weg, auf einem anderen Wagenplatz tauscht es
+    if (z.vonMehr !== undefined) { if (ziel !== 'mehr') mehrWeg(z.vonMehr); return }
+    if (z.art === 'lok' && ziel === 'mehr') { mehrDazu(z.typ as LokTyp); return }
     if (z.vonPlatz !== undefined) {
-      if (ziel === null || ziel === 'lok') { setWagen((l) => l.filter((_, k) => k !== z.vonPlatz)); return }
+      if (ziel === null || ziel === 'lok' || ziel === 'mehr') { setWagen((l) => l.filter((_, k) => k !== z.vonPlatz)); return }
       const nach = Number(ziel)
       setWagen((l) => { const neu = [...l]; const [x] = neu.splice(z.vonPlatz!, 1); neu.splice(Math.min(nach, neu.length), 0, x); return neu })
       return
     }
     if (z.art === 'lok') { if (ziel !== null) lokWahl(z.typ as LokTyp); return }
-    if (ziel !== null && ziel !== 'lok') wagenDazu(z.typ as WagenTyp, Number(ziel))
+    if (ziel !== null && ziel !== 'lok' && ziel !== 'mehr') wagenDazu(z.typ as WagenTyp, Number(ziel))
   }
   // Ziehen über das ganze Fenster verfolgen
   useEffect(() => {
@@ -374,7 +387,8 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
       if (!z) return
       if (!z.bewegt) {
         // ein Tipp: aus der Auswahl in den Zug, aus dem Zug hinaus
-        if (z.vonPlatz !== undefined) setWagen((l) => l.filter((_, k) => k !== z.vonPlatz))
+        if (z.vonMehr !== undefined) mehrWeg(z.vonMehr)
+        else if (z.vonPlatz !== undefined) setWagen((l) => l.filter((_, k) => k !== z.vonPlatz))
         else if (z.art === 'lok') lokWahl(z.typ as LokTyp)
         else wagenDazu(z.typ as WagenTyp)
         return
@@ -387,10 +401,10 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
     window.addEventListener('pointercancel', los)
     return () => { window.removeEventListener('pointermove', bewegen); window.removeEventListener('pointerup', los); window.removeEventListener('pointercancel', los) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [!!zieh, lok, zugkraft])
-  const greifen = (e: React.PointerEvent, art: 'lok' | 'wagen', typ: string, vonPlatz?: number) => {
+  }, [!!zieh, lok, zugkraft, mehr])
+  const greifen = (e: React.PointerEvent, art: 'lok' | 'wagen', typ: string, vonPlatz?: number, vonMehr?: number) => {
     e.preventDefault()
-    const z: Ziehen = { art, typ, x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, vonPlatz, bewegt: false }
+    const z: Ziehen = { art, typ, x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, vonPlatz, vonMehr, bewegt: false }
     ziehRef.current = z; setZieh(z)
   }
   const bestaetigen = () => {
@@ -399,9 +413,9 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
     if (kosten > 0 && setBetrieb) setBetrieb((b) => {
       const fb = frei(b, andere), w2 = { ...b.wagen }
       for (const w of wagenArten) { const mehr = Math.max(0, n(w) - (fb.wagen[w] ?? 0)); if (mehr) w2[w] = (w2[w] ?? 0) + mehr }
-      return { ...b, geld: b.geld - kosten, loks: fb.loks.includes(lok) ? b.loks : [...b.loks, lok], wagen: w2 }
+      return { ...b, geld: b.geld - kosten, loks: [...b.loks, ...lokKaufListe], wagen: w2 }
     })
-    setzen({ lok, wagen })
+    setzen({ lok, wagen, ...(mehr.length ? { mehr } : {}) })
   }
   const platzKlasse = (aktiv: boolean) => `flex h-16 w-24 flex-none flex-col items-center justify-center rounded-lg border-2 border-dashed text-xs ${aktiv
     ? 'border-sbb-red bg-sbb-red/5' : 'border-sbb-cloud dark:border-sbb-iron'}`
@@ -428,6 +442,17 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
                   </button>
                 ) : <span className="text-sbb-metal dark:text-sbb-storm">Lok</span>}
               </div>
+              {lok && mehr.map((l, k) => (
+                <div key={`m${k}`} className={platzKlasse(false)}>
+                  <button type="button" onPointerDown={(e) => greifen(e, 'lok', l, undefined, k)} className="flex touch-none flex-col items-center" title="Antippen oder hinausziehen nimmt sie weg">
+                    <FahrzeugBild lok={l} klasse="h-9 w-20" /><span className="font-bold">{LOKS[l].name}</span>
+                  </button>
+                </div>
+              ))}
+              {lok && mehr.length < MEHR_LOKS && (
+                <div data-platz="mehr" title="Eine weitere Lok hierher ziehen" aria-label="Weitere Lok"
+                     className={`flex h-16 w-10 flex-none items-center justify-center rounded-lg border-2 border-dashed text-2xl font-bold ${zieh?.bewegt && zieh.art === 'lok' ? 'border-sbb-red bg-sbb-red/5 text-sbb-red' : 'border-sbb-cloud text-sbb-metal dark:border-sbb-iron dark:text-sbb-storm'}`}>+</div>
+              )}
               {Array.from({ length: lok ? zugkraft : 3 }, (_, k) => {
                 const w = wagen[k]
                 return (
@@ -442,6 +467,7 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
               })}
             </div>
             {!lok && <p className="text-sm text-sbb-metal dark:text-sbb-storm">Zuerst eine Lok: Sie bestimmt, wie viele Wagen Platz haben.</p>}
+            {lok && mehr.length < MEHR_LOKS && <p className="text-sm text-sbb-metal dark:text-sbb-storm">Auf das + eine weitere Lok ziehen: mehr Zugkraft für mehr Wagen, das Tempo der langsameren.</p>}
           </div>
         </div>
         {/* die Summe, immer sichtbar */}
@@ -460,14 +486,14 @@ export function ZugWahl({ betrieb, setBetrieb, auftrag, andere, anfang, setzen, 
             <div className="mt-0.5"><LokLegende /></div>
             <ul className="mt-1.5 grid gap-1.5 sm:grid-cols-2">
               {loks.map((l) => {
-                const da = f.loks.filter((x) => x === l).length - (lok === l ? 1 : 0)
+                const da = f.loks.filter((x) => x === l).length - [lok, ...mehr].filter((x) => x === l).length
                 return (
                   <li key={l}>
                     <button type="button" onPointerDown={(e) => greifen(e, 'lok', l)} className={`${karte} w-full ${lok === l ? 'ring-2 ring-sbb-anthracite dark:ring-sbb-white' : ''}`}>
                       <FahrzeugBild lok={l} />
                       <span className="min-w-0 flex-1 leading-tight"><span className="font-bold">{LOKS[l].name}</span>
                         <span className="flex flex-wrap items-center gap-x-2 text-sbb-metal dark:text-sbb-storm">{LOKS[l].art} <LokWerte l={l} /></span></span>
-                      <span className="flex-none text-right text-xs tabular-nums">{lok === l ? (lokKauf ? `${chf(LOKS[l].preis)}, im Zug` : 'im Zug') : offen ? '' : da > 0 ? `${da} im Depot` : chf(LOKS[l].preis)}</span>
+                      <span className="flex-none text-right text-xs tabular-nums">{lok === l || mehr.includes(l) ? (lokKaufListe.includes(l) ? `${chf(LOKS[l].preis)}, im Zug` : 'im Zug') : offen ? '' : da > 0 ? `${da} im Depot` : chf(LOKS[l].preis)}</span>
                     </button>
                   </li>
                 )
