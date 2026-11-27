@@ -1343,8 +1343,13 @@ export class Zug {
       if (!s.gross && haltHier && vorher < mitte && vorher + rest >= mitte && (!amBf || !weiterImBahnhof())) {
         this.kopf = mitte; this.halt = Math.max(HALT_S, this.taktWarten?.(`${s.i},${s.j}`) ?? 0); this.amBahnhof = true; this.tempo = 0; this.halte++; this.haltFeld = `${s.i},${s.j}`
         this.wendenNachHalt = this.sackgasse(b, s)
+        // Wagen für Wagen nur, wenn das Gleis hinter dem Schuppen lang genug ist, dass jeder Wagen direkt davor halten kann; sonst (etwa am Gleisende) alles
+        // auf einmal (Michael, 2026-11-27: «Die Einzelwagen-Abfertigung soll nur stattfinden, wenn die Züge mit ihren entsprechenden Wagen direkt am Haus vorbei
+        // und direkt davor anhalten können. Sonst in einmal auf resp. abladen»)
         const n = this.art !== 'person' && gueterGilt(b[s.j][s.i]) ? this.gueterwagen().length : 0
-        if (n) { this.kriechen = { rest: n, weg: 0, wenden: this.wendenNachHalt }; this.wendenNachHalt = false; this.halt = KRIECH_HALT_S }
+        if (n && !this.wendenNachHalt && this.vorausFrei(b, s, stueckLaenge(s) - this.kopf, this.letzterGueterwagen() * (WAGEN_LAENGE + WAGEN_LUECKE))) {
+          this.kriechen = { rest: n, weg: 0, wenden: false }; this.halt = KRIECH_HALT_S
+        }
         return
       }
       if (vorher + rest <= l) { this.kopf += rest; rest = 0; break }
@@ -1381,6 +1386,14 @@ export class Zug {
     }
   }
 
+  /** ob hinter der Stelle (im Stück s noch rest) mindestens d Gleis folgt */
+  private vorausFrei(b: Brett, s: Stueck, rest: number, d: number): boolean {
+    let x = s
+    for (let k = 0; k < 40 && rest < d; k++) { const n = naechstes(b, x); if (!n) return false; rest += stueckLaenge(n); x = n }
+    return rest >= d
+  }
+  /** die Stelle des hintersten Güterwagens, von der Spitze an gezählt */
+  private letzterGueterwagen(): number { let m = 0; this.fz.forEach((v, k) => { if (v.t === 'wagen' && v.typ !== 'person') m = k }); return m }
   /** ein Stück vorwärts ohne Halte (Schritt am Güterschuppen); false am Gleisende, vor Rot oder einem anderen Zug */
   private vorwaerts(b: Brett, d: number, frei?: (felder: Set<string>) => boolean): boolean {
     let rest = d

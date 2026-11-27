@@ -15,7 +15,7 @@ import { bild, GelaendeBild, IndustrieBild, IndustrieFeld, GELAENDE_NAMEN, Gelae
 import { Bus, type BusLage, strassenNetz } from '../gleisbauBus'
 import { type Gueter, gueterHalt, gueterStart, gueterWagen, gueterWarten, gueterZeit, type Ladung } from '../gleisbauGueter'
 import { GUETER, LOKS, type LokTyp, WAGEN_ARTEN, type Zusammenstellung } from '../gleisbauFahrzeuge'
-import { AUFTRAEGE, type Auftrag, auftragAlsAufgabe, type Betrieb, betriebLesen, betriebMerken, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
+import { AUFTRAEGE, type Auftrag, auftragAlsAufgabe, type Betrieb, betriebLesen, betriebMerken, jeGut, WIEDERHOLT_ANTEIL } from '../gleisbauBetrieb'
 import BetriebSeite, { ZugWahl } from './GleisbauBetrieb'
 
 const LEISE = 'text-sm text-sbb-metal dark:text-sbb-storm'
@@ -416,23 +416,38 @@ function Ziel({ z }: { z: string }) {
   return <span className="inline-flex size-5 items-center justify-center rounded-full text-[11px] font-bold text-white" style={{ background: zielFarbe(z) }}>{z}</span>
 }
 
-/** die Wartenden an jedem Bahnhof: Figuren mit dem Buchstaben ihres Ziels neben dem Schild */
-function WartendeBild({ namen, warten }: { namen: Map<string, string>; warten: Record<string, string[]> }) {
+/**
+ * wo der m-te Wartende eines Bahnhofs steht: seit 2026-11-27 an der Kante des Perrons neben dem Gleis, vor und hinter dem Dach, in einer Reihe (Michael: «Personen
+ * sollen als schwarze Punkte auf dem Perron stehen (sichtbar, nicht unter dem Dach)»); im Kurvenbahnhof wie bisher oben im Feld; Abstände gewählt
+ */
+function perronPunkt(brett: Brett, k: string, m: number): { x: number; y: number } {
+  const [i, j] = k.split(',').map(Number), g = brett[j]?.[i]?.gleis
+  if (g?.art !== 'bahnhof') return { x: i + 0.14 + (m % 6) * 0.14, y: j + 0.37 + Math.floor(m / 6) * 0.12 }
+  // ohne Drehung liegt das Gleis senkrecht, der Perron rechts davon; die Plätze laufen längs vor dem Dach (bis 0,26) und dahinter (ab 0,74)
+  const PLATZ = [0.1, 0.18, 0.82, 0.9, 0.14, 0.86, 0.22, 0.78]
+  let dx = (m < 8 ? 0.645 : 0.6) - 0.5, dy = PLATZ[m % 8] - 0.5
+  for (let r = 0; r < g.dreh; r++) [dx, dy] = [-dy, dx]
+  return { x: i + 0.5 + dx, y: j + 0.5 + dy }
+}
+/** die Wartenden an jedem Bahnhof: schwarze Punkte mit dem Buchstaben ihres Ziels, auf dem Perron */
+function WartendeBild({ namen, warten, brett }: { namen: Map<string, string>; warten: Record<string, string[]>; brett: Brett }) {
   const raus = []
   for (const [k, n] of namen) {
-    const [i, j] = k.split(',').map(Number)
     const l = warten[n] ?? []
     for (let m = 0; m < l.length; m++) {
-      const x = i + 0.14 + m * 0.15, y = j + 0.37
-      raus.push(
-        <g key={`${k}-${m}`} pointerEvents="none">
-          <circle cx={x} cy={y} r={0.065} fill={zielFarbe(l[m])} stroke="#ffffff" strokeWidth={0.015} />
-          <text x={x} y={y + 0.035} fontSize={0.09} fontWeight={700} textAnchor="middle" fill="#ffffff">{l[m]}</text>
-        </g>,
-      )
+      const { x, y } = perronPunkt(brett, k, m)
+      raus.push(<Person key={`${k}-${m}`} x={x} y={y} ziel={l[m]} />)
     }
   }
   return <>{raus}</>
+}
+function Person({ x, y, ziel, deckt = 1 }: { x: number; y: number; ziel: string; deckt?: number }) {
+  return (
+    <g pointerEvents="none" opacity={deckt}>
+      <circle cx={x} cy={y} r={0.042} fill="#1d1d1d" stroke="#ffffff" strokeWidth={0.008} />
+      <text x={x} y={y + 0.021} fontSize={0.055} fontWeight={700} textAnchor="middle" fill="#ffffff">{ziel}</text>
+    </g>
+  )
 }
 
 /** die wartenden Ladungen am Güterschuppen als Kisten, je Ziel ein Ton (gewählt) */
@@ -453,6 +468,8 @@ function LadungenBild({ warten }: { warten: Record<string, Ladung[]> }) {
 
 /** so schnell klingt der Zug bei vollem Tempo auf dem Brett, in m/s (etwa 80 km/h; gewählt, das Brett hat keinen Massstab) */
 const ZUG_KLANG_MS = 22
+/** so lange geht ein Fahrgast zwischen Perron und Wagen, in ms (gewählt) */
+const GEHEN_MS = 1100
 
 const linie = (p: Array<{ x: number; y: number }>) => p.map((q, k) => `${k ? 'L' : 'M'}${q.x.toFixed(3)},${q.y.toFixed(3)}`).join('')
 /**
@@ -1298,6 +1315,8 @@ export function Gleisbau() {
   // Aufgaben im Gleisbau soll nicht nach einem Taktfahrplan gefragt werden. Dies gibt u.U. einen Konflikt mit der Aufgabe Elemente und der Uhr»)
   const takt = aufgabe ? 0 : taktFrei
   const taktRef = useRef(0)
+  /** das Ziel der Aufgabe für die Züge: Fahrgäste, Ladungen und im Bahnbetrieb je Gut */
+  const zielRef = useRef<{ p: number; g: number; jeGut: Partial<Record<string, number>> } | null>(null)
   taktRef.current = takt
   const uhrBelegt = useMemo(() => takt > 0 && uhrPlatz(brett) !== brett, [takt, brett])
   /**
@@ -1356,8 +1375,10 @@ export function Gleisbau() {
   const landschaftGleich = (a: Feld, b: Feld) => a.grund === b.grund && !!a.fluss === !!b.fluss && a.objekt === b.objekt && a.hang === b.hang
   // ein Auftrag des Bahnbetriebs ist eine Aufgabe mit dem Auftrag dazu
   const auftrag = (aufgabe as { betrieb?: Auftrag } | null)?.betrieb ?? null
+  zielRef.current = aufgabe ? { p: aufgabe.transport?.fahrgaeste ?? 0, g: auftrag ? 0 : aufgabe.transport?.gueter ?? 0, jeGut: auftrag ? jeGut(auftrag) : {} } : null
   // im Bahnbetrieb und beim freien Bauen werden Züge aus Lok und Wagen zusammengestellt
-  const zusammenBauen = !!auftrag || !aufgabe
+  // seit 2026-11-27 überall, auch im Tutorial (Michael: «wenn man auf Züge tippt, die ganze Auswahl der Züge und Wagen erscheinen»)
+  const zusammenBauen = true
   const [ergebnis, setErgebnis] = useState<Ergebnis | null>(null)
   const [fortschritt, setFortschritt] = useState<Record<string, number>>(() => fortschrittLesen())
   const aufgabeWaehlen = (a: Aufgabe | null, vonVorn = false) => {
@@ -1560,6 +1581,8 @@ export function Gleisbau() {
   // Pause während der Fahrt (Michael, 2026-11-26: «Während des Abspielens muss man Pause drücken können»): alles steht, Weichen und Ampeln lassen sich stellen
   const [pause, setPause] = useState(false)
   const [imZugOffen, setImZugOffen] = useState(false)
+  /** wer gerade ein- oder aussteigt */
+  const gaenger = useRef<Array<{ x0: number; y0: number; x1: number; y1: number; t0: number; ziel: string; aus: boolean }>>([])
   const [entgleist, setEntgleist] = useState<string | null>(null)
   const pauseRef = useRef(false)
   pauseRef.current = pause
@@ -1677,7 +1700,20 @@ export function Gleisbau() {
           halteRef.current[k] = z.halte
           const wo = gruppen.get(z.haltFeld)
           if (!wo) return
+          // wer einsteigt, geht vom Perron zum nächsten Personenwagen, wer aussteigt, vom Wagen auf den Perron (Michael, 2026-11-27: «ein- und aussteigen können.
+          // In einen Wagen der am nächsten liegt»); Wege und Zeiten gewählt
+          const vorher = [...(fg.warten[wo] ?? [])], drinVor = [...(fg.imZug[k] ?? [])]
           const { aus, ein } = fahrgaesteHalt(fg, k, wo, z.plaetze(WAGEN_ARTEN.person.plaetze))
+          const feld = [...bahnhofNamen(brettRef.current)].find(([, n]) => n === wo)?.[0]
+          if (feld && (aus || ein)) {
+            const wl = z.wagen().filter((w) => !w.gueter), jetzt = performance.now()
+            const naechster = (p: { x: number; y: number }) => wl.reduce((a, w) => (Math.hypot(w.x - p.x, w.y - p.y) < Math.hypot(a.x - p.x, a.y - p.y) ? w : a), wl[0] ?? p)
+            const neuG: typeof gaenger.current = []
+            for (let m = 0; m < ein; m++) { const p = perronPunkt(brettRef.current, feld, m), w = naechster(p); neuG.push({ x0: p.x, y0: p.y, x1: w.x, y1: w.y, t0: jetzt + m * 140, ziel: vorher[m], aus: false }) }
+            const raus = drinVor.filter((x) => x === wo)
+            raus.forEach((x, m) => { const p = perronPunkt(brettRef.current, feld, 7 - (m % 8)), w = naechster(p); neuG.push({ x0: w.x, y0: w.y, x1: p.x, y1: p.y, t0: jetzt + m * 140, ziel: x, aus: true }) })
+            gaenger.current = [...gaenger.current.filter((g) => jetzt - g.t0 < GEHEN_MS), ...neuG]
+          }
           if (aus) antwortTon('richtig')
           if (aus || ein) neu = true
         })
@@ -1712,6 +1748,19 @@ export function Gleisbau() {
         setBusLagen(lagen)
       }
       setWagen(zz.map((z) => beladenZeigen(z, z.wagen())))
+      // hat ein Zug seine Aufgabe erfüllt (Personenzug: genug Fahrgäste, Güterzug: genug Ladungen), bleibt er am nächsten Halt stehen, die anderen fahren
+      // weiter (Michael, 2026-11-27: «Wenn mehrere Züge unterwegs sind und einer seine Aufgabe erfüllt hat, kann er anhalten. Der andere fährt weiter bis er fertig ist»)
+      const zl = zielRef.current
+      if (zl && zz.length > 1) {
+        const fgx = fgRef.current, gx = gutRef.current
+        const pFertig = zl.p > 0 && (fgx?.gebracht ?? 0) >= zl.p
+        const gZiel = zl.g > 0 || Object.keys(zl.jeGut).length > 0
+        const gFertig = gZiel && (!zl.g || (gx?.geliefert ?? 0) >= zl.g) && Object.entries(zl.jeGut).every(([k, n]) => ((gx?.jeGut as Record<string, number> | undefined)?.[k] ?? 0) >= (n ?? 0))
+        for (const z of zz) {
+          const fertig = z.art === 'person' ? pFertig : z.art === 'gueter' ? gFertig : (pFertig || !zl.p) && (gFertig || !gZiel) && (zl.p > 0 || gZiel)
+          if (fertig) z.haltVerlaengern(0.5)
+        }
+      }
       // ein Zug ist am Gleisende ins Feld gefahren: alles steht, das Spiel ist aus
       const raus = zz.findIndex((z) => z.entgleist)
       if (raus >= 0 && !pauseRef.current) { setEntgleist(zz.length > 1 ? `Zug ${raus + 1}` : 'Der Zug'); setPause(true); zuggeraeuschAus(); antwortTon('falsch') }
@@ -1776,6 +1825,40 @@ export function Gleisbau() {
     for (const e of enden) { if (ohne && e.x === ohne.x && e.y === ohne.y) continue; const dd = Math.hypot(e.x - x, e.y - y); if (dd < d) { d = dd; best = e } }
     return best
   }
+  /**
+   * den zusammengestellten Zug aufs Gleis ziehen (Michael, 2026-11-27: «Sobald der Zug definiert ist, kann man diesen auf dem Gleis platzieren (Drag and Drop) und
+   * er erscheint bereits beim Darüberfahren transparent. Beim Abstellen rastet er in die nächstmögliche Kachel ein (Lok)»): das freie einfache Gleisfeld nächst
+   * dem Finger, höchstens ZUG_EINRASTEN Felder weit (gewählt)
+   */
+  const ZUG_EINRASTEN = 1.6
+  const [zugVorschau, setZugVorschau] = useState<[number, number] | null>(null)
+  const zugVorschauRef = useRef<[number, number] | null>(null)
+  zugVorschauRef.current = zugVorschau
+  const [zugGriff, setZugGriff] = useState<{ x: number; y: number } | null>(null)
+  const zugFeldBei = (x: number, y: number): [number, number] | null => {
+    let best: [number, number] | null = null, d = ZUG_EINRASTEN
+    for (let j = Math.max(0, Math.floor(y - 2)); j <= Math.min(ZE - 1, Math.floor(y + 2)); j++) for (let i = Math.max(0, Math.floor(x - 2)); i <= Math.min(SP - 1, Math.floor(x + 2)); i++) {
+      const f = brett[j][i]
+      if (!zugStartGilt(f) || f.zugStart) continue
+      const dd = Math.hypot(i + 0.5 - x, j + 0.5 - y)
+      if (dd < d) { d = dd; best = [i, j] }
+    }
+    return best
+  }
+  useEffect(() => { if (!zugWartet) { setZugVorschau(null); setZugGriff(null) } }, [zugWartet])
+  // während des Ziehens: Vorschau unter dem Finger, beim Loslassen hinstellen
+  useEffect(() => {
+    if (!zugGriff) return
+    const bewegt = (e: PointerEvent) => { setZugGriff({ x: e.clientX, y: e.clientY }); const p = brettPunkt(e.clientX, e.clientY); setZugVorschau(zugFeldBei(p.x, p.y)) }
+    const los = () => {
+      const v = zugVorschauRef.current
+      setZugGriff(null)
+      if (v && zugWartet) { zugHinstellen(v[0], v[1], zugWartet); setZugWartet(null); setMeldung(null) }
+    }
+    window.addEventListener('pointermove', bewegt); window.addEventListener('pointerup', los); window.addEventListener('pointercancel', los)
+    return () => { window.removeEventListener('pointermove', bewegt); window.removeEventListener('pointerup', los); window.removeEventListener('pointercancel', los) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [!!zugGriff, zugWartet, brett])
   function verbindenFertig() {
     const v = verbindeRef.current
     verbindeRef.current = null; setVerbinde(null)
@@ -1832,6 +1915,7 @@ export function Gleisbau() {
       if (verbindeRef.current) { verbindeRef.current = { ...verbindeRef.current, ...p }; setVerbinde(verbindeRef.current); return }
       const da = !!endeBei(p.x, p.y)
       if (da !== ueberEnde) setUeberEnde(da)
+      if (zugWartet) setZugVorschau(zugFeldBei(p.x, p.y))
       const fu = malRef.current || linieRef.current ? null : feldBei(e.clientX, e.clientY)
       if (fu?.[0] !== ueber?.[0] || fu?.[1] !== ueber?.[1]) setUeber(fu ?? null)
     }
@@ -1962,6 +2046,13 @@ export function Gleisbau() {
   function feldAn(e: React.MouseEvent<SVGSVGElement>) {
     // der Klick nach dem Loslassen eines gezogenen Felds legt nichts
     if (nachZiehen.current) { nachZiehen.current = false; return }
+    // ein wartender Zug rastet beim Tipp auf dem nächsten freien Gleis ein
+    if (zugWartet && !faehrt) {
+      const p = brettPunkt(e.clientX, e.clientY), v = zugFeldBei(p.x, p.y)
+      if (v) { zugHinstellen(v[0], v[1], zugWartet); setZugWartet(null); setMeldung(null) }
+      else setMeldung('Hier ist kein freies gerades Gleis. Zieh den Zug auf ein Gleis oder in einen Bahnhof.')
+      return
+    }
     const feld = feldBei(e.clientX, e.clientY)
     if (!feld) return
     const [i, j] = feld
@@ -2102,9 +2193,7 @@ export function Gleisbau() {
       // im Bahnbetrieb und beim freien Bauen: der eben zusammengestellte Zug kommt hierhin; sonst das Blatt für dieses Feld
       if (!zugStartGilt(f)) { setMeldung('Ein Zug steht auf einem einfachen Gleisstück, nicht auf einer grossen Kurve oder leerem Feld.'); return }
       if (zugWartet && !f.zugStart) {
-        const z = zugWartet
-        if (auftrag) setBetrieb((b) => ({ ...b, zuege: { ...b.zuege, [auftrag.id]: { ...(b.zuege[auftrag.id] ?? {}), [`${i},${j}`]: z } } }))
-        neu(i, j, { ...f, zugStart: z.wagen.every((x) => x === 'person') ? 'p' : 'g', ...(auftrag ? {} : { zusammen: z }) }); setZugWartet(null); setMeldung(null); knopfTon(true)
+        zugHinstellen(i, j, zugWartet); setZugWartet(null); setMeldung(null)
         return
       }
       setZugWahlFeld([i, j]); knopfTon(true)
@@ -2267,21 +2356,6 @@ export function Gleisbau() {
     if (auftrag) setBetrieb((b) => { const m = { ...(b.zuege[auftrag.id] ?? {}) }; delete m[`${i},${j}`]; return { ...b, zuege: { ...b.zuege, [auftrag.id]: m } } })
     const { zugStart: _, zusammen: _z, ...o } = brett[j][i]; neu(i, j, o)
   }
-  /**
-   * ein Schritt statt zwei (Michael, 2026-11-27: «Alle», Vorschlag B4): der zusammengestellte Zug kommt von selbst in den ersten freien geraden Bahnhof, sonst
-   * auf das erste freie einfache Gleis; nur wenn keines frei ist, tippt man selbst
-   */
-  function zugAutomatisch(z: Zusammenstellung) {
-    const frei = (f: Feld) => zugStartGilt(f) && !f.zugStart
-    let ziel: [number, number] | null = null
-    brett.forEach((zz, j) => zz.forEach((f, i) => { if (!ziel && frei(f) && f.gleis?.art === 'bahnhof') ziel = [i, j] }))
-    brett.forEach((zz, j) => zz.forEach((f, i) => { if (!ziel && frei(f)) ziel = [i, j] }))
-    if (!ziel) { setZugWartet(z); setWerkzeug({ art: 'zug', zug: 'p' }); setMeldung('Leg zuerst ein Gleis, dann tippe darauf, wo dein Zug stehen soll.'); return }
-    const [i, j] = ziel as [number, number]
-    zugHinstellen(i, j, z)
-    setMeldung('Dein Zug steht bereit. Unter «Deine Züge» kannst du ihn ändern oder verschieben.')
-  }
-
   function fahren() {
     if (faehrt) { setFaehrt(false); setWagen([]); zuege.current = []; busse.current = []; setBusLagen([]); fgRef.current = null; setFahrgaeste(null); wagenZurueck(); return }
     if (uhrBelegt) { setMeldung('Zuerst entscheiden: oben links Platz für die Uhr machen oder den Takt ausschalten.'); return }
@@ -2340,7 +2414,7 @@ export function Gleisbau() {
     const gut = l.some((x) => x.art !== 'person') ? gueterStart(schuppen, routen) : null
     if (l.some((x) => x.art !== 'person') && !gut) setMeldung('Für Ladungen braucht der Güterzug mindestens zwei Güterschuppen (unter Bauwerke «Güter»).')
     gutRef.current = gut; gutHalte.current = new Map(); gutSchritte.current = new Map(); setLadungen(gut ? { ...gut.warten } : null)
-    setStand({ fahrgaeste: 0, gueter: 0 })
+    setStand({ fahrgaeste: 0, gueter: 0 }); gaenger.current = []
     // jede Fahrt beginnt die Prüfung neu, so kommt «Geschafft!» auch, wenn die Aufgabe schon einmal gelöst war (Michael, 2026-11-27: «Kann es sein dass
     // der Auftrag nie aufhört?»)
     setErgebnis(null); setGeloest(false)
@@ -2375,7 +2449,7 @@ export function Gleisbau() {
   // Gleise, Züge und sonst nichts»); Bahnhöfe und Schuppen gibt der Auftrag vor, Tunnel und Brücken entstehen mit «Linie» von selbst
   // die Ampel im Bahnbetrieb vorne nach Linie, Gerade und Kurve, sonst lag sie hinter allen Weichen ausser Sicht (Michael, 2026-11-27: «Bei den Aufträgen muss man
   // eine Ampel einbauen können»)
-  const gruppen = auftrag ? [{ titel: 'Gleise', l: [...GRUPPEN[0].l.slice(0, 3), ...GRUPPEN[2].l.filter((x) => x.w.art === 'ampel'), ...GRUPPEN[0].l.slice(3)] }] : GRUPPEN
+  const gruppen = auftrag ? [{ titel: 'Gleise', l: [...GRUPPEN[0].l.slice(0, 3), ...GRUPPEN[2].l.filter((x) => x.w.art === 'ampel'), ...GRUPPEN[0].l.slice(3)] }] : GRUPPEN.filter((g) => g.titel !== 'Züge')
   useEffect(() => { if (!gruppen.some((g) => g.titel === reiter)) setReiter(gruppen[0].titel) }, [gruppen, reiter])
   // im Tutorial der jetzige Hinweis: der erste, der noch nicht erledigt ist; sein Werkzeug und seine Felder leuchten
   const werkzeugName = GRUPPEN.flatMap((g) => g.l).find((x) => gleich(x.w, werkzeug))?.text ?? ''
@@ -2455,14 +2529,14 @@ export function Gleisbau() {
               <h2 className="text-2xl font-bold leading-tight tracking-tight">{aufgabe.titel}</h2>
               {/* im Bahnbetrieb der Auftrag fett über dem Brett, statt der Schritte Bauen → Züge → Fahren (Michael, 2026-11-27: «Oben: Bauen -> Züge -> Fahren kann
                   weg, da sehe ich keinen Sinn dafür. Beschrieb … oberhalb des Brettes und in Fett») */}
-              {auftrag && <p className="mt-1 max-w-4xl text-sm font-bold leading-snug sm:text-base">{aufgabe.ziel}</p>}
+              {auftrag && <p className="mt-1 text-sm font-bold leading-snug sm:text-base">{aufgabe.ziel}</p>}
             </div>
           )}
           <div ref={buehne} className="relative min-h-0 w-full shrink touch-none overflow-hidden" style={{ aspectRatio: `${SP + 0.3 + 0.4} / ${ZE + 0.3}` }}
                onPointerDown={buehneDrucken} onPointerMove={buehneBewegen} onPointerUp={buehneLos} onPointerCancel={buehneLos} onWheel={buehneRad}>
             <div className="absolute inset-0 px-2.5" style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`, transformOrigin: '0 0' }}>
         <svg ref={svg} viewBox={`-0.15 -0.15 ${SP + 0.3} ${ZE + 0.3}`} role="img" aria-label={`Spielbrett mit ${SP} × ${ZE} Feldern`}
-             onClick={feldAn} onPointerDown={(e) => { mausKlick.current = e.pointerType === 'mouse'; drucken(e) }} onPointerMove={bewegen} onPointerUp={loslassen} onPointerLeave={() => setUeber(null)}
+             onClick={feldAn} onPointerDown={(e) => { mausKlick.current = e.pointerType === 'mouse'; drucken(e) }} onPointerMove={bewegen} onPointerUp={loslassen} onPointerLeave={() => { setUeber(null); if (!zugGriff) setZugVorschau(null) }}
              onPointerCancel={() => { druck.current = null; setZiehen(null); linieRef.current = null; setLinie(null); malRef.current = null; malStart.current = null; setMalen(null) }} onContextMenu={(e) => e.preventDefault()}
              className={`size-full ${ueberEnde || verbinde ? 'cursor-crosshair' : 'cursor-pointer'} select-none [-webkit-touch-callout:none]`}>
           <rect x={-0.15} y={-0.15} width={SP + 0.3} height={ZE + 0.3} rx={0.14} fill={F.tablett} />
@@ -2505,6 +2579,11 @@ export function Gleisbau() {
               {vorschau.l.map(([i, j]) => <GleisBild key={`vg${i},${j}`} f={vorschau.b[j][i]} i={i} j={j} wasser={(u, v) => ueberWasser(vorschau.b[v]?.[u])} brett={vorschau.b} />)}
             </g>
           )}
+          {/* der wartende Zug halb durchsichtig dort, wo er einrasten würde */}
+          {zugWartet && zugVorschau && !faehrt && (() => {
+            const l = LOKS[zugWartet.lok], z = Zug.zusammengestellt(brett, zugVorschau[0], zugVorschau[1], { typ: zugWartet.lok, diesel: l.diesel, tempo: l.tempo }, zugWartet.wagen)
+            return z ? <g opacity={0.55} pointerEvents="none">{z.wagen().slice().reverse().map((w, k) => <WagenBild key={k} w={w} tunnel={false} />)}</g> : null
+          })()}
           {schloss && (
             <g pointerEvents="none" transform={`translate(${schloss[0] + 0.5} ${schloss[1] + 0.5})`}>
               <circle r={0.26} fill="#212121" opacity={0.85} />
@@ -2525,7 +2604,14 @@ export function Gleisbau() {
           <SchildBild namen={namen} titel={titel} knoten={knotenSet} takt={takt} mass={schildMass} />
           <AnlagenBild brett={brett} />
           {takt > 0 && !uhrBelegt && <UhrBild minuten={UHR_START_MIN + (faehrt ? spielSek.current : 0)} />}
-          {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} />}
+          {fahrgaeste && <WartendeBild namen={namen} warten={fahrgaeste.warten} brett={brett} />}
+          {/* ein- und aussteigend: vom Perron zum nächsten Wagen und zurück */}
+          {faehrt && gaenger.current.map((g, k) => {
+            const t = Math.min(1, Math.max(0, (performance.now() - g.t0) / GEHEN_MS))
+            if (t <= 0) return <Person key={`ga${k}`} x={g.x0} y={g.y0} ziel={g.ziel} />
+            const deckt = g.aus ? (t < 0.75 ? 1 : 1 - (t - 0.75) / 0.25) : t < 0.85 ? 1 : 1 - (t - 0.85) / 0.15
+            return <Person key={`ga${k}`} x={g.x0 + (g.x1 - g.x0) * t} y={g.y0 + (g.y1 - g.y0) * t} ziel={g.ziel} deckt={deckt} />
+          })}
           {faehrt && ladungen && <LadungenBild warten={ladungen} />}
           {/* vor der Fahrt die gesetzten Züge als Lok auf ihrem Feld */}
           {!faehrt && brett.flatMap((zz, j) => zz.map((f, i) => {
@@ -2758,26 +2844,35 @@ export function Gleisbau() {
               </div>
             ) : (
               <>
+                {/* der zusammengestellte Zug zum Ziehen aufs Gleis */}
+                {zugWartet && (
+                  <div className="mx-2 mt-1.5 flex items-center gap-2 rounded-lg bg-sbb-milk px-2 py-1.5 text-[13px] dark:bg-sbb-midnight">
+                    <button type="button" onPointerDown={(e) => { e.preventDefault(); setZugGriff({ x: e.clientX, y: e.clientY }) }}
+                            className="flex min-w-0 flex-1 touch-none select-none items-center gap-2 rounded-lg bg-white px-2 py-1.5 text-left shadow-sm cursor-grab active:cursor-grabbing dark:bg-sbb-charcoal">
+                      <span aria-hidden="true" className="text-lg leading-none">⠿</span>
+                      <span className="min-w-0 leading-tight"><span className="font-bold">Dein Zug: {LOKS[zugWartet.lok].name}, {zugWartet.wagen.length === 1 ? '1 Wagen' : `${zugWartet.wagen.length} Wagen`}</span>
+                        <span className="block text-sbb-metal dark:text-sbb-storm">aufs Gleis ziehen oder dort tippen</span></span>
+                    </button>
+                    <button type="button" onClick={() => { setZugWartet(null); setMeldung(null) }} aria-label="Zug nicht hinstellen" className="rounded-lg px-2 py-1 font-bold text-sbb-red">✕</button>
+                  </div>
+                )}
+                {zugGriff && zugWartet && (
+                  <div className="pointer-events-none fixed z-50 -translate-x-1/2 -translate-y-[130%] rounded-lg bg-sbb-red px-2 py-1 text-xs font-bold text-white shadow-lg" style={{ left: zugGriff.x, top: zugGriff.y }}>
+                    {LOKS[zugWartet.lok].name}
+                  </div>
+                )}
                 <div className="flex gap-0.5 overflow-x-auto px-2 pt-1.5 [scrollbar-width:none]" role="tablist" aria-label="Werkzeuge">
                   {/* im Bahnbetrieb ist «Züge» ein Knopf: er öffnet gleich das Zusammenstellen (Michael, 2026-11-26: «Klickt man auf Züge soll nicht das Element «Zug
                       einsetzen» sondern es soll direkt die Auswahl mit den Drag and Drop Ansicht kommen») */}
-                  {auftrag && (
-                    <button type="button" onClick={() => { setZugWahlFeld('neu'); knopfTon(true) }}
-                            className="order-last shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold text-sbb-metal sm:px-3 sm:text-sm dark:text-sbb-storm">Züge</button>
-                  )}
-                  {gruppen.map((g) => (
+                  {/* «Züge» öffnet überall gleich die Auswahl (seit 2026-11-27 auch im Tutorial und beim freien Bauen) */}
+                  <button type="button" onClick={() => { setZugWahlFeld('neu'); knopfTon(true) }}
+                          className={`${hinweis?.werkzeug === 'Züge' ? LEUCHTEN : ''} shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold text-sbb-metal sm:px-3 sm:text-sm dark:text-sbb-storm ${auftrag ? 'order-last' : 'order-1'}`}>Züge</button>
+                  {gruppen.map((g, gk) => (
                     <button key={g.titel} type="button" role="tab" aria-selected={reiter === g.titel} onClick={() => setReiter(g.titel)}
-                            className={`${hinweisReiter === g.titel && reiter !== g.titel ? LEUCHTEN : ''} shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold sm:px-3 sm:text-sm ${reiter === g.titel ? 'bg-sbb-milk dark:bg-sbb-midnight' : 'text-sbb-metal dark:text-sbb-storm'}`}>{g.titel}</button>
+                            className={`${gk ? 'order-2' : ''} ${hinweisReiter === g.titel && reiter !== g.titel ? LEUCHTEN : ''} shrink-0 rounded-lg px-1.5 py-1 text-[13px] font-bold sm:px-3 sm:text-sm ${reiter === g.titel ? 'bg-sbb-milk dark:bg-sbb-midnight' : 'text-sbb-metal dark:text-sbb-storm'}`}>{g.titel}</button>
                   ))}
                 </div>
                 <div className="flex gap-1.5 overflow-x-auto px-2 pb-1 pt-1.5 [scrollbar-width:none]">
-                  {/* beim freien Bauen alle Loks und Wagen ohne Kosten (Michael, 2026-11-26: «beim freien Bauen auf alle Züge ohne Grenzen Zugriff») */}
-                  {!aufgabe && reiter === 'Züge' && (
-                    <button type="button" onClick={() => { setZugWahlFeld('neu'); knopfTon(true) }} className={knopf(werkzeug.art === 'zug')}>
-                      <WerkzeugBild w={{ art: 'zug', zug: 'p' }} dreh={dreh} />
-                      <span className="whitespace-normal text-center">Zug zusammen&shy;stellen</span>
-                    </button>
-                  )}
                   {(gruppen.find((g) => g.titel === reiter) ?? gruppen[0]).l.filter(({ w }) => (takt > 0 || w.art !== 'knoten') && !(auftrag && ((w.art === 'zug' && w.zug === 'g') || w.art === 'wagen')) && !(!aufgabe && w.art === 'zug'))
                     .map(({ w, text }) => ({ w, text: auftrag && w.art === 'zug' ? 'Zug einsetzen' : text })).map(({ w, text }) => (
                     <button key={`${text}${JSON.stringify(w)}`} type="button" aria-pressed={gleich(w, werkzeug)} title={gleich(w, werkzeug) ? 'Nochmals tippen dreht' : undefined}
@@ -2790,19 +2885,6 @@ export function Gleisbau() {
                 </div>
                 {/* unter «Züge» in einem Satz, was ein Zug trägt und wie man ihn setzt (Michael, 2026-11-26: «Das Konzept mit dem Auswählen der richtigen Züge
                     mit Wagen muss klarer sein. Wieviele Personen passen in einen Personenwagen? Was heisst eine Ladung im Güterverkehr?») */}
-                {reiter === 'Züge' && (
-                  <p className="px-3 pb-1 text-xs leading-snug text-sbb-metal dark:text-sbb-storm">
-                    {!aufgabe
-                      ? 'Stell einen Zug aus allen Loks und Wagen zusammen, ohne Kosten, und tippe dann aufs Gleis, wo er stehen soll. Ein Tipp auf einen gesetzten Zug ändert ihn. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung.'
-                      : auftrag
-                      ? `Tippe mit «Zug einsetzen» auf ein Gleis und wähle Lok und Wagen aus deinem Depot. Ein Personenwagen hat ${WAGEN_ARTEN.person.plaetze} Plätze, ein Güterwagen trägt 1 Ladung.`
-                      : werkzeug.art === 'zug' && werkzeug.zug === 'g'
-                        ? `Güterzug: Lok und ${wagenZahl - 1} Güterwagen. Jeder Wagen trägt 1 Ladung, zusammen ${wagenZahl - 1}. Er hält nur am Güterschuppen. Tippe auf ein Gleis.`
-                        : werkzeug.art === 'wagen'
-                          ? 'Ein einzelner Wagen zum Abstellen. Fährt ein Zug hinein, kuppelt er ihn an.'
-                          : `Personenzug: Lok, ${wagenZahl - 1} Personenwagen (mit Steuerwagen) à ${WAGEN_ARTEN.person.plaetze} Plätze, zusammen ${(wagenZahl - 1) * WAGEN_ARTEN.person.plaetze} Fahrgäste. Er hält an Bahnhöfen. Tippe auf ein Gleis.`}
-                  </p>
-                )}
               </>
             )}
           </div>
@@ -2911,11 +2993,11 @@ export function Gleisbau() {
             const andere = Object.entries(alle).filter(([k]) => brett[+k.split(',')[1]]?.[+k.split(',')[0]]?.zugStart).map(([, z]) => z)
             return (
               <ZugWahl betrieb={auftrag ? betrieb : undefined} setBetrieb={setBetrieb} auftrag={auftrag ?? undefined} andere={andere} anfang={zugWartet} zu={() => setZugWahlFeld(null)}
-                       setzen={(z) => { setZugWahlFeld(null); setZugWartet(null); zugAutomatisch(z) }}
+                       setzen={(z) => { setZugWahlFeld(null); setZugWartet(z); setWerkzeug({ art: 'zug', zug: 'p' }); setMeldung('Zieh deinen Zug aufs Gleis oder tippe dort aufs Gleis.') }}
                        entfernen={() => { setZugWartet(null); setZugWahlFeld(null) }} />
             )
           })()}
-          {Array.isArray(zugWahlFeld) && !auftrag && !aufgabe && (() => {
+          {Array.isArray(zugWahlFeld) && !auftrag && (() => {
             const [zi, zj] = zugWahlFeld, f0 = brett[zj][zi], zu = () => setZugWahlFeld(null)
             const anfang = f0.zugStart && f0.zusammen && f0.zusammen.lok in LOKS ? f0.zusammen as Zusammenstellung : null
             return (

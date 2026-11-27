@@ -265,7 +265,9 @@ const verbunden = (a: string, c: string, t = false, br = false) => (x: Fuehrungs
 const hatZug = (art: 'p' | 'g') => (x: FuehrungsLage) => x.b.some((z) => z.some((f) => f.zugStart === art))
 const schuppenVerbunden = (x: FuehrungsLage) => { const sf = schuppenFelder(x.b); return sf.length >= 2 && sf.slice(1).every((k) => wegGibt(x.b, new Set([sf[0]]), new Set([k]))) }
 const LINIE: Fuehrung = { text: 'Wähle unten im Reiter «Gleise» das Werkzeug «Linie».', werkzeug: 'Linie' }
-const zugWaehlen = (art: 'p' | 'g'): Fuehrung => ({ text: `Tippe unten auf den Reiter «Züge» und wähle «${art === 'p' ? 'Personenzug' : 'Güterzug'}».`, werkzeug: art === 'p' ? 'Personenzug' : 'Güterzug' })
+// seit 2026-11-27 öffnet «Züge» die Auswahl aller Loks und Wagen, der fertige Zug wird aufs Gleis gezogen (Michael: «wenn man auf Züge tippt, die ganze Auswahl
+// der Züge und Wagen erscheinen … Sobald der Zug definiert ist, kann man diesen auf dem Gleis platzieren (Drag and Drop)»)
+const zugWaehlen = (art: 'p' | 'g'): Fuehrung => ({ text: `Tippe unten auf «Züge» und stell eine Lok mit ${art === 'p' ? 'Personenwagen' : 'Güterwagen, für Holz Rungenwagen'} zusammen.`, werkzeug: 'Züge' })
 const FAHREN = (text: string): Fuehrung => ({ text: `Tippe rechts unter dem Brett auf den roten Knopf ▶ «Fahren». ${text}`, fertig: (x) => x.faehrt || (x.stand?.fahrgaeste ?? 0) > 0 || (x.stand?.gueter ?? 0) > 0 })
 const FUEHRUNG: Fuehrung[][] = [
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Seewil', 'Bergau')(x) },
@@ -279,15 +281,15 @@ const FUEHRUNG: Fuehrung[][] = [
   [{ text: 'Baue einen geschlossenen Ring, der über den Fluss und durch den Berg führt. Er darf an dein Netz anschliessen.' },
     { text: 'Tippe auf die Weichen im Ring, bis sie im Ring weiterführen. Gelöst ist die Lektion von selbst, sobald ein Zug im Ring im Kreis fahren kann.' }],
   [{ ...zugWaehlen('p'), fertig: (x) => x.werkzeug === 'Personenzug' || hatZug('p')(x) },
-    { text: 'Tippe auf ein Gleis, am besten in einem Bahnhof: Dort steht jetzt dein Zug.', fertig: hatZug('p') },
+    { text: 'Zieh deinen Zug aufs Gleis, am besten in einen Bahnhof, oder tippe dort aufs Gleis: Die Lok rastet auf dem nächsten Feld ein.', fertig: hatZug('p') },
     FAHREN('An den Bahnhöfen warten Fahrgäste mit ihrem Ziel. Jeder Personenwagen hat 4 Plätze.'),
     { text: 'Lass fahren, bis 15 Fahrgäste am Ziel sind. Jeder Fahrgast wartet an einem Bahnhof und will zu einem anderen: Der Buchstabe auf seinem Punkt ist sein Ziel, A ist Seewil, B Bergau und so weiter wie auf den Schildern. Steigt er dort aus, zählt er. Die Zahl steht unten.' }],
   [{ text: 'Verbinde den Forst Tannegg und die Sägerei Seewil mit deinem Netz. Ein Güterschuppen ist ein Gleis, an dem nur Güterzüge halten.', werkzeug: 'Linie', felder: [[10, 7], [4, 7]], fertig: schuppenVerbunden },
-    { ...zugWaehlen('g'), fertig: (x) => x.werkzeug === 'Güterzug' || hatZug('g')(x) },
-    { text: 'Tippe auf ein Gleis, um den Güterzug hinzustellen.', fertig: hatZug('g') },
+    { ...zugWaehlen('g'), fertig: (x) => x.werkzeug === 'Personenzug' || hatZug('g')(x) },
+    { text: 'Zieh den Güterzug aufs Gleis oder tippe dort aufs Gleis. Noch keiner? Unter «Züge» Lok und Rungenwagen zusammenstellen.', fertig: hatZug('g') },
     FAHREN('Am Forst wartet Holz. Jeder Güterwagen trägt 1 Ladung zur Sägerei.'),
     { text: 'Lass fahren, bis 5 Ladungen geliefert sind.' }],
-  [{ text: 'Stell unter «Züge» einen Personenzug und einen Güterzug auf die Gleise.', werkzeug: 'Personenzug', fertig: (x) => hatZug('p')(x) && hatZug('g')(x) },
+  [{ text: 'Stell unter «Züge» einen Zug mit Personenwagen und einen mit Güterwagen zusammen und zieh beide aufs Gleis.', werkzeug: 'Züge', fertig: (x) => hatZug('p')(x) && hatZug('g')(x) },
     FAHREN('Beide Züge fahren zugleich: der Personenzug von Bahnhof zu Bahnhof, der Güterzug von Schuppen zu Schuppen.'),
     { text: 'Bring 10 Fahrgäste und 5 Ladungen ans Ziel. Danach weisst du alles für den Bahnbetrieb.' }],
 ]
