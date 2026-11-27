@@ -1736,7 +1736,7 @@ die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot einer Bahn i
 3dland.ch auf Englisch seit 2026-11-27 (Michael: «Ja, starte mit der englischen Fassung von 3D-Land»; Taktland bleibt deutsch): src/sprache.ts (t(), sprache(),
              zahlOrt: de-CH oder en-GB), src/sprache-en.ts (etwa 230 Texte), src/dreidland-sprache.ts als erster Import in src/dreidland.tsx: ?lang=en oder ?lang=de,
              sonst die gemerkte Wahl (localStorage dreidland.sprache), sonst die Sprache des Browsers (beginnt sie mit «de», Deutsch, sonst Englisch); in der Fusszeile
-             «Deutsch · English», lädt mit ?lang=… neu; die Anleitung auf Englisch in komponenten/Schweiz3DEn.tsx: **wer die deutsche Anleitung von 3D-Land ändert, ändert
+             «Deutsch · English», lädt mit ?lang=… neu; seit 2026-11-27 dazu oben rechts im Auftaktbild links der Bildmarke DE und EN, die jetzige weiss (SpracheOben in dreidland.tsx; Michael: «Ja gerne, oben rechts im Auftaktbild einbauen»); die Anleitung auf Englisch in komponenten/Schweiz3DEn.tsx: **wer die deutsche Anleitung von 3D-Land ändert, ändert
              diese Datei mit**; Namen aus den Daten und der Quellen unübersetzt; Taktland ruft spracheSetzen nie auf; im Browser hier die Stufe Schweiz auf Englisch
              angeschaut, tiefere Stufen, Schilder der Züge und die Tafel der Brille nicht
 
