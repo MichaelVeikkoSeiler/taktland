@@ -1250,13 +1250,19 @@ export function Gleisbau() {
   const oberleitung = useMemo(() => <OberleitungBild brett={brett} />, [brett])
   // Bäume, Häuser und Büsche nur, wo man sie erkennt: ab 10 Bildpunkten je Feld und nur im sichtbaren Ausschnitt (grosse Bretter bis 192 × 108)
   const [buehneGr, setBuehneGr] = useState({ w: 0, h: 0 })
+  // nach jedem Bild prüfen, ob die Bühne ein anderes Element ist (im Tutorial kam sie später, die Schilder blieben klein; Michael, 2026-11-27: «die Ortsnamen
+  // sind hier wieder klein?»)
+  const beobachtet = useRef<{ el: HTMLDivElement; ro: ResizeObserver } | null>(null)
   useEffect(() => {
     const el = buehne.current
+    if (beobachtet.current?.el === el) return
+    beobachtet.current?.ro.disconnect(); beobachtet.current = null
     if (!el) return
     const ro = new ResizeObserver(() => setBuehneGr({ w: el.clientWidth, h: el.clientHeight }))
     ro.observe(el)
-    return () => ro.disconnect()
-  }, [ansicht, offen])
+    beobachtet.current = { el, ro }
+  })
+  useEffect(() => () => beobachtet.current?.ro.disconnect(), [])
   const sicht = (() => {
     const { w, h } = buehneGr
     if (!w || !h) return null
@@ -2353,6 +2359,14 @@ export function Gleisbau() {
              role="dialog" aria-label={aufgabe ? `Gleisbau, Aufgabe ${aufgabe.titel}` : `Gleisbau, ${bretter.find((x) => x.id === offen)?.name ?? 'Brett'}`}>
           {/* oben freier Raum, dann das Brett so hoch, wie es braucht, gleich darunter Aufgabe und Knöpfe */}
           <div className="flex-1" style={{ minHeight: 'calc(env(safe-area-inset-top) + 8px)' }} />
+          {/* der Name der Lektion oder des Auftrags gross über dem Brett (Michael, 2026-11-27: «Name des Tutorials oberhalb des Brettes und grösser und ausgezeichnet») */}
+          {aufgabe && (
+            <div className="flex-none px-3 pb-2">
+              {aufgabe.reihe !== undefined && <p className="text-xs font-bold uppercase tracking-wide text-sbb-red dark:text-[#d63a55]">Lektion {aufgabe.reihe + 1} von {AUFGABEN.filter((x) => x.reihe !== undefined).length}</p>}
+              {auftrag && <p className="text-xs font-bold uppercase tracking-wide text-sbb-red dark:text-[#d63a55]">Auftrag</p>}
+              <h2 className="text-2xl font-bold leading-tight tracking-tight">{aufgabe.titel}</h2>
+            </div>
+          )}
           <div ref={buehne} className="relative min-h-0 w-full shrink touch-none overflow-hidden" style={{ aspectRatio: `${SP + 0.3 + 0.4} / ${ZE + 0.3}` }}
                onPointerDown={buehneDrucken} onPointerMove={buehneBewegen} onPointerUp={buehneLos} onPointerCancel={buehneLos} onWheel={buehneRad}>
             <div className="absolute inset-0 px-2.5" style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`, transformOrigin: '0 0' }}>
@@ -2890,8 +2904,10 @@ export function Gleisbau() {
           )}
           {/* gelöst: einmal eine Karte mit den Sternen und «Nächste Aufgabe» */}
           {aufgabe && geloest && ergebnis?.ok && (
-            <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/30 p-4">
-              <div className="grid w-full max-w-sm gap-3 rounded-2xl bg-white p-5 text-center shadow-xl dark:bg-sbb-charcoal">
+            // unten über den Knöpfen statt über dem Brett, so bleibt die Lösung sichtbar (Michael, 2026-11-27: «Ist man fertig verdeckt dieses Fenster sofort das
+            // Brett und man sieht die Lösung nicht mehr»)
+            <div className="absolute inset-x-0 bottom-0 z-10 flex justify-center p-3" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 12px)' }}>
+              <div className="grid w-full max-w-md gap-2 rounded-2xl bg-white p-4 text-center shadow-[0_-4px_24px_rgba(0,0,0,0.25)] dark:bg-sbb-charcoal">
                 <p className="text-2xl font-bold tracking-tight">Geschafft!</p>
                 <p className="text-3xl"><Sterne n={ergebnis.sterne} /></p>
                 <p className="text-sm leading-relaxed">{ergebnis.text}</p>
