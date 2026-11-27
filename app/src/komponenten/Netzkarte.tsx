@@ -5,6 +5,7 @@ import { SeenFlaechen, SeenNamen, useSeen } from './Seen'
 import { FlussNamen, KartengrundEbene, useKartengrund } from './Kartengrund'
 import { type Auswahl, AuswahlZeile, FlaechenEbene, SehenswertEbene, SehenswertLegende, useSehenswert, useVersteckt } from './Sehenswert'
 import { Klappe } from './Klappe'
+import { t } from '../sprache'
 
 /** So viel der Breite reicht die Zeichnung der Netzkarte auf jeder Seite über den Rahmen hinaus */
 const RAND_BILD = 0.25
@@ -232,8 +233,8 @@ export function VollbildKnopf({ voll, umschalten }: { voll: boolean; umschalten:
     </button>
   )
   return (
-    <button type="button" onClick={umschalten} aria-label={voll ? 'Vollbild schliessen' : 'Karte als Vollbild'}
-            title={voll ? 'Vollbild schliessen' : 'Vollbild'}
+    <button type="button" onClick={umschalten} aria-label={voll ? t('Vollbild schliessen') : t('Karte als Vollbild')}
+            title={voll ? t('Vollbild schliessen') : t('Vollbild')}
             className="flex size-8 items-center justify-center rounded-lg border border-sbb-cloud bg-white
                        text-sbb-black hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight
                        dark:text-sbb-white dark:hover:border-sbb-white">

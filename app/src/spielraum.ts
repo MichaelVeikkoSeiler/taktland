@@ -5,6 +5,7 @@
  * sehen alle denselben Stand, und wer neu lädt, holt die Liste einfach nochmals.
  */
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { t } from './sprache'
 
 /** Zum Ausprobieren auf dem eigenen Rechner: VITE_SPIEL_URL=http://127.0.0.1:8090/raum.php */
 const ADRESSE = import.meta.env.VITE_SPIEL_URL ?? 'https://spiel.taktland.ch/raum.php'
@@ -19,13 +20,13 @@ async function anfrage(a: string, raum?: string, ab?: number, koerper?: unknown)
   const r = await fetch(url, koerper === undefined && a !== 'neu' ? { cache: 'no-store' }
     : { method: 'POST', cache: 'no-store', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(koerper ?? {}) })
   const j = await r.json().catch(() => ({}))
-  if (!r.ok) throw new Error(r.status === 404 ? 'Diesen Spielraum gibt es nicht (mehr).' : `Die Vermittlung antwortet nicht wie erwartet (${r.status}).`)
+  if (!r.ok) throw new Error(r.status === 404 ? t('Diesen Spielraum gibt es nicht (mehr).') : t('Die Vermittlung antwortet nicht wie erwartet ({status}).', { status: r.status }))
   return j
 }
 
 export async function raumEroeffnen(): Promise<string> {
   const j = await anfrage('neu')
-  if (typeof j.raum !== 'string') throw new Error('Kein Spielraum erhalten.')
+  if (typeof j.raum !== 'string') throw new Error(t('Kein Spielraum erhalten.'))
   return j.raum
 }
 

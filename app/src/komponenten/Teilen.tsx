@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { t } from '../sprache'
 
 const ADRESSE = 'https://taktland.ch'
 const TEXT = 'Taktland: Bahnhöfe, Strecken, Tunnel und Brücken der Schweiz kennenlernen und im Zug mitfahren.'
@@ -48,14 +49,14 @@ export default function Teilen({ name = 'Taktland', adresse = ADRESSE, text = TE
       setKopiert(true)
       window.setTimeout(() => setKopiert(false), 3000)
     } catch {
-      window.prompt('Link zum Kopieren', adresse)
+      window.prompt(t('Link zum Kopieren'), adresse)
     }
   }
 
   return (
     <div ref={rahmen} className="relative">
       <button type="button" onClick={() => void teilen()} aria-expanded={'share' in navigator ? undefined : auswahl}
-              aria-label={`${name} teilen`} title={`${name} teilen`} className={SYMBOL}>
+              aria-label={t('{name} teilen', { name })} title={t('{name} teilen', { name })} className={SYMBOL}>
         {/* Teilen: drei verbundene Punkte */}
         <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
           <circle cx="18" cy="5" r="2.5" /><circle cx="6" cy="12" r="2.5" /><circle cx="18" cy="19" r="2.5" />
@@ -71,7 +72,7 @@ export default function Teilen({ name = 'Taktland', adresse = ADRESSE, text = TE
             WhatsApp
           </a>
           <button type="button" className={KNOPF} onClick={() => void kopieren()}>
-            {kopiert ? 'Link kopiert' : 'Link kopieren'}
+            {kopiert ? t('Link kopiert') : t('Link kopieren')}
           </button>
         </div>
       )}

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import qrcode from 'qrcode-generator'
 import { eigeneId, type Ereignis, raumAdresse, type Teilnahme, teilnahmeLesen, teilnahmeMerken, useRaum } from '../spielraum'
 import { Zurueck } from './Zurueck'
+import { t } from '../sprache'
 
 /**
  * Was alle Spiele auf mehreren Geräten teilen (Michael, 2026-10-05, zuerst «Geo», dann
@@ -182,7 +183,7 @@ export function QrCode({ text, className = "max-w-64" }: { text: string; classNa
     return q.createSvgTag({ cellSize: 6, margin: 4, scalable: true })
   }, [text])
   return <div className={`mx-auto w-full ${className} bg-white p-2 [&_svg]:h-auto [&_svg]:w-full`} role="img"
-              aria-label={`QR-Code für ${text}`} dangerouslySetInnerHTML={{ __html: svg }} />
+              aria-label={t('QR-Code für {text}', { text })} dangerouslySetInnerHTML={{ __html: svg }} />
 }
 
 function Warteraum({ raum, adresse, spielName, dabei, ich, gastgeber, starten }: {

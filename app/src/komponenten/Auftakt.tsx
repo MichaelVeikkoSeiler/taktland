@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useState, useSyncExternalStore } from 'react'
+import { t as tr } from '../sprache'
 
 /** So lange bleibt das andere Bild stehen, bevor es zurückblendet */
 const ANZEIGEDAUER_MS = 5000
@@ -89,7 +90,7 @@ export function Auftakt({ bild, oben }: { bild: AuftaktBild; oben?: ReactNode })
   }, [sichtbar])
 
   const anderes = dunkel ? bild.hell : bild.dunkel
-  const beschriftung = dunkel ? 'Kurz das Tagbild zeigen' : 'Kurz das Nachtbild zeigen'
+  const beschriftung = dunkel ? tr('Kurz das Tagbild zeigen') : tr('Kurz das Nachtbild zeigen')
 
   return (
     <div className="relative -mx-4 -mt-8 mb-6">

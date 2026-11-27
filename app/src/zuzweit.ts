@@ -6,6 +6,7 @@
  */
 import { useEffect, useRef, useState } from 'react'
 import { eigeneId } from './spielraum'
+import { t } from './sprache'
 
 const ADRESSE = import.meta.env.VITE_SPIEL_URL ?? 'https://spiel.taktland.ch/raum.php'
 /** so oft wird gesendet und abgeholt (die Vermittlung ist ein einfaches Webhosting; gewählt) */
@@ -37,7 +38,7 @@ async function anfrage(a: string, raum: string, koerper?: unknown) {
   const r = await fetch(`${ADRESSE}?a=${a}&raum=${raum}`, koerper === undefined ? { cache: 'no-store' }
     : { method: 'POST', cache: 'no-store', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(koerper) })
   const j = await r.json().catch(() => ({}))
-  if (!r.ok) throw new Error(r.status === 404 ? 'Diesen Raum gibt es nicht (mehr).' : r.status === 409 ? 'Der Raum ist voll.' : `Die Vermittlung antwortet nicht wie erwartet (${r.status}).`)
+  if (!r.ok) throw new Error(r.status === 404 ? t('Diesen Raum gibt es nicht (mehr).') : r.status === 409 ? t('Der Raum ist voll.') : t('Die Vermittlung antwortet nicht wie erwartet ({status}).', { status: r.status }))
   return j
 }
 

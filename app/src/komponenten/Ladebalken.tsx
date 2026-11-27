@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { balkenInKarte, laden, ladenBeobachten, SZENE_MS, szeneFertig } from '../daten'
+import { t as tr } from '../sprache'
 
 /** erst nach so vielen Millisekunden zeigen: was schneller lädt, soll nicht aufblitzen */
 const NACH_MS = 250
@@ -66,7 +67,7 @@ export function Ladebalken({ inKarte = false }: { inKarte?: boolean }) {
   const gross = inKarte || szeneAb !== null
   return (
     <div className={`pointer-events-none ${inKarte ? 'absolute z-10' : 'fixed z-50'} inset-0 flex items-center justify-center`} role="status"
-         aria-label={szeneAb !== null ? 'Das Modell wird geladen' : 'Wird geladen'}>
+         aria-label={szeneAb !== null ? tr('Das Modell wird geladen') : tr('Wird geladen')}>
       <svg viewBox="0 0 48 48" className={`${gross ? 'h-12 w-12' : 'h-9 w-9'} animate-spin drop-shadow-[0_0_3px_rgba(0,0,0,0.35)]`}
            style={{ animationDuration: '0.9s' }} aria-hidden="true">
         <circle cx="24" cy="24" r="19" fill="none" stroke="rgba(255,255,255,0.75)" strokeWidth="5" />

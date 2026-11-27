@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { t } from '../sprache'
 
 /** so breit liegt die rote Fläche «Löschen» frei, wenn ein Eintrag aufgeschoben ist */
 const OFFEN_PX = 96
@@ -58,7 +59,7 @@ export default function Wischen({ children, frage, loeschen, className = '' }: {
               onClick={() => { setDx(0); loeschen() }}
               className="absolute inset-y-0 right-0 flex items-center justify-center bg-sbb-red font-bold text-white"
               style={{ width: Math.max(OFFEN_PX, -dx) }}>
-        Löschen
+        {t('Löschen')}
       </button>
       <div
         className="relative bg-sbb-kachel dark:bg-sbb-charcoal"

@@ -3,6 +3,8 @@
  * Neuladen. Vorher stand nur «Failed to fetch» da, ohne Ausweg (Brücken,
  * während GitHub eine neue Version einspielte).
  */
+import { t } from '../sprache'
+
 export function Ladefehler({ was, fehler, className = '' }: {
   /** «Die Liste konnte nicht geladen werden.» */
   was: string
@@ -17,7 +19,7 @@ export function Ladefehler({ was, fehler, className = '' }: {
         className="rounded-lg mt-3 border border-sbb-cloud bg-white px-4 py-2 font-medium hover:border-sbb-black
                    dark:border-sbb-iron dark:bg-sbb-midnight dark:hover:border-sbb-white"
       >
-        Nochmals versuchen
+        {t('Nochmals versuchen')}
       </button>
     </div>
   )

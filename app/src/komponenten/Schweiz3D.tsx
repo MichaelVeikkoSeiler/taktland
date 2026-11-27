@@ -53,6 +53,8 @@ import { type Andere, type Lage, type Punkt, type Stand, type Zeichnung, useZuZw
 import Wischen from './Wischen'
 import { raumEroeffnen } from '../spielraum'
 import { himmelNacht, sternSicht } from '../sterne'
+import { sprache, t as tr, zahlOrt } from '../sprache'
+import { AnleitungEn, QuellenEn } from './Schweiz3DEn'
 
 /**
  * «3D Schweiz» (Michael, 2026-10-18: «die Berge und Täler der Schweiz besser erkunden … von der ganzen Schweiz bis ins
@@ -237,7 +239,7 @@ async function uebersichtLaden(): Promise<Gelaende> {
   // auch in der ganzen Schweiz der Seegrund (Michael, 2026-10-25: «Seegrund auch in der ganzen Schweiz einbauen»), ohne Fels: die Wände
   // liegen dort fast überall im Ausland, wo swissBEDROCK nichts angibt
   return seegrundSetzen({ raster: { ost: ix.ost, nord: ix.nord, m: ix.m, breite: ix.breite, hoehe: ix.hoehe }, h: Float32Array.from(u), bild: c,
-           rahmen: { e0: ix.ost, n1: ix.nord, b: ix.breite * ix.m, h: ix.hoehe * ix.m }, quellen: [ix.quelle_gelaende, ix.quelle_luftbild] })
+           rahmen: { e0: ix.ost, n1: ix.nord, b: ix.breite * ix.m, h: ix.hoehe * ix.m }, quellen: [tr(ix.quelle_gelaende), tr(ix.quelle_luftbild)] })
 }
 
 async function regionLaden(f: Feld): Promise<Gelaende> {
@@ -258,8 +260,8 @@ async function regionLaden(f: Feld): Promise<Gelaende> {
   const d = await schweiz3dLaden(ost, nord - hoehe * m, ost + breite * m, nord, Math.ceil(sx * 1000), true).catch(() => null)
   for (const k of d?.bilder ?? []) g.drawImage(k.bild, (k.ke * 1000 - ost) * sx, (nord - (k.kn + 1) * 1000) * sy, 1000 * sx, 1000 * sy)
   return untergrundSetzen({ raster: a.raster, h: Float32Array.from(a.h), bild: c, rahmen: { e0: ost, n1: nord, b: breite * m, h: hoehe * m },
-           quellen: [a.quelle, d?.bilder.length ? `${d.quelle_bild}, hier auf etwa ${Math.round(1 / sx)} m, Aufnahmen ${d.bildJahre.join(', ')}`
-             : lb ? `SWISSIMAGE (swisstopo), auf 10 m gemittelt, Aufnahmen ${lb.jahre.join(', ')}` : 'ohne Luftbild'] })
+           quellen: [tr(a.quelle), d?.bilder.length ? tr('{q}, hier auf etwa {m} m, Aufnahmen {jahre}', { q: tr(d.quelle_bild), m: Math.round(1 / sx), jahre: d.bildJahre.join(', ') })
+             : lb ? tr('SWISSIMAGE (swisstopo), auf 10 m gemittelt, Aufnahmen {jahre}', { jahre: lb.jahre.join(', ') }) : tr('ohne Luftbild')] })
 }
 
 /** Gebiete von 128 und 64 km (bis 2026-11-02 eines von 80 km, Michael, 2026-10-29: «eine Zoom-Stufe mit Seitenlänge 80 km»), das Gelände
@@ -284,8 +286,8 @@ async function grossLaden(f: Feld, schritt = 2): Promise<Gelaende> {
     g.drawImage(k.bild, (k.ex * lb!.kachel_m - raster.ost) * sx, (raster.nord - (k.ny + 1) * lb!.kachel_m) * sy, lb!.kachel_m * sx, lb!.kachel_m * sy)
   }
   return untergrundSetzen({ raster, h, bild: c, rahmen: { e0: raster.ost, n1: raster.nord, b: breite * m, h: breite * m },
-           quellen: [`${a.quelle}, hier jeder ${schritt === 2 ? 'zweite' : `${schritt}.`} Punkt, also ${m} m`,
-             lb ? `SWISSIMAGE (swisstopo), hier auf etwa ${Math.round(1 / sx)} m, Aufnahmen ${lb.jahre.join(', ')}` : 'ohne Luftbild'] })
+           quellen: [tr('{q}, hier jeder {n} Punkt, also {m} m', { q: tr(a.quelle), n: schritt === 2 ? tr('zweite') : tr('{n}.', { n: schritt }), m }),
+             lb ? tr('SWISSIMAGE (swisstopo), hier auf etwa {m} m, Aufnahmen {jahre}', { m: Math.round(1 / sx), jahre: lb.jahre.join(', ') }) : tr('ohne Luftbild')] })
 }
 
 /** Ort: 4 km im 10-m-Raster; feines Gelände und Nahbild, wo es sie gibt, sonst das Gelände der Region */
@@ -320,12 +322,12 @@ async function ortLaden(f: Feld, region: Bestand): Promise<Gelaende> {
   const rq = region.teile.values().next().value!.quellen
   return untergrundSetzen({
     raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c, rahmen: { e0, n1, b: f.seite, h: f.seite },
-    quellen: [ganz ? `${details!.quelle_hoehe}, Aufnahmen ${details!.fein.jahre.join(', ')}`
-                : anteil > 0 ? 'swissALTI3D (swisstopo), auf 10 m gemittelt, nur bis 500 m neben den Bahnlinien' : rq[0],
-              details?.bilder.length ? `${details.quelle_bild}, Aufnahmen ${details.bildJahre.join(', ')}`
-                : nah ? 'SWISSIMAGE (swisstopo), auf 2,5 m, nur bis 500 m neben den Bahnlinien, sonst auf 10 m' : rq[1]],
-    hinweis: anteil < 0.98 ? (anteil === 0 ? 'Hier gibt es noch keine feineren Daten: Gelände auf 50 m, Luftbild auf 10 m wie in der Region.'
-      : ganz ? 'Am Rand fehlen feinere Daten, dort wie in der Region.' : 'Feiner nur bis 500 m neben den Bahnlinien, weiter weg wie in der Region.') : undefined,
+    quellen: [ganz ? tr('{q}, Aufnahmen {jahre}', { q: tr(details!.quelle_hoehe), jahre: details!.fein.jahre.join(', ') })
+                : anteil > 0 ? tr('swissALTI3D (swisstopo), auf 10 m gemittelt, nur bis 500 m neben den Bahnlinien') : rq[0],
+              details?.bilder.length ? tr('{q}, Aufnahmen {jahre}', { q: tr(details.quelle_bild), jahre: details.bildJahre.join(', ') })
+                : nah ? tr('SWISSIMAGE (swisstopo), auf 2,5 m, nur bis 500 m neben den Bahnlinien, sonst auf 10 m') : rq[1]],
+    hinweis: anteil < 0.98 ? (anteil === 0 ? tr('Hier gibt es noch keine feineren Daten: Gelände auf 50 m, Luftbild auf 10 m wie in der Region.')
+      : ganz ? tr('Am Rand fehlen feinere Daten, dort wie in der Region.') : tr('Feiner nur bis 500 m neben den Bahnlinien, weiter weg wie in der Region.')) : undefined,
   })
 }
 
@@ -386,13 +388,13 @@ async function nahLaden(f: Feld, ort: Bestand): Promise<Gelaende> {
   const oq = ort.teile.values().next().value!.quellen
   return untergrundSetzen({
     raster: { ost: e0, nord: n1, m, breite, hoehe: breite }, h, bild: c, rahmen: { e0, n1, b: f.seite, h: f.seite },
-    quellen: [[anteil > 0 && 'swissALTI3D (swisstopo), 2 m, bis 200 m neben den Bahnlinien', feine > 0 && fein!.quelle_hoehe,
-               anteilFein < 1 && oq[0]].filter(Boolean).join('; sonst '),
-              [bilder.some(Boolean) && 'SWISSIMAGE (swisstopo) auf 25 cm, bis 200 m neben den Bahnlinien',
-               feinBild && `${fein!.quelle_bild}, Aufnahmen ${fein!.bildJahre.join(', ')}`, !feinBild && oq[1]].filter(Boolean).join('; sonst ')],
+    quellen: [[anteil > 0 && tr('swissALTI3D (swisstopo), 2 m, bis 200 m neben den Bahnlinien'), feine > 0 && tr(fein!.quelle_hoehe),
+               anteilFein < 1 && oq[0]].filter(Boolean).join(tr('; sonst ')),
+              [bilder.some(Boolean) && tr('SWISSIMAGE (swisstopo) auf 25 cm, bis 200 m neben den Bahnlinien'),
+               feinBild && tr('{q}, Aufnahmen {jahre}', { q: tr(fein!.quelle_bild), jahre: fein!.bildJahre.join(', ') }), !feinBild && oq[1]].filter(Boolean).join(tr('; sonst '))],
     hinweis: anteilFein === 0 && !feinBild
-      ? 'Schärfer als im Feld darüber gibt es hier noch nichts: Gelände auf 10 m, Luftbild auf 2,5 m. Schärfere Daten gibt es bisher nur nahe an den Bahnlinien.'
-      : anteilFein < 0.98 ? 'Am Rand fehlen schärfere Daten, dort wie im Feld darüber.' : undefined,
+      ? tr('Schärfer als im Feld darüber gibt es hier noch nichts: Gelände auf 10 m, Luftbild auf 2,5 m. Schärfere Daten gibt es bisher nur nahe an den Bahnlinien.')
+      : anteilFein < 0.98 ? tr('Am Rand fehlen schärfere Daten, dort wie im Feld darüber.') : undefined,
   })
 }
 
@@ -538,21 +540,21 @@ const ADRESSE_URL = 'https://api3.geo.admin.ch/rest/services/api/SearchServer', 
  * die Uhrzeit (direkt freigestellt auf dem Bild. Je nach Helligkeit muss die Schrift hell oder umgekehrt dunkel sein»): nachts (wenn in den Fenstern Licht
  * brennt, fensterNacht) weiss mit dunklem Schein, sonst dunkel mit hellem Schein; jede Sekunde neu, die Zeit nach Schweizer Zeit
  */
-const UHR_FMT = new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+const uhrFmt = () => new Intl.DateTimeFormat(zahlOrt(), { timeZone: 'Europe/Zurich', weekday: 'short', day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })
 function SzenenUhr({ versatzMs, offen, umschalten }: { versatzMs: number; offen: boolean; umschalten: () => void }) {
   const [, neu] = useState(0)
   useEffect(() => { const t = setInterval(() => neu((x) => x + 1), 1000); return () => clearInterval(t) }, [])
   const nacht = fensterNacht.value > 0.5
-  const teile = UHR_FMT.formatToParts(Date.now() + versatzMs)
+  const teile = uhrFmt().formatToParts(Date.now() + versatzMs)
   const t = (art: string) => teile.find((x) => x.type === art)?.value ?? ''
   // in Schrift, Grösse und Einzug wie der Text im Suchfeld (text-sm, 1 px Rand und 10 px Innenabstand); ein Tipp öffnet die Zeitreise (Michael, 2026-11-18:
   // «Datum und Uhrzeit in der gleichen Schriftart und Grösse und Einzug wie der Text im Suchfeld … daraf klicken tippen können und dort dann die Zeitreise
   // machen können»)
   return (
-    <button type="button" onClick={umschalten} aria-expanded={offen} aria-label="Datum und Uhrzeit der Szene, Zeitreise"
+    <button type="button" onClick={umschalten} aria-expanded={offen} aria-label={tr('Datum und Uhrzeit der Szene, Zeitreise')}
             className={'whitespace-nowrap py-0.5 pl-[11px] pr-1 text-left text-sm leading-tight tabular-nums ' + (nacht ? 'text-white' : 'text-sbb-black')}
             style={{ textShadow: nacht ? '0 0 3px rgba(0,0,0,0.9), 0 0 6px rgba(0,0,0,0.6)' : '0 0 3px rgba(255,255,255,0.95), 0 0 6px rgba(255,255,255,0.7)' }}>
-      {t('weekday')} {t('day')}.{t('month')}.{t('year')} · {t('hour')}:{t('minute')} <span aria-hidden className="text-[10px]">{offen ? '▴' : '▾'}</span>
+      {t('weekday')} {t('day')}{sprache() === 'en' ? '/' : '.'}{t('month')}{sprache() === 'en' ? '/' : '.'}{t('year')} · {t('hour')}:{t('minute')} <span aria-hidden className="text-[10px]">{offen ? '▴' : '▾'}</span>
     </button>
   )
 }
@@ -594,8 +596,8 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
       const x = o[i]
       const [la, lo] = wgs(x.e, x.n)
       const kanton = [...zusatz.pool.kantone.keys()].find((k) => imGebiet(zusatz.pool, k, la, lo))
-      const art = x.art === 'see' ? 'See' : x.art === 'gipfel' ? (x.rang === SUCHE_RANG.gipfelAb ? 'Hügel' : 'Gipfel') : null
-      const wo = art ? `${art}${x.hoehe != null ? ` ${x.hoehe.toLocaleString('de-CH')} m` : ''}` : kanton ?? 'Ausland'
+      const art = x.art === 'see' ? tr('See') : x.art === 'gipfel' ? (x.rang === SUCHE_RANG.gipfelAb ? tr('Hügel') : sprache() === 'en' ? 'Peak' : 'Gipfel') : null
+      const wo = art ? `${art}${x.hoehe != null ? ` ${x.hoehe.toLocaleString(zahlOrt())} m` : ''}` : kanton ?? tr('Ausland')
       return { name: x.name, e: x.e, n: x.n, wo, schweiz: !!kanton || x.art !== 'ort' }
     })
     return [...liste.filter((t) => t.schweiz), ...liste.filter((t) => !t.schweiz)].slice(0, SUCHE_TREFFER)
@@ -614,7 +616,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
           if (weg) return
           setAdressen((d?.results ?? []).flatMap(({ attrs: a }) => a?.label && a.x && a.y
             // in LV95 nennt die Suche Nord als x und Ost als y
-            ? [{ name: a.label.replace(/\s*<b>/, ', ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(), e: a.y, n: a.x, wo: 'Adresse' }] : []))
+            ? [{ name: a.label.replace(/\s*<b>/, ', ').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(), e: a.y, n: a.x, wo: tr('Adresse') }] : []))
         })
         .catch(() => { if (!weg) setAdressen([]) })
     }, ADRESSE_WARTE_MS)
@@ -624,7 +626,7 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
   const nehmen = (t: { name: string; e: number; n: number }) => { waehlen(t.e, t.n, t.name); setText(t.name); setOffen(false) }
   return (
     <div className="relative w-44 min-w-0 max-w-[calc(100vw-8.5rem)] shrink">
-      <input type="search" value={text} placeholder="Ort, Adresse, Gipfel" aria-label="Ort, Adresse, Gipfel oder See suchen" autoComplete="off" enterKeyHint="search"
+      <input type="search" value={text} placeholder={tr('Ort, Adresse, Gipfel')} aria-label={tr('Ort, Adresse, Gipfel oder See suchen')} autoComplete="off" enterKeyHint="search"
              onChange={(e) => { setText(e.target.value); setOffen(true); gipfelHolen() }} onFocus={() => { setOffen(true); gipfelHolen() }}
              onKeyDown={(e) => { if (e.key === 'Enter' && alle[0]) { nehmen(alle[0]); e.currentTarget.blur() } else if (e.key === 'Escape') setOffen(false) }}
              className="w-full rounded-lg border border-sbb-cloud bg-white/90 px-2.5 py-1 text-sm dark:border-sbb-iron dark:bg-sbb-midnight/90" />
@@ -636,8 +638,8 @@ function OrtSuche({ zusatz, waehlen }: { zusatz: Zusatz; waehlen: (e: number, n:
                 <span className="font-medium">{t.name}</span> <span className="text-xs text-sbb-metal dark:text-sbb-storm">{t.wo}</span>
               </button>
             </li>
-          )) : <li className="px-2.5 py-1.5 text-sbb-metal dark:text-sbb-storm">Nichts mit diesem Namen</li>}
-          {adressen.length > 0 && <li className="px-2.5 py-1 text-[11px] text-sbb-metal dark:text-sbb-storm">Adressen: Suche von swisstopo</li>}
+          )) : <li className="px-2.5 py-1.5 text-sbb-metal dark:text-sbb-storm">{tr('Nichts mit diesem Namen')}</li>}
+          {adressen.length > 0 && <li className="px-2.5 py-1 text-[11px] text-sbb-metal dark:text-sbb-storm">{tr('Adressen: Suche von swisstopo')}</li>}
         </ul>
       )}
     </div>
@@ -698,7 +700,7 @@ async function stufeLaden(s: Exclude<Stufe, 'schweiz'>, f: Feld, unter: Bestand 
 export interface Knoepfe { plus: Record<Seite, boolean>; wachsen: Record<Seite, boolean>; minus: Record<Seite, boolean> }
 
 /** 2026-11-19 als 19.11.2026 */
-const datumKurz = (d: string) => { const [j, m, t] = d.split('-').map(Number); return `${t}.${m}.${j}` }
+const datumKurz = (d: string) => { const [j, m, t] = d.split('-').map(Number); return sprache() === 'en' ? `${t}/${m}/${j}` : `${t}.${m}.${j}` }
 
 /** welcher Schritt der Virtuellen Schweiz laut Adresse */
 /** eine gemerkte Ansicht (Michael, 2026-11-12: «User sollen individuelle Perspektiven und deren Einstellung der Knöpfe als Favoriten abspeichern
@@ -882,7 +884,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }
   function gpsUmschalten() {
     if (gpsAn) { gpsStoppen(); return }
-    if (!('geolocation' in navigator)) { setMeldung('Dieser Browser kann den Standort nicht bestimmen.'); return }
+    if (!('geolocation' in navigator)) { setMeldung(tr('Dieser Browser kann den Standort nicht bestimmen.')); return }
     setGpsAn(true)
     let erster = true
     gpsWache.current = navigator.geolocation.watchPosition((p) => {
@@ -891,14 +893,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       if (!erster) return
       erster = false
       const s = stufeJetzt.current
-      setGesucht({ e, n, name: 'Dein Standort' })
+      setGesucht({ e, n, name: tr('Dein Standort') })
       if (s !== 'nah') setWahl({ e: Math.round(e / RASTER_M[s]) * RASTER_M[s], n: Math.round(n / RASTER_M[s]) * RASTER_M[s], seite: FELD_M[s] })
     }, (f) => {
       // ohne Freigabe aus; sonst (kein Empfang, zu spät) weiter warten, gemeldet nur, solange es noch keinen Standort gab
       if (f.code === f.PERMISSION_DENIED) {
-        setMeldung('Der Standort ist nicht freigegeben. Erlaube ihn in den Einstellungen des Browsers.')
+        setMeldung(tr('Der Standort ist nicht freigegeben. Erlaube ihn in den Einstellungen des Browsers.'))
         gpsStoppen()
-      } else if (erster) setMeldung('Der Standort liess sich noch nicht bestimmen. Taktland versucht es weiter.')
+      } else if (erster) setMeldung(tr('Der Standort liess sich noch nicht bestimmen. Taktland versucht es weiter.'))
     }, { enableHighAccuracy: true, maximumAge: 5000 })
   }
   useEffect(() => () => { if (gpsWache.current !== null) navigator.geolocation.clearWatch(gpsWache.current) }, [])
@@ -966,12 +968,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }, [windAn, hoerNieder?.art, hoerNieder?.staerke, windHoeren])
   const tagText = useMemo(() => {
     const [j, m, t] = tag.split('-').map(Number)
-    return new Date(Date.UTC(j, m - 1, t)).toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
+    return new Date(Date.UTC(j, m - 1, t)).toLocaleDateString(zahlOrt(), { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' })
   }, [tag])
   const standText = stand ? (stand.hoehe > 0
-    ? `Sonne ${Math.round(stand.hoehe)}° über dem Horizont, im ${himmelsrichtung(stand.richtung)}`
-    : 'Die Sonne steht unter dem Horizont') : null
-  const sonnenZeilen = useMemo(() => (stand ? [`${tagText}, ${uhrzeit(minuten)} Uhr`, standText!] : null), [stand, tagText, minuten, standText])
+    ? tr('Sonne {h}° über dem Horizont, im {r}', { h: Math.round(stand.hoehe), r: tr(himmelsrichtung(stand.richtung)) })
+    : tr('Die Sonne steht unter dem Horizont')) : null
+  const sonnenZeilen = useMemo(() => (stand ? [tr('{tag}, {zeit} Uhr', { tag: tagText, zeit: uhrzeit(minuten) }), standText!] : null), [stand, tagText, minuten, standText])
   // die Uhr der Szene läuft weiter, ob jetzt oder nach einer Zeitreise
   useEffect(() => {
     const nachstellen = () => { const j = jetztInDerSchweiz(new Date(Date.now() + versatzMs)); setTag(j.datum); setMinuten(j.minuten) }
@@ -1039,16 +1041,16 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   const vollSpalten = voll && vollZeilen < SCHALTER_SYMBOLE.length
   const letzterTipp = useRef(0)
   const inBrille = () => {
-    if (!xr) { setBrilleHinweis('Auf diesem Gerät ist keine VR-Brille zu finden. Öffne Taktland im Browser einer VR-Brille wie der Meta Quest 3.'); return }
+    if (!xr) { setBrilleHinweis(tr('Auf diesem Gerät ist keine VR-Brille zu finden. Öffne Taktland im Browser einer VR-Brille wie der Meta Quest 3.')); return }
     setBrilleHinweis(null)
-    brille.current?.().catch((e: Error) => setBrilleHinweis(`Die Brille liess sich nicht starten: ${e.message}`))
+    brille.current?.().catch((e: Error) => setBrilleHinweis(tr('Die Brille liess sich nicht starten: {f}', { f: e.message })))
   }
   // was in der Brille über dem Feld steht, dieselben Angaben wie die Karte auf dem Bildschirm
   const info = useMemo(() => (wahl && inhalt ? [
-    inhalt.orte.length ? inhalt.orte.join(', ') : inhalt.gipfel?.name ?? 'Ohne Ort der Landeskarte',
-    ...(inhalt.gipfel ? [`▲ ${inhalt.gipfel.name} ${inhalt.gipfel.hoehe_m!.toLocaleString('de-CH')} m`] : []),
+    inhalt.orte.length ? inhalt.orte.join(', ') : inhalt.gipfel?.name ?? tr('Ohne Ort der Landeskarte'),
+    ...(inhalt.gipfel ? [`▲ ${inhalt.gipfel.name} ${inhalt.gipfel.hoehe_m!.toLocaleString(zahlOrt())} m`] : []),
     ...(inhalt.seen.length ? [inhalt.seen.join(', ')] : []),
-    ...(inhalt.kanton ? [`Mitte im Kanton ${inhalt.kanton}`] : []),
+    ...(inhalt.kanton ? [tr('Mitte im Kanton {k}', { k: inhalt.kanton })] : []),
   ] : null), [wahl, inhalt])
 
   /** das Feld einer Stufe um den gesuchten Ort, in der Stufe 1 km keines mehr (dort wählt man nichts) */
@@ -1098,7 +1100,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       if (a) ansichtOeffnenRef.current(a)
       return () => ketteWeg.current?.()
     }
-    const lat = Number(q.get('lat')), lon = Number(q.get('lon')), name = q.get('name') ?? 'Bahnhof'
+    const lat = Number(q.get('lat')), lon = Number(q.get('lon')), name = q.get('name') ?? tr('Bahnhof')
     if (!q.get('lat') || !Number.isFinite(lat) || !Number.isFinite(lon)) return
     // die Adresse ohne den Ort, damit «Zurück» und Neuladen nicht wieder eintauchen
     history.replaceState(history.state, '', window.location.pathname + window.location.search + window.location.hash.split('?')[0])
@@ -1275,7 +1277,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   async function erweitern(seite: Seite, plus: boolean) {
     if (grob(stufe) || !aktuell || !knoepfe || laedt) return
     const b = aktuell
-    if (!plus && !knoepfe.minus[seite]) { setMeldung('Ein Stück bleibt immer: kleiner geht es nicht.'); return }
+    if (!plus && !knoepfe.minus[seite]) { setMeldung(tr('Ein Stück bleibt immer: kleiner geht es nicht.')); return }
     const di: [number, number] = [...b.di], dj: [number, number] = [...b.dj]
     const neu: Array<[number, number]> = []
     // grösser geht es nicht (höchstens JE_RICHTUNG Stücke in eine Richtung und hoechstens() im Ganzen, so viel muss die Grafik
@@ -1328,7 +1330,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   }
   const titel = (f: Feld | null) => {
     const i = f ? feldInhalt(f, zusatz) : null
-    return i?.orte[0] ? `um ${i.orte[0]}` : i?.gipfel ? `am ${i.gipfel.name}` : 'Feld'
+    return i?.orte[0] ? tr('um {ort}', { ort: i.orte[0] }) : i?.gipfel ? tr('am {gipfel}', { gipfel: i.gipfel.name }) : 'Feld'
   }
   // gemerkte Ansichten (Michael, 2026-11-12: «User sollen individuelle Perspektiven und deren Einstellung der Knöpfe als Favoriten abspeichern
   // können», «Ja bitte bauen, mit Link teilen»): nur auf diesem Gerät, die neueste zuoberst, höchstens ANSICHTEN_HOECHSTENS
@@ -1370,7 +1372,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   laedtRef.current = laedt
   const ansichtJetztRef = useRef(ansichtJetzt)
   ansichtJetztRef.current = ansichtJetzt
-  const zuletztName = stufe === 'schweiz' ? 'Schweiz' : (gesucht?.name ?? titel(gelaende[stufe]?.anker ?? null).replace(/^(um|am) /, ''))
+  const zuletztName = stufe === 'schweiz' ? tr('Schweiz') : (gesucht?.name ?? titel(gelaende[stufe]?.anker ?? null).replace(/^(um|am|around|near) /, ''))
   const zuletztNameRef = useRef(zuletztName)
   zuletztNameRef.current = zuletztName
   useEffect(() => {
@@ -1392,7 +1394,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
     if (navigator.share && window.matchMedia('(pointer: coarse)').matches) {
       try { await navigator.share({ title: a.name, url }); return } catch (x) { if ((x as DOMException).name === 'AbortError') return }
     }
-    try { await navigator.clipboard.writeText(url); setGeteilt(i); window.setTimeout(() => setGeteilt((g) => g === i ? null : g), 2500) } catch { window.prompt('Link zur Ansicht', url) }
+    try { await navigator.clipboard.writeText(url); setGeteilt(i); window.setTimeout(() => setGeteilt((g) => g === i ? null : g), 2500) } catch { window.prompt(tr('Link zur Ansicht'), url) }
   }
   // ein geteilter Link, während die Seite schon offen ist
   useEffect(() => {
@@ -1410,21 +1412,21 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
   // der volle Name einer Stufe, nur noch als title der Knöpfe (die Zeile darunter ist weg, Michael, 2026-11-15)
   const stufenName = (s: Stufe): string | null => {
     const f = s === 'schweiz' ? null : gelaende[s]
-    if (s === 'schweiz') return 'Schweiz'
+    if (s === 'schweiz') return tr('Schweiz')
     if (!f) return null
     const t = titel(f.anker)
     const km = { gross: '128 km', mittel: '64 km', region: '16 km', ort: '4 km', nah: '1 km' }[s]
-    return t === 'Feld' ? km : s === 'region' ? `${km}, Region ${t}` : `${km} ${t}`
+    return t === 'Feld' ? km : s === 'region' ? tr('{km}, Region {titel}', { km, titel: t }) : `${km} ${t}`
   }
   const groesse = aktuell && stufe !== 'schweiz' && (aktuell.teile.size > 1)
-    ? `${((aktuell.di[1] - aktuell.di[0] + 1) * aktuell.anker.seite / 1000).toLocaleString('de-CH')} × ${((aktuell.dj[1] - aktuell.dj[0] + 1) * aktuell.anker.seite / 1000).toLocaleString('de-CH')} km`
+    ? `${((aktuell.di[1] - aktuell.di[0] + 1) * aktuell.anker.seite / 1000).toLocaleString(zahlOrt())} × ${((aktuell.dj[1] - aktuell.dj[0] + 1) * aktuell.anker.seite / 1000).toLocaleString(zahlOrt())} km`
     : null
 
   return (
     <div className="px-4 pb-4">
       {!eigeneSeite && <Zurueck onClick={() => { window.location.hash = '#/' }} text="Startseite" />}
       {/* auf 3dland.ch stehen Name und Bildmarke im Bild (Michael, 2026-10-21: «diese Zeilen entfernen») */}
-      <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? '3dland: 3D-Land' : 'Virtuelle Schweiz'}</h1>
+      <h1 className={eigeneSeite ? 'sr-only' : 'mt-4 text-2xl font-bold tracking-tight'}>{eigeneSeite ? tr('3dland: 3D-Land') : 'Virtuelle Schweiz'}</h1>
       {ansicht !== 'karte' && (
         <>
           {ansicht === 'wahl' && <p className="mt-2 leading-relaxed">Die ganze Schweiz als Modell. Wähle ein Feld oder such einen Ort, eine Adresse, einen Gipfel oder See, und tauche ein, bis auf ein Stück
@@ -1435,7 +1437,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </div>
         </>
       )}
-      {ansicht === 'karte' && fehler && <Ladefehler className="mt-3" was="Das Gelände konnte nicht geladen werden." fehler={fehler} />}
+      {ansicht === 'karte' && fehler && <Ladefehler className="mt-3" was={tr('Das Gelände konnte nicht geladen werden.')} fehler={fehler} />}
       {ansicht === 'karte' && (<>
       {/* am Desktop taucht ein zweiter Klick in den gewählten Kasten ein (waehlen unten; bis 2026-11-11 ein Doppelklick) */}
       <div
@@ -1478,7 +1480,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                    zeichnenKlick={fuehrend && werkzeug ? zeichnenKlick : null}
                    folgeId={blickFolgen && fuehrer ? fuehrer.id : null} blickLos={() => setBlickFolgen(false)} />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-sbb-metal">Die Schweiz wird geladen …</div>
+          <div className="flex h-full items-center justify-center text-sm text-sbb-metal">{tr('Die Schweiz wird geladen …')}</div>
         )}
         <Ladebalken inKarte />
         {/* die Schalter auf dem Bildschirm als feste Symbole am rechten Rand des Bilds, an den Wänden nur noch in der Brille (Michael, 2026-11-14:
@@ -1498,7 +1500,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             return (
               <button key={art} type="button" disabled={gesperrt} aria-pressed={leuchtet}
                       onClick={() => { knopfTon(!an); setzen((x) => !x) }}
-                      aria-label={gesperrt ? `${name} (in dieser Stufe nicht)` : name} title={gesperrt ? `${name}: in dieser Stufe nicht` : name}
+                      aria-label={gesperrt ? tr('{name} (in dieser Stufe nicht)', { name: tr(name) }) : tr(name)} title={gesperrt ? tr('{name}: in dieser Stufe nicht', { name: tr(name) }) : tr(name)}
                       // an: eingedrückt (Schatten nach innen) und das Zeichen 30° gegen den Uhrzeigersinn gedreht, aus: erhaben mit Schatten nach aussen
                       // (Michael, 2026-11-14: «Icon müssen klarer aktiv resp nicht aktiv sein. Evtl durch Schatten nach innen? Zudem im aktiven Zustand das
                       // Zeichen im Icon um 30 Grad gegen Uhrzeigersinn drehen»)
@@ -1514,7 +1516,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             den anderen Icons»; «Suchmaske und Icons unten rechts im Kartenbild») */}
         {gemerkt && (
           <div role="status" className="pointer-events-none absolute bottom-12 right-2 z-10 max-w-[calc(100%-1rem)] truncate rounded-lg bg-sbb-anthracite px-3 py-1.5 text-sm text-white shadow">
-            «{gemerkt}» gemerkt, unten in der Liste
+            {tr('«{name}» gemerkt, unten in der Liste', { name: gemerkt })}
           </div>
         )}
         <div className="absolute bottom-2 right-2 flex max-w-[calc(100%-1rem)] items-center gap-2" style={desktop ? { zoom: DESKTOP_KNOPF_MASS, maxWidth: `calc((100% - 1rem) / ${DESKTOP_KNOPF_MASS})` } : undefined}>
@@ -1522,7 +1524,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               umgeschaltet werden können … wobei man nur hinauszoomen muss»; seit 2026-11-03 auch ausserhalb des Vollbilds, Michael: «Die Lupe zum
               Wegzoomen integrieren. Xr als zweitletztes») */}
           {stufe !== 'schweiz' && (
-            <button type="button" onClick={eineZurueck} aria-label="Eine Stufe hinaus" title="Eine Stufe hinaus"
+            <button type="button" onClick={eineZurueck} aria-label={tr('Eine Stufe hinaus')} title={tr('Eine Stufe hinaus')}
                     className={`flex size-8 flex-none items-center justify-center rounded-lg border ${KNOPF_AUS}`}>
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.2 15.2L21 21M7.5 10.5h6" />
@@ -1531,21 +1533,21 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           )}
           <button type="button" onClick={() => {
             // immer «Neue Ansicht», umbenennen mit dem Stift (Michael, 2026-11-15: «Neue Ansicht soll heissen "Neue Ansicht" und nicht Schweiz»)
-            const name = 'Neue Ansicht'
+            const name = tr('Neue Ansicht')
             setAnsichten((l) => [ansichtJetzt(name), ...l].slice(0, ANSICHTEN_HOECHSTENS))
             setAnsichtWeg(null)
             setGemerkt(name)
             window.clearTimeout(gemerktUhr.current)
             gemerktUhr.current = window.setTimeout(() => setGemerkt(null), 2500)
-          }} aria-label="Ansicht merken" title={gemerkt ? 'Ansicht gemerkt' : 'Ansicht merken'}
+          }} aria-label={tr('Ansicht merken')} title={gemerkt ? tr('Ansicht gemerkt') : tr('Ansicht merken')}
                   className={`flex size-8 flex-none items-center justify-center rounded-lg border ${KNOPF_AUS}`}>
             {gemerkt ? <Stern voll /> : <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
               <path d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
             </svg>}
           </button>
           <button type="button" onClick={gpsUmschalten} aria-pressed={gpsAn}
-                  aria-label={gpsAn ? 'Mein Standort ausschalten' : 'Mein Standort zeigen'}
-                  title={gpsAn ? (standort ? 'Mein Standort (aus)' : 'Standort wird gesucht …') : 'Mein Standort'}
+                  aria-label={gpsAn ? tr('Mein Standort ausschalten') : tr('Mein Standort zeigen')}
+                  title={gpsAn ? (standort ? tr('Mein Standort (aus)') : tr('Standort wird gesucht …')) : tr('Mein Standort')}
                   className={`flex size-8 flex-none items-center justify-center rounded-lg border ${gpsAn ? KNOPF_AN : KNOPF_AUS} ${gpsAn && !standort ? 'animate-pulse' : ''}`}>
             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(gpsAn)} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <circle cx="12" cy="12" r="6.5" /><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none" />
@@ -1554,7 +1556,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           </button>
           {(stufe === 'ort' || stufe === 'nah') && (
             <button type="button" onClick={() => setStehen((x) => !x)} aria-pressed={stehen}
-                    aria-label={stehen ? 'Augenhöhe beenden' : 'Auf Augenhöhe stellen'} title={stehen ? 'Augenhöhe beenden' : 'Auf Augenhöhe: hinstellen und umschauen'}
+                    aria-label={stehen ? tr('Augenhöhe beenden') : tr('Auf Augenhöhe stellen')} title={stehen ? tr('Augenhöhe beenden') : tr('Auf Augenhöhe: hinstellen und umschauen')}
                     className={`flex size-8 flex-none items-center justify-center rounded-lg border ${stehen ? KNOPF_AN : KNOPF_AUS}`}>
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(stehen)} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="4.2" r="2.2" fill="currentColor" stroke="none" /><path d="M12 8v7M12 15l-3 6.5M12 15l3 6.5M7 11.5l5-2.5 5 2.5" />
@@ -1569,7 +1571,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                     if (voll) setVoll(false)
                     window.setTimeout(() => zweitTafelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 120)
                   }}
-                  aria-label={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'} title={raum ? `Zu zweit: Raum ${raum}` : 'Zu zweit im selben Modell'}
+                  aria-label={raum ? tr('Zu zweit: Raum {raum}', { raum }) : tr('Zu zweit im selben Modell')} title={raum ? tr('Zu zweit: Raum {raum}', { raum }) : tr('Zu zweit im selben Modell')}
                   className={`flex size-8 flex-none items-center justify-center rounded-lg border ${raum || zuZweitOffen ? KNOPF_AN : KNOPF_AUS}`}>
             {/* zwei Handys mit Pfeilen hin und her (Michael, 2026-11-15: zwei Figuren waren neben «Menschen» und der Augenhöhe schwer zu erkennen) */}
             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(!!raum || zuZweitOffen)} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -1581,14 +1583,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           {/* Ton aus und an (Michael, 2026-11-11: «In allen Formaten soll man den Ton abstellen können»): Lautsprecher wie beim Zuggeräusch,
               mit Schallwellen an, mit Kreuz aus */}
           <button type="button" onClick={() => stummSetzen(!stumm)} aria-pressed={stumm}
-                  aria-label={stumm ? 'Ton ist aus, einschalten' : 'Ton ausschalten'} title={stumm ? 'Ton einschalten' : 'Ton ausschalten'}
+                  aria-label={stumm ? tr('Ton ist aus, einschalten') : tr('Ton ausschalten')} title={stumm ? tr('Ton einschalten') : tr('Ton ausschalten')}
                   className={`flex size-8 flex-none items-center justify-center rounded-lg border ${stumm ? KNOPF_AN : KNOPF_AUS}`}>
             <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" className="transition-transform duration-200" style={gedreht(stumm)} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" />
               {stumm ? <path d="M15.5 9.5l5 5m0-5l-5 5" /> : <><path d="M15.5 9a4 4 0 0 1 0 6" /><path d="M18 6.5a7.5 7.5 0 0 1 0 11" /></>}
             </svg>
           </button>
-          {xrDa && <button type="button" onClick={inBrille} aria-label="Mit VR-Brille (XR)" title="Mit VR-Brille"
+          {xrDa && <button type="button" onClick={inBrille} aria-label={tr('Mit VR-Brille (XR)')} title={tr('Mit VR-Brille')}
                   // wie die Knöpfe daneben, nicht mehr rot (Michael, 2026-10-26: «nicht mehr Rot sondern harmonisch wie die anderen Icons»)
                   className={`flex size-8 flex-none items-center justify-center rounded-lg border text-xs font-bold ${KNOPF_AUS}`}>
             XR
@@ -1607,20 +1609,20 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               {zeitOffen && (
                 <div className="absolute left-0 top-full z-20 mt-1 w-64 max-w-[calc(100vw-6.5rem)] rounded-lg bg-white/95 p-2 text-sm shadow-lg dark:bg-sbb-charcoal/95">
                   <div className="flex items-center gap-2">
-                    <input type="date" value={tag} onChange={(e) => { if (e.target.value) zeitSetzen(e.target.value, minuten) }} aria-label="Datum"
+                    <input type="date" value={tag} onChange={(e) => { if (e.target.value) zeitSetzen(e.target.value, minuten) }} aria-label={tr('Datum')}
                            className="min-w-0 flex-1 rounded-lg border border-sbb-cloud bg-white px-1.5 py-1 dark:border-sbb-iron dark:bg-sbb-midnight" />
                     <button type="button" onClick={() => zeitSchieben('jetzt', 0)} aria-pressed={jetztAn}
                             className={'flex-none rounded-lg border px-2.5 py-1.5 text-xs font-bold ' + (jetztAn ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
-                              : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>Jetzt</button>
+                              : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>{tr('Jetzt')}</button>
                   </div>
                   <label className="mt-2 flex items-center gap-2">
-                    <span className="sr-only">Uhrzeit</span>
+                    <span className="sr-only">{tr('Uhrzeit')}</span>
                     <input type="range" min={0} max={1439} step={1} value={minuten} onChange={(e) => zeitSetzen(tag, Number(e.target.value))}
                            className="min-w-0 flex-1 accent-sbb-red" />
                     <span className="w-10 flex-none font-bold tabular-nums">{uhrzeit(minuten)}</span>
                   </label>
                   {fahrplanTage && (tag < fahrplanTage.von || tag > fahrplanTage.bis) && (
-                    <p className="mt-1 text-xs">Für diesen Tag gibt es keinen Fahrplan: geladen ist der {datumKurz(fahrplanTage.von)} bis {datumKurz(fahrplanTage.bis)}.</p>
+                    <p className="mt-1 text-xs">{tr('Für diesen Tag gibt es keinen Fahrplan: geladen ist der {von} bis {bis}.', { von: datumKurz(fahrplanTage.von), bis: datumKurz(fahrplanTage.bis) })}</p>
                   )}
                 </div>
               )}
@@ -1635,14 +1637,14 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                ['flaeche', 'Fläche zeichnen', <path d="M5 7l8-3 7 6-3 9-11-2z" fill="currentColor" fillOpacity="0.25" />]] as Array<[Zeichnung['art'], string, ReactNode]>).map(([art, name, zeichen]) => {
               const an = werkzeug === art
               return (
-                <button key={art} type="button" aria-pressed={an} aria-label={name} title={name}
+                <button key={art} type="button" aria-pressed={an} aria-label={tr(name)} title={tr(name)}
                         onClick={() => { knopfTon(!an); zeichnenFertig(); setWerkzeug(an ? null : art) }}
                         className={`flex size-8 items-center justify-center rounded-lg border ${an ? KNOPF_AN : KNOPF_AUS}`}>
                   <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" style={gedreht(an)}>{zeichen}</svg>
                 </button>
               )
             })}
-            <button type="button" aria-label="Alle Zeichnungen löschen" title="Alle Zeichnungen löschen" disabled={!zeichnungen.length && !entwurf.length}
+            <button type="button" aria-label={tr('Alle Zeichnungen löschen')} title={tr('Alle Zeichnungen löschen')} disabled={!zeichnungen.length && !entwurf.length}
                     onClick={() => { knopfTon(true); setZeichnungen([]); setEntwurf([]) }}
                     className={`flex size-8 items-center justify-center rounded-lg border disabled:opacity-40 ${KNOPF_AUS}`}>
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
@@ -1650,20 +1652,20 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               </svg>
             </button>
             {werkzeug === 'punkt' && (
-              <input value={nadelText} onChange={(e) => setNadelText(e.target.value)} maxLength={ZEICHNEN_TEXT_LAENGE} placeholder="Wort (sonst Nummer)"
-                     aria-label="Wort für die nächste Stecknadel" className="w-36 rounded-lg border border-sbb-cloud bg-white/90 px-2 py-1 text-xs dark:border-sbb-iron dark:bg-sbb-midnight/90" />
+              <input value={nadelText} onChange={(e) => setNadelText(e.target.value)} maxLength={ZEICHNEN_TEXT_LAENGE} placeholder={tr('Wort (sonst Nummer)')}
+                     aria-label={tr('Wort für die nächste Stecknadel')} className="w-36 rounded-lg border border-sbb-cloud bg-white/90 px-2 py-1 text-xs dark:border-sbb-iron dark:bg-sbb-midnight/90" />
             )}
             {(werkzeug === 'linie' || werkzeug === 'flaeche') && (
               <p className="max-w-36 rounded bg-white/85 px-1.5 py-0.5 text-[11px] leading-tight text-sbb-black dark:bg-sbb-midnight/85 dark:text-sbb-white">
-                {werkzeug === 'linie' ? 'Ins Gelände tippen, Punkt für Punkt' : 'Ecke für Ecke tippen, ein Tipp auf den ersten Punkt schliesst'}
+                {werkzeug === 'linie' ? tr('Ins Gelände tippen, Punkt für Punkt') : tr('Ecke für Ecke tippen, ein Tipp auf den ersten Punkt schliesst')}
               </p>
             )}
             {entwurf.length > 0 && (
               <div className="flex gap-2">
-                <button type="button" onClick={() => setEntwurf((x) => x.slice(0, -1))} aria-label="Letzten Punkt zurück" title="Letzten Punkt zurück"
+                <button type="button" onClick={() => setEntwurf((x) => x.slice(0, -1))} aria-label={tr('Letzten Punkt zurück')} title={tr('Letzten Punkt zurück')}
                         className={`flex size-8 items-center justify-center rounded-lg border ${KNOPF_AUS}`}>↶</button>
                 <button type="button" onClick={zeichnenFertig} disabled={entwurf.length < (werkzeug === 'flaeche' ? 3 : 2)}
-                        className={`rounded-lg border px-2 text-xs font-bold disabled:opacity-40 ${KNOPF_AUS}`}>Fertig</button>
+                        className={`rounded-lg border px-2 text-xs font-bold disabled:opacity-40 ${KNOPF_AUS}`}>{tr('Fertig')}</button>
               </div>
             )}
           </div>
@@ -1671,7 +1673,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
         {/* im Vollbild ein Kreuz oben rechts in der Ecke statt «Schliessen» unten (Michael, 2026-11-07: «Lieber ein passendes Schliessen-Icon an
             der Ecke»; unten legt Chrome auf Android seinen Hinweis zum Beenden darüber) */}
         {voll && (
-          <button type="button" onClick={() => setVoll(false)} aria-label="Vollbild schliessen" title="Vollbild schliessen"
+          <button type="button" onClick={() => setVoll(false)} aria-label={tr('Vollbild schliessen')} title={tr('Vollbild schliessen')}
                   className="absolute right-2 top-2 z-10 flex size-10 items-center justify-center rounded-lg border border-sbb-cloud bg-white/90 text-sbb-black shadow-sm hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight/90 dark:text-sbb-white">
             <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
               <path d="M6 6l12 12M18 6L6 18" />
@@ -1697,23 +1699,23 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                   className={'absolute rounded-lg bg-sbb-red font-bold text-white shadow-lg hover:bg-sbb-red125 disabled:opacity-50 ' + (tablet
                     ? 'left-2 bottom-2 px-[18px] py-[9px] text-2xl' : desktop ? 'right-2 bottom-[60px] px-3 py-1.5 text-base'
                       : 'left-2 top-[4.25rem] px-3 py-1.5 text-base max-[359px]:text-[14px]')}>
-            {laedt ? 'Wird geladen …' : 'Eintauchen'}
+            {laedt ? tr('Wird geladen …') : tr('Eintauchen')}
           </button>
         )}
       </div>
       {/* die Stufen als Knöpfe mit der Seitenlänge in km, die Schweiz als grober Umriss, die jetzige dunkel, ohne Namen darunter (Michael, 2026-11-14:
           «Die Stufung unten auch mit Icons machen und mit Zahlen beschriften»; 2026-11-15: «Statt CH einen ganz groben Umriss der Schweiz … bei allen
           Zahlen KM dahinter … braucht es … 16 Kilometer Region um Thun nicht mehr»); der Name steht im title */}
-      <nav aria-label="Stufe" className="mt-2 flex flex-wrap items-center gap-1 text-sm">
+      <nav aria-label={tr('Stufe')} className="mt-2 flex flex-wrap items-center gap-1 text-sm">
         {([['schweiz', '', 'Schweiz', true], ['gross', '128 km', '128 km', !!gelaende.gross], ['mittel', '64 km', '64 km', !!gelaende.mittel],
            ['region', '16 km', '16 km', !!gelaende.region], ['ort', '4 km', '4 km', (stufe === 'ort' || stufe === 'nah') && !!gelaende.ort],
            ['nah', '1 km', '1 km', stufe === 'nah' && !!gelaende.nah]] as Array<[Stufe, string, string, boolean]>).map(([s, zahl, kurz, da]) => {
           const jetzt = stufe === s
           // mit angesetzten Stücken (+) die ganze Grösse dazu, wie vorher in Klammern hinter dem Namen
-          const name = (stufenName(s) ?? kurz) + (jetzt && groesse ? ` (${groesse})` : '')
+          const name = (stufenName(s) ?? tr(kurz)) + (jetzt && groesse ? ` (${groesse})` : '')
           return (
             <button key={s} type="button" disabled={!da || jetzt} onClick={() => zurueck(s)} aria-current={jetzt ? 'step' : undefined}
-                    aria-label={jetzt ? `${name}, jetzt` : da ? `Zurück zu ${name}` : `${kurz}, noch nicht gewählt`} title={name}
+                    aria-label={jetzt ? tr('{name}, jetzt', { name }) : da ? tr('Zurück zu {name}', { name }) : tr('{name}, noch nicht gewählt', { name: tr(kurz) })} title={name}
                     className={`flex h-8 flex-none items-center justify-center whitespace-nowrap rounded-lg border text-xs font-bold ${s === 'schweiz' ? 'w-9' : 'px-1.5'} ${jetzt
                       ? 'border-sbb-anthracite bg-sbb-anthracite text-white'
                       : 'border-sbb-cloud bg-white text-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight dark:text-sbb-white'} ${!da ? 'opacity-40' : ''}`}>
@@ -1733,46 +1735,46 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           unterhalb der Karte nicht mehr?») */}
       {/* der Satz zum Stand der Sonne ist weg (Michael, 2026-11-13, durchgestrichen); nur ausserhalb der Tage des Fahrplans ein Hinweis, wie vorher bei der Uhr */}
       {fahrplanTage && (tag < fahrplanTage.von || tag > fahrplanTage.bis) && (
-        <p className="mt-1 text-sm">Für diesen Tag gibt es keinen Fahrplan: geladen ist der {datumKurz(fahrplanTage.von)} bis {datumKurz(fahrplanTage.bis)}.</p>
+        <p className="mt-1 text-sm">{tr('Für diesen Tag gibt es keinen Fahrplan: geladen ist der {von} bis {bis}.', { von: datumKurz(fahrplanTage.von), bis: datumKurz(fahrplanTage.bis) })}</p>
       )}
       {hinweis && <p className="mt-2 text-sm font-bold">{hinweis}</p>}
       {/* zu zweit (Michael, 2026-11-10, Vorschlag 13): Raum eröffnen oder mit dem Code beitreten, wer eröffnet, führt */}
       <div ref={zweitTafelRef} className="mt-2 text-sm">
         {raum ? (
           <div className="flex flex-wrap items-center gap-2">
-            <span>Zu zweit: Raum <b className="tabular-nums tracking-wider">{raum}</b>, {andere.length + 1} im Raum, {fuehreSeit !== null ? 'du führst' : fuehrer ? 'du folgst' : 'niemand führt'}.</span>
+            <span>{tr('Zu zweit: Raum')} <b className="tabular-nums tracking-wider">{raum}</b>, {tr('{n} im Raum', { n: andere.length + 1 })}, {fuehreSeit !== null ? tr('du führst') : fuehrer ? tr('du folgst') : tr('niemand führt')}.</span>
             {fuehrer && (
               <button type="button" onClick={() => setBlickFolgen((x) => !x)} aria-pressed={blickFolgen}
-                      className={'rounded-lg border px-2.5 py-1 font-bold ' + (blickFolgen ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>Blick folgen</button>
+                      className={'rounded-lg border px-2.5 py-1 font-bold ' + (blickFolgen ? 'border-sbb-anthracite bg-sbb-anthracite text-white' : 'border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-midnight')}>{tr('Blick folgen')}</button>
             )}
             {fuehreSeit === null && (
-              <button type="button" onClick={() => setFuehreSeit(Date.now())} className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Führen</button>
+              <button type="button" onClick={() => setFuehreSeit(Date.now())} className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">{tr('Führen')}</button>
             )}
             <button type="button" onClick={() => { void navigator.clipboard?.writeText(raumLink).catch(() => {}) }}
-                    className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Link kopieren</button>
+                    className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">{tr('Link kopieren')}</button>
             <button type="button" onClick={() => { setRaum(null); setFuehreSeit(null) }}
-                    className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Verlassen</button>
+                    className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">{tr('Verlassen')}</button>
             {raumWeg && <span className="font-bold text-sbb-red">{raumWeg}</span>}
-            {!raumWeg && !raumVerbunden && <span className="text-sbb-metal">Keine Verbindung zur Vermittlung, es wird weiter versucht.</span>}
+            {!raumWeg && !raumVerbunden && <span className="text-sbb-metal">{tr('Keine Verbindung zur Vermittlung, es wird weiter versucht.')}</span>}
             {/* der Link als QR-Code zum Scannen mit dem anderen Gerät (Michael, 2026-11-15: «dass man hier einen QR-Code scannen kann»), auf dem Gerät gerechnet */}
             <div className="basis-full">
               <QrCode text={raumLink} className="max-w-44" />
-              <p className="mt-1 text-center text-sbb-metal dark:text-sbb-storm">Mit der Kamera des anderen Geräts scannen, oder dort unter «Zu zweit» den Code {raum} eingeben.</p>
+              <p className="mt-1 text-center text-sbb-metal dark:text-sbb-storm">{tr('Mit der Kamera des anderen Geräts scannen, oder dort unter «Zu zweit» den Code {code} eingeben.', { code: raum })}</p>
             </div>
           </div>
         ) : zuZweitOffen ? (
           <form className="flex flex-wrap items-center gap-2" onSubmit={(e) => {
             e.preventDefault()
             const c = raumCode.trim().toUpperCase()
-            if (/^[A-Z]{4}$/.test(c)) { setRaum(c); setFuehreSeit(null); setRaumFehler(null) } else setRaumFehler('Der Code hat vier Buchstaben.')
+            if (/^[A-Z]{4}$/.test(c)) { setRaum(c); setFuehreSeit(null); setRaumFehler(null) } else setRaumFehler(tr('Der Code hat vier Buchstaben.'))
           }}>
             <button type="button" onClick={() => { setRaumFehler(null); void raumEroeffnen().then((r) => { setRaum(r); setFuehreSeit(Date.now()) }).catch((x) => setRaumFehler((x as Error).message)) }}
-                    className={EINTAUCHEN_KNOPF + ' !text-sm'}>Raum eröffnen</button>
-            <span>oder</span>
-            <input value={raumCode} onChange={(e) => setRaumCode(e.target.value)} maxLength={4} placeholder="Code" aria-label="Code des Raums"
+                    className={EINTAUCHEN_KNOPF + ' !text-sm'}>{tr('Raum eröffnen')}</button>
+            <span>{tr('oder')}</span>
+            <input value={raumCode} onChange={(e) => setRaumCode(e.target.value)} maxLength={4} placeholder={tr('Code')} aria-label={tr('Code des Raums')}
                    className="w-20 rounded-lg border border-sbb-cloud bg-white px-2 py-1 uppercase tracking-wider dark:border-sbb-iron dark:bg-sbb-midnight" />
-            <button type="submit" className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">Beitreten</button>
-            <button type="button" onClick={() => setZuZweitOffen(false)} className="underline underline-offset-2">Abbrechen</button>
+            <button type="submit" className="rounded-lg border border-sbb-cloud bg-white px-2.5 py-1 font-bold dark:border-sbb-iron dark:bg-sbb-midnight">{tr('Beitreten')}</button>
+            <button type="button" onClick={() => setZuZweitOffen(false)} className="underline underline-offset-2">{tr('Abbrechen')}</button>
             {raumFehler && <span className="w-full font-bold text-sbb-red">{raumFehler}</span>}
           </form>
         ) : null}
@@ -1780,19 +1782,19 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
       {/* gemerkte Ansichten (Michael, 2026-11-12): merken mit Namen, öffnen, als Link teilen, umbenennen, ordnen, nach links wischen oder × löscht */}
       <div className="mt-2 text-sm">
         {/* Titel wie «Gemerkte Fahrten» bei Mitfahren (Michael, 2026-11-15, Bildschirmfotos beider Listen) */}
-        {ansichten.length > 0 && <h2 className="mt-6 text-lg font-bold">Favoriten</h2>}
+        {ansichten.length > 0 && <h2 className="mt-6 text-lg font-bold">{tr('Favoriten')}</h2>}
         {/* wie die Probefahrten (Michael, 2026-11-15: «Favoriten Perspektiven soll man gleich wie andere Elemente auf Taktland löschen können (schieben).
             Mit Icons soll man sie bearbeiten und Teilen können. Reihenfolge auch editierbar machen»): wischen oder × löscht mit «Rückgängig», Stift benennt um,
             Teilen-Zeichen teilt den Link, «Reihenfolge ändern» mit ↑ und ↓ */}
         {ansichtWeg && (
           <div role="status" className="kachel mt-2 flex items-center justify-between gap-3 py-1 pl-4 pr-1">
-            <span className="min-w-0">{ansichtWeg.a.name} entfernt.</span>
+            <span className="min-w-0">{tr('{name} entfernt.', { name: ansichtWeg.a.name })}</span>
             <button type="button" onClick={() => { const w = ansichtWeg; setAnsichten((l) => [...l.slice(0, w.i), w.a, ...l.slice(w.i)]); setAnsichtWeg(null) }}
-                    className="min-h-11 shrink-0 rounded-lg px-3 font-bold text-sbb-red hover:bg-sbb-silver dark:hover:bg-sbb-iron">Rückgängig</button>
+                    className="min-h-11 shrink-0 rounded-lg px-3 font-bold text-sbb-red hover:bg-sbb-silver dark:hover:bg-sbb-iron">{tr('Rückgängig')}</button>
           </div>
         )}
         {ansichten.length > 0 && (
-          <ul className="mt-2 space-y-2" aria-label="Favoriten">
+          <ul className="mt-2 space-y-2" aria-label={tr('Favoriten')}>
             {ansichten.map((a, i) => {
               // wie die Bahnhofsliste mit dem roten Stern (Michael, 2026-11-15), die Knöpfe so gross wie die Symbole in der Karte
               // eine Zeile wie «Gemerkte Fahrten» bei Mitfahren, der Stern rechts (Michael, 2026-11-15: «Kannst du den Stern auch rechts platzieren analog
@@ -1800,7 +1802,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
               const kopf = (
                 <span className="flex min-w-0 flex-1 items-baseline gap-2">
                   <span className="max-w-[75%] shrink-0 truncate font-medium text-sbb-black dark:text-sbb-white">{a.name}</span>
-                  <span className="min-w-0 truncate text-sm text-sbb-metal dark:text-sbb-storm">{STUFE_NAME[a.stufe]}{a.zeit !== null ? ', Zeitreise' : ''}</span>
+                  <span className="min-w-0 truncate text-sm text-sbb-metal dark:text-sbb-storm">{tr(STUFE_NAME[a.stufe])}{a.zeit !== null ? tr(', Zeitreise') : ''}</span>
                 </span>
               )
               const SEITE = `flex size-8 flex-none items-center justify-center rounded-lg border disabled:opacity-40 disabled:shadow-none ${KNOPF_AUS}`
@@ -1808,7 +1810,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                 <li key={`${i}-${a.name}`} className="kachel flex min-h-12 items-center gap-2 py-1 pl-3 pr-2 text-base">
                   {kopf}
                   {([[-1, '↑', 'nach oben'], [1, '↓', 'nach unten']] as const).map(([r, z, w]) => (
-                    <button key={r} type="button" aria-label={`Ansicht ${a.name} ${w}`} title={`Nach ${r < 0 ? 'oben' : 'unten'}`}
+                    <button key={r} type="button" aria-label={tr('Ansicht {name} {w}', { name: a.name, w: tr(w) })} title={r < 0 ? tr('Nach oben') : tr('Nach unten')}
                             disabled={i + r < 0 || i + r >= ansichten.length}
                             onClick={() => setAnsichten((l) => { const n = [...l]; [n[i], n[i + r]] = [n[i + r], n[i]]; return n })}
                             className={SEITE + ' text-lg leading-none'}>{z}</button>
@@ -1824,31 +1826,31 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                     setAnsichtUmbenennen(null)
                   }}>
                     <input value={ansichtUmbenennen.name} onChange={(e) => setAnsichtUmbenennen({ i, name: e.target.value })} maxLength={80} autoFocus
-                           aria-label="Neuer Name der Ansicht"
+                           aria-label={tr('Neuer Name der Ansicht')}
                            className="min-w-0 flex-1 rounded-lg border border-sbb-cloud bg-white px-2 py-1.5 dark:border-sbb-iron dark:bg-sbb-midnight" />
-                    <button type="submit" className={EINTAUCHEN_KNOPF + ' !text-sm'}>Speichern</button>
-                    <button type="button" onClick={() => setAnsichtUmbenennen(null)} className="underline underline-offset-2">Abbrechen</button>
+                    <button type="submit" className={EINTAUCHEN_KNOPF + ' !text-sm'}>{tr('Speichern')}</button>
+                    <button type="button" onClick={() => setAnsichtUmbenennen(null)} className="underline underline-offset-2">{tr('Abbrechen')}</button>
                   </form>
                 </li>
               )
               const weg = () => { setAnsichtWeg({ a, i }); setAnsichten((l) => l.filter((_, j) => j !== i)) }
               return (
                 <li key={`${i}-${a.name}`} className="kachel overflow-hidden text-base">
-                  <Wischen frage={`Ansicht ${a.name} löschen?`} loeschen={weg}>
+                  <Wischen frage={tr('Ansicht {name} löschen?', { name: a.name })} loeschen={weg}>
                     <div className="flex items-stretch">
                       <div className="flex min-w-0 flex-1 items-center gap-2 pr-2">
                       <button type="button" onClick={() => ansichtOeffnenRef.current(a)}
                               className="kachel-link flex min-w-0 flex-1 items-center py-3 pl-3 pr-1 text-left">
                         {kopf}
                       </button>
-                      <button type="button" onClick={() => setAnsichtUmbenennen({ i, name: a.name })} aria-label={`Ansicht ${a.name} umbenennen`}
-                              title="Umbenennen" className={SEITE}>
+                      <button type="button" onClick={() => setAnsichtUmbenennen({ i, name: a.name })} aria-label={tr('Ansicht {name} umbenennen', { name: a.name })}
+                              title={tr('Umbenennen')} className={SEITE}>
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden="true">
                           <path d="M4 20h4L19 9l-4-4L4 16z" /><path d="M13.5 6.5l4 4" />
                         </svg>
                       </button>
-                      <button type="button" onClick={() => void ansichtTeilen(a, i)} aria-label={`Link zur Ansicht ${a.name} teilen`}
-                              title={geteilt === i ? 'Link kopiert' : 'Link teilen'} className={SEITE + (geteilt === i ? ' !text-sbb-red' : '')}>
+                      <button type="button" onClick={() => void ansichtTeilen(a, i)} aria-label={tr('Link zur Ansicht {name} teilen', { name: a.name })}
+                              title={geteilt === i ? tr('Link kopiert') : tr('Link teilen')} className={SEITE + (geteilt === i ? ' !text-sbb-red' : '')}>
                         {geteilt === i
                           ? <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><path d="M5 12l5 5 9-10" /></svg>
                           : <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -1858,7 +1860,7 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
                       </button>
                       </div>
                       {/* der Stern rechts wie bei Mitfahren: ein Tipp nimmt die Ansicht aus der Liste, «Rückgängig» holt sie zurück */}
-                      <button type="button" onClick={weg} aria-pressed aria-label={`Ansicht ${a.name} nicht mehr merken`} title="Nicht mehr merken"
+                      <button type="button" onClick={weg} aria-pressed aria-label={tr('Ansicht {name} nicht mehr merken', { name: a.name })} title={tr('Nicht mehr merken')}
                               className="flex shrink-0 items-center border-l border-sbb-cloud px-3 hover:bg-sbb-milk dark:border-sbb-iron dark:hover:bg-sbb-charcoal">
                         <Stern voll />
                       </button>
@@ -1874,29 +1876,29 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
           <div className="flex justify-end">
             <button type="button" onClick={() => { setAnsichtOrdnen((o) => !o); setAnsichtUmbenennen(null) }}
                     className="min-h-11 rounded-lg px-3 text-sm font-medium hover:bg-sbb-silver dark:hover:bg-sbb-iron">
-              {ansichtOrdnen ? 'Fertig' : 'Reihenfolge ändern'}</button>
+              {ansichtOrdnen ? tr('Fertig') : tr('Reihenfolge ändern')}</button>
           </div>
         )}
       </div>
       {scheiben && (
-        <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Höhenlinien">
+        <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label={tr('Höhenlinien')}>
           {HOEHEN_STUFEN.map(([z, farbe, name]) => (
             <span key={z} className="inline-flex items-center gap-1">
-              <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: farbe }} />{z.toLocaleString('de-CH')} m ({name})
+              <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ background: farbe }} />{z.toLocaleString(zahlOrt())} m ({tr(name)})
             </span>
           ))}
         </p>
       )}
       {wandern && !grob(stufe) && (
-        <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label="Wanderwege">
+        <p className="mt-1 flex flex-wrap gap-x-3 text-xs text-sbb-metal dark:text-sbb-storm" aria-label={tr('Wanderwege')}>
           {WANDER_NAMEN.map(([a, name]) => (
             <span key={a} className="inline-flex items-center gap-1">
-              <span className="inline-block h-1 w-4 rounded-sm" style={{ background: WANDER_FARBEN[a] }} />{name}
+              <span className="inline-block h-1 w-4 rounded-sm" style={{ background: WANDER_FARBEN[a] }} />{tr(name)}
             </span>
           ))}
         </p>
       )}
-      {anker && (
+      {anker && (sprache() === 'en' ? <QuellenEn anker={anker} seenHier={seenHier} stufe={stufe} umweltHier={umweltHier} umweltGanzDa={umweltGanzDa} /> : (
         <details className="klapp mt-1 text-xs text-sbb-metal dark:text-sbb-storm">
           <summary className="flex min-h-9 cursor-pointer items-center underline underline-offset-2">Modell, nicht massstäblich: Quellen</summary>
           <p className="mt-1">Gelände: {anker.quellen[0]}. Luftbild: {anker.quellen[1]}. {seenHier.length
@@ -1922,12 +1924,12 @@ export default function Schweiz3D({ eigeneSeite = false }: { eigeneSeite?: boole
             gezeichneten Bäumen gefüllt; Abstand, Höhe und Form in keiner Quelle; Laub- oder Nadelbaum nach dem Waldmischungsgrad LFI (BAFU), wo er fehlt bis 800 m über Meer
             im Wald 40 % Nadelbäume, ab 1'500 m nur Nadelbäume, dazwischen steigend, eine Annahme nach den Höhenstufen, nicht gemessen; bei sehr vielen Bäumen wird der gezeichnete Wald lichter. {umweltGanzDa ? 'In der ganzen Schweiz (daten.taktland.ch).' : 'Vorerst nur um Köniz und um den Gantrisch.'}</>}</p>
         </details>
-      )}
+      ))}
       </>)}
       {/* kein Einstiegstext mehr, die Anleitung sagt es (Michael, 2026-11-15: «Diesen Text braucht es wohl nicht wenn es eine Anleitung gibt oder?») */}
       {/* die Anleitung unter dem Modell, je Thema auf- und zuklappbar wie bei Taktland (Michael, 2026-10-24: «Einleitungstext streichen
           und Karte nach oben direkt zum Auftaktbild schieben. Einleitungstext als Anleitung unter der Karte und jeweils kategorisieren») */}
-      {ansicht !== 'wahl' && (<>
+      {ansicht !== 'wahl' && (sprache() === 'en' ? <AnleitungEn eigeneSeite={eigeneSeite} /> : <>
       <h2 className="mt-6 text-xl font-bold">Anleitung</h2>
       <div className="mt-2 space-y-2 text-sm leading-relaxed">
         <Abschnitt titel="Wählen und eintauchen">
@@ -2927,7 +2929,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       c.width = 1024; c.height = 820
       x.fillStyle = 'rgba(255,255,255,0.96)'; x.beginPath(); x.roundRect(0, 0, c.width, c.height, 24); x.fill()
       x.fillStyle = '#212121'; x.font = 'bold 48px Helvetica, system-ui, sans-serif'
-      x.fillText(`${AUF_3DLAND ? '3D-Land' : 'Virtuelle Schweiz'}: Tasten`, 48, 84)
+      x.fillText(tr('{name}: Tasten', { name: AUF_3DLAND ? tr('3D-Land') : 'Virtuelle Schweiz' }), 48, 84)
       const zeilen: Array<[string, string]> = [
         ['Abzug kurz', 'Feld wählen, nochmals: eintauchen'], ['Abzug auf + oder −', 'an dieser Wand erweitern'],
         ['Abzug halten', 'Modell tragen'], ['Beide Abzüge', 'grösser, kleiner, drehen'],
@@ -2937,11 +2939,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       ]
       zeilen.forEach(([taste, was], i) => {
         const y = 160 + i * 58
-        x.font = 'bold 36px Helvetica, system-ui, sans-serif'; x.fillStyle = KARMIN; x.fillText(taste, 48, y)
-        x.font = '36px Helvetica, system-ui, sans-serif'; x.fillStyle = '#212121'; x.fillText(was, 440, y)
+        x.font = 'bold 36px Helvetica, system-ui, sans-serif'; x.fillStyle = KARMIN; x.fillText(tr(taste), 48, y)
+        x.font = '36px Helvetica, system-ui, sans-serif'; x.fillStyle = '#212121'; x.fillText(tr(was), 440, y)
       })
       x.font = '30px Helvetica, system-ui, sans-serif'; x.fillStyle = '#767676'
-      x.fillText('Ein Modell zum Anschauen, Höhe wie echt.', 48, 780)
+      x.fillText(tr('Ein Modell zum Anschauen, Höhe wie echt.'), 48, 780)
       const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace
       const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false }))
       sp.scale.set(0.5 * c.width / c.height, 0.5, 1)
@@ -2952,7 +2954,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       kc.width = 360; kc.height = 96
       kx.fillStyle = KARMIN; kx.beginPath(); kx.roundRect(0, 0, kc.width, kc.height, 16); kx.fill()
       kx.fillStyle = '#ffffff'; kx.font = 'bold 48px Helvetica, system-ui, sans-serif'; kx.textAlign = 'center'
-      kx.fillText('Schliessen', kc.width / 2, 64)
+      kx.fillText(tr('Schliessen'), kc.width / 2, 64)
       const kt = new THREE.CanvasTexture(kc); kt.colorSpace = THREE.SRGBColorSpace
       const knopf = new THREE.Sprite(new THREE.SpriteMaterial({ map: kt, depthTest: false }))
       knopf.scale.set(0.06 * kc.width / kc.height, 0.06, 1)
@@ -3105,14 +3107,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     renderer.xr.addEventListener('sessionend', () => { if (stehenBrille) { stehenBrille = false; wenn.stehenAus() } inDerBrille = false; setBrilleAn(false); schattenGroesse(schattenPx); bildschirmSetzen(); setzeHimmel(); anleitung.visible = false; kamera.near = 0.01; kamera.updateProjectionMatrix() })
     brilleRef.current = async () => {
       const xr = navigator.xr
-      if (!xr) throw new Error('Kein WebXR')
+      if (!xr) throw new Error(tr('Kein WebXR'))
       durchsicht = await xr.isSessionSupported('immersive-ar').catch(() => false)
       // auf dem Handy gibt es keine Tasten der Brille: ein Knopf «Schliessen» über dem Bild (Michael, 2026-10-25: «Wenn ich XR auf dem
       // Mobile Device anschaue, habe ich keinen Button, um zurückzukehren»), wo der Browser dom-overlay kann
       const ueber = document.createElement('div')
       ueber.style.cssText = 'position:fixed;inset:0;pointer-events:none'
       const zu = document.createElement('button')
-      zu.type = 'button'; zu.textContent = '✕ Schliessen'
+      zu.type = 'button'; zu.textContent = tr('✕ Schliessen')
       zu.style.cssText = 'position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;pointer-events:auto;padding:10px 16px;' +
         'border:0;border-radius:8px;background:#5a5a5a;color:#fff;font:700 16px Helvetica,system-ui,sans-serif'
       ueber.appendChild(zu)
@@ -3907,7 +3909,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // 3000 und 4000 stehen»), je Wand einmal, in der Farbe der Linie
     const zahlBild = (z: number, farbe: string) => {
       const c = document.createElement('canvas'), x = c.getContext('2d')!
-      const px = 22, text = `${z.toLocaleString('de-CH')} m`
+      const px = 22, text = `${z.toLocaleString(zahlOrt())} m`
       x.font = `bold ${px}px Helvetica, system-ui, sans-serif`
       c.width = Math.ceil(x.measureText(text).width) + 8; c.height = px + 6
       x.font = `bold ${px}px Helvetica, system-ui, sans-serif`
@@ -4078,7 +4080,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const gipfel = zusatz.sw.gipfel.filter((x) => x.hoehe_m !== null).map((x) => ({ x, l: lv95(x.lage[0], x.lage[1]) }))
         .filter(({ l }) => drin(l[0], l[1])).sort((a, c) => c.x.hoehe_m! - a.x.hoehe_m!)
       const anzahl = (stufe === 'schweiz' ? 8 : stufe === 'gross' || stufe === 'mittel' ? 15 : stufe === 'region' ? 25 : stufe === 'ort' ? 10 : 4) * Math.min(3, b.teile.size)
-      for (const { x, l } of gipfel.slice(0, anzahl)) schild(`▲ ${x.name} ${x.hoehe_m!.toLocaleString('de-CH')}`, l[0], l[1], x.hoehe_m!)
+      for (const { x, l } of gipfel.slice(0, anzahl)) schild(`▲ ${x.name} ${x.hoehe_m!.toLocaleString(zahlOrt())}`, l[0], l[1], x.hoehe_m!)
     }
     // Ortschaften wie die Bahnhöfe der Modellbahn (Michael, 2026-10-21: «mit deiner … dunkelgrauen Linie, die sehr dünn ist, und
     // deiner Fahne oben, wo weiss auf schwarzem Kasten der Ortsname steht»): ein Mast, oben ein eckiges dunkelgraues Schild;
@@ -4407,27 +4409,27 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     // Schiffe -> etwas Abstand Wandern, Gipfel, Wolken, Wetter, Sonne»; Höhen zwischen Wandern und Gipfel, «Nimm ihn in die Mitte der anderen gelben»)
     const abstand: Teil = { zeilen: [], breite: KNOPF_ABSTAND * W, leer: true }
     const eins: Teil[] = [
-      { zeilen: ['Orte'], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
+      { zeilen: [tr('Orte')], breite: KNOPF_B * W, an: orte, farbe: LICHT.gelaende, aktion: umschalten('orte') },
       // wie die Wanderwege erst ab der Stufe 16 km
-      ...(zuegeDa ? [abstand, { zeilen: ['Züge'], breite: KNOPF_B * W, an: !zugFern(stufe) && zuege, farbe: LICHT.zuege, gesperrt: zugFern(stufe),
+      ...(zuegeDa ? [abstand, { zeilen: [tr('Züge')], breite: KNOPF_B * W, an: !zugFern(stufe) && zuege, farbe: LICHT.zuege, gesperrt: zugFern(stufe),
         aktion: umschalten('zuege') },
         // Schiffe laut Fahrplan auf den Kurslinien von swissTLMRegio (Michael, 2026-10-28)
-        { zeilen: ['Schiffe'], breite: KNOPF_B * W, an: !grob(stufe) && schiffe, farbe: LICHT.schiffe, gesperrt: grob(stufe),
+        { zeilen: [tr('Schiffe')], breite: KNOPF_B * W, an: !grob(stufe) && schiffe, farbe: LICHT.schiffe, gesperrt: grob(stufe),
           aktion: umschalten('schiffe') },
         // Autos nur im Feld von 1 km (seit 2026-11-21; Michael: «Autos nicht in der 4km Ansicht. Der Untergrund wirkt zu unscharf und die autos gestochen Scharf»)
-        { zeilen: ['Autos'], breite: KNOPF_B * W, an: stufe === 'nah' && autos, farbe: LICHT.autos,
+        { zeilen: [tr('Autos')], breite: KNOPF_B * W, an: stufe === 'nah' && autos, farbe: LICHT.autos,
           gesperrt: stufe !== 'nah', aktion: umschalten('autos') },
         // Menschen auf Perrons, in Siedlungen und auf Wanderwegen (Michael, 2026-11-11: «Gerne gemäss deinen Vorschlägen umsetzen»)
-        { zeilen: ['Menschen'], breite: KNOPF_B * W, an: (stufe === 'ort' || stufe === 'nah') && menschen, farbe: LICHT.menschen,
+        { zeilen: [tr('Menschen')], breite: KNOPF_B * W, an: (stufe === 'ort' || stufe === 'nah') && menschen, farbe: LICHT.menschen,
           gesperrt: stufe !== 'ort' && stufe !== 'nah', aktion: umschalten('menschen') }] : []),
       abstand,
-      { zeilen: ['Wandern'], breite: KNOPF_B * W, an: !grob(stufe) && wandern, farbe: LICHT.gelaende, gesperrt: grob(stufe),
+      { zeilen: [tr('Wandern')], breite: KNOPF_B * W, an: !grob(stufe) && wandern, farbe: LICHT.gelaende, gesperrt: grob(stufe),
         aktion: umschalten('wandern') },
-      { zeilen: ['Höhen'], breite: KNOPF_B * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
-      { zeilen: ['Gipfel'], breite: KNOPF_B * W, an: gipfel, farbe: LICHT.gelaende, aktion: umschalten('gipfel') },
+      { zeilen: [tr('Höhen')], breite: KNOPF_B * W, an: scheiben, farbe: LICHT.gelaende, aktion: umschalten('hoehen') },
+      { zeilen: [tr('Gipfel')], breite: KNOPF_B * W, an: gipfel, farbe: LICHT.gelaende, aktion: umschalten('gipfel') },
       // in jeder Stufe (Michael, 2026-10-29: «Wolken auch in den Feldern 4 km und 1 km zeigen»)
-      { zeilen: ['Wolken'], breite: KNOPF_B * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
-      { zeilen: ['Wetter'], breite: KNOPF_B * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
+      { zeilen: [tr('Wolken')], breite: KNOPF_B * W, an: wolken, farbe: LICHT.wolken, aktion: umschalten('wolken') },
+      { zeilen: [tr('Wetter')], breite: KNOPF_B * W, an: windAn, farbe: LICHT.wind, aktion: umschalten('wind') },
     ]
     const zeitDa = sonnenAn && !!sonnenZeilen
     const [tagZeit] = sonnenZeilen ?? ['–, –'], komma = tagZeit.lastIndexOf(', ')
@@ -4438,11 +4440,11 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const zwei: Teil[] = zeitDa ? [
       { zeilen: ['−1 h'], breite: KNOPF_B * W, knopf: true, aktion: zeit('stunde', -1) },
       { zeilen: ['+1 h'], breite: KNOPF_B * W, knopf: true, aktion: zeit('stunde', 1) },
-      { zeilen: ['−1 Tag'], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', -1) },
-      { zeilen: ['+1 Tag'], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', 1) },
-      { zeilen: ['−1 Monat'], breite: KNOPF_B * W, knopf: true, aktion: zeit('monat', -1) },
-      { zeilen: ['+1 Monat'], breite: KNOPF_B * W, knopf: true, aktion: zeit('monat', 1) },
-      { zeilen: ['Jetzt'], breite: KNOPF_B * W, an: jetztAn, farbe: LICHT.sonne, aktion: zeit('jetzt', 0) },
+      { zeilen: [tr('−1 Tag')], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', -1) },
+      { zeilen: [tr('+1 Tag')], breite: KNOPF_B * W, knopf: true, aktion: zeit('tag', 1) },
+      { zeilen: [tr('−1 Monat')], breite: KNOPF_B * W, knopf: true, aktion: zeit('monat', -1) },
+      { zeilen: [tr('+1 Monat')], breite: KNOPF_B * W, knopf: true, aktion: zeit('monat', 1) },
+      { zeilen: [tr('Jetzt')], breite: KNOPF_B * W, an: jetztAn, farbe: LICHT.sonne, aktion: zeit('jetzt', 0) },
       { zeilen: [tagZeit.slice(0, komma), tagZeit.slice(komma + 2)], breite: 0.09 * W },
     ] : []
     // je Reihe alles ohne Lücke über die Wand, so gross, wie es in der längeren Reihe Platz hat (Michael, 2026-10-30: «Bitte verteile sie auf
@@ -5955,7 +5957,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       void titel
       // ohne Zugnummer (Michael, 2026-11-08: «"In den Führerstand nach..." ohne Zugnummer etc»)
       mitfahrenDa = true
-      setMitfahren({ name: `In den Führerstand nach ${f.ziel}`,
+      setMitfahren({ name: tr('In den Führerstand nach {ziel}', { ziel: f.ziel }),
                      url: `${AUF_3DLAND ? TAKTLAND_APP : ''}#/strecke?von=${von}&nach=${nach}&weg=${weg.join('.')}&fahrt=probe&fuehrerstand=1${planTeil}${AUF_3DLAND ? '&von3d=1' : zurueckTeil(ab)}` })
     }
     const linkSetzen = (abk: string | null) => {
@@ -5970,22 +5972,22 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       const titel = `${f.linie && f.linie !== f.gattung ? f.linie : f.gattung} ${f.nummer}`.trim()
       const h = f.halte
       const halt = st.art === 'halt' ? h[st.i] : h[st.i + 1]
-      const gleis = halt.gleis ? `, Gleis ${halt.gleis}` : ''
+      const gleis = halt.gleis ? tr(', Gleis {g}', { g: halt.gleis }) : ''
       const zweite = st.art === 'halt'
-        ? (st.i === h.length - 1 ? `in ${name(halt.abk)}${gleis}, an ${uhr(halt.an)}` : st.i === 0 ? `in ${name(halt.abk)}${gleis}, ab ${uhr(halt.ab)}`
-          : `in ${name(halt.abk)}${gleis}, an ${uhr(halt.an)}, ab ${uhr(halt.ab)}`)
-        : `nächster Halt ${name(halt.abk)}${gleis}, an ${uhr(halt.an ?? halt.ab)}`
+        ? (st.i === h.length - 1 ? tr('in {halt}{gleis}, an {an}', { halt: name(halt.abk), gleis, an: uhr(halt.an) }) : st.i === 0 ? tr('in {halt}{gleis}, ab {ab}', { halt: name(halt.abk), gleis, ab: uhr(halt.ab) })
+          : tr('in {halt}{gleis}, an {an}, ab {ab}', { halt: name(halt.abk), gleis, an: uhr(halt.an), ab: uhr(halt.ab) }))
+        : tr('nächster Halt {halt}{gleis}, an {an}', { halt: name(halt.abk), gleis, an: uhr(halt.an ?? halt.ab) })
       // woher er kommt (Michael, 2026-11-11: «Kannst du bei den Zügen auch angeben von wo sie kommen?»): der erste Halt laut Fahrplan
       const von = name(h[0].abk)
       // Echtzeit (echtzeit.ts): die Verspätung am Halt, an dem er steht (Abfahrt), sonst am nächsten (Ankunft); die Zeiten oben laut Fahrplan
       const i = st.art === 'halt' ? st.i : st.i + 1, v = haltVerspaetung(f, i, st.tag, st.art === 'halt')
       const e = f.echt?.get(st.tag)
-      const dritte = e?.halt[i] ? `laut Echtzeit kein Halt in ${name(halt.abk)}`
+      const dritte = e?.halt[i] ? tr('laut Echtzeit kein Halt in {halt}', { halt: name(halt.abk) })
         // ohne Antwort der Echtzeit der Grund (Michael, 2026-11-14: «Es zeigt keine Echtzeiten mehr an kann das sein?»), sonst war für ihn nichts gemeldet
-        : v === null ? (echtzeitStand.ok || !echtzeitStand.grund ? 'laut Fahrplan, keine Echtzeit gemeldet' : `laut Fahrplan, Echtzeit ${echtzeitStand.grund}`)
-        : Math.round(v) === 0 ? 'Echtzeit: pünktlich'
-        : Math.round(v) > 0 ? `Echtzeit: ${Math.round(v)} Min. später` : `Echtzeit: ${-Math.round(v)} Min. früher`
-      return [`${titel} von ${von} nach ${f.ziel}`, zweite, dritte]
+        : v === null ? (echtzeitStand.ok || !echtzeitStand.grund ? tr('laut Fahrplan, keine Echtzeit gemeldet') : tr('laut Fahrplan, Echtzeit {grund}', { grund: echtzeitStand.grund }))
+        : Math.round(v) === 0 ? tr('Echtzeit: pünktlich')
+        : Math.round(v) > 0 ? tr('Echtzeit: {n} Min. später', { n: Math.round(v) }) : tr('Echtzeit: {n} Min. früher', { n: -Math.round(v) })
+      return [tr('{titel} von {von} nach {ziel}', { titel, von, ziel: f.ziel }), zweite, dritte]
     }
     gruppe.userData.wahl = (o: THREE.Object3D, i: number) => {
       const zug = o === netze.wagen ? Math.floor(i / (ZUG_WAGEN - 1)) : o === netze.lok || o === netze.steuer ? i : -1
@@ -6173,7 +6175,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     void (async () => {
       ix = await zugIndexLaden()
       if (weg) return
-      if (!ix) { setZugZeile('Züge: der Fahrplan ist hier nicht geladen.'); return }
+      if (!ix) { setZugZeile(tr('Züge: der Fahrplan ist hier nicht geladen.')); return }
       const [liste, netzDa] = await Promise.all([zuegeLaden(ix, e0, n0, e1, n1).catch(() => []), zugNetzLaden().catch(() => null)])
       if (weg) return
       fahrten = liste; zn = netzDa; kopplung = kopplungFinden(liste); fluegelFinden(liste)
@@ -6188,7 +6190,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       // nur kurz, was es heisst, steht in der Anleitung (Michael, 2026-11-08: «Züge nach Fahrplan... weg. Das steht ja im Beschrieb. Evtl für 3 Sek.
       // Einblenden "Züge fahren nach Fahrplan und nicht live"»)
       void st
-      if (!zn) { setZugZeile('Züge: das Netz konnte nicht geladen werden.'); return }
+      if (!zn) { setZugZeile(tr('Züge: das Netz konnte nicht geladen werden.')); return }
       // Echtzeit (Michael, 2026-11-11: «ok gehen wirs an»): alle ECHTZEIT_ALLE_MS die Fahrten, die jetzt unterwegs sind (nach der Uhr, nicht nach
       // der Zeit der Szene), solange die Seite sichtbar ist
       const echtzeit = async () => {
@@ -6202,7 +6204,7 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       }
       await echtzeit()
       if (weg) return
-      setZugZeile(echtzeitStand.ok ? 'Züge nach Fahrplan, Verspätungen in Echtzeit, wo gemeldet' : 'Züge fahren nach Fahrplan und nicht live')
+      setZugZeile(echtzeitStand.ok ? tr('Züge nach Fahrplan, Verspätungen in Echtzeit, wo gemeldet') : tr('Züge fahren nach Fahrplan und nicht live'))
       setTimeout(() => { if (!weg) setZugZeile(null) }, HINWEIS_KURZ_MS)
     })()
     /** je stehendem Zug, der hinter anderen auf demselben Gleis steht, wie viele Züge vor ihm stehen */
@@ -7012,12 +7014,12 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const zeilenVon = (f: ZugFahrt, st: ZugStelle): string[] => {
       const name = (i: string) => daten?.laendten[Number(i)]?.name ?? i
       const h = f.halte, halt = st.art === 'halt' ? h[st.i] : h[st.i + 1]
-      const titel = `${f.gattung === 'FAE' ? 'Fähre' : 'Schiff'} ${f.nummer}`.trim()
+      const titel = `${f.gattung === 'FAE' ? tr('Fähre') : tr('Schiff')} ${f.nummer}`.trim()
       const zweite = st.art === 'halt'
-        ? (st.i === h.length - 1 ? `in ${name(halt.abk)}, an ${uhr(halt.an)}` : st.i === 0 ? `in ${name(halt.abk)}, ab ${uhr(halt.ab)}`
-          : `in ${name(halt.abk)}, an ${uhr(halt.an)}, ab ${uhr(halt.ab)}`)
-        : `nächster Halt ${name(halt.abk)}, an ${uhr(halt.an ?? halt.ab)}`
-      return [`${titel} nach ${f.ziel}`, zweite, 'laut Fahrplan']
+        ? (st.i === h.length - 1 ? tr('in {halt}, an {an}', { halt: name(halt.abk), an: uhr(halt.an) }) : st.i === 0 ? tr('in {halt}, ab {ab}', { halt: name(halt.abk), ab: uhr(halt.ab) })
+          : tr('in {halt}, an {an}, ab {ab}', { halt: name(halt.abk), an: uhr(halt.an), ab: uhr(halt.ab) }))
+        : tr('nächster Halt {halt}, an {an}', { halt: name(halt.abk), an: uhr(halt.an ?? halt.ab) })
+      return [tr('{titel} nach {ziel}', { titel, ziel: f.ziel }), zweite, tr('laut Fahrplan')]
     }
     const finden = (r: THREE.Ray, grenze: number) => {
       let best = -1, bestWinkel = grenze
@@ -7075,10 +7077,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     void schiffeLaden().then((d) => {
       if (weg) return
       daten = d
-      if (!d) { setSchiffZeile('Schiffe: der Fahrplan ist hier nicht geladen.'); return }
+      if (!d) { setSchiffZeile(tr('Schiffe: der Fahrplan ist hier nicht geladen.')); return }
       const st = /^\d{8}$/.test(d.stand) ? `${Number(d.stand.slice(6))}.${Number(d.stand.slice(4, 6))}.${d.stand.slice(0, 4)}` : d.stand
       void st
-      setSchiffZeile('Schiffe fahren nach Fahrplan und nicht live')
+      setSchiffZeile(tr('Schiffe fahren nach Fahrplan und nicht live'))
       setTimeout(() => { if (!weg) setSchiffZeile(null) }, HINWEIS_KURZ_MS)
     })
     const m = new THREE.Matrix4(), q = new THREE.Quaternion(), v = new THREE.Vector3(), skala = new THREE.Vector3(), oben = new THREE.Vector3(0, 1, 0)
@@ -7950,10 +7952,10 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const zeit = stand?.zeit ?? new Date()
     void wolkenLaden().then((w) => {
       if (weg) return
-      if (!w) { setWolkenZeile('Wolken: die Prognose von MeteoSchweiz ist hier nicht geladen.'); return }
-      const uhr = (ms: number) => new Intl.DateTimeFormat('de-CH', { timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }).format(ms)
+      if (!w) { setWolkenZeile(tr('Wolken: die Prognose von MeteoSchweiz ist hier nicht geladen.')); return }
+      const uhr = (ms: number) => new Intl.DateTimeFormat(zahlOrt(), { timeZone: 'Europe/Zurich', day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' }).format(ms)
       const st = wolkenStunde(w, zeit)
-      if (st === null) { setWolkenZeile(`Wolken: für ${uhr(zeit.getTime())} gibt es keine Prognose, nur für ${uhr(w.zeiten[0])} bis ${uhr(w.zeiten[w.zeiten.length - 1])}.`); return }
+      if (st === null) { setWolkenZeile(tr('Wolken: für {zeit} gibt es keine Prognose, nur für {von} bis {bis}.', { zeit: uhr(zeit.getTime()), von: uhr(w.zeiten[0]), bis: uhr(w.zeiten[w.zeiten.length - 1]) })); return }
       // als Ballen (WolkenBild.ts; Michael, 2026-11-07, zu den flachen Ebenen: «Diese dünnen Wolkenschichten sehen visuell nicht schön aus»,
       // dann «Hört sich genial an - ja bitte»), in echter Höhe, wo es sie für diese Stunde gibt (Michael, 2026-10-29), sonst in den drei Schichten
       const ballen = wolkenBallen(w, st, e0, n0, e1, n1, (e, n, h) => [(e - lage.cE) / 1000, h / 1000, -(n - lage.cN) / 1000], 1 / 1000,
@@ -8112,14 +8114,14 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
     const k = kern.current
     if (k?.inBrille()) {
       k.tafelSetzen(meldung ? [meldung.split(': ')[0], ...(meldung.split(': ')[1] ? [meldung.split(': ').slice(1).join(': ')] : [])]
-        : info && wahl ? [...info, 'Nochmals Abzug: eintauchen'] : stufe === 'nah' ? ['Greiftaste: zurück'] : null)
+        : info && wahl ? [...info, tr('Nochmals Abzug: eintauchen')] : stufe === 'nah' ? [tr('Greiftaste: zurück')] : null)
     }
   }, [wahl, info, stufe, b, meldung])
   return (
     <div ref={huelle} className="absolute inset-0 touch-none">
       {grafikWeg && (
         <p role="status" className="absolute inset-x-2 top-12 z-10 rounded-lg bg-white/95 p-2 text-xs font-medium dark:bg-sbb-midnight/95">
-          Die Grafik des Geräts hat aufgegeben, wohl weil ihr der Speicher ausging. Lade die Seite neu und wähle ein kleineres Modell.
+          {tr('Die Grafik des Geräts hat aufgegeben, wohl weil ihr der Speicher ausging. Lade die Seite neu und wähle ein kleineres Modell.')}
         </p>
       )}
       {/* Züge und Schiffe sind laut Fahrplan, nicht live: das steht beim Bild, solange sie zu sehen sind; oben rechts, eng untereinander, damit
@@ -8142,9 +8144,9 @@ function Ansicht({ b, stufe, wahl, waehlen, abwaehlen, eintauchen, zurueck, info
       {autoWahl && (
         <div ref={autoKnopfRef} className="absolute z-10 flex -translate-x-1/2 -translate-y-full gap-2 whitespace-nowrap" style={{ left: '50%', top: '50%', visibility: 'hidden' }}>
           <button type="button" onClick={() => autoEntfernen.current?.()}
-            className="rounded-lg bg-sbb-red px-3 py-1.5 text-sm font-bold text-white shadow">{autoWahl} entfernen</button>
+            className="rounded-lg bg-sbb-red px-3 py-1.5 text-sm font-bold text-white shadow">{autoWahl === 'Lastwagen' ? tr('Lastwagen entfernen') : tr('Auto entfernen')}</button>
           <button type="button" onClick={() => autoAbwahl.current?.()}
-            className="rounded-lg border border-sbb-metal bg-white px-3 py-1.5 text-sm text-sbb-black shadow dark:bg-sbb-midnight dark:text-sbb-white">Abbrechen</button>
+            className="rounded-lg border border-sbb-metal bg-white px-3 py-1.5 text-sm text-sbb-black shadow dark:bg-sbb-midnight dark:text-sbb-white">{tr('Abbrechen')}</button>
         </div>
       )}
     </div>

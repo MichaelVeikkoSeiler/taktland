@@ -3,6 +3,8 @@
  * Taktland, mit eigener Bildmarke und eigenem Auftaktbild (Michael, 2026-10-21: «als Platzhalter»; seit 2026-10-25 mit XR-Brille, Windhosen und Regen, dunkel bei Nacht), sonst den Farben von Taktland. Die Daten kommen von taktland.ch und daten.taktland.ch
  * (vite.3dland.config.ts). Ohne Zähler, ohne Konto; Einstellungen wie Datum und Uhrzeit bleiben nur, solange die Seite offen ist.
  */
+// zuerst die Sprache, damit jeder Text schon in ihr entsteht
+import { spracheWaehlen } from './dreidland-sprache'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
@@ -12,10 +14,73 @@ import { Auftakt } from './komponenten/Auftakt'
 import { aufklappenHoeren } from './audio'
 import Schweiz3D from './komponenten/Schweiz3D'
 import Teilen from './komponenten/Teilen'
+import { sprache, t } from './sprache'
 
 const LINK = 'underline underline-offset-2 hover:text-sbb-black dark:hover:text-sbb-white'
 
+/** Deutsch · English, die jetzige fett; die Wahl bleibt im Browser und lädt die Seite neu */
+function SprachWahl() {
+  const jetzt = sprache()
+  return (
+    <p className="mt-2">
+      {(['de', 'en'] as const).map((s, i) => (
+        <span key={s}>
+          {i > 0 && ' · '}
+          {s === jetzt ? <b className="text-sbb-black dark:text-sbb-white">{s === 'de' ? 'Deutsch' : 'English'}</b>
+            : <button type="button" lang={s === 'de' ? 'de-CH' : 'en'} onClick={() => spracheWaehlen(s)} className={LINK}>{s === 'de' ? 'Deutsch' : 'English'}</button>}
+        </span>
+      ))}
+    </p>
+  )
+}
+
+/** die Fusszeile auf Englisch, inhaltlich wie die deutsche in DreiDLand */
+function FusszeileEn() {
+  return (<>
+    <p>
+      Data: Federal Office of Topography swisstopo, Federal Statistical Office FSO (BFS), MeteoSwiss (MeteoSchweiz), timetable and real-time data opentransportdata.swiss, SBB Open Data, Federal Office of Transport FOT (BAV). 3dland is a private project
+      by <a href="https://taktland.ch" className={LINK}>Taktland</a> and not a service of any public authority.
+    </p>
+    <details className="klapp mt-2">
+      <summary className="flex min-h-11 cursor-pointer items-center text-sm font-medium text-sbb-black underline underline-offset-2 dark:text-sbb-white">
+        All data sources and licences
+      </summary>
+      <p className="mt-1">
+        Terrain (swissALTIRegio, swissALTI3D), aerial imagery (SWISSIMAGE), lakes, settlements and the peaks in the search (swissTLMRegio), hiking trails, trees and
+        forest, track axes, bridges and roads (swissTLM3D), broadleaf and coniferous trees from the LFI forest mixture rate (Federal Office for the Environment FOEN, BAFU), buildings (swissBUILDINGS3D 3.0), peaks and place names of the 1:1 million national map (Swiss Map Vector 1000):
+        Federal Office of Topography swisstopo. Cantons: Federal Statistical Office FSO (BFS). Wind, temperature and forecast: MeteoSwiss
+        (SwissMetNet with measurements since 1 January and local forecast, Open Government Data). Clouds: weather model ICON-CH1-EPS, MeteoSwiss (Open Government Data, CC-BY). Lake beds of 22 lakes: swissBATHY3D; bedrock surface: swissBEDROCK; population of the municipalities for naming a square: swissBOUNDARIES3D; all swisstopo. Trains and boats: timetable as GTFS, opentransportdata.swiss; route of the trains: lines and kilometre points of SBB and sector signs for the position of the tracks, and platform edges with their height, SBB Open Data (data.sbb.ch); electrification of the lines for the overhead line masts: rail network, Federal Office of Transport FOT (BAV); boat routes: swissTLMRegio, swisstopo. Type of bridge (arch or truss, material): Wikidata (CC0). Buildings without windows (industry, silos, storage): Federal Register of Buildings and Dwellings GWR, FSO (BFS). Churches for the bells: swissTLMRegio, swisstopo. Cars: carriageways from swissTLM3D, swisstopo; traffic from the road traffic counts of the Federal Roads Office FEDRO (ASTRA), and the traffic model «Belastung Personen- und Güterverkehr Strasse» (road passenger and freight traffic load), Federal Office for Spatial Development ARE (NPVM 2023, AMG UVEK); people: residents per hectare, STATPOP 2025, Federal Statistical Office FSO (BFS). City traffic, cowbells and river: recordings «Background traffic noise» by Froey_, «cowbells2» by deleted_user_229898 «Rapidly Flowing Water (loopable)» by Osiruswaltz; cars and propeller plane: «car9» by lndip and «Propeller plane» by Breviceps; «Helicopter Swirling» by Tiagorlp; whistle «Referee whistle blow, gymnasium» by SpliceSound; horns «Beeping car horn from inside car, engine off» by misperpodcast, «car horn 1» by 3863, «Car Horn Honk 01» by Brett+Butter; gulls: «ES Seagulls from Window 01» by se2001, all freesound.org (CC0). Stars: Hipparcos catalogue of ESA, prepared by d3-celestial
+        (Olaf Frohn, BSD licence). What is used for what in each model is listed below it
+        under «Model, not to scale: sources». Licences of the bundled libraries:{' '}
+        <a href="./lizenzen/drittsoftware.txt" className={LINK}>drittsoftware.txt</a>.
+        Made with the help of AI (Claude Code; logo and header image: ChatGPT). 3dland may contain errors: the raw data
+        may be incomplete or out of date, and errors can also happen while preparing it. Not intended for navigation.
+      </p>
+    </details>
+    <p className="mt-2">
+      Responsible: Michael Veikko Seiler, <a href="mailto:hallo@taktland.ch" className={LINK}>hallo@taktland.ch</a>, also for questions about your data.
+    </p>
+    <p className="mt-1">
+      A private project to look at, not for planning journeys: trains and boats show the timetable, the trains with reported delays, not reality; weather,
+      clouds, rain and snow are measurements and forecasts by MeteoSwiss, drawn with assumptions, not warnings; the hiking trails only show their position according to swissTLM3D (swisstopo), without closures, diversions, condition or hazards, and are not meant for planning a hike. All information without
+      guarantee; the site may be changed or discontinued without notice.
+    </p>
+    <p className="mt-1">
+      No account, no counter, no cookies; settings such as sound stay in this device's browser (localStorage) and are not sent. The site is served by GitHub Pages, a service of GitHub (USA); data may
+      reach the USA in the process, and according to GitHub it stores IP addresses for security reasons. «Share 3dland» only passes the address 3dland.ch and one sentence to the device's share menu, to e-mail or WhatsApp. The site loads terrain, aerial images and paths from taktland.ch (GitHub Pages) and daten.taktland.ch (cyon, Switzerland); as with any website,
+      the server sees the device's address. «My location» only asks for your location after you allow it;
+      it stays on the device and is neither sent nor stored. When «Weather» is on, the site fetches the measurement and forecast of the
+      nearest weather station from data.geo.admin.ch (Swiss Confederation); the service thus learns in which area the model lies. From three characters on, the search sends what you type to the swisstopo search (api3.geo.admin.ch, Swiss Confederation) so that it also finds addresses. «Together» sends every second via
+      spiel.taktland.ch (cyon, Switzerland) where you are looking and pointing in the model, and the person leading also sends the square, switches and time; only the latest information per device is kept there,
+      without name, IP address or account; it is dropped after one minute without anything new, the room after six hours.
+      When «Trains» is on, the site asks spiel.taktland.ch every 30 seconds for the delays of the trains currently running; only
+      their trip numbers are sent, and none of it is stored.
+    </p>
+  </>)
+}
+
 function DreiDLand() {
+  const en = sprache() === 'en'
   return (
     <div className="min-h-screen bg-white text-sbb-black dark:bg-sbb-midnight dark:text-sbb-white">
       <div className="mx-auto max-w-2xl md:max-w-3xl xl:max-w-6xl">
@@ -23,7 +88,7 @@ function DreiDLand() {
         {/* -mb-6 hebt den Abstand unter dem Auftaktbild auf, das Modell schliesst gleich an (Michael, 2026-10-25: «Weissen Rahmen um die
             Karte weglassen») */}
         <div className="-mb-6 px-4 pt-8">
-          <Auftakt bild={{ hell: auftaktHell, dunkel: auftaktDunkel, breite: 1536, hoehe: 1024, alt: 'Illustration: Jemand mit XR-Brille und zwei Controllern blickt auf ein quadratisches Modell einer Landschaft mit zwei Seen, Dörfern und Wald auf einem dunklen Sockel; darauf zwei rot-weisse Windhosen, im Hintergrund Regen über Seen und Hügeln.'}}
+          <Auftakt bild={{ hell: auftaktHell, dunkel: auftaktDunkel, breite: 1536, hoehe: 1024, alt: t('Illustration: Jemand mit XR-Brille und zwei Controllern blickt auf ein quadratisches Modell einer Landschaft mit zwei Seen, Dörfern und Wald auf einem dunklen Sockel; darauf zwei rot-weisse Windhosen, im Hintergrund Regen über Seen und Hügeln.')}}
                    oben={<img src="./logo.png" alt="3dland" className="absolute right-3 top-3 size-14 rounded-xl shadow-md sm:right-5 sm:top-5 sm:size-20" />} />
         </div>
         <main>
@@ -35,8 +100,9 @@ function DreiDLand() {
             <p className="flex items-center gap-2 text-sm font-bold text-sbb-black dark:text-sbb-white">
               <img src="./logo.png" alt="" className="size-6 rounded" />3dland
             </p>
-            <Teilen name="3dland" adresse="https://3dland.ch" text="3dland: die Schweiz als 3D-Modell zum Eintauchen, auch mit XR-Brille." />
+            <Teilen name="3dland" adresse="https://3dland.ch" text={t('3dland: die Schweiz als 3D-Modell zum Eintauchen, auch mit XR-Brille.')} />
           </div>
+          {en ? <FusszeileEn /> : (<>
           <p>
             Daten: Bundesamt für Landestopografie swisstopo, Bundesamt für Statistik BFS, MeteoSchweiz, Fahrplan und Echtzeit opentransportdata.swiss, SBB Open Data, Bundesamt für Verkehr BAV. 3dland ist ein privates Projekt
             von <a href="https://taktland.ch" className={LINK}>Taktland</a> und kein Angebot einer Behörde.
@@ -76,6 +142,8 @@ function DreiDLand() {
             Sind «Züge» an, fragt die Seite alle 30 Sekunden bei spiel.taktland.ch nach den Verspätungen der Züge, die gerade fahren; geschickt werden
             nur deren Fahrtnummern, gespeichert wird nichts davon.
           </p>
+          </>)}
+          <SprachWahl />
         </footer>
       </div>
     </div>

@@ -7,6 +7,7 @@
  */
 import { holen } from './daten'
 import { type ZugFahrt, type ZugIndex } from './zuege3d'
+import { t } from './sprache'
 
 export const ECHTZEIT_URL: string = import.meta.env.VITE_ECHTZEIT_URL ?? 'https://spiel.taktland.ch/echtzeit.php'
 /** so oft fragt die App, gewählt: die Plattform erneuert alle 30 s, echtzeit.php holt höchstens alle 35 s */
@@ -57,19 +58,19 @@ function aufHalte(seqs: number[], art: number, meldungen: Meldung[]): Echtzeit {
 /** fragt nach den Fahrten und schreibt die Echtzeit in f.echt; bleibt still, wenn es nicht geht (dann gilt der Fahrplan) */
 export async function echtzeitHolen(ix: ZugIndex, fahrten: ZugFahrt[]): Promise<void> {
   const reisen = await reisenLaden()
-  if (!reisen) { echtzeitStand.ok = false; echtzeitStand.grund = 'ohne Fahrtnummern'; return }
+  if (!reisen) { echtzeitStand.ok = false; echtzeitStand.grund = t('ohne Fahrtnummern'); return }
   const je = new Map<string, { f: ZugFahrt; seqs: number[] }>()
   for (const f of fahrten) for (const [tid, seqs] of reisen[f.id] ?? []) if (seqs.length === f.halte.length) je.set(tid, { f, seqs })
-  if (!je.size) { if (fahrten.length) { echtzeitStand.ok = false; echtzeitStand.grund = 'ohne passende Fahrtnummern' } return }
+  if (!je.size) { if (fahrten.length) { echtzeitStand.ok = false; echtzeitStand.grund = t('ohne passende Fahrtnummern') } return }
   let a: { v: string; zeit: number; alter: number; f: Record<string, Array<[string, number, Meldung[]]>> }
   try {
     const r = await fetch(`${ECHTZEIT_URL}?a=fahrten`, { method: 'POST', body: JSON.stringify({ t: [...je.keys()] }), signal: AbortSignal.timeout(20_000) })
-    if (!r.ok) { echtzeitStand.ok = false; echtzeitStand.grund = `nicht erreichbar (Server ${r.status})`; return }
+    if (!r.ok) { echtzeitStand.ok = false; echtzeitStand.grund = t('nicht erreichbar (Server {status})', { status: r.status }); return }
     a = await r.json()
-  } catch { echtzeitStand.ok = false; echtzeitStand.grund = 'nicht erreichbar'; return }
+  } catch { echtzeitStand.ok = false; echtzeitStand.grund = t('nicht erreichbar'); return }
   // die Fahrtnummern wechseln mit jeder Fassung des Fahrplans: nur dieselbe
-  if (a.v !== ix.stand) { echtzeitStand.ok = false; echtzeitStand.grund = `für eine andere Fassung des Fahrplans (Echtzeit ${a.v}, Fahrplan ${ix.stand})`; return }
-  if (a.alter > ECHTZEIT_ALT_S) { echtzeitStand.ok = false; echtzeitStand.grund = `veraltet (${Math.round(a.alter / 60)} Min.)`; return }
+  if (a.v !== ix.stand) { echtzeitStand.ok = false; echtzeitStand.grund = t('für eine andere Fassung des Fahrplans (Echtzeit {v}, Fahrplan {stand})', { v: a.v, stand: ix.stand }); return }
+  if (a.alter > ECHTZEIT_ALT_S) { echtzeitStand.ok = false; echtzeitStand.grund = t('veraltet ({n} Min.)', { n: Math.round(a.alter / 60) }); return }
   echtzeitStand.ok = true; echtzeitStand.grund = null; echtzeitStand.zeit = a.zeit
   const neu = new Map<ZugFahrt, Map<number, Echtzeit>>()
   for (const [tid, liste] of Object.entries(a.f)) {
