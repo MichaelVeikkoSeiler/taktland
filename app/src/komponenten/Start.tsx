@@ -24,7 +24,8 @@ const NUR_KLEIN = 'flex xl:hidden', NUR_DESKTOP = 'hidden xl:flex'
 /** die drei grossen Kacheln oben (Virtuelle Schweiz mit dem Bild der VR-Brille, Michael, 2026-11-27) */
 const GROSS = [
   { titel: 'Virtuelle Schweiz', adresse: '#/schweiz3d', hell: virtuellHell, dunkel: virtuellDunkel,
-    text: 'Das ganze Land in 3D, mit Zügen laut Fahrplan und Echtzeit, Wetter und Sonne, auch mit VR-Brille' },
+    // seit 2026-11-27 kürzer, auf zwei Zeilen, «VR‑Brille» mit festem Bindestrich (Michael: «Bitte auf 2 Zeilen umbrechen»)
+    text: 'Das ganze Land in 3D, mit Zügen, Wetter und Sonne, auch mit VR\u2011Brille' },
   // seit 2026-11-27 «Fahren» an zweiter Stelle und ohne «Im Zug:», «Spielen» an dritter (Michael: «Bitte Spiele als dritte Kachel und das zweite soll nur Fahren heissen»)
   // seit 2026-11-27 «Mitfahren» (Michael: «Ja, Mitfahren ist besser»)
   { titel: 'Mitfahren', adresse: '#/fahrt', hell: fahrtHell, dunkel: fahrtDunkel, klasse: NUR_KLEIN,
