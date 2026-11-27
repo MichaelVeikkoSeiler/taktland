@@ -1254,6 +1254,7 @@ export function Gleisbau() {
   const nachZiehen = useRef(false)
   // Linie ziehen: die Felder, über die der Finger gefahren ist
   const [linie, setLinie] = useState<Array<[number, number]> | null>(null)
+  const linieAusGleis = useRef(false)
   const linieRef = useRef<Array<[number, number]> | null>(null)
   /**
    * Malen (Michael, 2026-11-24: «Generell soll man bei ausgewählten Elementen ziehen können und es füllt auf der Fläche auf»): mit Boden, Fluss oder
@@ -1975,6 +1976,15 @@ export function Gleisbau() {
       linieRef.current = [feld]; setLinie([feld])
       return
     }
+    /*
+     * mit Gerade oder Kurve über mehrere Felder ziehen legt eine Linie wie «Linie», Geraden und Kurven von selbst (Michael, 2026-11-27: «Schienen soll man ebenso
+     * durch Ziehen erweitern können wie bei den Strassen»); ein Tipp legt weiter das gewählte Stück, lange halten auf einem Gleis verschiebt es
+     */
+    linieAusGleis.current = werkzeug.art === 'gleis' && (werkzeug.gleis === 'gerade' || werkzeug.gleis === 'kurve')
+    if (linieAusGleis.current) {
+      try { e.currentTarget.setPointerCapture(e.pointerId) } catch { /* ohne Fangen geht es trotzdem */ }
+      linieRef.current = [feld]
+    }
     malStart.current = MAL_WERKZEUGE.includes(werkzeug.art) ? { x: e.clientX, y: e.clientY, feld } : null
     const f = brett[feld[1]][feld[0]]
     if (!f.gleis && !f.teil && f.grund === 'wiese') return
@@ -1983,6 +1993,8 @@ export function Gleisbau() {
     const id = e.pointerId, el = e.currentTarget
     window.setTimeout(() => {
       if (druck.current !== d) return
+      if (linieRef.current && linieRef.current.length > 1) { druck.current = null; return }
+      if (linieAusGleis.current) { linieRef.current = null; setLinie(null); linieAusGleis.current = false }
       if (fest?.has(`${feld[0]},${feld[1]}`)) { druck.current = null; festMelden(feld[0], feld[1]); return }
       d.zeit = -1
       try { el.setPointerCapture(id) } catch { /* ohne Fangen geht es trotzdem */ }
@@ -2061,7 +2073,10 @@ export function Gleisbau() {
       return
     }
     const l = linieRef.current
-    if (l) {
+    // nur getippt mit Gerade oder Kurve: weiter wie ein Tipp
+    if (l && l.length < 2 && linieAusGleis.current) { linieRef.current = null; setLinie(null); linieAusGleis.current = false }
+    else if (l) {
+      linieAusGleis.current = false
       linieRef.current = null; setLinie(null)
       nachZiehen.current = true
       window.setTimeout(() => { nachZiehen.current = false }, 250)
