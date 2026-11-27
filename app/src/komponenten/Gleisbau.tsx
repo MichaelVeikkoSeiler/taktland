@@ -56,6 +56,7 @@ const GLEISE: Array<{ w: Werkzeug; text: string }> = [
   { w: { art: 'gleis', gleis: 'weiche' }, text: 'Weiche R' },
   { w: { art: 'gleis', gleis: 'weiche_l' }, text: 'Weiche L' },
   { w: { art: 'gleis', gleis: 'dreiweg' }, text: 'Dreiweg' },
+  { w: { art: 'gleis', gleis: 'tweiche' }, text: 'T-Weiche' },
   { w: { art: 'gleis', gleis: 'kreuzung' }, text: 'Kreuzung' },
   { w: { art: 'gleis', gleis: 'ueberfuehrung' }, text: 'Überführung' },
   { w: { art: 'gleis', gleis: 'doppelkurve' }, text: 'Doppelkurve' },

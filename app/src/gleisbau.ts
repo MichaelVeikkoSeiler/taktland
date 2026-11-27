@@ -25,7 +25,7 @@ export const spalten = (b: Brett) => b[0]?.length ?? 0
 export const zeilen = (b: Brett) => b.length
 
 export type Grund = 'wiese' | 'wald' | 'wasser' | 'berg' | 'dorf' | 'rebberg' | 'schnee' | 'acker'
-export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve' | 'ueberfuehrung'
+export type GleisArt = 'gerade' | 'kurve' | 'weiche' | 'kreuzung' | 'prellbock' | 'bahnhof' | 'kurvenbahnhof' | 'dreiweg' | 'bogen2' | 'bogen3' | 'weiche_l' | 'doppelkurve' | 'ueberfuehrung' | 'tweiche'
 
 /** Bahnhof auf einer Geraden oder in einer Kurve (seit 2026-11-22; Michael: «Bahnhof darf auch in einer Kurve sein») */
 /** wo eine Ampel stehen kann: an einer Geraden, Kurve oder einem Bahnhof */
@@ -41,7 +41,8 @@ export type Dreh = 0 | 1 | 2 | 3
 
 /** Weiche mit zwei oder, als Dreiwegweiche, drei Wegen (seit 2026-11-22; Michael: «Dreier-Weiche auch möglich machen») */
 // seit 2026-11-23 auch gespiegelt, der Abzweig nach links (Michael: «Weichen muss man spiegeln können»)
-export const istWeiche = (g?: Gleis) => g?.art === 'weiche' || g?.art === 'weiche_l' || g?.art === 'dreiweg'
+// seit 2026-11-27 die T-Weiche: von unten nach links oder rechts, ohne Gerade (Michael: «Wir benötigen noch eine T Weiche»)
+export const istWeiche = (g?: Gleis) => g?.art === 'weiche' || g?.art === 'weiche_l' || g?.art === 'dreiweg' || g?.art === 'tweiche'
 /** Kurve über 2 × 2 oder 3 × 3 Felder (seit 2026-11-22; Michael: «Kurvenelemente auch in 2x2 und 3x3 Kacheln»); n, sonst 0 */
 export const grosseKurve = (g?: Gleis) => (g?.art === 'bogen2' ? 2 : g?.art === 'bogen3' ? 3 : 0)
 
@@ -100,6 +101,7 @@ const WEGE: Record<GleisArt, Array<[number, number]>> = {
   ueberfuehrung: [[0, 2], [1, 3]],
   // die Dreiwegweiche: gerade, rechts, links; die grossen Kurven haben keine Wege in einem Feld (grossGeometrie)
   dreiweg: [[2, 0], [2, 1], [2, 3]], bogen2: [], bogen3: [],
+  tweiche: [[2, 1], [2, 3]],
 }
 
 const drehen = (k: number, d: number) => (k < 0 ? -1 : (k + d) % 4)
@@ -383,7 +385,7 @@ export function zufallsBeispiel(sp = SPALTEN, ze = ZEILEN): Brett {
 
 const SPEICHER = 'taktland.gleisbau.v1'
 const GRUENDE: Grund[] = ['wiese', 'wald', 'wasser', 'berg', 'dorf', 'rebberg', 'schnee', 'acker']
-const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung']
+const ARTEN: GleisArt[] = ['gerade', 'kurve', 'weiche', 'kreuzung', 'prellbock', 'bahnhof', 'kurvenbahnhof', 'dreiweg', 'bogen2', 'bogen3', 'weiche_l', 'doppelkurve', 'ueberfuehrung', 'tweiche']
 
 /** das gemerkte Brett, nur wenn es heil ist */
 export function brettLesen(): Brett | null {
@@ -403,7 +405,7 @@ export function brettLesen(): Brett | null {
  * Zeile, getrennt mit «-», je Feld der Grund (w f s b d) und das Gleis als Zeichen (Art × 4 + Drehung) oder «.». Weitere Teile kommen nach einem
  * weiteren «~» dazu
  */
-const GRUND_Z = 'wfsbdrna', STRASSE_Z = 'WFSBDRNA', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+const GRUND_Z = 'wfsbdrna', STRASSE_Z = 'WFSBDRNA', GLEIS_Z = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123'
 const namenEsc = (n: string) => encodeURIComponent(n).replace(/[.\-_~!*'()]/g, (c) => `%${c.charCodeAt(0).toString(16).toUpperCase()}`)
 export function brettCode(b: Brett): string {
   // Namen der Bahnhöfe als weiterer Teil: «n», dann je Feld Spalte.Zeile.Name, getrennt mit «_»
