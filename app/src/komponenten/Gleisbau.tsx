@@ -1820,6 +1820,30 @@ export function Gleisbau() {
     b2.forEach((z, jj) => z.forEach((x, ii) => { if (x !== brett[jj][ii]) l.push([ii, jj]) }))
     return { b: b2, l }
   }, [ueber, faehrt, werkzeug, dreh, brett, fest])
+  /**
+   * Tastatur (Michael, 2026-11-27: «Mit der Tab-Taste soll man Elemente, welche über dem Brett schweben und noch nicht platziert werden, drehen können. Mit Befehl
+   * und Z resp. auf Windows mit Ctrl und Z soll man Rückgängig machen können»): Tab dreht das Gleis des Werkzeugs im Uhrzeigersinn, Umschalt und Tab zurück, nur
+   * solange die Maus mit einem Gleis-Werkzeug über dem Brett ist (sonst springt Tab wie gewohnt von Knopf zu Knopf); Befehl oder Ctrl und Z macht rückgängig
+   */
+  const tastenRef = useRef({ ueber, werkzeug, dreh, faehrt, zurueck, n: verlauf.length })
+  tastenRef.current = { ueber, werkzeug, dreh, faehrt, zurueck, n: verlauf.length }
+  useEffect(() => {
+    const taste = (e: KeyboardEvent) => {
+      const ziel = e.target as HTMLElement | null
+      if (ziel && (ziel.tagName === 'INPUT' || ziel.tagName === 'TEXTAREA' || ziel.tagName === 'SELECT' || ziel.isContentEditable)) return
+      const t = tastenRef.current
+      if (e.key === 'Tab' && !e.ctrlKey && !e.metaKey && !e.altKey && t.ueber && !t.faehrt && t.werkzeug.art === 'gleis') {
+        e.preventDefault(); setDreh(((t.dreh + (e.shiftKey ? 3 : 1)) % 4) as Dreh); knopfTon(true); return
+      }
+      if ((e.key === 'z' || e.key === 'Z') && (e.metaKey || e.ctrlKey) && !e.shiftKey && !e.altKey) {
+        e.preventDefault()
+        if (t.faehrt) { setMeldung('Zum Rückgängigmachen zuerst anhalten.'); return }
+        if (t.n) t.zurueck()
+      }
+    }
+    window.addEventListener('keydown', taste)
+    return () => window.removeEventListener('keydown', taste)
+  }, [])
   const brettPunkt = (cx: number, cy: number) => {
     const r = svg.current!.getBoundingClientRect(), vw = SP + 2 * RAHMEN_B, vh = ZE + 2 * RAHMEN_B, kk = Math.min(r.width / vw, r.height / vh)
     return { x: (cx - r.left - (r.width - vw * kk) / 2) / kk - RAHMEN_B, y: (cy - r.top - (r.height - vh * kk) / 2) / kk - RAHMEN_B }
@@ -3181,6 +3205,7 @@ function SoGehts() {
       <li>Bahnbetrieb: ein Spiel mit Aufträgen, Geld und Depot. Beim ersten Öffnen wählst du die Schwierigkeit und was du fahren möchtest. Jeder Auftrag bringt Lohn, die Gleise kosten (Tunnel und Brücken mehr). Ein Tipp auf «Züge» öffnet das Zusammenstellen: Lok und Wagen in die leeren Felder ziehen oder antippen, Kosten und Platz stehen darunter; danach aufs Gleis tippen, wo der Zug stehen soll. Ein Tipp auf einen gesetzten Zug ändert ihn. Ein Personenwagen hat 4 Plätze, ein Güterwagen trägt 1 Ladung seines Guts. Mit dem Gewinn kaufst du im Depot weitere Loks und Wagen.</li>
       <li>Mit der Maus zwei rote Punkte verbinden: auf einem roten Punkt drücken und zu einem anderen ziehen, dazwischen entsteht das Gleis mit möglichst wenig Kurven, über Wasser als Brücke, durch Berge als Tunnel.</li>
       <li>Mit der Maus: Ein Klick wählt ein Feld (gestrichelter Rahmen). Entf oder die Rückschritt-Taste nimmt seinen obersten Inhalt weg, Schicht um Schicht bis zur Wiese; Esc hebt die Wahl auf. Rückgängig geht wie immer.</li>
+      <li>Tastatur: Tab dreht das Gleis, das unter der Maus schwebt, Umschalt und Tab dreht zurück. Befehl und Z (Mac) oder Ctrl und Z (Windows) macht rückgängig.</li>
       <li>Personen- und Güterzüge: Unter «Züge» setzt «Personenzug» oder «Güterzug» einen Zug aufs Gleis. Gibt es gesetzte Züge, fahren genau diese, sonst wie bisher Personenzüge nach «Anzahl Züge». Der Personenzug (Lok, Personenwagen und Steuerwagen, je 4 Plätze) hält an Bahnhöfen und bringt Fahrgäste ans Ziel, der Güterzug fährt an Bahnhöfen durch, hält am Güterschuppen (Bauwerke «Güter») und liefert Ladungen zu einem anderen Güterschuppen; eine Ladung füllt einen Güterwagen. Das Tutorial zeigt es Schritt für Schritt.</li>
       <li>Busse: Im Reiter «Strasse» liegen Strasse, Haltestelle, Wendeplatz, Brücke und Tunnel. Eine Strasse über Wasser oder einen Fluss wird zur Brücke,
         im Berg zum Tunnel; «Brücke» über ein Gleis führt die Strasse darüber statt über einen Bahnübergang. Die Busse fahren rechts, biegen nach Zufall ab,
