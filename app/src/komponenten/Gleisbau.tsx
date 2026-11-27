@@ -1644,7 +1644,7 @@ export function Gleisbau() {
             setMeldung(`${zz.length > 1 ? `Zug ${k + 1}` : 'Der Zug'} schleppt Zug ${oi + 1} ab.`); knopfTon(true)
             return true
           })
-        if (!vorher && z.stromlos) setMeldung(`${zz.length > 1 ? `Zug ${k + 1}` : 'Der Zug'} hat keinen Strom und rollt aus. Erreicht er wieder ein Gleis mit Fahrleitung, fährt er an, sonst bleibt er stehen. Eine Diesellok kann ihn abschleppen.`)
+        if (!vorher && z.stromlos) setMeldung(`Kein Strom! ${zz.length > 1 ? `Zug ${k + 1}` : 'Der Zug'} fährt mit Strom in ein Gleis ohne Fahrleitung und rollt aus. Erreicht er wieder ein Gleis mit Fahrleitung, fährt er an, sonst bleibt er stehen. Eine Diesellok kann ihn abschleppen.`)
         if (vorher && !z.stromlos) setMeldung(null)
       })
       // abgeschleppte Züge sind jetzt Teil eines anderen
@@ -2604,7 +2604,7 @@ export function Gleisbau() {
           {brett.flatMap((z, j) => z.map((f, i) => f.wagen && wagenGilt(f)
             ? <WagenBild key={`a${i},${j}`} w={{ x: i + 0.5, y: j + 0.5, w: f.gleis!.dreh % 2 ? 0 : Math.PI / 2, art: 1, vorne: false }} tunnel={false} /> : null))}
           <AmpelBild brett={brett} />
-          <OhneStromBild brett={brett} />
+          {/* ohne Strom seit 2026-11-27 ohne Schild auf dem Brett, man sieht es am fehlenden Fahrdraht (Michael: «ohne Strom soll kein Symbol mehr haben, das sieht nicht schön aus, wenn mehrere davon liegen»); fährt ein Stromzug hinein, kommt die Meldung */}
           {/* beim Verbinden zweier roter Punkte: eine gestrichelte Linie zur Maus, der Zielpunkt hervorgehoben */}
           {verbinde && (() => {
             const z = endeBei(verbinde.x, verbinde.y, verbinde.von)
