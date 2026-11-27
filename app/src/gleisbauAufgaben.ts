@@ -239,7 +239,7 @@ function nachNamen(b: Brett) {
   return m
 }
 /** warum oft keine Verbindung entsteht (Michael, 2026-11-26: Linie von unten an einen waagrechten Bahnhof) */
-const SEITE = 'Ein Bahnhof hat nur links und rechts ein Gleis: Die Linie muss von der Seite hinein. Rote Punkte zeigen Enden, an denen noch nichts anschliesst.'
+const SEITE = 'Ein Bahnhof hat nur links und rechts ein Gleis: Die Linie muss von der Seite hinein.'
 function verbindenN(a: string, c: string, mitTunnel = false, mitBruecke = false) {
   return (b: Brett) => {
     const f = nachNamen(b)
@@ -266,14 +266,14 @@ const zugWaehlen = (art: 'p' | 'g'): Fuehrung => ({ text: `Tippe unten auf den R
 const FAHREN = (text: string): Fuehrung => ({ text: `Drück oben rechts ▶ «Fahren». ${text}`, fertig: (x) => x.faehrt || (x.stand?.fahrgaeste ?? 0) > 0 || (x.stand?.gueter ?? 0) > 0 })
 const FUEHRUNG: Fuehrung[][] = [
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Seewil', 'Bergau')(x) },
-    { text: 'Zieh mit dem Finger von Seewil nach Bergau, Feld für Feld. Gerade Stücke und Kurven legt die Linie von selbst. Ein Bahnhof hat nur links und rechts ein Gleis.', felder: [[1, 1], [5, 1]], fertig: verbunden('Seewil', 'Bergau') }],
+    { text: 'Zieh mit dem Finger von Seewil nach Bergau, Feld für Feld. Gerade Stücke und Kurven legt die Linie von selbst. Ein Bahnhof hat nur links und rechts ein Gleis. Rote Punkte zeigen Gleise, die noch offen enden.', felder: [[1, 1], [5, 1]], fertig: verbunden('Seewil', 'Bergau') }],
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Bergau', 'Flussau', false, true)(x) },
     { text: 'Zieh die Linie von Bergau über den Fluss bis Flussau. Ein Gleis auf dem Wasser wird von selbst zur Brücke.', felder: [[5, 1], [9, 1]], fertig: verbunden('Bergau', 'Flussau', false, true) }],
   [{ ...LINIE, fertig: (x) => x.werkzeug === 'Linie' || verbunden('Flussau', 'Alpwil', true)(x) },
-    { text: 'Zieh die Linie rechts aus Flussau hinaus, dann nach unten über den Berg und von links oder rechts in Alpwil hinein. Ein Gleis auf dem Berg wird von selbst zum Tunnel. Rote Punkte zeigen Enden, an denen noch nichts anschliesst.', felder: [[9, 1], [10, 1], [10, 6]], fertig: verbunden('Flussau', 'Alpwil', true) }],
+    { text: 'Zieh die Linie rechts aus Flussau hinaus, dann nach unten über den Berg und von links oder rechts in Alpwil hinein. Ein Gleis auf dem Berg wird von selbst zum Tunnel.', felder: [[9, 1], [10, 1], [10, 6]], fertig: verbunden('Flussau', 'Alpwil', true) }],
   [{ text: 'Zieh mit «Linie» ein Gleis von deiner Strecke seitlich in Waldegg hinein. Wo es auf ein Gleis trifft, entsteht eine Weiche.', werkzeug: 'Linie', felder: [[2, 5]], fertig: (x) => alleVerbunden(x.b).ok },
     FAHREN('Ein Tipp auf eine Weiche stellt sie um, so fährt der Zug auch nach Waldegg.')],
-  [{ text: 'Baue einen geschlossenen Ring, der über den Fluss und durch den Berg führt. Er darf an dein Netz anschliessen. Rote Punkte zeigen Gleise, die noch offen enden.' },
+  [{ text: 'Baue einen geschlossenen Ring, der über den Fluss und durch den Berg führt. Er darf an dein Netz anschliessen.' },
     { text: 'Tippe auf die Weichen im Ring, bis sie im Ring weiterführen. Gelöst ist die Lektion von selbst, sobald ein Zug im Ring im Kreis fahren kann.' }],
   [{ ...zugWaehlen('p'), fertig: (x) => x.werkzeug === 'Personenzug' || hatZug('p')(x) },
     { text: 'Tippe auf ein Gleis, am besten in einem Bahnhof: Dort steht jetzt dein Zug.', fertig: hatZug('p') },
