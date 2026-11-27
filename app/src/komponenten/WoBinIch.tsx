@@ -104,6 +104,10 @@ function Partie({ netz, linien, pool, brueckeKm, index, hilfenStart, schliessen 
   const [stelle, setStelle] = useState(0)
   const [pin, setPin] = useState<KartenPin | null>(null)
   const [ergebnisse, setErgebnisse] = useState<Ergebnis[]>([])
+  // die gespielten Strecken, um sie nach der Auflösung nochmals zu fahren, jetzt mit Namen (Michael, 2026-11-27: «Nach Abschluss und dem Ergebnis soll man die
+  // Strecke nochmal fahren können»); zählt nicht für die Punkte
+  const [gespielt, setGespielt] = useState<Runde[]>([])
+  const [wiederholung, setWiederholung] = useState<Runde | null>(null)
   const d0 = useMemo(() => nullGrenzeM(pool, 'CH'), [pool])
   const ziel = useMemo<SpielObjekt | null>(() => {
     if (!runde || phase === 'fahrt') return null
@@ -133,10 +137,13 @@ function Partie({ netz, linien, pool, brueckeKm, index, hilfenStart, schliessen 
         </button>
       </div>
       {!runde && <p className="p-4">Es liess sich kein Stück Strecke finden. Bitte nochmals versuchen.</p>}
-      {runde && phase === 'fahrt' && (
+      {wiederholung && (
+        <Fahrt key={`w-${nr}-${phase}`} runde={wiederholung} mitNamen fertig={() => setWiederholung(null)} />
+      )}
+      {!wiederholung && runde && phase === 'fahrt' && (
         <Fahrt key={nr} runde={runde} fertig={(s) => { setStelle(s); setPhase('tipp') }} />
       )}
-      {runde && ziel && phase === 'tipp' && (
+      {!wiederholung && runde && ziel && phase === 'tipp' && (
         <div className="flex min-h-0 flex-1 flex-col md:flex-row quer:flex-row">
           <div className="relative min-h-0 flex-1">
             <Schweiz11Karte key={`tipp-${nr}`} pool={pool} gebiet="CH" hilfen={hilfenStart} ziel={ziel} index={index.bahnhoefe}
@@ -150,6 +157,7 @@ function Partie({ netz, linien, pool, brueckeKm, index, hilfenStart, schliessen 
             <button type="button" disabled={!pin} onClick={() => {
               const dM = abstandM(pin!, ziel)
               setErgebnisse([...ergebnisse, { dM, punkte: punkte(dM, d0, 1, hilfenStart.size), hilfen: hilfenStart.size }])
+              setGespielt([...gespielt, runde])
               setPhase('aufloesung')
             }} className="mt-3 min-h-12 w-full rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125 disabled:opacity-40">
               {pin ? 'Tipp bestätigen' : 'Tippe auf die Karte für deinen Pin'}
@@ -157,19 +165,26 @@ function Partie({ netz, linien, pool, brueckeKm, index, hilfenStart, schliessen 
           </div>
         </div>
       )}
-      {runde && ziel && phase === 'aufloesung' && (
+      {!wiederholung && runde && ziel && phase === 'aufloesung' && (
         <Aufloesung runde={runde} stelle={stelle} netz={netz} ziel={ziel} pin={pin} ergebnis={ergebnisse[ergebnisse.length - 1]}
-                    pool={pool} index={index} hilfen={hilfenStart} d0={d0} letzte={nr + 1 >= RUNDEN} weiter={naechsteRunde} nr={nr} />
+                    pool={pool} index={index} hilfen={hilfenStart} d0={d0} letzte={nr + 1 >= RUNDEN} weiter={naechsteRunde} nr={nr}
+                    nochmals={() => setWiederholung(runde)} />
       )}
-      {phase === 'ende' && (
+      {!wiederholung && phase === 'ende' && (
         <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
           <p className="text-sm text-sbb-metal dark:text-sbb-storm">{RUNDEN} Runden gespielt</p>
           <p className="mt-2 text-4xl font-bold">{summe} Punkte</p>
           <p className="mt-1 text-sbb-metal dark:text-sbb-storm">von höchstens {moeglich * RUNDEN}</p>
           <ul className="mt-4 text-sm">
-            {ergebnisse.map((e, i) => <li key={i}>Runde {i + 1}: {distanzText(e.dM)} daneben, {e.punkte} Punkte</li>)}
+            {ergebnisse.map((e, i) => (
+              <li key={i} className="mt-1 flex items-center justify-center gap-3">
+                <span>Runde {i + 1}: {distanzText(e.dM)} daneben, {e.punkte} Punkte</span>
+                {gespielt[i] && <button type="button" onClick={() => setWiederholung(gespielt[i])}
+                                        className="rounded-lg border border-sbb-cloud px-2 py-1 text-xs font-bold dark:border-sbb-iron">Nochmals fahren</button>}
+              </li>
+            ))}
           </ul>
-          <button type="button" onClick={() => { setErgebnisse([]); setNr(0); setRunde(ziehen()); setPin(null); setPhase('fahrt') }}
+          <button type="button" onClick={() => { setErgebnisse([]); setGespielt([]); setNr(0); setRunde(ziehen()); setPin(null); setPhase('fahrt') }}
                   className="mt-6 min-h-12 rounded-lg bg-sbb-red px-10 font-bold text-white hover:bg-sbb-red125">
             Nochmals
           </button>
@@ -180,7 +195,7 @@ function Partie({ netz, linien, pool, brueckeKm, index, hilfenStart, schliessen 
 }
 
 /** Die Fahrt einer Runde: der Zug steht, bis «Losfahren» oder das Pult ihn startet, und fährt FAHRT_S Sekunden */
-function Fahrt({ runde, fertig }: { runde: Runde; fertig: (s: number) => void }) {
+function Fahrt({ runde, fertig, mitNamen = false }: { runde: Runde; fertig: (s: number) => void; mitNamen?: boolean }) {
   const { fahrweg, abS } = runde
   const ende = useMemo(() => wegEnde(fahrweg) - 100, [fahrweg])
   const [s, setS] = useState(abS)
@@ -195,7 +210,7 @@ function Fahrt({ runde, fertig }: { runde: Runde; fertig: (s: number) => void })
       const dt = Math.min(0.2, (t - vorher) / 1000)
       vorher = t
       const z = zustand.current
-      if (!z.angehalten && z.gefahren < FAHRT_S) {
+      if (!z.angehalten && (mitNamen || z.gefahren < FAHRT_S)) {
         const v = TEMPO_STUFEN[z.stufe] / 3.6
         setS(Math.min(ende, z.s + v * dt))
         setGefahren(z.gefahren + dt)
@@ -204,8 +219,9 @@ function Fahrt({ runde, fertig }: { runde: Runde; fertig: (s: number) => void })
     }
     bild = requestAnimationFrame(schritt)
     return () => cancelAnimationFrame(bild)
-  }, [ende])
-  const vorbei = gefahren >= FAHRT_S || s >= ende
+  }, [ende, mitNamen])
+  // nochmals gefahren gilt keine Zeit, nur das Ende des Stücks
+  const vorbei = (!mitNamen && gefahren >= FAHRT_S) || s >= ende
   useEffect(() => { if (vorbei) setAngehalten(true) }, [vorbei])
   const aussen = useRef<PultAussen | null>(null)
   aussen.current = {
@@ -220,11 +236,12 @@ function Fahrt({ runde, fertig }: { runde: Runde; fertig: (s: number) => void })
     <div className="flex min-h-0 flex-1 flex-col">
       <Suspense fallback={<p className="p-4 text-sbb-metal">Wird geladen …</p>}>
         <GelaendeFahrt fahrweg={fahrweg} objekte={[]} sJetzt={s} className="min-h-0 flex-1" tempo={tempo} tempoQuelle="probe"
-                       aussen={aussen} verdeckt vorneAnfang />
+                       aussen={aussen} verdeckt={!mitNamen} vorneAnfang />
       </Suspense>
       <div className="flex items-center gap-3 border-t border-sbb-cloud px-4 py-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] dark:border-sbb-iron">
         <p className="min-w-0 flex-1 text-sm tabular-nums">
-          {vorbei ? 'Fahrt zu Ende.' : angehalten ? `${FAHRT_S - Math.floor(gefahren)} s Fahrt übrig` : `noch ${Math.ceil(FAHRT_S - gefahren)} s`}
+          {mitNamen ? (vorbei ? 'Fahrt zu Ende.' : 'Nochmals, jetzt mit Namen. Zählt nicht für die Punkte.')
+            : vorbei ? 'Fahrt zu Ende.' : angehalten ? `${FAHRT_S - Math.floor(gefahren)} s Fahrt übrig` : `noch ${Math.ceil(FAHRT_S - gefahren)} s`}
         </p>
         {!vorbei && (
           <button type="button" onClick={() => setAngehalten(!angehalten)}
@@ -234,16 +251,16 @@ function Fahrt({ runde, fertig }: { runde: Runde; fertig: (s: number) => void })
         )}
         <button type="button" onClick={() => fertig(s)}
                 className={`min-h-11 rounded-lg px-4 text-sm font-bold ${vorbei ? 'bg-sbb-red text-white' : 'border border-sbb-cloud dark:border-sbb-iron'}`}>
-          Zur Karte
+          {mitNamen ? 'Zurück' : 'Zur Karte'}
         </button>
       </div>
     </div>
   )
 }
 
-function Aufloesung({ runde, stelle, netz, ziel, pin, ergebnis, pool, index, hilfen, d0, letzte, weiter, nr }: {
+function Aufloesung({ runde, stelle, netz, ziel, pin, ergebnis, pool, index, hilfen, d0, letzte, weiter, nr, nochmals }: {
   runde: Runde; stelle: number; netz: StreckenNetz; ziel: SpielObjekt; pin: KartenPin | null; ergebnis: Ergebnis; pool: Pool
-  index: BahnhofIndex; hilfen: Set<Hilfe>; d0: number; letzte: boolean; weiter: () => void; nr: number
+  index: BahnhofIndex; hilfen: Set<Hilfe>; d0: number; letzte: boolean; weiter: () => void; nr: number; nochmals: () => void
 }) {
   // die Bahnhöfe des Wegs vor und nach der Stelle, wo es sie gibt
   const bahnhoefe = runde.fahrweg.objekte.filter((o) => o.art === 'bahnhof')
@@ -268,6 +285,10 @@ function Aufloesung({ runde, stelle, netz, ziel, pin, ergebnis, pool, index, hil
         <button type="button" onClick={weiter}
                 className="mt-5 min-h-12 w-full rounded-lg bg-sbb-red px-4 font-bold text-white hover:bg-sbb-red125">
           {letzte ? 'Zum Ergebnis' : 'Nächste Runde'}
+        </button>
+        <button type="button" onClick={nochmals}
+                className="mt-2 min-h-12 w-full rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">
+          Strecke nochmals fahren, mit Namen
         </button>
       </div>
     </div>
