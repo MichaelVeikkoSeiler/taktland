@@ -18,15 +18,16 @@ import { sprache, t } from './sprache'
 
 const LINK = 'underline underline-offset-2 hover:text-sbb-black dark:hover:text-sbb-white'
 
-/** oben rechts im Auftaktbild, links der Bildmarke: DE und EN, die jetzige weiss hinterlegt (Michael, 2026-11-27: «Ja gerne, oben rechts im Auftaktbild einbauen») */
+/** oben rechts im Auftaktbild, links der Bildmarke: DE und EN, die jetzige weiss hinterlegt (Michael, 2026-11-27: «Ja gerne, oben rechts im Auftaktbild einbauen»), seit 2026-11-28 um ein Drittel kleiner
+    (Michael: «das DE EN ca um einen Drittel verkleinern») */
 function SpracheOben() {
   const jetzt = sprache()
   return (
-    <div className="absolute right-20 top-3 flex overflow-hidden rounded-lg bg-black/45 text-sm font-bold text-white shadow-md backdrop-blur-sm sm:right-28 sm:top-5">
+    <div className="absolute right-20 top-3 flex overflow-hidden rounded-md bg-black/45 text-[10px] font-bold text-white shadow-md backdrop-blur-sm sm:right-28 sm:top-5">
       {(['de', 'en'] as const).map((s) => (
         <button key={s} type="button" lang={s === 'de' ? 'de-CH' : 'en'} aria-pressed={s === jetzt} title={s === 'de' ? 'Deutsch' : 'English'}
                 onClick={() => { if (s !== jetzt) spracheWaehlen(s) }}
-                className={`min-h-9 px-3 ${s === jetzt ? 'bg-white text-sbb-black' : 'hover:bg-white/20'}`}>{s.toUpperCase()}</button>
+                className={`min-h-6 px-2 ${s === jetzt ? 'bg-white text-sbb-black' : 'hover:bg-white/20'}`}>{s.toUpperCase()}</button>
       ))}
     </div>
   )
