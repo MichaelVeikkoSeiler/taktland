@@ -1,4 +1,5 @@
 import { type ReactElement, useEffect, useMemo, useRef, useState } from 'react'
+import { useEchtesVollbild } from './Netzkarte'
 import { abfahrtsPfiff, antwortTon, kirchenSchlag, knopfTon, zuggeraeuschAus, zuggeraeuschTempo } from '../audio'
 import {
   type Brett, brettAusCode, brettCode, bretterLesen, bretterMerken, type GespeichertesBrett, neueId, type Gleis, bahnhofGruppen, bahnhofNamen, bahnhofTitel, type Dreh, type Feld, type GleisArt, groesseAendern, type Grund, leer,
@@ -1585,6 +1586,7 @@ export function Gleisbau() {
     const t = window.setTimeout(() => setMeldung(null), 4000)
     return () => window.clearTimeout(t)
   }, [meldung])
+  useEffect(() => { if (!faehrt || !auftrag) setGross(false) }, [faehrt, auftrag])
   // im Vollbild steht die Seite darunter still
   const imVollbild = ansicht === 'brett' || ((ansicht === 'aufgaben' || ansicht === 'betrieb') && !!aufgabe)
   useEffect(() => {
@@ -1678,6 +1680,10 @@ export function Gleisbau() {
   // der Zug je Bild
   // Pause während der Fahrt (Michael, 2026-11-26: «Während des Abspielens muss man Pause drücken können»): alles steht, Weichen und Ampeln lassen sich stellen
   const [pause, setPause] = useState(false)
+  // Vollformat, solange ein Auftrag fährt: nur Brett und Knöpfe, auf dem Handy ohne die Leisten des Browsers (Michael, 2026-11-28: «Beim Abspielen eines Auftrages
+  // im Gleisbauspiel soll man dies als Vollformat anschauen können»)
+  const [gross, setGross] = useState(false)
+  useEchtesVollbild(gross, setGross)
   const [imZugOffen, setImZugOffen] = useState(false)
   /** wer gerade ein- oder aussteigt */
   const gaenger = useRef<Array<{ x0: number; y0: number; x1: number; y1: number; t0: number; ziel: string; aus: boolean }>>([])
@@ -2667,7 +2673,7 @@ export function Gleisbau() {
           {/* oben freier Raum, dann das Brett so hoch, wie es braucht, gleich darunter Aufgabe und Knöpfe */}
           <div className="flex-1" style={{ minHeight: 'calc(env(safe-area-inset-top) + 8px)' }} />
           {/* der Name der Lektion oder des Auftrags gross über dem Brett (Michael, 2026-11-27: «Name des Tutorials oberhalb des Brettes und grösser und ausgezeichnet») */}
-          {aufgabe && (
+          {aufgabe && !gross && (
             <div className="flex-none px-3 pb-2">
               {aufgabe.reihe !== undefined && <p className="text-xs font-bold uppercase tracking-wide text-sbb-red dark:text-[#d63a55]">Lektion {aufgabe.reihe + 1} von {AUFGABEN.filter((x) => x.reihe !== undefined).length}</p>}
               {auftrag && <p className="text-xs font-bold uppercase tracking-wide text-sbb-red dark:text-[#d63a55]">Auftrag</p>}
@@ -2871,7 +2877,9 @@ export function Gleisbau() {
               <p role="status" className="pointer-events-none absolute inset-x-3 bottom-2 mx-auto max-w-md rounded-lg bg-sbb-charcoal/90 px-3 py-2 text-center text-sm font-medium text-white shadow-lg">{meldung}</p>
             )}
           </div>
-          <div className="flex-none pt-2">
+          {/* im Vollformat steht das Brett in der Mitte */}
+          {gross && <div className="flex-1" />}
+          <div className={gross ? 'hidden' : 'flex-none pt-2'}>
           {/* solange ein Hinweis des Tutorials gilt, nur er: zwei Texte sagten fast dasselbe (Michael, 2026-11-27: «Warum zwei Texte?»); im Auftrag steht er über dem Brett */}
           {aufgabe && !hinweis && !auftrag && (
             <div className="mx-2.5 mb-2 flex flex-none items-start gap-3 rounded-lg bg-white px-3 py-2 shadow-sm dark:bg-sbb-charcoal">
@@ -2932,7 +2940,7 @@ export function Gleisbau() {
           {/* die Knöpfe unter dem Brett und der Aufgabe (Michael, 2026-11-26: «Bitte alle Steuerelemente unterhalb des Brettes anbringen. Die Erklärung der
               Aufgabe oder Hinweistexte direkt unter dem Brett über die volle Breite») */}
           <div className="flex flex-none items-center gap-2 px-2.5 pb-2 pt-1"
-               style={{ paddingLeft: 'calc(env(safe-area-inset-left) + 10px)', paddingRight: 'calc(env(safe-area-inset-right) + 10px)' }}>
+               style={{ paddingLeft: 'calc(env(safe-area-inset-left) + 10px)', paddingRight: 'calc(env(safe-area-inset-right) + 10px)', ...(gross ? { paddingBottom: 'calc(env(safe-area-inset-bottom) + 8px)' } : {}) }}>
             <button type="button" onClick={() => { window.location.hash = auftrag ? '#/gleisbau?betrieb' : aufgabe?.id.startsWith('eigen-') ? '#/gleisbau' : aufgabe ? '#/gleisbau?aufgaben' : '#/gleisbau?frei' }} aria-label={auftrag ? 'Zurück zum Bahnbetrieb' : aufgabe?.id.startsWith('eigen-') ? 'Zurück zur Übersicht' : aufgabe ? 'Zurück zum Tutorial' : 'Zurück zu meinen Brettern'}
                     className={rund}><span className="pfeil pfeil-links" aria-hidden="true">←</span></button>
             <p className="min-w-0 flex-1 truncate font-bold">{aufgabe ? aufgabe.titel : bretter.find((x) => x.id === offen)?.name ?? 'Brett'}</p>
@@ -2950,6 +2958,13 @@ export function Gleisbau() {
                 <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{pause ? <path d="M8 5.5v13l11-6.5z" /> : <><rect x="6.5" y="5.5" width="4" height="13" rx="1" /><rect x="13.5" y="5.5" width="4" height="13" rx="1" /></>}</svg>
               </button>
             )}
+            {faehrt && auftrag && (
+              <button type="button" onClick={() => { setGross((x) => !x); knopfTon(true) }} aria-pressed={gross} aria-label={gross ? 'Vollformat beenden' : 'Vollformat'}
+                      title={gross ? 'Vollformat beenden' : 'Vollformat'} className={rund}>
+                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                  {gross ? <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" /> : <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />}</svg>
+              </button>
+            )}
             <button type="button" onClick={fahren} aria-label={faehrt ? 'Anhalten' : 'Fahren'} title={faehrt ? 'Anhalten' : 'Fahren'}
                     className="flex h-11 flex-none items-center gap-1.5 rounded-full bg-sbb-red px-4 font-bold text-white shadow-sm hover:bg-sbb-red125">
               <svg viewBox="0 0 24 24" className="size-5" fill="currentColor" aria-hidden="true">{faehrt ? <rect x="6" y="6" width="12" height="12" rx="1.5" /> : <path d="M8 5.5v13l11-6.5z" />}</svg>
@@ -2959,7 +2974,7 @@ export function Gleisbau() {
                 : <span className="hidden sm:inline">{faehrt ? 'Anhalten' : 'Fahren'}</span>}
             </button>
           </div>
-          <div className="flex-none border-t border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-charcoal"
+          <div className={`flex-none border-t border-sbb-cloud bg-white dark:border-sbb-iron dark:bg-sbb-charcoal ${gross ? 'hidden' : ''}`}
                style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 6px)', paddingLeft: 'env(safe-area-inset-left)', paddingRight: 'env(safe-area-inset-right)' }}>
             {faehrt ? (
               <div className="flex min-h-[7.25rem] flex-col justify-center gap-1 px-3 py-2 text-sm">

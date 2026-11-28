@@ -1760,6 +1760,11 @@ Gleisbau, Blatt eines angetippten Zugs im Auftrag (Bahnbetrieb) seit 2026-11-28 
              mehr verändern.»; Fahrtrichtung ändern, Abkuppeln und Zug entfernen bleiben (Michael: «Beim Auftrag soll man den Zug nicht mehr verändern können»); in den Aufgaben und
              im freien Bauen wie bisher
 
+Gleisbau, Vollformat im Auftrag seit 2026-11-28 (Michael: «Beim Abspielen eines Auftrages im Gleisbauspiel soll man dies als Vollformat anschauen können»): solange
+             ein Auftrag fährt, in der Leiste unter dem Brett ein Knopf (vier Ecken) vor «Anhalten»: ohne Titel und Text des Auftrags, ohne die Zeile darunter und ohne die Tafel
+             unten, das Brett in der Mitte, wo der Browser es kann ohne seine Leisten (useEchtesVollbild, auch drehen); zurück mit demselben Knopf, Escape oder der
+             Zurück-Taste, von selbst beim Anhalten (gross in Gleisbau.tsx); im Browser hier mit Pixel 7 hochkant geprüft, quer nicht
+
 ## Offen: Rückmeldung zur Oberfläche (2026-11-27)
 
 Michael: «Alles merken aber schlag mir nochmals die dringendsten Sachen vor». Noch nicht gebaut, angeschaut im Browser hier (Handy Pixel 7, iPad hoch und quer,
