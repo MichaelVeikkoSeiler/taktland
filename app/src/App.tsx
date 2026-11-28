@@ -300,8 +300,9 @@ export default function App() {
           {/* eine Zeile mit allen Quellen bleibt immer sichtbar, was wofür ist, klappt auf (Michael, 2026-10-09:
               «Quellenangaben ein- und ausklappbar», mit Blick auf Barrierefreiheit: details/summary des Browsers) */}
           <p>
-            Daten: SBB, opentransportdata.swiss, Bundesamt für Verkehr BAV, Bundesamt für Landestopografie swisstopo,
-            Bundesamt für Statistik BFS, Bundesamt für Bevölkerungsschutz BABS, Bundesamt für Umwelt BAFU.
+            {/* seit 2026-11-28 alle Herausgeber, nur mit Kürzeln; vorher fehlten MeteoSchweiz, ASTRA, ARE und weitere (Michael: «Warum ist das so und nicht alles
+                zusammen und das dann aufklappbar?», dann «Ja gern»); wer was liefert, darunter in der Klappe */}
+            Daten: SBB, opentransportdata.swiss, BAV, swisstopo, BFS, BABS, BAFU, MeteoSchweiz, ASTRA, ARE, Wikidata, ESA (Hipparcos), Aufnahmen von freesound.org.
             Taktland ist ein privates Projekt und kein Angebot einer Bahnunternehmung.
           </p>
           <details className="klapp mt-2">

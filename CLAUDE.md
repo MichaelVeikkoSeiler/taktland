@@ -1752,6 +1752,10 @@ Fusszeile von Taktland seit 2026-11-28: «Was du in Taktland speicherst, bleibt 
              Konto; …» statt «Der Lernfortschritt bleibt auf diesem Gerät», der Knopf darunter «Lernfortschritt auf diesem Gerät löschen» (er löscht nur Antworten und Bestwerte im
              Duell) (Michael: «Guter Vorschlag»)
 
+Quellenzeile der Fusszeile von Taktland seit 2026-11-28 mit allen Herausgebern, nur Kürzel: «Daten: SBB, opentransportdata.swiss, BAV, swisstopo, BFS, BABS, BAFU,
+             MeteoSchweiz, ASTRA, ARE, Wikidata, ESA (Hipparcos), Aufnahmen von freesound.org.» (vorher fehlten MeteoSchweiz, ASTRA, ARE und weitere; Michael: «Warum ist das so und
+             nicht alles zusammen und das dann aufklappbar?», dann «Ja gern»); was wofür, weiter in der Klappe «Alle Datenquellen und Lizenzen»; neue Quellen in beiden nennen
+
 ## Offen: Rückmeldung zur Oberfläche (2026-11-27)
 
 Michael: «Alles merken aber schlag mir nochmals die dringendsten Sachen vor». Noch nicht gebaut, angeschaut im Browser hier (Handy Pixel 7, iPad hoch und quer,
