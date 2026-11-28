@@ -1748,6 +1748,10 @@ die Marke nicht. In der Fusszeile steht, dass Taktland kein Angebot einer Bahn i
 Texte auf 3dland.ch am Desktop seit 2026-11-27 über die ganze Breite der Spalte statt höchstens 48rem (Michael: «bitte die Texte auf 3DLand auf die ganze Breite
              laufen lassen»; Klasse text-breit auf der Seite in dreidland.tsx, index.css); in Taktland bleibt der Fliesstext schmal
 
+Fusszeile von Taktland seit 2026-11-28: «Was du in Taktland speicherst, bleibt auf diesem Gerät: Lernfortschritt, Favoriten, Fahrten, Spielstände und Bretter. Es gibt kein
+             Konto; …» statt «Der Lernfortschritt bleibt auf diesem Gerät», der Knopf darunter «Lernfortschritt auf diesem Gerät löschen» (er löscht nur Antworten und Bestwerte im
+             Duell) (Michael: «Guter Vorschlag»)
+
 ## Offen: Rückmeldung zur Oberfläche (2026-11-27)
 
 Michael: «Alles merken aber schlag mir nochmals die dringendsten Sachen vor». Noch nicht gebaut, angeschaut im Browser hier (Handy Pixel 7, iPad hoch und quer,

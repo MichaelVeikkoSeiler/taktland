@@ -338,8 +338,9 @@ export default function App() {
             </a>
           </p>
           <p className="mt-1">
-            Der Lernfortschritt bleibt auf diesem Gerät. Es gibt kein Konto; gezählt wird nur, wie oft
-            Taktland geöffnet wird, nur als Zahlen je Tag.
+            {/* seit 2026-11-28 nicht mehr nur der Lernfortschritt (Michael: «Guter Vorschlag», auf: heute bleiben auch Favoriten, Fahrten und Bretter auf dem Gerät) */}
+            Was du in Taktland speicherst, bleibt auf diesem Gerät: Lernfortschritt, Favoriten, Fahrten, Spielstände und Bretter. Es gibt kein Konto;
+            gezählt wird nur, wie oft Taktland geöffnet wird, nur als Zahlen je Tag.
           </p>
           <Zuruecksetzen />
           {index && <p className="mt-1">Daten geladen am {index.stand.split('-').map(Number).reverse().join('.')}</p>}
@@ -381,7 +382,7 @@ function Zuruecksetzen() {
         className="mt-2 underline underline-offset-2 hover:text-sbb-black
                    dark:hover:text-sbb-white"
       >
-        Fortschritt auf diesem Gerät löschen
+        Lernfortschritt auf diesem Gerät löschen
       </button>
     )
   }
