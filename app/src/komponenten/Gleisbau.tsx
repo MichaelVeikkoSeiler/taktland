@@ -3056,7 +3056,10 @@ export function Gleisbau() {
                     <button type="button" onClick={zu} aria-label="Schliessen" className={rund}>✕</button>
                   </div>
                   {zugWahl.stromlos && <p className="mt-2 text-sm font-bold text-sbb-red">Ohne Strom: Der Zug steht still. Ein Zug mit Diesellok kann ihn abschleppen.</p>}
-                  {zugWahl.teile() === 1 && (
+                  {/* im Auftrag bleibt der Zug, wie er zusammengestellt ist: kein Antrieb, keine Wagen, nichts abstellen (Michael, 2026-11-28: «Beim Auftrag soll man den
+                      Zug nicht mehr verändern können») */}
+                  {auftrag && <p className="mt-2 text-sm text-sbb-metal">Im Auftrag lässt sich der Zug hier nicht mehr verändern.</p>}
+                  {zugWahl.teile() === 1 && !auftrag && (
                     <div className="mt-2 flex min-h-12 items-center justify-between gap-3">
                       <span>Antrieb<span className="block text-xs text-sbb-metal">Strom braucht eine Fahrleitung, Diesel fährt überall</span></span>
                       <div className="segmente grid grid-cols-2">
@@ -3068,7 +3071,7 @@ export function Gleisbau() {
                       </div>
                     </div>
                   )}
-                  {zugWahl.teile() === 1 && <div className="mt-2 flex min-h-12 items-center justify-between gap-3">
+                  {zugWahl.teile() === 1 && !auftrag && <div className="mt-2 flex min-h-12 items-center justify-between gap-3">
                     <span>Wagen<span className="block text-xs text-sbb-metal">zwischen Lok und Steuerwagen</span></span>
                     <span className="flex items-center gap-2">
                       <button type="button" aria-label="Ein Wagen weniger" disabled={n <= WAGEN_MIN} onClick={() => { zugWahl.fahrzeugeSetzen(brettRef.current, n - 1); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true) }} className={rund}>−</button>
@@ -3091,14 +3094,14 @@ export function Gleisbau() {
                     )}
                     <button type="button" disabled={zugWahl.stromlos} onClick={() => { zugWahl.wenden(); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true); zu() }}
                             className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Fahrtrichtung ändern</button>
-                    <button type="button" disabled={n <= WAGEN_MIN} onClick={() => {
+                    {!auftrag && <button type="button" disabled={n <= WAGEN_MIN} onClick={() => {
                       // den hintersten Wagen dort stehen lassen, wo er ist
                       const [ei, ej] = zugWahl.ende(), f = brettRef.current[ej]?.[ei]
                       if (!wagenGilt(f) || f!.wagen) { setMeldung('Hier kann kein Wagen stehen: nur auf einer Geraden, einem Bahnhof oder vor einem Prellbock.'); zu(); return }
                       const b = brettRef.current.map((zz, jj) => (jj === ej ? zz.map((x, ii) => (ii === ei ? { ...x, wagen: true as const } : x)) : zz))
                       brettRef.current = b; setBrettRoh(b)
                       zugWahl.fahrzeugeSetzen(b, n - 1); setWagen(zuege.current.map((x) => x.wagen())); knopfTon(true); zu()
-                    }} className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Wagen abstellen</button>
+                    }} className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold hover:border-sbb-black disabled:opacity-40 dark:border-sbb-iron dark:bg-sbb-midnight">Wagen abstellen</button>}
                     <button type="button" onClick={entfernen}
                             className="min-h-11 rounded-lg border border-sbb-cloud bg-white px-4 font-bold text-sbb-red hover:border-sbb-black dark:border-sbb-iron dark:bg-sbb-midnight">Zug entfernen</button>
                   </div>

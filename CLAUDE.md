@@ -1756,6 +1756,10 @@ Quellenzeile der Fusszeile von Taktland seit 2026-11-28 mit allen Herausgebern, 
              MeteoSchweiz, ASTRA, ARE, Wikidata, ESA (Hipparcos), Aufnahmen von freesound.org.» (vorher fehlten MeteoSchweiz, ASTRA, ARE und weitere; Michael: «Warum ist das so und
              nicht alles zusammen und das dann aufklappbar?», dann «Ja gern»); was wofür, weiter in der Klappe «Alle Datenquellen und Lizenzen»; neue Quellen in beiden nennen
 
+Gleisbau, Blatt eines angetippten Zugs im Auftrag (Bahnbetrieb) seit 2026-11-28 ohne Antrieb, Wagen und «Wagen abstellen», dafür «Im Auftrag lässt sich der Zug hier nicht
+             mehr verändern.»; Fahrtrichtung ändern, Abkuppeln und Zug entfernen bleiben (Michael: «Beim Auftrag soll man den Zug nicht mehr verändern können»); in den Aufgaben und
+             im freien Bauen wie bisher
+
 ## Offen: Rückmeldung zur Oberfläche (2026-11-27)
 
 Michael: «Alles merken aber schlag mir nochmals die dringendsten Sachen vor». Noch nicht gebaut, angeschaut im Browser hier (Handy Pixel 7, iPad hoch und quer,
